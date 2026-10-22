@@ -1,0 +1,40 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "indian_wells",
+  "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+  "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame inspection and source-bound multiple-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:53:24.115379+00:00",
+  "reviewed_from": 235.6,
+  "reviewed_to": 245.36,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 242.18,
+      "end": 245.28,
+      "en": "Oh, not done yet.",
+      "zh": "哦，还没结束。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-save-d23437bf3c-indian-wells-save-small.en.json",
+      "sha256": "d23437bf3cd8e3fca7ea096b2edda1e0910a95eb6253b699fec9200267ff6d50",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-save-0300133707-indian-wells-save-medium.en.json",
+      "sha256": "0300133707cc1a5385f3e8abf42948c102e8ffece4285dfc505451a28a15bb6a",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/iw-save-b46edc1560-iw-champion-medium.en.json",
+      "sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+      "model": "medium.en"
+    }
+  ],
+  "review_scope": "Entire selected actual source window; coherent identifiable English retained with bilingual captions; machine review, not human listening.",
+  "review_notes": "Actual new small180–245.5 and medium235–245.6 agree on Oh, not done yet. Wider source-bound medium240–309 supports complete phrase until245.28; subtitle uses conservative full-context bounds. Previous separate commentary after Rybakina6-5 point ends234.64 before235.6, next Third time is a charm starts251.06 after this window. No foreground words reconstructed. Original sound unchanged."
+}

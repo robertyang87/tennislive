@@ -1,0 +1,139 @@
+{
+  "schema": "sabalenka.native-slam-preview-review.v1",
+  "reviewed_at_utc": "2026-10-22T04:17:25.929455+00:00",
+  "kind": "native_png_visual_preview_only",
+  "final_film_qc": false,
+  "publication_approved": false,
+  "status": "needs_rg_inset_fix",
+  "spec_sha256_rendered": "695c7caa2346b1b286041d2f32503b2e9d35161415d59ff972f6f1b528c96157",
+  "spec_sha256_before": "695c7caa2346b1b286041d2f32503b2e9d35161415d59ff972f6f1b528c96157",
+  "spec_sha256_current_at_review": "695c7caa2346b1b286041d2f32503b2e9d35161415d59ff972f6f1b528c96157",
+  "same_spec_through_primary_preview": true,
+  "same_spec_for_followup": true,
+  "actual_native_fps": "25/1",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "sample_count": 22,
+  "primary_manifest": "/workspace/sabalenka-finals-production/native-preview-slams/preview_manifest.json",
+  "primary_manifest_sha256": "f76ad100a8003ecf4a4c5004acfc1df3778f9148231e2c256bc898f2a67d88d0",
+  "followup_manifest": "/workspace/sabalenka-finals-production/native-preview-slams/edges-and-cues/preview_manifest.json",
+  "followup_manifest_sha256": "b171c50700f74ea2a701c465bb7ce983acd202c7c3d756d42d3475534e10d475",
+  "contact_sheets": [
+    "/workspace/sabalenka-finals-production/native-preview-slams/contact-labels.jpg",
+    "/workspace/sabalenka-finals-production/native-preview-slams/contact-faces-quotes.jpg",
+    "/workspace/sabalenka-finals-production/native-preview-slams/edges-and-cues/contact.jpg"
+  ],
+  "scope": [
+    "AO/RG/Wimbledon inset start/middle/end on actual native rendered pixels",
+    "AO key-break reaction with bilingual caption",
+    "RG winner reaction with inset already gone",
+    "RG post-match interview first/middle/final subtitle cues and fixed person crop",
+    "Wimbledon real Sabalenka loss reaction and2English/Chinese umpire cues",
+    "Extra RG pre-point close-ups to investigate replacement inset timing"
+  ],
+  "findings": [
+    {
+      "severity": "blocker",
+      "id": "rg_inset_covers_far_player",
+      "segment_id": "rg",
+      "source": "rg-qf",
+      "observed_frames": [
+        {
+          "image": "caption-05.png",
+          "film_time": 172.46,
+          "source_time": 189.23999999999998
+        },
+        {
+          "image": "caption-07.png",
+          "film_time": 174.94000000000003,
+          "source_time": 191.72
+        }
+      ],
+      "detail": "In source189.24 native frame the transparent V14 date/score/players block covers the far-side returner Shnaider head and torso; feet remain visible below the words. At191.72 the date/score still touch her head/upper body. Wide court is not itself a safe label interval.",
+      "occupied_label_ink_bbox_approx_native": [
+        656,
+        165,
+        1022,
+        359
+      ],
+      "current_source_label_interval": [
+        188.9,
+        192.1
+      ],
+      "replacement_checked_source_times": [
+        185.8,
+        186.48,
+        187.4,
+        188.28
+      ],
+      "replacement_result": "Pre-point close-ups put Sabalenka/Shnaider head or face in the same ink region. No≥2.8second contiguous safe interval was established in these checked locations. Current overlay must not be called safe.",
+      "suggested_fix": "Remove inset from this RG match take and include final6-3,5-7,0-6 result on preceding card-rg, or prepare another actual native placement/time candidate and re-preview. Do not move it onto reaction faces.",
+      "safe_interval_approved": null
+    },
+    {
+      "severity": "pass_for_samples",
+      "id": "ao_inset_and_caption",
+      "segment_id": "ao",
+      "source_label_interval": [
+        163.6,
+        168.6
+      ],
+      "detail": "3sampled inset states stay clear of far-side Sabalenka face and actual strokes; returner at left edge briefly partly outside fixed court crop before return, visible during actual return/rally. Actual source173.47 close-up has no right-top inset. English/Chinese key-break subtitles fit, do not cover face/head. This is4-3 key break, not championship point.",
+      "sample_files": [
+        "caption-01.png",
+        "caption-02.png",
+        "caption-03.png",
+        "caption-04.png",
+        "edges-and-cues/caption-01.png"
+      ]
+    },
+    {
+      "severity": "pass_for_samples",
+      "id": "wimbledon_inset_faces_bilingual",
+      "segment_id": "wimbledon",
+      "source_label_interval": [
+        291.05,
+        295.85
+      ],
+      "detail": "3sampled inset states clear far-side Osaka and near-side Sabalenka. It is absent from winner reaction and actual Sabalenka close-up304.98. Both umpire subtitle cues fit, no bilingual stacking overlap, no face/head obstruction.",
+      "sample_files": [
+        "caption-12.png",
+        "caption-13.png",
+        "caption-14.png",
+        "caption-15.png",
+        "edges-and-cues/caption-06.png",
+        "edges-and-cues/caption-07.png"
+      ]
+    },
+    {
+      "severity": "pass_for_samples",
+      "id": "rg_interview_person_crop_and_subtitles",
+      "segment_id": "rg-quote",
+      "source_times": [
+        36.78,
+        48.3,
+        60.1
+      ],
+      "detail": "All3actual native frames fill1080x1440, Sabalenka face and crown remain visible, measured fixed person crop is consistent. English/Chinese first/middle/final cues are legible and fit their lanes without clipping or overlap; subtitles lie on desk below face.",
+      "sample_files": [
+        "caption-09.png",
+        "caption-10.png",
+        "caption-11.png"
+      ]
+    },
+    {
+      "severity": "pass_for_samples",
+      "id": "sampled_full_canvas",
+      "detail": "All22sampled native PNGs are1080x1440 and use actual native crop/canvas/font/ASS implementation. No added contain bars or visibly mismatched canvas were found in the sampled segments. This is not a claim that every video frame of all30segments has been reviewed."
+    }
+  ],
+  "limitations": [
+    "Preview only; no full film encoded, no final H.264 compression/dissolve-edge/audio mix assessed.",
+    "Sampled coverage only; exact source/film frame times come from actual25/1 manifests, not manual30fps arithmetic.",
+    "No source English/French audio was newly judged from silent PNGs. Existing source-audio packets remain separate.",
+    "No sharedspec or git files changed by this review.",
+    "Any spec/label change requires a new native sample for affected content; this review binds the recorded pre-fix spec SHA."
+  ]
+}

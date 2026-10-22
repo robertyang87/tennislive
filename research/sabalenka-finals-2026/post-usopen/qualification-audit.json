@@ -1,0 +1,49 @@
+{
+  "schema": "sabalenka.qualification-audit.v1",
+  "written_utc": "2026-10-22T03:24:09.265539+00:00",
+  "recommended_date_for_chinese_outline": "2026-09-29",
+  "recommended_sentence": "北京时间9月29日，WTA正式确认萨巴伦卡成为本届年终第二位单打入围者，连续第六年晋级。",
+  "recommended_short_label": "9月29日 · 正式确认年终资格",
+  "primary_official_x": {
+    "url": "https://x.com/WTA/status/2104949796649705950",
+    "account": "WTA",
+    "created_at_utc": "2026-09-29T15:01:54.000Z",
+    "created_at_beijing": "2026-09-29T23:01:54+08:00",
+    "exact_text": "Confirmed her place on #TheUltimateStage 🐯\n\nAryna Sabalenka has qualified for WTA Finals Indian Wells after a season highlighted by the Sunshine Double and Brisbane titles!\n\nGrab your tickets now! 👉 https://t.co/OX5flw1kI0\n\n#WTAFinals https://t.co/wpx8JfUHqM",
+    "original_public_metadata": "/workspace/sabalenka-finals-production/research/post-usopen/qualifying-official-x-syndication.json",
+    "public_metadata_url": "https://cdn.syndication.twimg.com/tweet-result?id=2104949796649705950&lang=en&token=0",
+    "official_oembed": "/workspace/sabalenka-finals-production/research/post-usopen/qualifying-official-x-oembed.json",
+    "graphic_original": "/workspace/sabalenka-finals-production/research/post-usopen/qualification-graphic.jpg"
+  },
+  "official_press_release": {
+    "url": "https://www.wtatennis.com/news/4583238/aryna-sabalenka-qualifies-for-wta-finals-indian-wells-for-sixth-consecutive-season",
+    "api_url": "https://api.wtatennis.com/content/wta/text/EN/4583238",
+    "raw_cms": "/workspace/sabalenka-finals-production/research/post-usopen/qualification.json",
+    "raw_page": "/workspace/sabalenka-finals-production/research/post-usopen/qualification-page.html",
+    "cms_date_utc": "2026-09-28T18:27:00Z",
+    "datePublished_utc": "2026-09-28T18:27:00Z",
+    "dateModified_utc": "2026-09-29T15:13:41Z",
+    "display_header": "28 Sep 2026",
+    "published_beijing": "2026-09-29T02:27:00+08:00",
+    "exact_announcement_text": "The WTA announced Tuesday that Aryna Sabalenka has become the second singles player to secure her place at the WTA Finals Indian Wells.",
+    "scope": "官方稿明确second singles qualifier / sixth consecutive season。"
+  },
+  "date_reconciliation": "网页头与CMS按UTC记9/28，其发布时间换成北京时间已是9/29；官方X独立created_at为9/29 15:01:54Z，且正文Tuesday对应2026-09-29。中文提纲明确北京时间9/29，或注明9/29 WTA官方社媒确认，均有直接一手证据。不要把网页CMS的9/28改写成9/29 UTC，也不要以9/12美网决赛日替代资格官宣。",
+  "mathematical_clinch": {
+    "date": null,
+    "status": "not_established_by_this_audit",
+    "rule": "正式公告与最早数学锁定是两件事。未取得官方最早数学锁定日或完整极限积分推演，不杜撰该日。"
+  },
+  "future_calendar_bounded_status": {
+    "latest_completed_official_match": "2026-10-14 Wuhan R2 vs Ann Li, L6-3 4-6 6-7(5)",
+    "latest_completed_source": "https://api.wtatennis.com/tennis/players/320760/matches?year=2026&type=S&page=0&pageSize=200&sort=desc",
+    "official_recent_editorial": "https://www.wtatennis.com/news/4594854/meet-your-elite-eight-a-snapshot-of-the-wta-finals-contenders",
+    "editorial_published_utc": "2026-10-19T19:18:00Z",
+    "editorial_summary": "官方前瞻称亚洲三场输了两场，将在年终前得到休整。",
+    "no_verified_claims": [
+      "尚未找到本人/赛事正式宣布退出年终或结束2026赛季。",
+      "尚未找到她2026宁波、东京、香港报名后退赛的明确官方公告；不把未参赛写成退出。"
+    ],
+    "safe_outline_ending": "10月14日武汉之后，最新已完赛记录停在这里。门票已经在手，接下来是她尚未赢过的年终总决赛。"
+  }
+}

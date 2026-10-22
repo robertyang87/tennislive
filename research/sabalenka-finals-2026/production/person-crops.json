@@ -1,0 +1,68 @@
+{
+ "sources": {
+  "us_runnerup": "https://www.youtube.com/watch?v=mDNM6E47Wqc",
+  "rg_press": "https://www.youtube.com/watch?v=CnL-mKOT9C8"
+ },
+ "segments": [
+  {
+   "source": "us_runnerup",
+   "start": 54.05,
+   "end": 62.05,
+   "frame": "person",
+   "cx": 0.427,
+   "cx_face": {
+    "samples": [
+     0.3791,
+     0.4586,
+     0.4841,
+     0.503,
+     0.4103,
+     0.3514,
+     0.4598,
+     0.4826,
+     0.3914
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-22T03:53:45+00:00",
+    "median": 0.4586,
+    "spread": 0.1516
+   }
+  },
+  {
+   "source": "rg_press",
+   "start": 36.1,
+   "end": 60.5,
+   "frame": "person",
+   "cx": 0.547,
+   "cx_face": {
+    "samples": [
+     0.5523,
+     0.5471,
+     0.548,
+     0.5414,
+     0.5477,
+     0.5522,
+     0.5489,
+     0.5489,
+     0.5454
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-22T03:53:49+00:00",
+    "median": 0.548,
+    "spread": 0.0109
+   }
+  }
+ ]
+}

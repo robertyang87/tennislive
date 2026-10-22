@@ -1,0 +1,27 @@
+{
+  "scope": [
+    "tools/build_match_reel.py",
+    "tools/render_title_card.py",
+    "tests/test_title_card.py"
+  ],
+  "focused": {
+    "command": "python -m pytest tests/test_title_card.py -q",
+    "passed": 32,
+    "seconds": 21.04
+  },
+  "evidence": [
+    "exact render_label PNG bytes embedded unchanged",
+    "native Chromium bounds x386 y151 width648; original aspect ratio within .02 px",
+    "label bottom plus24px below centered chapter heading/kicker",
+    "legacy renderer mock kwargs unchanged",
+    "generated long payload >255UTF8 bytes skips filesystem stat; real tall evidence PNG retains subtitle-overlap gate"
+  ],
+  "related_suite": {
+    "passed": 84,
+    "skipped": 1,
+    "unrelated_baseline_failures": 7,
+    "fixture_failure_corrected_in_focused_rerun": 1
+  },
+  "baseline_verification": "All seven unrelated failures reproduced with HEAD tools/render_title_card.py and tools/build_match_reel.py loaded in isolated module namespaces; missing historical es/us flags/Eala photo and stale corner-label legacy list. No gate bypass or unrelated code changes.",
+  "final_qc": false
+}

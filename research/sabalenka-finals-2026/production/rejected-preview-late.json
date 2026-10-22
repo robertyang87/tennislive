@@ -1,0 +1,115 @@
+{
+  "schema": "sabalenka.late-native-visual-review.v1",
+  "reviewed_at": "2026-10-22T04:13:45.179115+00:00",
+  "method": "Actual native preview_reel_captions.py PNGs, direct model visual inspection; no human review claimed",
+  "scope": "17 interior native sample frames only; no audio, transitions, final encoding or final-film QC",
+  "spec_file_sha256": "695c7caa2346b1b286041d2f32503b2e9d35161415d59ff972f6f1b528c96157",
+  "manifest": "/workspace/sabalenka-finals-production/native-preview-late/preview_manifest.json",
+  "contact": "/workspace/sabalenka-finals-production/native-preview-late/contact-all.jpg",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "resolved_fps": "25/1",
+  "all_requested_pngs_decoded": 17,
+  "publication_approved": false,
+  "current_visual_gate_pass": false,
+  "findings": [
+    {
+      "id": "US_INSET_OCCLUSION",
+      "blocking_for_this_visual_gate": true,
+      "sample": "caption-02.png",
+      "film_time": 259.36000000000007,
+      "source_time": 173.44,
+      "source_key": "us-final-highlights",
+      "observed": "右上字卡覆盖远端莱巴金娜的发球头部/抛球侧手臂；全景源窗不能证明右上图层安全。",
+      "rejected_source_interval": [
+        171.45,
+        175.45
+      ],
+      "verified_alternative_source_interval_at_current_card_geometry": null,
+      "why_null": "没有取得保持当前右上宽0.6图层、持续约4秒且原生画面已验证不遮击球/脸的替代窗，不编造安全时间。",
+      "minimum_real_repair": "删除本比赛段重复inset，保留紧接前面的原生事实卡和完整回合/真实反应；或主线程另定新几何后重新出实际原生样帧。"
+    },
+    {
+      "id": "BEIJING_INSET_OCCLUSION",
+      "blocking_for_this_visual_gate": true,
+      "sample": "caption-05.png",
+      "film_time": 286.94000000000005,
+      "source_time": 259.32,
+      "source_key": "beijing-r3",
+      "observed": "右上日期和人名行覆盖远端巴尔通科娃头脸；后两张移动向左时不遮挡，不能抵消起始遮挡。",
+      "rejected_source_interval": [
+        259.0,
+        266.0
+      ],
+      "verified_alternative_source_interval_at_current_card_geometry": null,
+      "why_null": "没有取得保持当前右上宽0.6图层、持续约4秒且原生画面已验证不遮击球/脸的替代窗，不编造安全时间。",
+      "minimum_real_repair": "删除本比赛段重复inset，保留紧接前面的原生事实卡和完整回合/真实反应；或主线程另定新几何后重新出实际原生样帧。"
+    },
+    {
+      "id": "WUHAN_INSET_OCCLUSION",
+      "blocking_for_this_visual_gate": true,
+      "sample": "caption-09.png",
+      "film_time": 313.6700000000001,
+      "source_time": 5.0,
+      "source_key": "wuhan-wsc-29-00",
+      "observed": "右上比分和人名行覆盖远端安·李头部和上身。",
+      "rejected_source_interval": [
+        2.8,
+        7.2
+      ],
+      "verified_alternative_source_interval_at_current_card_geometry": null,
+      "why_null": "没有取得保持当前右上宽0.6图层、持续约4秒且原生画面已验证不遮击球/脸的替代窗，不编造安全时间。",
+      "minimum_real_repair": "删除本比赛段重复inset，保留紧接前面的原生事实卡和完整回合/真实反应；或主线程另定新几何后重新出实际原生样帧。"
+    }
+  ],
+  "passes": [
+    {
+      "item": "Full-bleed match footage",
+      "result": "全部比赛样帧1080×1440铺满，无黑边/模糊补边。固定几何裁切不等于保留横向原片每个边缘人物，未额外声称。"
+    },
+    {
+      "item": "Bilingual subtitles",
+      "samples": [
+        "caption-07.png",
+        "caption-10.png",
+        "caption-12.png",
+        "caption-13.png",
+        "caption-14.png",
+        "caption-15.png",
+        "caption-16.png",
+        "caption-17.png"
+      ],
+      "result": "实际英中字幕可读，英文长句已换行，中文和底线均留在画布内；没有切底。"
+    },
+    {
+      "item": "Qualification evidence",
+      "sample": "caption-04.png",
+      "film_time": 273.0200000000001,
+      "source_asset": "assets/reel/sabalenka-finals-2026/qualification-evidence.png",
+      "source_asset_size": [
+        1440,
+        1350
+      ],
+      "result": "整张带deepblue侧边的证据图按比例放入deepblue画布；原图QUALIFIED、ARYNA SABALENKA及WTA Finals字样完整。下方中文独立，不压官宣原字。"
+    },
+    {
+      "item": "Ending",
+      "sample": "caption-11.png",
+      "film_time": 333.7900000000001,
+      "result": "主标题及当时显示的旁白字幕均清楚、不切底，品牌页脚与字幕分开。"
+    },
+    {
+      "item": "Score direction",
+      "result": "当前字卡采用萨巴伦卡视角：US4-6 7-5 2-6；北京4-6 3-6；武汉6-3 4-6 6-7(5)，与事实包一致。"
+    }
+  ],
+  "unreviewed": [
+    "最终完整成片",
+    "音频/混音/真实播报边界",
+    "全片所有未抽样帧",
+    "淡入淡出/压缩"
+  ],
+  "shared_spec_or_git_changed": false
+}

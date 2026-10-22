@@ -1,0 +1,51 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "brisbane_final",
+  "source_url": "https://www.youtube.com/watch?v=gGpXEkR5BBs",
+  "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame inspection and source-bound multiple-ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:53:24.008030+00:00",
+  "reviewed_from": 240.0,
+  "reviewed_to": 254.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 247.5,
+      "end": 251.08,
+      "en": "Mission accomplished for Aryna Sabalenka.",
+      "zh": "萨巴伦卡如愿以偿。"
+    },
+    {
+      "start": 251.5,
+      "end": 254.38,
+      "en": "She's the champion once again in Brisbane.",
+      "zh": "她再次成为布里斯班冠军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/brisbane-826bdcc342-brisbane-final-small.en.json",
+      "sha256": "826bdcc342c9ee90319c359a7f20f48fe6f8869286f8a4047f5752ecaf878616",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/brisbane-2b59913939-brisbane-final-selected-small.en.json",
+      "sha256": "2b5991393926644858967cb074bf7ff088a8d13fa1db0a11cc4115539c198ee1",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/brisbane-b8b795f625-brisbane-final-medium.en.json",
+      "sha256": "b8b795f625cd5028cff3212f59bb0e342ce1634070350a5200c1fe81d307a8c6",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/brisbane-908dc6cced-brisbane-final-turbo-diagnostic.json",
+      "sha256": "908dc6ccedb8397b0602f7055e5c94cec21fcb752bb48a3aea4918aa978b301a",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "review_scope": "Entire selected actual source window; coherent identifiable English retained with bilingual captions; machine review, not human listening.",
+  "review_notes": "Full selected window cross-checked. Medium identified Mission accomplished247.7 onward, missed by both small contexts; independent actual turbo247.5–250.98 confirms complete phrase with high-confidence words. All models agree on next champion-in-Brisbane line. Medium duplicated champion/is-standing fragments with zero-duration words and carryover Outstanding from prior point239 are rejected against small and independent turbo as decoder artifacts, not silently omitted coherent speech. Names normalized to verified Aryna Sabalenka. Prior coherent Outstanding ends239.08 before240; next scintillating-performance sentence starts256.26 after254.6."
+}

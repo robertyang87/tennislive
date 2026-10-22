@@ -1,0 +1,1033 @@
+{
+  "schema": "sabalenka.post-usopen-facts.v1",
+  "player": "Aryna Sabalenka",
+  "player_id": 320760,
+  "season": 2026,
+  "research_written_utc": "2026-10-22T03:23:37.583075+00:00",
+  "scope": "2026 US Open之后至2026-10-22 UTC；北京、武汉、资格官宣及最新赛季状态",
+  "timeline": [
+    {
+      "id": "qualified",
+      "date_for_chinese_timeline": "2026-09-29",
+      "date_label_policy": "明确北京时间9月29日，或明确“9月29日WTA官方社媒确认”。",
+      "status": "confirmed",
+      "facts": [
+        "WTA确认成为2026年终第二位单打入围者。",
+        "连续第六年入围；此前2022和2025两次亚军。"
+      ],
+      "safe_narration_zh": "北京时间9月29日，WTA正式确认：萨巴伦卡成为本届年终第二位单打入围者。",
+      "sources": [
+        "https://www.wtatennis.com/news/4583238/aryna-sabalenka-qualifies-for-wta-finals-indian-wells-for-sixth-consecutive-season",
+        "https://x.com/WTA/status/2104949796649705950"
+      ],
+      "announcement_timestamp_details": {
+        "official_x_utc": "2026-09-29T15:01:54.000Z",
+        "official_x_beijing": "2026-09-29T23:01:54+08:00",
+        "wta_article_date_utc": "2026-09-28T18:27:00Z",
+        "wta_article_date_beijing": "2026-09-29T02:27:00+08:00",
+        "wta_article_display_date": "28 Sep 2026",
+        "wta_article_modified_utc": "2026-09-29T15:13:41Z",
+        "explanation": "官方网页显示与CMS按UTC为9/28；换算北京时间为9/29。官方X的确切created_at又明确为9/29，文章正文说Tuesday也指9/29。中文片使用北京时间9/29可同时满足一手证据，不能把9/28原始CMS日期悄悄写成9/29 UTC。"
+      },
+      "mathematical_clinch": "本研究未取得或重建最早数学锁定精确日期。正式官宣不等同最早数学锁定；不用美网亚军日或排名更替日替代。"
+    },
+    {
+      "id": "beijing_opening_win",
+      "date": "2026-10-02",
+      "event": "China Open / 北京中网",
+      "round": "第二轮（首轮轮空后的首战）",
+      "result_sabalenka": "W 6-1 6-3",
+      "opponent": "Renata Zarazua",
+      "match_id": "LS063",
+      "duration": "1:02:18",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches",
+      "safe_narration_zh": "来到北京，她先以六比一、六比三击败萨拉苏亚。",
+      "limits": [
+        "不要把北京写成首战出局。"
+      ]
+    },
+    {
+      "id": "beijing_third_round_loss",
+      "date": "2026-10-04",
+      "event": "China Open / 北京中网",
+      "round": "第三轮",
+      "result_sabalenka": "L 4-6 3-6",
+      "opponent": "Nikola Bartunkova",
+      "match_id": "LS031",
+      "duration_article": "1h35m",
+      "facts": [
+        "全场五个破发点，一个也没兑现；全部出现在第一盘。",
+        "对手在第二盘没有让她拿到破发点。"
+      ],
+      "safe_narration_zh": "中网第三轮，她却以四比六、三比六输给巴尔通科娃。全场五个破发点，一个都没兑现。",
+      "sources": [
+        "https://www.wtatennis.com/news/4586336/bartunkova-stuns-sabalenka-in-beijing-third-round",
+        "https://www.wtatennis.com/tournaments/1020/beijing/2026/scores/LS031"
+      ],
+      "limits": [
+        "个人叙事说第三轮，不以32强代替轮次。",
+        "不要称对方世界第26：她是26号种子、当周世界第34。",
+        "没有本场因伤退赛的证据；这是正常完赛失利。"
+      ]
+    },
+    {
+      "id": "wuhan_media_day",
+      "date": "2026-10-11",
+      "event": "Wuhan Open",
+      "safe_fact_zh": "武汉赛前，她谈到自己在这里有过很多成功，熟悉条件，感觉温暖、像回到家。",
+      "source": "https://www.wtatennis.com/news/4590461/best-of-wuhan-media-day-top-quotes-marta-kostyuks-alex-eala-adventures",
+      "limits": [
+        "这是WTA文字引语，尚未取得本人原始讲话音视频；不把文字稿伪装为已拿到原声。",
+        "不能将赛前的轻松心境当成赛后状态。"
+      ]
+    },
+    {
+      "id": "wuhan_opening_loss",
+      "date": "2026-10-14",
+      "event": "Wuhan Open",
+      "round": "第二轮（首轮轮空后的首战）",
+      "result_sabalenka": "L 6-3 4-6 6-7(5)",
+      "opponent": "Ann Li",
+      "opponent_player_id": 326096,
+      "match_id": "LS016",
+      "duration": "2:27:35",
+      "facts": [
+        "先赢首盘，第二盘4-2领先后被逆转。",
+        "决胜盘2-5落后，挽救九个赛点，将比赛拖入抢七。",
+        "对手在第十个赛点完成胜利；不是她挽救十个赛点。",
+        "WTA记录决胜盘中途理疗师为其右腿重新缠胶带；比赛最终正常打完。"
+      ],
+      "safe_narration_zh": "武汉首战，她先赢一盘，第二盘一度四比二领先，却还是被拖入决胜盘。二比五落后，她救回九个赛点，把比赛追进抢七。但第十次机会，李吉妮没有再错过。",
+      "sources": [
+        "https://www.wtatennis.com/news/4592337/li-converts-10th-match-point-to-upset-sabalenka-earn-career-best-win-in-wuhan",
+        "https://www.wtatennis.com/tournaments/1075/wuhan/2026/scores/LS016"
+      ],
+      "injury_safe_phrase": "决胜盘中途，她请理疗师为右腿重新缠了胶带。",
+      "limits": [
+        "不能写她退出武汉、因伤退赛或没到武汉。",
+        "不能由重新贴胶带诊断撕裂、跟腱炎、伤势严重或已完全康复。",
+        "Ann Li采用仓库已登记规范名李吉妮，避免临时编新译名。",
+        "武汉为二轮，不是第三轮；对手获胜后才晋级第三轮。"
+      ]
+    },
+    {
+      "id": "current_status",
+      "cutoff_utc": "2026-10-22T03:23:37.583013+00:00",
+      "latest_completed_match": "2026-10-14 Wuhan R2 vs Ann Li",
+      "asian_swing_record": "1 win / 2 losses",
+      "facts": [
+        "本研究截至当下，官方逐场API最后一场仍是武汉对李吉妮。",
+        "WTA10月19日前瞻称她亚洲赛季三场输了两场，年终前将得到休整。",
+        "未找到本人或赛事发布的结束赛季、退出年终或退出宁波/东京的官方公告。"
+      ],
+      "safe_narration_zh": "年终门票已经拿到，亚洲赛季却只赢了一场。接下来，她要带着三座冠军和两次大满贯亚军，去冲击自己还没有赢过的年终桂冠。",
+      "sources": [
+        "https://www.wtatennis.com/news/4594854/meet-your-elite-eight-a-snapshot-of-the-wta-finals-contenders",
+        "https://api.wtatennis.com/tennis/players/320760/matches?year=2026&type=S&page=0&pageSize=200&sort=desc"
+      ],
+      "limits": [
+        "未参赛宁波、东京不等于退出；没有官宣不要创作退赛节点。",
+        "不能说2026赛季已经结束，年终尚未打。",
+        "“亚洲三战一胜二负”来自实际北京两场+武汉一场，不计首轮轮空。"
+      ]
+    }
+  ],
+  "sources": {
+    "qualification": {
+      "url": "https://www.wtatennis.com/news/4583238/aryna-sabalenka-qualifies-for-wta-finals-indian-wells-for-sixth-consecutive-season",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4583238",
+      "title": "Aryna Sabalenka qualifies for WTA Finals Indian Wells for sixth consecutive season",
+      "date_utc": "2026-09-28T18:27:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/qualification.json",
+      "official": true
+    },
+    "beijing_loss": {
+      "url": "https://www.wtatennis.com/news/4586336/bartunkova-stuns-sabalenka-in-beijing-third-round",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4586336",
+      "title": "By the numbers: Bartunkova stuns Sabalenka to reach Beijing last 16",
+      "date_utc": "2026-10-04T04:53:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/beijing-loss.json",
+      "official": true
+    },
+    "wuhan_loss": {
+      "url": "https://www.wtatennis.com/news/4592337/li-converts-10th-match-point-to-upset-sabalenka-earn-career-best-win-in-wuhan",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4592337",
+      "title": "'I was about to crash out': Li converts 10th match point to upset Sabalenka in Wuhan",
+      "date_utc": "2026-10-14T13:58:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/wuhan-loss.json",
+      "official": true
+    },
+    "finals_snapshot": {
+      "url": "https://www.wtatennis.com/news/4594854/meet-your-elite-eight-a-snapshot-of-the-wta-finals-contenders",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4594854",
+      "title": "Meet your elite eight: A snapshot of the 2026 WTA Finals field",
+      "date_utc": "2026-10-19T19:18:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/elite-eight.json",
+      "official": true
+    },
+    "wuhan_media_day": {
+      "url": "https://www.wtatennis.com/news/4590461/best-of-wuhan-media-day-top-quotes-marta-kostyuks-alex-eala-adventures",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4590461",
+      "title": "Best of Wuhan media day: Top quotes and Kostyuk, Eala's adventures",
+      "date_utc": "2026-10-11T09:48:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/wuhan-media-day.json",
+      "official": true
+    },
+    "qualification_profile": {
+      "url": "https://www.wtatennis.com/news/4583209/one-result-at-a-time-aryna-sabalenka-keeps-ending-up-at-the-wta-finals",
+      "api_url": "https://api.wtatennis.com/content/wta/text/EN/4583209",
+      "title": "One result at a time, Aryna Sabalenka keeps ending up at the WTA Finals",
+      "date_utc": "2026-09-29T09:22:00Z",
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/qualification-profile.json",
+      "official": true
+    }
+  },
+  "official_social_posts": [
+    {
+      "id": "qualification",
+      "official": true,
+      "account": "WTA",
+      "post_url": "https://x.com/WTA/status/2104949796649705950",
+      "created_utc": "2026-09-29T15:01:54.000Z",
+      "text": "Confirmed her place on #TheUltimateStage 🐯\n\nAryna Sabalenka has qualified for WTA Finals Indian Wells after a season highlighted by the Sunshine Double and Brisbane titles!\n\nGrab your tickets now! 👉 https://t.co/OX5flw1kI0\n\n#WTAFinals https://t.co/wpx8JfUHqM",
+      "media_types": [
+        "photo"
+      ],
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/qualifying-official-x-syndication.json",
+      "status": "public_official_syndication_metadata_retrieved",
+      "media_downloaded": true
+    },
+    {
+      "id": "beijing_result",
+      "official": true,
+      "account": "WTA",
+      "post_url": "https://x.com/WTA/status/2106610894926934297",
+      "created_utc": "2026-10-04T05:02:30.000Z",
+      "text": "She gets it done 🔥\n\nNikola Bartunkova secures the win of her career defeating No.2 seed Sabalenka in straight sets!\n\n#ChinaOpen https://t.co/2NHzzCGrKT",
+      "media_types": [
+        "video"
+      ],
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/beijing-official-x.json",
+      "status": "public_official_syndication_metadata_retrieved",
+      "media_downloaded": false
+    },
+    {
+      "id": "wuhan_result",
+      "official": true,
+      "account": "WTA",
+      "post_url": "https://x.com/WTA/status/2110369280667640108",
+      "created_utc": "2026-10-14T13:56:59.000Z",
+      "text": "THE BIGGEST WIN OF HER CAREER 💪\n\nAnn Li defeats the No.1 seed in Wuhan!\n\n#dongfengvoyahwuhanopen https://t.co/UXmnwsiJDK",
+      "media_types": [
+        "video"
+      ],
+      "raw_file": "/workspace/sabalenka-finals-production/research/post-usopen/wuhan-official-x.json",
+      "status": "public_official_syndication_metadata_retrieved",
+      "media_downloaded": false
+    }
+  ],
+  "official_media_candidates": [
+    {
+      "id": "qualification_video",
+      "official": true,
+      "publisher": "WTA",
+      "type": "video",
+      "cms_id": 4583233,
+      "brightcove_account": "6041795521001",
+      "brightcove_media_id": "6405745478112",
+      "duration_seconds": 33,
+      "page_url": "https://www.wtatennis.com/videos/4583233/sabalenka-qualification-v2-16x9",
+      "title": "Aryna Sabalenka has unfinished business at the WTA Finals",
+      "metadata": {
+        "id": 4583233,
+        "accountId": 29,
+        "type": "video",
+        "title": "Aryna Sabalenka has unfinished business at the WTA Finals",
+        "description": null,
+        "date": "2026-09-28T18:17:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1790693644102,
+        "publishTo": 0,
+        "tags": [
+          {
+            "id": 4996,
+            "label": "topic:wta-finals"
+          },
+          {
+            "id": 4977,
+            "label": "videos"
+          }
+        ],
+        "platform": "BRIGHTCOVE",
+        "language": "en",
+        "additionalInfo": {
+          "deliveryType": "dynamic_origin",
+          "bc_thumbnail_url": "https://cf-images.us-east-1.prod.boltdns.net/v1/jit/6041795521001/3fdcd051-16c8-4af4-8aad-bfaddb026601/main/1280x720/16s149ms/match/image.jpg"
+        },
+        "canonicalUrl": "",
+        "references": [
+          {
+            "label": null,
+            "id": 320760,
+            "type": "TENNIS_PLAYER",
+            "sid": "320760"
+          },
+          {
+            "label": null,
+            "id": 808,
+            "type": "TENNIS_TOURNAMENTGROUP",
+            "sid": "808"
+          }
+        ],
+        "related": [],
+        "metadata": {},
+        "titleTranslations": null,
+        "lastModified": 1790693644388,
+        "titleUrlSegment": "sabalenka-qualification-v2-16x9",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "thumbnailUrl": "https://photoresources.wtatennis.com/photo-resources/2026/09/28/9a496d06-5136-4020-8e61-e8352e21ad19/vPoY3EA5.jpg?width=1280",
+        "duration": 33,
+        "variants": [
+          {
+            "aspectRatio": 0.0,
+            "displayAspectRatio": null,
+            "bitRate": 0,
+            "codec": null,
+            "duration": 33,
+            "format": null,
+            "frameRate": 0.0,
+            "height": 0,
+            "mediaId": "6405745478112",
+            "tags": [],
+            "width": 0
+          }
+        ],
+        "thumbnail": {
+          "id": 4583232,
+          "accountId": 29,
+          "type": "photo",
+          "title": "Sabalenka qualification V2 16x9",
+          "description": null,
+          "date": "2026-09-28T18:16:45Z",
+          "location": "",
+          "coordinates": null,
+          "commentsOn": false,
+          "copyright": null,
+          "publishFrom": 1790619405997,
+          "publishTo": 0,
+          "tags": [],
+          "platform": "BRIGHTCOVE",
+          "language": "en",
+          "additionalInfo": {},
+          "canonicalUrl": "",
+          "references": [],
+          "related": [],
+          "metadata": null,
+          "titleTranslations": null,
+          "lastModified": 1790619445149,
+          "titleUrlSegment": "sabalenka-qualification-v2-16x9",
+          "allowedUserGroups": [],
+          "allowedTerritories": [],
+          "subtitle": null,
+          "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/09/28/9a496d06-5136-4020-8e61-e8352e21ad19/vPoY3EA5.jpg",
+          "originalDetails": {
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.7777778
+          },
+          "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/09/28/9a496d06-5136-4020-8e61-e8352e21ad19/vPoY3EA5.jpg"
+        },
+        "mediaId": "6405745478112",
+        "mediaGuid": "6405745478112",
+        "subtitle": null,
+        "closedCaptioned": false,
+        "hotlinkUrl": null,
+        "views": 0,
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/09/28/9a496d06-5136-4020-8e61-e8352e21ad19/vPoY3EA5.jpg",
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/09/28/9a496d06-5136-4020-8e61-e8352e21ad19/vPoY3EA5.jpg"
+      },
+      "status": "official_metadata_confirmed_not_downloaded_not_viewed",
+      "warning": "尚未观看，不提供虚构切点或本人讲话逐字稿；宣发混剪不能冒充某场实际比赛。"
+    },
+    {
+      "id": "beijing_highlights",
+      "official": true,
+      "publisher": "WTA",
+      "type": "video",
+      "cms_id": 4586350,
+      "brightcove_account": "6041795521001",
+      "brightcove_media_id": "6406199305112",
+      "duration_seconds": 286,
+      "page_url": "https://www.wtatennis.com/videos/4586350/bartunkova-upsets-sabalenka-in-beijing-for-first-career-top-3-win",
+      "title": "Bartunkova upsets Sabalenka in Beijing for first career Top 3 win",
+      "metadata": {
+        "id": 4586350,
+        "accountId": 29,
+        "type": "video",
+        "title": "Bartunkova upsets Sabalenka in Beijing for first career Top 3 win",
+        "description": null,
+        "date": "2026-10-04T05:52:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1791093046259,
+        "publishTo": 0,
+        "tags": [
+          {
+            "id": 4976,
+            "label": "topic:highlights"
+          },
+          {
+            "id": 5003,
+            "label": "singles"
+          },
+          {
+            "id": 4977,
+            "label": "videos"
+          }
+        ],
+        "platform": "BRIGHTCOVE",
+        "language": "en",
+        "additionalInfo": {
+          "deliveryType": "dynamic_origin",
+          "bc_thumbnail_url": "https://cf-images.us-east-1.prod.boltdns.net/v1/jit/6041795521001/03960468-f93d-4858-ad91-0c63a906e745/main/1280x720/2m22s837ms/match/image.jpg"
+        },
+        "canonicalUrl": "",
+        "references": [
+          {
+            "label": null,
+            "id": 320760,
+            "type": "TENNIS_PLAYER",
+            "sid": "320760"
+          },
+          {
+            "label": null,
+            "id": 330364,
+            "type": "TENNIS_PLAYER",
+            "sid": "330364"
+          },
+          {
+            "label": null,
+            "id": 1020,
+            "type": "TENNIS_TOURNAMENTGROUP",
+            "sid": "1020"
+          }
+        ],
+        "related": [],
+        "metadata": {},
+        "titleTranslations": null,
+        "lastModified": 1791095778344,
+        "titleUrlSegment": "bartunkova-upsets-sabalenka-in-beijing-for-first-career-top-3-win",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "thumbnailUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/04/12dcbbda-4455-45f4-9f4a-a6f5c1de21b1/Bartunkova-R3-FL.jpg?width=1280",
+        "duration": 286,
+        "variants": [
+          {
+            "aspectRatio": 0.0,
+            "displayAspectRatio": null,
+            "bitRate": 0,
+            "codec": null,
+            "duration": 286,
+            "format": null,
+            "frameRate": 0.0,
+            "height": 0,
+            "mediaId": "6406199305112",
+            "tags": [],
+            "width": 0
+          }
+        ],
+        "thumbnail": {
+          "id": 4586361,
+          "accountId": 29,
+          "type": "photo",
+          "title": "Nikola Bartunkova, Beijing 2026",
+          "description": null,
+          "date": "2026-10-04T06:34:00Z",
+          "location": null,
+          "coordinates": [
+            0.0,
+            0.0
+          ],
+          "commentsOn": false,
+          "copyright": null,
+          "publishFrom": 1791095671368,
+          "publishTo": 0,
+          "tags": [],
+          "platform": "PULSE_CMS",
+          "language": "en",
+          "additionalInfo": {},
+          "canonicalUrl": "",
+          "references": [
+            {
+              "label": null,
+              "id": 330364,
+              "type": "TENNIS_PLAYER",
+              "sid": "330364"
+            },
+            {
+              "label": null,
+              "id": 1020,
+              "type": "TENNIS_TOURNAMENTGROUP",
+              "sid": "1020"
+            }
+          ],
+          "related": [],
+          "metadata": {
+            "credit": "Fred Lee/Getty Images"
+          },
+          "titleTranslations": null,
+          "lastModified": 1791095760397,
+          "titleUrlSegment": "bartunkova-r3-fl",
+          "visibilityOrder": [],
+          "allowedUserGroups": [],
+          "allowedTerritories": [],
+          "subtitle": null,
+          "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/04/12dcbbda-4455-45f4-9f4a-a6f5c1de21b1/Bartunkova-R3-FL.jpg",
+          "originalDetails": {
+            "width": 6000,
+            "height": 4000,
+            "aspectRatio": 1.5
+          },
+          "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/04/bf49af00-22b9-4207-8808-eb7c81df50ed/Bartunkova-R3-FL.jpg"
+        },
+        "mediaId": "6406199305112",
+        "mediaGuid": "6406199305112",
+        "subtitle": null,
+        "closedCaptioned": false,
+        "hotlinkUrl": null,
+        "views": 0,
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/04/bf49af00-22b9-4207-8808-eb7c81df50ed/Bartunkova-R3-FL.jpg",
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/04/12dcbbda-4455-45f4-9f4a-a6f5c1de21b1/Bartunkova-R3-FL.jpg"
+      },
+      "status": "official_metadata_confirmed_not_downloaded_not_viewed",
+      "warning": "尚未观看，不提供虚构切点或本人讲话逐字稿；宣发混剪不能冒充某场实际比赛。"
+    },
+    {
+      "id": "wuhan_highlights",
+      "official": true,
+      "publisher": "WTA",
+      "type": "video",
+      "cms_id": 4592365,
+      "brightcove_account": "6041795521001",
+      "brightcove_media_id": "6406853454112",
+      "duration_seconds": 391,
+      "page_url": "https://www.wtatennis.com/videos/4592365/li-converts-10th-match-point-to-complete-sabalenka-upset-in-wuhan",
+      "title": "Finally! On 10th match point, Li completes upset of Sabalenka at the Wuhan Open",
+      "metadata": {
+        "id": 4592365,
+        "accountId": 29,
+        "type": "video",
+        "title": "Finally! On 10th match point, Li completes upset of Sabalenka at the Wuhan Open",
+        "description": null,
+        "date": "2026-10-14T14:24:00Z",
+        "location": null,
+        "coordinates": [
+          0.0,
+          0.0
+        ],
+        "commentsOn": false,
+        "copyright": null,
+        "publishFrom": 1791987736400,
+        "publishTo": 0,
+        "tags": [
+          {
+            "id": 4976,
+            "label": "topic:highlights"
+          },
+          {
+            "id": 5003,
+            "label": "singles"
+          },
+          {
+            "id": 4977,
+            "label": "videos"
+          }
+        ],
+        "platform": "BRIGHTCOVE",
+        "language": "en",
+        "additionalInfo": {
+          "deliveryType": "dynamic_origin",
+          "bc_thumbnail_url": "https://cf-images.us-east-1.prod.boltdns.net/v1/jit/6041795521001/adb64484-d4ae-400d-b6e6-39dc60429abb/main/1280x720/3m15s104ms/match/image.jpg"
+        },
+        "canonicalUrl": "",
+        "references": [
+          {
+            "label": null,
+            "id": 320760,
+            "type": "TENNIS_PLAYER",
+            "sid": "320760"
+          },
+          {
+            "label": null,
+            "id": 326096,
+            "type": "TENNIS_PLAYER",
+            "sid": "326096"
+          },
+          {
+            "label": null,
+            "id": 1075,
+            "type": "TENNIS_TOURNAMENTGROUP",
+            "sid": "1075"
+          }
+        ],
+        "related": [],
+        "metadata": {},
+        "titleTranslations": null,
+        "lastModified": 1791988249151,
+        "titleUrlSegment": "li-converts-10th-match-point-to-complete-sabalenka-upset-in-wuhan",
+        "visibilityOrder": [],
+        "allowedUserGroups": [],
+        "allowedTerritories": [],
+        "thumbnailUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/14/4dda732e-4b74-4cf6-af0e-c514dc9bf950/Ann_Li_-_Dongfeng_Voyah_Wuhan_Open_-_Day_3-DSC_0141A.jpg?width=1280",
+        "duration": 391,
+        "variants": [
+          {
+            "aspectRatio": 0.0,
+            "displayAspectRatio": null,
+            "bitRate": 0,
+            "codec": null,
+            "duration": 391,
+            "format": null,
+            "frameRate": 0.0,
+            "height": 0,
+            "mediaId": "6406853454112",
+            "tags": [],
+            "width": 0
+          }
+        ],
+        "thumbnail": {
+          "id": 4592361,
+          "accountId": 29,
+          "type": "photo",
+          "title": "Ann Li, Wuhan 2026",
+          "description": null,
+          "date": "2026-10-14T14:20:00Z",
+          "location": null,
+          "coordinates": [
+            0.0,
+            0.0
+          ],
+          "commentsOn": false,
+          "copyright": null,
+          "publishFrom": 1791987657215,
+          "publishTo": 0,
+          "tags": [],
+          "platform": "PULSE_CMS",
+          "language": "en",
+          "additionalInfo": {},
+          "canonicalUrl": "",
+          "references": [
+            {
+              "label": null,
+              "id": 1075,
+              "type": "TENNIS_TOURNAMENTGROUP",
+              "sid": "1075"
+            },
+            {
+              "label": null,
+              "id": 326096,
+              "type": "TENNIS_PLAYER",
+              "sid": "326096"
+            }
+          ],
+          "related": [],
+          "metadata": {
+            "credit": "Jimmie48/WTA"
+          },
+          "titleTranslations": null,
+          "lastModified": 1791987695071,
+          "titleUrlSegment": "ann_li_-_dongfeng_voyah_wuhan_open_-_day_3-dsc_0141a",
+          "visibilityOrder": [],
+          "allowedUserGroups": [],
+          "allowedTerritories": [],
+          "subtitle": null,
+          "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/14/4dda732e-4b74-4cf6-af0e-c514dc9bf950/Ann_Li_-_Dongfeng_Voyah_Wuhan_Open_-_Day_3-DSC_0141A.jpg",
+          "originalDetails": {
+            "width": 4700,
+            "height": 3196,
+            "aspectRatio": 1.4705882
+          },
+          "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/14/cf02df2f-c9e2-4fea-98b6-f117a67d0c24/Ann_Li_-_Dongfeng_Voyah_Wuhan_Open_-_Day_3-DSC_0141A.jpg"
+        },
+        "mediaId": "6406853454112",
+        "mediaGuid": "6406853454112",
+        "subtitle": null,
+        "closedCaptioned": false,
+        "hotlinkUrl": null,
+        "views": 0,
+        "imageUrl": "https://photoresources.wtatennis.com/wta/photo/2026/10/14/cf02df2f-c9e2-4fea-98b6-f117a67d0c24/Ann_Li_-_Dongfeng_Voyah_Wuhan_Open_-_Day_3-DSC_0141A.jpg",
+        "onDemandUrl": "https://photoresources.wtatennis.com/photo-resources/2026/10/14/4dda732e-4b74-4cf6-af0e-c514dc9bf950/Ann_Li_-_Dongfeng_Voyah_Wuhan_Open_-_Day_3-DSC_0141A.jpg"
+      },
+      "status": "official_metadata_confirmed_not_downloaded_not_viewed",
+      "warning": "尚未观看，不提供虚构切点或本人讲话逐字稿；宣发混剪不能冒充某场实际比赛。"
+    },
+    {
+      "id": "qualification_official_graphic",
+      "official": true,
+      "publisher": "WTA",
+      "type": "photo",
+      "post_url": "https://x.com/WTA/status/2104949796649705950",
+      "image_url": "https://pbs.twimg.com/media/HTZFELMXsAAUA9Q.jpg?name=orig",
+      "width": 1080,
+      "height": 1350,
+      "local_file": "/workspace/sabalenka-finals-production/research/post-usopen/qualification-graphic.jpg",
+      "status": "original_official_graphic_downloaded_not_visually_qc",
+      "context": "2026年终入围宣发图，不是比赛实拍封面。"
+    }
+  ],
+  "post_usopen_official_matches": [
+    {
+      "event": "beijing",
+      "official_match": {
+        "BinPacketBase64": null,
+        "CourtID": 1,
+        "DateSeq": 5,
+        "DrawLevelType": "M",
+        "DrawMatchType": "S",
+        "EntryTypeA": "",
+        "EntryTypeB": "",
+        "EventID": "1020",
+        "EventYear": 2026,
+        "LastUpdated": "2026-10-02T12:11:41.943+00:00",
+        "MatchID": "LS063",
+        "MatchState": "F",
+        "MatchTimeStamp": "2026-10-02T10:46:52.2+00:00",
+        "MatchTimeTotal": "01:02:18",
+        "Message": "{11|A. Sabalenka}",
+        "NumSets": 2,
+        "PlayerCountryA": "MEX",
+        "PlayerCountryA2": "",
+        "PlayerCountryB": "BLR",
+        "PlayerCountryB2": "",
+        "PlayerIDA": "320716",
+        "PlayerIDA2": "",
+        "PlayerIDB": "320760",
+        "PlayerIDB2": "",
+        "PlayerNameFirstA": "Renata",
+        "PlayerNameFirstA2": "",
+        "PlayerNameFirstB": "Aryna",
+        "PlayerNameFirstB2": "",
+        "PlayerNameLastA": "Zarazua",
+        "PlayerNameLastA2": "",
+        "PlayerNameLastB": "Sabalenka",
+        "PlayerNameLastB2": "",
+        "PointA": "",
+        "PointB": "",
+        "ResultString": "[2]A. Sabalenka d R. Zarazua 6-1,6-3",
+        "RoundID": "2",
+        "ScoreSet1A": "1",
+        "ScoreSet1B": "6",
+        "ScoreSet2A": "3",
+        "ScoreSet2B": "6",
+        "ScoreSet3A": "",
+        "ScoreSet3B": "",
+        "ScoreSet4A": "",
+        "ScoreSet4B": "",
+        "ScoreSet5A": "",
+        "ScoreSet5B": "",
+        "ScoreString": "6-1,6-3",
+        "ScoreSys": "1",
+        "ScoreTbSet1": "",
+        "ScoreTbSet2": "",
+        "ScoreTbSet3": "",
+        "ScoreTbSet4": "",
+        "SeedA": "",
+        "SeedB": "2",
+        "Serve": "",
+        "Winner": "3"
+      },
+      "source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches"
+    },
+    {
+      "event": "beijing",
+      "official_match": {
+        "BinPacketBase64": null,
+        "CourtID": 1,
+        "DateSeq": 7,
+        "DrawLevelType": "M",
+        "DrawMatchType": "S",
+        "EntryTypeA": "",
+        "EntryTypeB": "",
+        "EventID": "1020",
+        "EventYear": 2026,
+        "LastUpdated": "2026-10-04T04:44:56.043+00:00",
+        "MatchID": "LS031",
+        "MatchState": "F",
+        "MatchTimeStamp": "2026-10-04T02:47:53.627+00:00",
+        "MatchTimeTotal": "01:35:13",
+        "Message": "{11|N. Bartunkova}",
+        "NumSets": 2,
+        "PlayerCountryA": "CZE",
+        "PlayerCountryA2": "",
+        "PlayerCountryB": "BLR",
+        "PlayerCountryB2": "",
+        "PlayerIDA": "330364",
+        "PlayerIDA2": "",
+        "PlayerIDB": "320760",
+        "PlayerIDB2": "",
+        "PlayerNameFirstA": "Nikola",
+        "PlayerNameFirstA2": "",
+        "PlayerNameFirstB": "Aryna",
+        "PlayerNameFirstB2": "",
+        "PlayerNameLastA": "Bartunkova",
+        "PlayerNameLastA2": "",
+        "PlayerNameLastB": "Sabalenka",
+        "PlayerNameLastB2": "",
+        "PointA": "",
+        "PointB": "",
+        "ResultString": "[26]N. Bartunkova d [2]A. Sabalenka 6-4,6-3",
+        "RoundID": "3",
+        "ScoreSet1A": "6",
+        "ScoreSet1B": "4",
+        "ScoreSet2A": "6",
+        "ScoreSet2B": "3",
+        "ScoreSet3A": "",
+        "ScoreSet3B": "",
+        "ScoreSet4A": "",
+        "ScoreSet4B": "",
+        "ScoreSet5A": "",
+        "ScoreSet5B": "",
+        "ScoreString": "6-4,6-3",
+        "ScoreSys": "1",
+        "ScoreTbSet1": "",
+        "ScoreTbSet2": "",
+        "ScoreTbSet3": "",
+        "ScoreTbSet4": "",
+        "SeedA": "26",
+        "SeedB": "2",
+        "Serve": "",
+        "Winner": "2"
+      },
+      "source": "https://api.wtatennis.com/tennis/tournaments/1020/2026/matches"
+    },
+    {
+      "event": "wuhan",
+      "official_match": {
+        "BinPacketBase64": null,
+        "CourtID": 1,
+        "DateSeq": 5,
+        "DrawLevelType": "M",
+        "DrawMatchType": "S",
+        "EntryTypeA": "",
+        "EntryTypeB": "",
+        "EventID": "1075",
+        "EventYear": 2026,
+        "LastUpdated": "2026-10-14T13:52:53.45+00:00",
+        "MatchID": "LS016",
+        "MatchState": "F",
+        "MatchTimeStamp": "2026-10-14T10:59:22.64+00:00",
+        "MatchTimeTotal": "02:27:35",
+        "Message": "{11|A. Li}",
+        "NumSets": 3,
+        "PlayerCountryA": "BLR",
+        "PlayerCountryA2": "",
+        "PlayerCountryB": "USA",
+        "PlayerCountryB2": "",
+        "PlayerIDA": "320760",
+        "PlayerIDA2": "",
+        "PlayerIDB": "326096",
+        "PlayerIDB2": "",
+        "PlayerNameFirstA": "Aryna",
+        "PlayerNameFirstA2": "",
+        "PlayerNameFirstB": "Ann",
+        "PlayerNameFirstB2": "",
+        "PlayerNameLastA": "Sabalenka",
+        "PlayerNameLastA2": "",
+        "PlayerNameLastB": "Li",
+        "PlayerNameLastB2": "",
+        "PointA": "",
+        "PointB": "",
+        "ResultString": "A. Li d [1]A. Sabalenka 3-6,6-4,7-6(5)",
+        "RoundID": "2",
+        "ScoreSet1A": "6",
+        "ScoreSet1B": "3",
+        "ScoreSet2A": "4",
+        "ScoreSet2B": "6",
+        "ScoreSet3A": "6",
+        "ScoreSet3B": "7",
+        "ScoreSet4A": "",
+        "ScoreSet4B": "",
+        "ScoreSet5A": "",
+        "ScoreSet5B": "",
+        "ScoreString": "3-6,6-4,7-6(5)",
+        "ScoreSys": "1",
+        "ScoreTbSet1": "",
+        "ScoreTbSet2": "",
+        "ScoreTbSet3": "5",
+        "ScoreTbSet4": "",
+        "SeedA": "1",
+        "SeedB": "",
+        "Serve": "",
+        "Winner": "3"
+      },
+      "source": "https://api.wtatennis.com/tennis/tournaments/1075/2026/matches"
+    }
+  ],
+  "record_discrepancy_audit": {
+    "computed_latest": "47-11",
+    "matches_played": 58,
+    "raw_entries": 68,
+    "byes": 10,
+    "reason_codes": [
+      "B",
+      "W"
+    ],
+    "official_profile_still_displays": "47 / 10",
+    "official_profile_file": "/workspace/sabalenka-finals-production/research/post-usopen/player-stats.html",
+    "official_profile_url": "https://www.wtatennis.com/players/320760/aryna-sabalenka",
+    "independent_official_pre_wuhan_evidence": {
+      "url": "https://wtafiles.wtatennis.com/pdf/matchnotes/2026/1075_3.pdf",
+      "local_pdf": "/workspace/sabalenka-finals-production/research/post-usopen/wuhan-day3-notes.pdf",
+      "local_text": "/workspace/sabalenka-finals-production/research/post-usopen/wuhan-day3-notes.txt",
+      "relevant_text": "47-10 / 415-146 YTD / Career W-L",
+      "meaning": "10/14对Ann Li赛前的官方match notes就是47-10。"
+    },
+    "reconciliation": "最新逐场API去除10条BYE后为47胜11负；排除武汉恰好47胜10负。武汉官宣赛报与赛果API明确增加一负，故当前汇总页显示的47-10与武汉前完全一致，差的恰是武汉这一负。没有walkover/retirement口径差：68条仅W与B两种reason。",
+    "confidence": "逐场47-11为确证；汇总页为何后台未更新不能从公开资料证实，但数值表现为遗漏武汉赛后一负。",
+    "production_rule": "可使用“按官方逐场赛果统计，截至武汉赛后47胜11负”并保留内部冲突说明；若不想在旁白承载解释，片中可只说三冠/五决赛/亚洲1-2，不引用47-10。",
+    "eleven_losses": [
+      {
+        "event": "WUHAN",
+        "event_id": "1075",
+        "round": "R32",
+        "opponent": "Ann Li",
+        "winner_perspective_score": "3-6  6-4  7-6(5)",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "BEIJING",
+        "event_id": "1020",
+        "round": "R32",
+        "opponent": "Nikola Bartunkova",
+        "winner_perspective_score": "6-4  6-3",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "US OPEN",
+        "event_id": "905",
+        "round": "F",
+        "opponent": "Elena Rybakina",
+        "winner_perspective_score": "6-4  5-7  6-2",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "CINCINNATI",
+        "event_id": "1017",
+        "round": "R16",
+        "opponent": "Sara Bejlek",
+        "winner_perspective_score": "7-6(7)  6-4",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "TORONTO",
+        "event_id": "806",
+        "round": "R16",
+        "opponent": "Ekaterina Alexandrova",
+        "winner_perspective_score": "7-6(3)  4-6  6-4",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "WIMBLEDON",
+        "event_id": "904",
+        "round": "R16",
+        "opponent": "Naomi Osaka",
+        "winner_perspective_score": "6-2  7-6(2)",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "BERLIN",
+        "event_id": "2012",
+        "round": "S",
+        "opponent": "Jessica Pegula",
+        "winner_perspective_score": "6-4  6-7(4)  6-0",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "ROLAND GARROS",
+        "event_id": "903",
+        "round": "Q",
+        "opponent": "Diana Shnaider",
+        "winner_perspective_score": "3-6  7-5  6-0",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "ROME",
+        "event_id": "709",
+        "round": "R32",
+        "opponent": "Sorana Cirstea",
+        "winner_perspective_score": "2-6  6-3  7-5",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "MADRID 1000",
+        "event_id": "1038",
+        "round": "Q",
+        "opponent": "Hailey Baptiste",
+        "winner_perspective_score": "2-6  6-2  7-6(6)",
+        "reason_code": "W",
+        "winner": 2
+      },
+      {
+        "event": "AUSTRALIAN OPEN",
+        "event_id": "901",
+        "round": "F",
+        "opponent": "Elena Rybakina",
+        "winner_perspective_score": "6-4  4-6  6-4",
+        "reason_code": "W",
+        "winner": 2
+      }
+    ],
+    "gross_points_once_per_tournament": 6560,
+    "note": "6560也与当前Race网页一致；points_champ_1在每场重复，是本站最终分，不要逐场累加。"
+  },
+  "social_search_log": {
+    "x": {
+      "searched": [
+        "WTA official qualification",
+        "WTA Beijing/Wuhan match results",
+        "@arynasabalenka Wuhan/withdrawal Oct2026"
+      ],
+      "results": "取得WTA资格、北京与武汉三个官方帖的公开syndication原始JSON，包含created_at、账号、媒体类型。未找到本人结束赛季或退出年终声明。"
+    },
+    "instagram": {
+      "searched": [
+        "@arynasabalenka Oct2026 Wuhan injury",
+        "WTA official qualification September29",
+        "@wuhanopenwta official press items"
+      ],
+      "results": "WTA武汉媒体日页嵌Instagram是Kostyuk/Eala活动而非萨巴伦卡声明，不冒充其本人片段。没有取得萨巴伦卡本人退赛/结束赛季原始Instagram帖子。"
+    },
+    "audience_policy": "素材缺口只记内部，不在旁白解释官方集锦有没有收录。"
+  },
+  "bounded_status_claims": [
+    "萨巴伦卡北京第三轮出局、武汉第二轮首战出局，均完成比赛。",
+    "右腿重新贴胶带是WTA已记载行为；不扩展为具体诊断。",
+    "年终官宣可明确北京时间9/29或WTA9/29官方社媒；CMS原始日期另存，不混淆。",
+    "数学最早锁定日未证实，不编。",
+    "47-10为仍在线的官方汇总值，但已落后于武汉赛后逐场事实；成片不沿用。"
+  ],
+  "no_shared_spec_or_git_mutation": true
+}

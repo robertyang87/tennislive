@@ -1,0 +1,84 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+  "source_sha256": "2583a83d9c85843e33e38b8df9664d73a2dbe66ba565f637eae334be43b2ca20",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual small.en + medium.en source-bound ASR cross-check and sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T03:48:54.280395+00:00",
+  "reviewed_from": 169.0,
+  "reviewed_to": 182.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 175.12,
+      "end": 177.82,
+      "en": "Game, set, match for Rybakina.",
+      "zh": "比赛结束，莱巴金娜获胜。"
+    },
+    {
+      "start": 178.76,
+      "end": 182.3,
+      "en": "Two sets to one, 6-4, 5-7, 6-2.",
+      "zh": "二比一，六比四、五比七、六比二。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-4b41a0aa66-us-final-small.en.json",
+      "sha256": "4b41a0aa66a60b7291f77ace7e6f4363d09a3f2fc9b1e959c10371948753cb3e",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-dfbf30896b-us-final-medium.en.json",
+      "sha256": "dfbf30896b59f15fbfd26455f4748e258861faf6b169b9c7be72244304c14dba",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-7df5bead20-us-exact-small.en.json",
+      "sha256": "7df5bead20b2a9d5be386589e6a78dd342ea9c2b20a260b00c8b4867bb3a43ea",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-a5bb55512d-us-exact-medium.en.json",
+      "sha256": "a5bb55512d8300404fcc07cb00852553b312dabf33171941c5c5fb6f63651b6e",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-aea28976fd-us-left-small.en.json",
+      "sha256": "aea28976fd0fe31389769477ac95ee4da38d1a5678a505cb11a08dee91c50595",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-5c39e4db8e-us-left-medium.en.json",
+      "sha256": "5c39e4db8e812d7ce0fb915df4fed807bfabd09b2785f73329f3608e68689627",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-d61750cf47-us-right-small.en.json",
+      "sha256": "d61750cf4777794333631fb3d92586644c4d088ecf82500687f505e1ef050f3c",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-ca3287d273-us-right-medium.en.json",
+      "sha256": "ca3287d273316bb07800bae8d2055445fe809572a06bca0b0dc250e234be9bdf",
+      "model": null
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-1beff7e28a-us-final-third-model-existing-diagnostic.json",
+      "sha256": "1beff7e28a3a721dc1fe993164033a96b73648117047286bfdb8bd967ed4b395",
+      "model": null
+    }
+  ],
+  "review_notes": "Broad167–201 ASR contaminated court call with the separate commentator sentence after182.58. Exact169–182.5 rerun with proper-name-only prompt gives small Game7forRybakina,who sets..., medium Game set match for Rybakina,who sets..., and score6-4,5-7,6-2. Both actual models identify winner and score; independent pre-existing source-SHA-matched turbo169–187 resolves Game set match for Rybakina / Two sets to one, same6-4,5-7,6-2. Normalize phonetic7→set/match and who sets the one→Two sets to one based on medium+turbo and direct score context; no invented player quote. End182.5 is after scorecall182.30 with0.20s margin, before next distinct commentary at182.58, which is not included. Channel/bandpass WAVs only used diagnostically; selected source retains original stereo and speed. No human listening claimed.",
+  "source_packet_sha256": "b6f3c264c3e34d97b9b8c510d563a17e83656330ed16bf4862cb35700ffb189b",
+  "translation_edits": [
+    {
+      "start": 178.76,
+      "end": 182.3,
+      "en": "Two sets to one, 6-4, 5-7, 6-2.",
+      "from_zh": "总盘分二比一：六比四、五比七、六比二。",
+      "to_zh": "二比一，六比四、五比七、六比二。",
+      "why": "精简中文报分前的冗余“总盘分”，保留全部比分含义，确保单行不溢出；英语原句、时码、音频字节不变。"
+    }
+  ]
+}

@@ -1,0 +1,524 @@
+{
+  "schema": "tennislive.source-reaction-crop-audit.v1",
+  "source": "indian-wells-final",
+  "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+  "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+  "source_fps": "25/1",
+  "selected_source_interval": [
+    245.6,
+    262.0
+  ],
+  "complete_fixed_crop_repair_achieved": false,
+  "reason": "Only loser reaction passes native face evidence. Winner reaction shot1 detected1/9 due racket/hands/head pose; shot2 face spread0.2951 exceeds native max0.2619 and diagnostic fixed crop still loses face edges. No fabricated face evidence or arbitrary split inside continuous shot.",
+  "real_transitions": [
+    {
+      "source_time": 251.28,
+      "type": "hard_cut",
+      "before": "court complete final point",
+      "after": "Sabalenka racket/head-back reaction"
+    },
+    {
+      "source_time": 255.28,
+      "type": "native_one_frame_dissolve",
+      "evidence": "255.24 previous angle;255.28 blended;255.32 new angle. Shot boundary used at first blended frame, not a claimed hard cut."
+    },
+    {
+      "source_time": 260.08,
+      "type": "hard_cut",
+      "before": "Sabalenka front reaction",
+      "after": "Rybakina loser reaction"
+    }
+  ],
+  "court_window": {
+    "start": 245.6,
+    "end": 251.28,
+    "cx": 0.5,
+    "frame": "court",
+    "fit": "crop",
+    "track": false
+  },
+  "reaction_measurements": [
+    {
+      "key": "sab-reaction-one",
+      "start": 251.28,
+      "end": 255.28,
+      "cx": 0.5,
+      "frame": "court",
+      "cx_face": {
+        "samples": [
+          0.2063
+        ],
+        "frames": 9,
+        "detected": 1,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T04:20:17+00:00",
+        "median": 0.2063,
+        "spread": 0.0
+      },
+      "accepted_by_native_policy": false,
+      "diagnostic_best_fixed_cx": 0.211,
+      "sample_evidence": [
+        {
+          "index": 1,
+          "requested_source_time": 251.58,
+          "face_bbox": [
+            232.35,
+            230.35,
+            559.94,
+            425.74
+          ],
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-01-crop.jpg"
+        },
+        {
+          "index": 2,
+          "requested_source_time": 252.00500000000002,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-02-crop.jpg"
+        },
+        {
+          "index": 3,
+          "requested_source_time": 252.43,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-03-crop.jpg"
+        },
+        {
+          "index": 4,
+          "requested_source_time": 252.85500000000002,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-04-crop.jpg"
+        },
+        {
+          "index": 5,
+          "requested_source_time": 253.28,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-05-crop.jpg"
+        },
+        {
+          "index": 6,
+          "requested_source_time": 253.705,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-06-crop.jpg"
+        },
+        {
+          "index": 7,
+          "requested_source_time": 254.13000000000002,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-07-crop.jpg"
+        },
+        {
+          "index": 8,
+          "requested_source_time": 254.555,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-08-crop.jpg"
+        },
+        {
+          "index": 9,
+          "requested_source_time": 254.98000000000002,
+          "face_bbox": null,
+          "diagnostic_cx": 0.211,
+          "crop_image": "sab-reaction-one-09-crop.jpg"
+        }
+      ],
+      "crop_contact": "sab-reaction-one-crop-contact.jpg",
+      "fit": "crop",
+      "track": false,
+      "approved_for_spec": false,
+      "note": "Actual raw source crop diagnostics, not native final-caption preview or final QC. Diagnostic cx must not be copied into spec as measured-approved."
+    },
+    {
+      "key": "sab-reaction-two",
+      "start": 255.28,
+      "end": 260.08,
+      "cx": 0.5,
+      "frame": "court",
+      "cx_face": {
+        "samples": [
+          0.5706,
+          0.6935,
+          0.7065,
+          0.5709,
+          0.4362,
+          0.7313,
+          0.6709,
+          0.6262,
+          0.6361
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T04:20:21+00:00",
+        "median": 0.6361,
+        "spread": 0.2951
+      },
+      "accepted_by_native_policy": false,
+      "diagnostic_best_fixed_cx": 0.584,
+      "sample_evidence": [
+        {
+          "index": 1,
+          "requested_source_time": 255.58,
+          "face_bbox": [
+            829.2,
+            204.49,
+            1362.01,
+            781.82
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-01-crop.jpg"
+        },
+        {
+          "index": 2,
+          "requested_source_time": 256.105,
+          "face_bbox": [
+            1052.83,
+            129.21,
+            1610.31,
+            713.86
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-02-crop.jpg"
+        },
+        {
+          "index": 3,
+          "requested_source_time": 256.63,
+          "face_bbox": [
+            1056.98,
+            56.27,
+            1655.85,
+            793.95
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-03-crop.jpg"
+        },
+        {
+          "index": 4,
+          "requested_source_time": 257.15500000000003,
+          "face_bbox": [
+            871.49,
+            178.69,
+            1320.93,
+            845.01
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-04-crop.jpg"
+        },
+        {
+          "index": 5,
+          "requested_source_time": 257.68,
+          "face_bbox": [
+            625.55,
+            160.53,
+            1049.31,
+            790.02
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-05-crop.jpg"
+        },
+        {
+          "index": 6,
+          "requested_source_time": 258.205,
+          "face_bbox": [
+            1187.93,
+            10.26,
+            1620.19,
+            531.95
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-06-crop.jpg"
+        },
+        {
+          "index": 7,
+          "requested_source_time": 258.73,
+          "face_bbox": [
+            1061.96,
+            15.68,
+            1514.46,
+            554.24
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-07-crop.jpg"
+        },
+        {
+          "index": 8,
+          "requested_source_time": 259.255,
+          "face_bbox": [
+            972.81,
+            35.44,
+            1431.91,
+            675.44
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-08-crop.jpg"
+        },
+        {
+          "index": 9,
+          "requested_source_time": 259.78,
+          "face_bbox": [
+            998.83,
+            219.81,
+            1443.79,
+            808.69
+          ],
+          "diagnostic_cx": 0.584,
+          "crop_image": "sab-reaction-two-09-crop.jpg"
+        }
+      ],
+      "crop_contact": "sab-reaction-two-crop-contact.jpg",
+      "fit": "crop",
+      "track": false,
+      "approved_for_spec": false,
+      "note": "Actual raw source crop diagnostics, not native final-caption preview or final QC. Diagnostic cx must not be copied into spec as measured-approved."
+    },
+    {
+      "key": "ryb-reaction",
+      "start": 260.08,
+      "end": 262.0,
+      "cx": 0.453,
+      "frame": "person",
+      "cx_face": {
+        "samples": [
+          0.4372,
+          0.427,
+          0.424,
+          0.4461,
+          0.4613,
+          0.4769,
+          0.4828,
+          0.4684,
+          0.4446
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T04:20:23+00:00",
+        "median": 0.4461,
+        "spread": 0.0588
+      },
+      "accepted_by_native_policy": true,
+      "diagnostic_best_fixed_cx": 0.453,
+      "sample_evidence": [
+        {
+          "index": 1,
+          "requested_source_time": 260.38,
+          "face_bbox": [
+            677.12,
+            321.65,
+            1001.81,
+            731.48
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-01-crop.jpg"
+        },
+        {
+          "index": 2,
+          "requested_source_time": 260.545,
+          "face_bbox": [
+            654.9,
+            381.43,
+            984.77,
+            793.66
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-02-crop.jpg"
+        },
+        {
+          "index": 3,
+          "requested_source_time": 260.71,
+          "face_bbox": [
+            645.49,
+            327.15,
+            982.58,
+            742.44
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-03-crop.jpg"
+        },
+        {
+          "index": 4,
+          "requested_source_time": 260.875,
+          "face_bbox": [
+            687.77,
+            297.53,
+            1025.13,
+            717.57
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-04-crop.jpg"
+        },
+        {
+          "index": 5,
+          "requested_source_time": 261.04,
+          "face_bbox": [
+            718.83,
+            327.94,
+            1052.55,
+            741.44
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-05-crop.jpg"
+        },
+        {
+          "index": 6,
+          "requested_source_time": 261.205,
+          "face_bbox": [
+            748.77,
+            350.55,
+            1082.53,
+            779.48
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-06-crop.jpg"
+        },
+        {
+          "index": 7,
+          "requested_source_time": 261.37,
+          "face_bbox": [
+            757.81,
+            318.17,
+            1096.29,
+            742.58
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-07-crop.jpg"
+        },
+        {
+          "index": 8,
+          "requested_source_time": 261.535,
+          "face_bbox": [
+            723.24,
+            302.75,
+            1075.27,
+            737.31
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-08-crop.jpg"
+        },
+        {
+          "index": 9,
+          "requested_source_time": 261.7,
+          "face_bbox": [
+            680.28,
+            342.7,
+            1026.85,
+            762.52
+          ],
+          "diagnostic_cx": 0.453,
+          "crop_image": "ryb-reaction-09-crop.jpg"
+        }
+      ],
+      "crop_contact": "ryb-reaction-crop-contact.jpg",
+      "fit": "crop",
+      "track": false,
+      "approved_for_spec": true,
+      "note": "Actual raw source crop diagnostics, not native final-caption preview or final QC."
+    }
+  ],
+  "measure_method": "Called actual tools/measure_person_center.py measure(path,start,end,face_checks.load(fetch=True)), then actual person_center_cx / native maxspread acceptance; nine evenly spaced samples each. Detailed frame detections and diagnostic crops retained.",
+  "audio_preservation": {
+    "source_interval": [
+      245.6,
+      262.0
+    ],
+    "modified": false,
+    "captions_absolute": [
+      {
+        "start": 251.06,
+        "end": 255.48,
+        "en": "Third time is a charm for Aryna Sabalenka.",
+        "zh": "第三次，萨巴伦卡终于如愿。"
+      },
+      {
+        "start": 258.34,
+        "end": 261.26,
+        "en": "As revenge is served.",
+        "zh": "她完成了复仇。"
+      }
+    ],
+    "warning": "Both English cues span visual shot boundaries. Keep exact source audio and continuous cue clock; do not trim sentences to reaction cuts."
+  },
+  "evidence_dir": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence",
+  "contacts": [
+    "shot-cuts-contact.jpg",
+    "dissolve-25fps-contact.jpg",
+    "sab-reaction-one-crop-contact.jpg",
+    "sab-reaction-two-crop-contact.jpg",
+    "ryb-reaction-crop-contact.jpg"
+  ],
+  "created_at": "2026-10-22T04:22:52.650175+00:00",
+  "kind": "source_visual_evidence_only",
+  "final_qc": false,
+  "publication_approved": false,
+  "editorial_photo_alternative_point_end_check": {
+    "source_fps": "25/1",
+    "proposed_live_action_window": [
+      245.6,
+      251.04
+    ],
+    "proposed_exact_audio_over_photo": [
+      251.04,
+      262.0
+    ],
+    "last_included_live_source_frame": 251.0,
+    "first_clear_out_bounce_frame": 250.4,
+    "rebound_confirmation_frame": 250.44,
+    "complete_final_point_retained": true,
+    "reason": "The ball lands beyond the near baseline and rebounds before winner begins lifting racket/hands; all visible by251.00, before photo edit251.04.",
+    "edit_type": "Ordinary editorial live-footage-to-authentic-photo cut; do not claim251.04 is original broadcast shot boundary.",
+    "audio": "Keep exact continuous source audio245.6–262.0 without gap/mute/speed change. Both full English sentences start after photo cut,251.06–255.48 and258.34–261.26.",
+    "keyframes": [
+      {
+        "source_time": 250.36,
+        "file": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/frame-010.png",
+        "sha256": "06661918ec9bcb07ec358e5af62227347ac1943949912e7c7e07c89d52fe04e9",
+        "observation": "Ball descending toward near baseline; no confirmed bounce yet."
+      },
+      {
+        "source_time": 250.4,
+        "file": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/frame-011.png",
+        "sha256": "672213b72fd2a5551b64636891168f60a235f14a5f1c4b6be9a33abe85d55f50",
+        "observation": "First clearly visible long landing/bounce frame in green beyond near baseline."
+      },
+      {
+        "source_time": 250.44,
+        "file": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/frame-012.png",
+        "sha256": "1b16f87c9514dc743ab0f69ed5c717593020b12690423e52e229fb747d279f48",
+        "observation": "Ball rises away from shadow, confirming rebound beyond baseline."
+      },
+      {
+        "source_time": 250.72,
+        "file": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/frame-019.png",
+        "sha256": "e891159ff15612e7c008e4aac5544f878cbee0a5244ef9f57477c0fa144780df",
+        "observation": "Sabalenka begins raised-racket/hand celebration."
+      },
+      {
+        "source_time": 251.0,
+        "file": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/frame-026.png",
+        "sha256": "01b130fd6003968dc7514bc721bb2320272aacafe674b6e943981b2552edd10e",
+        "observation": "Winner celebration visible before proposed cut."
+      }
+    ],
+    "contact": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/point-end-keyframes.jpg",
+    "full_33_frame_contact": "/workspace/sabalenka-finals-production/research/production/iw-reaction-crop-evidence/last-point/point-end-25fps-contact.jpg",
+    "kind": "source_visual_evidence_only",
+    "final_qc": false
+  }
+}

@@ -1,0 +1,821 @@
+{
+  "schema": "tennislive.source-audio-tail-audit.v1",
+  "created_at": "2026-10-22T04:34:23.731233+00:00",
+  "kind": "source_audio_boundary_audit",
+  "method": "Existing actual source-bound small.en/medium.en context ASR with word timestamps; Brisbane actual turbo diagnostic additionally consulted. Actual source SHA recomputed and matched every ASR file. No claim of human listening.",
+  "native_outgoing_tail_seconds": 0.25,
+  "segments_checked": 9,
+  "new_unselected_foreground_word_leak_found": false,
+  "shared_spec_modified": false,
+  "rows": [
+    {
+      "segment": "cold-miami",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "body_end": 266.8,
+      "native_audio_tail_end": 267.05,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "file_sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "checked_source_clip": [
+            210.0,
+            310.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Sabalenka.",
+              "s": 265.72,
+              "e": 266.5,
+              "p": 0.773
+            },
+            {
+              "w": " She",
+              "s": 267.44,
+              "e": 267.8,
+              "p": 0.954
+            },
+            {
+              "w": " is",
+              "s": 267.8,
+              "e": 268.04,
+              "p": 0.976
+            },
+            {
+              "w": " the",
+              "s": 268.04,
+              "e": 268.22,
+              "p": 0.991
+            },
+            {
+              "w": " champion",
+              "s": 268.22,
+              "e": 268.54,
+              "p": 0.976
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 267.44,
+            "e": 267.8,
+            "p": 0.954
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "file_sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "checked_source_clip": [
+            252.0,
+            275.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Sabalenka.",
+              "s": 265.74,
+              "e": 266.56,
+              "p": 0.879
+            },
+            {
+              "w": " She",
+              "s": 267.46,
+              "e": 267.78,
+              "p": 0.984
+            },
+            {
+              "w": " is",
+              "s": 267.78,
+              "e": 268.08,
+              "p": 0.98
+            },
+            {
+              "w": " the",
+              "s": 268.08,
+              "e": 268.24,
+              "p": 0.993
+            },
+            {
+              "w": " champion",
+              "s": 268.24,
+              "e": 268.74,
+              "p": 0.971
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 267.46,
+            "e": 267.78,
+            "p": 0.984
+          }
+        }
+      ]
+    },
+    {
+      "segment": "brisbane",
+      "source_file": "/workspace/sabalenka-finals-production/staging/brisbane-final.mp4",
+      "source_sha256": "4d8a85756d84b4019e635bd8396c1ff247e99feca3fc10670dd86f5e38fc4c57",
+      "body_end": 254.6,
+      "native_audio_tail_end": 254.85,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-small.en.json",
+          "file_sha256": "826bdcc342c9ee90319c359a7f20f48fe6f8869286f8a4047f5752ecaf878616",
+          "model": "small.en",
+          "checked_source_clip": [
+            210.0,
+            310.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " again",
+              "s": 253.24,
+              "e": 253.6,
+              "p": 0.98
+            },
+            {
+              "w": " in",
+              "s": 253.6,
+              "e": 253.88,
+              "p": 0.959
+            },
+            {
+              "w": " Brisbane.",
+              "s": 253.88,
+              "e": 254.34,
+              "p": 0.913
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " scintillating",
+            "s": 256.26,
+            "e": 257.04,
+            "p": 0.979
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-medium.en.json",
+          "file_sha256": "b8b795f625cd5028cff3212f59bb0e342ce1634070350a5200c1fe81d307a8c6",
+          "model": "medium.en",
+          "checked_source_clip": [
+            239.0,
+            255.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " again",
+              "s": 253.3,
+              "e": 253.66,
+              "p": 0.81
+            },
+            {
+              "w": " in",
+              "s": 253.66,
+              "e": 253.88,
+              "p": 0.985
+            },
+            {
+              "w": " Brisbane.",
+              "s": 253.88,
+              "e": 254.38,
+              "p": 0.977
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": null
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/brisbane-final-turbo-diagnostic.json",
+          "file_sha256": "908dc6ccedb8397b0602f7055e5c94cec21fcb752bb48a3aea4918aa978b301a",
+          "model": "large-v3-turbo",
+          "checked_source_clip": [
+            246,
+            255.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " again",
+              "s": 253.28,
+              "e": 253.58,
+              "p": 0.9983789920806885
+            },
+            {
+              "w": " in",
+              "s": 253.58,
+              "e": 253.86,
+              "p": 0.9840230941772461
+            },
+            {
+              "w": " Brisbane.",
+              "s": 253.86,
+              "e": 254.26,
+              "p": 0.9910141825675964
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": null
+        }
+      ]
+    },
+    {
+      "segment": "ao",
+      "source_file": "/workspace/rybakina-finals-production/sources/ao-highlights.mp4",
+      "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+      "body_end": 179.6,
+      "native_audio_tail_end": 179.85,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/rybakina-finals-production/research/points/ao-highlights-end-small.en.json",
+          "file_sha256": "b02d462cf866effd9f181197f11ce1eeff36babd501406c2c8120b2fd7eada58",
+          "model": "small.en",
+          "checked_source_clip": [
+            160.0,
+            217.7
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " final",
+              "s": 178.84,
+              "e": 178.92,
+              "p": 0.568
+            },
+            {
+              "w": " set.",
+              "s": 178.92,
+              "e": 179.46,
+              "p": 0.876
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " This",
+            "s": 183.04,
+            "e": 184.02,
+            "p": 0.019
+          }
+        },
+        {
+          "path": "/workspace/rybakina-finals-production/research/points/ao-break-medium.en.json",
+          "file_sha256": "22dbaa2522b166dd8b1b463abd20566ec14e46084b2eaad152b5fc0e744486f9",
+          "model": "medium.en",
+          "checked_source_clip": [
+            156.0,
+            180.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Final",
+              "s": 178.76,
+              "e": 178.96,
+              "p": 0.99
+            },
+            {
+              "w": " set.",
+              "s": 178.96,
+              "e": 179.28,
+              "p": 0.74
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": null
+        }
+      ]
+    },
+    {
+      "segment": "iw-save",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "body_end": 245.36,
+      "native_audio_tail_end": 245.61,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-small.en.json",
+          "file_sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " Third",
+            "s": 250.86,
+            "e": 252.18,
+            "p": 0.912
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "file_sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " Third",
+            "s": 251.26,
+            "e": 251.74,
+            "p": 0.718
+          }
+        }
+      ]
+    },
+    {
+      "segment": "iw-final",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "body_end": 251.04,
+      "native_audio_tail_end": 251.29,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": true,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "coherent_same_source_carry_not_a_leak",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-small.en.json",
+          "file_sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Third",
+              "s": 250.86,
+              "e": 252.18,
+              "p": 0.912
+            },
+            {
+              "w": " time",
+              "s": 252.18,
+              "e": 252.64,
+              "p": 0.988
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " time",
+            "s": 252.18,
+            "e": 252.64,
+            "p": 0.988
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "file_sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Third",
+              "s": 251.26,
+              "e": 251.74,
+              "p": 0.718
+            },
+            {
+              "w": " time",
+              "s": 251.74,
+              "e": 252.7,
+              "p": 0.995
+            }
+          ],
+          "words_starting_in_tail": [
+            {
+              "w": " Third",
+              "s": 251.26,
+              "e": 251.74,
+              "p": 0.718
+            }
+          ],
+          "first_next_recognized_word": {
+            "w": " Third",
+            "s": 251.26,
+            "e": 251.74,
+            "p": 0.718
+          }
+        }
+      ]
+    },
+    {
+      "segment": "iw-photo",
+      "source_file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "source_sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "body_end": 262.0,
+      "native_audio_tail_end": 262.25,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-small.en.json",
+          "file_sha256": "541e7453ddc7b6681f6e87e099d450d3fee939e5c5c1b5da46bdf3f8ee64610b",
+          "model": "small.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 268.66,
+            "e": 269.98,
+            "p": 0.988
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/iw-champion-medium.en.json",
+          "file_sha256": "b46edc1560febee0c0e167ee285298aa787e3822c50b34eebff2ca1cc1dd1a12",
+          "model": "medium.en",
+          "checked_source_clip": [
+            240.0,
+            309.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " served",
+              "s": 260.5,
+              "e": 261.26,
+              "p": 0.98
+            },
+            {
+              "w": " She",
+              "s": 263.04,
+              "e": 264.0,
+              "p": 0.983
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 263.04,
+            "e": 264.0,
+            "p": 0.983
+          }
+        }
+      ]
+    },
+    {
+      "segment": "miami-point",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "body_end": 262.08,
+      "native_audio_tail_end": 262.33,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": true,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "coherent_same_source_carry_not_a_leak",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "file_sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "checked_source_clip": [
+            210.0,
+            310.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " The",
+              "s": 262.16,
+              "e": 262.94,
+              "p": 0.792
+            },
+            {
+              "w": " Sunshine",
+              "s": 262.94,
+              "e": 263.38,
+              "p": 0.686
+            },
+            {
+              "w": " Double",
+              "s": 263.38,
+              "e": 263.84,
+              "p": 0.354
+            }
+          ],
+          "words_starting_in_tail": [
+            {
+              "w": " The",
+              "s": 262.16,
+              "e": 262.94,
+              "p": 0.792
+            }
+          ],
+          "first_next_recognized_word": {
+            "w": " The",
+            "s": 262.16,
+            "e": 262.94,
+            "p": 0.792
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "file_sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "checked_source_clip": [
+            252.0,
+            275.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " The",
+              "s": 262.32,
+              "e": 262.96,
+              "p": 0.674
+            },
+            {
+              "w": " sunshine",
+              "s": 262.96,
+              "e": 263.4,
+              "p": 0.631
+            },
+            {
+              "w": " double",
+              "s": 263.4,
+              "e": 263.88,
+              "p": 0.972
+            }
+          ],
+          "words_starting_in_tail": [
+            {
+              "w": " The",
+              "s": 262.32,
+              "e": 262.96,
+              "p": 0.674
+            }
+          ],
+          "first_next_recognized_word": {
+            "w": " The",
+            "s": 262.32,
+            "e": 262.96,
+            "p": 0.674
+          }
+        }
+      ]
+    },
+    {
+      "segment": "miami-reaction-reprise",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "body_end": 266.8,
+      "native_audio_tail_end": 267.05,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "file_sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "checked_source_clip": [
+            210.0,
+            310.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Sabalenka.",
+              "s": 265.72,
+              "e": 266.5,
+              "p": 0.773
+            },
+            {
+              "w": " She",
+              "s": 267.44,
+              "e": 267.8,
+              "p": 0.954
+            },
+            {
+              "w": " is",
+              "s": 267.8,
+              "e": 268.04,
+              "p": 0.976
+            },
+            {
+              "w": " the",
+              "s": 268.04,
+              "e": 268.22,
+              "p": 0.991
+            },
+            {
+              "w": " champion",
+              "s": 268.22,
+              "e": 268.54,
+              "p": 0.976
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 267.44,
+            "e": 267.8,
+            "p": 0.954
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "file_sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "checked_source_clip": [
+            252.0,
+            275.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " Sabalenka.",
+              "s": 265.74,
+              "e": 266.56,
+              "p": 0.879
+            },
+            {
+              "w": " She",
+              "s": 267.46,
+              "e": 267.78,
+              "p": 0.984
+            },
+            {
+              "w": " is",
+              "s": 267.78,
+              "e": 268.08,
+              "p": 0.98
+            },
+            {
+              "w": " the",
+              "s": 268.08,
+              "e": 268.24,
+              "p": 0.993
+            },
+            {
+              "w": " champion",
+              "s": 268.24,
+              "e": 268.74,
+              "p": 0.971
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " She",
+            "s": 267.46,
+            "e": 267.78,
+            "p": 0.984
+          }
+        }
+      ]
+    },
+    {
+      "segment": "miami-after",
+      "source_file": "/workspace/sabalenka-finals-production/staging/miami-final.mp4",
+      "source_sha256": "153fc4b21d266952ee2e2b0eaa41ea1c0a26845edef491db92800affd6bfdd57",
+      "body_end": 274.88,
+      "native_audio_tail_end": 275.13,
+      "tail_seconds": 0.25,
+      "same_source_complete_carry": false,
+      "new_unselected_foreground_word_leak_found": false,
+      "result": "no_new_foreground_word_in_tail_by_source_bound_asr",
+      "evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-small.en.json",
+          "file_sha256": "56bb9372b50fd6e1be83ade97063d5b784a6ecaecd944dab851d214f5b56bfda",
+          "model": "small.en",
+          "checked_source_clip": [
+            210.0,
+            310.0
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " couple",
+              "s": 273.54,
+              "e": 273.78,
+              "p": 0.995
+            },
+            {
+              "w": " of",
+              "s": 273.78,
+              "e": 273.98,
+              "p": 0.984
+            },
+            {
+              "w": " weeks",
+              "s": 273.98,
+              "e": 274.2,
+              "p": 0.996
+            },
+            {
+              "w": " ago.",
+              "s": 274.2,
+              "e": 274.62,
+              "p": 0.999
+            },
+            {
+              "w": " And",
+              "s": 275.72,
+              "e": 276.4,
+              "p": 0.072
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": {
+            "w": " And",
+            "s": 275.72,
+            "e": 276.4,
+            "p": 0.072
+          }
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/core-asr/miami-final-medium.en.json",
+          "file_sha256": "223aaa306b21051a95b63a068e07c26ab479e9b74c95b2b599ab6f0f986abdc4",
+          "model": "medium.en",
+          "checked_source_clip": [
+            252.0,
+            275.5
+          ],
+          "tail_interval_covered": true,
+          "nearby_words_absolute": [
+            {
+              "w": " couple",
+              "s": 273.6,
+              "e": 273.8,
+              "p": 0.999
+            },
+            {
+              "w": " of",
+              "s": 273.8,
+              "e": 274.02,
+              "p": 0.998
+            },
+            {
+              "w": " weeks",
+              "s": 274.02,
+              "e": 274.24,
+              "p": 0.999
+            },
+            {
+              "w": " ago.",
+              "s": 274.24,
+              "e": 274.68,
+              "p": 0.999
+            }
+          ],
+          "words_starting_in_tail": [],
+          "first_next_recognized_word": null
+        }
+      ]
+    }
+  ],
+  "interpretation": [
+    "IWfinal251.04–251.29 contains beginning of the selected Third time sentence; next photo audio starts at identical original251.04 and carries the complete sentence, so it is not an unselected-word leak.",
+    "MiamiPoint262.08–262.33 contains beginning of selected The Sunshine Double sentence; reprise starts at identical original262.08 and carries full sentence, so it is not an unselected-word leak.",
+    "IWsave to next final skips only original245.36–245.60; checked outgoing tail245.36–245.61 contains no recognizable new foreground word."
+  ],
+  "limitations": [
+    "ASR timestamp uncertainty remains; this is actual machine cross-check evidence, not human listening or final encoded-film audio QC.",
+    "No change requested to the two separate Madrid and US audio_tail:silence fixes already made by parent."
+  ]
+}

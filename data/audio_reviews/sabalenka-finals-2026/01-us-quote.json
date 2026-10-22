@@ -1,0 +1,52 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=mDNM6E47Wqc",
+  "source_sha256": "9627d6c18e0bc9bf967d65ade1a03b3902102743ab878bdd32959275a3a6cf9d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T04:36:49.799268+00:00",
+  "reviewed_from": 54.05,
+  "reviewed_to": 62.05,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 54.16,
+      "end": 56.4,
+      "en": "That's the last thing I can...",
+      "zh": "现在我最不想做的，"
+    },
+    {
+      "start": 56.44,
+      "end": 58.02,
+      "en": "I want to do right now is give speech,",
+      "zh": "就是发表感言。"
+    },
+    {
+      "start": 58.02,
+      "end": 59.45,
+      "en": "but I'll try my very best.",
+      "zh": "但我会尽我所能。"
+    },
+    {
+      "start": 60.7,
+      "end": 61.9,
+      "en": "Thank you everyone.",
+      "zh": "谢谢大家。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Both models agree on words and self-correction I can / I want. Exact spoken article before speech is not independently resolved; both output give speech. Preserve source disfluency, do not claim human listening.",
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-quote-8d2c10381e-us-runnerup-small.en.json",
+      "sha256": "8d2c10381e39dbc77f920d66387b4185d7ec9a9dca919501dc0459ac47989173",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/us-quote-49771fd9b5-us-runnerup-medium.en.json",
+      "sha256": "49771fd9b518d5b6fd1be7bc30b9bf67581f2a2a31ccb174168bc5d4fc2abb95",
+      "model": "medium.en"
+    }
+  ]
+}

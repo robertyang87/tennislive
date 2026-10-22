@@ -1,0 +1,167 @@
+{
+  "method": "Native measure_person_center.py9samples plus native_source_crop_window and actual FFmpeg3:4 frames, followed by direct model visual inspection of contact sheets and source frame; no human review claimed.",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "segments": [
+    {
+      "source": "us_runnerup",
+      "source_url": "https://www.youtube.com/watch?v=mDNM6E47Wqc",
+      "source_file": "/workspace/sabalenka-finals-production/staging/us-runnerup-speech.mp4",
+      "source_sha256": "9627d6c18e0bc9bf967d65ade1a03b3902102743ab878bdd32959275a3a6cf9d",
+      "cx": 0.427,
+      "cx_face": {
+        "samples": [
+          0.3791,
+          0.4586,
+          0.4841,
+          0.503,
+          0.4103,
+          0.3514,
+          0.4598,
+          0.4826,
+          0.3914
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T03:53:45+00:00",
+        "median": 0.4586,
+        "spread": 0.1516
+      },
+      "crop_native_whxy": [
+        810,
+        1080,
+        414,
+        0
+      ],
+      "sample_times": [
+        54.349999999999994,
+        55.27499999999999,
+        56.199999999999996,
+        57.12499999999999,
+        58.05,
+        58.974999999999994,
+        59.89999999999999,
+        60.824999999999996,
+        61.74999999999999
+      ],
+      "nine_frame_contact": "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-nine-contact.jpg",
+      "first_middle_last_contact": "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-first-middle-last.jpg",
+      "frames": [
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample01.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample02.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample03.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample04.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample05.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample06.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample07.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample08.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-sample09.jpg"
+      ],
+      "contact_sha256": {
+        "nine_frame_contact": "e8e282893de8c6564bd910dbecc4f8c5784e1a6af13ae33d8e0917d419757fe7",
+        "first_middle_last_contact": "23761f096e6328a840ed59d1475a719349502ed0984e833c66c931cd796fef2c"
+      }
+    },
+    {
+      "source": "rg_press",
+      "source_url": "https://www.youtube.com/watch?v=CnL-mKOT9C8",
+      "source_file": "/workspace/sabalenka-finals-production/staging/rg-qf-presser.mp4",
+      "source_sha256": "fbca6f1dcf5bbd9d1f8bb11b2cbd1f2377cd71a55683e0f780de6adcea0ae39e",
+      "cx": 0.547,
+      "cx_face": {
+        "samples": [
+          0.5523,
+          0.5471,
+          0.548,
+          0.5414,
+          0.5477,
+          0.5522,
+          0.5489,
+          0.5489,
+          0.5454
+        ],
+        "frames": 9,
+        "detected": 9,
+        "source_size": [
+          1920,
+          1080
+        ],
+        "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+        "measured_at": "2026-10-22T03:53:49+00:00",
+        "median": 0.548,
+        "spread": 0.0109
+      },
+      "crop_native_whxy": [
+        810,
+        1080,
+        644,
+        0
+      ],
+      "sample_times": [
+        36.4,
+        39.375,
+        42.349999999999994,
+        45.324999999999996,
+        48.3,
+        51.275,
+        54.25,
+        57.224999999999994,
+        60.199999999999996
+      ],
+      "nine_frame_contact": "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-nine-contact.jpg",
+      "first_middle_last_contact": "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-first-middle-last.jpg",
+      "frames": [
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample01.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample02.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample03.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample04.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample05.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample06.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample07.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample08.jpg",
+        "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-sample09.jpg"
+      ],
+      "contact_sha256": {
+        "nine_frame_contact": "ac106a78e12803f515f1cdde047c86d4625573cb981eaa181bf436e5e9672658",
+        "first_middle_last_contact": "e0403cc597ae97350a70a903891705c50c21f845346056f2b093bdbeb23d660f"
+      }
+    }
+  ],
+  "visual_qc": {
+    "review_method": "Actual images viewed using view_image; model visual inspection, not human listening or human visual review",
+    "reviewed_images": [
+      "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-nine-contact.jpg",
+      "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us_runnerup-first-middle-last.jpg",
+      "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-nine-contact.jpg",
+      "/workspace/sabalenka-finals-production/research/production/person-crop-qc/rg_press-first-middle-last.jpg",
+      "/workspace/sabalenka-finals-production/research/production/person-crop-qc/us-first-source.png"
+    ],
+    "us_runnerup": {
+      "fixed_cx": 0.427,
+      "face_fully_inside_all_9_samples_and_first_middle_last": true,
+      "top_of_head_not_cut": true,
+      "head_entirely_inside_at_start": false,
+      "observed_limit": "At54.05s Sabalenka has both hands behind her head. Leftmost hair-bun/fringe lies to left of x414 native crop; some bun outline is clipped. Face and cranial top remain inside. First54.35s sample also has hair-bun edge near left crop boundary. Do not claim full-head clearance for this opening pose.",
+      "decision": "Measurement fields valid; visual full-head-clearance has an actual opening limitation. Parent must decide integration. No cx override or shared spec changes made."
+    },
+    "rg_press": {
+      "fixed_cx": 0.547,
+      "face_and_complete_head_inside_all_9_samples_and_first_middle_last": true,
+      "pose": "Stable press-room seated closeup, small eye/head movement; hand on cheek remains visible.",
+      "decision": "Fixed person crop approved for this measured source window only; subtitles and final output geometry not reviewed."
+    }
+  },
+  "validation": {
+    "person_frame_problems": [],
+    "source_links_by_youtube_id": true,
+    "sources_sha256_recomputed": true,
+    "shared_spec_git_unchanged": true
+  }
+}

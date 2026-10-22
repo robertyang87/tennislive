@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=RpL5S1vtiAw",
+  "source_sha256": "a30bae4c685bda47d61509b50f85ea887e4a5cd43721ce633e707d115e2e268b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+  "reviewed_from": 290.5,
+  "reviewed_to": 307.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/wimbledon-d0ce30a9ad-wimbledon-r4-small.en.json",
+      "sha256": "d0ce30a9adf879a34d17063bbc11f2e47c7b2f858a95e9c5fa04e723b3be7065",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/wimbledon-0766934f58-wimbledon-r4-medium.en.json",
+      "sha256": "0766934f58508971fb0a6f81e9248e1d397b6841470860c56ad024e13fdacf85",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/wimbledon-67cd7081b1-wim-selected-turbo.json",
+      "sha256": "67cd7081b1cb3e3b67891412eed9411dcdf8211070e54e253b528fbe98e5c73d",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "source_key": "wimbledon_r4",
+  "foreground_english": [
+    {
+      "start": 295.74,
+      "end": 297.9,
+      "en": "Game, set and match, Osaka.",
+      "zh": "比赛结束，大坂直美获胜。"
+    },
+    {
+      "start": 299.0,
+      "end": 302.42,
+      "en": "Two sets to love, six-two, seven-six.",
+      "zh": "盘分二比零，六比二、七比六。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Both standard small.en and medium.en were actually run. Medium misses most distant court-call words; actual selected-window third-model diagnostic recovers recognizable Osaka/two-sets/six-two/seven-six sequence and matches small phonetic sequence. Standard court call normalized from repeated Game/set/match phonetics and verified official result; no extra commentary sentence invented from low-confidenceAgain/Oh artifacts. Caption scope is court umpire announcement; not a verbatim claim of every ASR-character agreement. Bound raw diagnostics retain all differences."
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=7CeEeluu9Q4",
+  "source_sha256": "4924c2c0bdb20c257a482b66d924bbbf950f206c7afecf8585a76adc0dc94063",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T03:56:44.799731+00:00",
+  "reviewed_from": 163.35,
+  "reviewed_to": 179.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/ao-b02d462cf8-reused-ao-highlights-end-small.en.json",
+      "sha256": "b02d462cf866effd9f181197f11ce1eeff36babd501406c2c8120b2fd7eada58",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/ao-22dbaa2522-reused-ao-break-medium.en.json",
+      "sha256": "22dbaa2522b166dd8b1b463abd20566ec14e46084b2eaad152b5fc0e744486f9",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/sabalenka-finals-2026/raw/ao-11c25289cc-reused-ao-highlights-call-diagnostic.json",
+      "sha256": "11c25289ccace60e2c670fba9733aecfb3cb26a5675824a01d715522b1f78e2f",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "source_key": "ao_final",
+  "foreground_english": [
+    {
+      "start": 169.38,
+      "end": 174.1,
+      "en": "Rybakina. It's Elena Rybakina who moves ahead in this final.",
+      "zh": "莱巴金娜在决赛中取得领先。"
+    },
+    {
+      "start": 174.3,
+      "end": 179.46,
+      "en": "She gets the important break and leads 4-3. Final set.",
+      "zh": "关键破发，决胜盘四比三领先。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": "Explicitly reuses exact same actual MP4 SHA and exact163.35–179.60 already verified source window. All3 retained prior ASR JSON file hashes verified and copied unchanged. User/parent has accepted this key-break alternative. Final4-6,6-4,4-6 result belongs to preceding narration/full-match label, not this rally."
+}
