@@ -1,10 +1,36 @@
-"""Five exact approved film identities from public production specs; no general bypass."""
+"""Original five approved films plus later exact identities; no general bypass."""
 import copy,json,unittest,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 import winners_ue_gate as gate
 FIXTURES=json.loads((ROOT/'tests/fixtures/approved_wue_five_films.json').read_text())
+# Added to the production registry by 79d64ba after the owner's 2026-10-22
+# single-film approval. Keep an independent literal fixture so every identity,
+# authorization, column and fabricated-value mutation below also checks Sun.
+FIXTURES['sun-cvetkovic-chengdu-2026-rr1'] = {
+    'slug': 'sun-cvetkovic-chengdu-2026-rr1',
+    '_match': {
+        'status': 'result_verified', 'source': 'world_tennis_official',
+        'source_id': 'ITF-2026-3454', 'date': '2026-10-21',
+        'winner_result': '7-6(1) 6-2', 'winner': '孙心然',
+        'loser': '茨维特科维奇', 'participants': ['孙心然', '茨维特科维奇'],
+        'set_scores_home_away': [[7, 6], [6, 2]],
+    },
+    'cover': {
+        'eyebrow': '赛场之上', 'winner': '孙心然', 'result': '7-6(1) 6-2',
+        'matchup': [
+            {'name': '孙心然', 'name_en': 'Xinran Sun'},
+            {'name': '茨维特科维奇', 'name_en': 'Anastasija Cvetkovic'},
+        ],
+    },
+    'stats': {'a': {}, 'b': {}, '_winners_ue_omission': {
+        'slug': 'sun-cvetkovic-chengdu-2026-rr1', 'source_id': 'ITF-2026-3454',
+        'match_date': '2026-10-21', 'winner_result': '7-6(1) 6-2',
+        'fields': ['winners', 'ue'], 'decision': 'omit_both_rows_for_this_film_only',
+        'authorization': 'owner-approved-single-film-omission-2026-10-22',
+    }},
+}
 SCENARIOS=0
 
 def fixture(slug):
