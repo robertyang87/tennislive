@@ -1,0 +1,27 @@
+{
+  "kind": "frozen_complete_points_production_plan",
+  "spec_file_sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+  "inputs": {
+    "specs/reels/pegula-finals-2026.json": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+    "data/audio_reviews/pegula-finals-2026.json": "c79e7bb372b1f72d9c5e8faf75a3de62cc656642b37674989d124d32c826c701",
+    "data/narration_checks/pegula-finals-2026.json": "54d611bf176551a153689b85264da0d56fcb9e98d4b4d2354352c91158474496"
+  },
+  "global_rules_pr": "https://github.com/robertyang87/tennislive/pull/1322",
+  "main_synced_commit": "c15a131",
+  "global_ci_run": 39759958993,
+  "point_coverage_audit": {
+    "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-audit-v2.json",
+    "sha256": "ebb5b40ebc44ab94db68b265a47d126285a77b324869c706fefe11e17f96982c"
+  },
+  "actual_voice_bundle": {
+    "sha256": "a147ad7a6e446c80b61b25780b10689cd8ed1e0ce7b413d9f56c197529325034",
+    "strict_reused_requests": 15
+  },
+  "requirements": [
+    "11 actual displayed matches each one complete terminal match point plus exactly one full extra rally",
+    "No information cards on static or transition cards",
+    "1/4决赛 and 1/8决赛 notation globally",
+    "Native1080x1440 crop fill; court center for match footage, measured face center for interviews"
+  ],
+  "final_film_qc": false
+}

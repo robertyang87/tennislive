@@ -1,0 +1,71 @@
+{
+  "model": "large-v3-turbo",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+  "clip": [
+    125,
+    130.5
+  ],
+  "method": "actual_faster_whisper_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "recorded_utc": "2026-10-22T09:37:28.038995+00:00",
+  "segments": [
+    {
+      "start": 126.6,
+      "end": 128.76,
+      "text": " The set is gone. It's gone to Goff.",
+      "avg_logprob": -0.3953612963358561,
+      "no_speech_prob": 4.68453678625913e-11,
+      "words": [
+        {
+          "word": " The",
+          "start": 126.6,
+          "end": 126.96,
+          "probability": 0.48227596282958984
+        },
+        {
+          "word": " set",
+          "start": 126.96,
+          "end": 127.06,
+          "probability": 0.41903433203697205
+        },
+        {
+          "word": " is",
+          "start": 127.06,
+          "end": 127.2,
+          "probability": 0.7061697840690613
+        },
+        {
+          "word": " gone.",
+          "start": 127.2,
+          "end": 127.52,
+          "probability": 0.9984221458435059
+        },
+        {
+          "word": " It's",
+          "start": 127.7,
+          "end": 128.06,
+          "probability": 0.9834159314632416
+        },
+        {
+          "word": " gone",
+          "start": 128.06,
+          "end": 128.24,
+          "probability": 0.9877476692199707
+        },
+        {
+          "word": " to",
+          "start": 128.24,
+          "end": 128.42,
+          "probability": 0.9932014346122742
+        },
+        {
+          "word": " Goff.",
+          "start": 128.42,
+          "end": 128.76,
+          "probability": 0.7370263040065765
+        }
+      ]
+    }
+  ]
+}

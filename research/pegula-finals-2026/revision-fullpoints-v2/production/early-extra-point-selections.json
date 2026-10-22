@@ -1,0 +1,873 @@
+{
+  "schema": "tennislive.early-extra-points.v1",
+  "created_utc": "2026-10-22T09:34:11.097211+00:00",
+  "rule": "Per match retain the terminal complete match point plus at most one complete extra point across spectacular/brilliant/turning-point categories. These four selections are each a unique additional point, not a terminal-point replay.",
+  "scope": "Only four early2026 Pegula matches. No shared spec or Git mutation; no formal render. Source-bound actual-frame and ASR research precheck, not final encoded-film/audio approval.",
+  "selection_count": 4,
+  "extra_point_count_by_match": {
+    "ao-sf": 1,
+    "dubai-final": 1,
+    "miami-qf": 1,
+    "charleston-final": 1
+  },
+  "notes": [
+    "Dates/results remain governed by canonical16event64match fact audit.",
+    "Charleston existing terminal262.20 starts with previous-point fragment. Since this package selects a different unique extra, root must trim that old fragment and its So good line while retaining terminal-point prelude from full She saved the match points sentence.",
+    "Root should inspect recorded native crop limitations, especially Dubai151.4/159.2; whole source-time action retained does not mean every original sideline/body pixel survives mandated center3:4crop.",
+    "No invented umpire announcements; packets include only identified actual English foreground speech."
+  ],
+  "selections": [
+    {
+      "key": "ao-sf-extra",
+      "source_name": "ao-sf",
+      "start": 113.36,
+      "end": 131.56,
+      "category": "key_turning_point",
+      "point_name": "First-set terminal set point #2",
+      "score_before": {
+        "sets": "0-0",
+        "games_pegula": 3,
+        "games_opponent": 5,
+        "points_pegula": "30",
+        "points_opponent": "40",
+        "server": "Elena Rybakina",
+        "burned_flag": "SET POINT #2"
+      },
+      "score_after": {
+        "sets_pegula": 0,
+        "sets_opponent": 1,
+        "first_set": "3-6"
+      },
+      "why_valuable": "首盘第二个盘点，莱巴金娜以完整发球和连续进攻拿下6-3；展示佩古拉在这场半决赛先丢一盘的真实关口，区别于末尾决胜赛点。",
+      "point_action": "113.36 server still before toss; 113.60–114.60 full serve; continuous rally through121; Rybakina fist reaction122 and Pegula actual reaction128–129; first set score updated6-3.",
+      "captions": [
+        {
+          "start": 119.92,
+          "end": 123.78,
+          "en": "Oh, it's simply stunning from Elena Rybakina.",
+          "zh": "哦，莱巴金娜这球真是精彩绝伦。"
+        },
+        {
+          "start": 124.32,
+          "end": 127.76,
+          "en": "What a set of tennis from the world number five.",
+          "zh": "世界第五打出了多么精彩的一盘。"
+        },
+        {
+          "start": 128.08,
+          "end": 131.34,
+          "en": "Wraps it up in 33 minutes, six games to three.",
+          "zh": "她用时33分钟，以六比三拿下首盘。"
+        }
+      ],
+      "audio_tail": "source",
+      "source_file": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "frame": "court",
+      "fps": "25/1",
+      "native_geometry": {
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      },
+      "duration": 18.2,
+      "is_match_point": false,
+      "extra_point_count": 1,
+      "existing_terminal_window": [
+        437.6,
+        455.15
+      ],
+      "method": "asr_cross_checked",
+      "uncertain": false,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-setpoint-small.en.json",
+          "sha256": "60bdb4fb65f43b5bed6aff73741b1f06fb1309f3140fe84e8ded87ec5443d71d",
+          "model": "small.en",
+          "clip": [
+            110.0,
+            134.0
+          ],
+          "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+          "method": "source_asr.py faster-whisper, no prior text, no VAD"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-setpoint-medium.en.json",
+          "sha256": "965e7d69d3555420897a52018f842d9bcc988fa6626ff9e17eaef028956b8be1",
+          "model": "medium.en",
+          "clip": [
+            110.0,
+            134.0
+          ],
+          "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+          "method": "source_asr.py faster-whisper, no prior text, no VAD"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-turbo.json",
+          "sha256": "14e7931cf4b547bc4ce852c047daad312aabaa544945124dcd899474b3b9937c",
+          "model": "large-v3-turbo",
+          "clip": [
+            113,
+            134
+          ],
+          "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+          "method": "faster_whisper_name_only_prompt_diagnostic"
+        }
+      ],
+      "reviewed_from": 110,
+      "reviewed_to": 134,
+      "crop_review": {
+        "status": "actual_nine_frame_precheck_with_limitations_not_final_QC",
+        "notes": "All sampled live-rally bodies retained; no contain or person-follow. Later seat shot131.4 includes foreground passer in original, not a generated obstruction.",
+        "frames": [
+          {
+            "at": 113.36,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-113.36.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-113.36.jpg",
+            "original_sha256": "336b03669d129b667fed2bb00de073bf7ce5412eca42be66ecd14b834196e8ca",
+            "native_sha256": "7359ff7e36f0a863acaaf1210f05b7bb547afe433f6fd396b58cf289496a3791"
+          },
+          {
+            "at": 113.84,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-113.84.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-113.84.jpg",
+            "original_sha256": "7aa9bdb83c75ae53d5e4f4ec6403ff2966b2877608d407c98e527ec981e4f1fc",
+            "native_sha256": "b6be73456f8785f4cd5d36a2d57240200b346434d63884e0cfe3a23d0c150531"
+          },
+          {
+            "at": 114.4,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-114.40.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-114.40.jpg",
+            "original_sha256": "6eb61dc0cb19fde2c47177f246734e05a5d74d45a88c1a87ba818f2a0bb68d94",
+            "native_sha256": "5cf0e3f7ea064bf0a57429242501a7697ab0d9c32d3bea3a9e5189bbb4578185"
+          },
+          {
+            "at": 116,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-116.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-116.00.jpg",
+            "original_sha256": "d52b7ea83dec0561f84b8f5d1400304ffceba1c66a29886f2dc3cba157faba87",
+            "native_sha256": "47d0f5805ebd7cbdd78bf4fce7614e3003f94b9280f51dac59f8168d4930dd28"
+          },
+          {
+            "at": 118,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-118.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-118.00.jpg",
+            "original_sha256": "e869945d25cebf2504e8e9604ecaa4d9b5eb29b5c594535fbcfd8d5459e1f754",
+            "native_sha256": "453b14ef40bfa6466744466900eeff509fd0dbd743ad6164fe2256c0e36ce59e"
+          },
+          {
+            "at": 120,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-120.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-120.00.jpg",
+            "original_sha256": "014e485eccd71a32ccbc9619ea6ed3128ff82cee308142622e89f4461f9140ed",
+            "native_sha256": "d3baca37e46087f7a111dcad4b90ed9a77c9b84439f2ede699d285dca3d1ed50"
+          },
+          {
+            "at": 121.8,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-121.80.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-121.80.jpg",
+            "original_sha256": "683cb5f1ba60e5203d0e84d313d3369756e0ddab4829cd944e9ca37fb10da433",
+            "native_sha256": "5cdba7eda6619a77427d4893de2e757963e86682b9137f426a2e7a33a4e7624a"
+          },
+          {
+            "at": 125,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-125.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-125.00.jpg",
+            "original_sha256": "d909d9f322983ec129c6bcd32fe4f91d0cfbd580438e6ebb6bd866f402eb703d",
+            "native_sha256": "80c5621cc9f9d23f07d6235ba70e3bb0d4a575074788b8563d3cdff66e156fc7"
+          },
+          {
+            "at": 131.4,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-original-131.40.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-native-131.40.jpg",
+            "original_sha256": "26e04c4ad639d2edadc274e630ba66668929eabdd09ef6c194136bf15b7db0cc",
+            "native_sha256": "eb8352f16f678d732b7c6c2756512b97a70e8ef4dd1d30c05abd74204a4d64eb"
+          }
+        ],
+        "native_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-nine-native.jpg",
+        "scoreboard_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-scoreboard.jpg",
+        "native_contact_sha256": "e29c3df162d1db6b33fe0359c8186fe9fb5e0d341eebf373e88332308cc8d670",
+        "scoreboard_contact_sha256": "49716c6930b549ec6916f982d58a4dfed23bcab1affab5b05760dc5f28e72c24"
+      },
+      "boundary_review": {
+        "incoming": "Previous independent Easier said than done ends113.34 in small; start113.36 retains pre-toss server setup; native boundary frame contact verifies toss follows.",
+        "outgoing": "All selected speech ends by131.34; reviewed context through134 contains no new distinct line. Outgoing quarter second remains within checked context.",
+        "outgoing_policy": "source",
+        "checked_through": 131.81
+      },
+      "review_notes": [
+        "Full medium misses the simply stunning sentence and shifts following sentence into its time; small and independent turbo agree on full actual phrase. Caption follows two agreeing models with official proper-name normalization.",
+        "Small next wraps onset128.52 vs turbo128.08; subtitle begins128.08 conservatively, includes entire thought."
+      ],
+      "status": "complete_transcript_source_point_verified_native_visual_QC_pending",
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-foreground-packet.json",
+      "packet_sha256": "ed54a562c51556885e38eb4feb9815ed730f94044e94849c37d8ba2c921bdb36"
+    },
+    {
+      "key": "dubai-final-extra",
+      "source_name": "dubai-final",
+      "start": 148.36,
+      "end": 174.12,
+      "category": "key_turning_point",
+      "point_name": "First-set terminal set point #2",
+      "score_before": {
+        "sets": "0-0",
+        "games_pegula": 5,
+        "games_opponent": 2,
+        "points_pegula": "40",
+        "points_opponent": "0",
+        "server": "Jessica Pegula",
+        "burned_flag": "SET POINT #2"
+      },
+      "score_after": {
+        "sets_pegula": 1,
+        "sets_opponent": 0,
+        "first_set": "6-2"
+      },
+      "why_valuable": "首盘盘点：佩古拉在5-2领先时以自己的发球局收下首盘，保留其握拳和完整首盘解说总结。",
+      "point_action": "Pegula service preparation in close-up148.36; toss151.3–151.6; source cuts to original wide151.64 before contact; full rally152–158; winner fist159;6-2 set score appears173.8.",
+      "captions": [
+        {
+          "start": 148.36,
+          "end": 152.16,
+          "en": "Multiple chances to get this first set on the board.",
+          "zh": "她有多个拿下首盘的机会。"
+        },
+        {
+          "start": 158.52,
+          "end": 161.44,
+          "en": "And Pegula gets the first set on the board.",
+          "zh": "佩古拉拿下首盘。"
+        },
+        {
+          "start": 162.02,
+          "end": 165.5,
+          "en": "It was tremendous from her, so solid early on.",
+          "zh": "她发挥出色，开局就非常扎实。"
+        },
+        {
+          "start": 165.82,
+          "end": 170.86,
+          "en": "Svitolina showed plenty of fight, but Pegula kept her at a distance",
+          "zh": "斯维托丽娜顽强抵抗，但佩古拉始终保持领先，"
+        },
+        {
+          "start": 170.86,
+          "end": 173.74,
+          "en": "and after 34 minutes takes the first set, 6-2.",
+          "zh": "用时34分钟，以六比二拿下首盘。"
+        }
+      ],
+      "audio_tail": "source",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "frame": "court",
+      "fps": "25/1",
+      "native_geometry": {
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      },
+      "duration": 25.76,
+      "is_match_point": false,
+      "extra_point_count": 1,
+      "existing_terminal_window": [
+        240.96,
+        251.72
+      ],
+      "method": "asr_cross_checked",
+      "uncertain": false,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-small.en.json",
+          "sha256": "a265c96b504954d079990780cf1c8c29fc9aa91f40534666b4b278ab2d14e839",
+          "model": "small.en",
+          "clip": [
+            140,
+            174
+          ],
+          "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-medium.en.json",
+          "sha256": "6ad8dd2fcb93c1988215355776f269ecfebf9fe7bbd49a22b06b2d8ed2b648b8",
+          "model": "medium.en",
+          "clip": [
+            140,
+            174
+          ],
+          "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-turbo.json",
+          "sha256": "dba40389a6b6b10aa03e0475c11013d8bad0d952402c32fe4562760f78d0f5c9",
+          "model": "large-v3-turbo",
+          "clip": [
+            147,
+            177
+          ],
+          "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+          "method": "faster_whisper_name_only_prompt_diagnostic"
+        }
+      ],
+      "reviewed_from": 140,
+      "reviewed_to": 177,
+      "crop_review": {
+        "status": "actual_nine_frame_precheck_with_limitations_not_final_QC",
+        "notes": "Source close-up151.4 crops the rear/right of Pegula head,159.2 fist reaction places part of face at left edge; near Svitolina on return around152–154 is partly outside left native crop. All source-time serve/rally/outcome retained. Root should decide native acceptability before formal render.",
+        "frames": [
+          {
+            "at": 148.36,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-148.36.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-148.36.jpg",
+            "original_sha256": "7baad63f32ca2df83fedebdd6f32abd4fb6b1d739af70e0ea9a40610521d39ae",
+            "native_sha256": "6662ea2411d8ffea3324baf5483593efd1be0614f9254add7e99dfa246885e02"
+          },
+          {
+            "at": 151.4,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-151.40.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-151.40.jpg",
+            "original_sha256": "fef0fb7fe22d9989e6d16e3b28cf155efda34d815581fc391c5fabad886e0dc4",
+            "native_sha256": "bc3ad65f2fbe25ebe1a513f7b4c4373f76b3e09ad3b5cda1da7a691426bed049"
+          },
+          {
+            "at": 151.84,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-151.84.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-151.84.jpg",
+            "original_sha256": "838c139dd904987abd432775aa84654dec99ed502333fe40e64cd5dc20259d2b",
+            "native_sha256": "ab1eff2fe76e57fb706c50206dd2c841f1368b9e8441fef7759dfab72344e393"
+          },
+          {
+            "at": 153.2,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-153.20.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-153.20.jpg",
+            "original_sha256": "c96253ae839ca4568c6580826efafc8ebf51c4c4483ef35d5c13c98d712586ba",
+            "native_sha256": "042078fddcf3ef5ba721e4b9bb54a935fec8219e37c328a75814be866af0cff9"
+          },
+          {
+            "at": 155.2,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-155.20.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-155.20.jpg",
+            "original_sha256": "8766cd4bea91c49d165e6417a5058a3d7766be2de7b5e5f66b124620630c009e",
+            "native_sha256": "c4283052e49daa4d91425b77eba0cd364f42d8246cd4b4fbf85816204418f174"
+          },
+          {
+            "at": 157.2,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-157.20.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-157.20.jpg",
+            "original_sha256": "3dd5b47150929aa33a083aa182ce5c57a515c0784db27a09b1a8cc14660aa9a3",
+            "native_sha256": "19f5567872bd42cc2783377f04935a0f436ae19547aaa193793c931e3e85e314"
+          },
+          {
+            "at": 159.2,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-159.20.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-159.20.jpg",
+            "original_sha256": "006c9b311ac1b11ad0280e2208270a47ceed4292ef857babf40f0a6713874e6c",
+            "native_sha256": "bd48ffcc5cb2ff206e3292d30e6de06093b183ad1a0e5f536928de01f4692376"
+          },
+          {
+            "at": 164,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-164.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-164.00.jpg",
+            "original_sha256": "d81df601ec5b581003f9e5d54db96a331e01d94ca8f7d4011c192367f7eea0af",
+            "native_sha256": "1cc6ecdbf97307a95d88b9502263a65bcf473db266f53cc9072a40f621f2aaf0"
+          },
+          {
+            "at": 173.8,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-173.80.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-173.80.jpg",
+            "original_sha256": "bad9586ca5c3d0d890bc2b85c9895726dc78c8a0e8e63e0cbd8e1780500296f0",
+            "native_sha256": "821a2895039ce7c9e7ea4def75a132b583744b733e73052a2976328aa46973ff"
+          }
+        ],
+        "native_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-nine-native.jpg",
+        "scoreboard_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-scoreboard.jpg",
+        "native_contact_sha256": "6abf1682fa8d5ca489bd08ae85e4f39be3132afb17699a33080e6421341172bf",
+        "scoreboard_contact_sha256": "238d0c5b3c63b1e35b3731ec9db1537d355190c8be0c33f7d672dce6b9f921d4"
+      },
+      "boundary_review": {
+        "incoming": "Prior Svitolina word ends148.16turbo/148.28medium; Multiple begins148.46turbo/148.50medium. Small runs boundary earlier148.24. start148.36 chosen between majority agreeing word bounds; no preceding-sentence fragment captioned.",
+        "outgoing": "Terminal6-2 ends173.74 at latest; no new distinct utterance in retained context through177; outgoing quarter second checked.",
+        "outgoing_policy": "source",
+        "checked_through": 174.37
+      },
+      "review_notes": [
+        "Small calls final score60; medium and turbo6-2 match burned first-set score.",
+        "Small and medium names misdecoded in parts; normalized against same-match official identities.",
+        "Court-center geometry is mandatory; native close-up faces/body at151.4/159.2 partly outside crop. This is a disclosed crop limitation, not certified visual pass."
+      ],
+      "status": "complete_transcript_source_point_verified_native_visual_QC_pending",
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-foreground-packet.json",
+      "packet_sha256": "6f25e409a1b3dad98a3ca50a2df7c86b7a0e1e62cf941433aa406a8785cb334e"
+    },
+    {
+      "key": "miami-qf-extra",
+      "source_name": "miami-qf",
+      "start": 54.64,
+      "end": 77.4,
+      "category": "key_turning_point",
+      "point_name": "First-set terminal set point with running pickup",
+      "score_before": {
+        "sets": "0-0",
+        "games_pegula": 5,
+        "games_opponent": 2,
+        "points_pegula": "40",
+        "points_opponent": "30",
+        "server": "Jessica Pegula",
+        "burned_flag": "SET POINT"
+      },
+      "score_after": {
+        "sets_pegula": 1,
+        "sets_opponent": 0,
+        "first_set": "6-2"
+      },
+      "why_valuable": "佩古拉在首盘盘点打出漂亮救球并拿下6-2，和最终被逆转形成直接对照；区别于原已选第三盘终局赛点。",
+      "point_action": "54.64 receiving/server setup;55.3–56.3 full serve; continuous rally through60;Pegula running left pickup and winning outcome;actual fist63;set6-2 independently displayed73–77.",
+      "captions": [
+        {
+          "start": 60.14,
+          "end": 64.34,
+          "en": "That's a remarkable collect from that position on the court",
+          "zh": "从这个位置把球救回来，太不可思议了，"
+        },
+        {
+          "start": 64.34,
+          "end": 67.94,
+          "en": "for Jess Pegula, who's been almost flawless in this first set.",
+          "zh": "佩古拉首盘的发挥几乎无可挑剔。"
+        },
+        {
+          "start": 68.34,
+          "end": 71.04,
+          "en": "Rybakina is showing signs of life towards the end of it.",
+          "zh": "到了盘末，莱巴金娜开始有所起色。"
+        },
+        {
+          "start": 71.5,
+          "end": 75.72,
+          "en": "But it's a very, very good opening set for Jessica Pegula.",
+          "zh": "但佩古拉的首盘确实打得非常出色。"
+        },
+        {
+          "start": 75.96,
+          "end": 77.38,
+          "en": "6-2 in 36 minutes.",
+          "zh": "用时36分钟，六比二。"
+        }
+      ],
+      "audio_tail": "silence",
+      "source_file": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Fah2i0vwBVU",
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "frame": "court",
+      "fps": "25/1",
+      "native_geometry": {
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      },
+      "duration": 22.76,
+      "is_match_point": false,
+      "extra_point_count": 1,
+      "existing_terminal_window": [
+        264,
+        276.96
+      ],
+      "method": "asr_cross_checked",
+      "uncertain": false,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-small.en.json",
+          "sha256": "57799dece423b253c295048428250ae317bc78e25f7d72b5521d764b10359b40",
+          "model": "small.en",
+          "clip": [
+            48,
+            82
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-medium.en.json",
+          "sha256": "5c2cb6ecbe83ad62a9bd82d6e96bfa77ac30e4db53f6ba7f025b14fd67946ecf",
+          "model": "medium.en",
+          "clip": [
+            48,
+            82
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-turbo.json",
+          "sha256": "213310a09aeb717e59ee9242d574728ebd191fd2f14adcb6756572a9685e485e",
+          "model": "large-v3-turbo",
+          "clip": [
+            54,
+            82
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper_name_only_prompt_diagnostic"
+        }
+      ],
+      "reviewed_from": 48,
+      "reviewed_to": 82,
+      "crop_review": {
+        "status": "actual_nine_frame_precheck_with_limitations_not_final_QC",
+        "notes": "Pegula left-side running pickup around57.6–59 can touch/exceed fixed crop edge; source-time point complete but the full original wide sideline reach is not all visible. No contain or moving crop.",
+        "frames": [
+          {
+            "at": 54.64,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-54.64.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-54.64.jpg",
+            "original_sha256": "b8e8f174679426155b14e8a985aaf4b44c5b8df90a2f69e84efcb62be8cd28d9",
+            "native_sha256": "e873c8168b435680d1c09709327d42f51ddbe331388ad3e99e4be7fd09984e45"
+          },
+          {
+            "at": 55.6,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-55.60.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-55.60.jpg",
+            "original_sha256": "002ffe73a79bc1e6f53f7780fafff33e39557512ce819292368af346aa807ef3",
+            "native_sha256": "ba9805478528f58f94fac2b327c2f308ac17488e2b65e68eaaf1cd0d16dbf453"
+          },
+          {
+            "at": 56.2,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-56.20.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-56.20.jpg",
+            "original_sha256": "1f107769c3661b256b9b5a40dcd7829585c323b1a2283d38823b265b59c7e620",
+            "native_sha256": "7d38f74951595a6a34272a51347e2ee3fab7bc3c4ed17bf7944c3ec42e1d8ec9"
+          },
+          {
+            "at": 57.6,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-57.60.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-57.60.jpg",
+            "original_sha256": "1e86109971f4b83b479093407304b4366e757d35d5b0f781b069f243b90c7cf8",
+            "native_sha256": "5285da4e4d4728aff1597c656e7b6718acf66f2ff980d8fa23c2f1bc43f2a798"
+          },
+          {
+            "at": 59.4,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-59.40.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-59.40.jpg",
+            "original_sha256": "7d5785179ca9dd324bb24bcfb50dc5a8cbb33e38dca1b88146ca46d696e2e779",
+            "native_sha256": "9b79a917183091699c1c837d78a6f1202cc256cac50248f7927c5549ea244672"
+          },
+          {
+            "at": 60.8,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-60.80.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-60.80.jpg",
+            "original_sha256": "109d6914a63bba1393de567aa4dfbff860e032b8b3885978dcdc65b70077992d",
+            "native_sha256": "694e75d7996fe72619779b082c6ad0c9ae30f974fd24ee00a0778a223e506ded"
+          },
+          {
+            "at": 63,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-63.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-63.00.jpg",
+            "original_sha256": "86bbe4ed94a02e63ecb454b3a9935038d343219865d6ac01e1b80a386855ac00",
+            "native_sha256": "976d5f275487a8b33a07a6afe9b5b0080ad9793010d931a3228ecd9493015413"
+          },
+          {
+            "at": 70,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-70.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-70.00.jpg",
+            "original_sha256": "50ddd6984182c4b36743ed82e267f0d66bd5cfde389228136c0602c4653fabe0",
+            "native_sha256": "097bbbdd8574b54279b16283e007aeb7e5579334ca7cbccb949b546e963a87c1"
+          },
+          {
+            "at": 77.36,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-original-77.36.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-native-77.36.jpg",
+            "original_sha256": "24e9e0e5dd3622a9079def3fb24477cd588c90c98c4463dccc1bacedca2ef90a",
+            "native_sha256": "22a6f2927360a7c947daf778731169889a1d684a09029602ed7d3ad456691e36"
+          }
+        ],
+        "native_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-nine-native.jpg",
+        "scoreboard_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-scoreboard.jpg",
+        "native_contact_sha256": "7a78949c408fe8fde1465e711d88c3bd8924d79a77f07821d5599016dd4ed3de",
+        "scoreboard_contact_sha256": "742930bcfc404faf78d91ac1470bf6889de55052d5969bd9dc088c89114b1764"
+      },
+      "boundary_review": {
+        "incoming": "Previous independent crowd waking up sentence ends54.38small/54.36medium; nativewide starts54.64, before service toss.",
+        "outgoing": "Next independent First set, the first serve... begins77.66small/77.54turbo; medium adjoins its start to previous minutes at77.38. end77.40 follows selected minutes77.30turbo/77.34small/77.38medium. Outgoing .25s MUST be silence to exclude next First set; do not extend source pad.",
+        "outgoing_policy": "silence",
+        "checked_through": 77.65
+      },
+      "review_notes": [
+        "Name-only turbo prompt identifies Rybakina where small/medium decode Rebecca.",
+        "Small life decoded light; medium/turbo agree signs of life.",
+        "Timing diagnostic records medium touching-word boundary77.38 versus other two models77.54/77.66; no human listening claimed. Native word-boundary check remains separate."
+      ],
+      "status": "complete_transcript_source_point_verified_native_visual_QC_pending",
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-foreground-packet.json",
+      "packet_sha256": "42b1328f5be2e9df86e71a305b6ab4386ff607d5c79c49fa947857837d36680f"
+    },
+    {
+      "key": "charleston-final-extra",
+      "source_name": "charleston-final",
+      "start": 89.68,
+      "end": 122.32,
+      "category": "spectacular_point",
+      "point_name": "Long rally and Pegula touch winner at15-30",
+      "score_before": {
+        "sets_pegula": 1,
+        "sets_opponent": 0,
+        "games_pegula": 1,
+        "games_opponent": 0,
+        "points_pegula": "15",
+        "points_opponent": "30",
+        "server": "Jessica Pegula",
+        "burned_first_set": "6-2"
+      },
+      "score_after": {
+        "sets_pegula": 1,
+        "sets_opponent": 0,
+        "games_pegula": 1,
+        "games_opponent": 0,
+        "points_pegula": "30",
+        "points_opponent": "30"
+      },
+      "why_valuable": "第二盘1-0、15-30的完整长回合，佩古拉以精巧手感赢分到30-30；评论员明确称world-class，并指出这一分避免了15-40。不虚称其为实际破发点或赛点。",
+      "point_action": "89.68 server preparation closeup;90.5 toss;91–91.7 serve and return;continuous same15-30 rally through114.4;Pegula running forward touch winner;reaction117;score30-30 and next pre-serve preparation122.08. Stop before next serve.",
+      "captions": [
+        {
+          "start": 114.44,
+          "end": 117.68,
+          "en": "It's truly world-class from Pegula.",
+          "zh": "佩古拉这球真是世界级水准。"
+        },
+        {
+          "start": 119.58,
+          "end": 122.08,
+          "en": "The difference between 30-all and 15-40.",
+          "zh": "这一分，决定了是三十平，还是十五比四十。"
+        }
+      ],
+      "audio_tail": "source",
+      "source_file": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+      "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "cx": 0.5,
+      "track": false,
+      "fit": "crop",
+      "frame": "court",
+      "fps": "25/1",
+      "native_geometry": {
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      },
+      "duration": 32.64,
+      "is_match_point": false,
+      "extra_point_count": 1,
+      "existing_terminal_window": [
+        262.2,
+        287.8
+      ],
+      "method": "asr_cross_checked",
+      "uncertain": false,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-small.en.json",
+          "sha256": "ee88f244ede5764ce5905224bfcaf9b881876285da7842963b570231cb4cdce0",
+          "model": "small.en",
+          "clip": [
+            100,
+            142
+          ],
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-medium.en.json",
+          "sha256": "e1c02517bdc5de59a0a9ae0e7f8d391b69dc1d8b28ed0de4dc82e6798e75f436",
+          "model": "medium.en",
+          "clip": [
+            100,
+            142
+          ],
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-point-small.en.json",
+          "sha256": "827655e3de86ccd4015f8179cae5fda5ef5cd4f83b970c47fec05768d0c2ef29",
+          "model": "small.en",
+          "clip": [
+            85.0,
+            125.0
+          ],
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "method": "source_asr.py faster-whisper, no prior text, no VAD"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-point-medium.en.json",
+          "sha256": "0a7c77d50102672b4d5d83de795a7e28e7f6a8d619b77287c350e650b524762f",
+          "model": "medium.en",
+          "clip": [
+            85.0,
+            125.0
+          ],
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "method": "source_asr.py faster-whisper, no prior text, no VAD"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-turbo.json",
+          "sha256": "e59b7975140e4103929b4bb4740bcd769c32a36a0f0cf7cdfa177fcc9ebd6efe",
+          "model": "large-v3-turbo",
+          "clip": [
+            88,
+            125
+          ],
+          "source_sha256": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+          "method": "faster_whisper_name_only_prompt_diagnostic"
+        }
+      ],
+      "reviewed_from": 85,
+      "reviewed_to": 142,
+      "crop_review": {
+        "status": "actual_nine_frame_precheck_with_limitations_not_final_QC",
+        "notes": "Near Pegula is partly at/exceeds left crop around102 and may approach edge on final forward pickup; original source proves continuous point. Native reaction117 clips part of body near left edge. No contain.",
+        "frames": [
+          {
+            "at": 89.68,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-89.68.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-89.68.jpg",
+            "original_sha256": "a43be413d8ca42f84190919c5f41f92fcc025fe577d54a44d94216c5d17b5d41",
+            "native_sha256": "4684feb7f435f7e5d1b5ac02d1202d4fc4208910d0c34c87bbeaffc61469a894"
+          },
+          {
+            "at": 90.56,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-90.56.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-90.56.jpg",
+            "original_sha256": "99364ff803e5eeef49d2c8826fe3191de9061f4a01a355c8b85df8f1c489d22a",
+            "native_sha256": "11f29c3fc626d3c80b2f1245be0e112023dd7884c993602c60b5f441f7db96c7"
+          },
+          {
+            "at": 91.6,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-91.60.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-91.60.jpg",
+            "original_sha256": "3c8d24b918096f4c1b03b3adb426a88ae3285ed783691ff585f136578ef55ca5",
+            "native_sha256": "193db72d9a19e1d8453115ba6581aeca204ecee9f7871d40f6c057656fb6af85"
+          },
+          {
+            "at": 96,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-96.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-96.00.jpg",
+            "original_sha256": "4a13ee2b9c6755671bd073a9737965d9bef91c932f2cbaa1c049b061bd6d6509",
+            "native_sha256": "73772d95031e6eb9c8efe50fcf0bfc553c910575f10fc9ddc27985934ce13e5b"
+          },
+          {
+            "at": 102,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-102.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-102.00.jpg",
+            "original_sha256": "2112909f819c6a1084d73b767fd12bf843b52ca7e071bf99173c9951f2fb7f8a",
+            "native_sha256": "783c7d7e864b396a9543b7dcba1f719a51a2b2bdef15495c51f5844b7e03be68"
+          },
+          {
+            "at": 109,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-109.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-109.00.jpg",
+            "original_sha256": "6cd407e034146a861feaaf759ffc4ef7c67225151a356e06b0d2068bd70773e4",
+            "native_sha256": "26dd5551bc50b8d6b0e3a61f63bfde2767c8640837fa3fb9fd4288b6475c5109"
+          },
+          {
+            "at": 114.5,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-114.50.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-114.50.jpg",
+            "original_sha256": "0cbcfab98022fd53ef3f906b916f40d4d1feda3037eb1de93a4489d4071c1276",
+            "native_sha256": "3c87dd47526448865360017737e2db21abf5b00a582f4f32ca8fbd6e4afd13c3"
+          },
+          {
+            "at": 117,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-117.00.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-117.00.jpg",
+            "original_sha256": "be9f5d4fa0819a5789af90b03fd3762bedaecd125605dcec61ebfc7d95079ac8",
+            "native_sha256": "e08814f54a081ad7819e8d62050c32b28751786c840bb795d389e6dd4f546b97"
+          },
+          {
+            "at": 122.08,
+            "original": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-original-122.08.jpg",
+            "native": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-native-122.08.jpg",
+            "original_sha256": "4478e48129a08d0c366670f405e6542abc87698b12fb1980c1a2b081ae41772a",
+            "native_sha256": "eab230d1214cca0d031a1454978094553b9247ecaeeb5cb4686f1c843d4277c1"
+          }
+        ],
+        "native_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-nine-native.jpg",
+        "scoreboard_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-scoreboard.jpg",
+        "native_contact_sha256": "cc02db20f6734f8f17bc46dec4e5c04dce30e66c586418aa6aba1def7da0746d",
+        "scoreboard_contact_sha256": "e7c65313af008d06c8311ffb4a577e0748ba0d46f61857bae1dade1d4ec8ed50"
+      },
+      "boundary_review": {
+        "incoming": "Previous independent Thats more like it ends88.18 at latest; start89.68 before toss. No invented umpire call.",
+        "outgoing": "Second commentary thought ends122.08latest; outgoing .25 to122.57 is before next serve and next commentary. Next distinct commentary Thats how you hit a slice is about next point and excluded.",
+        "outgoing_policy": "source",
+        "checked_through": 122.57
+      },
+      "review_notes": [
+        "Small well-class corrected to world-class by two medium contexts and turbo.",
+        "First broad medium misses difference phrase; fresh85–125medium andsmall+turbo all identify30-all/15-40.",
+        "Point is NOT a break point:15-30 win prevents15-40, actual resulting score30-30.",
+        "Full continuous long rally lasts over20seconds, so32.64s window is needed with serve setup and complete two commentary thoughts."
+      ],
+      "status": "complete_transcript_source_point_verified_native_visual_QC_pending",
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-foreground-packet.json",
+      "packet_sha256": "7a80dbb77d045ff971095897abd41c24ce8c6c65329d970593cf04d8b3c327fa"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "created_utc": "2026-10-22T09:31:54.464373+00:00",
+  "status": "candidate_blocked_umpire_transcript_not_production_approved",
+  "source_name": "us-sf",
+  "source_key": "us-sf",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+  "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "publisher": "US Open Tennis Championships (verified official channel)",
+  "source_native_resolution": [
+    1920,
+    1080
+  ],
+  "source_fps": "60000/1001",
+  "source_probe": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/original-probe.json",
+  "start": 142.94,
+  "end": 186.4,
+  "duration": 43.46,
+  "cx": 0.5,
+  "frame": "court",
+  "fit": "crop",
+  "crop_policy": "cropfill",
+  "quote_kind": "commentary",
+  "captions": [
+    {
+      "start": 163.94,
+      "end": 166.64,
+      "en": "Aryna Sabalenka is into another",
+      "zh": "萨巴伦卡再次挺进"
+    },
+    {
+      "start": 166.64,
+      "end": 169.64,
+      "en": "US Open championship match.",
+      "zh": "美网决赛。"
+    },
+    {
+      "start": 170.12,
+      "end": 171.18,
+      "en": "And boy, oh boy,",
+      "zh": "天哪，"
+    },
+    {
+      "start": 173.8,
+      "end": 175.64,
+      "en": "if somebody in the other semi",
+      "zh": "若另一场半决赛有人"
+    },
+    {
+      "start": 175.64,
+      "end": 178.28,
+      "en": "can stay with this woman, live with her,",
+      "zh": "能够与她抗衡，"
+    },
+    {
+      "start": 178.28,
+      "end": 180.98,
+      "en": "live with her serving,",
+      "zh": "顶住她的发球，"
+    },
+    {
+      "start": 181.28,
+      "end": 182.66,
+      "en": "live with her ground game,",
+      "zh": "顶住她的底线进攻，"
+    },
+    {
+      "start": 183.82,
+      "end": 184.62,
+      "en": "we are going to have",
+      "zh": "我们就将见证"
+    },
+    {
+      "start": 184.62,
+      "end": 186.2,
+      "en": "a fabulous match on Saturday.",
+      "zh": "周六的一场精彩对决。"
+    }
+  ],
+  "foreground_packet": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/foreground-packet.json",
+  "foreground_packet_sha256": "2d8dc72829006fbaf6b91795b7139810a3e03627939cc047ac78b51cb520e5e9",
+  "method": "asr_cross_checked_partial_uncertain_not_approved",
+  "human_listened": false,
+  "approved": false,
+  "uncertain_spans": [
+    {
+      "start": 150.08,
+      "end": 155.96,
+      "speaker": "on-court chair umpire / PA",
+      "reason": "The call contains audible English; independent actual small.en/medium.en/small/large-v3-turbo/large-v3 and original/left/right/bandpass variants disagree substantially. Match/Sabalenka/7-5 fragments recur, but full wording and final spoken score cannot be certified. No standard formula inserted and no no-English waiver claimed."
+    }
+  ],
+  "point_identity": {
+    "event": "2026 US Open women singles semifinal",
+    "winner": "Aryna Sabalenka",
+    "loser": "Jessica Pegula",
+    "result": "7-5 6-2",
+    "serve_start": 143.7,
+    "last_rally_action": [
+      144.4,
+      148.9
+    ],
+    "result_reaction_start": 150.02,
+    "scoreboard_source_time": 142.94,
+    "scoreboard_png": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png",
+    "scoreboard_png_sha256": "e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0",
+    "burned_label": "MATCH POINT; SABALENKA7 5 40 / PEGULA5 2 30; serverPegula",
+    "phase": "This is actual terminal matchpoint, not the old saved break point16.92–27.40. Full source chronology from pre-serve through point result, winner closeup, walk to net and handshake preserved."
+  },
+  "visual_evidence": {
+    "point_nine": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/nine-samples.json",
+    "point_source_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/nine-source-contact.jpg",
+    "point_cx05_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/nine-fixed-cx05-contact.jpg",
+    "first_sentence_window_nine": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/window-nine-samples.json",
+    "first_sentence_window_contact": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/window-nine-contact.jpg",
+    "actual_viewed": [
+      "matchpoint-source-contact.jpg",
+      "nine-source-contact.jpg",
+      "nine-fixed-cx05-contact.jpg",
+      "matchpoint-scoreboard.png",
+      "window-nine-contact.jpg",
+      "extended-contact.jpg"
+    ],
+    "findings": [
+      "Fixedcx.5 retains the complete temporal point but does not keep Pegula final far-right chase/racket in3:4frame at148.6–149.8. This is a real sourcegeometry boundary, not fixed by time changes.",
+      "Winner reaction at152.4/152.98 also approaches right edge; both players at net fit159.67.",
+      "Original full-width proof establishes point outcome. No contain, tracking, alternate person center or720p exemption applied.",
+      "Source geometry checks only; not native font/alpha preview or final-film QC."
+    ]
+  },
+  "alternatives": [
+    {
+      "start": 142.94,
+      "end": 161.8,
+      "duration": 18.86,
+      "purpose": "Full terminalpoint+winnerreaction+net handshake, before later broadcaster sentence. Still blocked by uncleared umpire; no fabricated subtitle or no-English waiver."
+    },
+    {
+      "start": 142.94,
+      "end": 169.7,
+      "duration": 26.76,
+      "purpose": "First complete commentator sentence only. Not approved outgoingtail: next And onset drifts169.60/170.12; requires resolved onset or whole next sentence, cannot falsely certify clean seam."
+    }
+  ],
+  "official_secondary_source": {
+    "source_url": "https://www.youtube.com/watch?v=QXUe4xTd5cs",
+    "source_file": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/QXUe4xTd5cs.mp4",
+    "source_sha256": "b15ad21ce8bcb01339f23f2e34a07f0b92b2d6be814920efd5caf1e0b6e1eaf6",
+    "archive_run": 39754857297,
+    "archive_run_url": "https://github.com/robertyang87/tennislive/actions/runs/39754857297",
+    "actual_bytes": 275100325,
+    "native_resolution": [
+      1920,
+      1080
+    ],
+    "probe": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/extended-probe.json",
+    "duration": 727.504399,
+    "verdict": "Actual same-match official extended highlights; terminalpoint is same court perspective, original same umpire call, both small/medium again fail exact words687.5–693.26. Does not solve sourcecrop or speech uncertainty."
+  },
+  "blockers": [
+    "Exact full English umpire call150.08–155.96 and accurate bilingualcaption remain unresolved. Allactual ASR retained.",
+    "No full foregroundpacket pass or production approval claimed. This package is an explicit candidate plus evidence for continued resolution, not final QC."
+  ],
+  "no_shared_spec_or_git_changes": true,
+  "formal_render_dispatched": false
+}

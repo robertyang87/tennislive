@@ -1,0 +1,289 @@
+{
+  "schema": "tennislive.dubai-extra-refinement.v1",
+  "created_utc": "2026-10-22T09:54:26.636355+00:00",
+  "search_started_utc": "2026-10-22T09:50:19Z",
+  "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+  "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+  "decision": "retain_existing_verified_set_point",
+  "preferred": {
+    "key": "dubai-final-extra",
+    "source_name": "dubai-final",
+    "start": 148.36,
+    "end": 174.12,
+    "category": "key_turning_point",
+    "point_name": "First-set terminal set point #2",
+    "score_before": {
+      "sets": "0-0",
+      "games_pegula": 5,
+      "games_opponent": 2,
+      "points_pegula": "40",
+      "points_opponent": "0",
+      "server": "Jessica Pegula",
+      "burned_flag": "SET POINT #2"
+    },
+    "score_after": {
+      "sets_pegula": 1,
+      "sets_opponent": 0,
+      "first_set": "6-2"
+    },
+    "why_valuable": "首盘盘点：佩古拉在5-2领先时以自己的发球局收下首盘，保留其握拳和完整首盘解说总结。",
+    "point_action": "Pegula service preparation in close-up148.36; toss151.3–151.6; source cuts to original wide151.64 before contact; full rally152–158; winner fist159;6-2 set score appears173.8.",
+    "captions": [
+      {
+        "start": 148.36,
+        "end": 152.16,
+        "en": "Multiple chances to get this first set on the board.",
+        "zh": "她有多个拿下首盘的机会。"
+      },
+      {
+        "start": 158.52,
+        "end": 161.44,
+        "en": "And Pegula gets the first set on the board.",
+        "zh": "佩古拉拿下首盘。"
+      },
+      {
+        "start": 162.02,
+        "end": 165.5,
+        "en": "It was tremendous from her, so solid early on.",
+        "zh": "她发挥出色，开局就非常扎实。"
+      },
+      {
+        "start": 165.82,
+        "end": 170.86,
+        "en": "Svitolina showed plenty of fight, but Pegula kept her at a distance",
+        "zh": "斯维托丽娜顽强抵抗，但佩古拉始终保持领先，"
+      },
+      {
+        "start": 170.86,
+        "end": 173.74,
+        "en": "and after 34 minutes takes the first set, 6-2.",
+        "zh": "用时34分钟，以六比二拿下首盘。"
+      }
+    ],
+    "audio_tail": "source",
+    "source_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+    "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+    "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+    "cx": 0.5,
+    "track": false,
+    "fit": "crop",
+    "frame": "court",
+    "fps": "25/1",
+    "native_geometry": {
+      "input": [
+        1920,
+        1080
+      ],
+      "crop_xywh": [
+        555,
+        0,
+        810,
+        1080
+      ],
+      "output": [
+        1080,
+        1440
+      ]
+    },
+    "duration": 25.76,
+    "is_match_point": false,
+    "extra_point_count": 1,
+    "existing_terminal_window": [
+      240.96,
+      251.72
+    ],
+    "method": "asr_cross_checked",
+    "uncertain": false,
+    "asr_evidence": [
+      {
+        "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-small.en.json",
+        "sha256": "a265c96b504954d079990780cf1c8c29fc9aa91f40534666b4b278ab2d14e839",
+        "model": "small.en",
+        "clip": [
+          140,
+          174
+        ],
+        "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+        "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+      },
+      {
+        "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-medium.en.json",
+        "sha256": "6ad8dd2fcb93c1988215355776f269ecfebf9fe7bbd49a22b06b2d8ed2b648b8",
+        "model": "medium.en",
+        "clip": [
+          140,
+          174
+        ],
+        "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+        "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+      },
+      {
+        "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-turbo.json",
+        "sha256": "dba40389a6b6b10aa03e0475c11013d8bad0d952402c32fe4562760f78d0f5c9",
+        "model": "large-v3-turbo",
+        "clip": [
+          147,
+          177
+        ],
+        "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+        "method": "faster_whisper_name_only_prompt_diagnostic"
+      }
+    ],
+    "reviewed_from": 140,
+    "reviewed_to": 177,
+    "crop_review": {
+      "status": "actual_nine_frame_precheck_with_limitations_not_final_QC",
+      "notes": "Source close-up151.4 crops the rear/right of Pegula head,159.2 fist reaction places part of face at left edge; near Svitolina on return around152–154 is partly outside left native crop. All source-time serve/rally/outcome retained. Root should decide native acceptability before formal render.",
+      "frames": [
+        {
+          "at": 148.36,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-148.36.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-148.36.jpg",
+          "original_sha256": "7baad63f32ca2df83fedebdd6f32abd4fb6b1d739af70e0ea9a40610521d39ae",
+          "native_sha256": "6662ea2411d8ffea3324baf5483593efd1be0614f9254add7e99dfa246885e02"
+        },
+        {
+          "at": 151.4,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-151.40.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-151.40.jpg",
+          "original_sha256": "fef0fb7fe22d9989e6d16e3b28cf155efda34d815581fc391c5fabad886e0dc4",
+          "native_sha256": "bc3ad65f2fbe25ebe1a513f7b4c4373f76b3e09ad3b5cda1da7a691426bed049"
+        },
+        {
+          "at": 151.84,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-151.84.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-151.84.jpg",
+          "original_sha256": "838c139dd904987abd432775aa84654dec99ed502333fe40e64cd5dc20259d2b",
+          "native_sha256": "ab1eff2fe76e57fb706c50206dd2c841f1368b9e8441fef7759dfab72344e393"
+        },
+        {
+          "at": 153.2,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-153.20.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-153.20.jpg",
+          "original_sha256": "c96253ae839ca4568c6580826efafc8ebf51c4c4483ef35d5c13c98d712586ba",
+          "native_sha256": "042078fddcf3ef5ba721e4b9bb54a935fec8219e37c328a75814be866af0cff9"
+        },
+        {
+          "at": 155.2,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-155.20.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-155.20.jpg",
+          "original_sha256": "8766cd4bea91c49d165e6417a5058a3d7766be2de7b5e5f66b124620630c009e",
+          "native_sha256": "c4283052e49daa4d91425b77eba0cd364f42d8246cd4b4fbf85816204418f174"
+        },
+        {
+          "at": 157.2,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-157.20.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-157.20.jpg",
+          "original_sha256": "3dd5b47150929aa33a083aa182ce5c57a515c0784db27a09b1a8cc14660aa9a3",
+          "native_sha256": "19f5567872bd42cc2783377f04935a0f436ae19547aaa193793c931e3e85e314"
+        },
+        {
+          "at": 159.2,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-159.20.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-159.20.jpg",
+          "original_sha256": "006c9b311ac1b11ad0280e2208270a47ceed4292ef857babf40f0a6713874e6c",
+          "native_sha256": "bd48ffcc5cb2ff206e3292d30e6de06093b183ad1a0e5f536928de01f4692376"
+        },
+        {
+          "at": 164,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-164.00.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-164.00.jpg",
+          "original_sha256": "d81df601ec5b581003f9e5d54db96a331e01d94ca8f7d4011c192367f7eea0af",
+          "native_sha256": "1cc6ecdbf97307a95d88b9502263a65bcf473db266f53cc9072a40f621f2aaf0"
+        },
+        {
+          "at": 173.8,
+          "original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-original-173.80.jpg",
+          "native": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-native-173.80.jpg",
+          "original_sha256": "bad9586ca5c3d0d890bc2b85c9895726dc78c8a0e8e63e0cbd8e1780500296f0",
+          "native_sha256": "821a2895039ce7c9e7ea4def75a132b583744b733e73052a2976328aa46973ff"
+        }
+      ],
+      "native_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-nine-native.jpg",
+      "scoreboard_contact": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-scoreboard.jpg",
+      "native_contact_sha256": "6abf1682fa8d5ca489bd08ae85e4f39be3132afb17699a33080e6421341172bf",
+      "scoreboard_contact_sha256": "238d0c5b3c63b1e35b3731ec9db1537d355190c8be0c33f7d672dce6b9f921d4"
+    },
+    "boundary_review": {
+      "incoming": "Prior Svitolina word ends148.16turbo/148.28medium; Multiple begins148.46turbo/148.50medium. Small runs boundary earlier148.24. start148.36 chosen between majority agreeing word bounds; no preceding-sentence fragment captioned.",
+      "outgoing": "Terminal6-2 ends173.74 at latest; no new distinct utterance in retained context through177; outgoing quarter second checked.",
+      "outgoing_policy": "source",
+      "checked_through": 174.37
+    },
+    "review_notes": [
+      "Small calls final score60; medium and turbo6-2 match burned first-set score.",
+      "Small and medium names misdecoded in parts; normalized against same-match official identities.",
+      "Court-center geometry is mandatory; native close-up faces/body at151.4/159.2 partly outside crop. This is a disclosed crop limitation, not certified visual pass."
+    ],
+    "status": "complete_transcript_source_point_verified_native_visual_QC_pending",
+    "foreground_audio_review": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-foreground-packet.json",
+    "packet_sha256": "6f25e409a1b3dad98a3ca50a2df7c86b7a0e1e62cf941433aa406a8785cb334e"
+  },
+  "reason": "Bounded check overran the requested3minute target by67seconds while existing ASR/frames completed; stopped without promoting an incompletely audited alternative. Existing verified set point retained.",
+  "candidates": [
+    {
+      "window": [
+        65.24,
+        79.12
+      ],
+      "reason_rejected": "Source middle-breakpoint serve toss begins65.24 while prior commentary continues through66.00. Starting after previous words loses full toss; starting before them cuts the thought or reintroduces face closeup."
+    },
+    {
+      "window": [
+        79.84,
+        95.64
+      ],
+      "status": "promising_but_not_promoted",
+      "score_before": "Set1:Pegula4-1,serving30-40, BREAK POINT flag",
+      "reason": "Low original camera and apparently more centered point. Both ASRs identify Well played / just saw Svitolina going back to the middle of the court / exactly the right thing to do. First small segment has uncertain Now/Oh and onset86.86 versus medium89.08. Not completed independent native9frames/source ending and lexical diagnostic within allotted bounded search; no packet claimed complete.",
+      "score_after": "Source95.00 confirms Pegula4-1,40-40; saved break point, not30-all.",
+      "scoreboard_after_original": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle2-95.jpg"
+    }
+  ],
+  "raw_asr": [
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle-small.en.json",
+      "sha256": "5fa0623c40dde1ff742476eb5da15b0d229d8004ae52d15db1fe8cc36f741ce2",
+      "model": "small.en",
+      "clip": [
+        58.0,
+        88.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle-medium.en.json",
+      "sha256": "a75251b89910a7bfc8d8a8fde064030a0bb2837c7b13a51cbfcaf768e2854344",
+      "model": "medium.en",
+      "clip": [
+        58.0,
+        88.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle2-small.en.json",
+      "sha256": "f756ea9f08ec238e307fb52b61a10ecf95832c49d593eee2b27ed7a6cc6f90ff",
+      "model": "small.en",
+      "clip": [
+        78.0,
+        99.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle2-medium.en.json",
+      "sha256": "24148eed3571779fe070598209e92f75fe8ecbc9fd6e2bc54658632104a8bac0",
+      "model": "medium.en",
+      "clip": [
+        78.0,
+        99.0
+      ]
+    }
+  ],
+  "frame_contacts": [
+    "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle-contact.jpg",
+    "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle-serve-boundary.jpg",
+    "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-middle2-contact.jpg"
+  ],
+  "limits": "No other3points/spec/Git altered. Existing148.36–174.12point retains disclosed face/edge limitations; no final visualQC pass invented.",
+  "search_finished_utc": "2026-10-22T09:54:26Z",
+  "duration_seconds": 247
+}

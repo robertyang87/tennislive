@@ -1,0 +1,337 @@
+{
+  "source_name": "us-sf",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "start": 142.94,
+  "end": 186.4,
+  "method": "asr_cross_checked",
+  "human_listened": false,
+  "audio_review_state": "blocked_unresolved_umpire_call",
+  "reviewed_from": 135,
+  "reviewed_to": 187,
+  "captions": [
+    {
+      "start": 163.94,
+      "end": 166.64,
+      "en": "Aryna Sabalenka is into another",
+      "zh": "萨巴伦卡再次挺进"
+    },
+    {
+      "start": 166.64,
+      "end": 169.64,
+      "en": "US Open championship match.",
+      "zh": "美网决赛。"
+    },
+    {
+      "start": 170.12,
+      "end": 171.18,
+      "en": "And boy, oh boy,",
+      "zh": "天哪，"
+    },
+    {
+      "start": 173.8,
+      "end": 175.64,
+      "en": "if somebody in the other semi",
+      "zh": "若另一场半决赛有人"
+    },
+    {
+      "start": 175.64,
+      "end": 178.28,
+      "en": "can stay with this woman, live with her,",
+      "zh": "能够与她抗衡，"
+    },
+    {
+      "start": 178.28,
+      "end": 180.98,
+      "en": "live with her serving,",
+      "zh": "顶住她的发球，"
+    },
+    {
+      "start": 181.28,
+      "end": 182.66,
+      "en": "live with her ground game,",
+      "zh": "顶住她的底线进攻，"
+    },
+    {
+      "start": 183.82,
+      "end": 184.62,
+      "en": "we are going to have",
+      "zh": "我们就将见证"
+    },
+    {
+      "start": 184.62,
+      "end": 186.2,
+      "en": "a fabulous match on Saturday.",
+      "zh": "周六的一场精彩对决。"
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 150.08,
+      "end": 155.96,
+      "speaker": "on-court chair umpire / PA",
+      "reason": "The call contains audible English; independent actual small.en/medium.en/small/large-v3-turbo/large-v3 and original/left/right/bandpass variants disagree substantially. Match/Sabalenka/7-5 fragments recur, but full wording and final spoken score cannot be certified. No standard formula inserted and no no-English waiver claimed."
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 150.08,
+      "end": 155.96,
+      "speaker": "umpire",
+      "transcript": null,
+      "translation": null,
+      "status": "unresolved"
+    },
+    {
+      "start": 163.94,
+      "end": 186.2,
+      "speaker": "commentator",
+      "status": "substantive_words_cross_checked; word onset alignment uncertainty at sentence joins recorded",
+      "text": "Aryna Sabalenka is into another US Open championship match. And boy, oh boy, if somebody in the other semi can stay with this woman, live with her, live with her serving, live with her ground game, we are going to have a fabulous match on Saturday."
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-medium.en.json",
+      "sha256": "a980b2ff88ca32d8dfe2a866e7f7d79c30ce9dd14467b2c8625f509162a6665e",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        163,
+        172.6
+      ],
+      "prompt": "Aryna Sabalenka. Jessica Pegula."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-small.en.json",
+      "sha256": "41acb6729fd698b3d3bd75bf435c8ff69d00c2b1d37119c83e6829a61e87f6c4",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        163,
+        172.6
+      ],
+      "prompt": "Aryna Sabalenka. Jessica Pegula."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/extended-medium.en.json",
+      "sha256": "83ee51cfd0ad15892885ea65aa032daf7a4efb777cd707311f7668c0e42e5134",
+      "model": "medium.en",
+      "source_sha256": "b15ad21ce8bcb01339f23f2e34a07f0b92b2d6be814920efd5caf1e0b6e1eaf6",
+      "clip": [
+        679.0,
+        715.0
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/extended-small.en.json",
+      "sha256": "fd6eae0300644ded23a3a21d5dc70cdc288741cf1db309f48ef0017a5f220a87",
+      "model": "small.en",
+      "source_sha256": "b15ad21ce8bcb01339f23f2e34a07f0b92b2d6be814920efd5caf1e0b6e1eaf6",
+      "clip": [
+        679.0,
+        715.0
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-medium.en.json",
+      "sha256": "1ef7fa19d90a9a51e7fb43446ab603a5f1bb070acea2bb505ac530110442c188",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        135,
+        187
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-small.en.json",
+      "sha256": "bcea03f713086afbe40c3586a06a489a3574afb9f26dd3d49ad69e10ac50be9e",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        135,
+        187
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-large-v3-turbo.json",
+      "sha256": "2887a1bcef2d2504d0632c9ebfcc717e7fc786b3439c24d1d8f4e6fc9329f620",
+      "model": "large-v3-turbo",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-medium.en.json",
+      "sha256": "196f4f79c786de134b619c790a8b596af0e8bac0081057cc3bdf1483863538d1",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-left-small.json",
+      "sha256": "7d3520d6330795e6a5adb5e4e9e1b2b2525b235dcf2b9409c72294631f210de3",
+      "model": "small",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-large-v3-turbo.json",
+      "sha256": "ef73e1ab0de119086369eaf9ae252a0c90e826e310e11e57acc3b5a7b50897ee",
+      "model": "large-v3-turbo",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-large-v3.json",
+      "sha256": "2edd4c350656fa044f3eb36398249138a977616cec54ca30aab68a3debc0bfb0",
+      "model": "large-v3",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-medium.en.json",
+      "sha256": "cac29205e4ec8e45f581b1c0f8345928dc21d33f0f4da263ea6b4766a00947af",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-band-small.json",
+      "sha256": "dc605af9ac108ae9329ad63ba4522d763c7fafcbb8727f58ce193d1a6b8ab63d",
+      "model": "small",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-large-v3-turbo.json",
+      "sha256": "0922f8bf898b3a1340aef0eba696e89d4ee16b27a35a35529c25d66223199552",
+      "model": "large-v3-turbo",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-large-v3.json",
+      "sha256": "bdf916788ff76f97f67108db1889dd96aa0494be07d48981d042977df2603d5a",
+      "model": "large-v3",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-medium.en.json",
+      "sha256": "68d5fcc06041fc8be7d3ac56e246331a21ef43edc903404ea15d7fcd3a094fc1",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-mid-small.json",
+      "sha256": "0bd2a48d8404625e00505736dd79d53ea4133be20b42ba214b1b07804c95807d",
+      "model": "small",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-names-only-medium.en.json",
+      "sha256": "2b243b62f988c2a31a05d0453f30970904aee2e2e70c66ee534650f664553293",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.6,
+        156.8
+      ],
+      "prompt": "Aryna Sabalenka. Jessica Pegula."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-names-only-small.en.json",
+      "sha256": "5b8016e636328cf5f883ec9d44b44c7a5e28701d167a222c9eaf53a19d67457d",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.6,
+        156.8
+      ],
+      "prompt": "Aryna Sabalenka. Jessica Pegula."
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-large-v3-turbo.json",
+      "sha256": "a9dd55078ee48cfb18272cd3f56dbe9b5db5a5009a033dd25023285f66b6ea12",
+      "model": "large-v3-turbo",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-medium.en.json",
+      "sha256": "b9ef97d708b5fdc96754f0cb42f001af8bcf2a3b5298fe1aba92c8d608fb88d3",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/judge-right-small.json",
+      "sha256": "51d8c3c2055bf203cdd497fe23e4d0905e39cf99651c18aeae1f40fdde3fba2f",
+      "model": "small",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        149.7,
+        156.7
+      ],
+      "prompt": null
+    }
+  ],
+  "boundary_notes": "142.94 is actual pre-serve setup. Full43.46s option avoids slicing next And whose onset aligns inconsistently169.60/170.12 in first-sentence-only option. Final retained Saturday ends186.14/186.20 in independent original-source small/medium; body end186.40, outgoing+.25 through186.65 before186.95 brand cut. No source-body muting approved. Umpire unresolved blocks full foreground audit regardless of safe tail."
+}

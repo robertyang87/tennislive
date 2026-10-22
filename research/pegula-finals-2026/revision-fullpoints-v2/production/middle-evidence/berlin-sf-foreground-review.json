@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+  "source_key": "berlin-sf-sabalenka",
+  "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T08:12:15.367492+00:00",
+  "reviewed_from": 254,
+  "reviewed_to": 295,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-small.en.json",
+      "sha256": "495c976bd4d2fbf14f6f737b4b0e150a4d408ee1d5e0e58d6150273af0f4ff3c",
+      "model": "small.en",
+      "clip": [
+        254.0,
+        295.0
+      ],
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-medium.en.json",
+      "sha256": "35a7a99a4d76f663a231a3fcde4697b201a303ba64bc3c7c605e52a5942a52e3",
+      "model": "medium.en",
+      "clip": [
+        254.0,
+        278.0
+      ],
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-selected-turbo.json",
+      "sha256": "383e5dcbc25dce861e6d4981b4cacb060be22c55c60a81531356569d10b6e842",
+      "model": "large-v3-turbo",
+      "clip": [
+        257,
+        279.2
+      ],
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-channel-left-medium.json",
+      "sha256": "ff050382ee29bb1d012f9a820fc175f9d22b0d5af4363ee85a3129bfed4a0aa9",
+      "model": "medium.en",
+      "clip": [
+        264,
+        279.2
+      ],
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "separate_channel_diagnostic_with_name_prompt"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-channel-right-medium.json",
+      "sha256": "cebf0c51dc9c8fa9861e842fae318db7d09c16e91b2de36053253d402be23371",
+      "model": "medium.en",
+      "clip": [
+        264,
+        279.2
+      ],
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "separate_channel_diagnostic_with_name_prompt"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 264.78,
+      "end": 270.9,
+      "en": "Jessica Pegula, the 2024 winner in Berlin, is into another final,",
+      "zh": "2024年的柏林冠军佩古拉，再次打进决赛，"
+    },
+    {
+      "start": 272.2,
+      "end": 277.12,
+      "en": "as she takes out the world number one, Aryna Sabalenka.",
+      "zh": "她击败了世界第一萨巴伦卡。"
+    }
+  ],
+  "review_notes": [
+    "Default stereo small/medium/turbo decode takes up. Independent left and right channel medium diagnostics both decode takes out. Channel diagnostics use only a proper-name prompt, not a prompted sentence. Final reading follows agreement of both channels; retain this disagreement in provenance."
+  ]
+}

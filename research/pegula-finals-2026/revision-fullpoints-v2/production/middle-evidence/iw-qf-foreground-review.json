@@ -1,0 +1,60 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=W-8a9rj2wEw",
+  "source_key": "iw-qf",
+  "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T08:12:15.365799+00:00",
+  "reviewed_from": 210,
+  "reviewed_to": 308,
+  "status": "needs_review",
+  "uncertain_spans": [
+    {
+      "start": 248.82,
+      "end": 250.15,
+      "reason": "Small/medium lexical disagreement: had the answer vs malformed have the answer; isolated small-only it. at the end."
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-small.en.json",
+      "sha256": "54c650c52b59cbe7e67a3961fd9b22995f99c1e558aa10aaf611d0429255e577",
+      "model": "small.en",
+      "clip": [
+        210,
+        308
+      ],
+      "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+      "method": "faster_whisper word timestamps, no human listening"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-medium.en.json",
+      "sha256": "dfc7c8b0844cad78b5be8342b1435137452f16f9e79984af2c3d212a05444a7e",
+      "model": "medium.en",
+      "clip": [
+        210,
+        308
+      ],
+      "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+      "method": "faster_whisper word timestamps, no human listening"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 242.64,
+      "end": 244.84,
+      "en": "Oh, it's so good.",
+      "zh": "这球太精彩了。"
+    },
+    {
+      "start": 245.48,
+      "end": 250.15,
+      "en": "Pegula repeatedly asking the question, and in the end, eventually Rybakina had the answer.",
+      "zh": "佩古拉不断施压，但最终莱巴金娜还是给出了答案。"
+    }
+  ],
+  "review_notes": [
+    "Proper names normalized against official match identity. Small has clear had the answer; medium misdecodes this phrase. Small appends an isolated low-probability it. at 250.06–250.14 absent from medium. This reserve retains transparent lexical uncertainty; do not describe as human-audited."
+  ]
+}

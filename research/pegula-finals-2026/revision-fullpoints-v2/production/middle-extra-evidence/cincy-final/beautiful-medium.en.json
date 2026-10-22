@@ -1,0 +1,86 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "clip": [
+    171.0,
+    193.0
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:44:16.062761+00:00",
+  "segments": [
+    {
+      "start": 171.0,
+      "end": 174.7,
+      "text": " Just got it all going on, hasn't she?",
+      "avg_logprob": -0.47825218902693856,
+      "no_speech_prob": 0.08404780179262161,
+      "words": [
+        {
+          "word": " Just",
+          "start": 171.0,
+          "end": 172.42,
+          "probability": 0.5763461589813232
+        },
+        {
+          "word": " got",
+          "start": 172.42,
+          "end": 173.06,
+          "probability": 0.9405080676078796
+        },
+        {
+          "word": " it",
+          "start": 173.06,
+          "end": 173.18,
+          "probability": 0.997878909111023
+        },
+        {
+          "word": " all",
+          "start": 173.18,
+          "end": 173.38,
+          "probability": 0.9920240640640259
+        },
+        {
+          "word": " going",
+          "start": 173.38,
+          "end": 173.64,
+          "probability": 0.9982530474662781
+        },
+        {
+          "word": " on,",
+          "start": 173.64,
+          "end": 173.92,
+          "probability": 0.9965574741363525
+        },
+        {
+          "word": " hasn't",
+          "start": 174.04,
+          "end": 174.18,
+          "probability": 0.996293842792511
+        },
+        {
+          "word": " she?",
+          "start": 174.18,
+          "end": 174.7,
+          "probability": 0.9974673986434937
+        }
+      ]
+    },
+    {
+      "start": 187.86,
+      "end": 188.66,
+      "text": " Beautiful!",
+      "avg_logprob": -0.47825218902693856,
+      "no_speech_prob": 0.08404780179262161,
+      "words": [
+        {
+          "word": " Beautiful!",
+          "start": 187.86,
+          "end": 188.66,
+          "probability": 0.5925650000572205
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "miami-qf",
+  "source_url": "https://www.youtube.com/watch?v=Fah2i0vwBVU",
+  "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frames and multiple independent ASR models; not human listening",
+  "reviewed_at": "2026-10-22T09:34:11.047268+00:00",
+  "reviewed_from": 48,
+  "reviewed_to": 82,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-small.en.json",
+      "sha256": "57799dece423b253c295048428250ae317bc78e25f7d72b5521d764b10359b40",
+      "model": "small.en",
+      "clip": [
+        48,
+        82
+      ],
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-medium.en.json",
+      "sha256": "5c2cb6ecbe83ad62a9bd82d6e96bfa77ac30e4db53f6ba7f025b14fd67946ecf",
+      "model": "medium.en",
+      "clip": [
+        48,
+        82
+      ],
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-turbo.json",
+      "sha256": "213310a09aeb717e59ee9242d574728ebd191fd2f14adcb6756572a9685e485e",
+      "model": "large-v3-turbo",
+      "clip": [
+        54,
+        82
+      ],
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "method": "faster_whisper_name_only_prompt_diagnostic"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 60.14,
+      "end": 64.34,
+      "en": "That's a remarkable collect from that position on the court",
+      "zh": "从这个位置把球救回来，太不可思议了，"
+    },
+    {
+      "start": 64.34,
+      "end": 67.94,
+      "en": "for Jess Pegula, who's been almost flawless in this first set.",
+      "zh": "佩古拉首盘的发挥几乎无可挑剔。"
+    },
+    {
+      "start": 68.34,
+      "end": 71.04,
+      "en": "Rybakina is showing signs of life towards the end of it.",
+      "zh": "到了盘末，莱巴金娜开始有所起色。"
+    },
+    {
+      "start": 71.5,
+      "end": 75.72,
+      "en": "But it's a very, very good opening set for Jessica Pegula.",
+      "zh": "但佩古拉的首盘确实打得非常出色。"
+    },
+    {
+      "start": 75.96,
+      "end": 77.38,
+      "en": "6-2 in 36 minutes.",
+      "zh": "用时36分钟，六比二。"
+    }
+  ],
+  "review_notes": [
+    "Name-only turbo prompt identifies Rybakina where small/medium decode Rebecca.",
+    "Small life decoded light; medium/turbo agree signs of life.",
+    "Timing diagnostic records medium touching-word boundary77.38 versus other two models77.54/77.66; no human listening claimed. Native word-boundary check remains separate.",
+    "Previous independent crowd waking up sentence ends54.38small/54.36medium; nativewide starts54.64, before service toss.",
+    "Next independent First set, the first serve... begins77.66small/77.54turbo; medium adjoins its start to previous minutes at77.38. end77.40 follows selected minutes77.30turbo/77.34small/77.38medium. Outgoing .25s MUST be silence to exclude next First set; do not extend source pad."
+  ]
+}

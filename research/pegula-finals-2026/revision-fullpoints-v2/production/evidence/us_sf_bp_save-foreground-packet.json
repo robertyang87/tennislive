@@ -1,0 +1,64 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 16.92,
+  "reviewed_to": 27.4,
+  "foreground_english": [
+    {
+      "start": 25.14,
+      "end": 26.48,
+      "en": "Oh, what a save!",
+      "zh": "哦，救得真漂亮！"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/us-sf-alternative-small.en.json",
+      "sha256": "fa7aceeaaea49b210ac58c5064707c69b1159415db8b082d863e44dda36d21b5",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_clip": [
+        16,
+        30
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/us-sf-alternative-medium.en.json",
+      "sha256": "c430de0a5f4ddf6f58e9991d974a0de27ab30cd51475ea647bf1821a0dd41a19",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_clip": [
+        16,
+        30
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/us-sf-selected-turbo.json",
+      "sha256": "870c4bd58dcf55c5b8d19b8eb3e07019bad6670084beb8b407fa972638add228",
+      "model": "large-v3-turbo",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_clip": [
+        23,
+        30
+      ]
+    }
+  ],
+  "review_notes": "small.en identifies full Oh what a save with high what/a/save probabilities; medium retains only Oh. Actual targeted turbo independently confirms Oh what a save25.14–26.48 (a.9976, save.9748), resolving medium omission. Selected16.92–27.40 and outgoing27.40–27.65 have no additional stable foreground English in actual30s context.",
+  "tail_audit": {
+    "interval": [
+      27.4,
+      27.65
+    ],
+    "new_word_leak": false,
+    "next_word": null,
+    "next_onsets": null,
+    "asr_context_end": 30,
+    "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+  },
+  "human_listened": false
+}

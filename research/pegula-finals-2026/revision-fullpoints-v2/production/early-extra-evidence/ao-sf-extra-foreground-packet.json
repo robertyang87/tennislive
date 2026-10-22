@@ -1,0 +1,74 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "ao-sf",
+  "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+  "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frames and multiple independent ASR models; not human listening",
+  "reviewed_at": "2026-10-22T09:34:10.891238+00:00",
+  "reviewed_from": 110,
+  "reviewed_to": 134,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-setpoint-small.en.json",
+      "sha256": "60bdb4fb65f43b5bed6aff73741b1f06fb1309f3140fe84e8ded87ec5443d71d",
+      "model": "small.en",
+      "clip": [
+        110.0,
+        134.0
+      ],
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "method": "source_asr.py faster-whisper, no prior text, no VAD"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-setpoint-medium.en.json",
+      "sha256": "965e7d69d3555420897a52018f842d9bcc988fa6626ff9e17eaef028956b8be1",
+      "model": "medium.en",
+      "clip": [
+        110.0,
+        134.0
+      ],
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "method": "source_asr.py faster-whisper, no prior text, no VAD"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-turbo.json",
+      "sha256": "14e7931cf4b547bc4ce852c047daad312aabaa544945124dcd899474b3b9937c",
+      "model": "large-v3-turbo",
+      "clip": [
+        113,
+        134
+      ],
+      "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "method": "faster_whisper_name_only_prompt_diagnostic"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 119.92,
+      "end": 123.78,
+      "en": "Oh, it's simply stunning from Elena Rybakina.",
+      "zh": "哦，莱巴金娜这球真是精彩绝伦。"
+    },
+    {
+      "start": 124.32,
+      "end": 127.76,
+      "en": "What a set of tennis from the world number five.",
+      "zh": "世界第五打出了多么精彩的一盘。"
+    },
+    {
+      "start": 128.08,
+      "end": 131.34,
+      "en": "Wraps it up in 33 minutes, six games to three.",
+      "zh": "她用时33分钟，以六比三拿下首盘。"
+    }
+  ],
+  "review_notes": [
+    "Full medium misses the simply stunning sentence and shifts following sentence into its time; small and independent turbo agree on full actual phrase. Caption follows two agreeing models with official proper-name normalization.",
+    "Small next wraps onset128.52 vs turbo128.08; subtitle begins128.08 conservatively, includes entire thought.",
+    "Previous independent Easier said than done ends113.34 in small; start113.36 retains pre-toss server setup; native boundary frame contact verifies toss follows.",
+    "All selected speech ends by131.34; reviewed context through134 contains no new distinct line. Outgoing quarter second remains within checked context."
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "kind": "independent_middle_four_extra_complete_rally_selection_package",
+  "created_utc": "2026-10-22T09:56:49.716324+00:00",
+  "scope": "Four supplementary complete rallies only; existing terminalMP/audio windows unchanged. Research artifacts only; no sharedspec/Git edits.",
+  "status": "four_ready",
+  "human_listened": false,
+  "visual_scope": "Actual source frames and fixed-center9crop grids; not final native composition or final film QC.",
+  "policy": "Each filmed match must contain its terminalMP plus exactly one full extra live rally, per latest user rule. This package supplies the four extras only. DC replay is same point, not another live rally. No discarded candidate included as ready.",
+  "selections": [
+    {
+      "key": "berlin-sf",
+      "source_key": "berlin-sf-sabalenka",
+      "start": 209.4,
+      "end": 230.0,
+      "category": "key_turning_point",
+      "score": "Sabalenka 4-6, 6-6, tiebreak6-4; SET POINT #3; Pegula serving",
+      "outcome": "Sabalenka wins second-set tiebreak to force a deciding set; Pegula later wins the match.",
+      "captions": [
+        {
+          "start": 214.44,
+          "end": 216.78,
+          "en": "Did the rain delay help Sabalenka?",
+          "zh": "雨暂停帮到了萨巴伦卡吗？"
+        },
+        {
+          "start": 217.38,
+          "end": 218.24,
+          "en": "It sure did.",
+          "zh": "确实如此。"
+        },
+        {
+          "start": 219.66,
+          "end": 222.36,
+          "en": "Down a mini-break, came out flying.",
+          "zh": "她一度落后一个迷你破发，重返赛场后火力全开。"
+        },
+        {
+          "start": 224.18,
+          "end": 227.28,
+          "en": "And again, these two are going to a decider.",
+          "zh": "两人又将进入决胜盘。"
+        },
+        {
+          "start": 228.18,
+          "end": 229.74,
+          "en": "Sabalenka taking the second.",
+          "zh": "萨巴伦卡拿下第二盘。"
+        }
+      ],
+      "notes": "small mini brake normalized to tennis mini-break; medium Down on mini break differs on article; unprompted whole-source small scan supports Down a mini break. Raw ASR retained. Prior speech ends209.24; final retained word second ends229.74. No next foreground word detected through232.",
+      "limitation": "At214.55near Pegula approaches right crop edge. Fixed center crop does not guarantee every lateral body/stroke remains visible.",
+      "status": "ready",
+      "source_file": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "framecourt": true,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "audio_review_packet": {
+        "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/packets/berlin-sf-extra.json",
+        "sha256": "c9d612f3e6e47c21064903db3c9e2689574a2cccb125c5b9e80cfe4041a48646"
+      },
+      "native_quote_cues": [
+        {
+          "start": 5.04,
+          "end": 7.38,
+          "en": "Did the rain delay help Sabalenka?",
+          "zh": "雨暂停帮到了萨巴伦卡吗？"
+        },
+        {
+          "start": 7.98,
+          "end": 8.84,
+          "en": "It sure did.",
+          "zh": "确实如此。"
+        },
+        {
+          "start": 10.26,
+          "end": 12.96,
+          "en": "Down a mini-break, came out flying.",
+          "zh": "她一度落后一个迷你破发，重返赛场后火力全开。"
+        },
+        {
+          "start": 14.78,
+          "end": 17.88,
+          "en": "And again, these two are going to a decider.",
+          "zh": "两人又将进入决胜盘。"
+        },
+        {
+          "start": 18.78,
+          "end": 20.34,
+          "en": "Sabalenka taking the second.",
+          "zh": "萨巴伦卡拿下第二盘。"
+        }
+      ],
+      "source_scoreboard_evidence": {
+        "source_time": 210.0,
+        "full_frame": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-scoreboard-source.jpg",
+          "sha256": "82eb5846df46e57c8e3f3e662b69c1ba40b275731e2fa7c38a3f4017bd7decaa"
+        },
+        "crop": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-scoreboard-crop.png",
+          "sha256": "69db7f776ad2ab01710526ae73cd5883a7e69b7f6b7b2cb3e7b3390ce303a6c0"
+        }
+      },
+      "source_visual_evidence": {
+        "nine_crop_manifest": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/primary-nine-manifest.json",
+          "sha256": "30ffb69d589a81631aba618b61c747f2c55d455e66ceb1af0a4504c6d8c0ce32"
+        },
+        "nine_crop_samples": [
+          {
+            "key": "berlin-sf",
+            "source_time": 209.4,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-00.jpg",
+            "sha256": "6bb3ad43e052b1d67724076233663c4ef35ce3b06288d062449196a42c4e0418"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 211.975,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-01.jpg",
+            "sha256": "541a64952f27e47419f6e6838c1c221ab95704ebb0781d2f6b8cd40955a6b05d"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 214.55,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-02.jpg",
+            "sha256": "286958e421097c2e9d050d5c3019c2379500168c3ca12a26c0b17438546d0b7a"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 217.125,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-03.jpg",
+            "sha256": "5e8f4069d5dfc7dd659707d25611e383835207ee098d49e415a6709911ece735"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 219.7,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-04.jpg",
+            "sha256": "4c4171ebd4c0dafb827ef0ee0c68ce37c1ac25c5ff242a0e04b2c5e420a4c7ee"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 222.275,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-05.jpg",
+            "sha256": "9cdbcadbe2d30ec34634255f7cf8eb7a0d27ae0be46d09b600d3664c92242dc5"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 224.85,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-06.jpg",
+            "sha256": "83543084c7c537c7d80d0575f2ab81f722c603ed6f1bced9d5a1e9cc71ddc668"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 227.425,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-07.jpg",
+            "sha256": "82a6e78b3aa32cc56797244f881b1f1031d13cc02ad2e69e8a858fa27a74deb5"
+          },
+          {
+            "key": "berlin-sf",
+            "source_time": 230.0,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-crop-08.jpg",
+            "sha256": "e7168836823c1d8a825ed98c9ab7611eced80156ce8c36eddf170173429de3bd"
+          }
+        ],
+        "nine_crop_contact": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-nine-contact.jpg",
+          "sha256": "74b852d6e968579bd55c7f9b624d71a2409d296b0102f790e91131f8be0587f9"
+        },
+        "all_nine_crops_actually_visually_inspected": true,
+        "kind": "actual_source_crop_proof_not_native_composite_or_final_film_qc"
+      },
+      "complete_extra_live_rally_count": 1,
+      "extra_is_distinct_from_terminal_matchpoint": true,
+      "label_safe_window": {
+        "start": 210.8,
+        "end": 214.0,
+        "status": "source_full_court_candidate_only_requires_actual_native_label_preview",
+        "recommendation": "Retain existing match label on its reviewed original live window; do not add another label solely for this extra."
+      }
+    },
+    {
+      "key": "dc-final",
+      "source_key": "dc-final",
+      "start": 156.2,
+      "end": 179.8,
+      "category": "key_turning_point",
+      "score": "Pegula6-4,4-5,30-40; Pegula serving, Eala receiving; SET POINT",
+      "outcome": "Eala breaks Pegula and wins second set6-4 to force a deciding set.",
+      "captions": [
+        {
+          "start": 168.14,
+          "end": 172.32,
+          "en": "A second break for Eala",
+          "zh": "伊埃拉第二次破发，"
+        },
+        {
+          "start": 172.66,
+          "end": 174.84,
+          "en": "delivers the second set.",
+          "zh": "拿下了第二盘。"
+        },
+        {
+          "start": 175.74,
+          "end": 179.36,
+          "en": "We are off to three in the DC final.",
+          "zh": "华盛顿决赛进入决胜盘。"
+        }
+      ],
+      "notes": "One complete live rally followed by a replay of the same point, not a second complete live rally. Prior utterance ends156.00; next new utterance begins180.54/180.76, outside179.80+.25. Name Eala agrees in both selected-window ASR.",
+      "limitation": "Near Pegula partly reaches the left crop edge around165.05. Original157scoreboard has animated SETPOINT overlay; candidate-scoreboards.png source164shows unobscured names.",
+      "status": "ready",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "framecourt": true,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "audio_review_packet": {
+        "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/packets/dc-final-extra.json",
+        "sha256": "1a74be54cef026d6c7c615c1d6be1f4a3496e4ac6e55bfd31ab3eff3fc3f148d"
+      },
+      "native_quote_cues": [
+        {
+          "start": 11.94,
+          "end": 16.12,
+          "en": "A second break for Eala",
+          "zh": "伊埃拉第二次破发，"
+        },
+        {
+          "start": 16.46,
+          "end": 18.64,
+          "en": "delivers the second set.",
+          "zh": "拿下了第二盘。"
+        },
+        {
+          "start": 19.54,
+          "end": 23.16,
+          "en": "We are off to three in the DC final.",
+          "zh": "华盛顿决赛进入决胜盘。"
+        }
+      ],
+      "source_scoreboard_evidence": {
+        "source_time": 157.0,
+        "full_frame": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-scoreboard-source.jpg",
+          "sha256": "6cbef7f9d15d3665048c047a87c7ef5e5276ce65ff6f8fb26c97cba443a079f0"
+        },
+        "crop": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-scoreboard-crop.png",
+          "sha256": "4b665aed7a99413a15b58066953102fdd52f9b8df7ce2762051c1059300dfcd8"
+        }
+      },
+      "source_visual_evidence": {
+        "nine_crop_manifest": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/primary-nine-manifest.json",
+          "sha256": "30ffb69d589a81631aba618b61c747f2c55d455e66ceb1af0a4504c6d8c0ce32"
+        },
+        "nine_crop_samples": [
+          {
+            "key": "dc-final",
+            "source_time": 156.2,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-00.jpg",
+            "sha256": "d758c8a56d128f8eaa7aa3f6b741fa7aa4239c6b7e7dce1426d78ced7ea86e0f"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 159.15,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-01.jpg",
+            "sha256": "2fd7428cad7d8068e2b72258ef18234c876a1fd2504353646f40872ab142f632"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 162.1,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-02.jpg",
+            "sha256": "3f694ead250abd4a9d03aa3d02f2b3c1bc002d793be4a7d3535ef967c5fb2df7"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 165.05,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-03.jpg",
+            "sha256": "94ead83f2d4de1e5f2a419fb3ccb42ab57e73f596326dbcc2994a532711d67d6"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 168.0,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-04.jpg",
+            "sha256": "be25d9854524057dec833ef01a0cb48996dcb6750f533f5b7f051deefa734104"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 170.95,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-05.jpg",
+            "sha256": "22bc728cffda7b7e224fd1053855b17c5ed46bfaca2481ca70d1c94e3dd95bd1"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 173.9,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-06.jpg",
+            "sha256": "ef511599774e6ba3e2dfb1692f28c83249d07faa9519f30838b81172253dcc2f"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 176.85,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-07.jpg",
+            "sha256": "cfb4f925e51e0d723aabf9d90d12aff816ba86231d04df4496663efaf4afa585"
+          },
+          {
+            "key": "dc-final",
+            "source_time": 179.8,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-crop-08.jpg",
+            "sha256": "74c02346a86d29bba6b6ad0b8a655bc5b47018c7aced6827b5f045fe5c9b4c4a"
+          }
+        ],
+        "nine_crop_contact": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-nine-contact.jpg",
+          "sha256": "a1011fe2a45bb7c79b33ceb36ec253599778462d219707f868fc35293d1ffe4a"
+        },
+        "all_nine_crops_actually_visually_inspected": true,
+        "kind": "actual_source_crop_proof_not_native_composite_or_final_film_qc"
+      },
+      "complete_extra_live_rally_count": 1,
+      "extra_is_distinct_from_terminal_matchpoint": true,
+      "label_safe_window": {
+        "start": 158.0,
+        "end": 165.0,
+        "status": "source_full_court_candidate_only_requires_actual_native_label_preview",
+        "recommendation": "Retain existing match label on its reviewed original live window; do not add another label solely for this extra."
+      }
+    },
+    {
+      "key": "cincy-sf",
+      "source_key": "cincy-sf",
+      "start": 171.92,
+      "end": 185.72,
+      "category": "key_turning_point",
+      "score": "Pegula7-5,1-1,Ad; Swiatek serving; BREAK POINT #2",
+      "outcome": "Swiatek saves Pegula break point with a winner; the scoreboard changes from Pegula advantage to40-40. This is a second-set missed opportunity before Pegula ultimately wins the match.",
+      "captions": [
+        {
+          "start": 181.44,
+          "end": 185.46,
+          "en": "Great winner! Kept it low enough then, wasn't affected by the wind.",
+          "zh": "好球！她把球压得足够低，没有受到风的影响。"
+        }
+      ],
+      "notes": "Replaces rejected first-set157s-boundary candidate. Actual two-model169–189context agrees on every foreground word in selected window. Previous complete utterance ends171.78small/171.82medium; start171.92after both, with wide pre-serve frame before toss. Retained complete comment starts181.44small/181.52medium, final wind ends185.38small/185.46medium. End185.72 is0.26s after latest final word; no new foreground through189. No clipped next clause; no need to use source-body audio muting. Outgoing audio_tail:silence only outside window.",
+      "limitation": "Nine fixed-center samples retain both players through this selected rally, with the near server approaching the left edge at177.095. Fixed center does not guarantee every lateral contact/body fits throughout unsampled instants.",
+      "status": "ready",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+      "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "framecourt": true,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "audio_review_packet": {
+        "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/packets/cincy-sf-extra.json",
+        "sha256": "bfd3f6c533e01f895c278d172d45082bdea7b4f178569adf10fdda94f0250eec"
+      },
+      "native_quote_cues": [
+        {
+          "start": 9.52,
+          "end": 13.54,
+          "en": "Great winner! Kept it low enough then, wasn't affected by the wind.",
+          "zh": "好球！她把球压得足够低，没有受到风的影响。"
+        }
+      ],
+      "source_scoreboard_evidence": {
+        "source_time": 172,
+        "full_frame": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-scoreboard-source.jpg",
+          "sha256": "c59159e3dd080aaa4e76edaf660f326f9bc52fb0062448a3a8a2ce4bf6854169"
+        },
+        "crop": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-scoreboard-crop.png",
+          "sha256": "2d7353bcfd0b129b92088004fcbc88dc9ce9dd18b3d0c08deb4c94b682588854"
+        }
+      },
+      "source_visual_evidence": {
+        "nine_crop_manifest": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-nine-manifest.json",
+          "sha256": "55ee4836f6c6a4ffd3c9d83e9a68909711d2f919c9c5e1a2fa99db5b6e0b8d04"
+        },
+        "nine_crop_samples": [
+          {
+            "key": "cincy-sf",
+            "source_time": 171.92,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-00.jpg",
+            "sha256": "79d88961503ed97c371fe89a8d0a9dc22656ad9157e8dc10a2ae4c07873d0918"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 173.645,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-01.jpg",
+            "sha256": "3ff93e0eec2d9849968311741f077952dce1912773ccea435d551b603e3ae3f7"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 175.37,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-02.jpg",
+            "sha256": "931dbd0f199ac35dcfbab8d620bced4846d267ebc7e8877244bf6fe4fb74aa8d"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 177.095,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-03.jpg",
+            "sha256": "8d480f28100de506b46647372ca6d1788d4b180a003bb338c3f1eb8bbcdc7805"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 178.82,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-04.jpg",
+            "sha256": "2c3e2266a229c43b5a8751a9b55724cf8b9e5fb3e75c88d0ea78ce9c760ec045"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 180.545,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-05.jpg",
+            "sha256": "a9ce47f1d20f66c4f8244c3b582780097e73881ecaf0595ce1a85c6fac18e88e"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 182.27,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-06.jpg",
+            "sha256": "60b472589a07e7bf96a96071dfddd64884434953ac4541db7e4219a9c95a7560"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 183.995,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-07.jpg",
+            "sha256": "8aa7423fcb9e87dc68a87d59d727162d5355d38c7c64af0f04c20e7b0270cccc"
+          },
+          {
+            "key": "cincy-sf",
+            "source_time": 185.72,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-crop-08.jpg",
+            "sha256": "109bfd2adf880d78bc5bec0bd66ffb04eb98e2e946fc39afe65dfa37234c0ffc"
+          }
+        ],
+        "nine_crop_contact": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-nine-contact.jpg",
+          "sha256": "70a0fcfe56f0aed59838401ab5374c1b0bf0810b3a414a87a2cfbb1a73f0b179"
+        },
+        "all_nine_crops_actually_visually_inspected": true,
+        "full_live_rally_and_reaction_contact": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-bp-contact.jpg",
+          "sha256": "c39305978b898859b8b6800fb029d2d5b8db11a698fd55ffc0a24b8616288164"
+        },
+        "kind": "actual_source_crop_proof_not_native_composite_or_final_film_qc"
+      },
+      "complete_extra_live_rally_count": 1,
+      "extra_is_distinct_from_terminal_matchpoint": true,
+      "label_safe_window": {
+        "start": 173,
+        "end": 180,
+        "status": "source_full_court_candidate_only_requires_actual_native_label_preview",
+        "recommendation": "Retain existing match label on its reviewed original live window; do not add another label solely for this extra."
+      },
+      "scoreboard_outcome_evidence": {
+        "source_time": 184.5,
+        "full_frame": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-after-source.jpg",
+          "sha256": "3a294f24d0354115a491452ca555a97c5d9b834fd4752c7c8c10806339f9eccf"
+        },
+        "crop": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-after-crop.png",
+          "sha256": "1697485bb798828941bf3f841166d6b8221b66ad5bd2b4ef69ec6aba3f1a87ba"
+        }
+      }
+    },
+    {
+      "key": "cincy-final",
+      "source_key": "cincy-final",
+      "start": 174.9,
+      "end": 189.1,
+      "category": "highlight",
+      "score": "Gauff6-2,3-1,30-0; Gauff serving",
+      "outcome": "Pegula wins this complete rally; this is a highlight, not a set point, break or asserted comeback.",
+      "captions": [
+        {
+          "start": 187.86,
+          "end": 188.66,
+          "en": "Beautiful!",
+          "zh": "漂亮！"
+        }
+      ],
+      "notes": "Previous complete sentence ends174.38small/174.70medium; start174.90 is after both. Small Beautiful188.28–188.52, medium187.86–188.66; caption uses union. No more foreground words through193. Scoreboard keeps pre-point score during reaction; do not infer the next displayed score.",
+      "limitation": "Near Gauff partially exits right edge around178.45 and183.78. Full temporal rally retained; no claim all contact/body positions fit fixed crop.",
+      "status": "ready",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+      "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "method": "asr_cross_checked",
+      "human_listened": false,
+      "framecourt": true,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "audio_review_packet": {
+        "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/packets/cincy-final-extra.json",
+        "sha256": "4118a067f132d9fcadcac0666c3aaeefa77bff030dbc905c81edaa0189f5d522"
+      },
+      "native_quote_cues": [
+        {
+          "start": 12.96,
+          "end": 13.76,
+          "en": "Beautiful!",
+          "zh": "漂亮！"
+        }
+      ],
+      "source_scoreboard_evidence": {
+        "source_time": 175.0,
+        "full_frame": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-scoreboard-source.jpg",
+          "sha256": "ebe77c3dc0e6e8556dc4d4fb6b88c6b6cf1d6843ba9258dc7cd965df2874d60b"
+        },
+        "crop": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-scoreboard-crop.png",
+          "sha256": "b483c3ad499c6b9aedb0af6b5e89d171f4b43a681d2a624f425af424995e88a2"
+        }
+      },
+      "source_visual_evidence": {
+        "nine_crop_manifest": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/primary-nine-manifest.json",
+          "sha256": "30ffb69d589a81631aba618b61c747f2c55d455e66ceb1af0a4504c6d8c0ce32"
+        },
+        "nine_crop_samples": [
+          {
+            "key": "cincy-final",
+            "source_time": 174.9,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-00.jpg",
+            "sha256": "6f71ccb5cbb326309c3c3762cb8f787c491f394593534d8aa31f04f5c9463035"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 176.675,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-01.jpg",
+            "sha256": "eba3964687d1b334132ef74d65cb8eb9a75fdfb2a3c6cab7214188b29bc09ec2"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 178.45,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-02.jpg",
+            "sha256": "e5e2565254487275c4aa320d63811e514312c52c46e5b3dbf6c5b68603ff9805"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 180.225,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-03.jpg",
+            "sha256": "fd3d2fe66d1055d8aad6f089857907b03a16474782a47427f09309cdf4682237"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 182.0,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-04.jpg",
+            "sha256": "31ddc27230d6643a49370d42554012bd992d92c63610273e00c065b9628867ea"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 183.775,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-05.jpg",
+            "sha256": "2a9e1798a17034b5f200b55e6c8bb34a5b0d5bd26d1d0d891ce954c49559870e"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 185.55,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-06.jpg",
+            "sha256": "8b3312b8e9be305e94db5326af887878a9f0b7ad0224b7eef560704515e4ba2b"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 187.325,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-07.jpg",
+            "sha256": "7d8fe533ecee5cf9d357573254dd89fdf05c6b7f96b9e0da3bae1f5043287c24"
+          },
+          {
+            "key": "cincy-final",
+            "source_time": 189.1,
+            "file": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-crop-08.jpg",
+            "sha256": "55159737d02d90f9904cc11af8d5a59cc9557b0c9a7f5967738bebb054619065"
+          }
+        ],
+        "nine_crop_contact": {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-nine-contact.jpg",
+          "sha256": "8ab636392f123f22e76204ef7665e1b264b0639a9b8eeb30e3ba17e25d5a78d9"
+        },
+        "all_nine_crops_actually_visually_inspected": true,
+        "kind": "actual_source_crop_proof_not_native_composite_or_final_film_qc"
+      },
+      "complete_extra_live_rally_count": 1,
+      "extra_is_distinct_from_terminal_matchpoint": true,
+      "label_safe_window": {
+        "start": 177.0,
+        "end": 184.0,
+        "status": "source_full_court_candidate_only_requires_actual_native_label_preview",
+        "recommendation": "Retain existing match label on its reviewed original live window; do not add another label solely for this extra."
+      }
+    }
+  ],
+  "updated_utc": "2026-10-22T10:02:36.851565+00:00"
+}

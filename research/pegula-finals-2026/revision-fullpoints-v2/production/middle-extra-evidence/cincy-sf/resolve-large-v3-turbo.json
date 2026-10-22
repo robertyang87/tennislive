@@ -1,0 +1,89 @@
+{
+  "model": "large-v3-turbo",
+  "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+  "clip": [
+    203.5,
+    209.5
+  ],
+  "method": "actual_faster_whisper_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "recorded_utc": "2026-10-22T09:37:16.792297+00:00",
+  "segments": [
+    {
+      "start": 204.7,
+      "end": 208.08,
+      "text": " Just enough to say that one did that before in there.",
+      "avg_logprob": -0.7537392695744832,
+      "no_speech_prob": 8.765733278126575e-11,
+      "words": [
+        {
+          "word": " Just",
+          "start": 204.7,
+          "end": 205.14,
+          "probability": 0.4545029401779175
+        },
+        {
+          "word": " enough",
+          "start": 205.14,
+          "end": 205.56,
+          "probability": 0.970304012298584
+        },
+        {
+          "word": " to",
+          "start": 205.56,
+          "end": 205.76,
+          "probability": 0.9955105781555176
+        },
+        {
+          "word": " say",
+          "start": 205.76,
+          "end": 205.98,
+          "probability": 0.41478028893470764
+        },
+        {
+          "word": " that",
+          "start": 205.98,
+          "end": 206.2,
+          "probability": 0.987369954586029
+        },
+        {
+          "word": " one",
+          "start": 206.2,
+          "end": 206.42,
+          "probability": 0.9015262722969055
+        },
+        {
+          "word": " did",
+          "start": 206.42,
+          "end": 207.08,
+          "probability": 0.8195403814315796
+        },
+        {
+          "word": " that",
+          "start": 207.08,
+          "end": 207.24,
+          "probability": 0.6683029532432556
+        },
+        {
+          "word": " before",
+          "start": 207.24,
+          "end": 207.6,
+          "probability": 0.9863994121551514
+        },
+        {
+          "word": " in",
+          "start": 207.6,
+          "end": 207.86,
+          "probability": 0.4205544590950012
+        },
+        {
+          "word": " there.",
+          "start": 207.86,
+          "end": 208.08,
+          "probability": 0.4692462980747223
+        }
+      ]
+    }
+  ]
+}

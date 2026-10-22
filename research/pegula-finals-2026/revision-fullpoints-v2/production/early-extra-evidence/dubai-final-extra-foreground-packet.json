@@ -1,0 +1,87 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_key": "dubai-final",
+  "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+  "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frames and multiple independent ASR models; not human listening",
+  "reviewed_at": "2026-10-22T09:34:11.000750+00:00",
+  "reviewed_from": 140,
+  "reviewed_to": 177,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-small.en.json",
+      "sha256": "a265c96b504954d079990780cf1c8c29fc9aa91f40534666b4b278ab2d14e839",
+      "model": "small.en",
+      "clip": [
+        140,
+        174
+      ],
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-medium.en.json",
+      "sha256": "6ad8dd2fcb93c1988215355776f269ecfebf9fe7bbd49a22b06b2d8ed2b648b8",
+      "model": "medium.en",
+      "clip": [
+        140,
+        174
+      ],
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "method": "faster_whisper_cpu_int8_beam5_no_vad_no_previous_text"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-turbo.json",
+      "sha256": "dba40389a6b6b10aa03e0475c11013d8bad0d952402c32fe4562760f78d0f5c9",
+      "model": "large-v3-turbo",
+      "clip": [
+        147,
+        177
+      ],
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "method": "faster_whisper_name_only_prompt_diagnostic"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 148.36,
+      "end": 152.16,
+      "en": "Multiple chances to get this first set on the board.",
+      "zh": "她有多个拿下首盘的机会。"
+    },
+    {
+      "start": 158.52,
+      "end": 161.44,
+      "en": "And Pegula gets the first set on the board.",
+      "zh": "佩古拉拿下首盘。"
+    },
+    {
+      "start": 162.02,
+      "end": 165.5,
+      "en": "It was tremendous from her, so solid early on.",
+      "zh": "她发挥出色，开局就非常扎实。"
+    },
+    {
+      "start": 165.82,
+      "end": 170.86,
+      "en": "Svitolina showed plenty of fight, but Pegula kept her at a distance",
+      "zh": "斯维托丽娜顽强抵抗，但佩古拉始终保持领先，"
+    },
+    {
+      "start": 170.86,
+      "end": 173.74,
+      "en": "and after 34 minutes takes the first set, 6-2.",
+      "zh": "用时34分钟，以六比二拿下首盘。"
+    }
+  ],
+  "review_notes": [
+    "Small calls final score60; medium and turbo6-2 match burned first-set score.",
+    "Small and medium names misdecoded in parts; normalized against same-match official identities.",
+    "Court-center geometry is mandatory; native close-up faces/body at151.4/159.2 partly outside crop. This is a disclosed crop limitation, not certified visual pass.",
+    "Prior Svitolina word ends148.16turbo/148.28medium; Multiple begins148.46turbo/148.50medium. Small runs boundary earlier148.24. start148.36 chosen between majority agreeing word bounds; no preceding-sentence fragment captioned.",
+    "Terminal6-2 ends173.74 at latest; no new distinct utterance in retained context through177; outgoing quarter second checked."
+  ]
+}

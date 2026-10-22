@@ -1,0 +1,63 @@
+{
+  "kind": "actual_native_sample_review_not_final_encoded_film",
+  "reviewer": "Codex actual image inspection",
+  "groups": [
+    {
+      "group": "fraction",
+      "manifest": "/workspace/pegula-finals-production/native-preview-fraction-fullpoints-v2/preview_manifest.json",
+      "manifest_sha256": "a9d98795d42e460dc19bbdbe534566ffde85a073d0bce16b541f777958ad0b09",
+      "actual_spec_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+      "frames": 8,
+      "all_contact_sheets_actually_viewed": true,
+      "all_labels_before_during_after": true,
+      "full_size_checks": [
+        "fraction/caption-06",
+        "early/caption-06"
+      ],
+      "issues": []
+    },
+    {
+      "group": "early",
+      "manifest": "/workspace/pegula-finals-production/native-preview-early-fullpoints-v2/preview_manifest.json",
+      "manifest_sha256": "3c7ff9f637f1248fd63c25999e28983206eca092e38be3cd1566b6b551fb6337",
+      "actual_spec_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+      "frames": 24,
+      "all_contact_sheets_actually_viewed": true,
+      "all_labels_before_during_after": true,
+      "full_size_checks": [
+        "fraction/caption-06",
+        "early/caption-06"
+      ],
+      "issues": []
+    },
+    {
+      "group": "late",
+      "manifest": "/workspace/pegula-finals-production/native-preview-late-fullpoints-v2/preview_manifest.json",
+      "manifest_sha256": "322b14d1045fe751cc2b727415d292bc60f02af79b95904124147eedbed25235",
+      "actual_spec_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+      "frames": 24,
+      "all_contact_sheets_actually_viewed": true,
+      "all_labels_before_during_after": true,
+      "full_size_checks": [],
+      "issues": []
+    },
+    {
+      "group": "late-end",
+      "manifest": "/workspace/pegula-finals-production/native-preview-late-end-fullpoints-v2/preview_manifest.json",
+      "manifest_sha256": "c73db5de766bd8c190893cfef16e2a15cb01971df56c2fa861b028bd40f7fead",
+      "actual_spec_sha256": "6620e2f7610595c8941d58a86cf4249504ee4c5fb202560d45598d449fd8c949",
+      "frames": 6,
+      "all_contact_sheets_actually_viewed": true,
+      "all_labels_before_during_after": true,
+      "full_size_checks": [],
+      "issues": []
+    }
+  ],
+  "observations": [
+    "Transparent top right cards only on actual video, correct1/4 notation, score/winner colors and before/after fade visible",
+    "Interviews fill canvas using measured fixed face center; chapter cards and official qualification static have no information inset",
+    "Side-by-side source-to-next-shot transition in AO is original broadcast dissolve, not duplicated extra point",
+    "Unchanged source/crop/label/voice fields outside two new supplementary subtitle-position windows; those two windows require separate fresh visual review"
+  ],
+  "final_film_qc": false
+}

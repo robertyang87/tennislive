@@ -1,0 +1,317 @@
+{
+  "schema": "tennislive.native-extra-early-repair-review.v1",
+  "reviewed_at": "2026-10-22T10:20:17.032149+00:00",
+  "spec_file": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+  "spec_sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+  "status": "sampled_repair_clear_no_blocking_findings",
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "scope": "Only the two repaired subtitle-position windows plus their incoming/outgoing boundaries.18actual native1080x1440 PNGs all individually viewed; earlier41frame review remains separate and honestly blocked for its oldspec.",
+  "method": "Native production preview graph at25fps with actual source/ASS/scoreboard pixels; SHA checked for manifest and each image. This is a visual PNG precheck, not encoded-video/audio approval.",
+  "manifest": {
+    "path": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/preview_manifest.json",
+    "sha256": "bcf5383899493c99c60f2be6fec4974cee5058729a2b37e52c7c1412f0670d60"
+  },
+  "requested_manifest": {
+    "path": "/workspace/pegula-finals-production/preview-extra-early-fullpoints-v2-repair-requested.json",
+    "sha256": "87163c9e4b23b098c0484ada775c06fcb158f59f55850a29f2b46348689cfa56"
+  },
+  "fps": "25/1",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "images": [
+    {
+      "number": 1,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-01.png",
+      "sha256": "bfc10bf18dc9e69127a48cbb267e363aa9b9821ba26504d103044fa52b8b4b4e",
+      "segment_id": "dubai-final-extra",
+      "reason": "before-lift",
+      "film_time": 95.21000000000001,
+      "source_time": 165.76000000000002,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 2,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-02.png",
+      "sha256": "56561d798aa9003a5edd4e189c5fd61300d7eb3301313920cb74a33e94a2f92e",
+      "segment_id": "dubai-final-extra",
+      "reason": "lift-first",
+      "film_time": 95.29,
+      "source_time": 165.84,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 3,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-03.png",
+      "sha256": "aca5f921e1ec79bb7fbeb1648377ef060a09349f76b0d418edaa9e621fe9a1be",
+      "segment_id": "dubai-final-extra",
+      "reason": "previous-cue-middle",
+      "film_time": 97.77000000000001,
+      "source_time": 168.32000000000002,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 4,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-04.png",
+      "sha256": "8c6310a828a493333bcbf6363f5a8cee0584813ca7b6acb5e147e4e015c6316e",
+      "segment_id": "dubai-final-extra",
+      "reason": "board-first",
+      "film_time": 99.25,
+      "source_time": 169.8,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 5,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-05.png",
+      "sha256": "c53d818640906ace4aabe56851c94f80500f792b0c141c882d455af0f722625c",
+      "segment_id": "dubai-final-extra",
+      "reason": "previous-cue-last",
+      "film_time": 100.25,
+      "source_time": 170.8,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 6,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-06.png",
+      "sha256": "8d0df80578c89110cf29d7c18cbfed77e98df6b215b95bbb8e4c85383141ee35",
+      "segment_id": "dubai-final-extra",
+      "reason": "final-cue-first",
+      "film_time": 100.45,
+      "source_time": 171.0,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 7,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-07.png",
+      "sha256": "ad116bab5aae971a7510892142fec84fcce8e0bcf790721106c4925b5072d538",
+      "segment_id": "dubai-final-extra",
+      "reason": "board-middle",
+      "film_time": 101.73,
+      "source_time": 172.28000000000003,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 8,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-08.png",
+      "sha256": "ca284ffd0c46646073ffa939c2a42db9dd93b6305225926466a43a4e79ca2ab6",
+      "segment_id": "dubai-final-extra",
+      "reason": "final-cue-last",
+      "film_time": 103.13,
+      "source_time": 173.68,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 9,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-09.png",
+      "sha256": "014da088390e39d5cbe27eedc34cdcc43c71e95c895a2d57b0c14a690cbe8146",
+      "segment_id": "dubai-final-extra",
+      "reason": "window-last-no-cue",
+      "film_time": 103.49000000000001,
+      "source_time": 174.04000000000002,
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "actually_viewed": true
+    },
+    {
+      "number": 10,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-10.png",
+      "sha256": "2e4cb37e4e332370e8204c6c0129cd2db74cbe012efd0199208ee9f7d3558636",
+      "segment_id": "miami-qf-extra",
+      "reason": "previous-cue-last-low",
+      "film_time": 148.43,
+      "source_time": 71.0,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 11,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-11.png",
+      "sha256": "03b64bc52e95cd801199b58b84e687b6fe5f4fd4e24919577b65212c449dbb32",
+      "segment_id": "miami-qf-extra",
+      "reason": "before-lift",
+      "film_time": 148.87,
+      "source_time": 71.44,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 12,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-12.png",
+      "sha256": "219c2b10858d83f92576414c95a190654299c781cf2b16bbe49803c1d5805706",
+      "segment_id": "miami-qf-extra",
+      "reason": "lift-first",
+      "film_time": 148.95,
+      "source_time": 71.52,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 13,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-13.png",
+      "sha256": "a8b922307fb7ecfa6f8b3f66565544be6ec9b29bb92614c82474b7fdb9edf19f",
+      "segment_id": "miami-qf-extra",
+      "reason": "board-first",
+      "film_time": 149.91,
+      "source_time": 72.48,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 14,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-14.png",
+      "sha256": "838ccf625fc270dc6809dd461791e2c85a13454fa31101cdd57e998205b0ba33",
+      "segment_id": "miami-qf-extra",
+      "reason": "board-middle",
+      "film_time": 151.03,
+      "source_time": 73.6,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 15,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-15.png",
+      "sha256": "42b64266278a79d0d68c1d93d14d5e857c74936a6099f37eaf2418361aada54c",
+      "segment_id": "miami-qf-extra",
+      "reason": "penultimate-cue-last",
+      "film_time": 153.10999999999999,
+      "source_time": 75.68,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 16,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-16.png",
+      "sha256": "83920ebf1b073942083a148d3924955dad3f18a1c7a297839a4d84b6236fadd0",
+      "segment_id": "miami-qf-extra",
+      "reason": "final-cue-middle",
+      "film_time": 154.07,
+      "source_time": 76.64,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 17,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-17.png",
+      "sha256": "00eaf703858bf25968ae30229970b371150f796e31c1df0b59afc176a3e939ee",
+      "segment_id": "miami-qf-extra",
+      "reason": "board-last",
+      "film_time": 154.67,
+      "source_time": 77.24000000000001,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    },
+    {
+      "number": 18,
+      "image": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-repair/caption-18.png",
+      "sha256": "99e14c2dc19186e4c405b06f634eafdac980131630fc13f97aad6177fa97d659",
+      "segment_id": "miami-qf-extra",
+      "reason": "window-last",
+      "film_time": 154.79,
+      "source_time": 77.36,
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "actually_viewed": true
+    }
+  ],
+  "historical_blocked_review": {
+    "path": "/workspace/pegula-finals-production/production/native-extra-early-v2-review.json",
+    "sha256": "2a314a592d25ceb71c4459cd5423a2fc355bfb9bf72ec9ad185e1af1cb1b2628",
+    "reviewed_spec_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+    "status": "Preserved blocked; not overwritten as pass."
+  },
+  "repairs": [
+    {
+      "segment": "dubai-final-extra",
+      "source_range": [
+        165.82,
+        174.12
+      ],
+      "subtitle_bottom_windows": [
+        [
+          17.46,
+          25.76,
+          520
+        ]
+      ],
+      "verified_images": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "result": "Both completecue boundaries held; EN/ZH entirely above original first-set lowerthird top~948 with visible gap. Names/scores remain readable. No subtitle on Pegula face; some subtitle over torso/skirt while she walks/sits."
+    },
+    {
+      "segment": "miami-qf-extra",
+      "source_range": [
+        71.5,
+        77.4
+      ],
+      "subtitle_bottom_windows": [
+        [
+          16.86,
+          22.76,
+          520
+        ]
+      ],
+      "verified_images": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "result": "Previous Rybakina/coach cue remains at original lower position; subsequent two completecues lifted. Caption no longer covers JessicaPegula green-name row. Table onset/middle/exit all sampled. Pegula seated face clear; subtitle over lowerlegs/seat background."
+    }
+  ],
+  "findings": [],
+  "checks": {
+    "original_scoreboard_caption_overlap_resolved": true,
+    "caption_clipping": false,
+    "english_chinese_collision": false,
+    "player_face_obscured_by_repaired_caption": false,
+    "coach_face_obscured_by_repaired_caption": false,
+    "source_fills_entire_canvas": true,
+    "all18_images_1080x1440": true,
+    "window_before_after_boundaries_sampled": true,
+    "all_affected_cues_sampled": true,
+    "static_information_insets": 0,
+    "title_card_story_label_count": 0
+  },
+  "observations": [
+    "Dubai repairedcue begins during a brief spectator shot: Chinese line brushes foreground spectator hair boundary, not eyes/nose/mouth; player/coach faces remain clear. This is not a claim every background hair pixel is uncovered.",
+    "Original fixedcourt .5crop limitations persist unchanged in Dubai service/reaction closeups and lateral running. This repair moves subtitles only; it does not certify all original source edges visible.",
+    "Miami source large lowerthird itself animates/fades near77.24; repaired caption stays above it. Native sample at71.52 is at cue fade-in boundary; fullcue is clear at72.48/73.60/75.68.",
+    "Charleston terminal264.60trim and all static-card checks remain documented in earlier41frame review. No new audio or complete motionQC conducted here."
+  ],
+  "contact": {
+    "path": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-evidence/repair18-contact.jpg",
+    "sha256": "5f905f1d26b4bb04e034805584b7c7e394078fcd1f169d6544880416e50c67f0"
+  },
+  "before_after": {
+    "path": "/workspace/pegula-finals-production/native-preview-extra-early-fullpoints-v2-evidence/miami-before-after-scoreboard.jpg",
+    "sha256": "05509d71176f52af37292c3cf1ed35a09bf32fa73da0ec755b048366250f7029"
+  },
+  "limits": [
+    "No final QC or publication approval",
+    "Interior segment samples exclude dissolves and final H.264 compression",
+    "Audio is not produced or evaluated",
+    "Geometry sets without timestamps do not prove all board-width transitions were sampled"
+  ]
+}

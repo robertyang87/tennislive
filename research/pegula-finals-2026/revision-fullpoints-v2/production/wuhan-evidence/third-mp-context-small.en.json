@@ -1,0 +1,110 @@
+{
+  "model": "small.en",
+  "source_file": "/workspace/pegula-finals-production/media/wuhan-r2.mp4",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "clip": [
+    165.0,
+    194.0
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vad_false_word_timestamps",
+  "human_listening_claimed": false,
+  "recorded_utc": "2026-10-22T07:46:05.235243+00:00",
+  "segments": [
+    {
+      "start": 165.0,
+      "end": 168.6,
+      "text": " Well, what can you do when Ostapenko plays like that?",
+      "avg_logprob": -0.42002790648004285,
+      "no_speech_prob": 0.10495509207248688,
+      "words": [
+        {
+          "word": " Well,",
+          "start": 165.0,
+          "end": 165.06,
+          "probability": 0.21551436185836792
+        },
+        {
+          "word": " what",
+          "start": 165.06,
+          "end": 165.22,
+          "probability": 0.9935756325721741
+        },
+        {
+          "word": " can",
+          "start": 165.22,
+          "end": 165.4,
+          "probability": 0.9981446266174316
+        },
+        {
+          "word": " you",
+          "start": 165.4,
+          "end": 165.54,
+          "probability": 0.9985948204994202
+        },
+        {
+          "word": " do",
+          "start": 165.54,
+          "end": 165.92,
+          "probability": 0.9970172643661499
+        },
+        {
+          "word": " when",
+          "start": 165.92,
+          "end": 167.04,
+          "probability": 0.7459320425987244
+        },
+        {
+          "word": " Ostapenko",
+          "start": 167.04,
+          "end": 167.62,
+          "probability": 0.5590934008359909
+        },
+        {
+          "word": " plays",
+          "start": 167.62,
+          "end": 168.0,
+          "probability": 0.9855917692184448
+        },
+        {
+          "word": " like",
+          "start": 168.0,
+          "end": 168.28,
+          "probability": 0.9966141581535339
+        },
+        {
+          "word": " that?",
+          "start": 168.28,
+          "end": 168.66,
+          "probability": 0.9946773052215576
+        }
+      ]
+    },
+    {
+      "start": 186.4,
+      "end": 187.2,
+      "text": " That is unreal.",
+      "avg_logprob": -0.42002790648004285,
+      "no_speech_prob": 0.10495509207248688,
+      "words": [
+        {
+          "word": " That",
+          "start": 186.24,
+          "end": 186.62,
+          "probability": 0.9431926012039185
+        },
+        {
+          "word": " is",
+          "start": 186.62,
+          "end": 186.82,
+          "probability": 0.9949553608894348
+        },
+        {
+          "word": " unreal.",
+          "start": 186.82,
+          "end": 187.2,
+          "probability": 0.9940290451049805
+        }
+      ]
+    }
+  ]
+}

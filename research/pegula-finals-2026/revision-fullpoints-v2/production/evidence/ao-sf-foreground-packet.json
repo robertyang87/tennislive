@@ -1,0 +1,89 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+  "source_sha256": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex early-source agent: actual word-timestamp small.en/medium.en comparison; no human listening claim",
+  "reviewed_at": "2026-10-22T08:04:46.518073+00:00",
+  "status": "complete",
+  "reviewed_from": 434,
+  "reviewed_to": 467,
+  "foreground_english": [
+    {
+      "start": 444.18,
+      "end": 447.1,
+      "en": "Makes no mistake of it this time,",
+      "zh": "这一次她没有再失手",
+      "text": "Makes no mistake of it this time,"
+    },
+    {
+      "start": 447.78,
+      "end": 450.06,
+      "en": "and it's Elena Rybakina",
+      "zh": "莱巴金娜",
+      "text": "and it's Elena Rybakina"
+    },
+    {
+      "start": 450.06,
+      "end": 454.9,
+      "en": "moving into the Australian Open final of 2026.",
+      "zh": "闯进2026年澳网决赛",
+      "text": "moving into the Australian Open final of 2026."
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/ao-sf-small.en.json",
+      "sha256": "f725125a0b7d7479c5ceb41fdbf48e0b909fabd1269c268f7495f1fa773e1b60",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        434,
+        467
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/ao-sf-medium.en.json",
+      "sha256": "09e717a80d2d430382b0861a0c13d45c288c395c2ad60c51a65a44657fa000d2",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        434,
+        467
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/ao-sf-lexical-small.en.json",
+      "sha256": "cbd2e7a4f1cdcd6bf1f99b2464dbbaf35dece7e2983e9410dce2eb573e8b73af",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        442,
+        456
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/ao-sf-lexical-medium.en.json",
+      "sha256": "82cafccda89474814ada3b9ab73297e73c278920fbb84c995b0805758c2c0377",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        442,
+        456
+      ]
+    }
+  ],
+  "word_level_resolution": {
+    "proper_names": "Canonical official event/player spelling applied to clearly corresponding ASR phonetic errors, e.g.Pagula→Pegula, Helena/Rabakana/Rebecca→Elena Rybakina, Anissimova→Anisimova. Does not invent new utterances.",
+    "ao": "Dedicated442–456 ASR confirms full sentence and Rybakina surname; small full makes +small lexical makes +medium full makes resolve medium lexical make.",
+    "charleston": "Dedicated273–280 both models agree “claims the title again” correcting initial medium article a. Dedicated258–270 resolves complete earlier So good/saved-match-points prelude.",
+    "dubai_sf": "Dedicated267–272 both models find “She’s done it again.” Small broad phantom Well258 removed. Both models agree remainder; source-bound primary identities normalize names.",
+    "champion": "Dedicated28.3–35 both models agree “It was just, it was a great week”, recovering false start omitted by initial medium. Nonlexical um need not be burned in subtitles."
+  },
+  "additional_foreground_audit": "Both actual ASR word lists within the chosen source body were compared. Only the listed intelligible broadcast/own-speech English was resolved; no umpire words fabricated from noise/crowd/impact/grunts. This is transcript cross-check, not human listening or final-mix approval.",
+  "outgoing_tail_audit": {
+    "native_default_seconds": 0.25,
+    "selected_end": 455.15,
+    "tail_through": 455.4,
+    "first_next_english_start": 460.44,
+    "conclusion": "No next English sentence onset inside default outgoing tail in the reviewed actual audio.",
+    "audio_tail": "default",
+    "note": "DubaiSF297.5–304 dedicated both-model check contains only the retained last phrase; no next English recovered through304. Other onsets from wider full ASR. No silence patch needed for these source-bound windows."
+  }
+}

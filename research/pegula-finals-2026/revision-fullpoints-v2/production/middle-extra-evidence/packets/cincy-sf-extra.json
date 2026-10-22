@@ -1,0 +1,40 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+  "source_sha256": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T10:02:36.848792+00:00",
+  "reviewed_from": 171.92,
+  "reviewed_to": 185.72,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 181.44,
+      "end": 185.46,
+      "en": "Great winner! Kept it low enough then, wasn't affected by the wind.",
+      "zh": "好球！她把球压得足够低，没有受到风的影响。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-breakpoint-small.en.json",
+      "sha256": "fbf11ba51607e833395ab512a9707a6f87a3c01b06712e79b9d333de2dd7f5d3",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        169,
+        189
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/secondset-breakpoint-medium.en.json",
+      "sha256": "b71df254ee201d466d6328afe561238aa2244abc5793957f834c18d67cc65ff5",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        169,
+        189
+      ]
+    }
+  ],
+  "review_notes": "Replaces rejected first-set157s-boundary candidate. Actual two-model169–189context agrees on every foreground word in selected window. Previous complete utterance ends171.78small/171.82medium; start171.92after both, with wide pre-serve frame before toss. Retained complete comment starts181.44small/181.52medium, final wind ends185.38small/185.46medium. End185.72 is0.26s after latest final word; no new foreground through189. No clipped next clause; no need to use source-body audio muting. Outgoing audio_tail:silence only outside window."
+}

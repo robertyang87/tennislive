@@ -1,0 +1,40 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T09:56:49.712178+00:00",
+  "reviewed_from": 174.9,
+  "reviewed_to": 189.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 187.86,
+      "end": 188.66,
+      "en": "Beautiful!",
+      "zh": "漂亮！"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/beautiful-small.en.json",
+      "sha256": "ddbdb6ef34edb454a512e400380dfdbeeb58629dfdfdece95fa180ee6827e388",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        171.0,
+        193.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/beautiful-medium.en.json",
+      "sha256": "de052277de3aa0fe9ca6a174f3853fe1b429cc115c9fa3f581d55b67dd8fb7e2",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        171.0,
+        193.0
+      ]
+    }
+  ],
+  "review_notes": "Previous complete sentence ends174.38small/174.70medium; start174.90 is after both. Small Beautiful188.28–188.52, medium187.86–188.66; caption uses union. No more foreground words through193. Scoreboard keeps pre-point score during reaction; do not infer the next displayed score."
+}

@@ -1,0 +1,53 @@
+{
+  "model": "large-v3-turbo",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+  "source_sha256": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+  "clip": [
+    114.9,
+    118.4
+  ],
+  "method": "actual_faster_whisper_cpu_int8_beam5_vadfalse_word_timestamps_no_prompt",
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:40:20.792166+00:00",
+  "segments": [
+    {
+      "start": 115.46,
+      "end": 116.6,
+      "text": " We are at set point.",
+      "avg_logprob": -0.5654123624165853,
+      "no_speech_prob": 1.5006053691313248e-11,
+      "words": [
+        {
+          "word": " We",
+          "start": 115.46,
+          "end": 115.9,
+          "probability": 0.1150190532207489
+        },
+        {
+          "word": " are",
+          "start": 115.9,
+          "end": 116.1,
+          "probability": 0.9355202317237854
+        },
+        {
+          "word": " at",
+          "start": 116.1,
+          "end": 116.22,
+          "probability": 0.9503572583198547
+        },
+        {
+          "word": " set",
+          "start": 116.22,
+          "end": 116.36,
+          "probability": 0.9229738116264343
+        },
+        {
+          "word": " point.",
+          "start": 116.36,
+          "end": 116.6,
+          "probability": 0.8794329166412354
+        }
+      ]
+    }
+  ]
+}

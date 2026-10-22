@@ -1,0 +1,71 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+  "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex early-source agent: actual word-timestamp small.en/medium.en comparison; no human listening claim",
+  "reviewed_at": "2026-10-22T08:04:46.518073+00:00",
+  "status": "complete",
+  "reviewed_from": 238,
+  "reviewed_to": 286,
+  "foreground_english": [
+    {
+      "start": 242.28,
+      "end": 245.8,
+      "en": "It is a dream debut Dubai title",
+      "zh": "梦幻般的迪拜首冠",
+      "text": "It is a dream debut Dubai title"
+    },
+    {
+      "start": 245.8,
+      "end": 247.46,
+      "en": "for Jessica Pegula,",
+      "zh": "属于杰西卡·佩古拉",
+      "text": "for Jessica Pegula,"
+    },
+    {
+      "start": 247.46,
+      "end": 251.52,
+      "en": "and she seals it in style with an ace.",
+      "zh": "她用一记ACE漂亮收官",
+      "text": "and she seals it in style with an ace."
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-final-small.en.json",
+      "sha256": "360d302f6eb5210e116af40ca92de3622a859e0d662d33cf2a348b1e8ccdc68f",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        238,
+        286
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-final-medium.en.json",
+      "sha256": "1ce39810c87ff7c13b36cca52655dbf1a415dfb77a86a0dfbc173c25a4bcc03c",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        238,
+        286
+      ]
+    }
+  ],
+  "word_level_resolution": {
+    "proper_names": "Canonical official event/player spelling applied to clearly corresponding ASR phonetic errors, e.g.Pagula→Pegula, Helena/Rabakana/Rebecca→Elena Rybakina, Anissimova→Anisimova. Does not invent new utterances.",
+    "ao": "Dedicated442–456 ASR confirms full sentence and Rybakina surname; small full makes +small lexical makes +medium full makes resolve medium lexical make.",
+    "charleston": "Dedicated273–280 both models agree “claims the title again” correcting initial medium article a. Dedicated258–270 resolves complete earlier So good/saved-match-points prelude.",
+    "dubai_sf": "Dedicated267–272 both models find “She’s done it again.” Small broad phantom Well258 removed. Both models agree remainder; source-bound primary identities normalize names.",
+    "champion": "Dedicated28.3–35 both models agree “It was just, it was a great week”, recovering false start omitted by initial medium. Nonlexical um need not be burned in subtitles."
+  },
+  "additional_foreground_audit": "Both actual ASR word lists within the chosen source body were compared. Only the listed intelligible broadcast/own-speech English was resolved; no umpire words fabricated from noise/crowd/impact/grunts. This is transcript cross-check, not human listening or final-mix approval.",
+  "outgoing_tail_audit": {
+    "native_default_seconds": 0.25,
+    "selected_end": 251.75,
+    "tail_through": 252.0,
+    "first_next_english_start": 252.8,
+    "conclusion": "No next English sentence onset inside default outgoing tail in the reviewed actual audio.",
+    "audio_tail": "default",
+    "note": "DubaiSF297.5–304 dedicated both-model check contains only the retained last phrase; no next English recovered through304. Other onsets from wider full ASR. No silence patch needed for these source-bound windows."
+  }
+}

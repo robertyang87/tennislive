@@ -1,0 +1,74 @@
+{
+  "model": "small.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    179.96,
+    205.0
+  ],
+  "method": "actual_source_ASR_unprompted_split_editorial_windows",
+  "initial_prompt": null,
+  "expected_sentence_prompted": false,
+  "bandpass_Hz": null,
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:37:53.544005+00:00",
+  "segments": [
+    {
+      "start": 195.18,
+      "end": 202.88,
+      "text": " She's in the semis at her favorite tournament.",
+      "avg_logprob": -0.6642041206359863,
+      "no_speech_prob": 0.21883828938007355,
+      "words": [
+        {
+          "w": " She's",
+          "s": 195.18,
+          "e": 196.58,
+          "p": 0.2865389147773385
+        },
+        {
+          "w": " in",
+          "s": 196.58,
+          "e": 197.32,
+          "p": 0.911734938621521
+        },
+        {
+          "w": " the",
+          "s": 197.32,
+          "e": 200.16,
+          "p": 0.9710193276405334
+        },
+        {
+          "w": " semis",
+          "s": 200.16,
+          "e": 200.88,
+          "p": 0.6632488816976547
+        },
+        {
+          "w": " at",
+          "s": 200.88,
+          "e": 201.96,
+          "p": 0.87049800157547
+        },
+        {
+          "w": " her",
+          "s": 201.96,
+          "e": 202.16,
+          "p": 0.9887708425521851
+        },
+        {
+          "w": " favorite",
+          "s": 202.16,
+          "e": 202.4,
+          "p": 0.9841498732566833
+        },
+        {
+          "w": " tournament.",
+          "s": 202.4,
+          "e": 202.88,
+          "p": 0.9822810888290405
+        }
+      ]
+    }
+  ]
+}

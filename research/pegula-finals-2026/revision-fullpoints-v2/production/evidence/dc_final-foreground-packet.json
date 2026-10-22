@@ -1,0 +1,69 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+  "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 234.72,
+  "reviewed_to": 260.5,
+  "foreground_english": [
+    {
+      "start": 247.22,
+      "end": 250.28,
+      "en": "It's Eala's magical moment.",
+      "zh": "这是伊埃拉的神奇时刻。"
+    },
+    {
+      "start": 251.6,
+      "end": 254.42,
+      "en": "The moment she has dreamt of.",
+      "zh": "她梦寐以求的这一刻。"
+    },
+    {
+      "start": 255.66,
+      "end": 260.24,
+      "en": "A first ever tour title delivered in DC.",
+      "zh": "首座巡回赛冠军，在华盛顿。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-final-small.en.json",
+      "sha256": "36ced28b8d75f130c65aec06a44268e17b2de7865cff4a20560963539f38732a",
+      "model": "small.en",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "source_clip": [
+        233,
+        291
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dc-final-medium.en.json",
+      "sha256": "238ab5306ea054bc935c116fcad038c0c1d7b7a4f2d2d9d1084e8f4523cec165",
+      "model": "medium.en",
+      "source_sha256": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "source_clip": [
+        233,
+        291
+      ]
+    }
+  ],
+  "review_notes": "All identifiable foreground English in the selected body is listed. Actual selected source sound remains intact; caption timing uses the preserved word evidence, with proper names resolved only by official player identity.",
+  "tail_audit": {
+    "interval": [
+      260.5,
+      260.75
+    ],
+    "new_word_leak": false,
+    "next_word": "500",
+    "next_onsets": [
+      261.86,
+      262.1
+    ],
+    "asr_context_end": 291,
+    "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+  },
+  "human_listened": false
+}

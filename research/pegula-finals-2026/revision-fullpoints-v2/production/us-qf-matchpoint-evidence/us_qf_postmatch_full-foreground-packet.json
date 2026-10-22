@@ -1,0 +1,77 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en full selected-window and broad-context machine cross-check; no human listening claim",
+  "reviewed_at": "2026-10-22T09:44:09.582431+00:00",
+  "status": "complete",
+  "reviewed_from": 179.96,
+  "reviewed_to": 203.2,
+  "foreground_english": [
+    {
+      "start": 190.86,
+      "end": 192.48,
+      "en": "She got through it.",
+      "zh": "她挺过来了。"
+    },
+    {
+      "start": 199.28,
+      "end": 202.9,
+      "en": "She's in the semis at her favorite tournament.",
+      "zh": "她在最爱的赛事打进四强。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-reaction-small.en.json",
+      "sha256": "9a455e649985d486bf04d6bc1ce273ed3bcf86770c212332c5270d09a523090e",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        179.96,
+        205.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-reaction-medium.en.json",
+      "sha256": "1c1489c6cfc1d4897312fdafb1f6d239fa79e012e58d8ec607bb61f8d30d45fc",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        179.96,
+        205.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-small.en.json",
+      "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        205
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-medium.en.json",
+      "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "clip": [
+        166,
+        205
+      ]
+    }
+  ],
+  "human_listened": false,
+  "review_notes": "All retained clear commentator speech listed: She got through it, then full semis/favorite tournament sentence. Full original broad small.en/medium.en agree these texts and stable word times. New narrower context smears leading silence before semis and medium decodes70s; original two broader outputs plus the second official WTA release both confirm semis. The completed umpire declaration ends no later179.76 in broad evidence, leaving.20s before179.96 selected start. No PA partial syllable or omitted exciting commentator sentence is retained.",
+  "tail_audit": {
+    "interval": [
+      203.2,
+      203.45
+    ],
+    "new_stable_foreground_word": false,
+    "context_end": 205
+  }
+}

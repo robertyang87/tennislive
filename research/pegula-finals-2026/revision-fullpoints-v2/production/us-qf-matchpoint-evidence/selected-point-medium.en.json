@@ -1,0 +1,50 @@
+{
+  "model": "medium.en",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "clip": [
+    168.4,
+    173.35
+  ],
+  "method": "actual_source_ASR_unprompted_split_editorial_windows",
+  "initial_prompt": null,
+  "expected_sentence_prompted": false,
+  "bandpass_Hz": null,
+  "human_listened": false,
+  "created_utc": "2026-10-22T09:37:57.150801+00:00",
+  "segments": [
+    {
+      "start": 171.92,
+      "end": 173.32,
+      "text": " Thank you for watching!",
+      "avg_logprob": -0.9336486011743546,
+      "no_speech_prob": 0.7064843773841858,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 171.92,
+          "e": 173.32,
+          "p": 0.01619633287191391
+        },
+        {
+          "w": " you",
+          "s": 173.32,
+          "e": 173.32,
+          "p": 0.9384020566940308
+        },
+        {
+          "w": " for",
+          "s": 173.32,
+          "e": 173.32,
+          "p": 0.34427982568740845
+        },
+        {
+          "w": " watching!",
+          "s": 173.32,
+          "e": 173.32,
+          "p": 0.8701109886169434
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,902 @@
+{
+  "schema": "pegula_fullpoints_coverage_audit_v2",
+  "created_utc": "2026-10-22T10:17:08.455013+00:00",
+  "scope": "Independent source-bound complete-point coverage of11 actual displayed matches in final41segment spec, not all64 singles matches in season and not final encoded film QC.",
+  "status": "pass_temporal_point_counts_with_explicit_fixed_crop_limits_and_accepted_preparation_tail",
+  "spec": {
+    "path": "/workspace/tennislive/specs/reels/pegula-finals-2026.json",
+    "sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23"
+  },
+  "audited_spec_snapshot": {
+    "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/audited-spec-snapshot.json",
+    "sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23"
+  },
+  "spec_segment_count": 41,
+  "comparison_to_initial_snapshot": {
+    "initial_sha256": "644ea74d2c45639f43cd83aaf91804666a50e60bafa3983307867d3bc672ccfc",
+    "current_sha256": "e5ae380159729cb89fc6f87f77efbe4af071a475b4e43075488dd91aed29ec23",
+    "scope": "Pointintervals manuallychecked unchanged. Current revision only Dubai165.82–174.12 andMiami71.50–77.40 subtitleplacementwindows; subtitles/renderQCareoutside thispoint-countaudit."
+  },
+  "policy": {
+    "required_per_actually_displayed_match": {
+      "true_terminal_complete_matchpoint": 1,
+      "distinct_complete_extra_live_point": 1
+    },
+    "matchpoint_only_fallback_used": false,
+    "count_replays_as_distinct_extra": false,
+    "roles_or_ids_accepted_as_proof": false,
+    "postmatch_reactions_or_interviews_count_as_livepoints": false
+  },
+  "summary": {
+    "actual_displayed_matches": 11,
+    "actual_court_source_segments": 24,
+    "distinct_complete_terminal_points": 11,
+    "distinct_complete_extra_points": 11,
+    "postmatch_only_source_segments": 2,
+    "all11_have_exactly1_plus1": true,
+    "all22_temporally_complete": true,
+    "every_action_visible_inside3by4": false,
+    "missing_terminal_or_extra": [],
+    "unaccounted_live_match_sources": []
+  },
+  "matches": [
+    {
+      "event": "澳网半决赛",
+      "source_key": "ao-sf",
+      "source_file": "/workspace/pegula-finals-production/sources/ao-sf.mp4",
+      "source_sha256_actual_verified": "480c4c5d1a3f7511d07c9ee39fb64de46c515eee849a8b2b291287472fd21d7c",
+      "source_url": "https://www.youtube.com/watch?v=qMezbjE3Nu4",
+      "spec_segment_indices_for_this_match": [
+        3,
+        4
+      ],
+      "terminal": {
+        "source_interval": [
+          437.6,
+          455.15
+        ],
+        "spec_indices": [
+          4
+        ],
+        "score_before": "Pegula3-6,6-6;TB7-8;Pegula serves;MATCH POINT#4",
+        "result": "Rybakina wins3-6,6-7(7) fromPegula perspective",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          113.36,
+          131.56
+        ],
+        "spec_indices": [
+          3
+        ],
+        "score_before": "Firstset Pegula3-5,30-40;Rybakina serves;SET POINT#2",
+        "actual_point_and_outcome": "Rybakina wins firstset6-3;pre-serve113.36,toss113.84,rally114.4–121,real set-end reactions.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "AO terminal includes replay of the same terminalpoint around451–454; not a second independent livepoint.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "AO center samples retain livepoint bodies; fixedcenter reaction framing still has edge limits.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/ao/contact.jpg",
+          "sha256": "1b1647733e8067b6e798cdff039aa275dcdef5ad623e9014d5aaf7e77580e17c"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-scoreboard.jpg",
+          "sha256": "49716c6930b549ec6916f982d58a4dfed23bcab1affab5b05760dc5f28e72c24"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-nine-native.jpg",
+          "sha256": "e29c3df162d1db6b33fe0359c8186fe9fb5e0d341eebf373e88332308cc8d670"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "迪拜决赛",
+      "source_key": "dubai-final",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "source_sha256_actual_verified": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "spec_segment_indices_for_this_match": [
+        6,
+        7
+      ],
+      "terminal": {
+        "source_interval": [
+          239.5,
+          251.75
+        ],
+        "spec_indices": [
+          7
+        ],
+        "score_before": "Pegula6-2,5-4,40-15;Pegula serves;CHAMPIONSHIP POINT#3",
+        "result": "Pegula ace;wins6-2,6-4",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          148.36,
+          174.12
+        ],
+        "spec_indices": [
+          6
+        ],
+        "score_before": "Firstset Pegula5-2,40-0;Pegula serves;SET POINT#2",
+        "actual_point_and_outcome": "Pre-serve closeup148.36,toss151.4,wide before contact151.64,continuous point to158,winreaction159.2,set6-2 confirmed173.8.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Only one actual firstsetpoint before seat/reaction; no next livepoint.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Svitolina service return partly exits left3:4edge around152–154; reaction Pegula partly left at159.2. Time complete is not full spatial visibility.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dubai-final/contact.jpg",
+          "sha256": "0883ffbef49b209847d6d803f4e308e320e16abd38fce6e508fa84d4f809463f"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-scoreboard.jpg",
+          "sha256": "238d0c5b3c63b1e35b3731ec9db1537d355190c8be0c33f7d672dce6b9f921d4"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-nine-native.jpg",
+          "sha256": "6abf1682fa8d5ca489bd08ae85e4f39be3132afb17699a33080e6421341172bf"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "迈阿密1/4决赛",
+      "source_key": "miami-qf",
+      "source_file": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf.mp4",
+      "source_sha256_actual_verified": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "source_url": "https://www.youtube.com/watch?v=Fah2i0vwBVU",
+      "spec_segment_indices_for_this_match": [
+        10,
+        11
+      ],
+      "terminal": {
+        "source_interval": [
+          264,
+          276.96
+        ],
+        "spec_indices": [
+          11
+        ],
+        "score_before": "Rybakina2-6,6-3,5-4,40-30;Rybakina serves;MATCH POINT",
+        "result": "Rybakina servicewinner;Pegula loses6-2,3-6,4-6",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          54.64,
+          77.4
+        ],
+        "spec_indices": [
+          10
+        ],
+        "score_before": "Firstset Pegula5-2,40-30;Pegula serves;SET POINT",
+        "actual_point_and_outcome": "Full setup54.64,toss55.6,serve56.2,rally including runningpickup57.6–60.8,fist63,set-end seating. Pegula wins firstset6-2.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Only firstsetterminalpoint and finalmatchpoint; different sets/scores and nonoverlappingsource intervals.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Pegula runningpickup at57.6–59 reaches/exceeds left fixedcropedge.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/miami-qf/contact.jpg",
+          "sha256": "53c04663f5ea4a29ad9d6bc3568743b3dbfcc40631a49b8c416fea76459017bf"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-scoreboard.jpg",
+          "sha256": "742930bcfc404faf78d91ac1470bf6889de55052d5969bd9dc088c89114b1764"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-nine-native.jpg",
+          "sha256": "7a78949c408fe8fde1465e711d88c3bd8924d79a77f07821d5599016dd4ed3de"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "查尔斯顿决赛",
+      "source_key": "charleston-final",
+      "source_file": "/workspace/pegula-finals-production/sources/charleston-final.mp4",
+      "source_sha256_actual_verified": "b52c0cce108acc732b5ee7a07a8d4d61a9670ae9594b4177ff85695b7241c53a",
+      "source_url": "https://www.youtube.com/watch?v=Zwi_zjefnh0",
+      "spec_segment_indices_for_this_match": [
+        13,
+        14
+      ],
+      "terminal": {
+        "source_interval": [
+          264.6,
+          287.8
+        ],
+        "spec_indices": [
+          14
+        ],
+        "score_before": "Pegula6-2,5-2,40-0;Pegula serves;CHAMPIONSHIP POINT#4",
+        "result": "Pegula wins6-2,6-2",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          89.68,
+          122.32
+        ],
+        "spec_indices": [
+          13
+        ],
+        "score_before": "Pegula6-2,1-0,15-30;Pegula serves",
+        "actual_point_and_outcome": "Setup89.68,toss90.56,serve91.6,one continuous longrally to114.5,touchwinner/reaction117,score30-30 at122.08.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "FinalMP starts264.60 after earlierpartialpoint262.2–263.3; complete finalserve267.7 and outcome272 retained. Extra ends with nextpointpreparation/tossabout122.1–122.32 but no nextservecontact or second complete rally; parent explicitly accepts retaining complete comment ending122.08.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Pegula approaches/exceedsleft edge around102 and117; MP receiver briefly beyondleft edge269.4–270.4.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/charleston-final/contact.jpg",
+          "sha256": "93546515b80b7dbe9aaff80880e5d5b5bf0319aeba0bb49b496ba221c376fa4b"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-scoreboard.jpg",
+          "sha256": "e7c65313af008d06c8311ffb4a577e0748ba0d46f61857bae1dade1d4ec8ed50"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-nine-native.jpg",
+          "sha256": "cc02db20f6734f8f17bc46dec4e5c04dce30e66c586418aa6aba1def7da0746d"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "柏林半决赛",
+      "source_key": "berlin-sf-sabalenka",
+      "source_file": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "source_sha256_actual_verified": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+      "spec_segment_indices_for_this_match": [
+        17,
+        18
+      ],
+      "terminal": {
+        "source_interval": [
+          257.4,
+          277.4
+        ],
+        "spec_indices": [
+          18
+        ],
+        "score_before": "Sabalenka4-6,7-6,0-5,30-40;Sabalenka serves;MATCH POINT#3",
+        "result": "Pegula wins6-4,6-7(4),6-0",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          209.4,
+          230
+        ],
+        "spec_indices": [
+          17
+        ],
+        "score_before": "Secondset6-6;TB Sabalenka6,Pegula4;Pegula serves;SET POINT#3",
+        "actual_point_and_outcome": "Pegula fullserve and shortpoint;Sabalenka wins tiebreak7-4,forces deciding set; scoregraphSab4/7 Peg6/6 at227.43–230.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Secondsetpoint and thirdsetterminalMP visibly different scoreboard states.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Pegula at214.55 reaches right fixedcropedge; no tracking/contain.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/berlin-sf/contact.jpg",
+          "sha256": "f10ad2ff2aaa195bb0c919b474a3fb35207a89e999c69fdcecd3c9b9b01f7464"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-nine-contact.jpg",
+          "sha256": "74b852d6e968579bd55c7f9b624d71a2409d296b0102f790e91131f8be0587f9"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/coverage-v2-middle-scoreboards.jpg",
+          "sha256": "17d18a0d76f06c7276e2b59b34f6511157d53da253a43c75762fb63c28b00be4"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "华盛顿决赛",
+      "source_key": "dc-final",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/dc-final.mp4",
+      "source_sha256_actual_verified": "3dd1c0fdbb714a1693c624ae3dbef9de0b6f4340379eba60c4b9545764d1c3b7",
+      "source_url": "https://www.youtube.com/watch?v=OvjNXy1mQjY",
+      "spec_segment_indices_for_this_match": [
+        20,
+        21
+      ],
+      "terminal": {
+        "source_interval": [
+          234.72,
+          260.5
+        ],
+        "spec_indices": [
+          21
+        ],
+        "score_before": "Pegula6-4,4-6,0-5,15-40;Pegula serves;CHAMPIONSHIP POINT#2",
+        "result": "Eala wins;Pegula loses6-4,4-6,0-6",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          156.2,
+          179.8
+        ],
+        "spec_indices": [
+          20
+        ],
+        "score_before": "Pegula6-4,4-5,30-40;Pegula serves;SET POINT",
+        "actual_point_and_outcome": "Pre-serve receiver156.2,full livepoint158–168;Eala breaks to win secondset6-4,forcing decider; reactions afterpoint.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Secondsetpoint is separate from thirdsetterminalpoint; same-point replay/alternate-angle aftermath does not add independentpoint.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Pegula partly beyondleft edge around165.05; finalpoint also retains time with lateral spatial limits.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dc-final/contact.jpg",
+          "sha256": "4efdf237d7d81fa01e4e76da5ec39dfab75d7eb1e515c8ffbf8fbab31e570be8"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-nine-contact.jpg",
+          "sha256": "a1011fe2a45bb7c79b33ceb36ec253599778462d219707f868fc35293d1ffe4a"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/coverage-v2-middle-scoreboards.jpg",
+          "sha256": "17d18a0d76f06c7276e2b59b34f6511157d53da253a43c75762fb63c28b00be4"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "辛辛那提半决赛",
+      "source_key": "cincy-sf",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-sf.mp4",
+      "source_sha256_actual_verified": "0717f5a4dbad2faf06bb0afe1d7a13f275a8fdbdcd7d31c0919d7d85d906de3d",
+      "source_url": "https://www.youtube.com/watch?v=C8_5ag2DYn0",
+      "spec_segment_indices_for_this_match": [
+        23,
+        24
+      ],
+      "terminal": {
+        "source_interval": [
+          262.72,
+          275.4
+        ],
+        "spec_indices": [
+          24
+        ],
+        "score_before": "Pegula7-5,4-6,5-4,40-15;Pegula serves;MATCH POINT",
+        "result": "Pegula wins7-5,4-6,6-4",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          171.92,
+          185.72
+        ],
+        "spec_indices": [
+          23
+        ],
+        "score_before": "Pegula7-5,1-1,Ad;Swiatek serves;BREAK POINT#2",
+        "actual_point_and_outcome": "Full pre-serve171.92,toss/serve173.645,rally through182.27,Swiatek reaction183.995. Score at184.5 explicitly40-40. Swiatek SAVES Pegula break point; Pegula does NOT break.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Extra is secondset missed opportunity, distinct from thirdset terminalMP; rejected157s candidate absent.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Both players visible across9extrasamples, near Swiatek approachesleft edge177.095; no guarantee unsampled lateral limbs all fit.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-sf/contact.jpg",
+          "sha256": "1ea364f179d28baa3c4e079ad418e9b138fad132bbaf93746725338fb507e76c"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-nine-contact.jpg",
+          "sha256": "70a0fcfe56f0aed59838401ab5374c1b0bf0810b3a414a87a2cfbb1a73f0b179"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/coverage-v2-middle-scoreboards.jpg",
+          "sha256": "17d18a0d76f06c7276e2b59b34f6511157d53da253a43c75762fb63c28b00be4"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "辛辛那提决赛",
+      "source_key": "cincy-final",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/cincy-final.mp4",
+      "source_sha256_actual_verified": "f8af2cf29c44ed88a62dde0e1f96948287fbd5b11d4ffda15ad86a637e48c9a1",
+      "source_url": "https://www.youtube.com/watch?v=Z2_awLHqcww",
+      "spec_segment_indices_for_this_match": [
+        25,
+        26
+      ],
+      "terminal": {
+        "source_interval": [
+          236.6,
+          260.5
+        ],
+        "spec_indices": [
+          26
+        ],
+        "score_before": "Gauff6-2,5-4,40-0;Pegula serves0-40;CHAMPIONSHIP POINT",
+        "result": "Gauff wins;Pegula loses2-6,4-6",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          174.9,
+          189.1
+        ],
+        "spec_indices": [
+          25
+        ],
+        "score_before": "Gauff6-2,3-1,30-0;Gauff serves",
+        "actual_point_and_outcome": "Setup174.9,fullserve176.68,continuousrally178.45–185.55,pointover187.32,reaction189.1. Pegula wins this highlight point.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Not a breakpoint/setpoint; do not manufacture comeback from this one point. Pre-pointscore remains burned during reaction; no false claim updated30-15 visible.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Gauffpartly outside right edge178.45/183.78. Timecomplete not fullwidth action visibility.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-final/contact.jpg",
+          "sha256": "9604775cd6519bfc353965fa8bb4c57fbcc6fa719eafcee6eb9fa94bf37131c8"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-nine-contact.jpg",
+          "sha256": "8ab636392f123f22e76204ef7665e1b264b0639a9b8eeb30e3ba17e25d5a78d9"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/coverage-v2-middle-scoreboards.jpg",
+          "sha256": "17d18a0d76f06c7276e2b59b34f6511157d53da253a43c75762fb63c28b00be4"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "美网1/4决赛",
+      "source_key": "us-qf",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256_actual_verified": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "spec_segment_indices_for_this_match": [
+        28,
+        29,
+        30
+      ],
+      "terminal": {
+        "source_interval": [
+          168.84,
+          173.04
+        ],
+        "spec_indices": [
+          29
+        ],
+        "score_before": "Pegula3-6,6-4,5-3,AD;Pegula serves;MATCH POINT#2",
+        "result": "Pegula wins3-6,6-4,6-3;true reaction179.96–203.20",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          150.5,
+          164.8
+        ],
+        "spec_indices": [
+          28
+        ],
+        "score_before": "Pegula3-6,6-4,5-3;NavarroAD;Pegula serves;BREAK POINT",
+        "actual_point_and_outcome": "Navarro receiver150.5;Pegula serve151–152,fullrally154–162,win/fist164.7 saves BP. This is not the terminalMP.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "MP serviceprep168.84,toss170.415,serve170.94,Navarro return fails atnet172.64–172.80;Pegula stopped/handraise172.96–173.04. Whole PA gap173.04–179.96 omitted;postmatch reaction does not addpoint.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Navarro initialstance atleft edge partially outside3:4;far Pegula terminalserve/outcome fits. Backgroundstadiumscreen inpostmatch does not introduce a complete new livepoint.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-qf-extra-source-nine.jpg",
+          "sha256": "914d854950753eb9804ae5623dd939b183fac86bd98f91ca5b08ff00eb85ea11"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-qf-extra-score-0.png",
+          "sha256": "11c4587fd1436c37e4ba465ca29a6c1b8f213cbf9568811c4a72a683e329d240"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-nine-contact.jpg",
+          "sha256": "9aa90dd91f6fd2988f11ea51c23b8f8f8b0deb065c67e423bac99fad3bc52dcd"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/matchpoint-2-scoreboard.png",
+          "sha256": "9017d9052c02d1ff1742cf1477cddf44453d5b0a65602801f560feb9d5ebcd47"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/point-dead-call-boundary-contact.jpg",
+          "sha256": "96bc025e9bb8eb2169a810bcc713afffdba3124b8bc9fb65f33d760e9257e03c"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "美网半决赛",
+      "source_key": "us-sf",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+      "source_sha256_actual_verified": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+      "spec_segment_indices_for_this_match": [
+        33,
+        34,
+        35
+      ],
+      "terminal": {
+        "source_interval": [
+          142.94,
+          150
+        ],
+        "spec_indices": [
+          34
+        ],
+        "score_before": "Sabalenka7-5,5-2,40-30;Pegula serves30-40;MATCH POINT",
+        "result": "Sabalenka wins7-5,6-2;real reaction156.20–186.40",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          16.92,
+          27.4
+        ],
+        "spec_indices": [
+          33
+        ],
+        "score_before": "Firstset Sabalenka2-1;Pegula serves30-40",
+        "actual_point_and_outcome": "Fullserve from16.92preparation/toss17.4,contact18.1,continuous rally19.5–25.5,winreaction27.3;Pegula SAVES break point.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "MP separate finalsetscore5-2;fullserve143.82–144.7,finalchase148.5–148.9,outcomeclear149.1–149.9. Entire PA150–156.2 omitted normally, then actualnet handshake/complete goodcommentary;not fabricated courtroomwords.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Near Pegula terminalfar-right chase/racket exits fixedcrop148.6–149.98; actual sourcefullwidth proof retained. No all-strokes-visiblepass.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-sf-extra-source-nine.jpg",
+          "sha256": "35ef18b3367b3fd843ffa3a2fb0625e07d85d02ca13e297cbfae0f5f46021098"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-sf-extra-score-0.png",
+          "sha256": "9768fd4d1591e2e5eadf4a9f3f0d0203a7de7920801c7ee56a68603078ecb4d7"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-source-nine.jpg",
+          "sha256": "5d551a8a8dab7ec969c8c603706455e34b901def51c65f6ccd61477eb38f5bc1"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png",
+          "sha256": "e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-cx05-nine.jpg",
+          "sha256": "08c1b4e2082f19c3603dc278451be23d73df5cfe9017673b7a8db826ac7020f3"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    },
+    {
+      "event": "武汉第二轮",
+      "source_key": "wuhan-r2",
+      "source_file": "/workspace/pegula-finals-production/media/wuhan-r2.mp4",
+      "source_sha256_actual_verified": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+      "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+      "spec_segment_indices_for_this_match": [
+        37,
+        38
+      ],
+      "terminal": {
+        "source_interval": [
+          257.64,
+          284.4
+        ],
+        "spec_indices": [
+          38
+        ],
+        "score_before": "Ostapenko2-6,7-6,5-3,40-0;Pegula serves0-40;MATCH POINT",
+        "result": "Ostapenko wins;Pegula loses6-2,6-7(7),3-6",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "count": 1
+      },
+      "extra": {
+        "source_interval": [
+          170.6,
+          188.04
+        ],
+        "spec_indices": [
+          37
+        ],
+        "score_before": "Secondset6-6;TB Pegula7,Ostapenko6;Pegula serves;MATCH POINT#3",
+        "actual_point_and_outcome": "Setup170.6,fullserve171.5–172,longrally174–185 withOstapenko dropshot andPegula failedretrieval,actualpointreaction185–188.04;Ostapenko saves Pegula thirdMP.",
+        "serve_rally_outcome_complete_in_source_time": true,
+        "independent_complete_point_count": 1
+      },
+      "same_point_replay_or_reaction_handling": "Failed secondsetMP is the ONE extra; match-terminal thirdsetpoint is another point with different score and winner. Do not count failedMP as the mandatory terminalpoint.",
+      "independent_identity_basis": "Actually inspected sourceframes, burned original score/server, point sequence/outcome, then bound actual sourcebytes and compared sourceintervals to spec. _id/_point_role are not evidence of point identity.",
+      "fixed_center_crop_limit": "Far-right failedretrieval around185 reaches/exceeds rightfixedcrop; full sourceidentity/outcome proved, not all original spatialedges preserved.",
+      "spatial_visibility_unqualified_pass": false,
+      "actual_visual_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-final/contact.jpg",
+          "sha256": "48dfcba9f6d45db04550e6605d149ef1e5ff1c45f8c4fc47cbf13cdfc9415900"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/wuhan-evidence/third-point-native-contact.jpg",
+          "sha256": "e9a104ec12eaefd6b68b7b541e8ca21bebff2351626ea5bc0d58306faa9829af"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-mp3/scoreboard-pair.png",
+          "sha256": "690db23afd9afd15e5f918ea9dea8bf761bc4a7eab4130eddb83da0edd1090f6"
+        }
+      ],
+      "verdict": "pass_one_actual_terminal_matchpoint_plus_exactly_one_distinct_complete_extra_in_source_time"
+    }
+  ],
+  "accepted_boundary_advisory": {
+    "event": "Charleston final extra",
+    "source_interval": [
+      89.68,
+      122.32
+    ],
+    "observation": "122.08 handballlow;122.16 hand/armmovingup;122.32 nextserve toss preparation visible, actual nextservecontactabout123.0 outside retainedwindow. About.2snexttoss preparation is not a second complete rally. Do NOT say windowendsbefore allnextservepreparation.",
+    "parent_decision": "Parent explicitly instructed retaining original122.32 to preserve full comment ending122.08; quantities concern completepoints. No freeze/visual substitution requested.",
+    "count_effect": 0,
+    "evidence": [
+      {
+        "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/charleston-extra-end-boundary.jpg",
+        "sha256": "248ed7f6d1d69e54a0bb0896d0e7621066cdbd9f621b13a395e80b7d9b00f352"
+      },
+      {
+        "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/charleston-extra-end-122.16.png",
+        "sha256": "9d97cbfb884a591d2b836b1ad7be7cc461df3aae0af122aa2b4a76181175e85b"
+      }
+    ]
+  },
+  "special_verifications": {
+    "new_cincy_semifinal_extra": "Visible source scorePegulaAd→40all withSwiatekserver;SwiateksavesBP,notPegulabreak.",
+    "charleston_terminal": "Current264.60 starts after partial priorpoint262.2–263.3, before finalpointfullserve.",
+    "us_splits": "USQF168.84–173.04+179.96–203.2;USSF142.94–150+156.2–186.4 preserve fullterminalpoints and laterauthenticreactions while entire nonhighlightPAdeclaredresultintervals omitted. No invented umpirewording promoted.",
+    "wuhan": "ExtraisPegula third failedsecondsetmatchpoint;mandatoryterminalisOstapenko thirdsetwin. These are independentpoints,not sameMP relabeled."
+  },
+  "exclusions": "Dubai semifinal, Berlin final, Brisbane, IndianWells, Toronto, Wimbledon andotherseasonmatches mentioned only in editorialcards are not displayed courtmatch footage and not added to11point obligations. Ceremony/openquote and USQFinterview do not count as newmatches or livepoints.",
+  "linked_evidence_inputs": [
+    {
+      "path": "/workspace/pegula-finals-production/production/selections.json",
+      "sha256": "437866530018102ec0773e0031d047d042af9188b14a7f96cd885e766a49cdab"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-audit.json",
+      "sha256": "717d181eecf41175a2cf580ad54438bec4819934283ab13e4fc8d90c9e459396"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-point-selections.json",
+      "sha256": "e43cffd99fa32f5c19b27b86ad04f12db6b532f1aa8ef6eaed5bbf3331305415"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-point-selections.json",
+      "sha256": "3a7d07c98201b2aa4b310c73fbbfcf2a08e1262f28d7fefe584fcacf9ec16c20"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/dubai-extra-refinement.json",
+      "sha256": "b71409600004302312f6d36a26b0f1ec8c369d1cde1347ace7af7f9771b85227"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-selection.json",
+      "sha256": "cc15c13587cf8449bc0a2ade697f78afbc6605bf036059229fa06826fa9c7242"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-selection.json",
+      "sha256": "a8e6d010179ddcfc6ac75730de230b4a0fa27bb5df4a839740581a48d8ace4fc"
+    }
+  ],
+  "actually_viewed_image_files": [
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/ao/contact.jpg",
+      "sha256": "1b1647733e8067b6e798cdff039aa275dcdef5ad623e9014d5aaf7e77580e17c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-scoreboard.jpg",
+      "sha256": "49716c6930b549ec6916f982d58a4dfed23bcab1affab5b05760dc5f28e72c24"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/ao-sf-extra-nine-native.jpg",
+      "sha256": "e29c3df162d1db6b33fe0359c8186fe9fb5e0d341eebf373e88332308cc8d670"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dubai-final/contact.jpg",
+      "sha256": "0883ffbef49b209847d6d803f4e308e320e16abd38fce6e508fa84d4f809463f"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-scoreboard.jpg",
+      "sha256": "238d0c5b3c63b1e35b3731ec9db1537d355190c8be0c33f7d672dce6b9f921d4"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/dubai-final-extra-nine-native.jpg",
+      "sha256": "6abf1682fa8d5ca489bd08ae85e4f39be3132afb17699a33080e6421341172bf"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/miami-qf/contact.jpg",
+      "sha256": "53c04663f5ea4a29ad9d6bc3568743b3dbfcc40631a49b8c416fea76459017bf"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-scoreboard.jpg",
+      "sha256": "742930bcfc404faf78d91ac1470bf6889de55052d5969bd9dc088c89114b1764"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/miami-qf-extra-nine-native.jpg",
+      "sha256": "7a78949c408fe8fde1465e711d88c3bd8924d79a77f07821d5599016dd4ed3de"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/charleston-final/contact.jpg",
+      "sha256": "93546515b80b7dbe9aaff80880e5d5b5bf0319aeba0bb49b496ba221c376fa4b"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-scoreboard.jpg",
+      "sha256": "e7c65313af008d06c8311ffb4a577e0748ba0d46f61857bae1dade1d4ec8ed50"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/early-extra-evidence/charleston-final-extra-nine-native.jpg",
+      "sha256": "cc02db20f6734f8f17bc46dec4e5c04dce30e66c586418aa6aba1def7da0746d"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/berlin-sf/contact.jpg",
+      "sha256": "f10ad2ff2aaa195bb0c919b474a3fb35207a89e999c69fdcecd3c9b9b01f7464"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/berlin-sf/primary-nine-contact.jpg",
+      "sha256": "74b852d6e968579bd55c7f9b624d71a2409d296b0102f790e91131f8be0587f9"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/coverage-v2-middle-scoreboards.jpg",
+      "sha256": "17d18a0d76f06c7276e2b59b34f6511157d53da253a43c75762fb63c28b00be4"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/dc-final/contact.jpg",
+      "sha256": "4efdf237d7d81fa01e4e76da5ec39dfab75d7eb1e515c8ffbf8fbab31e570be8"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/dc-final/primary-nine-contact.jpg",
+      "sha256": "a1011fe2a45bb7c79b33ceb36ec253599778462d219707f868fc35293d1ffe4a"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-sf/contact.jpg",
+      "sha256": "1ea364f179d28baa3c4e079ad418e9b138fad132bbaf93746725338fb507e76c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-sf/ready-nine-contact.jpg",
+      "sha256": "70a0fcfe56f0aed59838401ab5374c1b0bf0810b3a414a87a2cfbb1a73f0b179"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/cincy-final/contact.jpg",
+      "sha256": "9604775cd6519bfc353965fa8bb4c57fbcc6fa719eafcee6eb9fa94bf37131c8"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/middle-extra-evidence/cincy-final/primary-nine-contact.jpg",
+      "sha256": "8ab636392f123f22e76204ef7665e1b264b0639a9b8eeb30e3ba17e25d5a78d9"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-qf-extra-source-nine.jpg",
+      "sha256": "914d854950753eb9804ae5623dd939b183fac86bd98f91ca5b08ff00eb85ea11"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-qf-extra-score-0.png",
+      "sha256": "11c4587fd1436c37e4ba465ca29a6c1b8f213cbf9568811c4a72a683e329d240"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-nine-contact.jpg",
+      "sha256": "9aa90dd91f6fd2988f11ea51c23b8f8f8b0deb065c67e423bac99fad3bc52dcd"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/matchpoint-2-scoreboard.png",
+      "sha256": "9017d9052c02d1ff1742cf1477cddf44453d5b0a65602801f560feb9d5ebcd47"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/point-dead-call-boundary-contact.jpg",
+      "sha256": "96bc025e9bb8eb2169a810bcc713afffdba3124b8bc9fb65f33d760e9257e03c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-sf-extra-source-nine.jpg",
+      "sha256": "35ef18b3367b3fd843ffa3a2fb0625e07d85d02ca13e297cbfae0f5f46021098"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/us-sf-extra-score-0.png",
+      "sha256": "9768fd4d1591e2e5eadf4a9f3f0d0203a7de7920801c7ee56a68603078ecb4d7"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-source-nine.jpg",
+      "sha256": "5d551a8a8dab7ec969c8c603706455e34b901def51c65f6ccd61477eb38f5bc1"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png",
+      "sha256": "e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-cx05-nine.jpg",
+      "sha256": "08c1b4e2082f19c3603dc278451be23d73df5cfe9017673b7a8db826ac7020f3"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-final/contact.jpg",
+      "sha256": "48dfcba9f6d45db04550e6605d149ef1e5ff1c45f8c4fc47cbf13cdfc9415900"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/third-point-native-contact.jpg",
+      "sha256": "e9a104ec12eaefd6b68b7b541e8ca21bebff2351626ea5bc0d58306faa9829af"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/matchpoint-policy-evidence/wuhan-mp3/scoreboard-pair.png",
+      "sha256": "690db23afd9afd15e5f918ea9dea8bf761bc4a7eab4130eddb83da0edd1090f6"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/coverage-v2-terminal-scoreboard-1.jpg",
+      "sha256": "f361926927d8a6dbc2a41e928b9f6c38f5461aad018da658c80e4d4c41bd4449"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/coverage-v2-terminal-scoreboard-2.jpg",
+      "sha256": "c7c4845c3f7d47301936390a1eb712d883ace8825adec1001306dacd66bc0e4a"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/coverage-v2-terminal-scoreboard-3.jpg",
+      "sha256": "cd2fae22a0a2dd249a28820bf2941d60edf8f41157a3fc90cdb555e91e82b31c"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/charleston-extra-end-boundary.jpg",
+      "sha256": "248ed7f6d1d69e54a0bb0896d0e7621066cdbd9f621b13a395e80b7d9b00f352"
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/fullpoints-coverage-v2-evidence/charleston-extra-end-122.16.png",
+      "sha256": "9d97cbfb884a591d2b836b1ad7be7cc461df3aae0af122aa2b4a76181175e85b"
+    }
+  ],
+  "human_listened": false,
+  "native_or_final_movie_qc_claimed": false,
+  "limitations": [
+    "This audits source time-domain serve/fullpoint/result/reaction coverage and distinctpoint counts. It does not certify native transitions,字幕/font/inset visibility,mix,or finalmovie.",
+    "Owner-fixed courtcx.5 cropfill can hide lateral player/racket actions despite complete source temporal point. Specific limitations retained per match; no contain/tracking exemptions inferred.",
+    "Existing densecontactboards and nine-sample sourcecrops do not constitute per-frame proof that every lateralstroke fits throughout unsampledinstants."
+  ],
+  "shared_spec_modified": false,
+  "git_operations": false
+}

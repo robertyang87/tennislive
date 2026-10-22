@@ -1,0 +1,163 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=L7tpXYiUH9c",
+  "source_sha256": "79c8a34c1486229d088196808b2ddb1f8d785648d4c08c6b09a9f2dc3511f619",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex early-source agent: actual word-timestamp small.en/medium.en comparison; no human listening claim",
+  "reviewed_at": "2026-10-22T08:04:46.518073+00:00",
+  "status": "complete",
+  "reviewed_from": 258,
+  "reviewed_to": 304,
+  "foreground_english": [
+    {
+      "start": 269.62,
+      "end": 270.85,
+      "en": "She's done it again.",
+      "zh": "她又做到了",
+      "text": "She's done it again."
+    },
+    {
+      "start": 272.12,
+      "end": 275.27,
+      "en": "Jessica Pegula gets the better of Amanda Anisimova",
+      "zh": "佩古拉击败阿尼西莫娃",
+      "text": "Jessica Pegula gets the better of Amanda Anisimova"
+    },
+    {
+      "start": 275.27,
+      "end": 276.88,
+      "en": "for the fifth time in succession,",
+      "zh": "连续第五次战胜对手",
+      "text": "for the fifth time in succession,"
+    },
+    {
+      "start": 276.88,
+      "end": 278.58,
+      "en": "for the second time this year,",
+      "zh": "也是今年的第二次",
+      "text": "for the second time this year,"
+    },
+    {
+      "start": 279.04,
+      "end": 280.51,
+      "en": "and she puts herself in a final",
+      "zh": "她闯进了决赛",
+      "text": "and she puts herself in a final"
+    },
+    {
+      "start": 280.51,
+      "end": 282.16,
+      "en": "for the first time this season,",
+      "zh": "本赛季的第一次",
+      "text": "for the first time this season,"
+    },
+    {
+      "start": 282.16,
+      "end": 285.02,
+      "en": "coming from a set down on this occasion",
+      "zh": "今天先丢一盘后逆转",
+      "text": "coming from a set down on this occasion"
+    },
+    {
+      "start": 285.02,
+      "end": 288.28,
+      "en": "to work her way past the younger American.",
+      "zh": "闯过这位年轻美国选手",
+      "text": "to work her way past the younger American."
+    },
+    {
+      "start": 288.76,
+      "end": 292.28,
+      "en": "1-6, 6-4, 6-3.",
+      "zh": "1比6 6比4 6比3",
+      "text": "1-6, 6-4, 6-3."
+    },
+    {
+      "start": 293.0,
+      "end": 295.76,
+      "en": "Very well done indeed after a difficult start,",
+      "zh": "开局艰难 她还是做到了",
+      "text": "Very well done indeed after a difficult start,"
+    },
+    {
+      "start": 295.9,
+      "end": 299.25,
+      "en": "but delight now in her moment of victory.",
+      "zh": "此刻尽享胜利的喜悦",
+      "text": "but delight now in her moment of victory."
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-small.en.json",
+      "sha256": "151eb6efe7125a979b87f8edf26fc13f3259a9424d026585d71de0cb0b54d6eb",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        258,
+        300
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-medium.en.json",
+      "sha256": "ccdf9bc121e208687a60582c932c0e256efca5c946b4d5706dec57e3f329da20",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        258,
+        300
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-267-boundary-small.en.json",
+      "sha256": "b959529217665fe461cf78be0029c4335d718d3bd01ad204dfca03a498e5dd35",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        267,
+        272
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-267-boundary-medium.en.json",
+      "sha256": "e9564ff7b53953a01fb525e55124af6227d66cc6570a253d8b14f20cfd14191c",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        267,
+        272
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-297.5-boundary-small.en.json",
+      "sha256": "57b1b647c4f3a1f3e1ed9b680e0a5b28b7d23e37cf1eb29a208d4ec05dd2f45e",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        297.5,
+        304
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/dubai-sf-297.5-boundary-medium.en.json",
+      "sha256": "dcb315854757bb17587e1ec9544f5bc884d5dc933f09981397df4f4d34c822d6",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        297.5,
+        304
+      ]
+    }
+  ],
+  "word_level_resolution": {
+    "proper_names": "Canonical official event/player spelling applied to clearly corresponding ASR phonetic errors, e.g.Pagula→Pegula, Helena/Rabakana/Rebecca→Elena Rybakina, Anissimova→Anisimova. Does not invent new utterances.",
+    "ao": "Dedicated442–456 ASR confirms full sentence and Rybakina surname; small full makes +small lexical makes +medium full makes resolve medium lexical make.",
+    "charleston": "Dedicated273–280 both models agree “claims the title again” correcting initial medium article a. Dedicated258–270 resolves complete earlier So good/saved-match-points prelude.",
+    "dubai_sf": "Dedicated267–272 both models find “She’s done it again.” Small broad phantom Well258 removed. Both models agree remainder; source-bound primary identities normalize names.",
+    "champion": "Dedicated28.3–35 both models agree “It was just, it was a great week”, recovering false start omitted by initial medium. Nonlexical um need not be burned in subtitles."
+  },
+  "additional_foreground_audit": "Both actual ASR word lists within the chosen source body were compared. Only the listed intelligible broadcast/own-speech English was resolved; no umpire words fabricated from noise/crowd/impact/grunts. This is transcript cross-check, not human listening or final-mix approval.",
+  "outgoing_tail_audit": {
+    "native_default_seconds": 0.25,
+    "selected_end": 299.45,
+    "tail_through": 299.7,
+    "first_next_english_start": null,
+    "conclusion": "No next English sentence onset inside default outgoing tail in the reviewed actual audio.",
+    "audio_tail": "default",
+    "note": "DubaiSF297.5–304 dedicated both-model check contains only the retained last phrase; no next English recovered through304. Other onsets from wider full ASR. No silence patch needed for these source-bound windows."
+  }
+}

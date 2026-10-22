@@ -1,0 +1,88 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=l9Gd5ksrsVM",
+  "source_sha256": "301dd05c374b11e55f35b09da4ba8066cbb14546c1242a1975331a105931c847",
+  "method": "asr_cross_checked",
+  "reviewer": "Actual independent small.en and medium.en ASR plus sampled source-frame inspection; not human listening",
+  "reviewed_at": "2026-10-22T08:00:52.594284+00:00",
+  "reviewed_from": 257.64,
+  "reviewed_to": 284.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.34,
+      "end": 268.12,
+      "en": "Ostapenko packs a power punch in Wuhan.",
+      "zh": "奥斯塔彭科在武汉打出重拳。"
+    },
+    {
+      "start": 268.12,
+      "end": 273.08,
+      "en": "A dazzling attacking performance from one of the biggest hitters in the game,",
+      "zh": "网坛重炮手之一，打出耀眼的进攻表现，"
+    },
+    {
+      "start": 273.08,
+      "end": 275.72,
+      "en": "as she picks Pegula apart.",
+      "zh": "拆解了佩古拉的防线。"
+    },
+    {
+      "start": 276.94,
+      "end": 278.52,
+      "en": "The second seed is stunned.",
+      "zh": "二号种子爆冷出局。"
+    },
+    {
+      "start": 279.06,
+      "end": 281.54,
+      "en": "She missed three match points in the second set,",
+      "zh": "她在第二盘错失了三个赛点，"
+    },
+    {
+      "start": 281.54,
+      "end": 284.08,
+      "en": "and they proved so costly.",
+      "zh": "这让她付出了沉重代价。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/final-context-small.en.json",
+      "sha256": "1bd5fabeeef301d699786b071adeee531c604ffea8192e88af77b05aa66df318",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        254.0,
+        302.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/final-context-medium.en.json",
+      "sha256": "b17c92d24769af4f81a94854c78eedc163b68a3550e3003c088eb3e6327d02d1",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        254.0,
+        302.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/costly-boundary-small.en.json",
+      "sha256": "de1500f014556c7f67d54bf38b9913ef8d0073fc1a75f1d637c59b028c6db5d8",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        278.0,
+        287.0
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/wuhan-evidence/costly-boundary-medium.en.json",
+      "sha256": "d87a09d28753779ad0185d5887b783a6e45f82d3d396e47c8192b53216334f4b",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        278.0,
+        287.0
+      ]
+    }
+  ],
+  "review_notes": "All substantive words in sixcaptionchunks agree acrosssmall/medium, proper-name phoneticsAustinPenko/Ostepenko/Piggula normalized only to officialOstapenko/Pegula. Firstcomplete sentence264.34/264.82–267.98/268.12; secondcomplete sentence268.12/268.80–275.58/275.72, split only atactualclauseboundary273.08forreadability. Thirdsentence276.94–278.40/278.52. Lastcomplete sentenceShe missed three matchpoints...costly ends284.02/284.08. Originalbroadsmall timing assigned followingAustin from284.02–285.64 acrosspause; explicit278–287actual shortcontext reruns withpropernamesonly independently move nextOstapenko to285.44–286.08(small),285.42–286.14(medium), whilecostly remains284.02/284.06. Keeprawbroadandshortresults, do nothideinitialalignmentdrift. Selectedend284.40 is0.32s after latestretainedcostly and≥1.02s before bothrefinednextwordstarts. Outgoingaudio_tail:silence appliesonlyoutsidewindow, no cutting nextword withdefault.25pad."
+}

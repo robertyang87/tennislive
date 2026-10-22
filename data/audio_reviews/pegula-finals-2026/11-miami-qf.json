@@ -1,0 +1,53 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=Fah2i0vwBVU",
+  "source_key": "miami-qf",
+  "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source-bound frame review and ASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T08:12:15.366733+00:00",
+  "reviewed_from": 210,
+  "reviewed_to": 308,
+  "status": "complete",
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/miami-qf-61925e4830-miami-qf-small.en.json",
+      "sha256": "61925e483040622d833c78bf7c982f5916982f6c746b45f3066d815341a950c6",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/miami-qf-f78ab2a95c-miami-qf-medium.en.json",
+      "sha256": "f78ab2a95c96644c8cffd750dac392481a71c8bd182fa4dc09ddb092da760220",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/pegula-finals-2026/raw/miami-qf-33beff9cde-miami-qf-selected-turbo.json",
+      "sha256": "33beff9cde39253a5e3ba8b4698bb3ed14b36416e412ea502d3711a1cb35b730",
+      "model": "large-v3-turbo"
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 267.52,
+      "end": 271.38,
+      "en": "It's another service winner from Rybakina.",
+      "zh": "莱巴金娜又打出一记发球制胜。"
+    },
+    {
+      "start": 271.56,
+      "end": 272.8,
+      "en": "It doesn't come back.",
+      "zh": "这一球没能回过来。"
+    },
+    {
+      "start": 272.8,
+      "end": 276.56,
+      "en": "And it's another defeat for Pegula against their old rival.",
+      "zh": "面对这位老对手，佩古拉再次落败。"
+    }
+  ],
+  "review_notes": [
+    "All three ASRs decode their old rival. Caption preserves their rather than silently rewriting to her; Chinese avoids introducing a pronoun. Names normalized to official identities."
+  ]
+}

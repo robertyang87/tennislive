@@ -1,0 +1,60 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual source-bound small.en/medium.en machine cross-check, with explicitly identified third-model diagnostics. No human listening claim.",
+  "reviewed_at": "2026-10-22T08:07:18.627132+00:00",
+  "status": "complete",
+  "reviewed_from": 190.7,
+  "reviewed_to": 203.2,
+  "foreground_english": [
+    {
+      "start": 190.86,
+      "end": 192.48,
+      "en": "She got through it.",
+      "zh": "她挺过来了。"
+    },
+    {
+      "start": 199.28,
+      "end": 202.9,
+      "en": "She's in the semis at her favorite tournament.",
+      "zh": "她在最爱的赛事打进四强。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/us-qf-small.en.json",
+      "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+      "model": "small.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_clip": [
+        166,
+        205
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/evidence/us-qf-medium.en.json",
+      "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+      "model": "medium.en",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_clip": [
+        166,
+        205
+      ]
+    }
+  ],
+  "review_notes": "All identifiable foreground English in the selected body is listed. Actual selected source sound remains intact; caption timing uses the preserved word evidence, with proper names resolved only by official player identity.",
+  "tail_audit": {
+    "interval": [
+      203.2,
+      203.45
+    ],
+    "new_word_leak": false,
+    "next_word": null,
+    "next_onsets": null,
+    "asr_context_end": 205,
+    "notes": "Actual selected source body unchanged; no new stable identifiable foreground word starts in outgoing native .25s."
+  },
+  "human_listened": false
+}

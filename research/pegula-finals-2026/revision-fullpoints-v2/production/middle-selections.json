@@ -1,0 +1,552 @@
+{
+  "schema": "tennislive.pegula-middle-selections.v1",
+  "created_at": "2026-10-22T08:12:15.368525+00:00",
+  "method": "asr_cross_checked",
+  "scope": "Research selections and actual-alpha label frame prechecks; no formal render, spec or Git mutation.",
+  "source_index": "/workspace/pegula-finals-production/production/middle-source-index.json",
+  "primary_keys": [
+    "miami-qf",
+    "berlin-sf"
+  ],
+  "primary_duration": 32.96,
+  "total_all_candidates_duration": 69.24,
+  "selection_notes": [
+    "Four alternatives retained; parent prefers Miami QF and Berlin SF.",
+    "IW and Berlin final clips are explicitly ordinary key points, not championship points.",
+    "All source and caption times absolute seconds. Native source 25fps.",
+    "No Wimbledon search or selection continued.",
+    "All-candidate total exceeds 65s because IW uses complete 22s central long rally; primary two total 32.96s.",
+    "No human listening or final-render QC claimed."
+  ],
+  "selections": [
+    {
+      "key": "iw-qf",
+      "source_name": "iw-qf",
+      "priority": "reserve",
+      "start": 228.4,
+      "end": 250.4,
+      "captions": [
+        {
+          "start": 242.64,
+          "end": 244.84,
+          "en": "Oh, it's so good.",
+          "zh": "这球太精彩了。"
+        },
+        {
+          "start": 245.48,
+          "end": 250.15,
+          "en": "Pegula repeatedly asking the question, and in the end, eventually Rybakina had the answer.",
+          "zh": "佩古拉不断施压，但最终莱巴金娜还是给出了答案。"
+        }
+      ],
+      "point": {
+        "type": "complete rally, not match point",
+        "before": "Rybakina serves at 6-1, 5-6, 15-15 (scoreboard shown Pegula 1,6 / Rybakina 6,5).",
+        "after": "Rybakina wins the rally: 30-15.",
+        "event_result": "Pegula lost 1-6 6-7(4).",
+        "action": "Rybakina begins service motion before wide view; long continuous rally and immediate reaction retained."
+      },
+      "crop_note": "Far-side Pegula is mostly central; some far-left defensive movement can extend beyond fixed native crop. Complete source-time point, not a claim every racket/ball pixel remains visible.",
+      "uncertain": true,
+      "uncertain_spans": [
+        {
+          "start": 248.82,
+          "end": 250.15,
+          "reason": "Small/medium lexical disagreement: had the answer vs malformed have the answer; isolated small-only it. at the end."
+        }
+      ],
+      "source_file": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=W-8a9rj2wEw",
+      "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+      "geometry": {
+        "mode": "cover",
+        "cx": 0.5,
+        "cy": 0.5,
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ],
+        "contains_no_letterbox": true
+      },
+      "duration": 22.0,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-small.en.json",
+          "sha256": "54c650c52b59cbe7e67a3961fd9b22995f99c1e558aa10aaf611d0429255e577",
+          "model": "small.en",
+          "clip": [
+            210,
+            308
+          ],
+          "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-medium.en.json",
+          "sha256": "dfc7c8b0844cad78b5be8342b1435137452f16f9e79984af2c3d212a05444a7e",
+          "model": "medium.en",
+          "clip": [
+            210,
+            308
+          ],
+          "source_sha256": "fd13adbe4d37d3fe3f306bc320658b33f7d72e6e1cb7e019be520017ed1098d8",
+          "method": "faster_whisper word timestamps, no human listening"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewed_from": 210,
+      "reviewed_to": 308,
+      "review_notes": [
+        "Proper names normalized against official match identity. Small has clear had the answer; medium misdecodes this phrase. Small appends an isolated low-probability it. at 250.06–250.14 absent from medium. This reserve retains transparent lexical uncertainty; do not describe as human-audited."
+      ],
+      "status": "needs_review",
+      "live_label": {
+        "image": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-iw-qf.png",
+        "sha256": "6a2bc473ff085984675886bbd1587094d6b6af6e623908fdb64227d2a512ed2e",
+        "width": 648,
+        "right": 46,
+        "top": 151,
+        "source_start": 229.2,
+        "source_end": 232.4,
+        "show_after": 0.8,
+        "show_for": 3.2,
+        "method": "Actual current label PNG alpha composited at native 1080x1440 fixed crop; five frames sampled across interval. Research precheck, not final native render QC.",
+        "contact_sheet": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-actual-label-precheck.jpg",
+        "status": "sampled_frames_clear_of_player_face_body_and_hitting_action",
+        "continuous_video_qc_pending": true
+      },
+      "audio_tail": {
+        "policy": "source",
+        "outgoing_seconds": 0.25,
+        "checked_until": 250.65,
+        "next_excluded_word_start": 254.03,
+        "next_word_not_in_tail": true,
+        "note": "ASR context extends beyond retained window and the outgoing .25s; no next-word leakage identified. Source-pad playback still subject to final native review."
+      },
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-foreground-review.json",
+      "point_frame_evidence": [
+        "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-earlier-start.jpg",
+        "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-early-fine.jpg",
+        "/workspace/pegula-finals-production/production/middle-evidence/iw-qf-coarse-full.jpg"
+      ]
+    },
+    {
+      "key": "miami-qf",
+      "source_name": "miami-qf",
+      "priority": "primary",
+      "start": 264.0,
+      "end": 276.96,
+      "captions": [
+        {
+          "start": 267.52,
+          "end": 271.38,
+          "en": "It's another service winner from Rybakina.",
+          "zh": "莱巴金娜又打出一记发球制胜。"
+        },
+        {
+          "start": 271.56,
+          "end": 272.8,
+          "en": "It doesn't come back.",
+          "zh": "这一球没能回过来。"
+        },
+        {
+          "start": 272.8,
+          "end": 276.56,
+          "en": "And it's another defeat for Pegula against their old rival.",
+          "zh": "面对这位老对手，佩古拉再次落败。"
+        }
+      ],
+      "point": {
+        "type": "complete match point",
+        "before": "Rybakina serves at 2-6, 6-3, 5-4, 40-30.",
+        "after": "Rybakina wins with an unreturned serve; Pegula reaction and handshake retained.",
+        "event_result": "Pegula lost 6-2 3-6 4-6.",
+        "action": "264.0 receiving preparation; 265.4–266.1 serve; 266.5–267.1 attempted return; actual Pegula close-up 272.2–275.8."
+      },
+      "crop_note": "Fixed center native crop retains central receiver preparation and return attempt; label withheld from serve because it would cover far-side Rybakina.",
+      "uncertain": false,
+      "uncertain_spans": [],
+      "source_file": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Fah2i0vwBVU",
+      "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+      "geometry": {
+        "mode": "cover",
+        "cx": 0.5,
+        "cy": 0.5,
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ],
+        "contains_no_letterbox": true
+      },
+      "duration": 12.96,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-small.en.json",
+          "sha256": "61925e483040622d833c78bf7c982f5916982f6c746b45f3066d815341a950c6",
+          "model": "small.en",
+          "clip": [
+            210,
+            308
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-medium.en.json",
+          "sha256": "f78ab2a95c96644c8cffd750dac392481a71c8bd182fa4dc09ddb092da760220",
+          "model": "medium.en",
+          "clip": [
+            210,
+            308
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-selected-turbo.json",
+          "sha256": "33beff9cde39253a5e3ba8b4698bb3ed14b36416e412ea502d3711a1cb35b730",
+          "model": "large-v3-turbo",
+          "clip": [
+            264,
+            278
+          ],
+          "source_sha256": "240ccf6790ef93a00e8469709d1c02079dad6fdf81611e309111cbdf57adbd28",
+          "method": "faster_whisper word timestamps, no human listening"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewed_from": 210,
+      "reviewed_to": 308,
+      "review_notes": [
+        "All three ASRs decode their old rival. Caption preserves their rather than silently rewriting to her; Chinese avoids introducing a pronoun. Names normalized to official identities."
+      ],
+      "status": "complete",
+      "live_label": {
+        "image": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-miami-qf.png",
+        "sha256": "4ee32de9da295b89a59e53e13db74a1d772e507118007183950c563363bb0fce",
+        "width": 648,
+        "right": 46,
+        "top": 151,
+        "source_start": 272.32,
+        "source_end": 275.52,
+        "show_after": 8.32,
+        "show_for": 3.2,
+        "method": "Actual current label PNG alpha composited at native 1080x1440 fixed crop; five frames sampled across interval. Research precheck, not final native render QC.",
+        "contact_sheet": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-actual-label-precheck.jpg",
+        "status": "sampled_frames_clear_of_player_face_body_and_hitting_action",
+        "continuous_video_qc_pending": true
+      },
+      "audio_tail": {
+        "policy": "source",
+        "outgoing_seconds": 0.25,
+        "checked_until": 277.21,
+        "next_excluded_word_start": 277.58,
+        "next_word_not_in_tail": true,
+        "note": "ASR context extends beyond retained window and the outgoing .25s; no next-word leakage identified. Source-pad playback still subject to final native review."
+      },
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-foreground-review.json",
+      "point_frame_evidence": [
+        "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-fine.jpg",
+        "/workspace/pegula-finals-production/production/middle-evidence/miami-qf-coarse-full.jpg"
+      ]
+    },
+    {
+      "key": "berlin-sf",
+      "source_name": "berlin-sf-sabalenka",
+      "priority": "primary",
+      "start": 257.4,
+      "end": 277.4,
+      "captions": [
+        {
+          "start": 264.78,
+          "end": 270.9,
+          "en": "Jessica Pegula, the 2024 winner in Berlin, is into another final,",
+          "zh": "2024年的柏林冠军佩古拉，再次打进决赛，"
+        },
+        {
+          "start": 272.2,
+          "end": 277.12,
+          "en": "as she takes out the world number one, Aryna Sabalenka.",
+          "zh": "她击败了世界第一萨巴伦卡。"
+        }
+      ],
+      "point": {
+        "type": "complete match point #3",
+        "before": "Sabalenka serves at 4-6, 7-6, 0-5, 30-40; MATCH POINT #3 visible.",
+        "after": "Pegula wins, celebrates, then shakes hands.",
+        "event_result": "Pegula won 6-4 6-7(4) 6-0.",
+        "action": "257.4 receiver close-up; wide view before serve 258.4–259.0; complete rally through 264.7; Pegula reaction 265.4 onwards; handshake 272–275."
+      },
+      "crop_note": "Source-time rally complete. Native fixed crop clips near Pegula left racket/arm around 259.9–260.2 and some wide edge movement around 263–264; no contain/panning used.",
+      "uncertain": false,
+      "uncertain_spans": [],
+      "source_file": "/workspace/sabalenka-finals-production/staging/extra/berlin-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=Il6cKvP4qAw",
+      "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+      "geometry": {
+        "mode": "cover",
+        "cx": 0.5,
+        "cy": 0.5,
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ],
+        "contains_no_letterbox": true
+      },
+      "duration": 20.0,
+      "asr_evidence": [
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-small.en.json",
+          "sha256": "495c976bd4d2fbf14f6f737b4b0e150a4d408ee1d5e0e58d6150273af0f4ff3c",
+          "model": "small.en",
+          "clip": [
+            254.0,
+            295.0
+          ],
+          "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/sabalenka-finals-production/research/production/asr/berlin-sf-medium.en.json",
+          "sha256": "35a7a99a4d76f663a231a3fcde4697b201a303ba64bc3c7c605e52a5942a52e3",
+          "model": "medium.en",
+          "clip": [
+            254.0,
+            278.0
+          ],
+          "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-selected-turbo.json",
+          "sha256": "383e5dcbc25dce861e6d4981b4cacb060be22c55c60a81531356569d10b6e842",
+          "model": "large-v3-turbo",
+          "clip": [
+            257,
+            279.2
+          ],
+          "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-channel-left-medium.json",
+          "sha256": "ff050382ee29bb1d012f9a820fc175f9d22b0d5af4363ee85a3129bfed4a0aa9",
+          "model": "medium.en",
+          "clip": [
+            264,
+            279.2
+          ],
+          "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+          "method": "separate_channel_diagnostic_with_name_prompt"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-channel-right-medium.json",
+          "sha256": "cebf0c51dc9c8fa9861e842fae318db7d09c16e91b2de36053253d402be23371",
+          "model": "medium.en",
+          "clip": [
+            264,
+            279.2
+          ],
+          "source_sha256": "231015c08fbdc556b1744cd814a76ceded04ae95309d585a1e6e7c50023e1d48",
+          "method": "separate_channel_diagnostic_with_name_prompt"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewed_from": 254,
+      "reviewed_to": 295,
+      "review_notes": [
+        "Default stereo small/medium/turbo decode takes up. Independent left and right channel medium diagnostics both decode takes out. Channel diagnostics use only a proper-name prompt, not a prompted sentence. Final reading follows agreement of both channels; retain this disagreement in provenance."
+      ],
+      "status": "complete",
+      "live_label": {
+        "image": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-berlin-sf.png",
+        "sha256": "c0093602f290b01a72cd39d2f15e23cff56667f7519bc890c1fc44de4d72309e",
+        "width": 648,
+        "right": 46,
+        "top": 151,
+        "source_start": 261.4,
+        "source_end": 264.2,
+        "show_after": 4.0,
+        "show_for": 2.8,
+        "method": "Actual current label PNG alpha composited at native 1080x1440 fixed crop; five frames sampled across interval. Research precheck, not final native render QC.",
+        "contact_sheet": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-actual-label-precheck.jpg",
+        "status": "sampled_frames_clear_of_player_face_body_and_hitting_action",
+        "continuous_video_qc_pending": true
+      },
+      "audio_tail": {
+        "policy": "source",
+        "outgoing_seconds": 0.25,
+        "checked_until": 277.65,
+        "next_excluded_word_start": 279.1,
+        "next_word_not_in_tail": true,
+        "note": "ASR context extends beyond retained window and the outgoing .25s; no next-word leakage identified. Source-pad playback still subject to final native review."
+      },
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-foreground-review.json",
+      "point_frame_evidence": [
+        "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-fine.jpg",
+        "/workspace/pegula-finals-production/production/middle-evidence/berlin-sf-coarse-full.jpg"
+      ]
+    },
+    {
+      "key": "berlin-final",
+      "source_name": "berlin-final",
+      "priority": "reserve",
+      "start": 237.12,
+      "end": 251.4,
+      "captions": [
+        {
+          "start": 247.4,
+          "end": 251.1,
+          "en": "Bullseye, and it brings the first break of this final set.",
+          "zh": "正中目标，她拿到决胜盘的第一次破发。"
+        }
+      ],
+      "point": {
+        "type": "complete deciding-set first break point, not match point",
+        "before": "Pegula serves at 4-6, 6-4, 0-1, advantage Noskova; BREAK POINT #2 visible.",
+        "after": "Noskova breaks to lead 2-0 in the deciding set.",
+        "event_result": "Pegula lost 4-6 6-4 3-6.",
+        "action": "237.12 before far Pegula serve; uninterrupted rally to 246.7; far-side Pegula reaction, followed by Noskova close-up."
+      },
+      "crop_note": "Full source-time point. Near-side Noskova receiver begins partly beyond left native crop around 237.5–239; far-side Pegula is generally central.",
+      "uncertain": false,
+      "uncertain_spans": [],
+      "source_file": "/workspace/pegula-finals-production/sources/berlin-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=fKfC75_5ZCI",
+      "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+      "geometry": {
+        "mode": "cover",
+        "cx": 0.5,
+        "cy": 0.5,
+        "input": [
+          1920,
+          1080
+        ],
+        "crop_xywh": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "output": [
+          1080,
+          1440
+        ],
+        "contains_no_letterbox": true
+      },
+      "duration": 14.28,
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-small.en.json",
+          "sha256": "658f9a5a778e9b558e6fa82376d78f07e93a15d3731e320257137bfe6ffc3c5e",
+          "model": "small.en",
+          "clip": [
+            235,
+            305
+          ],
+          "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-medium.en.json",
+          "sha256": "882665114ed7fdcedfbb0258db2904909025f370b0668bf0675d999fd2aa4862",
+          "model": "medium.en",
+          "clip": [
+            235,
+            305
+          ],
+          "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-breakpoint-small.en.json",
+          "sha256": "4de2d50976d69b4af4530ad9e008a5fdb00cdb8d9012ba730ecdbabe52610e90",
+          "model": "small.en",
+          "clip": [
+            236,
+            254
+          ],
+          "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+          "method": "faster_whisper word timestamps, no human listening"
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-breakpoint-turbo.json",
+          "sha256": "dd4e2697817a208d20d5bcda9188334789b35707b334d568a8f329fb7463bc61",
+          "model": "large-v3-turbo",
+          "clip": [
+            236,
+            254
+          ],
+          "source_sha256": "ab85a4bf65bc5aadd1b62686b40db035a0f30403e6fd32cf73ed35115ae75171",
+          "method": "faster_whisper word timestamps, no human listening"
+        }
+      ],
+      "method": "asr_cross_checked",
+      "reviewed_from": 235,
+      "reviewed_to": 305,
+      "review_notes": [
+        "Full medium and selected turbo independently decode Bullseye; full small incorrectly attaches the preceding authoritatively and selected small misses the opening word. Caption follows medium/turbo, all raw versions retained."
+      ],
+      "status": "complete",
+      "live_label": {
+        "image": "/workspace/tennislive/assets/reel/pegula-finals-2026/context-berlin-final.png",
+        "sha256": "a2da439685438b92ad37d092f6141596d5ad23a6d0073848eedf879fbf6e99cd",
+        "width": 648,
+        "right": 46,
+        "top": 151,
+        "source_start": 240.4,
+        "source_end": 243.2,
+        "show_after": 3.28,
+        "show_for": 2.8,
+        "method": "Actual current label PNG alpha composited at native 1080x1440 fixed crop; five frames sampled across interval. Research precheck, not final native render QC.",
+        "contact_sheet": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-actual-label-precheck.jpg",
+        "status": "sampled_frames_clear_of_player_face_body_and_hitting_action",
+        "continuous_video_qc_pending": true
+      },
+      "audio_tail": {
+        "policy": "source",
+        "outgoing_seconds": 0.25,
+        "checked_until": 251.65,
+        "next_excluded_word_start": 261.29,
+        "next_word_not_in_tail": true,
+        "note": "ASR context extends beyond retained window and the outgoing .25s; no next-word leakage identified. Source-pad playback still subject to final native review."
+      },
+      "foreground_audio_review": "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-foreground-review.json",
+      "point_frame_evidence": [
+        "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-fine.jpg",
+        "/workspace/pegula-finals-production/production/middle-evidence/berlin-final-coarse-full.jpg"
+      ]
+    }
+  ]
+}

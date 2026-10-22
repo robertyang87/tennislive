@@ -1,0 +1,130 @@
+{
+  "status": "canonical_call_proposed_with_actual_word_evidence_not_human_listened",
+  "source_window": [
+    173.1,
+    179.76
+  ],
+  "proposed_text": "Game, set and match, Pegula. Two sets to one. Three-six, six-four, six-three.",
+  "do_not_claim_two_models_both_emitted_this_entire_sentence": true,
+  "no_expected_sentence_prompted": true,
+  "identity_prompt_used_only_in_explicit_files": "Tennis. Jessica Pegula. Emma Navarro.",
+  "word_resolution": [
+    {
+      "word": "Game",
+      "support": [
+        {
+          "file": "center-call-small.json",
+          "raw": "Game",
+          "p": 0.4243397116661072
+        },
+        {
+          "file": "center-call-turbo.json",
+          "raw": "Game",
+          "p": 0.12554273009300232
+        },
+        {
+          "file": "bandpass-call-turbo.json",
+          "raw": "Game",
+          "p": 0.2544613182544708
+        }
+      ],
+      "source_word_range": [
+        173.1,
+        173.9
+      ],
+      "note": "Raw lexical Game exists independently; onset smears backwards across source silence, conservative caption starts173.38."
+    },
+    {
+      "word": "set",
+      "support": [
+        {
+          "file": "bandpass-call-turbo.json",
+          "raw": "set",
+          "p": 0.05309217423200607
+        },
+        {
+          "file": "wta-official-medium.en.json",
+          "raw": "set",
+          "p": 0.192
+        }
+      ],
+      "source_word_range": [
+        173.8,
+        174.26
+      ],
+      "note": "Actual emissions, but low confidence; other raw decodes merge into outside/has had. Needs explicit editorial lexical correction, not a claim exact automatic agreement."
+    },
+    {
+      "word": "and",
+      "support": [
+        {
+          "file": "bandpass-call-turbo.json",
+          "raw": "and",
+          "p": 0.6554948687553406
+        }
+      ],
+      "source_word_range": [
+        174.26,
+        174.44
+      ],
+      "note": "Actual emission from narrow bandpass diagnostic; other models substitute a/the. Single-model lexical support only."
+    },
+    {
+      "word": "match",
+      "support": [
+        {
+          "file": "center-call-small.en.json",
+          "raw": "match",
+          "p": 0.9897280335426331
+        },
+        {
+          "file": "center-call-medium.en.json",
+          "raw": "match",
+          "p": 0.9951680898666382
+        },
+        {
+          "file": "wta-official-medium.en.json",
+          "raw": "match",
+          "p": 0.997
+        }
+      ],
+      "source_word_range": [
+        174.4,
+        174.78
+      ],
+      "note": "Stable across models and official releases."
+    },
+    {
+      "word": "Pegula",
+      "support": [
+        {
+          "file": "wta-official-medium.en.json",
+          "raw": "Pegula",
+          "p": 0.228
+        },
+        {
+          "file": "identity-context-small.en.json",
+          "raw": "Pegula",
+          "p": 0.19755685492418706
+        },
+        {
+          "file": "identity-context-medium.en.json",
+          "raw": "Pegula",
+          "p": 0.09598220698535442
+        }
+      ],
+      "source_word_range": [
+        174.9,
+        175.5
+      ],
+      "note": "No-prompt second official release names Pegula; two explicit names-only prompted models agree. Official scoreboard/WTA article independently fixes identity; Tegeler/regular/take a left are raw pronunciation variants. Not a template-only name insertion."
+    }
+  ],
+  "stable_following_sentences": [
+    "Two sets to one.",
+    "3-6, 6-4, 6-3.",
+    "She got through it.",
+    "She's in the semis at her favorite tournament."
+  ],
+  "review_limit": "Machine cross-check plus source identity/court-score context. No human ear claimed. set/and phonetic normalization remains the weak span; retain this diagnostic and raw files if adopting canonical transcript."
+}

@@ -1,0 +1,382 @@
+{
+  "schema_version": 2,
+  "created_utc": "2026-10-22T09:44:09.582431+00:00",
+  "status": "two_source_bound_editorial_windows_complete_ASR_cross_checked_native_final_pending",
+  "method": "asr_cross_checked",
+  "human_listened": false,
+  "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+  "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+  "selections": [
+    {
+      "key": "us_qf_matchpoint",
+      "source_name": "us-qf",
+      "source_key": "us-qf",
+      "source": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "source_fps": "60000/1001",
+      "start": 168.84,
+      "end": 173.04,
+      "seconds": 4.2,
+      "duration": 4.2,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "narration": "",
+      "captions": [],
+      "quote": [],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us_qf_matchpoint-foreground-packet.json",
+      "audio_review_packet_sha256": "dfa29a859529f19eba40873cecc1834cabffc7313cfdfbbc069ff5328d0132be",
+      "method": "asr_cross_checked",
+      "audio_review_status": "complete_asr_cross_checked_not_human_listening",
+      "reviewed_from": 168.84,
+      "reviewed_to": 173.04,
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-point-small.en.json",
+          "sha256": "00cef4b6264b7388a590cd4828a4f8b2783ecdb6f224743780a34254d634e014",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            168.4,
+            173.35
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-point-medium.en.json",
+          "sha256": "665281bd5b4baa43464895687228e35aa9452debc665b6e63c6749eb49637937",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            168.4,
+            173.35
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-small.en.json",
+          "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-medium.en.json",
+          "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-turbo-diagnostic.json",
+          "sha256": "7779c36006da564cf78e3ae0527b92fcdf804493d7ced710454186ba4658d484",
+          "model": "large-v3-turbo",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            172.8,
+            180.5
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/bandpass-call-turbo.json",
+          "sha256": "fb201e5eb0c667b450a91363a506478293738dacef02705dd3552b5189abd45e",
+          "model": "turbo",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            173.1,
+            180.3
+          ]
+        }
+      ],
+      "visual_evidence": {
+        "key": "point",
+        "start": 168.84,
+        "end": 173.04,
+        "cx": 0.5,
+        "fit": "crop",
+        "canvas": [
+          1080,
+          1440
+        ],
+        "samples": [
+          {
+            "source_time": 168.84,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-01.jpg",
+            "sha256": "3820756b674aa7eca24bec6e499083ae0387298a3878b1bb500c7b55abedc259"
+          },
+          {
+            "source_time": 169.365,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-02.jpg",
+            "sha256": "c39f35b774f15740d5b237feaac3167d330d9c81005b7f84a93ffd25b72dbc66"
+          },
+          {
+            "source_time": 169.89,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-03.jpg",
+            "sha256": "f21d8dd5a80e04b204cde550a445ed742f0575abf6abe8f8ef44169a431ffd2c"
+          },
+          {
+            "source_time": 170.415,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-04.jpg",
+            "sha256": "b86954cf722ba606b7a2faaa04b781db551a30560050e9b725839bd3ca059ffa"
+          },
+          {
+            "source_time": 170.94,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-05.jpg",
+            "sha256": "608c47cb18097d08e6cd135c9952de6b7a34c1b060431a64d0e08db667bd95c9"
+          },
+          {
+            "source_time": 171.465,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-06.jpg",
+            "sha256": "f4aac3f8a19332cce29a9ac16758352e2d55956c9216330c90328331481f6459"
+          },
+          {
+            "source_time": 171.99,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-07.jpg",
+            "sha256": "fd508bfb52c8190d3367671f857d7bebe9e3528c28b4bef2a5fe903645c83ffe"
+          },
+          {
+            "source_time": 172.515,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-08.jpg",
+            "sha256": "88988e402ec44559bbbea9eea0398768f577a769ead34dab3e458b3d3708565e"
+          },
+          {
+            "source_time": 173.04,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-09.jpg",
+            "sha256": "1a36930cf7bc40be6638d103fcc71a4d9e6f6f583682f762d58524c68738b16a"
+          }
+        ],
+        "contact": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-nine-contact.jpg"
+      },
+      "visual_review_status": "All9 actual requested fixed-center crops inspected, before actual new native final render",
+      "human_listened": false,
+      "live_label_window": null,
+      "audio_tail": "silence",
+      "point_end_ok": "Actual full source MATCH POINT #2: Pegula far-side service preparation168.84, toss170.4, serve171, Navarro return171.98–172.11 fails at net172.64–172.80; by172.96–173.04 Pegula has stopped rallying and walks forward with raised/clenched hand. End173.04 is after point death/outcome and before the entire PA result sentence. Later authentic reaction/handshake179.96–203.20 completes the match reaction in normal editorial continuation. No extension to result-call speech required; no stroke cut.",
+      "visual_notes": "Real full second-service match point, serve and one return attempt to net, not an extended rally. Far Pegula service/outcome retained; near Navarro left edge partly clipped during initial stance due requested fixedcenter3:4. Do not claim every limb visible. Source score image shows actual MATCH POINT #2."
+    },
+    {
+      "key": "us_qf_postmatch_full",
+      "source_name": "us-qf",
+      "source_key": "us-qf",
+      "source": "us-qf",
+      "source_url": "https://www.youtube.com/watch?v=beax9TP-Dlk",
+      "source_file": "/workspace/pegula-finals-production/audio/sources/us-qf.mp4",
+      "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+      "source_size": [
+        1920,
+        1080
+      ],
+      "source_fps": "60000/1001",
+      "start": 179.96,
+      "end": 203.2,
+      "seconds": 23.24,
+      "duration": 23.24,
+      "quote_kind": "commentary",
+      "_quote_kind": "broadcast",
+      "frame": "court",
+      "cx": 0.5,
+      "fit": "crop",
+      "track": false,
+      "narration": "",
+      "captions": [
+        {
+          "start": 190.86,
+          "end": 192.48,
+          "en": "She got through it.",
+          "zh": "她挺过来了。"
+        },
+        {
+          "start": 199.28,
+          "end": 202.9,
+          "en": "She's in the semis at her favorite tournament.",
+          "zh": "她在最爱的赛事打进四强。"
+        }
+      ],
+      "quote": [
+        {
+          "at": 10.9,
+          "end": 12.52,
+          "text": "She got through it.\n她挺过来了。"
+        },
+        {
+          "at": 19.32,
+          "end": 22.94,
+          "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
+        }
+      ],
+      "audio_review_packet": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us_qf_postmatch_full-foreground-packet.json",
+      "audio_review_packet_sha256": "8774afb3fc4d470dba54f357fad0cf3a8e97aed23a2f990b3f1799640641e9da",
+      "method": "asr_cross_checked",
+      "audio_review_status": "complete_asr_cross_checked_not_human_listening",
+      "reviewed_from": 179.96,
+      "reviewed_to": 203.2,
+      "uncertain_spans": [],
+      "asr_evidence": [
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-reaction-small.en.json",
+          "sha256": "9a455e649985d486bf04d6bc1ce273ed3bcf86770c212332c5270d09a523090e",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            179.96,
+            205.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/selected-reaction-medium.en.json",
+          "sha256": "1c1489c6cfc1d4897312fdafb1f6d239fa79e012e58d8ec607bb61f8d30d45fc",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            179.96,
+            205.0
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-small.en.json",
+          "sha256": "a9e4621d249f55fbca6e92471938b7858796aafd401f338d3d641a3b91af0ca9",
+          "model": "small.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            166,
+            205
+          ]
+        },
+        {
+          "path": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/us-qf-medium.en.json",
+          "sha256": "b87a919b3d0c998ca6a58be991874bac3158bcb0b80d7a8f4416bd6f9b6a24c4",
+          "model": "medium.en",
+          "source_sha256": "73b8e573df1bb9db5a070756b0a8b7aee12c7bb12f1228bd3b2fb13fc38afe39",
+          "clip": [
+            166,
+            205
+          ]
+        }
+      ],
+      "visual_evidence": {
+        "key": "reaction",
+        "start": 179.96,
+        "end": 203.2,
+        "cx": 0.5,
+        "fit": "crop",
+        "canvas": [
+          1080,
+          1440
+        ],
+        "samples": [
+          {
+            "source_time": 179.96,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-01.jpg",
+            "sha256": "1a2ffb3d2a562bc53193c9da59e5dbdc47c34a9606b56fa982ae94bc3eca062c"
+          },
+          {
+            "source_time": 182.865,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-02.jpg",
+            "sha256": "c07319a8f786d6fd84474282da04021f17ecb65e8a77be1190c79ba8a7eac195"
+          },
+          {
+            "source_time": 185.77,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-03.jpg",
+            "sha256": "612ebf570898f63079ba2535c5336b28702f364f3fd283b2ee8a53fa9b1f0534"
+          },
+          {
+            "source_time": 188.675,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-04.jpg",
+            "sha256": "333fb86a2a09849efda3388e64478ded3cd271fb0abf814adecbcffe285f8d14"
+          },
+          {
+            "source_time": 191.58,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-05.jpg",
+            "sha256": "7721eba50cccd8569f4fce62eede9300d7ce7030942c8feb0ccd4e11b7da40f5"
+          },
+          {
+            "source_time": 194.485,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-06.jpg",
+            "sha256": "8eb2e203ac9fce998770e37b3e36dfd11ede31626c887d226124505a599f20a4"
+          },
+          {
+            "source_time": 197.39,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-07.jpg",
+            "sha256": "a23996fbfff7d4f245879546bc09dfa13651c2835745a8bdeb91dabcacb7c902"
+          },
+          {
+            "source_time": 200.295,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-08.jpg",
+            "sha256": "fc6deedd4012a12d157325cd3345cbec1e2fc76e399b79f1524c2f7f4378e1fe"
+          },
+          {
+            "source_time": 203.2,
+            "file": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-09.jpg",
+            "sha256": "39ce2befb210cdfdcb8ea7c7e9d362fe4c2e34f172a84f1b8ab3a7e8e89e3e8a"
+          }
+        ],
+        "contact": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-nine-contact.jpg"
+      },
+      "visual_review_status": "All9 actual requested fixed-center crops inspected, before actual new native final render",
+      "human_listened": false,
+      "live_label_window": null,
+      "visual_notes": "Authentic same-match loser/winner reaction, handshake/embrace, umpire handshake, Pegula thanks crowd; full clear commentary. Starts179.96 after complete PA179.76+.20, avoiding omitted177.43 source-right partial-face close-up. In9 inspected fixedcenter crops all faces retained; natural arms/body edge crop remains ordinary portrait geometry. Do not label this as another complete point."
+    }
+  ],
+  "total_seconds": 27.44,
+  "editorial_omission": {
+    "source_interval": [
+      173.04,
+      179.96
+    ],
+    "reason": "Parent-authorized normal editorial omission of entire non-highlight PA result declaration, not omission of exciting commentator analysis. No partial PA line retained or transcribed as certain. Full point outcome before omission, actual subsequent reaction/handshake after omission, both精彩commentator sentences190.86–192.48 and199.28–202.90 retained.",
+    "weak_call_diagnostics_retained": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/lexical-normalization-review.json",
+    "not_claimed_as_heard_or_complete_literal_transcript": true,
+    "bad_face_177_43_not_retained": true
+  },
+  "complete_matchpoint_scoreboard": {
+    "source_time": 169.2,
+    "png": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/matchpoint-2-scoreboard.png",
+    "sha256": "9017d9052c02d1ff1742cf1477cddf44453d5b0a65602801f560feb9d5ebcd47",
+    "reading": "MATCH POINT #2; PEGULA3/6/5 AD, NAVARRO6/4/3; service indicator Pegula far side."
+  },
+  "source_boundary_evidence": {
+    "point_contact": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/point-dead-call-boundary-contact.jpg",
+    "outcome_frames": [
+      "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/boundary-source-172.800.png",
+      "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/boundary-source-172.960.png",
+      "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/boundary-source-173.040.png"
+    ],
+    "earliest_nonleading_PA_word_onsets": [
+      173.4,
+      173.54
+    ],
+    "PA_completed_no_later": 179.76,
+    "next_selected_start": 179.96,
+    "PA_gap_seconds": 0.2,
+    "note": "Machine word-boundary evidence, not human phoneme listening. Leading173.10 word intervals smear prior quiet; conservative body ends173.04 and native tail zero only outside selected body."
+  },
+  "keep_bp_highlight": {
+    "start": 150.5,
+    "end": 164.8,
+    "note": "Retain independently. It is a saved break point, not fulfilment of the new complete match-point requirement."
+  },
+  "deduplicate_old_reaction": {
+    "start": 190.7,
+    "end": 203.2,
+    "note": "Now wholly contained in179.96–203.20; remove separate duplicate if merging new second window."
+  },
+  "existing_live_match_label": "Retain approved USQF information label on existing BP156.60–159.40, not on this reaction face footage. The actual match has that live label already.",
+  "archive_of_unapproved_continuous_candidate": "/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/continuous-window-not-approved.json",
+  "shared_spec_modified": false
+}

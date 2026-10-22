@@ -115,6 +115,44 @@
       "_voice_emphasis": "结果及转折"
     },
     {
+      "start": 113.36,
+      "end": 131.56,
+      "cx": 0.5,
+      "frame": "court",
+      "_id": "ao-sf-extra",
+      "source": "ao-sf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Actual same-match source.",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "quote": [
+        {
+          "at": 6.56,
+          "end": 10.42,
+          "text": "Oh, it's simply stunning from Elena Rybakina.\n哦，莱巴金娜这球真是精彩绝伦。"
+        },
+        {
+          "at": 10.96,
+          "end": 14.4,
+          "text": "What a set of tennis from the world number five.\n世界第五打出了多么精彩的一盘。"
+        },
+        {
+          "at": 14.72,
+          "end": 17.98,
+          "text": "Wraps it up in 33 minutes, six games to three.\n她用时33分钟，以六比三拿下首盘。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "ao-sf",
+      "_point_role": "extra_turning_point"
+    },
+    {
       "start": 437.6,
       "end": 455.15,
       "cx": 0.5,
@@ -165,7 +203,9 @@
           "score": "3-6 6-7(7)"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "ao-sf",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-dubai",
@@ -180,6 +220,62 @@
       "kicker": "02 · 第一座冠军",
       "_voice_intent": "完整语义整段合成；人名比分内部不人为停顿，事件转折用自然句界；不统一提速。",
       "_voice_emphasis": "结果及转折"
+    },
+    {
+      "start": 148.36,
+      "end": 174.12,
+      "cx": 0.5,
+      "frame": "court",
+      "subtitle_bottom_windows": [
+        [
+          17.46,
+          25.76,
+          520
+        ]
+      ],
+      "_subtitle_position_why": "实际原生预览末段电视大比分牌顶约y950，字幕底边固定y920避开牌；从完整前一句边界165.82开始，不切英文句，球场中心裁切与声音不变。",
+      "_id": "dubai-final-extra",
+      "source": "dubai-final",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Actual same-match source.",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 3.8,
+          "text": "Multiple chances to get this first set on the board.\n她有多个拿下首盘的机会。"
+        },
+        {
+          "at": 10.16,
+          "end": 13.08,
+          "text": "And Pegula gets the first set on the board.\n佩古拉拿下首盘。"
+        },
+        {
+          "at": 13.66,
+          "end": 17.14,
+          "text": "It was tremendous from her, so solid early on.\n她发挥出色，开局就非常扎实。"
+        },
+        {
+          "at": 17.46,
+          "end": 22.5,
+          "text": "Svitolina showed plenty of fight, but Pegula kept her at a distance\n斯维托丽娜顽抗，佩古拉仍领先"
+        },
+        {
+          "at": 22.5,
+          "end": 25.38,
+          "text": "and after 34 minutes takes the first set, 6-2.\n用时34分钟，以六比二拿下首盘。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "dubai-final",
+      "_point_role": "extra_turning_point"
     },
     {
       "start": 239.5,
@@ -232,7 +328,9 @@
           "score": "6-2 6-4"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "dubai-final",
+      "_point_role": "match_point"
     },
     {
       "start": 28.6,
@@ -307,6 +405,63 @@
       "_voice_emphasis": "结果及转折"
     },
     {
+      "start": 54.64,
+      "end": 77.4,
+      "cx": 0.5,
+      "frame": "court",
+      "audio_tail": "silence",
+      "subtitle_bottom_windows": [
+        [
+          16.86,
+          22.76,
+          520
+        ]
+      ],
+      "_subtitle_position_why": "原生样帧与原源逐帧核实，大比分牌在71.04句末后才出现；从下一完整原声句71.50起将字幕底边固定y920避开牌，前一句仍在底部避免挡教练脸；完整声音与取景不变。",
+      "_id": "miami-qf-extra",
+      "source": "miami-qf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Actual same-match source.",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "quote": [
+        {
+          "at": 5.5,
+          "end": 9.7,
+          "text": "That's a remarkable collect from that position on the court\n竟能从那里把球救回来！"
+        },
+        {
+          "at": 9.7,
+          "end": 13.3,
+          "text": "for Jess Pegula, who's been almost flawless in this first set.\n佩古拉首盘的发挥几乎无可挑剔。"
+        },
+        {
+          "at": 13.7,
+          "end": 16.4,
+          "text": "Rybakina is showing signs of life towards the end of it.\n到了盘末，莱巴金娜开始有所起色。"
+        },
+        {
+          "at": 16.86,
+          "end": 21.08,
+          "text": "But it's a very, very good opening set for Jessica Pegula.\n但佩古拉的首盘确实打得非常出色。"
+        },
+        {
+          "at": 21.32,
+          "end": 22.74,
+          "text": "6-2 in 36 minutes.\n用时36分钟，六比二。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "miami-qf",
+      "_point_role": "extra_turning_point"
+    },
+    {
       "start": 264.0,
       "end": 276.96,
       "_id": "miami-qf",
@@ -355,7 +510,9 @@
           "score": "6-2 3-6 4-6"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "miami-qf",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-charleston",
@@ -372,7 +529,40 @@
       "_voice_emphasis": "四场三盘与第二冠"
     },
     {
-      "start": 262.2,
+      "start": 89.68,
+      "end": 122.32,
+      "cx": 0.5,
+      "frame": "court",
+      "_id": "charleston-final-extra",
+      "source": "charleston-final",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Actual same-match source.",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "quote": [
+        {
+          "at": 24.76,
+          "end": 28.0,
+          "text": "It's truly world-class from Pegula.\n佩古拉这球真是世界级水准。"
+        },
+        {
+          "at": 29.9,
+          "end": 32.4,
+          "text": "The difference between 30-all and 15-40.\n这分决定三十平还是十五比四十"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "charleston-final",
+      "_point_role": "extra_highlight"
+    },
+    {
+      "start": 264.6,
       "end": 287.8,
       "cx": 0.5,
       "frame": "court",
@@ -386,42 +576,37 @@
       "fit": "crop",
       "track": false,
       "_quote_kind": "broadcast",
-      "_why": "Selection includes complete spoken prelude “So good. She saved the match points. And now a fourth championship point”, actual fourth championship point with serve, rally, result and real winner reaction. The she in saved the match points refers to opponent Starodubtseva, NOT Pegula; Chinese explicitly says opponent. Prior saved point is only retrospectively referenced; not falsely claimed fully shown. Near receiver briefly outside left fixed-center crop around269.4–270.4; full time-domain point retained with this spatial limitation. Title-again and current-season wins commentary preserved as full sentences. Avoid next independent opponent-focused commentary at288.54.",
+      "_why": "Selection includes complete spoken prelude “So good. She saved the match points. And now a fourth championship point”, actual fourth championship point with serve, rally, result and real winner reaction. The she in saved the match points refers to opponent Starodubtseva, NOT Pegula; Chinese explicitly says opponent. Prior saved point is only retrospectively referenced; not falsely claimed fully shown. Near receiver briefly outside left fixed-center crop around269.4–270.4; full time-domain point retained with this spatial limitation. Title-again and current-season wins commentary preserved as full sentences. Avoid next independent opponent-focused commentary at288.54. Selected championship point now starts264.60, after the previous rally fragment and full unrelated So good sentence; She saved the match points remains complete.",
       "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
       "quote": [
         {
-          "at": 0.22,
-          "end": 1.4,
-          "text": "So good.\n太棒了"
-        },
-        {
-          "at": 2.6,
-          "end": 4.18,
+          "at": 0.2,
+          "end": 1.78,
           "text": "She saved the match points.\n对手此前救下那些冠军点"
         },
         {
-          "at": 4.64,
-          "end": 7.35,
+          "at": 2.24,
+          "end": 4.95,
           "text": "And now a fourth championship point.\n现在来到第四个冠军点"
         },
         {
-          "at": 10.8,
-          "end": 11.75,
+          "at": 8.4,
+          "end": 9.35,
           "text": "What a week!\n多么精彩的一周"
         },
         {
-          "at": 13.2,
-          "end": 17.1,
+          "at": 10.8,
+          "end": 14.7,
           "text": "The defending champion claims the title again in Charleston.\n卫冕冠军再度称霸查尔斯顿"
         },
         {
-          "at": 19.48,
-          "end": 22.04,
+          "at": 17.08,
+          "end": 19.64,
           "text": "And no one has won more matches this year\n论本赛季WTA胜场数"
         },
         {
-          "at": 22.04,
-          "end": 25.38,
+          "at": 19.64,
+          "end": 22.98,
           "text": "on the WTA Tour than Jess Pegula.\n还无人超过佩古拉"
         }
       ],
@@ -431,7 +616,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_after": 10.4,
+        "show_after": 8.0,
         "show_for": 3.8,
         "motion": "editorial",
         "label": {
@@ -442,7 +627,9 @@
           "score": "6-2 6-2"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "charleston-final",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-clay",
@@ -471,6 +658,53 @@
       "kicker": "04 · 再次走到决赛",
       "_voice_intent": "完整语义整段合成；人名比分内部不人为停顿，事件转折用自然句界；不统一提速。",
       "_voice_emphasis": "结果及转折"
+    },
+    {
+      "start": 209.4,
+      "end": 230.0,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "_id": "berlin-sf-extra",
+      "source": "berlin-sf-sabalenka",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "small mini brake normalized to tennis mini-break; medium Down on mini break differs on article; unprompted whole-source small scan supports Down a mini break. Raw ASR retained. Prior speech ends209.24; final retained word second ends229.74. No next foreground word detected through232.",
+      "quote": [
+        {
+          "at": 5.04,
+          "end": 7.38,
+          "text": "Did the rain delay help Sabalenka?\n雨暂停帮到了萨巴伦卡吗？"
+        },
+        {
+          "at": 7.98,
+          "end": 8.84,
+          "text": "It sure did.\n确实如此。"
+        },
+        {
+          "at": 10.26,
+          "end": 12.96,
+          "text": "Down a mini-break, came out flying.\n一度落后迷你破发，回来火力全开"
+        },
+        {
+          "at": 14.78,
+          "end": 17.88,
+          "text": "And again, these two are going to a decider.\n两人又将进入决胜盘。"
+        },
+        {
+          "at": 18.78,
+          "end": 20.34,
+          "text": "Sabalenka taking the second.\n萨巴伦卡拿下第二盘。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "berlin-sf",
+      "_point_role": "extra_turning_point"
     },
     {
       "start": 257.4,
@@ -516,7 +750,9 @@
           "score": "6-4 6-7(4) 6-0"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "berlin-sf",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-summer",
@@ -531,6 +767,43 @@
       "kicker": "05 · 北美的起伏",
       "_voice_intent": "完整语义整段合成；人名比分内部不人为停顿，事件转折用自然句界；不统一提速。",
       "_voice_emphasis": "结果及转折"
+    },
+    {
+      "start": 156.2,
+      "end": 179.8,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "_id": "dc-final-extra",
+      "source": "dc-final",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "One complete live rally followed by a replay of the same point, not a second complete live rally. Prior utterance ends156.00; next new utterance begins180.54/180.76, outside179.80+.25. Name Eala agrees in both selected-window ASR.",
+      "quote": [
+        {
+          "at": 11.94,
+          "end": 16.12,
+          "text": "A second break for Eala\n伊埃拉第二次破发，"
+        },
+        {
+          "at": 16.46,
+          "end": 18.64,
+          "text": "delivers the second set.\n拿下了第二盘。"
+        },
+        {
+          "at": 19.54,
+          "end": 23.16,
+          "text": "We are off to three in the DC final.\n华盛顿决赛进入决胜盘。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "dc-final",
+      "_point_role": "extra_turning_point"
     },
     {
       "start": 234.72,
@@ -584,7 +857,9 @@
           "score": "6-4 4-6 0-6"
         }
       },
-      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。235.04起实际全场，不用234.80背部近景压肩。远端佩古拉在实际字形左侧、近端伊埃拉在下方。 仍需最终native字幕PNG及成片复核。"
+      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。235.04起实际全场，不用234.80背部近景压肩。远端佩古拉在实际字形左侧、近端伊埃拉在下方。 仍需最终native字幕PNG及成片复核。",
+      "_match_id": "dc-final",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-cincy",
@@ -599,6 +874,33 @@
       "kicker": "05 · 辛辛那提",
       "_voice_intent": "完整语义整段合成；人名比分内部不人为停顿，事件转折用自然句界；不统一提速。",
       "_voice_emphasis": "结果及转折"
+    },
+    {
+      "start": 171.92,
+      "end": 185.72,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "_id": "cincy-sf-extra",
+      "source": "cincy-sf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Replaces rejected first-set157s-boundary candidate. Actual two-model169–189context agrees on every foreground word in selected window. Previous complete utterance ends171.78small/171.82medium; start171.92after both, with wide pre-serve frame before toss. Retained complete comment starts181.44small/181.52medium, final wind ends185.38small/185.46medium. End185.72 is0.26s after latest final word; no new foreground through189. No clipped next clause; no need to use source-body audio muting. Outgoing audio_tail:silence only outside window.",
+      "quote": [
+        {
+          "at": 9.52,
+          "end": 13.54,
+          "text": "Great winner! Kept it low enough then, wasn't affected by the wind.\n好球！压得够低，没受风的影响"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "cincy-sf",
+      "_point_role": "extra_turning_point"
     },
     {
       "start": 262.72,
@@ -651,7 +953,36 @@
           "score": "7-5 4-6 6-4"
         }
       },
-      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。本人发球准备至连续全场回合，实际字形在发球人物右侧及远端斯瓦泰克右侧，九样本未遮脸或击球身体。 仍需最终native字幕PNG及成片复核。"
+      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。本人发球准备至连续全场回合，实际字形在发球人物右侧及远端斯瓦泰克右侧，九样本未遮脸或击球身体。 仍需最终native字幕PNG及成片复核。",
+      "_match_id": "cincy-sf",
+      "_point_role": "match_point"
+    },
+    {
+      "start": 174.9,
+      "end": 189.1,
+      "cx": 0.5,
+      "audio_tail": "silence",
+      "_id": "cincy-final-extra",
+      "source": "cincy-final",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "Previous complete sentence ends174.38small/174.70medium; start174.90 is after both. Small Beautiful188.28–188.52, medium187.86–188.66; caption uses union. No more foreground words through193. Scoreboard keeps pre-point score during reaction; do not infer the next displayed score.",
+      "quote": [
+        {
+          "at": 12.96,
+          "end": 13.76,
+          "text": "Beautiful!\n漂亮！"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "cincy-final",
+      "_point_role": "extra_highlight"
     },
     {
       "start": 236.6,
@@ -704,7 +1035,9 @@
           "score": "2-6 4-6"
         }
       },
-      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。首帧高芙低头脸在字形左下，随后连续现场网前镜头天空；末帧两人握手脸在字形下方。 仍需最终native字幕PNG及成片复核。"
+      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。首帧高芙低头脸在字形左下，随后连续现场网前镜头天空；末帧两人握手脸在字形下方。 仍需最终native字幕PNG及成片复核。",
+      "_match_id": "cincy-final",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-us-open",
@@ -755,10 +1088,36 @@
           "score": "3-6 6-4 6-3"
         }
       },
-      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。救破发点回合，远端佩古拉左移后与文字分开、近端纳瓦罗在下方。不要延伸到更早151–156字形遮人区间。 仍需最终native字幕PNG及成片复核。"
+      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。救破发点回合，远端佩古拉左移后与文字分开、近端纳瓦罗在下方。不要延伸到更早151–156字形遮人区间。 仍需最终native字幕PNG及成片复核。",
+      "_match_id": "us-qf",
+      "_point_role": "extra_turning_point"
     },
     {
-      "start": 190.7,
+      "start": 168.84,
+      "end": 173.04,
+      "cx": 0.5,
+      "frame": "court",
+      "audio_tail": "silence",
+      "point_end_ok": "Actual full source MATCH POINT #2: Pegula far-side service preparation168.84, toss170.4, serve171, Navarro return171.98–172.11 fails at net172.64–172.80; by172.96–173.04 Pegula has stopped rallying and walks forward with raised/clenched hand. End173.04 is after point death/outcome and before the entire PA result sentence. Later authentic reaction/handshake179.96–203.20 completes the match reaction in normal editorial continuation. No extension to result-call speech required; no stroke cut.",
+      "_id": "us-qf-matchpoint",
+      "source": "us-qf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "{'key': 'point', 'start': 168.84, 'end': 173.04, 'cx': 0.5, 'fit': 'crop', 'canvas': [1080, 1440], 'samples': [{'source_time': 168.84, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-01.jpg', 'sha256': '3820756b674aa7eca24bec6e499083ae0387298a3878b1bb500c7b55abedc259'}, {'source_time': 169.365, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-02.jpg', 'sha256': 'c39f35b774f15740d5b237feaac3167d330d9c81005b7f84a93ffd25b72dbc66'}, {'source_time': 169.89, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-03.jpg', 'sha256': 'f21d8dd5a80e04b204cde550a445ed742f0575abf6abe8f8ef44169a431ffd2c'}, {'source_time': 170.415, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-04.jpg', 'sha256': 'b86954cf722ba606b7a2faaa04b781db551a30560050e9b725839bd3ca059ffa'}, {'source_time': 170.94, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-05.jpg', 'sha256': '608c47cb18097d08e6cd135c9952de6b7a34c1b060431a64d0e08db667bd95c9'}, {'source_time': 171.465, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-06.jpg', 'sha256': 'f4aac3f8a19332cce29a9ac16758352e2d55956c9216330c90328331481f6459'}, {'source_time': 171.99, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-07.jpg', 'sha256': 'fd508bfb52c8190d3367671f857d7bebe9e3528c28b4bef2a5fe903645c83ffe'}, {'source_time': 172.515, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-08.jpg', 'sha256': '88988e402ec44559bbbea9eea0398768f577a769ead34dab3e458b3d3708565e'}, {'source_time': 173.04, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-center-09.jpg', 'sha256': '1a36930cf7bc40be6638d103fcc71a4d9e6f6f583682f762d58524c68738b16a'}], 'contact': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-point-final-nine-contact.jpg'}",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "_quote_skip_why": "Actual source-bound small.en context168.40–173.35 emits no words. medium.en same context emits only Thank you for watching171.92–173.32, with Thank probability.0162, no_speech.706, and you/for/watching all zero-duration at173.32. This short-window generic decoder fragment is not stable identifiable foreground English: original broad small.en/medium.en166–205 also contain no words during the selected service/return point. Actual court/crowd sound is preserved through173.04. The separate complete PA result announcement is deliberately outside this selected editorial window; no claim it was absent from the source or heard clearly. Existing unprompted diagnostic first non-leading Game word evidence starts173.40 or173.54; leading173.10 low-probability intervals include preceding silence and do not prove word onset. Outgoing.25s is conservatively zero-padded only outside body via audio_tail:silence to exclude any incipient PA.",
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "us-qf",
+      "_point_role": "match_point"
+    },
+    {
+      "start": 179.96,
       "end": 203.2,
       "cx": 0.5,
       "frame": "court",
@@ -772,20 +1131,23 @@
       "fit": "crop",
       "track": false,
       "_quote_kind": "broadcast",
-      "_why": "Authentic same-match post-win Pegula reaction, kept as full12.50s with complete She got through it and full semis/favorite tournament sentence. This is reaction, not another complete match point. No live label on this face reaction; put result card on the selected earlier live point.",
+      "_why": "{'key': 'reaction', 'start': 179.96, 'end': 203.2, 'cx': 0.5, 'fit': 'crop', 'canvas': [1080, 1440], 'samples': [{'source_time': 179.96, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-01.jpg', 'sha256': '1a2ffb3d2a562bc53193c9da59e5dbdc47c34a9606b56fa982ae94bc3eca062c'}, {'source_time': 182.865, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-02.jpg', 'sha256': 'c07319a8f786d6fd84474282da04021f17ecb65e8a77be1190c79ba8a7eac195'}, {'source_time': 185.77, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-03.jpg', 'sha256': '612ebf570898f63079ba2535c5336b28702f364f3fd283b2ee8a53fa9b1f0534'}, {'source_time': 188.675, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-04.jpg', 'sha256': '333fb86a2a09849efda3388e64478ded3cd271fb0abf814adecbcffe285f8d14'}, {'source_time': 191.58, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-05.jpg', 'sha256': '7721eba50cccd8569f4fce62eede9300d7ce7030942c8feb0ccd4e11b7da40f5'}, {'source_time': 194.485, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-06.jpg', 'sha256': '8eb2e203ac9fce998770e37b3e36dfd11ede31626c887d226124505a599f20a4'}, {'source_time': 197.39, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-07.jpg', 'sha256': 'a23996fbfff7d4f245879546bc09dfa13651c2835745a8bdeb91dabcacb7c902'}, {'source_time': 200.295, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-08.jpg', 'sha256': 'fc6deedd4012a12d157325cd3345cbec1e2fc76e399b79f1524c2f7f4378e1fe'}, {'source_time': 203.2, 'file': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-center-09.jpg', 'sha256': '39ce2befb210cdfdcb8ea7c7e9d362fe4c2e34f172a84f1b8ab3a7e8e89e3e8a'}], 'contact': '/workspace/pegula-finals-production/production/us-qf-matchpoint-evidence/split-reaction-nine-contact.jpg'}",
       "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
       "quote": [
         {
-          "at": 0.16,
-          "end": 1.78,
+          "at": 10.9,
+          "end": 12.52,
           "text": "She got through it.\n她挺过来了。"
         },
         {
-          "at": 8.58,
-          "end": 12.2,
+          "at": 19.32,
+          "end": 22.94,
           "text": "She's in the semis at her favorite tournament.\n她在最爱的赛事打进四强。"
         }
-      ]
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "us-qf",
+      "_point_role": "post_match_reaction"
     },
     {
       "start": 57.4,
@@ -919,7 +1281,100 @@
           "score": "5-7 2-6"
         }
       },
-      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。避开23.44日期行遮远端萨巴身体；23.80已左移出字形。26.25后本人近景脸仍在字形左侧，26.60末帧安全。 仍需最终native字幕PNG及成片复核。"
+      "_label_window_why": "实际本集透明PNG、宽648/left386/top151，2.8秒窗9帧逐张已核。避开23.44日期行遮远端萨巴身体；23.80已左移出字形。26.25后本人近景脸仍在字形左侧，26.60末帧安全。 仍需最终native字幕PNG及成片复核。",
+      "_match_id": "us-sf",
+      "_point_role": "extra_highlight"
+    },
+    {
+      "start": 142.94,
+      "end": 150.0,
+      "cx": 0.5,
+      "frame": "court",
+      "audio_tail": "silence",
+      "_id": "us-sf-matchpoint",
+      "source": "us-sf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "{'source_contact': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-source-nine.jpg', 'cx05_contact': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-cx05-nine.jpg', 'nine_samples': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-point-samples.json', 'boundary_contact': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-end-boundary-source-nine.jpg', 'scoreboard_png': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/matchpoint-scoreboard.png', 'scoreboard_sha256': 'e58ed01dc9c4801205be109c627ac85df27d7b332bbe76b027712592cb369ec0', 'observation': '142.94 pre-serve setup,143.82 toss,144.70 firstserve/rally,148.50–148.90 final chase/contact and outcome;149.10–149.90 both players have stopped the point and are walking.150.00 preserves complete temporal point before150.02 reactioncamera cut. Allthree actual source/fixedcrop/boundary contacts viewed.', 'crop_boundary': 'Fixedcx.5 loses Pegula far-right final chase/racket around148.6–149.98. Full temporal rally preserved; do not claim full-width action fits3:4. No contain/tracking used.', 'scope': 'Actual source and fixed3:4geometry only; not native movie QC.'}",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "_quote_skip_why": "Actual selected body independently transcribed without prompting bysmall.en andmedium.en. Both output only nonlexical Ahh/Ahhh vocalizations synchronized with actual rally/point-ending crowd reaction. No retained intelligible umpire/commentator English identified; this is not a waiver for the excluded audible PA call.",
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "us-sf",
+      "_point_role": "match_point"
+    },
+    {
+      "start": 156.2,
+      "end": 186.4,
+      "cx": 0.5,
+      "frame": "court",
+      "_id": "us-sf-postmatch",
+      "source": "us-sf",
+      "narration": "",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "自然云健+6%/+0Hz；完整语义整段合成，无人工加速。"
+      },
+      "fit": "crop",
+      "track": false,
+      "_quote_kind": "broadcast",
+      "_why": "{'source_contact': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-source-nine.jpg', 'cx05_contact': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-cx05-nine.jpg', 'nine_samples': '/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-reaction-samples.json', 'observation': '156.20 Pegula walking toward net,159.98 handshake visible,163.75 winner walking away,167.53 chairumpire handshake,171.30 crowd acknowledgement,175.08 winner wave,178.85 crowd,182.63 winner walking,186.35 official finalresult graphic. Exact fixedcx.5 fullbleed source geometry reviewed. Some closeup edges clipped under owner-fixedcourtcenter, no adjustable person crop applied.', 'scope': 'Actual source and fixed3:4geometry only; not native movie QC.'}",
+      "_frame_why": "实际比赛及同场赛后比赛反应；按用户要求固定球场中心cx=.5，不跟踪、不改为人物取景。",
+      "quote": [
+        {
+          "at": 7.74,
+          "end": 10.44,
+          "text": "Aryna Sabalenka is into another\n萨巴伦卡再次挺进"
+        },
+        {
+          "at": 10.44,
+          "end": 13.44,
+          "text": "US Open championship match.\n美网决赛。"
+        },
+        {
+          "at": 13.92,
+          "end": 14.98,
+          "text": "And boy, oh boy,\n天哪，"
+        },
+        {
+          "at": 17.6,
+          "end": 19.44,
+          "text": "if somebody in the other semi\n若另一场半决赛有人"
+        },
+        {
+          "at": 19.44,
+          "end": 22.08,
+          "text": "can stay with this woman, live with her,\n能够与她抗衡，"
+        },
+        {
+          "at": 22.08,
+          "end": 24.78,
+          "text": "live with her serving,\n顶住她的发球，"
+        },
+        {
+          "at": 25.08,
+          "end": 26.46,
+          "text": "live with her ground game,\n顶住她的底线进攻，"
+        },
+        {
+          "at": 27.62,
+          "end": 28.42,
+          "text": "we are going to have\n我们就将见证"
+        },
+        {
+          "at": 28.42,
+          "end": 30.0,
+          "text": "a fabulous match on Saturday.\n周六的一场精彩对决。"
+        }
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "us-sf",
+      "_point_role": "post_match_reaction"
     },
     {
       "_id": "card-asia",
@@ -975,7 +1430,9 @@
           "score": "6-2 6-7(7) 3-6"
         }
       },
-      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render."
+      "_label_window_why": "Actual-video-only label; selected live interval must be checked in native caption previews before final render.",
+      "_match_id": "wuhan-r2",
+      "_point_role": "extra_turning_point"
     },
     {
       "start": 257.64,
@@ -1024,7 +1481,10 @@
           "end": 26.44,
           "text": "and they proved so costly.\n这让她付出了沉重代价。"
         }
-      ]
+      ],
+      "_band_skip_why": "本场完整赛事信息已在同场另一段真实比赛字卡展示；此段只保完整回合或同场赛后反应，不重复叠卡。",
+      "_match_id": "wuhan-r2",
+      "_point_role": "match_point"
     },
     {
       "_id": "card-qualification",

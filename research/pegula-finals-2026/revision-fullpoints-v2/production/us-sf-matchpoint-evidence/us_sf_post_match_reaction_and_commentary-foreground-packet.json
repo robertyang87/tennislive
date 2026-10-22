@@ -1,0 +1,158 @@
+{
+  "source_name": "us-sf",
+  "source_key": "us-sf",
+  "source_file": "/workspace/pegula-finals-production/audio/sources/us-sf.mp4",
+  "source_url": "https://www.youtube.com/watch?v=1WAjW7l89YQ",
+  "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+  "quote_kind": "commentary",
+  "_quote_kind": "commentary",
+  "cx": 0.5,
+  "human_listened": false,
+  "method": "asr_cross_checked",
+  "audio_review_state": "complete_asr_cross_checked_not_human_listening",
+  "uncertain_spans": [],
+  "key": "us_sf_post_match_reaction_and_commentary",
+  "start": 156.2,
+  "end": 186.4,
+  "duration": 30.2,
+  "seconds": 30.2,
+  "captions": [
+    {
+      "start": 163.94,
+      "end": 166.64,
+      "en": "Aryna Sabalenka is into another",
+      "zh": "萨巴伦卡再次挺进"
+    },
+    {
+      "start": 166.64,
+      "end": 169.64,
+      "en": "US Open championship match.",
+      "zh": "美网决赛。"
+    },
+    {
+      "start": 170.12,
+      "end": 171.18,
+      "en": "And boy, oh boy,",
+      "zh": "天哪，"
+    },
+    {
+      "start": 173.8,
+      "end": 175.64,
+      "en": "if somebody in the other semi",
+      "zh": "若另一场半决赛有人"
+    },
+    {
+      "start": 175.64,
+      "end": 178.28,
+      "en": "can stay with this woman, live with her,",
+      "zh": "能够与她抗衡，"
+    },
+    {
+      "start": 178.28,
+      "end": 180.98,
+      "en": "live with her serving,",
+      "zh": "顶住她的发球，"
+    },
+    {
+      "start": 181.28,
+      "end": 182.66,
+      "en": "live with her ground game,",
+      "zh": "顶住她的底线进攻，"
+    },
+    {
+      "start": 183.82,
+      "end": 184.62,
+      "en": "we are going to have",
+      "zh": "我们就将见证"
+    },
+    {
+      "start": 184.62,
+      "end": 186.2,
+      "en": "a fabulous match on Saturday.",
+      "zh": "周六的一场精彩对决。"
+    }
+  ],
+  "reviewed_from": 156.2,
+  "reviewed_to": 186.65,
+  "asr_evidence": [
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-join-body-small.en.json",
+      "sha256": "358903e50af993beac4f321a561d2978ddc5c2dc7506e9058f099df8b9a37b98",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        155.9,
+        164.5
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/split-join-body-medium.en.json",
+      "sha256": "fa0ebc47591beff29aef9d162590253c8f1baaf460ec7b9e9ea71c3748eddf22",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        155.9,
+        164.5
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-small.en.json",
+      "sha256": "bcea03f713086afbe40c3586a06a489a3574afb9f26dd3d49ad69e10ac50be9e",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        135,
+        187
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/full-medium.en.json",
+      "sha256": "1ef7fa19d90a9a51e7fb43446ab603a5f1bb070acea2bb505ac530110442c188",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        135,
+        187
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-small.en.json",
+      "sha256": "41acb6729fd698b3d3bd75bf435c8ff69d00c2b1d37119c83e6829a61e87f6c4",
+      "model": "small.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        163,
+        172.6
+      ]
+    },
+    {
+      "path": "/workspace/pegula-finals-production/production/us-sf-matchpoint-evidence/commentary-boundary-medium.en.json",
+      "sha256": "a980b2ff88ca32d8dfe2a866e7f7d79c30ce9dd14467b2c8625f509162a6665e",
+      "model": "medium.en",
+      "source_sha256": "0ac7f4c834cfb5737fede3a340c90f052569d1a6a036b4a90119a4513a61d291",
+      "clip": [
+        163,
+        172.6
+      ]
+    }
+  ],
+  "boundary_notes": "Entire unidentified umpire declaration omitted between150.00–156.20. All actual short PA variants finish by155.96 (latest cross-trial end), leaving>=.24s before retained156.20. New independent155.9–164.5 small/medium contain no further umpire words and only detect start of Aryna at162.94/163.08 with pause-alignment drift; full context substantive speech starts163.94. Retain156.20 walking to net, actual handshake159.98, all complete commentator sentences163.94–186.20. No source-body audio removed or fake umpire caption supplied.",
+  "tail_audit": {
+    "interval": [
+      186.4,
+      186.65
+    ],
+    "mode": "default_outgoing_0.25",
+    "new_word_leak": false,
+    "evidence": "Fullsource135–187 small/medium final wordSaturday ends186.14/186.20; no next lexical segment through187.0. Brandcut186.95 follows outgoingtail.",
+    "review_method": "asr_cross_checked_not_human_listening"
+  },
+  "scope": "Only retainedsourceboundbody audited; excludedPA remains untranscribed and is not approved speech.",
+  "excluded_uncertain_spans": [
+    {
+      "start": 150.0,
+      "end": 156.2,
+      "reason": "Whole on-court result declaration excluded by authorized normal editorial timecompression; no retained halfsentence and no guessing exact words."
+    }
+  ]
+}
