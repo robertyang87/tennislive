@@ -364,7 +364,7 @@
           "zh": "征服中国网球公开赛。"
         }
       ],
-      "point_evidence": "263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30.",
+      "point_evidence": "Source scoreboard championshippoint#1 Zheng7 5 40/Mirra5 4 30. Fullsamepointprep264–265.44,fullserve266+,dead269.28–269.76,actualZhengfloorreaction270–275.52,crowd275.76+. Root and own agent actually opened both dense contacts. Actual Mirraloss5-7 4-6. Cachedprobe279.36 falls in crowd and cannot stand as real board evidence.",
       "key": "beijing-final",
       "source_name": "beijing-final",
       "source_file": "/workspace/andreeva-finals-production/sources/beijing-final.mp4",
@@ -399,11 +399,12 @@
       "status": "ready_for_native_integration",
       "uncertain": false,
       "quote_kind": "broadcast",
-      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30.",
+      "notes": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30. Dense actual samples independently reviewed byroot confirm prep264–265.44,toss/serve266+,pointdead269.28–269.76,Zhengfloorreaction270–275.52,crowd275.76+. Cachedprobe279.36 is crowd-image false positive; actual end277.40 preserves fullpoint and genuine result reaction.",
       "label_window_why": "Actual source court-only candidate interval; alpha-accurate native1080×1440 label preview required before render. No static-card fallback.",
       "visual_evidence": [
         "/workspace/andreeva-finals-production/production/terminal/beijing-final-contact.jpg"
-      ]
+      ],
+      "point_end_ok": "实际密集样帧核对同源SHA21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451：264–265.44发球准备、266+完整发球，269.28–269.76死球，270–275.52郑钦文倒地庆祝，275.76后观众欢呼；277.40结束已保留完整赛点及真实结果反应。probe279.36变牌判定落在观众镜头，不是未完成一分。证据research/andreeva-finals-2026/production/beijing-actual-end-review.json及密集图SHA6212caee0cba8b38b50c4518fd21646982bae3721a4120ce20ea826cefec8e37、d525e0d2a8b304fd35f7bef5fb2df374b82fca3d833c8a352ed6d6552cea0818。"
     },
     "rg-final": {
       "start": 1040.1,

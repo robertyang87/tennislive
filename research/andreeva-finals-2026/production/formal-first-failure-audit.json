@@ -1,0 +1,33 @@
+{
+  "schema": "andreeva.formal-first-failure-audit.v1",
+  "run": 39792798531,
+  "input_head": "6a9b12d392290a24dbce3cc316c100d023e51349",
+  "input_spec_sha256": "70533f7aa66fb90243c3e1bc7ad1b2c8ac5cb199c2d976be1a48e2a1dc61368f",
+  "actual_first_failure": "Native spec validation found exact cover photo already published as wta-age-eligibility-rule/cover.jpg on2026-10-09. Sparse oldphoto absent locally so earlierlocal gate failed to detect it.",
+  "old_photo_git_blob": "b4b69a7ce189ead27400a71dd877dcbb3e1ffbb5",
+  "second_independent_local_failure": "After fullHEAD probe restoration, end277.40 flagged against cached279.36 scoreflip; actualdense proves279.36 occurs in crowd scene and is not unfinished point.",
+  "resolution_direction": "Root chose fresh same2026RGofficial photo (no reuse annotation) plus original277.40 with actual point_end_ok contract evidence; no validator/code/oldspec edit.",
+  "prohibited_inference": "Do not label3.2second crowd extension as retained TVscoreboard. Diagnostic280.60 rejected after actual image review.",
+  "scope": "No source download or film encoding occurred in firstformal run.",
+  "tts_restore": {
+    "path": "/workspace/andreeva-finals-production/andreeva-restore-proof-3kp1ujna",
+    "verified_empty_before_restore": true,
+    "output": "/workspace/andreeva-finals-production/andreeva-restore-proof-3kp1ujna/tts_bundle.zip",
+    "returncode": 0,
+    "bytes": 469801,
+    "sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2"
+  },
+  "source_asr_tail": {
+    "selected_end": 277.4,
+    "outgoing_end": 277.65,
+    "small_nextEnglish": 281.7,
+    "medium_nextEnglish": 281.74,
+    "paired_reviewed_range": [
+      258,
+      303
+    ],
+    "human_listening": false
+  },
+  "final_status": "Both originalfailures closed: freshactualnativecover independentpass; precise Beijing actual-end evidence underexistingcontract; all923HEADprobes restored andlastnative dryrunpass; exactworkflow publishpreflightpass; actualemptyTTSrestorepass.",
+  "repaired_spec_sha256": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26"
+}

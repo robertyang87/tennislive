@@ -1,0 +1,105 @@
+{
+  "schema": "andreeva.actual-native-visual-review.v1",
+  "kind": "sampled_native_preview_not_final_movie_qc",
+  "final_spec_sha256": "70533f7aa66fb90243c3e1bc7ad1b2c8ac5cb199c2d976be1a48e2a1dc61368f",
+  "historical_full_sample_spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+  "status": "sampled_visual_pass_with_explicit_fixed_crop_limits",
+  "actual_opened_contact_groups": [
+    "all28labels",
+    "all25cue_mids",
+    "all24point_person_first_mid_last",
+    "all12chapter_cards"
+  ],
+  "additional_actual_fullsize_images": [
+    "native-preview-labels-final-labels-batch1/caption-05.png",
+    "native-preview-labels-final-labels-batch1/caption-06.png",
+    "native-preview-labels-final-labels-batch1/caption-07.png",
+    "native-preview-labels-final-labels-batch1/caption-08.png",
+    "native-preview-adelaide-board-fixed/caption-01.png",
+    "native-preview-adelaide-board-fixed/caption-02.png",
+    "native-preview-adelaide-board-fixed/caption-03.png"
+  ],
+  "image_sha_checks": true,
+  "actual_samples_total": 92,
+  "final_delta_paths": [
+    "/segments/3/_why",
+    "/segments/3/subtitle_bottom_windows"
+  ],
+  "delta_scope": "Only Adelaide last whole cue274.24–277.72 bottom520 plus explanatory _why; every other source/time/text/voice/crop/label identical. Earlier89 native images remain historical spec-bound and carry forward only for unchanged fields, never falsely rehashed as current renders. Three final-SHA native frames show full cue above original TV board, faces clear.",
+  "findings": [
+    "Live-only info labels have no sampled face/key-live-hit obstruction after repaired timing. Linz foreground blackWilson=Potapova, blueNike=Mirra; name bottom border near front hair edge but no covered brow/eyes/cheek.",
+    "Adelaide whole finalcue raised before TV board appearance; actual source274.5,276.5,277.5 confirms clear original finalscore, retained English/Chinese.",
+    "Native cards have no information inset or title_card_story_label.",
+    "Cold interview9actualface measurements fixedcx.514 preserve hairtop/face in sampled frames."
+  ],
+  "limitations": [
+    "These are actual native PNG samples, not all continuous frames and not final H264/dissolve/movie QC.",
+    "No human listening. Paired local ASR crosscheck only; French RG background opening and overlapping distant Wimbledon PA remain explicitly unrecovered, original audio retained; complete adopted mainEnglish bilingual.",
+    "Fixed courtcx.5 fill crops edge bodies/rackets and portrait shot edges; Adelaide reaction player at right edge, RG kneeling close-up can momentarily put upperhead outside crop, Wimbledon near-player edge run and Beijing near-player left edge. No contain/pan or invented whole-body guarantee.",
+    "AO is factual chapter only; seven actually shown matches have independently checked same-point prep through terminal result, no fabricated eighth fullMP.",
+    "Final automated voice suite, final encoded film visual/audio QC and root formaldispatch remain pending."
+  ],
+  "evidence": [
+    {
+      "group": "labels-final-labels",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-labels-final-labels-batch1/preview_manifest.json",
+      "manifest_sha256": "58eb6839c5aeaca7bfb8a581a0b0509478ad381cd6f94dcc25ec9c922969c3b1",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 24,
+      "contact": "/workspace/andreeva-finals-production/native-preview-labels-final-labels-batch1/contact.jpg"
+    },
+    {
+      "group": "labels-final-labels",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-labels-final-labels-batch2/preview_manifest.json",
+      "manifest_sha256": "12782f52092205350f043566deae00165bc0ffcc7caf4a921d7c152b07b2f528",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 4,
+      "contact": "/workspace/andreeva-finals-production/native-preview-labels-final-labels-batch2/contact.jpg"
+    },
+    {
+      "group": "captions-final-captions",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-captions-final-captions-batch1/preview_manifest.json",
+      "manifest_sha256": "f9cea573c5060fa8b2a486f631c4273489c5d343c7b29c04f8ed0d1c019b3242",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 24,
+      "contact": "/workspace/andreeva-finals-production/native-preview-captions-final-captions-batch1/contact.jpg"
+    },
+    {
+      "group": "captions-final-captions",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-captions-final-captions-batch2/preview_manifest.json",
+      "manifest_sha256": "a5c2dac87bbd835cd2c967a31888d5575d5a0f244b1081e8442fbb5d7d2af4d5",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 1,
+      "contact": null
+    },
+    {
+      "group": "points-final-points",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-points-final-points/preview_manifest.json",
+      "manifest_sha256": "f1eea908f418eee6719f7a2f0fc38ccffecaea1a5ec63e7968abfa426893cdaf",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 24,
+      "contact": "/workspace/andreeva-finals-production/native-preview-points-final-points/contact.jpg"
+    },
+    {
+      "group": "cards-final-cards",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-cards-final-cards/preview_manifest.json",
+      "manifest_sha256": "c9d9b7fd74b575a89ab5a0f07b0cef26c5d2e3233a8579fcb21dfcf31c9daf2f",
+      "spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
+      "samples": 12,
+      "contact": "/workspace/andreeva-finals-production/native-preview-cards-final-cards/contact.jpg"
+    },
+    {
+      "group": "final-adelaide-complete-cue-board-position",
+      "manifest": "/workspace/andreeva-finals-production/native-preview-adelaide-board-fixed/preview_manifest.json",
+      "manifest_sha256": "a21c07bb95b0674d82ef551c6cfe0d950a874498b47bea004b2fe3ebed37c3a5",
+      "spec_sha256": "70533f7aa66fb90243c3e1bc7ad1b2c8ac5cb199c2d976be1a48e2a1dc61368f",
+      "samples": 3
+    }
+  ],
+  "publication_approved": false,
+  "final_encoded_film_qc": false,
+  "usable_unchanged_prior_samples": 88,
+  "usable_final_spec_samples": 3,
+  "usable_total_samples": 91,
+  "superseded_sample": "native-preview-captions-final-captions-batch1/caption-09.png (old275.98 subtitle position; replaced by three final-SHA board-safe samples)"
+}

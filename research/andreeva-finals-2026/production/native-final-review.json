@@ -1,9 +1,9 @@
 {
   "schema": "andreeva.actual-native-visual-review.v1",
   "kind": "sampled_native_preview_not_final_movie_qc",
-  "final_spec_sha256": "70533f7aa66fb90243c3e1bc7ad1b2c8ac5cb199c2d976be1a48e2a1dc61368f",
+  "final_spec_sha256": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26",
   "historical_full_sample_spec_sha256": "dc77a667e54316af07546de121e494b87373f100ec9896f100966ffd81eaf11e",
-  "status": "sampled_visual_pass_with_explicit_fixed_crop_limits",
+  "status": "sampled_visual_pass_after_fresh_cover_and_actual_end_evidence_no_final_movie_qc",
   "actual_opened_contact_groups": [
     "all28labels",
     "all25cue_mids",
@@ -30,7 +30,8 @@
     "Live-only info labels have no sampled face/key-live-hit obstruction after repaired timing. Linz foreground blackWilson=Potapova, blueNike=Mirra; name bottom border near front hair edge but no covered brow/eyes/cheek.",
     "Adelaide whole finalcue raised before TV board appearance; actual source274.5,276.5,277.5 confirms clear original finalscore, retained English/Chinese.",
     "Native cards have no information inset or title_card_story_label.",
-    "Cold interview9actualface measurements fixedcx.514 preserve hairtop/face in sampled frames."
+    "Cold interview9actualface measurements fixedcx.514 preserve hairtop/face in sampled frames.",
+    "Original reusedcover rejected by formalnativevalidation; replaced with distinct official2026RGJB1_2805, focus.14, native actualfullface/eyes/cupclear; Maja face/head excluded, slightedgehair/arm remains. Beijing end277.40 retained under explicit actual-end review contract, cached279.36 falls in crowd, not uncompletedpoint."
   ],
   "limitations": [
     "These are actual native PNG samples, not all continuous frames and not final H264/dissolve/movie QC.",
@@ -101,5 +102,13 @@
   "usable_unchanged_prior_samples": 88,
   "usable_final_spec_samples": 3,
   "usable_total_samples": 91,
-  "superseded_sample": "native-preview-captions-final-captions-batch1/caption-09.png (old275.98 subtitle position; replaced by three final-SHA board-safe samples)"
+  "superseded_sample": "native-preview-captions-final-captions-batch1/caption-09.png (old275.98 subtitle position; replaced by three final-SHA board-safe samples)",
+  "body_evidence_equivalence": "final-repair-equivalence.json proves all20bodypaint/audio fields identical to70533; 91usable priorbody native samples remain honestly bound to their originaldc77/705manifests, not falsely rerendered undernewSHA.",
+  "fresh_cover_native": {
+    "spec_sha256": "55e8e7273e023cfc599b2cb1130552a8bdb3cd4b3922bfe23de87423c3cadc26",
+    "poster_sha256": "f6b44b6331045d883b4b2a60c4d955ef7b1eea1eea53482d06ef41dec30f12b3",
+    "poster": "/workspace/andreeva-finals-production/production/cover-native-fresh-jb1-exact/poster.jpg",
+    "independent_report": "/workspace/finals-remaining-2026/independent-qc/native-covers/andreeva-fresh-qc.json",
+    "source_global_git_blob_unique": true
+  }
 }
