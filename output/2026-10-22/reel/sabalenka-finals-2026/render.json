@@ -1,0 +1,99 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "048370eeda89185d73bd854b5b9282b136677d448baf39e4a92eac579cf1d433",
+    "request_count": 15,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-sabalenka-finals-2026-048370eeda89185d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sabalenka-finals-2026-048370eeda89185d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39723354846"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 336.73,
+  "topbar": null,
+  "film_seconds": 342.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "2": 6.72,
+    "4": 8.592,
+    "6": 8.376,
+    "10": 8.592,
+    "14": 6.24,
+    "16": 10.92,
+    "19": 7.392,
+    "20": 3.96,
+    "22": 7.872,
+    "23": 7.464,
+    "25": 7.728,
+    "26": 7.608,
+    "28": 8.712,
+    "30": 10.152
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "be7ecd4eeefd01cb4cb3f5e99b4cd9ee8055e2e410851ef57d35568eefcfcc21",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sabalenka-finals-2026",
+    "received_at": "2026-10-22T04:37:00Z",
+    "artifact_ready_at": "2026-10-22T04:46:11Z",
+    "elapsed_seconds": 551.82,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "c544402307a03448a42c2dd59e20be41cb3cf15110a8420f713be8d0ddc17f93",
+    "spec_sha256": "8d110c006621e1ce176a67401653545a74eb9be5cca43df917ce6bc3a5805e24",
+    "run_id": "39723354846",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-22T04:40:49Z",
+        "run_id": "39723354846"
+      }
+    ],
+    "render_seconds": 322.82,
+    "pre_render_seconds": 229.0
+  },
+  "film_sha256": "c544402307a03448a42c2dd59e20be41cb3cf15110a8420f713be8d0ddc17f93",
+  "film_bytes": 117067496,
+  "qc_attestation_sha256": "7213c99971d6c771826ab54b0773d4328d3666226eeb1a7178c5992d9129b51d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-22T04:40:49Z",
+      "run_id": "39723354846"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-22T04:46:16Z",
+      "run_id": "39723354846"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sabalenka-finals-2026/sabalenka-finals-2026.mp4",
+  "video_bytes": 117067496
+}
