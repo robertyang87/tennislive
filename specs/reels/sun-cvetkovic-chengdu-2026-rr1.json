@@ -17,7 +17,7 @@
   "push": {
     "auto": false,
     "summary": "成都主场开门红",
-    "lead": "首盘一比四落后，孙心然在成都翻了回来：对手发球胜盘局一分没让，抢七七比一，次盘六比二。十六岁，青少年世界第一，主场总决赛首秀开门红。小组赛还有两场，你觉得她在成都，能走多远？",
+    "lead": "首盘一比四落后，孙心然在成都翻了回来：对手发球胜盘局被破发，抢七七比一，次盘六比二。十六岁，青少年世界第一，主场总决赛首秀开门红。小组赛还有两场，你觉得她在成都，能走多远？",
     "_no_auto_why": "渲染QC与main CI状态确认后显式mode=push+push=true派发，防重复发送。"
   },
   "cover": {
@@ -67,11 +67,11 @@
   "editorial": {
     "mode": "match_review",
     "question": "十六岁的孙心然，主场总决赛首秀一比四翻盘，你觉得她在成都能走多远？",
-    "thesis": "首盘一比四落后：开局连救三个破发点、第三第五局两度被破（一比三落后时右膝接受了理疗师的治疗）；第六局立刻回破、第十局在对手发球胜盘局连下四分破发至零；抢七七比一，对手四个发球分全丢。第二盘零比二开局后立刻回破，第五局、第七局两度破发，六比二。青少年世界第一的主场首秀，小组赛开门红。",
+    "thesis": "首盘一比四落后：开局连救三个破发点、第三第五局两度被破（一比三落后时右膝接受了理疗师的治疗）；第六局立刻回破、第十局在对手发球胜盘局连拿三分逼出破发点、第二个兑现；抢七七比一，对手四个发球分全丢。第二盘零比二开局后立刻回破，第五局、第七局两度破发，六比二。青少年世界第一的主场首秀，小组赛开门红。",
     "beats": [
       "成都主场、A组首轮；四个月前法网青少年八强曾六比零、六比二胜过同一对手",
       "首盘第一局连救三个破发点（原声定调），第三、五局两度被破，一比三时右膝接受理疗师治疗，一比四",
-      "第六局立刻回破；第十局对手发球胜盘局连下四分破发至零（原声收尾段）",
+      "第六局立刻回破；第十局对手发球胜盘局连拿三分逼出破发点、第二个兑现（原声收尾段）",
       "抢七七比一，对手发球分连丢；胜利在望（原声）",
       "第二盘零比二后立刻回破；第五局破发点长回合反超三比二（原声）",
       "第七局再破，五比二；完整赛点、赛果播报与解说复盘（原声）"
@@ -81,7 +81,7 @@
       "facts": [
         "孙心然16岁，ITF青少年世界第1（2026年6月登顶）、本届1号种子，2026美网青少年女单冠军",
         "四个月前法网青少年八强，孙心然6-0、6-2胜茨维特科维奇；本场是四个月内第二次交手",
-        "首盘1-4落后：第3、5局两度被破；第6局立刻回破；第10局对手发球胜盘局连下四分破发至零；抢七7-1，对手4个发球分全丢",
+        "首盘1-4落后：第3、5局两度被破；第6局立刻回破；第10局对手发球胜盘局连拿三分逼出两个破发点、第二个兑现；抢七7-1，对手4个发球分全丢",
         "官方解说证实：首盘1-3落后时，孙心然右膝接受了理疗师的治疗（两档ASR一致：receiving treatment to her right knee from the physio / since the visit of the physio）",
         "第二盘0-2开局后立刻回破，第5、7局破发，6-2；转播记分牌总用时1:33",
         "本场为2026世界网联青少年年终总决赛（10/21-25，成都四川国际网球中心室外硬地）女子A组第1轮；A组另有普什卡列娃、叶弗列莫娃"
@@ -123,6 +123,71 @@
     "duration": "1:33",
     "_duration_note": "转播记分牌终局画面显示1:33（内部抽帧核验）；无公开官方计时出处。",
     "_match_day_why": "用户点名制作：孙心然成都青少年年终总决赛跟踪线（goal-8）首战，小组赛开门红。"
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "aces": 1,
+      "df": 3,
+      "first_in": 61,
+      "first_total": 70,
+      "first_won": 36,
+      "second_won": 5,
+      "second_total": 9,
+      "bp_conv": 5,
+      "bp_chances": 7,
+      "pts_won": 72,
+      "pts_total": 125,
+      "headshot": "assets/players/headshots/wta-335958-match-LS041.jpg",
+      "_headshot_source": {
+        "kind": "same_match_official_photo_crop",
+        "source_url": "https://p1.img.cctvpic.com/photoAlbum/source/2026/10/03/PHOTEwtxo8ISUhf8KuCYB0HG261003.jpg",
+        "source_sha256": "734a79c643a39aefcee8ed766a80d42550257e61feb17d208775ca3e24f57c45",
+        "crop_xywh": [
+          280,
+          150,
+          900,
+          900
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "b": {
+      "aces": 4,
+      "df": 5,
+      "first_in": 46,
+      "first_total": 55,
+      "first_won": 23,
+      "second_won": 1,
+      "second_total": 9,
+      "bp_conv": 3,
+      "bp_chances": 8,
+      "pts_won": 53,
+      "pts_total": 125,
+      "headshot": "assets/players/headshots/wta-333724-match-chengdu-2026.jpg",
+      "_headshot_source": {
+        "kind": "same_match_broadcast_frame_crop",
+        "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+        "source_sha256": "9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1",
+        "frame_at_seconds": 301.5,
+        "crop_xywh": [
+          640,
+          30,
+          720,
+          720
+        ],
+        "size": [
+          600,
+          600
+        ]
+      }
+    },
+    "_source": "ITF 官方记分组件（matchscorerlive）ACE/双误计数 + 全场录像逐分制表复核（总分/破发/发球计数，两组独立核对记分牌）；官方总分占比 58/42、茨破发 3/8 与制表一致，孙破发机会官方记 6 次、录像逐分实数 7 次，卡面取实测值。",
+    "_headshot_why": "两人 WTA 官方头像 blob（wtafiles.blob.core.windows.net/images/headshots/）按 ID 查均无图：孙心然 335958、茨维特科维奇 333724 的 .jpg/.png 均 404（2026-10-22 实测）；Sofascore 403 挑战墙、ITF 站 Incapsula 挡直连抓图。孙沿用仓库已认领的北京站比赛图裁切 wta-335958-match-LS041.jpg（sun-bucsa-beijing-2026-r2 已用同一张）；茨用本场官方转播集合片 301.5s 正脸特写帧裁切（白衣者即茨维特科维奇，记分牌上下文核对无误）。",
+    "_winners_ue_why": "本场（ITF 青少年赛事）无任何公开源提供制胜分/非受迫失误：ITF 官方记分组件只有百分比汇总（无 winners/UE），转播无统计牌，逐分制表未记制胜分。按 render_stat_card 的 OPTIONAL_FIELDS 口径留空不画这两行，绝不零填。"
   },
   "_facts": [
     {
@@ -293,7 +358,7 @@
       ]
     },
     {
-      "title_card": "对手发球胜盘\n她一分没让",
+      "title_card": "对手发球胜盘局\n她第二个破发点兑现",
       "kicker": "全场转折",
       "seconds": 17.05,
       "narration": "第六局，破发点上，茨维特科维奇一记直线回球出界，孙心然立刻回破，把比分追到二比四。第九局顶住压力保发。第十局，轮到茨维特科维奇为这一盘发球。",
@@ -331,8 +396,8 @@
     {
       "title_card": "抢七七比一\n对手发球分全丢",
       "kicker": "首盘决胜",
-      "seconds": 12.82,
-      "narration": "这一局，孙心然连下四分，破发至零。茨维特科维奇一个发球胜盘局，一分都没拿到。五比五，比赛回到同一起跑线。",
+      "seconds": 14.46,
+      "narration": "这一局，孙心然连拿三分，逼出破发点。第一个被救掉，第二个，她兑现了。对手的发球胜盘局被破，五比五，比赛回到同一起跑线。",
       "_timing_why": "本地 edge-tts 被代理挡（仓库已知：退回 runner mode=narration）；seconds 按 YunxiNeural +6% 约 0.235s/字 + 0.6s 呼吸估算，派发后以 mode=narration 实测为准"
     },
     {
