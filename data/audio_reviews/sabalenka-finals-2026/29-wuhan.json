@@ -5,7 +5,7 @@
   "reviewer": "Actual small.en + medium.en source-bound ASR cross-check and sampled source-frame inspection; not human listening",
   "reviewed_at": "2026-10-22T03:48:54.353612+00:00",
   "reviewed_from": 0.0,
-  "reviewed_to": 19.8,
+  "reviewed_to": 18.56,
   "status": "complete",
   "uncertain_spans": [],
   "foreground_english": [
@@ -40,5 +40,7 @@
       "model": null
     }
   ],
-  "review_notes": "Small and medium agree on entire6.6–17.1 commentary with only Ann Li phonetic and/Lee normalized to official identity. Initial And a tournament preserved as both ASRs, without editorial grammar invention. Small shows next distinct Three-time champion... at20.06; medium stretches an anticipatory Three token across17.12–20.10, a word-alignment silence artifact. End19.8 retains final point, victory, and handshake while avoiding next sentence; final mix must confirm this boundary. No human listening claim."
+  "review_notes": "Small and medium agree on entire6.6–17.1 commentary with only Ann Li phonetic and/Lee normalized to official identity. Initial And a tournament preserved as both ASRs, without editorial grammar invention. Small shows next distinct Three-time champion... at20.06; medium stretches an anticipatory Three token across17.12–20.10, a word-alignment silence artifact. End19.8 retains final point, victory, and handshake while avoiding next sentence; final mix must confirm this boundary. No human listening claim.",
+  "source_packet_sha256": "1a743a61e88be29284bf93ecfe343c0e2b0006ee4f25198f7bce3a43c96748cf",
+  "selected_window_derivation": "Narrowed actual source review to conservative18.56aftercompletecommentary/handshake. Additional short-window ASR makes next Three onsetuncertain19.12/19.30; original19.8span is not reused as proof those later words absent. Originalpacket andrawcontext retained; no humanlisteningclaim."
 }

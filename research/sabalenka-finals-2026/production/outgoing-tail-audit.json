@@ -1,0 +1,63 @@
+{
+  "schema": "sabalenka.outgoing-tail-audit.v1",
+  "recorded_utc": "2026-10-22T04:35:23.933175+00:00",
+  "method": "Actual existing broad-context and newly run18–23s small.en/medium.en word timestamps; ASR cross-check, not human listening",
+  "human_listening_claimed": false,
+  "beijing": {
+    "requested_body_end": 271.8,
+    "requested_tail_end": 272.05,
+    "existing_small_next_word": {
+      "text": "Nicola",
+      "start": 272.32,
+      "end": 272.6
+    },
+    "existing_medium_next_word": {
+      "text": "Nikola",
+      "start": 272.22,
+      "end": 272.66
+    },
+    "last_completed_clause_end": 271.62,
+    "foreground_next_word_begins_within_tail": false,
+    "minimum_existing_ASR_gap_after_tail_end": 0.17,
+    "result": "No next-word overlap indicated by either actual broad-context ASR."
+  },
+  "wuhan": {
+    "requested_body_end": 19.8,
+    "requested_tail_end": 20.05,
+    "previous_complete_clause_end": 17.12,
+    "existing_small_segment_start": 20.06,
+    "existing_small_word": {
+      "text": "Three",
+      "start": 19.78,
+      "end": 20.12
+    },
+    "existing_medium_word": {
+      "text": "three",
+      "start": 17.12,
+      "end": 20.1,
+      "note": "Long silence-alignment artifact; does not prove speech at17.12."
+    },
+    "new_small_short_context_word": {
+      "text": "three",
+      "start": 19.12,
+      "end": 20.08,
+      "probability": 0.14134089648723602
+    },
+    "new_medium_short_context_word": {
+      "text": "three",
+      "start": 19.3,
+      "end": 20.1,
+      "probability": 0.19004695117473602
+    },
+    "foreground_next_word_exact_onset": "Unresolved: ASR first-word starts spread across preceding silence; all end near20.1. Segment start20.06 cannot substitute for actual word onset.",
+    "word_alignment_overlaps_tail": true,
+    "can_certify_body_end_19_8_clean": false,
+    "can_certify_body_end_19_56_clean": false,
+    "minimum_conservative_proposal": "End19.0 plus outgoing audio_tail:silence is earlier than both new short-context starts19.12/19.30 and retains known17.5–18.5 handshake; this is conservative ASR-based selection, not a claim of human acoustic onset verification.",
+    "files": [
+      "/workspace/sabalenka-finals-production/research/production/late-season/wuhan-outgoing-tail-small.en.json",
+      "/workspace/sabalenka-finals-production/research/production/late-season/wuhan-outgoing-tail-medium.en.json"
+    ]
+  },
+  "shared_files_edited": false
+}

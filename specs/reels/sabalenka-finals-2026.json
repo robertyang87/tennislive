@@ -847,7 +847,8 @@
     },
     {
       "start": 0.0,
-      "end": 19.8,
+      "end": 18.56,
+      "audio_tail": "silence",
       "_id": "wuhan",
       "source": "wuhan-wsc-29-00",
       "narration": "",
@@ -861,6 +862,7 @@
       "_quote_kind": "broadcast",
       "_audio_review_state": "actual_asr_cross_checked_not_human_listening",
       "_why": "{'identity': '2026 Wuhan R2; Ann Li blue top/black skirt serving far-side; Sabalenka purple/pink near-side.', 'point': '0–2 Ann Li preparation/full toss;3–6.7 full final service rally;7–10 winner real fist-pump;11–12 playerbox;13–17 Ann Li reaction;17.5–18.5 handshake;19.7 Sabalenka real exit reaction in foreground.', 'scoreboard': 'First frame clearlyMATCH POINT#10. Tiebreak Ann Li6/Sabalenka5; final point ends match7-6(5) in deciding set.', 'ninth_save_warning': 'This selected point is conversion of Ann Li10th matchpoint, not Sabalenka ninth saved point. Available WSC28 first frame explicitlyMATCH POINT#8 at tiebreak6-3, so it must not be falsely labelled ninth save.'}",
+      "_audio_tail_why": "Conservative boundary after complete result commentary ending17.12 and handshake17.5–18.5. Short-window models stretch next Three to19.12/19.30 with lowconfidence;18.56 leaves>=.56s margin without asserting exact phonetic onset. Pad outgoing audio tail only.",
       "quote": [
         {
           "at": 6.62,

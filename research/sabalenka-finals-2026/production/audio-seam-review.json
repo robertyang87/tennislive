@@ -1,11 +1,18 @@
 {
-  "checked_at": "2026-10-22T04:32:33.439753+00:00",
-  "spec_sha256": "c79f8c58af9816d61d785ff87dc3c60f87973b7d5d903514c6623c4e864c6c78",
-  "change": "Native audio_tail silence on Madrid and US outgoing dissolve only; original reviewed body samples and all41cue windows unchanged",
+  "checked_at": "2026-10-22T04:36:07.065265+00:00",
+  "spec_sha256": "8d110c006621e1ce176a67401653545a74eb9be5cca43df917ce6bc3a5805e24",
+  "change": "Native audio_tail silence on Madrid,US,Wuhan outgoing dissolves only;Wuhanend18.56 conservatively aftercompletecommentaryandhandshake;all41cuesunchanged",
   "reason": "Nextunselectedcommentary beginsMadrid273.42 afterend273.38,US182.58afterend182.5; native .25sec dissolve otherwisecouldreadbeyondreviewedbody",
   "earlier_render": "39722561034 cancellation requestedbeforeformalMP4",
   "frozen_voice": "unchanged048370eeda89185d73bd854b5b9282b136677d448baf39e4a92eac579cf1d433",
   "new_foreground_plan": "rebound17actualsourcewindows41cues;fulltastepreflightpassed",
   "prior_previews": "Same pictures, sourcewindows and labelgeometry; earlierpreviewSHAdoesnotclaimcurrentaudiomixapproval",
-  "final_film_qc": false
+  "final_film_qc": false,
+  "wuhan_uncertainty": "ShortASRwordstart19.12/19.30 lowconfidence;19.56notclaimedclean.18.56boundaryleaves>=.56sbeforetheseonsets.",
+  "all_17_tail_windows": "9core+4slam/interview+2late+Madrid+USreviewed;diagnosticsretained",
+  "expected_film_seconds": 342.48,
+  "prior_runs_cancelled": [
+    39722561034,
+    39722957502
+  ]
 }

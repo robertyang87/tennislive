@@ -666,7 +666,7 @@
     "source_url": "https://wta-assets.mvp.fan/games/934eecbf0fdeb931fe26a46728e8d1a1/55429c9c-ae73-4044-a0b8-8c0784b9eb88.mp4",
     "source_sha256": "8682acab809a54fbeb21e4b9d0fe7510e6ee9789f2659bb34bc3ba1754792605",
     "start": 0.0,
-    "end": 19.8,
+    "end": 18.56,
     "duration": 19.8,
     "method": "asr_cross_checked",
     "human_listening_claimed": false,
@@ -753,13 +753,17 @@
         "zh": "用醒目的大字，登上头版。"
       }
     ],
-    "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/late-season/packets/wuhan_second_round_loss.json",
+    "audio_review_packet": "/workspace/sabalenka-finals-production/research/production/wuhan-selected-final-audio-packet.json",
     "asr_evidence": [],
     "label_safe_window": [
       2.8,
       7.2
     ],
-    "visual_review": "{'identity': '2026 Wuhan R2; Ann Li blue top/black skirt serving far-side; Sabalenka purple/pink near-side.', 'point': '0–2 Ann Li preparation/full toss;3–6.7 full final service rally;7–10 winner real fist-pump;11–12 playerbox;13–17 Ann Li reaction;17.5–18.5 handshake;19.7 Sabalenka real exit reaction in foreground.', 'scoreboard': 'First frame clearlyMATCH POINT#10. Tiebreak Ann Li6/Sabalenka5; final point ends match7-6(5) in deciding set.', 'ninth_save_warning': 'This selected point is conversion of Ann Li10th matchpoint, not Sabalenka ninth saved point. Available WSC28 first frame explicitlyMATCH POINT#8 at tiebreak6-3, so it must not be falsely labelled ninth save.'}"
+    "visual_review": "{'identity': '2026 Wuhan R2; Ann Li blue top/black skirt serving far-side; Sabalenka purple/pink near-side.', 'point': '0–2 Ann Li preparation/full toss;3–6.7 full final service rally;7–10 winner real fist-pump;11–12 playerbox;13–17 Ann Li reaction;17.5–18.5 handshake;19.7 Sabalenka real exit reaction in foreground.', 'scoreboard': 'First frame clearlyMATCH POINT#10. Tiebreak Ann Li6/Sabalenka5; final point ends match7-6(5) in deciding set.', 'ninth_save_warning': 'This selected point is conversion of Ann Li10th matchpoint, not Sabalenka ninth saved point. Available WSC28 first frame explicitlyMATCH POINT#8 at tiebreak6-3, so it must not be falsely labelled ninth save.'}",
+    "seconds": 18.56,
+    "audio_tail": "silence",
+    "audio_tail_why": "Conservative boundary after complete result commentary ending17.12 and handshake17.5–18.5. Short-window models stretch next Three to19.12/19.30 with lowconfidence;18.56 leaves>=.56s margin without asserting exact phonetic onset. Pad outgoing audio tail only.",
+    "audio_review_packet_sha256": "2e690d5d785aa3a55e1c3885865eb9bc4a0693b850e290ae70c4e61847464bc1"
   },
   "madrid": {
     "id": "madrid-final-match-point",
