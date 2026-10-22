@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "0ed82baf3ffcd2f73c5871e3191f508c91e3628194e5010ce0452c73b105aeb2",
-    "render_inputs_sha256": "6b4f0b8d58eb2eb54a624dab8a7f6b0062ccebb510a32bd218b4f777abd1158b",
-    "spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
-    "film_sha256": "e6f91ef1482b011c9c6da98b0dcc6b124277fe089061c876521aed2002503dc0",
+    "render_sha256": "1f6982852dc510fbd26c37250c8bdeead60eadb221db5a067e0d42b538344a92",
+    "render_inputs_sha256": "abc800446e54808cb5a3e67a7d196ce5688e69040124b963cb026617e1e1f783",
+    "spec_sha256": "febb8932a84d31bbde524f62ba0766181038abf833bd1e8b09e74a65178320a7",
+    "film_sha256": "5e8be7ae4e529dc75e5345c2dd367382171b175a7bb4548687520cdca45bb292",
     "inventory_sha256": "76e8e0486fe7b6714e2d7322f030ecf9d1b171694db151f17cca30560b54c83e"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-22T14:24:40+00:00",
+  "reviewed_at": "2026-10-22T15:07:36+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -186,7 +186,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "去年,她在辛辛那提的停车场哭。今年,手冠终于在同一站到来。"
+        "transcript": "去年,她在辛辛那提的停车场哭。今年,手冠终于在同一战到来。"
       },
       "polyphones": [],
       "pauses": {
@@ -218,7 +218,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "多哈首战出局,迪拜打进四墙,再到印第安威尔斯赛中退赛。迈阿弥终于打进本季首场决赛。"
+        "transcript": "多哈首战出局,敌败打进四墙,再到印第安威尔斯赛中退赛。迈阿弥终于打进本季首场决赛。"
       },
       "polyphones": [],
       "pauses": {
@@ -250,7 +250,7 @@
         "substituted": 1,
         "sub_ratio": 0.037,
         "longest_deletion": 0,
-        "transcript": "柏林守占出局,温网却拼到半爵在抢时,穆霍娃赢下最后两个小分。"
+        "transcript": "柏林守占出局,温网却拼到半决在抢时,穆霍娃赢下最后两个小分。"
       },
       "polyphones": [],
       "pauses": {
@@ -282,7 +282,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "斯图加特指部八强、马德里指部第四轮。罗马在拿亚军,两场一千赛决赛,都没能赢。"
+        "transcript": "斯图加特指部八强、马德里指部第四轮。罗马在拿亚军。两场一千赛决赛,都没能赢。"
       },
       "polyphones": [],
       "pauses": {
@@ -314,7 +314,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "北京第四轮出局后退出武汉。10月14日,WTA公布他连续第五年入围年中。"
+        "transcript": "北京第四轮出局后退出武汉。10月14日,WTA公布它连续第五年入围年中。"
       },
       "polyphones": [],
       "pauses": {
@@ -346,7 +346,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "眉网四分之一决赛,他就下两个赛点,逆转安德烈耶瓦。不留遗憾,是他赢球后给出的答案。"
+        "transcript": "没往四分之一决赛,他就下两个赛点,逆转安德烈耶瓦。不留遗憾,是他赢球后给出的答案。"
       },
       "polyphones": [],
       "pauses": {
@@ -442,7 +442,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "威眠之旅只于第三轮,先赢一盘,仍被波塔波娃逆转。"
+        "transcript": "未免之旅只于第三轮,先赢一盘,仍被波塔波娃逆转。"
       },
       "polyphones": [],
       "pauses": {
@@ -506,7 +506,7 @@
         "substituted": 1,
         "sub_ratio": 0.037,
         "longest_deletion": 0,
-        "transcript": "本届一贯两压,两次打进大满贯四强。年中,你期待他再往前走几步。"
+        "transcript": "本届一贯两压,两次打进大满罐四墙。年中,你期待他再往前走几步。"
       },
       "polyphones": [],
       "pauses": {
@@ -538,7 +538,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "联合碑单打三胜一副开局。欧网联营四场,四分之一决赛却以1比6,2比6赋予斯维托丽娜。"
+        "transcript": "联合碑单打三胜一副开局,欧网连营四场,四分之一决赛却以1比6,2比6赋予斯维托丽娜。"
       },
       "polyphones": [],
       "pauses": {

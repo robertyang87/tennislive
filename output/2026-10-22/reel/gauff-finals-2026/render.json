@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-gauff-finals-2026-895493bdabf7511d",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-gauff-finals-2026-895493bdabf7511d/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39794116872"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39800822363"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -53,44 +53,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "6b4f0b8d58eb2eb54a624dab8a7f6b0062ccebb510a32bd218b4f777abd1158b",
+  "render_inputs_sha256": "abc800446e54808cb5a3e67a7d196ce5688e69040124b963cb026617e1e1f783",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "gauff-finals-2026",
-    "received_at": "2026-10-22T14:15:32Z",
-    "artifact_ready_at": "2026-10-22T14:23:29Z",
-    "elapsed_seconds": 477.344,
+    "received_at": "2026-10-22T15:01:04Z",
+    "artifact_ready_at": "2026-10-22T15:06:49Z",
+    "elapsed_seconds": 345.706,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "e6f91ef1482b011c9c6da98b0dcc6b124277fe089061c876521aed2002503dc0",
-    "spec_sha256": "ae04fb9a5a8d11f05b017e339eaf2f6e37e44f874916a752829609a5a9a1cd66",
-    "run_id": "39794116872",
+    "film_sha256": "5e8be7ae4e529dc75e5345c2dd367382171b175a7bb4548687520cdca45bb292",
+    "spec_sha256": "febb8932a84d31bbde524f62ba0766181038abf833bd1e8b09e74a65178320a7",
+    "run_id": "39800822363",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-22T14:18:06Z",
-        "run_id": "39794116872"
+        "at": "2026-10-22T15:03:23Z",
+        "run_id": "39800822363"
       }
     ],
-    "render_seconds": 323.344,
-    "pre_render_seconds": 154.0
+    "render_seconds": 206.706,
+    "pre_render_seconds": 139.0
   },
-  "film_sha256": "e6f91ef1482b011c9c6da98b0dcc6b124277fe089061c876521aed2002503dc0",
-  "film_bytes": 133366651,
-  "qc_attestation_sha256": "6b5fdba087e4e7f40b3cddd24fb146aaf443b40cacf26f5dc85f6c85cf2cb376",
+  "film_sha256": "5e8be7ae4e529dc75e5345c2dd367382171b175a7bb4548687520cdca45bb292",
+  "film_bytes": 133409601,
+  "qc_attestation_sha256": "e4cdb30e714289d558b54d1b92a42806aae109aec11a49111d95fdcf7985bd99",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-22T14:18:06Z",
-      "run_id": "39794116872"
+      "at": "2026-10-22T15:03:23Z",
+      "run_id": "39800822363"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-22T14:23:33Z",
-      "run_id": "39794116872"
+      "at": "2026-10-22T15:06:53Z",
+      "run_id": "39800822363"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-gauff-finals-2026/gauff-finals-2026.mp4",
-  "video_bytes": 133366651
+  "video_bytes": 133409601
 }
