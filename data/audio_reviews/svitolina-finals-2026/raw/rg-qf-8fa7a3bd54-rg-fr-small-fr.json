@@ -1,0 +1,125 @@
+{
+  "source_key": "rg-qf",
+  "source_file": "/workspace/svitolina-finals-production/media/sources/rg-qf.mp4",
+  "source_sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+  "source_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+  "model": "small",
+  "range": [
+    227.0,
+    245.9
+  ],
+  "language": "fr",
+  "method": "actual_faster_whisper_int8_cpu_beam5_vad_false_no_prompt",
+  "human_listening_claimed": false,
+  "created_utc": "2026-10-22T12:39:18.434660+00:00",
+  "segments": [
+    {
+      "start": 235.24,
+      "end": 236.82,
+      "text": " Je... C'est un match.",
+      "avg_logprob": -0.9491366340268043,
+      "no_speech_prob": 0.1721569150686264,
+      "words": [
+        {
+          "word": " Je...",
+          "start": 235.24,
+          "end": 235.84,
+          "probability": 0.12945308536291122
+        },
+        {
+          "word": " C",
+          "start": 235.84,
+          "end": 236.42,
+          "probability": 0.6389415264129639
+        },
+        {
+          "word": "'est",
+          "start": 236.42,
+          "end": 236.44,
+          "probability": 0.9097438454627991
+        },
+        {
+          "word": " un",
+          "start": 236.44,
+          "end": 236.56,
+          "probability": 0.3445543944835663
+        },
+        {
+          "word": " match.",
+          "start": 236.56,
+          "end": 236.82,
+          "probability": 0.9791947603225708
+        }
+      ]
+    },
+    {
+      "start": 236.98,
+      "end": 242.3,
+      "text": " Je vais manger une six-trois, deux-six, six-trois.",
+      "avg_logprob": -0.9491366340268043,
+      "no_speech_prob": 0.1721569150686264,
+      "words": [
+        {
+          "word": " Je",
+          "start": 236.98,
+          "end": 237.06,
+          "probability": 0.05613842234015465
+        },
+        {
+          "word": " vais",
+          "start": 237.06,
+          "end": 237.48,
+          "probability": 0.26797759532928467
+        },
+        {
+          "word": " manger",
+          "start": 237.48,
+          "end": 239.74,
+          "probability": 0.03262612223625183
+        },
+        {
+          "word": " une",
+          "start": 239.74,
+          "end": 240.08,
+          "probability": 0.47658571600914
+        },
+        {
+          "word": " six",
+          "start": 240.08,
+          "end": 240.38,
+          "probability": 0.11212649941444397
+        },
+        {
+          "word": "-trois,",
+          "start": 240.38,
+          "end": 240.78,
+          "probability": 0.917974571386973
+        },
+        {
+          "word": " deux",
+          "start": 240.78,
+          "end": 240.98,
+          "probability": 0.9899352192878723
+        },
+        {
+          "word": "-six,",
+          "start": 240.98,
+          "end": 241.2,
+          "probability": 0.6355704218149185
+        },
+        {
+          "word": " six",
+          "start": 241.46,
+          "end": 242.0,
+          "probability": 0.8588337302207947
+        },
+        {
+          "word": "-trois.",
+          "start": 242.0,
+          "end": 242.3,
+          "probability": 0.6857149302959442
+        }
+      ]
+    }
+  ]
+}

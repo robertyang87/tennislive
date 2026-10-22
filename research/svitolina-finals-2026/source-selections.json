@@ -1,0 +1,753 @@
+{
+  "schema": "svitolina-selected-source-windows.v1",
+  "generated_utc": "2026-10-22T12:58:20.637370+00:00",
+  "selections": {
+    "cold-rome": {
+      "key": "cold-rome",
+      "source_name": "rome-final",
+      "source_file": "/workspace/gauff-finals-production/sources/WXNZTi6qd1Y.mp4",
+      "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+      "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+      "start": 526.76,
+      "end": 537.68,
+      "frame": "person",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 526.79,
+          "end": 528.45,
+          "en": "I told my coach that would be nice",
+          "zh": "我跟教练说 这样挺好"
+        },
+        {
+          "start": 528.45,
+          "end": 532.25,
+          "en": "before I finish my career to have a round number.",
+          "zh": "生涯结束前 能凑个整数"
+        },
+        {
+          "start": 532.25,
+          "end": 534.95,
+          "en": "So he told me that hopefully",
+          "zh": "他就说 希望"
+        },
+        {
+          "start": 534.95,
+          "end": 536.38,
+          "en": "we're gonna get this this year.",
+          "zh": "今年就能做到"
+        },
+        {
+          "start": 536.38,
+          "end": 537.42,
+          "en": "So I'm glad.",
+          "zh": "所以我很高兴"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/cold-rome.json",
+      "audio_review_packet_sha256": "fa50222b754148fc55d9dab24050fe64cd11900c188392a8188e0a29d2c6209b",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rome-svi-speech-small.en-en.json",
+          "sha256": "058ab5d919dab324da460057e399dc538c64ed4dea8d817bf8d98536c3a0c37d",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rome-svi-speech-medium.en-en.json",
+          "sha256": "5bce5c3b7dce0d03eb6575779924ff79d326f2c5dba2c83fd6ce968e9d59782b",
+          "model": "medium.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/cold-rome-turbo-en.json",
+          "sha256": "d7fbfde0b7d456fa41cc739ac704c8ab8c67574a736f936458f684f6ebd493b1",
+          "model": "turbo"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/cold-tail-small.en-en.json",
+          "sha256": "04d24fd676a1d5e2bf8b31e7aca87bcaab210a76705e8f7a66338e5d43eb76e3",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/cold-tail-medium.en-en.json",
+          "sha256": "0313fd3d18ff3b9c52c3005db2943b3e852ddb9b3b4d635e750a6d5a5621325e",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+        "The broad medium speech pass conflates the final so I am glad with the later very happy after applause; focused same-byte534.8–541.8 small.en and medium.en both agree so I am glad ending537.40/537.42. Small hallucinates cheering as Whoa after537.4; medium yields no additional foreground speech. Start at526.76 lies at independently estimated I onset526.74–526.80, after preceding20th clause."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false
+    },
+    "auckland-final": {
+      "key": "auckland-final",
+      "source_name": "auckland-final",
+      "source_file": "/workspace/svitolina-finals-production/auckland-helper/cqQQnYmVkVQ.mp4",
+      "source_url": "https://www.youtube.com/watch?v=cqQQnYmVkVQ",
+      "source_sha256": "a1017dd34d208197fd0e0d46fcf00d4bab2384284b1bc83d465f9cc3626e6f7f",
+      "start": 258.68,
+      "end": 275.12,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 263.84,
+          "end": 267.74,
+          "en": "Elina Svitolina is the champion in Auckland.",
+          "zh": "斯维托丽娜赢下奥克兰冠军"
+        },
+        {
+          "start": 269.36,
+          "end": 271.9,
+          "en": "Her 19th career title,",
+          "zh": "她职业生涯的第19冠"
+        },
+        {
+          "start": 271.9,
+          "end": 274.84,
+          "en": "and she had to work hard for it in this final.",
+          "zh": "这场决赛她赢得很艰难"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/auckland-final.json",
+      "audio_review_packet_sha256": "68dda7a781478caf42d68d8245fcf7f71eb10a4700eb24d2961e089eafefd024",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/auckland-final-small.en.json",
+          "sha256": "4c299b122b2d91839102f1b7acb1b6d6b382340bd1bd380d28d162e518c8b039",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/auckland-final-medium.en.json",
+          "sha256": "42d9734d4bc27086c9d0116942ccddc6a573c969678625c98690100688a2ed94",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "冠军·250分",
+        "date": "2026.01.11",
+        "place": "奥克兰决赛",
+        "people": "斯维托丽娜 vs 王欣瑜",
+        "score": "6-3 7-6(6)"
+      },
+      "label_safe_window_candidate": [
+        270.9,
+        274.4
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "ao-sf": {
+      "key": "ao-sf",
+      "source_name": "ao-sf",
+      "source_file": "/workspace/svitolina-finals-production/media/sources/ao-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=g-co4fMMjnc",
+      "source_sha256": "464421ecf66067c3e1542f9b8d6d6989385883fdae29ca4d81fa1326809767cb",
+      "start": 450.52,
+      "end": 472.4,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 462.28,
+          "end": 466.72,
+          "en": "So impressive from the world No. 1.",
+          "zh": "世界第一 表现太出色了"
+        },
+        {
+          "start": 466.72,
+          "end": 472.1,
+          "en": "Sabalenka moves through to the final once again in Melbourne.",
+          "zh": "萨巴伦卡再次闯进墨尔本决赛"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/ao-sf.json",
+      "audio_review_packet_sha256": "72c0f1162b51cc32ae26c3bc3031302614afc9892a2a9d61ee7f3619421dad53",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/ao-sf-small.en.json",
+          "sha256": "0a255234308f6acac8c17e3250e898fe2b24e1a843f44663e6ab7b3601c81864",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/ao-sf-medium.en.json",
+          "sha256": "87441bbddc49ee91282a37cf796703095e0d212e95b88fc896eb1b0d5bfedd05",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "止步4强·780分",
+        "date": "2026.01.29",
+        "place": "澳网半决赛",
+        "people": "斯维托丽娜 vs 萨巴伦卡",
+        "score": "2-6 3-6"
+      },
+      "label_safe_window_candidate": [
+        468.6,
+        472.24
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "dubai-final": {
+      "key": "dubai-final",
+      "source_name": "dubai-final",
+      "source_file": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "source_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "source_sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "start": 239.2,
+      "end": 251.76,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 241.14,
+          "end": 245.72,
+          "en": "It is a dream debut Dubai title",
+          "zh": "梦幻般的迪拜首冠"
+        },
+        {
+          "start": 245.72,
+          "end": 247.48,
+          "en": "for Jessica Pegula,",
+          "zh": "属于杰西卡·佩古拉"
+        },
+        {
+          "start": 247.48,
+          "end": 251.6,
+          "en": "and she seals it in style with an ace.",
+          "zh": "她用一记ACE漂亮收官"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/dubai-final.json",
+      "audio_review_packet_sha256": "7440f1e354694136afeff911f72e2fd6d04fd19bb4e2f76b4d13aaa1bffedc4e",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/dubai-terminal-small.en-en.json",
+          "sha256": "7d724c0a2ee73031199e2026c2e3fa448ebe4426e50376326cb30e20c31de634",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/dubai-terminal-medium.en-en.json",
+          "sha256": "9b9d18b685d3cd7f08ae4e58af2c1481be4a36be2ec76ecee895882a8b17fd8c",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "亚军·650分",
+        "date": "2026.02.21",
+        "place": "迪拜决赛",
+        "people": "斯维托丽娜 vs 佩古拉",
+        "score": "2-6 4-6"
+      },
+      "label_safe_window_candidate": [
+        239.68,
+        243.08
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "rome-final": {
+      "key": "rome-final",
+      "source_name": "rome-final",
+      "source_file": "/workspace/gauff-finals-production/sources/WXNZTi6qd1Y.mp4",
+      "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+      "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+      "start": 219.92,
+      "end": 255.52,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 235.84,
+          "end": 240.56,
+          "en": "Elina Svitolina is a Roman champion once again.",
+          "zh": "斯维托丽娜再次在罗马捧杯"
+        },
+        {
+          "start": 240.56,
+          "end": 243.62,
+          "en": "The third act of a glorious trilogy",
+          "zh": "荣耀三部曲的第三幕"
+        },
+        {
+          "start": 243.62,
+          "end": 247.38,
+          "en": "set under the ancient skies of the Eternal City.",
+          "zh": "永恒之城的古老天空之下"
+        },
+        {
+          "start": 247.38,
+          "end": 252.42,
+          "en": "A story of defiance, determination and perseverance,",
+          "zh": "这是抗争 坚定与坚持的故事"
+        },
+        {
+          "start": 252.42,
+          "end": 255.22,
+          "en": "ultimately ending in glory.",
+          "zh": "最终以荣耀作结"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/rome-final.json",
+      "audio_review_packet_sha256": "feea607a01487f08430e59769ccc47c93845bbe7e3b4d4c64958d482f886c925",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rome-terminal-small.en-en.json",
+          "sha256": "27fbaf0ba714892a6a2cca1e63fab841ec54c947ba4da220ce666e90a7de8e2e",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rome-terminal-medium.en-en.json",
+          "sha256": "d03692a541b90b6e791789a87a66e63dc20c3bc35973c9515fdab9b02b3a9c9d",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "冠军·1000分",
+        "date": "2026.05.16",
+        "place": "罗马决赛",
+        "people": "斯维托丽娜 vs 高芙",
+        "score": "6-4 6-7 6-2"
+      },
+      "label_safe_window_candidate": [
+        232.2,
+        235.4
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "rg-qf": {
+      "key": "rg-qf",
+      "source_name": "rg-qf",
+      "source_file": "/workspace/svitolina-finals-production/media/sources/rg-qf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+      "source_sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+      "start": 228.0,
+      "end": 245.52,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/rg-qf.json",
+      "audio_review_packet_sha256": "e694884587f0b124cd7c6ed62aaa29d09b033652ea8e471a5269e088a88b3746",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/rg-qf-small.en.json",
+          "sha256": "7d12850638ef56e3738a06a1e9533cdf9817a99e60bb3d072fc2caf18de18585",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/rg-qf-medium.en.json",
+          "sha256": "24f66d5d6175499ef421af1237d4220d3be8d9eb50d1dc088f8e2ce0df58c569",
+          "model": "medium.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rg-fr-small-fr.json",
+          "sha256": "8fa7a3bd54576972cb31cb10763d359f0bc0d879783cf4d66439a6cb0fe4c7d5",
+          "model": "small"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rg-fr-turbo-fr.json",
+          "sha256": "201703ad779fb236ecbe4a41ce267922597bf0a85fef87b5ecf5f7efe4e2a30f",
+          "model": "turbo"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/rg-pa-large-large-v3-fr.json",
+          "sha256": "9f442a4659822fef08f7d6a7c5488671958a2fa8b67c2cbc7bac8402092dfc41",
+          "model": "large-v3"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+        "Non-English background PA transcription remains unverified; this packet is complete only for the required foreground-English inventory, not a French speech audit. No fabricated French subtitles and no muted source."
+      ],
+      "no_foreground_english_reason": "No intelligible foreground English. Original court ambience includes distant French chair/PA; English-only model outputs are French-to-English hallucinations, not English captions. Three French-capable model attempts fail to give a reliable full French transcription. Original sound is retained, and no French transcript/listening pass is claimed. Parent authorized this honest English-only foreground scope on2026-10-22.",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "止步8强·430分",
+        "date": "2026.06.02",
+        "place": "法网1/4决赛",
+        "people": "斯维托丽娜 vs 科斯秋克",
+        "score": "3-6 6-2 2-6"
+      },
+      "label_safe_window_candidate": [
+        237.0,
+        240.4
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "wimbledon-r1": {
+      "key": "wimbledon-r1",
+      "source_name": "wimbledon-r1",
+      "source_file": "/workspace/svitolina-finals-production/media/sources/wimbledon-r1.mp4",
+      "source_url": "https://www.youtube.com/watch?v=efGsU1vRZc8",
+      "source_sha256": "b75c4fa4809dcfa7a7e949d8b733752853260cfe40c36c5ea5329f02df8978ac",
+      "start": 363.32,
+      "end": 383.28,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 367.38,
+          "end": 368.02,
+          "en": "There it is.",
+          "zh": "拿下来了"
+        },
+        {
+          "start": 368.02,
+          "end": 374.18,
+          "en": "Snigur takes the biggest win of her career,",
+          "zh": "斯尼古尔拿下生涯最大胜利"
+        },
+        {
+          "start": 374.18,
+          "end": 378.04,
+          "en": "defeating fellow Ukrainian Elina Svitolina",
+          "zh": "击败同胞斯维托丽娜"
+        },
+        {
+          "start": 378.04,
+          "end": 381.2,
+          "en": "in straight sets on No. 2 Court,",
+          "zh": "在2号球场直落两盘"
+        },
+        {
+          "start": 381.2,
+          "end": 383.06,
+          "en": "and in some style.",
+          "zh": "而且赢得漂亮"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/wimbledon-r1.json",
+      "audio_review_packet_sha256": "cba8cf1ef4f39b9ed4671477c09516963e731fc14c4b582227b6162ea415b430",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/wimbledon-r1-small.en.json",
+          "sha256": "8f07355325bb414d54fa9cca20fc9380acf104b2bb4909c140a919827313123b",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/wimbledon-r1-medium.en.json",
+          "sha256": "da9fcef51286e4ea30c5491a55024f068c4b164d440c66ff06fc066805a2903b",
+          "model": "medium.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/wimbledon-terminal-turbo-en.json",
+          "sha256": "e03b1014be7771d2ed068e49fef0203f437191c02341c3849463f72bcbcb0c36",
+          "model": "turbo"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/window-context/wimbledon-call-large-large-v3-en.json",
+          "sha256": "388a40905efa6c2f96d4ce44ecb6c4b69581d9d9b9ce9bde58e169abe714fe8f",
+          "model": "large-v3"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed.",
+        "Medium skips noisy368–374 call; small/turbo and independent multilingual large-v3 consistently support biggest win/career meaning. Snigur and Elina canonical spelling; male his from large-v3 is obvious ASR gender error for the visibly identified woman, normalized to her. All raw variants retained. No human ear confirmation claimed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "第1轮·10分",
+        "date": "2026.06.30",
+        "place": "温网第一轮",
+        "people": "斯维托丽娜 vs 斯尼古尔",
+        "score": "5-7 2-6"
+      },
+      "label_safe_window_candidate": [
+        377.8,
+        383.0
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "toronto-sf": {
+      "key": "toronto-sf",
+      "source_name": "toronto-sf",
+      "source_file": "/workspace/svitolina-finals-production/media/sources/toronto-sf.mp4",
+      "source_url": "https://www.youtube.com/watch?v=YgwYriOtnPs",
+      "source_sha256": "09909651ae61819e07f8ef1f5a577da83774152a33482f7d3ff234cbcf4cf317",
+      "start": 249.32,
+      "end": 271.8,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 258.74,
+          "end": 261.66,
+          "en": "A first final of the season,",
+          "zh": "本赛季第一次闯进决赛"
+        },
+        {
+          "start": 261.66,
+          "end": 266.02,
+          "en": "a first Canadian final for Iga Swiatek.",
+          "zh": "斯瓦泰克首进加拿大站决赛"
+        },
+        {
+          "start": 267.86,
+          "end": 269.24,
+          "en": "Tough for Svitolina.",
+          "zh": "斯维托丽娜很遗憾"
+        },
+        {
+          "start": 269.62,
+          "end": 271.5,
+          "en": "She battled so hard.",
+          "zh": "她拼得那么顽强"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/toronto-sf.json",
+      "audio_review_packet_sha256": "e64270b3f6d80d946bc4dfdc52fc17a8acaee5021aff2dd7c6f4006fed244e5a",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/toronto-sf-small.en.json",
+          "sha256": "aaf7d96aa66ece86b9fcecb66c679c1ae892c935567c696bcf3fd38a90fbedf3",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/toronto-sf-medium.en.json",
+          "sha256": "1d49f8883ea4326d505e48d8e6ed40bbdbc36ef89d67a47103f76dc8f244e054",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "止步4强·390分",
+        "date": "2026.08.12",
+        "place": "多伦多半决赛",
+        "people": "斯维托丽娜 vs 斯瓦泰克",
+        "score": "3-6 6-1 3-6"
+      },
+      "label_safe_window_candidate": [
+        264.3,
+        269.2
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    },
+    "us-r3": {
+      "key": "us-r3",
+      "source_name": "us-r3",
+      "source_file": "/workspace/svitolina-finals-production/media/sources/us-r3.mp4",
+      "source_url": "https://www.youtube.com/watch?v=FiwiyGycgs4",
+      "source_sha256": "cf39b9f03d58401873b3f43286145ddde2c9c1a9811f8b903180e92d67dcbac3",
+      "start": 168.8,
+      "end": 185.6,
+      "frame": "court",
+      "cx": 0.5,
+      "captions": [
+        {
+          "start": 173.32,
+          "end": 174.48,
+          "en": "She's done it.",
+          "zh": "她做到了"
+        },
+        {
+          "start": 174.48,
+          "end": 177.8,
+          "en": "Anna Kalinskaya is into the last 16 in New York",
+          "zh": "卡林斯卡娅闯进美网第四轮"
+        },
+        {
+          "start": 177.8,
+          "end": 182.02,
+          "en": "for the first time in her career.",
+          "zh": "这是她职业生涯的第一次"
+        },
+        {
+          "start": 182.1,
+          "end": 185.5,
+          "en": "What a crazy, crazy roller coaster!",
+          "zh": "真是一场疯狂的过山车"
+        }
+      ],
+      "audio_review_packet": "/workspace/svitolina-finals-production/production/foreground-packets/us-r3.json",
+      "audio_review_packet_sha256": "0fab68735da86fa1811251b00c4883591922df38c2e043ab0c9e44b4899c5c9b",
+      "asr_evidence": [
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/us-r3-small.en.json",
+          "sha256": "51eae8902c05f08ab8d79178c80b1318e6bea5ec858271f023de6bb812bfd3da",
+          "model": "small.en"
+        },
+        {
+          "path": "/workspace/svitolina-finals-production/audio/tail-context/us-r3-medium.en.json",
+          "sha256": "00f1bfaadb7eb897a3f5b76bad29e12b2625fd08371fe83a4427cb76c7c94d4b",
+          "model": "medium.en"
+        }
+      ],
+      "audio_tail": "silence",
+      "notes": [
+        "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+        "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+      ],
+      "no_foreground_english_reason": "",
+      "ready_for_native_preview": true,
+      "final_film_qc": false,
+      "label": {
+        "topic": "第3轮·130分",
+        "date": "2026.09.04",
+        "place": "美网第三轮",
+        "people": "斯维托丽娜 vs 卡林斯卡娅",
+        "score": "3-6 6-2 3-6"
+      },
+      "label_safe_window_candidate": [
+        181.8,
+        185.5
+      ],
+      "label_safe_window_status": "actual native composition review still required; candidate not automatic visual pass"
+    }
+  },
+  "sources": [
+    {
+      "key": "ao-sf",
+      "path": "/workspace/svitolina-finals-production/media/sources/ao-sf.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=g-co4fMMjnc",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-g-co4fMMjnc/g-co4fMMjnc.mp4",
+      "status": "actual_source_only_not_window_approved",
+      "sha256": "464421ecf66067c3e1542f9b8d6d6989385883fdae29ca4d81fa1326809767cb",
+      "bytes": 59382990,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 493.888435
+    },
+    {
+      "key": "rg-qf",
+      "path": "/workspace/svitolina-finals-production/media/sources/rg-qf.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=W7vJsxli0p0",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-W7vJsxli0p0/W7vJsxli0p0.mp4",
+      "status": "actual_source_only_not_window_approved",
+      "sha256": "6a8aefd56f0fe579586e8390a566de130767fdcb54ec3377bcac65664bc8d359",
+      "bytes": 64244179,
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1",
+      "duration": 268.097596
+    },
+    {
+      "key": "wimbledon-r1",
+      "path": "/workspace/svitolina-finals-production/media/sources/wimbledon-r1.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=efGsU1vRZc8",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-efGsU1vRZc8/efGsU1vRZc8.mp4",
+      "status": "actual_source_only_not_window_approved",
+      "sha256": "b75c4fa4809dcfa7a7e949d8b733752853260cfe40c36c5ea5329f02df8978ac",
+      "bytes": 48589107,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 399.33678
+    },
+    {
+      "key": "toronto-sf",
+      "path": "/workspace/svitolina-finals-production/media/sources/toronto-sf.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=YgwYriOtnPs",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-YgwYriOtnPs/YgwYriOtnPs.mp4",
+      "status": "actual_source_only_not_window_approved",
+      "sha256": "09909651ae61819e07f8ef1f5a577da83774152a33482f7d3ff234cbcf4cf317",
+      "bytes": 59453237,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 302.857868
+    },
+    {
+      "key": "us-r3",
+      "path": "/workspace/svitolina-finals-production/media/sources/us-r3.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=FiwiyGycgs4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-FiwiyGycgs4/FiwiyGycgs4.mp4",
+      "status": "actual_source_only_not_window_approved",
+      "sha256": "cf39b9f03d58401873b3f43286145ddde2c9c1a9811f8b903180e92d67dcbac3",
+      "bytes": 73839759,
+      "width": 1920,
+      "height": 1080,
+      "fps": "60000/1001",
+      "duration": 203.685442
+    },
+    {
+      "key": "dubai-final",
+      "path": "/workspace/pegula-finals-production/sources/dubai-final.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=n8N7tGMhsQA",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-n8N7tGMhsQA/n8N7tGMhsQA.mp4",
+      "sha256": "f08ae60ec29ec90789dc943e9f01234608cb6549da727f989389471aa0509c35",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 309.405896,
+      "approval": "Source bytes checked; not final selected-clip/crop/foreground/render approval"
+    },
+    {
+      "key": "auckland-final",
+      "path": "/workspace/svitolina-finals-production/auckland-helper/cqQQnYmVkVQ.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=cqQQnYmVkVQ",
+      "sha256": "a1017dd34d208197fd0e0d46fcf00d4bab2384284b1bc83d465f9cc3626e6f7f",
+      "width": 1920,
+      "height": 1080,
+      "duration": 304.088526,
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-cqQQnYmVkVQ/cqQQnYmVkVQ.mp4",
+      "fps": "25/1"
+    },
+    {
+      "key": "rome-final",
+      "path": "/workspace/gauff-finals-production/sources/WXNZTi6qd1Y.mp4",
+      "canonical_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-WXNZTi6qd1Y/WXNZTi6qd1Y.mp4",
+      "sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 685.545941,
+      "bytes": 185331289,
+      "shared_from": "gauff-finals-production actual shared bytes, no copy"
+    }
+  ],
+  "complete_terminal_match_points": 8,
+  "extra_rallies": 0,
+  "cold_quote_repeated_in_body": false,
+  "video_body_seconds": 174.15999999999997,
+  "scope": "Source/audio selection only; actual native captions/card and final encoded-film QC pending."
+}

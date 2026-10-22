@@ -1,0 +1,61 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=WXNZTi6qd1Y",
+  "source_sha256": "e5aab2e4155d2ebf9ef25e4d31d2e84b6748963d0442c9a5e1818a14e0f904dc",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex local source-bound paired ASR with source frames; no human listening",
+  "reviewed_at": "2026-10-22T12:58:20.620705+00:00",
+  "reviewed_from": 205.0,
+  "reviewed_to": 260.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 235.84,
+      "end": 240.56,
+      "en": "Elina Svitolina is a Roman champion once again.",
+      "zh": "斯维托丽娜再次在罗马捧杯"
+    },
+    {
+      "start": 240.56,
+      "end": 243.62,
+      "en": "The third act of a glorious trilogy",
+      "zh": "荣耀三部曲的第三幕"
+    },
+    {
+      "start": 243.62,
+      "end": 247.38,
+      "en": "set under the ancient skies of the Eternal City.",
+      "zh": "永恒之城的古老天空之下"
+    },
+    {
+      "start": 247.38,
+      "end": 252.42,
+      "en": "A story of defiance, determination and perseverance,",
+      "zh": "这是抗争 坚定与坚持的故事"
+    },
+    {
+      "start": 252.42,
+      "end": 255.22,
+      "en": "ultimately ending in glory.",
+      "zh": "最终以荣耀作结"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "review_notes": [
+    "Actual local paired ASR; not human listening. Canonical player spelling and obvious ASR name/pronoun mistranscriptions normalized only using official same-match identities; raw retained.",
+    "Outgoing native .25s dissolve padding uses audio_tail:silence outside selected body only. No words inside selected body removed."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rome-final-27fbaf0ba7-rome-terminal-small.en-en.json",
+      "sha256": "27fbaf0ba714892a6a2cca1e63fab841ec54c947ba4da220ce666e90a7de8e2e",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/svitolina-finals-2026/raw/rome-final-d03692a541-rome-terminal-medium.en-en.json",
+      "sha256": "d03692a541b90b6e791789a87a66e63dc20c3bc35973c9515fdab9b02b3a9c9d",
+      "model": "medium.en"
+    }
+  ]
+}
