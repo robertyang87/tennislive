@@ -11853,6 +11853,12 @@ def _slide_html(
     from ..render.webcards import _font_css
     from . import explainer_card_palette as P
 
+    if segment.visual and segment.visual.get("layout") == "transition":
+        from .transition_cards import build as build_transition
+        visual = segment.visual
+        return build_transition(visual.get("headline", segment.title),
+                                content=visual.get("content"), kicker=visual.get("kicker", ""),
+                                size=(W, height))
     if segment.visual:
         from .source_story_cards import source_slide_html
 
@@ -12329,6 +12335,11 @@ def render_explainer_slides(
                         "Array.from(document.images).every(i => i.complete)",
                         timeout=15000,
                     )
+                    if seg.visual and seg.visual.get("layout") == "transition":
+                        from .transition_cards import plan as transition_plan, check_page
+                        page.evaluate("window.setTransitionTime(2.6)")
+                        check_page(page, transition_plan(seg.visual.get("headline", seg.title),
+                            seg.visual.get("content"), size=(W, height), kicker=seg.visual.get("kicker", "")))
                     # 示意图不许压到编号药丸——字体落定之后量，放不下就等比缩，
                     # 缩过头就停下来（见 `diagram_fit_problem`）。
                     problem = diagram_fit_problem(
@@ -12353,6 +12364,15 @@ def render_explainer_slides(
                         path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
                         clip={"x": 0, "y": 0, "width": W, "height": height},
                     )
+                    from .transition_cards import SIDECAR_SUFFIX
+                    sidecar = out.with_suffix(SIDECAR_SUFFIX)
+                    if seg.visual and seg.visual.get("layout") == "transition":
+                        visual = seg.visual
+                        sidecar.write_text(json.dumps({"text": visual.get("headline", seg.title),
+                            "kicker": visual.get("kicker", ""), "content": visual.get("content"),
+                            "size": [W, height]}, ensure_ascii=False))
+                    else:
+                        sidecar.unlink(missing_ok=True)
                     paths.append(out)
                 finally:
                     page.close()
@@ -14023,9 +14043,17 @@ def assemble_explainer_video(
         seconds = audio_secs[-1] + head[i] + tail[i]
         lengths.append(float(f"{seconds:.3f}"))
         slide_secs.append(float(f"{seconds:.3f}"))
-        command.extend(
-            ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
-        )
+        from .transition_cards import SIDECAR_SUFFIX, render_clip as render_transition
+        transition_sidecar = Path(slide).with_suffix(SIDECAR_SUFFIX)
+        if transition_sidecar.is_file():
+            transition = json.loads(transition_sidecar.read_text())
+            clip = Path(slide).with_suffix(".transition.mp4")
+            render_transition(transition.pop("text"), clip, seconds=seconds, fps=30, **transition)
+            command.extend(["-t", f"{seconds:.3f}", "-i", str(clip.resolve())])
+        else:
+            command.extend(
+                ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
+            )
         command.extend(["-i", str(Path(audio).resolve())])
         slide_inputs.append((next_input, next_input + 1))
         next_input += 2
@@ -14595,3 +14623,4 @@ def explainer_xiaohongshu(
         f"这里是 @网球时差｜{column}。\n\n"
         f"{tags}"
     )
+

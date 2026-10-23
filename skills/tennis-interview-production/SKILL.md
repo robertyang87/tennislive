@@ -66,3 +66,9 @@ QC、PushPlus 发送和 `pushed.json` 五阶段都有可核验证据，才可称
 `gauff-pegula-cin2026-final` 判据下由人工对照复核，不改原 spec、不 render、
 不 dispatch、不发布；候选通过机械硬闸与人工终审，才有资格进入正式生产。
 学习结构和判断标准，禁止复制样片措辞到别的比赛。
+
+
+
+## Owner update 2026-10-23: shared content-adaptive transition cards
+
+All future transition cards in every column must reference and reuse [the global transition-card contract](../../docs/global-transition-cards.md) and `tennislive.video.transition_cards`. Editorial binds complete semantic lines and one relationship to verified facts; the component chooses geometry and matching motion for turns, scores, comparisons, chronology or a sourced person photo. Preserve existing navy, native fonts, subtitle/brand/story-label safe areas, fixed scoreboard and complete narration. Native `title_card` uses motion by default; explainer transitions declare `visual.layout=transition`. Reuse exact caches; do not manufacture facts, roll through fake scores or rerender/resend historical movies.

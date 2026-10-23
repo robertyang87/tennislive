@@ -4030,7 +4030,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
-                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "title_card_story_label",
+                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
                 "kind", "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
@@ -4212,6 +4212,8 @@ def _normalize_title_card_segments(spec: dict) -> None:
     现场声就显式写 `"narration": ""` 并按 image 段的规矩自己担哑场。
     """
     for i, s in enumerate(spec.get("segments") or []):
+        if isinstance(s, dict) and "transition_card" in s and not s.get("title_card"):
+            raise ReelError(f"第 {i + 1} 段 transition_card 只能用于 title_card")
         if isinstance(s, dict) and "title_card_story_label" in s and not s.get("title_card"):
             raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能用于 title_card 段")
         if not (isinstance(s, dict) and s.get("title_card")):
@@ -4248,6 +4250,14 @@ def _normalize_title_card_segments(spec: dict) -> None:
             if problem := story_label_problem(s["title_card_story_label"], text=text, size=size):
                 raise ReelError(f"第 {i + 1} 段 title_card_story_label：{problem}")
             card["story_label"] = dict(s["title_card_story_label"])
+        if "transition_card" in s:
+            from tennislive.video.transition_cards import plan as transition_plan
+            size = (VIDEO_W, BAND_PIC_H) if spec.get("layout") == "band" else (VIDEO_W, VIDEO_H)
+            try:
+                prepared = transition_plan(text, s["transition_card"], size=size, kicker=card["kicker"])
+            except ValueError as exc:
+                raise ReelError(f"第 {i + 1} 段 transition_card：{exc}") from exc
+            card["content"] = prepared["content"]
         s["image"] = TITLE_CARD_PREFIX + json.dumps(card, ensure_ascii=False)
 
 
@@ -4769,6 +4779,22 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
     seconds 只比旁白长零点几秒）。
     """
     run = globals()["run"] if command_sink is None else command_sink
+    if Path(seg.image).suffix.lower() == ".mp4":
+        # Shared silent transition movie; narration is mixed on the existing
+        # timeline. Preserve its complete window and native dissolve tail.
+        thread_args = ["-threads", str(threads)] if threads is not None else []
+        fit = (f"scale={VIDEO_W}:{BAND_PIC_H},pad={VIDEO_W}:{VIDEO_H}:0:{BAND_TOP}:color={BAND_BG},"
+               if LAYOUT == "band" else f"scale={VIDEO_W}:{VIDEO_H},")
+        filter_args = ["-filter_threads", str(threads)] if threads is not None else []
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *filter_args, *thread_args,
+            "-i", seg.image, "-f", "lavfi", "-i",
+            f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+            "-t", f"{seg.length + tail:.3f}", "-vf",
+            f"{fit}fps={FPS_EXPR},setsar=1,tpad=stop_mode=clone:stop_duration={tail + 1:.3f}",
+            "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            "-shortest", str(dest))
+        return dest
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
@@ -10102,10 +10128,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
     if not any(s.image.startswith(TITLE_CARD_PREFIX) for s in segments if s.image):
         return segments
     with stage("章节卡（剪进片子）"):
-        if renderer is None:
-            sys.path.insert(0, str(Path(__file__).resolve().parent))
-            import render_title_card  # noqa: PLC0415
-            renderer = render_title_card.render
+        animated = renderer is None
+        if animated:
+            from tennislive.video.transition_cards import render_clip
+            renderer = render_clip
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
         # 品牌默认距底 HANDLE_BOTTOM_PX（28）。字幕保留自己的锚，不拿默认
         # 上锚把品牌抬到标题中间。spec 写了 `title_card_handle_bottom` 时沿用
@@ -10123,8 +10149,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 out_segments.append(s)
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
-            out = outdir / f"title_card_{i + 1:02d}.jpg"
+            out = outdir / f"title_card_{i + 1:02d}{'.mp4' if animated else '.jpg'}"
             render_kwargs = {}
+            if animated:
+                render_kwargs.update(seconds=s.length, fps=FPS_EXPR, content=card.get("content"))
             if "story_label" in card:
                 from render_title_card import story_label_problem  # noqa: PLC0415
                 if problem := story_label_problem(card["story_label"], text=card["text"], size=size):
@@ -12755,3 +12783,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

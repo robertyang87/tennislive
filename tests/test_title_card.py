@@ -406,7 +406,13 @@ def test_章节卡品牌在真实字幕下方的底部安全区(tmp_path, monkey
     assert f"bottom:{tc.HANDLE_BOTTOM_PX}px" in html
     assert "bottom:64px" not in html
 
-    bare = Image.open(card.image).convert("L").resize((1080, 1440), Image.Resampling.BOX)
+    # The materializer now emits a real motion clip. Inspect its actual
+    # encoded settled frame instead of treating movie bytes as a JPEG.
+    import subprocess
+    bare_path = tmp_path / "native-card-frame.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1.8", "-i", card.image,
+                    "-frames:v", "1", str(bare_path)], check=True)
+    bare = Image.open(bare_path).convert("L")
     brand_spans = _row_spans(_bright_rows(bare, 1100, 1440))
     assert len(brand_spans) == 1, f"底部只该有一条品牌，量到 {brand_spans}"
     brand_top, brand_bot = brand_spans[-1]
@@ -503,8 +509,10 @@ def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp
     got = reel._materialize_title_cards({}, segs, tmp_path)
     card_seg = got[1]
     assert card_seg.full_bleed is True and not segs[0].full_bleed and not got[2].full_bleed
-    with Image.open(card_seg.image) as im:
-        assert im.size == (reel.VIDEO_W * 2, reel.VIDEO_H * 2), "渲染器出的是 2×，判据要拿这一档验"
+    assert card_seg.image.endswith(".mp4")
+    native = json.loads(subprocess.check_output([
+        "ffprobe", "-v", "error", "-show_streams", "-of", "json", card_seg.image]))
+    assert (native["streams"][0]["width"], native["streams"][0]["height"]) == (reel.VIDEO_W, reel.VIDEO_H)
     dest = tmp_path / "part.mp4"
     reel.cut_still_segment(card_seg, dest)
     frame = tmp_path / "f0.png"
@@ -525,3 +533,4 @@ def test_真渲的章节卡走完切段那条路_成片第一行就是彩条(tmp
     for y in (60, 87, 95):
         assert all(max(c) < 110 and c[2] > c[1] >= c[0] for c in row(y)), \
             f"y={y} 该是柔光深蓝底——彩条要是还落在这儿就是又缩了"
+
