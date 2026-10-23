@@ -1,0 +1,100 @@
+{
+  "kind": "native_preflight_not_final_movie_qc",
+  "spec_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+  "critical_to_current_project_equal": true,
+  "critical_to_current_changed_paths": [
+    [
+      "segments",
+      3,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      7,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      9,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      11,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      13,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      15,
+      "_label_window_why"
+    ],
+    [
+      "segments",
+      18,
+      "_label_window_why"
+    ]
+  ],
+  "manifest_evidence": [
+    {
+      "directory": "native-preview-top46-width48-critical",
+      "manifest_sha256": "1e950a730da04dc881a7e1a62f11e51cb926227ddb4bafff71a0859adc683d4f",
+      "spec_file_sha256": "e76689530db5293ba750def4606396004e9c3d919fb5945ac65367f7abb00374",
+      "sample_count": 20,
+      "all_actual_image_sha_match": true,
+      "applicability": "Exact render projection equivalent; only underscore notes changed"
+    },
+    {
+      "directory": "native-preview-top46-width48-labels-1",
+      "manifest_sha256": "d97b292f70f67404b895518a9c70fe301360290a47bd81ee402ca2d9885a45c2",
+      "spec_file_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+      "sample_count": 20,
+      "all_actual_image_sha_match": true,
+      "applicability": "Exact current spec"
+    },
+    {
+      "directory": "native-preview-top46-width48-labels-2",
+      "manifest_sha256": "add671e2db769289c93359495d606a76681401a78188485aff01ebee2ef49f33",
+      "spec_file_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+      "sample_count": 16,
+      "all_actual_image_sha_match": true,
+      "applicability": "Exact current spec"
+    },
+    {
+      "directory": "native-preview-chapters",
+      "manifest_sha256": "fb3c44ba6112fb8ba1f0e0899d9ee362541da7a8b3ef892ac868a4ec8da23506",
+      "spec_file_sha256": "117e0ed0823365ca7c2da799b984519ee6f383c16a5ce478bedf67e9337d86b6",
+      "sample_count": 6,
+      "all_actual_image_sha_match": true,
+      "applicability": "Unchanged chapter render fields/caption clocks; previously actually inspected, native latest-main chapter version identical"
+    }
+  ],
+  "current_visual_status": "pass_sampled_0_15_static_width48_top46",
+  "actual_inspected": "All critical20 and boundary36 contacts; fullnative Linz250.55/RG1040.14/Wim4.08/Beijing268.0 plus nextchapter.04; independent helper review separately. No all-continuous-frames or human-listening claim.",
+  "limits": [
+    "Some initial close-shot label pixels may touch upper hair/bun or cap edge; observed faces, hands and captions remain readable.",
+    "Fixed court center crop and original source cuts retained.",
+    "Final encoded dissolve joins/whole final soundtrack pending new formal movie QC."
+  ],
+  "final_geometry": {
+    "width": 0.48,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 15,
+    "animate": false,
+    "png_design_sizes": [
+      89,
+      98,
+      73
+    ],
+    "actual_proportional_display_vs_width60": 0.8
+  },
+  "narration_requests": 13,
+  "new_synthesis_count": 0,
+  "authorization": "Original user rerender request; standing global immediate15s info rule; root-authorized minimal per-inset top placement and proportional width48 to remove real face obstruction. Root viewed final36contacts and authorized one exactHEAD mode=render push=false after currentgates."
+}

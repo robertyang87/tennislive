@@ -1,0 +1,91 @@
+{
+  "spec_sha256": "117e0ed0823365ca7c2da799b984519ee6f383c16a5ce478bedf67e9337d86b6",
+  "results": [
+    {
+      "name": "real-restore",
+      "command": [
+        "python",
+        "tools/reel_tts_release.py",
+        "restore",
+        "--slug",
+        "andreeva-finals-2026",
+        "--metadata",
+        "data/narration_checks/andreeva-finals-2026.json",
+        "--output",
+        "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/real-restore-g6q7xyft/tts_bundle.zip"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.6
+    },
+    {
+      "name": "strict-restored-bundle",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--check-tts-bundle",
+        "--tts-bundle-in",
+        "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/real-restore-g6q7xyft/tts_bundle.zip"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.45
+    },
+    {
+      "name": "dry-run",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--outdir",
+        "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/dry-run",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.31
+    },
+    {
+      "name": "workflow-production-preflight",
+      "command": [
+        "python",
+        "tools/production_preflight.py",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--column",
+        "赛场之上"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.21
+    },
+    {
+      "name": "taste-preflight",
+      "command": [
+        "python",
+        "tools/taste_preflight.py",
+        "--slug",
+        "andreeva-finals-2026"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.5
+    },
+    {
+      "name": "release-collision",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_release_tag_collision.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 31.59
+    }
+  ],
+  "actual_restored_bytes": 469801,
+  "actual_restored_sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+  "metadata_exactly_reused": true,
+  "new_synthesis_count": 0
+}

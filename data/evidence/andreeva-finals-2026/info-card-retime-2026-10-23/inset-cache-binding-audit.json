@@ -1,0 +1,21 @@
+{
+  "kind": "read-only cache and native fingerprint audit",
+  "conclusion": "No persistent native match-part/PNG reuse cache; each preview calls current cut_segment command generation and ffmpeg. No cache code edit needed. Entire inset dictionary is retained in segment render projection, including top_pad.",
+  "files": {
+    "tools/build_match_reel.py": "6c4e7508d2166dd78cb963f32966fb0486f0722a8396fc071a07cb4a6e53130c",
+    "tools/preview_reel_captions.py": "b8e6b4baacd458b9efbe5a6376472e85a3011044d2b9ebabf207e671627cb381",
+    "tools/render_inputs.py": "e6a9a7cdf8051e7e9346121672e4cfb539b750e5f7cb377434f7d2ec39edd593",
+    "tests/test_story_inset_top_pad.py": "3a87d3452468db3335c702dcd799f7da523530a04e797e0b4983844991e03b19"
+  },
+  "evidence": [
+    "build_match_reel.py _encode_one always writes part via cut_segment/cut_still_segment; cut_segment invokes ffmpeg -y",
+    "preview_reel_captions.py render_frames uses current cut_segment command and actual ffmpeg frame_command; existing preview manifest destinations are rejected",
+    "Persistent source/TTS/scoreboard-mask/chapter caches do not cache match inset composite pixels. Scoreboard-mask source geometry is unchanged by overlay position.",
+    "tests/test_story_inset_top_pad.py verifies project() changes exactly segment.inset.top_pad; actual native decoded first/.04/14.92/15.04 pixels establish visibility and removal."
+  ],
+  "targeted_tests": {
+    "command": "python -m pytest -q tests/test_story_inset_top_pad.py tests/test_match_reel_story_inset_delay.py tests/test_inset_animation.py",
+    "result": "30 passed in 15.99s",
+    "log_sha256": "ab5b0e7a98bec64da2295ac8210c8d05b45150d859554f3455187a7c23b8017c"
+  }
+}
