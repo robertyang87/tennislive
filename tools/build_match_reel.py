@@ -6871,6 +6871,13 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # [12330,12860] 拼成集合源（集合内时间轴 = 原秒 − 12330）。白名单只加
     # 这条存档 URL，不及于 YouTube 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-ZTPAUi0nFIs/ZTPAUi0nFIs.mp4': 720,
+    # 《规则里没有对不起》（netcord-apology-2026）v2 2007 索德林段：账号所有者
+    # 2026-10-23 v2 修复令六点名要 2007 温网纳达尔–索德林原场，并明示只有
+    # 720/SD 时按 1989 同款落位；14:20 裁决再次确认。该场次无任何官方全场/
+    # 集锦存档，现存最佳为 NBC/Olympics 专题片 yvJlyvAXEAc 中的 2007 温网
+    # 原场闪回（640x360 SD），仅 seg38/39 两段 contain 短插。白名单只加这条
+    # 存档 URL，不及于 YouTube 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-yvJlyvAXEAc/yvJlyvAXEAc.mp4': 360,
     # 2026-10-18: owner approved this Wuhan final official long source: 可以用 720如果可以完整展示内容的话.
     'https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4': 720,
     # 2026-10-17: owner approved this exact Shanghai semifinal long source after
