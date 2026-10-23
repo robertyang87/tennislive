@@ -5820,7 +5820,7 @@ def ours_ratio(spec: dict) -> tuple[float, float]:
     lead_secs = (lead["end"] - lead["start"]) if lead else 0.0
     ours = (COVER_SECONDS * bool(spec.get("cover"))
             + sum(takeaway_seconds(tk[k]) for k in ("open", "close") if tk.get(k))
-            + outro_page.min_length())
+            + outro_page.min_length("赛后开麦"))
     return ours, ours + lead_secs + (spec["end"] - spec["start"])
 
 
@@ -6551,7 +6551,7 @@ def _build_outro(outdir: Path) -> Path | None:
         clip = outro_page.build_with_voice(
             outdir, chromium=_chromium_executable(), dest=outdir / "_outro.mp4",
             fps=25.0, audio_rate="48000", preset="medium", crf="20",
-            audio_bitrate="128k", audio_channels=2,
+            audio_bitrate="128k", audio_channels=2, column="赛后开麦",
         )
     except Exception as exc:  # noqa: BLE001 - 片尾不该拖垮整条片子
         print(f"[片尾] 渲不出来，这条片子没有片尾：{exc}")

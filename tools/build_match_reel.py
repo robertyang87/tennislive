@@ -6021,7 +6021,7 @@ def outro_length(voice_path: Path, *, measure_tail: bool = False) -> float:
     spoken = ((_speech_tail_end(voice_path) or probe_duration(voice_path))
               if measure_tail else probe_duration(voice_path))
     spoken_need = round(spoken + OUTRO_TAIL, 3)
-    motion_need = outro_page.min_length()
+    motion_need = outro_page.min_length("赛场之上")
     length = round(max(spoken_need, motion_need), 3)
     who = "口播" if spoken_need >= motion_need else "动效"
     print(f"[片尾] 口播 {spoken:.2f}s + 尾 {OUTRO_TAIL}s = {spoken_need:.2f}s，"
@@ -6029,7 +6029,8 @@ def outro_length(voice_path: Path, *, measure_tail: bool = False) -> float:
     return length
 
 
-def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
+def build_outro(outdir: Path, seconds: float, tail: float = 0.0,
+                *, column: str = "赛场之上") -> Path:
     """渲片尾品牌页并合成动效，出一个 part_*.mp4。
 
     静音轨是**占位**，和 `_still_to_clip` 同一个道理：口播在最后混音那一步按
@@ -6040,11 +6041,12 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
     `AUDIO_RATE`/`FPS_EXPR`）——`concat` 那一步只认第一个文件的流参数，
     差一项就会拼出坏流，而它不报错。
     """
-    if outro_page.MASTER.is_file():
+    master = outro_page.master_for(column)
+    if master.is_file():
         dest = outdir / "part_outro.mp4"
         with stage("片尾母版转码"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-i", str(outro_page.MASTER), "-f", "lavfi", "-i",
+                "-i", str(master), "-f", "lavfi", "-i",
                 f"anullsrc=r={AUDIO_RATE}:cl=stereo",
                 "-map", "0:v:0", "-map", "1:a:0",
                 "-vf", f"fps={FPS_EXPR},setsar=1,tpad=stop_mode=clone:stop_duration={seconds + tail}",
@@ -6065,7 +6067,7 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
             fps_expr=FPS_EXPR, fps=FPS, chromium=_chromium(),
             dest=outdir / "part_outro.mp4",
             audio_rate=AUDIO_RATE, preset=PART_PRESET, crf=PART_CRF,
-            tail=tail,
+            tail=tail, column=column,
             runner=lambda args, **kw: run(*args),
         )
     print(f"[片尾] {dest.name} {probe_duration(dest):.2f}s"
@@ -10630,7 +10632,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             encoded = [_encode_one(e) for e in enumerate(segments)]
     parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
     if outro_enabled:
-        parts.append(build_outro(outdir, outro_secs, tail=0.0))
+        parts.append(build_outro(outdir, outro_secs, tail=0.0,
+                                 column=outro_page.column_from_spec(spec)))
 
     silent = outdir / "_video.mp4"
     with stage("拼接"):

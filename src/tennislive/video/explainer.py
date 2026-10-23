@@ -14379,7 +14379,8 @@ def generate_explainer_video(
             ) + "\n",
             encoding="utf-8",
         )
-        outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
+        outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch,
+                                  column=explainer_column(story.slug))
         # ⚠️⚠️ **2026-09-16 默认值翻面：3:4 是默认，9:16 变成要显式认领的例外。**
         #
         # 来路：账号所有者「我要求**所有**视频都是 3:4 的比例画面啊」。而这句话
@@ -14433,6 +14434,7 @@ def generate_explainer_video(
 
 def _build_outro_clip(
     outdir: Path, *, voice: str, rate: str, pitch: str,
+    column: str = "网球有故事",
 ) -> Path | None:
     """片尾品牌页那一段。**渲不出来就返回 None，不要把整条片子带崩。**
 
@@ -14456,6 +14458,7 @@ def _build_outro_clip(
             fps=30.0, audio_rate="24000", preset="slow", crf="26",
             audio_bitrate="64k", audio_channels=1,
             voice=voice, rate=rate, pitch=pitch,
+            column=column if column == "网球有故事" else None,
         )
     except Exception as exc:  # noqa: BLE001 - 片尾不该拖垮整条片子
         print(f"[片尾] 渲不出来，这条片子没有片尾：{exc}")

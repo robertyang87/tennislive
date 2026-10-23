@@ -194,8 +194,26 @@ def render_layers(outdir: Path, chromium: str) -> dict[str, Path]:
     return paths
 
 
-def min_length() -> float:
+def master_for(column: str | None = None) -> Path:
+    """Active columns have separate masters; archived callers retain their old brand page."""
+    if column is None:
+        return MASTER
+    from .column_outro import master_path
+    return master_path(column)
+
+
+def column_from_spec(spec: dict) -> str:
+    from .column_outro import normalize_column
+    return normalize_column(str(spec.get("column") or
+        (spec.get("cover") or {}).get("eyebrow") or "赛场之上"))
+
+
+def min_length(column: str | None = None) -> float:
     """动效自己要求的最短时长——最后一层淡完再停 `MIN_HOLD`。"""
+    if column is not None:
+        from .column_outro import MIN_LENGTH, normalize_column
+        normalize_column(column)
+        return MIN_LENGTH
     _, st, dur, _ = LAYERS[-1]
     return round(st + dur + MIN_HOLD, 3)
 
@@ -287,6 +305,7 @@ def render_clip(
     voice: Path | None = None,
     layers: dict[str, Path] | None = None,
     runner=None,
+    column: str | None = None,
 ) -> Path:
     """渲片尾页 + 合动效，出一个 mp4 片段。**两条生产线共用这一份。**
 
@@ -311,6 +330,14 @@ def render_clip(
     """
     import subprocess  # noqa: PLC0415
 
+    if column is not None:
+        if layers is not None:
+            raise ValueError("栏目片尾不能混用旧版静态层")
+        from .column_outro import render_clip as render_column
+        return render_column(outdir, seconds, column=column, fps_expr=fps_expr,
+            chromium=chromium, dest=dest, audio_rate=audio_rate, preset=preset,
+            crf=crf, audio_bitrate=audio_bitrate, audio_channels=audio_channels,
+            tail=tail, voice=voice, runner=runner)
     run = runner or subprocess.run
     total = seconds + tail
     if layers is None:
@@ -381,6 +408,7 @@ def build_with_voice(
     rate: str | None = None,
     pitch: str | None = None,
     fresh: bool = False,
+    column: str | None = None,
 ) -> Path:
     """合口播 → 渲页 → 出片尾片段。**三条生产线共用这一份。**
 
@@ -419,9 +447,10 @@ def build_with_voice(
     # ⚠️ 中间这一步转码**省不掉**：三条线的帧率/采样率/声道数不一样，
     # `concat` 差一项就静默丢流。母版按上界存（60fps / 48000 stereo / crf 12），
     # 往下转无损失，往上补不出信息。
-    if MASTER.is_file() and not fresh:
+    master = master_for(column)
+    if master.is_file() and not fresh:
         subprocess.run(
-            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MASTER),
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(master),
              "-r", str(fps_expr or int(fps)),
              "-c:v", "libx264", "-preset", preset, "-crf", crf,
              "-pix_fmt", "yuv420p", "-color_range", "tv",
@@ -444,10 +473,11 @@ def build_with_voice(
         rate=rate or DEFAULT_RATE,
         pitch=pitch or DEFAULT_PITCH,
     )[0]
-    secs = max(_audio_seconds(spoken, "ffprobe", subprocess.run) + TAIL, min_length())
+    secs = max(_audio_seconds(spoken, "ffprobe", subprocess.run) + TAIL, min_length(column))
     return render_clip(
         outdir, secs,
         fps_expr=fps_expr or str(int(fps)), fps=fps, chromium=chromium, dest=dest,
         audio_rate=audio_rate, preset=preset, crf=crf,
         audio_bitrate=audio_bitrate, audio_channels=audio_channels, voice=spoken,
+        **({"column": column} if column is not None else {}),
     )
