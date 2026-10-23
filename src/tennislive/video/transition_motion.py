@@ -33,7 +33,7 @@ def enhance(document: str, p: dict, *, size, seconds: float) -> str:
             document += panel
     summary = p['content'].get('summary')
     if summary:
-        document += (f'<div class="motion-summary" style="top:{p["proof_y"]+236}px">'
+        document += (f'<div class="motion-summary" style="top:{p["proof_y"]+p["proof_h"]-156}px">'
                      f'<div class="summary-value">{html.escape(summary["value"])}</div>'
                      f'<div class="summary-label">{html.escape(summary["label"])}</div></div>')
     result = p['content'].get('photo', {}).get('result') if p.get('photo') else None
@@ -50,8 +50,8 @@ def enhance(document: str, p: dict, *, size, seconds: float) -> str:
 .tc-glow{{opacity:.35}}
 .transition-line{{color:{DARK['foreground']}}}
 .transition-line:last-child:not(:first-child){{color:{DARK['primary']}}}
-.score_progress .transition-node{{height:218px;border:1px solid #cfe6d82b;border-radius:18px;padding:24px 12px;background:{DARK['card']}}}
-.score_progress .node-value{{font-size:96px;color:{DARK['primary']}}}
+.score_progress.horizontal .transition-node{{height:218px;border:1px solid #cfe6d82b;border-radius:18px;padding:24px 12px;background:{DARK['card']}}}
+.score_progress.horizontal .node-value{{font-size:96px;color:{DARK['primary']}}}
 .score_progress:after,.chronology:after{{animation:none;opacity:.45}}
 .chronology .transition-node{{height:{p.get('node_height',86)}px;padding-left:40px}}
 .chronology .transition-node:before{{content:'';position:absolute;left:-8px;top:50%;width:16px;height:16px;border-radius:50%;background:{DARK['primary']}}}

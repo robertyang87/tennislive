@@ -71,3 +71,21 @@ def test_native_column_still_keeps_cold_open_and_no_cover_heading():
     spec['segments'][0].update(start=1,end=9)
     assert reel.cold_open_problem(spec,primary='main') is not None
     assert not reel.wants_watermark('赛场之上')
+
+
+def test_four_score_nodes_use_the_planned_vertical_space(tmp_path):
+    from playwright.sync_api import sync_playwright
+    from tennislive.chromium import launch_chromium
+    content={'scores':[{'label':f'阶段{i+1}','value':v,'source':'verified-result'} for i,v in enumerate(['1–1','3–3','5–3','6–3'])],
+             'summary':{'value':'6–3','label':'拿下首盘','source':'verified-result'}}
+    p=cards.plan('重新拿回主动\n把比赛带向终点',content)
+    assert p['direction']=='vertical'
+    entry=tmp_path/'card.html';entry.write_text(cards.build('重新拿回主动\n把比赛带向终点',content=content))
+    with sync_playwright() as pw:
+        browser=launch_chromium(pw,args=['--no-sandbox'])
+        page=browser.new_page(viewport={'width':1080,'height':1440});page.goto(entry.as_uri())
+        page.wait_for_function('window.transitionMotion');page.evaluate('window.setTransitionTime(6)')
+        cards.check_page(page,p)
+        boxes=page.eval_on_selector_all('.transition-node,.motion-summary','es=>es.map(e=>e.getBoundingClientRect().toJSON())')
+        assert all(a['bottom']<=b['top']+.1 for a,b in zip(boxes,boxes[1:]))
+        browser.close()
