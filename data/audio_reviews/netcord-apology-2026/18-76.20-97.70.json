@@ -1,0 +1,56 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-aH0oKK0YrTg/aH0oKK0YrTg.mp4",
+  "source_sha256": "86b0cdb7ae784d1e8a9a5fbadfed31dd7e84e0548a2e002c837180144b7abe51",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T04:12:41+00:00",
+  "reviewed_from": 76.2,
+  "reviewed_to": 97.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 76.25,
+      "end": 79.9,
+      "en": "Can you fill us in on the conversation you were having with Jelena out there?",
+      "zh": "能说说你们刚才在场上那番对话吗？"
+    },
+    {
+      "start": 80.0,
+      "end": 81.6,
+      "en": "It's competition.",
+      "zh": "竞技体育就是这样"
+    },
+    {
+      "start": 81.6,
+      "end": 84.5,
+      "en": "People get upset when they lose.",
+      "zh": "输球的人难免上火"
+    },
+    {
+      "start": 84.6,
+      "end": 89.2,
+      "en": "Some people say bad things. She told me I have no class.",
+      "zh": "有人会说难听的话。她说我没有风度"
+    },
+    {
+      "start": 89.3,
+      "end": 93.7,
+      "en": "I have no education, and to see what happens when we get outside the US.",
+      "zh": "说我没有教养，还说等离开美国再看"
+    },
+    {
+      "start": 93.8,
+      "end": 96.7,
+      "en": "I beat her in Canada, outside the US. I beat her in New York, outside the US.",
+      "zh": "我在加拿大赢过她，在纽约也赢过她"
+    },
+    {
+      "start": 96.7,
+      "end": 97.6,
+      "en": "So let's see what else she has to say.",
+      "zh": "看她还有什么可说的"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 86b0cdb7ae784d1e8a9a5fbadfed31dd7e84e0548a2e002c837180144b7abe51，存于 data/source_asr/aH0oKK0YrTg/small.en.json 与 data/source_asr/aH0oKK0YrTg/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
