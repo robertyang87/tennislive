@@ -142,7 +142,6 @@ jobs:
           }
           cut_win 1090 1210 p1.mp4
           cut_win 9230 9340 p2.mp4
-            "$RUNNER_TEMP/parts/p3.mp4" "$RUNNER_TEMP/parts/p4.mp4" \
           printf "file '%s'\n" "$RUNNER_TEMP/parts/p1.mp4" "$RUNNER_TEMP/parts/p2.mp4" > "$RUNNER_TEMP/list.txt"
           ffmpeg -hide_banner -loglevel error -f concat -safe 0 -i "$RUNNER_TEMP/list.txt" \
             -c copy wQBlMkVI8F8-clips2.mp4 -y
