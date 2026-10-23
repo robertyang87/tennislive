@@ -1,0 +1,18 @@
+name: import-ao20-clips-std
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rehost:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 转存集合源为标准 id 存档
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release download source-wQBlMkVI8F8-clips --repo robertyang87/tennislive --pattern "wQBlMkVI8F8-clips.mp4"
+          mv wQBlMkVI8F8-clips.mp4 AO20ThiemNa.mp4
+          ls -la AO20ThiemNa.mp4
+          gh release create source-AO20ThiemNa AO20ThiemNa.mp4 --repo robertyang87/tennislive --title "source AO20ThiemNa" --notes "AO 2020 QF Thiem-Nadal six-window collection (from wQBlMkVI8F8), standard-id rehost for netcord-apology-2026 v2"
