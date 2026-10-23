@@ -6,6 +6,7 @@ permissions:
 jobs:
   rehost:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: 转存集合源为标准 id 存档
         env:
