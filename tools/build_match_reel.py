@@ -3958,6 +3958,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     for i, seg in enumerate(segments):
         ins = seg.inset or {}
         _story_inset_show_after(ins)
+        _story_inset_top_pad(ins)
         if str(ins.get("kind", "")) != "story_text":
             continue
         width = float(ins.get("width", 0) or 0)
@@ -4605,6 +4606,25 @@ def _story_inset_show_after(ins: dict) -> float:
     return float(value)
 
 
+def _story_inset_top_pad(ins: dict) -> float | None:
+    """Explicit story-label top margin, measured in canvas-width units like pad.
+
+    This per-inset placement can use the free space to the right of a brand
+    mark without changing the legacy full-width clearance for other labels.
+    """
+    if "top_pad" not in ins:
+        return None
+    value = ins["top_pad"]
+    if (str(ins.get("kind", "")) != "story_text"
+            or str(ins.get("corner", "tl")) != "tr"
+            or type(value) not in (int, float)
+            or not math.isfinite(value)
+            or not STORY_LABEL_PAD <= value <= .15):
+        raise ReelError(
+            "inset.top_pad 只用于story_text右上角tr，须为有限数值0.043~0.15")
+    return float(value)
+
+
 def _overlay_chain(base: str, ins: dict) -> str:
     """把角标压上去。没有角标时只是把 `[base]` 改名成 `[vout]`。
 
@@ -4617,6 +4637,7 @@ def _overlay_chain(base: str, ins: dict) -> str:
     """
     if not ins:
         return base.replace("[base]", "[vout]")
+    top_pad = _story_inset_top_pad(ins)
     width = int(round(float(ins.get("width", 0.34)) * VIDEO_W)) // 2 * 2
     pad = int(round(float(ins.get("pad", 0.043)) * VIDEO_W))
     corner = str(ins.get("corner", "tl"))
@@ -4626,7 +4647,9 @@ def _overlay_chain(base: str, ins: dict) -> str:
     top_off = BAND_TOP if LAYOUT == "band" else 0
     bot_off = (VIDEO_H - BAND_TOP - BAND_PIC_H) if LAYOUT == "band" else 0
     y_top = top_off + pad
-    if _INSET_TOP_CLEAR_Y and corner in ("tl", "tr"):
+    if top_pad is not None:
+        y_top = top_off + int(round(top_pad * VIDEO_W))
+    elif _INSET_TOP_CLEAR_Y and corner in ("tl", "tr"):
         # 让开常驻角标（见 `_INSET_TOP_CLEAR_Y`）。只往下推，不往上拉：
         # 合同的 pad 本来就比角标低的（没有的事）照旧。
         y_top = max(y_top, _INSET_TOP_CLEAR_Y)

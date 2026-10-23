@@ -1,0 +1,78 @@
+{
+  "spec_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+  "results": [
+    {
+      "name": "strict-restored-bundle",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--check-tts-bundle",
+        "--tts-bundle-in",
+        "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/real-restore-g6q7xyft/tts_bundle.zip"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.43,
+      "log_sha256": "428732912854740c3be5930b073b23436ab5f2a522522cf0da641b55d9b0bcec"
+    },
+    {
+      "name": "dry-run",
+      "command": [
+        "python",
+        "tools/build_match_reel.py",
+        "render",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--outdir",
+        "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/dry-run-current",
+        "--dry-run"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.15,
+      "log_sha256": "e693ff5ad114de82b1c89c08299c9747bcfaef86fbed29ad9e5d1e01f126fe1b"
+    },
+    {
+      "name": "workflow-production-preflight",
+      "command": [
+        "python",
+        "tools/production_preflight.py",
+        "--spec",
+        "specs/reels/andreeva-finals-2026.json",
+        "--column",
+        "\u8d5b\u573a\u4e4b\u4e0a"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.2,
+      "log_sha256": "91134670f5f039c9d78509084b58fdbd85e913ae0c24d45e0111f4141ae63553"
+    },
+    {
+      "name": "taste-preflight",
+      "command": [
+        "python",
+        "tools/taste_preflight.py",
+        "--slug",
+        "andreeva-finals-2026"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.42,
+      "log_sha256": "0195eeda71f6783caf01425328907367ddf567bdd6178225d2d16c9e8e01ddc3"
+    },
+    {
+      "name": "release-collision",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_release_tag_collision.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 27.41,
+      "log_sha256": "a34d39d989eeaa192f9f0c39033d26be9725c1ef8537a61ef904848550d60b69"
+    }
+  ],
+  "actual_real_restore_unchanged_evidence": "/workspace/andreeva-finals-production/info-card-retime-2026-10-23/gates.json",
+  "new_synthesis_count": 0
+}
