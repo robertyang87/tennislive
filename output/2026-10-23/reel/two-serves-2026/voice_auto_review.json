@@ -1,0 +1,3794 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "b471eadedeac100d06f2d671d33838d58e9c48c582c786222ed6ddc8f2b34694",
+    "render_inputs_sha256": "b8192d6338c48ae35ee0ec3f116b543338833c9f9f86d5e5f02e7c10de7e3fb8",
+    "spec_sha256": "a859893a130817136db05c57b466f49b316374fd0ef929b34429d7a0d94a382c",
+    "film_sha256": "393f446bf9b0577a3e9a2966973c39d09c942841d66248ec887bbee35a3183d9",
+    "inventory_sha256": "5bf094b3837e960ee6decdc10faa33d3c061734b123ca1e58c54b48fca178d11"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-23T11:34:30+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d",
+      "audio_sha256": "50e391df238d20a7767e6267f3705ea4d55748c551a54d1ab9b76819e0e47a84",
+      "pass": true,
+      "result_of": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d"
+    },
+    {
+      "id": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c",
+      "audio_sha256": "a09e84826b72a38ed8b1516aff95ec00d2e9065163b72bd258c6d99d1b6085b8",
+      "pass": true,
+      "result_of": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c"
+    },
+    {
+      "id": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd",
+      "audio_sha256": "0791d309e8aac3a046db72d812422d568d8252a7a8c446fbc64636b56ef154b8",
+      "pass": true,
+      "result_of": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd"
+    },
+    {
+      "id": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778",
+      "audio_sha256": "4bdfd3d40fd96680d84713883a6204e574bf2d0589dfc1913dabbaf3aa029384",
+      "pass": true,
+      "result_of": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778"
+    },
+    {
+      "id": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879",
+      "audio_sha256": "1b83ef6c7f485cd830dceb94a61e41ef6ce3634ed1a33034f84143283d711b46",
+      "pass": true,
+      "result_of": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879"
+    },
+    {
+      "id": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1",
+      "audio_sha256": "9777f38ae4dd9f96a5ce2c2c88f3c59d576ff24a38a62b5ff263374759b2dfbe",
+      "pass": true,
+      "result_of": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1"
+    },
+    {
+      "id": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71",
+      "audio_sha256": "cba28e824b1587bdcc9b9b1dece966c1298d4b29b2ef4009090d2de0e7fc8e08",
+      "pass": true,
+      "result_of": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71"
+    },
+    {
+      "id": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683",
+      "audio_sha256": "39708c77514c4fd1cbe53449324e6755d7af12853abb9164980f598a72939ffa",
+      "pass": true,
+      "result_of": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683"
+    },
+    {
+      "id": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954",
+      "audio_sha256": "b26188ab29f1a47eaf015676f462beaf94344ea07c16e5ca34e4b558e8fc2745",
+      "pass": true,
+      "result_of": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954"
+    },
+    {
+      "id": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de",
+      "audio_sha256": "7aad58070245524ba8043f0f61bf6d8a85d74fedb82d61374c189f94acda1c34",
+      "pass": true,
+      "result_of": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de"
+    },
+    {
+      "id": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075",
+      "audio_sha256": "c2312e2a69932fef96e4c117abdaeb65f58a54cb6bb010bad1b08cb5632a6f02",
+      "pass": true,
+      "result_of": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075"
+    },
+    {
+      "id": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab",
+      "audio_sha256": "340405078fea923067684fb45cc09aa6844aecde3ff149a93db153ff3f0e2c37",
+      "pass": true,
+      "result_of": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab"
+    },
+    {
+      "id": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda",
+      "audio_sha256": "4ce3c66ead7a8352de8b5d2273c4916435266a0d0c18f266a821a024645157b7",
+      "pass": true,
+      "result_of": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda"
+    },
+    {
+      "id": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79",
+      "audio_sha256": "b06ffe3dded2f741e5bd0e3d7b6eae70ed5df8e31e713bb7f82c652532a429ed",
+      "pass": true,
+      "result_of": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79"
+    },
+    {
+      "id": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1",
+      "audio_sha256": "c5147025f21730837af22f972b6979e96ed937146c977ae5d0047cc3d83513ed",
+      "pass": true,
+      "result_of": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1"
+    },
+    {
+      "id": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d",
+      "audio_sha256": "c60c8a06e199679a5989e995383138a56ed4ce7a720e83660dc42ae548946bbf",
+      "pass": true,
+      "result_of": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d"
+    },
+    {
+      "id": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb",
+      "audio_sha256": "ba1ced4298fffebb25bd3a0db440c44042b6e7f845910cb5f7f536340a6dcd71",
+      "pass": true,
+      "result_of": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb"
+    },
+    {
+      "id": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7",
+      "audio_sha256": "10c412b2cbb3803efeb700a62866b41bd089437c860c4255e5f185fe0382c9c2",
+      "pass": true,
+      "result_of": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7"
+    },
+    {
+      "id": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be",
+      "audio_sha256": "7be05ee9c02073dd54d60c84a01bdfa3bbd8a8b1886333322bbc51b86fc20492",
+      "pass": true,
+      "result_of": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be"
+    },
+    {
+      "id": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d",
+      "audio_sha256": "b08e425e633e38e1ffbc21b9236bf10abcaf6cd4a47cee5169b697849426481c",
+      "pass": true,
+      "result_of": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d"
+    },
+    {
+      "id": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9",
+      "audio_sha256": "a6159e4053043d637988b7d47a1ef1df51958c6b253194c33317408a84fd652e",
+      "pass": true,
+      "result_of": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9"
+    },
+    {
+      "id": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c",
+      "audio_sha256": "0e120145fc965f8ca5297aa51eab47247bc90dfb34ab08ebace21e161fc43059",
+      "pass": true,
+      "result_of": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c"
+    },
+    {
+      "id": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8",
+      "audio_sha256": "f339c547d7f135c9e390c962d13a56a79b7e661aafdc609296f80b4004e4c8ce",
+      "pass": true,
+      "result_of": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8"
+    },
+    {
+      "id": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886",
+      "audio_sha256": "96579cefedcb1f4ce09093e020e2229242fe73e0bf6e01aaf85cc96b66e188aa",
+      "pass": true,
+      "result_of": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886"
+    },
+    {
+      "id": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834",
+      "audio_sha256": "28cba65adcda33a3513cdec68035cbad661c1dabbf230c5771f561224b26cd93",
+      "pass": true,
+      "result_of": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834"
+    },
+    {
+      "id": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8",
+      "audio_sha256": "3ab49bf084dc3c965fa21bc5f84fb95be2fa56c82f78cdebc823784c49b4e4e8",
+      "pass": true,
+      "result_of": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8"
+    },
+    {
+      "id": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d",
+      "audio_sha256": "cd23614c5ddca6712a335551ce4e169ea5e2052ce46a4b195df2f387a2dc4bea",
+      "pass": true,
+      "result_of": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d"
+    },
+    {
+      "id": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f",
+      "audio_sha256": "f547f731974aacf7f5e22fe44d372dab44e581f9b69603b21265f99a3c7d3d6a",
+      "pass": true,
+      "result_of": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f"
+    },
+    {
+      "id": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8",
+      "audio_sha256": "16892344747994382bca4ac4b4a3d7c6658477e9aec44963f6f3bb652297b0c8",
+      "pass": true,
+      "result_of": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8"
+    },
+    {
+      "id": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca",
+      "audio_sha256": "43707854177f3e1ec90510e947c92e539c66a5a0302c3f289733a59969e3e1d6",
+      "pass": true,
+      "result_of": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca"
+    },
+    {
+      "id": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b",
+      "audio_sha256": "a38af3e441b4462d4c6a64179fd4c371ef080cd091eb3f14e593f9d9fda905e5",
+      "pass": true,
+      "result_of": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b"
+    },
+    {
+      "id": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19",
+      "audio_sha256": "8e849e0b09aee52d8ebc2e88f66e1f8fdb82159f936e6fcd8e5705f33ab0c56a",
+      "pass": true,
+      "result_of": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19"
+    },
+    {
+      "id": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb",
+      "audio_sha256": "f351d21daf13cc6b4248f3ff912268e6ea99830589eda0fe016de350988c170e",
+      "pass": true,
+      "result_of": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb"
+    },
+    {
+      "id": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b",
+      "audio_sha256": "1966d117fdbfc8555c79daf3e12ec4d9d72bf0967275942da2ff28765d812c0f",
+      "pass": true,
+      "result_of": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b"
+    },
+    {
+      "id": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a",
+      "audio_sha256": "ae142726f5a2f64d6ad76f9d2ccff2988dfcb389ce14510f21b2ed1a3171ffff",
+      "pass": true,
+      "result_of": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a"
+    },
+    {
+      "id": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578",
+      "audio_sha256": "896858ce68128c061eabc2e68ee3e70c226abe8223dfc3670667ec5c6b4c13e2",
+      "pass": true,
+      "result_of": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578"
+    },
+    {
+      "id": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf",
+      "audio_sha256": "a2621058f8aaa3439868ebe9bd86b8304e5bd7128c2e37d0acf018b7e098a5ac",
+      "pass": true,
+      "result_of": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf"
+    },
+    {
+      "id": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd",
+      "audio_sha256": "692690885540cf02cb0fc4be92fea9806f3e13001aa581eb7c85793b96f4974a",
+      "pass": true,
+      "result_of": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd"
+    },
+    {
+      "id": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441",
+      "audio_sha256": "379aa41136789d60af3beb210112977ef0e5e8e7b2219c4dba22c62f9377a1ab",
+      "pass": true,
+      "result_of": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441"
+    },
+    {
+      "id": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17",
+      "audio_sha256": "bbd04d6dd6e537fe404a5a910be2e388e52faf6c98223a72e88eff680d002eaf",
+      "pass": true,
+      "result_of": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17"
+    },
+    {
+      "id": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621",
+      "audio_sha256": "a85f1b546647dacc5cba0e55d325184fbcb39b52a89914f0d7421d218c2471fa",
+      "pass": true,
+      "result_of": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621"
+    },
+    {
+      "id": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b",
+      "audio_sha256": "d242e8cee9aa74cd3a826f2822e47abaea7785f32705c2126c1986a3fad885c9",
+      "pass": true,
+      "result_of": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b"
+    },
+    {
+      "id": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc",
+      "audio_sha256": "b912318c49b1b9dd51dea6af2637c7e94c7f91a9b5e9aa5de81407e51c45e54e",
+      "pass": true,
+      "result_of": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc"
+    },
+    {
+      "id": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5",
+      "audio_sha256": "5e4e00f95a2806283489e70e3958eefae0897fbd6224c25e6832eac051a92b54",
+      "pass": true,
+      "result_of": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5"
+    },
+    {
+      "id": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215",
+      "audio_sha256": "c06b8c9a332a541d8a3ef15308fad215681a10b2a58841806a546a2b48fb2ade",
+      "pass": true,
+      "result_of": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215"
+    },
+    {
+      "id": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a",
+      "audio_sha256": "f39f5bf71a63c3d7c08b0e58492f96e7490a9bc110f5e61d204d56a1193fc2c3",
+      "pass": true,
+      "result_of": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a"
+    },
+    {
+      "id": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750",
+      "audio_sha256": "931a5e5aa764ec8e65f5cb82ca2179166b6227ed44b77d92115b3b29dad45e1e",
+      "pass": true,
+      "result_of": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750"
+    },
+    {
+      "id": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832",
+      "audio_sha256": "d6013ed1499da2bf0789580d052c49e8c171b806ff8321d0393021bb1a072831",
+      "pass": true,
+      "result_of": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832"
+    },
+    {
+      "id": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967",
+      "audio_sha256": "9abea6ec769ec8ff7a80b63b724d3e88827bc934c232663a105596fd1ccddc89",
+      "pass": true,
+      "result_of": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967"
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "audio_sha256": "2c42a120cd3c3d8206326cfcc11bcdd39af2021472bb4c88c46fbaafcdae309c",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    },
+    {
+      "id": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328",
+      "audio_sha256": "5645acae953511557a388c86e7066631c7fd2a7e348193ef826969cb3af1b455",
+      "pass": true,
+      "result_of": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328"
+    },
+    {
+      "id": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e",
+      "audio_sha256": "1c8c205d5dd1c2bdf784895ec3e0dd1b0f90c48c96337f491eb368e2b22a13cd",
+      "pass": true,
+      "result_of": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e"
+    },
+    {
+      "id": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a",
+      "audio_sha256": "4f1168ed3a98426ba68b5fa23b537f0fea3a46e0d20acb62bce5bc41c2654ba3",
+      "pass": true,
+      "result_of": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a"
+    },
+    {
+      "id": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e",
+      "audio_sha256": "31e524cab3c63aa18741655337e00116be0bff5d254d8568ee05872c035b6116",
+      "pass": true,
+      "result_of": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e"
+    },
+    {
+      "id": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f",
+      "audio_sha256": "86b2313d6657f71dcd4124a6d93c918a9eca54b01114be120caffd470b5e0bd2",
+      "pass": true,
+      "result_of": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f"
+    },
+    {
+      "id": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf",
+      "audio_sha256": "e072d9f52f5fe332a056efa9773d70af1d68b8750514e01dc84950a070f72c42",
+      "pass": true,
+      "result_of": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf"
+    },
+    {
+      "id": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa",
+      "audio_sha256": "c435141dff5048bb72203a50cc7cee542ede195a5abd127cb114dc293b3fbada",
+      "pass": true,
+      "result_of": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa"
+    },
+    {
+      "id": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b",
+      "audio_sha256": "def2133dfa5dd7a2189d5082b36004fce0265ed27adba79bd3aa5e17a8930404",
+      "pass": true,
+      "result_of": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b"
+    },
+    {
+      "id": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6",
+      "audio_sha256": "bccf1109eaf634c23c0b77e7d9efd9e8640ad67daf2a3ef897bc3460e929496f",
+      "pass": true,
+      "result_of": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6"
+    },
+    {
+      "id": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea",
+      "audio_sha256": "dca064822992ae9f3b5610beb8b053c8e436685e6fbed9ee49b499e32d4d621d",
+      "pass": true,
+      "result_of": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea"
+    },
+    {
+      "id": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e",
+      "audio_sha256": "040df4d3c73e42ab84577bc422defec0589d26f87e7314f9dad132c8cf11271e",
+      "pass": true,
+      "result_of": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e"
+    },
+    {
+      "id": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319",
+      "audio_sha256": "dfefa501384af11e4afc398fa5c2149f67a6c5c014db5b4112d9905ffa1d8194",
+      "pass": true,
+      "result_of": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "4ce3c66ead7a8352de8b5d2273c4916435266a0d0c18f266a821a024645157b7",
+      "pass": true,
+      "result_of": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "31e524cab3c63aa18741655337e00116be0bff5d254d8568ee05872c035b6116",
+      "pass": true,
+      "result_of": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "931a5e5aa764ec8e65f5cb82ca2179166b6227ed44b77d92115b3b29dad45e1e",
+      "pass": true,
+      "result_of": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "4bdfd3d40fd96680d84713883a6204e574bf2d0589dfc1913dabbaf3aa029384",
+      "pass": true,
+      "result_of": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "9abea6ec769ec8ff7a80b63b724d3e88827bc934c232663a105596fd1ccddc89",
+      "pass": true,
+      "result_of": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "5e4e00f95a2806283489e70e3958eefae0897fbd6224c25e6832eac051a92b54",
+      "pass": true,
+      "result_of": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "86b2313d6657f71dcd4124a6d93c918a9eca54b01114be120caffd470b5e0bd2",
+      "pass": true,
+      "result_of": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "ba1ced4298fffebb25bd3a0db440c44042b6e7f845910cb5f7f536340a6dcd71",
+      "pass": true,
+      "result_of": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "379aa41136789d60af3beb210112977ef0e5e8e7b2219c4dba22c62f9377a1ab",
+      "pass": true,
+      "result_of": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "f547f731974aacf7f5e22fe44d372dab44e581f9b69603b21265f99a3c7d3d6a",
+      "pass": true,
+      "result_of": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "5645acae953511557a388c86e7066631c7fd2a7e348193ef826969cb3af1b455",
+      "pass": true,
+      "result_of": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "c60c8a06e199679a5989e995383138a56ed4ce7a720e83660dc42ae548946bbf",
+      "pass": true,
+      "result_of": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "cd23614c5ddca6712a335551ce4e169ea5e2052ce46a4b195df2f387a2dc4bea",
+      "pass": true,
+      "result_of": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "a09e84826b72a38ed8b1516aff95ec00d2e9065163b72bd258c6d99d1b6085b8",
+      "pass": true,
+      "result_of": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "c2312e2a69932fef96e4c117abdaeb65f58a54cb6bb010bad1b08cb5632a6f02",
+      "pass": true,
+      "result_of": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "a85f1b546647dacc5cba0e55d325184fbcb39b52a89914f0d7421d218c2471fa",
+      "pass": true,
+      "result_of": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "d6013ed1499da2bf0789580d052c49e8c171b806ff8321d0393021bb1a072831",
+      "pass": true,
+      "result_of": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "bbd04d6dd6e537fe404a5a910be2e388e52faf6c98223a72e88eff680d002eaf",
+      "pass": true,
+      "result_of": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "b26188ab29f1a47eaf015676f462beaf94344ea07c16e5ca34e4b558e8fc2745",
+      "pass": true,
+      "result_of": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "4f1168ed3a98426ba68b5fa23b537f0fea3a46e0d20acb62bce5bc41c2654ba3",
+      "pass": true,
+      "result_of": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "96579cefedcb1f4ce09093e020e2229242fe73e0bf6e01aaf85cc96b66e188aa",
+      "pass": true,
+      "result_of": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "1966d117fdbfc8555c79daf3e12ec4d9d72bf0967275942da2ff28765d812c0f",
+      "pass": true,
+      "result_of": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "8e849e0b09aee52d8ebc2e88f66e1f8fdb82159f936e6fcd8e5705f33ab0c56a",
+      "pass": true,
+      "result_of": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "f339c547d7f135c9e390c962d13a56a79b7e661aafdc609296f80b4004e4c8ce",
+      "pass": true,
+      "result_of": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "340405078fea923067684fb45cc09aa6844aecde3ff149a93db153ff3f0e2c37",
+      "pass": true,
+      "result_of": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "692690885540cf02cb0fc4be92fea9806f3e13001aa581eb7c85793b96f4974a",
+      "pass": true,
+      "result_of": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd"
+    },
+    {
+      "id": "voice_28.mp3",
+      "audio_sha256": "39708c77514c4fd1cbe53449324e6755d7af12853abb9164980f598a72939ffa",
+      "pass": true,
+      "result_of": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "16892344747994382bca4ac4b4a3d7c6658477e9aec44963f6f3bb652297b0c8",
+      "pass": true,
+      "result_of": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8"
+    },
+    {
+      "id": "voice_30.mp3",
+      "audio_sha256": "0e120145fc965f8ca5297aa51eab47247bc90dfb34ab08ebace21e161fc43059",
+      "pass": true,
+      "result_of": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c"
+    },
+    {
+      "id": "voice_31.mp3",
+      "audio_sha256": "b912318c49b1b9dd51dea6af2637c7e94c7f91a9b5e9aa5de81407e51c45e54e",
+      "pass": true,
+      "result_of": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc"
+    },
+    {
+      "id": "voice_32.mp3",
+      "audio_sha256": "f39f5bf71a63c3d7c08b0e58492f96e7490a9bc110f5e61d204d56a1193fc2c3",
+      "pass": true,
+      "result_of": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a"
+    },
+    {
+      "id": "voice_33.mp3",
+      "audio_sha256": "1c8c205d5dd1c2bdf784895ec3e0dd1b0f90c48c96337f491eb368e2b22a13cd",
+      "pass": true,
+      "result_of": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e"
+    },
+    {
+      "id": "voice_34.mp3",
+      "audio_sha256": "bccf1109eaf634c23c0b77e7d9efd9e8640ad67daf2a3ef897bc3460e929496f",
+      "pass": true,
+      "result_of": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6"
+    },
+    {
+      "id": "voice_35.mp3",
+      "audio_sha256": "dfefa501384af11e4afc398fa5c2149f67a6c5c014db5b4112d9905ffa1d8194",
+      "pass": true,
+      "result_of": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319"
+    },
+    {
+      "id": "voice_36.mp3",
+      "audio_sha256": "c06b8c9a332a541d8a3ef15308fad215681a10b2a58841806a546a2b48fb2ade",
+      "pass": true,
+      "result_of": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215"
+    },
+    {
+      "id": "voice_37.mp3",
+      "audio_sha256": "0791d309e8aac3a046db72d812422d568d8252a7a8c446fbc64636b56ef154b8",
+      "pass": true,
+      "result_of": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd"
+    },
+    {
+      "id": "voice_38.mp3",
+      "audio_sha256": "e072d9f52f5fe332a056efa9773d70af1d68b8750514e01dc84950a070f72c42",
+      "pass": true,
+      "result_of": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf"
+    },
+    {
+      "id": "voice_39.mp3",
+      "audio_sha256": "def2133dfa5dd7a2189d5082b36004fce0265ed27adba79bd3aa5e17a8930404",
+      "pass": true,
+      "result_of": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b"
+    },
+    {
+      "id": "voice_40.mp3",
+      "audio_sha256": "040df4d3c73e42ab84577bc422defec0589d26f87e7314f9dad132c8cf11271e",
+      "pass": true,
+      "result_of": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e"
+    },
+    {
+      "id": "voice_41.mp3",
+      "audio_sha256": "ae142726f5a2f64d6ad76f9d2ccff2988dfcb389ce14510f21b2ed1a3171ffff",
+      "pass": true,
+      "result_of": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a"
+    },
+    {
+      "id": "voice_42.mp3",
+      "audio_sha256": "f351d21daf13cc6b4248f3ff912268e6ea99830589eda0fe016de350988c170e",
+      "pass": true,
+      "result_of": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb"
+    },
+    {
+      "id": "voice_43.mp3",
+      "audio_sha256": "1b83ef6c7f485cd830dceb94a61e41ef6ce3634ed1a33034f84143283d711b46",
+      "pass": true,
+      "result_of": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879"
+    },
+    {
+      "id": "voice_44.mp3",
+      "audio_sha256": "9777f38ae4dd9f96a5ce2c2c88f3c59d576ff24a38a62b5ff263374759b2dfbe",
+      "pass": true,
+      "result_of": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1"
+    },
+    {
+      "id": "voice_45.mp3",
+      "audio_sha256": "cba28e824b1587bdcc9b9b1dece966c1298d4b29b2ef4009090d2de0e7fc8e08",
+      "pass": true,
+      "result_of": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71"
+    },
+    {
+      "id": "voice_46.mp3",
+      "audio_sha256": "a6159e4053043d637988b7d47a1ef1df51958c6b253194c33317408a84fd652e",
+      "pass": true,
+      "result_of": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9"
+    },
+    {
+      "id": "voice_47.mp3",
+      "audio_sha256": "7aad58070245524ba8043f0f61bf6d8a85d74fedb82d61374c189f94acda1c34",
+      "pass": true,
+      "result_of": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de"
+    },
+    {
+      "id": "voice_48.mp3",
+      "audio_sha256": "a2621058f8aaa3439868ebe9bd86b8304e5bd7128c2e37d0acf018b7e098a5ac",
+      "pass": true,
+      "result_of": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf"
+    },
+    {
+      "id": "voice_50.mp3",
+      "audio_sha256": "a38af3e441b4462d4c6a64179fd4c371ef080cd091eb3f14e593f9d9fda905e5",
+      "pass": true,
+      "result_of": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b"
+    },
+    {
+      "id": "voice_51.mp3",
+      "audio_sha256": "10c412b2cbb3803efeb700a62866b41bd089437c860c4255e5f185fe0382c9c2",
+      "pass": true,
+      "result_of": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7"
+    },
+    {
+      "id": "voice_52.mp3",
+      "audio_sha256": "43707854177f3e1ec90510e947c92e539c66a5a0302c3f289733a59969e3e1d6",
+      "pass": true,
+      "result_of": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca"
+    },
+    {
+      "id": "voice_53.mp3",
+      "audio_sha256": "c5147025f21730837af22f972b6979e96ed937146c977ae5d0047cc3d83513ed",
+      "pass": true,
+      "result_of": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1"
+    },
+    {
+      "id": "voice_54.mp3",
+      "audio_sha256": "28cba65adcda33a3513cdec68035cbad661c1dabbf230c5771f561224b26cd93",
+      "pass": true,
+      "result_of": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834"
+    },
+    {
+      "id": "voice_55.mp3",
+      "audio_sha256": "c435141dff5048bb72203a50cc7cee542ede195a5abd127cb114dc293b3fbada",
+      "pass": true,
+      "result_of": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa"
+    },
+    {
+      "id": "voice_56.mp3",
+      "audio_sha256": "896858ce68128c061eabc2e68ee3e70c226abe8223dfc3670667ec5c6b4c13e2",
+      "pass": true,
+      "result_of": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578"
+    },
+    {
+      "id": "voice_57.mp3",
+      "audio_sha256": "7be05ee9c02073dd54d60c84a01bdfa3bbd8a8b1886333322bbc51b86fc20492",
+      "pass": true,
+      "result_of": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be"
+    },
+    {
+      "id": "voice_58.mp3",
+      "audio_sha256": "d242e8cee9aa74cd3a826f2822e47abaea7785f32705c2126c1986a3fad885c9",
+      "pass": true,
+      "result_of": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b"
+    },
+    {
+      "id": "voice_59.mp3",
+      "audio_sha256": "dca064822992ae9f3b5610beb8b053c8e436685e6fbed9ee49b499e32d4d621d",
+      "pass": true,
+      "result_of": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea"
+    },
+    {
+      "id": "voice_60.mp3",
+      "audio_sha256": "3ab49bf084dc3c965fa21bc5f84fb95be2fa56c82f78cdebc823784c49b4e4e8",
+      "pass": true,
+      "result_of": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8"
+    },
+    {
+      "id": "voice_61.mp3",
+      "audio_sha256": "b06ffe3dded2f741e5bd0e3d7b6eae70ed5df8e31e713bb7f82c652532a429ed",
+      "pass": true,
+      "result_of": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79"
+    },
+    {
+      "id": "voice_62.mp3",
+      "audio_sha256": "b08e425e633e38e1ffbc21b9236bf10abcaf6cd4a47cee5169b697849426481c",
+      "pass": true,
+      "result_of": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "50e391df238d20a7767e6267f3705ea4d55748c551a54d1ab9b76819e0e47a84",
+      "pass": true,
+      "result_of": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "2c42a120cd3c3d8206326cfcc11bcdd39af2021472bb4c88c46fbaafcdae309c",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d",
+      "text": "网球为啥给两次发球？其实是抄来的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "网球为啥给两次发球?其实是超来的。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.987,
+        "cps": 5.02,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "网球 ｜ 为啥 ｜ 给 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 抄 ｜ 来 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c",
+      "text": "第二次机会，只是一份宽容。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.091,
+        "longest_deletion": 0,
+        "transcript": "第二次机会,直去一份宽容。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.023,
+        "cps": 5.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二次机会 ｜ 只是 ｜ 一 ｜ 份 ｜ 宽容"
+      }
+    },
+    {
+      "id": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd",
+      "text": "但也有例外：二发全力轰，也可能彻底崩掉。萨巴伦卡就是例子，后面会讲到。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但也有例外,二发全力轰也可能彻底崩掉。萨巴伦卡就是例子,后面会讲道。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.229,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 也有 ｜ 例外 ｜ 二发 ｜ 全力 ｜ 轰 ｜ 也 ｜ 可能 ｜ 彻底 ｜ 崩 ｜ 掉 ｜ 萨巴伦卡 ｜ 就 ｜ 是 ｜ 例子 ｜ 后面 ｜ 会 ｜ 讲 ｜ 到"
+      }
+    },
+    {
+      "id": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778",
+      "text": "二发，ACE。每小时只有一百四十多公里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "二发,每小时只有一百四十多公里。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.199,
+        "cps": 4.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二 ｜ 发 ｜ ACE ｜ 每 ｜ 小时 ｜ 只有 ｜ 一百四十 ｜ 多 ｜ 公里"
+      }
+    },
+    {
+      "id": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879",
+      "text": "德约科维奇两次，在法网决赛的冠军点上双误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.053,
+        "longest_deletion": 0,
+        "transcript": "德约科维奇两次在罚网军赛的冠军点上双误。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.051,
+        "cps": 6.23,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德约科维奇 ｜ 两次 ｜ 在 ｜ 法网 ｜ 决赛 ｜ 的 ｜ 冠军 ｜ 点 ｜ 上 ｜ 双 ｜ 误"
+      }
+    },
+    {
+      "id": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1",
+      "text": "两次，都把冠军送给了纳达尔。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两次都把冠军送给了纳达尔。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.172,
+        "cps": 5.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两次 ｜ 都 ｜ 把 ｜ 冠军 ｜ 送给 ｜ 了 ｜ 纳达尔"
+      }
+    },
+    {
+      "id": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71",
+      "text": "二零二二年初，世界第二萨巴伦卡，一场比赛双误二十一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2022年初,世界第二萨巴伦卡,一场比赛,双521次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.004,
+        "cps": 5.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二二年初 ｜ 世界 ｜ 第二 ｜ 萨巴伦卡 ｜ 一 ｜ 场 ｜ 比赛 ｜ 双 ｜ 误 ｜ 二十一次"
+      }
+    },
+    {
+      "id": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683",
+      "text": "二零二五年美网对辛纳，一场双误十三次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2025年,梅网对新纳,一场双五十三次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.019,
+        "cps": 5.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二五年 ｜ 美 ｜ 网 ｜ 对 ｜ 辛纳 ｜ 一 ｜ 场 ｜ 双 ｜ 误 ｜ 十三次"
+      }
+    },
+    {
+      "id": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954",
+      "text": "ATP 统计了二十六年：一发进了，平均赢百分之七十五的分；二发，只有百分之五十二。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
+        "longest_deletion": 0,
+        "transcript": "ATP统计了26年,一发现了平均营75%的分,二发只有52%。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 30,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.451,
+        "cps": 4.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "ATP ｜ 统计 ｜ 了 ｜ 二十六年 ｜ 一发 ｜ 进 ｜ 了 ｜ 平均 ｜ 赢 ｜ 百分之 ｜ 七十五 ｜ 的 ｜ 分 ｜ 二 ｜ 发 ｜ 只有 ｜ 百分之 ｜ 五十二"
+      }
+    },
+    {
+      "id": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de",
+      "text": "一年后，她拿下澳网冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一年后,他拿下傲网冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.875,
+        "cps": 5.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一年 ｜ 后 ｜ 她 ｜ 拿下 ｜ 澳 ｜ 网 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075",
+      "text": "很快就有人站起来上手发，发球方开始占上风。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "很快就有人站起来上手发,发球方开始站上风。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.104,
+        "cps": 6.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "很快 ｜ 就 ｜ 有人 ｜ 站 ｜ 起来 ｜ 上手 ｜ 发 ｜ 发球 ｜ 方 ｜ 开始 ｜ 占上风"
+      }
+    },
+    {
+      "id": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab",
+      "text": "穆雷说过，他的二发能到每小时两百多公里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "穆雷说过,他的二发能到每小时两百多公里。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.273,
+        "cps": 5.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "穆雷 ｜ 说 ｜ 过 ｜ 他 ｜ 的 ｜ 二发 ｜ 能 ｜ 到 ｜ 每 ｜ 小时 ｜ 两百多公里"
+      }
+    },
+    {
+      "id": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda",
+      "text": "一九九六年美网，决胜盘抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1996年梅网 决胜盘抢七"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.362,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一九九六年 ｜ 美 ｜ 网 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 七"
+      }
+    },
+    {
+      "id": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79",
+      "text": "规则还是两次。二发是在保护弱者，还是给强者开挂？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "规则还是两次。二发誓在保护弱者,还是给强者开挂。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.383,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": -0.177,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.301,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "规则 ｜ 还是 ｜ 两次 ｜ 二发 ｜ 是 ｜ 在 ｜ 保护 ｜ 弱者 ｜ 还是 ｜ 给 ｜ 强者 ｜ 开挂"
+      }
+    },
+    {
+      "id": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1",
+      "text": "有的表演赛，已经只给一次发球：发球得分率降到百分之五十左右，跟巡回赛的二发差不多，ACE 基本消失。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "游的表演赛已经只给一次发球,发球得分率降到50%左右,跟循回赛的二发差不多as基本消失。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 17,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 36,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 6.896,
+        "cps": 5.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "有的 ｜ 表演赛 ｜ 已经 ｜ 只 ｜ 给 ｜ 一次 ｜ 发球 ｜ 发球 ｜ 得分率 ｜ 降到 ｜ 百分之 ｜ 五十 ｜ 左右 ｜ 跟 ｜ 巡回 ｜ 赛 ｜ 的 ｜ 二发 ｜ 差不多 ｜ ACE ｜ 基本 ｜ 消失"
+      }
+    },
+    {
+      "id": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d",
+      "text": "那里早就是这样：第二次失误，才丢分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那里早就是这样,第二次失误才丢分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.722,
+        "cps": 5.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那里 ｜ 早就 ｜ 是 ｜ 这样 ｜ 第二次 ｜ 失误 ｜ 才 ｜ 丢分"
+      }
+    },
+    {
+      "id": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb",
+      "text": "一八七七年，第一届温网开打前，全英俱乐部三个会员定了规则。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1877年,第一届温网开打前,全英俱乐部三个会员定了规则。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 4.28,
+        "cps": 6.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一八七七年 ｜ 第一届 ｜ 温网 ｜ 开打 ｜ 前 ｜ 全英俱乐部 ｜ 三个 ｜ 会员 ｜ 定 ｜ 了 ｜ 规则"
+      }
+    },
+    {
+      "id": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7",
+      "text": "支持的人不只是网友：纳达尔说过，取消二发不是蠢主意。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "支持的人不只是网友,纳达尔说过,取消二发不是蠢主意。"
+      },
+      "polyphones": [
+        {
+          "index": 19,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.237,
+        "cps": 5.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "支持 ｜ 的 ｜ 人 ｜ 不只 ｜ 是 ｜ 网友 ｜ 纳达尔 ｜ 说 ｜ 过 ｜ 取消 ｜ 二发 ｜ 不是 ｜ 蠢 ｜ 主意"
+      }
+    },
+    {
+      "id": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be",
+      "text": "二发兜底，他们的一发才敢全力抡。两次发球，其实是在给一发强的人加成。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "二发都底,他们的一发才敢全理论。两次发球,其实是在给一发强的人加成。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 9,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 18,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 27,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.657,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二发兜底 ｜ 他们 ｜ 的 ｜ 一发 ｜ 才 ｜ 敢 ｜ 全力 ｜ 抡 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 在 ｜ 给 ｜ 一发 ｜ 强 ｜ 的 ｜ 人 ｜ 加成"
+      }
+    },
+    {
+      "id": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d",
+      "text": "只剩一发，谁最吃亏？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "只剩一发,谁最吃亏? 评论区说说。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 3.03,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "只 ｜ 剩 ｜ 一发 ｜ 谁 ｜ 最 ｜ 吃亏 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9",
+      "text": "最后只能下手发球，在场上哭了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后只能下手发球,在场上哭了。"
+      },
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.511,
+        "cps": 5.18,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 只能 ｜ 下手 ｜ 发球 ｜ 在 ｜ 场 ｜ 上 ｜ 哭 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c",
+      "text": "这场赌局值不值？只看二发，他输了：二发得分率，比巡回赛平均低三个百分点左右。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这场赌局值不值,只看二发,他输了。二发得分率比循回赛平均低三个百分点左右。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 18,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 19,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.451,
+        "cps": 5.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 场 ｜ 赌局 ｜ 值 ｜ 不值 ｜ 只 ｜ 看 ｜ 二发 ｜ 他 ｜ 输 ｜ 了 ｜ 二发 ｜ 得分 ｜ 率 ｜ 比 ｜ 巡回 ｜ 赛 ｜ 平均 ｜ 低 ｜ 三个百分点 ｜ 左右"
+      }
+    },
+    {
+      "id": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8",
+      "text": "布勃利克说：“我是个赌徒。平分时二发全力发，我会害怕，可我喜欢这种感觉。”",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "布勃利克说,我是个赌徒,凭分十二发全力发,我会害怕,可我喜欢这种感觉。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 20,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 32,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": -0.063,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.625,
+        "cps": 5.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "布勃利克 ｜ 说 ｜ 我 ｜ 是个 ｜ 赌徒 ｜ 平分 ｜ 时 ｜ 二发 ｜ 全力 ｜ 发 ｜ 我 ｜ 会 ｜ 害怕 ｜ 可 ｜ 我 ｜ 喜欢 ｜ 这种 ｜ 感觉"
+      }
+    },
+    {
+      "id": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886",
+      "text": "去年温网，姆佩奇·佩里卡尔，打出了温网史上最快的发球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "去年温王,姆佩奇、佩里卡尔,打出了温王史上最快的发球。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.311,
+        "cps": 5.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 温网 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 打 ｜ 出 ｜ 了 ｜ 温网 ｜ 史 ｜ 上 ｜ 最 ｜ 快 ｜ 的 ｜ 发球"
+      }
+    },
+    {
+      "id": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834",
+      "text": "布勃利克说：“这拿走了我最好的武器。”",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "布勃利克说,这拿走了我最好的武器。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.669,
+        "cps": 5.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "布勃利克 ｜ 说 ｜ 这 ｜ 拿 ｜ 走 ｜ 了 ｜ 我 ｜ 最好 ｜ 的 ｜ 武器"
+      }
+    },
+    {
+      "id": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8",
+      "text": "两次发球，本来是一份宽容，后来成了强者的武器，也成了最考验心脏的一拍。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两次发球,本来是一份宽容,后来成了强者的武器,也成了最考验心脏的一派。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 5.455,
+        "cps": 5.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两次 ｜ 发球 ｜ 本来 ｜ 是 ｜ 一 ｜ 份 ｜ 宽容 ｜ 后来 ｜ 成 ｜ 了 ｜ 强者 ｜ 的 ｜ 武器 ｜ 也 ｜ 成 ｜ 了 ｜ 最 ｜ 考验 ｜ 心脏 ｜ 的 ｜ 一 ｜ 拍"
+      }
+    },
+    {
+      "id": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d",
+      "text": "那时候大多数人下手发球，发球根本不吓人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那时候大多数人下手发球,发球根本不吓人。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.189,
+        "cps": 5.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那时候 ｜ 大多数人 ｜ 下手 ｜ 发球 ｜ 发球 ｜ 根本 ｜ 不 ｜ 吓人"
+      }
+    },
+    {
+      "id": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f",
+      "text": "还有一条，每一分，发球员有两次机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "还有一条,每一分,发球员有两次机会。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.002,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.68,
+        "cps": 5.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "还有 ｜ 一条 ｜ 每 ｜ 一 ｜ 分 ｜ 发球 ｜ 员 ｜ 有 ｜ 两次 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8",
+      "text": "实在不行，他还有下手发球：二零二二年温网，他一局里连发六个下手发球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "实在不行,他还有下手发球。2022年温网,他一举李联发六个下手发球。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "行",
+          "word": "不行",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.475,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        },
+        {
+          "index": 6,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.149,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 26,
+          "char": "发",
+          "word": "连发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 31,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 4.958,
+        "cps": 6.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "实在 ｜ 不行 ｜ 他 ｜ 还有 ｜ 下手 ｜ 发球 ｜ 二零二二年 ｜ 温网 ｜ 他 ｜ 一 ｜ 局 ｜ 里 ｜ 连发 ｜ 六个 ｜ 下手 ｜ 发球"
+      }
+    },
+    {
+      "id": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca",
+      "text": "鲁德宁愿看十拍的回合。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "鲁德宁愿看失派的回合。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "宁",
+          "word": "宁愿",
+          "intended": "ning4",
+          "wrong": [
+            "ning2"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ning2",
+              "verdict": "correct",
+              "score": 0.3,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "佞泞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.811,
+        "cps": 5.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "鲁德 ｜ 宁愿 ｜ 看 ｜ 十 ｜ 拍 ｜ 的 ｜ 回合"
+      }
+    },
+    {
+      "id": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b",
+      "text": "那二发，该不该取消？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 8,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "纳尔发,该不该取消?"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 8,
+        "speech_s": 1.547,
+        "cps": 5.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 二发 ｜ 该 ｜ 不该 ｜ 取消"
+      }
+    },
+    {
+      "id": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19",
+      "text": "也有人，把二发当一发打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "也有人把二发当一发打。"
+      },
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 9,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.822,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "也 ｜ 有人 ｜ 把 ｜ 二发 ｜ 当 ｜ 一发 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb",
+      "text": "直到第四个，他才拿下冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "直到第四个,他才拿下冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.161,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "直到 ｜ 第四个 ｜ 他 ｜ 才 ｜ 拿下 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b",
+      "text": "那场他的二发平均每小时一百九十七公里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.056,
+        "longest_deletion": 0,
+        "transcript": "赖场他的二发平均每小时197公里。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 2.924,
+        "cps": 6.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 场 ｜ 他 ｜ 的 ｜ 二发 ｜ 平均 ｜ 每 ｜ 小时 ｜ 一百九十七公里"
+      }
+    },
+    {
+      "id": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a",
+      "text": "第二个冠军点，又是双误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二个冠军点,又是双雾。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.854,
+        "cps": 5.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二个 ｜ 冠军 ｜ 点 ｜ 又是 ｜ 双 ｜ 误"
+      }
+    },
+    {
+      "id": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578",
+      "text": "一发得分率高八个百分点，二发只高不到一个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一发得分率高八个百分点,二发只高不到一个。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 2,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.061,
+        "cps": 6.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一发 ｜ 得分 ｜ 率 ｜ 高 ｜ 八个百分点 ｜ 二发 ｜ 只 ｜ 高 ｜ 不 ｜ 到 ｜ 一个"
+      }
+    },
+    {
+      "id": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf",
+      "text": "下手发球从来都合法。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "下手发球,从来都合法。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 1.706,
+        "cps": 5.28,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "下手 ｜ 发球 ｜ 从来 ｜ 都 ｜ 合法"
+      }
+    },
+    {
+      "id": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd",
+      "text": "代价是双误。他连续几年，都是全巡回赛双误最多的人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "代价是双物﹑它连续几年,都是全循回赛双物最多的人。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.237,
+        "cps": 5.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "代价 ｜ 是 ｜ 双 ｜ 误 ｜ 他 ｜ 连续 ｜ 几年 ｜ 都是 ｜ 全 ｜ 巡回 ｜ 赛 ｜ 双 ｜ 误 ｜ 最多 ｜ 的 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441",
+      "text": "长方形场地，十五、三十、四十计分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.077,
+        "longest_deletion": 0,
+        "transcript": "长房型场地 15 30 40 级分。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "长",
+          "word": "长方形",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.42,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 3.072,
+        "cps": 4.23,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "长方形 ｜ 场地 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 计分"
+      }
+    },
+    {
+      "id": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17",
+      "text": "有了二发兜底，一发就敢冒险。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "有了二发兜底,一发就敢冒险。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 8,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.055,
+        "cps": 5.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "有 ｜ 了 ｜ 二发 ｜ 兜底 ｜ 一发 ｜ 就 ｜ 敢 ｜ 冒险"
+      }
+    },
+    {
+      "id": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621",
+      "text": "规则没有动发球次数，动的是场地。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.071,
+        "longest_deletion": 0,
+        "transcript": "规则没有动发球次数,动的是常遍。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.288,
+        "cps": 6.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "规则 ｜ 没有 ｜ 动 ｜ 发球 ｜ 次数 ｜ 动 ｜ 的 ｜ 是 ｜ 场地"
+      }
+    },
+    {
+      "id": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b",
+      "text": "可只给一发，就会变成推过去：ACE 没了，大力发球的看点也没了，弱者也少了一层保险。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可只给一发,就会变成推过去。Base没了,大力发球的看点也没了,弱者也少了一层保险。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 23,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 5.826,
+        "cps": 5.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 只 ｜ 给 ｜ 一发 ｜ 就 ｜ 会 ｜ 变成 ｜ 推 ｜ 过去 ｜ ACE ｜ 没 ｜ 了 ｜ 大力 ｜ 发球 ｜ 的 ｜ 看点 ｜ 也 ｜ 没 ｜ 了 ｜ 弱者 ｜ 也 ｜ 少 ｜ 了 ｜ 一 ｜ 层 ｜ 保险"
+      }
+    },
+    {
+      "id": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc",
+      "text": "可对手不敢放心打他的二发，他的一发和破发点挽救率都是顶级。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可对手不敢放心打他的二发,他的一发和破发点挽救率都是顶级。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 16,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 19,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 4.46,
+        "cps": 6.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 对手 ｜ 不敢 ｜ 放心 ｜ 打 ｜ 他 ｜ 的 ｜ 二发 ｜ 他 ｜ 的 ｜ 一发 ｜ 和 ｜ 破发 ｜ 点 ｜ 挽救 ｜ 率 ｜ 都是 ｜ 顶级"
+      }
+    },
+    {
+      "id": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5",
+      "text": "同一个二发，一个人用它救命，一个人用它送命。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "同一个二发,一个人用他救命,一个人用他送命。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.559,
+        "cps": 5.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "同 ｜ 一个 ｜ 二发 ｜ 一个 ｜ 人 ｜ 用 ｜ 它 ｜ 救命 ｜ 一个 ｜ 人 ｜ 用 ｜ 它 ｜ 送命"
+      }
+    },
+    {
+      "id": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215",
+      "text": "伊斯内尔、卡洛维奇这些发球机器，二发得分率反而高于平均。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "伊斯内尔、卡罗维奇这些发球机器,二发得分率,反而高于平均。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 18,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 4.354,
+        "cps": 5.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "伊斯内尔 ｜ 卡洛维 ｜ 奇 ｜ 这些 ｜ 发球 ｜ 机器 ｜ 二发 ｜ 得分 ｜ 率 ｜ 反而 ｜ 高于 ｜ 平均"
+      }
+    },
+    {
+      "id": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a",
+      "text": "而他拿下四个冠军的最好赛季，恰恰是双误最少的一年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "而他拿下四个冠军的最好赛季,恰恰是双武最少的一年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 3.93,
+        "cps": 5.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 他 ｜ 拿下 ｜ 四个 ｜ 冠军 ｜ 的 ｜ 最好 ｜ 赛季 ｜ 恰恰 ｜ 是 ｜ 双 ｜ 误 ｜ 最少 ｜ 的 ｜ 一年"
+      }
+    },
+    {
+      "id": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750",
+      "text": "七平，一发失误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 6,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "七平亦发失误。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 6,
+        "speech_s": 1.303,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七 ｜ 平 ｜ 一发 ｜ 失误"
+      }
+    },
+    {
+      "id": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832",
+      "text": "网降了，发球线从离网二十六英尺，一路缩到今天的二十一英尺。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "网将了,发球线从离网26英尺,一路缩到今天的21英尺。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 4.83,
+        "cps": 5.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "网 ｜ 降 ｜ 了 ｜ 发球 ｜ 线 ｜ 从 ｜ 离 ｜ 网 ｜ 二十六英尺 ｜ 一路 ｜ 缩 ｜ 到 ｜ 今天 ｜ 的 ｜ 二十一英尺"
+      }
+    },
+    {
+      "id": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967",
+      "text": "下一分，赛点。对面的科雷蒂亚，双误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.071,
+        "longest_deletion": 0,
+        "transcript": "下一分,赛连,对面的克雷蒂亚,双雾。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.178,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "下 ｜ 一 ｜ 分 ｜ 赛点 ｜ 对面 ｜ 的 ｜ 科雷蒂亚 ｜ 双 ｜ 误"
+      }
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.892,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328",
+      "text": "计分和两次发球，都照搬自更古老的室内网球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "几分和两次发球都照搬自更古老的室内网球。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.189,
+        "cps": 5.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "计分 ｜ 和 ｜ 两次 ｜ 发球 ｜ 都 ｜ 照搬 ｜ 自 ｜ 更 ｜ 古老 ｜ 的 ｜ 室内 ｜ 网球"
+      }
+    },
+    {
+      "id": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e",
+      "text": "数据给的答案是：二发可以赌，但别全押。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "数据给的答案是二发可以赌但别全压。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.252,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "数据 ｜ 给 ｜ 的 ｜ 答案 ｜ 是 ｜ 二发 ｜ 可以 ｜ 赌 ｜ 但 ｜ 别 ｜ 全 ｜ 押"
+      }
+    },
+    {
+      "id": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a",
+      "text": "现在，还有人，干脆不要保险。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "现在还有人干脆不要保险。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.521,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.373,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "现在 ｜ 还有 ｜ 人 ｜ 干脆 ｜ 不要 ｜ 保险"
+      }
+    },
+    {
+      "id": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e",
+      "text": "桑普拉斯病到在场边呕吐。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "桑普拉斯病到在场边嘔吐。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "吐",
+          "word": "呕吐",
+          "intended": "tu4",
+          "wrong": [
+            "tu3"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "tu3",
+              "verdict": "correct",
+              "score": 0.725,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "堍兔"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 1.79,
+        "cps": 6.14,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "桑普拉斯 ｜ 病 ｜ 到 ｜ 在 ｜ 场 ｜ 边 ｜ 呕吐"
+      }
+    },
+    {
+      "id": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f",
+      "text": "可网球为什么，偏偏给你两次机会？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可网球为什么?偏偏给你两次机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.415,
+        "cps": 5.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 网球 ｜ 为什么 ｜ 偏偏 ｜ 给 ｜ 你 ｜ 两次 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf",
+      "text": "教练的建议是：大锤不用每次都抡，让对手猜不到，才最可怕。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "教练的建议是,大锤不用每次斗轮,让对手猜不到,才最可怕。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.619,
+        "cps": 5.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "教练 ｜ 的 ｜ 建议 ｜ 是 ｜ 大锤 ｜ 不用 ｜ 每次 ｜ 都 ｜ 抡 ｜ 让 ｜ 对手 ｜ 猜 ｜ 不 ｜ 到 ｜ 才 ｜ 最 ｜ 可怕"
+      }
+    },
+    {
+      "id": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa",
+      "text": "数据站在哪边？ATP 发球最猛的四分之一，比最弱的四分之一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "数据站在哪边,att发球最猛的四分之一比最弱的四分之一。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.587,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "数据 ｜ 站 ｜ 在 ｜ 哪边 ｜ ATP ｜ 发球 ｜ 最 ｜ 猛 ｜ 的 ｜ 四分之一 ｜ 比 ｜ 最 ｜ 弱 ｜ 的 ｜ 四分之一"
+      }
+    },
+    {
+      "id": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b",
+      "text": "可大多数人的二发，承载的是心理。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可大多数人的二发承载的是心理。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.5,
+        "cps": 5.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 大多数人 ｜ 的 ｜ 二发 ｜ 承载 ｜ 的 ｜ 是 ｜ 心理"
+      }
+    },
+    {
+      "id": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6",
+      "text": "敢这么赌的，多数本来就有一发撑腰。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "敢这么赌的,多数本来就有一发撑腰。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.5,
+        "cps": 6.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "敢 ｜ 这么 ｜ 赌 ｜ 的 ｜ 多数 ｜ 本来 ｜ 就 ｜ 有 ｜ 一发 ｜ 撑腰"
+      }
+    },
+    {
+      "id": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea",
+      "text": "而且二发是可以练的：萨巴伦卡从一场二十一次双误，练到去年二发得分率女子第二。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "而且二发是可以练的,萨巴伦卡从一场21次双误练到去年二发得分率女子第二。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 29,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 30,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 6.006,
+        "cps": 5.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而且 ｜ 二发 ｜ 是 ｜ 可以 ｜ 练 ｜ 的 ｜ 萨巴伦卡 ｜ 从 ｜ 一 ｜ 场 ｜ 二十一次 ｜ 双 ｜ 误 ｜ 练 ｜ 到 ｜ 去年 ｜ 二发 ｜ 得分 ｜ 率 ｜ 女子 ｜ 第二"
+      }
+    },
+    {
+      "id": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e",
+      "text": "二零零一年温网决赛，伊万尼塞维奇手握冠军点。双误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.045,
+        "longest_deletion": 0,
+        "transcript": "2001年温网决赛,伊万尼塞维奇手卧冠军点。双卧"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.174,
+        "cps": 5.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零零一年 ｜ 温 ｜ 网 ｜ 决赛 ｜ 伊万尼塞维奇 ｜ 手 ｜ 握 ｜ 冠军 ｜ 点 ｜ 双 ｜ 误"
+      }
+    },
+    {
+      "id": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319",
+      "text": "去年二发最快的前五名里，姆佩奇·佩里卡尔和奥佩尔卡的一发，也是全巡回赛最快的两个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.027,
+        "longest_deletion": 0,
+        "transcript": "去年二发最快的前五名礼——梅佩奇、佩里卡尔和奥佩尔卡的一发,也是全循回赛最快的两个。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 27,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 6.621,
+        "cps": 5.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 二发 ｜ 最 ｜ 快 ｜ 的 ｜ 前五名 ｜ 里 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 和 ｜ 奥佩尔卡 ｜ 的 ｜ 一发 ｜ 也是 ｜ 全 ｜ 巡回 ｜ 赛 ｜ 最 ｜ 快 ｜ 的 ｜ 两个"
+      }
+    }
+  ]
+}
