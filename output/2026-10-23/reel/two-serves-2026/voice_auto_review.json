@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "b471eadedeac100d06f2d671d33838d58e9c48c582c786222ed6ddc8f2b34694",
-    "render_inputs_sha256": "b8192d6338c48ae35ee0ec3f116b543338833c9f9f86d5e5f02e7c10de7e3fb8",
-    "spec_sha256": "a859893a130817136db05c57b466f49b316374fd0ef929b34429d7a0d94a382c",
-    "film_sha256": "393f446bf9b0577a3e9a2966973c39d09c942841d66248ec887bbee35a3183d9",
-    "inventory_sha256": "5bf094b3837e960ee6decdc10faa33d3c061734b123ca1e58c54b48fca178d11"
+    "render_sha256": "506bcf170a1cc6fc92e6dacfecc0d2abec09a57c659704a0c5f6a8e13c684402",
+    "render_inputs_sha256": "134d53d5bcedd49396e7fa36923d8d9e1c1ee360cd72f0bd93bd4c1cd0b4563a",
+    "spec_sha256": "6047d0d95b1c4f62dd99d6a271660b298bd9ef8f67cc81cda946ebaf0e1fbb6f",
+    "film_sha256": "e0b022bbb986f30208a6dc73703a26cb3d9d6a2ef164c8fd1d55568c824ec954",
+    "inventory_sha256": "f55b3fbb37a7691f9cc7f8865a55b96b1c342fb6b980d6c67f796cd98995bfcf"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,16 +18,10 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-23T11:34:30+00:00",
+  "reviewed_at": "2026-10-23T13:29:16+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
-    {
-      "id": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d",
-      "audio_sha256": "50e391df238d20a7767e6267f3705ea4d55748c551a54d1ab9b76819e0e47a84",
-      "pass": true,
-      "result_of": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d"
-    },
     {
       "id": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c",
       "audio_sha256": "a09e84826b72a38ed8b1516aff95ec00d2e9065163b72bd258c6d99d1b6085b8",
@@ -36,439 +30,445 @@
     },
     {
       "id": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd",
-      "audio_sha256": "0791d309e8aac3a046db72d812422d568d8252a7a8c446fbc64636b56ef154b8",
+      "audio_sha256": "013766a258754dac2d38dc1ee603620e3f58174db3ae4d4f2ec9acff841b809e",
       "pass": true,
       "result_of": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd"
     },
     {
       "id": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778",
-      "audio_sha256": "4bdfd3d40fd96680d84713883a6204e574bf2d0589dfc1913dabbaf3aa029384",
+      "audio_sha256": "08af29306d48c7195a651ad2a7f1f4f716a741cc9274b24a862c754e3757106b",
       "pass": true,
       "result_of": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778"
     },
     {
       "id": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879",
-      "audio_sha256": "1b83ef6c7f485cd830dceb94a61e41ef6ce3634ed1a33034f84143283d711b46",
+      "audio_sha256": "360b04e381b68ff5871f53fb25a080680d17e3669fb57f5a23df622663e6d558",
       "pass": true,
       "result_of": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879"
     },
     {
       "id": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1",
-      "audio_sha256": "9777f38ae4dd9f96a5ce2c2c88f3c59d576ff24a38a62b5ff263374759b2dfbe",
+      "audio_sha256": "eae46047ca44b6b6ca90ce9c67599b8b25b41b1bc110589b6fdb001489e78661",
       "pass": true,
       "result_of": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1"
     },
     {
       "id": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71",
-      "audio_sha256": "cba28e824b1587bdcc9b9b1dece966c1298d4b29b2ef4009090d2de0e7fc8e08",
+      "audio_sha256": "05e36d5e6550f110349880d1016b14850b26b76dffb6d7878bdc50527ef21f92",
       "pass": true,
       "result_of": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71"
     },
     {
       "id": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683",
-      "audio_sha256": "39708c77514c4fd1cbe53449324e6755d7af12853abb9164980f598a72939ffa",
+      "audio_sha256": "401644db31c96328c7df26906d66d7a3e4d599e6867d4be68d9f4e5095ca0e9d",
       "pass": true,
       "result_of": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683"
     },
     {
       "id": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954",
-      "audio_sha256": "b26188ab29f1a47eaf015676f462beaf94344ea07c16e5ca34e4b558e8fc2745",
+      "audio_sha256": "b61bbc917de2815020fff2fa65a7da6f82dd625b48e7d0ec3ae844595779fff9",
       "pass": true,
       "result_of": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954"
     },
     {
       "id": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de",
-      "audio_sha256": "7aad58070245524ba8043f0f61bf6d8a85d74fedb82d61374c189f94acda1c34",
+      "audio_sha256": "5504ed17521cd94f0a9d00390e1e03528e282027275938a1dea35fd6bb03a746",
       "pass": true,
       "result_of": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de"
     },
     {
       "id": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075",
-      "audio_sha256": "c2312e2a69932fef96e4c117abdaeb65f58a54cb6bb010bad1b08cb5632a6f02",
+      "audio_sha256": "53ab96e504faf9f8210170e9cf15b8a887b3e65fcf577951e0239c910419de6a",
       "pass": true,
       "result_of": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075"
     },
     {
       "id": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab",
-      "audio_sha256": "340405078fea923067684fb45cc09aa6844aecde3ff149a93db153ff3f0e2c37",
+      "audio_sha256": "2fa79a50a3e2bc34ed551ced4e582e0eb7cb1412b985fa210774d348901354af",
       "pass": true,
       "result_of": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab"
     },
     {
       "id": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda",
-      "audio_sha256": "4ce3c66ead7a8352de8b5d2273c4916435266a0d0c18f266a821a024645157b7",
+      "audio_sha256": "53c3d3a9916362eade826e183a86100e4f05370e66f8a7bbfa47005a544775e7",
       "pass": true,
       "result_of": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda"
     },
     {
       "id": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79",
-      "audio_sha256": "b06ffe3dded2f741e5bd0e3d7b6eae70ed5df8e31e713bb7f82c652532a429ed",
+      "audio_sha256": "5554f669d55de64d470ce3ee68ee9ac78b55fb12a07abb2947cb8796ea499d54",
       "pass": true,
       "result_of": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79"
     },
     {
       "id": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1",
-      "audio_sha256": "c5147025f21730837af22f972b6979e96ed937146c977ae5d0047cc3d83513ed",
+      "audio_sha256": "a2c372ca85bff7e9567c6e64271f28b3573ec615dc7c1d1a5033b4d360d918c0",
       "pass": true,
       "result_of": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1"
     },
     {
       "id": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d",
-      "audio_sha256": "c60c8a06e199679a5989e995383138a56ed4ce7a720e83660dc42ae548946bbf",
+      "audio_sha256": "2396cd8b99725eea038a605bf0c6c35f11b67d9b9464cdf3c4b8e2376e5dc3f6",
       "pass": true,
       "result_of": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d"
     },
     {
       "id": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb",
-      "audio_sha256": "ba1ced4298fffebb25bd3a0db440c44042b6e7f845910cb5f7f536340a6dcd71",
+      "audio_sha256": "4aef8d4754dfd7109f2eeb3605cef21a21b46a544ef05aeba0a94215f90f676e",
       "pass": true,
       "result_of": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb"
     },
     {
       "id": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7",
-      "audio_sha256": "10c412b2cbb3803efeb700a62866b41bd089437c860c4255e5f185fe0382c9c2",
+      "audio_sha256": "8f5afc999308ef42e12c24d11d61ededb3edccb1e67c30716b63c3aabd788983",
       "pass": true,
       "result_of": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7"
     },
     {
       "id": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be",
-      "audio_sha256": "7be05ee9c02073dd54d60c84a01bdfa3bbd8a8b1886333322bbc51b86fc20492",
+      "audio_sha256": "9635a8e30b8415ee2614ff160f06998853fca65e6572aa6554b9cea6c8fc161b",
       "pass": true,
       "result_of": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be"
     },
     {
       "id": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d",
-      "audio_sha256": "b08e425e633e38e1ffbc21b9236bf10abcaf6cd4a47cee5169b697849426481c",
+      "audio_sha256": "caa9113f14f59fd7a37b550d77b5a86cd52ecb93fce3d39b1e66bf09fe66e231",
       "pass": true,
       "result_of": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d"
     },
     {
       "id": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9",
-      "audio_sha256": "a6159e4053043d637988b7d47a1ef1df51958c6b253194c33317408a84fd652e",
+      "audio_sha256": "dc786bd381793820c372685f3860d72edb8c97f6932db08ac7728a214fdebd55",
       "pass": true,
       "result_of": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9"
     },
     {
+      "id": "bundle:6463b2fec8cfba9c13c6c534f3c3d11b4704afa856a82583e8385933cac12e48",
+      "audio_sha256": "da50a614107e13b29edcb2d10224b0bfc5fe09bcc786c6f4b4bee73c1938341b",
+      "pass": true,
+      "result_of": "bundle:6463b2fec8cfba9c13c6c534f3c3d11b4704afa856a82583e8385933cac12e48"
+    },
+    {
       "id": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c",
-      "audio_sha256": "0e120145fc965f8ca5297aa51eab47247bc90dfb34ab08ebace21e161fc43059",
+      "audio_sha256": "e5ac3a810227504f303343aeeda281de4e92a7906cc5460ccf1e06bb68fccc18",
       "pass": true,
       "result_of": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c"
     },
     {
       "id": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8",
-      "audio_sha256": "f339c547d7f135c9e390c962d13a56a79b7e661aafdc609296f80b4004e4c8ce",
+      "audio_sha256": "408f52b858b22a43d932d561e4e2cec979aaaf08e49783b6c2b24ea8d2d44f52",
       "pass": true,
       "result_of": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8"
     },
     {
       "id": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886",
-      "audio_sha256": "96579cefedcb1f4ce09093e020e2229242fe73e0bf6e01aaf85cc96b66e188aa",
+      "audio_sha256": "bdf9e1cc9dc6498b0824595bfab0395cec189ba87f88c5e6179add5b67f8f6b4",
       "pass": true,
       "result_of": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886"
     },
     {
       "id": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834",
-      "audio_sha256": "28cba65adcda33a3513cdec68035cbad661c1dabbf230c5771f561224b26cd93",
+      "audio_sha256": "025a49f596bb41df7c72cb7f0ce72e2bbcaa3f769b0d66eed39a4ec67c3a4c7f",
       "pass": true,
       "result_of": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834"
     },
     {
       "id": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8",
-      "audio_sha256": "3ab49bf084dc3c965fa21bc5f84fb95be2fa56c82f78cdebc823784c49b4e4e8",
+      "audio_sha256": "07924c911133f49c166dddf671d3af894596c121e7d31c7675268793c8e2ac6b",
       "pass": true,
       "result_of": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8"
     },
     {
       "id": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d",
-      "audio_sha256": "cd23614c5ddca6712a335551ce4e169ea5e2052ce46a4b195df2f387a2dc4bea",
+      "audio_sha256": "93aba8d8d4d1084c2f6797b04f54a7464aad16ec06bc712e948ea4831d2f7fb8",
       "pass": true,
       "result_of": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d"
     },
     {
       "id": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f",
-      "audio_sha256": "f547f731974aacf7f5e22fe44d372dab44e581f9b69603b21265f99a3c7d3d6a",
+      "audio_sha256": "a37d379635ea96f7a45b2beb8cfe194dc571f85ab13320bdbbd2ccbf04524eda",
       "pass": true,
       "result_of": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f"
     },
     {
       "id": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8",
-      "audio_sha256": "16892344747994382bca4ac4b4a3d7c6658477e9aec44963f6f3bb652297b0c8",
+      "audio_sha256": "ab4f56b59b8626a1c9eb9f24e6a2035eb9c17d549d2ab23308f24342ea4484b0",
       "pass": true,
       "result_of": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8"
     },
     {
       "id": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca",
-      "audio_sha256": "43707854177f3e1ec90510e947c92e539c66a5a0302c3f289733a59969e3e1d6",
+      "audio_sha256": "69bedff2c41a8957dc3dc6411767bed9ebefcc56966ad34befc21705ed98ad68",
       "pass": true,
       "result_of": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca"
     },
     {
       "id": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b",
-      "audio_sha256": "a38af3e441b4462d4c6a64179fd4c371ef080cd091eb3f14e593f9d9fda905e5",
+      "audio_sha256": "7c9c771c55a225137dabc8233136325ca0f218e397c10fde5e45540efb295ba5",
       "pass": true,
       "result_of": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b"
     },
     {
       "id": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19",
-      "audio_sha256": "8e849e0b09aee52d8ebc2e88f66e1f8fdb82159f936e6fcd8e5705f33ab0c56a",
+      "audio_sha256": "f1e06c9ab2a5cdcf7be6b3563fd6bdb8041e3f84c1af44036dc533bc8b10be26",
       "pass": true,
       "result_of": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19"
     },
     {
       "id": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb",
-      "audio_sha256": "f351d21daf13cc6b4248f3ff912268e6ea99830589eda0fe016de350988c170e",
+      "audio_sha256": "10a814807da1900f2f60eb5f7a13c651d27e3162005113db3c207ed0750db783",
       "pass": true,
       "result_of": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb"
     },
     {
       "id": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b",
-      "audio_sha256": "1966d117fdbfc8555c79daf3e12ec4d9d72bf0967275942da2ff28765d812c0f",
+      "audio_sha256": "abb6def2520ea9cf23628aa2b24ee4290348d9c08ae58c11c50b9b96f66a0401",
       "pass": true,
       "result_of": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b"
     },
     {
       "id": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a",
-      "audio_sha256": "ae142726f5a2f64d6ad76f9d2ccff2988dfcb389ce14510f21b2ed1a3171ffff",
+      "audio_sha256": "372865dfe00b207dfcd158427d8781ffbce62a7fe6a31bf5e154f1f152514be6",
       "pass": true,
       "result_of": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a"
     },
     {
       "id": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578",
-      "audio_sha256": "896858ce68128c061eabc2e68ee3e70c226abe8223dfc3670667ec5c6b4c13e2",
+      "audio_sha256": "2dd5671994f732da12b2fa265f85c14af0de9da80d66ec4a23a0ccff0567dd12",
       "pass": true,
       "result_of": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578"
     },
     {
       "id": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf",
-      "audio_sha256": "a2621058f8aaa3439868ebe9bd86b8304e5bd7128c2e37d0acf018b7e098a5ac",
+      "audio_sha256": "45a9bd278331b635b38af0e0c725e2061005216c7cbcdc1e48b8ea74ad4a6ac2",
       "pass": true,
       "result_of": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf"
     },
     {
       "id": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd",
-      "audio_sha256": "692690885540cf02cb0fc4be92fea9806f3e13001aa581eb7c85793b96f4974a",
+      "audio_sha256": "464f9b6883230d849bc56579ccf6dfef192d9998575c2165175b8ba1cf9eb0c8",
       "pass": true,
       "result_of": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd"
     },
     {
       "id": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441",
-      "audio_sha256": "379aa41136789d60af3beb210112977ef0e5e8e7b2219c4dba22c62f9377a1ab",
+      "audio_sha256": "cb8e9bbd6a885167cc60f0f60385eace7aeea645318d0a4c7ad7adc1b7b277cb",
       "pass": true,
       "result_of": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441"
     },
     {
       "id": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17",
-      "audio_sha256": "bbd04d6dd6e537fe404a5a910be2e388e52faf6c98223a72e88eff680d002eaf",
+      "audio_sha256": "736bacb5cdf61c0bdc71eebdb35a02d36a4ead455257537b51dfb19b85e22394",
       "pass": true,
       "result_of": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17"
     },
     {
       "id": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621",
-      "audio_sha256": "a85f1b546647dacc5cba0e55d325184fbcb39b52a89914f0d7421d218c2471fa",
+      "audio_sha256": "33e1ec8bef98e62d473e07ed38a7867209127cdac336692fe140b220fa4b5bfe",
       "pass": true,
       "result_of": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621"
     },
     {
       "id": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b",
-      "audio_sha256": "d242e8cee9aa74cd3a826f2822e47abaea7785f32705c2126c1986a3fad885c9",
+      "audio_sha256": "863fa01df1fbf1a6238a08d3803c77264ca52e7a0d4984986e0d689eaa084b25",
       "pass": true,
       "result_of": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b"
     },
     {
       "id": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc",
-      "audio_sha256": "b912318c49b1b9dd51dea6af2637c7e94c7f91a9b5e9aa5de81407e51c45e54e",
+      "audio_sha256": "91bb6116e16828a7093a53394c2e169ddc366004a52a1116eae865f3ee30e8d5",
       "pass": true,
       "result_of": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc"
     },
     {
       "id": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5",
-      "audio_sha256": "5e4e00f95a2806283489e70e3958eefae0897fbd6224c25e6832eac051a92b54",
+      "audio_sha256": "9ffc172431435565116d3c7c70c6f0c60c2729f43fb4d5346ca8bab1e5286a0a",
       "pass": true,
       "result_of": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5"
     },
     {
       "id": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215",
-      "audio_sha256": "c06b8c9a332a541d8a3ef15308fad215681a10b2a58841806a546a2b48fb2ade",
+      "audio_sha256": "34131a0356fa21e352d76300ab236f6084d57a795b5e76c955f8dceae1bfa2d9",
       "pass": true,
       "result_of": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215"
     },
     {
       "id": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a",
-      "audio_sha256": "f39f5bf71a63c3d7c08b0e58492f96e7490a9bc110f5e61d204d56a1193fc2c3",
+      "audio_sha256": "b63d606b782af80ec40c4eedeaacc34a29b1b2ca4d6b586f3ac9c3e376f32db5",
       "pass": true,
       "result_of": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a"
     },
     {
       "id": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750",
-      "audio_sha256": "931a5e5aa764ec8e65f5cb82ca2179166b6227ed44b77d92115b3b29dad45e1e",
+      "audio_sha256": "c433a415f3622333da0f56905a5d02d8136c5ea3f4ade3a18427b09b23c96192",
       "pass": true,
       "result_of": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750"
     },
     {
       "id": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832",
-      "audio_sha256": "d6013ed1499da2bf0789580d052c49e8c171b806ff8321d0393021bb1a072831",
+      "audio_sha256": "175d021e253c178587d04de3ce6d88f2185c5f9bbe1c81f33a4c4331cf478dee",
       "pass": true,
       "result_of": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832"
     },
     {
       "id": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967",
-      "audio_sha256": "9abea6ec769ec8ff7a80b63b724d3e88827bc934c232663a105596fd1ccddc89",
+      "audio_sha256": "daa04579eb679792a405da14eb5cf8aaebafb84799b74a0ea91a7e99fcfcfbd4",
       "pass": true,
       "result_of": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967"
     },
     {
       "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
-      "audio_sha256": "2c42a120cd3c3d8206326cfcc11bcdd39af2021472bb4c88c46fbaafcdae309c",
+      "audio_sha256": "117568cdf1faab08779d4c071bf323b3ec43958cfe73d6f84467b1036b6aa7da",
       "pass": true,
       "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
     },
     {
       "id": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328",
-      "audio_sha256": "5645acae953511557a388c86e7066631c7fd2a7e348193ef826969cb3af1b455",
+      "audio_sha256": "c6526512c1331700d87e885da1cac4311b9206e20908ba016e729d022f7b10b3",
       "pass": true,
       "result_of": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328"
     },
     {
       "id": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e",
-      "audio_sha256": "1c8c205d5dd1c2bdf784895ec3e0dd1b0f90c48c96337f491eb368e2b22a13cd",
+      "audio_sha256": "5c032d893ff3b71518828ea44320ae16275cf50f83e67c4a64ad52d57844a112",
       "pass": true,
       "result_of": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e"
     },
     {
       "id": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a",
-      "audio_sha256": "4f1168ed3a98426ba68b5fa23b537f0fea3a46e0d20acb62bce5bc41c2654ba3",
+      "audio_sha256": "60d6ebb64e2ea9952146bebbfbfcb180adbf4f012c783ea57ebb0633e4519114",
       "pass": true,
       "result_of": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a"
     },
     {
       "id": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e",
-      "audio_sha256": "31e524cab3c63aa18741655337e00116be0bff5d254d8568ee05872c035b6116",
+      "audio_sha256": "5505f66c26f48befa04705564845e1495a67a83c93602c278daf805f64d60345",
       "pass": true,
       "result_of": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e"
     },
     {
       "id": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f",
-      "audio_sha256": "86b2313d6657f71dcd4124a6d93c918a9eca54b01114be120caffd470b5e0bd2",
+      "audio_sha256": "178644aa151e30439b712b541365d15034798bd55574f4c652539817979c9521",
       "pass": true,
       "result_of": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f"
     },
     {
       "id": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf",
-      "audio_sha256": "e072d9f52f5fe332a056efa9773d70af1d68b8750514e01dc84950a070f72c42",
+      "audio_sha256": "6d6fb17b260aac1c702e81701be6125d182818411717632ff668256b9a7aed21",
       "pass": true,
       "result_of": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf"
     },
     {
       "id": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa",
-      "audio_sha256": "c435141dff5048bb72203a50cc7cee542ede195a5abd127cb114dc293b3fbada",
+      "audio_sha256": "a9ac2d553886e9d7156e7522c57775e8b253b9c8697174f5196503db9ceda6fb",
       "pass": true,
       "result_of": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa"
     },
     {
       "id": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b",
-      "audio_sha256": "def2133dfa5dd7a2189d5082b36004fce0265ed27adba79bd3aa5e17a8930404",
+      "audio_sha256": "05a9787fd86381486a3b2592e5c21f7f5aacc2f324d9ed5f47b85ad1e1ee2cd8",
       "pass": true,
       "result_of": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b"
     },
     {
       "id": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6",
-      "audio_sha256": "bccf1109eaf634c23c0b77e7d9efd9e8640ad67daf2a3ef897bc3460e929496f",
+      "audio_sha256": "1b77df2dcdda7847220127c50073cf4e9694448ccd79d8a8fc5f9ef53d375a75",
       "pass": true,
       "result_of": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6"
     },
     {
-      "id": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea",
-      "audio_sha256": "dca064822992ae9f3b5610beb8b053c8e436685e6fbed9ee49b499e32d4d621d",
-      "pass": true,
-      "result_of": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea"
-    },
-    {
       "id": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e",
-      "audio_sha256": "040df4d3c73e42ab84577bc422defec0589d26f87e7314f9dad132c8cf11271e",
+      "audio_sha256": "35d2b4d7b1496fc665c3039075f586ec7703ab901661b31ef931807314dce788",
       "pass": true,
       "result_of": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e"
     },
     {
       "id": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319",
-      "audio_sha256": "dfefa501384af11e4afc398fa5c2149f67a6c5c014db5b4112d9905ffa1d8194",
+      "audio_sha256": "1541734946c536abf71c64ad9c368114e6244029ee6dfb2111ddac41cca2fca2",
       "pass": true,
       "result_of": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319"
     },
     {
+      "id": "bundle:fc966495bdf3cf4bdda1c64f0d2479c417d872bc60fcf124751f883d275720e3",
+      "audio_sha256": "429b41cd3ec6a40c1a4956725ebcd1aa0a67d67b39184322d03962a27e7bde16",
+      "pass": true,
+      "result_of": "bundle:fc966495bdf3cf4bdda1c64f0d2479c417d872bc60fcf124751f883d275720e3"
+    },
+    {
       "id": "voice_00.mp3",
-      "audio_sha256": "4ce3c66ead7a8352de8b5d2273c4916435266a0d0c18f266a821a024645157b7",
+      "audio_sha256": "53c3d3a9916362eade826e183a86100e4f05370e66f8a7bbfa47005a544775e7",
       "pass": true,
       "result_of": "bundle:34e707903a619259eeccf47ac23926b0038317fc10fb899cf8075da20d84ccda"
     },
     {
       "id": "voice_01.mp3",
-      "audio_sha256": "31e524cab3c63aa18741655337e00116be0bff5d254d8568ee05872c035b6116",
+      "audio_sha256": "5505f66c26f48befa04705564845e1495a67a83c93602c278daf805f64d60345",
       "pass": true,
       "result_of": "bundle:d32a78dcc6f1d4172a5514629971bcb65e2f6debcc3750bba5457088d2376b5e"
     },
     {
       "id": "voice_02.mp3",
-      "audio_sha256": "931a5e5aa764ec8e65f5cb82ca2179166b6227ed44b77d92115b3b29dad45e1e",
+      "audio_sha256": "c433a415f3622333da0f56905a5d02d8136c5ea3f4ade3a18427b09b23c96192",
       "pass": true,
       "result_of": "bundle:b35a894ccca54f8ad908f5df09d32aa5441d161dce5340ff3354dfea1bc01750"
     },
     {
       "id": "voice_03.mp3",
-      "audio_sha256": "4bdfd3d40fd96680d84713883a6204e574bf2d0589dfc1913dabbaf3aa029384",
+      "audio_sha256": "08af29306d48c7195a651ad2a7f1f4f716a741cc9274b24a862c754e3757106b",
       "pass": true,
       "result_of": "bundle:1c0a42c6fb5948415abd20c814858b2be44f8d4ec0d3c9fbb7bc7b6b8d310778"
     },
     {
       "id": "voice_04.mp3",
-      "audio_sha256": "9abea6ec769ec8ff7a80b63b724d3e88827bc934c232663a105596fd1ccddc89",
+      "audio_sha256": "daa04579eb679792a405da14eb5cf8aaebafb84799b74a0ea91a7e99fcfcfbd4",
       "pass": true,
       "result_of": "bundle:b558ab4dc13d070fab9b0242266157007a03db5f5b45493ee2f2662c7728a967"
     },
     {
       "id": "voice_06.mp3",
-      "audio_sha256": "5e4e00f95a2806283489e70e3958eefae0897fbd6224c25e6832eac051a92b54",
+      "audio_sha256": "9ffc172431435565116d3c7c70c6f0c60c2729f43fb4d5346ca8bab1e5286a0a",
       "pass": true,
       "result_of": "bundle:ac2bf591819438e430bb4a43887177b700e3ee72c0403629cb90f3323196c3e5"
     },
     {
       "id": "voice_07.mp3",
-      "audio_sha256": "86b2313d6657f71dcd4124a6d93c918a9eca54b01114be120caffd470b5e0bd2",
+      "audio_sha256": "178644aa151e30439b712b541365d15034798bd55574f4c652539817979c9521",
       "pass": true,
       "result_of": "bundle:d4a3b659d75f67ee9fd6a26e10d1d8afdf31a470bf1a86a076ce07c3be7db81f"
     },
     {
       "id": "voice_08.mp3",
-      "audio_sha256": "ba1ced4298fffebb25bd3a0db440c44042b6e7f845910cb5f7f536340a6dcd71",
+      "audio_sha256": "4aef8d4754dfd7109f2eeb3605cef21a21b46a544ef05aeba0a94215f90f676e",
       "pass": true,
       "result_of": "bundle:4ba4247373c6372e07a0eb2b20cde7fd74627e2347763b57e0ee54460e7fccfb"
     },
     {
       "id": "voice_09.mp3",
-      "audio_sha256": "379aa41136789d60af3beb210112977ef0e5e8e7b2219c4dba22c62f9377a1ab",
+      "audio_sha256": "cb8e9bbd6a885167cc60f0f60385eace7aeea645318d0a4c7ad7adc1b7b277cb",
       "pass": true,
       "result_of": "bundle:9dfc6a08744053d71bc6bd5c2dd821ed4b5d2a6e05d1ce439cc54906fc7fb441"
     },
     {
       "id": "voice_10.mp3",
-      "audio_sha256": "f547f731974aacf7f5e22fe44d372dab44e581f9b69603b21265f99a3c7d3d6a",
+      "audio_sha256": "a37d379635ea96f7a45b2beb8cfe194dc571f85ab13320bdbbd2ccbf04524eda",
       "pass": true,
       "result_of": "bundle:6f4a0ac9def6c87afcd0e7c1eaacb114cabb44090222af3cef3e7fa102471a7f"
     },
     {
       "id": "voice_11.mp3",
-      "audio_sha256": "5645acae953511557a388c86e7066631c7fd2a7e348193ef826969cb3af1b455",
+      "audio_sha256": "c6526512c1331700d87e885da1cac4311b9206e20908ba016e729d022f7b10b3",
       "pass": true,
       "result_of": "bundle:bb1ba11c0e04b5955cb89a2491c8f69245be2beb7346202917e5b7f834fcc328"
     },
     {
       "id": "voice_12.mp3",
-      "audio_sha256": "c60c8a06e199679a5989e995383138a56ed4ce7a720e83660dc42ae548946bbf",
+      "audio_sha256": "2396cd8b99725eea038a605bf0c6c35f11b67d9b9464cdf3c4b8e2376e5dc3f6",
       "pass": true,
       "result_of": "bundle:48a87189ab706047432b6cc4b66540c20ab3b74f785bf7cf90bca732e973ce9d"
     },
     {
       "id": "voice_13.mp3",
-      "audio_sha256": "cd23614c5ddca6712a335551ce4e169ea5e2052ce46a4b195df2f387a2dc4bea",
+      "audio_sha256": "93aba8d8d4d1084c2f6797b04f54a7464aad16ec06bc712e948ea4831d2f7fb8",
       "pass": true,
       "result_of": "bundle:6de52d2780d3a6610efa3a8330ec3be23d40798c93b5fb274357c5cdfde4981d"
     },
@@ -480,339 +480,294 @@
     },
     {
       "id": "voice_15.mp3",
-      "audio_sha256": "c2312e2a69932fef96e4c117abdaeb65f58a54cb6bb010bad1b08cb5632a6f02",
+      "audio_sha256": "53ab96e504faf9f8210170e9cf15b8a887b3e65fcf577951e0239c910419de6a",
       "pass": true,
       "result_of": "bundle:2d4792dd72a981fa76b6178631b4c7f96ab33ada42db7b99e9d0816b85923075"
     },
     {
       "id": "voice_16.mp3",
-      "audio_sha256": "a85f1b546647dacc5cba0e55d325184fbcb39b52a89914f0d7421d218c2471fa",
+      "audio_sha256": "33e1ec8bef98e62d473e07ed38a7867209127cdac336692fe140b220fa4b5bfe",
       "pass": true,
       "result_of": "bundle:a7644a9c4808a45ddf21322a274bb07706b58413c115f77436c9cb872cd23621"
     },
     {
       "id": "voice_17.mp3",
-      "audio_sha256": "d6013ed1499da2bf0789580d052c49e8c171b806ff8321d0393021bb1a072831",
+      "audio_sha256": "175d021e253c178587d04de3ce6d88f2185c5f9bbe1c81f33a4c4331cf478dee",
       "pass": true,
       "result_of": "bundle:b480d95bfbed305fa8d93010b74c4141cf3b14028c6ae8dd39ecf4992b36d832"
     },
     {
       "id": "voice_18.mp3",
-      "audio_sha256": "bbd04d6dd6e537fe404a5a910be2e388e52faf6c98223a72e88eff680d002eaf",
+      "audio_sha256": "736bacb5cdf61c0bdc71eebdb35a02d36a4ead455257537b51dfb19b85e22394",
       "pass": true,
       "result_of": "bundle:a591c4699d13f006e6dd48556349884cd5ae3b0bb72a2fb0fdcb4bb0bcd62f17"
     },
     {
       "id": "voice_19.mp3",
-      "audio_sha256": "b26188ab29f1a47eaf015676f462beaf94344ea07c16e5ca34e4b558e8fc2745",
+      "audio_sha256": "b61bbc917de2815020fff2fa65a7da6f82dd625b48e7d0ec3ae844595779fff9",
       "pass": true,
       "result_of": "bundle:2a536e4112fb31d25284761a55673d8c812763c75c2052f9eab17b01fd8b8954"
     },
     {
       "id": "voice_20.mp3",
-      "audio_sha256": "4f1168ed3a98426ba68b5fa23b537f0fea3a46e0d20acb62bce5bc41c2654ba3",
+      "audio_sha256": "60d6ebb64e2ea9952146bebbfbfcb180adbf4f012c783ea57ebb0633e4519114",
       "pass": true,
       "result_of": "bundle:cc5893ba28c239d4981ec92d50a3e2e78ec014716826f774387420feed97ea2a"
     },
     {
       "id": "voice_21.mp3",
-      "audio_sha256": "96579cefedcb1f4ce09093e020e2229242fe73e0bf6e01aaf85cc96b66e188aa",
+      "audio_sha256": "bdf9e1cc9dc6498b0824595bfab0395cec189ba87f88c5e6179add5b67f8f6b4",
       "pass": true,
       "result_of": "bundle:659c21388fe493406f2816689ac54a3b27d629cd058c37e6066eb42e55745886"
     },
     {
       "id": "voice_22.mp3",
-      "audio_sha256": "1966d117fdbfc8555c79daf3e12ec4d9d72bf0967275942da2ff28765d812c0f",
+      "audio_sha256": "abb6def2520ea9cf23628aa2b24ee4290348d9c08ae58c11c50b9b96f66a0401",
       "pass": true,
       "result_of": "bundle:85f9f351803a9f8207a3daf31bd05ec439f2e9575bfb3355d3ab734a73d5268b"
     },
     {
       "id": "voice_23.mp3",
-      "audio_sha256": "8e849e0b09aee52d8ebc2e88f66e1f8fdb82159f936e6fcd8e5705f33ab0c56a",
+      "audio_sha256": "f1e06c9ab2a5cdcf7be6b3563fd6bdb8041e3f84c1af44036dc533bc8b10be26",
       "pass": true,
       "result_of": "bundle:7d82e97b3779e72138e8219d59e1ec80035026b61ac25178552cee9404a59c19"
     },
     {
       "id": "voice_24.mp3",
-      "audio_sha256": "f339c547d7f135c9e390c962d13a56a79b7e661aafdc609296f80b4004e4c8ce",
+      "audio_sha256": "408f52b858b22a43d932d561e4e2cec979aaaf08e49783b6c2b24ea8d2d44f52",
       "pass": true,
       "result_of": "bundle:64f04eb5ed0e2034eadc18ca218edd6f72f9a5c331b96df288a0450affdab2b8"
     },
     {
       "id": "voice_25.mp3",
-      "audio_sha256": "340405078fea923067684fb45cc09aa6844aecde3ff149a93db153ff3f0e2c37",
+      "audio_sha256": "2fa79a50a3e2bc34ed551ced4e582e0eb7cb1412b985fa210774d348901354af",
       "pass": true,
       "result_of": "bundle:33b108986e422365212a57718c6b83c48a6f9c59091afe4afb503285b0863fab"
     },
     {
       "id": "voice_26.mp3",
-      "audio_sha256": "692690885540cf02cb0fc4be92fea9806f3e13001aa581eb7c85793b96f4974a",
+      "audio_sha256": "464f9b6883230d849bc56579ccf6dfef192d9998575c2165175b8ba1cf9eb0c8",
       "pass": true,
       "result_of": "bundle:8a74ead3ed48075eba23126829677c9a48d88f222a74d8e014a6844624a097fd"
     },
     {
       "id": "voice_28.mp3",
-      "audio_sha256": "39708c77514c4fd1cbe53449324e6755d7af12853abb9164980f598a72939ffa",
+      "audio_sha256": "401644db31c96328c7df26906d66d7a3e4d599e6867d4be68d9f4e5095ca0e9d",
       "pass": true,
       "result_of": "bundle:29d0d288345697d17a7f851f0d4628f18328a95c29b1badd3ce603c84cf0b683"
     },
     {
       "id": "voice_29.mp3",
-      "audio_sha256": "16892344747994382bca4ac4b4a3d7c6658477e9aec44963f6f3bb652297b0c8",
+      "audio_sha256": "ab4f56b59b8626a1c9eb9f24e6a2035eb9c17d549d2ab23308f24342ea4484b0",
       "pass": true,
       "result_of": "bundle:7307eafd8209b301c0b079d4277aecc42f6bcf12d6bc30a9aadccb234a9489d8"
     },
     {
       "id": "voice_30.mp3",
-      "audio_sha256": "0e120145fc965f8ca5297aa51eab47247bc90dfb34ab08ebace21e161fc43059",
+      "audio_sha256": "e5ac3a810227504f303343aeeda281de4e92a7906cc5460ccf1e06bb68fccc18",
       "pass": true,
       "result_of": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c"
     },
     {
       "id": "voice_31.mp3",
-      "audio_sha256": "b912318c49b1b9dd51dea6af2637c7e94c7f91a9b5e9aa5de81407e51c45e54e",
+      "audio_sha256": "91bb6116e16828a7093a53394c2e169ddc366004a52a1116eae865f3ee30e8d5",
       "pass": true,
       "result_of": "bundle:abe17a7ca5badca8ec497e78f829085cbf5b27fb4c91ea5a5e98dcea156437cc"
     },
     {
       "id": "voice_32.mp3",
-      "audio_sha256": "f39f5bf71a63c3d7c08b0e58492f96e7490a9bc110f5e61d204d56a1193fc2c3",
+      "audio_sha256": "b63d606b782af80ec40c4eedeaacc34a29b1b2ca4d6b586f3ac9c3e376f32db5",
       "pass": true,
       "result_of": "bundle:b13ad2482d146862dd44a4bd221d74e3103916881927f8686e1d3be3e0cc186a"
     },
     {
       "id": "voice_33.mp3",
-      "audio_sha256": "1c8c205d5dd1c2bdf784895ec3e0dd1b0f90c48c96337f491eb368e2b22a13cd",
+      "audio_sha256": "5c032d893ff3b71518828ea44320ae16275cf50f83e67c4a64ad52d57844a112",
       "pass": true,
       "result_of": "bundle:c88b5035c9b653f8148e6aac726b99972bf4432fb89704f53ffc8ef071e83d5e"
     },
     {
       "id": "voice_34.mp3",
-      "audio_sha256": "bccf1109eaf634c23c0b77e7d9efd9e8640ad67daf2a3ef897bc3460e929496f",
+      "audio_sha256": "1b77df2dcdda7847220127c50073cf4e9694448ccd79d8a8fc5f9ef53d375a75",
       "pass": true,
       "result_of": "bundle:e6a8e97be0419750ecfd9d1e6329009646ff6ecfa0185a172f8b68dfffb0c6d6"
     },
     {
       "id": "voice_35.mp3",
-      "audio_sha256": "dfefa501384af11e4afc398fa5c2149f67a6c5c014db5b4112d9905ffa1d8194",
+      "audio_sha256": "1541734946c536abf71c64ad9c368114e6244029ee6dfb2111ddac41cca2fca2",
       "pass": true,
       "result_of": "bundle:ecc1a6a0edcf59b937c98c1602dde70ab3a22bcd7ed1b858acecdee68c487319"
     },
     {
       "id": "voice_36.mp3",
-      "audio_sha256": "c06b8c9a332a541d8a3ef15308fad215681a10b2a58841806a546a2b48fb2ade",
+      "audio_sha256": "34131a0356fa21e352d76300ab236f6084d57a795b5e76c955f8dceae1bfa2d9",
       "pass": true,
       "result_of": "bundle:af35e831a2f93a795863f79995f4f93dda33ddb4570e1c58bdc808265ad66215"
     },
     {
       "id": "voice_37.mp3",
-      "audio_sha256": "0791d309e8aac3a046db72d812422d568d8252a7a8c446fbc64636b56ef154b8",
+      "audio_sha256": "013766a258754dac2d38dc1ee603620e3f58174db3ae4d4f2ec9acff841b809e",
       "pass": true,
       "result_of": "bundle:10f6a850f8707c0e82195cc4e5abd3fdd61e4181cd2e06e9f50661d3c29c0ccd"
     },
     {
       "id": "voice_38.mp3",
-      "audio_sha256": "e072d9f52f5fe332a056efa9773d70af1d68b8750514e01dc84950a070f72c42",
+      "audio_sha256": "6d6fb17b260aac1c702e81701be6125d182818411717632ff668256b9a7aed21",
       "pass": true,
       "result_of": "bundle:df3431a024bce75c1d75eeec45908e95ddd3aab2c903f433d6a154c464c4cacf"
     },
     {
       "id": "voice_39.mp3",
-      "audio_sha256": "def2133dfa5dd7a2189d5082b36004fce0265ed27adba79bd3aa5e17a8930404",
+      "audio_sha256": "05a9787fd86381486a3b2592e5c21f7f5aacc2f324d9ed5f47b85ad1e1ee2cd8",
       "pass": true,
       "result_of": "bundle:e4ab867aeeefd853183c8b452891761d5e4ed189c0f96178da804252ad1ccd1b"
     },
     {
       "id": "voice_40.mp3",
-      "audio_sha256": "040df4d3c73e42ab84577bc422defec0589d26f87e7314f9dad132c8cf11271e",
+      "audio_sha256": "35d2b4d7b1496fc665c3039075f586ec7703ab901661b31ef931807314dce788",
       "pass": true,
       "result_of": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e"
     },
     {
       "id": "voice_41.mp3",
-      "audio_sha256": "ae142726f5a2f64d6ad76f9d2ccff2988dfcb389ce14510f21b2ed1a3171ffff",
+      "audio_sha256": "372865dfe00b207dfcd158427d8781ffbce62a7fe6a31bf5e154f1f152514be6",
       "pass": true,
       "result_of": "bundle:8622aba3dc2c9fcb24f5dbb4eeaa63c5cc2d9e4f76bf0f859eb047800eebf43a"
     },
     {
       "id": "voice_42.mp3",
-      "audio_sha256": "f351d21daf13cc6b4248f3ff912268e6ea99830589eda0fe016de350988c170e",
+      "audio_sha256": "10a814807da1900f2f60eb5f7a13c651d27e3162005113db3c207ed0750db783",
       "pass": true,
       "result_of": "bundle:7e082ad977391814c202d75916ceca8aefc23f4720864512a3c83d1f73f9eceb"
     },
     {
       "id": "voice_43.mp3",
-      "audio_sha256": "1b83ef6c7f485cd830dceb94a61e41ef6ce3634ed1a33034f84143283d711b46",
+      "audio_sha256": "360b04e381b68ff5871f53fb25a080680d17e3669fb57f5a23df622663e6d558",
       "pass": true,
       "result_of": "bundle:221f5ed9a2c92d38252491ff2530adaac1da91e930435f1832d222166985b879"
     },
     {
       "id": "voice_44.mp3",
-      "audio_sha256": "9777f38ae4dd9f96a5ce2c2c88f3c59d576ff24a38a62b5ff263374759b2dfbe",
+      "audio_sha256": "eae46047ca44b6b6ca90ce9c67599b8b25b41b1bc110589b6fdb001489e78661",
       "pass": true,
       "result_of": "bundle:25bf8ebc7d08292056d4ad36d09c949c206924b33c1c64642b1c88bc77fa7ba1"
     },
     {
       "id": "voice_45.mp3",
-      "audio_sha256": "cba28e824b1587bdcc9b9b1dece966c1298d4b29b2ef4009090d2de0e7fc8e08",
+      "audio_sha256": "05e36d5e6550f110349880d1016b14850b26b76dffb6d7878bdc50527ef21f92",
       "pass": true,
       "result_of": "bundle:28aebef187cb7e2c4dc4b0eaebccdb9b6673387e50c08ea1702fcc72ba078d71"
     },
     {
       "id": "voice_46.mp3",
-      "audio_sha256": "a6159e4053043d637988b7d47a1ef1df51958c6b253194c33317408a84fd652e",
+      "audio_sha256": "dc786bd381793820c372685f3860d72edb8c97f6932db08ac7728a214fdebd55",
       "pass": true,
       "result_of": "bundle:5f09d0b3c471532f95e21e2658826922dc2a7fadb718c8ac82c1678ffe468cd9"
     },
     {
       "id": "voice_47.mp3",
-      "audio_sha256": "7aad58070245524ba8043f0f61bf6d8a85d74fedb82d61374c189f94acda1c34",
+      "audio_sha256": "5504ed17521cd94f0a9d00390e1e03528e282027275938a1dea35fd6bb03a746",
       "pass": true,
       "result_of": "bundle:2c588c154a8a7a2c4e14737036fa2b4a7985e45aa5f7c183c02c713f236cb5de"
     },
     {
       "id": "voice_48.mp3",
-      "audio_sha256": "a2621058f8aaa3439868ebe9bd86b8304e5bd7128c2e37d0acf018b7e098a5ac",
+      "audio_sha256": "45a9bd278331b635b38af0e0c725e2061005216c7cbcdc1e48b8ea74ad4a6ac2",
       "pass": true,
       "result_of": "bundle:89a25b0b8b8eb4ba66a21198e5da0ca22cecb1d54af06a6e4065f14fe6a018cf"
     },
     {
       "id": "voice_50.mp3",
-      "audio_sha256": "a38af3e441b4462d4c6a64179fd4c371ef080cd091eb3f14e593f9d9fda905e5",
+      "audio_sha256": "7c9c771c55a225137dabc8233136325ca0f218e397c10fde5e45540efb295ba5",
       "pass": true,
       "result_of": "bundle:7ced33d19b19f257e2f57b8a4b79db4473de7da4cc8770a6e3d27dffc0c2082b"
     },
     {
       "id": "voice_51.mp3",
-      "audio_sha256": "10c412b2cbb3803efeb700a62866b41bd089437c860c4255e5f185fe0382c9c2",
+      "audio_sha256": "8f5afc999308ef42e12c24d11d61ededb3edccb1e67c30716b63c3aabd788983",
       "pass": true,
       "result_of": "bundle:4d88fee3ec8a69c21d830d320814b4b4ea122fc8ffdbfea1f66a4902277d02f7"
     },
     {
       "id": "voice_52.mp3",
-      "audio_sha256": "43707854177f3e1ec90510e947c92e539c66a5a0302c3f289733a59969e3e1d6",
+      "audio_sha256": "69bedff2c41a8957dc3dc6411767bed9ebefcc56966ad34befc21705ed98ad68",
       "pass": true,
       "result_of": "bundle:73dc44a5f2912208fe9c004de446f552b90a386e1419a4ce261e49d838fe77ca"
     },
     {
       "id": "voice_53.mp3",
-      "audio_sha256": "c5147025f21730837af22f972b6979e96ed937146c977ae5d0047cc3d83513ed",
+      "audio_sha256": "a2c372ca85bff7e9567c6e64271f28b3573ec615dc7c1d1a5033b4d360d918c0",
       "pass": true,
       "result_of": "bundle:400159edde4fba9e301532f9f8ad9108619b8f4d7f9dddbe8d59e3631abfd8e1"
     },
     {
       "id": "voice_54.mp3",
-      "audio_sha256": "28cba65adcda33a3513cdec68035cbad661c1dabbf230c5771f561224b26cd93",
+      "audio_sha256": "025a49f596bb41df7c72cb7f0ce72e2bbcaa3f769b0d66eed39a4ec67c3a4c7f",
       "pass": true,
       "result_of": "bundle:6a0e0343ac6cea6092fa48b9c08bcfcd6adb976609e7d5fe01792ed84c364834"
     },
     {
       "id": "voice_55.mp3",
-      "audio_sha256": "c435141dff5048bb72203a50cc7cee542ede195a5abd127cb114dc293b3fbada",
+      "audio_sha256": "a9ac2d553886e9d7156e7522c57775e8b253b9c8697174f5196503db9ceda6fb",
       "pass": true,
       "result_of": "bundle:e1e57cc4d1600e1a72586a50bce778281d68c5ff09e0f0ccf998d771ef316eaa"
     },
     {
       "id": "voice_56.mp3",
-      "audio_sha256": "896858ce68128c061eabc2e68ee3e70c226abe8223dfc3670667ec5c6b4c13e2",
+      "audio_sha256": "2dd5671994f732da12b2fa265f85c14af0de9da80d66ec4a23a0ccff0567dd12",
       "pass": true,
       "result_of": "bundle:885f23b546d53368c0c8eaa864e3d0487778b056e1220118843b7f4d0d2df578"
     },
     {
       "id": "voice_57.mp3",
-      "audio_sha256": "7be05ee9c02073dd54d60c84a01bdfa3bbd8a8b1886333322bbc51b86fc20492",
+      "audio_sha256": "9635a8e30b8415ee2614ff160f06998853fca65e6572aa6554b9cea6c8fc161b",
       "pass": true,
       "result_of": "bundle:58b1525058604e235e3384e1a2e6ecd4b9094893ecfa9acfd49781e33b8e84be"
     },
     {
       "id": "voice_58.mp3",
-      "audio_sha256": "d242e8cee9aa74cd3a826f2822e47abaea7785f32705c2126c1986a3fad885c9",
+      "audio_sha256": "863fa01df1fbf1a6238a08d3803c77264ca52e7a0d4984986e0d689eaa084b25",
       "pass": true,
       "result_of": "bundle:a846ca1147238a22ac1f45b758a6b71ca1d4d679b99903892975cf4b324c4d7b"
     },
     {
       "id": "voice_59.mp3",
-      "audio_sha256": "dca064822992ae9f3b5610beb8b053c8e436685e6fbed9ee49b499e32d4d621d",
+      "audio_sha256": "429b41cd3ec6a40c1a4956725ebcd1aa0a67d67b39184322d03962a27e7bde16",
       "pass": true,
-      "result_of": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea"
+      "result_of": "bundle:fc966495bdf3cf4bdda1c64f0d2479c417d872bc60fcf124751f883d275720e3"
     },
     {
       "id": "voice_60.mp3",
-      "audio_sha256": "3ab49bf084dc3c965fa21bc5f84fb95be2fa56c82f78cdebc823784c49b4e4e8",
+      "audio_sha256": "07924c911133f49c166dddf671d3af894596c121e7d31c7675268793c8e2ac6b",
       "pass": true,
       "result_of": "bundle:6d89a73b9ba8f74150fb4af233f65969241b320c30af21cdd253ea488626a9f8"
     },
     {
       "id": "voice_61.mp3",
-      "audio_sha256": "b06ffe3dded2f741e5bd0e3d7b6eae70ed5df8e31e713bb7f82c652532a429ed",
+      "audio_sha256": "5554f669d55de64d470ce3ee68ee9ac78b55fb12a07abb2947cb8796ea499d54",
       "pass": true,
       "result_of": "bundle:36aa921f09295a32e43057d954288347eb887836c5c48a0d431fe4eb17054f79"
     },
     {
       "id": "voice_62.mp3",
-      "audio_sha256": "b08e425e633e38e1ffbc21b9236bf10abcaf6cd4a47cee5169b697849426481c",
+      "audio_sha256": "caa9113f14f59fd7a37b550d77b5a86cd52ecb93fce3d39b1e66bf09fe66e231",
       "pass": true,
       "result_of": "bundle:5ec5e488947df4fac2335998918d2aac8895095289c9664a1ef08ba027ce5c4d"
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "50e391df238d20a7767e6267f3705ea4d55748c551a54d1ab9b76819e0e47a84",
+      "audio_sha256": "da50a614107e13b29edcb2d10224b0bfc5fe09bcc786c6f4b4bee73c1938341b",
       "pass": true,
-      "result_of": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d"
+      "result_of": "bundle:6463b2fec8cfba9c13c6c534f3c3d11b4704afa856a82583e8385933cac12e48"
     },
     {
       "id": "voice_outro.mp3",
-      "audio_sha256": "2c42a120cd3c3d8206326cfcc11bcdd39af2021472bb4c88c46fbaafcdae309c",
+      "audio_sha256": "117568cdf1faab08779d4c071bf323b3ec43958cfe73d6f84467b1036b6aa7da",
       "pass": true,
       "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
     }
   ],
   "audio": [
-    {
-      "id": "bundle:01cc5ae32dcd9ef782c8ed3d1250ef03bdcaa2e56a286103baf570845a59aa7d",
-      "text": "网球为啥给两次发球？其实是抄来的。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 15,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "网球为啥给两次发球?其实是超来的。"
-      },
-      "polyphones": [
-        {
-          "index": 7,
-          "char": "发",
-          "word": "发球",
-          "intended": "fa1",
-          "wrong": [
-            "fa4"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "why": "找不到只读 fa1 的常用字当参考"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 15,
-        "speech_s": 2.987,
-        "cps": 5.02,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "网球 ｜ 为啥 ｜ 给 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 抄 ｜ 来 ｜ 的"
-      }
-    },
     {
       "id": "bundle:0a95d202e48c76a726981f758e89a590c9ab8b58e8c8826b064ee299b9c4653c",
       "text": "第二次机会，只是一份宽容。",
@@ -863,7 +818,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但也有例外,二发全力轰也可能彻底崩掉。萨巴伦卡就是例子,后面会讲道。"
+        "transcript": "但也有例外,二发全力轰也可能彻底崩掉。萨巴伦卡就是例子,后面会讲到。"
       },
       "polyphones": [
         {
@@ -904,11 +859,11 @@
         "ok": true,
         "ref_syllables": 14,
         "deleted": 0,
-        "inserted": 0,
+        "inserted": 1,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "二发,每小时只有一百四十多公里。"
+        "transcript": "阿尔法,每小时只有一百四十多公里。"
       },
       "polyphones": [
         {
@@ -928,11 +883,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 14,
-        "speech_s": 3.199,
-        "cps": 4.38,
+        "speech_s": 3.21,
+        "cps": 4.36,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "二 ｜ 发 ｜ ACE ｜ 每 ｜ 小时 ｜ 只有 ｜ 一百四十 ｜ 多 ｜ 公里"
+        "tokens": "二 ｜ 发 ｜ ACE ｜ 每 ｜ 小时 ｜ 只有 ｜ 一百四十多 ｜ 公里"
       }
     },
     {
@@ -953,7 +908,7 @@
         "substituted": 1,
         "sub_ratio": 0.053,
         "longest_deletion": 0,
-        "transcript": "德约科维奇两次在罚网军赛的冠军点上双误。"
+        "transcript": "德约科维奇两次在罚网局赛的冠军点上双误。"
       },
       "polyphones": [],
       "pauses": {
@@ -964,7 +919,7 @@
         "cps": 6.23,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "德约科维奇 ｜ 两次 ｜ 在 ｜ 法网 ｜ 决赛 ｜ 的 ｜ 冠军 ｜ 点 ｜ 上 ｜ 双 ｜ 误"
+        "tokens": "德约科维奇 ｜ 两 ｜ 次 ｜ 在 ｜ 法网 ｜ 决赛 ｜ 的 ｜ 冠军 ｜ 点 ｜ 上 ｜ 双误"
       }
     },
     {
@@ -1049,18 +1004,18 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年,梅网对新纳,一场双五十三次。"
+        "transcript": "2025年梅网对新娜,一场双五十三次。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 17,
-        "speech_s": 3.019,
-        "cps": 5.63,
+        "speech_s": 2.754,
+        "cps": 6.17,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "二零二五年 ｜ 美 ｜ 网 ｜ 对 ｜ 辛纳 ｜ 一 ｜ 场 ｜ 双 ｜ 误 ｜ 十三次"
+        "tokens": "二零二五年 ｜ 美网 ｜ 对 ｜ 辛纳 ｜ 一 ｜ 场 ｜ 双误 ｜ 十三 ｜ 次"
       }
     },
     {
@@ -1078,10 +1033,10 @@
         "ref_syllables": 32,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.031,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "ATP统计了26年,一发现了平均营75%的分,二发只有52%。"
+        "transcript": "ATP统计了26年,一发进了平均营75%的分,二发只有52%。"
       },
       "polyphones": [
         {
@@ -1113,11 +1068,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 32,
-        "speech_s": 6.451,
-        "cps": 4.96,
+        "speech_s": 6.208,
+        "cps": 5.15,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "ATP ｜ 统计 ｜ 了 ｜ 二十六年 ｜ 一发 ｜ 进 ｜ 了 ｜ 平均 ｜ 赢 ｜ 百分之 ｜ 七十五 ｜ 的 ｜ 分 ｜ 二 ｜ 发 ｜ 只有 ｜ 百分之 ｜ 五十二"
+        "tokens": "ATP ｜ 统计 ｜ 了 ｜ 二十六 ｜ 年 ｜ 一 ｜ 发进 ｜ 了 ｜ 平均 ｜ 赢 ｜ 百分之七十五 ｜ 的 ｜ 分 ｜ 二发 ｜ 只有 ｜ 百分之五十二"
       }
     },
     {
@@ -1145,11 +1100,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 10,
-        "speech_s": 1.875,
-        "cps": 5.33,
+        "speech_s": 1.928,
+        "cps": 5.19,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "一年 ｜ 后 ｜ 她 ｜ 拿下 ｜ 澳 ｜ 网 ｜ 冠军"
+        "tokens": "一年 ｜ 后 ｜ 她 ｜ 拿下 ｜ 澳网 ｜ 冠军"
       }
     },
     {
@@ -1202,11 +1157,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 19,
-        "speech_s": 3.104,
-        "cps": 6.12,
+        "speech_s": 3.189,
+        "cps": 5.96,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "很快 ｜ 就 ｜ 有人 ｜ 站 ｜ 起来 ｜ 上手 ｜ 发 ｜ 发球 ｜ 方 ｜ 开始 ｜ 占上风"
+        "tokens": "很快 ｜ 就 ｜ 有人 ｜ 站 ｜ 起来 ｜ 上 ｜ 手发 ｜ 发 ｜ 球方 ｜ 开始 ｜ 占上风"
       }
     },
     {
@@ -1283,7 +1238,7 @@
         "cps": 5.08,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "一九九六年 ｜ 美 ｜ 网 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 七"
+        "tokens": "一九九六年 ｜ 美网 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 七"
       }
     },
     {
@@ -1304,7 +1259,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "规则还是两次。二发誓在保护弱者,还是给强者开挂。"
+        "transcript": "规则还是两次。二发是在保护弱者,还是给强者开挂。"
       },
       "polyphones": [
         {
@@ -1321,7 +1276,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.383,
+              "score": 0.399,
               "confidence": "medium",
               "near": null
             }
@@ -1354,7 +1309,7 @@
             {
               "wrong": "huan2",
               "verdict": "uncertain",
-              "score": -0.177,
+              "score": -0.151,
               "confidence": null,
               "near": null
             }
@@ -1391,7 +1346,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "游的表演赛已经只给一次发球,发球得分率降到50%左右,跟循回赛的二发差不多as基本消失。"
+        "transcript": "有的表演赛已经只给一次发球,发球得分率降到50%左右,跟循回赛的2发差不多,Ace基本消失。"
       },
       "polyphones": [
         {
@@ -1448,11 +1403,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 41,
-        "speech_s": 6.896,
-        "cps": 5.95,
+        "speech_s": 6.917,
+        "cps": 5.93,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "有的 ｜ 表演赛 ｜ 已经 ｜ 只 ｜ 给 ｜ 一次 ｜ 发球 ｜ 发球 ｜ 得分率 ｜ 降到 ｜ 百分之 ｜ 五十 ｜ 左右 ｜ 跟 ｜ 巡回 ｜ 赛 ｜ 的 ｜ 二发 ｜ 差不多 ｜ ACE ｜ 基本 ｜ 消失"
+        "tokens": "有的 ｜ 表演赛 ｜ 已经 ｜ 只 ｜ 给 ｜ 一次 ｜ 发球 ｜ 发球 ｜ 得分率 ｜ 降到 ｜ 百分之五十 ｜ 左右 ｜ 跟 ｜ 巡回赛 ｜ 的 ｜ 二发 ｜ 差不多 ｜ ACE ｜ 基本 ｜ 消失"
       }
     },
     {
@@ -1502,21 +1457,21 @@
         "ref_syllables": 26,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.038,
         "longest_deletion": 0,
-        "transcript": "1877年,第一届温网开打前,全英俱乐部三个会员定了规则。"
+        "transcript": "1877年,第一届温网开打前,全英俊乐部三个会员定了规则。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 26,
-        "speech_s": 4.28,
-        "cps": 6.08,
+        "speech_s": 4.29,
+        "cps": 6.06,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "一八七七年 ｜ 第一届 ｜ 温网 ｜ 开打 ｜ 前 ｜ 全英俱乐部 ｜ 三个 ｜ 会员 ｜ 定 ｜ 了 ｜ 规则"
+        "tokens": "一八七七年 ｜ 第一 ｜ 届 ｜ 温网 ｜ 开打 ｜ 前 ｜ 全 ｜ 英 ｜ 俱乐部 ｜ 三 ｜ 个 ｜ 会员 ｜ 定 ｜ 了 ｜ 规则"
       }
     },
     {
@@ -1537,7 +1492,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "支持的人不只是网友,纳达尔说过,取消二发不是蠢主意。"
+        "transcript": "支持的人不只是网友,纳达尔说过,取消而发不是纯主义。"
       },
       "polyphones": [
         {
@@ -1557,11 +1512,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 23,
-        "speech_s": 4.237,
-        "cps": 5.43,
+        "speech_s": 4.184,
+        "cps": 5.5,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "支持 ｜ 的 ｜ 人 ｜ 不只 ｜ 是 ｜ 网友 ｜ 纳达尔 ｜ 说 ｜ 过 ｜ 取消 ｜ 二发 ｜ 不是 ｜ 蠢 ｜ 主意"
+        "tokens": "支持 ｜ 的 ｜ 人 ｜ 不只 ｜ 是 ｜ 网友 ｜ 纳达尔 ｜ 说 ｜ 过 ｜ 取消 ｜ 二发 ｜ 不是 ｜ 蠢主意"
       }
     },
     {
@@ -1582,7 +1537,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "二发都底,他们的一发才敢全理论。两次发球,其实是在给一发强的人加成。"
+        "transcript": "二发都底,他们的一发才敢全立论。两次发球,其实是在给一发强的人加成。"
       },
       "polyphones": [
         {
@@ -1638,11 +1593,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 30,
-        "speech_s": 5.657,
-        "cps": 5.3,
+        "speech_s": 5.636,
+        "cps": 5.32,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "二发兜底 ｜ 他们 ｜ 的 ｜ 一发 ｜ 才 ｜ 敢 ｜ 全力 ｜ 抡 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 在 ｜ 给 ｜ 一发 ｜ 强 ｜ 的 ｜ 人 ｜ 加成"
+        "tokens": "二 ｜ 发 ｜ 兜底 ｜ 他们 ｜ 的 ｜ 一发 ｜ 才 ｜ 敢 ｜ 全力 ｜ 抡 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 在 ｜ 给 ｜ 一发 ｜ 强 ｜ 的 ｜ 人 ｜ 加成"
       }
     },
     {
@@ -1736,6 +1691,51 @@
       }
     },
     {
+      "id": "bundle:6463b2fec8cfba9c13c6c534f3c3d11b4704afa856a82583e8385933cac12e48",
+      "text": "网球为什么给两次发球？其实是抄来的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "网球为什么给两次发球?其实是抄来的。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.008,
+        "cps": 5.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "网球 ｜ 为什么 ｜ 给 ｜ 两次 ｜ 发球 ｜ 其实 ｜ 是 ｜ 抄 ｜ 来 ｜ 的"
+      }
+    },
+    {
       "id": "bundle:64aa2fd7cf43b17e9e81a8822626edbddbcfcce7165d3142e073bfc23332685c",
       "text": "这场赌局值不值？只看二发，他输了：二发得分率，比巡回赛平均低三个百分点左右。",
       "pass": true,
@@ -1753,7 +1753,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "这场赌局值不值,只看二发,他输了。二发得分率比循回赛平均低三个百分点左右。"
+        "transcript": "这场赌局直不直,只看二发,他输了。二发的分率比循回赛平均第三个百分点左右。"
       },
       "polyphones": [
         {
@@ -1798,11 +1798,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 33,
-        "speech_s": 6.451,
-        "cps": 5.12,
+        "speech_s": 6.409,
+        "cps": 5.15,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "这 ｜ 场 ｜ 赌局 ｜ 值 ｜ 不值 ｜ 只 ｜ 看 ｜ 二发 ｜ 他 ｜ 输 ｜ 了 ｜ 二发 ｜ 得分 ｜ 率 ｜ 比 ｜ 巡回 ｜ 赛 ｜ 平均 ｜ 低 ｜ 三个百分点 ｜ 左右"
+        "tokens": "这 ｜ 场 ｜ 赌局 ｜ 值 ｜ 不值 ｜ 只 ｜ 看 ｜ 二 ｜ 发 ｜ 他 ｜ 输 ｜ 了 ｜ 二发 ｜ 得分率 ｜ 比 ｜ 巡回赛 ｜ 平均 ｜ 低 ｜ 三个百分点 ｜ 左右"
       }
     },
     {
@@ -1864,7 +1864,7 @@
             {
               "wrong": "zhong4",
               "verdict": "unreliable",
-              "score": -0.063,
+              "score": -0.061,
               "confidence": null,
               "near": null
             }
@@ -1925,7 +1925,7 @@
         "cps": 5.33,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "去年 ｜ 温网 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 打 ｜ 出 ｜ 了 ｜ 温网 ｜ 史 ｜ 上 ｜ 最 ｜ 快 ｜ 的 ｜ 发球"
+        "tokens": "去年 ｜ 温网 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 打出 ｜ 了 ｜ 温网史 ｜ 上 ｜ 最 ｜ 快 ｜ 的 ｜ 发球"
       }
     },
     {
@@ -1953,8 +1953,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 15,
-        "speech_s": 2.669,
-        "cps": 5.62,
+        "speech_s": 2.68,
+        "cps": 5.6,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "布勃利克 ｜ 说 ｜ 这 ｜ 拿 ｜ 走 ｜ 了 ｜ 我 ｜ 最好 ｜ 的 ｜ 武器"
@@ -2055,8 +2055,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 18,
-        "speech_s": 3.189,
-        "cps": 5.65,
+        "speech_s": 3.178,
+        "cps": 5.66,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "那时候 ｜ 大多数人 ｜ 下手 ｜ 发球 ｜ 发球 ｜ 根本 ｜ 不 ｜ 吓人"
@@ -2097,7 +2097,7 @@
             {
               "wrong": "huan2",
               "verdict": "uncertain",
-              "score": 0.002,
+              "score": 0.027,
               "confidence": null,
               "near": null
             }
@@ -2121,11 +2121,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 15,
-        "speech_s": 2.68,
-        "cps": 5.6,
+        "speech_s": 2.733,
+        "cps": 5.49,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "还有 ｜ 一条 ｜ 每 ｜ 一 ｜ 分 ｜ 发球 ｜ 员 ｜ 有 ｜ 两次 ｜ 机会"
+        "tokens": "还有 ｜ 一条 ｜ 每 ｜ 一 ｜ 分 ｜ 发 ｜ 球员 ｜ 有 ｜ 两 ｜ 次 ｜ 机会"
       }
     },
     {
@@ -2146,7 +2146,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "实在不行,他还有下手发球。2022年温网,他一举李联发六个下手发球。"
+        "transcript": "实在不行,他还有下手发球。2022年温网,他一举李连发六个下手发球。"
       },
       "polyphones": [
         {
@@ -2163,7 +2163,7 @@
             {
               "wrong": "hang2",
               "verdict": "correct",
-              "score": 0.475,
+              "score": 0.487,
               "confidence": "medium",
               "near": null
             }
@@ -2179,13 +2179,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "uncertain",
-              "score": 0.149,
-              "confidence": null,
+              "verdict": "correct",
+              "score": 0.237,
+              "confidence": "low",
               "near": null
             }
           ],
@@ -2232,8 +2232,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 30,
-        "speech_s": 4.958,
-        "cps": 6.05,
+        "speech_s": 4.989,
+        "cps": 6.01,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "实在 ｜ 不行 ｜ 他 ｜ 还有 ｜ 下手 ｜ 发球 ｜ 二零二二年 ｜ 温网 ｜ 他 ｜ 一 ｜ 局 ｜ 里 ｜ 连发 ｜ 六个 ｜ 下手 ｜ 发球"
@@ -2257,7 +2257,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "鲁德宁愿看失派的回合。"
+        "transcript": "鲁德 宁愿看实派的回合。"
       },
       "polyphones": [
         {
@@ -2274,7 +2274,7 @@
             {
               "wrong": "ning2",
               "verdict": "correct",
-              "score": 0.3,
+              "score": 0.295,
               "confidence": "low",
               "near": null
             }
@@ -2286,8 +2286,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 10,
-        "speech_s": 1.811,
-        "cps": 5.52,
+        "speech_s": 2.034,
+        "cps": 4.92,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "鲁德 ｜ 宁愿 ｜ 看 ｜ 十 ｜ 拍 ｜ 的 ｜ 回合"
@@ -2388,11 +2388,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 10,
-        "speech_s": 1.822,
-        "cps": 5.49,
+        "speech_s": 1.748,
+        "cps": 5.72,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "也 ｜ 有人 ｜ 把 ｜ 二发 ｜ 当 ｜ 一发 ｜ 打"
+        "tokens": "也有 ｜ 人 ｜ 把 ｜ 二发 ｜ 当 ｜ 一 ｜ 发打"
       }
     },
     {
@@ -2420,8 +2420,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 11,
-        "speech_s": 2.161,
-        "cps": 5.09,
+        "speech_s": 2.15,
+        "cps": 5.12,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "直到 ｜ 第四个 ｜ 他 ｜ 才 ｜ 拿下 ｜ 冠军"
@@ -2442,10 +2442,10 @@
         "ref_syllables": 18,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.056,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "赖场他的二发平均每小时197公里。"
+        "transcript": "那场他的二发平均每小时197公里。"
       },
       "polyphones": [
         {
@@ -2465,11 +2465,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 18,
-        "speech_s": 2.924,
-        "cps": 6.16,
+        "speech_s": 2.903,
+        "cps": 6.2,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "那 ｜ 场 ｜ 他 ｜ 的 ｜ 二发 ｜ 平均 ｜ 每 ｜ 小时 ｜ 一百九十七公里"
+        "tokens": "那 ｜ 场 ｜ 他 ｜ 的 ｜ 二发 ｜ 平均 ｜ 每 ｜ 小时 ｜ 一百九十七 ｜ 公里"
       }
     },
     {
@@ -2519,10 +2519,10 @@
         "ref_syllables": 19,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.053,
         "longest_deletion": 0,
-        "transcript": "一发得分率高八个百分点,二发只高不到一个。"
+        "transcript": "一发都分率高八个百分点,二发只高不到一个。"
       },
       "polyphones": [
         {
@@ -2567,11 +2567,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 19,
-        "speech_s": 3.061,
-        "cps": 6.21,
+        "speech_s": 3.114,
+        "cps": 6.1,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "一发 ｜ 得分 ｜ 率 ｜ 高 ｜ 八个百分点 ｜ 二发 ｜ 只 ｜ 高 ｜ 不 ｜ 到 ｜ 一个"
+        "tokens": "一发 ｜ 得 ｜ 分率 ｜ 高 ｜ 八个百分点 ｜ 二发 ｜ 只 ｜ 高 ｜ 不 ｜ 到 ｜ 一个"
       }
     },
     {
@@ -2637,18 +2637,18 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "代价是双物﹑它连续几年,都是全循回赛双物最多的人。"
+        "transcript": "代价是双物,他连续几年都是全循回赛双物最多的人。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 22,
-        "speech_s": 4.237,
-        "cps": 5.19,
+        "speech_s": 4.227,
+        "cps": 5.21,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "代价 ｜ 是 ｜ 双 ｜ 误 ｜ 他 ｜ 连续 ｜ 几年 ｜ 都是 ｜ 全 ｜ 巡回 ｜ 赛 ｜ 双 ｜ 误 ｜ 最多 ｜ 的 ｜ 人"
+        "tokens": "代价 ｜ 是 ｜ 双误 ｜ 他 ｜ 连续 ｜ 几年 ｜ 都 ｜ 是 ｜ 全 ｜ 巡回赛 ｜ 双误 ｜ 最多 ｜ 的 ｜ 人"
       }
     },
     {
@@ -2666,10 +2666,10 @@
         "ref_syllables": 13,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.077,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "长房型场地 15 30 40 级分。"
+        "transcript": "常防刑场地 15 30 40 级分。"
       },
       "polyphones": [
         {
@@ -2686,9 +2686,9 @@
             {
               "wrong": "zhang3",
               "verdict": "correct",
-              "score": 0.42,
-              "confidence": "medium",
-              "near": null
+              "score": 0.964,
+              "confidence": "high",
+              "near": "intended"
             }
           ],
           "ok_refs": "偿尝常"
@@ -2698,11 +2698,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 13,
-        "speech_s": 3.072,
-        "cps": 4.23,
+        "speech_s": 3.061,
+        "cps": 4.25,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "长方形 ｜ 场地 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 计分"
+        "tokens": "长方 ｜ 形场地 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 计分"
       }
     },
     {
@@ -2755,11 +2755,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 12,
-        "speech_s": 2.055,
-        "cps": 5.84,
+        "speech_s": 2.066,
+        "cps": 5.81,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "有 ｜ 了 ｜ 二发 ｜ 兜底 ｜ 一发 ｜ 就 ｜ 敢 ｜ 冒险"
+        "tokens": "有 ｜ 了 ｜ 二 ｜ 发 ｜ 兜底 ｜ 一发 ｜ 就 ｜ 敢 ｜ 冒险"
       }
     },
     {
@@ -2777,10 +2777,10 @@
         "ref_syllables": 14,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.071,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "规则没有动发球次数,动的是常遍。"
+        "transcript": "规则没有动发球次数,动的是常地。"
       },
       "polyphones": [
         {
@@ -2800,11 +2800,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 14,
-        "speech_s": 2.288,
-        "cps": 6.12,
+        "speech_s": 2.309,
+        "cps": 6.06,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "规则 ｜ 没有 ｜ 动 ｜ 发球 ｜ 次数 ｜ 动 ｜ 的 ｜ 是 ｜ 场地"
+        "tokens": "规则 ｜ 没有 ｜ 动发 ｜ 球 ｜ 次数 ｜ 动 ｜ 的 ｜ 是 ｜ 场地"
       }
     },
     {
@@ -2825,7 +2825,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可只给一发,就会变成推过去。Base没了,大力发球的看点也没了,弱者也少了一层保险。"
+        "transcript": "可只给一发,就会变成推过去。Ace没了,大力发球的看点也没了,弱者也少了一层保险。"
       },
       "polyphones": [
         {
@@ -2996,7 +2996,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "伊斯内尔、卡罗维奇这些发球机器,二发得分率,反而高于平均。"
+        "transcript": "伊斯内尔、卡洛维奇、这些发球机器、二发得分率,反而高于平均。"
       },
       "polyphones": [
         {
@@ -3041,11 +3041,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 25,
-        "speech_s": 4.354,
-        "cps": 5.74,
+        "speech_s": 4.343,
+        "cps": 5.76,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "伊斯内尔 ｜ 卡洛维 ｜ 奇 ｜ 这些 ｜ 发球 ｜ 机器 ｜ 二发 ｜ 得分 ｜ 率 ｜ 反而 ｜ 高于 ｜ 平均"
+        "tokens": "伊斯内尔 ｜ 卡洛维 ｜ 奇 ｜ 这些 ｜ 发球 ｜ 机器 ｜ 二发 ｜ 得分率 ｜ 反而 ｜ 高于 ｜ 平均"
       }
     },
     {
@@ -3073,11 +3073,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 23,
-        "speech_s": 3.93,
-        "cps": 5.85,
+        "speech_s": 3.962,
+        "cps": 5.81,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "而 ｜ 他 ｜ 拿下 ｜ 四个 ｜ 冠军 ｜ 的 ｜ 最好 ｜ 赛季 ｜ 恰恰 ｜ 是 ｜ 双 ｜ 误 ｜ 最少 ｜ 的 ｜ 一年"
+        "tokens": "而 ｜ 他 ｜ 拿下 ｜ 四个 ｜ 冠军 ｜ 的 ｜ 最好 ｜ 赛季 ｜ 恰恰 ｜ 是 ｜ 双误 ｜ 最少 ｜ 的 ｜ 一 ｜ 年"
       }
     },
     {
@@ -3140,10 +3140,10 @@
         "ref_syllables": 26,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.038,
         "longest_deletion": 0,
-        "transcript": "网将了,发球线从离网26英尺,一路缩到今天的21英尺。"
+        "transcript": "网下了,发球线从离网26英尺,一路缩到今天的21英尺。"
       },
       "polyphones": [
         {
@@ -3163,11 +3163,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 26,
-        "speech_s": 4.83,
-        "cps": 5.38,
+        "speech_s": 4.852,
+        "cps": 5.36,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "网 ｜ 降 ｜ 了 ｜ 发球 ｜ 线 ｜ 从 ｜ 离 ｜ 网 ｜ 二十六英尺 ｜ 一路 ｜ 缩 ｜ 到 ｜ 今天 ｜ 的 ｜ 二十一英尺"
+        "tokens": "网降 ｜ 了 ｜ 发球线 ｜ 从 ｜ 离网 ｜ 二十六 ｜ 英尺 ｜ 一路 ｜ 缩 ｜ 到 ｜ 今天 ｜ 的 ｜ 二十一 ｜ 英尺"
       }
     },
     {
@@ -3195,11 +3195,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 14,
-        "speech_s": 3.178,
-        "cps": 4.41,
+        "speech_s": 3.21,
+        "cps": 4.36,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "下 ｜ 一 ｜ 分 ｜ 赛点 ｜ 对面 ｜ 的 ｜ 科雷蒂亚 ｜ 双 ｜ 误"
+        "tokens": "下 ｜ 一 ｜ 分 ｜ 赛点 ｜ 对面 ｜ 的 ｜ 科雷蒂亚 ｜ 双误"
       }
     },
     {
@@ -3227,8 +3227,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 14,
-        "speech_s": 2.892,
-        "cps": 4.84,
+        "speech_s": 2.903,
+        "cps": 4.82,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
@@ -3297,7 +3297,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "数据给的答案是二发可以赌但别全压。"
+        "transcript": "数据给的答案是二发可以赌,但别全压。"
       },
       "polyphones": [
         {
@@ -3342,7 +3342,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "现在还有人干脆不要保险。"
+        "transcript": "现在,还有人干脆不要保险。"
       },
       "polyphones": [
         {
@@ -3359,7 +3359,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.521,
+              "score": 0.512,
               "confidence": "medium",
               "near": null
             }
@@ -3393,10 +3393,10 @@
         "ref_syllables": 11,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.091,
         "longest_deletion": 0,
-        "transcript": "桑普拉斯病到在场边嘔吐。"
+        "transcript": "桑普拉斯并到在场边嘔托。"
       },
       "polyphones": [
         {
@@ -3413,7 +3413,7 @@
             {
               "wrong": "tu3",
               "verdict": "correct",
-              "score": 0.725,
+              "score": 0.7,
               "confidence": "medium",
               "near": null
             }
@@ -3482,7 +3482,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "教练的建议是,大锤不用每次斗轮,让对手猜不到,才最可怕。"
+        "transcript": "教练的建议是,大锤不用每次斗轮,让对手猜不到才最可怕。"
       },
       "polyphones": [],
       "pauses": {
@@ -3514,7 +3514,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "数据站在哪边,att发球最猛的四分之一比最弱的四分之一。"
+        "transcript": "数据站在哪边?ATP发球最猛的四分之一比最弱的四分之一。"
       },
       "polyphones": [
         {
@@ -3534,11 +3534,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 23,
-        "speech_s": 4.587,
-        "cps": 5.01,
+        "speech_s": 4.544,
+        "cps": 5.06,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "数据 ｜ 站 ｜ 在 ｜ 哪边 ｜ ATP ｜ 发球 ｜ 最 ｜ 猛 ｜ 的 ｜ 四分之一 ｜ 比 ｜ 最 ｜ 弱 ｜ 的 ｜ 四分之一"
+        "tokens": "数据 ｜ 站 ｜ 在 ｜ 哪边 ｜ ATP ｜ 发球 ｜ 最 ｜ 猛 ｜ 的 ｜ 四分之一 ｜ 比 ｜ 最弱 ｜ 的 ｜ 四分之一"
       }
     },
     {
@@ -3559,7 +3559,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可大多数人的二发承载的是心理。"
+        "transcript": "可大多数人的二法承载的是心理。"
       },
       "polyphones": [
         {
@@ -3632,76 +3632,6 @@
       }
     },
     {
-      "id": "bundle:e78c03aa1ef9c87bb3ed585c0a6ffd0c7fbd0019e01c6562123d7aeb912742ea",
-      "text": "而且二发是可以练的：萨巴伦卡从一场二十一次双误，练到去年二发得分率女子第二。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 35,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "而且二发是可以练的,萨巴伦卡从一场21次双误练到去年二发得分率女子第二。"
-      },
-      "polyphones": [
-        {
-          "index": 3,
-          "char": "发",
-          "word": "发",
-          "intended": "fa1",
-          "wrong": [
-            "fa4"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "why": "找不到只读 fa1 的常用字当参考"
-        },
-        {
-          "index": 29,
-          "char": "发",
-          "word": "发",
-          "intended": "fa1",
-          "wrong": [
-            "fa4"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "why": "找不到只读 fa1 的常用字当参考"
-        },
-        {
-          "index": 30,
-          "char": "得",
-          "word": "得",
-          "intended": "de2",
-          "wrong": [
-            "dei3"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "runs": [],
-          "ok_refs": "德锝"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 35,
-        "speech_s": 6.006,
-        "cps": 5.83,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "而且 ｜ 二发 ｜ 是 ｜ 可以 ｜ 练 ｜ 的 ｜ 萨巴伦卡 ｜ 从 ｜ 一 ｜ 场 ｜ 二十一次 ｜ 双 ｜ 误 ｜ 练 ｜ 到 ｜ 去年 ｜ 二发 ｜ 得分 ｜ 率 ｜ 女子 ｜ 第二"
-      }
-    },
-    {
       "id": "bundle:e8ae6c032eb237d5f2abc155479b9044d76de88d861071f9462e2a521f674f7e",
       "text": "二零零一年温网决赛，伊万尼塞维奇手握冠军点。双误。",
       "pass": true,
@@ -3719,7 +3649,7 @@
         "substituted": 1,
         "sub_ratio": 0.045,
         "longest_deletion": 0,
-        "transcript": "2001年温网决赛,伊万尼塞维奇手卧冠军点。双卧"
+        "transcript": "2001年温网决赛,伊万尼塞维奇手卧冠军典。双卧"
       },
       "polyphones": [],
       "pauses": {
@@ -3751,7 +3681,7 @@
         "substituted": 1,
         "sub_ratio": 0.027,
         "longest_deletion": 0,
-        "transcript": "去年二发最快的前五名礼——梅佩奇、佩里卡尔和奥佩尔卡的一发,也是全循回赛最快的两个。"
+        "transcript": "去年二发最快的前五名礼,姆佩奇、佩里卡尔和奥佩尔卡的一发,也是全球回赛最快的两个。"
       },
       "polyphones": [
         {
@@ -3787,7 +3717,77 @@
         "cps": 5.59,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "去年 ｜ 二发 ｜ 最 ｜ 快 ｜ 的 ｜ 前五名 ｜ 里 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 和 ｜ 奥佩尔卡 ｜ 的 ｜ 一发 ｜ 也是 ｜ 全 ｜ 巡回 ｜ 赛 ｜ 最 ｜ 快 ｜ 的 ｜ 两个"
+        "tokens": "去年 ｜ 二 ｜ 发 ｜ 最 ｜ 快 ｜ 的 ｜ 前五名 ｜ 里 ｜ 姆佩奇 ｜ 佩里卡尔 ｜ 和 ｜ 奥佩尔卡 ｜ 的 ｜ 一发 ｜ 也是 ｜ 全 ｜ 巡回赛 ｜ 最 ｜ 快 ｜ 的 ｜ 两个"
+      }
+    },
+    {
+      "id": "bundle:fc966495bdf3cf4bdda1c64f0d2479c417d872bc60fcf124751f883d275720e3",
+      "text": "二发是可以练的：萨巴伦卡从一场二十一次双误，练到去年，二发得分率女子第二。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "二发是可以练的,萨巴伦卡从一场21次双误练到去年,二发得分率女子第二。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 29,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 5.784,
+        "cps": 5.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二发 ｜ 是 ｜ 可以 ｜ 练 ｜ 的 ｜ 萨巴伦卡 ｜ 从 ｜ 一 ｜ 场 ｜ 二十一次 ｜ 双 ｜ 误 ｜ 练 ｜ 到 ｜ 去年 ｜ 二发 ｜ 得分 ｜ 率 ｜ 女子 ｜ 第二"
       }
     }
   ]
