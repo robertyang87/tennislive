@@ -18,6 +18,25 @@ import scoreboard_mask_cache as C
 import wta_scoreboard as W
 
 
+
+def test_function_identity_ignores_string_interning_but_binds_code_and_defaults():
+    # Executing/importing code can intern a shared string on Python 3.11.
+    # Its value and the detector must still produce the same persistent key.
+    namespace = {}
+    exec('def detector(value=1):\n return ("cache identity has spaces 928364", value)', namespace)
+    detector = namespace['detector']
+    before = C._function_identity(detector)
+    interned = sys.intern(detector.__code__.co_consts[1])
+    assert interned == detector()[0]
+    assert C._function_identity(detector) == before
+    detector.__defaults__ = (2,)
+    assert C._function_identity(detector) != before
+    detector.__defaults__ = (1,)
+    detector.__code__ = detector.__code__.replace(
+        co_consts=(None, 'different actual detector constant'))
+    assert C._function_identity(detector) != before
+
+
 def _geometry(width, header=False):
     body = (0, 36, width, 154)
     tag = (0, 0, 230, 28) if header else None

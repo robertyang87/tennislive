@@ -63,7 +63,10 @@ def _function_identity(fn) -> dict:
     def relocated(code):
         return code.replace(co_filename='', co_consts=tuple(
             relocated(v) if isinstance(v, types.CodeType) else v for v in code.co_consts))
-    identity = {'code': hashlib.sha256(marshal.dumps(relocated(fn.__code__))).hexdigest()}
+    # Format 3+ encodes reference/interning flags that can change on first
+    # execution under Python 3.11 without any bytecode/input change. Format 2
+    # serializes the same complete code values without those object-graph flags.
+    identity = {'code': hashlib.sha256(marshal.dumps(relocated(fn.__code__), 2)).hexdigest()}
     for name, value in [('defaults', fn.__defaults__), ('kwdefaults', fn.__kwdefaults__)]:
         try:
             identity[name] = _freeze(value)

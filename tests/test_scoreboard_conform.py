@@ -61,7 +61,7 @@ def assert_complete_score(segment):
     assert alpha[848-y0, 350-x0] == 0  # court next to the narrow header
 
 
-def test_real_720_frame_conform_retains_both_rows_and_scores(real_sources, tmp_path):
+def test_real_720_frame_conform_retains_both_rows_and_scores(real_sources, tmp_path, capsys):
     segments = [point('main'), point()]
     report = cache.resolve_masks_cached('wta', real_sources, segments, tmp_path / 'cold',
         '25', 0, decode_transforms={'extended': TRANSFORM}, cache_root=tmp_path / 'cache')
@@ -76,6 +76,9 @@ def test_real_720_frame_conform_retains_both_rows_and_scores(real_sources, tmp_p
     warm = [point('main'), point()]
     cache.resolve_masks_cached('wta', real_sources, warm, tmp_path / 'warm', '25', 0,
         decode_transforms={'extended': TRANSFORM}, cache_root=tmp_path / 'cache')
+    messages = capsys.readouterr().out
+    assert 'Inputs changed during native mask scan' not in messages
+    assert '[score-mask-cache] hit ' in messages
     for a, b in zip(segments, warm):
         assert_complete_score(b)
         assert Path(a.score_inset_mask).read_bytes() == Path(b.score_inset_mask).read_bytes()
