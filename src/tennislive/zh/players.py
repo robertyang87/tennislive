@@ -497,6 +497,7 @@ PLAYER_ZH: dict[str, str] = {
     "Andy Murray": "穆雷",
     "Andre Agassi": "阿加西",
     "Pete Sampras": "桑普拉斯",
+    "Alex Corretja": "科雷蒂亚",
     "Boris Becker": "贝克尔",
     "Bjorn Borg": "博格",
     "John McEnroe": "麦肯罗",

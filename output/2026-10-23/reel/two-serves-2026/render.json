@@ -1,0 +1,152 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "678ea4f82b270e8fdc5e0693c86a236b12ffa4604f1c65607669d9b0cc32dff6",
+    "request_count": 62,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-two-serves-2026-678ea4f82b270e8f",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-two-serves-2026-678ea4f82b270e8f/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39945309707"
+  },
+  "cover_seconds": 4.018,
+  "cover_narrated": true,
+  "outro_seconds": 4.122,
+  "layout": "full",
+  "segments_seconds": 320.13,
+  "topbar": null,
+  "film_seconds": 328.28,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 3.144,
+    "1": 2.592,
+    "2": 2.112,
+    "3": 4.008,
+    "4": 3.96,
+    "6": 4.368,
+    "7": 3.216,
+    "8": 5.088,
+    "9": 3.864,
+    "10": 3.48,
+    "11": 3.96,
+    "12": 3.504,
+    "13": 3.984,
+    "14": 2.832,
+    "15": 3.912,
+    "16": 3.096,
+    "17": 5.64,
+    "18": 2.856,
+    "19": 7.248,
+    "20": 3.168,
+    "21": 5.112,
+    "22": 3.72,
+    "23": 2.616,
+    "24": 6.408,
+    "25": 4.08,
+    "26": 5.016,
+    "28": 3.816,
+    "29": 5.736,
+    "30": 7.248,
+    "31": 5.256,
+    "32": 4.728,
+    "33": 4.032,
+    "34": 3.288,
+    "35": 7.416,
+    "36": 5.136,
+    "37": 7.008,
+    "38": 5.4,
+    "39": 3.312,
+    "40": 4.944,
+    "41": 2.64,
+    "42": 2.952,
+    "43": 3.84,
+    "44": 2.976,
+    "45": 4.8,
+    "46": 3.312,
+    "47": 2.664,
+    "48": 2.496,
+    "50": 2.352,
+    "51": 5.016,
+    "52": 2.616,
+    "53": 7.68,
+    "54": 3.48,
+    "55": 5.376,
+    "56": 3.84,
+    "57": 6.456,
+    "58": 6.624,
+    "59": 6.792,
+    "60": 6.24,
+    "61": 5.088,
+    "62": 3.84
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "b8192d6338c48ae35ee0ec3f116b543338833c9f9f86d5e5f02e7c10de7e3fb8",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "two-serves-2026",
+    "received_at": "2026-10-23T11:19:56Z",
+    "artifact_ready_at": "2026-10-23T11:29:35Z",
+    "elapsed_seconds": 579.82,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "393f446bf9b0577a3e9a2966973c39d09c942841d66248ec887bbee35a3183d9",
+    "spec_sha256": "a859893a130817136db05c57b466f49b316374fd0ef929b34429d7a0d94a382c",
+    "run_id": "39945309707",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-23T11:22:34Z",
+        "run_id": "39945309707"
+      }
+    ],
+    "render_seconds": 421.82,
+    "pre_render_seconds": 158.0
+  },
+  "film_sha256": "393f446bf9b0577a3e9a2966973c39d09c942841d66248ec887bbee35a3183d9",
+  "film_bytes": 166380020,
+  "qc_attestation_sha256": "e524be2b37bf91eca1424e31d92544cf894d3848afcb12ae219d865a587ca40a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-23T11:22:34Z",
+      "run_id": "39945309707"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-23T11:29:39Z",
+      "run_id": "39945309707"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-two-serves-2026/two-serves-2026.mp4",
+  "video_bytes": 166380020,
+  "reattests": [
+    {
+      "at": "2026-10-23T11:38:45Z",
+      "spec_sha256": "764ab7a48622edc474791fa3856782433bf7e9ca11e25d27ea94dd9adabe0636",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/39947241724"
+    }
+  ]
+}

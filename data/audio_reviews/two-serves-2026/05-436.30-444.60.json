@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=qG_MuDVcpE4",
+  "source_sha256": "be3f80df6cc97f63abaed3052c9ea966be939da6ea6093823dcaa2c007b3b9b7",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T11:19:46+00:00",
+  "reviewed_from": 436.3,
+  "reviewed_to": 444.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 436.57,
+      "end": 438.5,
+      "en": "More than I've ever felt out there.",
+      "zh": "这是我在场上感受过最强烈的情绪。"
+    },
+    {
+      "start": 439.71,
+      "end": 443.9,
+      "en": "A double fault ends it and gives Pete Sampras a win.",
+      "zh": "一个双误终结比赛，桑普拉斯赢了"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 be3f80df6cc97f63abaed3052c9ea966be939da6ea6093823dcaa2c007b3b9b7，存于 data/source_asr/qG_MuDVcpE4/small.en.json 与 data/source_asr/qG_MuDVcpE4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

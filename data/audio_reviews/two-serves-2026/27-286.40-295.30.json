@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=JDlWxkbBFV8",
+  "source_sha256": "f96335a82763d5aee62893ef7e061773ffe1055e59a17521ab8b87e53a8742ff",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T11:19:46+00:00",
+  "reviewed_from": 286.4,
+  "reviewed_to": 295.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 287.6,
+      "end": 291.8,
+      "en": "A test for the second serve.",
+      "zh": "考验二发的时候到了。"
+    },
+    {
+      "start": 294.2,
+      "end": 294.9,
+      "en": "And another double.",
+      "zh": "又一个双误。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 f96335a82763d5aee62893ef7e061773ffe1055e59a17521ab8b87e53a8742ff，存于 data/source_asr/JDlWxkbBFV8/small.en.json 与 data/source_asr/JDlWxkbBFV8/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
