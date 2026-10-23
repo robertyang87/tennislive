@@ -1,0 +1,159 @@
+name: import-rg89-chang-lendl-source
+run-name: "import-rg89 · ZTPAUi0nFIs 集合源 [12330,12860]"
+
+# 一次性：《规则里没有对不起》（netcord-apology-2026）的 1989 法网段
+# 集合源存档。Roland-Garros 官方全场 ZTPAUi0nFIs 最高 1280×720，
+# 全场文件 2,655,939,531 字节超过 Release 单附件 2GiB 上限，整场存档
+# 不可能。账号所有者 2026-10-23 批准路线 A（仿 import-sun-cvetkovic-source
+# 先例）：runner 上下载原片、按锚点截 [12330,12860]（原回放绝对秒）
+# 拼成集合源、直传已建好的 Release source-ZTPAUi0nFIs。
+# 集合内时间轴 = 原回放秒 − 12330。本片两分锚点：
+#   下手发球分（穿越擦网）原 [12411,12429] → 集合 [81,99]
+#   赛点二发擦网出界双误 原 [12768,12788] → 集合 [438,458]
+# 本地直传 uploads.github.com 被凭据 401 挡住，故走 runner。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-rg89-chang-lendl-source
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      VIDEO_URL: "https://www.youtube.com/watch?v=ZTPAUi0nFIs"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 安装 YouTube 下载器
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+
+      - name: 恢复 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-import-rg89-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-import-rg89-v1-
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: 回写 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
+      # YouTube 对机房 IP 经常要求 PO token（与 download-video.yml 同款）。
+      - name: 启动 PO token provider
+        continue-on-error: true
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for attempt in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "PO token provider 已就绪"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: 写入 YouTube cookies（如已配置）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
+          fi
+
+      - name: 下载原片（与 download-video 同格式口径）
+        timeout-minutes: 40
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -euo pipefail
+          ARGS=(--js-runtimes node)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
+          fi
+          mkdir -p "$RUNNER_TEMP/download"
+          yt-dlp "${ARGS[@]}" \
+            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
+            --merge-output-format mp4 --remux-video mp4 \
+            -o "$RUNNER_TEMP/download/ZTPAUi0nFIs.%(ext)s" \
+            "$VIDEO_URL"
+          ls -la "$RUNNER_TEMP/download"
+          ffprobe -v error -show_entries stream=width,height,r_frame_rate,codec_type \
+            -show_entries format=duration,size -of default=nw=1 \
+            "$RUNNER_TEMP/download/ZTPAUi0nFIs.mp4"
+
+      - name: 按锚点截集合源 [12330,12860] 并验帧
+        run: |
+          set -euo pipefail
+          SRC="$RUNNER_TEMP/download/ZTPAUi0nFIs.mp4"
+          # 带 15 秒边距先粗剪窗口、再精确切（仿孙心然先例的两段式，
+          # 保证集合 0 点与原回放 12330 秒帧对齐）。
+          ffmpeg -hide_banner -loglevel error -ss 12315 -i "$SRC" -t 560 \
+            -c copy "$RUNNER_TEMP/win.mp4" -y
+          ffmpeg -hide_banner -loglevel error -ss 15 -i "$RUNNER_TEMP/win.mp4" -t 530 \
+            -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 128k \
+            ZTPAUi0nFIs.mp4 -y
+          ffprobe -v error -show_entries stream=width,height,r_frame_rate,codec_type \
+            -show_entries format=duration,size -of default=nw=1 ZTPAUi0nFIs.mp4
+          # 锚点验帧：集合 90s = 原 12420（下手发球分进行中）、
+          # 集合 448s = 原 12778（赛点网带特写回放带）。
+          ffmpeg -hide_banner -loglevel error -ss 90 -i ZTPAUi0nFIs.mp4 \
+            -frames:v 1 chk-a-90.jpg -y
+          ffmpeg -hide_banner -loglevel error -ss 448 -i ZTPAUi0nFIs.mp4 \
+            -frames:v 1 chk-b-448.jpg -y
+          ls -la ZTPAUi0nFIs.mp4 chk-a-90.jpg chk-b-448.jpg
+
+      - name: 锚点验帧图（人工回看用）
+        uses: actions/upload-artifact@v4
+        with:
+          name: rg89-anchor-frames
+          path: |
+            chk-a-90.jpg
+            chk-b-448.jpg
+          retention-days: 7
+
+      - name: 上传到 Release source-ZTPAUi0nFIs
+        run: |
+          gh release upload source-ZTPAUi0nFIs ZTPAUi0nFIs.mp4 --clobber
+          gh release view source-ZTPAUi0nFIs --json assets \
+            --jq '.assets[] | "\(.name) \(.size)"'
