@@ -4,6 +4,9 @@
   "date": "2026-10-24",
   "_column": "网球有故事",
   "tts_backend": "edge",
+  "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
+  "_primary_why": "仪式正片 cere 是本期框架源：告别仪式的致敬大屏、本人发言与挥手告别只此一源，封面帧亦出自此片。",
+  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径，与前两期同）。顶层 voice/rate 没有代码读，不写。",
   "primary": "cere",
   "sources": {
     "cere": "https://github.com/robertyang87/tennislive/releases/download/source-V8QfaokOn58/V8QfaokOn58.mp4",
