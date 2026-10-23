@@ -1,0 +1,123 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "0f0ae703ac3a2569586d16e62f50aad5a7fe23ae8b15c937e371f85934f00b9e",
+    "request_count": 40,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-netcord-apology-2026-0f0ae703ac3a2569",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-netcord-apology-2026-0f0ae703ac3a2569/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39900502293"
+  },
+  "cover_seconds": 2.746,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 349.3,
+  "topbar": null,
+  "film_seconds": 356.59,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.272,
+    "2": 6.48,
+    "3": 5.328,
+    "4": 4.032,
+    "5": 3.072,
+    "6": 6.768,
+    "7": 6.864,
+    "8": 2.232,
+    "9": 5.664,
+    "10": 5.232,
+    "11": 5.064,
+    "12": 3.84,
+    "13": 3.48,
+    "14": 5.304,
+    "15": 2.832,
+    "16": 6.624,
+    "17": 6.912,
+    "19": 8.04,
+    "20": 7.2,
+    "21": 3.912,
+    "22": 6.96,
+    "23": 7.248,
+    "25": 4.704,
+    "26": 7.392,
+    "27": 3.864,
+    "28": 8.928,
+    "29": 3.144,
+    "30": 3.696,
+    "31": 15.48,
+    "32": 10.344,
+    "33": 6.984,
+    "34": 4.848,
+    "35": 6.072,
+    "36": 5.688,
+    "37": 8.232,
+    "38": 6.168,
+    "39": 6.696,
+    "40": 5.184
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "9fd4918288f2ce577c0c2083316926d0916764f6b995b0a803746f7b8a780b10",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "netcord-apology-2026",
+    "received_at": "2026-10-23T04:28:31Z",
+    "artifact_ready_at": "2026-10-23T04:38:12Z",
+    "elapsed_seconds": 581.071,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "01b578fcecc28a01fbe70127ed5e2afa5ff99d0f5d7a76ea1405fdfca28b5863",
+    "spec_sha256": "8a952d14a570f0cf5b88e61b46f59d5944c47bb9a3259710ada28cf2bb93f97c",
+    "run_id": "39900502293",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-23T04:32:10Z",
+        "run_id": "39900502293"
+      }
+    ],
+    "render_seconds": 362.071,
+    "pre_render_seconds": 219.0
+  },
+  "film_sha256": "01b578fcecc28a01fbe70127ed5e2afa5ff99d0f5d7a76ea1405fdfca28b5863",
+  "film_bytes": 175096375,
+  "qc_attestation_sha256": "5dab0fdd13dca6c812cc63657071a44a8f80558911acf6f8ce9508f111a1df2d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-23T04:32:10Z",
+      "run_id": "39900502293"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-23T04:38:17Z",
+      "run_id": "39900502293"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-netcord-apology-2026/netcord-apology-2026.mp4",
+  "video_bytes": 175096375
+}

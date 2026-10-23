@@ -1,0 +1,2103 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "a63be53a54bee864283f92c92208278b503d5619f2d6cf75adf5d0f612de8c0b",
+    "render_inputs_sha256": "9fd4918288f2ce577c0c2083316926d0916764f6b995b0a803746f7b8a780b10",
+    "spec_sha256": "8a952d14a570f0cf5b88e61b46f59d5944c47bb9a3259710ada28cf2bb93f97c",
+    "film_sha256": "01b578fcecc28a01fbe70127ed5e2afa5ff99d0f5d7a76ea1405fdfca28b5863",
+    "inventory_sha256": "905e2c104c4cc21e04c98b803e4420e5d630e79b301136a20080e2fa2b3b161a"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-23T04:41:21+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579",
+      "audio_sha256": "0ebfb748f833242cfcd4fc1b4465436360193d10ce4561f575bf0790f316d669",
+      "pass": true,
+      "result_of": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579"
+    },
+    {
+      "id": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886",
+      "audio_sha256": "8ebd149dc4cedbe78bc540660601547da72043e9d7f61f89cd00a599beef24e9",
+      "pass": true,
+      "result_of": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886"
+    },
+    {
+      "id": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1",
+      "audio_sha256": "20ca2ebca1bd211089bcf00f33f9df3d1a72081e69ed7c1c4b7ba61d61c0997d",
+      "pass": true,
+      "result_of": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1"
+    },
+    {
+      "id": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc",
+      "audio_sha256": "86eab3ac2930fd23913641d293fe945b5242134e2d9afc3d17c0728d3bb71900",
+      "pass": true,
+      "result_of": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc"
+    },
+    {
+      "id": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa",
+      "audio_sha256": "3bdf8b2d21790759e83b0203ee6e0321b01b5e1e8e1e1389567066e432a4d115",
+      "pass": true,
+      "result_of": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa"
+    },
+    {
+      "id": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af",
+      "audio_sha256": "6c50a50f170526697dd2b5cbe9b82bbb7e73f898fe6c254915f792150c285171",
+      "pass": true,
+      "result_of": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af"
+    },
+    {
+      "id": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab",
+      "audio_sha256": "4c9872d814a6bdffdc5824fb3b2b39c4ea43fe0c68ee09f218c4315b5bf739ec",
+      "pass": true,
+      "result_of": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab"
+    },
+    {
+      "id": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a",
+      "audio_sha256": "6fb7976e66fe3d17003567e1785d04ea3f1684c2b905b3f27198e72ec592b105",
+      "pass": true,
+      "result_of": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a"
+    },
+    {
+      "id": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be",
+      "audio_sha256": "d8168bed6b32ed603f4c49f067b71c121077a8a1fdd57a0e4991c601beaaa3a8",
+      "pass": true,
+      "result_of": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be"
+    },
+    {
+      "id": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603",
+      "audio_sha256": "012bb357e57640d2c762a75d084e646e2609a2a79e7ebddcbc6eb82602450230",
+      "pass": true,
+      "result_of": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603"
+    },
+    {
+      "id": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547",
+      "audio_sha256": "b1be800d596ac56c225d3ff7278d284e7a8755d18e26a0c6069b95c4fcf682c5",
+      "pass": true,
+      "result_of": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547"
+    },
+    {
+      "id": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a",
+      "audio_sha256": "ac993ecc92cb5028c1537b0a26fed99d8966c9d9560a93d9eb0b1dd08247dc40",
+      "pass": true,
+      "result_of": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a"
+    },
+    {
+      "id": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f",
+      "audio_sha256": "0cce3d1eae7630eeaffa30890234cde2420022f61c4302c3c6a072b3639ba745",
+      "pass": true,
+      "result_of": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f"
+    },
+    {
+      "id": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac",
+      "audio_sha256": "cac49f4287a3042f789ffb7fbaad7445506c20d0a9e86bc3f69fa4a5d6f7c5f9",
+      "pass": true,
+      "result_of": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac"
+    },
+    {
+      "id": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350",
+      "audio_sha256": "156b3c7bded8bef6e9ca87751d4c944ee4de1c70f3611a748aea4a447fcb4add",
+      "pass": true,
+      "result_of": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350"
+    },
+    {
+      "id": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd",
+      "audio_sha256": "4f17b62cf351bbf2873fb48f625d36d14724bd3196844fb2ce175068c1eaecf7",
+      "pass": true,
+      "result_of": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd"
+    },
+    {
+      "id": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64",
+      "audio_sha256": "ba2811f91f2130e3580aab1f1689f69a13905bd039f6a0bf47368016a87bf5a3",
+      "pass": true,
+      "result_of": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64"
+    },
+    {
+      "id": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc",
+      "audio_sha256": "901a2f373c153962c7f7bd2ca147690307f4b9514b7be662d75f77399f4da565",
+      "pass": true,
+      "result_of": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc"
+    },
+    {
+      "id": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc",
+      "audio_sha256": "554ba30dc2caad2ae7ab10eb64667e07d8a5040c678b5a1de17b721351d9b2a5",
+      "pass": true,
+      "result_of": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc"
+    },
+    {
+      "id": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1",
+      "audio_sha256": "fcee0845cf305669d9e350f5c5f5302c8e8e1f096a99c8cdb3148a8275623eb3",
+      "pass": true,
+      "result_of": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1"
+    },
+    {
+      "id": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d",
+      "audio_sha256": "69585aa469760d615c960a72e7a4ebfc2e6ddc322508470369188d3c549b5759",
+      "pass": true,
+      "result_of": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d"
+    },
+    {
+      "id": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062",
+      "audio_sha256": "801bc7b92bde6fed4c697d09d42f54aad58fb342b3babde1486680ffa1b18e3d",
+      "pass": true,
+      "result_of": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062"
+    },
+    {
+      "id": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873",
+      "audio_sha256": "a5b569c0d9ccb9464e67991cca5082227c5daafdb1fa11187771c9b26299d342",
+      "pass": true,
+      "result_of": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873"
+    },
+    {
+      "id": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e",
+      "audio_sha256": "d7a3d57829f8b68c69f8c12100d0bdd8bd182aee47412720202cba7dee579138",
+      "pass": true,
+      "result_of": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e"
+    },
+    {
+      "id": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d",
+      "audio_sha256": "80ceb580ff9a2a4a51ef05ecf08ff3c0ea52a95eba030f320b3dfad317054336",
+      "pass": true,
+      "result_of": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d"
+    },
+    {
+      "id": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d",
+      "audio_sha256": "b94b801d3f8e397043602d381c2ac671776a62282322abcfff65628cb5d5b7c9",
+      "pass": true,
+      "result_of": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d"
+    },
+    {
+      "id": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b",
+      "audio_sha256": "2576f0cad04e7cdfb7cdaa22ba98064bdc1d4b93e93cc49b25d7a4e389ab86f9",
+      "pass": true,
+      "result_of": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b"
+    },
+    {
+      "id": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27",
+      "audio_sha256": "f3113f72590303dbca991b6f6d135f654d5a1c5acc68aef4a8b0d15a66b9fa1e",
+      "pass": true,
+      "result_of": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27"
+    },
+    {
+      "id": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e",
+      "audio_sha256": "7ad0575ca83e1789c59644b671f839fb01a467f05b5ecc48b139614e984c465d",
+      "pass": true,
+      "result_of": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "299f3b25a8ce6539a31329019333dbc4d2123e0ba6217d553110c1ab0e352737",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a",
+      "audio_sha256": "0319de5664b95b26a9ee84c7dbd9611ce56365d74fb7c75b2df05b6a3e471a43",
+      "pass": true,
+      "result_of": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a"
+    },
+    {
+      "id": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073",
+      "audio_sha256": "cb94cf6d9760c0fd93b1e112b7f0b5314f28a56ec49b5c4c5b8bad7a2054ce16",
+      "pass": true,
+      "result_of": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073"
+    },
+    {
+      "id": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887",
+      "audio_sha256": "bde51fb4f4efe5c476b40a5af3af71868aab1f726ac23ebd8667a82644e06592",
+      "pass": true,
+      "result_of": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887"
+    },
+    {
+      "id": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c",
+      "audio_sha256": "1fdf67b1475de07d17516b87b4fe6d81205cc0c933c07f87bfddd146121f183e",
+      "pass": true,
+      "result_of": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c"
+    },
+    {
+      "id": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b",
+      "audio_sha256": "f4c15145c43d750becccbf9872ec9511898f0deacf8c78c60f7b4adad8d4b57a",
+      "pass": true,
+      "result_of": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b"
+    },
+    {
+      "id": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c",
+      "audio_sha256": "e0adb0b7e55c5d918cec743747896ad89b2f63696c31fd984ca3a52e25650cd8",
+      "pass": true,
+      "result_of": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c"
+    },
+    {
+      "id": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c",
+      "audio_sha256": "c098bef848581d321a58c837005fe078209cbd8a55feafbe0dfeb0b6141424ed",
+      "pass": true,
+      "result_of": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c"
+    },
+    {
+      "id": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17",
+      "audio_sha256": "fefc2bc9823994a02414f2d812d55ad99c5cc7e39b5cb74e4a2a93060b826869",
+      "pass": true,
+      "result_of": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17"
+    },
+    {
+      "id": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c",
+      "audio_sha256": "e6b8059dd60dcbe36a73836b4bb9888f21f8bc530c66c2832bda7556a02422c8",
+      "pass": true,
+      "result_of": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c"
+    },
+    {
+      "id": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46",
+      "audio_sha256": "c7e67e5f272bccc42d2820efa19723b24f2a201cf071ac34b760b6ab67ecc250",
+      "pass": true,
+      "result_of": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "80ceb580ff9a2a4a51ef05ecf08ff3c0ea52a95eba030f320b3dfad317054336",
+      "pass": true,
+      "result_of": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "0cce3d1eae7630eeaffa30890234cde2420022f61c4302c3c6a072b3639ba745",
+      "pass": true,
+      "result_of": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "554ba30dc2caad2ae7ab10eb64667e07d8a5040c678b5a1de17b721351d9b2a5",
+      "pass": true,
+      "result_of": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "f4c15145c43d750becccbf9872ec9511898f0deacf8c78c60f7b4adad8d4b57a",
+      "pass": true,
+      "result_of": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "0ebfb748f833242cfcd4fc1b4465436360193d10ce4561f575bf0790f316d669",
+      "pass": true,
+      "result_of": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "3bdf8b2d21790759e83b0203ee6e0321b01b5e1e8e1e1389567066e432a4d115",
+      "pass": true,
+      "result_of": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "fefc2bc9823994a02414f2d812d55ad99c5cc7e39b5cb74e4a2a93060b826869",
+      "pass": true,
+      "result_of": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "cb94cf6d9760c0fd93b1e112b7f0b5314f28a56ec49b5c4c5b8bad7a2054ce16",
+      "pass": true,
+      "result_of": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "fcee0845cf305669d9e350f5c5f5302c8e8e1f096a99c8cdb3148a8275623eb3",
+      "pass": true,
+      "result_of": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "69585aa469760d615c960a72e7a4ebfc2e6ddc322508470369188d3c549b5759",
+      "pass": true,
+      "result_of": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "f3113f72590303dbca991b6f6d135f654d5a1c5acc68aef4a8b0d15a66b9fa1e",
+      "pass": true,
+      "result_of": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "c098bef848581d321a58c837005fe078209cbd8a55feafbe0dfeb0b6141424ed",
+      "pass": true,
+      "result_of": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "0319de5664b95b26a9ee84c7dbd9611ce56365d74fb7c75b2df05b6a3e471a43",
+      "pass": true,
+      "result_of": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "1fdf67b1475de07d17516b87b4fe6d81205cc0c933c07f87bfddd146121f183e",
+      "pass": true,
+      "result_of": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "e0adb0b7e55c5d918cec743747896ad89b2f63696c31fd984ca3a52e25650cd8",
+      "pass": true,
+      "result_of": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "bde51fb4f4efe5c476b40a5af3af71868aab1f726ac23ebd8667a82644e06592",
+      "pass": true,
+      "result_of": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "e6b8059dd60dcbe36a73836b4bb9888f21f8bc530c66c2832bda7556a02422c8",
+      "pass": true,
+      "result_of": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "c7e67e5f272bccc42d2820efa19723b24f2a201cf071ac34b760b6ab67ecc250",
+      "pass": true,
+      "result_of": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "901a2f373c153962c7f7bd2ca147690307f4b9514b7be662d75f77399f4da565",
+      "pass": true,
+      "result_of": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "156b3c7bded8bef6e9ca87751d4c944ee4de1c70f3611a748aea4a447fcb4add",
+      "pass": true,
+      "result_of": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "4c9872d814a6bdffdc5824fb3b2b39c4ea43fe0c68ee09f218c4315b5bf739ec",
+      "pass": true,
+      "result_of": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "b94b801d3f8e397043602d381c2ac671776a62282322abcfff65628cb5d5b7c9",
+      "pass": true,
+      "result_of": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "a5b569c0d9ccb9464e67991cca5082227c5daafdb1fa11187771c9b26299d342",
+      "pass": true,
+      "result_of": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "b1be800d596ac56c225d3ff7278d284e7a8755d18e26a0c6069b95c4fcf682c5",
+      "pass": true,
+      "result_of": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547"
+    },
+    {
+      "id": "voice_27.mp3",
+      "audio_sha256": "ba2811f91f2130e3580aab1f1689f69a13905bd039f6a0bf47368016a87bf5a3",
+      "pass": true,
+      "result_of": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64"
+    },
+    {
+      "id": "voice_28.mp3",
+      "audio_sha256": "d8168bed6b32ed603f4c49f067b71c121077a8a1fdd57a0e4991c601beaaa3a8",
+      "pass": true,
+      "result_of": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "4f17b62cf351bbf2873fb48f625d36d14724bd3196844fb2ce175068c1eaecf7",
+      "pass": true,
+      "result_of": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd"
+    },
+    {
+      "id": "voice_30.mp3",
+      "audio_sha256": "d7a3d57829f8b68c69f8c12100d0bdd8bd182aee47412720202cba7dee579138",
+      "pass": true,
+      "result_of": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e"
+    },
+    {
+      "id": "voice_31.mp3",
+      "audio_sha256": "7ad0575ca83e1789c59644b671f839fb01a467f05b5ecc48b139614e984c465d",
+      "pass": true,
+      "result_of": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e"
+    },
+    {
+      "id": "voice_32.mp3",
+      "audio_sha256": "2576f0cad04e7cdfb7cdaa22ba98064bdc1d4b93e93cc49b25d7a4e389ab86f9",
+      "pass": true,
+      "result_of": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b"
+    },
+    {
+      "id": "voice_33.mp3",
+      "audio_sha256": "20ca2ebca1bd211089bcf00f33f9df3d1a72081e69ed7c1c4b7ba61d61c0997d",
+      "pass": true,
+      "result_of": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1"
+    },
+    {
+      "id": "voice_34.mp3",
+      "audio_sha256": "6c50a50f170526697dd2b5cbe9b82bbb7e73f898fe6c254915f792150c285171",
+      "pass": true,
+      "result_of": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af"
+    },
+    {
+      "id": "voice_35.mp3",
+      "audio_sha256": "801bc7b92bde6fed4c697d09d42f54aad58fb342b3babde1486680ffa1b18e3d",
+      "pass": true,
+      "result_of": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062"
+    },
+    {
+      "id": "voice_36.mp3",
+      "audio_sha256": "6fb7976e66fe3d17003567e1785d04ea3f1684c2b905b3f27198e72ec592b105",
+      "pass": true,
+      "result_of": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a"
+    },
+    {
+      "id": "voice_37.mp3",
+      "audio_sha256": "ac993ecc92cb5028c1537b0a26fed99d8966c9d9560a93d9eb0b1dd08247dc40",
+      "pass": true,
+      "result_of": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a"
+    },
+    {
+      "id": "voice_38.mp3",
+      "audio_sha256": "cac49f4287a3042f789ffb7fbaad7445506c20d0a9e86bc3f69fa4a5d6f7c5f9",
+      "pass": true,
+      "result_of": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac"
+    },
+    {
+      "id": "voice_39.mp3",
+      "audio_sha256": "86eab3ac2930fd23913641d293fe945b5242134e2d9afc3d17c0728d3bb71900",
+      "pass": true,
+      "result_of": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc"
+    },
+    {
+      "id": "voice_40.mp3",
+      "audio_sha256": "012bb357e57640d2c762a75d084e646e2609a2a79e7ebddcbc6eb82602450230",
+      "pass": true,
+      "result_of": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "8ebd149dc4cedbe78bc540660601547da72043e9d7f61f89cd00a599beef24e9",
+      "pass": true,
+      "result_of": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "299f3b25a8ce6539a31329019333dbc4d2123e0ba6217d553110c1ab0e352737",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579",
+      "text": "阿加西在评论席当场开炮……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "阿加西在评论席当场开炮。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.182,
+        "cps": 5.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿加西 ｜ 在 ｜ 评论 ｜ 席 ｜ 当场 ｜ 开炮"
+      }
+    },
+    {
+      "id": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886",
+      "text": "规则里，没有对不起。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 8,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "规则里,没有对不起。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 8,
+        "speech_s": 1.604,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "规则 ｜ 里 ｜ 没有 ｜ 对不起"
+      }
+    },
+    {
+      "id": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1",
+      "text": "2020年澳网，蒂姆淘汰纳达尔那场，擦网得分至少五次，举手也五次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2020年奥网,地姆淘汰纳达尔那场,擦网得分至少5次,举手也5次。"
+      },
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.109,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2020 ｜ 年 ｜ 澳 ｜ 网 ｜ 蒂姆 ｜ 淘汰 ｜ 纳达尔 ｜ 那 ｜ 场 ｜ 擦 ｜ 网 ｜ 得分 ｜ 至少 ｜ 五次 ｜ 举手 ｜ 也 ｜ 五次"
+      }
+    },
+    {
+      "id": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc",
+      "text": "\"Why should I say I'm sorry when it's the happiest moment of my life?\"我人生最幸福的时刻，为什么要说对不起？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "Why should I say I'm sorry when it's the happiest moment of my life?我人生最幸福的时刻,为什么要说对不起?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 5.802,
+        "cps": 2.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "Why ｜ should ｜ I ｜ say ｜ I'm ｜ sorry ｜ when ｜ it's ｜ the ｜ happiest ｜ moment ｜ of ｜ my ｜ life ｜ 我 ｜ 人生 ｜ 最 ｜ 幸福 ｜ 的 ｜ 时刻 ｜ 为什么 ｜ 要 ｜ 说 ｜ 对不起"
+      }
+    },
+    {
+      "id": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa",
+      "text": "\"Can we please rally to get rid of that 'I apologise for hitting the net cord'?\"我们能不能把“为擦网道歉”这习俗，废了？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "我们能不能把为擦网道歉这习俗,废了?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 5.908,
+        "cps": 2.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "Can ｜ we ｜ please ｜ rally ｜ to ｜ get ｜ rid ｜ of ｜ that ｜ I ｜ apologise ｜ for ｜ hitting ｜ the ｜ net ｜ cord ｜ 我们能不能 ｜ 把 ｜ 为 ｜ 擦网 ｜ 道歉 ｜ 这 ｜ 习俗 ｜ 废 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af",
+      "text": "第一次是真心，第五次呢？画面自己会问。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一次是真心,第五次呢。画面自己会问。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.998,
+        "cps": 4.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一次 ｜ 是 ｜ 真心 ｜ 第五次 ｜ 呢 ｜ 画面 ｜ 自己 ｜ 会 ｜ 问"
+      }
+    },
+    {
+      "id": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab",
+      "text": "三天后，她发文道歉：英语非母语，“教养”指礼仪。汤森德接受了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三天后,他发文道歉,英语非母语教养直理医。汤森德接受了。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发文",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 6.097,
+        "cps": 3.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三天 ｜ 后 ｜ 她 ｜ 发文 ｜ 道歉 ｜ 英语 ｜ 非 ｜ 母语 ｜ 教养 ｜ 指 ｜ 礼仪 ｜ 汤森德 ｜ 接受 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a",
+      "text": "所以这声“对不起”是什么？废除派说虚伪，坚守派说体面。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以这声对不起是什么?废除派说虚伪,坚守派说体面。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.8,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 这 ｜ 声 ｜ 对不起 ｜ 是 ｜ 什么 ｜ 废除 ｜ 派 ｜ 说 ｜ 虚伪 ｜ 坚守 ｜ 派 ｜ 说 ｜ 体面"
+      }
+    },
+    {
+      "id": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be",
+      "text": "\"I'm sorry, because I'd rather have finished it on a outright winner.\"我道歉，是因为我宁愿用一记干干净净的制胜分，结束这一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.08,
+        "longest_deletion": 0,
+        "transcript": "I'm sorry, because I rather have finished it on an alright winner.我道歉,是因为,我宁愿用一季刚干净净的去胜分,结束这一分。"
+      },
+      "polyphones": [
+        {
+          "index": 78,
+          "char": "宁",
+          "word": "宁愿",
+          "intended": "ning4",
+          "wrong": [
+            "ning2"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ning2",
+              "verdict": "correct",
+              "score": 0.702,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "佞泞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 8.066,
+        "cps": 3.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "I'm ｜ sorry ｜ because ｜ I'd ｜ rather ｜ have ｜ finished ｜ it ｜ on ｜ a ｜ outright ｜ winner ｜ 我 ｜ 道歉 ｜ 是 ｜ 因为 ｜ 我 ｜ 宁愿 ｜ 用 ｜ 一 ｜ 记 ｜ 干干净净 ｜ 的 ｜ 制胜 ｜ 分 ｜ 结束 ｜ 这 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603",
+      "text": "那么你说——擦网得分举起的那只手，是礼貌还是演戏？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.048,
+        "longest_deletion": 0,
+        "transcript": "那么你说,擦网德红举起的那只手是礼貌还是演戏?"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 20,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.247,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.292,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那么 ｜ 你 ｜ 说 ｜ 擦 ｜ 网 ｜ 得分 ｜ 举起 ｜ 的 ｜ 那 ｜ 只 ｜ 手 ｜ 是 ｜ 礼貌 ｜ 还是 ｜ 演戏"
+      }
+    },
+    {
+      "id": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547",
+      "text": "\"If you hit the net cord and it doesn't go over, I don't see the other person apologising.\"没人跟你道歉——这动作，天生单向。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "If you hit the net court and it doesn't go over, I don't see the other person apologizing. 没人跟你道歉,这动作,天生单想。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 6.521,
+        "cps": 1.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "If ｜ you ｜ hit ｜ the ｜ net ｜ cord ｜ and ｜ it ｜ doesn't ｜ go ｜ over ｜ I ｜ don't ｜ see ｜ the ｜ other ｜ person ｜ apologising ｜ 没 ｜ 人 ｜ 跟 ｜ 你 ｜ 道歉 ｜ 这 ｜ 动作 ｜ 天生 ｜ 单向"
+      }
+    },
+    {
+      "id": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a",
+      "text": "省掉它的人被堵着讨说法，做足的人只想着下一分。没人真信，它却活了一百多年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "省掉他的人被堵着讨说法,作足的人只想着下一分,没人真信他却活了一百多年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.347,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "省掉 ｜ 它 ｜ 的 ｜ 人 ｜ 被 ｜ 堵 ｜ 着 ｜ 讨 ｜ 说法 ｜ 做 ｜ 足 ｜ 的 ｜ 人 ｜ 只 ｜ 想 ｜ 着 ｜ 下 ｜ 一 ｜ 分 ｜ 没 ｜ 人 ｜ 真 ｜ 信 ｜ 它 ｜ 却 ｜ 活 ｜ 了 ｜ 一百多年"
+      }
+    },
+    {
+      "id": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f",
+      "text": "握手时，她被堵在网前，骂“没有风度，没有教养”。导火索是……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "握手时,他被堵在往前,骂没有风度、没有教养。刀火所势。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.613,
+        "cps": 3.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "握手 ｜ 时 ｜ 她 ｜ 被 ｜ 堵 ｜ 在 ｜ 网 ｜ 前 ｜ 骂 ｜ 没有 ｜ 风度 ｜ 没有 ｜ 教养 ｜ 导火索 ｜ 是"
+      }
+    },
+    {
+      "id": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac",
+      "text": "2007年温网，索德林擦网得分没致歉，还振臂庆祝，被纳达尔批评……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2007年温网,索德林擦网得分梅志倩,还振臂庆祝北纳达尔批评。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 19,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.545,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.283,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2007 ｜ 年 ｜ 温 ｜ 网 ｜ 索德林 ｜ 擦 ｜ 网 ｜ 得分 ｜ 没 ｜ 致歉 ｜ 还 ｜ 振臂 ｜ 庆祝 ｜ 被 ｜ 纳达尔 ｜ 批评"
+      }
+    },
+    {
+      "id": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350",
+      "text": "大坂直美公开批评她，舆论连吵几天。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "大坂直美公开批评它,舆论连朝几天。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.054,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "大坂直美 ｜ 公开 ｜ 批评 ｜ 她 ｜ 舆论 ｜ 连 ｜ 吵 ｜ 几天"
+      }
+    },
+    {
+      "id": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd",
+      "text": "别忘了，争论的起点是球本身……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "别忘了,争论的起点是求本身。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.264,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "别 ｜ 忘 ｜ 了 ｜ 争论 ｜ 的 ｜ 起点 ｜ 是 ｜ 球 ｜ 本身"
+      }
+    },
+    {
+      "id": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64",
+      "text": "那举手的人图什么？莎拉波娃说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那举手的人图什么? 沙拉波娃说。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.983,
+        "cps": 4.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 举手 ｜ 的 ｜ 人 ｜ 图 ｜ 什么 ｜ 莎拉波娃 ｜ 说"
+      }
+    },
+    {
+      "id": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc",
+      "text": "\"There are some rules in tennis which most of the players follow.\"——她说，这是她生涯第一次遇上有人不道歉。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他说,这是他生涯第一次遇上有人不道歉。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 6.321,
+        "cps": 2.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "There ｜ are ｜ some ｜ rules ｜ in ｜ tennis ｜ which ｜ most ｜ of ｜ the ｜ players ｜ follow ｜ 她 ｜ 说 ｜ 这是 ｜ 她 ｜ 生涯 ｜ 第一次 ｜ 遇 ｜ 上 ｜ 有人 ｜ 不 ｜ 道歉"
+      }
+    },
+    {
+      "id": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc",
+      "text": "首盘一记擦网弹过网带，她拿下那分——却没举手道歉。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.095,
+        "longest_deletion": 0,
+        "transcript": "首盘遗迹插网谈过网袋,他拿下那分,却没举手道歉。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.446,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 一 ｜ 记 ｜ 擦 ｜ 网 ｜ 弹 ｜ 过 ｜ 网带 ｜ 她 ｜ 拿下 ｜ 那 ｜ 分 ｜ 却 ｜ 没 ｜ 举手 ｜ 道歉"
+      }
+    },
+    {
+      "id": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1",
+      "text": "回合中球擦网带过网、落入界内，规则第二十五条：好球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "回合中球擦网带过网,落入界内,规则第25条,好球。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.453,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.383,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.811,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "回合 ｜ 中 ｜ 球 ｜ 擦 ｜ 网 ｜ 带 ｜ 过 ｜ 网 ｜ 落入 ｜ 界 ｜ 内 ｜ 规则 ｜ 第二十五条 ｜ 好 ｜ 球"
+      }
+    },
+    {
+      "id": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d",
+      "text": "只有发球擦网才重发。那这一下手，是谁教的？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "只有发球擦网才重发。那这一下手是谁教的?"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 7,
+          "char": "重",
+          "word": "重",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.188,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        },
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 4.363,
+        "cps": 4.13,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "只有 ｜ 发球 ｜ 擦 ｜ 网 ｜ 才 ｜ 重 ｜ 发 ｜ 那 ｜ 这 ｜ 一 ｜ 下手 ｜ 是 ｜ 谁 ｜ 教 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062",
+      "text": "没人能练擦网。它不认排名、不认苦练，只认那条白带。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "没人能练擦网,他不认排名、不认苦练,只认那条白带。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 5.201,
+        "cps": 4.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "没 ｜ 人 ｜ 能 ｜ 练 ｜ 擦 ｜ 网 ｜ 它 ｜ 不 ｜ 认 ｜ 排名 ｜ 不 ｜ 认 ｜ 苦练 ｜ 只 ｜ 认 ｜ 那 ｜ 条 ｜ 白带"
+      }
+    },
+    {
+      "id": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873",
+      "text": "另一边火力同样不弱。阿加西后半句更狠……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "另一边火力同样不弱,阿加西后半句更狠。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.844,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "另 ｜ 一边 ｜ 火力 ｜ 同样 ｜ 不 ｜ 弱 ｜ 阿加西 ｜ 后 ｜ 半 ｜ 句 ｜ 更 ｜ 狠"
+      }
+    },
+    {
+      "id": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e",
+      "text": "有些擦网，擦掉的不是一分，是历史。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "有些擦網,擦掉的不是一分,是历史。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.807,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "有些 ｜ 擦 ｜ 网 ｜ 擦 ｜ 掉 ｜ 的 ｜ 不是 ｜ 一 ｜ 分 ｜ 是 ｜ 历史"
+      }
+    },
+    {
+      "id": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d",
+      "text": "去年美网，比赛打完，戏才开始。汤森德7比5、6比1赢了奥斯塔彭科。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "去年美网比赛打完戏才开始,汤森德7比5,6比1赢了奥斯塔彭科。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.38,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 美 ｜ 网 ｜ 比赛 ｜ 打 ｜ 完 ｜ 戏 ｜ 才 ｜ 开始 ｜ 汤森德 ｜ 7比5 ｜ 6比1 ｜ 赢 ｜ 了 ｜ 奥斯塔彭科"
+      }
+    },
+    {
+      "id": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d",
+      "text": "不止她讨过这声“对不起”。2018年，梅德韦杰夫赢下西西帕斯，握手第一句……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "不止他讨过这声对不起,2018年,梅德维杰夫赢下西西帕斯握手第一句。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.368,
+        "cps": 4.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "不止 ｜ 她 ｜ 讨 ｜ 过 ｜ 这 ｜ 声 ｜ 对不起 ｜ 2018 ｜ 年 ｜ 梅德韦杰夫 ｜ 赢 ｜ 下 ｜ 西西帕斯 ｜ 握手 ｜ 第一句"
+      }
+    },
+    {
+      "id": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b",
+      "text": "赛点上，伦德尔二发又擦到网带，弹出界外——双误，比赛结束。同一场，网带先帮张德培一次，最后又替他收了尾。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.023,
+        "longest_deletion": 0,
+        "transcript": "赛点上,伦德尔二发又擦到网贷,谈出界外,双误比赛结束。同一场,网贷先帮张德培一次,最后又替他收了尾。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 9.469,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赛点 ｜ 上 ｜ 伦德尔 ｜ 二发 ｜ 又 ｜ 擦 ｜ 到 ｜ 网带 ｜ 弹 ｜ 出 ｜ 界外 ｜ 双 ｜ 误 ｜ 比赛 ｜ 结束 ｜ 同 ｜ 一 ｜ 场 ｜ 网带 ｜ 先 ｜ 帮 ｜ 张德培 ｜ 一次 ｜ 最后 ｜ 又 ｜ 替 ｜ 他 ｜ 收 ｜ 了 ｜ 尾"
+      }
+    },
+    {
+      "id": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27",
+      "text": "没人说得清。史家柯林斯说：来自英式绅士年代。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "没人说得清,史加柯林斯说,来自英史深世年代。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.945,
+              "confidence": "low",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 4.175,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "没 ｜ 人 ｜ 说 ｜ 得 ｜ 清 ｜ 史家 ｜ 柯林斯 ｜ 说 ｜ 来自 ｜ 英 ｜ 式 ｜ 绅士 ｜ 年代"
+      }
+    },
+    {
+      "id": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e",
+      "text": "1989年法网，17岁的张德培对世界第一伦德尔。第五盘他抽筋到走不动，却在4比3、15比30时打出一记下手发球。伦德尔被引到网前，穿越球擦着网带爬了过去。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 73,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1989年罚网,17岁的张德培对世界第一伦德尔,第五盘他抽筋到走不动,却在4比3,15比30时打出一技下手发球。伦德尔被引到往前,穿越球擦着往带,爬了过去。"
+      },
+      "polyphones": [
+        {
+          "index": 53,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 70,
+        "speech_s": 14.611,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "1989 ｜ 年 ｜ 法网 ｜ 17岁 ｜ 的 ｜ 张德培 ｜ 对 ｜ 世界 ｜ 第一 ｜ 伦德尔 ｜ 第五盘 ｜ 他 ｜ 抽筋 ｜ 到 ｜ 走 ｜ 不 ｜ 动 ｜ 却 ｜ 在 ｜ 4比3 ｜ 15比30 ｜ 时 ｜ 打 ｜ 出 ｜ 一 ｜ 记 ｜ 下手 ｜ 发球 ｜ 伦德尔 ｜ 被 ｜ 引 ｜ 到 ｜ 网 ｜ 前 ｜ 穿越 ｜ 球 ｜ 擦 ｜ 着 ｜ 网带 ｜ 爬 ｜ 了 ｜ 过去"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a",
+      "text": "\"But I think it's automatic now\"——全是自动动作。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 6,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "But I think it's automatic now, 全是自动动作。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 6,
+        "speech_s": 2.618,
+        "cps": 2.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "But ｜ I ｜ think ｜ it's ｜ automatic ｜ now ｜ 全 ｜ 是 ｜ 自动 ｜ 动作"
+      }
+    },
+    {
+      "id": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073",
+      "text": "先把规则说清楚。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 7,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先把规则说清楚。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 7,
+        "speech_s": 1.368,
+        "cps": 5.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 把 ｜ 规则 ｜ 说 ｜ 清楚"
+      }
+    },
+    {
+      "id": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887",
+      "text": "首盘关键时刻，汤森德一记擦网弹高过网，对方救回，还是丢了分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.038,
+        "longest_deletion": 0,
+        "transcript": "手盘关键时刻,汤森德一技擦网弹高过网,对方就回还是丢了分。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.669,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.755,
+        "cps": 4.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 关键 ｜ 时刻 ｜ 汤森德 ｜ 一 ｜ 记 ｜ 擦 ｜ 网 ｜ 弹 ｜ 高 ｜ 过 ｜ 网 ｜ 对方 ｜ 救 ｜ 回 ｜ 还是 ｜ 丢 ｜ 了 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c",
+      "text": "动作还分流派：摊手的、举拍的、一挥而过的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "动作还分流派、贪守的、举拍的一挥而过的。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.166,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 4.434,
+        "cps": 3.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "动作 ｜ 还 ｜ 分 ｜ 流派 ｜ 摊手 ｜ 的 ｜ 举拍 ｜ 的 ｜ 一挥而过 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b",
+      "text": "今年温网半决赛，德约又一次擦网得分举手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.056,
+        "longest_deletion": 0,
+        "transcript": "今年温网半决赛,德约又一次插网得分举手。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.16,
+        "cps": 5.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 温网 ｜ 半决赛 ｜ 德 ｜ 约 ｜ 又 ｜ 一次 ｜ 擦 ｜ 网 ｜ 得分 ｜ 举手"
+      }
+    },
+    {
+      "id": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c",
+      "text": "先把去年那场架说完整。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先把去年那场架说完整。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.946,
+        "cps": 5.14,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 把 ｜ 去年 ｜ 那 ｜ 场 ｜ 架 ｜ 说 ｜ 完整"
+      }
+    },
+    {
+      "id": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c",
+      "text": "哈勒普说：\"I was taught as a kid that you have to say sorry.”",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 4,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "哈勒普说,I was taught as a kid that you have to say sorry."
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 4,
+        "speech_s": 2.96,
+        "cps": 1.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "哈勒普 ｜ 说 ｜ I ｜ was ｜ taught ｜ as ｜ a ｜ kid ｜ that ｜ you ｜ have ｜ to ｜ say ｜ sorry"
+      }
+    },
+    {
+      "id": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17",
+      "text": "一个动作，有人当面开骂，名宿喊着废除。可规则书里，没有“对不起”。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.038,
+        "longest_deletion": 0,
+        "transcript": "一个动作,有人当面开骂,民宿喊着废除。可规则书里,没有对不起。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.991,
+        "cps": 4.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一个 ｜ 动作 ｜ 有人 ｜ 当面 ｜ 开骂 ｜ 名宿 ｜ 喊 ｜ 着 ｜ 废除 ｜ 可 ｜ 规则书 ｜ 里 ｜ 没有 ｜ 对不起"
+      }
+    },
+    {
+      "id": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c",
+      "text": "她转身回底线，没举手。握手时奥斯塔彭科当场发作，她这样转述。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他转身回底线,没举手。握手时,奥斯塔彭科当场发作,他这样转述。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发作",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 6.026,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 转身 ｜ 回 ｜ 底线 ｜ 没 ｜ 举手 ｜ 握手 ｜ 时 ｜ 奥斯塔彭科 ｜ 当场 ｜ 发作 ｜ 她 ｜ 这样 ｜ 转述"
+      }
+    },
+    {
+      "id": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46",
+      "text": "她说我没风度、没教养。奥斯塔彭科在社媒写，火来自那记“决定性时刻”的擦网球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
+        "longest_deletion": 0,
+        "transcript": "他说我没风度、没教养。奥斯塔彭科在社媒写《火来自纳计》决定性时刻的插网球。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.182,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 说 ｜ 我 ｜ 没 ｜ 风度 ｜ 没 ｜ 教养 ｜ 奥斯塔彭科 ｜ 在 ｜ 社 ｜ 媒 ｜ 写 ｜ 火 ｜ 来自 ｜ 那 ｜ 记 ｜ 决定性 ｜ 时刻 ｜ 的 ｜ 擦 ｜ 网球"
+      }
+    }
+  ]
+}
