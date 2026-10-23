@@ -12337,7 +12337,10 @@ def render_explainer_slides(
                     )
                     if seg.visual and seg.visual.get("layout") == "transition":
                         from .transition_cards import plan as transition_plan, check_page
-                        page.evaluate("window.setTransitionTime(2.6)")
+                        page.wait_for_function("window.transitionMotion || window.transitionMotionError")
+                        if issue := page.evaluate("window.transitionMotionError || null"):
+                            raise ValueError(issue)
+                        page.evaluate("window.setTransitionTime(window.transitionMotion.horizon)")
                         check_page(page, transition_plan(seg.visual.get("headline", seg.title),
                             seg.visual.get("content"), size=(W, height), kicker=seg.visual.get("kicker", "")))
                     # 示意图不许压到编号药丸——字体落定之后量，放不下就等比缩，

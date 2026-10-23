@@ -72,3 +72,38 @@ PYTHONPATH=src:tools python tools/render_transition_card.py --text '重新出发
 4. `render_clip` 缓存绑定 HTML、内容、尺寸、帧率、完整时长与实际 MP4 SHA。相同输入复用；动效稳定后复用静止帧，避免为长旁白重复浏览器截图。不恢复任何响度或源声增益扫描。
 
 本次确认的 27 秒视觉参考 SHA256：`36f0bb571be780d0fc2a33d28e06beb03268081f4b13d5220eba6b731ccbd26f`。包含短转折、比分推进、数据对照、经历时间线、人物图文五类；是视觉参考，不是其他比赛的事实或发布凭证。实现和后续改良均走上述共用入口，不能依赖本机会话的 scratch/tmp 文件。
+
+## 2026-10-23 完整 Demo 确认后同步主线
+
+账号所有者看过伊埃拉宁波首轮完整 Demo 后确认：“开头的冷开场不要拿掉，其他 ok”，随后要求“同步到主线”。另外确认正片不显示封面左上角标题，照片卡下方不显示“WTA巡回赛女单正赛 图片 宁波网球公开赛官方”这一行小字。
+
+执行范围：
+
+- 保留比赛原声冷开场，并在正文保留完整赛点、反应、握手与谢场。动效只是中段解释，不能取代冷开场或挤掉结尾落点。原有 `cold_open_problem`、原声与字幕检查继续执行。
+- `wants_watermark("赛场之上")` 继续关闭正片封面台头的整组叠加；封面台头仍由原封面入口绘制。任何新 Demo 或包装层必须读这个共用开关，不能直接调用角标绘图函数强贴。
+- 图文卡只展示标题、正式图片、必要赛果和实际旁白字幕；不在图片下方加来源/范围等小字行。图片与事实来源保留在 `transition_card`、输入指纹和审查记录中，不清除原图自己的标识。
+
+同一 `transition_cards.build/render_clip` 已升级到 GSAP 3.15.0 与 D3 7.9.0 的离线实现。依赖固定在 `assets/vendor/motion/`，带上游许可证说明；不在渲染时加载 CDN 或安装 npm。标题分层入场、比分节点依次推进、逐组统计条形图、时间线和照片赛果浮现共享一个可寻址时钟。入场结束后复用停稳帧，长旁白照原时长播放。缓存包括最终 HTML 中的库字节和完整画面输入，库或内容变化就重新生成相应卡片。
+
+新增可复用内容契约：
+
+- `comparisons`：1–3 组 `{metric, scope, unit, nodes}`，每组仍要求每个节点带 `source`。各组使用同一球员顺序；非负有限数值由 D3 同尺度展示，禁止从全场与单盘混拼数字。放不下就拆卡。
+- 比分卡可加 `summary: {value, label, source}`，例如经核实的“三局＋四局＝七局”。总结由事实包提供，组件不推断某场比赛连赢多少局。
+- `photo` 可加 `result: {value, source, label?}`，以照片上的赛果卡收束。照片继续完整 contain，不猜裁人脸，不显示下方小字。
+- 旧 `comparison`、`scores`、`events`、`photo` 和无数据的转折卡保持兼容；完整 `stat_card` 仍是完整统计证据，不能为做动画擅自删列。
+
+HyperFrames 使用同一份 HTML、字体、实际 GSAP 主时钟和 D3 数据绑定导出，无需重写另一套场景：
+
+```bash
+PYTHONPATH=src:tools python tools/render_transition_card.py \
+  --text $'赢球的另一面\n把失误留给对手' --kicker '全场统计' \
+  --content /tmp/verified-comparisons.json --seconds 13.4 \
+  --out /tmp/comparison.mp4 --hyperframes /tmp/comparison-hyperframes
+```
+
+`--hyperframes` 生成可编辑的 `index.html` 与 `reference.json`；原生产线继续使用已有 Playwright/FFmpeg 渲染器直接消费相同页面，避免为每张卡额外启动第二条编码链。可选用 HyperFrames CLI 打开或渲染导出的工程，不能把导出成功当作影片通过质检。
+
+四类完整、带真实来源的参考在 `data/visual-reference/approved-motion-20261023/cards.json`。这是视觉学习与审查参考，`reference_only: true`，新比赛必须换成自身事实与正式图片。
+
+确认版完整 Demo：
+[Google Drive 查看](https://drive.google.com/file/d/1uFQtwnmBxeL416EXrVQfIRsPkceiglAY/view?usp=drivesdk)，3分56.8秒，1080×1440，25 fps，5920帧，SHA256 `fc7bc4a35ff6aefa3d5826b1226ca6c5eebbdf75b2f8c133f772bd119d75edfc`。它保留了冷开场、完整赛点和赛后致意；已移除正片封面台头和照片下方指定小字。只认可该版，不以本机会话临时路径作为后续生产依赖。
