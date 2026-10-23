@@ -59,7 +59,7 @@ def test_normal_source_policy_rejects_adjustments_and_does_not_scan_tail(tmp_pat
  voice=tmp_path/'voice.wav'
  subprocess.run(['ffmpeg','-v','error','-y','-f','lavfi','-i',
                  'sine=frequency=440:sample_rate=48000:duration=2',str(voice)],check=True)
- assert build.outro_length(voice)==pytest.approx(max(2+build.OUTRO_TAIL,build.outro_page.min_length()),abs=.001)
+ assert build.outro_length(voice)==pytest.approx(max(2+build.OUTRO_TAIL,build.outro_page.min_length("赛场之上")),abs=.001)
 
 
 def test_preserved_audio_rejects_every_gain_or_replacement_conflict():
