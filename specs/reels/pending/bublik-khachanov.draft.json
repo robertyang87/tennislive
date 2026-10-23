@@ -18,7 +18,16 @@
       }
     ],
     "winner": "布勃利克",
-    "result": "4-6 7-6(5) 7-6(5)"
+    "result": "4-6 7-6(5) 7-6(5)",
+    "portrait": {
+      "image": "assets/reel/bublik-khachanov-cover.jpg",
+      "focus": 0.0,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「alexander bublik」「Almaty Open」，日期对上当地 2026-10-23（Asia/Almaty；日期来源 flashscore dc_1_27fjhO64）（放宽：标题不带对手和日期，按照片 EXIF 绑场次：EXIF 拍摄于当地 10-23 19:35:06，落在这场的窗口 当地 10-23 19:35~22:20 里（atp-media #4597950））；EXIF 拍摄 2026:10:23 19:35:06+05:00。② 分辨率：4537×3025，zoom 1 铺 1080×1440 是 2.10×（不放大）。③ 认人：最大那张脸像 布勃利克 0.64（≥ 0.34）。④ 睁眼：EAR 0.2815（≥ 0.16）。⑤ 钩子带：脸落在 y342~675，钩子顶边 790。排序：[True, False, False, True, True, 333, 0.6362]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/23/295dadbb-e815-456e-bec6-b5cfcc4667a5/UDA_6706.JPG",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/23/295dadbb-e815-456e-bec6-b5cfcc4667a5/UDA_6706.JPG（条目 #4597950，接口发布 2026-10-23T16:40:14Z，EXIF 拍摄 2026:10:23 19:35:06+05:00（UTC 2026-10-23T14:35:06Z），原图 4537×3025），说明原文「2026 Almaty Bublik · Alexander Bublik」，署名 ANDREY UDARTSEV   udartsev@gmail.com；KTF / Andrey Udartsev；Andrey Udartsev。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -261,5 +270,14 @@
     "技战术资料：no_readable_analysis；未核观点不进入旁白",
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-21–2026-10-23 窗口里扫了 38 场，没有同时出现 ['alexander bublik', 'karen khachanov'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "27fjhO64",
+      "start_utc": "2026-10-23T14:40:00Z",
+      "end_utc": "2026-10-23T17:05:37Z",
+      "source": "flashscore dc_1_27fjhO64（DC／DD）"
+    },
+    "replaced_under": ""
+  }
 }
