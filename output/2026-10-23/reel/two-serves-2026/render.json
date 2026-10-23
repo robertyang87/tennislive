@@ -127,7 +127,7 @@
   },
   "film_sha256": "393f446bf9b0577a3e9a2966973c39d09c942841d66248ec887bbee35a3183d9",
   "film_bytes": 166380020,
-  "qc_attestation_sha256": "5008487d1ff4e95b97b8c961d190554f2bc4677bbbfe682a9ab2e1a51b277fdd",
+  "qc_attestation_sha256": "e524be2b37bf91eca1424e31d92544cf894d3848afcb12ae219d865a587ca40a",
   "production_stage_events": [
     {
       "stage": "render",
@@ -141,5 +141,12 @@
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-two-serves-2026/two-serves-2026.mp4",
-  "video_bytes": 166380020
+  "video_bytes": 166380020,
+  "reattests": [
+    {
+      "at": "2026-10-23T11:38:45Z",
+      "spec_sha256": "764ab7a48622edc474791fa3856782433bf7e9ca11e25d27ea94dd9adabe0636",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/39947241724"
+    }
+  ]
 }
