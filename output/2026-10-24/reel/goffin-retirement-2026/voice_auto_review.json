@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "1f4ca38a72de3dd8eebadd7070e84b69fd1a51d2380e91111c35ea3f2e0a0825",
-    "render_inputs_sha256": "aa79424b544a02ea06a7642292d2ba5713b6d70a82268582fee1c6fd149909cf",
-    "spec_sha256": "09de2429635c7041220ba519353ad72faa8f02b0f66345642e6b8d4714a15e52",
-    "film_sha256": "6388474b15be5ca9a3f3ad515d6bbca4b37337a54233c81c56fca6448034fd06",
+    "render_sha256": "b85607ee4db550c17c1769908c0557d8241c5ec7f3f45a2d7834301dd7841f80",
+    "render_inputs_sha256": "58021ba5ccd2b5de389412d616f6ada41fc9c85365ca5517676db9a6cb6da255",
+    "spec_sha256": "e741d06f3f1fbffbfc761c60fcf96acbd5d8901aae15998b7664973fb43f5009",
+    "film_sha256": "71726876e136bb300df5a63866ee563a8b6a6456efdf80301f306ae508b151e5",
     "inventory_sha256": "7981560a91481d93484a07427dadf2b5fa0b579b75d6539fa3595f347859a17d"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-23T19:49:16+00:00",
+  "reviewed_at": "2026-10-23T20:13:28+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -488,7 +488,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网求掉眼泪,就是那年在麦阿弥输给割分之后。"
+        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网球调眼泪,就是那年在麦阿弥输给割分之后。"
       },
       "polyphones": [],
       "pauses": {
@@ -517,10 +517,10 @@
         "ref_syllables": 30,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.033,
         "longest_deletion": 0,
-        "transcript": "没有大蛮冠、没有大师赛冠军,最高只到第七这样的职业生涯,算不算成功。"
+        "transcript": "没有大盲冠,没有大失赛冠军,最高只到第七,这样的职业生涯,算不算成功。"
       },
       "polyphones": [],
       "pauses": {
@@ -783,7 +783,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2024年上海,33岁的他赢下自为列夫,打进八墙。"
+        "transcript": "2024年上海,33岁的他赢下自为列夫,打尽八强。"
       },
       "polyphones": [],
       "pauses": {
@@ -1023,10 +1023,10 @@
         "ref_syllables": 65,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.031,
+        "substituted": 1,
+        "sub_ratio": 0.015,
         "longest_deletion": 0,
-        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、梅雷、纳班迪安。最后一个,是大外,割分。"
+        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个,是大外,割分。"
       },
       "polyphones": [],
       "pauses": {
@@ -1232,7 +1232,7 @@
         "substituted": 1,
         "sub_ratio": 0.013,
         "longest_deletion": 0,
-        "transcript": "2022年阿斯坦娜,资格塞出局的她,又以幸运落败者的身份递不尽正赛。对面是刚拿下梅网,刚登上世界第一的阿尔卡拉斯,她直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
+        "transcript": "2022年阿斯坦娜,资格塞出局的她,又以幸运落败者的身份递不尽正赛。对面是刚拿下眉网,刚登上世界第一的阿尔卡拉斯,她直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
       },
       "polyphones": [
         {
@@ -1335,7 +1335,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "大屏幕上,纳达尔第一个出现祝贺他了不起的职业生涯。他站在场中央,哭了。"
+        "transcript": "大屏幕上,纳达尔第一个出现,祝贺他了不起的职业生涯。他站在场中央,哭了。"
       },
       "polyphones": [],
       "pauses": {
@@ -1399,7 +1399,7 @@
         "substituted": 1,
         "sub_ratio": 0.012,
         "longest_deletion": 0,
-        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。合辞没有骨折,可整个草地赛季就这样报销。"
+        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。核词没有骨折,可整个草地赛季就这样爆消。"
       },
       "polyphones": [
         {
@@ -1613,7 +1613,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。蒙菲尔斯退赛,他以幸运落败者的身份递不进正赛,连赢三轮,第四轮占到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点 站进场内把球打得比所有人早半步"
+        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。蒙菲尔斯退赛,他以幸运落败者的身份递不尽正赛,连赢三轮,第四轮占到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点 站进场内把球打得比所有人早半步"
       },
       "polyphones": [
         {
@@ -1771,10 +1771,10 @@
         "ref_syllables": 38,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "半决赛,他又逆转了费德勒,此前六次交手,他全败。他说,这是我生涯最佳的一场胜利,千真万确。"
+        "transcript": "半决在,他又逆转了费德勒,此前六次交手,他全败。他说,这是我生涯最佳的一场胜利,千真万确。"
       },
       "polyphones": [],
       "pauses": {
@@ -1806,7 +1806,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "纳达尔当时就说过,那块扇部的位置一直很危险。"
+        "transcript": "纳达尔当时就说过,那块擅步的位置一直很危险。"
       },
       "polyphones": [
         {
