@@ -1,0 +1,22 @@
+{
+  "reference_only": true,
+  "match": "2026 WTA500 宁波 首轮 伊埃拉 vs 帕里",
+  "fact_source": "data/evidence/eala-parry-ningbo-2026-r1/facts/",
+  "approved_film": {
+    "url": "https://drive.google.com/file/d/1uFQtwnmBxeL416EXrVQfIRsPkceiglAY/view?usp=drivesdk",
+    "sha256": "fc7bc4a35ff6aefa3d5826b1226ca6c5eebbdf75b2f8c133f772bd119d75edfc",
+    "seconds": 236.8,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "cold_open": "保留完整比赛原声冷开场 正文回到同一胜利落点",
+    "match_cover_heading": false,
+    "photo_small_print": false
+  },
+  "cards": [
+    {"id":"chronology","text":"武汉的遗憾之后\n在宁波重新出发","kicker":"从武汉到宁波","seconds":10.96,"content":{"events":[{"label":"武汉 首轮","value":"先赢一盘 后遭逆转","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json"},{"label":"宁波 首轮","value":"重整旗鼓 再出发","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json","winning":true}]}},
+    {"id":"scores","text":"从三比三的拉锯\n到跨盘连赢七局","kicker":"宁波500 首轮","seconds":13.6,"content":{"scores":[{"label":"首盘","value":"3–3","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json"},{"label":"首盘","value":"6–3","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json","winning":true},{"label":"第二盘","value":"4–0","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json","winning":true}],"summary":{"value":"3 + 4 = 7","label":"跨盘连赢七局","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/facts.json"}}},
+    {"id":"comparison","text":"赢球的另一面\n把失误留给对手","kicker":"伊埃拉 vs 帕里 全场统计","seconds":13.4,"content":{"comparisons":[{"metric":"制胜分","scope":"全场","unit":"个","nodes":[{"label":"伊埃拉","value":"12","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/fs-df_st_1_2w7niT85.raw"},{"label":"帕里","value":"11","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/fs-df_st_1_2w7niT85.raw"}]},{"metric":"非受迫失误","scope":"全场","unit":"个","nodes":[{"label":"伊埃拉","value":"9","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/fs-df_st_1_2w7niT85.raw"},{"label":"帕里","value":"25","source":"data/evidence/eala-parry-ningbo-2026-r1/facts/fs-df_st_1_2w7niT85.raw"}]}]}},
+    {"id":"photo","text":"美网后巡回赛首胜\n伊埃拉重新出发","kicker":"宁波500 伊埃拉 vs 帕里","seconds":10.32,"content":{"photo":{"path":"assets/reel/eala-parry-ningbo-2026-r1-ningbo-official-5355841909686985.jpg","source":"https://www.sina.cn/news/detail/5355841909686985.html","result":{"value":"6–3 6–1","label":"直落两盘 晋级第二轮","source":"https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"}}}}
+  ]
+}

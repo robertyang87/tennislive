@@ -19,9 +19,9 @@ import tempfile
 
 from ..design_tokens import DARK
 
-VERSION = 1
+VERSION = 2
 ROOT = Path(__file__).resolve().parents[3]
-KINDS = ("turn", "score_progress", "comparison", "chronology", "person")
+KINDS = ("turn", "score_progress", "comparison", "chronology", "person", "comparison_groups")
 SIDECAR_SUFFIX = ".transition.json"
 
 
@@ -38,10 +38,10 @@ def validate_content(content: dict | None) -> dict:
         return {}
     if not isinstance(content, dict):
         raise ValueError("transition_card 必须是对象")
-    unknown = content.keys() - {"scores", "events", "comparison", "photo", "highlight"}
+    unknown = content.keys() - {"scores", "events", "comparison", "comparisons", "photo", "highlight", "summary"}
     if unknown:
         raise ValueError(f"transition_card 不支持的字段：{sorted(unknown)}")
-    kinds = [k for k in ("scores", "events", "comparison", "photo") if k in content]
+    kinds = [k for k in ("scores", "events", "comparison", "comparisons", "photo") if k in content]
     if len(kinds) > 1:
         raise ValueError("一张转场卡只表达一种信息关系 请编辑拆卡")
     if "highlight" in content and not isinstance(content["highlight"], str):
@@ -55,7 +55,7 @@ def validate_content(content: dict | None) -> dict:
                 or not isinstance(comparison["metric"], str) or not comparison["metric"].strip()):
             raise ValueError("comparison 必须写清 metric 和 nodes")
         nodes = comparison["nodes"]
-    if kinds and kinds[0] != "photo":
+    if kinds and kinds[0] not in {"photo", "comparisons"}:
         if not isinstance(nodes, list) or not 2 <= len(nodes) <= 5:
             raise ValueError("推进或对照需要2到5个节点 更多内容请分卡")
         for node in nodes:
@@ -69,11 +69,39 @@ def validate_content(content: dict | None) -> dict:
                 raise ValueError("节点不能自动拆行 请缩短完整语义")
             if "scores" in content and not re.fullmatch(r"[0-9]+[–:比-][0-9]+", node["value"]):
                 raise ValueError("比分节点必须是完整比分 且 label 写明盘次")
+    if "comparisons" in content:
+        groups = content["comparisons"]
+        if not isinstance(groups, list) or not 1 <= len(groups) <= 3:
+            raise ValueError("comparisons 需要1到3组指标 更多内容请拆卡")
+        labels = None
+        for group in groups:
+            if (not isinstance(group, dict) or set(group) != {"metric", "scope", "unit", "nodes"}
+                    or any(not isinstance(group.get(k), str) or not group[k].strip() for k in ("metric", "scope", "unit"))):
+                raise ValueError("每组对照必须有 metric scope unit nodes")
+            validate_content({"comparison": {"metric": group["metric"], "nodes": group["nodes"]}})
+            if any(not re.fullmatch(r"\d+(?:\.\d+)?", n["value"]) or not math.isfinite(float(n["value"])) for n in group["nodes"]):
+                raise ValueError("分组对照数值必须是有限非负数")
+            current = [n["label"] for n in group["nodes"]]
+            if labels is not None and current != labels:
+                raise ValueError("逐组对照必须保留相同双方与顺序")
+            labels = current
+    if "summary" in content:
+        summary = content["summary"]
+        if ("scores" not in content or not isinstance(summary, dict) or set(summary) != {"value", "label", "source"}
+                or any(not isinstance(summary[k], str) or not summary[k].strip() for k in summary)):
+            raise ValueError("比分总结必须写 value label source 且来自核实事实")
     if "photo" in content:
         photo = content["photo"]
-        if (not isinstance(photo, dict) or set(photo) != {"path", "source"}
+        if (not isinstance(photo, dict) or (not {"path", "source"} <= photo.keys() or photo.keys() - {"path", "source", "result"})
                 or any(not isinstance(photo.get(k), str) or not photo[k].strip() for k in ("path", "source"))):
             raise ValueError("photo 必须有仓库相对 path 和正式来源 source")
+        if "result" in photo:
+            result = photo["result"]
+            if (not isinstance(result, dict) or not {"value", "source"} <= result.keys()
+                    or result.keys() - {"value", "source", "label"}
+                    or any(not isinstance(result.get(k), str) or not result[k].strip() for k in ("value", "source"))
+                    or ("label" in result and not isinstance(result["label"], str))):
+                raise ValueError("照片赛果必须有 value source 可选完整 label")
         path = Path(photo["path"])
         if path.is_absolute() or ".." in path.parts:
             raise ValueError("photo.path 必须是仓库内的相对路径")
@@ -94,6 +122,8 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
     if w < 540 or h < 800:
         raise ValueError("转场卡画面区过小")
     px = tc.title_px(lines, size)
+    if h < 1200 and any(k in c for k in ("scores", "events", "comparison", "comparisons", "photo")):
+        px = min(px,72)
     highlight = c.get("highlight", "")
     if highlight and not any(highlight in line for line in lines):
         raise ValueError("highlight 不能拆开语义行 且必须来自当前标题")
@@ -105,6 +135,9 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
         kind, nodes = "chronology", c["events"]
     elif "comparison" in c:
         kind, nodes = "comparison", c["comparison"]["nodes"]
+    groups = c.get("comparisons", [])
+    if groups:
+        kind = "comparison_groups"
     photo = None
     if "photo" in c:
         from PIL import Image
@@ -118,33 +151,40 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
         else:
             notes.append("照片不存在 回退简洁转折卡")
     direction = "vertical" if kind == "chronology" or len(nodes) > 3 else "horizontal"
-    top, bottom = 160, h - (196 if h >= 1200 else 110)
+    top, bottom = (160 if h >= 1200 else 96), h - (196 if h >= 1200 else 110)
     title_h = len(lines) * px * 1.28
     has_kicker = bool(kicker and kicker not in tc.COLUMN_LABELS)
-    lead = 84 if has_kicker else 0
-    proof_h = (len(nodes) * 86 if direction == "vertical" else 218) if nodes else 0
-    total = lead + title_h + (68 + proof_h if nodes else 64)
+    lead = (84 if h >= 1200 else 64) if has_kicker else 0
+    proof_gap = 68 if h >= 1200 else 40
+    node_height = 140 if kind == "chronology" and h >= 1200 else 86
+    proof_h = (len(nodes) * node_height if direction == "vertical" else 218) if nodes else 0
+    if groups:
+        proof_h = sum((60 if h >= 1200 else 44) + (68 if h >= 1200 else 48) * len(g["nodes"]) for g in groups)
+    if "summary" in c:
+        proof_h += 174
+    total = lead + title_h + (proof_gap + proof_h if nodes or groups else 64)
     start = top + (bottom - top - total) / 2
     headline_y = start + lead
-    proof_y = headline_y + title_h + 68
+    proof_y = headline_y + title_h + proof_gap
     if photo:
-        headline_y = bottom - 56 - title_h
-        start = headline_y - lead
-        photo_h = start - top - 28
+        start = 118 if h >= 1200 else 80
+        headline_y = start + lead
+        photo_top = headline_y + title_h + 40
+        photo_h = bottom - photo_top - (58 if c["photo"].get("result") else 0)
         if photo_h < 230 or min((w - 140) / photo["width"], photo_h / photo["height"]) > 1.6:
             notes.append("照片空间或清晰度不足 回退简洁转折卡")
             return {**plan(text, {k: v for k, v in c.items() if k != "photo"}, size=size, kicker=kicker), "notes": notes}
-        photo.update(top=top, height=photo_h)
-    if start < top - 1 or proof_y + proof_h > bottom + 1:
+        photo.update(top=photo_top, height=photo_h)
+    if (not photo and start < top - 1) or proof_y + proof_h > bottom + 1:
         raise ValueError("转场内容无法在字幕安全区上方排下 请精简或拆卡")
-    return {"kind": kind, "lines": lines, "font_px": px, "nodes": nodes,
-            "direction": direction, "kicker_y": start, "headline_y": headline_y,
+    return {"canvas_width": w, "kind": kind, "lines": lines, "font_px": px, "nodes": nodes,
+            "direction": direction, "groups": groups, "proof_h": proof_h, "node_height": node_height, "kicker_y": start, "headline_y": headline_y,
             "proof_y": proof_y, "safe_bottom": bottom, "photo": photo,
             "highlight": highlight, "kicker": kicker, "content": c, "notes": notes}
 
 
 def build(text: str, *, content=None, kicker="", size=(1080, 1440),
-          handle_bottom=None, story_label=None) -> str:
+          handle_bottom=None, story_label=None, seconds=6.0) -> str:
     """One HTML source for previews and motion, preserving the native brand rail."""
     tc = _tc()
     p = plan(text, content, size=size, kicker=kicker)
@@ -178,7 +218,7 @@ def build(text: str, *, content=None, kicker="", size=(1080, 1440),
     css = f'''<style>
 .wrap{{inset:auto;top:{p['kicker_y']}px;left:0;width:{w}px;justify-content:flex-start}}
 .wrap .kicker{{font-size:36px;letter-spacing:4px;line-height:1;margin-bottom:28px;padding:9px 20px;border-width:1px;animation:tc-kicker .45s .18s both}}
-.wrap .thesis{{position:fixed;top:{p['headline_y']}px;left:70px;width:{w-140}px;max-width:{w-140}px}}
+.wrap .thesis{{font-size:{p['font_px']}px;position:fixed;top:{p['headline_y']}px;left:70px;width:{w-140}px;max-width:{w-140}px}}
 .transition-line{{white-space:nowrap;animation:tc-enter .48s var(--delay) both}}
 em{{position:relative;font-style:normal;color:{DARK['primary']}}}
 em:after{{content:'';position:absolute;left:0;right:0;bottom:-6px;height:3px;background:currentColor;transform-origin:left;animation:tc-grow .5s 1.25s both}}
@@ -215,16 +255,17 @@ em:after{{content:'';position:absolute;left:0;right:0;bottom:-6px;height:3px;bac
     # Background graphics precede real copy and the existing fixed brand rail.
     page = page.replace('<div class="bar">', graphics+'<div class="bar">', 1)
     clock = '''<script>window.setTransitionTime=(seconds)=>{document.getAnimations().forEach(a=>{a.pause();a.currentTime=seconds*1000});};</script>'''
-    return page + css + photo + proof + clock
+    from .transition_motion import enhance
+    return enhance(page + css + photo + proof + clock, p, size=size, seconds=seconds)
 
 
 def check_page(page, p: dict) -> dict:
     evidence = page.evaluate('''()=>{
       const rect=el=>el.getBoundingClientRect().toJSON();
-      return {boxes:[...document.querySelectorAll('.transition-line,.node-label,.node-value')].map(el=>({text:el.innerText,width:el.clientWidth,scroll:el.scrollWidth,rect:rect(el)})),
-        content:[...document.querySelectorAll('.thesis,.transition-proof,.kicker')].map(rect),
+      return {boxes:[...document.querySelectorAll('.transition-line,.node-label,.node-value,.metric-title,.chart-label,.chart-value,.result-label,.result-value,.summary-label,.summary-value')].map(el=>({text:el.innerText,width:el.clientWidth,scroll:el.scrollWidth,rect:rect(el)})),
+        content:[...document.querySelectorAll('.thesis,.transition-proof,.kicker,.transition-photo,.motion-result,.motion-summary')].map(rect),
         story:document.querySelector('.story-label')?rect(document.querySelector('.story-label')):null};}''')
-    if any(b["scroll"] > b["width"] + 1 for b in evidence["boxes"]):
+    if any(b["scroll"] > b["width"] + 1 or b["rect"]["left"] < 48 or b["rect"]["right"] > p["canvas_width"] - 48 for b in evidence["boxes"]):
         raise ValueError("转场实际排版文字溢出 请缩短完整语义")
     if any(b["bottom"] > p["safe_bottom"] + 30 for b in evidence["content"]):
         raise ValueError("转场实际排版侵入字幕安全区")
@@ -246,8 +287,8 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
         raise ValueError("转场需要有效的完整停留时长和帧率")
     p = plan(text, content, size=size, kicker=kicker)
     document = build(text, content=content, kicker=kicker, size=size,
-                     handle_bottom=handle_bottom, story_label=story_label)
-    motion_window = min(2.6, max(.1, seconds - .3))
+                     handle_bottom=handle_bottom, story_label=story_label, seconds=seconds)
+    motion_window = min(6.0, max(.1, seconds - .3))
     engine_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     key = hashlib.sha256((str(VERSION)+engine_sha+document+json.dumps([seconds,str(fps),p['content']],ensure_ascii=False)).encode()).hexdigest()
     receipt = out.with_suffix('.transition-render.json')
@@ -268,8 +309,11 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
             try:
                 page = browser.new_page(viewport={'width':w,'height':h},device_scale_factor=1)
                 page.goto(source.as_uri());page.evaluate('document.fonts.ready')
+                page.wait_for_function('window.transitionMotion || window.transitionMotionError')
+                if issue := page.evaluate('window.transitionMotionError || null'):
+                    raise ValueError(issue)
                 page.wait_for_function('Array.from(document.images).every(i=>i.complete&&i.naturalWidth>0)')
-                page.evaluate('window.setTransitionTime(2.6)')
+                page.evaluate('(t)=>window.setTransitionTime(t)',motion_window)
                 evidence = check_page(page,p)
                 page.screenshot(path=str(out.with_suffix('.jpg')),type='jpeg',quality=95)
                 process = subprocess.Popen(['ffmpeg','-y','-v','error','-f','rawvideo','-pix_fmt','rgb24',
@@ -278,8 +322,8 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
                 try:
                     last = None
                     for i in range(frame_count):
-                        t = min((i/rate) * (2.6/motion_window),2.6)
-                        if t < 2.6 or last is None:
+                        t = min(i/rate,motion_window)
+                        if t < motion_window or last is None:
                             page.evaluate('(t)=>window.setTransitionTime(t)',t)
                             last = Image.open(io.BytesIO(page.screenshot(type='jpeg',quality=95))).convert('RGB').tobytes()
                         process.stdin.write(last)
@@ -296,3 +340,16 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
         'seconds':frame_count/rate,'fps':str(fps),'size':list(size),'plan':p,'browser_evidence':evidence,
         'review_scope':'deterministic browser geometry and encoding; not full visual/audio review'},ensure_ascii=False,indent=2))
     return out
+
+
+def export_hyperframes(text: str, directory: Path, *, seconds: float, fps=25, content=None, kicker="", size=(1080,1440)) -> Path:
+    """Export the very same offline page/GSAP clock as an editable HF project."""
+    if not math.isfinite(seconds) or seconds <= 0:
+        raise ValueError("HyperFrames 导出需要实际完整时长")
+    directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
+    page = build(text, content=content, kicker=kicker, size=size, seconds=seconds)
+    width, height = size
+    entry = directory / "index.html"
+    entry.write_text(f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"></head><body><div id="report" data-composition-id="main" data-start="0" data-duration="{seconds:g}" data-fps="{fps}" data-width="{width}" data-height="{height}">{page}</div></body></html>')
+    (directory / "reference.json").write_text(json.dumps({"version": VERSION,"text":text,"content":validate_content(content),"seconds":seconds,"fps":str(fps),"size":list(size)},ensure_ascii=False,indent=2))
+    return entry
