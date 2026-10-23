@@ -4015,7 +4015,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "source_crop", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
-             "layout", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
+             "layout", "column", "mode", "thesis", "question", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
@@ -4030,7 +4030,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
-                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "title_card_story_label",
+                "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
                 "kind", "kicker", "track", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
 }
 
@@ -4212,6 +4212,8 @@ def _normalize_title_card_segments(spec: dict) -> None:
     现场声就显式写 `"narration": ""` 并按 image 段的规矩自己担哑场。
     """
     for i, s in enumerate(spec.get("segments") or []):
+        if isinstance(s, dict) and "transition_card" in s and not s.get("title_card"):
+            raise ReelError(f"第 {i + 1} 段 transition_card 只能用于 title_card")
         if isinstance(s, dict) and "title_card_story_label" in s and not s.get("title_card"):
             raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能用于 title_card 段")
         if not (isinstance(s, dict) and s.get("title_card")):
@@ -4248,6 +4250,14 @@ def _normalize_title_card_segments(spec: dict) -> None:
             if problem := story_label_problem(s["title_card_story_label"], text=text, size=size):
                 raise ReelError(f"第 {i + 1} 段 title_card_story_label：{problem}")
             card["story_label"] = dict(s["title_card_story_label"])
+        if "transition_card" in s:
+            from tennislive.video.transition_cards import plan as transition_plan
+            size = (VIDEO_W, BAND_PIC_H) if spec.get("layout") == "band" else (VIDEO_W, VIDEO_H)
+            try:
+                prepared = transition_plan(text, s["transition_card"], size=size, kicker=card["kicker"])
+            except ValueError as exc:
+                raise ReelError(f"第 {i + 1} 段 transition_card：{exc}") from exc
+            card["content"] = prepared["content"]
         s["image"] = TITLE_CARD_PREFIX + json.dumps(card, ensure_ascii=False)
 
 
@@ -4769,6 +4779,22 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
     seconds 只比旁白长零点几秒）。
     """
     run = globals()["run"] if command_sink is None else command_sink
+    if Path(seg.image).suffix.lower() == ".mp4":
+        # Shared silent transition movie; narration is mixed on the existing
+        # timeline. Preserve its complete window and native dissolve tail.
+        thread_args = ["-threads", str(threads)] if threads is not None else []
+        fit = (f"scale={VIDEO_W}:{BAND_PIC_H},pad={VIDEO_W}:{VIDEO_H}:0:{BAND_TOP}:color={BAND_BG},"
+               if LAYOUT == "band" else f"scale={VIDEO_W}:{VIDEO_H},")
+        filter_args = ["-filter_threads", str(threads)] if threads is not None else []
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *filter_args, *thread_args,
+            "-i", seg.image, "-f", "lavfi", "-i",
+            f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+            "-t", f"{seg.length + tail:.3f}", "-vf",
+            f"{fit}fps={FPS_EXPR},setsar=1,tpad=stop_mode=clone:stop_duration={tail + 1:.3f}",
+            "-c:v", "libx264", *thread_args, "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            "-shortest", str(dest))
+        return dest
     from PIL import Image  # noqa: PLC0415
 
     card = Image.open(seg.image).convert("RGBA")
@@ -6021,7 +6047,7 @@ def outro_length(voice_path: Path, *, measure_tail: bool = False) -> float:
     spoken = ((_speech_tail_end(voice_path) or probe_duration(voice_path))
               if measure_tail else probe_duration(voice_path))
     spoken_need = round(spoken + OUTRO_TAIL, 3)
-    motion_need = outro_page.min_length()
+    motion_need = outro_page.min_length("赛场之上")
     length = round(max(spoken_need, motion_need), 3)
     who = "口播" if spoken_need >= motion_need else "动效"
     print(f"[片尾] 口播 {spoken:.2f}s + 尾 {OUTRO_TAIL}s = {spoken_need:.2f}s，"
@@ -6029,7 +6055,8 @@ def outro_length(voice_path: Path, *, measure_tail: bool = False) -> float:
     return length
 
 
-def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
+def build_outro(outdir: Path, seconds: float, tail: float = 0.0,
+                *, column: str = "赛场之上") -> Path:
     """渲片尾品牌页并合成动效，出一个 part_*.mp4。
 
     静音轨是**占位**，和 `_still_to_clip` 同一个道理：口播在最后混音那一步按
@@ -6040,11 +6067,12 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
     `AUDIO_RATE`/`FPS_EXPR`）——`concat` 那一步只认第一个文件的流参数，
     差一项就会拼出坏流，而它不报错。
     """
-    if outro_page.MASTER.is_file():
+    master = outro_page.master_for(column)
+    if master.is_file():
         dest = outdir / "part_outro.mp4"
         with stage("片尾母版转码"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-i", str(outro_page.MASTER), "-f", "lavfi", "-i",
+                "-i", str(master), "-f", "lavfi", "-i",
                 f"anullsrc=r={AUDIO_RATE}:cl=stereo",
                 "-map", "0:v:0", "-map", "1:a:0",
                 "-vf", f"fps={FPS_EXPR},setsar=1,tpad=stop_mode=clone:stop_duration={seconds + tail}",
@@ -6065,7 +6093,7 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
             fps_expr=FPS_EXPR, fps=FPS, chromium=_chromium(),
             dest=outdir / "part_outro.mp4",
             audio_rate=AUDIO_RATE, preset=PART_PRESET, crf=PART_CRF,
-            tail=tail,
+            tail=tail, column=column,
             runner=lambda args, **kw: run(*args),
         )
     print(f"[片尾] {dest.name} {probe_duration(dest):.2f}s"
@@ -10109,10 +10137,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
     if not any(s.image.startswith(TITLE_CARD_PREFIX) for s in segments if s.image):
         return segments
     with stage("章节卡（剪进片子）"):
-        if renderer is None:
-            sys.path.insert(0, str(Path(__file__).resolve().parent))
-            import render_title_card  # noqa: PLC0415
-            renderer = render_title_card.render
+        animated = renderer is None
+        if animated:
+            from tennislive.video.transition_cards import render_clip
+            renderer = render_clip
         size = (VIDEO_W, BAND_PIC_H) if LAYOUT == "band" else (VIDEO_W, VIDEO_H)
         # 品牌默认距底 HANDLE_BOTTOM_PX（28）。字幕保留自己的锚，不拿默认
         # 上锚把品牌抬到标题中间。spec 写了 `title_card_handle_bottom` 时沿用
@@ -10130,8 +10158,10 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 out_segments.append(s)
                 continue
             card = json.loads(s.image[len(TITLE_CARD_PREFIX):])
-            out = outdir / f"title_card_{i + 1:02d}.jpg"
+            out = outdir / f"title_card_{i + 1:02d}{'.mp4' if animated else '.jpg'}"
             render_kwargs = {}
+            if animated:
+                render_kwargs.update(seconds=s.length, fps=FPS_EXPR, content=card.get("content"))
             if "story_label" in card:
                 from render_title_card import story_label_problem  # noqa: PLC0415
                 if problem := story_label_problem(card["story_label"], text=card["text"], size=size):
@@ -10630,7 +10660,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             encoded = [_encode_one(e) for e in enumerate(segments)]
     parts += [p for _, p in sorted(encoded, key=lambda t: t[0])]
     if outro_enabled:
-        parts.append(build_outro(outdir, outro_secs, tail=0.0))
+        parts.append(build_outro(outdir, outro_secs, tail=0.0,
+                                 column=outro_page.column_from_spec(spec)))
 
     silent = outdir / "_video.mp4"
     with stage("拼接"):
@@ -12762,3 +12793,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

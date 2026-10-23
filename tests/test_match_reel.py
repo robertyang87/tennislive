@@ -8978,9 +8978,9 @@ def test_口播尾音渐弱不许被算成片尾要停多久(tmp_path):
     # `outro_length()` 要真的用上这个更短的时刻，不是算出来没人接
     naive = reel.OUTRO_TAIL + reel.probe_duration(tail_off)
     fixed = reel.outro_length(tail_off, measure_tail=True)
-    assert fixed < naive - 1.0, (
-        f"outro_length 该按真正说完的时刻算，不是文件总长——"
-        f"量到 {fixed:.2f}s，该比按总长算的 {naive:.2f}s 短至少 1 秒")
+    want = max(end + reel.OUTRO_TAIL, reel.outro_page.min_length("赛场之上"))
+    assert fixed == pytest.approx(want, abs=.01)
+    assert fixed < naive, "显式尾音模式仍应去掉多算的尾巴，同时保留新版动效的最短停留"
 
 
 def test_屏幕上的数字不许把字吃掉():
