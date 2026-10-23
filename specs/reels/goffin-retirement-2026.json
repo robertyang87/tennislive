@@ -124,6 +124,11 @@
       ]
     }
   },
+  "archival": {
+    "rg12m": "2012 年法网第四轮比赛录像只有民间转播存档（1280×720，25fps），无官方高清源；用户锁稿代决 2 的低清破例段。整幅 contain 展示、不裁切不放大冒充高清。",
+    "rg12i": "2012 年法网赛后场内采访现存最佳版本 640×360；同代决 2 破例范围。整幅 contain 展示。",
+    "kitz": "2014 年基茨比厄尔决赛集锦为 ATP 官方上传，封顶 1280×720（无 1080p 版本）；整幅 contain 展示。"
+  },
   "source_quality_exceptions": {
     "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4": {
       "min_height": 720,
@@ -177,7 +182,13 @@
     {
       "title_card": "幸运儿",
       "kicker": "第一章 · 二零一二 · 巴黎",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "故事从一个递补名额开始。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "cx": 0.5,
@@ -192,6 +203,7 @@
         "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
       },
       "point_end_ok": true,
+      "fit": "contain",
       "_why": "2012 法网第四轮对费德勒比赛录像（SD 粉丝存档，本期低清破例段）；窗口取中段相持，人物与赛事经 probe 缩略图墙验明。"
     },
     {
@@ -213,12 +225,19 @@
         }
       ],
       "_quote_kind": "player_quote",
-      "_quote_why": "原声位 1（原话库 11）：2012 法网赛后场内采访原声（法语发言，英文字卡为多源一致的官方译文）；画面为采访特写，费德勒在旁。音频无法逐句对位英文，故字卡按全句呈现，不冒充逐字同步。"
+      "_quote_why": "原声位 1（原话库 11）：2012 法网赛后场内采访原声（法语发言，英文字卡为多源一致的官方译文）；画面为采访特写，费德勒在旁。音频无法逐句对位英文，故字卡按全句呈现，不冒充逐字同步。",
+      "fit": "contain"
     },
     {
       "title_card": "长连胜",
       "kicker": "第二章 · 二零一四",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "手术之后，他从头爬起。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "cx": 0.5,
@@ -231,14 +250,15 @@
         "pitch": "+0Hz",
         "rate": "+6%",
         "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
+      },
+      "fit": "contain"
     },
     {
       "cx": 0.5,
       "source": "kitz",
       "start": 196.5,
       "end": 210.5,
-      "narration": "这几年，他还把比利时带进戴维斯杯决赛：2017 年那次，他两场单打全赢，球队还是输了。离冠军差一步——这件事，后来反复发生。",
+      "narration": "2017 年，他还把比利时带进戴维斯杯决赛，两场单打全赢，球队还是输了。离冠军差一步——这件事，后来反复发生。",
       "track": false,
       "voice": {
         "pitch": "+0Hz",
@@ -246,6 +266,7 @@
         "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
       },
       "point_end_ok": true,
+      "fit": "contain",
       "inset": {
         "image": "assets/reel/goffin-retirement-2026/inset-kitz-quote.png",
         "corner": "tr",
@@ -260,12 +281,18 @@
     {
       "title_card": "一块苫布",
       "kicker": "第三章 · 二零一七 · 巴黎",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "上升最陡的那一年，意外来了。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "image": "assets/reel/goffin-retirement-2026/goffin-roland-garros-2019.jpg",
       "image_kind": "photo",
-      "narration": "2017 年，是他上升最陡的一年。法网第三轮，他第一盘 5 比 4 领先，追球冲向场底，右脚卡进了卷起的防水苫布，整个人撞上围墙，被扶着下了场。核磁没有骨折，可整个草地赛季就这样报销。",
+      "narration": "2017 年，是他上升最陡的一年。法网第三轮，他第一盘 5 比 4 领先。追球冲向场底时，他的右脚卡进了卷起的防水苫布，整个人撞上围墙，被扶着下了场。核磁没有骨折，可整个草地赛季就这样报销。",
       "seconds": 21.0,
       "voice": {
         "pitch": "+0Hz",
@@ -318,7 +345,7 @@
       "source": "finf",
       "start": 165.0,
       "end": 176.0,
-      "narration": "而他这一生，离最大的两个冠军都只差一场：2017 年总决赛决赛，他输给迪米特洛夫；",
+      "narration": "而他这一生，离最大的两个冠军都只差一场。2017 年总决赛决赛，他输给迪米特洛夫。",
       "track": false,
       "voice": {
         "pitch": "+0Hz",
@@ -344,14 +371,20 @@
     {
       "title_card": "通杀之年",
       "kicker": "第四章 · 二零一七 · 蒙特卡洛与伦敦",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "同一年，他接连赢下三巨头。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "cx": 0.5,
       "source": "mc17",
       "start": 129.7,
       "end": 143.4,
-      "narration": "但 2017 年剩下的部分，他全抢了回来。那年 4 月的蒙特卡洛，他此前对德约科维奇五战全败，这一次决胜盘 2 比 4 落后，硬是翻盘，",
+      "narration": "但 2017 年剩下的部分，他全抢了回来。那年 4 月的蒙特卡洛，他对德约科维奇此前五战全败。这一次决胜盘 2 比 4 落后，他硬是翻了盘。",
       "track": false,
       "voice": {
         "pitch": "+0Hz",
@@ -365,7 +398,7 @@
       "source": "mc17",
       "start": 149.9,
       "end": 157.0,
-      "narration": "第五个赛点终于兑现。他说：这是我生涯最佳的一场胜利。",
+      "narration": "第五个赛点，终于兑现。他说：这是我生涯最佳的一场胜利。",
       "track": false,
       "voice": {
         "pitch": "+0Hz",
@@ -414,7 +447,7 @@
       "source": "fin17",
       "start": 671.3,
       "end": 681.8,
-      "narration": "半决赛，他又逆转了此前六次交手全败的费德勒。他说：这是我生涯最佳的一场胜利，千真万确。",
+      "narration": "半决赛，他又逆转了费德勒——此前六次交手，他全败。他说：这是我生涯最佳的一场胜利，千真万确。",
       "track": false,
       "voice": {
         "pitch": "+0Hz",
@@ -476,7 +509,13 @@
     {
       "title_card": "第二曲线",
       "kicker": "第五章 · 二零二零至二零二五",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "很多人以为，他就此沉寂了。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "cx": 0.5,
@@ -564,7 +603,13 @@
     {
       "title_card": "最后一舞",
       "kicker": "终章 · 二零二六 · 布鲁塞尔",
-      "seconds": 3.4
+      "seconds": 3.4,
+      "narration": "最后一站，他选在家乡。",
+      "voice": {
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+      }
     },
     {
       "cx": 0.5,
