@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "a63be53a54bee864283f92c92208278b503d5619f2d6cf75adf5d0f612de8c0b",
-    "render_inputs_sha256": "9fd4918288f2ce577c0c2083316926d0916764f6b995b0a803746f7b8a780b10",
-    "spec_sha256": "8a952d14a570f0cf5b88e61b46f59d5944c47bb9a3259710ada28cf2bb93f97c",
-    "film_sha256": "01b578fcecc28a01fbe70127ed5e2afa5ff99d0f5d7a76ea1405fdfca28b5863",
-    "inventory_sha256": "905e2c104c4cc21e04c98b803e4420e5d630e79b301136a20080e2fa2b3b161a"
+    "render_sha256": "ef2b0a1b5d1b011893d038014ffa331412b094dc970c328134169edf2ae27faa",
+    "render_inputs_sha256": "37f5fecd8209a1d9f4d59dd296b31427a60fd7b52e536a67a4e1d0745a824048",
+    "spec_sha256": "99592cc7e4d8918ac130e623648f0bfe7b3fd946ab7fbaeb1487fd90e179993b",
+    "film_sha256": "1bf2df22a4c56caeccffff441a2fc5d50a21b205b5ff72d4534d41dc182335e0",
+    "inventory_sha256": "3aba7938dc663f148cfeee0d216fe16c9928985157745942219534c3cfb9e0f8"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,492 +18,536 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-23T04:41:21+00:00",
+  "reviewed_at": "2026-10-23T09:30:48+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
     {
+      "id": "bundle:0301ca283a2bb7106cfb1cfa57016085ec7504696287aa572590dd76a84146c7",
+      "audio_sha256": "8d6dac4bcc4f79ad6639fa94fcc08f067a5e142366c98a82b943be424b9f8063",
+      "pass": true,
+      "result_of": "bundle:0301ca283a2bb7106cfb1cfa57016085ec7504696287aa572590dd76a84146c7"
+    },
+    {
       "id": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579",
-      "audio_sha256": "0ebfb748f833242cfcd4fc1b4465436360193d10ce4561f575bf0790f316d669",
+      "audio_sha256": "5d4765f43e2b79acc18826bf07bd514b73c727ad99b7e73b78ae2339d9e1eac1",
       "pass": true,
       "result_of": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579"
     },
     {
+      "id": "bundle:0a8ef4360a07819c768db655a9951604887fba69d6b79871a4db94b3f3c32bb9",
+      "audio_sha256": "aa4d1543174f20ead4a36c51808ba0d8c207c3517d58f79e45b875d88fe5a3fe",
+      "pass": true,
+      "result_of": "bundle:0a8ef4360a07819c768db655a9951604887fba69d6b79871a4db94b3f3c32bb9"
+    },
+    {
       "id": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886",
-      "audio_sha256": "8ebd149dc4cedbe78bc540660601547da72043e9d7f61f89cd00a599beef24e9",
+      "audio_sha256": "821cd8832a0d05dfad85fecb98e76ab1f89c98a6b31fd9c5ba8b2a2e8ab8771a",
       "pass": true,
       "result_of": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886"
     },
     {
-      "id": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1",
-      "audio_sha256": "20ca2ebca1bd211089bcf00f33f9df3d1a72081e69ed7c1c4b7ba61d61c0997d",
-      "pass": true,
-      "result_of": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1"
-    },
-    {
-      "id": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc",
-      "audio_sha256": "86eab3ac2930fd23913641d293fe945b5242134e2d9afc3d17c0728d3bb71900",
-      "pass": true,
-      "result_of": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc"
-    },
-    {
-      "id": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa",
-      "audio_sha256": "3bdf8b2d21790759e83b0203ee6e0321b01b5e1e8e1e1389567066e432a4d115",
-      "pass": true,
-      "result_of": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa"
-    },
-    {
       "id": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af",
-      "audio_sha256": "6c50a50f170526697dd2b5cbe9b82bbb7e73f898fe6c254915f792150c285171",
+      "audio_sha256": "ba91229adc83431710884614e6aad44378dc00fbf9d26b3865315d2622fbb3c1",
       "pass": true,
       "result_of": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af"
     },
     {
       "id": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab",
-      "audio_sha256": "4c9872d814a6bdffdc5824fb3b2b39c4ea43fe0c68ee09f218c4315b5bf739ec",
+      "audio_sha256": "7b46d03622418e80f1c8cb0aa3cadd7e293ead0a3cbaa263f024c2ee0f5dc150",
       "pass": true,
       "result_of": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab"
     },
     {
+      "id": "bundle:2a33e5f8ce526ff9cc54544ca80de89c2a6430fd9cd533f885d99087dfcdfc87",
+      "audio_sha256": "d195960e2513d2da9df65d38f13f00db9dac2327d8c040c4220008661a0104db",
+      "pass": true,
+      "result_of": "bundle:2a33e5f8ce526ff9cc54544ca80de89c2a6430fd9cd533f885d99087dfcdfc87"
+    },
+    {
       "id": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a",
-      "audio_sha256": "6fb7976e66fe3d17003567e1785d04ea3f1684c2b905b3f27198e72ec592b105",
+      "audio_sha256": "238901d2b9b8c934991d137bc892ae0a3f9e7a29f97694cce04a6c72892e4e94",
       "pass": true,
       "result_of": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a"
     },
     {
-      "id": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be",
-      "audio_sha256": "d8168bed6b32ed603f4c49f067b71c121077a8a1fdd57a0e4991c601beaaa3a8",
-      "pass": true,
-      "result_of": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be"
-    },
-    {
       "id": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603",
-      "audio_sha256": "012bb357e57640d2c762a75d084e646e2609a2a79e7ebddcbc6eb82602450230",
+      "audio_sha256": "297d57143f90b9ca14c359ef15b05a91fef5a52fce193d20f392f1225b262014",
       "pass": true,
       "result_of": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603"
     },
     {
-      "id": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547",
-      "audio_sha256": "b1be800d596ac56c225d3ff7278d284e7a8755d18e26a0c6069b95c4fcf682c5",
-      "pass": true,
-      "result_of": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547"
-    },
-    {
       "id": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a",
-      "audio_sha256": "ac993ecc92cb5028c1537b0a26fed99d8966c9d9560a93d9eb0b1dd08247dc40",
+      "audio_sha256": "68f1845e36dce3f146a4069e32cfce98b4833392a9ffbba75ad5d39a9105de95",
       "pass": true,
       "result_of": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a"
     },
     {
+      "id": "bundle:47bca226dd7448ca017f9a67ec8d6df36a301870839295bebdec5f1aff4d691d",
+      "audio_sha256": "a9e4f44d69f75c96b32109322d00a136e1d19f02cae49fa2d3f207475b24b2c7",
+      "pass": true,
+      "result_of": "bundle:47bca226dd7448ca017f9a67ec8d6df36a301870839295bebdec5f1aff4d691d"
+    },
+    {
       "id": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f",
-      "audio_sha256": "0cce3d1eae7630eeaffa30890234cde2420022f61c4302c3c6a072b3639ba745",
+      "audio_sha256": "1c22f9245b64042c2b3d90b7c5d271069aeecdf6dee0eb9cfddbc88d6abc73cc",
       "pass": true,
       "result_of": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f"
     },
     {
       "id": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac",
-      "audio_sha256": "cac49f4287a3042f789ffb7fbaad7445506c20d0a9e86bc3f69fa4a5d6f7c5f9",
+      "audio_sha256": "1d9314be42840539d0b3b6ada42d8cb9926f6a1f4103e4ee08bb6c61b414c211",
       "pass": true,
       "result_of": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac"
     },
     {
       "id": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350",
-      "audio_sha256": "156b3c7bded8bef6e9ca87751d4c944ee4de1c70f3611a748aea4a447fcb4add",
+      "audio_sha256": "14ad28b2703a6c956be93a50580a0dd7fce16f7fa2c2ff313304655cbec5d8c6",
       "pass": true,
       "result_of": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350"
     },
     {
       "id": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd",
-      "audio_sha256": "4f17b62cf351bbf2873fb48f625d36d14724bd3196844fb2ce175068c1eaecf7",
+      "audio_sha256": "5b9b393cd28379714538e7d7ee5196b24104e558582b09a83c35fbc31ca39b10",
       "pass": true,
       "result_of": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd"
     },
     {
+      "id": "bundle:6770e12bfcf21b9a47670a3b4d8eca202b65b18a2b1d32d7ad713a7d56842696",
+      "audio_sha256": "11d8f32401337ae806218eca2ceee1d51beb0f60de27aa80d8333d5a4f7c4b61",
+      "pass": true,
+      "result_of": "bundle:6770e12bfcf21b9a47670a3b4d8eca202b65b18a2b1d32d7ad713a7d56842696"
+    },
+    {
       "id": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64",
-      "audio_sha256": "ba2811f91f2130e3580aab1f1689f69a13905bd039f6a0bf47368016a87bf5a3",
+      "audio_sha256": "b111bdaa81d92cb949bd1fabcfe00ac4f820921fb106332949d11a9863ac0049",
       "pass": true,
       "result_of": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64"
     },
     {
-      "id": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc",
-      "audio_sha256": "901a2f373c153962c7f7bd2ca147690307f4b9514b7be662d75f77399f4da565",
-      "pass": true,
-      "result_of": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc"
-    },
-    {
       "id": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc",
-      "audio_sha256": "554ba30dc2caad2ae7ab10eb64667e07d8a5040c678b5a1de17b721351d9b2a5",
+      "audio_sha256": "751236b1c9fd5c50d1c570e98158894cf4bc301025ae602b81197caaf87f6dba",
       "pass": true,
       "result_of": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc"
     },
     {
+      "id": "bundle:7267dc2c4b768e3a0cc21e6fcd259049019289883efa35684a3c5bae9c682ca4",
+      "audio_sha256": "df595b3ff9a7445ee2df373a28890d4c39cce7a706aa6f2aca06195a01bd3b6a",
+      "pass": true,
+      "result_of": "bundle:7267dc2c4b768e3a0cc21e6fcd259049019289883efa35684a3c5bae9c682ca4"
+    },
+    {
       "id": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1",
-      "audio_sha256": "fcee0845cf305669d9e350f5c5f5302c8e8e1f096a99c8cdb3148a8275623eb3",
+      "audio_sha256": "90ceb92e9f906e007fa2e7088ec546febdf453c460a31f404e364d69ec903c34",
       "pass": true,
       "result_of": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1"
     },
     {
       "id": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d",
-      "audio_sha256": "69585aa469760d615c960a72e7a4ebfc2e6ddc322508470369188d3c549b5759",
+      "audio_sha256": "58a056a01818d4edffd26d939efebfc6dbf5ca1036d706c004838ae0687bc7f4",
       "pass": true,
       "result_of": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d"
     },
     {
       "id": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062",
-      "audio_sha256": "801bc7b92bde6fed4c697d09d42f54aad58fb342b3babde1486680ffa1b18e3d",
+      "audio_sha256": "15268082b4c3f5612ec76c5d3a4e97fe1f56cb19303081f0e4b022a8abde9aeb",
       "pass": true,
       "result_of": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062"
     },
     {
+      "id": "bundle:84bebd8516325338952cf974c1907ac7620c4bdc7a1d83e78590c5bf0cc40bb7",
+      "audio_sha256": "e1ace7709f9b1d971eac28bb1bbc4521f30dde84e7afbc33730e2ca4be986991",
+      "pass": true,
+      "result_of": "bundle:84bebd8516325338952cf974c1907ac7620c4bdc7a1d83e78590c5bf0cc40bb7"
+    },
+    {
       "id": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873",
-      "audio_sha256": "a5b569c0d9ccb9464e67991cca5082227c5daafdb1fa11187771c9b26299d342",
+      "audio_sha256": "8848abceaa5404fcedc048872c9ca8f158150c888046c006e0475ffabe6f9386",
       "pass": true,
       "result_of": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873"
     },
     {
       "id": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e",
-      "audio_sha256": "d7a3d57829f8b68c69f8c12100d0bdd8bd182aee47412720202cba7dee579138",
+      "audio_sha256": "6c6e3e7be57cd4a05fe4c197548604da52e99d3bca864f3fc9239e0af2b5e144",
       "pass": true,
       "result_of": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e"
     },
     {
       "id": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d",
-      "audio_sha256": "80ceb580ff9a2a4a51ef05ecf08ff3c0ea52a95eba030f320b3dfad317054336",
+      "audio_sha256": "437235bb0a8c94b18e3f01938be1619b3d613ea81e44e812db9dfbb6a8fc98fd",
       "pass": true,
       "result_of": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d"
     },
     {
       "id": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d",
-      "audio_sha256": "b94b801d3f8e397043602d381c2ac671776a62282322abcfff65628cb5d5b7c9",
+      "audio_sha256": "c7ad6b3a73fb9e48660109bc2ffba174149167278251dfca48fe0ffea7a1c05f",
       "pass": true,
       "result_of": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d"
     },
     {
       "id": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b",
-      "audio_sha256": "2576f0cad04e7cdfb7cdaa22ba98064bdc1d4b93e93cc49b25d7a4e389ab86f9",
+      "audio_sha256": "60558d67376ad1e5fd8c8d920b98b10a5468c8e7eaaf3dbecaba74d07e611deb",
       "pass": true,
       "result_of": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b"
     },
     {
       "id": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27",
-      "audio_sha256": "f3113f72590303dbca991b6f6d135f654d5a1c5acc68aef4a8b0d15a66b9fa1e",
+      "audio_sha256": "ffee1611dda23974de440e86f8ce56bca4e0aa902f44f13b9ced5cfbcc7d1364",
       "pass": true,
       "result_of": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27"
     },
     {
       "id": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e",
-      "audio_sha256": "7ad0575ca83e1789c59644b671f839fb01a467f05b5ecc48b139614e984c465d",
+      "audio_sha256": "9ac525d2426b849b06ea7479c87a24bc7504d0fac82700bccb1aa0bef475e5d1",
       "pass": true,
       "result_of": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e"
     },
     {
+      "id": "bundle:b79db1cdfead3e69ce1282344292fe39b62a7944d8c1886ab217ea2c5e4d2ad0",
+      "audio_sha256": "6e6c6d984a3362b39d0d000319c70dbd35015385a09546fd965a3f479f5cf460",
+      "pass": true,
+      "result_of": "bundle:b79db1cdfead3e69ce1282344292fe39b62a7944d8c1886ab217ea2c5e4d2ad0"
+    },
+    {
       "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
-      "audio_sha256": "299f3b25a8ce6539a31329019333dbc4d2123e0ba6217d553110c1ab0e352737",
+      "audio_sha256": "ff965556f03de5d7b578e9e50ec59bb33603fc8781034c90f4e2be6a99f6febb",
       "pass": true,
       "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
     },
     {
-      "id": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a",
-      "audio_sha256": "0319de5664b95b26a9ee84c7dbd9611ce56365d74fb7c75b2df05b6a3e471a43",
-      "pass": true,
-      "result_of": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a"
-    },
-    {
       "id": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073",
-      "audio_sha256": "cb94cf6d9760c0fd93b1e112b7f0b5314f28a56ec49b5c4c5b8bad7a2054ce16",
+      "audio_sha256": "d062dc679ef7058a8fe000ace3fa27eaedec3d3db1d925b9db99dd77d4c92e6e",
       "pass": true,
       "result_of": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073"
     },
     {
       "id": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887",
-      "audio_sha256": "bde51fb4f4efe5c476b40a5af3af71868aab1f726ac23ebd8667a82644e06592",
+      "audio_sha256": "13de5017bbe5e48ede5150f75b408310f2861f9c1c307a6c5fd5bcb34d85ba07",
       "pass": true,
       "result_of": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887"
     },
     {
       "id": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c",
-      "audio_sha256": "1fdf67b1475de07d17516b87b4fe6d81205cc0c933c07f87bfddd146121f183e",
+      "audio_sha256": "20ee9fc5d58c74763c2969522bdb98cafed4124b9f9667c532c73aba96df1d0b",
       "pass": true,
       "result_of": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c"
     },
     {
       "id": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b",
-      "audio_sha256": "f4c15145c43d750becccbf9872ec9511898f0deacf8c78c60f7b4adad8d4b57a",
+      "audio_sha256": "32b32aa45f73b088ab623b78d3a68bdd757229e3c17ac584fb6c5dde7f688cc3",
       "pass": true,
       "result_of": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b"
     },
     {
       "id": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c",
-      "audio_sha256": "e0adb0b7e55c5d918cec743747896ad89b2f63696c31fd984ca3a52e25650cd8",
+      "audio_sha256": "aa545f85a0f34aaa7cb35be2a8bbf1a8413dbaa14ed39bfac1ccd88e0e30a797",
       "pass": true,
       "result_of": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c"
     },
     {
-      "id": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c",
-      "audio_sha256": "c098bef848581d321a58c837005fe078209cbd8a55feafbe0dfeb0b6141424ed",
-      "pass": true,
-      "result_of": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c"
-    },
-    {
       "id": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17",
-      "audio_sha256": "fefc2bc9823994a02414f2d812d55ad99c5cc7e39b5cb74e4a2a93060b826869",
+      "audio_sha256": "742870530f5d914b0a5cb2183702cfaa66ed329e061838aa4fb5d39f3ba5a65c",
       "pass": true,
       "result_of": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17"
     },
     {
+      "id": "bundle:f0fc8fafea14013de9d83188839757868b213b5ad999a9a5de6d2a0f6ba53788",
+      "audio_sha256": "3e791ae125661974a13228a67c3962092d7096992de10127fa2cb943d1e5142f",
+      "pass": true,
+      "result_of": "bundle:f0fc8fafea14013de9d83188839757868b213b5ad999a9a5de6d2a0f6ba53788"
+    },
+    {
       "id": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c",
-      "audio_sha256": "e6b8059dd60dcbe36a73836b4bb9888f21f8bc530c66c2832bda7556a02422c8",
+      "audio_sha256": "cf083c04ffa6131c7a41683f59b76ce0978c20b620eb5e51a687e0e145d6b03d",
       "pass": true,
       "result_of": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c"
     },
     {
       "id": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46",
-      "audio_sha256": "c7e67e5f272bccc42d2820efa19723b24f2a201cf071ac34b760b6ab67ecc250",
+      "audio_sha256": "f3f099a92a733a7f65b0cf631a542d44f5794a5e433e80bdc0c8d10246d3fabe",
       "pass": true,
       "result_of": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46"
     },
     {
       "id": "voice_01.mp3",
-      "audio_sha256": "80ceb580ff9a2a4a51ef05ecf08ff3c0ea52a95eba030f320b3dfad317054336",
+      "audio_sha256": "437235bb0a8c94b18e3f01938be1619b3d613ea81e44e812db9dfbb6a8fc98fd",
       "pass": true,
       "result_of": "bundle:a05d66975b88e30f51ef7b8364a22f6a77f35d74fff5ef007a621e7dcb81e84d"
     },
     {
       "id": "voice_02.mp3",
-      "audio_sha256": "0cce3d1eae7630eeaffa30890234cde2420022f61c4302c3c6a072b3639ba745",
+      "audio_sha256": "1c22f9245b64042c2b3d90b7c5d271069aeecdf6dee0eb9cfddbc88d6abc73cc",
       "pass": true,
       "result_of": "bundle:52c3d399c66eba36379f094df35dee83a10e1a3b6f73793239d5e2d7d13c6a7f"
     },
     {
       "id": "voice_03.mp3",
-      "audio_sha256": "554ba30dc2caad2ae7ab10eb64667e07d8a5040c678b5a1de17b721351d9b2a5",
+      "audio_sha256": "751236b1c9fd5c50d1c570e98158894cf4bc301025ae602b81197caaf87f6dba",
       "pass": true,
       "result_of": "bundle:7099f7afd3deaec8481a802b1454df0c1649cf169a7dd48f8fcdf2b1911ce4bc"
     },
     {
       "id": "voice_04.mp3",
-      "audio_sha256": "f4c15145c43d750becccbf9872ec9511898f0deacf8c78c60f7b4adad8d4b57a",
+      "audio_sha256": "32b32aa45f73b088ab623b78d3a68bdd757229e3c17ac584fb6c5dde7f688cc3",
       "pass": true,
       "result_of": "bundle:e3ef2447b531ea0f68a4c28de072ac72af60d6cd1760dc6c4bfef025afd27b4b"
     },
     {
-      "id": "voice_05.mp3",
-      "audio_sha256": "0ebfb748f833242cfcd4fc1b4465436360193d10ce4561f575bf0790f316d669",
+      "id": "voice_06.mp3",
+      "audio_sha256": "5d4765f43e2b79acc18826bf07bd514b73c727ad99b7e73b78ae2339d9e1eac1",
       "pass": true,
       "result_of": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579"
     },
     {
-      "id": "voice_06.mp3",
-      "audio_sha256": "3bdf8b2d21790759e83b0203ee6e0321b01b5e1e8e1e1389567066e432a4d115",
+      "id": "voice_07.mp3",
+      "audio_sha256": "aa4d1543174f20ead4a36c51808ba0d8c207c3517d58f79e45b875d88fe5a3fe",
       "pass": true,
-      "result_of": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa"
+      "result_of": "bundle:0a8ef4360a07819c768db655a9951604887fba69d6b79871a4db94b3f3c32bb9"
     },
     {
-      "id": "voice_07.mp3",
-      "audio_sha256": "fefc2bc9823994a02414f2d812d55ad99c5cc7e39b5cb74e4a2a93060b826869",
+      "id": "voice_08.mp3",
+      "audio_sha256": "742870530f5d914b0a5cb2183702cfaa66ed329e061838aa4fb5d39f3ba5a65c",
       "pass": true,
       "result_of": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17"
     },
     {
-      "id": "voice_08.mp3",
-      "audio_sha256": "cb94cf6d9760c0fd93b1e112b7f0b5314f28a56ec49b5c4c5b8bad7a2054ce16",
+      "id": "voice_09.mp3",
+      "audio_sha256": "d062dc679ef7058a8fe000ace3fa27eaedec3d3db1d925b9db99dd77d4c92e6e",
       "pass": true,
       "result_of": "bundle:c64ab249f11797a98454c70febdf930aa2e41ca75a1e69771421ab75df522073"
     },
     {
-      "id": "voice_09.mp3",
-      "audio_sha256": "fcee0845cf305669d9e350f5c5f5302c8e8e1f096a99c8cdb3148a8275623eb3",
+      "id": "voice_10.mp3",
+      "audio_sha256": "90ceb92e9f906e007fa2e7088ec546febdf453c460a31f404e364d69ec903c34",
       "pass": true,
       "result_of": "bundle:77513a01b08fe20fbbd4ed8f072903aa2de8a1708470947b9a8e24b2721f05c1"
     },
     {
-      "id": "voice_10.mp3",
-      "audio_sha256": "69585aa469760d615c960a72e7a4ebfc2e6ddc322508470369188d3c549b5759",
+      "id": "voice_11.mp3",
+      "audio_sha256": "58a056a01818d4edffd26d939efebfc6dbf5ca1036d706c004838ae0687bc7f4",
       "pass": true,
       "result_of": "bundle:805e65720e5888b089a92277d3b63ef6e281b4b8891633f0380a4602b394561d"
     },
     {
-      "id": "voice_11.mp3",
-      "audio_sha256": "f3113f72590303dbca991b6f6d135f654d5a1c5acc68aef4a8b0d15a66b9fa1e",
+      "id": "voice_12.mp3",
+      "audio_sha256": "ffee1611dda23974de440e86f8ce56bca4e0aa902f44f13b9ced5cfbcc7d1364",
       "pass": true,
       "result_of": "bundle:a9a6f4566e5de1e3004b15eb1bfab022c3185c4a31cbb12013548f929bcbbb27"
     },
     {
-      "id": "voice_12.mp3",
-      "audio_sha256": "c098bef848581d321a58c837005fe078209cbd8a55feafbe0dfeb0b6141424ed",
-      "pass": true,
-      "result_of": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c"
-    },
-    {
       "id": "voice_13.mp3",
-      "audio_sha256": "0319de5664b95b26a9ee84c7dbd9611ce56365d74fb7c75b2df05b6a3e471a43",
+      "audio_sha256": "3e791ae125661974a13228a67c3962092d7096992de10127fa2cb943d1e5142f",
       "pass": true,
-      "result_of": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a"
+      "result_of": "bundle:f0fc8fafea14013de9d83188839757868b213b5ad999a9a5de6d2a0f6ba53788"
     },
     {
       "id": "voice_14.mp3",
-      "audio_sha256": "1fdf67b1475de07d17516b87b4fe6d81205cc0c933c07f87bfddd146121f183e",
+      "audio_sha256": "d195960e2513d2da9df65d38f13f00db9dac2327d8c040c4220008661a0104db",
+      "pass": true,
+      "result_of": "bundle:2a33e5f8ce526ff9cc54544ca80de89c2a6430fd9cd533f885d99087dfcdfc87"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "20ee9fc5d58c74763c2969522bdb98cafed4124b9f9667c532c73aba96df1d0b",
       "pass": true,
       "result_of": "bundle:d18b17e3213445f8ba681c3ab9f9b904f6f39d4068414986fe21059ff5f2413c"
     },
     {
-      "id": "voice_15.mp3",
-      "audio_sha256": "e0adb0b7e55c5d918cec743747896ad89b2f63696c31fd984ca3a52e25650cd8",
+      "id": "voice_17.mp3",
+      "audio_sha256": "a9e4f44d69f75c96b32109322d00a136e1d19f02cae49fa2d3f207475b24b2c7",
+      "pass": true,
+      "result_of": "bundle:47bca226dd7448ca017f9a67ec8d6df36a301870839295bebdec5f1aff4d691d"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "aa545f85a0f34aaa7cb35be2a8bbf1a8413dbaa14ed39bfac1ccd88e0e30a797",
       "pass": true,
       "result_of": "bundle:e4fe083c67589164f2eb0aa2f94d3ade5ffa0c93517f29b421493fa93b74251c"
     },
     {
-      "id": "voice_16.mp3",
-      "audio_sha256": "bde51fb4f4efe5c476b40a5af3af71868aab1f726ac23ebd8667a82644e06592",
+      "id": "voice_19.mp3",
+      "audio_sha256": "13de5017bbe5e48ede5150f75b408310f2861f9c1c307a6c5fd5bcb34d85ba07",
       "pass": true,
       "result_of": "bundle:c8648c7bf9d22061a7ae407ef8f04f54a2508b2a6b6edda052e2df3704ede887"
     },
     {
-      "id": "voice_17.mp3",
-      "audio_sha256": "e6b8059dd60dcbe36a73836b4bb9888f21f8bc530c66c2832bda7556a02422c8",
+      "id": "voice_20.mp3",
+      "audio_sha256": "cf083c04ffa6131c7a41683f59b76ce0978c20b620eb5e51a687e0e145d6b03d",
       "pass": true,
       "result_of": "bundle:fdc46affee99733ae5307aef045992de3a298b475ad17cfbe462069210eb412c"
     },
     {
-      "id": "voice_19.mp3",
-      "audio_sha256": "c7e67e5f272bccc42d2820efa19723b24f2a201cf071ac34b760b6ab67ecc250",
+      "id": "voice_22.mp3",
+      "audio_sha256": "f3f099a92a733a7f65b0cf631a542d44f5794a5e433e80bdc0c8d10246d3fabe",
       "pass": true,
       "result_of": "bundle:fe9a1913603b1b7fc1c83bbed6705e6ab6470bdd7e2f575308b6c84138cd0f46"
     },
     {
-      "id": "voice_20.mp3",
-      "audio_sha256": "901a2f373c153962c7f7bd2ca147690307f4b9514b7be662d75f77399f4da565",
+      "id": "voice_23.mp3",
+      "audio_sha256": "8d6dac4bcc4f79ad6639fa94fcc08f067a5e142366c98a82b943be424b9f8063",
       "pass": true,
-      "result_of": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc"
+      "result_of": "bundle:0301ca283a2bb7106cfb1cfa57016085ec7504696287aa572590dd76a84146c7"
     },
     {
-      "id": "voice_21.mp3",
-      "audio_sha256": "156b3c7bded8bef6e9ca87751d4c944ee4de1c70f3611a748aea4a447fcb4add",
+      "id": "voice_24.mp3",
+      "audio_sha256": "14ad28b2703a6c956be93a50580a0dd7fce16f7fa2c2ff313304655cbec5d8c6",
       "pass": true,
       "result_of": "bundle:5a725c5bb30bbf94d0485f16daaa177e45456e80fb3011699c180e270ef96350"
     },
     {
-      "id": "voice_22.mp3",
-      "audio_sha256": "4c9872d814a6bdffdc5824fb3b2b39c4ea43fe0c68ee09f218c4315b5bf739ec",
+      "id": "voice_25.mp3",
+      "audio_sha256": "7b46d03622418e80f1c8cb0aa3cadd7e293ead0a3cbaa263f024c2ee0f5dc150",
       "pass": true,
       "result_of": "bundle:25c3faec061180e60322d1950baace7983484fb1273bb93951b8e2ec9504fdab"
     },
     {
-      "id": "voice_23.mp3",
-      "audio_sha256": "b94b801d3f8e397043602d381c2ac671776a62282322abcfff65628cb5d5b7c9",
+      "id": "voice_26.mp3",
+      "audio_sha256": "c7ad6b3a73fb9e48660109bc2ffba174149167278251dfca48fe0ffea7a1c05f",
       "pass": true,
       "result_of": "bundle:a417dcd923c1dc29fbb5ee50441d163de463f59f9e725bd649d7afc4ddd0327d"
     },
     {
-      "id": "voice_25.mp3",
-      "audio_sha256": "a5b569c0d9ccb9464e67991cca5082227c5daafdb1fa11187771c9b26299d342",
+      "id": "voice_28.mp3",
+      "audio_sha256": "8848abceaa5404fcedc048872c9ca8f158150c888046c006e0475ffabe6f9386",
       "pass": true,
       "result_of": "bundle:912106f018199ca1477d4a02d530ff94fe7865b2b63c82dd84358f2adb177873"
     },
     {
-      "id": "voice_26.mp3",
-      "audio_sha256": "b1be800d596ac56c225d3ff7278d284e7a8755d18e26a0c6069b95c4fcf682c5",
+      "id": "voice_29.mp3",
+      "audio_sha256": "11d8f32401337ae806218eca2ceee1d51beb0f60de27aa80d8333d5a4f7c4b61",
       "pass": true,
-      "result_of": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547"
+      "result_of": "bundle:6770e12bfcf21b9a47670a3b4d8eca202b65b18a2b1d32d7ad713a7d56842696"
     },
     {
-      "id": "voice_27.mp3",
-      "audio_sha256": "ba2811f91f2130e3580aab1f1689f69a13905bd039f6a0bf47368016a87bf5a3",
+      "id": "voice_30.mp3",
+      "audio_sha256": "b111bdaa81d92cb949bd1fabcfe00ac4f820921fb106332949d11a9863ac0049",
       "pass": true,
       "result_of": "bundle:68de07294c02a92507f522ba4bf02333b02a2972a9ff0df04899936c9e415b64"
     },
     {
-      "id": "voice_28.mp3",
-      "audio_sha256": "d8168bed6b32ed603f4c49f067b71c121077a8a1fdd57a0e4991c601beaaa3a8",
+      "id": "voice_31.mp3",
+      "audio_sha256": "6e6c6d984a3362b39d0d000319c70dbd35015385a09546fd965a3f479f5cf460",
       "pass": true,
-      "result_of": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be"
+      "result_of": "bundle:b79db1cdfead3e69ce1282344292fe39b62a7944d8c1886ab217ea2c5e4d2ad0"
     },
     {
-      "id": "voice_29.mp3",
-      "audio_sha256": "4f17b62cf351bbf2873fb48f625d36d14724bd3196844fb2ce175068c1eaecf7",
+      "id": "voice_32.mp3",
+      "audio_sha256": "5b9b393cd28379714538e7d7ee5196b24104e558582b09a83c35fbc31ca39b10",
       "pass": true,
       "result_of": "bundle:64cf50f83188494cbd96c26f31e667dc1485b73b6b1bb044c8373f398ee99afd"
     },
     {
-      "id": "voice_30.mp3",
-      "audio_sha256": "d7a3d57829f8b68c69f8c12100d0bdd8bd182aee47412720202cba7dee579138",
+      "id": "voice_33.mp3",
+      "audio_sha256": "6c6e3e7be57cd4a05fe4c197548604da52e99d3bca864f3fc9239e0af2b5e144",
       "pass": true,
       "result_of": "bundle:9e3af0e22198acc7e079cd0df93dece019cc81b28b7383bf1188423fd892f87e"
     },
     {
-      "id": "voice_31.mp3",
-      "audio_sha256": "7ad0575ca83e1789c59644b671f839fb01a467f05b5ecc48b139614e984c465d",
+      "id": "voice_34.mp3",
+      "audio_sha256": "9ac525d2426b849b06ea7479c87a24bc7504d0fac82700bccb1aa0bef475e5d1",
       "pass": true,
       "result_of": "bundle:b57818b7e3889c2124cdee7bfbbf046d8f15a93971230bbce27f34684f6e4c9e"
     },
     {
-      "id": "voice_32.mp3",
-      "audio_sha256": "2576f0cad04e7cdfb7cdaa22ba98064bdc1d4b93e93cc49b25d7a4e389ab86f9",
+      "id": "voice_35.mp3",
+      "audio_sha256": "60558d67376ad1e5fd8c8d920b98b10a5468c8e7eaaf3dbecaba74d07e611deb",
       "pass": true,
       "result_of": "bundle:a8392cebb9e8b678355ce7d4a719643ef24ac1d277944cfc4833ffe18ed0022b"
     },
     {
-      "id": "voice_33.mp3",
-      "audio_sha256": "20ca2ebca1bd211089bcf00f33f9df3d1a72081e69ed7c1c4b7ba61d61c0997d",
+      "id": "voice_36.mp3",
+      "audio_sha256": "e1ace7709f9b1d971eac28bb1bbc4521f30dde84e7afbc33730e2ca4be986991",
       "pass": true,
-      "result_of": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1"
+      "result_of": "bundle:84bebd8516325338952cf974c1907ac7620c4bdc7a1d83e78590c5bf0cc40bb7"
     },
     {
-      "id": "voice_34.mp3",
-      "audio_sha256": "6c50a50f170526697dd2b5cbe9b82bbb7e73f898fe6c254915f792150c285171",
+      "id": "voice_40.mp3",
+      "audio_sha256": "ba91229adc83431710884614e6aad44378dc00fbf9d26b3865315d2622fbb3c1",
       "pass": true,
       "result_of": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af"
     },
     {
-      "id": "voice_35.mp3",
-      "audio_sha256": "801bc7b92bde6fed4c697d09d42f54aad58fb342b3babde1486680ffa1b18e3d",
+      "id": "voice_41.mp3",
+      "audio_sha256": "15268082b4c3f5612ec76c5d3a4e97fe1f56cb19303081f0e4b022a8abde9aeb",
       "pass": true,
       "result_of": "bundle:837552ef7a1d5fe6df5f1dda61f50b2a01936a2cd6815d96bb4bc6cd9e95e062"
     },
     {
-      "id": "voice_36.mp3",
-      "audio_sha256": "6fb7976e66fe3d17003567e1785d04ea3f1684c2b905b3f27198e72ec592b105",
+      "id": "voice_42.mp3",
+      "audio_sha256": "238901d2b9b8c934991d137bc892ae0a3f9e7a29f97694cce04a6c72892e4e94",
       "pass": true,
       "result_of": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a"
     },
     {
-      "id": "voice_37.mp3",
-      "audio_sha256": "ac993ecc92cb5028c1537b0a26fed99d8966c9d9560a93d9eb0b1dd08247dc40",
+      "id": "voice_43.mp3",
+      "audio_sha256": "68f1845e36dce3f146a4069e32cfce98b4833392a9ffbba75ad5d39a9105de95",
       "pass": true,
       "result_of": "bundle:440a78337b73763454cef7d8aba97dd4c97c2dbc54bce51ea645b1eed924625a"
     },
     {
-      "id": "voice_38.mp3",
-      "audio_sha256": "cac49f4287a3042f789ffb7fbaad7445506c20d0a9e86bc3f69fa4a5d6f7c5f9",
+      "id": "voice_44.mp3",
+      "audio_sha256": "1d9314be42840539d0b3b6ada42d8cb9926f6a1f4103e4ee08bb6c61b414c211",
       "pass": true,
       "result_of": "bundle:59a263e3195d4efc72f158c43e345be2813e1916dbd872f6977963eb390307ac"
     },
     {
-      "id": "voice_39.mp3",
-      "audio_sha256": "86eab3ac2930fd23913641d293fe945b5242134e2d9afc3d17c0728d3bb71900",
+      "id": "voice_45.mp3",
+      "audio_sha256": "df595b3ff9a7445ee2df373a28890d4c39cce7a706aa6f2aca06195a01bd3b6a",
       "pass": true,
-      "result_of": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc"
+      "result_of": "bundle:7267dc2c4b768e3a0cc21e6fcd259049019289883efa35684a3c5bae9c682ca4"
     },
     {
-      "id": "voice_40.mp3",
-      "audio_sha256": "012bb357e57640d2c762a75d084e646e2609a2a79e7ebddcbc6eb82602450230",
+      "id": "voice_46.mp3",
+      "audio_sha256": "297d57143f90b9ca14c359ef15b05a91fef5a52fce193d20f392f1225b262014",
       "pass": true,
       "result_of": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603"
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "8ebd149dc4cedbe78bc540660601547da72043e9d7f61f89cd00a599beef24e9",
+      "audio_sha256": "821cd8832a0d05dfad85fecb98e76ab1f89c98a6b31fd9c5ba8b2a2e8ab8771a",
       "pass": true,
       "result_of": "bundle:0e4a3f5dd246430a925c0f0aadb7e6e08e4b9546a952b174f6b405469f61b886"
     },
     {
       "id": "voice_outro.mp3",
-      "audio_sha256": "299f3b25a8ce6539a31329019333dbc4d2123e0ba6217d553110c1ab0e352737",
+      "audio_sha256": "ff965556f03de5d7b578e9e50ec59bb33603fc8781034c90f4e2be6a99f6febb",
       "pass": true,
       "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
     }
   ],
   "audio": [
+    {
+      "id": "bundle:0301ca283a2bb7106cfb1cfa57016085ec7504696287aa572590dd76a84146c7",
+      "text": "她说，网球里有些规矩，是大多数球员都会遵守的——这是她生涯第一次遇上有人不道歉。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他说,网球里有些规矩,是大多数球员都会遵守的。这是他生涯第一次遇上有人不道歉。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 6.509,
+        "cps": 5.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 说 ｜ 网球 ｜ 里 ｜ 有些 ｜ 规矩 ｜ 是 ｜ 大多数 ｜ 球员 ｜ 都 ｜ 会 ｜ 遵守 ｜ 的 ｜ 这是 ｜ 她 ｜ 生涯 ｜ 第一次 ｜ 遇 ｜ 上 ｜ 有人 ｜ 不 ｜ 道歉"
+      }
+    },
     {
       "id": "bundle:065cdce89a690ac36a947064bd6d129ddbb6183486bc262f36cf7cbb1f0d1579",
       "text": "阿加西在评论席当场开炮……",
@@ -534,6 +578,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "阿加西 ｜ 在 ｜ 评论 ｜ 席 ｜ 当场 ｜ 开炮"
+      }
+    },
+    {
+      "id": "bundle:0a8ef4360a07819c768db655a9951604887fba69d6b79871a4db94b3f3c32bb9",
+      "text": "我们能不能把“为擦网道歉”这习俗，废了？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.062,
+        "longest_deletion": 0,
+        "transcript": "我们能不能把卫擦网道歉之习俗?废了!"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 2.925,
+        "cps": 5.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "我们能不能 ｜ 把 ｜ 为 ｜ 擦网 ｜ 道歉 ｜ 这 ｜ 习俗 ｜ 废 ｜ 了"
       }
     },
     {
@@ -569,116 +645,6 @@
       }
     },
     {
-      "id": "bundle:1a4d7eb3e30f3ebb59006a8e45f1c143a92b66827bc74de8a2cc8cd8f53a6fe1",
-      "text": "2020年澳网，蒂姆淘汰纳达尔那场，擦网得分至少五次，举手也五次。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 30,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "2020年奥网,地姆淘汰纳达尔那场,擦网得分至少5次,举手也5次。"
-      },
-      "polyphones": [
-        {
-          "index": 20,
-          "char": "得",
-          "word": "得",
-          "intended": "de2",
-          "wrong": [
-            "dei3"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "runs": [],
-          "ok_refs": "德锝"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 29,
-        "speech_s": 6.109,
-        "cps": 4.75,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "2020 ｜ 年 ｜ 澳 ｜ 网 ｜ 蒂姆 ｜ 淘汰 ｜ 纳达尔 ｜ 那 ｜ 场 ｜ 擦 ｜ 网 ｜ 得分 ｜ 至少 ｜ 五次 ｜ 举手 ｜ 也 ｜ 五次"
-      }
-    },
-    {
-      "id": "bundle:1cb7a28bab261558494dbe09d8a1980d7142d758819d9fb4c2818f745fd693bc",
-      "text": "\"Why should I say I'm sorry when it's the happiest moment of my life?\"我人生最幸福的时刻，为什么要说对不起？",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 17,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "Why should I say I'm sorry when it's the happiest moment of my life?我人生最幸福的时刻,为什么要说对不起?"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 17,
-        "speech_s": 5.802,
-        "cps": 2.93,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "Why ｜ should ｜ I ｜ say ｜ I'm ｜ sorry ｜ when ｜ it's ｜ the ｜ happiest ｜ moment ｜ of ｜ my ｜ life ｜ 我 ｜ 人生 ｜ 最 ｜ 幸福 ｜ 的 ｜ 时刻 ｜ 为什么 ｜ 要 ｜ 说 ｜ 对不起"
-      }
-    },
-    {
-      "id": "bundle:22ac5cd9a8a9a656c76334c57f51c17d21637981419d4d810bf1b71a1be432fa",
-      "text": "\"Can we please rally to get rid of that 'I apologise for hitting the net cord'?\"我们能不能把“为擦网道歉”这习俗，废了？",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 16,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "我们能不能把为擦网道歉这习俗,废了?"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 16,
-        "speech_s": 5.908,
-        "cps": 2.71,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "Can ｜ we ｜ please ｜ rally ｜ to ｜ get ｜ rid ｜ of ｜ that ｜ I ｜ apologise ｜ for ｜ hitting ｜ the ｜ net ｜ cord ｜ 我们能不能 ｜ 把 ｜ 为 ｜ 擦网 ｜ 道歉 ｜ 这 ｜ 习俗 ｜ 废 ｜ 了"
-      }
-    },
-    {
       "id": "bundle:23fdc6a44d497b9644b1a913a71215f3817337cbcc0329af46ac3541924876af",
       "text": "第一次是真心，第五次呢？画面自己会问。",
       "pass": true,
@@ -696,7 +662,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第一次是真心,第五次呢。画面自己会问。"
+        "transcript": "第一次是真心,第五次呢? 画面自己会问。"
       },
       "polyphones": [],
       "pauses": {
@@ -756,6 +722,38 @@
       }
     },
     {
+      "id": "bundle:2a33e5f8ce526ff9cc54544ca80de89c2a6430fd9cd533f885d99087dfcdfc87",
+      "text": "“做到后来，全是自动动作。”",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "做到后来,全是自动动作。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 2.3,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "做到 ｜ 后来 ｜ 全 ｜ 是 ｜ 自动 ｜ 动作"
+      }
+    },
+    {
       "id": "bundle:2c1f2b98be75be878069883caa332e12b1bd202bc6783cc5693fa286fef0075a",
       "text": "所以这声“对不起”是什么？废除派说虚伪，坚守派说体面。",
       "pass": true,
@@ -788,60 +786,6 @@
       }
     },
     {
-      "id": "bundle:2e80bf20b460a3b67c3826cba5ac0be943e3d2dfe4bfeb5876a5095ad76e01be",
-      "text": "\"I'm sorry, because I'd rather have finished it on a outright winner.\"我道歉，是因为我宁愿用一记干干净净的制胜分，结束这一分。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 25,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.08,
-        "longest_deletion": 0,
-        "transcript": "I'm sorry, because I rather have finished it on an alright winner.我道歉,是因为,我宁愿用一季刚干净净的去胜分,结束这一分。"
-      },
-      "polyphones": [
-        {
-          "index": 78,
-          "char": "宁",
-          "word": "宁愿",
-          "intended": "ning4",
-          "wrong": [
-            "ning2"
-          ],
-          "tier": "A",
-          "verdict": "correct",
-          "runs": [
-            {
-              "wrong": "ning2",
-              "verdict": "correct",
-              "score": 0.702,
-              "confidence": "medium",
-              "near": null
-            }
-          ],
-          "ok_refs": "佞泞"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 25,
-        "speech_s": 8.066,
-        "cps": 3.1,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "I'm ｜ sorry ｜ because ｜ I'd ｜ rather ｜ have ｜ finished ｜ it ｜ on ｜ a ｜ outright ｜ winner ｜ 我 ｜ 道歉 ｜ 是 ｜ 因为 ｜ 我 ｜ 宁愿 ｜ 用 ｜ 一 ｜ 记 ｜ 干干净净 ｜ 的 ｜ 制胜 ｜ 分 ｜ 结束 ｜ 这 ｜ 一 ｜ 分"
-      }
-    },
-    {
       "id": "bundle:3bbb156d578736c16a83544d2906560e9072b4b778eadda89ceb6daebc3ed603",
       "text": "那么你说——擦网得分举起的那只手，是礼貌还是演戏？",
       "pass": true,
@@ -856,10 +800,10 @@
         "ref_syllables": 21,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.048,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那么你说,擦网德红举起的那只手是礼貌还是演戏?"
+        "transcript": "那么你说,擦网得分举起的那只手是礼貌还是演戏?"
       },
       "polyphones": [
         {
@@ -889,7 +833,7 @@
             {
               "wrong": "huan2",
               "verdict": "unreliable",
-              "score": 0.247,
+              "score": 0.219,
               "confidence": null,
               "near": null
             }
@@ -906,38 +850,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "那么 ｜ 你 ｜ 说 ｜ 擦 ｜ 网 ｜ 得分 ｜ 举起 ｜ 的 ｜ 那 ｜ 只 ｜ 手 ｜ 是 ｜ 礼貌 ｜ 还是 ｜ 演戏"
-      }
-    },
-    {
-      "id": "bundle:40c3e8f46f3081300c0b06e7d0a49dbf9177e9f1975274349be195a90f445547",
-      "text": "\"If you hit the net cord and it doesn't go over, I don't see the other person apologising.\"没人跟你道歉——这动作，天生单向。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 13,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "If you hit the net court and it doesn't go over, I don't see the other person apologizing. 没人跟你道歉,这动作,天生单想。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 13,
-        "speech_s": 6.521,
-        "cps": 1.99,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "If ｜ you ｜ hit ｜ the ｜ net ｜ cord ｜ and ｜ it ｜ doesn't ｜ go ｜ over ｜ I ｜ don't ｜ see ｜ the ｜ other ｜ person ｜ apologising ｜ 没 ｜ 人 ｜ 跟 ｜ 你 ｜ 道歉 ｜ 这 ｜ 动作 ｜ 天生 ｜ 单向"
       }
     },
     {
@@ -958,7 +870,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "省掉他的人被堵着讨说法,作足的人只想着下一分,没人真信他却活了一百多年。"
+        "transcript": "省掉他的人被堵着讨说法,作足的人只想着下一分。没人真信,他却活了一百多年。"
       },
       "polyphones": [],
       "pauses": {
@@ -970,6 +882,94 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "省掉 ｜ 它 ｜ 的 ｜ 人 ｜ 被 ｜ 堵 ｜ 着 ｜ 讨 ｜ 说法 ｜ 做 ｜ 足 ｜ 的 ｜ 人 ｜ 只 ｜ 想 ｜ 着 ｜ 下 ｜ 一 ｜ 分 ｜ 没 ｜ 人 ｜ 真 ｜ 信 ｜ 它 ｜ 却 ｜ 活 ｜ 了 ｜ 一百多年"
+      }
+    },
+    {
+      "id": "bundle:47bca226dd7448ca017f9a67ec8d6df36a301870839295bebdec5f1aff4d691d",
+      "text": "还有肯宁这种，擦网得了分，抿着嘴转身就走，手都不举一下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.042,
+        "longest_deletion": 0,
+        "transcript": "还有肯尼这种,擦网得了分,敏着嘴转身就走,手都不举一下。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.448,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 5,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.425,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 9,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.142,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "还有 ｜ 肯宁 ｜ 这种 ｜ 擦 ｜ 网 ｜ 得了 ｜ 分 ｜ 抿 ｜ 着 ｜ 嘴 ｜ 转身 ｜ 就 ｜ 走 ｜ 手 ｜ 都 ｜ 不 ｜ 举 ｜ 一下"
       }
     },
     {
@@ -990,7 +990,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "握手时,他被堵在往前,骂没有风度、没有教养。刀火所势。"
+        "transcript": "握手时,他被堵在往前,骂没有封堵,没有教养。刀火所势。"
       },
       "polyphones": [],
       "pauses": {
@@ -1022,7 +1022,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2007年温网,索德林擦网得分梅志倩,还振臂庆祝北纳达尔批评。"
+        "transcript": "2007年温网,索德林擦网得分梅志倩还振臂庆祝被纳达尔批评。"
       },
       "polyphones": [
         {
@@ -1052,7 +1052,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.545,
+              "score": 0.624,
               "confidence": "medium",
               "near": null
             }
@@ -1121,7 +1121,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "别忘了,争论的起点是求本身。"
+        "transcript": "别忘了,争论的起点是球本身。"
       },
       "polyphones": [],
       "pauses": {
@@ -1133,6 +1133,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "别 ｜ 忘 ｜ 了 ｜ 争论 ｜ 的 ｜ 起点 ｜ 是 ｜ 球 ｜ 本身"
+      }
+    },
+    {
+      "id": "bundle:6770e12bfcf21b9a47670a3b4d8eca202b65b18a2b1d32d7ad713a7d56842696",
+      "text": "没人跟你道歉——这动作，天生单向。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "没人跟你道歉,这动作天生丹响。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.913,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "没 ｜ 人 ｜ 跟 ｜ 你 ｜ 道歉 ｜ 这 ｜ 动作 ｜ 天生 ｜ 单向"
       }
     },
     {
@@ -1153,7 +1185,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那举手的人图什么? 沙拉波娃说。"
+        "transcript": "那举手的人图什么? 莎拉波娃说。"
       },
       "polyphones": [],
       "pauses": {
@@ -1165,38 +1197,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "那 ｜ 举手 ｜ 的 ｜ 人 ｜ 图 ｜ 什么 ｜ 莎拉波娃 ｜ 说"
-      }
-    },
-    {
-      "id": "bundle:6d33e5efcc90d7b147cca1ce5f34818d9d6c537dacfda4abb407b75d95711fbc",
-      "text": "\"There are some rules in tennis which most of the players follow.\"——她说，这是她生涯第一次遇上有人不道歉。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 17,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "他说,这是他生涯第一次遇上有人不道歉。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 17,
-        "speech_s": 6.321,
-        "cps": 2.69,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "There ｜ are ｜ some ｜ rules ｜ in ｜ tennis ｜ which ｜ most ｜ of ｜ the ｜ players ｜ follow ｜ 她 ｜ 说 ｜ 这是 ｜ 她 ｜ 生涯 ｜ 第一次 ｜ 遇 ｜ 上 ｜ 有人 ｜ 不 ｜ 道歉"
       }
     },
     {
@@ -1214,10 +1214,10 @@
         "ref_syllables": 21,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.095,
+        "substituted": 1,
+        "sub_ratio": 0.048,
         "longest_deletion": 0,
-        "transcript": "首盘遗迹插网谈过网袋,他拿下那分,却没举手道歉。"
+        "transcript": "首盘遗迹擦网谈过网袋,他拿下那分,却没举手道歉。"
       },
       "polyphones": [],
       "pauses": {
@@ -1229,6 +1229,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "首盘 ｜ 一 ｜ 记 ｜ 擦 ｜ 网 ｜ 弹 ｜ 过 ｜ 网带 ｜ 她 ｜ 拿下 ｜ 那 ｜ 分 ｜ 却 ｜ 没 ｜ 举手 ｜ 道歉"
+      }
+    },
+    {
+      "id": "bundle:7267dc2c4b768e3a0cc21e6fcd259049019289883efa35684a3c5bae9c682ca4",
+      "text": "我人生最幸福的时刻，为什么要说对不起？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "我人生最幸福的时刻,为什么要说对不起?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.09,
+        "cps": 5.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "我 ｜ 人生 ｜ 最 ｜ 幸福 ｜ 的 ｜ 时刻 ｜ 为什么 ｜ 要 ｜ 说 ｜ 对不起"
       }
     },
     {
@@ -1267,14 +1299,14 @@
             {
               "wrong": "la4",
               "verdict": "correct",
-              "score": 0.453,
+              "score": 0.446,
               "confidence": "medium",
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "correct",
-              "score": 0.383,
+              "score": 0.389,
               "confidence": "medium",
               "near": null
             }
@@ -1340,7 +1372,7 @@
             {
               "wrong": "zhong4",
               "verdict": "unreliable",
-              "score": 0.188,
+              "score": 0.649,
               "confidence": null,
               "near": null
             }
@@ -1401,6 +1433,52 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "没 ｜ 人 ｜ 能 ｜ 练 ｜ 擦 ｜ 网 ｜ 它 ｜ 不 ｜ 认 ｜ 排名 ｜ 不 ｜ 认 ｜ 苦练 ｜ 只 ｜ 认 ｜ 那 ｜ 条 ｜ 白带"
+      }
+    },
+    {
+      "id": "bundle:84bebd8516325338952cf974c1907ac7620c4bdc7a1d83e78590c5bf0cc40bb7",
+      "text": "2020年澳网，蒂姆淘汰纳达尔那场，擦网得分至少五次，举手也五次——其中三记，完整看一遍。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2020年澳王,地姆淘汰纳达尔那场,擦网得分至少五次,举手也五次,其中三季完整看一遍。"
+      },
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.054,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2020 ｜ 年 ｜ 澳 ｜ 网 ｜ 蒂姆 ｜ 淘汰 ｜ 纳达尔 ｜ 那 ｜ 场 ｜ 擦 ｜ 网 ｜ 得分 ｜ 至少 ｜ 五次 ｜ 举手 ｜ 也 ｜ 五次 ｜ 其中 ｜ 三记 ｜ 完整 ｜ 看 ｜ 一遍"
       }
     },
     {
@@ -1485,7 +1563,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "去年美网比赛打完戏才开始,汤森德7比5,6比1赢了奥斯塔彭科。"
+        "transcript": "去年美网比赛打完戏才开始,汤森德7比5、6比1赢了奥斯塔彭科。"
       },
       "polyphones": [],
       "pauses": {
@@ -1549,7 +1627,7 @@
         "substituted": 1,
         "sub_ratio": 0.023,
         "longest_deletion": 0,
-        "transcript": "赛点上,伦德尔二发又擦到网贷,谈出界外,双误比赛结束。同一场,网贷先帮张德培一次,最后又替他收了尾。"
+        "transcript": "赛点上,伦德尔二发又擦到网带,谈出界外,双误比赛结束。同一场,网带先帮张德培一次,最后又替他收了尾。"
       },
       "polyphones": [
         {
@@ -1594,7 +1672,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "没人说得清,史加柯林斯说,来自英史深世年代。"
+        "transcript": "没人说得清,史加克林斯说,来自英史深世年代。"
       },
       "polyphones": [
         {
@@ -1612,7 +1690,7 @@
             {
               "wrong": "de2",
               "verdict": "correct",
-              "score": 0.945,
+              "score": 0.98,
               "confidence": "low",
               "near": "intended"
             }
@@ -1649,7 +1727,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "1989年罚网,17岁的张德培对世界第一伦德尔,第五盘他抽筋到走不动,却在4比3,15比30时打出一技下手发球。伦德尔被引到往前,穿越球擦着往带,爬了过去。"
+        "transcript": "1989年罚网,17岁的张德培对世界第一伦德尔。第五盘他抽筋到走不动,却在4比3,15比30时打出一技下手发球。伦德尔被引到往前,穿越球擦着往带,爬了过去。"
       },
       "polyphones": [
         {
@@ -1674,6 +1752,60 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "1989 ｜ 年 ｜ 法网 ｜ 17岁 ｜ 的 ｜ 张德培 ｜ 对 ｜ 世界 ｜ 第一 ｜ 伦德尔 ｜ 第五盘 ｜ 他 ｜ 抽筋 ｜ 到 ｜ 走 ｜ 不 ｜ 动 ｜ 却 ｜ 在 ｜ 4比3 ｜ 15比30 ｜ 时 ｜ 打 ｜ 出 ｜ 一 ｜ 记 ｜ 下手 ｜ 发球 ｜ 伦德尔 ｜ 被 ｜ 引 ｜ 到 ｜ 网 ｜ 前 ｜ 穿越 ｜ 球 ｜ 擦 ｜ 着 ｜ 网带 ｜ 爬 ｜ 了 ｜ 过去"
+      }
+    },
+    {
+      "id": "bundle:b79db1cdfead3e69ce1282344292fe39b62a7944d8c1886ab217ea2c5e4d2ad0",
+      "text": "我道歉，是因为我宁愿用一记干干净净的制胜分，结束这一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "我道歉,是因为我宁愿用一剂干干净净的致胜分结束这一分。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "宁",
+          "word": "宁愿",
+          "intended": "ning4",
+          "wrong": [
+            "ning2"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ning2",
+              "verdict": "correct",
+              "score": 0.655,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "佞泞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.047,
+        "cps": 4.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "我 ｜ 道歉 ｜ 是 ｜ 因为 ｜ 我 ｜ 宁愿 ｜ 用 ｜ 一 ｜ 记 ｜ 干干净净 ｜ 的 ｜ 制胜 ｜ 分 ｜ 结束 ｜ 这 ｜ 一 ｜ 分"
       }
     },
     {
@@ -1706,38 +1838,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
-      }
-    },
-    {
-      "id": "bundle:beab67739148739e6c558d847d79ef653474c7b753a2c5c0327350e02406b51a",
-      "text": "\"But I think it's automatic now\"——全是自动动作。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 6,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "But I think it's automatic now, 全是自动动作。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 6,
-        "speech_s": 2.618,
-        "cps": 2.29,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "But ｜ I ｜ think ｜ it's ｜ automatic ｜ now ｜ 全 ｜ 是 ｜ 自动 ｜ 动作"
       }
     },
     {
@@ -1802,13 +1902,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "unreliable",
-              "score": 0.669,
-              "confidence": null,
+              "verdict": "correct",
+              "score": 0.733,
+              "confidence": "medium",
               "near": null
             }
           ],
@@ -1856,13 +1956,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "unreliable",
-              "score": 0.166,
-              "confidence": null,
+              "verdict": "correct",
+              "score": 0.276,
+              "confidence": "low",
               "near": null
             }
           ],
@@ -1959,38 +2059,6 @@
       }
     },
     {
-      "id": "bundle:e8152a21cb6e5765e558f13b19142e83ca74997fbb75bf032569e16d92610f6c",
-      "text": "哈勒普说：\"I was taught as a kid that you have to say sorry.”",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 4,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "哈勒普说,I was taught as a kid that you have to say sorry."
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 4,
-        "speech_s": 2.96,
-        "cps": 1.35,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "哈勒普 ｜ 说 ｜ I ｜ was ｜ taught ｜ as ｜ a ｜ kid ｜ that ｜ you ｜ have ｜ to ｜ say ｜ sorry"
-      }
-    },
-    {
       "id": "bundle:ecc9459920f2ee72d8003895f11a8eaa76225a333cdc6ee9a26cd1118f39dc17",
       "text": "一个动作，有人当面开骂，名宿喊着废除。可规则书里，没有“对不起”。",
       "pass": true,
@@ -2020,6 +2088,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "一个 ｜ 动作 ｜ 有人 ｜ 当面 ｜ 开骂 ｜ 名宿 ｜ 喊 ｜ 着 ｜ 废除 ｜ 可 ｜ 规则书 ｜ 里 ｜ 没有 ｜ 对不起"
+      }
+    },
+    {
+      "id": "bundle:f0fc8fafea14013de9d83188839757868b213b5ad999a9a5de6d2a0f6ba53788",
+      "text": "哈勒普说：“从小就被教要道歉。”",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "哈勒普说：从小就被教要道歉。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.382,
+        "cps": 5.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "哈勒普 ｜ 说 ｜ 从小 ｜ 就 ｜ 被 ｜ 教 ｜ 要 ｜ 道歉"
       }
     },
     {
