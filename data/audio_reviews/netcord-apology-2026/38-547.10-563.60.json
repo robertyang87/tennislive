@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-AO20ThiemNa/AO20ThiemNa.mp4",
+  "source_sha256": "0b5f5bf98440cc6db99cb9be9ade976317749e0eacc76992e17e0bb29f87825e",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T08:40:15+00:00",
+  "reviewed_from": 547.1,
+  "reviewed_to": 563.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 547.15,
+      "end": 549.4,
+      "en": "Net cord No. 2 — set point, second-set tiebreak.",
+      "zh": "（擦网第二记 · 抢七盘点）\n（现场原声）"
+    },
+    {
+      "start": 554.0,
+      "end": 556.5,
+      "en": "Set point won off the tape — hand up in apology.",
+      "zh": "（擦网得分拿下盘点——蒂姆举手致歉）"
+    },
+    {
+      "start": 558.55,
+      "end": 563.4,
+      "en": "And he's certainly been that, Dominic Thiem, all the way through this contest.",
+      "zh": "整场比赛，蒂姆都是这么打的。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 0b5f5bf98440cc6db99cb9be9ade976317749e0eacc76992e17e0bb29f87825e，存于 data/source_asr/AO20ThiemNa/small.en.json 与 data/source_asr/AO20ThiemNa/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
