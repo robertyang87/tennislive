@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-PhMzH4gtbRQ/PhMzH4gtbRQ.mp4",
+  "source_sha256": "7e1dff4489f8470ebae9e02ab9c00753d497bae4ea4a8d4070dfcbb39ef4d7b6",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T19:11:07+00:00",
+  "reviewed_from": 8.6,
+  "reviewed_to": 28.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 8.65,
+      "end": 12.2,
+      "en": "It was the best moment to do it,",
+      "zh": "在这样的观众面前，"
+    },
+    {
+      "start": 12.2,
+      "end": 15.6,
+      "en": "in front of such a nice crowd.",
+      "zh": "没有比这更好的时机了。"
+    },
+    {
+      "start": 15.6,
+      "end": 21.8,
+      "en": "To beat Roger was something unbelievable.",
+      "zh": "能击败罗杰，简直难以置信。"
+    },
+    {
+      "start": 21.8,
+      "end": 25.96,
+      "en": "He's such a legend.",
+      "zh": "他是一个传奇。"
+    },
+    {
+      "start": 25.96,
+      "end": 28.52,
+      "en": "He's my idol since I'm really young.",
+      "zh": "他是我从小的偶像。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 7e1dff4489f8470ebae9e02ab9c00753d497bae4ea4a8d4070dfcbb39ef4d7b6，存于 data/source_asr/PhMzH4gtbRQ/small.en.json 与 data/source_asr/PhMzH4gtbRQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
