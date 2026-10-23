@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=fgfdCPaGArg",
+  "source_sha256": "920404e472b01b3fab7a0580cc211f8709e92e43c62b68046fd671458fe23489",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-23T10:02:42+00:00",
+  "reviewed_from": 15.55,
+  "reviewed_to": 25.15,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 15.7,
+      "end": 20.85,
+      "en": "Cramping in the fifth set, Chang resorted to unusual tactics, including the now-legendary",
+      "zh": "第五盘抽筋，张德培出了奇招"
+    },
+    {
+      "start": 20.85,
+      "end": 25.0,
+      "en": "underhand serve, to complete one of the biggest upsets in tennis history.",
+      "zh": "包括传奇的下手发球，爆出大冷门"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 920404e472b01b3fab7a0580cc211f8709e92e43c62b68046fd671458fe23489，存于 data/source_asr/fgfdCPaGArg/small.en.json 与 data/source_asr/fgfdCPaGArg/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
