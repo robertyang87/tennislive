@@ -6879,6 +6879,16 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 存档 URL，不及于 YouTube 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-yvJlyvAXEAc/yvJlyvAXEAc.mp4': 360,
     'https://github.com/robertyang87/tennislive/releases/download/source-gxJAnyNbb64/gxJAnyNbb64.mp4': 720,
+    # 《戈芬退役》（goffin-retirement-2026）段 1（2012 法网）：账号所有者
+    # 2026-10-24 锁稿代决 2 批准该段用民间存档短插。2012 年该场无官方存档，
+    # 比赛录像为粉丝转播存档（1280×720），赛后场内采访现存最佳 640×360。
+    # 白名单只加这两条存档 URL，不及于 YouTube 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4': 720,
+    'https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4': 360,
+    # 《戈芬退役》（goffin-retirement-2026）段 2（2014 基茨比厄尔）：2014 年
+    # ATP 官方上传封顶 1280×720（决赛集锦与梅斯集锦均实测），无 1080p 版本；
+    # 按同片代决 2 的白名单机制落位，仅段 2 短插。
+    'https://github.com/robertyang87/tennislive/releases/download/source-ou674aWvv38/ou674aWvv38.mp4': 720,
     # 2026-10-18: owner approved this Wuhan final official long source: 可以用 720如果可以完整展示内容的话.
     'https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4': 720,
     # 2026-10-17: owner approved this exact Shanghai semifinal long source after
