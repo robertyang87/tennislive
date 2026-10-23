@@ -8,6 +8,7 @@
   "sources": {
     "cere": "https://github.com/robertyang87/tennislive/releases/download/source-V8QfaokOn58/V8QfaokOn58.mp4",
     "eomic": "https://github.com/robertyang87/tennislive/releases/download/source-sDp1mQfXBNI/sDp1mQfXBNI.mp4",
+    "upnxh": "https://github.com/robertyang87/tennislive/releases/download/source-UPnxhVAjoPQ/UPnxhVAjoPQ.mp4",
     "bertn": "https://github.com/robertyang87/tennislive/releases/download/source-7sTTvFfiDc8/7sTTvFfiDc8.mp4",
     "rg12m": "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4",
     "rg12i": "https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4",
@@ -28,6 +29,7 @@
     "cere": "25fps（Tennis TV 官方，probe.json 实测），出片基帧率。",
     "eomic": "25fps（European Open 官方，probe.json 实测），同上。",
     "bertn": "25fps（Tennis TV，probe.json 实测），同上。",
+    "upnxh": "25fps（Tennis TV，probe.json 实测），同上。",
     "rg12m": "25fps（2012 转播存档，probe.json 实测），与出片基帧率一致。",
     "rg12i": "25fps（2012 采访存档，probe.json 实测），同上。",
     "kitz": "25fps（ATP 官方，probe.json 实测），同上。",
@@ -159,9 +161,9 @@
     },
     {
       "cx": 0.5,
-      "source": "cere",
-      "start": 12.0,
-      "end": 18.5,
+      "source": "upnxh",
+      "start": 206.5,
+      "end": 213.5,
       "narration": "10 月 22 日，他在家乡布鲁塞尔，打完了职业生涯的最后一场。",
       "track": false,
       "voice": {
@@ -169,7 +171,7 @@
         "rate": "+6%"
       },
       "point_end_ok": true,
-      "_why": "仪式正片开场即最后一分与主裁握手（Tennis TV 版），与旁白严丝合缝。"
+      "_why": "Tennis TV 最后一场集锦尾段（解说收声后网前握手与全场掌声，无英文空当），与旁白严丝合缝。"
     },
     {
       "title_card": "幸运儿",
@@ -549,8 +551,8 @@
     {
       "cx": 0.5,
       "source": "bertn",
-      "start": 180.0,
-      "end": 196.0,
+      "start": 68.5,
+      "end": 84.0,
       "narration": "2026 年，膝伤让他决定停下，告别站选在家乡布鲁塞尔。首轮决胜盘 0 比 3 落后，他又抢了回来，赛后还开玩笑：订好的告别派对，怕是要取消了。",
       "track": false,
       "voice": {
@@ -574,8 +576,8 @@
     {
       "cx": 0.5,
       "source": "eomic",
-      "start": 168.0,
-      "end": 178.0,
+      "start": 160.0,
+      "end": 168.5,
       "narration": "第二天，最后一场，他输了。最后一个回球下网，全场起立。",
       "track": false,
       "voice": {
