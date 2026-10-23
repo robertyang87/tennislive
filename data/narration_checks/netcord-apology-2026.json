@@ -1,6 +1,6 @@
 {
  "slug": "netcord-apology-2026",
- "checked_at": "2026-10-23T04:09:53Z",
+ "checked_at": "2026-10-23T08:41:09Z",
  "voice": "zh-CN-YunjianNeural",
  "rate": "+6%",
  "backend": "edge-tts",
@@ -8,12 +8,12 @@
   "",
   ""
  ],
- "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+ "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）；本账时长取自 narration run 39926965806 发布的冻结 TTS 束 manifest 实测值（main 上 narration 步不提交，按工作流注释的抄账路径回填）。",
  "segments": {
   "6fc6ad915d84de6d": {
    "segment": 2,
-   "spoken": 7.27,
-   "picture": 7.9
+   "spoken": 7.272,
+   "picture": 7.7
   },
   "f8f15d465060eb6c": {
    "segment": 3,
@@ -22,183 +22,202 @@
   },
   "bdc154cf8fff0e6c": {
    "segment": 4,
-   "spoken": 5.33,
+   "spoken": 5.328,
    "picture": 6.5
   },
   "5373eb4011bca006": {
    "segment": 5,
-   "spoken": 4.03,
-   "picture": 5.2
+   "spoken": 4.032,
+   "picture": 4.2
   },
   "9fe0a27e3845ed55": {
-   "segment": 6,
-   "spoken": 3.07,
-   "picture": 3.5
-  },
-  "f9fc1b8c0755ddd0": {
    "segment": 7,
-   "spoken": 6.77,
-   "picture": 13.0
+   "spoken": 3.072,
+   "picture": 7.5
+  },
+  "abef9864deeb6b06": {
+   "segment": 8,
+   "spoken": 3.792,
+   "picture": 5.2
   },
   "6ce701f83484cfa9": {
-   "segment": 8,
-   "spoken": 6.86,
+   "segment": 9,
+   "spoken": 6.864,
    "picture": 8.4
   },
   "5f64857835935fa1": {
-   "segment": 9,
-   "spoken": 2.23,
+   "segment": 10,
+   "spoken": 2.232,
    "picture": 2.4
   },
   "2d319302fbb4df57": {
-   "segment": 10,
-   "spoken": 5.66,
+   "segment": 11,
+   "spoken": 5.664,
    "picture": 7.0
   },
   "059a65e425188521": {
-   "segment": 11,
-   "spoken": 5.23,
+   "segment": 12,
+   "spoken": 5.232,
    "picture": 5.5
   },
   "72fae99790b4ece7": {
-   "segment": 12,
-   "spoken": 5.06,
+   "segment": 13,
+   "spoken": 5.064,
    "picture": 5.7
   },
-  "ad39bcbc99173518": {
-   "segment": 13,
-   "spoken": 3.84,
-   "picture": 6.9
-  },
-  "5053e0d50ab7ef98": {
+  "0c0dd19da92d756a": {
    "segment": 14,
-   "spoken": 3.48,
-   "picture": 6.0
+   "spoken": 3.264,
+   "picture": 7.0
+  },
+  "32b3b1d03c575212": {
+   "segment": 15,
+   "spoken": 3.168,
+   "picture": 4.0
   },
   "495f4fa3992cb212": {
-   "segment": 15,
-   "spoken": 5.3,
+   "segment": 16,
+   "spoken": 5.304,
    "picture": 5.5
   },
+  "6327b8b6bd32e6d0": {
+   "segment": 18,
+   "spoken": 6.024,
+   "picture": 6.8
+  },
   "f430259397528eec": {
-   "segment": 16,
-   "spoken": 2.83,
+   "segment": 19,
+   "spoken": 2.832,
    "picture": 2.8
   },
   "143d15a2803bff05": {
-   "segment": 17,
-   "spoken": 6.62,
-   "picture": 8.0
+   "segment": 20,
+   "spoken": 6.624,
+   "picture": 15.0
   },
   "56c5dcddf8dbfa1e": {
-   "segment": 18,
-   "spoken": 6.91,
-   "picture": 7.7
+   "segment": 21,
+   "spoken": 6.912,
+   "picture": 8.0
   },
   "8eec3b2499ea8e41": {
-   "segment": 20,
+   "segment": 23,
    "spoken": 8.04,
    "picture": 9.7
   },
-  "54f16dc9fd42f5fe": {
-   "segment": 21,
-   "spoken": 7.2,
+  "0a0079610f365b84": {
+   "segment": 24,
+   "spoken": 7.392,
    "picture": 12.4
   },
   "2453485cf9231e94": {
-   "segment": 22,
-   "spoken": 3.91,
+   "segment": 25,
+   "spoken": 3.912,
    "picture": 4.5
   },
   "fb92acd0e9a2dcc5": {
-   "segment": 23,
+   "segment": 26,
    "spoken": 6.96,
    "picture": 8.0
   },
   "0dc83a77a3ab1f31": {
-   "segment": 24,
-   "spoken": 7.25,
+   "segment": 27,
+   "spoken": 7.248,
    "picture": 9.1
   },
   "bf6dd6457aa73b78": {
-   "segment": 26,
-   "spoken": 4.7,
+   "segment": 29,
+   "spoken": 4.704,
    "picture": 5.2
   },
-  "87c8fc827e51f60c": {
-   "segment": 27,
-   "spoken": 7.39,
+  "d1372f02f1a8a5ff": {
+   "segment": 30,
+   "spoken": 3.792,
    "picture": 13.9
   },
   "b1f0535999c445ab": {
-   "segment": 28,
-   "spoken": 3.86,
-   "picture": 4.0
+   "segment": 31,
+   "spoken": 3.864,
+   "picture": 4.5
   },
-  "5cc595ae05bb10c1": {
-   "segment": 29,
-   "spoken": 8.93,
-   "picture": 14.0
+  "f2aad8e3606198e4": {
+   "segment": 32,
+   "spoken": 5.928,
+   "picture": 6.5
   },
   "d925adb5692f673b": {
-   "segment": 30,
-   "spoken": 3.14,
+   "segment": 33,
+   "spoken": 3.144,
    "picture": 3.6
   },
   "a44935d3136b4fce": {
-   "segment": 31,
-   "spoken": 3.7,
+   "segment": 34,
+   "spoken": 3.696,
    "picture": 4.5
   },
   "74fc987b6593ead2": {
-   "segment": 32,
+   "segment": 35,
    "spoken": 15.48,
    "picture": 18.0
   },
   "a82e1b3ad69b10bb": {
-   "segment": 33,
-   "spoken": 10.34,
+   "segment": 36,
+   "spoken": 10.344,
    "picture": 20.0
   },
-  "7b1ae962dbb7e0a3": {
-   "segment": 34,
-   "spoken": 6.98,
-   "picture": 8.0
+  "085ece8df25fe645": {
+   "segment": 37,
+   "spoken": 8.928,
+   "picture": 10.0
   },
   "13fae41529c36f4d": {
-   "segment": 35,
-   "spoken": 4.85,
+   "segment": 41,
+   "spoken": 4.848,
    "picture": 6.0
   },
   "bbd0ff0e1f4812bd": {
-   "segment": 36,
-   "spoken": 6.07,
+   "segment": 42,
+   "spoken": 6.072,
    "picture": 6.5
   },
   "5a15ba541aadc745": {
-   "segment": 37,
-   "spoken": 5.69,
-   "picture": 7.0
+   "segment": 43,
+   "spoken": 5.688,
+   "picture": 7.5
   },
   "bb17aecc2064da78": {
-   "segment": 38,
-   "spoken": 8.23,
+   "segment": 44,
+   "spoken": 8.232,
    "picture": 9.4
   },
   "4e998dcf2b1f0730": {
-   "segment": 39,
-   "spoken": 6.17,
-   "picture": 7.9
+   "segment": 45,
+   "spoken": 6.168,
+   "picture": 8.6
   },
-  "65314249389b46ec": {
-   "segment": 40,
-   "spoken": 6.7,
-   "picture": 12.4
+  "69c43b97cd360c4b": {
+   "segment": 46,
+   "spoken": 3.984,
+   "picture": 4.25
   },
   "c419e01ab6d2b0fd": {
-   "segment": 41,
-   "spoken": 5.18,
+   "segment": 47,
+   "spoken": 5.184,
    "picture": 6.5
   }
+ },
+ "tts_bundle": {
+  "schema": "tennislive.frozen-tts-bundle.v1",
+  "bundle_sha256": "fd760d96aa6a2c9524ec178ff4375ae7058e58db40353f5d41aa32f34d174d09",
+  "request_count": 41,
+  "mode": "capture_export",
+  "strict_reused": false,
+  "artifact_kind": "native_tts_inputs",
+  "quality_approval": false,
+  "audio_decoding_verified": true,
+  "release_tag": "reel-tts-netcord-apology-2026-fd760d96aa6a2c95",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-netcord-apology-2026-fd760d96aa6a2c95/tts_bundle.zip",
+  "file_name": "tts_bundle.zip",
+  "source_run": "https://github.com/robertyang87/tennislive/actions/runs/39926965806"
  }
 }
