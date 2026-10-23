@@ -6878,6 +6878,7 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 原场闪回（640x360 SD），仅 seg38/39 两段 contain 短插。白名单只加这条
     # 存档 URL，不及于 YouTube 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-yvJlyvAXEAc/yvJlyvAXEAc.mp4': 360,
+    'https://github.com/robertyang87/tennislive/releases/download/source-gxJAnyNbb64/gxJAnyNbb64.mp4': 720,
     # 2026-10-18: owner approved this Wuhan final official long source: 可以用 720如果可以完整展示内容的话.
     'https://github.com/robertyang87/tennislive/releases/download/source-6407050487112/6407050487112.mp4': 720,
     # 2026-10-17: owner approved this exact Shanghai semifinal long source after
