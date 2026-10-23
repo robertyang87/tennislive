@@ -1,0 +1,179 @@
+name: import-ao20-thiem-nadal-clips
+run-name: "import-ao20 · wQBlMkVI8F8 擦网候选集合源"
+
+# 一次性：《规则里没有对不起》（netcord-apology-2026）v2 修复——2020 澳网
+# QF 蒂姆对纳达尔「至少五次擦网」逐分补全。AO 官方全场 wQBlMkVI8F8 的
+# 1080 文件超过 Release 单附件 2GiB 上限、整场存档不可能（v1 已验证失败）。
+# 账号所有者 2026-10-23 v2 修复令第五条批准路线 A（仿 import-rg89 先例）：
+# runner 上下载原片、按官方字幕锚点截六个候选窗口拼成集合源、直传
+# Release source-wQBlMkVI8F8-clips。集合源 1920×1080（原片原生），无需
+# 低清白名单。集合时间轴（原全场秒 → 集合秒）：
+#   W1 原 [1440,1520]   → 集合 [0,80]     S1 字幕「the net tonight」候选
+#   W2 原 [2700,2810]   → 集合 [80,190]   S1 字幕实锤 tape+apology
+#   W3 原 [3160,3280]   → 集合 [190,310]  S1 抢七「just tips it」候选
+#   W4 原 [6700,7060]   → 集合 [310,670]  S2 抢七尾段（含盘点擦网，浓缩版已证）
+#   W5 原 [12560,12710] → 集合 [670,820]  S4 抢七字幕实锤「Touches the tape」
+#   W6 原 [4140,4260]   → 集合 [820,940]  S2「got unlucky」备选
+# 本地直传 uploads.github.com 被凭据 401 挡住，故走 runner。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-ao20-thiem-nadal-clips
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      VIDEO_URL: "https://www.youtube.com/watch?v=wQBlMkVI8F8"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 安装 YouTube 下载器
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+
+      - name: 恢复 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-import-rg89-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-import-rg89-v1-
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: 回写 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
+      # YouTube 对机房 IP 经常要求 PO token（与 download-video.yml 同款）。
+      - name: 启动 PO token provider
+        continue-on-error: true
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for attempt in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "PO token provider 已就绪"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: 写入 YouTube cookies（如已配置）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
+          fi
+
+      - name: 下载原片（与 download-video 同格式口径）
+        timeout-minutes: 40
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -euo pipefail
+          ARGS=(--js-runtimes node)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
+          fi
+          mkdir -p "$RUNNER_TEMP/download"
+          yt-dlp "${ARGS[@]}" \
+            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
+            --merge-output-format mp4 --remux-video mp4 \
+            -o "$RUNNER_TEMP/download/wQBlMkVI8F8.%(ext)s" \
+            "$VIDEO_URL"
+          ls -la "$RUNNER_TEMP/download"
+          ffprobe -v error -show_entries stream=width,height,r_frame_rate,codec_type \
+            -show_entries format=duration,size -of default=nw=1 \
+            "$RUNNER_TEMP/download/wQBlMkVI8F8.mp4"
+
+      - name: 按锚点截六窗集合源并验帧
+        run: |
+          set -euo pipefail
+          SRC="$RUNNER_TEMP/download/wQBlMkVI8F8.mp4"
+          mkdir -p "$RUNNER_TEMP/parts"
+          # 两段式：带 15 秒边距粗剪（copy）再精确重编码切，保证帧对齐。
+          cut_win() {
+            local a=$1 b=$2 out=$3
+            ffmpeg -hide_banner -loglevel error -ss $((a-15)) -i "$SRC" -t $((b-a+30)) \
+              -c copy "$RUNNER_TEMP/win.mp4" -y
+            ffmpeg -hide_banner -loglevel error -ss 15 -i "$RUNNER_TEMP/win.mp4" -t $((b-a)) \
+              -c:v libx264 -crf 18 -preset veryfast -c:a aac -b:a 128k \
+              "$RUNNER_TEMP/parts/$out" -y
+          }
+          cut_win 1440 1520 p1.mp4
+          cut_win 2700 2810 p2.mp4
+          cut_win 3160 3280 p3.mp4
+          cut_win 6700 7060 p4.mp4
+          cut_win 12560 12710 p5.mp4
+          cut_win 4140 4260 p6.mp4
+          printf "file '%s'\n" "$RUNNER_TEMP/parts/p1.mp4" "$RUNNER_TEMP/parts/p2.mp4" \
+            "$RUNNER_TEMP/parts/p3.mp4" "$RUNNER_TEMP/parts/p4.mp4" \
+            "$RUNNER_TEMP/parts/p5.mp4" "$RUNNER_TEMP/parts/p6.mp4" > "$RUNNER_TEMP/list.txt"
+          ffmpeg -hide_banner -loglevel error -f concat -safe 0 -i "$RUNNER_TEMP/list.txt" \
+            -c copy wQBlMkVI8F8-clips.mp4 -y
+          ffprobe -v error -show_entries stream=width,height,r_frame_rate,codec_type \
+            -show_entries format=duration,size -of default=nw=1 wQBlMkVI8F8-clips.mp4
+          # 锚点验帧：集合 155s=原 2775（tape 分）、260s=原 3230（tips it）、
+          # 510s=原 6900（S2 抢七尾）、740s=原 12630（S4 抢七擦带后）。
+          for t in 155 260 510 740; do
+            ffmpeg -hide_banner -loglevel error -ss $t -i wQBlMkVI8F8-clips.mp4 \
+              -frames:v 1 chk-$t.jpg -y
+          done
+          ls -la wQBlMkVI8F8-clips.mp4 chk-*.jpg
+
+      - name: 锚点验帧图（人工回看用）
+        uses: actions/upload-artifact@v4
+        with:
+          name: ao20-anchor-frames
+          path: |
+            chk-155.jpg
+            chk-260.jpg
+            chk-510.jpg
+            chk-740.jpg
+          retention-days: 7
+
+      - name: 上传到 Release source-wQBlMkVI8F8-clips
+        run: |
+          gh release upload source-wQBlMkVI8F8-clips wQBlMkVI8F8-clips.mp4 --clobber
+          gh release view source-wQBlMkVI8F8-clips --json assets \
+            --jq '.assets[] | "\(.name) \(.size)"'
