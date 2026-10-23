@@ -19,7 +19,8 @@
   "rg14": "25fps（法网官方决赛集锦，probe.json 实测），逐帧复制 conform 到 30。",
   "aoclips": "25fps（澳网官方全场回放截取集合源，probe.json 实测），逐帧复制 conform 到 30。",
   "fy1": "25fps（澳网官方全场，probe.json 实测），逐帧复制 conform 到 30。",
-  "sod07": "29.97fps（NBC/Olympics 专题片，与出片基帧率同族），逐帧复制 conform 到 30。"
+  "sod07b": "30fps（ESPN+ 新闻包，与出片基帧率一致），逐帧复制 conform 到 30。",
+  "sod07": "29.97fps（NBC/Olympics 专题，与出片基帧率同族），逐帧复制 conform 到 30。"
  },
  "sources": {
   "uso": "https://github.com/robertyang87/tennislive/releases/download/source-yOd_uc0mUtU/yOd_uc0mUtU.mp4",
@@ -29,8 +30,9 @@
   "ao": "https://github.com/robertyang87/tennislive/releases/download/source-GFjgW-hzb7k/GFjgW-hzb7k.mp4",
   "rg": "https://github.com/robertyang87/tennislive/releases/download/source-ZTPAUi0nFIs/ZTPAUi0nFIs.mp4",
   "rg14": "https://github.com/robertyang87/tennislive/releases/download/source-nfuDPWS3q1I/nfuDPWS3q1I.mp4",
-  "aoclips": "https://github.com/robertyang87/tennislive/releases/download/source-AO20ThiemNa/AO20ThiemNa.mp4",
+  "aoclips": "https://github.com/robertyang87/tennislive/releases/download/source-wQBlMkVI8F8-clips/wQBlMkVI8F8-clips.mp4",
   "fy1": "https://github.com/robertyang87/tennislive/releases/download/source-FY1DeATclio/FY1DeATclio.mp4",
+  "sod07b": "https://github.com/robertyang87/tennislive/releases/download/source-gxJAnyNbb64/gxJAnyNbb64.mp4",
   "sod07": "https://github.com/robertyang87/tennislive/releases/download/source-yvJlyvAXEAc/yvJlyvAXEAc.mp4"
  },
  "cover": {
@@ -444,8 +446,8 @@
      "text": "\n（2020 澳网决赛 · 肯宁的擦网——现场原声）"
     },
     {
-     "at": 9.6,
-     "end": 13.4,
+     "at": 5.8,
+     "end": 13.1,
      "text": "Oh, she's had all the luck with the net cords tonight — that's about three dead ones she's had.\n她今晚擦网的运气全占了——这种擦死的擦网，已经第三个了。"
     }
    ],
@@ -454,10 +456,10 @@
   },
   {
    "source": "fy1",
-   "start": 5763.5,
-   "end": 5769.5,
+   "start": 5778.4,
+   "end": 5784.2,
    "narration": "还有肯宁这种，擦网得了分，抿着嘴转身就走，手都不举一下。",
-   "_v2_note": "v2 裁决二（事实对齐最小改动）：锁稿原句「还有肯宁这种，举手致歉还没放下，转身已经握拳庆祝了」与验帧实证不符（该记擦网后她立于网前抿嘴、无举手无握拳，FY1 [5763.5,5769] 特写实证），按实证动作对齐为现句。逐字留痕。"
+   "_v2_note": "v2 裁决二（事实对齐最小改动）：锁稿原句「还有肯宁这种，举手致歉还没放下，转身已经握拳庆祝了」与验帧实证不符（该记擦网后她立于网前抿嘴、无举手无握拳，FY1 特写实证；窗口取回放特写段 [5778.4,5784.2]，在 asr_plan 空当内），按实证动作对齐为现句。逐字留痕。"
   },
   {
    "title_card": "两派对线",
@@ -882,20 +884,40 @@
    "kind": "quote",
    "source": "aoclips",
    "start": 144.0,
-   "end": 164.0,
+   "end": 170.2,
    "cx": 0.5,
    "track": false,
    "_quote_kind": "broadcast",
    "quote": [
     {
      "at": 0.05,
-     "end": 12.6,
+     "end": 0.7,
      "text": "\n（擦网第一记 · 第一盘——蒂姆网前回球擦网得分，现场原声）"
     },
     {
-     "at": 12.6,
-     "end": 19.9,
-     "text": "\n（擦带爬过——蒂姆随即举掌致歉）"
+     "at": 0.72,
+     "end": 6.72,
+     "text": "A couple of years ago in the French Open final, when he had the tape — as we see this exchange…\n几年前法网决赛他也遇到过——正说着，这一拍就擦上了。"
+    },
+    {
+     "at": 7.98,
+     "end": 11.24,
+     "text": "Usually so efficient up at the net — not this time.\n他网前一向高效——这次没有。"
+    },
+    {
+     "at": 12.9,
+     "end": 16.7,
+     "text": "\n（擦带爬过——蒂姆随即摊手致歉）"
+    },
+    {
+     "at": 16.72,
+     "end": 21.44,
+     "text": "He actually had the tape under his sweat bands, as they get the apology there…\n他把胶带缠在汗带下面——看，致歉来了——"
+    },
+    {
+     "at": 21.44,
+     "end": 25.9,
+     "text": "…to try and keep them in place, because they were slipping down — so heavy with sweat.\n是怕汗带被汗浸重了往下滑，才缠在里面。"
     }
    ],
    "inset": {
@@ -919,7 +941,7 @@
   {
    "kind": "quote",
    "source": "aoclips",
-   "start": 544.0,
+   "start": 547.1,
    "end": 558.0,
    "cx": 0.5,
    "track": false,
@@ -927,12 +949,12 @@
    "quote": [
     {
      "at": 0.05,
-     "end": 9.6,
+     "end": 2.3,
      "text": "\n（擦网第二记 · 第二盘抢七盘点——现场原声）"
     },
     {
-     "at": 9.6,
-     "end": 13.9,
+     "at": 6.9,
+     "end": 9.4,
      "text": "\n（擦网得分拿下盘点——蒂姆举手致歉）"
     }
    ],
@@ -957,30 +979,35 @@
   {
    "kind": "quote",
    "source": "aoclips",
-   "start": 655.0,
-   "end": 712.0,
+   "start": 697.0,
+   "end": 744.0,
    "cx": 0.5,
    "track": false,
    "_quote_kind": "broadcast",
    "quote": [
     {
      "at": 0.05,
-     "end": 18.0,
-     "text": "\n（擦网第三记 · 第四盘抢七赛点区——现场原声）"
+     "end": 13.9,
+     "text": "\n（擦网第三记 · 第四盘抢七赛点区——先有一段毛巾争议，现场原声）"
     },
     {
-     "at": 18.0,
-     "end": 24.0,
-     "text": "Oh my goodness — the umpire's saying you can't get the towel.\n天哪——主裁说，现在不能拿毛巾。"
+     "at": 13.98,
+     "end": 15.96,
+     "text": "I'm probably saying: you can't get the towel.\n（争议）主裁的意思大概是：现在不能拿毛巾。"
     },
     {
-     "at": 37.0,
-     "end": 43.5,
-     "text": "He's had a few of those. He had a net cord on the set point in the second set.\n他这样擦网好几次了——第二盘盘点那记也是擦网。"
+     "at": 30.44,
+     "end": 37.64,
+     "text": "He's had a few of those. He had a net cord on the set point in the second set.\n他这样擦网已经好几次了——第二盘盘点那记也是擦网。"
     },
     {
-     "at": 48.0,
-     "end": 53.0,
+     "at": 37.64,
+     "end": 42.66,
+     "text": "And Nadal doing everything right here — and Thiem just beats him flat out for pace.\n纳达尔这边什么都做对了——蒂姆就是硬生生用速度压过去。"
+    },
+    {
+     "at": 43.22,
+     "end": 46.0,
      "text": "Touches the tape as it goes over. It was that close.\n（回放）球擦着网带过去——就差这么一点。"
     }
    ],
@@ -1062,9 +1089,9 @@
   },
   {
    "cx": 0.5,
-   "source": "sod07",
-   "start": 78.5,
-   "end": 86.8,
+   "source": "sod07b",
+   "start": 83.2,
+   "end": 91.8,
    "narration": "2007年温网，索德林擦网得分没致歉，还振臂庆祝，被纳达尔批评……",
    "track": false,
    "voice": {
@@ -1075,13 +1102,13 @@
    "_window_why": "2007 温网无 HD 已验源（稿中以原话引用为主，按任务口径无画面过）：画面用澳网决胜抢七鹰眼复核段的纳达尔特写承接『被纳达尔公开批评』，不冒充 2007 画面。 原窗 [1844,1856] 压鹰眼复核解说（asr_plan 拦）；改至纳达尔特写区空当 [1110,1122]（1110.00–1152.44）。",
    "point_end_ok": "窗内为鹰眼复核与纳达尔特写，分后画面。",
    "fit": "contain",
-   "_v2_note": "v2：2007 温网原场闪回（NBC/Olympics 专题，360p SD 破例 contain 短插）：索德林本人到场备战镜头。该记擦网分本身无现存影像，注记在 archival.sod07。"
+   "_v2_note": "v2：2007 温网该场草地相持（ESPN+ 新闻包，720p 破例 contain 短插）：纳达尔本人该场画面。yvJ 纪录片闪回段解说全程覆盖、旁白无合规落点（asr_plan 实测），故引言段落位本源静默段；索德林本人画面由下一段（金句段）承担。该记擦网分本身无现存影像，注记在 archival。"
   },
   {
    "cx": 0.5,
    "source": "sod07",
-   "start": 86.8,
-   "end": 92.5,
+   "start": 47.85,
+   "end": 52.1,
    "narration": "我人生最幸福的时刻，为什么要说对不起？",
    "track": false,
    "voice": {
@@ -1107,7 +1134,7 @@
     "_why": "索德林结尾金句：英文移原话卡（v2）；画面待硬停点裁决"
    },
    "fit": "contain",
-   "_v2_note": "v2：金句段画面=索德林本人（2007 温网原场，准备接发+开局分），原话卡保留。"
+   "_v2_note": "v2：金句段画面=索德林本人特写（NBC/Olympics 专题采访，360p SD 破例 contain 短插；该窗为 asr_plan 空当）：金句是他本人原话、画面是他本人，原话卡保留。2007 原场闪回段解说全程覆盖无旁白落点。"
   },
   {
    "title_card": "擦网得分举起的那只手\n是礼貌还是演戏",
@@ -1144,6 +1171,7 @@
  },
  "archival": {
   "rg": "Roland-Garros 官方频道全场回放 ZTPAUi0nFIs 最高只有 1280×720（probe 实测封顶，等不出 1080）；全场文件 2.66GB 超 Release 单附件上限，按用户 2026-10-21 定法只截关键窗口拼集合源存档。1989 年的比赛影像只有当年转播这一种存在形式。",
+  "sod07b": "2007 温网纳达尔–索德林第三轮的 ESPN+ 新闻包（720p）：含该场草地相持与赛后发布会。",
   "sod07": "2007 温网纳达尔–索德林一战无任何官方全场/集锦存档（温网官方频道未上传该场）；现存最佳为 NBC/Olympics 专题片 yvJlyvAXEAc [72,118] 的 2007 温网原场闪回（640x360 SD），含索德林本人到场、备战与比赛镜头。按用户 2026-10-23 v2 修复令六（点名要此段原场、720/SD 按 1989 落位）与 14:20 裁决「文案和视频都要有的就行」执行：contain 短插、如实标 SD。该记擦网分本身无任何现存可得影像（已穷尽检索），本段用同场索德林本人镜头承接，审计表注明。"
  },
  "source_quality_exceptions": {
@@ -1152,6 +1180,7 @@
    "approved_by": "user",
    "reason": "账号所有者 2026-10-23 亲批：《规则里没有对不起》1989 法网段用 720p 短插（单片破例，仅本片仅此段），并批准路线 A 建集合源存档（截原回放 [12330,12860]，集合内时间轴 = 原秒 − 12330）。Roland-Garros 官方全场最高 1280×720，无更高版本。"
   },
+  "https://github.com/robertyang87/tennislive/releases/download/source-gxJAnyNbb64/gxJAnyNbb64.mp4": "ESPN+ 2007 温网新闻包（1280x720），含该场草地相持与纳达尔发布会——2007 原场影像无更高清来源（猎源结论见 production-log）；用户 2026-10-23 v2 修复令六点名 + 14:20 裁决按 1989 同款单片破例。",
   "https://github.com/robertyang87/tennislive/releases/download/source-yvJlyvAXEAc/yvJlyvAXEAc.mp4": {
    "min_height": 360,
    "approved_by": "user",
