@@ -62,3 +62,9 @@ All columns use a redesigned, visually pleasant navy system for native cards: bl
 ### 2026-10-13：预检与正式渲染复用实际配音
 
 赛场之上预检用 `--check-narration --tts-bundle-out ZIP` 保留真实 MP3 和 WordBoundary；审音以这份实际字节为准，正式渲染用 `--tts-bundle-in ZIP` 严格复用。工作流 narration 完整生成配音后发布有限小包，render 从 narration record 自动恢复并在下载源片前查当前声音请求。无记录允许首次合成；有记录但引用、哈希或声音参数不匹配必须修复或重新预检，不允许静默重合成。只改取景、字幕或时间窗不使声音失效。快照不是 QC 通过凭据，不恢复响度、静音或增益检查。完整用法见 `docs/reel-frozen-tts-bundle.md`。
+
+
+
+## Owner update 2026-10-23: shared content-adaptive transition cards
+
+All future transition cards in every column must reference and reuse [the global transition-card contract](../../docs/global-transition-cards.md) and `tennislive.video.transition_cards`. Editorial binds complete semantic lines and one relationship to verified facts; the component chooses geometry and matching motion for turns, scores, comparisons, chronology or a sourced person photo. Preserve existing navy, native fonts, subtitle/brand/story-label safe areas, fixed scoreboard and complete narration. Native `title_card` uses motion by default; explainer transitions declare `visual.layout=transition`. Reuse exact caches; do not manufacture facts, roll through fake scores or rerender/resend historical movies.
