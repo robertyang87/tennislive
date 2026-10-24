@@ -1,0 +1,90 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791",
+    "request_count": 14,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-andreeva-finals-2026-new-story-9f980bafc2d47cff",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-new-story-9f980bafc2d47cff/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40113529730"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 319.03,
+  "topbar": null,
+  "film_seconds": 324.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 3.312,
+    "1": 13.776,
+    "2": 12.312,
+    "4": 10.8,
+    "5": 9.984,
+    "7": 9.144,
+    "9": 12.24,
+    "11": 8.976,
+    "13": 11.832,
+    "15": 9.36,
+    "16": 8.424,
+    "18": 10.656,
+    "19": 10.656
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "1c8e868b2c89a7c8a595f2d87a3a970e66de62a80a6703755b1c9afd07f7e2b8",
+  "film_sha256": "d51692b9141bc64a5afa2b4382fa16d187471e13b5550f8967aa8ee7f7a03099",
+  "film_bytes": 126795100,
+  "qc_attestation_sha256": "f471b785eeb7b57026dfb2b3e2a505ba50fc974297fc2447e15f1957f03ac4c0",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "andreeva-finals-2026-new-story",
+    "received_at": "2026-10-24T16:27:29Z",
+    "artifact_ready_at": "2026-10-24T16:36:27Z",
+    "elapsed_seconds": 538.0,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "d51692b9141bc64a5afa2b4382fa16d187471e13b5550f8967aa8ee7f7a03099",
+    "spec_sha256": "0e964104a4f404bed0b2458ae82abb8803494d979ee3e92388303f2abc0fc300",
+    "run_id": "40111642644"
+  },
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-finals-2026-new-story/andreeva-finals-2026-new-story.mp4",
+  "video_bytes": 126795100,
+  "_native_recovery": {
+    "original_formal_run": 40111642644,
+    "original_formal_head": "ae8c0240f682d106dd0360244f7e265289ee167d",
+    "original_run_failed_only_after_owned_mp4_and_sealed_inputs": "TTSRelease403 before L2/MP4upload; history preserved",
+    "artifact_id": 12567076243,
+    "artifact_zip_sha256": "1235514188d9b8f9150d207c189e23dfcd52bf7644695e99a5052a675e18a7e7",
+    "transport_recovery_run": 40113529730,
+    "transport_recovery_head": "1af54da8f9a77cd39d413ffa111ff14f2e985ae8",
+    "film_asset_id": 672795412,
+    "tts_asset_id": 672795338,
+    "same_encoded_movie_no_rerender_or_reencode": true,
+    "sla_received_source": "Original workflow created_at; ownedMP4ready_at is original sealed manifest written_at, not reset by transport recovery"
+  }
+}
