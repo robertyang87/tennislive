@@ -93,6 +93,56 @@ CORNER_OUTLINE = (20, 30, 24, 255)
 CORNER_STROKE, CORNER_SHADOW_OFFSET = 7, 2
 CORNER_GAP, CORNER_SCORE_GAP = 20, 17
 
+# 2026-10-24 账号所有者看过四种底（无底／贴边直角／贴边渐隐／右上柔光）选了
+# 「F 贴边渐隐底」：深蓝底从屏幕右边缘铺进来（右缘竖线包在底里），往左、
+# 往上下渐隐、没有边框。圆角底被否掉的理由是「在外面没包住那个右边的竖线」。
+# 底是渲染时按成片像素合成的（`compose_label_scrim`），PNG 本身仍是透明底。
+SCRIM_RGB = (8, 14, 29)            # design_tokens DARK background #080e1d
+SCRIM_ALPHA = 140                  # 最深处约 55%
+SCRIM_FADE_PX, SCRIM_SOLID_PX = 160, 40   # 墨迹左缘外 160px 起淡入，左缘内 40px 到最深
+SCRIM_BLUR_PX = 28
+SCRIM_MARGIN_PX = 80               # 上下渐隐要的空间
+
+
+def compose_label_scrim(label_png: Path, out: Path, *, width_px: int,
+                        right_px: int, top_room: int) -> tuple[Path, int]:
+    """把透明字卡缩到成片宽度，背后垫 F 渐隐底，一直铺到画面右边缘。
+
+    返回 (新 PNG, 上方多出的像素)。新 PNG 宽 ``width_px + right_px``（贴边），
+    叠的时候 x=W-w、y 往上挪那段上边距，字卡本身的落位一像素不动。
+    """
+    from PIL import ImageChops
+    with Image.open(label_png) as raw:
+        label = raw.convert("RGBA")
+    height = max(2, round(label.height * width_px / label.width))
+    label = label.resize((width_px, height), Image.LANCZOS)
+    box = label.getchannel("A").getbbox()
+    top = min(SCRIM_MARGIN_PX, max(0, top_room))
+    w, h = width_px + right_px, height + top + SCRIM_MARGIN_PX
+    w, h = w + w % 2, h + h % 2   # overlay 链里 scale=w:-2 要偶数，免得再缩一次
+    canvas = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    if box:
+        left, ink_top, _r, ink_bottom = box
+        fade = Image.new("L", (w, h), 0)
+        draw = ImageDraw.Draw(fade)
+        x_a, x_b = left - SCRIM_FADE_PX, left + SCRIM_SOLID_PX
+        for x in range(w):
+            a = 0.0 if x < x_a else 1.0 if x > x_b else (x - x_a) / (x_b - x_a)
+            draw.line([(x, 0), (x, h)], fill=int(255 * a))
+        band = Image.new("L", (w, h), 0)
+        ImageDraw.Draw(band).rectangle(
+            [0, top + ink_top - 10, w, top + ink_bottom + 10], fill=255)
+        band = band.filter(ImageFilter.GaussianBlur(SCRIM_BLUR_PX))
+        mask = ImageChops.multiply(fade, band).point(lambda v: v * SCRIM_ALPHA // 255)
+        scrim = Image.new("RGBA", (w, h), (*SCRIM_RGB, 0))
+        scrim.putalpha(mask)
+        canvas = Image.alpha_composite(canvas, scrim)
+    canvas.alpha_composite(label, (0, top))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out)
+    return out, top
+
+
 # 0.60 * 1080 = 648px in the finished reel. 1200px therefore gives a crisp
 # source while leaving enough room for the longest opponent name.
 WIDTH, HEIGHT = 1200, 340
