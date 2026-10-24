@@ -1,0 +1,27 @@
+{
+  "pass": true,
+  "empty_output_path_before_restore": true,
+  "transport": "repository",
+  "repository_commit": "55b7dc0472ffb15b85feb2602986c9609771439d",
+  "url": "https://raw.githubusercontent.com/robertyang87/tennislive/55b7dc0472ffb15b85feb2602986c9609771439d/assets/tts-bundles/andreeva-finals-2026-new-story/9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791/tts_bundle.zip",
+  "actual_restored_bundle_sha256": "9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791",
+  "bytes": 849713,
+  "request_count": 14,
+  "metadata_candidate": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/canonical-producer-candidate.json",
+  "restored_path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/real-empty-restore-szcti2_n/tts_bundle.zip",
+  "command": [
+    "python",
+    "tools/reel_tts_release.py",
+    "restore",
+    "--slug",
+    "andreeva-finals-2026-new-story",
+    "--metadata",
+    "/workspace/andreeva-finals-production/new-story-2026-10-24/production/canonical-producer-candidate.json",
+    "--output",
+    "/workspace/andreeva-finals-production/new-story-2026-10-24/production/real-empty-restore-szcti2_n/tts_bundle.zip"
+  ],
+  "local_bundle_bytes_equal": true,
+  "final_metadata_path": "data/narration_checks/andreeva-finals-2026-new-story.json",
+  "final_metadata_tts_bundle_exactly_equal_verified_candidate": true,
+  "final_metadata_sha256": "8dc0b79048761614eee1451acdc27783a92d5c19533d5bacf84f2ad82d010777"
+}

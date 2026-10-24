@@ -1,0 +1,169 @@
+{
+  "kind": "independent_actual_formal_film_bounded_visual_QC",
+  "status": "PASS_BOUNDED_VISUAL_SAMPLES",
+  "film_path": "/workspace/andreeva-finals-production/new-story-2026-10-24/recovered-artifact/andreeva-finals-2026-new-story.mp4",
+  "film_sha256": "d51692b9141bc64a5afa2b4382fa16d187471e13b5550f8967aa8ee7f7a03099",
+  "film_bytes": 126795100,
+  "duration_seconds": 324.8,
+  "audio_seconds": 324.784,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "audio_rate": 48000,
+  "spec_sha256": "0e964104a4f404bed0b2458ae82abb8803494d979ee3e92388303f2abc0fc300",
+  "original_render_sha256": "184f511a0ece14304c25c486ef460595f32096b7e44b0d7d016d56725c7cd947",
+  "current_delivery_render_sha256_at_report": "bd3dfb8924d059376c966509aee40d01394f38eb63022f12e58c2ce2481fa4ee",
+  "changed_delivery_render_top_fields": [
+    "tts_bundle"
+  ],
+  "render_inputs_sha256": "1c8e868b2c89a7c8a595f2d87a3a970e66de62a80a6703755b1c9afd07f7e2b8",
+  "qc_attestation_sha256": "f471b785eeb7b57026dfb2b3e2a505ba50fc974297fc2447e15f1957f03ac4c0",
+  "ass_sha256": "a7ec93be6f7ddac776200e3d6e67102b2ea9b214aeb1f08139f73574a3ca2f59",
+  "audio_review_binding_sha256": "6a4fad0c8c7bc2eda8b2870d4edc42f06ae677112de0a2424157382d5983b720",
+  "sample_manifest_sha256": "066d572e1dbbfdfca7eb124082440cadc3692d616a33546100634fdb921edf58",
+  "coverage": {
+    "all8_contacts_actually_viewed": true,
+    "actual_image_files": 88,
+    "unique_encoded_positions": 84,
+    "all88_sample_hashes_verified": true,
+    "full_actualfilm_frames_viewed": [
+      2,
+      47,
+      64,
+      67,
+      72,
+      79,
+      83,
+      87
+    ],
+    "all8_label_native_pixel_crops_read": [
+      2,
+      9,
+      67,
+      24,
+      72,
+      76,
+      79,
+      82
+    ],
+    "actualfilm_subtitle_native_width_crops_read": [
+      2,
+      5,
+      6,
+      11,
+      13,
+      14,
+      21,
+      28,
+      35,
+      42,
+      49,
+      50,
+      55,
+      57,
+      58,
+      74,
+      77
+    ],
+    "new_raw_frame_extractions_or_movie_transcodes": 0
+  },
+  "findings": [],
+  "observations": [
+    "New approved B portrait and exact two-line Finals hook retained in actual film0.40sec; face/words clear and canvas filled. Actual native poster391673... is separately hashed from local preview97b...; no false byte-identity claim.",
+    "Cold correctly shows blue Mirra point tail and pale-yellow Gauff victory reaction with US losing-result/namecard and Finals question. It is an excerpt; complete138.2–166.9 US point appears later in segment14.",
+    "All seven long-video cards absent in sampled8.04 positions011/019/026/033/040/047/055; present at7.92. Sampled following chapters.36 have no stationary information inset.",
+    "Linz250.55(frame067), US142.0(frame079) actual far faces clear; RG high serve(frame072) hand/racket below card. Other serve/shot risks inspected in contacts/native crops, no new material obstruction.",
+    "Eight actual encoded label types read clearly: date/score/longnames/winner tint/TB7superscript/F edge gradient. Seventeen actual subtitle crops read without clipping. Twelve new narrated chapter titles retain current 本季/first singles Finals/date qualifiers.",
+    "Actual Adelaide final TV board at55.16(frame064) fully visible/readable with no subtitle overlap in this sample.",
+    "Cover/cold and source/chapter joins have normal global dissolves. Initial encoded source frames can still contain outgoing chapter/cover; not claimed fully opaque first-frame card.",
+    "Story outro320.28/321.84/323.64/324.56 settles to intact brand/tagline with no information card residency or blank sampled end."
+  ],
+  "provenance_checks": {
+    "independent_film_hash_and_ffprobe": true,
+    "original_render_QC_inputs_ASS_chain_verified": true,
+    "original_metadata_saved_before_delivery_metadata_update": "/workspace/andreeva-finals-production/new-story-2026-10-24/independent-qc/final-film-original-binding",
+    "original_inputs_and_attestation_unchanged_in_current_delivery_metadata": true,
+    "actual_runtime14_MP3_hashes_equal_frozen_bundle_verified_before_report": true,
+    "runtime14_WordBoundary_JSON_equal_frozen_marks_verified_before_report": true,
+    "tts_bundle_sha256": "9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791",
+    "seven_complete_point_windows_bound_to_original_projection_and_timeline": [
+      {
+        "segment": 3,
+        "source": "adelaide-final",
+        "source_sha256": "f7a431ec9cd83435345e90ddf0bf5348d7561b6e927d2f49dadff5ac16ad8a7d",
+        "source_start": 256.9,
+        "source_end": 278.0,
+        "film_start": 34.34,
+        "length": 21.1
+      },
+      {
+        "segment": 6,
+        "source": "linz-final",
+        "source_sha256": "0222e3483da383550e627a34478a4f07c4946d400fff78f1ea921e5980334c7f",
+        "source_start": 243.15,
+        "source_end": 273.05,
+        "film_start": 77.16,
+        "length": 29.9
+      },
+      {
+        "segment": 8,
+        "source": "madrid-final",
+        "source_sha256": "b9594d1803e11690c148be7c131f6f7df1bdf96b2e25309d203fc24b59756682",
+        "source_start": 247.35,
+        "source_end": 271.12,
+        "film_start": 116.66,
+        "length": 23.77
+      },
+      {
+        "segment": 10,
+        "source": "rg-final",
+        "source_sha256": "42fcbca7282ccf3b05cb44bcb2277e4fae77462ecf43da6ae4a93f6c1c26ca47",
+        "source_start": 1040.1,
+        "source_end": 1069.5,
+        "film_start": 153.15,
+        "length": 29.4
+      },
+      {
+        "segment": 12,
+        "source": "wimbledon-r2",
+        "source_sha256": "11d264f1c0fa010432b666d88641dc21d0d98052f24e3f17f2f3b1224d197668",
+        "source_start": 0.0,
+        "source_end": 32.3,
+        "film_start": 191.99,
+        "length": 32.3
+      },
+      {
+        "segment": 14,
+        "source": "us-qf",
+        "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+        "source_start": 138.2,
+        "source_end": 166.9,
+        "film_start": 236.61,
+        "length": 28.7
+      },
+      {
+        "segment": 17,
+        "source": "beijing-final",
+        "source_sha256": "21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451",
+        "source_start": 263.44,
+        "source_end": 277.4,
+        "film_start": 284.03,
+        "length": 13.96
+      }
+    ],
+    "native_produced_poster_sha256": "391673ecde832afcd3d8fb82e793d68b46595b59b733d9cc7305473eb8e98928",
+    "approved_preflight_poster_sha256": "97b10688512193bfd57c5cdec8b87b3f88589fed03cbc95430c6348b72cf22c8"
+  },
+  "limits": [
+    "88 files include4 repeated encoded positions:84 unique frames, not continuous full-film playback.",
+    "Actual film still samples only; earlier135 native frames/71cue review remains separate. Not all71 final encoded cues or every0–8sec frame reviewed.",
+    "Seven full-point windows/source SHA confirmed by original render projection/timeline and prior source-bound QC; no fresh continuous replay of all seven encoded points.",
+    "No human listening, new ASR, or perceptual audio approval. Frozen actual MP3 equality is byte provenance.",
+    "Original job failed AFTER rendering at Release upload403. Delivery URL/voice-autoapproval metadata is handled by root/producer; this visual PASS does not claim all publication gates complete.",
+    "No rerender/download/movie transcode/repository modification/formal dispatch/merge/publish by this reviewer."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "kind": "independent_bounded_current_native_preflight_not_final_movie_QC",
+  "status": "PASS_SAMPLED_CURRENT_PREFLIGHT",
+  "spec_path": "/workspace/tennislive-andreeva-new-story/specs/reels/andreeva-finals-2026-new-story.json",
+  "spec_sha256": "0e964104a4f404bed0b2458ae82abb8803494d979ee3e92388303f2abc0fc300",
+  "editorial_sha256": "3469788d864ec95542e389e3424935d3fe54bc73534d5b905f00d520ea98f6b6",
+  "tts_bundle_sha256": "9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791",
+  "tts_bundle_bytes": 849713,
+  "cover_poster_sha256": "97b10688512193bfd57c5cdec8b87b3f88589fed03cbc95430c6348b72cf22c8",
+  "ass_sha256": "a7ec93be6f7ddac776200e3d6e67102b2ea9b214aeb1f08139f73574a3ca2f59",
+  "manifest_bindings": [
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-critical-width48/preview_manifest.json",
+      "sha256": "3e222c3e99e48923f171f93ef19baf14b41777d67231ffe86cbe13bbc7d50588",
+      "sample_count": 24
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-boundaries1/preview_manifest.json",
+      "sha256": "b91fca31585b00d503dd8ab556c9530ad87b6ca10ff29d02e13304622460fdf2",
+      "sample_count": 20
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-boundaries2/preview_manifest.json",
+      "sha256": "d4f97b0ad1dc3b9d99f76a14487c4f9b03a41062c34b27e2f214744c7a9504bd",
+      "sample_count": 20
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-captions1/preview_manifest.json",
+      "sha256": "cf23aaad67527ee725bab283a7efd0fe0053d7befa063a9e884776f679e1e79a",
+      "sample_count": 24
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-captions2/preview_manifest.json",
+      "sha256": "7fe905e2ce3f9d5bfb8ac5e2c894a05b8f0d3477ba720bb1e5f637c38ab09121",
+      "sample_count": 24
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/new-story-2026-10-24/production/native-captions3/preview_manifest.json",
+      "sha256": "168a3bf200982f383952584342ffca14f0bb100c5b1fc0c19c1de25fe3cab66c",
+      "sample_count": 23
+    }
+  ],
+  "coverage": {
+    "actual135PNG_files_viewed_through_contacts": true,
+    "unique_segment_native_frame_positions": 130,
+    "critical_risk_pngs": 24,
+    "boundary_pngs": 40,
+    "cue_pngs": 71,
+    "all135_image_hashes_reverified": true,
+    "all71_native_width_subtitle_crops_actually_read": true,
+    "all8_label_native_pixel_crops_actually_read": true,
+    "actual_full_images_viewed": [
+      "native-critical-width48/caption-02.png",
+      "native-critical-width48/caption-07.png",
+      "native-critical-width48/caption-10.png",
+      "native-critical-width48/caption-17.png",
+      "native-captions1/caption-16.png"
+    ],
+    "all12_chapter_titles_viewed_in_contacts": true,
+    "current_native_cover_full_viewed": true
+  },
+  "findings": [],
+  "observations": [
+    "Seven long realvideo insets present atrelative0/.04, retainedat7.96, offat8.04 inactualnativeboundaries. Shortcold stillpresentat6.04 andlimitedby6.1secbody; no8sec extension.",
+    "Fedge-attachednavygradient, righttrack, new81/66/89sourcefont sizes retained. All8dates/results/people/USloserTB7superscript readable inactualnativecrops. Correctwinner green.",
+    "THISepisode .48/y46geometry specificallyauthorizedbyroot afteractual.60cardpeople-rowfaceblocking; globalwidth.60rule unchanged. Actual.48Linz250.55/US142.0facesclear, RGhighservehand/racketclear inreviewedsamples.",
+    "ColdshowsGauffwinreaction, identity/resultcard preventsmisattributingit toMirra; coldnotrepresented ascompletepointand noextra430pointsrepeated. BodyUS138.2–166.9fullpointpreserved.",
+    "12newchaptertitlesfit logicaltwo lines, subtitles/brandclear, noinfoinset onchapter. Scopequalifiers本季/首个单打年终 and10/9beforeBeijingdate retained.",
+    "All71cueimages read withoutclippedwords; speakable-only硬帝 notburnedinsubtitles, display硬地correct. LongEnglishMadridcuefits. Wimbledonpassivehelpmeaningpreserved acrossadjacentcues.",
+    "Adelaidelastcaption actualfullframe usesraisedsubtitleposition abovefutureTVboardarea; nofaceoverlay inactualhugframe. Formalencodedboard/joins stillrequireactualfilmreview.",
+    "13bodyTTSrequesttexts+14audio/marks bytehashes independentlyverified againstcurrent624char editorial andcurrentvisualspec; fullMP3duration/lastboundary fitssegment. Nohumanphonemequalityapproval."
+  ],
+  "source_reuse": {
+    "all8_inventory_source_hashes_previously_independently_reverified": true,
+    "seven_match_point_windows_exact_published_baseline_match": true,
+    "new_match_point_replay_or_ASR_performed_by_reviewer": false
+  },
+  "prior_rejected_evidence": "native-width60-rejected.json retainsactualLinz+USfaceblock at a7c4spec; notcurrentpass.",
+  "limits": [
+    "No actualnewformalfilmreviewyet.",
+    "Contact/cue/risk/edge samples only, notcontinuousall0–8sec frameverification orcompletefilmplayback.",
+    "Nativeinteriorpreviewsdonotprove encodedglobaldissolve/compression orcovermatch; afterformalactualfilmSHA/metadata/cover/cold→intro/8sec cutoff/Beijing/outro joinsmustbechecked.",
+    "Nohumanlistening, no newASR/API/models/downloads/coreedits/dispatch/publishing bythisreviewer."
+  ]
+}
