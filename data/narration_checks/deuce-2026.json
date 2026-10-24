@@ -1,6 +1,6 @@
 {
   "slug": "deuce-2026",
-  "checked_at": "2026-10-24T03:15:32Z",
+  "checked_at": "2026-10-24T03:43:16Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+18%",
   "backend": "edge-tts",
@@ -10,10 +10,10 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "e879eb87138f8a15": {
+    "b26b3915edc9c527": {
       "segment": 1,
-      "spoken": 6.48,
-      "picture": 7.15
+      "spoken": 7.032,
+      "picture": 7.68
     },
     "83799c2543aa53af": {
       "segment": 2,
@@ -40,10 +40,10 @@
       "spoken": 5.928,
       "picture": 6.55
     },
-    "437d3e5743144653": {
-      "segment": 8,
-      "spoken": 4.248,
-      "picture": 4.87
+    "c627c3d4a0a5f515": {
+      "segment": 7,
+      "spoken": 5.664,
+      "picture": 6.29
     },
     "e550f601a5ce7073": {
       "segment": 9,
@@ -155,10 +155,10 @@
       "spoken": 7.464,
       "picture": 8.21
     },
-    "c7e0123e2509f8e8": {
+    "ae0f7ff98be8be49": {
       "segment": 32,
-      "spoken": 4.104,
-      "picture": 4.8
+      "spoken": 4.584,
+      "picture": 5.26
     },
     "fc894ddce3174a4e": {
       "segment": 33,
@@ -213,16 +213,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "6f533930ad9e95c4a6cf993add13e38b7415b323d3335dabef381431cb4b971a",
+    "bundle_sha256": "b1d656d9698678644619bfe9cdc9f3b9fd33bc9390e437cb6d354cf74d2c8db2",
     "request_count": 42,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-deuce-2026-6f533930ad9e95c4",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-deuce-2026-6f533930ad9e95c4/tts_bundle.zip",
+    "release_tag": "reel-tts-deuce-2026-b1d656d969867864",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-deuce-2026-b1d656d969867864/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40057461091"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40059322119"
   }
 }
