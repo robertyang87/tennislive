@@ -1,0 +1,1382 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "9345cba90beddb81ae8573cb85f972c045c8d2ccbdfd7ad2801b9b76e1688f7e",
+    "render_inputs_sha256": "c31790f99ba7a05a3c8de6b001f559b769163168c34fde55396e7ef758d21a96",
+    "spec_sha256": "904550e34ce727c9c6cba0d0fe0e6187c2aa9e9ceaf79e00f1903c8bc289b7ea",
+    "film_sha256": "0f8ee983de2f0b6fc5521d015dc5548dbc24518736bf306123afe54e01d3c682",
+    "inventory_sha256": "e96464ba76c5d7a8b68c7c957cc7e4375e12794ab4c1c7506f3c4c9c83beeec3"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-24T11:43:21+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0a10ac844ac53367b17c06854b2b956a1ee69dceea8a9a58be12bd864eadadee",
+      "audio_sha256": "dabb0dc4d469ed7def8783a1ed4e0b7cb3c6701a77c94e181712141aa63aa019",
+      "pass": true,
+      "result_of": "bundle:0a10ac844ac53367b17c06854b2b956a1ee69dceea8a9a58be12bd864eadadee"
+    },
+    {
+      "id": "bundle:13cef2f2d03cb336e45a437a5ccfbe1d41882718054d154ae661ef655ffd19ac",
+      "audio_sha256": "fb30c6c4d627eea4be3e1c1a67bf6561eeb3a1eb56a97c9d6eb216d7512c11bf",
+      "pass": true,
+      "result_of": "bundle:13cef2f2d03cb336e45a437a5ccfbe1d41882718054d154ae661ef655ffd19ac"
+    },
+    {
+      "id": "bundle:1cf52cdbf56bc9eaee00fbf0e1f5998352b897414f633ac2b0776b4d87086cbd",
+      "audio_sha256": "b6489a5ffd927100d8f5c0cdec2de6c7be4512b06d7f50d4cdc3cb7cc2391a9b",
+      "pass": true,
+      "result_of": "bundle:1cf52cdbf56bc9eaee00fbf0e1f5998352b897414f633ac2b0776b4d87086cbd"
+    },
+    {
+      "id": "bundle:243ee8d5bf237e8b52f3d5fbe954c5ab9ffd7a8e836a0ddc6367eb45b2aef03b",
+      "audio_sha256": "5182e7b19035024c0ea985d75f2a823aa1e39015570dd08cb7d7170361dba0e7",
+      "pass": true,
+      "result_of": "bundle:243ee8d5bf237e8b52f3d5fbe954c5ab9ffd7a8e836a0ddc6367eb45b2aef03b"
+    },
+    {
+      "id": "bundle:258f37beb3402899c05b7f7f30ac85a6e8e84c040c952975cc133e1d0477bd8e",
+      "audio_sha256": "8e53cefc5d9171ee2d0980240e01d7a6811cd0fd01f4b7e99125dbd12186742a",
+      "pass": true,
+      "result_of": "bundle:258f37beb3402899c05b7f7f30ac85a6e8e84c040c952975cc133e1d0477bd8e"
+    },
+    {
+      "id": "bundle:2657412b51d10725b2fcf1485f2841223f4efe444df10b18cc9e9e399d5371b4",
+      "audio_sha256": "755f6f0259088d58f9ced0bb94aca94bdeda2a389868e9d0b408373bd63ea37e",
+      "pass": true,
+      "result_of": "bundle:2657412b51d10725b2fcf1485f2841223f4efe444df10b18cc9e9e399d5371b4"
+    },
+    {
+      "id": "bundle:37ba5a4b9b885e2a3a1086582b5186ee0f97b52cc7f5c581b1867218cc7a1b4d",
+      "audio_sha256": "4ba559ad9ef358835cc82c5751f5becc48bf39f901147d374fe2ea6447d12112",
+      "pass": true,
+      "result_of": "bundle:37ba5a4b9b885e2a3a1086582b5186ee0f97b52cc7f5c581b1867218cc7a1b4d"
+    },
+    {
+      "id": "bundle:3cd71a9b0057e5a47422071510005aa14c6fbc68ae3326644c782c0eec2a84d2",
+      "audio_sha256": "6eef10af7969ff3401f3549cc73e0a73206006d4f682c8ec269c93681c36e2e2",
+      "pass": true,
+      "result_of": "bundle:3cd71a9b0057e5a47422071510005aa14c6fbc68ae3326644c782c0eec2a84d2"
+    },
+    {
+      "id": "bundle:502af392c3cc1bd0768347a7f85d46b6d91431531343766b12e6520cc0e4e4d5",
+      "audio_sha256": "a39d62885779c58df72b789efd29a9dc527dd710d6e57a69fbaa9195982b7fd9",
+      "pass": true,
+      "result_of": "bundle:502af392c3cc1bd0768347a7f85d46b6d91431531343766b12e6520cc0e4e4d5"
+    },
+    {
+      "id": "bundle:51b63f1bd5356133ed18c46f8e2a25d9b7d0defba54dc0a27c22745055d9bdd4",
+      "audio_sha256": "d99a7afe22cb68582e2468799fd27b10bed4d4e5f0f1ebbc97ed9428e6edaec6",
+      "pass": true,
+      "result_of": "bundle:51b63f1bd5356133ed18c46f8e2a25d9b7d0defba54dc0a27c22745055d9bdd4"
+    },
+    {
+      "id": "bundle:55788740e72d9233df4fc22a75e735ff3b805b3647b43989fe642ded8affce4e",
+      "audio_sha256": "c94c054bc35c64ed926a5109ea5dce1515e5197aadfbd840543eab56a206a4cf",
+      "pass": true,
+      "result_of": "bundle:55788740e72d9233df4fc22a75e735ff3b805b3647b43989fe642ded8affce4e"
+    },
+    {
+      "id": "bundle:55d8da1d06a36a52f5328349a9c91d4550cb63a66669092bd1d23f40912e2955",
+      "audio_sha256": "4a9aaccc768e5cf2af706e8cf6963e4a003dc9e54e2d4033fa5a24974c68a315",
+      "pass": true,
+      "result_of": "bundle:55d8da1d06a36a52f5328349a9c91d4550cb63a66669092bd1d23f40912e2955"
+    },
+    {
+      "id": "bundle:5e6b5b37055ee7ef65e0dbfea5ff8a38c088e534aa723d05dc9dd2ee24b08a18",
+      "audio_sha256": "92470ac54360140614d5b51396426231443e81aa7611692eda08cc8ffab2dc5a",
+      "pass": true,
+      "result_of": "bundle:5e6b5b37055ee7ef65e0dbfea5ff8a38c088e534aa723d05dc9dd2ee24b08a18"
+    },
+    {
+      "id": "bundle:63febb992ff80867ef970ca7642686e32ff73b5b97d55de67b74cb36509d65c5",
+      "audio_sha256": "a005c74fc4f23c8b899b8ee8dc7cb797b19661cae5888cba0bdf1902a8d22cda",
+      "pass": true,
+      "result_of": "bundle:63febb992ff80867ef970ca7642686e32ff73b5b97d55de67b74cb36509d65c5"
+    },
+    {
+      "id": "bundle:7d215a3e9316c4d0c2432d0a355b57fa54562d88ea4373428c47f3d3dcd03d15",
+      "audio_sha256": "7306c33478b653dda488b76d4a4552c7c6ab4b3d8b69ec67e87e102f06b03e7b",
+      "pass": true,
+      "result_of": "bundle:7d215a3e9316c4d0c2432d0a355b57fa54562d88ea4373428c47f3d3dcd03d15"
+    },
+    {
+      "id": "bundle:a1c76cf1c9155f896fbcf3a8e9223c116a89d950946c05982b378d55586099ca",
+      "audio_sha256": "2d32a4e846819deafbe6cfd8f74672f0cb0b651c55978feb2aa4ced427267a53",
+      "pass": true,
+      "result_of": "bundle:a1c76cf1c9155f896fbcf3a8e9223c116a89d950946c05982b378d55586099ca"
+    },
+    {
+      "id": "bundle:a30ceb6deafc7e90694582c56ef26cd53eae19dbf30c1df21c8432c59a7ee2a3",
+      "audio_sha256": "eaa0790bdd55c540a1603cfb67e75c34968ec33a0692505d90554453716f48e5",
+      "pass": true,
+      "result_of": "bundle:a30ceb6deafc7e90694582c56ef26cd53eae19dbf30c1df21c8432c59a7ee2a3"
+    },
+    {
+      "id": "bundle:b30052ff6b60042456fdc81a7fbdbc222278531ed72489c6e884100248cc7e2b",
+      "audio_sha256": "3613045092ae778f9dafac92c41c0daa2a404fcbf1f82f04980383cbf812c816",
+      "pass": true,
+      "result_of": "bundle:b30052ff6b60042456fdc81a7fbdbc222278531ed72489c6e884100248cc7e2b"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "0a0014a9d218eb8c3f56bd883e9e305d09bfeda203adbf21e6190ce086fea6bf",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:cc7087ee0fc3c7d857838a79d67d5ff20bed613b498b94dc6ba63096ed665b29",
+      "audio_sha256": "546d139d8c6f5e5f05d753e83eee06fbe074d3d2251ea001528c82d49f62e828",
+      "pass": true,
+      "result_of": "bundle:cc7087ee0fc3c7d857838a79d67d5ff20bed613b498b94dc6ba63096ed665b29"
+    },
+    {
+      "id": "bundle:d4916908622cdf3c6c3f610eb7d39b2a0988429eff5fe651f644ed108b5169d0",
+      "audio_sha256": "b53dcd661853ad7fc7b0c694a170a1cc414adfaf2168b766e8e55b43f2218c7e",
+      "pass": true,
+      "result_of": "bundle:d4916908622cdf3c6c3f610eb7d39b2a0988429eff5fe651f644ed108b5169d0"
+    },
+    {
+      "id": "bundle:da17737e15e321e72d962944b7ed10e938f9623770c222ca423be007f3de2ab7",
+      "audio_sha256": "fe8a902b80d5bc2d77029f0cdfcd81ea901e3278e71f635992508f5611c044a2",
+      "pass": true,
+      "result_of": "bundle:da17737e15e321e72d962944b7ed10e938f9623770c222ca423be007f3de2ab7"
+    },
+    {
+      "id": "bundle:e70ceb34d52cb09ecaa0a6b1f85f84c3f5bda7a80493d615d3ba274befe15c0f",
+      "audio_sha256": "9881d16514ebb988ed6d679017b07f17e47f09657b168a62d799a791e80260a9",
+      "pass": true,
+      "result_of": "bundle:e70ceb34d52cb09ecaa0a6b1f85f84c3f5bda7a80493d615d3ba274befe15c0f"
+    },
+    {
+      "id": "bundle:e98b9aac0e9c05983d16ca73848d2bec7e7a1ad8a9e9e64fcd0b9614979af432",
+      "audio_sha256": "e0fc56a5b89a6b963646495dfecd2fe73193b4de7026b377f20d7bd331a1922b",
+      "pass": true,
+      "result_of": "bundle:e98b9aac0e9c05983d16ca73848d2bec7e7a1ad8a9e9e64fcd0b9614979af432"
+    },
+    {
+      "id": "bundle:ee989c28c737105b39bf6b539a10b2374faf965fb07beb90ec32f05814af07b4",
+      "audio_sha256": "19b335ec1067760d78cbf15457b2d23afde85bcfad85f4b84638eac05b0520c3",
+      "pass": true,
+      "result_of": "bundle:ee989c28c737105b39bf6b539a10b2374faf965fb07beb90ec32f05814af07b4"
+    },
+    {
+      "id": "bundle:ef516a7b8a9716950398fc6635f77faa756aec7f00c76f3b89339789917b0a3e",
+      "audio_sha256": "585bcfd35c99f77b81f1ba49640d47d4e1c29e898a39c9076049672d06fab0fd",
+      "pass": true,
+      "result_of": "bundle:ef516a7b8a9716950398fc6635f77faa756aec7f00c76f3b89339789917b0a3e"
+    },
+    {
+      "id": "bundle:fa2a3a3dbdacea5f399e759c2780260b915785dd59045565a47c9b5fb36b5124",
+      "audio_sha256": "dd740d435ff1b2cf9a8f750daa241220d02ab673f4b6570128efb1a413809b78",
+      "pass": true,
+      "result_of": "bundle:fa2a3a3dbdacea5f399e759c2780260b915785dd59045565a47c9b5fb36b5124"
+    },
+    {
+      "id": "bundle:fe3c50365589c6bef770ef3458a924fd9edf87f559050bd4370c9966a632a1ae",
+      "audio_sha256": "44f28703ee4ed0f8c3cbe29a8eaf3f6857e5d9c18ff8b08e3e2a096d87a397ef",
+      "pass": true,
+      "result_of": "bundle:fe3c50365589c6bef770ef3458a924fd9edf87f559050bd4370c9966a632a1ae"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "7306c33478b653dda488b76d4a4552c7c6ab4b3d8b69ec67e87e102f06b03e7b",
+      "pass": true,
+      "result_of": "bundle:7d215a3e9316c4d0c2432d0a355b57fa54562d88ea4373428c47f3d3dcd03d15"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "4a9aaccc768e5cf2af706e8cf6963e4a003dc9e54e2d4033fa5a24974c68a315",
+      "pass": true,
+      "result_of": "bundle:55d8da1d06a36a52f5328349a9c91d4550cb63a66669092bd1d23f40912e2955"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "5182e7b19035024c0ea985d75f2a823aa1e39015570dd08cb7d7170361dba0e7",
+      "pass": true,
+      "result_of": "bundle:243ee8d5bf237e8b52f3d5fbe954c5ab9ffd7a8e836a0ddc6367eb45b2aef03b"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "dabb0dc4d469ed7def8783a1ed4e0b7cb3c6701a77c94e181712141aa63aa019",
+      "pass": true,
+      "result_of": "bundle:0a10ac844ac53367b17c06854b2b956a1ee69dceea8a9a58be12bd864eadadee"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "dd740d435ff1b2cf9a8f750daa241220d02ab673f4b6570128efb1a413809b78",
+      "pass": true,
+      "result_of": "bundle:fa2a3a3dbdacea5f399e759c2780260b915785dd59045565a47c9b5fb36b5124"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "c94c054bc35c64ed926a5109ea5dce1515e5197aadfbd840543eab56a206a4cf",
+      "pass": true,
+      "result_of": "bundle:55788740e72d9233df4fc22a75e735ff3b805b3647b43989fe642ded8affce4e"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "44f28703ee4ed0f8c3cbe29a8eaf3f6857e5d9c18ff8b08e3e2a096d87a397ef",
+      "pass": true,
+      "result_of": "bundle:fe3c50365589c6bef770ef3458a924fd9edf87f559050bd4370c9966a632a1ae"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "fb30c6c4d627eea4be3e1c1a67bf6561eeb3a1eb56a97c9d6eb216d7512c11bf",
+      "pass": true,
+      "result_of": "bundle:13cef2f2d03cb336e45a437a5ccfbe1d41882718054d154ae661ef655ffd19ac"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "fe8a902b80d5bc2d77029f0cdfcd81ea901e3278e71f635992508f5611c044a2",
+      "pass": true,
+      "result_of": "bundle:da17737e15e321e72d962944b7ed10e938f9623770c222ca423be007f3de2ab7"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "b53dcd661853ad7fc7b0c694a170a1cc414adfaf2168b766e8e55b43f2218c7e",
+      "pass": true,
+      "result_of": "bundle:d4916908622cdf3c6c3f610eb7d39b2a0988429eff5fe651f644ed108b5169d0"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "e0fc56a5b89a6b963646495dfecd2fe73193b4de7026b377f20d7bd331a1922b",
+      "pass": true,
+      "result_of": "bundle:e98b9aac0e9c05983d16ca73848d2bec7e7a1ad8a9e9e64fcd0b9614979af432"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "8e53cefc5d9171ee2d0980240e01d7a6811cd0fd01f4b7e99125dbd12186742a",
+      "pass": true,
+      "result_of": "bundle:258f37beb3402899c05b7f7f30ac85a6e8e84c040c952975cc133e1d0477bd8e"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "546d139d8c6f5e5f05d753e83eee06fbe074d3d2251ea001528c82d49f62e828",
+      "pass": true,
+      "result_of": "bundle:cc7087ee0fc3c7d857838a79d67d5ff20bed613b498b94dc6ba63096ed665b29"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "d99a7afe22cb68582e2468799fd27b10bed4d4e5f0f1ebbc97ed9428e6edaec6",
+      "pass": true,
+      "result_of": "bundle:51b63f1bd5356133ed18c46f8e2a25d9b7d0defba54dc0a27c22745055d9bdd4"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "4ba559ad9ef358835cc82c5751f5becc48bf39f901147d374fe2ea6447d12112",
+      "pass": true,
+      "result_of": "bundle:37ba5a4b9b885e2a3a1086582b5186ee0f97b52cc7f5c581b1867218cc7a1b4d"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "585bcfd35c99f77b81f1ba49640d47d4e1c29e898a39c9076049672d06fab0fd",
+      "pass": true,
+      "result_of": "bundle:ef516a7b8a9716950398fc6635f77faa756aec7f00c76f3b89339789917b0a3e"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "b6489a5ffd927100d8f5c0cdec2de6c7be4512b06d7f50d4cdc3cb7cc2391a9b",
+      "pass": true,
+      "result_of": "bundle:1cf52cdbf56bc9eaee00fbf0e1f5998352b897414f633ac2b0776b4d87086cbd"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "a39d62885779c58df72b789efd29a9dc527dd710d6e57a69fbaa9195982b7fd9",
+      "pass": true,
+      "result_of": "bundle:502af392c3cc1bd0768347a7f85d46b6d91431531343766b12e6520cc0e4e4d5"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "3613045092ae778f9dafac92c41c0daa2a404fcbf1f82f04980383cbf812c816",
+      "pass": true,
+      "result_of": "bundle:b30052ff6b60042456fdc81a7fbdbc222278531ed72489c6e884100248cc7e2b"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "6eef10af7969ff3401f3549cc73e0a73206006d4f682c8ec269c93681c36e2e2",
+      "pass": true,
+      "result_of": "bundle:3cd71a9b0057e5a47422071510005aa14c6fbc68ae3326644c782c0eec2a84d2"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "2d32a4e846819deafbe6cfd8f74672f0cb0b651c55978feb2aa4ced427267a53",
+      "pass": true,
+      "result_of": "bundle:a1c76cf1c9155f896fbcf3a8e9223c116a89d950946c05982b378d55586099ca"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "19b335ec1067760d78cbf15457b2d23afde85bcfad85f4b84638eac05b0520c3",
+      "pass": true,
+      "result_of": "bundle:ee989c28c737105b39bf6b539a10b2374faf965fb07beb90ec32f05814af07b4"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "eaa0790bdd55c540a1603cfb67e75c34968ec33a0692505d90554453716f48e5",
+      "pass": true,
+      "result_of": "bundle:a30ceb6deafc7e90694582c56ef26cd53eae19dbf30c1df21c8432c59a7ee2a3"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "92470ac54360140614d5b51396426231443e81aa7611692eda08cc8ffab2dc5a",
+      "pass": true,
+      "result_of": "bundle:5e6b5b37055ee7ef65e0dbfea5ff8a38c088e534aa723d05dc9dd2ee24b08a18"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "755f6f0259088d58f9ced0bb94aca94bdeda2a389868e9d0b408373bd63ea37e",
+      "pass": true,
+      "result_of": "bundle:2657412b51d10725b2fcf1485f2841223f4efe444df10b18cc9e9e399d5371b4"
+    },
+    {
+      "id": "voice_27.mp3",
+      "audio_sha256": "9881d16514ebb988ed6d679017b07f17e47f09657b168a62d799a791e80260a9",
+      "pass": true,
+      "result_of": "bundle:e70ceb34d52cb09ecaa0a6b1f85f84c3f5bda7a80493d615d3ba274befe15c0f"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "a005c74fc4f23c8b899b8ee8dc7cb797b19661cae5888cba0bdf1902a8d22cda",
+      "pass": true,
+      "result_of": "bundle:63febb992ff80867ef970ca7642686e32ff73b5b97d55de67b74cb36509d65c5"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "0a0014a9d218eb8c3f56bd883e9e305d09bfeda203adbf21e6190ce086fea6bf",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0a10ac844ac53367b17c06854b2b956a1ee69dceea8a9a58be12bd864eadadee",
+      "text": "网球为什么这么数数？没有标准答案。但线索，能追到六百年前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "网球为什么这么数数?没有标准答案,但线索能追到六百年前。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "数",
+          "word": "数数",
+          "intended": "shu3",
+          "wrong": [
+            "shu4",
+            "shuo4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "shu4",
+              "verdict": "correct",
+              "score": 0.485,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "shuo4",
+              "verdict": "correct",
+              "score": 0.538,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "暑曙署"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.943,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "网球 ｜ 为什么 ｜ 这么 ｜ 数数 ｜ 没有 ｜ 标准答案 ｜ 但 ｜ 线索 ｜ 能 ｜ 追 ｜ 到 ｜ 六百年 ｜ 前"
+      }
+    },
+    {
+      "id": "bundle:13cef2f2d03cb336e45a437a5ccfbe1d41882718054d154ae661ef655ffd19ac",
+      "text": "他玩的是手掌击球的老式网球，后来发展成皇家网球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他玩的是手掌机球的老式网球,后来发展成皇家网球。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "发",
+          "word": "发展",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.186,
+        "cps": 5.26,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 玩 ｜ 的 ｜ 是 ｜ 手掌 ｜ 击球 ｜ 的 ｜ 老式 ｜ 网球 ｜ 后来 ｜ 发展 ｜ 成 ｜ 皇家 ｜ 网球"
+      }
+    },
+    {
+      "id": "bundle:1cf52cdbf56bc9eaee00fbf0e1f5998352b897414f633ac2b0776b4d87086cbd",
+      "text": "再说 love。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 2,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "再说啦!"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 2,
+        "speech_s": 0.684,
+        "cps": 2.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再说 ｜ love"
+      }
+    },
+    {
+      "id": "bundle:243ee8d5bf237e8b52f3d5fbe954c5ab9ffd7a8e836a0ddc6367eb45b2aef03b",
+      "text": "一分没赢，不叫零，叫 love，爱。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一分没赢,不较灵,较烂,爱。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 2.606,
+        "cps": 3.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 分 ｜ 没 ｜ 赢 ｜ 不 ｜ 叫 ｜ 零 ｜ 叫 ｜ love ｜ 爱"
+      }
+    },
+    {
+      "id": "bundle:258f37beb3402899c05b7f7f30ac85a6e8e84c040c952975cc133e1d0477bd8e",
+      "text": "另一个说法来自皇家网球：发球方每赢一分，就往前站十五尺。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "另一个说法来自黄家网球,发球方每赢一分,就往前站失无耻。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.189,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "另一个 ｜ 说法 ｜ 来自 ｜ 皇家 ｜ 网球 ｜ 发球 ｜ 方 ｜ 每 ｜ 赢 ｜ 一 ｜ 分 ｜ 就 ｜ 往前 ｜ 站 ｜ 十五尺"
+      }
+    },
+    {
+      "id": "bundle:2657412b51d10725b2fcf1485f2841223f4efe444df10b18cc9e9e399d5371b4",
+      "text": "几百年过去，来历说不清，这套报分却留了下来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "几百年过去,来历说不清,这套报分却留了下来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.703,
+        "cps": 5.13,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "几百年 ｜ 过去 ｜ 来历 ｜ 说不清 ｜ 这 ｜ 套 ｜ 报 ｜ 分 ｜ 却 ｜ 留 ｜ 了 ｜ 下来"
+      }
+    },
+    {
+      "id": "bundle:37ba5a4b9b885e2a3a1086582b5186ee0f97b52cc7f5c581b1867218cc7a1b4d",
+      "text": "四十五怎么变成四十，同样找不到原始出处。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四十五怎么变成四十,同样找不到原始出处。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.538,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四十五 ｜ 怎么 ｜ 变成 ｜ 四十 ｜ 同样 ｜ 找 ｜ 不 ｜ 到 ｜ 原始 ｜ 出处"
+      }
+    },
+    {
+      "id": "bundle:3cd71a9b0057e5a47422071510005aa14c6fbc68ae3326644c782c0eec2a84d2",
+      "text": "还有人说来自荷兰语，意思是荣誉：为荣誉而打，不为钱。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "还有人说来自荷兰语,意思是荣誉,为荣誉而打,不为钱。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.292,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.788,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "还有 ｜ 人 ｜ 说 ｜ 来自 ｜ 荷兰 ｜ 语 ｜ 意思 ｜ 是 ｜ 荣誉 ｜ 为 ｜ 荣誉 ｜ 而 ｜ 打 ｜ 不 ｜ 为 ｜ 钱"
+      }
+    },
+    {
+      "id": "bundle:502af392c3cc1bd0768347a7f85d46b6d91431531343766b12e6520cc0e4e4d5",
+      "text": "最浪漫的说法，是法语里的鸡蛋，因为零的形状像个蛋。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最浪漫的说法是罚鱼里的鸡蛋,因为铃的形状像个蛋。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.269,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最 ｜ 浪漫的 ｜ 说法 ｜ 是 ｜ 法语 ｜ 里 ｜ 的 ｜ 鸡蛋 ｜ 因为 ｜ 零 ｜ 的 ｜ 形状 ｜ 像 ｜ 个 ｜ 蛋"
+      }
+    },
+    {
+      "id": "bundle:51b63f1bd5356133ed18c46f8e2a25d9b7d0defba54dc0a27c22745055d9bdd4",
+      "text": "那四十五，又是怎么变成四十的？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那四十五又是怎么变成四十的?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.677,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 四十五 ｜ 又是 ｜ 怎么 ｜ 变成 ｜ 四十 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:55788740e72d9233df4fc22a75e735ff3b805b3647b43989fe642ded8affce4e",
+      "text": "作者是奥尔良公爵查理。阿金库尔战役被英军俘虏，在英国当了二十五年人质。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "作者是奥尔良公爵查理,阿金库尔战役《北英军俘虏》在英国当了二十五年人质。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.722,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "作者 ｜ 是 ｜ 奥尔良 ｜ 公爵 ｜ 查理 ｜ 阿金库尔 ｜ 战役 ｜ 被 ｜ 英 ｜ 军 ｜ 俘虏 ｜ 在 ｜ 英国 ｜ 当 ｜ 了 ｜ 二十五年 ｜ 人质"
+      }
+    },
+    {
+      "id": "bundle:55d8da1d06a36a52f5328349a9c91d4550cb63a66669092bd1d23f40912e2955",
+      "text": "第三分，按理该是四十五，主裁喊的却是四十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三分,按理该是45,主才喊的却是40。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.679,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第三分 ｜ 按理 ｜ 该 ｜ 是 ｜ 四十五 ｜ 主 ｜ 裁 ｜ 喊 ｜ 的 ｜ 却 ｜ 是 ｜ 四十"
+      }
+    },
+    {
+      "id": "bundle:5e6b5b37055ee7ef65e0dbfea5ff8a38c088e534aa723d05dc9dd2ee24b08a18",
+      "text": "国际网联的规则里没有这一条。大满贯赛场上，主裁照样喊 love。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "国际网联的规则里没有这一条。大满冠赛场上,主裁赵洋罕乐。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.283,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "国际 ｜ 网 ｜ 联 ｜ 的 ｜ 规则 ｜ 里 ｜ 没有 ｜ 这 ｜ 一条 ｜ 大满贯 ｜ 赛场 ｜ 上 ｜ 主 ｜ 裁 ｜ 照样 ｜ 喊 ｜ love"
+      }
+    },
+    {
+      "id": "bundle:63febb992ff80867ef970ca7642686e32ff73b5b97d55de67b74cb36509d65c5",
+      "text": "十五、三十、四十，为什么没有四十五？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "十五、三十、四十﹐为什么没有四十五?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.55,
+        "cps": 3.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十五 ｜ 三十 ｜ 四十 ｜ 为什么 ｜ 没有 ｜ 四十五"
+      }
+    },
+    {
+      "id": "bundle:7d215a3e9316c4d0c2432d0a355b57fa54562d88ea4373428c47f3d3dcd03d15",
+      "text": "赢一分，十五。再赢一分，三十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "赢一分 15, 再赢一分 30。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 3.538,
+        "cps": 3.11,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赢 ｜ 一 ｜ 分 ｜ 十五 ｜ 再 ｜ 赢 ｜ 一 ｜ 分 ｜ 三十"
+      }
+    },
+    {
+      "id": "bundle:a1c76cf1c9155f896fbcf3a8e9223c116a89d950946c05982b378d55586099ca",
+      "text": "词源学家更认可的，是英语里的为爱而玩：不下注，白打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "此缘学家更认可的是英语里的未爱而完,不下注白打。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.835,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "词源 ｜ 学家 ｜ 更 ｜ 认可 ｜ 的 ｜ 是 ｜ 英语 ｜ 里 ｜ 的 ｜ 为 ｜ 爱 ｜ 而 ｜ 玩 ｜ 不 ｜ 下注 ｜ 白 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:a30ceb6deafc7e90694582c56ef26cd53eae19dbf30c1df21c8432c59a7ee2a3",
+      "text": "嫌绕口？美国网协的规则手册写着：可以用零、一、二、三，代替 love、十五、三十、四十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 1,
+        "sub_ratio": 0.034,
+        "longest_deletion": 0,
+        "transcript": "闲绕考,美国网写的规则手册写着,可以用零,一、二、三,代替啦,十五、三十、四十。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 8.703,
+        "cps": 3.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "嫌 ｜ 绕口 ｜ 美国网协 ｜ 的 ｜ 规则 ｜ 手册 ｜ 写 ｜ 着 ｜ 可以 ｜ 用 ｜ 零 ｜ 一 ｜ 二 ｜ 三 ｜ 代替 ｜ love ｜ 十五 ｜ 三十 ｜ 四十"
+      }
+    },
+    {
+      "id": "bundle:b30052ff6b60042456fdc81a7fbdbc222278531ed72489c6e884100248cc7e2b",
+      "text": "可韦氏词典的词源学家说，找不到法语用鸡蛋表示零分的任何证据。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可唯是此点的词源学家说,找不到法语用鸡蛋表示零分的任何证据。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.259,
+        "cps": 5.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 韦 ｜ 氏 ｜ 词典 ｜ 的 ｜ 词源 ｜ 学家 ｜ 说 ｜ 找 ｜ 不 ｜ 到 ｜ 法语 ｜ 用 ｜ 鸡蛋 ｜ 表示 ｜ 零分 ｜ 的 ｜ 任何 ｜ 证据"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:cc7087ee0fc3c7d857838a79d67d5ff20bed613b498b94dc6ba63096ed665b29",
+      "text": "两种说法，都只是后人的推测，拿不出史料。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两种说法都只是后人的推测拿不出实料。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.695,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.526,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两种 ｜ 说法 ｜ 都 ｜ 只是 ｜ 后人 ｜ 的 ｜ 推测 ｜ 拿 ｜ 不 ｜ 出 ｜ 史料"
+      }
+    },
+    {
+      "id": "bundle:d4916908622cdf3c6c3f610eb7d39b2a0988429eff5fe651f644ed108b5169d0",
+      "text": "可为什么偏偏是十五？流传最广的说法有两个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可为什么偏偏是十五? 流传最广的说法有两个。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 4.422,
+        "cps": 4.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 为什么 ｜ 偏偏 ｜ 是 ｜ 十五 ｜ 流传 ｜ 最 ｜ 广 ｜ 的 ｜ 说法 ｜ 有 ｜ 两个"
+      }
+    },
+    {
+      "id": "bundle:da17737e15e321e72d962944b7ed10e938f9623770c222ca423be007f3de2ab7",
+      "text": "这是现代网球的祖先，在四面高墙、带斜顶棚的室内球场里打。球打到墙上、顶棚上，都还算活球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这是现代网球的祖先在四面高墙带鞋顶棚的室内球场里打。球打到墙上、顶棚上都还算活球。"
+      },
+      "polyphones": [
+        {
+          "index": 39,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.321,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.267,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这是 ｜ 现代 ｜ 网球 ｜ 的 ｜ 祖先 ｜ 在 ｜ 四面 ｜ 高墙 ｜ 带 ｜ 斜 ｜ 顶棚 ｜ 的 ｜ 室内 ｜ 球场 ｜ 里 ｜ 打 ｜ 球 ｜ 打 ｜ 到 ｜ 墙 ｜ 上 ｜ 顶棚 ｜ 上 ｜ 都 ｜ 还 ｜ 算 ｜ 活球"
+      }
+    },
+    {
+      "id": "bundle:e70ceb34d52cb09ecaa0a6b1f85f84c3f5bda7a80493d615d3ba274befe15c0f",
+      "text": "十五、三十、四十，再加一个 love。如果让你改成一、二、三、四，你同意吗？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "十五﹑三十﹑四十﹑再加一个LAW,如果让你改成第一﹑二﹑三﹑四,你同意吗?评论区说说。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 9.045,
+        "cps": 3.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十五 ｜ 三十 ｜ 四十 ｜ 再 ｜ 加 ｜ 一个 ｜ love ｜ 如果 ｜ 让 ｜ 你 ｜ 改 ｜ 成 ｜ 一 ｜ 二 ｜ 三 ｜ 四 ｜ 你 ｜ 同意 ｜ 吗 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:e98b9aac0e9c05983d16ca73848d2bec7e7a1ad8a9e9e64fcd0b9614979af432",
+      "text": "一个说是钟面：一刻钟十五分，转满一圈六十，正好一局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一个说是中面,一刻中十五分, 转满一圈六十,正好一举。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.165,
+        "cps": 4.26,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一个 ｜ 说 ｜ 是 ｜ 钟面 ｜ 一刻钟 ｜ 十五分 ｜ 转 ｜ 满 ｜ 一 ｜ 圈 ｜ 六十 ｜ 正好 ｜ 一 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:ee989c28c737105b39bf6b539a10b2374faf965fb07beb90ec32f05814af07b4",
+      "text": "巧的是，公爵那首诗里写的，正是押了注，不是白打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "巧的是,公爵那首诗里写的,正是压了住,不是白打。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 20,
+        "speech_s": 4.399,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "巧 ｜ 的 ｜ 是 ｜ 公爵 ｜ 那 ｜ 首 ｜ 诗 ｜ 里 ｜ 写 ｜ 的 ｜ 正是 ｜ 押 ｜ 了 ｜ 注 ｜ 不是 ｜ 白 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:ef516a7b8a9716950398fc6635f77faa756aec7f00c76f3b89339789917b0a3e",
+      "text": "能确定的是，一八七七年第一届温网规则写明：沿用皇家网球的十五进位计分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "能确定的是 1877 年第一届温网规则写名沿用皇家网球的 15 进位纪分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 5.967,
+        "cps": 5.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "能 ｜ 确定 ｜ 的 ｜ 是 ｜ 一八七七年 ｜ 第一届 ｜ 温 ｜ 网 ｜ 规则 ｜ 写 ｜ 明 ｜ 沿用 ｜ 皇家 ｜ 网球 ｜ 的 ｜ 十五 ｜ 进位 ｜ 计分"
+      }
+    },
+    {
+      "id": "bundle:fa2a3a3dbdacea5f399e759c2780260b915785dd59045565a47c9b5fb36b5124",
+      "text": "最早的线索，藏在一首法语诗里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最早的线索藏在一手法语尸里。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.665,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最早 ｜ 的 ｜ 线索 ｜ 藏 ｜ 在 ｜ 一 ｜ 首 ｜ 法语 ｜ 诗 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:fe3c50365589c6bef770ef3458a924fd9edf87f559050bd4370c9966a632a1ae",
+      "text": "诗里，他把人生比作一场球：我已经打到四十五；我们押了注，不是白打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "势力﹑他把人生比作一场球﹑我已经打到45﹑我们压了住,不是白打。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.684,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "诗 ｜ 里 ｜ 他 ｜ 把 ｜ 人生 ｜ 比作 ｜ 一 ｜ 场 ｜ 球 ｜ 我 ｜ 已经 ｜ 打 ｜ 到 ｜ 四十五 ｜ 我们 ｜ 押 ｜ 了 ｜ 注 ｜ 不是 ｜ 白 ｜ 打"
+      }
+    }
+  ]
+}

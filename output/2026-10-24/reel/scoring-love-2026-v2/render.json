@@ -1,0 +1,111 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "1a4e7026859b1ebbf0acbe693b24465d317c97be7460e12ea90323379a8f4901",
+    "request_count": 28,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-scoring-love-2026-v2-1a4e7026859b1ebb",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-scoring-love-2026-v2-1a4e7026859b1ebb/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40090655544"
+  },
+  "cover_seconds": 4.69,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 170.9,
+  "topbar": null,
+  "film_seconds": 180.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 4.416,
+    "2": 4.56,
+    "4": 3.48,
+    "5": 6.84,
+    "6": 3.552,
+    "7": 7.608,
+    "8": 6.552,
+    "9": 5.064,
+    "10": 9.168,
+    "11": 5.304,
+    "12": 6.048,
+    "13": 6.072,
+    "14": 4.392,
+    "15": 3.552,
+    "16": 4.416,
+    "17": 6.864,
+    "18": 1.872,
+    "19": 5.136,
+    "20": 6.144,
+    "21": 5.664,
+    "22": 5.712,
+    "23": 5.28,
+    "24": 9.576,
+    "25": 6.168,
+    "26": 4.584,
+    "27": 9.936
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "c31790f99ba7a05a3c8de6b001f559b769163168c34fde55396e7ef758d21a96",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "scoring-love-2026-v2",
+    "received_at": "2026-10-24T11:37:42Z",
+    "artifact_ready_at": "2026-10-24T11:41:48Z",
+    "elapsed_seconds": 246.396,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "0f8ee983de2f0b6fc5521d015dc5548dbc24518736bf306123afe54e01d3c682",
+    "spec_sha256": "904550e34ce727c9c6cba0d0fe0e6187c2aa9e9ceaf79e00f1903c8bc289b7ea",
+    "run_id": "40090655544",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-24T11:39:49Z",
+        "run_id": "40090655544"
+      }
+    ],
+    "render_seconds": 120.396,
+    "pre_render_seconds": 126.0
+  },
+  "film_sha256": "0f8ee983de2f0b6fc5521d015dc5548dbc24518736bf306123afe54e01d3c682",
+  "film_bytes": 72460826,
+  "qc_attestation_sha256": "57b5191f14187a0b696bf09f31af0e73c822d26454398bd1116131fc300a8dd6",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-24T11:39:49Z",
+      "run_id": "40090655544"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-24T11:41:51Z",
+      "run_id": "40090655544"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-scoring-love-2026-v2/scoring-love-2026-v2.mp4",
+  "video_bytes": 72460826
+}
