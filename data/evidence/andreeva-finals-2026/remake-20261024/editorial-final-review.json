@@ -1,0 +1,404 @@
+{
+  "schema": "tennislive.editorial-final-review.v1",
+  "reviewed_at": "2026-10-24T10:15:10.819966+00:00",
+  "review_scope": "Independent read-only script, displayed factual content and structure review. No encoded-film QC, actual audio listening, acoustic verification, source-pixel re-review, render or publication approval is claimed.",
+  "spec_path": "/tmp/andreeva-road-20261024/repo/specs/reels/andreeva-finals-2026.json",
+  "spec_sha256_at_read": "530a23dd9a9bfde3e2ade46611f50539d20d33ed60c2e0deab18ca37ae7f47a7",
+  "reviewed_content_sha256": "b48d47c1e5a5628e44b2c3679868ddd8aa9749082a8f8a750a89980737c8086d",
+  "source_fact_audit": "/tmp/andreeva-road-20261024/source-fact-audit.json",
+  "source_fact_audit_sha256": "a1a1620fa5f7a926bb93dd248080d62bbbca4f0059e2b1ba521104444d48daec",
+  "source_fact_audit_context": "Audits prior source spec; not mistaken for new script QC. New script reviewed line by line here.",
+  "fact_editorial_result": "supported; no factual or narrative hard blocker found",
+  "factual_blockers": [],
+  "line_checks": [
+    {
+      "segment_index": 1,
+      "id": "card-intro",
+      "text": "去年错过单打年终，今年拿下第一座大满贯。安德烈耶娃终于拿到那张门票。但这一年，并不是一路赢过来的。",
+      "han_characters": 44,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "2025未获单打年终资格；2026首次取得单打资格",
+        "2026法网首夺大满贯",
+        "赛季不只有胜利为后续已有失利的概括，不是虚构心理"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4591278.json",
+        "research/andreeva-finals-2026/raw/qualification-4586608.json",
+        "research/andreeva-finals-2026/raw/article-4515090.json"
+      ],
+      "boundary": "写明单打，未误称首次参加任何年终。"
+    },
+    {
+      "segment_index": 2,
+      "id": "card-january",
+      "text": "阿德莱德决赛，她从零比三开始连赢九局，拿下赛季首冠。",
+      "han_characters": 23,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "阿德莱德决赛0–3后连赢9局",
+        "6–3、6–1战胜姆博科，赛季首冠"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4435881.json",
+        "research/andreeva-finals-2026/events.csv"
+      ],
+      "boundary": "旁白不称一月时已19岁；封面19岁是本集年终/法网阶段身份，未和一月年龄混写。"
+    },
+    {
+      "segment_index": 4,
+      "id": "card-ao",
+      "text": "澳网止步第四轮。接下来的四站硬地，她也都没能走到四强。",
+      "han_characters": 24,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "澳网止步第四轮",
+        "后续多哈、迪拜、印第安维尔斯、迈阿密四站均未进半决赛"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4439253.json",
+        "research/andreeva-finals-2026/events.csv"
+      ],
+      "boundary": "不把轮空或对手赛前退出算实际赢球；未展示冒充澳网完整赛点的视频。"
+    },
+    {
+      "segment_index": 5,
+      "id": "card-linz",
+      "text": "四月的林茨，决赛首盘一比六。她连扳两盘，逆转波塔波娃，拿下第二冠。",
+      "han_characters": 28,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "4/12林茨决赛首盘1–6后连赢两盘",
+        "1–6、6–4、6–3逆转波塔波娃，赛季第二冠"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4486392.json",
+        "research/andreeva-finals-2026/events.csv"
+      ],
+      "boundary": "比分动画是三个实盘结果，不生成虚构逐分推进。"
+    },
+    {
+      "segment_index": 7,
+      "id": "card-madrid",
+      "text": "马德里再进决赛，却两盘负于科斯秋克。这一次，奖杯属于科斯秋克。可两人的故事，还没结束。",
+      "han_characters": 37,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "马德里决赛两盘负于科斯秋克，冠军属于后者",
+        "随后法网半决赛对同一人获胜"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4497140.json",
+        "research/andreeva-finals-2026/raw/article-4514107.json"
+      ],
+      "boundary": "明确不同赛事、轮次，不暗示马德里决赛逆转获胜。"
+    },
+    {
+      "segment_index": 9,
+      "id": "card-rg",
+      "text": "到了巴黎，她先在半决赛击败科斯秋克，再战胜赫瓦林斯卡。十九岁，首夺大满贯，她一直以来的梦想成为现实。",
+      "han_characters": 44,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "法网半决赛击败科斯秋克",
+        "决赛战胜赫瓦林斯卡6–3、6–2",
+        "19岁首夺大满贯",
+        "梦想成为现实为本人原声与官方赛后稿支持的转述"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4514107.json",
+        "research/andreeva-finals-2026/raw/article-4515090.json",
+        "same-event cold-open quote rg-press20.00–36.70"
+      ],
+      "boundary": "已把原建议的“从小”收为“一直以来”，不额外推定梦想从几岁开始；冠军照片不冒称捧杯视频。"
+    },
+    {
+      "segment_index": 11,
+      "id": "card-grass",
+      "text": "本季至今，红土二十二胜三负，草地却只有一胜两负。温网先赢一盘，她仍被克雷吉茨科娃逆转。",
+      "han_characters": 38,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "2026实打硬地27胜11负、红土22胜3负、草地1胜2负",
+        "温网先赢一盘，后被克雷吉茨科娃逆转"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/events.csv",
+        "research/andreeva-finals-2026/canonical.json matches.count_wl=true",
+        "research/andreeva-finals-2026/raw/article-4529431.json"
+      ],
+      "boundary": "这是本季截至最新已赛北京的回顾统计，不是7/1当日即时统计；scope未声称截至7/1。BYE/W/O均排除。"
+    },
+    {
+      "segment_index": 13,
+      "id": "card-us",
+      "text": "美网，她拿到两个赛点，却没能拿下比赛。高芙完成逆转，她止步八强。",
+      "han_characters": 27,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "美网对高芙的第二盘拥有两个赛点未能拿下比赛",
+        "最终被逆转，止步1/4决赛、成绩8强"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4574376.json",
+        "research/andreeva-finals-2026/events.csv"
+      ],
+      "boundary": "正式终局画面是高芙取胜的完整最后一分，不把它冒称米拉两个错失赛点；字卡和旁白未作此误指。"
+    },
+    {
+      "segment_index": 15,
+      "id": "card-asia",
+      "text": "十月九日，官方确认她首次获得单打年终资格。去年错过的那张门票，今年不用再等到最后。",
+      "han_characters": 37,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "10/9 WTA正式宣布首次单打年终资格",
+        "2025错过、2026更早确认资格",
+        "资格在10/11北京决赛之前"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/qualification.json",
+        "research/andreeva-finals-2026/raw/qualification-4586608.json",
+        "research/andreeva-finals-2026/raw/article-4591278.json",
+        "research/andreeva-finals-2026/raw/article-4590546.json"
+      ],
+      "boundary": "不声称最早数学锁定时刻或某场胜利触发资格；不写成北京决赛决定门票。"
+    },
+    {
+      "segment_index": 16,
+      "id": "card-beijing",
+      "text": "两天后的北京决赛，五比七、四比六，她负于郑钦文，收获亚军。",
+      "han_characters": 24,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "10/11在10/9两天之后",
+        "5–7、4–6负郑钦文，北京亚军",
+        "今年第五场决赛"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4590546.json",
+        "research/andreeva-finals-2026/raw/article-4590575.json",
+        "research/andreeva-finals-2026/events.csv"
+      ],
+      "boundary": "对手郑钦文的倒地庆祝不可归给米拉；现稿未这样写。"
+    },
+    {
+      "segment_index": 18,
+      "id": "card-ranking",
+      "text": "北京之后，她首次升到世界第三，因赛程调整退出武汉。",
+      "han_characters": 22,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "北京之后首次升至世界第3",
+        "因赛程调整退出武汉"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4591059.json",
+        "research/andreeva-finals-2026/raw/article-4590575.json"
+      ],
+      "boundary": "排名限定北京之后而非预言年终排名；没有借用郑钦文右肩伤。"
+    },
+    {
+      "segment_index": 19,
+      "id": "card-ending",
+      "text": "她回顾，今年和团队更注意参赛与休息。去年错过的单打年终门票，今年终于属于她。首次单打年终，你期待她走到哪一步？",
+      "han_characters": 49,
+      "finding": "supported_by_cited_evidence",
+      "claims": [
+        "她回顾今年与团队更注意参赛和休息安排",
+        "去年错过的单打年终资格今年已经取得",
+        "首次单打年终的结果仍未知，以期待问题收束"
+      ],
+      "evidence": [
+        "research/andreeva-finals-2026/raw/article-4591278.json",
+        "research/andreeva-finals-2026/raw/qualification-4586608.json"
+      ],
+      "boundary": "“她回顾”明确为书面官方访谈的间接转述，不伪造视频原话；未断言休息单独导致入围、未预写未来名次。"
+    }
+  ],
+  "D3_independent_check": {
+    "actual_played": 66,
+    "wins": 50,
+    "losses": 16,
+    "by_surface": {
+      "Hard": {
+        "W": 27,
+        "L": 11
+      },
+      "Clay": {
+        "W": 22,
+        "L": 3
+      },
+      "Grass": {
+        "W": 1,
+        "L": 2
+      }
+    },
+    "excluded_bye": 14,
+    "excluded_wo": 1,
+    "sum_matches": 66,
+    "scope": "2026 actual played singles through latest Beijing final, as corroborated by fresh10/24 source-audit history; not live7/1 totals.",
+    "all_three_groups_equal_current_spec": true,
+    "advisory": "If desired, display scope “2026赛季·截至北京” to remove any possible July timeline ambiguity. Current wording does not explicitly claim a July cutoff and is not a factual blocker; no narration/audio change required."
+  },
+  "chronology_check": {
+    "cold_open": "Approved retrospective June press answer retained before January rewind.",
+    "three_chapters": [
+      "冠军从逆境开始",
+      "从马德里到巴黎",
+      "冠军之后仍要继续"
+    ],
+    "chapter_order": "01 Adelaide/AO/spring/Linz →02 Madrid/Roland-Garros→03 Wimbledon/US/Open qualification/Beijing/ranking/schedule/end",
+    "qualification_day": "2026-10-09",
+    "beijing_final_day": "2026-10-11",
+    "qualification_before_beijing": true,
+    "no_future_finals_result_claimed": true,
+    "closing_loop": "2025 missed singles berth →2026 first singles berth; closes documentary question without falsely claiming the Finals have already been played."
+  },
+  "source_selection_check": {
+    "source_windows": [
+      {
+        "id": "cold-quote",
+        "start": 20.0,
+        "end": 36.7,
+        "seconds": 16.7,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "adelaide-final",
+        "start": 256.9,
+        "end": 278.0,
+        "seconds": 21.1,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "linz-final",
+        "start": 243.15,
+        "end": 273.05,
+        "seconds": 29.9,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "madrid-final",
+        "start": 247.35,
+        "end": 271.12,
+        "seconds": 23.77,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "rg-final",
+        "start": 1040.1,
+        "end": 1069.5,
+        "seconds": 29.4,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "wimbledon-r2",
+        "start": 0.0,
+        "end": 32.3,
+        "seconds": 32.3,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "us-qf",
+        "start": 138.2,
+        "end": 166.9,
+        "seconds": 28.7,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      },
+      {
+        "id": "beijing-final",
+        "start": 263.44,
+        "end": 277.4,
+        "seconds": 13.96,
+        "source_fields_and_quote_exactly_unchanged": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "frame": true,
+          "cx": true,
+          "quote": true
+        }
+      }
+    ],
+    "full_matchpoint_windows": 7,
+    "full_matchpoint_total_seconds": 179.13,
+    "cold_open_seconds": 16.7,
+    "no_new_extra_point": true,
+    "boundary": "Unchanged selections are identity-checked here; actual final encoded point continuity and subtitle/crop safety remain producer/QC work."
+  },
+  "metadata_action": {
+    "id": "outline-confirmation-state",
+    "current_state_consistent_with_reported_user_reply": true,
+    "observed": {
+      "received": true,
+      "outline_shown": true,
+      "series_scope_authorized": true,
+      "preproduction_may_continue": true,
+      "formal_render_authorized": true,
+      "request_quote": "重新编排和制作安德烈耶娃的年终之路视频",
+      "revision": "2026-10-24-story-v3",
+      "specific_outline_approval_quote": "好的继续",
+      "outline_shown_by": "root",
+      "outline_shown_date": "2026-10-24",
+      "outline_pdf": "新版制作提纲.pdf",
+      "drive_outline": "https://drive.google.com/file/d/1oJLHLoVoHoIjXGbCbhtO4zKorvHkDgqj/view?usp=drivesdk",
+      "approved_at": "2026-10-24T10:13:40.448608+00:00",
+      "outline_revision": "2026-10-24-story-v3",
+      "approval_context": "Owner acknowledgement after the one-page revised outline and native motion proposal were shown; not a claim of continuous playback or human audio listening."
+    },
+    "actual_user_reply_reported_by_parent": "好的继续",
+    "action": "Before formal render, record received=true, formal_render_authorized=true, exact reply and actual reply date. User approval is already reported; do not ask user again. If updated after this read, rebind metadata to the same reviewed content rather than re-synthesize audio.",
+    "reported_to_parent": true
+  },
+  "mutations": "No production spec, source, bundle or publication state was modified."
+}

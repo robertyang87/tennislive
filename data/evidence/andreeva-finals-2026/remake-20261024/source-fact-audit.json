@@ -1,0 +1,417 @@
+{
+  "schema": "tennislive.source-fact-audit.v1",
+  "audited_at": "2026-10-24T09:21:53.558964+00:00",
+  "pinned_main": "07d0af88ce02560fd08f53bb085d9ed288986618",
+  "task_scope": "Read-only factual/source/byte-identity audit for re-edit. No new film rendered, heard or visually approved.",
+  "spec_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+  "canonical_summary": {
+    "player": "Mirra Andreeva",
+    "cn": "米拉·安德烈耶娃",
+    "pid": 331809,
+    "year": 2026,
+    "events": 19,
+    "entries": 81,
+    "played": 66,
+    "wins": 50,
+    "losses": 16,
+    "byes": 14,
+    "walkovers": 1,
+    "retirements": 0,
+    "titles": [
+      "阿德莱德",
+      "林茨",
+      "法网"
+    ],
+    "finals": 5,
+    "event_points_total": 6372,
+    "race_official": {
+      "player": {
+        "id": 331809,
+        "firstName": "Mirra",
+        "lastName": "Andreeva",
+        "fullName": "Mirra Andreeva",
+        "countryCode": "RUS",
+        "dateOfBirth": "2007-04-29",
+        "metadata": null
+      },
+      "ranking": 3,
+      "points": 6306,
+      "tournamentsPlayed": 20,
+      "movement": 0,
+      "rankedAt": "2026-10-19T00:00:00Z"
+    },
+    "profile_stats": {
+      "ytd": {
+        "singles": {
+          "rank": "3",
+          "titles": 3,
+          "winLoss": "50 / 16"
+        },
+        "doubles": {
+          "rank": "42",
+          "titles": 1,
+          "winLoss": "13 / 4"
+        },
+        "prizeMoney": "7152615"
+      },
+      "career": {
+        "singles": {
+          "rank": 3,
+          "titles": 6,
+          "highRankDate": "12 Oct 26",
+          "winLoss": "199 / 66"
+        },
+        "doubles": {
+          "rank": 12,
+          "titles": 3,
+          "highRankDate": "15 Sep 25",
+          "winLoss": "58 / 35"
+        },
+        "prizeMoney": "14697747"
+      }
+    },
+    "race_boundary": "Race tournamentsPlayed20 versus actual19 events preserved, reason unknown.19 event points compared to6306; no invented missing event or zero penalty."
+  },
+  "qualification": {
+    "official_announcement_day": "2026-10-09",
+    "official_timestamp_utc": "2026-10-09T00:50:00Z",
+    "first_singles_not_first_any_finals": true,
+    "beijing_final_day": "2026-10-11",
+    "specific_triggering_match_for_qualification": "not established by announcement; do not invent",
+    "venue_2026": "Indian Wells, as named by official2026announcement; do not copy2025Riyadh into2026",
+    "references": [
+      "research/andreeva-finals-2026/qualification.json",
+      "research/andreeva-finals-2026/raw/qualification-4586608.json"
+    ]
+  },
+  "fresh_official_history": {
+    "url": "https://api.wtatennis.com/tennis/players/331809/matches?year=2026&type=S&page=0&pageSize=200&sort=desc",
+    "retrieved_at": "2026-10-24T09:19:50.882149+00:00",
+    "sha256": "2e3710ef9e61d312d70279cf1ccd61260b8ee1e475f7959916bad875c25b1a2d",
+    "entries": 81,
+    "latest_rows": [
+      {
+        "event": "BEIJING",
+        "round": "F",
+        "event_end": "2026-10-11",
+        "opponent": "Qinwen Zheng",
+        "score": "7-5  6-4"
+      },
+      {
+        "event": "BEIJING",
+        "round": "S",
+        "event_end": "2026-10-11",
+        "opponent": "Nikola Bartunkova",
+        "score": "6-2  6-2"
+      },
+      {
+        "event": "BEIJING",
+        "round": "Q",
+        "event_end": "2026-10-11",
+        "opponent": "Ekaterina Alexandrova",
+        "score": "7-6(4)  7-6(3)"
+      },
+      {
+        "event": "BEIJING",
+        "round": "R16",
+        "event_end": "2026-10-11",
+        "opponent": "Daria Snigur",
+        "score": "6-2  6-2"
+      }
+    ],
+    "same_bytes_as_1022": true
+  },
+  "restructure_narration_supported_phrases": [
+    {
+      "claim_cn": "去年，她错过了单打年终。她后来把那段亚洲赛季称为“噩梦”。",
+      "original": "BEIJING -- Mirra Andreeva said her 2025 Asian Swing was a \"nightmare.\"",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "Indirect narration of documented retrospective description; not recovered audio."
+    },
+    {
+      "claim_cn": "当时她排在争夺年终席位的第八位，随后在北京、武汉和宁波只取得两胜两负。",
+      "original": "At the time, she was in a prime position to qualify for the 2025 WTA Finals Riyadh, holding onto the eighth spot. However, following a 2-2 record across Beijing, Wuhan and Ningbo, the margin quickly shrunk as Elena Rybakina, who won Ningbo, was now right behind.",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "2025 events and singles Race position; not 2026 or world ranking."
+    },
+    {
+      "claim_cn": "她没有参加东京；莱巴金娜打进半决赛，最终拿走了那张单打门票。",
+      "original": "Then came Tokyo, which Andreeva decided not to play. That choice opened the door for Rybakina, who now controlled her own destiny and just need to make the semifinals. The rest is history as Rybakina made the semifinals, and ultimately won her first WTA Finals championships.",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "No invented withdrawal injury or assertion she would certainly qualify if she played Tokyo."
+    },
+    {
+      "claim_cn": "她承认，去年自己把事情搞砸了；有时，人就是从错误中学习。",
+      "original": "\"I think we all know that I just messed up big time,\" Andreeva said to wtatennis.com in Beijing. \"Every match that [Rybakina] had to win in order to qualify, she did. Every tournament that she had to play to qualify, she did.\" / \"You learn from your mistakes sometimes, and even though last year was pretty harsh because when I saw that she won -- I think it was quarterfinal match in Tokyo -- I was like, 'Ughh yeah, of course.' I was disappointed.\"",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "Attributed indirect speech is safe; do not fabricate new spoken video."
+    },
+    {
+      "claim_cn": "今年，她和团队更注意什么时候参赛，什么时候休息。红土赛季，她几乎站站都打。",
+      "original": "\"We did a pretty good job this year focusing on sometimes maybe not playing a certain week, sometimes playing more like we did with a clay season,\" Andreeva said. \"I played [almost] every single tournament that there was on clay. That also brought me a lot of points in order to help me qualify for the finals.\"",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "Attribute schedule explanation to Andreeva. Do not invent quantified causal effect or claim rest alone won qualification."
+    },
+    {
+      "claim_cn": "她说，有经验的团队帮助她保存体能、减少不必要的驻场时间，把注意力放在比赛上。",
+      "original": "\"Having my team that is super experienced around me, kind of giving me advice on how to preserve my energy, how to maybe spend less time on site, how to focus on whatever stuff that I have to focus on in order to play well. I think just a mix of all these aspects just helped me to play consistent and earn enough points to qualify.\"",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "Her attributed assessment, not independently measured sports-science causality."
+    },
+    {
+      "claim_cn": "十月九日，WTA宣布她首次获得单打年终资格。北京决赛在两天之后。",
+      "original": "The WTA on Friday announced Mirra Andreeva and Linda Noskova ... have secured qualification for the WTA Finals Indian Wells.",
+      "source": "https://www.wtatennis.com/news/4586608/mirra-andreeva-and-linda-noskova-secure-qualification-for-wta-finals-indian-wells",
+      "scope": "First SINGLES Finals; she played2025doubles. Earliest mathematical/public-social second not established."
+    },
+    {
+      "claim_cn": "北京之后，她因赛程调整退出武汉，下一站计划是年终。",
+      "original": "After a runner-up finish in Beijing, Andreeva elected to skip Wuhan with a change of schedule. She is next scheduled to return at Indian Wells.",
+      "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals",
+      "scope": "Do not borrow Zheng right-shoulder injury. Do not state she withdrew to secure qualification; qualification already announced."
+    }
+  ],
+  "source_download_manifest": "/tmp/andreeva-road-20261024/source-download-manifest.json",
+  "full_matchpoint_windows": [
+    {
+      "segment_id": "adelaide-final",
+      "start": 256.9,
+      "end": 278.0,
+      "seconds": 21.1,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/03-adelaide-final.json",
+      "source": "adelaide-final"
+    },
+    {
+      "segment_id": "beijing-final",
+      "start": 263.44,
+      "end": 277.4,
+      "seconds": 13.96,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/18-beijing-final.json",
+      "source": "beijing-final"
+    },
+    {
+      "segment_id": "linz-final",
+      "start": 243.15,
+      "end": 273.05,
+      "seconds": 29.9,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/07-linz-final.json",
+      "source": "linz-final"
+    },
+    {
+      "segment_id": "madrid-final",
+      "start": 247.35,
+      "end": 271.12,
+      "seconds": 23.77,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/09-madrid-final.json",
+      "source": "madrid-final"
+    },
+    {
+      "segment_id": "rg-final",
+      "start": 1040.1,
+      "end": 1069.5,
+      "seconds": 29.4,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/11-rg-final.json",
+      "source": "rg-final"
+    },
+    {
+      "segment_id": "us-qf",
+      "start": 138.2,
+      "end": 166.9,
+      "seconds": 28.7,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/15-us-qf.json",
+      "source": "us-qf"
+    },
+    {
+      "segment_id": "wimbledon-r2",
+      "start": 0.0,
+      "end": 32.3,
+      "seconds": 32.3,
+      "role": "match_point",
+      "frame": "court",
+      "cx": 0.5,
+      "source_review_path": "data/audio_reviews/andreeva-finals-2026/13-wimbledon-r2.json",
+      "source": "wimbledon-r2"
+    }
+  ],
+  "cold_open": {
+    "segment_id": "cold-quote",
+    "start": 20.0,
+    "end": 36.7,
+    "seconds": 16.7,
+    "role": "cold_open",
+    "frame": "person",
+    "cx": 0.514,
+    "source_review_path": "data/audio_reviews/andreeva-finals-2026/00-cold-quote.json"
+  },
+  "trophy_and_reaction_boundary": [
+    "Current RG match-point window includes full final point, kneeling and handshake, per prior source review. This audit did not visually re-open footage.",
+    "Current cold open is actual same-event press answer with the trophy by her side; retain complete source20.00–36.70.",
+    "Actual trophy-lift ceremony VIDEO is not established by the seven-point selection/spec. Official champion photograph is available in cover-rg-2026-jb1-2805.jpg; do not call a photo a ceremony-video excerpt.",
+    "Winner reactions in Madrid,Wimbledon,US,Beijing belong to opponents, never attribute to Mirra."
+  ],
+  "audio_reuse": {
+    "source_reviews": "data/audio_reviews/andreeva-finals-2026.json",
+    "source_review_old_plan_sha256": "a211508c42a62b2dfaa5bb0f2cdf2a2527450d8e5fedc6e9e00ea43b8b83b78a",
+    "old_indices": [
+      0,
+      3,
+      7,
+      9,
+      11,
+      13,
+      15,
+      18
+    ],
+    "rebinding_required": "Re-order/new offsets invalidate old timeline binding. Reuse transcript evidence only when source SHA and complete selected source-window/subtitle content match; regenerate current plan/time binding.",
+    "frozen_tts": {
+      "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-d50ae5bd6906a26a/tts_bundle.zip",
+      "bytes": 469801,
+      "sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+      "entries": 13,
+      "local_zip": "/tmp/andreeva-road-20261024/source-audit/tts_bundle.zip",
+      "local_manifest": "/tmp/andreeva-road-20261024/source-audit/manifest.json",
+      "reuse_rules": "Exact text+voice+rate+pitch+bytes may reuse prior request audio and appropriate evidence; changed wording must synthesize and check anew. Strict bundle import itself is not quality approval.",
+      "requests": [
+        {
+          "request_id": "1bc27956367bb58c370f81a584574feffed100ed17f2f1aecdbb9de3c30723bc",
+          "text": "罗马止步8强。巴黎半决赛，她击败科斯秋克；决赛战胜赫瓦林斯卡，首夺大满贯。",
+          "audio_sha256": "0d775ec3e99b2c22d73b28f4f46efa9a437c6a866cc61d5fdb1d6fb8cf70a478",
+          "duration_seconds": 8.232,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "22c3ad0000466e2b5f6873d20f53fa92f1cd6dfd101694593b40be20bad6738a",
+          "text": "林茨决赛，先丢一盘后逆转波塔波娃，她拿下今年第二冠。",
+          "audio_sha256": "5310a52b3aaecc7ece26b2974c34b9c3274016b526dc573bc5cc2b99a3b507bc",
+          "duration_seconds": 5.52,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "3c97f8490686d6e6eecb9b2adbc3fc0ab2272c0af01838108fa2b3bc5eb86461",
+          "text": "五比七、四比六，收获北京亚军。",
+          "audio_sha256": "36bd50c7118f7da1195c7d5df70c0781bd256ebc73c45fc388cff04b6512c086",
+          "duration_seconds": 3.744,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "5a6fd72483a649302edb5b6679b5bf7920a04c2393e1b7e4b2eeefb8b5269047",
+          "text": "马德里再进决赛，却两盘负于科斯秋克。",
+          "audio_sha256": "955a649d2b2ca24804f3f6b959426be92839595a8baa72a74321cd90ad2772e4",
+          "duration_seconds": 4.152,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "62506c105dbe6e7de2ee91dc9e3275c1d91d771101ef0f3a81ffd01163ef8c0b",
+          "text": "阿德莱德决赛，她从零比三开始连赢九局，拿下赛季首冠。",
+          "audio_sha256": "e0b256c18ff6700a517e071bf613ba29f550cf846cd9d95e3eb9602903f770a5",
+          "duration_seconds": 5.712,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "73e836f1fac80d6076d7bdf1379cd4c255879c7885f953bdb1cb44c77ff033f7",
+          "text": "十九岁，本季三冠，第一次拿下大满贯。安德烈耶娃的年终之路，从一月说起。",
+          "audio_sha256": "7e6ced3d6d5755aac813636c9ee870430fb85a2f7b5a3e6c7cb3248683a8ee7d",
+          "duration_seconds": 7.584,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "7c9fdd13a9f0770c1e8ef32a3a664cf81cbedfd7c4a350a983ff660aa25a3918",
+          "text": "北京之后，世界第三。她因赛程调整退出武汉，下一站年终。你期待她走到哪一步？",
+          "audio_sha256": "8bc83962b434a23bae37d70a309e0d413543253f563987eebb4feb249117b589",
+          "duration_seconds": 8.712,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "8f5e17b41e0244ba69e9e9031d6a7fea3e0470e0269bb2fc2e394c5b7d33fbd7",
+          "text": "春季四站硬帝，她都未能走到4强。",
+          "audio_sha256": "f6d4920963ec75de7732bed504f000b80da43853d69011e6aa0e6fe5809a2bf0",
+          "duration_seconds": 4.128,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "9c0e99d7acd43a3d39fa31af94997fbc006d6a54cf7829cf3bb6be1753a2ee43",
+          "text": "澳网第四轮，她两盘负于斯维托丽娜。",
+          "audio_sha256": "de05b79c1069552e50546b569de3e6382317093a487f96474f459f040c99b715",
+          "duration_seconds": 3.984,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+          "text": "关注网球时插，时插归我，好球归你。",
+          "audio_sha256": "7a3a0a50808c47121774d198c34f84ccc9670bff740e06aacde9ed15be30987f",
+          "duration_seconds": 4.104,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "d4d9c3534ad7bc9f4d531ad14bf116080acc066f9f8f050cf7a618e4d6dcc2b8",
+          "text": "十月九日，她首次获得单打年终资格。两天后的北京决赛，是今年第五场决赛。",
+          "audio_sha256": "e75d99667aef2b2ab351ea884ad26acc1f4552b0839ad81d3d9bc2cb48d37b48",
+          "duration_seconds": 7.8,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "e03d0809bdc86bc4a626357a3d5570b2bbde072431748fe64c9d7c787cfb43aa",
+          "text": "美网四分之一决赛，两个赛点没兑现，她最终被高芙逆转。",
+          "audio_sha256": "28aadec25628ce26b5ae6035527eb230a1313ae38a6f1e2d30500f778139a419",
+          "duration_seconds": 5.112,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        },
+        {
+          "request_id": "ec56dc96c852781817654a7ebcdc2e77bd1c1fbf1a52ba3edb368a35e422deb1",
+          "text": "温网先赢一盘，仍被克雷吉茨科娃逆转，止步第二轮。",
+          "audio_sha256": "bc9e02413ebd661852b8ac645643f40868d33465f6dd5c46b439b48e23834bfb",
+          "duration_seconds": 5.448,
+          "voice": "zh-CN-YunjianNeural",
+          "rate": "+6%"
+        }
+      ]
+    },
+    "prior_auto_review": "Current original film has automated_voice_suite pass in2026-10-24output; explicitly not human listening; new film needs own binding."
+  },
+  "existing_published_version": {
+    "key": "pushplus:reel:andreeva-finals-2026:908b8a456c6b80338063586b0e7da425849c3ae7976246eb7c97bf8374647aff",
+    "fingerprint": "908b8a456c6b80338063586b0e7da425849c3ae7976246eb7c97bf8374647aff",
+    "status": "sent",
+    "at": "2026-10-23T18:14:01Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/40001457018",
+    "pushplus_receipt": "92f0cb83f6dc4235a98d8d505a6d7328",
+    "message_url": "https://www.pushplus.plus/shortMessage/92f0cb83f6dc4235a98d8d505a6d7328"
+  },
+  "new_film_publication_state": "not produced/not sent by this audit; old link must not be presented as new publication",
+  "unknowns": [
+    "Official Race6306 vs event-points6372 difference66 unresolved; do not invent point deductions or extra events.",
+    "19actualevents vs Race tournamentsPlayed20 unresolved.",
+    "Source pixels and new crop safety need actual native/encoded review by producer.",
+    "No earliest mathematical qualification trigger or exact first-social-public second established."
+  ]
+}

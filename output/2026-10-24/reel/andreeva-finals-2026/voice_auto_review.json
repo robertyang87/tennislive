@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "2eb72095315d284187d10630160557f0b65d367076a3dbd9ffbc3dd7c2ecccc1",
-    "render_inputs_sha256": "0c9d940e7faa40fdef2234f3dfa47f96b9321211f415f7e4474015f4fb81d2a2",
-    "spec_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
-    "film_sha256": "908b8a456c6b80338063586b0e7da425849c3ae7976246eb7c97bf8374647aff",
-    "inventory_sha256": "e97624db031e0ba0279e8767ba1131aaddea373a9d68e4a4af7babe10391a451"
+    "render_sha256": "c4ab5a8512543a70f1b9d24c7cccd2f085386f6acc28807edd391b3ab6099e51",
+    "render_inputs_sha256": "a49fc68be479e2d3b6ba4dd9d883f78bcc4b70db17ad81fedcccd23250b68c5c",
+    "spec_sha256": "530a23dd9a9bfde3e2ade46611f50539d20d33ed60c2e0deab18ca37ae7f47a7",
+    "film_sha256": "7b19f46b91932a3ae2a1efc3063579fcda3b0e2a6969379baf1b34729f2cfb50",
+    "inventory_sha256": "66f93eae02d97329968274b2bff24aff2547dbd8e517385cb805fdb54786720a"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,33 +18,33 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-23T17:43:02+00:00",
+  "reviewed_at": "2026-10-24T10:43:03+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
     {
-      "id": "bundle:1bc27956367bb58c370f81a584574feffed100ed17f2f1aecdbb9de3c30723bc",
-      "audio_sha256": "0d775ec3e99b2c22d73b28f4f46efa9a437c6a866cc61d5fdb1d6fb8cf70a478",
+      "id": "bundle:068d2c0b5e713c3ea59c6f87cda57dc9b28fc549f351e3b6573d9810a08fdef8",
+      "audio_sha256": "1d4a7577eb81910c1a14bcb42879488db0cf006a4c102db0667cad3137561091",
       "pass": true,
-      "result_of": "bundle:1bc27956367bb58c370f81a584574feffed100ed17f2f1aecdbb9de3c30723bc"
+      "result_of": "bundle:068d2c0b5e713c3ea59c6f87cda57dc9b28fc549f351e3b6573d9810a08fdef8"
     },
     {
-      "id": "bundle:22c3ad0000466e2b5f6873d20f53fa92f1cd6dfd101694593b40be20bad6738a",
-      "audio_sha256": "5310a52b3aaecc7ece26b2974c34b9c3274016b526dc573bc5cc2b99a3b507bc",
+      "id": "bundle:44d6435dfb7e81cfc73d603cf7677fb330ec05f4f47a63e96b5249d0a3f41fb8",
+      "audio_sha256": "00489b1df99413f97c90757e8c4fbe0ac3126e8c72c0b82f3ee0c1038909d619",
       "pass": true,
-      "result_of": "bundle:22c3ad0000466e2b5f6873d20f53fa92f1cd6dfd101694593b40be20bad6738a"
+      "result_of": "bundle:44d6435dfb7e81cfc73d603cf7677fb330ec05f4f47a63e96b5249d0a3f41fb8"
     },
     {
-      "id": "bundle:3c97f8490686d6e6eecb9b2adbc3fc0ab2272c0af01838108fa2b3bc5eb86461",
-      "audio_sha256": "36bd50c7118f7da1195c7d5df70c0781bd256ebc73c45fc388cff04b6512c086",
+      "id": "bundle:457ff689c486dbf9bd17e8cdb92d30d07528335a21512d92ab15a03ea2390178",
+      "audio_sha256": "8a28fca2554d16c72a17a9982859cc032dc372e0b576b44059b9e834336dd286",
       "pass": true,
-      "result_of": "bundle:3c97f8490686d6e6eecb9b2adbc3fc0ab2272c0af01838108fa2b3bc5eb86461"
+      "result_of": "bundle:457ff689c486dbf9bd17e8cdb92d30d07528335a21512d92ab15a03ea2390178"
     },
     {
-      "id": "bundle:5a6fd72483a649302edb5b6679b5bf7920a04c2393e1b7e4b2eeefb8b5269047",
-      "audio_sha256": "955a649d2b2ca24804f3f6b959426be92839595a8baa72a74321cd90ad2772e4",
+      "id": "bundle:5b2f942a11c25dcd44005360b1cf12523637b27e8579a75af101552edd322747",
+      "audio_sha256": "979ff65a231d2be8b5dbeea243b59329213956293a2d09ccf02fdc82ddd7eda9",
       "pass": true,
-      "result_of": "bundle:5a6fd72483a649302edb5b6679b5bf7920a04c2393e1b7e4b2eeefb8b5269047"
+      "result_of": "bundle:5b2f942a11c25dcd44005360b1cf12523637b27e8579a75af101552edd322747"
     },
     {
       "id": "bundle:62506c105dbe6e7de2ee91dc9e3275c1d91d771101ef0f3a81ffd01163ef8c0b",
@@ -53,28 +53,34 @@
       "result_of": "bundle:62506c105dbe6e7de2ee91dc9e3275c1d91d771101ef0f3a81ffd01163ef8c0b"
     },
     {
-      "id": "bundle:73e836f1fac80d6076d7bdf1379cd4c255879c7885f953bdb1cb44c77ff033f7",
-      "audio_sha256": "7e6ced3d6d5755aac813636c9ee870430fb85a2f7b5a3e6c7cb3248683a8ee7d",
+      "id": "bundle:671b7d2df79d75f7d3f64f27b63793c85d591332e979ccb0e4420216115698a0",
+      "audio_sha256": "e85f5d86ad6fffbd38e19123a4c009526123f2a0a5b18696abe18edbb43d9d66",
       "pass": true,
-      "result_of": "bundle:73e836f1fac80d6076d7bdf1379cd4c255879c7885f953bdb1cb44c77ff033f7"
+      "result_of": "bundle:671b7d2df79d75f7d3f64f27b63793c85d591332e979ccb0e4420216115698a0"
     },
     {
-      "id": "bundle:7c9fdd13a9f0770c1e8ef32a3a664cf81cbedfd7c4a350a983ff660aa25a3918",
-      "audio_sha256": "8bc83962b434a23bae37d70a309e0d413543253f563987eebb4feb249117b589",
+      "id": "bundle:6bf714242e833939885aee685d891efff948fda26f40378c72ee029415b36483",
+      "audio_sha256": "0dfb4386c2eebec55a028b191cfc447d464d63fb903e07a824cc281bd572d4be",
       "pass": true,
-      "result_of": "bundle:7c9fdd13a9f0770c1e8ef32a3a664cf81cbedfd7c4a350a983ff660aa25a3918"
+      "result_of": "bundle:6bf714242e833939885aee685d891efff948fda26f40378c72ee029415b36483"
     },
     {
-      "id": "bundle:8f5e17b41e0244ba69e9e9031d6a7fea3e0470e0269bb2fc2e394c5b7d33fbd7",
-      "audio_sha256": "f6d4920963ec75de7732bed504f000b80da43853d69011e6aa0e6fe5809a2bf0",
+      "id": "bundle:6c6b3fa8bdcf71bdb2a5f677dc8ab2ba256a6b67f0d46b74b51ae463e24875d5",
+      "audio_sha256": "fec3e45e6f338ed6c48c94d1d00ab2a3debc8e574a7972282215731191156e7e",
       "pass": true,
-      "result_of": "bundle:8f5e17b41e0244ba69e9e9031d6a7fea3e0470e0269bb2fc2e394c5b7d33fbd7"
+      "result_of": "bundle:6c6b3fa8bdcf71bdb2a5f677dc8ab2ba256a6b67f0d46b74b51ae463e24875d5"
     },
     {
-      "id": "bundle:9c0e99d7acd43a3d39fa31af94997fbc006d6a54cf7829cf3bb6be1753a2ee43",
-      "audio_sha256": "de05b79c1069552e50546b569de3e6382317093a487f96474f459f040c99b715",
+      "id": "bundle:8e7dd87e9e1019b259f4ce5d8899a41e4e5d7069c19ca818157f5765f285d612",
+      "audio_sha256": "6572f14c00f76b06612b8683b4a376ecc15195af11cc191e7921bb80ec4dd50d",
       "pass": true,
-      "result_of": "bundle:9c0e99d7acd43a3d39fa31af94997fbc006d6a54cf7829cf3bb6be1753a2ee43"
+      "result_of": "bundle:8e7dd87e9e1019b259f4ce5d8899a41e4e5d7069c19ca818157f5765f285d612"
+    },
+    {
+      "id": "bundle:b03811d74c3672e28238ad4c6ef8be8cd63e2224174ed2668cc7a1dc816f6c47",
+      "audio_sha256": "f42cb7a07502d762efa85bd35dcdc4fbcef9319502df9f779abdb70d9592d4f4",
+      "pass": true,
+      "result_of": "bundle:b03811d74c3672e28238ad4c6ef8be8cd63e2224174ed2668cc7a1dc816f6c47"
     },
     {
       "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
@@ -83,28 +89,22 @@
       "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
     },
     {
-      "id": "bundle:d4d9c3534ad7bc9f4d531ad14bf116080acc066f9f8f050cf7a618e4d6dcc2b8",
-      "audio_sha256": "e75d99667aef2b2ab351ea884ad26acc1f4552b0839ad81d3d9bc2cb48d37b48",
+      "id": "bundle:d308980e88d4a1bb9e882ddf6317547e3de2b65e67e1b5fed14e07559633acd2",
+      "audio_sha256": "1c91b9c33e54bba2fd25a7f2f7d3192a6578231d8dcc7ebfb382f18de9dbaaa2",
       "pass": true,
-      "result_of": "bundle:d4d9c3534ad7bc9f4d531ad14bf116080acc066f9f8f050cf7a618e4d6dcc2b8"
+      "result_of": "bundle:d308980e88d4a1bb9e882ddf6317547e3de2b65e67e1b5fed14e07559633acd2"
     },
     {
-      "id": "bundle:e03d0809bdc86bc4a626357a3d5570b2bbde072431748fe64c9d7c787cfb43aa",
-      "audio_sha256": "28aadec25628ce26b5ae6035527eb230a1313ae38a6f1e2d30500f778139a419",
+      "id": "bundle:e9cf28bcf550696697280a323df8b261cc98fdacdbf0917eef1b4c88133f7d0e",
+      "audio_sha256": "e9c93458f5cff8721369f107e4eb88310af47cf3c9389c7664adebab192dfa84",
       "pass": true,
-      "result_of": "bundle:e03d0809bdc86bc4a626357a3d5570b2bbde072431748fe64c9d7c787cfb43aa"
-    },
-    {
-      "id": "bundle:ec56dc96c852781817654a7ebcdc2e77bd1c1fbf1a52ba3edb368a35e422deb1",
-      "audio_sha256": "bc9e02413ebd661852b8ac645643f40868d33465f6dd5c46b439b48e23834bfb",
-      "pass": true,
-      "result_of": "bundle:ec56dc96c852781817654a7ebcdc2e77bd1c1fbf1a52ba3edb368a35e422deb1"
+      "result_of": "bundle:e9cf28bcf550696697280a323df8b261cc98fdacdbf0917eef1b4c88133f7d0e"
     },
     {
       "id": "voice_01.mp3",
-      "audio_sha256": "7e6ced3d6d5755aac813636c9ee870430fb85a2f7b5a3e6c7cb3248683a8ee7d",
+      "audio_sha256": "00489b1df99413f97c90757e8c4fbe0ac3126e8c72c0b82f3ee0c1038909d619",
       "pass": true,
-      "result_of": "bundle:73e836f1fac80d6076d7bdf1379cd4c255879c7885f953bdb1cb44c77ff033f7"
+      "result_of": "bundle:44d6435dfb7e81cfc73d603cf7677fb330ec05f4f47a63e96b5249d0a3f41fb8"
     },
     {
       "id": "voice_02.mp3",
@@ -114,63 +114,63 @@
     },
     {
       "id": "voice_04.mp3",
-      "audio_sha256": "de05b79c1069552e50546b569de3e6382317093a487f96474f459f040c99b715",
+      "audio_sha256": "e85f5d86ad6fffbd38e19123a4c009526123f2a0a5b18696abe18edbb43d9d66",
       "pass": true,
-      "result_of": "bundle:9c0e99d7acd43a3d39fa31af94997fbc006d6a54cf7829cf3bb6be1753a2ee43"
+      "result_of": "bundle:671b7d2df79d75f7d3f64f27b63793c85d591332e979ccb0e4420216115698a0"
     },
     {
       "id": "voice_05.mp3",
-      "audio_sha256": "f6d4920963ec75de7732bed504f000b80da43853d69011e6aa0e6fe5809a2bf0",
+      "audio_sha256": "e9c93458f5cff8721369f107e4eb88310af47cf3c9389c7664adebab192dfa84",
       "pass": true,
-      "result_of": "bundle:8f5e17b41e0244ba69e9e9031d6a7fea3e0470e0269bb2fc2e394c5b7d33fbd7"
+      "result_of": "bundle:e9cf28bcf550696697280a323df8b261cc98fdacdbf0917eef1b4c88133f7d0e"
     },
     {
-      "id": "voice_06.mp3",
-      "audio_sha256": "5310a52b3aaecc7ece26b2974c34b9c3274016b526dc573bc5cc2b99a3b507bc",
+      "id": "voice_07.mp3",
+      "audio_sha256": "0dfb4386c2eebec55a028b191cfc447d464d63fb903e07a824cc281bd572d4be",
       "pass": true,
-      "result_of": "bundle:22c3ad0000466e2b5f6873d20f53fa92f1cd6dfd101694593b40be20bad6738a"
+      "result_of": "bundle:6bf714242e833939885aee685d891efff948fda26f40378c72ee029415b36483"
     },
     {
-      "id": "voice_08.mp3",
-      "audio_sha256": "955a649d2b2ca24804f3f6b959426be92839595a8baa72a74321cd90ad2772e4",
+      "id": "voice_09.mp3",
+      "audio_sha256": "8a28fca2554d16c72a17a9982859cc032dc372e0b576b44059b9e834336dd286",
       "pass": true,
-      "result_of": "bundle:5a6fd72483a649302edb5b6679b5bf7920a04c2393e1b7e4b2eeefb8b5269047"
+      "result_of": "bundle:457ff689c486dbf9bd17e8cdb92d30d07528335a21512d92ab15a03ea2390178"
     },
     {
-      "id": "voice_10.mp3",
-      "audio_sha256": "0d775ec3e99b2c22d73b28f4f46efa9a437c6a866cc61d5fdb1d6fb8cf70a478",
+      "id": "voice_11.mp3",
+      "audio_sha256": "979ff65a231d2be8b5dbeea243b59329213956293a2d09ccf02fdc82ddd7eda9",
       "pass": true,
-      "result_of": "bundle:1bc27956367bb58c370f81a584574feffed100ed17f2f1aecdbb9de3c30723bc"
+      "result_of": "bundle:5b2f942a11c25dcd44005360b1cf12523637b27e8579a75af101552edd322747"
     },
     {
-      "id": "voice_12.mp3",
-      "audio_sha256": "bc9e02413ebd661852b8ac645643f40868d33465f6dd5c46b439b48e23834bfb",
+      "id": "voice_13.mp3",
+      "audio_sha256": "1d4a7577eb81910c1a14bcb42879488db0cf006a4c102db0667cad3137561091",
       "pass": true,
-      "result_of": "bundle:ec56dc96c852781817654a7ebcdc2e77bd1c1fbf1a52ba3edb368a35e422deb1"
+      "result_of": "bundle:068d2c0b5e713c3ea59c6f87cda57dc9b28fc549f351e3b6573d9810a08fdef8"
     },
     {
-      "id": "voice_14.mp3",
-      "audio_sha256": "28aadec25628ce26b5ae6035527eb230a1313ae38a6f1e2d30500f778139a419",
+      "id": "voice_15.mp3",
+      "audio_sha256": "6572f14c00f76b06612b8683b4a376ecc15195af11cc191e7921bb80ec4dd50d",
       "pass": true,
-      "result_of": "bundle:e03d0809bdc86bc4a626357a3d5570b2bbde072431748fe64c9d7c787cfb43aa"
+      "result_of": "bundle:8e7dd87e9e1019b259f4ce5d8899a41e4e5d7069c19ca818157f5765f285d612"
     },
     {
       "id": "voice_16.mp3",
-      "audio_sha256": "e75d99667aef2b2ab351ea884ad26acc1f4552b0839ad81d3d9bc2cb48d37b48",
+      "audio_sha256": "f42cb7a07502d762efa85bd35dcdc4fbcef9319502df9f779abdb70d9592d4f4",
       "pass": true,
-      "result_of": "bundle:d4d9c3534ad7bc9f4d531ad14bf116080acc066f9f8f050cf7a618e4d6dcc2b8"
+      "result_of": "bundle:b03811d74c3672e28238ad4c6ef8be8cd63e2224174ed2668cc7a1dc816f6c47"
     },
     {
-      "id": "voice_17.mp3",
-      "audio_sha256": "36bd50c7118f7da1195c7d5df70c0781bd256ebc73c45fc388cff04b6512c086",
+      "id": "voice_18.mp3",
+      "audio_sha256": "1c91b9c33e54bba2fd25a7f2f7d3192a6578231d8dcc7ebfb382f18de9dbaaa2",
       "pass": true,
-      "result_of": "bundle:3c97f8490686d6e6eecb9b2adbc3fc0ab2272c0af01838108fa2b3bc5eb86461"
+      "result_of": "bundle:d308980e88d4a1bb9e882ddf6317547e3de2b65e67e1b5fed14e07559633acd2"
     },
     {
       "id": "voice_19.mp3",
-      "audio_sha256": "8bc83962b434a23bae37d70a309e0d413543253f563987eebb4feb249117b589",
+      "audio_sha256": "fec3e45e6f338ed6c48c94d1d00ab2a3debc8e574a7972282215731191156e7e",
       "pass": true,
-      "result_of": "bundle:7c9fdd13a9f0770c1e8ef32a3a664cf81cbedfd7c4a350a983ff660aa25a3918"
+      "result_of": "bundle:6c6b3fa8bdcf71bdb2a5f677dc8ab2ba256a6b67f0d46b74b51ae463e24875d5"
     },
     {
       "id": "voice_outro.mp3",
@@ -181,8 +181,8 @@
   ],
   "audio": [
     {
-      "id": "bundle:1bc27956367bb58c370f81a584574feffed100ed17f2f1aecdbb9de3c30723bc",
-      "text": "罗马止步8强。巴黎半决赛，她击败科斯秋克；决赛战胜赫瓦林斯卡，首夺大满贯。",
+      "id": "bundle:068d2c0b5e713c3ea59c6f87cda57dc9b28fc549f351e3b6573d9810a08fdef8",
+      "text": "美网，她拿到两个赛点，却没能拿下比赛。高芙完成逆转，她止步八强。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -192,93 +192,29 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 32,
+        "ref_syllables": 27,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "罗马直部八强,巴黎半决赛,他击败科斯丘克,决赛战胜赫瓦林斯卡,首夺大满冠。"
+        "transcript": "没网,他拿到两个赛点,却没能拿下比赛。高幅完成逆转,他只不扒墙。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 32,
-        "speech_s": 7.359,
-        "cps": 4.35,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "罗马 ｜ 止步 ｜ 8 ｜ 强 ｜ 巴黎 ｜ 半决赛 ｜ 她 ｜ 击败 ｜ 科斯秋克 ｜ 决赛 ｜ 战胜 ｜ 赫瓦林斯卡 ｜ 首 ｜ 夺 ｜ 大满贯"
-      }
-    },
-    {
-      "id": "bundle:22c3ad0000466e2b5f6873d20f53fa92f1cd6dfd101694593b40be20bad6738a",
-      "text": "林茨决赛，先丢一盘后逆转波塔波娃，她拿下今年第二冠。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 23,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "临此决赛,先丢一盘后逆转波塔波娃,她拿下今年第二罐。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 23,
-        "speech_s": 4.646,
-        "cps": 4.95,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "林茨 ｜ 决赛 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 后 ｜ 逆转 ｜ 波塔波娃 ｜ 她 ｜ 拿下 ｜ 今年 ｜ 第二 ｜ 冠"
-      }
-    },
-    {
-      "id": "bundle:3c97f8490686d6e6eecb9b2adbc3fc0ab2272c0af01838108fa2b3bc5eb86461",
-      "text": "五比七、四比六，收获北京亚军。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 12,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "5比7 4比6 收获北京亚军。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 12,
-        "speech_s": 2.866,
+        "chars": 27,
+        "speech_s": 6.45,
         "cps": 4.19,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "五比七 ｜ 四比六 ｜ 收获 ｜ 北京 ｜ 亚军"
+        "tokens": "美 ｜ 网 ｜ 她 ｜ 拿 ｜ 到 ｜ 两个 ｜ 赛点 ｜ 却 ｜ 没 ｜ 能 ｜ 拿下 ｜ 比赛 ｜ 高芙 ｜ 完成 ｜ 逆转 ｜ 她 ｜ 止步 ｜ 八 ｜ 强"
       }
     },
     {
-      "id": "bundle:5a6fd72483a649302edb5b6679b5bf7920a04c2393e1b7e4b2eeefb8b5269047",
-      "text": "马德里再进决赛，却两盘负于科斯秋克。",
+      "id": "bundle:44d6435dfb7e81cfc73d603cf7677fb330ec05f4f47a63e96b5249d0a3f41fb8",
+      "text": "去年错过单打年终，今年拿下第一座大满贯。安德烈耶娃终于拿到那张门票。但这一年，并不是一路赢过来的。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -288,24 +224,88 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 16,
+        "ref_syllables": 44,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.062,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "马德里在竞决赛,却两盘赴于科斯秋克。"
+        "transcript": "去年错过单打年终,今年拿下第一座大满罐。安德烈叶娃终于拿到那张门票,但这一年并不是一路赢过来的。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 16,
-        "speech_s": 3.278,
-        "cps": 4.88,
+        "chars": 44,
+        "speech_s": 9.575,
+        "cps": 4.6,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "马德里 ｜ 再 ｜ 进 ｜ 决赛 ｜ 却 ｜ 两盘 ｜ 负 ｜ 于 ｜ 科斯秋克"
+        "tokens": "去年 ｜ 错过 ｜ 单打 ｜ 年终 ｜ 今年 ｜ 拿下 ｜ 第一座 ｜ 大满贯 ｜ 安德烈耶娃 ｜ 终于 ｜ 拿 ｜ 到 ｜ 那 ｜ 张 ｜ 门票 ｜ 但 ｜ 这 ｜ 一 ｜ 年 ｜ 并不是 ｜ 一路 ｜ 赢 ｜ 过来 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:457ff689c486dbf9bd17e8cdb92d30d07528335a21512d92ab15a03ea2390178",
+      "text": "到了巴黎，她先在半决赛击败科斯秋克，再战胜赫瓦林斯卡。十九岁，首夺大满贯，她一直以来的梦想成为现实。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "到了巴黎,他现在半决赛几百科斯秋克在战胜赫瓦林斯卡。19岁,首多大满冠,他一直以来的梦想成为现实。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.599,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "到 ｜ 了 ｜ 巴黎 ｜ 她 ｜ 先 ｜ 在 ｜ 半决赛 ｜ 击败 ｜ 科斯秋克 ｜ 再 ｜ 战胜 ｜ 赫瓦林斯卡 ｜ 十九岁 ｜ 首 ｜ 夺 ｜ 大满贯 ｜ 她 ｜ 一直以来 ｜ 的 ｜ 梦想 ｜ 成为 ｜ 现实"
+      }
+    },
+    {
+      "id": "bundle:5b2f942a11c25dcd44005360b1cf12523637b27e8579a75af101552edd322747",
+      "text": "本季至今，红土二十二胜三负，草地却只有一胜两负。温网先赢一盘，她仍被克雷吉茨科娃逆转。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "本季至今,宏土二十二胜三富,草地却只有一胜两富。温网先赢一盘,他仍被克雷吉茨科娃逆转。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.597,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "本 ｜ 季 ｜ 至今 ｜ 红土 ｜ 二十二 ｜ 胜 ｜ 三 ｜ 负 ｜ 草地 ｜ 却 ｜ 只有 ｜ 一 ｜ 胜 ｜ 两 ｜ 负 ｜ 温网 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 她 ｜ 仍 ｜ 被 ｜ 克雷吉茨科娃 ｜ 逆转"
       }
     },
     {
@@ -341,8 +341,8 @@
       }
     },
     {
-      "id": "bundle:73e836f1fac80d6076d7bdf1379cd4c255879c7885f953bdb1cb44c77ff033f7",
-      "text": "十九岁，本季三冠，第一次拿下大满贯。安德烈耶娃的年终之路，从一月说起。",
+      "id": "bundle:671b7d2df79d75f7d3f64f27b63793c85d591332e979ccb0e4420216115698a0",
+      "text": "澳网止步第四轮。接下来的四站硬帝，她也都没能走到四强。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -352,29 +352,29 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 30,
+        "ref_syllables": 24,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "19岁,本季三冠,第一次拿下大满冠。安德烈耶瓦的年中之路,从1月说起。"
+        "transcript": "澳王只布第四轮。接下来的四战硬帝,他也都没能走到四墙。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 30,
-        "speech_s": 6.71,
-        "cps": 4.47,
+        "chars": 24,
+        "speech_s": 5.318,
+        "cps": 4.51,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "十九岁 ｜ 本 ｜ 季 ｜ 三 ｜ 冠 ｜ 第一次 ｜ 拿下 ｜ 大满贯 ｜ 安德烈耶娃 ｜ 的 ｜ 年终 ｜ 之 ｜ 路 ｜ 从 ｜ 一月 ｜ 说 ｜ 起"
+        "tokens": "澳 ｜ 网 ｜ 止步 ｜ 第四轮 ｜ 接下来 ｜ 的 ｜ 四站 ｜ 硬 ｜ 帝 ｜ 她 ｜ 也 ｜ 都 ｜ 没 ｜ 能 ｜ 走 ｜ 到 ｜ 四 ｜ 强"
       }
     },
     {
-      "id": "bundle:7c9fdd13a9f0770c1e8ef32a3a664cf81cbedfd7c4a350a983ff660aa25a3918",
-      "text": "北京之后，世界第三。她因赛程调整退出武汉，下一站年终。你期待她走到哪一步？",
+      "id": "bundle:6bf714242e833939885aee685d891efff948fda26f40378c72ee029415b36483",
+      "text": "马德里再进决赛，却两盘负于科斯秋克。这一次，奖杯属于科斯秋克。可两人的故事，还没结束。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -384,29 +384,51 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 32,
+        "ref_syllables": 37,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.027,
         "longest_deletion": 0,
-        "transcript": "北京之后,世界第三,他因赛程调整退出武汉下一战年中。你期待他走到哪一步?"
+        "transcript": "马德里在竞决赛却两盘赴于科斯秋克。这一次,奖杯属于科斯秋克。可两人的故事还没结束。"
       },
-      "polyphones": [],
+      "polyphones": [
+        {
+          "index": 38,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.227,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 32,
-        "speech_s": 7.854,
-        "cps": 4.07,
+        "chars": 37,
+        "speech_s": 8.844,
+        "cps": 4.18,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "北京 ｜ 之后 ｜ 世界 ｜ 第三 ｜ 她 ｜ 因 ｜ 赛程 ｜ 调整 ｜ 退出 ｜ 武汉 ｜ 下 ｜ 一 ｜ 站 ｜ 年终 ｜ 你 ｜ 期待 ｜ 她 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+        "tokens": "马德里 ｜ 再 ｜ 进 ｜ 决赛 ｜ 却 ｜ 两盘 ｜ 负 ｜ 于 ｜ 科斯秋克 ｜ 这 ｜ 一次 ｜ 奖杯 ｜ 属于 ｜ 科斯秋克 ｜ 可 ｜ 两 ｜ 人 ｜ 的 ｜ 故事 ｜ 还 ｜ 没 ｜ 结束"
       }
     },
     {
-      "id": "bundle:8f5e17b41e0244ba69e9e9031d6a7fea3e0470e0269bb2fc2e394c5b7d33fbd7",
-      "text": "春季四站硬帝，她都未能走到4强。",
+      "id": "bundle:6c6b3fa8bdcf71bdb2a5f677dc8ab2ba256a6b67f0d46b74b51ae463e24875d5",
+      "text": "她回顾，今年和团队更注意参赛与休息。去年错过的单打年终门票，今年终于属于她。首次单打年终，你期待她走到哪一步？",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -416,29 +438,29 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 14,
+        "ref_syllables": 49,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "春季四战硬帝 他都未能走到四墙。"
+        "transcript": "他回顾,今年和团队更注意参赛与休息。去年错过的单打年中门票,今年终于属于他。首次单打年中,你期待他走到哪一步?"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 14,
-        "speech_s": 3.255,
-        "cps": 4.3,
+        "chars": 49,
+        "speech_s": 10.896,
+        "cps": 4.5,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "春季 ｜ 四 ｜ 站 ｜ 硬 ｜ 帝 ｜ 她 ｜ 都 ｜ 未能 ｜ 走 ｜ 到 ｜ 4 ｜ 强"
+        "tokens": "她 ｜ 回顾 ｜ 今年 ｜ 和 ｜ 团队 ｜ 更 ｜ 注意 ｜ 参赛 ｜ 与 ｜ 休息 ｜ 去年 ｜ 错过 ｜ 的 ｜ 单打 ｜ 年终 ｜ 门票 ｜ 今年 ｜ 终于 ｜ 属于 ｜ 她 ｜ 首次 ｜ 单打 ｜ 年终 ｜ 你 ｜ 期待 ｜ 她 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
       }
     },
     {
-      "id": "bundle:9c0e99d7acd43a3d39fa31af94997fbc006d6a54cf7829cf3bb6be1753a2ee43",
-      "text": "澳网第四轮，她两盘负于斯维托丽娜。",
+      "id": "bundle:8e7dd87e9e1019b259f4ce5d8899a41e4e5d7069c19ca818157f5765f285d612",
+      "text": "十月九日，官方确认她首次获得单打年终资格。去年错过的那张门票，今年不用再等到最后。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -448,24 +470,70 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 15,
+        "ref_syllables": 37,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "澳网第四轮,他两盘赴于斯维托丽娜。"
+        "transcript": "10月9日,官方确认他首次获得单打年中资格。去年错过的那张门票,今年不用再等到最后。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "得",
+          "word": "获得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.889,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月九日 ｜ 官方 ｜ 确认 ｜ 她 ｜ 首次 ｜ 获得 ｜ 单打 ｜ 年终 ｜ 资格 ｜ 去年 ｜ 错过 ｜ 的 ｜ 那 ｜ 张 ｜ 门票 ｜ 今年 ｜ 不用 ｜ 再 ｜ 等到 ｜ 最后"
+      }
+    },
+    {
+      "id": "bundle:b03811d74c3672e28238ad4c6ef8be8cd63e2224174ed2668cc7a1dc816f6c47",
+      "text": "两天后的北京决赛，五比七、四比六，她负于郑钦文，收获亚军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两天后的北京决赛,5比7,4比6,他赴于郑钦文收获亚军。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 15,
-        "speech_s": 3.09,
-        "cps": 4.85,
+        "chars": 24,
+        "speech_s": 5.307,
+        "cps": 4.52,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "澳 ｜ 网 ｜ 第四轮 ｜ 她 ｜ 两盘 ｜ 负 ｜ 于 ｜ 斯维托丽娜"
+        "tokens": "两天 ｜ 后 ｜ 的 ｜ 北京 ｜ 决赛 ｜ 五比七 ｜ 四比 ｜ 六 ｜ 她 ｜ 负 ｜ 于 ｜ 郑钦文 ｜ 收获 ｜ 亚军"
       }
     },
     {
@@ -486,7 +554,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "关注网球时差,时差归我,好球归你。"
+        "transcript": "关注网球时差﹑时差归我﹑好球归你。"
       },
       "polyphones": [],
       "pauses": {
@@ -501,8 +569,8 @@
       }
     },
     {
-      "id": "bundle:d4d9c3534ad7bc9f4d531ad14bf116080acc066f9f8f050cf7a618e4d6dcc2b8",
-      "text": "十月九日，她首次获得单打年终资格。两天后的北京决赛，是今年第五场决赛。",
+      "id": "bundle:d308980e88d4a1bb9e882ddf6317547e3de2b65e67e1b5fed14e07559633acd2",
+      "text": "北京之后，她首次升到世界第三，因赛程调整退出武汉。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -512,75 +580,29 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 31,
+        "ref_syllables": 22,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "10月9日,他首次获得单打年中资格。两天后的北京决赛,是今年第五场决赛。"
-      },
-      "polyphones": [
-        {
-          "index": 9,
-          "char": "得",
-          "word": "获得",
-          "intended": "de2",
-          "wrong": [
-            "dei3"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "runs": [],
-          "ok_refs": "德锝"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 31,
-        "speech_s": 6.91,
-        "cps": 4.49,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "十月九日 ｜ 她 ｜ 首次 ｜ 获得 ｜ 单打 ｜ 年终 ｜ 资格 ｜ 两天 ｜ 后 ｜ 的 ｜ 北京 ｜ 决赛 ｜ 是 ｜ 今年 ｜ 第五场 ｜ 决赛"
-      }
-    },
-    {
-      "id": "bundle:e03d0809bdc86bc4a626357a3d5570b2bbde072431748fe64c9d7c787cfb43aa",
-      "text": "美网四分之一决赛，两个赛点没兑现，她最终被高芙逆转。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 23,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "梅网四分之一决赛,两个赛点没兑现,他最终被高福逆转。"
+        "transcript": "北京之后,他首次升到世界第三,因赛程调整,退出武汉。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 23,
-        "speech_s": 4.234,
-        "cps": 5.43,
+        "chars": 22,
+        "speech_s": 4.493,
+        "cps": 4.9,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "美 ｜ 网 ｜ 四分之一 ｜ 决赛 ｜ 两个 ｜ 赛点 ｜ 没 ｜ 兑现 ｜ 她 ｜ 最终 ｜ 被 ｜ 高芙 ｜ 逆转"
+        "tokens": "北京 ｜ 之后 ｜ 她 ｜ 首次 ｜ 升 ｜ 到 ｜ 世界 ｜ 第三 ｜ 因 ｜ 赛程 ｜ 调整 ｜ 退出 ｜ 武汉"
       }
     },
     {
-      "id": "bundle:ec56dc96c852781817654a7ebcdc2e77bd1c1fbf1a52ba3edb368a35e422deb1",
-      "text": "温网先赢一盘，仍被克雷吉茨科娃逆转，止步第二轮。",
+      "id": "bundle:e9cf28bcf550696697280a323df8b261cc98fdacdbf0917eef1b4c88133f7d0e",
+      "text": "四月的林茨，决赛首盘一比六。她连扳两盘，逆转波塔波娃，拿下第二冠。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -590,24 +612,24 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 21,
+        "ref_syllables": 28,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "温网先赢一盘,仍被克雷吉茨科娃逆转, 止步第二轮。"
+        "transcript": "四月的临词,决赛手盘1比6。他连班两盘,逆转波塔波娃,拿下第二罐。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 21,
-        "speech_s": 4.552,
-        "cps": 4.61,
+        "chars": 28,
+        "speech_s": 6.509,
+        "cps": 4.3,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "温网 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 仍 ｜ 被 ｜ 克雷吉茨科娃 ｜ 逆转 ｜ 止步 ｜ 第二轮"
+        "tokens": "四月 ｜ 的 ｜ 林茨 ｜ 决赛 ｜ 首盘 ｜ 一比六 ｜ 她 ｜ 连 ｜ 扳 ｜ 两盘 ｜ 逆转 ｜ 波塔波娃 ｜ 拿下 ｜ 第二 ｜ 冠"
       }
     }
   ]
