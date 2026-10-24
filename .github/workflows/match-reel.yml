@@ -45,7 +45,7 @@ on:
         # 能用的那台机器上够不着（源片只在 runner 上活过几分钟）。
         # **`reattest` 是加在这儿的选项，不是新输入**——表单 25 项已满（见
         # `apply_tts_backend` 的 docstring）。它什么都不下、不渲，见文件头那段。
-        options: [probe, cover, narration, render, reattest, push, cookies]
+        options: [probe, cover, narration, render, reattest, push, cookies, recovery_upload]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -201,6 +201,7 @@ concurrency:
 
 jobs:
   reel:
+    if: github.event.inputs.mode != 'recovery_upload'
     runs-on: ubuntu-latest
     # 各步骤声明的最坏预算之和是 59 分钟（dry-run 闸 3 + 抽帧封面渲前查官方图 2 +
     # 装 ffmpeg／中文字体各 15 + 装 Chromium 10 + 判据回喂修复步 8 + 源片认领的认领／摘认领／
@@ -2159,3 +2160,82 @@ jobs:
           git commit -m "reel: ${{ github.event.inputs.slug }} 推送状态待核实" || exit 0
           git pull --rebase origin main || { git rebase --abort || true; }
           git push origin main
+
+  # TEMPORARY single-episode transport recovery; root removes before final merge.
+  recovery_upload:
+    if: github.event.inputs.mode == 'recovery_upload'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SLUG: andreeva-finals-2026-new-story
+      RECOVERED: ${{ runner.temp }}/original-native-artifact
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            specs/reels/andreeva-finals-2026-new-story.json
+            assets/tts-bundles/andreeva-finals-2026-new-story
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: reel-andreeva-finals-2026-new-story-3389
+          run-id: 40111642644
+          repository: ${{ github.repository }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/original-native-artifact
+      - name: Verify immutable original native movie and producer
+        run: |
+          set -euo pipefail
+          test "$SLUG" = 'andreeva-finals-2026-new-story'
+          test "${{ github.event.inputs.push }}" != 'true'
+          python - <<'PY_CHECK'
+          from pathlib import Path
+          import hashlib,json,os
+          slug=os.environ['SLUG'];root=Path(os.environ['RECOVERED']);films=list(root.rglob(slug+'.mp4'));assert len(films)==1,films
+          film=films[0];out=film.parent;sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+          assert film.stat().st_size==126795100
+          assert sha(film)=='d51692b9141bc64a5afa2b4382fa16d187471e13b5550f8967aa8ee7f7a03099'
+          assert sha(Path('specs/reels')/(slug+'.json'))=='0e964104a4f404bed0b2458ae82abb8803494d979ee3e92388303f2abc0fc300'
+          m=json.loads((out/'render_inputs.json').read_text());assert m['film_sha256']==sha(film)and m['film_bytes']==126795100 and m['spec_sha256']=='0e964104a4f404bed0b2458ae82abb8803494d979ee3e92388303f2abc0fc300'
+          assert sha(out/'render_inputs.json')=='1c8e868b2c89a7c8a595f2d87a3a970e66de62a80a6703755b1c9afd07f7e2b8'
+          bundle=Path('assets/tts-bundles')/slug/'9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791/tts_bundle.zip'
+          assert sha(bundle)=='9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791'and bundle.stat().st_size==849713
+          with open(os.environ['GITHUB_ENV'],'a')as f:f.write('NATIVE_RECOVERED='+str(out)+'\nNATIVE_FILM='+str(film)+'\nNATIVE_BUNDLE='+str(bundle.resolve())+'\n')
+          print('EXACT ORIGINAL MOVIE/SPEC/SEALED INPUTS/FROZEN14 VERIFIED; no encoder or model initialized')
+          PY_CHECK
+          # Both tags were precreated by the owner. Never create references here.
+          gh release view 'reel-andreeva-finals-2026-new-story' >/dev/null
+          gh release view 'reel-tts-andreeva-finals-2026-new-story-9f980bafc2d47cff' >/dev/null
+      - name: Upload exact native bytes to preexisting Releases
+        run: |
+          set -euo pipefail
+          python tools/reel_tts_release.py publish --slug "$SLUG" --bundle "$NATIVE_BUNDLE" --metadata "$NATIVE_RECOVERED/render.json"
+          python - <<'PY_UPLOAD'
+          from pathlib import Path
+          import subprocess,json,os
+          repo=os.environ['GH_REPO'];tag='reel-andreeva-finals-2026-new-story';name='andreeva-finals-2026-new-story.mp4';expected='sha256:d51692b9141bc64a5afa2b4382fa16d187471e13b5550f8967aa8ee7f7a03099'
+          def release(t):return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/releases/tags/{t}'],text=True))
+          r=release(tag);found=[a for a in r['assets']if a['name']==name];assert len(found)<=1
+          if found:
+           assert found[0]['size']==126795100 and found[0]['digest']==expected,'Refuse overwrite of mismatched existing asset'
+          else:subprocess.run(['gh','release','upload',tag,os.environ['NATIVE_FILM']],check=True)
+          a=next(x for x in release(tag)['assets']if x['name']==name);assert a['size']==126795100 and a['digest']==expected
+          b=next(x for x in release('reel-tts-andreeva-finals-2026-new-story-9f980bafc2d47cff')['assets']if x['name']=='tts_bundle.zip');assert b['size']==849713 and b['digest']=='sha256:9f980bafc2d47cff304bc731563d99fb10d1983aa7340226b1a66d4aeb578791'
+          proof={'status':'exact_original_bytes_uploaded_no_render','original_render_run':40111642644,'original_render_head':'ae8c0240f682d106dd0360244f7e265289ee167d','original_artifact_name':'reel-andreeva-finals-2026-new-story-3389','recovery_run':os.environ['GITHUB_RUN_ID'],'film_asset':a,'tts_asset':b,'no_encoding_or_synthesis_or_models':True}
+          out=Path(os.environ['RUNNER_TEMP'])/'recovery-proof';out.mkdir(exist_ok=True);(out/'upload-proof.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n');(out/'published-tts-render-copy.json').write_bytes((Path(os.environ['NATIVE_RECOVERED'])/'render.json').read_bytes());print(json.dumps(proof,ensure_ascii=False))
+          PY_UPLOAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recovery-upload-andreeva-finals-2026-new-story-${{ github.run_id }}
+          path: ${{ runner.temp }}/recovery-proof
+          retention-days: 14
+          if-no-files-found: error
