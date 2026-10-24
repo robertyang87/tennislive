@@ -1,5 +1,34 @@
 [
   {
+    "id": "2dSkgyTQzUw",
+    "url": "https://www.youtube.com/watch?v=2dSkgyTQzUw",
+    "title": "Elena Rybakina vs. Diana Shnaider | 2026 Ningbo Semifinal | WTA Match Highlights",
+    "source": "WTA",
+    "duration_s": 450,
+    "round_zh": "半决赛",
+    "cn_player": null,
+    "cn_beaten": null,
+    "event_zh": "宁波网球公开赛",
+    "match_id": "2026:宁波网球公开赛:sf:elena-rybakina",
+    "source_verification": {
+      "source_id": "2dSkgyTQzUw",
+      "source_url": "https://www.youtube.com/watch?v=2dSkgyTQzUw",
+      "source": "WTA",
+      "title": "Elena Rybakina vs. Diana Shnaider | 2026 Ningbo Semifinal | WTA Match Highlights",
+      "status": "pending",
+      "detected_type": "on_court",
+      "method": "wta_highlight_tail",
+      "reason": "已确认片尾含场上采访，但采访起点尚未逐条核验，不能从 0 秒制作",
+      "evidence": [
+        {
+          "kind": "measured_format",
+          "note": "@wta 逐场集锦 320 秒双峰后的场上采访尾段",
+          "duration_s": 450
+        }
+      ]
+    }
+  },
+  {
     "id": "X8iDIdl2gdg",
     "url": "https://www.youtube.com/watch?v=X8iDIdl2gdg",
     "title": "Leylah Fernandez vs. Marie Bouzkova | 2026 Ningbo Semifinal | WTA Match Highlights",
@@ -26,6 +55,40 @@
           "duration_s": 403
         }
       ]
+    }
+  },
+  {
+    "id": "tennistv:4598262",
+    "url": "https://www.tennistv.com/videos/4598262/lyon-2026-sf-fritz-interview",
+    "title": "Fritz through in Lyon!",
+    "source": "Tennis TV 站 (库页 + 各赛事页)",
+    "duration_s": 123,
+    "round_zh": "半决赛",
+    "cn_player": null,
+    "cn_beaten": null,
+    "event_zh": "里昂公开赛",
+    "match_id": "2026:里昂公开赛:sf:taylor-fritz",
+    "source_verification": {
+      "source_id": "tennistv:4598262",
+      "source_url": "https://www.tennistv.com/videos/4598262/lyon-2026-sf-fritz-interview",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fritz through in Lyon!",
+      "status": "verified",
+      "detected_type": "on_court",
+      "method": "tennistv_structured_feed",
+      "evidence": [
+        {
+          "kind": "provider_metadata",
+          "video_type": "interviews",
+          "round": "SF",
+          "duration_s": 123
+        }
+      ]
+    },
+    "entitlement": "freemium",
+    "production_readiness": {
+      "status": "pending",
+      "reason": "Tennis TV entitlement=freemium；当前无人值守链路没有注册会话，只允许 free 条目，不能把反复 403 当自动重试"
     }
   },
   {
@@ -84,6 +147,28 @@
           "duration_s": 442
         }
       ]
+    }
+  },
+  {
+    "id": "l1Q13PTBffE",
+    "url": "https://www.youtube.com/watch?v=l1Q13PTBffE",
+    "title": "Nikoloz Basilashvili interview after Semi-FInal win against Tsitsipas at 2026 Almaty Open",
+    "source": "Edimator",
+    "duration_s": 69,
+    "round_zh": "半决赛",
+    "cn_player": null,
+    "cn_beaten": null,
+    "event_zh": "阿拉木图公开赛",
+    "match_id": "2026:阿拉木图公开赛:sf:nikoloz-basilashvili",
+    "source_verification": {
+      "source_id": "l1Q13PTBffE",
+      "source_url": "https://www.youtube.com/watch?v=l1Q13PTBffE",
+      "source": "Edimator",
+      "title": "Nikoloz Basilashvili interview after Semi-FInal win against Tsitsipas at 2026 Almaty Open",
+      "status": "pending",
+      "detected_type": "unknown",
+      "method": "needs_visual_review",
+      "reason": "没有逐条画面结论，也不满足受信结构化/官方明确内容类型判据"
     }
   }
 ]
