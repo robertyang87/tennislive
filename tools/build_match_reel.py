@@ -4659,7 +4659,7 @@ def _with_story_scrim(ins: dict, dest: Path) -> dict:
     out, top = compose_label_scrim(
         Path(str(ins["image"])), dest.with_name(dest.stem + ".label-scrim.png"),
         width_px=width, right_px=pad, top_room=y_top)
-    return {**ins, "image": str(out), "_scrim_top": top, "_scrim_w": width + pad}
+    return {**ins, "image": str(out), "scrim_top_px": top, "scrim_w_px": width + pad}
 
 
 def _overlay_chain(base: str, ins: dict) -> str:
@@ -4678,12 +4678,12 @@ def _overlay_chain(base: str, ins: dict) -> str:
     corner = str(ins.get("corner", "tl"))
     x = f"{pad}" if corner in ("tl", "bl") else f"W-w-{pad}"
     bot_off = (VIDEO_H - BAND_TOP - BAND_PIC_H) if LAYOUT == "band" else 0
-    if "_scrim_top" in ins:
-        # 合成过 F 渐隐底的那张（`_with_story_scrim`）：贴住右边缘，往上挪出底的上边距，
+    if "scrim_top_px" in ins:
+        # 合成过 F 渐隐底的那张（`_with_story_scrim`，键名不带下划线：它不是 spec 注解）：贴住右边缘，往上挪出底的上边距，
         # 字卡墨迹的落位和不带底时一像素不差。
-        width = int(ins["_scrim_w"])
+        width = int(ins["scrim_w_px"])
         x = "W-w"
-        y_top -= int(ins["_scrim_top"])
+        y_top -= int(ins["scrim_top_px"])
     y = f"{y_top}" if corner in ("tl", "tr") else f"H-h-{bot_off + pad}"
     # **入场动效默认开**（`"animate": false` 关）：0.45s 淡入 + 36px 上浮。
     # 来路：抖音七批诊断里六批点名「动态文字/卡片要有动感」，这是其中唯一
