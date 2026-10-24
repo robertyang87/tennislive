@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "b85607ee4db550c17c1769908c0557d8241c5ec7f3f45a2d7834301dd7841f80",
-    "render_inputs_sha256": "58021ba5ccd2b5de389412d616f6ada41fc9c85365ca5517676db9a6cb6da255",
-    "spec_sha256": "e741d06f3f1fbffbfc761c60fcf96acbd5d8901aae15998b7664973fb43f5009",
-    "film_sha256": "71726876e136bb300df5a63866ee563a8b6a6456efdf80301f306ae508b151e5",
-    "inventory_sha256": "7981560a91481d93484a07427dadf2b5fa0b579b75d6539fa3595f347859a17d"
+    "render_sha256": "88d023b7d3fc39226abd463f15904c03199b9987bfcf239aaa1496720f0ba96d",
+    "render_inputs_sha256": "489a1efe1619e37f38840bf9f07e147e19de3755c5ae003c36a91e014f10b631",
+    "spec_sha256": "9d5de52279d6a1f1f3fca9db5d7c7d06d473886731c38c70848f7dd10fb8d9c4",
+    "film_sha256": "67e4ae831b4bfe6eddc48f30dacc87adf4635396d0cdb106e938858d2e2f7953",
+    "inventory_sha256": "ce16e72834c0dff694f45f9f65aad65fdf001e21e61a0753f1cf346e7c9cb424"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-23T20:13:28+00:00",
+  "reviewed_at": "2026-10-24T04:36:13+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -125,6 +125,12 @@
       "result_of": "bundle:4db4763797f5d8263f9dee4d0220c96d6217b3147e7722c2e786d69071506a61"
     },
     {
+      "id": "bundle:4fe747dd06638f3ce7ea0b87e05444e815457191869ddc246bcfbe98b1d7d673",
+      "audio_sha256": "c0b7e24df291beb7110080595651b37f484a352c69245324d6451b76c1184dae",
+      "pass": true,
+      "result_of": "bundle:4fe747dd06638f3ce7ea0b87e05444e815457191869ddc246bcfbe98b1d7d673"
+    },
+    {
       "id": "bundle:52d3724f6a05dc8b969181f985e265f2641f46e0758bf92fe42cd132ce916ac4",
       "audio_sha256": "5975f14ce54aa5945d897fd10a4835b4fdb1a2ed03becfa489d8fb6dc8a218d6",
       "pass": true,
@@ -185,12 +191,6 @@
       "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
     },
     {
-      "id": "bundle:de47f1e4e2f42aa8c21786a7721dedb91702873819f94c0d96053b85bb168187",
-      "audio_sha256": "d2b384c87283c6059872414ce6c1109400971d2e9b847e495a15e3ec821da967",
-      "pass": true,
-      "result_of": "bundle:de47f1e4e2f42aa8c21786a7721dedb91702873819f94c0d96053b85bb168187"
-    },
-    {
       "id": "bundle:e5037f48255072f1c7736219a0c44cfed6ed9f0b6b63dfc2379097c09d777772",
       "audio_sha256": "eb863dc0da26c81c296979ffa860bbff0454deddcf383e991b5e2901140cf5cb",
       "pass": true,
@@ -234,9 +234,9 @@
     },
     {
       "id": "voice_03.mp3",
-      "audio_sha256": "d2b384c87283c6059872414ce6c1109400971d2e9b847e495a15e3ec821da967",
+      "audio_sha256": "c0b7e24df291beb7110080595651b37f484a352c69245324d6451b76c1184dae",
       "pass": true,
-      "result_of": "bundle:de47f1e4e2f42aa8c21786a7721dedb91702873819f94c0d96053b85bb168187"
+      "result_of": "bundle:4fe747dd06638f3ce7ea0b87e05444e815457191869ddc246bcfbe98b1d7d673"
     },
     {
       "id": "voice_05.mp3",
@@ -488,7 +488,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网球调眼泪,就是那年在麦阿弥输给割分之后。"
+        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网求掉眼泪,就是那年在麦阿弥输给割分之后。"
       },
       "polyphones": [],
       "pauses": {
@@ -898,7 +898,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "而他这一生离最大的两个冠军都只差一场。2017年总决赛决赛,他输给迪米特洛夫。"
+        "transcript": "而他这一生,离最大的两个冠军都只差一场。2017年总决赛决赛,他输给迪米特洛夫。"
       },
       "polyphones": [],
       "pauses": {
@@ -1026,7 +1026,7 @@
         "substituted": 1,
         "sub_ratio": 0.015,
         "longest_deletion": 0,
-        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个,是大外,割分。"
+        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个,是大外,戈芬。"
       },
       "polyphones": [],
       "pauses": {
@@ -1136,7 +1136,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "同一句话,同一年,他说了两次。这一年,他把德约科维奇、纳达尔、费德勒挨个赢了一遍。同一年里,通杀三巨头,整个三巨头时代,也没几个人做到过。"
+        "transcript": "同一句话,同一年,他说了两次。这一年,他把德约科维奇、纳达尔、费德勒挨个赢了一遍。同一年里通杀三巨头,整个三巨头时代,也没几个人做到过。"
       },
       "polyphones": [],
       "pauses": {
@@ -1180,6 +1180,103 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "第二天 ｜ 最后 ｜ 一 ｜ 场 ｜ 他 ｜ 输 ｜ 了 ｜ 最后 ｜ 一个 ｜ 回球 ｜ 下网 ｜ 全场 ｜ 起立"
+      }
+    },
+    {
+      "id": "bundle:4fe747dd06638f3ce7ea0b87e05444e815457191869ddc246bcfbe98b1d7d673",
+      "text": "2012 年法网，21 岁的戈芬排名第 109，资格赛已经出局。孟菲尔斯退赛，他以幸运落败者的身份递补进正赛——连赢三轮，第四轮站到了费德勒对面。他的卧室墙上，贴满了费德勒的海报。那一天，他从偶像手里抢下第一盘，第二盘只差两分，就能取得两盘领先。他的个子，在男子网球里不占优势。他靠的是抢点：站进场内，把球打得比所有人早半步。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 145,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。孟菲尔斯退赛,他以幸运落败者的身份递不进正赛,连赢三轮,第四轮战到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点占进场内把球打得比所有人早半步"
+      },
+      "polyphones": [
+        {
+          "index": 43,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.195,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.175,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 117,
+          "char": "得",
+          "word": "取得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 154,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.418,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 141,
+        "speech_s": 30.837,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2012 ｜ 年 ｜ 法网 ｜ 21 岁 ｜ 的 ｜ 戈芬 ｜ 排名 ｜ 第 ｜ 109 ｜ 资格 ｜ 赛 ｜ 已经 ｜ 出局 ｜ 孟菲尔斯 ｜ 退赛 ｜ 他 ｜ 以 ｜ 幸运 ｜ 落败 ｜ 者 ｜ 的 ｜ 身份 ｜ 递补 ｜ 进 ｜ 正 ｜ 赛 ｜ 连 ｜ 赢 ｜ 三轮 ｜ 第四轮 ｜ 站 ｜ 到 ｜ 了 ｜ 费德勒 ｜ 对面 ｜ 他 ｜ 的 ｜ 卧室 ｜ 墙 ｜ 上 ｜ 贴 ｜ 满 ｜ 了 ｜ 费德勒 ｜ 的 ｜ 海报 ｜ 那 ｜ 一天 ｜ 他 ｜ 从 ｜ 偶像 ｜ 手 ｜ 里 ｜ 抢 ｜ 下 ｜ 第一盘 ｜ 第二盘 ｜ 只 ｜ 差 ｜ 两分 ｜ 就 ｜ 能 ｜ 取得 ｜ 两盘 ｜ 领先 ｜ 他 ｜ 的 ｜ 个子 ｜ 在 ｜ 男子 ｜ 网球 ｜ 里 ｜ 不 ｜ 占优势 ｜ 他 ｜ 靠 ｜ 的 ｜ 是 ｜ 抢点 ｜ 站 ｜ 进场 ｜ 内 ｜ 把 ｜ 球 ｜ 打 ｜ 得 ｜ 比 ｜ 所有 ｜ 人 ｜ 早 ｜ 半步"
       }
     },
     {
@@ -1232,7 +1329,7 @@
         "substituted": 1,
         "sub_ratio": 0.013,
         "longest_deletion": 0,
-        "transcript": "2022年阿斯坦娜,资格塞出局的她,又以幸运落败者的身份递不尽正赛。对面是刚拿下眉网,刚登上世界第一的阿尔卡拉斯,她直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
+        "transcript": "2022年阿斯坦娜,资格塞出局的她,又以幸运落败者的身份递不尽正赛。对面是刚拿下美网,刚登上世界第一的阿尔卡拉斯,她直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
       },
       "polyphones": [
         {
@@ -1399,7 +1496,7 @@
         "substituted": 1,
         "sub_ratio": 0.012,
         "longest_deletion": 0,
-        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。核词没有骨折,可整个草地赛季就这样爆消。"
+        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。合辞没有骨折,可整个草地赛季就这样爆消。"
       },
       "polyphones": [
         {
@@ -1593,103 +1690,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
-      }
-    },
-    {
-      "id": "bundle:de47f1e4e2f42aa8c21786a7721dedb91702873819f94c0d96053b85bb168187",
-      "text": "2012 年法网，21 岁的戈芬排名第 109，资格赛已经出局。蒙菲尔斯退赛，他以幸运落败者的身份递补进正赛——连赢三轮，第四轮站到了费德勒对面。他的卧室墙上，贴满了费德勒的海报。那一天，他从偶像手里抢下第一盘，第二盘只差两分，就能取得两盘领先。他的个子，在男子网球里不占优势。他靠的是抢点：站进场内，把球打得比所有人早半步。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 145,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。蒙菲尔斯退赛,他以幸运落败者的身份递不尽正赛,连赢三轮,第四轮占到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点 站进场内把球打得比所有人早半步"
-      },
-      "polyphones": [
-        {
-          "index": 43,
-          "char": "落",
-          "word": "落",
-          "intended": "luo4",
-          "wrong": [
-            "la4",
-            "lao4"
-          ],
-          "tier": "B",
-          "verdict": "correct",
-          "runs": [
-            {
-              "wrong": "la4",
-              "verdict": "correct",
-              "score": 0.208,
-              "confidence": "low",
-              "near": null
-            },
-            {
-              "wrong": "lao4",
-              "verdict": "correct",
-              "score": 0.21,
-              "confidence": "low",
-              "near": null
-            }
-          ],
-          "ok_refs": "洛骆摞"
-        },
-        {
-          "index": 117,
-          "char": "得",
-          "word": "取得",
-          "intended": "de2",
-          "wrong": [
-            "dei3"
-          ],
-          "tier": "B",
-          "verdict": "unmeasurable",
-          "runs": [],
-          "ok_refs": "德锝"
-        },
-        {
-          "index": 154,
-          "char": "得",
-          "word": "得",
-          "intended": "de5",
-          "wrong": [
-            "de2",
-            "dei3"
-          ],
-          "tier": "B",
-          "verdict": "correct",
-          "runs": [
-            {
-              "wrong": "de2",
-              "verdict": "correct",
-              "score": 0.837,
-              "confidence": "low",
-              "near": null
-            }
-          ],
-          "ok_refs": "的"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 141,
-        "speech_s": 30.849,
-        "cps": 4.57,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "2012 ｜ 年 ｜ 法网 ｜ 21 岁 ｜ 的 ｜ 戈芬 ｜ 排名 ｜ 第 ｜ 109 ｜ 资格 ｜ 赛 ｜ 已经 ｜ 出局 ｜ 蒙菲尔斯 ｜ 退赛 ｜ 他 ｜ 以 ｜ 幸运 ｜ 落败 ｜ 者 ｜ 的 ｜ 身份 ｜ 递补 ｜ 进 ｜ 正 ｜ 赛 ｜ 连 ｜ 赢 ｜ 三轮 ｜ 第四轮 ｜ 站 ｜ 到 ｜ 了 ｜ 费德勒 ｜ 对面 ｜ 他 ｜ 的 ｜ 卧室 ｜ 墙 ｜ 上 ｜ 贴 ｜ 满 ｜ 了 ｜ 费德勒 ｜ 的 ｜ 海报 ｜ 那 ｜ 一天 ｜ 他 ｜ 从 ｜ 偶像 ｜ 手 ｜ 里 ｜ 抢 ｜ 下 ｜ 第一盘 ｜ 第二盘 ｜ 只 ｜ 差 ｜ 两分 ｜ 就 ｜ 能 ｜ 取得 ｜ 两盘 ｜ 领先 ｜ 他 ｜ 的 ｜ 个子 ｜ 在 ｜ 男子 ｜ 网球 ｜ 里 ｜ 不 ｜ 占优势 ｜ 他 ｜ 靠 ｜ 的 ｜ 是 ｜ 抢点 ｜ 站 ｜ 进场 ｜ 内 ｜ 把 ｜ 球 ｜ 打 ｜ 得 ｜ 比 ｜ 所有 ｜ 人 ｜ 早 ｜ 半步"
       }
     },
     {
