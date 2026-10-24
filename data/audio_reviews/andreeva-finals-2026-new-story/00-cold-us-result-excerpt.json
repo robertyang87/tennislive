@@ -1,0 +1,139 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+  "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+  "method": "asr_cross_checked",
+  "reviewed_at": "2026-10-24T15:08:15.723602+00:00",
+  "reviewed_from": 136,
+  "reviewed_to": 197,
+  "selected_from": 160.8,
+  "selected_to": 166.9,
+  "outgoing_pad_seconds": 0.18,
+  "effective_audio_end": 167.08,
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026-new-story/raw/us-qf-small.en.json",
+      "sha256": "c9bce52365ddcfaa0d86f9179cbe71007167fe2d7c20fa379595f9607ff2e5b7",
+      "model": "small.en",
+      "clip": [
+        136,
+        197
+      ],
+      "selected_plus_outgoing_tail_word_overlap": [],
+      "nearest_prior_words": [
+        {
+          "w": " now",
+          "s": 139.44,
+          "e": 139.72,
+          "p": 0.962
+        },
+        {
+          "w": " for",
+          "s": 139.72,
+          "e": 139.94,
+          "p": 0.978
+        },
+        {
+          "w": " golf.",
+          "s": 139.94,
+          "e": 140.52,
+          "p": 0.827
+        }
+      ],
+      "nearest_later_words": [
+        {
+          "w": " 2",
+          "s": 167.34,
+          "e": 168.14,
+          "p": 0.081
+        },
+        {
+          "w": "-6",
+          "s": 168.14,
+          "e": 168.32,
+          "p": 0.569
+        },
+        {
+          "w": "-2,",
+          "s": 168.32,
+          "e": 168.7,
+          "p": 0.59
+        }
+      ]
+    },
+    {
+      "path": "data/audio_reviews/andreeva-finals-2026-new-story/raw/us-qf-medium.en.json",
+      "sha256": "48b4647fc196c4d6fed7465af67a87f3b04b73a74df7c7c74c4856ec18cf03a0",
+      "model": "medium.en",
+      "clip": [
+        136,
+        197
+      ],
+      "selected_plus_outgoing_tail_word_overlap": [],
+      "nearest_prior_words": [
+        {
+          "w": " now",
+          "s": 139.5,
+          "e": 139.76,
+          "p": 0.97
+        },
+        {
+          "w": " for",
+          "s": 139.76,
+          "e": 139.98,
+          "p": 0.991
+        },
+        {
+          "w": " golf.",
+          "s": 139.98,
+          "e": 140.82,
+          "p": 0.862
+        }
+      ],
+      "nearest_later_words": [
+        {
+          "w": " 7",
+          "s": 172.44,
+          "e": 173.24,
+          "p": 0.261
+        },
+        {
+          "w": ".66",
+          "s": 173.24,
+          "e": 173.58,
+          "p": 0.1
+        },
+        {
+          "w": " 7",
+          "s": 173.58,
+          "e": 174.18,
+          "p": 0.002
+        }
+      ]
+    }
+  ],
+  "status": "complete",
+  "audio_ready": true,
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "reuse_packet": {
+    "path": "data/audio_reviews/andreeva-finals-2026-new-story/raw/prior-us-qf-packet.json",
+    "sha256": "6bc3e60de50bcaa081982c281c89f6b526ac791bb6e2a3d781ac25e876b7fe48"
+  },
+  "uncertain_spans": [],
+  "review_notes": "Reuses unchanged source and existing two primary full-context local-ASR136-197 plus prior adjudicated packet. Neither primary places a word in160.8-167.08. Last adopted English ends140.82, before excerpt. Earliest next PA model onset in retained context diagnostic167.18 (not a human-measured phoneme onset); effective audio end167.08 precedes it by0.10sec. No new model/transcription or human listening claim. Prior cropped-medium161-164 low-probability I am very nervous / The game is over remains recorded as rejected hallucination in original packet; not adopted or erased. Scope is adopted intelligible foreground, not all crowd/PA lexical intelligibility.",
+  "prior_crop_diagnostic_conflict": {
+    "path": "data/audio_reviews/andreeva-finals-2026-new-story/raw/prior-us-qf-ump-context-medium.en.json",
+    "range": [
+      161,
+      164.36
+    ],
+    "resolution": "Rejected in original broad-context crosscheck; primary small.en/medium.en and prior large diagnostic do not corroborate speech."
+  },
+  "background_audio_policy": "original source unity; no loudness normalization; no TTS substitutes source English",
+  "subtitle_policy": "No English or Chinese source-quote captions necessary for this excerpt; added narration is separately labeled as narration.",
+  "reviewer": "Codex source-bound integration: existing paired primary ASR and independently reviewed actual source frames; no human listening",
+  "no_foreground_english_reason": "Reuses unchanged source and existing two primary full-context local-ASR136-197 plus prior adjudicated packet. Neither primary places a word in160.8-167.08. Last adopted English ends140.82, before excerpt. Earliest next PA model onset in retained context diagnostic167.18 (not a human-measured phoneme onset); effective audio end167.08 precedes it by0.10sec. No new model/transcription or human listening claim. Prior cropped-medium161-164 low-probability I am very nervous / The game is over remains recorded as rejected hallucination in original packet; not adopted or erased. Scope is adopted intelligible foreground, not all crowd/PA lexical intelligibility.",
+  "_original_helper_packet_sha256": "07086dd6632689915668cd0064ceae271c69c6696a946b80bd341e44caa8e5ae"
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=eBTlK8A4IDE",
+  "source_sha256": "43ca94013f9fdae50f409c99eec182f3a417a7cf210d0255403bb0cc06890018",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual source-frame review and paired primary localASR cross-check; not human listening",
+  "reviewed_at": "2026-10-22T13:29:16.610547+00:00",
+  "reviewed_from": 136,
+  "reviewed_to": 197,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 138.32,
+      "end": 140.82,
+      "en": "Second match point now for Gauff.",
+      "zh": "现在是高芙的第二个赛点。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-small.en.json",
+      "sha256": "c9bce52365ddcfaa0d86f9179cbe71007167fe2d7c20fa379595f9607ff2e5b7",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        136,
+        197
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-medium.en.json",
+      "sha256": "48b4647fc196c4d6fed7465af67a87f3b04b73a74df7c7c74c4856ec18cf03a0",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        136,
+        197
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-short-turbo.json",
+      "sha256": "40e7f332f3ea9b4252998b19571f404c10de9667ff9d1ef3664a382f5f966ebd",
+      "model": "large-v3-turbo",
+      "actual_reviewed_range": [
+        164,
+        178
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-small.en.json",
+      "sha256": "f5d9ad9d62c7f4cac6bc194b58fac855a7cff9e173867fe0617afa5fe99aa1f4",
+      "model": "small.en",
+      "actual_reviewed_range": [
+        161,
+        178
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-medium.en.json",
+      "sha256": "038b864efea5b7955a010f440e601103df5d127159809377a65ce399d5e06dbd",
+      "model": "medium.en",
+      "actual_reviewed_range": [
+        161,
+        178
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-ump-context-large-v3-turbo.json",
+      "sha256": "071f0fb293798824dad036c0afba83ae83257213c5b67385d38143afa1361fc6",
+      "model": "large-v3-turbo",
+      "actual_reviewed_range": [
+        161,
+        178
+      ]
+    },
+    {
+      "path": "/workspace/andreeva-finals-production/production/asr/us-qf-last-short-large-v3.json",
+      "sha256": "7d8f255a840af30eaaa92065dfed30c6126c9b752da0d0a57b509cef66391f69",
+      "model": "large-v3",
+      "actual_reviewed_range": [
+        162,
+        175.4
+      ]
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "transcript_scope": "Selected main foreground English commentary, not a claim every background PA/crowd word is intelligible.",
+  "background_disagreements_preserved": true,
+  "review_notes": "Actual same-point Gauff ball-in-hand prep138.4–140.0;wide140.5 before full toss/serve and entire long rally;~164dead and actual Gauff victory reaction166.0. Main subjectMirra loses; never assign winner emotion to her. Stop after complete point and real reaction, before separate post-matchPA167.18; no artificial Game/set/match statement. Paired full-range outputs agree initial commentary, proper noungolf corrected to verifiedGauff. Single cropped medium hallucinated Iamverynervous/Thegameisover during point; full-range primary and large diagnostics do not confirm these words, rejected as literal foreground quotes. Body original audio wholly retained. Not a claim all distant crowd/PA is lexically recovered."
+}

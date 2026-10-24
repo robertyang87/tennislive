@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "134aad5c17001bf1e5e22f647c5e8a4907e1d1a14685e622950403199c7f8f3a",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026-new-story/00-cold-us-result-excerpt.json",
+      "transcript_sha256": "f59a82abd7d623ee823ed45f29bf972e5b42a5c0d10e3872feac8cf5a289c68b"
+    },
+    {
+      "index": 3,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/03-adelaide-final.json",
+      "transcript_sha256": "077d66cbb466f96bd48355cf4764b1aa50ef21d37fcba3dc84a353a7e08e5c87"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/07-linz-final.json",
+      "transcript_sha256": "2f1a5240ba22e78ce2729b21d45d35a49c852a92433cb9945db80c5e7393b11f"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/09-madrid-final.json",
+      "transcript_sha256": "9c48dbb350ed5fcac33c5605f98e74f3e91314126255535f860fd4db8094700d"
+    },
+    {
+      "index": 10,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/11-rg-final.json",
+      "transcript_sha256": "4c80ac2f71f24c6ddf7438169d86824903d7863638213b42e1ebd958ec617d3b"
+    },
+    {
+      "index": 12,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/13-wimbledon-r2.json",
+      "transcript_sha256": "db651ba6d1ca6c9ea26de3762f9514f5cd9f9d5d8c3a5539194cc1944829dca9"
+    },
+    {
+      "index": 14,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/15-us-qf.json",
+      "transcript_sha256": "dd98a49fed2038d2eeb9684351f914e1ddd1890ffd8e6935bfc4f85b290b36cd"
+    },
+    {
+      "index": 17,
+      "transcript_path": "data/audio_reviews/andreeva-finals-2026/18-beijing-final.json",
+      "transcript_sha256": "9e4902b1b9703d681caf71821ec965c2af0f6a9c5fd06bed769e6d6a1f6153bd"
+    }
+  ],
+  "method_note": "Seven whole source-bound paired-ASR packets byte-exact reused; one result-excerpt scope rebased to committed actual raw evidence. No human listening claim."
+}
