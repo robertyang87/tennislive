@@ -18,23 +18,17 @@
   "story_kind": "other",
   "layout": "solo",
   "portrait": {
-   "image": "assets/reel/scoring-love-2026/cover-umpire-w23.png",
+   "image": "assets/reel/scoring-love-2026/portrait-sinner-uso24-commons.jpg",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Jannik_Sinner_(2024_US_Open)_03.jpg",
+   "fit": "width",
    "focus": 0.5,
    "focus_y": 0.3,
-   "_low_res_why": "上下叠版式：这张只铺下格 1080×763，实际放大约 1.04 倍（校验器按整张 1080×1440 计成 1.97 倍）。官方转播帧是唯一同时有记分牌 15/40 和主裁的画面，账号所有者 10.24 选定此版。",
-   "_portrait_why": "温网官方决赛集锦（FQZ7B7JTta4）t=262.85s 原帧 1920×1080 裁 1035×732，主裁坐在高椅上，头肩放在格子上半，钩子压在椅子腿上、不压胸口；约 1.04 倍，不糊。"
-  },
-  "portrait_above": {
-   "image": "assets/reel/scoring-love-2026/cover-board-w23.png",
-   "focus": 0.5,
-   "focus_y": 0.5,
-   "_low_res_why": "记分牌取自官方转播 1920×1080 帧，上格放大约 1.64 倍，字清楚但偏软；账号所有者 10.24 选定此版。",
-   "_why": "同一帧中央球场 Rolex 记分牌：阿尔卡拉斯 15、德约科维奇 40（转播比分条同为 15/40）。账号所有者 10.24 选定 A 版：记分牌＋主裁。"
+   "zoom": 1.0,
+   "_portrait_why": "维基共享资源原图 4000×6000（Hameltion 摄，2024-08-25 美网赛前训练，CC BY-SA 4.0，需署名）：辛纳面向镜头、整个头部完整入画；裁 3:4 为 2100×2800，高清无放大。"
   }
  },
  "push": {
-  "auto": false,
-  "_auto_why": "修正版仅供审阅：首版已推送一次，这版不合并、不推送。",
+  "auto": true,
   "summary": "为什么40不是45",
   "lead": "赢一分十五，再赢一分三十，第三分却是四十；一分没有，叫 love。网球为什么这么数数？线索能追到六百年前一位公爵的诗，可答案至今没有定论。",
   "_why": "账号所有者固定口径：质检通过即推送微信一次。标题「10.24网球有故事|为什么40不是45」20 字 ≤20。"
@@ -53,11 +47,12 @@
  "editorial": {
   "mode": "match_review",
   "question": "网球为什么按15、30、40计分？0分为什么叫love？",
-  "thesis": "15、30、45的计分最早见于奥尔良公爵查理被囚英国时写的诗（“我已打到四十五；我们押了注，不是白打”）；诗里打的是手掌击球的老式网球，后来发展成皇家网球；钟面说、皇家网球15尺说都只是后人推测，拿不出史料；45怎么变成40也没有原始记载；1877年温网规则写明沿用皇家网球的十五进位计分。love 多数词源学者认为来自“为爱而玩”（不下注、白打）；l'oeuf 说找不到证据。USTA 允许用零一二三代替，ITF 规则没有。",
+  "thesis": "15、30、45的计分最早见于奥尔良公爵查理被囚英国时写的诗（“我已打到四十五；我们押了注，不是白打”），1555年斯卡伊诺写明每分记15、第三分45；钟面说、皇家网球15尺说都有硬伤，起源至今无定论；45何时变40也无原始记载，1877年温网规则已是15、30、40。love 多数词源学者认为来自“为爱而玩”（不下注、白打，1670年代），1742年已指零分；l'oeuf 说找不到证据。USTA 允许用零一二三代替，ITF 规则没有。",
   "beats": [
    "冷开场：主裁报分 30-15、15-love",
    "最早记载：公爵的诗与皇家网球",
-   "两种起源说都只是推测",
+   "1555 斯卡伊诺",
+   "两种起源说及其漏洞",
    "45 变 40",
    "love 的三种词源与学界倾向",
    "USTA 零一二三",
@@ -67,8 +62,10 @@
    "angle": "计分的来历说不清，最早的记载和 love 的词源却都指向“押注还是白打”。",
    "facts": [
     "Charles d'Orléans Ballade 113：J'ay quarante cinq; sur bon gage nous jouons, non pas por neant（British Academy Review 17, Putter 2011）",
-    "1877 温网规则：The real tennis method of scoring by fifteens will be adopted（“15, 30, 40”是维基编者注，不是原文）",
-    "love 源自 play for love（不下注；OED / Oxford Reference、韦氏、Sheidlower NPR）；韦氏编辑部：l'oeuf 说无证据",
+    "Scaino 1555：each stroke won is scored 15 … for the third, 45（Marshall, Annals of Tennis 1878）",
+    "钟面说反方：分针普及在约1690年摆钟之后（Milham）；15尺说反方：皇家网球场无统一长度（Shneerson 2015）",
+    "1877 温网规则：The real tennis method of scoring by fifteens (15, 30, 40) will be adopted",
+    "love 零分义 by 1742，源自 playing for love (1670s)（etymonline / OED）；韦氏编辑部：l'oeuf 说无证据",
     "USTA Friend at Court：Zero, one, two, three may be substituted for Love, 15, 30, 40（ITF 规则无此条）"
    ],
    "sources": [
@@ -224,10 +221,10 @@
   {
    "source": "rt",
    "start": 44.5,
-   "end": 50.26,
+   "end": 48.46,
    "cx": 0.5,
    "track": false,
-   "narration": "他玩的是手掌击球的老式网球，后来发展成皇家网球。",
+   "narration": "他玩的，正是皇家网球。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -263,6 +260,18 @@
    }
   },
   {
+   "source": "rt",
+   "start": 163.5,
+   "end": 172.12,
+   "cx": 0.5,
+   "track": false,
+   "narration": "一五五五年，意大利人斯卡伊诺写得明明白白：每赢一分，记十五；第三分，记四十五。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+   }
+  },
+  {
    "source": "w23g",
    "start": 393.5,
    "end": 399.48,
@@ -287,6 +296,18 @@
    }
   },
   {
+   "source": "w23g",
+   "start": 1320.8,
+   "end": 1328.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "可反对的人说，那时的钟大多只有时针。分针普及，要等到十七世纪末。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+   }
+  },
+  {
    "source": "rt",
    "start": 202.5,
    "end": 209.22,
@@ -299,12 +320,24 @@
    }
   },
   {
-   "source": "w23g",
-   "start": 600.0,
-   "end": 605.26,
+   "source": "rt",
+   "start": 235.0,
+   "end": 240.69,
    "cx": 0.5,
    "track": false,
-   "narration": "两种说法，都只是后人的推测，拿不出史料。",
+   "narration": "问题是，当年的皇家网球场，长短并不统一。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+   }
+  },
+  {
+   "source": "w23g",
+   "start": 600.0,
+   "end": 606.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "两种说法都有漏洞。网球史学者争了几百年，至今没有定论。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -324,11 +357,23 @@
   },
   {
    "source": "w23g",
-   "start": 710.0,
-   "end": 715.04,
+   "start": 638.0,
+   "end": 646.95,
    "cx": 0.5,
    "track": false,
-   "narration": "四十五怎么变成四十，同样没有原始记载。",
+   "narration": "钟面说的解释是，给平分留出位置：四十、五十、六十。也有人说，四十只是更好念。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+   }
+  },
+  {
+   "source": "w23g",
+   "start": 710.0,
+   "end": 714.15,
+   "cx": 0.5,
+   "track": false,
+   "narration": "哪一种，都拿不出原始证据。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -336,11 +381,11 @@
   },
   {
    "source": "w23h",
-   "start": 1247.5,
-   "end": 1254.99,
+   "start": 1245.9,
+   "end": 1254.9,
    "cx": 0.5,
    "track": false,
-   "narration": "能确定的是，一八七七年第一届温网规则写明：沿用皇家网球的十五进位计分。",
+   "narration": "能确定的是，一八七七年第一届温网规则写明：沿用皇家网球的计分，十五、三十、四十。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -349,7 +394,7 @@
   {
    "source": "w23g",
    "start": 785.0,
-   "end": 787.64,
+   "end": 788.07,
    "cx": 0.5,
    "track": false,
    "narration": "再说 love。",
@@ -408,6 +453,18 @@
   },
   {
    "source": "w23g",
+   "start": 1464.0,
+   "end": 1471.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "这个说法十七世纪就有了。到一七四二年，love 已经用来表示零分。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+   }
+  },
+  {
+   "source": "w23g",
    "start": 1500.0,
    "end": 1505.98,
    "cx": 0.5,
@@ -432,8 +489,8 @@
   },
   {
    "source": "w23h",
-   "start": 477.9,
-   "end": 484.01,
+   "start": 477.2,
+   "end": 484.06,
    "cx": 0.5,
    "track": false,
    "narration": "国际网联的规则里没有这一条。大满贯赛场上，主裁照样喊 love。",
@@ -445,10 +502,10 @@
   {
    "source": "w23g",
    "start": 1360.0,
-   "end": 1365.33,
+   "end": 1364.87,
    "cx": 0.5,
    "track": false,
-   "narration": "几百年过去，来历说不清，这套报分却留了下来。",
+   "narration": "六百年，来历说不清，规矩却一直没改。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
