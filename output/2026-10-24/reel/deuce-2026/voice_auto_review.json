@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "00c63dd952d9a11c13c7b1d261717fc6e6041cfe152a6bbc09c213bd329a8f40",
-    "render_inputs_sha256": "658749a00f385eac2458197953bd33b1ca844bbc3a738f4f21ba1781cbaaeca5",
-    "spec_sha256": "5a0a5bb600904db0e90a65cf340e52b85107a41ba0bc2404b1e53c5bb26162f1",
-    "film_sha256": "fe61b4bbe62229a4cd91aead19e8a3c2ec209e0a6d72ac10d0ddeac0ab0addc7",
-    "inventory_sha256": "799b2905aabc3dc53fd9a1519be89567b4977b625e57cb74e1c55033e884b1d0"
+    "render_sha256": "96a1c1fcd8aea3526ed8eb0fb20313a081947aa94f34e36c273f163c007d0f8d",
+    "render_inputs_sha256": "1bbf1eaa26cb8c851fabff04aeaa2aa58859ee0dd87fc3a0fba949e81dde2b22",
+    "spec_sha256": "4bc1046be6d2b727c9049d870202d0a4e2e2ad8584e03a224344aeea95aa6814",
+    "film_sha256": "833f327035dcdb44f2af51ba5b26f71119b7eb13a6b853f3103016ae67dd012a",
+    "inventory_sha256": "344e84a64a18cd9c5455187e728c132bfd13391160ad89dc121cc118c10b8f62"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,516 +18,612 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-24T04:21:24+00:00",
+  "reviewed_at": "2026-10-24T05:53:05+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
     {
+      "id": "bundle:0d294a6cf5042a043652e4645ca536af5aa0e50110838d8857de236d158d2bf8",
+      "audio_sha256": "d909ece1453d131a5d99135c777e96d073fde992e5d3eb9c827d11b34a469004",
+      "pass": true,
+      "result_of": "bundle:0d294a6cf5042a043652e4645ca536af5aa0e50110838d8857de236d158d2bf8"
+    },
+    {
       "id": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214",
-      "audio_sha256": "cbba30b11e1f461dd6e5161873d787e715babff8698c96fa1625a7acca46b2df",
+      "audio_sha256": "d26f3ef523900f1b3a5147684102c1bf651ce9600dbedc930bd8ca7bbb9421fe",
       "pass": true,
       "result_of": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214"
     },
     {
       "id": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d",
-      "audio_sha256": "9fb05472b304e99bfa6337bb053edb3e047382a81ce2f680ace25676fb54fe7e",
+      "audio_sha256": "d63a8302ad8b6f320c62ba722c849e3b34b3ce47da32ff70ec007f847abcef47",
       "pass": true,
       "result_of": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d"
     },
     {
       "id": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f",
-      "audio_sha256": "bbc01c1c35f23f1274cd16356d98c9a1407fa2930f7bf524d720adfdffd4cc20",
+      "audio_sha256": "9eddf848dee63c59c4160674a9e557923cf4a91b38294f5990fc22eb47d74d35",
       "pass": true,
       "result_of": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f"
     },
     {
       "id": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d",
-      "audio_sha256": "44698304d30c5fcef63867e185b1da2a17045293e157e311182d62dd2d690363",
+      "audio_sha256": "678c33f8f40d3b7bbdab79b24e6bc070f780530ae434dfacd76045e23a0fcfcb",
       "pass": true,
       "result_of": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d"
     },
     {
       "id": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e",
-      "audio_sha256": "6d4850cd139dd21f81caa745c16abf74fee4361bfc038f4710fb32b12fe83620",
+      "audio_sha256": "9f81c09dee6b5de64eee0c86104e1f8412dc1ea6382ced04ef732e313d71514a",
       "pass": true,
       "result_of": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e"
     },
     {
       "id": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0",
-      "audio_sha256": "42370eaa36a61a931361c02f4ef61fe1fbf47b99bd8d69f0e35d67553320bdfd",
+      "audio_sha256": "084a37bee594497148bd8084b002a91d6e66f4d1b1df304c0281dfa89152b40a",
       "pass": true,
       "result_of": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0"
     },
     {
       "id": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98",
-      "audio_sha256": "1eb7cede390efb9885d8ecfd090997b0bc60f7f727ad23b16b48172f81291070",
+      "audio_sha256": "a2cf454f6f1850679f06f1648a4f42993afa7fd162c8d28fb3d15c22868a88b0",
       "pass": true,
       "result_of": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98"
     },
     {
       "id": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f",
-      "audio_sha256": "497dece98bf1bf1ab6af38d1f4639b4e283892a7522487959955bd2ea0827827",
+      "audio_sha256": "e34c37566333c0219981d63bf4067b833191d4f6868879f2f122f68634963fd7",
       "pass": true,
       "result_of": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f"
     },
     {
       "id": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3",
-      "audio_sha256": "046a15c3e5d50f755b395b672beb58e6c63b415f15e93fd2a98e18ff1afd460c",
+      "audio_sha256": "40f68943f617976403f5211d510a53652e19fee54088883fc44f34664a8964c5",
       "pass": true,
       "result_of": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3"
     },
     {
       "id": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199",
-      "audio_sha256": "9a8e59758f104fd0f5b136ba722f4f2f54406f1799f8bee2c394a88722c366ce",
+      "audio_sha256": "b20268cae127bd84a8406c412d1c690fdd802a17f8c30214d832d70ebe51690b",
       "pass": true,
       "result_of": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199"
     },
     {
       "id": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7",
-      "audio_sha256": "660b4193d595b2082207911af021827e0ce991ead45c1ba55040939fa696ff1c",
+      "audio_sha256": "af0ff3ef90d25207069889e1af207ff5e143caacbaa0aeec5dd15fc8a253a7a9",
       "pass": true,
       "result_of": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7"
     },
     {
       "id": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d",
-      "audio_sha256": "224c0cad41e274bd9dcd564b3213634305e2c86ab7af2a155bd22cc8a03e8e08",
+      "audio_sha256": "c89e99c5bcf6dd7c483a5a5db7370e2eab32cdbdc4d0213098843d8ee66ccd63",
       "pass": true,
       "result_of": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d"
     },
     {
       "id": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab",
-      "audio_sha256": "fb408c9910ebd06434c2db67e9af34efd6c587fec2bcf8d89d25c6b1e42a1090",
+      "audio_sha256": "b7c0ef9d19f7a3b02cb81b91987b9ceea2a89d5065a7eb813b758ab3cb896440",
       "pass": true,
       "result_of": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab"
     },
     {
-      "id": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281",
-      "audio_sha256": "8d51524c7220baf2b1697e4aff36a79191820717ff3503c80c19df7e96e7fe79",
-      "pass": true,
-      "result_of": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281"
-    },
-    {
       "id": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef",
-      "audio_sha256": "4debfb4972e401bc644ea467d6750d8c0ba22a94284db70c49d7423821e4c36f",
+      "audio_sha256": "dfb7affd88fbd66f5b31ae8aea0dab21e600dc86494d14392a160a82c72c8f0d",
       "pass": true,
       "result_of": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef"
     },
     {
+      "id": "bundle:4691fb49940e22c59d6e7808f4a5e0e436c9a22639df83860e3297e0a5460eb0",
+      "audio_sha256": "8e89f0d71c2ba364ed3cb2bad6c4336c4f022f932e0a16cd675f365051584cb0",
+      "pass": true,
+      "result_of": "bundle:4691fb49940e22c59d6e7808f4a5e0e436c9a22639df83860e3297e0a5460eb0"
+    },
+    {
       "id": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c",
-      "audio_sha256": "2874e5dc545b95e920f4e63a09f649e88bafec16e9c47c4933d9ea195d3122ad",
+      "audio_sha256": "1bacf3f298eecc280a4dfba8daa9ac287f23c96a1837040771941843d8e31e85",
       "pass": true,
       "result_of": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c"
     },
     {
       "id": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8",
-      "audio_sha256": "48ab0a470190e3a129c6ea373f4f553339cc34709938809a0e51fb9fe9b5be06",
+      "audio_sha256": "cf7ce066e89ae62faeda1a2054778f98f83a936f8fce4789f1f4de0ba054beb5",
       "pass": true,
       "result_of": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8"
     },
     {
       "id": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1",
-      "audio_sha256": "6e630d9094420553a05baec22c704a0d0974a164df0cbc0048e5cdcb36f00d08",
+      "audio_sha256": "9bb48a7b9dcabc29471c62526529effc498f0b92bea29d8698beffb1d11c9cc0",
       "pass": true,
       "result_of": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1"
     },
     {
-      "id": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022",
-      "audio_sha256": "74cf2b464353f176018a6f3b1b0a632e714ef5165a6025ce4de30266edc71452",
-      "pass": true,
-      "result_of": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022"
-    },
-    {
       "id": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c",
-      "audio_sha256": "c9922a1a08793a91ed745a65c82db6eb6405453af535cc2f9bd25f8c4cbf4ebf",
+      "audio_sha256": "d0eaaaae92c293070bb8f8872e136eae112739540f2dca07a91691c341e02e5c",
       "pass": true,
       "result_of": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c"
     },
     {
       "id": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161",
-      "audio_sha256": "77f679e59455af31d2116fab5750c24dc8e4c113f352be96b78b2512b0466033",
+      "audio_sha256": "66bc364399b32886400078072776ca93e0281c73e5b921b4642e611418c0f236",
       "pass": true,
       "result_of": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161"
     },
     {
       "id": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905",
-      "audio_sha256": "35e087302489fceae6688c1072070c071aefdd3a86b7631be8901ad64a9fe125",
+      "audio_sha256": "104dcc1c1ac7033f869fe3eacfade5880564ecd0d85c72e5d23fe75e5d097841",
       "pass": true,
       "result_of": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905"
     },
     {
       "id": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a",
-      "audio_sha256": "8fc62698d1f9c849f2276d97c320459d83bfaffdf571d0d046648923732b15cb",
+      "audio_sha256": "2c50b7077123cf95ece371529a4cd6314c892cf13effe7043196f5b163e61d5d",
       "pass": true,
       "result_of": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a"
     },
     {
       "id": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc",
-      "audio_sha256": "f344a6f1f51509c8ae611d8295cf5525d104641b716ef989c2225edbaa620176",
+      "audio_sha256": "ad89d8c8226224cd07c5de517da28e5990a4a0cd03aa3a6eb06947029097ab23",
       "pass": true,
       "result_of": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc"
     },
     {
       "id": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63",
-      "audio_sha256": "7f22ab729a4cd3b34f12031410f23e4ca5de840690e72251b61f66b4fbd28243",
+      "audio_sha256": "081c06589ffa27278461e59afc0565b22ec6dc5d87180f6c85f1f8854ad0a1d8",
       "pass": true,
       "result_of": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63"
     },
     {
-      "id": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26",
-      "audio_sha256": "561161b114ba3ccd7dc0a91c216e13e21f451c2240ec6f7477e443128b19abab",
-      "pass": true,
-      "result_of": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26"
-    },
-    {
       "id": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282",
-      "audio_sha256": "f50926d6ad8a65367c972050d8d7380274702fbf021b6b6be4b92512445a563b",
+      "audio_sha256": "1d84f31b566803dad5bf0bf944866609002dda674036f46837cf3759362558b6",
       "pass": true,
       "result_of": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282"
     },
     {
       "id": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644",
-      "audio_sha256": "37a1e459215bd29470eb74c7363609922b3ba55248bc350077f6cf5b1c2806ae",
+      "audio_sha256": "5ec7ccf57d7a242d412b708f2b4c317f2465ea34361a144dead7d42a6e8aea0a",
       "pass": true,
       "result_of": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644"
     },
     {
       "id": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555",
-      "audio_sha256": "f6e02bacf8444ae189fa0c5262b781c7ba738e51ab66e687cb3f6fd6b4074143",
+      "audio_sha256": "d4d19e2863a689070a4d807fd50d1acf48732888fea6e51c9ac4fc94d0506c40",
       "pass": true,
       "result_of": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555"
     },
     {
       "id": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5",
-      "audio_sha256": "5ceffec5f181d6c48e26232f77decfab5c48e2324586898f93d7927c1888f34e",
+      "audio_sha256": "81b837e11a9923c1dce4e915f8d637dcd8b4a5b87b2e7726df04cf97420e79d5",
       "pass": true,
       "result_of": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5"
     },
     {
       "id": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0",
-      "audio_sha256": "07e71855e54531ccf21f14a4d70cb34d4595e8e631e3ece6b4a4661d503cc46b",
+      "audio_sha256": "ab56bd1e28b56dd53e5415746e8a021a1ddaa6c1185b82ba5cee713499552a4a",
       "pass": true,
       "result_of": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0"
     },
     {
       "id": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317",
-      "audio_sha256": "0449f759b345730a3d6f32b6357bea941eb58e6e254006b2b5c0679e87fe6310",
+      "audio_sha256": "2a24c6b505b8d0adb513d7b3fb40a7a096f2d257d2e174a36280f8079261a4f0",
       "pass": true,
       "result_of": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317"
     },
     {
-      "id": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06",
-      "audio_sha256": "095570e3c673b6ad03ea958fb965a7a8e0ba5b144df81bfef1d1a2237970bcda",
+      "id": "bundle:abd315352a6ae202754d8c0ddfb636705aeafe394299ab0aaff301700fa4edca",
+      "audio_sha256": "b48b2864ef1a51e12bea521f962777e0f5e546ce38e6b029b754b9eeea22f91d",
       "pass": true,
-      "result_of": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06"
+      "result_of": "bundle:abd315352a6ae202754d8c0ddfb636705aeafe394299ab0aaff301700fa4edca"
     },
     {
       "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
-      "audio_sha256": "4d7b37c8f3c9b4f66fe72c1311038764f96008a2b324b04370ee1b0f65c431b7",
+      "audio_sha256": "bd431a45b0419573eb4823f79ff2085aaf777d7ec84019ef959cbaad61dc16cf",
       "pass": true,
       "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
     },
     {
       "id": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299",
-      "audio_sha256": "46d4f0c889fd42a22d1e458ffbab00a10834c8e3c78759a446009fb4c078914d",
+      "audio_sha256": "48ab89885acb0793b9f0eb957579a428a0ce8925b717e775acb0f82dc865d6b0",
       "pass": true,
       "result_of": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299"
     },
     {
       "id": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438",
-      "audio_sha256": "adb87c2e5926324484288c6cd4f1d32b29d14fd592849db1e7cc434dd5e4b76a",
+      "audio_sha256": "b2d1902f041d1bc4e1d36f179d0f5a94b2cd772acde0ceedc32baa779a1580d5",
       "pass": true,
       "result_of": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438"
     },
     {
+      "id": "bundle:c4f725b6baad1ddbc827c794362ae597518fa44be479e669f841fb5962ecfa8f",
+      "audio_sha256": "b91f52347cac0b1de7496bce3169ed64c34401452cd636d59598f6c3f2aad413",
+      "pass": true,
+      "result_of": "bundle:c4f725b6baad1ddbc827c794362ae597518fa44be479e669f841fb5962ecfa8f"
+    },
+    {
       "id": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5",
-      "audio_sha256": "5f4ab373fd2598dccbbd920472582690858c8b2241f1865abe3e0d6493a862df",
+      "audio_sha256": "7e88441fc768320b7a6e782f039172d2fe916f83c148322ec1c1f1984aecaa8f",
       "pass": true,
       "result_of": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5"
     },
     {
       "id": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5",
-      "audio_sha256": "3d14789821c6e39d86bb7774b33992deee281e2a91395302861ff9a0569108fd",
+      "audio_sha256": "f64478f615368cf05af3c18b86c9332e0072a709b68d55ea61ff5eba3c936e7a",
       "pass": true,
       "result_of": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5"
     },
     {
       "id": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5",
-      "audio_sha256": "1a6d8271172fe88421431d55e3044a1f984c3d790967f51dcccb9be232c1555a",
+      "audio_sha256": "1a43fb2ec3f68fe75acbf5d9b12de0b0f5791cbac0d47ec80e4be79b947bc1f0",
       "pass": true,
       "result_of": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5"
     },
     {
-      "id": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a",
-      "audio_sha256": "a42c71838d852ee84aa42ea53da59f58dd781f981d0acae5bf8f0a9633cbd2a4",
-      "pass": true,
-      "result_of": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a"
-    },
-    {
       "id": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42",
-      "audio_sha256": "8424ec60c7457ee98229dbb4e507fcb0cc56df3cb68a1448c266601fcfc8eea3",
+      "audio_sha256": "fe24a584a72a8a344f76b7674d0c54a15803fab14db6ece9a589c1fb7e20c55d",
       "pass": true,
       "result_of": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42"
     },
     {
       "id": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188",
-      "audio_sha256": "754f65abbfc2b1e89922cbcbb91f7f6e4f344a0e972abe699610ba1c90ccd6e2",
+      "audio_sha256": "a5bd4a29fa6a7c08746952ce1c8236230791e4be97ece30d6dc38e87826671da",
       "pass": true,
       "result_of": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188"
     },
     {
+      "id": "bundle:fa06011b367a3ace03624817d6cc31d30c05c3005e2d7e04e0aa7fc48e5c7642",
+      "audio_sha256": "e1bd079515857320d5979287941cb0117640697d94c8b26f6c5dd62326c2af65",
+      "pass": true,
+      "result_of": "bundle:fa06011b367a3ace03624817d6cc31d30c05c3005e2d7e04e0aa7fc48e5c7642"
+    },
+    {
       "id": "voice_00.mp3",
-      "audio_sha256": "fb408c9910ebd06434c2db67e9af34efd6c587fec2bcf8d89d25c6b1e42a1090",
+      "audio_sha256": "b7c0ef9d19f7a3b02cb81b91987b9ceea2a89d5065a7eb813b758ab3cb896440",
       "pass": true,
       "result_of": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab"
     },
     {
       "id": "voice_01.mp3",
-      "audio_sha256": "3d14789821c6e39d86bb7774b33992deee281e2a91395302861ff9a0569108fd",
+      "audio_sha256": "f64478f615368cf05af3c18b86c9332e0072a709b68d55ea61ff5eba3c936e7a",
       "pass": true,
       "result_of": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5"
     },
     {
       "id": "voice_02.mp3",
-      "audio_sha256": "2874e5dc545b95e920f4e63a09f649e88bafec16e9c47c4933d9ea195d3122ad",
+      "audio_sha256": "1bacf3f298eecc280a4dfba8daa9ac287f23c96a1837040771941843d8e31e85",
       "pass": true,
       "result_of": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c"
     },
     {
       "id": "voice_03.mp3",
-      "audio_sha256": "42370eaa36a61a931361c02f4ef61fe1fbf47b99bd8d69f0e35d67553320bdfd",
+      "audio_sha256": "084a37bee594497148bd8084b002a91d6e66f4d1b1df304c0281dfa89152b40a",
       "pass": true,
       "result_of": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0"
     },
     {
       "id": "voice_04.mp3",
-      "audio_sha256": "561161b114ba3ccd7dc0a91c216e13e21f451c2240ec6f7477e443128b19abab",
+      "audio_sha256": "e1bd079515857320d5979287941cb0117640697d94c8b26f6c5dd62326c2af65",
       "pass": true,
-      "result_of": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26"
+      "result_of": "bundle:fa06011b367a3ace03624817d6cc31d30c05c3005e2d7e04e0aa7fc48e5c7642"
     },
     {
       "id": "voice_05.mp3",
-      "audio_sha256": "74cf2b464353f176018a6f3b1b0a632e714ef5165a6025ce4de30266edc71452",
+      "audio_sha256": "d909ece1453d131a5d99135c777e96d073fde992e5d3eb9c827d11b34a469004",
       "pass": true,
-      "result_of": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022"
+      "result_of": "bundle:0d294a6cf5042a043652e4645ca536af5aa0e50110838d8857de236d158d2bf8"
     },
     {
       "id": "voice_06.mp3",
-      "audio_sha256": "754f65abbfc2b1e89922cbcbb91f7f6e4f344a0e972abe699610ba1c90ccd6e2",
+      "audio_sha256": "a5bd4a29fa6a7c08746952ce1c8236230791e4be97ece30d6dc38e87826671da",
       "pass": true,
       "result_of": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188"
     },
     {
       "id": "voice_08.mp3",
-      "audio_sha256": "35e087302489fceae6688c1072070c071aefdd3a86b7631be8901ad64a9fe125",
+      "audio_sha256": "104dcc1c1ac7033f869fe3eacfade5880564ecd0d85c72e5d23fe75e5d097841",
       "pass": true,
       "result_of": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905"
     },
     {
       "id": "voice_09.mp3",
-      "audio_sha256": "5ceffec5f181d6c48e26232f77decfab5c48e2324586898f93d7927c1888f34e",
+      "audio_sha256": "81b837e11a9923c1dce4e915f8d637dcd8b4a5b87b2e7726df04cf97420e79d5",
       "pass": true,
       "result_of": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5"
     },
     {
       "id": "voice_10.mp3",
-      "audio_sha256": "bbc01c1c35f23f1274cd16356d98c9a1407fa2930f7bf524d720adfdffd4cc20",
+      "audio_sha256": "9eddf848dee63c59c4160674a9e557923cf4a91b38294f5990fc22eb47d74d35",
       "pass": true,
       "result_of": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f"
     },
     {
       "id": "voice_11.mp3",
-      "audio_sha256": "f6e02bacf8444ae189fa0c5262b781c7ba738e51ab66e687cb3f6fd6b4074143",
+      "audio_sha256": "d4d19e2863a689070a4d807fd50d1acf48732888fea6e51c9ac4fc94d0506c40",
       "pass": true,
       "result_of": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555"
     },
     {
       "id": "voice_12.mp3",
-      "audio_sha256": "046a15c3e5d50f755b395b672beb58e6c63b415f15e93fd2a98e18ff1afd460c",
+      "audio_sha256": "40f68943f617976403f5211d510a53652e19fee54088883fc44f34664a8964c5",
       "pass": true,
       "result_of": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3"
     },
     {
       "id": "voice_14.mp3",
-      "audio_sha256": "46d4f0c889fd42a22d1e458ffbab00a10834c8e3c78759a446009fb4c078914d",
+      "audio_sha256": "48ab89885acb0793b9f0eb957579a428a0ce8925b717e775acb0f82dc865d6b0",
       "pass": true,
       "result_of": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299"
     },
     {
       "id": "voice_15.mp3",
-      "audio_sha256": "8fc62698d1f9c849f2276d97c320459d83bfaffdf571d0d046648923732b15cb",
+      "audio_sha256": "2c50b7077123cf95ece371529a4cd6314c892cf13effe7043196f5b163e61d5d",
       "pass": true,
       "result_of": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a"
     },
     {
       "id": "voice_16.mp3",
-      "audio_sha256": "44698304d30c5fcef63867e185b1da2a17045293e157e311182d62dd2d690363",
+      "audio_sha256": "678c33f8f40d3b7bbdab79b24e6bc070f780530ae434dfacd76045e23a0fcfcb",
       "pass": true,
       "result_of": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d"
     },
     {
       "id": "voice_17.mp3",
-      "audio_sha256": "6e630d9094420553a05baec22c704a0d0974a164df0cbc0048e5cdcb36f00d08",
+      "audio_sha256": "9bb48a7b9dcabc29471c62526529effc498f0b92bea29d8698beffb1d11c9cc0",
       "pass": true,
       "result_of": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1"
     },
     {
       "id": "voice_18.mp3",
-      "audio_sha256": "f344a6f1f51509c8ae611d8295cf5525d104641b716ef989c2225edbaa620176",
+      "audio_sha256": "ad89d8c8226224cd07c5de517da28e5990a4a0cd03aa3a6eb06947029097ab23",
       "pass": true,
       "result_of": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc"
     },
     {
       "id": "voice_19.mp3",
-      "audio_sha256": "77f679e59455af31d2116fab5750c24dc8e4c113f352be96b78b2512b0466033",
+      "audio_sha256": "66bc364399b32886400078072776ca93e0281c73e5b921b4642e611418c0f236",
       "pass": true,
       "result_of": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161"
     },
     {
       "id": "voice_20.mp3",
-      "audio_sha256": "224c0cad41e274bd9dcd564b3213634305e2c86ab7af2a155bd22cc8a03e8e08",
+      "audio_sha256": "c89e99c5bcf6dd7c483a5a5db7370e2eab32cdbdc4d0213098843d8ee66ccd63",
       "pass": true,
       "result_of": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d"
     },
     {
       "id": "voice_21.mp3",
-      "audio_sha256": "1a6d8271172fe88421431d55e3044a1f984c3d790967f51dcccb9be232c1555a",
+      "audio_sha256": "1a43fb2ec3f68fe75acbf5d9b12de0b0f5791cbac0d47ec80e4be79b947bc1f0",
       "pass": true,
       "result_of": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5"
     },
     {
       "id": "voice_22.mp3",
-      "audio_sha256": "8d51524c7220baf2b1697e4aff36a79191820717ff3503c80c19df7e96e7fe79",
+      "audio_sha256": "8e89f0d71c2ba364ed3cb2bad6c4336c4f022f932e0a16cd675f365051584cb0",
       "pass": true,
-      "result_of": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281"
+      "result_of": "bundle:4691fb49940e22c59d6e7808f4a5e0e436c9a22639df83860e3297e0a5460eb0"
     },
     {
       "id": "voice_23.mp3",
-      "audio_sha256": "5f4ab373fd2598dccbbd920472582690858c8b2241f1865abe3e0d6493a862df",
+      "audio_sha256": "7e88441fc768320b7a6e782f039172d2fe916f83c148322ec1c1f1984aecaa8f",
       "pass": true,
       "result_of": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5"
     },
     {
       "id": "voice_24.mp3",
-      "audio_sha256": "8424ec60c7457ee98229dbb4e507fcb0cc56df3cb68a1448c266601fcfc8eea3",
+      "audio_sha256": "fe24a584a72a8a344f76b7674d0c54a15803fab14db6ece9a589c1fb7e20c55d",
       "pass": true,
       "result_of": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42"
     },
     {
       "id": "voice_25.mp3",
-      "audio_sha256": "095570e3c673b6ad03ea958fb965a7a8e0ba5b144df81bfef1d1a2237970bcda",
+      "audio_sha256": "b91f52347cac0b1de7496bce3169ed64c34401452cd636d59598f6c3f2aad413",
       "pass": true,
-      "result_of": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06"
+      "result_of": "bundle:c4f725b6baad1ddbc827c794362ae597518fa44be479e669f841fb5962ecfa8f"
     },
     {
       "id": "voice_26.mp3",
-      "audio_sha256": "1eb7cede390efb9885d8ecfd090997b0bc60f7f727ad23b16b48172f81291070",
+      "audio_sha256": "a2cf454f6f1850679f06f1648a4f42993afa7fd162c8d28fb3d15c22868a88b0",
       "pass": true,
       "result_of": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98"
     },
     {
       "id": "voice_27.mp3",
-      "audio_sha256": "9a8e59758f104fd0f5b136ba722f4f2f54406f1799f8bee2c394a88722c366ce",
+      "audio_sha256": "b20268cae127bd84a8406c412d1c690fdd802a17f8c30214d832d70ebe51690b",
       "pass": true,
       "result_of": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199"
     },
     {
       "id": "voice_28.mp3",
-      "audio_sha256": "48ab0a470190e3a129c6ea373f4f553339cc34709938809a0e51fb9fe9b5be06",
+      "audio_sha256": "cf7ce066e89ae62faeda1a2054778f98f83a936f8fce4789f1f4de0ba054beb5",
       "pass": true,
       "result_of": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8"
     },
     {
       "id": "voice_29.mp3",
-      "audio_sha256": "497dece98bf1bf1ab6af38d1f4639b4e283892a7522487959955bd2ea0827827",
+      "audio_sha256": "e34c37566333c0219981d63bf4067b833191d4f6868879f2f122f68634963fd7",
       "pass": true,
       "result_of": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f"
     },
     {
       "id": "voice_30.mp3",
-      "audio_sha256": "9fb05472b304e99bfa6337bb053edb3e047382a81ce2f680ace25676fb54fe7e",
+      "audio_sha256": "d63a8302ad8b6f320c62ba722c849e3b34b3ce47da32ff70ec007f847abcef47",
       "pass": true,
       "result_of": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d"
     },
     {
       "id": "voice_31.mp3",
-      "audio_sha256": "a42c71838d852ee84aa42ea53da59f58dd781f981d0acae5bf8f0a9633cbd2a4",
+      "audio_sha256": "b48b2864ef1a51e12bea521f962777e0f5e546ce38e6b029b754b9eeea22f91d",
       "pass": true,
-      "result_of": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a"
+      "result_of": "bundle:abd315352a6ae202754d8c0ddfb636705aeafe394299ab0aaff301700fa4edca"
     },
     {
       "id": "voice_32.mp3",
-      "audio_sha256": "7f22ab729a4cd3b34f12031410f23e4ca5de840690e72251b61f66b4fbd28243",
+      "audio_sha256": "081c06589ffa27278461e59afc0565b22ec6dc5d87180f6c85f1f8854ad0a1d8",
       "pass": true,
       "result_of": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63"
     },
     {
       "id": "voice_33.mp3",
-      "audio_sha256": "660b4193d595b2082207911af021827e0ce991ead45c1ba55040939fa696ff1c",
+      "audio_sha256": "af0ff3ef90d25207069889e1af207ff5e143caacbaa0aeec5dd15fc8a253a7a9",
       "pass": true,
       "result_of": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7"
     },
     {
       "id": "voice_34.mp3",
-      "audio_sha256": "6d4850cd139dd21f81caa745c16abf74fee4361bfc038f4710fb32b12fe83620",
+      "audio_sha256": "9f81c09dee6b5de64eee0c86104e1f8412dc1ea6382ced04ef732e313d71514a",
       "pass": true,
       "result_of": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e"
     },
     {
       "id": "voice_35.mp3",
-      "audio_sha256": "0449f759b345730a3d6f32b6357bea941eb58e6e254006b2b5c0679e87fe6310",
+      "audio_sha256": "2a24c6b505b8d0adb513d7b3fb40a7a096f2d257d2e174a36280f8079261a4f0",
       "pass": true,
       "result_of": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317"
     },
     {
       "id": "voice_39.mp3",
-      "audio_sha256": "37a1e459215bd29470eb74c7363609922b3ba55248bc350077f6cf5b1c2806ae",
+      "audio_sha256": "5ec7ccf57d7a242d412b708f2b4c317f2465ea34361a144dead7d42a6e8aea0a",
       "pass": true,
       "result_of": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644"
     },
     {
       "id": "voice_40.mp3",
-      "audio_sha256": "07e71855e54531ccf21f14a4d70cb34d4595e8e631e3ece6b4a4661d503cc46b",
+      "audio_sha256": "ab56bd1e28b56dd53e5415746e8a021a1ddaa6c1185b82ba5cee713499552a4a",
       "pass": true,
       "result_of": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0"
     },
     {
       "id": "voice_41.mp3",
-      "audio_sha256": "cbba30b11e1f461dd6e5161873d787e715babff8698c96fa1625a7acca46b2df",
+      "audio_sha256": "d26f3ef523900f1b3a5147684102c1bf651ce9600dbedc930bd8ca7bbb9421fe",
       "pass": true,
       "result_of": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214"
     },
     {
       "id": "voice_42.mp3",
-      "audio_sha256": "adb87c2e5926324484288c6cd4f1d32b29d14fd592849db1e7cc434dd5e4b76a",
+      "audio_sha256": "b2d1902f041d1bc4e1d36f179d0f5a94b2cd772acde0ceedc32baa779a1580d5",
       "pass": true,
       "result_of": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438"
     },
     {
       "id": "voice_43.mp3",
-      "audio_sha256": "c9922a1a08793a91ed745a65c82db6eb6405453af535cc2f9bd25f8c4cbf4ebf",
+      "audio_sha256": "d0eaaaae92c293070bb8f8872e136eae112739540f2dca07a91691c341e02e5c",
       "pass": true,
       "result_of": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c"
     },
     {
       "id": "voice_44.mp3",
-      "audio_sha256": "4debfb4972e401bc644ea467d6750d8c0ba22a94284db70c49d7423821e4c36f",
+      "audio_sha256": "dfb7affd88fbd66f5b31ae8aea0dab21e600dc86494d14392a160a82c72c8f0d",
       "pass": true,
       "result_of": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef"
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "f50926d6ad8a65367c972050d8d7380274702fbf021b6b6be4b92512445a563b",
+      "audio_sha256": "1d84f31b566803dad5bf0bf944866609002dda674036f46837cf3759362558b6",
       "pass": true,
       "result_of": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282"
     },
     {
       "id": "voice_outro.mp3",
-      "audio_sha256": "4d7b37c8f3c9b4f66fe72c1311038764f96008a2b324b04370ee1b0f65c431b7",
+      "audio_sha256": "bd431a45b0419573eb4823f79ff2085aaf777d7ec84019ef959cbaad61dc16cf",
       "pass": true,
       "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
     }
   ],
   "audio": [
+    {
+      "id": "bundle:0d294a6cf5042a043652e4645ca536af5aa0e50110838d8857de236d158d2bf8",
+      "text": "这还不算最长。有记录的最长一局在一九七五年：三十七次平分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这还不算最长。有记录的最长一局在1975年,37次评分。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.39,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 5,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.811,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "偿尝常"
+        },
+        {
+          "index": 12,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.381,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.35,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 还 ｜ 不 ｜ 算 ｜ 最 ｜ 长 ｜ 有 ｜ 记录 ｜ 的 ｜ 最 ｜ 长 ｜ 一 ｜ 局 ｜ 在 ｜ 一九七五年 ｜ 三十七次 ｜ 平分"
+      }
+    },
     {
       "id": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214",
       "text": "所以，赢两分其实是在给强者上保险：谁更强，就多给他几次机会证明。",
@@ -578,7 +674,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "真到了场上,因人而异。2017年ATP统计,木雷达到评分以后,爆发率80%。"
+        "transcript": "真到了场上,因人而已。2017年ATP统计,木雷达到评分以后,爆发率80%。"
       },
       "polyphones": [
         {
@@ -598,11 +694,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 32,
-        "speech_s": 6.663,
-        "cps": 4.8,
+        "speech_s": 6.621,
+        "cps": 4.83,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "真 ｜ 到 ｜ 了 ｜ 场 ｜ 上 ｜ 因人而异 ｜ 二零一七 ｜ 年 ｜ ATP ｜ 统计 ｜ 穆雷 ｜ 打 ｜ 到 ｜ 平分 ｜ 以后 ｜ 保 ｜ 发 ｜ 率 ｜ 百分之 ｜ 八十"
+        "tokens": "真 ｜ 到 ｜ 了 ｜ 场 ｜ 上 ｜ 因人而异 ｜ 二零一七 ｜ 年 ｜ ATP ｜ 统计 ｜ 穆雷 ｜ 打 ｜ 到 ｜ 平分 ｜ 以后 ｜ 保发率 ｜ 百分之八十"
       }
     },
     {
@@ -703,8 +799,8 @@
           "runs": [
             {
               "wrong": "zhang3",
-              "verdict": "unreliable",
-              "score": -0.029,
+              "verdict": "uncertain",
+              "score": 0.04,
               "confidence": null,
               "near": null
             }
@@ -716,11 +812,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 24,
-        "speech_s": 4.597,
-        "cps": 5.22,
+        "speech_s": 4.608,
+        "cps": 5.21,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "ATP ｜ 当时 ｜ 给 ｜ 的 ｜ 理由 ｜ 是 ｜ 比赛 ｜ 时长 ｜ 好 ｜ 预估 ｜ 电视台 ｜ 和 ｜ 赞助 ｜ 商 ｜ 更 ｜ 喜欢"
+        "tokens": "ATP ｜ 当时 ｜ 给 ｜ 的 ｜ 理由 ｜ 是 ｜ 比赛 ｜ 时 ｜ 长好 ｜ 预估 ｜ 电视台 ｜ 和 ｜ 赞助商 ｜ 更 ｜ 喜欢"
       }
     },
     {
@@ -741,7 +837,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "战先,又评分。战先,又评分。"
+        "transcript": "战先﹑幼平分﹑战先﹑幼平分。"
       },
       "polyphones": [],
       "pauses": {
@@ -773,7 +869,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "为什么必须赢两分?算一笔账。"
+        "transcript": "为什么必须赢两分? 算一笔账。"
       },
       "polyphones": [],
       "pauses": {
@@ -889,11 +985,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 16,
-        "speech_s": 3.008,
-        "cps": 5.32,
+        "speech_s": 2.828,
+        "cps": 5.66,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "ATP ｜ 发球 ｜ 方 ｜ 平均 ｜ 每 ｜ 分 ｜ 赢 ｜ 百分之 ｜ 六十四 ｜ 左右"
+        "tokens": "ATP ｜ 发球方 ｜ 平均 ｜ 每 ｜ 分赢 ｜ 百分之六十四 ｜ 左右"
       }
     },
     {
@@ -953,11 +1049,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 22,
-        "speech_s": 3.718,
-        "cps": 5.92,
+        "speech_s": 3.655,
+        "cps": 6.02,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "一五九二年 ｜ 的 ｜ 巴黎 ｜ 规则 ｜ 里 ｜ 平分 ｜ 和 ｜ 占先 ｜ 都 ｜ 写 ｜ 进 ｜ 了 ｜ 条文"
+        "tokens": "一五九二年 ｜ 的 ｜ 巴黎 ｜ 规则 ｜ 里 ｜ 平分 ｜ 和 ｜ 占先 ｜ 都 ｜ 写进 ｜ 了 ｜ 条文"
       }
     },
     {
@@ -993,38 +1089,6 @@
       }
     },
     {
-      "id": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281",
-      "text": "一八七七年，第一届温网定规则，直接照搬了皇家网球的计分：十五、三十、四十，连平分和占先一起搬了过来。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 43,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "1877年,第一届温网定规则直接照搬了皇家网球的计分,15、30、40连评分和战线一起搬了过来。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 43,
-        "speech_s": 8.263,
-        "cps": 5.2,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "一八七七年 ｜ 第一届 ｜ 温 ｜ 网 ｜ 定 ｜ 规则 ｜ 直接 ｜ 照搬 ｜ 了 ｜ 皇家 ｜ 网球 ｜ 的 ｜ 计分 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 连 ｜ 平分 ｜ 和 ｜ 占先 ｜ 一起 ｜ 搬 ｜ 了 ｜ 过来"
-      }
-    },
-    {
       "id": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef",
       "text": "四十平以后一球定胜负，你支持吗？评论区说说。",
       "pass": true,
@@ -1042,7 +1106,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "四十平以后亦求定胜负,你支持吗?评论区说说。"
+        "transcript": "四十平以后,义求定胜负,你支持吗?评论区说说。"
       },
       "polyphones": [],
       "pauses": {
@@ -1054,6 +1118,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "四十 ｜ 平 ｜ 以后 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 你 ｜ 支持 ｜ 吗 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:4691fb49940e22c59d6e7808f4a5e0e436c9a22639df83860e3297e0a5460eb0",
+      "text": "这套计分，一八七七年被第一届温网原样照搬：十五、三十、四十，连平分和占先一起。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这套计分,1877年被第一届温网原样照班,十五、三十、四十,连评分和战先一起。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.907,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 套 ｜ 计分 ｜ 一八七七年 ｜ 被 ｜ 第一 ｜ 届 ｜ 温网 ｜ 原样 ｜ 照搬 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 连 ｜ 平分 ｜ 和 ｜ 占先 ｜ 一起"
       }
     },
     {
@@ -1074,7 +1170,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "然后评分。"
+        "transcript": "然后,评分。"
       },
       "polyphones": [],
       "pauses": {
@@ -1106,7 +1202,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "如果打到平分,要连赢两分才算数。按概率算,发球方从平分爆发的机会,反而升到76%左右。"
+        "transcript": "如果打到平分,要联赢两分才算数。按概率算,发球方从平分爆发的机会,反而升到76%左右。"
       },
       "polyphones": [
         {
@@ -1138,11 +1234,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 41,
-        "speech_s": 7.585,
-        "cps": 5.41,
+        "speech_s": 7.564,
+        "cps": 5.42,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "如果 ｜ 打 ｜ 到 ｜ 平分 ｜ 要 ｜ 连 ｜ 赢 ｜ 两分 ｜ 才 ｜ 算数 ｜ 按 ｜ 概率 ｜ 算 ｜ 发球 ｜ 方 ｜ 从 ｜ 平分 ｜ 保 ｜ 发 ｜ 的 ｜ 机会 ｜ 反而 ｜ 升 ｜ 到 ｜ 百分之 ｜ 七十六 ｜ 左右"
+        "tokens": "如果 ｜ 打到 ｜ 平分 ｜ 要 ｜ 连赢 ｜ 两分 ｜ 才 ｜ 算数 ｜ 按 ｜ 概率 ｜ 算 ｜ 发 ｜ 球方 ｜ 从 ｜ 平分 ｜ 保发 ｜ 的 ｜ 机会 ｜ 反而 ｜ 升 ｜ 到 ｜ 百分之七十六 ｜ 左右"
       }
     },
     {
@@ -1178,60 +1274,6 @@
       }
     },
     {
-      "id": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022",
-      "text": "有记录的最长一局，是一九七五年英国的一个草地赛，三十七次平分。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 28,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "有记录的《最长一局》是1975年英国的一个草地赛,37次平分。"
-      },
-      "polyphones": [
-        {
-          "index": 5,
-          "char": "长",
-          "word": "长",
-          "intended": "chang2",
-          "wrong": [
-            "zhang3"
-          ],
-          "tier": "B",
-          "verdict": "correct",
-          "runs": [
-            {
-              "wrong": "zhang3",
-              "verdict": "correct",
-              "score": 0.596,
-              "confidence": "medium",
-              "near": null
-            }
-          ],
-          "ok_refs": "偿尝常"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 28,
-        "speech_s": 5.127,
-        "cps": 5.46,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "有 ｜ 记录 ｜ 的 ｜ 最 ｜ 长 ｜ 一 ｜ 局 ｜ 是 ｜ 一九七五年 ｜ 英国 ｜ 的 ｜ 一个 ｜ 草地 ｜ 赛 ｜ 三十七次 ｜ 平分"
-      }
-    },
-    {
       "id": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c",
       "text": "可温网决赛那二十六分钟，也只有赢两分，才打得出来。",
       "pass": true,
@@ -1244,12 +1286,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 22,
-        "deleted": 0,
+        "deleted": 1,
         "inserted": 0,
         "substituted": 1,
         "sub_ratio": 0.045,
-        "longest_deletion": 0,
-        "transcript": "可温网决赛那二十六分钟也持有赢两分才打得出来。"
+        "longest_deletion": 1,
+        "transcript": "可温网决赛26分钟,也只有赢2分才打得出来。"
       },
       "polyphones": [
         {
@@ -1267,7 +1309,7 @@
             {
               "wrong": "de2",
               "verdict": "unreliable",
-              "score": 0.125,
+              "score": 0.077,
               "confidence": null,
               "near": null
             }
@@ -1279,11 +1321,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 22,
-        "speech_s": 3.983,
-        "cps": 5.52,
+        "speech_s": 3.718,
+        "cps": 5.92,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "可 ｜ 温 ｜ 网 ｜ 决赛 ｜ 那 ｜ 二十六分钟 ｜ 也 ｜ 只有 ｜ 赢 ｜ 两分 ｜ 才 ｜ 打 ｜ 得 ｜ 出来"
+        "tokens": "可温网 ｜ 决赛 ｜ 那 ｜ 二十六分钟 ｜ 也 ｜ 只有 ｜ 赢 ｜ 两分 ｜ 才 ｜ 打 ｜ 得 ｜ 出来"
       }
     },
     {
@@ -1343,11 +1385,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 15,
-        "speech_s": 2.744,
-        "cps": 5.47,
+        "speech_s": 2.765,
+        "cps": 5.43,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "他 ｜ 拿下 ｜ 这 ｜ 一 ｜ 盘 ｜ 最后 ｜ 拿下 ｜ 了 ｜ 温 ｜ 网 ｜ 冠军"
+        "tokens": "他 ｜ 拿下 ｜ 这 ｜ 一 ｜ 盘 ｜ 最后 ｜ 拿下 ｜ 了 ｜ 温网 ｜ 冠军"
       }
     },
     {
@@ -1389,8 +1431,8 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 12,
-        "speech_s": 2.288,
-        "cps": 5.24,
+        "speech_s": 2.362,
+        "cps": 5.08,
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "这 ｜ 条 ｜ 规矩 ｜ 比 ｜ 现代 ｜ 网球 ｜ 老 ｜ 得 ｜ 多"
@@ -1446,50 +1488,18 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那改成一球定胜负呢? 早就有人这么干了。"
+        "transcript": "那改成一球定胜夫呢,早就有人这么干了。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 17,
-        "speech_s": 3.422,
-        "cps": 4.97,
+        "speech_s": 3.453,
+        "cps": 4.92,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "那 ｜ 改 ｜ 成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 呢 ｜ 早就 ｜ 有人 ｜ 这么 ｜ 干 ｜ 了"
-      }
-    },
-    {
-      "id": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26",
-      "text": "这一局打了三十二分，十三次平分，整整二十六分钟。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 21,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "这一局打了32分,13次平分,整整26分钟。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 21,
-        "speech_s": 3.729,
-        "cps": 5.63,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "这 ｜ 一 ｜ 局 ｜ 打 ｜ 了 ｜ 三十二分 ｜ 十三次 ｜ 平分 ｜ 整整 ｜ 二十六分钟"
+        "tokens": "那 ｜ 改成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 呢 ｜ 早 ｜ 就 ｜ 有人 ｜ 这么 ｜ 干 ｜ 了"
       }
     },
     {
@@ -1623,7 +1633,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.453,
+              "score": 0.475,
               "confidence": "medium",
               "near": null
             }
@@ -1660,7 +1670,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "按概率算,ATP平均水平的发球局改成一球定胜负,爆发率大约降3个百分点。"
+        "transcript": "按概率算,ATP平均水平的发球局改成一球定胜负,保发率大约降三个百分点。"
       },
       "polyphones": [
         {
@@ -1692,11 +1702,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 30,
-        "speech_s": 5.625,
-        "cps": 5.33,
+        "speech_s": 5.572,
+        "cps": 5.38,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "按 ｜ 概率 ｜ 算 ｜ ATP ｜ 平均 ｜ 水平 ｜ 的 ｜ 发球 ｜ 局 ｜ 改 ｜ 成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 保 ｜ 发 ｜ 率 ｜ 大约 ｜ 降 ｜ 三个百分点"
+        "tokens": "按 ｜ 概率 ｜ 算 ｜ ATP ｜ 平均 ｜ 水平 ｜ 的 ｜ 发球局 ｜ 改成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 保发率 ｜ 大约 ｜ 降 ｜ 三个百分点"
       }
     },
     {
@@ -1734,7 +1744,7 @@
             {
               "wrong": "huan2",
               "verdict": "uncertain",
-              "score": 0.025,
+              "score": 0.0,
               "confidence": null,
               "near": null
             }
@@ -1754,8 +1764,8 @@
       }
     },
     {
-      "id": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06",
-      "text": "唯一的例外是一九七零年的美网：九分制抢七，四平时一分定胜负。几年后，又改回了要领先两分。",
+      "id": "bundle:abd315352a6ae202754d8c0ddfb636705aeafe394299ab0aaff301700fa4edca",
+      "text": "西里奇呢？平分后保发率不到百分之六十五。比他三十平时的百分之七十二，还低。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -1765,24 +1775,58 @@
       },
       "completeness": {
         "ok": true,
-        "ref_syllables": 39,
+        "ref_syllables": 33,
         "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "唯一的例外是1970年的美网,九分之抢七,四平时一分定胜负。几年后,又改回了,要领先两分。"
+        "transcript": "西里奇呢?平分后,宝发率不到65%,比他30平时的72%还低。"
       },
-      "polyphones": [],
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 34,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.511,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
-        "chars": 39,
-        "speech_s": 7.542,
-        "cps": 5.17,
+        "chars": 33,
+        "speech_s": 6.472,
+        "cps": 5.1,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "唯一 ｜ 的 ｜ 例外 ｜ 是 ｜ 一九七零年 ｜ 的 ｜ 美 ｜ 网 ｜ 九分制 ｜ 抢 ｜ 七 ｜ 四 ｜ 平时 ｜ 一 ｜ 分 ｜ 定 ｜ 胜负 ｜ 几年 ｜ 后 ｜ 又 ｜ 改 ｜ 回 ｜ 了 ｜ 要 ｜ 领先 ｜ 两分"
+        "tokens": "西里奇 ｜ 呢 ｜ 平分 ｜ 后 ｜ 保 ｜ 发 ｜ 率 ｜ 不 ｜ 到 ｜ 百分之 ｜ 六十五 ｜ 比 ｜ 他 ｜ 三十 ｜ 平时 ｜ 的 ｜ 百分之 ｜ 七十二 ｜ 还 ｜ 低"
       }
     },
     {
@@ -1835,18 +1879,18 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "战先时数一分就回到评分, 理论上可以一直打下去。"
+        "transcript": "战先时数一分就回到平分, 理论上可以一直打下去。"
       },
       "polyphones": [],
       "pauses": {
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 21,
-        "speech_s": 4.322,
-        "cps": 4.86,
+        "speech_s": 4.333,
+        "cps": 4.85,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "占先 ｜ 时 ｜ 输 ｜ 一 ｜ 分 ｜ 就 ｜ 回到 ｜ 平分 ｜ 理论上 ｜ 可以 ｜ 一直 ｜ 打 ｜ 下去"
+        "tokens": "占 ｜ 先时 ｜ 输 ｜ 一 ｜ 分 ｜ 就 ｜ 回到 ｜ 平分 ｜ 理论上 ｜ 可以 ｜ 一直 ｜ 打 ｜ 下去"
       }
     },
     {
@@ -1867,7 +1911,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "一球定胜负,比赛更短,接发球的一方和弱者也多了暴冷的机会。"
+        "transcript": "一球定胜负,比赛更短,接发球的一方和弱者,也多了暴冷的机会。"
       },
       "polyphones": [
         {
@@ -1892,6 +1936,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 比赛 ｜ 更 ｜ 短 ｜ 接 ｜ 发球 ｜ 的 ｜ 一方 ｜ 和 ｜ 弱者 ｜ 也 ｜ 多 ｜ 了 ｜ 爆冷 ｜ 的 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:c4f725b6baad1ddbc827c794362ae597518fa44be479e669f841fb5962ecfa8f",
+      "text": "唯一的例外是一九七零年美网的九分制抢七，四平时一分定胜负。几年后又改回领先两分，才有了一九八零年温网决赛，那个十八比十六的抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "唯一的例外是1970年美网的9分制抢期, 四平时一分定胜负。几年后又赶回零先两分, 才有了1980年温网决赛,那个是8比16的抢期。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 10.699,
+        "cps": 5.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "唯一 ｜ 的 ｜ 例外 ｜ 是 ｜ 一九七零年 ｜ 美网 ｜ 的 ｜ 九分制 ｜ 抢 ｜ 七 ｜ 四平 ｜ 时 ｜ 一 ｜ 分定 ｜ 胜负 ｜ 几年 ｜ 后 ｜ 又 ｜ 改回 ｜ 领先 ｜ 两分 ｜ 才有 ｜ 了 ｜ 一九八零年 ｜ 温网 ｜ 决赛 ｜ 那个 ｜ 十八 ｜ 比 ｜ 十六 ｜ 的 ｜ 抢 ｜ 七"
       }
     },
     {
@@ -1924,13 +2000,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "unreliable",
-              "score": 0.441,
-              "confidence": null,
+              "verdict": "correct",
+              "score": 0.422,
+              "confidence": "medium",
               "near": null
             }
           ],
@@ -2023,7 +2099,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "1641年的一首拉丁诗还记下了球场上的韩分：45平,我战线。又评分了。"
+        "transcript": "1641年的一首拉丁诗还记下了球场上的韩分,四十五瓶我战线。又评分了。"
       },
       "polyphones": [
         {
@@ -2040,7 +2116,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.423,
+              "score": 0.397,
               "confidence": "low",
               "near": null
             }
@@ -2057,60 +2133,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "一六四一年 ｜ 的 ｜ 一 ｜ 首 ｜ 拉丁诗 ｜ 还 ｜ 记 ｜ 下 ｜ 了 ｜ 球场 ｜ 上 ｜ 的 ｜ 喊 ｜ 分 ｜ 四十五 ｜ 平 ｜ 我 ｜ 占先 ｜ 又 ｜ 平分 ｜ 了"
-      }
-    },
-    {
-      "id": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a",
-      "text": "西里奇呢？还不到百分之六十五，反而更低。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 17,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "西里奇呢,还不到 65%,反而更低。"
-      },
-      "polyphones": [
-        {
-          "index": 5,
-          "char": "还",
-          "word": "还",
-          "intended": "hai2",
-          "wrong": [
-            "huan2"
-          ],
-          "tier": "B",
-          "verdict": "correct",
-          "runs": [
-            {
-              "wrong": "huan2",
-              "verdict": "correct",
-              "score": 0.515,
-              "confidence": "low",
-              "near": null
-            }
-          ],
-          "ok_refs": "孩骸"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 17,
-        "speech_s": 3.57,
-        "cps": 4.76,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "西里奇 ｜ 呢 ｜ 还 ｜ 不 ｜ 到 ｜ 百分之 ｜ 六十五 ｜ 反而 ｜ 更 ｜ 低"
       }
     },
     {
@@ -2200,6 +2222,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "八个 ｜ 局点 ｜ 德 ｜ 约 ｜ 都 ｜ 没 ｜ 拿下 ｜ 第七个 ｜ 破发 ｜ 点 ｜ 阿尔卡拉 ｜ 斯 ｜ 破发 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:fa06011b367a3ace03624817d6cc31d30c05c3005e2d7e04e0aa7fc48e5c7642",
+      "text": "这一局，十三次平分，三十二个小分，整整二十六分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "这局,13次平分,32个小分,整整26分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.364,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 局 ｜ 十三次 ｜ 平分 ｜ 三十二个 ｜ 小 ｜ 分 ｜ 整整 ｜ 二十六分钟"
       }
     }
   ]
