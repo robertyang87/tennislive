@@ -1,7 +1,7 @@
 {
   "slug": "andreeva-finals-2026",
   "primary": "adelaide-final",
-  "date": "2026-10-22",
+  "date": "2026-10-24",
   "_column": "网球有故事",
   "title": "安德烈耶娃：从巴黎冠军到单打年终",
   "cover": {
@@ -96,30 +96,44 @@
     {
       "_id": "card-intro",
       "_timeline_date": "2026-01-01",
-      "title_card": "19岁首夺大满贯\n首次入围单打年终",
-      "seconds": 7.72,
-      "narration": "十九岁，本季三冠，第一次拿下大满贯。安德烈耶娃的年终之路，从一月说起。",
+      "title_card": "去年错过单打年终\n今年首次拿到门票",
+      "seconds": 10.64,
+      "narration": "去年错过单打年终，今年拿下第一座大满贯。安德烈耶娃终于拿到那张门票。但这一年，并不是一路赢过来的。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "RACE TO THE FINALS",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "19岁的第一座大满贯；第一张单打年终门票"
+      "kicker": "年终之路 · 2026",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "去年错过单打年终；今年首次拿到门票",
+      "transition_card": {
+        "events": [
+          {
+            "label": "2025",
+            "value": "错过单打年终",
+            "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals"
+          },
+          {
+            "label": "2026",
+            "value": "首次取得资格",
+            "source": "https://www.wtatennis.com/news/4591278/150-percent-of-your-focus-mirra-andreeva-on-what-it-will-take-to-compete-at-the-wta-finals"
+          }
+        ]
+      }
     },
     {
       "_id": "card-january",
       "_timeline_date": "2026-01-17",
-      "title_card": "从阿德莱德\n开启冠军赛季",
-      "seconds": 5.84,
+      "title_card": "从0比3开始\n她连赢九局夺冠",
+      "seconds": 5.92,
       "narration": "阿德莱德决赛，她从零比三开始连赢九局，拿下赛季首冠。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "01 · 一月",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "从阿德莱德；开启冠军赛季"
+      "kicker": "01 · 冠军从逆境开始",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "从0比3开始；她连赢九局夺冠"
     },
     {
       "subtitle_bottom_windows": [
@@ -193,44 +207,64 @@
     {
       "_id": "card-ao",
       "_timeline_date": "2026-01-25",
-      "title_card": "澳网第四轮\n2-6 4-6",
-      "seconds": 4.12,
-      "narration": "澳网第四轮，她两盘负于斯维托丽娜。",
+      "title_card": "澳网第四轮之后\n春季硬地仍未突破",
+      "seconds": 6.4,
+      "narration": "澳网止步第四轮。接下来的四站硬地，她也都没能走到四强。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "2026.01.25 · 负斯维托丽娜",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "澳网第四轮；被斯维托丽娜挡住"
-    },
-    {
-      "_id": "card-spring",
-      "_timeline_date": "2026-03-23",
-      "title_card": "春季硬地\n四站都未走到4强",
-      "seconds": 4.28,
-      "narration": "春季四站硬地，她都未能走到4强。",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
-      },
-      "kicker": "02 · 春天的阻力",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "春季硬地；四站都未走到4强"
+      "kicker": "01 · 冠军从逆境开始",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "澳网第四轮之后；春季硬地仍未突破",
+      "transition_card": {
+        "events": [
+          {
+            "label": "澳网",
+            "value": "第四轮",
+            "source": "https://www.wtatennis.com/news/4439253"
+          },
+          {
+            "label": "春季四站硬地",
+            "value": "均未打进4强",
+            "source": "research/andreeva-finals-2026/events.csv"
+          }
+        ]
+      }
     },
     {
       "_id": "card-linz",
       "_timeline_date": "2026-04-12",
-      "title_card": "先丢一盘\n林茨再捧杯",
-      "seconds": 5.64,
-      "narration": "林茨决赛，先丢一盘后逆转波塔波娃，她拿下今年第二冠。",
+      "title_card": "首盘1比6之后\n她把比赛赢了回来",
+      "seconds": 7.6,
+      "narration": "四月的林茨，决赛首盘一比六。她连扳两盘，逆转波塔波娃，拿下第二冠。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "03 · 红土反弹",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "先丢一盘；林茨再捧杯"
+      "kicker": "01 · 冠军从逆境开始",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "首盘1比6之后；她把比赛赢了回来",
+      "transition_card": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "1–6",
+            "source": "research/andreeva-finals-2026/canonical.json"
+          },
+          {
+            "label": "第二盘",
+            "value": "6–4",
+            "source": "research/andreeva-finals-2026/canonical.json"
+          },
+          {
+            "label": "决胜盘",
+            "value": "6–3",
+            "source": "research/andreeva-finals-2026/canonical.json",
+            "winning": true
+          }
+        ]
+      }
     },
     {
       "_id": "linz-final",
@@ -302,16 +336,30 @@
     {
       "_id": "card-madrid",
       "_timeline_date": "2026-05-02",
-      "title_card": "第三次赛季决赛\n马德里收获亚军",
-      "seconds": 4.28,
-      "narration": "马德里再进决赛，却两盘负于科斯秋克。",
+      "title_card": "马德里没拿到的冠军\n巴黎迎来新的答案",
+      "seconds": 9.92,
+      "narration": "马德里再进决赛，却两盘负于科斯秋克。这一次，奖杯属于科斯秋克。可两人的故事，还没结束。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "03 · 马德里",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "第三次赛季决赛；马德里收获亚军"
+      "kicker": "02 · 从马德里到巴黎",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "马德里没拿到的冠军；巴黎迎来新的答案",
+      "transition_card": {
+        "events": [
+          {
+            "label": "马德里决赛",
+            "value": "负于科斯秋克",
+            "source": "https://www.wtatennis.com/news/4497140"
+          },
+          {
+            "label": "法网半决赛",
+            "value": "战胜科斯秋克",
+            "source": "https://www.wtatennis.com/news/4514107"
+          }
+        ]
+      }
     },
     {
       "_id": "madrid-final",
@@ -368,16 +416,27 @@
     {
       "_id": "card-rg",
       "_timeline_date": "2026-06-06",
-      "title_card": "在巴黎\n把冠军梦变成现实",
-      "seconds": 8.36,
-      "narration": "罗马止步8强。巴黎半决赛，她击败科斯秋克；决赛战胜赫瓦林斯卡，首夺大满贯。",
+      "title_card": "首夺大满贯\n把梦想变成现实",
+      "seconds": 10.72,
+      "narration": "到了巴黎，她先在半决赛击败科斯秋克，再战胜赫瓦林斯卡。十九岁，首夺大满贯，她一直以来的梦想成为现实。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "04 · 巴黎高光",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "在巴黎；把冠军梦变成现实"
+      "kicker": "02 · 从马德里到巴黎",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "首夺大满贯；把梦想变成现实",
+      "transition_card": {
+        "photo": {
+          "path": "assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+          "source": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026",
+          "result": {
+            "value": "6–3  6–2",
+            "label": "2026 法网女单决赛",
+            "source": "research/andreeva-finals-2026/canonical.json"
+          }
+        }
+      }
     },
     {
       "_id": "rg-final",
@@ -429,16 +488,71 @@
     {
       "_id": "card-grass",
       "_timeline_date": "2026-07-01",
-      "title_card": "先赢一盘\n温网第二轮出局",
-      "seconds": 5.6,
-      "narration": "温网先赢一盘，仍被克雷吉茨科娃逆转，止步第二轮。",
+      "title_card": "红土高光之后\n草地又遇考验",
+      "seconds": 9.68,
+      "narration": "本季至今，红土二十二胜三负，草地却只有一胜两负。温网先赢一盘，她仍被克雷吉茨科娃逆转。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "05 · 草地低谷",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "先赢一盘；温网第二轮出局"
+      "kicker": "03 · 冠军之后仍要继续",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "红土高光之后；草地又遇考验",
+      "transition_card": {
+        "comparisons": [
+          {
+            "metric": "硬地",
+            "scope": "2026赛季实际比赛",
+            "unit": "场",
+            "nodes": [
+              {
+                "label": "胜场",
+                "value": "27",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              },
+              {
+                "label": "负场",
+                "value": "11",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              }
+            ]
+          },
+          {
+            "metric": "红土",
+            "scope": "2026赛季实际比赛",
+            "unit": "场",
+            "nodes": [
+              {
+                "label": "胜场",
+                "value": "22",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              },
+              {
+                "label": "负场",
+                "value": "3",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              }
+            ]
+          },
+          {
+            "metric": "草地",
+            "scope": "2026赛季实际比赛",
+            "unit": "场",
+            "nodes": [
+              {
+                "label": "胜场",
+                "value": "1",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              },
+              {
+                "label": "负场",
+                "value": "2",
+                "source": "research/andreeva-finals-2026/canonical.json"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "audio_tail": "silence",
@@ -511,16 +625,16 @@
     {
       "_id": "card-us",
       "_timeline_date": "2026-09-09",
-      "title_card": "两个赛点之后\n美网止步8强",
-      "seconds": 5.24,
-      "narration": "美网四分之一决赛，两个赛点没兑现，她最终被高芙逆转。",
+      "title_card": "拿到两个赛点\n却没能拿下比赛",
+      "seconds": 7.52,
+      "narration": "美网，她拿到两个赛点，却没能拿下比赛。高芙完成逆转，她止步八强。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "06 · 纽约关口",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "两个赛点之后；美网止步8强"
+      "kicker": "03 · 冠军之后仍要继续",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "拿到两个赛点；却没能拿下比赛"
     },
     {
       "audio_tail": "silence",
@@ -573,29 +687,43 @@
     {
       "_id": "card-asia",
       "_timeline_date": "2026-10-09",
-      "title_card": "十月九日\n首获单打年终资格",
-      "seconds": 7.92,
-      "narration": "十月九日，她首次获得单打年终资格。两天后的北京决赛，是今年第五场决赛。",
+      "title_card": "先拿单打门票\n再赴北京决赛",
+      "seconds": 8.96,
+      "narration": "十月九日，官方确认她首次获得单打年终资格。去年错过的那张门票，今年不用再等到最后。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "07 · 资格先到，决赛随后",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "十月九日；首获单打年终资格"
+      "kicker": "03 · 今年有了新答案",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "先拿单打门票；再赴北京决赛",
+      "transition_card": {
+        "events": [
+          {
+            "label": "2026.10.09",
+            "value": "首次取得单打资格",
+            "source": "https://www.wtatennis.com/news/4586608"
+          },
+          {
+            "label": "2026.10.11",
+            "value": "北京决赛亚军",
+            "source": "research/andreeva-finals-2026/canonical.json"
+          }
+        ]
+      }
     },
     {
       "_id": "card-beijing",
       "_timeline_date": "2026-10-11",
       "title_card": "第五场赛季决赛\n北京收获亚军",
-      "seconds": 3.88,
-      "narration": "五比七、四比六，收获北京亚军。",
+      "seconds": 6.4,
+      "narration": "两天后的北京决赛，五比七、四比六，她负于郑钦文，收获亚军。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "07 · 北京",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
+      "kicker": "03 · 冠军之后仍要继续",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
       "_voice_emphasis": "第五场赛季决赛；北京收获亚军"
     },
     {
@@ -652,18 +780,32 @@
       "_point_role": "match_point"
     },
     {
-      "_id": "card-ending",
+      "_id": "card-ranking",
       "_timeline_date": "2026-10-15",
-      "title_card": "下一站年终\n她会走到哪一步",
-      "seconds": 8.84,
-      "narration": "北京之后，世界第三。她因赛程调整退出武汉，下一站年终。你期待她走到哪一步？",
+      "title_card": "北京之后\n首次升至世界第三",
+      "seconds": 5.6,
+      "narration": "北京之后，她首次升到世界第三，因赛程调整退出武汉。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
-      "kicker": "08 · 还在继续",
-      "_voice_intent": "完整语义整段合成；自然句界停顿，不额外拆字或统一加速。",
-      "_voice_emphasis": "下一站年终；她会走到哪一步"
+      "kicker": "03 · 冠军之后仍要继续",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "北京之后；首次升至世界第三"
+    },
+    {
+      "_id": "card-ending",
+      "_timeline_date": "2026-10-15",
+      "title_card": "去年错过单打年终\n今年终于拿到门票",
+      "seconds": 11.96,
+      "narration": "她回顾，今年和团队更注意参赛与休息。去年错过的单打年终门票，今年终于属于她。首次单打年终，你期待她走到哪一步？",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
+      },
+      "kicker": "年终之路 · 安德烈耶娃",
+      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
+      "_voice_emphasis": "去年错过单打年终；今年终于拿到门票"
     }
   ],
   "sources": {
@@ -694,19 +836,16 @@
   "push": {
     "auto": true,
     "summary": "安德烈耶娃年终之路",
-    "lead": "阿德莱德、林茨、法网三冠，也有温网失利和美网两个未兑现的赛点。10月9日首次取得单打年终资格，随后北京第五次打进赛季决赛。"
+    "lead": "去年错过单打年终，今年首夺大满贯、首次拿到门票。三次夺冠，也有温网和美网的遗憾；10月9日确认资格在前，北京决赛在后。"
   },
   "editorial": {
     "mode": "match_review",
-    "question": "第一座大满贯之后，安德烈耶娃怎样走到首次单打年终？",
-    "thesis": "按时间线串起3冠、2亚军和大满贯低谷；10/9资格先于10/11北京决赛，继续至武汉赛程调整退赛及最新已证实状态。",
+    "question": "去年错过单打年终的她，今年怎样终于拿到门票？",
+    "thesis": "2025错过与2026首次单打资格形成首尾；以三次夺冠与真实失利讲完整进程，10/9资格在10/11北京决赛之前。",
     "chapters": [
-      "一月首冠",
-      "春季阻力",
-      "林茨反弹",
-      "巴黎高光",
-      "草地与纽约",
-      "亚洲与年终"
+      "冠军从逆境开始",
+      "从马德里到巴黎",
+      "冠军之后仍要继续"
     ],
     "beats": [
       "阿德莱德零比三后连赢九局",
@@ -718,13 +857,14 @@
       "10/9首次单打资格、10/11北京亚军、随后世界第三"
     ],
     "human_context": {
-      "angle": "首夺大满贯不意味着每一站都顺利；她的全年有三次捧杯，也有先赢一盘后出局和未兑现赛点。",
+      "angle": "她最好的赛季，并不是一路赢过来的。去年错过的单打年终门票，今年终于属于她。",
       "_facts_file": "research/andreeva-finals-2026/canonical.json",
       "sources": [
         "https://www.wtatennis.com/news/4515090",
         "https://www.wtatennis.com/news/4574376",
         "https://www.wtatennis.com/news/4586608",
-        "https://www.wtatennis.com/news/4590575"
+        "https://www.wtatennis.com/news/4590575",
+        "https://www.wtatennis.com/news/4591278"
       ],
       "facts": [
         "19站66场实打50胜16负，14BYE及1对手W/O另列；零RET。",
@@ -792,27 +932,38 @@
   },
   "_story_label_style": "透明右上TR89/98/73原PNG排布和配色；7卡show_after=0、animate=false、show_for=15，短段随片段结束（北京13.96s）。本集显式top_pad=.043（y46）、width=.48、pad=.043；root为消除长持卡遮挡批准整组等比显示较原width.60缩小20%，PNG设计字号不改；实际可读性、品牌与人物/球安全由本集原生采样复核。未声明top_pad的其他片维持原全宽品牌避让。",
   "_outline_review": {
-    "received": false,
+    "received": true,
     "outline_shown": true,
-    "outline_shown_by": "root",
-    "outline_shown_date": "2026-10-22",
     "series_scope_authorized": true,
     "preproduction_may_continue": true,
-    "specific_outline_approval_quote": null,
-    "formal_render_authorized": false,
-    "request": "requests/stories/andreeva-finals-2026.json",
-    "latest_scope": "最新系列授权每集更紧凑约5分钟；四大满贯、全部三冠(法网重合)、马德里和北京两站大分，共8站重点；其余11站一句带过。7场画面出场比赛完整终局赛点；澳网第四轮以准确原生事实章交代，不拼接非同步准备，不借用720豁免。额外完整分最多1且本集暂不加。全季工作簿仍保留19站66实打，另列BYE/W/O，不止于美网。",
-    "latest_user_steering": "本次原始授权：用户要求安德烈耶娃重新渲染。既有全局规则：右上字卡切入即出现，最多15秒或片段结束。root公开实施时序修正，实际预览发现远端球员遮挡后批准最小per-inset top_pad落位实现；这不是用户逐字批准新API。故事文案/事实/源窗/裁切保持不变，采用最新主线动态章节转场和故事片尾，不新增BGM。"
+    "formal_render_authorized": true,
+    "request_quote": "重新编排和制作安德烈耶娃的年终之路视频",
+    "revision": "2026-10-24-story-v3",
+    "specific_outline_approval_quote": "好的继续",
+    "outline_shown_by": "root",
+    "outline_shown_date": "2026-10-24",
+    "outline_pdf": "新版制作提纲.pdf",
+    "drive_outline": "https://drive.google.com/file/d/1oJLHLoVoHoIjXGbCbhtO4zKorvHkDgqj/view?usp=drivesdk",
+    "approved_at": "2026-10-24T10:13:40.448608+00:00",
+    "outline_revision": "2026-10-24-story-v3",
+    "approval_context": "Owner acknowledgement after the one-page revised outline and native motion proposal were shown; not a claim of continuous playback or human audio listening."
   },
   "_cold_open_why": "2026法网夺冠同场本人真实短句；接旁白带回一月，正文不重复同一句。",
   "_render_blockers": [],
   "_duration_target_seconds": [
-    270,
+    290,
     320
   ],
   "_matchpoint_coverage": {
     "actual_full_match_points": 7,
     "ao_r4": "native factual chapter only; independently checked official1080 sources lack same-point prep; no match video shown",
     "extras": 0
+  },
+  "_revision_notes": {
+    "restructure_date": "2026-10-24",
+    "voice_rewrite": "11 body lines changed, original January and brand outro may be byte-exact reused.",
+    "source_windows_unchanged": true,
+    "info_card_placement_unchanged": true,
+    "data_scope": "2026 actual played singles,66 matches;14 BYE and1W/O excluded; no invented Race deduction."
   }
 }

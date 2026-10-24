@@ -1,0 +1,30 @@
+{
+  "scope": "Official2026main-drawsingles history throughlatestactualAPI. BYE/W/O excluded from W-L; RET included separately if present. All dates explicitly officiallocalstart, completionunknownunlessseparatelysourced.",
+  "canonical_sha256": "b83797254c060d88e13e3759710b4065e0d255ab35fb457f1a5d52a5c5c38d3d",
+  "events_csv_sha256": "0badc8ecf91cbe45ed2c9f9ec8b75817f9c1adcfb2bfa3ec8dc018ff22c578b2",
+  "entries": 81,
+  "actual_played": 66,
+  "excluded": 15,
+  "excluded_by_status": {
+    "轮空 BYE": 14,
+    "对手赛前退出 W/O": 1
+  },
+  "actual_by_surface": {
+    "Hard": {
+      "W": 27,
+      "L": 11
+    },
+    "Clay": {
+      "W": 22,
+      "L": 3
+    },
+    "Grass": {
+      "L": 2,
+      "W": 1
+    }
+  },
+  "all_actual_wins": 50,
+  "all_actual_losses": 16,
+  "method": "Independent canonical.matches aggregation of count_wl=true; confirms events.csv surface sums. One W/O result=W has count_wl=false and is excluded;14BYE excluded. RET included if present, but this dataset has zero RET.",
+  "raw_by_surface_including_excluded_is_invalid_for_winloss": true
+}
