@@ -2173,7 +2173,6 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
       SLUG: andreeva-finals-2026-new-story
-      RECOVERED: ${{ runner.temp }}/original-native-artifact
     steps:
       - uses: actions/checkout@v4
         with:
@@ -2195,6 +2194,7 @@ jobs:
       - name: Verify immutable original native movie and producer
         run: |
           set -euo pipefail
+          export RECOVERED="$RUNNER_TEMP/original-native-artifact"
           test "$SLUG" = 'andreeva-finals-2026-new-story'
           test "${{ github.event.inputs.push }}" != 'true'
           python - <<'PY_CHECK'
