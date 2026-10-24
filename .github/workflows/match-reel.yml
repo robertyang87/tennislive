@@ -526,8 +526,6 @@ jobs:
       - name: 备好人脸模型
         id: face-models
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        env:
-          TENNISLIVE_FACE_MODEL_FETCH: "0"
         run: |
           if python tools/face_checks.py fetch; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
@@ -1669,8 +1667,6 @@ jobs:
           restore-keys: voice-auto-${{ runner.os }}-v1-
       - name: 配音自动听审（实际配音字节，五项全过才放行）
         if: github.event.inputs.mode == 'render'
-        env:
-          HF_HUB_OFFLINE: "1"
         run: |
           set -o pipefail
           pip install -q -e ".[polyphone]" faster-whisper
