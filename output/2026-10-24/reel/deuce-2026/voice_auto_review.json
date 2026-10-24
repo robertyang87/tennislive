@@ -1,0 +1,2206 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "00c63dd952d9a11c13c7b1d261717fc6e6041cfe152a6bbc09c213bd329a8f40",
+    "render_inputs_sha256": "658749a00f385eac2458197953bd33b1ca844bbc3a738f4f21ba1781cbaaeca5",
+    "spec_sha256": "5a0a5bb600904db0e90a65cf340e52b85107a41ba0bc2404b1e53c5bb26162f1",
+    "film_sha256": "fe61b4bbe62229a4cd91aead19e8a3c2ec209e0a6d72ac10d0ddeac0ab0addc7",
+    "inventory_sha256": "799b2905aabc3dc53fd9a1519be89567b4977b625e57cb74e1c55033e884b1d0"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-24T04:21:24+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214",
+      "audio_sha256": "cbba30b11e1f461dd6e5161873d787e715babff8698c96fa1625a7acca46b2df",
+      "pass": true,
+      "result_of": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214"
+    },
+    {
+      "id": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d",
+      "audio_sha256": "9fb05472b304e99bfa6337bb053edb3e047382a81ce2f680ace25676fb54fe7e",
+      "pass": true,
+      "result_of": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d"
+    },
+    {
+      "id": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f",
+      "audio_sha256": "bbc01c1c35f23f1274cd16356d98c9a1407fa2930f7bf524d720adfdffd4cc20",
+      "pass": true,
+      "result_of": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f"
+    },
+    {
+      "id": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d",
+      "audio_sha256": "44698304d30c5fcef63867e185b1da2a17045293e157e311182d62dd2d690363",
+      "pass": true,
+      "result_of": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d"
+    },
+    {
+      "id": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e",
+      "audio_sha256": "6d4850cd139dd21f81caa745c16abf74fee4361bfc038f4710fb32b12fe83620",
+      "pass": true,
+      "result_of": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e"
+    },
+    {
+      "id": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0",
+      "audio_sha256": "42370eaa36a61a931361c02f4ef61fe1fbf47b99bd8d69f0e35d67553320bdfd",
+      "pass": true,
+      "result_of": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0"
+    },
+    {
+      "id": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98",
+      "audio_sha256": "1eb7cede390efb9885d8ecfd090997b0bc60f7f727ad23b16b48172f81291070",
+      "pass": true,
+      "result_of": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98"
+    },
+    {
+      "id": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f",
+      "audio_sha256": "497dece98bf1bf1ab6af38d1f4639b4e283892a7522487959955bd2ea0827827",
+      "pass": true,
+      "result_of": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f"
+    },
+    {
+      "id": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3",
+      "audio_sha256": "046a15c3e5d50f755b395b672beb58e6c63b415f15e93fd2a98e18ff1afd460c",
+      "pass": true,
+      "result_of": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3"
+    },
+    {
+      "id": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199",
+      "audio_sha256": "9a8e59758f104fd0f5b136ba722f4f2f54406f1799f8bee2c394a88722c366ce",
+      "pass": true,
+      "result_of": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199"
+    },
+    {
+      "id": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7",
+      "audio_sha256": "660b4193d595b2082207911af021827e0ce991ead45c1ba55040939fa696ff1c",
+      "pass": true,
+      "result_of": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7"
+    },
+    {
+      "id": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d",
+      "audio_sha256": "224c0cad41e274bd9dcd564b3213634305e2c86ab7af2a155bd22cc8a03e8e08",
+      "pass": true,
+      "result_of": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d"
+    },
+    {
+      "id": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab",
+      "audio_sha256": "fb408c9910ebd06434c2db67e9af34efd6c587fec2bcf8d89d25c6b1e42a1090",
+      "pass": true,
+      "result_of": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab"
+    },
+    {
+      "id": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281",
+      "audio_sha256": "8d51524c7220baf2b1697e4aff36a79191820717ff3503c80c19df7e96e7fe79",
+      "pass": true,
+      "result_of": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281"
+    },
+    {
+      "id": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef",
+      "audio_sha256": "4debfb4972e401bc644ea467d6750d8c0ba22a94284db70c49d7423821e4c36f",
+      "pass": true,
+      "result_of": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef"
+    },
+    {
+      "id": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c",
+      "audio_sha256": "2874e5dc545b95e920f4e63a09f649e88bafec16e9c47c4933d9ea195d3122ad",
+      "pass": true,
+      "result_of": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c"
+    },
+    {
+      "id": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8",
+      "audio_sha256": "48ab0a470190e3a129c6ea373f4f553339cc34709938809a0e51fb9fe9b5be06",
+      "pass": true,
+      "result_of": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8"
+    },
+    {
+      "id": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1",
+      "audio_sha256": "6e630d9094420553a05baec22c704a0d0974a164df0cbc0048e5cdcb36f00d08",
+      "pass": true,
+      "result_of": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1"
+    },
+    {
+      "id": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022",
+      "audio_sha256": "74cf2b464353f176018a6f3b1b0a632e714ef5165a6025ce4de30266edc71452",
+      "pass": true,
+      "result_of": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022"
+    },
+    {
+      "id": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c",
+      "audio_sha256": "c9922a1a08793a91ed745a65c82db6eb6405453af535cc2f9bd25f8c4cbf4ebf",
+      "pass": true,
+      "result_of": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c"
+    },
+    {
+      "id": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161",
+      "audio_sha256": "77f679e59455af31d2116fab5750c24dc8e4c113f352be96b78b2512b0466033",
+      "pass": true,
+      "result_of": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161"
+    },
+    {
+      "id": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905",
+      "audio_sha256": "35e087302489fceae6688c1072070c071aefdd3a86b7631be8901ad64a9fe125",
+      "pass": true,
+      "result_of": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905"
+    },
+    {
+      "id": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a",
+      "audio_sha256": "8fc62698d1f9c849f2276d97c320459d83bfaffdf571d0d046648923732b15cb",
+      "pass": true,
+      "result_of": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a"
+    },
+    {
+      "id": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc",
+      "audio_sha256": "f344a6f1f51509c8ae611d8295cf5525d104641b716ef989c2225edbaa620176",
+      "pass": true,
+      "result_of": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc"
+    },
+    {
+      "id": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63",
+      "audio_sha256": "7f22ab729a4cd3b34f12031410f23e4ca5de840690e72251b61f66b4fbd28243",
+      "pass": true,
+      "result_of": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63"
+    },
+    {
+      "id": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26",
+      "audio_sha256": "561161b114ba3ccd7dc0a91c216e13e21f451c2240ec6f7477e443128b19abab",
+      "pass": true,
+      "result_of": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26"
+    },
+    {
+      "id": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282",
+      "audio_sha256": "f50926d6ad8a65367c972050d8d7380274702fbf021b6b6be4b92512445a563b",
+      "pass": true,
+      "result_of": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282"
+    },
+    {
+      "id": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644",
+      "audio_sha256": "37a1e459215bd29470eb74c7363609922b3ba55248bc350077f6cf5b1c2806ae",
+      "pass": true,
+      "result_of": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644"
+    },
+    {
+      "id": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555",
+      "audio_sha256": "f6e02bacf8444ae189fa0c5262b781c7ba738e51ab66e687cb3f6fd6b4074143",
+      "pass": true,
+      "result_of": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555"
+    },
+    {
+      "id": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5",
+      "audio_sha256": "5ceffec5f181d6c48e26232f77decfab5c48e2324586898f93d7927c1888f34e",
+      "pass": true,
+      "result_of": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5"
+    },
+    {
+      "id": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0",
+      "audio_sha256": "07e71855e54531ccf21f14a4d70cb34d4595e8e631e3ece6b4a4661d503cc46b",
+      "pass": true,
+      "result_of": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0"
+    },
+    {
+      "id": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317",
+      "audio_sha256": "0449f759b345730a3d6f32b6357bea941eb58e6e254006b2b5c0679e87fe6310",
+      "pass": true,
+      "result_of": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317"
+    },
+    {
+      "id": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06",
+      "audio_sha256": "095570e3c673b6ad03ea958fb965a7a8e0ba5b144df81bfef1d1a2237970bcda",
+      "pass": true,
+      "result_of": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06"
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "audio_sha256": "4d7b37c8f3c9b4f66fe72c1311038764f96008a2b324b04370ee1b0f65c431b7",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    },
+    {
+      "id": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299",
+      "audio_sha256": "46d4f0c889fd42a22d1e458ffbab00a10834c8e3c78759a446009fb4c078914d",
+      "pass": true,
+      "result_of": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299"
+    },
+    {
+      "id": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438",
+      "audio_sha256": "adb87c2e5926324484288c6cd4f1d32b29d14fd592849db1e7cc434dd5e4b76a",
+      "pass": true,
+      "result_of": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438"
+    },
+    {
+      "id": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5",
+      "audio_sha256": "5f4ab373fd2598dccbbd920472582690858c8b2241f1865abe3e0d6493a862df",
+      "pass": true,
+      "result_of": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5"
+    },
+    {
+      "id": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5",
+      "audio_sha256": "3d14789821c6e39d86bb7774b33992deee281e2a91395302861ff9a0569108fd",
+      "pass": true,
+      "result_of": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5"
+    },
+    {
+      "id": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5",
+      "audio_sha256": "1a6d8271172fe88421431d55e3044a1f984c3d790967f51dcccb9be232c1555a",
+      "pass": true,
+      "result_of": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5"
+    },
+    {
+      "id": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a",
+      "audio_sha256": "a42c71838d852ee84aa42ea53da59f58dd781f981d0acae5bf8f0a9633cbd2a4",
+      "pass": true,
+      "result_of": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a"
+    },
+    {
+      "id": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42",
+      "audio_sha256": "8424ec60c7457ee98229dbb4e507fcb0cc56df3cb68a1448c266601fcfc8eea3",
+      "pass": true,
+      "result_of": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42"
+    },
+    {
+      "id": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188",
+      "audio_sha256": "754f65abbfc2b1e89922cbcbb91f7f6e4f344a0e972abe699610ba1c90ccd6e2",
+      "pass": true,
+      "result_of": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "fb408c9910ebd06434c2db67e9af34efd6c587fec2bcf8d89d25c6b1e42a1090",
+      "pass": true,
+      "result_of": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "3d14789821c6e39d86bb7774b33992deee281e2a91395302861ff9a0569108fd",
+      "pass": true,
+      "result_of": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "2874e5dc545b95e920f4e63a09f649e88bafec16e9c47c4933d9ea195d3122ad",
+      "pass": true,
+      "result_of": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "42370eaa36a61a931361c02f4ef61fe1fbf47b99bd8d69f0e35d67553320bdfd",
+      "pass": true,
+      "result_of": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "561161b114ba3ccd7dc0a91c216e13e21f451c2240ec6f7477e443128b19abab",
+      "pass": true,
+      "result_of": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "74cf2b464353f176018a6f3b1b0a632e714ef5165a6025ce4de30266edc71452",
+      "pass": true,
+      "result_of": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "754f65abbfc2b1e89922cbcbb91f7f6e4f344a0e972abe699610ba1c90ccd6e2",
+      "pass": true,
+      "result_of": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "35e087302489fceae6688c1072070c071aefdd3a86b7631be8901ad64a9fe125",
+      "pass": true,
+      "result_of": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "5ceffec5f181d6c48e26232f77decfab5c48e2324586898f93d7927c1888f34e",
+      "pass": true,
+      "result_of": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "bbc01c1c35f23f1274cd16356d98c9a1407fa2930f7bf524d720adfdffd4cc20",
+      "pass": true,
+      "result_of": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "f6e02bacf8444ae189fa0c5262b781c7ba738e51ab66e687cb3f6fd6b4074143",
+      "pass": true,
+      "result_of": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "046a15c3e5d50f755b395b672beb58e6c63b415f15e93fd2a98e18ff1afd460c",
+      "pass": true,
+      "result_of": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "46d4f0c889fd42a22d1e458ffbab00a10834c8e3c78759a446009fb4c078914d",
+      "pass": true,
+      "result_of": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "8fc62698d1f9c849f2276d97c320459d83bfaffdf571d0d046648923732b15cb",
+      "pass": true,
+      "result_of": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "44698304d30c5fcef63867e185b1da2a17045293e157e311182d62dd2d690363",
+      "pass": true,
+      "result_of": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "6e630d9094420553a05baec22c704a0d0974a164df0cbc0048e5cdcb36f00d08",
+      "pass": true,
+      "result_of": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "f344a6f1f51509c8ae611d8295cf5525d104641b716ef989c2225edbaa620176",
+      "pass": true,
+      "result_of": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "77f679e59455af31d2116fab5750c24dc8e4c113f352be96b78b2512b0466033",
+      "pass": true,
+      "result_of": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "224c0cad41e274bd9dcd564b3213634305e2c86ab7af2a155bd22cc8a03e8e08",
+      "pass": true,
+      "result_of": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "1a6d8271172fe88421431d55e3044a1f984c3d790967f51dcccb9be232c1555a",
+      "pass": true,
+      "result_of": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "8d51524c7220baf2b1697e4aff36a79191820717ff3503c80c19df7e96e7fe79",
+      "pass": true,
+      "result_of": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "5f4ab373fd2598dccbbd920472582690858c8b2241f1865abe3e0d6493a862df",
+      "pass": true,
+      "result_of": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "8424ec60c7457ee98229dbb4e507fcb0cc56df3cb68a1448c266601fcfc8eea3",
+      "pass": true,
+      "result_of": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "095570e3c673b6ad03ea958fb965a7a8e0ba5b144df81bfef1d1a2237970bcda",
+      "pass": true,
+      "result_of": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "1eb7cede390efb9885d8ecfd090997b0bc60f7f727ad23b16b48172f81291070",
+      "pass": true,
+      "result_of": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98"
+    },
+    {
+      "id": "voice_27.mp3",
+      "audio_sha256": "9a8e59758f104fd0f5b136ba722f4f2f54406f1799f8bee2c394a88722c366ce",
+      "pass": true,
+      "result_of": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199"
+    },
+    {
+      "id": "voice_28.mp3",
+      "audio_sha256": "48ab0a470190e3a129c6ea373f4f553339cc34709938809a0e51fb9fe9b5be06",
+      "pass": true,
+      "result_of": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "497dece98bf1bf1ab6af38d1f4639b4e283892a7522487959955bd2ea0827827",
+      "pass": true,
+      "result_of": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f"
+    },
+    {
+      "id": "voice_30.mp3",
+      "audio_sha256": "9fb05472b304e99bfa6337bb053edb3e047382a81ce2f680ace25676fb54fe7e",
+      "pass": true,
+      "result_of": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d"
+    },
+    {
+      "id": "voice_31.mp3",
+      "audio_sha256": "a42c71838d852ee84aa42ea53da59f58dd781f981d0acae5bf8f0a9633cbd2a4",
+      "pass": true,
+      "result_of": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a"
+    },
+    {
+      "id": "voice_32.mp3",
+      "audio_sha256": "7f22ab729a4cd3b34f12031410f23e4ca5de840690e72251b61f66b4fbd28243",
+      "pass": true,
+      "result_of": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63"
+    },
+    {
+      "id": "voice_33.mp3",
+      "audio_sha256": "660b4193d595b2082207911af021827e0ce991ead45c1ba55040939fa696ff1c",
+      "pass": true,
+      "result_of": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7"
+    },
+    {
+      "id": "voice_34.mp3",
+      "audio_sha256": "6d4850cd139dd21f81caa745c16abf74fee4361bfc038f4710fb32b12fe83620",
+      "pass": true,
+      "result_of": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e"
+    },
+    {
+      "id": "voice_35.mp3",
+      "audio_sha256": "0449f759b345730a3d6f32b6357bea941eb58e6e254006b2b5c0679e87fe6310",
+      "pass": true,
+      "result_of": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317"
+    },
+    {
+      "id": "voice_39.mp3",
+      "audio_sha256": "37a1e459215bd29470eb74c7363609922b3ba55248bc350077f6cf5b1c2806ae",
+      "pass": true,
+      "result_of": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644"
+    },
+    {
+      "id": "voice_40.mp3",
+      "audio_sha256": "07e71855e54531ccf21f14a4d70cb34d4595e8e631e3ece6b4a4661d503cc46b",
+      "pass": true,
+      "result_of": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0"
+    },
+    {
+      "id": "voice_41.mp3",
+      "audio_sha256": "cbba30b11e1f461dd6e5161873d787e715babff8698c96fa1625a7acca46b2df",
+      "pass": true,
+      "result_of": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214"
+    },
+    {
+      "id": "voice_42.mp3",
+      "audio_sha256": "adb87c2e5926324484288c6cd4f1d32b29d14fd592849db1e7cc434dd5e4b76a",
+      "pass": true,
+      "result_of": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438"
+    },
+    {
+      "id": "voice_43.mp3",
+      "audio_sha256": "c9922a1a08793a91ed745a65c82db6eb6405453af535cc2f9bd25f8c4cbf4ebf",
+      "pass": true,
+      "result_of": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c"
+    },
+    {
+      "id": "voice_44.mp3",
+      "audio_sha256": "4debfb4972e401bc644ea467d6750d8c0ba22a94284db70c49d7423821e4c36f",
+      "pass": true,
+      "result_of": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "f50926d6ad8a65367c972050d8d7380274702fbf021b6b6be4b92512445a563b",
+      "pass": true,
+      "result_of": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "4d7b37c8f3c9b4f66fe72c1311038764f96008a2b324b04370ee1b0f65c431b7",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0f265b5ede4f5715e9e6e84f5fc29fb8aa91119530cb93948486b331d1fc5214",
+      "text": "所以，赢两分其实是在给强者上保险：谁更强，就多给他几次机会证明。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以,赢两分其实是在给强者上保险,谁更强就多给他几次机会证明。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.487,
+        "cps": 5.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 赢 ｜ 两分 ｜ 其实 ｜ 是 ｜ 在 ｜ 给 ｜ 强者 ｜ 上 ｜ 保险 ｜ 谁 ｜ 更 ｜ 强 ｜ 就 ｜ 多 ｜ 给 ｜ 他 ｜ 几次 ｜ 机会 ｜ 证明"
+      }
+    },
+    {
+      "id": "bundle:19665ce4c6d9847d3bd1cdf38a73d78e82e2b2fa75e4dcdb42fd33788c784c0d",
+      "text": "真到了场上，因人而异。二零一七年 ATP 统计，穆雷打到平分以后，保发率百分之八十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "真到了场上,因人而异。2017年ATP统计,木雷达到评分以后,爆发率80%。"
+      },
+      "polyphones": [
+        {
+          "index": 34,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.663,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "真 ｜ 到 ｜ 了 ｜ 场 ｜ 上 ｜ 因人而异 ｜ 二零一七 ｜ 年 ｜ ATP ｜ 统计 ｜ 穆雷 ｜ 打 ｜ 到 ｜ 平分 ｜ 以后 ｜ 保 ｜ 发 ｜ 率 ｜ 百分之 ｜ 八十"
+      }
+    },
+    {
+      "id": "bundle:1f9970372850e4f84659607ebb723902d81e6965c6517bc35d84a92449488e5f",
+      "text": "网球一局，按十五、三十、四十计分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "网球一局 按 15、30、40 级分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 3.03,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "网球 ｜ 一 ｜ 局 ｜ 按 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 计分"
+      }
+    },
+    {
+      "id": "bundle:2190c6494a1d1973a6424c184f16ff1bbce2da4aed5886e280c3fe049ff0868d",
+      "text": "它来自皇家网球：在四面高墙的室内球场里打，是现代网球的祖先。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他来自皇家网球,在四面高墙的室内球场里打,是现代网球的祖先。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 4.809,
+        "cps": 5.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "它 ｜ 来自 ｜ 皇家 ｜ 网球 ｜ 在 ｜ 四面 ｜ 高墙 ｜ 的 ｜ 室内 ｜ 球场 ｜ 里 ｜ 打 ｜ 是 ｜ 现代 ｜ 网球 ｜ 的 ｜ 祖先"
+      }
+    },
+    {
+      "id": "bundle:25a070b9a429fd71ebce565375dbae8b7247699c7ef37d480239b97ed356b89e",
+      "text": "ATP 当时给的理由是：比赛时长好预估，电视台和赞助商更喜欢。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "ATP当时给的理由是,比赛时常好预估,电视台和赞助商更喜欢。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "长",
+          "word": "时长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "unreliable",
+              "score": -0.029,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.597,
+        "cps": 5.22,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "ATP ｜ 当时 ｜ 给 ｜ 的 ｜ 理由 ｜ 是 ｜ 比赛 ｜ 时长 ｜ 好 ｜ 预估 ｜ 电视台 ｜ 和 ｜ 赞助 ｜ 商 ｜ 更 ｜ 喜欢"
+      }
+    },
+    {
+      "id": "bundle:2a17d14cdeb732af80855001c04281d4c7abd72ad0a79662bbd179a5d28d16c0",
+      "text": "占先，又平分。占先，又平分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "战先,又评分。战先,又评分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 3.136,
+        "cps": 3.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "占先 ｜ 又 ｜ 平分 ｜ 占先 ｜ 又 ｜ 平分"
+      }
+    },
+    {
+      "id": "bundle:2e9753b45e5c705682ecb4fb5e11bd3f15ba1ead93472bfea670337fa057bd98",
+      "text": "为什么必须赢两分？算一笔账。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "为什么必须赢两分?算一笔账。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.648,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "为什么 ｜ 必须 ｜ 赢 ｜ 两分 ｜ 算 ｜ 一 ｜ 笔 ｜ 账"
+      }
+    },
+    {
+      "id": "bundle:2f650b902689875d92b84f3d305f6b15faf9c5fab665b6bafac669ee3671805f",
+      "text": "每一分上的小优势，被连赢两分放大了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "每一分上的小优势被连赢两分放大了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 2.765,
+        "cps": 5.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "每 ｜ 一 ｜ 分 ｜ 上 ｜ 的 ｜ 小 ｜ 优势 ｜ 被 ｜ 连 ｜ 赢 ｜ 两分 ｜ 放大 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:319270cd75b897243e18c47628ec67fb04650bb41a7d866f390250dd4e45cfc3",
+      "text": "平分以后先赢一分，叫占先；占先再赢一分，才拿下这一局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "评分以后先赢一分,叫战先。战先再赢一分,才拿下这一局。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.523,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "平分 ｜ 以后 ｜ 先 ｜ 赢 ｜ 一 ｜ 分 ｜ 叫 ｜ 占先 ｜ 占先 ｜ 再 ｜ 赢 ｜ 一 ｜ 分 ｜ 才 ｜ 拿下 ｜ 这 ｜ 一 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:382833660f2a96254708325b7c5bbe8bf2c1c714a9688c14cf6f4ccc1bb86199",
+      "text": "ATP 发球方平均每分赢百分之六十四左右。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "ATP发球方平均每分赢64%左右。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.008,
+        "cps": 5.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "ATP ｜ 发球 ｜ 方 ｜ 平均 ｜ 每 ｜ 分 ｜ 赢 ｜ 百分之 ｜ 六十四 ｜ 左右"
+      }
+    },
+    {
+      "id": "bundle:3d15f45a18c750ab3da180ab44a714b7e4bb08786953b13f1a49c45a0f1157e7",
+      "text": "二零零六年起，ATP 双打平分后只打一分，决胜盘也换成了抢十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2006年起,ATP双打平分后只打一分,决胜盘也换成了强势。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.958,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零零六年 ｜ 起 ｜ ATP ｜ 双打 ｜ 平分 ｜ 后 ｜ 只 ｜ 打 ｜ 一 ｜ 分 ｜ 决胜 ｜ 盘 ｜ 也 ｜ 换 ｜ 成 ｜ 了 ｜ 抢 ｜ 十"
+      }
+    },
+    {
+      "id": "bundle:3e947558ccea5fc7191a38f0c9bbe246e79e364dfdbba27e98ae83046d56fe4d",
+      "text": "一五九二年的巴黎规则里，平分和占先都写进了条文。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1592年的《巴黎规则》里,评分和战先都写进了条文。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 3.718,
+        "cps": 5.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一五九二年 ｜ 的 ｜ 巴黎 ｜ 规则 ｜ 里 ｜ 平分 ｜ 和 ｜ 占先 ｜ 都 ｜ 写 ｜ 进 ｜ 了 ｜ 条文"
+      }
+    },
+    {
+      "id": "bundle:3f7bd27990a58ffbff0e1972455144ed02e80c307a400b28f7e60bf73671a9ab",
+      "text": "二零二三年温网男单决赛。二十岁的世界第一阿尔卡拉斯，对阵七届温网冠军德约科维奇。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.027,
+        "longest_deletion": 0,
+        "transcript": "2023年温网南丹决赛,20岁的世界第一阿尔卡拉斯对战七届温网冠军德约科维奇。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 6.229,
+        "cps": 5.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二三年 ｜ 温网 ｜ 男单 ｜ 决赛 ｜ 二十岁 ｜ 的 ｜ 世界 ｜ 第一 ｜ 阿尔卡拉 ｜ 斯 ｜ 对阵 ｜ 七届 ｜ 温 ｜ 网 ｜ 冠军 ｜ 德约科维奇"
+      }
+    },
+    {
+      "id": "bundle:408088b082b4840dee814fe9e30be519bf7cee05641d5863e7e66502260b8281",
+      "text": "一八七七年，第一届温网定规则，直接照搬了皇家网球的计分：十五、三十、四十，连平分和占先一起搬了过来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1877年,第一届温网定规则直接照搬了皇家网球的计分,15、30、40连评分和战线一起搬了过来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.263,
+        "cps": 5.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一八七七年 ｜ 第一届 ｜ 温 ｜ 网 ｜ 定 ｜ 规则 ｜ 直接 ｜ 照搬 ｜ 了 ｜ 皇家 ｜ 网球 ｜ 的 ｜ 计分 ｜ 十五 ｜ 三十 ｜ 四十 ｜ 连 ｜ 平分 ｜ 和 ｜ 占先 ｜ 一起 ｜ 搬 ｜ 了 ｜ 过来"
+      }
+    },
+    {
+      "id": "bundle:40b7ab729b44269f9bc0387215cc3d6fe77da312bb58b8e66e8a828d27ce3cef",
+      "text": "四十平以后一球定胜负，你支持吗？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四十平以后亦求定胜负,你支持吗?评论区说说。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.898,
+        "cps": 4.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四十 ｜ 平 ｜ 以后 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 你 ｜ 支持 ｜ 吗 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:4fe94312d20babd85a1e120c12593f48c4948528ebd5b3a6877871fe5242164c",
+      "text": "然后，平分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 4,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "然后评分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 4,
+        "speech_s": 1.059,
+        "cps": 3.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "然后 ｜ 平分"
+      }
+    },
+    {
+      "id": "bundle:5b10ea8febd0bce8566b5244d0935f813d3dfc5410a91b65918514cbdce816e8",
+      "text": "如果打到平分，要连赢两分才算数。按概率算，发球方从平分保发的机会，反而升到百分之七十六左右。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "如果打到平分,要连赢两分才算数。按概率算,发球方从平分爆发的机会,反而升到76%左右。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 7.585,
+        "cps": 5.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "如果 ｜ 打 ｜ 到 ｜ 平分 ｜ 要 ｜ 连 ｜ 赢 ｜ 两分 ｜ 才 ｜ 算数 ｜ 按 ｜ 概率 ｜ 算 ｜ 发球 ｜ 方 ｜ 从 ｜ 平分 ｜ 保 ｜ 发 ｜ 的 ｜ 机会 ｜ 反而 ｜ 升 ｜ 到 ｜ 百分之 ｜ 七十六 ｜ 左右"
+      }
+    },
+    {
+      "id": "bundle:5c65b3332cc4d6ab5642ebeb89deaa8936a579ec2255889ca7eeb82e3f7170d1",
+      "text": "一五五五年，意大利人斯卡伊诺写了一本球类专著。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1555年,意大利人斯卡依诺写了一本球类专注。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 3.464,
+        "cps": 6.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一五五五年 ｜ 意大利 ｜ 人 ｜ 斯卡伊 ｜ 诺 ｜ 写 ｜ 了 ｜ 一本 ｜ 球类 ｜ 专著"
+      }
+    },
+    {
+      "id": "bundle:5fecb63248143c9565e541acdd958c8e6844ad4f66870c764eb06d88154e7022",
+      "text": "有记录的最长一局，是一九七五年英国的一个草地赛，三十七次平分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "有记录的《最长一局》是1975年英国的一个草地赛,37次平分。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.596,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.127,
+        "cps": 5.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "有 ｜ 记录 ｜ 的 ｜ 最 ｜ 长 ｜ 一 ｜ 局 ｜ 是 ｜ 一九七五年 ｜ 英国 ｜ 的 ｜ 一个 ｜ 草地 ｜ 赛 ｜ 三十七次 ｜ 平分"
+      }
+    },
+    {
+      "id": "bundle:61a3081ff4e41d0f3f6f17fa4e1d4a2c2ebf2948d3ca85d6d5c7f2e078cb003c",
+      "text": "可温网决赛那二十六分钟，也只有赢两分，才打得出来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.045,
+        "longest_deletion": 0,
+        "transcript": "可温网决赛那二十六分钟也持有赢两分才打得出来。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.125,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 3.983,
+        "cps": 5.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 温 ｜ 网 ｜ 决赛 ｜ 那 ｜ 二十六分钟 ｜ 也 ｜ 只有 ｜ 赢 ｜ 两分 ｜ 才 ｜ 打 ｜ 得 ｜ 出来"
+      }
+    },
+    {
+      "id": "bundle:632ee1acca4440789d541da17efcc4595f6e81b9acadd2935e49ddf76f3c2161",
+      "text": "这个词传到法语，再被英国人念走了样，就成了今天的 deuce。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这个词传到法语,再被英国人念走了样,就成了今天的duce。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.004,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这个 ｜ 词 ｜ 传 ｜ 到 ｜ 法语 ｜ 再 ｜ 被 ｜ 英国 ｜ 人 ｜ 念 ｜ 走 ｜ 了 ｜ 样 ｜ 就 ｜ 成 ｜ 了 ｜ 今天 ｜ 的 ｜ deuce"
+      }
+    },
+    {
+      "id": "bundle:6492349295631dfaa058ae9f7a7c3209816b12c5f00aad841ffe28064dbff905",
+      "text": "他拿下这一盘，最后拿下了温网冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他拿下这一盘,最后拿下了温网冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.744,
+        "cps": 5.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 拿下 ｜ 这 ｜ 一 ｜ 盘 ｜ 最后 ｜ 拿下 ｜ 了 ｜ 温 ｜ 网 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:763dc6a1e2ab2fceef332417ba40d98caeec143ccda9382485094b825b252b5a",
+      "text": "这条规矩，比现代网球老得多。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这条规矩比现代网球老得多。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.288,
+        "cps": 5.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 条 ｜ 规矩 ｜ 比 ｜ 现代 ｜ 网球 ｜ 老 ｜ 得 ｜ 多"
+      }
+    },
+    {
+      "id": "bundle:764c9a239d62f17ccc3c5099fef64e02296d250ae123c9f9238811b6c53ed8dc",
+      "text": "书里说，比分追平以后，要再赢两分才能拿下一局，意大利语就叫“差两分”。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "树里说,比分追平以后要再赢两分才能拿下一局,意大利语就叫差两分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.233,
+        "cps": 5.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "书 ｜ 里 ｜ 说 ｜ 比分 ｜ 追 ｜ 平 ｜ 以后 ｜ 要 ｜ 再 ｜ 赢 ｜ 两分 ｜ 才能 ｜ 拿下 ｜ 一 ｜ 局 ｜ 意大利 ｜ 语 ｜ 就 ｜ 叫 ｜ 差 ｜ 两分"
+      }
+    },
+    {
+      "id": "bundle:793ddd264b709bd815285e79154ca2213e1612181fe0efaca35ed4360727fa63",
+      "text": "那改成一球定胜负呢？早就有人这么干了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那改成一球定胜负呢? 早就有人这么干了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.422,
+        "cps": 4.97,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 改 ｜ 成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 呢 ｜ 早就 ｜ 有人 ｜ 这么 ｜ 干 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:82228ef591b2614597a3fa3d30981c7787db28826b09d85a4b119779f823fb26",
+      "text": "这一局打了三十二分，十三次平分，整整二十六分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一局打了32分,13次平分,整整26分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 3.729,
+        "cps": 5.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 局 ｜ 打 ｜ 了 ｜ 三十二分 ｜ 十三次 ｜ 平分 ｜ 整整 ｜ 二十六分钟"
+      }
+    },
+    {
+      "id": "bundle:95dd86c9e5815fc49c8b8db2d5e17bd2b24388be447e57ee2315ad95835aa282",
+      "text": "一局二十六分钟，只因要赢两分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.077,
+        "longest_deletion": 0,
+        "transcript": "一局26分钟,指引要赢2分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.373,
+        "cps": 5.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 局 ｜ 二十六分钟 ｜ 只 ｜ 因 ｜ 要 ｜ 赢 ｜ 两分"
+      }
+    },
+    {
+      "id": "bundle:99909e61d95e8cd2244c56080c3baae765061bba8066aa3f3c0bd07ca9324644",
+      "text": "澳大利亚网协推的短盘赛制 Fast4，也是平分后一球定胜负。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "澳大利亚网鞋推的短盘赛指FAST4 也是评分后一球定胜负。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.354,
+        "cps": 5.28,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "澳大利亚网协 ｜ 推 ｜ 的 ｜ 短盘 ｜ 赛制 ｜ Fast ｜ 4 ｜ 也是 ｜ 平分 ｜ 后 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负"
+      }
+    },
+    {
+      "id": "bundle:a2dba601702c9b99c3b094972ad01d5338c54c90b0633143d6c40062d6701555",
+      "text": "打到四十比四十，叫平分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "达到 40 比 40 较平分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 1.939,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "打 ｜ 到 ｜ 四十比四十 ｜ 叫 ｜ 平分"
+      }
+    },
+    {
+      "id": "bundle:a7e2bc83df1d15a78d2be5a00a7ae2e860ded8d58436c4d3cfaa6df21259c5c5",
+      "text": "可网球为什么要这么打？追平了还不算，必须连赢两分？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可网球为什么要这么大? 追平了还不算,必须连赢两分。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.453,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.078,
+        "cps": 5.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 网球 ｜ 为什么 ｜ 要 ｜ 这么 ｜ 打 ｜ 追 ｜ 平 ｜ 了 ｜ 还 ｜ 不 ｜ 算 ｜ 必须 ｜ 连 ｜ 赢 ｜ 两分"
+      }
+    },
+    {
+      "id": "bundle:a817a0217cae2b6aac51cbd0686c6ff63b94b5bce8536528456753351808d1b0",
+      "text": "按概率算，ATP 平均水平的发球局改成一球定胜负，保发率大约降三个百分点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "按概率算,ATP平均水平的发球局改成一球定胜负,爆发率大约降3个百分点。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.625,
+        "cps": 5.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "按 ｜ 概率 ｜ 算 ｜ ATP ｜ 平均 ｜ 水平 ｜ 的 ｜ 发球 ｜ 局 ｜ 改 ｜ 成 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 保 ｜ 发 ｜ 率 ｜ 大约 ｜ 降 ｜ 三个百分点"
+      }
+    },
+    {
+      "id": "bundle:a96c7ee7e092b051650f74a2ec79cf8742eb3446c260e72301261c0ded201317",
+      "text": "后来，ATP 还在新生代总决赛，把一球定胜负搬进了单打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "后来,ATP还在新生代总决赛,把一球定胜负搬进了单打。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.025,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.258,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "后来 ｜ ATP ｜ 还 ｜ 在 ｜ 新生代 ｜ 总决赛 ｜ 把 ｜ 一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 搬进 ｜ 了 ｜ 单打"
+      }
+    },
+    {
+      "id": "bundle:b54176dacf7ed7dc7e3a1a7b939a4f31b77130b854e4f68a011c6084fc7c8d06",
+      "text": "唯一的例外是一九七零年的美网：九分制抢七，四平时一分定胜负。几年后，又改回了要领先两分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "唯一的例外是1970年的美网,九分之抢七,四平时一分定胜负。几年后,又改回了,要领先两分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.542,
+        "cps": 5.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "唯一 ｜ 的 ｜ 例外 ｜ 是 ｜ 一九七零年 ｜ 的 ｜ 美 ｜ 网 ｜ 九分制 ｜ 抢 ｜ 七 ｜ 四 ｜ 平时 ｜ 一 ｜ 分 ｜ 定 ｜ 胜负 ｜ 几年 ｜ 后 ｜ 又 ｜ 改 ｜ 回 ｜ 了 ｜ 要 ｜ 领先 ｜ 两分"
+      }
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.892,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bab6643cbe7fb05de15f2684d116e2ca9b66b0147d96f4830c17af184f80d299",
+      "text": "占先时输一分，就回到平分。理论上，可以一直打下去。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "战先时数一分就回到评分, 理论上可以一直打下去。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.322,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "占先 ｜ 时 ｜ 输 ｜ 一 ｜ 分 ｜ 就 ｜ 回到 ｜ 平分 ｜ 理论上 ｜ 可以 ｜ 一直 ｜ 打 ｜ 下去"
+      }
+    },
+    {
+      "id": "bundle:c00c01872fcd5432dd991f846b4217ec67695ff3e58e6c6b6d22484b3b367438",
+      "text": "一球定胜负，比赛更短，接发球的一方和弱者，也多了爆冷的机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一球定胜负,比赛更短,接发球的一方和弱者也多了暴冷的机会。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 4.661,
+        "cps": 5.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 球 ｜ 定 ｜ 胜负 ｜ 比赛 ｜ 更 ｜ 短 ｜ 接 ｜ 发球 ｜ 的 ｜ 一方 ｜ 和 ｜ 弱者 ｜ 也 ｜ 多 ｜ 了 ｜ 爆冷 ｜ 的 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:c79f38caa1a9064cc3fbf052f7d4827f3e12995af9f80b89f43b88415ad07ef5",
+      "text": "后来，这条规矩还扩展到了盘和抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "后来,这条规矩还扩展到了盘和抢期。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.441,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.68,
+        "cps": 5.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "后来 ｜ 这 ｜ 条 ｜ 规矩 ｜ 还 ｜ 扩展 ｜ 到 ｜ 了 ｜ 盘 ｜ 和 ｜ 抢 ｜ 七"
+      }
+    },
+    {
+      "id": "bundle:d50150b7b39c0250fb159be8345f90e096076d1aa250db32e14302e503723bd5",
+      "text": "第三盘，德约科维奇发球，四十比十五，只差一分就能保发。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三盘,德约科维奇发球,40比15,只差1分就能爆发。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 25,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.28,
+        "cps": 5.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第三盘 ｜ 德约科维奇 ｜ 发球 ｜ 四十比 ｜ 十五 ｜ 只 ｜ 差 ｜ 一 ｜ 分 ｜ 就 ｜ 能 ｜ 保 ｜ 发"
+      }
+    },
+    {
+      "id": "bundle:e0c105f3de0f730316129a48ae317c25940424dbd2216eea2317125a7a6050f5",
+      "text": "一六四一年的一首拉丁诗，还记下了球场上的喊分：四十五平，我占先。又平分了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1641年的一首拉丁诗还记下了球场上的韩分：45平,我战线。又评分了。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.423,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.589,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一六四一年 ｜ 的 ｜ 一 ｜ 首 ｜ 拉丁诗 ｜ 还 ｜ 记 ｜ 下 ｜ 了 ｜ 球场 ｜ 上 ｜ 的 ｜ 喊 ｜ 分 ｜ 四十五 ｜ 平 ｜ 我 ｜ 占先 ｜ 又 ｜ 平分 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:e2a31d78c8c1b8987dbd9168a0c84f9db30978ba4050f57a8b97375374d5f35a",
+      "text": "西里奇呢？还不到百分之六十五，反而更低。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "西里奇呢,还不到 65%,反而更低。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.515,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.57,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "西里奇 ｜ 呢 ｜ 还 ｜ 不 ｜ 到 ｜ 百分之 ｜ 六十五 ｜ 反而 ｜ 更 ｜ 低"
+      }
+    },
+    {
+      "id": "bundle:e9906dd3378e1edde9b2d1cc39e26b9cac29f806bb4a54ab72bd4dd7bcf66d42",
+      "text": "这场决赛的第二盘抢七，就一路打到了八比六。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这场决赛的第二盘抢7就一路达到了8比6。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.199,
+        "cps": 5.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 场 ｜ 决赛 ｜ 的 ｜ 第二盘 ｜ 抢 ｜ 七 ｜ 就 ｜ 一路 ｜ 打 ｜ 到 ｜ 了 ｜ 八比六"
+      }
+    },
+    {
+      "id": "bundle:eeb08c4cd32bab66689b781c7c8cc8307e934495ed0d055b698198ff80cef188",
+      "text": "八个局点，德约都没拿下。第七个破发点，阿尔卡拉斯破发了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "八个局点,德约都没拿下。第七个破发点,阿尔卡拉斯破发了。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 25,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.883,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "八个 ｜ 局点 ｜ 德 ｜ 约 ｜ 都 ｜ 没 ｜ 拿下 ｜ 第七个 ｜ 破发 ｜ 点 ｜ 阿尔卡拉 ｜ 斯 ｜ 破发 ｜ 了"
+      }
+    }
+  ]
+}
