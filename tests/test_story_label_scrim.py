@@ -65,11 +65,13 @@ def test_字卡垫贴边渐隐底_铺到右边缘_往左渐隐_墨迹不挪位(t
     # 往左渐隐：字卡左侧远处不碰画面。
     far_left = (1080 - pad - width - 200, mid_y)
     assert abs(sum(framed.getpixel(far_left)) - sum(plain.getpixel(far_left))) < 12
-    # 字卡墨迹落位不动：品牌绿竖线在两版里是同一列。
+    # 字卡墨迹落位不动：右缘那条品牌绿竖线在两版里是同一列。竖线是字卡最右边的
+    # 东西，只量它，不拿一整行的绿字去平均（绿字的抗锯齿在深浅底上读数不同）。
     def rail_x(im):
-        row = [im.getpixel((x, mid_y)) for x in range(700, 1080)]
-        greens = [700 + i for i, (r, g, b) in enumerate(row) if g > 200 and r > 150 and b < 140]
-        return greens[len(greens) // 2]
+        xs = [x for y in range(y_top, y_top + 240, 6) for x in range(1080 - pad - 40, 1080)
+              if (lambda r, g, b: g > 200 and r > 150 and b < 140)(*im.getpixel((x, y)))]
+        assert xs, "找不到右缘竖线"
+        return max(xs)
     assert abs(rail_x(framed) - rail_x(plain)) <= 1
 
 
