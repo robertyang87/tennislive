@@ -10,33 +10,34 @@
  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18% --pitch +10Hz。",
  "cover": {
   "eyebrow": "网球有故事",
-  "hook": "一局二十六分钟\n只因要赢两分",
-  "narration": "一局二十六分钟，只因要赢两分。",
+  "hook": "一局26分钟\n只因要赢两分",
+  "narration": "一局26分钟，只因要赢两分。",
   "subject": "平分",
   "topic": "平分为什么要赢两分",
   "story_kind": "other",
   "layout": "solo",
   "portrait": {
-   "image": "assets/reel/deuce-2026/portrait-alcaraz-w23.jpg",
-   "source_url": "https://www.youtube.com/watch?v=FQZ7B7JTta4",
+   "image": "assets/reel/deuce-2026/portrait-alcaraz-w23-ap.jpg",
+   "source_url": "https://sportnet.sme.sk/spravy/tenis-novak-djokovic-carlos-alcaraz-finale-fotogaleria-wimbledon-2023/",
    "fit": "width",
    "focus": 0.5,
    "focus_y": 0.35,
    "zoom": 1.0,
-   "_portrait_why": "温网官方整局视频（1080p）27:12：阿尔卡拉斯拿下这 26 分钟一局后仰天怒吼，正面、整个头部完整入画、无遮挡。",
+   "_portrait_why": "AP 通讯社 2023-07-16 温网男单决赛现场图（AP Photo，原图 2000×1336，取自 Sportnet 转载的 TASR/AP 决赛图集）：阿尔卡拉斯持拍面向镜头，正脸、整个头部完整入画、无遮挡；裁 3:4。",
    "_low_res_why": "温网官方 1080p 视频帧，3:4 裁 810×1080，铺 1080×1440 放大 1.33 倍；这一刻正是本期主角那一局的结果，按精准优先认领。"
   }
  },
  "push": {
   "auto": true,
   "summary": "平分为什么要赢两分",
-  "lead": "二〇二三年温网决赛，一局打了三十二分、十三次平分、二十六分钟。网球为什么非要领先两分才算赢？这条规矩比现代网球还老。",
+  "lead": "二〇二三年温网决赛，一局十三次平分、三十二个小分、整整二十六分钟。网球为什么非要领先两分才算赢？这条规矩比现代网球还老。",
   "_why": "账号所有者固定口径：质检通过即推送微信一次。标题「10.24网球有故事|平分为什么要赢两分」19 字 ≤20。"
  },
  "sources": {
   "w23g": "https://www.youtube.com/watch?v=FQZ7B7JTta4",
   "w23h": "https://www.youtube.com/watch?v=dvBr9Wr8BCY",
   "rt": "https://www.youtube.com/watch?v=Iqjau4MJ15E",
+  "b80": "https://www.youtube.com/watch?v=UnwYdF8a5ws",
   "mur17": "https://www.youtube.com/watch?v=KtJ7XCnnRyw",
   "cil17": "https://www.youtube.com/watch?v=DSFsyg48fBg",
   "dbl21": "https://www.youtube.com/watch?v=QuGCLOwmruM",
@@ -47,6 +48,7 @@
   "w23g": "https://github.com/robertyang87/tennislive/releases/download/source-FQZ7B7JTta4/FQZ7B7JTta4.mp4",
   "w23h": "https://github.com/robertyang87/tennislive/releases/download/source-dvBr9Wr8BCY/dvBr9Wr8BCY.mp4",
   "rt": "https://github.com/robertyang87/tennislive/releases/download/source-Iqjau4MJ15E/Iqjau4MJ15E.mp4",
+  "b80": "https://github.com/robertyang87/tennislive/releases/download/source-UnwYdF8a5ws/UnwYdF8a5ws.mp4",
   "mur17": "https://github.com/robertyang87/tennislive/releases/download/source-KtJ7XCnnRyw/KtJ7XCnnRyw.mp4",
   "cil17": "https://github.com/robertyang87/tennislive/releases/download/source-DSFsyg48fBg/DSFsyg48fBg.mp4",
   "dbl21": "https://github.com/robertyang87/tennislive/releases/download/source-QuGCLOwmruM/QuGCLOwmruM.mp4",
@@ -180,10 +182,10 @@
   {
    "source": "w23g",
    "start": 960.0,
-   "end": 965.18,
+   "end": 965.83,
    "cx": 0.5,
    "track": false,
-   "narration": "这一局打了三十二分，十三次平分，整整二十六分钟。",
+   "narration": "这一局，十三次平分，三十二个小分，整整二十六分钟。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -192,10 +194,10 @@
   {
    "source": "w23g",
    "start": 1290.0,
-   "end": 1296.55,
+   "end": 1296.84,
    "cx": 0.5,
    "track": false,
-   "narration": "有记录的最长一局，是一九七五年英国的一个草地赛，三十七次平分。",
+   "narration": "这还不算最长。有记录的最长一局在一九七五年：三十七次平分。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -224,7 +226,7 @@
     {
      "at": 7.72,
      "end": 15.16,
-     "text": "And that's it, it's two breaks of serve, 32 points in that one game alone.\n结束了，两次破发，这一局32分"
+     "text": "And that's it, it's two breaks of serve, 32 points in that one game alone.\n结束了，两次破发，这局32个小分"
     }
    ],
    "_quote_kind": "broadcast",
@@ -421,12 +423,12 @@
    }
   },
   {
-   "source": "w23h",
-   "start": 45.0,
-   "end": 54.79,
+   "source": "rt",
+   "start": 235.0,
+   "end": 243.35,
    "cx": 0.5,
    "track": false,
-   "narration": "一八七七年，第一届温网定规则，直接照搬了皇家网球的计分：十五、三十、四十，连平分和占先一起搬了过来。",
+   "narration": "这套计分，一八七七年被第一届温网原样照搬：十五、三十、四十，连平分和占先一起。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -474,16 +476,33 @@
    }
   },
   {
-   "source": "w23h",
-   "start": 432.0,
-   "end": 440.98,
+   "source": "b80",
+   "start": 762.0,
+   "end": 774.36,
    "cx": 0.5,
    "track": false,
-   "narration": "唯一的例外是一九七〇年的美网：九分制抢七，四平时一分定胜负。几年后，又改回了要领先两分。",
+   "narration": "唯一的例外是一九七〇年美网的九分制抢七，四平时一分定胜负。几年后又改回领先两分，才有了一九八〇年温网决赛，那个十八比十六的抢七。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
-   }
+   },
+   "inset": {
+    "image": "assets/reel/deuce-2026/label-b80.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_for": 15.0,
+    "motion": "editorial",
+    "label": {
+     "topic": "抢七18-16",
+     "date": "1980.07.05",
+     "place": "温网 决赛",
+     "score": "1-6 7-5 6-3 6-7(16) 8-6",
+     "people": "博格 vs 麦肯罗"
+    }
+   },
+   "_inset_why": "右上角标：主题、日期＋赛事、整场比分（赢盘局数上色）、对阵；同一角标连续段合计 8–15 秒。"
   },
   {
    "source": "w23g",
@@ -564,11 +583,11 @@
   },
   {
    "source": "cil17",
-   "start": 128.0,
-   "end": 132.99,
+   "start": 137.8,
+   "end": 144.42,
    "cx": 0.5,
    "track": false,
-   "narration": "西里奇呢？还不到百分之六十五，反而更低。",
+   "narration": "西里奇平分后的保发率，还不到百分之六十五，比他三十平时的百分之七十二还低。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
@@ -815,6 +834,12 @@
   },
   "rt": {
    "why": "Release 存档 source-Iqjau4MJ15E ffprobe 实测；窗口按两档 ASR（data/source_asr/Iqjau4MJ15E）和逐段抽帧定，不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "b80": {
+   "why": "Release 存档 source-UnwYdF8a5ws ffprobe 实测；窗口按两档 ASR（data/source_asr/UnwYdF8a5ws）和逐段抽帧定，不另跑 probe。",
    "width": 1920,
    "height": 1080,
    "fps": "25/1"
