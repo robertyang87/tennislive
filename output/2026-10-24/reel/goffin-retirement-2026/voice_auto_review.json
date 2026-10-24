@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "88d023b7d3fc39226abd463f15904c03199b9987bfcf239aaa1496720f0ba96d",
-    "render_inputs_sha256": "489a1efe1619e37f38840bf9f07e147e19de3755c5ae003c36a91e014f10b631",
-    "spec_sha256": "9d5de52279d6a1f1f3fca9db5d7c7d06d473886731c38c70848f7dd10fb8d9c4",
-    "film_sha256": "67e4ae831b4bfe6eddc48f30dacc87adf4635396d0cdb106e938858d2e2f7953",
-    "inventory_sha256": "ce16e72834c0dff694f45f9f65aad65fdf001e21e61a0753f1cf346e7c9cb424"
+    "render_sha256": "a391550d153860fb6b518b3c5fc921a7aa54d52377edfd14c9ce7637483d66aa",
+    "render_inputs_sha256": "e47a4c485d41046e79d339bdcbbab3542188462b69da4153946a563fc8eca42b",
+    "spec_sha256": "eaf450d4fa37315cd75f608f3fb93995138d7350b846b6c2859c018afd621f8a",
+    "film_sha256": "831c8a61816d9b9592e2878c5e0a299f688a3f795ebe890b1576e38017c4087a",
+    "inventory_sha256": "6e3da46d8ffe80618211da4e16f0980f49c148b57c83175fc2728ec4270379b9"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-24T04:36:13+00:00",
+  "reviewed_at": "2026-10-24T08:28:18+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -149,12 +149,6 @@
       "result_of": "bundle:68bbd2478625f75ec64793379c800c72fa92744d5b53194927e9a15df6a31ff0"
     },
     {
-      "id": "bundle:69fe34f2ea1b7efbb7b4324af415ed6b2dfe9131aa46b9e1fcd575fab3f5ed24",
-      "audio_sha256": "c13d8964c9a3228cd11608bac363c233e8e4b2743fe6f0ee692e8eacb04aaccf",
-      "pass": true,
-      "result_of": "bundle:69fe34f2ea1b7efbb7b4324af415ed6b2dfe9131aa46b9e1fcd575fab3f5ed24"
-    },
-    {
       "id": "bundle:6b4671264c0f8fa4e83cfeafa75bab625dbb5fb77014259108d834aa5bedc094",
       "audio_sha256": "1c8928827ae7e68b5c0f0a917bd0cbb95fdc485a61d89df7aaa796138b90e2fa",
       "pass": true,
@@ -171,6 +165,12 @@
       "audio_sha256": "c054a79c5828e07a7d7a906dd909fff75e6b7c4282127afb1c551ea6eafa907c",
       "pass": true,
       "result_of": "bundle:88fafbcb6f168d603fad5d93d4fbe1208c1aaf7255bdd6ec9ae685d5a5e4a91c"
+    },
+    {
+      "id": "bundle:8c9afd54a58b5f646f24d741da28ed927476350247c7767e2015af690c57ecc7",
+      "audio_sha256": "cd0f754c28fc8c1c9b65be8250d08b5819d38d788063d4e0ddd7503e40f86d7c",
+      "pass": true,
+      "result_of": "bundle:8c9afd54a58b5f646f24d741da28ed927476350247c7767e2015af690c57ecc7"
     },
     {
       "id": "bundle:8d2f28a74bd48a150bd9ee269f465f254618f66f5305bff61a839805e5fc2362",
@@ -396,9 +396,9 @@
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "c13d8964c9a3228cd11608bac363c233e8e4b2743fe6f0ee692e8eacb04aaccf",
+      "audio_sha256": "cd0f754c28fc8c1c9b65be8250d08b5819d38d788063d4e0ddd7503e40f86d7c",
       "pass": true,
-      "result_of": "bundle:69fe34f2ea1b7efbb7b4324af415ed6b2dfe9131aa46b9e1fcd575fab3f5ed24"
+      "result_of": "bundle:8c9afd54a58b5f646f24d741da28ed927476350247c7767e2015af690c57ecc7"
     },
     {
       "id": "voice_outro.mp3",
@@ -488,7 +488,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网求掉眼泪,就是那年在麦阿弥输给割分之后。"
+        "transcript": "2025年麦阿弥,34岁,他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认,他上一次为网球调眼泪,就是那年在麦阿弥输给割分之后。"
       },
       "polyphones": [],
       "pauses": {
@@ -520,7 +520,7 @@
         "substituted": 1,
         "sub_ratio": 0.033,
         "longest_deletion": 0,
-        "transcript": "没有大盲冠,没有大失赛冠军,最高只到第七,这样的职业生涯,算不算成功。"
+        "transcript": "没有大盲冠、没有大失赛冠军,最高只到第七这样的职业生涯,算不算成功。"
       },
       "polyphones": [],
       "pauses": {
@@ -783,7 +783,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2024年上海,33岁的他赢下自为列夫,打尽八强。"
+        "transcript": "2024年上海,33岁的他,赢下自为列夫,打尽八强。"
       },
       "polyphones": [],
       "pauses": {
@@ -1026,7 +1026,7 @@
         "substituted": 1,
         "sub_ratio": 0.015,
         "longest_deletion": 0,
-        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个,是大外,戈芬。"
+        "transcript": "在同一战比赛里,先后击败纳达尔和费德勒,ATP有一份官方名单,做到过的人一共只有六个,达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个,是大外,割分。"
       },
       "polyphones": [],
       "pauses": {
@@ -1200,7 +1200,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。孟菲尔斯退赛,他以幸运落败者的身份递不进正赛,连赢三轮,第四轮战到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点占进场内把球打得比所有人早半步"
+        "transcript": "2012年罚网,21岁的歌分排名第109,资格赛已经出局。孟菲尔斯退赛,他以幸运落败者的身份递不进正赛,连赢三轮,第四轮占到了费德勒对面。他的卧室墙上贴满了费德勒的海报。那一天,他从偶像手里抢下第一盘,第二盘只差两分,就能取得两盘领先。他的个子在男子网球里不占优势。他靠的是强点占进场内把球打得比所有人早半步"
       },
       "polyphones": [
         {
@@ -1329,7 +1329,7 @@
         "substituted": 1,
         "sub_ratio": 0.013,
         "longest_deletion": 0,
-        "transcript": "2022年阿斯坦娜,资格塞出局的她,又以幸运落败者的身份递不尽正赛。对面是刚拿下美网,刚登上世界第一的阿尔卡拉斯,她直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
+        "transcript": "2022年阿斯坦那,资格塞出局的他,又以幸运落败者的身份递不尽正赛。对面是刚拿下美网,刚登上世界第一的阿尔卡拉斯,他直落两盘赢了。两次从替布希出发,中间隔了整整十年。"
       },
       "polyphones": [
         {
@@ -1432,7 +1432,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "大屏幕上,纳达尔第一个出现,祝贺他了不起的职业生涯。他站在场中央,哭了。"
+        "transcript": "大屏幕上,纳达尔第一个出现祝贺他了不起的职业生涯。他站在场中央,哭了。"
       },
       "polyphones": [],
       "pauses": {
@@ -1444,38 +1444,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "大 ｜ 屏幕 ｜ 上 ｜ 纳达尔 ｜ 第一个 ｜ 出现 ｜ 祝贺 ｜ 他 ｜ 了不起的 ｜ 职业 ｜ 生涯 ｜ 他 ｜ 站 ｜ 在 ｜ 场 ｜ 中央 ｜ 哭 ｜ 了"
-      }
-    },
-    {
-      "id": "bundle:69fe34f2ea1b7efbb7b4324af415ed6b2dfe9131aa46b9e1fcd575fab3f5ed24",
-      "text": "三巨头，他都赢过；大满贯，他一个没有。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 15,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "三句头,他都赢过,大满关,他一个没有。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 15,
-        "speech_s": 3.644,
-        "cps": 4.12,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "三 ｜ 巨头 ｜ 他 ｜ 都 ｜ 赢 ｜ 过 ｜ 大满贯 ｜ 他 ｜ 一个 ｜ 没有"
       }
     },
     {
@@ -1496,7 +1464,7 @@
         "substituted": 1,
         "sub_ratio": 0.012,
         "longest_deletion": 0,
-        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。合辞没有骨折,可整个草地赛季就这样爆消。"
+        "transcript": "2017年,是他上升最抖的一年。发往第三轮,他第一盘5比4领线。追求冲向长底时,他的右脚卡进了卷起的防水扇布,整个人撞上围墙,被扶着下了场。核词没有骨折,可整个草地赛季就这样报销。"
       },
       "polyphones": [
         {
@@ -1594,6 +1562,38 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "358 ｜ 场 ｜ 胜利 ｜ 6 个 ｜ 冠军 ｜ 他 ｜ 在 ｜ 赛 ｜ 后 ｜ 说 ｜ 我 ｜ 为 ｜ 我 ｜ 的 ｜ 整个 ｜ 职业 ｜ 生涯 ｜ 自豪 ｜ 我 ｜ 没有 ｜ 遗憾 ｜ 我 ｜ 拼 ｜ 到 ｜ 了 ｜ 最后 ｜ 一刻"
+      }
+    },
+    {
+      "id": "bundle:8c9afd54a58b5f646f24d741da28ed927476350247c7767e2015af690c57ecc7",
+      "text": "三巨头，他都赢过；35岁，他告别网球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三句头,他都赢过,三十五岁,他告别网球。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.75,
+        "cps": 4.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三 ｜ 巨头 ｜ 他 ｜ 都 ｜ 赢 ｜ 过 ｜ 35岁 ｜ 他 ｜ 告别 ｜ 网球"
       }
     },
     {
