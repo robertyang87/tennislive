@@ -32,7 +32,8 @@ no panel, winner names green and loser names white, shared date/event baseline,
 centered vs, won-set digits bold and lost-set digits light. Tiebreak points are
 bare small superscripts by the losing game count. The final follow-up fixes
 all full-match scores at the same98px source size: five sets extend left
-instead of shrinking. Default hold is at most15s, bounded by the associated clip.
+instead of shrinking. Default hold is at most 8s (owner 2026-10-24; was 15s),
+bounded by the associated clip.
 
 The PNG is intentionally rendered near 2x its final display width. The reel
 pipeline scales it down with Lanczos so Chinese strokes stay crisp.
@@ -78,11 +79,15 @@ SCORE = REPO / "assets" / "fonts" / "TLScore-Bold.ttf"
 SCORE_LIGHT = REPO / "assets" / "fonts" / "TLScore-Light.ttf"
 
 # 2026-10-21 follow-up: topic97→89; score115→106→98; metadata/people unchanged.
+# 2026-10-24 账号所有者「显示的时长有点长，同时字体都有点大，建议都再小一号」，
+# 看过对比图后选「8 秒」：每行各小一号（约 9%）89/73/98→81/66/89，停留 15→8 秒。
 STORY_LABEL_WIDTH = 0.60
 STORY_LABEL_PAD = 0.043
-STORY_LABEL_MAX_SECONDS = 15.0
-CORNER_TOPIC_SIZE, CORNER_META_SIZE, CORNER_SCORE_SIZE = 89, 73, 98
-CORNER_PEOPLE_SIZE = 73
+STORY_LABEL_MAX_SECONDS = 8.0
+#: 10-24 之前的 spec 写着 show_for 15；照样过闸，渲染时一律截到 STORY_LABEL_MAX_SECONDS。
+STORY_LABEL_LEGACY_MAX_SECONDS = 15.0
+CORNER_TOPIC_SIZE, CORNER_META_SIZE, CORNER_SCORE_SIZE = 81, 66, 89
+CORNER_PEOPLE_SIZE = 66
 CORNER_LANE = 637
 CORNER_OUTLINE = (20, 30, 24, 255)
 CORNER_STROKE, CORNER_SHADOW_OFFSET = 7, 2

@@ -235,7 +235,7 @@ def test_15秒字卡不延长短片段也不遗留到下一片段(tmp_path):
     assert green - red < 40, "下一片段不能继承上一片段字卡"
 
 
-def test_字卡无论是否开动效都最多显示15秒(tmp_path, monkeypatch):
+def test_字卡无论是否开动效都最多显示8秒(tmp_path, monkeypatch):
     import build_match_reel as reel
 
     # Small synthetic canvas checks real FFmpeg pixels without rendering an episode.
@@ -247,15 +247,15 @@ def test_字卡无论是否开动效都最多显示15秒(tmp_path, monkeypatch):
     for animate in (True, False):
         ins = {"image": str(card), "corner": "tl", "kind": "story_text",
                "motion": "editorial", "animate": animate, "carry": "start"}
-        # No show_for: the production default itself must be 15, not infinite.
+        # No show_for: the production default itself must be 8 (owner 2026-10-24), not infinite.
         chain = reel._overlay_chain("[0:v]null[base]", ins)
         out = tmp_path / f"hold-{animate}.mp4"
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
-                        "color=c=0x303030:size=320x240:rate=10:duration=16.2",
+                        "color=c=0x303030:size=320x240:rate=10:duration=9.2",
                         "-i", str(card), "-filter_complex", chain, "-map", "[vout]",
-                        "-t", "16.2", "-an", "-c:v", "libx264", "-preset", "ultrafast",
+                        "-t", "9.2", "-an", "-c:v", "libx264", "-preset", "ultrafast",
                         str(out)], check=True, capture_output=True, text=True)
-        red, green, _ = _pixel(out, 14, (60, 45))
+        red, green, _ = _pixel(out, 7, (60, 45))
         assert green - red > 100
-        red, green, _ = _pixel(out, 15.5, (60, 45))
-        assert green - red < 40, "静态或旧carry字段都不能绕过15秒上限"
+        red, green, _ = _pixel(out, 8.5, (60, 45))
+        assert green - red < 40, "静态或旧carry字段都不能绕过8秒上限"

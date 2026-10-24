@@ -348,7 +348,7 @@ def test_确认版角标同基线居中并按盘区分粗细和抢七上标(tmp_
     assert people[2][2]["fill"] == WHITE
     digits = [c for c in calls if c[1].isdigit()]
     main_size = max(c[2]["font"].size for c in digits)
-    assert main_size == band.CORNER_SCORE_SIZE == 98, "两盘和五盘必须保持确认的同一字号"
+    assert main_size == band.CORNER_SCORE_SIZE == 89, "两盘和五盘必须保持确认的同一字号"
     for xy, text, kw in digits:
         expected = "TLScore-Bold.ttf" if kw["fill"] == BRAND_GREEN else "TLScore-Light.ttf"
         assert Path(kw["font"].path).name == expected
@@ -387,7 +387,7 @@ def test_固定字号比分超出画布必须报错而非缩小(tmp_path):
                tmp_path / "overflow.png", highlight="美网男单决赛", metric=metric)
 
 
-def test_新字卡默认15秒并允许向右靠_超过上限仍拒绝(tmp_path):
+def test_新字卡默认8秒_旧spec写15照样过闸但渲染截到8秒_超过15仍拒绝(tmp_path):
     import build_match_reel as reel
     import render_story_info_band as band
 
@@ -399,7 +399,11 @@ def test_新字卡默认15秒并允许向右靠_超过上限仍拒绝(tmp_path):
                                          "inset": inset}]}
     segments = reel.parse_segments(spec, {"r": Path("source.mp4")}, "r")
     assert segments[0].length == 2
-    assert "lt(t,15.000)" in reel._overlay_chain("[0:v]null[base]", segments[0].inset)
+    # 账号所有者 2026-10-24：停留 15→8 秒。
+    assert "lt(t,8.000)" in reel._overlay_chain("[0:v]null[base]", segments[0].inset)
+    inset["show_for"] = 15.0
+    segments = reel.parse_segments(spec, {"r": Path("source.mp4")}, "r")
+    assert "lt(t,8.000)" in reel._overlay_chain("[0:v]null[base]", segments[0].inset)
     inset["show_for"] = 15.01
     with pytest.raises(reel.ReelError, match="story_text"):
         reel.parse_segments(spec, {"r": Path("source.mp4")}, "r")
