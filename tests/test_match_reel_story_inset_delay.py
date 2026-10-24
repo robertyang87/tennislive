@@ -34,12 +34,12 @@ def test_delayed_story_label_shifts_every_animation_clock_and_keeps_default_iden
     plain = reel._overlay_chain(base, _inset(image))
     assert reel._overlay_chain(base, _inset(image, show_after=0)) == plain
     delayed = reel._overlay_chain(base, _inset(image, show_after=18.2))
-    assert "enable='gte(t,18.200)*lt(t,33.200)'" in delayed
+    assert "enable='gte(t,18.200)*lt(t,26.200)'" in delayed
     assert "fade=t=in:st=18.200:d=0.28" in delayed
-    assert "fade=t=out:st=32.850:d=0.350" in delayed
+    assert "fade=t=out:st=25.850:d=0.350" in delayed
     assert "if(lt(t,18.480)" in delayed and "(t-18.200)/0.28" in delayed
     assert reel._overlay_chain(base, _inset(image, show_after=18.2, carry="start")) == delayed
-    assert "33.200" in reel._overlay_chain(base, _inset(image, show_after=18.2, show_for=20))
+    assert "26.200" in reel._overlay_chain(base, _inset(image, show_after=18.2, show_for=20))
     assert _parse(image, show_after=18.2, show_for=15.)
     with pytest.raises(reel.ReelError, match="story_text"):
         _parse(image, show_after=4.5, show_for=15.01)

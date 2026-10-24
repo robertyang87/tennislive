@@ -103,7 +103,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from render_story_info_band import STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD  # noqa: E402
+from render_story_info_band import (  # noqa: E402
+    STORY_LABEL_LEGACY_MAX_SECONDS, STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD,
+)
 
 import narrated_audio_mode  # noqa: E402
 import reviewed_effects_mode  # noqa: E402
@@ -3952,7 +3954,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     # A story-text lock-up has a narrower contract than a generic sticker.
     # These limits keep it out of the platform chrome, stop it becoming a
     # second subtitle block, and make the intended quiet motion non-optional.
-    # 2026-10-21: 最多15秒；所属片段先结束，字卡也随之结束。
+    # 2026-10-21: 最多15秒；2026-10-24 收到8秒（渲染时截断，旧 spec 写的15照样过闸）。
+    # 所属片段先结束，字卡也随之结束。
     # 历史 carry 字段可读，但 story_text 渲染不再跨片段续挂。
     bad_story_text = []
     for i, seg in enumerate(segments):
@@ -3972,7 +3975,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # 兼容历史短 carry 声明的预检；story_text 渲染仍按本段15秒上限。
             show_for = max(show_for, 2.8)
         if (not 0.48 <= width <= 0.60
-                or not (2.8 if carry != "end" else 1.0) <= show_for <= STORY_LABEL_MAX_SECONDS
+                or not (2.8 if carry != "end" else 1.0) <= show_for <= STORY_LABEL_LEGACY_MAX_SECONDS
                 or pad < STORY_LABEL_PAD
                 or str(ins.get("motion", "")) != "editorial"):
             bad_story_text.append(i + 1)
@@ -4229,7 +4232,7 @@ def _normalize_title_card_segments(spec: dict) -> None:
         if "title_card_story_label" in s:
             seconds = s.get("seconds")
             if (type(seconds) not in (int, float) or not math.isfinite(seconds)
-                    or not 0 < seconds <= STORY_LABEL_MAX_SECONDS):
+                    or not 0 < seconds <= STORY_LABEL_LEGACY_MAX_SECONDS):
                 raise ReelError(f"第 {i + 1} 段 title_card_story_label 的 seconds 必须是 >0 且 ≤15 秒")
         if not float(s.get("seconds") or 0) > 0:
             raise ReelError(
@@ -10207,7 +10210,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
                 from render_title_card import story_label_problem  # noqa: PLC0415
                 if problem := story_label_problem(card["story_label"], text=card["text"], size=size):
                     raise ReelError(f"第 {i + 1} 段 title_card_story_label：{problem}")
-                if not 0 < s.length <= STORY_LABEL_MAX_SECONDS:
+                if not 0 < s.length <= STORY_LABEL_LEGACY_MAX_SECONDS:
                     raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能停留 >0 且 ≤15 秒")
                 render_kwargs["story_label"] = card["story_label"]
             if handle_bottom is not None:

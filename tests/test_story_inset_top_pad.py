@@ -50,7 +50,7 @@ def _pixel(film, time, xy):
     return Image.frombytes("RGB", (1080, 1440), raw).getpixel(xy)
 
 
-def test_native_explicit_top_is_visible_immediately_holds_and_clears_at_15(tmp_path, monkeypatch):
+def test_native_explicit_top_is_visible_immediately_holds_and_clears_at_8(tmp_path, monkeypatch):
     source, image = tmp_path / "source.mp4", tmp_path / "label.png"
     Image.new("RGBA", (20, 20), (0, 255, 0, 255)).save(image)
     subprocess.run([
@@ -77,7 +77,7 @@ def test_native_explicit_top_is_visible_immediately_holds_and_clears_at_15(tmp_p
     assert reel.parse_segments(_spec(real_inset), {"main": source}, "main")
     reel.cut_segment(source, reel.Segment(0, 15.12, .5, "", inset=ins),
                      explicit, 1920, threads=2)
-    for at, visible in ((0, True), (.04, True), (14.92, True), (15.04, False)):
+    for at, visible in ((0, True), (.04, True), (7.92, True), (8.04, False)):
         red, green, blue = _pixel(explicit, at, (450, 60))
         assert (green > 180 and red < 60 and blue < 60) == visible
     assert 15.08 <= reel.probe_duration(explicit) <= 15.2
