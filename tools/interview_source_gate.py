@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """“赛后开麦”的 L0 内容身份门禁。
 
+2026-09-30: trophy_moment is an explicitly reviewed trophy presentation with
+broadcast commentary, not a player speech. It requires source/frame hashes and
+same-match winner/trophy evidence; automatic title discovery stays unchanged.
+It retains all mandatory lead-in, bilingual, cover, film and publication gates.
+
 机器字段 ``requested_content_type`` 与观众看到的 ``interview_kind`` 必须成对，
 来源身份和逐场赛果必须带哈希绑定。当前允许五种真实内容：赛后场上采访、
 颁奖台致辞、最后一战/退役告别仪式、赛前出场秀，以及**赛后新闻发布会**。
@@ -78,6 +83,7 @@ VERDICTS = ROOT / "data" / "oncourt_verify.json"
 SOURCES = ROOT / "data" / "oncourt_sources.json"
 
 REQUESTED_KINDS = {
+    "trophy_moment": "赛后捧杯时刻",
     "on_court": "赛后场上采访",
     "ceremony": "赛后捧杯致辞",
     "farewell": "赛后告别仪式",
@@ -86,11 +92,14 @@ REQUESTED_KINDS = {
     "broadcaster_interview": "赛后转播商专访",
 }
 DETECTED_TYPES = {
+    "trophy_moment",
     "on_court", "press", "press_conference", "studio", "ceremony", "farewell",
     "walk_on", "broadcaster_interview", "highlight", "unknown",
 }
 
 APPROVED_METHODS = {
+    # Manual source review only; title-based discovery remains unchanged.
+    "trophy_moment": {"reviewed_trophy_frames"},
     "on_court": {
         "human_visual_verdict",
         "tennistv_structured_feed",
@@ -325,6 +334,8 @@ def contract_payload(spec: dict) -> dict:
     }
     # 老 spec 的 attestation 不能因为新增一种产品而集体失效；只让新类型把新字段
     # 纳入签名，既能绑定名人堂身份，又保持既有比赛内容的哈希完全不变。
+    if spec.get("requested_content_type") == "trophy_moment":
+        payload["trophy_moment"] = spec.get("trophy_moment")
     if is_hall_of_fame_induction(spec):
         payload["ceremony_subtype"] = spec.get("ceremony_subtype")
         payload["subject"] = spec.get("subject")
@@ -365,6 +376,7 @@ def content_identity_id(spec: dict) -> str:
 #: farewell／名人堂那两支的门槛保持一致。真出现一条只有人工目视判定的出场秀，
 #: 它会在这儿红出来，让人显式决定，而不是被一条宽口径悄悄放过。
 NO_LEAD_EXCEPTION_METHOD: dict[str, str | None] = {
+    "trophy_moment": None,
     "on_court": None,
     "ceremony": None,
     "farewell": "official_explicit_farewell",
@@ -490,6 +502,20 @@ def validate_source_contract(spec: dict) -> str:
             problems.append("match 的胜负双方不在 participants 中")
         if verification.get("match_id") != match.get("id"):
             problems.append("来源证明和赛果的 match_id 不一致")
+
+    if requested == "trophy_moment":
+        trophy = spec.get("trophy_moment") or {}
+        if trophy.get("audio_speaker") != "broadcast_commentator" or trophy.get("player_speech") is not False:
+            problems.append("trophy_moment 必须明确转播解说音轨，不能冒称球员致辞")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(trophy.get("source_sha256") or "")):
+            problems.append("trophy_moment 缺真实源片 SHA256")
+        frames = trophy.get("reviewed_frames") or []
+        if not frames or not any(f.get("trophy_visible") is True and f.get("winner_visible") is True for f in frames if isinstance(f, dict)):
+            problems.append("trophy_moment 缺同场冠军和奖杯同框的实看证据")
+        if any(not isinstance(f, dict) or not isinstance(f.get("source_second"), (int, float)) or not re.fullmatch(r"[0-9a-f]{64}",str(f.get("sha256") or "")) for f in frames):
+            problems.append("trophy_moment 帧证据缺源时间或像素文件哈希")
+        if trophy.get("match_id") != (spec.get("match") or {}).get("id"):
+            problems.append("trophy_moment 画面与比赛身份不一致")
 
     actual = str(verification.get("attestation_sha256") or "")
     expected = sha256_json(contract_payload(spec))
