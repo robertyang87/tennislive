@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=3mCyG8Vt65o",
+  "source_sha256": "91ec6c9ce0000dda1576a67ef6b796c861c337ca72ed060f462d57f5ce322214",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-24T03:13:51+00:00",
+  "reviewed_from": 46.6,
+  "reviewed_to": 57.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 46.7,
+      "end": 53.3,
+      "en": "The first ever ATP Next Gen champion was about to be decided,",
+      "zh": "第一届新生代总决赛冠军即将揭晓"
+    },
+    {
+      "start": 53.3,
+      "end": 57.4,
+      "en": "as Hyeon Chung and Andrey Rublev faced off in the Milan final.",
+      "zh": "郑泫和鲁布列夫在米兰决赛相遇"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 91ec6c9ce0000dda1576a67ef6b796c861c337ca72ed060f462d57f5ce322214，存于 data/source_asr/3mCyG8Vt65o/small.en.json 与 data/source_asr/3mCyG8Vt65o/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
