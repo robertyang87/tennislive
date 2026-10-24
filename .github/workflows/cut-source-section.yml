@@ -1,0 +1,186 @@
+name: cut-source-section
+run-name: "cut-source-section · ${{ inputs.url }} ${{ inputs.start }}-${{ inputs.end }}"
+
+# 把一条公开 YouTube 视频的指定时间段（秒）切下来，存到该视频的
+# source-<id> Release 里。整场存档走 download-video.yml；整场超过
+# Release 单文件 2 GiB 上限时（例如 1080p 全场回放），用这条只切需要的段。
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "YouTube 视频链接（请确保你有权下载和存档）"
+        required: true
+        type: string
+      start:
+        description: "起始秒"
+        required: true
+        type: string
+      end:
+        description: "结束秒"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cut-source-section-${{ inputs.url }}-${{ inputs.start }}-${{ inputs.end }}
+  cancel-in-progress: false
+
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VIDEO_URL: ${{ inputs.url }}
+      SECTION_START: ${{ inputs.start }}
+      SECTION_END: ${{ inputs.end }}
+      GH_TOKEN: ${{ github.token }}
+      # 下载和 Release 显式绑定仓库；仅检出共享依赖安装脚本。
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 安装 YouTube 下载器
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+
+      - name: 恢复音视频工具 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-download-video-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-download-video-v1-
+      - name: 安装音视频合并工具
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: 回写实际下载的 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
+      # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
+      # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。
+      - name: 启动 PO token provider
+        continue-on-error: true
+        run: |
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for attempt in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "PO token provider 已就绪"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内未就绪，继续尝试 cookies/client 通道"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: 写入 YouTube cookies（如已配置）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
+          fi
+
+      - name: 解析并切段下载
+        id: video
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -euo pipefail
+          ARGS=(--js-runtimes node)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
+          fi
+
+          VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
+          TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
+          test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
+
+          mkdir -p "$RUNNER_TEMP/cut"
+          ASSET="${VIDEO_ID}-${SECTION_START}-${SECTION_END}.mp4"
+          yt-dlp "${ARGS[@]}" \
+            -f "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
+            --merge-output-format mp4 --remux-video mp4 \
+            --download-sections "*${SECTION_START}-${SECTION_END}" \
+            --force-keyframes-at-cuts \
+            -o "$RUNNER_TEMP/cut/$ASSET" \
+            "$VIDEO_URL"
+
+          FILE="$RUNNER_TEMP/cut/$ASSET"
+          test -s "$FILE" || { echo "::error::切段结束但没有生成 MP4"; exit 1; }
+          SIZE=$(stat -c%s "$FILE")
+          test "$SIZE" -gt 51200 || { echo "::error::文件只有 $SIZE 字节，不是有效视频"; exit 1; }
+
+          echo "id=$VIDEO_ID" >> "$GITHUB_OUTPUT"
+          echo "title<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$TITLE" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          echo "asset=$ASSET" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+
+      - name: 上传到 GitHub Release
+        env:
+          VIDEO_ID: ${{ steps.video.outputs.id }}
+          VIDEO_TITLE: ${{ steps.video.outputs.title }}
+          VIDEO_FILE: ${{ steps.video.outputs.file }}
+          VIDEO_ASSET: ${{ steps.video.outputs.asset }}
+          VIDEO_SIZE: ${{ steps.video.outputs.size }}
+        run: |
+          set -euo pipefail
+          TAG="source-$VIDEO_ID"
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "$VIDEO_TITLE" \
+              --notes "由 cut-source-section GitHub Action 保存的源视频片段。来源：$VIDEO_URL"
+
+          UPLOADED=0
+          for attempt in 1 2 3 4; do
+            if gh release upload "$TAG" "$VIDEO_FILE" --clobber; then
+              UPLOADED=1
+              break
+            fi
+            sleep $((attempt * attempt * 5))
+          done
+          test "$UPLOADED" = 1 || { echo "::error::Release 附件连续 4 次上传失败"; exit 1; }
+
+          gh release view "$TAG" --json assets \
+            --jq '.assets[].name' | grep -qx "$VIDEO_ASSET" \
+            || { echo "::error::Release 里没有找到刚上传的附件"; exit 1; }
+
+          URL="https://github.com/${{ github.repository }}/releases/download/$TAG/$VIDEO_ASSET"
+          {
+            echo "## 片段已保存"
+            echo
+            echo "- 标题：$VIDEO_TITLE"
+            echo "- 片段：源 ${SECTION_START}s–${SECTION_END}s"
+            echo "- 大小：$VIDEO_SIZE 字节"
+            echo "- [直接下载]($URL)"
+            echo "- [Release 页](https://github.com/${{ github.repository }}/releases/tag/$TAG)"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "download_url=$URL"
