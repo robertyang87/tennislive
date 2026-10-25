@@ -260,7 +260,7 @@ def test_顶栏宽度尺量的是libass真渲出来的宽(tmp_path):
     head_b = clip.header_ass(spec)[1]
     a = _burn(clip._ASS_HEAD + f"Dialogue: 0,0:00:00.00,0:00:01.00,HEADB,,0,0,0,,{head_b}\n",
               tmp_path)
-    cols = np.where(a[80:140].max(0) > 60)[0]
+    cols = np.where(a[clip._TOPBAR_BAND_SPLIT_Y:80].max(0) > 60)[0]
     ink = cols[-1] - cols[0] + 1
     assert abs(ink - predicted) / predicted < 0.04, f"预测 {predicted:.0f}px，真烧 {ink}px"
     assert ink < clip._HEAD_PX
@@ -296,16 +296,16 @@ def test_人物主标题顶栏按PNG真画的宽量_画不下要报错(tmp_path)
 
     size = clip._HEAD_SIZE["a"]
     # ① 评审的复现：真画 1266px
-    big = _subject_spec("阿格涅什卡·拉德万斯卡", "国际网球名人堂入选致辞")
+    big = _subject_spec("阿格涅什卡·拉德万斯卡", "国际网球名人堂入选典礼及职业生涯回顾致辞")
     assert clip._subject_head_width(size, clip.header_runs(big)[0][0][0]) > clip._HEAD_PX
-    with pytest.raises(SystemExit, match="顶栏这行 1266px"):
+    with pytest.raises(SystemExit, match="顶栏这行"):
         clip.header_lines(big)
     with pytest.raises(SystemExit, match="两头会被画布切掉"):
         clip._subject_topbar_png(big, tmp_path)
 
     # ② 贴边那一种：按日文 face 量 901px 放得下，按真画的简体 face 是 996px——
     #    拿 `_measure_at` 顶替画字那支字体，这一条就漏过去
-    edge = _subject_spec("玛丽亚·何塞·马丁内斯·桑切斯", "致辞")
+    edge = _subject_spec("玛丽亚·何塞·马丁内斯·桑切斯·维克梅耶尔女士", "致辞")
     main = clip.header_runs(edge)[0][0][0]
     assert clip._measure_at("zh", size, main) <= clip._HEAD_PX < clip._subject_head_width(size, main)
     with pytest.raises(SystemExit, match="顶栏这行"):
@@ -315,7 +315,7 @@ def test_人物主标题顶栏按PNG真画的宽量_画不下要报错(tmp_path)
     ok = _spec("federer-ithf-2026-induction-speech")
     png = clip._subject_topbar_png(ok, tmp_path)
     alpha = np.asarray(Image.open(png).getchannel("A"))
-    cols = np.where(alpha[:clip._TOPBAR_BAND_SPLIT_Y].max(0) > 0)[0]
+    cols = np.where(alpha[:clip._subject_topbar_geometry(ok)[2]].max(0) > 220)[0]
     ink = cols[-1] - cols[0] + 1
     predicted = clip._subject_head_width(size, clip.header_lines(ok)[0])
     assert abs(ink - predicted) / predicted < 0.03, f"预测 {predicted:.0f}px，PNG 上画了 {ink}px"
@@ -729,3 +729,36 @@ def test_收尾卡口播等溶解走完再开口(tmp_path):
     pcm = np.abs(np.frombuffer(raw, np.int16))
     onset = np.argmax(pcm > 1000) / 48000
     assert clip._OVERLAP_S - 0.02 <= onset <= clip._OVERLAP_S + 0.06, onset
+
+
+def test_紧凑透明顶栏与赛场之上共用样式_白底有字形阴影(tmp_path):
+    """用真正的采访 write_ass 出片路径，防止共享参数只接进一个栏目。"""
+    import numpy as np
+    from PIL import Image
+    import build_match_reel as reel
+    from tennislive import topbar_style
+
+    assert clip._HEAD_SIZE == {"a": reel.TOPBAR_HEAD_SIZE, "b": reel.TOPBAR_BODY_SIZE}
+    assert clip._HEAD_SIZE == {"a": 40, "b": 38}
+    assert clip._SCORE_PX == reel.TOPBAR_SCORE_SIZE == 40
+    assert (clip._HEAD_A_TOP, clip._HEAD_B_TOP) == (8, 36)
+    spec = {"slug": "topbar-white-preview", "event": "2026 WTA500 宁波 决赛",
+            "winner": "莱巴金娜", "interview_kind": "赛后捧杯致辞",
+            "push": {"matchup": "莱巴金娜 vs 费尔南德斯", "score": "6-2 6-2"}}
+    path = tmp_path / 'header.ass'
+    clip.write_ass([], [], 0, path, spec=spec, duration=1)
+    output = tmp_path / 'white.png'
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-f', 'lavfi', '-i',
+                    'color=white:s=1080x1440:r=25', '-vf',
+                    f'subtitles={path}:fontsdir={ROOT / "assets/fonts"}',
+                    '-frames:v', '1', '-threads', '1', str(output)], check=True)
+    pixels = np.asarray(Image.open(output).convert('RGB'))
+    assert pixels[:160, 1060].min() >= 250, '阴影不能变成一整块底板'
+    assert pixels[100:160].min() >= 250, '文字之外不许压暗采访画面'
+    for lo, hi in ((8, topbar_style.INK_SPLIT_Y), (topbar_style.INK_SPLIT_Y, 80)):
+        region = pixels[lo:hi, 180:900]
+        assert (region.max(axis=2) < 55).sum() > 100, '白底缺少深色字形边缘'
+    text = path.read_text()
+    for style in ['HEADA', 'HEADB']:
+        assert sum(line.startswith('Dialogue:') and f',{style},' in line
+                   for line in text.splitlines()) == 2, '清晰前景和柔影均应实际输出'

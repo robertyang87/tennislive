@@ -9916,7 +9916,7 @@ def test_顶栏版式用两种字体且只覆盖比赛区(tmp_path):
         ("WTA 1000 加拿大站 第二轮", "伊埃拉 6-1 4-6 6-2 帕克斯"),
         1.2, 51.2, tmp_path / "topbar.ass")
     text = ass.read_text(encoding="utf-8")
-    assert "Style: HEAD,得意黑,54" in text
+    assert "Style: HEAD,得意黑,40" in text
     assert "Style: BODY,Noto Sans CJK SC,38" in text
     assert "Dialogue: 0,0:00:01.20,0:00:51.20,HEAD" in text
     assert "Dialogue: 0,0:00:01.20,0:00:51.20,BODY" in text
@@ -12993,7 +12993,7 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
         # ⚠️ 取样带从常量推，别写死行号。原来这儿是 `[80:150]`，而
         # `TOPBAR_BODY_TOP` 2026-08-15 从 92 收到了 72——写死的带子会从上边
         # 切掉第二行的头几行像素，而**它只会让量出来的宽度小一点，不会报错**。
-        top = reel.TOPBAR_BODY_TOP - 2
+        top = reel.topbar_style.INK_SPLIT_Y
         band = np.asarray(pil.open(png).convert("RGB"))[top:top + 80, :, :]
         cols = np.where(band.sum(axis=2) > 60)[1]
         assert cols.size, f"{second}s 这一帧 BODY 行没渲出任何字"
@@ -13013,20 +13013,7 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
 
 
 def test_顶栏盒子要装得下两行字并且留出余量(tmp_path):
-    """账号所有者 2026-08-15：「顶部比分栏高度建议再调小一些」。150 → 126。
-
-    **收的是留白，不是字号**——量出来那 150px 里只有 101px 是字（第一行墨迹
-    27~71、第二行 99~128），一半以上是留白。顶栏是全片曝光最长的元素，缩字号
-    是拿可读性换高度。
-
-    这条判据钉的不是「等于 126」，是**「还装得下」**：把一个量出来的数写死，
-    下一个人想再调就只能改判据，而改判据的人不会知道 126 是怎么来的。所以它
-    真渲一帧量墨迹，只要求三处留白都还在。谁把 `TOPBAR_H` 再往下调到字贴边、
-    或者反过来把字号调大到撑破盒子，都会在这儿红。
-
-    ⚠️ **必须带 `fontsdir`**，和 `topbar_filtergraph` 一样：不带的话字体解析
-    看这台机器上装了什么，量出来的行高在沙箱和 CI 上不是一回事。
-    """
+    """10-25 紧凑顶栏：真渲量两行墨迹，次行原字号、间距收紧且不能碰撞。"""
     import shutil  # noqa: PLC0415
     import subprocess  # noqa: PLC0415
 
@@ -13065,10 +13052,10 @@ def test_顶栏盒子要装得下两行字并且留出余量(tmp_path):
     where = (f"上留白 {top_pad}px、行间 {mid_gap}px、下留白 {bottom_pad}px"
              f"（盒高 {reel.TOPBAR_H}，墨迹 {bands}）")
     assert b1 < reel.TOPBAR_H, f"第二行已经戳出盒子外面了：{where}"
-    # 12px 是下界不是目标：现在是 21/16/19，还留着一档余量。实测 118px 那一版
-    # 是 15/16/17，看着已经是「挤」不是「紧」——所以下界压在它下面一点。
-    for name, got in (("上", top_pad), ("行间", mid_gap), ("下", bottom_pad)):
-        assert got >= 12, f"{name}留白只剩 {got}px，字快贴边了：{where}"
+    # 10-25 用户确认：首行缩小，次行不缩，两行贴近；仍须分成两行且不触边。
+    assert top_pad >= 8 and bottom_pad >= 8, where
+    assert 2 <= mid_gap <= 8, f"两行须紧凑但不相碰：{where}"
+
 
 
 def test_赛场之上的quote段不许是赛后采访():
@@ -14701,8 +14688,8 @@ def test_带式的字幕锚顶栏角标都进带_全出血原样(monkeypatch):
     monkeypatch.setattr(reel, "LAYOUT", "full")
     assert reel.default_margin_v() == reel._REEL_MARGIN_V
     g2 = reel.topbar_filtergraph(1.2, 10.0, Path("t.ass"), Path("s.ass"))
-    # 2026-09-27 起那层压暗是渐变（评审 Q6），不再是 drawbox 实条
-    assert "[topbar_scrim]" in g2, "全出血的顶栏要那层压暗保可读性"
+    # 2026-10-25 起两种布局都靠字形阴影，不画顶栏压暗层
+    assert "topbar_scrim" not in g2, "10-25 顶栏透明，靠字形描边柔影保可读性"
     assert f"overlay={pad}:{pad}" in reel._overlay_chain(
         "[0:v]null[base]", ins), "全出血的角标落位不许被带式改动牵动"
 

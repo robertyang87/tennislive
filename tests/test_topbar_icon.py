@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from PIL import Image
+from tennislive import topbar_style
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -82,7 +83,7 @@ def test_赛后开麦顶栏是麦克风而且和文字一起居中(tmp_path):
                 + f"Dialogue: 0,0:00:00.00,0:00:05.00,HEADA,,0,0,0,,{a}\n"
                 + f"Dialogue: 0,0:00:00.00,0:00:05.00,HEADB,,0,0,0,,{b}\n",
                 tmp_path, clip.CANVAS_W, clip.CANVAS_H)
-    _check_line(_ink(arr[:clip._HEAD_B_TOP - 8]), clip.CANVAS_W, want_tall=True)
+    _check_line(_ink(arr[:clip._TOPBAR_BAND_SPLIT_Y]), clip.CANVAS_W, want_tall=True)
 
 
 def test_赛场之上顶栏是透视球场而且和文字一起居中(tmp_path):
@@ -94,7 +95,7 @@ def test_赛场之上顶栏是透视球场而且和文字一起居中(tmp_path):
     text = path.read_text(encoding="utf-8")
     assert r"{\r\p0}" in text, "图标后面要复位，不然赛事行跟着变绿"
     arr = _burn(text, tmp_path, reel.VIDEO_W, reel.VIDEO_H)
-    band = arr[:reel.TOPBAR_BODY_TOP - 4]
+    band = arr[:topbar_style.INK_SPLIT_Y]
     _check_line(_ink(band), reel.VIDEO_W, want_tall=False)
     # 赛事行本身不许被染绿（复位漏了的样子）：白墨那一块里不许混进绿墨
     tx0 = _ink(band)["text"][0]
