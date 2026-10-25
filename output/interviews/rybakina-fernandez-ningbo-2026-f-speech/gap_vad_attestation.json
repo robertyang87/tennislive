@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "ba421504637326058c55482cd43e2c30bab09cb19b39865e25591612b92a9b41",
+ "sha256": "05a594b993881217ad7722882a7ff52be78787b81012b13826ac6bbe8d885d06",
  "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -32,7 +32,7 @@
     "want",
     "to",
     "congratulate",
-    "Layla",
+    "Leila",
     "with",
     "a",
     "great",
@@ -42,7 +42,7 @@
    "transcript_covered": false,
    "caption_timeline_covered": true,
    "status": "caption_timeline_covered",
-   "reason": "VAD 测到 3.640s 人声，第二份 ASR（small）听到「want to congratulate Layla with a great week, a」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 3.640s 人声，第二份 ASR（small）听到「want to congratulate Leila with a great week, a」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "14.3-17.2",
@@ -150,7 +150,8 @@
     "接下來",
     "勝",
     "於",
-    "不多",
+    "戶",
+    "多",
     "的",
     "賽",
     "季",
@@ -170,7 +171,7 @@
    "transcript_covered": false,
    "caption_timeline_covered": false,
    "status": "speech_detected",
-   "reason": "VAD 测到 5.102s 人声，第二份 ASR（small）听到「希望 你 跟 你的 團 隊 在 接下來 勝 於 不多 的 賽 季 繼續 有 出 色 的 發 揮 精 彩 的 表 現」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+   "reason": "VAD 测到 5.102s 人声，第二份 ASR（small）听到「希望 你 跟 你的 團 隊 在 接下來 勝 於 戶 多 的 賽 季 繼續 有 出 色 的 發 揮 精 彩 的 表 現」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
   },
   {
    "key": "34.3-37.9",
@@ -286,12 +287,12 @@
     "of",
     "us",
     "chair",
-    "empires"
+    "and"
    ],
    "transcript_covered": false,
    "caption_timeline_covered": true,
    "status": "caption_timeline_covered",
-   "reason": "VAD 测到 2.880s 人声，第二份 ASR（small）听到「for always taking such a good care of us chair empires」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 2.880s 人声，第二份 ASR（small）听到「for always taking such a good care of us chair and」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "62.5-64.6",

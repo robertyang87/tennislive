@@ -13,8 +13,8 @@
 ## 4.4–8.7 秒（片内，4.3 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=9）
 
 - 键：`10.0-14.3`
-- 第二份 ASR（small）：`want to congratulate Layla with a great week, a`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：字幕时间轴自动销账：VAD 测到 3.640s 人声，第二份 ASR（small）听到「want to congratulate Layla with a great week, a」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 第二份 ASR（small）：`want to congratulate Leila with a great week, a`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 已销账：字幕时间轴自动销账：VAD 测到 3.640s 人声，第二份 ASR（small）听到「want to congratulate Leila with a great week, a」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
 
 ## 8.7–11.6 秒（片内，2.9 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=14）
 
@@ -37,7 +37,7 @@
 ## 22.0–28.7 秒（片内，6.7 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=27）
 
 - 键：`27.6-34.3`
-- 第二份 ASR（small）：`希望 你 跟 你的 團 隊 在 接下來 勝 於 不多 的 賽 季 繼續 有 出 色 的 發 揮 精 彩 的 表 現`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 第二份 ASR（small）：`希望 你 跟 你的 團 隊 在 接下來 勝 於 戶 多 的 賽 季 繼續 有 出 色 的 發 揮 精 彩 的 表 現`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
 - 已销账：**否**
 
 ## 28.7–32.3 秒（片内，3.5 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=34）
@@ -73,8 +73,8 @@
 ## 50.2–53.8 秒（片内，3.6 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=55）
 
 - 键：`55.8-59.4`
-- 第二份 ASR（small）：`for always taking such a good care of us chair empires`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：字幕时间轴自动销账：VAD 测到 2.880s 人声，第二份 ASR（small）听到「for always taking such a good care of us chair empires」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 第二份 ASR（small）：`for always taking such a good care of us chair and`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 已销账：字幕时间轴自动销账：VAD 测到 2.880s 人声，第二份 ASR（small）听到「for always taking such a good care of us chair and」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
 
 ## 56.9–59.0 秒（片内，2.1 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=62）
 
