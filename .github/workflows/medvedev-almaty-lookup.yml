@@ -35,6 +35,31 @@ jobs:
             printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
             echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
           fi
+      - name: 排名与签表
+        run: |
+          pip install -q pdfplumber || true
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          for u in https://www.protennislive.com/posting/ramr/singles_entry_numerical.pdf https://www.protennislive.com/posting/2026/9410/mds.pdf https://www.protennislive.com/posting/2025/9410/mds.pdf; do
+            echo "==== $u"
+            curl -sL -A "$UA" -o /tmp/x.pdf -w "%{http_code} %{size_download}\n" "$u"
+            python - <<'PY'
+          import pdfplumber
+          try:
+              with pdfplumber.open("/tmp/x.pdf") as pdf:
+                  txt = "\n".join((p.extract_text() or "") for p in pdf.pages)
+          except Exception as e:
+              print("pdf err", e); txt = ""
+          lines = txt.splitlines()
+          print(lines[:6])
+          for i, ln in enumerate(lines):
+              if any(k in ln for k in ("MEDVEDEV", "Medvedev", "BASILASHVILI", "Basilashvili", "Ranking", "as of", "Seed")):
+                  print(i, ln)
+          if "mds" in open("/proc/self/cmdline").read(): pass
+          PY
+          done
+      - name: ATP Media 决赛日照片
+        run: |
+          python tools/find_cover_photo.py --player Medvedev --event Almaty --tour atp --date 2026-10-25 --final --tz Asia/Almaty 2>&1 | sed -n '/ATP Media/,/WTA 照片接口/p' | head -60 || true
       - name: 决赛全量与开赛时刻
         run: |
           python tools/match_feed.py show 6B33aysH --home 梅德韦杰夫 --away 巴西拉什维利 2>&1 | sed -n 1,80p || true
