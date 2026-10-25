@@ -1,0 +1,85 @@
+{
+  "kind": "authorized visual-only remake production inputs; no film QC claimed",
+  "owner_scope_quote": "保留原时间线，仅更新视觉",
+  "original_spec_ref": "68d010ff4c0588c52c5b09785587fc29c23e2c23",
+  "retained_later_cover_and_beijing_removal_ref": "3242d126e6311c003963913ff30591c952a8afea",
+  "canonical_spec_sha256": "a98f74ff2c051a7b98a7c4154d21aeb636f42d4201b4f29e2e1a8d98b82b1a3c",
+  "approved_visual_review": "Primary assistant actually viewed12card contact sheet,6label font comparisons, original12narration bodies/current XHS/push and scope audit before dispatch authorization.",
+  "unchanged_scope": {
+    "narration_bodies": 12,
+    "original_card_durations": 12,
+    "source_windows_including_cold": 7,
+    "bilingual_source_cues": 23,
+    "voice_requests_including_outro": 13,
+    "spring_card_original_place": true,
+    "beijing_raw_remains_removed": true,
+    "cover_equals_later_approved_main": true,
+    "no_new_three_chapter_or_rank_section": true
+  },
+  "visual_changes": [
+    "12originalcard slots add current shared transition_card semantics/adaptive layout/motion",
+    "6right-rail story_text PNGs regenerated with current81/66/89 typography; positions,width.48,pad/top_pad.043 and exactsource/cx unchanged",
+    "Current global8second cap/F edge gradient and branded 网球有故事 ending apply through existing renderer."
+  ],
+  "native_preflight": {
+    "production_preflight": {
+      "exit_code": 0
+    },
+    "dry_run_after_actual_duration_measurement": {
+      "exit_code": 0
+    },
+    "check_tts_bundle": {
+      "exit_code": 0,
+      "decode_audio_completed": true
+    },
+    "check_narration": {
+      "exit_code": 0,
+      "strict_import": true,
+      "bundle_bytes_reexported_exactly": true,
+      "original_card_seconds_changed": false,
+      "narration_measurements": 12,
+      "range_margin_seconds": [
+        0.12,
+        0.152
+      ]
+    },
+    "foreground_packet_check": {
+      "cue_count": 23,
+      "plan_sha256": "33343db4e55b5ac61deed400684cd3ab38873269051c33b7e8b3f8ced3ec7904"
+    },
+    "final_encoded_quality": "not yet available; this is preproduction only"
+  },
+  "frozen_tts": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+    "request_count": 13,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-andreeva-finals-2026-d50ae5bd6906a26a",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-d50ae5bd6906a26a/tts_bundle.zip",
+    "file_name": "tts_bundle.zip"
+  },
+  "new_render_plan": {
+    "workflow": "match-reel.yml",
+    "mode": "render",
+    "push": false,
+    "expected_outdir": "output/2026-10-25/reel/andreeva-finals-2026",
+    "clean_previous_same_day_outputs_before_render": true,
+    "preserve_historical_publish_ledger": true,
+    "immutable_old_audio_packets_reused": true,
+    "source_byte_identity_must_rebind_during_native_production": true,
+    "fresh_checks_required": [
+      "actual final encodedQC and source score/caption boundaries",
+      "13strict-reused actual speech auto review bound to new film",
+      "native input archive,new render input fingerprint and attestation",
+      "complete new master SHA+bytes verification",
+      "final picture samples and complete Drive review copy before main publication"
+    ]
+  },
+  "previous_film_receipts_are_not_new_delivery_proof": true,
+  "estimated_duration_seconds": 259.36,
+  "actual_duration_pending": true
+}

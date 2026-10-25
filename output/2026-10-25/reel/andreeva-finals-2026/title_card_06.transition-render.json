@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "key": "a9df34c5c7b910d66b5ec3e68720fe8818eb8868fd4a15d18c8e6f5b3e3b63d3",
-  "sha256": "6b070109c8154dcd14065e1dcc5624293d01f2111780d7c656dd24090e950030",
-  "seconds": 7.6,
+  "key": "4648806d7a859307d6443af78ca7a886cc439587710608000907dac1d3545ea7",
+  "sha256": "838f5d0754e6a5c232bcd44e4e3959a792672e259ea6d6549805db6de5b8d9b2",
+  "seconds": 4.28,
   "fps": "25/1",
   "size": [
     1080,
@@ -10,58 +10,66 @@
   ],
   "plan": {
     "canvas_width": 1080,
-    "kind": "score_progress",
+    "kind": "chronology",
     "lines": [
-      "首盘1比6之后",
-      "她把比赛赢了回来"
+      "春季硬地",
+      "四站都未走到4强"
     ],
     "font_px": 96,
     "nodes": [
       {
-        "label": "首盘",
-        "value": "1–6",
-        "source": "research/andreeva-finals-2026/canonical.json"
+        "label": "多哈",
+        "value": "第三轮",
+        "source": "https://www.wtatennis.com/tournaments/1003/-/2026"
       },
       {
-        "label": "第二盘",
-        "value": "6–4",
-        "source": "research/andreeva-finals-2026/canonical.json"
+        "label": "迪拜",
+        "value": "8强",
+        "source": "https://www.wtatennis.com/tournaments/718/-/2026"
       },
       {
-        "label": "决胜盘",
-        "value": "6–3",
-        "source": "research/andreeva-finals-2026/canonical.json",
-        "winning": true
+        "label": "印第安维尔斯",
+        "value": "第三轮",
+        "source": "https://www.wtatennis.com/tournaments/609/-/2026"
+      },
+      {
+        "label": "迈阿密",
+        "value": "第四轮",
+        "source": "https://www.wtatennis.com/tournaments/902/-/2026"
       }
     ],
-    "direction": "horizontal",
+    "direction": "vertical",
     "groups": [],
-    "proof_h": 218,
-    "node_height": 86,
-    "kicker_y": 394.12,
-    "headline_y": 478.12,
-    "proof_y": 791.88,
+    "proof_h": 560,
+    "node_height": 140,
+    "kicker_y": 223.12,
+    "headline_y": 307.12,
+    "proof_y": 620.88,
     "safe_bottom": 1244,
     "photo": null,
     "highlight": "",
-    "kicker": "01 · 冠军从逆境开始",
+    "kicker": "02 · 春天的阻力",
     "content": {
-      "scores": [
+      "events": [
         {
-          "label": "首盘",
-          "value": "1–6",
-          "source": "research/andreeva-finals-2026/canonical.json"
+          "label": "多哈",
+          "value": "第三轮",
+          "source": "https://www.wtatennis.com/tournaments/1003/-/2026"
         },
         {
-          "label": "第二盘",
-          "value": "6–4",
-          "source": "research/andreeva-finals-2026/canonical.json"
+          "label": "迪拜",
+          "value": "8强",
+          "source": "https://www.wtatennis.com/tournaments/718/-/2026"
         },
         {
-          "label": "决胜盘",
-          "value": "6–3",
-          "source": "research/andreeva-finals-2026/canonical.json",
-          "winning": true
+          "label": "印第安维尔斯",
+          "value": "第三轮",
+          "source": "https://www.wtatennis.com/tournaments/609/-/2026"
+        },
+        {
+          "label": "迈阿密",
+          "value": "第四轮",
+          "source": "https://www.wtatennis.com/tournaments/902/-/2026"
         }
       ]
     },
@@ -70,155 +78,185 @@
   "browser_evidence": {
     "boxes": [
       {
-        "text": "首盘1比6之后",
+        "text": "春季硬地",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 478.109375,
+          "y": 307.109375,
           "width": 940,
           "height": 122.875,
-          "top": 478.109375,
+          "top": 307.109375,
           "right": 1010,
-          "bottom": 600.984375,
+          "bottom": 429.984375,
           "left": 70
         }
       },
       {
-        "text": "她把比赛赢了回来",
+        "text": "四站都未走到4强",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 600.984375,
+          "y": 429.984375,
           "width": 940,
           "height": 122.875,
-          "top": 600.984375,
+          "top": 429.984375,
           "right": 1010,
-          "bottom": 723.859375,
+          "bottom": 552.859375,
           "left": 70
         }
       },
       {
-        "text": "首盘",
-        "width": 253,
-        "scroll": 253,
+        "text": "多哈",
+        "width": 56,
+        "scroll": 56,
         "rect": {
-          "x": 103,
-          "y": 816.875,
-          "width": 252.65625,
+          "x": 130,
+          "y": 670.78125,
+          "width": 56,
           "height": 39.1875,
-          "top": 816.875,
-          "right": 355.65625,
-          "bottom": 856.0625,
-          "left": 103
+          "top": 670.78125,
+          "right": 186,
+          "bottom": 709.96875,
+          "left": 130
         }
       },
       {
-        "text": "1–6",
-        "width": 253,
-        "scroll": 253,
+        "text": "第三轮",
+        "width": 120,
+        "scroll": 120,
         "rect": {
-          "x": 103,
-          "y": 868.0625,
-          "width": 252.65625,
-          "height": 120,
-          "top": 868.0625,
-          "right": 355.65625,
-          "bottom": 988.0625,
-          "left": 103
+          "x": 834,
+          "y": 665.375,
+          "width": 120,
+          "height": 50,
+          "top": 665.375,
+          "right": 954,
+          "bottom": 715.375,
+          "left": 834
         }
       },
       {
-        "text": "第二盘",
-        "width": 253,
-        "scroll": 253,
+        "text": "迪拜",
+        "width": 56,
+        "scroll": 56,
         "rect": {
-          "x": 413.65625,
-          "y": 816.875,
-          "width": 252.671875,
+          "x": 130,
+          "y": 810.78125,
+          "width": 56,
           "height": 39.1875,
-          "top": 816.875,
-          "right": 666.328125,
-          "bottom": 856.0625,
-          "left": 413.65625
+          "top": 810.78125,
+          "right": 186,
+          "bottom": 849.96875,
+          "left": 130
         }
       },
       {
-        "text": "6–4",
-        "width": 253,
-        "scroll": 253,
+        "text": "8强",
+        "width": 62,
+        "scroll": 62,
         "rect": {
-          "x": 413.65625,
-          "y": 868.0625,
-          "width": 252.671875,
-          "height": 120,
-          "top": 868.0625,
-          "right": 666.328125,
-          "bottom": 988.0625,
-          "left": 413.65625
+          "x": 892,
+          "y": 805.375,
+          "width": 62,
+          "height": 50,
+          "top": 805.375,
+          "right": 954,
+          "bottom": 855.375,
+          "left": 892
         }
       },
       {
-        "text": "决胜盘",
-        "width": 253,
-        "scroll": 253,
+        "text": "印第安维尔斯",
+        "width": 168,
+        "scroll": 168,
         "rect": {
-          "x": 724.328125,
-          "y": 816.875,
-          "width": 252.671875,
+          "x": 130,
+          "y": 950.78125,
+          "width": 168,
           "height": 39.1875,
-          "top": 816.875,
-          "right": 977,
-          "bottom": 856.0625,
-          "left": 724.328125
+          "top": 950.78125,
+          "right": 298,
+          "bottom": 989.96875,
+          "left": 130
         }
       },
       {
-        "text": "6–3",
-        "width": 253,
-        "scroll": 253,
+        "text": "第三轮",
+        "width": 120,
+        "scroll": 120,
         "rect": {
-          "x": 724.328125,
-          "y": 868.0625,
-          "width": 252.671875,
-          "height": 120,
-          "top": 868.0625,
-          "right": 977,
-          "bottom": 988.0625,
-          "left": 724.328125
+          "x": 834,
+          "y": 945.375,
+          "width": 120,
+          "height": 50,
+          "top": 945.375,
+          "right": 954,
+          "bottom": 995.375,
+          "left": 834
+        }
+      },
+      {
+        "text": "迈阿密",
+        "width": 84,
+        "scroll": 84,
+        "rect": {
+          "x": 130,
+          "y": 1090.78125,
+          "width": 84,
+          "height": 39.1875,
+          "top": 1090.78125,
+          "right": 214,
+          "bottom": 1129.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "第四轮",
+        "width": 120,
+        "scroll": 120,
+        "rect": {
+          "x": 834,
+          "y": 1085.375,
+          "width": 120,
+          "height": 50,
+          "top": 1085.375,
+          "right": 954,
+          "bottom": 1135.375,
+          "left": 834
         }
       }
     ],
     "content": [
       {
-        "x": 336,
-        "y": 394.109375,
-        "width": 408,
+        "x": 376,
+        "y": 223.109375,
+        "width": 328,
         "height": 56,
-        "top": 394.109375,
-        "right": 744,
-        "bottom": 450.109375,
-        "left": 336
+        "top": 223.109375,
+        "right": 704,
+        "bottom": 279.109375,
+        "left": 376
       },
       {
         "x": 70,
-        "y": 478.109375,
+        "y": 307.109375,
         "width": 940,
         "height": 245.75,
-        "top": 478.109375,
+        "top": 307.109375,
         "right": 1010,
-        "bottom": 723.859375,
+        "bottom": 552.859375,
         "left": 70
       },
       {
         "x": 90,
-        "y": 791.875,
+        "y": 620.875,
         "width": 900,
-        "height": 218,
-        "top": 791.875,
+        "height": 560,
+        "top": 620.875,
         "right": 990,
-        "bottom": 1009.875,
+        "bottom": 1180.875,
         "left": 90
       }
     ],

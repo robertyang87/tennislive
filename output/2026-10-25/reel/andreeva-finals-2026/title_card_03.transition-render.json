@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "key": "2d210abad1de43ee4c8e1ee8fcbf545744126f3d46f5fbcd9924f5ccfc8a0c73",
-  "sha256": "a71c27985655604fa601742974a9c500fc99e389e66362c088e8116de1cfa27d",
-  "seconds": 5.92,
+  "key": "d69e5ffa17b7f5d0d04dbae37dd5deb8ae8dd2883f54adef68691b5079b91686",
+  "sha256": "db122991afb179dfcbb727ff1e1b183d40ce8028b374331f05d442eb29202876",
+  "seconds": 5.84,
   "fps": "25/1",
   "size": [
     1080,
@@ -10,80 +10,174 @@
   ],
   "plan": {
     "canvas_width": 1080,
-    "kind": "turn",
+    "kind": "chronology",
     "lines": [
-      "从0比3开始",
-      "她连赢九局夺冠"
+      "从阿德莱德",
+      "开启冠军赛季"
     ],
     "font_px": 96,
-    "nodes": [],
-    "direction": "horizontal",
+    "nodes": [
+      {
+        "label": "首盘开局",
+        "value": "0比3",
+        "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+      },
+      {
+        "label": "最终夺冠",
+        "value": "6比3、6比1",
+        "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+      }
+    ],
+    "direction": "vertical",
     "groups": [],
-    "proof_h": 0,
-    "node_height": 86,
-    "kicker_y": 505.12,
-    "headline_y": 589.12,
-    "proof_y": 902.88,
+    "proof_h": 280,
+    "node_height": 140,
+    "kicker_y": 363.12,
+    "headline_y": 447.12,
+    "proof_y": 760.88,
     "safe_bottom": 1244,
     "photo": null,
     "highlight": "",
-    "kicker": "01 · 冠军从逆境开始",
-    "content": {},
+    "kicker": "01 · 一月",
+    "content": {
+      "events": [
+        {
+          "label": "首盘开局",
+          "value": "0比3",
+          "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+        },
+        {
+          "label": "最终夺冠",
+          "value": "6比3、6比1",
+          "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+        }
+      ]
+    },
     "notes": []
   },
   "browser_evidence": {
     "boxes": [
       {
-        "text": "从0比3开始",
+        "text": "从阿德莱德",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 589.109375,
+          "y": 447.109375,
           "width": 940,
           "height": 122.875,
-          "top": 589.109375,
+          "top": 447.109375,
           "right": 1010,
-          "bottom": 711.984375,
+          "bottom": 569.984375,
           "left": 70
         }
       },
       {
-        "text": "她连赢九局夺冠",
+        "text": "开启冠军赛季",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 711.984375,
+          "y": 569.984375,
           "width": 940,
           "height": 122.875,
-          "top": 711.984375,
+          "top": 569.984375,
           "right": 1010,
-          "bottom": 834.859375,
+          "bottom": 692.859375,
           "left": 70
+        }
+      },
+      {
+        "text": "首盘开局",
+        "width": 112,
+        "scroll": 112,
+        "rect": {
+          "x": 130,
+          "y": 810.78125,
+          "width": 112,
+          "height": 39.1875,
+          "top": 810.78125,
+          "right": 242,
+          "bottom": 849.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "0比3",
+        "width": 84,
+        "scroll": 84,
+        "rect": {
+          "x": 870,
+          "y": 805.375,
+          "width": 84,
+          "height": 50,
+          "top": 805.375,
+          "right": 954,
+          "bottom": 855.375,
+          "left": 870
+        }
+      },
+      {
+        "text": "最终夺冠",
+        "width": 112,
+        "scroll": 112,
+        "rect": {
+          "x": 130,
+          "y": 950.78125,
+          "width": 112,
+          "height": 39.1875,
+          "top": 950.78125,
+          "right": 242,
+          "bottom": 989.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "6比3、6比1",
+        "width": 208,
+        "scroll": 208,
+        "rect": {
+          "x": 746,
+          "y": 945.375,
+          "width": 208,
+          "height": 50,
+          "top": 945.375,
+          "right": 954,
+          "bottom": 995.375,
+          "left": 746
         }
       }
     ],
     "content": [
       {
-        "x": 336,
-        "y": 505.109375,
-        "width": 408,
+        "x": 436,
+        "y": 363.109375,
+        "width": 208,
         "height": 56,
-        "top": 505.109375,
-        "right": 744,
-        "bottom": 561.109375,
-        "left": 336
+        "top": 363.109375,
+        "right": 644,
+        "bottom": 419.109375,
+        "left": 436
       },
       {
         "x": 70,
-        "y": 589.109375,
+        "y": 447.109375,
         "width": 940,
         "height": 245.75,
-        "top": 589.109375,
+        "top": 447.109375,
         "right": 1010,
-        "bottom": 834.859375,
+        "bottom": 692.859375,
         "left": 70
+      },
+      {
+        "x": 90,
+        "y": 760.875,
+        "width": 900,
+        "height": 280,
+        "top": 760.875,
+        "right": 990,
+        "bottom": 1040.875,
+        "left": 90
       }
     ],
     "story": null
