@@ -1,0 +1,446 @@
+{
+  "schema": "tennislive.point-window-visual-review.v1",
+  "episode": "rybakina-ningbo-title-run-2026",
+  "at": "2026-10-25T12:24:05.936224+00:00",
+  "method": "Actual decoded source frame visual inspection.24 full-source samples per file plus dense0.2–2s selected-window sheets really opened.",
+  "status": "selected_source_windows_visually_verified",
+  "not_final_movie_qc": true,
+  "sources": {
+    "qf": {
+      "path": "/tmp/rybakina-ningbo-20261025/media/oLH65bF8l6g.mp4",
+      "sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+      "duration_video": 308.4,
+      "fps": 25.0,
+      "full_source_times": [
+        0.12,
+        13.515652173913042,
+        26.911304347826086,
+        40.306956521739124,
+        53.70260869565217,
+        67.09826086956521,
+        80.49391304347826,
+        93.88956521739131,
+        107.28521739130434,
+        120.68086956521738,
+        134.0765217391304,
+        147.47217391304346,
+        160.8678260869565,
+        174.26347826086956,
+        187.6591304347826,
+        201.0547826086956,
+        214.45043478260868,
+        227.84608695652173,
+        241.24173913043475,
+        254.6373913043478,
+        268.0330434782608,
+        281.4286956521739,
+        294.8243478260869,
+        308.21999999999997
+      ],
+      "source_url": "https://www.youtube.com/watch?v=oLH65bF8l6g"
+    },
+    "sf": {
+      "path": "/tmp/rybakina-ningbo-20261025/media/2dSkgyTQzUw.mp4",
+      "sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+      "duration_video": 449.64,
+      "fps": 25.0,
+      "full_source_times": [
+        0.12,
+        19.656521739130433,
+        39.19304347826086,
+        58.729565217391304,
+        78.26608695652173,
+        97.80260869565217,
+        117.33913043478262,
+        136.87565217391304,
+        156.41217391304346,
+        175.9486956521739,
+        195.48521739130433,
+        215.02173913043478,
+        234.55826086956523,
+        254.09478260869565,
+        273.6313043478261,
+        293.1678260869565,
+        312.7043478260869,
+        332.2408695652174,
+        351.7773913043478,
+        371.31391304347824,
+        390.85043478260866,
+        410.38695652173914,
+        429.92347826086956,
+        449.46
+      ],
+      "source_url": "https://www.youtube.com/watch?v=2dSkgyTQzUw"
+    },
+    "final": {
+      "path": "/tmp/rybakina-ningbo-20261025/media/Rn0lchWoTIM.mp4",
+      "sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "duration_video": 560.32,
+      "fps": 25.0,
+      "full_source_times": [
+        0.12,
+        24.468695652173917,
+        48.81739130434783,
+        73.16608695652177,
+        97.51478260869567,
+        121.86347826086958,
+        146.21217391304353,
+        170.56086956521742,
+        194.90956521739133,
+        219.25826086956528,
+        243.60695652173916,
+        267.9556521739131,
+        292.30434782608705,
+        316.65304347826094,
+        341.0017391304348,
+        365.3504347826088,
+        389.69913043478266,
+        414.0478260869566,
+        438.39652173913055,
+        462.7452173913044,
+        487.0939130434783,
+        511.44260869565227,
+        535.7913043478262,
+        560.1400000000001
+      ],
+      "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM"
+    }
+  },
+  "windows": [
+    {
+      "source_key": "final",
+      "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "role": "cold_open_post_championship_reaction",
+      "window": [
+        257.2,
+        263.6
+      ],
+      "score_visible": "Final championship point just completed; old board initially visible",
+      "server": "No live point",
+      "point_dead_approx": null,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": false,
+      "visual_observations": [
+        "Actual Rybakina relief close-up, brief smile and hair adjustment.",
+        "No full rally duplicated at opening. Final full championship window later covers same payoff.",
+        "Complete initial championship call retained; next independent commentary sentence begins after263.60."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "qf",
+      "source_url": "https://www.youtube.com/watch?v=oLH65bF8l6g",
+      "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+      "role": "extra_second_set_loss",
+      "window": [
+        212.48,
+        236.08
+      ],
+      "score_visible": "Rybakina6 3 15 / Kawa1 5 40; SET POINT",
+      "server": "Kawa far end blue/white; Rybakina receives near end white/navy and dark skirt",
+      "point_dead_approx": 230.8,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": true,
+      "visual_observations": [
+        "212.48 cut to Kawa holding ball preparing next set point;214.64 court wide before serve.",
+        "One complete long baseline rally ends with Kawa taking second set6-3.",
+        "232–236 Kawa genuine fist and smile,236.12 cut to audience. This is the opponent emotional response, never label it Rybakina."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "qf",
+      "source_url": "https://www.youtube.com/watch?v=oLH65bF8l6g",
+      "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+      "role": "mandatory_complete_match_point",
+      "window": [
+        265.32,
+        298.36
+      ],
+      "score_visible": "Rybakina6 3 5 40 / Kawa1 6 1 30; MATCH POINT",
+      "server": "Rybakina near end",
+      "point_dead_approx": 272.6,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": false,
+      "visual_observations": [
+        "265.32 cut to actual Rybakina serve preparation close-up;267.96 court wide,269.2 toss and270.0 serve.",
+        "Complete point before272.76 cut to winner reaction.",
+        "278 Kawa close-up,280 net handshake,284 umpire handshake,286–292 thanks to crowd,296–298 actual final score graphic at bench.",
+        "298.40 starts WTA source branding; excluded."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "sf",
+      "source_url": "https://www.youtube.com/watch?v=2dSkgyTQzUw",
+      "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+      "role": "extra_first_set_point_11",
+      "window": [
+        210.1,
+        236.6
+      ],
+      "score_visible": "At opening prior tenth set point dead; new point5-3 AD, SET POINT #11",
+      "server": "Rybakina near end, Shnaider far end yellow",
+      "point_dead_approx": 224.6,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": true,
+      "visual_observations": [
+        "210.10 begins after prior point already dead:209.6 players relaxed,210.0 Rybakina walks off. Includes only dead-ball tail for full source commentary sentence, not a second complete rally.",
+        "214.68 cut to eleventh set point serve preparation;216.52 court wide;218 toss, full point to224.72 cut.",
+        "225 winner Rybakina actual small fist;229.32 audience;232.28 bench.236.60 still first-set changeover/towel.",
+        "237.20 cuts second-set independent rally; excluded."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "sf",
+      "source_url": "https://www.youtube.com/watch?v=2dSkgyTQzUw",
+      "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+      "role": "mandatory_complete_match_point",
+      "window": [
+        251.68,
+        299.08
+      ],
+      "score_visible": "Rybakina6 6 40 / Shnaider3 5 30; MATCH POINT #2",
+      "server": "Rybakina far end, Shnaider near yellow",
+      "point_dead_approx": 262.8,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": false,
+      "visual_observations": [
+        "251.68 actual matchpoint preparation close-up;253.48 court wide before serve.",
+        "Full baseline rally to262.9 cut to Rybakina winner face and small fist;272 handshake;280–286 racket salute.",
+        "299.12 first frame of independent on-court interview, excluded from matchpoint window.",
+        "1080 highlights omit observed BC second-set5-4 to5-5 point. Explain verified course in facts card instead of inserting different match footage."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "final",
+      "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "role": "extra_first_set_point",
+      "window": [
+        105.08,
+        125.1
+      ],
+      "score_visible": "Rybakina5 40 / Fernandez2 0; SET POINT",
+      "server": "Rybakina far end in court wide; Fernandez near white/blue",
+      "point_dead_approx": 119.4,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": true,
+      "visual_observations": [
+        "105.08 Rybakina low-head holding ball during dead-ball serve preparation;105.72 side serve close-up;108.16 wide court before toss.",
+        "Complete baseline rally; Fernandez moves across baseline and at118–119 runs forward to left short area.119.60 cuts to Rybakina.",
+        "121.84 audience applause;125.10 still applause with no new point. Extended for complete source commentary through124.65."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "final",
+      "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "role": "mandatory_complete_championship_point",
+      "window": [
+        248.12,
+        295.56
+      ],
+      "score_visible": "Rybakina6 5 40 / Fernandez2 2 30; CHAMPIONSHIP POINT",
+      "server": "Rybakina far end; Fernandez near white/blue",
+      "point_dead_approx": 256.6,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": false,
+      "visual_observations": [
+        "248.12 serve preparation close-up;249.92 court wide before actual serve;full rally before256.80 winner close-up.",
+        "257–263 Rybakina relief/brief smile;264–270 handshake and umpire;272–276 waving;280 bench;289–295 putting on jacket.",
+        "295.60 cuts to award ceremony stage. Selected matchpoint payoff ends before that scene; separate trophy segment carries ceremony."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    },
+    {
+      "source_key": "final",
+      "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "role": "trophy_speech_close",
+      "window": [
+        530.15,
+        550.28
+      ],
+      "score_visible": "Post-match award ceremony; no score board",
+      "server": "No live point",
+      "point_dead_approx": null,
+      "point_end_ok": true,
+      "counts_as_extra_complete_rally": false,
+      "visual_observations": [
+        "Nine evenly sampled actual frames530.15–550.28 opened: Rybakina in white jacket holding green champion trophy at microphone, smiling and addressing fans.",
+        "This is genuine trophy-holding speech, not footage of the trophy lift itself. Lift can use separately verified official vertical footage from media agent.",
+        "550.32 exact source WTA-brand transition independently verified by media frame audit;550.28 last selected sampled frame remains Rybakina."
+      ],
+      "source_audio_review": "Paired actual source ASR by source_audio agent; no human listening claimed.",
+      "timebase": "This exact1920x1080/25fps official YouTube file. BC source windows are separate research only."
+    }
+  ],
+  "extras_per_match": {
+    "qf": 1,
+    "sf": 1,
+    "final": 1
+  },
+  "technical_observations": [
+    "Both final selected points are Rybakina serving from far end, Fernandez receiving near.",
+    "Both points continue into baseline rallies after serve; serve alone does not end the point.",
+    "Fernandez visibly changes lateral direction during final rallies; at first-set point last stage118–119 she chases toward short near-left area.",
+    "Safe narration candidate: 发球之后，她继续把压力留在底线，让费尔南德斯不断横向移动。",
+    "Do not call an unverified specific stroke winner/backhand-crosscourt/first-serve merely from distant samples."
+  ],
+  "rejected_claims": [
+    "Second-set Rybakina5-2 to5-5 is not established; BC shows2-3 then3-3 then5-4 then5-5. Official point-by-point facts take precedence.",
+    "Do not call semifinal5-4 point present in this1080file; it is absent.",
+    "Do not call final530–550 speech a trophy-raising clip."
+  ],
+  "audio_boundary_extensions": {
+    "sf_extra": "210.10 prior point already dead,236.60 still changeover; both visually checked for paired ASR full sentences.",
+    "final_extra": "105.08 dead-ball preparation and125.10 audience; both visually checked for paired ASR full sentences."
+  },
+  "reviewed_evidence": [
+    {
+      "file": "youtube/qf-all-1.jpg",
+      "sha256": "861313147990b3b24f256df7499187e67046a43ed5bee68904cdf09804d3f177"
+    },
+    {
+      "file": "youtube/qf-all-2.jpg",
+      "sha256": "cae09a44b3a54b6c744a992d524065a692e4543abc817eb419af2d12eb9faeef"
+    },
+    {
+      "file": "youtube/sf-all-1.jpg",
+      "sha256": "bd3e6b0a7f75933650ff43279e65bff6f658c14f52e033d4038f9c55f90e8382"
+    },
+    {
+      "file": "youtube/sf-all-2.jpg",
+      "sha256": "1061ca448ae12b796bf78c0434a6334edc6bcb4b43337d41eead979fbd8551ba"
+    },
+    {
+      "file": "youtube/final-all-1.jpg",
+      "sha256": "84414e41a259c6de6327a6a3b8bb37fc4ba03b54e17dbfb323a609c8ec4c4407"
+    },
+    {
+      "file": "youtube/final-all-2.jpg",
+      "sha256": "be62d91d62cd71439b990b9d44ac90d05ac8ba7b2c0d4b9f33f4c4b533dbc72f"
+    },
+    {
+      "file": "youtube/qf-tail-1.jpg",
+      "sha256": "3e03c73e0cd08ffffcd30d2c85b700af132aafe111388c2bdedc326a843e4ba8"
+    },
+    {
+      "file": "youtube/qf-tail-2.jpg",
+      "sha256": "99f80d8edc49575f6260e2a3172ac955eb543c9b03a7d968e47244ed0b44dcb1"
+    },
+    {
+      "file": "youtube/sf-tail-1.jpg",
+      "sha256": "b537de41242676d717c954943543d2300e79d698b12687fca9c13d1af9987283"
+    },
+    {
+      "file": "youtube/sf-tail-2.jpg",
+      "sha256": "e329a3b43562c1f454d691b25996b2cde25e3714366dedf47400c6272b9605db"
+    },
+    {
+      "file": "youtube/final-tail-1.jpg",
+      "sha256": "ae32e8dbfccff65bfce22b5cd67f925b6642fb9d42a563cad330c0b8d4806265"
+    },
+    {
+      "file": "youtube/final-tail-2.jpg",
+      "sha256": "b6c5918cf7a82d57ff1d8b3d2ba5affabfea87c7d7d5870fd9ec44904cf5c8d0"
+    },
+    {
+      "file": "youtube/qf-matchpoint-fine-1.jpg",
+      "sha256": "19e2f1c87e3551508448e3daea375a3e0606773c87674412d28593df0d239263"
+    },
+    {
+      "file": "youtube/sf-matchpoint-fine-1.jpg",
+      "sha256": "65aa9faeb1ac9a80b80c14429a9dbf3a9c92a3e8d137dbb824d4d8838087e70e"
+    },
+    {
+      "file": "youtube/final-matchpoint-fine-1.jpg",
+      "sha256": "4a239f82d5d2780a934b29db739f032a0c23b1ce113498df95589919bfca1f45"
+    },
+    {
+      "file": "youtube/qf-setloss-1.jpg",
+      "sha256": "1bae5409c2913a68495e70753422a8084af945175afd02dbb8c7d3ca4a8de19d"
+    },
+    {
+      "file": "youtube/qf-setloss-2.jpg",
+      "sha256": "a714eab713a81e13de0ed57321681c3562be946ca417e66efd9fb9b67fdc379c"
+    },
+    {
+      "file": "youtube/sf-first-setpoint-1.jpg",
+      "sha256": "b92b2aaff9f271dfa140b382e4f55095ec2cf0ce94c06a1b6006bec116849c96"
+    },
+    {
+      "file": "youtube/sf-first-setpoint-2.jpg",
+      "sha256": "c6223982359ac6c29da6e357dd744683999d24efa9fd07dc6867f9c49377fb9b"
+    },
+    {
+      "file": "youtube/qf-outro-1.jpg",
+      "sha256": "1ea4817b5932dece7139bd24b8ef554244f12fa2b7ccfe963f35854b7dc7b8d0"
+    },
+    {
+      "file": "youtube/sf-interview-boundary-1.jpg",
+      "sha256": "ffeff7cfe8b47412d4184f438e624b0352e21b25bebc69f697dcc8d2cf89d6fe"
+    },
+    {
+      "file": "youtube/sf-interview-boundary-2.jpg",
+      "sha256": "7221806011226eb509e4144d3c291cb0d93a5ba80789e2c90c804dce2168f9dd"
+    },
+    {
+      "file": "youtube/final-ceremony-boundary-1.jpg",
+      "sha256": "ecf30c191a46aed49290c5d499c6d29a6b7bafcc999bb6f1c14e2c7f138b7a65"
+    },
+    {
+      "file": "youtube/sf-expanded-start-1.jpg",
+      "sha256": "909be47d4a518d92281892dc1481fc204c67ed7ed59ae66f400e22389ab0dfaf"
+    },
+    {
+      "file": "youtube/sf-expanded-start-2.jpg",
+      "sha256": "7a84886ed16a042ca762fd19c6fc6fc431851979f219edbdda44df51bb08d40a"
+    },
+    {
+      "file": "youtube/sf-expanded-end-1.jpg",
+      "sha256": "179f25236b9e9f98e5c5b997de050cd7b51ded399aa85b1fa60d73675e2a2dac"
+    },
+    {
+      "file": "youtube/sf-expanded-end-2.jpg",
+      "sha256": "b9c618e132d2dd4f1a316633ddc21e45b376cb4dcfbc1aa0aed377fc30a356dd"
+    },
+    {
+      "file": "youtube/final-expanded-start-1.jpg",
+      "sha256": "469e762196a87c74632703e14b807bf51c167be86886c784ff4d8ddb0f177a7a"
+    },
+    {
+      "file": "youtube/final-expanded-end-1.jpg",
+      "sha256": "5e628bb9cb70cc63a8635c4650e36abd9e3a8b66855405a6ee1fe5768b8c76da"
+    },
+    {
+      "file": "youtube/final-setpoint-1.jpg",
+      "sha256": "62814a424734772944ecb8729485971462501a358f3ae049caa820a1eb11fc18"
+    },
+    {
+      "file": "youtube/final-setpoint-2.jpg",
+      "sha256": "dda5813432c1af280c1961ebabcf03f853acf9c10185dde7794a8fd74baa5ef1"
+    },
+    {
+      "file": "youtube/trophy-selected-9.jpg",
+      "sha256": "563b56b610b3697500477e3802c4211048f6a9e64871b925fe40f0cde01fc7c0"
+    }
+  ],
+  "limits": [
+    "No manual full-audio listening claim.",
+    "Source frame review is not encoded final-movie quality approval.",
+    "Board geometry/25fps visibility windows measured independently by production-route agent and must use final segment-relative offsets."
+  ]
+}

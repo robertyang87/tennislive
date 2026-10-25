@@ -1,0 +1,959 @@
+{
+  "schema": "tennislive.independent-fact-packet.v1",
+  "event": {
+    "name": "2026 BNB Ningbo Open",
+    "level": "WTA500",
+    "surface": "outdoor hard",
+    "place": "Ningbo, China",
+    "start": "2026-10-19",
+    "end": "2026-10-25"
+  },
+  "created_at": "2026-10-25T12:06:53.242697+00:00",
+  "user_source": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+  "sources": {
+    "final": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+    "qf": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+    "sf": "https://www.wtatennis.com/news/4598225/rybakina-survives-shnaider-test-sets-up-ningbo-final-with-fernandez",
+    "final_preview": "https://www.wtatennis.com/news/4598107/elena-rybakina-vs-leylah-fernandez-everything-to-know-about-the-ningbo-final",
+    "r2": "https://www.wtatennis.com/news/4597263/rybakina-advances-to-face-kawa-in-ningbo-quarters-after-polina-kudermetova-retires",
+    "2025_final": "https://www.wtatennis.com/news/4385270/perfect-10-rybakina-defeats-alexandrova-to-claim-milestone-ningbo-title",
+    "2026_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+    "2025_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2025/2092/MDS.pdf",
+    "draw": "https://www.wtatennis.com/tournaments/2092/Ningbo/2026/draws"
+  },
+  "matches": [
+    {
+      "match_id": "LS008",
+      "round": "第二轮",
+      "date_beijing": "2026-10-22",
+      "winner_name": "Elena Rybakina",
+      "winner_name_zh": "莱巴金娜",
+      "winner_player_id": "324166",
+      "loser_name": "Polina Kudermetova",
+      "loser_name_zh": "波利娜·库德梅托娃",
+      "loser_player_id": "328897",
+      "score_winner_perspective": [
+        [
+          5,
+          0
+        ]
+      ],
+      "result_string": "[1]E. Rybakina d P. Kudermetova 5-0 Ret'd",
+      "retirement": true,
+      "completed_match_point_expected": false,
+      "duration_official_exact": "00:30:58",
+      "official_article": "https://www.wtatennis.com/news/4597263/rybakina-advances-to-face-kawa-in-ningbo-quarters-after-polina-kudermetova-retires",
+      "official_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "feed_evidence": {
+        "file": "../official-completed-matches.json",
+        "selector": {
+          "EventID": "2092",
+          "EventYear": 2026,
+          "MatchID": "LS008"
+        },
+        "identity_method": "PlayerIDA/B, ScoreSetNA/B, ResultString and official draw; Winner numeric values differ for retirements"
+      }
+    },
+    {
+      "match_id": "LS004",
+      "round": "1/4决赛",
+      "date_beijing": "2026-10-23",
+      "winner_name": "Elena Rybakina",
+      "winner_name_zh": "莱巴金娜",
+      "winner_player_id": "324166",
+      "loser_name": "Katarzyna Kawa",
+      "loser_name_zh": "卡瓦",
+      "loser_player_id": "315806",
+      "score_winner_perspective": [
+        [
+          6,
+          1
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "result_string": "[1]E. Rybakina d K. Kawa 6-1,3-6,6-1",
+      "retirement": false,
+      "completed_match_point_expected": true,
+      "duration_official_exact": "01:45:03",
+      "official_article": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+      "official_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "feed_evidence": {
+        "file": "../official-completed-matches.json",
+        "selector": {
+          "EventID": "2092",
+          "EventYear": 2026,
+          "MatchID": "LS004"
+        },
+        "identity_method": "PlayerIDA/B, ScoreSetNA/B, ResultString and official draw; Winner numeric values differ for retirements"
+      }
+    },
+    {
+      "match_id": "LS002",
+      "round": "半决赛",
+      "date_beijing": "2026-10-24",
+      "winner_name": "Elena Rybakina",
+      "winner_name_zh": "莱巴金娜",
+      "winner_player_id": "324166",
+      "loser_name": "Diana Shnaider",
+      "loser_name_zh": "施耐德",
+      "loser_player_id": "330482",
+      "score_winner_perspective": [
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          5
+        ]
+      ],
+      "result_string": "[1]E. Rybakina d [6]D. Shnaider 6-3,7-5",
+      "retirement": false,
+      "completed_match_point_expected": true,
+      "duration_official_exact": "01:35:54",
+      "official_article": "https://www.wtatennis.com/news/4598225/rybakina-survives-shnaider-test-sets-up-ningbo-final-with-fernandez",
+      "official_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "feed_evidence": {
+        "file": "../official-completed-matches.json",
+        "selector": {
+          "EventID": "2092",
+          "EventYear": 2026,
+          "MatchID": "LS002"
+        },
+        "identity_method": "PlayerIDA/B, ScoreSetNA/B, ResultString and official draw; Winner numeric values differ for retirements"
+      }
+    },
+    {
+      "match_id": "LS001",
+      "round": "决赛",
+      "date_beijing": "2026-10-25",
+      "winner_name": "Elena Rybakina",
+      "winner_name_zh": "莱巴金娜",
+      "winner_player_id": "324166",
+      "loser_name": "Leylah Fernandez",
+      "loser_name_zh": "费尔南德斯",
+      "loser_player_id": "326735",
+      "score_winner_perspective": [
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "result_string": "[1]E. Rybakina d L. Fernandez 6-2,6-2",
+      "retirement": false,
+      "completed_match_point_expected": true,
+      "duration_official_exact": "01:16:25",
+      "official_article": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "official_draw_pdf": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "feed_evidence": {
+        "file": "../official-completed-matches.json",
+        "selector": {
+          "EventID": "2092",
+          "EventYear": 2026,
+          "MatchID": "LS001"
+        },
+        "identity_method": "PlayerIDA/B, ScoreSetNA/B, ResultString and official draw; Winner numeric values differ for retirements"
+      }
+    }
+  ],
+  "final_statistics": {
+    "a": {
+      "name": "Elena Rybakina",
+      "player_id": "324166",
+      "ace": 3,
+      "double_fault": 2,
+      "first_serve_in": [
+        37,
+        55
+      ],
+      "first_serve_points_won": [
+        27,
+        37
+      ],
+      "second_serve_points_won": [
+        10,
+        18
+      ],
+      "break_points_converted": [
+        4,
+        5
+      ],
+      "break_points_saved": [
+        4,
+        4
+      ],
+      "total_points_won": 59,
+      "service_games_won": [
+        8,
+        8
+      ],
+      "winners": 25,
+      "unforced_errors": 25
+    },
+    "b": {
+      "name": "Leylah Fernandez",
+      "player_id": "326735",
+      "ace": 2,
+      "double_fault": 3,
+      "first_serve_in": [
+        27,
+        45
+      ],
+      "first_serve_points_won": [
+        16,
+        27
+      ],
+      "second_serve_points_won": [
+        7,
+        18
+      ],
+      "break_points_converted": [
+        0,
+        4
+      ],
+      "break_points_saved": [
+        1,
+        5
+      ],
+      "total_points_won": 41,
+      "service_games_won": [
+        4,
+        8
+      ],
+      "winners": 10,
+      "unforced_errors": 24
+    },
+    "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches/LS001/stats",
+    "source_setnum": 0,
+    "second_serve_derivation": "won=ptstotwonserv-ptswon1stserv; attempted=totservplayed-ptsplayed1stserv",
+    "winners_unforced_errors_status": "verified actual Flashscore Match feed, raw player label identity, set sums and eight core categories crosschecked to WTA",
+    "raw": "raw/final-stats.json",
+    "winners_unforced_errors_source": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_hEzXOoZg",
+    "winners_unforced_errors_verification": "final-statistics-crosscheck.json"
+  },
+  "claims": [
+    {
+      "id": "first_round_bye",
+      "safe_zh": "首轮轮空",
+      "value": true,
+      "source": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "field": "Top of main draw: RYBAKINA / Bye"
+    },
+    {
+      "id": "r2_retirement",
+      "safe_zh": "第二轮5比0领先时，波利娜·库德梅托娃退赛。",
+      "source": "https://www.wtatennis.com/news/4597263/rybakina-advances-to-face-kawa-in-ningbo-quarters-after-polina-kudermetova-retires",
+      "value": {
+        "score": [
+          5,
+          0
+        ],
+        "retirement": true,
+        "medical_timeout_at": [
+          3,
+          0
+        ]
+      },
+      "do_not_say": [
+        "6比0获胜",
+        "完整赛点",
+        "打满首盘"
+      ]
+    },
+    {
+      "id": "qf_score",
+      "safe_zh": "1/4决赛6比1先赢，第二盘3比6失守，决胜盘6比1拿回主动。",
+      "source": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+      "value": [
+        [
+          6,
+          1
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "crosscheck_source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_44GtNVPa"
+    },
+    {
+      "id": "qf_turnaround",
+      "safe_zh": "决胜盘先赢3局，3比1后再赢最后3局。",
+      "source": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+      "value": {
+        "decider_opening": [
+          3,
+          0
+        ],
+        "opponent_first_game": [
+          3,
+          1
+        ],
+        "end": [
+          6,
+          1
+        ]
+      }
+    },
+    {
+      "id": "qf_errors_shift",
+      "safe_zh": "第二盘21次非受迫失误，决胜盘降到2次。",
+      "source": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+      "value": {
+        "set1_winners_ue": [
+          14,
+          4
+        ],
+        "set2_winners_ue": [
+          9,
+          21
+        ],
+        "set3_winners_ue": [
+          6,
+          2
+        ]
+      },
+      "use": "Official article only; do not reuse as final statistics."
+    },
+    {
+      "id": "sf_11_set_points",
+      "safe_zh": "半决赛首盘，用到第11个盘点才拿下。",
+      "source": "https://www.wtatennis.com/news/4598225/rybakina-survives-shnaider-test-sets-up-ningbo-final-with-fernandez",
+      "value": {
+        "converted_set_point_number": 11,
+        "missed_previous": 10
+      },
+      "do_not_say": [
+        "错失10个赛点",
+        "救回11个盘点",
+        "首盘落后11次"
+      ],
+      "crosscheck_source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_E5AcXbEi",
+      "raw_marker_count": "11 |B2| markers in Set1 final game, score6-3 after game"
+    },
+    {
+      "id": "sf_late_stumble",
+      "safe_zh": "第二盘5比3领先，发球胜赛局连丢4分被追到5比5；她随即再赢两局，以7比5过关。",
+      "source": "https://www.wtatennis.com/news/4598225/rybakina-survives-shnaider-test-sets-up-ningbo-final-with-fernandez",
+      "value": {
+        "broken_at_love_serving_for_match": true,
+        "set2_result": [
+          7,
+          5
+        ],
+        "set2_after_each_late_game": [
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ]
+        ],
+        "match_points_needed_in_final_game": 2
+      },
+      "crosscheck_source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_E5AcXbEi"
+    },
+    {
+      "id": "final_control",
+      "safe_zh": "决赛两个6比2，自己的8个发球局全部保住。",
+      "source": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "additional_source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches/LS001/stats",
+      "value": {
+        "score": [
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            2
+          ]
+        ],
+        "own_service_games_lost": 0,
+        "breaks_per_set": [
+          2,
+          2
+        ],
+        "elapsed_minutes_rounddown": 76,
+        "final_championship_point_number": 1,
+        "first_set_first_break_for": [
+          3,
+          2
+        ],
+        "second_set_first_break_for": [
+          2,
+          1
+        ]
+      },
+      "crosscheck_source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_hEzXOoZg"
+    },
+    {
+      "id": "season_titles",
+      "safe_zh": "莱巴金娜拿下2026赛季第4座巡回赛单打冠军。",
+      "source": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "value": 4,
+      "events": [
+        "Australian Open",
+        "Stuttgart",
+        "US Open",
+        "Ningbo"
+      ]
+    },
+    {
+      "id": "career_titles",
+      "safe_zh": "莱巴金娜拿下职业生涯第15座巡回赛单打冠军。",
+      "source": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "value": 15
+    },
+    {
+      "id": "first_back_to_back_defense",
+      "safe_zh": "她职业生涯第一次在同一项巡回赛连续两年夺冠。",
+      "source": "https://www.wtatennis.com/news/4598107/elena-rybakina-vs-leylah-fernandez-everything-to-know-about-the-ningbo-final",
+      "source_status": "Conditional preview claim + final result establishes completed outcome",
+      "value": true,
+      "supporting_quote": "first time she’s won a tournament in back-to-back years",
+      "do_not_say": [
+        "首次同一站二度夺冠"
+      ],
+      "distinction": "2024/2026 Stuttgart are repeat titles, not consecutive-year defense."
+    },
+    {
+      "id": "first_title_as_no1",
+      "safe_zh": "这是她登上世界第一之后的首座巡回赛冠军。",
+      "source": "https://www.reuters.com/sports/tennis/rybakina-brushes-aside-fernandez-retain-ningbo-crown-2026-10-25/",
+      "source_status": "Reuters search-result text verified; direct GET401 archived",
+      "value": true
+    },
+    {
+      "id": "2025_final",
+      "safe_zh": "2025年宁波决赛，莱巴金娜3比6、6比0、6比2击败亚历山德洛娃。",
+      "source": "https://www.wtatennis.com/news/4385270/perfect-10-rybakina-defeats-alexandrova-to-claim-milestone-ningbo-title",
+      "additional_source": "https://wtafiles.wtatennis.com/pdf/draws/2025/2092/MDS.pdf",
+      "value": {
+        "opponent": "Ekaterina Alexandrova",
+        "score": [
+          [
+            3,
+            6
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            6,
+            2
+          ]
+        ]
+      }
+    }
+  ],
+  "background_candidate": {
+    "safe_zh": "北京首战就出局，武汉因伤退赛；宁波重新拿到冠军。",
+    "beijing_primary": "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+    "beijing_archive": "/workspace/tennislive/data/research/rybakina-charaeva-beijing-2026-r2/official-target-match.json",
+    "beijing_result_from_winner_perspective": "A. Charaeva d [1]E. Rybakina 3-6,6-4,6-3",
+    "beijing_first_match_evidence": "Fresh WTA official story GET200 raw/beijing-background.html and text; archive official match and first-round-bye review corroborates.",
+    "wuhan_source": "https://www.reuters.com/sports/tennis/rybakina-withdraws-wuhan-with-injury-after-china-open-exit-2026-10-04/",
+    "wuhan_do_not_say": "武汉输了",
+    "wuhan_primary": "https://www.wtatennis.com/news/4593595/ningbo-draw-rybakina-returns-kostyuk-swiatek-still-in-wta-finals-hunt",
+    "wuhan_primary_archive": "raw/ningbo-draw-preview.html"
+  },
+  "conflicts_and_exclusions": [
+    {
+      "source": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "claim": "2025 final opponent Mirra Andreeva",
+      "status": "reject_wrong",
+      "reason": "2025 official article and official MDS agree Ekaterina Alexandrova."
+    },
+    {
+      "source": "https://www.wtatennis.com/news/4598107/elena-rybakina-vs-leylah-fernandez-everything-to-know-about-the-ningbo-final",
+      "claim": "final Saturday Oct24",
+      "status": "reject_wrong",
+      "reason": "Final completed feed and Oct25 formal report establish Sunday Oct25. Do not copy preview schedule date."
+    },
+    {
+      "source": "https://tennisnow.com/defending-champion-rybakina-rolls-past-fernandez-to-15th-title-in-ningbo/",
+      "claim": "25 winners and all5BP saved",
+      "status": "Split: 25W independently verified by FS; save5BP rejected. Do not use this article as stats evidence.",
+      "reason": "Actual FS W25/10 UE25/24; full-match and per-set sum checks + eight official core categories all agree. Official opponent BP0/4, not0/5."
+    },
+    {
+      "claim": "first ever repeated title",
+      "status": "reject_ambiguous",
+      "reason": "She repeated Stuttgart in2024/2026. Scope first consecutive-year title defense."
+    },
+    {
+      "claim": "year-end No1 secured",
+      "status": "not_verified_do_not_use",
+      "reason": "Final report only closing in; no official secured claim established."
+    },
+    {
+      "source": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "claim": "social embed24th winner",
+      "status": "do_not_use_for_final_winners_total",
+      "reason": "Actual FS full-match W25/10 and set sums8+17/4+6; official core categories all match. Could be embed wording/count context; no speculative explanation."
+    }
+  ],
+  "source_manifest": [
+    {
+      "url": "https://www.wtatennis.com/news/4593595/ningbo-draw-rybakina-returns-kostyuk-swiatek-still-in-wta-finals-hunt",
+      "status": 200,
+      "sha256": "fe9a79d963b006235e3f5e6a11a6c993d1ac0d051980a029d88888e5af2db543",
+      "fetched_at": "2026-10-25T12:10:10.092965+00:00",
+      "bytes": 206827
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_44GtNVPa",
+      "status": 200,
+      "sha256": "1207b9e369178f72cda03ee9ec7c2783b9eea130e164c765f7620080a070adba",
+      "fetched_at": "2026-10-25T12:09:50.628124+00:00",
+      "bytes": 1940
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_hEzXOoZg",
+      "status": 200,
+      "sha256": "4043bf4bd7fbde21713b3e97e14d36441d08a260bd2479ad2a341996aef00fc2",
+      "fetched_at": "2026-10-25T12:09:50.301670+00:00",
+      "bytes": 1289
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_E5AcXbEi",
+      "status": 200,
+      "sha256": "930e3a1595737c8c9e1ebbae92201d5044432309d6a6e95e9128d83be87d3e91",
+      "fetched_at": "2026-10-25T12:09:20.083547+00:00",
+      "bytes": 1637
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_hEzXOoZg",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:08:12.779449+00:00",
+      "sha256": "418a04c48449bb7ba4af9c677f35a817e8aba7c1a31f458ff8d223922c755f0f",
+      "bytes": 3040
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/df_hh_1_hEzXOoZg",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:08:12.523592+00:00",
+      "sha256": "c23ed494bb15e9c5dd5c0b76c344b0907558d68e418eb73d0e70a386ae47e78d",
+      "bytes": 166023
+    },
+    {
+      "url": "https://local-global.flashscore.ninja/2/x/feed/f_2_0_2_en_1",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:08:12.521249+00:00",
+      "sha256": "c0b43e8456f1862b7b44303d8a137b35eb6f8b2bc6cd885a363183c4bbf0dc05",
+      "bytes": 467277
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4586105/charaeva-upsets-new-world-no-1-rybakina-in-beijing-second-round",
+      "status": 200,
+      "sha256": "e1b530590e70d3b30b63789191a6d355d500d256b9f8ea7ef616aa2ff2b14c65",
+      "fetched_at": "2026-10-25T12:07:26.571043+00:00",
+      "bytes": 200751
+    },
+    {
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2025/2092/MDS.pdf",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:02:22.357625+00:00",
+      "sha256": "b56377b5db31d7facd1d2aca1700d60ec2fadaaafc17b7b6f683787e802203d7",
+      "bytes": 270269
+    },
+    {
+      "url": "https://wtafiles.wtatennis.com/pdf/matchnotes/2026/2092__F.pdf",
+      "status": 404,
+      "fetched_at": "2026-10-25T12:02:22.109308+00:00",
+      "sha256": "294fde5727e998852e2ef3dba0581ac9cff8de45446cdf1eef589a293b46b578",
+      "bytes": 215
+    },
+    {
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:02:22.017269+00:00",
+      "sha256": "496956ef03aeed098e54d5555865a0f6361be944bcb28af80470b4c1a193a59f",
+      "bytes": 307538
+    },
+    {
+      "url": "https://www.reuters.com/sports/tennis/rybakina-brushes-aside-fernandez-retain-ningbo-crown-2026-10-25/",
+      "status": 401,
+      "fetched_at": "2026-10-25T12:02:21.981041+00:00",
+      "sha256": "c6eaff71e4e0826ed300b51258f20838849679a60756a0d0288baff8a283390c",
+      "bytes": 771
+    },
+    {
+      "url": "https://www.reuters.com/sports/tennis/holder-rybakina-sets-up-fernandez-clash-ningbo-final-2026-10-24/",
+      "status": 401,
+      "fetched_at": "2026-10-25T12:02:21.899299+00:00",
+      "sha256": "71bb32bc2254b17073f07bbbff458540c8b44c0c95fd45f5a9fc2301e766aa0e",
+      "bytes": 771
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4385270/perfect-10-rybakina-defeats-alexandrova-to-claim-milestone-ningbo-title",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:02:21.861219+00:00",
+      "sha256": "3a0f55ff76d70121f0bec3c1bcee40ac22ff582d72f49e858052f663ac93d543",
+      "bytes": 202881
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4597263/rybakina-advances-to-face-kawa-in-ningbo-quarters-after-polina-kudermetova-retires",
+      "status": 200,
+      "fetched_at": "2026-10-25T12:02:21.845295+00:00",
+      "sha256": "984fdaed295fc72f1f30200017f930c4d74b3ba86351cb74f96303c6cb9ca152",
+      "bytes": 202402
+    },
+    {
+      "url": "https://www.wtatennis.com/tournaments/2092/Ningbo/2026/draws",
+      "status": 200,
+      "fetched_at": "2026-10-25T11:59:52.432401+00:00",
+      "sha256": "21dd2d857ad9c8f5a6e63b32b20283e049540df56d04719b3ec283bf0a85b948",
+      "bytes": 841168
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4598107/elena-rybakina-vs-leylah-fernandez-everything-to-know-about-the-ningbo-final",
+      "status": 200,
+      "fetched_at": "2026-10-25T11:59:52.147515+00:00",
+      "sha256": "4e405e1e4b8f27685f53ed8062baf637c3e916d1537cae505822cc433a5a31b7",
+      "bytes": 206914
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4598225/rybakina-survives-shnaider-test-sets-up-ningbo-final-with-fernandez",
+      "status": 200,
+      "fetched_at": "2026-10-25T11:59:51.913613+00:00",
+      "sha256": "6c45398aa867b3de7eb8a686b845b3531f15beb0ddbca54a20a8f7048f2a005d",
+      "bytes": 203258
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4597912/rybakina-overcomes-kawa-second-set-dip-return-to-ningbo-semifinals",
+      "status": 200,
+      "fetched_at": "2026-10-25T11:59:51.670942+00:00",
+      "sha256": "70567b87517ae606528adf2b4a441ecb0fe5040fc45d1972cbbb4ad30a273766",
+      "bytes": 209528
+    },
+    {
+      "url": "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "status": 200,
+      "fetched_at": "2026-10-25T11:59:50.052324+00:00",
+      "sha256": "642394892a9ae9f27b2c8b2b82dd25f6b6e21f43c5215b2ecbb3110a9a957155",
+      "bytes": 199799
+    }
+  ],
+  "updated_at": "2026-10-25T12:11:12.835805+00:00",
+  "verified_game_sequences": {
+    "qf": {
+      "a": "Elena Rybakina",
+      "b": "Katarzyna Kawa",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_44GtNVPa",
+      "games_after_each_game": {
+        "Set 1": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ]
+        ],
+        "Set 2": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ]
+        ],
+        "Set 3": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ]
+        ]
+      },
+      "set_point_opportunities": 2,
+      "match_point_opportunities": 1,
+      "raw": "raw/qf-flashscore-mh.txt",
+      "parsed": "qf-flashscore-points.json"
+    },
+    "sf": {
+      "a": "Elena Rybakina",
+      "b": "Diana Shnaider",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_E5AcXbEi",
+      "games_after_each_game": {
+        "Set 1": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            3
+          ]
+        ],
+        "Set 2": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ]
+        ]
+      },
+      "set_point_opportunities": 11,
+      "match_point_opportunities": 2,
+      "raw": "raw/sf-flashscore-mh.txt",
+      "parsed": "sf-flashscore-points.json"
+    },
+    "final": {
+      "a": "Elena Rybakina",
+      "b": "Leylah Fernandez",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_hEzXOoZg",
+      "games_after_each_game": {
+        "Set 1": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ]
+        ],
+        "Set 2": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ]
+        ]
+      },
+      "set_point_opportunities": 1,
+      "match_point_opportunities": 1,
+      "raw": "raw/final-flashscore-mh.txt",
+      "parsed": "final-flashscore-points.json"
+    }
+  }
+}

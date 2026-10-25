@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-oLH65bF8l6g/oLH65bF8l6g.mp4",
+  "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 212.48,
+  "reviewed_to": 236.08,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 233.18,
+      "end": 234.16,
+      "en": "Quite extraordinary.",
+      "zh": "太惊人了。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "qf-crisis-yt-oLH65bF8l6g-refine-medium.en.json",
+      "sha256": "c8b77b5c02d8ccbe843307c47ee6e6d1ee263159d0592417ec949182aefea60d"
+    },
+    {
+      "file": "qf-crisis-yt-oLH65bF8l6g-refine-small.en.json",
+      "sha256": "65042a120516dbae3fab12b3281094a64d73dc5296898e19d889235d22b17307"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

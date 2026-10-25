@@ -1,0 +1,157 @@
+{
+  "schema": "tennislive.independent-encoded-visual-review.v1",
+  "slug": "rybakina-ningbo-title-run-2026",
+  "reviewed_at": "2026-10-25T13:31:24.190889+00:00",
+  "reviewer": "ningbo_final_visual_qc independent agent",
+  "film_sha256": "5f990e5892359a6d8fde8988b2f2afe9a057e0c91a45e264fd3f10ed147249d0",
+  "film_bytes": 167651743,
+  "native_qc_status": "pass",
+  "visual_sample_review": "pass",
+  "material_findings": [],
+  "review_scope": {
+    "own_actual_encoded_samples": 23,
+    "root_selected_encoded_samples_opened": 44,
+    "contact_sheets_opened": [
+      "encoded-visual-qc/contact-1.jpg",
+      "encoded-visual-qc/contact-2.jpg",
+      "encoded-visual-qc/contact-3.jpg",
+      "encoded-visual-qc/contact-4.jpg",
+      "independent-qc/contact-1.jpg",
+      "independent-qc/contact-2.jpg",
+      "independent-qc/boundaries-contact.jpg"
+    ]
+  },
+  "observations": [
+    "1080x1440 full-canvas3:4 actual encoded source; no letterboxing in reviewed match/person/card frames.",
+    "All six live score inset samples show true native outline, complete names/set/point numbers and appropriate SET/MATCH/CHAMPIONSHIP labels at fixed lower-left natural landing.",
+    "Sampled English/Chinese source captions stay inside canvas without cut-bottom or duplicate overlapping blocks.",
+    "Chronological original route remains: bye/retirement factual card, QF loss/recovery, SF first-set11th-setpoint and late score recovery, final main chapter.",
+    "Final is132.93seconds and longest individual-match chapter, includes first-set point,8servicegamesheld/4BPsave explanation,complete championship-point selection,matchstatistics and actual本人抱杯发言.",
+    "Final statistic card reads6-2/6-2,W25/10,UE25/24 and valid service/break figures.",
+    "Cup late boundary317.45s remains actual Rybakina with green trophy; no WTA source-outro image appears there.",
+    "Branded ending actually settles by334.00/334.70s as网球时差·赛场之上 with original logo and tagline.",
+    "Cold later close-up is source subject near edge under the approved fixed court fallback. Reviewed eyes/mouth remain visible in sampled shots; no new tracking or aesthetic change requested."
+  ],
+  "limits": [
+    "Visual frame-sample review, not manual frame-by-frame playback.",
+    "No human audio listening performed or claimed. Native voice report is separate.",
+    "No source/spec/audio/renderer edits; publication decision remains primary assistant."
+  ],
+  "own_samples": [
+    {
+      "name": "cold",
+      "time": 3.1,
+      "sha256": "199ac9a2e81d7efb151b5338d4398e3e0d0e70c86f83685e913ab6a9afbb0c39"
+    },
+    {
+      "name": "opening-captions",
+      "time": 10.5,
+      "sha256": "7518c32cda0c6bdbb49b24235de203cfb95928820ea2002fcdbec54a83c5825c"
+    },
+    {
+      "name": "qf-pressure",
+      "time": 32,
+      "sha256": "11bbe2aefebd3419c1122f182e9e8be5f2477e87cfc70d4da53ca051611248b9"
+    },
+    {
+      "name": "qf-live",
+      "time": 43.5,
+      "sha256": "464773e7d2254655b7b015ccaa939d70c0d0c712dfc70f91e1c9d83856a88201"
+    },
+    {
+      "name": "qf-data",
+      "time": 67.0,
+      "sha256": "88c5f22eed483e8d7876b295f9e3f306a9ad100113d8b72e369ca40fc96eca7c"
+    },
+    {
+      "name": "qf-mp-live",
+      "time": 75.5,
+      "sha256": "77065b4bf6612caef4cdd90790476cb95bd906a1978c5120d16851a507abad47"
+    },
+    {
+      "name": "sf-card",
+      "time": 108,
+      "sha256": "091825a321bcfb2b945030f59fc9704d9ead5538bf7069a9957a492cf70b0e20"
+    },
+    {
+      "name": "sf-set-live",
+      "time": 120,
+      "sha256": "d6e7476827c0203d3387c05fa4e39a85453254e362ce2a9e29953c830c296db3"
+    },
+    {
+      "name": "sf-response",
+      "time": 145,
+      "sha256": "3f87d215425301d5dd2bf0a86802e6367e253fed2ee3347a87db19f9f3b60216"
+    },
+    {
+      "name": "sf-mp-live",
+      "time": 154,
+      "sha256": "7a41145030b50213b73b67157b1126e882d351270eea5bd47f318fbd9d569410"
+    },
+    {
+      "name": "f-context",
+      "time": 202,
+      "sha256": "f9bea20e942bddb91cea9e61eb218716c92880d0e561661a48a2ad9757d05354"
+    },
+    {
+      "name": "f-sp-live",
+      "time": 215,
+      "sha256": "906ede1bf04bb4607ff1754f9615c7cfee4967e7d85e3a72e5e15ccd2a34c96e"
+    },
+    {
+      "name": "f-control",
+      "time": 233.5,
+      "sha256": "267d8a5db464f5beda822c80fb682d0929a26293289b2ad00d4421fbf85d7967"
+    },
+    {
+      "name": "f-mp-live",
+      "time": 244,
+      "sha256": "65dcf6b3aac37a4038c87461ed827c9b3d83669ff968739c669f215884ef5bed"
+    },
+    {
+      "name": "f-last-call",
+      "time": 285,
+      "sha256": "625b359b3e688fa028fb0cab449cfd5471eaae5eb5de6badefd35595fa30f36b"
+    },
+    {
+      "name": "stats",
+      "time": 292,
+      "sha256": "791d2c7539bd4b9b6dd7667caf7775f27d51f4f7bc2aa47ba7583f9271796068"
+    },
+    {
+      "name": "cup",
+      "time": 301,
+      "sha256": "8299c8fa2f2700e430ded99e0babc178ce802657d3058675c2607f1e9b2ee2b3"
+    },
+    {
+      "name": "cup-thanks",
+      "time": 315.7,
+      "sha256": "3c1433af384b36d0131e32f401968a51312201fbf7df292f4487874cae9dc366"
+    },
+    {
+      "name": "ending",
+      "time": 323,
+      "sha256": "a6043598163a9cfbdf5211653daabcbb3f66289dd7d7266044a20623ed93ce2b"
+    },
+    {
+      "name": "brand",
+      "time": 333,
+      "sha256": "449d72a928b9ec31bb2f85b91440c489676f6002fe4c105b3750ecaf904cb391"
+    },
+    {
+      "name": "boundary-317.45",
+      "time": 317.45,
+      "sha256": "ab8b4ba200bc99f8f7f85db7cdff5208b7c3214f50c0da3d302e3199529033c4"
+    },
+    {
+      "name": "boundary-334.00",
+      "time": 334.0,
+      "sha256": "2ea498bf584c559b641e6f47b617e49adb434ee2f3228df8c2816557c6f4c71e"
+    },
+    {
+      "name": "boundary-334.70",
+      "time": 334.7,
+      "sha256": "4a857749f06f4e2182c31cac16e7a0baf07d87b2c58445a72cda21614707fe4d"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 105.08,
+  "reviewed_to": 125.1,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 105.08,
+      "end": 108.55,
+      "en": "Right at the start of the match, she wasn't able to take them.",
+      "zh": "开场时，她没抓住那些机会。"
+    },
+    {
+      "start": 108.55,
+      "end": 110.19,
+      "en": "Since then it's been comfortable.",
+      "zh": "此后，局面就轻松多了。"
+    },
+    {
+      "start": 118.91,
+      "end": 122.31,
+      "en": "Too good from the world number one,",
+      "zh": "世界第1的表现太出色了，"
+    },
+    {
+      "start": 122.31,
+      "end": 124.65,
+      "en": "wrapping up the set in style.",
+      "zh": "漂亮地拿下首盘。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "final-setpoint-yt-Rn0lchWoTIM-refine-medium.en.json",
+      "sha256": "e9ae0cc275f9925147690f81afe7aace4d1df18b6017720c335b3d572b883c50"
+    },
+    {
+      "file": "final-setpoint-yt-Rn0lchWoTIM-refine-small.en.json",
+      "sha256": "9383955bbb7b91a9fa5fda60d4e26cee963ab38b4774ee3c63c1d730a4939441"
+    },
+    {
+      "file": "final-setpoint-context-yt-Rn0lchWoTIM-refine-medium.en.json",
+      "sha256": "531743d311c79b61307efc60a976d2c99791fcfdc21448545378d7c9c450b6b0"
+    },
+    {
+      "file": "final-setpoint-context-yt-Rn0lchWoTIM-refine-small.en.json",
+      "sha256": "981e5f598f89b5e1c386c8702f0dc219ae7cc4763050c29f75635f0c86e0d211"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

@@ -1,0 +1,666 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "1b7700551afac5e71153e8f1c122edf2dff5e7f2eaddb65cd2fd7c6529f29700",
+    "render_inputs_sha256": "1024d7dac454d1c9f1b03074c3fbe8255f396c1b63f15a5402c9020ecc198949",
+    "spec_sha256": "856af80e2d41091c8dfa46433a725b29beb0a7f3e8801e7cbdede2a843feab60",
+    "film_sha256": "5f990e5892359a6d8fde8988b2f2afe9a057e0c91a45e264fd3f10ed147249d0",
+    "inventory_sha256": "431ce5c6f7fbfed26579c6ca2e2440c3d5e04127e1d0948fbde40a1c96e73062"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-25T13:26:47+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:28423e6c88b6873d5231cd7415338975f997cc3216021115c2fdf924c7ff82ed",
+      "audio_sha256": "e901bc85a32cf7c8806799126c1fae9472d9a821a7d1075c2e97b705b03a83ad",
+      "pass": true,
+      "result_of": "bundle:28423e6c88b6873d5231cd7415338975f997cc3216021115c2fdf924c7ff82ed"
+    },
+    {
+      "id": "bundle:7300c1a56ca96d393c87bf2053a55c40e4f4cc35daa475aae9456ded50a2f0ef",
+      "audio_sha256": "0e988697b1a131bd24bba8366d6f8226d008c665dd82ace49b1a18fa94cf7380",
+      "pass": true,
+      "result_of": "bundle:7300c1a56ca96d393c87bf2053a55c40e4f4cc35daa475aae9456ded50a2f0ef"
+    },
+    {
+      "id": "bundle:7c1669ce05c286b766c8d7ebf107bd885fb8663090ca9e39075d8d80831b7fea",
+      "audio_sha256": "e7c794ffb1df3a8221b7963aa4e0f9f85d194c93edfce401f82c609945e85279",
+      "pass": true,
+      "result_of": "bundle:7c1669ce05c286b766c8d7ebf107bd885fb8663090ca9e39075d8d80831b7fea"
+    },
+    {
+      "id": "bundle:8eff5f0be72f548642bbbccef262ffd1602ad3e49b34fd044dfd25cc551d1114",
+      "audio_sha256": "82454fe609186b947f6b0463cd483636f75f082d125a40cdfe01e2fc608c54fb",
+      "pass": true,
+      "result_of": "bundle:8eff5f0be72f548642bbbccef262ffd1602ad3e49b34fd044dfd25cc551d1114"
+    },
+    {
+      "id": "bundle:a8ed7c249aecc8b48ad05e87b27351aec94389a4f2af1b915a9f37e1140e0ee5",
+      "audio_sha256": "87d727fcdd2a2d188ea5ea373d25af59fcfd6ba5c8ebd2c64eb4e22f0c8a2d25",
+      "pass": true,
+      "result_of": "bundle:a8ed7c249aecc8b48ad05e87b27351aec94389a4f2af1b915a9f37e1140e0ee5"
+    },
+    {
+      "id": "bundle:b1a5b8477181f41c0dde54f4c6fffc39b9376a3198b3952b6d24c71387f4cdf0",
+      "audio_sha256": "0fff73a746e91552e48970ef16fab5fc3c840f05c3729848ed8d96c49bf091bd",
+      "pass": true,
+      "result_of": "bundle:b1a5b8477181f41c0dde54f4c6fffc39b9376a3198b3952b6d24c71387f4cdf0"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c08907b6bf5aa6d346340d2b977dcbb4070a4006e1a49b1b575644d0bedbcb4a",
+      "audio_sha256": "d8a2cff9a9c3c4b95acb256b108c9042be7c7999ac7f4a5289fdfbed79a85e78",
+      "pass": true,
+      "result_of": "bundle:c08907b6bf5aa6d346340d2b977dcbb4070a4006e1a49b1b575644d0bedbcb4a"
+    },
+    {
+      "id": "bundle:c2f0a0d62bc4c0694e27886dd2387f3f3691a660ac381d8eb0081c442b79c4a3",
+      "audio_sha256": "4b9133a0c91dedbc9361e7cdc8e45fefb40f3f56ab739b950bddb91cfce19543",
+      "pass": true,
+      "result_of": "bundle:c2f0a0d62bc4c0694e27886dd2387f3f3691a660ac381d8eb0081c442b79c4a3"
+    },
+    {
+      "id": "bundle:ca1f7f47873d6cb045a651bd6589cceeac308e8f14019b15d4ef0eb157666e75",
+      "audio_sha256": "c279bc5dff0afdc46f711ee1658f677b0023203bd0f1487a7d144e79e6b549d7",
+      "pass": true,
+      "result_of": "bundle:ca1f7f47873d6cb045a651bd6589cceeac308e8f14019b15d4ef0eb157666e75"
+    },
+    {
+      "id": "bundle:f5cb4bf6cc47176b5bbdcebe86982b83b1cd701f440806102363323b90fead1d",
+      "audio_sha256": "86cc2399c9ed9f12fc2d8045cb384b1da715b5fac1dc5a19698022d2bb124e43",
+      "pass": true,
+      "result_of": "bundle:f5cb4bf6cc47176b5bbdcebe86982b83b1cd701f440806102363323b90fead1d"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "87d727fcdd2a2d188ea5ea373d25af59fcfd6ba5c8ebd2c64eb4e22f0c8a2d25",
+      "pass": true,
+      "result_of": "bundle:a8ed7c249aecc8b48ad05e87b27351aec94389a4f2af1b915a9f37e1140e0ee5"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "c279bc5dff0afdc46f711ee1658f677b0023203bd0f1487a7d144e79e6b549d7",
+      "pass": true,
+      "result_of": "bundle:ca1f7f47873d6cb045a651bd6589cceeac308e8f14019b15d4ef0eb157666e75"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "0fff73a746e91552e48970ef16fab5fc3c840f05c3729848ed8d96c49bf091bd",
+      "pass": true,
+      "result_of": "bundle:b1a5b8477181f41c0dde54f4c6fffc39b9376a3198b3952b6d24c71387f4cdf0"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "86cc2399c9ed9f12fc2d8045cb384b1da715b5fac1dc5a19698022d2bb124e43",
+      "pass": true,
+      "result_of": "bundle:f5cb4bf6cc47176b5bbdcebe86982b83b1cd701f440806102363323b90fead1d"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "e901bc85a32cf7c8806799126c1fae9472d9a821a7d1075c2e97b705b03a83ad",
+      "pass": true,
+      "result_of": "bundle:28423e6c88b6873d5231cd7415338975f997cc3216021115c2fdf924c7ff82ed"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "0e988697b1a131bd24bba8366d6f8226d008c665dd82ace49b1a18fa94cf7380",
+      "pass": true,
+      "result_of": "bundle:7300c1a56ca96d393c87bf2053a55c40e4f4cc35daa475aae9456ded50a2f0ef"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "d8a2cff9a9c3c4b95acb256b108c9042be7c7999ac7f4a5289fdfbed79a85e78",
+      "pass": true,
+      "result_of": "bundle:c08907b6bf5aa6d346340d2b977dcbb4070a4006e1a49b1b575644d0bedbcb4a"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "4b9133a0c91dedbc9361e7cdc8e45fefb40f3f56ab739b950bddb91cfce19543",
+      "pass": true,
+      "result_of": "bundle:c2f0a0d62bc4c0694e27886dd2387f3f3691a660ac381d8eb0081c442b79c4a3"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "e7c794ffb1df3a8221b7963aa4e0f9f85d194c93edfce401f82c609945e85279",
+      "pass": true,
+      "result_of": "bundle:7c1669ce05c286b766c8d7ebf107bd885fb8663090ca9e39075d8d80831b7fea"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "82454fe609186b947f6b0463cd483636f75f082d125a40cdfe01e2fc608c54fb",
+      "pass": true,
+      "result_of": "bundle:8eff5f0be72f548642bbbccef262ffd1602ad3e49b34fd044dfd25cc551d1114"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:28423e6c88b6873d5231cd7415338975f997cc3216021115c2fdf924c7ff82ed",
+      "text": "半决赛，首盘的终点，一次次被推远。前十个盘点都没拿下，莱巴金娜等到了第十一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "半决赛,手盘的终点,一次次被推远。前十个盘点都没拿下,来巴金娜等到了第十一次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.193,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 首盘 ｜ 的 ｜ 终点 ｜ 一次次 ｜ 被 ｜ 推 ｜ 远 ｜ 前 ｜ 十个 ｜ 盘点 ｜ 都 ｜ 没 ｜ 拿下 ｜ 莱巴金娜 ｜ 等到 ｜ 了 ｜ 第十一次"
+      }
+    },
+    {
+      "id": "bundle:7300c1a56ca96d393c87bf2053a55c40e4f4cc35daa475aae9456ded50a2f0ef",
+      "text": "第二盘五比四，轮到自己发球结束比赛，她却连丢四分，被追到五比五。但她随即破发，又把机会争了回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘5比4,轮到自己发球结束比赛,他却连丢4分,被追到5比5。但他随即破发,又把机会争了回来。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 37,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.585,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 五比四 ｜ 轮 ｜ 到 ｜ 自己 ｜ 发球 ｜ 结束 ｜ 比赛 ｜ 她 ｜ 却 ｜ 连 ｜ 丢 ｜ 四分 ｜ 被 ｜ 追 ｜ 到 ｜ 五比五 ｜ 但 ｜ 她 ｜ 随即 ｜ 破发 ｜ 又 ｜ 把 ｜ 机会 ｜ 争 ｜ 了 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:7c1669ce05c286b766c8d7ebf107bd885fb8663090ca9e39075d8d80831b7fea",
+      "text": "制胜分二十五比十，非受迫失误二十五比二十四。她拿下对手四个发球局，也把自己的发球局，一个都守住了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.045,
+        "longest_deletion": 0,
+        "transcript": "赤身分25比10,飞兽破15,25比24。他拿下对手四个发球局,也把自己的发球局一个都守住了。"
+      },
+      "polyphones": [
+        {
+          "index": 29,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 38,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.021,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "制胜 ｜ 分 ｜ 二十五比 ｜ 十 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 二十五比 ｜ 二十四 ｜ 她 ｜ 拿下 ｜ 对手 ｜ 四个 ｜ 发球 ｜ 局 ｜ 也 ｜ 把 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 一个 ｜ 都 ｜ 守 ｜ 住 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:8eff5f0be72f548642bbbccef262ffd1602ad3e49b34fd044dfd25cc551d1114",
+      "text": "从中途失速，到收官反复，莱巴金娜还是把宁波冠军留下了。赛季第四冠，生涯第十五冠。到了年终总决赛，你看好她走到哪一步？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从中途失速,到收官反复,莱巴金娜还是把宁波冠军留下了。赛季第四冠,生涯第十五冠。到了年种总决赛,你看好他走到哪一步。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.015,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.816,
+        "cps": 4.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 中途 ｜ 失速 ｜ 到 ｜ 收官 ｜ 反复 ｜ 莱巴金娜 ｜ 还是 ｜ 把 ｜ 宁波 ｜ 冠军 ｜ 留下 ｜ 了 ｜ 赛季 ｜ 第四 ｜ 冠 ｜ 生涯 ｜ 第十五 ｜ 冠 ｜ 到 ｜ 了 ｜ 年终 ｜ 总决赛 ｜ 你 ｜ 看好 ｜ 她 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+      }
+    },
+    {
+      "id": "bundle:a8ed7c249aecc8b48ad05e87b27351aec94389a4f2af1b915a9f37e1140e0ee5",
+      "text": "北京时间十月二十五日下午，宁波站女单决赛。北京首战出局，武汉因伤退赛。莱巴金娜在这里，把去年的冠军守住了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月25日下午,宁波战女单决赛。北京首战出局,武汉阴伤退赛。莱巴金娜在这里,把去年的冠军守住了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.66,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十五日 ｜ 下午 ｜ 宁波站 ｜ 女单 ｜ 决赛 ｜ 北京 ｜ 首战 ｜ 出局 ｜ 武汉 ｜ 因 ｜ 伤 ｜ 退赛 ｜ 莱巴金娜 ｜ 在 ｜ 这里 ｜ 把 ｜ 去年 ｜ 的 ｜ 冠军 ｜ 守 ｜ 住 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:b1a5b8477181f41c0dde54f4c6fffc39b9376a3198b3952b6d24c71387f4cdf0",
+      "text": "对阵卡瓦，首盘六比一，第二盘却有二十一次非受迫失误。盘点上，莱巴金娜在底线被拉向左侧，伸拍救球，还是丢掉了这一盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "堆陣卡瓦、手盘6比1,第二盘却要21次非受迫失误。盘点上,莱巴金娜在底线被拉向左侧,深拍就球,还是丢掉了这一盘。"
+      },
+      "polyphones": [
+        {
+          "index": 48,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.082,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 10.295,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "对阵 ｜ 卡瓦 ｜ 首盘 ｜ 六比一 ｜ 第二盘 ｜ 却 ｜ 有 ｜ 二十一次 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 盘点 ｜ 上 ｜ 莱巴金娜 ｜ 在 ｜ 底线 ｜ 被 ｜ 拉 ｜ 向 ｜ 左侧 ｜ 伸 ｜ 拍 ｜ 救 ｜ 球 ｜ 还是 ｜ 丢掉 ｜ 了 ｜ 这 ｜ 一 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c08907b6bf5aa6d346340d2b977dcbb4070a4006e1a49b1b575644d0bedbcb4a",
+      "text": "决赛，对面是费尔南德斯。首盘盘点，莱巴金娜发球后继续在底线相持，调动对手左右奔跑。赢下这一分，她就先拿一盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "决赛,对面是费尔南德斯。手盘盘点,莱巴金娜发球后继续在底线相持,调动对手左右奔跑。赢下一分,她就先拿一盘。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.507,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对面 ｜ 是 ｜ 费尔南德斯 ｜ 首盘 ｜ 盘点 ｜ 莱巴金娜 ｜ 发球 ｜ 后 ｜ 继续 ｜ 在 ｜ 底线 ｜ 相持 ｜ 调动 ｜ 对手 ｜ 左右 ｜ 奔跑 ｜ 赢 ｜ 下 ｜ 这 ｜ 一 ｜ 分 ｜ 她 ｜ 就 ｜ 先 ｜ 拿 ｜ 一 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:c2f0a0d62bc4c0694e27886dd2387f3f3691a660ac381d8eb0081c442b79c4a3",
+      "text": "这一晚，她的八个发球局全部保住。费尔南德斯四次拿到破发机会，四次都没能突破。冠军，就在眼前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一晚,他的八个发球局全部保住。费尔南德斯四次拿到破发机会,四次都没能突破。冠军就在眼前。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 9.469,
+        "cps": 4.22,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一晚 ｜ 她 ｜ 的 ｜ 八个 ｜ 发球 ｜ 局 ｜ 全部 ｜ 保 ｜ 住 ｜ 费尔南德斯 ｜ 四次 ｜ 拿 ｜ 到 ｜ 破发 ｜ 机会 ｜ 四次 ｜ 都 ｜ 没 ｜ 能 ｜ 突破 ｜ 冠军 ｜ 就 ｜ 在 ｜ 眼前"
+      }
+    },
+    {
+      "id": "bundle:ca1f7f47873d6cb045a651bd6589cceeac308e8f14019b15d4ef0eb157666e75",
+      "text": "首轮轮空。第二轮五比零领先时，波利娜·库德梅托娃退赛。真正的反复，出现在下一场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首轮轮空。第二轮5比0领先时,波利娜·库德梅托娃退赛。真正的反复出现在下一场。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 8.019,
+        "cps": 4.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首轮 ｜ 轮空 ｜ 第二轮 ｜ 五比零 ｜ 领先 ｜ 时 ｜ 波利娜 ｜ 库德梅托娃 ｜ 退赛 ｜ 真正 ｜ 的 ｜ 反复 ｜ 出现 ｜ 在 ｜ 下 ｜ 一 ｜ 场"
+      }
+    },
+    {
+      "id": "bundle:f5cb4bf6cc47176b5bbdcebe86982b83b1cd701f440806102363323b90fead1d",
+      "text": "决胜盘，她的非受迫失误降到两次。先拿三局，再以六比一收尾。波折还在，主动权拿回来了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.028,
+        "longest_deletion": 0,
+        "transcript": "决胜盘：他的非受迫失误降到两次：先拿三局：再以6比1收尾：波德还在：主动权拿回来了。"
+      },
+      "polyphones": [
+        {
+          "index": 31,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.406,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 8.644,
+        "cps": 4.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 她 ｜ 的 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 降到 ｜ 两次 ｜ 先 ｜ 拿 ｜ 三局 ｜ 再 ｜ 以 ｜ 六比一 ｜ 收尾 ｜ 波折 ｜ 还 ｜ 在 ｜ 主动权 ｜ 拿 ｜ 回来 ｜ 了"
+      }
+    }
+  ]
+}
