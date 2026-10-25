@@ -425,21 +425,39 @@
         "show_after": 0,
         "animate": false
       },
-      "_full_canvas_review": "Actual fixed-center crops at4,6,8,10,12,14 seconds preserve service/rally actions near center; this replaces the previous176–178 right-edge reach. Opening2.00–2.15 has a very brief same-match close-up before wide service shot; court/rally remains fixed center, no interview/person-crop assertion.",
-      "_clip_context": {
-        "round": "2026 Roland-Garros R2 vs Yuliia Starodubtseva",
-        "stage": "First set, Rybakina leads2-0, serving; wins opening point of next game for15-0",
-        "not_championship_point": true,
-        "not_match_point": true,
-        "safe_caption_context_zh": "法网第二轮，莱巴金娜曾先赢一盘，最终三盘出局。",
-        "not_to_claim": [
-          "Do not call this the final point",
-          "Do not present this as deciding-tiebreak9-4",
-          "Do not say Starodubtseva wins this particular rally"
-        ]
-      },
       "audio_tail": "silence",
-      "_audio_tail_why": "Preserve all nominal source audio; zero-fill only the native dissolve continuation after the reviewed source endpoint, so the next unselected sentence cannot bleed in."
+      "_audio_tail_why": "Preserve all nominal source audio; zero-fill only the native dissolve continuation after the reviewed source endpoint, so the next unselected sentence cannot bleed in.",
+      "_terminal_point_visual_evidence": {
+        "source": "research/rybakina-finals-2026/ningbo-title-2026-10-25/point-audit/matchpoint-audit.json",
+        "row": "rg_r2",
+        "window": [
+          166.84,
+          179.55
+        ],
+        "phases": {
+          "prep": [
+            166.84,
+            170.9
+          ],
+          "toss": [
+            171,
+            171.4
+          ],
+          "serve_contact_interval": [
+            171.4,
+            171.7
+          ],
+          "rally": [
+            171.7,
+            178.2
+          ],
+          "winner_reaction": [
+            178.5,
+            179.55
+          ]
+        },
+        "scope": "Independent point-audit sampled full-source frames and fine contact sheet; deciding tiebreak9-4, near Rybakina serving, far Starodubtseva receiving. No continuous human watching claimed. Previous opening-first-set4–14s evidence is not applied to this replacement."
+      }
     },
     {
       "_id": "grass_results",
