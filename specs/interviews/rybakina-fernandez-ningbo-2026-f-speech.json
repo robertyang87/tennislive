@@ -1,6 +1,6 @@
 {
   "_facts": "2026-10-25 宁波公开赛（WTA500）女单决赛，莱巴金娜（世界第1、头号种子、卫冕冠军）6-2、6-2 胜费尔南德斯（世界第30、非种子），用时1小时16分钟（WTA官方By the Numbers稿）。生涯第15个单打冠军、2026赛季第4冠（澳网、斯图加特、美网、宁波）；宁波两连冠（2025、2026），宁波站回归后首位卫冕球员；以世界第一身份拿下的首冠；宁波8连胜；对费尔南德斯三连胜、交手4-2领先；第7个WTA500冠军；赛季第53胜领跑巡回赛。",
-  "_notes": "源视频为 Tennis Channel 官方独立冠军致辞视频（2:01），非集锦。用户给的 Rn0lchWoTIM 是 WTA 官方决赛集锦，不作正文源。本地已下载并 ffprobe 验真：1920x1080/25fps/AV1+Opus/121.45s/18.4MB，归档于项目 src/。视频首尾帧已目视核验：莱巴金娜手持宁波奖杯（绿色大瓷瓶）在 WTA TOUR 话筒前致辞，121s 末帧仍为致辞画面、无赛事 logo 尾帧。 首份转写：本视频无任何 YouTube 自动字幕（8 档 client 均无、本地 yt-dlp --list-subs 复核亦无），按仓库既定逃生口径本地 faster-whisper medium.en 跑首份逐词稿，写 output/interviews/<slug>/cap_asr.json3（json3 形，34 events、293 词、0.0-119.26s）；第二份 ASR 由 runner 用 small.en 交叉校验（与 asr_model 不同模型，符合 verify_transcript 闸）。 首份逐词稿人工订正（2026-10-25）：63.9-94.7s 段 medium.en 全音频幻觉（重复 join us 等约102词）经窗口双模型（medium.en/small.en 均无词）+RMS 掌声床核实为无言掌声段，已删，仅补 90.8s 一句 Thank you；主持词按贪心解码订正为 you make it come true twice；Leila→Leylah、empires→umpires、Visios→physios、Ningguo→Ningbo。订正后 191 词，待 subs 重跑第二份 ASR 交叉校验。",
+  "_notes": "源视频为 Tennis Channel 官方独立冠军致辞视频（2:01），非集锦。用户给的 Rn0lchWoTIM 是 WTA 官方决赛集锦，不作正文源。本地已下载并 ffprobe 验真：1920x1080/25fps/AV1+Opus/121.45s/18.4MB，归档于项目 src/。视频首尾帧已目视核验：莱巴金娜手持宁波奖杯（绿色大瓷瓶）在 WTA TOUR 话筒前致辞，121s 末帧仍为致辞画面、无赛事 logo 尾帧。 首份转写：本视频无任何 YouTube 自动字幕（8 档 client 均无、本地 yt-dlp --list-subs 复核亦无），按仓库既定逃生口径本地 faster-whisper medium.en 跑首份逐词稿，写 output/interviews/<slug>/cap_asr.json3（json3 形，34 events、293 词、0.0-119.26s）；第二份 ASR 由 runner 用 small.en 交叉校验（与 asr_model 不同模型，符合 verify_transcript 闸）。 首份逐词稿人工订正（2026-10-25）：63.9-94.7s 段 medium.en 全音频幻觉（重复 join us 等约102词）经窗口双模型（medium.en/small.en 均无词）+RMS 掌声床核实为无言掌声段，已删，仅补 90.8s 一句 Thank you；主持词按贪心解码订正为 you make it come true twice；Leila→Leylah、empires→umpires、Visios→physios、Ningguo→Ningbo。订正后 191 词，待 subs 重跑第二份 ASR 交叉校验。 本视频为双语现场：莱巴金娜以英文致辞，现场翻译两次以中文跟进（约20.4–33.5秒译祝贺段、63.9–94.6秒译团队/赛事段；她「I would like…」起句被译声覆盖未收）。transcript_languages 按词级时间轴分窗：英文窗用 medium.en 逐词稿、中文窗①用 small 多语逐词稿、中文窗②用 medium 多语逐词稿，拼为 cap_asr.json3（v2）；第二份 ASR 用多语 small 分窗复核。start 由 0 改 5.6：主持人开场句被两份 ASR 听乱，只保留干净交接句「Please have your champion speech.」。视频无任何 YouTube 字幕轨，用户定案按音频自识别（见 _user_ruling）。",
   "column": "赛后开麦",
   "event": "2026 WTA500 宁波 决赛",
   "featured_player": "莱巴金娜",
@@ -57,12 +57,40 @@
     "title": "Elena Rybakina Championship Speech | 2026 Ningbo",
     "attestation_sha256": "e8e565cb1745e0eb044833fb0c34a61dc050dde27c24bdfddae2c287872a7dbd"
   },
-  "start": 0.0,
+  "start": 5.6,
   "end": 121.45,
   "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
   "winner": "莱巴金娜",
   "winner_en": "Elena Rybakina",
-  "asr_model": "medium.en",
-  "whisper_model": "small.en",
-  "transcript_verified": false
+  "asr_model": "medium",
+  "whisper_model": "small",
+  "transcript_verified": false,
+  "transcript_languages": [
+    {
+      "start": 5.6,
+      "end": 20.4,
+      "language": "en"
+    },
+    {
+      "start": 20.4,
+      "end": 33.5,
+      "language": "zh"
+    },
+    {
+      "start": 33.5,
+      "end": 63.9,
+      "language": "en"
+    },
+    {
+      "start": 63.9,
+      "end": 94.6,
+      "language": "zh"
+    },
+    {
+      "start": 94.6,
+      "end": 121.45,
+      "language": "en"
+    }
+  ],
+  "_user_ruling": "用户 2026-10-25 定案：不要 YouTube 字幕，就按音频本身自己识别。"
 }
