@@ -228,24 +228,27 @@
       }
     },
     {
-      "_id": "r2-card",
-      "seconds": 9.5,
-      "title_card": "第二轮52分钟\n只丢3局",
-      "kicker": "头号种子出发",
-      "narration": "作为头号种子，他首轮轮空。第二轮对岛袋将，五十二分钟，六比二、六比一。",
+      "_id": "run-card",
+      "seconds": 12.5,
+      "title_card": "前三场一盘没丢\n半决赛对手退赛",
+      "kicker": "决赛之前",
+      "narration": "作为头号种子，他首轮轮空。第二轮和四分之一决赛连赢四盘，半决赛布勃利克只打了一盘就退赛。打进决赛之前，他一盘没丢。",
       "transition_card": {
-        "scores": [
+        "events": [
           {
-            "label": "第一盘",
-            "value": "6–2",
-            "winning": true,
-            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_MgnKGnx8"
+            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_MgnKGnx8",
+            "label": "10.22 · 第二轮",
+            "value": "6-2 6-1 岛袋将"
           },
           {
-            "label": "第二盘",
-            "value": "6–1",
-            "winning": true,
-            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_MgnKGnx8"
+            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_t2iMf2AC",
+            "label": "10.23 · 1/4决赛",
+            "value": "6-4 6-4 阿特曼"
+          },
+          {
+            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_AJS23nbt",
+            "label": "10.24 · 半决赛",
+            "value": "6-3 布勃利克退赛"
           }
         ]
       }
@@ -275,34 +278,6 @@
       "_frame_why": "比赛主画面固定球场中心，非采访发言段。",
       "_point_role": "match_point",
       "point_end_ok": "Tennis TV Day4合集逐帧核过：赛点回合165.4起至173.7得分，174.1切近景，181-182握手，182.68转黑场前收。"
-    },
-    {
-      "_id": "qf-card",
-      "seconds": 9.5,
-      "title_card": "1/4决赛连赢两盘\n对手0个破发点",
-      "kicker": "发球局全保",
-      "narration": "四分之一决赛对阿特曼。十个发球局，他没给对手一个破发点，六比四、六比四。",
-      "transition_card": {
-        "scores": [
-          {
-            "label": "第一盘",
-            "value": "6–4",
-            "winning": true,
-            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_t2iMf2AC"
-          },
-          {
-            "label": "第二盘",
-            "value": "6–4",
-            "winning": true,
-            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_t2iMf2AC"
-          }
-        ],
-        "summary": {
-          "value": "0",
-          "label": "对手拿到的破发点",
-          "source": "flashscore t2iMf2AC Break Points Saved 0/0"
-        }
-      }
     },
     {
       "_id": "qf-match-point",
@@ -339,27 +314,6 @@
       "_frame_why": "比赛主画面固定球场中心，非采访发言段。",
       "_point_role": "match_point",
       "point_end_ok": "Tennis TV 1/4决赛日合集逐帧核过：186.62切到发球、189.3得分翻牌，201.06黑场前收。"
-    },
-    {
-      "_id": "sf-card",
-      "seconds": 10.5,
-      "title_card": "半决赛6-3\n布勃利克退赛",
-      "kicker": "21分钟一盘",
-      "narration": "半决赛对布勃利克，第一盘二十一分钟，六比三，五个发球局全保。盘间，布勃利克退赛。",
-      "transition_card": {
-        "events": [
-          {
-            "label": "第一盘 · 21分钟",
-            "value": "6-3",
-            "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_AJS23nbt"
-          },
-          {
-            "label": "盘间",
-            "value": "布勃利克退赛",
-            "source": "flashscore AJS23nbt; Tennis TV commentary"
-          }
-        ]
-      }
     },
     {
       "_id": "sf-set-point",
@@ -404,10 +358,10 @@
     },
     {
       "_id": "final-card",
-      "seconds": 16.0,
+      "seconds": 19.0,
       "title_card": "决赛5比6\n15比40落后",
       "kicker": "两个盘点",
-      "narration": "决赛对手巴西拉什维利，是从资格赛打上来的。第一盘五比六，梅德韦杰夫发球，十五比四十，对手拿到两个盘点。第一个盘点，对手选择和他反手对拉，那正是梅德韦杰夫最拿手的。"
+      "narration": "决赛对手巴西拉什维利，从资格赛一路打上来，半决赛淘汰了西西帕斯。第一盘五比六，梅德韦杰夫发球，十五比四十，对手拿到两个盘点。第一个盘点，对手选择和他反手对拉，那正是梅德韦杰夫最拿手的。"
     },
     {
       "_id": "final-set-point-saved",
