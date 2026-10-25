@@ -1,0 +1,68 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive666859/666859-0d901eae.mp4",
+  "source_sha256": "0d901eae70177b9a8ffc1f7737161199ce660cd7e641ab32fb1a2d6f9964f01b",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-25T13:13:40+00:00",
+  "reviewed_from": 1163.0,
+  "reviewed_to": 1252.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1163.8,
+      "end": 1165.9,
+      "en": "It's just been so sound.",
+      "zh": "她的发挥太稳了"
+    },
+    {
+      "start": 1167.7,
+      "end": 1171.2,
+      "en": "Too many of those forehands sailing along.",
+      "zh": "对手的正手频频出界"
+    },
+    {
+      "start": 1171.2,
+      "end": 1179.0,
+      "en": "Sun continues to test that wing — and now she's got two match points.",
+      "zh": "她继续压制那一侧\n拿到了两个赛点"
+    },
+    {
+      "start": 1211.0,
+      "end": 1221.8,
+      "en": "One of the best junior seasons we have seen in the 21st century.",
+      "zh": "这是二十一世纪最好的青少年赛季之一"
+    },
+    {
+      "start": 1222.4,
+      "end": 1228.5,
+      "en": "She's played eight junior events — into her seventh final of the season.",
+      "zh": "八站比赛\n第七次打进决赛"
+    },
+    {
+      "start": 1230.8,
+      "end": 1236.4,
+      "en": "Champion at the US Open, finalist at Wimbledon, finalist at Roland Garros.",
+      "zh": "美网冠军、温网亚军、法网亚军"
+    },
+    {
+      "start": 1237.4,
+      "end": 1241.1,
+      "en": "Now a finalist at the Junior Finals in Chengdu as well.",
+      "zh": "如今又打进成都总决赛的决赛"
+    },
+    {
+      "start": 1242.4,
+      "end": 1247.2,
+      "en": "The second Chinese player to ever have the opportunity to play for the title.",
+      "zh": "第二位有机会打进这项决赛的中国球员"
+    },
+    {
+      "start": 1248.3,
+      "end": 1252.0,
+      "en": "Tip of the cap to world number two, Jana Kovackova.",
+      "zh": "向世界第二科瓦科娃致意"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 0d901eae70177b9a8ffc1f7737161199ce660cd7e641ab32fb1a2d6f9964f01b，存于 data/source_asr/666859/small.en.json 与 data/source_asr/666859/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
