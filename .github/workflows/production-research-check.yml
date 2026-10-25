@@ -1,5 +1,5 @@
 name: production-research-check
-run-name: Osaka final UTC source freshness refresh
+run-name: Osaka observed official playlist source check
 on:
   workflow_dispatch: {}
 permissions:
@@ -20,7 +20,7 @@ jobs:
           python - <<'PY'
           import subprocess,json,pathlib,datetime
           out=pathlib.Path('inventory')
-          channels=[('wta-videos','https://www.youtube.com/@WTA/videos',30),('wta-shorts','https://www.youtube.com/@WTA/shorts',30),('wta-siniakova-osaka-search','https://www.youtube.com/@WTA/search?query=Siniakova%20Osaka',30),('wta-siniakova-search','https://www.youtube.com/@WTA/search?query=Siniakova',30),('wta-osaka-search','https://www.youtube.com/@WTA/search?query=Osaka',30)]
+          channels=[('wta-current-osaka-playlist','https://www.youtube.com/playlist?list=PLGG94DGJAqdM',30)]
           report=[]
           for key,url,limit in channels:
               cmd=['yt-dlp','--flat-playlist','--playlist-end',str(limit),'--dump-single-json','--socket-timeout','20','--retries','1',url]
