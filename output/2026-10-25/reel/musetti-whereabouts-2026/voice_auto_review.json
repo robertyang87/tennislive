@@ -1,0 +1,985 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "b694c7516161ef9e8821da0a38180656aa575a3afa3ae472b084d54d2da4a4f3",
+    "render_inputs_sha256": "980474a56ba2514eb370d7526dfa4ab30350496f64d99cc80793eae69c6b1261",
+    "spec_sha256": "e82572391b78f1f181773ae7ad1b42acace4e862e81a5d0adfb327b39bb427be",
+    "film_sha256": "1d450fc82baca593993748c1e2cef35ac9df9e8be70aca2911881de8f9a30180",
+    "inventory_sha256": "9b1d6db660e441ee74364d6860051e92efdbf21ad461e7d2a7b1932a89d6a7a1"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-25T14:47:43+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1818b2ae2ad1fe63b23b252102d184c9e8378e3363b048a262c0575fd427f244",
+      "audio_sha256": "1acde384c6b72da7b7ac96a1cfdb6b7b915c5bcc416facfff143359f8ac9b3ea",
+      "pass": true,
+      "result_of": "bundle:1818b2ae2ad1fe63b23b252102d184c9e8378e3363b048a262c0575fd427f244"
+    },
+    {
+      "id": "bundle:252c5590604438ef1e4ae5dbdca1c9b251e3599b3dcaf4bcc266eaa0b6df7ed4",
+      "audio_sha256": "11a0496f57256d49284080dd62ea57f8dfdb1cb009882e65814df6253501ea5b",
+      "pass": true,
+      "result_of": "bundle:252c5590604438ef1e4ae5dbdca1c9b251e3599b3dcaf4bcc266eaa0b6df7ed4"
+    },
+    {
+      "id": "bundle:477ac34fee1ba3d158f21b2ecc5365ba660677a38f2e623f9fb37a2188336930",
+      "audio_sha256": "ebb57e0499f436a19a38c0aa313f1c284d10d87a7c8829a645113eb965dbfd8b",
+      "pass": true,
+      "result_of": "bundle:477ac34fee1ba3d158f21b2ecc5365ba660677a38f2e623f9fb37a2188336930"
+    },
+    {
+      "id": "bundle:4ce75ba7474cf98752b892251368410297442f1a5c11bbec2418b93d25ce37d8",
+      "audio_sha256": "02e9bb21e8c3ee0335bfe806a8422d691440311a2ca00865a8ce7c881817a33b",
+      "pass": true,
+      "result_of": "bundle:4ce75ba7474cf98752b892251368410297442f1a5c11bbec2418b93d25ce37d8"
+    },
+    {
+      "id": "bundle:67a786cfe61d2c15cb36f179b9fd140efb9f08a6551648e3862c815d10df75fa",
+      "audio_sha256": "b7bd2e66c0948eda56c8a1e739ead964ad0c5e559fffe605e66e226bc11d910e",
+      "pass": true,
+      "result_of": "bundle:67a786cfe61d2c15cb36f179b9fd140efb9f08a6551648e3862c815d10df75fa"
+    },
+    {
+      "id": "bundle:70ce7d30cd5059daea72b5b46b4b53d58139b6d437560d593480b3adcf2b39ec",
+      "audio_sha256": "1e5de226834a59587c75602e18a025abf754aec72483cff14c5498a875b71785",
+      "pass": true,
+      "result_of": "bundle:70ce7d30cd5059daea72b5b46b4b53d58139b6d437560d593480b3adcf2b39ec"
+    },
+    {
+      "id": "bundle:757e17fb71beef88d4a3a3c384bd05f9daa1b619378beb25fc870f70e541ff1a",
+      "audio_sha256": "bad906f9fbf4962fa5929e2c3041f79bf43040d961bb92f30dd2e4d7c8242e99",
+      "pass": true,
+      "result_of": "bundle:757e17fb71beef88d4a3a3c384bd05f9daa1b619378beb25fc870f70e541ff1a"
+    },
+    {
+      "id": "bundle:7a5dafbb2b33a757308fe96b1d1f531b2ce21f5103544436cc2d3df61790cb50",
+      "audio_sha256": "b8e186f437c3a5449be8537d51ade9a4bd113cba9c03a67d3a450acb93cb010f",
+      "pass": true,
+      "result_of": "bundle:7a5dafbb2b33a757308fe96b1d1f531b2ce21f5103544436cc2d3df61790cb50"
+    },
+    {
+      "id": "bundle:9e0ef5025cfc3a4456e92ed50f0f6cd14a13d927ea8f8d33989843a28ba5d9d7",
+      "audio_sha256": "dee618b8778d239c79d9d2d27319d8212b996eab322ba139625df02730091bc5",
+      "pass": true,
+      "result_of": "bundle:9e0ef5025cfc3a4456e92ed50f0f6cd14a13d927ea8f8d33989843a28ba5d9d7"
+    },
+    {
+      "id": "bundle:a2662226d0e90711e1d72180be478542967c4f6e23e08f58fb62f288365d36e9",
+      "audio_sha256": "ce7481f52a3f66d5d26f72578666b557f08519119a4ce874eb6002051f641e5b",
+      "pass": true,
+      "result_of": "bundle:a2662226d0e90711e1d72180be478542967c4f6e23e08f58fb62f288365d36e9"
+    },
+    {
+      "id": "bundle:a49f99dc0e7044bbf6e13020e717e019735568f4beb7cd4dcf68799a3029e5ec",
+      "audio_sha256": "87a74bc86b12c491e3f7355c7160d329434b0d96c67838bde3a3cd015252bc0c",
+      "pass": true,
+      "result_of": "bundle:a49f99dc0e7044bbf6e13020e717e019735568f4beb7cd4dcf68799a3029e5ec"
+    },
+    {
+      "id": "bundle:af0507515cea39ca9586d9c942423fc6985358f1c47db8dc2989580b78985917",
+      "audio_sha256": "73d306e6a5579789b4ac0b36abb80eaff294b9b671e9c04a9cb34b2b0613a373",
+      "pass": true,
+      "result_of": "bundle:af0507515cea39ca9586d9c942423fc6985358f1c47db8dc2989580b78985917"
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "audio_sha256": "ddbc47ebaa494640eb897dd88767ea48d7c6c6b746f4926191edd26c8ea4bce5",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    },
+    {
+      "id": "bundle:be0c67728173e4613b77c5b4f05f0c7d0797577d41f2097d8fd5f78ae0cc32b6",
+      "audio_sha256": "9155981c0182e521f7533829f6a52004afa16d81953c5730d745db22e00a57dd",
+      "pass": true,
+      "result_of": "bundle:be0c67728173e4613b77c5b4f05f0c7d0797577d41f2097d8fd5f78ae0cc32b6"
+    },
+    {
+      "id": "bundle:c0e7f9c8f79cd0f1beca85c2e0ef93b0f9bceb01b98a22cfbe814ae9c8705d19",
+      "audio_sha256": "fc07fcc3a7270920e44c6d9cb81822c9c2a82f91e881061c23f63fdf7133718a",
+      "pass": true,
+      "result_of": "bundle:c0e7f9c8f79cd0f1beca85c2e0ef93b0f9bceb01b98a22cfbe814ae9c8705d19"
+    },
+    {
+      "id": "bundle:dc4cfd8d0793709deb09c68dcc3751ce79177149e4c443122e7ade56c588cf83",
+      "audio_sha256": "2eb0728a7af77d5f3048170940978331dea09c5c919e3f930708ab64f9520752",
+      "pass": true,
+      "result_of": "bundle:dc4cfd8d0793709deb09c68dcc3751ce79177149e4c443122e7ade56c588cf83"
+    },
+    {
+      "id": "bundle:f10cb43faa335982f0759c3b3b7073f2457c97bee81429f762cfea0107105919",
+      "audio_sha256": "ec0b6de413683451b0feb4171376174fbc26c74fceaea0b8de31411fa4cb1e6c",
+      "pass": true,
+      "result_of": "bundle:f10cb43faa335982f0759c3b3b7073f2457c97bee81429f762cfea0107105919"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "ce7481f52a3f66d5d26f72578666b557f08519119a4ce874eb6002051f641e5b",
+      "pass": true,
+      "result_of": "bundle:a2662226d0e90711e1d72180be478542967c4f6e23e08f58fb62f288365d36e9"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "ebb57e0499f436a19a38c0aa313f1c284d10d87a7c8829a645113eb965dbfd8b",
+      "pass": true,
+      "result_of": "bundle:477ac34fee1ba3d158f21b2ecc5365ba660677a38f2e623f9fb37a2188336930"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "b8e186f437c3a5449be8537d51ade9a4bd113cba9c03a67d3a450acb93cb010f",
+      "pass": true,
+      "result_of": "bundle:7a5dafbb2b33a757308fe96b1d1f531b2ce21f5103544436cc2d3df61790cb50"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "1e5de226834a59587c75602e18a025abf754aec72483cff14c5498a875b71785",
+      "pass": true,
+      "result_of": "bundle:70ce7d30cd5059daea72b5b46b4b53d58139b6d437560d593480b3adcf2b39ec"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "87a74bc86b12c491e3f7355c7160d329434b0d96c67838bde3a3cd015252bc0c",
+      "pass": true,
+      "result_of": "bundle:a49f99dc0e7044bbf6e13020e717e019735568f4beb7cd4dcf68799a3029e5ec"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "b7bd2e66c0948eda56c8a1e739ead964ad0c5e559fffe605e66e226bc11d910e",
+      "pass": true,
+      "result_of": "bundle:67a786cfe61d2c15cb36f179b9fd140efb9f08a6551648e3862c815d10df75fa"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "bad906f9fbf4962fa5929e2c3041f79bf43040d961bb92f30dd2e4d7c8242e99",
+      "pass": true,
+      "result_of": "bundle:757e17fb71beef88d4a3a3c384bd05f9daa1b619378beb25fc870f70e541ff1a"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "73d306e6a5579789b4ac0b36abb80eaff294b9b671e9c04a9cb34b2b0613a373",
+      "pass": true,
+      "result_of": "bundle:af0507515cea39ca9586d9c942423fc6985358f1c47db8dc2989580b78985917"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "02e9bb21e8c3ee0335bfe806a8422d691440311a2ca00865a8ce7c881817a33b",
+      "pass": true,
+      "result_of": "bundle:4ce75ba7474cf98752b892251368410297442f1a5c11bbec2418b93d25ce37d8"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "fc07fcc3a7270920e44c6d9cb81822c9c2a82f91e881061c23f63fdf7133718a",
+      "pass": true,
+      "result_of": "bundle:c0e7f9c8f79cd0f1beca85c2e0ef93b0f9bceb01b98a22cfbe814ae9c8705d19"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "2eb0728a7af77d5f3048170940978331dea09c5c919e3f930708ab64f9520752",
+      "pass": true,
+      "result_of": "bundle:dc4cfd8d0793709deb09c68dcc3751ce79177149e4c443122e7ade56c588cf83"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "9155981c0182e521f7533829f6a52004afa16d81953c5730d745db22e00a57dd",
+      "pass": true,
+      "result_of": "bundle:be0c67728173e4613b77c5b4f05f0c7d0797577d41f2097d8fd5f78ae0cc32b6"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "dee618b8778d239c79d9d2d27319d8212b996eab322ba139625df02730091bc5",
+      "pass": true,
+      "result_of": "bundle:9e0ef5025cfc3a4456e92ed50f0f6cd14a13d927ea8f8d33989843a28ba5d9d7"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "11a0496f57256d49284080dd62ea57f8dfdb1cb009882e65814df6253501ea5b",
+      "pass": true,
+      "result_of": "bundle:252c5590604438ef1e4ae5dbdca1c9b251e3599b3dcaf4bcc266eaa0b6df7ed4"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "ec0b6de413683451b0feb4171376174fbc26c74fceaea0b8de31411fa4cb1e6c",
+      "pass": true,
+      "result_of": "bundle:f10cb43faa335982f0759c3b3b7073f2457c97bee81429f762cfea0107105919"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "1acde384c6b72da7b7ac96a1cfdb6b7b915c5bcc416facfff143359f8ac9b3ea",
+      "pass": true,
+      "result_of": "bundle:1818b2ae2ad1fe63b23b252102d184c9e8378e3363b048a262c0575fd427f244"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "ddbc47ebaa494640eb897dd88767ea48d7c6c6b746f4926191edd26c8ea4bce5",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1818b2ae2ad1fe63b23b252102d184c9e8378e3363b048a262c0575fd427f244",
+      "text": "凌晨一点，比赛打到一半，他为什么要掏手机？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "凌晨一点,比赛打到一半,他为什么要掏手机?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.273,
+        "cps": 5.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "凌晨一点 ｜ 比赛 ｜ 打 ｜ 到 ｜ 一半 ｜ 他 ｜ 为什么 ｜ 要 ｜ 掏 ｜ 手机"
+      }
+    },
+    {
+      "id": "bundle:252c5590604438ef1e4ae5dbdca1c9b251e3599b3dcaf4bcc266eaa0b6df7ed4",
+      "text": "所以，他宁可在场上先把行踪改了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以,他宁可在场上先把行踪改了。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "宁",
+          "word": "宁可",
+          "intended": "ning4",
+          "wrong": [
+            "ning2"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ning2",
+              "verdict": "correct",
+              "score": 0.529,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "佞泞"
+        },
+        {
+          "index": 11,
+          "char": "行",
+          "word": "行踪",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.308,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.691,
+        "cps": 5.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 他 ｜ 宁可 ｜ 在 ｜ 场 ｜ 上 ｜ 先 ｜ 把 ｜ 行踪 ｜ 改 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:477ac34fee1ba3d158f21b2ecc5365ba660677a38f2e623f9fb37a2188336930",
+      "text": "第一盘打进抢七，穆塞蒂七比五先拿下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一盘打进抢7,穆塞蒂7比5先拿下。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 2.775,
+        "cps": 5.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一盘 ｜ 打 ｜ 进 ｜ 抢七 ｜ 穆塞蒂 ｜ 七比五 ｜ 先 ｜ 拿下"
+      }
+    },
+    {
+      "id": "bundle:4ce75ba7474cf98752b892251368410297442f1a5c11bbec2418b93d25ce37d8",
+      "text": "他们要申报一年里每一天的行踪，还要留出一个六十分钟的时段，检查员上门得找得到人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他们要申报一年里每一天的行踪,还要留出一个60分钟的时段,检查员上门得找得到人。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "行",
+          "word": "行踪",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.306,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        },
+        {
+          "index": 15,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.54,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 34,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 36,
+          "char": "得",
+          "word": "找得到",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": -0.004,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 5.932,
+        "cps": 6.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他们 ｜ 要 ｜ 申报 ｜ 一年 ｜ 里 ｜ 每 ｜ 一天 ｜ 的 ｜ 行踪 ｜ 还要 ｜ 留 ｜ 出 ｜ 一个 ｜ 六十分钟 ｜ 的 ｜ 时段 ｜ 检查 ｜ 员 ｜ 上门 ｜ 得 ｜ 找 ｜ 得到 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:67a786cfe61d2c15cb36f179b9fd140efb9f08a6551648e3862c815d10df75fa",
+      "text": "他说：我设了反兴奋剂的闹钟，凌晨一点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他说,我设了反兴分计的闹钟凌晨一点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.231,
+        "cps": 4.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 说 ｜ 我 ｜ 设 ｜ 了 ｜ 反 ｜ 兴奋剂 ｜ 的 ｜ 闹钟 ｜ 凌晨一点"
+      }
+    },
+    {
+      "id": "bundle:70ce7d30cd5059daea72b5b46b4b53d58139b6d437560d593480b3adcf2b39ec",
+      "text": "决胜盘一直打到快凌晨一点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.083,
+        "longest_deletion": 0,
+        "transcript": "决胜盘一直打到快临沉一点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.108,
+        "cps": 5.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 一直 ｜ 打 ｜ 到 ｜ 快 ｜ 凌晨一点"
+      }
+    },
+    {
+      "id": "bundle:757e17fb71beef88d4a3a3c384bd05f9daa1b619378beb25fc870f70e541ff1a",
+      "text": "督导同意了。一个闹钟，为什么这么要紧？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "读导同意了,一个闹钟为什么这么要紧。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.369,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "督导 ｜ 同意 ｜ 了 ｜ 一个 ｜ 闹钟 ｜ 为什么 ｜ 这么 ｜ 要紧"
+      }
+    },
+    {
+      "id": "bundle:7a5dafbb2b33a757308fe96b1d1f531b2ce21f5103544436cc2d3df61790cb50",
+      "text": "第二盘又是抢七，东道主九比七扳回一盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘又是抢七,东道主9比7搬回一盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.21,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 又是 ｜ 抢 ｜ 七 ｜ 东道主 ｜ 九比七 ｜ 扳回 ｜ 一 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:9e0ef5025cfc3a4456e92ed50f0f6cd14a13d927ea8f8d33989843a28ba5d9d7",
+      "text": "第一次违规，禁赛两年，视过错程度最少减到一年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.05,
+        "longest_deletion": 0,
+        "transcript": "第一次违规近在两年是过错程度最少减刀一年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 20,
+        "speech_s": 3.888,
+        "cps": 5.14,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一次 ｜ 违规 ｜ 禁赛 ｜ 两年 ｜ 视 ｜ 过错 ｜ 程度 ｜ 最少 ｜ 减 ｜ 到 ｜ 一年"
+      }
+    },
+    {
+      "id": "bundle:a2662226d0e90711e1d72180be478542967c4f6e23e08f58fb62f288365d36e9",
+      "text": "十月二十三日晚，里昂站，四分之一决赛。穆塞蒂，对阵东道主球员。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.077,
+        "longest_deletion": 0,
+        "transcript": "10月23日晚,李扬湛四分之一决赛。穆塞蒂对战东道主球员。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.477,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月二十三日 ｜ 晚 ｜ 里昂 ｜ 站 ｜ 四分之一 ｜ 决赛 ｜ 穆塞蒂 ｜ 对阵 ｜ 东道主 ｜ 球员"
+      }
+    },
+    {
+      "id": "bundle:a49f99dc0e7044bbf6e13020e717e019735568f4beb7cd4dcf68799a3029e5ec",
+      "text": "这时，穆塞蒂向ATP督导提出，要用一下手机。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这是穆塞蒂象ATP督导提出要用一下手机。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.39,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这时 ｜ 穆塞蒂 ｜ 向 ｜ ATP ｜ 督导 ｜ 提出 ｜ 要 ｜ 用 ｜ 一下 ｜ 手机"
+      }
+    },
+    {
+      "id": "bundle:af0507515cea39ca9586d9c942423fc6985358f1c47db8dc2989580b78985917",
+      "text": "世界排名前一百的单打球员，都在国际网球诚信机构的，注册检查库里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "世界排名前100的单打球员都在国际网球诚信机构的注册检查库里。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.011,
+        "cps": 5.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "世界 ｜ 排名 ｜ 前一百 ｜ 的 ｜ 单打 ｜ 球员 ｜ 都 ｜ 在 ｜ 国际 ｜ 网球 ｜ 诚信 ｜ 机构 ｜ 的 ｜ 注册 ｜ 检查库 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.892,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:be0c67728173e4613b77c5b4f05f0c7d0797577d41f2097d8fd5f78ae0cc32b6",
+      "text": "按国际网球诚信机构的反兴奋剂条例，十二个月内两种加起来满三次，就构成违规。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "按国际网球诚信机构的反兴分级条例,12个月内两种加起来满三次就构成违规。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.731,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 5.9,
+        "cps": 5.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "按 ｜ 国际 ｜ 网球 ｜ 诚信 ｜ 机构 ｜ 的 ｜ 反 ｜ 兴奋剂 ｜ 条例 ｜ 十二个月 ｜ 内 ｜ 两种 ｜ 加 ｜ 起来 ｜ 满 ｜ 三次 ｜ 就 ｜ 构成 ｜ 违规"
+      }
+    },
+    {
+      "id": "bundle:c0e7f9c8f79cd0f1beca85c2e0ef93b0f9bceb01b98a22cfbe814ae9c8705d19",
+      "text": "他报的时段，从凌晨一点开始，人却还在场上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他报的时段,从凌晨一点开始,人却还在场上。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.298,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.549,
+        "cps": 5.07,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 报 ｜ 的 ｜ 时段 ｜ 从 ｜ 凌晨一点 ｜ 开始 ｜ 人 ｜ 却 ｜ 还 ｜ 在 ｜ 场 ｜ 上"
+      }
+    },
+    {
+      "id": "bundle:dc4cfd8d0793709deb09c68dcc3751ce79177149e4c443122e7ade56c588cf83",
+      "text": "检查员找不到人，算错过检查；行踪没报或报错，算申报失误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "检察员找不到人,算错过检查。行踪没爆或爆错,算身保失误。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "行",
+          "word": "行踪",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.518,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.661,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "检查员 ｜ 找 ｜ 不 ｜ 到 ｜ 人 ｜ 算 ｜ 错过 ｜ 检查 ｜ 行踪 ｜ 没 ｜ 报 ｜ 或 ｜ 报错 ｜ 算 ｜ 申报 ｜ 失误"
+      }
+    },
+    {
+      "id": "bundle:f10cb43faa335982f0759c3b3b7073f2457c97bee81429f762cfea0107105919",
+      "text": "凌晨一点多，穆塞蒂六比四拿下决胜盘，整场打了三个半小时。凌晨一点还查药检，太严了吗？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "凌晨一点多,穆塞第六比四拿下决胜盘,整场打了三个半小时。凌晨一点还查药解,太严了吗?评论区说说。"
+      },
+      "polyphones": [
+        {
+          "index": 32,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.387,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.782,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "凌晨一点 ｜ 多 ｜ 穆塞蒂 ｜ 六比四 ｜ 拿下 ｜ 决胜 ｜ 盘 ｜ 整 ｜ 场 ｜ 打 ｜ 了 ｜ 三个半小时 ｜ 凌晨一点 ｜ 还 ｜ 查 ｜ 药检 ｜ 太 ｜ 严 ｜ 了 ｜ 吗 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    }
+  ]
+}
