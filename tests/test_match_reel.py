@@ -17842,7 +17842,6 @@ def test_混音真峰值过线才限没过线原样(tmp_path):
     ② 本来就在线下的**一个字节都不许动**——这道闸只治过线，借机给所有
        存量片子重做响度就是越界（回归底线：已发布口径不被改变）。
     """
-    import filecmp  # noqa: PLC0415
     import shutil  # noqa: PLC0415
     import subprocess  # noqa: PLC0415
 
@@ -17863,9 +17862,14 @@ def test_混音真峰值过线才限没过线原样(tmp_path):
         "-c:a", "pcm_f32le", str(hot))
     before = reel._loudnorm_stats(hot)
     assert before["input_tp"] > 0, f"热信号没造出来：{before}"
-    out = tmp_path / "hot_limited.m4a"
-    report = reel.limit_true_peak(hot, out)
+    report = reel.limit_true_peak(hot)
     assert report["applied"], "真峰值过线却没限幅"
+    # 限幅必须**原地写回**：产物另起一个文件，渲完的中间物清理按 `mixed`
+    # 变量删人，原混音就成孤儿——443 秒片子的原混音 10.6 MB 被工作流的
+    # 大文件兜底当漏网中间物拦下（戈芬 v5 render 三派实测）。同目录里
+    # 不许剩下 _peak 临时文件。
+    assert reel._loudnorm_stats(hot)["input_tp"] == report["output_tp"]
+    assert not list(tmp_path.glob("*_peak*")), "限幅留下了临时文件"
     assert report["output_tp"] <= reel.FINAL_PEAK_CEILING_DBTP + 0.02, report
     # 「只削峰」的诚实口径：不许抬响度；下移只许来自削峰本身的物理账——
     # 本信号爆峰占 1/6 时长、削约 13 dB，整体掉约 1.3 LUFS 是算出来的，
@@ -17875,12 +17879,12 @@ def test_混音真峰值过线才限没过线原样(tmp_path):
         f"限幅把整体响度从 {before['input_i']:.2f} 改成了 "
         f"{report['output_i']:.2f}——超出削峰能解释的量")
 
-    # 安静信号：−20 dB 的正弦，真峰值约 −20，限幅器不许碰它
+    # 安静信号：−20 dB 的正弦，真峰值约 −20，限幅器不许碰它一个字节
     quiet = tmp_path / "quiet.wav"
     _ff("-f", "lavfi", "-i", "sine=frequency=440:duration=3,volume=0.1",
         "-c:a", "pcm_f32le", str(quiet))
     assert reel._loudnorm_stats(quiet)["input_tp"] <= reel.FINAL_PEAK_CEILING_DBTP
-    out2 = tmp_path / "quiet_out.m4a"
-    report2 = reel.limit_true_peak(quiet, out2)
+    raw_before = quiet.read_bytes()
+    report2 = reel.limit_true_peak(quiet)
     assert not report2["applied"]
-    assert filecmp.cmp(quiet, out2, shallow=False), "没过线的混音被改了字节"
+    assert quiet.read_bytes() == raw_before, "没过线的混音被改了字节"

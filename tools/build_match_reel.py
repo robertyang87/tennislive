@@ -1037,24 +1037,33 @@ def _loudnorm_stats(path: Path) -> dict[str, float]:
     return {k: float(data[k]) for k in ("input_i", "input_tp", "input_lra")}
 
 
-def limit_true_peak(src: Path, dst: Path) -> dict:
-    """把混音的真峰值压到 `FINAL_PEAK_CEILING_DBTP` 以下，写到 `dst`。
+def limit_true_peak(path: Path) -> dict:
+    """把混音的真峰值压到 `FINAL_PEAK_CEILING_DBTP` 以下，**原地写回 `path`**。
 
-    **没过线就原样复制**——这道闸只治「峰值过 0」这一种病，不借机重做
-    响度：过线的片子整体响度本来就在 −21 LUFS 量级（各期成片 −19.9~−22.8），
-    限幅时把 loudnorm 的目标响度钉在**它自己的实测值**上，限幅器只削峰、
-    不抬不压整体。限完**再量一遍**，还过线就把目标按实测差额再压一轮
-    （AAC 编码会把峰值顶回几分贝——合成爆峰信号实测顶回 0.45 dB）；
-    三轮还不过线当场红——「以为限住了」和「量过、限住了」是两回事，
-    这条线上有过太多前者（见本文件各处 ⚠️）。
+    **没过线就一个字节都不动**——这道闸只治「峰值过 0」这一种病，不借机
+    重做响度：过线的片子整体响度本来就在 −21 LUFS 量级（各期成片
+    −19.9~−22.8），限幅时把 loudnorm 的目标响度钉在**它自己的实测值**上，
+    限幅器只削峰、不抬不压整体。限完**再量一遍**，还过线就把目标按实测
+    差额再压一轮（AAC 编码会把峰值顶回几分贝——合成爆峰信号实测顶回
+    0.45 dB）；三轮还不过线当场红——「以为限住了」和「量过、限住了」
+    是两回事，这条线上有过太多前者（见本文件各处 ⚠️）。
+
+    ⚠️ 为什么必须原地：第一版写到新文件 `_audio_peak.m4a` 再把 `mixed`
+    改指过去，渲完的中间物清理（本文件末尾按 `mixed` 变量删）删的是
+    新文件，原混音 `_audio.m4a` 成了没人认领的孤儿——443 秒的片子它有
+    10.6 MB，工作流「清理之后仍有大文件进仓库」的兜底当场拦下（戈芬 v5
+    render 三派 run 40163229742 实测）。限幅产物只许经临时文件再
+    `os.replace` 回原路径：下游封存、终编码、清理认的自始至终是一个文件。
 
     返回实测账（before/after 的 tp 与 i），调用方打进日志，验片照着对。
     """
-    before = _loudnorm_stats(src)
+    before = _loudnorm_stats(path)
     if before["input_tp"] <= FINAL_PEAK_CEILING_DBTP:
-        shutil.copyfile(src, dst)
         return {"applied": False, **before,
                 "output_tp": before["input_tp"], "output_i": before["input_i"]}
+    # 临时文件用 .m4a：限幅链出的是 AAC，跟着原文件后缀走（.wav 测试信号）
+    # 会把 AAC 塞进 WAV 容器、量出来是静音。成片混音本来就是 _audio.m4a。
+    tmp = path.with_name(f"{path.stem}_peak.m4a")
     target = FINAL_PEAK_CEILING_DBTP
     after = None
     for _attempt in range(3):
@@ -1071,15 +1080,17 @@ def limit_true_peak(src: Path, dst: Path) -> dict:
             chain = (f"volume={10 ** ((target - before['input_tp']) / 20):.6f}"
                      f",aresample={AUDIO_RATE}")
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(src), "-vn", "-af", chain,
-            "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE, str(dst))
-        after = _loudnorm_stats(dst)
+            "-i", str(path), "-vn", "-af", chain,
+            "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE, str(tmp))
+        after = _loudnorm_stats(tmp)
         if after["input_tp"] <= FINAL_PEAK_CEILING_DBTP + 0.02:
+            os.replace(tmp, path)
             return {"applied": True, **before,
                     "output_tp": after["input_tp"],
                     "output_i": after["input_i"]}
         # 差多少补多少、再多留 0.3 dB 给下一轮编码漂移
         target -= (after["input_tp"] - FINAL_PEAK_CEILING_DBTP) + 0.3
+    tmp.unlink(missing_ok=True)
     raise ReelError(
         f"限幅三轮后真峰值仍是 {after['input_tp']:+.2f} dBTP，"
         f"过 {FINAL_PEAK_CEILING_DBTP:+.1f} 天花板——不许带着过线的混音出片")
@@ -10946,8 +10957,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 真峰值天花板（2026-10-25 账号所有者拍板进管线，见 `limit_true_peak`）：
     # 混音一落地就量、过线才限，限完的结果才是后面 seal 和终编码用的那份。
     # 放在 seal 之前是故意的——封存/ attest 的对象必须是观众真正听到的音频。
-    peak_limited = outdir / "_audio_peak.m4a"
-    peak = limit_true_peak(mixed, peak_limited)
+    # 原地写回：`mixed` 变量和文件名都不许变（中间物清理按它删，见函数 docstring）。
+    peak = limit_true_peak(mixed)
     if peak["applied"]:
         print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP 过 "
               f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，已限幅到 "
@@ -10956,7 +10967,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     else:
         print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP，未过 "
               f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，混音原样")
-    mixed = peak_limited
 
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
