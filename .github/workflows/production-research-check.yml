@@ -13,6 +13,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -q 'yt-dlp[default]'
+      - name: Install muxer and actual media probe
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Inspect and archive official WTA footage
         env:
           GH_TOKEN: ${{ github.token }}
@@ -33,11 +37,7 @@ jobs:
             d=json.loads(r.stdout);entries=[{k:x.get(k) for k in ['id','title','url','duration','channel','channel_id']} for x in d.get('entries',[])];return {'key':key,'status':'ok','channel_id':d.get('channel_id'),'entries':entries}
            except Exception as e:return {'key':key,'status':'error','error':str(e)[:300]}
           invs=list(concurrent.futures.ThreadPoolExecutor(3).map(inventory,[('latest','https://www.youtube.com/@WTA/videos'),('rybakina-ningbo','https://www.youtube.com/@WTA/search?query=Rybakina%20Ningbo'),('trophy','https://www.youtube.com/@WTA/shorts')]))
-          ids={'Rn0lchWoTIM','EH601A8VVIQ','usAI7cOn5pE'}
-          for inv in invs:
-           for e in inv.get('entries',[]):
-            title=str(e.get('title') or '').lower()
-            if 'rybakina' in title and ('ningbo' in title or 'trophy' in title or 'champion' in title) and ('2026' in title or inv['key']=='latest'):ids.add(e['id'])
+          ids={'Rn0lchWoTIM','2dSkgyTQzUw','oLH65bF8l6g'}
           def metadata(vid):
            rec={'id':vid,'source_url':'https://www.youtube.com/watch?v='+vid}
            try:
@@ -48,16 +48,18 @@ jobs:
             # Download only current Ningbo source, never historical search hit.
             title=str(d.get('title') or '').lower()
             if vid=='Rn0lchWoTIM' or ('ningbo' in title and str(d.get('upload_date','')).startswith('202610')):
-             dl=run(['yt-dlp',*AUTH,'--no-playlist','--socket-timeout','25','--retries','2','--remote-components','ejs:github','-f','bv*[height<=1080]+ba/b[height<=1080]','--merge-output-format','mp4','-o',str(P/(vid+'.%(ext)s')),rec['source_url']],450)
+             dl=run(['yt-dlp',*AUTH,'--no-playlist','--socket-timeout','25','--retries','2','--remote-components','ejs:github','-f','bv*[ext=mp4][vcodec^=avc1][height<=1080]+ba[ext=m4a]/b[ext=mp4][height<=1080]','--merge-output-format','mp4','--remux-video','mp4','-o',str(P/(vid+'.%(ext)s')),rec['source_url']],450)
              rec['download_status']='ok' if dl.returncode==0 else 'error';rec['download_error']=None if not dl.returncode else dl.stderr[-700:]
              f=P/(vid+'.mp4')
+             rec['downloaded_files']=[str(x) for x in P.glob(vid+'*')]
+             rec['ffmpeg_available']=run(['ffmpeg','-version'],10).returncode==0
              if f.exists() and not dl.returncode:
               rec['download_bytes']=f.stat().st_size;rec['download_sha256']=hashlib.file_digest(f.open('rb'),'sha256').hexdigest();q=run(['ffprobe','-v','error','-show_entries','format=duration:stream=codec_type,width,height,r_frame_rate','-of','json',str(f)]);rec['probe']=json.loads(q.stdout);tag='source-'+vid
               run(['gh','release','create',tag,'--repo','robertyang87/tennislive','--title','Official WTA source '+vid,'--notes',rec['source_url']],60)
               up=run(['gh','release','upload',tag,str(f),'--clobber','--repo','robertyang87/tennislive'],180);rec['archive_status']='ok' if not up.returncode else 'error';rec['archive_url']='https://github.com/robertyang87/tennislive/releases/download/'+tag+'/'+f.name
             return rec
            except Exception as e:return dict(rec,status='error',error=str(e)[:600])
-          rows=list(concurrent.futures.ThreadPoolExecutor(3).map(metadata,sorted(ids)[:10]));report={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inventories':invs,'videos':rows};f=P/'report-v2.json';f.write_text(json.dumps(report,ensure_ascii=False,indent=2));tag='research-rybakina-ningbo-20261025'
+          rows=list(concurrent.futures.ThreadPoolExecutor(3).map(metadata,sorted(ids)[:10]));report={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inventories':invs,'videos':rows};f=P/'report-v3.json';f.write_text(json.dumps(report,ensure_ascii=False,indent=2));tag='research-rybakina-ningbo-20261025'
           run(['gh','release','create',tag,'--repo','robertyang87/tennislive','--title','Ningbo2026 official source research','--notes','Read-only metadata and source archive research; no publication.'],60)
           u=run(['gh','release','upload',tag,str(f),'--clobber','--repo','robertyang87/tennislive'],120)
           print('REPORT_BEGIN');print(json.dumps(report,ensure_ascii=False));print('REPORT_END');assert u.returncode==0
@@ -66,4 +68,4 @@ jobs:
         if: always()
         with:
           name: rybakina-ningbo-official-inventory
-          path: inventory/report-v2.json
+          path: inventory/report-v3.json
