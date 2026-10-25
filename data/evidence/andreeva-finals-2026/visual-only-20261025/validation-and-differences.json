@@ -1,0 +1,70 @@
+{
+  "schema": "tennislive.visual-only-preparation.v1",
+  "created_at": "2026-10-25T10:05:31.441959+00:00",
+  "baseline_ref": "68d010ff4c0588c52c5b09785587fc29c23e2c23",
+  "original_spec_sha256": "3d5417ac11e4a5a498dc50a19af847f8555867bade3ef538bb400e929e54002f",
+  "candidate_spec_sha256": "29c387075c71240369b88bc3fa5f2a1f5c7c589744d5dc65eb498c7dfd15311c",
+  "B_snapshot_ref": "30ea97a7c2b27e4dcdb2fba2fa75c0b59187d3f8",
+  "B_files_implementation": {
+    "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+    "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef",
+    "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+    "pronounce.py": "7091b501fec9d98e6c3621cbe744e4ff7aaa62ba0e584e6d4e7d55cc97275a64"
+  },
+  "checks": {
+    "12_original_narration_bodies_unchanged": true,
+    "12_original_card_seconds_unchanged": true,
+    "original_card_order_unchanged": true,
+    "spring_card_original_position_restored": true,
+    "original_source_cues_unchanged_except_removed_Beijing": true,
+    "cover_equals_current_main_correction": true,
+    "Beijing_low_angle_and_all_Beijing_raw_absent": true,
+    "Beijing_event_narration_retained_original_position": true,
+    "no_new_chapter_or_ranking_segment": true,
+    "all_12_shared_transition_geometries_valid": true,
+    "13_native_TTS_requests_exact": true,
+    "frozen_implementation_exact": true,
+    "all_frozen_audio_complete_decode": true,
+    "immutable_packet_native_rebind": true,
+    "actual_browser_all_12_settled_card_bounds_passed": true,
+    "remaining_7_raw_semantics_equal_except_6_visual_image_refs_and_comments": true,
+    "six_latest_main_pngs_font_audited_and_regenerated_81_66_89": true,
+    "six_label_comparison_actual_opened": true
+  },
+  "counts": {
+    "segments": 19,
+    "narration_cards": 12,
+    "raw_including_cold": 7,
+    "complete_match_terminal_windows": 6,
+    "source_cues": 23,
+    "frozen_requests": 13,
+    "raw_seconds": 181.87,
+    "card_seconds": 71.72,
+    "removed_Beijing_raw_seconds": 13.96,
+    "historical_length_minus_deleted_raw_estimate": 259.36
+  },
+  "allowed_differences_from_exact_original": [
+    "12 existing cards add native transition_card semantic relationships, adaptive geometry and shared animation; all original words/order/durations retained.",
+    "Current-main approved cover correction retained as a whole; historical editorial title/question/chapters stay baseline.",
+    "PR1345 Beijing live-action removal retained; remove corresponding source keys and audio-index entry only. Original Beijing event card and narration remain; no replacement real footage added.",
+    "Current shared renderer applies global 8-second information-label cap/F edge scrim and branded 网球有故事 ending without new narration.",
+    "Plan/index SHA rebound legally after deleting raw slot; packet bytes/reviewer/status/timing/cues unchanged.",
+    "Six story_text PNG references now point to independently regenerated81/66/89 labels. Original labels/positions/cx/source windows/audio/cues unchanged; image bytes and truthful visual provenance comments updated only."
+  ],
+  "unresolved_before_formal_render": [
+    "This is an independent candidate, not a new approved/published film. No dispatch/commit performed.",
+    "Actual selected source-file bytes must match immutable packet SHAs during native production.",
+    "Check 12 actual rendered transitions for safe-area/caption overflow, clear complete nodes, motion timing and source-photo framing; geometry validation is not continuous film visual QC.",
+    "Current B reused implementation is exact now; recalculate requests and implementation at actual production commit and fail closed on differences.",
+    "Native final film QC, voice/connections and new fingerprint/receipt are required; prior movie/WeChat/Drive receipts do not cover this candidate.",
+    "Current later cover includes title wording different from historical body opening; deliberately retained as the explicitly approved later cover, not used to rewrite narration.",
+    "Native actual-shot overlap and label-end seam QC remain required for six new label PNGs at unchanged per-film .48 width/top_pad.043; neutral comparison is not actual-source overlay QC."
+  ],
+  "browser_visual_review": {
+    "evidence": "browser-layout-evidence.json",
+    "contact_sheet": "12-card-contact.jpg",
+    "actual_contact_sheet_opened": true,
+    "scope": "All12 settled card snapshots: original titles, four-station spring chronology, set progression, real RG photo and concluding original timeline seen. No assertion of full video motion/subtitle/audio QC."
+  },
+  "story_text_font_audit": "story-label-font-audit.json"
+}

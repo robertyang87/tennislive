@@ -1,6 +1,6 @@
 {
   "slug": "andreeva-finals-2026",
-  "checked_at": "2026-10-25T04:16:59Z",
+  "checked_at": "2026-10-25T10:15:53Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,74 +10,78 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "62d82e2cc27270c5": {
+    "a40101adba4969e4": {
       "segment": 2,
-      "spoken": 10.344,
-      "picture": 10.64
+      "spoken": 7.584,
+      "picture": 7.72
     },
     "6dbda2de3f7dbd29": {
       "segment": 3,
-      "spoken": 5.688,
-      "picture": 5.92
-    },
-    "508faae0af0028b0": {
-      "segment": 5,
-      "spoken": 6.144,
-      "picture": 6.4
-    },
-    "93a0177a793fdb52": {
-      "segment": 6,
-      "spoken": 7.368,
-      "picture": 7.6
-    },
-    "67d3445b6b78825d": {
-      "segment": 8,
-      "spoken": 9.816,
-      "picture": 9.92
-    },
-    "50338912e861b2f2": {
-      "segment": 10,
-      "spoken": 10.488,
-      "picture": 10.72
-    },
-    "9ebcd97731e16cae": {
-      "segment": 12,
-      "spoken": 9.456,
-      "picture": 9.68
-    },
-    "ee1932e1f5302f64": {
-      "segment": 14,
-      "spoken": 7.32,
-      "picture": 7.52
-    },
-    "bb677c6aefdca311": {
-      "segment": 16,
-      "spoken": 9.024,
-      "picture": 8.96
-    },
-    "a95c2b841bd0748f": {
-      "segment": 17,
       "spoken": 5.712,
-      "picture": 6.4
+      "picture": 5.84
     },
-    "6a054d934a5d04c7": {
+    "f4ce7aa003f7bfd2": {
+      "segment": 5,
+      "spoken": 3.984,
+      "picture": 4.12
+    },
+    "fec60b7935a2516a": {
+      "segment": 6,
+      "spoken": 4.128,
+      "picture": 4.28
+    },
+    "64af1b9335907af4": {
+      "segment": 7,
+      "spoken": 5.52,
+      "picture": 5.64
+    },
+    "fb0dc9e843b46bfb": {
+      "segment": 9,
+      "spoken": 4.152,
+      "picture": 4.28
+    },
+    "8e455c70ca948b2e": {
+      "segment": 11,
+      "spoken": 8.232,
+      "picture": 8.36
+    },
+    "dfdbf98712ab4554": {
+      "segment": 13,
+      "spoken": 5.448,
+      "picture": 5.6
+    },
+    "2134f8c1a03aeb32": {
+      "segment": 15,
+      "spoken": 5.112,
+      "picture": 5.24
+    },
+    "a62ee1147643476f": {
+      "segment": 17,
+      "spoken": 7.8,
+      "picture": 7.92
+    },
+    "02b97d3a0b042361": {
       "segment": 18,
-      "spoken": 11.76,
-      "picture": 11.96
+      "spoken": 3.744,
+      "picture": 3.88
+    },
+    "b123b0a9c024d714": {
+      "segment": 19,
+      "spoken": 8.712,
+      "picture": 8.84
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "279e9db2f44a243fa61f9a1a6a0f93550cb9ac361e5868f2726dbd629e2e0b02",
-    "request_count": 12,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "bundle_sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+    "request_count": 13,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-andreeva-finals-2026-279e9db2f44a243f",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-279e9db2f44a243f/tts_bundle.zip",
-    "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40161197574"
+    "release_tag": "reel-tts-andreeva-finals-2026-d50ae5bd6906a26a",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-d50ae5bd6906a26a/tts_bundle.zip",
+    "file_name": "tts_bundle.zip"
   }
 }

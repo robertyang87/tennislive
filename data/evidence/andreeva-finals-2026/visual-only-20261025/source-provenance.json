@@ -1,0 +1,245 @@
+{
+  "baseline_spec": {
+    "ref": "68d010ff4c0588c52c5b09785587fc29c23e2c23",
+    "url": "https://github.com/robertyang87/tennislive/blob/68d010ff4c0588c52c5b09785587fc29c23e2c23/specs/reels/andreeva-finals-2026.json",
+    "local": "/tmp/siniakova-osaka-20261025/andreeva-scope-read/before-spec.json"
+  },
+  "later_fix": {
+    "ref": "3242d126e6311c003963913ff30591c952a8afea",
+    "pr": "https://github.com/robertyang87/tennislive/pull/1345",
+    "used": "cover correction and Beijing real footage removal only"
+  },
+  "canonical_evidence": {
+    "archive_member": "current/research/andreeva-finals-2026/canonical.json",
+    "sha256": "b83797254c060d88e13e3759710b4065e0d255ab35fb457f1a5d52a5c5c38d3d",
+    "as_of": "2026-10-22T12:24:55.706295+00:00",
+    "note": "Existing audited season snapshot; no new career/ranking claim or additional chapter introduced."
+  },
+  "frozen_bundle": {
+    "archive": "/workspace/scratch/andreeva-remake-20261024/重制工程与预检.zip",
+    "member": "original-tts.zip",
+    "sha256": "d50ae5bd6906a26a4a49533d15b7b7318c86c56f43a233d66e4c6d3f44b75fe2",
+    "bytes": 469801,
+    "unchanged_metadata": true
+  },
+  "transition_evidence": [
+    {
+      "id": "card-intro",
+      "content": {
+        "photo": {
+          "path": "assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+          "source": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026"
+        }
+      }
+    },
+    {
+      "id": "card-january",
+      "content": {
+        "events": [
+          {
+            "label": "首盘开局",
+            "value": "0比3",
+            "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+          },
+          {
+            "label": "最终夺冠",
+            "value": "6比3、6比1",
+            "source": "https://www.wtatennis.com/tournaments/2014/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-ao",
+      "content": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "2–6",
+            "source": "https://www.wtatennis.com/tournaments/901/-/2026"
+          },
+          {
+            "label": "第二盘",
+            "value": "4–6",
+            "source": "https://www.wtatennis.com/tournaments/901/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-spring",
+      "content": {
+        "events": [
+          {
+            "label": "多哈",
+            "value": "第三轮",
+            "source": "https://www.wtatennis.com/tournaments/1003/-/2026"
+          },
+          {
+            "label": "迪拜",
+            "value": "8强",
+            "source": "https://www.wtatennis.com/tournaments/718/-/2026"
+          },
+          {
+            "label": "印第安维尔斯",
+            "value": "第三轮",
+            "source": "https://www.wtatennis.com/tournaments/609/-/2026"
+          },
+          {
+            "label": "迈阿密",
+            "value": "第四轮",
+            "source": "https://www.wtatennis.com/tournaments/902/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-linz",
+      "content": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "1–6",
+            "source": "https://www.wtatennis.com/tournaments/528/-/2026"
+          },
+          {
+            "label": "第二盘",
+            "value": "6–4",
+            "source": "https://www.wtatennis.com/tournaments/528/-/2026"
+          },
+          {
+            "label": "决胜盘",
+            "value": "6–3",
+            "source": "https://www.wtatennis.com/tournaments/528/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-madrid",
+      "content": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "3–6",
+            "source": "https://www.wtatennis.com/tournaments/1038/-/2026"
+          },
+          {
+            "label": "第二盘",
+            "value": "5–7",
+            "source": "https://www.wtatennis.com/tournaments/1038/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-rg",
+      "content": {
+        "photo": {
+          "path": "assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+          "source": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026",
+          "result": {
+            "value": "6–3  6–2",
+            "label": "2026 法网女单决赛",
+            "source": "https://www.wtatennis.com/tournaments/903/-/2026"
+          }
+        }
+      }
+    },
+    {
+      "id": "card-grass",
+      "content": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "6–4",
+            "source": "https://www.wtatennis.com/tournaments/904/-/2026"
+          },
+          {
+            "label": "第二盘",
+            "value": "5–7",
+            "source": "https://www.wtatennis.com/tournaments/904/-/2026"
+          },
+          {
+            "label": "决胜盘",
+            "value": "4–6",
+            "source": "https://www.wtatennis.com/tournaments/904/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-us",
+      "content": {
+        "events": [
+          {
+            "label": "机会",
+            "value": "两个赛点未兑现",
+            "source": "https://www.wtatennis.com/news/4574376"
+          },
+          {
+            "label": "赛果",
+            "value": "止步8强",
+            "source": "https://www.wtatennis.com/tournaments/905/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-asia",
+      "content": {
+        "events": [
+          {
+            "label": "2026.10.09",
+            "value": "首获单打年终资格",
+            "source": "https://www.wtatennis.com/news/4586608"
+          },
+          {
+            "label": "2026.10.11",
+            "value": "第五场赛季决赛",
+            "source": "https://www.wtatennis.com/tournaments/1020/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-beijing",
+      "content": {
+        "scores": [
+          {
+            "label": "首盘",
+            "value": "5–7",
+            "source": "https://www.wtatennis.com/tournaments/1020/-/2026"
+          },
+          {
+            "label": "第二盘",
+            "value": "4–6",
+            "source": "https://www.wtatennis.com/tournaments/1020/-/2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "card-ending",
+      "content": {
+        "events": [
+          {
+            "label": "北京之后",
+            "value": "世界第三",
+            "source": "https://www.wtatennis.com/news/4590575"
+          },
+          {
+            "label": "武汉",
+            "value": "赛程调整退赛",
+            "source": "https://www.wtatennis.com/news/4590575"
+          },
+          {
+            "label": "下一站",
+            "value": "单打年终",
+            "source": "https://www.wtatennis.com/news/4586608"
+          }
+        ]
+      }
+    }
+  ]
+}
