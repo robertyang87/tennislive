@@ -105,3 +105,14 @@ def test_new_match_header_is_part_of_actual_render_input_projection():
     assert before != RI.project(spec)
     spec['topbar_by_source']['_r1'] = spec['topbar_by_source'].pop('r1')
     assert '_r1' in RI.project(spec)['topbar_by_source']
+
+
+def test_source_header_notes_cannot_become_rendered_text(tmp_path):
+    spec, segments = recipe()
+    original = B.write_segment_topbar_ass(spec, segments, 2, tmp_path/"before.ass",
+                                        default_lines=tuple(spec["topbar"].values())).read_bytes()
+    spec["topbar_by_source"]["r1"]["_why"] = "ignored private annotation with unrelated opponent"
+    spec["topbar_by_source"]["r1"]["_line1"] = "must never override the actual header"
+    after = B.write_segment_topbar_ass(spec, segments, 2, tmp_path/"after.ass",
+                                     default_lines=tuple(spec["topbar"].values())).read_bytes()
+    assert after == original

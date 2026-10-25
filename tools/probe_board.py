@@ -144,6 +144,12 @@ def measure(profile: str, band) -> tuple[int, int | None] | None:
         _left, top, _right, bottom = geometry["body"]
         hint = mod.board_edge(band[top:bottom], cap=1)
         anchored = None if hint is None or hint <= 1 else int(hint)
+        # Rendering preserves genuine standalone event banners (e.g. BREAK POINT
+        # or DOUBLE FAULT), but they do not calibrate a two-player score body.
+        # Count an event here only when a real games-cell anchor is also visible;
+        # ordinary opening boards without mint retain their existing semantics.
+        if geometry.get("native_event") and anchored is None:
+            return None
         return (int(geometry["edge"]), anchored)
     raw = mod.board_edge(band, cap=None)
     if raw is None:

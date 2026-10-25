@@ -1431,6 +1431,10 @@ def test_按下划线整批跳过的地方只许在闸和推送里():
     """
     allowed = {
         ("build_match_reel.py", "_reject_underscored_fields"),   # 闸：`_push` 这种假字段
+        # Per-source header shape validation ignores notes; rendered strings
+        # come only from its five explicit fields. The native writer test
+        # verifies annotation contents cannot change any ASS output bytes.
+        ("build_match_reel.py", "_source_topbar_lines"),
         ("render_inputs.py", "is_annotation"),                    # 投影本身
         ("push_reel.py", "push_meta"),                            # 推送元数据
         ("spec_wording.py", "voiced_texts"), ("spec_wording.py", "outward_deep"),
