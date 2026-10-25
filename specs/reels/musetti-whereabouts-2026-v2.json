@@ -33,11 +33,11 @@
   },
   "sources": {
     "lyon": "https://www.youtube.com/watch?v=LmU9ZiPxJ_g",
-    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv2/animMusWhv2.mp4"
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv3/animMusWhv3.mp4"
   },
   "source_fallbacks": {
     "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-LmU9ZiPxJ_g/LmU9ZiPxJ_g.mp4",
-    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv2/animMusWhv2.mp4"
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv3/animMusWhv3.mp4"
   },
   "primary": "lyon",
   "editorial": {
@@ -344,9 +344,9 @@
       "fps": "50/1"
     },
     "anim": {
-      "why": "本地 PIL 渲染的流程动画，ffprobe 实测；画面只在中央 1080×1440，cx=0.5 裁切 1:1 不放大。",
-      "width": 2560,
-      "height": 1440,
+      "why": "本地 PIL 渲染的流程动画，ffprobe 实测；2560×1440 母版缩到 1920×1080，画面在中央 810×1080，cx=0.5 裁切后放大 1.33 倍。",
+      "width": 1920,
+      "height": 1080,
       "fps": "50/1"
     }
   },

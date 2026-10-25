@@ -1,14 +1,14 @@
 {
-  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv2/animMusWhv2.mp4",
-  "source_sha256": "b864cbd0ab23a8f49f76255d06f0623041c2526a9c39118a7c180de3a406d33e",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv3/animMusWhv3.mp4",
+  "source_sha256": "c8fe3b14b92ff64d08568785e49b796494ff7dba98806c8cdd1cc32986eb9d19",
   "method": "asr_cross_checked",
   "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
-  "reviewed_at": "2026-10-25T15:14:07+00:00",
+  "reviewed_at": "2026-10-25T15:17:19+00:00",
   "reviewed_from": 35.73,
   "reviewed_to": 41.66,
   "status": "complete",
   "uncertain_spans": [],
   "foreground_english": [],
-  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 b864cbd0ab23a8f49f76255d06f0623041c2526a9c39118a7c180de3a406d33e，存于 data/source_asr/animMusWhv2/small.en.json 与 data/source_asr/animMusWhv2/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文",
-  "no_foreground_english_reason": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 b864cbd0ab23a8f49f76255d06f0623041c2526a9c39118a7c180de3a406d33e，存于 data/source_asr/animMusWhv2/small.en.json 与 data/source_asr/animMusWhv2/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文。35.73–41.66s 两档转写都没有英文句子（疑似幻听的单档低置信句不计）。"
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 c8fe3b14b92ff64d08568785e49b796494ff7dba98806c8cdd1cc32986eb9d19，存于 data/source_asr/animMusWhv3/small.en.json 与 data/source_asr/animMusWhv3/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文",
+  "no_foreground_english_reason": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 c8fe3b14b92ff64d08568785e49b796494ff7dba98806c8cdd1cc32986eb9d19，存于 data/source_asr/animMusWhv3/small.en.json 与 data/source_asr/animMusWhv3/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文。35.73–41.66s 两档转写都没有英文句子（疑似幻听的单档低置信句不计）。"
 }
