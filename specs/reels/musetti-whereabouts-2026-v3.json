@@ -1,0 +1,351 @@
+{
+  "slug": "musetti-whereabouts-2026-v3",
+  "date": "2026-10-26",
+  "_column": "网球有故事",
+  "title": "为什么比赛中要手机",
+  "_title_why": "推送标题「10.26网球有故事|为什么比赛中要手机」20字；按审核建议，“掏手机”无一手证据，改“要手机”。",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "网球有故事剪辑片用 edge 云健，+18% 语速、+10Hz 音高（账号所有者固定口径）。",
+  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18% --pitch +10Hz。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "hook": "凌晨1点\n比赛中要手机",
+    "narration": "凌晨一点，比赛还没打完，他为什么要手机？",
+    "_narration_why": "海报用阿拉伯数字，口播念成汉字。",
+    "subject": "穆塞蒂",
+    "topic": "为什么比赛中要手机",
+    "story_kind": "other",
+    "layout": "solo",
+    "portrait": {
+      "image": "assets/reel/musetti-whereabouts-2026/cover-musetti-lyon.png",
+      "focus": 0.5,
+      "focus_y": 0.3,
+      "_portrait_why": "ATP Media 官方图库 4598310「2026 Lyon Musetti」（Tennis TV 转播截图，3024×1704，2026-10-24 发布），里昂中央球场场上采访，正脸、整个头部完整；裁 1278×1704 再缩到 1080×1440，不放大。来源 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/24/8222f81d-723c-48a8-8fca-118184f7d07f/Screenshot-2026-10-24-at-17.59.51.png"
+    }
+  },
+  "push": {
+    "auto": false,
+    "summary": "为什么比赛中要手机",
+    "lead": "里昂站四分之一决赛打到快凌晨一点，据报道穆塞蒂向督导要用手机，他说设了凌晨一点的反兴奋剂闹钟。行踪申报是怎么回事？十二个月三次失误，就构成违规。",
+    "_no_auto_why": "v3 仅供审阅：首版已推送一次，是否重推由账号所有者决定；不合并、不推送。"
+  },
+  "sources": {
+    "lyon": "https://www.youtube.com/watch?v=LmU9ZiPxJ_g",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv4/animMusWhv4.mp4"
+  },
+  "source_fallbacks": {
+    "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-LmU9ZiPxJ_g/LmU9ZiPxJ_g.mp4",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMusWhv4/animMusWhv4.mp4"
+  },
+  "primary": "lyon",
+  "editorial": {
+    "mode": "match_review",
+    "question": "穆塞蒂为什么在比赛中途要用手机？行踪申报规则是什么？",
+    "thesis": "2026-10-23 里昂 ATP250 四分之一决赛，穆塞蒂 7-6(5) 6-7(7) 6-4 胜范阿舍，凌晨一点多结束。据报道（José Morgado X 帖等），决胜盘他向 ATP 督导提出要用手机，说“I have my antidoping alarm set for 1am”；他没有解释这个闹钟提醒什么，ATP/ITIA 无公开说法。ITIA 注册检查库（含单打前100）须每天申报过夜地址和 5–23 点之间的 60 分钟时段；错过检查或申报失误，12个月内累计3次即违反 TADP 2.4，首次禁赛两年、按过错最少一年（TADP 10.3.2）。有媒体说他报了凌晨一点的时段，与 ISTI 4.8.8.3 冲突。v3：删去“督导同意了”“改了行踪”，加“据报道”“据记者转述”，示意动画代替找不到的真实镜头。",
+    "beats": [
+      "比赛场景",
+      "两个抢七",
+      "据报道决胜盘要用手机",
+      "闹钟原话（示意动画）",
+      "行踪申报规则",
+      "三次即违规与处罚",
+      "他没解释，媒体说法对照规则",
+      "赢球结局",
+      "评论区问题"
+    ],
+    "human_context": {
+      "angle": "他只说了一句闹钟设在凌晨一点；规则是什么，可以讲清楚。",
+      "facts": [
+        "Eurosport/Sport.fr/tennis.com：7-6(5) 6-7(7) 6-4，凌晨一点多结束",
+        "José Morgado、2UP Tennis X 帖：I have my antidoping alarm set for 1am",
+        "ITIA TADP 2026 Art 2.4、10.3.2；ITIA Whereabouts 页、ITIA 经纪人指南：60分钟时段、三次可致最多两年",
+        "Sport.fr、Repubblica、Eurosport.it：据报道督导同意他用手机（无官方说法，旁白未用）",
+        "未找到赛后解释；Sky Sport 唯一配视频报道视频 403 无法核实"
+      ],
+      "sources": [
+        "https://itia.tennis/media/ypiiv4dg/tennis-anti-doping-programme-2026-clean.pdf",
+        "https://www.itia.tennis/anti-doping/whereabouts/",
+        "https://itia.tennis/media/stegbgwh/itia_tourmanageragentsguide_v02_2026.pdf",
+        "https://x.com/josemorgado/status/2113766013497954621",
+        "https://x.com/2UPTennis/status/2113767254428897460",
+        "https://www.eurosport.fr/tennis/atp-lyon-2026/2026/atp-lyon-i-2h45-de-combat-mais-corent-moutet-sarrete-en-quarts-apres-sa-defaite-contre-tommy-paul_sto23348542/story.shtml",
+        "https://www.sport.fr/tennis/atp-250-de-lyon-musetti-sort-son-telephone-en-plein-match-contre-van-assche-pour-lantidopage-1493288.shtm",
+        "https://www.repubblica.it/en/sport/tennis/2026/10/24/news/musetti_and_the_phone_ringing_on_court_at_1_am_it_was_his_alarm_what_happened-425672373/",
+        "https://www.tenniswatcher.com/en/news/lorenzo-musettis-late-night-win-in-lyon-came-with-an-anti-doping-twist",
+        "https://www.tennisworlditalia.com/en/tennis/news/Atp_Tennis/108197/lorenzo-musetti-fears-doping-trouble-and-makes-a-request-on-court-in-lyon/",
+        "https://www.tennis.com/tournaments/open-parc-auvergne-rhone-alpes-lyon/matches/l-van-assche-vs-l-musetti-2026-10-23"
+      ]
+    }
+  },
+  "segments": [
+    {
+      "source": "lyon",
+      "start": 1.0,
+      "end": 8.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "十月二十三日晚，里昂站，四分之一决赛。穆塞蒂，对阵东道主球员。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "inset": {
+        "image": "assets/reel/musetti-whereabouts-2026/label-lyon-v3.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 8.0,
+        "motion": "editorial",
+        "label": {
+          "topic": "比赛中要手机",
+          "date": "2026.10.23",
+          "place": "ATP250 里昂",
+          "score": "7-6(5) 6-7(7) 6-4",
+          "people": "穆塞蒂 vs 范阿舍"
+        }
+      },
+      "_inset_why": "右上角标：主题、日期＋赛事、整场比分、对阵；只放比赛画面，显示8秒。",
+      "_ending_payoff_required": false,
+      "_cold_open_why": "开场交代比赛场景，不承担结局。",
+      "_name_why": "「范阿舍」的「舍」多音字听审测不出，旁白不念名字；对手全名在右上角标里。"
+    },
+    {
+      "source": "lyon",
+      "start": 73.0,
+      "end": 78.3,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第一盘打进抢七，穆塞蒂七比五先拿下。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：t=70 记分牌第一盘抢七 6-5，第一盘抢七来回。"
+    },
+    {
+      "source": "lyon",
+      "start": 148.3,
+      "end": 155.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二盘又是抢七，东道主九比七扳回一盘。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：t=150 记分牌第二盘抢七 范阿舍 8-7，随后范阿舍赢下抢七。"
+    },
+    {
+      "source": "lyon",
+      "start": 159.5,
+      "end": 163.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "决胜盘一直打到快凌晨一点。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：t=170 记分牌第三盘0-0，正是决胜盘开局。"
+    },
+    {
+      "source": "lyon",
+      "start": 177.5,
+      "end": 183.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "据报道，穆塞蒂这时向ATP督导提出，要用一下手机。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "官方集锦没有他用手机的镜头（Tennis TV 两条集锦已逐帧查过）；用同场决胜盘穆塞蒂场上特写，旁白只叙述，不说画面就是那一刻。 v3：加「据报道」——来源是 José Morgado X 帖及 Sport.fr、Repubblica 等转述，无 ATP 官方说法。"
+    },
+    {
+      "source": "anim",
+      "start": 0.02,
+      "end": 5.25,
+      "cx": 0.5,
+      "track": false,
+      "narration": "据记者转述，他说：我设了反兴奋剂的闹钟，凌晨一点。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "示意动画（PIL 扁平卡通，画面角标「示意动画」）：穆塞蒂走到督导身边、手机图标；气泡为 Morgado X 帖原话译文「I have my antidoping alarm set for 1am」，2UP Tennis 同句、We Love Tennis/Puntodebreak/Sport.fr 转引；标「据记者转述」，因 Morgado 未注明听自何处。未找到可用真实镜头。"
+    },
+    {
+      "source": "anim",
+      "start": 5.31,
+      "end": 10.67,
+      "cx": 0.5,
+      "track": false,
+      "narration": "反兴奋剂，为什么会跟闹钟扯上关系？先看规则。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "闹钟钩子，过渡到规则。"
+    },
+    {
+      "source": "anim",
+      "start": 10.73,
+      "end": 17.09,
+      "cx": 0.5,
+      "track": false,
+      "narration": "世界排名前一百的单打球员，都在国际网球诚信机构的，注册检查库里。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "ITIA 行踪页、2026 注册检查库名单说明：单打前100。"
+    },
+    {
+      "source": "anim",
+      "start": 17.15,
+      "end": 24.66,
+      "cx": 0.5,
+      "track": false,
+      "narration": "他们要申报每一天的行踪：晚上住在哪儿，再留出一个六十分钟的时段，检查员上门得找得到人。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "ITIA TADP 2026 / WADA ISTI 4.8.8.3：每日过夜地址 + 60 分钟时段。"
+    },
+    {
+      "source": "anim",
+      "start": 24.72,
+      "end": 31.47,
+      "cx": 0.5,
+      "track": false,
+      "narration": "这个时段，只能定在早上五点到晚上十一点之间。比赛期间，还可以不报。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "ISTI 4.8.8.3：时段在 5:00–23:00；ITIA 经纪人指南：比赛期间可不报时段。"
+    },
+    {
+      "source": "anim",
+      "start": 31.53,
+      "end": 37.46,
+      "cx": 0.5,
+      "track": false,
+      "narration": "检查员找不到人，算错过检查；行踪没报或报错，算申报失误。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "TADP 2.4 / ISTI 定义：错过检查、申报失误。"
+    },
+    {
+      "source": "anim",
+      "start": 37.52,
+      "end": 42.06,
+      "cx": 0.5,
+      "track": false,
+      "narration": "十二个月内，两种加起来满三次，就构成违规。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "TADP 2.4：12 个月内合计 3 次。"
+    },
+    {
+      "source": "anim",
+      "start": 42.12,
+      "end": 47.26,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第一次违规，禁赛两年，视过错程度，最少减到一年。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "TADP 10.3.2（与 WADA 条例同文）：两年，按过错最少一年。"
+    },
+    {
+      "source": "anim",
+      "start": 47.32,
+      "end": 51.28,
+      "cx": 0.5,
+      "track": false,
+      "narration": "他这个闹钟到底提醒什么，他没有解释。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "审核结论：未找到任何赛后解释（fanpage.it 引赛后采访未涉手机）。"
+    },
+    {
+      "source": "anim",
+      "start": 51.34,
+      "end": 58.92,
+      "cx": 0.5,
+      "track": false,
+      "narration": "有媒体说，他报了凌晨一点的检查时段；可按规则，时段只能在早上五点到晚上十一点之间。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Gazzetta、Eurosport.it、Repubblica 等说他报了凌晨一点的时段；与 ISTI 4.8.8.3 的 5–23 点冲突，故只作「有媒体说」并对照规则。"
+    },
+    {
+      "source": "lyon",
+      "start": 221.4,
+      "end": 233.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "凌晨一点多，穆塞蒂六比四拿下决胜盘，整场打了三个半小时。凌晨一点还得惦记反兴奋剂，你怎么看？评论区说说。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：t=213–220 决胜盘5-4 穆塞蒂发球；t=221.5–233.5 最后一分来回。"
+    },
+    {
+      "source": "lyon",
+      "start": 233.2,
+      "end": 244.3,
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 6.4,
+          "text": "Lorenzo Musetti wins his 200th Tour-level match\n穆塞蒂拿下巡回赛生涯第两百胜"
+        },
+        {
+          "at": 6.4,
+          "end": 11.0,
+          "text": "in a brutal gladiatorial combat.\n一场残酷的角斗"
+        }
+      ],
+      "_quote_kind": "commentator",
+      "_why": "Tennis TV 解说原声（两档 ASR 233.2–244.2s，ASR 把 Musetti 误转成 Rosetti）；画面为穆塞蒂赢球、拥抱团队、两人握手。第两百胜另见 Repubblica。",
+      "_ending_payoff_required": false
+    }
+  ],
+  "_no_probe_why": {
+    "lyon": {
+      "why": "Release 存档 source-LmU9ZiPxJ_g ffprobe 实测；窗口按逐秒抽帧和记分牌定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "anim": {
+      "why": "本地 PIL 渲染的流程动画，ffprobe 实测；2560×1440 母版缩到 1920×1080，画面在中央 810×1080，cx=0.5 裁切后放大 1.33 倍。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    }
+  },
+  "mixed_fps": {},
+  "_slug_why": "v3 审阅版：按 docs/musetti-claim-audit.md 改写旁白，浅色扁平动画重做；新 slug 不覆盖已推送首版。",
+  "_cover_reuse_why": "沿用首版 ATP Media 官方图库人像（正脸、整头），标题换成「比赛中要手机」。"
+}
