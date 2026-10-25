@@ -1,47 +1,47 @@
 name: production-research-check
-run-name: Osaka official caption verification
+run-name: Osaka final UTC source freshness refresh
 on:
   workflow_dispatch: {}
 permissions:
   contents: read
 jobs:
-  official-source-captions:
+  read-only-official-inventory:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -q 'yt-dlp[default]'
-      - name: Read only public source caption tracks
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+      - name: Install public metadata reader
+        run: pip install -q 'yt-dlp[default]'
+      - name: Inventory WTA and tournament official channels
         run: |
           mkdir -p inventory
-          python - <<'PYCODE'
-          import pathlib,subprocess,json,os
-          out=pathlib.Path('inventory');args=[]
-          if os.environ.get('YT_COOKIES_TXT'):
-              cookie=pathlib.Path(os.environ['RUNNER_TEMP'])/'yt-cookies.txt';cookie.write_text(os.environ['YT_COOKIES_TXT']);cookie.chmod(0o600);args=['--cookies',str(cookie)]
-          result=[]
-          for key,start,end in [('ksA37BLbaWg',711,729),('_r9i8mV5Zv8',1071,1092)]:
-              cmd=['yt-dlp',*args,'--no-warnings','--skip-download','--ignore-no-formats-error','--write-auto-subs','--write-subs','--sub-langs','en-orig','--sub-format','json3','--socket-timeout','20','--retries','1','-o',str(out/(key+'.%(ext)s')),'https://www.youtube.com/watch?v='+key]
-              r=subprocess.run(cmd,capture_output=True,text=True,timeout=180)
-              row={'id':key,'returncode':r.returncode,'log':(r.stdout+r.stderr)[-1200:],'subfiles':[]}
-              for f in out.glob(key+'*.json3'):
-                  d=json.loads(f.read_text());events=[]
-                  for e in d.get('events',[]):
-                      a=e.get('tStartMs',0)/1000;b=a+e.get('dDurationMs',0)/1000
-                      if b>=start and a<=end:events.append({'start':a,'end':b,'text':''.join(x.get('utf8','') for x in e.get('segs',[]))})
-                  row['subfiles'].append({'name':f.name,'selected_events':events})
-              result.append(row)
-          (out/'caption-report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
-          print('OFFICIAL_CAPTION_REPORT_JSON_BEGIN')
-          print(json.dumps(result,ensure_ascii=False))
-          print('OFFICIAL_CAPTION_REPORT_JSON_END')
-          PYCODE
+          python - <<'PY'
+          import subprocess,json,pathlib,datetime
+          out=pathlib.Path('inventory')
+          channels=[('wta-videos','https://www.youtube.com/@WTA/videos',30),('wta-shorts','https://www.youtube.com/@WTA/shorts',30),('wta-siniakova-osaka-search','https://www.youtube.com/@WTA/search?query=Siniakova%20Osaka',30),('wta-siniakova-search','https://www.youtube.com/@WTA/search?query=Siniakova',30),('wta-osaka-search','https://www.youtube.com/@WTA/search?query=Osaka',30)]
+          report=[]
+          for key,url,limit in channels:
+              cmd=['yt-dlp','--flat-playlist','--playlist-end',str(limit),'--dump-single-json','--socket-timeout','20','--retries','1',url]
+              try:r=subprocess.run(cmd,capture_output=True,text=True,timeout=150)
+              except subprocess.TimeoutExpired:
+                  report.append({'channel':key,'status':'timeout'});continue
+              (out/(key+'-stderr.txt')).write_text(r.stderr)
+              if r.returncode:
+                  report.append({'channel':key,'status':'error','error':r.stderr[-600:]});continue
+              d=json.loads(r.stdout);(out/(key+'.json')).write_text(json.dumps(d))
+              hits=[{k:e.get(k) for k in ['id','title','url','duration','channel','channel_id','uploader','timestamp','release_timestamp']} for e in d.get('entries',[]) if any(s in str(e.get('title','')).lower() for s in ['siniak','osaka','japan','大阪','シニアコバ','シニアコワ'])]
+              report.append({'channel':key,'channel_id':d.get('channel_id'),'status':'ok','total':len(d.get('entries',[])),'first_entries':[{k:e.get(k) for k in ['id','title','url','duration','channel_id','timestamp','channel','uploader']} for e in d.get('entries',[])[:30]],'hits':hits})
+          rec={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'report':report}
+          (out/'report.json').write_text(json.dumps(rec,ensure_ascii=False,indent=2))
+          print('OFFICIAL_INVENTORY_JSON_BEGIN')
+          print(json.dumps(rec,ensure_ascii=False))
+          print('OFFICIAL_INVENTORY_JSON_END')
+          assert all(x.get('status')=='ok' for x in report),'Final refresh must actually fetch every requested official channel/search page'
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: osaka-official-caption-verification
+          name: osaka-official-inventory
           path: inventory/
