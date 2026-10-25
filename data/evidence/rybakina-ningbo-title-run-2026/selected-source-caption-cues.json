@@ -1,0 +1,610 @@
+{
+  "schema": "tennislive.source-caption-candidates.v1",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "human_listening_performed": false,
+  "status": "primary_translation_reviewed_actual_source_asr_closed",
+  "segments": [
+    {
+      "segment_id": "cold-final-reaction",
+      "source_key": "final",
+      "youtube_id": "Rn0lchWoTIM",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "raw_window": [
+        257.2,
+        263.1
+      ],
+      "cues": [
+        {
+          "at": 0.6,
+          "end": 4.28,
+          "en": "Elena Rybakina goes back to back in Ningbo.",
+          "zh": "莱巴金娜连续两年在宁波夺冠。",
+          "source_start": 257.8,
+          "source_end": 261.48
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "final-yt-Rn0lchWoTIM-match-end-medium.en.json",
+          "sha256": "a69ab0fe86a392744f0c5f8c7dbdcf4aaf0be56416ba96bfb4a680f96ca74e87"
+        },
+        {
+          "file": "final-yt-Rn0lchWoTIM-match-end-small.en.json",
+          "sha256": "f0d21a225301f5c53b85145e1e846f760562a408b1ac4a7fdd091b16232455cd"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/cold-final-reaction.json",
+      "packet_sha256": "1c47e5e5dbf0aa29be9b3155e06e21bf2e6687f72350532d7cc7651b9dc0e1f9"
+    },
+    {
+      "segment_id": "qf-second-set-crisis",
+      "source_key": "qf",
+      "youtube_id": "oLH65bF8l6g",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-oLH65bF8l6g/oLH65bF8l6g.mp4",
+      "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+      "raw_window": [
+        212.48,
+        236.08
+      ],
+      "cues": [
+        {
+          "at": 20.7,
+          "end": 21.68,
+          "en": "Quite extraordinary.",
+          "zh": "太惊人了。",
+          "source_start": 233.18,
+          "source_end": 234.16
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "qf-crisis-yt-oLH65bF8l6g-refine-medium.en.json",
+          "sha256": "c8b77b5c02d8ccbe843307c47ee6e6d1ee263159d0592417ec949182aefea60d"
+        },
+        {
+          "file": "qf-crisis-yt-oLH65bF8l6g-refine-small.en.json",
+          "sha256": "65042a120516dbae3fab12b3281094a64d73dc5296898e19d889235d22b17307"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/qf-second-set-crisis.json",
+      "packet_sha256": "85e927d22f11e917b768f4a87582df988b8ee1435656593aff9fe2d9e8258ef3"
+    },
+    {
+      "segment_id": "qf-match-point",
+      "source_key": "qf",
+      "youtube_id": "oLH65bF8l6g",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-oLH65bF8l6g/oLH65bF8l6g.mp4",
+      "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+      "raw_window": [
+        265.32,
+        298.36
+      ],
+      "cues": [
+        {
+          "at": 0.32,
+          "end": 1.42,
+          "en": "Here's match point.",
+          "zh": "赛点来了。",
+          "source_start": 265.64,
+          "source_end": 266.74
+        },
+        {
+          "at": 8.04,
+          "end": 12.96,
+          "en": "Elena Rybakina makes a return to the last four in Ningbo.",
+          "zh": "莱巴金娜再次闯进宁波4强。",
+          "source_start": 273.36,
+          "source_end": 278.28
+        },
+        {
+          "at": 16.04,
+          "end": 20.38,
+          "en": "There are certainly a fair few questions around her form.",
+          "zh": "围绕她的状态，确实有不少疑问。",
+          "source_start": 281.36,
+          "source_end": 285.7
+        },
+        {
+          "at": 20.84,
+          "end": 24.96,
+          "en": "That second set, by her standards, was a disappointing one.",
+          "zh": "按她的标准，第二盘令人失望。",
+          "source_start": 286.16,
+          "source_end": 290.28
+        },
+        {
+          "at": 25.3,
+          "end": 26.68,
+          "en": "She finds it in the end",
+          "zh": "但她最终找回了状态，",
+          "source_start": 290.62,
+          "source_end": 292.0
+        },
+        {
+          "at": 27.68,
+          "end": 30.58,
+          "en": "to move through to a meeting with Diana Shnaider.",
+          "zh": "接下来将对阵施耐德。",
+          "source_start": 293.0,
+          "source_end": 295.9
+        },
+        {
+          "at": 31.42,
+          "end": 32.56,
+          "en": "6-1 in the third.",
+          "zh": "决胜盘6比1。",
+          "source_start": 296.74,
+          "source_end": 297.88
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "qf-yt-oLH65bF8l6g-match-end-medium.en.json",
+          "sha256": "91b2800a745a5d7514562fd8f42d139cd5ebf198357066999e14492635cb68e7"
+        },
+        {
+          "file": "qf-yt-oLH65bF8l6g-match-end-small.en.json",
+          "sha256": "964897355f3af3bc771f9cf3c297b7944785672b5de5687a848f2f8f27d7db08"
+        },
+        {
+          "file": "qf-yt-oLH65bF8l6g-tail-medium.en.json",
+          "sha256": "2596b567131656617111a434070a9f3bb142ecda1bacd75cc44fe1f62ae7abdd"
+        },
+        {
+          "file": "qf-yt-oLH65bF8l6g-tail-small.en.json",
+          "sha256": "ab33c4dd5c1271d81ea2354b156f9b798e463ba1b77d0afb095588feef645c28"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/qf-match-point.json",
+      "packet_sha256": "06769da06476c4321a2327baa1c7e21c89a3ec6f7a9819405274ce25cdb9902e"
+    },
+    {
+      "segment_id": "sf-first-set-point",
+      "source_key": "sf",
+      "youtube_id": "2dSkgyTQzUw",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-2dSkgyTQzUw/2dSkgyTQzUw.mp4",
+      "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+      "raw_window": [
+        210.1,
+        236.6
+      ],
+      "cues": [
+        {
+          "at": 0.2,
+          "end": 4.28,
+          "en": "It's just extraordinary, really, because",
+          "zh": "这真的太不可思议了，因为——",
+          "source_start": 210.3,
+          "source_end": 214.38
+        },
+        {
+          "at": 15.48,
+          "end": 16.76,
+          "en": "she got there in the end.",
+          "zh": "她终于拿下了这一盘。",
+          "source_start": 225.58,
+          "source_end": 226.86
+        },
+        {
+          "at": 17.12,
+          "end": 20.56,
+          "en": "Eleven set points required in that final game",
+          "zh": "最后这一局用了11个盘点，",
+          "source_start": 227.22,
+          "source_end": 230.66
+        },
+        {
+          "at": 21.56,
+          "end": 22.76,
+          "en": "to eventually get over the line.",
+          "zh": "才终于赢下来。",
+          "source_start": 231.66,
+          "source_end": 232.86
+        },
+        {
+          "at": 22.84,
+          "end": 26.32,
+          "en": "It made that first set a lot tougher than it might have been.",
+          "zh": "这让首盘比原本可能的局面艰难得多。",
+          "source_start": 232.94,
+          "source_end": 236.42
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "sf-setpoint-yt-2dSkgyTQzUw-refine-medium.en.json",
+          "sha256": "b8b3cab33a1ab7874e206eb2485531bdef783ba5aed2375692c46784ef718805"
+        },
+        {
+          "file": "sf-setpoint-yt-2dSkgyTQzUw-refine-small.en.json",
+          "sha256": "f389b317d44b4d35d6c399d79ab5cd198fa10689dc23912b72bda4719f2dc295"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/sf-first-set-point.json",
+      "packet_sha256": "5336945eef3164cc15c7496d5641e7079ea660ff93ff93a38f3f8c76fb3b046d"
+    },
+    {
+      "segment_id": "sf-match-point",
+      "source_key": "sf",
+      "youtube_id": "2dSkgyTQzUw",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-2dSkgyTQzUw/2dSkgyTQzUw.mp4",
+      "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+      "raw_window": [
+        251.68,
+        299.08
+      ],
+      "cues": [
+        {
+          "at": 12.41,
+          "end": 16.35,
+          "en": "The world number one is back in the final in Ningbo.",
+          "zh": "世界第1再次闯进宁波决赛。",
+          "source_start": 264.09,
+          "source_end": 268.03
+        },
+        {
+          "at": 17.81,
+          "end": 19.83,
+          "en": "The defense of her title continues.",
+          "zh": "她的卫冕之路还在继续。",
+          "source_start": 269.49,
+          "source_end": 271.51
+        },
+        {
+          "at": 21.42,
+          "end": 23.29,
+          "en": "An impressive week from Diana Shnaider,",
+          "zh": "施耐德这一周表现出色，",
+          "source_start": 273.1,
+          "source_end": 274.97
+        },
+        {
+          "at": 23.29,
+          "end": 25.69,
+          "en": "who has a great record here as well,",
+          "zh": "她在这里也有很好的战绩，",
+          "source_start": 274.97,
+          "source_end": 277.37
+        },
+        {
+          "at": 25.69,
+          "end": 28.51,
+          "en": "but she just couldn't get it over the line today",
+          "zh": "但今天她没能赢下比赛，",
+          "source_start": 277.37,
+          "source_end": 280.19
+        },
+        {
+          "at": 28.51,
+          "end": 30.66,
+          "en": "against the best player in the world.",
+          "zh": "她面对的是世界第1。",
+          "source_start": 280.19,
+          "source_end": 282.34
+        },
+        {
+          "at": 32.34,
+          "end": 36.84,
+          "en": "Had a few struggles at the back end of both sets, Elena Rybakina.",
+          "zh": "莱巴金娜在两盘收尾时都有些波折。",
+          "source_start": 284.02,
+          "source_end": 288.52
+        },
+        {
+          "at": 38.18,
+          "end": 40.44,
+          "en": "Scoreline maybe making it look a little",
+          "zh": "比分看上去，",
+          "source_start": 289.86,
+          "source_end": 292.12
+        },
+        {
+          "at": 40.44,
+          "end": 42.28,
+          "en": "more comfortable than it actually was.",
+          "zh": "或许比实际过程更轻松。",
+          "source_start": 292.12,
+          "source_end": 293.96
+        },
+        {
+          "at": 43.56,
+          "end": 46.68,
+          "en": "Through to the final, 6-3, 7-5.",
+          "zh": "闯进决赛，6比3、7比5。",
+          "source_start": 295.24,
+          "source_end": 298.36
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "sf-yt-2dSkgyTQzUw-match-end-medium.en.json",
+          "sha256": "f62368761ccf069e7f242585a69da709a9210b899d9732fd981eb59d422278db"
+        },
+        {
+          "file": "sf-yt-2dSkgyTQzUw-match-end-small.en.json",
+          "sha256": "5d25fb5e0a4b02caa6ce21b02babe71dc6127d2c142b30e3679c8b2de61a32ea"
+        },
+        {
+          "file": "sf-close-yt-2dSkgyTQzUw-refine-medium.en.json",
+          "sha256": "4fdae690d847cb2ac120305aa477629622cd5e4cf770fa8cbab25aa1d1cd3ee2"
+        },
+        {
+          "file": "sf-close-yt-2dSkgyTQzUw-refine-small.en.json",
+          "sha256": "97157e2e95fa48e9ba43460616f789c14e53fedf1ecea055a26fdce9e20c2232"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/sf-match-point.json",
+      "packet_sha256": "6cb8a73ccad20df15d55e201f3d342d0a1c8225f647a79f60e3603331a8118f8",
+      "root_display_note": "Adjacent score-only phrase merged with its preceding real utterance. Actual speech/timing preserved; numeric display remains numeric."
+    },
+    {
+      "segment_id": "final-first-set-point",
+      "source_key": "final",
+      "youtube_id": "Rn0lchWoTIM",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "raw_window": [
+        105.08,
+        125.1
+      ],
+      "cues": [
+        {
+          "at": 0.0,
+          "end": 3.47,
+          "en": "Right at the start of the match, she wasn't able to take them.",
+          "zh": "开场时，她没抓住那些机会。",
+          "source_start": 105.08,
+          "source_end": 108.55
+        },
+        {
+          "at": 3.47,
+          "end": 5.11,
+          "en": "Since then it's been comfortable.",
+          "zh": "此后，局面就轻松多了。",
+          "source_start": 108.55,
+          "source_end": 110.19
+        },
+        {
+          "at": 13.83,
+          "end": 17.23,
+          "en": "Too good from the world number one,",
+          "zh": "世界第1的表现太出色了，",
+          "source_start": 118.91,
+          "source_end": 122.31
+        },
+        {
+          "at": 17.23,
+          "end": 19.57,
+          "en": "wrapping up the set in style.",
+          "zh": "漂亮地拿下首盘。",
+          "source_start": 122.31,
+          "source_end": 124.65
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "final-setpoint-yt-Rn0lchWoTIM-refine-medium.en.json",
+          "sha256": "e9ae0cc275f9925147690f81afe7aace4d1df18b6017720c335b3d572b883c50"
+        },
+        {
+          "file": "final-setpoint-yt-Rn0lchWoTIM-refine-small.en.json",
+          "sha256": "9383955bbb7b91a9fa5fda60d4e26cee963ab38b4774ee3c63c1d730a4939441"
+        },
+        {
+          "file": "final-setpoint-context-yt-Rn0lchWoTIM-refine-medium.en.json",
+          "sha256": "531743d311c79b61307efc60a976d2c99791fcfdc21448545378d7c9c450b6b0"
+        },
+        {
+          "file": "final-setpoint-context-yt-Rn0lchWoTIM-refine-small.en.json",
+          "sha256": "981e5f598f89b5e1c386c8702f0dc219ae7cc4763050c29f75635f0c86e0d211"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/final-first-set-point.json",
+      "packet_sha256": "8ec5637dbdf21bb80e844ae0f9f269d2a9efb72683e46762d077fa2261aef13d"
+    },
+    {
+      "segment_id": "final-match-point-payoff",
+      "source_key": "final",
+      "youtube_id": "Rn0lchWoTIM",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "raw_window": [
+        248.12,
+        295.56
+      ],
+      "cues": [
+        {
+          "at": 9.68,
+          "end": 13.36,
+          "en": "Elena Rybakina goes back to back in Ningbo.",
+          "zh": "莱巴金娜连续两年在宁波夺冠。",
+          "source_start": 257.8,
+          "source_end": 261.48
+        },
+        {
+          "at": 15.26,
+          "end": 17.78,
+          "en": "Another statement from the world number one,",
+          "zh": "世界第1再次证明了自己，",
+          "source_start": 263.38,
+          "source_end": 265.9
+        },
+        {
+          "at": 19.06,
+          "end": 21.08,
+          "en": "and she claims yet another title",
+          "zh": "她又拿下一座冠军，",
+          "source_start": 267.18,
+          "source_end": 269.2
+        },
+        {
+          "at": 21.08,
+          "end": 23.66,
+          "en": "in what has been an extraordinary season.",
+          "zh": "为这个非凡的赛季再添一笔。",
+          "source_start": 269.2,
+          "source_end": 271.78
+        },
+        {
+          "at": 27.08,
+          "end": 29.8,
+          "en": "Very little drama, very little jeopardy",
+          "zh": "几乎没有悬念，也没有险情，",
+          "source_start": 275.2,
+          "source_end": 277.92
+        },
+        {
+          "at": 31.51,
+          "end": 34.09,
+          "en": "in a clash against a player who's had an outstanding week,",
+          "zh": "尽管对手这一周的表现非常出色，",
+          "source_start": 279.63,
+          "source_end": 282.21
+        },
+        {
+          "at": 35.43,
+          "end": 39.85,
+          "en": "but the best player in the world was just too good on the night.",
+          "zh": "但世界第1今晚的发挥实在太强。",
+          "source_start": 283.55,
+          "source_end": 287.97
+        },
+        {
+          "at": 40.51,
+          "end": 43.37,
+          "en": "Elena Rybakina, the champion in Ningbo once again,",
+          "zh": "莱巴金娜再次成为宁波冠军，",
+          "source_start": 288.63,
+          "source_end": 291.49
+        },
+        {
+          "at": 43.59,
+          "end": 47.37,
+          "en": "winning this final against Leylah Fernandez, 6-2, 6-2.",
+          "zh": "决赛以6比2、6比2击败费尔南德斯。",
+          "source_start": 291.71,
+          "source_end": 295.49
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "final-yt-Rn0lchWoTIM-match-end-medium.en.json",
+          "sha256": "a69ab0fe86a392744f0c5f8c7dbdcf4aaf0be56416ba96bfb4a680f96ca74e87"
+        },
+        {
+          "file": "final-yt-Rn0lchWoTIM-match-end-small.en.json",
+          "sha256": "f0d21a225301f5c53b85145e1e846f760562a408b1ac4a7fdd091b16232455cd"
+        },
+        {
+          "file": "final-close-yt-Rn0lchWoTIM-refine-medium.en.json",
+          "sha256": "9039b90d2e8e36ab7c49f7ae3bb9fd7f3d1645ae2966d8149af1eabc52c45829"
+        },
+        {
+          "file": "final-close-yt-Rn0lchWoTIM-refine-small.en.json",
+          "sha256": "93ae0b228d6dc70bd6bb584fbd35926e0d07e3319c1928bbe9ce28aa7eaa6305"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/final-match-point-payoff.json",
+      "packet_sha256": "ec2131fa983fc8b5354af387c06c579015d6ffbf7a7f2df56e42c58c32539cbf",
+      "root_display_note": "Adjacent score-only phrase merged with its preceding real utterance. Actual speech/timing preserved; numeric display remains numeric."
+    },
+    {
+      "segment_id": "champion-trophy-speech",
+      "source_key": "final",
+      "youtube_id": "Rn0lchWoTIM",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+      "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+      "raw_window": [
+        530.15,
+        550.28
+      ],
+      "cues": [
+        {
+          "at": 0.13,
+          "end": 3.53,
+          "en": "Thank you so much for an amazing atmosphere every day.",
+          "zh": "谢谢大家每天营造这么棒的氛围。",
+          "source_start": 530.28,
+          "source_end": 533.68
+        },
+        {
+          "at": 5.07,
+          "end": 7.25,
+          "en": "It's amazing to play in front of you,",
+          "zh": "能在你们面前打球，感觉特别好，",
+          "source_start": 535.22,
+          "source_end": 537.4
+        },
+        {
+          "at": 7.35,
+          "end": 8.93,
+          "en": "always gives a lot of motivation,",
+          "zh": "总能给我很多动力，",
+          "source_start": 537.5,
+          "source_end": 539.08
+        },
+        {
+          "at": 9.25,
+          "end": 11.59,
+          "en": "a lot of energy to keep on playing.",
+          "zh": "给我继续比赛的能量。",
+          "source_start": 539.4,
+          "source_end": 541.74
+        },
+        {
+          "at": 11.59,
+          "end": 14.51,
+          "en": "And it's already a second year here, second win,",
+          "zh": "我第2年来这里，第2次夺冠，",
+          "source_start": 541.74,
+          "source_end": 544.66
+        },
+        {
+          "at": 14.51,
+          "end": 16.49,
+          "en": "and it's such a special place for me.",
+          "zh": "这里对我来说很特别。",
+          "source_start": 544.66,
+          "source_end": 546.64
+        },
+        {
+          "at": 16.97,
+          "end": 18.61,
+          "en": "Thank you so much, Ningbo. Xie xie!",
+          "zh": "非常感谢，宁波！谢谢！",
+          "source_start": 547.12,
+          "source_end": 548.76
+        }
+      ],
+      "evidence_files": [
+        {
+          "file": "final-yt-Rn0lchWoTIM-tail-medium.en.json",
+          "sha256": "731975a7f81f5522711fa53405fa2385970a2fe28297b4e18e00223d8228da9b"
+        },
+        {
+          "file": "final-yt-Rn0lchWoTIM-tail-small.en.json",
+          "sha256": "87b56e70eb1283ea2e26a74026a162a2908d0c30eaebc52a3752eefe6e56ed36"
+        }
+      ],
+      "foreground_packet_path": "/tmp/rybakina-ningbo-20261025/asr/source-audio/champion-trophy-speech.json",
+      "packet_sha256": "0c973d84ec82bafcc9539d407d13d50a26c129cbb016f0b59bf4138d069bbc8c"
+    }
+  ],
+  "notes": [
+    "All source identities are actual downloaded YouTube1080 bytes; BC720 timings and X clips are not reused.",
+    "Proper names and Ningbo normalized against official identities, raw model differences preserved in listed evidence files.",
+    "ASR word-time edges are approximate automated estimates, not claims of sample-precise auditory inspection.",
+    "Cold end revised263.10 excludes next Another statement sentence beginning263.38.",
+    "SF set window expanded210.10–236.60 and F set expanded105.08–125.10 to preserve complete English; point agent actual visuals verified no live ball cutoff/extra complete point.",
+    "All Chinese translations remain primary assistant editorial review; source wording preserved."
+  ],
+  "primary_review": {
+    "method": "textual_translation_and_source_evidence_review",
+    "reviewed_at": "2026-10-25T12:28:25.577907+00:00",
+    "human_audio_listening_claimed": false,
+    "cue_count": 46
+  }
+}

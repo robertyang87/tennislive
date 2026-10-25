@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-2dSkgyTQzUw/2dSkgyTQzUw.mp4",
+  "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 210.1,
+  "reviewed_to": 236.6,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 210.3,
+      "end": 214.38,
+      "en": "It's just extraordinary, really, because",
+      "zh": "这真的太不可思议了，因为——"
+    },
+    {
+      "start": 225.58,
+      "end": 226.86,
+      "en": "she got there in the end.",
+      "zh": "她终于拿下了这一盘。"
+    },
+    {
+      "start": 227.22,
+      "end": 230.66,
+      "en": "Eleven set points required in that final game",
+      "zh": "最后这一局用了11个盘点，"
+    },
+    {
+      "start": 231.66,
+      "end": 232.86,
+      "en": "to eventually get over the line.",
+      "zh": "才终于赢下来。"
+    },
+    {
+      "start": 232.94,
+      "end": 236.42,
+      "en": "It made that first set a lot tougher than it might have been.",
+      "zh": "这让首盘比原本可能的局面艰难得多。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "sf-setpoint-yt-2dSkgyTQzUw-refine-medium.en.json",
+      "sha256": "b8b3cab33a1ab7874e206eb2485531bdef783ba5aed2375692c46784ef718805"
+    },
+    {
+      "file": "sf-setpoint-yt-2dSkgyTQzUw-refine-small.en.json",
+      "sha256": "f389b317d44b4d35d6c399d79ab5cd198fa10689dc23912b72bda4719f2dc295"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

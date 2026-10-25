@@ -1,0 +1,77 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-oLH65bF8l6g/oLH65bF8l6g.mp4",
+  "source_sha256": "6f347f8e46043d024247ed74258b4536e25da0e709f617340f9d951533997434",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 265.32,
+  "reviewed_to": 298.36,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 265.64,
+      "end": 266.74,
+      "en": "Here's match point.",
+      "zh": "赛点来了。"
+    },
+    {
+      "start": 273.36,
+      "end": 278.28,
+      "en": "Elena Rybakina makes a return to the last four in Ningbo.",
+      "zh": "莱巴金娜再次闯进宁波4强。"
+    },
+    {
+      "start": 281.36,
+      "end": 285.7,
+      "en": "There are certainly a fair few questions around her form.",
+      "zh": "围绕她的状态，确实有不少疑问。"
+    },
+    {
+      "start": 286.16,
+      "end": 290.28,
+      "en": "That second set, by her standards, was a disappointing one.",
+      "zh": "按她的标准，第二盘令人失望。"
+    },
+    {
+      "start": 290.62,
+      "end": 292.0,
+      "en": "She finds it in the end",
+      "zh": "但她最终找回了状态，"
+    },
+    {
+      "start": 293.0,
+      "end": 295.9,
+      "en": "to move through to a meeting with Diana Shnaider.",
+      "zh": "接下来将对阵施耐德。"
+    },
+    {
+      "start": 296.74,
+      "end": 297.88,
+      "en": "6-1 in the third.",
+      "zh": "决胜盘6比1。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "qf-yt-oLH65bF8l6g-match-end-medium.en.json",
+      "sha256": "91b2800a745a5d7514562fd8f42d139cd5ebf198357066999e14492635cb68e7"
+    },
+    {
+      "file": "qf-yt-oLH65bF8l6g-match-end-small.en.json",
+      "sha256": "964897355f3af3bc771f9cf3c297b7944785672b5de5687a848f2f8f27d7db08"
+    },
+    {
+      "file": "qf-yt-oLH65bF8l6g-tail-medium.en.json",
+      "sha256": "2596b567131656617111a434070a9f3bb142ecda1bacd75cc44fe1f62ae7abdd"
+    },
+    {
+      "file": "qf-yt-oLH65bF8l6g-tail-small.en.json",
+      "sha256": "ab33c4dd5c1271d81ea2354b156f9b798e463ba1b77d0afb095588feef645c28"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

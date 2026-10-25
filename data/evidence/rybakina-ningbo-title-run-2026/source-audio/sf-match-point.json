@@ -1,0 +1,95 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-2dSkgyTQzUw/2dSkgyTQzUw.mp4",
+  "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 251.68,
+  "reviewed_to": 299.08,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.09,
+      "end": 268.03,
+      "en": "The world number one is back in the final in Ningbo.",
+      "zh": "世界第1再次闯进宁波决赛。"
+    },
+    {
+      "start": 269.49,
+      "end": 271.51,
+      "en": "The defense of her title continues.",
+      "zh": "她的卫冕之路还在继续。"
+    },
+    {
+      "start": 273.1,
+      "end": 274.97,
+      "en": "An impressive week from Diana Shnaider,",
+      "zh": "施耐德这一周表现出色，"
+    },
+    {
+      "start": 274.97,
+      "end": 277.37,
+      "en": "who has a great record here as well,",
+      "zh": "她在这里也有很好的战绩，"
+    },
+    {
+      "start": 277.37,
+      "end": 280.19,
+      "en": "but she just couldn't get it over the line today",
+      "zh": "但今天她没能赢下比赛，"
+    },
+    {
+      "start": 280.19,
+      "end": 282.34,
+      "en": "against the best player in the world.",
+      "zh": "她面对的是世界第1。"
+    },
+    {
+      "start": 284.02,
+      "end": 288.52,
+      "en": "Had a few struggles at the back end of both sets, Elena Rybakina.",
+      "zh": "莱巴金娜在两盘收尾时都有些波折。"
+    },
+    {
+      "start": 289.86,
+      "end": 292.12,
+      "en": "Scoreline maybe making it look a little",
+      "zh": "比分看上去，"
+    },
+    {
+      "start": 292.12,
+      "end": 293.96,
+      "en": "more comfortable than it actually was.",
+      "zh": "或许比实际过程更轻松。"
+    },
+    {
+      "start": 295.24,
+      "end": 298.36,
+      "en": "Through to the final, 6-3, 7-5.",
+      "zh": "闯进决赛，6比3、7比5。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "sf-yt-2dSkgyTQzUw-match-end-medium.en.json",
+      "sha256": "f62368761ccf069e7f242585a69da709a9210b899d9732fd981eb59d422278db"
+    },
+    {
+      "file": "sf-yt-2dSkgyTQzUw-match-end-small.en.json",
+      "sha256": "5d25fb5e0a4b02caa6ce21b02babe71dc6127d2c142b30e3679c8b2de61a32ea"
+    },
+    {
+      "file": "sf-close-yt-2dSkgyTQzUw-refine-medium.en.json",
+      "sha256": "4fdae690d847cb2ac120305aa477629622cd5e4cf770fa8cbab25aa1d1cd3ee2"
+    },
+    {
+      "file": "sf-close-yt-2dSkgyTQzUw-refine-small.en.json",
+      "sha256": "97157e2e95fa48e9ba43460616f789c14e53fedf1ecea055a26fdce9e20c2232"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

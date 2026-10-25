@@ -1,0 +1,89 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 248.12,
+  "reviewed_to": 295.56,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 257.8,
+      "end": 261.48,
+      "en": "Elena Rybakina goes back to back in Ningbo.",
+      "zh": "莱巴金娜连续两年在宁波夺冠。"
+    },
+    {
+      "start": 263.38,
+      "end": 265.9,
+      "en": "Another statement from the world number one,",
+      "zh": "世界第1再次证明了自己，"
+    },
+    {
+      "start": 267.18,
+      "end": 269.2,
+      "en": "and she claims yet another title",
+      "zh": "她又拿下一座冠军，"
+    },
+    {
+      "start": 269.2,
+      "end": 271.78,
+      "en": "in what has been an extraordinary season.",
+      "zh": "为这个非凡的赛季再添一笔。"
+    },
+    {
+      "start": 275.2,
+      "end": 277.92,
+      "en": "Very little drama, very little jeopardy",
+      "zh": "几乎没有悬念，也没有险情，"
+    },
+    {
+      "start": 279.63,
+      "end": 282.21,
+      "en": "in a clash against a player who's had an outstanding week,",
+      "zh": "尽管对手这一周的表现非常出色，"
+    },
+    {
+      "start": 283.55,
+      "end": 287.97,
+      "en": "but the best player in the world was just too good on the night.",
+      "zh": "但世界第1今晚的发挥实在太强。"
+    },
+    {
+      "start": 288.63,
+      "end": 291.49,
+      "en": "Elena Rybakina, the champion in Ningbo once again,",
+      "zh": "莱巴金娜再次成为宁波冠军，"
+    },
+    {
+      "start": 291.71,
+      "end": 295.49,
+      "en": "winning this final against Leylah Fernandez, 6-2, 6-2.",
+      "zh": "决赛以6比2、6比2击败费尔南德斯。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "final-yt-Rn0lchWoTIM-match-end-medium.en.json",
+      "sha256": "a69ab0fe86a392744f0c5f8c7dbdcf4aaf0be56416ba96bfb4a680f96ca74e87"
+    },
+    {
+      "file": "final-yt-Rn0lchWoTIM-match-end-small.en.json",
+      "sha256": "f0d21a225301f5c53b85145e1e846f760562a408b1ac4a7fdd091b16232455cd"
+    },
+    {
+      "file": "final-close-yt-Rn0lchWoTIM-refine-medium.en.json",
+      "sha256": "9039b90d2e8e36ab7c49f7ae3bb9fd7f3d1645ae2966d8149af1eabc52c45829"
+    },
+    {
+      "file": "final-close-yt-Rn0lchWoTIM-refine-small.en.json",
+      "sha256": "93ae0b228d6dc70bd6bb584fbd35926e0d07e3319c1928bbe9ce28aa7eaa6305"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

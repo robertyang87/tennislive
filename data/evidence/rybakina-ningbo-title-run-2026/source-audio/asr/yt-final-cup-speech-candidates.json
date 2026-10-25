@@ -1,0 +1,77 @@
+{
+  "schema": "tennislive.source-caption-research-candidates.v1",
+  "status": "source_cross_check_draft_for_primary_review",
+  "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "reviewed_window": [
+    430.0,
+    560.413605
+  ],
+  "proposed_selected_window": [
+    530.15,
+    550.28
+  ],
+  "method": "asr_cross_checked",
+  "human_listening_performed": false,
+  "evidence_files": [
+    {
+      "path": "final-yt-Rn0lchWoTIM-tail-small.en.json",
+      "sha256": "87b56e70eb1283ea2e26a74026a162a2908d0c30eaebc52a3752eefe6e56ed36"
+    },
+    {
+      "path": "final-yt-Rn0lchWoTIM-tail-medium.en.json",
+      "sha256": "731975a7f81f5522711fa53405fa2385970a2fe28297b4e18e00223d8228da9b"
+    }
+  ],
+  "cues": [
+    {
+      "source_start": 530.28,
+      "source_end": 533.68,
+      "en": "Thank you so much for an amazing atmosphere every day.",
+      "zh_draft": "谢谢大家每天营造这么棒的氛围。"
+    },
+    {
+      "source_start": 535.22,
+      "source_end": 537.4,
+      "en": "It's amazing to play in front of you,",
+      "zh_draft": "能在你们面前打球，感觉特别好，"
+    },
+    {
+      "source_start": 537.5,
+      "source_end": 539.08,
+      "en": "always gives a lot of motivation,",
+      "zh_draft": "总能给我很多动力，"
+    },
+    {
+      "source_start": 539.4,
+      "source_end": 541.74,
+      "en": "a lot of energy to keep on playing.",
+      "zh_draft": "给我继续比赛的能量。"
+    },
+    {
+      "source_start": 541.74,
+      "source_end": 544.66,
+      "en": "And it's already a second year here, second win,",
+      "zh_draft": "这是我第二年来到这里，也是第二次夺冠，"
+    },
+    {
+      "source_start": 544.66,
+      "source_end": 546.64,
+      "en": "and it's such a special place for me.",
+      "zh_draft": "这里对我来说很特别。"
+    },
+    {
+      "source_start": 547.12,
+      "source_end": 548.76,
+      "en": "Thank you so much, Ningbo. Xie xie!",
+      "zh_draft": "非常感谢，宁波！谢谢！"
+    }
+  ],
+  "notes": [
+    "Small and medium agree actual English meaning and motivation; proper event Ningbo normalized against official source.",
+    "The ending contains spoken Mandarin xie xie, retained in romanization in English line and proper Chinese in translation.",
+    "The earlier 437–493 thanks and 523–530 family phrase were transcribed but are outside proposed selected window.",
+    "Primary assistant must bind final selected source window and captions to the production plan; this draft is not a final movie QC.",
+    "Media agent actual frame review: final person+cup frame550.28, official WTA outro starts550.32; selected end550.28 excludes it."
+  ]
+}
