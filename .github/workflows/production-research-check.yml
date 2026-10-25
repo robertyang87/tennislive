@@ -21,18 +21,18 @@ jobs:
           python - <<'CHECK'
           import hashlib, pathlib
           p=pathlib.Path('data/research/rybakina-ningbo-tts-transfer/tts_bundle.zip')
-          assert hashlib.sha256(p.read_bytes()).hexdigest() == 'cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b'
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == 'e7e7a7b1539da85104aab58320210fd6fde32e7d9356cda5945f9a6e09d5637d'
           print('Exact frozen bundle verified:',p.stat().st_size,'bytes; no synthesis')
           CHECK
-          TAG=reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48
+          TAG=reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             python - <<'CHECK'
           import json,subprocess
-          d=json.loads(subprocess.check_output(['gh','release','view','reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48','--repo','robertyang87/tennislive','--json','assets']))
+          d=json.loads(subprocess.check_output(['gh','release','view','reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851','--repo','robertyang87/tennislive','--json','assets']))
           assert len(d['assets']) == 0, 'Immutable asset already exists; inspect rather than clobber'
           CHECK
           else
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target c7b26135b032827c2d59867762d12052e74ae6ac --title "Frozen narration: Rybakina Ningbo 2026" --notes "Exact 11-request native narration input bundle, SHA256 cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b. Input integrity is not film approval."
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target c7b26135b032827c2d59867762d12052e74ae6ac --title "Frozen narration: Rybakina Ningbo 2026" --notes "Exact 11-request native narration input bundle, SHA256 e7e7a7b1539da85104aab58320210fd6fde32e7d9356cda5945f9a6e09d5637d. Input integrity is not film approval."
           fi
           gh release upload "$TAG" data/research/rybakina-ningbo-tts-transfer/tts_bundle.zip --repo "$GITHUB_REPOSITORY"
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets
