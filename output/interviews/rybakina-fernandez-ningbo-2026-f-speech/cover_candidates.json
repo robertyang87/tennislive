@@ -1,0 +1,1166 @@
+{
+ "slug": "rybakina-fernandez-ningbo-2026-f-speech",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "6c0f76e19ce8a4f6",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-25T14:11:33Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": null,
+  "crop_keep_top": null,
+  "crop_shift_x": null,
+  "zoom": 1.0,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  114.5,
+  118.5
+ ],
+ "window_declared": false,
+ "step": 0.2,
+ "spec_frame_at": 116.5,
+ "candidates": [
+  {
+   "frame_at": 114.5,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     281,
+     305,
+     275,
+     275
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.33951,
+    "face_area_ratio": 0.08645,
+    "sharpness": 558.472,
+    "contrast": 171.0,
+    "center_x_ratio": 0.3875,
+    "center_y_ratio": 0.36111
+   },
+   "margin": 4.244,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.491
+     },
+     "missing": [],
+     "face_px": 246.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2746,
+     "face_px": 246.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.491,
+      "费尔南德斯": 0.0253
+     },
+     "missing": [],
+     "face_px": 246.3,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 114.7,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     419,
+     352,
+     189,
+     189
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.23333,
+    "face_area_ratio": 0.04083,
+    "sharpness": 248.852,
+    "contrast": 163.0,
+    "center_x_ratio": 0.47546,
+    "center_y_ratio": 0.36605
+   },
+   "margin": 2.917,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4663
+     },
+     "missing": [],
+     "face_px": 237.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.246,
+     "face_px": 237.9
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4663,
+      "费尔南德斯": 0.0409
+     },
+     "missing": [],
+     "face_px": 237.9,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 114.9,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     291,
+     292,
+     298,
+     298
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.3679,
+    "face_area_ratio": 0.10151,
+    "sharpness": 758.122,
+    "contrast": 187.0,
+    "center_x_ratio": 0.40741,
+    "center_y_ratio": 0.35926
+   },
+   "margin": 4.599,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4419
+     },
+     "missing": [],
+     "face_px": 237.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2616,
+     "face_px": 237.7
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4419,
+      "费尔南德斯": 0.0708
+     },
+     "missing": [],
+     "face_px": 237.7,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 115.1,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     294,
+     284,
+     286,
+     286
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.35309,
+    "face_area_ratio": 0.0935,
+    "sharpness": 675.156,
+    "contrast": 181.0,
+    "center_x_ratio": 0.40463,
+    "center_y_ratio": 0.34198
+   },
+   "margin": 4.414,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4589
+     },
+     "missing": [],
+     "face_px": 249.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2918,
+     "face_px": 249.0
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4589,
+      "费尔南德斯": 0.0407
+     },
+     "missing": [],
+     "face_px": 249.0,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 115.3,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     291,
+     275,
+     295,
+     295
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.3642,
+    "face_area_ratio": 0.09948,
+    "sharpness": 915.918,
+    "contrast": 182.0,
+    "center_x_ratio": 0.40602,
+    "center_y_ratio": 0.33642
+   },
+   "margin": 4.553,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4456
+     },
+     "missing": [],
+     "face_px": 244.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.1825,
+     "face_px": 244.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4456,
+      "费尔南德斯": 0.0245
+     },
+     "missing": [],
+     "face_px": 244.3,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 115.5,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     296,
+     290,
+     277,
+     277
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.34198,
+    "face_area_ratio": 0.08771,
+    "sharpness": 629.469,
+    "contrast": 178.0,
+    "center_x_ratio": 0.40231,
+    "center_y_ratio": 0.34383
+   },
+   "margin": 4.275,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4691
+     },
+     "missing": [],
+     "face_px": 243.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2858,
+     "face_px": 243.1
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4691,
+      "费尔南德斯": 0.0324
+     },
+     "missing": [],
+     "face_px": 243.1,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 115.7,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     301,
+     286,
+     284,
+     284
+    ],
+    "eyes": 4,
+    "face_height_ratio": 0.35062,
+    "face_area_ratio": 0.0922,
+    "sharpness": 637.531,
+    "contrast": 177.0,
+    "center_x_ratio": 0.41019,
+    "center_y_ratio": 0.34321
+   },
+   "margin": 4.383,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4668
+     },
+     "missing": [],
+     "face_px": 251.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2853,
+     "face_px": 251.5
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4668,
+      "费尔南德斯": 0.0632
+     },
+     "missing": [],
+     "face_px": 251.5,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 115.9,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     314,
+     293,
+     278,
+     278
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.34321,
+    "face_area_ratio": 0.08834,
+    "sharpness": 711.961,
+    "contrast": 172.0,
+    "center_x_ratio": 0.41944,
+    "center_y_ratio": 0.34815
+   },
+   "margin": 4.29,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4717
+     },
+     "missing": [],
+     "face_px": 247.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2854,
+     "face_px": 247.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4717,
+      "费尔南德斯": 0.0609
+     },
+     "missing": [],
+     "face_px": 247.6,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 116.1,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     306,
+     293,
+     281,
+     281
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.34691,
+    "face_area_ratio": 0.09026,
+    "sharpness": 707.007,
+    "contrast": 172.85,
+    "center_x_ratio": 0.41343,
+    "center_y_ratio": 0.35
+   },
+   "margin": 4.336,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4561
+     },
+     "missing": [],
+     "face_px": 253.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2729,
+     "face_px": 253.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4561,
+      "费尔南德斯": 0.0605
+     },
+     "missing": [],
+     "face_px": 253.6,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 116.3,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     310,
+     298,
+     260,
+     260
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.32099,
+    "face_area_ratio": 0.07727,
+    "sharpness": 527.614,
+    "contrast": 161.0,
+    "center_x_ratio": 0.40741,
+    "center_y_ratio": 0.34321
+   },
+   "margin": 4.012,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4572
+     },
+     "missing": [],
+     "face_px": 252.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2948,
+     "face_px": 252.4
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4572,
+      "费尔南德斯": 0.0249
+     },
+     "missing": [],
+     "face_px": 252.4,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 116.5,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "这张脸闭眼：眼睛纵横比 0.08 < 0.12"
+   ],
+   "face": {
+    "box": [
+     298,
+     291,
+     286,
+     286
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.35309,
+    "face_area_ratio": 0.0935,
+    "sharpness": 658.018,
+    "contrast": 170.0,
+    "center_x_ratio": 0.40833,
+    "center_y_ratio": 0.35062
+   },
+   "margin": 4.414,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4481
+     },
+     "missing": [],
+     "face_px": 243.5
+    },
+    "eyes": {
+     "verdict": "closed",
+     "ear": 0.083,
+     "face_px": 243.5
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4481,
+      "费尔南德斯": 0.0139
+     },
+     "missing": [],
+     "face_px": 243.5,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 116.7,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     303,
+     307,
+     256,
+     256
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.31605,
+    "face_area_ratio": 0.07492,
+    "sharpness": 563.46,
+    "contrast": 164.0,
+    "center_x_ratio": 0.39907,
+    "center_y_ratio": 0.35185
+   },
+   "margin": 3.951,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5392
+     },
+     "missing": [],
+     "face_px": 246.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2873,
+     "face_px": 246.2
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5392,
+      "费尔南德斯": 0.0065
+     },
+     "missing": [],
+     "face_px": 246.2,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 116.9,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     308,
+     314,
+     237,
+     237
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.29259,
+    "face_area_ratio": 0.06421,
+    "sharpness": 353.92,
+    "contrast": 165.0,
+    "center_x_ratio": 0.39491,
+    "center_y_ratio": 0.34877
+   },
+   "margin": 3.657,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4912
+     },
+     "missing": [],
+     "face_px": 243.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3012,
+     "face_px": 243.8
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4912,
+      "费尔南德斯": -0.018
+     },
+     "missing": [],
+     "face_px": 243.8,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 117.1,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     314,
+     313,
+     229,
+     229
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.28272,
+    "face_area_ratio": 0.05995,
+    "sharpness": 333.147,
+    "contrast": 167.0,
+    "center_x_ratio": 0.39676,
+    "center_y_ratio": 0.34259
+   },
+   "margin": 3.534,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4998
+     },
+     "missing": [],
+     "face_px": 244.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2944,
+     "face_px": 244.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4998,
+      "费尔南德斯": 0.0031
+     },
+     "missing": [],
+     "face_px": 244.3,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 117.3,
+   "status": "fail",
+   "issues": [
+    "这张脸闭眼：眼睛纵横比 0.07 < 0.12"
+   ],
+   "face": {
+    "box": [
+     424,
+     328,
+     200,
+     200
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.24691,
+    "face_area_ratio": 0.04572,
+    "sharpness": 187.57,
+    "contrast": 166.0,
+    "center_x_ratio": 0.48519,
+    "center_y_ratio": 0.34321
+   },
+   "margin": 3.086,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4311
+     },
+     "missing": [],
+     "face_px": 250.7
+    },
+    "eyes": {
+     "verdict": "closed",
+     "ear": 0.0693,
+     "face_px": 250.7
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4311,
+      "费尔南德斯": -0.0108
+     },
+     "missing": [],
+     "face_px": 250.7,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 117.5,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2"
+   ],
+   "face": {
+    "box": [
+     364,
+     228,
+     270,
+     270
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.33333,
+    "face_area_ratio": 0.08333,
+    "sharpness": 1293.893,
+    "contrast": 183.0,
+    "center_x_ratio": 0.46204,
+    "center_y_ratio": 0.26296
+   },
+   "margin": 4.167,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5181
+     },
+     "missing": [],
+     "face_px": 244.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2504,
+     "face_px": 244.7
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5181,
+      "费尔南德斯": 0.0073
+     },
+     "missing": [],
+     "face_px": 244.7,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 117.7,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     409,
+     335,
+     213,
+     213
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.26296,
+    "face_area_ratio": 0.05186,
+    "sharpness": 421.794,
+    "contrast": 167.0,
+    "center_x_ratio": 0.47731,
+    "center_y_ratio": 0.35988
+   },
+   "margin": 3.287,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4845
+     },
+     "missing": [],
+     "face_px": 244.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2586,
+     "face_px": 244.3
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.4845,
+      "费尔南德斯": -0.0056
+     },
+     "missing": [],
+     "face_px": 244.3,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 117.9,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     414,
+     316,
+     221,
+     221
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.27284,
+    "face_area_ratio": 0.05583,
+    "sharpness": 322.429,
+    "contrast": 159.0,
+    "center_x_ratio": 0.48565,
+    "center_y_ratio": 0.34136
+   },
+   "margin": 3.411,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5436
+     },
+     "missing": [],
+     "face_px": 249.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2895,
+     "face_px": 249.2
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5436,
+      "费尔南德斯": 0.0519
+     },
+     "missing": [],
+     "face_px": 249.2,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 118.1,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     426,
+     317,
+     222,
+     222
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.27407,
+    "face_area_ratio": 0.05634,
+    "sharpness": 237.036,
+    "contrast": 166.0,
+    "center_x_ratio": 0.49722,
+    "center_y_ratio": 0.34321
+   },
+   "margin": 3.426,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5261
+     },
+     "missing": [],
+     "face_px": 247.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2099,
+     "face_px": 247.5
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5261,
+      "费尔南德斯": 0.0389
+     },
+     "missing": [],
+     "face_px": 247.5,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 118.3,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     472,
+     246,
+     298,
+     298
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.3679,
+    "face_area_ratio": 0.10151,
+    "sharpness": 996.857,
+    "contrast": 188.0,
+    "center_x_ratio": 0.575,
+    "center_y_ratio": 0.30247
+   },
+   "margin": 4.599,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5487
+     },
+     "missing": [],
+     "face_px": 242.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3045,
+     "face_px": 242.7
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5487,
+      "费尔南德斯": 0.0561
+     },
+     "missing": [],
+     "face_px": 242.7,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 118.5,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     523,
+     265,
+     278,
+     278
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.34321,
+    "face_area_ratio": 0.08834,
+    "sharpness": 720.801,
+    "contrast": 190.0,
+    "center_x_ratio": 0.61296,
+    "center_y_ratio": 0.31358
+   },
+   "margin": 4.29,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5511
+     },
+     "missing": [],
+     "face_px": 247.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3161,
+     "face_px": 247.6
+    },
+    "rivals": {
+     "verdict": "match",
+     "name": "莱巴金娜",
+     "similarity": {
+      "莱巴金娜": 0.5511,
+      "费尔南德斯": 0.01
+     },
+     "missing": [],
+     "face_px": 247.6,
+     "target": [
+      "莱巴金娜"
+     ]
+    }
+   }
+  }
+ ],
+ "passing": [
+  114.9,
+  118.3,
+  115.3,
+  115.1,
+  115.7,
+  116.1,
+  115.9,
+  118.5,
+  115.5,
+  114.5,
+  116.3,
+  116.7,
+  116.9,
+  117.1,
+  118.1,
+  117.9,
+  117.7,
+  114.7
+ ]
+}

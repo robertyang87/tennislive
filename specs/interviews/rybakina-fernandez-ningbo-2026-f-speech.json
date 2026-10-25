@@ -167,13 +167,26 @@
   },
   "cover": {
     "mode": "video_frame",
-    "frame_at": 116.5,
+    "frame_at": 114.9,
     "title": [
       "世界第一的首冠",
       "宁波卫冕"
     ],
     "sub": "莱巴金娜 · 宁波公开赛捧杯致辞",
-    "tag": "2026 宁波 · 赛后开麦"
+    "tag": "2026 宁波 · 赛后开麦",
+    "_frame_autopick": {
+      "from": 116.5,
+      "to": 114.9,
+      "at": "2026-10-25T14:11:33Z",
+      "why": "只检出 1 只眼，正面睁眼合同要求 ≥ 2；这张脸闭眼：眼睛纵横比 0.08 < 0.12",
+      "chosen": {
+        "margin": 4.599,
+        "name": "莱巴金娜",
+        "similarity": 0.4419,
+        "ear": 0.2616
+      },
+      "record": "cover_candidates.json"
+    }
   },
   "_asr_review": "双 ASR 交叉校验通过（分歧率 0.0842 ≤ 0.12；首份 medium 拼稿、第二份 small 多语分窗复核，词数 392/400）。人工裁定：Leylah 拼写与 Chair umpires/physios/ball boys 一行已在 cap_asr 人工订正中修正；中文窗清理同音误听（费尔南德斯、宁波、剩余的）并把悬空的「希望」从第 11 行移至第 12 行行首；末行经 medium.en＋small＋medium 多语三份窗口复听，实为英语「Thank you so much Ningbo」＋中文「谢谢（xie xie）」收尾，en_fixed 补全。26 处字幕空档已由双 ASR 自动销账（VAD＋词序证据）。",
   "caption_gaps_ok": {
