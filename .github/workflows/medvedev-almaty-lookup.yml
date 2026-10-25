@@ -35,16 +35,18 @@ jobs:
             printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
             echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
           fi
-      - name: flashscore 逐场
+      - name: 决赛全量与开赛时刻
         run: |
-          python tools/match_feed.py find --tour atp --event almaty --who Medvedev 2>&1 | tail -40 || true
-          for m in "MgnKGnx8 梅德韦杰夫 岛袋将" "t2iMf2AC 梅德韦杰夫 阿特曼" "AJS23nbt 梅德韦杰夫 布勃利克" "6B33aysH 梅德韦杰夫 巴西拉什维利"; do
-            set -- $m
-            echo "==== $1"
-            python tools/match_feed.py show "$1" --home "$2" --away "$3" 2>&1 | tail -120 || true
-          done
-          python tools/match_feed.py find --tour atp --event almaty --who Moutet 2>&1 | tail -5 || true
-      - name: 封面官方图
-        run: |
-          python tools/find_cover_photo.py --discover almaty 2>&1 | tail -60 || true
-          python tools/find_cover_photo.py --player Medvedev --event Almaty --tour atp --date 2026-10-25 --final 2>&1 | tail -80 || true
+          python tools/match_feed.py show 6B33aysH --home 梅德韦杰夫 --away 巴西拉什维利 2>&1 | sed -n 1,80p || true
+          python - <<'PY'
+          import re, sys, datetime
+          sys.path.insert(0, "tools")
+          import match_feed as mf
+          page = mf._get("https://www.flashscore.com/tennis/atp-singles/almaty/results/").decode("utf-8","replace")
+          for blk in page.split("~AA÷")[1:]:
+              if "Medvedev" not in blk: continue
+              f = dict(re.findall(r"([A-Z]{2})÷([^¬~]*)", blk))
+              ad = f.get("AD")
+              t = datetime.datetime.utcfromtimestamp(int(ad)).isoformat()+"Z" if ad else None
+              print("MATCH", blk[:8], f.get("AE"), f.get("AF"), f.get("ER"), t, {k:f.get(k) for k in ("BA","BB","BC","BD","BE","BF","DA","DB","AS","AZ")})
+          PY
