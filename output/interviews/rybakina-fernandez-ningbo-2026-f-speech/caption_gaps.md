@@ -38,7 +38,7 @@
 
 - 键：`27.6-34.3`
 - 第二份 ASR（small）：`希望 你 跟 你的 團 隊 在 接下來 勝 於 戶 多 的 賽 季 繼續 有 出 色 的 發 揮 精 彩 的 表 現`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：**否**
+- 已销账：现场翻译①后半段：第二份 ASR 把整段连听成一句，与首份逐行切分对位不上而未自动销账；内容已由第 12–15 行逐词覆盖（希望你／跟你的团队在接下来剩余的／的赛季继续有出色的发挥精彩／的表现），第二份的同音误听「胜于不多」实为「剩余的」，已在 en_fixed 订正。
 
 ## 28.7–32.3 秒（片内，3.5 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=34）
 
@@ -56,13 +56,13 @@
 
 - 键：`42.9-46.3`
 - 第二份 ASR（small）：`guys, and thank you to stars for staying with me`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：字幕时间轴自动销账：VAD 测到 2.720s 人声，第二份 ASR（small）听到「guys, and thank you to stars for staying with me」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 已销账：字幕时间轴自动销账：VAD 测到 2.720s 人声，第二份 ASR（small）听到「guys, and thank you to stars for staying with」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
 
 ## 40.7–44.3 秒（片内，3.6 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=46）
 
 - 键：`46.3-49.9`
-- 第二份 ASR（small）：`this week and Supporting each match and of`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：字幕时间轴自动销账：VAD 测到 2.880s 人声，第二份 ASR（small）听到「this week and Supporting each match and of」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
+- 第二份 ASR（small）：`me this week and Supporting each match and of`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
+- 已销账：字幕时间轴自动销账：VAD 测到 2.880s 人声，第二份 ASR（small）听到「me this week and Supporting each match and of」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）（证据 gap_vad_attestation.json）
 
 ## 46.9–50.2 秒（片内，3.3 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=52）
 
@@ -80,7 +80,7 @@
 
 - 键：`62.5-64.6`
 - 第二份 ASR（small）：`you so much guys 同`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：**否**
+- 已销账：她英文第 28 行尾句「Thank you so much, guys.」与翻译②首字「同」交界：第二份 ASR 跨语言连听成「you so much guys 同」而未自动销账；内容分属第 28、29 行，已逐词覆盖，无遗漏人声。
 
 ## 59.0–61.1 秒（片内，2.1 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=64）
 
@@ -116,7 +116,7 @@
 
 - 键：`89.9-94.8`
 - 第二份 ASR（small）：`次 感 谢 大家 Then`　→ **第一份（ASR（medium））可能漏了原文或发生时间边界漂移，核对 `en_fixed`**
-- 已销账：**否**
+- 已销账：翻译②收尾（第 42 行「的各位再次感谢大家」）之后为现场掌声，她在 94.8 秒接续英文（第 43 行）；第二份 ASR 只听到收尾与接续的碎片词而未自动销账；空档内除掌声外无人声，内容已逐行覆盖。
 
 ## 89.2–94.1 秒（片内，4.9 秒；源片 https://youtu.be/0XhJ4hqRRYA?t=94）
 
