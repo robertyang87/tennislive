@@ -7,13 +7,13 @@
     {
       "key": "pushplus:rybakina-fernandez-ningbo-2026-f-speech:fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
       "film_sha256": "fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
-      "status": "not_sent",
+      "status": "sending",
       "provider": "pushplus",
       "requested_channel": "wechat",
-      "platform_status": "not_sent",
-      "delivery_status": "not_sent",
-      "at": "2026-10-25T15:15:23Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40205988027",
+      "platform_status": "pending",
+      "delivery_status": "not_attempted",
+      "at": "2026-10-25T16:20:24Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40211163218",
       "_not_sent_evidence": "run 40205988027（点名 push）退出在 push_reel.py 的 voice_quality_gate.require_publish（render_inputs.json 是 reel 线专属工件、访谈线从不产出），早于任何 PushPlus 请求：无流水号、无回执、无 message_url，PushPlus 从未发出（2026-10-25 23:47 复核，见 ~/workspace/rybakina-ningbo-2026/STATUS.md）。账号所有者 2026-10-25 23:54 批准方案一（修自动推送正文校验稀疏检出坑＋本条核销），改记 not_sent 后由自动推送重发。"
     }
   ]
