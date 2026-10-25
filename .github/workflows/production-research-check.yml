@@ -1,41 +1,38 @@
 name: production-research-check
+run-name: "Archive exact frozen Rybakina narration bytes"
 on:
-  pull_request:
-    paths:
-      - tools/tactical_research.py
-      - .github/workflows/production-research-check.yml
-  workflow_dispatch: {}
+  workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
-  read-only-probe:
+  archive:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            src
-            tools
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: pip
-      - run: pip install -q -e .
-      - name: 实测固定来源读取与超时回退
+            data/research/rybakina-ningbo-tts-transfer
+      - name: Verify frozen bytes and upload immutable release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
-          python tools/tactical_research.py --home 'Aryna Sabalenka' --away 'Linda Noskova' --event 'US Open' --year 2026 --out /tmp/tactical-probe.json
-          python - <<'PY'
-          import json, os
-          d = json.load(open('/tmp/tactical-probe.json'))
-          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('```json\n' + json.dumps(d, ensure_ascii=False, indent=2) + '\n```\n')
-          assert d['elapsed_seconds'] < 40
-          if d['status'] != 'ready':
-              print('::warning::实际来源未读到；查看 source_status，不把回退成功称为资料获取成功')
-          PY
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: tactical-source-probe
-          path: /tmp/tactical-probe.json
+          python - <<'CHECK'
+          import hashlib, pathlib
+          p=pathlib.Path('data/research/rybakina-ningbo-tts-transfer/tts_bundle.zip')
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == 'cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b'
+          print('Exact frozen bundle verified:',p.stat().st_size,'bytes; no synthesis')
+          CHECK
+          TAG=reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            python - <<'CHECK'
+          import json,subprocess
+          d=json.loads(subprocess.check_output(['gh','release','view','reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48','--repo','robertyang87/tennislive','--json','assets']))
+          assert len(d['assets']) == 0, 'Immutable asset already exists; inspect rather than clobber'
+          CHECK
+          else
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target c7b26135b032827c2d59867762d12052e74ae6ac --title "Frozen narration: Rybakina Ningbo 2026" --notes "Exact 11-request native narration input bundle, SHA256 cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b. Input integrity is not film approval."
+          fi
+          gh release upload "$TAG" data/research/rybakina-ningbo-tts-transfer/tts_bundle.zip --repo "$GITHUB_REPOSITORY"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets
