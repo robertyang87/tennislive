@@ -1,0 +1,26 @@
+{
+  "mode": "shadow",
+  "model": "jev-1.13.0",
+  "total": 1,
+  "counts": {
+    "cache_hit": 1
+  },
+  "api_attempts": 0,
+  "known_input_tokens": 0,
+  "estimated_known_jev_cost_usd": 0.0,
+  "unconfirmed_billing_calls": 0,
+  "savings_vs_current_pipeline_usd": null,
+  "production_dispatches": 0,
+  "records": [
+    {
+      "id": "tennistv:4213580",
+      "decision": "cache_hit",
+      "production_action": "unchanged",
+      "suggestion": "uncertain",
+      "confidence": 0.39,
+      "model": "jev-1.13.0",
+      "needs_review": true
+    }
+  ],
+  "wall_ms": 4.232
+}
