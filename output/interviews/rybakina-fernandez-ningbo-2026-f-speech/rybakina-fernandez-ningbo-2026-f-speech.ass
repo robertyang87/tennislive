@@ -1,0 +1,102 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,54,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,24,1
+Style: HEADB,Noto Sans CJK SC,38,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,92,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 2,0:00:00.00,0:01:55.85,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,24)\bord0\shad0\p1\pbo3.5}m 6.8 6.2 l 7.1 4.3 8.0 2.6 9.3 1.2 11.1 0.3 13.0 0.0 15.0 0.3 16.7 1.2 18.1 2.6 19.0 4.3 19.3 6.2 19.3 19.0 19.0 20.9 18.1 22.6 16.7 24.0 15.0 24.9 13.0 25.2 11.1 24.9 9.3 24.0 8.0 22.6 7.1 20.9 6.8 19.0 m 24.5 16.8 l 24.2 20.2 23.3 23.4 22.0 26.2 20.2 28.6 18.0 30.4 15.6 31.5 13.0 31.9 10.5 31.5 8.0 30.4 5.9 28.6 4.1 26.2 2.7 23.4 1.8 20.2 1.6 16.8 5.1 16.8 5.3 19.4 5.9 21.8 6.9 24.0 8.1 25.8 9.6 27.2 11.3 28.1 13.0 28.4 14.8 28.1 16.4 27.2 17.9 25.8 19.2 24.0 20.1 21.8 20.7 19.4 20.9 16.8 m 11.2 31.9 l 14.8 31.9 14.8 39.1 11.2 39.1 m 6.2 38.2 l 19.8 38.2 19.8 42.0 6.2 42.0 m 9.6 9.0 l 16.5 9.0 16.5 7.0 9.6 7.0 m 9.6 13.6 l 16.5 13.6 16.5 11.6 9.6 11.6 m 9.6 18.2 l 16.5 18.2 16.5 16.2 9.6 16.2 m 41.2 0{\r\p0}{\r\fn得意黑\fs54}2026 WTA500 宁波 决赛
+Dialogue: 1,0:00:00.00,0:01:55.85,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs38\c&H8CDC4A&\an8\pos(540,92)}莱巴金娜 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}2 {\r\fnTL Score\c&H8CDC4A&\b1\fs40}6{\r\fnTL Score\fs40\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs40}2{\r\fnNoto Sans CJK SC\fs38} 费尔南德斯 · 赛后捧杯致辞
+Dialogue: 0,0:00:00.00,0:00:02.50,EN,,0,0,0,,Please have your champion speech.
+Dialogue: 0,0:00:00.00,0:00:02.50,ZH,,0,0,0,,有请冠军发表致辞
+Dialogue: 0,0:00:02.50,0:00:04.36,EN,,0,0,0,,Hello, everyone.
+Dialogue: 0,0:00:02.50,0:00:04.36,ZH,,0,0,0,,大家好
+Dialogue: 0,0:00:04.36,0:00:05.84,EN,,0,0,0,,I want to congratulate Leylah
+Dialogue: 0,0:00:04.36,0:00:05.84,ZH,,0,0,0,,我想祝贺莱拉
+Dialogue: 0,0:00:05.84,0:00:08.70,EN,,0,0,0,,with a great week.
+Dialogue: 0,0:00:05.84,0:00:08.70,ZH,,0,0,0,,这一周她表现出色
+Dialogue: 0,0:00:08.70,0:00:10.96,EN,,0,0,0,,A lot of tough matches, tough wins.
+Dialogue: 0,0:00:08.70,0:00:10.96,ZH,,0,0,0,,一路都是硬仗苦战
+Dialogue: 0,0:00:10.96,0:00:12.92,EN,,0,0,0,,Congrats to you and your team,
+Dialogue: 0,0:00:10.96,0:00:12.92,ZH,,0,0,0,,祝贺你和你的团队
+Dialogue: 0,0:00:12.92,0:00:14.80,EN,,0,0,0,,and good luck for the rest of the year.
+Dialogue: 0,0:00:12.92,0:00:14.80,ZH,,0,0,0,,祝你今年余下赛季好运
+Dialogue: 0,0:00:15.16,0:00:16.52,ZH,,0,0,0,,首先我要祝贺
+Dialogue: 0,0:00:16.52,0:00:18.92,ZH,,0,0,0,,我的对手费尔南德斯在宁波
+Dialogue: 0,0:00:18.92,0:00:20.44,ZH,,0,0,0,,的比赛当中你打了很多
+Dialogue: 0,0:00:20.44,0:00:22.52,ZH,,0,0,0,,很精彩也很艰难的比赛
+Dialogue: 0,0:00:22.52,0:00:22.68,ZH,,0,0,0,,希望你
+Dialogue: 0,0:00:22.68,0:00:24.68,ZH,,0,0,0,,跟你的团队在接下来剩余
+Dialogue: 0,0:00:24.68,0:00:26.78,ZH,,0,0,0,,的赛季继续有出色的发挥精彩
+Dialogue: 0,0:00:26.78,0:00:27.90,ZH,,0,0,0,,的表现
+Dialogue: 0,0:00:28.72,0:00:34.24,EN,,0,0,0,,to say thank you to my team,
+Dialogue: 0,0:00:28.72,0:00:34.24,ZH,,0,0,0,,我想感谢我的团队
+Dialogue: 0,0:00:34.24,0:00:36.10,EN,,0,0,0,,most of them back home watching,
+Dialogue: 0,0:00:34.24,0:00:36.10,ZH,,0,0,0,,他们大多在家里看比赛
+Dialogue: 0,0:00:36.10,0:00:36.86,EN,,0,0,0,,supporting.
+Dialogue: 0,0:00:36.10,0:00:36.86,ZH,,0,0,0,,为我加油
+Dialogue: 0,0:00:36.86,0:00:38.74,EN,,0,0,0,,Thank you so much, guys, and thank you
+Dialogue: 0,0:00:36.86,0:00:38.74,ZH,,0,0,0,,谢谢你们也要谢谢
+Dialogue: 0,0:00:38.74,0:00:41.58,EN,,0,0,0,,to Stas for staying with me this week
+Dialogue: 0,0:00:38.74,0:00:41.58,ZH,,0,0,0,,谢谢斯塔斯这一周陪着我
+Dialogue: 0,0:00:41.58,0:00:43.44,EN,,0,0,0,,and supporting each match.
+Dialogue: 0,0:00:41.58,0:00:43.44,ZH,,0,0,0,,每一场都支持我
+Dialogue: 0,0:00:43.44,0:00:45.14,EN,,0,0,0,,Of course,
+Dialogue: 0,0:00:43.44,0:00:45.14,ZH,,0,0,0,,当然
+Dialogue: 0,0:00:45.14,0:00:46.72,EN,,0,0,0,,I would like to say thank you to everyone
+Dialogue: 0,0:00:45.14,0:00:46.72,ZH,,0,0,0,,我要感谢所有人
+Dialogue: 0,0:00:46.72,0:00:50.22,EN,,0,0,0,,who made this tournament possible.
+Dialogue: 0,0:00:46.72,0:00:50.22,ZH,,0,0,0,,让这站比赛得以办成
+Dialogue: 0,0:00:50.22,0:00:52.76,EN,,0,0,0,,Laura, for always taking such good care
+Dialogue: 0,0:00:50.22,0:00:52.76,ZH,,0,0,0,,劳拉谢谢你一直以来
+Dialogue: 0,0:00:52.76,0:00:53.62,EN,,0,0,0,,of us.
+Dialogue: 0,0:00:52.76,0:00:53.62,ZH,,0,0,0,,对我们的照顾
+Dialogue: 0,0:00:53.62,0:00:56.90,EN,,0,0,0,,Chair umpires, physios, ball boys, everyone.
+Dialogue: 0,0:00:53.62,0:00:56.90,ZH,,0,0,0,,主裁理疗师球童和所有人
+Dialogue: 0,0:00:56.90,0:00:58.30,EN,,0,0,0,,Thank you so much, guys.
+Dialogue: 0,0:00:56.90,0:00:58.30,ZH,,0,0,0,,太感谢大家了
+Dialogue: 0,0:00:59.02,0:01:01.52,ZH,,0,0,0,,同时我要感谢我的团队很多
+Dialogue: 0,0:01:01.52,0:01:02.32,ZH,,0,0,0,,的成员其实是在家乡
+Dialogue: 0,0:01:02.32,0:01:04.68,ZH,,0,0,0,,正在通过电视来看我
+Dialogue: 0,0:01:04.68,0:01:06.36,ZH,,0,0,0,,比赛感谢你们对我的支持当然
+Dialogue: 0,0:01:06.36,0:01:07.24,ZH,,0,0,0,,还有在现场
+Dialogue: 0,0:01:07.24,0:01:08.38,ZH,,0,0,0,,我的团队的成员
+Dialogue: 0,0:01:08.38,0:01:10.62,ZH,,0,0,0,,我的教练对于我这一周的信任
+Dialogue: 0,0:01:10.62,0:01:12.90,ZH,,0,0,0,,我要同时感谢赛事方我们
+Dialogue: 0,0:01:12.90,0:01:14.98,ZH,,0,0,0,,的赛事监督赛事总监两位赛事
+Dialogue: 0,0:01:14.98,0:01:16.02,ZH,,0,0,0,,总监对于我们
+Dialogue: 0,0:01:16.02,0:01:19.12,ZH,,0,0,0,,精彩表现的付出同时要感谢
+Dialogue: 0,0:01:19.12,0:01:21.34,ZH,,0,0,0,,所有为我们呈现那么多那么
+Dialogue: 0,0:01:21.34,0:01:23.76,ZH,,0,0,0,,好美妙时刻宁波网球公开赛
+Dialogue: 0,0:01:23.76,0:01:26.36,ZH,,0,0,0,,的各位再次感谢大家
+Dialogue: 0,0:01:29.16,0:01:32.54,EN,,0,0,0,,And of course, thank you to my family,
+Dialogue: 0,0:01:29.16,0:01:32.54,ZH,,0,0,0,,当然要谢谢我的家人
+Dialogue: 0,0:01:32.54,0:01:35.76,EN,,0,0,0,,friends, sponsors, and all of you guys.
+Dialogue: 0,0:01:32.54,0:01:35.76,ZH,,0,0,0,,朋友赞助商和你们大家
+Dialogue: 0,0:01:35.76,0:01:36.46,EN,,0,0,0,,Thank you so much
+Dialogue: 0,0:01:35.76,0:01:36.46,ZH,,0,0,0,,非常感谢
+Dialogue: 0,0:01:36.46,0:01:40.84,EN,,0,0,0,,for an amazing atmosphere every day.
+Dialogue: 0,0:01:36.46,0:01:40.84,ZH,,0,0,0,,每一天的氛围都太棒了
+Dialogue: 0,0:01:40.84,0:01:43.06,EN,,0,0,0,,It's amazing to play in front of you.
+Dialogue: 0,0:01:40.84,0:01:43.06,ZH,,0,0,0,,在你们面前打球太棒了
+Dialogue: 0,0:01:43.06,0:01:44.82,EN,,0,0,0,,Always gives a lot of motivation,
+Dialogue: 0,0:01:43.06,0:01:44.82,ZH,,0,0,0,,总能给我很多动力
+Dialogue: 0,0:01:44.82,0:01:47.36,EN,,0,0,0,,a lot of energy to keep on playing.
+Dialogue: 0,0:01:44.82,0:01:47.36,ZH,,0,0,0,,很多继续打下去的能量
+Dialogue: 0,0:01:47.36,0:01:49.56,EN,,0,0,0,,And it's already a second year here,
+Dialogue: 0,0:01:47.36,0:01:49.56,ZH,,0,0,0,,这是我第二年来这里
+Dialogue: 0,0:01:49.56,0:01:51.66,EN,,0,0,0,,second win, and it's such a special place
+Dialogue: 0,0:01:49.56,0:01:51.66,ZH,,0,0,0,,第二次夺冠这里太特别了
+Dialogue: 0,0:01:51.66,0:01:52.50,EN,,0,0,0,,for me.
+Dialogue: 0,0:01:51.66,0:01:52.50,ZH,,0,0,0,,对我来说
+Dialogue: 0,0:01:52.50,0:01:54.72,EN,,0,0,0,,Thank you so much Ningbo, xie xie.
+Dialogue: 0,0:01:52.50,0:01:54.72,ZH,,0,0,0,,太感谢了宁波谢谢

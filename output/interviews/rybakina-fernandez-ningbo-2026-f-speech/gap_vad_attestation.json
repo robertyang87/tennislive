@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "05a594b993881217ad7722882a7ff52be78787b81012b13826ac6bbe8d885d06",
+ "sha256": "5d2183426d5da962f04780a53faa0e1e88b34a3a89d7baa267a447ae609e2e4d",
  "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -227,13 +227,12 @@
     "stars",
     "for",
     "staying",
-    "with",
-    "me"
+    "with"
    ],
    "transcript_covered": false,
    "caption_timeline_covered": true,
    "status": "caption_timeline_covered",
-   "reason": "VAD 测到 2.720s 人声，第二份 ASR（small）听到「guys, and thank you to stars for staying with me」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 2.720s 人声，第二份 ASR（small）听到「guys, and thank you to stars for staying with」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "46.3-49.9",
@@ -241,6 +240,7 @@
    "end": 49.92,
    "speech_seconds": 2.88,
    "second_asr_words": [
+    "me",
     "this",
     "week",
     "and",
@@ -253,7 +253,7 @@
    "transcript_covered": false,
    "caption_timeline_covered": true,
    "status": "caption_timeline_covered",
-   "reason": "VAD 测到 2.880s 人声，第二份 ASR（small）听到「this week and Supporting each match and of」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+   "reason": "VAD 测到 2.880s 人声，第二份 ASR（small）听到「me this week and Supporting each match and of」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
   },
   {
    "key": "52.5-55.8",
