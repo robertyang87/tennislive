@@ -1,0 +1,123 @@
+{
+  "schema": "independent-encoded-film-targeted-qc-v2",
+  "status": "pass_targeted_final_visual_review_with_recorded_minor_hair_edge_limitation",
+  "reviewed_at_utc": "2026-10-25T16:07:07.729182+00:00",
+  "film_path": "/dev/shm/rybakina-final-v2/rybakina-finals-2026/rybakina-finals-2026.mp4",
+  "film_sha256": "2c0084e7763e5e03b2e804e04558384b9a2068583271cd55e6223ce669ac9ebc",
+  "film_bytes": 126036469,
+  "duration": "337.560000",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "spec_sha256": "5354789e466a9f66b92cf570e0f6b6e76fe3dd97372ac25c5b7e0d6fe2760944",
+  "render_sha256": "5fabddda7d4e140d5ef0ad7e12d3dc25a12696f8d59bb4db973f8f0731eccb48",
+  "render_inputs_sha256": "43fe2e935ad733433f1a81375b54391f2e5c50f1b5b16060d8f3ea423f543d9b",
+  "ass_sha256": "7f6639eda1893c4e036553ecfbca8e8bd8567911c5304069b67cfb484c26ce41",
+  "qc_attestation_sha256": "99abb33c676c3b3b15d0d5cfd3f5050a8b4efd157137abe87c95dbc04328eec9",
+  "scope": {
+    "sample_files": 75,
+    "unique_encoded_positions": 70,
+    "contact_sheets_actually_opened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "native_full_frames_actually_opened": [
+      1,
+      2,
+      5,
+      6,
+      7,
+      8,
+      9,
+      50,
+      51,
+      53,
+      60,
+      62,
+      63,
+      69,
+      73
+    ],
+    "enlarged_ROIs_actually_opened": [
+      {
+        "frame": 1,
+        "movie_time": 299.4
+      },
+      {
+        "frame": 6,
+        "movie_time": 304.28
+      }
+    ],
+    "samples_manifest": "/dev/shm/independent-rybakina-v2-frames/manifest.json",
+    "sample_directory": "/dev/shm/independent-rybakina-v2-frames",
+    "continuous_film_viewing_claimed": false,
+    "human_audio_listening_claimed": false,
+    "changed_segment_dense_scope": "40 equally spaced actual encoded samples from298.00 through305.80s, plus critical positions299.40/301.20/303.20/303.24/303.40/304.28/304.68/305.92/306.00s; five positions duplicate the dense grid."
+  },
+  "checks": [
+    {
+      "check": "new_master_identity_and_certificate_bindings",
+      "status": "pass",
+      "evidence": "Independently hashed actual126036469B MP4; film SHA matches render.json, render_inputs.json and qc_attestation.json. Final spec5354789e…60944 matches both input and attestation. render_inputs, ASS and attestation content hashes match native crossbindings. ffprobe actual337.56s1080x1440/25fps with audio."
+    },
+    {
+      "check": "old_304_28_face_occlusion_fixed",
+      "status": "pass",
+      "evidence": "New actual movie304.28s/frame7607 shows far-side Rybakina complete head and facial region below information card; no date ink crosses forehead or eyes. Full frame006 plus opened enlarged ROI."
+    },
+    {
+      "check": "critical_serve_return_ball_and_brand_relationship",
+      "status": "pass_on_sampled_positions",
+      "evidence": "Viewed all0–8s dense contact samples and original301.20s serve,303.40s return,304.28/304.68s rally. Card sits in upper-right wall area, brand stays horizontally left, relevant heads/faces and critical stroke/ball positions in these samples remain clear."
+    },
+    {
+      "check": "immediate_eight_second_information_card",
+      "status": "pass",
+      "evidence": "Card visible at first sampled encoded298.00s/incoming transition, retained305.92s, gone306.00s. Spec show_after0/show_for8, width0.50/top_pad0.043, source248.32–272.00 and cx0.5 unchanged. Incoming dissolve is not an authored info overlay on a static chapter."
+    },
+    {
+      "check": "Ningbo_point_continuity_result_and_subtitles",
+      "status": "pass_on_sampled_sequence",
+      "evidence": "Dense samples show close-up preparation, toss, serve, rally;307.76s winner reaction,314.64s handshake,319.76/321.16s reaction and all three result subtitle clauses. Continuous23.68s source window retained."
+    },
+    {
+      "check": "historical_2025_photos_and_chronology",
+      "status": "pass",
+      "evidence": "283.48s original frame shows physical2025 lettering and 去年宁波夺冠后;285.60s 她在东京赶上年终末班车.288.52s authentic2025 Finals trophy kiss plus 随后五战全胜在利雅得封后.2026 return chapter separates years."
+    },
+    {
+      "check": "interview_full_canvas_person_and_bilingual_captions",
+      "status": "pass",
+      "evidence": "Opened actual322.12/324.04/324.72s full frames show clear head/face, centered person and all three bilingual clauses; all5 interview samples clear, no match information card."
+    },
+    {
+      "check": "return_and_ending_chapters_and_native_outro",
+      "status": "pass",
+      "evidence": "292.28/294.88/297.68s pure return chapter has no info;327.32/329.92/332.72s final payoff这一程腾飞从宁波开始 and年终她还能再次捧杯吗.333.60–337.08s samples show animated clock/ball, 网球时差·网球有故事 and时差归我好球归你; no unrelated final card."
+    }
+  ],
+  "minor_recorded_limitation": {
+    "time_seconds": 299.4,
+    "source_relative_requested": 1.44,
+    "finding": "People-line left-bottom outline lightly touches right-rear hair contour in the preparation close-up; it does not cover visor edge, forehead, eyes or face. This is the already disclosed non-blocking hair-edge limitation, not a claim of zero head-contour overlap.",
+    "proof": "/dev/shm/independent-rybakina-v2-frames/actual-v2-head-risk-comparison.jpg"
+  },
+  "blocking_issues": [],
+  "limitations": [
+    "This is actual encoded frame sampling, not continuous viewing of all337.56 seconds.",
+    "No independent human audio listening or voice-prosody approval is claimed.",
+    "No re-run of unchanged historical fact research or all original-body editorial checks; those remain documented separately.",
+    "Near-side receiver may leave the authorized fixed3:4 court crop temporarily; no claim both players remain visible at every moment."
+  ],
+  "prior_reports_preserved": [
+    "/dev/shm/independent-final-film-qc-5ddd336d71be.json",
+    "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/facts/independent-editorial-qc-final-f5c4a59e9cdf.json"
+  ]
+}
