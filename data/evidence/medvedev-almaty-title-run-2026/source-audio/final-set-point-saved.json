@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-caCEoWln_aU/caCEoWln_aU.mp4",
+  "source_sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T13:46:02.588412+00:00",
+  "status": "complete",
+  "reviewed_from": 89.7,
+  "reviewed_to": 120.2,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 114.1,
+      "end": 118.1,
+      "en": "It's a dangerous game to play when you start trading backhand to backhand with Medvedev.",
+      "zh": "跟梅德韦杰夫反手对拉很危险。"
+    },
+    {
+      "start": 118.1,
+      "end": 120.0,
+      "en": "That is his absolute bread and butter.",
+      "zh": "那正是他的看家本领。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/caCEoWln_aU/small.en.json; data/source_asr/caCEoWln_aU/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "Full-file ASR (small.en, medium.en) and YouTube captions agree; medium.en mishears 'back end' for 'backhand' while small.en and captions read 'backhand'. Commentary at 87.2 ends before the window."
+}

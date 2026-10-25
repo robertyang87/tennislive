@@ -1,0 +1,23 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-5I7xwWNvnJ8/5I7xwWNvnJ8.mp4",
+  "source_sha256": "7d4542b4d35963b6e068e7ca5dda81e14ede4465d2495fb45850261720479987",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T13:46:02.588412+00:00",
+  "status": "complete",
+  "reviewed_from": 165.4,
+  "reviewed_to": 182.4,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 174.2,
+      "end": 177.6,
+      "en": "Pretty much the ideal first-up match you want to have in a tournament.",
+      "zh": "几乎是一项赛事里最理想的首战。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/5I7xwWNvnJ8/small.en.json; data/source_asr/5I7xwWNvnJ8/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "Dedicated clip ASR 170–183s (small.en and medium.en) both return only 'pretty much the ideal first up match you want to have in a tournament' at 174.2–177.6. The earlier wider 140–186 small.en pass (since overwritten in data/source_asr, retained in git history) put 'Those things are precious situations' over 172.56–176.28; neither medium.en pass nor the dedicated clip passes reproduce it. YouTube auto-captions additionally list 'Game and set' (173.72), 'And to you again, Al Zubair' (178.64) and '6-2 6-1' (180.24); neither Whisper model on the dedicated clip detects any speech there, so they are recorded as not established foreground English rather than subtitled."
+}
