@@ -1,0 +1,99 @@
+name: import-title-run-source
+run-name: "import-title-run-source · staylive${{ inputs.video_id }}"
+
+# 一次性（参数化）：孙心然成都夺冠之路特辑的 Staylive 源存档。
+# 在 runner 上按窗口表从 1080p 档剪关键段、拼接后直传已建好的
+# Release source-staylive<video_id>，资产名 <video_id>-<sha256前8位>.mp4。
+# 本地直传 uploads.github.com 被凭据 401 挡住，故走 runner（RR1 先例）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: "Staylive video id"
+        required: true
+        type: string
+      windows:
+        description: "窗口表：start end name;start end name（父流秒）"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-title-run-${{ inputs.video_id }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      VID: ${{ inputs.video_id }}
+      WINDOWS: ${{ inputs.windows }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: 按窗口表剪辑并拼接
+        run: |
+          set -euo pipefail
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          REND=$(python3 - "$VID" "$UA" <<'PYEOF'
+          import json, re, sys, urllib.request
+          from urllib.parse import urljoin
+          vid, ua = sys.argv[1], sys.argv[2]
+          req = urllib.request.Request(f"https://api.staylive.tv/videos/{vid}",
+              headers={"Accept": "application/json", "User-Agent": ua})
+          d = json.load(urllib.request.urlopen(req, timeout=30))["message"]
+          master = d["playback_url"]
+          req2 = urllib.request.Request(master, headers={"User-Agent": ua})
+          txt = urllib.request.urlopen(req2, timeout=30).read().decode()
+          lines = txt.splitlines()
+          for i, ln in enumerate(lines):
+              m = re.search(r"RESOLUTION=(\d+)x(\d+)", ln)
+              if m and int(m.group(2)) == 1080:
+                  print(urljoin(master, lines[i+1].strip())); break
+          else:
+              sys.exit("1080p rendition not found")
+          PYEOF
+          )
+          test -n "$REND"
+          echo "rendition: ${REND:0:80}..."
+          mkdir -p win seg
+          : > seg/concat.txt
+          i=0
+          IFS=';' read -ra SEGS <<< "$WINDOWS"
+          for s in "${SEGS[@]}"; do
+            read -r a b name <<< "$s"
+            i=$((i+1))
+            base=$(printf "%02d_%s" "$i" "$name")
+            ffmpeg -hide_banner -loglevel error -user_agent "$UA" -ss $((a - 15)) -i "$REND" -t $((b - a + 30)) -map 0:v:0 -map 0:a:0 -c copy "win/${base}.mp4" -y
+            ffmpeg -hide_banner -loglevel error -ss 15 -to $((15 + b - a)) -i "win/${base}.mp4" -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 128k "seg/${base}.mp4" -y
+            echo "file '${base}.mp4'" >> seg/concat.txt
+            echo "done $base"
+          done
+          ffmpeg -hide_banner -loglevel error -f concat -safe 0 -i seg/concat.txt -c copy "staylive${VID}.mp4" -y
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=width,height,avg_frame_rate,codec_name -of default=nw=1 "staylive${VID}.mp4"
+          sha256sum "staylive${VID}.mp4"
+
+      - name: 上传到 Release
+        run: |
+          set -euo pipefail
+          SHA=$(sha256sum "staylive${VID}.mp4" | cut -c1-8)
+          FINAL="${VID}-${SHA}.mp4"
+          cp "staylive${VID}.mp4" "$FINAL"
+          gh release upload "source-staylive${VID}" "$FINAL" --clobber
+          gh release view "source-staylive${VID}" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          echo "ASSET_NAME=$FINAL"
