@@ -1,6 +1,6 @@
 {
   "slug": "musetti-whereabouts-2026",
-  "checked_at": "2026-10-25T14:32:32Z",
+  "checked_at": "2026-10-25T14:40:59Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+18%",
   "backend": "edge-tts",
@@ -10,9 +10,9 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "7764d97a409f39ad": {
+    "c99c0e8f6d1cf9c6": {
       "segment": 1,
-      "spoken": 4.92,
+      "spoken": 6.288,
       "picture": 7.5
     },
     "9b3ebf52c6103c33": {
@@ -20,9 +20,9 @@
       "spoken": 3.576,
       "picture": 5.3
     },
-    "41ab9548116cee9f": {
+    "08d6bb22bbf4ef47": {
       "segment": 3,
-      "spoken": 3.912,
+      "spoken": 3.984,
       "picture": 6.7
     },
     "f15cfb8ba365fff9": {
@@ -88,16 +88,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "b6c0c76f39c7e3d0338099647f442e30424a45d7c0bf961be9316ee012434a8a",
+    "bundle_sha256": "d09ae66d0f8f5f9670580f76cbc51d05d506f3fb7ec192ec4a0c0fc21fbe05a9",
     "request_count": 17,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-musetti-whereabouts-2026-b6c0c76f39c7e3d0",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-musetti-whereabouts-2026-b6c0c76f39c7e3d0/tts_bundle.zip",
+    "release_tag": "reel-tts-musetti-whereabouts-2026-d09ae66d0f8f5f96",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-musetti-whereabouts-2026-d09ae66d0f8f5f96/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40202581425"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40203200249"
   }
 }
