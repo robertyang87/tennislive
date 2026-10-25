@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-mB7W6LY2Gk0/mB7W6LY2Gk0.mp4",
+  "source_sha256": "97aed6c4f33e5bca1adcd2d5b6994b08dca6f64b64834e82302f44144de88ebe",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T13:46:02.588412+00:00",
+  "status": "complete",
+  "reviewed_from": 446.6,
+  "reviewed_to": 462.9,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 447.8,
+      "end": 451.5,
+      "en": "And that'll do for set number one.",
+      "zh": "第一盘就到这里。"
+    },
+    {
+      "start": 452.4,
+      "end": 456.1,
+      "en": "And we'll hold for a moment. Medvedev goes six games to three.",
+      "zh": "先停一下，梅德韦杰夫6比3。"
+    },
+    {
+      "start": 456.1,
+      "end": 459.2,
+      "en": "He sits, he stands, he walks over.",
+      "zh": "他坐下，又站起来，走了过去。"
+    },
+    {
+      "start": 459.3,
+      "end": 461.8,
+      "en": "Bublik comes across and says that'll do.",
+      "zh": "布勃利克过来说：到此为止。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/mB7W6LY2Gk0/small.en.json; data/source_asr/mB7W6LY2Gk0/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "Clip ASR 430–476 (small.en, medium.en) and YouTube captions agree on the four utterances (ASR spells the surname 'Bubly/Bublick'). Speech before 447.8 ('two first serves') ends before the window; next utterance starts 463.0, after the window end 462.9."
+}

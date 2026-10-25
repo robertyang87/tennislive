@@ -1,0 +1,547 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "198fa50250c20f25ccac202231d2046134699733dc2efd2ba57f602f5b177f31",
+    "render_inputs_sha256": "12fe7f3c32a398d6151d382fd7ea4fda9f73d22de5976d0c1338af1e6f9eeff3",
+    "spec_sha256": "9555894e4bc39abd3045850e1ad506038fe20fef0c90d11413379df3abd642fb",
+    "film_sha256": "82d005f1cde987df69ccd365028c07159b3c30b03d2166cdd0176865bf967bd8",
+    "inventory_sha256": "ac519b08b82394d29ac39f21f66279736b8d0b0aacb65e12494e72607adda7a5"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-25T13:56:28+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1f10aed041fc223e921e8a3ec9b213d0db9be17513de630ee2bc79dd816a5ec2",
+      "audio_sha256": "4e502d75dc6943e601006f110ee2131bc94f42b34e45926922a93c923c678bb3",
+      "pass": true,
+      "result_of": "bundle:1f10aed041fc223e921e8a3ec9b213d0db9be17513de630ee2bc79dd816a5ec2"
+    },
+    {
+      "id": "bundle:4e2043d8574e6e051f4bcfd8cc2a9476fd9df269f4166e283bd636534957a973",
+      "audio_sha256": "dd661bb526c73e0560bad297d507b0c8d420ca37125f09a8ffd5f260d6bb5b3d",
+      "pass": true,
+      "result_of": "bundle:4e2043d8574e6e051f4bcfd8cc2a9476fd9df269f4166e283bd636534957a973"
+    },
+    {
+      "id": "bundle:506908cd798c312803731ec44951cb7763827300a044a9de1df97bdfa7f34bc1",
+      "audio_sha256": "3cbb93395673f6fe0a507ec0349541b87517097f6ce08f1594ab9ad2a59adaf0",
+      "pass": true,
+      "result_of": "bundle:506908cd798c312803731ec44951cb7763827300a044a9de1df97bdfa7f34bc1"
+    },
+    {
+      "id": "bundle:54c850b08ab4bdc58c4e1814878ecbf3ddb37f3adbe22192465179fefbebd745",
+      "audio_sha256": "3d4f376e59b609caf20b5536818bb2e2282cfa0b0c4253cb5ddcb6772f9905d0",
+      "pass": true,
+      "result_of": "bundle:54c850b08ab4bdc58c4e1814878ecbf3ddb37f3adbe22192465179fefbebd745"
+    },
+    {
+      "id": "bundle:77120511d169bd352bc0f586fee022d1ce3ea7e8869b9b418755aaa24a3705d8",
+      "audio_sha256": "c7b0b4ac8813e872f63cc3d25731fc26d97f30bd0a00f036303bb16b639fe671",
+      "pass": true,
+      "result_of": "bundle:77120511d169bd352bc0f586fee022d1ce3ea7e8869b9b418755aaa24a3705d8"
+    },
+    {
+      "id": "bundle:8ae248995a45b44848ed60b6af69bf97d77bd0f44f83fcf50a41f0b675ae0fa4",
+      "audio_sha256": "4baf1f2b1dc8d3a9c4198200d4fcb91e2b9ccf13f290b218b38f0423ad0f0209",
+      "pass": true,
+      "result_of": "bundle:8ae248995a45b44848ed60b6af69bf97d77bd0f44f83fcf50a41f0b675ae0fa4"
+    },
+    {
+      "id": "bundle:b1804d2eda90112b205384fa8121d11003a3765505b1fe01c902ff611f51021f",
+      "audio_sha256": "6ba36b41ef596900c7c42cb187c42d845b2317f43abb597d236a7b5bf622ae96",
+      "pass": true,
+      "result_of": "bundle:b1804d2eda90112b205384fa8121d11003a3765505b1fe01c902ff611f51021f"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "f4d528ed9397855c0b9ff31d520637ddc7d97990a6e90e1083ff18a84db53c7d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c9fc85b29f7ca18ef810abe3316e026378cfdf5a0f59f6dca61fb1ddf10b3a7d",
+      "audio_sha256": "5fd0e2a95cd56bffa25c98c75ce642a6f49667fbe45e44bdd437d267dcd7feb7",
+      "pass": true,
+      "result_of": "bundle:c9fc85b29f7ca18ef810abe3316e026378cfdf5a0f59f6dca61fb1ddf10b3a7d"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "6ba36b41ef596900c7c42cb187c42d845b2317f43abb597d236a7b5bf622ae96",
+      "pass": true,
+      "result_of": "bundle:b1804d2eda90112b205384fa8121d11003a3765505b1fe01c902ff611f51021f"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "4baf1f2b1dc8d3a9c4198200d4fcb91e2b9ccf13f290b218b38f0423ad0f0209",
+      "pass": true,
+      "result_of": "bundle:8ae248995a45b44848ed60b6af69bf97d77bd0f44f83fcf50a41f0b675ae0fa4"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "3d4f376e59b609caf20b5536818bb2e2282cfa0b0c4253cb5ddcb6772f9905d0",
+      "pass": true,
+      "result_of": "bundle:54c850b08ab4bdc58c4e1814878ecbf3ddb37f3adbe22192465179fefbebd745"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "c7b0b4ac8813e872f63cc3d25731fc26d97f30bd0a00f036303bb16b639fe671",
+      "pass": true,
+      "result_of": "bundle:77120511d169bd352bc0f586fee022d1ce3ea7e8869b9b418755aaa24a3705d8"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "4e502d75dc6943e601006f110ee2131bc94f42b34e45926922a93c923c678bb3",
+      "pass": true,
+      "result_of": "bundle:1f10aed041fc223e921e8a3ec9b213d0db9be17513de630ee2bc79dd816a5ec2"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "dd661bb526c73e0560bad297d507b0c8d420ca37125f09a8ffd5f260d6bb5b3d",
+      "pass": true,
+      "result_of": "bundle:4e2043d8574e6e051f4bcfd8cc2a9476fd9df269f4166e283bd636534957a973"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "5fd0e2a95cd56bffa25c98c75ce642a6f49667fbe45e44bdd437d267dcd7feb7",
+      "pass": true,
+      "result_of": "bundle:c9fc85b29f7ca18ef810abe3316e026378cfdf5a0f59f6dca61fb1ddf10b3a7d"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "3cbb93395673f6fe0a507ec0349541b87517097f6ce08f1594ab9ad2a59adaf0",
+      "pass": true,
+      "result_of": "bundle:506908cd798c312803731ec44951cb7763827300a044a9de1df97bdfa7f34bc1"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "f4d528ed9397855c0b9ff31d520637ddc7d97990a6e90e1083ff18a84db53c7d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1f10aed041fc223e921e8a3ec9b213d0db9be17513de630ee2bc79dd816a5ec2",
+      "text": "决赛对手巴西拉什维利，是从资格赛打上来的。第一盘五比六，梅德韦杰夫发球，十五比四十，对手拿到两个盘点。第一个盘点，对手选择和他反手对拉，那正是梅德韦杰夫最拿手的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 72,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛对手巴西拉什维利是从资格赛打上来的。第一盘5比6,梅德韦杰夫发球,15比40,对手拿到两个盘点。第一个盘点,对手选择和他反手对拉,那正是梅德韦杰夫最拿手的。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 72,
+        "speech_s": 14.634,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对手 ｜ 巴西拉什维利 ｜ 是 ｜ 从 ｜ 资格 ｜ 赛 ｜ 打 ｜ 上来 ｜ 的 ｜ 第一盘 ｜ 五比六 ｜ 梅德韦杰夫 ｜ 发球 ｜ 十五比四十 ｜ 对手 ｜ 拿 ｜ 到 ｜ 两个 ｜ 盘点 ｜ 第一个 ｜ 盘点 ｜ 对手 ｜ 选择 ｜ 和 ｜ 他 ｜ 反手 ｜ 对 ｜ 拉 ｜ 那 ｜ 正是 ｜ 梅德韦杰夫 ｜ 最 ｜ 拿手 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:4e2043d8574e6e051f4bcfd8cc2a9476fd9df269f4166e283bd636534957a973",
+      "text": "两个盘点都救了回来，抢七却以六比八丢掉首盘。第二盘他两次破发，六比一。决胜盘第三局再破发，十四个发球局，他一个没丢。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两个盘点都救了回来,抢7却以6比8丢掉手盘。第二盘他两次破发,6比1。决胜盘第三局在破发,14个发球局,他一个没丢。"
+      },
+      "polyphones": [
+        {
+          "index": 29,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 43,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 48,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.967,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两个 ｜ 盘点 ｜ 都 ｜ 救 ｜ 了 ｜ 回来 ｜ 抢 ｜ 七 ｜ 却 ｜ 以 ｜ 六比八 ｜ 丢掉 ｜ 首盘 ｜ 第二盘 ｜ 他 ｜ 两次 ｜ 破发 ｜ 六比一 ｜ 决胜 ｜ 盘 ｜ 第三局 ｜ 再 ｜ 破发 ｜ 十四个 ｜ 发球 ｜ 局 ｜ 他 ｜ 一个 ｜ 没 ｜ 丢"
+      }
+    },
+    {
+      "id": "bundle:506908cd798c312803731ec44951cb7763827300a044a9de1df97bdfa7f34bc1",
+      "text": "二零二六赛季第四冠，生涯第二十五冠，也是他第一次成功卫冕。梅德韦杰夫的冠军里，你最难忘哪一座？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2026赛季第四冠,生涯第二十五冠,也是他第一次成功未免。梅德韦杰夫的冠军礼,你最难忘哪一座。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.809,
+        "cps": 4.77,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二六 ｜ 赛季 ｜ 第四 ｜ 冠 ｜ 生涯 ｜ 第二十五 ｜ 冠 ｜ 也是 ｜ 他 ｜ 第一次 ｜ 成功 ｜ 卫冕 ｜ 梅德韦杰夫 ｜ 的 ｜ 冠军 ｜ 里 ｜ 你 ｜ 最 ｜ 难忘 ｜ 哪 ｜ 一 ｜ 座"
+      }
+    },
+    {
+      "id": "bundle:54c850b08ab4bdc58c4e1814878ecbf3ddb37f3adbe22192465179fefbebd745",
+      "text": "四分之一决赛对阿特曼。十个发球局，他没给对手一个破发点，六比四、六比四。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "4分之1决赛对阿特曼。10个发球局,他没给对手一个破发点。6比4,6比4。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 25,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.592,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四分之一 ｜ 决赛 ｜ 对 ｜ 阿特曼 ｜ 十个 ｜ 发球 ｜ 局 ｜ 他 ｜ 没 ｜ 给 ｜ 对手 ｜ 一个 ｜ 破发 ｜ 点 ｜ 六比四 ｜ 六比四"
+      }
+    },
+    {
+      "id": "bundle:77120511d169bd352bc0f586fee022d1ce3ea7e8869b9b418755aaa24a3705d8",
+      "text": "半决赛对布勃利克，第一盘二十一分钟，六比三，五个发球局全保。盘间，布勃利克退赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 1,
+        "transcript": "半决赛对布勃利克,低盘21分钟,6比3,5个发球局全跑。盘尖,布勃利克退赛。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.347,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 对 ｜ 布勃利克 ｜ 第一盘 ｜ 二十一分钟 ｜ 六比三 ｜ 五个 ｜ 发球 ｜ 局 ｜ 全 ｜ 保 ｜ 盘 ｜ 间 ｜ 布勃利克 ｜ 退赛"
+      }
+    },
+    {
+      "id": "bundle:8ae248995a45b44848ed60b6af69bf97d77bd0f44f83fcf50a41f0b675ae0fa4",
+      "text": "作为头号种子，他首轮轮空。第二轮对岛袋将，五十二分钟，六比二、六比一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "作为头号种子：它手轮轮空。第二轮对导代将 52 分钟 6 比 2 6 比 1。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.824,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.698,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "作为 ｜ 头号 ｜ 种子 ｜ 他 ｜ 首轮 ｜ 轮空 ｜ 第二轮 ｜ 对 ｜ 岛袋 ｜ 将 ｜ 五十二分钟 ｜ 六比二 ｜ 六比一"
+      }
+    },
+    {
+      "id": "bundle:b1804d2eda90112b205384fa8121d11003a3765505b1fe01c902ff611f51021f",
+      "text": "北京时间十月二十五日，阿拉木图站男单决赛。去年在这里夺冠的梅德韦杰夫，先丢一盘，再逆转巴西拉什维利。职业生涯第一次，他成功卫冕。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 57,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月25日,阿拉木图战南丹决赛。去年在这里夺冠的梅德韦杰夫,先丢一盘,再逆转巴西拉什维利。职业生涯第一次,他成功未免。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 57,
+        "speech_s": 11.934,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十五日 ｜ 阿拉木图站 ｜ 男单 ｜ 决赛 ｜ 去年 ｜ 在 ｜ 这里 ｜ 夺冠 ｜ 的 ｜ 梅德韦杰夫 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 再 ｜ 逆转 ｜ 巴西拉什维利 ｜ 职业 ｜ 生涯 ｜ 第一次 ｜ 他 ｜ 成功 ｜ 卫冕"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c9fc85b29f7ca18ef810abe3316e026378cfdf5a0f59f6dca61fb1ddf10b3a7d",
+      "text": "决赛二十二记ACE，十四个发球局全部保住。巴西拉什维利的非受迫失误有四十个，是梅德韦杰夫的两倍。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "决赛二十二GX,十四个发球局全部保住。巴西拉什维利的非受迫失误,有四十个是梅德韦杰夫的两倍。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.396,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 二十二 ｜ 记 ｜ ACE ｜ 十四个 ｜ 发球 ｜ 局 ｜ 全部 ｜ 保 ｜ 住 ｜ 巴西 ｜ 拉什维利 ｜ 的 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 有 ｜ 四十个 ｜ 是 ｜ 梅德韦杰夫 ｜ 的 ｜ 两倍"
+      }
+    }
+  ]
+}

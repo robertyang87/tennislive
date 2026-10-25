@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-caCEoWln_aU/caCEoWln_aU.mp4",
+  "source_sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T13:46:02.588412+00:00",
+  "status": "complete",
+  "reviewed_from": 431.6,
+  "reviewed_to": 474.6,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 441.2,
+      "end": 444.3,
+      "en": "And for the first time in his career,",
+      "zh": "职业生涯第一次，"
+    },
+    {
+      "start": 444.3,
+      "end": 447.0,
+      "en": "Daniil Medvedev successfully defends a title.",
+      "zh": "梅德韦杰夫成功卫冕。"
+    },
+    {
+      "start": 447.0,
+      "end": 450.4,
+      "en": "Six-seven, six-one, six-three.",
+      "zh": "6比7、6比1、6比3。"
+    },
+    {
+      "start": 451.3,
+      "end": 453.5,
+      "en": "Champion last year in Almaty, champion this year.",
+      "zh": "去年在这里夺冠，今年还是冠军。"
+    },
+    {
+      "start": 455.0,
+      "end": 458.5,
+      "en": "His fourth title of 2026, his 25th overall.",
+      "zh": "2026年第4冠，生涯第25冠。"
+    },
+    {
+      "start": 461.0,
+      "end": 463.7,
+      "en": "A big battle, but he's had a superb week.",
+      "zh": "一场硬仗，但他这一周太出色了。"
+    },
+    {
+      "start": 466.8,
+      "end": 472.4,
+      "en": "Daniil Medvedev, our top seed, our defending champion, is successful.",
+      "zh": "头号种子、卫冕冠军梅德韦杰夫赢了。"
+    },
+    {
+      "start": 472.4,
+      "end": 474.5,
+      "en": "He wins at 6-3 in the third.",
+      "zh": "决胜盘6-3。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/caCEoWln_aU/small.en.json; data/source_asr/caCEoWln_aU/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "Full-file ASR (small.en, medium.en) and YouTube captions agree; both ASR models garble the name at 466.8 ('then he'll never'/'The nominative'), YouTube captions read 'Daniel Mev, our top seed' — the commentator's call of the winner's name, rendered as Daniil Medvedev. Last utterance ends 474.5 inside the 474.6 window end."
+}
