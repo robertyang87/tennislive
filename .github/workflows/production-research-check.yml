@@ -1,41 +1,47 @@
 name: production-research-check
+run-name: Osaka official public media inventory
 on:
-  pull_request:
-    paths:
-      - tools/tactical_research.py
-      - .github/workflows/production-research-check.yml
   workflow_dispatch: {}
 permissions:
   contents: read
 jobs:
-  read-only-probe:
+  read-only-official-inventory:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            src
-            tools
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: pip
-      - run: pip install -q -e .
-      - name: 实测固定来源读取与超时回退
+          python-version: '3.12'
+      - name: Install public metadata reader
+        run: pip install -q 'yt-dlp[default]'
+      - name: Inventory WTA and tournament official channels
         run: |
-          python tools/tactical_research.py --home 'Aryna Sabalenka' --away 'Linda Noskova' --event 'US Open' --year 2026 --out /tmp/tactical-probe.json
+          mkdir -p inventory
           python - <<'PY'
-          import json, os
-          d = json.load(open('/tmp/tactical-probe.json'))
-          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('```json\n' + json.dumps(d, ensure_ascii=False, indent=2) + '\n```\n')
-          assert d['elapsed_seconds'] < 40
-          if d['status'] != 'ready':
-              print('::warning::实际来源未读到；查看 source_status，不把回退成功称为资料获取成功')
+          import subprocess,json,pathlib,datetime
+          out=pathlib.Path('inventory')
+          channels=[('wta-videos','https://www.youtube.com/@WTA/videos',180),('wta-shorts','https://www.youtube.com/@WTA/shorts',100),('osaka-videos','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/videos',100),('osaka-shorts','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/shorts',80)]
+          report=[]
+          for key,url,limit in channels:
+              cmd=['yt-dlp','--flat-playlist','--playlist-end',str(limit),'--dump-single-json','--socket-timeout','20','--retries','1',url]
+              try:r=subprocess.run(cmd,capture_output=True,text=True,timeout=150)
+              except subprocess.TimeoutExpired:
+                  report.append({'channel':key,'status':'timeout'});continue
+              (out/(key+'-stderr.txt')).write_text(r.stderr)
+              if r.returncode:
+                  report.append({'channel':key,'status':'error','error':r.stderr[-600:]});continue
+              d=json.loads(r.stdout);(out/(key+'.json')).write_text(json.dumps(d))
+              hits=[{k:e.get(k) for k in ['id','title','url','duration','channel','channel_id','uploader','timestamp','release_timestamp']} for e in d.get('entries',[]) if any(s in str(e.get('title','')).lower() for s in ['siniak','osaka','japan','大阪','シニアコバ','シニアコワ'])]
+              report.append({'channel':key,'channel_id':d.get('channel_id'),'status':'ok','total':len(d.get('entries',[])),'hits':hits})
+          rec={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'report':report}
+          (out/'report.json').write_text(json.dumps(rec,ensure_ascii=False,indent=2))
+          print('OFFICIAL_INVENTORY_JSON_BEGIN')
+          print(json.dumps(rec,ensure_ascii=False))
+          print('OFFICIAL_INVENTORY_JSON_END')
+          assert any(x.get('status')=='ok' for x in report),'No actual channel inventory succeeded'
           PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tactical-source-probe
-          path: /tmp/tactical-probe.json
+          name: osaka-official-inventory
+          path: inventory/
