@@ -1,0 +1,10 @@
+{
+  "selector_first": "bv*[height<=1080][vcodec^=avc1]+ba[ext=m4a]",
+  "used": {
+    "r1": "pipeline-download",
+    "qf": "pipeline-download",
+    "r2": "pipeline-download",
+    "sf": "pipeline-download",
+    "final": "pipeline-download"
+  }
+}

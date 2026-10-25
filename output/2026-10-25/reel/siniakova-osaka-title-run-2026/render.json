@@ -1,0 +1,139 @@
+{
+  "scoreboard_qc_sha256": "0391f3f517f12198c7d1c328461434469a37ce7f367ad65ef84898904866156f",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "cbb2cf96af7e0081968e4f065531da0d2622fb6764e73e22a414472052d192ae",
+    "request_count": 8,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-siniakova-osaka-title-run-2026-cbb2cf96af7e0081",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-siniakova-osaka-title-run-2026-cbb2cf96af7e0081/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40181588425"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 211.23,
+  "topbar_by_source": {
+    "r1": {
+      "line1": "2026 WTA250 大阪 首轮",
+      "winner": "西尼亚科娃",
+      "loser": "斯特恩斯",
+      "result": "6-4 0-6 4-0 Ret.",
+      "source": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C",
+      "_match_id": "LS031"
+    },
+    "r2": {
+      "line1": "2026 WTA250 大阪 第二轮",
+      "winner": "西尼亚科娃",
+      "loser": "林内特",
+      "result": "6-4 6-1",
+      "source": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C",
+      "_match_id": "LS015"
+    },
+    "qf": {
+      "line1": "2026 WTA250 大阪 1/4决赛",
+      "winner": "西尼亚科娃",
+      "loser": "斯托亚纳",
+      "result": "6-1 6-2",
+      "source": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C",
+      "_match_id": "LS007"
+    },
+    "sf": {
+      "line1": "2026 WTA250 大阪 半决赛",
+      "winner": "西尼亚科娃",
+      "loser": "布尔特",
+      "result": "6-1 6-4",
+      "source": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C",
+      "_match_id": "LS003"
+    },
+    "final": {
+      "line1": "2026 WTA250 大阪 决赛",
+      "winner": "西尼亚科娃",
+      "loser": "克鲁格",
+      "result": "6-1 6-0",
+      "source": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C",
+      "_match_id": "LS001"
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA250 大阪 决赛",
+    "line2": "西尼亚科娃 6-1 6-0 克鲁格",
+    "start": 1.2,
+    "end": 212.43
+  },
+  "film_seconds": 217.0,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.552,
+    "2": 8.928,
+    "4": 11.16,
+    "7": 9.024,
+    "9": 12.048,
+    "12": 11.784,
+    "13": 12.84
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "7769af222b606ab7f2c3a534430b9b6eefba8bd60cb66e136203f64a285b76eb",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "siniakova-osaka-title-run-2026",
+    "received_at": "2026-10-25T09:40:11Z",
+    "artifact_ready_at": "2026-10-25T09:49:41Z",
+    "elapsed_seconds": 570.769,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "91c2e7d6d80cc6947fe2f346ef9b6f7a35c2555ae31752d3d86c9b7dfa2e307c",
+    "spec_sha256": "5866e74f4807e1251d33fee01be6953f63d4caa8e896350771d57b5cf79eb46b",
+    "run_id": "40181588425",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-25T09:44:02Z",
+        "run_id": "40181588425"
+      }
+    ],
+    "render_seconds": 339.769,
+    "pre_render_seconds": 231.0
+  },
+  "film_sha256": "91c2e7d6d80cc6947fe2f346ef9b6f7a35c2555ae31752d3d86c9b7dfa2e307c",
+  "film_bytes": 87078323,
+  "qc_attestation_sha256": "1c4b8b26beccdddb3cf49e7d969a3742d314a540ea8b441ebcaabf7f3c8c662f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-25T09:44:02Z",
+      "run_id": "40181588425"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-25T09:49:46Z",
+      "run_id": "40181588425"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-siniakova-osaka-title-run-2026/siniakova-osaka-title-run-2026.mp4",
+  "video_bytes": 87078323
+}
