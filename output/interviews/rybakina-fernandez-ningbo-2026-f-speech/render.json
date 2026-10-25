@@ -88,39 +88,39 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-25T15:06:42Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:39:59Z",
+      "run_id": "40207943979"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-25T15:07:49Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:40:58Z",
+      "run_id": "40207943979"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-25T15:07:59Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:41:11Z",
+      "run_id": "40207943979"
     },
     {
       "stage": "render",
-      "at": "2026-10-25T15:08:01Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:41:12Z",
+      "run_id": "40207943979"
     },
     {
       "stage": "qc",
-      "at": "2026-10-25T15:09:25Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:42:37Z",
+      "run_id": "40207943979"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-25T15:09:25Z",
-      "run_id": "40205309623"
+      "at": "2026-10-25T15:42:37Z",
+      "run_id": "40207943979"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-fernandez-ningbo-2026-f-speech/rybakina-fernandez-ningbo-2026-f-speech.mp4?v=fc5d21986115f303",
   "video_bytes": 31994589,
   "release_asset_digest": "sha256:fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
-  "qc_attestation_sha256": "6821177c6cb020b1837ba74c22d01240c38e7c617b2df4461c7d5a8c87732305",
+  "qc_attestation_sha256": "424427fd455643c05a6b9d5d11b92602de79d5f63c39788a10a2f44fc62a21df",
   "production_sla_history": [
     {
       "version": 2,
@@ -158,43 +158,80 @@
       ],
       "render_seconds": 83.602,
       "pre_render_seconds": 523.0
+    },
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "rybakina-fernandez-ningbo-2026-f-speech",
+      "received_at": "2026-10-25T14:35:03Z",
+      "artifact_ready_at": "2026-10-25T15:09:24Z",
+      "elapsed_seconds": 2061.153,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
+      "spec_sha256": "f2097cb57d5fb35b4090210cd8b85ec1c4ab0ec322f4d42d38c82ae8aea77794",
+      "run_id": "40205309623",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-25T15:06:42Z",
+          "run_id": "40205309623"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-25T15:07:49Z",
+          "run_id": "40205309623"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-25T15:07:59Z",
+          "run_id": "40205309623"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-25T15:08:01Z",
+          "run_id": "40205309623"
+        }
+      ],
+      "render_seconds": 83.153,
+      "pre_render_seconds": 1978.0
     }
   ],
   "production_sla": {
     "version": 2,
     "pipeline": "interview-clip",
     "slug": "rybakina-fernandez-ningbo-2026-f-speech",
-    "received_at": "2026-10-25T14:35:03Z",
-    "artifact_ready_at": "2026-10-25T15:09:24Z",
-    "elapsed_seconds": 2061.153,
+    "received_at": "2026-10-25T15:32:54Z",
+    "artifact_ready_at": "2026-10-25T15:42:36Z",
+    "elapsed_seconds": 582.292,
     "budget_seconds": 600,
-    "met": false,
+    "met": true,
     "film_sha256": "fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
-    "spec_sha256": "f2097cb57d5fb35b4090210cd8b85ec1c4ab0ec322f4d42d38c82ae8aea77794",
-    "run_id": "40205309623",
+    "spec_sha256": "8836e01a0eb5ec660774bf935ee35437e1e7954142049ecb971c50f6381865a0",
+    "run_id": "40207943979",
     "stage_events": [
       {
         "stage": "preflight",
-        "at": "2026-10-25T15:06:42Z",
-        "run_id": "40205309623"
+        "at": "2026-10-25T15:39:59Z",
+        "run_id": "40207943979"
       },
       {
         "stage": "cover_audit",
-        "at": "2026-10-25T15:07:49Z",
-        "run_id": "40205309623"
+        "at": "2026-10-25T15:40:58Z",
+        "run_id": "40207943979"
       },
       {
         "stage": "asr_verify",
-        "at": "2026-10-25T15:07:59Z",
-        "run_id": "40205309623"
+        "at": "2026-10-25T15:41:11Z",
+        "run_id": "40207943979"
       },
       {
         "stage": "render",
-        "at": "2026-10-25T15:08:01Z",
-        "run_id": "40205309623"
+        "at": "2026-10-25T15:41:12Z",
+        "run_id": "40207943979"
       }
     ],
-    "render_seconds": 83.153,
-    "pre_render_seconds": 1978.0
+    "render_seconds": 84.292,
+    "pre_render_seconds": 498.0
   }
 }
