@@ -231,7 +231,9 @@ def test_preview_visual_graph_uses_native_per_source_match_header_windows(tmp_pa
         spec, segments, 1.2, tmp_path / 'native_topbar.ass',
         default_lines=reel._topbar_lines(spec), pulse_at=[9.5])
     assert actual.read_bytes() == reference.read_bytes()
-    rows = [row for row in actual.read_text().splitlines() if row.startswith('Dialogue:')]
+    all_rows = [row for row in actual.read_text().splitlines() if row.startswith('Dialogue:')]
+    rows = [row for row in all_rows if not row.startswith('Dialogue: 0,')]
+    assert len(all_rows) == 2 * len(rows), '每行清晰前景和柔影须覆盖相同比赛窗口'
     assert len(rows) == 4
     assert all(',0:00:01.20,0:00:05.20,' in row for row in rows[:2])
     assert '斯特恩斯' in rows[1] and '克鲁格' not in rows[1]

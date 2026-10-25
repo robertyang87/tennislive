@@ -44,7 +44,7 @@ def recipe():
 def dialogues(path):
     rows = []
     for line in path.read_text().splitlines():
-        if line.startswith('Dialogue:'):
+        if line.startswith('Dialogue:') and not line.startswith('Dialogue: 0,'):
             bits = line.split(',', 9)
             rows.append((bits[1], bits[2], bits[3], re.sub(r'\{[^}]*\}', '', bits[9])))
     return rows
