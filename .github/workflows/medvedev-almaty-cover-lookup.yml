@@ -1,0 +1,41 @@
+name: medvedev-almaty-cover-lookup
+# 一次性：只在这条分支 push 时跑，不进 main。找梅德韦杰夫阿拉木图决赛/捧杯官方高清图。
+on:
+  push:
+    branches: [claude/medvedev-almaty-cover-lookup]
+permissions:
+  contents: read
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q -e .
+      - name: find_cover_photo
+        run: |
+          python tools/find_cover_photo.py --player Medvedev --event Almaty --tour atp --date 2026-10-25 --final --tz Asia/Almaty --start 2026-10-25T10:10:00Z --end 2026-10-25T12:05:00Z --zh 梅德韦杰夫 --city 阿拉木图 2>&1 | tail -150 || true
+      - name: ATP Media 全量列表（Almaty / Medvedev）
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          UA={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"}
+          for q in ["Almaty Medvedev","Medvedev Almaty 2026","Almaty 2026 trophy","Almaty Open 2026 final","Medvedev trophy"]:
+              for base in ["https://api.atptour.com/content/atp/photo/en?q=","https://www.tennistv.com/content/tennistv/photo/en?q="]:
+                  url=base+urllib.parse.quote(q) if False else base+q.replace(" ","%20")+"&pageSize=40"
+                  try:
+                      d=json.load(urllib.request.urlopen(urllib.request.Request(url,headers=UA),timeout=30))
+                  except Exception as e:
+                      print("ERR",url,e); continue
+                  print("==",url,len(d.get("content",[])))
+                  for c in d.get("content",[])[:40]:
+                      print(" ",c.get("id"),c.get("publishFrom") or c.get("date"),c.get("title"),c.get("onDemandUrl") or c.get("imageUrl"),c.get("originalDetails") or "")
+          PY
