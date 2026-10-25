@@ -1,0 +1,47 @@
+{
+  "model": "turbo",
+  "source_sha256": "af5d1902786bf4506380b816781df928ae7c938b49fea58fe37d897bae2ae59a",
+  "clip": [
+    257.5,
+    263.0
+  ],
+  "duration": 5.5,
+  "decoder": "ffmpeg16k_mono_float32_actual_audio",
+  "method": "automated_asr_not_human_listening",
+  "created_at": "2026-10-25T09:03:40.093332+00:00",
+  "segments": [
+    {
+      "start": 258.78,
+      "end": 259.84,
+      "text": "And there it is.",
+      "avg_logprob": -0.5431941747665405,
+      "no_speech_prob": 7.30073848598245e-11,
+      "words": [
+        {
+          "w": " And",
+          "s": 258.78,
+          "e": 259.26,
+          "p": 0.24905231595039368
+        },
+        {
+          "w": " there",
+          "s": 259.26,
+          "e": 259.4,
+          "p": 0.9855697751045227
+        },
+        {
+          "w": " it",
+          "s": 259.4,
+          "e": 259.52,
+          "p": 0.9936960339546204
+        },
+        {
+          "w": " is.",
+          "s": 259.52,
+          "e": 259.84,
+          "p": 0.9993946552276611
+        }
+      ]
+    }
+  ]
+}

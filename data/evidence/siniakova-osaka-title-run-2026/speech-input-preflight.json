@@ -1,0 +1,393 @@
+{
+  "schema": "tennislive.speech-input-preflight.v1",
+  "stage": "input_only_not_film_approval",
+  "reviewed_at": "2026-10-25T09:21:17.844882+00:00",
+  "method": "native_voice_auto_review_actual_functions_not_human_listening",
+  "rows": [
+    {
+      "id": "bundle:0058cc197ecb7ae205d1a542cd6975301b36d6edaeacc4da919a9a868a7e9316",
+      "text": "从东京的亚军，到大阪的冠军。双打世界第一西尼亚科娃，拿下生涯第六座巡回赛单打冠军。你对她的印象，更多来自单打，还是双打？",
+      "audio_sha256": "11796763a788f1a46d7121420efb9aaf28291fdb3ffdc9513b67859579d92cf7",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "从东京的亚军到大阪的冠军,双打世界第一西尼亚科娃拿下生涯第六座巡回赛单打冠军,你对他的印象更多来自单打还是双打。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从东京的亚军到大阪的冠军,双打世界第一西尼亚科娃拿下生涯第六座巡回赛单打冠军,你对他的印象更多来自单打还是双打。"
+      },
+      "polyphones": [
+        {
+          "index": 55,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.445,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.958,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 东京 ｜ 的 ｜ 亚军 ｜ 到 ｜ 大阪的 ｜ 冠军 ｜ 双打 ｜ 世界 ｜ 第一 ｜ 西尼亚科娃 ｜ 拿下 ｜ 生涯 ｜ 第六座 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 冠军 ｜ 你 ｜ 对 ｜ 她 ｜ 的 ｜ 印象 ｜ 更多 ｜ 来自 ｜ 单打 ｜ 还是 ｜ 双打"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:8751ed6ed4c560e5e73bfa43f23953ac245788edcc00187aa1989a4bc4d0c4dd",
+      "text": "北京时间十月二十五日中午，大阪站女单决赛。二零一六年，她在这项赛事的东京决赛落败。十年后，西尼亚科娃只丢一局，拿下冠军。",
+      "audio_sha256": "f0a5e3cd414efab66dffc5ab3c71b69d7dd813758d98881d2aa0a30d76e1b7f4",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "北京时间10月25日中午,大阪战女单决赛。2016年,她在这项赛事的东京决赛落败。十年后,西尼亚科娃只丢一局,拿下冠军。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月25日中午,大阪战女单决赛。2016年,她在这项赛事的东京决赛落败。十年后,西尼亚科娃只丢一局,拿下冠军。"
+      },
+      "polyphones": [
+        {
+          "index": 38,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.162,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.21,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.675,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十五日 ｜ 中午 ｜ 大阪站 ｜ 女单 ｜ 决赛 ｜ 二零一六年 ｜ 她 ｜ 在 ｜ 这 ｜ 项 ｜ 赛事 ｜ 的 ｜ 东京 ｜ 决赛 ｜ 落败 ｜ 十年 ｜ 后 ｜ 西尼亚科娃 ｜ 只 ｜ 丢 ｜ 一 ｜ 局 ｜ 拿下 ｜ 冠军"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:9550f89baaab8682155eed2352d74ab6c424892661db81bc7548ac1a7af28b34",
+      "text": "半决赛最后一分，西尼亚科娃发球后回到底线，和布尔特继续相持。赢下这一分，她就能再进决赛。",
+      "audio_sha256": "640951bc7c1ae4bb75124d297011ec1f78c02548da53d29bd8d075cbf9c86f40",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "半决赛自后一分,西尼亚科娃发球后回到底线,和布尔特继续相职。赢下一分,他就能再进决赛。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.051,
+        "longest_deletion": 1,
+        "transcript": "半决赛自后一分,西尼亚科娃发球后回到底线,和布尔特继续相职。赢下一分,他就能再进决赛。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.137,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 最后 ｜ 一 ｜ 分 ｜ 西尼亚科娃 ｜ 发球 ｜ 后 ｜ 回到 ｜ 底线 ｜ 和 ｜ 布尔特 ｜ 继续 ｜ 相持 ｜ 赢 ｜ 下 ｜ 这 ｜ 一 ｜ 分 ｜ 她 ｜ 就 ｜ 能 ｜ 再 ｜ 进 ｜ 决赛"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:a8adb93765bb293a3f0f1d13bb5572d07cdc77582035bd2b9ae67555b1b160e5",
+      "text": "从第二轮到半决赛，她先后击败林内特、斯托亚纳和布尔特。三场比赛，六盘全赢。再往前一步，就是冠军。",
+      "audio_sha256": "c8de16a91bc306f710f5732fa8d1e88e5881cc10b807628d204e51c7b9b8d774",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "从第二轮到半决赛,他先后击败林内特、斯托亚纳和布尔特。三场比赛,六盘全赢。再往前一步,就是冠军。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从第二轮到半决赛,他先后击败林内特、斯托亚纳和布尔特。三场比赛,六盘全赢。再往前一步,就是冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 10.271,
+        "cps": 3.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 第二轮 ｜ 到 ｜ 半决赛 ｜ 她 ｜ 先后 ｜ 击败 ｜ 林内特 ｜ 斯托亚纳 ｜ 和 ｜ 布尔特 ｜ 三场 ｜ 比赛 ｜ 六盘 ｜ 全 ｜ 赢 ｜ 再 ｜ 往前 ｜ 一 ｜ 步 ｜ 就 ｜ 是 ｜ 冠军"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "audio_sha256": "e3adab94a3d54e2ba5cdee58a6e6f2aa3e373ccd2a1cc3aa7ee967f674759012",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "关注网球时差,时差归我,好球归你。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:d9d3cbff5c0d0428895b9e7c08bd46959c8a200c7b7d93901abee5c2f6862c95",
+      "text": "决赛，对面是二零二三年的大阪冠军克鲁格。盘点上，西尼亚科娃向右跨步，正手接发，再回到底线相持。六比一，首盘到手。",
+      "audio_sha256": "780a0a6d3b8aae8fdf849a1614c056afcd903f32a016d25d7f4398918212adb0",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "决赛,对面是2023年的大板冠军克鲁格。盘点上,西尼亚科娃向右跨步,正手揭发,再回到底线相指。6比1,手盘到手。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 48,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.021,
+        "longest_deletion": 0,
+        "transcript": "决赛,对面是2023年的大板冠军克鲁格。盘点上,西尼亚科娃向右跨步,正手揭发,再回到底线相指。6比1,手盘到手。"
+      },
+      "polyphones": [
+        {
+          "index": 37,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 48,
+        "speech_s": 11.167,
+        "cps": 4.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对面 ｜ 是 ｜ 二零二三年 ｜ 的 ｜ 大阪 ｜ 冠军 ｜ 克鲁格 ｜ 盘点 ｜ 上 ｜ 西尼亚科娃 ｜ 向右 ｜ 跨 ｜ 步 ｜ 正手 ｜ 接 ｜ 发 ｜ 再 ｜ 回到 ｜ 底线 ｜ 相持 ｜ 六比一 ｜ 首盘 ｜ 到手"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:dabba9e95f9016cd4535d4bbde9c9efe026bcf77028b468faee0e28bf72e38d8",
+      "text": "首轮，她先赢六比四，第二盘却一局没拿。决胜盘四比零时，斯特恩斯退赛，西尼亚科娃晋级。",
+      "audio_sha256": "dbe2bf65633364ac695ab233468d8c4fbcf0fe0eb6aaed4ba203a4ce931cf8cc",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "首轮,他先赢6比4,第二盘却一局没拿。决胜盘4比0时,斯特恩斯退赛,西尼亚科娃晋级。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首轮,他先赢6比4,第二盘却一局没拿。决胜盘4比0时,斯特恩斯退赛,西尼亚科娃晋级。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 8.042,
+        "cps": 4.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首轮 ｜ 她 ｜ 先 ｜ 赢 ｜ 六比四 ｜ 第二盘 ｜ 却 ｜ 一 ｜ 局 ｜ 没 ｜ 拿 ｜ 决胜 ｜ 盘 ｜ 四比零时 ｜ 斯特恩斯 ｜ 退赛 ｜ 西尼亚科娃 ｜ 晋级"
+      },
+      "reused_from": "before-stats-speech-input-preflight.json"
+    },
+    {
+      "id": "bundle:e018915671783ed0f684809e4af1769068adc0136a1286bdddab856196903113",
+      "text": "制胜分十六比十，非受迫失误十九比三十四。西尼亚科娃在对手七个发球局里，完成六次破发。她把优势，一直兑现到了最后。",
+      "audio_sha256": "4f7d80117dd10702e9296ecb903caf4acc49fd3114e4107973e3bd11f2c58a22",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "智成分16比10,非受迫失误19比34。西尼亚科娃在对手7个发球局里完成6次破发。他把优势一直兑现到了最后。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "智成分16比10,非受迫失误19比34。西尼亚科娃在对手7个发球局里完成6次破发。他把优势一直兑现到了最后。"
+      },
+      "polyphones": [
+        {
+          "index": 30,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 40,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 10.932,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "制胜 ｜ 分 ｜ 十六比十 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 十九比三十四 ｜ 西尼亚科娃 ｜ 在 ｜ 对手 ｜ 七个 ｜ 发球 ｜ 局 ｜ 里 ｜ 完成 ｜ 六次 ｜ 破发 ｜ 她 ｜ 把 ｜ 优势 ｜ 一直 ｜ 兑现 ｜ 到 ｜ 了 ｜ 最后"
+      }
+    }
+  ],
+  "pass": true,
+  "reuse_source_sha256": "f35d14b390cfcea580aba2dd4e787033bef18845583c7751de4df2bcd7949614",
+  "limits": "No final movie/seams approval. Producer must rerun and bind native voice suite to final movie identity."
+}

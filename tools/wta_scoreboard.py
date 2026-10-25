@@ -101,9 +101,9 @@ def present(band: np.ndarray) -> bool:
             and g - r >= 20 and near >= 0.5 and dark >= 0.5)
 
 
-def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
+def board_edge(band: np.ndarray, cap: int | None = None, *, native_event: bool = False, event_right: int = 0) -> int | None:
     """这一帧板的右缘（相对带左缘的列号，不含），板不在就 None。"""
-    if not present(band):
+    if not native_event and not present(band):
         return None
     frac = board_colour(band).mean(axis=0)
     low = frac < 0.5
@@ -115,8 +115,15 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     if edge is None:
         edge = len(frac)
     mint_cols = mint_mask(band).mean(axis=0) > 0.4
-    cells = [(lo, hi) for lo, hi in _runs(mint_cols)
-             if lo >= MIN_BOARD_W and hi - lo >= MINT_COLS]
+    raw_cells = [(lo, hi) for lo, hi in _runs(mint_cols)
+                 if lo >= max(MIN_BOARD_W, event_right)]
+    merged_cells = []
+    for lo,hi in raw_cells:
+        if merged_cells and lo-merged_cells[-1][1] <= 3:
+            merged_cells[-1] = (merged_cells[-1][0],hi)
+        else:
+            merged_cells.append((lo,hi))
+    cells = [(lo,hi) for lo,hi in merged_cells if hi-lo >= MINT_COLS]
     if cells:
         # Mint TEXT in the point-score slot (e.g. 40) is not another filled games
         # cell. Use the broad solid cell, rather than the last mint-coloured letter.
@@ -125,6 +132,17 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
         body = band[margin:-margin].astype(np.int16)
         jump = np.abs(body[:, 1:] - body[:, :-1]).mean(axis=2)
         persistent = (jump > 8).mean(axis=0)
+        # Some genuine WTA feeds (and exact conformed copies) have a point
+        # slot wider than the historical56px cap. Accept it only when a strong
+        # measured border continues through both player rows beyond that cap.
+        # This is an observed edge, never a padded fallback width.
+        limit = min(band.shape[1]-1,
+                    cell_hi + max(POINTS_MAX,2*(cell_hi-cell_lo)) + 4)
+        across_two = (np.abs(body[:,2:]-body[:,:-2]).mean(axis=2)>8).mean(axis=0)
+        strong = [x for x in range(cell_hi+POINTS_MAX+EDGE_PAD+1,limit+1)
+                  if persistent[x-1] >= .8 or across_two[x-2] >= .85]
+        if strong:
+            return strong[0]
         # A native border/background boundary runs through both player rows.
         # Point numerals form discontinuous strokes; no fixed point-slot width
         # is made opaque, and stat panels without a point slot remain narrower.
@@ -217,7 +235,7 @@ def _runs(flags: np.ndarray) -> list[tuple[int, int]]:
     return [(int(v[0]), int(v[-1]) + 1) for v in np.split(values, cuts)]
 
 
-def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
+def _score_body_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
     """Measure native body and independent header; coordinates stay source-relative.
 
     The search rectangle is never itself an opaque graphic. A positive board signature
@@ -366,6 +384,109 @@ def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
               max(r[2] for r in all_rows), max(r[0] for r in all_rows) + 1)
     return {"body": body, "header": header, "bounds": bounds,
             "rows": all_rows, "edge": edge}
+
+
+def _mint_event_geometry(band: np.ndarray, cap: int | None = None, base: dict | None = None) -> dict | None:
+    """Measure a native broad mint event banner (e.g. DOUBLE FAULT).
+
+    This is positive graphic evidence, never an exception to absent-board checks.
+    Its connected mint silhouette must span a broad horizontal area and both
+    player rows; small point headers and the narrow games column do not qualify.
+    """
+    mint = mint_mask(band)
+    r,g,b = _rgb(band)
+    event_mint = (g > 155) & (r < 110) & (b > 60) & (g-r > 70) & (g-b > 25)
+    if not (event_mint.sum(axis=1) >= 90).any():
+        return None
+    import cv2
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(event_mint.astype(np.uint8), 8)
+    candidates = []
+    for i in range(1, count):
+        x, y, width, height, area = map(int, stats[i])
+        if ((x < MIN_BOARD_W or (base and x < base["body"][2]))
+                and width >= 90 and 48 <= height
+                and y+height < band.shape[0]-1
+                and area >= .45 * width * height
+                and any(b-a >= 48 for a,b in _runs(
+                    np.array([int(np.flatnonzero(row)[-1]-np.flatnonzero(row)[0]+1)
+                              if row.any() else 0 for row in
+                              (labels[y:y+height, x:x+width] == i)]) >= 90))):
+            candidates.append((area, i, x, y, width, height))
+    if not candidates:
+        return None
+    _, label, x, y, width, height = max(candidates)
+    component = labels == label
+    event_right = x + width
+    # Only an independently visible games cell to the RIGHT of the event can
+    # establish the underlying two-player body; banner lettering is not a cell.
+    columns = mint.mean(axis=0) > .25
+    cells = [(a,b) for a,b in _runs(columns)
+             if a >= max(MIN_BOARD_W, event_right) and b-a >= MINT_COLS]
+    body_span = None
+    edge = min(band.shape[1], event_right + 1)
+    if cells:
+        a,b = max(cells, key=lambda v:v[1]-v[0])
+        native_rows = np.flatnonzero(mint[:,a:b].any(axis=1))
+        if native_rows.size and native_rows[-1]-native_rows[0]+1 >= 48:
+            lo,hi = max(0,int(native_rows[0])-1), min(len(band),int(native_rows[-1])+2)
+            edge = board_edge(band[lo:hi], cap=cap, native_event=True,
+                              event_right=event_right)
+            if edge is None or edge < b:
+                raise RuntimeError("WTA mint event present but underlying native right edge is unmeasurable")
+            body_span = (lo,hi)
+    colour = board_colour(band)
+    rows = []
+    for row in range(len(band)):
+        event_x = np.flatnonzero(component[row])
+        pieces = []
+        if event_x.size:
+            pieces.append((max(0,int(event_x[0])-1), min(band.shape[1],int(event_x[-1])+2)))
+        if body_span and body_span[0] <= row < body_span[1]:
+            native_x = np.flatnonzero(colour[row,:edge])
+            if native_x.size:
+                pieces.append((max(0,int(native_x[0])-1), min(edge,int(native_x[-1])+2)))
+        if pieces:
+            rows.append((row,min(a for a,b in pieces),max(b for a,b in pieces)))
+    if len(rows) < 48:
+        raise RuntimeError("WTA mint event present but native silhouette cannot be measured")
+    event_body = (min(r[1] for r in rows), min(r[0] for r in rows),
+                  max(r[2] for r in rows), max(r[0] for r in rows) + 1)
+    if base:
+        merged = {}
+        for row,left,right in base["rows"] + rows:
+            if row in merged:
+                a,b = merged[row]; merged[row] = (min(a,left),max(b,right))
+            else:
+                merged[row] = (left,right)
+        rows = [(row,*merged[row]) for row in sorted(merged)]
+    header = base.get("header") if base else None
+    body = event_body
+    if base:
+        other = base["body"]
+        body = (min(body[0],other[0]),min(body[1],other[1]),
+                max(body[2],other[2]),max(body[3],other[3]))
+    all_rows = rows
+    bounds = (min(r[1] for r in all_rows), min(r[0] for r in all_rows),
+              max(r[2] for r in all_rows), max(r[0] for r in all_rows) + 1)
+    return {"body": body, "header": header, "bounds": bounds,
+            "rows": all_rows, "edge": edge, "native_event": "broad-mint-banner"}
+
+
+def frame_geometry(band: np.ndarray, cap: int | None = None) -> dict | None:
+    if band.ndim != 3 or band.shape[1] < MIN_BOARD_W:
+        return None
+    base = None
+    failure = None
+    try:
+        base = _score_body_geometry(band, cap)
+    except RuntimeError as exc:
+        failure = exc
+    event = _mint_event_geometry(band, cap, base)
+    if event is not None:
+        return event
+    if failure:
+        raise failure
+    return base
 
 
 def scan_geometry(source: Path, box: tuple[int, int, int, int], start: float,

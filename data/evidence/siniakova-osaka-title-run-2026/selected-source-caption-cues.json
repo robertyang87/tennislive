@@ -1,0 +1,587 @@
+{
+  "method": "asr_cross_checked",
+  "review_kind": "verified_source_captions",
+  "human_listening_performed": false,
+  "segments": [
+    {
+      "segment_id": "cold-final-reaction",
+      "source_key": "final",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407369981112/6407369981112.mp4",
+      "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+      "raw_window": [
+        269.25,
+        276.94
+      ],
+      "reviewed_intervals": [
+        [
+          269.25,
+          276.94
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 269.53,
+          "source_end": 271.21,
+          "relative_start": 0.28,
+          "relative_end": 1.96,
+          "en": "Ten games in a row.",
+          "zh": "连赢10局。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 271.63,
+          "source_end": 272.81,
+          "relative_start": 2.38,
+          "relative_end": 3.56,
+          "en": "One game dropped.",
+          "zh": "整场只丢1局。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 273.03,
+          "source_end": 276.69,
+          "relative_start": 3.78,
+          "relative_end": 7.44,
+          "en": "What a performance from Katerina Siniakova here in Osaka.",
+          "zh": "西尼亚科娃在大阪的表现太出色了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "note": "Katarina normalized to official Katerina; turbo splits here/in Osaka across two model segments, joined into the actual full sentence.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    },
+    {
+      "segment_id": "r1-retirement",
+      "source_key": "r1",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-_r9i8mV5Zv8/_r9i8mV5Zv8.mp4",
+      "source_sha256": "aee6e8276346dc0a03b912ec5085cde31e799f0414aedea728d292c2b3f37215",
+      "raw_window": [
+        1072.24,
+        1085.64
+      ],
+      "reviewed_intervals": [
+        [
+          1072.24,
+          1085.64
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 1072.4,
+          "source_end": 1074.84,
+          "relative_start": 0.16,
+          "relative_end": 2.6,
+          "en": "And Peyton Stearns looking towards David Witt.",
+          "zh": "斯特恩斯望向大卫·维特。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r1-retirement-turbo.json",
+            "r1-ending-small.en.json",
+            "r1-ending-medium.en.json"
+          ],
+          "note": "Source begins1072.24, before turbo And1072.40 and small sentence1072.78. Prefix no longer clipped. Original YouTube en-orig independently confirms And Peyton Stearns looking towards David Witt.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 1075.32,
+          "source_end": 1078.12,
+          "relative_start": 3.08,
+          "relative_end": 5.88,
+          "en": "You just wonder if this match might be over.",
+          "zh": "不禁让人觉得，这场比赛可能要结束了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r1-retirement-turbo.json",
+            "r1-ending-small.en.json",
+            "r1-ending-medium.en.json"
+          ],
+          "note": "Turbo lacks And; small has And he just wondered, medium has And you just wonder. Preserve raw hypotheses and verify lead-in rather than adding an unsupported conjunction.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 1080.04,
+          "source_end": 1082.0,
+          "relative_start": 7.8,
+          "relative_end": 9.76,
+          "en": "Coming to the net and conceding,",
+          "zh": "她来到网前，选择退赛，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r1-retirement-turbo.json",
+            "r1-ending-small.en.json",
+            "r1-ending-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 1082.0,
+          "source_end": 1085.06,
+          "relative_start": 9.76,
+          "relative_end": 12.82,
+          "en": "with an injury to her right leg, I think.",
+          "zh": "我想，应该是右腿伤势所致。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r1-retirement-turbo.json",
+            "r1-ending-small.en.json",
+            "r1-ending-medium.en.json"
+          ],
+          "note": "Commentator qualifier I think retained faithfully. This is not independently diagnosed injury narration. Full utterance completes by1085.52 in all model hypotheses and by1085.388 in VAD speech-end measurement, before selected1085.64 cut.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    },
+    {
+      "segment_id": "r2-match-point",
+      "source_key": "r2",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407221766112/6407221766112.mp4",
+      "source_sha256": "805ac8a00aa966e7c3389af23dded7afaaacbbe03a4bdd596a3ae5c2d85986c8",
+      "raw_window": [
+        242.44,
+        257.64
+      ],
+      "reviewed_intervals": [
+        [
+          242.44,
+          257.64
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 248.91,
+          "source_end": 250.57,
+          "relative_start": 6.47,
+          "relative_end": 8.13,
+          "en": "Oh, it ends on a fluke.",
+          "zh": "哦，比赛以一个幸运球结束。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r2-point-turbo.json",
+            "r2-ending-small.en.json",
+            "r2-ending-medium.en.json"
+          ],
+          "note": "VAD turbo timing used. Old small puts Oh at239.88 and medium at245.22, before the actual terminal result; those timings are rejected.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 250.83,
+          "source_end": 252.53,
+          "relative_start": 8.39,
+          "relative_end": 10.09,
+          "en": "She has had the run of the ball today,",
+          "zh": "今天她的球运一直不错，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r2-point-turbo.json",
+            "r2-ending-small.en.json",
+            "r2-ending-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 252.77,
+          "source_end": 257.05,
+          "relative_start": 10.33,
+          "relative_end": 14.61,
+          "en": "but even so, Siniakova sails through.",
+          "zh": "但无论如何，西尼亚科娃顺利晋级。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "r2-point-turbo.json",
+            "r2-ending-small.en.json",
+            "r2-ending-medium.en.json"
+          ],
+          "note": "Sinyakova normalized to official Siniakova. Literal sail-through describes advancement, not an invented winner or round.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    },
+    {
+      "segment_id": "qf-match-point",
+      "source_key": "qf",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ksA37BLbaWg/ksA37BLbaWg.mp4",
+      "source_sha256": "c058483ddc791e24291091d02bdc19a9c7d9bf49004a16b92462775272e06d2b",
+      "raw_window": [
+        702.56,
+        715.52
+      ],
+      "reviewed_intervals": [
+        [
+          702.56,
+          715.52
+        ]
+      ],
+      "cues": [],
+      "coverage_status": "no_retained_lexical_speech_before_measured_onset"
+    },
+    {
+      "segment_id": "sf-match-point",
+      "source_key": "sf",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407335181112/6407335181112.mp4",
+      "source_sha256": "af5d1902786bf4506380b816781df928ae7c938b49fea58fe37d897bae2ae59a",
+      "raw_window": [
+        260.64,
+        284.12
+      ],
+      "reviewed_intervals": [
+        [
+          260.64,
+          284.12
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 270.61,
+          "source_end": 271.61,
+          "relative_start": 9.97,
+          "relative_end": 10.97,
+          "en": "And that's it.",
+          "zh": "比赛结束了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "sf-tight-turbo.json",
+            "sf-ending-small.en.json",
+            "sf-ending-medium.en.json"
+          ],
+          "note": "VAD turbo preferred for onset; old small270.22 and medium271.08 differ. Actual live rally ends just before270.48 camera cut; no move to the earlier258s previous point.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 271.61,
+          "source_end": 274.59,
+          "relative_start": 10.97,
+          "relative_end": 13.95,
+          "en": "The roar tells you everything you need to know.",
+          "zh": "这一声吼，已经说明了一切。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "sf-tight-turbo.json",
+            "sf-ending-small.en.json",
+            "sf-ending-medium.en.json"
+          ],
+          "note": "Cross-checked medium roar, turbo Raw (same spoken sound), small rule; coherent actual winning roar context. Caption lexical normalization uses roar; no human hearing claim.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 277.51,
+          "source_end": 281.97,
+          "relative_start": 16.87,
+          "relative_end": 21.33,
+          "en": "Katerina Siniakova into her second Japan Open final,",
+          "zh": "西尼亚科娃第2次打进日本公开赛决赛，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "sf-tight-turbo.json",
+            "sf-ending-small.en.json",
+            "sf-ending-medium.en.json"
+          ],
+          "note": "Katarina normalized to official Katerina. The2016 Tokyo final explains second JapanOpen final, distinct from first in Osaka.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 282.13,
+          "source_end": 283.77,
+          "relative_start": 21.49,
+          "relative_end": 23.13,
+          "en": "her first here in Osaka.",
+          "zh": "也是她首次在大阪打进决赛。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "sf-tight-turbo.json",
+            "sf-ending-small.en.json",
+            "sf-ending-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    },
+    {
+      "segment_id": "final-set-point",
+      "source_key": "final",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407369981112/6407369981112.mp4",
+      "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+      "raw_window": [
+        156.08,
+        172.18
+      ],
+      "reviewed_intervals": [
+        [
+          156.08,
+          172.18
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 167.43,
+          "source_end": 170.61,
+          "relative_start": 11.35,
+          "relative_end": 14.53,
+          "en": "What a set of tennis that was from Katerina Siniakova.",
+          "zh": "西尼亚科娃这一盘打得太出色了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-setpoint-turbo.json",
+            "final-setpoint-vad-medium.en.json",
+            "final-setpoint-tight-small.en.json",
+            "final-setpoint-tight-medium.en.json"
+          ],
+          "note": "Use VAD turbo167.43 and VAD medium167.47, not nonVAD medium163.00. Proper-name ASR variants normalized.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 170.79,
+          "source_end": 172.09,
+          "relative_start": 14.71,
+          "relative_end": 16.01,
+          "en": "Disappointing for Ashlyn Krueger.",
+          "zh": "克鲁格这边令人失望。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-setpoint-turbo.json",
+            "final-setpoint-vad-medium.en.json",
+            "final-setpoint-tight-small.en.json",
+            "final-setpoint-tight-medium.en.json"
+          ],
+          "note": "Official Ashlyn Krueger spelling; selected exact phrase ends172.09 in VAD turbo and172.16 in medium, source cut172.18; next clause She starts172.19 in turbo/172.38 in medium and is excluded.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    },
+    {
+      "segment_id": "final-match-point-payoff",
+      "source_key": "final",
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407369981112/6407369981112.mp4",
+      "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+      "raw_window": [
+        240.4,
+        281.8
+      ],
+      "reviewed_intervals": [
+        [
+          240.4,
+          281.8
+        ]
+      ],
+      "cues": [
+        {
+          "source_start": 256.65,
+          "source_end": 258.39,
+          "relative_start": 16.25,
+          "relative_end": 17.99,
+          "en": "And there it is!",
+          "zh": "比赛结束了！",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "note": "Onset from turbo256.65; old small254.94 and medium256.18 precede the visually established result and are not used for timing. This cue is an excited conclusion at the winning exchange, not a new claim of an earlier win.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 258.51,
+          "source_end": 261.39,
+          "relative_start": 18.11,
+          "relative_end": 20.99,
+          "en": "Your 2026 Japan Open champion,",
+          "zh": "2026年日本公开赛冠军，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 262.01,
+          "source_end": 263.85,
+          "relative_start": 21.61,
+          "relative_end": 23.45,
+          "en": "dominating from start to finish",
+          "zh": "从头到尾掌控比赛，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 263.85,
+          "source_end": 266.09,
+          "relative_start": 23.45,
+          "relative_end": 25.69,
+          "en": "to win her sixth career title,",
+          "zh": "拿下生涯第6座冠军，",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "note": "Source literally says sixth career title. Established context is WTA Tour singles; do not imply this includes her doubles or WTA125 titles.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 266.89,
+          "source_end": 268.59,
+          "relative_start": 26.49,
+          "relative_end": 28.19,
+          "en": "Katerina Siniakova.",
+          "zh": "西尼亚科娃。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 269.53,
+          "source_end": 271.21,
+          "relative_start": 29.13,
+          "relative_end": 30.81,
+          "en": "Ten games in a row.",
+          "zh": "连赢10局。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 271.63,
+          "source_end": 272.81,
+          "relative_start": 31.23,
+          "relative_end": 32.41,
+          "en": "One game dropped.",
+          "zh": "整场只丢1局。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 273.03,
+          "source_end": 276.69,
+          "relative_start": 32.63,
+          "relative_end": 36.29,
+          "en": "What a performance from Katerina Siniakova here in Osaka.",
+          "zh": "西尼亚科娃在大阪的表现太出色了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "note": "Katarina normalized to official Katerina; turbo splits here/in Osaka across two model segments, joined into the actual full sentence.",
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 277.05,
+          "source_end": 278.91,
+          "relative_start": 36.65,
+          "relative_end": 38.51,
+          "en": "And now we see the smile.",
+          "zh": "现在，她露出了笑容。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 279.27,
+          "source_end": 280.09,
+          "relative_start": 38.87,
+          "relative_end": 39.69,
+          "en": "Thoroughly deserved.",
+          "zh": "实至名归。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        },
+        {
+          "source_start": 280.37,
+          "source_end": 281.43,
+          "relative_start": 39.97,
+          "relative_end": 41.03,
+          "en": "What a performance.",
+          "zh": "太精彩了。",
+          "status": "asr_cross_checked",
+          "asr_evidence_files": [
+            "final-winning-turbo.json",
+            "final-tail-small.en.json",
+            "final-tail-medium.en.json"
+          ],
+          "method": "asr_cross_checked",
+          "verified_source_captions": true
+        }
+      ],
+      "coverage_status": "retained_foreground_speech_closed_by_crosschecked_cues"
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "schema": "tennislive.source-caption-draft.v2",
+  "created_at": "2026-10-25T09:14:59.512779+00:00",
+  "status": "selected_windows_source_captions_cross_checked_ready_for_root_recheck",
+  "method": "asr_cross_checked",
+  "review_kind": "verified_source_captions",
+  "human_listening_performed": false,
+  "scope": "Independent positive caption verification for exactly proposed retained source windows. Not a claim of human listening, a native packet creation, a full-filmQC, or publication. Root independently verifies and applies cuts/creates native packets.",
+  "root_spec_modified": false,
+  "verified_cue_count": 27,
+  "legal_cut_changes": [
+    {
+      "segment_id": "r1-retirement",
+      "from": [
+        1072.48,
+        1090.96
+      ],
+      "to": [
+        1072.24,
+        1085.64
+      ]
+    },
+    {
+      "segment_id": "qf-match-point",
+      "from": [
+        702.56,
+        719.56
+      ],
+      "to": [
+        702.56,
+        715.52
+      ]
+    },
+    {
+      "segment_id": "sf-match-point",
+      "from": [
+        260.64,
+        289.5
+      ],
+      "to": [
+        260.64,
+        284.12
+      ]
+    },
+    {
+      "segment_id": "final-match-point-payoff",
+      "from": [
+        233.5,
+        281.8
+      ],
+      "to": [
+        240.4,
+        281.8
+      ]
+    }
+  ],
+  "excluded_candidates_audit": [
+    {
+      "source": "qf",
+      "interval": [
+        715.6,
+        717.18
+      ],
+      "status": "uncertain_not_selected",
+      "reason": "OriginalCC and3 isolated ASR yield only garbled court announcement; no fabricated exact umpire words. Proposed qf end715.52 precedes measured onset715.612."
+    },
+    {
+      "source": "qf",
+      "interval": [
+        717.13,
+        727.11
+      ],
+      "status": "not_selected_in_legal_shorter_window",
+      "reason": "Known complete It's been... and subsequent flag sentence lie after proposed715.52 endpoint."
+    },
+    {
+      "source": "r1",
+      "interval": [
+        1086.092,
+        1086.956
+      ],
+      "status": "uncertain_not_selected",
+      "reason": "Actual speech VAD interval; isolated small/medium/turbo disagree on retiring/starting from the mic/net. It is not falsely certified. Proposed end1085.64 excludes it."
+    },
+    {
+      "source": "r1",
+      "interval": [
+        1086.96,
+        1094.16
+      ],
+      "status": "not_selected",
+      "reason": "Sad end...retire often as I've said continuation. OriginalYouTubeCC confirms continuation beyond original1090.96 cut; proposed earlier cut excludes the entire sentence."
+    },
+    {
+      "source": "sf",
+      "interval": [
+        285.51,
+        288.91
+      ],
+      "status": "not_selected",
+      "reason": "11th singles final source-text number has conflicting official biographical scope; proposed284.12 endpoint ends after full Osaka sentence and before this new sentence."
+    },
+    {
+      "source": "final",
+      "interval": [
+        233.5,
+        240.1
+      ],
+      "status": "uncertain_prefix_not_selected",
+      "reason": "Continues/Tennis initial token uncertain; proposed240.40 start removes the whole earlier-point clause while preserving actual receiver and server preparation."
+    },
+    {
+      "source": "final",
+      "interval": [
+        172.19,
+        178.24
+      ],
+      "status": "not_selected",
+      "reason": "She never really... is next set-summary sentence; selected172.18 endpoint excludes its actual onset."
+    }
+  ],
+  "closure_checks": {
+    "exact_sources_bound": true,
+    "all_selected_cues_inside_proposed_windows": true,
+    "cue_order_and_overlap_checked": true,
+    "complete_selected_clauses_by_crosscheck": true,
+    "unresolved_speech_not_in_selected_windows": true,
+    "wording_not_rewritten_as_heard_without_evidence": true,
+    "human_listening_claimed": false
+  },
+  "evidence_files": [
+    {
+      "path": "/tmp/siniakova-osaka-20261025/qf-vad-onset.json",
+      "sha256": "5b136adfe2d1f03df29fd075d8bd890ce3bdbde7ff01da81c9eb856f5e7162d5"
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/r1-vad-boundary.json",
+      "sha256": "1f354c73855b0f0898f7b64f2b2de55d640ecbcec45f1779e4db5fed58a14533"
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/asr/sf-before-current-start-vad-turbo.json",
+      "sha256": "1373ace4fe06ac5fe1584d919adfd56059d0631e0875584ae13769747168aa5d"
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/ball-route-evidence.json",
+      "sha256": "80d56d7198fc4391cfa1e3d70a652d106d989db0d71c059a95e8f7e3d9a97870"
+    }
+  ]
+}

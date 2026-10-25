@@ -462,6 +462,11 @@ def project(spec: dict) -> dict:
     # 这里不当注解剥（评审 2026-09-27：剥了之后插一句 `_why` 投影不变，主源片却换了人）。
     if isinstance(spec.get("sources"), dict) and "sources" in out:
         out["sources"] = json.loads(json.dumps(spec["sources"], ensure_ascii=False))
+    # Per-source topbar keys are also source identities, including `_` prefixes.
+    # Preserve those keys, while ordinary annotations inside a row remain notes.
+    if isinstance(spec.get("topbar_by_source"), dict) and "topbar_by_source" in out:
+        out["topbar_by_source"] = {key: walk(node)
+                                    for key, node in spec["topbar_by_source"].items()}
     return out
 
 
