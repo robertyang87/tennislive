@@ -1,0 +1,342 @@
+{
+  "schema": "tennislive.encoded-visual-review.v1",
+  "slug": "andreeva-finals-2026",
+  "reviewed_at": "2026-10-25T10:40:28.173177+00:00",
+  "reviewer": "primary assistant, actual encoded frame visual review",
+  "status": "pass",
+  "film_sha256": "c1244630c90d92c9ef98ac301af07f1286e33c13829ddbacdb0224ae5437075c",
+  "film_bytes": 121369641,
+  "native_render_run": 40184716021,
+  "native_qc_sha256": "72d79db8957f6c5faf793707aba630d7417f30967e05868f14935229f0232f54",
+  "voice_review_sha256": "dda4ec61be318a4cecab6eed913aa0fb3f5cb821fcf7cb13352659e03e3d4a90",
+  "voice_review_method": "automated_voice_suite, not human listening",
+  "voice_requests_passed": 13,
+  "scope": "Keep original narration, card durations and chronology; keep subsequent approved Beijing raw deletion and cover correction; visual changes only.",
+  "observations": [
+    "40 frames decoded from actual H264 master and visually opened across four contact sheets.",
+    "All 12 original card slots reviewed at entry and later animation state. Title, photo, score/timeline content and subtitles visible within canvas.",
+    "Cold interview and six remaining complete terminal source windows retained in original chronology.",
+    "Six context overlays retain their original upper-right placement with current font assets.",
+    "Current corrected cover retained. No deleted Beijing raw clip was reintroduced.",
+    "Current column logo ending reviewed. No newly proposed three-chapter narration or ranking insertion."
+  ],
+  "samples": [
+    {
+      "id": "cover",
+      "time": 0.6,
+      "frame_sha256": "2b124b7bb43ae74da0fdf8325c3c16207e5441099532a181123dff8866441672"
+    },
+    {
+      "id": "cold-quote-early",
+      "time": 3.705,
+      "frame_sha256": "48b59db8109ba44e4a41de277a1f1e58ace55c8da29cee00bf1817bf5a799dd2"
+    },
+    {
+      "id": "cold-quote-terminal",
+      "time": 17.099999999999998,
+      "frame_sha256": "1b00d2c12e07adfb1380fc9b976652d754fb82350fcc448e33373c56c63ab300"
+    },
+    {
+      "id": "card-intro-entry",
+      "time": 18.2,
+      "frame_sha256": "5285b7b53ef6828081ecdb029d8cb5755d2bf6a5b74e7606c3207173aca7f232"
+    },
+    {
+      "id": "card-intro-settled",
+      "time": 20.299999999999997,
+      "frame_sha256": "9ce80052622370aca73235e02034a55af9c59d9c6aa3d4d859f429bbb24ef234"
+    },
+    {
+      "id": "card-january-entry",
+      "time": 25.919999999999998,
+      "frame_sha256": "f5850570db6fa9a50caed3e0fd1da518ea3c33f7fcbf930232b37c22ebb27fca"
+    },
+    {
+      "id": "card-january-settled",
+      "time": 28.019999999999996,
+      "frame_sha256": "06543fb029d20058f33082c192908c8ac180596a5158295e2321d7f4fc3c4b64"
+    },
+    {
+      "id": "adelaide-final-early",
+      "time": 34.459999999999994,
+      "frame_sha256": "02193e3ebdee4d12a58a4556cf8cda04c46d5f28d9c9c5f86cc0ef2b1c4384d5"
+    },
+    {
+      "id": "adelaide-final-terminal",
+      "time": 51.76,
+      "frame_sha256": "055f194767b8194526a081a6cd79c0784fe882e3e0b09fc629454f90b547b59b"
+    },
+    {
+      "id": "card-ao-entry",
+      "time": 52.86,
+      "frame_sha256": "efba4a223dd2161b7e6498c6355fa4a166d0585c75c2cd20b6ea4d3d7782d56e"
+    },
+    {
+      "id": "card-ao-settled",
+      "time": 54.96,
+      "frame_sha256": "e37202b61edb28df6c8b712824ee0dbc3191ae6f9c96a60e8ed121a4d913ace6"
+    },
+    {
+      "id": "card-spring-entry",
+      "time": 56.98,
+      "frame_sha256": "dfc0834c97a7e5835cb9f3d5ca2bd29a38b03d5e2fbcefcd80147ac9262c7527"
+    },
+    {
+      "id": "card-spring-settled",
+      "time": 59.08,
+      "frame_sha256": "696b716f882ffafe34900b3d5387ea9174439466357f1d35805382a645f3db98"
+    },
+    {
+      "id": "card-linz-entry",
+      "time": 61.26,
+      "frame_sha256": "6d28ce3b9516016e9793d3032cc0621ed319778d613171ff627fb93e692e87e6"
+    },
+    {
+      "id": "card-linz-settled",
+      "time": 63.36,
+      "frame_sha256": "8bab7f2c13539a796a4cbc699f44db91d34d1e63660a6c6c6b5fa7762a9c8447"
+    },
+    {
+      "id": "linz-final-early",
+      "time": 69.6,
+      "frame_sha256": "92a6a10995d554bf74745e87c600d0eabba2b8b35a92f220eae92942e18288dc"
+    },
+    {
+      "id": "linz-final-terminal",
+      "time": 95.69999999999999,
+      "frame_sha256": "23d7714b8a263b594c0fe6211240d574baaf303de6b857cf439bf0e167330c2b"
+    },
+    {
+      "id": "card-madrid-entry",
+      "time": 96.8,
+      "frame_sha256": "ba463a514427f90614befedc5d8400d082191db0c8980d189b17dd467a52e13d"
+    },
+    {
+      "id": "card-madrid-settled",
+      "time": 98.9,
+      "frame_sha256": "2778074d93ee8582eda6e46dc7f9fbcb08a17d5c025595046ca0ead22b002d6d"
+    },
+    {
+      "id": "madrid-final-early",
+      "time": 103.78,
+      "frame_sha256": "0780ce96cb19e30bdd3ea5c328b2f6419556ee0235d35cb295070484fc3689f1"
+    },
+    {
+      "id": "madrid-final-terminal",
+      "time": 123.75,
+      "frame_sha256": "8692394034e485f373900a771f15c8019745276cd4b1ce610c29fd9be3e16513"
+    },
+    {
+      "id": "card-rg-entry",
+      "time": 124.85,
+      "frame_sha256": "75d0f503efa1b37bb8653045ad1acfb9cc8909705b164e8933d3f07e587f0637"
+    },
+    {
+      "id": "card-rg-settled",
+      "time": 126.95,
+      "frame_sha256": "747c440031f474799a77d8b9ff489d53f12a46693c23ab44a58e680f65ec4d47"
+    },
+    {
+      "id": "rg-final-early",
+      "time": 135.91,
+      "frame_sha256": "fd75d8d539a68fae99e5bb87ff29801b3d838bfea89e7cc6a05cfc074345104c"
+    },
+    {
+      "id": "rg-final-terminal",
+      "time": 161.51,
+      "frame_sha256": "4cfc6c1753882b0d00da88c55c9574cd94f3ac0f5c05d146d7b9c7176e35317e"
+    },
+    {
+      "id": "card-grass-entry",
+      "time": 162.61,
+      "frame_sha256": "0bff82f38003f081ce6d449cab23ddb2df8c3aad933c131bf8b2b2c7330f13a8"
+    },
+    {
+      "id": "card-grass-settled",
+      "time": 164.71,
+      "frame_sha256": "1c9d90e6ad10361baf37ac32f7825337e578db79d02cf86bc8af4190543979e6"
+    },
+    {
+      "id": "wimbledon-r2-early",
+      "time": 170.91,
+      "frame_sha256": "d855783b303585acb4a242bcd269bf59d636d80e567eb2e5e26a58ad113125d8"
+    },
+    {
+      "id": "wimbledon-r2-terminal",
+      "time": 199.41,
+      "frame_sha256": "292df3f2a09d465862794a1e40da19953bf96bcb1057662bd0c2cab220eb7383"
+    },
+    {
+      "id": "card-us-entry",
+      "time": 200.51,
+      "frame_sha256": "4f61e12bb492aa56a6182d6efa2a10e4123ad91c466c179391f0ba94b75463a8"
+    },
+    {
+      "id": "card-us-settled",
+      "time": 202.60999999999999,
+      "frame_sha256": "12427b6dc5066521d5e1b0e194e2369ab912920de681e98d693b7dcafa14bfc5"
+    },
+    {
+      "id": "us-qf-early",
+      "time": 208.45,
+      "frame_sha256": "716810fe719358ff5062f9b9f020eec0603991147079f21108d0083d5f41b58a"
+    },
+    {
+      "id": "us-qf-terminal",
+      "time": 233.35,
+      "frame_sha256": "9ce6568847ddc1f2b359f9b9c4367705a16c0fb417ab97e2b985ed430928fe85"
+    },
+    {
+      "id": "card-asia-entry",
+      "time": 234.45,
+      "frame_sha256": "7890374e7026a6dc1994ac9b109f3902c274cee7c6c5154124ae2282e6c84fa2"
+    },
+    {
+      "id": "card-asia-settled",
+      "time": 236.54999999999998,
+      "frame_sha256": "19f49d1f4919d3bac5e9ab8da362a1a0a992ab152d0a16918efdcdd8c7259d39"
+    },
+    {
+      "id": "card-beijing-entry",
+      "time": 242.36999999999998,
+      "frame_sha256": "7d4d5417b429021dd3e75a8a7c355802e7c942762e2f75f848bec3f308ade496"
+    },
+    {
+      "id": "card-beijing-settled",
+      "time": 244.39799999999997,
+      "frame_sha256": "69aee5d4ab9691300cb59203e3fb9f2da1e3ad3bc625944af0e04efedee00035"
+    },
+    {
+      "id": "card-ending-entry",
+      "time": 246.24999999999997,
+      "frame_sha256": "0e08a06bfec575dd0bb37bfac2e50f1e15353ef785c7c745803b1596592801f6"
+    },
+    {
+      "id": "card-ending-settled",
+      "time": 248.34999999999997,
+      "frame_sha256": "3e6b870d9e866b9a62684f350e9bacc4907ce3414fd7d571c0bb7d45a2505099"
+    },
+    {
+      "id": "brand-outro",
+      "time": 257.09,
+      "frame_sha256": "02d6aac569494d029a729cbfc2a9a40dcac22169533eb4b52482265f64a56b27"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "cold-quote",
+      "length": 16.7,
+      "start": 1.2,
+      "end": 17.9
+    },
+    {
+      "id": "card-intro",
+      "length": 7.72,
+      "start": 17.9,
+      "end": 25.619999999999997
+    },
+    {
+      "id": "card-january",
+      "length": 5.84,
+      "start": 25.619999999999997,
+      "end": 31.459999999999997
+    },
+    {
+      "id": "adelaide-final",
+      "length": 21.1,
+      "start": 31.459999999999997,
+      "end": 52.56
+    },
+    {
+      "id": "card-ao",
+      "length": 4.12,
+      "start": 52.56,
+      "end": 56.68
+    },
+    {
+      "id": "card-spring",
+      "length": 4.28,
+      "start": 56.68,
+      "end": 60.96
+    },
+    {
+      "id": "card-linz",
+      "length": 5.64,
+      "start": 60.96,
+      "end": 66.6
+    },
+    {
+      "id": "linz-final",
+      "length": 29.9,
+      "start": 66.6,
+      "end": 96.5
+    },
+    {
+      "id": "card-madrid",
+      "length": 4.28,
+      "start": 96.5,
+      "end": 100.78
+    },
+    {
+      "id": "madrid-final",
+      "length": 23.77,
+      "start": 100.78,
+      "end": 124.55
+    },
+    {
+      "id": "card-rg",
+      "length": 8.36,
+      "start": 124.55,
+      "end": 132.91
+    },
+    {
+      "id": "rg-final",
+      "length": 29.4,
+      "start": 132.91,
+      "end": 162.31
+    },
+    {
+      "id": "card-grass",
+      "length": 5.6,
+      "start": 162.31,
+      "end": 167.91
+    },
+    {
+      "id": "wimbledon-r2",
+      "length": 32.3,
+      "start": 167.91,
+      "end": 200.20999999999998
+    },
+    {
+      "id": "card-us",
+      "length": 5.24,
+      "start": 200.20999999999998,
+      "end": 205.45
+    },
+    {
+      "id": "us-qf",
+      "length": 28.7,
+      "start": 205.45,
+      "end": 234.14999999999998
+    },
+    {
+      "id": "card-asia",
+      "length": 7.92,
+      "start": 234.14999999999998,
+      "end": 242.06999999999996
+    },
+    {
+      "id": "card-beijing",
+      "length": 3.88,
+      "start": 242.06999999999996,
+      "end": 245.94999999999996
+    },
+    {
+      "id": "card-ending",
+      "length": 8.84,
+      "start": 245.94999999999996,
+      "end": 254.78999999999996
+    }
+  ],
+  "limits": "Frame sampling and native deterministic checks do not assert human audio listening or frame-by-frame manual inspection."
+}
