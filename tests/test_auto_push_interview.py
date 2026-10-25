@@ -578,6 +578,92 @@ def test_稀疏检出下原生双语开场也认得出(repo: Path):
     assert gate.validate_qc(repo, "demo", outdir)
 
 
+def test_稀疏检出下正文声音事件也认得出(repo: Path, monkeypatch):
+    """正文校验和冷开场是同一个坑：`bilingual_body_ok` 按磁盘读 ass 本体，
+    又按同目录的 `cap_*.json3` 算词空档；自动推送的 gate 排在
+    `git sparse-checkout add` 之前，output/ 不在盘上，空档一个都对不上，
+    正文一律被拦（2026-10-25 rybakina 宁波 run 40208250408 实撞）。
+    受跟踪字节先落临时目录再判——判的仍是 QC 绑定的同一批字节。
+    """
+    import build_interview_clip as clip
+    from interview_source_gate import finalize_source_contract
+
+    slug = "demo"
+    outdir = repo / f"output/interviews/{slug}"
+    spec_path = repo / "specs/interviews" / f"{slug}.json"
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+
+    source_sha = "a" * 64
+    proof_path = repo / "tools" / "gap-proof.json"
+    proof_path.parent.mkdir(parents=True, exist_ok=True)
+    proof_path.write_text(json.dumps({
+        "source_sha256": source_sha, "window": [3, 6],
+        "status": "uncertain speech identity, applause supported",
+        "method": "ASR plus AudioSet, no human listening claim",
+        "evidence": {"first": {"result": {"results": [{"model": "medium"}]}},
+                     "second": {"result": {"results": [{"model": "tiny"}]}},
+                     "audioset": {"result": []}},
+    }), encoding="utf-8")
+    spec["start"], spec["end"] = 0, 8
+    spec["asr_model"], spec["whisper_model"] = "small", "medium"
+    spec["zh"] = ["今天到场", "大家知道"]
+    spec["push"] = {"auto": True}
+    spec["source_verification"]["evidence"].append(
+        {"kind": "actual_source_file", "sha256": source_sha})
+    spec["caption_gap_annotations"] = [{
+        "start": 3, "end": 6, "kind": "applause_with_indistinct_voices",
+        "source_sha256": source_sha,
+        "evidence": {"path": "tools/gap-proof.json",
+                     "sha256": hashlib.sha256(
+                         proof_path.read_bytes()).hexdigest()},
+        "why": "Keep complete original audio and explicitly label unresolved "
+               "voices; no listening or silence attestation.",
+    }]
+    finalize_source_contract(spec)
+    spec_path.write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    spec_sha = hashlib.sha256(spec_path.read_bytes()).hexdigest()
+
+    (outdir / "cap_asr.json3").write_text(json.dumps({"events": [
+        {"tStartMs": 0, "dDurationMs": 3000, "segs": [{"utf8": "out today"}]},
+        {"tStartMs": 6000, "dDurationMs": 2000, "segs": [{"utf8": "Com sabeu"}]},
+    ]}), encoding="utf-8")
+    lines = [{"a": 0, "b": 4.4, "en": "out today."},
+             {"a": 6, "b": 8, "en": "Com sabeu."}]
+    (outdir / "lines.json").write_text(
+        json.dumps(lines), encoding="utf-8")
+    monkeypatch.setattr(clip, "ROOT", repo)
+    monkeypatch.setattr(clip, "wants_topbar", lambda _spec: False)
+    ass_path = outdir / f"{slug}.ass"
+    clip.write_ass(lines, spec["zh"], 0, ass_path, spec, duration=8)
+
+    cover_path = outdir / "cover_visual_attestation.json"
+    cover = json.loads(cover_path.read_text(encoding="utf-8"))
+    cover["spec_sha256"] = spec_sha
+    cover_path.write_text(json.dumps(cover, ensure_ascii=False), encoding="utf-8")
+    qc_path = outdir / "qc_attestation.json"
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    qc["spec_sha256"] = spec_sha
+    qc["source_attestation_sha256"] = \
+        spec["source_verification"]["attestation_sha256"]
+    qc["cover_visual_attestation_sha256"] = hashlib.sha256(
+        cover_path.read_bytes()).hexdigest()
+    qc["ass_sha256"] = hashlib.sha256(ass_path.read_bytes()).hexdigest()
+    qc["checks"]["bilingual_body_cues"] = 3
+    qc_path.write_text(json.dumps(qc, ensure_ascii=False), encoding="utf-8")
+    render_path = outdir / "render.json"
+    render = json.loads(render_path.read_text(encoding="utf-8"))
+    render["qc_attestation_sha256"] = hashlib.sha256(
+        qc_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(render, ensure_ascii=False), encoding="utf-8")
+    _commit_all(repo)
+
+    # 模拟稀疏检出：正文校验要按磁盘读的三件套不在工作区，只在仓库里。
+    ass_path.unlink()
+    (outdir / "cap_asr.json3").unlink()
+    (outdir / "lines.json").unlink()
+    gate.wants_auto_push(repo, slug, outdir)  # 过不了闸就 Skip，走到这行即通过
+
+
 @pytest.mark.parametrize("missing_style", ["EN", "ZH"])
 def test_发布拒绝原生开场缺少一种语言(repo: Path, missing_style):
     outdir = _native_opening(repo, missing_style=missing_style)

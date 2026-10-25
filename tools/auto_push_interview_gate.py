@@ -158,6 +158,29 @@ def _load_ledger(repo: Path, slug: str, *, allow_untracked: bool = False) -> dic
     return data
 
 
+def _body_check_filenames(repo: Path, outdir: Path, slug: str) -> list[str]:
+    """`bilingual_body_ok` 会按磁盘读的同目录文件：正文字幕、转写缓存、切行记录。
+
+    只列**受跟踪**的（`git ls-files`，稀疏检出下照样认得）；工作区里有
+    没有都不算数——output/ 不在盘上正是正文校验要在临时目录里重演的原因。
+    转写缓存按 `cap_*.json3` 全量取：`pick_caption` 在多份缓存里挑哪一份
+    取决于目录里有哪些文件，少落一份就可能挑错、算出另一组空档。
+    """
+    import subprocess
+
+    rel = outdir.relative_to(repo) if outdir.is_absolute() else outdir
+    proc = subprocess.run(
+        ["git", "-C", str(repo), "ls-files", "--", rel.as_posix()],
+        capture_output=True, check=False, text=True)
+    names = []
+    for line in proc.stdout.splitlines():
+        name = Path(line.strip()).name
+        if (name == f"{slug}.ass" or name == "lines.json"
+                or (name.startswith("cap_") and name.endswith(".json3"))):
+            names.append(name)
+    return names
+
+
 def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     """L3 发布前复核 L0/L2 凭证与当前 spec/render 完全对应。返回成片哈希。"""
     qc_path = outdir / "qc_attestation.json"
@@ -234,10 +257,22 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
         ass_path = outdir / f"{slug}.ass"
         if not tracked(repo, ass_path) or qc.get("ass_sha256") != _sha256_bytes(_tracked_bytes(repo, ass_path)):
             raise Skip(f"{slug}：声音事件双语字幕与 QC 字节不一致")
-        body_ok, detail = bilingual_body_ok(ass_path, spec)
-        if not body_ok:
-            raise Skip(f"{slug}：L2 正文与保守声音事件验证失败（{detail}）")
-        expected_body = len(_ass_body_events(ass_path)["EN"])
+        # 稀疏检出下 output/ 不在工作区（gate 排在「放进稀疏范围」之前），
+        # `bilingual_body_ok` 按磁盘读 ass 本体、又按同目录的 cap_*.json3
+        # 算词空档——读不到就空档一个都对不上、正文一律被拦（2026-10-25
+        # rybakina 宁波点名/自动两路都撞上，run 40208250408）。比照下面
+        # 冷开场校验 2026-10-18 的修法：把正文校验要读的那批受跟踪字节
+        # （ass＋cap_*.json3＋lines.json）落进临时目录再判，判的仍是 QC
+        # 绑定的同一批字节，判据与阈值一字不动。
+        import tempfile  # noqa: PLC0415
+        with tempfile.TemporaryDirectory() as tmp:
+            tmpdir = Path(tmp)
+            for name in _body_check_filenames(repo, outdir, slug):
+                (tmpdir / name).write_bytes(_tracked_bytes(repo, outdir / name))
+            body_ok, detail = bilingual_body_ok(tmpdir / f"{slug}.ass", spec)
+            if not body_ok:
+                raise Skip(f"{slug}：L2 正文与保守声音事件验证失败（{detail}）")
+            expected_body = len(_ass_body_events(tmpdir / f"{slug}.ass")["EN"])
     expected_lead = len(((spec.get("lead_in") or {}).get("subs") or []))
     if not expected_body or checks.get("bilingual_body_cues") != expected_body:
         raise Skip(f"{slug}：QC 没有逐 cue 证明采访正文中英字幕完整")
