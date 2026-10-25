@@ -1,0 +1,62 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-staylive667406/667406-72981da6.mp4",
+  "source_sha256": "72981da688217a1048ff6e924f97df6dfccd2206f5cc6e32ba632a22bafde044",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-25T13:13:40+00:00",
+  "reviewed_from": 1655.0,
+  "reviewed_to": 1785.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1664.5,
+      "end": 1666.7,
+      "en": "No, you're kidding.",
+      "zh": "不敢相信"
+    },
+    {
+      "start": 1674.4,
+      "end": 1678.8,
+      "en": "Like I said, she's inevitable.",
+      "zh": "我说过，她势不可挡"
+    },
+    {
+      "start": 1701.1,
+      "end": 1724.6,
+      "en": "So much to celebrate for Anna Pushkareva: junior Wimbledon champion, US Open finalist, and over $18,000 in travel grants.",
+      "zh": "普什卡列娃同样值得庆祝\n温网冠军、美网亚军，还有一万八千美元资助"
+    },
+    {
+      "start": 1729.7,
+      "end": 1737.9,
+      "en": "The story of the 2026 junior calendar is what Sun Xinran has accomplished.",
+      "zh": "二〇二六青少年赛季的故事\n就是孙心然写下的"
+    },
+    {
+      "start": 1748.8,
+      "end": 1759.3,
+      "en": "French Open finalist, Wimbledon finalist, US Open champion — and now your 2026 Junior Finals champion!",
+      "zh": "法网亚军、温网亚军、美网冠军\n现在是成都总决赛的冠军"
+    },
+    {
+      "start": 1759.3,
+      "end": 1765.7,
+      "en": "The Sun shines in Chengdu.",
+      "zh": "阳光，照耀成都"
+    },
+    {
+      "start": 1765.7,
+      "end": 1774.9,
+      "en": "Sun Xinran: 40 and 3 on this 2026 season at the junior level.",
+      "zh": "这个赛季，她四十胜三负"
+    },
+    {
+      "start": 1776.5,
+      "end": 1784.4,
+      "en": "Eight events, seven finals, and another crown to her name.",
+      "zh": "八站比赛，七进决赛，又一冠"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 72981da688217a1048ff6e924f97df6dfccd2206f5cc6e32ba632a22bafde044，存于 data/source_asr/667406/small.en.json 与 data/source_asr/667406/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
