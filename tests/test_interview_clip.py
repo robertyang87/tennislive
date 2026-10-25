@@ -2078,7 +2078,11 @@ _DROP_NAMES = {"cover.html", "whisper.json"}
 #
 # ⚠️ **不许改成「目录一律跳过」**：那会让下一个中间物目录静静地进仓库，
 # 而这条判据存在的全部意义就是「新增一个中间物，这条会红」。
-_KEEP_DIRS = {"visual_audit_history"}
+#
+# `evidence/` 同理（2026-10-25）：空档声音证据 `independent-audioset.json` 由
+# `data/audio_reviews/<slug>/gap-*-conservative-proof.json` 按路径和 sha256 引着，
+# 删了它那份证明就复核不了。
+_KEEP_DIRS = {"visual_audit_history", "evidence"}
 
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
