@@ -30,45 +30,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.18
   },
-  "film_sha256": "2abb6cb7ca200c81a6f2c63776a048fc8d1d2245325e6a1979d1c16a6bc14674",
+  "film_sha256": "fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
   "film_seconds": 127.44,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "rybakina-fernandez-ningbo-2026-f-speech",
-    "received_at": "2026-10-25T14:02:55Z",
-    "artifact_ready_at": "2026-10-25T14:13:01Z",
-    "elapsed_seconds": 606.602,
-    "budget_seconds": 600,
-    "met": false,
-    "film_sha256": "2abb6cb7ca200c81a6f2c63776a048fc8d1d2245325e6a1979d1c16a6bc14674",
-    "spec_sha256": "7a35a1e95fb82fef9f96c2253f2b5124071d953173ecd06485a6040c71319189",
-    "run_id": "40200809581",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-25T14:09:30Z",
-        "run_id": "40200809581"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-25T14:10:39Z",
-        "run_id": "40200809581"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-25T14:11:37Z",
-        "run_id": "40200809581"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-25T14:11:38Z",
-        "run_id": "40200809581"
-      }
-    ],
-    "render_seconds": 83.602,
-    "pre_render_seconds": 523.0
-  },
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -125,37 +88,113 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-25T14:09:30Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:06:42Z",
+      "run_id": "40205309623"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-25T14:10:39Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:07:49Z",
+      "run_id": "40205309623"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-25T14:11:37Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:07:59Z",
+      "run_id": "40205309623"
     },
     {
       "stage": "render",
-      "at": "2026-10-25T14:11:38Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:08:01Z",
+      "run_id": "40205309623"
     },
     {
       "stage": "qc",
-      "at": "2026-10-25T14:13:02Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:09:25Z",
+      "run_id": "40205309623"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-25T14:13:03Z",
-      "run_id": "40200809581"
+      "at": "2026-10-25T15:09:25Z",
+      "run_id": "40205309623"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-fernandez-ningbo-2026-f-speech/rybakina-fernandez-ningbo-2026-f-speech.mp4?v=2abb6cb7ca200c81",
-  "video_bytes": 31984548,
-  "release_asset_digest": "sha256:2abb6cb7ca200c81a6f2c63776a048fc8d1d2245325e6a1979d1c16a6bc14674",
-  "qc_attestation_sha256": "4fc405512190d729494e7d0a0774f3bd891db03679ba6db5ed120630ea7bab16"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-rybakina-fernandez-ningbo-2026-f-speech/rybakina-fernandez-ningbo-2026-f-speech.mp4?v=fc5d21986115f303",
+  "video_bytes": 31994589,
+  "release_asset_digest": "sha256:fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
+  "qc_attestation_sha256": "6821177c6cb020b1837ba74c22d01240c38e7c617b2df4461c7d5a8c87732305",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "rybakina-fernandez-ningbo-2026-f-speech",
+      "received_at": "2026-10-25T14:02:55Z",
+      "artifact_ready_at": "2026-10-25T14:13:01Z",
+      "elapsed_seconds": 606.602,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "2abb6cb7ca200c81a6f2c63776a048fc8d1d2245325e6a1979d1c16a6bc14674",
+      "spec_sha256": "7a35a1e95fb82fef9f96c2253f2b5124071d953173ecd06485a6040c71319189",
+      "run_id": "40200809581",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-25T14:09:30Z",
+          "run_id": "40200809581"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-25T14:10:39Z",
+          "run_id": "40200809581"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-25T14:11:37Z",
+          "run_id": "40200809581"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-25T14:11:38Z",
+          "run_id": "40200809581"
+        }
+      ],
+      "render_seconds": 83.602,
+      "pre_render_seconds": 523.0
+    }
+  ],
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "rybakina-fernandez-ningbo-2026-f-speech",
+    "received_at": "2026-10-25T14:35:03Z",
+    "artifact_ready_at": "2026-10-25T15:09:24Z",
+    "elapsed_seconds": 2061.153,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "fc5d21986115f303fa7c1ce124e823b7a623cbc5107d235e531f56539a57ec5a",
+    "spec_sha256": "f2097cb57d5fb35b4090210cd8b85ec1c4ab0ec322f4d42d38c82ae8aea77794",
+    "run_id": "40205309623",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-25T15:06:42Z",
+        "run_id": "40205309623"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-25T15:07:49Z",
+        "run_id": "40205309623"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-25T15:07:59Z",
+        "run_id": "40205309623"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-25T15:08:01Z",
+        "run_id": "40205309623"
+      }
+    ],
+    "render_seconds": 83.153,
+    "pre_render_seconds": 1978.0
+  }
 }
