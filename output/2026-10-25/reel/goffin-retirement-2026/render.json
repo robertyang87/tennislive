@@ -1,0 +1,116 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "ddeabd207882ceae6fc3aab73c2ae6ffa70b16fba5ec33274c13e166803c7c09",
+    "request_count": 32,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-goffin-retirement-2026-ddeabd207882ceae",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-goffin-retirement-2026-ddeabd207882ceae/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40165017682"
+  },
+  "cover_seconds": 4.834,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 433.47,
+  "topbar": null,
+  "film_seconds": 442.9,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 14.928,
+    "1": 5.736,
+    "2": 2.928,
+    "3": 31.704,
+    "5": 3.048,
+    "6": 13.704,
+    "7": 10.752,
+    "8": 3.624,
+    "9": 18.864,
+    "10": 5.088,
+    "12": 8.496,
+    "13": 5.76,
+    "14": 3.216,
+    "15": 12.96,
+    "16": 5.928,
+    "18": 7.944,
+    "19": 9.6,
+    "20": 14.184,
+    "22": 3.144,
+    "23": 10.248,
+    "24": 15.576,
+    "26": 5.76,
+    "27": 11.76,
+    "28": 2.976,
+    "29": 12.576,
+    "30": 6.288,
+    "31": 7.656,
+    "33": 9.72,
+    "35": 7.392,
+    "36": 2.904
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "29c9cf3d1b1706d4c392a02e67a887e7ce462dd366146c616cc2c79afff9c4bd",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "goffin-retirement-2026",
+    "received_at": "2026-10-25T05:18:00Z",
+    "artifact_ready_at": "2026-10-25T05:32:13Z",
+    "elapsed_seconds": 853.098,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "da553f43402a313615a1778129073f6122b6f171f913bca04b3c413eff322fa4",
+    "spec_sha256": "4a893e326b80d91637c974a5fedbbfe9a77be6c724476504f2f0a0e94c886a50",
+    "run_id": "40165017682",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-25T05:23:19Z",
+        "run_id": "40165017682"
+      }
+    ],
+    "render_seconds": 534.098,
+    "pre_render_seconds": 319.0
+  },
+  "film_sha256": "da553f43402a313615a1778129073f6122b6f171f913bca04b3c413eff322fa4",
+  "film_bytes": 189209147,
+  "qc_attestation_sha256": "0133d9073907e0802830454b5115e41ce6cac68e65a12e73c4935c1fefd2ec29",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-25T05:23:19Z",
+      "run_id": "40165017682"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-25T05:32:17Z",
+      "run_id": "40165017682"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-goffin-retirement-2026/goffin-retirement-2026.mp4",
+  "video_bytes": 189209147,
+  "_release_tag_note": "2026-10-25T05:32:26Z run 40165017682 把这一份（video_bytes 189209147）传上 tag `reel-goffin-retirement-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-24/reel/goffin-retirement-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
