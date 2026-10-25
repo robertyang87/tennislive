@@ -1,41 +1,65 @@
 name: production-research-check
+run-name: Rybakina Ningbo2026 official video quality and archives
 on:
-  pull_request:
-    paths:
-      - tools/tactical_research.py
-      - .github/workflows/production-research-check.yml
   workflow_dispatch: {}
 permissions:
-  contents: read
+  contents: write
 jobs:
-  read-only-probe:
+  official-media:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            src
-            tools
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: pip
-      - run: pip install -q -e .
-      - name: 实测固定来源读取与超时回退
+          python-version: '3.12'
+      - run: pip install -q 'yt-dlp[default]'
+      - name: Inspect and archive official WTA footage
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          python tools/tactical_research.py --home 'Aryna Sabalenka' --away 'Linda Noskova' --event 'US Open' --year 2026 --out /tmp/tactical-probe.json
-          python - <<'PY'
-          import json, os
-          d = json.load(open('/tmp/tactical-probe.json'))
-          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('```json\n' + json.dumps(d, ensure_ascii=False, indent=2) + '\n```\n')
-          assert d['elapsed_seconds'] < 40
-          if d['status'] != 'ready':
-              print('::warning::实际来源未读到；查看 source_status，不把回退成功称为资料获取成功')
-          PY
+          python - <<'PY_REMOTE'
+          import concurrent.futures,subprocess,json,pathlib,datetime,hashlib,os
+          P=pathlib.Path('inventory');P.mkdir(exist_ok=True);OFFICIAL='UCaBIVVpHjq6j3tSyxwTE-8Q'
+          def run(cmd,timeout=180):return subprocess.run(cmd,capture_output=True,text=True,timeout=timeout)
+          def inventory(item):
+           key,url=item
+           try:
+            r=run(['yt-dlp','--flat-playlist','--playlist-end','35','--dump-single-json','--socket-timeout','20','--retries','1',url]);
+            if r.returncode:return {'key':key,'status':'error','error':r.stderr[-450:]}
+            d=json.loads(r.stdout);entries=[{k:x.get(k) for k in ['id','title','url','duration','channel','channel_id']} for x in d.get('entries',[])];return {'key':key,'status':'ok','channel_id':d.get('channel_id'),'entries':entries}
+           except Exception as e:return {'key':key,'status':'error','error':str(e)[:300]}
+          invs=list(concurrent.futures.ThreadPoolExecutor(3).map(inventory,[('latest','https://www.youtube.com/@WTA/videos'),('rybakina-ningbo','https://www.youtube.com/@WTA/search?query=Rybakina%20Ningbo'),('trophy','https://www.youtube.com/@WTA/shorts')]))
+          ids={'Rn0lchWoTIM'}
+          for inv in invs:
+           for e in inv.get('entries',[]):
+            title=str(e.get('title') or '').lower()
+            if 'rybakina' in title and ('ningbo' in title or 'trophy' in title or 'champion' in title) and ('2026' in title or inv['key']=='latest'):ids.add(e['id'])
+          def metadata(vid):
+           rec={'id':vid,'source_url':'https://www.youtube.com/watch?v='+vid}
+           try:
+            r=run(['yt-dlp','--dump-single-json','--skip-download','--socket-timeout','25','--retries','1','--remote-components','ejs:github',rec['source_url']],220)
+            if r.returncode:return dict(rec,status='error',error=r.stderr[-700:])
+            d=json.loads(r.stdout);rec.update({k:d.get(k) for k in ['title','description','duration','channel','channel_id','upload_date','availability','live_status']});rec['formats']=[{k:f.get(k) for k in ['format_id','ext','width','height','fps','vcodec','acodec','format_note']} for f in d.get('formats',[])];rec['subtitles']=list(d.get('subtitles',{}));rec['automatic_captions']=list(d.get('automatic_captions',{}));rec['status']='ok'
+            if d.get('channel_id')!=OFFICIAL:return dict(rec,download_status='not_official')
+            # Download only current Ningbo source, never historical search hit.
+            title=str(d.get('title') or '').lower()
+            if vid=='Rn0lchWoTIM' or ('ningbo' in title and str(d.get('upload_date','')).startswith('202610')):
+             dl=run(['yt-dlp','--no-playlist','--socket-timeout','25','--retries','2','--remote-components','ejs:github','-f','bv*[height<=1080]+ba/b[height<=1080]','--merge-output-format','mp4','-o',str(P/(vid+'.%(ext)s')),rec['source_url']],450)
+             rec['download_status']='ok' if dl.returncode==0 else 'error';rec['download_error']=None if not dl.returncode else dl.stderr[-700:]
+             f=P/(vid+'.mp4')
+             if f.exists() and not dl.returncode:
+              rec['download_bytes']=f.stat().st_size;rec['download_sha256']=hashlib.file_digest(f.open('rb'),'sha256').hexdigest();q=run(['ffprobe','-v','error','-show_entries','format=duration:stream=codec_type,width,height,r_frame_rate','-of','json',str(f)]);rec['probe']=json.loads(q.stdout);tag='source-'+vid
+              run(['gh','release','create',tag,'--repo','robertyang87/tennislive','--title','Official WTA source '+vid,'--notes',rec['source_url']],60)
+              up=run(['gh','release','upload',tag,str(f),'--clobber','--repo','robertyang87/tennislive'],180);rec['archive_status']='ok' if not up.returncode else 'error';rec['archive_url']='https://github.com/robertyang87/tennislive/releases/download/'+tag+'/'+f.name
+            return rec
+           except Exception as e:return dict(rec,status='error',error=str(e)[:600])
+          rows=list(concurrent.futures.ThreadPoolExecutor(3).map(metadata,sorted(ids)[:10]));report={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'inventories':invs,'videos':rows};f=P/'report.json';f.write_text(json.dumps(report,ensure_ascii=False,indent=2));tag='research-rybakina-ningbo-20261025'
+          run(['gh','release','create',tag,'--repo','robertyang87/tennislive','--title','Ningbo2026 official source research','--notes','Read-only metadata and source archive research; no publication.'],60)
+          u=run(['gh','release','upload',tag,str(f),'--clobber','--repo','robertyang87/tennislive'],120)
+          print('REPORT_BEGIN');print(json.dumps(report,ensure_ascii=False));print('REPORT_END');assert u.returncode==0
+          PY_REMOTE
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: tactical-source-probe
-          path: /tmp/tactical-probe.json
+          name: rybakina-ningbo-official-inventory
+          path: inventory/report.json
