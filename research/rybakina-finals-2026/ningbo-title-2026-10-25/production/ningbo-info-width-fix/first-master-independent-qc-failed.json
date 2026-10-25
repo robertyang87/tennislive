@@ -1,0 +1,121 @@
+{
+  "schema": "independent-actual-final-film-qc/v1",
+  "status": "blocked_one_information_card_face_occlusion",
+  "reviewed_at_utc": "2026-10-25T15:25:25.652664+00:00",
+  "film_sha256": "5ddd336d71be0e0f356ba6820499a081b8f86d410e187633b9f543e6188a6112",
+  "film_bytes": 125995003,
+  "spec_sha256": "f5c4a59e9cdffaee1d5da9514a553934fd1f5cf6a0cd1b905bd31961641f4b60",
+  "render_inputs_sha256": "856935c24424fcd024b18c35c108d2fba624ded3085a44379acc816027901ba4",
+  "ass_sha256": "7f6639eda1893c4e036553ecfbca8e8bd8567911c5304069b67cfb484c26ce41",
+  "qc_attestation_sha256": "991359dad8d80ad24da6840eaefdc6f408e9e08568214d05b75ccc4c8c247143",
+  "duration_seconds": 337.56,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "actual_sample_scope": {
+    "sample_files": 121,
+    "unique_encoded_positions": 121,
+    "contact_sheets_actually_opened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "native_frames_actually_opened": [
+      62,
+      76,
+      77,
+      78,
+      79,
+      80,
+      84,
+      90,
+      94,
+      69,
+      72,
+      108,
+      109,
+      115,
+      119
+    ],
+    "magnified_actual_frame_ROIs_actually_opened": [
+      78,
+      79,
+      80,
+      81
+    ],
+    "continuous_viewing_claimed": false,
+    "human_audio_listening_claimed": false,
+    "samples_directory": "/dev/shm/independent-rybakina-final-frames",
+    "manifest": "/dev/shm/independent-rybakina-final-frames/manifest.json"
+  },
+  "checks_passed": [
+    {
+      "check": "exact_master_and_native_certificate_bindings",
+      "evidence": "MP4actualhash/bytes andspec/render_inputs/ASS/qcattestation crossbindings all matched;probe actual1080x1440/25fps/AAC"
+    },
+    {
+      "check": "historical2025_flashback_clear",
+      "evidence": "Actual283.48/285.60/287.92frames show authenticNingbocup photo with2025lettering;subtitle去年宁波夺冠后/她在东京赶上年终末班车. Actual288.52/290.00/291.68showsRiyadhtrophykisswith随后五战全胜在利雅得封后. Returnchapter2026·重回宁波 separatesyears."
+    },
+    {
+      "check": "newNingbo_continuous_full_point_sequence",
+      "evidence": "23.68swindow actualencodedframes sampled preparation298.36/298.68,toss300.84,serve301.64,rally302.44/303.24/304.28/305.08,resultandwinnercloseup306.84/307.76/309.16,handshake314.64,wave321.16. Farserver ispinkskirtRybakina, nearreceiverwhite/tealFernandez. Nearreceiveroccasionallyleavesfixed3:4crop; no claim bothplayers visibleatalltimes."
+    },
+    {
+      "check": "newNingbo_caption_content_and_card_timing",
+      "evidence": "Actualcard says2026.10.25宁波决赛6-2 6-2; visibleincoming298.00/298.36 andthrough305.88;gone306.04(after8sec). NewthreeEnglish/Chineseresultclauses visibleat307.76/314.64/319.76."
+    },
+    {
+      "check": "person_centered_interview_and_three_bilingual_subtitles",
+      "evidence": "Actual322.12/322.84/323.64/324.04/324.72/326.32 showfullclearhead/face,mic,personcenteredfullbleed;threeclauses第二年来到这里/第二次夺冠/这里对我而言如此特别readable;noinfooncamera-speaker."
+    },
+    {
+      "check": "chapter_cards_do_not_carry_info",
+      "evidence": "Purechaptermidpoints inspected inall11contacts inclopening,clay,grass,Beijing/Wuhan,newreturn,newending;noauthoredmatchinfoonstaticchapters. Incomingtransitiondissolveisnotclaimedasastaticchapter."
+    },
+    {
+      "check": "new_ending_and_current_native_outro",
+      "evidence": "Actual327.32/329.92/332.72 ending这一程腾飞从宁波开始and年终她还能再次捧杯吗. Actual333.60/334.80/336.28/337.08 animatedclock/balland网球时差·网球有故事 plus时差归我好球归你;singlecolumnidentifier,nounrelatedfinalcard."
+    },
+    {
+      "check": "selected_US_RG_and_AO_scope",
+      "evidence": "ActualUS201.68/207.76/209.96/212.16/215.16/217.08 showofficialnewserve,result,raisedarmsandthreeumpirecaptions. ActualRG116.16/117.56/119.36/120.96/123.96/127.64 shownewterminalpointandStarodubtsevavictory. ActualAO16.68/20.48/26.36 correspondoriginalordinarybreakandoriginaltwoquotes;ownerkeep-originalexceptionretained,nofalseAOterminalpointapproval."
+    },
+    {
+      "check": "full_canvas_and_readability_sampled",
+      "evidence": "All121sampleframes are1080x1440;actualnewphotosandinterviewfillcanvas,eyes/mouthclearinthe15openedfullframesotherthanspecifiedfarplayerocclusion;labelsandbilingualcaptionslegibleonthereviewedsamples. Staticexistingofficialevidencephotosremainboundedcardsasoriginal,notmistakenforvideocrop."
+    }
+  ],
+  "issues": [
+    {
+      "severity": "must_fix_before_visual_acceptance",
+      "segment": 31,
+      "segment_id": "ningbo_title_matchpoint",
+      "movie_time_seconds": 304.28,
+      "movie_frame": 7607,
+      "requested_relative_seconds": 6.32,
+      "source_time_approx": "254.6s",
+      "finding": "Far-sideRybakinahead/facemovesunderthedate2026…ink;thedatecoversherforehead/eyesintheactualencodedframe. At303.24salreadynearleftdateedge;304.28frameconfirmsocclusion.",
+      "full_frame": "/dev/shm/independent-rybakina-final-frames/frame-081.jpg",
+      "full_frame_sha256": "1a5ce56c34a2a0e2e163b611c2bc3087d356a6a1339b5008998c49dcb0ad6e9a",
+      "magnified_ROI_sheet": "/dev/shm/independent-rybakina-final-frames/ningbo-far-player-info-risk-rois.jpg",
+      "recommendation": "AdjustonlyNingboinformation-cardgeometryafteractualaction-framepreflight;preservefullexactpoint,immediateappearanceand8smaximum;donotdelaylabelormoveitontoachaptercard. Rebindandrechecknewmaster,donottransplantthisoldmasterQC."
+    }
+  ],
+  "limitations": [
+    "Samplebasedactualfilmvisualreview,nocontinuousallfilmwatchclaim",
+    "No human listeningorvoiceprosodyapproval",
+    "Frameextractionandmetadataidentityalonearenotvisualacceptance"
+  ],
+  "earlier_text_QC": "facts/independent-editorial-qc-final-f5c4a59e9cdf.json"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "independent-native-preflight-qc-v1",
+  "reviewed_at_utc": "2026-10-25T15:39:07.503975+00:00",
+  "status": "pass_for_second_formal_render_only",
+  "scope": "Actual viewing of all four supplied native contact sheets (45 sampled positions), plus original full frames at relative6.32s and6.72s; this is not encoded-final acceptance.",
+  "inset_width": 0.5,
+  "findings": [
+    "The date no longer overlaps far-side Rybakina forehead or eyes at6.32s.",
+    "Serve and5.24–5.44s return action retain visible head/face and the relevant stroke.",
+    "At6.32s the names line partially crosses torso during recovery; no face overlap observed.",
+    "At6.72s racket approaches the names line while near-side Fernandez is receiving; proximity alone is not an additional blocker.",
+    "No concrete evidence in these samples requires reducing width to0.44."
+  ],
+  "unchanged_requirements": [
+    "show_after0",
+    "show_for8",
+    "cx0.5",
+    "same exact continuous source point and audio"
+  ],
+  "limitations": [
+    "Native preview only, not newly encoded final.",
+    "No human listening claim.",
+    "New encoded master must be independently rebound by SHA and sampled."
+  ],
+  "actually_opened_files": [
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/head-info-roi-contact-01.jpg",
+      "sha256": "d072cf0059351c28a20fcb8870132c7bdc99b9f34b8a224bad1ac1cc5d30c13d"
+    },
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/head-info-roi-contact-02.jpg",
+      "sha256": "be10a0865f31a006f732043afec41ca2a3bedbaa44a9ea2ee87ac74e47d3d6a9"
+    },
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/head-info-roi-contact-03.jpg",
+      "sha256": "0ed9e3a3739bf0443082b0622d3d3d621c4b03b654d05560f9e0aad3fc5c9064"
+    },
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/head-info-roi-contact-04.jpg",
+      "sha256": "f991e48d7b0aaf8315240b5185fdd554041b75ced53653dadd7acad3dadc2bcb"
+    },
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/frames-v2-batch-02/caption-10.png",
+      "sha256": "58329770a30c2077d62585d5c718e1de8422fa99b879e1dfe38814c7db9c92f8"
+    },
+    {
+      "path": "/dev/shm/rybakina-final/ningbo-width50-dense/frames-v2-batch-02/caption-13.png",
+      "sha256": "f5bc55505d376ff659413a8b71d7ede73047bef8f2f1cf91617d5f5d1b53c44b"
+    }
+  ]
+}
