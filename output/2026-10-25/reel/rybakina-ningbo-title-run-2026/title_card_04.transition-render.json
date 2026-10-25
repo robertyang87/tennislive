@@ -1,0 +1,186 @@
+{
+  "version": 2,
+  "key": "537880eb5fa05020bd8d82437d0a9577d2504f7deba1c03bdb368c69b140ffb4",
+  "sha256": "191a8396afd159ec2a86334ca919538cc01f07e9895f726b70a0a11194e48400",
+  "seconds": 11.6,
+  "fps": "25/1",
+  "size": [
+    1080,
+    1440
+  ],
+  "plan": {
+    "canvas_width": 1080,
+    "kind": "score_progress",
+    "lines": [
+      "6比1的顺风",
+      "变成决胜盘的考验"
+    ],
+    "font_px": 96,
+    "nodes": [
+      {
+        "label": "首盘",
+        "value": "6–1",
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      },
+      {
+        "label": "第二盘",
+        "value": "3–6",
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      }
+    ],
+    "direction": "horizontal",
+    "groups": [],
+    "proof_h": 218,
+    "node_height": 86,
+    "kicker_y": 394.12,
+    "headline_y": 478.12,
+    "proof_y": 791.88,
+    "safe_bottom": 1244,
+    "photo": null,
+    "highlight": "",
+    "kicker": "1/4决赛 · 卡瓦",
+    "content": {
+      "scores": [
+        {
+          "label": "首盘",
+          "value": "6–1",
+          "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+        },
+        {
+          "label": "第二盘",
+          "value": "3–6",
+          "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+        }
+      ]
+    },
+    "notes": []
+  },
+  "browser_evidence": {
+    "boxes": [
+      {
+        "text": "6比1的顺风",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 478.109375,
+          "width": 940,
+          "height": 122.875,
+          "top": 478.109375,
+          "right": 1010,
+          "bottom": 600.984375,
+          "left": 70
+        }
+      },
+      {
+        "text": "变成决胜盘的考验",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 600.984375,
+          "width": 940,
+          "height": 122.875,
+          "top": 600.984375,
+          "right": 1010,
+          "bottom": 723.859375,
+          "left": 70
+        }
+      },
+      {
+        "text": "首盘",
+        "width": 408,
+        "scroll": 408,
+        "rect": {
+          "x": 103,
+          "y": 816.875,
+          "width": 408,
+          "height": 39.1875,
+          "top": 816.875,
+          "right": 511,
+          "bottom": 856.0625,
+          "left": 103
+        }
+      },
+      {
+        "text": "6–1",
+        "width": 408,
+        "scroll": 408,
+        "rect": {
+          "x": 103,
+          "y": 868.0625,
+          "width": 408,
+          "height": 120,
+          "top": 868.0625,
+          "right": 511,
+          "bottom": 988.0625,
+          "left": 103
+        }
+      },
+      {
+        "text": "第二盘",
+        "width": 408,
+        "scroll": 408,
+        "rect": {
+          "x": 569,
+          "y": 816.875,
+          "width": 408,
+          "height": 39.1875,
+          "top": 816.875,
+          "right": 977,
+          "bottom": 856.0625,
+          "left": 569
+        }
+      },
+      {
+        "text": "3–6",
+        "width": 408,
+        "scroll": 408,
+        "rect": {
+          "x": 569,
+          "y": 868.0625,
+          "width": 408,
+          "height": 120,
+          "top": 868.0625,
+          "right": 977,
+          "bottom": 988.0625,
+          "left": 569
+        }
+      }
+    ],
+    "content": [
+      {
+        "x": 387,
+        "y": 394.109375,
+        "width": 306,
+        "height": 56,
+        "top": 394.109375,
+        "right": 693,
+        "bottom": 450.109375,
+        "left": 387
+      },
+      {
+        "x": 70,
+        "y": 478.109375,
+        "width": 940,
+        "height": 245.75,
+        "top": 478.109375,
+        "right": 1010,
+        "bottom": 723.859375,
+        "left": 70
+      },
+      {
+        "x": 90,
+        "y": 791.875,
+        "width": 900,
+        "height": 218,
+        "top": 791.875,
+        "right": 990,
+        "bottom": 1009.875,
+        "left": 90
+      }
+    ],
+    "story": null
+  },
+  "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
+}
