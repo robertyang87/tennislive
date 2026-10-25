@@ -1,0 +1,274 @@
+{
+  "schema": "independent-editorial-qc/v2",
+  "status": "pass_text_and_data_final_visual_review_pending",
+  "reviewed_at_utc": "2026-10-25T14:55:29.779208+00:00",
+  "review_scope": "Final read-only canonical text/data/source-quote-metadata consistency review after user-authorized AO original-window retention, replacement of US official terminal point, and RG true-terminal-point window. No movie/audio/image viewing or listening, rendering, or publication performed in this review.",
+  "files_sha256": {
+    "specs/reels/rybakina-finals-2026.json": "f5c4a59e9cdffaee1d5da9514a553934fd1f5cf6a0cd1b905bd31961641f4b60",
+    "research/rybakina-finals-2026/ningbo-title-2026-10-25/season-results-2026-10-25.json": "668b62e24b30f6769737b4dec47634a50bfd88a4f16394cd133be2fce7aec1e4",
+    "research/rybakina-finals-2026/ningbo-title-2026-10-25/season-all-events-2026-10-25.csv": "7a61cb2696ff19983220c76b8afebf9ebe5edd4606ba7c696f1869b65ce19fd2",
+    "specs/reels/rybakina-finals-2026.xhs.txt": "8fad2c3ba036e5cca68487da6da2958a5a76ebfde1eb62b2d22b008d44cf1c91"
+  },
+  "checks": [
+    {
+      "check": "six_new_tail_segments",
+      "pass": true,
+      "evidence": [
+        "ningbo_origin_2025",
+        "riyadh_title_2025",
+        "ningbo_return_2026",
+        "ningbo_title_matchpoint",
+        "ningbo_special_place",
+        "ending"
+      ]
+    },
+    {
+      "check": "explicit2025flashback_then2026return",
+      "pass": true,
+      "evidence": {
+        "origin_narration": "去年，宁波夺冠后，她在东京赶上年终末班车。",
+        "riyadh_narration": "随后五战全胜，在利雅得封后。",
+        "return_narration": "今年，两夺大满贯、登顶世界第一，她又回到宁波卫冕。",
+        "return_kicker": "2026 · 重回宁波"
+      }
+    },
+    {
+      "check": "tokyo_last_entry_date",
+      "pass": true,
+      "evidence": {
+        "canonical_fact": "2025-10-19宁波冠军后，10-23在东京进入4强才锁定第8席；11-08以5-0年终封后。",
+        "primary": "WTA4388394,2025-10-23T12:49Z; afterTokyoQFwinvsMboko,notNingbotitleday"
+      }
+    },
+    {
+      "check": "2026doublemajor_and_current_no1_scope",
+      "pass": true,
+      "evidence": {
+        "currentNo1_effective": "2026-09-14",
+        "2026majors": [
+          "AustralianOpen",
+          "USOpen"
+        ],
+        "year_endNo1_claimed": false
+      }
+    },
+    {
+      "check": "freshNingbofinal_and_counts",
+      "pass": true,
+      "evidence": {
+        "last_opponent": "Leylah Fernandez",
+        "last_score": "6-2 6-2",
+        "season_titles": [
+          "澳网",
+          "斯图加特",
+          "美网",
+          "宁波"
+        ],
+        "career_count": 15,
+        "primary": "WTA4598517 + officialevent2092/2026/LS001"
+      }
+    },
+    {
+      "check": "recomputed53W14L67played",
+      "pass": true,
+      "evidence": {
+        "recomputed_wins": 53,
+        "recomputed_losses": 14,
+        "recomputed_played": 67,
+        "declared_wl": "53–14"
+      }
+    },
+    {
+      "check": "NingboBye_excluded_RET_counted",
+      "pass": true,
+      "evidence": {
+        "entry_rows": 5,
+        "played": 4,
+        "bye": 1,
+        "retirement_win": "5-0vsPolinaKudermetova on2026-10-22",
+        "round_one_source": "officialMDS showsBye"
+      }
+    },
+    {
+      "check": "new_result_codes_normalized_in_both_mirrors",
+      "pass": true,
+      "evidence": {
+        "resolved_finding": "New Ningbo result胜 normalized toW in4nested+4flatrows;genericWcounter now53"
+      }
+    },
+    {
+      "check": "prior17events_and76entries_preserved",
+      "pass": true,
+      "evidence": {
+        "unchanged_prior_events": 17,
+        "unchanged_prior_entries": 76
+      }
+    },
+    {
+      "check": "18eventCSV_matches_JSON",
+      "pass": true,
+      "evidence": {
+        "rows": 18,
+        "issues": [],
+        "Ningbo_row": {
+          "event": "宁波",
+          "event_id": "2092",
+          "start": "2026-10-19",
+          "end": "2026-10-25",
+          "level": "WTA 500",
+          "surface": "Hard",
+          "result": "冠军",
+          "points": "500",
+          "played_matches": "4",
+          "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+        }
+      }
+    },
+    {
+      "check": "no_blind500Race_update",
+      "pass": true,
+      "evidence": {
+        "race_points": null,
+        "race_note": "Historical Race7502 is not refreshed by simply adding500; no unverified current Race total is displayed.",
+        "CSV_event_points_sum": 8002,
+        "scope": "8002 is only an arithmetic sum of18event awards,not asserted asRace"
+      }
+    },
+    {
+      "check": "oldNingbonoResult_copy_removed",
+      "pass": true,
+      "evidence": {
+        "ningbo_result_visible_in": [
+          "push.lead",
+          "XHSbody",
+          "segments.ningbo_return_2026.narration",
+          "segments.ningbo_title_matchpoint.inset.label"
+        ]
+      }
+    },
+    {
+      "check": "2026officialqualification_date_preserved",
+      "pass": true,
+      "evidence": {
+        "primary": "WTA4575967; formal announcement andNo1effectiveSep14, not claimed onSep12finalday"
+      }
+    },
+    {
+      "check": "pushXHS_consistent_and_compact",
+      "pass": true,
+      "evidence": {
+        "XHS_chars": 522,
+        "tags": [
+          "#莱巴金娜",
+          "#网球有故事",
+          "#网球时差",
+          "#WTA年终总决赛",
+          "#网球时间到"
+        ],
+        "push_summary": "莱巴金娜宁波再捧杯"
+      }
+    },
+    {
+      "check": "unchanged_ningbo_tail_editorial_and_data_after_source_updates",
+      "pass": true,
+      "evidence": {
+        "four_spoken_texts_exactly_unchanged": {
+          "ningbo_origin_2025": "去年，宁波夺冠后，她在东京赶上年终末班车。",
+          "riyadh_title_2025": "随后五战全胜，在利雅得封后。",
+          "ningbo_return_2026": "今年，两夺大满贯、登顶世界第一，她又回到宁波卫冕。",
+          "ending": "这一程腾飞，从宁波开始。年终，她还能再次捧杯吗？"
+        },
+        "season_JSON_CSV_XHS_SHAunchanged": {
+          "research/rybakina-finals-2026/ningbo-title-2026-10-25/season-results-2026-10-25.json": "668b62e24b30f6769737b4dec47634a50bfd88a4f16394cd133be2fce7aec1e4",
+          "research/rybakina-finals-2026/ningbo-title-2026-10-25/season-all-events-2026-10-25.csv": "7a61cb2696ff19983220c76b8afebf9ebe5edd4606ba7c696f1869b65ce19fd2",
+          "specs/reels/rybakina-finals-2026.xhs.txt": "8fad2c3ba036e5cca68487da6da2958a5a76ebfde1eb62b2d22b008d44cf1c91"
+        }
+      }
+    },
+    {
+      "check": "AO_original_retention_follows_explicit_owner_scope",
+      "pass": true,
+      "evidence": {
+        "window": [
+          163.35,
+          179.6
+        ],
+        "ordinary_break_point": true,
+        "terminal_match_point_claimed": false,
+        "two_quotes_match_prior_original": true,
+        "owner_reply_recorded": "先保持原来的吧",
+        "note": "Specific owner scope exception is not expanded to other matches."
+      }
+    },
+    {
+      "check": "US_official_replacement_source_and_three_quotes_consistent",
+      "pass": true,
+      "evidence": {
+        "source": "https://www.youtube.com/watch?v=_1dOo30-iAM",
+        "source_sha256_from_bound_handoff": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+        "window": [
+          0,
+          17.4
+        ],
+        "quote_count": 3,
+        "quotes_match_exact_bound_handoff": true,
+        "stale_firstset_context_found": false,
+        "actual_visual_completion_not_reverified_in_text_review": true
+      }
+    },
+    {
+      "check": "RG_true_terminal_point_context_consistent_after_cleanup",
+      "pass": true,
+      "evidence": {
+        "window": [
+          166.84,
+          179.55
+        ],
+        "text_context": "deciding tiebreak9-4",
+        "old_firstset2-0_not_matchpoint_metadata_removed": true,
+        "old_4_6_8_10_12_14_fullcanvas_metadata_removed": true,
+        "commentary_state": "no foreground English claimed; quotesempty and native audio retained",
+        "actual_visual_completion_not_reverified_in_text_review": true
+      }
+    }
+  ],
+  "issues": [],
+  "resolved_findings": [
+    {
+      "field": "season.events[-1].matches[1:5].result and season.matches[-4:].result",
+      "before": "胜",
+      "after": "W",
+      "verified": "53genericWrows+14Lrows=67played"
+    },
+    {
+      "field": "segments[_id=rg_r2]._clip_context and ._full_canvas_review",
+      "before": "Old first-set2-0/not_match_point metadata contradicted new166.84–179.55 terminal point",
+      "after": "Both stale metadata fields removed before final freeze",
+      "scope": "No video/narration parameters changed by this reviewer."
+    }
+  ],
+  "nonblocking_notes": [
+    {
+      "field": "season.events[0:17].finish and CSV prior17result cells",
+      "note": "Inherited technicalfinishlabels16强/64强/32强 preserved byte-for-byte as requested; outward2026narration andnewXHS correctly say actualrounds, e.g.法网第二轮/温网第三轮. This review does not silently rewrite historical records."
+    },
+    {
+      "field": "ending.narration",
+      "note": "“这一程腾飞，从宁波开始” is editorial interpretation of2025late-season resurgence, supported by player2026official“special place / started to play really well from this tournament” statement, not a claim Ningbo began her career."
+    }
+  ],
+  "supersedes": {
+    "file": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/facts/independent-editorial-qc.json",
+    "spec_sha256": "8562b49a5b88a93b4373126e9fb3a69fd1ed1420bd945ba92ffeb5208862e614",
+    "original_preserved": true
+  },
+  "revision_note": "This new immutable QC version binds the final current SHA. Since the earlier review, the Ningbo narrative,18eventdata,CSVandXHScopy are unchanged. Changes concern AOownerkeep-original decision, USofficialsource/quotes, RGterminalpoint/source-window metadata, and related production metadata; no old QC record is overwritten.",
+  "pending_actual_film_QC": [
+    "Actual final encoded master identity",
+    "Historical2025flashback/date clarity",
+    "NewNingbofullpreparation/serve/rally/result/reaction",
+    "Actualceremonysentence/crop/captionwindow",
+    "Latestfont/fullcanvas/transitionnoinfo",
+    "Currentbrandoutro"
+  ]
+}

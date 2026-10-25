@@ -1,0 +1,169 @@
+{
+  "as_of_utc": "2026-10-25T13:34:23.938480+00:00",
+  "scope": "Ningbo2026 title update and factual2025-to2026 closing narrative; no publishing or repo edits",
+  "ningbo_2026": {
+    "event_id": 2092,
+    "level": "WTA500",
+    "dates": [
+      "2026-10-19",
+      "2026-10-25"
+    ],
+    "result": "冠军/卫冕",
+    "final_date": "2026-10-25",
+    "final_opponent": "Leylah Fernandez",
+    "final_score_winner_perspective": "6-2 6-2",
+    "season_title_number": 4,
+    "career_title_number": 15,
+    "season_played_wins": 53,
+    "season_played_losses": 14,
+    "round_one": "BYE, not a played win",
+    "played_matches": [
+      {
+        "date_utc": "2026-10-22",
+        "round": "第二轮",
+        "match_id": "LS008",
+        "opponent": "Polina Kudermetova",
+        "winner": "Elena Rybakina",
+        "score_winner_perspective": "5-0 Ret'd",
+        "retirement": true,
+        "played_match": true,
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      },
+      {
+        "date_utc": "2026-10-23",
+        "round": "1/4决赛",
+        "match_id": "LS004",
+        "opponent": "Katarzyna Kawa",
+        "winner": "Elena Rybakina",
+        "score_winner_perspective": "6-1,3-6,6-1",
+        "retirement": false,
+        "played_match": true,
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      },
+      {
+        "date_utc": "2026-10-24",
+        "round": "半决赛",
+        "match_id": "LS002",
+        "opponent": "Diana Shnaider",
+        "winner": "Elena Rybakina",
+        "score_winner_perspective": "6-3,7-5",
+        "retirement": false,
+        "played_match": true,
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      },
+      {
+        "date_utc": "2026-10-25",
+        "round": "决赛",
+        "match_id": "LS001",
+        "opponent": "Leylah Fernandez",
+        "winner": "Elena Rybakina",
+        "score_winner_perspective": "6-2,6-2",
+        "retirement": false,
+        "played_match": true,
+        "source": "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C"
+      }
+    ],
+    "matches_played_count": 4,
+    "completed_without_retirement_count": 3,
+    "retirement_win_count": 1,
+    "bye_count": 1,
+    "first_title_as_no1": true,
+    "first_successful_singles_title_defense": true,
+    "ranking_points_awarded_for_event": 500,
+    "net_race_change": "not established; do not claim fresh total or net +500",
+    "primary_sources": [
+      "https://www.wtatennis.com/news/4598517/by-the-numbers-rybakina-wins-ningbo-open-for-tour-leading-fourth-title-of-season",
+      "https://api.wtatennis.com/tennis/tournaments/2092/2026/matches?states=C",
+      "https://wtafiles.wtatennis.com/pdf/draws/2026/2092/MDS.pdf"
+    ]
+  },
+  "history": [
+    {
+      "date": "2025-10-19",
+      "event": "Ningbo",
+      "claim": "冠军，决赛胜Ekaterina Alexandrova 3-6 6-0 6-2；尚未锁定年终，仍需东京至少4强",
+      "source": "https://www.wtatennis.com/news/4385270/perfect-10-rybakina-defeats-alexandrova-to-claim-milestone-ningbo-title"
+    },
+    {
+      "date": "2025-10-23",
+      "event": "Tokyo",
+      "claim": "1/4决赛胜Victoria Mboko，进入4强，WTA当天12:49Z官宣第八位最后入围者",
+      "source": "https://www.wtatennis.com/news/4388394/rybakina-secures-qualification-for-wta-finals-to-set-star-studded-singles-field"
+    },
+    {
+      "date": "2025-11-08",
+      "event": "WTA Finals Riyadh",
+      "claim": "5-0不败夺冠，决赛胜Sabalenka 6-3 7-6(0)",
+      "sources": [
+        "https://www.wtatennis.com/news/4398548/rybakina-takes-down-sabalenka-to-close-2025-with-wta-finals-crown",
+        "https://www.wtatennis.com/news/4398611/champions-corner-catching-up-with-wta-finals-champion-elena-rybakina"
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "event": "WTA ranking/Finals qualification",
+      "claim": "同日正式登顶世界第一、本届年终首位单打入围者；2026澳网和美网为其两座赛季大满贯",
+      "source": "https://www.wtatennis.com/news/4575967/defending-wta-finals-champion-elena-rybakina-becomes-first-singles-qualifier"
+    }
+  ],
+  "season_record_method": {
+    "fresh_player_api": "https://api.wtatennis.com/tennis/players/324166/matches?year=2026&type=S&page=0&pageSize=200&sort=desc",
+    "api_rows": 76,
+    "baseline_played_wins": 49,
+    "baseline_played_losses": 14,
+    "baseline_bye_rows": 13,
+    "baseline_latest_event": "Beijing",
+    "fresh_event_rows_added": 4,
+    "retirement_treated_as_played": "Yes, including2026Ningbo5-0opponentRET; excludeBYE andWO",
+    "combined_record": "53-14",
+    "independent_primary_crosscheck": "WTA4598517 explicitly states 53rd tour-level match win"
+  },
+  "data_quality_warnings": [
+    {
+      "issue": "Today WTA4598517 paragraph8 misidentifies2025 Ningbo final opponent as Mirra Andreeva",
+      "resolution": "2025 original official report4385270 and actual2025 title photograph take precedence: opponentEkaterinaAlexandrova,3-6 6-0 6-2",
+      "do_not_repeat_outward": true
+    },
+    {
+      "issue": "Fresh player-season match API does not yet include Ningbo2026",
+      "resolution": "Use fresh event2092/2026 official match list+MDS and baseline49-14 to derive53-14; do not claim playerAPIalonealready53-14"
+    }
+  ],
+  "narrative_audit": {
+    "recommended_text": "去年，宁波捧杯后，她在东京赶上年终末班车，随后五战全胜，年终封后。今年，两夺大满贯、登上世界第一，她又回宁波卫冕。这一程腾飞，从宁波开始。",
+    "characters_including_punctuation": 69,
+    "status": "fact-consistent interpretive ending",
+    "why": "Explicitly places qualification in Tokyo after Ningbo; does not claim Ningbo title immediately clinched entry, nor Ningbo was career start; “这一程腾飞” is editorial interpretation of2025late-season surge, supported by player own2026quote",
+    "avoid": [
+      "宁波夺冠当天锁定年终",
+      "宁波是职业生涯的起点",
+      "2026已锁定年终世界第一",
+      "今年两座大满贯=生涯仅两座大满贯",
+      "把宁波500分直接加到旧Race总分"
+    ]
+  },
+  "player_own_support": {
+    "source_article": 4598517,
+    "published": "2026-10-25T11:24:00Z",
+    "english_evidence": "Very happy and definitely for me, Ningbo is already a special place. Last year, I started to play really well from this tournament and all the way.",
+    "chinese_paraphrase": "宁波对她已经是特别的地方；她认为去年正是从这站开始打出了好状态，并延续下去。",
+    "scope": "Written official postmatch quotation; not proof the exact line appears in the video segment. Use as paraphrase/narration unless the same spoken line is actually acquired."
+  },
+  "photos": {
+    "preferred_2025_ningbo": "../photos/ningbo-2025-trophy-hq.jpg",
+    "ningbo_size": [
+      5727,
+      3818
+    ],
+    "ningbo_sha256": "c6d924f82de4ac552b672dad29141a2cbb6c715b9b47aa5f7fe1d0d51b487e60",
+    "ningbo_credit": "Huang Jinwen/WTA",
+    "ningbo_composition": "Actual visually inspected: open-eyed Rybakina and trophy on imageleft; background2025Ningbo lettering; 3:4fullheightcropfocusabout0.25 retainsfaceandtrophy",
+    "riyadh": "../photos/riyadh-2025-trophy.jpg",
+    "riyadh_size": [
+      4700,
+      2878
+    ],
+    "riyadh_sha256": "d2bb129666ba92c20ceb1ac927ac7422892f4b9d538783ea710bae1b0b37ca0f",
+    "riyadh_composition": "Actual visually inspected: playerkissingtrophywithsparks; expectedclosedeyesinaction, bodyphotoonly; cropfocusxabout0.60retainstrophyandperson; not recommended as eye-open portrait cover"
+  }
+}

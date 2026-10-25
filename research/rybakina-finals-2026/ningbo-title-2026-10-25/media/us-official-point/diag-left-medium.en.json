@@ -1,0 +1,116 @@
+{
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "method": "diagnostic_channel_bandpass_cached_asr_final_source_unchanged",
+  "channel": "left",
+  "filter": "highpass120 lowpass5000, no word prompting",
+  "window": [
+    7,
+    18
+  ],
+  "model": "medium.en",
+  "segments": [
+    {
+      "start": 10.220000000000002,
+      "end": 17.259999999999998,
+      "text": " Game set match for Riva Kina, who sets the 1, 6-4, 5-7, 6-2.",
+      "words": [
+        {
+          "start": 10.220000000000002,
+          "end": 10.82,
+          "word": " Game",
+          "probability": 0.13349220156669617
+        },
+        {
+          "start": 10.82,
+          "end": 11.18,
+          "word": " set",
+          "probability": 0.16986292600631714
+        },
+        {
+          "start": 11.18,
+          "end": 11.66,
+          "word": " match",
+          "probability": 0.8571702241897583
+        },
+        {
+          "start": 11.66,
+          "end": 11.9,
+          "word": " for",
+          "probability": 0.8764330744743347
+        },
+        {
+          "start": 11.9,
+          "end": 12.1,
+          "word": " Riva",
+          "probability": 0.5113618820905685
+        },
+        {
+          "start": 12.1,
+          "end": 12.76,
+          "word": " Kina,",
+          "probability": 0.5778238922357559
+        },
+        {
+          "start": 13.879999999999999,
+          "end": 14.32,
+          "word": " who",
+          "probability": 0.9057967066764832
+        },
+        {
+          "start": 14.32,
+          "end": 14.52,
+          "word": " sets",
+          "probability": 0.9782648086547852
+        },
+        {
+          "start": 14.52,
+          "end": 14.76,
+          "word": " the",
+          "probability": 0.8833945989608765
+        },
+        {
+          "start": 14.76,
+          "end": 15.04,
+          "word": " 1,",
+          "probability": 0.46520552039146423
+        },
+        {
+          "start": 15.36,
+          "end": 15.58,
+          "word": " 6",
+          "probability": 0.7877982258796692
+        },
+        {
+          "start": 15.58,
+          "end": 15.94,
+          "word": "-4,",
+          "probability": 0.8133453130722046
+        },
+        {
+          "start": 16.16,
+          "end": 16.3,
+          "word": " 5",
+          "probability": 0.9909036755561829
+        },
+        {
+          "start": 16.3,
+          "end": 16.68,
+          "word": "-7,",
+          "probability": 0.9824284017086029
+        },
+        {
+          "start": 16.84,
+          "end": 16.96,
+          "word": " 6",
+          "probability": 0.9951317310333252
+        },
+        {
+          "start": 16.96,
+          "end": 17.259999999999998,
+          "word": "-2.",
+          "probability": 0.9984207153320312
+        }
+      ]
+    }
+  ]
+}

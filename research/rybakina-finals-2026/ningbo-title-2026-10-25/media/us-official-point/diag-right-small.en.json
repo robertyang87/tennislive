@@ -1,0 +1,116 @@
+{
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "method": "diagnostic_channel_bandpass_cached_asr_final_source_unchanged",
+  "channel": "right",
+  "filter": "highpass120 lowpass5000, no word prompting",
+  "window": [
+    7,
+    18
+  ],
+  "model": "small.en",
+  "segments": [
+    {
+      "start": 10.16,
+      "end": 17.22,
+      "text": " Game 7-8 for LaRiba Kena, 2 sets to 1, 6-4, 5-7, 6-2.",
+      "words": [
+        {
+          "start": 10.16,
+          "end": 10.8,
+          "word": " Game",
+          "probability": 0.15866634249687195
+        },
+        {
+          "start": 10.8,
+          "end": 11.219999999999999,
+          "word": " 7",
+          "probability": 0.5476663708686829
+        },
+        {
+          "start": 11.219999999999999,
+          "end": 11.620000000000001,
+          "word": "-8",
+          "probability": 0.6932417899370193
+        },
+        {
+          "start": 11.620000000000001,
+          "end": 11.9,
+          "word": " for",
+          "probability": 0.16286210715770721
+        },
+        {
+          "start": 11.9,
+          "end": 12.059999999999999,
+          "word": " LaRiba",
+          "probability": 0.30196870615084964
+        },
+        {
+          "start": 12.059999999999999,
+          "end": 12.780000000000001,
+          "word": " Kena,",
+          "probability": 0.5986395329236984
+        },
+        {
+          "start": 12.780000000000001,
+          "end": 14.3,
+          "word": " 2",
+          "probability": 0.1328125149011612
+        },
+        {
+          "start": 14.3,
+          "end": 14.5,
+          "word": " sets",
+          "probability": 0.9161214232444763
+        },
+        {
+          "start": 14.5,
+          "end": 14.74,
+          "word": " to",
+          "probability": 0.979460597038269
+        },
+        {
+          "start": 14.74,
+          "end": 15.02,
+          "word": " 1,",
+          "probability": 0.910564661026001
+        },
+        {
+          "start": 15.18,
+          "end": 15.52,
+          "word": " 6",
+          "probability": 0.8980478048324585
+        },
+        {
+          "start": 15.52,
+          "end": 15.92,
+          "word": "-4,",
+          "probability": 0.8876954913139343
+        },
+        {
+          "start": 16.04,
+          "end": 16.259999999999998,
+          "word": " 5",
+          "probability": 0.9935626983642578
+        },
+        {
+          "start": 16.259999999999998,
+          "end": 16.64,
+          "word": "-7,",
+          "probability": 0.9485272169113159
+        },
+        {
+          "start": 16.64,
+          "end": 16.9,
+          "word": " 6",
+          "probability": 0.995263934135437
+        },
+        {
+          "start": 16.9,
+          "end": 17.22,
+          "word": "-2.",
+          "probability": 0.9976591467857361
+        }
+      ]
+    }
+  ]
+}

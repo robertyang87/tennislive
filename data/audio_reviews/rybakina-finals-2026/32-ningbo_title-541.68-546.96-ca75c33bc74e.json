@@ -1,0 +1,62 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual cached small.en and medium.en exact-source transcription cross-check and bounded source-frame review; not human listening",
+  "reviewed_at": "2026-10-25T14:17:47.998821+00:00",
+  "status": "complete",
+  "reviewed_from": 541.68,
+  "reviewed_to": 546.96,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 541.7,
+      "end": 543.84,
+      "en": "And it's already a second year here,",
+      "zh": "这是我第二年来到这里，"
+    },
+    {
+      "start": 544.04,
+      "end": 544.7,
+      "en": "second win,",
+      "zh": "也是第二次夺冠，"
+    },
+    {
+      "start": 544.7,
+      "end": 546.64,
+      "en": "and it's such a special place for me.",
+      "zh": "这里对我而言如此特别。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ningbo_title-963c5875f88c-speech-last25-small.en.json",
+      "sha256": "963c5875f88ceb30d33608308fc3a2c9f8c0991b7d141c4355ccf68e2d9c9f00",
+      "model": "small.en",
+      "source_window": [
+        526,
+        551
+      ]
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ningbo_title-18d904e97222-speech-last25-medium.en.json",
+      "sha256": "18d904e972224d1aee2cf1f7843f2984d6662794fd3bf645879ed37b3d2c7588",
+      "model": "medium.en",
+      "source_window": [
+        526,
+        551
+      ]
+    }
+  ],
+  "review_notes": "Entire selected clause agrees word-for-word in actual cached small.en+medium.en. And starts541.70/541.74, final me ends546.62/546.64; next Thankyou starts547.08/547.14 outside546.96. Prior playing tail has ASR alignment uncertainty withinoneframe at boundary541.68; selection preserves complete And-clause anddoesnotclaim exact phoneme timing from ASR alone. No subsequent thanks/Ningbo/Chinese clause is included. Existing121.45sTennisChannel source full-ASR failed38.9% is not reused as approval for this different exact source. Three subtitle clauses remain together in one continuous video utterance. No human listening claimed.",
+  "source_identity": {
+    "file": "Rn0lchWoTIM.mp4",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "fps": "25/1",
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4"
+  },
+  "review_scope": "Selected exact foreground window only; no global listening or whole-speech approval claim"
+}

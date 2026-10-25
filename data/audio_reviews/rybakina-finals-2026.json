@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
-  "plan_sha256": "7a466920fac852cdc29a7887112aa079a6334a27849397728fb4ac91b5e46e0d",
+  "plan_sha256": "f4f856d91296385c9e79885eb569947102e1e768d59d3d525123fdfdc0490a9c",
   "segments": [
     {
       "index": 1,
@@ -33,9 +33,9 @@
       "transcript_sha256": "4754e801fed6645e38b908f92eddfd55eea26b5380118ebc0c3c3c54122fe06c"
     },
     {
-      "index": 11,
-      "transcript_path": "data/audio_reviews/rybakina-finals-2026/11-rg_r2.json",
-      "transcript_sha256": "28d751e2c5cb096aeac50d504f9652058137fb4a340a467b308c85c6af436a05"
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/20261025-rg-terminal-point.json",
+      "transcript_sha256": "b2f2a1e45a286051f781935314ee6551a24735487f410bba7bf5448aa996d962",
+      "index": 11
     },
     {
       "index": 13,
@@ -48,9 +48,9 @@
       "transcript_sha256": "878532de30da739482e10a8529d0c066b78e3277e16c7ae06fa786376c75a8ca"
     },
     {
-      "index": 19,
-      "transcript_path": "data/audio_reviews/rybakina-finals-2026/19-us_final.json",
-      "transcript_sha256": "7ce90954106cf6c3a031b37fa860e0bf248c6665f6942336fd4aff3d26fbe2f8"
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/20261025-us-terminal-point-9c532e3ae23d.json",
+      "transcript_sha256": "9c532e3ae23d3e3f0aa123787f0e2a6949259f787775d299229b95f3117cab31",
+      "index": 19
     },
     {
       "index": 20,
@@ -58,15 +58,20 @@
       "transcript_sha256": "dfa83a82df9f34837f90ebb1aaa38236282518c36e659c5019b001c9d4ce9f58"
     },
     {
-      "index": 21,
-      "transcript_path": "data/audio_reviews/rybakina-finals-2026/21-us_press.json",
-      "transcript_sha256": "768022522aaa7f9bd67ddaa87e6da7a6f4e98df4b7094ef0881cfe3e5fda83a1"
-    },
-    {
-      "index": 26,
+      "index": 25,
       "transcript_path": "data/audio_reviews/rybakina-finals-2026/26-beijing.json",
       "transcript_sha256": "d129b8dc0a021250c413364e0ef17846c030407bfe223401bb836c651d156032"
+    },
+    {
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/31-ningbo_title-248.32-272.00-37f2306fa66d.json",
+      "transcript_sha256": "37f2306fa66ddc51794903dead447eaf4c58f6b88d21447ee089447a672dc282",
+      "index": 31
+    },
+    {
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/32-ningbo_title-541.68-546.96-ca75c33bc74e.json",
+      "transcript_sha256": "ca75c33bc74ecbbb338c9ef3f5df11704d86f0fa7404b460fce466f072bb01bf",
+      "index": 32
     }
   ],
-  "method_note": "Actual paired ASR and source-frame cross-checks; no human listening claimed."
+  "method_note": "Immutable original source-bound packets reused only for unchanged selected windows. New RG/US/Ningbo packets bind actual bytes and retained ASR. AO uses exactly original reviewed window following explicit user keep-original instruction; unclear new source remains excluded."
 }
