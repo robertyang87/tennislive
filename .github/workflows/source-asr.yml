@@ -59,7 +59,7 @@ jobs:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -euo pipefail
-          test "$SOURCE_URL" = "https://www.youtube.com/watch?v=Yh8lt5u7nqM"
+          test "$SOURCE_URL" = "https://www.youtube.com/watch?v=J92COzd463c"
           mkdir -p "$RUNNER_TEMP/ao-caption-evidence"
           ARGS=(--js-runtimes node --no-playlist --no-progress --socket-timeout 25 --retries 1 --extractor-retries 1 --fragment-retries 0)
           if [ -n "$YT_COOKIES" ]; then ARGS+=(--cookies "$YT_COOKIES"); fi
@@ -99,7 +99,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ao-Yh8lt5u7nqM-caption-evidence
+          name: ao-J92COzd463c-caption-evidence
           path: ${{ runner.temp }}/ao-caption-evidence
           retention-days: 3
       - name: Require actual subtitle evidence
