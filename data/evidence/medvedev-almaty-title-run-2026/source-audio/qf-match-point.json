@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-3LrSBUtHN_s/3LrSBUtHN_s.mp4",
+  "source_sha256": "3aa57ff2e7fdab6572879ec4809ff303a98a0f09fedec97fe50de585a83a3961",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T14:36:00.585760+00:00",
+  "status": "complete",
+  "reviewed_from": 186.7,
+  "reviewed_to": 200.8,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 188.4,
+      "end": 189.6,
+      "en": "And that'll do it.",
+      "zh": "比赛结束。"
+    },
+    {
+      "start": 191.3,
+      "end": 194.5,
+      "en": "Comfortable in the end for our top seed and defending champion.",
+      "zh": "头号种子兼卫冕冠军，赢得轻松。"
+    },
+    {
+      "start": 195.2,
+      "end": 197.4,
+      "en": "Another semi-final this season.",
+      "zh": "本赛季又一个半决赛。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/3LrSBUtHN_s/small.en.json; data/source_asr/3LrSBUtHN_s/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "small.en and medium.en (clip 150–205) and YouTube captions agree on the three utterances. small.en alone adds 'We'll see you next time.' over 197.42–198.64; medium.en and YouTube captions have no speech there; treated as a known Whisper silence hallucination, not subtitled."
+}

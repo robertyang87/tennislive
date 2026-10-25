@@ -1,0 +1,58 @@
+{
+  "slug": "medvedev-almaty-title-run-2026",
+  "checked_at": "2026-10-25T14:39:29Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "4c08f6056434447f": {
+      "segment": 2,
+      "spoken": 13.176,
+      "picture": 15.0
+    },
+    "2510c3846685ae0b": {
+      "segment": 3,
+      "spoken": 12.408,
+      "picture": 12.5
+    },
+    "1cca6fa700df1197": {
+      "segment": 7,
+      "spoken": 17.688,
+      "picture": 19.0
+    },
+    "0f774b1eb9421c19": {
+      "segment": 9,
+      "spoken": 11.832,
+      "picture": 13.0
+    },
+    "2e36fda1768452f4": {
+      "segment": 11,
+      "spoken": 9.288,
+      "picture": 11.0
+    },
+    "350bfc4c40bf8e99": {
+      "segment": 12,
+      "spoken": 9.672,
+      "picture": 11.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "851860c27e99963cb1391a4a0655f49b19a90d3644ba3f2cf9d44febd59a7c69",
+    "request_count": 7,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-medvedev-almaty-title-run-2026-851860c27e99963c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-almaty-title-run-2026-851860c27e99963c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40203135864"
+  }
+}

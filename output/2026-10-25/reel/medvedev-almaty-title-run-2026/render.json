@@ -1,0 +1,130 @@
+{
+  "scoreboard_qc_sha256": "e8017afa418ae7b9fe85939d956e350cf54690b801eefbfca4a85aa4b82e0dcb",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "851860c27e99963cb1391a4a0655f49b19a90d3644ba3f2cf9d44febd59a7c69",
+    "request_count": 7,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-medvedev-almaty-title-run-2026-851860c27e99963c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-almaty-title-run-2026-851860c27e99963c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40203348108"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 216.1,
+  "topbar_by_source": {
+    "r2": {
+      "line1": "2026 ATP250 阿拉木图 第二轮",
+      "winner": "梅德韦杰夫",
+      "loser": "岛袋将",
+      "result": "6-2 6-1",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_MgnKGnx8",
+      "_match_id": "MgnKGnx8"
+    },
+    "qf": {
+      "line1": "2026 ATP250 阿拉木图 1/4决赛",
+      "winner": "梅德韦杰夫",
+      "loser": "阿特曼",
+      "result": "6-4 6-4",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_t2iMf2AC",
+      "_match_id": "t2iMf2AC"
+    },
+    "sf": {
+      "line1": "2026 ATP250 阿拉木图 半决赛",
+      "winner": "梅德韦杰夫",
+      "loser": "布勃利克",
+      "result": "6-3 Ret.",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_AJS23nbt",
+      "_match_id": "AJS23nbt"
+    },
+    "final": {
+      "line1": "2026 ATP250 阿拉木图 决赛",
+      "winner": "梅德韦杰夫",
+      "loser": "巴西拉什维利",
+      "result": "6-7(6) 6-1 6-3",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_6B33aysH",
+      "_match_id": "6B33aysH"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP250 阿拉木图 决赛",
+    "line2": "梅德韦杰夫 6-7(6) 6-1 6-3 巴西拉什维利",
+    "start": 1.2,
+    "end": 217.3
+  },
+  "film_seconds": 221.88,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 13.176,
+    "2": 12.408,
+    "6": 17.688,
+    "8": 11.832,
+    "10": 9.288,
+    "11": 9.672
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "79083c90bf4443444a3d750fa9e9a7a69314d6362bd8fa146359c44f5ff1a8b1",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "medvedev-almaty-title-run-2026",
+    "received_at": "2026-10-25T14:40:41Z",
+    "artifact_ready_at": "2026-10-25T14:49:18Z",
+    "elapsed_seconds": 517.37,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "23dee653fc89e644e66a1a5a17874875fef4cab6f4b73ff7f674b130f1fc40ce",
+    "spec_sha256": "17aaa12ddbca34fcdc98bbc1aa1fff3bbaed5ce700cb223c655142d7db73ccb2",
+    "run_id": "40203348108",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-25T14:44:01Z",
+        "run_id": "40203348108"
+      }
+    ],
+    "render_seconds": 317.37,
+    "pre_render_seconds": 200.0
+  },
+  "film_sha256": "23dee653fc89e644e66a1a5a17874875fef4cab6f4b73ff7f674b130f1fc40ce",
+  "film_bytes": 86279409,
+  "qc_attestation_sha256": "a1b4e55dfc463e109f66a33f26b76e2e325c2b9593b36c02d57105c149f0ee8b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-25T14:44:01Z",
+      "run_id": "40203348108"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-25T14:49:23Z",
+      "run_id": "40203348108"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-almaty-title-run-2026/medvedev-almaty-title-run-2026.mp4",
+  "video_bytes": 86279409
+}

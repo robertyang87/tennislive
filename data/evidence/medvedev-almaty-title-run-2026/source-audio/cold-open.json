@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-caCEoWln_aU/caCEoWln_aU.mp4",
+  "source_sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude session review of two Whisper passes (small.en, medium.en) on the archived source bytes plus the source's YouTube timed captions; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T14:36:00.585760+00:00",
+  "status": "complete",
+  "reviewed_from": 440.1,
+  "reviewed_to": 453.8,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 441.2,
+      "end": 444.3,
+      "en": "And for the first time in his career,",
+      "zh": "职业生涯第一次，"
+    },
+    {
+      "start": 444.3,
+      "end": 447.0,
+      "en": "Daniil Medvedev successfully defends a title.",
+      "zh": "梅德韦杰夫成功卫冕。"
+    },
+    {
+      "start": 447.0,
+      "end": 450.4,
+      "en": "Six-seven, six-one, six-three.",
+      "zh": "6比7、6比1、6比3。"
+    },
+    {
+      "start": 451.3,
+      "end": 453.5,
+      "en": "Champion last year in Almaty, champion this year.",
+      "zh": "去年在这里夺冠，今年还是冠军。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "data/source_asr/caCEoWln_aU/small.en.json; data/source_asr/caCEoWln_aU/medium.en.json; probe captions.txt for the same video id",
+  "cross_check_note": "Utterances bounded by the source's own YouTube timed captions (441.20/444.32/447.04/451.28) and both Whisper passes (small.en 439.82–454.00, medium.en 439.73–453.99), which agree word-for-word apart from the name spelling (ASR 'Daniel'). No other English inside 440.1–453.8."
+}
