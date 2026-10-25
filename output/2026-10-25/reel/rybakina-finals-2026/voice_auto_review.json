@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "1c3f29c56d7d9972277e48080e1bf242b2be6d7a3edd80e21c9195f1d2a7d610",
-    "render_inputs_sha256": "856935c24424fcd024b18c35c108d2fba624ded3085a44379acc816027901ba4",
-    "spec_sha256": "f5c4a59e9cdffaee1d5da9514a553934fd1f5cf6a0cd1b905bd31961641f4b60",
-    "film_sha256": "5ddd336d71be0e0f356ba6820499a081b8f86d410e187633b9f543e6188a6112",
+    "render_sha256": "5fabddda7d4e140d5ef0ad7e12d3dc25a12696f8d59bb4db973f8f0731eccb48",
+    "render_inputs_sha256": "43fe2e935ad733433f1a81375b54391f2e5c50f1b5b16060d8f3ea423f543d9b",
+    "spec_sha256": "5354789e466a9f66b92cf570e0f6b6e76fe3dd97372ac25c5b7e0d6fe2760944",
+    "film_sha256": "2c0084e7763e5e03b2e804e04558384b9a2068583271cd55e6223ce669ac9ebc",
     "inventory_sha256": "e873326124010873078def994416e6922552c6e1c7eb1624da9866fc2ab21d8a"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-25T15:08:25+00:00",
+  "reviewed_at": "2026-10-25T16:00:36+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -312,14 +312,14 @@
             {
               "wrong": "la4",
               "verdict": "uncertain",
-              "score": 0.071,
+              "score": 0.079,
               "confidence": null,
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "unreliable",
-              "score": 0.355,
+              "score": 0.361,
               "confidence": null,
               "near": null
             }
@@ -388,7 +388,7 @@
         "substituted": 1,
         "sub_ratio": 0.048,
         "longest_deletion": 0,
-        "transcript": "今年,梁多大猛冠登顶世界第一,他又回到宁波未免。"
+        "transcript": "今年,两多大猛冠登顶世界第一,他又回到宁波未免。"
       },
       "polyphones": [],
       "pauses": {
@@ -420,7 +420,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "莱巴金娜握有冠军点,却没能拿下。决胜盘抢七六比八,他输给萨巴伦卡。"
+        "transcript": "莱巴金娜握有冠军点,却没能拿下。爵声盘强七六比八,他输给萨巴伦卡。"
       },
       "polyphones": [],
       "pauses": {
@@ -612,7 +612,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "马德里第四轮出局,罗马只不扒墙。来到法网,他先赢一盘,却输掉决胜盘抢期,只不第二轮。"
+        "transcript": "马德里第四轮出局,罗马止步八强。来到法网,他先赢一盘,却输掉绝胜盘抢七,止步第二轮。"
       },
       "polyphones": [],
       "pauses": {
@@ -644,7 +644,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "也是这一天他正式登上世界第一, 但这个赛季还没有结束。"
+        "transcript": "也是这一天他正式登上世界第一,但这个赛季还没有结束。"
       },
       "polyphones": [
         {
@@ -661,7 +661,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 1.0,
+              "score": 0.998,
               "confidence": "high",
               "near": "intended"
             }
@@ -698,7 +698,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "多哈只不扒墙,敌败殷并退赛。来到印第安威尔斯,他又打进决赛。"
+        "transcript": "多哈止步巴强,敌败阴并退赛。来到印第安威尔斯,他又打进决赛。"
       },
       "polyphones": [],
       "pauses": {
