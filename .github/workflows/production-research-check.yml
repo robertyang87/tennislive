@@ -20,7 +20,7 @@ jobs:
           python - <<'PY'
           import subprocess,json,pathlib,datetime
           out=pathlib.Path('inventory')
-          channels=[('wta-videos','https://www.youtube.com/@WTA/videos',180),('wta-shorts','https://www.youtube.com/@WTA/shorts',100),('osaka-videos','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/videos',100),('osaka-shorts','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/shorts',80)]
+          channels=[('wta-videos','https://www.youtube.com/@WTA/videos',40),('wta-search','https://www.youtube.com/@WTA/search?query=Siniakova',50),('wta-osaka-search','https://www.youtube.com/@WTA/search?query=Osaka',50),('wta-shorts','https://www.youtube.com/@WTA/shorts',100),('osaka-videos','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/videos',100),('osaka-shorts','https://www.youtube.com/channel/UC07T1DWqWQTejoCwyUuDVzQ/shorts',80)]
           report=[]
           for key,url,limit in channels:
               cmd=['yt-dlp','--flat-playlist','--playlist-end',str(limit),'--dump-single-json','--socket-timeout','20','--retries','1',url]
@@ -32,7 +32,7 @@ jobs:
                   report.append({'channel':key,'status':'error','error':r.stderr[-600:]});continue
               d=json.loads(r.stdout);(out/(key+'.json')).write_text(json.dumps(d))
               hits=[{k:e.get(k) for k in ['id','title','url','duration','channel','channel_id','uploader','timestamp','release_timestamp']} for e in d.get('entries',[]) if any(s in str(e.get('title','')).lower() for s in ['siniak','osaka','japan','大阪','シニアコバ','シニアコワ'])]
-              report.append({'channel':key,'channel_id':d.get('channel_id'),'status':'ok','total':len(d.get('entries',[])),'hits':hits})
+              report.append({'channel':key,'channel_id':d.get('channel_id'),'status':'ok','total':len(d.get('entries',[])),'first_entries':[{k:e.get(k) for k in ['id','title','url','duration','channel_id','timestamp']} for e in d.get('entries',[])[:12]],'hits':hits})
           rec={'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'report':report}
           (out/'report.json').write_text(json.dumps(rec,ensure_ascii=False,indent=2))
           print('OFFICIAL_INVENTORY_JSON_BEGIN')
