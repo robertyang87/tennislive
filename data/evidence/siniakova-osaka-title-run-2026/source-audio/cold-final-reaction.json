@@ -1,0 +1,36 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407369981112/6407369981112.mp4",
+  "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+  "method": "asr_cross_checked",
+  "reviewer": "root independent review of actual-source multi-model transcripts, VAD, original captions where available and visual timing; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T09:16:29.470326+00:00",
+  "status": "complete",
+  "reviewed_from": 269.25,
+  "reviewed_to": 276.94,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 269.53,
+      "end": 271.21,
+      "en": "Ten games in a row.",
+      "zh": "连赢10局。"
+    },
+    {
+      "start": 271.63,
+      "end": 272.81,
+      "en": "One game dropped.",
+      "zh": "整场只丢1局。"
+    },
+    {
+      "start": 273.03,
+      "end": 276.69,
+      "en": "What a performance from Katerina Siniakova here in Osaka.",
+      "zh": "西尼亚科娃在大阪的表现太出色了。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "../selected-source-caption-cues.json; ../source-caption-closure-audit.json; source-audio/asr actual hypotheses retained",
+  "selection_note": "Excluded source speech outside these exact windows remains explicitly unresolved in audit, never certified as heard.",
+  "translation_note": "Root tightened only two Chinese translations to native line width; English and actual source timing unchanged. Meaning rechecked against English."
+}

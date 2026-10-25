@@ -1,0 +1,293 @@
+{
+  "schema": "tennislive.source-fact-audit.v1",
+  "audited_at": "2026-10-25T07:09:44.858346+00:00",
+  "subject": "Katerina Siniakova",
+  "subject_player_id": "320301",
+  "event": {
+    "name": "Kinoshita Group Japan Open",
+    "city": "Osaka",
+    "year": 2026,
+    "official_id": "405",
+    "level": "WTA 250",
+    "surface": "Outdoor Hard",
+    "dates": [
+      "2026-10-19",
+      "2026-10-25"
+    ],
+    "draw_size": 32
+  },
+  "verified": true,
+  "official_results_url": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches",
+  "official_last_updated": "2026-10-25T06:43:55.243+00:00",
+  "rounds": [
+    {
+      "match_id": "LS031",
+      "round_zh": "第一轮",
+      "round_en": "Round 1",
+      "date_utc": "2026-10-20",
+      "date_japan": "2026-10-20",
+      "opponent": "Peyton Stearns",
+      "opponent_player_id": "327573",
+      "opponent_seed": "2",
+      "winner": "Katerina Siniakova",
+      "winner_player_id": "320301",
+      "winner_side": "A",
+      "winner_perspective_sets": [
+        [
+          6,
+          4
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "official_result_string": "K. Siniakova d [2]P. Stearns 6-4,0-6,4-0 Ret'd",
+      "match_state": "F",
+      "duration_exact": "01:34:44",
+      "end_type": "opponent_retirement",
+      "official_score_page": "https://www.wtatennis.com/tournaments/405/osaka/2026/scores/LS031"
+    },
+    {
+      "match_id": "LS015",
+      "round_zh": "第二轮",
+      "round_en": "Round 2",
+      "date_utc": "2026-10-22",
+      "date_japan": "2026-10-22",
+      "opponent": "Magda Linette",
+      "opponent_player_id": "315130",
+      "opponent_seed": "",
+      "winner": "Katerina Siniakova",
+      "winner_player_id": "320301",
+      "winner_side": "B",
+      "winner_perspective_sets": [
+        [
+          6,
+          4
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "official_result_string": "K. Siniakova d M. Linette 6-4,6-1",
+      "match_state": "F",
+      "duration_exact": "01:23:17",
+      "end_type": "completed",
+      "official_score_page": "https://www.wtatennis.com/tournaments/405/osaka/2026/scores/LS015"
+    },
+    {
+      "match_id": "LS007",
+      "round_zh": "1/4决赛",
+      "round_en": "Quarterfinal",
+      "date_utc": "2026-10-23",
+      "date_japan": "2026-10-23",
+      "opponent": "Mary Stoiana",
+      "opponent_player_id": "330265",
+      "opponent_seed": "",
+      "winner": "Katerina Siniakova",
+      "winner_player_id": "320301",
+      "winner_side": "B",
+      "winner_perspective_sets": [
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          2
+        ]
+      ],
+      "official_result_string": "K. Siniakova d M. Stoiana 6-1,6-2",
+      "match_state": "F",
+      "duration_exact": "01:11:29",
+      "end_type": "completed",
+      "official_score_page": "https://www.wtatennis.com/tournaments/405/osaka/2026/scores/LS007"
+    },
+    {
+      "match_id": "LS003",
+      "round_zh": "半决赛",
+      "round_en": "Semifinal",
+      "date_utc": "2026-10-24",
+      "date_japan": "2026-10-24",
+      "opponent": "Katie Boulter",
+      "opponent_player_id": "319125",
+      "opponent_seed": "8",
+      "winner": "Katerina Siniakova",
+      "winner_player_id": "320301",
+      "winner_side": "B",
+      "winner_perspective_sets": [
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          4
+        ]
+      ],
+      "official_result_string": "K. Siniakova d [8]K. Boulter 6-1,6-4",
+      "match_state": "F",
+      "duration_exact": "01:25:36",
+      "end_type": "completed",
+      "official_score_page": "https://www.wtatennis.com/tournaments/405/osaka/2026/scores/LS003"
+    },
+    {
+      "match_id": "LS001",
+      "round_zh": "决赛",
+      "round_en": "Final",
+      "date_utc": "2026-10-25",
+      "date_japan": "2026-10-25",
+      "opponent": "Ashlyn Krueger",
+      "opponent_player_id": "329409",
+      "opponent_seed": "",
+      "winner": "Katerina Siniakova",
+      "winner_player_id": "320301",
+      "winner_side": "B",
+      "winner_perspective_sets": [
+        [
+          6,
+          1
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "official_result_string": "K. Siniakova d A. Krueger 6-1,6-0",
+      "match_state": "F",
+      "duration_exact": "01:04:17",
+      "end_type": "completed",
+      "official_score_page": "https://www.wtatennis.com/tournaments/405/osaka/2026/scores/LS001"
+    }
+  ],
+  "final": {
+    "score": "6-1 6-0",
+    "duration": "01:04:17",
+    "editorial_duration_zh": "64分钟",
+    "career_wta_tour_singles_title_number": 6,
+    "official_video": "https://www.wtatennis.com/videos/4598500/siniakova-wins-osaka-final-to-claim-sixth-career-title",
+    "official_video_duration": "PT4M58S",
+    "official_video_upload_date": "2026-10-25T06:56:29Z",
+    "official_video_description_confirms": [
+      "winner Siniakova",
+      "score 6-1 6-0",
+      "sixth WTA singles title",
+      "H2H versus Krueger now 5-0"
+    ],
+    "statistics": {
+      "official_url": "https://api.wtatennis.com/tennis/tournaments/405/2026/matches/LS001/stats",
+      "stats_side_binding": "A=Ashlyn Krueger; B=Katerina Siniakova",
+      "siniakova_breaks_converted": 6,
+      "siniakova_break_chances": 8,
+      "krueger_breaks_converted": 0,
+      "krueger_break_chances": 1,
+      "siniakova_service_games": 6,
+      "siniakova_service_games_held": 6
+    }
+  },
+  "background": {
+    "current_doubles_rank": 1,
+    "rank_source": "https://www.wtatennis.com/players/320301/katerina-siniakova",
+    "rank_scope": "Current Doubles Rank at audit time; not singles ranking",
+    "last_wta_tour_singles_title_before_osaka": {
+      "event": "Nanchang",
+      "year": 2023,
+      "ordinal": 5,
+      "official_url": "https://www.wtatennis.com/news/3747886/siniakova-saves-match-points-wins-longest-final-of-2023-in-nanchang"
+    },
+    "safe_wording_zh": [
+      "现任双打世界第1，在大阪拿到生涯第6座WTA巡回赛单打冠军。",
+      "2023年南昌之后，再次捧起WTA巡回赛单打冠军奖杯。"
+    ],
+    "scope_note": "WTA Tour singles title excludes WTA 125 titles (profile separately lists 2024 Lleida and 2025 Warsaw). Do not say she won no singles titles of any level since 2023."
+  },
+  "first_round_caution": {
+    "fact": "Won first set 6-4, lost second set 0-6, led third set 4-0 when Stearns retired.",
+    "no_completed_terminal_match_point": true,
+    "reason_for_retirement": "not independently established from official sources in this audit; do not invent injury/illness",
+    "safe_wording_zh": "首轮第二盘0比6；决胜盘4比0领先时，对手退赛。"
+  },
+  "conflicts_and_exclusions": [
+    {
+      "claim": "First WTA singles final since 2023",
+      "source": "Official semifinal video title",
+      "conflict": "Official player biography also says two WTA singles finals in 2024, Cleveland and Guangzhou.",
+      "action": "Do not use this claim in new narration/copy; title win since 2023 is the supported narrower claim."
+    },
+    {
+      "claim": "Current profile Singles Career Titles = 5",
+      "source": "Official profile structured data and career highlights list",
+      "conflict": "Profile excludes current week; fresh official final video and final score confirm title number 6.",
+      "action": "Use fresh official final video, explicitly title number 6."
+    },
+    {
+      "claim": "Final winner absent from official PDF draw",
+      "source": "draw.pdf snapshot",
+      "conflict": "PDF snapshot not updated past semifinal at audit time; official completed-match API is newer.",
+      "action": "Do not use stale PDF to negate completed final."
+    },
+    {
+      "claim": "First-round match is a full completed victory/match point",
+      "action": "Do not imply the retirement was a won match point; factual card/voice can cover first round if official footage unavailable."
+    },
+    {
+      "claim": "She won 12 consecutive games / never faced a break point",
+      "action": "12 consecutive games not verified; never-faced is false because official stats show Krueger had 1 break chance."
+    }
+  ],
+  "story_recommendation": {
+    "angle": "从首轮第二盘0比6，到决赛6比1、6比0；双打世界第1重拾巡回赛单打冠军。",
+    "structure": [
+      "冷开场：决赛夺冠反应或本人捧杯发言，避免先用旁白盖掉情绪。",
+      "首轮：6-4、0-6后在4-0时对手退赛，准确交代这次起步并不顺。",
+      "第二轮、1/4决赛、半决赛：每轮实际素材对应完整终局；比赛间用一句话或短转场交代升级。",
+      "决赛重点：用官方stats解释压制力，但以实际关键回合、完整赛点、庆祝和握手画面为主。",
+      "颁奖捧杯：保留同场官方仪式和本人发言，落点是2023南昌之后再次赢得WTA巡回赛单打冠军。"
+    ],
+    "hook_candidate": [
+      "首轮第二盘0比6",
+      "希尼亚科娃大阪夺冠"
+    ],
+    "hook_alternative": [
+      "决赛只丢1局",
+      "希尼亚科娃大阪夺冠"
+    ]
+  },
+  "raw_evidence": [
+    {
+      "path": "/tmp/siniakova-osaka-20261025/official-matches.json",
+      "sha256": "d3c3c957da66d85f72584ba9da78504f8f4153d2f14350d3a188b227146c2b91",
+      "bytes": 73782
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/final-stats.json",
+      "sha256": "af7739987d3de125253abd531ee57ab1a2dafb3c20457a732fe8ef961c8a4966",
+      "bytes": 1638
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/profile.html",
+      "sha256": "15950a10a2037e41f41d9e37c8383294c89dccc5c81323356b7f0d73891df263",
+      "bytes": 226998
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/final-video.html",
+      "sha256": "89fcb9118fc3b2b826f18c6ef5f7475d6f0416e8af5d1d85941f0b3d02993692",
+      "bytes": 192040
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/draw.pdf",
+      "sha256": "4d0e3bebfb4bc0d7b9acf881fcf9f1072fa8096b9338cffd379ef85575509be6",
+      "bytes": 354446
+    },
+    {
+      "path": "/tmp/siniakova-osaka-20261025/nanchang-2023-last-tour-title.html",
+      "sha256": "296e0454bef63ca8202b2a0614134a6faed1221f0b5954b418524f788e08dc29",
+      "bytes": 180280
+    }
+  ]
+}

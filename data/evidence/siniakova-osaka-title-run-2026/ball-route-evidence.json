@@ -1,0 +1,235 @@
+{
+  "schema": "tennislive.visible-ball-route-evidence.v1",
+  "created_at": "2026-10-25T09:10:11.254314+00:00",
+  "method": "Native-source frame sequence visual inspection, no audio hearing claim",
+  "routes": [
+    {
+      "id": "sf-serve-then-baseline-exchange",
+      "source_key": "sf",
+      "source_file": "sources/sf-web720.mp4",
+      "window": [
+        260.64,
+        269.6
+      ],
+      "visible_action": "Near-end Siniakova in black long-sleeve top prepares, tosses and completes serve; lands and stays at baseline exchanging groundstrokes with Boulter in blue.",
+      "most_direct_milestones": [
+        {
+          "tc": 260.64,
+          "action": "Hands and racket low in service preparation."
+        },
+        {
+          "tc": 261.04,
+          "action": "Toss/serving motion visible."
+        },
+        {
+          "tc": 262.2,
+          "action": "Serve swing through; receiver Boulter at far end ready."
+        },
+        {
+          "tc": 263.0,
+          "action": "Siniakova bends and moves after service landing."
+        },
+        {
+          "tc": 264.0,
+          "action": "Baseline exchange continues."
+        }
+      ],
+      "safe_narration": "半决赛最后一分，她发球后回到底线，继续和布尔特对拉。",
+      "no_inference": [
+        "No claim of ace, serve direction, intentional tactic or winner landing."
+      ]
+    },
+    {
+      "id": "final-setpoint-forehand-return",
+      "source_key": "final",
+      "source_file": "sources/final-web-preview720.mp4",
+      "window": [
+        156.08,
+        168.24
+      ],
+      "visible_action": "Krueger in burgundy serves from far end; Siniakova in light-gray dress runs toward image right, stretches with right arm/racket for forehand return, then exchanges shots from the baseline.",
+      "most_direct_milestones": [
+        {
+          "tc": 158.0,
+          "action": "Far-end Krueger has served; Siniakova starts return movement."
+        },
+        {
+          "tc": 159.6,
+          "action": "Siniakova stretches toward image right with racket on right-hand forehand side."
+        },
+        {
+          "tc": 160.0,
+          "action": "Right-arm extended low forehand return follow-through."
+        },
+        {
+          "tc": 160.4,
+          "action": "Siniakova recovers balance after stretched return."
+        },
+        {
+          "tc": 161.0,
+          "action": "Moves back toward baseline center; rally continues."
+        }
+      ],
+      "safe_narration": "决赛盘点，她先向右跨步，用正手把发球接了回去。",
+      "no_inference": [
+        "Do not call this a backhand.",
+        "Do not claim serve wide or down-the-T from these selected frames alone.",
+        "Do not call return a winner; point continues."
+      ]
+    }
+  ],
+  "r2_netcord_question": {
+    "status": "not_established_by_current_sparse_frames",
+    "source_window": [
+      247,
+      250.2
+    ],
+    "detail": "ASR calls it a fluke, but these sparse source frames alone do not isolate a ball-net contact. Do not write擦网from this audit; the two positive routes above are safer."
+  },
+  "evidence": [
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0244.00.jpg",
+      "sha256": "64e424fd71918e6c6f8dd6e6a4a83ba4fbbafa269fdad63dd1d020cbd17a1f51"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0245.00.jpg",
+      "sha256": "d025271a719e519dfb21c254b1927516a4e5d21cbc893bd0bb89c104fad6efc1"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0246.00.jpg",
+      "sha256": "e421b171e06ec1e0a035d6e728e772115c950f0b963445d49ea11f1e9e78ed6f"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0247.00.jpg",
+      "sha256": "0b694af583d59b55f6670b5f2f640ec5737ebebac3449b8b2a30102566fc06ef"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0248.00.jpg",
+      "sha256": "9cd0a14d23c6d979bfb83718f179b9bb5c1cff9c7ea93ddf17b17b60a2e65b9a"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0249.00.jpg",
+      "sha256": "50120a962db7e53587316010152d54c9e5d17b1ba875c9815af5e2f37bd193df"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0249.40.jpg",
+      "sha256": "b71a75c9b57fd805b417bc81629ddc34c838186a3c51de33b83a2bc3bd9c2aa8"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0249.80.jpg",
+      "sha256": "0d6111ba94441d9cc91ce6d052008240da8cf2584f595a83a9acc9bca65b3233"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-0250.20.jpg",
+      "sha256": "2f9c283aec12bf8d97ae17dbae4801082de8457646bf5dec780054eed6f826c2"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/r2-contact.jpg",
+      "sha256": "3da9404ee83d045a60ec1b3a80eb00e3d824d9896a6448d6d041a8d8d2f96bab"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0158.00.jpg",
+      "sha256": "0c1c659fd8567a18129fb8c84dbd3c4cba52caa52de4bf7613a29be9981d85c1"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0159.00.jpg",
+      "sha256": "26a1d8fb7fcf11b9ca192998f1d29bd0ac08673d6865c60e52d1dd334f3baf2a"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0159.60.jpg",
+      "sha256": "c8b1f15b9443101357c00c1be551faa6ed8b291c1a0fa943c58629de45e33271"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0160.00.jpg",
+      "sha256": "76f7f97aecec26066a69f0cf03961df9e6c24021293881faf676d303a223845d"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0160.40.jpg",
+      "sha256": "dcac701bb68e80e1207e774aeba8f6d56cda6718986b4b3df099a137accbaaf7"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0161.00.jpg",
+      "sha256": "0bfd3f137e1268bf4f94406eb68adf1e39c3e13f1f17a126b7eb88b6225faeab"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0162.00.jpg",
+      "sha256": "f2f6143e87a82c36edcb13e1d6b9e5461d4cf3aca8c12e9ce07f099608639ef6"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0163.00.jpg",
+      "sha256": "f434fc55474f9630e3ae887ae7bebe5ae05f23121dd42de0e5ccf9ff45eefa27"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0164.00.jpg",
+      "sha256": "538d9f5a22e86f1a7c6d35def4d60ef6ec31e6cebb3cb0ca0407004c57868e55"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0165.00.jpg",
+      "sha256": "b1927b882b2a3221c04b9c9483ccfe9b487e9153da8b49d78d13396ed6753ca7"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0166.00.jpg",
+      "sha256": "9f1b6872fddb3eef90c87213224a16d18dfa0ba1e414c4eaebd4433772b68af2"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0167.00.jpg",
+      "sha256": "e2b07bf132d49055a22890af86f77dfcf95f8f37743aac294f2c3cce3a9a7d45"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-0167.60.jpg",
+      "sha256": "d2fb5160f5c74472859cdd41b49edb627933e5270864b78fa098c3775ea56ec9"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/set-contact.jpg",
+      "sha256": "23874cef444e31a17758283ffbe8262695efdab101b3c468105abda0fe3e48af"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0260.64.jpg",
+      "sha256": "16b651c6cacf199bf720a3111f2225e93b064f5fb8b8b6612ebc02e2cb0e4dd1"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0261.04.jpg",
+      "sha256": "4b1ca2f277725f4ea4556744f2b681360ebe4fdce651255e5725226e01580440"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0261.60.jpg",
+      "sha256": "61a19d3c1a7d327e5ecf775635d2d5c94e75fe95e540ec549a5a328da993b170"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0262.20.jpg",
+      "sha256": "7b3364319d272dd8e1265aec33768b1e2c1f67315fbca5ac0b1e5924865d0f4e"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0263.00.jpg",
+      "sha256": "e8a1f9196460bd119afb3f79ca9136028392ea79908d9b97ba8af804a0d33916"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0264.00.jpg",
+      "sha256": "e0947ed63f40d6fe6637115188128175b73a665e05fa687fe976ab57b378cc0b"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0265.00.jpg",
+      "sha256": "e04e8e1602022d41b611ba939c52a23a9b93da44715737eb4688055cbb6dc288"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0266.00.jpg",
+      "sha256": "f73b78680078ba7f188aeacae1805919c68949d75676c4fd82e68bf716b5341b"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0267.00.jpg",
+      "sha256": "8f221131a2235f48e61b84ed5b942e7d68c6f3dbe18e78dadaa46da66d55b798"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0268.00.jpg",
+      "sha256": "fb713f6c64d0c99fe208b1291eb304a7a87aa0d72b5bce4d26d116b580ee5ac1"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-0269.00.jpg",
+      "sha256": "b9a6cc00eb9dec554654c2aa36fe293446c5548f8afe1cd32906dcef68d36066"
+    },
+    {
+      "file": "/tmp/siniakova-osaka-20261025/shot-audit/ball-route/sf-contact.jpg",
+      "sha256": "20725ce0d3c3521b3af1babb2f20941c9deeb474292b41456a044fe6ac4a10ca"
+    }
+  ]
+}

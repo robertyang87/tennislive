@@ -1,0 +1,41 @@
+{
+  "model": "small.en",
+  "source_sha256": "c058483ddc791e24291091d02bdc19a9c7d9bf49004a16b92462775272e06d2b",
+  "clip": [
+    714.85,
+    717.18
+  ],
+  "duration": 2.33,
+  "decoder": "ffmpeg16k_mono_float32_actual_audio",
+  "method": "automated_asr_not_human_listening",
+  "created_at": "2026-10-25T08:59:49.250258+00:00",
+  "segments": [
+    {
+      "start": 714.85,
+      "end": 716.67,
+      "text": "Okay, 7 match.",
+      "avg_logprob": -1.0503456145524979,
+      "no_speech_prob": 0.4156729578971863,
+      "words": [
+        {
+          "w": " Okay,",
+          "s": 714.85,
+          "e": 715.79,
+          "p": 0.13692475855350494
+        },
+        {
+          "w": " 7",
+          "s": 715.99,
+          "e": 716.33,
+          "p": 0.31820687651634216
+        },
+        {
+          "w": " match.",
+          "s": 716.33,
+          "e": 716.67,
+          "p": 0.7841798663139343
+        }
+      ]
+    }
+  ]
+}

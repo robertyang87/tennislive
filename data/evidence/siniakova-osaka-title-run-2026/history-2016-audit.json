@@ -1,0 +1,264 @@
+{
+  "schema": "tennislive.historical-source-fact-audit.v1",
+  "created_at": "2026-10-25T08:09:02.466778+00:00",
+  "scope": "Only the2016 final background for the2026 Osaka title-run recap; not a ten-year career retrospective",
+  "verified_facts": {
+    "historic_event_name": "Hashimoto Sogyo Japan Women's Open Tennis2016",
+    "historic_event_id": "405",
+    "historic_host_city": "Tokyo",
+    "country": "Japan",
+    "historic_level": "WTA International",
+    "historic_final_date": "2016-09-18",
+    "historic_event_header_dates": "10–18 September2016, including qualifying; main-draw API says12–18 September",
+    "historic_final_winner": "Christina McHale",
+    "historic_final_runner_up": "Katerina Siniakova",
+    "winner_perspective_score": [
+      [
+        3,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "siniakova_perspective_score": [
+      [
+        6,
+        3
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "same_event_lineage_as2026": true,
+    "lineage_reason": "2016 and2026 are official tournament405; the2026 tournament/Japan Tennis Association article explicitly calls2016 Hashimoto Sogyo Japan Women's Open the current event's predecessor and says Siniakova was runner-up then, returning to this event's final after ten years.",
+    "2026_host_city": "Osaka",
+    "2026_final_date": "2026-10-25",
+    "2026_final_score_siniakova_perspective": [
+      [
+        6,
+        1
+      ],
+      [
+        6,
+        0
+      ]
+    ],
+    "2026_only_games_lost_in_final": 1,
+    "2026_career_wta_tour_singles_title_number": 6,
+    "2026_current_doubles_rank": 1,
+    "year_comparison_scope": "2016→2026 is ten calendar years; the two finals are ten years and37days apart. No exact tenth-anniversary claim."
+  },
+  "sources": [
+    {
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2016/405/MDS.pdf",
+      "file": "draw2016.pdf",
+      "priority": "contemporaneous official final draw; primary score and city proof",
+      "readback": "Tokyo, Japan10–18September2016; winner ChristinaMCHALE[7], score36 64 64."
+    },
+    {
+      "url": "https://www.wtatennis.com/news/2785901/mchale-nara-arruabarrena-announce-retirements",
+      "file": "wta-retirement-history-2022.html",
+      "priority": "official retrospective corroboration",
+      "readback": "Explicit2016Tokyo, McHale defeating Siniakova3-6,6-4,6-4 in final."
+    },
+    {
+      "url": "https://www.wtatennis.com/players/314917/christina-mchale",
+      "file": "mchale-profile.html",
+      "priority": "official career corroboration",
+      "readback": "Singles Winner(1):2016Tokyo(International); first WTA singles title atTokyo[JapanOpen], defeating Siniakova in final."
+    },
+    {
+      "url": "https://www.japanopentennis.com/wta/news-and-media/news/20261024-shiniakobahaborutawosutoretodexia-shitejue-sheng-jin-chu/",
+      "file": "event-official-2026-semi-history.html",
+      "priority": "official event/JapanTennisAssociation explicit lineage and historical score",
+      "readback": "Calls2016 Hashimoto Sogyo Japan Women's Open the current event's predecessor, identifies Siniakova runner-up in2016, ten years later in final again, and her loss6-3,4-6,4-6."
+    },
+    {
+      "url": "https://www.wtatennis.com/tournaments/405/osaka/2016/scores/LS001",
+      "file": "finalpage2016.html",
+      "priority": "identity/city metadata only; historical numeric data rejected",
+      "readback": "Content title saysTokyo while path says/osaka. Path city is current group slug, not historic location."
+    },
+    {
+      "url": "https://www.wtatennis.com/videos/4598500/siniakova-wins-osaka-final-to-claim-sixth-career-title",
+      "priority": "current2026 final facts; already in fact-audit.json"
+    },
+    {
+      "url": "https://www.wtatennis.com/players/320301/katerina-siniakova",
+      "priority": "current doublesWorldNo1, previously captured in fact-audit.json"
+    }
+  ],
+  "historical_video": {
+    "official_post": "https://x.com/WTA/status/777410477982818305",
+    "publisher_screen_name": "WTA",
+    "publisher_user_id": "17158140",
+    "published_at": "2016-09-18T07:34:36.000Z",
+    "official_post_text_summary": "WTA announces Christina McHale's first WTA title; video metadata says JWO TennisFinal.",
+    "public_metadata_file": "tweet-777410477982818305-publicwidget.json",
+    "video_url": "https://video.twimg.com/amplify_video/777410418885038081/vid/640x360/I84vkB0nEp7qkgeI.mp4",
+    "local_file": "/tmp/siniakova-osaka-20261025/history-2016/wta-2016-final.mp4",
+    "actual_width": 640,
+    "actual_height": 360,
+    "actual_fps": 30,
+    "actual_duration_seconds": 45.747596,
+    "highest_mp4_variant_in_official_public_metadata": "640x360 at832000bits/s; lower320x180 also listed; HLS master independently read below",
+    "actual_visual_identity": {
+      "court": "Blue court, pink HashimotoSogyo JapanWomen'sOpen banners, TennisTV original broadcast mark",
+      "terminal_score_at_source40s": "KaterinaSINIAKOVA6 4 4 / ChristinaMCHALE3 6 6",
+      "footage_contents": "Terminal match-point rally, McHale winning reaction, players handshake, official final result graphic."
+    },
+    "identity_status": "Actual downloaded video frames inspected, not merely matching title.",
+    "production_use_status": "not authorized by this audit; low resolution must not be relabeled1080p or silently covered by another source's720p authorization",
+    "contact_sheet": "/tmp/siniakova-osaka-20261025/history-2016/wta2016-source-contact.jpg",
+    "hls_master_probe_status": 200,
+    "hls_master_resolutions": [
+      "320x180",
+      "640x360"
+    ]
+  },
+  "historical_photo_candidate": {
+    "official_post": "https://x.com/TennisTV/status/777413999176605696",
+    "published_at": "2016-09-18T07:48:35.000Z",
+    "local_file": "/tmp/siniakova-osaka-20261025/history-2016/tennistv-2016-final-photo.jpg",
+    "native_dimensions": [
+      939,
+      514
+    ],
+    "actual_visual": "Christina McHale holding trophy beside an official; Siniakova is not the woman holding this cup.",
+    "status": "Identity inspected. Do not use as a Siniakova runner-up portrait or claim the pictured woman is Siniakova."
+  },
+  "problems_and_exclusions": [
+    {
+      "issue": "2016 dynamic-match payload corruption",
+      "detail": "Current official API gives an unfinished3-6,6-4,4-1 score and incorrect1/8 seeds for McHale/Siniakova, while contemporary final PDF and actual original broadcast show3-6,6-4,6-4, McHale seed7.",
+      "decision": "Reject old API numeric score, seeds, winner enum and exact start time. Use original PDF and official retrospective."
+    },
+    {
+      "issue": "Current /osaka path used to infer past location",
+      "decision": "Forbidden.2016 text and original PDF sayTokyo."
+    },
+    {
+      "issue": "Same event confused with same city or same court",
+      "decision": "Use same event/predecessor wording; never ten years later returning to the same Osaka court."
+    },
+    {
+      "issue": "Tokyo JapanWomen'sOpen confused with TorayPanPacificOpen",
+      "decision": "2016 event405 is International JapanWomen'sOpen. Do not label that final asTorayPanPacificOpen, WTA500 or the different TokyoPremier tournament."
+    },
+    {
+      "issue": "2016final claimed as career first final",
+      "decision": "Do not use: Siniakova had already reached2016Bastad final. Tournament article's first-final phrasing can mean first at this event; do not expand scope."
+    },
+    {
+      "issue": "Ten-year vow, revenge against same opponent, waiting only for this trophy",
+      "decision": "Unsupported motives; do not invent.2016 opponentMcHale and2026 opponentKrueger are different players."
+    }
+  ],
+  "editorial_recommendation": {
+    "safe_hook": [
+      "十年前决赛留下遗憾",
+      "十年后只丢1局夺冠"
+    ],
+    "safe_short_narration": "二零一六年，这项赛事还在东京举行。西尼亚科娃先赢一盘，最终拿到亚军。十年后，来到大阪。这次决赛，她只丢一局。",
+    "precise_longer_narration": "二零一六年，日本女子公开赛在东京举行。西尼亚科娃六比三先赢一盘，随后连输两个四比六，没能捧杯。二零二六年，这项赛事来到大阪。她以六比一、六比零夺冠，拿到生涯第六座WTA巡回赛单打冠军。",
+    "visual_labels": [
+      "2016 东京 · 日本女子公开赛决赛",
+      "2026 大阪 · 日本公开赛决赛"
+    ],
+    "structure": "Only one short8–15second historical bridge or adaptive2016→2026 comparison card, then the2026 round-by-round title run. No detour through the full ten-year career.",
+    "if_no_additional_lowres_use_authorization": "Use the verified official facts in the shared native timeline card; do not insert a current photograph as if it were2016 or claim the historical video isHD.",
+    "source_disclaimer_location": "Internal metadata only; film narration need not discuss asset gaps."
+  },
+  "media_search_scope": {
+    "checked": [
+      "WTA public2016drawPDF",
+      "WTA2022retirement retrospective",
+      "WTAplayerprofiles",
+      "WTApublicCMSall185Siniakova-referenced videos and203photos via two/three pages",
+      "WTApublicCMSMcHale-referenced4videos and11photos",
+      "Primary event/JTA2026history paragraph",
+      "WTAofficial2016Xpost and actual original video"
+    ],
+    "not_found": "No independently verified separate WTAofficial2016YouTubeHD candidate yet; not a claim that no such upload can exist.",
+    "network_note": "Direct localYouTube access returned proxyCONNECT403; no shell-route bypass attempted."
+  },
+  "raw_evidence": [
+    {
+      "file": "draw2016.pdf",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/draw2016.pdf",
+      "bytes": 55207,
+      "sha256": "ca0b0ffb9747a7992b407983bb0eecee0f23e4bb484fd806a2be91b386bde993"
+    },
+    {
+      "file": "draw2016.txt",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/draw2016.txt",
+      "bytes": 7421,
+      "sha256": "cbbc98a19932aa9fb4c45022e10b82710e10aaecc88f37565337c1b5ce4ffea6"
+    },
+    {
+      "file": "matches2016.json",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/matches2016.json",
+      "bytes": 148621,
+      "sha256": "d6f481ec6e0606b52d72291bb9f909a80b980c58083bad17e9541bb5776ef698"
+    },
+    {
+      "file": "finalpage2016.html",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/finalpage2016.html",
+      "bytes": 167395,
+      "sha256": "8385d542d005f87bd9e2b404c04f3621ca80b00b6aefb41f19a65257838051e8"
+    },
+    {
+      "file": "mchale-profile.html",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/mchale-profile.html",
+      "bytes": 219235,
+      "sha256": "d1e963a3a1fa569234286ed482fe935de85c8d7c784ae528352aa7755e9558f1"
+    },
+    {
+      "file": "wta-retirement-history-2022.html",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/wta-retirement-history-2022.html",
+      "bytes": 194382,
+      "sha256": "5cf50d68fe8312dddfb594993c83beb586fc12a6e9841c15a343bf04b72804d0"
+    },
+    {
+      "file": "event-official-2026-semi-history.html",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/event-official-2026-semi-history.html",
+      "bytes": 35693,
+      "sha256": "5d57aa0b974958634596a9d3dfd81369f86e8382d72d6659fcacb840880ffe05"
+    },
+    {
+      "file": "tweet-777410477982818305-publicwidget.json",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/tweet-777410477982818305-publicwidget.json",
+      "bytes": 2880,
+      "sha256": "ab6717ecbef28ae78be55b38221c690fae61b4fae169d1a18e890cd40c3dbd24"
+    },
+    {
+      "file": "wta-2016-final.mp4",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/wta-2016-final.mp4",
+      "bytes": 3575636,
+      "sha256": "26294ec11831a66fdf025ead846b2d1e3abebf3d568cc5948387c3333bb53729"
+    },
+    {
+      "file": "tennistv-2016-final-photo.jpg",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/tennistv-2016-final-photo.jpg",
+      "bytes": 78880,
+      "sha256": "09fd9f822eeed9c79dbb812497a03c1835561e768e5bf6bc0b147ce591cc4ed3"
+    },
+    {
+      "file": "wta2016-hls-master.m3u8",
+      "path": "/tmp/siniakova-osaka-20261025/history-2016/wta2016-hls-master.m3u8",
+      "bytes": 599,
+      "sha256": "a5ebfb1188086c4a7e564a7d0439709b916fa3068d68e06b57e210ceecc91c21"
+    }
+  ]
+}

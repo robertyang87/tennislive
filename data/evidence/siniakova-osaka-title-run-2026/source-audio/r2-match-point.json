@@ -1,0 +1,36 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407221766112/6407221766112.mp4",
+  "source_sha256": "805ac8a00aa966e7c3389af23dded7afaaacbbe03a4bdd596a3ae5c2d85986c8",
+  "method": "asr_cross_checked",
+  "reviewer": "root independent review of actual-source multi-model transcripts, VAD, original captions where available and visual timing; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T09:16:29.470858+00:00",
+  "status": "complete",
+  "reviewed_from": 242.44,
+  "reviewed_to": 257.64,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 248.91,
+      "end": 250.57,
+      "en": "Oh, it ends on a fluke.",
+      "zh": "哦，比赛以一个幸运球结束。"
+    },
+    {
+      "start": 250.83,
+      "end": 252.53,
+      "en": "She has had the run of the ball today,",
+      "zh": "今天她的球运一直不错，"
+    },
+    {
+      "start": 252.77,
+      "end": 257.05,
+      "en": "but even so, Siniakova sails through.",
+      "zh": "但无论如何，西尼亚科娃顺利晋级。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "../selected-source-caption-cues.json; ../source-caption-closure-audit.json; source-audio/asr actual hypotheses retained",
+  "selection_note": "Excluded source speech outside these exact windows remains explicitly unresolved in audit, never certified as heard.",
+  "translation_note": "Root tightened only two Chinese translations to native line width; English and actual source timing unchanged. Meaning rechecked against English."
+}

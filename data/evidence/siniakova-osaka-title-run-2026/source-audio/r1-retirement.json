@@ -1,0 +1,42 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-_r9i8mV5Zv8/_r9i8mV5Zv8.mp4",
+  "source_sha256": "aee6e8276346dc0a03b912ec5085cde31e799f0414aedea728d292c2b3f37215",
+  "method": "asr_cross_checked",
+  "reviewer": "root independent review of actual-source multi-model transcripts, VAD, original captions where available and visual timing; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T09:16:29.470597+00:00",
+  "status": "complete",
+  "reviewed_from": 1072.24,
+  "reviewed_to": 1085.64,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1072.4,
+      "end": 1074.84,
+      "en": "And Peyton Stearns looking towards David Witt.",
+      "zh": "斯特恩斯望向大卫·维特。"
+    },
+    {
+      "start": 1075.32,
+      "end": 1078.12,
+      "en": "You just wonder if this match might be over.",
+      "zh": "让人觉得，比赛可能要结束了。"
+    },
+    {
+      "start": 1080.04,
+      "end": 1082.0,
+      "en": "Coming to the net and conceding,",
+      "zh": "她来到网前，选择退赛，"
+    },
+    {
+      "start": 1082.0,
+      "end": 1085.06,
+      "en": "with an injury to her right leg, I think.",
+      "zh": "我想，应该是右腿伤势所致。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "../selected-source-caption-cues.json; ../source-caption-closure-audit.json; source-audio/asr actual hypotheses retained",
+  "selection_note": "Excluded source speech outside these exact windows remains explicitly unresolved in audit, never certified as heard.",
+  "translation_note": "Root tightened only two Chinese translations to native line width; English and actual source timing unchanged. Meaning rechecked against English."
+}

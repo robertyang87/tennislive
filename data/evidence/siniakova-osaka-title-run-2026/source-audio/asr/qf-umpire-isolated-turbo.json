@@ -1,0 +1,47 @@
+{
+  "model": "turbo",
+  "source_sha256": "c058483ddc791e24291091d02bdc19a9c7d9bf49004a16b92462775272e06d2b",
+  "clip": [
+    714.85,
+    717.18
+  ],
+  "duration": 2.33,
+  "decoder": "ffmpeg16k_mono_float32_actual_audio",
+  "method": "automated_asr_not_human_listening",
+  "created_at": "2026-10-25T09:00:02.904453+00:00",
+  "segments": [
+    {
+      "start": 714.85,
+      "end": 717.15,
+      "text": "Yay, second match, Siniak.",
+      "avg_logprob": -0.8046211947997411,
+      "no_speech_prob": 2.2762833284950545e-10,
+      "words": [
+        {
+          "w": " Yay,",
+          "s": 714.85,
+          "e": 715.77,
+          "p": 0.29609596729278564
+        },
+        {
+          "w": " second",
+          "s": 716.11,
+          "e": 716.37,
+          "p": 0.3951764404773712
+        },
+        {
+          "w": " match,",
+          "s": 716.37,
+          "e": 716.71,
+          "p": 0.9973976612091064
+        },
+        {
+          "w": " Siniak.",
+          "s": 716.85,
+          "e": 717.15,
+          "p": 0.5692281176646551
+        }
+      ]
+    }
+  ]
+}

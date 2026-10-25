@@ -1,0 +1,117 @@
+{
+  "schema": "tennislive.official-source-freeze-research.v1",
+  "frozen_at_utc": "2026-10-25T09:12:41.136018+00:00",
+  "scope": "Osaka2026 Siniakova title road official sources",
+  "wta_channel_refresh": {
+    "run_id": 40178998557,
+    "url": "https://github.com/robertyang87/tennislive/actions/runs/40178998557",
+    "head_sha": "b3db8c259fec94e2c0d3bfa219eb23d07094785f",
+    "observed_at": "2026-10-25T09:02:31.928740+00:00",
+    "file": "final-official-youtube-inventory.json",
+    "coverage": [
+      {
+        "page": "wta-videos",
+        "entries": 30,
+        "status": "ok",
+        "verified_official_channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q"
+      },
+      {
+        "page": "wta-shorts",
+        "entries": 30,
+        "status": "ok",
+        "verified_official_channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q"
+      },
+      {
+        "page": "wta-siniakova-osaka-search",
+        "entries": 30,
+        "status": "ok",
+        "verified_official_channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q"
+      },
+      {
+        "page": "wta-siniakova-search",
+        "entries": 30,
+        "status": "ok",
+        "verified_official_channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q"
+      },
+      {
+        "page": "wta-osaka-search",
+        "entries": 30,
+        "status": "ok",
+        "verified_official_channel_id": "UCaBIVVpHjq6j3tSyxwTE-8Q"
+      }
+    ],
+    "conclusion": "No identifiable current Osaka Siniakova-v-Linette second round, v-Boulter semifinal, or v-Krueger final video discovered in these official newest video/short inventories and scoped searches. Existing2026 Osaka QF/Day2 compilations remain available and are not discarded."
+  },
+  "current_event_playlist": {
+    "run_id": 40179378908,
+    "url": "https://github.com/robertyang87/tennislive/actions/runs/40179378908",
+    "head_sha": "f507a14606dd21f0368449966152f8960e5392b6",
+    "observed_at": "2026-10-25T09:08:04.983458+00:00",
+    "file": "final-official-osaka-playlist.json",
+    "coverage": "Official current2026 Osaka playlist,12 positions /11 identifiable videos plus1 untitled, duration-unknown entry PzQUuiRQwVA",
+    "conclusion": "No identifiable later version of the three target matches. Untitled item cannot be identified or counted as accessible1080p footage; no round or resolution invented."
+  },
+  "brightcove_final_refresh": {
+    "completed_at_utc": "2026-10-25T09:03:00.147977+00:00",
+    "file": "final-bc-quality-refresh.json",
+    "sources": [
+      {
+        "round": "r2",
+        "source_url": "https://www.wtatennis.com/videos/4597150/siniakova-wins-seventh-edition-of-rivalry-vs-linette-into-osaka-quarters",
+        "highest_actual_hls_resolution": [
+          1280,
+          720
+        ],
+        "duration_ms": 258027,
+        "playback_http_status": 200,
+        "hls_http_status": 200
+      },
+      {
+        "round": "sf",
+        "source_url": "https://www.wtatennis.com/videos/4598182/siniakova-defeats-boulter-in-osaka-semis-to-reach-first-wta-singles-final-since-2023",
+        "highest_actual_hls_resolution": [
+          1280,
+          720
+        ],
+        "duration_ms": 300501,
+        "playback_http_status": 200,
+        "hls_http_status": 200
+      },
+      {
+        "round": "final",
+        "source_url": "https://www.wtatennis.com/videos/4598500/siniakova-wins-osaka-final-to-claim-sixth-career-title",
+        "highest_actual_hls_resolution": [
+          1280,
+          720
+        ],
+        "duration_ms": 297429,
+        "playback_http_status": 200,
+        "hls_http_status": 200
+      }
+    ],
+    "conclusion": "All3 public official playback responses and actual HLS master playlists retrieved200; each highest1280x720, not1080."
+  },
+  "current_trophy_sources": {
+    "public_official_photo_post": "https://x.com/WTA/status/2114275921192747020",
+    "actual_photo_count": 2,
+    "actual_photo_dimensions_each": [
+      1080,
+      1350
+    ],
+    "actual_trophy_video_found": false,
+    "larger_same_photographs_found": false,
+    "last_successful_public_channel_check": "2026-10-25T09:10:01Z",
+    "parent_editorial_decision": "Real official trophy photographs with native photo-result motion are acceptable for this episode; they must remain identified as photographs. No fake trophy-video claim."
+  },
+  "fallback_basis": "Parent will apply existing owner media-source conditional policy after waiting and refreshing; this research report does not assert a new user720p approval. Pending question is unanswered.",
+  "new_user_720_approval_asserted": false,
+  "workflow_scope": "Existing research branch only; existing registered research workflow overwritten for read-only metadata inventory. No mainline merge, production render, push, or shared-code edit performed by this agent.",
+  "research_branch": "research/siniakova-osaka-official-20261025",
+  "research_branch_head": "f507a14606dd21f0368449966152f8960e5392b6",
+  "file_sha256": {
+    "final-official-youtube-inventory.json": "83c1f4fa76e2f45c677dab0c6b156b1b28aa362de5e4d952d3b30676e709b970",
+    "final-official-osaka-playlist.json": "fc6cd0ec1a9ab8cd702be91eb960ac137ef5194b96d69cfa2c54b481eb4ff861",
+    "final-bc-quality-refresh.json": "f661d60ebb0f08ae7b8d55d3f79a665d6c7f5c1c392e6b33f519433c838bfeeb"
+  },
+  "public_monitor_stopped_at_utc": "2026-10-25T09:12:41.136018+00:00"
+}

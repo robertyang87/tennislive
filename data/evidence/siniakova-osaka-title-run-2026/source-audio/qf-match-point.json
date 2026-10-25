@@ -1,0 +1,18 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ksA37BLbaWg/ksA37BLbaWg.mp4",
+  "source_sha256": "c058483ddc791e24291091d02bdc19a9c7d9bf49004a16b92462775272e06d2b",
+  "method": "asr_cross_checked",
+  "reviewer": "root independent review of actual-source multi-model transcripts, VAD, original captions where available and visual timing; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T09:16:29.471011+00:00",
+  "status": "complete",
+  "reviewed_from": 702.56,
+  "reviewed_to": 715.52,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "human_listening_performed": false,
+  "evidence": "../selected-source-caption-cues.json; ../source-caption-closure-audit.json; source-audio/asr actual hypotheses retained",
+  "selection_note": "Excluded source speech outside these exact windows remains explicitly unresolved in audit, never certified as heard.",
+  "no_foreground_english_reason": "实际完整赛点保留击球与现场声；主裁首次语音715.612在本段715.52切出后。三阈值语音VAD和原频道字幕/独立ASR时间交叉核验，见qf-vad-onset.json；没有将未明口令写成确定字幕。",
+  "translation_note": "Root tightened only two Chinese translations to native line width; English and actual source timing unchanged. Meaning rechecked against English."
+}

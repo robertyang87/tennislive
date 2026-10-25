@@ -1,0 +1,42 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407335181112/6407335181112.mp4",
+  "source_sha256": "af5d1902786bf4506380b816781df928ae7c938b49fea58fe37d897bae2ae59a",
+  "method": "asr_cross_checked",
+  "reviewer": "root independent review of actual-source multi-model transcripts, VAD, original captions where available and visual timing; no auditory listening claimed",
+  "reviewed_at": "2026-10-25T09:16:29.471168+00:00",
+  "status": "complete",
+  "reviewed_from": 260.64,
+  "reviewed_to": 284.12,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 270.61,
+      "end": 271.61,
+      "en": "And that's it.",
+      "zh": "比赛结束了。"
+    },
+    {
+      "start": 271.61,
+      "end": 274.59,
+      "en": "The roar tells you everything you need to know.",
+      "zh": "这一声吼，已经说明了一切。"
+    },
+    {
+      "start": 277.51,
+      "end": 281.97,
+      "en": "Katerina Siniakova into her second Japan Open final,",
+      "zh": "她第2次打进日本公开赛决赛，"
+    },
+    {
+      "start": 282.13,
+      "end": 283.77,
+      "en": "her first here in Osaka.",
+      "zh": "也是她首次在大阪打进决赛。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": "../selected-source-caption-cues.json; ../source-caption-closure-audit.json; source-audio/asr actual hypotheses retained",
+  "selection_note": "Excluded source speech outside these exact windows remains explicitly unresolved in audit, never certified as heard.",
+  "translation_note": "Root tightened only two Chinese translations to native line width; English and actual source timing unchanged. Meaning rechecked against English."
+}

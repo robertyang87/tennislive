@@ -1,0 +1,60 @@
+{
+  "slug": "siniakova-osaka-title-run-2026",
+  "checked_at": "2026-10-25T09:23:41Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "5ffd8f6b69b41684": {
+      "segment": 2,
+      "spoken": 12.552,
+      "picture": 13.0
+    },
+    "1984d72c619bd39e": {
+      "segment": 3,
+      "spoken": 8.928,
+      "picture": 9.3
+    },
+    "29f09411f3813365": {
+      "segment": 5,
+      "spoken": 11.16,
+      "picture": 11.6
+    },
+    "bdf646c56c5d414c": {
+      "segment": 8,
+      "spoken": 9.024,
+      "picture": 9.4
+    },
+    "96fdd9e033b3a6c5": {
+      "segment": 10,
+      "spoken": 12.048,
+      "picture": 12.4
+    },
+    "e645aca54deca33b": {
+      "segment": 13,
+      "spoken": 11.784,
+      "picture": 12.0
+    },
+    "b320f9bc323438c8": {
+      "segment": 14,
+      "spoken": 12.84,
+      "picture": 13.3
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "cbb2cf96af7e0081968e4f065531da0d2622fb6764e73e22a414472052d192ae",
+    "request_count": 8,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "transport": "repository",
+    "repository_commit": "e3e9581368dd755f2d5df11615741e63a1243faf",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/e3e9581368dd755f2d5df11615741e63a1243faf/assets/tts-bundles/siniakova-osaka-title-run-2026/cbb2cf96af7e0081968e4f065531da0d2622fb6764e73e22a414472052d192ae/tts_bundle.zip"
+  }
+}

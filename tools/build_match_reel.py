@@ -4150,7 +4150,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "slug", "source_audio", "source_fallbacks", "source_url",
              "original_audio_mode", "owner_approval", "audio_effects_review", "preserve_source_audio", "track",
              "source_quality_exceptions", "sources", "stats",
-             "subtitle_scrim", "subtitle_top", "title_card_handle_bottom", "topbar", "tts_backend", "voice",
+             "subtitle_scrim", "subtitle_top", "title_card_handle_bottom", "topbar", "topbar_by_source", "tts_backend", "voice",
              "editorial", "narration_audio_recipe", "scene_edl_recipe", "scoreboard_profile"),
     "cover": ("approved_image", "event_badge", "eyebrow", "hook", "hook_accent", "hook_accent_color", "hook_align", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
@@ -7215,6 +7215,19 @@ JODAR_TOWEL_LOW_RES_SOURCES: dict[str, int] = {
     "https://github.com/robertyang87/tennislive/releases/download/reel-src-jodar-towel-shanghai-2026/xg.mp4": 652,
 }
 
+# Existing owner media-source policy permits WTA's official 720p only after
+# waiting a production cycle and checking the official YouTube channel again.
+# For this episode the final was published 06:58 UTC; the 09:02 UTC channel
+# inventory and 09:03 UTC actual HLS recheck still found no higher version.
+# Evidence: data/evidence/siniakova-osaka-title-run-2026/source-quality-policy.json.
+# The owner subsequently explicitly confirmed this episode: "720 的可以"
+# (2026-10-25). The evidence retains the earlier wait and recheck; no approval
+# was inferred from an unanswered question. Only these three sources qualify.
+SINIAKOVA_OSAKA_2026_LOW_RES_SOURCES: dict[str, int] = {
+    f"https://github.com/robertyang87/tennislive/releases/download/source-{video}/{video}.mp4": 720
+    for video in ("6407221766112", "6407335181112", "6407369981112")
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -7232,6 +7245,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
             if spec.get("slug") != "jodar-towel-shanghai-2026":
                 raise ReelError("source_quality_exceptions 此源授权仅限霍达尔毛巾风波影片")
             floor = JODAR_TOWEL_LOW_RES_SOURCES[url]
+        if url in SINIAKOVA_OSAKA_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "siniakova-osaka-title-run-2026":
+                raise ReelError("source_quality_exceptions 此源条件政策仅限西尼亚科娃2026大阪夺冠之路")
+            floor = SINIAKOVA_OSAKA_2026_LOW_RES_SOURCES[url]
         if floor is None or url not in urls:
             raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
         if (not isinstance(claim, dict)
@@ -9999,6 +10016,7 @@ def validate_spec(
     # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
     # 不要等到六分钟渲染完才发现两行文字没读到。
     topbar = _topbar_lines(spec)
+    _source_topbar_lines(spec)  # optional multi-match map; fail before source fetch
     _validate_editorial_contract(
         spec, required=_editorial_contract_required(spec, urls, topbar))
     _absolute_claims_need_a_source(spec)
@@ -10984,8 +11002,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # `_topbar_pulse_tags` 会自己出声，不会拖垮整条渲染。
         raw_pulse = (spec.get("topbar") or {}).get("pulse_at") or []
         pulse_at = [float(t) for t in raw_pulse] if isinstance(raw_pulse, list) else []
-        topbar_ass = write_topbar_ass(
-            topbar, cover_secs, match_end, outdir / "topbar.ass", pulse_at=pulse_at)
+        topbar_ass = write_segment_topbar_ass(
+            spec, segments, cover_secs, outdir / "topbar.ass",
+            default_lines=topbar, pulse_at=pulse_at)
         print(f"顶栏 {topbar_ass.name}：封面后 {cover_secs:.2f}s 起，"
               f"比赛画面结束 {match_end:.2f}s 止；片尾不挂顶栏"
               + (f"，{len(pulse_at)} 处关键分脉冲" if pulse_at else ""))
@@ -11134,6 +11153,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # 不用回头翻 spec（改 spec 不重渲是常事，产物记的才是渲的那一版）。
         "layout": spec.get("layout") or "full",
         "segments_seconds": round(sum(s.length for s in segments), 3),
+        **({"topbar_by_source": spec["topbar_by_source"]}
+           if "topbar_by_source" in spec else {}),
         "topbar": ({"line1": topbar[0], "line2": topbar[1],
                     "start": round(cover_secs, 3),
                     "end": round(cover_secs + sum(s.length for s in segments), 3)}
@@ -11888,6 +11909,105 @@ def topbar_head_with_icon(line1: str) -> str:
     """
     colour = TOPBAR_SETWIN_ASS.strip("{}")
     return icon_ass(COURT, TOPBAR_ICON_H, colour, font_px=TOPBAR_HEAD_SIZE) + line1
+
+
+
+def _source_topbar_lines(spec: dict) -> dict[str, tuple[str, str]] | None:
+    """Validate an explicit per-source match header without changing legacy specs.
+
+    A title run contains several opponents. The global final header remains the
+    cover/result contract, while each actual match source supplies its own header.
+    Every footage source must be covered exactly once; silent fallbacks would put
+    the final opponent over an earlier round again. This is metadata validation,
+    not a claim that a supplied evidence URL has been fact-checked by code.
+    """
+    if "topbar_by_source" not in spec:
+        return None
+    from urllib.parse import urlparse  # noqa: PLC0415
+    from reel_facts import result_direction_problem, tour_topline_problem  # noqa: PLC0415
+    from versus_poster import _SET_RE  # noqa: PLC0415
+
+    mapping = spec["topbar_by_source"]
+    if not isinstance(mapping, dict) or not mapping:
+        raise ReelError("topbar_by_source must be a nonempty source-keyed object")
+    sources = spec_sources(spec)
+    primary = next(iter(sources))
+    used = {str(seg.get("source", primary)) for seg in spec.get("segments", [])
+            if not any(seg.get(k) for k in ("image", "title_card", "stat_card", "visual_image"))}
+    unknown = set(mapping) - set(sources)
+    missing, unused = used - set(mapping), set(mapping) - used
+    if unknown or missing or unused:
+        raise ReelError("topbar_by_source source coverage mismatch: "
+                        f"unknown={sorted(unknown)}, missing={sorted(missing)}, unused={sorted(unused)}")
+    fields = {"line1", "winner", "loser", "result", "source"}
+    output = {}
+    for key, node in mapping.items():
+        if not isinstance(node, dict) or fields - set(node):
+            raise ReelError(f"topbar_by_source.{key} requires line1/winner/loser/result/source")
+        if any(k not in fields and not k.startswith("_") for k in node):
+            raise ReelError(f"topbar_by_source.{key} has unknown fields; line2 is derived, not editable")
+        text = {}
+        for name in fields:
+            value = node[name]
+            if (not isinstance(value, str) or not value.strip()
+                    or any(c in value for c in ("\n", "\r", "{", "}", "\\"))):
+                raise ReelError(f"topbar_by_source.{key}.{name} must be one plain nonempty line")
+            text[name] = value.strip()
+        if any(re.search(r"unknown|tbd|待定|未知|\?", text[k], re.I) for k in ("winner", "loser")):
+            raise ReelError(f"topbar_by_source.{key} requires two known player names")
+        if text["winner"] == text["loser"]:
+            raise ReelError(f"topbar_by_source.{key} winner and loser must differ")
+        if issue := tour_topline_problem(text["line1"]):
+            raise ReelError(f"topbar_by_source.{key}: {issue}")
+        url = urlparse(text["source"])
+        if url.scheme not in {"http", "https"} or not url.hostname:
+            raise ReelError(f"topbar_by_source.{key}.source requires an HTTP(S) evidence URL")
+        tokens = text["result"].split()
+        retired = tokens[-1].casefold() in {"ret.", "ret", "ret'd", "退赛"}
+        if retired:
+            tokens = tokens[:-1]
+        scores = [_SET_RE.fullmatch(token) for token in tokens]
+        if not scores or not all(scores):
+            raise ReelError(f"topbar_by_source.{key}.result requires winner-first set scores")
+        pairs = [(int(match.group(1)), int(match.group(2))) for match in scores]
+        completed = [max(a, b) >= 6 and (abs(a-b) >= 2 or {a, b} == {6, 7})
+                     for a, b in pairs]
+        if (not all(completed[:-1] if retired else completed)
+                or (not retired and sum(a > b for a, b in pairs) <= sum(b > a for a, b in pairs))):
+            raise ReelError(f"topbar_by_source.{key}.result is not a completed winner-first match")
+        if issue := result_direction_problem({"cover": text}):
+            raise ReelError(f"topbar_by_source.{key}: {issue}")
+        output[key] = (text["line1"], f'{text["winner"]} {text["result"]} {text["loser"]}')
+    return output
+
+
+def write_segment_topbar_ass(spec: dict, segments: list[Segment], start: float,
+                             path: Path, *, default_lines: tuple[str, str],
+                             pulse_at: list[float] | None = None) -> Path:
+    """Reuse the native ASS styling, limited to each source's real film interval.
+
+    No map delegates to the original writer with exactly its previous arguments.
+    Native full-canvas cards get no topbar events; their existing clean-card
+    composition and ordinary subtitle policy remain unchanged.
+    """
+    mapping = _source_topbar_lines(spec)
+    end = start + sum(seg.length for seg in segments)
+    if mapping is None:
+        return write_topbar_ass(default_lines, start, end, path, pulse_at=pulse_at)
+    prefix, events, cursor = None, [], start
+    for seg in segments:
+        until = cursor + seg.length
+        if not (seg.image or seg.full_canvas or seg.visual_image):
+            points = [t for t in pulse_at or [] if cursor <= t <= until]
+            write_topbar_ass(mapping[seg.source], cursor, until, path, pulse_at=points)
+            text = path.read_text(encoding="utf-8")
+            prefix = prefix or text.split("Dialogue:", 1)[0]
+            events.extend(line for line in text.splitlines() if line.startswith("Dialogue:"))
+        cursor = until
+    if prefix is None:
+        raise ReelError("topbar_by_source has no actual footage windows")
+    path.write_text(prefix + "\n".join(events) + "\n", encoding="utf-8")
+    return path
 
 
 def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
