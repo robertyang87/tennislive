@@ -25,7 +25,7 @@ jobs:
               cookie=pathlib.Path(os.environ['RUNNER_TEMP'])/'yt-cookies.txt';cookie.write_text(os.environ['YT_COOKIES_TXT']);cookie.chmod(0o600);args=['--cookies',str(cookie)]
           result=[]
           for key,start,end in [('ksA37BLbaWg',711,729),('_r9i8mV5Zv8',1071,1092)]:
-              cmd=['yt-dlp',*args,'--no-warnings','--skip-download','--write-auto-subs','--write-subs','--sub-langs','en','--sub-format','json3','--socket-timeout','20','--retries','1','-o',str(out/(key+'.%(ext)s')),'https://www.youtube.com/watch?v='+key]
+              cmd=['yt-dlp',*args,'--no-warnings','--skip-download','--ignore-no-formats-error','--write-auto-subs','--write-subs','--sub-langs','en','--sub-format','json3','--socket-timeout','20','--retries','1','-o',str(out/(key+'.%(ext)s')),'https://www.youtube.com/watch?v='+key]
               r=subprocess.run(cmd,capture_output=True,text=True,timeout=180)
               row={'id':key,'returncode':r.returncode,'log':(r.stdout+r.stderr)[-1200:],'subfiles':[]}
               for f in out.glob(key+'*.json3'):
