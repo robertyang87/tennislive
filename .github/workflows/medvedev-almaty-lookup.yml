@@ -1,0 +1,57 @@
+name: medvedev-almaty-lookup
+
+# 一次性：梅德韦杰夫 2026 阿拉木图夺冠之路选源。只在本分支 push 时跑，不进 main。
+# 识别用户给的三条链接、按每一场搜官方集锦、拉 flashscore 逐场比分与统计。
+
+on:
+  push:
+    branches: [claude/medvedev-almaty-title-run]
+    paths: [.github/workflows/medvedev-almaty-lookup.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q -e . "yt-dlp[default]"
+      - name: cookies
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+          fi
+      - name: 用户给的三条链接
+        env:
+          CK: ${{ steps.cookies.outputs.path }}
+        run: |
+          C=(); [ -n "$CK" ] && C=(--cookies "$CK")
+          for v in 9g-XICnwmw4 XCcfLBk89xs ILLNdGG8nKA mB7W6LY2Gk0; do
+            yt-dlp "${C[@]}" --skip-download --print "LINK %(id)s | %(title)s | %(channel)s | %(duration)s | %(upload_date)s | %(height)s" "https://www.youtube.com/watch?v=$v" 2>&1 | grep -E "^LINK|ERROR" || true
+          done
+      - name: 搜各场集锦
+        env:
+          CK: ${{ steps.cookies.outputs.path }}
+        run: |
+          C=(); [ -n "$CK" ] && C=(--cookies "$CK")
+          for q in "Medvedev Shimabukuro Almaty 2026" "Medvedev Atmane Almaty 2026" "Medvedev Bublik Almaty 2026" "Medvedev Basilashvili Almaty 2026 final" "Medvedev Almaty 2026 highlights" "Medvedev Almaty 2026 trophy" "Medvedev Almaty 2026 interview"; do
+            echo "== $q"
+            yt-dlp "${C[@]}" --flat-playlist --print "HIT %(id)s | %(title)s | %(channel)s | %(duration)s" "ytsearch12:$q" 2>&1 | grep -E "^HIT|ERROR" || true
+          done
+      - name: flashscore 逐场
+        run: |
+          python tools/match_feed.py find --tour atp --event almaty --who Medvedev 2>&1 | tail -40 || true
