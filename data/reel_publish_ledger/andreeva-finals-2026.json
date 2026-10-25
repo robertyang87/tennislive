@@ -32,9 +32,10 @@
     {
       "key": "pushplus:reel:andreeva-finals-2026:fd72af45d95fd247229d41323db0abc5d0b76964b2fa11f1ed4733ac1f7ea895",
       "fingerprint": "fd72af45d95fd247229d41323db0abc5d0b76964b2fa11f1ed4733ac1f7ea895",
-      "status": "uncertain",
+      "status": "not_sent",
       "at": "2026-10-25T05:17:31Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40164903707"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40164903707",
+      "_not_sent_evidence": "run 40164903707 在 push_reel.py:981 require_publish（配音审查绑定的 spec 字节对不上）处退出，早于 PushPlus 请求，无流水号、无回执；账号所有者 2026-10-25「你帮我全部处理完吧」授权改记，按当前 spec 重渲后再发"
     }
   ]
 }

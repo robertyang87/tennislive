@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-andreeva-finals-2026-279e9db2f44a243f",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-279e9db2f44a243f/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40161356898"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40166897409"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -53,52 +53,45 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "689ffbbf9015eca390c9479f6f6427c0ffd24cabb40024e575cd4d7f25cd3841",
+  "render_inputs_sha256": "eeb97e0b92c6b2c044ddcb4839164bfadcc6ae97fdd1bb1b168b777b470b66a1",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "andreeva-finals-2026",
-    "received_at": "2026-10-25T04:17:47Z",
-    "artifact_ready_at": "2026-10-25T04:26:53Z",
-    "elapsed_seconds": 546.829,
+    "received_at": "2026-10-25T05:49:16Z",
+    "artifact_ready_at": "2026-10-25T05:58:44Z",
+    "elapsed_seconds": 568.4,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "fd72af45d95fd247229d41323db0abc5d0b76964b2fa11f1ed4733ac1f7ea895",
-    "spec_sha256": "02934ad9d26a4706c6a7dfc936fb4fe272d93c2a883e5deb1c0d0334d22ea7cc",
-    "run_id": "40161356898",
+    "film_sha256": "3c886278dbc6f7e2b2a1c90f882e9a4d18453340477003fb4c581550e0cf357a",
+    "spec_sha256": "dbec54a15354ea87904cb42d7fec436d44f504910ceaecca1c3f6d3632a60dff",
+    "run_id": "40166897409",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-25T04:20:44Z",
-        "run_id": "40161356898"
+        "at": "2026-10-25T05:52:27Z",
+        "run_id": "40166897409"
       }
     ],
-    "render_seconds": 369.829,
-    "pre_render_seconds": 177.0
+    "render_seconds": 377.4,
+    "pre_render_seconds": 191.0
   },
-  "film_sha256": "fd72af45d95fd247229d41323db0abc5d0b76964b2fa11f1ed4733ac1f7ea895",
-  "film_bytes": 122040572,
-  "qc_attestation_sha256": "10213a438ad654aaa8f3567aab908c8d06b86f8262da9d474681ec12d85e7e11",
+  "film_sha256": "3c886278dbc6f7e2b2a1c90f882e9a4d18453340477003fb4c581550e0cf357a",
+  "film_bytes": 122046584,
+  "qc_attestation_sha256": "cfa529ef8d2dfdcb4a8afdf9da1f945ef04e291430f6e13addce8b3773e0c1f0",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-25T04:20:44Z",
-      "run_id": "40161356898"
+      "at": "2026-10-25T05:52:27Z",
+      "run_id": "40166897409"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-25T04:26:57Z",
-      "run_id": "40161356898"
+      "at": "2026-10-25T05:58:48Z",
+      "run_id": "40166897409"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-finals-2026/andreeva-finals-2026.mp4",
-  "video_bytes": 122040572,
-  "_release_tag_note": "2026-10-25T04:27:05Z run 40161356898 把这一份（video_bytes 122040572）传上 tag `reel-andreeva-finals-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-22/reel/andreeva-finals-2026、output/2026-10-24/reel/andreeva-finals-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。",
-  "reattests": [
-    {
-      "at": "2026-10-25T05:15:58Z",
-      "spec_sha256": "dbec54a15354ea87904cb42d7fec436d44f504910ceaecca1c3f6d3632a60dff",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40164782771"
-    }
-  ]
+  "video_bytes": 122046584,
+  "_release_tag_note": "2026-10-25T05:58:55Z run 40166897409 把这一份（video_bytes 122046584）传上 tag `reel-andreeva-finals-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-22/reel/andreeva-finals-2026、output/2026-10-24/reel/andreeva-finals-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
