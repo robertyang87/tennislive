@@ -1,6 +1,6 @@
 {
   "slug": "andreeva-finals-2026",
-  "checked_at": "2026-10-24T09:38:19Z",
+  "checked_at": "2026-10-25T04:16:59Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -12,17 +12,17 @@
   "segments": {
     "62d82e2cc27270c5": {
       "segment": 2,
-      "spoken": 10.44,
+      "spoken": 10.344,
       "picture": 10.64
     },
     "6dbda2de3f7dbd29": {
       "segment": 3,
-      "spoken": 5.712,
+      "spoken": 5.688,
       "picture": 5.92
     },
     "508faae0af0028b0": {
       "segment": 5,
-      "spoken": 6.168,
+      "spoken": 6.144,
       "picture": 6.4
     },
     "93a0177a793fdb52": {
@@ -32,7 +32,7 @@
     },
     "67d3445b6b78825d": {
       "segment": 8,
-      "spoken": 9.72,
+      "spoken": 9.816,
       "picture": 9.92
     },
     "50338912e861b2f2": {
@@ -52,37 +52,32 @@
     },
     "bb677c6aefdca311": {
       "segment": 16,
-      "spoken": 8.76,
+      "spoken": 9.024,
       "picture": 8.96
     },
-    "705dba00747bd891": {
+    "a95c2b841bd0748f": {
       "segment": 17,
-      "spoken": 6.192,
+      "spoken": 5.712,
       "picture": 6.4
     },
-    "674c58fc6859ccd4": {
-      "segment": 19,
-      "spoken": 5.376,
-      "picture": 5.6
-    },
     "6a054d934a5d04c7": {
-      "segment": 20,
+      "segment": 18,
       "spoken": 11.76,
       "picture": 11.96
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "62b4c283ba89ccca9fb0cd647b586f22d10b1a73960078c012b28b3d377836f8",
-    "request_count": 13,
-    "mode": "strict_import",
-    "strict_reused": true,
+    "bundle_sha256": "279e9db2f44a243fa61f9a1a6a0f93550cb9ac361e5868f2726dbd629e2e0b02",
+    "request_count": 12,
+    "mode": "capture_export",
+    "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "transport": "repository",
-    "repository_commit": "770ebe839466b5a9602cfc427592af696915ff04",
+    "release_tag": "reel-tts-andreeva-finals-2026-279e9db2f44a243f",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-2026-279e9db2f44a243f/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/770ebe839466b5a9602cfc427592af696915ff04/assets/tts-bundles/andreeva-finals-2026/62b4c283ba89ccca9fb0cd647b586f22d10b1a73960078c012b28b3d377836f8/tts_bundle.zip"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40161197574"
   }
 }

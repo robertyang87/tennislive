@@ -3,25 +3,26 @@
   "primary": "adelaide-final",
   "date": "2026-10-24",
   "_column": "网球有故事",
-  "title": "安德烈耶娃：从巴黎冠军到单打年终",
+  "title": "安德烈耶娃：三冠也有遗憾的一年",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
     "story_kind": "person",
     "subject": "安德烈耶娃",
-    "hook": "19岁首夺大满贯\n首次入围单打年终",
-    "topic": "安德烈耶娃：从巴黎冠军到单打年终",
+    "hook": "19岁拿下法网冠军\n第一次凭单打进年终",
+    "topic": "安德烈耶娃：三冠也有遗憾的一年",
     "portrait": {
-      "image": "assets/reel/andreeva-finals-2026/cover-rg-2026-jb1-2805.jpg",
+      "image": "assets/reel/andreeva-finals-2026/cover-rg-2026-r2-fist.jpg",
       "fit": "cover",
-      "focus": 0.14,
+      "focus": 0.62,
       "focus_y": 0.5,
       "zoom": 1.0,
-      "source_url": "https://www.rolandgarros.com/en-us/photo-gallery/2026-edition-gallery-photos-champions-finalists-roland-garros-2026",
-      "_credit": "Jean-Baptiste Autissier / FFT",
-      "_portrait_why": "2026法网官方Champions图库JB1_2805实际3000×2000原图，横向裁切取Mirra与本人奖杯；原图已实际查看，fresh JPEG全HEADblob/原图URL去重通过；原生封面仍需实核。"
+      "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/05/29/f0b92e0e-ccb6-420f-a1fc-12e16b70e8e4/Mirra-Andreeva-Paris-2026.jpg",
+      "_credit": "Anne-Christine Poujoulat / AFP via Getty Images（WTA 官网照片接口 id 4511285）",
+      "_portrait_why": "2026-10-25 重做换封面：WTA 官方照片接口 references=TENNIS_PLAYER:331809 检出，原图 4652×3102；EXIF 2026-05-27 20:02:30+02:00，IPTC 说明写明 2026 法网第二轮对 Bassols Ribera（她先输一盘后逆转，夺冠之路的一场）赢分后握拳。近景、正脸偏侧、双眼睁开、合焦。旧两版封面都是法网捧杯照，这次换成夺冠之路上的情绪近景。"
     },
-    "scrim": "clear"
+    "scrim": "clear",
+    "_redo_20261025_why": "账号所有者2026-10-25要求封面和文案都改；2025年她打过双打年终，钩子保留『凭单打』范围词避免歧义。"
   },
   "segments": [
     {
@@ -688,7 +689,7 @@
       "_id": "card-asia",
       "_timeline_date": "2026-10-09",
       "title_card": "先拿单打门票\n再赴北京决赛",
-      "seconds": 8.96,
+      "seconds": 9.3,
       "narration": "十月九日，官方确认她首次获得单打年终资格。去年错过的那张门票，今年不用再等到最后。",
       "voice": {
         "pitch": "+0Hz",
@@ -714,84 +715,18 @@
     },
     {
       "_id": "card-beijing",
-      "_timeline_date": "2026-10-11",
-      "title_card": "第五场赛季决赛\n北京收获亚军",
+      "_timeline_date": "2026-10-12",
+      "title_card": "北京收获亚军\n随后升至世界第三",
       "seconds": 6.4,
-      "narration": "两天后的北京决赛，五比七、四比六，她负于郑钦文，收获亚军。",
+      "narration": "两天后，她在北京决赛收获亚军，随后首次升到世界第三。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
       },
       "kicker": "03 · 冠军之后仍要继续",
       "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
-      "_voice_emphasis": "第五场赛季决赛；北京收获亚军"
-    },
-    {
-      "point_end_ok": "实际密集样帧核对同源SHA21524862c53c4629e64615179c5345b03209bff7406ec7977ea268367598f451：264–265.44发球准备、266+完整发球，269.28–269.76死球，270–275.52郑钦文倒地庆祝，275.76后观众欢呼；277.40结束已保留完整赛点及真实结果反应。probe279.36变牌判定落在观众镜头，不是未完成一分。证据research/andreeva-finals-2026/production/beijing-actual-end-review.json及密集图SHA6212caee0cba8b38b50c4518fd21646982bae3721a4120ce20ea826cefec8e37、d525e0d2a8b304fd35f7bef5fb2df374b82fca3d833c8a352ed6d6552cea0818。",
-      "_id": "beijing-final",
-      "source": "beijing-final",
-      "start": 263.44,
-      "end": 277.4,
-      "frame": "court",
-      "cx": 0.5,
-      "track": false,
-      "fit": "crop",
-      "narration": "",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
-      },
-      "_quote_kind": "broadcast",
-      "_why": "Actual paired primary localASR cross-check. Proper nouns normalized only to independently verified official participant spelling; raw misspellings/timing differences retained. Selected complete first post-point sentence(s); following independent new analysis is outside editorial scope, never cut mid-word to evade subtitles. No human listening. 263.44 hard cut to same championshippoint#1 Zheng ball-in-hand prep;266.40 wide and whole toss/serve ace;271 dead;272+ Zheng lies down. Actual lossMirra5-7 4-6. SourceboardZheng7 5 40 /Mirra5 4 30. Dense actual samples independently reviewed byroot confirm prep264–265.44,toss/serve266+,pointdead269.28–269.76,Zhengfloorreaction270–275.52,crowd275.76+. Cachedprobe279.36 is crowd-image false positive; actual end277.40 preserves fullpoint and genuine result reaction.",
-      "_frame_why": "比赛固定球场中心cx=.5铺满1080×1440，包含同场真实反应；不自动跟随。",
-      "quote": [
-        {
-          "at": 6.32,
-          "end": 10.44,
-          "text": "And the ultimate exclamation point\n用最有力的惊叹号，"
-        },
-        {
-          "at": 10.44,
-          "end": 12.76,
-          "text": "to conquer the China Open.\n征服中国网球公开赛。"
-        }
-      ],
-      "inset": {
-        "image": "assets/reel/andreeva-finals-2026/context-beijing-final.png",
-        "kind": "story_text",
-        "corner": "tr",
-        "width": 0.48,
-        "pad": 0.043,
-        "show_after": 0,
-        "show_for": 15,
-        "motion": "editorial",
-        "label": {
-          "topic": "亚军·650分",
-          "date": "2026.10.11",
-          "place": "北京决赛",
-          "people": "安德烈耶娃 vs 郑钦文",
-          "score": "5-7 4-6"
-        },
-        "animate": false,
-        "top_pad": 0.043
-      },
-      "_label_window_why": "本次0–13.96s即显静态信息卡；原source窗263.44–277.40与固定court cx=.5不变，show_after=0/show_for=15/animate=false，短段自然随段结束。显式top_pad=.043、width=.48，整组较原.60缩小20%，PNG设计89/98/73与颜色排布不改。原151/width.60诊断帧有遮挡，不适用安全结论；本次仅按native-preview-top46-width48-critical及native-preview-top46-width48-labels-1/-2实际采样核人物/球拍/字幕/品牌，未宣称所有连续帧无遮挡；正式溶解接缝仍待新成片核验。",
-      "_match_id": "beijing-final",
-      "_point_role": "match_point"
-    },
-    {
-      "_id": "card-ranking",
-      "_timeline_date": "2026-10-15",
-      "title_card": "北京之后\n首次升至世界第三",
-      "seconds": 5.6,
-      "narration": "北京之后，她首次升到世界第三，因赛程调整退出武汉。",
-      "voice": {
-        "pitch": "+0Hz",
-        "_why": "云健+6%/+0Hz完整语义整句合成，实际字节冻结与时长检查；不人为拆字加速。"
-      },
-      "kicker": "03 · 冠军之后仍要继续",
-      "_voice_intent": "完整语义整句合成；自然句界停顿，不统一加速；正式片严格使用新冻结字节。",
-      "_voice_emphasis": "北京之后；首次升至世界第三"
+      "_voice_emphasis": "北京收获亚军；随后升至世界第三",
+      "_redo_20261025_why": "账号所有者2026-10-25「重做……同时拿掉北京的一些」：北京决赛那段视频（郑钦文倒地低角度镜头疑触发平台机审限流、中网画面版权敏感）整段拿掉；北京亚军按10-22规则非大满贯非夺冠一句带过，和原『升至世界第三』卡合并，不再点对手姓名比分、不提武汉。"
     },
     {
       "_id": "card-ending",
@@ -810,7 +745,6 @@
   ],
   "sources": {
     "adelaide-final": "https://www.youtube.com/watch?v=Z-erh7o_zvI",
-    "beijing-final": "https://www.youtube.com/watch?v=Vq_UC0n5DKQ",
     "linz-final": "https://www.youtube.com/watch?v=SAzG0MU3Ums",
     "madrid-final": "https://www.youtube.com/watch?v=FTTBcO6RWic",
     "rg-final": "https://www.youtube.com/watch?v=WN-TlTb8-aA",
@@ -820,7 +754,6 @@
   },
   "source_fallbacks": {
     "adelaide-final": "https://github.com/robertyang87/tennislive/releases/download/source-Z-erh7o_zvI/Z-erh7o_zvI.mp4",
-    "beijing-final": "https://github.com/robertyang87/tennislive/releases/download/source-Vq_UC0n5DKQ/Vq_UC0n5DKQ.mp4",
     "linz-final": "https://github.com/robertyang87/tennislive/releases/download/source-SAzG0MU3Ums/SAzG0MU3Ums.mp4",
     "madrid-final": "https://github.com/robertyang87/tennislive/releases/download/source-FTTBcO6RWic/FTTBcO6RWic.mp4",
     "rg-final": "https://github.com/robertyang87/tennislive/releases/download/source-WN-TlTb8-aA/WN-TlTb8-aA.mp4",
@@ -835,8 +768,8 @@
   "preserve_source_audio": true,
   "push": {
     "auto": true,
-    "summary": "安德烈耶娃年终之路",
-    "lead": "去年错过单打年终，今年首夺大满贯、首次拿到门票。三次夺冠，也有温网和美网的遗憾；10月9日确认资格在前，北京决赛在后。"
+    "summary": "三冠也有遗憾的一年",
+    "lead": "19岁拿下法网冠军，安德烈耶娃第一次凭单打拿到年终门票。三座冠军之外，也有马德里决赛失利、温网和美网的遗憾——她最好的一年，并不是一路赢过来的。"
   },
   "editorial": {
     "mode": "match_review",
@@ -955,15 +888,17 @@
     320
   ],
   "_matchpoint_coverage": {
-    "actual_full_match_points": 7,
+    "actual_full_match_points": 6,
     "ao_r4": "native factual chapter only; independently checked official1080 sources lack same-point prep; no match video shown",
-    "extras": 0
+    "extras": 0,
+    "beijing_final": "2026-10-25 重做：视频段拿掉，北京亚军只在原生字卡一句带过（非大满贯、非夺冠）"
   },
   "_revision_notes": {
     "restructure_date": "2026-10-24",
     "voice_rewrite": "11 body lines changed, original January and brand outro may be byte-exact reused.",
-    "source_windows_unchanged": true,
+    "source_windows_unchanged": false,
     "info_card_placement_unchanged": true,
-    "data_scope": "2026 actual played singles,66 matches;14 BYE and1W/O excluded; no invented Race deduction."
+    "data_scope": "2026 actual played singles,66 matches;14 BYE and1W/O excluded; no invented Race deduction.",
+    "redo_2026_10_25": "抖音小红书观看为0后重做：去掉北京决赛视频段（含郑钦文倒地低角度镜头与中网画面），北京两卡合并；封面换图、钩子副标题推送小红书改写。"
   }
 }
