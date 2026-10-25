@@ -1,0 +1,504 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "e3d8fc34274310e5565051b8cb5a1e875d0ff9402718e3e10e10d878c41ebde7",
+ "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "0.0-2.2",
+   "start": 0.0,
+   "end": 2.22,
+   "speech_seconds": 1.52,
+   "second_asr_words": [
+    "All",
+    "right,",
+    "Elena,",
+    "you"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 1.520s 人声，第二份 ASR（small.en）听到「All right, Elena, you」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "2.2-6.6",
+   "start": 2.22,
+   "end": 6.62,
+   "speech_seconds": 3.7,
+   "second_asr_words": [
+    "make",
+    "it",
+    "come",
+    "to",
+    "choice.",
+    "Please",
+    "have",
+    "your",
+    "champion",
+    "speech."
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 3.700s 人声，第二份 ASR（small.en）听到「make it come to choice. Please have your champion speech.」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "10.0-14.4",
+   "start": 9.96,
+   "end": 14.4,
+   "speech_seconds": 3.74,
+   "second_asr_words": [
+    "want",
+    "to",
+    "congratulate",
+    "Leila",
+    "with",
+    "a",
+    "great",
+    "week.",
+    "A",
+    "lot"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 3.740s 人声，第二份 ASR（small.en）听到「want to congratulate Leila with a great week. A lot」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "14.4-17.7",
+   "start": 14.4,
+   "end": 17.7,
+   "speech_seconds": 2.6,
+   "second_asr_words": [
+    "of",
+    "tough",
+    "matches,",
+    "tough",
+    "wins.",
+    "Congrats",
+    "to",
+    "you",
+    "and",
+    "your"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.600s 人声，第二份 ASR（small.en）听到「of tough matches, tough wins. Congrats to you and your」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "17.7-20.2",
+   "start": 17.7,
+   "end": 20.22,
+   "speech_seconds": 1.82,
+   "second_asr_words": [
+    "team,",
+    "and",
+    "good",
+    "luck",
+    "for",
+    "the",
+    "rest",
+    "of",
+    "the",
+    "year."
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 1.820s 人声，第二份 ASR（small.en）听到「team, and good luck for the rest of the year.」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "20.2-38.8",
+   "start": 20.22,
+   "end": 38.84,
+   "speech_seconds": 14.056,
+   "second_asr_words": [
+    "I",
+    "would",
+    "like",
+    "to",
+    "thank",
+    "you",
+    "so",
+    "much"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 14.056s 人声，第二份 ASR（small.en）听到「I would like to thank you so much」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "38.8-42.8",
+   "start": 38.84,
+   "end": 42.76,
+   "speech_seconds": 3.22,
+   "second_asr_words": [
+    "for"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 3.220s 人声，第二份 ASR（small.en）听到「for」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "42.8-45.8",
+   "start": 42.76,
+   "end": 45.84,
+   "speech_seconds": 2.38,
+   "second_asr_words": [
+    "staying",
+    "with"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.380s 人声，第二份 ASR（small.en）听到「staying with」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "45.8-50.7",
+   "start": 45.84,
+   "end": 50.74,
+   "speech_seconds": 4.2,
+   "second_asr_words": [
+    "me",
+    "this",
+    "week",
+    "and",
+    "supporting",
+    "each",
+    "match.",
+    "And",
+    "of",
+    "course,",
+    "I"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 4.200s 人声，第二份 ASR（small.en）听到「me this week and supporting each match. And of course, I」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "52.5-55.8",
+   "start": 52.54,
+   "end": 55.82,
+   "speech_seconds": 2.58,
+   "second_asr_words": [
+    "this",
+    "tournament",
+    "possible."
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.580s 人声，第二份 ASR（small.en）听到「this tournament possible.」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "55.8-59.4",
+   "start": 55.82,
+   "end": 59.4,
+   "speech_seconds": 2.88,
+   "second_asr_words": [
+    "Laura,",
+    "for",
+    "always",
+    "taking",
+    "such",
+    "a",
+    "good",
+    "care",
+    "of",
+    "us.",
+    "Chair,",
+    "empires,"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 2.880s 人声，第二份 ASR（small.en）听到「Laura, for always taking such a good care of us. Chair, empires,」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "59.4-64.4",
+   "start": 59.4,
+   "end": 64.36,
+   "speech_seconds": 4.26,
+   "second_asr_words": [
+    "physios,",
+    "ball",
+    "boys,",
+    "everyone.",
+    "Thank",
+    "you",
+    "so",
+    "much,",
+    "guys."
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 4.260s 人声，第二份 ASR（small.en）听到「physios, ball boys, everyone. Thank you so much, guys.」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "64.4-68.9",
+   "start": 64.36,
+   "end": 68.86,
+   "speech_seconds": 3.8,
+   "second_asr_words": [
+    "Thank",
+    "you",
+    "very",
+    "much.",
+    "I",
+    "would",
+    "like",
+    "to"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 3.800s 人声，第二份 ASR（small.en）听到「Thank you very much. I would like to」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "68.9-71.3",
+   "start": 68.86,
+   "end": 71.32,
+   "speech_seconds": 1.76,
+   "second_asr_words": [
+    "thank",
+    "everyone",
+    "who",
+    "made",
+    "this",
+    "tournament",
+    "possible."
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 1.760s 人声，第二份 ASR（small.en）听到「thank everyone who made this tournament possible.」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "71.3-76.1",
+   "start": 71.32,
+   "end": 76.08,
+   "speech_seconds": 4.06,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 4.060s 人声，第二份 ASR（small.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "76.1-78.3",
+   "start": 76.08,
+   "end": 78.32,
+   "speech_seconds": 1.54,
+   "second_asr_words": [
+    "Well,",
+    "thank",
+    "you",
+    "so",
+    "much."
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 1.540s 人声，第二份 ASR（small.en）听到「Well, thank you so much.」——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "78.3-80.9",
+   "start": 78.32,
+   "end": 80.88,
+   "speech_seconds": 1.86,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 1.860s 人声，第二份 ASR（small.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "80.9-83.8",
+   "start": 80.88,
+   "end": 83.8,
+   "speech_seconds": 2.22,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 2.220s 人声，第二份 ASR（small.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "87.7-92.6",
+   "start": 87.7,
+   "end": 92.58,
+   "speech_seconds": 3.09,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 3.090s 人声，第二份 ASR（small.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "92.6-94.8",
+   "start": 92.58,
+   "end": 94.76,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 0.000s 人声，第二份 ASR（small.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "94.8-99.7",
+   "start": 94.76,
+   "end": 99.66,
+   "speech_seconds": 4.2,
+   "second_asr_words": [
+    "Of",
+    "course,",
+    "thank",
+    "you",
+    "to",
+    "my",
+    "family,",
+    "friends,",
+    "sponsors,",
+    "and"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 4.200s 人声，第二份 ASR（small.en）听到「Of course, thank you to my family, friends, sponsors, and」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "99.7-102.3",
+   "start": 99.66,
+   "end": 102.28,
+   "speech_seconds": 1.92,
+   "second_asr_words": [
+    "all",
+    "of",
+    "you",
+    "guys.",
+    "Thank",
+    "you",
+    "so",
+    "much",
+    "for",
+    "an"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 1.920s 人声，第二份 ASR（small.en）听到「all of you guys. Thank you so much for an」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "102.3-106.4",
+   "start": 102.28,
+   "end": 106.44,
+   "speech_seconds": 3.166,
+   "second_asr_words": [
+    "amazing",
+    "atmosphere.",
+    "Every",
+    "day,",
+    "it's"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 3.166s 人声，第二份 ASR（small.en）听到「amazing atmosphere. Every day, it's」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "106.4-109.1",
+   "start": 106.44,
+   "end": 109.08,
+   "speech_seconds": 1.94,
+   "second_asr_words": [
+    "amazing",
+    "to",
+    "play",
+    "in",
+    "front",
+    "of",
+    "you.",
+    "always",
+    "gives",
+    "a"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 1.940s 人声，第二份 ASR（small.en）听到「amazing to play in front of you. always gives a」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "109.1-112.3",
+   "start": 109.08,
+   "end": 112.3,
+   "speech_seconds": 2.52,
+   "second_asr_words": [
+    "lot",
+    "of",
+    "motivation",
+    "a",
+    "lot",
+    "of",
+    "energy",
+    "to",
+    "keep",
+    "on"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.520s 人声，第二份 ASR（small.en）听到「lot of motivation a lot of energy to keep on」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "112.3-115.4",
+   "start": 112.3,
+   "end": 115.42,
+   "speech_seconds": 2.42,
+   "second_asr_words": [
+    "playing",
+    "and",
+    "it's",
+    "already",
+    "a",
+    "second",
+    "year",
+    "here",
+    "second",
+    "win"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.420s 人声，第二份 ASR（small.en）听到「playing and it's already a second year here second win」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  },
+  {
+   "key": "115.4-118.3",
+   "start": 115.42,
+   "end": 118.26,
+   "speech_seconds": 2.14,
+   "second_asr_words": [
+    "and",
+    "it's",
+    "such",
+    "a",
+    "special",
+    "place",
+    "for",
+    "me",
+    "thank",
+    "you"
+   ],
+   "transcript_covered": true,
+   "caption_timeline_covered": true,
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.140s 人声，第二份 ASR（small.en）听到「and it's such a special place for me thank you」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
+  }
+ ]
+}
