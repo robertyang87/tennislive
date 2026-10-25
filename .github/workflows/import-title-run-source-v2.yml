@@ -1,0 +1,109 @@
+name: import-title-run-source-v2
+
+# 一次性（夺冠之路特辑）：整轨下载一次 → 本地切窗编码 → 拼接 → 传 Release。
+# v1 逐窗从 HLS 深 seek 拉流太慢（决赛 2 小时未完），v2 改整轨落盘后本地切。
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        description: "Staylive video id"
+        required: true
+      windows:
+        description: "start end name;start end name;...（源内秒）"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-title-run-v2-${{ inputs.video_id }}
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VID: ${{ inputs.video_id }}
+      WINDOWS: ${{ inputs.windows }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 安装 ffmpeg
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          ffmpeg -version | head -1
+      - name: 整轨下载 + 切窗拼接
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get install -y -qq gh >/dev/null 2>&1 || true
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          mkdir -p work out
+          python3 - <<'PYEOF'
+          import json, os, sys, urllib.request
+          from urllib.parse import urljoin
+          UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          vid = os.environ["VID"]
+          req = urllib.request.Request(f"https://api.staylive.tv/videos/{vid}",
+                                       headers={"Accept": "application/json", "User-Agent": UA})
+          with urllib.request.urlopen(req, timeout=30) as r:
+              meta = json.load(r)["message"]
+          master = meta["playback_url"]
+          req = urllib.request.Request(master, headers={"User-Agent": UA})
+          lines = urllib.request.urlopen(req, timeout=30).read().decode().splitlines()
+          rend = None
+          for i, ln in enumerate(lines):
+              if "RESOLUTION=1920x1080" in ln:
+                  rend = urljoin(master, lines[i + 1].strip())
+                  break
+          if not rend:
+              sys.exit("1080p rendition not found")
+          open("work/rendition.txt", "w").write(rend)
+          print("title:", meta.get("name"), "| duration:", meta.get("duration"))
+          PYEOF
+          REND=$(cat work/rendition.txt)
+          echo "downloading full rendition once..."
+          ffmpeg -hide_banner -loglevel error -stats -user_agent "$UA" -i "$REND" -c copy work/full.mp4
+          ls -la work/full.mp4
+          python3 - <<'PYEOF'
+          import os, subprocess, sys
+          wins = []
+          for part in os.environ["WINDOWS"].split(";"):
+              part = part.strip()
+              if not part:
+                  continue
+              a, b, name = part.split()
+              wins.append((int(a), int(b), name))
+          concat = []
+          for a, b, name in wins:
+              out = f"work/seg_{name}.mp4"
+              s = max(0, a - 15)
+              dur = (b - a) + 30
+              subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error",
+                              "-ss", str(s), "-i", "work/full.mp4",
+                              "-t", str(dur),
+                              "-vf", "scale=1920:1080:force_original_aspect_ratio=disable",
+                              "-r", "25", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
+                              "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k",
+                              "-video_track_timescale", "12800", out, "-y"], check=True)
+              concat.append(out)
+              print("done", name, a, b, flush=True)
+          with open("work/list.txt", "w") as f:
+              for p in concat:
+                  f.write(f"file '{os.path.basename(p)}'\n")
+          PYEOF
+          (cd work && ffmpeg -hide_banner -loglevel error -f concat -safe 0 -i list.txt -c copy ../out/all.mp4)
+          SHA=$(sha256sum out/all.mp4 | cut -c1-8)
+          NAME="${VID}-${SHA}.mp4"
+          mv out/all.mp4 "out/${NAME}"
+          ffprobe -v error -show_entries stream=codec_type,width,height,avg_frame_rate -show_entries format=duration,size -of default=nw=1 "out/${NAME}"
+          echo "ASSET_NAME=${NAME}" >> "$GITHUB_ENV"
+          echo "ASSET_PATH=out/${NAME}" >> "$GITHUB_ENV"
+      - name: 上传到 Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release upload "source-staylive${VID}" "${ASSET_PATH}" --clobber
+          gh release view "source-staylive${VID}" --json assets --jq '.assets[] | "\(.name) \(.size)"'
