@@ -95,6 +95,8 @@ from tennislive.design_tokens import (  # noqa: E402
     BRAND_BAR_CSS, DARK, MOTION, SCORE, TEXT_SHADOW_CHROME, TEXT_SHADOW_HOOK,
     ass, ass_inline, rgb,
 )
+from tennislive import topbar_style  # noqa: E402
+
 # ⚠️ `tennislive.video.subtitle_text` **不许在模块级 import**：它本身只用标准库，可
 # `tennislive/video/__init__.py` 会把 pipeline → research → digest → sources → requests
 # 整串拉进来。interview-auto-render 的「没活就早退」探针跑在 runner 的系统 python3 上、
@@ -317,7 +319,7 @@ _SUB_FG = DARK["subtitle-foreground"]
 # 通用典礼名当内容标题、把真正的「谁在做什么」缩成小字。名人堂入选致辞因此
 # 反过来用「人物＋致辞类型 / 典礼名」。这条语义和字号必须绑在一起，否则 ASS
 # 里虽然有 HEADA，观众仍然只会看到一个小 kicker，误以为大标题漏了。
-_HEAD_SIZE = {"a": 54, "b": 38}
+_HEAD_SIZE = {"a": topbar_style.HEAD_SIZE, "b": topbar_style.BODY_SIZE}
 _FONT_CACHE: dict[str, object] = {}
 
 
@@ -1518,13 +1520,11 @@ _BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 # ⚠️ 只换顶栏：`assets/fonts/ATTRIBUTION.md` 里早写着「display headings…
 # body copy keeps Noto for long-form legibility」——得意黑是**斜体加窄身**，
 # 当标题有劲，一整句字幕读下来就累。渲出来两版比过，这条边界是对的。
-_HEAD_A_TOP, _HEAD_B_TOP = 24, 92
+_HEAD_A_TOP, _HEAD_B_TOP = topbar_style.HEAD_TOP, topbar_style.BODY_TOP
 
-# 顶栏第一行最前面那支麦克风（`video/topbar_icon.py`）。高 42：54px 得意黑那一行
-# 的墨是 43px 高（「2026 WTA500 新加坡站 1/4决赛」实测 y44~87），图标和字一样高，
-# 读起来是这一行的一个符号，不是一枚徽章。
+# 麦克风和球场图标沿用各自栏目语义，共享紧凑尺寸与文字阴影。
 _HEAD_ICON = "mic"
-_HEAD_ICON_H = 42
+_HEAD_ICON_H = topbar_style.ICON_H
 
 
 def _run_width(kind: str, size: int, text: str) -> float:
@@ -1534,10 +1534,9 @@ def _run_width(kind: str, size: int, text: str) -> float:
         from tennislive.video.topbar_icon import icon_advance  # noqa: PLC0415
         return icon_advance(text, _HEAD_ICON_H)
     return _topbar_width(kind, size, text)
-# 渲后顶栏像素闸。顶栏所在的 0–150px 是纯品牌深绿底，不受源片内容影响，
-# 因而可以稳定地数「接近白色」的文字像素。分界取两行上锚之间：HEADA 的墨迹
-# 实测落在 24–71，HEADB 落在 98–126；84px 留足抗锯齿和编码余量。
-_TOPBAR_BAND_SPLIT_Y = 84
+# 普通 ASS 主行/次行实际墨迹约11–42 / 46–69，按44分带核两行。
+# 人物预栅格分支按自身 PIL 字形实测，避免压行或把一行算成两行。
+_TOPBAR_BAND_SPLIT_Y = topbar_style.INK_SPLIT_Y
 _TOPBAR_LIGHT_FLOOR = 100
 _TOPBAR_MIN_TEXT_PIXELS = 300
 _TOPBAR_PROBE_SECONDS = 0.50
@@ -1567,8 +1566,8 @@ ScaledBorderAndShadow: yes
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: EN,{_EN_FONT},{_EN_RENDER_PX},{ass(_SUB_FG)},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_ZH_RENDER_PX},{ass(_SUB_FG)},{_ASS_BLACK},{_ASS_BLACK},1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
-Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},{ass(DARK['foreground'])},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},{ass(_TOPBAR_BODY)},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
+Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},{ass(DARK['foreground'])},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,1,0,1,{topbar_style.OUTLINE},{topbar_style.SHADOW},8,48,48,{_HEAD_A_TOP},1
+Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},{ass(_TOPBAR_BODY)},{_ASS_BLACK},{_ASS_BLACK},0,0,0,0,100,100,0,0,1,{topbar_style.OUTLINE},{topbar_style.SHADOW},8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -1610,7 +1609,7 @@ _HEADA_COLOUR = ass_inline(DARK["foreground"]).strip("{}")
 # （= `build_match_reel.TOPBAR_SCORE_SIZE`），连字符压暗（`_DASH_TAG`）。
 # 44 那一档是 Barlow 时代量的；换成 TL Score 之后同字号墨高已经和中文名对齐，
 # 两条线一个 40、一个 44 是评审 3.4 量出来的分叉。判据钉两边相等。
-_SCORE_PX = 40
+_SCORE_PX = topbar_style.SCORE_SIZE
 _SCORE_SIZE_TAG = rf"\fs{_SCORE_PX}"
 # ⚠️ `push.score` 的记法是**从整场比赛赢家视角连续写下来的**——每一盘前面
 # 那个数永远是整场赢家自己的局数（`alexandrova-sabalenka-tor2026-r16.json`
@@ -2066,6 +2065,18 @@ def _subject_head_width(size: int, text: str) -> float:
     return _subject_head_font(size).getlength(text)
 
 
+def _subject_topbar_geometry(spec: dict) -> tuple[int, int, int]:
+    """PIL uses em pixels; derive the tight second row from its actual ink box."""
+    from PIL import Image, ImageDraw
+
+    main, _ = header_lines(spec)
+    draw = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    box = draw.textbbox((CANVAS_W // 2, _HEAD_A_TOP), main,
+                        font=_subject_head_font(_HEAD_SIZE["a"]), anchor="mt")
+    context_top = box[3] + 4
+    return _HEAD_A_TOP, context_top, box[3] + 2
+
+
 def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     """把人物主标题顶栏预栅格为透明 PNG，绕开生产 libass 的顶边差异。
 
@@ -2084,18 +2095,18 @@ def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     context_font = _subject_head_font(_HEAD_SIZE["b"])
 
     image = Image.new("RGBA", (CANVAS_W, VIDEO_TOP), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(image)
+    main_top, context_top, split_y = _subject_topbar_geometry(spec)
     # 两行的颜色和 ASS 那条路同一个出处（HEADA = foreground、HEADB = 顶栏次行色），
     # 不再各写一份 RGB 元组——原来这儿写的是纯白，ASS 那头是 BGR 的 &H00DBE2D5。
-    draw.text((CANVAS_W // 2, _HEAD_A_TOP), main, font=main_font,
-              fill=(*rgb(DARK["foreground"]), 255), anchor="mt")
-    draw.text((CANVAS_W // 2, _HEAD_B_TOP), context, font=context_font,
-              fill=(*rgb(_TOPBAR_BODY), 255), anchor="mt")
+    topbar_style.draw_text(image, (CANVAS_W // 2, main_top), main, font=main_font,
+                           fill=(*rgb(DARK["foreground"]), 255))
+    topbar_style.draw_text(image, (CANVAS_W // 2, context_top), context, font=context_font,
+                           fill=(*rgb(_TOPBAR_BODY), 255))
 
     # 在保存和交给 ffmpeg 前先用与成片相同的双带区判据查真实像素。
     proof = Image.new("RGB", image.size, (0, 18, 11))
     proof.paste(image, mask=image.getchannel("A"))
-    main_px, context_px = _topbar_light_pixel_counts(proof.tobytes())
+    main_px, context_px = _topbar_light_pixel_counts(proof.tobytes(), split_y=split_y)
     if min(main_px, context_px) < _TOPBAR_MIN_TEXT_PIXELS:
         raise SystemExit(
             "人物顶栏预栅格不合格："
@@ -2107,7 +2118,7 @@ def _subject_topbar_png(spec: dict, outdir: Path) -> Path | None:
     return path
 
 
-def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
+def _topbar_light_pixel_counts(rgb: bytes, *, split_y: int = _TOPBAR_BAND_SPLIT_Y) -> tuple[int, int]:
     """返回渲染帧 HEADA / HEADB 两个带区里的浅色文字像素数。
 
     只认 RGB 三通道都高于阈值，故品牌绿的麦克风图标不能冒充主标题。传入内容必须正好是
@@ -2129,8 +2140,7 @@ def _topbar_light_pixel_counts(rgb: bytes) -> tuple[int, int]:
             for i in range(start, end, 3)
         )
 
-    return (_count(0, _TOPBAR_BAND_SPLIT_Y),
-            _count(_TOPBAR_BAND_SPLIT_Y, VIDEO_TOP))
+    return (_count(0, split_y), _count(split_y, VIDEO_TOP))
 
 
 def assert_rendered_topbar(film: Path, spec: dict) -> None:
@@ -2156,7 +2166,9 @@ def assert_rendered_topbar(film: Path, spec: dict) -> None:
         raise SystemExit(
             f"顶栏像素探针无法读取 {film.name}："
             f"{proc.stderr.decode('utf-8', errors='replace')[-600:]}")
-    main_px, context_px = _topbar_light_pixel_counts(proc.stdout)
+    split_y = (_subject_topbar_geometry(spec)[2] if topbar_layout(spec) == "subject_primary"
+               else _TOPBAR_BAND_SPLIT_Y)
+    main_px, context_px = _topbar_light_pixel_counts(proc.stdout, split_y=split_y)
     missing = []
     if main_px < _TOPBAR_MIN_TEXT_PIXELS:
         missing.append(f"主标题带区仅 {main_px} 个浅色像素")
@@ -2431,8 +2443,8 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         header_lines(spec)                    # 两种路径都先过事实与宽度闸
         if layout != "subject_primary":
             head_a, head_b = header_ass(spec)
-            ev.append(f"Dialogue: 2,{a},{b},HEADA,,0,0,0,,{head_a}")
-            ev.append(f"Dialogue: 1,{a},{b},HEADB,,0,0,0,,{head_b}")
+            ev.extend(topbar_style.ass_events(a, b, "HEADA", head_a, layer=2))
+            ev.extend(topbar_style.ass_events(a, b, "HEADB", head_b))
         # 人物主标题由 `_subject_topbar_png()` 预栅格并在字幕前 overlay；这里
         # 刻意不再写重复的 ASS 事件，避免正式 runner 再叠一层小标题。
     # 没有台词就到此为止——`highlight_en` 是给对白上色的，没有对白就没什么

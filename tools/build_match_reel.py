@@ -112,6 +112,7 @@ import reviewed_effects_mode  # noqa: E402
 import reel_source_audio_policy  # noqa: E402
 
 from tennislive import localca  # noqa: E402
+from tennislive import topbar_style  # noqa: E402
 from tennislive.video import outro_page  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.watermark import (  # noqa: E402
@@ -209,7 +210,7 @@ _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
 #
 # 不写 layout 的 spec 走原全出血路径，一个字节都不变——巡回赛片子零影响。
 BAND_PIC_RATIO = 9 / 8      # 画面带的源片窗口画幅（宽:高）
-BAND_TOP = 132              # 顶带高：TOPBAR_H=126 + 6px 呼吸，顶栏原样落进带里
+BAND_TOP = 132              # 历史带式取景保持原样；紧凑顶栏仍落在带内
 BAND_PIC_H = 960            # 9:8 窗口缩到 1080 宽的高（1080 ÷ 9×8）
 BAND_BG = "0x0D1016"        # 带底色：近黑偏蓝，接美网深蓝但不抢画面
 # ⚠️ 带式的窗口也**居中**（默认 cx=0.5，和全出血同一个值）。第一版把默认
@@ -243,32 +244,15 @@ BAND_FOOT_COLOUR = (148, 163, 156)  # 压暗的灰绿——脚注是注脚，不
 # 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
 # 则恢复原来的完整画面，不把「关注网球时差」和比赛信息混在一起。
 #
-# ⭐ 2026-08-15 账号所有者：「顶部比分栏高度建议再调小一些」。**150 → 126，
-# 字号一个都没动**——量出来那 150px 里只有 101px 是字：
-#
-#     行           墨迹          留白
-#     第一行 HEAD  27 ~ 71       上 27
-#     第二行 BODY  99 ~ 128      行间 28、下 25
-#
-# 也就是说一半以上的高度是留白，收留白就够，不用去动 54/38 那两个字号
-# （顶栏是全片曝光最长的元素，缩字号是拿可读性换高度，方向反了）。
-#
-# ⚠️ **减的是行间和底部，不是顶部。** 三档都渲出来量过（`上留白/行间/下留白`）：
-#
-#     150（改前）  27 / 28 / 25
-#     **126（现在）  21 / 16 / 19**
-#     118          15 / 16 / 17   ← 第二行几乎贴着盒底，看着是「挤」不是「紧」
-#
-# 顶部只让出 6px 是故意的：**往上收是有风险的那个方向**（越靠近画面上沿越容易
-# 撞到 app 自己的顶部 UI），而账号所有者要的是总高度降下来——那笔账在行间和
-# 底部那 53px 里就付得起。
-TOPBAR_H = 126
+# 2026-10-25 账号所有者确认：首行40，次行38/比分40不缩；两行紧贴、透明底。
+# 统一字形描边和柔影由 topbar_style 提供，80px 内收住顶栏。
+TOPBAR_H = topbar_style.HEIGHT
 TOPBAR_HEAD_FONT = "得意黑"          # 和封面 storytitle 同一支标题字体
 TOPBAR_BODY_FONT = "Noto Sans CJK SC"  # 第二行只负责清楚读信息
-TOPBAR_HEAD_SIZE = 54
-TOPBAR_BODY_SIZE = 38
-TOPBAR_HEAD_TOP = 18
-TOPBAR_BODY_TOP = 72
+TOPBAR_HEAD_SIZE = topbar_style.HEAD_SIZE
+TOPBAR_BODY_SIZE = topbar_style.BODY_SIZE
+TOPBAR_HEAD_TOP = topbar_style.HEAD_TOP
+TOPBAR_BODY_TOP = topbar_style.BODY_TOP
 TOPBAR_MARGIN_H = 48
 
 #: 比分数字的字体和字号。**两条线共用同一支**——账号所有者 2026-08-18 拿
@@ -309,7 +293,7 @@ TOPBAR_MARGIN_H = 48
 #: 字号从 44 收到 40：Barlow 是窄身，44 是给它补的；Noto Sans CJK SC 同字号
 #: 宽 14%（实测 80px 下 210px vs 240px），照抄 44 会把顶栏第二行撑出去。
 TOPBAR_SCORE_FONT = "TL Score"
-TOPBAR_SCORE_SIZE = 40
+TOPBAR_SCORE_SIZE = topbar_style.SCORE_SIZE
 
 # **源片自己烧了记分条时，字幕要让开它。**
 #
@@ -11661,10 +11645,8 @@ TOPBAR_HEAD_HEX = DARK["foreground"]
 TOPBAR_HEAD_COLOUR = _ass_colour(TOPBAR_HEAD_HEX)   # "&H00F7FBF4"
 
 #: 顶栏两行字的描边（px）。⚠️ **2026-09-27 起标题行也是 1.5**：原来 HEAD 是 0、
-#: BODY 是 1.5——第一行 54px 的得意黑压在亮画面（白球衣、白天的看台）上，
-#: 笔画边缘直接化进底色里（评审 `sim_topbar_flat.jpg`）。两行同一个数，
-#: 一个出处。透视球场图标自带 `\bord0`，不跟着描。
-TOPBAR_OUTLINE_PX = 1.5
+#: 透明顶栏靠共享的字形描边与柔影，亮色球衣和白底也要能辨认。
+TOPBAR_OUTLINE_PX = topbar_style.OUTLINE
 
 #: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
 #: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
@@ -11898,7 +11880,7 @@ def _topbar_pulse_tags(pulse_at: list[float], start: float, end: float) -> str:
 #: 2026-09-25 定的：赛后开麦那一头是麦克风，这一头是转播机位看过去的球场，
 #: 和顶栏正下方的比赛画面同一个角度。38：球场是横着的梯形（宽 1.25 倍高），
 #: 比麦克风（42）矮一截，两块墨在各自那一行里看起来一样重。
-TOPBAR_ICON_H = 38
+TOPBAR_ICON_H = topbar_style.ICON_H
 
 
 def topbar_head_with_icon(line1: str) -> str:
@@ -12024,6 +12006,12 @@ def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
     pulse_tags = _topbar_pulse_tags(pulse_at, start, end) if pulse_at else ""
     body_text = pulse_tags + colorize_topbar_score(lines[1])
     head_text = topbar_head_with_icon(lines[0])
+    # Explicit anchors prevent libass collision avoidance from pushing the
+    # second line down when the halo expands the first line's layout box.
+    head_text = rf"{{\an8\pos({VIDEO_W // 2},{TOPBAR_HEAD_TOP})}}" + head_text
+    body_text = rf"{{\an8\pos({VIDEO_W // 2},{TOPBAR_BODY_TOP})}}" + body_text
+    events = (topbar_style.ass_events(_ass_timestamp(start), _ass_timestamp(end), "HEAD", head_text)
+              + topbar_style.ass_events(_ass_timestamp(start), _ass_timestamp(end), "BODY", body_text))
     body = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {VIDEO_W}
@@ -12033,13 +12021,12 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},{TOPBAR_HEAD_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,{TOPBAR_OUTLINE_PX},0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},{TOPBAR_HEAD_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,{TOPBAR_OUTLINE_PX},{topbar_style.SHADOW},8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,{TOPBAR_OUTLINE_PX},{topbar_style.SHADOW},8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},HEAD,,0,0,0,,{head_text}
-Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_text}
+{chr(10).join(events)}
 """
     path.write_text(body, encoding="utf-8")
     return path
@@ -12088,8 +12075,7 @@ def watermark_xy(*, has_topbar: bool) -> tuple[int, int]:
 
     **纵向要让开顶部那条带**，不然角标压在顶栏的字上：
     - 带式：顶带是实色，画面从 `BAND_TOP` 才开始
-    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，字底下垫着一层渐变压暗（`TOPBAR_SCRIM_*`，
-      顶上 0.62 淡到 200px 处 0——Q6 之前是一块 45% 半透明黑实条）
+    - 全出血 ＋ 顶栏：顶栏占 `TOPBAR_H`，透明底，字形描边与柔影不压暗球场
     - 全出血、没顶栏（网球有故事这类）：顶上是空的，直接贴
     """
     if LAYOUT == "band":
@@ -12296,46 +12282,7 @@ def plain_filtergraph(subtitles_ass: Path, cover_secs: float,
     )
 
 
-#: 顶栏底下那层压暗（只有全出血有；带式的顶带本来就是实色）。
-#:
-#: ⭐ **2026-09-27 账号所有者选的（评审 Q6 方案 A）：实条换成渐变。** 原来是
-#: `drawbox` 一块 45% 黑、高 `TOPBAR_H`、**下边是硬的**——白天的比赛画面上，
-#: 比分行（薄荷 #4adc8c）只有 **1.9:1**，而那道硬边在画面上多出一条横线。
-#: 现在：顶上 `TOPBAR_SCRIM_ALPHA`（0.62）一直铺到 `TOPBAR_SCRIM_SOLID_PX`
-#: （两行字都压在满档上），再用 smoothstep 淡到 `TOPBAR_SCRIM_FADE_PX`（200）
-#: 处的 0——**没有硬边**，也就没有那条线。纯白底上标题行 6.1:1、比分行（薄荷）
-#: 3.62:1（老的 1.88:1），白底上相邻两行最多差 5/255（老的实条下沿一行跳 114）。
-#:
-#: ⚠️ **满档那一段量到比分行的行盒底（72+38）再多 2px 描边，不是评审图里的
-#: 100px。** 评审给账号所有者看的那一版（`grad_topbar.png`）满档只到 100，
-#: 而比分行的墨实测落在 y86~109——下面 9 行字压在已经开始变淡的底上，白底上
-#: 最亮那一行只剩 **3.31:1**，过不了他定的「比分行 ≥3.6:1」。延到 112 之后
-#: 整行都在满档上，淡出段 88px，仍然看不出边。
-#: ⚠️ **图在滤镜图里现生成，不另起一路输入**（`color` 源 ＋ `geq` 写 alpha，
-#: 一帧、1080×200，overlay 默认把最后一帧一直重复下去）——加一路输入就得改
-#: render 里拼 `-i` 的那两处，而那两处正是「加了一处漏一处」栽过的地方。
-#: 判据 `test_顶栏底是渐变压暗没有硬边_白底上比分行读得出`（真跑 ffmpeg 量）。
-TOPBAR_SCRIM_ALPHA = 0.62
-TOPBAR_SCRIM_SOLID_PX = TOPBAR_BODY_TOP + TOPBAR_BODY_SIZE + 2   # 112
-TOPBAR_SCRIM_FADE_PX = 200
-
-
-def topbar_scrim_source(label: str = "topbar_scrim") -> str:
-    """顶栏渐变压暗的那张图：滤镜图里的一条源链，输出 `[label]`（RGBA）。
-
-    alpha：`y ≤ SOLID` 恒为 `ALPHA`；`SOLID < y < FADE` 按 smoothstep 淡到 0。
-    smoothstep 两头的斜率都是 0，所以接缝处（SOLID、FADE 那两行）没有折角——
-    线性淡出在两个端点各有一道折角，亮画面上看得出是一条线（Mach 带）。
-    """
-    a = round(255 * TOPBAR_SCRIM_ALPHA)
-    s0, s1 = TOPBAR_SCRIM_SOLID_PX, TOPBAR_SCRIM_FADE_PX
-    t = f"(Y-{s0})/{s1 - s0}"
-    alpha = (f"if(lte(Y,{s0}),{a},if(gte(Y,{s1}),0,"
-             f"{a}*(1-{t}*{t}*(3-2*{t}))))")
-    return (f"color=c=black:s={VIDEO_W}x{s1}:r=1:d=1,format=rgba,"
-            f"geq=r='0':g='0':b='0':a='{alpha}'[{label}]")
-
-
+# 2026-10-25：顶栏透明，靠字形描边和柔影保可读性，不再压暗整片球场。
 def match_canvas_filtergraph(*, foot_input: int | None = None,
                              wm_input: int | None = None,
                              scrim_input: int | None = None, scrim_y: int = 0) -> str:
@@ -12362,10 +12309,7 @@ def match_canvas_filtergraph(*, foot_input: int | None = None,
     return (
         f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
         f"crop={VIDEO_W}:{VIDEO_H},"
-        + ("setsar=1[match_flat];" if LAYOUT == "band" else
-           "setsar=1[match_bare];"
-           f"{topbar_scrim_source('topbar_scrim')};"
-           "[match_bare][topbar_scrim]overlay=0:0,setsar=1[match_flat];")
+        + "setsar=1[match_flat];"
         + f"{canvas};")
 
 

@@ -1095,7 +1095,7 @@ def test_渲染后顶栏像素闸能抓住只有小标题(tmp_path, monkeypatch)
     from PIL import Image, ImageDraw
     with Image.open(topbar_png).convert("RGBA") as broken:
         ImageDraw.Draw(broken).rectangle(
-            (0, 0, clip.CANVAS_W, clip._TOPBAR_BAND_SPLIT_Y),
+            (0, 0, clip.CANVAS_W, clip._subject_topbar_geometry(spec)[2]),
             fill=(0, 0, 0, 0))
         broken.save(topbar_png)
     bad = tmp_path / "only-small-title.mp4"
@@ -1657,7 +1657,7 @@ def test_顶栏从头挂到尾(tmp_path):
     path = tmp_path / "t.ass"
     write_ass(lines, spec["zh"], 0.0, path, spec)
     body = path.read_text(encoding="utf-8")
-    head = [r for r in body.splitlines() if r.startswith("Dialogue") and "HEAD" in r]
+    head = [r for r in body.splitlines() if r.startswith("Dialogue") and "HEAD" in r and not r.startswith("Dialogue: 0,")]
     assert len(head) == 2, "顶栏该有两行"
     assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
     end = _ts(lines[-1]["b"])
@@ -1779,7 +1779,7 @@ def test_关掉顶栏要显式认领而且默认不许变(tmp_path):
         path = tmp_path / f"{len(list(tmp_path.iterdir()))}.ass"
         write_ass(lines, spec["zh"], 0.0, path, spec)
         return [r for r in path.read_text(encoding="utf-8").splitlines()
-                if r.startswith("Dialogue") and "HEAD" in r]
+                if r.startswith("Dialogue") and "HEAD" in r and not r.startswith("Dialogue: 0,")]
 
     assert len(heads(base)) == 2, "没写 `topbar` 的存量 spec 必须一个字都不变"
     assert wants_topbar(base) is True
