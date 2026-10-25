@@ -213,7 +213,8 @@ def verified_reviewed_mix_seconds(spec: dict, film: Path, candidates: list[int],
                 continue
             offset, end = float(offsets[i]), float(offsets[i]) + float(lengths[i])
             key = str(seg.get('source', primary))
-            gain = (BED_LOUD if ducked else 1.) * BED_TIERS.get(seg.get('bed'), 1.)
+            gain = ((BED_LOUD if ducked else 1.) * BED_TIERS.get(seg.get('bed'), 1.)
+                    * 10 ** (float(seg.get('gain_db') or 0) / 20))
             for second in candidates:
                 if not isinstance(second, int) or isinstance(second, bool):
                     continue

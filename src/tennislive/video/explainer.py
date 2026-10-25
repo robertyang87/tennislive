@@ -12789,6 +12789,40 @@ def _num_value(run: str) -> str | None:
 # 那条片子已发不重渲，这一刀对它没有回归。
 _DECIMAL_STOP = "分半刻钟点"
 
+# 「数字是修辞、不是计数」的固定词：里面的十/百/千是成语的骨头，换成阿拉伯
+# 数字就成了错字——「千真万确」被 `one()` 里 `_STRUCTURED` 那一刀换成
+# 「1000真万确」，2026-10-24 戈芬那条（goffin-retirement-2026）渲完抽帧才
+# 看见（第 19 段末句，配音读的是对的，只有字幕错，听审过≠字幕过）。
+#
+# ⚠️ **判据是「一张词表＋位置覆盖」，不是放宽正则。** 分辨「千真万确」的千
+# 和「一千六百人」的千，靠上下文是个会误判的判据（和 `_DECIMAL_STOP` 上面
+# 那段「钟点 vs 小数」同一个教训）；而「凡千/百后面不跟量词就不转」会把
+# 「三千米」「五百强」这类真数放掉。所以取最窄的那一刀：词表里的词逐个
+# 都是从成语/固定说法里挑的、里面的数**永远**不是计数；新撞上一个再往表里
+# 加一个，和 `_TYPO_SAFE`、这文件里「一号种」「百分点」那几个卡死形状的
+# 挡法同一路数。判据 `test_成语里的千百十是修辞不是数` 两头都钉。
+_FIGURATIVE_NUMERAL_WORDS = (
+    "千真万确", "千辛万苦", "千军万马", "千钧一发", "千变万化", "千言万语",
+    "千山万水", "千家万户", "千方百计", "千载难逢", "千锤百炼", "千头万绪",
+    "千丝万缕", "千篇一律", "千奇百怪", "千疮百孔", "千难万险", "千千万万",
+    "百发百中", "百战百胜", "百依百顺", "百思不得其解", "百孔千疮",
+    "十全十美", "十拿九稳", "十万火急", "万无一失", "万水千山", "万紫千红",
+)
+
+
+def _figurative_word_covers(text: str, pos: int) -> bool:
+    """`pos` 这个字落没落进上表某个固定词的范围里。
+
+    要查「覆盖」而不是「从 pos 开始」：「万水千山」里要挡的是第三个字那个
+    「千」，它不是词的开头；「千方百计」里第二个要挡的是「百」。所以对每
+    个词都看一遍它所有能盖住 pos 的起点。
+    """
+    for word in _FIGURATIVE_NUMERAL_WORDS:
+        for start in range(max(0, pos - len(word) + 1), pos + 1):
+            if text.startswith(word, start):
+                return True
+    return False
+
 
 def _decimal_value(run: str) -> str | None:
     """「二十一点六」→ 21.6。读不出来返回 None。
@@ -12979,6 +13013,10 @@ def arabic_numerals(text: str) -> str:
         before = text[m.start() - 1] if m.start() else ""
         value = _num_value(run)
         if value is None:
+            return m.group(0)
+        if _figurative_word_covers(text, m.start()):
+            # 成语/固定词里的十百千是修辞不是计数（「千真万确」），换成
+            # 阿拉伯数字就是屏幕上的错字。词表与判据见 `_FIGURATIVE_NUMERAL_WORDS`。
             return m.group(0)
         if nxt == "几":
             # 「十几岁」「二十几场」是**约数**，不是数。按数字写出来是「10几岁」

@@ -17789,3 +17789,98 @@ def test_角标carry跨镜头连挂只在首镜淡入末镜淡出():
     end = reel._overlay_chain(base, ins(carry="end", show_for=3.0))
     assert "fade=t=in" not in end
     assert f"fade=t=out:st={3.0 - reel.CARRY_OUT_SECS:.3f}" in end
+
+
+def test_原声段增益gain_db进得了链也算得进账():
+    """`gain_db` 是原声段的电平对齐旋钮（2026-10-25 账号所有者拍板进管线）。
+
+    来路：戈芬 v4 全片审计 M3——2012 采访段成片 RMS −36.7 dB，旁白段
+    −23~−28 dB，差约 10 dB；而既有三档音床最高只有 +2.6 dB（bed=high），
+    够不着。增益必须**三处联动**，缺一处就是静默失效：
+    校验（`_seg_gain_db`）→ 滤镜链（`_seg_audio_chain` 真的乘上去）→
+    电平账（`_seg_bed_gain`，dry-run/probe 按它换算成片口径）。
+    """
+    import dataclasses  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    # 校验：不写＝0（存量 spec 零影响）；数字照收；字符串/超界/和 mute 同写当场红
+    assert reel._seg_gain_db({}, 0) == 0.0
+    assert reel._seg_gain_db({"gain_db": 10}, 0) == 10.0
+    assert reel._seg_gain_db({"gain_db": -3.5}, 0) == -3.5
+    for bad in ({"gain_db": "10"}, {"gain_db": True}, {"gain_db": 25},
+                {"gain_db": -25}, {"gain_db": 10, "mute": True}):
+        try:
+            reel._seg_gain_db(bad, 0)
+        except reel.ReelError:
+            pass
+        else:
+            raise AssertionError(f"gain_db 校验漏了 {bad}")
+
+    seg = reel.Segment(0.0, 10.0, None, "")
+    gained = dataclasses.replace(seg, gain_db=10.0)
+    # 滤镜链：+10 dB 就是 ×3.162278，必须真的出现在链上
+    assert "volume=3.162278" in reel._seg_audio_chain(gained)
+    assert reel._seg_audio_chain(seg) == ""
+    # 电平账：同一个倍率，不许链上乘了、账上没乘（dry-run 会按错的数判响度）
+    base = reel._seg_bed_gain(seg)
+    assert abs(reel._seg_bed_gain(gained) / base - 10 ** 0.5) < 1e-9
+    # 只有增益也要走滤镜——`_seg_audio_needs_filter` 漏了它，cut 那步会把
+    # 算好的链绕过去，还不报错（bed 当年就是这么防的）。
+    assert reel._seg_audio_needs_filter(gained)
+    assert not reel._seg_audio_needs_filter(seg)
+
+
+def test_混音真峰值过线才限没过线原样(tmp_path):
+    """成片真峰值天花板 −1 dBTP（2026-10-25 账号所有者拍板，戈芬审计 M2）。
+
+    v4 成片真峰值 +0.29 dBTP：样本峰值看着没过 0，真峰值过线，平台转码有
+    削波风险。判据真跑 ffmpeg，两头都钉：
+    ① 热信号（真峰值 >0）限完必须 ≤ 天花板，且整体响度不许被顺手改掉
+       （限幅只削峰——把目标响度钉在素材自己的实测值上，±1 LUFS 内）；
+    ② 本来就在线下的**一个字节都不许动**——这道闸只治过线，借机给所有
+       存量片子重做响度就是越界（回归底线：已发布口径不被改变）。
+    """
+    import filecmp  # noqa: PLC0415
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    # 热信号：成片峰值过线的真实形状是「整体正常、个别瞬间爆峰」——
+    # 前 0.5 秒 ×8、其余 ×0.1（浮点 wav 装得下 >0 dB 的样本）：
+    # 真峰值 > 0 dBTP，整体响度还在一部正常片子的量级。
+    hot = tmp_path / "hot.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-af", "volume='if(lt(t,0.5),8,0.1)':eval=frame",
+        "-c:a", "pcm_f32le", str(hot))
+    before = reel._loudnorm_stats(hot)
+    assert before["input_tp"] > 0, f"热信号没造出来：{before}"
+    out = tmp_path / "hot_limited.m4a"
+    report = reel.limit_true_peak(hot, out)
+    assert report["applied"], "真峰值过线却没限幅"
+    assert report["output_tp"] <= reel.FINAL_PEAK_CEILING_DBTP + 0.02, report
+    # 「只削峰」的诚实口径：不许抬响度；下移只许来自削峰本身的物理账——
+    # 本信号爆峰占 1/6 时长、削约 13 dB，整体掉约 1.3 LUFS 是算出来的，
+    # 不是限幅器在顺手动响度。真实成片过线只有 1 dB 量级、爆点是瞬间，
+    # 下移在 0.1 LUFS 以内；这条判据按合成信号的账给 1.5 的界。
+    assert before["input_i"] - 1.5 <= report["output_i"] <= before["input_i"] + 0.3, (
+        f"限幅把整体响度从 {before['input_i']:.2f} 改成了 "
+        f"{report['output_i']:.2f}——超出削峰能解释的量")
+
+    # 安静信号：−20 dB 的正弦，真峰值约 −20，限幅器不许碰它
+    quiet = tmp_path / "quiet.wav"
+    _ff("-f", "lavfi", "-i", "sine=frequency=440:duration=3,volume=0.1",
+        "-c:a", "pcm_f32le", str(quiet))
+    assert reel._loudnorm_stats(quiet)["input_tp"] <= reel.FINAL_PEAK_CEILING_DBTP
+    out2 = tmp_path / "quiet_out.m4a"
+    report2 = reel.limit_true_peak(quiet, out2)
+    assert not report2["applied"]
+    assert filecmp.cmp(quiet, out2, shallow=False), "没过线的混音被改了字节"
