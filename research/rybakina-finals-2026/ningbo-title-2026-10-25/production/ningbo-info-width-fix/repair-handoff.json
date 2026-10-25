@@ -1,6 +1,6 @@
 {
-  "change": "Only Ningbo match-point inset width .60→.50; no other video/audio/label timing change",
-  "new_spec_sha256": "e719ea93341d29c982136e4df9ba6c93f249113ef53b05fe1f862381f0ae39e8",
+  "change": "Only Ningbo match-point inset width.60→.50 and existing native top_pad=.043; no code, source, sound, length or onset/end changes",
+  "new_spec_sha256": "5354789e466a9f66b92cf570e0f6b6e76fe3dd97372ac25c5b7e0d6fe2760944",
   "first_master_sha256": "5ddd336d71be0e0f356ba6820499a081b8f86d410e187633b9f543e6188a6112",
   "first_master_qc": "blocked at304.28s: date ink over far Rybakina head/face",
   "diagnostic_samples": 45,
@@ -15,5 +15,14 @@
   "native_actual_source_audio_windows": 14,
   "native_actual_source_bilingual_cues": 30,
   "foreground_plan_sha256": "f4f856d91296385c9e79885eb569947102e1e768d59d3d525123fdfdc0490a9c",
-  "frozen_bundle_sha256": "70008279fb1cea1194aa9d88f80b171ae116b89b194f8fc2eae37fd61ba6bafd"
+  "frozen_bundle_sha256": "70008279fb1cea1194aa9d88f80b171ae116b89b194f8fc2eae37fd61ba6bafd",
+  "final_geometry": {
+    "width": 0.5,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8
+  },
+  "raised_native_samples": 45,
+  "review_scope": "Producer actually opened4 raised ROI sheets covering45 native positions plus critical full frames. Root/independent inspected8 actual key frames and1.44 hair ROI; actual far face/eyes/visor and key shots clear. Small black stroke touches rear hair outline at1.44; no claim of entire head zero overlap.",
+  "superseded_default_top_diagnostic": "Low/default-top.50 images retained as intermediate scope, not final layout approval."
 }
