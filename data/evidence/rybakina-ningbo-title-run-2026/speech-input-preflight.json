@@ -1,10 +1,10 @@
 {
   "schema": "tennislive.speech-input-preflight.v1",
   "stage": "input_only_not_film_approval",
-  "reviewed_at": "2026-10-25T12:40:03.357987+00:00",
+  "reviewed_at": "2026-10-25T13:10:40.872108+00:00",
   "method": "native_voice_auto_review_actual_functions_not_human_listening",
-  "spec_sha256": "715e515e3c2641c1c2509426e9b5b6e380e5b7b57799fabf37234808633e267b",
-  "bundle_sha256": "cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b",
+  "spec_sha256": "856af80e2d41091c8dfa46433a725b29beb0a7f3e8801e7cbdede2a843feab60",
+  "bundle_sha256": "e7e7a7b1539da85104aab58320210fd6fde32e7d9356cda5945f9a6e09d5637d",
   "request_count": 11,
   "unique_audio_count": 11,
   "rows": [
@@ -51,51 +51,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "半决赛 ｜ 首盘 ｜ 的 ｜ 终点 ｜ 一次次 ｜ 被 ｜ 推 ｜ 远 ｜ 前 ｜ 十个 ｜ 盘点 ｜ 都 ｜ 没 ｜ 拿下 ｜ 莱巴金娜 ｜ 等到 ｜ 了 ｜ 第十一次"
-      }
-    },
-    {
-      "id": "bundle:3818e5880cfcd551bb43eba13aac2b68c0da84081dabc153ae5924d48f23ceac",
-      "text": "北京时间十月二十五日，宁波站女单决赛。北京首战出局，武汉因伤退赛。莱巴金娜在这里，把去年的冠军守住了。",
-      "request": {
-        "backend": "edge",
-        "cache_key": "c96f82bb0297a32d65131144ad190721",
-        "lead_pause": 0.0,
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "style": "",
-        "styledegree": "",
-        "text": "北京时间十月二十五日，宁波站女单决赛。北京首战出局，武汉因伤退赛。莱巴金娜在这里，把去年的冠军守住了。",
-        "voice": "zh-CN-YunjianNeural"
-      },
-      "audio_sha256": "967857451f9b0d9a2cdc4926a83cefb9458965e6f81a47b9f9b0bba49f655966",
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "pass": true,
-      "asr": "北京时间10月25日 宁波战女单决赛,北京首战出局武汉阴伤退赛,来巴金娜在这里把去年的冠军守住了。",
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 45,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "北京时间10月25日 宁波战女单决赛,北京首战出局武汉阴伤退赛,来巴金娜在这里把去年的冠军守住了。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 45,
-        "speech_s": 10.318,
-        "cps": 4.36,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "北京时间 ｜ 十月二十五日 ｜ 宁波站 ｜ 女单 ｜ 决赛 ｜ 北京 ｜ 首战 ｜ 出局 ｜ 武汉 ｜ 因 ｜ 伤 ｜ 退赛 ｜ 莱巴金娜 ｜ 在 ｜ 这里 ｜ 把 ｜ 去年 ｜ 的 ｜ 冠军 ｜ 守 ｜ 住 ｜ 了"
       }
     },
     {
@@ -303,6 +258,51 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "从 ｜ 中途 ｜ 失速 ｜ 到 ｜ 收官 ｜ 反复 ｜ 莱巴金娜 ｜ 还是 ｜ 把 ｜ 宁波 ｜ 冠军 ｜ 留下 ｜ 了 ｜ 赛季 ｜ 第四 ｜ 冠 ｜ 生涯 ｜ 第十五 ｜ 冠 ｜ 到 ｜ 了 ｜ 年终 ｜ 总决赛 ｜ 你 ｜ 看好 ｜ 她 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+      }
+    },
+    {
+      "id": "bundle:a8ed7c249aecc8b48ad05e87b27351aec94389a4f2af1b915a9f37e1140e0ee5",
+      "text": "北京时间十月二十五日下午，宁波站女单决赛。北京首战出局，武汉因伤退赛。莱巴金娜在这里，把去年的冠军守住了。",
+      "request": {
+        "backend": "edge",
+        "cache_key": "cfdf13b47d1656121792e25af6d18553",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "北京时间十月二十五日下午，宁波站女单决赛。北京首战出局，武汉因伤退赛。莱巴金娜在这里，把去年的冠军守住了。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "87d727fcdd2a2d188ea5ea373d25af59fcfd6ba5c8ebd2c64eb4e22f0c8a2d25",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "pass": true,
+      "asr": "北京时间10月25日下午 宁波战女单决赛,北京首战出局武汉阴伤退赛,来巴金娜在这里把去年的冠军守住了。",
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月25日下午 宁波战女单决赛,北京首战出局武汉阴伤退赛,来巴金娜在这里把去年的冠军守住了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.66,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十五日 ｜ 下午 ｜ 宁波站 ｜ 女单 ｜ 决赛 ｜ 北京 ｜ 首战 ｜ 出局 ｜ 武汉 ｜ 因 ｜ 伤 ｜ 退赛 ｜ 莱巴金娜 ｜ 在 ｜ 这里 ｜ 把 ｜ 去年 ｜ 的 ｜ 冠军 ｜ 守 ｜ 住 ｜ 了"
       }
     },
     {

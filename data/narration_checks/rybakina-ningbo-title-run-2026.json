@@ -1,6 +1,6 @@
 {
   "slug": "rybakina-ningbo-title-run-2026",
-  "checked_at": "2026-10-25T12:44:54Z",
+  "checked_at": "2026-10-25T13:10:33Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,10 +10,10 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "c31335cc2c41bdcf": {
+    "681cd561b5fe3abc": {
       "segment": 2,
-      "spoken": 11.184,
-      "picture": 11.6
+      "spoken": 11.544,
+      "picture": 11.85
     },
     "36221d8518265005": {
       "segment": 3,
@@ -63,16 +63,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "cdd1b353844cac489a98f6fd87cf7fa1244f288eac6882632de592234eb2601b",
+    "bundle_sha256": "e7e7a7b1539da85104aab58320210fd6fde32e7d9356cda5945f9a6e09d5637d",
     "request_count": 11,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-ningbo-title-run-2026-cdd1b353844cac48/tts_bundle.zip",
+    "release_tag": "reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40194816401"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40196502400"
   }
 }
