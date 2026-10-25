@@ -1,0 +1,88 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=_1dOo30-iAM",
+  "source_path": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/media/us-official-point/_1dOo30-iAM.mp4",
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "bytes": 87930372,
+  "duration": 253.051066,
+  "width": 1920,
+  "height": 1080,
+  "fps": "60000/1001",
+  "archive": "https://github.com/robertyang87/tennislive/releases/download/source-_1dOo30-iAM/_1dOo30-iAM.mp4",
+  "archive_run": 40202037826,
+  "release": 423451668,
+  "asset": 675245473,
+  "proposed_source_key": "us_championship_point",
+  "proposed_segment": {
+    "source": "us_championship_point",
+    "start": 0,
+    "end": 17.4,
+    "cx": 0.5,
+    "fit": "crop",
+    "track": false,
+    "narration": "",
+    "audio_tail": "silence",
+    "_quote_kind": "broadcast",
+    "quote": [
+      {
+        "at": 10.18,
+        "end": 12.76,
+        "text": "Game, set, match for Rybakina.\n比赛结束，莱巴金娜获胜。"
+      },
+      {
+        "at": 13.68,
+        "end": 15.06,
+        "text": "Two sets to one.\n盘数二比一。"
+      },
+      {
+        "at": 15.28,
+        "end": 17.26,
+        "text": "Six four, five seven, six two.\n六比四、五比七、六比二。"
+      }
+    ]
+  },
+  "packet": {
+    "transcript_path": "data/audio_reviews/rybakina-finals-2026/20261025-us-terminal-point-9c532e3ae23d.json",
+    "transcript_sha256": "9c532e3ae23d3e3f0aa123787f0e2a6949259f787775d299229b95f3117cab31"
+  },
+  "foreground_validation": {
+    "subset_only": true,
+    "actual_source_sha_checked": true,
+    "cues": [
+      {
+        "segment": 0,
+        "start": 10.18,
+        "end": 12.76,
+        "en": "Game, set, match for Rybakina.",
+        "zh": "比赛结束，莱巴金娜获胜。"
+      },
+      {
+        "segment": 0,
+        "start": 13.68,
+        "end": 15.06,
+        "en": "Two sets to one.",
+        "zh": "盘数二比一。"
+      },
+      {
+        "segment": 0,
+        "start": 15.28,
+        "end": 17.26,
+        "en": "Six four, five seven, six two.",
+        "zh": "六比四、五比七、六比二。"
+      }
+    ]
+  },
+  "roles": {
+    "far_server": "Elena Rybakina, yellow top/dark skirt",
+    "near_receiver": "Aryna Sabalenka, orange"
+  },
+  "visual_phase": {
+    "preparation": "0–6.4 closeup, then wide",
+    "toss_serve": "8.2–9.4",
+    "result": "9.4–9.8",
+    "clear_winner_raised_arms": "10.6–12.5"
+  },
+  "crop_note": "cx0.5 keeps actual far server; near receiver may be left outside portrait crop. Winner face near right edge during closeup; source-full and crop samples preserved for parent review. No claim both players always visible.",
+  "audio_tail_why": "Next commentator phrase begins17.50; silence only added dissolve source tail beyond17.40, retained audio unchanged.",
+  "canonical_spec_modified": false,
+  "canonical_index_modified": false
+}

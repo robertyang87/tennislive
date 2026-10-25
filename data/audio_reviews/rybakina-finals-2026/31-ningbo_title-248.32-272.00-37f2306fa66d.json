@@ -1,0 +1,62 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual cached small.en and medium.en exact-source transcription cross-check and bounded source-frame review; not human listening",
+  "reviewed_at": "2026-10-25T14:17:47.998242+00:00",
+  "status": "complete",
+  "reviewed_from": 248.32,
+  "reviewed_to": 272.0,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 257.86,
+      "end": 261.48,
+      "en": "Elena Rybakina goes back-to-back in Ningbo.",
+      "zh": "莱巴金娜在宁波成功卫冕。"
+    },
+    {
+      "start": 263.44,
+      "end": 266.72,
+      "en": "Another statement from the world number one.",
+      "zh": "世界第一再次展现实力。"
+    },
+    {
+      "start": 267.22,
+      "end": 271.76,
+      "en": "And she claims yet another title in what has been an extraordinary season.",
+      "zh": "非凡赛季，她又收获一座冠军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ningbo_title-3afefff9c9f9-point-last36-small.en.json",
+      "sha256": "3afefff9c9f93fa38afa39e64c7977801969484fda52b2e313f84f6851d6d209",
+      "model": "small.en",
+      "source_window": [
+        244,
+        280
+      ]
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/ningbo_title-70bfaf5b4999-point-last36-medium.en.json",
+      "sha256": "70bfaf5b49996f9b24f021ec6c9545db69304bafd44bd2df349517041971ffea",
+      "model": "medium.en",
+      "source_window": [
+        244,
+        280
+      ]
+    }
+  ],
+  "review_notes": "Three selected complete commentary clauses agree across actual small.en+medium.en raw JSON. Prior clause ends246.10 before selected248.32; selected final clause ends271.76 before272.00; next sentence275.04 is outside. Segment uses native audio_tail:silence for additional dissolve continuation. Source spatial roles verified by root full-resolution251.20/252.00 phase sequence: far pink-skirt Rybakina SERVES, near white/teal Fernandez RECEIVES. Original semantic/word timestamps are absolute source times. No human listening claimed.",
+  "source_identity": {
+    "file": "Rn0lchWoTIM.mp4",
+    "source_size": [
+      1920,
+      1080
+    ],
+    "fps": "25/1",
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4"
+  },
+  "review_scope": "Selected exact foreground window only; no global listening or whole-speech approval claim"
+}

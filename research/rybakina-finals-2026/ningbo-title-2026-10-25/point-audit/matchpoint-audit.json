@@ -1,0 +1,593 @@
+{
+  "schema": "rybakina-terminal-point-audit/v1",
+  "scope": "Eight original match-video appearances; new Ningbo final handled by separate agent. Static mention-only events do not acquire extra footage.",
+  "read_only_to_repository": true,
+  "all_source_videos_1080p": false,
+  "raw_frames_opened": true,
+  "frame_evidence": "sample-manifest.json plus RG and Toronto fine contact sheets; selected full-source frames inspected, not a claim of continuous watching",
+  "rows": [
+    {
+      "segment_id": "ao_final",
+      "source_name": "ao-championship-point",
+      "file": "/workspace/rybakina-finals-production/sources/ao-championship-point.mp4",
+      "sha256": "b707213733ff4b1e4d11b92b4ea863424703bdf5dc6f595c3ad4e27d3a687ead",
+      "source_url": "https://www.youtube.com/watch?v=Yh8lt5u7nqM",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "158.081451"
+        }
+      },
+      "old_window": [
+        163.35,
+        179.6
+      ],
+      "old_window_is_terminal_match_point": false,
+      "recommended_window": [
+        0,
+        14.6
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          0,
+          2.6
+        ],
+        "toss": [
+          2.8,
+          3.5
+        ],
+        "serve_contact_interval": [
+          3.5,
+          3.8
+        ],
+        "result_interval": [
+          3.96,
+          4.4
+        ],
+        "reaction": [
+          4.9,
+          9.0
+        ]
+      },
+      "visual_notes": "Rybakina near server; ace on5-4,40-30. Full first service action plus actual winner response, completed result scoreboard and approach to net.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/ao-championship-point-contact.jpg",
+      "audio_status": "see_audio_notes"
+    },
+    {
+      "segment_id": "indian_wells",
+      "source_name": "indian-wells-final",
+      "file": "/workspace/rybakina-finals-production/sources/indian-wells-final.mp4",
+      "sha256": "ee5664990aeb7e0bf5637120632b75df5ee37acd316a26dd2151f669715d364c",
+      "source_url": "https://www.youtube.com/watch?v=9qBMhp-2sYk",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "308.987937"
+        }
+      },
+      "old_window": [
+        245.6,
+        262
+      ],
+      "old_window_is_terminal_match_point": true,
+      "recommended_window": [
+        245.6,
+        262
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          245.6,
+          246.7
+        ],
+        "toss": [
+          246.8,
+          247.3
+        ],
+        "serve_contact_interval": [
+          247.3,
+          247.8
+        ],
+        "rally": [
+          247.8,
+          251.5
+        ],
+        "reaction": [
+          252,
+          262
+        ]
+      },
+      "visual_notes": "Sabalenka near server, Rybakina far receiver, deciding tiebreak7-6 before point. Keep old exact complete point and two commentary clauses.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/indian-wells-final-contact.jpg",
+      "audio_status": "existing_exact_source_window_accepted_asr_review_reusable"
+    },
+    {
+      "segment_id": "stuttgart_final",
+      "source_name": "stuttgart-final",
+      "file": "/workspace/rybakina-finals-production/sources/stuttgart-final.mp4",
+      "sha256": "bbddcae719682fed3c553a5ec7bf9cf63a81d6e46e53122da9d9f1494467393b",
+      "source_url": "https://www.youtube.com/watch?v=cu2BtcEjWww",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "309.754195"
+        }
+      },
+      "old_window": [
+        261,
+        271.4
+      ],
+      "old_window_is_terminal_match_point": true,
+      "recommended_window": [
+        261,
+        271.4
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          261,
+          261.7
+        ],
+        "toss": [
+          261.8,
+          262.6
+        ],
+        "serve_contact_interval": [
+          263.0,
+          263.3
+        ],
+        "rally": [
+          263.3,
+          266.7
+        ],
+        "reaction": [
+          267,
+          271.4
+        ]
+      },
+      "visual_notes": "Rybakina near server;40-0 at7-5,5-1. Current selected source includes entire action through title reaction and complete championship commentary.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/stuttgart-final-contact.jpg",
+      "audio_status": "existing_exact_source_window_accepted_asr_review_reusable"
+    },
+    {
+      "segment_id": "rg_r2",
+      "source_name": "rg-r2",
+      "file": "/workspace/rybakina-finals-production/sources/rg-r2.mp4",
+      "sha256": "4923c86a1048ed4c404e5deaa53d18ebb70a7789394f8e3ba26f053ab48d9afb",
+      "source_url": "https://www.youtube.com/watch?v=HhnEOFJMcsU",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "221.634467"
+        }
+      },
+      "old_window": [
+        2.0,
+        14.3
+      ],
+      "old_window_is_terminal_match_point": false,
+      "recommended_window": [
+        166.84,
+        179.55
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          166.84,
+          170.9
+        ],
+        "toss": [
+          171,
+          171.4
+        ],
+        "serve_contact_interval": [
+          171.4,
+          171.7
+        ],
+        "rally": [
+          171.7,
+          178.2
+        ],
+        "reaction": [
+          178.5,
+          179.55
+        ]
+      },
+      "visual_notes": "Rybakina near server, Starodubtseva far receiver, deciding tiebreak9-4. Source hard cut166.84 starts final point;166.82 still shows previous point tail. Actual winner fist-pump178.5+. Prior165.35 recommendation was not clean and must not be reused.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/rg-r2-contact.jpg",
+      "audio_status": "see_audio_notes"
+    },
+    {
+      "segment_id": "wimbledon_r3",
+      "source_name": "wimbledon-r3",
+      "file": "/workspace/rybakina-finals-production/sources/wimbledon-r3.mp4",
+      "sha256": "3fb20aefc4d5d812ebd823d6e4c3fbead3920b41c1cd649ad1ca8d4e609d5bd8",
+      "source_url": "https://www.youtube.com/watch?v=fWfn-EgR68Q",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "216.456417"
+        }
+      },
+      "old_window": [
+        179.4,
+        194.5
+      ],
+      "old_window_is_terminal_match_point": true,
+      "recommended_window": [
+        179.4,
+        194.5
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          179.4,
+          180.8
+        ],
+        "toss": [
+          180.9,
+          181.5
+        ],
+        "serve_contact_interval": [
+          181.5,
+          181.9
+        ],
+        "rally": [
+          181.9,
+          183.9
+        ],
+        "reaction": [
+          184,
+          194.5
+        ]
+      },
+      "visual_notes": "Mertens far server, Rybakina near receiver, final set5-1 AD.179.4 crowd cut then179.6 starts wide service preparation. Entire point and original two complete commentary lines survive.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/wimbledon-r3-contact.jpg",
+      "audio_status": "existing_exact_source_window_accepted_asr_review_reusable"
+    },
+    {
+      "segment_id": "toronto_final",
+      "source_name": "toronto-final",
+      "file": "/workspace/rybakina-finals-production/sources/toronto-final.mp4",
+      "sha256": "e3ea884260dd872a2ac119194a1d85a6d56ad1db239c80d146aa5368b4f04979",
+      "source_url": "https://www.youtube.com/watch?v=bDttZof7qXI",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "476.171610"
+        }
+      },
+      "old_window": [
+        248.0,
+        264.0
+      ],
+      "old_window_is_terminal_match_point": true,
+      "recommended_window": [
+        248,
+        264
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          248,
+          248.5
+        ],
+        "toss": [
+          248.5,
+          249
+        ],
+        "serve_contact_interval": [
+          249,
+          249.5
+        ],
+        "rally": [
+          249.5,
+          254.5
+        ],
+        "reaction": [
+          255,
+          264
+        ]
+      },
+      "visual_notes": "CORRECTION to old prose: Swiatek near receiver, Rybakina far server.248 close-up is receiving-player preparation,248.5 wide shot still before contact and shows entire toss/serve and ensuing point. Winner Swiatek raises arms255+. Existing window itself is correct.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/toronto-final-contact.jpg",
+      "audio_status": "existing_exact_source_window_accepted_asr_review_reusable"
+    },
+    {
+      "segment_id": "us_final",
+      "source_name": "us-final",
+      "file": "/workspace/rybakina-finals-production/sources/us-final.mp4",
+      "sha256": "2583a83d9c85843e33e38b8df9664d73a2dbe66ba565f637eae334be43b2ca20",
+      "source_url": "https://www.youtube.com/watch?v=YCAQnmJBJIk",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "60000/1001"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "214.273741"
+        }
+      },
+      "old_window": [
+        152.0,
+        167.0
+      ],
+      "old_window_is_terminal_match_point": false,
+      "recommended_window": [
+        169,
+        182.44
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          169,
+          171.4
+        ],
+        "toss": [
+          171.5,
+          172.3
+        ],
+        "serve_contact_interval": [
+          172.3,
+          172.6
+        ],
+        "rally": [
+          172.6,
+          175.4
+        ],
+        "reaction": [
+          175.8,
+          178.5
+        ]
+      },
+      "visual_notes": "Rybakina far server, Sabalenka near receiver at5-2/40-30 CHAMPIONSHIP POINT#2. Entire serve and final ball retained. End182.44 after final score sentence182.24 and before next unrelated commentator182.54.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/us-final-contact.jpg",
+      "audio_status": "see_audio_notes"
+    },
+    {
+      "segment_id": "beijing",
+      "source_name": "beijing-charaeva",
+      "file": "/workspace/rybakina-finals-production/sources/beijing-charaeva.mp4",
+      "sha256": "521a2948180718bdadb8b0b18951f6b0b4f4a65cb89889cc46e634bbb2fe0c1c",
+      "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_type": "audio",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "364.400000"
+        }
+      },
+      "old_window": [
+        323.45,
+        339.2
+      ],
+      "old_window_is_terminal_match_point": true,
+      "recommended_window": [
+        323.45,
+        339.2
+      ],
+      "complete_point_visual_status": "pass_sampled_full_serve_to_result_and_reaction",
+      "timecode_precision": "Phase intervals bound actual contact-frame observations; values are not frame-accurate event annotations except RG hard cut166.84.",
+      "phases": {
+        "prep": [
+          323.45,
+          324.1
+        ],
+        "toss": [
+          324.1,
+          324.7
+        ],
+        "serve_contact_interval": [
+          324.7,
+          325.1
+        ],
+        "rally": [
+          325.1,
+          329.5
+        ],
+        "reaction": [
+          329.5,
+          339.2
+        ]
+      },
+      "visual_notes": "Final point at Charaeva5-3/40-30. Continuous full serve/rally then winning-player/kneeling response and coach; original two complete commentary clauses preserved.",
+      "contact": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/point-audit/beijing-charaeva-contact.jpg",
+      "audio_status": "existing_exact_source_window_accepted_asr_review_reusable"
+    }
+  ],
+  "audio_notes": {
+    "ao_final": {
+      "status": "visual_ready_audio_first_clause_uncertain",
+      "clip": [
+        0,
+        14.6
+      ],
+      "stable_content": [
+        {
+          "start": 5.8,
+          "end": 6.74,
+          "en": "Rybakina.",
+          "zh": "莱巴金娜。"
+        },
+        {
+          "start": 6.76,
+          "end": 8.68,
+          "en": "Elena Rybakina.",
+          "zh": "叶莲娜·莱巴金娜。"
+        },
+        {
+          "start": 10.76,
+          "end": 12.24,
+          "en": "The Australian Open champion.",
+          "zh": "澳大利亚网球公开赛冠军。"
+        }
+      ],
+      "uncertain_spans": [
+        {
+          "start": 3.8,
+          "end": 5.98,
+          "reason": "First commentator clause is masked by crowd/court call: cached small.en mono/right produces Snicks has a win at ice / This is a win at Ace; older turbo Scissor with an ice / Sizzle with an ass. Likely domain phrase Seals it with an ace, but not sufficiently established by exact-source ASR to record an unqualified pass."
+        }
+      ],
+      "evidence": [
+        "ao-championship-point-focused-small.json",
+        "ao-opening-small-en-variants.json",
+        "ao-right-medium-en.json",
+        "/workspace/rybakina-finals-production/research/asr/ao-championship-point-small.en.json",
+        "/workspace/rybakina-finals-production/research/points/ao-championship-point-medium.en.json",
+        "/workspace/rybakina-finals-production/research/points/ao-opening-channel-diagnostic.json"
+      ],
+      "do_not": "Do not silently omit known foreground line or invent complete approval; source audio final bytes remain untouched."
+    },
+    "us_final": {
+      "status": "full_terminal_window_and_score_verified_with_source_bound_asr",
+      "clip": [
+        169,
+        182.44
+      ],
+      "proposed_quote": [
+        {
+          "start": 175.3,
+          "end": 177.5,
+          "en": "Game, set, match for Rybakina.",
+          "zh": "比赛结束，莱巴金娜获胜。"
+        },
+        {
+          "start": 178.84,
+          "end": 182.24,
+          "en": "Two sets to one, six-four, five-seven, six-two.",
+          "zh": "盘分二比一：六比四、五比七、六比二。"
+        }
+      ],
+      "evidence": [
+        "us-final-focused-small.json",
+        "/workspace/rybakina-finals-production/research/points/us-final-call-diagnostic.json",
+        "/workspace/rybakina-finals-production/research/points/us-final-medium.en.json"
+      ],
+      "normalization_note": "Small multilingual first call Gains a match for Rybakina and old turbo Game set match for Rybakina; standard game-set-match court call normalized. Final score sequence is exact in both current small and old turbo. Next commentator starts182.54 and is excluded."
+    },
+    "rg_r2": {
+      "status": "reuse_nested_scope_no_identifiable_foreground_English",
+      "clip": [
+        166.84,
+        179.55
+      ],
+      "proposed_quote": [],
+      "evidence": [
+        "/workspace/rybakina-finals-production/research/asr/rg-r2-small.en.json",
+        "/workspace/rybakina-finals-production/research/points/rg-r2-medium.en.json",
+        "/workspace/rybakina-finals-production/research/points/rg-final-multilingual-diagnostic.json"
+      ],
+      "scope_note": "New166.84 start is nested inside previously reviewed165.35–179.55 no-English range. Foreground score/PA after180s is outside new clip. Preserve impacts,crowd and actual winner reaction; do not claim any of the unreliable English-ASR gibberish as spoken words."
+    }
+  },
+  "resolution_summary": "Seven1080p; Beijing1280x720 uses the existing exact-source owner-authorized full-canvas claim. No new low-resolution exemption."
+}

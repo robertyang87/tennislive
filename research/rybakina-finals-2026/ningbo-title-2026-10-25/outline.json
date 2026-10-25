@@ -1,0 +1,58 @@
+{
+  "request": [
+    "在莱巴金娜年终之路尾部加入2026宁波夺冠视频",
+    "精炼宁波为去年起飞起点的叙事并带入"
+  ],
+  "copy": "去年，宁波夺冠后，她在东京赶上年终末班车，随后在利雅得封后。今年，两夺大满贯、登顶世界第一，她又回到宁波卫冕。这一程腾飞，从宁波开始。",
+  "tail_outline": [
+    {
+      "id": "ningbo_origin_2025",
+      "seconds": 7.5,
+      "picture": "2025宁波捧杯官方原图，3:4按本人和杯裁切",
+      "narration": "去年，宁波夺冠后，她在东京赶上年终末班车。"
+    },
+    {
+      "id": "riyadh_title_2025",
+      "seconds": 4.8,
+      "picture": "2025利雅得年终捧杯官方原图，3:4",
+      "narration": "随后五战全胜，在利雅得封后。"
+    },
+    {
+      "id": "ningbo_return_2026",
+      "seconds": 7.8,
+      "picture": "原生转场：一年之后／世界第一归来",
+      "narration": "今年，两夺大满贯、登顶世界第一，她又回到宁波卫冕。"
+    },
+    {
+      "id": "ningbo_title_matchpoint",
+      "seconds": 18.53,
+      "picture": "WTA2026宁波决赛1080源，248.32–266.85待媒体验收",
+      "audio": "保留完整发球准备、抛球、完整回合、制胜分、本人反应与握手；两句完整英中解说，下一句不截入。"
+    },
+    {
+      "id": "ningbo_special_place",
+      "seconds": 5.28,
+      "picture": "同一1080官方源541.68–546.96，按实测固定人物中心裁切",
+      "audio": "And it’s already a second year here, second win, and it’s such a special place for me."
+    },
+    {
+      "id": "ending",
+      "seconds": 8.6,
+      "picture": "原生收束卡：这一程腾飞／从宁波开始",
+      "narration": "这一程腾飞，从宁波开始。年终，她还能再次捧杯吗？"
+    }
+  ],
+  "body_constraints": {
+    "scope": "保持原有赛季主体。仅把不完整或普通分修正为永久全局要求的完整赛点；避免新增无关故事或比赛。",
+    "remove_for_compactness": [
+      "原旧US press13.95秒，以新宁波本人贴题原声承担人物感受",
+      "原宁波备战/旧期待结尾11.1秒由本次尾部取代"
+    ],
+    "voice_policy": "原主体旁白按完整请求精确复用，仅调整没有声音的等待时间；不截声音，不统一提速",
+    "labels": "当前main81/66/89字号、F贴边渐隐底、切入即显、最多8秒；不在转场卡上放信息条",
+    "video_policy": "1080x1440 full-canvas; actual matches court center; interviews measured fixed person center",
+    "qualification_2026": "2026-09-14首位单打入围，不说今年又是末班车；去年是在东京锁定，非宁波当天。"
+  },
+  "approval_basis": "用户已直接要求此次尾部改剪并指定叙事；话术及具体画面结构已在对话展示。不是需要另一次泛化许可的新选题。",
+  "status": "concrete_outline_presented_media_boundaries_pending_final_handoff"
+}

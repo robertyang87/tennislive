@@ -1,0 +1,84 @@
+{
+  "model": "small",
+  "model_path": "/home/agent/.cache/huggingface/hub/models--Systran--faster-whisper-small/snapshots/536b0662742c02347bc0e980a01041f333bce120",
+  "source_sha256": "b707213733ff4b1e4d11b92b4ea863424703bdf5dc6f595c3ad4e27d3a687ead",
+  "clip": [
+    0,
+    16
+  ],
+  "method": "offline_cached_asr_not_human_listening",
+  "segments": [
+    {
+      "start": 3.8800000000000026,
+      "end": 6.68,
+      "text": " Elena Rybakina.",
+      "avg_logprob": -0.5770785944028334,
+      "words": [
+        {
+          "start": 3.8800000000000026,
+          "end": 5.280000000000001,
+          "word": " Elena",
+          "probability": 0.001210444956086576
+        },
+        {
+          "start": 5.280000000000001,
+          "end": 6.68,
+          "word": " Rybakina.",
+          "probability": 0.23124507938822111
+        }
+      ]
+    },
+    {
+      "start": 6.76,
+      "end": 8.52,
+      "text": " Elena Rybakina.",
+      "avg_logprob": -0.5770785944028334,
+      "words": [
+        {
+          "start": 6.76,
+          "end": 7.82,
+          "word": " Elena",
+          "probability": 0.01597324199974537
+        },
+        {
+          "start": 7.82,
+          "end": 8.52,
+          "word": " Rybakina.",
+          "probability": 0.9817290902137756
+        }
+      ]
+    },
+    {
+      "start": 8.84,
+      "end": 12.14,
+      "text": " The Australian Open Champion.",
+      "avg_logprob": -0.5770785944028334,
+      "words": [
+        {
+          "start": 8.84,
+          "end": 9.46,
+          "word": " The",
+          "probability": 0.11607541888952255
+        },
+        {
+          "start": 9.46,
+          "end": 11.22,
+          "word": " Australian",
+          "probability": 0.9897940158843994
+        },
+        {
+          "start": 11.22,
+          "end": 11.66,
+          "word": " Open",
+          "probability": 0.9388158917427063
+        },
+        {
+          "start": 11.66,
+          "end": 12.14,
+          "word": " Champion.",
+          "probability": 0.6318697333335876
+        }
+      ]
+    }
+  ]
+}

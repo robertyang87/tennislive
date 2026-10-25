@@ -1,0 +1,116 @@
+{
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "method": "diagnostic_channel_bandpass_cached_asr_final_source_unchanged",
+  "channel": "left",
+  "filter": "highpass120 lowpass5000, no word prompting",
+  "window": [
+    7,
+    18
+  ],
+  "model": "small.en",
+  "segments": [
+    {
+      "start": 10.18,
+      "end": 17.22,
+      "text": " Game 7 out for the Reebokina, 2 sets to 1, 6-4, 5-7, 6-2.",
+      "words": [
+        {
+          "start": 10.18,
+          "end": 10.82,
+          "word": " Game",
+          "probability": 0.23575179278850555
+        },
+        {
+          "start": 10.82,
+          "end": 11.24,
+          "word": " 7",
+          "probability": 0.49377086758613586
+        },
+        {
+          "start": 11.24,
+          "end": 11.58,
+          "word": " out",
+          "probability": 0.36071786284446716
+        },
+        {
+          "start": 11.58,
+          "end": 11.96,
+          "word": " for",
+          "probability": 0.6774942278862
+        },
+        {
+          "start": 11.96,
+          "end": 11.96,
+          "word": " the",
+          "probability": 0.06854616105556488
+        },
+        {
+          "start": 11.96,
+          "end": 12.54,
+          "word": " Reebokina,",
+          "probability": 0.49743662402033806
+        },
+        {
+          "start": 12.76,
+          "end": 14.3,
+          "word": " 2",
+          "probability": 0.1278018355369568
+        },
+        {
+          "start": 14.3,
+          "end": 14.48,
+          "word": " sets",
+          "probability": 0.9402788877487183
+        },
+        {
+          "start": 14.48,
+          "end": 14.74,
+          "word": " to",
+          "probability": 0.9808802008628845
+        },
+        {
+          "start": 14.74,
+          "end": 15.02,
+          "word": " 1,",
+          "probability": 0.8297314047813416
+        },
+        {
+          "start": 15.22,
+          "end": 15.52,
+          "word": " 6",
+          "probability": 0.8591040372848511
+        },
+        {
+          "start": 15.52,
+          "end": 15.92,
+          "word": "-4,",
+          "probability": 0.7307679951190948
+        },
+        {
+          "start": 16.16,
+          "end": 16.259999999999998,
+          "word": " 5",
+          "probability": 0.9904302954673767
+        },
+        {
+          "start": 16.259999999999998,
+          "end": 16.64,
+          "word": "-7,",
+          "probability": 0.9700600504875183
+        },
+        {
+          "start": 16.64,
+          "end": 16.9,
+          "word": " 6",
+          "probability": 0.9928841590881348
+        },
+        {
+          "start": 16.9,
+          "end": 17.22,
+          "word": "-2.",
+          "probability": 0.9971207082271576
+        }
+      ]
+    }
+  ]
+}

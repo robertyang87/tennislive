@@ -1,0 +1,148 @@
+{
+  "status": "ready_for_root_native_preflight",
+  "time": "2026-10-25T13:44:49.173535+00:00",
+  "primary": {
+    "url": "https://www.youtube.com/watch?v=Rn0lchWoTIM",
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+    "path": "/workspace/rybakina-finals-production/ningbo-title-2026-10-25/media/ningbo-final-youtube-1080.mp4",
+    "bytes": 156986965,
+    "sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+    "duration": 560.413605,
+    "size": [
+      1920,
+      1080
+    ],
+    "fps": "25/1",
+    "codecs": [
+      "h264",
+      "aac"
+    ],
+    "release_id": 423378212,
+    "asset_id": 674950874,
+    "release_digest_verified": true,
+    "source_identity": "Official WTA high-resolution extended highlights plus same-match presentation. TennisMajors actual HTML embeds this exact YouTube ID; all-source contact sheet inspected; score, players, clothing, Ningbo court and final point cross-match official WTA Brightcove and official X."
+  },
+  "suggested_source_key": "ningbo_title",
+  "suggested_no_probe_why": "本场官方YouTube源已由原生source-Rn0lchWoTIM归档；本次直接复用现成Release原字节，已核资产digest、ffprobe与真实全源接触图，避免重复派probe。仅用于该精确源，不豁免未知源。",
+  "points": [
+    {
+      "source": "ningbo_title",
+      "start": 248.32,
+      "end": 272.0,
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 9.54,
+          "end": 13.16,
+          "text": "Elena Rybakina goes back-to-back in Ningbo.\n莱巴金娜在宁波成功卫冕。"
+        },
+        {
+          "at": 15.12,
+          "end": 18.4,
+          "text": "Another statement from the world number one.\n世界第一再次展现实力。"
+        },
+        {
+          "at": 18.9,
+          "end": 23.44,
+          "text": "And she claims yet another title in what has been an extraordinary season.\n非凡赛季，她又收获一座冠军。"
+        }
+      ],
+      "_why": "Full-resolution phase sequence251.20/252.00/252.80/253.60: FAR pink-skirt Rybakina serves (toss251.20,jump252.00); NEAR white/teal Fernandez receives. Source248.32 is server Rybakina preparation close-up. Full serve,rally,winning reaction and handshake retained; three commentary clauses end271.76 before next sentence275+. Strict court-centre3:4 crop retains actual far server; near receiver may be outside the left crop edge. Not a claim both players remain visible every frame. Exact-source dual cached ASR small.en+medium.en; not human listening."
+    }
+  ],
+  "same_match_speech": {
+    "source": "ningbo_title",
+    "start": 541.68,
+    "end": 546.96,
+    "fit": "crop",
+    "track": false,
+    "frame": "person",
+    "cx": 0.464,
+    "cx_face": {
+      "samples": [
+        0.4534,
+        0.4652,
+        0.4579,
+        0.4639,
+        0.4678,
+        0.4745,
+        0.4651,
+        0.4699,
+        0.4734
+      ],
+      "frames": 9,
+      "detected": 9,
+      "source_size": [
+        1920,
+        1080
+      ],
+      "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+      "measured_at": "2026-10-25T13:41:02+00:00",
+      "median": 0.4652,
+      "spread": 0.0211
+    },
+    "narration": "",
+    "_quote_kind": "ceremony",
+    "quote": [
+      {
+        "at": 0.02,
+        "end": 2.16,
+        "text": "And it's already a second year here,\n这是我第二年来到这里，"
+      },
+      {
+        "at": 2.36,
+        "end": 3.02,
+        "text": "second win,\n也是第二次夺冠，"
+      },
+      {
+        "at": 3.02,
+        "end": 4.96,
+        "text": "and it's such a special place for me.\n这里对我而言如此特别。"
+      }
+    ],
+    "_why": "A complete standalone clause from actual same-match trophy speech. Both cached ASR models give identical normalized words. Final me ends546.62/546.64; next Thank you starts547.08/547.14, so546.96 preserves full semantic sentence and excludes next sentence. Scope limited to this exact source/window; entire alternate Tennis Channel source ASR verdict is failed and is not reused as approval."
+  },
+  "evidence_files": {
+    "probe": "ningbo-final-youtube-1080-probe.json",
+    "full_contact": "yt-full-contact.jpg",
+    "point_precise": "yt-point-precise.jpg",
+    "speech_contact": "yt-speech-boundaries.jpg",
+    "point_asr": [
+      "point-last36-small.en.json",
+      "point-last36-medium.en.json"
+    ],
+    "speech_asr": [
+      "speech-last25-small.en.json",
+      "speech-last25-medium.en.json"
+    ],
+    "person_center": "ningbo-person-centre.json",
+    "point_full_wide": "point-full-wide-250.52.jpg",
+    "court_centre_crop_risk": "court-centre-serve-250.52.jpg",
+    "person_crop_sample": "person-centre-speech-541.9.jpg",
+    "server_toss_full_resolution": "point-full-wide-251.20.jpg",
+    "server_jump_full_resolution": "point-full-wide-252.00.jpg",
+    "server_preparation_full_resolution": "point-preparation-248.52.png"
+  },
+  "repo_proposed_evidence_root": "research/rybakina-finals-2026/ningbo-title-2026-10-25/media",
+  "extra_rallies_used": 0,
+  "full_point_identity": {
+    "server": "Elena Rybakina",
+    "server_position": "far",
+    "server_clothes": "pink/lilac skirt and white/pink top, white visor",
+    "receiver": "Leylah Fernandez",
+    "receiver_position": "near",
+    "receiver_clothes": "white/light teal outfit",
+    "evidence": "Root full-resolution phase review251.20/252.00/252.80/253.60: far Rybakina tosses251.20 and jumps into serve252.00; near Fernandez waits with racket to receive. Final roles override all earlier contradictory chat guesses."
+  },
+  "limitations": [
+    "Strict centre3:4 crop may exclude near-side Fernandez RECEIVING at the left edge; the actual FAR Rybakina server remains in the centred court. Source and crop do not prove both players visible at every frame. Prior source-role interpretations were corrected using251.20/252.00/252.80/253.60 full-resolution phases.",
+    "Source complete-rally coverage has been visually checked using bounded and full-resolution samples; final native3:4 crop and rendered label/subtitle placement remain root preflight tasks.",
+    "No continuous full-film human listening is claimed.",
+    "The earlier temporary Brightcove720p copy was deleted after1080source verification; hash/probe/info/contact evidence preserved.",
+    "WTA article4598517 has an incorrect 2025 final-opponent sentence (Mirra Andreeva); do not use it for2025 opponent. Official2025 article4385270 is correct Alexandrova."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=Yh8lt5u7nqM",
+  "source_sha256": "b707213733ff4b1e4d11b92b4ea863424703bdf5dc6f595c3ad4e27d3a687ead",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex actual cached source-bound ASR and official caption evidence review; no human listening claim",
+  "reviewed_at": "2026-10-25T14:40:30.712180+00:00",
+  "status": "waiting_audio_review",
+  "reviewed_from": 0,
+  "reviewed_to": 14.6,
+  "uncertain_spans": [
+    {
+      "start": 3.8,
+      "end": 5.98,
+      "reason": "First foreground commentator clause is not reliably transcribed by actual cached models or official automatic captions. User was asked for the missing human transcription; no answer or approval is presumed."
+    }
+  ],
+  "foreground_english": [
+    {
+      "start": 5.8,
+      "end": 6.74,
+      "en": "Rybakina.",
+      "zh": "莱巴金娜。"
+    },
+    {
+      "start": 6.76,
+      "end": 8.68,
+      "en": "Elena Rybakina.",
+      "zh": "叶莲娜·莱巴金娜。"
+    },
+    {
+      "start": 10.76,
+      "end": 12.24,
+      "en": "The Australian Open champion.",
+      "zh": "澳大利亚网球公开赛冠军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "research/rybakina-finals-2026/ningbo-title-2026-10-25/point-audit/ao-championship-point-focused-small.json",
+      "sha256": "3fb84174f3f0a5bf3d7705919ae5f0a25b9f3e9318ac38a724cf11b87e96a64e"
+    },
+    {
+      "path": "research/rybakina-finals-2026/ningbo-title-2026-10-25/point-audit/ao-right-medium-en.json",
+      "sha256": "39148a7421c39f3aa7518b628cfaf31747f74822a017e4439abe823df9737866"
+    },
+    {
+      "path": "research/rybakina-finals-2026/ningbo-title-2026-10-25/point-audit/ao-opening-small-en-variants.json",
+      "sha256": "ed11ff7420bdac99e679aa4f524709bb7d8cae88e8c6765dfd18af72bb834197"
+    }
+  ],
+  "review_notes": "This is an explicit blocked record, not a complete review or publication approval. Actual source preserves complete terminal serve/ace/reaction. Standard phrase Seals it with an ace has not been inserted from context. The raw mono small.en ASR also emits fragmentary score numbers under the broadcast; no unverified reconstruction of masked background call is claimed."
+}

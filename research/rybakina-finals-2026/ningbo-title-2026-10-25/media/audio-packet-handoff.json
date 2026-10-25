@@ -1,0 +1,63 @@
+{
+  "status": "two_new_packets_validated_exact_source",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "canonical_spec_modified": false,
+  "canonical_index_modified": false,
+  "entries_for_root_index": [
+    {
+      "index": 31,
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/31-ningbo_title-248.32-272.00-37f2306fa66d.json",
+      "transcript_sha256": "37f2306fa66ddc51794903dead447eaf4c58f6b88d21447ee089447a672dc282"
+    },
+    {
+      "index": 32,
+      "transcript_path": "data/audio_reviews/rybakina-finals-2026/32-ningbo_title-541.68-546.96-ca75c33bc74e.json",
+      "transcript_sha256": "ca75c33bc74ecbbb338c9ef3f5df11704d86f0fa7404b460fce466f072bb01bf"
+    }
+  ],
+  "validated_required_cues": [
+    {
+      "segment": 0,
+      "start": 9.54000000000002,
+      "end": 13.160000000000025,
+      "en": "Elena Rybakina goes back-to-back in Ningbo.",
+      "zh": "莱巴金娜在宁波成功卫冕。"
+    },
+    {
+      "segment": 0,
+      "start": 15.120000000000005,
+      "end": 18.400000000000034,
+      "en": "Another statement from the world number one.",
+      "zh": "世界第一再次展现实力。"
+    },
+    {
+      "segment": 0,
+      "start": 18.900000000000034,
+      "end": 23.439999999999998,
+      "en": "And she claims yet another title in what has been an extraordinary season.",
+      "zh": "非凡赛季，她又收获一座冠军。"
+    },
+    {
+      "segment": 1,
+      "start": 0.020000000000095497,
+      "end": 2.160000000000082,
+      "en": "And it's already a second year here,",
+      "zh": "这是我第二年来到这里，"
+    },
+    {
+      "segment": 1,
+      "start": 2.3600000000000136,
+      "end": 3.0200000000000955,
+      "en": "second win,",
+      "zh": "也是第二次夺冠，"
+    },
+    {
+      "segment": 1,
+      "start": 3.0200000000000955,
+      "end": 4.960000000000036,
+      "en": "and it's such a special place for me.",
+      "zh": "这里对我而言如此特别。"
+    }
+  ],
+  "scope": "Subset validation only; root must build/rebind full canonical index separately."
+}

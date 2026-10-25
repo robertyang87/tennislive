@@ -1,0 +1,38 @@
+{
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "method": "diagnostic_channel_bandpass_cached_asr_final_source_unchanged",
+  "channel": "right",
+  "filter": "highpass120 lowpass5000, no word prompting",
+  "window": [
+    7,
+    18
+  ],
+  "model": "medium.en",
+  "segments": [
+    {
+      "start": 13.22,
+      "end": 17.18,
+      "text": " That's the 1645762.",
+      "words": [
+        {
+          "start": 13.22,
+          "end": 14.620000000000001,
+          "word": " That's",
+          "probability": 0.5336323417723179
+        },
+        {
+          "start": 14.620000000000001,
+          "end": 14.780000000000001,
+          "word": " the",
+          "probability": 0.9811113476753235
+        },
+        {
+          "start": 14.780000000000001,
+          "end": 17.18,
+          "word": " 1645762.",
+          "probability": 0.5851453642050425
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "_facts": "2026-10-25 宁波公开赛（WTA500）女单决赛，莱巴金娜（世界第1、头号种子、卫冕冠军）6-2、6-2 胜费尔南德斯（世界第30、非种子），用时1小时16分钟（WTA官方By the Numbers稿）。生涯第15个单打冠军、2026赛季第4冠（澳网、斯图加特、美网、宁波）；宁波两连冠（2025、2026），宁波站回归后首位卫冕球员；以世界第一身份拿下的首冠；宁波8连胜；对费尔南德斯三连胜、交手4-2领先；第7个WTA500冠军；赛季第53胜领跑巡回赛。",
+  "_notes": "源视频为 Tennis Channel 官方独立冠军致辞视频（2:01），非集锦。用户给的 Rn0lchWoTIM 是 WTA 官方决赛集锦，不作正文源。本地已下载并 ffprobe 验真：1920x1080/25fps/AV1+Opus/121.45s/18.4MB，归档于项目 src/。视频首尾帧已目视核验：莱巴金娜手持宁波奖杯（绿色大瓷瓶）在 WTA TOUR 话筒前致辞，121s 末帧仍为致辞画面、无赛事 logo 尾帧。 首份转写：本视频无任何 YouTube 自动字幕（8 档 client 均无、本地 yt-dlp --list-subs 复核亦无），按仓库既定逃生口径本地 faster-whisper medium.en 跑首份逐词稿，写 output/interviews/<slug>/cap_asr.json3（json3 形，34 events、293 词、0.0-119.26s）；第二份 ASR 由 runner 用 small.en 交叉校验（与 asr_model 不同模型，符合 verify_transcript 闸）。",
+  "column": "赛后开麦",
+  "event": "2026 WTA500 宁波 决赛",
+  "featured_player": "莱巴金娜",
+  "interview_kind": "赛后捧杯致辞",
+  "match": {
+    "duration": "1:16",
+    "event": "2026 WTA500 宁波 决赛",
+    "event_search": "Ningbo Open",
+    "id": "2026:ningbo-open:womens-final:rybakina-fernandez",
+    "loser": "费尔南德斯",
+    "loser_en": "Leylah Fernandez",
+    "participants": [
+      "莱巴金娜",
+      "费尔南德斯"
+    ],
+    "round": "Women's Singles Final",
+    "score": "6-2 6-2",
+    "winner": "莱巴金娜",
+    "winner_en": "Elena Rybakina",
+    "year": 2026
+  },
+  "opening": {
+    "kind": "none",
+    "why": "源片为 Tennis Channel 独立冠军致辞视频，无比赛画面；致辞本身即为完整内容。"
+  },
+  "push": {
+    "auto": false,
+    "_no_auto_why": "字幕尚未完成，transcript_verified=false；制作及复核完成后再启用推送。",
+    "matchup": "莱巴金娜 vs 费尔南德斯",
+    "score": "6-2 6-2",
+    "summary": "宁波卫冕第十五冠"
+  },
+  "requested_content_type": "ceremony",
+  "slug": "rybakina-fernandez-ningbo-2026-f-speech",
+  "source_title": "Elena Rybakina Championship Speech | 2026 Ningbo",
+  "source_verification": {
+    "detected_type": "ceremony",
+    "evidence": [
+      {
+        "kind": "official_channel_title",
+        "note": "official_channel_title: Tennis Channel 官方 YouTube 频道（oncourt_sources.json verified:true，致辞类主源）；标题明确球员 Elena Rybakina、类型 Championship Speech、赛事 Ningbo 2026；video_id 0XhJ4hqRRYA；时长 2:01；2026-10-25 上传。整条视频即为颁奖仪式上的冠军致辞（浏览器打开播放页核对标题一致；本地下载后首尾帧目视核验：莱巴金娜手持奖杯在 WTA TOUR 话筒前致辞），英文致辞。"
+      },
+      {
+        "kind": "title_match_tags",
+        "note": "title_match_tags: 与本场一致：2026-10-25 宁波公开赛女单决赛，莱巴金娜 6-2、6-2 胜费尔南德斯（WTA 官方 By the Numbers 稿、路透社战报交叉核实）；生涯第15冠、2026赛季第4冠；宁波两连冠；以世界第一身份拿下的首冠。"
+      }
+    ],
+    "match_id": "2026:ningbo-open:womens-final:rybakina-fernandez",
+    "method": "official_explicit_ceremony",
+    "source": "Tennis Channel",
+    "source_id": "youtube:0XhJ4hqRRYA",
+    "source_url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
+    "status": "verified",
+    "title": "Elena Rybakina Championship Speech | 2026 Ningbo",
+    "attestation_sha256": "e8e565cb1745e0eb044833fb0c34a61dc050dde27c24bdfddae2c287872a7dbd"
+  },
+  "start": 0.0,
+  "end": 121.45,
+  "url": "https://www.youtube.com/watch?v=0XhJ4hqRRYA",
+  "winner": "莱巴金娜",
+  "winner_en": "Elena Rybakina",
+  "asr_model": "medium.en",
+  "whisper_model": "small.en",
+  "transcript_verified": false
+}

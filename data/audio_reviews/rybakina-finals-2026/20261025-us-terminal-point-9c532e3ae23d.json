@@ -1,0 +1,88 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=_1dOo30-iAM",
+  "source_sha256": "cca2fa39de89a9e670171a8d73a88aa2306df3e644ff998b298ada06dbaef96f",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: actual cached small.en+medium.en source-bound transcript cross-check with bounded visual phase inspection; not human listening",
+  "reviewed_at": "2026-10-25T14:41:14.055648+00:00",
+  "status": "complete",
+  "reviewed_from": 0,
+  "reviewed_to": 17.4,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 10.18,
+      "end": 12.76,
+      "en": "Game, set, match for Rybakina.",
+      "zh": "比赛结束，莱巴金娜获胜。"
+    },
+    {
+      "start": 13.68,
+      "end": 15.06,
+      "en": "Two sets to one.",
+      "zh": "盘数二比一。"
+    },
+    {
+      "start": 15.28,
+      "end": 17.26,
+      "en": "Six four, five seven, six two.",
+      "zh": "六比四、五比七、六比二。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-bafda52df17e-first50-small.en.json",
+      "sha256": "bafda52df17ede514c078e6c4634855068f1f3c6f3acc8126e425e250aa2cf09",
+      "method": "cached_local_ASR",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-5d75d2485a1a-first50-medium.en.json",
+      "sha256": "5d75d2485a1a20a4f53c1cc918d58f4d104eedc2757d9e51fb9db4134b1a3ba1",
+      "method": "cached_local_ASR",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-5db83a160e4e-first17.5-small-multilingual.json",
+      "sha256": "5db83a160e4e69a9006eccc7c2d75d8447799f3a25f9fd11dab3f32a15f8d551",
+      "method": "cached_local_ASR",
+      "model": "small(multilingual)"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-a4c906d5f81b-diag-left-small.en.json",
+      "sha256": "a4c906d5f81b47f05ece3488a88cd951d74dbdcef529e5ec338832d6afced14a",
+      "method": "diagnostic_channel_ASR_final_audio_unchanged",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-1fec267fa7f8-diag-right-small.en.json",
+      "sha256": "1fec267fa7f86be17bdb016fedfdb8517f38b8b6a2d8cf5a38040d6b6854eb73",
+      "method": "diagnostic_channel_ASR_final_audio_unchanged",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-ee9c8cb9821c-diag-left-medium.en.json",
+      "sha256": "ee9c8cb9821c6832568841112cedf7ba25629295d14ebcc6618a230800304fe4",
+      "method": "diagnostic_channel_ASR_final_audio_unchanged",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/rybakina-finals-2026/raw/us-official-point-e31edd132ef8-diag-right-medium.en.json",
+      "sha256": "e31edd132ef8e69eb0ecea2c7097722f9d811f68513d1d740297a35849fe5808",
+      "method": "diagnostic_channel_ASR_final_audio_unchanged",
+      "model": "medium.en"
+    }
+  ],
+  "review_notes": "Actual raw mono medium.en returns Game set match for Reba Kina; independent small.en yields phonetically Game7out for Ribocchina at same10.18–12.46 interval. A diagnostic left-channel120–5000Hz bandpass (NOT applied to final film) again yields medium.en Game set match for Riva Kina. Name normalized to official Rybakina; no sentence filled from a remembered chair template. First words have low probabilities and small model substitutes7/out; exact disagreements remain in raw artifacts. Root reviewed actual raw medium wording and explicitly accepted this source-grounded cross-check rather than requiring allASRs identical. Two sets to one strongly supported by small.en and all score groups agree across models. A third cached multilingualsmall misses first sentence and is preserved as diagnostic, not presented as corroboration. No human listening, no new weights, no external model, no final-source audio processing claimed. Score rendered as English words, matching the actual spoken numeric sequence; former draft digits-only cue cannot pass foreground gate and is superseded.",
+  "source_identity": {
+    "title": "Championship Point | Elena Rybakina Wins the Women's Singles Title | 2026 US Open",
+    "publisher": "US Open Tennis Championships / USTA",
+    "archive_run": 40202037826,
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-_1dOo30-iAM/_1dOo30-iAM.mp4",
+    "size": [
+      1920,
+      1080
+    ],
+    "fps": "60000/1001"
+  },
+  "review_scope": "All retained foreground words in this exact0–17.4source window, no full253s listening claim. Final source original audio unchanged."
+}
