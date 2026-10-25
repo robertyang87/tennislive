@@ -1,0 +1,33 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 257.2,
+  "reviewed_to": 263.1,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 257.8,
+      "end": 261.48,
+      "en": "Elena Rybakina goes back to back in Ningbo.",
+      "zh": "莱巴金娜连续两年在宁波夺冠。"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "final-yt-Rn0lchWoTIM-match-end-medium.en.json",
+      "sha256": "a69ab0fe86a392744f0c5f8c7dbdcf4aaf0be56416ba96bfb4a680f96ca74e87"
+    },
+    {
+      "file": "final-yt-Rn0lchWoTIM-match-end-small.en.json",
+      "sha256": "f0d21a225301f5c53b85145e1e846f760562a408b1ac4a7fdd091b16232455cd"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}

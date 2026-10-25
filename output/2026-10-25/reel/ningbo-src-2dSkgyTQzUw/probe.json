@@ -1,0 +1,106 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-2dSkgyTQzUw/2dSkgyTQzUw.mp4",
+  "width": 1920,
+  "height": 1080,
+  "duration": 449.724082,
+  "fps": "25/1",
+  "fps_value": 25.0,
+  "scene_cuts": null,
+  "scene_cuts_loose": null,
+  "point_ends": null,
+  "scorebox_guess": null,
+  "scorebox": "88,824,650,988",
+  "scorebox_fitted": null,
+  "point_ends_guess": null,
+  "silent_audio": null,
+  "audio_levels": null,
+  "audio_stream_present": true,
+  "audio_analysis": "not_run_bounded_scoreboard_calibration",
+  "clip_from": 175.0,
+  "clip_to": 177.4,
+  "sheets": [],
+  "every": null,
+  "captions": null,
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 175.0,
+    "frames": 12,
+    "scans": [
+      {
+        "box": [
+          88,
+          824,
+          650,
+          988
+        ],
+        "frames": 12,
+        "profiles": {
+          "wta": {
+            "present": 12,
+            "unresolved": 0,
+            "runs": [
+              [
+                12,
+                482,
+                482
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "source_profile": "wta",
+    "source_window": [
+      175.0,
+      177.4
+    ],
+    "scope": "bounded_calibration_only_not_full_source_or_full_selected_segments",
+    "geometry_space": {
+      "size": [
+        1920,
+        1080
+      ],
+      "box": [
+        88,
+        824,
+        650,
+        988
+      ],
+      "original_source_size": [
+        1920,
+        1080
+      ],
+      "why": "Measured direct native1080 source; no conform derivative."
+    },
+    "source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+    "scan_input_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+    "scan_invocation": {
+      "function": "probe_board.scan_plan",
+      "source_w": 1920,
+      "start": 175.0,
+      "stop": 177.4,
+      "fps": 5,
+      "plan": [
+        {
+          "profiles": [
+            "wta"
+          ],
+          "box": [
+            88,
+            824,
+            650,
+            988
+          ]
+        }
+      ]
+    },
+    "native_implementation_sha256": {
+      "probe_board.py": "0e0d321f66337777504a9bbd02f564eea28fbd48692baecdc73d98c5e3eb9494",
+      "wta_scoreboard.py": "369616b9fd3fa28e3f5e3cd00d9771f15c4479b112a94b69ecc41b5ce9f0c335"
+    }
+  },
+  "_scope": "Only exact custom-scorebox calibration scanned. Source metadata from actual ffprobe; no scene/audio/full-film coverage claimed. Native renderer must still measure every selected encoded frame.",
+  "_source_sha256": "0fddb85e2dd63b9d20ac4fe1e7a153e06f64e93705b1be1c844d4ba36cf74881",
+  "_created_at": "2026-10-25T12:14:11.560285+00:00"
+}

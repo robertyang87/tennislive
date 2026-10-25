@@ -1,0 +1,78 @@
+{
+  "slug": "rybakina-ningbo-title-run-2026",
+  "checked_at": "2026-10-25T13:10:33Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "681cd561b5fe3abc": {
+      "segment": 2,
+      "spoken": 11.544,
+      "picture": 11.85
+    },
+    "36221d8518265005": {
+      "segment": 3,
+      "spoken": 8.88,
+      "picture": 8.8
+    },
+    "b593b75ebe79ed92": {
+      "segment": 4,
+      "spoken": 11.16,
+      "picture": 11.6
+    },
+    "a7a54f7e1133a8b6": {
+      "segment": 6,
+      "spoken": 9.528,
+      "picture": 9.69
+    },
+    "ca0a95436fd02858": {
+      "segment": 8,
+      "spoken": 8.088,
+      "picture": 8.25
+    },
+    "6ee3bcbc0e6144c2": {
+      "segment": 10,
+      "spoken": 9.48,
+      "picture": 9.8
+    },
+    "bdf62643b70f5fa9": {
+      "segment": 12,
+      "spoken": 11.376,
+      "picture": 11.8
+    },
+    "baa49128004abc93": {
+      "segment": 14,
+      "spoken": 10.32,
+      "picture": 10.48
+    },
+    "524c24b96991fdf9": {
+      "segment": 16,
+      "spoken": 9.888,
+      "picture": 10.2
+    },
+    "5d60bc64e8837950": {
+      "segment": 18,
+      "spoken": 12.696,
+      "picture": 12.86
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "e7e7a7b1539da85104aab58320210fd6fde32e7d9356cda5945f9a6e09d5637d",
+    "request_count": 11,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-rybakina-ningbo-title-run-2026-e7e7a7b1539da851/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40196502400"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Rn0lchWoTIM/Rn0lchWoTIM.mp4",
+  "source_sha256": "f4c7abb64c78257866d0e957558f0db87dd775e19512741532ca8b8a78448e69",
+  "method": "asr_cross_checked",
+  "reviewer": "rybakina_ningbo_source_audio agent, independent actual-source ASR hypotheses and word-time review; not human listening",
+  "reviewed_at": "2026-10-25T12:26:51.387040+00:00",
+  "status": "complete",
+  "reviewed_from": 530.15,
+  "reviewed_to": 550.28,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 530.28,
+      "end": 533.68,
+      "en": "Thank you so much for an amazing atmosphere every day.",
+      "zh": "谢谢大家每天营造这么棒的氛围。"
+    },
+    {
+      "start": 535.22,
+      "end": 537.4,
+      "en": "It's amazing to play in front of you,",
+      "zh": "能在你们面前打球，感觉特别好，"
+    },
+    {
+      "start": 537.5,
+      "end": 539.08,
+      "en": "always gives a lot of motivation,",
+      "zh": "总能给我很多动力，"
+    },
+    {
+      "start": 539.4,
+      "end": 541.74,
+      "en": "a lot of energy to keep on playing.",
+      "zh": "给我继续比赛的能量。"
+    },
+    {
+      "start": 541.74,
+      "end": 544.66,
+      "en": "And it's already a second year here, second win,",
+      "zh": "我第2年来这里，第2次夺冠，"
+    },
+    {
+      "start": 544.66,
+      "end": 546.64,
+      "en": "and it's such a special place for me.",
+      "zh": "这里对我来说很特别。"
+    },
+    {
+      "start": 547.12,
+      "end": 548.76,
+      "en": "Thank you so much, Ningbo. Xie xie!",
+      "zh": "非常感谢，宁波！谢谢！"
+    }
+  ],
+  "human_listening_performed": false,
+  "evidence": [
+    {
+      "file": "final-yt-Rn0lchWoTIM-tail-medium.en.json",
+      "sha256": "731975a7f81f5522711fa53405fa2385970a2fe28297b4e18e00223d8228da9b"
+    },
+    {
+      "file": "final-yt-Rn0lchWoTIM-tail-small.en.json",
+      "sha256": "87b56e70eb1283ea2e26a74026a162a2908d0c30eaebc52a3752eefe6e56ed36"
+    }
+  ],
+  "selection_note": "Closed selected actual-source utterances by independent ASR/word-time evidence; only these exact windows are claimed. Original hypotheses saved in source-audio/asr. Neither picture samples nor this packet approve final encoded film.",
+  "translation_note": "Primary assistant read every selected English/Chinese pair and approved faithful meaning and scope on 2026-10-25. This is textual translation review, not human auditory listening."
+}
