@@ -1,0 +1,99 @@
+{
+ "model": "Xenova/ast-finetuned-audioset-10-10-0.4593",
+ "model_revision": "249a1fbf0286b40e7f1ed687a8ae396997bf7dc6",
+ "model_sha256": "6ff353b1e809da25f900b54494fd4ac12a6fc7db1e25195e238f21be125bb4bd",
+ "preprocessing": "16kHz mono float PCM scaled to the int16 amplitude domain; Kaldi-compatible fbank128 (numpy implementation): pre-emphasis 0.97, 25ms Hanning window (povey exponent 0.85), 10ms hop, HTK mel scale 20-8000Hz, log floor 1e-10; right-padded to 1024 frames with 0.0 after normalization (fbank - (-4.2677393)) / (2 * 4.5689974). Scores are the ONNX model's raw sigmoid outputs; they are not calibrated probabilities.",
+ "control_windows": [
+  {
+   "window": [
+    86.0,
+    90.9
+   ],
+   "note": "现场翻译讲话中（对照窗）",
+   "top_scores": [
+    {
+     "label": "Speech",
+     "sigmoid_score": 0.8966
+    },
+    {
+     "label": "Music",
+     "sigmoid_score": 0.0957
+    }
+   ]
+  },
+  {
+   "window": [
+    94.8,
+    99.0
+   ],
+   "note": "莱巴金娜英文续讲（对照窗）",
+   "top_scores": [
+    {
+     "label": "Speech",
+     "sigmoid_score": 0.3571
+    },
+    {
+     "label": "Music",
+     "sigmoid_score": 0.2904
+    }
+   ]
+  }
+ ],
+ "result": {
+  "window": [
+   90.9,
+   94.76
+  ],
+  "wav_sha256": "cd6a7fcf600a83c887c66f377e5f23f93a15f2a8a16ce2244400e1ce88c48851",
+  "top_scores": [
+   {
+    "label": "Music",
+    "sigmoid_score": 0.5459291934967041
+   },
+   {
+    "label": "Crowd",
+    "sigmoid_score": 0.13452653586864471
+   },
+   {
+    "label": "Inside, large room or hall",
+    "sigmoid_score": 0.04518359154462814
+   },
+   {
+    "label": "Bellow",
+    "sigmoid_score": 0.03422622010111809
+   },
+   {
+    "label": "Speech",
+    "sigmoid_score": 0.030780019238591194
+   },
+   {
+    "label": "Shout",
+    "sigmoid_score": 0.027355622500181198
+   },
+   {
+    "label": "Whoop",
+    "sigmoid_score": 0.018631145358085632
+   },
+   {
+    "label": "Inside, public space",
+    "sigmoid_score": 0.016932018101215363
+   },
+   {
+    "label": "Cheering",
+    "sigmoid_score": 0.015495620667934418
+   },
+   {
+    "label": "Singing",
+    "sigmoid_score": 0.013229729607701302
+   },
+   {
+    "label": "Children shouting",
+    "sigmoid_score": 0.012564421631395817
+   },
+   {
+    "label": "Screaming",
+    "sigmoid_score": 0.011760050430893898
+   }
+  ]
+ }
+}
