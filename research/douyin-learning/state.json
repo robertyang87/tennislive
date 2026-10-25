@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "stage": "browser_connection_timeout_cross_author_probe_saved",
+  "stage": "user_directed_title_review_saved_media_access_blocked",
   "watchlist": [
     {
       "name": "河岸",
@@ -3722,6 +3722,62 @@
           "note": "Media download navigation returned generic Access Denied; returning once to the permanent work page produced 请完成下列验证后继续. No challenge interaction or bypass attempted."
         }
       }
+    },
+    "7700563510194965794": {
+      "permanent_url": "https://www.douyin.com/video/7700563510194965794",
+      "author": "网球青春",
+      "author_id": null,
+      "author_identity_status": "user_supplied_not_independently_verified",
+      "title": "一年前走出低谷，一年后已是球后——莱巴金娜福地宁波...",
+      "title_provenance": "user_share_text",
+      "published_at": null,
+      "duration_seconds": null,
+      "role": "user_directed_reference",
+      "observations": [
+        {
+          "observed_at": "2026-10-25T23:05:18.297790Z",
+          "source_url": "https://www.douyin.com/video/7700563510194965794",
+          "evidence_kind": "short_link_redirect_and_user_shared_title",
+          "metrics": {
+            "likes": null,
+            "comments": null,
+            "collections": null,
+            "shares": null,
+            "plays": null,
+            "completion_rate": null
+          },
+          "collection_status": "blocked",
+          "blocker": "public_detail_requires_fresh_cookies"
+        }
+      ],
+      "analysis": {
+        "status": "title_only_media_blocked",
+        "coverage": "user_shared_title_only; no video, audio, subtitles, cover or rendered detail",
+        "review_path": "research/douyin-learning/reviews/7700563510194965794.md",
+        "media_hash": null,
+        "timestamped_observations": [],
+        "dimensions": {
+          "composition_subject_layout": "pending_full_video",
+          "text_graphics_style": "pending_full_video",
+          "editing_rhythm": "pending_full_video",
+          "speed_changes": "pending_full_video",
+          "zoom_focus": "pending_full_video",
+          "transitions": "pending_full_video",
+          "voiceover_logic": "pending_full_video",
+          "voice_music_sound_mix": "pending_full_video",
+          "counterexamples": "pending_full_video"
+        },
+        "title_text_hypothesis": "Temporal contrast compresses a change of state; the shared place can anchor the meaning of the change.",
+        "blocker": {
+          "package": "yt-dlp",
+          "version": "2026.10.21",
+          "recovery_attempts": 1,
+          "http_status": 403,
+          "error": "Fresh cookies (not necessarily logged in) are needed",
+          "further_retries": 0
+        },
+        "next_action": "Acquire same-work accessible public URL or user-provided video/recording, then transcribe and inspect full timeline."
+      }
     }
   },
   "strategies": {
@@ -3912,6 +3968,43 @@
       "validated": false,
       "published": false,
       "next_action": "Use only on a fact-checked unpublished athlete biography; hold all other script, image, audio and timing variables constant; render and pass project QC before normal publication and outcome collection."
+    },
+    "time-contrast-identity-hook-v1": {
+      "status": "hypothesis",
+      "column": "网球有故事",
+      "applicable_columns": [
+        "网球有故事",
+        "赛场之上"
+      ],
+      "evidence": [
+        "https://www.douyin.com/video/7700563510194965794",
+        "research/douyin-learning/reviews/7700563510194965794.md",
+        "research/douyin-learning/evidence/20261025T2303Z-user-7700563510194965794.json"
+      ],
+      "evidence_scope": "user_shared_title_only",
+      "instruction": "以经核实的过去处境与现在变化构造时间对照钩子；需要事实支持，保留原冷开场与坐标。",
+      "single_variable": "Only one cover-hook or post-coordinate sentence; hold other content and media constant.",
+      "skill_path": "research/douyin-learning/candidates/time-contrast-identity-hook-v1/SKILL.md",
+      "visual_instruction_enabled": false,
+      "primary_metric": "retention_5s",
+      "secondary_metric": "completion_rate",
+      "observation_window": "Same platform, 72 hours after normal publication",
+      "failure_criteria": [
+        "Unverified status/ranking or ambiguous scope",
+        "Viewer cannot identify the person/event",
+        "Body does not explain the promised change",
+        "No reproducible retention improvement or completion declines"
+      ],
+      "rollback": "Restore the experiment's previous hook only; retain source facts and existing brand/cold-open constraints.",
+      "production_consumption": {
+        "status": "awaiting_full_source_then_applicable_unpublished_experiment",
+        "work_id": null,
+        "qc_receipt": null,
+        "outcome_receipt": null
+      },
+      "validated": false,
+      "published": false,
+      "next_action": "Acquire and review the complete source first; no author editing rule may be inferred from its title."
     }
   },
   "successful_watermarks": {},
@@ -4032,6 +4125,15 @@
       "overlap_required_hours": 24,
       "watermark_advanced": false,
       "next_action": "Use one fresh browser probe next run. If recovered, prioritize rotated cross-author reads and four stable-ID additions before returning to GOAT Anatomy."
+    },
+    {
+      "run_id": "20261025T2303Z-user-7700563510194965794",
+      "query_scope": [
+        "https://www.douyin.com/video/7700563510194965794"
+      ],
+      "reason": "user_directed_full_media_and_timecoded_review_pending",
+      "watermark_advanced": false,
+      "next_action": "Acquire same-work accessible public URL or user-provided video/recording, then transcribe and inspect full timeline."
     }
   ],
   "runs": [
@@ -4960,9 +5062,37 @@
       "watermark_advanced": false,
       "watermark_reason": "No rendered profile or work content was read; no discovery watermarks advanced.",
       "persistence_receipt": "evidence 071b62dd4eea2155d40dcceb696a3427de18ef32"
+    },
+    {
+      "run_id": "20261025T2303Z-user-7700563510194965794",
+      "started_at": "2026-10-25T23:05:18.297790Z",
+      "ended_at": "2026-10-25T23:05:18.297790Z",
+      "stage": "user_directed_title_review_saved_media_access_blocked",
+      "authors_checked": 0,
+      "new_authors_verified": 0,
+      "discovered": 1,
+      "collected": 0,
+      "title_text_reviews": 1,
+      "deep_review_started": 0,
+      "deep_review_completed": 0,
+      "full_media_acquired": 0,
+      "proposed": 1,
+      "promoted": 0,
+      "evidence_path": "research/douyin-learning/evidence/20261025T2303Z-user-7700563510194965794.json",
+      "review_path": "research/douyin-learning/reviews/7700563510194965794.md",
+      "candidate_path": "research/douyin-learning/candidates/time-contrast-identity-hook-v1/SKILL.md",
+      "earliest_blocker": {
+        "kind": "fresh_cookies_required_no_connected_browser_tool",
+        "recovery_attempts": 1,
+        "further_retries": 0,
+        "source": "yt-dlp 2026.10.21 normal public Douyin extractor",
+        "http_status": 403
+      },
+      "watermark_advanced": false,
+      "watermark_reason": "No rendered author profile or full work content was acquired."
     }
   ],
-  "last_notification_fingerprint": "goat-opening-reversal-factual-sequencing-20260919T205550Z",
+  "last_notification_fingerprint": "7700563510194965794:title_only:403:fresh-cookies-required:no-browser-tool",
   "production_integration": {
     "status": "consumer_merged_no_validated_rules",
     "pr": "https://github.com/robertyang87/tennislive/pull/937",
