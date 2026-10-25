@@ -195,3 +195,60 @@ def test_automatic_sample_budget_prioritizes_distinct_native_bottoms(monkeypatch
     assert len(samples) == 3
     assert {row['reason'] for row in samples} == {'distinct-bottom-306', 'distinct-bottom-360', 'distinct-bottom-480'}
     assert all(abs(row['segment_time'] * 25 - row['frame']) < 1e-6 for row in samples)
+
+
+
+def _multi_match_preview_recipe():
+    source = 'https://api.wtatennis.com/tennis/tournaments/405/2026/matches?states=C'
+    spec = {
+        'sources': {'r1': 'https://example.org/r1.mp4', 'final': 'https://example.org/final.mp4'},
+        'cover': {'eyebrow': '赛场之上', 'layout': 'solo', 'winner': '西尼亚科娃',
+                  'result': '6-1 6-0', 'topic': 'WTA250 大阪 决赛 · 西尼亚科娃 VS 克鲁格',
+                  'matchup': [{'name': '西尼亚科娃'}, {'name': '克鲁格'}]},
+        'topbar': {'line1': '2026 WTA250 大阪 决赛', 'line2': '西尼亚科娃 6-1 6-0 克鲁格',
+                   'pulse_at': [9.5]},
+        'segments': [{'source': 'r1', 'start': 100, 'end': 104},
+                     {'title_card': '走向决赛', 'seconds': 2, 'narration': '走向决赛'},
+                     {'source': 'final', 'start': 200, 'end': 205}],
+        'topbar_by_source': {
+            'r1': {'line1': '2026 WTA250 大阪 首轮', 'winner': '西尼亚科娃',
+                   'loser': '斯特恩斯', 'result': '6-4 0-6 4-0 Ret.', 'source': source},
+            'final': {'line1': '2026 WTA250 大阪 决赛', 'winner': '西尼亚科娃',
+                      'loser': '克鲁格', 'result': '6-1 6-0', 'source': source}}}
+    segments = [reel.Segment(100, 104, .5, '', source='r1'),
+                reel.Segment(0, 2, .5, '走向决赛', image='native-card.jpg', full_canvas=True),
+                reel.Segment(200, 205, .5, '', source='final')]
+    return spec, segments
+
+
+def test_preview_visual_graph_uses_native_per_source_match_header_windows(tmp_path):
+    spec, segments = _multi_match_preview_recipe()
+    ass = tmp_path / 'captions.ass'
+    ass.write_text('[Script Info]\nScriptType: v4.00+\n')
+    inputs, graph = preview.visual_graph(spec, segments, 1.2, ass, tmp_path, first_extra=1)
+    actual = tmp_path / 'preview_topbar.ass'
+    reference = reel.write_segment_topbar_ass(
+        spec, segments, 1.2, tmp_path / 'native_topbar.ass',
+        default_lines=reel._topbar_lines(spec), pulse_at=[9.5])
+    assert actual.read_bytes() == reference.read_bytes()
+    rows = [row for row in actual.read_text().splitlines() if row.startswith('Dialogue:')]
+    assert len(rows) == 4
+    assert all(',0:00:01.20,0:00:05.20,' in row for row in rows[:2])
+    assert '斯特恩斯' in rows[1] and '克鲁格' not in rows[1]
+    assert all(',0:00:07.20,0:00:12.20,' in row for row in rows[2:])
+    assert '克鲁格' in rows[3] and '斯特恩斯' not in rows[3]
+    assert reel._escape(actual) in graph
+    # Full-canvas restoration still runs on the actual native card interval.
+    assert 'gte(t,5.200000)*lt(t,7.200000)' in graph
+    assert inputs == []
+
+
+def test_preview_visual_graph_without_source_map_keeps_legacy_ass_bytes(tmp_path):
+    spec, segments = _multi_match_preview_recipe()
+    spec.pop('topbar_by_source')
+    ass = tmp_path / 'captions.ass'
+    ass.write_text('[Script Info]\nScriptType: v4.00+\n')
+    preview.visual_graph(spec, segments, 1.2, ass, tmp_path, first_extra=1)
+    reference = reel.write_topbar_ass(
+        reel._topbar_lines(spec), 1.2, 12.2, tmp_path / 'legacy_topbar.ass', pulse_at=[9.5])
+    assert (tmp_path / 'preview_topbar.ass').read_bytes() == reference.read_bytes()

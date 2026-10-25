@@ -1,0 +1,148 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-6407369981112/6407369981112.mp4",
+  "width": 1280,
+  "height": 720,
+  "duration": 297.386667,
+  "fps": "25/1",
+  "fps_value": 25.0,
+  "scene_cuts": null,
+  "scene_cuts_loose": null,
+  "point_ends": null,
+  "scorebox_guess": null,
+  "scorebox": "90,828,670,988",
+  "scorebox_fitted": null,
+  "point_ends_guess": null,
+  "silent_audio": null,
+  "audio_levels": null,
+  "audio_stream_present": true,
+  "audio_analysis": "not_run_bounded_scoreboard_calibration",
+  "clip_from": 240.4,
+  "clip_to": 242.8,
+  "sheets": [],
+  "every": null,
+  "captions": null,
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 240.4,
+    "frames": 12,
+    "scans": [
+      {
+        "box": [
+          90,
+          828,
+          670,
+          988
+        ],
+        "frames": 12,
+        "profiles": {
+          "wta": {
+            "present": 12,
+            "unresolved": 0,
+            "runs": [
+              [
+                2,
+                596,
+                596
+              ],
+              [
+                2,
+                595,
+                595
+              ],
+              [
+                1,
+                596,
+                596
+              ],
+              [
+                4,
+                595,
+                595
+              ],
+              [
+                3,
+                596,
+                596
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "source_profile": "wta",
+    "source_window": [
+      240.4,
+      242.8
+    ],
+    "scope": "bounded_calibration_only_not_full_source_or_full_selected_segments",
+    "geometry_space": {
+      "size": [
+        1920,
+        1080
+      ],
+      "box": [
+        90,
+        828,
+        670,
+        988
+      ],
+      "original_source_size": [
+        1280,
+        720
+      ],
+      "why": "Exact rendering conform geometry"
+    },
+    "scan_input_sha256": "7166f8d3803f6737d96e830867a99fac2dd92428458dcbf5f15cdb13f73a660b",
+    "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+    "scan_invocation": {
+      "function": "probe_board.scan_plan",
+      "source_w": 1920,
+      "start": 0.0,
+      "stop": 2.4,
+      "fps": 5,
+      "plan": [
+        {
+          "profiles": [
+            "wta"
+          ],
+          "box": [
+            90,
+            828,
+            670,
+            988
+          ]
+        }
+      ]
+    },
+    "derivation": {
+      "kind": "bounded_lossless_geometry_derivative",
+      "source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+      "source_window": [
+        240.4,
+        242.8
+      ],
+      "derivative_sha256": "7166f8d3803f6737d96e830867a99fac2dd92428458dcbf5f15cdb13f73a660b",
+      "derivative_file": "6407369981112-conformed-240.40-2.4s.mkv",
+      "derivative_bytes": 23954148,
+      "derivative_codec": "ffv1",
+      "derivative_pix_fmt": "yuv420p",
+      "derivative_dimensions": [
+        1920,
+        1080
+      ],
+      "derivative_duration": 2.4,
+      "vf": "scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080",
+      "source_time_offset": 240.4,
+      "timestamp_projection": "source_time = derivative_time + source_time_offset",
+      "detail_claim": "Geometric conform only; original source remains native1280x720, no1080 source-detail claim."
+    },
+    "native_implementation_sha256": {
+      "probe_board.py": "a5a8085f7791ce5de69a17c331dd88564a93c15c3a346d6b64bd54718bbb2620",
+      "wta_scoreboard.py": "369616b9fd3fa28e3f5e3cd00d9771f15c4479b112a94b69ecc41b5ce9f0c335"
+    }
+  },
+  "_scope": "Only exact custom-scorebox calibration is scanned. Native source metadata is measured by ffprobe; scene/point/audio/full-film coverage is not claimed. All selected film segments have separate actual native per-frame masks.",
+  "_source_sha256": "5277b6ec66b9994304bb128fa00ba730e19d06d0fd10e77ab6eb9a2665b0bd77",
+  "_created_at": "2026-10-25T09:37:25.841314+00:00"
+}

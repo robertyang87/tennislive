@@ -128,8 +128,9 @@ def visual_graph(spec, segments, cover_secs, ass, outdir, first_extra):
     if topbar:
         raw = (spec.get('topbar') or {}).get('pulse_at') or []
         pulses = [float(t) for t in raw] if isinstance(raw, list) else []
-        top_ass = reel.write_topbar_ass(topbar, cover_secs, match_end,
-                                        outdir / 'preview_topbar.ass', pulse_at=pulses)
+        top_ass = reel.write_segment_topbar_ass(
+            spec, segments, cover_secs, outdir / 'preview_topbar.ass',
+            default_lines=topbar, pulse_at=pulses)
     inputs = []
     foot = wm = scrim = None
     scrim_y = 0

@@ -1,0 +1,40 @@
+{
+  "returncode": 0,
+  "command": [
+    "python",
+    "tools/production_preflight.py",
+    "--spec",
+    "specs/reels/siniakova-osaka-title-run-2026.json",
+    "--column",
+    "赛场之上"
+  ],
+  "cwd": "/tmp/siniakova-osaka-20261025/repo",
+  "scope": "production cheap preflight with five actual bounded custom-scorebox probes; not full movie QC",
+  "probes": [
+    {
+      "path": "output/2026-10-25/reel/osaka-src-_r9i8mV5Zv8/probe.json",
+      "sha256": "441358c7a938fd03b01079ee531685fdc72b9311eb0c55a75eaf173d8af43c32",
+      "bytes": 3202
+    },
+    {
+      "path": "output/2026-10-25/reel/osaka-src-ksA37BLbaWg/probe.json",
+      "sha256": "3f6b7feb1c25583fef8bb4acafeb3d13f98df363cccd4283921672d57f6831b1",
+      "bytes": 2721
+    },
+    {
+      "path": "output/2026-10-25/reel/osaka-src-6407221766112/probe.json",
+      "sha256": "33a5bc3f27d244d946201fb70a56cc1eec6e01d7f87470a6a9dd0bd89afb1012",
+      "bytes": 4104
+    },
+    {
+      "path": "output/2026-10-25/reel/osaka-src-6407335181112/probe.json",
+      "sha256": "4938dbb3746f57204e007e9f1db075a98d36d2bc0d660424f31019e54a8aad4f",
+      "bytes": 3675
+    },
+    {
+      "path": "output/2026-10-25/reel/osaka-src-6407369981112/probe.json",
+      "sha256": "b45a146aa48b82d128b6f5efad07871475cd5d13c8b66ebfd7d4411f2ceb0c99",
+      "bytes": 4006
+    }
+  ]
+}
