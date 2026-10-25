@@ -2081,6 +2081,57 @@ _DROP_NAMES = {"cover.html", "whisper.json"}
 _KEEP_DIRS = {"visual_audit_history"}
 
 
+def _retained_directory_ok(path):
+    """Keep the small classifier proof referenced by the final audio contract.
+
+    Do not accept a whole evidence directory: new media, nested directories,
+    symlinks, unknown files and incomplete JSON must still fail this gate.
+    """
+    if path.name in _KEEP_DIRS:
+        return True
+    if path.name != "evidence":
+        return False
+    files = list(path.iterdir())
+    if len(files) != 1 or files[0].name != "independent-audioset.json":
+        return False
+    item = files[0]
+    if item.is_symlink() or not item.is_file() or item.stat().st_size > 65536:
+        return False
+    try:
+        proof = json.loads(item.read_text())
+        result = proof["result"]
+        return (bool(proof.get("model")) and bool(proof.get("model_revision"))
+                and bool(re.fullmatch(r"[a-f0-9]{64}", proof["model_sha256"]))
+                and bool(re.fullmatch(r"[a-f0-9]{64}", result["wav_sha256"]))
+                and len(result["window"]) == 2
+                and result["window"][0] < result["window"][1]
+                and bool(result["top_scores"])
+                and len(proof["control_windows"]) >= 2)
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
+
+
+def test_正式声音分类证据可保留_新中间物仍拦截(tmp_path):
+    path = tmp_path / "evidence"
+    path.mkdir()
+    item = path / "independent-audioset.json"
+    proof = {"model": "AudioSet AST", "model_revision": "pinned-revision",
+             "model_sha256": "a" * 64, "control_windows": [{}, {}],
+             "result": {"wav_sha256": "b" * 64, "window": [90.9, 94.76],
+                        "top_scores": [{"label": "Speech", "sigmoid_score": .03}]}}
+    item.write_text(json.dumps(proof))
+    assert _retained_directory_ok(path)
+    extra = path / "source.wav"
+    extra.write_bytes(b"intermediate")
+    assert not _retained_directory_ok(path)
+    extra.unlink()
+    item.write_text("{}")
+    assert not _retained_directory_ok(path)
+    item.write_text(json.dumps(proof))
+    (path / "raw").mkdir()
+    assert not _retained_directory_ok(path)
+
+
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
 def test_中间物不许进仓库(path):
     """第七趟出片时跟着进仓库的中间物比成片的三分之一还多。
@@ -2097,7 +2148,7 @@ def test_中间物不许进仓库(path):
     bad = []
     for p in outdir.iterdir():
         if p.is_dir():                       # 目录走 `_KEEP_DIRS`，见上面那段
-            if p.name not in _KEEP_DIRS:
+            if not _retained_directory_ok(p):
                 bad.append(p.name + "/")
             continue
         if (p.name not in _KEEP_NAMES and
