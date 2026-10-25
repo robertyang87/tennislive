@@ -1009,6 +1009,82 @@ def audio_peak_db(path: Path) -> float | None:
     return float(found.group(1)) if found else None
 
 
+#: 成片混音的真峰值天花板（dBTP）。账号所有者 2026-10-25 拍板（选项甲，
+#: 管线根治）：混音出来先量、过线才限，没过线一个字节不动。
+#:
+#: 来路是戈芬 v4 全片审计 M2：成片真峰值 **+0.29 dBTP**——样本峰值volumedetect
+#: 看着没过 0（+0.27），真峰值（采样间峰值）更高，平台转码/播放端有削波
+#: 风险；同批参照成片是 −0.96 / −4.57 dBTP。−1 是广播与各平台的通行天花板：
+#: 留 1 dB 给有损编码的峰值漂移，又不像 −2/−3 那样白白吃掉响度。
+FINAL_PEAK_CEILING_DBTP = -1.0
+
+
+def _loudnorm_stats(path: Path) -> dict[str, float]:
+    """用 loudnorm 量一遍：整体响度（LUFS）／真峰值（dBTP）／响度范围。
+
+    量不出来**当场红**，不许退回「当成没过线」：`limit_true_peak` 的整个
+    判据就建立在这三个数上，量失败了还往下走，等于没量就出片——正是这道
+    闸要防的形状（和 `audio_peak_db` 那条「量不出来不能当成静音」同一课）。
+    """
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn",
+              "-af", "loudnorm=I=-21:TP=-1:LRA=11:print_format=json",
+              "-f", "null", os.devnull).stderr
+    found = re.search(r"\{\s*\"input_i\".*?\}", out, re.S)
+    if not found:
+        raise ReelError(f"loudnorm 量不出 {path.name} 的响度/真峰值，"
+                        "峰值闸没有判据可用，先查这条音轨是不是坏的")
+    data = json.loads(found.group(0))
+    return {k: float(data[k]) for k in ("input_i", "input_tp", "input_lra")}
+
+
+def limit_true_peak(src: Path, dst: Path) -> dict:
+    """把混音的真峰值压到 `FINAL_PEAK_CEILING_DBTP` 以下，写到 `dst`。
+
+    **没过线就原样复制**——这道闸只治「峰值过 0」这一种病，不借机重做
+    响度：过线的片子整体响度本来就在 −21 LUFS 量级（各期成片 −19.9~−22.8），
+    限幅时把 loudnorm 的目标响度钉在**它自己的实测值**上，限幅器只削峰、
+    不抬不压整体。限完**再量一遍**，还过线就把目标按实测差额再压一轮
+    （AAC 编码会把峰值顶回几分贝——合成爆峰信号实测顶回 0.45 dB）；
+    三轮还不过线当场红——「以为限住了」和「量过、限住了」是两回事，
+    这条线上有过太多前者（见本文件各处 ⚠️）。
+
+    返回实测账（before/after 的 tp 与 i），调用方打进日志，验片照着对。
+    """
+    before = _loudnorm_stats(src)
+    if before["input_tp"] <= FINAL_PEAK_CEILING_DBTP:
+        shutil.copyfile(src, dst)
+        return {"applied": False, **before,
+                "output_tp": before["input_tp"], "output_i": before["input_i"]}
+    target = FINAL_PEAK_CEILING_DBTP
+    after = None
+    for _attempt in range(3):
+        if before["input_i"] <= -5.0:
+            # 常规路径：loudnorm 动态限幅，目标响度钉在素材自己的实测值上。
+            chain = (f"loudnorm=I={before['input_i']:.2f}"
+                     f":TP={target:.2f}"
+                     f":LRA={min(max(before['input_lra'], 1.0), 50.0):.2f}"
+                     f",aresample={AUDIO_RATE}")
+        else:
+            # loudnorm 的目标响度只认 −5 LUFS 以下；整体热到那个量级的混音
+            # （不该出现在成片里，但这道闸不能因此崩）退回静态削峰：整轨乘
+            # 一个常数把真峰值压到目标，整体响度随之同量下移——账照样记着。
+            chain = (f"volume={10 ** ((target - before['input_tp']) / 20):.6f}"
+                     f",aresample={AUDIO_RATE}")
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(src), "-vn", "-af", chain,
+            "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE, str(dst))
+        after = _loudnorm_stats(dst)
+        if after["input_tp"] <= FINAL_PEAK_CEILING_DBTP + 0.02:
+            return {"applied": True, **before,
+                    "output_tp": after["input_tp"],
+                    "output_i": after["input_i"]}
+        # 差多少补多少、再多留 0.3 dB 给下一轮编码漂移
+        target -= (after["input_tp"] - FINAL_PEAK_CEILING_DBTP) + 0.3
+    raise ReelError(
+        f"限幅三轮后真峰值仍是 {after['input_tp']:+.2f} dBTP，"
+        f"过 {FINAL_PEAK_CEILING_DBTP:+.1f} 天花板——不许带着过线的混音出片")
+
+
 def _speech_tail_end(path: Path, floor_db: float = -50.0,
                       min_silence: float = 0.15) -> float | None:
     """这段语音真正说完的时刻——不是文件末尾。
@@ -2954,6 +3030,14 @@ class Segment:
     # ⚠️ 排在 image 之后：`_one` 到 image 为止都是按位置传的，插在前面会把
     # mute 顶进这个槽（第一版就是这么在 `bed=` 上撞出 multiple values 的）。
     bed: str = ""
+    # **这一段自己的增益（dB，可正可负）**：乘在这一段的音轨上（在全局
+    # `BED_LOUD`／闪避之前），和 bed 是两个旋钮——bed 是三档情绪（压下去／
+    # 顶上来），gain_db 是**电平对齐**：原声段（采访、解说原声）的源片录音
+    # 电平和 TTS 旁白差出 3~10 dB 是常态（2026-10-24 戈芬 v4 全片审计 M3：
+    # 2012 采访段 RMS −36.7，旁白段 −23~−28，手机外放听不清），三档音床最高
+    # 才 +2.6 dB，够不着。写它的人按**成片口径实测**定值：目标是原声段 RMS
+    # 和旁白段差 ≤3 dB。缺省 0＝不写就和从前一模一样（存量 spec 零影响）。
+    gain_db: float = 0.0
     # **记分条回贴**：解析好的抠图坐标 (x0, y0, x1, y1)，
     # None＝这一段不贴。带式的窗口居中（「不要偏离中心的」），美网那条浮在
     # 左下的板会被窗口左缘裁掉——开了这个的段从同一帧把整条板抠出来、按画面
@@ -3194,6 +3278,30 @@ def _seg_mute(s: dict, index: int) -> bool:
                     f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
+def _seg_gain_db(s: dict, index: int) -> float:
+    """`gain_db` 只认数字（dB），±24 之外报错。
+
+    上下限的账：审计里最弱的原声段要 +10 dB 才够着旁白；+24 dB 是 ×16，
+    再弱的源已经不是「增益能救」的范畴（那是选错了源/窗口，先回去挑段）。
+    和 mute 一起写也红——mute 已经把这一段钉在地板上，再给增益是两种读法
+    都说得通的矛盾，和 bed/mute 那条同一个形状。字符串数字一律报错，同
+    `_seg_mute` 的理由：悄悄当真和悄悄当假都会让 spec 与成片对不上。"""
+    raw = s.get("gain_db")
+    if raw is None:
+        return 0.0
+    if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        raise ReelError(f"第 {index + 1} 段的 gain_db 要写数字（dB），"
+                        f"不是 {raw!r}")
+    v = float(raw)
+    if not -24.0 <= v <= 24.0:
+        raise ReelError(f"第 {index + 1} 段 gain_db={v:g} 超出 ±24 dB——"
+                        "这个量级的差不是增益能补的，先回去看源/窗口挑对没有")
+    if s.get("mute") is True and v != 0:
+        raise ReelError(f"第 {index + 1} 段同时写了 mute 和 gain_db——mute 已把"
+                        "现场声压到地板，增益对它没有意义；二选一")
+    return v
+
+
 def _seg_audio_tail(s: dict, index: int) -> str:
     raw = s.get("audio_tail", "")
     if raw not in ("", "silence"):
@@ -3235,6 +3343,8 @@ def _seg_audio_chain(seg: "Segment", tail: float = 0.0) -> str:
         parts.append(f"volume={MUTE_FLOOR}")
     if seg.bed:
         parts.append(f"volume={BED_TIERS[seg.bed]}")
+    if seg.gain_db:
+        parts.append(f"volume={10 ** (seg.gain_db / 20):.6f}")
     if seg.audio_tail == "silence":
         rate = int(AUDIO_RATE)
         body_samples = round(seg.length * rate)
@@ -3256,7 +3366,8 @@ def _seg_bed_gain(seg: "Segment", *, ducked: bool = True) -> float:
     `BED_LOUD` 根本没乘——按 0.72 算会把成片
     估轻 2.85 dB，反过来误报（评审 2026-09-27 nit）。"""
     return ((BED_LOUD if ducked else 1.0) * (MUTE_FLOOR if seg.mute else 1.0)
-            * (BED_TIERS[seg.bed] if seg.bed else 1.0))
+            * (BED_TIERS[seg.bed] if seg.bed else 1.0)
+            * (10 ** (seg.gain_db / 20) if seg.gain_db else 1.0))
 
 
 def _mix_ducks(spec: dict, segments: list["Segment"]) -> bool:
@@ -3287,7 +3398,8 @@ def _seg_audio_needs_filter(seg: "Segment") -> bool:
     """这一段的音轨要不要走滤镜（慢放 / mute / 音床 / 尾料）——cut_segment 那两处
     `-map` 判据的单一出处。原来写成 `seg.speed != 1 or seg.mute` 两遍，加音床
     时漏改一处的样子是：滤镜链算好了、`-map 0:a:0` 把它绕过去，**不报错**。"""
-    return seg.speed != 1 or seg.mute or bool(seg.bed) or bool(seg.audio_tail)
+    return (seg.speed != 1 or seg.mute or bool(seg.bed) or bool(seg.audio_tail)
+            or seg.gain_db != 0)
 
 
 def _atempo(speed: float) -> str:
@@ -3678,6 +3790,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",
                                      "quote", "inset", "speed", "mute", "audio_tail", "cx",
+                                     "gain_db",
                                      "crop_zoom", "fit", "crosses_cut", "point_end_ok",
                                      "score_inset", "score_inset_windows", "scorebox"})
             if stray:
@@ -3705,6 +3818,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        _seg_speed(s, i),
                        _seg_mute(s, i),
                        bed=_seg_bed(s, i),
+                       gain_db=_seg_gain_db(s, i),
                        audio_tail=_seg_audio_tail(s, i),
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
@@ -4031,7 +4145,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "story_kind", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "image", "image_kind",
+    "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "gain_db", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
@@ -10828,6 +10942,21 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
                 "-ar", AUDIO_RATE, str(mixed))
+
+    # 真峰值天花板（2026-10-25 账号所有者拍板进管线，见 `limit_true_peak`）：
+    # 混音一落地就量、过线才限，限完的结果才是后面 seal 和终编码用的那份。
+    # 放在 seal 之前是故意的——封存/ attest 的对象必须是观众真正听到的音频。
+    peak_limited = outdir / "_audio_peak.m4a"
+    peak = limit_true_peak(mixed, peak_limited)
+    if peak["applied"]:
+        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP 过 "
+              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，已限幅到 "
+              f"{peak['output_tp']:+.2f} dBTP（整体响度 {peak['input_i']:.2f}"
+              f" → {peak['output_i']:.2f} LUFS，钉住原响度只削峰）")
+    else:
+        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP，未过 "
+              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，混音原样")
+    mixed = peak_limited
 
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
