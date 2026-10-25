@@ -8988,6 +8988,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "bublik-jodar-laver-cup-2026",
     "medvedev-royer-hangzhou-2026-r2",
     "wong-vallejo-hangzhou-2026-r2",
+    "medvedev-almaty-title-run-2026",  # 2026-10-25常设授权；ATP Media决赛日只有两张无EXIF截图，四类源与捧杯正脸帧证据见spec/_frame_why。
     "medvedev-wong-hangzhou-2026-qf",
     "zverev-tien-laver-cup-2026",
     "two-handled-racket-maric-2026",
