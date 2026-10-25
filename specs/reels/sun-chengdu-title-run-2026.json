@@ -1,0 +1,980 @@
+{
+ "slug": "sun-chengdu-title-run-2026",
+ "date": "2026-10-25",
+ "_column": "网球有故事",
+ "tts_backend": "edge",
+ "_tts_backend_why": "仓库既定 edge TTS 口径；本机 edge-tts 直连方案未获用户批准切换管线，本期仍走仓库 edge 后端。",
+ "_primary_why": "决赛是全片高潮与冷开场/结局所在，钉为 primary；其余四场按赛程顺序作章节源。",
+ "_voice_why": "网球有故事既定口径：zh-CN-YunjianNeural、rate +6%、pitch +0Hz（与戈芬篇、孙心然中网故事篇一致）。",
+ "primary": "final",
+ "sources": {
+  "final": "https://github.com/robertyang87/tennislive/releases/download/source-staylive667406/667406-72981da6.mp4",
+  "rr1": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663661/663661-9f57421c.mp4",
+  "rr2": "https://github.com/robertyang87/tennislive/releases/download/source-staylive663985/663985-3db45362.mp4",
+  "rr3": "https://github.com/robertyang87/tennislive/releases/download/source-staylive664876/664876-77091842.mp4",
+  "sf": "https://github.com/robertyang87/tennislive/releases/download/source-staylive666859/666859-0d901eae.mp4"
+ },
+ "mixed_fps": {
+  "rr2": "RR2 存档集锦为二号球场单场 VOD 的 1080p/25fps 窗口集锦，主源（决赛）为 50fps；统一按主源帧率输出，均为实拍画面与原声，不加速不减速。"
+ },
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "subject": "孙心然",
+  "hook": "不要放弃坚持下来\n我相信我一定可以",
+  "hook_accent": "我相信我一定可以",
+  "narration": "不要放弃坚持下来，我相信我一定可以。",
+  "topic": "孙心然：五战全胜的成都夺冠之路",
+  "portrait": {
+   "image": "assets/reel/sun-chengdu-title-run-2026/portrait.jpg",
+   "fit": "cover",
+   "focus": 0.66,
+   "focus_y": 0.32,
+   "zoom": 1.0,
+   "source_url": "http://dingyue.ws.126.net/2026/1025/4363d211j00tngmcq001bd000sg00hfp.jpg",
+   "_portrait_why": "本场决赛官方新闻图（央视新闻/网易 2026-10-25 发稿配图）：孙心然决赛反手击球、侧面面部可见、赛事背板在场；1024×627 为该图全网最高分辨率版本，本期首次采用。此前本系列用过的孙心然肖像（RR1 期 WTA 图、中网高芙期 Getty 图）均已发布，不重复使用。"
+  }
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "16岁的孙心然，怎样在主场五战全胜拿下青少年年终总决赛冠军？",
+  "thesis": "一周五胜、只丢一盘：小组赛从理疗翻盘起步，半决赛48分钟速胜，决赛在抢七1-5、丢掉第二盘后第三盘重整旗鼓——她的稳定不是天赋标签，是『不要放弃坚持下来』的执行力。温网被同一对手逆转的剧本，这次由她亲手改写。",
+  "chapters": [
+   "01\n小组赛：从抢七翻盘起步",
+   "02\n全胜出线与半决赛速胜",
+   "03\n决赛三番战：改写温网剧本"
+  ],
+  "beats": [
+   "RR1 一度1-4落后+右膝理疗，抢七7-1翻盘、次盘连赢六局",
+   "RR2 对普什卡列娃6-2 6-0、50分钟；RR3 6-1 6-4小组头名",
+   "半决赛6-3 6-2、48分钟淘汰2号种子科瓦科娃",
+   "决赛6-3先胜；第二盘4-5救盘点、抢七1-5落后救回两盘点仍丢盘",
+   "第三盘连保带破3-0、最终6-1；赛后原话『不要放弃坚持下来，我相信我一定可以』"
+  ],
+  "human_context": {
+   "angle": "她这一年三次大满贯青少年决赛只赢一次，温网被普什卡列娃先赢一盘后逆转；成都决赛第二盘几乎复制那个剧本（抢七1-5），第三盘她没有再让它重演。金句不是鸡汤，是她赛后对这场球的复盘原话。",
+   "facts": [
+    "五场全胜、盘分10-1、局分67-31（ITF官方记分组件核）",
+    "决赛第二盘4-5、30-40救盘点保发至5-5（帧证+红星新闻）",
+    "抢七1-5落后、2-6救回两个盘点、终以4-7丢盘（视频侦察逐分）",
+    "赛季青少年40胜3负、积分4692为2020年改革后新高、锁定年终世界第一（新华社/ITF口径）",
+    "本项赛事现行形态下中国球员女单首冠；前身青少年大师赛2015年徐诗霖夺冠（ITF/解说口径）"
+   ],
+   "sources": [
+    "https://www.itftennis.com/en/news-and-media/articles/draw-2026-world-tennis-tour-junior-finals/",
+    "https://www.163.com/dy/article/LA3PVCGH0514R9OJ.html",
+    "https://www.wtatennis.com/news/4583293/who-is-sun-xinran-wta-tour-debut-beijing-get-to-know-junior-number-one"
+   ]
+  }
+ },
+ "_facts": [
+  {
+   "url": "https://www.itftennis.com/en/news-and-media/articles/draw-2026-world-tennis-tour-junior-finals/",
+   "why": "赛事签表与赛制（分组/赛程）官方页；五场比分另经 ITF 官方记分组件 ITF-2026-3454 逐场核（比分/时长/场地）。"
+  },
+  {
+   "url": "https://www.163.com/dy/article/LA3PVCGH0514R9OJ.html",
+   "why": "央视新闻稿（网易转载）：决赛比分与赛后引语逐字——『整场比赛按照战术来执行，安娜打得也非常好，我想不要放弃坚持下来，无论怎样打出自己最好的网球，我相信我一定可以。』封面金句与采访段出处。"
+  },
+  {
+   "url": "https://www.wtatennis.com/news/4583293/who-is-sun-xinran-wta-tour-debut-beijing-get-to-know-junior-number-one",
+   "why": "WTA 官方人物稿：16岁、青少年世界第一、法网/温网青少年决赛与美网夺冠背景、郑钦文评价。"
+  }
+ ],
+ "_source_provenance": {
+  "final": {
+   "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+   "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+   "title": "F Girls singles: Final, Sun v Pushkareva（决赛单场 VOD）→ 关键窗集锦（7窗）",
+   "platform_video_id": 667406,
+   "release_tag": "source-staylive667406",
+   "asset": "667406-72981da6.mp4",
+   "bytes": 1009893541,
+   "sha256": "72981da688217a1048ff6e924f97df6dfccd2206f5cc6e32ba632a22bafde044",
+   "width": 1920,
+   "height": 1080,
+   "avg_frame_rate": "50/1",
+   "duration_seconds": 2005.02,
+   "_cut_note": "官方单场 VOD 的 1080p 档按 7 个锚点窗口精剪（720p 侦察定锚），含完整抢七与冠军局、采访段；全场只留本地。"
+  },
+  "rr1": {
+   "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+   "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+   "title": "Centre Court: Day 1 in Chengdu（整日回放）→ 本场关键球+精彩球集合（13段）",
+   "platform_video_id": 663661,
+   "release_tag": "source-staylive663661",
+   "asset": "663661-9f57421c.mp4",
+   "bytes": 955431351,
+   "sha256": "9f57421c24c81b38e9bd6fc84bffdc212c9eab8ae8688f42988f99e8438671a1",
+   "width": 1920,
+   "height": 1080,
+   "avg_frame_rate": "50/1",
+   "duration_seconds": 1930.08,
+   "_cut_note": "《赛场之上》RR1 期已建存档集锦，本期复用（抢七尾段与赛点段窗口、cue 均经上期过闸）。"
+  },
+  "rr2": {
+   "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+   "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+   "title": "Centre Court 2: Sun v Pushkareva RR2（单场 VOD）→ 关键窗集锦（3窗）",
+   "platform_video_id": 663985,
+   "release_tag": "source-staylive663985",
+   "asset": "663985-3db45362.mp4",
+   "bytes": 54964260,
+   "sha256": "3db453620fa6849b80771c1b9e0092bc0f1d542b58e4fc95f70120cf0ed88ce0",
+   "width": 1920,
+   "height": 1080,
+   "avg_frame_rate": "25/1",
+   "duration_seconds": 280.02,
+   "_cut_note": "官方单场 VOD 的 1080p 档按 3 个锚点窗口精剪；二号球场无解说轨（双档 ASR 仅主裁/观众）。"
+  },
+  "rr3": {
+   "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+   "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+   "title": "Centre Court: Day 3 in Chengdu（整日回放）→ 本场关键窗集锦（3窗）",
+   "platform_video_id": 664876,
+   "release_tag": "source-staylive664876",
+   "asset": "664876-77091842.mp4",
+   "bytes": 556832879,
+   "sha256": "77091842990f0fa6fed66e0a782b38cfd231b3515c74024304aea922c5ba2baa",
+   "width": 1920,
+   "height": 1080,
+   "avg_frame_rate": "50/1",
+   "duration_seconds": 995.04,
+   "_cut_note": "官方整日回放 1080p 档按 3 个锚点窗口精剪（720p 侦察定锚+抽帧验位）。"
+  },
+  "sf": {
+   "publisher": "World Tennis（ITF）官方流媒体平台（Staylive承运）",
+   "canonical_url": "https://video.worldtennistourjuniors.com/en/wtt-junior-finals",
+   "title": "Centre Court: Semi-finals in Chengdu（整日回放）→ 本场关键窗集锦（3窗）",
+   "platform_video_id": 666859,
+   "release_tag": "source-staylive666859",
+   "asset": "666859-0d901eae.mp4",
+   "bytes": 775749845,
+   "sha256": "0d901eae70177b9a8ffc1f7737161199ce660cd7e641ab32fb1a2d6f9964f01b",
+   "width": 1920,
+   "height": 1080,
+   "avg_frame_rate": "50/1",
+   "duration_seconds": 1440.02,
+   "_cut_note": "官方整日回放 1080p 档按 3 个锚点窗口精剪（直播流探帧定锚，逐窗比分帧证）。"
+  }
+ },
+ "_key_point_coverage": {
+  "rr1_tiebreak": "抢七末段原声引用（集锦 1088–1110），含对手两个发球分连丢与 7-1 定格。",
+  "rr1_match_point": "赛点完整引用（1629.5–1706.5）含赛果播报与解说复盘，本期作第一章收束。",
+  "final_save_set_point": "第二盘 4-5、30-40 盘点保发（集锦 512–537）引用解说定格两句，比分经帧证。",
+  "final_tiebreak": "完整抢七分两段引用（1-5 落后与救盘点两段），盘分以视频逐分侦察为准。",
+  "final_championship_point": "冷开场用冠军分（集锦 1723–1751），第五章以整局完整重放回扣（1670–1765）。",
+  "final_interview": "赛后采访中文回答原声（1913–1953），金句与央视引语双源一致。"
+ },
+ "_heat_why": "用户点名制作：孙心然成都青少年总决赛夺冠之路特辑（五场全胜主场夺冠+锁定年终世界第一），承接 RR1 期《赛场之上》跟踪线。",
+ "_production_timing": {
+  "received_at": "2026-10-25T09:38:00Z"
+ },
+ "push": {
+  "auto": false,
+  "_no_auto_why": "分支完成渲染与质检后按正常发布链显式推，避免分支自动发送。",
+  "summary": "五战全胜成都夺冠",
+  "lead": "五场比赛只丢一盘。16岁的孙心然在成都拿下青少年年终总决赛冠军：小组赛从一比四落后、叫医疗暂停开始翻盘，决赛面对今年第三次在决赛相遇的普什卡列娃，第二盘抢七一度一比五落后，她说：不要放弃坚持下来，我相信我一定可以。"
+ },
+ "track": false,
+ "outro": true,
+ "segments": [
+  {
+   "source": "final",
+   "start": 1740,
+   "end": 1775,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "冷开场：冠军分兑现（帧证 VOD 约7122=集锦约1747）与解说加冕原声；cue 按仓库双档 ASR 逐句对齐；本段在第五章完整重放（含整局）。",
+   "_why": "冷开场：冠军分兑现（帧证 VOD 约7122=集锦约1747）与解说加冕原声；cue 按仓库双档 ASR 逐句对齐；本段在第五章完整重放（含整局）。",
+   "quote": [
+    {
+     "at": 8.8,
+     "end": 19.3,
+     "text": "French Open finalist, Wimbledon finalist, US Open champion — and now your 2026 Junior Finals champion!\n法网亚军、温网亚军、美网冠军\n现在是成都总决赛的冠军"
+    },
+    {
+     "at": 19.3,
+     "end": 25.7,
+     "text": "The Sun shines in Chengdu.\n阳光，照耀成都"
+    },
+    {
+     "at": 25.7,
+     "end": 34.9,
+     "text": "Sun Xinran: 40 and 3 on this 2026 season at the junior level.\n这个赛季，她四十胜三负"
+    }
+   ],
+   "_ending_payoff_required": true
+  },
+  {
+   "title_card": "成都夺冠之路",
+   "kicker": "网球有故事 · 二零二六 · 成都",
+   "seconds": 3.3,
+   "narration": "五场球，她只丢了一盘。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "title_card": "抢七翻盘",
+   "kicker": "第一章 · 小组赛首轮 · 对茨维特科维奇",
+   "seconds": 3.5,
+   "narration": "首战，她一度一比四落后。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "source": "rr1",
+   "start": 410,
+   "end": 418,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第一盘一比三落后，孙心然叫了医疗暂停。右膝缠上绷带，她重新站回底线。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR1 集锦 seg3 医疗暂停段：理疗师处理右膝；解说 429.58 才再开口，窗口内无前景人声。",
+   "_why": "RR1 集锦 seg3 医疗暂停段：理疗师处理右膝；解说 429.58 才再开口，窗口内无前景人声。"
+  },
+  {
+   "source": "rr1",
+   "start": 708,
+   "end": 716,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "暂停回来，她连破带保追平比分，又把第一盘拖进了抢七。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR1 第一盘末局相持（解说静默窗 707.26–734.90）；旁白交代回破追平并引入抢七。",
+   "_why": "RR1 第一盘末局相持（解说静默窗 707.26–734.90）；旁白交代回破追平并引入抢七。"
+  },
+  {
+   "source": "rr1",
+   "start": 1088,
+   "end": 1110,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "抢七末段：对手两个发球分连丢，孙心然 7-1 拿下抢七；cue 与窗口复用《赛场之上》RR1 期已过闸版本。",
+   "_why": "抢七末段：对手两个发球分连丢，孙心然 7-1 拿下抢七；cue 与窗口复用《赛场之上》RR1 期已过闸版本。",
+   "quote": [
+    {
+     "at": 0.5,
+     "end": 8.8,
+     "text": "Both service points from Cvetkovic in this tiebreak go the way of her opponent.\n抢七她的两个发球分\n又都送给了对手"
+    },
+    {
+     "at": 14.0,
+     "end": 18.5,
+     "text": "You can see her way to victory in this first set now.\n她离拿下首盘不远了"
+    }
+   ]
+  },
+  {
+   "source": "rr1",
+   "start": 1629.5,
+   "end": 1706.5,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "RR1 收束完整重放：赛点兑现、赛果播报、握手与解说复盘（理疗翻盘+次盘连赢六局）；cue 按官方 ASR 逐句对齐，窗口复用 RR1 期已验证段。",
+   "_why": "RR1 收束完整重放：赛点兑现、赛果播报、握手与解说复盘（理疗翻盘+次盘连赢六局）；cue 按官方 ASR 逐句对齐，窗口复用 RR1 期已验证段。",
+   "quote": [
+    {
+     "at": 0.1,
+     "end": 10.0,
+     "text": "The player is staying fairly central there — the tape from behind the baseline,\n球员站位保持居中\n球擦网带而过"
+    },
+    {
+     "at": 10.1,
+     "end": 15.0,
+     "text": "And it is match point for Xinran Sun.\n这是孙心然的赛点"
+    },
+    {
+     "at": 15.1,
+     "end": 25.0,
+     "text": "She's got two of them, and executes on the first.\n两个赛点，第一个就兑现"
+    },
+    {
+     "at": 25.6,
+     "end": 32.5,
+     "text": "Game, set and match to Xinran Sun, 7-6, 6-2,\n比赛结束\n孙心然七比六、六比二获胜"
+    },
+    {
+     "at": 32.6,
+     "end": 48.4,
+     "text": "she might have scarcely believed it — receiving treatment on her right knee, three games to one down\n她接受理疗时大概也没想到\n当时她一比三落后"
+    },
+    {
+     "at": 48.9,
+     "end": 57.0,
+     "text": "From there she roared back — two games down at the beginning of the second set as well\n从那里她一路反扑\n第二盘开局也曾两局落后"
+    },
+    {
+     "at": 57.0,
+     "end": 64.6,
+     "text": "and it looked like Cvetkovic might mount a comeback\n对手一度看似要反扑"
+    },
+    {
+     "at": 64.6,
+     "end": 76.5,
+     "text": "Sun would once again rally and win six consecutive games to take her opening match\n她再次连赢六局\n拿下首战"
+    }
+   ]
+  },
+  {
+   "title_card": "五十分钟",
+   "kicker": "第二章 · 小组赛次轮 · 对普什卡列娃",
+   "seconds": 3.5,
+   "narration": "第二场，只用了五十分钟。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "source": "rr2",
+   "start": 58,
+   "end": 68,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "再遇普什卡列娃——温网决赛赢她的那个人。这一次，孙心然没有给她机会。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR2 集锦 w1 第一盘末局接发相持；二号球场无解说轨（双档 ASR 仅主裁与观众），窗口内无前景人声。",
+   "_why": "RR2 集锦 w1 第一盘末局接发相持；二号球场无解说轨（双档 ASR 仅主裁与观众），窗口内无前景人声。"
+  },
+  {
+   "source": "rr2",
+   "start": 160,
+   "end": 169,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "六比二、六比零。来到赛点局，她已经连赢七局。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR2 集锦 w2 赛点局开局（40-0 在 comp 约162）；无解说轨，窗口内无前景人声。",
+   "_why": "RR2 集锦 w2 赛点局开局（40-0 在 comp 约162）；无解说轨，窗口内无前景人声。"
+  },
+  {
+   "source": "rr2",
+   "start": 198,
+   "end": 206,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第一个赛点，她直接拿下。五十分钟，小组赛两连胜。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR2 赛点兑现（comp 约205）与握手；无解说轨，窗口内无前景人声。",
+   "_why": "RR2 赛点兑现（comp 约205）与握手；无解说轨，窗口内无前景人声。"
+  },
+  {
+   "title_card": "小组头名",
+   "kicker": "第三章 · 小组赛末轮 · 对埃弗雷莫娃",
+   "seconds": 3.1,
+   "narration": "末轮，她打得最从容。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "source": "rr3",
+   "start": 258,
+   "end": 266,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "对埃弗雷莫娃，她一上来就压着节奏：正手抢攻，第一盘六比一。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR3 集锦 w1 相持段（解说静默窗 250.58–295.14）；旁白述首盘压制。",
+   "_why": "RR3 集锦 w1 相持段（解说静默窗 250.58–295.14）；旁白述首盘压制。"
+  },
+  {
+   "source": "rr3",
+   "start": 384,
+   "end": 392,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘她一度二比四落后。连扳三局，破发之后五比四，发球胜赛。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "RR3 集锦 w2 的 4-4 局相持（解说静默窗 379.94–412.74）；旁白述次盘逆转至发球胜赛。",
+   "_why": "RR3 集锦 w2 的 4-4 局相持（解说静默窗 379.94–412.74）；旁白述次盘逆转至发球胜赛。"
+  },
+  {
+   "source": "rr3",
+   "start": 641.0,
+   "end": 672,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "RR3 赛点与兑现：解说报出赛点、全胜出线与比分；cue 按官方 medium.en 逐句对齐。",
+   "_why": "RR3 赛点与兑现：解说报出赛点、全胜出线与比分；cue 按官方 medium.en 逐句对齐。",
+   "quote": [
+    {
+     "at": 3.6,
+     "end": 4.7,
+     "text": "Match point.\n赛点"
+    },
+    {
+     "at": 10.6,
+     "end": 16.9,
+     "text": "This crowd in Chengdu got exactly what they came to see\n成都观众\n等到了想看的结果"
+    },
+    {
+     "at": 18.1,
+     "end": 20.6,
+     "text": "Undefeated in round robin play.\n小组赛全胜"
+    },
+    {
+     "at": 20.6,
+     "end": 25.6,
+     "text": "She moves to 3-1 in her career against the former world junior number one.\n她与埃弗雷莫娃的交手记录\n来到三胜一负"
+    },
+    {
+     "at": 25.8,
+     "end": 29.7,
+     "text": "The 16-year-old from China — 6-1, 6-4.\n十六岁的中国姑娘\n六比一、六比四"
+    }
+   ]
+  },
+  {
+   "title_card": "四十八分钟",
+   "kicker": "第四章 · 半决赛 · 对科瓦科娃",
+   "seconds": 3.0,
+   "narration": "半决赛，她更快了。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "source": "sf",
+   "start": 140,
+   "end": 148,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "对二号种子科瓦科娃，她开局就回破，三比一领先。节奏，从一开始就在她手里。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "SF 集锦 w1：回破至 3-1 后的相持（双档 ASR 静默窗 136.34–164.44）；探帧实证回放 14400=2-1、30-0 接发局，回破在集锦约 107s。",
+   "_why": "SF 集锦 w1：回破至 3-1 后的相持（双档 ASR 静默窗 136.34–164.44）；探帧实证回放 14400=2-1、30-0 接发局，回破在集锦约 107s。"
+  },
+  {
+   "source": "sf",
+   "start": 788,
+   "end": 793,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第一盘六比三，只用了不到半小时。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "SF 集锦 w2 末：首盘结束局间（解说 780–783 报拿下首盘，其后静默至 849.94）。",
+   "_why": "SF 集锦 w2 末：首盘结束局间（解说 780–783 报拿下首盘，其后静默至 849.94）。"
+  },
+  {
+   "source": "sf",
+   "start": 1060,
+   "end": 1070,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘五比二，她的发球胜赛局。四十八分钟，她不想再多等。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "SF 集锦 w3 发球胜赛局（探帧实证回放 16560=5-2、15-15；双档 ASR 静默窗 1054.10–1100.06）。",
+   "_why": "SF 集锦 w3 发球胜赛局（探帧实证回放 16560=5-2、15-15；双档 ASR 静默窗 1054.10–1100.06）。"
+  },
+  {
+   "source": "sf",
+   "start": 1163,
+   "end": 1252.5,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "SF 赛点兑现与赛后解说定格：两个赛点（集锦约1171–1179）、兑现与全场定格评语；cue 按官方 medium.en 逐句对齐，窗口止于采访引入句之前。",
+   "_why": "SF 赛点兑现与赛后解说定格：两个赛点（集锦约1171–1179）、兑现与全场定格评语；cue 按官方 medium.en 逐句对齐，窗口止于采访引入句之前。",
+   "quote": [
+    {
+     "at": 0.8,
+     "end": 2.9,
+     "text": "It's just been so sound.\n她的发挥太稳了"
+    },
+    {
+     "at": 4.7,
+     "end": 8.2,
+     "text": "Too many of those forehands sailing along.\n对手的正手频频出界"
+    },
+    {
+     "at": 8.2,
+     "end": 16.0,
+     "text": "Sun continues to test that wing — and now she's got two match points.\n她继续压制那一侧\n拿到了两个赛点"
+    },
+    {
+     "at": 48.0,
+     "end": 58.8,
+     "text": "One of the best junior seasons we have seen in the 21st century.\n这是二十一世纪最好的青少年赛季之一"
+    },
+    {
+     "at": 59.4,
+     "end": 65.5,
+     "text": "She's played eight junior events — into her seventh final of the season.\n八站比赛\n第七次打进决赛"
+    },
+    {
+     "at": 67.8,
+     "end": 73.4,
+     "text": "Champion at the US Open, finalist at Wimbledon, finalist at Roland Garros.\n美网冠军、温网亚军、法网亚军"
+    },
+    {
+     "at": 74.4,
+     "end": 78.1,
+     "text": "Now a finalist at the Junior Finals in Chengdu as well.\n如今又打进成都总决赛的决赛"
+    },
+    {
+     "at": 79.4,
+     "end": 84.2,
+     "text": "The second Chinese player to ever have the opportunity to play for the title.\n第二位有机会打进这项决赛的中国球员"
+    },
+    {
+     "at": 85.3,
+     "end": 89.0,
+     "text": "Tip of the cap to world number two, Jana Kovackova.\n向世界第二科瓦科娃致意"
+    }
+   ]
+  },
+  {
+   "title_card": "三番战",
+   "kicker": "第五章 · 决赛 · 再遇普什卡列娃",
+   "seconds": 3.6,
+   "narration": "决赛，又是普什卡列娃。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "source": "final",
+   "start": 73,
+   "end": 81,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第一盘四比三，她在对方的发球局动手——破发，五比三。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "决赛集锦 w1：破发兑现后的局间（本地转写静默窗 VOD 2231–2257）；以 runner 双档 ASR 复核为准。",
+   "_why": "决赛集锦 w1：破发兑现后的局间（本地转写静默窗 VOD 2231–2257）；以 runner 双档 ASR 复核为准。"
+  },
+  {
+   "source": "final",
+   "start": 246,
+   "end": 254,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "发球胜盘局，她没有手软。六比三，第一盘拿下。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "决赛集锦 w1 末：发球胜盘局盘点相持（本地转写 2403–2405 解说报盘点，其后静默）；以 runner 双档 ASR 复核为准。",
+   "_why": "决赛集锦 w1 末：发球胜盘局盘点相持（本地转写 2403–2405 解说报盘点，其后静默）；以 runner 双档 ASR 复核为准。"
+  },
+  {
+   "source": "final",
+   "start": 513,
+   "end": 531.5,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "第二盘 4-5、30-40 盘点：孙心然救盘点保发追至 5-5（比分经 ITF 官方记分与帧证）；cue 按仓库双档 ASR 对齐（原句集锦 523.72–530.26）。",
+   "_why": "第二盘 4-5、30-40 盘点：孙心然救盘点保发追至 5-5（比分经 ITF 官方记分与帧证）；cue 按仓库双档 ASR 对齐（原句集锦 523.72–530.26）。",
+   "quote": [
+    {
+     "at": 10.6,
+     "end": 17.6,
+     "text": "And so it's a set point fought off, a bullet dodged.\n盘点救回来了\n躲过一劫"
+    }
+   ]
+  },
+  {
+   "source": "final",
+   "start": 700,
+   "end": 785,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "抢七前段：普什卡列娃占先至 4-1、5-1（一比五之分在无解说段内打完）；cue 按仓库双档 ASR 逐句对齐。",
+   "_why": "抢七前段：普什卡列娃占先至 4-1、5-1（一比五之分在无解说段内打完）；cue 按仓库双档 ASR 逐句对齐。",
+   "quote": [
+    {
+     "at": 3.2,
+     "end": 5.8,
+     "text": "Just didn't do enough with the drop shot.\n吊小球的火候，还差一点"
+    },
+    {
+     "at": 7.3,
+     "end": 10.7,
+     "text": "What an approach from Pushkareva.\n普什卡列娃这拍上网，时机抓得准"
+    },
+    {
+     "at": 11.4,
+     "end": 12.9,
+     "text": "Depth, angle.\n深度、角度都有了"
+    },
+    {
+     "at": 29.2,
+     "end": 31.8,
+     "text": "And now the lead's extended to 4-1.\n领先扩大到四比一"
+    },
+    {
+     "at": 66.5,
+     "end": 73.5,
+     "text": "Wow — Sun Xinran has yet to drop a set this tournament.\n这一周，她还没有丢过一盘"
+    },
+    {
+     "at": 79.1,
+     "end": 83.9,
+     "text": "First tiebreak in the five career head-to-head matchups between these two.\n五次交手里的第一个抢七"
+    }
+   ]
+  },
+  {
+   "source": "final",
+   "start": 855,
+   "end": 1027,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "抢七尾段完整：1-5 后的生死分、2-6 四个盘点、救回两个（解说 That's two）、4-6 后回球出界以 4-7 丢盘；cue 按仓库双档 ASR 逐句对齐。",
+   "_why": "抢七尾段完整：1-5 后的生死分、2-6 四个盘点、救回两个（解说 That's two）、4-6 后回球出界以 4-7 丢盘；cue 按仓库双档 ASR 逐句对齐。",
+   "quote": [
+    {
+     "at": 3.2,
+     "end": 9.3,
+     "text": "Could tell that was the do-or-die point for Sun Xinran.\n看得出，这是她的生死分"
+    },
+    {
+     "at": 9.5,
+     "end": 10.9,
+     "text": "Just full acceleration.\n她全速出击"
+    },
+    {
+     "at": 15.0,
+     "end": 20.3,
+     "text": "Does it provide a spark to turn around this tiebreak?\n这会是翻盘的火花吗"
+    },
+    {
+     "at": 39.7,
+     "end": 42.3,
+     "text": "Oh my goodness.\n天啊"
+    },
+    {
+     "at": 49.4,
+     "end": 59.9,
+     "text": "Drop shot successful — four set points to send us to a decider.\n吊小球得手\n四个盘点，决胜盘在招手"
+    },
+    {
+     "at": 114.2,
+     "end": 116.5,
+     "text": "That's two.\n两个盘点，都救回来了"
+    },
+    {
+     "at": 158.3,
+     "end": 166.9,
+     "text": "Oh, misses it wide.\n这一拍，打出界了"
+    },
+    {
+     "at": 168.0,
+     "end": 170.6,
+     "text": "A deciding set.\n比赛进入决胜盘"
+    }
+   ]
+  },
+  {
+   "source": "final",
+   "start": 1400,
+   "end": 1412,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "温网决赛，她先赢一盘被逆转。这一次，第三盘她连保带破，三比零开局。剧本，自己改了。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "决赛集锦 w4 第三盘开局相持（3-0 在集锦约1475 前成形）；仓库双档 ASR 复核：窗口内无句（下一句 1424.74 为人群幻听碎片）。",
+   "_why": "决赛集锦 w4 第三盘开局相持（3-0 在集锦约1475 前成形）；仓库双档 ASR 复核：窗口内无句（下一句 1424.74 为人群幻听碎片）。"
+  },
+  {
+   "source": "final",
+   "start": 1555,
+   "end": 1600,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "第三盘 5-1 破发局：解说定格对手体能见底；cue 按仓库双档 ASR 逐句对齐。",
+   "_why": "第三盘 5-1 破发局：解说定格对手体能见底；cue 按仓库双档 ASR 逐句对齐。",
+   "quote": [
+    {
+     "at": 4.7,
+     "end": 21.4,
+     "text": "It feels like a match point, doesn't it?\n这感觉，就像是一个赛点"
+    },
+    {
+     "at": 23.0,
+     "end": 30.2,
+     "text": "So hard to sustain the degree of attacking tennis it requires to hit through Sun Xinran.\n想持续打出能打穿她的进攻，太难了"
+    },
+    {
+     "at": 37.9,
+     "end": 40.8,
+     "text": "You just wonder if the gas tank's on empty.\n她的油箱，怕是已经见底了"
+    }
+   ]
+  },
+  {
+   "source": "final",
+   "start": 1616,
+   "end": 1626,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "第三盘五比一，冠军只剩最后一局。她走向发球线，深吸一口气。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "决赛集锦 w5/w6 之间：破发至 5-1 后局间走向发球胜冠局；仓库双档 ASR 静默窗 1615.12–1664.50（前句止于 1615.12）。",
+   "_why": "决赛集锦 w5/w6 之间：破发至 5-1 后局间走向发球胜冠局；仓库双档 ASR 静默窗 1615.12–1664.50（前句止于 1615.12）。"
+  },
+  {
+   "source": "final",
+   "start": 1655,
+   "end": 1785,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "broadcast",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "发球胜冠局完整重放（覆盖冷开场）：30-15→40-15 两个冠军点（帧证）、兑现（VOD 约7122=集锦约1747）与加冕评语；cue 按仓库双档 ASR 逐句对齐。",
+   "_why": "发球胜冠局完整重放（覆盖冷开场）：30-15→40-15 两个冠军点（帧证）、兑现（VOD 约7122=集锦约1747）与加冕评语；cue 按仓库双档 ASR 逐句对齐。",
+   "quote": [
+    {
+     "at": 9.5,
+     "end": 11.7,
+     "text": "No, you're kidding.\n不敢相信"
+    },
+    {
+     "at": 19.4,
+     "end": 23.8,
+     "text": "Like I said, she's inevitable.\n我说过，她势不可挡"
+    },
+    {
+     "at": 46.1,
+     "end": 69.6,
+     "text": "So much to celebrate for Anna Pushkareva: junior Wimbledon champion, US Open finalist, and over $18,000 in travel grants.\n普什卡列娃同样值得庆祝\n温网冠军、美网亚军，还有一万八千美元资助"
+    },
+    {
+     "at": 74.7,
+     "end": 82.9,
+     "text": "The story of the 2026 junior calendar is what Sun Xinran has accomplished.\n二〇二六青少年赛季的故事\n就是孙心然写下的"
+    },
+    {
+     "at": 93.8,
+     "end": 104.3,
+     "text": "French Open finalist, Wimbledon finalist, US Open champion — and now your 2026 Junior Finals champion!\n法网亚军、温网亚军、美网冠军\n现在是成都总决赛的冠军"
+    },
+    {
+     "at": 104.3,
+     "end": 110.7,
+     "text": "The Sun shines in Chengdu.\n阳光，照耀成都"
+    },
+    {
+     "at": 110.7,
+     "end": 119.9,
+     "text": "Sun Xinran: 40 and 3 on this 2026 season at the junior level.\n这个赛季，她四十胜三负"
+    },
+    {
+     "at": 121.5,
+     "end": 129.4,
+     "text": "Eight events, seven finals, and another crown to her name.\n八站比赛，七进决赛，又一冠"
+    }
+   ]
+  },
+  {
+   "source": "final",
+   "start": 1868,
+   "end": 1903,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "interview",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "赛后场上采访中文回答原声（战术答）：金句经央视新闻引语原文核实（网易转载同字）；其后 1929 起为翻译复述同一内容，互证窗口定位；颁奖礼全景，她在话筒前答问、转播不时切全场与对手，按画面中心取景。",
+   "_why": "赛后场上采访中文回答原声（战术答）：金句经央视新闻引语原文核实（网易转载同字）；其后 1929 起为翻译复述同一内容，互证窗口定位；颁奖礼全景，她在话筒前答问、转播不时切全场与对手，按画面中心取景。",
+   "quote": [
+    {
+     "at": 3.0,
+     "end": 11.0,
+     "text": "I played the whole match according to my game plan.\n整场比赛按照战术来执行"
+    },
+    {
+     "at": 11.0,
+     "end": 18.0,
+     "text": "Anna played really well today, too.\n安娜打得也非常好"
+    },
+    {
+     "at": 18.0,
+     "end": 26.0,
+     "text": "I just kept telling myself: don't give up, hang in there.\n我就想着不要放弃，坚持下来"
+    },
+    {
+     "at": 26.0,
+     "end": 33.0,
+     "text": "Play my best tennis no matter what. I believed I could do it.\n无论怎样打出自己最好的网球，我相信我一定可以"
+    }
+   ],
+   "frame": "court",
+   "_frame_why": "颁奖采访为全场全景机位，答问者在话筒前呈小景别，转播间或切全场/对手签球；固定人物框不可行，按画面中心取景。"
+  },
+  {
+   "source": "final",
+   "start": 1903,
+   "end": 1922,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_quote_kind": "interview",
+   "_quote_asr": "两档 faster-whisper（small.en/medium.en）交叉核验，转写证据 data/source_asr/（与集锦 sha256 绑定）；人名按官方拼写整理。",
+   "point_end_ok": "采访英文答原声：她对普什卡列娃的幽默致意（两人今年四次交手、三进决赛）；cue 按仓库双档 ASR 逐句对齐；同为颁奖全景机位。",
+   "_why": "采访英文答原声：她对普什卡列娃的幽默致意（两人今年四次交手、三进决赛）；cue 按仓库双档 ASR 逐句对齐；同为颁奖全景机位。",
+   "quote": [
+    {
+     "at": 0.9,
+     "end": 3.1,
+     "text": "I also want to say something to Anna.\n我也想对安娜说几句"
+    },
+    {
+     "at": 4.1,
+     "end": 8.2,
+     "text": "We play each other four times this year. I cannot believe it.\n今年我们交手了四次，不敢相信"
+    },
+    {
+     "at": 8.5,
+     "end": 14.2,
+     "text": "I hope I don't see you next year — but you're an amazing player.\n希望明年别再碰到你，你太强了"
+    },
+    {
+     "at": 14.8,
+     "end": 18.1,
+     "text": "I like to play with you, and we are really good friends.\n我喜欢和你打球，我们是好朋友"
+    }
+   ],
+   "frame": "court",
+   "_frame_why": "同 S29：颁奖采访全场全景机位，按画面中心取景。"
+  },
+  {
+   "source": "final",
+   "start": 1968,
+   "end": 1980,
+   "fit": "crop",
+   "cx": 0.5,
+   "track": false,
+   "narration": "她说，不要放弃坚持下来，我相信我一定可以。十六岁，年终世界第一。下一站广州，成人赛场。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": "决赛集锦 w7 尾段：签名抛球与赛季蒙太奇；仓库双档 ASR 复核窗口内无句（1995.9 起为转播尾声广告旁白，本窗止于其前）；结尾以金句回扣收束并指向下一站。",
+   "_why": "决赛集锦 w7 尾段：签名抛球与赛季蒙太奇；仓库双档 ASR 复核窗口内无句（1995.9 起为转播尾声广告旁白，本窗止于其前）；结尾以金句回扣收束并指向下一站。"
+  }
+ ],
+ "title": "10.25网球有故事|五战全胜主场夺冠"
+}
