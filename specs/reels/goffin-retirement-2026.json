@@ -1,790 +1,795 @@
 {
-  "slug": "goffin-retirement-2026",
-  "title": "戈芬退役：三巨头都赢过的人",
-  "date": "2026-10-24",
-  "_column": "网球有故事",
-  "_social_search": {
-    "x": "@atptour 2026-10-22 发致敬视频《Merci David》（生涯蒙太奇，t.co 短链）：已评估——非 YouTube 载体无法走 Release 存档，且仪式正片（Tennis TV）含同一段大屏致敬原声、画质更优，故未采用；本人 @David__Goffin 无告别视频帖。",
-    "instagram": "本人账号 2026 年 3 月发过告别季宣布视频（Reuters、ATP 官网均有报道）：属赛季初宣布、非告别周第一手，且无官方 YouTube 载体可存档；告别周本人第一手发言已由仪式正片原声位承载（告别段发言原声）。"
+ "slug": "goffin-retirement-2026",
+ "title": "戈芬退役：三巨头都赢过的人",
+ "date": "2026-10-24",
+ "_column": "网球有故事",
+ "_social_search": {
+  "x": "@atptour 2026-10-22 发致敬视频《Merci David》（生涯蒙太奇，t.co 短链）：已评估——非 YouTube 载体无法走 Release 存档，且仪式正片（Tennis TV）含同一段大屏致敬原声、画质更优，故未采用；本人 @David__Goffin 无告别视频帖。",
+  "instagram": "本人账号 2026 年 3 月发过告别季宣布视频（Reuters、ATP 官网均有报道）：属赛季初宣布、非告别周第一手，且无官方 YouTube 载体可存档；告别周本人第一手发言已由仪式正片原声位承载（告别段发言原声）。"
+ },
+ "tts_backend": "edge",
+ "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
+ "_primary_why": "仪式正片 cere 是本期框架源：告别仪式的致敬大屏、本人发言与挥手告别只此一源，封面帧亦出自此片。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径，与前两期同）。顶层 voice/rate 没有代码读，不写。",
+ "primary": "cere",
+ "sources": {
+  "cere": "https://github.com/robertyang87/tennislive/releases/download/source-V8QfaokOn58/V8QfaokOn58.mp4",
+  "eomic": "https://github.com/robertyang87/tennislive/releases/download/source-sDp1mQfXBNI/sDp1mQfXBNI.mp4",
+  "upnxh": "https://github.com/robertyang87/tennislive/releases/download/source-UPnxhVAjoPQ/UPnxhVAjoPQ.mp4",
+  "bertn": "https://github.com/robertyang87/tennislive/releases/download/source-7sTTvFfiDc8/7sTTvFfiDc8.mp4",
+  "rg12m": "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4",
+  "rg12i": "https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4",
+  "kitz": "https://github.com/robertyang87/tennislive/releases/download/source-ou674aWvv38/ou674aWvv38.mp4",
+  "mc17": "https://github.com/robertyang87/tennislive/releases/download/source-gNKAs28cLrk/gNKAs28cLrk.mp4",
+  "mcint": "https://github.com/robertyang87/tennislive/releases/download/source-tNNoMqH7Wxc/tNNoMqH7Wxc.mp4",
+  "fin17": "https://github.com/robertyang87/tennislive/releases/download/source-DxsbU7f3BZQ/DxsbU7f3BZQ.mp4",
+  "finint": "https://github.com/robertyang87/tennislive/releases/download/source-PhMzH4gtbRQ/PhMzH4gtbRQ.mp4",
+  "finf": "https://github.com/robertyang87/tennislive/releases/download/source-ea5OEOoSvd0/ea5OEOoSvd0.mp4",
+  "tok17": "https://github.com/robertyang87/tennislive/releases/download/source-HdDhnnuGJqM/HdDhnnuGJqM.mp4",
+  "cin19": "https://github.com/robertyang87/tennislive/releases/download/source-lzIsYprtBkM/lzIsYprtBkM.mp4",
+  "atpc": "https://github.com/robertyang87/tennislive/releases/download/source-ICCdirb-E-M/ICCdirb-E-M.mp4",
+  "asta": "https://github.com/robertyang87/tennislive/releases/download/source-ZN2UDUKvfj0/ZN2UDUKvfj0.mp4",
+  "sh24": "https://github.com/robertyang87/tennislive/releases/download/source-p-kqln3-XNA/p-kqln3-XNA.mp4",
+  "mia25": "https://github.com/robertyang87/tennislive/releases/download/source-z1nHQq_xtz8/z1nHQq_xtz8.mp4"
+ },
+ "mixed_fps": {
+  "cere": "25fps（Tennis TV 官方，probe.json 实测），出片基帧率。",
+  "eomic": "25fps（European Open 官方，probe.json 实测），同上。",
+  "bertn": "25fps（Tennis TV，probe.json 实测），同上。",
+  "upnxh": "25fps（Tennis TV，probe.json 实测），同上。",
+  "rg12m": "25fps（2012 转播存档，probe.json 实测），与出片基帧率一致。",
+  "rg12i": "25fps（2012 采访存档，probe.json 实测），同上。",
+  "kitz": "25fps（ATP 官方，probe.json 实测），同上。",
+  "mc17": "25fps（Tennis TV，probe.json 实测），同上。",
+  "mcint": "25fps（ATP 官方，probe.json 实测），同上。",
+  "fin17": "29.97fps（Tennis TV，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
+  "finint": "25fps（ATP 官方，probe.json 实测），同上。",
+  "finf": "25fps（Tennis TV，probe.json 实测），同上。",
+  "tok17": "29.97fps（ATP 官方，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
+  "cin19": "29.97fps（Tennis TV，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
+  "atpc": "30fps（Tennis TV，probe.json 实测），逐帧复制 conform 到 25。",
+  "asta": "30fps（Tennis TV，probe.json 实测），逐帧复制 conform 到 25。",
+  "sh24": "25fps（Tennis TV，probe.json 实测），同上。",
+  "mia25": "25fps（Tennis TV，probe.json 实测），同上。"
+ },
+ "cover": {
+  "eyebrow": "网球有故事",
+  "hook": "三巨头，他都赢过\n35岁，他告别网球",
+  "layout": "solo",
+  "narration": "三巨头，他都赢过；35岁，他告别网球。",
+  "story_kind": "person",
+  "subject": "大卫·戈芬",
+  "topic": "大卫·戈芬：抢点赢过三巨头",
+  "_hook_term_why": "金句『三巨头，他都赢过；35岁，他告别网球。』为用户定版封面文案（金句三处之封面位）：初版第二行以大满贯零冠收尾，用户 2026-10-24 14:25 否决原句、15:07 定调第二行不谈大满贯要落到退役、15:50 拍板改为「35岁，他告别网球」。已核事实——生涯对三巨头共 4 胜（纳达尔 2、德约 1、费德勒 1）；戈芬生于 1990-12-07，2026-10-22 在布鲁塞尔打完生涯最后一场后退役，时年 35 岁（事实卡逐项已核）。",
+  "portrait": {
+   "image": "assets/reel/goffin-retirement-2026/cover-dc2024.jpg",
+   "fit": "cover",
+   "focus": 0.5,
+   "focus_y": 0.3,
+   "zoom": 1.0,
+   "source_url": "https://commons.wikimedia.org/wiki/File:David_Goffin_(2024_DC_Open)_01.jpg",
+   "_credit": "封面图为 Wikimedia Commons 高清实拍：2024 年华盛顿公开赛（DC Open）首轮，摄影 Hameltion，CC BY-SA 4.0。原生 4000×6000 竖幅，戈芬正脸对镜、清晰可辨，已逐图验明本人。取 (560,560)-(2960,3760) 的 2400×3200 窗口预裁为 1800×2400 入仓（画布 1080×1440 的 1.67 倍，渲染只缩小不放大）。封面文案为定版金句「三巨头，他都赢过；35岁，他告别网球。」",
+   "_portrait_why": "v3 换图（用户 2026-10-24 定）：封面换真正的高清大图，不再用 1080p 视频抽帧。选 2024 华盛顿实拍——近期（退役前一年）、正脸、原生竖幅高像素；法网 2019 握拳图已在本片照片段用过，避免同图在封面与正片重复。画面情绪是赛场专注，与「抢点」主题不冲突。",
+   "verified_date": "2026-10-24",
+   "verified_note": "本地取 Commons 原图（4000×6000）验图后预裁入仓；裁切窗口与原图 URL 记在 _credit，可由原图复现。候选三版封面预览存 ~/workspace/goffin-story/cover-candidates/（DC2024 定版）。"
+  }
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "一个从没拿过大满贯、没拿过大师赛的人，凭什么让三巨头排队送别？",
+  "thesis": "戈芬的答案是抢点：站进场内、把球打得比所有人早半步——个子不占优势的人，用提前量赢了整个三巨头时代。",
+  "beats": [
+   "钩子先行：ATP 官方六人名单（同站连克纳达尔与费德勒），戈芬是最后一个",
+   "起点：2012 法网幸运落败者递补，抢下偶像费德勒一盘，「抢点」定型",
+   "长连胜与「差一步」标签埋点：25 连胜首冠、戴杯两胜仍亚军（只旁白一句、零画面）",
+   "至暗：2017 法网苫布事件＋两次大决赛皆负并表",
+   "高潮：2017 蒙特卡洛＋总决赛同年通杀三巨头，两次「生涯最佳胜利」原声连放",
+   "第二曲线：2020 再胜纳达尔、2022 阿斯塔纳幸运落败者掀翻世界第一（十年回环）、2024 上海、2025 迈阿密",
+   "告别：布鲁塞尔最后一周——逆转、取消派对玩笑、最后一场、致敬前三人原声、九行数据卡、「没有遗憾」原声",
+   "落点站队问：无大满贯无大师赛的生涯算不算成功"
+  ],
+  "chapters": [
+   "冷开场 · 六人名单",
+   "第一章 · 幸运儿",
+   "第二章 · 长连胜",
+   "第三章 · 一块苫布",
+   "第四章 · 通杀之年",
+   "第五章 · 第二曲线",
+   "终章 · 最后一舞"
+  ],
+  "human_context": {
+   "angle": "助理代决锁稿（用户 2026-10-24 00:41 授权）：单一隐喻「抢点」贯穿全片；封面与结尾共用一组事实对照（三巨头都赢过／大满贯一个没有）；致敬段只取前三位出镜者；戴维斯杯全片零画面、仅段 2 旁白一句与数据卡一行文字。",
+   "facts": [
+    "同站连克纳达尔与费德勒史上六人、戈芬为最后一位（ATP 官方 Media Notes 口径）",
+    "2012 法网以幸运落败者身份进十六强，第四轮负费德勒（抢下第一盘、第二盘 5-7）",
+    "2014 年 25 连胜＋基茨比厄尔首冠＋ATP 年度最佳复出球员",
+    "2017 法网第三轮右脚卡进防水苫布撞墙退赛，核磁无骨折，错过整个草地赛季",
+    "2017 年终总决赛亚军（决赛负迪米特洛夫）、2019 辛辛那提亚军（唯一大师赛决赛，负梅德韦杰夫）",
+    "2017 年蒙特卡洛胜德约（决胜盘 2-4 翻盘、第五赛点）、总决赛小组赛胜世界第一纳达尔（其赛后因膝伤退赛）、半决赛首胜费德勒",
+    "2020 ATP 杯胜纳达尔；2022 阿斯塔纳以幸运落败者身份胜世界第一阿尔卡拉斯",
+    "2024 上海胜兹维列夫进八强；2025 迈阿密逆转阿尔卡拉斯",
+    "2026-10-22 布鲁塞尔负米克尔森打完生涯最后一场；生涯 358 胜、6 冠、最高第 7、对三巨头 4 胜、胜世界第一 3 次、4 次大满贯八强",
+    "致敬视频出场顺序经仪式正片逐帧验明：纳达尔、加斯奎特、迪米特洛夫、（其后普伊耶与家人不用）"
+   ],
+   "sources": [
+    "https://www.youtube.com/watch?v=V8QfaokOn58",
+    "https://www.youtube.com/watch?v=DxsbU7f3BZQ",
+    "https://www.youtube.com/watch?v=PhMzH4gtbRQ",
+    "https://www.youtube.com/watch?v=tNNoMqH7Wxc",
+    "https://www.youtube.com/watch?v=sDp1mQfXBNI"
+   ]
+  }
+ },
+ "archival": {
+  "rg12m": "2012 年法网第四轮比赛录像只有民间转播存档（1280×720，25fps），无官方高清源；用户锁稿代决 2 的低清破例段。整幅 contain 展示、不裁切不放大冒充高清。",
+  "rg12i": "2012 年法网赛后场内采访现存最佳版本 640×360；同代决 2 破例范围。整幅 contain 展示。",
+  "kitz": "2014 年基茨比厄尔决赛集锦为 ATP 官方上传，封顶 1280×720（无 1080p 版本）；整幅 contain 展示。"
+ },
+ "source_quality_exceptions": {
+  "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "账号所有者 2026-10-24 锁稿代决 2：段 1（2012 法网）用民间存档短插。该场无官方存档，现存比赛录像为粉丝转播存档（1280x720，probe 实测）。仅本片段 1 比赛段短插，采访段另用 rg12i。"
   },
-  "tts_backend": "edge",
-  "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
-  "_primary_why": "仪式正片 cere 是本期框架源：告别仪式的致敬大屏、本人发言与挥手告别只此一源，封面帧亦出自此片。",
-  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径，与前两期同）。顶层 voice/rate 没有代码读，不写。",
-  "primary": "cere",
-  "sources": {
-    "cere": "https://github.com/robertyang87/tennislive/releases/download/source-V8QfaokOn58/V8QfaokOn58.mp4",
-    "eomic": "https://github.com/robertyang87/tennislive/releases/download/source-sDp1mQfXBNI/sDp1mQfXBNI.mp4",
-    "upnxh": "https://github.com/robertyang87/tennislive/releases/download/source-UPnxhVAjoPQ/UPnxhVAjoPQ.mp4",
-    "bertn": "https://github.com/robertyang87/tennislive/releases/download/source-7sTTvFfiDc8/7sTTvFfiDc8.mp4",
-    "rg12m": "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4",
-    "rg12i": "https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4",
-    "kitz": "https://github.com/robertyang87/tennislive/releases/download/source-ou674aWvv38/ou674aWvv38.mp4",
-    "mc17": "https://github.com/robertyang87/tennislive/releases/download/source-gNKAs28cLrk/gNKAs28cLrk.mp4",
-    "mcint": "https://github.com/robertyang87/tennislive/releases/download/source-tNNoMqH7Wxc/tNNoMqH7Wxc.mp4",
-    "fin17": "https://github.com/robertyang87/tennislive/releases/download/source-DxsbU7f3BZQ/DxsbU7f3BZQ.mp4",
-    "finint": "https://github.com/robertyang87/tennislive/releases/download/source-PhMzH4gtbRQ/PhMzH4gtbRQ.mp4",
-    "finf": "https://github.com/robertyang87/tennislive/releases/download/source-ea5OEOoSvd0/ea5OEOoSvd0.mp4",
-    "tok17": "https://github.com/robertyang87/tennislive/releases/download/source-HdDhnnuGJqM/HdDhnnuGJqM.mp4",
-    "cin19": "https://github.com/robertyang87/tennislive/releases/download/source-lzIsYprtBkM/lzIsYprtBkM.mp4",
-    "atpc": "https://github.com/robertyang87/tennislive/releases/download/source-ICCdirb-E-M/ICCdirb-E-M.mp4",
-    "asta": "https://github.com/robertyang87/tennislive/releases/download/source-ZN2UDUKvfj0/ZN2UDUKvfj0.mp4",
-    "sh24": "https://github.com/robertyang87/tennislive/releases/download/source-p-kqln3-XNA/p-kqln3-XNA.mp4",
-    "mia25": "https://github.com/robertyang87/tennislive/releases/download/source-z1nHQq_xtz8/z1nHQq_xtz8.mp4"
+  "https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4": {
+   "min_height": 360,
+   "approved_by": "user",
+   "reason": "同代决 2 的段 1 低清破例范围：2012 法网赛后场内采访现存最佳版本为 640x360，仅本片段 1 原声位短插。"
   },
-  "mixed_fps": {
-    "cere": "25fps（Tennis TV 官方，probe.json 实测），出片基帧率。",
-    "eomic": "25fps（European Open 官方，probe.json 实测），同上。",
-    "bertn": "25fps（Tennis TV，probe.json 实测），同上。",
-    "upnxh": "25fps（Tennis TV，probe.json 实测），同上。",
-    "rg12m": "25fps（2012 转播存档，probe.json 实测），与出片基帧率一致。",
-    "rg12i": "25fps（2012 采访存档，probe.json 实测），同上。",
-    "kitz": "25fps（ATP 官方，probe.json 实测），同上。",
-    "mc17": "25fps（Tennis TV，probe.json 实测），同上。",
-    "mcint": "25fps（ATP 官方，probe.json 实测），同上。",
-    "fin17": "29.97fps（Tennis TV，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
-    "finint": "25fps（ATP 官方，probe.json 实测），同上。",
-    "finf": "25fps（Tennis TV，probe.json 实测），同上。",
-    "tok17": "29.97fps（ATP 官方，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
-    "cin19": "29.97fps（Tennis TV，probe.json 实测 30000/1001），逐帧复制 conform 到 25。",
-    "atpc": "30fps（Tennis TV，probe.json 实测），逐帧复制 conform 到 25。",
-    "asta": "30fps（Tennis TV，probe.json 实测），逐帧复制 conform 到 25。",
-    "sh24": "25fps（Tennis TV，probe.json 实测），同上。",
-    "mia25": "25fps（Tennis TV，probe.json 实测），同上。"
+  "https://github.com/robertyang87/tennislive/releases/download/source-ou674aWvv38/ou674aWvv38.mp4": {
+   "min_height": 720,
+   "approved_by": "user",
+   "reason": "2014 年 ATP 官方上传封顶 720p（基茨比厄尔决赛集锦与梅斯决赛集锦均实测 1280x720，无任何 1080p 官方版本）；按代决 2 的低清白名单机制（netcord 先例、只加本期存档 URL）落位，仅本片段 2 短插。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "_why": "退役事件 72 小时热点窗口内，本期为用户 2026-10-24 00:41 明确授权「完成后推送微信」的定稿生产，push 模式自动推送。",
+  "summary": "三巨头都赢过的人",
+  "lead": "大卫·戈芬退役了。同站连克纳达尔与费德勒的，ATP 官方名单上只有六个人，他是最后一个；可他这辈子，没拿过一个大满贯。他靠的只有一样东西：比所有人早半步。布鲁塞尔告别夜，纳达尔第一个出现在大屏幕上——他说：我没有遗憾。无大满贯、无大师赛、六个冠军、世界第七，这样的生涯，算成功吗？"
+ },
+ "segments": [
+  {
+   "image": "assets/reel/goffin-retirement-2026/names-wall.png",
+   "seconds": 15.5,
+   "narration": "在同一站比赛里，先后击败纳达尔和费德勒——ATP 有一份官方名单，做到过的人一共只有六个：达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个，是大卫·戈芬。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_card_why": "段 0 名单墙（定稿脚本画面指示）：六人名单整屏图（本地渲染 PNG 入仓，戈芬黄色高亮压轴）；title_card 总长上限 18 字装不下六人名单，故走整屏图段。"
   },
-  "cover": {
-    "eyebrow": "网球有故事",
-    "hook": "三巨头，他都赢过\n35岁，他告别网球",
-    "layout": "solo",
-    "narration": "三巨头，他都赢过；35岁，他告别网球。",
-    "story_kind": "person",
-    "subject": "大卫·戈芬",
-    "topic": "大卫·戈芬：抢点赢过三巨头",
-    "_hook_term_why": "金句『三巨头，他都赢过；35岁，他告别网球。』为用户定版封面文案（金句三处之封面位）：初版第二行以大满贯零冠收尾，用户 2026-10-24 14:25 否决原句、15:07 定调第二行不谈大满贯要落到退役、15:50 拍板改为「35岁，他告别网球」。已核事实——生涯对三巨头共 4 胜（纳达尔 2、德约 1、费德勒 1）；戈芬生于 1990-12-07，2026-10-22 在布鲁塞尔打完生涯最后一场后退役，时年 35 岁（事实卡逐项已核）。",
-    "portrait": {
-      "image": "assets/reel/goffin-retirement-2026/cover-dc2024.jpg",
-      "fit": "cover",
-      "focus": 0.5,
-      "focus_y": 0.3,
-      "zoom": 1.0,
-      "source_url": "https://commons.wikimedia.org/wiki/File:David_Goffin_(2024_DC_Open)_01.jpg",
-      "_credit": "封面图为 Wikimedia Commons 高清实拍：2024 年华盛顿公开赛（DC Open）首轮，摄影 Hameltion，CC BY-SA 4.0。原生 4000×6000 竖幅，戈芬正脸对镜、清晰可辨，已逐图验明本人。取 (560,560)-(2960,3760) 的 2400×3200 窗口预裁为 1800×2400 入仓（画布 1080×1440 的 1.67 倍，渲染只缩小不放大）。封面文案为定版金句「三巨头，他都赢过；35岁，他告别网球。」",
-      "_portrait_why": "v3 换图（用户 2026-10-24 定）：封面换真正的高清大图，不再用 1080p 视频抽帧。选 2024 华盛顿实拍——近期（退役前一年）、正脸、原生竖幅高像素；法网 2019 握拳图已在本片照片段用过，避免同图在封面与正片重复。画面情绪是赛场专注，与「抢点」主题不冲突。",
-      "verified_date": "2026-10-24",
-      "verified_note": "本地取 Commons 原图（4000×6000）验图后预裁入仓；裁切窗口与原图 URL 记在 _credit，可由原图复现。候选三版封面预览存 ~/workspace/goffin-story/cover-candidates/（DC2024 定版）。"
+  {
+   "cx": 0.5,
+   "source": "upnxh",
+   "start": 159.5,
+   "end": 166.5,
+   "narration": "10 月 22 日，他在家乡布鲁塞尔，打完了职业生涯的最后一场。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true,
+   "_why": "Tennis TV 最后一场集锦的最后一局相持（ASR 空当 159.22–170.76，记分牌 GOFFIN 3-6 2-4、米克尔森赛点局）。原尾窗 206.5–213.5 经成片验片发现是源片自带 SUBSCRIBE 尾卡，故改此窗（验片帧 filmcheck/x01 作废记录）。"
+  },
+  {
+   "title_card": "幸运儿",
+   "kicker": "第一章 · 二零一二 · 巴黎",
+   "seconds": 3.4,
+   "narration": "故事从一个递补名额开始。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "rg12m",
+   "start": 610.0,
+   "end": 643.0,
+   "narration": "2012 年法网，21 岁的戈芬排名第 109，资格赛已经出局。孟菲尔斯退赛，他以幸运落败者的身份递补进正赛——连赢三轮，第四轮站到了费德勒对面。他的卧室墙上，贴满了费德勒的海报。那一天，他从偶像手里抢下第一盘，第二盘只差两分，就能取得两盘领先。他的个子，在男子网球里不占优势。他靠的是抢点：站进场内，把球打得比所有人早半步。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true,
+   "fit": "contain",
+   "_why": "2012 法网第四轮对费德勒比赛录像（SD 粉丝存档，本期低清破例段）；窗口取中段相持，人物与赛事经 probe 缩略图墙验明。"
+  },
+  {
+   "cx": 0.5,
+   "source": "rg12i",
+   "start": 53.0,
+   "end": 68.1,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 8.5,
+     "text": "All the walls of my bedroom were full of posters of Roger.\n我卧室的墙上，贴满了罗杰的海报。"
+    },
+    {
+     "at": 8.5,
+     "end": 14.9,
+     "text": "It was like a dream for me.\n那感觉，就像做梦一样。"
     }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 1（原话库 11）：2012 法网赛后场内采访原声（法语发言，英文字卡为多源一致的官方译文）；画面为采访特写，费德勒在旁。音频无法逐句对位英文，故字卡按全句呈现，不冒充逐字同步。",
+   "fit": "contain",
+   "gain_db": 10.0
   },
-  "editorial": {
-    "mode": "match_review",
-    "question": "一个从没拿过大满贯、没拿过大师赛的人，凭什么让三巨头排队送别？",
-    "thesis": "戈芬的答案是抢点：站进场内、把球打得比所有人早半步——个子不占优势的人，用提前量赢了整个三巨头时代。",
-    "beats": [
-      "钩子先行：ATP 官方六人名单（同站连克纳达尔与费德勒），戈芬是最后一个",
-      "起点：2012 法网幸运落败者递补，抢下偶像费德勒一盘，「抢点」定型",
-      "长连胜与「差一步」标签埋点：25 连胜首冠、戴杯两胜仍亚军（只旁白一句、零画面）",
-      "至暗：2017 法网苫布事件＋两次大决赛皆负并表",
-      "高潮：2017 蒙特卡洛＋总决赛同年通杀三巨头，两次「生涯最佳胜利」原声连放",
-      "第二曲线：2020 再胜纳达尔、2022 阿斯塔纳幸运落败者掀翻世界第一（十年回环）、2024 上海、2025 迈阿密",
-      "告别：布鲁塞尔最后一周——逆转、取消派对玩笑、最后一场、致敬前三人原声、九行数据卡、「没有遗憾」原声",
-      "落点站队问：无大满贯无大师赛的生涯算不算成功"
-    ],
-    "chapters": [
-      "冷开场 · 六人名单",
-      "第一章 · 幸运儿",
-      "第二章 · 长连胜",
-      "第三章 · 一块苫布",
-      "第四章 · 通杀之年",
-      "第五章 · 第二曲线",
-      "终章 · 最后一舞"
-    ],
-    "human_context": {
-      "angle": "助理代决锁稿（用户 2026-10-24 00:41 授权）：单一隐喻「抢点」贯穿全片；封面与结尾共用一组事实对照（三巨头都赢过／大满贯一个没有）；致敬段只取前三位出镜者；戴维斯杯全片零画面、仅段 2 旁白一句与数据卡一行文字。",
-      "facts": [
-        "同站连克纳达尔与费德勒史上六人、戈芬为最后一位（ATP 官方 Media Notes 口径）",
-        "2012 法网以幸运落败者身份进十六强，第四轮负费德勒（抢下第一盘、第二盘 5-7）",
-        "2014 年 25 连胜＋基茨比厄尔首冠＋ATP 年度最佳复出球员",
-        "2017 法网第三轮右脚卡进防水苫布撞墙退赛，核磁无骨折，错过整个草地赛季",
-        "2017 年终总决赛亚军（决赛负迪米特洛夫）、2019 辛辛那提亚军（唯一大师赛决赛，负梅德韦杰夫）",
-        "2017 年蒙特卡洛胜德约（决胜盘 2-4 翻盘、第五赛点）、总决赛小组赛胜世界第一纳达尔（其赛后因膝伤退赛）、半决赛首胜费德勒",
-        "2020 ATP 杯胜纳达尔；2022 阿斯塔纳以幸运落败者身份胜世界第一阿尔卡拉斯",
-        "2024 上海胜兹维列夫进八强；2025 迈阿密逆转阿尔卡拉斯",
-        "2026-10-22 布鲁塞尔负米克尔森打完生涯最后一场；生涯 358 胜、6 冠、最高第 7、对三巨头 4 胜、胜世界第一 3 次、4 次大满贯八强",
-        "致敬视频出场顺序经仪式正片逐帧验明：纳达尔、加斯奎特、迪米特洛夫、（其后普伊耶与家人不用）"
-      ],
-      "sources": [
-        "https://www.youtube.com/watch?v=V8QfaokOn58",
-        "https://www.youtube.com/watch?v=DxsbU7f3BZQ",
-        "https://www.youtube.com/watch?v=PhMzH4gtbRQ",
-        "https://www.youtube.com/watch?v=tNNoMqH7Wxc",
-        "https://www.youtube.com/watch?v=sDp1mQfXBNI"
-      ]
+  {
+   "title_card": "长连胜",
+   "kicker": "第二章 · 二零一四",
+   "seconds": 3.4,
+   "narration": "手术之后，他从头爬起。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "kitz",
+   "start": 63.0,
+   "end": 79.0,
+   "narration": "2013 年底，他动了手腕手术，排名掉出百名开外。2014 年夏天，他打出一波 25 连胜，拿下生涯第一个巡回赛冠军，年底当选 ATP 年度最佳复出球员。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "fit": "contain"
+  },
+  {
+   "cx": 0.5,
+   "source": "kitz",
+   "start": 196.5,
+   "end": 210.5,
+   "narration": "2017 年，他还把比利时带进戴维斯杯决赛，两场单打全赢，球队还是输了。离冠军差一步——这件事，后来反复发生。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true,
+   "fit": "contain",
+   "inset": {
+    "image": "assets/reel/goffin-retirement-2026/inset-kitz-quote.png",
+    "corner": "tr",
+    "width": 0.48,
+    "pad": 0.02,
+    "show_for": 12.0,
+    "motion": "editorial",
+    "_why": "戈芬首冠原话卡（原话库 10，据 ATP 官网）：英文移预渲染原话卡 PNG，旁白零英文。（v5 按系列母版重渲：透明底浮字、右对齐、黄题白文灰注、黄竖线在右侧；英文换事实卡原话 10 存档原文、中文换存档译文，审计样式统一＋M6。）"
+   },
+   "_why": "画面停留在首冠捧杯帧（用户定：戴杯只旁白一句、不配戴杯画面）；原话卡为原声位外加的首冠原话（原话库 10）。"
+  },
+  {
+   "title_card": "一块苫布",
+   "kicker": "第三章 · 二零一七 · 巴黎",
+   "seconds": 4.0,
+   "narration": "上升最陡的那一年，意外来了。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "image": "assets/reel/goffin-retirement-2026/goffin-roland-garros-2019.jpg",
+   "image_kind": "photo",
+   "narration": "2017 年，是他上升最陡的一年。法网第三轮，他第一盘 5 比 4 领先。追球冲向场底时，他的右脚卡进了卷起的防水苫布，整个人撞上围墙，被扶着下了场。核磁没有骨折，可整个草地赛季就这样报销。",
+   "seconds": 19.6,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_photo_source": "https://commons.wikimedia.org/wiki/File:David_Goffin_wins_match_at_the_2019_French_Open.jpg",
+   "_photo_caption_safety": "照片已按画布 3:4 预裁为 1080×1440：戈芬全身居画面中部，面部在上部三分之一，字幕下锚只压球场地面，不遮面部、球拍与主体。",
+   "_photo_note": "Wikimedia Commons 自由授权照片《David Goffin wins match at the 2019 French Open》（戈芬本人于罗兰·加洛斯，原图 5184×3456）。苫布瞬间全网无可用视频源（多路检索皆空），以本照片段承载本段旁白，并在片中定位为资料照片用法；照片与事件年份不同（2019），不冒充 2017 现场画面。（v5：照片左下角已烧入「资料照片 · 2019 年法网」角标，审计 M1。）"
+  },
+  {
+   "image": "assets/reel/goffin-retirement-2026/nadal-tarp-card.png",
+   "seconds": 6.2,
+   "narration": "纳达尔当时就说过，那块苫布的位置，一直很危险。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_card_why": "原声位 3（纳达尔苫布声援）：图段不许带 inset，故原话卡独立成整屏图段（本地渲染 PNG 入仓，双语原话＋据美联社出处），旁白只作归属引导。（v5：英文引语换事实卡原话 16 的 AP 存档逐字版、中文照存档译文三行，审计 H5；旧版「moving very well」无出处已弃。）"
+  },
+  {
+   "cx": 0.5,
+   "source": "tok17",
+   "start": 258.0,
+   "end": 267.44,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 2.15,
+     "end": 3.08,
+     "text": "And there it is.\n拿下了！"
+    },
+    {
+     "at": 3.32,
+     "end": 6.2,
+     "text": "He has captured his first ATP 500 title,\n他拿下生涯首个 500 级别冠军。"
+    },
+    {
+     "at": 6.2,
+     "end": 9.24,
+     "text": "his second title of 2017, his fourth career title.\n2017 年第二冠，生涯第四冠。"
     }
+   ],
+   "_quote_kind": "commentary_quote",
+   "_quote_why": "转折画面承载（定稿脚本段 3 指示）：苫布之后同年秋季深圳、东京两冠打进总决赛——以东京夺冠瞬间＋现场解说原声快闪呈现「爬回来了」，旁白不喊。"
   },
-  "archival": {
-    "rg12m": "2012 年法网第四轮比赛录像只有民间转播存档（1280×720，25fps），无官方高清源；用户锁稿代决 2 的低清破例段。整幅 contain 展示、不裁切不放大冒充高清。",
-    "rg12i": "2012 年法网赛后场内采访现存最佳版本 640×360；同代决 2 破例范围。整幅 contain 展示。",
-    "kitz": "2014 年基茨比厄尔决赛集锦为 ATP 官方上传，封顶 1280×720（无 1080p 版本）；整幅 contain 展示。"
+  {
+   "cx": 0.5,
+   "source": "finf",
+   "start": 165.0,
+   "end": 176.0,
+   "narration": "而他这一生，离最大的两个冠军都只差一场。2017 年总决赛决赛，他输给迪米特洛夫。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
   },
-  "source_quality_exceptions": {
-    "https://github.com/robertyang87/tennislive/releases/download/source-fTJRqnouO-Q/fTJRqnouO-Q.mp4": {
-      "min_height": 720,
-      "approved_by": "user",
-      "reason": "账号所有者 2026-10-24 锁稿代决 2：段 1（2012 法网）用民间存档短插。该场无官方存档，现存比赛录像为粉丝转播存档（1280x720，probe 实测）。仅本片段 1 比赛段短插，采访段另用 rg12i。"
+  {
+   "cx": 0.5,
+   "source": "cin19",
+   "start": 158.0,
+   "end": 165.5,
+   "narration": "2019 年辛辛那提，他唯一一次大师赛决赛，输给梅德韦杰夫。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "title_card": "通杀之年",
+   "kicker": "第四章 · 二零一七 · 蒙特卡洛与伦敦",
+   "seconds": 3.4,
+   "narration": "同一年，他接连赢下三巨头。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "mc17",
+   "start": 129.7,
+   "end": 143.4,
+   "narration": "但 2017 年剩下的部分，他全抢了回来。那年 4 月的蒙特卡洛，他对德约科维奇此前五战全败。这一次决胜盘 2 比 4 落后，他硬是翻了盘。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "mc17",
+   "start": 149.9,
+   "end": 157.0,
+   "narration": "第五个赛点，终于兑现。他说：这是我生涯最佳的一场胜利。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "mcint",
+   "start": 11.3,
+   "end": 17.3,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.38,
+     "end": 2.44,
+     "text": "It's a fantastic win.\n一场梦幻般的胜利。"
     },
-    "https://github.com/robertyang87/tennislive/releases/download/source-xPViRXzqr9s/xPViRXzqr9s.mp4": {
-      "min_height": 360,
-      "approved_by": "user",
-      "reason": "同代决 2 的段 1 低清破例范围：2012 法网赛后场内采访现存最佳版本为 640x360，仅本片段 1 原声位短插。"
-    },
-    "https://github.com/robertyang87/tennislive/releases/download/source-ou674aWvv38/ou674aWvv38.mp4": {
-      "min_height": 720,
-      "approved_by": "user",
-      "reason": "2014 年 ATP 官方上传封顶 720p（基茨比厄尔决赛集锦与梅斯决赛集锦均实测 1280x720，无任何 1080p 官方版本）；按代决 2 的低清白名单机制（netcord 先例、只加本期存档 URL）落位，仅本片段 2 短插。"
+    {
+     "at": 2.44,
+     "end": 5.26,
+     "text": "The best win of my career for sure.\n是我生涯最好的一场胜利，千真万确。"
     }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 3 之一（原话库 1 蒙特卡洛版）：ATP 官方赛后采访原声，ASR 实测 11.68–16.56s 为本人原话。",
+   "gain_db": 4.5
   },
-  "push": {
-    "auto": true,
-    "_why": "退役事件 72 小时热点窗口内，本期为用户 2026-10-24 00:41 明确授权「完成后推送微信」的定稿生产，push 模式自动推送。",
-    "summary": "三巨头都赢过的人",
-    "lead": "大卫·戈芬退役了。同站连克纳达尔与费德勒的，ATP 官方名单上只有六个人，他是最后一个；可他这辈子，没拿过一个大满贯。他靠的只有一样东西：比所有人早半步。布鲁塞尔告别夜，纳达尔第一个出现在大屏幕上——他说：我没有遗憾。无大满贯、无大师赛、六个冠军、世界第七，这样的生涯，算成功吗？"
+  {
+   "cx": 0.5,
+   "source": "fin17",
+   "start": 404.0,
+   "end": 414.5,
+   "narration": "11 月伦敦总决赛，小组赛他赢了世界第一纳达尔——那一场纳达尔膝伤缠身，赛后退出了比赛。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
   },
-  "segments": [
+  {
+   "cx": 0.5,
+   "source": "fin17",
+   "start": 671.3,
+   "end": 681.8,
+   "narration": "半决赛，他又逆转了费德勒——此前六次交手，他全败。他说：这是我生涯最佳的一场胜利，千真万确。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "fin17",
+   "start": 692.0,
+   "end": 708.0,
+   "narration": "同一句话，同一年，他说了两次。这一年，他把德约科维奇、纳达尔、费德勒挨个赢了一遍。同一年里通杀三巨头，整个三巨头时代，也没几个人做到过。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "finint",
+   "start": 8.6,
+   "end": 28.7,
+   "kind": "quote",
+   "quote": [
     {
-      "image": "assets/reel/goffin-retirement-2026/names-wall.png",
-      "seconds": 15.5,
-      "narration": "在同一站比赛里，先后击败纳达尔和费德勒——ATP 有一份官方名单，做到过的人一共只有六个：达维登科、德尔波特罗、德约科维奇、穆雷、纳班迪安。最后一个，是大卫·戈芬。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "_card_why": "段 0 名单墙（定稿脚本画面指示）：六人名单整屏图（本地渲染 PNG 入仓，戈芬黄色高亮压轴）；title_card 总长上限 18 字装不下六人名单，故走整屏图段。"
+     "at": 0.05,
+     "end": 3.6,
+     "text": "It was the best moment to do it,\n没有比这更好的时机了，"
     },
     {
-      "cx": 0.5,
-      "source": "upnxh",
-      "start": 159.5,
-      "end": 166.5,
-      "narration": "10 月 22 日，他在家乡布鲁塞尔，打完了职业生涯的最后一场。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true,
-      "_why": "Tennis TV 最后一场集锦的最后一局相持（ASR 空当 159.22–170.76，记分牌 GOFFIN 3-6 2-4、米克尔森赛点局）。原尾窗 206.5–213.5 经成片验片发现是源片自带 SUBSCRIBE 尾卡，故改此窗（验片帧 filmcheck/x01 作废记录）。"
+     "at": 3.6,
+     "end": 7.0,
+     "text": "in front of such a nice crowd.\n在这样的观众面前。"
     },
     {
-      "title_card": "幸运儿",
-      "kicker": "第一章 · 二零一二 · 巴黎",
-      "seconds": 3.4,
-      "narration": "故事从一个递补名额开始。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
+     "at": 7.0,
+     "end": 13.2,
+     "text": "To beat Roger was something unbelievable.\n能击败罗杰，简直难以置信。"
     },
     {
-      "cx": 0.5,
-      "source": "rg12m",
-      "start": 610.0,
-      "end": 643.0,
-      "narration": "2012 年法网，21 岁的戈芬排名第 109，资格赛已经出局。孟菲尔斯退赛，他以幸运落败者的身份递补进正赛——连赢三轮，第四轮站到了费德勒对面。他的卧室墙上，贴满了费德勒的海报。那一天，他从偶像手里抢下第一盘，第二盘只差两分，就能取得两盘领先。他的个子，在男子网球里不占优势。他靠的是抢点：站进场内，把球打得比所有人早半步。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true,
-      "fit": "contain",
-      "_why": "2012 法网第四轮对费德勒比赛录像（SD 粉丝存档，本期低清破例段）；窗口取中段相持，人物与赛事经 probe 缩略图墙验明。"
+     "at": 13.2,
+     "end": 17.36,
+     "text": "He's such a legend.\n他是一个传奇。"
     },
     {
-      "cx": 0.5,
-      "source": "rg12i",
-      "start": 53.0,
-      "end": 68.1,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.05,
-          "end": 8.5,
-          "text": "All the walls of my bedroom were full of posters of Roger.\n我卧室的墙上，贴满了罗杰的海报。"
-        },
-        {
-          "at": 8.5,
-          "end": 14.9,
-          "text": "It was like a dream for me.\n那感觉，就像做梦一样。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 1（原话库 11）：2012 法网赛后场内采访原声（法语发言，英文字卡为多源一致的官方译文）；画面为采访特写，费德勒在旁。音频无法逐句对位英文，故字卡按全句呈现，不冒充逐字同步。",
-      "fit": "contain"
-    },
-    {
-      "title_card": "长连胜",
-      "kicker": "第二章 · 二零一四",
-      "seconds": 3.4,
-      "narration": "手术之后，他从头爬起。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "kitz",
-      "start": 63.0,
-      "end": 79.0,
-      "narration": "2013 年底，他动了手腕手术，排名掉出百名开外。2014 年夏天，他打出一波 25 连胜，拿下生涯第一个巡回赛冠军，年底当选 ATP 年度最佳复出球员。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "fit": "contain"
-    },
-    {
-      "cx": 0.5,
-      "source": "kitz",
-      "start": 196.5,
-      "end": 210.5,
-      "narration": "2017 年，他还把比利时带进戴维斯杯决赛，两场单打全赢，球队还是输了。离冠军差一步——这件事，后来反复发生。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true,
-      "fit": "contain",
-      "inset": {
-        "image": "assets/reel/goffin-retirement-2026/inset-kitz-quote.png",
-        "corner": "tr",
-        "width": 0.6,
-        "pad": 0.043,
-        "show_for": 12.0,
-        "motion": "editorial",
-        "_why": "戈芬首冠原话卡（原话库 10，据 ATP 官网）：英文移预渲染原话卡 PNG，旁白零英文。"
-      },
-      "_why": "画面停留在首冠捧杯帧（用户定：戴杯只旁白一句、不配戴杯画面）；原话卡为原声位外加的首冠原话（原话库 10）。"
-    },
-    {
-      "title_card": "一块苫布",
-      "kicker": "第三章 · 二零一七 · 巴黎",
-      "seconds": 4.0,
-      "narration": "上升最陡的那一年，意外来了。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "image": "assets/reel/goffin-retirement-2026/goffin-roland-garros-2019.jpg",
-      "image_kind": "photo",
-      "narration": "2017 年，是他上升最陡的一年。法网第三轮，他第一盘 5 比 4 领先。追球冲向场底时，他的右脚卡进了卷起的防水苫布，整个人撞上围墙，被扶着下了场。核磁没有骨折，可整个草地赛季就这样报销。",
-      "seconds": 21.0,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "_photo_source": "https://commons.wikimedia.org/wiki/File:David_Goffin_wins_match_at_the_2019_French_Open.jpg",
-      "_photo_caption_safety": "照片已按画布 3:4 预裁为 1080×1440：戈芬全身居画面中部，面部在上部三分之一，字幕下锚只压球场地面，不遮面部、球拍与主体。",
-      "_photo_note": "Wikimedia Commons 自由授权照片《David Goffin wins match at the 2019 French Open》（戈芬本人于罗兰·加洛斯，原图 5184×3456）。苫布瞬间全网无可用视频源（多路检索皆空），以本照片段承载本段旁白，并在片中定位为资料照片用法；照片与事件年份不同（2019），不冒充 2017 现场画面。"
-    },
-    {
-      "image": "assets/reel/goffin-retirement-2026/nadal-tarp-card.png",
-      "seconds": 7.0,
-      "narration": "纳达尔当时就说过，那块苫布的位置，一直很危险。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "_card_why": "原声位 3（纳达尔苫布声援）：图段不许带 inset，故原话卡独立成整屏图段（本地渲染 PNG 入仓，双语原话＋据美联社出处），旁白只作归属引导。"
-    },
-    {
-      "cx": 0.5,
-      "source": "tok17",
-      "start": 258.0,
-      "end": 267.44,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 2.15,
-          "end": 3.08,
-          "text": "And there it is.\n拿下了！"
-        },
-        {
-          "at": 3.32,
-          "end": 6.2,
-          "text": "He has captured his first ATP 500 title,\n他拿下生涯首个 500 级别冠军。"
-        },
-        {
-          "at": 6.2,
-          "end": 9.24,
-          "text": "his second title of 2017, his fourth career title.\n2017 年第二冠，生涯第四冠。"
-        }
-      ],
-      "_quote_kind": "commentary_quote",
-      "_quote_why": "转折画面承载（定稿脚本段 3 指示）：苫布之后同年秋季深圳、东京两冠打进总决赛——以东京夺冠瞬间＋现场解说原声快闪呈现「爬回来了」，旁白不喊。"
-    },
-    {
-      "cx": 0.5,
-      "source": "finf",
-      "start": 165.0,
-      "end": 176.0,
-      "narration": "而他这一生，离最大的两个冠军都只差一场。2017 年总决赛决赛，他输给迪米特洛夫。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "cin19",
-      "start": 158.0,
-      "end": 165.5,
-      "narration": "2019 年辛辛那提，他唯一一次大师赛决赛，输给梅德韦杰夫。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "title_card": "通杀之年",
-      "kicker": "第四章 · 二零一七 · 蒙特卡洛与伦敦",
-      "seconds": 3.4,
-      "narration": "同一年，他接连赢下三巨头。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "mc17",
-      "start": 129.7,
-      "end": 143.4,
-      "narration": "但 2017 年剩下的部分，他全抢了回来。那年 4 月的蒙特卡洛，他对德约科维奇此前五战全败。这一次决胜盘 2 比 4 落后，他硬是翻了盘。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "mc17",
-      "start": 149.9,
-      "end": 157.0,
-      "narration": "第五个赛点，终于兑现。他说：这是我生涯最佳的一场胜利。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "mcint",
-      "start": 11.3,
-      "end": 17.3,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.38,
-          "end": 2.44,
-          "text": "It's a fantastic win.\n一场梦幻般的胜利。"
-        },
-        {
-          "at": 2.44,
-          "end": 5.26,
-          "text": "The best win of my career for sure.\n是我生涯最好的一场胜利，千真万确。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 3 之一（原话库 1 蒙特卡洛版）：ATP 官方赛后采访原声，ASR 实测 11.68–16.56s 为本人原话。"
-    },
-    {
-      "cx": 0.5,
-      "source": "fin17",
-      "start": 404.0,
-      "end": 414.5,
-      "narration": "11 月伦敦总决赛，小组赛他赢了世界第一纳达尔——那一场纳达尔膝伤缠身，赛后退出了比赛。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "fin17",
-      "start": 671.3,
-      "end": 681.8,
-      "narration": "半决赛，他又逆转了费德勒——此前六次交手，他全败。他说：这是我生涯最佳的一场胜利，千真万确。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "fin17",
-      "start": 692.0,
-      "end": 708.0,
-      "narration": "同一句话，同一年，他说了两次。这一年，他把德约科维奇、纳达尔、费德勒挨个赢了一遍。同一年里通杀三巨头，整个三巨头时代，也没几个人做到过。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "finint",
-      "start": 8.6,
-      "end": 28.7,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.05,
-          "end": 3.6,
-          "text": "It was the best moment to do it,\n在这样的观众面前，"
-        },
-        {
-          "at": 3.6,
-          "end": 7.0,
-          "text": "in front of such a nice crowd.\n没有比这更好的时机了。"
-        },
-        {
-          "at": 7.0,
-          "end": 13.2,
-          "text": "To beat Roger was something unbelievable.\n能击败罗杰，简直难以置信。"
-        },
-        {
-          "at": 13.2,
-          "end": 17.36,
-          "text": "He's such a legend.\n他是一个传奇。"
-        },
-        {
-          "at": 17.36,
-          "end": 19.92,
-          "text": "He's my idol since I'm really young.\n他是我从小的偶像。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 3 之二（原话库 1 总决赛升级版）：ATP 官方赛后采访原声，ASR 实测三句分别在 8.86s、15.2s、28.5s 起。"
-    },
-    {
-      "title_card": "第二曲线",
-      "kicker": "第五章 · 二零二零至二零二五",
-      "seconds": 3.7,
-      "narration": "很多人以为，他就此沉寂了。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "atpc",
-      "start": 30.7,
-      "end": 42.5,
-      "narration": "故事没有在 2017 年结束。2020 年，他第二次赢下纳达尔。他说过，打拉法，你必须把球抢得更早、多冒险。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "asta",
-      "start": 185.0,
-      "end": 201.5,
-      "narration": "2022 年阿斯塔纳，资格赛出局的他，又以幸运落败者的身份递补进正赛，对面是刚拿下美网、刚登上世界第一的阿尔卡拉斯——他直落两盘赢了。两次从替补席出发，中间隔了整整十年。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "asta",
-      "start": 226.6,
-      "end": 236.3,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.05,
-          "end": 2.8,
-          "text": "It was a tough three years.\n这三年很艰难。"
-        },
-        {
-          "at": 2.8,
-          "end": 5.6,
-          "text": "I still have the fire inside me.\n但我心里的火，还在烧。"
-        },
-        {
-          "at": 5.6,
-          "end": 9.5,
-          "text": "Today, I couldn't handle his pressure.\n阿尔卡拉斯：这压力，我扛不住。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 4（原话库 3＋17）：两句原话均出自赛后发布会、无场内原声音频，以原话卡呈现在阿斯塔纳赛后画面上，不冒充现场原声（集锦 ASR 已核：全片仅解说）。"
-    },
-    {
-      "cx": 0.5,
-      "source": "sh24",
-      "start": 146.0,
-      "end": 152.5,
-      "narration": "2024 年上海，33 岁的他赢下兹维列夫，打进八强。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "mia25",
-      "start": 194.0,
-      "end": 206.0,
-      "narration": "2025 年迈阿密，34 岁，他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认，他上一次为网球掉眼泪，就是那年在迈阿密输给戈芬之后。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true,
-      "_why": "「落泪」照事实卡隔离区 7 以转述句式呈现，不上逐字引号、不作原话卡。"
-    },
-    {
-      "title_card": "最后一舞",
-      "kicker": "终章 · 二零二六 · 布鲁塞尔",
-      "seconds": 3.4,
-      "narration": "最后一站，他选在家乡。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "bertn",
-      "start": 68.9,
-      "end": 84.0,
-      "narration": "2026 年，膝伤让他决定停下，告别站选在家乡布鲁塞尔。首轮决胜盘 0 比 3 落后，他又抢了回来，赛后还开玩笑：订好的告别派对，怕是要取消了。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true,
-      "inset": {
-        "image": "assets/reel/goffin-retirement-2026/inset-party-quote.png",
-        "corner": "tr",
-        "width": 0.6,
-        "pad": 0.043,
-        "show_for": 12.0,
-        "motion": "editorial",
-        "_why": "戈芬「取消派对」原话卡（据赛事与 ATP 报道）：英文移预渲染原话卡 PNG，旁白零英文。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "eomic",
-      "start": 160.0,
-      "end": 168.5,
-      "narration": "第二天，最后一场，他输了。最后一个回球下网，全场起立。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "cx": 0.5,
-      "source": "cere",
-      "start": 240.0,
-      "end": 248.5,
-      "narration": "大屏幕上，纳达尔第一个出现，祝贺他了不起的职业生涯。他站在场中央，哭了。",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      }
-    },
-    {
-      "cx": 0.5,
-      "source": "cere",
-      "start": 260.3,
-      "end": 289.2,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.32,
-          "end": 2.7,
-          "text": "Hello, David. How are you doing, man?\n纳达尔：大卫，你好吗，老兄？"
-        },
-        {
-          "at": 3.4,
-          "end": 6.3,
-          "text": "I just want to congratulate you on your amazing career.\n祝贺你这段了不起的职业生涯。"
-        },
-        {
-          "at": 6.3,
-          "end": 10.0,
-          "text": "It has been a huge pleasure to share practices and matches,\n能和你一起训练、一起比赛，"
-        },
-        {
-          "at": 10.0,
-          "end": 13.7,
-          "text": "and great moments together on the tour.\n分享巡回赛的美好时刻，是荣幸。"
-        },
-        {
-          "at": 14.2,
-          "end": 15.7,
-          "text": "David! This video is to congratulate you\n加斯奎特：大卫！这段视频，"
-        },
-        {
-          "at": 15.7,
-          "end": 17.3,
-          "text": "on your great career.\n是为了祝贺你伟大的职业生涯。"
-        },
-        {
-          "at": 17.6,
-          "end": 19.8,
-          "text": "It has been an honour to share this time with you.\n能与你共度这段时光，是我的荣幸。"
-        },
-        {
-          "at": 19.8,
-          "end": 22.0,
-          "text": "You are truly an extraordinary person.\n你是一个真正了不起的人。"
-        },
-        {
-          "at": 22.3,
-          "end": 23.8,
-          "text": "Congratulations on your incredible career\n迪米特洛夫：祝贺你，"
-        },
-        {
-          "at": 23.8,
-          "end": 25.4,
-          "text": "and amazing journey, my dear friend.\n这段不可思议的旅程，我亲爱的朋友。"
-        },
-        {
-          "at": 26.1,
-          "end": 28.5,
-          "text": "Thank you for sharing the court with me for so many years.\n谢谢你这么多年与我共享球场。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 5 之一：仪式大屏致敬视频原声，只取前三位出镜者（实测顺序：纳达尔 262.5s、加斯奎特 274.5s、迪米特洛夫 282.5s；窗口 290.0s 在第四位出镜前切断，普伊耶与家人段落零入片）。英文字幕为大屏自带烧录字幕，cue 时点按烧录字幕＋源片 ASR 双核（纳达尔 260.6s 起、加斯奎特 274.5s 起、迪米特洛夫 282.6s 起；第四位 289.36s 开口，窗口 289.2s 切断）。"
-    },
-    {
-      "image": "assets/reel/goffin-retirement-2026/data-wall.png",
-      "seconds": 11.0,
-      "narration": "358 场胜利，6 个冠军。他在赛后说：我为我的整个职业生涯自豪，我没有遗憾，我拼到了最后一刻。",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "_card_why": "九行履历卡整屏图（本地渲染 PNG 入仓，九行与定稿脚本数据卡逐字一致、已与事实卡逐项对账）；第九行为纯文字行，全片不出现任何戴维斯杯画面（用户硬约束）。title_card 18 字上限装不下九行，故走整屏图段。"
-    },
-    {
-      "cx": 0.5,
-      "source": "cere",
-      "start": 436.0,
-      "end": 465.0,
-      "kind": "quote",
-      "quote": [
-        {
-          "at": 0.05,
-          "end": 7.0,
-          "text": "I am proud of my whole career.\n我为我的整个职业生涯自豪。"
-        },
-        {
-          "at": 9.0,
-          "end": 16.44,
-          "text": "I have no regrets.\n我没有遗憾。"
-        },
-        {
-          "at": 16.44,
-          "end": 28.5,
-          "text": "I gave it my all, right to the end.\n我拼到了最后一刻。"
-        }
-      ],
-      "_quote_kind": "player_quote",
-      "_quote_why": "原声位 5 之二（原话库 6）：戈芬仪式发言原声（法语，英文字卡为 ATP 官方译文）；画面为发言特写。"
-    },
-    {
-      "cx": 0.5,
-      "source": "cere",
-      "start": 472.0,
-      "end": 482.0,
-      "narration": "没有大满贯、没有大师赛冠军，最高只到第 7——这样的职业生涯，算不算成功？",
-      "track": false,
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "point_end_ok": true
-    },
-    {
-      "title_card": "这样的生涯\n算成功吗？",
-      "kicker": "网球有故事 · 落点",
-      "seconds": 5.0,
-      "narration": "这样的生涯，算成功吗？",
-      "voice": {
-        "pitch": "+0Hz",
-        "rate": "+6%",
-        "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
-      },
-      "_card_why": "结尾站队问定格卡（定稿口径：球员原话＋站队问收尾）；随后片尾只品牌页（管线既有规则）。"
+     "at": 17.36,
+     "end": 19.92,
+     "text": "He's my idol since I'm really young.\n他是我从小的偶像。"
     }
-  ]
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 3 之二（原话库 1 总决赛升级版）：ATP 官方赛后采访原声，ASR 实测三句分别在 8.86s、15.2s、28.5s 起。",
+   "gain_db": 4.5
+  },
+  {
+   "title_card": "第二曲线",
+   "kicker": "第五章 · 二零二零至二零二五",
+   "seconds": 3.7,
+   "narration": "很多人以为，他就此沉寂了。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "atpc",
+   "start": 30.7,
+   "end": 42.5,
+   "narration": "故事没有在 2017 年结束。2020 年，他第二次赢下纳达尔。他说过，打拉法，你必须把球抢得更早、多冒险。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "asta",
+   "start": 185.0,
+   "end": 201.5,
+   "narration": "2022 年阿斯塔纳，资格赛出局的他，又以幸运落败者的身份递补进正赛，对面是刚拿下美网、刚登上世界第一的阿尔卡拉斯——他直落两盘赢了。两次从替补席出发，中间隔了整整十年。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "asta",
+   "start": 214.82,
+   "end": 226.45,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 3.4,
+     "text": "It was a tough three years.\n这三年很艰难。"
+    },
+    {
+     "at": 3.4,
+     "end": 6.8,
+     "text": "I still have the fire inside me.\n但我心里的火，还在烧。"
+    },
+    {
+     "at": 6.8,
+     "end": 11.45,
+     "text": "Today, I couldn't handle his pressure.\n阿尔卡拉斯：这压力，我扛不住。"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 4（原话库 3＋17）：两句原话均出自赛后发布会、无场内原声音频，以原话卡呈现在阿斯塔纳赛后画面上，不冒充现场原声（集锦 ASR 已核：全片仅解说）。（v5 换窗：原窗 226.6–236.3 整段落在源片结尾屏（审计 H1），新窗 214.82–226.45 为赛点全景→庆祝近景→网前同框实况，源 ASR 证实全窗连续解说；cue 相对时点按新窗等比重排。）"
+  },
+  {
+   "cx": 0.5,
+   "source": "sh24",
+   "start": 146.0,
+   "end": 152.5,
+   "narration": "2024 年上海，33 岁的他赢下兹维列夫，打进八强。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "mia25",
+   "start": 194.0,
+   "end": 206.0,
+   "narration": "2025 年迈阿密，34 岁，他又一次逆转阿尔卡拉斯。阿尔卡拉斯后来承认，他上一次为网球掉眼泪，就是那年在迈阿密输给戈芬之后。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true,
+   "_why": "「落泪」照事实卡隔离区 7 以转述句式呈现，不上逐字引号、不作原话卡。"
+  },
+  {
+   "title_card": "最后一舞",
+   "kicker": "终章 · 二零二六 · 布鲁塞尔",
+   "seconds": 3.4,
+   "narration": "最后一站，他选在家乡。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "bertn",
+   "start": 68.9,
+   "end": 84.0,
+   "narration": "2026 年，膝伤让他决定停下，告别站选在家乡布鲁塞尔。首轮决胜盘 0 比 3 落后，他又抢了回来，赛后还开玩笑：订好的告别派对，怕是要取消了。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true,
+   "inset": {
+    "image": "assets/reel/goffin-retirement-2026/inset-party-quote.png",
+    "corner": "tr",
+    "width": 0.48,
+    "pad": 0.02,
+    "show_for": 12.0,
+    "motion": "editorial",
+    "_why": "戈芬「取消派对」原话卡（据赛事与 ATP 报道）：英文移预渲染原话卡 PNG，旁白零英文。（v5 按系列母版重渲：透明底浮字、右对齐、黄题白文灰注、黄竖线在右侧；英文换事实卡原话 9 存档原文、中文换存档译文，审计样式统一＋M6。）"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "eomic",
+   "start": 160.0,
+   "end": 168.5,
+   "narration": "第二天，最后一场，他输了。最后一个回球下网，全场起立。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "cx": 0.5,
+   "source": "cere",
+   "start": 240.0,
+   "end": 248.5,
+   "narration": "大屏幕上，纳达尔第一个出现，祝贺他了不起的职业生涯。他站在场中央，哭了。",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   }
+  },
+  {
+   "cx": 0.5,
+   "source": "cere",
+   "start": 260.3,
+   "end": 288.7,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.32,
+     "end": 2.7,
+     "text": "Hello, David. How are you doing, man?\n纳达尔：大卫，你好吗，老兄？"
+    },
+    {
+     "at": 3.4,
+     "end": 6.3,
+     "text": "I just want to congratulate you on your amazing career.\n祝贺你这段了不起的职业生涯。"
+    },
+    {
+     "at": 6.3,
+     "end": 10.0,
+     "text": "It has been a huge pleasure to share practices and matches,\n能和你一起训练、一起比赛，"
+    },
+    {
+     "at": 10.0,
+     "end": 13.7,
+     "text": "and great moments together on the tour.\n分享巡回赛的美好时刻，是荣幸。"
+    },
+    {
+     "at": 14.2,
+     "end": 15.7,
+     "text": "David! This video is to congratulate you\n加斯奎特：大卫！这段视频，"
+    },
+    {
+     "at": 15.7,
+     "end": 17.3,
+     "text": "on your great career.\n是为了祝贺你伟大的职业生涯。"
+    },
+    {
+     "at": 17.6,
+     "end": 19.8,
+     "text": "It has been an honour to share this time with you.\n能与你共度这段时光，是我的荣幸。"
+    },
+    {
+     "at": 19.8,
+     "end": 22.0,
+     "text": "You are truly an extraordinary person.\n你是一个真正了不起的人。"
+    },
+    {
+     "at": 22.3,
+     "end": 23.8,
+     "text": "Congratulations on your incredible career\n迪米特洛夫：祝贺你，"
+    },
+    {
+     "at": 23.8,
+     "end": 25.4,
+     "text": "and amazing journey, my dear friend.\n这段不可思议的旅程，我亲爱的朋友。"
+    },
+    {
+     "at": 26.1,
+     "end": 28.35,
+     "text": "Thank you for sharing the court with me for so many years.\n谢谢你这么多年与我共享球场。"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 5 之一：仪式大屏致敬视频原声，只取前三位出镜者（实测顺序：纳达尔 262.5s、加斯奎特 274.5s、迪米特洛夫 282.5s；窗口在第四位出镜前切断，普伊耶与家人段落零入片）。英文字幕为大屏自带烧录字幕，cue 时点按烧录字幕＋源片 ASR 双核（纳达尔 260.6s 起、加斯奎特 274.5s 起、迪米特洛夫 282.6s 起；第四位 289.36s 开口、画面叠化约 288.5s 起（v5 密帧实测），窗口尾点 288.7s 切断）。",
+   "gain_db": 3.0
+  },
+  {
+   "image": "assets/reel/goffin-retirement-2026/data-wall.png",
+   "seconds": 11.0,
+   "narration": "358 场胜利，6 个冠军。他在赛后说：我为我的整个职业生涯自豪，我没有遗憾，我拼到了最后一刻。",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_card_why": "九行履历卡整屏图（本地渲染 PNG 入仓，九行与定稿脚本数据卡逐字一致、已与事实卡逐项对账）；第九行为纯文字行，全片不出现任何戴维斯杯画面（用户硬约束）。title_card 18 字上限装不下九行，故走整屏图段。"
+  },
+  {
+   "cx": 0.5,
+   "source": "cere",
+   "start": 436.0,
+   "end": 465.0,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.05,
+     "end": 7.0,
+     "text": "I am proud of my whole career.\n我为我的整个职业生涯自豪。"
+    },
+    {
+     "at": 9.0,
+     "end": 16.44,
+     "text": "I have no regrets.\n我没有遗憾。"
+    },
+    {
+     "at": 16.44,
+     "end": 28.5,
+     "text": "I gave it my all, right to the end.\n我拼到了最后一刻。"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声位 5 之二（原话库 6）：戈芬仪式发言原声（法语，英文字卡为 ATP 官方译文）；画面为发言特写。",
+   "gain_db": 3.0
+  },
+  {
+   "cx": 0.5,
+   "source": "cere",
+   "start": 472.0,
+   "end": 482.0,
+   "narration": "没有大满贯、没有大师赛冠军，最高只到第 7——这样的职业生涯，算不算成功？",
+   "track": false,
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "point_end_ok": true
+  },
+  {
+   "title_card": "这样的生涯\n算成功吗？",
+   "kicker": "网球有故事 · 落点",
+   "seconds": 5.0,
+   "narration": "这样的生涯，算成功吗？",
+   "voice": {
+    "pitch": "+0Hz",
+    "rate": "+6%",
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。"
+   },
+   "_card_why": "结尾站队问定格卡（定稿口径：球员原话＋站队问收尾）；随后片尾只品牌页（管线既有规则）。"
+  }
+ ]
 }
