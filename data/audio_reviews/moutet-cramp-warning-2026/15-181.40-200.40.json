@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=SwjfbwzPLtU",
+  "source_sha256": "4223cbe63fb9e120db14cf49a337a3d57799f827473b3c9aaab9944cf5f39060",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-26T08:05:42+00:00",
+  "reviewed_from": 181.4,
+  "reviewed_to": 200.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 181.5,
+      "end": 190.6,
+      "en": "You have to say, well played, Daniil Medvedev, digging so deep.",
+      "zh": "打得好，梅德韦杰夫咬牙撑住了。"
+    },
+    {
+      "start": 190.7,
+      "end": 200.2,
+      "en": "Clearly, really struggling with cramp, but he has somehow found a way to win that match.",
+      "zh": "被抽筋折磨，他还是赢了。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 4223cbe63fb9e120db14cf49a337a3d57799f827473b3c9aaab9944cf5f39060，存于 data/source_asr/SwjfbwzPLtU/small.en.json 与 data/source_asr/SwjfbwzPLtU/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
