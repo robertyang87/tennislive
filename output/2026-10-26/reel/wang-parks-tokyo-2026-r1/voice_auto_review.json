@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "26b764bca2a1db15184a7cbaeb1116109600d7937c04ee375c936b5ef19e2ccc",
-    "render_inputs_sha256": "d9958705728c37b008a1975226c116b899f7e55f3d583330a264eb4b16847d5d",
-    "spec_sha256": "cab6d067095a3cd384cf65233cd2f7e3214b86dae5b3fd27c97c21764cbbc71d",
-    "film_sha256": "c40ebc1c05d9253fe4ec358d85995933224863fbea663cb2ab32281152517670",
+    "render_sha256": "6a60e739c0f4930bd280d4aa77cffdc8e6f9e4dff130c9178ce6e3dcd4fc686e",
+    "render_inputs_sha256": "44d5c94301c63f6e777fb36baced3520c051f4bdaa91152c5dc598cdd2932204",
+    "spec_sha256": "bcf006c1aa83fd5aa6fcd9b587b672f2653a43121a111ad124ba62924b97d6bc",
+    "film_sha256": "b453b5e721db13dfabbda556780bf5372de04cd22f6713749aa200a293b85796",
     "inventory_sha256": "fcee7f89dbaffadaf67b06e33fbd2087be237579f9d862026a6de4fe27d81ef6"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-26T05:17:13+00:00",
+  "reviewed_at": "2026-10-26T05:46:03+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -442,9 +442,9 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.298,
-              "confidence": "low",
-              "near": null
+              "score": 1.0,
+              "confidence": "high",
+              "near": "intended"
             }
           ],
           "ok_refs": "孩骸"
@@ -552,7 +552,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.353,
+              "score": 0.449,
               "confidence": "medium",
               "near": null
             }
@@ -638,7 +638,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.418,
+              "score": 0.514,
               "confidence": "medium",
               "near": null
             }
@@ -692,7 +692,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.354,
+              "score": 0.305,
               "confidence": "low",
               "near": null
             }
@@ -920,14 +920,14 @@
             {
               "wrong": "la4",
               "verdict": "uncertain",
-              "score": 0.177,
+              "score": 0.182,
               "confidence": null,
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "uncertain",
-              "score": 0.066,
+              "score": 0.099,
               "confidence": null,
               "near": null
             }

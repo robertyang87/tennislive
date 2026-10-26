@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.actual-native-visual-review.v1",
+  "method": "assistant_visual_inspection_of_actual_final_film_frames",
+  "checked_at": "2026-10-26T05:47:11.952960+00:00",
+  "native_run": 40275220116,
+  "native_output_commit": "4113f290e7ffdf416a2ba5596d39c955d7a7d724",
+  "film_sha256": "b453b5e721db13dfabbda556780bf5372de04cd22f6713749aa200a293b85796",
+  "film_bytes": 88942923,
+  "seconds": 255.52,
+  "reviewer": "current assistant",
+  "cover_frame_time": 0.5,
+  "court_frame_time": 195.57,
+  "observations": [
+    "Actual encoded cover has visible entire hat, head and face, with empty space between header and head. Neither upper-left header nor lower hook overlaps face.",
+    "Same-match official Toray alternate photograph, actual950x1425, original source bytes unchanged. Original header, hook, score board, fonts and3:4 layout retained.",
+    "Only cover fields differ from approved full4m15 film. Narration, source windows, all3 setpoints, matchpoint, stats and fixed scoreboard unchanged. Sampled actual court frame agrees with original."
+  ],
+  "headroom_estimate": {
+    "method": "manual visual estimate in actual1080x1440 frame",
+    "header_guard_bottom_y": 170,
+    "head_top_y_approx": 260,
+    "head_face_bottom_y_approx": 565,
+    "hook_top_y_approx": 796
+  },
+  "audio_pcm_sha256": "SHA256=b2bf4728fa8aadbcf35682d7ad56bfc619e0c0adc7c88a99a1ca66ebe20ba0c8",
+  "decoded_audio_identical_to_previous": true,
+  "voice_evidence": "Current native automated_voice_suite passed; this is not a claim of human audio listening.",
+  "result": "pass"
+}
