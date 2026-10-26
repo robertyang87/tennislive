@@ -104,7 +104,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from render_story_info_band import (  # noqa: E402
-    compose_label_scrim, STORY_LABEL_LEGACY_MAX_SECONDS, STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD,
+    STORY_LABEL_LEGACY_MAX_SECONDS, STORY_LABEL_MAX_SECONDS, STORY_LABEL_PAD,
 )
 
 import narrated_audio_mode  # noqa: E402
@@ -4756,21 +4756,6 @@ def _inset_box(ins: dict) -> tuple[int, int, int]:
     return width, pad, y_top
 
 
-def _with_story_scrim(ins: dict, dest: Path) -> dict:
-    """右上角 story_text 垫 F 贴边渐隐底（账号所有者 2026-10-24 选定）。
-
-    图不在盘上（规划、测试替身）就原样返回，不凭空造文件。
-    """
-    if (str(ins.get("kind", "")) != "story_text" or str(ins.get("corner", "")) != "tr"
-            or not Path(str(ins.get("image", ""))).is_file()):
-        return ins
-    width, pad, y_top = _inset_box(ins)
-    out, top = compose_label_scrim(
-        Path(str(ins["image"])), dest.with_name(dest.stem + ".label-scrim.png"),
-        width_px=width, right_px=pad, top_room=y_top)
-    return {**ins, "image": str(out), "scrim_top_px": top, "scrim_w_px": width + pad}
-
-
 def _overlay_chain(base: str, ins: dict) -> str:
     """把角标压上去。没有角标时只是把 `[base]` 改名成 `[vout]`。
 
@@ -4787,12 +4772,6 @@ def _overlay_chain(base: str, ins: dict) -> str:
     corner = str(ins.get("corner", "tl"))
     x = f"{pad}" if corner in ("tl", "bl") else f"W-w-{pad}"
     bot_off = (VIDEO_H - BAND_TOP - BAND_PIC_H) if LAYOUT == "band" else 0
-    if "scrim_top_px" in ins:
-        # 合成过 F 渐隐底的那张（`_with_story_scrim`，键名不带下划线：它不是 spec 注解）：贴住右边缘，往上挪出底的上边距，
-        # 字卡墨迹的落位和不带底时一像素不差。
-        width = int(ins["scrim_w_px"])
-        x = "W-w"
-        y_top -= int(ins["scrim_top_px"])
     y = f"{y_top}" if corner in ("tl", "tr") else f"H-h-{bot_off + pad}"
     # **入场动效默认开**（`"animate": false` 关）：0.45s 淡入 + 36px 上浮。
     # 来路：抖音七批诊断里六批点名「动态文字/卡片要有动感」，这是其中唯一
@@ -5337,7 +5316,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
     # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
     # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
-    ins = _with_story_scrim(seg.inset, dest) if seg.inset else {}
+    ins = seg.inset or {}
     inset_in = ["-i", str(ins["image"])] if ins else []
     null_idx = 2 if ins else 1
     extra_in = ([] if has_audio else
