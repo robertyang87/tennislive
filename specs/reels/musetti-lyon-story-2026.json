@@ -1,6 +1,6 @@
 {
  "_column": "网球有故事",
- "_owner_fix_2026_10_26": "所有者验片后三令：①删全部 Tennis TV 片尾/标识卡（seg1、seg16 原窗口整段落在源片尾卡上、seg4 尾部带标识卡，均已换窗/收尾，新窗逐帧验过且整分打完再切）；②全段补右上角信息字卡（无背景版）；③副标题去『洛伦佐·』只留穆塞蒂。已推版本按所有者明示返工重推。 ④删最后一段采访原声（seg quote-med），结尾旁白改配捧杯镜头。",
+ "_owner_fix_2026_10_26": "所有者验片后三令：①删全部 Tennis TV 片尾/标识卡（seg1、seg16 原窗口整段落在源片尾卡上、seg4 尾部带标识卡，均已换窗/收尾，新窗逐帧验过且整分打完再切）；②全段补右上角信息字卡（无背景版）；③副标题去『洛伦佐·』只留穆塞蒂。已推版本按所有者明示返工重推。 ④删最后一段采访原声（seg quote-med），结尾旁白改配捧杯镜头。 ⑤结尾重构：删发言画面，改『倒地庆祝（旁白回环）→握手英文解说原声→捧杯镜头（旁白收束）』三段；原结尾旁白中『24岁…』一句随结构调整删去。",
  "_primary_why": "里昂决赛集锦 lyonf 是本期框架源：决赛收官、捧杯与封面帧皆出自此片。",
  "_social_search": {
   "instagram": "未检索到本人账号发布的决赛采访视频；不采用球迷搬运源。",
@@ -153,9 +153,9 @@
    "track": false
   },
   {
-   "_why": "win-01 无英文空当（ASR 实测 477.84–487.80）：捧杯后庆祝段；原 460–478 窗口有英文解说（『四年首冠』句在 462–470），按口径改用此空当定调。",
+   "_why": "定调段（所有者返工版）：里昂决赛首盘一个完整分（弗里茨特写→整分打完），避开片尾卡与结尾庆祝区（庆祝弧线留给结尾三段）。",
    "cx": 0.5,
-   "end": 457.2,
+   "end": 116.0,
    "inset": {
     "corner": "tr",
     "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
@@ -175,7 +175,7 @@
    "narration": "里昂，2026 年 10 月 25 日。穆塞蒂 6 比 3、6 比 4 击败弗里茨——他上一次捧杯，还是四年前。",
    "point_end_ok": true,
    "source": "lyonf",
-   "start": 448.0,
+   "start": 104.5,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
@@ -773,9 +773,9 @@
    }
   },
   {
-   "_why": "所有者 2026-10-26 定：结尾不要采访画面，旁白（做梦回环）直接配里昂捧杯镜头（457.2 起：起身、握手、捧起狮子奖杯）。",
+   "_why": "结尾一（所有者定：结尾不要发言画面）：赛点后倒地庆祝＋团队鼓掌＋起身，中文旁白『做梦回环』前半。",
    "cx": 0.5,
-   "end": 477.4,
+   "end": 462.4,
    "inset": {
     "corner": "tr",
     "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
@@ -792,9 +792,74 @@
     "show_for": 7,
     "width": 0.6
    },
-   "narration": "2022 年在汉堡，他说：我还在做梦。四年、七场决赛之后，在里昂，他说了几乎同一句话：这个梦，我不想醒来。24 岁的穆塞蒂，武器从来不是问题，问题一直是健康，和决赛里最后那一口气。现在这口气，他在里昂续上了。",
+   "narration": "2022 年在汉堡，他说：我还在做梦。四年、七场决赛之后，在里昂，他说了几乎同一句话：这个梦，我不想醒来。",
+   "point_end_ok": true,
    "source": "lyonf",
-   "start": 457.2,
+   "start": 448.0,
+   "track": false,
+   "voice": {
+    "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
+    "pitch": "+0Hz",
+    "rate": "+6%"
+   }
+  },
+  {
+   "_quote_kind": "broadcast_quote",
+   "_why": "结尾二：握手＋英文解说原声『时隔四年的第一个冠军』（双语字幕），承接捧杯。",
+   "cx": 0.5,
+   "end": 470.2,
+   "gain_db": 4.5,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
+   "quote": [
+    {
+     "at": 0.12,
+     "end": 7.54,
+     "text": "and Lorenzo Musetti, a first title in four years on the ATP Tour\n穆塞蒂，时隔四年的第一个冠军头衔"
+    }
+   ],
+   "source": "lyonf",
+   "start": 462.4,
+   "track": false
+  },
+  {
+   "_why": "结尾三：捧杯镜头（手捧狮子奖杯对镜头），旁白收束『最后这一口气，他在里昂续上了』，随后问题字卡。",
+   "cx": 0.5,
+   "end": 475.9,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 5,
+    "width": 0.6
+   },
+   "narration": "现在，最后这一口气，他在里昂续上了。",
+   "point_end_ok": true,
+   "source": "lyonf",
+   "start": 470.2,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
