@@ -1,0 +1,68 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-pZO13c3Q8XU/pZO13c3Q8XU.mp4",
+  "source_sha256": "e3fd7c431f91474dd998a444bb1ec6876d3aecd7c1934a014338ba89d5c4031b",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-26T07:44:44+00:00",
+  "reviewed_from": 203.9,
+  "reviewed_to": 233.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 204.18,
+      "end": 206.42,
+      "en": "Finished pretty late, the quarter finals.",
+      "zh": "八强那场，打到很晚才结束。"
+    },
+    {
+      "start": 206.64,
+      "end": 208.36,
+      "en": "Yesterday was really a tough match,",
+      "zh": "昨天的半决赛，也特别难打，"
+    },
+    {
+      "start": 208.94,
+      "end": 215.14,
+      "en": "and honestly, I felt completely dead after those matches,",
+      "zh": "说实话，那两场打完，我整个人都散架了，"
+    },
+    {
+      "start": 215.14,
+      "end": 218.56,
+      "en": "but I don't know how, I don't know in what way",
+      "zh": "但我不知道为什么，"
+    },
+    {
+      "start": 218.56,
+      "end": 220.02,
+      "en": "when I stepped on the court,",
+      "zh": "当我站上球场，"
+    },
+    {
+      "start": 220.16,
+      "end": 223.52,
+      "en": "I felt the energy from the crowd",
+      "zh": "观众的能量就涌了过来，"
+    },
+    {
+      "start": 223.52,
+      "end": 226.06,
+      "en": "and from all the nice work that they've done,",
+      "zh": "还有他们为我做的一切。"
+    },
+    {
+      "start": 226.06,
+      "end": 229.84,
+      "en": "So I really appreciated the work and effort",
+      "zh": "所以我特别感谢他们的付出，"
+    },
+    {
+      "start": 229.84,
+      "end": 233.54,
+      "en": "by all the medical staff and the physio from the tournament.",
+      "zh": "感谢医疗团队和赛事的理疗师。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 e3fd7c431f91474dd998a444bb1ec6876d3aecd7c1934a014338ba89d5c4031b，存于 data/source_asr/pZO13c3Q8XU/small.en.json 与 data/source_asr/pZO13c3Q8XU/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
