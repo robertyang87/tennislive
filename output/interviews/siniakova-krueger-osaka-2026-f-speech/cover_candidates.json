@@ -1,0 +1,1187 @@
+{
+ "slug": "siniakova-krueger-osaka-2026-f-speech",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "6c0f76e19ce8a4f6",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-26T04:59:19Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=6c7Ujiylup4",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": null,
+  "crop_keep_top": null,
+  "crop_shift_x": null,
+  "zoom": 1.0,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  6.0,
+  10.0
+ ],
+ "window_declared": true,
+ "step": 0.2,
+ "spec_frame_at": 8.0,
+ "candidates": [
+  {
+   "frame_at": 6.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     405,
+     291,
+     161,
+     161
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19877,
+    "face_area_ratio": 0.02963,
+    "sharpness": 87.279,
+    "contrast": 91.0,
+    "center_x_ratio": 0.44954,
+    "center_y_ratio": 0.27346
+   },
+   "margin": 1.94,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2576,
+     "face_px": 167.6
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.3112
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.6,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 6.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     408,
+     289,
+     163,
+     163
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.20123,
+    "face_area_ratio": 0.03037,
+    "sharpness": 77.391,
+    "contrast": 100.0,
+    "center_x_ratio": 0.45324,
+    "center_y_ratio": 0.27222
+   },
+   "margin": 1.72,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2559,
+     "face_px": 166.7
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.295
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.7,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 6.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     413,
+     290,
+     165,
+     165
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.2037,
+    "face_area_ratio": 0.03112,
+    "sharpness": 79.259,
+    "contrast": 115.0,
+    "center_x_ratio": 0.4588,
+    "center_y_ratio": 0.27469
+   },
+   "margin": 1.761,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2532,
+     "face_px": 164.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.3066
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 6.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     417,
+     288,
+     164,
+     164
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.20247,
+    "face_area_ratio": 0.03075,
+    "sharpness": 93.343,
+    "contrast": 114.0,
+    "center_x_ratio": 0.46204,
+    "center_y_ratio": 0.2716
+   },
+   "margin": 2.074,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 168.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2462,
+     "face_px": 168.2
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2895
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 168.2,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 6.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     424,
+     292,
+     163,
+     163
+    ],
+    "eyes": 3,
+    "face_height_ratio": 0.20123,
+    "face_area_ratio": 0.03037,
+    "sharpness": 71.728,
+    "contrast": 116.0,
+    "center_x_ratio": 0.46806,
+    "center_y_ratio": 0.27593
+   },
+   "margin": 1.594,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2287,
+     "face_px": 167.8
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2533
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.8,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 7.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     433,
+     295,
+     158,
+     158
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19506,
+    "face_area_ratio": 0.02854,
+    "sharpness": 71.219,
+    "contrast": 116.0,
+    "center_x_ratio": 0.47407,
+    "center_y_ratio": 0.27654
+   },
+   "margin": 1.583,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2383,
+     "face_px": 167.8
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2579
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.8,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 7.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     437,
+     295,
+     159,
+     159
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.1963,
+    "face_area_ratio": 0.0289,
+    "sharpness": 85.13,
+    "contrast": 118.0,
+    "center_x_ratio": 0.47824,
+    "center_y_ratio": 0.27716
+   },
+   "margin": 1.892,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2366,
+     "face_px": 166.5
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2605
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.5,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 7.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     447,
+     299,
+     152,
+     152
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.18765,
+    "face_area_ratio": 0.02641,
+    "sharpness": 71.736,
+    "contrast": 118.0,
+    "center_x_ratio": 0.48426,
+    "center_y_ratio": 0.27778
+   },
+   "margin": 1.594,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2321,
+     "face_px": 164.5
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2825
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.5,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 7.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     443,
+     294,
+     159,
+     159
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.1963,
+    "face_area_ratio": 0.0289,
+    "sharpness": 82.062,
+    "contrast": 119.0,
+    "center_x_ratio": 0.4838,
+    "center_y_ratio": 0.27593
+   },
+   "margin": 1.824,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.8
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.237,
+     "face_px": 166.8
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2719
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.8,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 7.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     442,
+     294,
+     159,
+     159
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.1963,
+    "face_area_ratio": 0.0289,
+    "sharpness": 86.313,
+    "contrast": 116.0,
+    "center_x_ratio": 0.48287,
+    "center_y_ratio": 0.27593
+   },
+   "margin": 1.918,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2562,
+     "face_px": 166.1
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2657
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.1,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 8.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     440,
+     293,
+     160,
+     160
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19753,
+    "face_area_ratio": 0.02926,
+    "sharpness": 83.355,
+    "contrast": 115.0,
+    "center_x_ratio": 0.48148,
+    "center_y_ratio": 0.27531
+   },
+   "margin": 1.852,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2513,
+     "face_px": 166.3
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2446
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.3,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 8.2,
+   "status": "fail",
+   "issues": [
+    "这张脸垂眼／半睁：眼睛纵横比 0.15，介于 0.12~0.16（半睁／往下看）"
+   ],
+   "face": {
+    "box": [
+     425,
+     290,
+     164,
+     164
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.20247,
+    "face_area_ratio": 0.03075,
+    "sharpness": 69.452,
+    "contrast": 103.0,
+    "center_x_ratio": 0.46944,
+    "center_y_ratio": 0.27407
+   },
+   "margin": 1.543,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.7
+    },
+    "eyes": {
+     "verdict": "downcast",
+     "ear": 0.1491,
+     "face_px": 164.7
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.237
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.7,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 8.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     416,
+     295,
+     154,
+     154
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19012,
+    "face_area_ratio": 0.02711,
+    "sharpness": 46.843,
+    "contrast": 82.0,
+    "center_x_ratio": 0.45648,
+    "center_y_ratio": 0.27407
+   },
+   "margin": 1.041,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2078,
+     "face_px": 164.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2702
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 8.6,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 44.319，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     419,
+     300,
+     145,
+     145
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.17901,
+    "face_area_ratio": 0.02403,
+    "sharpness": 44.319,
+    "contrast": 83.0,
+    "center_x_ratio": 0.45509,
+    "center_y_ratio": 0.27469
+   },
+   "margin": 0.985,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 162.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2443,
+     "face_px": 162.7
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.251
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 162.7,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 8.8,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 38.433，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     420,
+     298,
+     144,
+     144
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.17778,
+    "face_area_ratio": 0.0237,
+    "sharpness": 38.433,
+    "contrast": 84.0,
+    "center_x_ratio": 0.45556,
+    "center_y_ratio": 0.2716
+   },
+   "margin": 0.854,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2495,
+     "face_px": 164.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2195
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 9.0,
+   "status": "fail",
+   "issues": [
+    "归一化脸部清晰度 41.339，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     418,
+     296,
+     144,
+     144
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.17778,
+    "face_area_ratio": 0.0237,
+    "sharpness": 41.339,
+    "contrast": 86.0,
+    "center_x_ratio": 0.4537,
+    "center_y_ratio": 0.26914
+   },
+   "margin": 0.919,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2464,
+     "face_px": 164.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2334
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 164.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 9.2,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     421,
+     292,
+     154,
+     154
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19012,
+    "face_area_ratio": 0.02711,
+    "sharpness": 57.879,
+    "contrast": 82.0,
+    "center_x_ratio": 0.46111,
+    "center_y_ratio": 0.27037
+   },
+   "margin": 1.286,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 165.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.265,
+     "face_px": 165.2
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2824
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 165.2,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 9.4,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     415,
+     289,
+     160,
+     160
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.19753,
+    "face_area_ratio": 0.02926,
+    "sharpness": 66.225,
+    "contrast": 84.0,
+    "center_x_ratio": 0.45833,
+    "center_y_ratio": 0.27037
+   },
+   "margin": 1.472,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2687,
+     "face_px": 166.7
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2299
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 166.7,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 9.6,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     417,
+     288,
+     162,
+     162
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.2,
+    "face_area_ratio": 0.03,
+    "sharpness": 88.674,
+    "contrast": 89.0,
+    "center_x_ratio": 0.46111,
+    "center_y_ratio": 0.27037
+   },
+   "margin": 1.971,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2676,
+     "face_px": 167.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2787
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 9.8,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     417,
+     288,
+     164,
+     164
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.20247,
+    "face_area_ratio": 0.03075,
+    "sharpness": 99.915,
+    "contrast": 95.0,
+    "center_x_ratio": 0.46204,
+    "center_y_ratio": 0.2716
+   },
+   "margin": 2.22,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2686,
+     "face_px": 167.9
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2709
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 167.9,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 10.0,
+   "status": "pass",
+   "issues": [],
+   "face": {
+    "box": [
+     424,
+     288,
+     162,
+     162
+    ],
+    "eyes": 2,
+    "face_height_ratio": 0.2,
+    "face_area_ratio": 0.03,
+    "sharpness": 90.654,
+    "contrast": 113.0,
+    "center_x_ratio": 0.46759,
+    "center_y_ratio": 0.27037
+   },
+   "margin": 2.015,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 168.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.2706,
+     "face_px": 168.5
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2536
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 168.5,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  }
+ ],
+ "passing": [
+  9.8,
+  6.6,
+  10.0,
+  9.6,
+  6.0,
+  7.8,
+  7.2,
+  8.0,
+  7.6,
+  6.4,
+  6.2,
+  7.4,
+  6.8,
+  7.0,
+  9.4,
+  9.2,
+  8.4
+ ]
+}
