@@ -1,0 +1,107 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "2989d0a9a9437a1e1f47167a3282006bb2017503076192ad400e61a43237f0af",
+    "request_count": 24,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-musetti-lyon-story-2026-2989d0a9a9437a1e",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-musetti-lyon-story-2026-2989d0a9a9437a1e/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40333537750"
+  },
+  "cover_seconds": 4.498,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 361.71,
+  "topbar": null,
+  "film_seconds": 370.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 8.832,
+    "2": 9.336,
+    "3": 8.016,
+    "4": 6.0,
+    "5": 10.8,
+    "6": 13.728,
+    "7": 9.888,
+    "8": 6.816,
+    "9": 8.616,
+    "10": 5.64,
+    "11": 11.544,
+    "12": 3.504,
+    "13": 9.6,
+    "14": 16.152,
+    "15": 6.816,
+    "16": 6.96,
+    "17": 10.464,
+    "18": 6.888,
+    "19": 7.056,
+    "20": 25.968,
+    "22": 20.688,
+    "23": 6.12
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "5ad371f51dc26d741de2a276ef13f51c56b0e2ee59a37a428ecd1ba5576357c2",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "musetti-lyon-story-2026",
+    "received_at": "2026-10-26T13:46:32Z",
+    "artifact_ready_at": "2026-10-26T13:55:33Z",
+    "elapsed_seconds": 541.192,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "88e69608a9ddfb19167ab6fbe9805fa737fadab5859f6c2b1a6e5947ab34b3f7",
+    "spec_sha256": "8b6e217d86cc6081c4feaf389d8fcc967c5cdd55751b145806ebbe9819a16783",
+    "run_id": "40333537750",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-26T13:50:38Z",
+        "run_id": "40333537750"
+      }
+    ],
+    "render_seconds": 295.192,
+    "pre_render_seconds": 246.0
+  },
+  "film_sha256": "88e69608a9ddfb19167ab6fbe9805fa737fadab5859f6c2b1a6e5947ab34b3f7",
+  "film_bytes": 130490644,
+  "qc_attestation_sha256": "750a3f301fa42c6a08d5c071913191e2c53b43a3bb46c959220d7e09b686c506",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-26T13:50:38Z",
+      "run_id": "40333537750"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-26T13:55:38Z",
+      "run_id": "40333537750"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-musetti-lyon-story-2026/musetti-lyon-story-2026.mp4",
+  "video_bytes": 130490644
+}
