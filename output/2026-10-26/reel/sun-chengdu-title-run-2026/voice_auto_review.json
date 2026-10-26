@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "0dc29a67b834da3c9051244c2f00a9c9c69f8c8876ed364efeaa5baaa9545ea9",
-    "render_inputs_sha256": "c008945d503e08c10a190fdf3e44fd8710333f002d8287e184d70ccff9db1c3f",
+    "render_sha256": "8e4dcee7baacdf9b16ff6d85fd0db2f8ebef820073af87200d11ca3f2def1a10",
+    "render_inputs_sha256": "89e4cab5cc1d27a70d632f16ddc7cf6724fe0ba69a6b53d1257ac5d3dd803888",
     "spec_sha256": "00b6315fa5ec4b225dc8773aafb5a92fa4c39a20c762590e1ac6de5785f869fc",
-    "film_sha256": "9bdd52fb96171531bf5f6324d4a1fb249550c23406d0fc19ef0a7c799fbcdfa0",
+    "film_sha256": "1e5f5ce6b839139735fbd3966b5aced76751b0ee66a31b7c08381ca48e290408",
     "inventory_sha256": "1fea34fed2423f27ca027f1ebd15231f99f797ccacd66160ca4c3be91d114b36"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-26T04:34:35+00:00",
+  "reviewed_at": "2026-10-26T14:45:19+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -363,7 +363,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "半决赛 他更快了。"
+        "transcript": "斑决赛,他更快了。"
       },
       "polyphones": [],
       "pauses": {
@@ -575,7 +575,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "不要放弃坚持下来,我相信我一定可以。"
+        "transcript": "不要放弃坚持下来。我相信我一定可以。"
       },
       "polyphones": [],
       "pauses": {
@@ -783,7 +783,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第一盘一笔三落后,孙心然叫了医疗暂停,又吸蝉上绷带,他重新站回底线。"
+        "transcript": "第一盘一比三落后,孙心然叫了医疗暂停,又吸蝉上绷带,他重新站回底线。"
       },
       "polyphones": [
         {
