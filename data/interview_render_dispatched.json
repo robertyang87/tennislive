@@ -87,5 +87,12 @@
       "inputs_sha256": "ddfde02349b025fd126c16bd69d47bbb2eca4251659f4c9b13b5affe31f0449e",
       "tries": 1
     }
+  },
+  "subs_red": {
+    "siniakova-krueger-osaka-2026-f-speech": {
+      "since": "2026-10-26T04:48:55Z",
+      "inputs_sha256": "ddfde02349b025fd126c16bd69d47bbb2eca4251659f4c9b13b5affe31f0449e",
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：分歧 42.0% 比认领的 32.0% 还高——认领是钉在当时那次观测上的，现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。"
+    }
   }
 }
