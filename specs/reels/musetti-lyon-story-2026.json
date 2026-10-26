@@ -1,6 +1,6 @@
 {
  "_column": "网球有故事",
- "_owner_fix_2026_10_26": "所有者验片后三令：①删全部 Tennis TV 片尾/标识卡（seg1、seg16 原窗口整段落在源片尾卡上、seg4 尾部带标识卡，均已换窗/收尾，新窗逐帧验过且整分打完再切）；②全段补右上角信息字卡（无背景版）；③副标题去『洛伦佐·』只留穆塞蒂。已推版本按所有者明示返工重推。",
+ "_owner_fix_2026_10_26": "所有者验片后三令：①删全部 Tennis TV 片尾/标识卡（seg1、seg16 原窗口整段落在源片尾卡上、seg4 尾部带标识卡，均已换窗/收尾，新窗逐帧验过且整分打完再切）；②全段补右上角信息字卡（无背景版）；③副标题去『洛伦佐·』只留穆塞蒂。已推版本按所有者明示返工重推。 ④删最后一段采访原声（seg quote-med），结尾旁白改配捧杯镜头。",
  "_primary_why": "里昂决赛集锦 lyonf 是本期框架源：决赛收官、捧杯与封面帧皆出自此片。",
  "_social_search": {
   "instagram": "未检索到本人账号发布的决赛采访视频；不采用球迷搬运源。",
@@ -155,7 +155,7 @@
   {
    "_why": "win-01 无英文空当（ASR 实测 477.84–487.80）：捧杯后庆祝段；原 460–478 窗口有英文解说（『四年首冠』句在 462–470），按口径改用此空当定调。",
    "cx": 0.5,
-   "end": 464.0,
+   "end": 457.2,
    "inset": {
     "corner": "tr",
     "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
@@ -175,7 +175,7 @@
    "narration": "里昂，2026 年 10 月 25 日。穆塞蒂 6 比 3、6 比 4 击败弗里茨——他上一次捧杯，还是四年前。",
    "point_end_ok": true,
    "source": "lyonf",
-   "start": 454.0,
+   "start": 448.0,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
@@ -773,85 +773,9 @@
    }
   },
   {
-   "_quote_kind": "player_quote",
-   "_quote_why": "原声位 2：里昂致辞致谢医疗/理疗团队段（窗口按侦察字幕定位 ≈03:17＋停顿检测定界，致辞特写验过）；扣全片健康线。cue 为草案，render 前以 source-asr 实测时戳订正。",
-   "_why": "win-08 致谢医疗团队原声（源 ASR medium 实测 203.9–233.54）：八强深夜＋半决赛苦战＋『整个人都散架了』，扣回伤病线。",
-   "_zh": "同场致辞后段（源 ASR 实测时戳）",
+   "_why": "所有者 2026-10-26 定：结尾不要采访画面，旁白（做梦回环）直接配里昂捧杯镜头（457.2 起：起身、握手、捧起狮子奖杯）。",
    "cx": 0.5,
-   "end": 233.7,
-   "gain_db": 4.5,
-   "inset": {
-    "corner": "tr",
-    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
-    "kind": "story_text",
-    "label": {
-     "date": "2026.10.25",
-     "people": "穆塞蒂 vs 弗里茨",
-     "place": "里昂公开赛 决赛",
-     "score": "6-3 6-4",
-     "topic": "冠军荒终结"
-    },
-    "motion": "editorial",
-    "pad": 0.043,
-    "show_for": 7,
-    "width": 0.6
-   },
-   "kind": "quote",
-   "quote": [
-    {
-     "at": 0.28,
-     "end": 2.52,
-     "text": "Finished pretty late, the quarter finals.\n八强那场，打到很晚才结束。"
-    },
-    {
-     "at": 2.74,
-     "end": 4.46,
-     "text": "Yesterday was really a tough match,\n昨天的半决赛，也特别难打，"
-    },
-    {
-     "at": 5.04,
-     "end": 11.24,
-     "text": "and honestly, I felt completely dead after those matches,\n说实话，那两场打完我都散架了，"
-    },
-    {
-     "at": 11.24,
-     "end": 14.66,
-     "text": "but I don't know how, I don't know in what way\n但我不知道为什么，"
-    },
-    {
-     "at": 14.66,
-     "end": 16.12,
-     "text": "when I stepped on the court,\n当我站上球场，"
-    },
-    {
-     "at": 16.26,
-     "end": 19.62,
-     "text": "I felt the energy from the crowd\n观众的能量就涌了过来，"
-    },
-    {
-     "at": 19.62,
-     "end": 22.16,
-     "text": "and from all the nice work that they've done,\n还有他们为我做的一切。"
-    },
-    {
-     "at": 22.16,
-     "end": 25.94,
-     "text": "So I really appreciated the work and effort\n所以我特别感谢他们的付出，"
-    },
-    {
-     "at": 25.94,
-     "end": 29.64,
-     "text": "by all the medical staff and the physio from the tournament.\n感谢医疗团队和赛事的理疗师。"
-    }
-   ],
-   "source": "speech",
-   "start": 203.9,
-   "track": false
-  },
-  {
-   "_why": "win-08 致辞后掌声段（156.14 致辞结束后的纯掌声空当）：结尾旁白 dream 回环＋维也纳下一站，画面为致辞后现场。",
-   "cx": 0.5,
-   "end": 179.0,
+   "end": 477.4,
    "inset": {
     "corner": "tr",
     "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
@@ -869,8 +793,8 @@
     "width": 0.6
    },
    "narration": "2022 年在汉堡，他说：我还在做梦。四年、七场决赛之后，在里昂，他说了几乎同一句话：这个梦，我不想醒来。24 岁的穆塞蒂，武器从来不是问题，问题一直是健康，和决赛里最后那一口气。现在这口气，他在里昂续上了。",
-   "source": "speech",
-   "start": 156.4,
+   "source": "lyonf",
+   "start": 457.2,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
