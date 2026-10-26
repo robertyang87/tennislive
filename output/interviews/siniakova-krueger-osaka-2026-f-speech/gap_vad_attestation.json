@@ -1,7 +1,7 @@
 {
  "status": "pass",
  "method": "silero_vad_plus_dual_asr_coverage",
- "sha256": "5d854fb89d43fdf4de1122b858e77c15d32289008cf3e80e5a95ed6e6dd73f0e",
+ "sha256": "91defd46cc8f9fdfb4f914700b48727e0354f482c2aa9ceec2ebff17f66b8b81",
  "url": "https://www.youtube.com/watch?v=6c7Ujiylup4",
  "edge_pad_seconds": 0.35,
  "max_speech_seconds": 0.12,
@@ -11,11 +11,13 @@
    "start": 139.7,
    "end": 147.0,
    "speech_seconds": 2.448,
-   "second_asr_words": [],
-   "transcript_covered": false,
+   "second_asr_words": [
+    "Thank"
+   ],
+   "transcript_covered": true,
    "caption_timeline_covered": false,
-   "status": "speech_detected",
-   "reason": "VAD 测到 2.448s 人声，第二份 ASR（small.en）没听出词——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+   "status": "transcript_covered",
+   "reason": "VAD 测到 2.448s 人声，第二份 ASR（small.en）听到「Thank」——这些词已按原顺序出现在前后 8 秒的成品字幕里，是两套时间码的边界漂移、不是漏了，按双 ASR 销账（不是 VAD 证明没人说话）"
   }
  ]
 }
