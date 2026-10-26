@@ -1,0 +1,563 @@
+{
+  "slug": "moutet-cramp-warning-2026",
+  "date": "2026-10-26",
+  "_column": "网球有故事",
+  "title": "为什么抽筋还被警告",
+  "_title_why": "推送标题「10.26网球有故事|为什么抽筋还被警告」20字（账号所有者批准）。",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "网球有故事剪辑片用 edge 云健，+18% 语速、+10Hz 音高（账号所有者固定口径）。",
+  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18% --pitch +10Hz。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "hook": "抽筋倒地\n为什么还被警告",
+    "narration": "抽筋倒地，为什么还被警告？",
+    "subject": "穆泰",
+    "topic": "为什么抽筋还被警告",
+    "story_kind": "other",
+    "layout": "solo",
+    "portrait": {
+      "image": "assets/reel/moutet-cramp-warning-2026/cover-moutet-lyon.jpg",
+      "focus": 0.5,
+      "focus_y": 0.3,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/20/d5b2464c-4214-415e-82f5-2518d8d290d3/20261020_GPARA_179_Corentin-MOUTET.jpg",
+      "_portrait_why": "ATP Media 官方图库 4596211「2026 Lyon Moutet」（6000×4000，EXIF 拍摄 2026-10-20 15:07，就是这场对安贝尔）；正脸、整个头部完整；裁 3000×4000 缩到 1080×1440，不放大。"
+    }
+  },
+  "push": {
+    "auto": true,
+    "summary": "为什么抽筋还被警告",
+    "lead": "里昂站穆泰抽筋倒地，起身后却吃了一次超时警告。ATP 规则：抽筋不能叫医疗暂停，只能在换边、盘间治疗。梅德韦杰夫、科兹洛夫、阿尔卡拉斯、辛纳都碰上过。",
+    "_why": "渲染前写 auto=true；合并后 CI 自动推送一次。"
+  },
+  "sources": {
+    "lyon": "https://www.youtube.com/watch?v=fgCvunxHYfk",
+    "short": "https://www.youtube.com/watch?v=FMlaCdqPkyw",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrv1/animMtCrv1.mp4",
+    "mia21": "https://www.youtube.com/watch?v=SwjfbwzPLtU",
+    "aca22": "https://www.youtube.com/watch?v=8J56Fy5bvao",
+    "rg23": "https://www.youtube.com/watch?v=JjbWqtnAbxY",
+    "sh25": "https://www.youtube.com/watch?v=S3HVLU-kVWU",
+    "ao26": "https://www.youtube.com/watch?v=kYlFxO1HA_A"
+  },
+  "source_fallbacks": {
+    "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-fgCvunxHYfk/fgCvunxHYfk.mp4",
+    "short": "https://github.com/robertyang87/tennislive/releases/download/source-FMlaCdqPkyw/FMlaCdqPkyw.mp4",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrv1/animMtCrv1.mp4",
+    "mia21": "https://github.com/robertyang87/tennislive/releases/download/source-SwjfbwzPLtU/SwjfbwzPLtU.mp4",
+    "aca22": "https://github.com/robertyang87/tennislive/releases/download/source-8J56Fy5bvao/8J56Fy5bvao.mp4",
+    "rg23": "https://github.com/robertyang87/tennislive/releases/download/source-JjbWqtnAbxY/JjbWqtnAbxY.mp4",
+    "sh25": "https://github.com/robertyang87/tennislive/releases/download/source-S3HVLU-kVWU/S3HVLU-kVWU.mp4",
+    "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4"
+  },
+  "primary": "lyon",
+  "_no_probe_why": {
+    "lyon": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "short": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1080,
+      "height": 1920,
+      "fps": "50/1"
+    },
+    "anim": {
+      "why": "本地 PIL 渲染的规则动画，ffprobe 实测；画面在中央 810×1080，cx=0.5 裁切。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "mia21": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60/1"
+    },
+    "aca22": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "60/1"
+    },
+    "rg23": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    },
+    "sh25": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
+    },
+    "ao26": {
+      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
+    }
+  },
+  "source_crop": {
+    "short": {
+      "reason": "Tennis TV 官方竖版 Short 原生 1080×1920，只有它拍到穆泰蜷地和被扶起的近景；按本源原生几何裁 1080×1440，不放大。",
+      "fill_y": 0.5,
+      "min_height": 1080
+    }
+  },
+  "mixed_fps": {
+    "mia21": "60 fps → 50：迈阿密 2021 走动与赛后近景，动作慢，重采样看不出。",
+    "aca22": "60 fps → 50：科兹洛夫躺地、季米特洛夫查看，基本静止。",
+    "rg23": "25 fps → 50：整齐地每帧重复一次，无丢帧。",
+    "ao26": "25 fps → 50：整齐地每帧重复一次，无丢帧。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "穆泰抽筋倒地，为什么还被判超时警告？抽筋的规则是什么？",
+    "thesis": "2026-10-20 里昂 ATP250 首轮，穆泰 6-2 6-7(5) 7-6(4) 胜安贝尔；决胜盘他抽筋倒地，被扶起后吃了一次超时警告。ATP 与大满贯规则：抽筋不能叫医疗暂停，只能在换边/盘间治疗，一场最多两次；分间 25 秒，第一次超时警告，再犯发球方判一发失误、接发方罚一分；撑不住可放弃分或局到换边治疗。历史案例：梅德韦杰夫迈阿密 2021、科兹洛夫阿卡普尔科 2022、阿尔卡拉斯法网 2023、辛纳上海 2025、阿尔卡拉斯—兹维列夫澳网 2026。",
+    "beats": [
+      "里昂：抽筋倒地、被扶起、超时警告、抢七取胜",
+      "规则：不能 MTO、换边盘间治疗、最多两次、25 秒、罚则、放弃分局",
+      "案例：迈阿密 2021、阿卡普尔科 2022、法网 2023、上海 2025、澳网 2026",
+      "收尾：抽筋到倒地，该不该多给几秒？"
+    ],
+    "human_context": {
+      "angle": "规则写得清清楚楚，可倒在地上的人只想多要几秒。",
+      "facts": [
+        "穆泰 6-2 6-7(5) 7-6(4) 胜安贝尔、抽筋、抢七 7-4（ATP、Tennis Temple）",
+        "超时警告（Sky Sports、Le Progrès）",
+        "规则条文（ATP 2026 规则手册、大满贯 2026 规则手册）"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/humbert-moutet-lyon-2026-tuesday",
+        "https://en.tennistemple.com/actu/lyon-corentin-moutet-battles-through-cramps-to/IePt",
+        "https://www.skysports.com/tennis/video/13601456/corentin-moutet-gets-cramp-then-a-time-violation-for-taking-too-long-to-serve",
+        "https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+        "https://apnews.com/hobbled-daniil-medvedev-limps-to-3rd-round-win-at-miami-open-959cb94812bef05f51b1ec3b85bf6d3c",
+        "https://www.miamiopen.com/latest-news/medvedev-fights-off-cramps-advances-into-miami-open-fourth-round/",
+        "https://apnews.com/article/b6688a507d75ff0409ca036ab9b55b3b",
+        "https://www.abc.net.au/news/2022-02-23/grigor-dimitrov-tries-to-help-a-cramping-stefan-kozlov/13766890",
+        "https://apnews.com/article/alcaraz-zverev-medical-time-out-cramps-afe44706c7d715bb4763ed60908b4280",
+        "https://www.reuters.com/sports/tennis/miracle-man-alcaraz-beats-leg-issue-zverev-make-australian-open-final-2026-01-30/",
+        "https://ausopen.com/articles/news/alcaraz-survives-zverev-longest-ao-semifinal-reach-first-final-melbourne"
+      ]
+    }
+  },
+  "_slug_why": "新题新 slug。",
+  "_dropped_cases": "张德培 1989 法网下手发球：RG 官方全场 ZTPAUi0nFIs 只有 1280×720（且为 1989 年标清转制），低于 1080 下限，删。",
+  "segments": [
+    {
+      "source": "lyon",
+      "start": 148.5,
+      "end": 157.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "十月二十号，里昂站首轮，法国人穆泰对阵同胞安贝尔。打到决胜盘，穆泰二比零领先。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：148–161 决胜盘广角回合，记分牌第三盘穆泰 2-0；162 起切到他倒地。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-lyon.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 8.5,
+        "motion": "editorial",
+        "label": {
+          "topic": "抽筋还被警告",
+          "date": "2026.10.20",
+          "place": "ATP250 里昂 首轮",
+          "score": "6-2 6-7(5) 7-6(4)",
+          "people": "穆泰 vs 安贝尔"
+        }
+      }
+    },
+    {
+      "source": "lyon",
+      "start": 162.0,
+      "end": 166.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "打完一分，他突然倒在了地上。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：162–166 穆泰倒在场上（广角侧面）。"
+    },
+    {
+      "source": "short",
+      "start": 10.6,
+      "end": 17.9,
+      "cx": 0.5,
+      "track": false,
+      "narration": "他抽筋了，蜷在地上，好一会儿都起不来。可按规则，这时候不能叫医疗暂停。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Tennis TV 竖版 Short 已抽帧：11–17 穆泰蜷在地上，记分牌 HUMBERT 2 7 0 40 / MOUTET 6 6 2 40；规则依据 ATP 规则手册 2026 与大满贯规则手册 2026「Muscle Cramping」条。"
+    },
+    {
+      "source": "short",
+      "start": 18.0,
+      "end": 23.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "工作人员过来，把他扶了起来。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：18–23 两名工作人员把他从地上扶起（不点身份，画面不能确认是防护师）。"
+    },
+    {
+      "source": "short",
+      "start": 24.0,
+      "end": 30.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "比赛接着打。可主裁判他超时，给了一次警告。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "24–30 比赛重新开始的广角回合；警告本身集锦没拍到，旁白只叙述。超时警告：Sky Sports 视频标题「gets cramp then a time violation for taking too long to serve」+ Le Progrès「À terre, crampé, averti」两源。"
+    },
+    {
+      "source": "lyon",
+      "start": 236.0,
+      "end": 241.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "他没有放弃，一路打进决胜盘抢七。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：236–241 决胜盘后段广角回合。"
+    },
+    {
+      "source": "lyon",
+      "start": 249.5,
+      "end": 257.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "抢七七比四，穆泰赢下比赛。抽筋倒地，为什么还会被警告？",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧核实：250–252 穆泰近景、253–257 抢七回合；抢七 7-4：ATP 稿 7-6(4) + Tennis Temple「prevailed seven points to four」。"
+    },
+    {
+      "source": "anim",
+      "start": 0.02,
+      "end": 6.53,
+      "cx": 0.5,
+      "track": false,
+      "narration": "先看规则。ATP和大满贯的规则都写着：抽筋，不能叫医疗暂停。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。ATP 2026 规则手册「4) Muscle Cramping」：Players may not receive a medical time-out for muscle cramping；大满贯 2026 规则手册同文。"
+    },
+    {
+      "source": "anim",
+      "start": 6.59,
+      "end": 11.6,
+      "cx": 0.5,
+      "track": false,
+      "narration": "只能在换边的九十秒，或者盘间的一百二十秒里治疗。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。同条：treatment ... only during the time allotted for changeovers and/or set breaks；换边 90 秒、盘间 120 秒（ATP「Time Between Points」与大满贯规则 J 条均写）。"
+    },
+    {
+      "source": "anim",
+      "start": 11.66,
+      "end": 15.07,
+      "cx": 0.5,
+      "track": false,
+      "narration": "一场比赛，抽筋最多治疗两次。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。同条：a total of two (2) full change of ends treatments for muscle cramping in a match（ATP、大满贯两本同文）。"
+    },
+    {
+      "source": "anim",
+      "start": 15.13,
+      "end": 18.28,
+      "cx": 0.5,
+      "track": false,
+      "narration": "分与分之间，只有二十五秒。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。ATP「Time Between Points. 25 Seconds」；大满贯规则 A maximum of twenty-five (25) seconds。"
+    },
+    {
+      "source": "anim",
+      "start": 18.34,
+      "end": 24.61,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第一次超时，是警告；再犯，发球方判一次发球失误，接发方直接丢一分。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。ATP：Time Violation, Warning → server「2nd Service」/ receiver「Point Penalty」；大满贯：first violation warning，subsequent: server fault / receiver point penalty。"
+    },
+    {
+      "source": "anim",
+      "start": 24.67,
+      "end": 29.92,
+      "cx": 0.5,
+      "track": false,
+      "narration": "真撑不住，可以先放弃几分、甚至几局，拖到换边再治。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。ATP 与大满贯同条 Note：may forfeit the point(s)/game(s) needed to get to a change of end or set-break in order to receive treatment。"
+    },
+    {
+      "source": "mia21",
+      "start": 30.0,
+      "end": 40.8,
+      "cx": 0.5,
+      "track": false,
+      "narration": "这条规则，不少球员都碰上过。二零二一年迈阿密，梅德韦杰夫第三盘抽筋，一瘸一拐地打。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Tennis TV SwjfbwzPLtU 已抽帧：30–40 第三盘梅德韦杰夫走动、腿部特写（37–40）。事实：AP「Hobbled Daniil Medvedev limps to 3rd-round win」、Miami Open 官网「Medvedev Fights Off Cramps」。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-mia21.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 9.0,
+        "motion": "editorial",
+        "label": {
+          "topic": "抽筋一瘸一拐赢球",
+          "date": "2021.03.28",
+          "place": "ATP1000 迈阿密 第三轮",
+          "score": "7-6(3) 6-7(7) 6-4",
+          "people": "梅德韦杰夫 vs 波佩林"
+        }
+      }
+    },
+    {
+      "source": "mia21",
+      "start": 183.0,
+      "end": 192.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "最后七比六、六比七、六比四赢了。他说，这种感觉，直落三盘赢大满贯决赛都比不上。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：183–192 赛点后梅德韦杰夫近景笑、握手。比分 7-6(3) 6-7(7) 6-4（AP、Miami Open 官网）；原话 winning a Grand Slam final in straight sets doesn't feel the way I felt after the match point today（AP、Tennis Majors）。"
+    },
+    {
+      "source": "aca22",
+      "start": 64.5,
+      "end": 74.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "二零二二年阿卡普尔科，科兹洛夫抽筋，直接躺倒在场上。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Tennis TV 8J56Fy5bvao 已抽帧：63 记分牌第二盘科兹洛夫 4-3，65–74 他躺倒在场上。事实：AP、ESPN、ABC（抽筋）。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-aca22.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 9.0,
+        "motion": "editorial",
+        "label": {
+          "topic": "抽筋躺倒在场上",
+          "date": "2022.02.21",
+          "place": "ATP500 阿卡普尔科 首轮",
+          "score": "7-6(8) 5-7 6-3",
+          "people": "科兹洛夫 vs 季米特洛夫"
+        }
+      }
+    },
+    {
+      "source": "aca22",
+      "start": 102.0,
+      "end": 109.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "对手季米特洛夫过来，帮他拉伸。打了三小时二十一分钟，科兹洛夫赢了。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：101–111 季米特洛夫（红衣）站到他身边、防护师处理；ABC「Grigor Dimitrov tries to help a cramping Stefan Kozlov」、AP。3 小时 21 分、7-6(8) 5-7 6-3：AP、ESPN。"
+    },
+    {
+      "source": "rg23",
+      "start": 85.0,
+      "end": 96.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "二零二三年法网半决赛，第三盘一比一，阿尔卡拉斯抽筋。为了拖到换边治疗，他直接放弃了一局。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Roland-Garros 官方 JjbWqtnAbxY 已抽帧：89–93 阿尔卡拉斯在场边椅子上接受治疗。第三盘 1-1 抽筋、为治疗放弃一局：ATP 稿 alcaraz-roland-garros-2023-friday-sf-cramp-forfeit + rolandgarros.com 赛报。哪条腿两源说法不一，不提。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-rg23.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 9.0,
+        "motion": "editorial",
+        "label": {
+          "topic": "为治疗放弃一局",
+          "date": "2023.06.09",
+          "place": "法网 半决赛",
+          "score": "6-3 5-7 6-1 6-1",
+          "people": "德约科维奇 vs 阿尔卡拉斯"
+        }
+      }
+    },
+    {
+      "source": "rg23",
+      "start": 158.0,
+      "end": 165.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "德约科维奇六比三、五比七、六比一、六比一赢下比赛。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：159–165 两人网前拥抱。比分 6-3 5-7 6-1 6-1：ATP、rolandgarros.com。"
+    },
+    {
+      "source": "sh25",
+      "start": 184.5,
+      "end": 196.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "二零二五年上海，天气又湿又热，辛纳右腿抽筋。第三盘二比三落后，他选择退赛，和格里克斯普尔握手。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Tennis TV S3HVLU-kVWU 已抽帧：182–191 辛纳在椅边收拾、192–197 与格里克斯普尔握手。右腿抽筋、第三盘 2-3 退赛、湿热：ATP、Guardian、AP。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-sh25.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 9.0,
+        "motion": "editorial",
+        "label": {
+          "topic": "抽筋退赛",
+          "date": "2025.10.05",
+          "place": "ATP1000 上海 第三轮",
+          "event": "6-7(3) 7-5 2-3退赛",
+          "people": "辛纳 vs 格里克斯普尔"
+        }
+      }
+    },
+    {
+      "source": "ao26",
+      "start": 200.0,
+      "end": 209.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "今年澳网半决赛，阿尔卡拉斯对兹维列夫。第三盘，阿尔卡拉斯的腿出了问题，拿到一次医疗暂停。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "Australian Open 官方 kYlFxO1HA_A 已抽帧：204–208 阿尔卡拉斯回合后腿部别扭、走动。第三盘医疗暂停：AP、Reuters、The Athletic、ABC。",
+      "inset": {
+        "image": "assets/reel/moutet-cramp-warning-2026/label-ao26.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 8.5,
+        "motion": "editorial",
+        "label": {
+          "topic": "医疗暂停起争议",
+          "date": "2026.01.30",
+          "place": "澳网 半决赛",
+          "score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+          "people": "阿尔卡拉斯 vs 兹维列夫"
+        }
+      }
+    },
+    {
+      "source": "ao26",
+      "start": 227.0,
+      "end": 235.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "兹维列夫很不满，认为抽筋不该给医疗暂停。阿尔卡拉斯说，他以为是受伤。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：231–234 兹维列夫在场边与工作人员争论。兹维列夫认为抽筋不该给医疗暂停、阿尔卡拉斯以为是受伤：AP、The Athletic。"
+    },
+    {
+      "source": "ao26",
+      "start": 453.0,
+      "end": 460.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "最后阿尔卡拉斯五盘获胜，打了五小时二十七分钟。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：450–460 赛后两人网前拥抱。五盘、5 小时 27 分：Reuters、ausopen.com。"
+    },
+    {
+      "source": "lyon",
+      "start": 260.0,
+      "end": 268.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "规则写得很清楚。可抽筋到倒地，该不该多给几秒？评论区说说。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
+      },
+      "_why": "已抽帧：260–263 穆泰赢球庆祝、264–268 与安贝尔网前握手。结尾评论区问题（账号所有者指定）。"
+    }
+  ]
+}
