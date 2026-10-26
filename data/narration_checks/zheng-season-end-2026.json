@@ -1,0 +1,78 @@
+{
+  "slug": "zheng-season-end-2026",
+  "checked_at": "2026-10-26T14:42:03Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "7ce75ffc3a19a0f2": {
+      "segment": 1,
+      "spoken": 10.224,
+      "picture": 10.9
+    },
+    "d76f4cca4294beb8": {
+      "segment": 3,
+      "spoken": 4.656,
+      "picture": 4.8
+    },
+    "7e2c9509796aab10": {
+      "segment": 4,
+      "spoken": 7.656,
+      "picture": 9.0
+    },
+    "2c305e177fe30770": {
+      "segment": 5,
+      "spoken": 6.84,
+      "picture": 9.0
+    },
+    "1b4e907ee59679e6": {
+      "segment": 6,
+      "spoken": 7.392,
+      "picture": 8.9
+    },
+    "2b8519e6b28c8657": {
+      "segment": 7,
+      "spoken": 10.656,
+      "picture": 11.7
+    },
+    "f1a6d9ec5eef85f0": {
+      "segment": 8,
+      "spoken": 6.12,
+      "picture": 7.8
+    },
+    "e4ba119d3375a0b1": {
+      "segment": 9,
+      "spoken": 9.024,
+      "picture": 9.5
+    },
+    "97aa9ff3ec8b6b92": {
+      "segment": 10,
+      "spoken": 4.344,
+      "picture": 7.0
+    },
+    "e2e0f00784387236": {
+      "segment": 11,
+      "spoken": 7.824,
+      "picture": 7.2
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "a434ddb00995c3991016dffafe6eddcb637293ed1bb4b33b7288f09760d6ed42",
+    "request_count": 12,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-zheng-season-end-2026-a434ddb00995c399",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zheng-season-end-2026-a434ddb00995c399/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40341807336"
+  }
+}
