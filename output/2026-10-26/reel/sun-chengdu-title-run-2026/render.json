@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-sun-chengdu-title-run-2026-b4609dcdf39e3132",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-chengdu-title-run-2026-b4609dcdf39e3132/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40268552858"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40340738096"
   },
   "cover_seconds": 4.234,
   "cover_narrated": true,
@@ -55,45 +55,45 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "c008945d503e08c10a190fdf3e44fd8710333f002d8287e184d70ccff9db1c3f",
+  "render_inputs_sha256": "89e4cab5cc1d27a70d632f16ddc7cf6724fe0ba69a6b53d1257ac5d3dd803888",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "sun-chengdu-title-run-2026",
-    "received_at": "2026-10-26T04:20:23Z",
-    "artifact_ready_at": "2026-10-26T04:32:58Z",
-    "elapsed_seconds": 755.453,
+    "received_at": "2026-10-26T14:33:52Z",
+    "artifact_ready_at": "2026-10-26T14:43:57Z",
+    "elapsed_seconds": 605.683,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "9bdd52fb96171531bf5f6324d4a1fb249550c23406d0fc19ef0a7c799fbcdfa0",
+    "film_sha256": "1e5f5ce6b839139735fbd3966b5aced76751b0ee66a31b7c08381ca48e290408",
     "spec_sha256": "00b6315fa5ec4b225dc8773aafb5a92fa4c39a20c762590e1ac6de5785f869fc",
-    "run_id": "40268552858",
+    "run_id": "40340738096",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-26T04:24:37Z",
-        "run_id": "40268552858"
+        "at": "2026-10-26T14:36:38Z",
+        "run_id": "40340738096"
       }
     ],
-    "render_seconds": 501.453,
-    "pre_render_seconds": 254.0
+    "render_seconds": 439.683,
+    "pre_render_seconds": 166.0
   },
-  "film_sha256": "9bdd52fb96171531bf5f6324d4a1fb249550c23406d0fc19ef0a7c799fbcdfa0",
-  "film_bytes": 283600353,
-  "qc_attestation_sha256": "5740d5ecff9cb256df07b00e0a4a63e3b27a1aa439e551f086f7a00ee1d91c06",
+  "film_sha256": "1e5f5ce6b839139735fbd3966b5aced76751b0ee66a31b7c08381ca48e290408",
+  "film_bytes": 283752300,
+  "qc_attestation_sha256": "971c1f471e30e560e8507d87091651e27337cb950736d7d510f1432582d3ef7b",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-26T04:24:37Z",
-      "run_id": "40268552858"
+      "at": "2026-10-26T14:36:38Z",
+      "run_id": "40340738096"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-26T04:33:04Z",
-      "run_id": "40268552858"
+      "at": "2026-10-26T14:44:01Z",
+      "run_id": "40340738096"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-chengdu-title-run-2026/sun-chengdu-title-run-2026.mp4",
-  "video_bytes": 283600353,
-  "_release_tag_note": "2026-10-26T04:33:18Z run 40268552858 把这一份（video_bytes 283600353）传上 tag `reel-sun-chengdu-title-run-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-25/reel/sun-chengdu-title-run-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "video_bytes": 283752300,
+  "_release_tag_note": "2026-10-26T14:44:13Z run 40340738096 把这一份（video_bytes 283752300）传上 tag `reel-sun-chengdu-title-run-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-25/reel/sun-chengdu-title-run-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }
