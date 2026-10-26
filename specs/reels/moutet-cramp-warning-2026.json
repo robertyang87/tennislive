@@ -34,7 +34,7 @@
   "sources": {
     "lyon": "https://www.youtube.com/watch?v=fgCvunxHYfk",
     "short": "https://www.youtube.com/watch?v=FMlaCdqPkyw",
-    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrv01/animMtCrv01.mp4",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb01/animMtCrb01.mp4",
     "mia21": "https://www.youtube.com/watch?v=SwjfbwzPLtU",
     "aca22": "https://www.youtube.com/watch?v=8J56Fy5bvao",
     "sh25": "https://www.youtube.com/watch?v=S3HVLU-kVWU",
@@ -43,7 +43,7 @@
   "source_fallbacks": {
     "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-fgCvunxHYfk/fgCvunxHYfk.mp4",
     "short": "https://github.com/robertyang87/tennislive/releases/download/source-FMlaCdqPkyw/FMlaCdqPkyw.mp4",
-    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrv01/animMtCrv01.mp4",
+    "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb01/animMtCrb01.mp4",
     "mia21": "https://github.com/robertyang87/tennislive/releases/download/source-SwjfbwzPLtU/SwjfbwzPLtU.mp4",
     "aca22": "https://github.com/robertyang87/tennislive/releases/download/source-8J56Fy5bvao/8J56Fy5bvao.mp4",
     "sh25": "https://github.com/robertyang87/tennislive/releases/download/source-S3HVLU-kVWU/S3HVLU-kVWU.mp4",
@@ -96,8 +96,8 @@
   },
   "source_crop": {
     "short": {
-      "reason": "Tennis TV 官方竖版 Short 原生 1080×1920，只有它拍到穆泰蜷地和被扶起的近景；按本源原生几何裁 1080×1440，不放大。",
-      "fill_y": 0.5,
+      "reason": "Tennis TV 官方竖版 Short 原生 1080×1920，只有它拍到穆泰蜷地和被扶起的近景；按本源原生几何裁 1080×1440、取 y=312 起的窗口，把左上角 Tennis TV 台标（y≈200–285）整块裁在画外，不放大。",
+      "fill_y": 0.65,
       "min_height": 1080
     }
   },
