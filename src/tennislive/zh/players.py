@@ -65,7 +65,7 @@ PLAYER_ZH: dict[str, str] = {
     # （「他的团队里有加斯奎特」），照 CLAUDE.md「表里没有的，定下来之后补进表里」。
     "Richard Gasquet": "加斯奎特",   # 法国
     "Denis Shapovalov": "沙波瓦洛夫",
-    "Alexei Popyrin": "波皮林",
+    "Alexei Popyrin": "波普林",
     "Alex Michelsen": "米切尔森",
     "Ugo Humbert": "安贝尔",
     "Giovanni Mpetshi Perricard": "佩里卡尔",

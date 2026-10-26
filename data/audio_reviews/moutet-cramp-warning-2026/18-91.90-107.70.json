@@ -1,0 +1,38 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=8J56Fy5bvao",
+  "source_sha256": "7347b5330d7c61df88ebb4e379394d73699ab78f84a998347c77ae0a5d8e30f0",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-26T12:30:09+00:00",
+  "reviewed_from": 91.9,
+  "reviewed_to": 107.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 92.0,
+      "end": 97.2,
+      "en": "No, I think he has to forfeit this game to get to the change of ends.",
+      "zh": "他得放弃这一局，才能拖到换边。"
+    },
+    {
+      "start": 97.2,
+      "end": 100.4,
+      "en": "I mean, Dimitrov helping him out here.",
+      "zh": "季米特洛夫在帮他。"
+    },
+    {
+      "start": 100.8,
+      "end": 103.7,
+      "en": "Oh, isn't that great sportsmanship from Dimitrov?",
+      "zh": "季米特洛夫真有体育精神。"
+    },
+    {
+      "start": 103.75,
+      "end": 107.6,
+      "en": "He came straight over, he showed concern immediately.",
+      "zh": "他马上就过来，第一时间表示关心。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 7347b5330d7c61df88ebb4e379394d73699ab78f84a998347c77ae0a5d8e30f0，存于 data/source_asr/8J56Fy5bvao/small.en.json 与 data/source_asr/8J56Fy5bvao/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

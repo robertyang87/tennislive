@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=FMlaCdqPkyw",
+  "source_sha256": "7a1cfcd6c40fa1b380f8d79916717890fe998260fc50a744a1aae36e137a4a0e",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-26T12:30:09+00:00",
+  "reviewed_from": 16.7,
+  "reviewed_to": 23.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 19.45,
+      "end": 23.3,
+      "en": "Well, he has been away from action like we said for nearly two months.",
+      "zh": "他已经快两个月没比赛了。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 7a1cfcd6c40fa1b380f8d79916717890fe998260fc50a744a1aae36e137a4a0e，存于 data/source_asr/FMlaCdqPkyw/small.en.json 与 data/source_asr/FMlaCdqPkyw/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
