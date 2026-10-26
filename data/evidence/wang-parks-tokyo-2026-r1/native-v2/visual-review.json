@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.actual-native-visual-review.v1",
+  "method": "assistant_visual_inspection_of_actual_final_film_frames",
+  "reviewer": "current assistant",
+  "checked_at": "2026-10-26T05:20:15.091595+00:00",
+  "film_sha256": "c40ebc1c05d9253fe4ec358d85995933224863fbea663cb2ab32281152517670",
+  "source_sha256": "c67cca588d87752a406cb3e8ffa017ee9de0bea6c1381854d457d33bbf3147b8",
+  "native_run": 40272579886,
+  "duration_seconds": 255.52,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "final_native_proof_commit": "bdeb14161c8227d5723018e38601aab417cfd5de",
+  "sample_times_seconds": [
+    2.825,
+    20.4,
+    36.4,
+    58.0,
+    71.53,
+    79.78,
+    95.87,
+    110.805,
+    117.655,
+    124.48,
+    139.04,
+    153.6,
+    171.995,
+    181.3,
+    186.25,
+    195.575,
+    209.4,
+    232.43,
+    244.93,
+    0.5,
+    13.5,
+    253.0
+  ],
+  "observations": [
+    "Final official-photo cover: Wang same-day burgundy outfit and shoulder tape, hook outside face; event/round and both names shown. Actual source image950x1425, no larger original claimed.",
+    "Compact transparent topbar has outlined/shadowed text; court-centered3:4 frame; original score strip remains fixed at left-bottom, no moving scoreboard.",
+    "Three complete second-set setpoints and final matchpoint retain original windows; no point outcome borrowed from another rally. Final sampled court/player/scoreboard frames agree with planned chronology. Source full-window contact review recorded separately.",
+    "New Beijing morning/date opening is visible at13.5s; no source-availability disclaimer or cover corner-title carried over into body.",
+    "Bilingual original-commentary subtitles remain within canvas; long sentence inspected at native resolution. Narration and scoreboard visually separated.",
+    "Official full-match stats10/29 winners,12/26 errors, and full-set score shown; closing card then existing logo outro, no match topbar in brand outro."
+  ],
+  "scope_limit": "Actual final visual frame review plus native deterministic QC; not a claim of human audio listening or exhaustive manual frame-by-frame review. Voice evidence is separately produced automated_voice_suite for actual final input bytes.",
+  "result": "pass"
+}
