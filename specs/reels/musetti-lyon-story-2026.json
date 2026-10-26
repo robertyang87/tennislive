@@ -1,5 +1,6 @@
 {
  "_column": "网球有故事",
+ "_owner_fix_2026_10_26": "所有者验片后三令：①删全部 Tennis TV 片尾/标识卡（seg1、seg16 原窗口整段落在源片尾卡上、seg4 尾部带标识卡，均已换窗/收尾，新窗逐帧验过且整分打完再切）；②全段补右上角信息字卡（无背景版）；③副标题去『洛伦佐·』只留穆塞蒂。已推版本按所有者明示返工重推。",
  "_primary_why": "里昂决赛集锦 lyonf 是本期框架源：决赛收官、捧杯与封面帧皆出自此片。",
  "_social_search": {
   "instagram": "未检索到本人账号发布的决赛采访视频；不采用球迷搬运源。",
@@ -27,7 +28,7 @@
   },
   "story_kind": "person",
   "subject": "洛伦佐·穆塞蒂",
-  "topic": "洛伦佐·穆塞蒂：四年冠军荒与决赛七连败"
+  "topic": "穆塞蒂：四年冠军荒与决赛七连败"
  },
  "date": "2026-10-26",
  "editorial": {
@@ -108,6 +109,22 @@
    "cx": 0.5,
    "end": 101.2,
    "gain_db": 4.5,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "kind": "quote",
    "quote": [
     {
@@ -138,11 +155,27 @@
   {
    "_why": "win-01 无英文空当（ASR 实测 477.84–487.80）：捧杯后庆祝段；原 460–478 窗口有英文解说（『四年首冠』句在 462–470），按口径改用此空当定调。",
    "cx": 0.5,
-   "end": 487.7,
+   "end": 464.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "里昂，2026 年 10 月 25 日。穆塞蒂 6 比 3、6 比 4 击败弗里茨——他上一次捧杯，还是四年前。",
    "point_end_ok": true,
    "source": "lyonf",
-   "start": 477.84,
+   "start": 454.0,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
@@ -154,6 +187,22 @@
    "_why": "win-04 无英文空当（ASR 实测 247.96–260.60）：第二盘 5-4 胜赛局相持；原窗口 250–275 内 260.8 起有英文，按口径收进空当。",
    "cx": 0.5,
    "end": 260.6,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-ham22.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2022.07.24",
+     "people": "穆塞蒂 vs 阿尔卡拉斯",
+     "place": "汉堡公开赛 决赛",
+     "score": "6-4 6-7(6) 6-4",
+     "topic": "19岁首冠"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2022 年汉堡，他 19 岁，第一次打进巡回赛决赛，对手是阿尔卡拉斯。第二盘，他自己的发球胜赛局。",
    "point_end_ok": true,
    "source": "ham22",
@@ -169,6 +218,22 @@
    "_why": "win-04 后段：抢七 6-6、3-5 等记分牌帧可读（精剪片断验过）。",
    "cx": 0.5,
    "end": 362.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-ham22.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2022.07.24",
+     "people": "穆塞蒂 vs 阿尔卡拉斯",
+     "place": "汉堡公开赛 决赛",
+     "score": "6-4 6-7(6) 6-4",
+     "topic": "19岁首冠"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "抢七里，冠军点又一个一个溜走。五个冠军点，他一个都没抓住——比赛被拖进了第三盘。",
    "point_end_ok": true,
    "source": "ham22",
@@ -183,11 +248,27 @@
   {
    "_why": "win-05 捧杯段解说密集，无英文空当改用 ASR 实测 506.98–519.80（捧杯庆祝尾段）；本段只埋 2022『还在做梦』一句，里昂回环放结尾段收束（plant & payoff）。",
    "cx": 0.5,
-   "end": 519.8,
+   "end": 516.4,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-ham22.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2022.07.24",
+     "people": "穆塞蒂 vs 阿尔卡拉斯",
+     "place": "汉堡公开赛 决赛",
+     "score": "6-4 6-7(6) 6-4",
+     "topic": "19岁首冠"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "那天的赛后采访里，他说：我没法形容现在的感受——我还在做梦。",
    "point_end_ok": true,
    "source": "ham22",
-   "start": 506.98,
+   "start": 505.0,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
@@ -199,6 +280,22 @@
    "_why": "win-06 内无英文空当：冠军点相持全程（源 ASR 实测 443.70–455.91 无解说，456.11 解说喊出冠军诞生）；窗口止于冠军分落地前一瞬，解说不入片。捧杯画面已在源后段，本段以冠军点相持承载『那不勒斯再冠』。",
    "cx": 0.5,
    "end": 455.91,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-nap22.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2022.10.23",
+     "people": "穆塞蒂 vs 贝雷蒂尼",
+     "place": "那不勒斯杯 决赛",
+     "score": "7-6(5) 6-2",
+     "topic": "三个月两冠"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "三个月后，那不勒斯，他直落两盘击败贝雷蒂尼。两次决赛，两座冠军。谁都觉得，他的冠军会一个接一个来。",
    "point_end_ok": true,
    "source": "nap22",
@@ -214,6 +311,22 @@
    "_why": "loss-01 源内无英文空当（ASR 实测 432.81–452.06）：女王杯决赛抢七相持段；原收官段 456–486 全程有英文解说，按 asr_plan 口径改用此空当，收官庆祝画面不入本段。",
    "cx": 0.5,
    "end": 452.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-queens.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2024.06.23",
+     "people": "穆塞蒂 vs 保罗",
+     "place": "女王杯 决赛",
+     "score": "1-6 6-7(8)",
+     "topic": "决赛首败"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "可下一次捧杯，一等就是四年。2024 年女王杯，他输给保罗。那一年他其实打进了温网四强、拿了奥运铜牌——他不是打得不好，他只是赢不了最后一场。",
    "point_end_ok": true,
    "source": "queens",
@@ -229,6 +342,22 @@
    "_why": "loss-02：决胜抢七结尾、最后一分、塞伦多洛倒地、终场记分牌（精剪片断验过）。",
    "cx": 0.5,
    "end": 454.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-umag.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2024.07.27",
+     "people": "穆塞蒂 vs F·塞伦多洛",
+     "place": "乌马格公开赛 决赛",
+     "score": "6-2 4-6 6-7(5)",
+     "topic": "抢七惜败"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "一个月后的乌马格，他先赢一盘，决胜盘抢七，最后一分落地，塞伦多洛倒在了地上。穆塞蒂，又是亚军。",
    "point_end_ok": true,
    "source": "umag",
@@ -244,6 +373,22 @@
    "_why": "loss-03：商竣程赛点、最后一分、双方反应（精剪片断验过）。",
    "cx": 0.5,
    "end": 456.9,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-chengdu24.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2024.09.24",
+     "people": "穆塞蒂 vs 商竣程",
+     "place": "成都公开赛 决赛",
+     "score": "6-7(4) 1-6",
+     "topic": "成都首败"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2024 年成都，他输给了商竣程。第三次决赛，第三次看着别人捧杯。",
    "point_end_ok": true,
    "source": "chengdu24",
@@ -259,6 +404,22 @@
    "_why": "loss-04-b 内无英文空当（ASR 实测 448.10–457.32）：第三盘赛点局最后一分相持；解说在分后才入声。医疗暂停官方精华无镜头，只以旁白陈述承载（脚本 v2 订正）。",
    "cx": 0.5,
    "end": 457.32,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-mc25.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2025.04.13",
+     "people": "穆塞蒂 vs 阿尔卡拉斯",
+     "place": "蒙特卡洛大师赛 决赛",
+     "score": "6-3 1-6 0-6",
+     "topic": "大师赛决赛"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2025 年蒙特卡洛，他第一次站上大师赛决赛，先赢一盘。可第三盘，他的右腿撑不住了。",
    "point_end_ok": true,
    "source": "mc25",
@@ -274,6 +435,22 @@
    "_why": "同源赛后段无英文空当（ASR 实测 472.78–487.98）：阿尔卡拉斯庆祝、网前握手；旁白收束蒙特卡洛伤情句。",
    "cx": 0.5,
    "end": 484.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-mc25.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2025.04.13",
+     "people": "穆塞蒂 vs 阿尔卡拉斯",
+     "place": "蒙特卡洛大师赛 决赛",
+     "score": "6-3 1-6 0-6",
+     "topic": "大师赛决赛"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "0 比 3 时他叫了医疗暂停，最后几乎是拖着一条腿打完的。",
    "point_end_ok": true,
    "source": "mc25",
@@ -289,6 +466,22 @@
    "_why": "loss-05-a 无英文空当（ASR 实测 340.20–362.70）：决胜盘 5-4 冠军点局前段相持（记分牌帧实证两次冠军点在本源 350–408 段内，本空当覆盖其前段）；原窗口尾 405.48 有英文短句，按口径收进空当。",
    "cx": 0.5,
    "end": 362.7,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-chengdu25.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2025.09.23",
+     "people": "穆塞蒂 vs 塔比洛",
+     "place": "成都公开赛 决赛",
+     "score": "3-6 6-2 6-7(5)",
+     "topic": "冠军点被救"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "半年后又回成都，这一次最痛。决胜盘，他手里握着两个冠军点，被世界排名 112 位的资格赛球员塔比洛，一个一个救了回来。",
    "point_end_ok": true,
    "source": "chengdu25",
@@ -304,6 +497,22 @@
    "_why": "loss-05-b 无英文空当（ASR 实测 453.78–471.48）：抢七 4-1 领先后被翻盘段；原窗口 445–462 内 451.90 有英文短句，按口径改用此空当。",
    "cx": 0.5,
    "end": 471.48,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-chengdu25.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2025.09.23",
+     "people": "穆塞蒂 vs 塔比洛",
+     "place": "成都公开赛 决赛",
+     "score": "3-6 6-2 6-7(5)",
+     "topic": "冠军点被救"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "抢七，他 4 比 1 领先，还是输了。",
    "point_end_ok": true,
    "source": "chengdu25",
@@ -319,6 +528,22 @@
    "_why": "loss-06 无英文子窗口（ASR 实测空当 432.84–453.34，451.90 起有英文短句，窗口止于 451.7）：决胜盘 5-5 相持段。",
    "cx": 0.5,
    "end": 451.7,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-athens.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2025.11.08",
+     "people": "穆塞蒂 vs 德约科维奇",
+     "place": "雅典公开赛 决赛",
+     "score": "6-4 3-6 5-7",
+     "topic": "逼决胜盘"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2025 年雅典，他把德约科维奇逼到决胜盘 5 比 5。那一站他必须赢才能直通都灵——他还是差了一口气。",
    "point_end_ok": true,
    "source": "athens",
@@ -334,6 +559,22 @@
    "_why": "loss-07 源收官段解说密集（445.7–449.5 冠军宣告），无英文空当改用 ASR 实测 379.48–397.46（第二盘相持段）；香港站对阵与语境由旁白确立，收官庆祝不入本段。",
    "cx": 0.5,
    "end": 397.46,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-hk26.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.01.11",
+     "people": "穆塞蒂 vs 布勃利克",
+     "place": "香港公开赛 决赛",
+     "score": "6-7(2) 3-6",
+     "topic": "第七次亚军"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2026 年 1 月香港，他输给布勃利克，巡回赛决赛七连败。吊诡的是，就在那一周，他的世界排名升到了生涯最高的第五。排名越爬越高的人，奖杯柜却四年没有添过一件东西。",
    "point_end_ok": true,
    "source": "hk26",
@@ -349,6 +590,22 @@
    "_why": "win-03 无英文空当之一（ASR 实测 197.84–207.16）：决胜盘相持段；本源解说密集，原 214–245 窗口三处英文，按口径拆两段空当。",
    "cx": 0.5,
    "end": 207.16,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonqf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.23",
+     "people": "穆塞蒂 vs 范阿斯切",
+     "place": "里昂公开赛 八强",
+     "score": "7-6(5) 6-7(7) 6-4",
+     "topic": "生涯第200胜"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "今年五月，他在罗马伤了大腿，法网、温网全退了，排名掉到二十六。",
    "point_end_ok": true,
    "source": "lyonqf",
@@ -363,11 +620,27 @@
   {
    "_why": "win-03 无英文空当之二（ASR 实测 244.34–251.96）：赛后段（200 胜已定），承载里昂周开启句。",
    "cx": 0.5,
-   "end": 251.96,
+   "end": 235.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonqf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.23",
+     "people": "穆塞蒂 vs 范阿斯切",
+     "place": "里昂公开赛 八强",
+     "score": "7-6(5) 6-7(7) 6-4",
+     "topic": "生涯第200胜"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "这一周在里昂，他先打了一场三个半小时、到凌晨一点的球——生涯第 200 胜。",
    "point_end_ok": true,
    "source": "lyonqf",
-   "start": 244.34,
+   "start": 221.0,
    "track": false,
    "voice": {
     "_why": "全片统一：云健 zh-CN-YunjianNeural、+6%、+0Hz（网球有故事既定口径），非单段改速；渲染派发同口径传参。",
@@ -379,6 +652,22 @@
    "_why": "win-02 无英文空当之一（ASR 实测 216.62–232.28）：决胜盘 4-5 发球局前两个赛点相持；原长窗口 225–295 内有两处英文惊叹（273.5、281.6），按 asr_plan 口径拆成三段空当，原声惊叹段不入片。",
    "cx": 0.5,
    "end": 232.28,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonsf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.24",
+     "people": "穆塞蒂 vs 科博利",
+     "place": "里昂公开赛 半决赛",
+     "score": "4-6 6-2 7-5",
+     "topic": "救四个赛点"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "半决赛对头号种子科博利，他先丢一盘。决胜盘 4 比 5，他的发球局，15 比 40。两个赛点，压在头顶。",
    "point_end_ok": true,
    "source": "lyonsf",
@@ -394,6 +683,22 @@
    "_why": "win-02 无英文空当之二（ASR 实测 235.56–249.94）：平分、三赛点相持与保发推进。",
    "cx": 0.5,
    "end": 249.94,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonsf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.24",
+     "people": "穆塞蒂 vs 科博利",
+     "place": "里昂公开赛 半决赛",
+     "score": "4-6 6-2 7-5",
+     "topic": "救四个赛点"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "后来变成四个赛点。一个一个，他全救了下来，然后破发，拿下比赛。",
    "point_end_ok": true,
    "source": "lyonsf",
@@ -409,6 +714,22 @@
    "_why": "win-02 无英文空当之三（ASR 实测 299.74–309.44）：保发收束段，承载成都镜像句。",
    "cx": 0.5,
    "end": 309.44,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonsf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.24",
+     "people": "穆塞蒂 vs 科博利",
+     "place": "里昂公开赛 半决赛",
+     "score": "4-6 6-2 7-5",
+     "topic": "救四个赛点"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "去年在成都，是别人的冠军点从他手里活了过来；这一次，活过来的是他自己。",
    "point_end_ok": true,
    "source": "lyonsf",
@@ -424,6 +745,22 @@
    "_why": "win-01 前段：胜赛局 15-15 起至 40-15 冠军点（记分牌帧验过）；赛点兑现与庆祝在下一段引用的窗口之外——本段止于冠军点形成，兑现画面已在定调段呈现（同一镜头不重复完整出现：定调段用 448–478 的兑现＋捧杯，本段用 410–448 的胜赛局过程）。",
    "cx": 0.5,
    "end": 448.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "决赛的对手弗里茨，整周 31 个发球局一个没丢。穆塞蒂在他的第一个发球局，就完成了破发。他的办法还是那一套：单手反拍不断变线、变节奏，放小球、拉高弧线，把一台发球机器拖进他最不舒服的回合里。6 比 3、6 比 4，81 分钟，他全场没有面对过一个破发点，在第一个赛点上，结束了四年的等待。",
    "point_end_ok": true,
    "source": "lyonf",
@@ -443,6 +780,22 @@
    "cx": 0.5,
    "end": 233.7,
    "gain_db": 4.5,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "kind": "quote",
    "quote": [
     {
@@ -499,6 +852,22 @@
    "_why": "win-08 致辞后掌声段（156.14 致辞结束后的纯掌声空当）：结尾旁白 dream 回环＋维也纳下一站，画面为致辞后现场。",
    "cx": 0.5,
    "end": 179.0,
+   "inset": {
+    "corner": "tr",
+    "image": "assets/reel/musetti-lyon-story-2026/label-lyonf.png",
+    "kind": "story_text",
+    "label": {
+     "date": "2026.10.25",
+     "people": "穆塞蒂 vs 弗里茨",
+     "place": "里昂公开赛 决赛",
+     "score": "6-3 6-4",
+     "topic": "冠军荒终结"
+    },
+    "motion": "editorial",
+    "pad": 0.043,
+    "show_for": 7,
+    "width": 0.6
+   },
    "narration": "2022 年在汉堡，他说：我还在做梦。四年、七场决赛之后，在里昂，他说了几乎同一句话：这个梦，我不想醒来。24 岁的穆塞蒂，武器从来不是问题，问题一直是健康，和决赛里最后那一口气。现在这口气，他在里昂续上了。",
    "source": "speech",
    "start": 156.4,
