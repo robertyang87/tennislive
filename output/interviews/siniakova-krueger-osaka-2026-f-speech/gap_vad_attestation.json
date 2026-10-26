@@ -1,0 +1,21 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "5d854fb89d43fdf4de1122b858e77c15d32289008cf3e80e5a95ed6e6dd73f0e",
+ "url": "https://www.youtube.com/watch?v=6c7Ujiylup4",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "139.7-147.0",
+   "start": 139.7,
+   "end": 147.0,
+   "speech_seconds": 2.448,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected",
+   "reason": "VAD 测到 2.448s 人声，第二份 ASR（small.en）没听出词——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+  }
+ ]
+}
