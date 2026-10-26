@@ -1,0 +1,101 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "b8f02308cce47429130433f88f32473f57cdcb56273ac35e72f9a7baae75ba1c",
+    "request_count": 18,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-musetti-whereabouts-2026-v2-b8f02308cce47429",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-musetti-whereabouts-2026-v2-b8f02308cce47429/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40206558182"
+  },
+  "cover_seconds": 4.306,
+  "cover_narrated": true,
+  "outro_seconds": 4.122,
+  "layout": "full",
+  "segments_seconds": 119.21,
+  "topbar": null,
+  "film_seconds": 127.64,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 6.288,
+    "1": 3.576,
+    "2": 3.984,
+    "3": 2.904,
+    "4": 4.2,
+    "5": 4.176,
+    "6": 5.808,
+    "7": 7.416,
+    "8": 6.36,
+    "9": 5.448,
+    "10": 4.152,
+    "11": 4.8,
+    "12": 7.848,
+    "13": 5.856,
+    "14": 3.48,
+    "15": 9.576
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "6b585b9c17f8f26b7c3d5509f9de7d3d7b6bcf0d10241f55b7fedd43733af055",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "musetti-whereabouts-2026-v2",
+    "received_at": "2026-10-25T15:21:43Z",
+    "artifact_ready_at": "2026-10-25T15:25:18Z",
+    "elapsed_seconds": 215.993,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9adb98a5209db04ed81a30e8a52934f518e4555a079e904c08e5c73527b85cef",
+    "spec_sha256": "b91fd127662ce9c112761fc65eda2c8d383fde1026dd923659d033d198496978",
+    "run_id": "40206558182",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-25T15:23:35Z",
+        "run_id": "40206558182"
+      }
+    ],
+    "render_seconds": 103.993,
+    "pre_render_seconds": 112.0
+  },
+  "film_sha256": "9adb98a5209db04ed81a30e8a52934f518e4555a079e904c08e5c73527b85cef",
+  "film_bytes": 30676732,
+  "qc_attestation_sha256": "5a953e385f98c9968669025740f725a17543831e6be9d4beda73e0d2899ade14",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-25T15:23:35Z",
+      "run_id": "40206558182"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-25T15:25:21Z",
+      "run_id": "40206558182"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-musetti-whereabouts-2026-v2/musetti-whereabouts-2026-v2.mp4",
+  "video_bytes": 30676732
+}
