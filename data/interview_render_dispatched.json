@@ -87,5 +87,12 @@
       "inputs_sha256": "6f24ca72daeddfd340ee117a91cdc3d4f995a5842a08dc97c9bfc84f97ec39a8",
       "tries": 1
     }
+  },
+  "subs_red": {
+    "siniakova-krueger-osaka-2026-f-speech": {
+      "since": "2026-10-26T04:30:45Z",
+      "inputs_sha256": "6f24ca72daeddfd340ee117a91cdc3d4f995a5842a08dc97c9bfc84f97ec39a8",
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 32.0%，超过闸门 12%。**不出片。** 逐处看 output/interviews/siniakova-krueger-osaka-2026-f-speech/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
+    }
   }
 }
