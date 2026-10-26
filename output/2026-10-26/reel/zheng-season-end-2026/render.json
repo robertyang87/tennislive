@@ -1,0 +1,95 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "a963e48d99cb2c29137192803a1fe519edf5057e41d84a5e07a1befca80a13cf",
+    "request_count": 12,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-zheng-season-end-2026-a963e48d99cb2c29",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zheng-season-end-2026-a963e48d99cb2c29/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40345413704"
+  },
+  "cover_seconds": 4.114,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 104.9,
+  "topbar": null,
+  "film_seconds": 113.6,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 10.224,
+    "2": 4.656,
+    "3": 7.656,
+    "4": 6.84,
+    "5": 7.392,
+    "6": 10.896,
+    "7": 6.12,
+    "8": 9.024,
+    "9": 4.344,
+    "10": 6.936
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "29a24432f414bbbfd2ee895e97c116c689ce09ace33bebdb0ba8e6997cc26974",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zheng-season-end-2026",
+    "received_at": "2026-10-26T15:02:49Z",
+    "artifact_ready_at": "2026-10-26T15:07:10Z",
+    "elapsed_seconds": 261.967,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "a57da092a4c3ed9e751cd38dd95339835e023864a4955d7dc9a70c18393414a5",
+    "spec_sha256": "f7847d78ddc1d8e8c98f5805c8b1f097c532fa7f3ff97129b9b11de411318949",
+    "run_id": "40345413704",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-26T15:05:27Z",
+        "run_id": "40345413704"
+      }
+    ],
+    "render_seconds": 103.967,
+    "pre_render_seconds": 158.0
+  },
+  "film_sha256": "a57da092a4c3ed9e751cd38dd95339835e023864a4955d7dc9a70c18393414a5",
+  "film_bytes": 36999705,
+  "qc_attestation_sha256": "b91b20b71ce30eb1a84edc4a4894ee57013ef4941ea9a4d618b2a0623e80f10f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-26T15:05:27Z",
+      "run_id": "40345413704"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-26T15:07:14Z",
+      "run_id": "40345413704"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zheng-season-end-2026/zheng-season-end-2026.mp4",
+  "video_bytes": 36999705
+}
