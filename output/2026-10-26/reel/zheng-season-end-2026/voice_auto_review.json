@@ -1,0 +1,578 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "7d493dfb4451ee427ff1a38b158e74d37b063fb0d5fcc195264e25d118ffc259",
+    "render_inputs_sha256": "95a36313e44e9c35f89e2d6e634ee4354c483fe54c2c053f58bcf48e5d062ae0",
+    "spec_sha256": "3466d640dd0c040cbea68bd121ae60a5db700d776509a9cec3e505d97a83338b",
+    "film_sha256": "ad120f4e974345023bf6a110ef1752b67864ec33e7bef90d4f74f77e3af0f3eb",
+    "inventory_sha256": "bd3e5bbc0a8090727eac9b68f1eba6b32ced2ebe73d54b5ea29d56302d819996"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-26T14:59:21+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:2bc152309d0e4a9cee7d37dc685bd14f2474081ca66691643d48cb43545ba73f",
+      "audio_sha256": "8c8c6faf86ee1b364579a12b5fb1f5c14e06beb7fe62094061a5f3a7255d8b7c",
+      "pass": true,
+      "result_of": "bundle:2bc152309d0e4a9cee7d37dc685bd14f2474081ca66691643d48cb43545ba73f"
+    },
+    {
+      "id": "bundle:6e9ffc283b9b8dd409aba15c6334bb1bc87b2b467bd60d3772a5b68326628435",
+      "audio_sha256": "4bcf012dd3414dc8f8deb32903f18453e13d02c2b0dc17e800dae7a315c9d5a7",
+      "pass": true,
+      "result_of": "bundle:6e9ffc283b9b8dd409aba15c6334bb1bc87b2b467bd60d3772a5b68326628435"
+    },
+    {
+      "id": "bundle:719bfed21fb39ec3aa7ee223e1d40b7d5a90e743359971de24a782738754374d",
+      "audio_sha256": "bc6c38da962371bab8c2cf5cb5154ef0eacb14e541f8a3551c87ffccc961f40d",
+      "pass": true,
+      "result_of": "bundle:719bfed21fb39ec3aa7ee223e1d40b7d5a90e743359971de24a782738754374d"
+    },
+    {
+      "id": "bundle:8e5482b900d4e591624543b0bb6b34c43e519d2626daf9e90a5d783998ebb73c",
+      "audio_sha256": "c832fc420e2341a85bf8e9c9551e32a6695f1aeadc6d9fc05601771b80fbe4e5",
+      "pass": true,
+      "result_of": "bundle:8e5482b900d4e591624543b0bb6b34c43e519d2626daf9e90a5d783998ebb73c"
+    },
+    {
+      "id": "bundle:9767063ed23120d7b0c269f359090246c03ace32731e268e1801a4d7542682aa",
+      "audio_sha256": "1cc19ef54f03e50539b81bdcf84ec671b64d20c43de5c874cc26d394735be201",
+      "pass": true,
+      "result_of": "bundle:9767063ed23120d7b0c269f359090246c03ace32731e268e1801a4d7542682aa"
+    },
+    {
+      "id": "bundle:988f78a6cfdb311e2ab302ad5eb6431ca8d0979c5b5f5afcb37ce86ed121ed39",
+      "audio_sha256": "47edba69df33b16dae23b9c95c56a22c898277a875c97adf320b2be8bdcf79c6",
+      "pass": true,
+      "result_of": "bundle:988f78a6cfdb311e2ab302ad5eb6431ca8d0979c5b5f5afcb37ce86ed121ed39"
+    },
+    {
+      "id": "bundle:add829992639ba5e02b5a8db3232c470901972fd965661ff27c61a3c6c05fc7b",
+      "audio_sha256": "0cc0f5d2cb8560f46bc09e717099a5bdafd9393c21fa82dfac5860ac03608585",
+      "pass": true,
+      "result_of": "bundle:add829992639ba5e02b5a8db3232c470901972fd965661ff27c61a3c6c05fc7b"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "e11d6e4cf9262bd2f26b4c635ce631ef7c69ec651e7dafc0597e16c34d56c071",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:e65642674dfe183baf627069bd8e5941882684c031e8205aa25c4129a6ae5a97",
+      "audio_sha256": "8e5728aa8e581dd185db011b56b24da004d8ac74cb9d133b8851b6eb680a58c1",
+      "pass": true,
+      "result_of": "bundle:e65642674dfe183baf627069bd8e5941882684c031e8205aa25c4129a6ae5a97"
+    },
+    {
+      "id": "bundle:eb0cab7c61d880a82e23fc841d373f75339c84a11ca21e77f288197da65355b5",
+      "audio_sha256": "dea0d95a9e8e1d5534e481edb319f18ae569af3b434456e1009c9e13bd478542",
+      "pass": true,
+      "result_of": "bundle:eb0cab7c61d880a82e23fc841d373f75339c84a11ca21e77f288197da65355b5"
+    },
+    {
+      "id": "bundle:fbd03f9fa5c0b8037a6d413b87bbfb2320294da2f579e2eb89c99062883515c4",
+      "audio_sha256": "e3ff3ae85054a9f8a17b85621a187129e7bcad1c0d1bf0b2db4cfcce0d9f1689",
+      "pass": true,
+      "result_of": "bundle:fbd03f9fa5c0b8037a6d413b87bbfb2320294da2f579e2eb89c99062883515c4"
+    },
+    {
+      "id": "bundle:ffdb66ff622c4468ff17609d0711b78c1a3e8fe4da91df6ccac202c1db64d145",
+      "audio_sha256": "518e30bb0c78fb1e441f864f174c55ce8bb66a562326019d9ad35ffde144f8db",
+      "pass": true,
+      "result_of": "bundle:ffdb66ff622c4468ff17609d0711b78c1a3e8fe4da91df6ccac202c1db64d145"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "bc6c38da962371bab8c2cf5cb5154ef0eacb14e541f8a3551c87ffccc961f40d",
+      "pass": true,
+      "result_of": "bundle:719bfed21fb39ec3aa7ee223e1d40b7d5a90e743359971de24a782738754374d"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "c832fc420e2341a85bf8e9c9551e32a6695f1aeadc6d9fc05601771b80fbe4e5",
+      "pass": true,
+      "result_of": "bundle:8e5482b900d4e591624543b0bb6b34c43e519d2626daf9e90a5d783998ebb73c"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "1cc19ef54f03e50539b81bdcf84ec671b64d20c43de5c874cc26d394735be201",
+      "pass": true,
+      "result_of": "bundle:9767063ed23120d7b0c269f359090246c03ace32731e268e1801a4d7542682aa"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "518e30bb0c78fb1e441f864f174c55ce8bb66a562326019d9ad35ffde144f8db",
+      "pass": true,
+      "result_of": "bundle:ffdb66ff622c4468ff17609d0711b78c1a3e8fe4da91df6ccac202c1db64d145"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "dea0d95a9e8e1d5534e481edb319f18ae569af3b434456e1009c9e13bd478542",
+      "pass": true,
+      "result_of": "bundle:eb0cab7c61d880a82e23fc841d373f75339c84a11ca21e77f288197da65355b5"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "0cc0f5d2cb8560f46bc09e717099a5bdafd9393c21fa82dfac5860ac03608585",
+      "pass": true,
+      "result_of": "bundle:add829992639ba5e02b5a8db3232c470901972fd965661ff27c61a3c6c05fc7b"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "e3ff3ae85054a9f8a17b85621a187129e7bcad1c0d1bf0b2db4cfcce0d9f1689",
+      "pass": true,
+      "result_of": "bundle:fbd03f9fa5c0b8037a6d413b87bbfb2320294da2f579e2eb89c99062883515c4"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "8c8c6faf86ee1b364579a12b5fb1f5c14e06beb7fe62094061a5f3a7255d8b7c",
+      "pass": true,
+      "result_of": "bundle:2bc152309d0e4a9cee7d37dc685bd14f2474081ca66691643d48cb43545ba73f"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "4bcf012dd3414dc8f8deb32903f18453e13d02c2b0dc17e800dae7a315c9d5a7",
+      "pass": true,
+      "result_of": "bundle:6e9ffc283b9b8dd409aba15c6334bb1bc87b2b467bd60d3772a5b68326628435"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "47edba69df33b16dae23b9c95c56a22c898277a875c97adf320b2be8bdcf79c6",
+      "pass": true,
+      "result_of": "bundle:988f78a6cfdb311e2ab302ad5eb6431ca8d0979c5b5f5afcb37ce86ed121ed39"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "8e5728aa8e581dd185db011b56b24da004d8ac74cb9d133b8851b6eb680a58c1",
+      "pass": true,
+      "result_of": "bundle:e65642674dfe183baf627069bd8e5941882684c031e8205aa25c4129a6ae5a97"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "e11d6e4cf9262bd2f26b4c635ce631ef7c69ec651e7dafc0597e16c34d56c071",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:2bc152309d0e4a9cee7d37dc685bd14f2474081ca66691643d48cb43545ba73f",
+      "text": "中网之后，她右肩又出了问题。她先退出家乡武汉，再退出日本站，十月十八号又宣布退出香港。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "中网之后,他又监又出了问题。他先退出家乡武汉,在退出日本站,10月18号又宣布退出香港。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.125,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "中网 ｜ 之后 ｜ 她 ｜ 右 ｜ 肩 ｜ 又 ｜ 出 ｜ 了 ｜ 问题 ｜ 她 ｜ 先 ｜ 退出 ｜ 家乡 ｜ 武汉 ｜ 再 ｜ 退出 ｜ 日本 ｜ 站 ｜ 十月十八号 ｜ 又 ｜ 宣布 ｜ 退出 ｜ 香港"
+      }
+    },
+    {
+      "id": "bundle:6e9ffc283b9b8dd409aba15c6334bb1bc87b2b467bd60d3772a5b68326628435",
+      "text": "今年就到这里，先养好伤，备战二零二七年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年就到这里,先养好伤,备战2027年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.479,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 就 ｜ 到 ｜ 这里 ｜ 先 ｜ 养 ｜ 好 ｜ 伤 ｜ 备战 ｜ 二零二七年"
+      }
+    },
+    {
+      "id": "bundle:719bfed21fb39ec3aa7ee223e1d40b7d5a90e743359971de24a782738754374d",
+      "text": "十月十一号，中网女单决赛。郑钦文七比五、六比四击败安德烈耶娃，成为中网二十年来，第一位本土女单冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "10月11号,中王女丹决赛。郑钦文7比5,6比4,即拜安德烈耶瓦,成为中王20年来第一位本土女丹冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.34,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月十一号 ｜ 中网 ｜ 女单 ｜ 决赛 ｜ 郑钦文 ｜ 七比五 ｜ 六比四 ｜ 击败 ｜ 安德烈耶娃 ｜ 成为 ｜ 中网 ｜ 二十年 ｜ 来 ｜ 第一位 ｜ 本土 ｜ 女单 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:8e5482b900d4e591624543b0bb6b34c43e519d2626daf9e90a5d783998ebb73c",
+      "text": "可八天后，她宣布：今年不打了。为什么？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可八天后,他宣布今年不打了。为什么?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.785,
+        "cps": 3.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 八天 ｜ 后 ｜ 她 ｜ 宣布 ｜ 今年 ｜ 不 ｜ 打 ｜ 了 ｜ 为什么"
+      }
+    },
+    {
+      "id": "bundle:9767063ed23120d7b0c269f359090246c03ace32731e268e1801a4d7542682aa",
+      "text": "先看这次中网。她是拿外卡进的正赛，一共打了七场，前四场场场打满三盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.033,
+        "longest_deletion": 0,
+        "transcript": "先看这次中王,他是拿外卡进的正赛,一共打了七场,前四场长场打满三盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.745,
+        "cps": 4.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 这次 ｜ 中网 ｜ 她 ｜ 是 ｜ 拿 ｜ 外卡 ｜ 进 ｜ 的 ｜ 正 ｜ 赛 ｜ 一共 ｜ 打 ｜ 了 ｜ 七场 ｜ 前 ｜ 四场 ｜ 场 ｜ 场 ｜ 打 ｜ 满 ｜ 三盘"
+      }
+    },
+    {
+      "id": "bundle:988f78a6cfdb311e2ab302ad5eb6431ca8d0979c5b5f5afcb37ce86ed121ed39",
+      "text": "拼下冠军，再停下来养伤。换你，会这么拼吗？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "拼下冠军, 再停下来养伤。换你, 会这么拼吗?评论区说说。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 6.038,
+        "cps": 3.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "拼 ｜ 下 ｜ 冠军 ｜ 再 ｜ 停 ｜ 下来 ｜ 养伤 ｜ 换 ｜ 你 ｜ 会 ｜ 这么 ｜ 拼 ｜ 吗 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:add829992639ba5e02b5a8db3232c470901972fd965661ff27c61a3c6c05fc7b",
+      "text": "其实她早就累了。去年温网后，她做了右肘手术；今年美网，她从资格赛一路打进四分之一决赛，接着又为国家队打团体赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "其实他早就累了。去年温网后,他做了幼州手术。今年眉网,他从资格赛一路打进四分之一决赛,接着又为国家队打团体赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.012,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "其实 ｜ 她 ｜ 早 ｜ 就 ｜ 累 ｜ 了 ｜ 去年 ｜ 温网 ｜ 后 ｜ 她 ｜ 做 ｜ 了 ｜ 右肘 ｜ 手术 ｜ 今年 ｜ 美网 ｜ 她 ｜ 从 ｜ 资格赛 ｜ 一路 ｜ 打进 ｜ 四分之一 ｜ 决赛 ｜ 接着 ｜ 又 ｜ 为 ｜ 国家队 ｜ 打 ｜ 团体赛"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:e65642674dfe183baf627069bd8e5941882684c031e8205aa25c4129a6ae5a97",
+      "text": "刚拿中网冠军，为什么郑钦文不打了？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "刚拿中网冠军,为什么郑钦文不打了?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.995,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "刚 ｜ 拿 ｜ 中网 ｜ 冠军 ｜ 为什么 ｜ 郑钦文 ｜ 不 ｜ 打 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:eb0cab7c61d880a82e23fc841d373f75339c84a11ca21e77f288197da65355b5",
+      "text": "四分之一决赛、半决赛、决赛，她又连赢斯维托丽娜、梅尔滕斯和安德烈耶娃。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四分之一决赛、半决赛、决赛,他又联营思维托丽娜、梅尔滕斯和安德烈耶瓦。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.498,
+        "cps": 4.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四分之一 ｜ 决赛 ｜ 半决赛 ｜ 决赛 ｜ 她 ｜ 又 ｜ 连赢 ｜ 斯维托丽娜 ｜ 梅尔滕斯 ｜ 和 ｜ 安德烈耶娃"
+      }
+    },
+    {
+      "id": "bundle:fbd03f9fa5c0b8037a6d413b87bbfb2320294da2f579e2eb89c99062883515c4",
+      "text": "她说：美网、比利·简·金杯、中网一路打下来，身体非常疲劳。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "她说,梅网、比利、简·金、碑、中网一路打下来,身体非常疲劳。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.236,
+        "cps": 4.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 说 ｜ 美 ｜ 网 ｜ 比利 ｜ 简 ｜ 金杯 ｜ 中 ｜ 网 ｜ 一路 ｜ 打 ｜ 下来 ｜ 身体 ｜ 非常 ｜ 疲劳"
+      }
+    },
+    {
+      "id": "bundle:ffdb66ff622c4468ff17609d0711b78c1a3e8fe4da91df6ccac202c1db64d145",
+      "text": "七场加起来，她在场上待了十五小时十六分钟，是今年所有单站赛事里最长的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "气场加起来,他在场上待了15小时16分钟,是今年所有单战赛事里最长的。"
+      },
+      "polyphones": [
+        {
+          "index": 32,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.769,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 5.955,
+        "cps": 5.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七场 ｜ 加 ｜ 起来 ｜ 她 ｜ 在 ｜ 场 ｜ 上 ｜ 待 ｜ 了 ｜ 十五小时 ｜ 十六分钟 ｜ 是 ｜ 今年 ｜ 所有 ｜ 单 ｜ 站 ｜ 赛事 ｜ 里 ｜ 最 ｜ 长 ｜ 的"
+      }
+    }
+  ]
+}
