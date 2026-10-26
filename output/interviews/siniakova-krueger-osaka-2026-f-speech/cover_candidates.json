@@ -1,0 +1,1233 @@
+{
+ "slug": "siniakova-krueger-osaka-2026-f-speech",
+ "method": "cover_scan_v1",
+ "auditor": "opencv-haar-v1",
+ "thresholds": {
+  "CANVAS": [
+   1080,
+   1440
+  ],
+  "FACE_CENTER_X_RANGE": [
+   0.08,
+   0.92
+  ],
+  "FACE_CENTER_Y_RANGE": [
+   0.06,
+   0.72
+  ],
+  "MIN_CLOSE_UP_FACE_HEIGHT_RATIO": 0.14,
+  "MIN_EYES": 2,
+  "MIN_FACE_AREA_RATIO": 0.01,
+  "MIN_FACE_CONTRAST": 32.0,
+  "MIN_FACE_HEIGHT_RATIO": 0.08,
+  "MIN_FACE_SHARPNESS": 45.0,
+  "MIN_ZOOM_CLOSE_UP": 1.5,
+  "PHOTO_HEIGHT": 810,
+  "PHOTO_TOP": 150
+ },
+ "layout": "6c0f76e19ce8a4f6",
+ "face_model": {
+  "cache_key": "face-models-buffalo_s-v0.7-17d6bb6dfcd3",
+  "thresholds": {
+   "CROP_MARGIN": 0.15,
+   "DET_SIZE": 640,
+   "DET_THRESH": 0.5,
+   "EYE_CLOSED_EAR": 0.12,
+   "EYE_OPEN_EAR": 0.16,
+   "MATCH_SIM": 0.34,
+   "MIN_EYE_FACE_PX": 72,
+   "MIN_ID_FACE_PX": 56,
+   "MISMATCH_SIM": 0.15,
+   "NMS_THRESH": 0.4
+  }
+ },
+ "face_in_scan": true,
+ "rivals_in_scan": 1,
+ "scanned_at": "2026-10-26T04:54:30Z",
+ "framing": {
+  "url": "https://www.youtube.com/watch?v=6c7Ujiylup4",
+  "mirrored": false,
+  "logo_box": null,
+  "video_eq": null,
+  "crop_ratio": null,
+  "crop_keep_top": null,
+  "crop_shift_x": null,
+  "zoom": 1.0,
+  "focus_y": 0.5,
+  "shot_type": ""
+ },
+ "window": [
+  98.0,
+  102.0
+ ],
+ "window_declared": false,
+ "step": 0.2,
+ "spec_frame_at": 100.0,
+ "candidates": [
+  {
+   "frame_at": 98.0,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.48%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 13.661，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     197,
+     295,
+     65,
+     65
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08025,
+    "face_area_ratio": 0.00483,
+    "sharpness": 13.661,
+    "contrast": 93.0,
+    "center_x_ratio": 0.2125,
+    "center_y_ratio": 0.21914
+   },
+   "margin": 0.304,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.8296,
+     "face_px": 248.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1821
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 98.2,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.50%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 16.739，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     195,
+     295,
+     66,
+     66
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08148,
+    "face_area_ratio": 0.00498,
+    "sharpness": 16.739,
+    "contrast": 91.0,
+    "center_x_ratio": 0.21111,
+    "center_y_ratio": 0.21975
+   },
+   "margin": 0.372,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.8875,
+     "face_px": 251.3
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1801
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.3,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 98.4,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.48%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 14.338，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     196,
+     294,
+     65,
+     65
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08025,
+    "face_area_ratio": 0.00483,
+    "sharpness": 14.338,
+    "contrast": 91.0,
+    "center_x_ratio": 0.21157,
+    "center_y_ratio": 0.2179
+   },
+   "margin": 0.319,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.826,
+     "face_px": 248.1
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1846
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.1,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 98.6,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.48%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 13.775，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     198,
+     293,
+     65,
+     65
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08025,
+    "face_area_ratio": 0.00483,
+    "sharpness": 13.775,
+    "contrast": 92.0,
+    "center_x_ratio": 0.21343,
+    "center_y_ratio": 0.21667
+   },
+   "margin": 0.306,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.4
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.744,
+     "face_px": 251.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1876
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 98.8,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.58%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 16.092，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     261,
+     238,
+     71,
+     71
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.08765,
+    "face_area_ratio": 0.00576,
+    "sharpness": 16.092,
+    "contrast": 93.0,
+    "center_x_ratio": 0.27454,
+    "center_y_ratio": 0.15247
+   },
+   "margin": 0.358,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.7934,
+     "face_px": 251.6
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1812
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.6,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 99.0,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.59%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 14.453，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     192,
+     290,
+     72,
+     72
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08889,
+    "face_area_ratio": 0.00593,
+    "sharpness": 14.453,
+    "contrast": 92.0,
+    "center_x_ratio": 0.21111,
+    "center_y_ratio": 0.21728
+   },
+   "margin": 0.321,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.5
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.7532,
+     "face_px": 248.5
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1516
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.5,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 99.2,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 42.262，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     753,
+     361,
+     119,
+     119
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.14691,
+    "face_area_ratio": 0.01619,
+    "sharpness": 42.262,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75231,
+    "center_y_ratio": 0.33395
+   },
+   "margin": 0.939,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 249.9
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6645,
+     "face_px": 249.9
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1917
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 249.9,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 99.4,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.51%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 16.009，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     190,
+     292,
+     67,
+     67
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08272,
+    "face_area_ratio": 0.00513,
+    "sharpness": 16.009,
+    "contrast": 91.0,
+    "center_x_ratio": 0.20694,
+    "center_y_ratio": 0.21667
+   },
+   "margin": 0.356,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6665,
+     "face_px": 250.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1913
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 99.6,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 43.879，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     759,
+     360,
+     114,
+     114
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.14074,
+    "face_area_ratio": 0.01486,
+    "sharpness": 43.879,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75556,
+    "center_y_ratio": 0.32963
+   },
+   "margin": 0.975,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.7004,
+     "face_px": 250.6
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1756
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.6,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 99.8,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 35.197，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     757,
+     356,
+     119,
+     119
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.14691,
+    "face_area_ratio": 0.01619,
+    "sharpness": 35.197,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75602,
+    "center_y_ratio": 0.32778
+   },
+   "margin": 0.782,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6935,
+     "face_px": 248.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2159
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 100.0,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 41.092，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     760,
+     362,
+     112,
+     112
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.13827,
+    "face_area_ratio": 0.01434,
+    "sharpness": 41.092,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75556,
+    "center_y_ratio": 0.33086
+   },
+   "margin": 0.913,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 249.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6451,
+     "face_px": 249.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1826
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 249.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 100.2,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 38.944，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     761,
+     359,
+     110,
+     110
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.1358,
+    "face_area_ratio": 0.01383,
+    "sharpness": 38.944,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75556,
+    "center_y_ratio": 0.32593
+   },
+   "margin": 0.865,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6221,
+     "face_px": 250.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1817
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 250.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 100.4,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 37.39，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     755,
+     356,
+     116,
+     116
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.14321,
+    "face_area_ratio": 0.01538,
+    "sharpness": 37.39,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75278,
+    "center_y_ratio": 0.32593
+   },
+   "margin": 0.831,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6533,
+     "face_px": 251.6
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1811
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 251.6,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 100.6,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.51%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 15.893，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     189,
+     291,
+     67,
+     67
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08272,
+    "face_area_ratio": 0.00513,
+    "sharpness": 15.893,
+    "contrast": 91.0,
+    "center_x_ratio": 0.20602,
+    "center_y_ratio": 0.21543
+   },
+   "margin": 0.353,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.7
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6674,
+     "face_px": 248.7
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.2015
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 248.7,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 100.8,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 37.296，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     761,
+     356,
+     113,
+     113
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.13951,
+    "face_area_ratio": 0.0146,
+    "sharpness": 37.296,
+    "contrast": 91.0,
+    "center_x_ratio": 0.75694,
+    "center_y_ratio": 0.32407
+   },
+   "margin": 0.829,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 245.0
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6944,
+     "face_px": 245.0
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1894
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 245.0,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 101.0,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 29.933，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     758,
+     352,
+     111,
+     111
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.13704,
+    "face_area_ratio": 0.01408,
+    "sharpness": 29.933,
+    "contrast": 92.0,
+    "center_x_ratio": 0.75324,
+    "center_y_ratio": 0.3179
+   },
+   "margin": 0.665,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 244.1
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.7267,
+     "face_px": 244.1
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1982
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 244.1,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 101.2,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "归一化脸部清晰度 34.19，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     761,
+     355,
+     109,
+     109
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.13457,
+    "face_area_ratio": 0.01358,
+    "sharpness": 34.19,
+    "contrast": 90.0,
+    "center_x_ratio": 0.75509,
+    "center_y_ratio": 0.32037
+   },
+   "margin": 0.76,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 243.3
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.3704,
+     "face_px": 243.3
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1427
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 243.3,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 101.4,
+   "status": "fail",
+   "issues": [
+    "只检出 1 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.79%，主体大小要求 ≥ 1.0%",
+    "归一化脸部清晰度 7.773，必须 ≥ 45"
+   ],
+   "face": {
+    "box": [
+     603,
+     435,
+     83,
+     83
+    ],
+    "eyes": 1,
+    "face_height_ratio": 0.10247,
+    "face_area_ratio": 0.00787,
+    "sharpness": 7.773,
+    "contrast": 41.0,
+    "center_x_ratio": 0.59676,
+    "center_y_ratio": 0.40309
+   },
+   "margin": 0.173,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 242.6
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.5789,
+     "face_px": 242.6
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.1824
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 242.6,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 101.6,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.53%，主体大小要求 ≥ 1.0%"
+   ],
+   "face": {
+    "box": [
+     268,
+     250,
+     68,
+     68
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08395,
+    "face_area_ratio": 0.00529,
+    "sharpness": 153.86,
+    "contrast": 123.0,
+    "center_x_ratio": 0.27963,
+    "center_y_ratio": 0.16543
+   },
+   "margin": 0.529,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 71.8
+    },
+    "eyes": {
+     "verdict": "unknown",
+     "ear": null,
+     "face_px": 71.8
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.0038
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 71.8,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 101.8,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.54%，主体大小要求 ≥ 1.0%"
+   ],
+   "face": {
+    "box": [
+     268,
+     249,
+     69,
+     69
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08519,
+    "face_area_ratio": 0.00544,
+    "sharpness": 198.833,
+    "contrast": 125.0,
+    "center_x_ratio": 0.28009,
+    "center_y_ratio": 0.16481
+   },
+   "margin": 0.544,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 72.2
+    },
+    "eyes": {
+     "verdict": "open",
+     "ear": 0.6946,
+     "face_px": 72.2
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": 0.0308
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 72.2,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  },
+  {
+   "frame_at": 102.0,
+   "status": "fail",
+   "issues": [
+    "只检出 0 只眼，正面睁眼合同要求 ≥ 2",
+    "脸部面积占照片区域 0.51%，主体大小要求 ≥ 1.0%"
+   ],
+   "face": {
+    "box": [
+     269,
+     250,
+     67,
+     67
+    ],
+    "eyes": 0,
+    "face_height_ratio": 0.08272,
+    "face_area_ratio": 0.00513,
+    "sharpness": 180.757,
+    "contrast": 123.85,
+    "center_x_ratio": 0.28009,
+    "center_y_ratio": 0.16481
+   },
+   "margin": 0.513,
+   "face_model": {
+    "status": "ok",
+    "identity": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {},
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 70.4
+    },
+    "eyes": {
+     "verdict": "unknown",
+     "ear": null,
+     "face_px": 70.4
+    },
+    "rivals": {
+     "verdict": "unknown",
+     "name": null,
+     "similarity": {
+      "克鲁格": -0.0281
+     },
+     "missing": [
+      "辛尼亚科娃"
+     ],
+     "face_px": 70.4,
+     "target": [
+      "辛尼亚科娃"
+     ]
+    }
+   }
+  }
+ ],
+ "passing": []
+}
