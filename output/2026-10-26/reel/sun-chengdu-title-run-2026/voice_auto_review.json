@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "5f9414df37134f509e7a8db01edf6ad335a9e09dfd960a3743820712c96e6a86",
-    "render_inputs_sha256": "d725a0861257c9f67d48760b21238095f51f7fe083f7774da9c447b53e6b1731",
-    "spec_sha256": "76c42fc7caae3a7fd85922239c80ffa5df8ba7673116a1247b512073b9135903",
-    "film_sha256": "92b11ee6cb0782807704995a49fc7dd530875b5eb311478d5e6fc39401acc0c2",
+    "render_sha256": "0dc29a67b834da3c9051244c2f00a9c9c69f8c8876ed364efeaa5baaa9545ea9",
+    "render_inputs_sha256": "c008945d503e08c10a190fdf3e44fd8710333f002d8287e184d70ccff9db1c3f",
+    "spec_sha256": "00b6315fa5ec4b225dc8773aafb5a92fa4c39a20c762590e1ac6de5785f869fc",
+    "film_sha256": "9bdd52fb96171531bf5f6324d4a1fb249550c23406d0fc19ef0a7c799fbcdfa0",
     "inventory_sha256": "1fea34fed2423f27ca027f1ebd15231f99f797ccacd66160ca4c3be91d114b36"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-25T18:22:03+00:00",
+  "reviewed_at": "2026-10-26T04:34:35+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -363,7 +363,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "半决赛,他更快了。"
+        "transcript": "半决赛 他更快了。"
       },
       "polyphones": [],
       "pauses": {
@@ -719,7 +719,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他说,不要放弃坚持下来,我相信我一定可以。十六岁,五战全胜,年中世界第一。下一站广州,成人赛场,他能把这股劲带到哪儿?"
+        "transcript": "他说,不要放弃坚持下来,我相信我一定可以。十六岁,五战全胜,年中世界第一。下一站广州,成人赛场,他能把这古进带到哪儿?"
       },
       "polyphones": [],
       "pauses": {
@@ -783,7 +783,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第一盘一比三落后,孙心然叫了医疗暂停,又吸蝉上绷带,他重新站回底线。"
+        "transcript": "第一盘一笔三落后,孙心然叫了医疗暂停,又吸蝉上绷带,他重新站回底线。"
       },
       "polyphones": [
         {
