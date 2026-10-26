@@ -1,0 +1,104 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "940b699fcc823a4ee3e28195a3c6de4345d1689b2ad3a8ad49a3b0e7ba993e54",
+    "request_count": 21,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-moutet-cramp-warning-2026-940b699fcc823a4e",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-moutet-cramp-warning-2026-940b699fcc823a4e/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40318057870"
+  },
+  "cover_seconds": 3.394,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 222.53,
+  "topbar": null,
+  "film_seconds": 230.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 8.184,
+    "1": 3.216,
+    "4": 9.144,
+    "5": 3.744,
+    "6": 7.608,
+    "8": 6.864,
+    "9": 5.232,
+    "10": 3.408,
+    "11": 3.144,
+    "12": 6.6,
+    "13": 5.496,
+    "14": 6.84,
+    "16": 7.536,
+    "19": 4.248,
+    "20": 9.696,
+    "21": 8.664,
+    "22": 7.008,
+    "23": 6.912,
+    "24": 6.768
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "9128f09140c44a7bd12cec7e7b6e37c0ee69dc321df6317025e9afd988e3ae0d",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "moutet-cramp-warning-2026",
+    "received_at": "2026-10-26T11:50:39Z",
+    "artifact_ready_at": "2026-10-26T11:57:15Z",
+    "elapsed_seconds": 396.702,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "ecebce77bc105988d79344c96583cd7cb9c2e0f83646f36a0740d80ec90b8805",
+    "spec_sha256": "c8ceb31ab4490e9eb56be338a9ac45f791c705a6cc996bead6bfe286a1ae94f0",
+    "run_id": "40318057870",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-26T11:52:52Z",
+        "run_id": "40318057870"
+      }
+    ],
+    "render_seconds": 263.702,
+    "pre_render_seconds": 133.0
+  },
+  "film_sha256": "ecebce77bc105988d79344c96583cd7cb9c2e0f83646f36a0740d80ec90b8805",
+  "film_bytes": 111940932,
+  "qc_attestation_sha256": "dc5402e21429e181a95bd341dd4ad92340ba154138fb4fd2946c8f11d37b6c80",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-26T11:52:52Z",
+      "run_id": "40318057870"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-26T11:57:18Z",
+      "run_id": "40318057870"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-moutet-cramp-warning-2026/moutet-cramp-warning-2026.mp4",
+  "video_bytes": 111940932
+}

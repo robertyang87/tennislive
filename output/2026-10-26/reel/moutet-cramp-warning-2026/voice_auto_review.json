@@ -1,0 +1,1138 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "6e7b39775fad411d10b4e4b2a0d00a3470de0256638c31cb6d0ded3aa98ceab8",
+    "render_inputs_sha256": "9128f09140c44a7bd12cec7e7b6e37c0ee69dc321df6317025e9afd988e3ae0d",
+    "spec_sha256": "c8ceb31ab4490e9eb56be338a9ac45f791c705a6cc996bead6bfe286a1ae94f0",
+    "film_sha256": "ecebce77bc105988d79344c96583cd7cb9c2e0f83646f36a0740d80ec90b8805",
+    "inventory_sha256": "0989ec55e753f99b13e46e0b51b829fd219ed0c4d2103ac62f2050b70e8810ff"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-26T11:59:11+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:02330f5a80ee204e588ed8a51b06e4772ccd65de7907345656c15a957b0d5796",
+      "audio_sha256": "95cf510d6dcf064815c8122291f476eb2f3a201b56dddbb8245ead279c63a025",
+      "pass": true,
+      "result_of": "bundle:02330f5a80ee204e588ed8a51b06e4772ccd65de7907345656c15a957b0d5796"
+    },
+    {
+      "id": "bundle:252e65d93d6e7fe6f0124b841d0f9ff17dc19fc0f4f1afacf645873fb3520f1f",
+      "audio_sha256": "42c260c62f51cc99e40df407441e29727977e6bfc5fa6c7ca4610e389d2aef2d",
+      "pass": true,
+      "result_of": "bundle:252e65d93d6e7fe6f0124b841d0f9ff17dc19fc0f4f1afacf645873fb3520f1f"
+    },
+    {
+      "id": "bundle:279032b9a8cfdd3ecb2b97b09b121ead2318572419b58df6272731348c2f93b3",
+      "audio_sha256": "1fa2d9cc2f5748f73d9c34b56b9da696700a8c36d5797b095f48b12993e16761",
+      "pass": true,
+      "result_of": "bundle:279032b9a8cfdd3ecb2b97b09b121ead2318572419b58df6272731348c2f93b3"
+    },
+    {
+      "id": "bundle:30a1792d2c291e024c8ae0fb36d9037e4fca3fb4c81c24879ed3611f11be06a9",
+      "audio_sha256": "d7428c7269dd5ccd97cba7392cf4d715efd5d84cfb808738edfa529ed9d34be4",
+      "pass": true,
+      "result_of": "bundle:30a1792d2c291e024c8ae0fb36d9037e4fca3fb4c81c24879ed3611f11be06a9"
+    },
+    {
+      "id": "bundle:31067b82829d5ac39a37ab224b7047671351ad314e222de70a60a101ea1ac5b1",
+      "audio_sha256": "6f6d699f617c6678def5756bc85cbd46ad4ae000916d3c09ebecd46f6252a072",
+      "pass": true,
+      "result_of": "bundle:31067b82829d5ac39a37ab224b7047671351ad314e222de70a60a101ea1ac5b1"
+    },
+    {
+      "id": "bundle:3bfd66e897cd6a05cfa8fa41bdd096c7f0717e1eb3678c573535a87e09d7c89c",
+      "audio_sha256": "d37886bf958f8b8aec1f348c37d6a57d9ac4cdfc7490a68b5cd468d0911096b7",
+      "pass": true,
+      "result_of": "bundle:3bfd66e897cd6a05cfa8fa41bdd096c7f0717e1eb3678c573535a87e09d7c89c"
+    },
+    {
+      "id": "bundle:5d204fe1ac0be900beba544a7e2a4df0b06799c15556645f4d4339a4cfb5abf2",
+      "audio_sha256": "bf36ef304e3d562affe8720f3d2754d5de8eb65bbd1c0e817ebceb3c881c797d",
+      "pass": true,
+      "result_of": "bundle:5d204fe1ac0be900beba544a7e2a4df0b06799c15556645f4d4339a4cfb5abf2"
+    },
+    {
+      "id": "bundle:6a32ffcd61ad87553ee726114b4fdc919f260e246f3d007d6295d123837690d2",
+      "audio_sha256": "89e386136a72d663b4c4d7a9f1922a25042c6cecd1686c636312dd7f3b3cd310",
+      "pass": true,
+      "result_of": "bundle:6a32ffcd61ad87553ee726114b4fdc919f260e246f3d007d6295d123837690d2"
+    },
+    {
+      "id": "bundle:6a92823e5274ad3caf529c30c2aa8b4185c80a61521418a21cb021dd88c5752d",
+      "audio_sha256": "4589900ec9b788dc2365fa5295ed6177388124bf3f24bb8b33faedff1d701443",
+      "pass": true,
+      "result_of": "bundle:6a92823e5274ad3caf529c30c2aa8b4185c80a61521418a21cb021dd88c5752d"
+    },
+    {
+      "id": "bundle:7119c6784d80fd8776b5f2ca26f792a03eaceed389cc9c8bc15d24073316e791",
+      "audio_sha256": "7ce4f31cc96f204b276c59b7e8247d17b47c6d616388d9e1cc4fd8ae23e8a503",
+      "pass": true,
+      "result_of": "bundle:7119c6784d80fd8776b5f2ca26f792a03eaceed389cc9c8bc15d24073316e791"
+    },
+    {
+      "id": "bundle:7f9ae6a4477ff6b2a8476a245b02b91cbfc5c8e5321786c5091b85d7a25c89f8",
+      "audio_sha256": "1cb7977fe33e37e2ae945d9b38e689b098c7ab8df0339fdfb04cd788582c0fc2",
+      "pass": true,
+      "result_of": "bundle:7f9ae6a4477ff6b2a8476a245b02b91cbfc5c8e5321786c5091b85d7a25c89f8"
+    },
+    {
+      "id": "bundle:80e34a1c1861cbb728f515a3613b08fcca1b025086a6ce2b7ef2c8ee859b2377",
+      "audio_sha256": "2015dccd025a28d9e247aa9f5108e7fbd0bf33510c8428a2721eea53e9c7cde0",
+      "pass": true,
+      "result_of": "bundle:80e34a1c1861cbb728f515a3613b08fcca1b025086a6ce2b7ef2c8ee859b2377"
+    },
+    {
+      "id": "bundle:967c849bc6bfca1785511193cbb1020d2a1a9ab2e57bd54b72a5996992e26448",
+      "audio_sha256": "8931da70a12bba2d27e748ced8d173572e425fd3c2ee45d0bb307e1449360079",
+      "pass": true,
+      "result_of": "bundle:967c849bc6bfca1785511193cbb1020d2a1a9ab2e57bd54b72a5996992e26448"
+    },
+    {
+      "id": "bundle:b5026caaa80c8d99c0a348e2aa9e688e992a36fabea00d83184f28319dcf39cd",
+      "audio_sha256": "fab10baa58e5108d4d629d9384813865af59cde8cc6d1dd5f73cf6a145a61bcd",
+      "pass": true,
+      "result_of": "bundle:b5026caaa80c8d99c0a348e2aa9e688e992a36fabea00d83184f28319dcf39cd"
+    },
+    {
+      "id": "bundle:b58a6a54c8b59abecb4e7e05a4f77c4c3586add4a1b104be8de8fb2ea4f61679",
+      "audio_sha256": "096929e018d90eb8a046d6cb825959144cea55ab633bffee0ece63aaf49479ba",
+      "pass": true,
+      "result_of": "bundle:b58a6a54c8b59abecb4e7e05a4f77c4c3586add4a1b104be8de8fb2ea4f61679"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "6c98bf97dcb4482a6383180ebf850ffdcb998f341906876f21af7eb48f4dc296",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bba1311eb4c2b09addf814edac70262a7c0e1e0bb7f24b720278b67d7d2687b2",
+      "audio_sha256": "2ba42945e800701f0103d9299da34d00ac9a0fd563f71e10165e408e4be54bae",
+      "pass": true,
+      "result_of": "bundle:bba1311eb4c2b09addf814edac70262a7c0e1e0bb7f24b720278b67d7d2687b2"
+    },
+    {
+      "id": "bundle:c1475c8bf52a8ee85ebf5ca6448e73e95f0e6792f3ebc81b60ab22961c37a6d2",
+      "audio_sha256": "14795b1e9be16eeaaf16e7c1abd756a7c3ff754a339e29fce47c2e2f89e5ff2c",
+      "pass": true,
+      "result_of": "bundle:c1475c8bf52a8ee85ebf5ca6448e73e95f0e6792f3ebc81b60ab22961c37a6d2"
+    },
+    {
+      "id": "bundle:d03f9f230507ae1739218c25c2eca3122a16b984aea96cdf7c1fc9577bb3a7f3",
+      "audio_sha256": "f9a2ceb50c9e235e67164389c872a2aae36bbd393295692fc820193ceaf44333",
+      "pass": true,
+      "result_of": "bundle:d03f9f230507ae1739218c25c2eca3122a16b984aea96cdf7c1fc9577bb3a7f3"
+    },
+    {
+      "id": "bundle:e9cf797f4785480d8b6328c000da64ba317a9f0e0898acf6f52f8cbcbfe3f7ef",
+      "audio_sha256": "c3ec7bb52982f4ed72ffa6c133a2aabe3a8b58a5d8d97f162d76e65eeb3c56a7",
+      "pass": true,
+      "result_of": "bundle:e9cf797f4785480d8b6328c000da64ba317a9f0e0898acf6f52f8cbcbfe3f7ef"
+    },
+    {
+      "id": "bundle:f7f00dbdc88c8bb5f7174a289684a41fd95c193b9ae8d5feb98f11bc04e4c643",
+      "audio_sha256": "148bccf7ed68a3f1154430843eceeb291992289f099a7b5e960850ebb9781017",
+      "pass": true,
+      "result_of": "bundle:f7f00dbdc88c8bb5f7174a289684a41fd95c193b9ae8d5feb98f11bc04e4c643"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "bf36ef304e3d562affe8720f3d2754d5de8eb65bbd1c0e817ebceb3c881c797d",
+      "pass": true,
+      "result_of": "bundle:5d204fe1ac0be900beba544a7e2a4df0b06799c15556645f4d4339a4cfb5abf2"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "2015dccd025a28d9e247aa9f5108e7fbd0bf33510c8428a2721eea53e9c7cde0",
+      "pass": true,
+      "result_of": "bundle:80e34a1c1861cbb728f515a3613b08fcca1b025086a6ce2b7ef2c8ee859b2377"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "f9a2ceb50c9e235e67164389c872a2aae36bbd393295692fc820193ceaf44333",
+      "pass": true,
+      "result_of": "bundle:d03f9f230507ae1739218c25c2eca3122a16b984aea96cdf7c1fc9577bb3a7f3"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "c3ec7bb52982f4ed72ffa6c133a2aabe3a8b58a5d8d97f162d76e65eeb3c56a7",
+      "pass": true,
+      "result_of": "bundle:e9cf797f4785480d8b6328c000da64ba317a9f0e0898acf6f52f8cbcbfe3f7ef"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "1fa2d9cc2f5748f73d9c34b56b9da696700a8c36d5797b095f48b12993e16761",
+      "pass": true,
+      "result_of": "bundle:279032b9a8cfdd3ecb2b97b09b121ead2318572419b58df6272731348c2f93b3"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "d37886bf958f8b8aec1f348c37d6a57d9ac4cdfc7490a68b5cd468d0911096b7",
+      "pass": true,
+      "result_of": "bundle:3bfd66e897cd6a05cfa8fa41bdd096c7f0717e1eb3678c573535a87e09d7c89c"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "14795b1e9be16eeaaf16e7c1abd756a7c3ff754a339e29fce47c2e2f89e5ff2c",
+      "pass": true,
+      "result_of": "bundle:c1475c8bf52a8ee85ebf5ca6448e73e95f0e6792f3ebc81b60ab22961c37a6d2"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "8931da70a12bba2d27e748ced8d173572e425fd3c2ee45d0bb307e1449360079",
+      "pass": true,
+      "result_of": "bundle:967c849bc6bfca1785511193cbb1020d2a1a9ab2e57bd54b72a5996992e26448"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "89e386136a72d663b4c4d7a9f1922a25042c6cecd1686c636312dd7f3b3cd310",
+      "pass": true,
+      "result_of": "bundle:6a32ffcd61ad87553ee726114b4fdc919f260e246f3d007d6295d123837690d2"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "6f6d699f617c6678def5756bc85cbd46ad4ae000916d3c09ebecd46f6252a072",
+      "pass": true,
+      "result_of": "bundle:31067b82829d5ac39a37ab224b7047671351ad314e222de70a60a101ea1ac5b1"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "42c260c62f51cc99e40df407441e29727977e6bfc5fa6c7ca4610e389d2aef2d",
+      "pass": true,
+      "result_of": "bundle:252e65d93d6e7fe6f0124b841d0f9ff17dc19fc0f4f1afacf645873fb3520f1f"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "2ba42945e800701f0103d9299da34d00ac9a0fd563f71e10165e408e4be54bae",
+      "pass": true,
+      "result_of": "bundle:bba1311eb4c2b09addf814edac70262a7c0e1e0bb7f24b720278b67d7d2687b2"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "d7428c7269dd5ccd97cba7392cf4d715efd5d84cfb808738edfa529ed9d34be4",
+      "pass": true,
+      "result_of": "bundle:30a1792d2c291e024c8ae0fb36d9037e4fca3fb4c81c24879ed3611f11be06a9"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "95cf510d6dcf064815c8122291f476eb2f3a201b56dddbb8245ead279c63a025",
+      "pass": true,
+      "result_of": "bundle:02330f5a80ee204e588ed8a51b06e4772ccd65de7907345656c15a957b0d5796"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "148bccf7ed68a3f1154430843eceeb291992289f099a7b5e960850ebb9781017",
+      "pass": true,
+      "result_of": "bundle:f7f00dbdc88c8bb5f7174a289684a41fd95c193b9ae8d5feb98f11bc04e4c643"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "7ce4f31cc96f204b276c59b7e8247d17b47c6d616388d9e1cc4fd8ae23e8a503",
+      "pass": true,
+      "result_of": "bundle:7119c6784d80fd8776b5f2ca26f792a03eaceed389cc9c8bc15d24073316e791"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "4589900ec9b788dc2365fa5295ed6177388124bf3f24bb8b33faedff1d701443",
+      "pass": true,
+      "result_of": "bundle:6a92823e5274ad3caf529c30c2aa8b4185c80a61521418a21cb021dd88c5752d"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "096929e018d90eb8a046d6cb825959144cea55ab633bffee0ece63aaf49479ba",
+      "pass": true,
+      "result_of": "bundle:b58a6a54c8b59abecb4e7e05a4f77c4c3586add4a1b104be8de8fb2ea4f61679"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "fab10baa58e5108d4d629d9384813865af59cde8cc6d1dd5f73cf6a145a61bcd",
+      "pass": true,
+      "result_of": "bundle:b5026caaa80c8d99c0a348e2aa9e688e992a36fabea00d83184f28319dcf39cd"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "1cb7977fe33e37e2ae945d9b38e689b098c7ab8df0339fdfb04cd788582c0fc2",
+      "pass": true,
+      "result_of": "bundle:7f9ae6a4477ff6b2a8476a245b02b91cbfc5c8e5321786c5091b85d7a25c89f8"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "6c98bf97dcb4482a6383180ebf850ffdcb998f341906876f21af7eb48f4dc296",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:02330f5a80ee204e588ed8a51b06e4772ccd65de7907345656c15a957b0d5796",
+      "text": "最后科兹洛夫赢了，打了三小时二十一分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.056,
+        "longest_deletion": 0,
+        "transcript": "最后,克斯洛夫赢了,打了3小时21分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.361,
+        "cps": 5.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 科兹洛夫 ｜ 赢 ｜ 了 ｜ 打 ｜ 了 ｜ 三小时 ｜ 二十一分钟"
+      }
+    },
+    {
+      "id": "bundle:252e65d93d6e7fe6f0124b841d0f9ff17dc19fc0f4f1afacf645873fb3520f1f",
+      "text": "真撑不住，可以先放弃几分、甚至几局，拖到换边再治。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "真称不住,可以先放弃几分,甚至几局,拖到换边再致。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.623,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "真 ｜ 撑 ｜ 不住 ｜ 可以 ｜ 先 ｜ 放弃 ｜ 几分 ｜ 甚至 ｜ 几局 ｜ 拖 ｜ 到 ｜ 换 ｜ 边 ｜ 再 ｜ 治"
+      }
+    },
+    {
+      "id": "bundle:279032b9a8cfdd3ecb2b97b09b121ead2318572419b58df6272731348c2f93b3",
+      "text": "接下来九分，他拿了七分，七比四赢下抢七。可抽筋倒地，为什么还会被警告？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "接下来9分,他拿了7分,7比4赢下强7。可抽筋倒地,为什么还会被警告?"
+      },
+      "polyphones": [
+        {
+          "index": 29,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.735,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.71,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "接下来 ｜ 九分 ｜ 他 ｜ 拿 ｜ 了 ｜ 七分 ｜ 七比四 ｜ 赢 ｜ 下 ｜ 抢 ｜ 七 ｜ 可 ｜ 抽筋 ｜ 倒 ｜ 地 ｜ 为什么 ｜ 还 ｜ 会 ｜ 被 ｜ 警告"
+      }
+    },
+    {
+      "id": "bundle:30a1792d2c291e024c8ae0fb36d9037e4fca3fb4c81c24879ed3611f11be06a9",
+      "text": "二零二二年阿卡普尔科，科兹洛夫对季米特洛夫。第二盘，他打着打着就抽筋了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2022年阿卡普尔科、柯兹洛夫对纪米特洛夫,第二盘,他打着打着就抽筋了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.663,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二二年 ｜ 阿卡普尔科 ｜ 科兹洛夫 ｜ 对 ｜ 季米特洛夫 ｜ 第二盘 ｜ 他 ｜ 打 ｜ 着 ｜ 打 ｜ 着 ｜ 就 ｜ 抽筋 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:31067b82829d5ac39a37ab224b7047671351ad314e222de70a60a101ea1ac5b1",
+      "text": "第一次超时，是警告；再犯，发球方判一次发球失误，接发方直接丢一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一次超时是警告,再犯,发球方判一次发球失误,结法方直接丢一分。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 19,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 25,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.719,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一 ｜ 次 ｜ 超时 ｜ 是 ｜ 警告 ｜ 再犯 ｜ 发 ｜ 球方 ｜ 判 ｜ 一次 ｜ 发球 ｜ 失误 ｜ 接发 ｜ 方 ｜ 直接 ｜ 丢 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:3bfd66e897cd6a05cfa8fa41bdd096c7f0717e1eb3678c573535a87e09d7c89c",
+      "text": "先看规则。ATP和大满贯的规则都写着：抽筋，不能叫医疗暂停。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先看规则,ATP和大满罐的规则都写着,抽筋不能叫医疗暂停。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.979,
+        "cps": 3.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 规则 ｜ ATP ｜ 和 ｜ 大满贯 ｜ 的 ｜ 规则 ｜ 都 ｜ 写 ｜ 着 ｜ 抽筋 ｜ 不能 ｜ 叫 ｜ 医疗 ｜ 暂停"
+      }
+    },
+    {
+      "id": "bundle:5d204fe1ac0be900beba544a7e2a4df0b06799c15556645f4d4339a4cfb5abf2",
+      "text": "十月二十号，里昂站首轮，法国人穆泰对阵同胞安贝尔。打到决胜盘，穆泰二比零领先。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.059,
+        "longest_deletion": 0,
+        "transcript": "10月20日,李扬战首轮,法国人木太对阵同胞安贝尔。达到决胜盘,木太2比0领先。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.3,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月二十号 ｜ 里昂 ｜ 站 ｜ 首轮 ｜ 法国 ｜ 人 ｜ 穆泰 ｜ 对阵 ｜ 同胞 ｜ 安贝尔 ｜ 打 ｜ 到 ｜ 决胜 ｜ 盘 ｜ 穆泰 ｜ 二比零 ｜ 领先"
+      }
+    },
+    {
+      "id": "bundle:6a32ffcd61ad87553ee726114b4fdc919f260e246f3d007d6295d123837690d2",
+      "text": "分与分之间，只有二十五秒。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "分与分之间,只有25秒。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.276,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "分 ｜ 与 ｜ 分 ｜ 之间 ｜ 只有 ｜ 二十五秒"
+      }
+    },
+    {
+      "id": "bundle:6a92823e5274ad3caf529c30c2aa8b4185c80a61521418a21cb021dd88c5752d",
+      "text": "医疗暂停之后，他接着打。兹维列夫很不满，认为抽筋不该给医疗暂停。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.036,
+        "longest_deletion": 0,
+        "transcript": "医疗暂停之后,他接着打。思维列夫很不满,认为抽筋不该给医疗暂停。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.132,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "医疗 ｜ 暂停 ｜ 之后 ｜ 他 ｜ 接着 ｜ 打 ｜ 兹维列夫 ｜ 很 ｜ 不满 ｜ 认为 ｜ 抽筋 ｜ 不该 ｜ 给 ｜ 医疗 ｜ 暂停"
+      }
+    },
+    {
+      "id": "bundle:7119c6784d80fd8776b5f2ca26f792a03eaceed389cc9c8bc15d24073316e791",
+      "text": "今年澳网半决赛，阿尔卡拉斯对兹维列夫。第三盘，阿尔卡拉斯的腿出了问题，拿到一次医疗暂停。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年澳网半决赛,阿尔卡拉斯队资维列夫。第三盘,阿尔卡拉斯的腿出了问题,拿到一次医疗暂停。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.783,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 澳网 ｜ 半决赛 ｜ 阿尔卡拉 ｜ 斯 ｜ 对兹 ｜ 维列夫 ｜ 第三 ｜ 盘 ｜ 阿尔卡拉 ｜ 斯 ｜ 的 ｜ 腿 ｜ 出 ｜ 了 ｜ 问题 ｜ 拿 ｜ 到 ｜ 一次 ｜ 医疗 ｜ 暂停"
+      }
+    },
+    {
+      "id": "bundle:7f9ae6a4477ff6b2a8476a245b02b91cbfc5c8e5321786c5091b85d7a25c89f8",
+      "text": "抽筋倒地，为什么还被警告？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "抽筋倒地,为什么还被警告?"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.462,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.252,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抽筋 ｜ 倒地 ｜ 为什么 ｜ 还 ｜ 被 ｜ 警告"
+      }
+    },
+    {
+      "id": "bundle:80e34a1c1861cbb728f515a3613b08fcca1b025086a6ce2b7ef2c8ee859b2377",
+      "text": "打完这一分，他突然倒在了地上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "打完这一分,它突然倒在了地上。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.347,
+        "cps": 5.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "打 ｜ 完 ｜ 这 ｜ 一 ｜ 分 ｜ 他 ｜ 突然 ｜ 倒在 ｜ 了 ｜ 地上"
+      }
+    },
+    {
+      "id": "bundle:967c849bc6bfca1785511193cbb1020d2a1a9ab2e57bd54b72a5996992e26448",
+      "text": "一场比赛，抽筋最多治疗两次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一场比赛,抽金最多治疗两次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.535,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 场 ｜ 比赛 ｜ 抽筋 ｜ 最多 ｜ 治疗 ｜ 两 ｜ 次"
+      }
+    },
+    {
+      "id": "bundle:b5026caaa80c8d99c0a348e2aa9e688e992a36fabea00d83184f28319dcf39cd",
+      "text": "规则写得很清楚。可抽筋到倒地，该不该多给几秒？评论区说说。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "规则写得很清楚,可抽筋到岛地该不该多给几秒。评论区说说。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.261,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.884,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "规则 ｜ 写 ｜ 得 ｜ 很 ｜ 清楚 ｜ 可 ｜ 抽筋 ｜ 到 ｜ 倒 ｜ 地 ｜ 该 ｜ 不该 ｜ 多 ｜ 给 ｜ 几秒 ｜ 评论 ｜ 区 ｜ 说说"
+      }
+    },
+    {
+      "id": "bundle:b58a6a54c8b59abecb4e7e05a4f77c4c3586add4a1b104be8de8fb2ea4f61679",
+      "text": "阿尔卡拉斯说，他以为是受伤。最后他五盘获胜，打了五小时二十七分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "阿尔卡拉斯说,他以为是受伤,最后他五盘获胜,打了五小时二十七分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.026,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿尔卡拉 ｜ 斯 ｜ 说 ｜ 他 ｜ 以为 ｜ 是 ｜ 受伤 ｜ 最后 ｜ 他 ｜ 五盘 ｜ 获胜 ｜ 打 ｜ 了 ｜ 五小时二十七分钟"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bba1311eb4c2b09addf814edac70262a7c0e1e0bb7f24b720278b67d7d2687b2",
+      "text": "这条规则，不少球员都碰上过。二零二一年迈阿密，梅德韦杰夫对波皮林。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这条规则,不少球员都碰上过。2021年卖阿密,梅德韦杰夫队波皮林。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.943,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 条 ｜ 规则 ｜ 不少 ｜ 球员 ｜ 都 ｜ 碰 ｜ 上 ｜ 过 ｜ 二零二一年 ｜ 迈阿密 ｜ 梅德韦杰夫 ｜ 对 ｜ 波皮林"
+      }
+    },
+    {
+      "id": "bundle:c1475c8bf52a8ee85ebf5ca6448e73e95f0e6792f3ebc81b60ab22961c37a6d2",
+      "text": "只能在换边的九十秒，或者盘间的一百二十秒里治疗。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "只能在换边的90秒或者盘尖的120秒里治疗。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.328,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "只能 ｜ 在 ｜ 换 ｜ 边 ｜ 的 ｜ 九十秒 ｜ 或者 ｜ 盘间 ｜ 的 ｜ 一百二十秒 ｜ 里 ｜ 治疗"
+      }
+    },
+    {
+      "id": "bundle:d03f9f230507ae1739218c25c2eca3122a16b984aea96cdf7c1fc9577bb3a7f3",
+      "text": "他被扶了起来，比赛接着打。可主裁还是判他超时，给了一次警告。按规则，抽筋不能叫医疗暂停。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他被扶了起来,比赛接着打。可主才还是判他超时,给了一次警告。按规则,抽金不能叫医疗暂停。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.335,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.255,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 被 ｜ 扶 ｜ 了 ｜ 起来 ｜ 比赛 ｜ 接着 ｜ 打 ｜ 可 ｜ 主裁 ｜ 还是 ｜ 判 ｜ 他 ｜ 超时 ｜ 给 ｜ 了 ｜ 一次 ｜ 警告 ｜ 按 ｜ 规则 ｜ 抽筋 ｜ 不能 ｜ 叫 ｜ 医疗 ｜ 暂停"
+      }
+    },
+    {
+      "id": "bundle:e9cf797f4785480d8b6328c000da64ba317a9f0e0898acf6f52f8cbcbfe3f7ef",
+      "text": "决胜盘打进抢七，他先零比二落后。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "爵声盘打进抢七,他先领比二落后。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.311,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.267,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.854,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 打 ｜ 进 ｜ 抢七 ｜ 他 ｜ 先 ｜ 零比二 ｜ 落后"
+      }
+    },
+    {
+      "id": "bundle:f7f00dbdc88c8bb5f7174a289684a41fd95c193b9ae8d5feb98f11bc04e4c643",
+      "text": "二零二五年上海，天气又湿又热，辛纳右腿抽筋。第三盘二比三落后，他选择退赛，和格里克斯普尔握手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2025年上海,天气又湿又热,心那又腿抽筋。第三盘2比3落后,他选择退赛,合格里克斯普尔握手。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.175,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.419,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.809,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二五年 ｜ 上海 ｜ 天气 ｜ 又 ｜ 湿 ｜ 又 ｜ 热 ｜ 辛纳 ｜ 右腿 ｜ 抽筋 ｜ 第三 ｜ 盘 ｜ 二 ｜ 比 ｜ 三落后 ｜ 他 ｜ 选择 ｜ 退赛 ｜ 和格里 ｜ 克斯普尔 ｜ 握手"
+      }
+    }
+  ]
+}
