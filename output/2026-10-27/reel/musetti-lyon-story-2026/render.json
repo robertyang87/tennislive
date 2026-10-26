@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-musetti-lyon-story-2026-afee862f5398e36e",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-musetti-lyon-story-2026-afee862f5398e36e/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40358822102"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40362092248"
   },
   "cover_seconds": 4.498,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 353.81,
+  "segments_seconds": 353.59,
   "topbar": null,
-  "film_seconds": 362.9,
+  "film_seconds": 362.7,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -65,45 +65,45 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "e1b696cce5fbf2c02327b7b68c8adcc892317ea3911cd7f78b095e33ee6ba94c",
+  "render_inputs_sha256": "c124f1606cf97bb9e20d143dc861f3ff56c8e898496d84fa15eff627ad9d60fa",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "musetti-lyon-story-2026",
-    "received_at": "2026-10-26T16:24:38Z",
-    "artifact_ready_at": "2026-10-26T16:35:37Z",
-    "elapsed_seconds": 659.668,
+    "received_at": "2026-10-26T16:45:08Z",
+    "artifact_ready_at": "2026-10-26T16:55:57Z",
+    "elapsed_seconds": 649.611,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "05977239a75dfec567892b007a495a2a9823489c1dc64722e2123ce2803feb45",
-    "spec_sha256": "8ea9f3c32ecec671f77801ee995a0be71246676eb5a2697cc9bdb1258f4b9cc2",
-    "run_id": "40358822102",
+    "film_sha256": "9440286fb3388e38a94d2cbe9a5e435949695ab946cccf636f3fd3205154dde0",
+    "spec_sha256": "1de507c124d4589621f60326165b6a1fff4e0dabd82263b162b7caa42f366638",
+    "run_id": "40362092248",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-26T16:28:39Z",
-        "run_id": "40358822102"
+        "at": "2026-10-26T16:49:29Z",
+        "run_id": "40362092248"
       }
     ],
-    "render_seconds": 418.668,
-    "pre_render_seconds": 241.0
+    "render_seconds": 388.611,
+    "pre_render_seconds": 261.0
   },
-  "film_sha256": "05977239a75dfec567892b007a495a2a9823489c1dc64722e2123ce2803feb45",
-  "film_bytes": 141834771,
-  "qc_attestation_sha256": "45840a12cc7f56daab25d4ffb56ad54079722039a5037e1954948307f788f7ad",
+  "film_sha256": "9440286fb3388e38a94d2cbe9a5e435949695ab946cccf636f3fd3205154dde0",
+  "film_bytes": 139274729,
+  "qc_attestation_sha256": "78748634dbaa8579eea69a0101200b824843cff2449d14a06d11fa3eaff6726b",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-26T16:28:39Z",
-      "run_id": "40358822102"
+      "at": "2026-10-26T16:49:29Z",
+      "run_id": "40362092248"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-26T16:35:41Z",
-      "run_id": "40358822102"
+      "at": "2026-10-26T16:56:02Z",
+      "run_id": "40362092248"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-musetti-lyon-story-2026/musetti-lyon-story-2026.mp4",
-  "video_bytes": 141834771,
-  "_release_tag_note": "2026-10-26T16:35:47Z run 40358822102 把这一份（video_bytes 141834771）传上 tag `reel-musetti-lyon-story-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-26/reel/musetti-lyon-story-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+  "video_bytes": 139274729,
+  "_release_tag_note": "2026-10-26T16:56:10Z run 40362092248 把这一份（video_bytes 139274729）传上 tag `reel-musetti-lyon-story-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-26/reel/musetti-lyon-story-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
 }

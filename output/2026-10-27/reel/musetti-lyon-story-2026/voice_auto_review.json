@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "353a8a0ab1fbe31b76f9747eb5747c09a4aecd453debed7b45fc7c9911fe04c8",
-    "render_inputs_sha256": "e1b696cce5fbf2c02327b7b68c8adcc892317ea3911cd7f78b095e33ee6ba94c",
-    "spec_sha256": "8ea9f3c32ecec671f77801ee995a0be71246676eb5a2697cc9bdb1258f4b9cc2",
-    "film_sha256": "05977239a75dfec567892b007a495a2a9823489c1dc64722e2123ce2803feb45",
+    "render_sha256": "e41552c1f474ead1e5d749291762b915a54502973d71518f3f432ca63c6d3356",
+    "render_inputs_sha256": "c124f1606cf97bb9e20d143dc861f3ff56c8e898496d84fa15eff627ad9d60fa",
+    "spec_sha256": "1de507c124d4589621f60326165b6a1fff4e0dabd82263b162b7caa42f366638",
+    "film_sha256": "9440286fb3388e38a94d2cbe9a5e435949695ab946cccf636f3fd3205154dde0",
     "inventory_sha256": "11f1397a99833af4643966f6c66158116890ff6f9c36a0a8f613fb3cb9e9fa95"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-26T16:38:28+00:00",
+  "reviewed_at": "2026-10-26T16:58:58+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -342,7 +342,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "强七里,冠军典又一个一个溜走。五个冠军典,他一个都没抓住,比赛被拖进了第三盘。"
+        "transcript": "抢七里,冠军点又一个一个溜走。五个冠军点,他一个都没抓住,比赛被拖进了第三盘。"
       },
       "polyphones": [],
       "pauses": {
@@ -449,7 +449,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "你觉得,这个冠军是他重回前五的起点,还是又要等下一个四年?"
+        "transcript": "你觉得,这个冠军是他重回前五的起点,还是又要等下一个四年。"
       },
       "polyphones": [
         {
@@ -546,7 +546,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决赛的对手弗里茨整周三十一个发球局一个没丢,穆塞蒂在他的第一个发球局就完成了破发。他的办法还是那一套,单手反拍不断变线便节奏,放小球拉高弧线,把一台发球机器拖进他最不舒服的回合里。6比3,6比4,81分钟,他全场没有面对过一个破发点,在第一个赛点上结束了四年的等待。"
+        "transcript": "决赛的对手弗里茨整周三十一个发球局一个没丢,穆塞蒂在他的第一个发球局就完成了破发。他的办法还是那一套,单手反拍不断变线便节奏,放小球拉高弧线,把一台发球机器拖进他最不舒服的回合里。6比3、6比4,81分钟,他全场没有面对过一个破发点,在第一个赛点上结束了四年的等待。"
       },
       "polyphones": [
         {
@@ -657,10 +657,10 @@
         "ref_syllables": 30,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.067,
+        "substituted": 1,
+        "sub_ratio": 0.033,
         "longest_deletion": 0,
-        "transcript": "这一周在里扬,他先打了一场三个半小时,到凌晨一点的球剩下第二百胜。"
+        "transcript": "这一周在里昂,他先打了一场三个半小时,到凌晨一点的球剩下第二百胜。"
       },
       "polyphones": [],
       "pauses": {
@@ -724,7 +724,7 @@
         "substituted": 1,
         "sub_ratio": 0.024,
         "longest_deletion": 0,
-        "transcript": "三个月后,纳布勒斯他直落两盘击败贝雷蒂尼。两次决赛,两座冠军。谁都觉得,他的冠军会一个接一个来。"
+        "transcript": "三个月后,纳布勒斯他直落两盘击败贝雷蒂尼,两次决赛,两座冠军,谁都觉得他的冠军会一个接一个来。"
       },
       "polyphones": [
         {
@@ -808,7 +808,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2026年1月香港,他输给布勃利克、循回赛决赛、七连败。吊鬼的是,就在那一周,他的世界排名升到了生涯最高的第五。排名越爬越高的人,讲卑贵却四年没有添过一件东西。"
+        "transcript": "2026年1月香港,他输给布勃利克,寻回赛决赛七连败。吊鬼的是,就在那一周,他的世界排名升到了生涯最高的第五。排名越爬越高的人,讲卑贵却四年没有添过一件东西。"
       },
       "polyphones": [],
       "pauses": {
@@ -840,7 +840,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "半决赛对头号种子科博利,他先丢一盘。决生盘4比5,他的发球局15比40。两个赛点,压在头顶。"
+        "transcript": "半决赛对头号种子科博利,他先丢一盘。决胜盘4比5,他的发球局15比40。两个赛点,压在头顶。"
       },
       "polyphones": [
         {
@@ -960,7 +960,7 @@
         "substituted": 1,
         "sub_ratio": 0.042,
         "longest_deletion": 0,
-        "transcript": "零比三十他叫了医疗暂停,最后几乎是脱了一条腿打完的。"
+        "transcript": "0比30：他叫了医疗暂停,最后几乎是脱了一条腿打完的。"
       },
       "polyphones": [
         {
@@ -1137,10 +1137,10 @@
         "ref_syllables": 45,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
         "longest_deletion": 0,
-        "transcript": "2025年雅典,他把德约科维奇逼到决胜盘5比5。那一战他必须赢,才能直通都领,他还是差了一口气。"
+        "transcript": "2025年雅典,他把德约科维奇逼到决胜盘5比5。那一战他必须赢,才能直通督领,他还是差了一口气。"
       },
       "polyphones": [
         {
@@ -1194,7 +1194,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可下一次捧碑一等就是四年,2024年女王碑她输给保罗,那一年她其实打进了温网四墙,拿了奥运铜牌,她不是打得不好,她只是赢不了最后一场。"
+        "transcript": "可下一次捧碑一等就是四年。2024年女王碑,她输给保罗。那一年,她其实打进了温网四墙,拿了奥运铜牌,她不是打得不好,她只是赢不了最后一场。"
       },
       "polyphones": [
         {
@@ -1367,7 +1367,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2022年汉堡,他19岁,第一次打进巡迴赛决赛,对手是阿尔卡拉斯,第二盘,他自己的发球胜赛局。"
+        "transcript": "2022年汉堡,他19岁,第一次打进巡迴赛决赛,对手是阿尔卡拉斯。第二盘,他自己的发球胜赛局。"
       },
       "polyphones": [
         {
@@ -1444,7 +1444,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "抢七,他四比一领先,还是输了。"
+        "transcript": "强七：他四比一领先,还是输了。"
       },
       "polyphones": [
         {
@@ -1572,10 +1572,10 @@
         "ref_syllables": 38,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.026,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年蒙特卡洛他第一次站上大师在决赛先赢一盘,可第三盘他的右腿撑不住了。"
+        "transcript": "2025年蒙特卡洛他第一次站上大师赛决赛先赢一盘,可第三盘他的右腿撑不住了。"
       },
       "polyphones": [],
       "pauses": {
