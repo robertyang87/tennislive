@@ -1,11 +1,11 @@
 {
   "status": "pass",
-  "checked_at": "2026-10-26T04:59:23Z",
+  "checked_at": "2026-10-26T06:02:49Z",
   "auditor": "opencv-haar-v1",
-  "expected_subject": "辛尼亚科娃",
+  "expected_subject": "西尼亚科娃",
   "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
-  "spec_sha256": "3f28e4b916ebadd48e23775910618ce903a48ff738e0e82d339f6144474f3336",
-  "poster_sha256": "bcf80cd3b4d52557ec098a72748dbb6765ae589f818a1e9405960bba5f031ee9",
+  "spec_sha256": "21c62a9823f93dff96a1f39e1e89d252f61869404bf0a25ae50abbdfc3ce9124",
+  "poster_sha256": "6a09f38853a3462eaed5b4b8640d3ee16a159b4b02172f8d561c428e76dbd6c7",
   "thresholds": {
     "close_up_zoom": 1.5,
     "face_height_ratio": 0.08,
@@ -55,14 +55,14 @@
       "status": "ok",
       "model": "buffalo_s-v0.7",
       "identity": {
-        "verdict": "unknown",
-        "name": null,
-        "similarity": {},
-        "missing": [
-          "辛尼亚科娃"
-        ],
+        "verdict": "match",
+        "name": "西尼亚科娃",
+        "similarity": {
+          "西尼亚科娃": 0.6261
+        },
+        "missing": [],
         "expected": [
-          "辛尼亚科娃"
+          "西尼亚科娃"
         ],
         "face": [
           449,
@@ -71,7 +71,7 @@
           300
         ],
         "face_px": 166.3,
-        "reason": "没有可比的官方头像：辛尼亚科娃",
+        "reason": "像 西尼亚科娃（0.63 ≥ 0.34）",
         "thresholds": {
           "match": 0.34,
           "mismatch": 0.15,
@@ -80,10 +80,10 @@
       },
       "eyes": {
         "verdict": "open",
-        "ear": 0.2513,
+        "ear": 0.2514,
         "ear_each": [
-          0.2503,
-          0.2523
+          0.2504,
+          0.2524
         ],
         "face": [
           449,
@@ -100,13 +100,9 @@
         }
       },
       "problems": [],
-      "warnings": [
-        "认人拿不准：没有可比的官方头像：辛尼亚科娃"
-      ]
+      "warnings": []
     }
   },
   "issues": [],
-  "warnings": [
-    "认人拿不准：没有可比的官方头像：辛尼亚科娃"
-  ]
+  "warnings": []
 }

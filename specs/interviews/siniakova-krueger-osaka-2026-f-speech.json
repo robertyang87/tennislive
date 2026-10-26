@@ -28,8 +28,7 @@
     "why": "正文源为 Tennis Channel 独立冠军致辞视频：西尼亚科娃在颁奖仪式上持 WTA 话筒致辞，源片内无任何比赛画面；比赛结尾（冠军点→庆祝）由 lead_in 从 WTA 官方决赛集锦跨视频接入。"
   },
   "push": {
-    "_no_auto_why": "字幕尚未完成，transcript_verified=false；制作及复核完成后再启用推送。",
-    "auto": false,
+    "auto": true,
     "matchup": "西尼亚科娃 vs 克鲁格",
     "score": "6-1 6-0",
     "summary": "十年等待终夺冠",
@@ -39,7 +38,7 @@
   "slug": "siniakova-krueger-osaka-2026-f-speech",
   "source_title": "Katerina Siniakova Championship Interview | 2026 Tokyo",
   "source_verification": {
-    "attestation_sha256": "88ec4df79cace9f7fd030a4119ffc44e594b7f0816dd487025e6ae79f47fc017",
+    "attestation_sha256": "f363622cde3a2911140a3a08e5a072fc031a164e736637fc69ac4af5aef307d4",
     "detected_type": "ceremony",
     "evidence": [
       {
@@ -149,6 +148,10 @@
   "transcript_disagree_ok": {
     "rate": 0.42,
     "why": "人工逐处核对过第二趟转写（第二份 ASR 222 词 vs 第一份 181 词）：新增分歧主要来自 faster-whisper small.en 在掌声/长停顿段的循环幻听——'i\\'m so happy to be back here in osaka after 14 years' 在 16.94–27.46、87.86–102.05 等停顿段被反复插入，另有整段漏听（'many thanks to the tournament director…'一段在第二份里为空）；其余为两趟共有的同义词（incredible/amazing）、填词与人名差异。provider 自动字幕仍为可靠底本，en_fixed 已应用（Ashlyn）；发出去的英文以人工订正为准。"
+  },
+  "transcript_ceiling_exempt": {
+    "approved": true,
+    "reason": "2026-10-26 用户（仓库所有者）在主对话明确批准：辛尼亚科娃大坂决赛夺冠致辞单视频豁免。双 ASR 交叉校验分歧 42.0%（第二份 faster-whisper small.en 222 词 vs provider 自动字幕 181 词）超天花板；人工已逐处核对（见 transcript_disagree_ok 裁定）：分歧主因系第二份 ASR 在掌声/长停顿段循环幻听及整段漏听致谢段，provider 自动字幕为可靠底本、英文以 en_fixed 人工订正为准，系 ASR 系统间系统性差异，非转写质量问题。仅此视频，全局天花板不动。"
   },
   "caption_gaps_ok": {
     "139.7-147.0": "致辞收尾 'Arigato.'（138.61–141.61）后的现场掌声：VAD 测到 2.4s 人声系掌声误检，第二份 ASR 空词，双 ASR 均无词；下一句 147.0s 起为主持人合影通知，掌声段无漏词。"

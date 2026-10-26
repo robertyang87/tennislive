@@ -1,0 +1,138 @@
+{
+  "scoreboard_qc_sha256": "fc3fe8d13bec0f37085c306e1b2e2e31eea7093e1502eb389ef45835e4858d23",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "384838a00dd273fc6846b10f879a6ff6577da525fe7e13a5f29bd48c08882c46",
+    "request_count": 16,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-wang-parks-tokyo-2026-r1-384838a00dd273fc",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wang-parks-tokyo-2026-r1-384838a00dd273fc/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40270728156"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 243.73,
+  "topbar": {
+    "line1": "2026 WTA500 东京 首轮",
+    "line2": "帕克斯 6-1 7-6(7) 王欣瑜",
+    "start": 1.2,
+    "end": 244.93
+  },
+  "film_seconds": 249.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 4.992,
+    "2": 8.952,
+    "3": 11.64,
+    "5": 7.608,
+    "7": 3.72,
+    "9": 6.288,
+    "11": 11.184,
+    "13": 7.8,
+    "15": 6.48,
+    "17": 9.072,
+    "19": 11.376,
+    "21": 6.384,
+    "22": 7.488,
+    "24": 10.152,
+    "25": 8.256
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 8,
+          "named": "帕克斯",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "王欣瑜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 12,
+          "named": "王欣瑜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 18,
+          "named": "王欣瑜",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 8,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "d4b357c926bc88f11f262d176b608afa3cf2a789b8830e154d30e72eab8051bb",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wang-parks-tokyo-2026-r1",
+    "received_at": "2026-10-26T04:45:53Z",
+    "artifact_ready_at": "2026-10-26T04:54:14Z",
+    "elapsed_seconds": 501.662,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "269c92287b8a0cf37c8307c612ff263afddc6d63c4ed313b941ddca26a713412",
+    "spec_sha256": "519f49cc703372c40635cb91a0c37f82973c2a57872423af87099324ccf59f88",
+    "run_id": "40270728156",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-26T04:49:04Z",
+        "run_id": "40270728156"
+      }
+    ],
+    "render_seconds": 310.662,
+    "pre_render_seconds": 191.0
+  },
+  "film_sha256": "269c92287b8a0cf37c8307c612ff263afddc6d63c4ed313b941ddca26a713412",
+  "film_bytes": 88803147,
+  "qc_attestation_sha256": "3fd686b06ccc889da77fd85d97812e50514c259ccd0257957edef8b4fb714358",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-26T04:49:04Z",
+      "run_id": "40270728156"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-26T04:54:19Z",
+      "run_id": "40270728156"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wang-parks-tokyo-2026-r1/wang-parks-tokyo-2026-r1.mp4",
+  "video_bytes": 88803147
+}

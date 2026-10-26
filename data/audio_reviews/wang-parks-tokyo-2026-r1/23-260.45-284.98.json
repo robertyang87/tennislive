@@ -1,0 +1,57 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tqSrR1WzkLw/tqSrR1WzkLw.mp4",
+  "source_sha256": "c67cca588d87752a406cb3e8ffa017ee9de0bea6c1381854d457d33bbf3147b8",
+  "method": "verified_source_captions",
+  "reviewer": "current_assistant_manual：官方源片字幕、small.en/medium.en逐词转写与画面切点交叉复核；202–232秒另用本地large-v3-turbo复核，不声称真人听审。",
+  "reviewed_at": "2026-10-26T04:40:36.260126+00:00",
+  "reviewed_from": 260.45,
+  "reviewed_to": 284.98,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 261.15,
+      "end": 263.75,
+      "en": "What a fight in that second set.",
+      "zh": "第二盘拼得真激烈"
+    },
+    {
+      "start": 265.2,
+      "end": 270.3,
+      "en": "Alycia Parks extends her winning run in Tokyo, having come through qualifying.",
+      "zh": "资格赛打起 她在东京继续赢球"
+    },
+    {
+      "start": 271.35,
+      "end": 274.75,
+      "en": "She defeats Wang Xinyu in the first round.",
+      "zh": "她在首轮击败王欣瑜"
+    },
+    {
+      "start": 276.5,
+      "end": 280.05,
+      "en": "Had to really dig deep in that second set to avoid a decider.",
+      "zh": "次盘苦战 才没被拖入决胜盘"
+    },
+    {
+      "start": 280.1,
+      "end": 284.9,
+      "en": "Saving three set points and eventually taking that tie-break.",
+      "zh": "挽救三个盘点 最终赢下抢七"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/small.en.json": "3c9960a9e4342dbd18c1c5575e55a7518da164bb6dd7710157e352ba0c3e5b23",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/medium.en.json": "61d9f53c6e63d589481942810e1bc682186a6fd103e34a509b89913000e1df63",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/targeted-turbo-202-232.json": "4f0f173fe112385ac82962cc27d09a231151214b1f500297c52469c51bfef528",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/youtube-caption-cues.txt": "367082502caed5656f942a84a50df4f417529e16d5bde728536f473ef8c9cc18"
+  },
+  "evidence": "官方YouTube自动字幕cue由probe取得，完整保存，姓名误转按官方对阵与画面纠正（Wang Xinyu、Alycia Parks）；不用ASR拉长到静音/下一句的段尾当作真实句界。完整原声句子均有双语cue，不把中文TTS与英文解说叠放。",
+  "visual_window_note": "连续承接完整赛点，帕克斯反应、王欣瑜近景、网前握手、两人致意，五句解说完整保留；284.98在下一句There was real tension前切，未带WTA订阅片尾。",
+  "boundary_corrections": [
+    "small.en把185.25句末out拉至187.16；medium.en与源字幕在新盘点开始185.68之前已经结束。",
+    "small.en把197.5句末rescue it拉至200.46；源字幕及medium.en核对句末，下一机位197.68前结束。",
+    "medium.en把246秒评论、262秒新句与265秒名字误合为长句；源字幕与small.en分别标出，冷开场只取完整What a fight in that second set。",
+    "small.en把284.9tie-break接到后一句There was real tension；按源字幕和medium.en在284.9句尾切，下一句285.52起未选。"
+  ]
+}

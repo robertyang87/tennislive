@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tqSrR1WzkLw/tqSrR1WzkLw.mp4",
+  "source_sha256": "c67cca588d87752a406cb3e8ffa017ee9de0bea6c1381854d457d33bbf3147b8",
+  "method": "verified_source_captions",
+  "reviewer": "current_assistant_manual：官方源片字幕、small.en/medium.en逐词转写与画面切点交叉复核；202–232秒另用本地large-v3-turbo复核，不声称真人听审。",
+  "reviewed_at": "2026-10-26T04:40:36.260126+00:00",
+  "reviewed_from": 0.2,
+  "reviewed_to": 8.15,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "corpus_sha256": {
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/small.en.json": "3c9960a9e4342dbd18c1c5575e55a7518da164bb6dd7710157e352ba0c3e5b23",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/medium.en.json": "61d9f53c6e63d589481942810e1bc682186a6fd103e34a509b89913000e1df63",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/targeted-turbo-202-232.json": "4f0f173fe112385ac82962cc27d09a231151214b1f500297c52469c51bfef528",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/youtube-caption-cues.txt": "367082502caed5656f942a84a50df4f417529e16d5bde728536f473ef8c9cc18"
+  },
+  "evidence": "官方YouTube自动字幕cue由probe取得，完整保存，姓名误转按官方对阵与画面纠正（Wang Xinyu、Alycia Parks）；不用ASR拉长到静音/下一句的段尾当作真实句界。完整原声句子均有双语cue，不把中文TTS与英文解说叠放。",
+  "visual_window_note": "片头姓名坐标和第一分末段作落点回溯；8.15在近景切换及裁判报分之前。",
+  "boundary_corrections": [
+    "small.en把185.25句末out拉至187.16；medium.en与源字幕在新盘点开始185.68之前已经结束。",
+    "small.en把197.5句末rescue it拉至200.46；源字幕及medium.en核对句末，下一机位197.68前结束。",
+    "medium.en把246秒评论、262秒新句与265秒名字误合为长句；源字幕与small.en分别标出，冷开场只取完整What a fight in that second set。",
+    "small.en把284.9tie-break接到后一句There was real tension；按源字幕和medium.en在284.9句尾切，下一句285.52起未选。"
+  ],
+  "no_foreground_english_reason": "本窗口完整对照官方源字幕及两档ASR：无解说英语；可见/可闻球声、现场反应保留。第0.2–8.15秒的裁判报分在8.8秒之后，未纳入；单档低置信非英语乱码不视为缺漏对白。"
+}

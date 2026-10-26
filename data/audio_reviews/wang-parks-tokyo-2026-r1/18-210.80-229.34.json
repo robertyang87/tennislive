@@ -1,0 +1,51 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tqSrR1WzkLw/tqSrR1WzkLw.mp4",
+  "source_sha256": "c67cca588d87752a406cb3e8ffa017ee9de0bea6c1381854d457d33bbf3147b8",
+  "method": "verified_source_captions",
+  "reviewer": "current_assistant_manual：官方源片字幕、small.en/medium.en逐词转写与画面切点交叉复核；202–232秒另用本地large-v3-turbo复核，不声称真人听审。",
+  "reviewed_at": "2026-10-26T04:40:36.260126+00:00",
+  "reviewed_from": 210.8,
+  "reviewed_to": 229.34,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 211.0,
+      "end": 212.8,
+      "en": "That's nicely put away.",
+      "zh": "这球收得漂亮"
+    },
+    {
+      "start": 215.15,
+      "end": 216.9,
+      "en": "Earlier in the set.",
+      "zh": "这一盘早些时候"
+    },
+    {
+      "start": 224.92,
+      "end": 226.0,
+      "en": "Too good.",
+      "zh": "这球太好了"
+    },
+    {
+      "start": 227.2,
+      "end": 229.2,
+      "en": "Outstanding from Alycia Parks.",
+      "zh": "帕克斯打得太出色了"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/small.en.json": "3c9960a9e4342dbd18c1c5575e55a7518da164bb6dd7710157e352ba0c3e5b23",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/medium.en.json": "61d9f53c6e63d589481942810e1bc682186a6fd103e34a509b89913000e1df63",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/targeted-turbo-202-232.json": "4f0f173fe112385ac82962cc27d09a231151214b1f500297c52469c51bfef528",
+    "data/evidence/wang-parks-tokyo-2026-r1/source-asr/youtube-caption-cues.txt": "367082502caed5656f942a84a50df4f417529e16d5bde728536f473ef8c9cc18"
+  },
+  "evidence": "官方YouTube自动字幕cue由probe取得，完整保存，姓名误转按官方对阵与画面纠正（Wang Xinyu、Alycia Parks）；不用ASR拉长到静音/下一句的段尾当作真实句界。完整原声句子均有双语cue，不把中文TTS与英文解说叠放。",
+  "visual_window_note": "保发末段至抢七6比5王欣瑜盘点：213.32切接发/发球准备、完整发球相持到226，帕克斯救回盘点到6比6；完整解说保留，短语Earlier in the set经small.en、medium.en及本地large-v3-turbo三档实际原声转写同意；未称真人听审。",
+  "boundary_corrections": [
+    "small.en把185.25句末out拉至187.16；medium.en与源字幕在新盘点开始185.68之前已经结束。",
+    "small.en把197.5句末rescue it拉至200.46；源字幕及medium.en核对句末，下一机位197.68前结束。",
+    "medium.en把246秒评论、262秒新句与265秒名字误合为长句；源字幕与small.en分别标出，冷开场只取完整What a fight in that second set。",
+    "small.en把284.9tie-break接到后一句There was real tension；按源字幕和medium.en在284.9句尾切，下一句285.52起未选。"
+  ]
+}
