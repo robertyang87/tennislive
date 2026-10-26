@@ -1,0 +1,974 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "6a60e739c0f4930bd280d4aa77cffdc8e6f9e4dff130c9178ce6e3dcd4fc686e",
+    "render_inputs_sha256": "44d5c94301c63f6e777fb36baced3520c051f4bdaa91152c5dc598cdd2932204",
+    "spec_sha256": "bcf006c1aa83fd5aa6fcd9b587b672f2653a43121a111ad124ba62924b97d6bc",
+    "film_sha256": "b453b5e721db13dfabbda556780bf5372de04cd22f6713749aa200a293b85796",
+    "inventory_sha256": "fcee7f89dbaffadaf67b06e33fbd2087be237579f9d862026a6de4fe27d81ef6"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-26T05:46:03+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0422989d4ff195f7012fc458f478342dc0daa913fbc97aecc0dd004319c54386",
+      "audio_sha256": "818ed72898284091434a75c7fa7eac0e6aa55e449c6ffd9a5a22ce9941d16a8c",
+      "pass": true,
+      "result_of": "bundle:0422989d4ff195f7012fc458f478342dc0daa913fbc97aecc0dd004319c54386"
+    },
+    {
+      "id": "bundle:299601b4eb32ecb649e4c30a936a8b439a066ee98cd3a4a8561f79682e9691c9",
+      "audio_sha256": "c7b5e6dd35921054fd62259d03dbd3da78b3b61f992b00ec15afa9bf66e0dbd8",
+      "pass": true,
+      "result_of": "bundle:299601b4eb32ecb649e4c30a936a8b439a066ee98cd3a4a8561f79682e9691c9"
+    },
+    {
+      "id": "bundle:3514761c0125a1e55fdd4afe8b720c6b02685a67522746d81e988f46f2cac387",
+      "audio_sha256": "a8ca862346bb0ddaaa584cef023200e1fa14d35374970589fe2a0cdba8d4d155",
+      "pass": true,
+      "result_of": "bundle:3514761c0125a1e55fdd4afe8b720c6b02685a67522746d81e988f46f2cac387"
+    },
+    {
+      "id": "bundle:4df01012e8099c1fd8c00d76677a142a44c5e8bf5c32cd8325c3e9475a7bcfea",
+      "audio_sha256": "6c4214f4952739894f8d69b90a539b108510fe437957aa0f1b7e59f9780874e4",
+      "pass": true,
+      "result_of": "bundle:4df01012e8099c1fd8c00d76677a142a44c5e8bf5c32cd8325c3e9475a7bcfea"
+    },
+    {
+      "id": "bundle:58da6bdd0f5d3c4cf58f29915d022226d2f6f08dc700ea31b6b51fd721087d62",
+      "audio_sha256": "519b3af30059a42535aab49e445c8cfdd155d4889da082babc05287b74bdf8f2",
+      "pass": true,
+      "result_of": "bundle:58da6bdd0f5d3c4cf58f29915d022226d2f6f08dc700ea31b6b51fd721087d62"
+    },
+    {
+      "id": "bundle:63a7bc2cf55060bef83cff55e5096406219981d999670e87ca77fc8c0f4e15e9",
+      "audio_sha256": "945af009186d0aa110e8b53a0932536eaa6516dfe00dc484416f274c61043c37",
+      "pass": true,
+      "result_of": "bundle:63a7bc2cf55060bef83cff55e5096406219981d999670e87ca77fc8c0f4e15e9"
+    },
+    {
+      "id": "bundle:7306d651a6a642cc492cdacd800c0e27824d80b7fb312495a845a02f4826e968",
+      "audio_sha256": "615ac22095a616c9c5ff1a96f378e394b46938ceb4aff2661770195aeffa728d",
+      "pass": true,
+      "result_of": "bundle:7306d651a6a642cc492cdacd800c0e27824d80b7fb312495a845a02f4826e968"
+    },
+    {
+      "id": "bundle:80f6c93c88398509d6c17382ad43e49c60742f8d6573d74583af3e93b215dea8",
+      "audio_sha256": "b32afb3f6e30c431aec641be7c95c1859631f16bba7da5112e0a8651aec4360f",
+      "pass": true,
+      "result_of": "bundle:80f6c93c88398509d6c17382ad43e49c60742f8d6573d74583af3e93b215dea8"
+    },
+    {
+      "id": "bundle:9e135cbdee86eb118e5eecc7249667e3dfe71fdb049e79a597abf483e6c44639",
+      "audio_sha256": "bfded9e79eafc2636bd079349e65f0b99dc7e3f6cdea923d2f981ac629af502d",
+      "pass": true,
+      "result_of": "bundle:9e135cbdee86eb118e5eecc7249667e3dfe71fdb049e79a597abf483e6c44639"
+    },
+    {
+      "id": "bundle:a23591a9142bfdb41e41b889c697992633fa1ae70e6149150b9f107459dd3db1",
+      "audio_sha256": "59664b67592c741c4144e5b82897c633b627c7143fedf275106c4a1317a0700e",
+      "pass": true,
+      "result_of": "bundle:a23591a9142bfdb41e41b889c697992633fa1ae70e6149150b9f107459dd3db1"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:baf1f10d63b0b70eb66e2f29902b4d876418f25f636ccb23218effc423f56db1",
+      "audio_sha256": "f50657de8a0fb0a56d0f9b73b76028ff5ea243275e5c6c6584bf8d62308509e1",
+      "pass": true,
+      "result_of": "bundle:baf1f10d63b0b70eb66e2f29902b4d876418f25f636ccb23218effc423f56db1"
+    },
+    {
+      "id": "bundle:c0bfb288de8486d3546dc31b62ef088899a26454da27c71489f1195ed1dff099",
+      "audio_sha256": "6e206bf857b0d5622e7bc421cff59df64d1f5f1961fd4c51405c5aa1f0c6377b",
+      "pass": true,
+      "result_of": "bundle:c0bfb288de8486d3546dc31b62ef088899a26454da27c71489f1195ed1dff099"
+    },
+    {
+      "id": "bundle:cbb72e7546b5b0c1515534cc137dafff1cc4069faa641d7ad3569e173c8b061e",
+      "audio_sha256": "77cb84cc85b8a2e2bd978aa079de8a5333331e0b1adcb3748728b80892fe2466",
+      "pass": true,
+      "result_of": "bundle:cbb72e7546b5b0c1515534cc137dafff1cc4069faa641d7ad3569e173c8b061e"
+    },
+    {
+      "id": "bundle:cbdbcd6bdba4bc1957e145c044bc44f26c2ab922b094e263acec671f2d6006b1",
+      "audio_sha256": "ea393aefdb553fcb5ec9b3818ead021a76b75dc9caa03129be3a9ffa2ba0aead",
+      "pass": true,
+      "result_of": "bundle:cbdbcd6bdba4bc1957e145c044bc44f26c2ab922b094e263acec671f2d6006b1"
+    },
+    {
+      "id": "bundle:f6f001f38b80040752cd0b81dcd6ce02cd809b3765dc1b91d7b9a5e3a842b7d5",
+      "audio_sha256": "941a40fb1a542b5312a592537f9bc60f1039547da59ad7f2371ab6f986c673bf",
+      "pass": true,
+      "result_of": "bundle:f6f001f38b80040752cd0b81dcd6ce02cd809b3765dc1b91d7b9a5e3a842b7d5"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "945af009186d0aa110e8b53a0932536eaa6516dfe00dc484416f274c61043c37",
+      "pass": true,
+      "result_of": "bundle:63a7bc2cf55060bef83cff55e5096406219981d999670e87ca77fc8c0f4e15e9"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "a8ca862346bb0ddaaa584cef023200e1fa14d35374970589fe2a0cdba8d4d155",
+      "pass": true,
+      "result_of": "bundle:3514761c0125a1e55fdd4afe8b720c6b02685a67522746d81e988f46f2cac387"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "519b3af30059a42535aab49e445c8cfdd155d4889da082babc05287b74bdf8f2",
+      "pass": true,
+      "result_of": "bundle:58da6bdd0f5d3c4cf58f29915d022226d2f6f08dc700ea31b6b51fd721087d62"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "941a40fb1a542b5312a592537f9bc60f1039547da59ad7f2371ab6f986c673bf",
+      "pass": true,
+      "result_of": "bundle:f6f001f38b80040752cd0b81dcd6ce02cd809b3765dc1b91d7b9a5e3a842b7d5"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "6e206bf857b0d5622e7bc421cff59df64d1f5f1961fd4c51405c5aa1f0c6377b",
+      "pass": true,
+      "result_of": "bundle:c0bfb288de8486d3546dc31b62ef088899a26454da27c71489f1195ed1dff099"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "bfded9e79eafc2636bd079349e65f0b99dc7e3f6cdea923d2f981ac629af502d",
+      "pass": true,
+      "result_of": "bundle:9e135cbdee86eb118e5eecc7249667e3dfe71fdb049e79a597abf483e6c44639"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "6c4214f4952739894f8d69b90a539b108510fe437957aa0f1b7e59f9780874e4",
+      "pass": true,
+      "result_of": "bundle:4df01012e8099c1fd8c00d76677a142a44c5e8bf5c32cd8325c3e9475a7bcfea"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "818ed72898284091434a75c7fa7eac0e6aa55e449c6ffd9a5a22ce9941d16a8c",
+      "pass": true,
+      "result_of": "bundle:0422989d4ff195f7012fc458f478342dc0daa913fbc97aecc0dd004319c54386"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "615ac22095a616c9c5ff1a96f378e394b46938ceb4aff2661770195aeffa728d",
+      "pass": true,
+      "result_of": "bundle:7306d651a6a642cc492cdacd800c0e27824d80b7fb312495a845a02f4826e968"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "f50657de8a0fb0a56d0f9b73b76028ff5ea243275e5c6c6584bf8d62308509e1",
+      "pass": true,
+      "result_of": "bundle:baf1f10d63b0b70eb66e2f29902b4d876418f25f636ccb23218effc423f56db1"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "59664b67592c741c4144e5b82897c633b627c7143fedf275106c4a1317a0700e",
+      "pass": true,
+      "result_of": "bundle:a23591a9142bfdb41e41b889c697992633fa1ae70e6149150b9f107459dd3db1"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "ea393aefdb553fcb5ec9b3818ead021a76b75dc9caa03129be3a9ffa2ba0aead",
+      "pass": true,
+      "result_of": "bundle:cbdbcd6bdba4bc1957e145c044bc44f26c2ab922b094e263acec671f2d6006b1"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "c7b5e6dd35921054fd62259d03dbd3da78b3b61f992b00ec15afa9bf66e0dbd8",
+      "pass": true,
+      "result_of": "bundle:299601b4eb32ecb649e4c30a936a8b439a066ee98cd3a4a8561f79682e9691c9"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "77cb84cc85b8a2e2bd978aa079de8a5333331e0b1adcb3748728b80892fe2466",
+      "pass": true,
+      "result_of": "bundle:cbb72e7546b5b0c1515534cc137dafff1cc4069faa641d7ad3569e173c8b061e"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "b32afb3f6e30c431aec641be7c95c1859631f16bba7da5112e0a8651aec4360f",
+      "pass": true,
+      "result_of": "bundle:80f6c93c88398509d6c17382ad43e49c60742f8d6573d74583af3e93b215dea8"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0422989d4ff195f7012fc458f478342dc0daa913fbc97aecc0dd004319c54386",
+      "text": "但帕克斯也没丢发球局。两人一路保发，王欣瑜五比四领先，终于等来本盘第一个盘点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但帕克斯也没丢发球局。两人一路爆发,王欣瑜无比四领先,终于等来本盘第一个盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 16,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 6.91,
+        "cps": 5.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 帕克斯 ｜ 也 ｜ 没 ｜ 丢 ｜ 发球 ｜ 局 ｜ 两 ｜ 人 ｜ 一路 ｜ 保 ｜ 发 ｜ 王欣瑜 ｜ 五比四 ｜ 领先 ｜ 终于 ｜ 等 ｜ 来 ｜ 本 ｜ 盘 ｜ 第一个 ｜ 盘点"
+      }
+    },
+    {
+      "id": "bundle:299601b4eb32ecb649e4c30a936a8b439a066ee98cd3a4a8561f79682e9691c9",
+      "text": "轮到帕克斯八比七领先时，她迎来了第一个赛点。这次，比赛没有再给王欣瑜机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "轮到帕克斯8比7领先时,他赢来了第一个赛点。这次,比赛没有再给王欣瑜机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.592,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "轮 ｜ 到 ｜ 帕克斯 ｜ 八比七 ｜ 领先 ｜ 时 ｜ 她 ｜ 迎来 ｜ 了 ｜ 第一个 ｜ 赛点 ｜ 这次 ｜ 比赛 ｜ 没有 ｜ 再 ｜ 给 ｜ 王欣瑜 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:3514761c0125a1e55fdd4afe8b720c6b02685a67522746d81e988f46f2cac387",
+      "text": "北京时间十月二十六号上午，东京五百赛首轮。第一盘只拿一局，第二盘王欣瑜却三次只差一分，就能拖进决胜盘。这场失利，最可惜的是哪一步？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 58,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月26号上午,东京500赛首论。第一盘只拿一局,第二盘王欣瑜却三次只差一分,就能脱进决胜盘。这场失利,最可惜的是哪一步?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 58,
+        "speech_s": 12.913,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十六号 ｜ 上午 ｜ 东京 ｜ 五百 ｜ 赛 ｜ 首轮 ｜ 第一盘 ｜ 只 ｜ 拿 ｜ 一 ｜ 局 ｜ 第二盘 ｜ 王欣瑜 ｜ 却 ｜ 三次 ｜ 只 ｜ 差 ｜ 一 ｜ 分 ｜ 就 ｜ 能 ｜ 拖 ｜ 进 ｜ 决胜 ｜ 盘 ｜ 这 ｜ 场 ｜ 失利 ｜ 最 ｜ 可惜 ｜ 的 ｜ 是 ｜ 哪 ｜ 一 ｜ 步"
+      }
+    },
+    {
+      "id": "bundle:4df01012e8099c1fd8c00d76677a142a44c5e8bf5c32cd8325c3e9475a7bcfea",
+      "text": "第二盘，最明显的变化，是王欣瑜守住了自己的发球局。她的二发得分，从首盘七分只拿一分，升到次盘十三分拿下十二分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "第二盘﹑最明显的变化﹑是王欣瑜守住了自己的发球局﹑他的二发得分﹑从手盘七分只拿一分﹑升到四盘十三分﹑拿下十二分。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 29,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.295,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 最 ｜ 明显 ｜ 的 ｜ 变化 ｜ 是 ｜ 王欣瑜 ｜ 守 ｜ 住 ｜ 了 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 她 ｜ 的 ｜ 二发 ｜ 得分 ｜ 从 ｜ 首盘 ｜ 七分 ｜ 只 ｜ 拿 ｜ 一 ｜ 分 ｜ 升 ｜ 到 ｜ 次 ｜ 盘 ｜ 十三分 ｜ 拿下 ｜ 十二分"
+      }
+    },
+    {
+      "id": "bundle:58da6bdd0f5d3c4cf58f29915d022226d2f6f08dc700ea31b6b51fd721087d62",
+      "text": "先看第一盘。帕克斯在底线左右调动，还能把防守的球顶回来。王欣瑜二发七分只拿一分，两次发球局失守，局面很快就被拉开。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先看第一盘。帕克斯在底线左右调动,还能把防守的球顶回来。王欣瑜二发七分只拿一分,两次发球局失手,局面很快就被拉开。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 1.0,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 32,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 42,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.767,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 第一盘 ｜ 帕克斯 ｜ 在 ｜ 底线 ｜ 左右 ｜ 调动 ｜ 还 ｜ 能 ｜ 把 ｜ 防守 ｜ 的 ｜ 球 ｜ 顶 ｜ 回来 ｜ 王欣瑜 ｜ 二 ｜ 发 ｜ 七分 ｜ 只 ｜ 拿 ｜ 一 ｜ 分 ｜ 两次 ｜ 发球 ｜ 局 ｜ 失守 ｜ 局面 ｜ 很快 ｜ 就 ｜ 被 ｜ 拉开"
+      }
+    },
+    {
+      "id": "bundle:63a7bc2cf55060bef83cff55e5096406219981d999670e87ca77fc8c0f4e15e9",
+      "text": "王欣瑜一比六、六比七，不敌帕克斯，东京首轮出局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "王欣瑜1比6、6比7、布迪帕克斯、东京首轮出局。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 20,
+        "speech_s": 4.116,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "王欣瑜 ｜ 一比六 ｜ 六比七 ｜ 不敌 ｜ 帕克斯 ｜ 东京 ｜ 首轮 ｜ 出局"
+      }
+    },
+    {
+      "id": "bundle:7306d651a6a642cc492cdacd800c0e27824d80b7fb312495a845a02f4826e968",
+      "text": "盘点到了。帕克斯往网前压，王欣瑜左右追球，还是没能拿下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "盘点到了。帕克斯往往前压,王欣瑜左右追求,还是没能拿下。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.449,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.601,
+        "cps": 4.28,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "盘点 ｜ 到 ｜ 了 ｜ 帕克斯 ｜ 往 ｜ 网 ｜ 前 ｜ 压 ｜ 王欣瑜 ｜ 左右 ｜ 追球 ｜ 还是 ｜ 没 ｜ 能 ｜ 拿下"
+      }
+    },
+    {
+      "id": "bundle:80f6c93c88398509d6c17382ad43e49c60742f8d6573d74583af3e93b215dea8",
+      "text": "从一比六打到三次盘点，抵抗是真实的。下一次，能不能把这份抵抗，变成一场胜利？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从1比6打到三次盘点,抵抗是真实的。下一次,能不能把这份抵抗变成一场胜利?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.394,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 一比六 ｜ 打 ｜ 到 ｜ 三次 ｜ 盘点 ｜ 抵抗 ｜ 是 ｜ 真实 ｜ 的 ｜ 下 ｜ 一次 ｜ 能不能 ｜ 把 ｜ 这 ｜ 份 ｜ 抵抗 ｜ 变成 ｜ 一 ｜ 场 ｜ 胜利"
+      }
+    },
+    {
+      "id": "bundle:9e135cbdee86eb118e5eecc7249667e3dfe71fdb049e79a597abf483e6c44639",
+      "text": "首盘盘点，王欣瑜还在追球。可这一盘，最后停在了一比六。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘盘点,王欣瑜还在追求。可这一盘,最后停在了一比六。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.514,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.413,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 盘点 ｜ 王欣瑜 ｜ 还 ｜ 在 ｜ 追 ｜ 球 ｜ 可 ｜ 这 ｜ 一 ｜ 盘 ｜ 最后 ｜ 停 ｜ 在 ｜ 了 ｜ 一比六"
+      }
+    },
+    {
+      "id": "bundle:a23591a9142bfdb41e41b889c697992633fa1ae70e6149150b9f107459dd3db1",
+      "text": "机会还没完。七比六，王欣瑜第三次握住盘点。只要再赢这一分，就有第三盘。帕克斯又一次顶住，继续往网前逼近。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "机会还没完。7比6,王欣瑜第三次握住盘点。只要再赢这一分,就有第三盘。帕克斯又一次顶住,继续往往前逼近。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.305,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 10.484,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "机会 ｜ 还 ｜ 没完 ｜ 七比六 ｜ 王欣瑜 ｜ 第三次 ｜ 握住 ｜ 盘点 ｜ 只要 ｜ 再 ｜ 赢 ｜ 这 ｜ 一 ｜ 分 ｜ 就 ｜ 有 ｜ 第三盘 ｜ 帕克斯 ｜ 又 ｜ 一次 ｜ 顶住 ｜ 继续 ｜ 往 ｜ 网 ｜ 前 ｜ 逼近"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:baf1f10d63b0b70eb66e2f29902b4d876418f25f636ccb23218effc423f56db1",
+      "text": "第一次机会没抓住，双方又各保一局，比赛进入抢七。随后六比五，第二个盘点又来到王欣瑜手里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一次机会没抓住,双方又个保一局,比赛进入抢七。随后6比5,第二个盘点又来到王欣瑜手里。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.196,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第 ｜ 一次机会 ｜ 没 ｜ 抓住 ｜ 双方 ｜ 又 ｜ 各 ｜ 保 ｜ 一 ｜ 局 ｜ 比赛 ｜ 进入 ｜ 抢七 ｜ 随后 ｜ 六比五 ｜ 第二个 ｜ 盘点 ｜ 又 ｜ 来到 ｜ 王欣瑜 ｜ 手 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:c0bfb288de8486d3546dc31b62ef088899a26454da27c71489f1195ed1dff099",
+      "text": "从底线打到网前，帕克斯没有放松。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从底线达到往前,帕克斯没有放松。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.842,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 底线 ｜ 打 ｜ 到 ｜ 网 ｜ 前 ｜ 帕克斯 ｜ 没有 ｜ 放松"
+      }
+    },
+    {
+      "id": "bundle:cbb72e7546b5b0c1515534cc137dafff1cc4069faa641d7ad3569e173c8b061e",
+      "text": "全场制胜分，十比二十九。两盘下来，王欣瑜一次也没能破发。她把第二盘撑住了，却没能把机会变成胜势。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "全场制胜分十比二十九。两盘下来,王欣瑜一次也没能破发。他把第二盘撑住了,却没能把机会变成胜识。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.281,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "全场 ｜ 制胜 ｜ 分 ｜ 十比二十九 ｜ 两盘 ｜ 下来 ｜ 王欣瑜 ｜ 一次 ｜ 也 ｜ 没 ｜ 能 ｜ 破发 ｜ 她 ｜ 把 ｜ 第二盘 ｜ 撑住 ｜ 了 ｜ 却 ｜ 没 ｜ 能 ｜ 把 ｜ 机会 ｜ 变成 ｜ 胜 ｜ 势"
+      }
+    },
+    {
+      "id": "bundle:cbdbcd6bdba4bc1957e145c044bc44f26c2ab922b094e263acec671f2d6006b1",
+      "text": "从七比六到七比八。王欣瑜没等来第三盘，却等来了对手的赛点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从7比6到7比8,王欣瑜没等来第三盘,却等来了对手的赛点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.507,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 七比六 ｜ 到 ｜ 七比八 ｜ 王欣瑜 ｜ 没 ｜ 等 ｜ 来 ｜ 第三盘 ｜ 却 ｜ 等 ｜ 来 ｜ 了 ｜ 对手 ｜ 的 ｜ 赛点"
+      }
+    },
+    {
+      "id": "bundle:f6f001f38b80040752cd0b81dcd6ce02cd809b3765dc1b91d7b9a5e3a842b7d5",
+      "text": "一比二落后，自己的发球局又被逼到破发点。帕克斯往前压，王欣瑜只能继续追。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
+        "longest_deletion": 0,
+        "transcript": "一边而落后,自己的发球局又被逼到破发点。帕克斯往前压,王欣瑜只能继续追。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.182,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.099,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.722,
+        "cps": 4.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一比二 ｜ 落后 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 又 ｜ 被 ｜ 逼 ｜ 到 ｜ 破发 ｜ 点 ｜ 帕克斯 ｜ 往前 ｜ 压 ｜ 王欣瑜 ｜ 只能 ｜ 继续 ｜ 追"
+      }
+    }
+  ]
+}
