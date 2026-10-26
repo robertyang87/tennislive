@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "e903b49160a207bca62a8d01ba306d820968c1e36675657259ceaf75f2cfb340",
-    "render_inputs_sha256": "29a24432f414bbbfd2ee895e97c116c689ce09ace33bebdb0ba8e6997cc26974",
+    "render_sha256": "99a8dda3070436894f86dfab1f79dff7b75f697db86bf9366575118fd3a232a9",
+    "render_inputs_sha256": "337fb314796983adac81d5bf2816aec543b06f5a76ebb38735267ff086e8fed1",
     "spec_sha256": "f7847d78ddc1d8e8c98f5805c8b1f097c532fa7f3ff97129b9b11de411318949",
-    "film_sha256": "a57da092a4c3ed9e751cd38dd95339835e023864a4955d7dc9a70c18393414a5",
+    "film_sha256": "4425c0cbdc2e8fc413ad7d063471bc87b0dc1b2b6c1a07f6f340856c69387eee",
     "inventory_sha256": "7cdffa88faca3b15af37b31686a7ac63f71fc293e5b0b9e79e5d014b367e8f9a"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-26T15:08:34+00:00",
+  "reviewed_at": "2026-10-26T15:13:10+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -346,7 +346,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "拼下冠军, 再停下来养伤。换你, 会这么拼吗?评论区说说。"
+        "transcript": "拼下冠军,再停下来养伤。换你,会这么拼吗?评论区说说。"
       },
       "polyphones": [],
       "pauses": {
