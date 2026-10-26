@@ -1,0 +1,57 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=PSOIvGWxtc4",
+  "source_sha256": "2bac31f87af4ca9675060f9f18879ee198db66bb66cc3feb7c78f2de99a49fce",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-26T17:50:48+00:00",
+  "reviewed_from": 257.6,
+  "reviewed_to": 296.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.4,
+      "end": 268.22,
+      "en": "Venus Williams, back with a bang.",
+      "zh": "大威廉姆斯 强势回归"
+    },
+    {
+      "start": 273.22,
+      "end": 283.9,
+      "en": "And becomes the oldest WTA tour winner since 2004, at the age of 45.",
+      "zh": "她成了2004年来最年长的胜者"
+    },
+    {
+      "start": 289.08,
+      "end": 296.04,
+      "en": "And the smile tells you everything you need to know. She loves this sport.",
+      "zh": "笑容说明一切 她热爱这项运动"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/PSOIvGWxtc4-full-small.en.json",
+      "sha256": "c9fda14f8cabe731dbc13fe8226efcbaf1b310459214d692081cd878d8d52c99",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/PSOIvGWxtc4-full-medium.en.json",
+      "sha256": "6fe9306ed5c3b7a525a789c6a0247078a4383b96cdc4909ee34d2e8f6499274d",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/PSOIvGWxtc4-clip248-270-small.en.json",
+      "sha256": "8fcbb86f7455ed1cc08db2228bac9c86c52edd1497578b1b0d57aaf3f8a21439",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/PSOIvGWxtc4-clip248-270-medium.en.json",
+      "sha256": "84af0df648c63a77afab065eb7c0ae8dd6f6462bdef8a325e1195db6d851599c",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "WTA 官方集锦：赛点回合、她举拍、和斯特恩斯握手、向看台致意。257.46 之前那句两档转写不一致（small『But not this time』/ medium『The nollie's done』），窗口从 257.6 起避开；『Round three』只在 full-small 里出现，248–270 单段两档重转都没有，判为幻听。"
+}

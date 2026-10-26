@@ -1,0 +1,35 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=zK_ppI7H92c",
+  "source_sha256": "04911cf07b81a4a13ed2a9ab9468fe299654dc986105b95bf3114d501ab82cf4",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-26T17:50:48+00:00",
+  "reviewed_from": 423.5,
+  "reviewed_to": 449.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 445.38,
+      "end": 449.18,
+      "en": "This is an incredible comeback from Olga Danilovic.",
+      "zh": "达尼洛维奇不可思议的逆转"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/zK_ppI7H92c-full-small.en.json",
+      "sha256": "e2935f499571403591b3329d976a1072e012796df573983d5c5e19d6bd6cbbd3",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/zK_ppI7H92c-full-medium.en.json",
+      "sha256": "0e838b36f5f400bfe0e4fcab629ea5ffb448313f078bf0480f8e52f564a11b72",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "完整赛点回合（7:05–7:24）、达尼洛维奇怒吼、大威的脸、网前握手，收在解说那句之后、7:53 黑场之前。"
+}

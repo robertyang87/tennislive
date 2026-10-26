@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=gG8NPAvYOJc",
+  "source_sha256": "afcf4c720a33526aaadc7a84274a4fe811a95212c77e52e172f4a7e8d93fe060",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-26T17:50:48+00:00",
+  "reviewed_from": 150.2,
+  "reviewed_to": 160.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-clip145-170-small.en.json",
+      "sha256": "a90c156b0787c6e20bdbd0c3b9a6dcebf410602e0ff605fb340daa933f498815",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-clip145-170-medium.en.json",
+      "sha256": "81c3f9e3bfca30771b906a09fdddadd8595b478870c670a5c626f825c16b3d67",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "完整赛点回合，收在主裁报分之前。",
+  "no_foreground_english_reason": "145–170 单段两档重转：small 149.78 之后到 161.58 无英文，medium 150.00 之后到 160.84 无英文。"
+}

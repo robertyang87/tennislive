@@ -1,0 +1,45 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=gG8NPAvYOJc",
+  "source_sha256": "afcf4c720a33526aaadc7a84274a4fe811a95212c77e52e172f4a7e8d93fe060",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-26T17:50:48+00:00",
+  "reviewed_from": 137.4,
+  "reviewed_to": 146.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 137.51,
+      "end": 141.55,
+      "en": "What a shot to hit.",
+      "zh": "这一拍太难打了"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-full-small.en.json",
+      "sha256": "42035648d730e4d83214bf7f40ca51db327b87af863fd23b6cdcb3e1d4965b78",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-full-medium.en.json",
+      "sha256": "4affc1123f7b4e791e5ed5e96a640771864723b2bd373d024d5e58883c6bb07f",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-clip145-170-small.en.json",
+      "sha256": "a90c156b0787c6e20bdbd0c3b9a6dcebf410602e0ff605fb340daa933f498815",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/gG8NPAvYOJc-clip145-170-medium.en.json",
+      "sha256": "81c3f9e3bfca30771b906a09fdddadd8595b478870c670a5c626f825c16b3d67",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "美网官方集锦：第二盘抢七 6-2 之后的盘点回合（源片记分条黄标 SET POINT #4，见 williams-kenin-us-open-2026-r1）。本场额外回合只用这一段。"
+}

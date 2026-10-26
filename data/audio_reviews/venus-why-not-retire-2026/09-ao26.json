@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=zK_ppI7H92c",
+  "source_sha256": "04911cf07b81a4a13ed2a9ab9468fe299654dc986105b95bf3114d501ab82cf4",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-26T17:50:48+00:00",
+  "reviewed_from": 299.3,
+  "reviewed_to": 311.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/zK_ppI7H92c-full-small.en.json",
+      "sha256": "e2935f499571403591b3329d976a1072e012796df573983d5c5e19d6bd6cbbd3",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/zK_ppI7H92c-full-medium.en.json",
+      "sha256": "0e838b36f5f400bfe0e4fcab629ea5ffb448313f078bf0480f8e52f564a11b72",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "澳网官方集锦：记分条 0-3 → 4-0（300–312 秒逐 2 秒裁记分条核过）；之后 1-4、2-4、3-4、4-4、4-5、4-6 依次出现。本场额外回合只用这一段。",
+  "no_foreground_english_reason": "两档全片转写在 299.14–311.32 之间都没有英文；窗口 299.3–311.2 落在空档内。"
+}
