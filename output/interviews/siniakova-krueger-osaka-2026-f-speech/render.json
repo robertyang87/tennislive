@@ -1,0 +1,166 @@
+{
+  "assembly": {
+    "parts": [
+      {
+        "role": "cover",
+        "file": "_cover.mp4",
+        "seconds": 2.0
+      },
+      {
+        "role": "lead_in",
+        "file": "_lead.mp4",
+        "seconds": 19.52
+      },
+      {
+        "role": "body",
+        "file": "_body.mp4",
+        "seconds": 160.92
+      },
+      {
+        "role": "takeaway_close",
+        "file": "_takeaway_close.mp4",
+        "seconds": 6.2,
+        "peak_db": -7.2
+      },
+      {
+        "role": "outro",
+        "file": "_outro.mp4",
+        "seconds": 4.2,
+        "peak_db": -8.5
+      }
+    ]
+  },
+  "seams": {
+    "count": 4,
+    "transition": "dissolve",
+    "dissolve_s": 0.18
+  },
+  "film_sha256": "680bbfb5361d992eb41bfb1f3522cf95f8bb27de9b7ab21813c0b1c67ae3017d",
+  "film_seconds": 192.04,
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "siniakova-krueger-osaka-2026-f-speech",
+    "received_at": "2026-10-26T05:57:53Z",
+    "artifact_ready_at": "2026-10-26T06:02:48Z",
+    "elapsed_seconds": 295.341,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "680bbfb5361d992eb41bfb1f3522cf95f8bb27de9b7ab21813c0b1c67ae3017d",
+    "spec_sha256": "21c62a9823f93dff96a1f39e1e89d252f61869404bf0a25ae50abbdfc3ce9124",
+    "run_id": "40277094568",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-26T05:58:54Z",
+        "run_id": "40277094568"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-26T06:00:05Z",
+        "run_id": "40277094568"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-26T06:00:20Z",
+        "run_id": "40277094568"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-26T06:00:21Z",
+        "run_id": "40277094568"
+      }
+    ],
+    "render_seconds": 147.341,
+    "pre_render_seconds": 148.0
+  },
+  "face_checks": {
+    "cover": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "match",
+        "name": "西尼亚科娃",
+        "similarity": {
+          "西尼亚科娃": 0.6261
+        },
+        "missing": [],
+        "expected": [
+          "西尼亚科娃"
+        ],
+        "face": [
+          449,
+          134,
+          577,
+          300
+        ],
+        "face_px": 166.3,
+        "reason": "像 西尼亚科娃（0.63 ≥ 0.34）",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2514,
+        "ear_each": [
+          0.2504,
+          0.2524
+        ],
+        "face": [
+          449,
+          134,
+          577,
+          300
+        ],
+        "face_px": 166.3,
+        "reason": "眼睛纵横比 0.25 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "warnings": []
+    },
+    "warnings": []
+  },
+  "production_stage_events": [
+    {
+      "stage": "preflight",
+      "at": "2026-10-26T05:58:54Z",
+      "run_id": "40277094568"
+    },
+    {
+      "stage": "cover_audit",
+      "at": "2026-10-26T06:00:05Z",
+      "run_id": "40277094568"
+    },
+    {
+      "stage": "asr_verify",
+      "at": "2026-10-26T06:00:20Z",
+      "run_id": "40277094568"
+    },
+    {
+      "stage": "render",
+      "at": "2026-10-26T06:00:21Z",
+      "run_id": "40277094568"
+    },
+    {
+      "stage": "qc",
+      "at": "2026-10-26T06:02:49Z",
+      "run_id": "40277094568"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-26T06:02:50Z",
+      "run_id": "40277094568"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-siniakova-krueger-osaka-2026-f-speech/siniakova-krueger-osaka-2026-f-speech.mp4?v=680bbfb5361d992e",
+  "video_bytes": 49549852,
+  "release_asset_digest": "sha256:680bbfb5361d992eb41bfb1f3522cf95f8bb27de9b7ab21813c0b1c67ae3017d",
+  "qc_attestation_sha256": "c2ac824751f42c6464d9ab68d03310f85e9a51849782ddc9e68b3ac512879969"
+}
