@@ -32,7 +32,8 @@
     "auto": false,
     "matchup": "西尼亚科娃 vs 克鲁格",
     "score": "6-1 6-0",
-    "summary": "西尼亚科娃大坂夺冠"
+    "summary": "十年等待终夺冠",
+    "lead": "2026 大坂决赛，西尼亚科娃 6-1、6-0 胜克鲁格，仅用时 64 分钟，生涯第 6 冠。捧杯致辞上她说：'能回到大坂、时隔多年再夺冠，太不可思议了。'并感谢了对手、赛事方、团队和家人。"
   },
   "requested_content_type": "ceremony",
   "slug": "siniakova-krueger-osaka-2026-f-speech",
@@ -70,8 +71,14 @@
     "subs": [
       {
         "a": 287.62,
+        "b": 289.44,
+        "en": "And there it is,",
+        "zh": "就是这样"
+      },
+      {
+        "a": 289.44,
         "b": 291.66,
-        "en": "And there it is, your 2026 Japan Open champion",
+        "en": "your 2026 Japan Open champion",
         "zh": "2026 日本公开赛冠军"
       },
       {
@@ -93,7 +100,7 @@
         "zh": "西尼亚科娃"
       }
     ],
-    "_subs_why": "本地 faster-whisper small.en 逐词时间戳核实：'And there it is' 287.62s 起（另两次转写分别量到 286.68/287.62s，取词级复核值）；280s 帧见冠军点记分牌、290s 帧见 DOUBLE FAULT 字样、298s 帧见网前拥抱；ASR 的 Katarina/Gasserina 均为人名误听，按官方拼写订正为 Katerina。"
+    "_subs_why": "本地 faster-whisper small.en 逐词时间戳核实：'And there it is' 287.62s 起（另两次转写分别量到 286.68/287.62s，取词级复核值）；280s 帧见冠军点记分牌、290s 帧见 DOUBLE FAULT 字样、298s 帧见网前拥抱；ASR 的 Katarina/Gasserina 均为人名误听，按官方拼写订正为 Katerina。首句 46 字量出 1033px 超 952 上限，按逐词时间戳在 your（289.44s）处拆成两条。"
   },
   "zh": [
     "大家好。",
@@ -140,21 +147,25 @@
   },
   "_en_fixed_why": "人工逐行核对：仅 #10 一处实锤订正——provider 字幕 'Ashleigh' 与第二份 ASR 'ashlyn' 对不上，决赛对手实为 Ashlyn Krueger，订正为 Ashlyn；其余行按 provider 字幕原文保留（含 #14 'play more games together'，第二份 ASR 的 matches 改写无确证，不采）。中文 38 行逐行对齐，每行≤13字。",
   "transcript_disagree_ok": {
-    "rate": 0.32,
-    "why": "人工逐行核对过转写：分歧是 provider 自动字幕与 faster-whisper small.en 在同义词（incredible/amazing）、填词、掌声段 ASR 叠词与人名（Ashleigh/Ashlyn）上的系统性差异，非整段对不上；发出去的英文以人工订正的 en_fixed 为准。"
+    "rate": 0.42,
+    "why": "人工逐处核对过第二趟转写（第二份 ASR 222 词 vs 第一份 181 词）：新增分歧主要来自 faster-whisper small.en 在掌声/长停顿段的循环幻听——'i\\'m so happy to be back here in osaka after 14 years' 在 16.94–27.46、87.86–102.05 等停顿段被反复插入，另有整段漏听（'many thanks to the tournament director…'一段在第二份里为空）；其余为两趟共有的同义词（incredible/amazing）、填词与人名差异。provider 自动字幕仍为可靠底本，en_fixed 已应用（Ashlyn）；发出去的英文以人工订正为准。"
   },
   "caption_gaps_ok": {
     "139.7-147.0": "致辞收尾 'Arigato.'（138.61–141.61）后的现场掌声：VAD 测到 2.4s 人声系掌声误检，第二份 ASR 空词，双 ASR 均无词；下一句 147.0s 起为主持人合影通知，掌声段无漏词。"
   },
   "cover": {
-    "frame_at": 100.0,
+    "frame_at": 8.0,
     "sub": "西尼亚科娃 · 大坂捧杯致辞",
     "tag": "2026 大坂 · 赛后开麦",
     "title": [
       "14年后再回大坂",
       "第六冠"
     ],
-    "_why": "100.0s：西尼亚科娃持 WTA 话筒致辞、面带笑容（'thank you for everything' 段末），球童列队背景干净；如视觉闸不过由 render --autopick 接管。"
+    "_why": "8.0s：开场致辞段正面近景——西尼亚科娃正对镜头、双眼睁开、面带笑容，手持 WTA 话筒，画面下方有 KATERINA SINIAKOVA CHAMPION 字条（'in Osaka after 14 years' 句）；100s 原帧为侧面低头、0 只眼未过像素闸，98–102s 窗口 21 格全灭，故换段至开场正面段。",
+    "scan_window": [
+      6.0,
+      10.0
+    ]
   },
   "takeaway": {
     "close": {

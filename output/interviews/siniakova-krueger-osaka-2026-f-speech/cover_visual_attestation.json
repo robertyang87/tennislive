@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-26T04:59:23Z",
+  "auditor": "opencv-haar-v1",
+  "expected_subject": "辛尼亚科娃",
+  "identity_evidence": "L0-bound spec subject + same-source frame_at + face model buffalo_s-v0.7 vs official headshot",
+  "spec_sha256": "3f28e4b916ebadd48e23775910618ce903a48ff738e0e82d339f6144474f3336",
+  "poster_sha256": "bcf80cd3b4d52557ec098a72748dbb6765ae589f818a1e9405960bba5f031ee9",
+  "thresholds": {
+    "close_up_zoom": 1.5,
+    "face_height_ratio": 0.08,
+    "close_up_face_height_ratio": 0.14,
+    "face_area_ratio": 0.01,
+    "face_sharpness": 45.0,
+    "face_contrast": 32.0,
+    "eyes": 2
+  },
+  "result": {
+    "poster": {
+      "decodable": true,
+      "format": "JPEG",
+      "width": 1080,
+      "height": 1440,
+      "photo_region": [
+        0,
+        150,
+        1080,
+        810
+      ]
+    },
+    "face": {
+      "detector": "frontal-default",
+      "box": [
+        440,
+        293,
+        160,
+        160
+      ],
+      "detected_faces": 3,
+      "eyes": 2,
+      "face_height_ratio": 0.19753,
+      "face_area_ratio": 0.02926,
+      "center_x_ratio": 0.48148,
+      "center_y_ratio": 0.27531,
+      "sharpness": 83.355,
+      "contrast": 115.0
+    },
+    "contract": {
+      "shot_type": "",
+      "frame_at": 8.0,
+      "zoom": 1.0,
+      "focus_y": 0.5
+    },
+    "face_model": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "identity": {
+        "verdict": "unknown",
+        "name": null,
+        "similarity": {},
+        "missing": [
+          "辛尼亚科娃"
+        ],
+        "expected": [
+          "辛尼亚科娃"
+        ],
+        "face": [
+          449,
+          134,
+          577,
+          300
+        ],
+        "face_px": 166.3,
+        "reason": "没有可比的官方头像：辛尼亚科娃",
+        "thresholds": {
+          "match": 0.34,
+          "mismatch": 0.15,
+          "min_face_px": 56
+        }
+      },
+      "eyes": {
+        "verdict": "open",
+        "ear": 0.2513,
+        "ear_each": [
+          0.2503,
+          0.2523
+        ],
+        "face": [
+          449,
+          134,
+          577,
+          300
+        ],
+        "face_px": 166.3,
+        "reason": "眼睛纵横比 0.25 ≥ 0.16",
+        "thresholds": {
+          "closed": 0.12,
+          "open": 0.16,
+          "min_face_px": 72
+        }
+      },
+      "problems": [],
+      "warnings": [
+        "认人拿不准：没有可比的官方头像：辛尼亚科娃"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "认人拿不准：没有可比的官方头像：辛尼亚科娃"
+  ]
+}
