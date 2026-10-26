@@ -28,14 +28,13 @@
   "push": {
     "auto": true,
     "summary": "为什么抽筋还被警告",
-    "lead": "里昂站穆泰抽筋倒地，起身后却吃了一次超时警告。ATP 规则：抽筋不能叫医疗暂停，只能在换边、盘间治疗。梅德韦杰夫、科兹洛夫、阿尔卡拉斯、辛纳都碰上过。",
+    "lead": "里昂站穆泰抽筋倒地，起身后却吃了一次超时警告。ATP 规则：抽筋不能叫医疗暂停，只能在换边、盘间治疗。科兹洛夫、阿尔卡拉斯、辛纳都碰上过。",
     "_why": "渲染前写 auto=true；合并后 CI 自动推送一次。"
   },
   "sources": {
     "lyon": "https://www.youtube.com/watch?v=fgCvunxHYfk",
     "short": "https://www.youtube.com/watch?v=FMlaCdqPkyw",
     "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb02/animMtCrb02.mp4",
-    "mia21": "https://www.youtube.com/watch?v=SwjfbwzPLtU",
     "aca22": "https://www.youtube.com/watch?v=8J56Fy5bvao",
     "sh25": "https://www.youtube.com/watch?v=S3HVLU-kVWU",
     "ao26": "https://www.youtube.com/watch?v=kYlFxO1HA_A"
@@ -44,7 +43,6 @@
     "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-fgCvunxHYfk/fgCvunxHYfk.mp4",
     "short": "https://github.com/robertyang87/tennislive/releases/download/source-FMlaCdqPkyw/FMlaCdqPkyw.mp4",
     "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb02/animMtCrb02.mp4",
-    "mia21": "https://github.com/robertyang87/tennislive/releases/download/source-SwjfbwzPLtU/SwjfbwzPLtU.mp4",
     "aca22": "https://github.com/robertyang87/tennislive/releases/download/source-8J56Fy5bvao/8J56Fy5bvao.mp4",
     "sh25": "https://github.com/robertyang87/tennislive/releases/download/source-S3HVLU-kVWU/S3HVLU-kVWU.mp4",
     "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4"
@@ -68,12 +66,6 @@
       "width": 1920,
       "height": 1080,
       "fps": "50/1"
-    },
-    "mia21": {
-      "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
-      "width": 1920,
-      "height": 1080,
-      "fps": "60/1"
     },
     "aca22": {
       "why": "Release 存档 ffprobe 实测；窗口按逐秒抽帧定，不另跑 probe。",
@@ -102,18 +94,17 @@
     }
   },
   "mixed_fps": {
-    "mia21": "60 fps → 50：迈阿密 2021 走动与赛后近景，动作慢，重采样看不出。",
     "aca22": "60 fps → 50：科兹洛夫躺地、季米特洛夫查看，基本静止。",
     "ao26": "25 fps → 50：整齐地每帧重复一次，无丢帧。"
   },
   "editorial": {
     "mode": "match_review",
     "question": "穆泰抽筋倒地，为什么还被判超时警告？抽筋的规则是什么？",
-    "thesis": "2026-10-20 里昂 ATP250 首轮，穆泰 6-2 6-7(5) 7-6(4) 胜安贝尔；决胜盘他抽筋倒地，被扶起后吃了一次超时警告。ATP 与大满贯规则：抽筋不能叫医疗暂停，只能在换边/盘间治疗，一场最多两次；分间 25 秒，第一次超时警告，再犯发球方判一发失误、接发方罚一分；撑不住可放弃分或局到换边治疗。历史案例：梅德韦杰夫迈阿密 2021、科兹洛夫阿卡普尔科 2022、辛纳上海 2025、阿尔卡拉斯—兹维列夫澳网 2026。",
+    "thesis": "2026-10-20 里昂 ATP250 首轮，穆泰 6-2 6-7(5) 7-6(4) 胜安贝尔；决胜盘他抽筋倒地，被扶起后吃了一次超时警告。ATP 与大满贯规则：抽筋不能叫医疗暂停，只能在换边/盘间治疗，一场最多两次；分间 25 秒，第一次超时警告，再犯发球方判一发失误、接发方罚一分；撑不住可放弃分或局到换边治疗。历史案例：科兹洛夫阿卡普尔科 2022、辛纳上海 2025、阿尔卡拉斯—兹维列夫澳网 2026。",
     "beats": [
       "里昂：抽筋倒地、被扶起、超时警告、抢七取胜",
       "规则：不能 MTO、换边盘间治疗、最多两次、25 秒、罚则、放弃分局",
-      "案例：迈阿密 2021、阿卡普尔科 2022、上海 2025、澳网 2026",
+      "案例：阿卡普尔科 2022、上海 2025、澳网 2026",
       "收尾：抽筋到倒地，该不该多给几秒？"
     ],
     "human_context": {
@@ -363,63 +354,12 @@
       "_why": "规则动画（本地 PIL 浅色扁平，逐词对齐本句 TTS）。ATP 与大满贯同条 Note：may forfeit the point(s)/game(s) needed to get to a change of end or set-break in order to receive treatment。"
     },
     {
-      "source": "mia21",
-      "start": 167.3,
-      "end": 181.2,
-      "cx": 0.5,
-      "track": false,
-      "narration": "这条规则，不少球员都碰上过。二零二一年迈阿密，梅德韦杰夫第三盘抽筋，一瘸一拐，最后七比六、六比七、六比四赢下波皮林。",
-      "voice": {
-        "pitch": "+10Hz",
-        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
-      },
-      "_why": "Tennis TV SwjfbwzPLtU 抽帧：第三盘回合与赛点；ASR 空当 167.1–181.4。事实：Miami Open 官网 2021-03-28、AP「Hobbled Daniil Medvedev limps」。",
-      "inset": {
-        "image": "assets/reel/moutet-cramp-warning-2026/label-mia21.png",
-        "kind": "story_text",
-        "corner": "tr",
-        "width": 0.6,
-        "pad": 0.043,
-        "show_for": 9.0,
-        "motion": "editorial",
-        "label": {
-          "topic": "抽筋一瘸一拐赢球",
-          "date": "2021.03.28",
-          "place": "ATP1000 迈阿密 第三轮",
-          "score": "7-6(3) 6-7(7) 6-4",
-          "people": "梅德韦杰夫 vs 波皮林"
-        }
-      }
-    },
-    {
-      "source": "mia21",
-      "start": 181.4,
-      "end": 200.4,
-      "cx": 0.5,
-      "track": false,
-      "narration": "",
-      "quote": [
-        {
-          "at": 0.1,
-          "end": 9.2,
-          "text": "You have to say, well played, Daniil Medvedev, digging so deep.\n打得好，梅德韦杰夫咬牙撑住了。"
-        },
-        {
-          "at": 9.3,
-          "end": 18.8,
-          "text": "Clearly, really struggling with cramp, but he has somehow found a way to win that match.\n被抽筋折磨，他还是赢了。"
-        }
-      ],
-      "_quote_kind": "commentator",
-      "_why": "抽帧：赛后梅德韦杰夫近景、握手；解说原声两档 ASR 一致（small.en 把 cramp 转成 Tram、Medvedev 转成 Medford，按画面与上下文校正）。"
-    },
-    {
       "source": "aca22",
-      "start": 0.5,
-      "end": 9.9,
+      "start": 0.3,
+      "end": 10.0,
       "cx": 0.5,
       "track": false,
-      "narration": "二零二二年阿卡普尔科，科兹洛夫对季米特洛夫。第二盘，他打着打着就抽筋了。",
+      "narration": "不少球员都碰上过。二零二二年阿卡普尔科，科兹洛夫对季米特洛夫，第二盘打着打着就抽筋了。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
