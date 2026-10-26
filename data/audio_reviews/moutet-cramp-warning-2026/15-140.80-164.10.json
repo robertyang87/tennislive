@@ -1,0 +1,32 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=GUP1Qr7z-Vc",
+  "source_sha256": "d81d162965f6db76e05597a2fec5082e6d26455872236b4cd7145263bc2fb408",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-26T11:46:40+00:00",
+  "reviewed_from": 140.8,
+  "reviewed_to": 164.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 145.54,
+      "end": 149.74,
+      "en": "You have to say, well played, Daniil Medvedev.",
+      "zh": "打得好，梅德韦杰夫。"
+    },
+    {
+      "start": 151.48,
+      "end": 157.42,
+      "en": "Digging so deep, clearly really struggling with cramp.",
+      "zh": "咬牙撑住，明显被抽筋折磨。"
+    },
+    {
+      "start": 159.34,
+      "end": 163.94,
+      "en": "But he's somehow found a way to win that match.",
+      "zh": "但他还是赢下了这场。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 d81d162965f6db76e05597a2fec5082e6d26455872236b4cd7145263bc2fb408，存于 data/source_asr/GUP1Qr7z-Vc/small.en.json 与 data/source_asr/GUP1Qr7z-Vc/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

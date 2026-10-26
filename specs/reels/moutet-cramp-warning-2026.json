@@ -35,18 +35,18 @@
     "lyon": "https://www.youtube.com/watch?v=fgCvunxHYfk",
     "short": "https://www.youtube.com/watch?v=FMlaCdqPkyw",
     "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb02/animMtCrb02.mp4",
-    "mia21": "https://www.youtube.com/watch?v=SwjfbwzPLtU",
+    "mia21": "https://www.youtube.com/watch?v=GUP1Qr7z-Vc",
     "aca22": "https://www.youtube.com/watch?v=8J56Fy5bvao",
-    "sh25": "https://www.youtube.com/watch?v=S3HVLU-kVWU",
+    "sh25": "https://www.youtube.com/watch?v=Wr9d2i6pqPs",
     "ao26": "https://www.youtube.com/watch?v=kYlFxO1HA_A"
   },
   "source_fallbacks": {
     "lyon": "https://github.com/robertyang87/tennislive/releases/download/source-fgCvunxHYfk/fgCvunxHYfk.mp4",
     "short": "https://github.com/robertyang87/tennislive/releases/download/source-FMlaCdqPkyw/FMlaCdqPkyw.mp4",
     "anim": "https://github.com/robertyang87/tennislive/releases/download/source-animMtCrb02/animMtCrb02.mp4",
-    "mia21": "https://github.com/robertyang87/tennislive/releases/download/source-SwjfbwzPLtU/SwjfbwzPLtU.mp4",
+    "mia21": "https://github.com/robertyang87/tennislive/releases/download/source-GUP1Qr7z-Vc/GUP1Qr7z-Vc.mp4",
     "aca22": "https://github.com/robertyang87/tennislive/releases/download/source-8J56Fy5bvao/8J56Fy5bvao.mp4",
-    "sh25": "https://github.com/robertyang87/tennislive/releases/download/source-S3HVLU-kVWU/S3HVLU-kVWU.mp4",
+    "sh25": "https://github.com/robertyang87/tennislive/releases/download/source-Wr9d2i6pqPs/Wr9d2i6pqPs.mp4",
     "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4"
   },
   "primary": "lyon",
@@ -102,7 +102,7 @@
     }
   },
   "mixed_fps": {
-    "mia21": "60 fps → 50：迈阿密 2021 走动与赛后近景，动作慢，重采样看不出。",
+    "mia21": "29.97 fps → 50：Tennis TV 迈阿密 2021 第五日集锦（比原 SwjfbwzPLtU 清晰：同口径锐度 84 对 56.5）；只用开场一段远景回合和赛点后的近景、握手，重采样的顿挫基本看不出。",
     "aca22": "60 fps → 50：科兹洛夫躺地、季米特洛夫查看，基本静止。",
     "ao26": "25 fps → 50：整齐地每帧重复一次，无丢帧。"
   },
@@ -364,23 +364,23 @@
     },
     {
       "source": "mia21",
-      "start": 167.3,
-      "end": 181.2,
+      "start": 3.7,
+      "end": 11.7,
       "cx": 0.5,
       "track": false,
-      "narration": "这条规则，不少球员都碰上过。二零二一年迈阿密，梅德韦杰夫第三盘抽筋，一瘸一拐，最后七比六、六比七、六比四赢下波皮林。",
+      "narration": "这条规则，不少球员都碰上过。二零二一年迈阿密，梅德韦杰夫对波皮林。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
       },
-      "_why": "Tennis TV SwjfbwzPLtU 抽帧：第三盘回合与赛点；ASR 空当 167.1–181.4。事实：Miami Open 官网 2021-03-28、AP「Hobbled Daniil Medvedev limps」。",
+      "_why": "Tennis TV GUP1Qr7z-Vc（迈阿密 2021 第五日集锦，梅德韦杰夫—波皮林段）抽帧：3.7–4.0 对阵字卡尾、4–6 波皮林近景、6–11.7 回合；ASR 空当 0.2–11.74。事实：Miami Open 官网 2021-03-28、Tennis Majors 2021-03-29。",
       "inset": {
         "image": "assets/reel/moutet-cramp-warning-2026/label-mia21.png",
         "kind": "story_text",
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 9.0,
+        "show_for": 8.0,
         "motion": "editorial",
         "label": {
           "topic": "抽筋一瘸一拐赢球",
@@ -393,25 +393,30 @@
     },
     {
       "source": "mia21",
-      "start": 181.4,
-      "end": 200.4,
+      "start": 140.8,
+      "end": 164.1,
       "cx": 0.5,
       "track": false,
       "narration": "",
       "quote": [
         {
-          "at": 0.1,
-          "end": 9.2,
-          "text": "You have to say, well played, Daniil Medvedev, digging so deep.\n打得好，梅德韦杰夫咬牙撑住了。"
+          "at": 4.74,
+          "end": 8.94,
+          "text": "You have to say, well played, Daniil Medvedev.\n打得好，梅德韦杰夫。"
         },
         {
-          "at": 9.3,
-          "end": 18.8,
-          "text": "Clearly, really struggling with cramp, but he has somehow found a way to win that match.\n被抽筋折磨，他还是赢了。"
+          "at": 10.68,
+          "end": 16.62,
+          "text": "Digging so deep, clearly really struggling with cramp.\n咬牙撑住，明显被抽筋折磨。"
+        },
+        {
+          "at": 18.54,
+          "end": 23.14,
+          "text": "But he's somehow found a way to win that match.\n但他还是赢下了这场。"
         }
       ],
       "_quote_kind": "commentator",
-      "_why": "抽帧：赛后梅德韦杰夫近景、握手；解说原声两档 ASR 一致（small.en 把 cramp 转成 Tram、Medvedev 转成 Medford，按画面与上下文校正）。"
+      "_why": "GUP1Qr7z-Vc 抽帧：140.8–145 回合、146–157 梅德韦杰夫赛后近景（弯腰、苦笑）、157–164 网前握手；解说原声 small.en/medium.en 两档一致（cramp 被转成 bram/Brem、Daniil 转成 Daniel，按画面与上下文校正）。"
     },
     {
       "source": "aca22",
@@ -516,8 +521,8 @@
     },
     {
       "source": "sh25",
-      "start": 184.5,
-      "end": 196.5,
+      "start": 114.2,
+      "end": 124.8,
       "cx": 0.5,
       "track": false,
       "narration": "二零二五年上海，天气又湿又热，辛纳右腿抽筋。第三盘二比三落后，他选择退赛，和格里克斯普尔握手。",
@@ -525,7 +530,7 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高；语速走 --rate +18%。"
       },
-      "_why": "Tennis TV S3HVLU-kVWU 抽帧：辛纳在椅边收拾、与格里克斯普尔握手；ASR 空当 182.9–196.5。右腿抽筋、湿热、2-3 退赛：ATP、Guardian、AP、BBC。",
+      "_why": "Rolex Shanghai Masters 官方 Wr9d2i6pqPs 抽帧：114–118 辛纳慢走到网前、118–124.8 与格里克斯普尔握手；ASR 空当 114.06–124.9；无 Tennis TV 台标。比原 S3HVLU-kVWU 清晰（同口径锐度 166 对 93）。事实：右腿抽筋、湿热、2-3 退赛：ATP、Guardian、AP、BBC。",
       "inset": {
         "image": "assets/reel/moutet-cramp-warning-2026/label-sh25.png",
         "kind": "story_text",
