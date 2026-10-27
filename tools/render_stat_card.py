@@ -877,6 +877,151 @@ def render(spec: dict, out: Path, *, variant: str = "poster") -> Path:
     return out
 
 
+# ── 动态版：剪进片子的那一屏（2026-10-27 账号所有者「好的接全局」）────────────
+#
+# 来路是 2026-10-20 的试点（`claude/animated-cards-pilot` 的 animate_cards.py）：
+# 一切由时间算出来——页面只暴露 `window.seek(t)`，没有 CSS transition、没有定时器，
+# 同一秒渲两遍逐像素相同。版式一个像素都不改，`build()` 的 HTML 外面套一层脚本。
+# 章节卡那一半主线已经有共用动效（`tennislive.video.transition_cards`），这里只接数据卡。
+#
+# ⚠️ **数字不做滚动**：滚动的中间帧会出现「35% (58/91)」这种对不上的假数据，
+# 只做整行进场。一屏只动一样东西（错开先后），只用 ease-out，动完就停，
+# 末帧和静态 `stat_card.jpg` 是同一个版面（推送页仍用那张静态图）。
+_STAT_MOTION_JS = r"""
+<style>*{transition:none!important;animation:none!important}</style>
+<script>
+(()=>{
+const clamp=x=>Math.max(0,Math.min(1,x));
+const ease=x=>1-Math.pow(1-clamp(x),3);
+const plan=[];   // [元素, 起点秒, 时长, 种类]
+const add=(sel,start,dur,kind)=>document.querySelectorAll(sel).forEach((el,i)=>
+  plan.push([el,typeof start==='function'?start(i):start,dur,kind]));
+function setup(){
+  add('.h2h-ring',0.0,0.5,'ring');
+  add('.h2h-cn,.h2h-flagrow',0.2,0.45,'fade');
+  add('.h2h-set-row',i=>0.35+0.22*i,0.4,'rise');
+  add('.h2h-meta',1.0,0.4,'fade');
+  add('.srow',i=>1.0+0.13*i,0.4,'rise');
+  window.statMotionEnd=plan.reduce((m,[,s,d])=>Math.max(m,s+d),0);
+}
+window.seek=t=>{
+  for(const [el,s,d,kind] of plan){
+    const p=ease((t-s)/d);
+    if(p>=1){el.style.opacity='';el.style.transform='';continue;}   // 终态＝静态图原样
+    el.style.opacity=p;
+    if(kind==='ring')el.style.transform='scale('+(0.92+0.08*p)+')';
+    if(kind==='rise')el.style.transform='translateY('+(16*(1-p))+'px)';
+  }
+};
+document.fonts.ready.then(()=>{setup();window.seek(0);window.statMotionReady=true;});
+})();
+</script>
+"""
+CLIP_SCALE = 2          # 和静态图一样 2× 截，再 lanczos 缩回画布，字边一样锐
+CLIP_HOLD_TAIL = 0.5    # 动画最晚在停留结束前这么多秒收住
+
+
+def _motion_document(spec: dict, variant: str) -> str:
+    page = build(spec, variant=variant)
+    return (page.replace("</body>", _STAT_MOTION_JS + "</body>", 1)
+            if "</body>" in page else page + _STAT_MOTION_JS)
+
+
+def render_clip(spec: dict, out: Path, *, variant: str = "film", seconds: float,
+                fps="30") -> Path:
+    """渲一段无声的数据卡入场动画 mp4（画布尺寸、整段 `seconds` 长）。
+
+    入场完了就停在终态，后面靠 ffmpeg `tpad` 复制最后一帧，不再逐帧截图。
+    停留太短装不下整套入场时按比例压快，**不许停在半路**。同一份 spec、同一个
+    时长、同一份脚本命中缓存（`.stat-render.json` 记 key 和成片 sha256）。
+    """
+    import hashlib  # noqa: PLC0415
+    import io  # noqa: PLC0415
+    import math  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+    from fractions import Fraction  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    from winners_ue_gate import require  # noqa: PLC0415
+
+    require(spec)
+    out = Path(out)
+    rate = float(Fraction(str(fps)))
+    if not math.isfinite(seconds) or seconds <= 0 or not 1 <= rate <= 60:
+        raise ValueError("数据卡动画需要有效的停留时长和帧率")
+    w, h = VARIANTS[variant]
+    document = _motion_document(spec, variant)
+    engine = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    key = hashlib.sha256(json.dumps([engine, document, seconds, str(fps), variant],
+                                    ensure_ascii=False).encode()).hexdigest()
+    receipt = out.with_suffix(".stat-render.json")
+    if out.is_file() and receipt.is_file():
+        old = json.loads(receipt.read_text(encoding="utf-8"))
+        if old.get("key") == key and old.get("sha256") == hashlib.sha256(out.read_bytes()).hexdigest():
+            return out
+    out.parent.mkdir(parents=True, exist_ok=True)
+    temp_movie = out.with_name(out.stem + ".tmp.mp4")
+    with tempfile.TemporaryDirectory(prefix="tennis-stat-card-") as directory:
+        source = Path(directory) / "card.html"
+        source.write_text(document, encoding="utf-8")
+        with sync_playwright() as pw:
+            browser = _launch_browser(pw)
+            try:
+                tab = browser.new_page(viewport={"width": w, "height": h},
+                                       device_scale_factor=CLIP_SCALE)
+                tab.goto(source.resolve().as_uri())
+                tab.wait_for_function("window.statMotionReady === true", timeout=20_000)
+                tab.wait_for_function(
+                    "Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)",
+                    timeout=15_000)
+                tab.evaluate("() => Promise.all(Array.from(document.images).map(i => i.decode()))")
+                motion_end = float(tab.evaluate("window.statMotionEnd"))
+                window = max(0.1, min(motion_end, seconds - CLIP_HOLD_TAIL))
+                speed = motion_end / window if motion_end > 0 else 1.0
+                moving = min(math.ceil(seconds * rate), math.ceil(window * rate) + 1)
+                total = math.ceil(seconds * rate)
+                hold = max(0.0, (total - moving - 1) / rate)
+                enc = subprocess.Popen(
+                    ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
+                     "-s", f"{w}x{h}", "-r", str(fps), "-i", "-", "-an",
+                     "-vf", f"tpad=stop_mode=clone:stop_duration={hold:.3f}",
+                     "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-threads", "2",
+                     "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(temp_movie)],
+                    stdin=subprocess.PIPE)
+
+                def frame(t: float) -> bytes:
+                    tab.evaluate(f"window.seek({t})")
+                    shot = tab.screenshot(type="jpeg", quality=95)
+                    return (Image.open(io.BytesIO(shot)).convert("RGB")
+                            .resize((w, h), Image.LANCZOS).tobytes())
+                try:
+                    for n in range(moving):
+                        enc.stdin.write(frame(n / rate * speed))
+                    # 静止段取终态（seek 一个远大于动画长度的 t），不拿收住那一帧：
+                    # 收住时刻估短了，终态就会停在半路上。
+                    enc.stdin.write(frame(1e3))
+                    enc.stdin.close()
+                    if enc.wait():
+                        raise RuntimeError("数据卡动画编码失败")
+                except BaseException:
+                    enc.kill()
+                    enc.wait()
+                    temp_movie.unlink(missing_ok=True)
+                    raise
+            finally:
+                browser.close()
+    temp_movie.replace(out)
+    receipt.write_text(json.dumps({
+        "key": key, "sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+        "seconds": seconds, "fps": str(fps), "size": [w, h], "variant": variant,
+        "motion_end": motion_end, "motion_speed": round(speed, 4),
+        "review_scope": "deterministic seek(t) frames; numbers never animate"},
+        ensure_ascii=False, indent=2), encoding="utf-8")
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                   formatter_class=argparse.RawDescriptionHelpFormatter)
