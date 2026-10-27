@@ -1,0 +1,43 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-YhL-TUHmqnY/YhL-TUHmqnY.mp4",
+  "source_sha256": "d15271b6ada9679786a50cbfba46b012cf3be368833838f0866aaff5d89fb4a6",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant_manual：实际本场1080源片完整contact及逐分记分条、small.en/medium.en两档逐词转写交叉复核；不声称真人听审。",
+  "reviewed_at": "2026-10-27T12:51:18.564786+00:00",
+  "reviewed_from": 264.24,
+  "reviewed_to": 276.85,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.8,
+      "end": 266.7,
+      "en": "Match points then for Tagger.",
+      "zh": "塔格尔迎来连续赛点"
+    },
+    {
+      "start": 268.2,
+      "end": 270.85,
+      "en": "And seals it in style. Ace number six.",
+      "zh": "漂亮收官 第六记发球直接得分"
+    },
+    {
+      "start": 271.2,
+      "end": 276.75,
+      "en": "And it is a tremendous win for Lilli Tagger against Venus Williams.",
+      "zh": "塔格尔击败大威 漂亮地赢球"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/venus-tagger-guangzhou-2026-r1/source-asr/small.en.json": "f8b2d8d53785eef3f24c58962291684f2cc3aedd84157d51051a21096b12e954",
+    "data/evidence/venus-tagger-guangzhou-2026-r1/source-asr/medium.en.json": "7aec75ceced1151decd6eaab2d130bc1df67b6e41ec4e1669dcf83f7ff0183c7"
+  },
+  "evidence": "两档ASR绑定同一源片SHA；被采用英文按完整独立句分段，保留完整语义；TTS窗口在英语实际句界之外。未采用205.94–209.84的含混短语、259–264的含混末句，也不纳入299秒后的采访。人名Tagger、Lilli按官方姓名规范，fill/foot与语法错转按共同上下文纠为feel/for；声音停顿不按ASR跨球拉长的整段时间机械均分。",
+  "visual_window_note": "完整赛点：264.24近景发球准备、267秒前后全景发球、最后发球定局、塔格尔反应与两人握手、大威从网前走过；到291.85完整评论后结束，未带采访。第六记是原解说忠实翻译，与官方统计7个不同，不将原声改数也不在正文重复。",
+  "boundary_corrections": [
+    "冷开场250.55–252.40取完整独立句Oh she is such a battler，不带随后and；正文250.5–257完整保留赞叹及下一句。",
+    "首盘官方stat ACE3，全场ACE7；268.2秒原解说说第6记，按原声忠实翻译，不改原声或官方统计。",
+    "135.5–138.6的34分钟来自源片原解说，官方首盘34:02；正文用官方全场1:12:45。",
+    "末段在291.85完整wonderful season句尾切，不带292.6之后下句及299秒场上采访。"
+  ]
+}
