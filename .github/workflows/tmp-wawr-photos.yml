@@ -1,5 +1,5 @@
 name: tmp-wawr-photos
-# 一次性：沙箱连不到 ATP Media 图床、也下不了 artifact。把 2026 巴塞尔瓦林卡的官方实拍
+# 一次性（第二趟：补装 requests）：沙箱连不到 ATP Media 图床、也下不了 artifact。把 2026 巴塞尔瓦林卡的官方实拍
 # 缩成预览（长边 1600）连同原图说明一起写回本分支，挑封面用。挑完即删本文件。
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -q pillow
+      - run: pip install -q pillow requests
       - name: 拉预览
         run: |
           python - <<'PY'
