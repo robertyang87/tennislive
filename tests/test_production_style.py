@@ -59,3 +59,9 @@ def test_match_footage_default_rejects_photos_but_retains_native_cards():
     assert match_footage_problem(s) is None
     s['cover']['eyebrow']='网球有故事';s['segments']=[{'image':'archive.jpg'}]
     assert match_footage_problem(s) is None
+
+
+def test_verified_evening_synonym_keeps_date_and_timezone_requirements():
+    assert opening_context_problem("北京时间十月二十七号晚间，广州首轮。") is None
+    assert opening_context_problem("十月二十七号晚间，广州首轮。") == "没有北京时间口径"
+    assert opening_context_problem("北京时间晚间，广州首轮。") == "没有比赛日期"

@@ -1,0 +1,20 @@
+{
+  "failed_run": 40513530014,
+  "actual_failure_count": 4,
+  "previous_passed": 6573,
+  "repairs": {
+    "parent": "7d19069d8b3c2eabc619e261ed758e000e33086f",
+    "paths": [
+      "tools/production_style.py",
+      "tools/build_match_reel.py",
+      "tests/test_production_style.py",
+      "tests/test_explainer.py",
+      "src/tennislive/zh/players.py",
+      "specs/reels/wawrinka-basel-farewell.json"
+    ],
+    "scope": "晚间本为已核实自然时段；多余封面表项删除；旧瓦林卡已发片只补既有冷开场说明与准确人名识别，不改媒体、不推送、不重认证旧片。",
+    "venus_spec_media_unchanged": true
+  },
+  "focused_tests": "ci-final-focused.log in working evidence; native full final-head CI still required",
+  "old_wawrinka_media": "Already published per durable ledger805cbdf32c7c496e8faca104e8bff2e0; only explanation of existing source0-5s editorial selection added. Old film not rerendered, repushed, or re-certified; any future render/push still requires exact fresh bindings."
+}
