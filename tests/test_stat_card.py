@@ -944,6 +944,45 @@ def test_数据卡动画只动透明度和位移_数字一个字都不许改():
     assert "style.opacity" in js and "style.transform" in js
 
 
+@pytest.mark.parametrize("layout,full_bleed", [("full", False), ("full", True), ("band", True)])
+def test_animated_card_encoding_preserves_static_safe_area(tmp_path, monkeypatch, layout, full_bleed):
+    """Real encoded card placement must preserve the approved static layout."""
+    import subprocess
+    from dataclasses import replace
+    from PIL import Image, ImageDraw, ImageChops, ImageStat
+
+    reel = _reel()
+    monkeypatch.setattr(reel, "LAYOUT", layout)
+    height = reel.BAND_PIC_H if layout == "band" else reel.VIDEO_H
+    card = Image.new("RGB", (reel.VIDEO_W * 2, height * 2), "#172435")
+    draw = ImageDraw.Draw(card)
+    draw.rectangle((0, 0, card.width, 24), fill="#c6f65a")
+    draw.rectangle((160, 95, 1500, 165), fill="white")
+    image = tmp_path / "card.png"
+    card.save(image)
+    movie = tmp_path / "card.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", str(image),
+                    "-t", "0.6", "-vf", f"scale={reel.VIDEO_W}:{height}",
+                    "-c:v", "libx264", "-threads", "1", "-pix_fmt", "yuv420p", str(movie)], check=True)
+    seg = reel.Segment(0, .6, .5, "数据", image=str(image), full_bleed=full_bleed)
+    static_out, animated_out = tmp_path / "static.mp4", tmp_path / "animated.mp4"
+    reel.cut_still_segment(seg, static_out, threads=1)
+    reel.cut_still_segment(replace(seg, image=str(movie)), animated_out, threads=1)
+
+    def frame(path):
+        out = path.with_suffix(".png")
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "0.3", "-i", str(path),
+                        "-frames:v", "1", str(out)], check=True)
+        return Image.open(out).convert("RGB")
+
+    still, moving = frame(static_out), frame(animated_out)
+    assert still.size == moving.size == (reel.VIDEO_W, reel.VIDEO_H)
+    assert max(ImageStat.Stat(ImageChops.difference(still, moving)).mean) < 2
+    if not full_bleed:
+        # The original data-card header must remain below the match topbar.
+        assert max(ImageStat.Stat(moving.crop((0, 0, reel.VIDEO_W, 80))).stddev) < 2
+
+
 def test_数据卡动画真渲_末帧就是静态图_停留太短就压快不停在半路(tmp_path, monkeypatch):
     import subprocess  # noqa: PLC0415
     from PIL import Image, ImageChops, ImageStat  # noqa: PLC0415
