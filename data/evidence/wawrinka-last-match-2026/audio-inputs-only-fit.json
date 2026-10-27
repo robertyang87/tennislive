@@ -1,0 +1,32 @@
+{
+  "status": "actual_audio_inputs_only_not_production_approval",
+  "backend": "edge-tts",
+  "spoken": {
+    "1": 9.792,
+    "2": 8.688,
+    "3": 3.576,
+    "5": 10.848,
+    "7": 10.848,
+    "8": 11.352,
+    "9": 5.472,
+    "10": 4.512,
+    "13": 10.392,
+    "14": 6.96,
+    "15": 8.616,
+    "17": 7.896,
+    "18": 7.464,
+    "20": 11.256,
+    "22": 10.296
+  },
+  "overruns": [],
+  "bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "bfc14118456866b95a937968fffb48eaa91b5cf1de8098bb19ed60dbaa168617",
+    "request_count": 16,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

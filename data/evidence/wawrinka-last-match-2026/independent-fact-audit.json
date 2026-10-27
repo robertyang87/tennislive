@@ -1,0 +1,173 @@
+{
+  "schema": "independent-tennis-fact-audit/v1",
+  "created_at_utc": "2026-10-27T23:23:58.613763+00:00",
+  "scope": "Read-only official-source identity and independent match facts; no source video downloaded or listened yet",
+  "requested_youtube": "https://www.youtube.com/watch?v=mo_Aust_pN0",
+  "youtube_metadata": {
+    "status": "verified_by_root_native_oembed_and_actual_watch",
+    "channel": "ATP Tour",
+    "handle": "@ATPTour",
+    "channel_id": "UCY_5h5zaSwN7Or4kIJDYNXA",
+    "run": 40602530031,
+    "job": 122533978107,
+    "evidence_path": "official-youtube-identity-verified.json",
+    "evidence_sha256": "5f6c9c92fbffe4acf8cc8649a6e73b9a3d90362d9dc1c166d84c5e30772f0736"
+  },
+  "match": {
+    "event": "2026 Swiss Indoors Basel",
+    "level": "ATP500",
+    "round": "R32 / first round",
+    "court": "Center Court",
+    "date_local": "2026-10-27",
+    "winner": "Jiri Lehecka",
+    "loser": "Stan Wawrinka",
+    "winner_sets": [
+      "7-5",
+      "7-6(2)"
+    ],
+    "wawrinka_sets": [
+      "5-7",
+      "6-7(2)"
+    ],
+    "second_set_tiebreak_winner_score": "7-2",
+    "match_duration": "1:51",
+    "duration_minutes": 111,
+    "lehecka_seed": 8,
+    "wawrinka_entry": "WC",
+    "status": "official_event_results_and_draw_cross_checked"
+  },
+  "ranking_age": {
+    "wawrinka": {
+      "age": 41,
+      "dob": "1985-03-28",
+      "rank_week_2026_10_26": 151
+    },
+    "lehecka": {
+      "age": 24,
+      "dob": "2001-11-08",
+      "rank_week_2026_10_26": 21
+    },
+    "status": "age DOB official event / farewell event / ATP profile; match-week rankings SRF and TennisAbstract/Tennis.com corroborate, ATP current profile caches stale so do not use them as fresh rank proof"
+  },
+  "meaning_of_last_match": {
+    "safe": "瓦林卡职业巡回赛最后一战；巴塞尔首轮告别职业巡回赛",
+    "basis": "Basel event explicitly states he ends his career in Basel; official draw/results confirm first-round loss. His separate December19 Geneva One Last Backhand is a farewell show with one-set singles and doubles, not an ATP tournament.",
+    "avoid": [
+      "生涯最后一次挥拍",
+      "从此再也不打比赛",
+      "将10月26日告别仪式标成10月27日赛后现场",
+      "将12月19日日内瓦告别活动当成职业巡回赛"
+    ],
+    "prior_ceremony": {
+      "date": "2026-10-26",
+      "venue": "Basel Center Court",
+      "note": "official report says over-one-hour tribute, followed next day by first match; keep clear date label if archival ceremony used"
+    }
+  },
+  "sources": [
+    {
+      "id": "event-results",
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/results/",
+      "type": "primary_event_results",
+      "retrieved": "full page through web tool",
+      "evidence": "R32 Center Court 1:51; Lehecka (8) 7 7; Wawrinka (WC)5 6^2",
+      "web_lines": "134-142"
+    },
+    {
+      "id": "event-draw",
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/draw/",
+      "type": "primary_event_draw",
+      "retrieved": "full page",
+      "evidence": "WC Wawrinka vs seed8 Lehecka; Lehecka advances 7/5 7/6(2)",
+      "web_lines": "445-459 and647-651"
+    },
+    {
+      "id": "event-ceremony",
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2026-10-26_Basel-celebrates-Stan-Wawrinka.php",
+      "type": "primary_event_news",
+      "published": "2026-10-26",
+      "retrieved": "full page",
+      "evidence": "Career ends in Basel; over-hour Monday tribute; age41;19th and last Swiss Indoors; starts final campaign Tuesday; eighth seed Lehecka opponent",
+      "web_lines": "100-108"
+    },
+    {
+      "id": "event-may-announcement",
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2026-05-04_Ticket-pre-sale-Stan-Wawrinka-bids-farewell-to-tennis-in-Basel.php",
+      "type": "primary_event_news",
+      "published": "2026-05-04",
+      "retrieved": "full page",
+      "evidence": "ATP500 and26Oct ceremony distinguished from following tournament matches",
+      "web_lines": "99-106"
+    },
+    {
+      "id": "atp-scouting-syndication",
+      "url": "https://www.erstebank-open.com/en/news/storys/basel-vienna-2026-scouting-report",
+      "type": "official_ATP_tournament_ATP_Staff_syndication",
+      "published": "2026-10-25",
+      "retrieved": "full page",
+      "evidence": "Wawrinka retires this week in Basel; age41; career high3;16tour titles incl3majors; eighth seed Lehecka",
+      "web_lines": "63-75",
+      "caution": "Other draw preview details are already outdated/internally inconsistent with latest official draw; use only explicitly cross-checked Wawrinka facts"
+    },
+    {
+      "id": "srf-matchday",
+      "url": "https://www.srf.ch/sport/tennis/atp-tour/swiss-indoors-am-dienstag-zum-richtigen-moment-bereit-kym-wirft-rinderknech-raus",
+      "type": "credible_broadcaster",
+      "published": "2026-10-27",
+      "retrieved": "search index excerpt",
+      "evidence": "Wawrinka ATP151 vs Lehecka ATP21"
+    },
+    {
+      "id": "tennisabstract",
+      "url": "https://www.tennisabstract.com/cgi-bin/player-classic.cgi?f=A2026qq&p=StanWawrinka",
+      "type": "specialist_stats_secondary",
+      "retrieved": "search index excerpt",
+      "evidence": "Basel R32 ranks151/21; WC vs8",
+      "caution": "Table row date26Oct is tournament week date, not exact match date; snippets may splice older matches so no duration inferred from adjacent rows"
+    },
+    {
+      "id": "nau-result",
+      "url": "https://www.nau.ch/sport/tennis/wawrinka-verliert-in-basel-profi-karriere-vorbei-67193732",
+      "type": "credible_swiss_media",
+      "published": "2026-10-27 23:02 local as displayed",
+      "retrieved": "search index only; page inaccessible",
+      "evidence": "Wawrinka loses5:7,6:7(2:7);professional career ends",
+      "caution": "Cross-check via official results/draw above, not used alone"
+    },
+    {
+      "id": "farewell-show",
+      "url": "https://www.onelastbackhand.com/en",
+      "type": "official_farewell_event",
+      "retrieved": "full page",
+      "evidence": "19Dec2026 Palexpo Geneva; farewell show with one-set Wawrinka-Monfils singles then2sets doubles with Federer/Murray; Wawrinka DOB1985-03-28",
+      "web_lines": "32-55;133-161"
+    },
+    {
+      "id": "lehecka-bio",
+      "url": "https://www.erstebank-open.com/en/players/jiri-lehecka/l0bv",
+      "type": "official_ATP_tournament_profile",
+      "retrieved": "full page",
+      "evidence": "Age24 DOB2001.11.08",
+      "web_lines": "57-59",
+      "caution": "Profile ranking23 is stale, not match-week21. RG fresh cache20 also conflicts. Use SRF matchday/TA ranks for this match."
+    }
+  ],
+  "pending": [
+    "Optional independent clearer validation of ambient230.4–235.1 court announcement (not claimed intelligible quote)"
+  ],
+  "no_unsupported_claims": [
+    "No invented aces/winners/UE statistics",
+    "No claim of matchpoint count/rally shot count pending source review",
+    "No claim of manual listening"
+  ],
+  "source_metadata": {
+    "title": "Jiri Lehecka vs Stan Wawrinka Highlights | Basel round 1",
+    "title_basis": "native download-video Release metadata",
+    "uploader_status": "verified ATP Tour official channel",
+    "sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+    "bytes": 33974731,
+    "resolution": "1920x1080",
+    "fps": 25,
+    "duration": 273.809705
+  }
+}

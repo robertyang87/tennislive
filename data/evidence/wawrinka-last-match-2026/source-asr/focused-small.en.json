@@ -1,0 +1,610 @@
+{
+  "model": "faster-whisper small.en cached CPU int8",
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "method": "Independent short windows, beam8 no VAD, condition_on_previous_text false, no text/name prompt",
+  "windows": [
+    {
+      "start": 222,
+      "end": 258,
+      "segments": [
+        {
+          "start": 230.76,
+          "end": 232.12,
+          "text": " The",
+          "avg_logprob": -2.1805806532502174,
+          "no_speech_prob": 0.3834199905395508,
+          "words": [
+            {
+              "start": 230.76,
+              "end": 232.12,
+              "word": " The",
+              "probability": 0.012554304674267769
+            }
+          ]
+        },
+        {
+          "start": 232.12,
+          "end": 234.74,
+          "text": " game is set match with",
+          "avg_logprob": -2.1805806532502174,
+          "no_speech_prob": 0.3834199905395508,
+          "words": [
+            {
+              "start": 232.12,
+              "end": 232.12,
+              "word": " game",
+              "probability": 0.023796983063220978
+            },
+            {
+              "start": 232.12,
+              "end": 233.72,
+              "word": " is",
+              "probability": 0.2381816804409027
+            },
+            {
+              "start": 233.72,
+              "end": 233.82,
+              "word": " set",
+              "probability": 0.33061841130256653
+            },
+            {
+              "start": 233.82,
+              "end": 234.48,
+              "word": " match",
+              "probability": 0.09460008144378662
+            },
+            {
+              "start": 234.48,
+              "end": 234.74,
+              "word": " with",
+              "probability": 0.17122147977352142
+            }
+          ]
+        },
+        {
+          "start": 234.74,
+          "end": 235.16,
+          "text": " the hitsker.",
+          "avg_logprob": -2.1805806532502174,
+          "no_speech_prob": 0.3834199905395508,
+          "words": [
+            {
+              "start": 234.74,
+              "end": 234.78,
+              "word": " the",
+              "probability": 0.21449021995067596
+            },
+            {
+              "start": 234.78,
+              "end": 235.16,
+              "word": " hitsker.",
+              "probability": 0.0026866572443395853
+            }
+          ]
+        },
+        {
+          "start": 239.04,
+          "end": 244.92,
+          "text": " A suitcase of incredible",
+          "avg_logprob": -2.1805806532502174,
+          "no_speech_prob": 0.3834199905395508,
+          "words": [
+            {
+              "start": 239.04,
+              "end": 240.4,
+              "word": " A",
+              "probability": 0.02187681384384632
+            },
+            {
+              "start": 240.4,
+              "end": 240.76,
+              "word": " suitcase",
+              "probability": 0.7045279145240784
+            },
+            {
+              "start": 240.76,
+              "end": 244.16,
+              "word": " of",
+              "probability": 0.9695714116096497
+            },
+            {
+              "start": 244.16,
+              "end": 244.92,
+              "word": " incredible",
+              "probability": 0.9764539003372192
+            }
+          ]
+        },
+        {
+          "start": 244.92,
+          "end": 248.26,
+          "text": " memories in a career that has",
+          "avg_logprob": -2.1805806532502174,
+          "no_speech_prob": 0.3834199905395508,
+          "words": [
+            {
+              "start": 244.92,
+              "end": 245.62,
+              "word": " memories",
+              "probability": 0.9641567468643188
+            },
+            {
+              "start": 245.62,
+              "end": 246.74,
+              "word": " in",
+              "probability": 0.44112107157707214
+            },
+            {
+              "start": 246.74,
+              "end": 246.88,
+              "word": " a",
+              "probability": 0.9732903838157654
+            },
+            {
+              "start": 246.88,
+              "end": 247.2,
+              "word": " career",
+              "probability": 0.8812696933746338
+            },
+            {
+              "start": 247.2,
+              "end": 248.08,
+              "word": " that",
+              "probability": 0.9753446578979492
+            },
+            {
+              "start": 248.08,
+              "end": 248.26,
+              "word": " has",
+              "probability": 0.9632003307342529
+            }
+          ]
+        },
+        {
+          "start": 248.26,
+          "end": 255.7,
+          "text": " spend 23 years and who's shot making has dazzled us for decades but that all",
+          "avg_logprob": -0.3279514642698424,
+          "no_speech_prob": 0.2350434958934784,
+          "words": [
+            {
+              "start": 248.26,
+              "end": 248.7,
+              "word": " spend",
+              "probability": 0.028886547312140465
+            },
+            {
+              "start": 248.7,
+              "end": 249.6,
+              "word": " 23",
+              "probability": 0.8863077163696289
+            },
+            {
+              "start": 249.6,
+              "end": 250.26,
+              "word": " years",
+              "probability": 0.9938552975654602
+            },
+            {
+              "start": 250.26,
+              "end": 251.26,
+              "word": " and",
+              "probability": 0.7552939057350159
+            },
+            {
+              "start": 251.26,
+              "end": 251.5,
+              "word": " who's",
+              "probability": 0.5152961611747742
+            },
+            {
+              "start": 251.5,
+              "end": 251.76,
+              "word": " shot",
+              "probability": 0.9766647815704346
+            },
+            {
+              "start": 251.76,
+              "end": 252.1,
+              "word": " making",
+              "probability": 0.7933750748634338
+            },
+            {
+              "start": 252.1,
+              "end": 252.42,
+              "word": " has",
+              "probability": 0.6433833837509155
+            },
+            {
+              "start": 252.42,
+              "end": 253.0,
+              "word": " dazzled",
+              "probability": 0.9902994632720947
+            },
+            {
+              "start": 253.0,
+              "end": 253.2,
+              "word": " us",
+              "probability": 0.9891794919967651
+            },
+            {
+              "start": 253.2,
+              "end": 253.4,
+              "word": " for",
+              "probability": 0.9919368028640747
+            },
+            {
+              "start": 253.4,
+              "end": 253.88,
+              "word": " decades",
+              "probability": 0.9987547397613525
+            },
+            {
+              "start": 253.88,
+              "end": 255.26,
+              "word": " but",
+              "probability": 0.3284217417240143
+            },
+            {
+              "start": 255.26,
+              "end": 255.42,
+              "word": " that",
+              "probability": 0.9464898705482483
+            },
+            {
+              "start": 255.42,
+              "end": 255.7,
+              "word": " all",
+              "probability": 0.9947453737258911
+            }
+          ]
+        },
+        {
+          "start": 255.7,
+          "end": 257.44,
+          "text": " comes to an end this evening",
+          "avg_logprob": -0.3279514642698424,
+          "no_speech_prob": 0.2350434958934784,
+          "words": [
+            {
+              "start": 255.7,
+              "end": 256.12,
+              "word": " comes",
+              "probability": 0.9975749850273132
+            },
+            {
+              "start": 256.12,
+              "end": 256.56,
+              "word": " to",
+              "probability": 0.9971131086349487
+            },
+            {
+              "start": 256.56,
+              "end": 256.72,
+              "word": " an",
+              "probability": 0.994434654712677
+            },
+            {
+              "start": 256.72,
+              "end": 256.92,
+              "word": " end",
+              "probability": 0.9992353916168213
+            },
+            {
+              "start": 256.92,
+              "end": 257.14,
+              "word": " this",
+              "probability": 0.9901392459869385
+            },
+            {
+              "start": 257.14,
+              "end": 257.44,
+              "word": " evening",
+              "probability": 0.9984478950500488
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 234.5,
+      "end": 241.2,
+      "segments": [
+        {
+          "start": 234.5,
+          "end": 240.62,
+          "text": " Yurila Hitchcock brings down the curtain on Stan Babrinka's career.",
+          "avg_logprob": -0.6118699249468351,
+          "no_speech_prob": 0.11484629660844803,
+          "words": [
+            {
+              "start": 234.5,
+              "end": 236.04,
+              "word": " Yurila",
+              "probability": 0.34034185111522675
+            },
+            {
+              "start": 236.04,
+              "end": 236.36,
+              "word": " Hitchcock",
+              "probability": 0.2196381539106369
+            },
+            {
+              "start": 236.36,
+              "end": 237.22,
+              "word": " brings",
+              "probability": 0.9498946666717529
+            },
+            {
+              "start": 237.22,
+              "end": 237.64,
+              "word": " down",
+              "probability": 0.9972142577171326
+            },
+            {
+              "start": 237.64,
+              "end": 237.88,
+              "word": " the",
+              "probability": 0.9753355979919434
+            },
+            {
+              "start": 237.88,
+              "end": 238.28,
+              "word": " curtain",
+              "probability": 0.9509709477424622
+            },
+            {
+              "start": 238.28,
+              "end": 238.74,
+              "word": " on",
+              "probability": 0.982151985168457
+            },
+            {
+              "start": 238.74,
+              "end": 239.36,
+              "word": " Stan",
+              "probability": 0.9526199102401733
+            },
+            {
+              "start": 239.36,
+              "end": 240.3,
+              "word": " Babrinka's",
+              "probability": 0.6283236816525459
+            },
+            {
+              "start": 240.3,
+              "end": 240.62,
+              "word": " career.",
+              "probability": 0.8952142596244812
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 241.5,
+      "end": 254.4,
+      "segments": [
+        {
+          "start": 241.5,
+          "end": 251.74,
+          "text": " A suitcase of incredible memories in a career that has spanned 23 years and who's shot",
+          "avg_logprob": -0.280201175520497,
+          "no_speech_prob": 0.15101087093353271,
+          "words": [
+            {
+              "start": 241.5,
+              "end": 243.0,
+              "word": " A",
+              "probability": 0.1841411590576172
+            },
+            {
+              "start": 243.0,
+              "end": 243.46,
+              "word": " suitcase",
+              "probability": 0.8922791481018066
+            },
+            {
+              "start": 243.46,
+              "end": 244.16,
+              "word": " of",
+              "probability": 0.9921007752418518
+            },
+            {
+              "start": 244.16,
+              "end": 244.92,
+              "word": " incredible",
+              "probability": 0.9949926733970642
+            },
+            {
+              "start": 244.92,
+              "end": 245.6,
+              "word": " memories",
+              "probability": 0.9978274703025818
+            },
+            {
+              "start": 245.6,
+              "end": 246.74,
+              "word": " in",
+              "probability": 0.43976718187332153
+            },
+            {
+              "start": 246.74,
+              "end": 246.88,
+              "word": " a",
+              "probability": 0.991104245185852
+            },
+            {
+              "start": 246.88,
+              "end": 247.2,
+              "word": " career",
+              "probability": 0.9781513214111328
+            },
+            {
+              "start": 247.2,
+              "end": 248.08,
+              "word": " that",
+              "probability": 0.9818500876426697
+            },
+            {
+              "start": 248.08,
+              "end": 248.22,
+              "word": " has",
+              "probability": 0.9848617315292358
+            },
+            {
+              "start": 248.22,
+              "end": 248.8,
+              "word": " spanned",
+              "probability": 0.9943026900291443
+            },
+            {
+              "start": 248.8,
+              "end": 249.56,
+              "word": " 23",
+              "probability": 0.9344989061355591
+            },
+            {
+              "start": 249.56,
+              "end": 250.2,
+              "word": " years",
+              "probability": 0.9943775534629822
+            },
+            {
+              "start": 250.2,
+              "end": 251.26,
+              "word": " and",
+              "probability": 0.7784823179244995
+            },
+            {
+              "start": 251.26,
+              "end": 251.5,
+              "word": " who's",
+              "probability": 0.5667676478624344
+            },
+            {
+              "start": 251.5,
+              "end": 251.74,
+              "word": " shot",
+              "probability": 0.986286461353302
+            }
+          ]
+        },
+        {
+          "start": 251.74,
+          "end": 253.78,
+          "text": " making has dazzled us for decades.",
+          "avg_logprob": -0.280201175520497,
+          "no_speech_prob": 0.15101087093353271,
+          "words": [
+            {
+              "start": 251.74,
+              "end": 252.1,
+              "word": " making",
+              "probability": 0.6186013221740723
+            },
+            {
+              "start": 252.1,
+              "end": 252.42,
+              "word": " has",
+              "probability": 0.9098264575004578
+            },
+            {
+              "start": 252.42,
+              "end": 253.0,
+              "word": " dazzled",
+              "probability": 0.9937716722488403
+            },
+            {
+              "start": 253.0,
+              "end": 253.18,
+              "word": " us",
+              "probability": 0.9939881563186646
+            },
+            {
+              "start": 253.18,
+              "end": 253.42,
+              "word": " for",
+              "probability": 0.996728777885437
+            },
+            {
+              "start": 253.42,
+              "end": 253.78,
+              "word": " decades.",
+              "probability": 0.9983769655227661
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 254.6,
+      "end": 258,
+      "segments": [
+        {
+          "start": 254.6,
+          "end": 257.46,
+          "text": " But that all comes to an end this evening.",
+          "avg_logprob": -0.2755766465113713,
+          "no_speech_prob": 0.020659755915403366,
+          "words": [
+            {
+              "start": 254.6,
+              "end": 255.24,
+              "word": " But",
+              "probability": 0.6780217289924622
+            },
+            {
+              "start": 255.24,
+              "end": 255.42,
+              "word": " that",
+              "probability": 0.968522310256958
+            },
+            {
+              "start": 255.42,
+              "end": 255.7,
+              "word": " all",
+              "probability": 0.9965200424194336
+            },
+            {
+              "start": 255.7,
+              "end": 256.14,
+              "word": " comes",
+              "probability": 0.9971575736999512
+            },
+            {
+              "start": 256.14,
+              "end": 256.58,
+              "word": " to",
+              "probability": 0.9923672080039978
+            },
+            {
+              "start": 256.58,
+              "end": 256.7,
+              "word": " an",
+              "probability": 0.9915354251861572
+            },
+            {
+              "start": 256.7,
+              "end": 256.94,
+              "word": " end",
+              "probability": 0.9997249245643616
+            },
+            {
+              "start": 256.94,
+              "end": 257.12,
+              "word": " this",
+              "probability": 0.9932618737220764
+            },
+            {
+              "start": 257.12,
+              "end": 257.46,
+              "word": " evening.",
+              "probability": 0.9988848567008972
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
