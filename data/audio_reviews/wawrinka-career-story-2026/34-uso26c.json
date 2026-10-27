@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=aGREoN-2dQc",
+  "source_sha256": "3f1ebdc43ce202ab910b7252bb19172bcf948a4039362280d942a9d59ea6065d",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 187.2,
+  "reviewed_to": 210.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 187.28,
+      "end": 191.78,
+      "en": "But over the years I received so much support, so much love because of you.",
+      "zh": "这些年 你们给了我太多支持和爱"
+    },
+    {
+      "start": 191.78,
+      "end": 196.12,
+      "en": "So I really enjoyed that. I found the way to play my best tennis here.",
+      "zh": "我很享受 在这里打出了最好的网球"
+    },
+    {
+      "start": 196.12,
+      "end": 199.88,
+      "en": "It was always really special,",
+      "zh": "这里一直很特别"
+    },
+    {
+      "start": 199.88,
+      "end": 203.7,
+      "en": "and tonight again was one of the reasons why I kept playing until 41:",
+      "zh": "今晚再次告诉我 为何打到41岁"
+    },
+    {
+      "start": 204.02,
+      "end": 207.12,
+      "en": "to live those moments like you gave me tonight, like you gave us tonight.",
+      "zh": "就为了今晚你们给我的这种时刻"
+    },
+    {
+      "start": 207.7,
+      "end": 209.74,
+      "en": "Amazing support, so thank you so much.",
+      "zh": "谢谢你们 太感谢了"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/aGREoN-2dQc-full-small.en.json",
+      "sha256": "c30f4b0f54a69c57a42b89e9a383cbf4aecec2e562e3d39f3ab18d0880d56a34",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/aGREoN-2dQc-full-medium.en.json",
+      "sha256": "dde05d6d09da5e35833fc03872614c63b1942e63bde95d5a259ea703710d5399",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "美网官方『Stan Wawrinka Retirement Speech and Ceremony | 2026 US Open』：赛后场上致辞（本人英文原声），187.28 上一句『the energy of this tournament』之后起，209.74 句尾收住、226.14 下一句之前。"
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=t09ZApKnZGE",
+  "source_sha256": "39909bffe70cb139930eee0a321bb48e3f20405d3988dbeb7351ec6d046f62bd",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 25.8,
+  "reviewed_to": 63.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 31.6,
+      "end": 33.44,
+      "en": "Beautiful way to wrap it up.",
+      "zh": "漂亮地结束了比赛"
+    },
+    {
+      "start": 33.56,
+      "end": 38.04,
+      "en": "It is victory for Matteo Berrettini, and it is a result that brings",
+      "zh": "贝雷蒂尼赢了 这个结果"
+    },
+    {
+      "start": 38.04,
+      "end": 44.16,
+      "en": "the curtain down on Stan Wawrinka's glittering career at the majors.",
+      "zh": "为瓦林卡辉煌的大满贯生涯落下帷幕"
+    },
+    {
+      "start": 44.58,
+      "end": 51.18,
+      "en": "The three-time major winner and 2016 champion here in New York",
+      "zh": "三届大满贯得主 2016美网冠军"
+    },
+    {
+      "start": 51.18,
+      "end": 54.56,
+      "en": "plays his last match in this famous city,",
+      "zh": "在纽约打完最后一场"
+    },
+    {
+      "start": 55.7,
+      "end": 63.16,
+      "en": "and it will surely be an emotional goodbye to this sell-out Grandstand crowd.",
+      "zh": "这注定是和满场观众的一场动情告别"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/t09ZApKnZGE-full-small.en.json",
+      "sha256": "f958f28d31e30d198833515244bd72e62936bd1a2f00ae1a6d6fbe6ee8c85dc2",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/t09ZApKnZGE-full-medium.en.json",
+      "sha256": "a2770fc16fb114a6e9a245fea14e9e5da8c42265da5501db9a7795258dbb9af1",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "美网官方『Stan Wawrinka's Emotional Final Grand Slam Point | 2026 US Open』：贝雷蒂尼赛点回合（26–32 秒，记分条 MATCH POINT）、两人网前拥抱、他向看台挥手；解说整句保留，64.14 下一句之前收住。"
+}

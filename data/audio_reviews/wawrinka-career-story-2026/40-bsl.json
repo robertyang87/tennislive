@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=mo_Aust_pN0",
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 241.2,
+  "reviewed_to": 257.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 241.96,
+      "end": 249.98,
+      "en": "A suitcase of incredible memories, in a career that has spanned 23 years,",
+      "zh": "满满一箱回忆 23年的职业生涯"
+    },
+    {
+      "start": 249.98,
+      "end": 253.94,
+      "en": "and whose shot-making has dazzled us for decades,",
+      "zh": "他的击球 让我们惊艳了几十年"
+    },
+    {
+      "start": 254.38,
+      "end": 257.52,
+      "en": "but that all comes to an end this evening.",
+      "zh": "而这一切 在今晚画上句号"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/mo_Aust_pN0-full-small.en.json",
+      "sha256": "4284ce25692f7fd1578b3d24bea5c5ad145efe545934baf63ca29bd623ed3594",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/mo_Aust_pN0-full-medium.en.json",
+      "sha256": "b42828ca7c47443c87e273ef357fee301eb3bf1f4a6e1dbcf75561c555a26f70",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "ATP 官方巴塞尔首轮集锦的结尾：网前和莱赫奇卡拥抱（243–248 秒）、他走回场边；解说的收尾整句保留，257.52 句尾收住、258 片尾卡之前。"
+}

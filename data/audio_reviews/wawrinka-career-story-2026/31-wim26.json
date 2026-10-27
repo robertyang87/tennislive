@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=Ym8TS_Y7JOk",
+  "source_sha256": "09849756c9e3a66e291fefae3e4738a951b3be85cce8b01edd1cc1508d97e526",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 114.0,
+  "reviewed_to": 134.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 114.42,
+      "end": 117.58,
+      "en": "It's never easy to say goodbye to something that you love so much.",
+      "zh": "和自己深爱的东西告别 从来不容易"
+    },
+    {
+      "start": 117.88,
+      "end": 120.48,
+      "en": "I've always been passionate about the game, always enjoyed that.",
+      "zh": "我一直热爱网球 一直乐在其中"
+    },
+    {
+      "start": 121.52,
+      "end": 128.66,
+      "en": "I'm grateful, and I'd like to thank everybody, because I had the chance to play one last time here.",
+      "zh": "谢谢大家 让我能在这里打最后一次"
+    },
+    {
+      "start": 128.94,
+      "end": 131.68,
+      "en": "I couldn't have dreamed of a better goodbye.",
+      "zh": "这是我梦想不到的好告别"
+    },
+    {
+      "start": 132.02,
+      "end": 133.84,
+      "en": "So thank you so much for the support.",
+      "zh": "谢谢你们的支持"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/Ym8TS_Y7JOk-full-small.en.json",
+      "sha256": "463867958fb81c33f12e1065fd376f1519f422b791ac79e25259c2f7bee87a68",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/Ym8TS_Y7JOk-full-medium.en.json",
+      "sha256": "291f9c6edff9601ed1f63459554acc85bb6b170a4073188605595ca2eb522248",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "温网官方『\"You dream about maybe being here one day\" | Stan Wawrinka | First Round Post-match Interview』：1号球场赛后场上采访，他含泪说完告别（114.42–133.84 连续一段），112.76 上一句之后起，140.40 主持人开口之前收住。"
+}

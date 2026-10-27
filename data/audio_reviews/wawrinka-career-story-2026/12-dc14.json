@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=vpTEcHRlP2k",
+  "source_sha256": "d7833d872b4431edd7be1a7422141a2a7711aa7c3a2a0c584607058fc0c084a6",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 214.1,
+  "reviewed_to": 239.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 214.32,
+      "end": 217.92,
+      "en": "Federer remained in complete control",
+      "zh": "费德勒牢牢掌控局面"
+    },
+    {
+      "start": 217.92,
+      "end": 221.38,
+      "en": "and nothing would stop him from achieving another personal goal in an amazing career.",
+      "zh": "没有什么能阻止他再圆一个梦"
+    },
+    {
+      "start": 229.68,
+      "end": 234.66,
+      "en": "History was made. Switzerland, the 2014 champions.",
+      "zh": "历史诞生了 瑞士 2014年冠军"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/vpTEcHRlP2k-full-small.en.json",
+      "sha256": "4c8631805ec70f89ce8dd8c7e375fa2837466e54a7ac916d727d382795aac448",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/vpTEcHRlP2k-full-medium.en.json",
+      "sha256": "5b959d8df7809378aebd594f3a10d9d85a612c2f3f3f342673aba049da344fe4",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "ITF 官方 World Tennis『Highlights: France 1-3 Switzerland』：锁定胜局的最后一分（221–224）、费德勒趴在红土上、瓦林卡冲进场拥抱、全队举杯；240 片尾标志之前收住。"
+}

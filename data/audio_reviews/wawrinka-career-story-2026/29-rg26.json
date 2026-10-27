@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=i0PDHwP7AJo",
+  "source_sha256": "0c52b7cf101b693037aad60544d18dcffa5ba8fc97b179cb87703235d79fb3c5",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 24.2,
+  "reviewed_to": 39.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/i0PDHwP7AJo-full-small.en.json",
+      "sha256": "841a4207502c5434be830c023ad61f91330d69ee0ab39f48ebea2fc686c019a8",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/i0PDHwP7AJo-full-medium.en.json",
+      "sha256": "e92ae0c46a4b018e3eb03cd6fc147a1080845883a6162091c86df667f997fa90",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方『Roland-Garros 2026 - Tribute to Stan Wawrinka's emotional farewell』：他擦泪（27–29 秒）、全场起立鼓掌（30–39 秒）；24.12 前一句说完之后起，51.34 下一句之前收住。",
+  "no_foreground_english_reason": "窗口 24.2–39.5 内 medium 无任何转写，small 的『Thank you very much』止于 24.12、在窗口之前；只有现场掌声，无前景英文。"
+}

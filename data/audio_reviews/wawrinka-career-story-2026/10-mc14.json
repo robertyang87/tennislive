@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=5uWD6W-ZIOM",
+  "source_sha256": "5700a66b96fd2a2bfdef783b7c0aa12991142dccde65e32e5072f37084a169de",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 39.0,
+  "reviewed_to": 62.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 49.48,
+      "end": 53.18,
+      "en": "Stan is the man in Monte Carlo,",
+      "zh": "斯坦是蒙特卡洛的主角"
+    },
+    {
+      "start": 54.82,
+      "end": 61.44,
+      "en": "Wawrinka claims his first ever Masters 1000 title.",
+      "zh": "瓦林卡拿下生涯第一个大师赛冠军"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/5uWD6W-ZIOM-full-small.en.json",
+      "sha256": "7dd65fccc314b88c7e7034fc4ede33f26a1fba1d85a43aa5f8a3ab35f2c54951",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/5uWD6W-ZIOM-full-medium.en.json",
+      "sha256": "ba1b8e575971dbd7aa625fb13f07829703ad5f04c77b57431d0e6e82276f5dd4",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "ATP 官方『Wawrinka Triumphs In 2014 Monte Carlo Classic Moment』：冠军点回合（39–50 秒，记分条 40-15）、他双臂高举、网前和费德勒拥抱；解说『Stan is the man in Monte Carlo… first ever Masters 1000 title』说完收住。"
+}

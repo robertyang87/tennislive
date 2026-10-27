@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinkafed/wawrinkafed.mp4",
+  "source_sha256": "aee82381673ed238008208abfccacf0decda6af28f6c77a9738725aac11b589b",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 0.0,
+  "reviewed_to": 14.32,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 0.05,
+      "end": 2.64,
+      "en": "Je te souhaite le meilleur.",
+      "zh": "祝你一切都好。"
+    },
+    {
+      "start": 2.64,
+      "end": 5.62,
+      "en": "Un petit mot en français, comme ça tu me comprends aussi.",
+      "zh": "用一点法语说，你也能听懂。"
+    },
+    {
+      "start": 5.78,
+      "end": 9.34,
+      "en": "Je pense à toi, tu me manques, je t'aime, mon gars.",
+      "zh": "我惦记你、想念你，我爱你，兄弟。"
+    },
+    {
+      "start": 9.34,
+      "end": 12.88,
+      "en": "Et enjoy le moment à Bâle, chez moi, à Bâle.",
+      "zh": "在我家乡巴塞尔，享受这一刻。"
+    },
+    {
+      "start": 13.24,
+      "end": 14.3,
+      "en": "Allez, à bientôt, ciao ciao.",
+      "zh": "加油，后会有期，再见。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/wawrinkafed-full-small.en.json",
+      "sha256": "f429f49f01674d53e8ef34833939b5b6fdbd718cdd5b22f8024a89178b949750",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/wawrinkafed-full-medium.en.json",
+      "sha256": "e6f492e9da6c3b85eea6100ae6509164764f5e0031c0f3048162a8566f90411c",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "原声位 1：费德勒视频致辞（法语）。英文双档 ASR 全是幻听，改以本地多语种转写（small＋medium 两档互证）定原话，nau.ch 德语标题『Du fehlst mir. Ich liebe dich』与中段逐字对应。窗口止于 14.32：nau 红卡 14.4 起淡入（抽帧实测），其英文转写末句止于 14.50、在切点容差内不构成切句。cx 按其面部实测（绿墙前居中偏左）。"
+}

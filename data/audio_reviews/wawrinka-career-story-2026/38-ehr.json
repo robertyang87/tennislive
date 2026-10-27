@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinkaehr/wawrinkaehr.mp4",
+  "source_sha256": "675487c3a55a1a2b2f6b92d9d40f3003da2831425416d3f6168ef62f834dd246",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T23:51:18+00:00",
+  "reviewed_from": 26.0,
+  "reviewed_to": 33.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/wawrinkaehr-full-small.en.json",
+      "sha256": "ff581bcad0ef78e781b8e1234508efe438a9b65a5fe6ae79688fa46c2d541684",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/wawrinkaehr-full-medium.en.json",
+      "sha256": "89d6aff2bde38b1ac5e408693208cfbfab4d8d69901ca77511661d44db7afce4",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "绕场片 26–33：观众席手机灯海与起立拍摄，旁白收束仪式。",
+  "no_foreground_english_reason": "绕场画面只有掌声与现场声，上一期两档转写在 26–33 之间无前景人声。"
+}
