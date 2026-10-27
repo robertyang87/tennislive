@@ -629,6 +629,8 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    # Venus Williams, WTA230220: owner nickname and existing full Chinese name.
+    "大威": PLAYER_ZH["Venus Williams"],
     # 人民网2014/01/09 c372176-24073699.html的1971/1972澳网冠军异译。
     "罗斯维尔": PLAYER_ZH["Ken Rosewall"],
     # Owner explicitly requests 卡塔尔 in Wuhan SF reel; both refer to WTA 329918.
