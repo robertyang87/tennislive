@@ -1,5 +1,5 @@
 name: tmp-wawr-photos
-# 一次性（第二趟：补装 requests）：沙箱连不到 ATP Media 图床、也下不了 artifact。把 2026 巴塞尔瓦林卡的官方实拍
+# 一次性（第三趟：git add --sparse）：沙箱连不到 ATP Media 图床、也下不了 artifact。把 2026 巴塞尔瓦林卡的官方实拍
 # 缩成预览（长边 1600）连同原图说明一起写回本分支，挑封面用。挑完即删本文件。
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
       - name: 写回分支
         run: |
           git config user.name "Claude"; git config user.email "noreply@anthropic.com"
-          git add -f assets/reel/wawrinka-career-story-2026/candidates
+          git add --sparse -f assets/reel/wawrinka-career-story-2026/candidates
           git commit -m "assets: 巴塞尔 2026 瓦林卡官方实拍预览（挑封面用）" || exit 0
           for i in 1 2 3; do git pull --rebase origin claude/wawrinka-career-story && git push origin HEAD:claude/wawrinka-career-story && exit 0; sleep 3; done
           exit 1
