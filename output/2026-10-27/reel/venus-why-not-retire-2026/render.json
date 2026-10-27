@@ -1,0 +1,102 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "007bb583dc5e84d3d23d54bb43ac729898fe08931ca5408a01429b406547db7f",
+    "request_count": 19,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-venus-why-not-retire-2026-007bb583dc5e84d3",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-venus-why-not-retire-2026-007bb583dc5e84d3/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40429065624"
+  },
+  "cover_seconds": 4.33,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 275.3,
+  "topbar": null,
+  "film_seconds": 284.2,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 8.376,
+    "1": 7.584,
+    "3": 9.168,
+    "4": 8.016,
+    "6": 7.008,
+    "7": 9.456,
+    "8": 8.136,
+    "9": 5.832,
+    "11": 8.568,
+    "13": 2.736,
+    "14": 9.744,
+    "15": 15.792,
+    "16": 6.096,
+    "17": 12.552,
+    "18": 10.008,
+    "19": 5.952,
+    "20": 6.816
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "5896bf1ddae83da2f201be8275f6f05ca1e3e2eefba741d8dc328d9a19948a36",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "venus-why-not-retire-2026",
+    "received_at": "2026-10-27T00:51:57Z",
+    "artifact_ready_at": "2026-10-27T00:59:22Z",
+    "elapsed_seconds": 445.675,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "571997bf1253ce7df015d06f989e008d7a4845c6537b9826e6cc96b349d4050e",
+    "spec_sha256": "83d5e5c467623ca59ef8656b579cd2ce5769632f20433dff016ee79b551eea47",
+    "run_id": "40429065624",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-27T00:54:29Z",
+        "run_id": "40429065624"
+      }
+    ],
+    "render_seconds": 293.675,
+    "pre_render_seconds": 152.0
+  },
+  "film_sha256": "571997bf1253ce7df015d06f989e008d7a4845c6537b9826e6cc96b349d4050e",
+  "film_bytes": 76202301,
+  "qc_attestation_sha256": "a428a39a81750500d54fb219a4d8f240cb96447824a1f28278d337de7679d03e",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-27T00:54:29Z",
+      "run_id": "40429065624"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-27T00:59:25Z",
+      "run_id": "40429065624"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-venus-why-not-retire-2026/venus-why-not-retire-2026.mp4",
+  "video_bytes": 76202301
+}
