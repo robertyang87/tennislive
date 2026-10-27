@@ -10344,6 +10344,13 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
 
     if not any(s.image == STAT_CARD_PLACEHOLDER for s in segments):
         return segments
+    full_canvas = bool(spec.get("stat_card_full_canvas"))
+    variant = "film_band" if LAYOUT == "band" and not full_canvas else "film"
+    # 默认（出片）走动态版：账号所有者 2026-10-27「好的接全局」，和章节卡
+    # `_materialize_title_cards` 同一个形状——不传 renderer 就是动画。
+    # 整画布版（`stat_card_full_canvas`）靠 `full_canvas_filtergraph` 盖住叠层，
+    # 那条路只吃静态图，照旧走静态。
+    animated = renderer is None and not full_canvas
     with stage("数据统计对照图（剪进片子）"):
         if renderer is None:
             sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -10352,13 +10359,25 @@ def _materialize_stat_card(spec: dict, segments: list[Segment], outdir: Path,
         out = outdir / STAT_CARD_NAME
         # 片里那一版是 1080×1440（render_stat_card.VARIANTS["film"]）——就是成片的
         # 画幅，缩进去铺满宽度；推送页那张仍是 1080×1920，两张各渲各的。
-        renderer(spec, out, variant="film_band"
-                 if LAYOUT == "band" and not spec.get("stat_card_full_canvas") else "film")
+        # 动态版也照样先渲这张静态图：推送页拿它当数据图。
+        renderer(spec, out, variant=variant)
         if not out.is_file():
             raise ReelError(f"数据统计图没渲出来：{out}")
-    return [replace(s, image=str(outdir / STAT_CARD_NAME), full_bleed=LAYOUT == "band",
-                    full_canvas=bool(spec.get("stat_card_full_canvas")))
-            if s.image == STAT_CARD_PLACEHOLDER else s for s in segments]
+        clips: dict[int, Path] = {}
+        if animated:
+            for i, s in enumerate(segments):
+                if s.image != STAT_CARD_PLACEHOLDER:
+                    continue
+                clip = outdir / f"stat_card_{i + 1:02d}.mp4"
+                render_stat_card.render_clip(spec, clip, variant=variant,
+                                             seconds=s.length, fps=FPS_EXPR)
+                if not clip.is_file():
+                    raise ReelError(f"第 {i + 1} 段的数据卡动画没渲出来：{clip}")
+                print(f"[数据统计图] 第 {i + 1} 段 → {clip.name}（入场动画，{s.length:.1f}s）")
+                clips[i] = clip
+    return [replace(s, image=str(clips.get(i, outdir / STAT_CARD_NAME)),
+                    full_bleed=LAYOUT == "band", full_canvas=full_canvas)
+            if s.image == STAT_CARD_PLACEHOLDER else s for i, s in enumerate(segments)]
 
 
 def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,

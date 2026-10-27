@@ -901,3 +901,72 @@ def test_头像底下的长中文名要按宽度缩字号不许出画布():
     got = re.search(r"\.h2h-cn\{[^}]*font-size:(\d+)px", css)
     assert got and int(got.group(1)) == sc.h2h_cn_px(spec["cover"]["matchup"]), (
         "`.h2h-cn` 的字号不是按名字宽度算出来的那个数")
+
+
+# ---------------------------------------------------------------------------
+# 动态数据卡：账号所有者 2026-10-27「好的接全局」——剪进片子的那一屏默认是入场动画
+# ---------------------------------------------------------------------------
+
+def test_出片默认剪进动态数据卡_推送页那张静态图照渲(tmp_path, monkeypatch):
+    reel = _reel()
+    segs = reel.parse_segments(_spec_with_stat_card(), {"": 1}, "")
+    calls = []
+
+    def fake_render(spec, out, *, variant):
+        calls.append(("jpg", out.name, variant))
+        out.write_bytes(b"jpg")
+
+    def fake_clip(spec, out, *, variant, seconds, fps):
+        calls.append(("mp4", out.name, variant, seconds, fps))
+        out.write_bytes(b"mp4")
+
+    monkeypatch.setattr(sc, "render", fake_render)
+    monkeypatch.setattr(sc, "render_clip", fake_clip)
+    got = reel._materialize_stat_card(_spec_with_stat_card(), segs, tmp_path)
+    assert calls == [("jpg", reel.STAT_CARD_NAME, "film"),
+                     ("mp4", "stat_card_02.mp4", "film", 6.0, reel.FPS_EXPR)]
+    assert got[1].image == str(tmp_path / "stat_card_02.mp4"), "片里那一段换成动画"
+    assert got[0].image == ""
+    # 整画布版走 full_canvas_filtergraph，那条路只吃静态图
+    spec = _spec_with_stat_card()
+    spec["stat_card_full_canvas"] = True
+    calls.clear()
+    got = reel._materialize_stat_card(spec, reel.parse_segments(spec, {"": 1}, ""), tmp_path)
+    assert [c[0] for c in calls] == ["jpg"] and got[1].image.endswith(reel.STAT_CARD_NAME)
+
+
+def test_数据卡动画只动透明度和位移_数字一个字都不许改():
+    """滚动数字的中间帧会出现对不上的假数据（「35% (58/91)」），这个号零容忍。"""
+    js = sc._STAT_MOTION_JS
+    for banned in ("textContent", "innerText", "innerHTML", "nodeValue", "setInterval",
+                   "setTimeout", "requestAnimationFrame", "Math.random", "Date."):
+        assert banned not in js, f"动画脚本里出现了 {banned}"
+    assert "style.opacity" in js and "style.transform" in js
+
+
+def test_数据卡动画真渲_末帧就是静态图_停留太短就压快不停在半路(tmp_path, monkeypatch):
+    import subprocess  # noqa: PLC0415
+    from PIL import Image, ImageChops, ImageStat  # noqa: PLC0415
+    import versus_poster as vp  # noqa: PLC0415
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda src, where: "3:12:00")
+    # 要过制胜分／非受迫那道证据闸（`winners_ue_gate`），挑一条带证据的真 spec
+    spec = json.loads(Path("specs/reels/medvedev-almaty-title-run-2026.json").read_text(encoding="utf-8"))
+    static = tmp_path / "static.jpg"
+    sc.render(spec, static, variant="film")
+    clip = sc.render_clip(spec, tmp_path / "c.mp4", variant="film", seconds=1.6, fps="10")
+    receipt = json.loads(clip.with_suffix(".stat-render.json").read_text(encoding="utf-8"))
+    assert receipt["motion_speed"] > 1, "1.6 秒装不下整套入场，要按比例压快"
+
+    def frame(t):
+        png = tmp_path / f"f{t}.png"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(t), "-i", str(clip),
+                        "-frames:v", "1", str(png)], check=True)
+        return Image.open(png).convert("RGB")
+
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                          "-of", "csv=p=0", str(clip)], capture_output=True, text=True, check=True)
+    assert abs(float(out.stdout) - 1.6) < 0.15
+    ref = Image.open(static).convert("RGB").resize((1080, 1440), Image.LANCZOS)
+    diff = lambda im: sum(ImageStat.Stat(ImageChops.difference(ref, im)).mean) / 3  # noqa: E731
+    assert diff(frame(1.5)) < 4, "收住之后的画面要和静态图是同一个版面"
+    assert diff(frame(0)) > 8, "第一帧应当还没进场"
