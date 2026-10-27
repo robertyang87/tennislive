@@ -1,6 +1,6 @@
 {
   "slug": "sun-sawangkaew-guangzhou-2026-r1",
-  "status": "ready_for_native_render_not_published",
+  "status": "ready_for_fresh_native_after_voice_failure_not_published",
   "user_source_start": 1092,
   "actual_selected_source_bounds": [
     1110.64,
@@ -11,7 +11,7 @@
   "source_quality": "native1920x1080/25fps",
   "native_probe_run": 40515999075,
   "native_asr_run": 40516366528,
-  "tts_bundle_sha256": "77ccab514f95f80abe79f5c963dbcc0cc000a0995edbb93ad5e13f6ac1e95ceb",
+  "tts_bundle_sha256": "f4b441f45bfb36ab452f940d245bd013c19b0f19b01b1e3ceb1101b08b742740",
   "actual_narration_fit": "all11 body plus fixed outro fit; deterministic lengths in narration_checks; no human listening claimed",
   "native_checks_required": [
     "actual final-film QC",
@@ -20,5 +20,7 @@
     "exact final-head CI",
     "merge before send",
     "durable WeChat receipt and ledger fingerprint"
-  ]
+  ],
+  "previous_failed_run": 40521772478,
+  "voice_fix": "Exactly three narrations reworded; other nine requests byte-identical; no gate thresholds or exceptions changed"
 }

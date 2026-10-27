@@ -2,16 +2,16 @@
   "schema": "tennislive.independent-source-audio-plan-audit.v1",
   "status": "source_plan_pass",
   "reviewer": "independent assistant /root/sun_source_audio_audit",
-  "reviewed_at": "2026-10-27T14:25:24.142502+00:00",
-  "reviewed_spec_sha256": "1b3b741206548141ce032c8f1ed4b1b7b270f295243e356b783f60346131c476",
-  "audio_plan_sha256": "c9a1f27378a3e87c17839392cd7efd1e9e46060d38b6d195b486933f018a4cda",
+  "reviewed_at": "2026-10-27T14:49:34.407603+00:00",
+  "reviewed_spec_sha256": "35e9f70f158e0498217d8bc1522e8fc97f39dd7e0e53e1b8696c64db7d9cbf09",
+  "audio_plan_sha256": "21c9e1ba01c70c118378e9b9a4a61a46eb463ec4328a3356f5469db6be179c01",
   "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
   "source_asr_corpus_sha256": {
     "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/small.en.json": "9ee29bd52eda647051d875497d582dc7946ba33eca5893ff0b80557e1582cde1",
     "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/medium.en.json": "536d2846230d2d1dd1a45a7b52897e146eebb1419099f0b8b0613562374fe50f"
   },
   "packet_index": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1.json",
-  "packet_index_sha256": "65c6b4984432f8d653ac0ae4fc2aae4bdb216b6d255b5d3a626a918301e7692c",
+  "packet_index_sha256": "d72a6855a5e850c6fa100dc7f3c5d53ceef24aa78ee5d7d272dfa628b93bc147",
   "packet_count": 10,
   "required_bilingual_utterance_count": 16,
   "human_listening_claimed": false,
@@ -505,5 +505,17 @@
   "limitations": [
     "This is source/plan evidence, not final rendered video QC or subjective human listening. Native final-film voice, scoreboard, captions and exact-byte publication QC remain required.",
     "Source English name variants and deft-touch transcription corrected contextually; raw audio is retained continuously, not replaced."
-  ]
+  ],
+  "voice_fix_rebind": {
+    "previous_audio_plan_sha256": "c9a1f27378a3e87c17839392cd7efd1e9e46060d38b6d195b486933f018a4cda",
+    "new_audio_plan_sha256": "21c9e1ba01c70c118378e9b9a4a61a46eb463ec4328a3356f5469db6be179c01",
+    "source_packets_unchanged": true,
+    "packet_count": 10,
+    "bilingual_utterances": 16,
+    "reason": "Narration-only voice wording/card duration repair after failed native voice suite. No new source audio or quotes; exact same packet bytes revalidated by native foreground_audio_gate.rebind_plan and require.",
+    "failed_previous_native_run": 40521772478,
+    "failed_previous_film_sha256": "b719baeca75ad5528a5783b22b52bf75ef2ffc36f1873922d84f63229da50b5b",
+    "old_film_publication_allowed": false,
+    "fresh_native_film_qc_required": true
+  }
 }
