@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "key": "09fbc1f9b08f3725ac75202f14bd9a9cc9e2444468d829ea600cdf23e6004672",
-  "sha256": "f1b58bcc761cbb208d916e90cd26b340fdf3537f61512113c5cce83664f96dc9",
-  "seconds": 7.88,
+  "key": "0e79719245f5d61f26beb1b7e39d82fd0267e460863b4f27b9060a1b150bd32f",
+  "sha256": "e7b4220ee4c54cc797239bf8a218ebb9e8e8e190a2f18866abac0a8a7e13c194",
+  "seconds": 12.36,
   "fps": "25/1",
   "size": [
     1080,
@@ -12,7 +12,7 @@
     "canvas_width": 1080,
     "kind": "chronology",
     "lines": [
-      "单打首轮",
+      "单打16连败",
       "对手只有18岁"
     ],
     "font_px": 96,
@@ -26,19 +26,24 @@
         "label": "塔格尔",
         "value": "18岁 4号种子",
         "source": "https://www.tennisworldusa.org/tennis/news/WTA_Tennis/170853/venus-williams-draws-28yearsyounger-rival-in-guangzhou-first-round/"
+      },
+      {
+        "label": "比分",
+        "value": "2-6 2-6",
+        "source": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches"
       }
     ],
     "direction": "vertical",
     "groups": [],
-    "proof_h": 280,
+    "proof_h": 420,
     "node_height": 140,
-    "kicker_y": 363.12,
-    "headline_y": 447.12,
-    "proof_y": 760.88,
+    "kicker_y": 293.12,
+    "headline_y": 377.12,
+    "proof_y": 690.88,
     "safe_bottom": 1244,
     "photo": null,
     "highlight": "",
-    "kicker": "广州 · 单打",
+    "kicker": "广州 · 单打首轮",
     "content": {
       "events": [
         {
@@ -50,6 +55,11 @@
           "label": "塔格尔",
           "value": "18岁 4号种子",
           "source": "https://www.tennisworldusa.org/tennis/news/WTA_Tennis/170853/venus-williams-draws-28yearsyounger-rival-in-guangzhou-first-round/"
+        },
+        {
+          "label": "比分",
+          "value": "2-6 2-6",
+          "source": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches"
         }
       ]
     },
@@ -58,17 +68,17 @@
   "browser_evidence": {
     "boxes": [
       {
-        "text": "单打首轮",
+        "text": "单打16连败",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 447.109375,
+          "y": 377.109375,
           "width": 940,
           "height": 122.875,
-          "top": 447.109375,
+          "top": 377.109375,
           "right": 1010,
-          "bottom": 569.984375,
+          "bottom": 499.984375,
           "left": 70
         }
       },
@@ -78,12 +88,12 @@
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 569.984375,
+          "y": 499.984375,
           "width": 940,
           "height": 122.875,
-          "top": 569.984375,
+          "top": 499.984375,
           "right": 1010,
-          "bottom": 692.859375,
+          "bottom": 622.859375,
           "left": 70
         }
       },
@@ -93,12 +103,12 @@
         "scroll": 140,
         "rect": {
           "x": 130,
-          "y": 810.78125,
+          "y": 740.78125,
           "width": 140,
           "height": 39.1875,
-          "top": 810.78125,
+          "top": 740.78125,
           "right": 270,
-          "bottom": 849.96875,
+          "bottom": 779.96875,
           "left": 130
         }
       },
@@ -108,12 +118,12 @@
         "scroll": 173,
         "rect": {
           "x": 781,
-          "y": 805.375,
+          "y": 735.375,
           "width": 173,
           "height": 50,
-          "top": 805.375,
+          "top": 735.375,
           "right": 954,
-          "bottom": 855.375,
+          "bottom": 785.375,
           "left": 781
         }
       },
@@ -123,12 +133,12 @@
         "scroll": 84,
         "rect": {
           "x": 130,
-          "y": 950.78125,
+          "y": 880.78125,
           "width": 84,
           "height": 39.1875,
-          "top": 950.78125,
+          "top": 880.78125,
           "right": 214,
-          "bottom": 989.96875,
+          "bottom": 919.96875,
           "left": 130
         }
       },
@@ -138,45 +148,75 @@
         "scroll": 235,
         "rect": {
           "x": 719,
-          "y": 945.375,
+          "y": 875.375,
           "width": 235,
           "height": 50,
-          "top": 945.375,
+          "top": 875.375,
           "right": 954,
-          "bottom": 995.375,
+          "bottom": 925.375,
           "left": 719
+        }
+      },
+      {
+        "text": "比分",
+        "width": 56,
+        "scroll": 56,
+        "rect": {
+          "x": 130,
+          "y": 1020.78125,
+          "width": 56,
+          "height": 39.1875,
+          "top": 1020.78125,
+          "right": 186,
+          "bottom": 1059.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "2-6 2-6",
+        "width": 125,
+        "scroll": 125,
+        "rect": {
+          "x": 829,
+          "y": 1015.375,
+          "width": 125,
+          "height": 50,
+          "top": 1015.375,
+          "right": 954,
+          "bottom": 1065.375,
+          "left": 829
         }
       }
     ],
     "content": [
       {
-        "x": 420,
-        "y": 363.109375,
-        "width": 240,
+        "x": 380,
+        "y": 293.109375,
+        "width": 320,
         "height": 56,
-        "top": 363.109375,
-        "right": 660,
-        "bottom": 419.109375,
-        "left": 420
+        "top": 293.109375,
+        "right": 700,
+        "bottom": 349.109375,
+        "left": 380
       },
       {
         "x": 70,
-        "y": 447.109375,
+        "y": 377.109375,
         "width": 940,
         "height": 245.75,
-        "top": 447.109375,
+        "top": 377.109375,
         "right": 1010,
-        "bottom": 692.859375,
+        "bottom": 622.859375,
         "left": 70
       },
       {
         "x": 90,
-        "y": 760.875,
+        "y": 690.875,
         "width": 900,
-        "height": 280,
-        "top": 760.875,
+        "height": 420,
+        "top": 690.875,
         "right": 990,
-        "bottom": 1040.875,
+        "bottom": 1110.875,
         "left": 90
       }
     ],

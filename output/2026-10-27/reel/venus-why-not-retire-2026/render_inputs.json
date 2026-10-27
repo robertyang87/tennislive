@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "venus-why-not-retire-2026",
-  "written_at": "2026-10-27T02:43:17Z",
-  "code_sha": "1f4fe90bcb4e06c52ac324ed52b240ab09c3fafc",
-  "spec_sha256": "ff4a58e02ca7dd7881d804a3f03484f78251b06e8edc06bfc3ac5699a4796e07",
-  "film_sha256": "ff87a8aa9f09e8ae7472efb5c2dc12841900f95a99071ae6b75316d7bb7ab2a9",
-  "film_bytes": 76288548,
-  "projection_sha256": "86ba15a76022121f2f34f8c7893b69bdba6293660bfff92da7803ced0d435e46",
+  "written_at": "2026-10-27T13:39:25Z",
+  "code_sha": "713e25fa74de22a0182f8cecd31026f4ff38e7aa",
+  "spec_sha256": "20ef4fd491af2e6247533a81d5cd2a3659bcd635c6d6b25de81254a68358a105",
+  "film_sha256": "4c46476ccc463ca6989764ca65231de75b365d635a906b1d471555eef706702d",
+  "film_bytes": 96440880,
+  "projection_sha256": "9ea9e7ed39b8cd6bd6178f36b436b3b7b4dcf1f68bb7d909d0ac95f7d2688fe4",
   "claims": [
     [
       "_no_probe_why"
@@ -30,6 +30,11 @@
     [
       "segments",
       12,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      20,
       "_quote_kind"
     ],
     [
@@ -60,6 +65,11 @@
     [
       "segments",
       13,
+      "_frame_why"
+    ],
+    [
+      "segments",
+      20,
       "_frame_why"
     ],
     [
@@ -196,21 +206,28 @@
       20,
       "voice",
       "_why"
+    ],
+    [
+      "segments",
+      21,
+      "voice",
+      "_why"
     ]
   ],
   "assets": {
     "assets/reel/venus-why-not-retire-2026-gz-doubles.jpg": "f0c37d425dbac37bb7c190ec0a715ef07690061734b82b9aca0358db62f61ac3",
     "assets/reel/venus-why-not-retire-2026-uso.jpg": "0e220e8a45532f43fc91bca0ac0aa4dcca8bef528e19294142ef534294b5a563",
     "assets/reel/venus-why-not-retire-2026/label-ao26.png": "86227cfe069f06aef2f1ccb5bc511e392afdd28f1ca1b8518df3d834e457a991",
+    "assets/reel/venus-why-not-retire-2026/label-gz26.png": "6551529db460d8e0d0528e51889bcb05a206022400fd47038b6dd34d110a0a06",
     "assets/reel/venus-why-not-retire-2026/label-uso26.png": "7d0c89d74624e1de0dbb6989eb99ed346acc80d710e514b907f3463a80bcbb36",
     "assets/reel/venus-why-not-retire-2026/label-wdc25.png": "9b112ed4e91a57873005c658259b499d555c827241a4c1d7d8a9f5ffd4d6eab7",
     "assets/reel/venus-why-not-retire-2026/label-wim01.png": "8990759d70fb131334b703b41ef12b28554fb42fa495a51b15a802a755508b7d"
   },
   "artifacts": {
-    "audio_review_binding.json": "c58ad98f0048bef132414c63f16aeca00c98cbec2704c8e3ca5ad789ff55e9e1",
-    "subtitles.ass": "2b9b18db34db7c4d9d47b6cdf5c1e4013c33722804545c0818a3c0226f3995c4",
-    "poster.jpg": "69f6df00d95fe0302e69dabaf992c4555e43cecc907967311c2eb6622b1015ba",
-    "voice_quality_inventory.json": "88aae080588e6069799899cde1d9e1665f4fadef8adaa7a7398883611540f1a7"
+    "audio_review_binding.json": "add3bfe2530ce25168f88b3378d02349723876fc05ac2836eb176a3fc0b65960",
+    "subtitles.ass": "6ae2f462c0daafed2c9ff261040247b754c03f1a7dc52579a19bf03b4ca31da7",
+    "poster.jpg": "5c1a59459d9494a1c7ed558b5565388e5ea69307cff1bff0afbb29efc3e601be",
+    "voice_quality_inventory.json": "05fa765319ebd9c169854d96d81891a0e8e3c9297853a909e099e2ae1d0b6fae"
   },
   "projection": {
     "date": "2026-10-27",
@@ -225,8 +242,8 @@
       "layout": "solo",
       "story_kind": "person",
       "subject": "大威廉姆斯",
-      "hook": "46岁15连败\n为什么还在打",
-      "narration": "46岁，15连败，为什么还在打？",
+      "hook": "46岁16连败\n为什么还在打",
+      "narration": "46岁，16连败，为什么还在打？",
       "topic": "大威廉姆斯：46岁还在拿外卡",
       "portrait": {
         "image": "assets/reel/venus-why-not-retire-2026-uso.jpg",
@@ -239,8 +256,8 @@
     },
     "editorial": {
       "mode": "match_review",
-      "question": "46岁、单打15连败的大威廉姆斯，为什么还在打？",
-      "thesis": "她赢过一切；16个月伤停后复出，记者问为什么，她回 Why not；复出首胜之后连输15场，其中澳网4-0领先、美网抢七6-2领先都没守住；外卡争议两方都有道理；在广州，她说赢球有趣但健康最重要，不知道明年做什么。",
+      "question": "46岁、单打16连败的大威廉姆斯，为什么还在打？",
+      "thesis": "她赢过一切；16个月伤停后复出，记者问为什么，她回 Why not；复出首胜之后连输15场，其中澳网4-0领先、美网抢七6-2领先都没守住；外卡争议两方都有道理；在广州，她说赢球有趣但健康最重要，不知道明年做什么；单打首轮 2-6 2-6 输给18岁的塔格尔，16连败。",
       "human_context": {
         "angle": "一个什么都赢过的人，连输十五场还在打——她要的从来不只是赢。",
         "facts": [
@@ -248,7 +265,8 @@
           "华盛顿 2025-07-20 赛前发布会 ASAP Sports 原文：Q『At 45 ... Why? Why?』A『Why not (smiling)?』；『the pure fun of playing the game, the fun of the challenge ... a lot of times you have to overcome yourself』。",
           "广州 2026-10-25 发布会（南方都市报、羊城晚报）：『我确实在享受乐趣，这就是我在这里的原因。赢球很有趣，但健康是最重要的。』『我甚至不知道我明年要做什么。所以对我来说是一步一步来。』『没有其他球员享受早晨，只有我。』发布会上戴的帽子是在长隆买的纪念品（南都原文；没说是熊猫造型，片中不写熊猫帽）。",
           "2001 温网决赛：大威廉姆斯 d. 海宁 6-1 3-6 6-0，2001-07-08（周日，雨推迟一天）——维基 2001 Wimbledon Women's singles 与 ESPN 2001/0708 赛报两源一致。主裁报分 ASR 两个模型都听成 six-one，是把 six-love 听错了；第一版据此印了 6-1 3-6 6-1、日期写成 07.07，账号所有者 2026-10-27 指出后按两源更正。",
-          "广州双打 R1：J. Tjen / V. Williams d. E. Gorgodze / K. Zimmermann 6-0 7-5（WTA 官方 tournaments/1023/2026/matches，MatchID LD014）。"
+          "广州双打 R1：J. Tjen / V. Williams d. E. Gorgodze / K. Zimmermann 6-0 7-5（WTA 官方 tournaments/1023/2026/matches，MatchID LD014）。",
+          "广州单打 R1：[4] L. Tagger d V. Williams 6-2 6-2，用时 1:12:45（WTA 官方 tournaments/1023/2026/matches，MatchID LS020，MatchState F，2026-10-27 13:09Z 查）；官方集锦 YhL-TUHmqnY 解说『Tagger 6-2, 6-2 in an hour and 12』，赛点是她本场第 6 记 ACE。这是复出首胜之后的第 16 场单打连败。"
         ],
         "sources": [
           "http://www.asapsports.com/show_interview.php?id=210137",
@@ -259,7 +277,8 @@
           "https://www.timeslive.co.za/sport/2026-01-18-danilovic-makes-epic-comeback-to-knock-out-venus-williams-at-australian-open/",
           "https://thegrio.com/2025/07/23/45-year-old-venus-williams-becomes-the-oldest-woman-since-martina-navratilova-to-win-a-singles-match/",
           "https://www.foxcarolina.com/2026/09/05/serena-venus-williams-lose-match-tiebreaker-their-return-us-open/",
-          "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches"
+          "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches",
+          "https://www.youtube.com/watch?v=YhL-TUHmqnY"
         ]
       },
       "beats": [
@@ -379,7 +398,8 @@
           "animate": false,
           "top_pad": 0.043
         },
-        "point_end_ok": "赛点在 40 秒前后落地，之后是主裁报分与庆祝。"
+        "point_end_ok": "赛点在 40 秒前后落地，之后是主裁报分与庆祝。",
+        "transition": "memory"
       },
       {
         "title_card": "停赛16个月\n她又回来了",
@@ -480,7 +500,8 @@
           "animate": false,
           "top_pad": 0.043
         },
-        "point_end_ok": "赛点在 262 秒前后打完，之后是庆祝与握手。"
+        "point_end_ok": "赛点在 262 秒前后打完，之后是庆祝与握手。",
+        "transition": "slide_left"
       },
       {
         "title_card": "她想念的\n是战胜自己",
@@ -508,8 +529,8 @@
       {
         "title_card": "那场之后\n再没赢过单打",
         "kicker": "03 · 十五连败",
-        "seconds": 11.1,
-        "narration": "可那场之后，她的单打再没赢过：二〇二五年输了三场，二〇二六年又输了十二场。有两场，只差一点。",
+        "seconds": 12.35,
+        "narration": "可那场之后，她的单打再没赢过：二〇二五年输了三场，二〇二六年到美网为止又输了十二场。有两场，只差一点。",
         "voice": {
           "pitch": "+0Hz"
         },
@@ -526,7 +547,7 @@
               "source": "https://www.tennisabstract.com/cgi-bin/wplayer.cgi?p=VenusWilliams"
             },
             {
-              "label": "合计",
+              "label": "到美网",
               "value": "15连败",
               "source": "https://www.thetennisgazette.com/news/venus-williams-receives-another-singles-wildcard-despite-being-winless-in-15-matches/"
             }
@@ -763,10 +784,10 @@
         }
       },
       {
-        "title_card": "单打首轮\n对手只有18岁",
-        "kicker": "广州 · 单打",
-        "seconds": 7.85,
-        "narration": "单打首轮，她的对手是十八岁的四号种子塔格尔，比她小二十八岁。",
+        "title_card": "单打16连败\n对手只有18岁",
+        "kicker": "广州 · 单打首轮",
+        "seconds": 12.35,
+        "narration": "单打首轮的对手是四号种子塔格尔，十八岁，比她小二十八岁。一小时十二分钟，二比六、二比六，第十六场连败。",
         "voice": {
           "pitch": "+0Hz"
         },
@@ -781,9 +802,70 @@
               "label": "塔格尔",
               "value": "18岁 4号种子",
               "source": "https://www.tennisworldusa.org/tennis/news/WTA_Tennis/170853/venus-williams-draws-28yearsyounger-rival-in-guangzhou-first-round/"
+            },
+            {
+              "label": "比分",
+              "value": "2-6 2-6",
+              "source": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches"
             }
           ]
         }
+      },
+      {
+        "source": "gz26",
+        "start": 264.3,
+        "end": 288.0,
+        "frame": "court",
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "narration": "",
+        "voice": {
+          "pitch": "+0Hz"
+        },
+        "quote": [
+          {
+            "at": 0.48,
+            "end": 2.7,
+            "text": "Match point then for Tagger.\n塔格尔拿到赛点"
+          },
+          {
+            "at": 3.8,
+            "end": 5.7,
+            "text": "And seals it in style.\n漂亮地拿下比赛"
+          },
+          {
+            "at": 5.7,
+            "end": 12.3,
+            "text": "Ace number six, and it is a tremendous win for Lilli Tagger against Venus Williams.\n第6记ACE 塔格尔赢下大威"
+          },
+          {
+            "at": 16.54,
+            "end": 23.14,
+            "text": "Barely put a foot wrong in the whole match. The Austrian takes the applause.\n全场几乎没失误 观众为她鼓掌"
+          }
+        ],
+        "inset": {
+          "image": "assets/reel/venus-why-not-retire-2026/label-gz26.png",
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "label": {
+            "topic": "单打16连败",
+            "date": "2026.10.27",
+            "place": "WTA250 广州 第一轮",
+            "people": "大威廉姆斯 vs 塔格尔",
+            "score": "2-6 2-6"
+          },
+          "animate": false,
+          "top_pad": 0.043
+        },
+        "point_end_ok": "赛点是一记 ACE，266.8 秒前后落地；之后是握手与致意，段尾在解说下一句开口之前。",
+        "transition": "iris"
       },
       {
         "title_card": "还在输\n也还在打",
@@ -799,13 +881,15 @@
       "wim": "https://www.youtube.com/watch?v=vmsUcHDu4W8",
       "wdc25": "https://www.youtube.com/watch?v=PSOIvGWxtc4",
       "ao26": "https://www.youtube.com/watch?v=zK_ppI7H92c",
-      "uso26": "https://www.youtube.com/watch?v=gG8NPAvYOJc"
+      "uso26": "https://www.youtube.com/watch?v=gG8NPAvYOJc",
+      "gz26": "https://www.youtube.com/watch?v=YhL-TUHmqnY"
     },
     "source_fallbacks": {
       "wim": "https://github.com/robertyang87/tennislive/releases/download/source-vmsUcHDu4W8/vmsUcHDu4W8.mp4",
       "wdc25": "https://github.com/robertyang87/tennislive/releases/download/source-PSOIvGWxtc4/PSOIvGWxtc4.mp4",
       "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-zK_ppI7H92c/zK_ppI7H92c.mp4",
-      "uso26": "https://github.com/robertyang87/tennislive/releases/download/source-gG8NPAvYOJc/gG8NPAvYOJc.mp4"
+      "uso26": "https://github.com/robertyang87/tennislive/releases/download/source-gG8NPAvYOJc/gG8NPAvYOJc.mp4",
+      "gz26": "https://github.com/robertyang87/tennislive/releases/download/source-YhL-TUHmqnY/YhL-TUHmqnY.mp4"
     },
     "mixed_fps": {
       "uso26": "实测原生60000/1001按实际时长转换主片25fps，不改变速度。"

@@ -1,0 +1,63 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=YhL-TUHmqnY",
+  "source_sha256": "d15271b6ada9679786a50cbfba46b012cf3be368833838f0866aaff5d89fb4a6",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T13:25:30+00:00",
+  "reviewed_from": 264.3,
+  "reviewed_to": 288.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 264.78,
+      "end": 267.0,
+      "en": "Match point then for Tagger.",
+      "zh": "塔格尔拿到赛点"
+    },
+    {
+      "start": 268.1,
+      "end": 270.0,
+      "en": "And seals it in style.",
+      "zh": "漂亮地拿下比赛"
+    },
+    {
+      "start": 270.0,
+      "end": 276.6,
+      "en": "Ace number six, and it is a tremendous win for Lilli Tagger against Venus Williams.",
+      "zh": "第6记ACE 塔格尔赢下大威"
+    },
+    {
+      "start": 280.84,
+      "end": 287.44,
+      "en": "Barely put a foot wrong in the whole match. The Austrian takes the applause.",
+      "zh": "全场几乎没失误 观众为她鼓掌"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/YhL-TUHmqnY-full-small.en.json",
+      "sha256": "39ef2b7a5c1b3db1b6f5afbf63b5b83da5cd7fb49d1273a7d8818030b12f23c3",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/YhL-TUHmqnY-full-medium.en.json",
+      "sha256": "5e670bc6d87d104d8e86387f241a138a161c0319612d6c9c04c68f6b94ab811a",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/YhL-TUHmqnY-clip262-278-small.en.json",
+      "sha256": "fecca40a6603d9dbef7320e3de4584b18b4edf5dfdd289ef2299bd4078dc319e",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/venus-why-not-retire-2026/raw/YhL-TUHmqnY-clip262-278-medium.en.json",
+      "sha256": "3fc08ec67805c6c329de5c7e49e8beef9873feac9b8eabb9287a7ed8cf31da9a",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "WTA 官方集锦（YhL-TUHmqnY，Lilli Tagger vs. Venus Williams | 2026 Guangzhou Round 1）：6-2 5-2 40-0 赛点（记分条 4:25 出 MATCH POINT），4:26.3 抛球、ACE 落地，之后网前握手、塔格尔向看台致意；288.3 『It's another…』之前收住，5:00 之后的场上采访不进片。本场只用这一段（完整赛点）。"
+}
