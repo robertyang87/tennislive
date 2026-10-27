@@ -112,18 +112,25 @@ def _seg(start: float, end: float, source: str = ""):
 
 
 def test_写过源片末尾_容差是0_hu_kopriva那一趟():
-    """hu-kopriva-chengdu-2026-r1（466450041）末段 139.1–143.4，ttv 源片 probe 报 143.56：
-    143.4＋0.18＝143.58，超出 0.02s，老容差 +0.05 放行，render 报「分段比要求的短」。"""
-    assert reel.segments_over_source_end([_seg(139.1, 143.4)], {"": 143.56})
+    """hu-kopriva-chengdu-2026-r1（466450041）末段 139.1–143.4，ttv 源片 probe 报 143.56。
+
+    2026-10-27 溶解拉长到 0.5 秒之后，这道闸**只管段体**（段尾之后的底料不够由
+    `tail_hold_seconds` 定格补足）；段体写过源片末尾照旧硬红、容差 0。"""
+    assert not reel.segments_over_source_end([_seg(139.1, 143.4)], {"": 143.56})
     # 正好贴住末尾的放行（浮点）
-    assert not reel.segments_over_source_end([_seg(139.1, 143.56 - reel.SEG_FADE)],
-                                             {"": 143.56})
-    # 第一版「减一帧」会误伤的那一档：已推送、落在源片最后一帧里照样渲出来的段
-    # （chengdu-ng-kouame 第 38 段 cf73af107、eala-ruse 第 22 段 5f589d63f——spec 和
-    # render.json 同一个提交落的），容差 0 放行
+    assert not reel.segments_over_source_end([_seg(139.1, 143.56)], {"": 143.56})
+    assert reel.segments_over_source_end([_seg(139.1, 143.57)], {"": 143.56}), "超 0.01s 也红"
+    # 已推送、末段贴着源片末尾的三条（chengdu-ng-kouame、eala-ruse、wang-vandewinkel）放行
     for end, limit in ((122.5, 122.69424), (183.7, 183.902041), (258.0, 258.218333)):
         assert not reel.segments_over_source_end([_seg(end - 4.0, end)], {"": limit}), end
-    assert reel.segments_over_source_end([_seg(139.1, 143.4)], {"": 143.57}), "超 0.01s 也红"
+
+
+def test_段尾底料不够就定格补足_够的一帧不补():
+    seg = _seg(139.1, 143.4)
+    assert reel.tail_hold_seconds(seg, 143.56) == pytest.approx(143.4 + reel.SEG_FADE - 143.56,
+                                                                 abs=1e-3)
+    assert reel.tail_hold_seconds(_seg(10.0, 20.0), 30.0) == 0.0
+    assert reel.tail_hold_seconds(seg, None) == 0.0       # 探不到时长不判
 
 
 def test_写过源片末尾只有两个参数_不要帧率也不要豁免表():

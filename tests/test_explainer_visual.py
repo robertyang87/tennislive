@@ -415,8 +415,9 @@ def test_接缝一律溶解_含冷开场和片尾(tmp_path, monkeypatch):
     graph = calls[-1][calls[-1].index("-filter_complex") + 1]
     fades = re.findall(r"xfade=transition=(\w+):duration=([\d.]+):offset=([\d.]+)", graph)
     # 冷开场 4.0 → 封面 4.0+0.6 → 末屏 4.0+1.5 → 片尾：三个接缝，起点和硬切时一样
-    assert fades == [("fade", "0.18", "4.000"), ("fade", "0.18", "8.600"),
-                     ("fade", "0.18", "14.100")], fades
+    d = f"{MOTION['video_dissolve_s']:g}"
+    assert fades == [("fade", d, "4.000"), ("fade", d, "8.600"),
+                     ("fade", d, "14.100")], fades
     assert float(fades[0][1]) == MOTION["video_dissolve_s"] == E.SLIDE_DISSOLVE
     assert "v=1:a=1" not in graph, "画面还在走 concat 硬切"
     assert "[aintro][a0][a1][a2]concat=n=4:v=0:a=1[outa]" in graph

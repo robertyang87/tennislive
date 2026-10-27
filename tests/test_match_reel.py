@@ -5283,13 +5283,12 @@ def test_dry_run要拿probe查选段(tmp_path):
         buf = io.StringIO()
         with redirect_stdout(buf):
             assert reel.probe_dry_run(long_spec, segs) is True
-        # ⚠️ 断言里那个 **14.18** 不是随手写的：段尾 44.0 + `SEG_FADE` 0.18
-        # 减去源片的 30.0。**它同时钉住了「dry-run 把溶解底料算进去了」**——
-        # 少算那 0.18 秒的话这儿会印 14.00，而那正是 run 680 白跑一趟的原因
-        # （dry-run 报「没有硬伤」，render 到了 runner 上才红）。
+        # 段尾 44.0 减去源片的 30.0。2026-10-27 溶解拉长到 0.5 秒之后，段尾之后那截
+        # 底料不够由 `tail_hold_seconds` 定格补足，这道闸只管段体（原来这里断言的是
+        # 带底料的 14.18）。dry-run 和 render 仍然共用同一个函数，不会再分叉。
         assert "第 1 段" in buf.getvalue()
-        assert "超出 14.18s" in buf.getvalue(), \
-            f"没把溶解底料算进去，或者根本没报：{buf.getvalue()}"
+        assert "超出 14.00s" in buf.getvalue(), \
+            f"段体写过源片末尾却没报：{buf.getvalue()}"
 
         # **一份都没认领上要出声**——空结果先自证是真空。
         monkey.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
@@ -6581,27 +6580,16 @@ def test_段落不许写过源片末尾(monkeypatch):
     with pytest.raises(reel.ReelError, match="超出"):
         reel._check_segments_fit([seg], {"": fake})
 
-    # 容差：源片时长有帧级误差，卡太死会误伤贴着片尾的那一段。
-    #
-    # ⚠️ **基准是 `end + SEG_FADE`，不是 `end`。** 这里原来喂 4.98——那时
-    # 「末段不留溶解底料」，单段就是末段，所以 5.0 秒的段配 4.98 秒的源片刚好
-    # 落在容差里。2026-08-05 片尾品牌页接上之后**每个分段后面都跟着东西**
-    # （下一段，或者片尾页），所以每段都要那 `SEG_FADE` 秒底料，需求变成 5.18。
-    # 这条断言的**前提变了，不是它写错了**——跟着改基准，容差本身照旧验。
-    need = 5.0 + reel.SEG_FADE
-    # ⚠️ 2026-09-28 容差从「+0.05s」收成 **0**（hu-kopriva-chengdu-2026-r1：
-    # 143.58 对 probe 的 143.56，老容差放行、render 报分段短了，run 35949569743）：
-    # 正好贴住源片末尾的放行（已推送的 5 段落在最后一帧里照样渲得出来），差 0.02s 的红。
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: need)
+    # ⭐ 2026-10-27 溶解拉长到 0.5 秒之后，**基准是 `end`**：段尾之后那截底料不够时
+    # 由 `tail_hold_seconds` 定格补足（原来基准是 `end + SEG_FADE`，全库 30 条已发的
+    # 末段贴着源片末尾，0.5 秒的底料一律取不到）。容差照旧是 0：
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 5.0)
     reel._check_segments_fit([seg], {"": fake})
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 5.0 - 0.02)
     with pytest.raises(reel.ReelError, match="超出"):
         reel._check_segments_fit([seg], {"": fake})
-
-    # 而超出容差的那一头仍然要炸：差 0.2s 已经够 xfade 落到流末尾之外
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.2)
-    with pytest.raises(reel.ReelError, match="超出"):
-        reel._check_segments_fit([seg], {"": fake})
+    # 底料不够的那一截有人补：贴着末尾的段要定格 SEG_FADE 秒
+    assert reel.tail_hold_seconds(seg, 5.0) == pytest.approx(reel.SEG_FADE)
 
 
 def test_写过源片末尾这条规矩只有一处实现():
@@ -6628,12 +6616,13 @@ def test_写过源片末尾这条规矩只有一处实现():
 
     reel = _reel()
 
-    # ① 行为：贴着源片末尾、只差溶解底料那 0.18 秒的段，必须被认出来
+    # ① 行为：段体写过源片末尾的必须被认出来；只差溶解底料的不拦，由
+    #    `tail_hold_seconds` 定格补足（2026-10-27 溶解拉长到 0.5 秒之后的口径）
     seg = _seg(reel, 0.0, 5.0)
-    assert reel.segments_over_source_end([seg], {"": 5.02}), \
-        "少算了 SEG_FADE：5.0s 的段配 5.02s 的源片，溶解底料取不到还说没事"
-    assert not reel.segments_over_source_end([seg], {"": 5.0 + reel.SEG_FADE + 0.1}), \
-        "留够底料的也被拦了，判据太宽"
+    assert reel.segments_over_source_end([seg], {"": 4.98}), "段体超出源片 0.02s 也要红"
+    assert not reel.segments_over_source_end([seg], {"": 5.02}), \
+        "只差溶解底料的段被拦了——那一截该定格补足"
+    assert reel.tail_hold_seconds(seg, 5.02) > 0, "底料不够却没人补"
     assert not reel.segments_over_source_end([seg], {"": None}), \
         "源片没探过就不该判——宁可漏报，别拿一个不存在的时长去拦"
 

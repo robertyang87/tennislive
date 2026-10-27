@@ -7,7 +7,7 @@ description: 网球时差｜出片手艺档案：分段窗口与死球切点、�
 
 ## 2026-10-27：段与段之间的转场动画库
 
-账号所有者：「多准备一些转场动画作为过渡效果，后续做视频需要的时候直接套用」。剪辑片在段上写 `"transition": "<名字>"`，接进这一段的那一刀就换成库里的动画（左推、右推、快甩、圈开、褪色回忆、时钟扫等 13 个，名单在 `src/tennislive/video/transitions.py`）；不写就是溶解。时长固定 `SEG_FADE` 0.18 秒，只换形状；淡到黑、放成纯色的不收（`tests/test_transitions.py` 逐帧量）。动画只给时间跳转、插叙、揭晓这类转折，大多数接缝仍是溶解。挑之前跑 `python3 tools/preview_transitions.py --out /tmp/t.mp4` 看样片。用法与每个预设的用途见[转场动画库](../../../docs/transition-presets.md)。
+账号所有者：「多准备一些转场动画作为过渡效果，后续做视频需要的时候直接套用」。剪辑片在段上写 `"transition": "<名字>"`，接进这一段的那一刀就换成库里的动画（左推、右推、快甩、圈开、褪色回忆、时钟扫等 13 个，名单在 `src/tennislive/video/transitions.py`）；不写就是溶解。所有接缝 `SEG_FADE` 0.5 秒（10-27 从 0.18 拉长，账号所有者：「几乎没有，特别生硬」；段尾源片不够时 `tail_hold_seconds` 定格补足），只换形状；淡到黑、放成纯色的不收（`tests/test_transitions.py` 逐帧量）。动画只给时间跳转、插叙、揭晓这类转折，大多数接缝仍是溶解。挑之前跑 `python3 tools/preview_transitions.py --out /tmp/t.mp4` 看样片。用法与每个预设的用途见[转场动画库](../../../docs/transition-presets.md)。
 
 ## 2026-10-23：三栏目统一使用品牌前缀片尾
 
