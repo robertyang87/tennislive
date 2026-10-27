@@ -458,6 +458,9 @@ PLAYER_ZH: dict[str, str] = {
     "Nuria Brancaccio": "布兰卡乔",
     "Georgia Pedone": "佩多内",
 
+    # 2026-10-27账号所有者纠正；本场中新网报道同名，旧机器音译留alias供历史身份归一。
+    "Mananchaya Sawangkaew": "萨王凯",
+
     # ===== 已退役 / 历史人物 =====
     # 知识帖里经常要提上一个年代的人，而两张表都只收现役球员——写稿时
     # grep 不到就只能手打，正是「人名不要手打」那条踩过两次的坑。定下来
@@ -629,6 +632,7 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    "萨旺考": PLAYER_ZH["Mananchaya Sawangkaew"],  # 旧机器音译，只保留同人归一，不作新片显示名。
     "蒙菲尔斯": PLAYER_ZH["Gael Monfils"],  # Gael Monfils的通行异译，身份仍归一为孟菲尔斯。
     # Venus Williams, WTA230220: owner nickname and existing full Chinese name.
     "大威": PLAYER_ZH["Venus Williams"],
