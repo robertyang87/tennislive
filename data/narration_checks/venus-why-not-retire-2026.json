@@ -1,6 +1,6 @@
 {
   "slug": "venus-why-not-retire-2026",
-  "checked_at": "2026-10-26T17:59:44Z",
+  "checked_at": "2026-10-27T00:40:58Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,10 +10,10 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "175779e42470ea35": {
+    "f21a1f41b37c2c01": {
       "segment": 1,
-      "spoken": 8.424,
-      "picture": 10.1
+      "spoken": 8.376,
+      "picture": 9.85
     },
     "748c423c42d65d88": {
       "segment": 2,
@@ -85,24 +85,29 @@
       "spoken": 10.008,
       "picture": 10.6
     },
-    "7c6d4cbb4c0f2525": {
+    "ef6ad24dfe8d5ef6": {
       "segment": 20,
+      "spoken": 5.952,
+      "picture": 7.85
+    },
+    "7c6d4cbb4c0f2525": {
+      "segment": 21,
       "spoken": 6.816,
       "picture": 7.35
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "e0a4904cf11206b0e14796af1738290db07fc14bea1a06393cac0623cc54660b",
-    "request_count": 18,
+    "bundle_sha256": "d6e2289a11cd71979419a6d453be68c80df51f634a8365ce19ffbf24a5e6082f",
+    "request_count": 19,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-venus-why-not-retire-2026-e0a4904cf11206b0",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-venus-why-not-retire-2026-e0a4904cf11206b0/tts_bundle.zip",
+    "release_tag": "reel-tts-venus-why-not-retire-2026-d6e2289a11cd7197",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-venus-why-not-retire-2026-d6e2289a11cd7197/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40373499110"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40427793921"
   }
 }
