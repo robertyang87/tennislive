@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "1c91c8308b0aeb373716c00e5f56cc356c82efba4ef1fb08e7d48ce0f31f0648",
-    "render_inputs_sha256": "34afb5dccd5ebcf85aea6ff953d90d4ea295005ba6b89e8341a24050381b4275",
-    "spec_sha256": "8cff2e2cc4b51ad7e0a2fc67f4373576a507bff82a5ff283cff090893dc64e1c",
-    "film_sha256": "b752b15697afe55ea79a3903a0d8f9020916c8ba651967059f264a5f5f7d3b75",
+    "render_sha256": "0426a797ea46cfdb5c90cb6225a218de185d62238770227524945de20015ca5a",
+    "render_inputs_sha256": "8a5e3d661a34ac66432a67e00aea434d44391774edb4354bddff6c18ecdfa719",
+    "spec_sha256": "ff4a58e02ca7dd7881d804a3f03484f78251b06e8edc06bfc3ac5699a4796e07",
+    "film_sha256": "ff87a8aa9f09e8ae7472efb5c2dc12841900f95a99071ae6b75316d7bb7ab2a9",
     "inventory_sha256": "88aae080588e6069799899cde1d9e1665f4fadef8adaa7a7398883611540f1a7"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-27T01:27:38+00:00",
+  "reviewed_at": "2026-10-27T02:45:13+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -270,7 +270,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可那场之后,他的单打再没赢过,2025年输了三场,2026年又输了十二场。有两场,只差一点。"
+        "transcript": "可那场之后,她的单打再没赢过,2025年输了三场,2026年又输了十二场。有两场,只差一点。"
       },
       "polyphones": [],
       "pauses": {
@@ -319,7 +319,7 @@
             {
               "wrong": "zhang3",
               "verdict": "correct",
-              "score": 0.809,
+              "score": 0.771,
               "confidence": "medium",
               "near": null
             }
@@ -400,7 +400,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他说,没有其他球员享受早晨,只有我。赢球很有趣,但健康最重要。我甚至不知道明年要做什么。"
+        "transcript": "她说,没有其他球员享受早晨,只有我。赢球很有趣,但健康最重要。我甚至不知道明年要做什么。"
       },
       "polyphones": [
         {
@@ -417,7 +417,7 @@
             {
               "wrong": "chong2",
               "verdict": "unreliable",
-              "score": 0.283,
+              "score": 0.219,
               "confidence": null,
               "near": null
             }
@@ -454,7 +454,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决胜盘﹑他四比零领先﹑然后,达尼洛维奇联赢了六局。"
+        "transcript": "绝胜盘：他四比零领先：然后,达尼洛维奇联赢了六局。"
       },
       "polyphones": [],
       "pauses": {
@@ -503,7 +503,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.535,
+              "score": 0.534,
               "confidence": "medium",
               "near": null
             }
@@ -540,7 +540,7 @@
         "substituted": 1,
         "sub_ratio": 0.014,
         "longest_deletion": 0,
-        "transcript": "一年多里、美网、傲网、美网,它都是拿外卡进的正赛。今年的印第安威尔斯、麦阿密、马德里和辛辛娜提也是外卡。有人说该把机会留给年轻人,也有人说,球迷就是来看传奇了。"
+        "transcript": "一年多礼、美网、傲网、美网,它都是拿外卡进的正赛。今年的印第安威尔斯、麦阿密、马德里和辛辛娜提也是外卡。有人说该把机会留给年轻人,也有人说,球迷就是来看传奇了。"
       },
       "polyphones": [],
       "pauses": {
@@ -621,7 +621,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.395,
+              "score": 0.628,
               "confidence": "medium",
               "near": null
             }
@@ -770,8 +770,8 @@
           "runs": [
             {
               "wrong": "zhong4",
-              "verdict": "uncertain",
-              "score": 0.046,
+              "verdict": "unreliable",
+              "score": 0.602,
               "confidence": null,
               "near": null
             }
@@ -808,7 +808,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2024年3月之后,他做了子宫肌瘤手术离开赛场16个月。2025年夏天,他在华盛顿付出。"
+        "transcript": "2024年3月之后,他做了子宫肌流手术离开赛场16个月。2025年夏天,他在华盛顿付出。"
       },
       "polyphones": [],
       "pauses": {
@@ -872,7 +872,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "46岁的大威廉姆斯、丹达、已经联书事务场。他又拿着外卡来到广州,为什么还在打?"
+        "transcript": "四十六岁的大威廉姆斯、丹达、已经联书事务场。他又拿着外卡来到广州,为什么还在打?"
       },
       "polyphones": [
         {
@@ -889,7 +889,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.404,
+              "score": 0.403,
               "confidence": "medium",
               "near": null
             }
@@ -972,7 +972,7 @@
         "substituted": 1,
         "sub_ratio": 0.024,
         "longest_deletion": 0,
-        "transcript": "这一年,小威也回来陪她打双打。新西纳提和梅网,两场都输在抢时,梅网那场,抢时里,他们无比零领先。"
+        "transcript": "这一年,小威也回来陪她打双打。新西纳提和梅网两场都输在抢时,梅网那场抢时里他们无比零领先。"
       },
       "polyphones": [],
       "pauses": {
@@ -1021,7 +1021,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.342,
+              "score": 0.413,
               "confidence": "medium",
               "near": null
             }
@@ -1042,7 +1042,7 @@
             {
               "wrong": "huan2",
               "verdict": "uncertain",
-              "score": 0.198,
+              "score": 0.094,
               "confidence": null,
               "near": null
             }
@@ -1064,7 +1064,7 @@
             {
               "wrong": "de2",
               "verdict": "unreliable",
-              "score": -0.083,
+              "score": 0.142,
               "confidence": null,
               "near": null
             }
