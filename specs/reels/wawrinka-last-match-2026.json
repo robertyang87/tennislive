@@ -429,6 +429,11 @@
   "_evidence_files": [
     "data/evidence/wawrinka-last-match-2026/audio-inputs-only-fit.json",
     "data/evidence/wawrinka-last-match-2026/dry-run-final.log",
+    "data/evidence/wawrinka-last-match-2026/formal-preview-poster.jpg",
+    "data/evidence/wawrinka-last-match-2026/formal-preview-stat-card.jpg",
+    "data/evidence/wawrinka-last-match-2026/formal-preview-stat-composed.jpg",
+    "data/evidence/wawrinka-last-match-2026/formal-preview-topbar.jpg",
+    "data/evidence/wawrinka-last-match-2026/formal-template-review.json",
     "data/evidence/wawrinka-last-match-2026/independent-audio-plan-review.json",
     "data/evidence/wawrinka-last-match-2026/independent-fact-audit.json",
     "data/evidence/wawrinka-last-match-2026/independent-source-point-audio-review.json",
@@ -456,7 +461,11 @@
     "data/evidence/wawrinka-last-match-2026/source-frames/wall-1.jpg",
     "data/evidence/wawrinka-last-match-2026/source-frames/wall-2.jpg",
     "data/evidence/wawrinka-last-match-2026/stat-avatar-provenance.json",
-    "data/evidence/wawrinka-last-match-2026/taste-final.log"
+    "data/evidence/wawrinka-last-match-2026/stat-card-inputs-verified.json",
+    "data/evidence/wawrinka-last-match-2026/taste-final.log",
+    "data/evidence/wawrinka-last-match-2026/tnns-complete-decoded.json",
+    "data/evidence/wawrinka-last-match-2026/tnns-complete-raw.json",
+    "data/evidence/wawrinka-last-match-2026/verify_complete_stat_counts.py"
   ],
   "stats": {
     "tour": "atp",
@@ -487,12 +496,46 @@
     "a": {
       "winners": 14,
       "ue": 30,
-      "headshot": "assets/reel/wawrinka-last-match-2026/avatars/atp-w367.jpg"
+      "headshot": "assets/reel/wawrinka-last-match-2026/avatars/atp-w367.jpg",
+      "aces": 9,
+      "df": 3,
+      "first_in": 43,
+      "first_total": 83,
+      "first_won": 36,
+      "second_total": 40,
+      "second_won": 17,
+      "bp_conv": 0,
+      "bp_chances": 2,
+      "pts_won": 64,
+      "pts_total": 147
     },
     "b": {
       "winners": 26,
       "ue": 25,
-      "headshot": "assets/reel/wawrinka-last-match-2026/avatars/atp-l0bv.jpg"
+      "headshot": "assets/reel/wawrinka-last-match-2026/avatars/atp-l0bv.jpg",
+      "aces": 11,
+      "df": 0,
+      "first_in": 43,
+      "first_total": 64,
+      "first_won": 35,
+      "second_total": 21,
+      "second_won": 18,
+      "bp_conv": 1,
+      "bp_chances": 6,
+      "pts_won": 83,
+      "pts_total": 147
+    },
+    "_full_stats_source": {
+      "source_url": "https://api.tnnslive.com/v1/web?id=UyyzQKM4yiJpnxGZw6NI&mode=match_info&submode=stats&web=true",
+      "match_url": "https://tnnslive.com/match/75991580",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40604537455",
+      "job_id": 122540634027,
+      "player_order": [
+        "Stan Wawrinka",
+        "Jiri Lehecka"
+      ],
+      "method": "Actual browser-captured full K/P/_ payload decoded with existing tnns_stats.decode. Numerator/denominator parsed directly from each original count string, never inferred from percentages.",
+      "raw_sha256": "0a8e16110585bd2938a53286f42e76887396c0a7f7ec36c20743027b72c3ec64"
     }
   },
   "_hit_data": {

@@ -1,0 +1,140 @@
+{
+  "status": "pass",
+  "scope": "Actual formal-spec poster, ASS topbar, and real stat template composed through the native still compositor. Local preflight only; no full native film or voice approval.",
+  "formal_spec_changed": false,
+  "tts_changed": false,
+  "previewed_cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "瓦林卡",
+    "_subject_why": "用户指定最后一战，以瓦林卡惜败谢幕为主视角。",
+    "hook": "次盘再拼到6比6\n瓦林卡告别职业赛场",
+    "hook_accent": "告别职业赛场",
+    "topic": "ATP500 巴塞尔 首轮 · 瓦林卡 VS 莱赫奇卡",
+    "winner": "莱赫奇卡",
+    "result": "7-5 7-6(2)",
+    "matchup": [
+      {
+        "name": "瓦林卡",
+        "name_en": "Stan Wawrinka",
+        "country": "SUI",
+        "rank": 151
+      },
+      {
+        "name": "莱赫奇卡",
+        "name_en": "Jiri Lehecka",
+        "country": "CZE",
+        "rank": 21
+      }
+    ],
+    "_rank_why": "比赛周2026-10-26排名151/21由SRF比赛日与TennisAbstract互证，非动态陈旧profile；中文规范由当前player_zh实测。",
+    "portrait": {
+      "image": "assets/reel/wawrinka-last-match-2026/GettyImages-2302293663.jpg",
+      "focus": 0.4,
+      "focus_y": 0,
+      "zoom": 1.0,
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/4bb49ac7-9ac0-4f2b-9766-7daa26687049/GettyImages-2302293663.jpg",
+      "verified_date": "2026-10-27",
+      "_credit": "ATP Media正式Gettyphoto4599884 /2302293663，原图4200x2800，本场赛后双手合十谢观众。IPTC有比赛/日期/双方名，不复用10月26日仪式封面。"
+    },
+    "scoreboard": {
+      "court": "Center Court",
+      "_court_why": "官方results本场Center Court。",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%2201%3A51%3A00%22%2C%20%22source_url%22%3A%20%22https%3A//www.swissindoorsbasel.ch/en/tournament/results/%22%7D",
+        "field": "duration"
+      }
+    },
+    "_hook_shape_why": "用户指定职业最后一战；第二行告别职业赛场明确本场失利后职业赛结束，官方结果与source终场一致。第一行关键局面6-6，不虚构险胜。",
+    "_heat_why": "用户点名瓦林卡职业巡回赛最后一战：三届大满贯冠军、标志性单手反拍、16座巡回赛冠军，在巴塞尔第十九次也是最后一次参赛；官方明确职业生涯在这里结束，具有跨排名的公众辨识度与告别热点。"
+  },
+  "previewed_topbar": {
+    "line1": "2026 ATP500 巴塞尔 首轮",
+    "line2": "莱赫奇卡 7-5 7-6(2) 瓦林卡"
+  },
+  "poster": {
+    "status": "pass",
+    "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/cover-review/formal-preview/poster.jpg",
+    "sha256": "9e88aef62275ba74da64d955a3ac8a4d5091ad679c88ad894567724eb44c6a1e",
+    "observations": [
+      "Actual finalhook次盘再拼到6比6/瓦林卡告别职业赛场 fits the fixed template.",
+      "Wholehead,both eyes,face andclasped palms remain visible andnot crossed by header/hook/scoreboard.",
+      "Canonical莱赫奇卡 andwinner-first scoreboard7/7 versusWawrinka5/6sup2,ranks21/151,flagsCZE/SUI,CenterCourt1:51 allreadable."
+    ]
+  },
+  "topbar": {
+    "status": "pass",
+    "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/cover-review/formal-preview/topbar.jpg",
+    "sha256": "245a48466048be2530da3bde116f5c49cfe92698e6dfa666f1b337a1b307b494",
+    "source": "Original1920x1080mo_Aust_pN0.mp4 at64seconds;not an upscaled smaller evidenceJPEG.",
+    "observations": [
+      "Actual ASS reads2026ATP500巴塞尔首轮 /莱赫奇卡7-5 7-6sup2瓦林卡 in the shared compact shadowed style.",
+      "Both lines are readable on the actual match-court background."
+    ],
+    "not_reviewed": "This isolated topbar preview doesnot certify finalscoreboard restoration orfullcourt sourcecut QC."
+  },
+  "stat_card": {
+    "status": "pass",
+    "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/cover-review/formal-preview/stat_card_composed.jpg",
+    "sha256": "c1307702f6664f94b21c6150ca1d35b8784007de6e9576b844b3337f43c7be82",
+    "raw_template_file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/cover-review/formal-preview/stat_card.jpg",
+    "raw_template_sha256": "1b135358dceaead146f9e1b66719a11c5e69232016a0d2b2e9c7761d02846da2",
+    "spec_sha256": "7be8890c9fa6919db6fa616ada88dcce6ae7b62993a3e0b54c7a5818dfd7d86c",
+    "source": {
+      "source_url": "https://api.tnnslive.com/v1/web?id=UyyzQKM4yiJpnxGZw6NI&mode=match_info&submode=stats&web=true",
+      "match_url": "https://tnnslive.com/match/75991580",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40604537455",
+      "job_id": 122540634027,
+      "player_order": [
+        "Stan Wawrinka",
+        "Jiri Lehecka"
+      ],
+      "method": "Actual browser-captured full K/P/_ payload decoded with existing tnns_stats.decode. Numerator/denominator parsed directly from each original count string, never inferred from percentages.",
+      "raw_sha256": "0a8e16110585bd2938a53286f42e76887396c0a7f7ec36c20743027b72c3ec64"
+    },
+    "verified_counts": {
+      "a": {
+        "aces": 9,
+        "df": 3,
+        "first_in": 43,
+        "first_total": 83,
+        "first_won": 36,
+        "second_total": 40,
+        "second_won": 17,
+        "bp_conv": 0,
+        "bp_chances": 2,
+        "pts_won": 64,
+        "winners": 14,
+        "ue": 30
+      },
+      "b": {
+        "aces": 11,
+        "df": 0,
+        "first_in": 43,
+        "first_total": 64,
+        "first_won": 35,
+        "second_total": 21,
+        "second_won": 18,
+        "bp_conv": 1,
+        "bp_chances": 6,
+        "pts_won": 83,
+        "winners": 26,
+        "ue": 25
+      }
+    },
+    "observations": [
+      "Actual composed frame opened independently. Wawrinka is left and Lehecka right; both same-match official avatars are correctly identified, with faces visible. Lehecka avatar is a clear side profile, not a frontal portrait.",
+      "Canonical Chinese names 瓦林卡 and 莱赫奇卡, rankings 151/21, SUI/CZE flags, match score 5-7 / 6-7 with losing tiebreak superscript 2, Center Court and 1:51 are readable.",
+      "All displayed counts match the verified TNNS full payload: ACE 9/11, double faults 3/0, winners 14/26, UE 30/25, first-in 43/83 vs 43/64 (52%/67%), first-won 36/43 vs 35/43 (84%/81%), second-won 17/40 vs 18/21 (43%/86%), break points 0/2 vs 1/6, total points 64/83.",
+      "Inset card begins at approximately x65/y86. The card brand/header and permanent compact topbar are separated and do not overlap; all statistic rows remain within the visible canvas."
+    ],
+    "preview_method": "Rendered actual formal stat template then applied native still compositor and actual topbarASS;not full new nativefilm orvoice approval.",
+    "native_full_film_approval": false,
+    "voice_quality_approval": false
+  },
+  "needs_fix": [],
+  "raw_asr_or_original_english_changed": false,
+  "voice_quality_approval": false,
+  "formal_spec_sha256": "7be8890c9fa6919db6fa616ada88dcce6ae7b62993a3e0b54c7a5818dfd7d86c",
+  "reviewed_at": "2026-10-27T23:54:19.681599+00:00"
+}
