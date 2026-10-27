@@ -519,7 +519,8 @@ AUDIO_RATE = "48000"
 
 
 def dissolve_filtergraph(lengths: list[float], fade: float,
-                         rate: int = int(AUDIO_RATE)) -> str:
+                         rate: int = int(AUDIO_RATE),
+                         transitions: list[str] | None = None) -> str:
     """把各段**溶解**着接起来的滤镜图（画面 `xfade`，现场声 `acrossfade`）。
 
     ### 长度账——这是这个函数存在的全部理由
@@ -562,8 +563,16 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
     由 `test_probe_audio.py::test_真cut_segment刀刀截短_溶解钉回名义长度_成片不漂` 压着
     （那九刀两版同刀同数地截短，拆掉这一钉就红）。
     `rate` 是 part 的音轨采样率（render 的每个 part 都是 `AUDIO_RATE`）。
+
+    `transitions` 是每个接缝的画面动画（`tennislive.video.transitions` 的预设名，
+    长度 n−1，第 k 个接进第 k 路）；不给就全是溶解。**只换形状不换时长**——
+    上面那本长度账一个数都不动，现场声也照旧三角 `acrossfade`。
     """
+    from tennislive.video import transitions as _tr  # noqa: PLC0415
     n = len(lengths)
+    seams = list(transitions) if transitions is not None else [_tr.DEFAULT] * (n - 1)
+    if len(seams) != max(n - 1, 0):
+        raise ValueError(f"{n} 路要 {n - 1} 个接缝动画，给了 {len(seams)} 个")
     if n == 1:
         return "[0:v]null[vout];[0:a]anull[aout]"
     vparts, aparts = [], []
@@ -575,7 +584,7 @@ def dissolve_filtergraph(lengths: list[float], fade: float,
         offset += lengths[i - 1]
         vout = "[vout]" if i == n - 1 else f"[vx{i}]"
         aout = "[aout]" if i == n - 1 else f"[ax{i}]"
-        vparts.append(f"{vprev}[{i}:v]xfade=transition=fade:"
+        vparts.append(f"{vprev}[{i}:v]xfade=transition={_tr.xfade_transition(seams[i - 1])}:"
                       f"duration={fade}:offset={offset:.3f}{vout}")
         # `c1`/`c2` 都用三角曲线：默认那组是等功率的，两条现场声（球场底噪）
         # 叠在一起会在中间鼓一下——底噪不相干，等功率补的那一块是白给的。
@@ -3086,6 +3095,9 @@ class Segment:
     # 水印条裁出画外——这个键原来在允许字段表里、**渲染一处都没读**，
     # 写了不报错也不生效（run 36214015142 渲出来水印原样还在）。
     crop_zoom: float = 1.0
+    # 接进这一段的那个接缝用哪个转场动画（spec `transition`，`tennislive.video.
+    # transitions.PRESETS` 的名字）；不写是溶解。只换形状，时长仍是 SEG_FADE。
+    transition: str = "dissolve"
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
     # Relative output-segment seconds; only explicitly contained cues move.
@@ -3654,6 +3666,15 @@ def _validate_segment_kinds(spec: dict) -> None:
             raise ReelError(f"第 {index} 段 kind=quote 须为保留原声的视频窗口，不能配TTS、静图或静音")
 
 
+def _seg_transition(s: dict, i: int) -> str:
+    """段级 `transition` → 动画库里的预设名；写错在 `--dry-run` 就红。"""
+    from tennislive.video import transitions  # noqa: PLC0415
+    try:
+        return transitions.validate(s.get("transition"))
+    except ValueError as exc:
+        raise ReelError(f"第 {i + 1} 段：{exc}") from None
+
+
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -3827,7 +3848,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        visual_image=str(s.get("visual_image") or ""),
                        native_crop=native_crops.get(str(s.get("source", primary))))
 
-    segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i))
+    segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i),
+                        transition=_seg_transition(s, i))
                 for i, s in enumerate(spec["segments"])]
     segments = [replace(seg, subtitle_bottom_windows=_seg_subtitle_bottom_windows(raw, i, seg.length))
                 for i, (raw, seg) in enumerate(zip(spec["segments"], segments))]
@@ -10805,7 +10827,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if outro_enabled:
         lengths.append(outro_secs)
     from reel_join_fusion import plan as plan_join_fusion  # noqa: PLC0415
-    native_join_graph = dissolve_filtergraph(lengths, SEG_FADE)
+    # 每个接缝的转场动画：封面→第 1 段用第 1 段的 `transition`，依次类推；
+    # 接进片尾那一刀照旧溶解。
+    seams = [seg.transition for seg in segments] + (["dissolve"] if outro_enabled else [])
+    native_join_graph = dissolve_filtergraph(lengths, SEG_FADE, transitions=seams)
     join_fusion, legacy_reason = plan_join_fusion(native_join_graph, len(lengths))
     if join_fusion is None:
         print(f"[拼接] 保留完整中间视频：{legacy_reason}")
