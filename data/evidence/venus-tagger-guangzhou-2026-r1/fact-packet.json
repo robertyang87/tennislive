@@ -1,0 +1,126 @@
+{
+  "schema": "tennislive.manual_match_fact_packet.v1",
+  "checked_at": "2026-10-27T12:32:43.896988+00:00",
+  "match_id": "1023_2026_LS020",
+  "event": "2026 WTA250 广州",
+  "round": "首轮",
+  "court": "Center Court",
+  "match_date": "2026-10-27",
+  "winner": "塔格尔",
+  "loser": "大威",
+  "winner_result": "6-2 6-2",
+  "duration": "01:12:45",
+  "players": [
+    {
+      "name": "塔格尔",
+      "name_en": "Lilli Tagger",
+      "id": 332150,
+      "country": "AUT",
+      "rank": 53,
+      "ranking_date": "2026-10-26",
+      "dob": "2008-02-17",
+      "age": 18
+    },
+    {
+      "name": "大威",
+      "name_en": "Venus Williams",
+      "id": 230220,
+      "country": "USA",
+      "rank": 599,
+      "ranking_status": "official_current_confirmed",
+      "dob": "1980-06-17",
+      "age": 46,
+      "ranking_date": "2026-10-26"
+    }
+  ],
+  "streak": {
+    "scope": "WTA巡回赛单打，跨赛季；不包括双打",
+    "last_win": {
+      "date": "2025-07-22",
+      "event": "Washington DC",
+      "opponent": "Peyton Stearns",
+      "score": "6-3 6-4"
+    },
+    "2025_losses_after_last_win": 3,
+    "2026_losses_before_this_match": 12,
+    "this_match_loss": 1,
+    "consecutive_losses_after_this_match": 16,
+    "history_caveat": "WTA球员历史接口本场尚未回填，12败为本场之前；本场由赛事matches已完成LS020加一次。reason_code是比赛完赛方式，不能当胜负；winner=1/2相对player_1/2，已逐条判。"
+  },
+  "same_event_doubles": {
+    "date": "2026-10-26",
+    "match_id": "LD014",
+    "partner": "曾丽美",
+    "opponents": [
+      "戈尔戈泽",
+      "齐默尔曼"
+    ],
+    "winner_result": "6-0 7-5",
+    "next_round": "1/4决赛",
+    "next_opponents": [
+      "基切诺克",
+      "二宫真琴"
+    ],
+    "scope_note": "因此不能把16连败说成所有项目连续输球。"
+  },
+  "stats_conflict": {
+    "screenshot_winners": [
+      9,
+      7
+    ],
+    "official_advanced_winners": [
+      29,
+      7
+    ],
+    "decision": "采用官方advanced-stats 29/7，且官方视频标题同步29；截图9不作为依据。",
+    "aces_commentary": {
+      "official": 7,
+      "source_commentator_at_198s": 6,
+      "decision": "正文不强调ACE个数；原声如保留按实际发言忠实译，不拿解说六个改官方七个。"
+    }
+  },
+  "core_stats": {
+    "venus_break_points_saved": [
+      12,
+      16
+    ],
+    "venus_break_points_created": 0,
+    "tagger_first_serve_points_won": [
+      25,
+      25
+    ],
+    "winners_venus_tagger": [
+      7,
+      29
+    ],
+    "unforced_errors_venus_tagger": [
+      14,
+      15
+    ]
+  },
+  "official_source": {
+    "page": "https://www.wtatennis.com/videos/4599572/tagger-strikes-29-winners-in-16-games-defeats-venus-williams-in-guangzhou",
+    "player": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407465955112",
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-venus-tagger-guangzhou-20261027/6407465955112-371c726a0b8d0888.mp4",
+    "sha256": "371c726a0b8d08887aad4051864b3b58ef8a077e75ed3b95434301afe8cf56a3",
+    "native_dimensions": [
+      1280,
+      720
+    ],
+    "duration": 208.2,
+    "fps": 25,
+    "highest_rendition_verified": "Playback MP4 + HLS master both max720; source exactbytes verified with bothASR models",
+    "source_review_status": "full source contact sheet and 3-second scoreboard timeline reviewed; exact boundary review pending",
+    "status": "research_reference_not_final_source"
+  },
+  "primary_urls": [
+    "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches",
+    "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches/LS020/stats",
+    "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches/LS020/advanced-stats",
+    "https://api.wtatennis.com/tennis/players/230220/matches?year=2025&pageSize=1000",
+    "https://api.wtatennis.com/tennis/players/230220/matches?year=2026&pageSize=1000",
+    "https://api.wtatennis.com/tennis/tournaments/1045/2025/matches",
+    "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=Venus&metric=SINGLES"
+  ],
+  "preferred_user_source": "https://www.youtube.com/watch?v=YhL-TUHmqnY"
+}

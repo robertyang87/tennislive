@@ -1,0 +1,7 @@
+{
+  "failed_ci_run": 40509416719,
+  "failure": "Chromium dependency installation timed out after10min despite exact playwright-chromium-Linux-pw1.64.1 browser cache hit.",
+  "observed_cause": "--with-deps apt upgraded existing libraries and fetched optional font packages; runtime itself already works in native renderer.",
+  "repair": "Attempt actual headless Chromium launch and PNG screenshot first. Only a real successful browser run exits setup early. Missing browser/runtime libraries still run the original timeout/retry/dpkg fallback. No test removed or marked optional.",
+  "verification": "3 existing timeout/retry/dpkg-budget regression checks passed; final actual CI browser smoke and complete tests must pass."
+}

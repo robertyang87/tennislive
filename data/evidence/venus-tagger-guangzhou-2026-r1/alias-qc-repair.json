@@ -1,0 +1,14 @@
+{
+  "failed_run": 40509269320,
+  "stage": "L2 stat-card headshot identity",
+  "reason": "Exact same WTA230220 headshot previously labeled 大威廉姆斯 vs owner nickname 大威. Existing identity comparator already uses normalize_player_zh; missing exact alias caused false clash.",
+  "fix": "Register only exact 大威→PLAYER_ZH[Venus Williams]; preserve all identity gates. Different players, 小威, 威廉姆斯姐妹 and swapped faces still rejected.",
+  "tests": "4 focused alias identity and swapped-face regression checks passed.",
+  "original_film": {
+    "bytes": 86496851,
+    "seconds": 263.6,
+    "qc_pass": false,
+    "not_published": true
+  },
+  "next_action": "Full native render/real QC/actual five-item voice suite, with same frozen speech inputs; no prior failed approval reused."
+}
