@@ -1,19 +1,19 @@
 {
-  "scoreboard_qc_sha256": "18fb47638cf3ec0e5bc1a91ed8307bc2a12f53a7b8ac347abb649228e296172c",
+  "scoreboard_qc_sha256": "685ebd46807ca362ac549c8ba1db29c0aadd56a8824dd17472d189e778f8a745",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f4b441f45bfb36ab452f940d245bd013c19b0f19b01b1e3ceb1101b08b742740",
+    "bundle_sha256": "a1c63008711bfd018496e2b35e7d5e6fd6da5ebc5f9fa497287302736ccc7d26",
     "request_count": 12,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-sun-sawangkaew-guangzhou-2026-r1-f4b441f45bfb36ab",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-sawangkaew-guangzhou-2026-r1-f4b441f45bfb36ab/tts_bundle.zip",
+    "release_tag": "reel-tts-sun-sawangkaew-guangzhou-2026-r1-a1c63008711bfd01",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-sawangkaew-guangzhou-2026-r1-a1c63008711bfd01/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40528316869"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40535716706"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -22,7 +22,7 @@
   "segments_seconds": 224.44,
   "topbar": {
     "line1": "2026 WTA250 广州 首轮",
-    "line2": "孙心然 6-3 6-4 萨旺考",
+    "line2": "孙心然 6-3 6-4 萨王凯",
     "start": 1.2,
     "end": 225.64
   },
@@ -31,7 +31,7 @@
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 12.288,
+    "1": 12.264,
     "2": 12.936,
     "3": 10.464,
     "5": 8.208,
@@ -58,44 +58,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "15846fcbd32e93cd6c405a483abf1da563ca36fb737873727b905fde23ddd355",
+  "render_inputs_sha256": "15c79c8730f548c730cc082ec2906e13a7e372aeabca48a49ed2c892071bdfab",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "sun-sawangkaew-guangzhou-2026-r1",
-    "received_at": "2026-10-27T15:10:26Z",
-    "artifact_ready_at": "2026-10-27T15:15:19Z",
-    "elapsed_seconds": 293.588,
+    "received_at": "2026-10-27T15:55:05Z",
+    "artifact_ready_at": "2026-10-27T16:02:36Z",
+    "elapsed_seconds": 451.99,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
-    "spec_sha256": "91844c7b19f4bf7fc479d3d4fa935f3d647e4bd3b32da1efe319aef36dd2e44b",
-    "run_id": "40528316869",
+    "film_sha256": "baad46ba8d432519b3a8968159a6d7242d0686f4ffffceb02984c06321235380",
+    "spec_sha256": "1663940c22e657432e2b794a887ef1e49b5dac75f7c57b1ef73a671ea1867d99",
+    "run_id": "40535716706",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-27T15:13:00Z",
-        "run_id": "40528316869"
+        "at": "2026-10-27T15:58:29Z",
+        "run_id": "40535716706"
       }
     ],
-    "render_seconds": 139.588,
-    "pre_render_seconds": 154.0
+    "render_seconds": 247.99,
+    "pre_render_seconds": 204.0
   },
-  "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
-  "film_bytes": 60904626,
-  "qc_attestation_sha256": "2ed54187918c68179924bada646812ca67fa2955b0a09363fc6b2259d18c239d",
+  "film_sha256": "baad46ba8d432519b3a8968159a6d7242d0686f4ffffceb02984c06321235380",
+  "film_bytes": 61000419,
+  "qc_attestation_sha256": "4d01d965271bb8488931d08395dc5a3e87033b3ee641fdfc31b8b3e36b544d04",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-27T15:13:00Z",
-      "run_id": "40528316869"
+      "at": "2026-10-27T15:58:29Z",
+      "run_id": "40535716706"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-27T15:15:23Z",
-      "run_id": "40528316869"
+      "at": "2026-10-27T16:02:40Z",
+      "run_id": "40535716706"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-sawangkaew-guangzhou-2026-r1/sun-sawangkaew-guangzhou-2026-r1.mp4",
-  "video_bytes": 60904626
+  "video_bytes": 61000419
 }
