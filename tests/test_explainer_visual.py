@@ -498,8 +498,11 @@ def test_接缝真跑ffmpeg_没有黑帧没有单帧跳变_声画对得上(tmp_p
     assert max(jumps) <= 20, f"接缝上有一帧跳了 {max(jumps):.1f}（>20），不是溶解"
     assert min(y) >= min(y[5], y[-5]) - 3, f"有一帧比最暗的那段还暗（{min(y):.1f}）——碰黑了"
     # 相邻两段的平台亮度差 ≥ 40：硬切一定会被上面那条逮到（对照组不是空转）
-    plateaus = [y[int(t * 30)] for t in (c0 / 2, (c0 + c1) / 2, (c1 + c2) / 2,
-                                         (c2 + c3) / 2)] + [y[-10]]
+    # 平台取在每一段**快结束**的地方（段尾前 0.1 秒），不取中点：溶解是从这一段的起点
+    # 往后吃 `SLIDE_DISSOLVE` 秒（2026-10-27 起 0.5 秒），而这组素材一屏只有 1 秒上下，
+    # 中点正好落在溶解收尾那一两帧上（CI 的 BtbN 把 mp3 报成 1.022 秒，中点 0.511）。
+    plateaus = [y[int(t * 30)] for t in (c0 / 2, c1 - 0.1, c2 - 0.1,
+                                         c3 - 0.1)] + [y[-10]]
     assert all(abs(a - b) >= 40 for a, b in zip(plateaus, plateaus[1:])), plateaus
 
     def dur(stream):
