@@ -1,0 +1,62 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinka90s/wawrinka90s.mp4",
+  "source_sha256": "3d43a6d1541127d504a661194fd4409a7b41985009f5c838a4eea5ad5e92b97d",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-27T07:21:16+00:00",
+  "reviewed_from": 62.2,
+  "reviewed_to": 84.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 62.46,
+      "end": 65.5,
+      "en": "On voulait te remercier pour ce tournoi.",
+      "zh": "我们想谢谢你，谢谢这站比赛。"
+    },
+    {
+      "start": 65.6,
+      "end": 68.38,
+      "en": "Malheureusement, je n'ai jamais réussi à le gagner.",
+      "zh": "可惜的是，我从来没能赢下它。"
+    },
+    {
+      "start": 68.78,
+      "end": 71.56,
+      "en": "Roger est passé plus d'une fois ici, donc ça a été plus compliqué.",
+      "zh": "罗杰来过不止一次，所以更难了。"
+    },
+    {
+      "start": 71.92,
+      "end": 73.9,
+      "en": "Mais mes meilleurs souvenirs, pour moi,",
+      "zh": "但对我来说，最好的回忆，"
+    },
+    {
+      "start": 74.0,
+      "end": 77.08,
+      "en": "pour pouvoir terminer ici, en Suisse, c'est un rêve.",
+      "zh": "是能在瑞士收官，像一场梦。"
+    },
+    {
+      "start": 77.08,
+      "end": 79.8,
+      "en": "C'est un rêve, après plus de vingt ans de carrière,",
+      "zh": "二十多年职业生涯之后，"
+    },
+    {
+      "start": 79.9,
+      "end": 83.04,
+      "en": "finir une dernière fois à la maison, sur un tel tournoi.",
+      "zh": "最后一次在家乡的这项大赛收官。"
+    },
+    {
+      "start": 83.32,
+      "end": 84.25,
+      "en": "C'est exceptionnel. Merci beaucoup.",
+      "zh": "太特别了。非常感谢。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 3d43a6d1541127d504a661194fd4409a7b41985009f5c838a4eea5ad5e92b97d，存于 data/source_asr/wawrinka90s/small.en.json 与 data/source_asr/wawrinka90s/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
