@@ -1,0 +1,715 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "2f1ebe42a102c0d29172a626be0c694e8701ddd6216c5de488f09e51043c5302",
+    "render_inputs_sha256": "cc2322b5febe7e2a4989289ffdca5ca195a74dd2243594c90e7f16b376965430",
+    "spec_sha256": "787de0c9cab236bf18934a43f0992d6fc4906e4e8afa9a2358a0aaa8fc1eac18",
+    "film_sha256": "ccc83ab2ecd66fb7b361d767816082c6d59962b500620b65c7cb51849b7c510c",
+    "inventory_sha256": "a0d251e49d5d15cd8241a7092118be3ee31c0777c54f5d98ccb75936f92db322"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-27T07:55:00+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:079196cb63cbb1d463ec3aac6364070e339053a899f97de2af875beea106b52a",
+      "audio_sha256": "cf59fd5352cfa7055ee3cfdc52817c516b11ff92b24757cabb78d90866428e8b",
+      "pass": true,
+      "result_of": "bundle:079196cb63cbb1d463ec3aac6364070e339053a899f97de2af875beea106b52a"
+    },
+    {
+      "id": "bundle:0ea45041fac038fd4aeffab8e0d2a4909d0e7b57ebe3f2bf3998c56b0c7ed0b6",
+      "audio_sha256": "6eff6c2bd49d019c019db8a12cebe984c4c826494f6519f0d0746ebd2645d32f",
+      "pass": true,
+      "result_of": "bundle:0ea45041fac038fd4aeffab8e0d2a4909d0e7b57ebe3f2bf3998c56b0c7ed0b6"
+    },
+    {
+      "id": "bundle:1b370fc4eb3c43cc74da0e5d020697e46bdced9413d49dcf32f610a27f8d4fd3",
+      "audio_sha256": "4c01eaeac6fb7d593b9d2a11609890e78f48ead9cd7512ce528c18eca567b05e",
+      "pass": true,
+      "result_of": "bundle:1b370fc4eb3c43cc74da0e5d020697e46bdced9413d49dcf32f610a27f8d4fd3"
+    },
+    {
+      "id": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6",
+      "audio_sha256": "87db35fb379aa61e0269e5eb1df3cc1cb36875c338bafc754ecba812b6c48ba3",
+      "pass": true,
+      "result_of": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6"
+    },
+    {
+      "id": "bundle:533b7869d1151c1af572ed384b2582e6fe4f426a3266c21eed65cb31e6ef75ad",
+      "audio_sha256": "fd04110ff004d8bbad651182c4ff2a4684b4b5e89aa3ebb7a25150203bb56bb0",
+      "pass": true,
+      "result_of": "bundle:533b7869d1151c1af572ed384b2582e6fe4f426a3266c21eed65cb31e6ef75ad"
+    },
+    {
+      "id": "bundle:568536abf706af5783719f94e499b7fc3ce5e57f80961de5de0ea58b902311fc",
+      "audio_sha256": "846b1a7f15f2d19d0d1ac2acd7b14230d31fb5f4fc9f6de7e015120793757cc2",
+      "pass": true,
+      "result_of": "bundle:568536abf706af5783719f94e499b7fc3ce5e57f80961de5de0ea58b902311fc"
+    },
+    {
+      "id": "bundle:5f6ae1290ed4db49e399c706c4a26ebea668cf64454888a82b2adc46d4a56315",
+      "audio_sha256": "748d6c6669b7c2e26f55224f5e71f53ea421e4c8b0e2de12c44cc6a7c9eed42a",
+      "pass": true,
+      "result_of": "bundle:5f6ae1290ed4db49e399c706c4a26ebea668cf64454888a82b2adc46d4a56315"
+    },
+    {
+      "id": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9",
+      "audio_sha256": "3609a3690b1805be9deb5c8fdb7404a9bf8007380c6a7e7b190da468bbd7e738",
+      "pass": true,
+      "result_of": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9"
+    },
+    {
+      "id": "bundle:9a2e252d921e0891e0922a25fdb2ca2f9dd6b25d33ee9e467d46fd84a8412499",
+      "audio_sha256": "6129fd0c98183aae3f8d9291f74ed5274fb6911761872cfa82e0868cbc899c69",
+      "pass": true,
+      "result_of": "bundle:9a2e252d921e0891e0922a25fdb2ca2f9dd6b25d33ee9e467d46fd84a8412499"
+    },
+    {
+      "id": "bundle:a151300787b948d033f6826982f299f1a80c149d931628c837508507f132d8bf",
+      "audio_sha256": "057240c731fb71e2546d5b57fa72300b5dd18e9d10a13aefbf2c52ce9d7a280d",
+      "pass": true,
+      "result_of": "bundle:a151300787b948d033f6826982f299f1a80c149d931628c837508507f132d8bf"
+    },
+    {
+      "id": "bundle:aaa026ccb7b7f6c884470845451155d71378788f310b8d27095b72b2be5c7dfa",
+      "audio_sha256": "995ca3cdf62dfbede59a23d1a346b1158d9fd268bc47f72e7cc54fa3a95e260f",
+      "pass": true,
+      "result_of": "bundle:aaa026ccb7b7f6c884470845451155d71378788f310b8d27095b72b2be5c7dfa"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "ded5298dc3a7ec4848aa030d4824ee2fb1eada0a6d9b32b7cce6727e58daac30",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f",
+      "audio_sha256": "f1b98c29f971c37eb284da2d2cf806d0a1fa1f8c6927729c21eada751487ae0f",
+      "pass": true,
+      "result_of": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f"
+    },
+    {
+      "id": "bundle:e437cdaa86c81e52f35848213c1191e4008a971bddf6854872c1b66f06b70ef2",
+      "audio_sha256": "bcf3459501a4e16defb0388cde9128fd90508d7289d8397b8c7f7d62d5eefc37",
+      "pass": true,
+      "result_of": "bundle:e437cdaa86c81e52f35848213c1191e4008a971bddf6854872c1b66f06b70ef2"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "cf59fd5352cfa7055ee3cfdc52817c516b11ff92b24757cabb78d90866428e8b",
+      "pass": true,
+      "result_of": "bundle:079196cb63cbb1d463ec3aac6364070e339053a899f97de2af875beea106b52a"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "057240c731fb71e2546d5b57fa72300b5dd18e9d10a13aefbf2c52ce9d7a280d",
+      "pass": true,
+      "result_of": "bundle:a151300787b948d033f6826982f299f1a80c149d931628c837508507f132d8bf"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "995ca3cdf62dfbede59a23d1a346b1158d9fd268bc47f72e7cc54fa3a95e260f",
+      "pass": true,
+      "result_of": "bundle:aaa026ccb7b7f6c884470845451155d71378788f310b8d27095b72b2be5c7dfa"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "f1b98c29f971c37eb284da2d2cf806d0a1fa1f8c6927729c21eada751487ae0f",
+      "pass": true,
+      "result_of": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "6129fd0c98183aae3f8d9291f74ed5274fb6911761872cfa82e0868cbc899c69",
+      "pass": true,
+      "result_of": "bundle:9a2e252d921e0891e0922a25fdb2ca2f9dd6b25d33ee9e467d46fd84a8412499"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "bcf3459501a4e16defb0388cde9128fd90508d7289d8397b8c7f7d62d5eefc37",
+      "pass": true,
+      "result_of": "bundle:e437cdaa86c81e52f35848213c1191e4008a971bddf6854872c1b66f06b70ef2"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "846b1a7f15f2d19d0d1ac2acd7b14230d31fb5f4fc9f6de7e015120793757cc2",
+      "pass": true,
+      "result_of": "bundle:568536abf706af5783719f94e499b7fc3ce5e57f80961de5de0ea58b902311fc"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "4c01eaeac6fb7d593b9d2a11609890e78f48ead9cd7512ce528c18eca567b05e",
+      "pass": true,
+      "result_of": "bundle:1b370fc4eb3c43cc74da0e5d020697e46bdced9413d49dcf32f610a27f8d4fd3"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "3609a3690b1805be9deb5c8fdb7404a9bf8007380c6a7e7b190da468bbd7e738",
+      "pass": true,
+      "result_of": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "6eff6c2bd49d019c019db8a12cebe984c4c826494f6519f0d0746ebd2645d32f",
+      "pass": true,
+      "result_of": "bundle:0ea45041fac038fd4aeffab8e0d2a4909d0e7b57ebe3f2bf3998c56b0c7ed0b6"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "748d6c6669b7c2e26f55224f5e71f53ea421e4c8b0e2de12c44cc6a7c9eed42a",
+      "pass": true,
+      "result_of": "bundle:5f6ae1290ed4db49e399c706c4a26ebea668cf64454888a82b2adc46d4a56315"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "fd04110ff004d8bbad651182c4ff2a4684b4b5e89aa3ebb7a25150203bb56bb0",
+      "pass": true,
+      "result_of": "bundle:533b7869d1151c1af572ed384b2582e6fe4f426a3266c21eed65cb31e6ef75ad"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "87db35fb379aa61e0269e5eb1df3cc1cb36875c338bafc754ecba812b6c48ba3",
+      "pass": true,
+      "result_of": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "ded5298dc3a7ec4848aa030d4824ee2fb1eada0a6d9b32b7cce6727e58daac30",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:079196cb63cbb1d463ec3aac6364070e339053a899f97de2af875beea106b52a",
+      "text": "2026 年 10 月 26 日，巴塞尔。九千名观众起立，掌声响了三分多钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2026年10月26日,巴塞尔。9000名观众起立,掌声响了三分多钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.038,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2026 年 10 月 26 日 ｜ 巴塞尔 ｜ 九千 ｜ 名 ｜ 观众 ｜ 起立 ｜ 掌声 ｜ 响 ｜ 了 ｜ 三分多钟"
+      }
+    },
+    {
+      "id": "bundle:0ea45041fac038fd4aeffab8e0d2a4909d0e7b57ebe3f2bf3998c56b0c7ed0b6",
+      "text": "2025 年 12 月，他宣布退役时写道：每本书都需要一个结局。瑞士人把这个结局，写成了一场庆典。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2025年12月,他宣布退一时写道,每本书都需要一个结局。瑞士人把这个结局写成了一场庆典。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.408,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2025 ｜ 年 ｜ 12 月 ｜ 他 ｜ 宣布 ｜ 退役 ｜ 时 ｜ 写 ｜ 道 ｜ 每 ｜ 本 ｜ 书 ｜ 都 ｜ 需要 ｜ 一个 ｜ 结局 ｜ 瑞士 ｜ 人 ｜ 把 ｜ 这个 ｜ 结局 ｜ 写 ｜ 成 ｜ 了 ｜ 一 ｜ 场 ｜ 庆典"
+      }
+    },
+    {
+      "id": "bundle:1b370fc4eb3c43cc74da0e5d020697e46bdced9413d49dcf32f610a27f8d4fd3",
+      "text": "轮到他自己致辞。他先谢了布伦瓦尔德——这站比赛，他打了十九届。然后，他讲了一句让全场大笑的话。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "轮到他自己致辞,他先谢了布伦瓦尔德这战比赛,他打了十九戒,然后他讲了一句让全场大笑的话。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 9.104,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "轮到 ｜ 他 ｜ 自己 ｜ 致辞 ｜ 他 ｜ 先 ｜ 谢 ｜ 了 ｜ 布伦瓦尔德 ｜ 这 ｜ 站 ｜ 比赛 ｜ 他 ｜ 打 ｜ 了 ｜ 十九届 ｜ 然后 ｜ 他 ｜ 讲 ｜ 了 ｜ 一 ｜ 句 ｜ 让 ｜ 全场 ｜ 大笑 ｜ 的话"
+      }
+    },
+    {
+      "id": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6",
+      "text": "三次决赛，三次掀翻世界第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三次决赛,三次先翻世界第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.512,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三次 ｜ 决赛 ｜ 三次 ｜ 掀翻 ｜ 世界 ｜ 第一"
+      }
+    },
+    {
+      "id": "bundle:533b7869d1151c1af572ed384b2582e6fe4f426a3266c21eed65cb31e6ef75ad",
+      "text": "而在巴塞尔当地 10 月 27 日晚，他还要走进这座球场，打职业生涯的最后一场比赛——或者，还不止一场。这一战，你希望他赢吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "而在巴塞尔当地10月27日晚,他还要走进这座球场,打职业生涯的最后一场比赛,或者还不止一场。这一战,你希望他赢吗?"
+      },
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.305,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 46,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.557,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.401,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 在 ｜ 巴塞尔 ｜ 当地 ｜ 10 月 ｜ 27 日 ｜ 晚 ｜ 他 ｜ 还要 ｜ 走进 ｜ 这 ｜ 座 ｜ 球场 ｜ 打 ｜ 职业 ｜ 生涯 ｜ 的 ｜ 最后 ｜ 一 ｜ 场 ｜ 比赛 ｜ 或者 ｜ 还 ｜ 不止 ｜ 一 ｜ 场 ｜ 这 ｜ 一 ｜ 战 ｜ 你 ｜ 希望 ｜ 他 ｜ 赢 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:568536abf706af5783719f94e499b7fc3ce5e57f80961de5de0ea58b902311fc",
+      "text": "最后播出的，是他父母的视频。镜头扫过，瓦林卡低下了头。全场最吵的一夜，在那一刻最安静。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后播出的是他父母的视频,镜头扫过,瓦林卡低下了头,全场最吵的一夜,在那一刻最安静。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.903,
+        "cps": 4.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 播出 ｜ 的 ｜ 是 ｜ 他 ｜ 父母 ｜ 的 ｜ 视频 ｜ 镜头 ｜ 扫 ｜ 过 ｜ 瓦林卡 ｜ 低下 ｜ 了 ｜ 头 ｜ 全场 ｜ 最 ｜ 吵 ｜ 的 ｜ 一夜 ｜ 在 ｜ 那 ｜ 一刻 ｜ 最 ｜ 安静"
+      }
+    },
+    {
+      "id": "bundle:5f6ae1290ed4db49e399c706c4a26ebea668cf64454888a82b2adc46d4a56315",
+      "text": "试过，败过，没关系。再试，再败，败得更好。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "试过、拜过没关系,再试、再拜,拜得更好。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 5.071,
+        "cps": 2.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "试 ｜ 过 ｜ 败 ｜ 过 ｜ 没关系 ｜ 再 ｜ 试 ｜ 再 ｜ 败 ｜ 败 ｜ 得 ｜ 更 ｜ 好"
+      }
+    },
+    {
+      "id": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9",
+      "text": "最后，他绕场一周。手机灯光亮起来，像给他点了一场星海。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后,她绕场一周,手机灯光亮起来向给她点了一场星海。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.259,
+        "cps": 4.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 他 ｜ 绕场 ｜ 一周 ｜ 手机 ｜ 灯光 ｜ 亮 ｜ 起来 ｜ 像 ｜ 给 ｜ 他 ｜ 点 ｜ 了 ｜ 一 ｜ 场 ｜ 星海"
+      }
+    },
+    {
+      "id": "bundle:9a2e252d921e0891e0922a25fdb2ca2f9dd6b25d33ee9e467d46fd84a8412499",
+      "text": "第一个出现的，是费德勒。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一个出现的是费德勒。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 2.087,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一个 ｜ 出现 ｜ 的 ｜ 是 ｜ 费德勒"
+      }
+    },
+    {
+      "id": "bundle:a151300787b948d033f6826982f299f1a80c149d931628c837508507f132d8bf",
+      "text": "一个从没在这座球场拿过冠军的人，这一夜是全场的主角。这一夜没有比赛——这是瑞士网球，为斯坦·瓦林卡办的告别仪式。布伦瓦尔德送了他一颗金色的网球，叫他网球界的史泰龙。而这里，也是他职业生涯的最后一站。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 88,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一个从没在这座球场拿过冠军的人,这一页是全场的主角。这一页没有比赛,这是瑞士网球、魏斯坦、瓦林卡半的告别仪式。布伦瓦尔德送了他一颗金色的网球,叫他网球界的史泰龙。而这里也是他职业生涯的最后一战。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 88,
+        "speech_s": 18.75,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一个 ｜ 从没 ｜ 在 ｜ 这 ｜ 座 ｜ 球场 ｜ 拿 ｜ 过 ｜ 冠军 ｜ 的 ｜ 人 ｜ 这 ｜ 一夜 ｜ 是 ｜ 全场 ｜ 的 ｜ 主角 ｜ 这 ｜ 一夜 ｜ 没有 ｜ 比赛 ｜ 这是 ｜ 瑞士 ｜ 网球 ｜ 为 ｜ 斯坦 ｜ 瓦林卡 ｜ 办 ｜ 的 ｜ 告别 ｜ 仪式 ｜ 布伦瓦尔德 ｜ 送 ｜ 了 ｜ 他 ｜ 一 ｜ 颗 ｜ 金色 ｜ 的 ｜ 网球 ｜ 叫 ｜ 他 ｜ 网球 ｜ 界 ｜ 的 ｜ 史泰龙 ｜ 而 ｜ 这里 ｜ 也是 ｜ 他 ｜ 职业 ｜ 生涯 ｜ 的 ｜ 最后 ｜ 一 ｜ 站"
+      }
+    },
+    {
+      "id": "bundle:aaa026ccb7b7f6c884470845451155d71378788f310b8d27095b72b2be5c7dfa",
+      "text": "主持人端来一盘爆米花。他笑着选了爆米花，没选香蕉，坐下来，看大屏幕上放自己的二十四年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "主持人端来一盘爆米花,他笑着选了爆米花,没选香蕉。坐下来,看大屏幕上方自己的二十四年。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.29,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "主持人 ｜ 端 ｜ 来 ｜ 一 ｜ 盘 ｜ 爆米花 ｜ 他 ｜ 笑 ｜ 着 ｜ 选 ｜ 了 ｜ 爆米花 ｜ 没 ｜ 选 ｜ 香蕉 ｜ 坐 ｜ 下来 ｜ 看 ｜ 大 ｜ 屏幕 ｜ 上放 ｜ 自己 ｜ 的 ｜ 二十四 ｜ 年"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.231,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f",
+      "text": "和费德勒同为瑞士人，是『另一个瑞士人』，二十八岁才第一次打进年终前十。三次大满贯决赛，对面站的全是世界第一，他全赢了。2017 年第四次决赛，输给纳达尔。之后他膝盖连做两次手术，排名跌到第二百六十三位——他又爬回来，打到了四十一岁。他的左臂上纹着一句话：再试，再败，败得更好。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 120,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "和费德勒同为瑞士人,是另一个瑞士人,二十八岁才第一次打进年中前时。三次大满冠决赛,对面战的全是世界第一,他全赢了。2017年第四次决赛,输给纳达尔。之后,他膝盖连做两次手术,排名跌到第二百六十三位,他又爬回来,打到了四十一岁。他的左臂上,闻着一句话,再是,再败,败得更好。"
+      },
+      "polyphones": [
+        {
+          "index": 134,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 118,
+        "speech_s": 26.415,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "和 ｜ 费德勒 ｜ 同 ｜ 为 ｜ 瑞士 ｜ 人 ｜ 是 ｜ 另 ｜ 一个 ｜ 瑞士 ｜ 人 ｜ 二十八 ｜ 岁 ｜ 才 ｜ 第一 ｜ 次 ｜ 打 ｜ 进 ｜ 年终前十 ｜ 三次 ｜ 大满贯 ｜ 决赛 ｜ 对面 ｜ 站 ｜ 的 ｜ 全 ｜ 是 ｜ 世界 ｜ 第一 ｜ 他 ｜ 全赢 ｜ 了 ｜ 2017 ｜ 年 ｜ 第四 ｜ 次 ｜ 决赛 ｜ 输给 ｜ 纳达尔 ｜ 之后 ｜ 他 ｜ 膝盖 ｜ 连 ｜ 做 ｜ 两 ｜ 次 ｜ 手术 ｜ 排名 ｜ 跌到 ｜ 第二百六十三 ｜ 位 ｜ 他 ｜ 又 ｜ 爬 ｜ 回来 ｜ 打到 ｜ 了 ｜ 四十一 ｜ 岁 ｜ 他 ｜ 的 ｜ 左臂 ｜ 上 ｜ 纹 ｜ 着 ｜ 一句话 ｜ 再 ｜ 试 ｜ 再 ｜ 败 ｜ 败 ｜ 得 ｜ 更 ｜ 好"
+      }
+    },
+    {
+      "id": "bundle:e437cdaa86c81e52f35848213c1191e4008a971bddf6854872c1b66f06b70ef2",
+      "text": "穆雷、威兰德、纳芙拉蒂洛娃、蒙菲尔斯依次出现，德约科维奇干脆就坐在观众席里。麦肯罗的致辞，只有一句最戳人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "穆雷、威兰德、纳芙拉蒂洛娃、蒙菲尔斯依次出现,德约科维奇干脆就坐在观众席里。麦肯罗的致词,只有一句最初人。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 9.764,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "穆雷 ｜ 威兰德 ｜ 纳芙拉蒂洛娃 ｜ 蒙菲尔斯 ｜ 依次 ｜ 出现 ｜ 德约科维奇 ｜ 干脆 ｜ 就 ｜ 坐 ｜ 在 ｜ 观众席 ｜ 里 ｜ 麦肯罗 ｜ 的 ｜ 致辞 ｜ 只有 ｜ 一 ｜ 句 ｜ 最 ｜ 戳 ｜ 人"
+      }
+    }
+  ]
+}
