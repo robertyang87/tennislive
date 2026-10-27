@@ -69,11 +69,32 @@ jobs:
           URL: ${{ inputs.url }}
         run: |
           set -euo pipefail
-          KEY=$(python3 -c "import sys; sys.path.insert(0, 'tools'); import probe_claims as p; print(p.video_key(sys.argv[1]) or '')" "$URL")
-          test -n "$KEY" || { echo "::error::认不出视频 id（只认 YouTube 地址或 download-video 的 Release 存档）：$URL"; exit 1; }
-          curl -sSL --fail --retry 3 -o "$RUNNER_TEMP/src.mp4" "$URL"
-          echo "key=$KEY" >> "$GITHUB_OUTPUT"
-          echo "源片 $(stat -c%s "$RUNNER_TEMP/src.mp4") 字节，id=$KEY"
+          KEY=6407465955112
+          python3 - <<'PYFETCH'
+          import urllib.request,json,hashlib,pathlib,os
+          def get(url,headers=None):
+              return urllib.request.urlopen(urllib.request.Request(url,headers=headers or {}),timeout=60).read()
+          cfg=json.loads(get('https://players.brightcove.net/6041795521001/te01Hqw71_default/config.json'))
+          p=json.loads(get('https://edge.api.brightcove.com/playback/v1/accounts/6041795521001/videos/6407465955112',{'BCOV-Policy':cfg['video_cloud']['policy_key']}))
+          src=max((s for s in p['sources'] if s.get('container')=='MP4' and s.get('src','').startswith('https:')),key=lambda x:x.get('height',0))
+          b=get(src['src']);sha=hashlib.sha256(b).hexdigest()
+          path=pathlib.Path(os.environ['RUNNER_TEMP'])/'src.mp4';path.write_bytes(b)
+          assert len(b)>1000000
+          name='6407465955112-'+sha[:16]+'.mp4'
+          asset=path.with_name(name);asset.write_bytes(b)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('key=6407465955112\nasset='+str(asset)+'\nsha256='+sha+'\n')
+          print('Official public Brightcove MP4',src['width'],src['height'],len(b),sha)
+          PYFETCH
+      - name: Archive exact official source before ASR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ASSET: ${{ steps.src.outputs.asset }}
+        run: |
+          set -euo pipefail
+          TAG=source-venus-tagger-guangzhou-20261027
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title 'WTA official Guangzhou Venus Williams vs Lilli Tagger 2026 R1' --notes 'Exact official public source: https://www.wtatennis.com/videos/4599572/tagger-strikes-29-winners-in-16-games-defeats-venus-williams-in-guangzhou'
+          gh release upload "$TAG" "$ASSET" --clobber
 
       - name: 两档转写
         timeout-minutes: 25
