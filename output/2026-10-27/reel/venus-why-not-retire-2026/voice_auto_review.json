@@ -1,0 +1,1087 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "0426a797ea46cfdb5c90cb6225a218de185d62238770227524945de20015ca5a",
+    "render_inputs_sha256": "8a5e3d661a34ac66432a67e00aea434d44391774edb4354bddff6c18ecdfa719",
+    "spec_sha256": "ff4a58e02ca7dd7881d804a3f03484f78251b06e8edc06bfc3ac5699a4796e07",
+    "film_sha256": "ff87a8aa9f09e8ae7472efb5c2dc12841900f95a99071ae6b75316d7bb7ab2a9",
+    "inventory_sha256": "88aae080588e6069799899cde1d9e1665f4fadef8adaa7a7398883611540f1a7"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-27T02:45:13+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:08a7fb6da51a4feb1e0b75aaf222245270c1962dfa5c2a6f05c486656ee10b72",
+      "audio_sha256": "e3a8696ec09451ef4b5c72d6f36aaae00236f2b2b269d57b7a35e45f7f9ae8a5",
+      "pass": true,
+      "result_of": "bundle:08a7fb6da51a4feb1e0b75aaf222245270c1962dfa5c2a6f05c486656ee10b72"
+    },
+    {
+      "id": "bundle:12d433bda6673d99a39083d6fc1754c8108d0e157e70adcf46dc882543c5e7e9",
+      "audio_sha256": "9083fb5fd376b102cd6ad487b43304c31344d48dd08db321152e01d7e5a60166",
+      "pass": true,
+      "result_of": "bundle:12d433bda6673d99a39083d6fc1754c8108d0e157e70adcf46dc882543c5e7e9"
+    },
+    {
+      "id": "bundle:15bf7cef024d810e2516d204af2e222d1ecd04558f1dd08386d670d4a7fef016",
+      "audio_sha256": "559ee4536f810523721c75890f6f73b865a26c7821cbc3a01c9cf67af2dbde5c",
+      "pass": true,
+      "result_of": "bundle:15bf7cef024d810e2516d204af2e222d1ecd04558f1dd08386d670d4a7fef016"
+    },
+    {
+      "id": "bundle:1a5e8cac38405f96bede48b26d0ddc254056edf511b26349f0eb04c4d4b25d61",
+      "audio_sha256": "c1d4f1f2cf9cd1472232b3d1359f51e201708bec5028c9879b3f6bc6385f1baf",
+      "pass": true,
+      "result_of": "bundle:1a5e8cac38405f96bede48b26d0ddc254056edf511b26349f0eb04c4d4b25d61"
+    },
+    {
+      "id": "bundle:48732855b0b8a993e0acd1abaca4ccc0b66890d7bc2c819fc0ad53b8a124533b",
+      "audio_sha256": "e16bb24a5746684df32af6009af3327978f3a3aa3567c55cb788af1982a26c83",
+      "pass": true,
+      "result_of": "bundle:48732855b0b8a993e0acd1abaca4ccc0b66890d7bc2c819fc0ad53b8a124533b"
+    },
+    {
+      "id": "bundle:4a171e6b487d38938c1d57aa724baae16766ef22a60f5be618014e8dc71b1287",
+      "audio_sha256": "b2a223c8d52a9bda052e1b5ff83c07553891878e86da984df57df829121b977f",
+      "pass": true,
+      "result_of": "bundle:4a171e6b487d38938c1d57aa724baae16766ef22a60f5be618014e8dc71b1287"
+    },
+    {
+      "id": "bundle:586c097e58afe1f1200bc876288073cfdcb11e96f9ebfbea7c0e0735323f2358",
+      "audio_sha256": "cad1e34745bc97bcb3c979f008ce13c7d3f03e56a598412bb55fc5f4b88eb40e",
+      "pass": true,
+      "result_of": "bundle:586c097e58afe1f1200bc876288073cfdcb11e96f9ebfbea7c0e0735323f2358"
+    },
+    {
+      "id": "bundle:58c293150bec8d3a106800d177326d43c65abdd0973728f4f571152b45ca7b9e",
+      "audio_sha256": "122a04515e075e12e9f1138ebbe2370e6cf45fae803a47259e9c29a7cf3a7320",
+      "pass": true,
+      "result_of": "bundle:58c293150bec8d3a106800d177326d43c65abdd0973728f4f571152b45ca7b9e"
+    },
+    {
+      "id": "bundle:6d7aee946327e4f3c24e9e99c76968aea974cc6f4e81f370260dd329cd664e0c",
+      "audio_sha256": "8d640127e49508d42db8c976c0b5d5efe47dddba0b08b0d7ad84e45f24206683",
+      "pass": true,
+      "result_of": "bundle:6d7aee946327e4f3c24e9e99c76968aea974cc6f4e81f370260dd329cd664e0c"
+    },
+    {
+      "id": "bundle:70630f1943bea421ee5c9fced36c57dd532061975b51c0839284a06741fa2055",
+      "audio_sha256": "2234941a7257e05c61cb825b9f8dc235c5e10b1396ed3c1308af15006266e0b8",
+      "pass": true,
+      "result_of": "bundle:70630f1943bea421ee5c9fced36c57dd532061975b51c0839284a06741fa2055"
+    },
+    {
+      "id": "bundle:8ac99a9dc64b6f9de33afe525c2b46604df4cf92103b19e19e63543871ea34b9",
+      "audio_sha256": "9e8c826c8a0c774c3a9a791a4ff087cef3406a5a1b86ef52f3e5c52eae13c3a1",
+      "pass": true,
+      "result_of": "bundle:8ac99a9dc64b6f9de33afe525c2b46604df4cf92103b19e19e63543871ea34b9"
+    },
+    {
+      "id": "bundle:99c40b994a8ddc4ed8d384fda41e92bfd086d7b79bf03c3b139c92ddeffa52f9",
+      "audio_sha256": "672fb195f54648ec17d0fedd648bafdb115432cc3bce9f1e25c4c8cdf38eea09",
+      "pass": true,
+      "result_of": "bundle:99c40b994a8ddc4ed8d384fda41e92bfd086d7b79bf03c3b139c92ddeffa52f9"
+    },
+    {
+      "id": "bundle:9d01a24411f05fa01d19d1fbcb3289088591d7352894809e56f95e062f844f1b",
+      "audio_sha256": "1bc572e81f765e069b4ae95a024e43304916a90ed1e46238914032ab735400cb",
+      "pass": true,
+      "result_of": "bundle:9d01a24411f05fa01d19d1fbcb3289088591d7352894809e56f95e062f844f1b"
+    },
+    {
+      "id": "bundle:b2e7a29c9d116ad9959540c58512bacf55bf088e7d8eb68adac11a42f1df2f6b",
+      "audio_sha256": "55881d980284054b4323d2600a869c530ed85cb5f254d310e652d67cb5aa880e",
+      "pass": true,
+      "result_of": "bundle:b2e7a29c9d116ad9959540c58512bacf55bf088e7d8eb68adac11a42f1df2f6b"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "24df6a9e60e85a1e9bff8ea5bf937f440f2590b3aff20971c56faef9bc62078f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c1a9a8502bcc324a1b1e7bee04b31f7875f0f259cbfd890e63dea290ddd2f9fa",
+      "audio_sha256": "8a14775bd0efa132e731866e15cec0f899708f4087cfa5e542de8dc569b695c7",
+      "pass": true,
+      "result_of": "bundle:c1a9a8502bcc324a1b1e7bee04b31f7875f0f259cbfd890e63dea290ddd2f9fa"
+    },
+    {
+      "id": "bundle:d50b38d3596a2a06f5f3dd23700fe26d0770e8d34930cd9e8c9c124e61e67e14",
+      "audio_sha256": "91f4087b641fd92e5df8b51589fb3e5e49de40cffe7957a31009812dd080a766",
+      "pass": true,
+      "result_of": "bundle:d50b38d3596a2a06f5f3dd23700fe26d0770e8d34930cd9e8c9c124e61e67e14"
+    },
+    {
+      "id": "bundle:e337c324087a1f4c88fcfff4a78cfd4ab34d191c6c00cbce03e850a49fff8d4a",
+      "audio_sha256": "73326af933bbe7112636224c8da9a08a33bee003b3d4c3bf0ce39fc531746189",
+      "pass": true,
+      "result_of": "bundle:e337c324087a1f4c88fcfff4a78cfd4ab34d191c6c00cbce03e850a49fff8d4a"
+    },
+    {
+      "id": "bundle:fdaa017a5469899be2423936512dbef506d3c15e02eaea4d4caeae14e3941497",
+      "audio_sha256": "b201fea306fad5cba63f6938e10c87eb5b152fb78cbeae5d624fe4b9ec64321a",
+      "pass": true,
+      "result_of": "bundle:fdaa017a5469899be2423936512dbef506d3c15e02eaea4d4caeae14e3941497"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "8a14775bd0efa132e731866e15cec0f899708f4087cfa5e542de8dc569b695c7",
+      "pass": true,
+      "result_of": "bundle:c1a9a8502bcc324a1b1e7bee04b31f7875f0f259cbfd890e63dea290ddd2f9fa"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "559ee4536f810523721c75890f6f73b865a26c7821cbc3a01c9cf67af2dbde5c",
+      "pass": true,
+      "result_of": "bundle:15bf7cef024d810e2516d204af2e222d1ecd04558f1dd08386d670d4a7fef016"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "55881d980284054b4323d2600a869c530ed85cb5f254d310e652d67cb5aa880e",
+      "pass": true,
+      "result_of": "bundle:b2e7a29c9d116ad9959540c58512bacf55bf088e7d8eb68adac11a42f1df2f6b"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "8d640127e49508d42db8c976c0b5d5efe47dddba0b08b0d7ad84e45f24206683",
+      "pass": true,
+      "result_of": "bundle:6d7aee946327e4f3c24e9e99c76968aea974cc6f4e81f370260dd329cd664e0c"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "9e8c826c8a0c774c3a9a791a4ff087cef3406a5a1b86ef52f3e5c52eae13c3a1",
+      "pass": true,
+      "result_of": "bundle:8ac99a9dc64b6f9de33afe525c2b46604df4cf92103b19e19e63543871ea34b9"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "e3a8696ec09451ef4b5c72d6f36aaae00236f2b2b269d57b7a35e45f7f9ae8a5",
+      "pass": true,
+      "result_of": "bundle:08a7fb6da51a4feb1e0b75aaf222245270c1962dfa5c2a6f05c486656ee10b72"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "122a04515e075e12e9f1138ebbe2370e6cf45fae803a47259e9c29a7cf3a7320",
+      "pass": true,
+      "result_of": "bundle:58c293150bec8d3a106800d177326d43c65abdd0973728f4f571152b45ca7b9e"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "e16bb24a5746684df32af6009af3327978f3a3aa3567c55cb788af1982a26c83",
+      "pass": true,
+      "result_of": "bundle:48732855b0b8a993e0acd1abaca4ccc0b66890d7bc2c819fc0ad53b8a124533b"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "2234941a7257e05c61cb825b9f8dc235c5e10b1396ed3c1308af15006266e0b8",
+      "pass": true,
+      "result_of": "bundle:70630f1943bea421ee5c9fced36c57dd532061975b51c0839284a06741fa2055"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "672fb195f54648ec17d0fedd648bafdb115432cc3bce9f1e25c4c8cdf38eea09",
+      "pass": true,
+      "result_of": "bundle:99c40b994a8ddc4ed8d384fda41e92bfd086d7b79bf03c3b139c92ddeffa52f9"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "73326af933bbe7112636224c8da9a08a33bee003b3d4c3bf0ce39fc531746189",
+      "pass": true,
+      "result_of": "bundle:e337c324087a1f4c88fcfff4a78cfd4ab34d191c6c00cbce03e850a49fff8d4a"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "cad1e34745bc97bcb3c979f008ce13c7d3f03e56a598412bb55fc5f4b88eb40e",
+      "pass": true,
+      "result_of": "bundle:586c097e58afe1f1200bc876288073cfdcb11e96f9ebfbea7c0e0735323f2358"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "91f4087b641fd92e5df8b51589fb3e5e49de40cffe7957a31009812dd080a766",
+      "pass": true,
+      "result_of": "bundle:d50b38d3596a2a06f5f3dd23700fe26d0770e8d34930cd9e8c9c124e61e67e14"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "9083fb5fd376b102cd6ad487b43304c31344d48dd08db321152e01d7e5a60166",
+      "pass": true,
+      "result_of": "bundle:12d433bda6673d99a39083d6fc1754c8108d0e157e70adcf46dc882543c5e7e9"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "c1d4f1f2cf9cd1472232b3d1359f51e201708bec5028c9879b3f6bc6385f1baf",
+      "pass": true,
+      "result_of": "bundle:1a5e8cac38405f96bede48b26d0ddc254056edf511b26349f0eb04c4d4b25d61"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "1bc572e81f765e069b4ae95a024e43304916a90ed1e46238914032ab735400cb",
+      "pass": true,
+      "result_of": "bundle:9d01a24411f05fa01d19d1fbcb3289088591d7352894809e56f95e062f844f1b"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "b201fea306fad5cba63f6938e10c87eb5b152fb78cbeae5d624fe4b9ec64321a",
+      "pass": true,
+      "result_of": "bundle:fdaa017a5469899be2423936512dbef506d3c15e02eaea4d4caeae14e3941497"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "b2a223c8d52a9bda052e1b5ff83c07553891878e86da984df57df829121b977f",
+      "pass": true,
+      "result_of": "bundle:4a171e6b487d38938c1d57aa724baae16766ef22a60f5be618014e8dc71b1287"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "24df6a9e60e85a1e9bff8ea5bf937f440f2590b3aff20971c56faef9bc62078f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:08a7fb6da51a4feb1e0b75aaf222245270c1962dfa5c2a6f05c486656ee10b72",
+      "text": "可那场之后，她的单打再没赢过：二零二五年输了三场，二零二六年又输了十二场。有两场，只差一点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可那场之后,她的单打再没赢过,2025年输了三场,2026年又输了十二场。有两场,只差一点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.561,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 那场 ｜ 之后 ｜ 她 ｜ 的 ｜ 单打 ｜ 再 ｜ 没 ｜ 赢过 ｜ 二零二五年 ｜ 输 ｜ 了 ｜ 三 ｜ 场 ｜ 二零二六年 ｜ 又 ｜ 输 ｜ 了 ｜ 十二场 ｜ 有 ｜ 两场 ｜ 只 ｜ 差 ｜ 一点"
+      }
+    },
+    {
+      "id": "bundle:12d433bda6673d99a39083d6fc1754c8108d0e157e70adcf46dc882543c5e7e9",
+      "text": "这是她二零一九年后第一次来亚洲，这趟也是她和丈夫的蜜月。她戴着在长隆买的帽子开发布会。双打首轮，她和曾丽美六比零、七比五赢了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 57,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.018,
+        "longest_deletion": 0,
+        "transcript": "这是他2019年后第一次来亚洲,这趟也是他和丈夫的蜜月。他带着在长龙买的帽子开发部会。双打手轮,他和曾丽美6比0,7比5赢了。"
+      },
+      "polyphones": [
+        {
+          "index": 32,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.771,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        },
+        {
+          "index": 39,
+          "char": "发",
+          "word": "开发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 57,
+        "speech_s": 11.686,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这是 ｜ 她 ｜ 二零一九年 ｜ 后 ｜ 第一次 ｜ 来 ｜ 亚洲 ｜ 这 ｜ 趟 ｜ 也是 ｜ 她 ｜ 和 ｜ 丈夫 ｜ 的 ｜ 蜜月 ｜ 她 ｜ 戴 ｜ 着 ｜ 在 ｜ 长隆 ｜ 买 ｜ 的 ｜ 帽子 ｜ 开 ｜ 发布会 ｜ 双打 ｜ 首轮 ｜ 她 ｜ 和 ｜ 曾丽美 ｜ 六比零 ｜ 七比五 ｜ 赢 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:15bf7cef024d810e2516d204af2e222d1ecd04558f1dd08386d670d4a7fef016",
+      "text": "她拿过七个大满贯单打冠军，五个在温网；四枚奥运金牌；二零零二年登上世界第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "他拿过七个大猛冠单打冠军,五个在温网,四枚奥运金牌,2002年登上世界第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 6.71,
+        "cps": 5.07,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 拿 ｜ 过 ｜ 七个 ｜ 大满贯 ｜ 单打 ｜ 冠军 ｜ 五 ｜ 个 ｜ 在 ｜ 温网 ｜ 四枚 ｜ 奥运 ｜ 金牌 ｜ 二零零二年 ｜ 登上 ｜ 世界 ｜ 第一"
+      }
+    },
+    {
+      "id": "bundle:1a5e8cac38405f96bede48b26d0ddc254056edf511b26349f0eb04c4d4b25d61",
+      "text": "她说：没有其他球员享受早晨，只有我。赢球很有趣，但健康最重要。我甚至不知道明年要做什么。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "她说,没有其他球员享受早晨,只有我。赢球很有趣,但健康最重要。我甚至不知道明年要做什么。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "重",
+          "word": "重要",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "unreliable",
+              "score": 0.219,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "仲众"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 9.139,
+        "cps": 4.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 说 ｜ 没有 ｜ 其他 ｜ 球员 ｜ 享受 ｜ 早晨 ｜ 只有 ｜ 我 ｜ 赢 ｜ 球 ｜ 很 ｜ 有趣 ｜ 但 ｜ 健康最重要 ｜ 我 ｜ 甚至 ｜ 不 ｜ 知道 ｜ 明年 ｜ 要 ｜ 做 ｜ 什么"
+      }
+    },
+    {
+      "id": "bundle:48732855b0b8a993e0acd1abaca4ccc0b66890d7bc2c819fc0ad53b8a124533b",
+      "text": "决胜盘，她四比零领先。然后，达尼洛维奇连赢了六局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝胜盘：他四比零领先：然后,达尼洛维奇联赢了六局。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.953,
+        "cps": 4.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 她 ｜ 四比零 ｜ 领先 ｜ 然后 ｜ 达尼 ｜ 洛维奇 ｜ 连 ｜ 赢 ｜ 了 ｜ 六局"
+      }
+    },
+    {
+      "id": "bundle:4a171e6b487d38938c1d57aa724baae16766ef22a60f5be618014e8dc71b1287",
+      "text": "46岁，15连败，为什么还在打？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.071,
+        "longest_deletion": 0,
+        "transcript": "四十六岁,十五年败,为什么还在打?"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.534,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 3.208,
+        "cps": 4.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "46岁 ｜ 15 ｜ 连 ｜ 败 ｜ 为什么 ｜ 还 ｜ 在 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:586c097e58afe1f1200bc876288073cfdcb11e96f9ebfbea7c0e0735323f2358",
+      "text": "一年多里，美网、澳网、美网，她都是拿外卡进的正赛；今年的印第安维尔斯、迈阿密、马德里和辛辛那提，也是外卡。有人说该把机会留给年轻人，也有人说，球迷就是来看传奇的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "一年多礼、美网、傲网、美网,它都是拿外卡进的正赛。今年的印第安威尔斯、麦阿密、马德里和辛辛娜提也是外卡。有人说该把机会留给年轻人,也有人说,球迷就是来看传奇了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 14.917,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一年 ｜ 多 ｜ 里 ｜ 美 ｜ 网 ｜ 澳 ｜ 网 ｜ 美 ｜ 网 ｜ 她 ｜ 都是 ｜ 拿 ｜ 外卡 ｜ 进 ｜ 的 ｜ 正 ｜ 赛 ｜ 今年 ｜ 的 ｜ 印第安维尔斯 ｜ 迈阿密 ｜ 马德里 ｜ 和 ｜ 辛辛那提 ｜ 也是 ｜ 外卡 ｜ 有人 ｜ 说 ｜ 该 ｜ 把 ｜ 机会 ｜ 留给 ｜ 年轻人 ｜ 也 ｜ 有人 ｜ 说 ｜ 球迷 ｜ 就 ｜ 是 ｜ 来看 ｜ 传奇 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:58c293150bec8d3a106800d177326d43c65abdd0973728f4f571152b45ca7b9e",
+      "text": "一月澳网，四十五岁的她是正赛年纪最大的女选手。首轮对达尼洛维奇，她打进了决胜盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.028,
+        "longest_deletion": 0,
+        "transcript": "1月傲王,45岁的他是正在年纪最大的女选手。首轮对达尼洛维奇,他打进了决胜盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.252,
+        "cps": 4.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一月 ｜ 澳 ｜ 网 ｜ 四十五 ｜ 岁 ｜ 的 ｜ 她 ｜ 是 ｜ 正 ｜ 赛 ｜ 年纪 ｜ 最大 ｜ 的 ｜ 女 ｜ 选手 ｜ 首轮 ｜ 对达 ｜ 尼 ｜ 洛维奇 ｜ 她 ｜ 打进 ｜ 了 ｜ 决胜盘"
+      }
+    },
+    {
+      "id": "bundle:6d7aee946327e4f3c24e9e99c76968aea974cc6f4e81f370260dd329cd664e0c",
+      "text": "赛前有记者问：四十五岁了，天这么热，为什么还要打？她笑着反问：为什么不呢？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.032,
+        "longest_deletion": 0,
+        "transcript": "赛前有记者问,四十五岁了,天这么热,为什么还要打?他笑着反问,为什么不难?"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.628,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 7.134,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赛 ｜ 前 ｜ 有 ｜ 记者 ｜ 问 ｜ 四十五岁 ｜ 了 ｜ 天 ｜ 这么 ｜ 热 ｜ 为什么 ｜ 还要 ｜ 打 ｜ 她 ｜ 笑 ｜ 着 ｜ 反问 ｜ 为什么 ｜ 不 ｜ 呢"
+      }
+    },
+    {
+      "id": "bundle:70630f1943bea421ee5c9fced36c57dd532061975b51c0839284a06741fa2055",
+      "text": "八月美网首轮，对手是肯宁。第二盘她七次拿到盘点，抢七里六比二领先，又连丢了六分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "八月美王手轮,对手是肯宁。第二盘他七次,拿到盘点,抢七里六比二领先,又连丢了六分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.677,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "八月 ｜ 美 ｜ 网 ｜ 首轮 ｜ 对手 ｜ 是 ｜ 肯宁 ｜ 第二盘 ｜ 她 ｜ 七次 ｜ 拿 ｜ 到 ｜ 盘点 ｜ 抢 ｜ 七 ｜ 里 ｜ 六比二 ｜ 领先 ｜ 又 ｜ 连 ｜ 丢 ｜ 了 ｜ 六分"
+      }
+    },
+    {
+      "id": "bundle:8ac99a9dc64b6f9de33afe525c2b46604df4cf92103b19e19e63543871ea34b9",
+      "text": "她说，想念的是比赛本身的乐趣和挑战。很多时候，要战胜的是你自己。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他说,想念的是比赛本身的乐趣和挑战,很多时候要战胜的是你自己。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.132,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 说 ｜ 想念 ｜ 的 ｜ 是 ｜ 比赛 ｜ 本身 ｜ 的 ｜ 乐趣 ｜ 和 ｜ 挑战 ｜ 很多 ｜ 时候 ｜ 要 ｜ 战胜 ｜ 的 ｜ 是 ｜ 你 ｜ 自己"
+      }
+    },
+    {
+      "id": "bundle:99c40b994a8ddc4ed8d384fda41e92bfd086d7b79bf03c3b139c92ddeffa52f9",
+      "text": "六比二，打成了六比八。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6比2 打成了6比8。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 1.863,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比二 ｜ 打 ｜ 成 ｜ 了 ｜ 六比八"
+      }
+    },
+    {
+      "id": "bundle:9d01a24411f05fa01d19d1fbcb3289088591d7352894809e56f95e062f844f1b",
+      "text": "单打首轮，她的对手是十八岁的四号种子塔格尔，比她小二十八岁。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "单打手轮,他的对手是18岁的4号种子塔格尔,比他小28岁。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.602,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 5.059,
+        "cps": 5.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "单打 ｜ 首轮 ｜ 她 ｜ 的 ｜ 对手 ｜ 是 ｜ 十八岁 ｜ 的 ｜ 四号 ｜ 种子 ｜ 塔格尔 ｜ 比 ｜ 她 ｜ 小 ｜ 二十八岁"
+      }
+    },
+    {
+      "id": "bundle:b2e7a29c9d116ad9959540c58512bacf55bf088e7d8eb68adac11a42f1df2f6b",
+      "text": "二零二四年三月之后，她做了子宫肌瘤手术，离开赛场十六个月。二零二五年夏天，她在华盛顿复出。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2024年3月之后,他做了子宫肌流手术离开赛场16个月。2025年夏天,他在华盛顿付出。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.278,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二四年 ｜ 三月 ｜ 之后 ｜ 她 ｜ 做 ｜ 了 ｜ 子宫肌瘤 ｜ 手术 ｜ 离开 ｜ 赛场 ｜ 十六个月 ｜ 二零二五年 ｜ 夏天 ｜ 她 ｜ 在 ｜ 华盛顿 ｜ 复出"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c1a9a8502bcc324a1b1e7bee04b31f7875f0f259cbfd890e63dea290ddd2f9fa",
+      "text": "四十六岁的大威廉姆斯，单打已经连输十五场。她又拿着外卡来到广州，为什么还在打？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四十六岁的大威廉姆斯、丹达、已经联书事务场。他又拿着外卡来到广州,为什么还在打?"
+      },
+      "polyphones": [
+        {
+          "index": 35,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.403,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.512,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四十六岁 ｜ 的 ｜ 大 ｜ 威廉姆斯 ｜ 单打 ｜ 已经 ｜ 连 ｜ 输 ｜ 十五场 ｜ 她 ｜ 又 ｜ 拿 ｜ 着 ｜ 外卡 ｜ 来到 ｜ 广州 ｜ 为什么 ｜ 还 ｜ 在 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:d50b38d3596a2a06f5f3dd23700fe26d0770e8d34930cd9e8c9c124e61e67e14",
+      "text": "美网输球后，被问到未来的打算，她说：我不觉得我必须去想这个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "美网书求后被问到未来的打算。他说,我不觉得我必须去想这个。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.212,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "美 ｜ 网 ｜ 输 ｜ 球 ｜ 后 ｜ 被 ｜ 问 ｜ 到 ｜ 未来 ｜ 的 ｜ 打算 ｜ 她 ｜ 说 ｜ 我 ｜ 不 ｜ 觉得 ｜ 我 ｜ 必须 ｜ 去 ｜ 想 ｜ 这个"
+      }
+    },
+    {
+      "id": "bundle:e337c324087a1f4c88fcfff4a78cfd4ab34d191c6c00cbce03e850a49fff8d4a",
+      "text": "这一年，小威也回来陪她打双打。辛辛那提和美网，两场都输在抢十；美网那场，抢十里她们五比零领先。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "这一年,小威也回来陪她打双打。新西纳提和梅网两场都输在抢时,梅网那场抢时里他们无比零领先。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 9.328,
+        "cps": 4.4,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 年 ｜ 小威 ｜ 也 ｜ 回来 ｜ 陪 ｜ 她 ｜ 打 ｜ 双打 ｜ 辛辛那提 ｜ 和美 ｜ 网 ｜ 两场 ｜ 都 ｜ 输 ｜ 在 ｜ 抢 ｜ 十 ｜ 美 ｜ 网 ｜ 那 ｜ 场 ｜ 抢 ｜ 十 ｜ 里 ｜ 她们 ｜ 五比零 ｜ 领先"
+      }
+    },
+    {
+      "id": "bundle:fdaa017a5469899be2423936512dbef506d3c15e02eaea4d4caeae14e3941497",
+      "text": "四十六岁，还在输，也还在打。你觉得，她该把外卡让给年轻人吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四十六岁,还在输,也还在打。你觉得,他该把外卡让给年轻人吗?"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.413,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 10,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.094,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 16,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.142,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.943,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四十六岁 ｜ 还 ｜ 在 ｜ 输 ｜ 也 ｜ 还 ｜ 在 ｜ 打 ｜ 你 ｜ 觉得 ｜ 她 ｜ 该 ｜ 把 ｜ 外卡 ｜ 让给 ｜ 年轻人 ｜ 吗"
+      }
+    }
+  ]
+}
