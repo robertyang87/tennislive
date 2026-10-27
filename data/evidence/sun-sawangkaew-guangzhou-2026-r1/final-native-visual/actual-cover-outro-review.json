@@ -1,0 +1,92 @@
+{
+  "status": "pass",
+  "reviewer": "independent current assistant",
+  "native_run": 40539608417,
+  "method": "Waited for current local release-preview native_run40539608417; verified this actual downloaded master hash/bytes and opened the five new actual-master frames listed below.",
+  "film_sha256": "747c52d2ebb488909e19bf1693837e4982f66b56ae70d78a355b168dcfac4ff2",
+  "film_bytes": 61089962,
+  "film_seconds": 230.2,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "review_scope": "Actual current native cover,stat-card safe-area/name layout,outro,and two key chapter-card still frames only;no audio or full animation-timing approval.",
+  "frames": [
+    {
+      "path": "frames/cover.jpg",
+      "sha256": "10bcfa14732d619309c2f2af8f3ef14efa62f1216a70d12e57b96b2a15a5577e"
+    },
+    {
+      "path": "frames/seg-15.jpg",
+      "sha256": "e316e146dc97dca970f6f0006545ef34085fd3477cf5c3d7d4ef6e105271eb69"
+    },
+    {
+      "path": "frames/outro.jpg",
+      "sha256": "bc27cec82db47cf0749a26f2844342d42bd0fd6cb420672d9ee7b47bc8b4ade5"
+    },
+    {
+      "path": "frames/seg-09.jpg",
+      "sha256": "05b105ca9a4ffba22e168e2889562a9f455895500b262ad3337d7c2eaa6f0417"
+    },
+    {
+      "path": "frames/seg-02.jpg",
+      "sha256": "e8a1f90f20783dac7c6a1b91108fedc2f9bccbbb88162584c0bd775b47aa0943"
+    }
+  ],
+  "cover": {
+    "status": "pass",
+    "observations": [
+      "Official same-matchD crop remains intact;hat/head,profileface and raised fist are visible without header/hook/scoreboard text crossing them.",
+      "Matchup subtitle and loser scoreboard row both visibly read萨王凯.",
+      "SunCHN405 andSawangkaewTHA80,6-3/6-4,CenterCourt and1:21 remain readable and correct."
+    ]
+  },
+  "stat_card": {
+    "status": "pass",
+    "observations": [
+      "The actual new film restores the stat-card safe inset,approximatelyx65/y86;its own brand title aroundy130–165 is clearly below the persistent match topbar and no longer overlaps it.",
+      "The card title and right-player name both read萨王凯;leftSun avatar and rightwhite-cappedThai avatar remain correctly assigned.",
+      "Displayed result6-3/6-4,rankings405/80,winners9/17,non-forcederrors21/41,aces3/3,doublefaults4/6,andtotalpoints69/52 remain correct.",
+      "The constant match topbar remains visible above the card;the stat-card data and left/right numbers remain legible."
+    ]
+  },
+  "outro": {
+    "status": "pass",
+    "observations": [
+      "Account tennis-clock logo is complete and centered.",
+      "网球时差·赛场之上,时差归我好球归你,andbottomaccountmark are legible and unclipped.",
+      "Approved deep-blue tennis-court background and top brand strip remain intact."
+    ]
+  },
+  "chapter_cards": {
+    "seg-09.jpg": {
+      "status": "pass",
+      "observations": [
+        "Full-canvas chapter layout retained without accidental stat-card inset.",
+        "ITF18岁及以下组女子排名 remains simultaneously visible with她已是女子世界第1 subtitle,maintaining the age-group/ranking-system qualification."
+      ]
+    },
+    "seg-02.jpg": {
+      "status": "pass",
+      "observations": [
+        "Full-canvas chapter layout and top brand strip retained.",
+        "10月25日→10月27日,青少年年终冠军/两天后再战职业赛 andsubtitle18岁及以下组 remain clear and separated."
+      ]
+    }
+  },
+  "resolved_findings": [
+    {
+      "kind": "stat_card_header_topbar_overlap",
+      "status": "resolved_on_actual_native40539608417",
+      "resolution": "Actual stat-card animation is composited back into the original safe inset,clearing the persistent topbar."
+    }
+  ],
+  "needs_fix": [],
+  "old_master_pass_reused": false,
+  "local_partial_preview_used_as_native_evidence": false,
+  "audio_reviewed": false,
+  "voice_quality_approval": false,
+  "human_listening_claimed": false,
+  "spec_changed": false,
+  "tts_changed": false
+}

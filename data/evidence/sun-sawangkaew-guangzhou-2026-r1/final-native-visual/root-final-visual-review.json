@@ -1,0 +1,49 @@
+{
+  "status": "pass",
+  "reviewer": "root actual current assistant",
+  "film_sha256": "747c52d2ebb488909e19bf1693837e4982f66b56ae70d78a355b168dcfac4ff2",
+  "film_bytes": 61089962,
+  "native_run": 40539608417,
+  "method": "Opened actual new master frames directly; no old master used. Native voice and QC approval are separate and still required.",
+  "frames": [
+    {
+      "path": "frames/cover.jpg",
+      "sha256": "10bcfa14732d619309c2f2af8f3ef14efa62f1216a70d12e57b96b2a15a5577e"
+    },
+    {
+      "path": "frames/seg-03.jpg",
+      "sha256": "b73f12a543b18db89051382d40f7fc3915b70c9dbf8f4b990dc5edb5baf8cae4"
+    },
+    {
+      "path": "frames/seg-09.jpg",
+      "sha256": "05b105ca9a4ffba22e168e2889562a9f455895500b262ad3337d7c2eaa6f0417"
+    },
+    {
+      "path": "frames/seg-15.jpg",
+      "sha256": "e316e146dc97dca970f6f0006545ef34085fd3477cf5c3d7d4ef6e105271eb69"
+    },
+    {
+      "path": "frames/point-result.jpg",
+      "sha256": "ef9f718ff3a855da0cfe15c890b5fd89aaf801afe87ae1708535b66164a9fa15"
+    },
+    {
+      "path": "frames/closing-quote.jpg",
+      "sha256": "186d0348d47a17ec2bcfb7bee0f18788d46025f9f82005e3b6cafdd29e469aac"
+    },
+    {
+      "path": "frames/outro.jpg",
+      "sha256": "bc27cec82db47cf0749a26f2844342d42bd0fd6cb420672d9ee7b47bc8b4ade5"
+    }
+  ],
+  "findings": [
+    "Actual stat-card begins x65/y86; card title and persistent match topbar are separate. Dynamic stat-card integration retained.",
+    "Cover head/face/fist unobscured; cover matchup, original topbar, stat avatar name and final Chinese source-commentary translation display 萨王凯.",
+    "Result 6-3/6-4 with Sun left and Thai opponent right; winners9/17, nonforcederrors21/41, total69/52 remain correct.",
+    "ITF18岁及以下组女子排名 and 她已是女子世界第1 occur together on actual seg09 frame.",
+    "Actual court fills1080x1440, original source scoreboard retained in fixed location; no point values reconstructed.",
+    "Actual ending handshake and faithful English/Chinese commentary retained; branded account outro intact."
+  ],
+  "needs_fix": [],
+  "human_listening_claimed": false,
+  "spec_changed_during_review": false
+}

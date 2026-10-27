@@ -1,0 +1,126 @@
+{
+  "schema": "tennislive.actual-point-quote-visual-review.v1",
+  "status": "pass",
+  "scope": "visual_only_actual_native40539608417_critical_points_quotes_and_itf_scope",
+  "fix_required": false,
+  "native_run": 40539608417,
+  "reviewer": "independent assistant /root/sun_source_audio_audit",
+  "reviewed_at": "2026-10-27T16:29:58.848383+00:00",
+  "film_sha256": "747c52d2ebb488909e19bf1693837e4982f66b56ae70d78a355b168dcfac4ff2",
+  "film_bytes": 61089962,
+  "film_seconds": 230.2,
+  "human_listening_claimed": false,
+  "voice_gate_pass_claimed": false,
+  "checks": [
+    {
+      "name": "corrected_chinese_name_in_all_source_quotes",
+      "status": "pass",
+      "observations": [
+        "Actual70.68 shows Sawangkaew is staying in touch. with 萨王凯仍然紧紧追着.",
+        "New extraction166.00 shows Again, the deft touch of Sawangkaew. with 又是萨王凯细腻的手感.",
+        "Actual192.48 shows She topples Mananchaya Sawangkaew with relative ease. with 她较为轻松地击败了萨王凯.",
+        "All three selected Chinese source-commentary mentions use the user-corrected name 萨王凯; English commentary identity remains unchanged."
+      ]
+    },
+    {
+      "name": "itf_rank_scope_visible_with_world_number_one_cue",
+      "status": "pass",
+      "actual_time": 86.44,
+      "observed_same_frame": [
+        "ITF18岁及以下组女子排名",
+        "她已是女子世界第1"
+      ],
+      "observation": "Explicit ITF18-and-under female ranking scope is visible on the same actual frame as the standalone world-number-one subtitle, so the cue does not imply WTA senior worldNo1."
+    },
+    {
+      "name": "match_result_and_original_scoreboard",
+      "status": "pass",
+      "observations": [
+        "Compact topbar visibly reads 孙心然6-3 6-4萨王凯 across actual match-point frames.",
+        "Original broadcaster board remains fixed lower-left with both name rows and5-4/40-15 digits clear in the actual preparation/serve/result frames.",
+        "Actual37.12 preserves source Sun3/Ad vs Sawangkaew2/blank. Prior original-source1113.64 verification established this opposing point cell is genuinely blank in the broadcast, not cropped40.",
+        "New extraction1.80 shows cold-open board present while still in source; it has not been falsely suppressed or moved."
+      ]
+    },
+    {
+      "name": "complete_match_point_and_same_match_handshake",
+      "status": "pass",
+      "actual_times": [
+        169.0,
+        171.64,
+        181.48,
+        192.48,
+        193.48,
+        193.56
+      ],
+      "observations": [
+        "169.00 actual frame shows serve preparation;171.64 shows Sun serving from far baseline;181.48 retains last exchange/result and full Another big moment... EN/ZH text.",
+        "The unchanged continuous source plan retains one complete extra key point plus the complete match point; card-only rendering changes do not alter those independently audited source windows.",
+        "Actual192.48 visibly includes the same two players clasping hands at net, faces and hands clear above the bilingual caption.",
+        "New193.48 extraction still shows Sun in maroon and Sawangkaew in white leaving net;193.56 begins the closing transition on that same match scene. No next-match content is present at the inspected boundary."
+      ]
+    }
+  ],
+  "evidence_frames": [
+    {
+      "path": "frames/seg-06.jpg",
+      "sha256": "9fc4a97d343bd3837679a1b46066d2942bfbd41ac79409d06e5f80136df430bb",
+      "actual_time": 70.68
+    },
+    {
+      "path": "frames/seg-09.jpg",
+      "sha256": "05b105ca9a4ffba22e168e2889562a9f455895500b262ad3337d7c2eaa6f0417",
+      "actual_time": 86.44
+    },
+    {
+      "path": "frames/seg-03.jpg",
+      "sha256": "b73f12a543b18db89051382d40f7fc3915b70c9dbf8f4b990dc5edb5baf8cae4",
+      "actual_time": 37.12
+    },
+    {
+      "path": "frames/point-prep.jpg",
+      "sha256": "308f15bd213fd24036b8f9aecff5e030860de7a150dc150a70aa41213cafe8f5",
+      "actual_time": 169.0
+    },
+    {
+      "path": "frames/point-serve.jpg",
+      "sha256": "15c75a3c377b3d2ba6c9cad0d7bf9651616b0501c4dfd55973430f6dcbed240a",
+      "actual_time": 171.64
+    },
+    {
+      "path": "frames/point-result.jpg",
+      "sha256": "ef9f718ff3a855da0cfe15c890b5fd89aaf801afe87ae1708535b66164a9fa15",
+      "actual_time": 181.48
+    },
+    {
+      "path": "frames/closing-quote.jpg",
+      "sha256": "186d0348d47a17ec2bcfb7bee0f18788d46025f9f82005e3b6cafdd29e469aac",
+      "actual_time": 192.48
+    },
+    {
+      "path": "frames/run40539608417-1.80.jpg",
+      "sha256": "b1d48d122a5998bf236c3df852d16e9d5811b67934dab84db0cb0157c263103b",
+      "actual_time": 1.8
+    },
+    {
+      "path": "frames/run40539608417-166.00.jpg",
+      "sha256": "b17a28334ca11fdb367ab017a8219800fa5deaa2ad3af465e200a41e224c542d",
+      "actual_time": 166.0
+    },
+    {
+      "path": "frames/run40539608417-193.48.jpg",
+      "sha256": "8378d4440b48826355140dc8a82788ee203acec51225c2a6c3e061940a7adadf",
+      "actual_time": 193.48
+    },
+    {
+      "path": "frames/run40539608417-193.56.jpg",
+      "sha256": "03716b9d695253bedaac3edfcab619c774067e6211929f1d2b83f7ab84f14104",
+      "actual_time": 193.56
+    }
+  ],
+  "publication_condition": "Native actual-audio/identity/QC suite and exact-final-head CI must independently pass before the authorized corrected-version repush. This is only an actual-film visual-scope pass; voice completion is not asserted.",
+  "limitations": [
+    "No subjective human listening or loudness processing claimed.",
+    "Root and cover reviewer independently verify new animated-stat-card safe margins, cover, outro and native full-film identities."
+  ]
+}
