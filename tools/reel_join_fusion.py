@@ -65,12 +65,14 @@ def plan(native_graph: str, parts: int) -> tuple[FusionPlan | None, str]:
         if native_graph != '[0:v]null[vout];[0:a]anull[aout]':
             return None, 'unrecognized one-part dissolve graph'
         return FusionPlan('[0:v]null[vout]', '[0:a]anull[aout]', parts), ''
+    from tennislive.video.transitions import xfade_names  # noqa: PLC0415
+    shapes = '|'.join(sorted(xfade_names()))
     chains = native_graph.split(';')
     videos, audios = [], []
     for chain in chains:
         if 'xfade=' in chain:
             if not re.fullmatch(
-                    r'\[(?:0:v|vx\d+)\]\[\d+:v\]xfade=transition=fade:'
+                    r'\[(?:0:v|vx\d+)\]\[\d+:v\]xfade=transition=(?:' + shapes + r'):'
                     r'duration=[0-9.]+:offset=[0-9.]+\[(?:vout|vx\d+)\]', chain):
                 return None, 'unrecognized video dissolve operation'
             videos.append(chain)
