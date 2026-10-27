@@ -11,11 +11,11 @@
   "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
   "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径，与前两期同）。顶层 voice/rate 没有代码读，不写。",
   "cover": {
-    "_hook_term_why": "金句口径：钩子用已核数字事实（三次大满贯决赛对手均为时任世界第一且全胜，事实卡逐场核实）——不可替换项占封面与生涯章节卡两处；纹身贝克特原句占结尾金句卡回环位。",
+    "_hook_term_why": "所有者 2026-10-27 修正：封面钩子改仪式文案（本期只做退役仪式，生涯向钩子不合定位）。「他从没赢过巴塞尔」为已核事实（_claims 已认领：ATP 冠军全表＋维基决赛全表均无巴塞尔冠军）；「九千人却起立送别」为仪式当夜事实（human_context：九千多名观众起立鼓掌三分多钟）。生涯数字（三冠掀翻世界第一）退回正文章节卡（segments[4]）承载，纹身贝克特原句仍占结尾金句卡回环位。",
     "eyebrow": "网球有故事",
-    "hook": "三次决赛\n三次掀翻世界第一",
+    "hook": "他从没赢过巴塞尔\n九千人却起立送别",
     "layout": "solo",
-    "narration": "三次决赛，三次掀翻世界第一。",
+    "narration": "他从没赢过巴塞尔，九千人却起立送别。",
     "portrait": {
       "_credit": "封面图为 SRF 官方直播（经 Blick 发布）绕场环节帧：瓦林卡向观众鼓掌致意（源内 43.5 秒）。自 1920×1080 原帧取 (800,0)-(1610,1080) 的 810×1080 窗口、Lanczos 放大至 1620×2160 入仓；双台标均在裁切窗外。",
       "_portrait_why": "本期无高于 1080p 的官方照片源可用，按『封面用当场高清图、主角正面优先』口径取官方直播帧：43.5 秒帧为近景、3/4 正脸、双眼睁开望向看台、情绪到位，身后 MERCI STAN 灯牌与手机灯海即本期主题；42 秒手抚胸口帧手臂过脸，不合 B8，弃用。",
@@ -28,7 +28,7 @@
     },
     "story_kind": "person",
     "subject": "瓦林卡",
-    "topic": "瓦林卡：三次决赛，三次掀翻世界第一"
+    "topic": "瓦林卡：巴塞尔退役仪式之夜"
   },
   "date": "2026-10-27",
   "editorial": {
@@ -668,7 +668,7 @@
     "rts90": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinka90s/wawrinka90s.mp4",
     "s19": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinka193/wawrinka193.mp4"
   },
-  "title": "瓦林卡：三次决赛，三次掀翻世界第一",
+  "title": "瓦林卡：巴塞尔退役仪式之夜",
   "tts_backend": "edge",
   "conform": {
     "fed": "费德勒致辞源只有 1280×720（SRF 录制、nau.ch 独家发布，无更高清载体，所有者 2026-10-27 已按 URL 在 APPROVED_LOW_RES_SOURCES 授权 720p 例外）；静态说话头特写、画面静止，等比放大铺满再中央裁到基准尺寸可接受，不冒充原生 1080p。"
