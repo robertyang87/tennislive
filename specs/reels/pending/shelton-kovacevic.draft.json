@@ -18,7 +18,16 @@
       }
     ],
     "winner": "谢尔顿",
-    "result": "6-7(4) 7-6(3) 7-6(4)"
+    "result": "6-7(4) 7-6(3) 7-6(4)",
+    "portrait": {
+      "image": "assets/reel/shelton-kovacevic-cover.jpg",
+      "focus": 0.485,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「ben shelton」「Swiss Indoors Basel」，日期对上当地 2026-10-27（Europe/Zurich；日期来源 flashscore dc_1_GQ8pNy7K）；EXIF 拍摄 2026:10:27 18:23:24+01:00。② 分辨率：4200×2800，zoom 1 铺 1080×1440 是 1.94×（不放大）。③ 认人：最大那张脸像 谢尔顿 0.60（≥ 0.34）。④ 睁眼：EAR 0.2906（≥ 0.16）。⑤ 钩子带：脸落在 y337~551，钩子顶边 790。排序：[True, False, False, True, True, 214, 0.5997]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/8342b3e5-9916-4b3c-a6ef-7847cdfdbe72/GettyImages-2301795145.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/8342b3e5-9916-4b3c-a6ef-7847cdfdbe72/GettyImages-2301795145.jpg（条目 #4599820，接口发布 2026-10-27T19:19:30Z，EXIF 拍摄 2026:10:27 18:23:24+01:00（UTC 2026-10-27T17:23:24Z），原图 4200×2800），说明原文「2026 Basel Shelton · BASEL, SWITZERLAND - OCTOBER 27: Ben Shelton of USA stretches to play the backhand against Aleksandar Kovacevic of USA during the Swiss Indoors Basel Day 4 at St. Jakobshalle on October 27, 2026 in Basel, Switzerland. (Photo by Pascal von Büren/Eurasia Sport Images/Getty Images)」，署名 Eurasia Sport Images；2026 Eurasia Sport Images；Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -271,5 +280,18 @@
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（GettyImages-2301794690.jpg 不匹配 Swiss Indoors Basel），拒绝资料图）",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-25–2026-10-27 窗口里扫了 118 场，没有同时出现 ['ben shelton', 'aleksandar kovacevic'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "GQ8pNy7K",
+      "start_utc": "2026-10-27T17:10:00Z",
+      "end_utc": "2026-10-27T19:48:09Z",
+      "source": "flashscore dc_1_GQ8pNy7K（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/d202d22a-bb69-4b42-b30a-22856c55389f/GettyImages-2301795045.jpg",
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/865af372-f739-4ae8-8f63-fbed4253abb4/GettyImages-2301794899.jpg"
+    ],
+    "replaced_under": ""
+  }
 }
