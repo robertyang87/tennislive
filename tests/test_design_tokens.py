@@ -74,7 +74,7 @@ def test_比分组件和彩条照原值收进来():
     assert T.TEXT_SHADOW_HOOK == ("0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),"
                                   "0 0 60px rgba(6,28,20,.7)")
     assert T.TEXT_SHADOW_CHROME == "0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)"
-    assert T.MOTION["video_dissolve_s"] == 0.18  # 溶解，中间一帧黑都不许有
+    assert T.MOTION["video_dissolve_s"] == 0.5  # 溶解，中间一帧黑都不许有；2026-10-27 从 0.18 拉长
     # 推送红按钮不进 token（两个调用处保持字面不动）
     every = [*T.DARK.values(), *T.LIGHT.values(), *T.CHART, *T.SCORE.values()]
     assert not any("ff2442" in v.lower() for v in every)

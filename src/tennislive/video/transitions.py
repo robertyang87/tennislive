@@ -12,20 +12,20 @@
 意思是**接进这一段的那个接缝**用这个动画；不写就是 `dissolve`（原来那条溶解）。
 片尾那一刀照旧溶解。名字只认 `PRESETS` 里的，写错 `--dry-run` 就红。
 
-### 为什么时长不让改
+### 为什么时长不让各写各的
 
-每个接缝都是 `build_match_reel.SEG_FADE`（0.18 秒），动画只换**形状**不换长度：
-part 多切的溶解底料、旁白 adelay、字幕 cue、现场声 `acrossfade`、死球后的 ghost
-检查，全按这 0.18 秒记账（见 `dissolve_filtergraph` 的长度账）。改成每个接缝
-各自一个时长，要动的不是这里，是那一整本账。0.18 秒在 60 fps 上是 11 帧，
-推、甩、圈开都看得清（2026-10-27 逐帧量过，见 `docs/transition-presets.md`）。
+每个接缝都是 `build_match_reel.SEG_FADE`（`design_tokens.MOTION["video_dissolve_s"]`，
+2026-10-27 起 0.5 秒），动画只换**形状**不换长度：part 多切的溶解底料、旁白 adelay、
+字幕 cue、现场声 `acrossfade`、死球后的 ghost 检查，全按这一个数记账（见
+`dissolve_filtergraph` 的长度账）。改成每个接缝各自一个时长，要动的不是这里，
+是那一整本账。
 
 ### 为什么不收 `fadeblack` / `fadewhite` / `zoomin` / `pixelize`
 
 账号所有者的老规矩：「接缝画面的时候有轻微的闪烁」——**中间一帧黑都不许有**
 （`design_tokens.MOTION["video_dissolve_s"]`）。`fadeblack` / `fadewhite` 就是
-淡到黑/白；`zoomin` 在 0.18 秒里把前一画面放到满屏一块纯色（实测中段整幅
-单色），观感和闪一下一样；`pixelize` 是马赛克，不合这个号的质感。
+淡到黑/白；`zoomin` 把前一画面放到满屏一块纯色（0.18 秒时实测中段整幅单色），
+观感和闪一下一样；`pixelize` 是马赛克，不合这个号的质感。
 判据 `tests/test_transitions.py::test_每个转场中间都不闪黑不闪成一块纯色`
 真跑 ffmpeg 逐帧量，谁要加新的预设，先过这一条。
 """

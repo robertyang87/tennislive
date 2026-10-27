@@ -188,7 +188,8 @@ def reviewed_codec_mix(encoded, tmp_path):
     original = Q.pcm(source)
     selected = original[6400:26400]
     times = np.arange(len(selected)) / Q.RATE
-    selected = selected * np.clip(times / .18, 0, 1) * .972
+    from build_match_reel import SEG_FADE  # 成片里证据卡→原声那一刀的溶解时长
+    selected = selected * np.clip(times / SEG_FADE, 0, 1) * .972
     # Card has actual tone audio at its beginning, then a deliberate quiet hold.
     card = np.zeros(12000)
     card[:3200] = .1 * np.sin(2*np.pi*300*np.arange(3200)/Q.RATE)

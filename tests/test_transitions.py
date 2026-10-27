@@ -61,9 +61,11 @@ def test_每个转场中间都不闪黑不闪成一块纯色(two_shots, name):
     assert not _flashes(frames), f"{name} 在接缝中段闪了一下——不许进动画库"
 
 
-@pytest.mark.parametrize("xfade", ["fadeblack", "fadewhite", "zoomin"])
+@pytest.mark.parametrize("xfade", ["fadeblack", "fadewhite"])
 def test_判据自己拦得住淡到黑和放成纯色的那几种(two_shots, xfade):
-    """反向：不收的那几个，同一把尺子必须量得出来。"""
+    """反向：淡到黑、淡到白这两个，同一把尺子必须量得出来。（`zoomin` 在 0.18 秒时会
+    放成整幅纯色，这把尺子量得到；拉长到 0.5 秒后量不到了，但它仍然是把前一画面
+    推到满屏一块色，按观感不收——见 `transitions.py` 头注。）"""
     assert _flashes(_seam_frames(two_shots, xfade)), xfade
 
 
@@ -109,3 +111,25 @@ def test_换了动画的拼接图照样走2x2时钟那条快路(tmp_path):
            "-c:a", "aac", "-ar", "48000", path)
     assert reel.probe_duration(joined) == pytest.approx(sum(lengths), abs=0.05)
     assert fusion.video_clock(joined) == fusion.video_clock(clock)
+
+
+def test_段尾贴着源片末尾_溶解底料定格补足_不短也不哑(tmp_path):
+    """溶解拉长到 0.5 秒之后，全库 30 条已发的末段贴着源片末尾、底料不够。
+    `tail_hold` 定格最后一帧、音轨补静音，part 长度照样是 length + tail。
+    反向验证过：把 cut_segment 里那行 tpad 拆掉，这一条红在长度上。"""
+    src = tmp_path / "source.mp4"
+    ff("-f", "lavfi", "-i", "testsrc2=size=1920x1080:rate=25:duration=4",
+       "-f", "lavfi", "-i", "sine=frequency=440:duration=4",
+       "-c:v", "libx264", "-preset", "ultrafast", "-crf", "35",
+       "-c:a", "aac", "-shortest", src)
+    limit = reel.probe_duration(src)
+    seg = reel.Segment(2.0, round(limit - 0.1, 3), 0.5, "", track=False)
+    hold = reel.tail_hold_seconds(seg, limit)
+    assert hold == pytest.approx(reel.SEG_FADE - 0.1, abs=0.01)
+    from dataclasses import replace
+    seg = replace(seg, tail_hold=hold)
+    assert reel._seg_audio_needs_filter(seg)
+    out = tmp_path / "part.mp4"
+    reel.cut_segment(src, seg, out, 1920, tail=reel.SEG_FADE)
+    got = reel.probe_duration(out)
+    assert got + 0.08 >= seg.length + reel.SEG_FADE, (got, seg.length + reel.SEG_FADE)

@@ -487,10 +487,15 @@ QUIETEST_BED_GAIN = BED_LOUD * min(BED_TIERS.values())
 # 长度账。**最后一段不留尾巴**，所以总长仍然是 Σ seg.length，`check_reel_landed`
 # 那句「画面总长 − 段落总长 ＝ 封面」照旧成立。
 #
-# 0.18 秒是「化开了」和「拖沓」之间那一档：段长最短的一段 4.0 秒，占 4.5%，
-# 看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，每句话自己
-# 有起止，淡它等于把开头几个字吞掉。
-SEG_FADE = 0.18
+# 旁白**不参与**——它是拼接之后另混上去的，每句话自己有起止，淡它等于把开头
+# 几个字吞掉。
+#
+# ⭐ 2026-10-27 从 0.18 秒拉长到 0.5 秒。账号所有者：「现在的转场过渡动画几乎没有，
+# 特别生硬」。0.18 秒在 60 fps 上只有 11 帧，看上去和硬切差不多；0.5 秒是 30 帧，
+# 化开、推、圈开都看得出是一个动作。数出自 `design_tokens.MOTION["video_dissolve_s"]`，
+# 三条线共用，别在这儿另写一个数。
+from tennislive.design_tokens import MOTION as _MOTION  # noqa: E402
+SEG_FADE = float(_MOTION["video_dissolve_s"])
 # 字卡/角标的入场动效：淡入时长（秒）和上浮距离（px）。见 _overlay_chain。
 INSET_IN_SECS = 0.45
 INSET_RISE_PX = 36
@@ -3098,6 +3103,9 @@ class Segment:
     # 接进这一段的那个接缝用哪个转场动画（spec `transition`，`tennislive.video.
     # transitions.PRESETS` 的名字）；不写是溶解。只换形状，时长仍是 SEG_FADE。
     transition: str = "dissolve"
+    # 源片在段尾之后不够 SEG_FADE 秒溶解底料时，尾料定格最后一帧补足的秒数（成片侧）。
+    # render 按源片时长算出来填，写 spec 的人碰不到它；0 = 底料够，原样取源片延续。
+    tail_hold: float = 0.0
     # Optional per-segment subtitle anchor; absent keeps the existing layout.
     subtitle_bottom: int | None = None
     # Relative output-segment seconds; only explicitly contained cues move.
@@ -3352,6 +3360,8 @@ def _seg_audio_chain(seg: "Segment", tail: float = 0.0) -> str:
         parts.append(f"volume={BED_TIERS[seg.bed]}")
     if seg.gain_db:
         parts.append(f"volume={10 ** (seg.gain_db / 20):.6f}")
+    if seg.tail_hold and tail and seg.audio_tail != "silence":
+        parts.append("apad")          # 源片音轨在段尾之后不够：补静音，-t 截齐
     if seg.audio_tail == "silence":
         rate = int(AUDIO_RATE)
         body_samples = round(seg.length * rate)
@@ -3406,7 +3416,7 @@ def _seg_audio_needs_filter(seg: "Segment") -> bool:
     `-map` 判据的单一出处。原来写成 `seg.speed != 1 or seg.mute` 两遍，加音床
     时漏改一处的样子是：滤镜链算好了、`-map 0:a:0` 把它绕过去，**不报错**。"""
     return (seg.speed != 1 or seg.mute or bool(seg.bed) or bool(seg.audio_tail)
-            or seg.gain_db != 0)
+            or seg.gain_db != 0 or seg.tail_hold > 0)
 
 
 def _atempo(speed: float) -> str:
@@ -5327,6 +5337,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
     # （`conform_sources` 不再落盘整条中间文件）。
     chain = conform_prefilter(source) + chain
+    if seg.tail_hold and tail:
+        # 源片在段尾之后不够溶解底料：定格最后一帧补足，`-t` 照旧截到 length+tail
+        chain += f",tpad=stop_mode=clone:stop_duration={seg.tail_hold + 0.1:.3f}"
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -5381,7 +5394,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             _overlay_chain(
                 (chain + "[base]") if labeled
                 else f"[0:v]{chain}[base]", ins)
-            + (f";[0:a:0]{_seg_audio_chain(seg, tail)}[aout]"
+            + (f";[0:a:0]{_seg_audio_chain(seg, tail) or 'anull'}[aout]"
                if has_audio and _seg_audio_needs_filter(seg) else ""),
             # The explicit finite sample-trim already bounds this audio stream;
             # -shortest can drop the last ALAC packet in short seeked parts.
@@ -10274,20 +10287,37 @@ def segments_over_source_end(segments: list[Segment],
     （cf73af107）、eala-ruse（5f589d63f）的 spec 和 render.json 是同一个提交落的。
     所以判据就是 `need ≤ 源片时长`，不需要帧率、也不需要豁免表；它对谁写的 spec 都硬
     （超了 render 必红）。判据 `tests/test_small_gates.py`。
+
+    ⭐ 2026-10-27 溶解从 0.18 秒拉长到 0.5 秒之后，**这道闸只管段体**：段尾之后那截
+    溶解底料不够时不再红，由 `tail_hold_seconds` 定格最后一帧补足（它在溶解里是
+    正在淡出的那一路，定格看不出来）。不改的话，全库 30 条已发的 spec 末段贴着源片
+    末尾，重渲一律红。段体本身写过源片末尾照旧硬红、容差 0。
     """
     over: list[str] = []
     for index, seg in enumerate(segments):
         if seg.image:
             continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
-        need = seg.end + SEG_FADE
-        if limit is None or need <= limit + 1e-6:   # 浮点：正好贴住末尾算放行
+        if limit is None or seg.end <= limit + 1e-6:   # 浮点：正好贴住末尾算放行
             continue
         over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
-                    f"（溶解还要往后多取 {need - seg.end:.2f}s）"
                     f"，而源片{('（' + seg.source + '）') if seg.source else ''}"
-                    f"只有 {limit:.2f}s，超出 {need - limit:.2f}s")
+                    f"只有 {limit:.2f}s，超出 {seg.end - limit:.2f}s")
     return over
+
+
+def tail_hold_seconds(seg: Segment, limit: float | None) -> float:
+    """段尾之后源片不够 `SEG_FADE` 秒溶解底料时，要定格补多少秒（成片侧，0 = 够）。
+
+    底料是这一段之后的自然延续，按源片秒消耗 `SEG_FADE`（和 `segments_over_source_end`
+    原来的口径一样，不按慢放折算——慢放段按源片秒算偏保守）。不够的部分在
+    `cut_segment` 里用 `tpad=stop_mode=clone` 定格、音轨 `apad` 补静音；`-t` 照旧
+    按 `seg.length + tail` 截，所以底料够的段一个字节都不变。
+    """
+    if seg.image or limit is None:
+        return 0.0
+    short = seg.end + SEG_FADE - limit
+    return round(short / seg.speed, 3) if short > 1e-6 else 0.0
 
 
 def stat_card_in_film(spec: dict) -> bool:
@@ -10387,7 +10417,7 @@ def _materialize_title_cards(spec: dict, segments: list[Segment], outdir: Path,
     return out_segments
 
 
-def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
+def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> dict:
     """段落不许写过源片的末尾。
 
     **ffmpeg 越界时退出码是 0。** `-ss`/`-t` 指到片尾之后，它安安静静出一个
@@ -10417,6 +10447,7 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
     if over:
         raise ReelError(OVER_SOURCE_END_HEAD + "\n".join(over)
                         + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
+    return durations
 
 
 # `same_line_as_printed`（封面念的那句和海报上印的钩子是不是同一句）2026-09-27 搬进
@@ -10557,7 +10588,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     segments = parse_segments(spec, sources, primary)
     segments = _materialize_stat_card(spec, segments, outdir)
     segments = _materialize_title_cards(spec, segments, outdir)
-    _check_segments_fit(segments, sources)
+    source_durations = _check_segments_fit(segments, sources) or {}
+    # 段尾之后底料不够 SEG_FADE 的，溶解那截定格最后一帧（见 `tail_hold_seconds`）
+    segments = [replace(seg, tail_hold=tail_hold_seconds(seg, source_durations.get(seg.source)))
+                for seg in segments]
+    for i, seg in enumerate(segments):
+        if seg.tail_hold:
+            print(f"[溶解] 第 {i + 1} 段段尾之后源片只剩 {SEG_FADE - seg.tail_hold * seg.speed:.2f}s，"
+                  f"溶解那截定格最后一帧补 {seg.tail_hold:.2f}s")
     global _INSET_TOP_CLEAR_Y
     _INSET_TOP_CLEAR_Y = inset_top_clear_y(spec)
     if _INSET_TOP_CLEAR_Y and any(s.inset for s in segments):

@@ -973,8 +973,9 @@ def test_片头片尾各留一段静音(tmp_path, monkeypatch):
     # 2026-09-27 起画面溶解着接（Q4），声音仍然按段 concat——每一屏的起点不变：
     # 第 1 个接缝落在 10.6s、第 2 个落在 20.6s，正是硬切时的那两个时刻。
     assert "[a0][a1][a2]concat=n=3:v=0:a=1[outa]" in graph
-    assert "[v0][v1]xfade=transition=fade:duration=0.18:offset=10.600[vx1]" in graph
-    assert "[vx1][v2]xfade=transition=fade:duration=0.18:offset=20.600[outv]" in graph
+    d = f"{E.SLIDE_DISSOLVE:g}"
+    assert f"[v0][v1]xfade=transition=fade:duration={d}:offset=10.600[vx1]" in graph
+    assert f"[vx1][v2]xfade=transition=fade:duration={d}:offset=20.600[outv]" in graph
 
 
 def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch):
@@ -1045,7 +1046,7 @@ def test_解说片的片尾要接进concat(tmp_path, monkeypatch):
     # 也溶解（账号所有者 2026-09-27 Q4「含进片尾」）
     assert "[a0][a1][a2]concat=n=3:v=0:a=1[outa]" in graph, (
         f"片尾没排在 concat 的最后一格：{graph}")
-    assert "[vx1][v2]xfade=transition=fade:duration=0.18:offset=10.100[outv]" in graph, (
+    assert f"[vx1][v2]xfade=transition=fade:duration={E.SLIDE_DISSOLVE:g}:offset=10.100[outv]" in graph, (
         f"末屏进片尾那一刀不是溶解：{graph}")
     # **不给片尾排字幕**：那一页上印着口播说的每个字
     outro_chain = [c for c in graph.split(";") if c.startswith("[4:v]")][0]

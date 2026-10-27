@@ -3,7 +3,7 @@
 账号所有者 2026-10-27：「多准备一些转场动画作为过渡效果，后续做视频需要的时候直接套用」。
 
 代码：`src/tennislive/video/transitions.py`（`PRESETS`），剪辑片的拼接图 `build_match_reel.dissolve_filtergraph` 按段套用。
-样片：`python3 tools/preview_transitions.py --out /tmp/transitions.mp4`。每个预设播两遍，先是真实速度，再慢放 4 倍。
+样片：`python3 tools/preview_transitions.py --out /tmp/transitions.mp4`。每个预设播两遍，先是真实速度，再慢放 2 倍。
 
 ## 怎么用
 
@@ -39,11 +39,11 @@
 
 ## 两条硬边界
 
-1. **时长固定 0.18 秒（`SEG_FADE`），只换形状。** part 多切的溶解底料、旁白 adelay、字幕 cue、现场声 `acrossfade`、死球后的 ghost 检查，全都按 0.18 秒记账。0.18 秒在 60 fps 上是 11 帧，推、甩、圈开都看得清（2026-10-27 逐帧量过）。
-2. **中间一帧黑都不许有**（老规矩，「接缝画面的时候有轻微的闪烁」）。所以 `fadeblack`、`fadewhite`、`zoomin`、`pixelize` 不收：`zoomin` 在 0.18 秒里会把前一画面放大成满屏一块纯色，观感和闪一下一样。判据 `tests/test_transitions.py::test_每个转场中间都不闪黑不闪成一块纯色` 会真跑 ffmpeg 逐帧量。同一把尺子反向量过，`fadeblack`、`fadewhite`、`zoomin` 都能被拦下。要加新预设，先过这一条。
+1. **所有接缝同一个时长 0.5 秒（`SEG_FADE` ＝ `design_tokens.MOTION["video_dissolve_s"]`），动画只换形状。** part 多切的溶解底料、旁白 adelay、字幕 cue、现场声 `acrossfade`、死球后的 ghost 检查，全都按这一个数记账。2026-10-27 从 0.18 秒拉长到 0.5 秒：账号所有者说「现在的转场过渡动画几乎没有，特别生硬」，0.18 秒在 60 fps 上只有 11 帧，看上去和硬切差不多。段尾之后源片不够 0.5 秒时，溶解那截定格最后一帧补足（`tail_hold_seconds`）。
+2. **中间一帧黑都不许有**（老规矩，「接缝画面的时候有轻微的闪烁」）。所以 `fadeblack`、`fadewhite`、`zoomin`、`pixelize` 不收：`zoomin` 会把前一画面放大成满屏一块纯色，观感和闪一下一样（0.18 秒时实测中段整幅单色）。判据 `tests/test_transitions.py::test_每个转场中间都不闪黑不闪成一块纯色` 会真跑 ffmpeg 逐帧量。同一把尺子反向量过，`fadeblack`、`fadewhite` 都能被拦下。要加新预设，先过这一条。
 
 ## 覆盖范围
 
 - **剪辑片**（赛场之上、网球有故事的剪辑片，`build_match_reel.py`）：已接入。
-- **赛后开麦**（`build_interview_clip.py`）、**字卡解说**（`explainer.py`）：仍然只用溶解。采访片是连续的一段原声，不适合换场动画。字卡线以后要用时，接同一个 `PRESETS`，不要另起一份名单。
+- **赛后开麦**（`build_interview_clip.py`）、**字卡解说**（`explainer.py`）：只用溶解，但时长同样跟着 `MOTION["video_dissolve_s"]` 拉长到 0.5 秒。采访片是连续的一段原声，不适合换场动画。字卡线以后要用时，接同一个 `PRESETS`，不要另起一份名单。
 - **转场卡**（章节卡、数据卡里的动画）是另一回事，见 [全局转场卡方案](global-transition-cards.md)。它管的是卡片本身怎么动；这份文档管的是段与段之间那一刀怎么接。

@@ -52,7 +52,7 @@
 - 次级灰别再往暗调（SOFT #cfe6d8 = `muted-foreground`）；一屏只留一个强调色
 - 钩子的三层阴影（封面禁用遮罩，这层阴影是唯一的可读性保护）→ `TEXT_SHADOW_HOOK`
 - 英文字幕 Inter 24pt SemiBold 44px / 描边 2.5 / 字距 0.6、比分 TL Score、
-  转场 0.18 秒溶解且中间不许有黑帧 → 字体参数留在各自模块，溶解时长 →
+  转场 0.5 秒溶解且中间不许有黑帧 → 字体参数留在各自模块，溶解时长 →
   `MOTION["video_dissolve_s"]`
 - **微信推送那颗红按钮 #ff2442 不进 token**：两个调用处保持字面不动。
   打了 `design-tokens: enforced` 标记的文件里，那一行靠同一行的
@@ -274,8 +274,9 @@ TEXT_SHADOW_CHROME = "0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)"
 #: - `ease_out` 是默认；`ease_spring` 只用在入场（弹一下），视频里默认不用回弹。
 #: - 永远列出具体属性，不写 `transition: all`；hover 只写在
 #:   `@media (hover:hover) and (pointer:fine)` 里（微信是触屏，:hover 会粘住）。
-#: - `video_dissolve_s`：所有接缝 `xfade=fade` + `acrossfade` 0.18 秒，
-#:   **中间一帧黑都不许有**（账号所有者规则）。
+#: - `video_dissolve_s`：所有接缝 `xfade` + `acrossfade` 的时长，**中间一帧黑都不许
+#:   有**（账号所有者规则）。2026-10-27 从 0.18 秒改成 0.5 秒：账号所有者「现在的转场
+#:   过渡动画几乎没有，特别生硬」。
 MOTION: Mapping[str, int | float | str] = MappingProxyType({
     "press_ms": 120,
     "quick_ms": 150,
@@ -286,7 +287,7 @@ MOTION: Mapping[str, int | float | str] = MappingProxyType({
     "stagger_ms": 40,
     "ease_out": "cubic-bezier(0.22,1,0.36,1)",
     "ease_spring": "cubic-bezier(0.34,1.35,0.64,1)",
-    "video_dissolve_s": 0.18,
+    "video_dissolve_s": 0.5,
 })
 
 # ── 换算 ──────────────────────────────────────────────────────────────────

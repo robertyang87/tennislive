@@ -3,7 +3,7 @@
     python3 tools/preview_transitions.py --out /tmp/transitions.mp4
     python3 tools/preview_transitions.py --only whip,iris --out /tmp/two.mp4
 
-每个预设两遍：先按成片里真实的 0.18 秒（`SEG_FADE`），再放慢 4 倍看清形状。
+每个预设两遍：先按成片里真实的时长（`SEG_FADE`），再放慢 2 倍看清形状。
 画面用仓库里已有的官方图（`assets/reel/*.jpg`），画布 1080×1440、60 fps，和赛场之上一样。
 """
 from __future__ import annotations
@@ -76,7 +76,7 @@ def main(argv=None) -> int:
         clips = []
         for i, name in enumerate(names):
             a, b = stills[i % len(stills)], stills[(i + 1) % len(stills)]
-            for fade, note, tag in ((SEG_FADE, "", "n"), (SEG_FADE * 4, "  · 慢放×4", "s")):
+            for fade, note, tag in ((SEG_FADE, "", "n"), (SEG_FADE * 2, "  · 慢放×2", "s")):
                 dest = t / f"{i:02d}{tag}.mp4"
                 _clip(a, b, name, fade, note, dest, font)
                 clips.append(dest)
