@@ -1,0 +1,67 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-U5C_WeAIhDI/U5C_WeAIhDI.mp4",
+  "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+  "method": "asr_cross_checked",
+  "reviewer": "independent_assistant /root/sun_source_audio_audit：两档同源ASR词级句界、真实选段源帧及完整记分条交叉复核；不声称真人听审。",
+  "reviewed_at": "2026-10-27T14:25:24.142502+00:00",
+  "reviewed_from": 1196.4,
+  "reviewed_to": 1267.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1233.7,
+      "end": 1235.8,
+      "en": "Oh, what a point!",
+      "zh": "这一分 太精彩了"
+    },
+    {
+      "start": 1236.84,
+      "end": 1238.75,
+      "en": "What a way to win it as well.",
+      "zh": "而且是用这样的方式拿下"
+    },
+    {
+      "start": 1239.08,
+      "end": 1242.18,
+      "en": "Again, the deft touch of Sawangkaew.",
+      "zh": "又是萨旺考细腻的手感"
+    },
+    {
+      "start": 1242.2,
+      "end": 1247.72,
+      "en": "One big serve away from a huge win.",
+      "zh": "再来一个好发球 就有望赢下比赛"
+    },
+    {
+      "start": 1255.56,
+      "end": 1260.52,
+      "en": "Another big moment in the young career of Sun Xinran.",
+      "zh": "孙心然的职业生涯 又迎来重要时刻"
+    },
+    {
+      "start": 1261.88,
+      "end": 1267.52,
+      "en": "She topples Mananchaya Sawangkaew with relative ease.",
+      "zh": "她较为轻松地 击败了萨旺考"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/small.en.json": "9ee29bd52eda647051d875497d582dc7946ba33eca5893ff0b80557e1582cde1",
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/medium.en.json": "536d2846230d2d1dd1a45a7b52897e146eebb1419099f0b8b0613562374fe50f"
+  },
+  "evidence": "两档实际源ASR同SHA3c1f6230，选中完整独立句，规范Sun Xinran及Mananchaya Sawangkaew人名；两档death touch在网球放短语境为deft touch，不把ASR误字写成死亡。开场1098–1105的含混跨场景句未选；长段保持1196.4–1267.6连续原声，1242处不切句。仅使用1092之后孙本场，1267.76别场标题不入。",
+  "visual_window_note": "本期唯一额外完整关键回合+必须完整赛点，连续不切：1196.4次盘4-3、40-30发球准备，发球及长相持至1236前后萨旺考放短拿到平分；1233.7起完整精彩原声；官方镜头在1241.6/1243.12转至5-4、40-15赛点准备，1245.76全景发球及完整相持，1255后结果、1258.76孙心然反应、握手、1267.52最后ease句尾。整段同源连续，避免在1242附近两句边界切开英文。1267.76才是别场标题，故止于1267.60。不是说孙赢下了前面的长相持。",
+  "independent_recheck": {
+    "spec_quotes_verified": true,
+    "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+    "method": "asr_cross_checked_with_source_frames",
+    "human_listening_claimed": false,
+    "checks": [
+      "Exact segment bounds match formal spec",
+      "All retained foreground English represented by EN/ZH cues",
+      "Known name/deft-touch ASR errors normalized against official identity and tennis context",
+      "No selected interval before1092 or at/after1267.76 next-match scene"
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "status": "preview_layout_pass_final_native_poster_pending",
+  "reviewed_by": "independent current assistant",
+  "review_scope": "official source photo and real existing native poster template previews, not final film approval",
+  "source_photo": {
+    "file": "/workspace/scratch/sun-xinran-U5C_WeAIhDI-20261027/Sun-R1.JPG",
+    "sha256": "bb39a38a8ce3c6bda1f6c69f01c40325766948c489789c852735c2b4626034bf",
+    "actual_pixels": [
+      4000,
+      2669
+    ],
+    "identity": "WTA photo4599614, Sun Xinran335958, Guangzhou1023,2026-10-27,matched burgundy clothing/visor and celebratory gesture",
+    "visual_limits": "Celebrating side profile; visor casts a natural eye shadow. No claim that both eyes face camera."
+  },
+  "recommended_portrait": {
+    "focus": 0.74,
+    "focus_y": 0,
+    "zoom": 1.3
+  },
+  "preview": {
+    "file": "/workspace/scratch/sun-xinran-U5C_WeAIhDI-20261027/cover-review/poster-d.jpg",
+    "sha256": "7c4b3802cd7660eaed2fe44d24f12e9eee8e8fadd581ea5557238627ee883609",
+    "canvas": [
+      1080,
+      1440
+    ],
+    "observations": [
+      "Full hat/head and face lie below170px header guard and above790px hook guard. Approximate head top187px; jaw about540px.",
+      "Face lies near horizontal center; fist remains fully visible with clear space to right edge.",
+      "Hook lines, winner score6/6 and loser3/4, CHN/THAflags,405/80rankings,CenterCourt and1:21duration readable.",
+      "Baseline focus.66/zoom1.0 would place head near144px and should not be used.",
+      "Four actual candidates rendered; selectedD improves centering over.66/.70 options without further enlargement."
+    ]
+  },
+  "editorial_findings": [
+    {
+      "severity": "must_fix_before_TTS",
+      "finding": "Stat narration says generic失误21/41; official measure is非受迫性失误.",
+      "recommendation": "Say非受迫性失误二十一比四十一 and use same category on stat card."
+    },
+    {
+      "severity": "must_fix_translation",
+      "finding": "with relative ease is currently translated直落两盘, changing the original proposition.",
+      "recommendation": "她较为轻松地击败了萨旺考; straight-sets result is already reported elsewhere."
+    },
+    {
+      "severity": "optional_precision",
+      "finding": "最后一段路最难走 overstates an absolute; match was a straight-sets win and actual commentary describes relative ease.",
+      "recommendation": "领先来到4比3 / 每一分还得自己争."
+    }
+  ],
+  "facts_checked": {
+    "junior_champion_two_days_earlier": {
+      "supported": true,
+      "date": "2026-10-25",
+      "event": "2026 World Tennis Tour Junior Finals,Chengdu,girls singles",
+      "opponent": "Anna Pushkareva",
+      "primary_title_source": "https://www.itftennis.com/en/news-and-media/articles/rising-stars-lee-and-sun-triumph-at-world-tennis-tour-junior-finals/",
+      "primary_title_source_date": "2026-10-26",
+      "primary_final_date_source": "https://www.itftennis.com/en/news-and-media/articles/who-is-in-the-final-2026-world-tennis-tour-junior-finals/",
+      "secondary_date_source": "https://www.bjnews.com.cn/detail/1792953964189961.html"
+    },
+    "junior_world_number_one": {
+      "supported": true,
+      "source": "https://www.itftennis.com/en/news-and-media/articles/rising-stars-lee-and-sun-triumph-at-world-tennis-tour-junior-finals/",
+      "as_of": "2026-10-26",
+      "finding": "Official ITF post-final report identifies Sun as top-ranked junior girl, fresh enough for next-day Guangzhou story; do not mislabel this as WTA No.1."
+    }
+  },
+  "voice_risks_to_check_on_actual_audio": [
+    "孙心然sun1xin1ran2",
+    "萨旺考sa4wang4kao3",
+    "青少年:少shao4",
+    "比赛得分:分fen1",
+    "发球fa1,冠军guan4,正反拍zheng4"
+  ],
+  "human_listening_claimed": false,
+  "global_or_formal_spec_mutated": false
+}

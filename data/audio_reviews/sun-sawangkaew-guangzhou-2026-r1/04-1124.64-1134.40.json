@@ -1,0 +1,43 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-U5C_WeAIhDI/U5C_WeAIhDI.mp4",
+  "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+  "method": "asr_cross_checked",
+  "reviewer": "independent_assistant /root/sun_source_audio_audit：两档同源ASR词级句界、真实选段源帧及完整记分条交叉复核；不声称真人听审。",
+  "reviewed_at": "2026-10-27T14:25:24.142502+00:00",
+  "reviewed_from": 1124.64,
+  "reviewed_to": 1134.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1124.84,
+      "end": 1126.84,
+      "en": "And the two-game cushion is back.",
+      "zh": "两局的领先优势 又回来了"
+    },
+    {
+      "start": 1126.84,
+      "end": 1131.9,
+      "en": "And look what the crowd think of it. They are delighted.",
+      "zh": "看看现场观众的反应 他们太高兴了"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/small.en.json": "9ee29bd52eda647051d875497d582dc7946ba33eca5893ff0b80557e1582cde1",
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/medium.en.json": "536d2846230d2d1dd1a45a7b52897e146eebb1419099f0b8b0613562374fe50f"
+  },
+  "evidence": "两档实际源ASR同SHA3c1f6230，选中完整独立句，规范Sun Xinran及Mananchaya Sawangkaew人名；两档death touch在网球放短语境为deft touch，不把ASR误字写成死亡。开场1098–1105的含混跨场景句未选；长段保持1196.4–1267.6连续原声，1242处不切句。仅使用1092之后孙本场，1267.76别场标题不入。",
+  "visual_window_note": "同一分结果，孙心然破发至4-2、观众鼓掌。完整保留two-game cushion与delighted两句；到1134.40覆盖小档对delighted拉长的尾端，不切后一句Beauty。",
+  "independent_recheck": {
+    "spec_quotes_verified": true,
+    "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+    "method": "asr_cross_checked_with_source_frames",
+    "human_listening_claimed": false,
+    "checks": [
+      "Exact segment bounds match formal spec",
+      "All retained foreground English represented by EN/ZH cues",
+      "Known name/deft-touch ASR errors normalized against official identity and tennis context",
+      "No selected interval before1092 or at/after1267.76 next-match scene"
+    ]
+  }
+}

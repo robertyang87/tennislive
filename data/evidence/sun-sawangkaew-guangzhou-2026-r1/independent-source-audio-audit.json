@@ -1,0 +1,509 @@
+{
+  "schema": "tennislive.independent-source-audio-plan-audit.v1",
+  "status": "source_plan_pass",
+  "reviewer": "independent assistant /root/sun_source_audio_audit",
+  "reviewed_at": "2026-10-27T14:25:24.142502+00:00",
+  "reviewed_spec_sha256": "1b3b741206548141ce032c8f1ed4b1b7b270f295243e356b783f60346131c476",
+  "audio_plan_sha256": "c9a1f27378a3e87c17839392cd7efd1e9e46060d38b6d195b486933f018a4cda",
+  "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+  "source_asr_corpus_sha256": {
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/small.en.json": "9ee29bd52eda647051d875497d582dc7946ba33eca5893ff0b80557e1582cde1",
+    "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/medium.en.json": "536d2846230d2d1dd1a45a7b52897e146eebb1419099f0b8b0613562374fe50f"
+  },
+  "packet_index": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1.json",
+  "packet_index_sha256": "65c6b4984432f8d653ac0ae4fc2aae4bdb216b6d255b5d3a626a918301e7692c",
+  "packet_count": 10,
+  "required_bilingual_utterance_count": 16,
+  "human_listening_claimed": false,
+  "final_film_qc_claimed": false,
+  "checks": [
+    "All10 selected source windows have actual same-source corpus bindings and matching packet hashes",
+    "All16 selected foreground-English utterances have current formal-spec English/Chinese cues and exact current plan binding",
+    "Cold opening scoreboard restored when visible; no false all-scoreless declaration",
+    "Two-game-cushion and first-set commentary cue timing corrections applied",
+    "Full one additional point1196.4+ and complete match point1243.12+ preserved in same continuous source1196.4–1267.6",
+    "Extra point lost by Sun to deuce; source then jumps to5-4 match point, not implied next point in same game",
+    "1266–1267.60 handshake remains same match;1267.76 begins next scene",
+    "No claim of unverified28-shot count"
+  ],
+  "source_frames": [
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1110.64.jpg",
+      "sha256": "8f87b6b6931f576e7c5b7c04b3792180e8f4dd9c2c2cf301db635a295d344f7b"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1179.04.jpg",
+      "sha256": "421c156f70da7515c5446d8bb460f7ab70dc08ed5ae22bb1f9540f7301bc391e"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1195.80.jpg",
+      "sha256": "7e428065c1459f18e22e97b7fa55636d74818103fb6a9eaa5937e4699501f92c"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1196.00.jpg",
+      "sha256": "386c1473b92751e32abb44c2876de715b84fd38c82d2c1e4c658ea864c6e72de"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1196.40.jpg",
+      "sha256": "3ad71e582e631b72d73785d67c99bf85f9d1e3245990fffbb3807df98afe2315"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1196.80.jpg",
+      "sha256": "9ad461f3182e2c4646d89c4f1383d26ab978e55f0d78f5ec64839e4b9df0f6fa"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1197.20.jpg",
+      "sha256": "6686a40b9e561c810638e16b819055799f760f65cfe60d582e0b68079b8b668d"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1197.60.jpg",
+      "sha256": "970514698a4a3bc985ae703e089a1ae98a866dd0b0e3bc5a17cef8142b08210d"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1198.00.jpg",
+      "sha256": "4cd7e64fb3b5d297e8aa4134af7f5f95be6d912804296c8f90a3e5ec1f261ff1"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1198.40.jpg",
+      "sha256": "1be3ec624ed6364ec2e558040bd617d0a8a7e3a074aeedfa7139077872d20089"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1232.00.jpg",
+      "sha256": "710e82bad395c67dcd3673c03e9ada5375ad51abf41ba7c6871da8125703f262"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1233.00.jpg",
+      "sha256": "52b9ca557eaa576c6d2399187cdc08d7d47431f563d83dd30934b48eb2511a6b"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1234.00.jpg",
+      "sha256": "ff05b848e086bf1651be4d5ce668faad5ba8ca6a2e4837910fd7ce46acf52733"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1235.00.jpg",
+      "sha256": "d84949600843148e0076202025ee217c9b71c17b6dec549dfd240bc5ad50bc29"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1236.00.jpg",
+      "sha256": "9c1de1b389098c2c00e290b0936797723138c084c0190da9a004725e3a741e87"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1237.00.jpg",
+      "sha256": "8219740f3d0008a7d490c4a1e92953da06898a601eefc28372696e1a8dc0bb5a"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1242.80.jpg",
+      "sha256": "8676ed67c1958bc330dc1a98622b211797b9cdbc97c7b9f448156c2556ec6633"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1243.12.jpg",
+      "sha256": "2fbc78311455536eb29ac3fc2c4189bef34521830893854aa0085076be04f16f"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1243.60.jpg",
+      "sha256": "204893f3c8682fff56b226bd8649889c9b058132b95460e0832504bad8098d5c"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1244.40.jpg",
+      "sha256": "6e8f415d9854e6fe1fed46579759578a3f5172c0f36cf58e2424e9c0ecde5ebc"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1245.00.jpg",
+      "sha256": "06f61eb8d5b6d2b637ea54cd63fdeee323280ce8d502a51e502db0b75bf20a1e"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1245.76.jpg",
+      "sha256": "ff9ca28d07baac4bf71e6ce92fbd74be76e0f34cd95aee74a066ec73daffc14a"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1246.20.jpg",
+      "sha256": "8bb79f8247bae01468a1d11eb0c332ac4c7c5a7e19fac5b143e1649f6e2f92f9"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1254.00.jpg",
+      "sha256": "72b2d9ca6e634f61af89459f8d8bd435d3505085abe761e7c7332d087de3caa4"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1254.80.jpg",
+      "sha256": "a4e8d463a5b27e435efab6d68f650eab641120c0481f701e796e05337ebf2ce5"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1255.40.jpg",
+      "sha256": "8a27b57813fdf48ba448d088a2f81b74759e5b509d7a6142953b0fdcacc7ddc8"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1266.00.jpg",
+      "sha256": "dc157661d48de8ed2ca3e91f56f1e27626583008d84348f33bb60d500c56988d"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1267.00.jpg",
+      "sha256": "0b87e84c51ef85c1d2c42d8f19d65ebda9303c9afbbdb3bacc41c0fa6d9945c0"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1267.60.jpg",
+      "sha256": "493f538c5cceefe103e90f790211bda1015b988b0017dbd4baee86b73c9b88d2"
+    },
+    {
+      "path": "data/evidence/sun-sawangkaew-guangzhou-2026-r1/independent-source-frames/1267.76.jpg",
+      "sha256": "1799420b08c76f62cb9bd94805c8d770014bf38f02072464e17d927ec487b3f3"
+    }
+  ],
+  "source_frame_count": 30,
+  "source_review_detail": {
+    "schema": "tennislive.independent-source-review.v1",
+    "scope": "Source timeline, ASR sentence completeness and selected raw point windows only; not final-film QC or subjective human listening.",
+    "reviewer": "independent assistant /root/sun_source_audio_audit",
+    "reviewed_at": "2026-10-27T14:14:54.753762+00:00",
+    "source_id": "U5C_WeAIhDI",
+    "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
+    "user_clip_from": 1092.0,
+    "local_source_clip": {
+      "path": "sun-only.mp4",
+      "duration": 176.019002,
+      "source_time_offset": 1092,
+      "independently_viewed_through_source_time": 1267.76
+    },
+    "methods": [
+      "Read both same-source small.en and medium.en word timestamps",
+      "Inspected existing source contact sheets",
+      "Independently extracted and viewed 24 source frames around extra-point serve/result and match-point prep/result"
+    ],
+    "human_listening_claimed": false,
+    "final_film_approved": false,
+    "findings": [
+      {
+        "id": "cold-open",
+        "status": "suitable",
+        "window": [
+          1255.2,
+          1260.84
+        ],
+        "english": "Another big moment in the young career of Sun Xinran.",
+        "chinese": "孙心然年轻的职业生涯，又迎来一个重要时刻。",
+        "evidence": "Both ASR models agree sentence; last word ends1260.48/1260.52. Next sentence starts1261.88 at earliest. The selected interval covers a complete independent sentence."
+      },
+      {
+        "id": "rejected-first-set-keypoint-cut",
+        "status": "repair_required_if_used",
+        "window": [
+          1103.8,
+          1130.56
+        ],
+        "evidence": "This starts inside the previous commentary ending For Sun to break at1105.16 and cuts They are delighted (medium ends1131.68; small merges delighted to1133.84). Main producer has already pivoted to the second-set keypoint.",
+        "recommendation": "Do not use the original raw-audio boundaries. For a process montage, enter after1105.24 and keep the complete crowd comment through at least1131.9; check actual final seam."
+      },
+      {
+        "id": "extra-point",
+        "status": "suitable",
+        "window": [
+          1196.4,
+          1242.2
+        ],
+        "observations": [
+          "At1196.4 Sun in maroon is near-end server preparing with scoreboard Sun6/4/40 vs Sawangkaew3/3/30.",
+          "At1196.8–1198.4 serve preparation/toss is visible, so1196.4 is before service.",
+          "At1234–1236 Sawangkaew in white wins via drop shot; at1242.8 scoreboard shows40-40.",
+          "This is an extra key point that Sun LOST, not a Sun winner."
+        ],
+        "shot_count": {
+          "verified": false,
+          "instruction": "Do not assert28 shots; use 长相持 without a numerical count."
+        }
+      },
+      {
+        "id": "match-point",
+        "status": "suitable",
+        "window": [
+          1243.12,
+          1267.6
+        ],
+        "observations": [
+          "At1243.12 Sun appears in close-up bouncing/preparing with Sun6/5/40 vs Sawangkaew3/4/15 and broadcast MATCH POINT #2.",
+          "At1245.76 wide view places Sun serving from far baseline; retained earlier close-up provides serve preparation.",
+          "At1254–1255.4 last exchange ends and Sawangkaew turns toward net after final result.",
+          "Actual source has an editorial jump around1243.12 from4-3 deuce to5-4 match point. It must not be described as the next point in the same game."
+        ],
+        "ending_limit": "Both ASRs finish ease1267.42/1267.52; cut1267.60 retains complete word before next-match scene1267.76. Independently viewed actual1266.00,1267.00,1267.60 handshake frames and1267.76 next scene."
+      },
+      {
+        "id": "continuous-two-points",
+        "status": "recommended",
+        "window": [
+          1196.4,
+          1267.6
+        ],
+        "reason": "Preserves exactly one additional complete key point plus the complete final match point and all joining commentary. Avoids uncertain phrase boundary between Sawangkaew and One big serve away..."
+      },
+      {
+        "id": "asr-corrections",
+        "status": "editorial_attention",
+        "items": [
+          "death touch is the contextual tennis expression deft touch; do not translate as死亡触球.",
+          "Player-name ASR variants Sam and Kao, Sawakow, manager normalize to Mananchaya Sawangkaew based on official identity and visible scoreboard, Chinese萨旺考.",
+          "Sun Jinran normalizes to Sun Xinran / 孙心然 based on official identity and scoreboard.",
+          "Holds the love is holds to love (love hold), not love as romance.",
+          "Preposition in Again, the deft touch of/as Sawangkaew and exact One onset are low-confidence ASR words; preserve their continuous audio and do not force a cut there."
+        ]
+      }
+    ],
+    "suggested_sentence_anchors": [
+      {
+        "start": 1124.84,
+        "end": 1126.84,
+        "english": "And the two-game cushion is back.",
+        "chinese": "两局的领先优势又回来了。"
+      },
+      {
+        "start": 1126.84,
+        "end": 1128.96,
+        "english": "And look what the crowd think of it.",
+        "chinese": "看，观众们有多兴奋。"
+      },
+      {
+        "start": 1129.94,
+        "end": 1131.68,
+        "english": "They are delighted.",
+        "chinese": "他们太开心了。"
+      },
+      {
+        "start": 1162.16,
+        "end": 1163.94,
+        "english": "And there it is.",
+        "chinese": "拿下了。"
+      },
+      {
+        "start": 1165.48,
+        "end": 1166.12,
+        "english": "Holds to love.",
+        "chinese": "连下四分保发。"
+      },
+      {
+        "start": 1166.8,
+        "end": 1168.04,
+        "english": "First set on the board.",
+        "chinese": "先拿一盘。"
+      },
+      {
+        "start": 1191.68,
+        "end": 1193.06,
+        "english": "And there is the break.",
+        "chinese": "破发了。"
+      },
+      {
+        "start": 1233.7,
+        "end": 1235.7,
+        "english": "Oh, what a point!",
+        "chinese": "哇，精彩的一分！"
+      },
+      {
+        "start": 1236.9,
+        "end": 1238.66,
+        "english": "What a way to win it as well.",
+        "chinese": "赢下这一分的方式也太漂亮了。"
+      },
+      {
+        "start": 1255.56,
+        "end": 1260.52,
+        "english": "Another big moment in the young career of Sun Xinran.",
+        "chinese": "孙心然年轻的职业生涯，又迎来一个重要时刻。"
+      },
+      {
+        "start": 1261.88,
+        "end": 1267.52,
+        "english": "She topples Mananchaya Sawangkaew with relative ease.",
+        "chinese": "她较为顺利地击败了萨旺考。"
+      }
+    ],
+    "frame_evidence": [
+      {
+        "path": "audit-source-frames/1195.80.jpg",
+        "sha256": "7e428065c1459f18e22e97b7fa55636d74818103fb6a9eaa5937e4699501f92c"
+      },
+      {
+        "path": "audit-source-frames/1196.00.jpg",
+        "sha256": "386c1473b92751e32abb44c2876de715b84fd38c82d2c1e4c658ea864c6e72de"
+      },
+      {
+        "path": "audit-source-frames/1196.40.jpg",
+        "sha256": "3ad71e582e631b72d73785d67c99bf85f9d1e3245990fffbb3807df98afe2315"
+      },
+      {
+        "path": "audit-source-frames/1196.80.jpg",
+        "sha256": "9ad461f3182e2c4646d89c4f1383d26ab978e55f0d78f5ec64839e4b9df0f6fa"
+      },
+      {
+        "path": "audit-source-frames/1197.20.jpg",
+        "sha256": "6686a40b9e561c810638e16b819055799f760f65cfe60d582e0b68079b8b668d"
+      },
+      {
+        "path": "audit-source-frames/1197.60.jpg",
+        "sha256": "970514698a4a3bc985ae703e089a1ae98a866dd0b0e3bc5a17cef8142b08210d"
+      },
+      {
+        "path": "audit-source-frames/1198.00.jpg",
+        "sha256": "4cd7e64fb3b5d297e8aa4134af7f5f95be6d912804296c8f90a3e5ec1f261ff1"
+      },
+      {
+        "path": "audit-source-frames/1198.40.jpg",
+        "sha256": "1be3ec624ed6364ec2e558040bd617d0a8a7e3a074aeedfa7139077872d20089"
+      },
+      {
+        "path": "audit-source-frames/1232.00.jpg",
+        "sha256": "710e82bad395c67dcd3673c03e9ada5375ad51abf41ba7c6871da8125703f262"
+      },
+      {
+        "path": "audit-source-frames/1233.00.jpg",
+        "sha256": "52b9ca557eaa576c6d2399187cdc08d7d47431f563d83dd30934b48eb2511a6b"
+      },
+      {
+        "path": "audit-source-frames/1234.00.jpg",
+        "sha256": "ff05b848e086bf1651be4d5ce668faad5ba8ca6a2e4837910fd7ce46acf52733"
+      },
+      {
+        "path": "audit-source-frames/1235.00.jpg",
+        "sha256": "d84949600843148e0076202025ee217c9b71c17b6dec549dfd240bc5ad50bc29"
+      },
+      {
+        "path": "audit-source-frames/1236.00.jpg",
+        "sha256": "9c1de1b389098c2c00e290b0936797723138c084c0190da9a004725e3a741e87"
+      },
+      {
+        "path": "audit-source-frames/1237.00.jpg",
+        "sha256": "8219740f3d0008a7d490c4a1e92953da06898a601eefc28372696e1a8dc0bb5a"
+      },
+      {
+        "path": "audit-source-frames/1242.80.jpg",
+        "sha256": "8676ed67c1958bc330dc1a98622b211797b9cdbc97c7b9f448156c2556ec6633"
+      },
+      {
+        "path": "audit-source-frames/1243.12.jpg",
+        "sha256": "2fbc78311455536eb29ac3fc2c4189bef34521830893854aa0085076be04f16f"
+      },
+      {
+        "path": "audit-source-frames/1243.60.jpg",
+        "sha256": "204893f3c8682fff56b226bd8649889c9b058132b95460e0832504bad8098d5c"
+      },
+      {
+        "path": "audit-source-frames/1244.40.jpg",
+        "sha256": "6e8f415d9854e6fe1fed46579759578a3f5172c0f36cf58e2424e9c0ecde5ebc"
+      },
+      {
+        "path": "audit-source-frames/1245.00.jpg",
+        "sha256": "06f61eb8d5b6d2b637ea54cd63fdeee323280ce8d502a51e502db0b75bf20a1e"
+      },
+      {
+        "path": "audit-source-frames/1245.76.jpg",
+        "sha256": "ff9ca28d07baac4bf71e6ce92fbd74be76e0f34cd95aee74a066ec73daffc14a"
+      },
+      {
+        "path": "audit-source-frames/1246.20.jpg",
+        "sha256": "8bb79f8247bae01468a1d11eb0c332ac4c7c5a7e19fac5b143e1649f6e2f92f9"
+      },
+      {
+        "path": "audit-source-frames/1254.00.jpg",
+        "sha256": "72b2d9ca6e634f61af89459f8d8bd435d3505085abe761e7c7332d087de3caa4"
+      },
+      {
+        "path": "audit-source-frames/1254.80.jpg",
+        "sha256": "a4e8d463a5b27e435efab6d68f650eab641120c0481f701e796e05337ebf2ce5"
+      },
+      {
+        "path": "audit-source-frames/1255.40.jpg",
+        "sha256": "8a27b57813fdf48ba448d088a2f81b74759e5b509d7a6142953b0fdcacc7ddc8"
+      },
+      {
+        "path": "audit-source-frames/contact-0.jpg",
+        "sha256": "64876bd9e9a75d6ad94e330d495c94d7fb8226bcc1ea3fa911514490368facc9"
+      },
+      {
+        "path": "audit-source-frames/contact-1.jpg",
+        "sha256": "074f4945517315e7b23cf42c688c06055d7fd6fc41a0e69f6fe10c2bee9188a1"
+      }
+    ],
+    "remaining": [
+      "Compare all actual selected native quote cue fields against these source bounds after spec exists",
+      "Final-film scoreboard, subtitles, voice and exact SHA-bound native QC remain with main producer"
+    ],
+    "draft_review": {
+      "draft_path": "editorial-draft.json",
+      "draft_sha256": "ddf1bc3c10a1da3202afb025e9cb154e08fd42a69043a4dd5c38723e3307302f",
+      "status": "changes_required_before_render",
+      "reviewed_at": "2026-10-27T14:18:22.058850+00:00",
+      "required_corrections": [
+        {
+          "segment_index": 0,
+          "field": "score_inset",
+          "before": false,
+          "after": true,
+          "reason": "Actual source1255.4 remains wide court with visible live scoreboard. Wide view persists until scene cut1258.76; source interval cannot be claimed as entirely scoreless close-up. Restore when present, do not synthesize after disappearance."
+        },
+        {
+          "segment_index": 4,
+          "field": "quote[0].end",
+          "before_source_time": 1127.7,
+          "after_source_time": 1126.84,
+          "after_relative_time": 2.2,
+          "reason": "Both ASRs end back1126.80/1126.84; And look sentence starts1126.80/1126.84."
+        },
+        {
+          "segment_index": 4,
+          "field": "quote[1].at",
+          "before_source_time": 1127.7,
+          "after_source_time": 1126.84,
+          "after_relative_time": 2.2,
+          "reason": "Show next sentence from its real onset, not after And look what has started."
+        },
+        {
+          "segment_index": 8,
+          "field": "quote[1] Holds to love",
+          "before_source_times": [
+            1164.0,
+            1165.5
+          ],
+          "after_source_times": [
+            1165.4,
+            1166.2
+          ],
+          "after_relative_times": [
+            3.44,
+            4.24
+          ],
+          "reason": "Medium word onset1165.48/end1166.12; existing cue substantially premature and ends before to love."
+        },
+        {
+          "segment_index": 8,
+          "field": "quote[2] First set on the board",
+          "before_source_times": [
+            1165.5,
+            1168.04
+          ],
+          "after_source_times": [
+            1166.8,
+            1168.04
+          ],
+          "after_relative_times": [
+            4.84,
+            6.08
+          ],
+          "reason": "Medium first begins1166.80; cue must not preempt previous Holds to love sentence."
+        }
+      ],
+      "other_reviewers_notes_received": [
+        "Cover/story reviewer independently requested relative ease be translated faithfully instead of replacing it with straight-sets result.",
+        "Root requested 1158.2–1161.96 narration change from 又用发球稳住局面 to 盘末，她守住了这一局。"
+      ],
+      "positive_findings": [
+        "All raw unvoiced windows carry English and Chinese quote text.",
+        "Cold-open complete sentence is covered again by final long segment.",
+        "Final long segment contains one full extra point and one full match point; source internal jump correctly documented.",
+        "Other narration process windows enter after service and do not introduce additional complete points.",
+        "No selected segment begins before user-required1092s."
+      ],
+      "final_spec_recheck": "All requested corrections applied to formal spec; source-plan check passed."
+    }
+  },
+  "limitations": [
+    "This is source/plan evidence, not final rendered video QC or subjective human listening. Native final-film voice, scoreboard, captions and exact-byte publication QC remain required.",
+    "Source English name variants and deft-touch transcription corrected contextually; raw audio is retained continuously, not replaced."
+  ]
+}
