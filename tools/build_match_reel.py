@@ -7190,6 +7190,12 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     "https://www.youtube.com/watch?v=0FsIdkTFLms": 720,
     # 2018 温网决赛，温网官方（对安德森）。这条下到的是 720p 画面，音轨被登录墙拦住。
     "https://www.youtube.com/watch?v=6Rnp8AtYIow": 720,
+    # 《瓦林卡巴塞尔告别》（wawrinka-basel-farewell）费德勒视频致辞段：账号所有者
+    # 2026-10-27 15:18 亲批登记 720p 例外。致辞由 SRF 录制、经 nau.ch 独家发布，
+    # 公开载体只有 1280×720 网络版，两轮检索（SRF/SRF Sport/Blick/赛事官方）确认
+    # 无更高清版本；该段是本片原声位 1、内容不可替代。白名单只加这条存档 URL，
+    # 不及于 nau.ch 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-wawrinkafed/wawrinkafed.mp4': 720,
 }
 
 
