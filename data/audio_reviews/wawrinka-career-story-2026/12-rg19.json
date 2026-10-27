@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=LkBexZfsmDs",
+  "source_sha256": "e43ee60232a89ad659e775a25b746c6d87f46bf610d934fc33c32a34462be3c4",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T15:33:02+00:00",
+  "reviewed_from": 169.0,
+  "reviewed_to": 199.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/LkBexZfsmDs-full-small.en.json",
+      "sha256": "960cc18e1172d1e860729b9e220c83358d1fbc8b1240774a7973f056d1c24087",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/LkBexZfsmDs-full-medium.en.json",
+      "sha256": "a1b8753f39d173c95c595752b07115703abd1e32c808c3e8d9feb8e46265bae9",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/LkBexZfsmDs-clip165-214-small.en.json",
+      "sha256": "1ab957b5bb1a1cf0bc7336f302d81acdfcb76d492d82aca3844ce28a22d315e6",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/LkBexZfsmDs-clip165-214-medium.en.json",
+      "sha256": "a2e349663ebab0372e4b4e121fa99d365eb226291a6795867f77ad981af390d3",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方集锦：决胜盘赛点回合（169 发球起）、主裁下场看印、他仰天张臂、趴在网上；201 秒法语球场广播开口之前收住。",
+  "no_foreground_english_reason": "全片与 165–214 单段两档互不一致（medium『Thank you very much』179–195 / small『Just a little bit better』『Stop it!』），没有一句两档相同，判为观众声幻听；201 秒起两档都听到人名，是法语球场广播，窗口在 200.6 收住避开。"
+}

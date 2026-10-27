@@ -1,0 +1,53 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=4147sgz1QHI",
+  "source_sha256": "4ae8bbfe18d7d7145cb7573570788d4fbe43935fbaa8f8f2cc846f0e77b80123",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T15:33:02+00:00",
+  "reviewed_from": 623.4,
+  "reviewed_to": 655.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 633.48,
+      "end": 638.0,
+      "en": "After a final that was dramatic and bizarre and puzzling,",
+      "zh": "一场跌宕又离奇的决赛"
+    },
+    {
+      "start": 638.0,
+      "end": 642.64,
+      "en": "it all ends well for Stan.",
+      "zh": "最后 斯坦笑到了最后"
+    },
+    {
+      "start": 642.64,
+      "end": 648.96,
+      "en": "He is the man in Melbourne, the 2014 Australian Open Champion,",
+      "zh": "他是墨尔本之王 2014澳网冠军"
+    },
+    {
+      "start": 650.28,
+      "end": 654.3,
+      "en": "the first time he claims Grand Slam glory.",
+      "zh": "第一次拿下大满贯"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/4147sgz1QHI-full-small.en.json",
+      "sha256": "948bd18549197a4ee30083db4c76088f54a46bfeabec7d29d52bb693eba81bac",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/4147sgz1QHI-full-medium.en.json",
+      "sha256": "5468d72fe33b64f1593683d745e8668c776ec16e87a4bbe44a31e0a06045211f",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "澳网官方 Extended Highlights：冠军点（记分条 CHAMPIONSHIP POINT，624–627 秒）、他张开双臂、网前和纳达尔拥抱，解说『the first time he claims Grand Slam glory』说完收住、品牌片尾之前。"
+}

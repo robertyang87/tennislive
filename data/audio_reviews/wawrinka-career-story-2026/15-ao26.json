@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=ChH5YbyWSPk",
+  "source_sha256": "0a5a2e9837ce1da41991ca55672cc4db3e54341321dad9c44595c5a8c829f8d9",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-27T15:33:02+00:00",
+  "reviewed_from": 688.6,
+  "reviewed_to": 713.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 688.96,
+      "end": 692.38,
+      "en": "It's hard to envision anything beyond that backhand,",
+      "zh": "说起他 先想到的总是单反"
+    },
+    {
+      "start": 692.76,
+      "end": 696.52,
+      "en": "but when you look beyond those three Grand Slam titles,",
+      "zh": "可在三座大满贯之外"
+    },
+    {
+      "start": 696.68,
+      "end": 701.9,
+      "en": "perhaps his greatest contribution to tennis is proof that courage,",
+      "zh": "他最大的贡献 也许是证明了勇气"
+    },
+    {
+      "start": 702.4,
+      "end": 706.86,
+      "en": "patience and late-blooming belief can carve out greatness,",
+      "zh": "耐心和大器晚成的信念"
+    },
+    {
+      "start": 707.24,
+      "end": 712.78,
+      "en": "even in an era dominated by the giants of the sport.",
+      "zh": "在巨头的时代也能成就伟大"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/ChH5YbyWSPk-full-small.en.json",
+      "sha256": "45c2dcaa5eac71d6b6c901484906636a58708c6314f637557222b92c6e038555",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/ChH5YbyWSPk-full-medium.en.json",
+      "sha256": "83b601498d039cd6b796776315ffb9da91af11cb28ccfad80e64fb204babbc4d",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "同一条官方视频：他手按胸口绕场向看台致意，解说的总结整句保留（688.96–712.78），686.92 上一句之后起。"
+}
