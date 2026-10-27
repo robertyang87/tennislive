@@ -1,0 +1,110 @@
+name: import-wawrinka-basel-sources
+run-name: "import-wawrinka-basel-sources · 瓦林卡巴塞尔仪式五源存档"
+
+# 一次性：瓦林卡 2026-10-26 巴塞尔退役仪式（网球有故事 wawrinka-basel-farewell）
+# 的五支横屏源存档。源不在 YouTube：RTS 致敬片段（progressive 直链）、
+# RTS 19h30 章节（HLS 分片在 runner 上按本地已验配方重建音画版）、
+# nau.ch 的 SRF 费德勒致辞直链、Blick 内嵌 JW Player 的 SRF 转播片段两支。
+# 本地直传 uploads.github.com 被凭据 401 挡住，故走 runner（import-sun 先例）。
+# 每个文件下载后按本地已验字节数断言；19h30 的两个中间体字节数与本地
+# segment-combined / 音频原片逐字节一致（87079216 / 2067407），切点
+# -ss 13 / -ss 5、时长 121.04 与本地 -av 版逐帧对位过（t=1、t=5.5 同帧）。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-wawrinka-basel-sources
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/ci_apt_install.sh
+          sparse-checkout-cone-mode: false
+
+      - name: 恢复 apt 缓存
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-import-wawrinka-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-import-wawrinka-v1-
+
+      - name: 安装 ffmpeg
+        timeout-minutes: 15
+        run: |
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+
+      - name: 回写 apt 缓存
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
+
+      - name: 下载四支直链源（字节数断言）
+        run: |
+          set -euo pipefail
+          mkdir -p dl && cd dl
+          curl -sSL --fail --retry 3 -o wawrinka90s.mp4 "https://rts-vod-dd.akamaized.net/ww/5a9b54df-557f-3004-9a05-4949d680a776/d6a87bb5-9226-3789-9a04-3f896619dc0d.mp4"
+          curl -sSL --fail --retry 3 -o wawrinkafed.mp4 "https://c.nau.ch/videos/A0ujYwfl/h264-aac/A0ujYwfl-video.mp4"
+          curl -sSL --fail --retry 3 -o wawrinkamce.mp4 "https://cdn.jwplayer.com/videos/WfmIqQEt-KUswyQvk.mp4"
+          curl -sSL --fail --retry 3 -o wawrinkaehr.mp4 "https://cdn.jwplayer.com/videos/MlqO2Znr-KUswyQvk.mp4"
+          test "$(stat -c%s wawrinka90s.mp4)" -eq 46675027
+          test "$(stat -c%s wawrinkafed.mp4)" -eq 3547821
+          test "$(stat -c%s wawrinkamce.mp4)" -eq 9524233
+          test "$(stat -c%s wawrinkaehr.mp4)" -eq 16708068
+          echo "四支直链字节数与本地已验文件一致"
+
+      - name: 重建 RTS 19h30 章节音画版（HLS 分片配方）
+        run: |
+          set -euo pipefail
+          cd dl
+          B="https://rts-vod-amd.akamaized.net/ww/ccc5e45c-6de2-3070-b726-973097cf1fc4/e78ce761-66f3-3151-a1be-ed7a85fe45c8"
+          { curl -s --fail --retry 3 "$B/init-f5-v1.mp4"; for i in $(seq 228 244); do curl -s --fail --retry 3 "$B/seg-$i-f5-v1.m4s"; done; } > vraw.mp4
+          { curl -s --fail --retry 3 "$B/init-f1-a1.mp4"; for i in $(seq 229 244); do curl -s --fail --retry 3 "$B/seg-$i-f1-a1.m4s"; done; } > araw.mp4
+          test "$(stat -c%s vraw.mp4)" -eq 87079216
+          test "$(stat -c%s araw.mp4)" -eq 2067407
+          ffmpeg -hide_banner -loglevel error -i vraw.mp4 -ss 13 -t 121.04 -c:v libx264 -crf 17 -preset medium -an vcut.mp4
+          ffmpeg -hide_banner -loglevel error -i araw.mp4 -ss 5 -t 121.04 -c:a aac -b:a 160k acut.m4a
+          ffmpeg -hide_banner -loglevel error -i vcut.mp4 -i acut.m4a -map 0:v -map 1:a -c copy wawrinka193.mp4
+          ffprobe -v error -show_entries format=duration -show_entries stream=codec_type,width,height -of default=nw=1 wawrinka193.mp4
+          rm -f vraw.mp4 araw.mp4 vcut.mp4 acut.m4a
+
+      - name: 上传五支到 Release 存档
+        run: |
+          set -euo pipefail
+          cd dl
+          declare -A TITLES=(
+            [wawrinka90s]="RTS 致敬片段 · 瓦林卡巴塞尔退役仪式（90s）"
+            [wawrinka193]="RTS 19h30 瓦林卡章节（音画版 121s）"
+            [wawrinkafed]="SRF 费德勒视频致辞（nau.ch 分发，18s）"
+            [wawrinkamce]="SRF 麦肯罗致辞（Blick/JW，30s）"
+            [wawrinkaehr]="SRF 荣誉绕场（Blick/JW，47s）"
+          )
+          for id in wawrinka90s wawrinka193 wawrinkafed wawrinkamce wawrinkaehr; do
+            gh release view "source-$id" >/dev/null 2>&1 || \
+              gh release create "source-$id" --title "${TITLES[$id]}" \
+                --notes "网球有故事 wawrinka-basel-farewell 源存档。由 import-wawrinka-basel-sources 从原始公开地址在 runner 上取回/重建，字节数已与本地验过的副本断言一致。"
+            gh release upload "source-$id" "$id.mp4" --clobber
+            echo "== source-$id"
+            gh release view "source-$id" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
+          sha256sum wawrinka90s.mp4 wawrinka193.mp4 wawrinkafed.mp4 wawrinkamce.mp4 wawrinkaehr.mp4
