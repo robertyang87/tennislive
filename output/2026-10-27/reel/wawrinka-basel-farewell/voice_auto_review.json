@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "2f1ebe42a102c0d29172a626be0c694e8701ddd6216c5de488f09e51043c5302",
-    "render_inputs_sha256": "cc2322b5febe7e2a4989289ffdca5ca195a74dd2243594c90e7f16b376965430",
-    "spec_sha256": "787de0c9cab236bf18934a43f0992d6fc4906e4e8afa9a2358a0aaa8fc1eac18",
-    "film_sha256": "ccc83ab2ecd66fb7b361d767816082c6d59962b500620b65c7cb51849b7c510c",
-    "inventory_sha256": "a0d251e49d5d15cd8241a7092118be3ee31c0777c54f5d98ccb75936f92db322"
+    "render_sha256": "dec01467e76496172596ebd1ed987eed56e29f0ef2aaee6ce2d68e2c978c3bf4",
+    "render_inputs_sha256": "1c656f5c48637d0911f690e2001fe38032d87a33cc7e4d8ed73ff239fc2a3cfd",
+    "spec_sha256": "5b4b1496924e8cee34a0afc9e1dedad1cb36a9ddecf11c99b5f6b92cd7b1f9d2",
+    "film_sha256": "79c1725de75ad93692a570607a79c95a83c005157c27bdaa7ebdad0823126032",
+    "inventory_sha256": "860d2ece5059f0e4f5fd7761dfc60c2320ce6aa13e61a38c562794c8c33f00bf"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-27T07:55:00+00:00",
+  "reviewed_at": "2026-10-27T09:34:54+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -39,12 +39,6 @@
       "audio_sha256": "4c01eaeac6fb7d593b9d2a11609890e78f48ead9cd7512ce528c18eca567b05e",
       "pass": true,
       "result_of": "bundle:1b370fc4eb3c43cc74da0e5d020697e46bdced9413d49dcf32f610a27f8d4fd3"
-    },
-    {
-      "id": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6",
-      "audio_sha256": "87db35fb379aa61e0269e5eb1df3cc1cb36875c338bafc754ecba812b6c48ba3",
-      "pass": true,
-      "result_of": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6"
     },
     {
       "id": "bundle:533b7869d1151c1af572ed384b2582e6fe4f426a3266c21eed65cb31e6ef75ad",
@@ -93,6 +87,12 @@
       "audio_sha256": "ded5298dc3a7ec4848aa030d4824ee2fb1eada0a6d9b32b7cce6727e58daac30",
       "pass": true,
       "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ba5d260fa1aa18455b1c1a7161ee0883f06b999bd432b05b71cf2f0a7b5c5792",
+      "audio_sha256": "03b74d7d3224082e4898342f9959a971e783c4607ac199bff848564b2a68dd87",
+      "pass": true,
+      "result_of": "bundle:ba5d260fa1aa18455b1c1a7161ee0883f06b999bd432b05b71cf2f0a7b5c5792"
     },
     {
       "id": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f",
@@ -180,9 +180,9 @@
     },
     {
       "id": "voice_cover.mp3",
-      "audio_sha256": "87db35fb379aa61e0269e5eb1df3cc1cb36875c338bafc754ecba812b6c48ba3",
+      "audio_sha256": "03b74d7d3224082e4898342f9959a971e783c4607ac199bff848564b2a68dd87",
       "pass": true,
-      "result_of": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6"
+      "result_of": "bundle:ba5d260fa1aa18455b1c1a7161ee0883f06b999bd432b05b71cf2f0a7b5c5792"
     },
     {
       "id": "voice_outro.mp3",
@@ -242,7 +242,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年12月,他宣布退一时写道,每本书都需要一个结局。瑞士人把这个结局写成了一场庆典。"
+        "transcript": "2025年12月,他宣布退一时写道,每本书都需要一个结局,瑞士人把这个结局写成了一场庆典。"
       },
       "polyphones": [],
       "pauses": {
@@ -286,38 +286,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "轮到 ｜ 他 ｜ 自己 ｜ 致辞 ｜ 他 ｜ 先 ｜ 谢 ｜ 了 ｜ 布伦瓦尔德 ｜ 这 ｜ 站 ｜ 比赛 ｜ 他 ｜ 打 ｜ 了 ｜ 十九届 ｜ 然后 ｜ 他 ｜ 讲 ｜ 了 ｜ 一 ｜ 句 ｜ 让 ｜ 全场 ｜ 大笑 ｜ 的话"
-      }
-    },
-    {
-      "id": "bundle:415abb6e6aeb32b0f3405470f514c0deccbad22c60aa6db6c008055851952af6",
-      "text": "三次决赛，三次掀翻世界第一。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 12,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "三次决赛,三次先翻世界第一。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 12,
-        "speech_s": 2.512,
-        "cps": 4.78,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "三次 ｜ 决赛 ｜ 三次 ｜ 掀翻 ｜ 世界 ｜ 第一"
       }
     },
     {
@@ -413,7 +381,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "最后播出的是他父母的视频,镜头扫过,瓦林卡低下了头,全场最吵的一夜,在那一刻最安静。"
+        "transcript": "最后播出的是他父母的视频。镜头扫过,瓦林卡低下了头。全场最吵的一夜,在那一刻最安静。"
       },
       "polyphones": [],
       "pauses": {
@@ -491,7 +459,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "最后,她绕场一周,手机灯光亮起来向给她点了一场星海。"
+        "transcript": "最后他绕场一周,手机灯光亮起来向给他点了一场星海。"
       },
       "polyphones": [],
       "pauses": {
@@ -555,7 +523,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "一个从没在这座球场拿过冠军的人,这一页是全场的主角。这一页没有比赛,这是瑞士网球、魏斯坦、瓦林卡半的告别仪式。布伦瓦尔德送了他一颗金色的网球,叫他网球界的史泰龙。而这里也是他职业生涯的最后一战。"
+        "transcript": "一个从没在这座球场拿过冠军的人,这一页是全场的主角。这一页没有比赛,这是瑞士网球、威斯坦、瓦林卡半的告别仪式。布伦瓦尔德送了他一颗金色的网球,叫他网球界的史泰龙。而这里也是他职业生涯的最后一站。"
       },
       "polyphones": [],
       "pauses": {
@@ -587,7 +555,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "主持人端来一盘爆米花,他笑着选了爆米花,没选香蕉。坐下来,看大屏幕上方自己的二十四年。"
+        "transcript": "主持人端来一盘爆米花,他笑着选了爆米花,没选香蕉,坐下来,看大屏幕上方自己的二十四年。"
       },
       "polyphones": [],
       "pauses": {
@@ -634,6 +602,38 @@
       }
     },
     {
+      "id": "bundle:ba5d260fa1aa18455b1c1a7161ee0883f06b999bd432b05b71cf2f0a7b5c5792",
+      "text": "他从没赢过巴塞尔，九千人却起立送别。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他从没赢过巴塞尔,九千人却起立送别。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.538,
+        "cps": 4.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 从没 ｜ 赢 ｜ 过 ｜ 巴塞尔 ｜ 九千 ｜ 人 ｜ 却 ｜ 起立 ｜ 送别"
+      }
+    },
+    {
       "id": "bundle:d16dc319e9abaded792ea281467fe90db0e644c8ca2a39b7361c3d7d9a9f6f6f",
       "text": "和费德勒同为瑞士人，是『另一个瑞士人』，二十八岁才第一次打进年终前十。三次大满贯决赛，对面站的全是世界第一，他全赢了。2017 年第四次决赛，输给纳达尔。之后他膝盖连做两次手术，排名跌到第二百六十三位——他又爬回来，打到了四十一岁。他的左臂上纹着一句话：再试，再败，败得更好。",
       "pass": true,
@@ -647,11 +647,11 @@
         "ok": true,
         "ref_syllables": 120,
         "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "inserted": 1,
+        "substituted": 2,
+        "sub_ratio": 0.017,
         "longest_deletion": 0,
-        "transcript": "和费德勒同为瑞士人,是另一个瑞士人,二十八岁才第一次打进年中前时。三次大满冠决赛,对面战的全是世界第一,他全赢了。2017年第四次决赛,输给纳达尔。之后,他膝盖连做两次手术,排名跌到第二百六十三位,他又爬回来,打到了四十一岁。他的左臂上,闻着一句话,再是,再败,败得更好。"
+        "transcript": "和费德勒同为瑞士人：是另一个瑞士人,28岁才第一次打进年中前时。三次大猛冠决赛,对面战的全是世界第一：他全赢了。2017年第四次决赛,输给纳达尔。之后,他膝盖连做两次手术,排名跌到第二百六十三位,他又爬回来,打到了四十一岁。他的左臂上闻着一句话,应该是再败,败得更好。"
       },
       "polyphones": [
         {
@@ -697,7 +697,7 @@
         "substituted": 1,
         "sub_ratio": 0.022,
         "longest_deletion": 0,
-        "transcript": "穆雷、威兰德、纳芙拉蒂洛娃、蒙菲尔斯依次出现,德约科维奇干脆就坐在观众席里。麦肯罗的致词,只有一句最初人。"
+        "transcript": "穆雷、威兰德、纳芙拉蒂洛娃、蒙菲尔斯依次出现,德约科维奇干脆就坐在观众席里。麦肯罗的致词,只有一句最出人。"
       },
       "polyphones": [],
       "pauses": {

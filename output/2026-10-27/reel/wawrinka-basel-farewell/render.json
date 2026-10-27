@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "ff0933195e81a5f1b71eab561b5c8281987c3a13d2866dd841d37da93271151f",
+    "bundle_sha256": "d592ec740f8c6d83f728ef8c77d159e4783b05665f0af57de0972d9074822e7f",
     "request_count": 14,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-wawrinka-basel-farewell-ff0933195e81a5f1",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wawrinka-basel-farewell-ff0933195e81a5f1/tts_bundle.zip",
+    "release_tag": "reel-tts-wawrinka-basel-farewell-d592ec740f8c6d83",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wawrinka-basel-farewell-d592ec740f8c6d83/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40469070620"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40481098714"
   },
-  "cover_seconds": 3.658,
+  "cover_seconds": 4.666,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
   "segments_seconds": 213.59,
   "topbar": null,
-  "film_seconds": 221.9,
+  "film_seconds": 222.9,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -54,44 +54,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "cc2322b5febe7e2a4989289ffdca5ca195a74dd2243594c90e7f16b376965430",
+  "render_inputs_sha256": "1c656f5c48637d0911f690e2001fe38032d87a33cc7e4d8ed73ff239fc2a3cfd",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "wawrinka-basel-farewell",
-    "received_at": "2026-10-27T07:45:50Z",
-    "artifact_ready_at": "2026-10-27T07:53:19Z",
-    "elapsed_seconds": 449.606,
+    "received_at": "2026-10-27T09:29:00Z",
+    "artifact_ready_at": "2026-10-27T09:33:54Z",
+    "elapsed_seconds": 294.045,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "ccc83ab2ecd66fb7b361d767816082c6d59962b500620b65c7cb51849b7c510c",
-    "spec_sha256": "787de0c9cab236bf18934a43f0992d6fc4906e4e8afa9a2358a0aaa8fc1eac18",
-    "run_id": "40469070620",
+    "film_sha256": "79c1725de75ad93692a570607a79c95a83c005157c27bdaa7ebdad0823126032",
+    "spec_sha256": "5b4b1496924e8cee34a0afc9e1dedad1cb36a9ddecf11c99b5f6b92cd7b1f9d2",
+    "run_id": "40481098714",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-27T07:48:22Z",
-        "run_id": "40469070620"
+        "at": "2026-10-27T09:31:32Z",
+        "run_id": "40481098714"
       }
     ],
-    "render_seconds": 297.606,
+    "render_seconds": 142.045,
     "pre_render_seconds": 152.0
   },
-  "film_sha256": "ccc83ab2ecd66fb7b361d767816082c6d59962b500620b65c7cb51849b7c510c",
-  "film_bytes": 82812645,
-  "qc_attestation_sha256": "4262b1a89360d3fc1786900dcb66b3ba5b79cd4f28bbcb030145c4f91b7795b3",
+  "film_sha256": "79c1725de75ad93692a570607a79c95a83c005157c27bdaa7ebdad0823126032",
+  "film_bytes": 82711397,
+  "qc_attestation_sha256": "bd1b4df79a014dcd8266d0bab52124a517ebde6ebb1b8c252392b557073fe42d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-27T07:48:22Z",
-      "run_id": "40469070620"
+      "at": "2026-10-27T09:31:32Z",
+      "run_id": "40481098714"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-27T07:53:22Z",
-      "run_id": "40469070620"
+      "at": "2026-10-27T09:33:56Z",
+      "run_id": "40481098714"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wawrinka-basel-farewell/wawrinka-basel-farewell.mp4",
-  "video_bytes": 82812645
+  "video_bytes": 82711397
 }
