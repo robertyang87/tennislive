@@ -4957,8 +4957,20 @@ def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0,
         # Shared silent transition movie; narration is mixed on the existing
         # timeline. Preserve its complete window and native dissolve tail.
         thread_args = ["-threads", str(threads)] if threads is not None else []
-        fit = (f"scale={VIDEO_W}:{BAND_PIC_H},pad={VIDEO_W}:{VIDEO_H}:0:{BAND_TOP}:color={BAND_BG},"
-               if LAYOUT == "band" else f"scale={VIDEO_W}:{VIDEO_H},")
+        # Animated cards must land in the same box as the 2x static cards.
+        # A data-card movie is not a full-bleed title page: stretching it to
+        # the canvas moves its own heading into the persistent match topbar.
+        from PIL import Image  # noqa: PLC0415
+
+        region_h = (VIDEO_H if seg.full_canvas else
+                    BAND_PIC_H if LAYOUT == "band" else VIDEO_H)
+        canvas, box = still_canvas_for_layout(
+            Image.new("RGBA", (VIDEO_W * 2, region_h * 2)), Image,
+            full_bleed=seg.full_bleed, full_canvas=seg.full_canvas)
+        x, y, right, bottom = box
+        color = "0x" + "".join(f"{c:02x}" for c in canvas.getpixel((0, 0))[:3])
+        fit = (f"format=rgba,scale={right-x}:{bottom-y}:flags=lanczos,"
+               f"pad={VIDEO_W}:{VIDEO_H}:{x}:{y}:color={color},")
         filter_args = ["-filter_threads", str(threads)] if threads is not None else []
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *filter_args, *thread_args,
             "-i", seg.image, "-f", "lavfi", "-i",
