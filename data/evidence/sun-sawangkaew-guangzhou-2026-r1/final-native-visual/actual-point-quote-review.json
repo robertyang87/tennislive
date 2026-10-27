@@ -1,0 +1,118 @@
+{
+  "schema": "tennislive.actual-point-quote-visual-review.v1",
+  "status": "pass",
+  "scope": "visual_only_actual_v3_critical_point_and_quote_frames",
+  "fix_required": false,
+  "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
+  "film_bytes": 60904626,
+  "film_seconds": 230.2,
+  "reviewed_at": "2026-10-27T15:17:42.746307+00:00",
+  "reviewer": "independent assistant /root/sun_source_audio_audit",
+  "human_listening_claimed": false,
+  "voice_gate_pass_claimed": false,
+  "checks": [
+    {
+      "name": "cold_open_and_scoreboard",
+      "status": "pass",
+      "observations": [
+        "Fresh V3 actual1.80 shows the live Sun6/5/40 vs Sawangkaew3/4/15 board restored in the fixed lower-left position with readable names and digits.",
+        "V3 seg00 at4.02 retains the complete Another big moment... bilingual caption and later same-match court reaction after source board disappearance.",
+        "V3 seg03 preserves Sun3/Ad with Sawangkaew2/blank exactly as previously independently verified original-source1113.64; do not add an invented40."
+      ]
+    },
+    {
+      "name": "complete_point_and_match_result",
+      "status": "pass",
+      "actual_times": [
+        169.0,
+        171.64,
+        181.48
+      ],
+      "observations": [
+        "Fresh V3 prep frame shows same-match serve preparation at5-4,40-15.",
+        "Fresh V3 serve frame shows Sun serving from far baseline; no obstruction by topbar or subtitle block.",
+        "Fresh V3 result frame retains final exchange/result and complete EN/ZH reaction text.",
+        "Source windows, speeds, quotes and audio plan remain unchanged; independently verified continuous full match point and exactly one additional complete key point are retained."
+      ]
+    },
+    {
+      "name": "handshake_and_caption_visibility",
+      "status": "pass",
+      "actual_time": 192.48,
+      "observations": [
+        "Fresh V3 closing-quote frame shows Sun and Sawangkaew exchanging a handshake, with both faces and joined hands visible.",
+        "Full English She topples Mananchaya Sawangkaew with relative ease. and faithful Chinese are within canvas and readable below faces/hands."
+      ]
+    },
+    {
+      "name": "no_next_match",
+      "status": "pass",
+      "actual_times": [
+        193.48,
+        193.56
+      ],
+      "observations": [
+        "Fresh V3 actual193.48 is still the same two players leaving the net.",
+        "Fresh V3 actual193.56 begins the closing transition over the same-match scene, with no next-match insert.",
+        "Selected source stop1267.60 remains before independently verified next-match scene1267.76."
+      ]
+    }
+  ],
+  "audio_plan_check": {
+    "current_plan_sha256": "21c9e1ba01c70c118378e9b9a4a61a46eb463ec4328a3356f5469db6be179c01",
+    "index_matches": true,
+    "kicker_change_affects_plan_hash": false,
+    "packet_or_index_modified": false
+  },
+  "evidence_frames": [
+    {
+      "path": "frames/seg-00.jpg",
+      "sha256": "f4ba9d16c0737d4c7160866ed250f49b6d90fc63635b44af23a4086d41aeeab1",
+      "actual_time": 4.02
+    },
+    {
+      "path": "frames/seg-03.jpg",
+      "sha256": "6dbe7d6ce85db45816893c79ee65215da594c5a25f9120766c90bfa486afe325",
+      "actual_time": 37.12
+    },
+    {
+      "path": "frames/point-prep.jpg",
+      "sha256": "9a37ad4efb557dd7b6b80dd5bbcc79219e62bddcb3ad76c1d772a325e11515fe",
+      "actual_time": 169.0
+    },
+    {
+      "path": "frames/point-serve.jpg",
+      "sha256": "0562ef67503fe5c03c76e0ea71fd88acc54407dfe53cf40e73e309e71322aa3b",
+      "actual_time": 171.64
+    },
+    {
+      "path": "frames/point-result.jpg",
+      "sha256": "41cf704460d9a9188d661e657b35fa9a62b9c842778a5866ab02c32e6a5d2416",
+      "actual_time": 181.48
+    },
+    {
+      "path": "frames/closing-quote.jpg",
+      "sha256": "d0317d9b943a5b198a1690fa2aa854e2ffc22c57d5a38374976189c79dc08a07",
+      "actual_time": 192.48
+    },
+    {
+      "path": "frames/v3-actual-1.80.jpg",
+      "sha256": "1ffeb16d97d16e54bd0c5e24f4887399a422fb6e1a62392968385938d47b7d3a",
+      "actual_time": 1.8
+    },
+    {
+      "path": "frames/v3-actual-193.48.jpg",
+      "sha256": "3d0901d069f3fbd60f00bdf3bda02198964794e56788ab10e10e4a069fcb0aad",
+      "actual_time": 193.48
+    },
+    {
+      "path": "frames/v3-actual-193.56.jpg",
+      "sha256": "19860274f9996d127d26ac2516a256158622888f4ccebdc0e9de43de4e73d3c2",
+      "actual_time": 193.56
+    }
+  ],
+  "publication_condition": "Native audio/identity/QC suite and exact-final-head CI must independently pass before publishing. This report approves only sampled actual V3 visual scope.",
+  "limitations": [
+    "No subjective human listening, full-film audio approval or loudness processing claimed."
+  ]
+}

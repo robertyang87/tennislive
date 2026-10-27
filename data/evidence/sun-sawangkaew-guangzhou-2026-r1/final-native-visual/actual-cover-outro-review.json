@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "reviewer": "independent current assistant",
+  "method": "Opened and visually inspected the three requested actual V3 master frames; verified actual V3 master hash and bytes.",
+  "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
+  "film_bytes": 60904626,
+  "film_seconds": 230.2,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "review_scope": "Actual V3 cover/outro still composition and corrected segment09 ranking-system/age-group label shown with subtitle. No audio or animation-timing approval.",
+  "frames": [
+    {
+      "path": "frames/seg-09.jpg",
+      "sha256": "3ef020b484529348afead96a42476384d220046b2b1e29a55c03ea13e6133c49"
+    },
+    {
+      "path": "frames/cover.jpg",
+      "sha256": "d5bdaa46c7ca8854cae316efa4f371a8c53a643d2881f4d7c7be3d3cacc75c8f"
+    },
+    {
+      "path": "frames/outro.jpg",
+      "sha256": "1f889be86e40d7da38441da318e806203cb418e8c52bd9955d2ff175b09dbbba"
+    }
+  ],
+  "cover": {
+    "status": "pass",
+    "observations": [
+      "Whole hat/head, profile face and raised fist are visible; header, hook and scoreboard do not cover them.",
+      "Approved same-match official photo andD crop fill3:4, with no letterboxing.",
+      "Account/column,Guangzhou first-round matchup,SunCHN405 versusSawangkaewTHA80,6-3/6-4 set result,CenterCourt and1:21 remain readable and correct.",
+      "Visor casts natural shadow on a side-profile eye; no claim that both eyes face camera."
+    ]
+  },
+  "outro": {
+    "status": "pass",
+    "observations": [
+      "Centered tennis-clock account logo remains complete.",
+      "网球时差·赛场之上,时差归我好球归你 and bottom account mark are legible and unclipped.",
+      "Deep-blue tennis-court background and top brand strip are intact."
+    ]
+  },
+  "chapter_frames": {
+    "seg-09.jpg": {
+      "status": "pass",
+      "observations": [
+        "Same actual frame now displaysITF18岁及以下组女子排名 legibly in the kicker above6比3先下一盘/第二盘仍要过关.",
+        "Subtitle她已是女子世界第1 is now simultaneously qualified by the ITF ranking system and18-and-under age group. Earlier scope ambiguity is resolved.",
+        "Kicker fits inside its label, remains clear of chapter title and compact match topbar, and does not overlap the lower subtitle."
+      ]
+    }
+  },
+  "resolved_findings": [
+    {
+      "kind": "scope_in_actual_subtitle",
+      "status": "resolved_on_actual_V3_frame",
+      "resolution": "ITF18岁及以下组女子排名 and女子世界第1 subtitle appear simultaneously."
+    }
+  ],
+  "needs_fix": [],
+  "old_master_used_for_V3_evidence": false,
+  "audio_reviewed": false,
+  "voice_quality_approval": false,
+  "human_listening_claimed": false,
+  "spec_changed": false
+}

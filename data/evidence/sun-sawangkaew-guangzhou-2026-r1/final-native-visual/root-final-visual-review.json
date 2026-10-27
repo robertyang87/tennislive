@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "scope": "actual final rendered visual inspection; native voice quality and exact-head CI are separate required gates",
+  "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
+  "film_bytes": 60904626,
+  "film_seconds": 230.2,
+  "native_run": 40528316869,
+  "spec_sha256": "91844c7b19f4bf7fc479d3d4fa935f3d647e4bd3b32da1efe319aef36dd2e44b",
+  "human_listening_claimed": false,
+  "observations": [
+    "Actual3:4 court fills1080x1440 and compact transparent topbar is clear. Original scoreboard vertical position is retained, names/sets/games/points remain visible. At SunAd the opponent blank field exactly matches original broadcast and was not supplemented.",
+    "Final ranking chapter visibly says ITF18岁及以下组女子排名 in the same frame as女子世界第1; youth/pro ranking scope is unambiguous.",
+    "Actual stats image Sun left/Sawangkaew right, flagsCHN/THA, ranks405/80, score6-3/6-4, winners9/17 and nonforced errors21/41 match official data.",
+    "Cover/outro and complete point/lastsame-match frames independently inspected by two agents against this exact final master SHA; see companion actual reviews.",
+    "All match windows use source1092s or later and end1267.60 before nextmatch1267.76; sourceauditedcomplete extra point+matchpoint+handshake retained."
+  ],
+  "frames": [
+    {
+      "name": "seg-03.jpg",
+      "sha256": "6dbe7d6ce85db45816893c79ee65215da594c5a25f9120766c90bfa486afe325"
+    },
+    {
+      "name": "seg-09.jpg",
+      "sha256": "3ef020b484529348afead96a42476384d220046b2b1e29a55c03ea13e6133c49"
+    },
+    {
+      "name": "seg-15.jpg",
+      "sha256": "8da9b9b0044e081b527b6abad3cb8e05f97dc587818190f388f89ddb056a2bb3"
+    }
+  ]
+}
