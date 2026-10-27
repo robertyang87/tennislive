@@ -17864,3 +17864,22 @@ def test_混音真峰值过线才限没过线原样(tmp_path):
     report2 = reel.limit_true_peak(quiet)
     assert not report2["applied"]
     assert quiet.read_bytes() == raw_before, "没过线的混音被改了字节"
+
+
+def test_venus_owner_nickname_preserves_identity_and_rejects_other_players(tmp_path):
+    import check_reel_landed as chk
+    from tennislive.zh.players import normalize_player_zh
+    reels = tmp_path / "reels"
+    reels.mkdir()
+    prior = {"cover": {"matchup": [{"name": "大威廉姆斯"}, {"name": "塔格尔"}]},
+             "stats": {"a": {"headshot": "wta-230220.jpg"}, "b": {"headshot": "wta-332150.png"}}}
+    (reels / "prior.json").write_text(json.dumps(prior), encoding="utf-8")
+    alias = {**prior, "cover": {"matchup": [{"name": "大威"}, {"name": "塔格尔"}]}}
+    assert normalize_player_zh("大威") == "大威廉姆斯"
+    assert chk.stat_card_headshot_problem(alias, reels) is None
+    swapped = {**alias, "stats": {"a": prior["stats"]["b"], "b": prior["stats"]["a"]}}
+    assert chk.stat_card_headshot_problem(swapped, reels)[0] is True
+    for different_name in ["小威", "威廉姆斯姐妹", "塔格尔"]:
+        assert normalize_player_zh(different_name) == different_name
+        other = {**alias, "cover": {"matchup": [{"name": different_name}, {"name": "塔格尔"}]}}
+        assert chk.stat_card_headshot_problem(other, reels)[0] is True

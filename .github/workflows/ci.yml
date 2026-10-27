@@ -331,6 +331,23 @@ jobs:
         # 掐掉，和「装不上」长得一模一样。
         timeout-minutes: 10
         run: |
+          # First verify the cached browser itself. A passing real launch does not
+          # need apt to install/upgrade unrelated optional font packages (40509416719).
+          # Missing browser libraries still fall through to the existing bounded
+          # --with-deps retries below; the full HTML/render test suite is unchanged.
+          if python - <<'PY_BROWSER'
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              browser = p.chromium.launch(headless=True, args=["--no-sandbox"])
+              page = browser.new_page(viewport={"width": 160, "height": 100})
+              page.set_content("<html><body>网球时差 CI</body></html>")
+              assert page.screenshot(type="png").startswith(b"\x89PNG")
+              browser.close()
+          PY_BROWSER
+          then
+            echo "Chromium real HTML screenshot passed; existing runtime dependencies are sufficient"
+            exit 0
+          fi
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算

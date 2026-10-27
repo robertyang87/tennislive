@@ -1,0 +1,9 @@
+{
+  "ref": "main",
+  "inputs": {
+    "mode": "http",
+    "want": "Tagger,Williams",
+    "urls": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaBIVVpHjq6j3tSyxwTE-8Q",
+    "grep": "<entry>[\\s\\S]*?</entry>"
+  }
+}

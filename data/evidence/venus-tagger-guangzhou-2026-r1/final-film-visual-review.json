@@ -1,0 +1,52 @@
+{
+  "slug": "venus-tagger-guangzhou-2026-r1",
+  "status": "pass",
+  "reviewer": "current assistant, actual rendered image inspection",
+  "human_listening_claimed": false,
+  "film_sha256": "77431a8aeb4284a175fe27578bb7d8abcc9ca7620e92e37c1bf91c3385a5d0be",
+  "film_bytes": 86535175,
+  "film_seconds": 263.6,
+  "native_run": 40511445604,
+  "spec_sha256": "9827fc9e43cd74910802b0ad407abbe68b4b2e13cfc62b313a6beae4ad53c2d6",
+  "render_inputs_sha256": "3b79fe6d930434f983db9b92847074bc5796fa1acc7521555fe4e255c3274bee",
+  "voice_auto_review": {
+    "pass": true,
+    "entries": 42,
+    "source": "native final-film five-item suite"
+  },
+  "observations": [
+    "Actual film cover: full head and face clear of top header and lower hook.",
+    "Actual court frames: full 3:4 canvas; compact transparent topbar; scoreboard restored at original vertical position with both rows and game/point columns visible.",
+    "Complete match-point source interval264.24–276.85 retained, followed by handshake and final reactions.",
+    "Deep-blue transition cards, singles-only losing-streak clarification and positive doubles continuation visually checked.",
+    "Actual stats card identifies Venus left and Tagger right, winners7/29 and Tagger first-serve points25/25.",
+    "Actual branded outro uses account logo and 网球时差·赛场之上."
+  ],
+  "frames": [
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/cover.jpg",
+      "sha256": "d5097d2329c731e6a363b8b8d96a9673ae890eac08b28682adb8a69c10f3b444"
+    },
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/seg-02.jpg",
+      "sha256": "e9cf85cdc8a5c01fe79be91ad89977a0be91069287f04f6683f88b28a4f50621"
+    },
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/seg-30.jpg",
+      "sha256": "1a5464290a23627da82536b57ac8ff027f12eb32b6a2c4894d52ef55226cd2b7"
+    },
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/seg-31.jpg",
+      "sha256": "d8a08d5cf17975ae692cac5cf074fd07626325ce54058d687a78f4351c8a1f11"
+    },
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/seg-33.jpg",
+      "sha256": "41527ca9de463f0b07bbd8aec5ffca98b2631652bb4cc0a54d2218d6eb66e00c"
+    },
+    {
+      "path": "data/evidence/venus-tagger-guangzhou-2026-r1/final-frames/outro.jpg",
+      "sha256": "3b3df10ce9e797123e959e57a973092d8009cb596fcdbf52e582dc10df03f80e"
+    }
+  ],
+  "publication": "not yet sent; merge and durable WeChat receipt required"
+}
