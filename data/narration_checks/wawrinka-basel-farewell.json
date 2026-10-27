@@ -1,0 +1,88 @@
+{
+  "slug": "wawrinka-basel-farewell",
+  "checked_at": "2026-10-27T09:18:45Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "e5b552a6ce0f7884": {
+      "segment": 2,
+      "spoken": 6.912,
+      "picture": 8.74
+    },
+    "b8663810dff4b278": {
+      "segment": 3,
+      "spoken": 19.632,
+      "picture": 21.0
+    },
+    "8839d9362945f020": {
+      "segment": 4,
+      "spoken": 9.144,
+      "picture": 11.0
+    },
+    "c25ca4e014210125": {
+      "segment": 5,
+      "spoken": 27.264,
+      "picture": 30.0
+    },
+    "da79f672aff94cf2": {
+      "segment": 7,
+      "spoken": 2.976,
+      "picture": 3.43
+    },
+    "a77e19d8af55114e": {
+      "segment": 9,
+      "spoken": 10.632,
+      "picture": 13.0
+    },
+    "c720e3d8c231032c": {
+      "segment": 11,
+      "spoken": 9.768,
+      "picture": 11.0
+    },
+    "bdb61903236ea70a": {
+      "segment": 12,
+      "spoken": 9.984,
+      "picture": 11.5
+    },
+    "48b25dd747ced965": {
+      "segment": 14,
+      "spoken": 6.144,
+      "picture": 7.0
+    },
+    "b2c7d18714009482": {
+      "segment": 15,
+      "spoken": 9.288,
+      "picture": 11.7
+    },
+    "fb0edd50427ddef7": {
+      "segment": 16,
+      "spoken": 5.928,
+      "picture": 6.0
+    },
+    "0cf862054e2224d7": {
+      "segment": 17,
+      "spoken": 11.28,
+      "picture": 13.5
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d592ec740f8c6d83f728ef8c77d159e4783b05665f0af57de0972d9074822e7f",
+    "request_count": 14,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-wawrinka-basel-farewell-d592ec740f8c6d83",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wawrinka-basel-farewell-d592ec740f8c6d83/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40479656823"
+  }
+}
