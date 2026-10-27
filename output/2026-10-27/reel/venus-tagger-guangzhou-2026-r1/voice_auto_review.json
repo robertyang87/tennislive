@@ -1,0 +1,1359 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "1feaaef48aad61c354e5128449f950722b30b9e6e2b3ea2f31dba9953a42d804",
+    "render_inputs_sha256": "3b79fe6d930434f983db9b92847074bc5796fa1acc7521555fe4e255c3274bee",
+    "spec_sha256": "9827fc9e43cd74910802b0ad407abbe68b4b2e13cfc62b313a6beae4ad53c2d6",
+    "film_sha256": "77431a8aeb4284a175fe27578bb7d8abcc9ca7620e92e37c1bf91c3385a5d0be",
+    "inventory_sha256": "fdcdd279bc085e0377520c71f0f0a603aa26b15b7a4c6d3070ca70104117f9a4"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-27T13:29:47+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:083d07664eac248f6884edf9815cd50ce51f6601ecbcf1b403977ec45ced63af",
+      "audio_sha256": "4801c9318c3a7ccf150a5dcccda51b3631bbf888a56913623a0bfb797f72b3d3",
+      "pass": true,
+      "result_of": "bundle:083d07664eac248f6884edf9815cd50ce51f6601ecbcf1b403977ec45ced63af"
+    },
+    {
+      "id": "bundle:11525323cb19c323a292275314aa8ca321173d7cf7281f206aaba3518c264304",
+      "audio_sha256": "3162d00f4aa70ff67a51b89c7c2d91273fdd3b7cc6b934f0482f5e2762396187",
+      "pass": true,
+      "result_of": "bundle:11525323cb19c323a292275314aa8ca321173d7cf7281f206aaba3518c264304"
+    },
+    {
+      "id": "bundle:2c03237df2ff95e3cedbcd1c09091b767e14a24ce9bfcdbbf8dcdcb2bf947a0d",
+      "audio_sha256": "de6d08723e873657b13499333494f2c4ae9c369bdf34b3a607b2b121b53aa1d2",
+      "pass": true,
+      "result_of": "bundle:2c03237df2ff95e3cedbcd1c09091b767e14a24ce9bfcdbbf8dcdcb2bf947a0d"
+    },
+    {
+      "id": "bundle:3766c482fa4c373f10f0355774ac870d1207990c6cd5b9be79d867803e3d5441",
+      "audio_sha256": "40d83778c32ab81078ed68856a1ef7d21110ff02a746059ce2958769f79e8d55",
+      "pass": true,
+      "result_of": "bundle:3766c482fa4c373f10f0355774ac870d1207990c6cd5b9be79d867803e3d5441"
+    },
+    {
+      "id": "bundle:42aa91cdf7ae4827f3e472c1ee0d8ba84f8fe8d662a89b49a36704a933b4b544",
+      "audio_sha256": "0c0e3319cddc9cc5751aa0d01349fdbfd8b6fe187b545f73f1b99758694b27ab",
+      "pass": true,
+      "result_of": "bundle:42aa91cdf7ae4827f3e472c1ee0d8ba84f8fe8d662a89b49a36704a933b4b544"
+    },
+    {
+      "id": "bundle:5690936431845f7e3cfdf193c48fb5c09486faaaed8029cb9ad93807232d2b20",
+      "audio_sha256": "4ca31d593364d6dba4f5fbb88aa455a31433cc343d1bb00248eecd7ac7f0b7e3",
+      "pass": true,
+      "result_of": "bundle:5690936431845f7e3cfdf193c48fb5c09486faaaed8029cb9ad93807232d2b20"
+    },
+    {
+      "id": "bundle:5ec699a54204d623c67ec751c91c4a100ca847d069cba265a8c2c54d0e2581ba",
+      "audio_sha256": "787af3381f3f39f57df158aa8497e5a650e838da1fd4dd384c786a7635055ec9",
+      "pass": true,
+      "result_of": "bundle:5ec699a54204d623c67ec751c91c4a100ca847d069cba265a8c2c54d0e2581ba"
+    },
+    {
+      "id": "bundle:649b31517d403da46d4f7568e97fade036f7a0bafe40956b514e5e93ca8c4cc7",
+      "audio_sha256": "caededd8c8c94b7d5622b57c2afa1bed6e59f9ecf8b920f3e442218cb19253d8",
+      "pass": true,
+      "result_of": "bundle:649b31517d403da46d4f7568e97fade036f7a0bafe40956b514e5e93ca8c4cc7"
+    },
+    {
+      "id": "bundle:7db8dbcbd82fdabb4eb5215b418ba70af6943d83690945ceff68901c3519fbdf",
+      "audio_sha256": "9b1e65245a5eb7917ece62ed321a017aa2e6677291ae5933fc062c17e2e775a9",
+      "pass": true,
+      "result_of": "bundle:7db8dbcbd82fdabb4eb5215b418ba70af6943d83690945ceff68901c3519fbdf"
+    },
+    {
+      "id": "bundle:80f72356f7d072515cdb00dde25a65b4adc5e9887447ee3555bae7330a8542cc",
+      "audio_sha256": "5374a3307779ebab19d416052ebdf38170f7293f14e7ff5d9bcafc955f576745",
+      "pass": true,
+      "result_of": "bundle:80f72356f7d072515cdb00dde25a65b4adc5e9887447ee3555bae7330a8542cc"
+    },
+    {
+      "id": "bundle:945028d51ff522978916544a41023bb5a01217b265d0d5b163b38b77364c2106",
+      "audio_sha256": "85433cff6775f3e277d73cb876f8097d7b7a4b5fe30da41d8c52c8b824580361",
+      "pass": true,
+      "result_of": "bundle:945028d51ff522978916544a41023bb5a01217b265d0d5b163b38b77364c2106"
+    },
+    {
+      "id": "bundle:a578c4e98bf29588103c179fe641ebe0088ca105d5f881bd3fa585ee5fb5ceb5",
+      "audio_sha256": "ff49d603cbaa8ad849896a1739386a76d6c8400762a326085e57886b1f4d7d24",
+      "pass": true,
+      "result_of": "bundle:a578c4e98bf29588103c179fe641ebe0088ca105d5f881bd3fa585ee5fb5ceb5"
+    },
+    {
+      "id": "bundle:a73d89c20fef806a4602b6bbc2bfbc554b1930dce899e864193e6bd99e94ad00",
+      "audio_sha256": "a760e5cc440846cc2a3a38cf808a4dfe7723e89135ae263ba162160858ba853b",
+      "pass": true,
+      "result_of": "bundle:a73d89c20fef806a4602b6bbc2bfbc554b1930dce899e864193e6bd99e94ad00"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c6004cb3248fe7638f280cd6dd35069041c5980d151a8251e8071db2c11a74b8",
+      "audio_sha256": "ec71adc1c8c3c00dc94d25156971d8064f83b72e5fd07cf19b17376bf711da2c",
+      "pass": true,
+      "result_of": "bundle:c6004cb3248fe7638f280cd6dd35069041c5980d151a8251e8071db2c11a74b8"
+    },
+    {
+      "id": "bundle:c838571cdabf0cbb17fbafa14e7441aff42e60ba96a78e71f56fe881c082817b",
+      "audio_sha256": "1ee7490636e70153ac76e8a96ab28eadd3a9dc65bbd33b364cca0938849fde9a",
+      "pass": true,
+      "result_of": "bundle:c838571cdabf0cbb17fbafa14e7441aff42e60ba96a78e71f56fe881c082817b"
+    },
+    {
+      "id": "bundle:d62c714426702f4a83dc407bc878d3482ac6b9d6c873cb1b32a99c81c76960f0",
+      "audio_sha256": "e28cc0db04888d42475a9bf2c66fb06599cf104a2f66e91785678cfc544d2a1d",
+      "pass": true,
+      "result_of": "bundle:d62c714426702f4a83dc407bc878d3482ac6b9d6c873cb1b32a99c81c76960f0"
+    },
+    {
+      "id": "bundle:ea21a003c627733f078ae1297bbaafce546b827aa8e131593abfbd0015be72b2",
+      "audio_sha256": "63f52db87306329e99fcc07448634a6238f3df48746c30877e91cf3ad53be04f",
+      "pass": true,
+      "result_of": "bundle:ea21a003c627733f078ae1297bbaafce546b827aa8e131593abfbd0015be72b2"
+    },
+    {
+      "id": "bundle:f63f9c15072d4ec65a56f128b0d1ce9bd226e7c99dc2c85bc2da177c05c9f2c6",
+      "audio_sha256": "c2213f714567b246d2aadfadfbd0632b4b7051f1d5deb459b72e8d1b128aaa36",
+      "pass": true,
+      "result_of": "bundle:f63f9c15072d4ec65a56f128b0d1ce9bd226e7c99dc2c85bc2da177c05c9f2c6"
+    },
+    {
+      "id": "bundle:f7a02b11a9fd79b3fe036576debbda224ee67734113c41c80124c96cb5b1c2e6",
+      "audio_sha256": "7654a550ed459cc3d34d8ebf4149b6ebe898185cab11e52e31ce9942465be841",
+      "pass": true,
+      "result_of": "bundle:f7a02b11a9fd79b3fe036576debbda224ee67734113c41c80124c96cb5b1c2e6"
+    },
+    {
+      "id": "bundle:f84f98aaefd3824126d93e31221ef4bbbc806157de096100d033eb91c6d18310",
+      "audio_sha256": "2389ad4edbed6c6774bbed7a8949bac92b59eaa817aeb9013f9bba9cfebbe9dc",
+      "pass": true,
+      "result_of": "bundle:f84f98aaefd3824126d93e31221ef4bbbc806157de096100d033eb91c6d18310"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "85433cff6775f3e277d73cb876f8097d7b7a4b5fe30da41d8c52c8b824580361",
+      "pass": true,
+      "result_of": "bundle:945028d51ff522978916544a41023bb5a01217b265d0d5b163b38b77364c2106"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "ff49d603cbaa8ad849896a1739386a76d6c8400762a326085e57886b1f4d7d24",
+      "pass": true,
+      "result_of": "bundle:a578c4e98bf29588103c179fe641ebe0088ca105d5f881bd3fa585ee5fb5ceb5"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "ec71adc1c8c3c00dc94d25156971d8064f83b72e5fd07cf19b17376bf711da2c",
+      "pass": true,
+      "result_of": "bundle:c6004cb3248fe7638f280cd6dd35069041c5980d151a8251e8071db2c11a74b8"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "9b1e65245a5eb7917ece62ed321a017aa2e6677291ae5933fc062c17e2e775a9",
+      "pass": true,
+      "result_of": "bundle:7db8dbcbd82fdabb4eb5215b418ba70af6943d83690945ceff68901c3519fbdf"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "5374a3307779ebab19d416052ebdf38170f7293f14e7ff5d9bcafc955f576745",
+      "pass": true,
+      "result_of": "bundle:80f72356f7d072515cdb00dde25a65b4adc5e9887447ee3555bae7330a8542cc"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "caededd8c8c94b7d5622b57c2afa1bed6e59f9ecf8b920f3e442218cb19253d8",
+      "pass": true,
+      "result_of": "bundle:649b31517d403da46d4f7568e97fade036f7a0bafe40956b514e5e93ca8c4cc7"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "63f52db87306329e99fcc07448634a6238f3df48746c30877e91cf3ad53be04f",
+      "pass": true,
+      "result_of": "bundle:ea21a003c627733f078ae1297bbaafce546b827aa8e131593abfbd0015be72b2"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "0c0e3319cddc9cc5751aa0d01349fdbfd8b6fe187b545f73f1b99758694b27ab",
+      "pass": true,
+      "result_of": "bundle:42aa91cdf7ae4827f3e472c1ee0d8ba84f8fe8d662a89b49a36704a933b4b544"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "3162d00f4aa70ff67a51b89c7c2d91273fdd3b7cc6b934f0482f5e2762396187",
+      "pass": true,
+      "result_of": "bundle:11525323cb19c323a292275314aa8ca321173d7cf7281f206aaba3518c264304"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "de6d08723e873657b13499333494f2c4ae9c369bdf34b3a607b2b121b53aa1d2",
+      "pass": true,
+      "result_of": "bundle:2c03237df2ff95e3cedbcd1c09091b767e14a24ce9bfcdbbf8dcdcb2bf947a0d"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "40d83778c32ab81078ed68856a1ef7d21110ff02a746059ce2958769f79e8d55",
+      "pass": true,
+      "result_of": "bundle:3766c482fa4c373f10f0355774ac870d1207990c6cd5b9be79d867803e3d5441"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "a760e5cc440846cc2a3a38cf808a4dfe7723e89135ae263ba162160858ba853b",
+      "pass": true,
+      "result_of": "bundle:a73d89c20fef806a4602b6bbc2bfbc554b1930dce899e864193e6bd99e94ad00"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "1ee7490636e70153ac76e8a96ab28eadd3a9dc65bbd33b364cca0938849fde9a",
+      "pass": true,
+      "result_of": "bundle:c838571cdabf0cbb17fbafa14e7441aff42e60ba96a78e71f56fe881c082817b"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "4ca31d593364d6dba4f5fbb88aa455a31433cc343d1bb00248eecd7ac7f0b7e3",
+      "pass": true,
+      "result_of": "bundle:5690936431845f7e3cfdf193c48fb5c09486faaaed8029cb9ad93807232d2b20"
+    },
+    {
+      "id": "voice_27.mp3",
+      "audio_sha256": "787af3381f3f39f57df158aa8497e5a650e838da1fd4dd384c786a7635055ec9",
+      "pass": true,
+      "result_of": "bundle:5ec699a54204d623c67ec751c91c4a100ca847d069cba265a8c2c54d0e2581ba"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "7654a550ed459cc3d34d8ebf4149b6ebe898185cab11e52e31ce9942465be841",
+      "pass": true,
+      "result_of": "bundle:f7a02b11a9fd79b3fe036576debbda224ee67734113c41c80124c96cb5b1c2e6"
+    },
+    {
+      "id": "voice_31.mp3",
+      "audio_sha256": "2389ad4edbed6c6774bbed7a8949bac92b59eaa817aeb9013f9bba9cfebbe9dc",
+      "pass": true,
+      "result_of": "bundle:f84f98aaefd3824126d93e31221ef4bbbc806157de096100d033eb91c6d18310"
+    },
+    {
+      "id": "voice_33.mp3",
+      "audio_sha256": "4801c9318c3a7ccf150a5dcccda51b3631bbf888a56913623a0bfb797f72b3d3",
+      "pass": true,
+      "result_of": "bundle:083d07664eac248f6884edf9815cd50ce51f6601ecbcf1b403977ec45ced63af"
+    },
+    {
+      "id": "voice_34.mp3",
+      "audio_sha256": "e28cc0db04888d42475a9bf2c66fb06599cf104a2f66e91785678cfc544d2a1d",
+      "pass": true,
+      "result_of": "bundle:d62c714426702f4a83dc407bc878d3482ac6b9d6c873cb1b32a99c81c76960f0"
+    },
+    {
+      "id": "voice_35.mp3",
+      "audio_sha256": "c2213f714567b246d2aadfadfbd0632b4b7051f1d5deb459b72e8d1b128aaa36",
+      "pass": true,
+      "result_of": "bundle:f63f9c15072d4ec65a56f128b0d1ce9bd226e7c99dc2c85bc2da177c05c9f2c6"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "3d7277d26afc569ab1979d3485891d79e290c7f020c7ffccb0a9e1a2d11c811f",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:083d07664eac248f6884edf9815cd50ce51f6601ecbcf1b403977ec45ced63af",
+      "text": "制胜分，七比二十九。对手一发进球的二十五分，全部拿下。抵抗没能变成反攻，这就是比分背后的差距。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "只剩分7比29,对手一发进球的25分全部拿下。抵抗没能变成反攻,这就是比分背后的差距。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 9.045,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "制胜 ｜ 分 ｜ 七比二十九 ｜ 对手 ｜ 一发 ｜ 进球 ｜ 的 ｜ 二十五分 ｜ 全部 ｜ 拿下 ｜ 抵抗 ｜ 没 ｜ 能 ｜ 变成 ｜ 反 ｜ 攻 ｜ 这 ｜ 就 ｜ 是 ｜ 比分 ｜ 背后 ｜ 的 ｜ 差距"
+      }
+    },
+    {
+      "id": "bundle:11525323cb19c323a292275314aa8ca321173d7cf7281f206aaba3518c264304",
+      "text": "第二盘，开局依然是被动。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 10,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘,开局依然是被动。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 10,
+        "speech_s": 2.158,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 开局 ｜ 依然 ｜ 是 ｜ 被动"
+      }
+    },
+    {
+      "id": "bundle:2c03237df2ff95e3cedbcd1c09091b767e14a24ce9bfcdbbf8dcdcb2bf947a0d",
+      "text": "塔格尔的接发很深，大威很难先发起进攻。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "塔格尔的揭发很深,大尾很难先发起进攻。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发起",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.479,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "塔格尔 ｜ 的 ｜ 接 ｜ 发 ｜ 很 ｜ 深 ｜ 大 ｜ 威 ｜ 很难 ｜ 先 ｜ 发起 ｜ 进攻"
+      }
+    },
+    {
+      "id": "bundle:3766c482fa4c373f10f0355774ac870d1207990c6cd5b9be79d867803e3d5441",
+      "text": "单打的胜利还没等来，发球局的危机又来了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "单打的胜利还没等来,发球局的危机又来了。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.501,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.113,
+        "cps": 5.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "单打 ｜ 的 ｜ 胜利 ｜ 还 ｜ 没 ｜ 等 ｜ 来 ｜ 发球 ｜ 局 ｜ 的 ｜ 危机 ｜ 又 ｜ 来 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:42aa91cdf7ae4827f3e472c1ee0d8ba84f8fe8d662a89b49a36704a933b4b544",
+      "text": "对手的发球局，她仍然找不到突破口。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "对手的发球局,他仍然找不到突破口。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.818,
+        "cps": 5.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "对手 ｜ 的 ｜ 发球 ｜ 局 ｜ 她 ｜ 仍然 ｜ 找 ｜ 不 ｜ 到 ｜ 突破口"
+      }
+    },
+    {
+      "id": "bundle:5690936431845f7e3cfdf193c48fb5c09486faaaed8029cb9ad93807232d2b20",
+      "text": "从零比二追回一局。一比三落后，她还在努力把比分拉回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从0比2追回一局,1比3落后,他还在努力把比分拉回来。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.09,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.61,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.412,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 4.917,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 零比二 ｜ 追回 ｜ 一 ｜ 局 ｜ 一比 ｜ 三落后 ｜ 她 ｜ 还 ｜ 在 ｜ 努力 ｜ 把 ｜ 比分 ｜ 拉 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:5ec699a54204d623c67ec751c91c4a100ca847d069cba265a8c2c54d0e2581ba",
+      "text": "一比三后，这个发球局又被拉进苦战。大威把这一分拿下来，追到二比三。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1比3后,这个发球局又被拉进苦战。大威把这一分拿下来,追到2比3。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.826,
+        "cps": 4.98,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一比三 ｜ 后 ｜ 这个 ｜ 发球 ｜ 局 ｜ 又 ｜ 被 ｜ 拉 ｜ 进 ｜ 苦战 ｜ 大威 ｜ 把 ｜ 这 ｜ 一 ｜ 分 ｜ 拿 ｜ 下来 ｜ 追 ｜ 到 ｜ 二比三"
+      }
+    },
+    {
+      "id": "bundle:649b31517d403da46d4f7568e97fade036f7a0bafe40956b514e5e93ca8c4cc7",
+      "text": "二比四，大威又被逼到破发点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2比4 大威又被逼倒破发点。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.547,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二比四 ｜ 大威 ｜ 又 ｜ 被 ｜ 逼 ｜ 到 ｜ 破 ｜ 发 ｜ 点"
+      }
+    },
+    {
+      "id": "bundle:7db8dbcbd82fdabb4eb5215b418ba70af6943d83690945ceff68901c3519fbdf",
+      "text": "塔格尔用单手反拍抢攻，把大威压在底线。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "塔格尔用单手反拍抢攻,把大威压在底线。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.396,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "塔格尔 ｜ 用 ｜ 单手 ｜ 反 ｜ 拍 ｜ 抢攻 ｜ 把 ｜ 大 ｜ 威 ｜ 压 ｜ 在 ｜ 底线"
+      }
+    },
+    {
+      "id": "bundle:80f72356f7d072515cdb00dde25a65b4adc5e9887447ee3555bae7330a8542cc",
+      "text": "塔格尔不断抢攻，首盘两次破掉大威的发球局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "塔格尔不断抢攻,手盘两次破掉大威的发球局。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.88,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "塔格尔 ｜ 不断 ｜ 抢攻 ｜ 首盘 ｜ 两次 ｜ 破 ｜ 掉 ｜ 大 ｜ 威 ｜ 的 ｜ 发球 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:945028d51ff522978916544a41023bb5a01217b265d0d5b163b38b77364c2106",
+      "text": "北京时间十月二十七号晚间，广州首轮，四十六岁的大威两个二比六出局，单打十六连败。可这一场，她也有过抵抗。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月27号晚间,广州首轮46岁的大威两个2比6出局单打16连败,可这一场他也有过抵抗。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 9.847,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十七号 ｜ 晚间 ｜ 广州 ｜ 首轮 ｜ 四十六岁 ｜ 的 ｜ 大威 ｜ 两个 ｜ 二比六 ｜ 出局 ｜ 单打 ｜ 十六 ｜ 连 ｜ 败 ｜ 可 ｜ 这 ｜ 一 ｜ 场 ｜ 她 ｜ 也有 ｜ 过 ｜ 抵抗"
+      }
+    },
+    {
+      "id": "bundle:a578c4e98bf29588103c179fe641ebe0088ca105d5f881bd3fa585ee5fb5ceb5",
+      "text": "首局救回零比四十，还是失守。十八岁的塔格尔先占上风。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首局就会0比40,还是失手。18岁的塔格尔先站上风。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.357,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.342,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首局 ｜ 救 ｜ 回 ｜ 零比四十 ｜ 还是 ｜ 失守 ｜ 十八岁 ｜ 的 ｜ 塔格尔 ｜ 先 ｜ 占上风"
+      }
+    },
+    {
+      "id": "bundle:a73d89c20fef806a4602b6bbc2bfbc554b1930dce899e864193e6bd99e94ad00",
+      "text": "第二盘第一个发球局，还是没能守住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘第一个发球局,还是没能守住。"
+      },
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 10,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.386,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 2.677,
+        "cps": 5.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 第一个 ｜ 发球 ｜ 局 ｜ 还是 ｜ 没 ｜ 能 ｜ 守 ｜ 住"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c6004cb3248fe7638f280cd6dd35069041c5980d151a8251e8071db2c11a74b8",
+      "text": "上一次单打赢球，还是去年七月的华盛顿。此后十五个月，跨过两个赛季，连败已经来到十六场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "上一次单打赢球,还是去年7月的华盛顿。此后15个月,跨过两个赛季,连败已经来到16场。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.221,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.925,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "上 ｜ 一次 ｜ 单打 ｜ 赢 ｜ 球 ｜ 还是 ｜ 去年七月 ｜ 的 ｜ 华盛顿 ｜ 此后 ｜ 十五个月 ｜ 跨过 ｜ 两个 ｜ 赛季 ｜ 连 ｜ 败 ｜ 已经 ｜ 来到 ｜ 十六场"
+      }
+    },
+    {
+      "id": "bundle:c838571cdabf0cbb17fbafa14e7441aff42e60ba96a78e71f56fe881c082817b",
+      "text": "零比二后，大威还在追。全场十六个破发点，她救下十二个。一次次被逼到边缘，她还在把比赛往回拉。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.025,
+        "longest_deletion": 0,
+        "transcript": "0比2后,大外还在坠。全场16个破发点,他就下12个。一次次被逼到边缘,他还在把比赛往回拉。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.095,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 37,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.055,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.915,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "零比二 ｜ 后 ｜ 大威 ｜ 还 ｜ 在 ｜ 追 ｜ 全场 ｜ 十六个 ｜ 破发 ｜ 点 ｜ 她 ｜ 救 ｜ 下 ｜ 十二个 ｜ 一次次 ｜ 被 ｜ 逼 ｜ 到 ｜ 边缘 ｜ 她 ｜ 还 ｜ 在 ｜ 把 ｜ 比赛 ｜ 往回 ｜ 拉"
+      }
+    },
+    {
+      "id": "bundle:d62c714426702f4a83dc407bc878d3482ac6b9d6c873cb1b32a99c81c76960f0",
+      "text": "十六连败，指的是单打。就在昨天，大威搭档曾丽美，六比零、七比五赢下双打首轮。她的广州之旅，还在继续。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "16年败指的是丹达。就在昨天,大卫搭档曾丽美：6比0：7比5影下双达手轮。她的广州之旅还在继续。"
+      },
+      "polyphones": [
+        {
+          "index": 45,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.791,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 10.861,
+        "cps": 3.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十六 ｜ 连 ｜ 败 ｜ 指 ｜ 的 ｜ 是 ｜ 单打 ｜ 就 ｜ 在 ｜ 昨天 ｜ 大威 ｜ 搭档 ｜ 曾丽美 ｜ 六比零 ｜ 七比五 ｜ 赢 ｜ 下 ｜ 双打 ｜ 首轮 ｜ 她 ｜ 的 ｜ 广州 ｜ 之 ｜ 旅 ｜ 还 ｜ 在 ｜ 继续"
+      }
+    },
+    {
+      "id": "bundle:ea21a003c627733f078ae1297bbaafce546b827aa8e131593abfbd0015be72b2",
+      "text": "二比五落后，这一盘的退路越来越窄。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2比5落后,这一盘的退路越来越窄。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.297,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.231,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.042,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二比五 ｜ 落后 ｜ 这 ｜ 一 ｜ 盘 ｜ 的 ｜ 退路 ｜ 越来越 ｜ 窄"
+      }
+    },
+    {
+      "id": "bundle:f63f9c15072d4ec65a56f128b0d1ce9bd226e7c99dc2c85bc2da177c05c9f2c6",
+      "text": "下一场，去双打赛场继续看她。也愿下一次单打，等来一场久违的胜利。你还会为她加油吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "下一场,去双打赛场继续看他,也愿下一次单打,等来一场久违的胜利,你还会为他加油吗?"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.351,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 8.243,
+        "cps": 4.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "下 ｜ 一 ｜ 场 ｜ 去 ｜ 双打 ｜ 赛场 ｜ 继续 ｜ 看 ｜ 她 ｜ 也 ｜ 愿 ｜ 下 ｜ 一次 ｜ 单打 ｜ 等 ｜ 来 ｜ 一 ｜ 场 ｜ 久违 ｜ 的 ｜ 胜利 ｜ 你 ｜ 还 ｜ 会 ｜ 为 ｜ 她 ｜ 加油 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:f7a02b11a9fd79b3fe036576debbda224ee67734113c41c80124c96cb5b1c2e6",
+      "text": "可守住一局之后，她始终没拿到破发点。二比四时，危机没能再化解，对手迎来发球胜赛局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可守住一局之后,他始终没拿到破发点。2比40,危机没能再化解,对手迎来发球胜赛局。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.712,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 守 ｜ 住 ｜ 一 ｜ 局 ｜ 之后 ｜ 她 ｜ 始终 ｜ 没 ｜ 拿 ｜ 到 ｜ 破发 ｜ 点 ｜ 二 ｜ 比 ｜ 四 ｜ 时 ｜ 危机 ｜ 没 ｜ 能 ｜ 再 ｜ 化解 ｜ 对手 ｜ 迎来 ｜ 发球 ｜ 胜 ｜ 赛 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:f84f98aaefd3824126d93e31221ef4bbbc806157de096100d033eb91c6d18310",
+      "text": "这一次，她又没能等来单打的胜利。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一次,他又没能等来单打的胜利。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.712,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一次 ｜ 她 ｜ 又 ｜ 没 ｜ 能 ｜ 等 ｜ 来 ｜ 单打 ｜ 的 ｜ 胜利"
+      }
+    }
+  ]
+}
