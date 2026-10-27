@@ -18,7 +18,16 @@
       }
     ],
     "winner": "菲斯",
-    "result": "7-6(5) 7-5"
+    "result": "7-6(5) 7-5",
+    "portrait": {
+      "image": "assets/reel/mpetshi-fils-cover.jpg",
+      "focus": 0.444,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「arthur fils」「Basel」，日期对上当地 2026-10-27（Europe/Zurich；日期来源 flashscore dc_1_Y3Ejqjad）；EXIF 拍摄 2026:10:27 16:56:00+01:00。② 分辨率：6000×4000，zoom 1 铺 1080×1440 是 2.78×（不放大）。③ 认人：最大那张脸像 菲斯 0.45（≥ 0.34）。④ 睁眼：EAR 0.3176（≥ 0.16）。⑤ 钩子带：脸落在 y210~466，钩子顶边 790。排序：[True, False, False, True, True, 256, 0.4515]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/5505868d-988a-42ca-a0b2-a088be273e6b/GettyImages-2302262876.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/5505868d-988a-42ca-a0b2-a088be273e6b/GettyImages-2302262876.jpg（条目 #4599799，接口发布 2026-10-27T18:48:02Z，EXIF 拍摄 2026:10:27 16:56:00+01:00（UTC 2026-10-27T15:56:00Z），原图 6000×4000），说明原文「2026 Basel Fils · BASEL, SWITZERLAND - OCTOBER 27: Arthur Fils of France in action against Giovanni Mpetshi Perricard of France in the round of 32 of Swiss Indoors Basel at St. Jakobshalle Basel on October 27, 2026 in Basel, Switzerland. (Photo by Clicks Images/Getty Images)」，署名 2026 Clicks Images；Getty Images；Clicks Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -247,5 +256,17 @@
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（GettyImages-2297293450.jpg 不匹配 Basel），拒绝资料图）",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-25–2026-10-27 窗口里扫了 117 场，没有同时出现 ['giovanni mpetshi perricard', 'arthur fils'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "Y3Ejqjad",
+      "start_utc": "2026-10-27T14:55:00Z",
+      "end_utc": "2026-10-27T16:40:42Z",
+      "source": "flashscore dc_1_Y3Ejqjad（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/9bfaba46-6456-426d-a299-9aa4f9fa5fbd/GettyImages-2302263054.jpg"
+    ],
+    "replaced_under": ""
+  }
 }
