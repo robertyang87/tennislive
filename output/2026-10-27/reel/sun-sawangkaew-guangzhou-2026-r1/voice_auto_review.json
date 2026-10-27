@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "aad05797178a84a12cf1af6d6c488b526a30334263dd30be2524bc00f19a950c",
-    "render_inputs_sha256": "3d29e4df0c28142d02e7eadd0f2a8a7c31402fdede9703aebe460ab6d1d3f0ef",
-    "spec_sha256": "85c3ad0fe4280ac9c1ffb20fbdfe50e95edd518125298be35b860dcdb9985133",
-    "film_sha256": "a34142bb7dbde27ea308f12c8c07a5daaeba84cd986f4ff8817c87f0bb76dcc5",
+    "render_sha256": "c7d4c09305605ce26c67bc585e43463b020c405237aa0957bf9fae7061402f81",
+    "render_inputs_sha256": "15846fcbd32e93cd6c405a483abf1da563ca36fb737873727b905fde23ddd355",
+    "spec_sha256": "91844c7b19f4bf7fc479d3d4fa935f3d647e4bd3b32da1efe319aef36dd2e44b",
+    "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
     "inventory_sha256": "412e3247ed55a17dc941701c2ed251cec25a4bf40ee44e11b50bfbdb17c93b83"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-27T15:01:34+00:00",
+  "reviewed_at": "2026-10-27T15:16:28+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -183,10 +183,10 @@
         "ref_syllables": 49,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.02,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "北京时间10月27号晚上,广州首轮。16岁的孙心然,6比3,6比4,祭拜撒旺考,近期16强。两天前,他还在成都捧碑。"
+        "transcript": "北京时间10月27号晚上广州首轮。16岁的孙心然：6比3：6比4既败撒旺考,近级16强。两天前,他还在成都捧碑。"
       },
       "polyphones": [
         {
@@ -364,7 +364,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 1,
-        "transcript": "成都夺冠是一个新的起点。把这场胜利收好再迎接下一场挑战。16岁的他还会带来什么惊喜?"
+        "transcript": "成都夺冠,是一个新的起点。把这场胜利收好,再迎接下一场挑战。16岁的他,还会带来什么惊喜?"
       },
       "polyphones": [
         {
@@ -482,7 +482,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但4比2不是安全线,对手把他拉向边线在突然放短,领先之后仍要一分一分地守。"
+        "transcript": "但4比2不是安全线,对手把他拉向边线,再突然放短,领先之后仍要一分一分地守。"
       },
       "polyphones": [],
       "pauses": {
@@ -560,7 +560,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "在国际网连十八岁既已下组,他已是女子世界第一：可职业赛场上对面是世界第八十：赢下一盘,不等于已经赢下整场。"
+        "transcript": "在国际网连十八岁既已下组,他已是女子世界第一﹑可职业赛场上对面是世界第八十﹑赢下一盘,不等于已经赢下整场。"
       },
       "polyphones": [],
       "pauses": {
@@ -592,7 +592,7 @@
         "substituted": 1,
         "sub_ratio": 0.024,
         "longest_deletion": 0,
-        "transcript": "智声分9比17,非受迫性失误,21比41。它不是打得更忙,而是少送机会,把优势守到了最后。"
+        "transcript": "智生分9比17,非受迫性失误21比41。他不是打得更忙,而是少送机会,把优势守到了最后。"
       },
       "polyphones": [
         {
