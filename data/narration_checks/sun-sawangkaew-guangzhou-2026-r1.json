@@ -1,6 +1,6 @@
 {
   "slug": "sun-sawangkaew-guangzhou-2026-r1",
-  "checked_at": "2026-10-27T14:49:15Z",
+  "checked_at": "2026-10-27T15:48:15Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,9 +10,9 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "018dbd18790f33cf": {
+    "c95ee6e70846eb39": {
       "segment": 2,
-      "spoken": 12.288,
+      "spoken": 12.264,
       "picture": 13.32
     },
     "d8414ac04b77a378": {
@@ -20,7 +20,7 @@
       "spoken": 12.936,
       "picture": 13.96
     },
-    "0bb90b79508552de": {
+    "8bb65653721debc0": {
       "segment": 4,
       "spoken": 10.464,
       "picture": 14.0
@@ -68,16 +68,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "f4b441f45bfb36ab452f940d245bd013c19b0f19b01b1e3ceb1101b08b742740",
+    "bundle_sha256": "a1c63008711bfd018496e2b35e7d5e6fd6da5ebc5f9fa497287302736ccc7d26",
     "request_count": 12,
-    "mode": "strict_import",
-    "strict_reused": true,
+    "mode": "capture_export",
+    "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "transport": "repository",
-    "repository_commit": "96ed8022ffb04bc410df161621ba78ab849bb752",
+    "repository_commit": "3ef3aa5bd6a7db6503e9eabdd16886fc424dfa07",
     "file_name": "tts_bundle.zip",
-    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/96ed8022ffb04bc410df161621ba78ab849bb752/assets/tts-bundles/sun-sawangkaew-guangzhou-2026-r1/f4b441f45bfb36ab452f940d245bd013c19b0f19b01b1e3ceb1101b08b742740/tts_bundle.zip"
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/3ef3aa5bd6a7db6503e9eabdd16886fc424dfa07/assets/tts-bundles/sun-sawangkaew-guangzhou-2026-r1/a1c63008711bfd018496e2b35e7d5e6fd6da5ebc5f9fa497287302736ccc7d26/tts_bundle.zip"
   }
 }

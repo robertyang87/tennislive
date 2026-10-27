@@ -2,16 +2,16 @@
   "schema": "tennislive.independent-source-audio-plan-audit.v1",
   "status": "source_plan_pass",
   "reviewer": "independent assistant /root/sun_source_audio_audit",
-  "reviewed_at": "2026-10-27T14:49:34.407603+00:00",
-  "reviewed_spec_sha256": "35e9f70f158e0498217d8bc1522e8fc97f39dd7e0e53e1b8696c64db7d9cbf09",
-  "audio_plan_sha256": "21c9e1ba01c70c118378e9b9a4a61a46eb463ec4328a3356f5469db6be179c01",
+  "reviewed_at": "2026-10-27T15:48:53.552627+00:00",
+  "reviewed_spec_sha256": "8bb98d301f93eb4524a3f207a765df3b5821bcb840d41e3c6a3c0b78b238cfdc",
+  "audio_plan_sha256": "43b91638ec087fcfbd8f2fcab8b12c30110f81d0a4dd1cd0537048b3c0e9fe2d",
   "source_sha256": "3c1f623005019d2c33445767d1b601860640ff5f104bc1beb6b2ecdd7092f016",
   "source_asr_corpus_sha256": {
     "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/small.en.json": "9ee29bd52eda647051d875497d582dc7946ba33eca5893ff0b80557e1582cde1",
     "data/evidence/sun-sawangkaew-guangzhou-2026-r1/source-asr/medium.en.json": "536d2846230d2d1dd1a45a7b52897e146eebb1419099f0b8b0613562374fe50f"
   },
   "packet_index": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1.json",
-  "packet_index_sha256": "d72a6855a5e850c6fa100dc7f3c5d53ceef24aa78ee5d7d272dfa628b93bc147",
+  "packet_index_sha256": "bce689c4db96835a1df52a381b412e0725c424c1ddfe09cc8e206234cb37d21d",
   "packet_count": 10,
   "required_bilingual_utterance_count": 16,
   "human_listening_claimed": false,
@@ -517,5 +517,72 @@
     "failed_previous_film_sha256": "b719baeca75ad5528a5783b22b52bf75ef2ffc36f1873922d84f63229da50b5b",
     "old_film_publication_allowed": false,
     "fresh_native_film_qc_required": true
+  },
+  "user_name_correction": {
+    "updated_at": "2026-10-27T15:48:53.552627+00:00",
+    "reason": "User explicitly requires 萨王凯 for the same Mananchaya Sawangkaew.",
+    "previous_audio_plan_sha256": "21c9e1ba01c70c118378e9b9a4a61a46eb463ec4328a3356f5469db6be179c01",
+    "current_audio_plan_sha256": "43b91638ec087fcfbd8f2fcab8b12c30110f81d0a4dd1cd0537048b3c0e9fe2d",
+    "changed_packets": [
+      {
+        "index": 6,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/06-1146.08-1151.52.json",
+        "old_sha256": "55cc9856944209710668e6e454c4473264ccea3cbbd08a3d5afa95c0f71f8b1e",
+        "new_sha256": "3a842f979f75438dc10977bd173a7b12d10f48669ba99703b68e6522634738dd"
+      },
+      {
+        "index": 13,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/13-1196.40-1267.60.json",
+        "old_sha256": "46e62ec2fe8abdf6dbe15318e891cafc77a9b13bd3e480a21d642d83533a55f9",
+        "new_sha256": "bf676ec1cf5356c833ab770b878471ef0149545cd96a05277ef806ab21de9e7d"
+      }
+    ],
+    "unchanged_packets": [
+      {
+        "index": 0,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/00-1255.20-1260.84.json",
+        "sha256": "0be9094e1d3be5c7e445b4ab9eae070c2146ffc84097881375e4a7036d22daf0"
+      },
+      {
+        "index": 3,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/03-1110.64-1124.64.json",
+        "sha256": "e8c270864485b41c8394f59543f4a4df5f5ada0a593d34fddc4b4c8820ce79c8"
+      },
+      {
+        "index": 4,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/04-1124.64-1134.40.json",
+        "sha256": "90eadf140dd52fbd8b8e69132057ff396544f3eab569e9df36d175359f6d0c68"
+      },
+      {
+        "index": 5,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/05-1136.00-1146.08.json",
+        "sha256": "6524762c8627e52a712540fa90d4d940a3969b9c6ffa240c507dd6cd83ca5340"
+      },
+      {
+        "index": 7,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/07-1158.20-1161.96.json",
+        "sha256": "42df1cf05358876d535d807ce11ebaaed0c6f24af0b9b882cf006293caff308d"
+      },
+      {
+        "index": 8,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/08-1161.96-1168.24.json",
+        "sha256": "398d4747792d0a7d26d0a83c9e7512f31137b69fc9d3ebcf92ddca1252163155"
+      },
+      {
+        "index": 10,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/10-1179.04-1191.04.json",
+        "sha256": "7bb8f22ccc1c61bcdd628fe6cab3e98f884f92cf4e8747cd21feb90d573f9654"
+      },
+      {
+        "index": 11,
+        "path": "data/audio_reviews/sun-sawangkaew-guangzhou-2026-r1/11-1191.04-1196.36.json",
+        "sha256": "b0c5c808cc5dcbca32845ff62168095683a210b77143f2fb2dfd114d06c3cf39"
+      }
+    ],
+    "corrected_visible_caption_occurrences": 3,
+    "english_source_sha_windows_asr_corpus_unchanged": true,
+    "source_identity": "Mananchaya Sawangkaew / WTA326929",
+    "original_publication_ledger_untouched": true,
+    "fresh_native_identity_voice_qc_and_explicit_repush_required": true
   }
 }

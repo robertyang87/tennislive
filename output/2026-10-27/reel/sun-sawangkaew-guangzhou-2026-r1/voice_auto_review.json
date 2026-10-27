@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "c7d4c09305605ce26c67bc585e43463b020c405237aa0957bf9fae7061402f81",
-    "render_inputs_sha256": "15846fcbd32e93cd6c405a483abf1da563ca36fb737873727b905fde23ddd355",
-    "spec_sha256": "91844c7b19f4bf7fc479d3d4fa935f3d647e4bd3b32da1efe319aef36dd2e44b",
-    "film_sha256": "8e86aaf7ff37fb617fd65a4c3c2ee8174b90897095e33b3d6ed2907c5bbec9b7",
-    "inventory_sha256": "412e3247ed55a17dc941701c2ed251cec25a4bf40ee44e11b50bfbdb17c93b83"
+    "render_sha256": "77c368f5ba5bd458a068cc9d40b6e5bec657d8eb88dbeca94b94adfc1ae405a6",
+    "render_inputs_sha256": "15c79c8730f548c730cc082ec2906e13a7e372aeabca48a49ed2c892071bdfab",
+    "spec_sha256": "1663940c22e657432e2b794a887ef1e49b5dac75f7c57b1ef73a671ea1867d99",
+    "film_sha256": "baad46ba8d432519b3a8968159a6d7242d0686f4ffffceb02984c06321235380",
+    "inventory_sha256": "d5bc0d359f6cae8bfbf9cbe643913f4af87ef679b8634faee8323cc322264bb6"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,16 +18,10 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-27T15:16:28+00:00",
+  "reviewed_at": "2026-10-27T16:04:23+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
-    {
-      "id": "bundle:030feb16bdadf9a584d9a6cb1fde8ba07259f512add4dba3ab7802c48f2b4ddd",
-      "audio_sha256": "c682642a52d63969bff91db5e37e08b73a901c3b7f4b8a9a09ab94c4fe03d8a8",
-      "pass": true,
-      "result_of": "bundle:030feb16bdadf9a584d9a6cb1fde8ba07259f512add4dba3ab7802c48f2b4ddd"
-    },
     {
       "id": "bundle:119ce381f78b62238781cd53cea1fce87976ca0e7b9520a33c4cdea0ae4c054f",
       "audio_sha256": "d12ad54a281a4ac3bbbad66518b4d02130c23ab4cf84cffbfc465690c3bd2d9d",
@@ -45,6 +39,12 @@
       "audio_sha256": "cd71899a0e33a00b3ffcb28df096a472cb45aad44c82a87e464393a917436ce5",
       "pass": true,
       "result_of": "bundle:67dd2720a77fac5fcf58979e4dc6fcdead5983eb64338f57d4763cf31feeac59"
+    },
+    {
+      "id": "bundle:a8e38d75260ea886190add6bb4c7da2f2066c090dd6dce911a4307aabe3db7fd",
+      "audio_sha256": "3dbcb146f26dd15049270240a4a8a8548be747b5a1226a47e160266af63a967d",
+      "pass": true,
+      "result_of": "bundle:a8e38d75260ea886190add6bb4c7da2f2066c090dd6dce911a4307aabe3db7fd"
     },
     {
       "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
@@ -65,10 +65,10 @@
       "result_of": "bundle:d38962ccc8f3ca70a3643268207b7e0155ecaa0030d824360c0c04be75948fa3"
     },
     {
-      "id": "bundle:d4a380660857c9c33ff90975737cf219a48d6b46f0538d8c1fef1475be12a66a",
-      "audio_sha256": "726fe84bb9d6d981d329602e4a466c079def7c4b35690b662263eab646d2993d",
+      "id": "bundle:d3bc5daa6d31c2341a82f76f87c40a77d001892e305522dd0d299173c37addc4",
+      "audio_sha256": "75720818581818918fae443f6348c5a4fcb8ccd0b7e510170155c81b00c61ba7",
       "pass": true,
-      "result_of": "bundle:d4a380660857c9c33ff90975737cf219a48d6b46f0538d8c1fef1475be12a66a"
+      "result_of": "bundle:d3bc5daa6d31c2341a82f76f87c40a77d001892e305522dd0d299173c37addc4"
     },
     {
       "id": "bundle:dffad748aa3e7c077fa6165daf5e3d8d21334b93a51bf5b37d43b80f8ba77c46",
@@ -96,9 +96,9 @@
     },
     {
       "id": "voice_01.mp3",
-      "audio_sha256": "c682642a52d63969bff91db5e37e08b73a901c3b7f4b8a9a09ab94c4fe03d8a8",
+      "audio_sha256": "3dbcb146f26dd15049270240a4a8a8548be747b5a1226a47e160266af63a967d",
       "pass": true,
-      "result_of": "bundle:030feb16bdadf9a584d9a6cb1fde8ba07259f512add4dba3ab7802c48f2b4ddd"
+      "result_of": "bundle:a8e38d75260ea886190add6bb4c7da2f2066c090dd6dce911a4307aabe3db7fd"
     },
     {
       "id": "voice_02.mp3",
@@ -108,9 +108,9 @@
     },
     {
       "id": "voice_03.mp3",
-      "audio_sha256": "726fe84bb9d6d981d329602e4a466c079def7c4b35690b662263eab646d2993d",
+      "audio_sha256": "75720818581818918fae443f6348c5a4fcb8ccd0b7e510170155c81b00c61ba7",
       "pass": true,
-      "result_of": "bundle:d4a380660857c9c33ff90975737cf219a48d6b46f0538d8c1fef1475be12a66a"
+      "result_of": "bundle:d3bc5daa6d31c2341a82f76f87c40a77d001892e305522dd0d299173c37addc4"
     },
     {
       "id": "voice_05.mp3",
@@ -169,60 +169,6 @@
   ],
   "audio": [
     {
-      "id": "bundle:030feb16bdadf9a584d9a6cb1fde8ba07259f512add4dba3ab7802c48f2b4ddd",
-      "text": "北京时间十月二十七号晚上，广州首轮。十六岁的孙心然，六比三、六比四击败萨旺考，晋级十六强。两天前，她还在成都捧杯。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 49,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "北京时间10月27号晚上广州首轮。16岁的孙心然：6比3：6比4既败撒旺考,近级16强。两天前,他还在成都捧碑。"
-      },
-      "polyphones": [
-        {
-          "index": 50,
-          "char": "还",
-          "word": "还",
-          "intended": "hai2",
-          "wrong": [
-            "huan2"
-          ],
-          "tier": "B",
-          "verdict": "uncertain",
-          "runs": [
-            {
-              "wrong": "huan2",
-              "verdict": "unreliable",
-              "score": 0.422,
-              "confidence": null,
-              "near": null
-            }
-          ],
-          "ok_refs": "孩骸"
-        }
-      ],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 49,
-        "speech_s": 11.403,
-        "cps": 4.3,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "北京时间 ｜ 十月二十七号 ｜ 晚上 ｜ 广州 ｜ 首轮 ｜ 十六岁 ｜ 的 ｜ 孙心然 ｜ 六比 ｜ 三 ｜ 六比四 ｜ 击败 ｜ 萨旺考 ｜ 晋级 ｜ 十六强 ｜ 两天 ｜ 前 ｜ 她 ｜ 还 ｜ 在 ｜ 成都 ｜ 捧杯"
-      }
-    },
-    {
       "id": "bundle:119ce381f78b62238781cd53cea1fce87976ca0e7b9520a33c4cdea0ae4c054f",
       "text": "十月二十五号，她刚在成都赢下十八岁及以下组的年终总决赛。第二天赶到广州，落地后就去适应场地。冠军来不及细细回味，新的考验已经到了。",
       "pass": true,
@@ -258,16 +204,16 @@
             {
               "wrong": "la4",
               "verdict": "correct",
-              "score": 0.57,
-              "confidence": "medium",
-              "near": null
+              "score": 0.976,
+              "confidence": "high",
+              "near": "intended"
             },
             {
               "wrong": "lao4",
               "verdict": "correct",
-              "score": 0.623,
-              "confidence": "medium",
-              "near": null
+              "score": 0.982,
+              "confidence": "high",
+              "near": "intended"
             }
           ],
           "ok_refs": "洛骆摞"
@@ -320,15 +266,15 @@
             {
               "wrong": "la4",
               "verdict": "correct",
-              "score": 0.333,
-              "confidence": "low",
+              "score": 0.443,
+              "confidence": "medium",
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "correct",
-              "score": 0.202,
-              "confidence": "low",
+              "score": 0.338,
+              "confidence": "medium",
               "near": null
             }
           ],
@@ -364,7 +310,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 1,
-        "transcript": "成都夺冠,是一个新的起点。把这场胜利收好,再迎接下一场挑战。16岁的他,还会带来什么惊喜?"
+        "transcript": "成都夺冠是一个新的起点。把这场胜利收好再迎接下一场挑战。16岁的他还会带来什么惊喜?"
       },
       "polyphones": [
         {
@@ -381,7 +327,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 1.0,
+              "score": 0.987,
               "confidence": "high",
               "near": "intended"
             }
@@ -398,6 +344,60 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "成都 ｜ 夺冠 ｜ 是 ｜ 一个 ｜ 新的起点 ｜ 把 ｜ 这 ｜ 一 ｜ 场 ｜ 胜利 ｜ 收 ｜ 好 ｜ 再 ｜ 迎接 ｜ 下 ｜ 一 ｜ 场 ｜ 挑战 ｜ 十六岁 ｜ 的 ｜ 她 ｜ 还 ｜ 会 ｜ 带来 ｜ 什么 ｜ 惊喜"
+      }
+    },
+    {
+      "id": "bundle:a8e38d75260ea886190add6bb4c7da2f2066c090dd6dce911a4307aabe3db7fd",
+      "text": "北京时间十月二十七号晚上，广州首轮。十六岁的孙心然，六比三、六比四击败萨王凯，晋级十六强。两天前，她还在成都捧杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月27号晚上广州首轮。16岁的孙心然,6比3、6比4,击败萨王凯,近级16强。两天前,他还在成都捧碑。"
+      },
+      "polyphones": [
+        {
+          "index": 50,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.385,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 11.38,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十七号 ｜ 晚上 ｜ 广州 ｜ 首轮 ｜ 十六岁 ｜ 的 ｜ 孙心然 ｜ 六比三 ｜ 六比四 ｜ 击败 ｜ 萨王凯 ｜ 晋级 ｜ 十六强 ｜ 两天 ｜ 前 ｜ 她 ｜ 还 ｜ 在 ｜ 成都 ｜ 捧杯"
       }
     },
     {
@@ -482,7 +482,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但4比2不是安全线,对手把他拉向边线,再突然放短,领先之后仍要一分一分地守。"
+        "transcript": "但4比2不是安全线,对手把他拉向边线在突然放短,领先之后仍要一分一分地守。"
       },
       "polyphones": [],
       "pauses": {
@@ -497,8 +497,8 @@
       }
     },
     {
-      "id": "bundle:d4a380660857c9c33ff90975737cf219a48d6b46f0538d8c1fef1475be12a66a",
-      "text": "三比二领先，这一次她把反拍顶得很深，再沿着斜线寻找角度。萨旺考不断把球挡回来，孙心然也没有急着一拍结束。",
+      "id": "bundle:d3bc5daa6d31c2341a82f76f87c40a77d001892e305522dd0d299173c37addc4",
+      "text": "三比二领先，这一次她把反拍顶得很深，再沿着斜线寻找角度。萨王凯不断把球挡回来，孙心然也没有急着一拍结束。",
       "pass": true,
       "checks": {
         "completeness": true,
@@ -514,7 +514,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "3比2领先,这一次他把反拍顶得很深,在沿着斜线寻找角度。撒网考不断把球挡回来,孙心然也没有急着一拍结束。"
+        "transcript": "3比2领先,这一次他把反拍顶得很深,在沿着斜线寻找角度。萨王凯不断把球挡回来,孙心然也没有急着一拍结束。"
       },
       "polyphones": [
         {
@@ -535,11 +535,11 @@
         "inner_pauses": [],
         "fake_tokens": [],
         "chars": 47,
-        "speech_s": 9.587,
-        "cps": 4.9,
+        "speech_s": 9.576,
+        "cps": 4.91,
         "pause_ok": true,
         "speed_ok": true,
-        "tokens": "三比二 ｜ 领先 ｜ 这 ｜ 一次 ｜ 她 ｜ 把 ｜ 反 ｜ 拍 ｜ 顶 ｜ 得 ｜ 很 ｜ 深 ｜ 再 ｜ 沿着 ｜ 斜线 ｜ 寻找 ｜ 角度 ｜ 萨旺考 ｜ 不断 ｜ 把 ｜ 球 ｜ 挡 ｜ 回来 ｜ 孙心然 ｜ 也 ｜ 没有 ｜ 急 ｜ 着 ｜ 一 ｜ 拍 ｜ 结束"
+        "tokens": "三比二 ｜ 领先 ｜ 这 ｜ 一次 ｜ 她 ｜ 把 ｜ 反 ｜ 拍 ｜ 顶 ｜ 得 ｜ 很 ｜ 深 ｜ 再 ｜ 沿着 ｜ 斜线 ｜ 寻找 ｜ 角度 ｜ 萨王凯 ｜ 不断 ｜ 把 ｜ 球 ｜ 挡 ｜ 回来 ｜ 孙心然 ｜ 也 ｜ 没有 ｜ 急 ｜ 着 ｜ 一 ｜ 拍 ｜ 结束"
       }
     },
     {
@@ -560,7 +560,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "在国际网连十八岁既已下组,他已是女子世界第一﹑可职业赛场上对面是世界第八十﹑赢下一盘,不等于已经赢下整场。"
+        "transcript": "在国际网连十八岁既已下组,他已是女子世界第一：可职业赛场上对面是世界第八十：赢下一盘,不等于已经赢下整场。"
       },
       "polyphones": [],
       "pauses": {
@@ -605,13 +605,13 @@
             "dei3"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "de2",
-              "verdict": "correct",
-              "score": 0.402,
-              "confidence": "low",
+              "verdict": "unreliable",
+              "score": 0.734,
+              "confidence": null,
               "near": null
             }
           ],
@@ -676,7 +676,7 @@
             {
               "wrong": "zhang3",
               "verdict": "correct",
-              "score": 0.968,
+              "score": 0.998,
               "confidence": "high",
               "near": "intended"
             }

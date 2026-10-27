@@ -468,3 +468,16 @@ def test_player_name_en查不到或撞姓原样返回():
     # 查不到：原样返回（认不出来好过认成另一个人）
     assert player_name_en("Nobody N.") == "Nobody N."
     assert player_name_en("") == ""
+
+
+def test_sawangkaew_confirmed_media_name_survives_snapshot_sync():
+    from tennislive.zh.players import normalize_player_zh
+    from tools.update_player_names import _translation_lookup, _normalize
+
+    assert player_zh("Mananchaya Sawangkaew") == "萨王凯"
+    assert player_zh("M. Sawangkaew") == "萨王凯"
+    assert player_name_en("M. Sawangkaew") == "mananchaya sawangkaew"
+    assert normalize_player_zh("萨旺考") == "萨王凯"
+    assert _translation_lookup()[_normalize("Mananchaya Sawangkaew")][0] == "萨王凯"
+    # Same surname alone must not turn an unrelated person into the confirmed player.
+    assert player_zh("Other Sawangkaew") == "Other Sawangkaew"
