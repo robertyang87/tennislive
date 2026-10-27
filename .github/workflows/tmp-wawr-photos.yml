@@ -1,6 +1,6 @@
 name: tmp-wawr-photos
-# 一次性（第三趟：git add --sparse）：沙箱连不到 ATP Media 图床、也下不了 artifact。把 2026 巴塞尔瓦林卡的官方实拍
-# 缩成预览（长边 1600）连同原图说明一起写回本分支，挑封面用。挑完即删本文件。
+# 一次性（第四趟：查告别画面＋封面原图）：沙箱连不到 ATP Media / Tennis TV / YouTube，下不了 artifact。
+# 结果写成文本、封面原图写进 assets，推回本分支。片子做完即删本文件。
 on:
   push:
     branches: [claude/wawrinka-career-story]
@@ -12,7 +12,7 @@ permissions:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,48 +22,69 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -q pillow requests
-      - name: 拉预览
+      - run: pip install -q pillow requests "yt-dlp[default]"
+      - name: 查
+        run: |
+          mkdir -p assets/reel/wawrinka-career-story-2026
+          R=assets/reel/wawrinka-career-story-2026/research.txt
+          python - <<'PY' > "$R" 2>&1 || true
+          import json, urllib.request
+          def get(url, **h):
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", **h})
+              return urllib.request.urlopen(req, timeout=40).read()
+          print("== Tennis TV: ATP_PLAYER:W367 最近 60 条")
+          for page in range(2):
+              d = json.loads(get(f"https://api.tennistv.com/content/atpmedia/video/EN/?pageSize=30&page={page}&references=ATP_PLAYER:W367", account="atpmedia"))
+              for c in d.get("content", []):
+                  tags = [t.get("label") for t in c.get("tags", [])]
+                  tags = [t for t in tags if t and (t.startswith("video-type") or t.startswith("entitlement"))]
+                  print(c.get("id"), c.get("date"), c.get("duration"), "|", c.get("title"), "|", tags, "|", (c.get("description") or "")[:160].replace("\n", " "))
+          print("== oEmbed")
+          for vid in ["mo_Aust_pN0"]:
+              try:
+                  o = json.loads(get(f"https://www.youtube.com/oembed?format=json&url=https://youtu.be/{vid}"))
+                  print(vid, o.get("author_name"), "|", o.get("title"))
+              except Exception as e:
+                  print(vid, "ERR", e)
+          PY
+          for q in "Wawrinka Basel farewell" "Wawrinka Lehecka Basel" "Wawrinka last match Basel" "Wawrinka emotional Basel 2026" "Stan Wawrinka farewell ceremony Swiss Indoors"; do
+            echo "== ytsearch: $q" >> "$R"
+            yt-dlp --flat-playlist --print "%(id)s|%(duration)s|%(channel)s|%(upload_date)s|%(title)s" "ytsearchdate15:$q" >> "$R" 2>&1 || true
+          done
+          echo "== 官方频道最新" >> "$R"
+          for ch in https://www.youtube.com/@ATPTour/videos https://www.youtube.com/@TennisTV/videos https://www.youtube.com/@SwissIndoorsBasel/videos https://www.youtube.com/@srfsport/videos; do
+            echo "-- $ch" >> "$R"
+            yt-dlp --flat-playlist --playlist-end 25 --print "%(id)s|%(duration)s|%(title)s" "$ch" >> "$R" 2>&1 || true
+          done
+          cat "$R"
+      - name: 封面原图
         run: |
           python - <<'PY'
           import io, json, sys, urllib.request
-          from pathlib import Path
           from PIL import Image
           sys.path.insert(0, "tools")
           import official_photo_apis as api
-          out = Path("assets/reel/wawrinka-career-story-2026/candidates"); out.mkdir(parents=True, exist_ok=True)
-          rows = []
-          for page in range(4):
+          for page in range(3):
               d = api.get_json(api.page_url(api.ATP_MEDIA_API, page))
               for c in d.get("content", []):
-                  t = c.get("title") or ""
-                  if "Wawrinka" not in t or "2026" not in t:
-                      continue
-                  pub = c.get("publishFrom") or 0
-                  if pub < 1793120400000:   # 2026-10-27 17:00Z 之前的不要
-                      continue
-                  url = c.get("imageUrl") or ""
-                  if not url.lower().endswith((".jpg", ".jpeg")):
-                      continue
-                  req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-                  blob = urllib.request.urlopen(req, timeout=60).read()
-                  meta = api.parse_head(blob[:api.HEAD_BYTES])
-                  im = Image.open(io.BytesIO(blob)); w, h = im.size
-                  im.thumbnail((1600, 1600)); name = f"{c['id']}.jpg"
-                  im.convert("RGB").save(out / name, quality=88)
-                  rows.append({"id": c["id"], "title": t, "publishFrom": pub, "date": c.get("date"),
-                               "url": url, "w": w, "h": h, "preview": name,
-                               "taken": meta.get("taken"), "caption": meta.get("caption"),
-                               "credit": meta.get("credit"), "instructions": meta.get("instructions"),
-                               "restriction": api.restriction(*(meta.get("texts") or []))})
-                  print(rows[-1])
-          (out / "meta.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1))
-          print(len(rows), "张")
+                  if c.get("id") == 4599884:
+                      url = c["imageUrl"]
+                      blob = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read()
+                      im = Image.open(io.BytesIO(blob)); print(url, im.size, len(blob))
+                      w, h = im.size
+                      # 预裁 3:4、人居中（预览上人的中线约在 0.56 处），存 1800×2400，免得 8MB 原图进 git
+                      cw = int(h * 3 / 4); cx = int(w * 0.56); x0 = max(0, min(w - cw, cx - cw // 2))
+                      im.crop((x0, 0, x0 + cw, h)).resize((1800, 2400), Image.LANCZOS).convert("RGB").save(
+                          "assets/reel/wawrinka-career-story-2026-cover.jpg", quality=92)
+                      open("assets/reel/wawrinka-career-story-2026/cover_src.txt", "w").write(
+                          f"{url}\n{w}x{h}\ncrop x0={x0} cw={cw}\n")
+                      raise SystemExit(0)
+          raise SystemExit("4599884 没找到")
           PY
       - name: 写回分支
         run: |
           git config user.name "Claude"; git config user.email "noreply@anthropic.com"
-          git add --sparse -f assets/reel/wawrinka-career-story-2026/candidates
-          git commit -m "assets: 巴塞尔 2026 瓦林卡官方实拍预览（挑封面用）" || exit 0
+          git add --sparse -f assets/reel/wawrinka-career-story-2026 assets/reel/wawrinka-career-story-2026-cover.jpg
+          git commit -m "assets: 瓦林卡告别画面检索结果＋巴塞尔赛后致谢封面原图" || exit 0
           for i in 1 2 3; do git pull --rebase origin claude/wawrinka-career-story && git push origin HEAD:claude/wawrinka-career-story && exit 0; sleep 3; done
           exit 1
