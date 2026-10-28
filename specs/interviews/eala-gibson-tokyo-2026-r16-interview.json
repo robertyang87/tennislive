@@ -1,0 +1,88 @@
+{
+ "_facts": "2026-10-28 WTA500 东丽泛太平洋公开赛（东京，有明体育馆）女单第二轮，[8]伊埃拉（Alexandra Eala，菲律宾，No.19）4-6、6-2、6-0 逆转吉布森（Talia Gibson，澳大利亚，No.38），用时 1 小时 53 分（WTA 官方战报确认）。进程：首盘 3-3 后被破、4-5 回破后再被破丢盘（吉布森 5-3 发球胜盘局未果、靠擦网死球过关）；第二盘先破 2-0；全场赢下最后 14 局中的 12 局、连赢最后 9 局，决胜盘送蛋。数据：Ace 9-5（9 记为伊埃拉生涯新高）、双误 2-3、破发兑现 6/9 vs 2/6、总得分 86-66、非受迫失误 21-47（分项口径以 WTA 官方统计为准，转播数据牌与 tennis.com 有出入，不在文案中混用）。背景：亚洲赛季首进八强（全年第 8 个、巡回赛级第 6 个八强），自 2026-08 华盛顿夺冠后首个 WTA 八强；对吉布森三战全胜。下一轮 1/4 决赛对 [3] 施耐德（No.13）——上周宁波第二轮施耐德 7-5、6-4 胜伊埃拉；两人 2019 年青少年大阪站交手时伊埃拉 6-1、6-3 胜。采访为赛后场内采访（WTA TOUR 话筒），共两问：①逆转关键——留在比赛里、永不放弃，首盘虽难但有过机会，保持专注机会还会再来（其间她把后半句又重复了一遍，为原声实况）；②满场菲律宾国旗与球迷——非常喜欢、非常开心，连声致谢，并以他加禄语致谢；收尾与主持人道别（祝下一场好运/恭喜）。文字全稿见 Tennis365 2026-10-28 采访 Q&A，引语与 WTA 官方战报所引一句一致。",
+ "_notes": "官方采访视频在 WTA 官网/Unlocked、Tennis Channel、赛事官方、WOWOW、菲律宾各台全网查无（2026-10-28 晚三路并行扫荡＋监看实证），所有者发来粉丝搬运链接并明示『就用这个做吧』，随后于 2026-10-29 00:20 CST 对实际取用版本再次确认『就用这版开工』。实际源文件为 Premier Sports 转播录屏的 Facebook 粉丝搬运（PILYO Trending Viral, reel 1780597729878699，2026-10-28 20:09 CST 发布），内容与所有者指定的 YouTube 搬运版（Tennis Stories nbQtAqxoYKE）为同一段场内采访；YouTube 侧因平台对本机 IP 的机器人校验无法下载，故取 FB 版先行存档至本仓库 Release（src-eala-tokyo-20261028）钉源。源文件 231.9s，有效画面 1296×672（手机录屏黑边，crop 172,24），全程右上角有 PREMIER SPORTS 2 LIVE 台标，顶部边缘有录屏者浏览器页签残字一条——均为该例外源的已知瑕疵，所有者知情接受。本期窗口只取 0–93s：片头自带最后一分＋握手（match_end 冷开场），17s 起场内采访，约 90s 道别结束，93s 后为签球与演播室解说，不入正文。L0 走 human_visual_verdict：人工逐帧核验（赛点/握手/话筒特写/数据牌/签表五类帧）＋本地 faster-whisper 转写与 Tennis365 全文、WTA 官方战报三方交叉一致。",
+ "column": "赛后开麦",
+ "cover": {
+  "_why": "69s：第二问致谢段正面近景——伊埃拉正对镜头、双眼睁开、露齿笑，WTA 话筒在胸前，网带背景干净；同段 67-73s 均为正面采访特写，无侧脸低头帧。",
+  "frame_at": 69.0,
+  "scan_window": [
+   67.0,
+   72.0
+  ],
+  "sub": "伊埃拉 · 东京逆转吉布森",
+  "tag": "2026 东京 · 赛后开麦",
+  "title": [
+   "先丢一盘",
+   "连赢九局"
+  ]
+ },
+ "end": 93.0,
+ "event": "2026 WTA500 东京 第二轮",
+ "featured_player": "伊埃拉",
+ "interview_kind": "赛后场上采访",
+ "match": {
+  "duration": "1:53",
+  "event": "2026 东丽泛太平洋公开赛",
+  "event_search": "Toray Pan Pacific Open Tokyo",
+  "id": "2026:toray-pan-pacific-open:womens-r16:eala-gibson",
+  "loser": "吉布森",
+  "loser_en": "Talia Gibson",
+  "participants": [
+   "伊埃拉",
+   "吉布森"
+  ],
+  "round": "女单第二轮",
+  "score": "4-6 6-2 6-0",
+  "winner": "伊埃拉",
+  "winner_en": "Alexandra Eala",
+  "year": 2026
+ },
+ "opening": {
+  "kind": "match_end",
+  "why": "源片 0s 起即为最后一分（伊埃拉接发站位→赛点兑现）与网前握手，17s 接场内采访，比赛结尾与采访同源同文件，正文窗口自 0s 起即满足 match_end 冷开场，不另借集锦。"
+ },
+ "push": {
+  "auto": true,
+  "lead": "东京 WTA500 第二轮，伊埃拉 4-6、6-2、6-0 逆转吉布森，决胜盘送蛋收尾，全场 9 记 Ace 创下生涯新高。赛后场内采访，她说逆转的关键就是留在比赛里、永不放弃。八强战，她将再遇上周宁波刚赢过她的施耐德。",
+  "matchup": "伊埃拉 vs 吉布森",
+  "score": "4-6 6-2 6-0",
+  "summary": "丢首盘后连赢九局"
+ },
+ "requested_content_type": "on_court",
+ "slug": "eala-gibson-tokyo-2026-r16-interview",
+ "source_title": "2026 TORAY PAN PACIFIC OPEN Alex Eala's post match interview after winning again (Premier Sports broadcast recording, Facebook re-upload)",
+ "source_verification": {
+  "detected_type": "on_court",
+  "evidence": [
+   {
+    "kind": "human_visual_verdict",
+    "note": "人工逐帧核验存档源（10s 间隔全片抽帧＋关键段 1s 密帧）：0s 最后一分、10-16s 网前握手（吉布森背对镜头）、20s 起伊埃拉持 WTA TOUR 话筒场内采访特写、约 190s 转播全场数据牌（EALA 4-6 6-2 6-0 GIBSON、1H 53'、ACES 9-5）、约 220s 签表牌（QF ALEXANDRA EALA [8] vs DIANA SHNAIDER [3]），内容身份与本场唯一对应。"
+   },
+   {
+    "kind": "transcript_cross_check",
+    "note": "本地 faster-whisper small 转写（词级时间戳存档于 goal 工作区 asr_segments.json）：采访段 15.99s 起第一问回答、57.55s 第二问（贵国国旗与球迷）、65.53s 起致谢、84-89s 道别；文本与 Tennis365 2026-10-28 刊出的采访两问全文及 WTA 官方战报（news/4600216）所引原句三方一致。95s 后为演播室解说，不在正文窗口内。"
+   },
+   {
+    "kind": "owner_exception_approval",
+    "note": "官方源全网查无后，仓库所有者 2026-10-28 22:16 CST 指定粉丝搬运为本期源（单期例外），2026-10-29 00:20 CST 对本 FB 转播录屏版再次确认开工；源瑕疵（PREMIER SPORTS 2 LIVE 台标、录屏黑边与页签残字、1296×672）已如实告知并接受。"
+   }
+  ],
+  "match_id": "2026:toray-pan-pacific-open:womens-r16:eala-gibson",
+  "method": "human_visual_verdict",
+  "source": "Premier Sports 转播录屏（Facebook 粉丝搬运，所有者批准的单期例外源）",
+  "source_id": "facebook:reel/1780597729878699 archived as release:src-eala-tokyo-20261028",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/src-eala-tokyo-20261028/eala-tokyo-r16-interview-fbcopy.mp4",
+  "status": "verified",
+  "title": "2026 TORAY PAN PACIFIC OPEN Alex Eala's post match interview after winning again",
+  "attestation_sha256": "7381323f19d1507fd6086351f30b1fcbbb622dda90641ef6b3b54f0d3c9629f9"
+ },
+ "start": 0.0,
+ "takeaway": {
+  "close": {
+   "ask": "八强再战施耐德，这次能复仇吗？",
+   "point": "先丢一盘，她连赢最后九局"
+  }
+ },
+ "url": "https://github.com/robertyang87/tennislive/releases/download/src-eala-tokyo-20261028/eala-tokyo-r16-interview-fbcopy.mp4",
+ "winner": "伊埃拉"
+}
