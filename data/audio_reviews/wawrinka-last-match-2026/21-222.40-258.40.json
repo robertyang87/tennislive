@@ -3,8 +3,8 @@
   "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
   "method": "asr_cross_checked",
   "reviewer": "independent_assistant /root/sun_source_audio_audit: full exact source contact sheets and short-window unprompted ASR cross-check; no human-listening claim",
-  "reviewed_at": "2026-10-27T23:37:48.358276+00:00",
-  "reviewed_from": 222.92,
+  "reviewed_at": "2026-10-28T00:15:07.329340+00:00",
+  "reviewed_from": 222.4,
   "reviewed_to": 258.4,
   "status": "complete",
   "uncertain_spans": [],
@@ -49,7 +49,7 @@
   },
   "evidence": "Original full-source small.en/medium.en have identical verified source SHA. Relevant exact selected windows reviewed against whole-source word times and independently re-decoded local small.en/base.en without text prompts. Proper names only normalized against official match identity; whose/shot-making punctuation normalized. Full-source ASR loops are explicitly rejected, never treated as real speech. English/ZH reviewed for semantic fidelity and cue boundaries; no manual hearing asserted.",
   "human_listening_claimed": false,
-  "visual_window_note": "Source first available toss/trophy frame222.92, actual serve contact around223.16, complete rally to233.48 and result closeup233.52; board5-7/6-7, hug/handshake245–250, umpire handshake252–255.7, same-match end258.4 before subscription. No previous-day ceremony or different match.",
+  "visual_window_note": "Actual matchpoint still begins source222.92 at first available toss/trophy, serve around223.16, full rally/result to233.52 and handshake/end258.4. Source222.40–222.92 is preceding-point closeup pre-roll only. Original source score jumps2-4 to2-6 at222.92 and remains authentic; do not rename pre-roll as matchpoint preparation. Background court-declaration uncertainty230.4–235.1 retained unchanged.",
   "background_uncertainty": [
     {
       "start": 230.4,
@@ -65,5 +65,16 @@
       "root_editorial_decision": "2026-10-27 /root explicitly instructed preserve this unclear background source sound and keep uncertainty evidence visible; no claimed human hearing or removal of uncertainty record."
     }
   ],
-  "years_note": "Actual quote says23 years. Official farewell material describes24-year career; do not silently alter quoted source number. Narration does not assert a competing year total."
+  "years_note": "Actual quote says23 years. Official farewell material describes24-year career; do not silently alter quoted source number. Narration does not assert a competing year total.",
+  "entry_visibility_fix": {
+    "reviewed_at": "2026-10-28T00:15:07.329340+00:00",
+    "old_reviewed_from": 222.92,
+    "old_reviewed_to": 258.4,
+    "old_packet_sha256": "cf97bedd8201c8f72f5c3b29f0cdc801fbbcf9014b774441f4641502d8b4ed6a",
+    "source_bytes_english_and_absolute_cues_unchanged": true,
+    "source_quote_text_and_abs_times_unchanged": true,
+    "separate_voice_fix": "i10得→要; only that Chinese narration/TTS changes, other15 requests exact reuse owned by lead",
+    "new_human_listening_claimed": false,
+    "why": "Add real222.40–222.92 pre-roll from preceding-point closeup so existing0.5s visual card fade can complete before actual matchpoint first available toss222.92. This is not earlier same-point preparation. Prior intelligible commentary ends222.12, so no sentence cut; all existing quote absolute source times remain identical."
+  }
 }

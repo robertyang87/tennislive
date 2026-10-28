@@ -35,7 +35,7 @@
   },
   "matchpoint": {
     "recommended_window": [
-      222.92,
+      222.4,
       258.4
     ],
     "original_scene_start": 222.92,
@@ -55,7 +55,13 @@
       255.7
     ],
     "do_not_start_at": 224,
-    "why": "224s misses actual first serve/return"
+    "why": "224s misses actual first serve/return",
+    "real_pre_roll": {
+      "from": 222.4,
+      "to": 222.92,
+      "role": "previous point closeup only, not earlier matchpoint preparation",
+      "reason": "Complete existing visual fade before first available actual matchpoint toss; actual native visibility must be verified."
+    }
   },
   "extra_complete_point": {
     "recommended_window": [
@@ -657,5 +663,43 @@
       "reason": "small whole/local gloss, medium across, base touch-of-cross; class only unconfirmed inference. Do not insert guessed quote."
     },
     "extra_point_commentary_timing": "isolated small/base147.78–149.38; quote end149.50 improves sync compared with whole ASR150.26 stretch"
+  },
+  "entry_visibility_fix": {
+    "status": "audio_plan_rebound_entry_visibility_fix_requires_actual_preview_and_new_master",
+    "reviewed_at": "2026-10-28T00:15:07.329340+00:00",
+    "old_plan_sha256": "1cd221d2d84bb2e953ce645ba85fa18eaf6aac2a21e1ab3fc60d9282efbdc461",
+    "new_plan_sha256": "276929c8cb1414bd21fc356dbfebee374bd5d7f244955757463889445c1fa5b7",
+    "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+    "changed_packets": [
+      {
+        "index": 11,
+        "old_path": "data/audio_reviews/wawrinka-last-match-2026/11-132.68-135.10.json",
+        "new_path": "data/audio_reviews/wawrinka-last-match-2026/11-132.68-135.24.json",
+        "old_sha256": "6a03151e1f0b03792b4e6c703cf6828bb8c18548c7c7d46a012bd528ec4c5a32",
+        "new_sha256": "cca2ec325bd9086eac30e91c21ac5564588eaab0e9e45224ffb4507391594e47"
+      },
+      {
+        "index": 21,
+        "old_path": "data/audio_reviews/wawrinka-last-match-2026/21-222.92-258.40.json",
+        "new_path": "data/audio_reviews/wawrinka-last-match-2026/21-222.40-258.40.json",
+        "old_sha256": "cf97bedd8201c8f72f5c3b29f0cdc801fbbcf9014b774441f4641502d8b4ed6a",
+        "new_sha256": "133d0b77866b4cb7e9c9e7a3b9ac5f450d7ab3bb992e0f6d88783e39af31a43b"
+      }
+    ],
+    "unchanged_packet_byte_count": 15,
+    "all_foreground_utterances_absolute_source_times_and_translations_unchanged": true,
+    "narration_change": {
+      "index": 10,
+      "old": "想把比赛带下去，每一次向前压，都得自己争。",
+      "new": "想把比赛带下去，每一次向前压，都要自己争。",
+      "reason": "Native pronunciation gate dei3 unmeasurable; only exact authorized rewrite accepted"
+    },
+    "other_narration_texts_unchanged": true,
+    "reviewed_windows": 17,
+    "bilingual_cues": 12,
+    "actual_source_binding_require": "pass",
+    "no_new_human_listening_claimed": true,
+    "old_master_f8ec137c_visual_status": "fix_required unchanged",
+    "short_previews_and_new_master": "Separate real visual evidence required; metadata green is not visibility approval."
   }
 }
