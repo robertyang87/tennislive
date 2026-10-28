@@ -6517,14 +6517,20 @@ def _record_film_seconds(out: Path, outdir: Path) -> Path:
     return out
 
 
-def _render_with_voice_seal(spec: dict, ass: Path, outdir: Path,
-                            spec_path: Path) -> Path:
-    """出片，并把本期现合成的口播在合成当下捕获、出片后封存。
+def _render_capturing_voice(spec: dict, ass: Path, outdir: Path) -> Path:
+    """出片，并把本期现合成的口播在合成当下捕获成冻结小包。
 
     捕获必须罩住合成那一刻：`tts_one` 只在 bundle session 开着时才登记实际
     请求，事后拿文字和参数反推不算数。没有解读卡口播的片子不开 session，
     走原来的路；开了 session 却一条都没捕获到（合成失败退回静音卡），
-    封印跳过、出片照常——但要出声，那一版推送时会停在配音闸前。
+    出片照常——但要出声，那一版推送时会停在配音闸前。
+
+    ⚠️ **这儿只捕获、不封印。** 封印（库存／清单／自动听审放行）绑的是
+    `render.json` 的字节哈希，而这条线的 `render.json` 在出片之后还要被
+    「终审封面视觉」和「成片发到 Release」两步合并写——在出片这一步里
+    封印，绑的必然是定稿前的字节，推送时一律判 stale（伊埃拉东京那一版
+    就这么卡的）。封印改由 `--stage seal` 在那两步之后、工作流提交之前
+    单独跑，见 `_seal_voice_quality`。
     """
     cards = spec.get("takeaway") or {}
     if not (cards.get("open") or cards.get("close")):
@@ -6544,9 +6550,10 @@ def _render_with_voice_seal(spec: dict, ass: Path, outdir: Path,
         if out is None or getattr(session, "entries", None):
             raise
         print(f"[配音封印] 口播一条都没捕获到（{type(exc).__name__}: {exc}），"
-              "跳过封印——这一版推送时会停在配音质量闸")
+              "不会有冻结小包——这一版推送时会停在配音质量闸")
     if out is not None and bundle_path.is_file():
-        _seal_voice_quality(outdir, spec_path, bundle_path, out)
+        print(f"[配音封印] 实际口播已捕获成冻结小包 {bundle_path.name}，"
+              "等 render.json 定稿后由 --stage seal 封存")
     assert out is not None
     return out
 
@@ -6567,8 +6574,13 @@ def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path,
     - 清单只钉三样：成片哈希（`render.json` 里那一份）、spec 字节哈希、
       库存文件哈希；
     - 放行只认自动五项检查（账号所有者 2026-10-20 定），全过才由
-      `voice_auto_review` 写放行记录；没过就让这一趟 render 红掉，
+      `voice_auto_review` 写放行记录；没过就让封印这一步红掉，
       不许留下一条「出了片却注定推不出去」的绿 run。
+
+    ⚠️ **只能在 `render.json` 定稿后调**（`--stage seal`，排在工作流
+    「终审封面视觉」与「成片发到 Release」之后）：放行记录绑
+    `render.json` 的字节哈希，那两步还会往同一个文件合并写字段，
+    封印早了推送时必然判 stale。
     """
     sys.path.insert(0, str(ROOT / "tools"))
     import voice_quality_gate as g  # noqa: PLC0415
@@ -6692,7 +6704,7 @@ def main() -> int:
                          "读 specs/interviews/<slug>.xhs.txt，不读 --spec 旁边那份——runner 上 --spec "
                          "恒是那个位置；本地拿 /tmp 下的副本跑，正文用的是仓库里那份")
     ap.add_argument("--stage",
-                    choices=["subs", "sheet", "verify", "cover", "cover-scan", "render"],
+                    choices=["subs", "sheet", "verify", "cover", "cover-scan", "render", "seal"],
                     default="subs")
     # 下面三个只给封面用：`cover-scan` 扫哪一段、隔多久一格；`--keep-source`
     # 让 `cover`/`cover-scan` 把源片留给同一趟 job 里后面的出片（见 interview-clip.yml）。
@@ -6975,6 +6987,29 @@ def main() -> int:
             return VERIFY_FINDINGS_EXIT
         return 0
 
+    if args.stage == "seal":
+        # **配音封印，单独一档。** 出片那一档只把实际口播捕获成冻结小包
+        # （见 `_render_capturing_voice` 为什么不能在那一档里封印）；
+        # 这一档由工作流排在「终审封面视觉」与「成片发到 Release」之后、
+        # 提交之前跑：那时 `render.json` 已经定稿，封印绑的字节哈希才
+        # 和推送那一步读到的对得上。听审没过在这儿红，整趟 render
+        # 就不会把没封印的产物提交进仓库。
+        bundle_path = outdir / "tts_bundle.zip"
+        film = outdir / f"{spec['slug']}.mp4"
+        cards = spec.get("takeaway") or {}
+        if not (cards.get("open") or cards.get("close")):
+            print("[配音封印] 这条 spec 没有解读卡口播，无需封印")
+            return 0
+        if not bundle_path.is_file():
+            print("[配音封印] 没有冻结小包（口播合成失败退回静音卡，"
+                  "或这一版不是这趟新出的片），跳过封印"
+                  "——推送时会停在配音质量闸")
+            return 0
+        if not film.is_file():
+            raise SystemExit(f"[配音封印] 成片不在出片目录里：{film}")
+        _seal_voice_quality(outdir, Path(args.spec), bundle_path, film)
+        return 0
+
     if args.stage == "render":
         # **没验过的转写不许出片。** 这不是提醒，是闸：英语素材发错一次，
         # 赔上的是整条线的可信度。`transcript_verified` 只有在人看过
@@ -7005,7 +7040,7 @@ def main() -> int:
                 print(f"  {key}：{why}")
         if holes := blocking_gaps(spec, lines, outdir):
             raise SystemExit(gap_block_message(args.spec, spec, holes))
-        out = _render_with_voice_seal(spec, ass, outdir, Path(args.spec))
+        out = _render_capturing_voice(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         # ⚠️ **两个数，别只报一个。** 这一行原来只印
         # `spec['end'] - spec['start']`，那是**裁出来那一段**的长度，不是成片
