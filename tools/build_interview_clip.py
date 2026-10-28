@@ -6610,6 +6610,23 @@ def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path) -> Non
         raise SystemExit(
             "[配音封印] render.json 里没有成片哈希/字节数，封印没法做"
             "——这一档必须排在「成片发到 Release」之后跑")
+    # 重渲时出片目录里躺着上一版的封印：`capture_inventory` 拒绝覆盖
+    # （怕毁掉真实输入的证据）。但小包字节每趟都不同（zip 容器本身带
+    # 时间戳），同一条口播重渲也会被判 differs 卡死。上一版封印绑的是
+    # 上一版成片、从未推送出去——新版封印理直气壮地取代它：小包哈希
+    # 对不上的旧封印四件套先删掉再封，删了什么打出来，不静默。
+    inv_path = outdir / g.INVENTORY
+    if inv_path.is_file():
+        try:
+            old_inv = json.loads(inv_path.read_text(encoding="utf-8"))
+        except ValueError:
+            old_inv = {}
+        if old_inv.get("bundle_sha256") != bundle_sha:
+            print(f"[配音封印] 上一版封印绑的小包（{str(old_inv.get('bundle_sha256'))[:12]}…）"
+                  f"与本版（{bundle_sha[:12]}…）不同，删旧封印四件套后重封")
+            for name in (g.INVENTORY, "render_inputs.json",
+                         "voice_quality_review.json", "voice_auto_review.json"):
+                (outdir / name).unlink(missing_ok=True)
     inventory_path = g.capture_inventory(outdir, bundle=bundle_path)
     manifest = {
         "lane": "interviews",
