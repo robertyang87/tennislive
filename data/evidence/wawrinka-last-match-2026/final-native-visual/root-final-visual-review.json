@@ -1,0 +1,81 @@
+{
+  "status": "pass",
+  "reviewer": "root",
+  "scope": "Actual new film visual inspection of 12 explicitly opened frames; detailed consecutive-frame point-entry audit is separate. No claim of human audio listening. Native voice suite remains a separate required gate.",
+  "native_run": 40607950013,
+  "film_sha256": "53b0c12e775533be55a47a14c922105031508491b4f7026920f6dcd42711f871",
+  "film_bytes": 85548631,
+  "duration_seconds": 236.56,
+  "spec_sha256": "a8e05f2e3405c1b628291ca01f4285675a359e60c6d7c1935f00b73e2d9d23c8",
+  "reviewed_at": "2026-10-28T00:27:50.887505+00:00",
+  "findings": [
+    "Same-match official cover face and joined hands unobscured; hook and result correct.",
+    "Original-language cold open retained, bilingual farewell returns in ending.",
+    "Compact transparent two-line topbar; fixed lower-left original scorebox; full-canvas 3:4.",
+    "Matchpoint preparation and serve actual frames clearly visible without stat-card overlay. Result scoreboard and handshake retained.",
+    "Full stat-card numbers agree with verified raw counts, all rows visible; established caption style retained.",
+    "Final shot and original farewell bilingual caption retain emotion; branded 网球时差·赛场之上 outro correct."
+  ],
+  "frames": [
+    {
+      "name": "cover",
+      "film_time": 0.5,
+      "sha256": "3121c70ba299868d6bd5fb0142d00333a7c528382f2383ee01448a980d773d07"
+    },
+    {
+      "name": "seg-00",
+      "film_time": 2.52,
+      "sha256": "adaab0f811b8ef2387e029c0b7cb381ff532891cde317b19a1ac5b73e0cbbdf8"
+    },
+    {
+      "name": "seg-03",
+      "film_time": 27.21,
+      "sha256": "da349ac5d44129caa88937688133c3e108777ccba2f76d58c7a8ec5dd8086645"
+    },
+    {
+      "name": "seg-09",
+      "film_time": 85.08,
+      "sha256": "bd7015944b54206e1ed7f4a9e4617c5db51c8c824dc543ce7dd9f3c6c528c118"
+    },
+    {
+      "name": "seg-12",
+      "film_time": 102.04,
+      "sha256": "ae1fc45fa60dd37691e2086376f70ac4b2340f722f73c6ffeff458df68851e7f"
+    },
+    {
+      "name": "seg-20",
+      "film_time": 175.54,
+      "sha256": "c274e71cd64288a997f02850e10d451c916eb2208e57615f9833c441bfea06a0"
+    },
+    {
+      "name": "point-prep",
+      "film_time": 185.26,
+      "sha256": "ea85dd12c1ae6a2107da3081da4bddbfddb84d24420e118331c511d1755c5b61"
+    },
+    {
+      "name": "point-serve",
+      "film_time": 185.5,
+      "sha256": "1e9c052a578176396a164780079f96e502757a1546c9f761749b85003b417790"
+    },
+    {
+      "name": "point-result",
+      "film_time": 195.82,
+      "sha256": "c3cda20d9a6215af4e3da119e81c1968a0fd36cda3a1da3202f8956e3c22e951"
+    },
+    {
+      "name": "handshake",
+      "film_time": 209.84,
+      "sha256": "8f4ff0b3c91eaba3416a699967799793a21ef17e6dbf5fddd995aeba38e5d39e"
+    },
+    {
+      "name": "closing-quote",
+      "film_time": 217.48,
+      "sha256": "060ea131faf4dd27f69b917dba5edab9659b7678fcd41e4c685491dc4283c513"
+    },
+    {
+      "name": "outro",
+      "film_time": 235.76,
+      "sha256": "0ef3537f7a42ed36a6186728a292be2db8d52908cb0e47250c0ee1aa6e70f4e0"
+    }
+  ]
+}

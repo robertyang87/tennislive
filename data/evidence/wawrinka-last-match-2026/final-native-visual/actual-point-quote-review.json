@@ -1,0 +1,293 @@
+{
+  "schema": "tennislive.actual-point-quote-visual-review.v1",
+  "status": "pass",
+  "scope": "Independent actual final native movie critical point entry, complete-rally continuity sampling, fixed source scoreboard, same-match handshake, cold-open payoff and closing bilingual captions. Visual-only; not voice or publication approval.",
+  "reviewed_at_utc": "2026-10-28T00:28:24.624973+00:00",
+  "native_run": 40607950013,
+  "spec_sha256": "a8e05f2e3405c1b628291ca01f4285675a359e60c6d7c1935f00b73e2d9d23c8",
+  "film": {
+    "path": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/final.mp4",
+    "sha256": "53b0c12e775533be55a47a14c922105031508491b4f7026920f6dcd42711f871",
+    "bytes": 85548631,
+    "duration": 236.56
+  },
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "method": "Verified final movie SHA locally, extracted actual movie JPGs via ffmpeg at exact spec-based source-to-film offsets, opened all four actual contact sheets and individual first-serve/contact/handshake frames with view_image. No repeated source download, invented manual listening or old-master pass reused.",
+  "resolved_prior_findings": [
+    {
+      "id": "extra-complete-point-entry-double-exposure",
+      "status": "resolved",
+      "film_window": [
+        99.04,
+        99.64
+      ],
+      "source_first_frame": 135.24,
+      "evidence": [
+        "independent-point-frames/extra-contact.jpg",
+        "independent-point-frames/extra-entry-0.00.jpg",
+        "independent-point-frames/extra-entry-0.24.jpg"
+      ],
+      "actual": "New native first available toss at99.04, preparation99.08, contact99.28 and follow-through99.40–99.64 have single unobscured player and ball positions. No prior closeup or double-pose ghost overlays the serve. Source clock continuity across predecessor/native dissolve is consistent with the repair."
+    },
+    {
+      "id": "matchpoint-entry-hidden-by-card-dissolve",
+      "status": "resolved",
+      "film_window": [
+        185.26,
+        185.74
+      ],
+      "source_window": [
+        222.92,
+        223.4
+      ],
+      "evidence": [
+        "independent-point-frames/matchpoint-entry-contact.jpg",
+        "independent-point-frames/matchpoint-source-222.92.jpg",
+        "independent-point-frames/matchpoint-source-223.16.jpg"
+      ],
+      "actual": "At first available same-point toss185.26 and serve/contact185.50, complete court and both players are fully visible. No statistics-card remnants remain. Source222.40–222.92 pre-roll is real prior-point reaction solely used to complete the dissolve; it is not represented as additional same-point preparation."
+    }
+  ],
+  "passed_visual_checks": [
+    {
+      "check": "one extra complete source point",
+      "film_window": [
+        99.04,
+        114.16
+      ],
+      "result": "Entry/serve, subsequent rally samples100.8/103.2/105.6/108/110.4, reaction112.8/114.0 and complete best-rally bilingual comment are retained. Original source point-count column is absent during rally; no fabricated40 or break-point claim is introduced. The sampled reaction frame still shows original3-3; this audit does not infer the later4-3 game update from that frame."
+    },
+    {
+      "check": "complete matchpoint rally and result",
+      "film_window": [
+        185.26,
+        195.82
+      ],
+      "result": "Unobscured toss and serve plus same-court rally samples187.34/190.34/193.34, then195.82 final original board Wawrinka5/6 and Lehecka7/7 are visible. Winner-perspective compact topbar7-5,7-6(2) is consistent."
+    },
+    {
+      "check": "source scoreboard position",
+      "result": "Original lower-left scoreboard stays at one fixed position throughout sampled extra-point and matchpoint frames. Restored board has original names/columns, no relocation or invented small points."
+    },
+    {
+      "check": "same-match handshake/hug and umpire farewell",
+      "film_window": [
+        209.84,
+        214.34
+      ],
+      "result": "Actual new movie209.84 shows Lehecka and Wawrinka embracing face-to-face, faces and hands remain visible above lower bilingual captions.214.34 shows both with umpire. This is the same final match, not prior-day ceremony."
+    },
+    {
+      "check": "closing bilingual captions",
+      "film_times": [
+        198.04,
+        204.64,
+        209.84,
+        214.34,
+        217.48,
+        219.64
+      ],
+      "result": "Actual new frames show full English and faithful Chinese for career curtain, suitcase of memories,23years, dazzling shot-making, and But...this evening. Text remains legible below faces;23years follows the source commentator, without changing it to24."
+    },
+    {
+      "check": "cold-open and payoff",
+      "film_times": [
+        2.52,
+        217.48,
+        219.64
+      ],
+      "result": "The same independent But that all comes to an end this evening sentence appears at opening and again at final same-match farewell, with bilingual captions. No subscription/next-match card appears in sampled last source frame220.46."
+    }
+  ],
+  "known_source_background_uncertainty": {
+    "source_window": [
+      230.4,
+      235.1
+    ],
+    "role": "indistinct background court declaration and crowd",
+    "result": "Raw sound remains retained and foreground commentary subsequently has captions. No literal Game,set,match subtitle is invented. This visual review does not resolve ambiguous background words."
+  },
+  "human_listening_claimed": false,
+  "voice_gate_pass_claimed": false,
+  "publication_condition": "Root must independently verify current native success, exact film/spec/actual voice/QC identities, final-head CI and authentic push receipt. This visual pass alone does not authorize claiming completed delivery.",
+  "frames": [
+    {
+      "file": "independent-point-frames/extra-entry-0.00.jpg",
+      "film_time": 99.04,
+      "sha256": "1b9aaaa699635b3964f3febe3f6f6ae12946730dc3ed3ddad5e5f2e1261319e1"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.04.jpg",
+      "film_time": 99.08,
+      "sha256": "ad0b096e3a464b9971ba918be9fed8682ff84501c7f5eaace728d7e40042ab4c"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.12.jpg",
+      "film_time": 99.16,
+      "sha256": "4216c5c4a22e457953c5c94792fd9826b4151d1c133fd5908c1789925719796f"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.24.jpg",
+      "film_time": 99.28,
+      "sha256": "1600546419bf26ff7be5843e418b7bdfa28ddeca41329d1a3a2ab983075aae3f"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.36.jpg",
+      "film_time": 99.4,
+      "sha256": "86299ecc8c31cec6fcb5963704e85b488c3dc1923e9af3ddf36b1ff4b9889fae"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.48.jpg",
+      "film_time": 99.52,
+      "sha256": "a467da25400b5ab0c235c34e7d66b084cf8c1ebb023289ba94db37181e976652"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.60.jpg",
+      "film_time": 99.64,
+      "sha256": "a4ce19d8b71788470fd2b67e37f13caa1cf0d3b374b98fc8885944804f233634"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-222.92.jpg",
+      "film_time": 185.26,
+      "sha256": "f2eb19d6a795f5cf3e9bb8c9ccd172e68c4767f34038097084a574c816571468"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.04.jpg",
+      "film_time": 185.38,
+      "sha256": "5da0aba22ad54ec32b49f69a5fb9a16be2c23a0c9d2b568e90d1631b5ab98190"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.16.jpg",
+      "film_time": 185.5,
+      "sha256": "038c5857316316d9ab74d1ede6cac7521b26c4bdfaa168393c2ed5bcbec9cafe"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.28.jpg",
+      "film_time": 185.62,
+      "sha256": "4072903b73423ccc83de46f96b91d9638a9c0bb875d3cb556867e1c93b294832"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.40.jpg",
+      "film_time": 185.74,
+      "sha256": "7902ae6e9f8470ca7539156bb0422ef935e699a1669994f74fcaa74becca176c"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-225.00.jpg",
+      "film_time": 187.34,
+      "sha256": "27fe26ec725fd005708c35acbcde13d1cfc182757668a519b174921b4e33269d"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-228.00.jpg",
+      "film_time": 190.34,
+      "sha256": "5db291fa894394671a6aae7b4abf4315b1ebc5914ec68b142c8981557789d165"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-231.00.jpg",
+      "film_time": 193.34,
+      "sha256": "29639458d44f906d4ca0d79e8804e7da700db551f5eb0d229065c60fd506d23f"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-233.48.jpg",
+      "film_time": 195.82,
+      "sha256": "1bd3d1d9df39ec9ef645489d6785020df0df699d4fa4235d1f76a76652a5945e"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-235.70.jpg",
+      "film_time": 198.04,
+      "sha256": "11d64aa596de9123d7274c14cc75537ef09026a59a4d1596d558c26cba437cd9"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-242.30.jpg",
+      "film_time": 204.64,
+      "sha256": "d8687074c19234faba56677a6066375cbc171bac4475206111442a9d01eef9d0"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-247.50.jpg",
+      "film_time": 209.84,
+      "sha256": "b1ef2935647581545eeaa82b9490241118e756b733066adeb9aaa45fc98f676f"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-252.00.jpg",
+      "film_time": 214.34,
+      "sha256": "082451999236973575c1580205b7a603b21ae4e0598964a846abe90a881e7a4b"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-255.14.jpg",
+      "film_time": 217.48,
+      "sha256": "a7c7a7eda9b2f376f7a44f91562bcbf6f9fa5195d4cfcc9bb96883f2b341e29c"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-257.30.jpg",
+      "film_time": 219.64,
+      "sha256": "c14537fcf3d712c895add45fa0e3afc0d4ee94501a1b40f0f9d235392a4bed62"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-258.12.jpg",
+      "film_time": 220.46,
+      "sha256": "d03f2d191e8183eb48d9392118da163480901419e389fc56a41075376787c34f"
+    },
+    {
+      "file": "independent-point-frames/extra-result.jpg",
+      "film_time": 113.54,
+      "sha256": "a709bf09aeef349b9847134131a2ea0c1b881972d85188386b8414d8c14842d8"
+    },
+    {
+      "file": "independent-point-frames/cold-open.jpg",
+      "film_time": 2.52,
+      "sha256": "b2554a74c8621148d7f39e186c8ed6597e33d7a00ce1fc23f2fa555a0137c1cc"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-100.8.jpg",
+      "film_time": 100.8,
+      "sha256": "5d5f62b138c6221a0e73be80e48f803df8ffd8d91299214286d1d3bd1c617aab"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-103.2.jpg",
+      "film_time": 103.2,
+      "sha256": "e01a8d2aa9dc4e6aaa39e80cce44ddd873c0147e65d57ddfa6f7c5a481d12f68"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-105.6.jpg",
+      "film_time": 105.6,
+      "sha256": "9c7b3559f4f587f490ebb793aaa892f182fe959ba74486e355559ebb43ef731e"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-108.jpg",
+      "film_time": 108,
+      "sha256": "9a730e007151cc678d4750918dca4fa61733499d02f7f63359b743ad084ce85d"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-110.4.jpg",
+      "film_time": 110.4,
+      "sha256": "a63780beca731d072cb88cf5569e1b469931d857c336e6ab2d11f3f91b27cf80"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-112.8.jpg",
+      "film_time": 112.8,
+      "sha256": "d2a21b139bfcf2d0a4e5f107140122a69ee759cd26fd6e5477520799fa38776b"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-114.0.jpg",
+      "film_time": 114.0,
+      "sha256": "796b8102eb1817803368cf3572bfb5bd716372c4a4a361aae37ef219c3e586c6"
+    }
+  ],
+  "viewed_contact_sheets": [
+    {
+      "file": "independent-point-frames/closing-contact.jpg",
+      "sha256": "b019e58e066b76075cf7ab1cadc0055076b00eafd401c790ec592c8c3770d79a"
+    },
+    {
+      "file": "independent-point-frames/extra-contact.jpg",
+      "sha256": "5f01549c59da97c259e960b18c47f950040b6a2628b231937b52d9ea57e5ddf9"
+    },
+    {
+      "file": "independent-point-frames/extra-rally-contact.jpg",
+      "sha256": "555f810ec76aa495c543aee1f549132cbdb246dc37d605488f5a7c831fe847a9"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-entry-contact.jpg",
+      "sha256": "81f06721ebe0599c83b4230328cb454240454ee52776819e009b7de9d6a75c87"
+    }
+  ]
+}

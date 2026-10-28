@@ -1,0 +1,73 @@
+{
+  "status": "pass",
+  "reviewed_at": "2026-10-28T00:27:36.660938+00:00",
+  "scope": "Independent visual inspection using view_image of five listed actual frames from the new native master. Not an audio approval or exhaustive frame-by-frame motion review.",
+  "native_run": 40607950013,
+  "spec_sha256": "a8e05f2e3405c1b628291ca01f4285675a359e60c6d7c1935f00b73e2d9d23c8",
+  "actual_film": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/final.mp4",
+  "actual_film_sha256": "53b0c12e775533be55a47a14c922105031508491b4f7026920f6dcd42711f871",
+  "actual_film_bytes": 85548631,
+  "duration_seconds": 236.56,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "frames": {
+    "cover.jpg": {
+      "status": "pass",
+      "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/frames/cover.jpg",
+      "time_seconds": 0.5,
+      "sha256": "3121c70ba299868d6bd5fb0142d00333a7c528382f2383ee01448a980d773d07",
+      "observations": [
+        "Actual new master hook: 次盘再拼到6比6 / 瓦林卡告别职业赛场; topic ATP500 巴塞尔 首轮·瓦林卡 VS 莱赫奇卡.",
+        "Wawrinka face, eyes, hair and both clasped hands remain visible; text and scoreboard do not cross face or palms.",
+        "Winner-first board Lehecka7/7 against Wawrinka5/6 with losing tiebreak superscript2; ranks21/151, CZE/SUI, Center Court and1:51 readable."
+      ]
+    },
+    "seg-20.jpg": {
+      "status": "pass",
+      "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/frames/seg-20.jpg",
+      "time_seconds": 175.54,
+      "sha256": "c274e71cd64288a997f02850e10d451c916eb2208e57615f9833c441bfea06a0",
+      "observations": [
+        "Actual full card shows Wawrinka left and Lehecka right with same-match avatars, names, ranks and flags.",
+        "All nine rows read correctly: ACE9/11; DF3/0; winners14/26; UE30/25; first-in52%(43/83) vs67%(43/64); first-won84%(36/43) vs81%(35/43); second-won43%(17/40) vs86%(18/21); BP0/2 vs1/6; points64/83.",
+        "Card brand header is below compact permanent topbar without collision. Subtitle covers a portion of central lower labels at this sample, while every numeric result remains unobscured; existing template behavior retained."
+      ]
+    },
+    "seg-03.jpg": {
+      "status": "pass",
+      "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/frames/seg-03.jpg",
+      "time_seconds": 27.21,
+      "sha256": "da349ac5d44129caa88937688133c3e108777ccba2f76d58c7a8ec5dd8086645",
+      "observations": [
+        "Compact transparent shadowed topbar contains 2026 ATP500 巴塞尔 首轮 and correct winner-first result.",
+        "Full-canvas center court crop and source scoreboard lower-left visible; far player is below topbar. Caption remains above scoreboard and does not hide numbers."
+      ]
+    },
+    "seg-09.jpg": {
+      "status": "pass",
+      "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/frames/seg-09.jpg",
+      "time_seconds": 85.08,
+      "sha256": "bd7015944b54206e1ed7f4a9e4617c5db51c8c824dc543ce7dd9f3c6c528c118",
+      "observations": [
+        "Second-set actual match frame shows original fixed lower-left scoreboard Wawrinka5/1/40, Lehecka7/1/15; 5-7 first set direction consistent.",
+        "Caption 比分没有拉开 瓦林卡继续跟住 and compact topbar readable, both players visible."
+      ]
+    },
+    "outro.jpg": {
+      "status": "pass",
+      "file": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/root-delivery-audit/frames/outro.jpg",
+      "time_seconds": 235.76,
+      "sha256": "0ef3537f7a42ed36a6186728a292be2db8d52908cb0e47250c0ee1aa6e70f4e0",
+      "observations": [
+        "Actual account clock/tennis logo and 网球时差·赛场之上 branding visible.",
+        "看见每一次转折; 时差归我 好球归你; @网球时差·TENNIS JETLAG visible without clipping; court-line background and no unwanted match topbar."
+      ]
+    }
+  },
+  "needs_fix": [],
+  "voice_quality_approval": false,
+  "spec_modified": false,
+  "audio_modified": false
+}
