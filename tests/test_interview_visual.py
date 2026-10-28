@@ -89,7 +89,7 @@ def test_顶栏主行近白_赢盘薄荷_连字符压暗和赛场之上同一支
     """评审 3.4：顶栏标题 #fff → #f4fbf7；Q17：比分 40、连字符压暗；Q1：薄荷只表示「赢」。"""
     reel = __import__("build_match_reel")
     assert _style("HEADA")[3] == ass(DARK["foreground"])
-    assert clip._SCORE_PX == reel.TOPBAR_SCORE_SIZE == 40
+    assert clip._SCORE_PX == reel.TOPBAR_SCORE_SIZE == 48
     assert "{" + clip._MARK_COLOUR + "}" == reel.TOPBAR_SETWIN_ASS == ass_inline(SCORE["win_video"])
     # 连字符：和赛场之上同一支灰（那边写成带 alpha 字节的 &H009CA793，值一样）
     dash = re.search(r"&H([0-9A-F]{6,8})&", clip._DASH_TAG).group(1)[-6:]
@@ -303,9 +303,10 @@ def test_人物主标题顶栏按PNG真画的宽量_画不下要报错(tmp_path)
     with pytest.raises(SystemExit, match="两头会被画布切掉"):
         clip._subject_topbar_png(big, tmp_path)
 
-    # ② 贴边那一种：按日文 face 量 901px 放得下，按真画的简体 face 是 996px——
-    #    拿 `_measure_at` 顶替画字那支字体，这一条就漏过去
-    edge = _subject_spec("玛丽亚·何塞·马丁内斯·桑切斯·维克梅耶尔女士", "致辞")
+    # ② 贴边那一种：按日文 face 量 972px 放得下，按真画的简体 face 是 1078px——
+    #    拿 `_measure_at` 顶替画字那支字体，这一条就漏过去（顶栏 48px 那一版
+    #    2026-10-28 重新挑的名字；40px 时是「…维克梅耶尔女士」901 / 996）
+    edge = _subject_spec("玛丽亚·何塞·马丁·桑切斯·维克梅耶尔", "致辞")
     main = clip.header_runs(edge)[0][0][0]
     assert clip._measure_at("zh", size, main) <= clip._HEAD_PX < clip._subject_head_width(size, main)
     with pytest.raises(SystemExit, match="顶栏这行"):
@@ -739,9 +740,9 @@ def test_紧凑透明顶栏与赛场之上共用样式_白底有字形阴影(tmp
     from tennislive import topbar_style
 
     assert clip._HEAD_SIZE == {"a": reel.TOPBAR_HEAD_SIZE, "b": reel.TOPBAR_BODY_SIZE}
-    assert clip._HEAD_SIZE == {"a": 40, "b": 38}
-    assert clip._SCORE_PX == reel.TOPBAR_SCORE_SIZE == 40
-    assert (clip._HEAD_A_TOP, clip._HEAD_B_TOP) == (8, 36)
+    assert clip._HEAD_SIZE == {"a": 48, "b": 46}
+    assert clip._SCORE_PX == reel.TOPBAR_SCORE_SIZE == 48
+    assert (clip._HEAD_A_TOP, clip._HEAD_B_TOP) == (8, 42)
     spec = {"slug": "topbar-white-preview", "event": "2026 WTA500 宁波 决赛",
             "winner": "莱巴金娜", "interview_kind": "赛后捧杯致辞",
             "push": {"matchup": "莱巴金娜 vs 费尔南德斯", "score": "6-2 6-2"}}
@@ -755,7 +756,7 @@ def test_紧凑透明顶栏与赛场之上共用样式_白底有字形阴影(tmp
     pixels = np.asarray(Image.open(output).convert('RGB'))
     assert pixels[:160, 1060].min() >= 250, '阴影不能变成一整块底板'
     assert pixels[100:160].min() >= 250, '文字之外不许压暗采访画面'
-    for lo, hi in ((8, topbar_style.INK_SPLIT_Y), (topbar_style.INK_SPLIT_Y, 80)):
+    for lo, hi in ((8, topbar_style.INK_SPLIT_Y), (topbar_style.INK_SPLIT_Y, topbar_style.HEIGHT)):
         region = pixels[lo:hi, 180:900]
         assert (region.max(axis=2) < 55).sum() > 100, '白底缺少深色字形边缘'
     text = path.read_text()
