@@ -77,6 +77,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 from typing import NamedTuple
 from urllib.parse import urlparse
@@ -6516,6 +6517,114 @@ def _record_film_seconds(out: Path, outdir: Path) -> Path:
     return out
 
 
+def _render_with_voice_seal(spec: dict, ass: Path, outdir: Path,
+                            spec_path: Path) -> Path:
+    """出片，并把本期现合成的口播在合成当下捕获、出片后封存。
+
+    捕获必须罩住合成那一刻：`tts_one` 只在 bundle session 开着时才登记实际
+    请求，事后拿文字和参数反推不算数。没有解读卡口播的片子不开 session，
+    走原来的路；开了 session 却一条都没捕获到（合成失败退回静音卡），
+    封印跳过、出片照常——但要出声，那一版推送时会停在配音闸前。
+    """
+    cards = spec.get("takeaway") or {}
+    if not (cards.get("open") or cards.get("close")):
+        return render(spec, ass, outdir)
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.video.tts import tts_bundle_session  # noqa: PLC0415
+
+    bundle_path = outdir / "tts_bundle.zip"
+    session = tts_bundle_session(
+        output_path=bundle_path,
+        metadata={"lane": "interviews", "slug": spec.get("slug", "")})
+    out: Path | None = None
+    try:
+        with session:
+            out = render(spec, ass, outdir)
+    except Exception as exc:  # noqa: BLE001
+        if out is None or getattr(session, "entries", None):
+            raise
+        print(f"[配音封印] 口播一条都没捕获到（{type(exc).__name__}: {exc}），"
+              "跳过封印——这一版推送时会停在配音质量闸")
+    if out is not None and bundle_path.is_file():
+        _seal_voice_quality(outdir, spec_path, bundle_path, out)
+    assert out is not None
+    return out
+
+
+def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path,
+                        film: Path) -> None:
+    """把这一版的实际口播封起来：库存、渲染输入清单、自动听审放行。
+
+    这条线原来出完片就结束了——产物里没有 `render_inputs.json`、没有配音
+    库存、没有放行记录，于是推送那一步的
+    `voice_quality_gate.require_publish` 永远报缺文件（2026-10-19 闸落地后
+    访谈线全线推不出去，莱巴金娜宁波、辛尼亚科娃大坂、伊埃拉东京三期都卡
+    在这儿）。赛场之上那条线早就把这套封印做在出片里，这条线照同一个
+    口径补上：
+
+    - 进库存的只有本期实际合成的口播（解读卡，合成时已被 bundle session
+      捕获成冻结小包）；片尾走母版转码、不在本期合成，不进本期库存；
+    - 清单只钉三样：成片哈希（`render.json` 里那一份）、spec 字节哈希、
+      库存文件哈希；
+    - 放行只认自动五项检查（账号所有者 2026-10-20 定），全过才由
+      `voice_auto_review` 写放行记录；没过就让这一趟 render 红掉，
+      不许留下一条「出了片却注定推不出去」的绿 run。
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    import voice_quality_gate as g  # noqa: PLC0415
+
+    with zipfile.ZipFile(bundle_path) as z:
+        bundle_manifest = json.loads(z.read("manifest.json"))
+    request_count = len(bundle_manifest.get("entries") or [])
+    if not request_count:
+        print("[配音封印] 冻结小包里没有口播条目，跳过封印"
+              "——这一版推送时会停在配音质量闸")
+        bundle_path.unlink(missing_ok=True)
+        return
+    bundle_sha = hashlib.sha256(bundle_path.read_bytes()).hexdigest()
+
+    render_path = outdir / "render.json"
+    data = json.loads(render_path.read_text(encoding="utf-8")) \
+        if render_path.is_file() else {}
+    data["tts_bundle"] = {"bundle_sha256": bundle_sha,
+                          "request_count": request_count}
+    render_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                           encoding="utf-8")
+    inventory_path = g.capture_inventory(outdir, bundle=bundle_path)
+    manifest = {
+        "lane": "interviews",
+        "film_sha256": data.get("film_sha256"),
+        "film_bytes": film.stat().st_size,
+        "spec_sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
+        "artifacts": {g.INVENTORY: hashlib.sha256(
+            inventory_path.read_bytes()).hexdigest()},
+    }
+    manifest_path = outdir / "render_inputs.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                             encoding="utf-8")
+    data["render_inputs_sha256"] = hashlib.sha256(
+        manifest_path.read_bytes()).hexdigest()
+    render_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                           encoding="utf-8")
+    print(f"[配音封印] {request_count} 条实际口播已封存"
+          f"（清单 {data['render_inputs_sha256'][:12]}…）")
+
+    import voice_auto_review  # noqa: PLC0415
+    evidence = voice_auto_review.review(outdir, bundle_path)
+    for line in voice_auto_review.summary_lines(evidence):
+        print(line)
+    if not evidence.get("pass"):
+        raise SystemExit(
+            "[配音封印] 自动听审没过，这一版不许往下走——按上面的红项改稿"
+            "或改合成，别把没过的片子留给推送那一步去撞闸")
+    # 小包到这儿就完成任务了：请求、音频哈希、词边界哈希都进了库存，
+    # 放行证据也钉住了它。原件不进仓库——出片目录的白名单不收 `.zip`，
+    # 而这条线也没有拿小包严格重导入的路（改稿重渲时合成走内容缓存，
+    # 字节还是同一份）。留着只会让「中间物不许进仓库」那条判据红。
+    bundle_path.unlink()
+    print("[配音封印] 冻结小包已在封存后删除（哈希与条目都在库存里）")
+
+
 def _takeaway_segments(spec: dict, outdir: Path, which: str) -> list[Path]:
     """解读卡那一段（没写就是空的——豁免名单里的老片子走这条）。
 
@@ -6896,7 +7005,7 @@ def main() -> int:
                 print(f"  {key}：{why}")
         if holes := blocking_gaps(spec, lines, outdir):
             raise SystemExit(gap_block_message(args.spec, spec, holes))
-        out = render(spec, ass, outdir)
+        out = _render_with_voice_seal(spec, ass, outdir, Path(args.spec))
         size = out.stat().st_size / 1e6
         # ⚠️ **两个数，别只报一个。** 这一行原来只印
         # `spec['end'] - spec['start']`，那是**裁出来那一段**的长度，不是成片
