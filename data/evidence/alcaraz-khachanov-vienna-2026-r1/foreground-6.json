@@ -1,0 +1,43 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-vI40Uo0zDuk/vI40Uo0zDuk.mp4",
+  "source_sha256": "68d274fb6156780327d632488cb284bad78f039042f69f56d709c6430ea66187",
+  "method": "asr_cross_checked",
+  "reviewer": "current OpenAI assistant; small.en + medium.en + large-v3-turbo + large-v3",
+  "reviewed_at": "2026-10-28T03:29:39.141720+00:00",
+  "status": "complete",
+  "reviewed_from": 249,
+  "reviewed_to": 266.12,
+  "foreground_english": [
+    {
+      "start": 257.3,
+      "end": 260.06,
+      "en": "It's a match that lived up to the billing",
+      "zh": "这场比赛不负期待"
+    },
+    {
+      "start": 260.06,
+      "end": 263.88,
+      "en": "when the tournament draw was announced.",
+      "zh": "正如签表公布时大家所期待的"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_files": [
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/medium.en.json",
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/small.en.json",
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/window-medium.en.json",
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/window-small.en.json",
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/tail-turbo.json",
+    "data/evidence/alcaraz-khachanov-vienna-2026-r1/tail-score-large.json"
+  ],
+  "review_basis": "逐词核对四模型对前景转播解说的交集；不把自动幻觉数字串作为解说。保留全部比赛现场声。",
+  "background_court_call": {
+    "start": 263.9,
+    "end": 266.12,
+    "kind": "distant_umpire_score_announcement",
+    "transcription_status": "not_reliably_resolved",
+    "use_as_match_fact": false,
+    "foreground_commentary": false,
+    "basis": "全片small没有独立此句；medium0.0/0.082/0.067词概率，窄窗两个大模型数字不符合官方比分。只留背景原声，不凭事实补写裁判原话。"
+  }
+}
