@@ -1,0 +1,20 @@
+name: tmp-wawr-trophy
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/tmp
+      - run: pip install -q requests
+      - run: python tools/tmp/wawr_trophy_probe.py out
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out && zip -q ../cands.zip * && cd ..
+          gh release create tmp-wawr-trophy --title tmp-wawr-trophy --notes tmp --prerelease -R "$GITHUB_REPOSITORY" 2>/dev/null || true
+          gh release upload tmp-wawr-trophy cands.zip --clobber -R "$GITHUB_REPOSITORY"
