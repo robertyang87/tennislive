@@ -1,0 +1,381 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "eala-r2-2026-10-28",
+  "written_at": "2026-10-28T12:35:29Z",
+  "code_sha": "3d8fe748790ded322027523123b6b4e89912c0f5",
+  "spec_sha256": "212e5000156bd33143b634aabf17c68964e5c3323278f08b88cf81ea53a87dbf",
+  "film_sha256": "727e7aaad26ca2a2025c4282bceaefc338dd84dd1c398730adf464f0b8d16acb",
+  "film_bytes": 61082507,
+  "projection_sha256": "983e05e0eff888b70410f567f3e934ccdfbb128726fa76ae6615fe903896223d",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "cover",
+      "portrait",
+      "_low_res_why"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      3,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      6,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      7,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      7,
+      "_score_inset_why"
+    ],
+    [
+      "_tactics_why"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/wta-329393.jpg": "657ce10243fd560316676c56a97b24e5f9a0bebae517d2fdebcae61e2cc9c606",
+    "assets/players/headshots/wta-330332.jpg": "732d8295731bdcd254120d5ced523ae83f8b18e4839d22e06637ddc679242831",
+    "assets/reel/eala-gibson-tokyo-2026-r2-toray.jpg": "01e4d06becef6859780c0e30fe043f142f16eee83faf31bac0251772c875e966"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "39cfafcf1e366ebac9af48348494820ea4664654056f0538f105f5e67a61ac97",
+    "subtitles.ass": "ff171faf6b7bd768f13ce21815e29dbf6b91e4a1e6fbeef2dbc6d7fb1514cc63",
+    "topbar.ass": "b5d95c135a8585666388586b776de1d8f2deff49577b30d16c044daeca5517c5",
+    "poster.jpg": "a90fec8f652a6ad71c44382d5e76c95c8c12b74c020273475ee86ad67daf0352",
+    "stat_card.jpg": "8f06a11343243b5311aa55056b9f2ea3aa51bcf98ec6d5282e9cf9b0cdc1f72d",
+    "scoreboard_qc.json": "bcb14b03f1f202146b15b40c503db1d0c05de2751f36ca84dd4b50f407d99509",
+    "voice_quality_inventory.json": "44adf4cd086297377aec42dbdb156eb904683848c5b4730629c7973385720690"
+  },
+  "projection": {
+    "slug": "eala-r2-2026-10-28",
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "sources": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-x8TR5doPQP8/x8TR5doPQP8.mp4"
+    },
+    "primary": "main",
+    "cover": {
+      "matchup": [
+        {
+          "name": "伊埃拉",
+          "name_en": "Alexandra Eala",
+          "country": "PHI",
+          "rank": 19
+        },
+        {
+          "name": "吉布森",
+          "name_en": "Talia Gibson",
+          "country": "AUS",
+          "rank": 38
+        }
+      ],
+      "winner": "伊埃拉",
+      "result": "4-6 6-2 6-0",
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "伊埃拉",
+      "topic": "WTA500 东京 第二轮 · 伊埃拉 VS 吉布森",
+      "hook": "先丢一盘后连赢9局\n伊埃拉逆转晋级8强",
+      "hook_accent": "逆转",
+      "portrait": {
+        "image": "assets/reel/eala-gibson-tokyo-2026-r2-toray.jpg",
+        "focus": 0.55,
+        "focus_y": 0.5,
+        "zoom": 1,
+        "source_url": "https://www.toray-ppo.com/photo/2026/assets_c/2026/10/c88af63ef95042e1977088b440300cbde39d9982-thumb-950xauto-3430.jpg"
+      },
+      "scoreboard": {
+        "court": "Center Court",
+        "duration_source": {
+          "url": "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches?states=C",
+          "match_id": "LS012"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 WTA500 东京 第二轮",
+      "line2": "伊埃拉 4-6 6-2 6-0 吉布森"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "hook": [
+        "先丢一盘后连赢9局",
+        "伊埃拉逆转晋级8强"
+      ],
+      "question": "首盘失利后，伊埃拉怎样把比赛扭转过来？",
+      "thesis": "首盘遭擦网盘点失利，第二盘3-2后跨盘连赢九局完成逆转。官方统计显示吉布森一发得分率逐盘下降，片中保留首盘关键分及完整赛点。",
+      "beats": [
+        "首盘苦战失守",
+        "先破发稳住局面",
+        "跨盘连赢九局",
+        "完整赛点与情绪回应"
+      ],
+      "narration": [
+        "先丢一盘，伊埃拉却连赢了最后九局。四比六、六比二、六比零。她在东京逆转吉布森，晋级八强。",
+        "东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
+        "丢掉首盘后，伊埃拉先破发，再稳住自己的发球局。吉布森一发进球后的得分率，从首盘百分之七十八，降到第二盘百分之六十。",
+        "第二盘三比二之后，伊埃拉连赢三局，把比赛拖进决胜盘。随后六局，她全部拿下。跨盘连赢九局，逆转就在眼前。",
+        "九个直接发球得分，九次破发机会兑现六次。决胜盘，吉布森一发进球后十二分只拿四分。伊埃拉把压力留给对手，也把胜利留给了自己。",
+        "从盘末的无奈，到赛后的挥手致意，这场逆转，伊埃拉没有把遗憾留到最后。下一轮，她还能继续向前吗？"
+      ],
+      "human_context": {
+        "angle": "同一场比赛从首盘擦网失利到反击获胜。",
+        "facts": [
+          "首盘4-6、第二盘6-2、决胜盘6-0。",
+          "第二盘3-2后连赢最后九局。",
+          "官方全场统计9个Ace、6/9破发。"
+        ],
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches?states=C",
+          "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches/LS012/stats",
+          "https://www.youtube.com/watch?v=x8TR5doPQP8"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 243.2,
+        "end": 249.2,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.16,
+            "end": 5.7,
+            "text": "She's into the quarterfinals in Tokyo at the first time of asking.\n首次出战东京，她就打进了8强。"
+          }
+        ],
+        "crosses_cut": "Original WTA editorial cuts retained; no claim of continuous match time.",
+        "point_end_ok": "Selected complete point ends before the window ends; exact source frames and scoreboard reviewed. No cut in a live rally."
+      },
+      {
+        "title_card": "先丢一盘\n此后连赢9局",
+        "kicker": "逆转的起点",
+        "narration": "先丢一盘，伊埃拉却连赢了最后九局。四比六、六比二、六比零。她在东京逆转吉布森，晋级八强。",
+        "seconds": 11.4
+      },
+      {
+        "title_card": "伊埃拉对阵吉布森\n首盘苦战失守",
+        "kicker": "东京第二轮",
+        "narration": "东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
+        "seconds": 12.4
+      },
+      {
+        "source": "main",
+        "start": 93.32,
+        "end": 124.6,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 14.36,
+            "end": 15.66,
+            "text": "No way!\n不会吧！"
+          },
+          {
+            "at": 16.2,
+            "end": 17.6,
+            "text": "First set.\n第一盘结束。"
+          },
+          {
+            "at": 17.8,
+            "end": 19.2,
+            "text": "How is your luck?\n这运气，真是没办法。"
+          },
+          {
+            "at": 20.96,
+            "end": 23.3,
+            "text": "Well, it's not in for Alexandra Eala.\n伊埃拉没有得到幸运眷顾。"
+          },
+          {
+            "at": 23.35,
+            "end": 26.06,
+            "text": "It's definitely in for Talia Gibson.\n吉布森却得到了。"
+          },
+          {
+            "at": 26.06,
+            "end": 30.86,
+            "text": "What a way to claim the opener.\n她就这样拿下了首盘。"
+          }
+        ],
+        "crosses_cut": "Original WTA editorial cuts retained; no claim of continuous match time.",
+        "point_end_ok": "Selected complete point ends before the window ends; exact source frames and scoreboard reviewed. No cut in a live rally."
+      },
+      {
+        "title_card": "吉布森一发得分率\n78%降到33%",
+        "kicker": "比分背后的变化",
+        "narration": "丢掉首盘后，伊埃拉先破发，再稳住自己的发球局。吉布森一发进球后的得分率，从首盘百分之七十八，降到第二盘百分之六十。",
+        "seconds": 12.5
+      },
+      {
+        "title_card": "第二盘3比2之后\n再没丢掉1局",
+        "kicker": "跨盘连赢九局",
+        "narration": "第二盘三比二之后，伊埃拉连赢三局，把比赛拖进决胜盘。随后六局，她全部拿下。跨盘连赢九局，逆转就在眼前。",
+        "seconds": 11.8
+      },
+      {
+        "source": "main",
+        "start": 236.2,
+        "end": 260.02,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 7.16,
+            "end": 12.7,
+            "text": "She's into the quarterfinals in Tokyo at the first time of asking.\n首次出战东京，她就打进了8强。"
+          },
+          {
+            "at": 14.84,
+            "end": 16.6,
+            "text": "It's her sixth of the year.\n这是她今年第六次晋级8强。"
+          },
+          {
+            "at": 16.6,
+            "end": 20.1,
+            "text": "A stunning year for Alexandra Eala.\n伊埃拉度过了一个出色的赛季。"
+          },
+          {
+            "at": 20.24,
+            "end": 23.78,
+            "text": "Gets better and better on debut in Tokyo.\n首次出战东京，她越打越好。"
+          }
+        ],
+        "crosses_cut": "Original WTA editorial cuts retained; no claim of continuous match time.",
+        "point_end_ok": "Selected complete point ends before the window ends; exact source frames and scoreboard reviewed. No cut in a live rally."
+      },
+      {
+        "source": "main",
+        "start": 260.05,
+        "end": 278.4,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": false,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 2.07,
+            "end": 4.69,
+            "text": "Had to do it the long way round today,\n今天她走了一条艰难的路，"
+          },
+          {
+            "at": 4.69,
+            "end": 11.41,
+            "text": "And lost that opening set on a really rough net cord.\n首盘还输在一次无奈的擦网上。"
+          },
+          {
+            "at": 12.13,
+            "end": 13.91,
+            "text": "But how good was the fightback?\n但这场反击多么出色！"
+          },
+          {
+            "at": 15.57,
+            "end": 18.21,
+            "text": "A performance of real tenacity.\n她展现了真正的韧性。"
+          }
+        ],
+        "crosses_cut": "Original WTA editorial cuts retained; no claim of continuous match time.",
+        "point_end_ok": "Selected complete point ends before the window ends; exact source frames and scoreboard reviewed. No cut in a live rally."
+      },
+      {
+        "stat_card": true,
+        "seconds": 14.0,
+        "narration": "九个直接发球得分，九次破发机会兑现六次。决胜盘，吉布森一发进球后十二分只拿四分。伊埃拉把压力留给对手，也把胜利留给了自己。"
+      },
+      {
+        "title_card": "从首盘遗憾\n走到逆转之后",
+        "kicker": "东京的新一步",
+        "narration": "从盘末的无奈，到赛后的挥手致意，这场逆转，伊埃拉没有把遗憾留到最后。下一轮，她还能继续向前吗？",
+        "seconds": 11.2
+      }
+    ],
+    "stats": {
+      "a": {
+        "aces": 9,
+        "df": 2,
+        "first_in": 54,
+        "first_won": 39,
+        "second_total": 29,
+        "second_won": 14,
+        "bp_conv": 6,
+        "bp_chances": 9,
+        "pts_won": 86,
+        "pts_total": 152,
+        "first_total": 83,
+        "headshot": "assets/players/headshots/wta-330332.jpg",
+        "winners": 33,
+        "ue": 21
+      },
+      "b": {
+        "aces": 5,
+        "df": 3,
+        "first_in": 50,
+        "first_won": 30,
+        "second_total": 19,
+        "second_won": 6,
+        "bp_conv": 2,
+        "bp_chances": 6,
+        "pts_won": 66,
+        "pts_total": 152,
+        "first_total": 69,
+        "headshot": "assets/players/headshots/wta-329393.jpg",
+        "winners": 35,
+        "ue": 47
+      },
+      "tour": "wta",
+      "footer_date": "2026-10-28",
+      "footer_venue": "东京 · 全场"
+    },
+    "preserve_source_audio": true,
+    "scorebox": [
+      90,
+      828,
+      560,
+      982
+    ]
+  }
+}
