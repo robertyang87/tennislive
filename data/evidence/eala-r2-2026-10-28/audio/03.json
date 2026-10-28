@@ -1,0 +1,61 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-x8TR5doPQP8/x8TR5doPQP8.mp4",
+  "source_sha256": "b5bd340ddb3d83640cf6c5052a258a2c203432aebb6cb59097d2e7798d4dc137",
+  "method": "asr_cross_checked",
+  "reviewer": "assistant, dual-ASR and publisher-caption comparison; no human listening claimed",
+  "reviewed_at": "2026-10-28T12:27:07.863645+00:00",
+  "status": "complete",
+  "reviewed_from": 93.32,
+  "reviewed_to": 124.6,
+  "foreground_english": [
+    {
+      "start": 107.68,
+      "end": 108.98,
+      "en": "No way!",
+      "zh": "不会吧！"
+    },
+    {
+      "start": 109.52,
+      "end": 110.92,
+      "en": "First set.",
+      "zh": "第一盘结束。"
+    },
+    {
+      "start": 111.12,
+      "end": 112.52,
+      "en": "How is your luck?",
+      "zh": "这运气，真是没办法。"
+    },
+    {
+      "start": 114.28,
+      "end": 116.62,
+      "en": "Well, it's not in for Alexandra Eala.",
+      "zh": "伊埃拉没有得到幸运眷顾。"
+    },
+    {
+      "start": 116.67,
+      "end": 119.38,
+      "en": "It's definitely in for Talia Gibson.",
+      "zh": "吉布森却得到了。"
+    },
+    {
+      "start": 119.38,
+      "end": 124.18,
+      "en": "What a way to claim the opener.",
+      "zh": "她就这样拿下了首盘。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_sources": [
+    "data/source_asr/x8TR5doPQP8/medium.en.json",
+    "data/source_asr/x8TR5doPQP8/small.en.json",
+    "output/2026-10-28/reel/eala-r2-2026-10-28/captions.txt"
+  ],
+  "normalizations": [
+    "Eala identity normalized from Ayala/Iyala/Allah using official metadata.",
+    "Gibson identity normalized from Gibbs.",
+    "opener normalized from oatlet/oatlook using publisher captions and first-set score graphic.",
+    "First set is the publisher-captioned umpire call, missed by both automatic ASRs."
+  ],
+  "limits": "Automatic transcript comparison and finite source-frame inspection, not human auditory review or proof of every phoneme."
+}
