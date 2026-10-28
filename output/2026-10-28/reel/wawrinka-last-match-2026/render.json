@@ -1,0 +1,130 @@
+{
+  "scoreboard_qc_sha256": "e0641ce2108bf376a7d46170a4e0a44276e94445048f75a787cfd18746566a18",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "a980ff8060b8d9ff06c36544cba924be37a7d038ee3891fb761e0b28bbb86e53",
+    "request_count": 16,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-wawrinka-last-match-2026-a980ff8060b8d9ff",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wawrinka-last-match-2026-a980ff8060b8d9ff/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40612521298"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 230.78,
+  "topbar": {
+    "line1": "2026 ATP500 巴塞尔 首轮",
+    "line2": "莱赫奇卡 7-5 7-6(2) 瓦林卡",
+    "start": 1.2,
+    "end": 231.98
+  },
+  "film_seconds": 236.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.576,
+    "2": 8.688,
+    "3": 3.576,
+    "5": 10.848,
+    "7": 10.848,
+    "8": 11.352,
+    "9": 5.472,
+    "10": 4.536,
+    "13": 10.392,
+    "14": 6.96,
+    "15": 8.616,
+    "17": 7.896,
+    "18": 7.464,
+    "20": 11.256,
+    "22": 10.296
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 10,
+          "named": "瓦林卡",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 15,
+          "named": "瓦林卡",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 19,
+          "named": "莱赫奇卡",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 6,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "891fcf5efdfba5ccec2e153205ac8273551dfad53b7d58de8354cdd3f71cc5e8",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wawrinka-last-match-2026",
+    "received_at": "2026-10-28T01:01:54Z",
+    "artifact_ready_at": "2026-10-28T01:09:50Z",
+    "elapsed_seconds": 476.536,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "71608cb5252e7946c67727023239d47e16bb65688bbf0b4a7d548a272cba0a56",
+    "spec_sha256": "4612151e485522ffcf7fe076f31f4f3f8150f9275f4c83ab7c0bf9ed85ef4e4a",
+    "run_id": "40612521298",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-28T01:04:35Z",
+        "run_id": "40612521298"
+      }
+    ],
+    "render_seconds": 315.536,
+    "pre_render_seconds": 161.0
+  },
+  "film_sha256": "71608cb5252e7946c67727023239d47e16bb65688bbf0b4a7d548a272cba0a56",
+  "film_bytes": 85533170,
+  "qc_attestation_sha256": "282424ba507f5d92fb01ad72e3c677d71a8eb1e078ba77cd45c814e8e8c1b8ee",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-28T01:04:35Z",
+      "run_id": "40612521298"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-28T01:09:53Z",
+      "run_id": "40612521298"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wawrinka-last-match-2026/wawrinka-last-match-2026.mp4",
+  "video_bytes": 85533170
+}
