@@ -20,7 +20,7 @@
 | 14 | 1:04.3 | 片内 64.3 秒 | How do you like that? | 感觉怎么样？ |  |
 | 15 | 1:05.5 | 片内 65.5 秒 | Thank you so much everybody. | 非常感谢大家 |  |
 | 16 | 1:13.1 | 片内 73.1 秒 | Thank you very much and see you | 非常感谢 |  |
-| 17 | 1:19.3 | 片内 79.3 秒 | in the quarters. | 八强见 |  |
+| 17 | 1:19.3 | 片内 79.3 秒 | in the quarters. | 四分之一决赛见 |  |
 | 18 | 1:20.1 | 片内 80.1 秒 | Thank you very much everyone. | 非常感谢大家 |  |
 | 19 | 1:24.7 | 片内 84.7 秒 | Best of luck on your next match too. | 也祝你下场好运 |  |
 | 20 | 1:28.1 | 片内 88.1 秒 | Thank you so much. | 非常感谢 |  |

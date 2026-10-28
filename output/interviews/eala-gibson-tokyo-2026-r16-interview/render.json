@@ -14,8 +14,8 @@
       {
         "role": "takeaway_close",
         "file": "_takeaway_close.mp4",
-        "seconds": 6.7,
-        "peak_db": -8.2
+        "seconds": 7.4,
+        "peak_db": -9.0
       },
       {
         "role": "outro",
@@ -30,45 +30,8 @@
     "transition": "dissolve",
     "dissolve_s": 0.5
   },
-  "film_sha256": "1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
-  "film_seconds": 104.68,
-  "production_sla": {
-    "version": 2,
-    "pipeline": "interview-clip",
-    "slug": "eala-gibson-tokyo-2026-r16-interview",
-    "received_at": "2026-10-28T17:10:55Z",
-    "artifact_ready_at": "2026-10-28T17:52:49Z",
-    "elapsed_seconds": 2514.849,
-    "budget_seconds": 600,
-    "met": false,
-    "film_sha256": "1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
-    "spec_sha256": "c070dda431af4800cb633977a3b0962bf0059ac45b67642471916b7c2a31f96a",
-    "run_id": "40738665245",
-    "stage_events": [
-      {
-        "stage": "preflight",
-        "at": "2026-10-28T17:50:39Z",
-        "run_id": "40738665245"
-      },
-      {
-        "stage": "cover_audit",
-        "at": "2026-10-28T17:51:41Z",
-        "run_id": "40738665245"
-      },
-      {
-        "stage": "asr_verify",
-        "at": "2026-10-28T17:51:46Z",
-        "run_id": "40738665245"
-      },
-      {
-        "stage": "render",
-        "at": "2026-10-28T17:51:47Z",
-        "run_id": "40738665245"
-      }
-    ],
-    "render_seconds": 62.849,
-    "pre_render_seconds": 2452.0
-  },
+  "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+  "film_seconds": 105.4,
   "face_checks": {
     "cover": {
       "status": "ok",
@@ -125,37 +88,118 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-28T17:50:39Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:17:11Z",
+      "run_id": "40752264936"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-28T17:51:41Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:18:18Z",
+      "run_id": "40752264936"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-28T17:51:46Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:18:22Z",
+      "run_id": "40752264936"
     },
     {
       "stage": "render",
-      "at": "2026-10-28T17:51:47Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:18:24Z",
+      "run_id": "40752264936"
     },
     {
       "stage": "qc",
-      "at": "2026-10-28T17:52:51Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:19:34Z",
+      "run_id": "40752264936"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-28T17:52:51Z",
-      "run_id": "40738665245"
+      "at": "2026-10-28T19:19:34Z",
+      "run_id": "40752264936"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-eala-gibson-tokyo-2026-r16-interview/eala-gibson-tokyo-2026-r16-interview.mp4?v=1d4ed57ef225853b",
-  "video_bytes": 19064157,
-  "release_asset_digest": "sha256:1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
-  "qc_attestation_sha256": "d607b9eab1a8028823dfe378b4c0b46ed4ec1e4a70debffc5eace692051b7c2f"
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-eala-gibson-tokyo-2026-r16-interview/eala-gibson-tokyo-2026-r16-interview.mp4?v=17b3dde4a2ff63f9",
+  "video_bytes": 19106668,
+  "release_asset_digest": "sha256:17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+  "qc_attestation_sha256": "7da1fbc6103c6e395aa01aaa2d31130e2120a03e45d961f21a1fdf9ce2e2fc80",
+  "production_sla_history": [
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "eala-gibson-tokyo-2026-r16-interview",
+      "received_at": "2026-10-28T17:10:55Z",
+      "artifact_ready_at": "2026-10-28T17:52:49Z",
+      "elapsed_seconds": 2514.849,
+      "budget_seconds": 600,
+      "met": false,
+      "film_sha256": "1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
+      "spec_sha256": "c070dda431af4800cb633977a3b0962bf0059ac45b67642471916b7c2a31f96a",
+      "run_id": "40738665245",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-28T17:50:39Z",
+          "run_id": "40738665245"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-28T17:51:41Z",
+          "run_id": "40738665245"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-28T17:51:46Z",
+          "run_id": "40738665245"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-28T17:51:47Z",
+          "run_id": "40738665245"
+        }
+      ],
+      "render_seconds": 62.849,
+      "pre_render_seconds": 2452.0
+    }
+  ],
+  "tts_bundle": {
+    "bundle_sha256": "2d702721e7b504f6e80e19eb6f79bb3b74b6133c830b624b663990b1ce242f96",
+    "request_count": 1
+  },
+  "render_inputs_sha256": "cb1a9f9870d80b140ad83a5408d06fbf2bec97ec7936607c93d4b155d7c5ba78",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "interview-clip",
+    "slug": "eala-gibson-tokyo-2026-r16-interview",
+    "received_at": "2026-10-28T19:12:54Z",
+    "artifact_ready_at": "2026-10-28T19:19:33Z",
+    "elapsed_seconds": 399.164,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+    "spec_sha256": "20bf6e00a2b6c109d6cfe22edb41f84df56326ffc990e3db9531c6260845c3b2",
+    "run_id": "40752264936",
+    "stage_events": [
+      {
+        "stage": "preflight",
+        "at": "2026-10-28T19:17:11Z",
+        "run_id": "40752264936"
+      },
+      {
+        "stage": "cover_audit",
+        "at": "2026-10-28T19:18:18Z",
+        "run_id": "40752264936"
+      },
+      {
+        "stage": "asr_verify",
+        "at": "2026-10-28T19:18:22Z",
+        "run_id": "40752264936"
+      },
+      {
+        "stage": "render",
+        "at": "2026-10-28T19:18:24Z",
+        "run_id": "40752264936"
+      }
+    ],
+    "render_seconds": 69.164,
+    "pre_render_seconds": 330.0
+  }
 }
