@@ -5,6 +5,7 @@
     "cobolli-mensik-laver-cup-2026-doubles-interview",
     "davidovichfokina-jodar-shanghai-2026-f-speech",
     "davidovichfokina-zverev-shanghai-2026-sf-interview",
+    "eala-gibson-tokyo-2026-r16-interview",
     "federer-ithf-2026-induction-speech",
     "gauff-bejlek-cincinnati-2026-sf",
     "jodar-medvedev-shanghai-2026-sf-interview",
@@ -57,7 +58,8 @@
     "jodar-medvedev-shanghai-2026-sf-interview": "2026-10-18T07:32:35Z",
     "davidovichfokina-jodar-shanghai-2026-f-speech": "2026-10-18T18:20:50Z",
     "rybakina-fernandez-ningbo-2026-f-speech": "2026-10-25T15:39:05Z",
-    "siniakova-krueger-osaka-2026-f-speech": "2026-10-26T05:57:53Z"
+    "siniakova-krueger-osaka-2026-f-speech": "2026-10-26T05:57:53Z",
+    "eala-gibson-tokyo-2026-r16-interview": "2026-10-28T17:44:58Z"
   },
   "spec_sha256": {
     "federer-ithf-2026-induction-speech": "21a8205779cf377f74f3a6ca1fec07801d9a0e2eaf2a3f55c913e6181c02d961",
@@ -82,20 +84,8 @@
     "jodar-medvedev-shanghai-2026-sf-interview": "ae43a077398e7edc4c9f3047ed05be783f7af60502181aed970a6e3cf8f29281",
     "davidovichfokina-jodar-shanghai-2026-f-speech": "dde6fa1520dff5ed53b106b020f1927116962320e511211b5f0fc1caaa9de482",
     "rybakina-fernandez-ningbo-2026-f-speech": "8836e01a0eb5ec660774bf935ee35437e1e7954142049ecb971c50f6381865a0",
-    "siniakova-krueger-osaka-2026-f-speech": "21c62a9823f93dff96a1f39e1e89d252f61869404bf0a25ae50abbdfc3ce9124"
+    "siniakova-krueger-osaka-2026-f-speech": "21c62a9823f93dff96a1f39e1e89d252f61869404bf0a25ae50abbdfc3ce9124",
+    "eala-gibson-tokyo-2026-r16-interview": "c070dda431af4800cb633977a3b0962bf0059ac45b67642471916b7c2a31f96a"
   },
-  "subs": {
-    "eala-gibson-tokyo-2026-r16-interview": {
-      "at": "2026-10-28T17:10:55Z",
-      "inputs_sha256": "1c975789d49cf89677ba648038aebeb0de08c9663f84919972f3c4c384859f06",
-      "tries": 1
-    }
-  },
-  "subs_red": {
-    "eala-gibson-tokyo-2026-r16-interview": {
-      "since": "2026-10-28T17:30:45Z",
-      "inputs_sha256": "1c975789d49cf89677ba648038aebeb0de08c9663f84919972f3c4c384859f06",
-      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 18.3%，超过闸门 12%。**不出片。** 逐处看 output/interviews/eala-gibson-tokyo-2026-r16-interview/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
-    }
-  }
+  "subs": {}
 }
