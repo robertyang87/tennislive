@@ -14,9 +14,10 @@
     {
       "key": "pushplus:reel:wawrinka-career-story-2026:4da91bc9d8e227ec6f46c829a041c8586e2f82d60f667e17345f8e900927e051",
       "fingerprint": "4da91bc9d8e227ec6f46c829a041c8586e2f82d60f667e17345f8e900927e051",
-      "status": "uncertain",
+      "status": "not_sent",
       "at": "2026-10-28T04:49:30Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40634447647"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40634447647",
+      "_not_sent_evidence": "run 40634447647 在 push_reel.py 的 require_publish（waiting_voice_quality_review: Voice approval is stale）处退出，早于 PushPlus 请求，无流水号、无回执。原因是质检后提交的 render.json 被本地 check_reel_landed 改写、哈希与配音审查绑定的对不上；已从渲染提交 8b9a50d15 恢复 render.json/qc_attestation.json。账号所有者 2026-10-28 追问「推送微信了么」、要求加速，按 andreeva-finals-2026 先例改记后重发。"
     }
   ]
 }
