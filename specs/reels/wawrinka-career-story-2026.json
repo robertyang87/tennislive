@@ -23,10 +23,11 @@
       "focus": 0.5,
       "focus_y": 0.5,
       "zoom": 1.0,
-      "_credit": "三座大满贯官方捧杯照拼图（版式参考 medvedev-24-titles-23-cities；账号所有者 2026-10-28 要求「都用捧杯照片、人脸和捧杯完全出现、不要视频抽帧」）：左上 澳网官网 ausopen.com/sites/default/files/Stan%20Wawrinka%20AO%202014%20champion.jpg（文章 ao-journeys-wawrinka-hits-new-heights，图注「Stan Wawrinka holds the trophy after winning Australian Open 2014」，1024×683）；右上 法网官网 FFT 摄影 Corinne Dubreuil，20150607_RG_CD_7194「Stan Wawrinka men's singles final 2015」（rolandgarros.com 文章 rg2025-ten-years-on-wawrinka-shows-his-style，3005×2000）；下 美网官方图片接口 USTA120448_20160911_DSC21076「September 11, 2016 - 2016 US Open Men's Singles Champion Stan Wawrinka」（photo-assets.usopen.org f_ 档，1280×720 为该站上限）。拼图脚本 scratchpad bin/tri_cover3.py，成图 1800×2400：顶部 236px 深色台头带、中间 1296–1690 深色钩子带（钩子不压任何照片），美网一格按 y124–664 取窗、两侧各约 50px 同图模糊延展。",
-      "_portrait_why": "账号所有者 2026-10-28：原巴塞尔谢幕照与赛场之上重复，要三座大满贯捧杯照拼封面、人脸和奖杯完全入画、只用照片不用抽帧。三张都是赛事官方当晚/当天实拍：2014 澳网诺曼·布鲁克斯杯、2015 法网火枪手杯、2016 美网奖杯；三张均正脸睁眼、奖杯从杯顶到底座完整。布局按钩子带的固定位置倒推：三张照片的脸都在画面上部，铺满会被台头压住，所以台头、钩子各占一条深色带，照片不被任何文字遮挡。",
+      "_credit": "三座大满贯官方捧杯照拼图（版式参考 medvedev-24-titles-23-cities；账号所有者 2026-10-28 要求「都用捧杯照片、人脸和捧杯完全出现、不要视频抽帧」）：左上 澳网官网 ausopen.com/sites/default/files/Stan%20Wawrinka%20AO%202014%20champion.jpg（文章 ao-journeys-wawrinka-hits-new-heights，图注「Stan Wawrinka holds the trophy after winning Australian Open 2014」，1024×683）；右上 法网官网 FFT 摄影 Corinne Dubreuil，20150607_RG_CD_7194「Stan Wawrinka men's singles final 2015」（rolandgarros.com 文章 rg2025-ten-years-on-wawrinka-shows-his-style，3005×2000）；下 美网官方图片接口 USTA120448_20160911_DSC21076「September 11, 2016 - 2016 US Open Men's Singles Champion Stan Wawrinka」（photo-assets.usopen.org f_ 档，1280×720 为该站上限）。拼图脚本 scratchpad bin/tri_cover4.py，成图 1800×2400：按年份上下三格（澳网 0–652、法网 666–1300、美网 1700–2400），每格按「头顶到奖杯底座」取窗缩到格高、两侧以同图压暗模糊补满；1300–1700 深色带放居中钩子（hook_align=center），照片上只留英文城市年份、不放中文。",
+      "_portrait_why": "账号所有者 2026-10-28：原巴塞尔谢幕照与赛场之上重复，要三座大满贯捧杯照拼封面、人脸和奖杯完全入画、只用照片不用抽帧。三张都是赛事官方当晚/当天实拍：2014 澳网诺曼·布鲁克斯杯、2015 法网火枪手杯、2016 美网奖杯；三张均正脸睁眼、奖杯从杯顶到底座完整。账号所有者同日追加：赛场上的捧杯画面、按顺序上下三格、图上不放中文、钩子居中。钩子在模板里的纵向位置是固定的，所以法网与美网之间留一条深色带放钩子，三张照片都不被文字遮挡。",
       "verified_date": "2026-10-28"
-    }
+    },
+    "hook_align": "center"
   },
   "push": {
     "auto": true,
