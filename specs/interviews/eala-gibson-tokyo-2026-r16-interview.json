@@ -39,7 +39,8 @@
  },
  "opening": {
   "kind": "match_end",
-  "why": "源片 0s 起即为最后一分（伊埃拉接发站位→赛点兑现）与网前握手，17s 接场内采访，比赛结尾与采访同源同文件，正文窗口自 0s 起即满足 match_end 冷开场，不另借集锦。"
+  "lead_in": 16.0,
+  "why": "源片 0s 起即最后一分＋庆祝＋网前握手（0–16s）；主持人第一问为场内 PA 音频、混在欢呼声里，本地 ASR 未能可靠捕获（约 10–15s），伊埃拉第一答约 16.0s 起、约 22s 起话筒特写。往前多收 16.0 秒即到采访第一答，比赛结尾与采访同源同文件，不另借集锦。第一问在写中文阶段按 Tennis365 全文补行。"
  },
  "push": {
   "auto": true,
@@ -84,5 +85,8 @@
   }
  },
  "url": "https://github.com/robertyang87/tennislive/releases/download/src-eala-tokyo-20261028/eala-tokyo-r16-interview-fbcopy.mp4",
- "winner": "伊埃拉"
+ "winner": "伊埃拉",
+ "asr_model": "small",
+ "whisper_model": "medium.en",
+ "_subs_fix_note": "2026-10-29 所有者批准按 subs 首跑日志修法补齐：首份转写由本地 faster-whisper small 跑出并以 cap_asr.json3 落 output/interviews/eala-gibson-tokyo-2026-r16-interview/（commit d24f84c）；asr_model=small 如实标注首份模型，whisper_model=medium.en 供 verify_transcript 换模型交叉校验；opening.lead_in=16.0 按窗口起点到采访第一答计。"
 }
