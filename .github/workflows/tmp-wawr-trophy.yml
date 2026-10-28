@@ -1,5 +1,8 @@
 name: tmp-wawr-trophy
-on: workflow_dispatch
+on:
+  push:
+    branches: [claude/wawrinka-career-story]
+    paths: [.github/workflows/tmp-wawr-trophy.yml, tools/wawr_trophy_probe.py]
 permissions:
   contents: write
 jobs:
@@ -9,9 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: tools/tmp
+          sparse-checkout: tools
       - run: pip install -q requests
-      - run: python tools/tmp/wawr_trophy_probe.py out
+      - run: python tools/wawr_trophy_probe.py out
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
