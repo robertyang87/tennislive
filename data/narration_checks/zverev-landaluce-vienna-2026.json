@@ -1,6 +1,6 @@
 {
   "slug": "zverev-landaluce-vienna-2026",
-  "checked_at": "2026-10-28T03:55:15Z",
+  "checked_at": "2026-10-28T04:31:38Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,15 +10,15 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "1bf93be2af5a3a2b": {
+    "7db094d2dbb2dcaa": {
       "segment": 2,
-      "spoken": 4.656,
-      "picture": 7.0
+      "spoken": 7.848,
+      "picture": 11.0
     },
     "9ea9c51fa86cc8d1": {
       "segment": 3,
       "spoken": 8.472,
-      "picture": 10.4
+      "picture": 10.15
     },
     "103b2571817edb7b": {
       "segment": 4,
@@ -35,9 +35,9 @@
       "spoken": 7.344,
       "picture": 12.0
     },
-    "257e28d2d6b4b792": {
+    "621ba37994bd0ac4": {
       "segment": 8,
-      "spoken": 8.4,
+      "spoken": 7.968,
       "picture": 11.0
     },
     "0dd6bb79af804101": {
@@ -48,16 +48,12 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "d27060391a9a818a1f1acc32707e81f7deb5246f32f939f10af9dc6dadc3c3bf",
+    "bundle_sha256": "1a35de82977866fdb49c607331e3244259ed7b463bd475145443dbf72a983c26",
     "request_count": 8,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true,
-    "transport": "repository",
-    "repository_commit": "4aeedb862d7a4e633d8a1988c3e2580e68c136bd",
-    "file_name": "tts_bundle.zip",
-    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/4aeedb862d7a4e633d8a1988c3e2580e68c136bd/assets/tts-bundles/zverev-landaluce-vienna-2026/d27060391a9a818a1f1acc32707e81f7deb5246f32f939f10af9dc6dadc3c3bf/tts_bundle.zip"
+    "audio_decoding_verified": true
   }
 }
