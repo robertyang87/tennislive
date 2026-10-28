@@ -6558,8 +6558,7 @@ def _render_capturing_voice(spec: dict, ass: Path, outdir: Path) -> Path:
     return out
 
 
-def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path,
-                        film: Path) -> None:
+def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path) -> None:
     """把这一版的实际口播封起来：库存、渲染输入清单、自动听审放行。
 
     这条线原来出完片就结束了——产物里没有 `render_inputs.json`、没有配音
@@ -6602,11 +6601,20 @@ def _seal_voice_quality(outdir: Path, spec_path: Path, bundle_path: Path,
                           "request_count": request_count}
     render_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                            encoding="utf-8")
+    # 成片本体这会儿已经不在出片目录里了：发 Release 那一步传完就删掉
+    # 本地那份（成片不进 git）。清单要的字节数从 `render.json` 拿——
+    # Release 那步把 asset 大小写成了 `video_bytes`，哈希本来就在里面。
+    film_bytes = data.get("video_bytes") or data.get("film_bytes")
+    if not data.get("film_sha256") or not isinstance(film_bytes, int) \
+            or film_bytes <= 0:
+        raise SystemExit(
+            "[配音封印] render.json 里没有成片哈希/字节数，封印没法做"
+            "——这一档必须排在「成片发到 Release」之后跑")
     inventory_path = g.capture_inventory(outdir, bundle=bundle_path)
     manifest = {
         "lane": "interviews",
         "film_sha256": data.get("film_sha256"),
-        "film_bytes": film.stat().st_size,
+        "film_bytes": film_bytes,
         "spec_sha256": hashlib.sha256(spec_path.read_bytes()).hexdigest(),
         "artifacts": {g.INVENTORY: hashlib.sha256(
             inventory_path.read_bytes()).hexdigest()},
@@ -6995,7 +7003,6 @@ def main() -> int:
         # 和推送那一步读到的对得上。听审没过在这儿红，整趟 render
         # 就不会把没封印的产物提交进仓库。
         bundle_path = outdir / "tts_bundle.zip"
-        film = outdir / f"{spec['slug']}.mp4"
         cards = spec.get("takeaway") or {}
         if not (cards.get("open") or cards.get("close")):
             print("[配音封印] 这条 spec 没有解读卡口播，无需封印")
@@ -7005,9 +7012,7 @@ def main() -> int:
                   "或这一版不是这趟新出的片），跳过封印"
                   "——推送时会停在配音质量闸")
             return 0
-        if not film.is_file():
-            raise SystemExit(f"[配音封印] 成片不在出片目录里：{film}")
-        _seal_voice_quality(outdir, Path(args.spec), bundle_path, film)
+        _seal_voice_quality(outdir, Path(args.spec), bundle_path)
         return 0
 
     if args.stage == "render":
