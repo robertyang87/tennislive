@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "a1dfedfe991adb4001768a1901477230a7c02653dc844f757a8b6c3c23081e74",
-    "render_inputs_sha256": "11eef26b4d71127c7784d36b4c4b507eabe6c87ed7afd584ab4891d9c712db77",
-    "spec_sha256": "a367d18b5752ad7afdae7c8386f1656a8f17a77fa47505c4f74d0d1449894df0",
-    "film_sha256": "dc6713b77b5c68c9ac7e0058df5e8b2421df064c5881f4490fa01f7659e478a5",
+    "render_sha256": "f309b1bbf06dd8742dfe55f361daef5efa007e4cd1ab4d972c019c5e1240737e",
+    "render_inputs_sha256": "b0a4504ebe2ce93364540c43b88eb290c541923ac52f1ac7cf3000ca04512107",
+    "spec_sha256": "e318075d1fb02e3e7967e9900cd27d4af788838fc6737248c78c41d8c7b1439b",
+    "film_sha256": "4da91bc9d8e227ec6f46c829a041c8586e2f82d60f667e17345f8e900927e051",
     "inventory_sha256": "6bd95645877190b9ed29e3b4b61066049328b1daeb6ba5bec6dc3ee75533f052"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-28T00:48:44+00:00",
+  "reviewed_at": "2026-10-28T04:34:59+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -342,7 +342,7 @@
         "substituted": 1,
         "sub_ratio": 0.056,
         "longest_deletion": 0,
-        "transcript": "28岁财营大满冠,41岁在家乡邂逅。"
+        "transcript": "28岁才盈大满冠,41岁在家乡邂墟。"
       },
       "polyphones": [],
       "pauses": {
@@ -467,10 +467,10 @@
         "ref_syllables": 56,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 2,
+        "sub_ratio": 0.036,
         "longest_deletion": 0,
-        "transcript": "那年11月,戴维斯卑决赛在法国里尔。他先拿下首场单打,又和费德勒赢下双打。最后一天,费德勒锁定胜局,瑞士第一次捧起了戴维斯卑。"
+        "transcript": "那年11月,戴维斯贝决赛在法国里尔。他先拿下首场单打,又和贝德勒赢下双打。最后一天,贝德勒锁定胜局,瑞士第一次捧起了戴维斯贝。"
       },
       "polyphones": [],
       "pauses": {
@@ -502,7 +502,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2015年罚网四分之一决赛,他直落三盘赢了费德勒。决赛又是世界第一德约,那一年德约拿了另外三个大满冠,唯独这一个被他拿走。"
+        "transcript": "2015年罚网四分之一决赛,他直落三盘,赢了费德勒。决赛又是世界第一德约,那一年德约拿了另外三个大满冠,唯独这一个被他拿走。"
       },
       "polyphones": [
         {
@@ -564,7 +564,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "8月31日,眉网手轮,他又输给了贝雷蒂尼,这是他最后一场大满冠比赛。"
+        "transcript": "8月31日,眉网手轮,他又输给了贝雷蒂尼。这是他最后一场大满冠比赛。"
       },
       "polyphones": [],
       "pauses": {
@@ -641,7 +641,7 @@
         "substituted": 1,
         "sub_ratio": 0.014,
         "longest_deletion": 0,
-        "transcript": "6月30日,温网手伦,他和贝雷蒂尼熬占4小时20分钟。四盘,全都打击了抢7。第二盘,他握有6个盘点,抢76比18,还是输了。温网破例,给了输球的他,以此厂商采访。"
+        "transcript": "6月30日,温王手伦,他和贝雷蒂尼熬占4小时20分钟。四盘,全都打击了抢7。第二盘,他握有6个盘点,抢76比18,还是输了。温王破例,给了输球的他,以此场上采访。"
       },
       "polyphones": [
         {
@@ -727,7 +727,7 @@
         "substituted": 1,
         "sub_ratio": 0.019,
         "longest_deletion": 1,
-        "transcript": "2026年,最后一个赛季。40岁的他,拿外卡打击澳网第三轮,是1978年以来的敌人。输球之后,他对看台说了这样几句话。"
+        "transcript": "2026年 最后一个赛季,40岁的他拿外卡打击澳网第三轮,是1978年以来的低人。输球之后,他对看台说了这样几句话。"
       },
       "polyphones": [],
       "pauses": {
@@ -759,7 +759,7 @@
         "substituted": 1,
         "sub_ratio": 0.034,
         "longest_deletion": 0,
-        "transcript": "三次大网冠决赛,三个世界第一,他一场没输。来得晚的巔峰,一样是巔峰。"
+        "transcript": "三次大网冠决赛,三个世界第一,他一场没输。来得晚的巅峰,一样是巅峰。"
       },
       "polyphones": [
         {
@@ -814,7 +814,7 @@
         "substituted": 1,
         "sub_ratio": 0.043,
         "longest_deletion": 0,
-        "transcript": "最后,他绕场一朝,手机灯光亮起来,向给他点了一场星海。"
+        "transcript": "最后他绕场一朝,手机灯光亮起来向给他点了一场星海。"
       },
       "polyphones": [],
       "pauses": {
@@ -878,7 +878,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第二天晚上,同一块场地,他打了职业生涯的最后一场比赛。5比7、6比7,他输给了8号种子,莱赫奇卡。全场的掌声,都给了他。"
+        "transcript": "第二天晚上,同一块场地,他打了职业生涯的最后一场比赛。5比7,6比7,他输给了8号种子,莱赫奇卡。全场的掌声,都给了他。"
       },
       "polyphones": [
         {
@@ -986,7 +986,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "试过、拜过。再试、再拜、拜得更好。三座大满罐之后,他在家乡说了再见。你最记得他的哪一场。"
+        "transcript": "是过、败过。再是、再败、败得更好。三座大满罐之后,他在家乡说了再见。你最记得他的哪一场。"
       },
       "polyphones": [
         {
@@ -1182,7 +1182,7 @@
         "substituted": 1,
         "sub_ratio": 0.019,
         "longest_deletion": 0,
-        "transcript": "五小时两分钟,决胜盘十比十二,他输了。再后他却说,这是他打过最好的一场球。他的左臂上,闻着贝克特的一句话,再使,再败,败得更好。"
+        "transcript": "五小时两分钟,决胜盘十比十二,他输了。再后他却说,这是他打过最好的一场球。他的左臂上,闻着贝克特的一句话,再是,再败,败得更好。"
       },
       "polyphones": [
         {
@@ -1260,7 +1260,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他又爬了回来。2019年罚网,34岁的他和20岁的西西帕斯打了5小时09分钟。"
+        "transcript": "他又爬了回来,2019年罚网,34岁的他和20岁的西西帕斯打了5小时09分钟。"
       },
       "polyphones": [],
       "pauses": {
@@ -1292,7 +1292,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "5月、罗兰、加洛斯为他办了告别仪式。他一次次抬手擦眼泪,看台上的人全站了起来,掌声很久都没有停。"
+        "transcript": "5月,罗兰、加洛斯为他办了告别仪式。他一次次抬手擦眼泪,看台上的人全站了起来,掌声很久都没有停。"
       },
       "polyphones": [],
       "pauses": {
