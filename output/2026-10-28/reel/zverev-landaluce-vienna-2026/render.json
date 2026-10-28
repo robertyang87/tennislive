@@ -1,0 +1,108 @@
+{
+  "scoreboard_qc_sha256": "5860d1a4b7b249c7bf379cf1de3d723670a77d53851672f87881070a2d5d4924",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "1a35de82977866fdb49c607331e3244259ed7b463bd475145443dbf72a983c26",
+    "request_count": 8,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-zverev-landaluce-vienna-2026-1a35de82977866fd",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zverev-landaluce-vienna-2026-1a35de82977866fd/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40633743527"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 91.06,
+  "topbar": {
+    "line1": "2026 ATP500 维也纳 首轮",
+    "line2": "兹维列夫 7-5 3-6 7-6(11) 兰达卢塞",
+    "start": 1.2,
+    "end": 92.26
+  },
+  "film_seconds": 96.84,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 7.848,
+    "2": 8.472,
+    "3": 5.976,
+    "4": 7.488,
+    "6": 7.344,
+    "7": 7.968,
+    "9": 6.384
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "兹维列夫",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 2,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "2e89da3dac18116158c6d48819b46271b03b8b8bdc766cb66e18988b269c07c5",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zverev-landaluce-vienna-2026",
+    "received_at": "2026-10-28T04:41:39Z",
+    "artifact_ready_at": "2026-10-28T04:46:00Z",
+    "elapsed_seconds": 261.755,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "800d666e34f0176488162e5c5d90ddc12eda664b8158629091034d8560700570",
+    "spec_sha256": "3c853832a2fb9a2736d44f1b6ab85423461830e8499873d76290169de558c3a7",
+    "request_received_at": "2026-10-28T03:13:49.977349+00:00",
+    "request_to_artifact_seconds": 5530.778,
+    "run_id": "40633743527",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-28T04:44:29Z",
+        "run_id": "40633743527"
+      }
+    ],
+    "render_seconds": 91.755,
+    "pre_render_seconds": 170.0
+  },
+  "film_sha256": "800d666e34f0176488162e5c5d90ddc12eda664b8158629091034d8560700570",
+  "film_bytes": 18243692,
+  "qc_attestation_sha256": "ce3f297dc0341264e7cee527a454151c2fc5f30e11ab4449b12987f1758e0560",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-28T04:44:29Z",
+      "run_id": "40633743527"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-28T04:46:04Z",
+      "run_id": "40633743527"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-landaluce-vienna-2026/zverev-landaluce-vienna-2026.mp4",
+  "video_bytes": 18243692
+}

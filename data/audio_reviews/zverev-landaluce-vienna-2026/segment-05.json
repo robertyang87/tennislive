@@ -1,0 +1,29 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-9X0BYNTegMU/9X0BYNTegMU.mp4",
+  "original_source_url": "https://youtu.be/9X0BYNTegMU",
+  "source_sha256": "5373947466eb9368d8779465b4b9b25872ec2928a1f2b6b54d52ee505e24e2d7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: multi-model transcript/VAD cross-check; no human listening claimed",
+  "reviewed_at": "2026-10-28T03:56:03.544500+00:00",
+  "status": "complete",
+  "reviewed_from": 102.5,
+  "reviewed_to": 105.95,
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 103.16,
+      "end": 105.9,
+      "en": "Oh, he's made it, I think.",
+      "zh": "噢，他好像打进了。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "evidence_reason": "small.en、medium.en、large-v3-turbo、large-v3四档的完整词序一致；small/turbo词尾104.64，medium词尾105.9，完整选窗102.5–105.95及字幕覆盖全部差异范围，不拆句。",
+  "evidence_paths": [
+    "data/evidence/zverev-landaluce-vienna-2026/source-asr-small.en.json",
+    "data/evidence/zverev-landaluce-vienna-2026/source-asr-medium.en.json",
+    "data/evidence/zverev-landaluce-vienna-2026/reselected-asr-large-v3.json",
+    "data/evidence/zverev-landaluce-vienna-2026/ending-vad.json"
+  ],
+  "transition_tail_reviewed": true
+}

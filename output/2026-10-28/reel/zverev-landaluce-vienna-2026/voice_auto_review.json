@@ -1,0 +1,457 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "905cfb4e506fedb00ed8d9ab54809c7024fcd9448c1dabaa598336dafb904b4b",
+    "render_inputs_sha256": "2e89da3dac18116158c6d48819b46271b03b8b8bdc766cb66e18988b269c07c5",
+    "spec_sha256": "3c853832a2fb9a2736d44f1b6ab85423461830e8499873d76290169de558c3a7",
+    "film_sha256": "800d666e34f0176488162e5c5d90ddc12eda664b8158629091034d8560700570",
+    "inventory_sha256": "e6d6c7a478ff0a54a7e26f80b3dc4f1409bbfcc048c2a4a9a4a24e7dcc3140ec"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-28T04:46:51+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:06ce089a43508d2ef8d26917b6af236b37cf97bad5e76388081707833dbc4f7b",
+      "audio_sha256": "d7a06bc865861024f7670f1057078cb05bdcaeca4e3ad4a85f0e5944b6addf88",
+      "pass": true,
+      "result_of": "bundle:06ce089a43508d2ef8d26917b6af236b37cf97bad5e76388081707833dbc4f7b"
+    },
+    {
+      "id": "bundle:6337925435998620fa06b66038b1c36a1f2335d2b1ba7d41840ac31cfc0abec7",
+      "audio_sha256": "f1f384f8f671cfe13acb19ba81815bb74243ee3411c1704006b00a06b33a1ab0",
+      "pass": true,
+      "result_of": "bundle:6337925435998620fa06b66038b1c36a1f2335d2b1ba7d41840ac31cfc0abec7"
+    },
+    {
+      "id": "bundle:823324106f7e81a1d22e7417ec2a3a21ad1852086b0cc3170e7385c39664e631",
+      "audio_sha256": "715d4aa0c31fb83ca82d89caf142d3134d2910c8e42171ce2e4bade5d637b41e",
+      "pass": true,
+      "result_of": "bundle:823324106f7e81a1d22e7417ec2a3a21ad1852086b0cc3170e7385c39664e631"
+    },
+    {
+      "id": "bundle:8e839ed159903607f4980289add673a5c4a896642df8063a610fb1e430815613",
+      "audio_sha256": "b14cd8cd44be8b2c62188c8f6e4e6a6802f2271774b8918b0ff23e1d1af7bfc0",
+      "pass": true,
+      "result_of": "bundle:8e839ed159903607f4980289add673a5c4a896642df8063a610fb1e430815613"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "2da4563fc2ebc16f6e78e5ef2c70246873fd3060951ec2e2831ff3f8fc8f6ea2",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c1ded471fa94368c57e351d3075f6162ea1ec458dd92f6881c13010846017aac",
+      "audio_sha256": "5bc29cdf8104d394d4c582c7db95a457af79a964893e316ef70cf9e031ff0a36",
+      "pass": true,
+      "result_of": "bundle:c1ded471fa94368c57e351d3075f6162ea1ec458dd92f6881c13010846017aac"
+    },
+    {
+      "id": "bundle:e43093aa32c257c1af8103c6a0a8b5e21b0e24a41ad6ed9b2f566df05384af1d",
+      "audio_sha256": "e1825e96dc3d56c28e41bed15ad9eed3dfbb9cad75a6162f81bfde5561017bc8",
+      "pass": true,
+      "result_of": "bundle:e43093aa32c257c1af8103c6a0a8b5e21b0e24a41ad6ed9b2f566df05384af1d"
+    },
+    {
+      "id": "bundle:fcd1082d6091b2902bc0661baab2f97b0ad086eac082aa976ff8f5944a9a7797",
+      "audio_sha256": "d32bae58edab21a2f3aba456641e63dc97d2496f354f28c97082606d4009c8d6",
+      "pass": true,
+      "result_of": "bundle:fcd1082d6091b2902bc0661baab2f97b0ad086eac082aa976ff8f5944a9a7797"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "b14cd8cd44be8b2c62188c8f6e4e6a6802f2271774b8918b0ff23e1d1af7bfc0",
+      "pass": true,
+      "result_of": "bundle:8e839ed159903607f4980289add673a5c4a896642df8063a610fb1e430815613"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "d7a06bc865861024f7670f1057078cb05bdcaeca4e3ad4a85f0e5944b6addf88",
+      "pass": true,
+      "result_of": "bundle:06ce089a43508d2ef8d26917b6af236b37cf97bad5e76388081707833dbc4f7b"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "f1f384f8f671cfe13acb19ba81815bb74243ee3411c1704006b00a06b33a1ab0",
+      "pass": true,
+      "result_of": "bundle:6337925435998620fa06b66038b1c36a1f2335d2b1ba7d41840ac31cfc0abec7"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "5bc29cdf8104d394d4c582c7db95a457af79a964893e316ef70cf9e031ff0a36",
+      "pass": true,
+      "result_of": "bundle:c1ded471fa94368c57e351d3075f6162ea1ec458dd92f6881c13010846017aac"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "d32bae58edab21a2f3aba456641e63dc97d2496f354f28c97082606d4009c8d6",
+      "pass": true,
+      "result_of": "bundle:fcd1082d6091b2902bc0661baab2f97b0ad086eac082aa976ff8f5944a9a7797"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "715d4aa0c31fb83ca82d89caf142d3134d2910c8e42171ce2e4bade5d637b41e",
+      "pass": true,
+      "result_of": "bundle:823324106f7e81a1d22e7417ec2a3a21ad1852086b0cc3170e7385c39664e631"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "e1825e96dc3d56c28e41bed15ad9eed3dfbb9cad75a6162f81bfde5561017bc8",
+      "pass": true,
+      "result_of": "bundle:e43093aa32c257c1af8103c6a0a8b5e21b0e24a41ad6ed9b2f566df05384af1d"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "2da4563fc2ebc16f6e78e5ef2c70246873fd3060951ec2e2831ff3f8fc8f6ea2",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:06ce089a43508d2ef8d26917b6af236b37cf97bad5e76388081707833dbc4f7b",
+      "text": "首盘，兹维列夫先破发，又被追平。直到五比五之后，他再次破发，七比五先下一盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘,自为列夫先破发,诱惑被追平。直到5比5之后,他再次破发7比5先下一盘。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.594,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 兹维列夫 ｜ 先 ｜ 破发 ｜ 又 ｜ 被 ｜ 追 ｜ 平 ｜ 直到 ｜ 五比五 ｜ 之后 ｜ 他 ｜ 再次 ｜ 破发 ｜ 七比五 ｜ 先 ｜ 下 ｜ 一 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:6337925435998620fa06b66038b1c36a1f2335d2b1ba7d41840ac31cfc0abec7",
+      "text": "第二盘，兰达卢塞先拿下对手的发球局，二比零领先，六比三扳平。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘,兰达卢塞先拿下对手的发球局,2比0领先,6比3颁平。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.106,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 兰达卢塞 ｜ 先 ｜ 拿下 ｜ 对手 ｜ 的 ｜ 发球 ｜ 局 ｜ 二比零 ｜ 领先 ｜ 六比三 ｜ 扳 ｜ 平"
+      }
+    },
+    {
+      "id": "bundle:823324106f7e81a1d22e7417ec2a3a21ad1852086b0cc3170e7385c39664e631",
+      "text": "制胜分四十一比三十五，非受迫失误二十九比四十一。赛点上，兰达卢塞正手接发出界。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "知生分四十一比三十五,非受迫失误二十九比四十一。赛点上,兰达卢塞正手揭发出解。"
+      },
+      "polyphones": [
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发出",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.087,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "制胜 ｜ 分 ｜ 四十一 ｜ 比 ｜ 三十五 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 二十九比 ｜ 四十一 ｜ 赛点 ｜ 上 ｜ 兰达卢塞 ｜ 正手 ｜ 接 ｜ 发 ｜ 出界"
+      }
+    },
+    {
+      "id": "bundle:8e839ed159903607f4980289add673a5c4a896642df8063a610fb1e430815613",
+      "text": "四次救回赛点，兹维列夫过关了。北京时间十月二十八日凌晨，维也纳公开赛首轮。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四次就回赛点,自为列夫过关了。北京时间10月28日凌晨,维也纳公开赛首轮。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.969,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四次 ｜ 救 ｜ 回 ｜ 赛点 ｜ 兹维列夫 ｜ 过关 ｜ 了 ｜ 北京时间 ｜ 十月二十八日 ｜ 凌晨 ｜ 维也纳 ｜ 公开赛 ｜ 首轮"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c1ded471fa94368c57e351d3075f6162ea1ec458dd92f6881c13010846017aac",
+      "text": "决胜盘四比四，底线相持之后，兹维列夫来到网前。兰达卢塞从底线继续反击。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "爵圣盘四比四,底线相持之后,自为列夫来到往前。兰达卢塞从底线继续反击。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.592,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 四比四 ｜ 底线 ｜ 相持 ｜ 之后 ｜ 兹维列夫 ｜ 来到 ｜ 网 ｜ 前 ｜ 兰达卢塞 ｜ 从 ｜ 底线 ｜ 继续 ｜ 反击"
+      }
+    },
+    {
+      "id": "bundle:e43093aa32c257c1af8103c6a0a8b5e21b0e24a41ad6ed9b2f566df05384af1d",
+      "text": "四个赛点都救回来了。下一轮，他能更早抓住结束比赛的机会吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四个赛点都就回来了,下一轮,他能更早抓住结束比赛的机会吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.519,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四个 ｜ 赛点 ｜ 都 ｜ 救 ｜ 回来 ｜ 了 ｜ 下 ｜ 一 ｜ 轮 ｜ 他 ｜ 能 ｜ 更 ｜ 早 ｜ 抓住 ｜ 结束 ｜ 比赛 ｜ 的 ｜ 机会 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:fcd1082d6091b2902bc0661baab2f97b0ad086eac082aa976ff8f5944a9a7797",
+      "text": "决胜盘，他先错过两个赛点。抢七又救回四个赛点，最后一次靠发球直接得分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决胜盘﹑他先错过两个赛点。抢期又就回四个赛点﹑最后一次靠发球直接得分。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 32,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.462,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 他 ｜ 先 ｜ 错过 ｜ 两个 ｜ 赛点 ｜ 抢七 ｜ 又 ｜ 救 ｜ 回 ｜ 四个 ｜ 赛点 ｜ 最后一次 ｜ 靠 ｜ 发球 ｜ 直接 ｜ 得分"
+      }
+    }
+  ]
+}
