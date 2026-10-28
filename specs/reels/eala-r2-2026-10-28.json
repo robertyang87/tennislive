@@ -44,7 +44,8 @@
     ],
     "date": "2026-10-28",
     "duration": "01:53:37",
-    "_match_day_why": "User supplied this exact official WTA source and requested Eala second round; source metadata and score graphics confirm Tokyo second round on 2026-10-28."
+    "_match_day_why": "User supplied this exact official WTA source and requested Eala second round; source metadata and score graphics confirm Tokyo second round on 2026-10-28.",
+    "_time_period_why": "Official WTA MatchTimeStamp 09:35 UTC and point-by-point first completed point 09:54:50 UTC both fall in Beijing late afternoon (17:35-17:54); use only 傍晚, not an invented exact first-serve minute."
   },
   "cover": {
     "matchup": [
@@ -106,7 +107,7 @@
     ],
     "narration": [
       "先丢一盘，伊埃拉却连赢了最后九局。四比六、六比二、六比零。她在东京逆转吉布森，晋级八强。",
-      "东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
+      "北京时间十月二十八日傍晚，东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
       "丢掉首盘后，伊埃拉先破发，再稳住自己的发球局。吉布森一发进球后的得分率，从首盘百分之七十八，降到第二盘百分之六十。",
       "第二盘三比二之后，伊埃拉连赢三局，把比赛拖进决胜盘。随后六局，她全部拿下。跨盘连赢九局，逆转就在眼前。",
       "九个直接发球得分，九次破发机会兑现六次。决胜盘，吉布森一发进球后十二分只拿四分。伊埃拉把压力留给对手，也把胜利留给了自己。",
@@ -137,7 +138,8 @@
     "score": "4-6 6-2 6-0",
     "event": "WTA500 东京 第二轮",
     "summary": "伊埃拉连赢9局逆转",
-    "lead": "首盘4-6落后，伊埃拉在第二盘3-2后连赢最后九局，以4-6、6-2、6-0逆转吉布森，晋级东京8强。盘末擦网、反击过程与完整赛点，都在这期赛场之上。"
+    "lead": "首盘4-6落后，伊埃拉在第二盘3-2后连赢最后九局，以4-6、6-2、6-0逆转吉布森，晋级东京8强。盘末擦网、反击过程与完整赛点，都在这期赛场之上。",
+    "_no_auto_why": "Branch rendering uses push=false. After current-head CI and actual-film QC pass, merge into main and explicitly dispatch match-reel mode=push for this same verified film; no WeChat before merge."
   },
   "segments": [
     {
@@ -172,8 +174,8 @@
     {
       "title_card": "伊埃拉对阵吉布森\n首盘苦战失守",
       "kicker": "东京第二轮",
-      "narration": "东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
-      "seconds": 12.4
+      "narration": "北京时间十月二十八日傍晚，东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
+      "seconds": 16.0
     },
     {
       "source": "main",
