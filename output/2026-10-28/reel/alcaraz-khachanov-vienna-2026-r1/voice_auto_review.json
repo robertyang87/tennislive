@@ -1,0 +1,379 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "c81fa2acec6a6e555a6b3ad6d1d510732eba38dc8f174cf596d8711c1c02af2f",
+    "render_inputs_sha256": "9c4ab42c01d339dd4d3d3252d9920ea9a3079d3538b60e033bb0b51ee4d69bd5",
+    "spec_sha256": "1a2c3962e9083dc3c7a3d635b4185ba57e31126d0829a5255bda6da4cd441ef5",
+    "film_sha256": "b58c8e256b1d8cf3d15b6d86176919b6fb0346b7b1c08070172db2ce85dd8b85",
+    "inventory_sha256": "78265598e0d66b40f277092556d6c0c5d88e1cf6bdb1ebd3c5ee2779b72ed2a9"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-28T03:46:08+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:449a36d893fcd5d479a100d3b8a9a3cbee0efe054c0dc34492eb10f1e6c6dc3d",
+      "audio_sha256": "13ec5e09a5272cf8d08ea1a1d2bb812355ff8a9adec37f2eeee7d0f689b493c9",
+      "pass": true,
+      "result_of": "bundle:449a36d893fcd5d479a100d3b8a9a3cbee0efe054c0dc34492eb10f1e6c6dc3d"
+    },
+    {
+      "id": "bundle:5e99e1eb0b74c6c0dc1bfc7ded5420cacd44a7fac3729d74e6c890e09eb898b6",
+      "audio_sha256": "7cbcd81f770fd78806cb34873fc5be15fae68ecccb9ce1cdc44272e4b8c67a8c",
+      "pass": true,
+      "result_of": "bundle:5e99e1eb0b74c6c0dc1bfc7ded5420cacd44a7fac3729d74e6c890e09eb898b6"
+    },
+    {
+      "id": "bundle:8654c041bf1fe0c9c1c1e8ac46bb8f6523622b3fc7de5043efadcb5de70ddfde",
+      "audio_sha256": "672865b6bd7a8d6727c288c4b2877940c783f1a88831c708c2d9516ba8d067fe",
+      "pass": true,
+      "result_of": "bundle:8654c041bf1fe0c9c1c1e8ac46bb8f6523622b3fc7de5043efadcb5de70ddfde"
+    },
+    {
+      "id": "bundle:a2a55590afb5c1a1bbba164ab3fc30ff81fa467f9b805df502d0fd1011de90a6",
+      "audio_sha256": "a1fecc381335bd622202b9c29729be75bbdc37c35a1a37a0767ce270c8393753",
+      "pass": true,
+      "result_of": "bundle:a2a55590afb5c1a1bbba164ab3fc30ff81fa467f9b805df502d0fd1011de90a6"
+    },
+    {
+      "id": "bundle:b171569fca55e5dada7628ccf59c07e2461fed4978ad6a7a543538d6e052c4b2",
+      "audio_sha256": "bf89b53ec1251753901a1abbe6f3e701cae7bad07ea6787026675e04876f809e",
+      "pass": true,
+      "result_of": "bundle:b171569fca55e5dada7628ccf59c07e2461fed4978ad6a7a543538d6e052c4b2"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "2db08007b8170274b2c872442ad9060c197f0605c685ca508ffbde483d8ed557",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "13ec5e09a5272cf8d08ea1a1d2bb812355ff8a9adec37f2eeee7d0f689b493c9",
+      "pass": true,
+      "result_of": "bundle:449a36d893fcd5d479a100d3b8a9a3cbee0efe054c0dc34492eb10f1e6c6dc3d"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "a1fecc381335bd622202b9c29729be75bbdc37c35a1a37a0767ce270c8393753",
+      "pass": true,
+      "result_of": "bundle:a2a55590afb5c1a1bbba164ab3fc30ff81fa467f9b805df502d0fd1011de90a6"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "7cbcd81f770fd78806cb34873fc5be15fae68ecccb9ce1cdc44272e4b8c67a8c",
+      "pass": true,
+      "result_of": "bundle:5e99e1eb0b74c6c0dc1bfc7ded5420cacd44a7fac3729d74e6c890e09eb898b6"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "672865b6bd7a8d6727c288c4b2877940c783f1a88831c708c2d9516ba8d067fe",
+      "pass": true,
+      "result_of": "bundle:8654c041bf1fe0c9c1c1e8ac46bb8f6523622b3fc7de5043efadcb5de70ddfde"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "bf89b53ec1251753901a1abbe6f3e701cae7bad07ea6787026675e04876f809e",
+      "pass": true,
+      "result_of": "bundle:b171569fca55e5dada7628ccf59c07e2461fed4978ad6a7a543538d6e052c4b2"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "2db08007b8170274b2c872442ad9060c197f0605c685ca508ffbde483d8ed557",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:449a36d893fcd5d479a100d3b8a9a3cbee0efe054c0dc34492eb10f1e6c6dc3d",
+      "text": "胜利差一点到手，再把机会抢回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "胜利差一点到手,再把机会抢回来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.995,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "胜利 ｜ 差一点 ｜ 到手 ｜ 再 ｜ 把 ｜ 机会 ｜ 抢 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:5e99e1eb0b74c6c0dc1bfc7ded5420cacd44a7fac3729d74e6c890e09eb898b6",
+      "text": "首盘二比三落后，对手又拿到四十比零。阿卡却连追五分，立即回破，再以六比四拿下首盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘2比3落后,对手又拿到40比0。阿卡却连追5分,立即回破,再以6比4拿下手盘。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.124,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.146,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.96,
+        "cps": 4.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 二比 ｜ 三落后 ｜ 对手 ｜ 又 ｜ 拿 ｜ 到 ｜ 四十比零 ｜ 阿卡 ｜ 却 ｜ 连 ｜ 追 ｜ 五分 ｜ 立即 ｜ 回 ｜ 破 ｜ 再 ｜ 以 ｜ 六比四 ｜ 拿下 ｜ 首盘"
+      }
+    },
+    {
+      "id": "bundle:8654c041bf1fe0c9c1c1e8ac46bb8f6523622b3fc7de5043efadcb5de70ddfde",
+      "text": "第二盘错过三个赛点，五比六时回破到零。抢七四比五，对手压到网前，阿卡要从底线找出路。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘错过三个赛点,5比60回破到0。抢74比5,对手压到往前,阿卡要从底线找出路。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.231,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 错过 ｜ 三个 ｜ 赛点 ｜ 五 ｜ 比 ｜ 六时 ｜ 回 ｜ 破 ｜ 到 ｜ 零 ｜ 抢 ｜ 七四比五 ｜ 对手 ｜ 压 ｜ 到 ｜ 网 ｜ 前 ｜ 阿卡 ｜ 要 ｜ 从 ｜ 底线 ｜ 找 ｜ 出路"
+      }
+    },
+    {
+      "id": "bundle:a2a55590afb5c1a1bbba164ab3fc30ff81fa467f9b805df502d0fd1011de90a6",
+      "text": "北京时间十月二十七日晚上，维也纳站首轮。五年后重返这里，阿卡迎战哈恰诺夫。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间十月二十七日晚上,为也纳战手轮。五年后重返这里,阿卡迎战哈恰诺夫。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "重",
+          "word": "重返",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.542,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.04,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十七日 ｜ 晚上 ｜ 维也纳站 ｜ 首轮 ｜ 五年 ｜ 后 ｜ 重返 ｜ 这里 ｜ 阿卡 ｜ 迎战 ｜ 哈恰诺夫"
+      }
+    },
+    {
+      "id": "bundle:b171569fca55e5dada7628ccf59c07e2461fed4978ad6a7a543538d6e052c4b2",
+      "text": "三十六记制胜分，对手十五记；十一次上网，全部得分。对哈恰诺夫七战全胜，阿卡的网前手感，下一轮还能延续吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三十六技制胜分,对手十五技,十一次上网,全部得分。对哈恰诺夫欺占全胜,阿卡的往前手感,下一轮还能延续吗?"
+      },
+      "polyphones": [
+        {
+          "index": 22,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 46,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.816,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 10.59,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三十六记 ｜ 制胜 ｜ 分 ｜ 对手 ｜ 十五记 ｜ 十一次 ｜ 上网 ｜ 全部 ｜ 得分 ｜ 对 ｜ 哈恰诺夫 ｜ 七 ｜ 战 ｜ 全胜 ｜ 阿卡 ｜ 的 ｜ 网 ｜ 前 ｜ 手感 ｜ 下 ｜ 一 ｜ 轮 ｜ 还 ｜ 能 ｜ 延续 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    }
+  ]
+}
