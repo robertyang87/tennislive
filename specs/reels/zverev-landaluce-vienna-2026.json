@@ -418,8 +418,8 @@
   "segments": [
     {
       "source": "main",
-      "start": 135.0,
-      "end": 138.0,
+      "start": 134.9,
+      "end": 137.9,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -431,7 +431,7 @@
       "_ending_payoff_required": true,
       "quote": [
         {
-          "at": 2.55,
+          "at": 2.65,
           "end": 2.95,
           "text": "Out!\n出界！"
         }
@@ -447,7 +447,7 @@
     {
       "source": "main",
       "start": 0,
-      "end": 10.4,
+      "end": 10.15,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -513,7 +513,7 @@
     {
       "source": "main",
       "start": 130.0,
-      "end": 138.0,
+      "end": 137.9,
       "cx": 0.5,
       "track": false,
       "fit": "crop",
@@ -525,7 +525,7 @@
       "quote": [
         {
           "at": 7.55,
-          "end": 7.95,
+          "end": 7.85,
           "text": "Out!\n出界！"
         }
       ],
@@ -543,8 +543,8 @@
     "method": "current_assistant_manual_contact_sheet_review",
     "external_model_pass_claimed": false,
     "cold_open": {
-      "start": 135,
-      "end": 138,
+      "start": 134.9,
+      "end": 137.9,
       "kind": "match_point",
       "winner_visible": true,
       "reason": "完整源覆盖的时间码墙显示12-11的最后一分，136.5秒兹维列夫站起转身，终场比分随后确认。",
@@ -552,7 +552,7 @@
     },
     "ending": {
       "start": 130,
-      "end": 138,
+      "end": 137.9,
       "kind": "match_point",
       "winner_visible": true,
       "reason": "130.5秒赛点发球准备；132.5至136.5秒发球、接发出界和赢家反应，覆盖冷开场135至138秒。",
@@ -575,5 +575,6 @@
   ],
   "_tts_backend_why": "本期使用云见常规体育解说，不声明Azure专属情绪样式；使用仓库2026-10-12已验证的新Edge端点。",
   "_original_source_url": "https://youtu.be/9X0BYNTegMU",
-  "_source_audio_review_note": "采用asr_cross_checked，多档实际源音频转写、VAD和字幕逐项比对；不声称真人听审。现场原声按2026-10-13规则保持，不处理制作响度。"
+  "_source_audio_review_note": "采用asr_cross_checked，多档实际源音频转写、VAD和字幕逐项比对；不声称真人听审。现场原声按2026-10-13规则保持，不处理制作响度。",
+  "_transition_audio_why": "将0.5秒转场尾部计入来源核对：首盘窗口10.15+0.5=10.65早于下一句10.7；赛点137.9+0.5=138.4早于下一句VAD138.416，不带入未核词头。精彩球与原声段为同源连续，字幕段承接整个英语句。"
 }
