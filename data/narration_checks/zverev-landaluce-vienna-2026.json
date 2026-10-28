@@ -1,0 +1,59 @@
+{
+  "slug": "zverev-landaluce-vienna-2026",
+  "checked_at": "2026-10-28T03:32:10Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "1bf93be2af5a3a2b": {
+      "segment": 2,
+      "spoken": 4.656,
+      "picture": 7.0
+    },
+    "405e20c47e9037e8": {
+      "segment": 3,
+      "spoken": 6.936,
+      "picture": 11.0
+    },
+    "103b2571817edb7b": {
+      "segment": 4,
+      "spoken": 5.976,
+      "picture": 16.0
+    },
+    "3efac0d296636974": {
+      "segment": 5,
+      "spoken": 6.744,
+      "picture": 19.5
+    },
+    "bc434e9b0852efd2": {
+      "segment": 7,
+      "spoken": 7.152,
+      "picture": 11.8
+    },
+    "257e28d2d6b4b792": {
+      "segment": 8,
+      "spoken": 8.4,
+      "picture": 11.0
+    },
+    "0dd6bb79af804101": {
+      "segment": 10,
+      "spoken": 6.384,
+      "picture": 9.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d0522004c8afcd6310b57db61f91a6bbdae3fd9c662fa809032b06dbe4a3b2fc",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}
