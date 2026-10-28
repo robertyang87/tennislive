@@ -1,0 +1,308 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "zverev-landaluce-vienna-2026",
+  "written_at": "2026-10-28T04:12:29Z",
+  "code_sha": "c5b6507c24620320893d2fc050bdc6773e1e1319",
+  "spec_sha256": "dce1395cecee8ee4b54a0089502d53c36510910153eeafebefdc2193dd89e392",
+  "film_sha256": "15f4d75661ec569e939bbe03e748e713de465e45ccb4cf4f0250c78ff260e92e",
+  "film_bytes": 18031352,
+  "projection_sha256": "b2850e84be1605d3f3f6f2e8679f6822ef96e417d41156287f5e7fbdb472c57b",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      8,
+      "_quote_kind"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/atp-L0IL.png": "44f31ef1cf423456346f229e5910321d9a142117955c82f58bb9727fba6b9e2d",
+    "assets/players/headshots/atp-Z355.png": "7c0d9a53189c0f670d06159881572b673886fa6929107f5210f84e33bac4679f",
+    "assets/reel/zverev-landaluce-vienna-2026-cover.jpg": "55e4ef3d868eeb7c7ebaffa90bdab8c82da8956dcd61cd3a430891489c42b8d5"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "c3d8fd604b016b395608a19b9c9c442e3bfb538e9d454d9ef2b926ad507bb69e",
+    "subtitles.ass": "22bbe609705cb2f13f1128c3ea3a6401038b1b93f9f7dca9b033cdc0eaa1b1c2",
+    "topbar.ass": "6d5974b49ae4331fb117cea2f728a7677e4f7d47bc03e5e1f0b26aecbde365f0",
+    "poster.jpg": "7b172807b4b1c2d5a07bba371626cefd9bbb9ebe59de1ab3024d3d10db2c7004",
+    "stat_card.jpg": "4f4cc146e44627f254f3dc14fcbf2d7ce45e88526326a91610b55ebe5bed81a3",
+    "scoreboard_qc.json": "852a72627b36c49ce114cad9d3c28221fc93ac403ab1111f843ffd3b12fbc446",
+    "voice_quality_inventory.json": "af3d2ee8b760e2866ee1fa4fcbd0dfb8a8f6ec077fdf6c478828bdfcb57d7dbf"
+  },
+  "projection": {
+    "slug": "zverev-landaluce-vienna-2026",
+    "_column": "reel",
+    "cover": {
+      "matchup": [
+        {
+          "name": "兹维列夫",
+          "name_en": "alexander zverev",
+          "country": "GER",
+          "rank": 2
+        },
+        {
+          "name": "兰达卢塞",
+          "name_en": "martin landaluce",
+          "country": "ESP",
+          "rank": 67
+        }
+      ],
+      "winner": "兹维列夫",
+      "result": "7-5 3-6 7-6(11)",
+      "portrait": {
+        "image": "assets/reel/zverev-landaluce-vienna-2026-cover.jpg",
+        "focus": 0.54,
+        "focus_y": 0.0,
+        "zoom": 1.0,
+        "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/27/c9b06514-db12-4b6b-9b81-202d1141bbce/_99A6784LR.JPG"
+      },
+      "subject": "兹维列夫",
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "hook": "4次救回赛点\n兹维列夫惊险过关",
+      "topic": "ATP500 维也纳 首轮 · 兹维列夫 VS 兰达卢塞",
+      "scoreboard": {
+        "court": "Centre Court",
+        "duration_source": {
+          "url": "data:application/json,%7B%22duration%22%3A%20%2203%3A05%3A00%22%2C%20%22precision%22%3A%20%22minute%22%2C%20%22source%22%3A%20%22https%3A//www.erstebank-open.com/en/news/storys/zverev-nach-abwehr-von-matchbaellen-im-achtelfinale%22%7D",
+          "field": "duration"
+        }
+      }
+    },
+    "_production": {
+      "kind": "owner_requested_reel",
+      "received_at": "2026-10-28T03:13:49.977349+00:00",
+      "event": "Erste Bank Open",
+      "year": 2026,
+      "round": "第一轮",
+      "court": "Centre Court",
+      "status": "manual_spec_validated_audio_cross_checked"
+    },
+    "stats": {
+      "a": {
+        "aces": 8,
+        "df": 4,
+        "winners": 41,
+        "ue": 29,
+        "first_in": 72,
+        "first_won": 53,
+        "second_total": 27,
+        "second_won": 19,
+        "bp_conv": 2,
+        "bp_chances": 7,
+        "pts_won": 113,
+        "pts_total": 220,
+        "first_total": 99,
+        "headshot": "assets/players/headshots/atp-Z355.png"
+      },
+      "b": {
+        "aces": 6,
+        "df": 4,
+        "winners": 35,
+        "ue": 41,
+        "first_in": 89,
+        "first_won": 63,
+        "second_total": 32,
+        "second_won": 17,
+        "bp_conv": 2,
+        "bp_chances": 4,
+        "pts_won": 107,
+        "pts_total": 220,
+        "first_total": 121,
+        "headshot": "assets/players/headshots/atp-L0IL.png"
+      },
+      "tour": "atp"
+    },
+    "sources": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-9X0BYNTegMU/9X0BYNTegMU.mp4"
+    },
+    "primary": "main",
+    "editorial": {
+      "mode": "match_review",
+      "hook": [
+        "4次救回赛点",
+        "兹维列夫惊险过关"
+      ],
+      "question": "先拿到赛点的兹维列夫，为什么还要连续四次挽救赛点才能过关？",
+      "thesis": "首盘七比五后，兰达卢塞第二盘抢先破发扳平。决胜盘兹维列夫先错过两个赛点，又救回四个赛点，最后在第五个赛点以十三比十一结束比赛。",
+      "beats": [
+        "首盘双方先后破发，兹维列夫盘末再次破发，7-5先下一盘。",
+        "第二盘兰达卢塞2-0领先，6-3扳平。",
+        "决胜盘4-4长回合从底线打到网前；随后双方先后错过赛点，兹维列夫13-11过关。"
+      ],
+      "human_context": {
+        "angle": "头号种子兹维列夫先错过赛点，又四次距失利只差一分，最后在第五个赛点过关。",
+        "facts": [
+          "兹维列夫7-5 3-6 7-6(11)获胜。",
+          "赛事官网记载：兰达卢塞在决胜盘5-6救回两个赛点；兹维列夫在抢七5-6、7-8、8-9、9-10救回四个赛点；第五个赛点以13-11赢下抢七。",
+          "全场制胜分41比35，非受迫失误29比41。"
+        ],
+        "sources": [
+          "https://www.erstebank-open.com/en/news/storys/zverev-nach-abwehr-von-matchbaellen-im-achtelfinale",
+          "https://global.flashscore.ninja/4/x/feed/df_st_1_8pkUvkbs",
+          "https://youtu.be/9X0BYNTegMU"
+        ]
+      },
+      "narration": [
+        "四次离出局只差一分，兹维列夫还是闯了过去。",
+        "首盘，兹维列夫先破发，又被追平。直到五比五之后，他再次破发，七比五先下一盘。",
+        "第二盘，兰达卢塞先拿下对手的发球局，二比零领先，六比三扳平。",
+        "决胜盘四比四，底线相持之后，兹维列夫来到网前。兰达卢塞从底线继续反击。",
+        "决胜盘，他先错过两个赛点。抢七又救回四个赛点，最后一次靠发球直接得分。",
+        "制胜分四十一比三十五，失误二十九比四十一。最后一分，兰达卢塞抢攻接发，正手出了界。",
+        "四个赛点都救回来了。下一轮，他能更早抓住结束比赛的机会吗？"
+      ]
+    },
+    "topbar": {
+      "line1": "2026 ATP500 维也纳 首轮",
+      "line2": "兹维列夫 7-5 3-6 7-6(11) 兰达卢塞"
+    },
+    "track": false,
+    "cx": 0.5,
+    "tts_backend": "edge",
+    "scorebox": [
+      98,
+      920,
+      465,
+      1029
+    ],
+    "segments": [
+      {
+        "source": "main",
+        "start": 134.9,
+        "end": 137.9,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "point_end_ok": "待核赛点结束后的冷开场，结尾重放完整赛点及握手；原声字幕未核，禁止转正。",
+        "crosses_cut": "待核赛点结束后的冷开场，结尾重放完整赛点及握手；原声字幕未核，禁止转正。",
+        "quote": [
+          {
+            "at": 2.65,
+            "end": 2.95,
+            "text": "Out!\n出界！"
+          }
+        ]
+      },
+      {
+        "title_card": "四次救回赛点",
+        "kicker": "兹维列夫惊险过关",
+        "seconds": 7,
+        "narration": "四次离出局只差一分，兹维列夫还是闯了过去。"
+      },
+      {
+        "source": "main",
+        "start": 0,
+        "end": 10.15,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "首盘，兹维列夫先破发，又被追平。直到五比五之后，他再次破发，七比五先下一盘。",
+        "point_end_ok": "第一盘比分进程；画面3-4到7-5，旁白交代此前已核逐局进程。",
+        "crosses_cut": "第一盘比分进程；画面3-4到7-5，旁白交代此前已核逐局进程。"
+      },
+      {
+        "title_card": "次盘3-6\n悬念重新拉满",
+        "kicker": "兰达卢塞扳平",
+        "seconds": 8,
+        "narration": "第二盘，兰达卢塞先拿下对手的发球局，二比零领先，六比三扳平。"
+      },
+      {
+        "source": "main",
+        "start": 86.94,
+        "end": 102.5,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "决胜盘四比四，底线相持之后，兹维列夫来到网前。兰达卢塞从底线继续反击。",
+        "point_end_ok": "决胜盘中段到5-6，接两个赛点与保发；具体原声窗口待核。",
+        "crosses_cut": "决胜盘中段到5-6，接两个赛点与保发；具体原声窗口待核。"
+      },
+      {
+        "source": "main",
+        "start": 102.5,
+        "end": 105.95,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.04,
+            "end": 3.4,
+            "text": "Oh, he's made it, I think.\n噢，他好像打进了。"
+          }
+        ],
+        "point_end_ok": "死球及反应后切段。",
+        "crosses_cut": "原集锦本身切换，不制造额外回合。"
+      },
+      {
+        "title_card": "4个赛点\n4次救回",
+        "kicker": "先错过机会，再挽回悬念",
+        "seconds": 12,
+        "narration": "决胜盘，他先错过两个赛点。抢七又救回四个赛点，最后一次靠发球直接得分。"
+      },
+      {
+        "stat_card": true,
+        "seconds": 11,
+        "narration": "制胜分四十一比三十五，失误二十九比四十一。最后一分，兰达卢塞抢攻接发，正手出了界。"
+      },
+      {
+        "source": "main",
+        "start": 130.0,
+        "end": 137.9,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "narration": "",
+        "point_end_ok": "待逐帧核完整赛点发球至接发出界、兹维列夫反应和拥抱，覆盖冷开场。",
+        "crosses_cut": "待逐帧核完整赛点发球至接发出界、兹维列夫反应和拥抱，覆盖冷开场。",
+        "quote": [
+          {
+            "at": 7.55,
+            "end": 7.85,
+            "text": "Out!\n出界！"
+          }
+        ]
+      },
+      {
+        "title_card": "下一轮\n更早结束悬念？",
+        "kicker": "4次救回赛点之后",
+        "seconds": 9,
+        "narration": "四个赛点都救回来了。下一轮，他能更早抓住结束比赛的机会吗？"
+      }
+    ],
+    "stat_card_full_canvas": true
+  }
+}
