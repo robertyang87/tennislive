@@ -15,7 +15,8 @@ def _inset(image="test.png", **changes):
     result = {"image": str(image), "kind": "story_text", "corner": "tr",
               "width": .6, "pad": .043, "motion": "editorial", "show_for": 15.,
               "label": {"topic": "决赛回顾", "date": "2026.04.19", "place": "斯图加特决赛",
-                        "people": "穆霍娃 vs 莱巴金娜", "score": "5-7 1-6"}}
+                        "people": "穆霍娃 vs 莱巴金娜", "score": "5-7 1-6",
+                        "result": {"winner": "莱巴金娜", "score": "7-5 6-1", "source": "https://example.org/result"}}}
     result.update(changes)
     return result
 

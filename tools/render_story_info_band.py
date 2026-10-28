@@ -980,6 +980,101 @@ def story_label_field_problems(spec: dict, *, honor_legacy: bool = True) -> list
     return problems
 
 
+# ⭐⭐ 2026-10-28 账号所有者：「整体 review 下这个视频里的比分字卡，然后做一个全局规则
+# 保证之后比分字卡不会错」。来路：wawrinka-career-story-2026 的 2013 澳网字卡——
+# 来源写的是「德约 d. 瓦林卡 1-6 7-5 6-4 6-7(5) 12-10」（赢家在前），字卡按 people
+# 「瓦林卡 vs 德约科维奇」要换成瓦林卡视角，手翻时把第四盘翻成了 6-7(5)（应为 7-6(5)），
+# 推出去才被读者指出。所以比分不许再手翻：字卡照抄来源的赛果（赢家在前），
+# 屏幕上的比分由这道闸按 people 的顺序翻好了比对。
+_LEGACY_LABEL_RESULT = REPO / "data" / "legacy_label_result.json"
+_PEOPLE_SEP = re.compile(r"\s+(?:vs|VS|Vs|胜|负)\s+")
+
+
+def flip_score(score: str) -> str:
+    """把比分换到另一方视角：每盘两边局数对调，抢七小分（输的那一方的分）原样跟着。"""
+    tokens = _parse_score_tokens(score)
+    if tokens is None:
+        raise ValueError(f"「{score}」不是整场比分")
+    out = []
+    for t in tokens:
+        text = f"{t.right}-{t.left}" + (f"({t.tiebreak})" if t.tiebreak is not None else "")
+        out.append(f"[{text}]" if t.match_decider else text)
+    return " ".join(out)
+
+
+def _result_sides(people: str) -> list[str]:
+    return [p.strip() for p in _PEOPLE_SEP.split(people.strip()) if p.strip()]
+
+
+def label_result_problem(label: object) -> str | None:
+    """带比分的字卡必须写 ``result``：``{"winner", "score", "source"}``。
+
+    ``score`` 照来源原样抄、赢家在前；屏幕上的 ``label.score`` 必须等于它按
+    ``people`` 左边那一方翻好的结果。另查：赢家确实赢的盘多；抢七小分只出现在
+    7-6 / 6-7 那一盘。对得上返回 None。
+    """
+    if not isinstance(label, dict):
+        return None
+    score = str(label.get("score") or "").strip()
+    if not score or _parse_score_tokens(score) is None:
+        return None
+    result = label.get("result")
+    if not isinstance(result, dict):
+        return ("带比分的字卡要写 result：{winner, score, source}——score 照来源原样抄"
+                "（赢家在前），屏幕比分由闸按 people 顺序翻转比对，不许手翻")
+    winner = str(result.get("winner") or "").strip()
+    rscore = " ".join(str(result.get("score") or "").split())
+    source = str(result.get("source") or "").strip()
+    if not source.startswith(("http://", "https://")):
+        return "result.source 要写来源链接"
+    tokens = _parse_score_tokens(rscore)
+    if tokens is None:
+        return f"result.score「{rscore}」不是整场比分"
+    sides = _result_sides(str(label.get("people") or ""))
+    if winner not in sides:
+        return f"result.winner「{winner}」不是 people 里的任何一方（{sides}）"
+    won = sum(int(t.left) > int(t.right) for t in tokens)
+    lost = sum(int(t.left) < int(t.right) for t in tokens)
+    if won <= lost:
+        return f"result.score「{rscore}」不是赢家视角：赢家 {won} 盘对 {lost} 盘"
+    for t in tokens:
+        games = {int(t.left), int(t.right)}
+        if t.tiebreak is not None and not t.match_decider and games != {7, 6}:
+            return f"result.score 里「{t.left}-{t.right}({t.tiebreak})」：抢七小分只跟 7-6 那一盘"
+    expected = rscore if sides and winner == sides[0] else flip_score(rscore)
+    if " ".join(score.split()) != expected:
+        return (f"比分「{score}」和来源赛果对不上：{winner} 胜 {rscore}，"
+                f"按 people「{label.get('people')}」左边那一方应写「{expected}」")
+    return None
+
+
+def legacy_label_result_slugs() -> frozenset[str]:
+    """2026-10-28 之前已发、比分字卡没写 result 的片子。只许减不许加。"""
+    if not _LEGACY_LABEL_RESULT.is_file():
+        return frozenset()
+    data = json.loads(_LEGACY_LABEL_RESULT.read_text(encoding="utf-8"))
+    return frozenset(str(slug) for slug in (data.get("slugs") or []))
+
+
+def story_label_result_problems(spec: dict, *, honor_legacy: bool = True) -> list[str]:
+    """每张带比分的 story_text 字卡（含章节卡上的 title_card_story_label）都要过 ``label_result_problem``。"""
+    slug = str(spec.get("slug") or "")
+    if honor_legacy and slug in legacy_label_result_slugs():
+        return []
+    problems: list[str] = []
+    for index, raw in enumerate(spec.get("segments") or []):
+        raw = raw or {}
+        inset = raw.get("inset") or {}
+        labels = [raw.get("title_card_story_label")]
+        if str(inset.get("kind") or "") == "story_text":
+            labels.append(inset.get("label"))
+        for label in labels:
+            message = label_result_problem(label)
+            if message:
+                problems.append(f"第 {index + 1} 段 {message}")
+    return problems
+
+
 def label_font_problem() -> str | None:
     """角标文字必须和左上角品牌标题同一支；比分数字仍是 TL Score。
 
