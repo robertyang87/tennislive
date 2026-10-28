@@ -2306,6 +2306,11 @@ def test_每个mode都各干各的活():
     2026-09-27 这张表按返工审计改过两处，**都是挪顺序，不是互相带着跑**：
     subs 在切行提交之后多跑一步第二份 ASR（只要音轨，报告 render 之前就摊出来）；
     render／cover 先出封面验视觉、再转写校验、再编码（封面红在编码之前）。
+
+    2026-10-29 render 尾上加了一步 `--stage seal`（配音封印）：出片那一档
+    只捕获实际口播成冻结小包，封印必须等 `render.json` 被终审封面与
+    Release 两步合并写完之后再做（放行绑它的字节哈希，早了推送判
+    stale）。它只在 render 跑，是 render 自己的最后一段，不是带着跑。
     """
     stage = {}                                  # mode -> 它跑到的那几个 --stage
     for mode in ("subs", "render", "cover", "push"):
@@ -2314,7 +2319,8 @@ def test_每个mode都各干各的活():
                        and "--stage" in _step_run(s)]
     assert stage["subs"] == ["取字幕切行", "第二份 ASR 交叉校验并提交报告（subs）"], stage["subs"]
     assert stage["render"] == ["出封面并验视觉（完全本地，排在转写和编码之前）",
-                               "转写交叉校验", "剪 + 烧字幕"], stage["render"]
+                               "转写交叉校验", "剪 + 烧字幕",
+                               "配音封印（库存 + 清单 + 自动听审）"], stage["render"]
     assert stage["cover"] == ["出封面并验视觉（完全本地，排在转写和编码之前）"], stage["cover"]
     assert stage["push"] == [], stage["push"]
 
