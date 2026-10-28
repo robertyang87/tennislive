@@ -4,17 +4,18 @@ OUT = sys.argv[1]; os.makedirs(OUT, exist_ok=True)
 H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
 PAGES = [
- "https://www.rolandgarros.com/en-us/article/rg-champions-stan-wawrinka-carrer-title-2015",
- "https://www.rolandgarros.com/fr-fr/article/rg-champions-stan-wawrinka-carriere-titre-2015",
- "https://www.rolandgarros.com/en-us/article/rg2025-ten-years-on-wawrinka-shows-his-style",
- "https://www.upi.com/News_Photos/Sports/French-Open-2015-Finals/9167/",
- "https://www.tennis.com.au/news/2014/01/27/ao-2014-the-final-word",
- "https://commons.wikimedia.org/wiki/Category:Stan_Wawrinka",
- "https://commons.wikimedia.org/w/index.php?search=Wawrinka+trophy&title=Special:MediaSearch&type=image",
- "https://commons.wikimedia.org/wiki/Category:2014_Australian_Open",
- "https://commons.wikimedia.org/wiki/Category:2015_French_Open",
+ "https://ausopen.com/node/156006", "https://ausopen.com/node/256381",
+ "https://en.wikipedia.org/wiki/2014_Stan_Wawrinka_tennis_season",
+ "https://en.wikipedia.org/wiki/2014_Australian_Open_%E2%80%93_Men%27s_singles",
+ "https://bleacherreport.com/articles/1937474-australian-open-2014-results-analyzing-impact-of-mens-and-womens-finals",
+ "https://www.wwno.org/2014-01-26/stan-wawrinka-beats-ailing-nadal-to-win-australian-open-final",
+ "https://www.apr.org/2014-01-26/stan-wawrinka-beats-ailing-nadal-to-win-australian-open-final",
+ "https://www.csmonitor.com/layout/set/amphtml/World/Latest-News-Wires/2014/0126/Wawrinka-bests-injured-Nadal-to-win-Australian-Open",
+ "https://www.foxnews.com/sports/wawrinka-upsets-nadal-in-australian-open-final-to-win-first-grand-slam-title.amp",
+ "https://english.ahram.org.eg/News/92616.aspx",
+ "https://sports.inquirer.net/?p=141823",
 ]
-cands = []
+cands = [{"page": "rg", "url": "https://images.prismic.io/fft-rg-commun-news/aELkHbh8WN-LVvsJ_20150607_RG_CD_7194StanWawrinkamen%27ssinglesfinal2015.jpg"}, {"page": "rg", "url": "https://images.prismic.io/fft-rg-commun-news/aELkHbh8WN-LVvsJ_20150607_RG_CD_7194StanWawrinkamen%27ssinglesfinal2015.jpg?w=4000"}]
 for u in PAGES:
     for k in range(3):
         try:
@@ -27,11 +28,11 @@ for u in PAGES:
     links = sorted(set(re.findall(r'href="(/wiki/(?:File|Category):[^"]+)"', t)))
     print("PAGE", u, r.status_code, len(t))
     for i in imgs:
-        if re.search(r"wawr|stan|troph|mousquet|brookes|final|champion", i, re.I): print("  IMG", i)
+        if re.search(r"wawr|troph|brookes|nadal|australian|melbourne|champion|ap_|apphoto", i, re.I): print("  IMG", i)
     for l in links:
         if re.search(r"wawr|troph|cup|coupe|champion|final|Wawrinka", l, re.I): print("  LINK", l)
     for i in imgs:
-        if re.search(r"wawr|troph|mousquet|brookes|champion", i, re.I): cands.append({"page": u, "url": i})
+        if re.search(r"wawr|troph|brookes|champion|nadal", i, re.I) and not re.search(r"logo|icon|avatar|sprite", i, re.I): cands.append({"page": u, "url": i})
 print("CANDIDATES", len(cands))
 seen = set(); n = 0
 for c in cands:
