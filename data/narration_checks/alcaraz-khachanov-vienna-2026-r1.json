@@ -1,0 +1,49 @@
+{
+  "slug": "alcaraz-khachanov-vienna-2026-r1",
+  "checked_at": "2026-10-28T03:23:09Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "cf6c0524b48f9a81": {
+      "segment": 2,
+      "spoken": 3.864,
+      "picture": 4.5
+    },
+    "f4116e5a654af52d": {
+      "segment": 3,
+      "spoken": 7.92,
+      "picture": 13.0
+    },
+    "113133942a5e3aad": {
+      "segment": 4,
+      "spoken": 8.856,
+      "picture": 13.0
+    },
+    "c4fd74d7b2b386af": {
+      "segment": 5,
+      "spoken": 9.096,
+      "picture": 16.0
+    },
+    "d03221be9e221cd3": {
+      "segment": 8,
+      "spoken": 11.472,
+      "picture": 12.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "cdc077c5804dfbd36ee3c28c4587480bbd7cfd3e3f26cfb3c502382f802b5968",
+    "request_count": 6,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}
