@@ -1,0 +1,62 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1440
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: EN,Inter 24pt SemiBold,44,&H00ECF3E7,&H00000000,&H00000000,0,0,0,0,100,100,0.6,0,1,0,0,8,64,64,1141,1
+Style: ZH,Noto Sans CJK SC,68,&H00ECF3E7,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,1194,1
+Style: HEADA,得意黑,48,&H00F7FBF4,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,2.2,1.2,8,48,48,8,1
+Style: HEADB,Noto Sans CJK SC,46,&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2.2,1.2,8,48,48,42,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:01:33.00,HEADA,,0,0,0,,{\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2}{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\c&H8CDC4A&\an8\pos(540,8)\bord0\shad0\p1\pbo1.4}m 5.5 5.1 l 5.7 3.5 6.4 2.1 7.6 1.0 9.0 0.2 10.5 0.0 12.1 0.2 13.5 1.0 14.6 2.1 15.4 3.5 15.6 5.1 15.6 15.3 15.4 16.9 14.6 18.3 13.5 19.4 12.1 20.2 10.5 20.4 9.0 20.2 7.6 19.4 6.4 18.3 5.7 16.9 5.5 15.3 m 19.8 13.6 l 19.6 16.3 18.9 18.9 17.8 21.2 16.3 23.2 14.6 24.6 12.6 25.5 10.5 25.8 8.5 25.5 6.5 24.6 4.8 23.2 3.3 21.2 2.2 18.9 1.5 16.3 1.3 13.6 4.2 13.6 4.3 15.7 4.8 17.7 5.5 19.4 6.6 20.9 7.8 22.0 9.1 22.7 10.5 23.0 12.0 22.7 13.3 22.0 14.5 20.9 15.5 19.4 16.3 17.7 16.8 15.7 16.9 13.6 m 9.1 25.8 l 12.0 25.8 12.0 31.6 9.1 31.6 m 5.1 30.9 l 16.0 30.9 16.0 34.0 5.1 34.0 m 7.8 7.3 l 13.3 7.3 13.3 5.7 7.8 5.7 m 7.8 11.0 l 13.3 11.0 13.3 9.4 7.8 9.4 m 7.8 14.7 l 13.3 14.7 13.3 13.1 7.8 13.1 m 33.3 0{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\p0}{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fn得意黑\fs48}2026 WTA500 东京 第二轮
+Dialogue: 2,0:00:00.00,0:01:33.00,HEADA,,0,0,0,,{\r\c&H8CDC4A&\an8\pos(540,8)\bord0.8\shad1\p1\pbo1.4}m 5.5 5.1 l 5.7 3.5 6.4 2.1 7.6 1.0 9.0 0.2 10.5 0.0 12.1 0.2 13.5 1.0 14.6 2.1 15.4 3.5 15.6 5.1 15.6 15.3 15.4 16.9 14.6 18.3 13.5 19.4 12.1 20.2 10.5 20.4 9.0 20.2 7.6 19.4 6.4 18.3 5.7 16.9 5.5 15.3 m 19.8 13.6 l 19.6 16.3 18.9 18.9 17.8 21.2 16.3 23.2 14.6 24.6 12.6 25.5 10.5 25.8 8.5 25.5 6.5 24.6 4.8 23.2 3.3 21.2 2.2 18.9 1.5 16.3 1.3 13.6 4.2 13.6 4.3 15.7 4.8 17.7 5.5 19.4 6.6 20.9 7.8 22.0 9.1 22.7 10.5 23.0 12.0 22.7 13.3 22.0 14.5 20.9 15.5 19.4 16.3 17.7 16.8 15.7 16.9 13.6 m 9.1 25.8 l 12.0 25.8 12.0 31.6 9.1 31.6 m 5.1 30.9 l 16.0 30.9 16.0 34.0 5.1 34.0 m 7.8 7.3 l 13.3 7.3 13.3 5.7 7.8 5.7 m 7.8 11.0 l 13.3 11.0 13.3 9.4 7.8 9.4 m 7.8 14.7 l 13.3 14.7 13.3 13.1 7.8 13.1 m 33.3 0{\r\p0}{\r\fn得意黑\fs48}2026 WTA500 东京 第二轮
+Dialogue: 0,0:00:00.00,0:01:33.00,HEADB,,0,0,0,,{\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2}{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnNoto Sans CJK SC\fs46\c&H8CDC4A&\an8\pos(540,42)}伊埃拉 {\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\b300\fs48}4{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\fs48\c&H9CA793&\b0}-{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\c&H8CDC4A&\b1\fs48}6 {\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\c&H8CDC4A&\b1\fs48}6{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\fs48\c&H9CA793&\b0}-{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\b300\fs48}2 {\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\c&H8CDC4A&\b1\fs48}6{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\fs48\c&H9CA793&\b0}-{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnTL Score\b300\fs48}0{\r\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2\fnNoto Sans CJK SC\fs46} 吉布森 · 赛后场上采访
+Dialogue: 1,0:00:00.00,0:01:33.00,HEADB,,0,0,0,,{\r\fnNoto Sans CJK SC\fs46\c&H8CDC4A&\an8\pos(540,42)}伊埃拉 {\r\fnTL Score\b300\fs48}4{\r\fnTL Score\fs48\c&H9CA793&\b0}-{\r\fnTL Score\c&H8CDC4A&\b1\fs48}6 {\r\fnTL Score\c&H8CDC4A&\b1\fs48}6{\r\fnTL Score\fs48\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs48}2 {\r\fnTL Score\c&H8CDC4A&\b1\fs48}6{\r\fnTL Score\fs48\c&H9CA793&\b0}-{\r\fnTL Score\b300\fs48}0{\r\fnNoto Sans CJK SC\fs46} 吉布森 · 赛后场上采访
+Dialogue: 0,0:00:15.99,0:00:21.37,EN,,0,0,0,,I think really staying
+Dialogue: 0,0:00:15.99,0:00:21.37,ZH,,0,0,0,,我觉得
+Dialogue: 0,0:00:21.37,0:00:23.61,EN,,0,0,0,,in the match never giving up.
+Dialogue: 0,0:00:21.37,0:00:23.61,ZH,,0,0,0,,留在比赛里 永不放弃
+Dialogue: 0,0:00:23.61,0:00:25.19,EN,,0,0,0,,The first set was difficult
+Dialogue: 0,0:00:23.61,0:00:25.19,ZH,,0,0,0,,第一盘确实很难
+Dialogue: 0,0:00:25.19,0:00:27.81,EN,,0,0,0,,and I had my chances so I knew
+Dialogue: 0,0:00:25.19,0:00:27.81,ZH,,0,0,0,,但我也有过机会 所以我知道
+Dialogue: 0,0:00:27.81,0:00:30.75,EN,,0,0,0,,that if I kept my concentration I would have
+Dialogue: 0,0:00:27.81,0:00:30.75,ZH,,0,0,0,,只要我保持专注
+Dialogue: 0,0:00:30.75,0:00:34.23,EN,,0,0,0,,more chances.
+Dialogue: 0,0:00:30.75,0:00:34.23,ZH,,0,0,0,,机会还会再来
+Dialogue: 0,0:00:37.13,0:00:39.31,EN,,0,0,0,,The first set was really difficult
+Dialogue: 0,0:00:37.13,0:00:39.31,ZH,,0,0,0,,第一盘真的很难打
+Dialogue: 0,0:00:39.31,0:00:42.21,EN,,0,0,0,,and I had my chances so I knew
+Dialogue: 0,0:00:39.31,0:00:42.21,ZH,,0,0,0,,我也有过机会 我知道
+Dialogue: 0,0:00:42.21,0:00:44.95,EN,,0,0,0,,that if I kept my concentration I would have
+Dialogue: 0,0:00:42.21,0:00:44.95,ZH,,0,0,0,,只要我保持专注
+Dialogue: 0,0:00:44.95,0:00:48.09,EN,,0,0,0,,more chances.
+Dialogue: 0,0:00:44.95,0:00:48.09,ZH,,0,0,0,,机会还会再来
+Dialogue: 0,0:00:57.55,0:01:00.73,EN,,0,0,0,,And you saw a lot of your country's flags
+Dialogue: 0,0:00:57.55,0:01:00.73,ZH,,0,0,0,,现场有很多你们的国旗
+Dialogue: 0,0:01:00.73,0:01:03.55,EN,,0,0,0,,and also the crowd was really rooting
+Dialogue: 0,0:01:00.73,0:01:03.55,ZH,,0,0,0,,而且观众一直在为你
+Dialogue: 0,0:01:03.55,0:01:04.29,EN,,0,0,0,,for you.
+Dialogue: 0,0:01:03.55,0:01:04.29,ZH,,0,0,0,,加油助威
+Dialogue: 0,0:01:04.29,0:01:05.53,EN,,0,0,0,,How do you like that?
+Dialogue: 0,0:01:04.29,0:01:05.53,ZH,,0,0,0,,感觉怎么样？
+Dialogue: 0,0:01:05.53,0:01:13.14,EN,,0,0,0,,Thank you so much everybody.
+Dialogue: 0,0:01:05.53,0:01:13.14,ZH,,0,0,0,,非常感谢大家
+Dialogue: 0,0:01:13.14,0:01:19.29,EN,,0,0,0,,Thank you very much and see you
+Dialogue: 0,0:01:13.14,0:01:19.29,ZH,,0,0,0,,非常感谢
+Dialogue: 0,0:01:19.29,0:01:20.11,EN,,0,0,0,,in the quarters.
+Dialogue: 0,0:01:19.29,0:01:20.11,ZH,,0,0,0,,八强见
+Dialogue: 0,0:01:20.11,0:01:24.69,EN,,0,0,0,,Thank you very much everyone.
+Dialogue: 0,0:01:20.11,0:01:24.69,ZH,,0,0,0,,非常感谢大家
+Dialogue: 0,0:01:24.69,0:01:28.13,EN,,0,0,0,,Best of luck on your next match too.
+Dialogue: 0,0:01:24.69,0:01:28.13,ZH,,0,0,0,,也祝你下场好运
+Dialogue: 0,0:01:28.13,0:01:29.31,EN,,0,0,0,,Thank you so much.
+Dialogue: 0,0:01:28.13,0:01:29.31,ZH,,0,0,0,,非常感谢
+Dialogue: 0,0:01:29.31,0:01:30.81,EN,,0,0,0,,Congratulations.
+Dialogue: 0,0:01:29.31,0:01:30.81,ZH,,0,0,0,,恭喜你
