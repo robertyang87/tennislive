@@ -1,0 +1,81 @@
+{
+  "status": "pass",
+  "reviewer": "root",
+  "scope": "Actual new movie visual review of 12 explicitly opened frames, including corrected opening date and round. Independent consecutive-frame point-entry review is separate; native voice suite remains mandatory. No human audio listening claimed.",
+  "native_run": 40612521298,
+  "film_sha256": "71608cb5252e7946c67727023239d47e16bb65688bbf0b4a7d548a272cba0a56",
+  "film_bytes": 85533170,
+  "duration_seconds": 236.56,
+  "spec_sha256": "4612151e485522ffcf7fe076f31f4f3f8150f9275f4c83ab7c0bf9ed85ef4e4a",
+  "reviewed_at": "2026-10-28T01:11:50.168220+00:00",
+  "findings": [
+    "Actual new opening displays 北京时间10月28号凌晨 at5.00s and 巴塞尔首轮 at6.84s; first-voice context repaired.",
+    "Same-match official cover, eyes and joined hands clear; hook and score unchanged.",
+    "Cold open retained; compact transparent topbar and original fixed lower-left board preserved.",
+    "Actual matchpoint toss and serve visible without data-card overlay. Complete-point midframe, handshake and original bilingual farewell retained.",
+    "All nine stat-card rows/counts match verified raw data; established layout maintained.",
+    "网球时差·赛场之上 branded outro intact."
+  ],
+  "frames": [
+    {
+      "name": "cover",
+      "film_time": 0.5,
+      "sha256": "3121c70ba299868d6bd5fb0142d00333a7c528382f2383ee01448a980d773d07"
+    },
+    {
+      "name": "seg-01",
+      "film_time": 6.84,
+      "sha256": "6dd597031967b016a22915d4b6152d56d44a8306b3f27bc90b04c32c02afca20"
+    },
+    {
+      "name": "opening-time",
+      "film_time": 5.0,
+      "sha256": "132278893354c6a1a3433fdbb96f6126dcd50976dee211cf46c4e06663e3c1ce"
+    },
+    {
+      "name": "point-prep",
+      "film_time": 185.26,
+      "sha256": "019730916375fe0dfb49f90dc4f56741ee5f1cd67821943e3e8ca251feafecb4"
+    },
+    {
+      "name": "point-serve",
+      "film_time": 185.5,
+      "sha256": "536e2d991459809ed100078da513506700fd29e0a9804fd525034cbb4ce2d242"
+    },
+    {
+      "name": "seg-20",
+      "film_time": 175.54,
+      "sha256": "c2a325ab0290afb39f7875b11360c03c45701b496cf25afe86b5995b122a9a68"
+    },
+    {
+      "name": "closing-quote",
+      "film_time": 217.48,
+      "sha256": "1e30853090b4d8b2bd5b536043f8da670a75f1e0cdf9f0d9b33db96a017055bb"
+    },
+    {
+      "name": "outro",
+      "film_time": 235.76,
+      "sha256": "e6498bd836646bd08e466ec41874afaf8a94c4bf7c00ce55e1a90482a857dfe3"
+    },
+    {
+      "name": "seg-00",
+      "film_time": 2.52,
+      "sha256": "e3f3bf75354c39d10d087c929cefdf563570fe1c0f6bd85de08b0760e20f3dcc"
+    },
+    {
+      "name": "seg-03",
+      "film_time": 27.21,
+      "sha256": "34d0f20898d3678e36ce4c6f1071f426c073bf04206150f20d2b1982328c7b89"
+    },
+    {
+      "name": "seg-12",
+      "film_time": 102.04,
+      "sha256": "ae1fc45fa60dd37691e2086376f70ac4b2340f722f73c6ffeff458df68851e7f"
+    },
+    {
+      "name": "handshake",
+      "film_time": 209.84,
+      "sha256": "7ee67798f6752b09b9ebc3c0763f9931ba7b16cdd9fba871b0a1c7b6726e23d5"
+    }
+  ]
+}

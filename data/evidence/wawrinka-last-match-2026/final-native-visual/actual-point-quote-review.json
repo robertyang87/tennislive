@@ -1,0 +1,192 @@
+{
+  "status": "pass",
+  "reviewer": "independent child /root/wawrinka_current_film_audit",
+  "native_run": 40612521298,
+  "film_sha256": "71608cb5252e7946c67727023239d47e16bb65688bbf0b4a7d548a272cba0a56",
+  "film_bytes": 85533170,
+  "duration_seconds": 236.56,
+  "spec_sha256": "4612151e485522ffcf7fe076f31f4f3f8150f9275f4c83ab7c0bf9ed85ef4e4a",
+  "reviewed_at": "2026-10-28T01:12:08.121387+00:00",
+  "scope_limit": "Visual inspection of actual new film frames only. No human audio listening or formal native voice approval claimed; root must require separate native voice/QC proofs.",
+  "scope": "Actual new-film consecutive-point-entry frames, rally/result/handshake and bilingual farewell montage",
+  "findings": [
+    {
+      "item": "extra full point entry",
+      "status": "pass",
+      "source_first_toss": 135.24,
+      "film_first_toss": 99.04,
+      "film_serve": 99.28,
+      "evidence": "Seven close-spaced frames99.04–99.64s viewed as contact sheet; first-toss and strike frames additionally opened singly. Body/ball/court remain coherent without doubled transition image. Scorebox source Wawrinka5/3 and Lehecka7/3, fixed left bottom; full point flows to held-game result, without invented point-count/shot-count claim."
+    },
+    {
+      "item": "complete matchpoint entry and result",
+      "status": "pass",
+      "source_window": [
+        222.4,
+        258.4
+      ],
+      "film_toss": 185.26,
+      "film_strike": 185.5,
+      "film_result": 195.82,
+      "evidence": "Contact sheet185.26,185.38,185.50,185.62,185.74,187.34,190.34,193.34,195.82s inspected; first-toss and strike frames additionally opened singly. No stat-card overlay at toss or strike. Complete rally and end reaction retained; original box progresses from Wawrinka5/6,Lehecka7/6,tiebreak2/6 to final set result5/6 vs7/7 in following reaction frame198.04s."
+    },
+    {
+      "item": "handshake and farewell payoff",
+      "status": "pass",
+      "film_handshake": 209.84,
+      "film_last_quote": [
+        217.48,
+        219.64
+      ],
+      "evidence": "Closing contact sheet shows actual reaction198.04,204.64s, hug209.84s, umpire handshake214.34s, final bilingual English/Chinese caption217.48 and219.64s, final post-caption220.46s. Caption23years translated faithfully as 二十三年. Cold-open2.52s repeats the same complete closing sentence. Unclear background umpire speech is not invented as a subtitle."
+    }
+  ],
+  "reviewed_frame_count": 25,
+  "reviewed_frames": [
+    {
+      "file": "independent-point-frames/extra-entry-0.00.jpg",
+      "film_time": 99.04,
+      "sha256": "1b9aaaa699635b3964f3febe3f6f6ae12946730dc3ed3ddad5e5f2e1261319e1"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.04.jpg",
+      "film_time": 99.08,
+      "sha256": "ad0b096e3a464b9971ba918be9fed8682ff84501c7f5eaace728d7e40042ab4c"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.12.jpg",
+      "film_time": 99.16,
+      "sha256": "4216c5c4a22e457953c5c94792fd9826b4151d1c133fd5908c1789925719796f"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.24.jpg",
+      "film_time": 99.28,
+      "sha256": "1600546419bf26ff7be5843e418b7bdfa28ddeca41329d1a3a2ab983075aae3f"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.36.jpg",
+      "film_time": 99.4,
+      "sha256": "86299ecc8c31cec6fcb5963704e85b488c3dc1923e9af3ddf36b1ff4b9889fae"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.48.jpg",
+      "film_time": 99.52,
+      "sha256": "a467da25400b5ab0c235c34e7d66b084cf8c1ebb023289ba94db37181e976652"
+    },
+    {
+      "file": "independent-point-frames/extra-entry-0.60.jpg",
+      "film_time": 99.64,
+      "sha256": "a4ce19d8b71788470fd2b67e37f13caa1cf0d3b374b98fc8885944804f233634"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-222.92.jpg",
+      "film_time": 185.26,
+      "sha256": "c3d1cccc3c1fc234f425d61a775f5eac51836de885c5715f1fe8a8268a39604c"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.04.jpg",
+      "film_time": 185.38,
+      "sha256": "4de45a65e3078cbbd7e681576c9d2a6bd4648f7c002ab3b2eaa1c27b4d490862"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.16.jpg",
+      "film_time": 185.5,
+      "sha256": "db16c2a0720f3a89b0cfea601f9d8ffcb3ecce9ef6ef60c61062d948c6db0c1d"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.28.jpg",
+      "film_time": 185.62,
+      "sha256": "b4db1be4776c366938be962917fb79bbc740a3f15e36d574c8ec27b4cb82eaaf"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-223.40.jpg",
+      "film_time": 185.74,
+      "sha256": "0fc82eb514fa40878f6f826b752d6e1723aea9b1a345afb3cf65551fe507e7e8"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-225.00.jpg",
+      "film_time": 187.34,
+      "sha256": "d16f189750e37802acd363cf64e5e2933828aa02a6d81a25a5a06c65205da99f"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-228.00.jpg",
+      "film_time": 190.34,
+      "sha256": "8fc4eae36321f45264c9d1762d5d7972bafb5921b48b1a3cd272eeb02970969d"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-231.00.jpg",
+      "film_time": 193.34,
+      "sha256": "666a1b6956797ecc78450867305eca86b040460dae1cc33d8765309fe329ee06"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-233.48.jpg",
+      "film_time": 195.82,
+      "sha256": "9f75493c0131ba43897d548cbf18e26c2dc5c23c96fa08d9bbd5688094e397fb"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-235.70.jpg",
+      "film_time": 198.04,
+      "sha256": "43b8c242cb20b4ee236291ac4219a7b61bda229d624d90135272061af11d9f10"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-242.30.jpg",
+      "film_time": 204.64,
+      "sha256": "c5b2217daee4cde6462c9bd5c00ab2b07bae7783235555c44284151ede0b95da"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-247.50.jpg",
+      "film_time": 209.84,
+      "sha256": "f184db8a86019639038be036ad0cea15a413de21bc28690586abbf8f497e2cfb"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-252.00.jpg",
+      "film_time": 214.34,
+      "sha256": "e2b57110373d80ce1070ae17b0c7dc2e75a2ee73c3eb3314b9d1ae5b65ee1b9d"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-255.14.jpg",
+      "film_time": 217.48,
+      "sha256": "6559a45509d28d071d35a5bc11ef667581099b10a983a041d4d4ecd01e5a9740"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-257.30.jpg",
+      "film_time": 219.64,
+      "sha256": "b57d297989b9629cc2d2f2947a305fc00f32c03d390523a0e06af5ee1a09aad8"
+    },
+    {
+      "file": "independent-point-frames/matchpoint-source-258.12.jpg",
+      "film_time": 220.46,
+      "sha256": "f3d079e41426c0d536ecc0741b8abdbf7ed8f46c55fa0f2cc86db7161f67c239"
+    },
+    {
+      "file": "independent-point-frames/extra-result.jpg",
+      "film_time": 113.54,
+      "sha256": "ee457068ec20aecc632b29ec22c08fdea7258613dd95038cd13eab4a3f30851e"
+    },
+    {
+      "file": "independent-point-frames/cold-open.jpg",
+      "film_time": 2.52,
+      "sha256": "9b6380ba82d39985b7370391dd0b5cdd6df4e9ba9f85f571e551cc84892b0d80"
+    }
+  ],
+  "reviewed_contact_sheets": [
+    {
+      "path": "independent-point-frames/extra-contact.jpg",
+      "sha256": "e57bda29102cad33152337c4f03e13e4ddc27447928f9a28b0b71a5113b5b3de"
+    },
+    {
+      "path": "independent-point-frames/matchpoint-entry-contact.jpg",
+      "sha256": "24733be76fcb14a7f95b14d627ef6c20c3e5895e51a36ec975c9e2dfd38b787b"
+    },
+    {
+      "path": "independent-point-frames/closing-contact.jpg",
+      "sha256": "bca97328bb842e0080107a4099e8e7ed42a3ab173ff444e53103e95e1c810ddb"
+    }
+  ],
+  "additionally_opened_single_frames": [
+    "extra-entry-0.00.jpg",
+    "extra-entry-0.24.jpg",
+    "matchpoint-source-222.92.jpg",
+    "matchpoint-source-223.16.jpg"
+  ]
+}

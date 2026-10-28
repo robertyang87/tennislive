@@ -1,0 +1,76 @@
+{
+  "status": "pass",
+  "reviewer": "independent child /root/wawrinka_current_film_audit",
+  "native_run": 40612521298,
+  "film_sha256": "71608cb5252e7946c67727023239d47e16bb65688bbf0b4a7d548a272cba0a56",
+  "film_bytes": 85533170,
+  "duration_seconds": 236.56,
+  "spec_sha256": "4612151e485522ffcf7fe076f31f4f3f8150f9275f4c83ab7c0bf9ed85ef4e4a",
+  "reviewed_at": "2026-10-28T01:12:08.121387+00:00",
+  "scope_limit": "Visual inspection of actual new film frames only. No human audio listening or formal native voice approval claimed; root must require separate native voice/QC proofs.",
+  "scope": "Cover, actual opening date/round captions, court topbar, fixed original scorebox, full statistics, branded outro",
+  "findings": [
+    {
+      "item": "same-match cover",
+      "status": "pass",
+      "evidence": "Face, open eyes, hair and joined hands unobscured. Hook 次盘再拼到6比6/瓦林卡告别职业赛场; winner Lehecka7/7 and Wawrinka5/6²; names/ranks151/21 and match duration1:51 visible."
+    },
+    {
+      "item": "repaired opening",
+      "status": "pass",
+      "evidence": "Actual new frame4.30s reads 北京时间10月28号凌晨, and6.84s reads 巴塞尔首轮. Entire opening is a blue transition card with compact topbar, no misleading court footage."
+    },
+    {
+      "item": "court framing and scoreboard",
+      "status": "pass",
+      "evidence": "seg03/seg09 show full-canvas centered court, transparent compact two-line topbar, fixed lower-left original source scorebox, with subtitle above the box."
+    },
+    {
+      "item": "full statistics",
+      "status": "pass",
+      "evidence": "All nine rows visible; a=Wawrinka b=Lehecka: ace9/11 DF3/0 winners14/26 UE30/25 first-in52%(43/83)/67%(43/64), first-won84%(36/43)/81%(35/43), second-won43%(17/40)/86%(18/21), BP0/2 vs1/6, points64/83. Avatar identities correct; title and player names visible. Established caption overlaps some central lower labels, not numerical data; no new layout requirement introduced."
+    },
+    {
+      "item": "outro",
+      "status": "pass",
+      "evidence": "Actual frame shows account tennis-clock logo, 网球时差·赛场之上, fixed brand spoken-copy text 时差归我 好球归你 and account footer."
+    }
+  ],
+  "reviewed_frames": [
+    {
+      "path": "frames/cover.jpg",
+      "film_time": 0.5,
+      "sha256": "3121c70ba299868d6bd5fb0142d00333a7c528382f2383ee01448a980d773d07"
+    },
+    {
+      "path": "frames/opening-date.jpg",
+      "film_time": 4.3,
+      "sha256": "889500a456332c70c45b1f691436f05f202f6247b4786e785b7764d2a8c08b7b"
+    },
+    {
+      "path": "frames/seg-01.jpg",
+      "film_time": 6.84,
+      "sha256": "6dd597031967b016a22915d4b6152d56d44a8306b3f27bc90b04c32c02afca20"
+    },
+    {
+      "path": "frames/seg-03.jpg",
+      "film_time": 27.21,
+      "sha256": "34d0f20898d3678e36ce4c6f1071f426c073bf04206150f20d2b1982328c7b89"
+    },
+    {
+      "path": "frames/seg-09.jpg",
+      "film_time": 85.08,
+      "sha256": "fe759411a789e666431c58ce6600c528ba5483bd17c3ccb94368e3bd86457005"
+    },
+    {
+      "path": "frames/seg-20.jpg",
+      "film_time": 175.54,
+      "sha256": "c2a325ab0290afb39f7875b11360c03c45701b496cf25afe86b5995b122a9a68"
+    },
+    {
+      "path": "frames/outro.jpg",
+      "film_time": 235.76,
+      "sha256": "e6498bd836646bd08e466ec41874afaf8a94c4bf7c00ce55e1a90482a857dfe3"
+    }
+  ]
+}
