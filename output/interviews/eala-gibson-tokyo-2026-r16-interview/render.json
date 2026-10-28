@@ -30,7 +30,7 @@
     "transition": "dissolve",
     "dissolve_s": 0.5
   },
-  "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+  "film_sha256": "37d964a1b85360dc916708a743ce1c678e3fa4966f9f5008b3e2d886b3979cdb",
   "film_seconds": 105.4,
   "face_checks": {
     "cover": {
@@ -40,7 +40,7 @@
         "verdict": "match",
         "name": "伊埃拉",
         "similarity": {
-          "伊埃拉": 0.7007
+          "伊埃拉": 0.7008
         },
         "missing": [],
         "expected": [
@@ -88,39 +88,39 @@
   "production_stage_events": [
     {
       "stage": "preflight",
-      "at": "2026-10-28T19:17:11Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:54:22Z",
+      "run_id": "40757766441"
     },
     {
       "stage": "cover_audit",
-      "at": "2026-10-28T19:18:18Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:55:34Z",
+      "run_id": "40757766441"
     },
     {
       "stage": "asr_verify",
-      "at": "2026-10-28T19:18:22Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:55:38Z",
+      "run_id": "40757766441"
     },
     {
       "stage": "render",
-      "at": "2026-10-28T19:18:24Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:55:39Z",
+      "run_id": "40757766441"
     },
     {
       "stage": "qc",
-      "at": "2026-10-28T19:19:34Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:56:30Z",
+      "run_id": "40757766441"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-28T19:19:34Z",
-      "run_id": "40752264936"
+      "at": "2026-10-28T19:56:30Z",
+      "run_id": "40757766441"
     }
   ],
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-eala-gibson-tokyo-2026-r16-interview/eala-gibson-tokyo-2026-r16-interview.mp4?v=17b3dde4a2ff63f9",
-  "video_bytes": 19106668,
-  "release_asset_digest": "sha256:17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
-  "qc_attestation_sha256": "7da1fbc6103c6e395aa01aaa2d31130e2120a03e45d961f21a1fdf9ce2e2fc80",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/interview-eala-gibson-tokyo-2026-r16-interview/eala-gibson-tokyo-2026-r16-interview.mp4?v=37d964a1b85360dc",
+  "video_bytes": 19113183,
+  "release_asset_digest": "sha256:37d964a1b85360dc916708a743ce1c678e3fa4966f9f5008b3e2d886b3979cdb",
+  "qc_attestation_sha256": "8f3b17bfa131df0f35e607c3de48f5866859e450b93cd19f271e57eb42ac4b6f",
   "production_sla_history": [
     {
       "version": 2,
@@ -158,48 +158,85 @@
       ],
       "render_seconds": 62.849,
       "pre_render_seconds": 2452.0
+    },
+    {
+      "version": 2,
+      "pipeline": "interview-clip",
+      "slug": "eala-gibson-tokyo-2026-r16-interview",
+      "received_at": "2026-10-28T19:12:54Z",
+      "artifact_ready_at": "2026-10-28T19:19:33Z",
+      "elapsed_seconds": 399.164,
+      "budget_seconds": 600,
+      "met": true,
+      "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+      "spec_sha256": "20bf6e00a2b6c109d6cfe22edb41f84df56326ffc990e3db9531c6260845c3b2",
+      "run_id": "40752264936",
+      "stage_events": [
+        {
+          "stage": "preflight",
+          "at": "2026-10-28T19:17:11Z",
+          "run_id": "40752264936"
+        },
+        {
+          "stage": "cover_audit",
+          "at": "2026-10-28T19:18:18Z",
+          "run_id": "40752264936"
+        },
+        {
+          "stage": "asr_verify",
+          "at": "2026-10-28T19:18:22Z",
+          "run_id": "40752264936"
+        },
+        {
+          "stage": "render",
+          "at": "2026-10-28T19:18:24Z",
+          "run_id": "40752264936"
+        }
+      ],
+      "render_seconds": 69.164,
+      "pre_render_seconds": 330.0
     }
   ],
   "tts_bundle": {
-    "bundle_sha256": "2d702721e7b504f6e80e19eb6f79bb3b74b6133c830b624b663990b1ce242f96",
+    "bundle_sha256": "3e27103c96b30903f191cea76893a70842d5491c623760e85b14892a881fc439",
     "request_count": 1
   },
-  "render_inputs_sha256": "cb1a9f9870d80b140ad83a5408d06fbf2bec97ec7936607c93d4b155d7c5ba78",
+  "render_inputs_sha256": "5d3f099d05fd92ebd3c39c4cd84a83dc9f84d30da80a69cb431b90eaefd640bb",
   "production_sla": {
     "version": 2,
     "pipeline": "interview-clip",
     "slug": "eala-gibson-tokyo-2026-r16-interview",
-    "received_at": "2026-10-28T19:12:54Z",
-    "artifact_ready_at": "2026-10-28T19:19:33Z",
-    "elapsed_seconds": 399.164,
+    "received_at": "2026-10-28T19:49:43Z",
+    "artifact_ready_at": "2026-10-28T19:56:29Z",
+    "elapsed_seconds": 406.621,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
+    "film_sha256": "37d964a1b85360dc916708a743ce1c678e3fa4966f9f5008b3e2d886b3979cdb",
     "spec_sha256": "20bf6e00a2b6c109d6cfe22edb41f84df56326ffc990e3db9531c6260845c3b2",
-    "run_id": "40752264936",
+    "run_id": "40757766441",
     "stage_events": [
       {
         "stage": "preflight",
-        "at": "2026-10-28T19:17:11Z",
-        "run_id": "40752264936"
+        "at": "2026-10-28T19:54:22Z",
+        "run_id": "40757766441"
       },
       {
         "stage": "cover_audit",
-        "at": "2026-10-28T19:18:18Z",
-        "run_id": "40752264936"
+        "at": "2026-10-28T19:55:34Z",
+        "run_id": "40757766441"
       },
       {
         "stage": "asr_verify",
-        "at": "2026-10-28T19:18:22Z",
-        "run_id": "40752264936"
+        "at": "2026-10-28T19:55:38Z",
+        "run_id": "40757766441"
       },
       {
         "stage": "render",
-        "at": "2026-10-28T19:18:24Z",
-        "run_id": "40752264936"
+        "at": "2026-10-28T19:55:39Z",
+        "run_id": "40757766441"
       }
     ],
-    "render_seconds": 69.164,
-    "pre_render_seconds": 330.0
+    "render_seconds": 50.621,
+    "pre_render_seconds": 356.0
   }
 }

@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "0f78f7af0df85ff94d6817e3b8824033bc1354a3f100ec4d996d98c8b87a91f3",
-    "render_inputs_sha256": "cb1a9f9870d80b140ad83a5408d06fbf2bec97ec7936607c93d4b155d7c5ba78",
+    "render_sha256": "00df9737714fc7d37c7088393d1765fe3ef742c61ba451f8321e3d626b4adb8e",
+    "render_inputs_sha256": "5d3f099d05fd92ebd3c39c4cd84a83dc9f84d30da80a69cb431b90eaefd640bb",
     "spec_sha256": "20bf6e00a2b6c109d6cfe22edb41f84df56326ffc990e3db9531c6260845c3b2",
-    "film_sha256": "17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
-    "inventory_sha256": "550bd498b577200d9d0f9982e18e1e9b90c063637b17201e45282220800f2bd5"
+    "film_sha256": "37d964a1b85360dc916708a743ce1c678e3fa4966f9f5008b3e2d886b3979cdb",
+    "inventory_sha256": "80f6e121f0a6f64e9427a827134102428b83dd58732c7e79c18b70b2878f98a0"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-28T19:19:32+00:00",
+  "reviewed_at": "2026-10-28T19:56:45+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -54,7 +54,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "先丢一盘,他连赢最后九局。四分之一决赛,在战师奈德,这次能复仇吗?"
+        "transcript": "先丢一盘,他连赢最后九局。四分之一决赛,在战士奈德,这次能复仇吗?"
       },
       "polyphones": [],
       "pauses": {
