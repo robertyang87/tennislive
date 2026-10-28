@@ -18,7 +18,16 @@
       }
     ],
     "winner": "德约科维奇",
-    "result": "4-6 6-3 6-4"
+    "result": "4-6 6-3 6-4",
+    "portrait": {
+      "image": "assets/reel/djokovic-humbert-cover.jpg",
+      "focus": 0.413,
+      "focus_y": 0.0,
+      "zoom": 1.1,
+      "_gates": "① 点名：说明／文件名有「novak djokovic」「Swiss Indoors Basel」，日期对上当地 2026-10-28（Europe/Zurich；日期来源 flashscore dc_1_r5W0Hwwq）；EXIF 拍摄 2026:10:28 16:22:43+01:00。② 分辨率：4200×2800，zoom 1.1 铺 1080×1440 是 1.77×（不放大）。③ 认人：最大那张脸像 德约科维奇 0.64（≥ 0.34）。④ 睁眼：EAR 0.3414（≥ 0.16）。⑤ 钩子带：脸落在 y173~508，钩子顶边 790。排序：[True, False, False, True, True, 335, 0.6404]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/28/73b86349-77d8-4578-b607-8844859b7227/GettyImages-2301888242.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：atp-media 渠道 https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/28/73b86349-77d8-4578-b607-8844859b7227/GettyImages-2301888242.jpg（条目 #4600345，接口发布 2026-10-28T17:01:06Z，EXIF 拍摄 2026:10:28 16:22:43+01:00（UTC 2026-10-28T15:22:43Z），原图 4200×2800），说明原文「2026 Basel Djokovic · BASEL, SWITZERLAND - OCTOBER 28: Novak Djokovic of Serbia plays a backhand against Ugo Humbert of France during the Swiss Indoors Basel Day 5 at St. Jakobshalle on October 28, 2026 in Basel, Switzerland. (Photo by Pascal von Büren/Eurasia Sport Images/Getty Images)」，署名 Eurasia Sport Images；2026 Eurasia Sport Images；Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -280,5 +289,17 @@
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "⚠️ Tennis TV 官方头图没成（ValueError: Tennis TV 头图不是本场赛事（GettyImages-2301895586.jpg 不匹配 Swiss Indoors Basel），拒绝资料图）",
     "⚠️ 封面抓取没成（SystemExit: 2026-10-26–2026-10-28 窗口里扫了 136 场，没有同时出现 ['novak djokovic', 'ugo humbert'] 的比赛）——portrait 留空，终审或 render 前再补"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "r5W0Hwwq",
+      "start_utc": "2026-10-28T15:20:00Z",
+      "end_utc": "2026-10-28T17:49:26Z",
+      "source": "flashscore dc_1_r5W0Hwwq（DC／DD）"
+    },
+    "tried": [
+      "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/28/5bb937db-fb19-4401-8f58-2d9b49c643c3/GettyImages-2301895775.jpg"
+    ],
+    "replaced_under": ""
+  }
 }
