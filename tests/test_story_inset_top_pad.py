@@ -18,7 +18,8 @@ def _inset(image, **extra):
             "width": .6, "pad": .043, "motion": "editorial", "animate": False,
             "show_after": 0, "show_for": 15,
             "label": {"topic": "决赛回顾", "date": "2026.06.06", "place": "法网决赛",
-                      "people": "安德烈耶娃 vs 赫瓦林斯卡", "score": "6-3 6-2"}, **extra}
+                      "people": "安德烈耶娃 vs 赫瓦林斯卡", "score": "6-3 6-2",
+                      "result": {"winner": "安德烈耶娃", "score": "6-3 6-2", "source": "https://example.org/result"}}, **extra}
 
 
 def _spec(inset):

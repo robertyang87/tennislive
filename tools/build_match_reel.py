@@ -4132,8 +4132,14 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     from render_story_info_band import (  # noqa: PLC0415
         story_corner_label_problems,
         story_label_field_problems,
+        story_label_result_problems,
     )
     corner_bad = story_corner_label_problems(spec) + story_label_field_problems(spec)
+    # 2026-10-28：比分字卡照抄来源赛果（赢家在前），闸按 people 顺序翻转比对。
+    # 已发、没写 result 的在 data/legacy_label_result.json，只许减不许加。
+    score_bad = story_label_result_problems(spec)
+    if score_bad:
+        raise ReelError("比分字卡和来源赛果对不上：\n  " + "\n  ".join(score_bad))
     if corner_bad:
         raise ReelError(
             "屏幕贴图必须是右上角、右缘品牌绿短轨、文字右对齐，"

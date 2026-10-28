@@ -118,6 +118,10 @@
 
 账号所有者原话：「多准备一些转场动画作为过渡效果，后续做视频需要的时候直接套用」。剪辑片（赛场之上、网球有故事剪辑片）在段上写 `"transition": "<名字>"`，从 `tennislive.video.transitions.PRESETS` 的 13 个预设里挑（溶解、左推、右推、上推、下推、柔推、快甩、圈开、圈收、时钟扫、褪色回忆、斜切、擦出）；不写就是溶解，写错 `--dry-run` 就红。所有接缝 0.5 秒（10-27 账号所有者嫌「几乎没有，特别生硬」，从 0.18 拉长，三条线共用 `MOTION["video_dissolve_s"]`；源片末尾不够时定格补足）、动画只换形状，中间不许闪黑、不许放成纯色（`tests/test_transitions.py`）。动画留给时间跳转、插叙、揭晓这类转折，大多数接缝仍溶解。样片 `tools/preview_transitions.py`，用法见[转场动画库](docs/transition-presets.md)。已发布影片不重渲。
 
+## 2026-10-28：比分字卡照抄来源赛果，不许手翻视角
+
+账号所有者原话：「整体 review 下这个视频里的比分字卡，然后做一个全局规则保证之后比分字卡不会错」。来路：`wawrinka-career-story-2026` 的 2013 澳网字卡，来源是「德约 d. 瓦林卡 1-6 7-5 6-4 6-7(5) 12-10」，换成瓦林卡视角时第四盘被手翻成 6-7(5)（应为 7-6(5)），推出去才被读者指出。全栏目带比分的字卡（`story_text` 角标、章节卡 `title_card_story_label`）一律写 `label.result = {winner, score, source}`：`score` 照来源原样抄、赢家在前，`source` 是链接；屏幕上的 `label.score` 由闸按 `people` 左边那一方翻好比对，对不上 `--dry-run` 就红。同时查赢家确实赢的盘多、抢七小分只跟 7-6 那一盘。闸 `render_story_info_band.story_label_result_problems`，判据 `tests/test_score_card_result.py`；之前已发的挂 `data/legacy_label_result.json`，只许减不许加。已发影片不重渲重推，错处回复读者更正。
+
 ## 2026-10-06：所有视频配音必须按语境核验多音字
 
 账号所有者原话：“我是说你要把这些多音字做成通用的要求，防止以后其他所有视频配音再犯。”并明确：“把这个规则落实成全局基础规则”。

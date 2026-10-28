@@ -29,12 +29,14 @@ def _spec(seg_extra=None, **top):
 
 def _story_label():
     return {"topic": "法网八强", "date": "2026.06.02", "place": "巴黎",
-            "people": "萨巴伦卡 vs 施耐德", "score": "4-6 6-2 4-6"}
+            "people": "萨巴伦卡 vs 施耐德", "score": "4-6 6-2 4-6",
+            "result": {"winner": "施耐德", "score": "6-4 2-6 6-4", "source": "https://example.org/result"}}
 
 
 def test_章节卡角标通过归一解析落图_没有变成实景贴图(tmp_path, monkeypatch):
     label = {**_story_label(), "topic": "法网女单四分之一决赛", "place": "法国巴黎罗兰加洛斯",
-             "people": "阿丽娜萨巴伦卡 vs 戴安娜施耐德"}
+             "people": "阿丽娜萨巴伦卡 vs 戴安娜施耐德",
+             "result": {"winner": "戴安娜施耐德", "score": "6-4 2-6 6-4", "source": "https://example.org/result"}}
     spec = _spec({"title_card_story_label": label, "seconds": 15})
     path = tmp_path / "spec.json"
     path.write_text(json.dumps(spec, ensure_ascii=False))

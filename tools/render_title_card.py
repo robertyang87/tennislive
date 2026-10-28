@@ -102,7 +102,7 @@ HANDLE_BOTTOM_MAX = 48
 STORY_LABEL_WIDTH_PX = 648
 STORY_LABEL_RIGHT_PX = 46
 STORY_LABEL_TOP_PX = 151
-STORY_LABEL_FIELDS = frozenset({"topic", "date", "place", "people", "score", "event"})
+STORY_LABEL_FIELDS = frozenset({"topic", "date", "place", "people", "score", "event", "result"})
 
 
 def story_label_problem(label: object, *, text: str,
@@ -115,7 +115,7 @@ def story_label_problem(label: object, *, text: str,
     extra = set(label) - STORY_LABEL_FIELDS
     if extra:
         return f"title_card_story_label 不认字段 {sorted(map(str, extra))}；只接受 label 语义字段"
-    if any(not isinstance(value, str) for value in label.values()):
+    if any(not isinstance(value, str) for key, value in label.items() if key != "result"):
         return "title_card_story_label 的字段必须是字符串"
     if size != DEFAULT_SIZE:
         return "title_card_story_label 只支持 1080×1440 全画布，不支持 band 几何"
