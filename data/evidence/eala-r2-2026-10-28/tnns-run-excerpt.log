@@ -1,0 +1,39 @@
+2026-10-28T12:21:23.4857113Z [TNNS] 打开 https://tnnslive.com/
+2026-10-28T12:21:23.4857955Z [TNNS] 页面内取 https://api.tnnslive.com/v1/matches?date=2026-10-28&web=true
+2026-10-28T12:21:23.4858656Z [TNNS] 按 date=2026-10-28 取到 259388 字节、623 场
+2026-10-28T12:21:23.4859112Z [TNNS] 认到这一场：id=75838034
+2026-10-28T12:21:23.4859539Z [TNNS] 打开 https://tnnslive.com/match/75838034
+2026-10-28T12:21:23.4859843Z 
+2026-10-28T12:21:23.4860024Z === TNNS 单场统计 id=75838034 ===
+2026-10-28T12:21:23.4860372Z hasExtendedStats: True
+2026-10-28T12:21:23.4860713Z 制胜分       [33, 35]
+2026-10-28T12:21:23.4861049Z 非受迫失误   [21, 47]
+2026-10-28T12:21:23.4861386Z （选手顺序 ['Eala', 'Gibson']）
+2026-10-28T12:21:23.4861806Z   [Set 1] 制胜分 [14, 13]　非受迫失误 [11, 11]
+2026-10-28T12:21:23.4862228Z   [Set 2] 制胜分 [11, 16]　非受迫失误 [7, 19]
+2026-10-28T12:21:23.4862636Z   [Set 3] 制胜分 [8, 6]　非受迫失误 [3, 17]
+2026-10-28T12:21:23.4863100Z   自证 winners：分盘合计 [33, 35] vs 全场 [33, 35]  ✅
+2026-10-28T12:21:23.4863538Z   自证 ue：分盘合计 [21, 47] vs 全场 [21, 47]  ✅
+2026-10-28T12:21:23.4863802Z 
+2026-10-28T12:21:23.4864320Z 粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：
+2026-10-28T12:21:23.4865240Z   "winners": 33,  "ue": 21    ← Eala
+2026-10-28T12:21:23.4865656Z   "winners": 35,  "ue": 47    ← Gibson
+2026-10-28T12:21:23.5228133Z Post job cleanup.
+2026-10-28T12:21:23.6566899Z (node:3275) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-28T12:21:23.6568144Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-28T12:21:23.6759140Z Post job cleanup.
+2026-10-28T12:21:23.7676419Z [command]/usr/bin/git version
+2026-10-28T12:21:23.7724815Z git version 2.56.0
+2026-10-28T12:21:23.7767363Z Temporarily overriding HOME='/home/runner/work/_temp/f7d0f750-187c-425e-a32a-f8b03f65fb50' before making global git config changes
+2026-10-28T12:21:23.7768317Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T12:21:23.7773647Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+2026-10-28T12:21:23.7820080Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T12:21:23.7861970Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T12:21:23.8263125Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T12:21:23.8305925Z http.https://github.com/.extraheader
+2026-10-28T12:21:23.8320766Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-28T12:21:23.8366816Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T12:21:23.8752928Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T12:21:23.8808417Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T12:21:23.9353956Z Cleaning up orphan processes
+2026-10-28T12:21:23.9724895Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

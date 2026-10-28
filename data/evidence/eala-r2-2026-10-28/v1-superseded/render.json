@@ -1,0 +1,96 @@
+{
+  "scoreboard_qc_sha256": "bcb14b03f1f202146b15b40c503db1d0c05de2751f36ca84dd4b50f407d99509",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "180e79a77cefcc3d124c925f236d1ffb1028e7d5f64b2b4c4545e2e13c6067b6",
+    "request_count": 7,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-eala-r2-2026-10-28-180e79a77cefcc3d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-eala-r2-2026-10-28-180e79a77cefcc3d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40688270188"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 152.75,
+  "topbar": {
+    "line1": "2026 WTA500 东京 第二轮",
+    "line2": "伊埃拉 4-6 6-2 6-0 吉布森",
+    "start": 1.2,
+    "end": 153.95
+  },
+  "film_seconds": 158.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.768,
+    "2": 11.76,
+    "4": 10.92,
+    "5": 11.4,
+    "8": 12.336,
+    "9": 9.84
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "9961dddce7d85e08e82a4177421b81018ab8bfea1afa38f29a8927a92c241362",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "eala-r2-2026-10-28",
+    "received_at": "2026-10-28T12:06:00Z",
+    "artifact_ready_at": "2026-10-28T12:35:31Z",
+    "elapsed_seconds": 1771.646,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "727e7aaad26ca2a2025c4282bceaefc338dd84dd1c398730adf464f0b8d16acb",
+    "spec_sha256": "212e5000156bd33143b634aabf17c68964e5c3323278f08b88cf81ea53a87dbf",
+    "run_id": "40688270188",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-28T12:32:30Z",
+        "run_id": "40688270188"
+      }
+    ],
+    "render_seconds": 181.646,
+    "pre_render_seconds": 1590.0
+  },
+  "film_sha256": "727e7aaad26ca2a2025c4282bceaefc338dd84dd1c398730adf464f0b8d16acb",
+  "film_bytes": 61082507,
+  "qc_attestation_sha256": "23f2abf99144f2822a778c7821f8aedb2413b2726740cf3defa51b4063addbf8",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-28T12:32:30Z",
+      "run_id": "40688270188"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-28T12:35:35Z",
+      "run_id": "40688270188"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-eala-r2-2026-10-28/eala-r2-2026-10-28.mp4",
+  "video_bytes": 61082507
+}

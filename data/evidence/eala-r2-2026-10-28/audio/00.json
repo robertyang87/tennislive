@@ -1,0 +1,31 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-x8TR5doPQP8/x8TR5doPQP8.mp4",
+  "source_sha256": "b5bd340ddb3d83640cf6c5052a258a2c203432aebb6cb59097d2e7798d4dc137",
+  "method": "asr_cross_checked",
+  "reviewer": "assistant, dual-ASR and publisher-caption comparison; no human listening claimed",
+  "reviewed_at": "2026-10-28T12:27:07.863155+00:00",
+  "status": "complete",
+  "reviewed_from": 243.2,
+  "reviewed_to": 249.2,
+  "foreground_english": [
+    {
+      "start": 243.36,
+      "end": 248.9,
+      "en": "She's into the quarterfinals in Tokyo at the first time of asking.",
+      "zh": "首次出战东京，她就打进了8强。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_sources": [
+    "data/source_asr/x8TR5doPQP8/medium.en.json",
+    "data/source_asr/x8TR5doPQP8/small.en.json",
+    "output/2026-10-28/reel/eala-r2-2026-10-28/captions.txt"
+  ],
+  "normalizations": [
+    "Eala identity normalized from Ayala/Iyala/Allah using official metadata.",
+    "Gibson identity normalized from Gibbs.",
+    "opener normalized from oatlet/oatlook using publisher captions and first-set score graphic.",
+    "First set is the publisher-captioned umpire call, missed by both automatic ASRs."
+  ],
+  "limits": "Automatic transcript comparison and finite source-frame inspection, not human auditory review or proof of every phoneme."
+}
