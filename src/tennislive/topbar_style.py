@@ -2,19 +2,23 @@
 
 2026-10-25: transparent background; 40px main line, original 38px context
 and 40px scores. A sharp edge and a soft, text-shaped shadow replace the scrim.
+2026-10-28: owner asked「字号是不是要再大一点」; compared 40 / +10% / +20% / +30%
+on a phone-scale sheet and took +20% (48 / 46 / 48). Tops, ink split and height
+were re-measured from real libass ink rows, keeping the old proportions:
+head ink 11..50, body ink 54..82 (was 11..42 / 46..69, height 80).
 Keep imports standard-library-only: the interview scheduler imports this module.
 """
 
-HEAD_SIZE = 40
-BODY_SIZE = 38
-SCORE_SIZE = 40
+HEAD_SIZE = 48
+BODY_SIZE = 46
+SCORE_SIZE = 48
 HEAD_TOP = 8
-BODY_TOP = 36
-ICON_H = 28
-HEIGHT = 80
+BODY_TOP = 42
+ICON_H = 34
+HEIGHT = 96
 OUTLINE = 2.2
 SHADOW = 1.2
-INK_SPLIT_Y = 44
+INK_SPLIT_Y = 52
 _HALO = r"\1a&HFF&\3a&H90&\4a&H70&\bord3\blur2\xshad0\yshad2"
 
 

@@ -9905,8 +9905,8 @@ def test_顶栏版式用两种字体且只覆盖比赛区(tmp_path):
         ("WTA 1000 加拿大站 第二轮", "伊埃拉 6-1 4-6 6-2 帕克斯"),
         1.2, 51.2, tmp_path / "topbar.ass")
     text = ass.read_text(encoding="utf-8")
-    assert "Style: HEAD,得意黑,40" in text
-    assert "Style: BODY,Noto Sans CJK SC,38" in text
+    assert "Style: HEAD,得意黑,48" in text
+    assert "Style: BODY,Noto Sans CJK SC,46" in text
     assert "Dialogue: 0,0:00:01.20,0:00:51.20,HEAD" in text
     assert "Dialogue: 0,0:00:01.20,0:00:51.20,BODY" in text
 
