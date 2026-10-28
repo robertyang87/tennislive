@@ -12048,28 +12048,58 @@ def write_segment_topbar_ass(spec: dict, segments: list[Segment], start: float,
                              pulse_at: list[float] | None = None) -> Path:
     """Reuse the native ASS styling, limited to each source's real film interval.
 
-    No map delegates to the original writer with exactly its previous arguments.
-    Native full-canvas cards get no topbar events; their existing clean-card
-    composition and ordinary subtitle policy remain unchanged.
+    顶栏只挂在比赛画面上：章节卡、数据卡这类整屏卡（`image` / `full_canvas` /
+    `visual_image` 段）一律不画——账号所有者 2026-10-28 看过 A/B/C/D 四版
+    （现状 / 卡上不显示 / 整块下移 / 只留比分行）后问「是否在这种画面就不显示」，
+    卡自己有小标题和比分，顶栏压在卡顶彩条上又挤又重复。和卡相邻的那一头淡入淡出
+    `TOPBAR_CARD_FADE_MS`，不硬切。没有卡的片子仍然逐字节等于原来的单条顶栏。
     """
     mapping = _source_topbar_lines(spec)
     end = start + sum(seg.length for seg in segments)
-    if mapping is None:
+
+    def is_card(seg: Segment) -> bool:
+        return bool(seg.image or seg.full_canvas or seg.visual_image)
+
+    if mapping is None and not any(is_card(s) for s in segments):
         return write_topbar_ass(default_lines, start, end, path, pulse_at=pulse_at)
-    prefix, events, cursor = None, [], start
+    # 连续、同一组台头的比赛段并成一段（没有 map 时整片同一组），卡把它切开。
+    runs: list[list] = []   # [lines, 起, 止, 前面是卡, 后面是卡]
+    cursor, prev_card = start, False
     for seg in segments:
         until = cursor + seg.length
-        if not (seg.image or seg.full_canvas or seg.visual_image):
-            points = [t for t in pulse_at or [] if cursor <= t <= until]
-            write_topbar_ass(mapping[seg.source], cursor, until, path, pulse_at=points)
-            text = path.read_text(encoding="utf-8")
-            prefix = prefix or text.split("Dialogue:", 1)[0]
-            events.extend(line for line in text.splitlines() if line.startswith("Dialogue:"))
+        if is_card(seg):
+            if runs and runs[-1][2] == cursor:
+                runs[-1][4] = True
+            prev_card = True
+        else:
+            lines = default_lines if mapping is None else mapping[seg.source]
+            if runs and runs[-1][2] == cursor and runs[-1][0] == lines and not prev_card:
+                runs[-1][2] = until
+            else:
+                runs.append([lines, cursor, until, prev_card, False])
+            prev_card = False
         cursor = until
-    if prefix is None:
-        raise ReelError("topbar_by_source has no actual footage windows")
+    if not runs:
+        raise ReelError("topbar has no actual footage windows")
+    prefix, events = None, []
+    for lines, a, b, card_before, card_after in runs:
+        points = [t for t in pulse_at or [] if a <= t <= b]
+        write_topbar_ass(lines, a, b, path, pulse_at=points)
+        text = path.read_text(encoding="utf-8")
+        prefix = prefix or text.split("Dialogue:", 1)[0]
+        fade = (rf"{{\fad({TOPBAR_CARD_FADE_MS if card_before else 0},"
+                rf"{TOPBAR_CARD_FADE_MS if card_after else 0})}}")
+        for line in text.splitlines():
+            if line.startswith("Dialogue:"):
+                head, body = line.split(",,0,0,0,,", 1)
+                events.append(head + ",,0,0,0,," + (fade if card_before or card_after else "") + body)
     path.write_text(prefix + "\n".join(events) + "\n", encoding="utf-8")
     return path
+
+
+#: 顶栏在比赛画面和整屏卡交界处的淡入淡出（毫秒）。接缝溶解是
+#: `MOTION["video_dissolve_s"]`（0.5s），顶栏在它的前半程里淡掉，不和卡叠在一起。
+TOPBAR_CARD_FADE_MS = 250
 
 
 def write_topbar_ass(lines: tuple[str, str], start: float, end: float,

@@ -251,6 +251,10 @@ def test_preview_visual_graph_without_source_map_keeps_legacy_ass_bytes(tmp_path
     ass = tmp_path / 'captions.ass'
     ass.write_text('[Script Info]\nScriptType: v4.00+\n')
     preview.visual_graph(spec, segments, 1.2, ass, tmp_path, first_extra=1)
-    reference = reel.write_topbar_ass(
-        reel._topbar_lines(spec), 1.2, 12.2, tmp_path / 'legacy_topbar.ass', pulse_at=[9.5])
+    reference = reel.write_segment_topbar_ass(
+        spec, segments, 1.2, tmp_path / 'native_topbar.ass',
+        default_lines=reel._topbar_lines(spec), pulse_at=[9.5])
     assert (tmp_path / 'preview_topbar.ass').read_bytes() == reference.read_bytes()
+    # 没有 map 也不在整屏卡（5.2..7.2 秒）上画顶栏（2026-10-28）
+    rows = [r for r in reference.read_text().splitlines() if r.startswith('Dialogue:')]
+    assert {tuple(r.split(',')[1:3]) for r in rows} == {('0:00:01.20', '0:00:05.20'), ('0:00:07.20', '0:00:12.20')}
