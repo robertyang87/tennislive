@@ -1,0 +1,191 @@
+{
+  "status": "pass_for_verified_source_foreground_commentary_with_explicit_unclear_background_record",
+  "reviewed_at": "2026-10-27T23:37:48.358276+00:00",
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "source_bytes": 33974731,
+  "spec_sha256_at_binding": "f6ad908f298de66515141541b84c4d0b63f0c0f7846d50629d9ecd625bd5b55f",
+  "plan_sha256": "1cd221d2d84bb2e953ce645ba85fa18eaf6aac2a21e1ab3fc60d9282efbdc461",
+  "selected_windows": [
+    [
+      0,
+      255.08,
+      257.72,
+      1
+    ],
+    [
+      2,
+      8.2,
+      18.24,
+      0
+    ],
+    [
+      3,
+      32.2,
+      37.42,
+      0
+    ],
+    [
+      4,
+      37.42,
+      40.3,
+      1
+    ],
+    [
+      5,
+      50.56,
+      67.6,
+      0
+    ],
+    [
+      6,
+      79.12,
+      82.5,
+      1
+    ],
+    [
+      8,
+      84.28,
+      101.44,
+      0
+    ],
+    [
+      9,
+      115.04,
+      122.48,
+      0
+    ],
+    [
+      10,
+      125.72,
+      132.68,
+      0
+    ],
+    [
+      11,
+      132.68,
+      135.1,
+      1
+    ],
+    [
+      12,
+      135.24,
+      150.36,
+      1
+    ],
+    [
+      14,
+      167.4,
+      176.2,
+      0
+    ],
+    [
+      15,
+      181.4,
+      194.16,
+      0
+    ],
+    [
+      16,
+      194.16,
+      197.52,
+      1
+    ],
+    [
+      18,
+      209.5,
+      219.62,
+      0
+    ],
+    [
+      19,
+      219.62,
+      222.8,
+      1
+    ],
+    [
+      21,
+      222.92,
+      258.4,
+      5
+    ]
+  ],
+  "windows": 17,
+  "bilingual_cues": 12,
+  "foreground_gate_require": "passed with actual downloaded source SHA binding",
+  "background_uncertainty_preserved": "packet for222.92–258.4 explicitly records230.4–235.1 indistinct court declaration and contradictory ASR, preserves all actual sound, does not fabricate quote; approved editorial treatment by root, not human listening.",
+  "human_listening_claimed": false,
+  "actual_final_film_approval": false,
+  "corpus_sha256": {
+    "data/evidence/wawrinka-last-match-2026/source-asr/small.en.json": "8c2106daeef35fcb7c9fa0990daddebb4ecdb4e262efafc6542d25539a973414",
+    "data/evidence/wawrinka-last-match-2026/source-asr/medium.en.json": "06fb4b3566eb406d3f4677d123e00766ae4a9b26f5dbd379aa05e7679b877deb",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-small.en.json": "9facaa9c6ceb9237d21031cb9fafaea70f45cf65ce1b772b7bff8f1120cbf6e6",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-additional.json": "ef5837c41c167dec2ac12427e96d7988f502e622c4c71a039e6962ff59996296",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-short-quotes.json": "08eaf67404dd89b27ad8e139800c635ab2afb42e3a0a4a17055c52a893a8481d"
+  },
+  "frame_evidence": [
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/125-entry-wall.jpg",
+      "sha256": "ec701affb9739ddae9f399425c8d95a09f61306d22a4b23e6447e51a6e6d15c8"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/234.00.jpg",
+      "sha256": "231607b01d59f684f878abbfa087bfcf360a30e2b5456b04590418e581f0e9eb"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/246.00.jpg",
+      "sha256": "d582bf4aa183cc38737b94826d6c093f7b378911a0a5097a831ba3b2bf87a6fe"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/250.00.jpg",
+      "sha256": "ba3d29619e1b0fb01cf1839605c62c2070144fb032108aaf5db946212352d975"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/254.00.jpg",
+      "sha256": "6a5fec82adf847a89e817b4360f73e83ec36108d048568ca8bffb37839e25586"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/257.00.jpg",
+      "sha256": "f321b4a3aeffa1dbec28fbc5382e454536b1c1d56e14a2f861d2d458675b5597"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/258.00.jpg",
+      "sha256": "63e909ae75d9b46ba6dc49dd09fb685fc5c11dab12d79dad9fb64452a44321da"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/259.00.jpg",
+      "sha256": "94c6450b6e7bcb0dafdb2ed63fdac1492e5fcfe63b3ec44b3264c84c91fbb55e"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/board-135.24.jpg",
+      "sha256": "412fc8cf623ff85588004d7014e802c51e6431f7a0600e479005eaf0780a920f"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/board-150.00.jpg",
+      "sha256": "25a9eb248712dd3803e5a3ade73f49198ee6d455d53cb58bc81c2bd248066ec2"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/board-233.48.jpg",
+      "sha256": "7c16c17bb294a1046ca57d8d22e0a20166c1bc90e3680b5e9b1b39ed4a9197e0"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/entry-wall.jpg",
+      "sha256": "caba9bb39f787b86d5c0609930b7362215d9ac2db06e6eef92d8f7c741e600c0"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/exact-135.24.jpg",
+      "sha256": "689c1988f416279597997451b9e636ac529274bb1d8a67be78edb593c8f48ab3"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/exact-222.92.jpg",
+      "sha256": "940cf8c79004af2383d01186810584bf183a78339762f38841196a163b516fec"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/wall-1.jpg",
+      "sha256": "6978908950ac024f4dccadd56310f77cb1846b41dfcb4ccb85375b11cd41522d"
+    },
+    {
+      "file": "data/evidence/wawrinka-last-match-2026/source-frames/wall-2.jpg",
+      "sha256": "95afaa75d3f943eb3517b4fb3a7d1b4d99aaf6552355d721e4ce0254e9a60b32"
+    }
+  ]
+}

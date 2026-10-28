@@ -1,0 +1,119 @@
+{
+  "schema": "independent-single-narration-completeness-asr/v1",
+  "status": "asr_completed_requires_root_native_voice_gate",
+  "model": "faster-whisper multilingual base cached CPU int8",
+  "language": "zh",
+  "method": "Actual4.536s repaired MP3 independently decoded no prompt beam8 no VAD no previous context; local_files_only, no model download. Completeness evidence only, not human listening or phoneme/gate override.",
+  "reviewed_at": "2026-10-28T00:15:07.224473+00:00",
+  "audio_sha256": "672ef9edb7e06842bea9cb16a248affa08e5115b765d661133119af69cf42e03",
+  "audio_bytes": 27216,
+  "expected_text": "想把比赛带下去，每一次向前压，都要自己争。",
+  "duration": 4.536,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.66,
+      "text": "小马比赛带下去,每一次向前压,都要自己争。",
+      "avg_logprob": -0.3587618923187256,
+      "words": [
+        {
+          "word": "小",
+          "start": 0.0,
+          "end": 0.24,
+          "probability": 0.13924236595630646
+        },
+        {
+          "word": "马",
+          "start": 0.24,
+          "end": 0.36,
+          "probability": 0.2330223172903061
+        },
+        {
+          "word": "比",
+          "start": 0.36,
+          "end": 0.5,
+          "probability": 0.9938588738441467
+        },
+        {
+          "word": "赛",
+          "start": 0.5,
+          "end": 0.66,
+          "probability": 0.9734988212585449
+        },
+        {
+          "word": "带",
+          "start": 0.66,
+          "end": 0.84,
+          "probability": 0.9903729856014252
+        },
+        {
+          "word": "下去,",
+          "start": 0.84,
+          "end": 1.16,
+          "probability": 0.9615022540092468
+        },
+        {
+          "word": "每",
+          "start": 1.56,
+          "end": 1.68,
+          "probability": 0.9847886562347412
+        },
+        {
+          "word": "一次",
+          "start": 1.68,
+          "end": 1.96,
+          "probability": 0.976250171661377
+        },
+        {
+          "word": "向",
+          "start": 1.96,
+          "end": 2.18,
+          "probability": 0.9901084899902344
+        },
+        {
+          "word": "前",
+          "start": 2.18,
+          "end": 2.4,
+          "probability": 0.9141691327095032
+        },
+        {
+          "word": "压,",
+          "start": 2.4,
+          "end": 2.58,
+          "probability": 0.8731577098369598
+        },
+        {
+          "word": "都",
+          "start": 2.8,
+          "end": 2.94,
+          "probability": 0.9902095794677734
+        },
+        {
+          "word": "要",
+          "start": 2.94,
+          "end": 3.12,
+          "probability": 0.9788171648979187
+        },
+        {
+          "word": "自己",
+          "start": 3.12,
+          "end": 3.46,
+          "probability": 0.9701962471008301
+        },
+        {
+          "word": "争。",
+          "start": 3.46,
+          "end": 3.66,
+          "probability": 0.8589758574962616
+        }
+      ]
+    }
+  ],
+  "human_listening_claimed": false,
+  "phonetic_native_gate_pass_claimed": false,
+  "assessment": {
+    "scope": "Partial actual-ASR completeness evidence only",
+    "changed_word": "要 independently recognized0.9788 confidence; subsequent自己争 also recognized",
+    "remaining_uncertainty": "Cached base misrecognizes initial想把 as小马 at low0.139/0.233 confidence. No whole-sentence exact-ASR pass claimed. Cannot infer true pronunciation error from this weak decoder alone. Root native full-suite check remains required."
+  }
+}

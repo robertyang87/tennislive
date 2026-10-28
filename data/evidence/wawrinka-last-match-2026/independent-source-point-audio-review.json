@@ -1,0 +1,705 @@
+{
+  "schema": "independent-source-point-audio-review/v1",
+  "reviewed_at_utc": "2026-10-27T23:31:49.098653+00:00",
+  "reviewer": "source_audio_audit_agent",
+  "scope": "Independent exact source bytes, full contact sheets, detailed matchpoint/one extra point, ASR cross-check; no manual listening claim",
+  "source": {
+    "youtube": "https://www.youtube.com/watch?v=mo_Aust_pN0",
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-mo_Aust_pN0/mo_Aust_pN0.mp4",
+    "local_path": "/workspace/scratch/wawrinka-mo_Aust_pN0-20261027/mo_Aust_pN0.mp4",
+    "sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+    "bytes": 33974731,
+    "duration": 273.809705,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "release_asset": 683188170
+  },
+  "identity": {
+    "status": "Verified exact source is ATP Tour official uploader UCY_5h5zaSwN7Or4kIJDYNXA by root native oEmbed/watch; independent whole source frames identify Wawrinka-Lehecka Basel only",
+    "wawrinka_outfit": "white/red gradient shirt, white shorts",
+    "lehecka_outfit": "dark maroon shirt and shorts",
+    "no_prior_day_ceremony_in_source": true,
+    "no_other_match_detected": true,
+    "subscription_outro": "visible by259.00; keep last usable same-match window to258.40",
+    "official_identity_evidence": {
+      "path": "official-youtube-identity-verified.json",
+      "sha256": "5f6c9c92fbffe4acf8cc8649a6e73b9a3d90362d9dc1c166d84c5e30772f0736",
+      "run": 40602530031
+    }
+  },
+  "source_result": {
+    "actual_frame": "point-frames/234.00.jpg",
+    "visual": "Wawrinka5/6 vs Lehecka7/7; tiebreak prefinal2/6",
+    "cross_checked_with_official": "Basel event results and draw: Lehecka7-5,7-6(2),1h51"
+  },
+  "matchpoint": {
+    "recommended_window": [
+      222.4,
+      258.4
+    ],
+    "original_scene_start": 222.92,
+    "first_source_frame_description": "Wawrinka near-side at toss/trophy preparation; source contains no earlier same-point setup shot",
+    "serve_contact_approx": 223.16,
+    "last_rally_approx_end": 233.48,
+    "closeup_scene_cut": 233.52,
+    "score_before": "Wawrinka5/6/2;Lehecka7/6/6",
+    "score_after": "Wawrinka5/6;Lehecka7/7",
+    "full_available_serve_through_result": true,
+    "handshake_hug": [
+      245,
+      250
+    ],
+    "umpire_handshake": [
+      252,
+      255.7
+    ],
+    "do_not_start_at": 224,
+    "why": "224s misses actual first serve/return",
+    "real_pre_roll": {
+      "from": 222.4,
+      "to": 222.92,
+      "role": "previous point closeup only, not earlier matchpoint preparation",
+      "reason": "Complete existing visual fade before first available actual matchpoint toss; actual native visibility must be verified."
+    }
+  },
+  "extra_complete_point": {
+    "recommended_window": [
+      135.24,
+      150.36
+    ],
+    "source_scene_start": 135.24,
+    "first_source_frame": "Wawrinka near-side at toss/trophy, ball still in air before serve contact",
+    "set_score_before": "Wawrinka5/3 vs Lehecka7/3",
+    "small_point_column": "Original broadcaster omits point column for most rally. No evidence from these frames for30-40 or break point.",
+    "rally_end_approx": 148.48,
+    "next_scene150_36": "Next game shown with Wawrinka4/3 in second set; this exchange closes his hold",
+    "winner": "Wawrinka, inference from next game4-3 and play; no exact preceding point count asserted",
+    "complete_commentary": {
+      "start": 147.4,
+      "end": 150.28,
+      "en": "Oh, that's the best rally of the match.",
+      "zh": "这就是本场最精彩的回合！"
+    },
+    "avoid": [
+      "挽救破发点",
+      "30比40",
+      "具体拍数"
+    ]
+  },
+  "closing_commentary": {
+    "method": "Whole-source small.en/medium.en plus independently unprompted local cached small.en/base.en in short windows; beam8 no VAD no previous context. No models downloaded, no source retransmitted.",
+    "raw_full_models_defect": "medium.en loops/repeats at235–252; small.en loops222–230. Those synthetic repeats excluded; short windows independently recover closing commentary.",
+    "caption_candidates": [
+      {
+        "start": 234.94,
+        "end": 240.68,
+        "en": "Jiri Lehecka brings down the curtain on Stan Wawrinka’s career.",
+        "zh": "莱赫奇卡 为瓦林卡的职业生涯拉下帷幕",
+        "normalizations": "Proper names only from severe phonetic ASR misspellings; rest agrees with isolated small/base."
+      },
+      {
+        "start": 242.02,
+        "end": 245.6,
+        "en": "A suitcase of incredible memories",
+        "zh": "满满一箱 珍贵的回忆"
+      },
+      {
+        "start": 245.6,
+        "end": 250.2,
+        "en": "in a career that has spanned 23 years",
+        "zh": "横跨二十三年的职业生涯"
+      },
+      {
+        "start": 250.2,
+        "end": 253.96,
+        "en": "and whose shot-making has dazzled us for decades.",
+        "zh": "他的精彩击球 让我们惊叹了数十年",
+        "normalization": "whose for raw who’s/who; shot-making punctuation only"
+      },
+      {
+        "start": 255.14,
+        "end": 257.6,
+        "en": "But that all comes to an end this evening.",
+        "zh": "而这一切 都在今夜落幕"
+      }
+    ],
+    "suitcase_vs_showcase": "Whole small + isolated small twice + isolated base independently say suitcase; do not substitute showcase unsupported.",
+    "years_caution": "Original commentary says23; official farewell event describes24years2002–2026. Preserve source23 if quoted, avoid conflicting narration counting years or silently replacing source with24.",
+    "unresolved_ambient_announcement": {
+      "window": [
+        230.4,
+        235.1
+      ],
+      "status": "unclear crowd/court official announcement; different ASR guesses contradictory. Do not invent literal EN/ZH caption. Not claimed human-verified.",
+      "observed_transcripts": [
+        "The game is set match with the hitsker.",
+        "The game is so much different.",
+        "Okay, so much, look at that."
+      ],
+      "publication_scope": "Retaining point and natural court ambience is intentional; root/lead must not promote these ASR guesses to intelligible quote."
+    }
+  },
+  "coldopen": {
+    "recommended_window": [
+      255.1,
+      257.7
+    ],
+    "quote": [
+      255.14,
+      257.6
+    ],
+    "en": "But that all comes to an end this evening.",
+    "zh": "而这一切 都在今夜落幕",
+    "source_scoreboard_present": false,
+    "warning": "Actual final source mostly Lehecka foreground while Wawrinka behind; do not misidentify dark shirt as Wawrinka"
+  },
+  "corpora": [
+    {
+      "file": "small.en.json",
+      "sha256": "8c2106daeef35fcb7c9fa0990daddebb4ecdb4e262efafc6542d25539a973414",
+      "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773"
+    },
+    {
+      "file": "medium.en.json",
+      "sha256": "06fb4b3566eb406d3f4677d123e00766ae4a9b26f5dbd379aa05e7679b877deb",
+      "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773"
+    },
+    {
+      "file": "focused-small.en.json",
+      "sha256": "9facaa9c6ceb9237d21031cb9fafaea70f45cf65ce1b772b7bff8f1120cbf6e6",
+      "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773"
+    },
+    {
+      "file": "focused-additional.json",
+      "sha256": "ef5837c41c167dec2ac12427e96d7988f502e622c4c71a039e6962ff59996296",
+      "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773"
+    }
+  ],
+  "images": [
+    {
+      "file": "board-135.24.jpg",
+      "sha256": "412fc8cf623ff85588004d7014e802c51e6431f7a0600e479005eaf0780a920f"
+    },
+    {
+      "file": "board-135.44.jpg",
+      "sha256": "901dcb883a8da6542760dc2318c4667b2f077d3d28b270a9d7d355543289fadc"
+    },
+    {
+      "file": "board-148.40.jpg",
+      "sha256": "b57fc26e5f16c93fca625a51c0ff06d78701966baffd4e41a4fb5049ff8c5bce"
+    },
+    {
+      "file": "board-150.00.jpg",
+      "sha256": "25a9eb248712dd3803e5a3ade73f49198ee6d455d53cb58bc81c2bd248066ec2"
+    },
+    {
+      "file": "board-222.92.jpg",
+      "sha256": "270c9986120ad336cdb974c0433d8390badde120d019d0f4047b3ea147dab1cd"
+    },
+    {
+      "file": "board-233.48.jpg",
+      "sha256": "7c16c17bb294a1046ca57d8d22e0a20166c1bc90e3680b5e9b1b39ed4a9197e0"
+    },
+    {
+      "file": "exact-135.24.jpg",
+      "sha256": "689c1988f416279597997451b9e636ac529274bb1d8a67be78edb593c8f48ab3"
+    },
+    {
+      "file": "exact-135.44.jpg",
+      "sha256": "4d8b8aa029adcffcc29af6e3a8df5a87f6335802fa9e7df3ae103071bccdbf6c"
+    },
+    {
+      "file": "exact-148.40.jpg",
+      "sha256": "66ea68b86b9f3ab5c3f248b1a530898c200d65bb5cc385e3f01a5059d87cd1e8"
+    },
+    {
+      "file": "exact-150.00.jpg",
+      "sha256": "1d05d87023b6f79435f4788d098328dd5aedd8e0381eeb70db1b8f7d1077e657"
+    },
+    {
+      "file": "exact-222.92.jpg",
+      "sha256": "940cf8c79004af2383d01186810584bf183a78339762f38841196a163b516fec"
+    },
+    {
+      "file": "exact-233.48.jpg",
+      "sha256": "3e8c122e4aa531b13b4785fbd270ffa92812c890170b64a869153ca8ccf3ed19"
+    },
+    {
+      "file": "frames/000.00.jpg",
+      "sha256": "54825e1eda724f11dd24798570c5fe5bba983b5508dd56986a9d6af4fca1e253"
+    },
+    {
+      "file": "frames/008.00.jpg",
+      "sha256": "f97f757d1928d531c99aba5243fdaf19a5d55a6271bff476907770ffd4436fe1"
+    },
+    {
+      "file": "frames/016.00.jpg",
+      "sha256": "2b2467d3e6cfb89433d386933fcef5976b6ec24d29c2add71577ad436bc80bf1"
+    },
+    {
+      "file": "frames/024.00.jpg",
+      "sha256": "1cf0765736cd6f0678cf678c5580dc806c2647136000205d57f60c5f2d1fe934"
+    },
+    {
+      "file": "frames/032.00.jpg",
+      "sha256": "af91dc50040bef007d10a30afa4a4ca9520962a11c6a1f784fd5d8df41173597"
+    },
+    {
+      "file": "frames/040.00.jpg",
+      "sha256": "0d0af929a1b93216d220640e7ef731150c9b0bd7e6411440a85b8e7dc527e61e"
+    },
+    {
+      "file": "frames/048.00.jpg",
+      "sha256": "112d991babbc4780c26b5ea4cb1cced99500c8c46f1839c014b84f47d49c4539"
+    },
+    {
+      "file": "frames/056.00.jpg",
+      "sha256": "f5ae3abd3121b1195e9482e57357a375505166d7e5217e7c015027940b10ca04"
+    },
+    {
+      "file": "frames/064.00.jpg",
+      "sha256": "509cb227ce08e76cd5cbd877ca6793334ec02a37767b27f1455dc25098aa7c32"
+    },
+    {
+      "file": "frames/072.00.jpg",
+      "sha256": "6ef1f988892beadf206c3f1843c80bd653741972547a4d9de15342dd912a4709"
+    },
+    {
+      "file": "frames/080.00.jpg",
+      "sha256": "06b279a4bbce62c1fba60994a4e2a536105fe22f68139d739b51952ab21dc20b"
+    },
+    {
+      "file": "frames/088.00.jpg",
+      "sha256": "46347046b9d87340aa09957cdccf269dd38815b73c9c031316535210f91517af"
+    },
+    {
+      "file": "frames/096.00.jpg",
+      "sha256": "f05a1901b01116ba5d0fb13b8cbc10c8f188c6c383603060b382ed462cf824a8"
+    },
+    {
+      "file": "frames/104.00.jpg",
+      "sha256": "140f149bb2bd072a22ac6181139f70bb6d5c6291dac82ff051689ddbbede028c"
+    },
+    {
+      "file": "frames/112.00.jpg",
+      "sha256": "77de37c616958668415471aae081b484e97e0064fa9589b375dde4092d1827a4"
+    },
+    {
+      "file": "frames/120.00.jpg",
+      "sha256": "dd5acefc9583b80169b551637d74e6264367278fb92339e1fee16e58ce4a4dbb"
+    },
+    {
+      "file": "frames/128.00.jpg",
+      "sha256": "e56f305da33e79d50e4d6dc8283271d4a4bdf892a7d570bab3c58994c2782e70"
+    },
+    {
+      "file": "frames/136.00.jpg",
+      "sha256": "8bb063cf70ff57c033ad65429bd9d2248fa3fb023dd27335b328e91037006bca"
+    },
+    {
+      "file": "frames/144.00.jpg",
+      "sha256": "4a437bf7c55f7c7cc927b3d9bdecea3330925c8b513696c4d5ea29d2cb0f9a14"
+    },
+    {
+      "file": "frames/152.00.jpg",
+      "sha256": "16ec2c2c025ac4e2cba9e0fd05cd3a15b4cb3dbaef01860d05bc0f7c5eb07024"
+    },
+    {
+      "file": "frames/160.00.jpg",
+      "sha256": "b7a27204d36c6f5dc0c50a02962085856bbc810b1ca2b280de8d0927054dacac"
+    },
+    {
+      "file": "frames/168.00.jpg",
+      "sha256": "3064810f85a7e2dc800a34257671af9b8357ba13e80753e9576dfeb7dd933fda"
+    },
+    {
+      "file": "frames/176.00.jpg",
+      "sha256": "a460dd26fce3037be9c53d2e3dbd7b36b6a6cc07e260db2f3ecc45018f023f35"
+    },
+    {
+      "file": "frames/184.00.jpg",
+      "sha256": "f0fa600d0607664bc71fbabf695648e8b326d44c8145a29ad16488bfe4c8cec8"
+    },
+    {
+      "file": "frames/192.00.jpg",
+      "sha256": "b9727c99a25c3748cb92ff7d6f0c5aca9ce44f3722ee7a0853dcdbb08fbd8163"
+    },
+    {
+      "file": "frames/200.00.jpg",
+      "sha256": "85dd0ef2a38cd74bab1282c5a92d2151d5a6d4e861d56cf7eb90dae1e9b1ca17"
+    },
+    {
+      "file": "frames/208.00.jpg",
+      "sha256": "99f7f86e193dce7bd09c092b4f339d86b87ca3971ba31d476963e341ab694aba"
+    },
+    {
+      "file": "frames/216.00.jpg",
+      "sha256": "f9274934ad4a9ae04c22a01fe79943ea10a3f437d5d6d6820fedda8cffea6be4"
+    },
+    {
+      "file": "frames/224.00.jpg",
+      "sha256": "2592cef368a7c268872d5fec220bc35c341c9aba4d7f8e20b874701ce0093de0"
+    },
+    {
+      "file": "frames/232.00.jpg",
+      "sha256": "f269ff5fe4d9d85fb562cc982ed746a4dbb19b2000ffc7ac9c313c44d91a118c"
+    },
+    {
+      "file": "frames/240.00.jpg",
+      "sha256": "199ba9f753674545a336f3d03484473b4ad14148fbed34ed7c4c7b59c8acd217"
+    },
+    {
+      "file": "frames/248.00.jpg",
+      "sha256": "4562d3158b690948fb86850b276d1bcabf59dc7597e459e84c7fe7ea58676b42"
+    },
+    {
+      "file": "frames/256.00.jpg",
+      "sha256": "3d8458a733119965054afaa744af6476fb3b2b9faf9a29efc3e8a0d52853d559"
+    },
+    {
+      "file": "frames/264.00.jpg",
+      "sha256": "f5819ce752fc7000a52a0f9ecde353b2b57f0f54dc59af71d4066c3af49fdc7d"
+    },
+    {
+      "file": "frames/272.00.jpg",
+      "sha256": "4c2a6396bcaab97b8c26c69e59a1157fc67afe1edf81aa306ae86031a057b6df"
+    },
+    {
+      "file": "keypoint-frames/132.00.jpg",
+      "sha256": "172f0f824d10db72e51fa7db8c805d0644f1497031ad8470d437ce42733d959d"
+    },
+    {
+      "file": "keypoint-frames/133.00.jpg",
+      "sha256": "2073c1593ea9fa9cd26e33f2a2056f72a3138ec7073574639f810a6d93ea8713"
+    },
+    {
+      "file": "keypoint-frames/134.00.jpg",
+      "sha256": "c425e81cafef87b0254eedecaf398dfc5952211d58831a2700a16eee51d1bffa"
+    },
+    {
+      "file": "keypoint-frames/135.00.jpg",
+      "sha256": "8e6ca61bf00cecbba4928aaebc30c088762f2355360525e438b5d1d011f6312e"
+    },
+    {
+      "file": "keypoint-frames/136.00.jpg",
+      "sha256": "8d0e7a05ba75afc86435345131cfb99f21fec71671a1c61d572ff33e514c07ee"
+    },
+    {
+      "file": "keypoint-frames/137.00.jpg",
+      "sha256": "a326423aed227010568d3fbf260ec8ba3dfcccf68130d4f9263bb6b4304b00e8"
+    },
+    {
+      "file": "keypoint-frames/138.00.jpg",
+      "sha256": "714c10f253b29b553fc9af32b41dbd1be847c867a362f62a02fb452a9b333ace"
+    },
+    {
+      "file": "keypoint-frames/139.00.jpg",
+      "sha256": "14720d3586eb6d627a689f31fce46cef6ec6e08a6a27d5a5d267c23e40d9cc49"
+    },
+    {
+      "file": "keypoint-frames/140.00.jpg",
+      "sha256": "7d2eb15f283004d3f74a10e4037db0349cf0bf2b04b198ed6c7115aa4b7284e6"
+    },
+    {
+      "file": "keypoint-frames/141.00.jpg",
+      "sha256": "0bed75bbbaf2dd262e935a4b4ea6accd1d033306d6a23b2516edabb8d5d301b8"
+    },
+    {
+      "file": "keypoint-frames/142.00.jpg",
+      "sha256": "49ce40195a745cab658464b636e758d1ee20c9502427cd3d0cae4512fee09b6b"
+    },
+    {
+      "file": "keypoint-frames/143.00.jpg",
+      "sha256": "3a5b155e98eaf1952a19435df0dd39da8f84a2fd4a8f3136f86df411d3276740"
+    },
+    {
+      "file": "keypoint-frames/144.00.jpg",
+      "sha256": "99caa1e44cbe61d50c0afedf608289ea94cf3d65b46b77e3c8412bdbc32ceac7"
+    },
+    {
+      "file": "keypoint-frames/145.00.jpg",
+      "sha256": "82ba9380419da6ddb17b4146e1084de1b1ae2c70c6dba0bc1835c2a3b0ac6a8d"
+    },
+    {
+      "file": "keypoint-frames/146.00.jpg",
+      "sha256": "a61c2a0ca981cd3ed2184fccc1e1d482e02ac7c39588d9f26539f248b2ae66fd"
+    },
+    {
+      "file": "keypoint-frames/147.00.jpg",
+      "sha256": "8d0824fdc68ae6e7949ec6f55086954c3980978689350c5fa74a2ee737a4d515"
+    },
+    {
+      "file": "keypoint-frames/148.00.jpg",
+      "sha256": "cc752e057e155ae81acaa722c6200ab03892ae817f0b2d43b053cfb96b89b99b"
+    },
+    {
+      "file": "keypoint-frames/149.00.jpg",
+      "sha256": "58e556e33d4cc08c9262d25d8aeacd478793fd0dfde7b11978c812bdda908e70"
+    },
+    {
+      "file": "keypoint-frames/150.00.jpg",
+      "sha256": "5fb64bdc2262e2a0a2ce8120948765d978e4889589b099bf0a531a3dded38e53"
+    },
+    {
+      "file": "keypoint-frames/151.00.jpg",
+      "sha256": "723c71ae53b602bafe9772fa7f7bf8c26baa677fe6235435c39d1467b097100e"
+    },
+    {
+      "file": "keypoint-frames/222.88.jpg",
+      "sha256": "3336bff4526f44ca908fa4ae790ab987a475111aa41a2251e0808695bb36ee45"
+    },
+    {
+      "file": "keypoint-frames/222.92.jpg",
+      "sha256": "7e1c2ec9989dd77c195bfb108f826a20b7af47eb1e2b498a7bc6a9b693dfb82e"
+    },
+    {
+      "file": "keypoint-frames/222.96.jpg",
+      "sha256": "68d02dbf95b6d7ee6395031e5e6f550cf06bd387afd0cb1126a0a5592cfe6e1a"
+    },
+    {
+      "file": "keypoint-frames/223.00.jpg",
+      "sha256": "deccdf242fc7c6dc57aa3b8562f3a94ced3f249cb35eb316c07881b985b59861"
+    },
+    {
+      "file": "keypoint-frames/223.04.jpg",
+      "sha256": "50da318485f469358839874ca54ce4baac0f7cf0b7ea283a0b4f5fede0f764b6"
+    },
+    {
+      "file": "keypoint-frames/223.08.jpg",
+      "sha256": "abb72f7e82b894891049c03470a983014f9ab8b7e8a7ace99f4f2d55e4e81cc4"
+    },
+    {
+      "file": "keypoint-frames/223.12.jpg",
+      "sha256": "4be74c61b860f699d8565e799980cd90439980e3caee879b9882e1ecdfbee3ad"
+    },
+    {
+      "file": "keypoint-frames/223.16.jpg",
+      "sha256": "a6ef852f9d2605307458a771bae865d74fedf00e7da97b9a29f07f0e8a352e68"
+    },
+    {
+      "file": "keypoint-frames/223.20.jpg",
+      "sha256": "4070d36d8952708d12dbf40dea8e824e894f9dc4c0a38bf6bf3f7539a9c68b35"
+    },
+    {
+      "file": "keypoint-wall-1.jpg",
+      "sha256": "bff926a0b5347d29ed675af64027ddca6d039368456b20473acaa239243acdd3"
+    },
+    {
+      "file": "keypoint-wall-2.jpg",
+      "sha256": "2c02e6f2dc5ed26f920c65444de98b5cc8dd757418f17cb4d88970053d79ede9"
+    },
+    {
+      "file": "keypoint-wall-3.jpg",
+      "sha256": "dc475e8a2aba890113d476770d9985a98fd3d4c44743173b0999093493bd98a3"
+    },
+    {
+      "file": "point-frames/219.00.jpg",
+      "sha256": "d223abf1bcc5db3bfd74efb1eba24582d390f9e53f00d2d584d4370abfb1f9a6"
+    },
+    {
+      "file": "point-frames/220.00.jpg",
+      "sha256": "4c044484f1599337d7e0c6a55505049e52f1aac6ab54f842ba018b149d398eb3"
+    },
+    {
+      "file": "point-frames/221.00.jpg",
+      "sha256": "22286020c15ec76c865874f6d6f71308ab8acc2209a128ff03950cb0f43711a5"
+    },
+    {
+      "file": "point-frames/222.00.jpg",
+      "sha256": "e6a8e8f29851d866820c33d55e33aca6465de23868eb0142d24ccf83f4d3fe24"
+    },
+    {
+      "file": "point-frames/222.80.jpg",
+      "sha256": "b4c1e952a25d7bb7f84336846bd57719693f6a12f91240683c9e591439675b84"
+    },
+    {
+      "file": "point-frames/223.20.jpg",
+      "sha256": "4070d36d8952708d12dbf40dea8e824e894f9dc4c0a38bf6bf3f7539a9c68b35"
+    },
+    {
+      "file": "point-frames/223.60.jpg",
+      "sha256": "289363420775be8929e326c41ff75642272f5b4a88edeccb5ca298af30c1ae6e"
+    },
+    {
+      "file": "point-frames/224.00.jpg",
+      "sha256": "574e39a5805eca655dc67e3c5dd9038108df91d804fa279acf3aa14fb651415f"
+    },
+    {
+      "file": "point-frames/224.40.jpg",
+      "sha256": "fa599cfaa384dc1ccd0c649ffca9df3d9397647a29b4424ca6ddae2fd757b4d9"
+    },
+    {
+      "file": "point-frames/224.80.jpg",
+      "sha256": "a0e9f60f9977afc1fde9321a07f8ccebbb42496b359adbcf9d85b1d07992373c"
+    },
+    {
+      "file": "point-frames/225.20.jpg",
+      "sha256": "582e700ba49556721ec5789684fc700ac63bb9b7fc3dc3eaf2165f2162d3cea8"
+    },
+    {
+      "file": "point-frames/226.00.jpg",
+      "sha256": "988778e329e8c790272029af276edb86d5227b2bc3a457079d239153c6f3e1fe"
+    },
+    {
+      "file": "point-frames/227.00.jpg",
+      "sha256": "fd3018f8ae306464d67801b5bb03582943d13f28b54ca9a0403964c961dcb4ad"
+    },
+    {
+      "file": "point-frames/228.00.jpg",
+      "sha256": "21c613bf658ec5dbe8c3fc61ed0984d8ff4a929ec9341fe3214b950f5163412b"
+    },
+    {
+      "file": "point-frames/229.00.jpg",
+      "sha256": "548f4d1505ddc95b3d6b4021f28a75f5fef173158eea7252223aa645e6d748ee"
+    },
+    {
+      "file": "point-frames/230.00.jpg",
+      "sha256": "ef640c16ba6c5942ae87872f3f22e6c9ad02628de4bbaf24d4d2983d4b0544d1"
+    },
+    {
+      "file": "point-frames/231.00.jpg",
+      "sha256": "5fe07a3fbdb635c039c44d7f5ead803b89ce93feb7abc088a56c050cc325730c"
+    },
+    {
+      "file": "point-frames/232.00.jpg",
+      "sha256": "40ec838434eb919fc120747e09d0fa9de2c2a472b52db47ed55a427657b10dd1"
+    },
+    {
+      "file": "point-frames/233.00.jpg",
+      "sha256": "ad23ba2440272a8f5c198b8c48d72999294e33f10579de8d8feb670556e5fdeb"
+    },
+    {
+      "file": "point-frames/234.00.jpg",
+      "sha256": "231607b01d59f684f878abbfa087bfcf360a30e2b5456b04590418e581f0e9eb"
+    },
+    {
+      "file": "point-frames/235.00.jpg",
+      "sha256": "6e204378df25151e74472b722a1eee2b01e59b3711b81cab1913a1c82855c65c"
+    },
+    {
+      "file": "point-frames/236.00.jpg",
+      "sha256": "33b7a63afe443cbde6226dd45281015b2d2354c6762cc73bdac19f304ccc9917"
+    },
+    {
+      "file": "point-frames/238.00.jpg",
+      "sha256": "18745932effd08f29b01f9ec1b0ed6e3370aaa337d061bd840eb5ba54f1d36fc"
+    },
+    {
+      "file": "point-frames/240.00.jpg",
+      "sha256": "f0bf31d73ba77676fb1e85917a0dc2777f2d17731d098b5c19d9e3a3f3e9c229"
+    },
+    {
+      "file": "point-frames/242.00.jpg",
+      "sha256": "9359428421f332e3c36db82813ef82a7ccad6e74f49a819c4599c608019b51e9"
+    },
+    {
+      "file": "point-frames/246.00.jpg",
+      "sha256": "d582bf4aa183cc38737b94826d6c093f7b378911a0a5097a831ba3b2bf87a6fe"
+    },
+    {
+      "file": "point-frames/250.00.jpg",
+      "sha256": "ba3d29619e1b0fb01cf1839605c62c2070144fb032108aaf5db946212352d975"
+    },
+    {
+      "file": "point-frames/254.00.jpg",
+      "sha256": "6a5fec82adf847a89e817b4360f73e83ec36108d048568ca8bffb37839e25586"
+    },
+    {
+      "file": "point-frames/257.00.jpg",
+      "sha256": "f321b4a3aeffa1dbec28fbc5382e454536b1c1d56e14a2f861d2d458675b5597"
+    },
+    {
+      "file": "point-frames/258.00.jpg",
+      "sha256": "63e909ae75d9b46ba6dc49dd09fb685fc5c11dab12d79dad9fb64452a44321da"
+    },
+    {
+      "file": "point-frames/259.00.jpg",
+      "sha256": "94c6450b6e7bcb0dafdb2ed63fdac1492e5fcfe63b3ec44b3264c84c91fbb55e"
+    },
+    {
+      "file": "point-frames/260.00.jpg",
+      "sha256": "692e2366123835b512abb5b72f36321cbf3c4b04c97296533b653b6a0fb73933"
+    },
+    {
+      "file": "point-wall-1.jpg",
+      "sha256": "bf913c3ff73a2707fb26dade64b43e54a112bb39d1c75f866ee79457d1a32de3"
+    },
+    {
+      "file": "point-wall-2.jpg",
+      "sha256": "5831bdc0daaeee689578cff22d7ed994b573362995e92108e3166f7e22dad9d4"
+    },
+    {
+      "file": "point-wall-3.jpg",
+      "sha256": "b9a8513910326e7a34b277ce348f88e2cc236112fead0a1fbf57eac7c1569afc"
+    },
+    {
+      "file": "wall-1.jpg",
+      "sha256": "6978908950ac024f4dccadd56310f77cb1846b41dfcb4ccb85375b11cd41522d"
+    },
+    {
+      "file": "wall-2.jpg",
+      "sha256": "95afaa75d3f943eb3517b4fb3a7d1b4d99aaf6552355d721e4ce0254e9a60b32"
+    }
+  ],
+  "status": "pass_with_explicit_ambient_speech_uncertainty",
+  "human_listening_claimed": false,
+  "final_film_or_voice_approval": false,
+  "short_quote_audit": {
+    "evidence": "focused-short-quotes.json",
+    "sha256": "08eaf67404dd89b27ad8e139800c635ab2afb42e3a0a4a17055c52a893a8481d",
+    "confirmed": [
+      "Got down with the leg (singular)",
+      "Strong finish from Jiri Lehecka",
+      "That is such an awkward shot to try and find",
+      "Oh what a combination"
+    ],
+    "rejected_pending_clarity": {
+      "window": [
+        176.58,
+        179.76
+      ],
+      "guessed_text": "touch of class",
+      "reason": "small whole/local gloss, medium across, base touch-of-cross; class only unconfirmed inference. Do not insert guessed quote."
+    },
+    "extra_point_commentary_timing": "isolated small/base147.78–149.38; quote end149.50 improves sync compared with whole ASR150.26 stretch"
+  },
+  "entry_visibility_fix": {
+    "status": "audio_plan_rebound_entry_visibility_fix_requires_actual_preview_and_new_master",
+    "reviewed_at": "2026-10-28T00:15:07.329340+00:00",
+    "old_plan_sha256": "1cd221d2d84bb2e953ce645ba85fa18eaf6aac2a21e1ab3fc60d9282efbdc461",
+    "new_plan_sha256": "276929c8cb1414bd21fc356dbfebee374bd5d7f244955757463889445c1fa5b7",
+    "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+    "changed_packets": [
+      {
+        "index": 11,
+        "old_path": "data/audio_reviews/wawrinka-last-match-2026/11-132.68-135.10.json",
+        "new_path": "data/audio_reviews/wawrinka-last-match-2026/11-132.68-135.24.json",
+        "old_sha256": "6a03151e1f0b03792b4e6c703cf6828bb8c18548c7c7d46a012bd528ec4c5a32",
+        "new_sha256": "cca2ec325bd9086eac30e91c21ac5564588eaab0e9e45224ffb4507391594e47"
+      },
+      {
+        "index": 21,
+        "old_path": "data/audio_reviews/wawrinka-last-match-2026/21-222.92-258.40.json",
+        "new_path": "data/audio_reviews/wawrinka-last-match-2026/21-222.40-258.40.json",
+        "old_sha256": "cf97bedd8201c8f72f5c3b29f0cdc801fbbcf9014b774441f4641502d8b4ed6a",
+        "new_sha256": "133d0b77866b4cb7e9c9e7a3b9ac5f450d7ab3bb992e0f6d88783e39af31a43b"
+      }
+    ],
+    "unchanged_packet_byte_count": 15,
+    "all_foreground_utterances_absolute_source_times_and_translations_unchanged": true,
+    "narration_change": {
+      "index": 10,
+      "old": "想把比赛带下去，每一次向前压，都得自己争。",
+      "new": "想把比赛带下去，每一次向前压，都要自己争。",
+      "reason": "Native pronunciation gate dei3 unmeasurable; only exact authorized rewrite accepted"
+    },
+    "other_narration_texts_unchanged": true,
+    "reviewed_windows": 17,
+    "bilingual_cues": 12,
+    "actual_source_binding_require": "pass",
+    "no_new_human_listening_claimed": true,
+    "old_master_f8ec137c_visual_status": "fix_required unchanged",
+    "short_previews_and_new_master": "Separate real visual evidence required; metadata green is not visibility approval."
+  }
+}

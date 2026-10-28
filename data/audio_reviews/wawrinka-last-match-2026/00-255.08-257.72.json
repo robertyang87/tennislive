@@ -1,0 +1,29 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-mo_Aust_pN0/mo_Aust_pN0.mp4",
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "method": "asr_cross_checked",
+  "reviewer": "independent_assistant /root/sun_source_audio_audit: full exact source contact sheets and short-window unprompted ASR cross-check; no human-listening claim",
+  "reviewed_at": "2026-10-27T23:37:48.358276+00:00",
+  "reviewed_from": 255.08,
+  "reviewed_to": 257.72,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 255.14,
+      "end": 257.54,
+      "en": "But that all comes to an end this evening.",
+      "zh": "但这一切 都将在今晚落幕"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/wawrinka-last-match-2026/source-asr/small.en.json": "8c2106daeef35fcb7c9fa0990daddebb4ecdb4e262efafc6542d25539a973414",
+    "data/evidence/wawrinka-last-match-2026/source-asr/medium.en.json": "06fb4b3566eb406d3f4677d123e00766ae4a9b26f5dbd379aa05e7679b877deb",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-small.en.json": "9facaa9c6ceb9237d21031cb9fafaea70f45cf65ce1b772b7bff8f1120cbf6e6",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-additional.json": "ef5837c41c167dec2ac12427e96d7988f502e622c4c71a039e6962ff59996296",
+    "data/evidence/wawrinka-last-match-2026/source-asr/focused-short-quotes.json": "08eaf67404dd89b27ad8e139800c635ab2afb42e3a0a4a17055c52a893a8481d"
+  },
+  "evidence": "Original full-source small.en/medium.en have identical verified source SHA. Relevant exact selected windows reviewed against whole-source word times and independently re-decoded local small.en/base.en without text prompts. Proper names only normalized against official match identity; whose/shot-making punctuation normalized. Full-source ASR loops are explicitly rejected, never treated as real speech. English/ZH reviewed for semantic fidelity and cue boundaries; no manual hearing asserted.",
+  "human_listening_claimed": false,
+  "visual_window_note": "Same-match post-match closeup; actual source scoreboard absent. Preserve full independent But...evening sentence; no prior has-dazzled tail enters this window."
+}
