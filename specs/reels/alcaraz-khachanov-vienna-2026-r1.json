@@ -256,10 +256,10 @@
   "stat_card_full_canvas": true,
   "scoreboard_profile": "atp",
   "scorebox": [
-    96,
+    98,
     920,
-    520,
-    1032
+    519,
+    1029
   ],
   "sources": {
     "main": "https://github.com/robertyang87/tennislive/releases/download/source-vI40Uo0zDuk/vI40Uo0zDuk.mp4"
@@ -459,5 +459,6 @@
     "extra_rally": "236.6-248.8 full tie-break 4-5 point; Khachanov closes net, Alcaraz passing shot to5-5",
     "confidence": 0.91,
     "external_model_pass_claimed": false
-  }
+  },
+  "_scorebox_why": "采用本源probe实际扫描的ATP标定框：1412帧中1327帧检测到板，逐帧宽度由原生板识别决定。"
 }
