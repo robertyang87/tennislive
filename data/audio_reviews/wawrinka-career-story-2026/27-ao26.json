@@ -1,0 +1,47 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=ChH5YbyWSPk",
+  "source_sha256": "0a5a2e9837ce1da41991ca55672cc4db3e54341321dad9c44595c5a8c829f8d9",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 589.6,
+  "reviewed_to": 601.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 589.92,
+      "end": 592.86,
+      "en": "And the reason why I was still playing is because of you,",
+      "zh": "我还在打 是因为你们"
+    },
+    {
+      "start": 593.04,
+      "end": 596.5,
+      "en": "because of the love of the game, the emotion you can give me.",
+      "zh": "因为热爱 因为你们给我的感动"
+    },
+    {
+      "start": 597.18,
+      "end": 601.04,
+      "en": "I'm sad to leave, but it's been an amazing journey.",
+      "zh": "要走了很难过 但这一路太精彩"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/ChH5YbyWSPk-full-small.en.json",
+      "sha256": "45c2dcaa5eac71d6b6c901484906636a58708c6314f637557222b92c6e038555",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/ChH5YbyWSPk-full-medium.en.json",
+      "sha256": "83b601498d039cd6b796776315ffb9da91af11cb28ccfad80e64fb204babbc4d",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "澳网官方『Stan Wawrinka's Final Point and Retirement Speech』：赛后场上告别致辞（瓦林卡本人英文原声）。589.00 上一句说完之后起，601.04 句尾收住、601.56 下一句之前。"
+}

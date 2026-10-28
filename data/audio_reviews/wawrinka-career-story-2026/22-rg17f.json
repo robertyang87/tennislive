@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=QNgE9-0sNjQ",
+  "source_sha256": "3069ad741c093f1510dbc856c6395ac02aaaf03c4873f931d1b311adb7e75b60",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 286.6,
+  "reviewed_to": 316.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/QNgE9-0sNjQ-full-small.en.json",
+      "sha256": "16de2ea918bdbedb4ac1b1072439d427d6867085e74deaaf2c819aabebc7cf47",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/QNgE9-0sNjQ-full-medium.en.json",
+      "sha256": "810a51e617229fc5a47380eb461152b5f0cadbbd54db70b7c664b49b9d0c9aeb",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方『Rafael Nadal v Stan Wawrinka Highlights - Men's Final 2017』：冠军点回合（287–301 秒）、纳达尔倒地、网前两人拥抱；317 纳达尔举臂之前收住。",
+  "no_foreground_english_reason": "窗口内 medium 只有 300.80『Oh』，small 是『I love you』『Thank you very much』，两档不一致、集锦无解说，判为现场声幻听，无前景英文。"
+}

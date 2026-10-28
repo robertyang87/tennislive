@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=91kNzC5OeWU",
+  "source_sha256": "6b9fe7b4c1f0dc0cb8837eeb7973b4ae5a4b304cb727a575644c70f6832cda35",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 89.8,
+  "reviewed_to": 108.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/91kNzC5OeWU-full-small.en.json",
+      "sha256": "181e7674de9cc3cc1a7afb7649d527481abf5e24f551b8e99e19d60a9e7a47d7",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/91kNzC5OeWU-full-medium.en.json",
+      "sha256": "c9807ebca62535d59f81273002e1bb781bc49112e90e6c28d3a03f40242f9fa0",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方『Stan Wawrinka v Roger Federer Highlights - Men's Quarterfinals 2015』：赛点回合（90–97 秒，记分条抢七）、他走向包厢、网前和费德勒握手；109 黑场之前收住。",
+  "no_foreground_english_reason": "窗口内 medium 只有 108.62『Thank you』，small 只有 104.94–107.02『He's got it』，两档不一致、集锦无解说，判为现场声幻听，无前景英文。"
+}

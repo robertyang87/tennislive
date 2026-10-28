@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=jnAwoyYygAw",
+  "source_sha256": "a73d6ce824c98f4374cb16d5741cd6870213caecaa55b793afe84c42780f1034",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 295.6,
+  "reviewed_to": 321.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/jnAwoyYygAw-full-small.en.json",
+      "sha256": "1b034b115296ada6d314526fa466e8d4340211a72e13d85ee822264ecef1a764",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/jnAwoyYygAw-full-medium.en.json",
+      "sha256": "8fba943fb5ed261fbd8799059089dbeffb0576b27d56aec4d4b1d4546ac8fca7",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方『Stan Wawrinka v Andy Murray Highlights - Men's Semi-Final 2017』：赛点回合（296–307 秒）、他双臂张开、团队起立、网前和穆雷握手；323 片尾转场之前收住。",
+  "no_foreground_english_reason": "窗口内两档互不一致：medium 只有『Thank you so much』×3（307–318），small 是『1,2,3』『Thank you very much』，判为观众声与球场广播幻听；集锦本身无解说。"
+}

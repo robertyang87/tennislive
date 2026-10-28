@@ -1,0 +1,29 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=f-KeK2Zt8j8",
+  "source_sha256": "8165b226933d8ca46f54c52fb302f4dedffee0a674b528608da4f89fbd71fc47",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 50.6,
+  "reviewed_to": 64.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/f-KeK2Zt8j8-full-small.en.json",
+      "sha256": "8307b56eb352e289efb3478998f477e370618adc1bdd0563c0dc1be3bcce3f25",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/f-KeK2Zt8j8-full-medium.en.json",
+      "sha256": "7af471a9bbb389acba9be211b23b6416096f6d27102d02258815d74b0abb6087",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "奥林匹克官方频道『Tennis - Men's Doubles - Beijing 2008』：金牌点回合（记分条 5-3 40-15，51 秒起）、两人跳起相拥、领奖台；64.5 升旗镜头之前收住。",
+  "no_foreground_english_reason": "全片两档转写互不一致：medium『3, 2, 1, Go!』『Now we've got it』，small『We'll be right back』，没有一句两档相同，判为观众声幻听；集锦本身无解说。"
+}

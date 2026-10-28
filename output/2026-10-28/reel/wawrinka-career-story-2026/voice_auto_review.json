@@ -1,0 +1,1310 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "a1dfedfe991adb4001768a1901477230a7c02653dc844f757a8b6c3c23081e74",
+    "render_inputs_sha256": "11eef26b4d71127c7784d36b4c4b507eabe6c87ed7afd584ab4891d9c712db77",
+    "spec_sha256": "a367d18b5752ad7afdae7c8386f1656a8f17a77fa47505c4f74d0d1449894df0",
+    "film_sha256": "dc6713b77b5c68c9ac7e0058df5e8b2421df064c5881f4490fa01f7659e478a5",
+    "inventory_sha256": "6bd95645877190b9ed29e3b4b61066049328b1daeb6ba5bec6dc3ee75533f052"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-28T00:48:44+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:04bb77a0b9a7dec5341c15ee4d06326c406ec8ca4c112dcc7b1de5fb82685016",
+      "audio_sha256": "be779f8c2060c29eae68ac91fc7571109464666c3a9ce6bde3ec5fc97490d96c",
+      "pass": true,
+      "result_of": "bundle:04bb77a0b9a7dec5341c15ee4d06326c406ec8ca4c112dcc7b1de5fb82685016"
+    },
+    {
+      "id": "bundle:0622826db4690cde3e259689e6d48d9c0b007d539cc6d6611be69e02c7ba2304",
+      "audio_sha256": "eb78b191b1b79aca712c8792f9b89e203ebbf3b529773bf4923b11521945eae8",
+      "pass": true,
+      "result_of": "bundle:0622826db4690cde3e259689e6d48d9c0b007d539cc6d6611be69e02c7ba2304"
+    },
+    {
+      "id": "bundle:0655aa8775834c36fb5474ffacd7446fd90ee14005218cb109abcc8807d01cf4",
+      "audio_sha256": "8ef237c48564dbaa0ba58347736e444e9725237cc0bce63e3076e4a5127ff10f",
+      "pass": true,
+      "result_of": "bundle:0655aa8775834c36fb5474ffacd7446fd90ee14005218cb109abcc8807d01cf4"
+    },
+    {
+      "id": "bundle:085e0f6c1a277d5e689ec6c32287c0d9b96f67ce0bad26d84e39ba25456c36cb",
+      "audio_sha256": "de867cfc500465af85c42668aec9c8926fa475448b7d51a694a96bbaebbc1170",
+      "pass": true,
+      "result_of": "bundle:085e0f6c1a277d5e689ec6c32287c0d9b96f67ce0bad26d84e39ba25456c36cb"
+    },
+    {
+      "id": "bundle:0a608b536ae8eef53fa7c27ea88a3b5cd2e63bb796e83ab7f35eb6d6af84059d",
+      "audio_sha256": "e104909775b08d0175888c3edbd7b239fb917353366bb19167c9b77eac299114",
+      "pass": true,
+      "result_of": "bundle:0a608b536ae8eef53fa7c27ea88a3b5cd2e63bb796e83ab7f35eb6d6af84059d"
+    },
+    {
+      "id": "bundle:0b3fe91847511338b6e2c2af251ba9f5361d0cd1c3ae0063438c9ed6bf094c8e",
+      "audio_sha256": "8cd2c3c7d06b5f468d1c5317a2c9ded58864af0bd634ac68c91f3a02c484a0a3",
+      "pass": true,
+      "result_of": "bundle:0b3fe91847511338b6e2c2af251ba9f5361d0cd1c3ae0063438c9ed6bf094c8e"
+    },
+    {
+      "id": "bundle:1febdf10b2aab154c70a3332ae8b531e503d90d824aa27fbab3f6ed535e51288",
+      "audio_sha256": "7ebd48d0974ff830ec291a9dd840a755c5a425a9fc0f569510eee9838bce550c",
+      "pass": true,
+      "result_of": "bundle:1febdf10b2aab154c70a3332ae8b531e503d90d824aa27fbab3f6ed535e51288"
+    },
+    {
+      "id": "bundle:20e05ef31f8f89cabc2c8efbff14a2de3fdeb372ecf90c54a4eb433a452f97db",
+      "audio_sha256": "c555b892620efa6931ff2b461df0d59c85465230e67dbced71c76dffe41f3074",
+      "pass": true,
+      "result_of": "bundle:20e05ef31f8f89cabc2c8efbff14a2de3fdeb372ecf90c54a4eb433a452f97db"
+    },
+    {
+      "id": "bundle:311d559526935ade171eee2247aa869244ac2ea54f96b11ea2fe6fa11cf4b60a",
+      "audio_sha256": "5b7376367cf722c64494f2a058272cd1a9007071a1ff4b7caa0cfcf505e69105",
+      "pass": true,
+      "result_of": "bundle:311d559526935ade171eee2247aa869244ac2ea54f96b11ea2fe6fa11cf4b60a"
+    },
+    {
+      "id": "bundle:327de31a4b272d5d7377e39b506fef5278d3148edc528306e60e824a3a5cfef6",
+      "audio_sha256": "9e0ffc98e4b7e9aadb96fae4c97e29c0dfc92e72b62851b03e271695bee8c94c",
+      "pass": true,
+      "result_of": "bundle:327de31a4b272d5d7377e39b506fef5278d3148edc528306e60e824a3a5cfef6"
+    },
+    {
+      "id": "bundle:56572eaada17a50967662eb2f8c0fb1d7815448993747ba3a5462e4751cad397",
+      "audio_sha256": "48da029b712522b805e6800b39223b634f013b80ba5eb27cd86953ef72f768c1",
+      "pass": true,
+      "result_of": "bundle:56572eaada17a50967662eb2f8c0fb1d7815448993747ba3a5462e4751cad397"
+    },
+    {
+      "id": "bundle:5d38ec3819c74db634bb477ab9f3982d336d4f70a0b254039ba01ec2369e3f0e",
+      "audio_sha256": "aeaeaaed9207e3965bc998f748b82b4334168e8847a05123658d620532bcc1df",
+      "pass": true,
+      "result_of": "bundle:5d38ec3819c74db634bb477ab9f3982d336d4f70a0b254039ba01ec2369e3f0e"
+    },
+    {
+      "id": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9",
+      "audio_sha256": "6031443c246266086f8062723c5526cc2ed6b8e1be9f690fd554f169b5556d2e",
+      "pass": true,
+      "result_of": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9"
+    },
+    {
+      "id": "bundle:a2013daee904178f77eeefa089e8cdc5ef485fa2fff4156a6d76645c62ff05da",
+      "audio_sha256": "c36713d09b3437625aa4d8e4c533776204fca0afb22ea62b14622a37862cba52",
+      "pass": true,
+      "result_of": "bundle:a2013daee904178f77eeefa089e8cdc5ef485fa2fff4156a6d76645c62ff05da"
+    },
+    {
+      "id": "bundle:a502c4f1978f4c145bfa5beb9a017c51c5451df23cdb9ae0e08b9987ea94c858",
+      "audio_sha256": "4eebf44ed489e506c26a1c4c5fef7ea3cf7b299aa586ed576399602a55046e96",
+      "pass": true,
+      "result_of": "bundle:a502c4f1978f4c145bfa5beb9a017c51c5451df23cdb9ae0e08b9987ea94c858"
+    },
+    {
+      "id": "bundle:a7b3c52a66598713d34456e993a31ef02fe9c7ea1a595f3d2f9bfba6fd25d96d",
+      "audio_sha256": "78ca193b71ce7060ec296efcc410a266470f6d5b2279fe6098badc2b626555d0",
+      "pass": true,
+      "result_of": "bundle:a7b3c52a66598713d34456e993a31ef02fe9c7ea1a595f3d2f9bfba6fd25d96d"
+    },
+    {
+      "id": "bundle:af197ec9289c9ac6720b774cfa61cf2c63de30940ce64d41095013d6f9946f99",
+      "audio_sha256": "db0da532d79b59c22aa35b5e1a12251d2c42f1f8e4de6e019e0862bca44ad8e4",
+      "pass": true,
+      "result_of": "bundle:af197ec9289c9ac6720b774cfa61cf2c63de30940ce64d41095013d6f9946f99"
+    },
+    {
+      "id": "bundle:b7a3239ecb58806fa2323620a07e1e0b895cd5ee6c35d4e7e4362195c3812cd5",
+      "audio_sha256": "cb08a9a053da7c81e9a836cb9ebd90ffeb513ad7a2c28d1dddc0f07ba57a4117",
+      "pass": true,
+      "result_of": "bundle:b7a3239ecb58806fa2323620a07e1e0b895cd5ee6c35d4e7e4362195c3812cd5"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "81e221c9c5314ca919a2f4b5ee85461807900efe238a996bbab8b39815affb67",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ba900cc4e130c084c2965cc989a8040847174b8a6bf602316ae6c0a3e339603f",
+      "audio_sha256": "6404b8873a29ac99be141e6b357f3853d6c09cb3fb4f0c8c29072971ada2fadc",
+      "pass": true,
+      "result_of": "bundle:ba900cc4e130c084c2965cc989a8040847174b8a6bf602316ae6c0a3e339603f"
+    },
+    {
+      "id": "bundle:c2a5ec36036b6466c13ba581ea31f9a4c50450df27e68ee3c9f5df501c92c814",
+      "audio_sha256": "c20cce1b54a0cca0d9503932c3f02dd9636269e9592cdb9981e1c9b32b5ac70c",
+      "pass": true,
+      "result_of": "bundle:c2a5ec36036b6466c13ba581ea31f9a4c50450df27e68ee3c9f5df501c92c814"
+    },
+    {
+      "id": "bundle:c633fd06f3da155f31021ade5b8b6ff073f3285de5b0fc0ffde03680018c7ab1",
+      "audio_sha256": "c2f929b2ee3af53612e32c09c46c5da4ec37240f0a38ea8c540db9d003d383cb",
+      "pass": true,
+      "result_of": "bundle:c633fd06f3da155f31021ade5b8b6ff073f3285de5b0fc0ffde03680018c7ab1"
+    },
+    {
+      "id": "bundle:cccd721ebf545e6865f63690c5c0ba8fa55f772c0fb7a745754a7e00bdbf0a15",
+      "audio_sha256": "193799bfda1d2af9a24ac814d0aaf31b20fc6904172f8368fd50cb283f1e3cbe",
+      "pass": true,
+      "result_of": "bundle:cccd721ebf545e6865f63690c5c0ba8fa55f772c0fb7a745754a7e00bdbf0a15"
+    },
+    {
+      "id": "bundle:d01b2de40ff63d033eeebe738589b136e516cbf01e29a8f05f49426c37de387b",
+      "audio_sha256": "c88b702d2da27b8d6c3b6ca72f3e161653ca856b7dcf3c8dcad16eb43d8e1b5f",
+      "pass": true,
+      "result_of": "bundle:d01b2de40ff63d033eeebe738589b136e516cbf01e29a8f05f49426c37de387b"
+    },
+    {
+      "id": "bundle:fa6de90f365019f91793c111e936992244a88caf536c30424f94c51c038422e6",
+      "audio_sha256": "2e56486fb09b4afee8df6420d917b985a7ef606e13234af97b2e21442273b535",
+      "pass": true,
+      "result_of": "bundle:fa6de90f365019f91793c111e936992244a88caf536c30424f94c51c038422e6"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "6404b8873a29ac99be141e6b357f3853d6c09cb3fb4f0c8c29072971ada2fadc",
+      "pass": true,
+      "result_of": "bundle:ba900cc4e130c084c2965cc989a8040847174b8a6bf602316ae6c0a3e339603f"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "eb78b191b1b79aca712c8792f9b89e203ebbf3b529773bf4923b11521945eae8",
+      "pass": true,
+      "result_of": "bundle:0622826db4690cde3e259689e6d48d9c0b007d539cc6d6611be69e02c7ba2304"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "9e0ffc98e4b7e9aadb96fae4c97e29c0dfc92e72b62851b03e271695bee8c94c",
+      "pass": true,
+      "result_of": "bundle:327de31a4b272d5d7377e39b506fef5278d3148edc528306e60e824a3a5cfef6"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "c2f929b2ee3af53612e32c09c46c5da4ec37240f0a38ea8c540db9d003d383cb",
+      "pass": true,
+      "result_of": "bundle:c633fd06f3da155f31021ade5b8b6ff073f3285de5b0fc0ffde03680018c7ab1"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "8ef237c48564dbaa0ba58347736e444e9725237cc0bce63e3076e4a5127ff10f",
+      "pass": true,
+      "result_of": "bundle:0655aa8775834c36fb5474ffacd7446fd90ee14005218cb109abcc8807d01cf4"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "de867cfc500465af85c42668aec9c8926fa475448b7d51a694a96bbaebbc1170",
+      "pass": true,
+      "result_of": "bundle:085e0f6c1a277d5e689ec6c32287c0d9b96f67ce0bad26d84e39ba25456c36cb"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "e104909775b08d0175888c3edbd7b239fb917353366bb19167c9b77eac299114",
+      "pass": true,
+      "result_of": "bundle:0a608b536ae8eef53fa7c27ea88a3b5cd2e63bb796e83ab7f35eb6d6af84059d"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "8cd2c3c7d06b5f468d1c5317a2c9ded58864af0bd634ac68c91f3a02c484a0a3",
+      "pass": true,
+      "result_of": "bundle:0b3fe91847511338b6e2c2af251ba9f5361d0cd1c3ae0063438c9ed6bf094c8e"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "193799bfda1d2af9a24ac814d0aaf31b20fc6904172f8368fd50cb283f1e3cbe",
+      "pass": true,
+      "result_of": "bundle:cccd721ebf545e6865f63690c5c0ba8fa55f772c0fb7a745754a7e00bdbf0a15"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "aeaeaaed9207e3965bc998f748b82b4334168e8847a05123658d620532bcc1df",
+      "pass": true,
+      "result_of": "bundle:5d38ec3819c74db634bb477ab9f3982d336d4f70a0b254039ba01ec2369e3f0e"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "78ca193b71ce7060ec296efcc410a266470f6d5b2279fe6098badc2b626555d0",
+      "pass": true,
+      "result_of": "bundle:a7b3c52a66598713d34456e993a31ef02fe9c7ea1a595f3d2f9bfba6fd25d96d"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "c36713d09b3437625aa4d8e4c533776204fca0afb22ea62b14622a37862cba52",
+      "pass": true,
+      "result_of": "bundle:a2013daee904178f77eeefa089e8cdc5ef485fa2fff4156a6d76645c62ff05da"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "cb08a9a053da7c81e9a836cb9ebd90ffeb513ad7a2c28d1dddc0f07ba57a4117",
+      "pass": true,
+      "result_of": "bundle:b7a3239ecb58806fa2323620a07e1e0b895cd5ee6c35d4e7e4362195c3812cd5"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "c88b702d2da27b8d6c3b6ca72f3e161653ca856b7dcf3c8dcad16eb43d8e1b5f",
+      "pass": true,
+      "result_of": "bundle:d01b2de40ff63d033eeebe738589b136e516cbf01e29a8f05f49426c37de387b"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "48da029b712522b805e6800b39223b634f013b80ba5eb27cd86953ef72f768c1",
+      "pass": true,
+      "result_of": "bundle:56572eaada17a50967662eb2f8c0fb1d7815448993747ba3a5462e4751cad397"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "2e56486fb09b4afee8df6420d917b985a7ef606e13234af97b2e21442273b535",
+      "pass": true,
+      "result_of": "bundle:fa6de90f365019f91793c111e936992244a88caf536c30424f94c51c038422e6"
+    },
+    {
+      "id": "voice_30.mp3",
+      "audio_sha256": "5b7376367cf722c64494f2a058272cd1a9007071a1ff4b7caa0cfcf505e69105",
+      "pass": true,
+      "result_of": "bundle:311d559526935ade171eee2247aa869244ac2ea54f96b11ea2fe6fa11cf4b60a"
+    },
+    {
+      "id": "voice_32.mp3",
+      "audio_sha256": "7ebd48d0974ff830ec291a9dd840a755c5a425a9fc0f569510eee9838bce550c",
+      "pass": true,
+      "result_of": "bundle:1febdf10b2aab154c70a3332ae8b531e503d90d824aa27fbab3f6ed535e51288"
+    },
+    {
+      "id": "voice_35.mp3",
+      "audio_sha256": "c555b892620efa6931ff2b461df0d59c85465230e67dbced71c76dffe41f3074",
+      "pass": true,
+      "result_of": "bundle:20e05ef31f8f89cabc2c8efbff14a2de3fdeb372ecf90c54a4eb433a452f97db"
+    },
+    {
+      "id": "voice_38.mp3",
+      "audio_sha256": "6031443c246266086f8062723c5526cc2ed6b8e1be9f690fd554f169b5556d2e",
+      "pass": true,
+      "result_of": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9"
+    },
+    {
+      "id": "voice_39.mp3",
+      "audio_sha256": "4eebf44ed489e506c26a1c4c5fef7ea3cf7b299aa586ed576399602a55046e96",
+      "pass": true,
+      "result_of": "bundle:a502c4f1978f4c145bfa5beb9a017c51c5451df23cdb9ae0e08b9987ea94c858"
+    },
+    {
+      "id": "voice_41.mp3",
+      "audio_sha256": "c20cce1b54a0cca0d9503932c3f02dd9636269e9592cdb9981e1c9b32b5ac70c",
+      "pass": true,
+      "result_of": "bundle:c2a5ec36036b6466c13ba581ea31f9a4c50450df27e68ee3c9f5df501c92c814"
+    },
+    {
+      "id": "voice_42.mp3",
+      "audio_sha256": "db0da532d79b59c22aa35b5e1a12251d2c42f1f8e4de6e019e0862bca44ad8e4",
+      "pass": true,
+      "result_of": "bundle:af197ec9289c9ac6720b774cfa61cf2c63de30940ce64d41095013d6f9946f99"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "be779f8c2060c29eae68ac91fc7571109464666c3a9ce6bde3ec5fc97490d96c",
+      "pass": true,
+      "result_of": "bundle:04bb77a0b9a7dec5341c15ee4d06326c406ec8ca4c112dcc7b1de5fb82685016"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "81e221c9c5314ca919a2f4b5ee85461807900efe238a996bbab8b39815affb67",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:04bb77a0b9a7dec5341c15ee4d06326c406ec8ca4c112dcc7b1de5fb82685016",
+      "text": "28岁才赢大满贯，41岁在家乡谢幕。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.056,
+        "longest_deletion": 0,
+        "transcript": "28岁财营大满冠,41岁在家乡邂逅。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.597,
+        "cps": 4.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "28岁 ｜ 才 ｜ 赢 ｜ 大满贯 ｜ 41岁 ｜ 在 ｜ 家乡 ｜ 谢幕"
+      }
+    },
+    {
+      "id": "bundle:0622826db4690cde3e259689e6d48d9c0b007d539cc6d6611be69e02c7ba2304",
+      "text": "很多人第一次记住他，是二零零八年北京奥运会。二十三岁的他，和费德勒搭档，拿下了男双金牌。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "很多人第一次记住他,是2008年北京奥运会。23岁的他和费德勒搭档拿下了南双金牌。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.795,
+        "cps": 5.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "很多 ｜ 人 ｜ 第一次 ｜ 记住 ｜ 他 ｜ 是 ｜ 二零零八年 ｜ 北京 ｜ 奥运会 ｜ 二十三岁 ｜ 的 ｜ 他 ｜ 和 ｜ 费德勒 ｜ 搭档 ｜ 拿下 ｜ 了 ｜ 男双 ｜ 金牌"
+      }
+    },
+    {
+      "id": "bundle:0655aa8775834c36fb5474ffacd7446fd90ee14005218cb109abcc8807d01cf4",
+      "text": "一年后，同一块场地，他决胜盘九比七赢了德约，终结了对手在澳网的二十五连胜。五天后的决赛，对面是世界第一纳达尔。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "一年后,同一块场地,他决胜盘9比7赢了德约,终结了对手在澳网的25-0胜。五天后的决赛,对面是世界第一纳达尔。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.106,
+        "cps": 4.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一年 ｜ 后 ｜ 同 ｜ 一块 ｜ 场地 ｜ 他 ｜ 决胜 ｜ 盘 ｜ 九 ｜ 比 ｜ 七 ｜ 赢 ｜ 了 ｜ 德约 ｜ 终结 ｜ 了 ｜ 对手 ｜ 在 ｜ 澳 ｜ 网 ｜ 的 ｜ 二十五 ｜ 连胜 ｜ 五 ｜ 天后 ｜ 的 ｜ 决赛 ｜ 对面 ｜ 是 ｜ 世界 ｜ 第一 ｜ 纳达尔"
+      }
+    },
+    {
+      "id": "bundle:085e0f6c1a277d5e689ec6c32287c0d9b96f67ce0bad26d84e39ba25456c36cb",
+      "text": "三个月后，蒙特卡洛大师赛决赛，对面是费德勒。先丢一盘，他逆转拿下，这是他生涯唯一一座大师赛冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三个月后,蒙特卡洛大师赛决赛对面是费德勒。先丢一盘,他逆转拿下,这是他生涯唯一一座大师赛冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.951,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三个月 ｜ 后 ｜ 蒙特卡洛 ｜ 大师 ｜ 赛 ｜ 决赛 ｜ 对面 ｜ 是 ｜ 费德勒 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 他 ｜ 逆转 ｜ 拿下 ｜ 这 ｜ 是 ｜ 他 ｜ 生涯 ｜ 唯一 ｜ 一 ｜ 座 ｜ 大师 ｜ 赛 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:0a608b536ae8eef53fa7c27ea88a3b5cd2e63bb796e83ab7f35eb6d6af84059d",
+      "text": "那年十一月，戴维斯杯决赛在法国里尔。他先拿下首场单打，又和费德勒赢下双打。最后一天，费德勒锁定胜局，瑞士第一次捧起了戴维斯杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那年11月,戴维斯卑决赛在法国里尔。他先拿下首场单打,又和费德勒赢下双打。最后一天,费德勒锁定胜局,瑞士第一次捧起了戴维斯卑。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 56,
+        "speech_s": 11.922,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 年 ｜ 十一月 ｜ 戴维斯 ｜ 杯 ｜ 决赛 ｜ 在 ｜ 法国 ｜ 里尔 ｜ 他 ｜ 先 ｜ 拿下 ｜ 首场 ｜ 单打 ｜ 又 ｜ 和 ｜ 费德勒 ｜ 赢 ｜ 下 ｜ 双打 ｜ 最后 ｜ 一天 ｜ 费德勒 ｜ 锁定 ｜ 胜 ｜ 局 ｜ 瑞士 ｜ 第一次 ｜ 捧 ｜ 起 ｜ 了 ｜ 戴维斯 ｜ 杯"
+      }
+    },
+    {
+      "id": "bundle:0b3fe91847511338b6e2c2af251ba9f5361d0cd1c3ae0063438c9ed6bf094c8e",
+      "text": "二零一五年法网，四分之一决赛，他直落三盘赢了费德勒。决赛，又是世界第一德约。那一年德约拿了另外三个大满贯，唯独这一个，被他拿走。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2015年罚网四分之一决赛,他直落三盘赢了费德勒。决赛又是世界第一德约,那一年德约拿了另外三个大满冠,唯独这一个被他拿走。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "落",
+          "word": "直落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.343,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.367,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 56,
+        "speech_s": 11.663,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零一五年 ｜ 法网 ｜ 四分之一 ｜ 决赛 ｜ 他 ｜ 直落 ｜ 三盘 ｜ 赢 ｜ 了 ｜ 费德勒 ｜ 决赛 ｜ 又是 ｜ 世界 ｜ 第一 ｜ 德 ｜ 约 ｜ 那 ｜ 一 ｜ 年 ｜ 德约 ｜ 拿 ｜ 了 ｜ 另外 ｜ 三个 ｜ 大满贯 ｜ 唯独 ｜ 这 ｜ 一个 ｜ 被 ｜ 他 ｜ 拿 ｜ 走"
+      }
+    },
+    {
+      "id": "bundle:1febdf10b2aab154c70a3332ae8b531e503d90d824aa27fbab3f6ed535e51288",
+      "text": "八月三十一日，美网首轮，他又输给了贝雷蒂尼。这是他最后一场大满贯比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "8月31日,眉网手轮,他又输给了贝雷蒂尼,这是他最后一场大满冠比赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.439,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "八月 ｜ 三十一日 ｜ 美网 ｜ 首 ｜ 轮 ｜ 他 ｜ 又 ｜ 输 ｜ 给 ｜ 了 ｜ 贝雷蒂尼 ｜ 这是 ｜ 他 ｜ 最后 ｜ 一 ｜ 场 ｜ 大满贯 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:20e05ef31f8f89cabc2c8efbff14a2de3fdeb372ecf90c54a4eb433a452f97db",
+      "text": "最后一站，是家乡巴塞尔。十月二十六日晚上，球场为他办了一场告别，费德勒发来了一段视频。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "最后一站,是家乡巴塞尔。10月26日晚上,球场为他办了一场告别,贝德勒发来了一段视频。"
+      },
+      "polyphones": [
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.771,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 一 ｜ 站 ｜ 是 ｜ 家乡 ｜ 巴塞尔 ｜ 十月二十六日 ｜ 晚上 ｜ 球场 ｜ 为 ｜ 他 ｜ 办 ｜ 了 ｜ 一 ｜ 场 ｜ 告别 ｜ 费德勒 ｜ 发 ｜ 来 ｜ 了 ｜ 一段 ｜ 视频"
+      }
+    },
+    {
+      "id": "bundle:311d559526935ade171eee2247aa869244ac2ea54f96b11ea2fe6fa11cf4b60a",
+      "text": "六月三十日，温网首轮，他和贝雷蒂尼鏖战四小时二十分钟。四盘，全都打进了抢七。第二盘他握有六个盘点，抢七十六比十八还是输了。温网破例，给了输球的他一次场上采访。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 70,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "6月30日,温网手伦,他和贝雷蒂尼熬占4小时20分钟。四盘,全都打击了抢7。第二盘,他握有6个盘点,抢76比18,还是输了。温网破例,给了输球的他,以此厂商采访。"
+      },
+      "polyphones": [
+        {
+          "index": 56,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.21,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 70,
+        "speech_s": 15.708,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六月三十日 ｜ 温网 ｜ 首轮 ｜ 他 ｜ 和 ｜ 贝雷蒂尼 ｜ 鏖战 ｜ 四小时二十分钟 ｜ 四盘 ｜ 全都 ｜ 打 ｜ 进 ｜ 了 ｜ 抢七 ｜ 第二盘 ｜ 他 ｜ 握有 ｜ 六个 ｜ 盘点 ｜ 抢 ｜ 七十六 ｜ 比 ｜ 十八 ｜ 还是 ｜ 输 ｜ 了 ｜ 温网 ｜ 破例 ｜ 给 ｜ 了 ｜ 输 ｜ 球 ｜ 的 ｜ 他 ｜ 一次 ｜ 场 ｜ 上 ｜ 采访"
+      }
+    },
+    {
+      "id": "bundle:327de31a4b272d5d7377e39b506fef5278d3148edc528306e60e824a3a5cfef6",
+      "text": "可在单打里，他一直站在费德勒身后。二零一三年澳网第四轮，二十七岁的他，对面是世界第一德约科维奇。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可在单打里,他一直站在费德勒身后。2013年傲网第四轮,27岁的他,对面是世界第一德约科维奇。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.314,
+        "cps": 5.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 在 ｜ 单打 ｜ 里 ｜ 他 ｜ 一直 ｜ 站 ｜ 在 ｜ 费德勒 ｜ 身后 ｜ 二零一三 ｜ 年 ｜ 澳网 ｜ 第四 ｜ 轮 ｜ 二十七 ｜ 岁 ｜ 的 ｜ 他 ｜ 对面 ｜ 是 ｜ 世界 ｜ 第一 ｜ 德 ｜ 约科维奇"
+      }
+    },
+    {
+      "id": "bundle:56572eaada17a50967662eb2f8c0fb1d7815448993747ba3a5462e4751cad397",
+      "text": "二零二六年，最后一个赛季。四十岁的他拿外卡打进澳网第三轮，是一九七八年以来的第一人。输球之后，他对看台说了这样几句话。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.019,
+        "longest_deletion": 1,
+        "transcript": "2026年,最后一个赛季。40岁的他,拿外卡打击澳网第三轮,是1978年以来的敌人。输球之后,他对看台说了这样几句话。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.191,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二六年 ｜ 最后 ｜ 一个 ｜ 赛季 ｜ 四十岁 ｜ 的 ｜ 他 ｜ 拿 ｜ 外卡 ｜ 打 ｜ 进 ｜ 澳 ｜ 网 ｜ 第三轮 ｜ 是 ｜ 一九七八年 ｜ 以来 ｜ 的 ｜ 第一 ｜ 人 ｜ 输 ｜ 球 ｜ 之后 ｜ 他 ｜ 对 ｜ 看台 ｜ 说 ｜ 了 ｜ 这样 ｜ 几句 ｜ 话"
+      }
+    },
+    {
+      "id": "bundle:5d38ec3819c74db634bb477ab9f3982d336d4f70a0b254039ba01ec2369e3f0e",
+      "text": "三次大满贯决赛，三个世界第一，他一场没输。来得晚的巅峰，一样是巅峰。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.034,
+        "longest_deletion": 0,
+        "transcript": "三次大网冠决赛,三个世界第一,他一场没输。来得晚的巔峰,一样是巔峰。"
+      },
+      "polyphones": [
+        {
+          "index": 22,
+          "char": "得",
+          "word": "来得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.2,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.58,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三次 ｜ 大满贯 ｜ 决赛 ｜ 三个世界 ｜ 第一 ｜ 他 ｜ 一 ｜ 场 ｜ 没 ｜ 输 ｜ 来得晚 ｜ 的 ｜ 巅峰 ｜ 一样 ｜ 是 ｜ 巅峰"
+      }
+    },
+    {
+      "id": "bundle:85a29de8dca0d94a7368a1a3560f8da42067bd1484c29857409ba150b52d16d9",
+      "text": "最后，他绕场一周。手机灯光亮起来，像给他点了一场星海。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.043,
+        "longest_deletion": 0,
+        "transcript": "最后,他绕场一朝,手机灯光亮起来,向给他点了一场星海。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.259,
+        "cps": 4.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 他 ｜ 绕场 ｜ 一 ｜ 周 ｜ 手机 ｜ 灯光 ｜ 亮 ｜ 起来 ｜ 像 ｜ 给 ｜ 他 ｜ 点 ｜ 了 ｜ 一 ｜ 场 ｜ 星海"
+      }
+    },
+    {
+      "id": "bundle:a2013daee904178f77eeefa089e8cdc5ef485fa2fff4156a6d76645c62ff05da",
+      "text": "决赛，他输给了纳达尔，二比六、三比六、一比六。这是他四次大满贯决赛里，唯一输掉的一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛：他输给了纳达尔：二比六：三比六：一比六：这是他四次大满冠决赛里唯一输掉的一次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.984,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 他 ｜ 输 ｜ 给 ｜ 了 ｜ 纳达尔 ｜ 二比六 ｜ 三 ｜ 比 ｜ 六 ｜ 一 ｜ 比 ｜ 六 ｜ 这 ｜ 是 ｜ 他 ｜ 四次 ｜ 大满贯 ｜ 决赛 ｜ 里 ｜ 唯一 ｜ 输 ｜ 掉 ｜ 的 ｜ 一次"
+      }
+    },
+    {
+      "id": "bundle:a502c4f1978f4c145bfa5beb9a017c51c5451df23cdb9ae0e08b9987ea94c858",
+      "text": "第二天晚上，同一块场地，他打了职业生涯的最后一场比赛。五比七，六比七，他输给了八号种子莱赫奇卡。全场的掌声，都给了他。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二天晚上,同一块场地,他打了职业生涯的最后一场比赛。5比7、6比7,他输给了8号种子,莱赫奇卡。全场的掌声,都给了他。"
+      },
+      "polyphones": [
+        {
+          "index": 41,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.044,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.297,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二 ｜ 天 ｜ 晚上 ｜ 同 ｜ 一块 ｜ 场地 ｜ 他 ｜ 打 ｜ 了 ｜ 职业 ｜ 生涯 ｜ 的 ｜ 最后 ｜ 一 ｜ 场 ｜ 比赛 ｜ 五比七 ｜ 六比七 ｜ 他 ｜ 输 ｜ 给 ｜ 了 ｜ 八号 ｜ 种子 ｜ 莱赫奇卡 ｜ 全场 ｜ 的 ｜ 掌声 ｜ 都 ｜ 给 ｜ 了 ｜ 他"
+      }
+    },
+    {
+      "id": "bundle:a7b3c52a66598713d34456e993a31ef02fe9c7ea1a595f3d2f9bfba6fd25d96d",
+      "text": "二零一七年法网半决赛，三十二岁的他，和头号种子穆雷打了四小时三十四分钟。决胜盘六比一，他打进了第四次大满贯决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2017年罚网半决赛,32岁的他和头号种子穆雷打了4小时34分钟。决胜盘6比1,他打进了第四次大满冠决赛。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.549,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.271,
+        "cps": 4.97,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零一七 ｜ 年 ｜ 法网 ｜ 半决赛 ｜ 三十二岁 ｜ 的 ｜ 他 ｜ 和 ｜ 头号 ｜ 种子 ｜ 穆雷 ｜ 打 ｜ 了 ｜ 四小时三十四分钟 ｜ 决胜 ｜ 盘 ｜ 六比一 ｜ 他 ｜ 打 ｜ 进 ｜ 了 ｜ 第四次 ｜ 大满贯 ｜ 决赛"
+      }
+    },
+    {
+      "id": "bundle:af197ec9289c9ac6720b774cfa61cf2c63de30940ce64d41095013d6f9946f99",
+      "text": "试过，败过。再试，再败，败得更好。三座大满贯之后，他在家乡说了再见。你最记得他的哪一场？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "试过、拜过。再试、再拜、拜得更好。三座大满罐之后,他在家乡说了再见。你最记得他的哪一场。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 37,
+          "char": "得",
+          "word": "记得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": 0.186,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 9.953,
+        "cps": 3.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "试 ｜ 过 ｜ 败 ｜ 过 ｜ 再 ｜ 试 ｜ 再 ｜ 败 ｜ 败 ｜ 得 ｜ 更 ｜ 好 ｜ 三座 ｜ 大满贯 ｜ 之后 ｜ 他 ｜ 在 ｜ 家乡 ｜ 说了再见 ｜ 你 ｜ 最 ｜ 记得 ｜ 他 ｜ 的 ｜ 哪 ｜ 一 ｜ 场"
+      }
+    },
+    {
+      "id": "bundle:b7a3239ecb58806fa2323620a07e1e0b895cd5ee6c35d4e7e4362195c3812cd5",
+      "text": "那年八月，三十二岁的他左膝连做两次手术，排名后来跌到两百六十名开外。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.032,
+        "longest_deletion": 0,
+        "transcript": "那年8月,32岁的他左西连坐两次手术,排名后来跌到260名开外。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.403,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 年 ｜ 八月 ｜ 三十二岁 ｜ 的 ｜ 他 ｜ 左 ｜ 膝 ｜ 连 ｜ 做 ｜ 两次 ｜ 手术 ｜ 排名 ｜ 后来 ｜ 跌 ｜ 到 ｜ 两百六十名 ｜ 开外"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:ba900cc4e130c084c2965cc989a8040847174b8a6bf602316ae6c0a3e339603f",
+      "text": "二零二六年十月二十七日夜里，巴塞尔。四十一岁的瓦林卡，在家乡，打完了职业生涯的最后一场比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2026年10月27日夜里,巴塞尔,41岁的瓦林卡在家乡打完了职业生涯的最后一场比赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.208,
+        "cps": 5.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二六年 ｜ 十月 ｜ 二十七日 ｜ 夜里 ｜ 巴塞尔 ｜ 四十一 ｜ 岁 ｜ 的 ｜ 瓦林卡 ｜ 在 ｜ 家乡 ｜ 打完 ｜ 了 ｜ 职业 ｜ 生涯 ｜ 的 ｜ 最后 ｜ 一 ｜ 场 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:c2a5ec36036b6466c13ba581ea31f9a4c50450df27e68ee3c9f5df501c92c814",
+      "text": "他背起球包，手放在胸口，向看台挥了挥手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他背起球包,手放在胸口,向看台挥了挥手。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.443,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 背起 ｜ 球包 ｜ 手 ｜ 放 ｜ 在 ｜ 胸口 ｜ 向 ｜ 看台 ｜ 挥 ｜ 了 ｜ 挥手"
+      }
+    },
+    {
+      "id": "bundle:c633fd06f3da155f31021ade5b8b6ff073f3285de5b0fc0ffde03680018c7ab1",
+      "text": "五小时两分钟，决胜盘十比十二，他输了。赛后他却说，这是他打过最好的一场球。他的左臂上，纹着贝克特的一句话：再试，再败，败得更好。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.019,
+        "longest_deletion": 0,
+        "transcript": "五小时两分钟,决胜盘十比十二,他输了。再后他却说,这是他打过最好的一场球。他的左臂上,闻着贝克特的一句话,再使,再败,败得更好。"
+      },
+      "polyphones": [
+        {
+          "index": 60,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 12.983,
+        "cps": 4.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五小时两分钟 ｜ 决胜 ｜ 盘 ｜ 十比 ｜ 十二 ｜ 他 ｜ 输 ｜ 了 ｜ 赛 ｜ 后 ｜ 他 ｜ 却说 ｜ 这是 ｜ 他 ｜ 打 ｜ 过 ｜ 最好 ｜ 的 ｜ 一 ｜ 场 ｜ 球 ｜ 他 ｜ 的 ｜ 左臂 ｜ 上 ｜ 纹 ｜ 着 ｜ 贝克特 ｜ 的 ｜ 一句话 ｜ 再 ｜ 试 ｜ 再 ｜ 败 ｜ 败 ｜ 得 ｜ 更 ｜ 好"
+      }
+    },
+    {
+      "id": "bundle:cccd721ebf545e6865f63690c5c0ba8fa55f772c0fb7a745754a7e00bdbf0a15",
+      "text": "二零一六年美网第三轮，他一度只差一分就出局。决赛，他第三次在大满贯决赛面对世界第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "2016年美网第三轮,他一度只差一分就出局。绝赛,他第三次在大猛冠绝赛面对世界第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.771,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零一六年 ｜ 美 ｜ 网 ｜ 第三轮 ｜ 他 ｜ 一度 ｜ 只 ｜ 差 ｜ 一 ｜ 分 ｜ 就 ｜ 出局 ｜ 决赛 ｜ 他 ｜ 第三次 ｜ 在 ｜ 大满贯 ｜ 决赛 ｜ 面对 ｜ 世界 ｜ 第一"
+      }
+    },
+    {
+      "id": "bundle:d01b2de40ff63d033eeebe738589b136e516cbf01e29a8f05f49426c37de387b",
+      "text": "他又爬了回来。二零一九年法网，三十四岁的他，和二十岁的西西帕斯打了五小时零九分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他又爬了回来。2019年罚网,34岁的他和20岁的西西帕斯打了5小时09分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.323,
+        "cps": 5.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 又 ｜ 爬 ｜ 了 ｜ 回来 ｜ 二零一九年 ｜ 法网 ｜ 三十四 ｜ 岁 ｜ 的 ｜ 他 ｜ 和 ｜ 二十 ｜ 岁 ｜ 的 ｜ 西西帕斯 ｜ 打 ｜ 了 ｜ 五小时 ｜ 零九 ｜ 分钟"
+      }
+    },
+    {
+      "id": "bundle:fa6de90f365019f91793c111e936992244a88caf536c30424f94c51c038422e6",
+      "text": "五月，罗兰·加洛斯为他办了告别仪式。他一次次抬手擦眼泪；看台上的人全站了起来，掌声很久都没有停。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "5月、罗兰、加洛斯为他办了告别仪式。他一次次抬手擦眼泪,看台上的人全站了起来,掌声很久都没有停。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.021,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五月 ｜ 罗兰 ｜ 加洛斯 ｜ 为 ｜ 他 ｜ 办 ｜ 了 ｜ 告别 ｜ 仪式 ｜ 他 ｜ 一次次 ｜ 抬手 ｜ 擦 ｜ 眼泪 ｜ 看台 ｜ 上 ｜ 的 ｜ 人 ｜ 全 ｜ 站 ｜ 了 ｜ 起来 ｜ 掌声 ｜ 很久 ｜ 都 ｜ 没有 ｜ 停"
+      }
+    }
+  ]
+}

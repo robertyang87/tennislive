@@ -1,0 +1,41 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=G7lHlhAY5tM",
+  "source_sha256": "476b0c4cba100941a1f411771121e81981f6e78b4d0fb8470863aebe32816772",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 1194.6,
+  "reviewed_to": 1219.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1201.92,
+      "end": 1206.2,
+      "en": "And that's how it happens.",
+      "zh": "就这样 一切尘埃落定"
+    },
+    {
+      "start": 1206.2,
+      "end": 1210.64,
+      "en": "Stan Wawrinka wins his third Grand Slam and the 2016 US Open.",
+      "zh": "瓦林卡拿下第3个大满贯"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/G7lHlhAY5tM-full-small.en.json",
+      "sha256": "4ff4a61c6a806025d66bf4ff60447dc175cb1bfee13da2c2487087629d081b22",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/G7lHlhAY5tM-full-medium.en.json",
+      "sha256": "3810819fbd10ad3082a7e76b3baf71c961a783c130f473be2d2b89508b674060",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "美网官方 Extended Highlights：冠军点回合（记分条 AD，1195–1202）、他仰天怒吼、张开双臂、网前和德约拥抱。"
+}

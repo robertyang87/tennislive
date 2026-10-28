@@ -1,0 +1,39 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://www.youtube.com/watch?v=JzLC_CVvLdw",
+  "source_sha256": "2b119ec337de2826c4c24d3fb18c73f3c8df45aa422a577c38d5c65fe557397b",
+  "method": "asr_cross_checked",
+  "reviewer": "Claude: paired small.en/medium.en ASR cross-check plus actual source-frame contact sheets; not human listening",
+  "reviewed_at": "2026-10-28T00:21:57+00:00",
+  "reviewed_from": 154.5,
+  "reviewed_to": 172.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/JzLC_CVvLdw-full-small.en.json",
+      "sha256": "ec9b99e086856b3b4c5addd902795e37d6a5e646e7e64d958256e8426bba9e8d",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/JzLC_CVvLdw-full-medium.en.json",
+      "sha256": "3e99d96580fc4eaeca23845851c76b548e3ade5e7e1e6c30720d083a3eba9033",
+      "model": "medium.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/JzLC_CVvLdw-clip150-228-small.en.json",
+      "sha256": "f29ab88ae57db9ddede01c23b063dd914a83007b8ffe634907b7a25f1168fc17",
+      "model": "small.en"
+    },
+    {
+      "path": "data/audio_reviews/wawrinka-career-story-2026/raw/JzLC_CVvLdw-clip150-228-medium.en.json",
+      "sha256": "9a08366c7eb7925dc6377c345403cd1aab2b81c56d1a538d9faabcb563effb7b",
+      "model": "medium.en"
+    }
+  ],
+  "human_listened": false,
+  "raw_conflicts_preserved": true,
+  "review_notes": "法网官方集锦：冠军点回合（154.5 发球起，记分条 AD）、他转身看向 3:12 的计时牌，172.4 切到包厢之前收住。",
+  "no_foreground_english_reason": "全片与 150–228 单段两档转写互不一致：medium 只有『the』×6 与『This is Cisco Cisco Cisco』，small 是『Yeah, set him up… Siska, Siska, Siska』，两档没有一句相同的英文，判为观众声与球场广播噪声（集锦本身无解说），无前景英文。"
+}
