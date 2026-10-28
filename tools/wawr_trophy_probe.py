@@ -1,48 +1,36 @@
-"""Temporary: Wawrinka AO2014 / RG2015 trophy photos from specific pages."""
+"""Temporary: AO2014 Wawrinka trophy photos (Commons originals, Flickr HTML search)."""
 import json, os, re, sys, time, requests, html
 OUT = sys.argv[1]; os.makedirs(OUT, exist_ok=True)
-H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
-PAGES = [
- "https://ausopen.com/node/156006", "https://ausopen.com/node/256381",
- "https://en.wikipedia.org/wiki/2014_Stan_Wawrinka_tennis_season",
- "https://en.wikipedia.org/wiki/2014_Australian_Open_%E2%80%93_Men%27s_singles",
- "https://bleacherreport.com/articles/1937474-australian-open-2014-results-analyzing-impact-of-mens-and-womens-finals",
- "https://www.wwno.org/2014-01-26/stan-wawrinka-beats-ailing-nadal-to-win-australian-open-final",
- "https://www.apr.org/2014-01-26/stan-wawrinka-beats-ailing-nadal-to-win-australian-open-final",
- "https://www.csmonitor.com/layout/set/amphtml/World/Latest-News-Wires/2014/0126/Wawrinka-bests-injured-Nadal-to-win-Australian-Open",
- "https://www.foxnews.com/sports/wawrinka-upsets-nadal-in-australian-open-final-to-win-first-grand-slam-title.amp",
- "https://english.ahram.org.eg/News/92616.aspx",
- "https://sports.inquirer.net/?p=141823",
-]
-cands = [{"page": "rg", "url": "https://images.prismic.io/fft-rg-commun-news/aELkHbh8WN-LVvsJ_20150607_RG_CD_7194StanWawrinkamen%27ssinglesfinal2015.jpg"}, {"page": "rg", "url": "https://images.prismic.io/fft-rg-commun-news/aELkHbh8WN-LVvsJ_20150607_RG_CD_7194StanWawrinkamen%27ssinglesfinal2015.jpg?w=4000"}]
-for u in PAGES:
-    for k in range(3):
-        try:
-            r = requests.get(u, headers=H, timeout=45); break
-        except Exception as e:
-            print("ERR", u, e); r = None; time.sleep(5)
-    if r is None: continue
+H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36", "Accept-Language": "en-US,en;q=0.9"}
+CUA = {"User-Agent": "tennislive-research/1.0 (https://github.com/robertyang87/tennislive) python-requests"}
+cands = []
+for f in ["15667869444", "16102933790", "16102933970", "16104151589", "16104428927", "16104429307", "16288498981", "16289450762"]:
+    r = requests.get(f"https://commons.wikimedia.org/wiki/File:Australian_Open_2015_({f}).jpg", headers=H, timeout=45)
     t = html.unescape(r.text)
-    imgs = sorted(set(re.findall(r'https?://[^"\'\s<>()]+?\.(?:jpg|jpeg|png|webp)(?:\?[^"\'\s<>]*)?', t, re.I)))
-    links = sorted(set(re.findall(r'href="(/wiki/(?:File|Category):[^"]+)"', t)))
-    print("PAGE", u, r.status_code, len(t))
-    for i in imgs:
-        if re.search(r"wawr|troph|brookes|nadal|australian|melbourne|champion|ap_|apphoto", i, re.I): print("  IMG", i)
-    for l in links:
-        if re.search(r"wawr|troph|cup|coupe|champion|final|Wawrinka", l, re.I): print("  LINK", l)
-    for i in imgs:
-        if re.search(r"wawr|troph|brookes|champion|nadal", i, re.I) and not re.search(r"logo|icon|avatar|sprite", i, re.I): cands.append({"page": u, "url": i})
+    m = re.search(r'https://upload\.wikimedia\.org/wikipedia/commons/[0-9a-f]/[0-9a-f]{2}/Australian_Open_2015_%28' + f + r'%29\.jpg', t)
+    auth = re.findall(r'(?:Author|Photographer)</td>\s*<td[^>]*>(.*?)</td>', t, re.S)
+    src = re.findall(r'https://www\.flickr\.com/photos/[^"\s<]+', t)
+    print("COMMONS", f, r.status_code, m and m.group(0), re.sub("<[^>]+>", "", auth[0])[:80] if auth else None, src[:2])
+    if m: cands.append({"page": f"commons {f}", "url": m.group(0), "flickr": src[:1]})
+    time.sleep(2)
+for q in ["wawrinka trophy 2014", "wawrinka australian open 2014 trophy", "wawrinka norman brookes", "stan wawrinka champion 2014"]:
+    r = requests.get("https://www.flickr.com/search/?text=" + requests.utils.quote(q), headers=H, timeout=45)
+    t = r.text
+    ids = re.findall(r'"id":"(\d{8,12})","secret":"([0-9a-f]+)","server":"(\d+)"', t)
+    titles = re.findall(r'"title":"([^"]{0,120})"', t)
+    print("FLICKR", q, r.status_code, len(t), len(ids), titles[:20])
+    for pid, sec, srv in ids[:25]:
+        cands.append({"page": "flickr " + q, "url": f"https://live.staticflickr.com/{srv}/{pid}_{sec}_c.jpg", "pid": pid})
 print("CANDIDATES", len(cands))
 seen = set(); n = 0
 for c in cands:
-    key = re.sub(r"\?.*", "", c["url"])
-    if key in seen: continue
-    seen.add(key)
+    if c["url"] in seen: continue
+    seen.add(c["url"])
     try:
-        r = requests.get(c["url"], headers=H, timeout=45)
+        r = requests.get(c["url"], headers=CUA if "wikimedia" in c["url"] else H, timeout=60)
         if r.ok and len(r.content) > 15000:
             c["file"] = f"{n:03d}.jpg"; open(f"{OUT}/{n:03d}.jpg", "wb").write(r.content); print("dl", n, len(r.content), c["url"]); n += 1
+        else: print("dl fail", r.status_code, c["url"])
     except Exception as e: print("dl err", e)
-    if n >= 80: break
+    time.sleep(1)
 json.dump(cands, open(f"{OUT}/cands.json", "w"), ensure_ascii=False, indent=1)
