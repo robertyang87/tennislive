@@ -1,0 +1,22 @@
+{
+  "status": "opening_only_repair_requires_new_native_all_QC",
+  "previous_native_run": 40607950013,
+  "previous_film_sha256": "53b0c12e775533be55a47a14c922105031508491b4f7026920f6dcd42711f871",
+  "previous_final_ci": 40609305706,
+  "actual_previous_ci_result": "1 failed,6585 passed,227 skipped",
+  "changed_narration_index": 1,
+  "before": "十月二十六号，巴塞尔刚为瓦林卡办完告别仪式。第二天，他又回到中央球场，打职业巡回赛的最后一战。",
+  "after": "北京时间十月二十八号凌晨，巴塞尔首轮。告别仪式后，瓦林卡回到中央球场，打职业巡回赛最后一战。",
+  "changed_request_duration": 9.576,
+  "picture_duration": 10.72,
+  "all23segment_geometry_unchanged": true,
+  "all_other15_requests_audio_and_marks_exact_reuse": true,
+  "all17_original_audio_packets_byte_identical": true,
+  "source_plan_sha256": "32259fccb94c7636219eebd0fe51d3667a539daad6fb75c7c416e2b3b2ed04ac",
+  "new_bundle_sha256": "a980ff8060b8d9ff06c36544cba924be37a7d038ee3891fb761e0b28bbb86e53",
+  "new_input_commit": "1a2723e6cb3dc25d6060ffe4d5be963db3cdc27c",
+  "original_failing_targeted_test": "pass",
+  "local_taste_CI_scope": "16 passed;2 failed only on unrelated stale local medvedev-24-titles-23-cities and khachanov-auger-aliassime-beijing-2026-r1 inventory. The actual remote final CI passed these two gates before this opening-only change. No exception/test/other spec altered; final exact-head CI remains mandatory.",
+  "native_QC_and_actual_film_review": "Required fresh; no approval inherited from previous film",
+  "old_film_publication_forbidden": true
+}
