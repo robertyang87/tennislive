@@ -1,0 +1,500 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "046870a6e9f5cf73a4b6e0eca82e6db4822e5a1dc07b05304e35a5ee51317a5f",
+    "render_inputs_sha256": "9961dddce7d85e08e82a4177421b81018ab8bfea1afa38f29a8927a92c241362",
+    "spec_sha256": "212e5000156bd33143b634aabf17c68964e5c3323278f08b88cf81ea53a87dbf",
+    "film_sha256": "727e7aaad26ca2a2025c4282bceaefc338dd84dd1c398730adf464f0b8d16acb",
+    "inventory_sha256": "44adf4cd086297377aec42dbdb156eb904683848c5b4730629c7973385720690"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-28T12:36:47+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:2542dd458de080512a4b1e6bc791f7d664153df380e67948ec73352a99031015",
+      "audio_sha256": "e6d589e855d4289d482a8299ad72d3b905c03d8ec55c4d3fb496798456bc6506",
+      "pass": true,
+      "result_of": "bundle:2542dd458de080512a4b1e6bc791f7d664153df380e67948ec73352a99031015"
+    },
+    {
+      "id": "bundle:44e5e6ec5d73c613c96c44b981af89d2aa120e59bf5088ed49bdfa8162bd2650",
+      "audio_sha256": "815365ec8572914eb253471cd8b9a29b4fcbef1b9a94186f928fa0b0115b1e0e",
+      "pass": true,
+      "result_of": "bundle:44e5e6ec5d73c613c96c44b981af89d2aa120e59bf5088ed49bdfa8162bd2650"
+    },
+    {
+      "id": "bundle:6bbdb1c637aa406e7b942f6f035809b98db1e0b6437239b754b759d98919415f",
+      "audio_sha256": "d97df3a3fe51343d4023b4c5336bf0dce854548fe3466d0e122b688985efcdf5",
+      "pass": true,
+      "result_of": "bundle:6bbdb1c637aa406e7b942f6f035809b98db1e0b6437239b754b759d98919415f"
+    },
+    {
+      "id": "bundle:702277a46ab9d03cf5b6c2b32214c3d6e857a1f5e0c8a5cb04080431cc7d7fb6",
+      "audio_sha256": "ece2428d3602027bd790c66b0aaf9cd7e977511494e443c3bdb7d2769ccb1b88",
+      "pass": true,
+      "result_of": "bundle:702277a46ab9d03cf5b6c2b32214c3d6e857a1f5e0c8a5cb04080431cc7d7fb6"
+    },
+    {
+      "id": "bundle:7af45e96aef05516da288c1c95369f4cb63b58487d2f8b9a9506c3587934a65b",
+      "audio_sha256": "17b7002f71774fd61ac1cb58f855112c22e25fe8a16061e269425fb42e57d399",
+      "pass": true,
+      "result_of": "bundle:7af45e96aef05516da288c1c95369f4cb63b58487d2f8b9a9506c3587934a65b"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "96dfbbdaafe106fbc4f42cae23ff2dc12bcb95239ce2c2ec15c130a2619e87d4",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:f4299ec1e4a10216504f2fa7158ee1a7519d4f2fd1e5751936964d8bc2e2afdf",
+      "audio_sha256": "c06415248d393ceeb19ab0319516a831aae3fa74edf62be6d5428ab5803edacf",
+      "pass": true,
+      "result_of": "bundle:f4299ec1e4a10216504f2fa7158ee1a7519d4f2fd1e5751936964d8bc2e2afdf"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "e6d589e855d4289d482a8299ad72d3b905c03d8ec55c4d3fb496798456bc6506",
+      "pass": true,
+      "result_of": "bundle:2542dd458de080512a4b1e6bc791f7d664153df380e67948ec73352a99031015"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "815365ec8572914eb253471cd8b9a29b4fcbef1b9a94186f928fa0b0115b1e0e",
+      "pass": true,
+      "result_of": "bundle:44e5e6ec5d73c613c96c44b981af89d2aa120e59bf5088ed49bdfa8162bd2650"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "d97df3a3fe51343d4023b4c5336bf0dce854548fe3466d0e122b688985efcdf5",
+      "pass": true,
+      "result_of": "bundle:6bbdb1c637aa406e7b942f6f035809b98db1e0b6437239b754b759d98919415f"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "17b7002f71774fd61ac1cb58f855112c22e25fe8a16061e269425fb42e57d399",
+      "pass": true,
+      "result_of": "bundle:7af45e96aef05516da288c1c95369f4cb63b58487d2f8b9a9506c3587934a65b"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "c06415248d393ceeb19ab0319516a831aae3fa74edf62be6d5428ab5803edacf",
+      "pass": true,
+      "result_of": "bundle:f4299ec1e4a10216504f2fa7158ee1a7519d4f2fd1e5751936964d8bc2e2afdf"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "ece2428d3602027bd790c66b0aaf9cd7e977511494e443c3bdb7d2769ccb1b88",
+      "pass": true,
+      "result_of": "bundle:702277a46ab9d03cf5b6c2b32214c3d6e857a1f5e0c8a5cb04080431cc7d7fb6"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "96dfbbdaafe106fbc4f42cae23ff2dc12bcb95239ce2c2ec15c130a2619e87d4",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:2542dd458de080512a4b1e6bc791f7d664153df380e67948ec73352a99031015",
+      "text": "先丢一盘，伊埃拉却连赢了最后九局。四比六、六比二、六比零。她在东京逆转吉布森，晋级八强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先丢一盘,伊埃拉却连赢了最后九局。4比6,6比2,6比0。他在东京逆转吉布森,进级八强。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.915,
+        "cps": 4.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 伊埃拉 ｜ 却 ｜ 连 ｜ 赢 ｜ 了 ｜ 最后 ｜ 九局 ｜ 四比六 ｜ 六比二 ｜ 六比零 ｜ 她 ｜ 在 ｜ 东京 ｜ 逆转 ｜ 吉布森 ｜ 晋级 ｜ 八 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:44e5e6ec5d73c613c96c44b981af89d2aa120e59bf5088ed49bdfa8162bd2650",
+      "text": "东京五百赛第二轮，伊埃拉对阵吉布森。首盘三比五落后，她回破追到四比五，却再次丢掉发球局。盘末这一分，更让人意外。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "东京500赛第二轮,伊埃拉对阵吉布森。手盘3比5落后,他回破追到4比5,却再次丢掉发球局。盘末这一分更让人意外。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.379,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.462,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 40,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.884,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "东京 ｜ 五百 ｜ 赛 ｜ 第二轮 ｜ 伊埃拉 ｜ 对阵 ｜ 吉布森 ｜ 首盘 ｜ 三比五 ｜ 落后 ｜ 她 ｜ 回 ｜ 破 ｜ 追 ｜ 到 ｜ 四比五 ｜ 却 ｜ 再次 ｜ 丢掉 ｜ 发球 ｜ 局 ｜ 盘末 ｜ 这 ｜ 一 ｜ 分 ｜ 更 ｜ 让 ｜ 人 ｜ 意外"
+      }
+    },
+    {
+      "id": "bundle:6bbdb1c637aa406e7b942f6f035809b98db1e0b6437239b754b759d98919415f",
+      "text": "丢掉首盘后，伊埃拉先破发，再稳住自己的发球局。吉布森一发进球后的得分率，从首盘百分之七十八，降到第二盘百分之六十。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "丢掉手盘后,伊埃拉先破发,再稳住自己的发球局。吉布森一发进球后的得分率,从手盘78%,降到第二盘60%."
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 19,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 27,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 32,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.047,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "丢掉 ｜ 首盘 ｜ 后 ｜ 伊埃拉 ｜ 先 ｜ 破发 ｜ 再 ｜ 稳住 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 吉布森 ｜ 一发 ｜ 进球 ｜ 后 ｜ 的 ｜ 得分率 ｜ 从 ｜ 首盘 ｜ 百分之 ｜ 七十八 ｜ 降到 ｜ 第二盘 ｜ 百分之 ｜ 六十"
+      }
+    },
+    {
+      "id": "bundle:702277a46ab9d03cf5b6c2b32214c3d6e857a1f5e0c8a5cb04080431cc7d7fb6",
+      "text": "从盘末的无奈，到赛后的挥手致意，这场逆转，伊埃拉没有把遗憾留到最后。下一轮，她还能继续向前吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从盘墨的无奈,到赛后的灰手致意,这场逆转,伊埃拉没有把遗憾留到最后。下一轮,他还能继续向前吗?"
+      },
+      "polyphones": [
+        {
+          "index": 39,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.19,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.974,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 盘末 ｜ 的 ｜ 无奈 ｜ 到 ｜ 赛 ｜ 后 ｜ 的 ｜ 挥手 ｜ 致意 ｜ 这 ｜ 场 ｜ 逆转 ｜ 伊埃拉 ｜ 没有 ｜ 把 ｜ 遗憾 ｜ 留 ｜ 到 ｜ 最后 ｜ 下 ｜ 一 ｜ 轮 ｜ 她 ｜ 还 ｜ 能 ｜ 继续 ｜ 向前 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:7af45e96aef05516da288c1c95369f4cb63b58487d2f8b9a9506c3587934a65b",
+      "text": "第二盘三比二之后，伊埃拉连赢三局，把比赛拖进决胜盘。随后六局，她全部拿下。跨盘连赢九局，逆转就在眼前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘3比2之后,伊埃拉连赢三局,把比赛拖进决胜盘。随后六局,他全部拿下。跨盘连赢九局,逆转就在眼前。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 10.554,
+        "cps": 4.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 三比二 ｜ 之后 ｜ 伊埃拉 ｜ 连 ｜ 赢 ｜ 三局 ｜ 把 ｜ 比赛 ｜ 拖 ｜ 进 ｜ 决胜 ｜ 盘 ｜ 随后 ｜ 六局 ｜ 她 ｜ 全部 ｜ 拿下 ｜ 跨 ｜ 盘 ｜ 连 ｜ 赢 ｜ 九局 ｜ 逆转 ｜ 就 ｜ 在 ｜ 眼前"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:f4299ec1e4a10216504f2fa7158ee1a7519d4f2fd1e5751936964d8bc2e2afdf",
+      "text": "九个直接发球得分，九次破发机会兑现六次。决胜盘，吉布森一发进球后十二分只拿四分。伊埃拉把压力留给对手，也把胜利留给了自己。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 55,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "9个直接发球得分,9次破发机会,兑现6次。决胜盘,吉布森一发进球后,12分,只拿4分。伊埃拉把压力留给对手,也把胜利留给了自己。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 6,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 28,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 55,
+        "speech_s": 11.451,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九个 ｜ 直接 ｜ 发球 ｜ 得分 ｜ 九次 ｜ 破发 ｜ 机会 ｜ 兑现 ｜ 六次 ｜ 决胜 ｜ 盘 ｜ 吉布森 ｜ 一发 ｜ 进球 ｜ 后 ｜ 十二分 ｜ 只 ｜ 拿 ｜ 四分 ｜ 伊埃拉 ｜ 把 ｜ 压力 ｜ 留给 ｜ 对手 ｜ 也 ｜ 把 ｜ 胜利 ｜ 留给 ｜ 了 ｜ 自己"
+      }
+    }
+  ]
+}
