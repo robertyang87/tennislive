@@ -90,5 +90,12 @@
       "inputs_sha256": "1c975789d49cf89677ba648038aebeb0de08c9663f84919972f3c4c384859f06",
       "tries": 1
     }
+  },
+  "subs_red": {
+    "eala-gibson-tokyo-2026-r16-interview": {
+      "since": "2026-10-28T17:30:45Z",
+      "inputs_sha256": "1c975789d49cf89677ba648038aebeb0de08c9663f84919972f3c4c384859f06",
+      "why": "预检：转写（subs 在当前转写指纹上量出来的）：第二份 ASR 在当前转写指纹上量到：两份转写对不上 18.3%，超过闸门 12%。**不出片。** 逐处看 output/interviews/eala-gibson-tokyo-2026-r16-interview/transcript_diff.md，把确认过的写进 spec 的 `en_fixed`。"
+    }
   }
 }
