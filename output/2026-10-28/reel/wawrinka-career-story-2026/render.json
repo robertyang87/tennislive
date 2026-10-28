@@ -1,0 +1,108 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "0bb1e7d1cb77e90d517f7f1adbe5596ea8d28b1d3b536828ec2d7174ff8c713b",
+    "request_count": 25,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-wawrinka-career-story-2026-0bb1e7d1cb77e90d",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wawrinka-career-story-2026-0bb1e7d1cb77e90d/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40608896950"
+  },
+  "cover_seconds": 4.738,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 729.87,
+  "topbar": null,
+  "film_seconds": 739.2,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.096,
+    "2": 8.664,
+    "4": 9.192,
+    "6": 13.848,
+    "7": 10.992,
+    "9": 9.84,
+    "11": 12.792,
+    "13": 12.528,
+    "16": 8.664,
+    "18": 7.464,
+    "19": 11.16,
+    "21": 8.856,
+    "23": 7.296,
+    "24": 8.208,
+    "26": 12.072,
+    "29": 9.888,
+    "30": 16.584,
+    "32": 7.32,
+    "35": 8.64,
+    "38": 6.144,
+    "39": 12.168,
+    "41": 4.32,
+    "42": 10.8
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "11eef26b4d71127c7784d36b4c4b507eabe6c87ed7afd584ab4891d9c712db77",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wawrinka-career-story-2026",
+    "received_at": "2026-10-28T00:27:45Z",
+    "artifact_ready_at": "2026-10-28T00:46:22Z",
+    "elapsed_seconds": 1117.167,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "dc6713b77b5c68c9ac7e0058df5e8b2421df064c5881f4490fa01f7659e478a5",
+    "spec_sha256": "a367d18b5752ad7afdae7c8386f1656a8f17a77fa47505c4f74d0d1449894df0",
+    "run_id": "40608896950",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-28T00:31:23Z",
+        "run_id": "40608896950"
+      }
+    ],
+    "render_seconds": 899.167,
+    "pre_render_seconds": 218.0
+  },
+  "film_sha256": "dc6713b77b5c68c9ac7e0058df5e8b2421df064c5881f4490fa01f7659e478a5",
+  "film_bytes": 393196617,
+  "qc_attestation_sha256": "7e2b6b70283553222f089b3673554d823fe7c045bf26c69d7fa484ad98319db2",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-28T00:31:23Z",
+      "run_id": "40608896950"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-28T00:46:29Z",
+      "run_id": "40608896950"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wawrinka-career-story-2026/wawrinka-career-story-2026.mp4",
+  "video_bytes": 393196617
+}
