@@ -1,0 +1,44 @@
+{
+  "status": "verified_broad_period_only",
+  "safe_narration_time": "北京时间十月二十八号凌晨",
+  "local_match_date": "2026-10-27",
+  "local_zone": "Europe/Zurich",
+  "target_zone": "Asia/Shanghai",
+  "evidence": [
+    {
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2026-10-26_Basel-celebrates-Stan-Wawrinka.php",
+      "method": "Existing independent full-page fact audit plus new search excerpt; latest web open inaccessible",
+      "evidence": "Tuesday evening session: Shelton no earlier than6pm, after which Wawrinka meets Lehecka."
+    },
+    {
+      "url": "https://www.tvprogrammheute.net/sendung/tennis-swiss-indoors-basel-2026-1-runde-stan-wawrinka-sui-jiri-lehecka-cze-c01f830aff",
+      "method": "Search index retrieved",
+      "evidence": "SRF zwei Tuesday27October2026 20:00–22:35 CET programme for this exact match. Programme time, not claimed actual first serve."
+    },
+    {
+      "url": "https://www.skysports.com/tennis/watch/8653513807222254112/swiss-indoors-basel-2026",
+      "method": "Search index retrieved; direct webopen inaccessible",
+      "evidence": "Exact match SkySports27October2026 at6:40pm UK, i.e.02:40BeijingOct28; programme/stream label, not claimed actual first serve."
+    }
+  ],
+  "why_no_precise_time": "Match/TV previews disagree on exact minute; all supported local evening windows convert to Beijing Oct28 early morning. Use only verified broad period, no invented minute.",
+  "timezone_examples": [
+    {
+      "local": "2026-10-27T19:30:00+01:00",
+      "Beijing": "2026-10-28T02:30:00+08:00"
+    },
+    {
+      "local": "2026-10-27T20:00:00+01:00",
+      "Beijing": "2026-10-28T03:00:00+08:00"
+    },
+    {
+      "local": "2026-10-27T20:20:00+01:00",
+      "Beijing": "2026-10-28T03:20:00+08:00"
+    },
+    {
+      "local": "2026-10-27T21:10:00+01:00",
+      "Beijing": "2026-10-28T04:10:00+08:00"
+    }
+  ],
+  "created_at": "2026-10-28T00:46:20.688284+00:00"
+}

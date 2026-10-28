@@ -1,0 +1,74 @@
+......F.......F...                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_收尾要落在一问上不能停在数据上 _____________________________
+
+    def test_收尾要落在一问上不能停在数据上():
+        """账号所有者定的：「**不要平白地叙事**，要有饱满情感、激起共鸣和代入感……
+        同时能引爆人们传播」。
+    
+        「饱满情感」测不了，但**产生它的那个结构测得了**：一条片子最后一句是什么。
+    
+        停在比分和数据上，读者读完就走——那是赛报的收法。落在一问上，读者会在
+        评论区接话，而评论正是这类短片唯一能换来的传播。这和解说片那条
+        `末屏那个问题，旁白必须问出来` 是同一条规矩，只是当时漏了剪辑线。
+    
+        **七条里六条本来就这么做了**，判据是把既有的好做法钉住，同时抓住那一次
+        失手：`wong-lehecka` 原来停在「排名差九十六位，生涯排名最高胜。」
+    
+        ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
+    
+        ⚠️ 2026-08-23 补的一条：**真正的末拍也可能是 `quote`（原声），不只是
+        `narration`。** `gauff-bejlek-cincinnati-2026-sf` 的最后一段是转播原声，
+        中文那半行是「这一次，她能拿下吗？」——一个真问句，而且是当事人／转播
+        自己说出来的，比我们替她问一句更硬（本文件「让当事人自己说」那条早就
+        偏爱这个写法）。老逻辑只扫 `narration`，量出来它落在再前一段（一句
+        陈述）上，误判成了「停在数据上」。
+    
+        所以判据放宽成 **OR**：末尾一问只要落在「最后一句 narration」或者
+        「真正的最后一段（不管是 narration 还是 quote）」任意一处，就算数。
+        只加不减——已经靠 narration 过关的片子不受影响（`fritz-jodar-final` /
+        `tiafoe-musetti-cincinnati-2026-qf` 的末段都是 quote 且不带问句，但它们
+        的末句 narration 本来就问着，OR 两头有一头成立就够）。
+        """
+        bad, offenders = [], set()
+        for slug, spec in _reel_specs().items():
+            if not should_check('tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上', Path("specs/reels") / f"{slug}.json"):
+                continue
+            # Runtime already applies ENDING_LEGACY; audit its entries against the
+            # underlying predicate separately, rather than treating acceptance as a fix.
+            if slug in _ENDING_LEGACY and _TG.ending_offender(spec) is not None:
+                offenders.add(slug)
+            tail = _TG.ending_problem(spec)
+            if tail is not None:
+                offenders.add(slug)
+                if slug not in _ENDING_LEGACY:
+                    bad.append(f"{slug}: …{tail}")
+>       assert not bad, (
+            "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
+E       AssertionError: 这些片子的收尾停在数据上，没有落在一问上：
+E           medvedev-24-titles-23-cities: …收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。
+E         账号所有者：「不要平白地叙事，要能引爆传播」。最后一段要么旁白问出一个针对这场的问题，要么留一句带问号的原声；先用一个数字回答开场的问题，再抛下一问。往积极的方向落——请读者期待他兑现，不是请读者怀疑他。
+E       assert not ['medvedev-24-titles-23-cities: …收尾停在数据上，没有落在一问上：…二十三记发球直接得分，杭州写下第二十四冠。\n账号所有者：「不要平白地叙事，要能引爆传播」。最后一段要么旁白问出一个针对这场的问题，要么留一句带问号的原声；先用一个数字回答开场的问题，再抛下一问。往积极的方向落——请读者期待他兑现，不是请读者怀疑他。']
+
+tests/test_match_reel.py:1550: AssertionError
+___________________________ test_赛场之上要么有狠数据要么说清为什么没有 ___________________________
+
+    def test_赛场之上要么有狠数据要么说清为什么没有():
+        fresh = {slug for slug in _missing_hit_data() - _HIT_DATA_LEGACY
+                 if should_check('tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有', SPEC_DIR / f"{slug}.json")}
+>       assert not fresh, (
+            f"这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`："
+            f"{sorted(fresh)}。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）"
+            f"是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上"
+            f"分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，"
+            f"把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句"
+            f"`_no_hit_data_why` 说清查过哪些源。"
+        )
+E       AssertionError: 这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`：['khachanov-auger-aliassime-beijing-2026-r1']。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句`_no_hit_data_why` 说清查过哪些源。
+E       assert not {'khachanov-auger-aliassime-beijing-2026-r1'}
+
+tests/test_reel_editorial.py:843: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上 - Assert...
+FAILED tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有
+2 failed, 16 passed in 2.12s

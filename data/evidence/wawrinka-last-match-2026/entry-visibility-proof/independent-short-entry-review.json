@@ -1,0 +1,82 @@
+{
+  "schema": "tennislive.independent-native-short-entry-review.v1",
+  "status": "pass",
+  "scope": "Actual short native action composites only; not full native movie, scoreboard restoration, captions, voice, or publication approval",
+  "reviewed_at": "2026-10-28T00:13:33.870378+00:00",
+  "method": "Opened both actual contact sheets and independently extracted full1080x1440 actual decoded clip frames at extra1.00/1.28 and matchpoint1.52/1.68. Independently recomputed clip and viewed-frame byte SHA. No source redownload or new ASR.",
+  "source_sha256": "bf780486775cbacfbf3c7d7121aa59310ff23ed6a0be687222465aaafc939773",
+  "clips": [
+    {
+      "path": "extra-corrected.mp4",
+      "sha256": "dbc929a95daff1b4fc20450297549623e5e7b147e2938a2548e886126d353829",
+      "bytes": 5244227
+    },
+    {
+      "path": "matchpoint-corrected.mp4",
+      "sha256": "4ddc162e3831d9846b2ed32ecb8d8e544e57c7fb823f18d15dc65e563662905f",
+      "bytes": 3395043
+    }
+  ],
+  "visual_checks": [
+    {
+      "entry": "extra",
+      "status": "pass",
+      "actual_frames": [
+        1.0,
+        1.28
+      ],
+      "source_first_point_frame": 135.24,
+      "conclusion": "Near-side Wawrinka toss and contact each have one clear body/ball pose. Previously visible old-pose ghost is absent. Contact sheet also shows1.04/1.12/1.48 consistently clear.",
+      "fix_basis": "Prior source segment ends135.24; native continuation tail and incoming135.24 use identical absolute frames during dissolve."
+    },
+    {
+      "entry": "matchpoint",
+      "status": "pass",
+      "actual_frames": [
+        1.52,
+        1.68
+      ],
+      "source_first_point_frame": 222.92,
+      "conclusion": "Actual first available toss frame and contact frame show unobscured court/players, no statistics-card remnants. Fade has completed by actual matchpoint entry.",
+      "pre_roll_note": "222.40–222.92 is a real previous-point closeup used only for visual transition pre-roll. It is not claimed to be earlier preparation for this matchpoint. Actual source point begins222.92."
+    }
+  ],
+  "limitations": [
+    "Short action proof intentionally does not recompose original scoreboard. Full native final movie still must show source board fixed and captions clean.",
+    "New final movie will require fresh SHA and actual-entry visual audit. Existing f8ec137c visual report remains fix_required.",
+    "Original source230.4–235.1 unclear background declaration uncertainty remains, no new listening or literal-caption claim."
+  ],
+  "human_listening_claimed": false,
+  "voice_gate_pass_claimed": false,
+  "viewed_frames": [
+    {
+      "path": "independent-extra-corrected-1.00.jpg",
+      "sha256": "722986150a5660b2134aa82d2b8912ed265d25694535c49d9c1ea6a4a164f4af"
+    },
+    {
+      "path": "independent-extra-corrected-1.28.jpg",
+      "sha256": "c1f153ff0f8a24eb354f7d89576f5322885b0d34f714ba53e731131f1f1d026f"
+    },
+    {
+      "path": "independent-matchpoint-corrected-1.52.jpg",
+      "sha256": "4b7a7c68a835f1a94f4308d646c5bcf44856c9a0a229eb5de289f8eb645be629"
+    },
+    {
+      "path": "independent-matchpoint-corrected-1.68.jpg",
+      "sha256": "14605952cf358ea2789f80db918eaa8c924263365b8172ba2d47ce3554bee430"
+    },
+    {
+      "path": "extra-entry-contact.jpg",
+      "sha256": "de14a347c7f6f36c1af0d666d4ce216c9c5776ec598e6f46c722ea50cbbdee68"
+    },
+    {
+      "path": "matchpoint-entry-contact.jpg",
+      "sha256": "563459e82c0153ca86f5b86b08f17543b418641d568ed1a5547e14c890ac4d31"
+    }
+  ],
+  "producer_native_proof": {
+    "path": "native-short-entry-proof.json",
+    "sha256": "3bc63c69fee7d44a3b2d677a3621a560d989f6cb6f3d47429af475585b43816c",
+    "review_note": "Producer frame-MAE numbers read as corroboration; independent acceptance based on actual decoded visual frames, not numeric threshold alone."
+  }
+}
