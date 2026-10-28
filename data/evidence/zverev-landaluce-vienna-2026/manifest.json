@@ -3,17 +3,17 @@
   "source_archive": "https://github.com/robertyang87/tennislive/releases/download/source-9X0BYNTegMU/9X0BYNTegMU.mp4",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/40624943935",
   "asr_run": "https://github.com/robertyang87/tennislive/actions/runs/40625145957",
-  "status": "waiting_audio_review",
+  "status": "ready_for_render",
   "files": {
-    "specs/reels/pending/zverev-landaluce-vienna-2026.draft.json": "4be4fb6a73315caa5ae3a9cb315e713ba614588cb6cc628b7b99fe62eadbf36f",
+    "specs/reels/zverev-landaluce-vienna-2026.json": "0ca8475d9b61515fe7d435955c66d1237c464cba830a34ca69ee3d1edb9d9dbd",
+    "data/audio_reviews/zverev-landaluce-vienna-2026.json": "5f81e1a4b667aea28dbdf66627f04da035e54abd8594ff2ae68220f08d182486",
     "assets/reel/zverev-landaluce-vienna-2026-cover.jpg": "55e4ef3d868eeb7c7ebaffa90bdab8c82da8956dcd61cd3a430891489c42b8d5",
-    "data/evidence/zverev-landaluce-vienna-2026/official-report.html": "1ae0b1471cf9a81a3728f73609241d2a0d586afa79fc17e64884846b869b379c",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/contact_00.jpg": "4d82469194a4286a6140c7642b33998b7849db0d8d824226bab0bd2a7c8d943a",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/score_00.jpg": "18d92d55de45fe47bb93f5eb3b785c570a690922566c9f7815c0dd1113bff55e",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/contact_02.jpg": "cd7f1b7e6bfc9a9b690f8d521afc0d4db0dc931057cb2e7370d0ff9cf29af9ed",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/score_02.jpg": "165946a1370d88865a6dfe1badbc405b2fde34f005d853694f64bb0a013e4d14",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/score_03.jpg": "c9c7c29f5aa54f8f605283837c71e6aacbdc5b397ea576190b47fae0c90e6ea0",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/contact_01.jpg": "894b48c1551b23024d661aff9b233311becb01857567114cc59421dd9448658e",
-    "output/2026-10-28/reel/youtube-9x0byntegmu/score_01.jpg": "f44dea04932da8ea6b705ef4428caa5e0220771667696d5b80a8196b15123e5a"
-  }
+    "data/audio_reviews/zverev-landaluce-vienna-2026/segment-08.json": "b2afaeb09b43deaf27c8f01839d8e459f303f0236347698511d54edc82dcfe06",
+    "data/audio_reviews/zverev-landaluce-vienna-2026/segment-00.json": "fe7aec419987cd58791c0e95f014316dbbce9822328f91eacd2bc9edd92d1ba4",
+    "data/audio_reviews/zverev-landaluce-vienna-2026/segment-02.json": "45a9e0569c6c09898a111c4470b07bb683ba7cb441780bb95ed1c416477001f3",
+    "data/audio_reviews/zverev-landaluce-vienna-2026/segment-04.json": "830b29c2aed6f994aec7ed74b414bf5e97a66a0500670db5da9591e8088f2769",
+    "data/audio_reviews/zverev-landaluce-vienna-2026/segment-05.json": "ced343edb27a279aa54c2765195c895dd462a3d26fb5e50e3e44989e422fe287"
+  },
+  "formal_spec": "specs/reels/zverev-landaluce-vienna-2026.json",
+  "audio_review": "data/audio_reviews/zverev-landaluce-vienna-2026.json"
 }

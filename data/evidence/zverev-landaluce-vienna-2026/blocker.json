@@ -1,6 +1,6 @@
 {
   "stage": "foreground_audio_review",
-  "status": "blocking",
+  "status": "resolved_by_reselection_and_cross_checked_audio_evidence",
   "checked_at": "2026-10-28T03:38:50.808619+00:00",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/40624943935",
   "source_asr_run": "https://github.com/robertyang87/tennislive/actions/runs/40625145957",
@@ -14,5 +14,12 @@
   ],
   "render_dispatched": false,
   "push_dispatched": false,
-  "source_sha256": "5373947466eb9368d8779465b4b9b25872ec2928a1f2b6b54d52ee505e24e2d7"
+  "source_sha256": "5373947466eb9368d8779465b4b9b25872ec2928a1f2b6b54d52ee505e24e2d7",
+  "resolved_at": "2026-10-28T03:57:37.865371+00:00",
+  "resolution": [
+    "不可靠现场长句未选入；第二盘和抢七过程用官方已核事实字卡说明。",
+    "0–10.4和86.94–102.5选窗使用多模型及VAD交叉复核；排除无语音支持且词长异常的ASR噪声幻识。",
+    "保留102.5–105.95完整英文句与中译；冷开及完整赛点Out在独立VAD事件完整保留，138.416起的下一句未选。",
+    "data/audio_reviews索引与全部5个选窗逐一绑定字节和当前计划，原生require与reel_review_files检查通过；方法asr_cross_checked，不声称真人听审。"
+  ]
 }
