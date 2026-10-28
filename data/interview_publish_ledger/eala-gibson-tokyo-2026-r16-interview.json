@@ -3,7 +3,8 @@
   "channel": "pushplus",
   "provider": "pushplus",
   "requested_channel": "wechat",
-  "attempts": [
+  "attempts": [],
+  "cleared_attempts": [
     {
       "key": "pushplus:eala-gibson-tokyo-2026-r16-interview:1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
       "film_sha256": "1d4ed57ef225853b7724a1aa5d0d0f4c61104a9aa8415fe4bf98c119e116162d",
@@ -13,7 +14,12 @@
       "platform_status": "unknown",
       "delivery_status": "unknown",
       "at": "2026-10-28T17:53:42Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40739935454"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40739935454",
+      "cleared": {
+        "at": "2026-10-28T19:31:51Z",
+        "by": "Muse（所有者 2026-10-29 02:02 CST 批准修推送闸并推送本期）",
+        "evidence": "发送前被配音闸拦下：push_reel 调 require_publish 报缺 render_inputs.json，PushPlus 从未被调用；本行无平台流水号，微信未收到。"
+      }
     },
     {
       "key": "pushplus:eala-gibson-tokyo-2026-r16-interview:17b3dde4a2ff63f90fcb6d10541e51e41443cd240ca9f2d395ef7d8a8e296e3d",
@@ -24,7 +30,12 @@
       "platform_status": "unknown",
       "delivery_status": "unknown",
       "at": "2026-10-28T19:20:17Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/40753313104"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/40753313104",
+      "cleared": {
+        "at": "2026-10-28T19:31:51Z",
+        "by": "Muse（所有者 2026-10-29 02:02 CST 批准修推送闸并推送本期）",
+        "evidence": "预占 sending 后、发送前退出：run 日志原文 waiting_voice_quality_review: Voice approval is stale for current spec/render/film/inventory（上一版封印绑了定稿前的 render.json 字节）；恢复步在回执文件里没找到 PushPlus 流水号，平台从未接收。"
+      }
     }
   ]
 }
