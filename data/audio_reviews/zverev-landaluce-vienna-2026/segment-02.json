@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-9X0BYNTegMU/9X0BYNTegMU.mp4",
+  "original_source_url": "https://youtu.be/9X0BYNTegMU",
+  "source_sha256": "5373947466eb9368d8779465b4b9b25872ec2928a1f2b6b54d52ee505e24e2d7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: multi-model transcript/VAD cross-check; no human listening claimed",
+  "reviewed_at": "2026-10-28T03:56:03.544500+00:00",
+  "status": "complete",
+  "reviewed_from": 0,
+  "reviewed_to": 10.4,
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "源片完整small.en/medium.en在0–10.4没有识别到英文句；选窗large-v3只有常见噪声幻识Thank you for watching，其for被拖成长达7.56秒，与仅5.728–5.952秒0.224秒的VAD发声事件矛盾，拒绝将其作真实英文。该窗口为进行中的网球回合，保留击球、场声与短促发声；下一句Oh yes在10.7秒才开始，未选。",
+  "evidence_reason": "源片完整small.en/medium.en在0–10.4没有识别到英文句；选窗large-v3只有常见噪声幻识Thank you for watching，其for被拖成长达7.56秒，与仅5.728–5.952秒0.224秒的VAD发声事件矛盾，拒绝将其作真实英文。该窗口为进行中的网球回合，保留击球、场声与短促发声；下一句Oh yes在10.7秒才开始，未选。",
+  "evidence_paths": [
+    "data/evidence/zverev-landaluce-vienna-2026/source-asr-small.en.json",
+    "data/evidence/zverev-landaluce-vienna-2026/source-asr-medium.en.json",
+    "data/evidence/zverev-landaluce-vienna-2026/reselected-asr-large-v3.json",
+    "data/evidence/zverev-landaluce-vienna-2026/ending-vad.json"
+  ]
+}
