@@ -69,13 +69,29 @@ def test_headers_follow_three_real_match_windows_and_skip_full_canvas_card(tmp_p
                                     ('0:00:17.00','0:00:21.00')}
 
 
-def test_absent_map_preserves_original_single_header_ass_bytes(tmp_path):
+def test_absent_map_without_cards_preserves_original_single_header_ass_bytes(tmp_path):
     spec, segments = recipe(); spec.pop('topbar_by_source')
+    segments = [s for s in segments if not s.image]
     lines = ('2026 WTA250 大阪 决赛', '西尼亚科娃 6-1 6-0 克鲁格')
-    old = B.write_topbar_ass(lines, 2, 21, tmp_path/'old.ass', pulse_at=[15.0])
+    old = B.write_topbar_ass(lines, 2, 18, tmp_path/'old.ass', pulse_at=[15.0])
     new = B.write_segment_topbar_ass(spec, segments, 2, tmp_path/'new.ass',
                                     default_lines=lines, pulse_at=[15.0])
     assert old.read_bytes() == new.read_bytes()
+
+
+def test_absent_map_still_skips_cards_and_fades_at_card_edges(tmp_path):
+    """账号所有者 2026-10-28：顶栏压在章节卡顶上突兀——整屏卡上不显示，交界处淡入淡出。"""
+    spec, segments = recipe(); spec.pop('topbar_by_source')
+    lines = ('2026 WTA250 大阪 决赛', '西尼亚科娃 6-1 6-0 克鲁格')
+    path = B.write_segment_topbar_ass(spec, segments, 2, tmp_path/'new.ass',
+                                     default_lines=lines, pulse_at=[15.0])
+    rows = dialogues(path)
+    # 卡在 7..10 秒；卡后两段比赛画面并成一段，同一组台头
+    assert {r[:2] for r in rows} == {('0:00:02.00', '0:00:07.00'), ('0:00:10.00', '0:00:21.00')}
+    raw = [l for l in path.read_text().splitlines() if l.startswith('Dialogue:')]
+    fade = B.TOPBAR_CARD_FADE_MS
+    assert all(rf'\fad(0,{fade})' in l for l in raw if ',0:00:02.00,0:00:07.00,' in l)
+    assert all(rf'\fad({fade},0)' in l for l in raw if ',0:00:10.00,0:00:21.00,' in l)
 
 
 @pytest.mark.parametrize('mutation', ['missing_source','unknown_source','missing_opponent','unknown_opponent',
