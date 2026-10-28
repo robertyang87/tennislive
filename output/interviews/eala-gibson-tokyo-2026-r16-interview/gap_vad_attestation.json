@@ -1,0 +1,72 @@
+{
+ "status": "pass",
+ "method": "silero_vad_plus_dual_asr_coverage",
+ "sha256": "1443610b391342c9271dfe007e4e09ffc66c19c7b5c61192f70bf69e9a4a2205",
+ "url": "https://github.com/robertyang87/tennislive/releases/download/src-eala-tokyo-20261028/eala-tokyo-r16-interview-fbcopy.mp4",
+ "edge_pad_seconds": 0.35,
+ "max_speech_seconds": 0.12,
+ "results": [
+  {
+   "key": "31.6-37.1",
+   "start": 31.65,
+   "end": 37.13,
+   "speech_seconds": 4.244,
+   "second_asr_words": [
+    "Well,",
+    "I",
+    "guess",
+    "that's",
+    "the",
+    "key",
+    "to",
+    "your",
+    "victory",
+    "tonight."
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected",
+   "reason": "VAD 测到 4.244s 人声，第二份 ASR（medium.en）听到「Well, I guess that's the key to your victory tonight.」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+  },
+  {
+   "key": "46.1-57.5",
+   "start": 46.15,
+   "end": 57.55,
+   "speech_seconds": 9.588,
+   "second_asr_words": [
+    "You",
+    "were",
+    "in",
+    "the",
+    "Philippines",
+    "for",
+    "a",
+    "long",
+    "time.",
+    "How",
+    "did",
+    "you",
+    "feel",
+    "when",
+    "you",
+    "came",
+    "back?"
+   ],
+   "transcript_covered": false,
+   "caption_timeline_covered": false,
+   "status": "speech_detected",
+   "reason": "VAD 测到 9.588s 人声，第二份 ASR（medium.en）听到「You were in the Philippines for a long time. How did you feel when you came back?」——要人听：漏了就补 `en_fixed`，是笑声／掌声就写 `caption_gaps_ok`"
+  },
+  {
+   "key": "66.6-69.9",
+   "start": 66.61,
+   "end": 69.88,
+   "speech_seconds": 0,
+   "second_asr_words": [],
+   "transcript_covered": false,
+   "caption_timeline_covered": true,
+   "status": "caption_timeline_covered",
+   "reason": "VAD 测到 0.000s 人声，第二份 ASR（medium.en）没听出词——成品字幕相邻两行的时间轴已经盖住这段空档的核心区，按字幕时间轴销账（不是 VAD 证明没人说话）"
+  }
+ ]
+}
