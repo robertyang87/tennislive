@@ -386,10 +386,10 @@ def test_第二份ASR在subs那一趟跑_排在切行提交之后(tmp_path):
         f"第二份 ASR 的模型缓存 subs 和 render 要同一把键：{keys}")
 
 
-#: `--stage` 各档要不要 ffmpeg：会走 `yt_download` 下源片或音轨的要（Brightcove
-#: HLS、合流、抽帧都靠它）；只拉字幕／故事板的不要。新加一档必须在这儿归类——
+#: `--stage` 各档要不要 ffmpeg：下载源片/音轨、合流、抽帧，以及 seal 的配音
+#: 解码与声学检查都需要；只拉字幕／故事板的不要。新加一档必须在这儿归类——
 #: 下面那条先拿 argparse 的 `choices` 对一遍，漏归类当场红。
-_MEDIA_STAGES = {"verify", "cover", "cover-scan", "render"}
+_MEDIA_STAGES = {"verify", "cover", "cover-scan", "render", "seal"}
 _CAPTION_ONLY_STAGES = {"subs", "sheet"}
 
 
