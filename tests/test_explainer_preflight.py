@@ -217,3 +217,26 @@ def test_最宽的日期真的是最宽的():
         day += dt.timedelta(days=1)
     assert xhs_title_len(f"🎾{P.WIDEST_DATE_LABEL} ") == max(widths), sorted(widths)
     assert len(widths) > 1, "日期宽度一样的话，这条测试就没在量东西"
+
+
+from tennislive.render.tournament_story import find_story_by_slug
+from tennislive.video import explainer as E
+from tennislive.video.transition_cards import validate_content
+
+
+def test_basel_episode_preserves_native_motion_and_entry_identity():
+    segments = E.explainer_script(find_story_by_slug('djokovic-basel-wildcard-2026'))
+    assert segments[0].kind == 'cover'
+    assert len(segments) == 12
+    for segment in segments[1:]:
+        assert segment.visual['layout'] == 'transition'
+        validate_content(segment.visual['content'])
+    text = ''.join(s.narration for s in segments)
+    assert '二十八天' in text and '四号种子' in text
+    assert '阿尔卡拉斯参加维也纳，也是外卡，却列二号种子' in text
+    assert '下一位合资格球员' in text
+
+
+def test_existing_packaged_episode_retains_visual_specs():
+    segments = E.explainer_script(find_story_by_slug(E._DEFAULT_SLUG))
+    assert [s.visual for s in segments[1:]] == [b.get('visual') for b in E._DEFAULT_EPISODE['beats']]

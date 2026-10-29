@@ -1,0 +1,574 @@
+{
+  "schema": "tennislive.voice-quality.v1",
+  "identity": {
+    "render_sha256": "1252a2939aeeaa2204d7821bad0618c343e204fb19d439e78140383e6d2512c4",
+    "render_inputs_sha256": "a93f3fd2e6c6301804e63d9aca6fd3ca78f249ecd9a0bf3dbe055dd038e0613b",
+    "spec_sha256": "df07b490d306d959f4e8a2fcd76e9662760853f657e122d9cf940d43ee946163",
+    "film_sha256": "cd522e61676417ff91397d5ff690fea38446cff64803da7c825af58d8dd6ed0f",
+    "inventory_sha256": "3699bafec732555d0a9c97431249ff961d1517b4d3c5119af6d95b2188467ff5"
+  },
+  "film_review": {
+    "status": "pass",
+    "method": "automated_voice_suite",
+    "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+    "reviewed_at": "2026-10-29T11:53:59+00:00",
+    "film_sha256": "cd522e61676417ff91397d5ff690fea38446cff64803da7c825af58d8dd6ed0f",
+    "whole_narration_and_seams": true,
+    "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+    "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f；接缝：原生解说按每段实际音频时长组装，全部12段实际成片AAC与对应已审冻结音频完整波形比较通过，起点零累计偏移；实际品牌片尾另做ASR通过，见final-audio-identity.json。没有真人听审。"
+  },
+  "entries": [
+    {
+      "id": "bundle:31e113abf68c0209596257d8e67968180aaec16d0913a7db4c7981f272deb1da",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:3589e455dce728432c8212029135c0deff2c0ca9b23e0e347a37ddaa99ba1499",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:387d69f86cce532c5710daff807e6c20b8dfa38d669d876f066da46b7d926783",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:390762f12c005afd2126f22529bd48c22a93b247c2ed35bbe6b923110c4fb401",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:3a491b749c21aadb072685af91fa1e91d47f814c14ca9a4ac83c5488651e1669",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:467466682c806c38eef3dff13fd703b3fcc8fec9669477cd127f22f0191db5b6",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:6353c27815a63f2fa39756d9a255d1e99e94ac514cfde014340b11e21d1029ba",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:71a0e485337e67ffe4845bf0ed263805ee9ab0b33286c29bf363d000e6157fb3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:7ed08dff75b4ae59bb83d32c9ccbad10f5450a62029310651492146b06c0abbd",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:8a56c4c5ee65e2f35b7bd21756678f33f6ae2c69704c61a9611c3f9ea79b93b4",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:8a85769f7307141b24f323d51d2951d37da2bbe663f76aaedd808d7398ff03ae",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "bundle:df16a1677257215768694c833890c06b5c5f7d0289d7f47db16a73344075ebb5",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_00.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_01.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_02.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_03.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_04.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_05.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_06.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_07.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_08.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_09.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_10.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    },
+    {
+      "id": "voice_11.mp3",
+      "phonetics": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "automated_voice_suite",
+        "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+        "reviewed_at": "2026-10-29T11:53:59+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+        "observations": "五项自动检查全过，证据 voice_auto_review.json sha256 8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+        "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f"
+      }
+    }
+  ]
+}

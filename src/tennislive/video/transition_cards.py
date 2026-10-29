@@ -184,7 +184,7 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
 
 
 def build(text: str, *, content=None, kicker="", size=(1080, 1440),
-          handle_bottom=None, story_label=None, seconds=6.0) -> str:
+          handle_bottom=None, story_label=None, seconds=6.0, header=None) -> str:
     """One HTML source for previews and motion, preserving the native brand rail."""
     tc = _tc()
     p = plan(text, content, size=size, kicker=kicker)
@@ -255,6 +255,15 @@ em:after{{content:'';position:absolute;left:0;right:0;bottom:-6px;height:3px;bac
     # Background graphics precede real copy and the existing fixed brand rail.
     page = page.replace('<div class="bar">', graphics+'<div class="bar">', 1)
     clock = '''<script>window.setTransitionTime=(seconds)=>{document.getAnimations().forEach(a=>{a.pause();a.currentTime=seconds*1000});};</script>'''
+    if header is not None:
+        if (not isinstance(header, dict) or set(header) != {"brand", "topic"}
+                or any(not isinstance(v, str) or not v.strip() for v in header.values())):
+            raise ValueError("解说台头需要完整品牌与主题")
+        page += ('<div class="explainer-head" style="position:absolute;z-index:20;left:70px;right:70px;top:43px;'
+                 'font-family:TL Sans SC,Noto Sans CJK SC,sans-serif;color:#edf1f5;line-height:1.2">'
+                 '<div style="font-size:38px;font-weight:700">' + e(header["brand"]) + '</div>'
+                 '<span class="topic" style="display:block;white-space:nowrap;font-size:27px;'
+                 'color:#c1ccd6;margin-top:8px">' + e(header["topic"]) + '</span></div>')
     from .transition_motion import enhance
     return enhance(page + css + photo + proof + clock, p, size=size, seconds=seconds)
 
@@ -265,6 +274,9 @@ def check_page(page, p: dict) -> dict:
       return {boxes:[...document.querySelectorAll('.transition-line,.node-label,.node-value,.metric-title,.chart-label,.chart-value,.result-label,.result-value,.summary-label,.summary-value')].map(el=>({text:el.innerText,width:el.clientWidth,scroll:el.scrollWidth,rect:rect(el)})),
         content:[...document.querySelectorAll('.thesis,.transition-proof,.kicker,.transition-photo,.motion-result,.motion-summary')].map(rect),
         story:document.querySelector('.story-label')?rect(document.querySelector('.story-label')):null};}''')
+    header_boxes = page.evaluate("[...document.querySelectorAll('.explainer-head,.explainer-head .topic')].map(e=>({w:e.clientWidth,s:e.scrollWidth,b:e.getBoundingClientRect().bottom}))")
+    if any(b["s"] > b["w"] + 1 or b["b"] > 152 for b in header_boxes):
+        raise ValueError("解说台头溢出顶部安全区")
     if any(b["scroll"] > b["width"] + 1 or b["rect"]["left"] < 48 or b["rect"]["right"] > p["canvas_width"] - 48 for b in evidence["boxes"]):
         raise ValueError("转场实际排版文字溢出 请缩短完整语义")
     if any(b["bottom"] > p["safe_bottom"] + 30 for b in evidence["content"]):
@@ -275,7 +287,7 @@ def check_page(page, p: dict) -> dict:
 
 
 def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
-                kicker="", size=(1080, 1440), handle_bottom=None, story_label=None) -> Path:
+                kicker="", size=(1080, 1440), handle_bottom=None, story_label=None, header=None) -> Path:
     """Cache exact silent movie bytes; animate once then hold for full narration."""
     from PIL import Image
     import io
@@ -287,7 +299,7 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
         raise ValueError("转场需要有效的完整停留时长和帧率")
     p = plan(text, content, size=size, kicker=kicker)
     document = build(text, content=content, kicker=kicker, size=size,
-                     handle_bottom=handle_bottom, story_label=story_label, seconds=seconds)
+                     handle_bottom=handle_bottom, story_label=story_label, seconds=seconds, header=header)
     motion_window = min(6.0, max(.1, seconds - .3))
     engine_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     key = hashlib.sha256((str(VERSION)+engine_sha+document+json.dumps([seconds,str(fps),p['content']],ensure_ascii=False)).encode()).hexdigest()

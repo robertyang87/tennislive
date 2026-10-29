@@ -380,9 +380,16 @@ def test_every_story_has_a_renderable_script():
         # 这里原来给 `kind == "mechanism"` 开了个口子，靠渲染时的兜底补图——
         # 而那个兜底摆的是**鹰眼**那张示意图。口子和兜底一起去掉了，见
         # `test_缺图的那一屏要报错而不是套用别的选题的图`。
-        assert all(s.image or s.diagram for s in segments), (
-            f"{story.slug} 有既没图也没示意图的一屏"
-        )
+        for segment in segments:
+            if segment.visual and segment.visual.get("layout") == "transition":
+                # Native motion uses typed, source-bound graphics instead of SVG strings.
+                from tennislive.video.transition_cards import validate_content
+                content = validate_content(segment.visual.get("content"))
+                assert any(k in content for k in ("events", "comparison", "comparisons", "photo", "scores"))
+            else:
+                assert segment.image or segment.diagram, (
+                    f"{story.slug} 有既没图也没示意图的一屏"
+                )
 
 
 def test_一屏不许既配图又画示意图否则示意图被静默丢掉():
@@ -1348,7 +1355,7 @@ def test_台头和副标题在每一屏上都常驻():
         explainer_column,
     )
 
-    topic_span = re.compile(r'<span class="topic">(.*?)</span>')
+    topic_span = re.compile(r'<span class="topic"(?:\s[^>]*)?>(.*?)</span>')
     slugs = slides = 0
     missing_brand: list[str] = []
     missing_topic: list[str] = []
