@@ -1,0 +1,153 @@
+{
+  "match": {
+    "event": 1023,
+    "year": 2026,
+    "match_id": "LS011",
+    "event_name": "Guangzhou Open",
+    "event_level": "WTA250",
+    "surface": "outdoor hard",
+    "round": "Second round",
+    "winner": "Han Shi",
+    "loser": "Dayana Yastremska",
+    "result": "7-5 6-4",
+    "duration": "01:31:12",
+    "date": "2026-10-28",
+    "time_period": "北京时间10月28日晚",
+    "start_metadata_utc": "2026-10-28T11:14:38.85+00:00",
+    "first_completed_point_utc": "2026-10-28T11:28:15Z",
+    "last_completed_point_utc": "2026-10-28T12:58:44Z"
+  },
+  "players": [
+    {
+      "name": "Han Shi",
+      "name_zh": "施晗",
+      "country": "CHN",
+      "rank": 162,
+      "rank_date": "2026-10-26",
+      "dateOfBirth": "2005-05-30",
+      "entry": "WC"
+    },
+    {
+      "name": "Dayana Yastremska",
+      "country": "UKR",
+      "rank": 97,
+      "rank_date": "2026-10-26",
+      "entry": "Q"
+    }
+  ],
+  "stats": {
+    "a": {
+      "aces": 3,
+      "df": 3,
+      "first_in": 41,
+      "first_total": 67,
+      "first_won": 32,
+      "second_total": 26,
+      "second_won": 14,
+      "bp_conv": 3,
+      "bp_chances": 9,
+      "pts_won": 73,
+      "pts_total": 131,
+      "winners": 7,
+      "ue": 16
+    },
+    "b": {
+      "aces": 1,
+      "df": 1,
+      "first_in": 45,
+      "first_total": 64,
+      "first_won": 27,
+      "second_total": 19,
+      "second_won": 10,
+      "bp_conv": 1,
+      "bp_chances": 5,
+      "pts_won": 58,
+      "pts_total": 131,
+      "winners": 15,
+      "ue": 39
+    }
+  },
+  "narrative": [
+    "首盘开场破发并保发2-0，随后被追至2-3",
+    "各自保发到施晗4-5，第10局30-40面对1盘点，连拿3分保至5-5",
+    "第11局连拿4分破发至6-5，第12局保发7-5；从4-5连赢3局",
+    "次盘1-1时破发至2-1，保发至3-1；此后各保发至5-4",
+    "次盘第10局发球胜赛局0-40落后，救3破发点并连拿5分，以6-4获胜"
+  ],
+  "next_round": {
+    "round": "quarterfinal",
+    "opponent": "Lilli Tagger or Magda Linette",
+    "opponent_match_id": "LS010",
+    "opponent_match_status": "scheduled",
+    "opponent_match_time": "2026-10-29T19:00+08:00",
+    "draw_source": "https://wtafiles.wtatennis.com/pdf/draws/2026/1023/MDS.pdf"
+  },
+  "cover": {
+    "photo_cms_id": 4600228,
+    "path": "/workspace/scratch/shi-facts-cover/video-og.jpg",
+    "url": "https://photoresources.wtatennis.com/wta/photo/2026/10/28/21d7c94b-83ec-44a6-8b52-1812fc0c0c7d/Shi-R2.JPG",
+    "dimensions": [
+      3750,
+      2500
+    ],
+    "credit": "Huang Jinwen/WTA",
+    "sha256": "3c25dfda4c71a94b3c79bb8dd6e47217ca402a368c4d2b5cb64cb31318d31521",
+    "file": "Shi-R2.JPG",
+    "exif_original": "2026:10:28 19:23:52+08:00",
+    "visual": "施晗黄绿裙、白帽、反手击球，帽檐遮双眼，不符合双眼清晰优先要求",
+    "same_match_evidence": "同场WTA R2集锦页og:image；WTA CMS2026-10-28发布、Shi-R2.JPG；EXIF落于官方MatchTimeStamp与首个PBP之间，可能热身画面，不要虚称某个回合"
+  },
+  "discrepancies": [
+    "官方stats全场73-58、131分；官方PBP全场72-58、130分。统计用stats，不用PBP总分。",
+    "官方MatchTimeTotal01:31:12；stats两盘49:28+41:41=1:31:09相差3秒。用MatchTimeTotal。"
+  ],
+  "sources": {
+    "matches": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches",
+    "stats": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches/LS011/stats",
+    "pbp": "https://api.wtatennis.com/tennis/tournaments/1023/2026/matches/LS011/point-by-point",
+    "photos": "https://api.wtatennis.com/content/wta/photo/EN/?pageSize=100&page=0",
+    "ranking": "https://api.wtatennis.com/tennis/players/ranked?page=1&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES",
+    "video": "https://www.wtatennis.com/videos/4600226/wild-card-shi-tops-yastremska-to-make-first-wta-quarterfinal-in-guangzhou"
+  },
+  "tnns": {
+    "run_id": 40750543752,
+    "status": "success",
+    "url": "https://github.com/robertyang87/tennislive/actions/runs/40750543752",
+    "match_id": 75838120,
+    "players": [
+      "Shi",
+      "Yastremska"
+    ],
+    "winners": [
+      7,
+      15
+    ],
+    "ue": [
+      16,
+      39
+    ],
+    "sets": [
+      {
+        "winners": [
+          5,
+          6
+        ],
+        "ue": [
+          10,
+          21
+        ]
+      },
+      {
+        "winners": [
+          2,
+          9
+        ],
+        "ue": [
+          6,
+          18
+        ]
+      }
+    ]
+  },
+  "mcp": "2026 Han_Shi仅中网对郑钦文有标注，本场没有"
+}

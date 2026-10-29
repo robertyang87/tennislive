@@ -7250,6 +7250,13 @@ SINIAKOVA_OSAKA_2026_LOW_RES_SOURCES: dict[str, int] = {
     for video in ("6407221766112", "6407335181112", "6407369981112")
 }
 
+# 2026-10-29: owner explicitly answered “这场允许用官网720p继续”.
+# Only this Guangzhou second-round film and its exact official source qualify.
+# Native bytes/height remain checked before any display scaling.
+SHI_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112": 720,
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -7271,6 +7278,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
             if spec.get("slug") != "siniakova-osaka-title-run-2026":
                 raise ReelError("source_quality_exceptions 此源条件政策仅限西尼亚科娃2026大阪夺冠之路")
             floor = SINIAKOVA_OSAKA_2026_LOW_RES_SOURCES[url]
+        if url in SHI_GUANGZHOU_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "shi-yastremska-guangzhou-2026-r2":
+                raise ReelError("source_quality_exceptions 此源授权仅限施晗2026广州第二轮")
+            floor = SHI_GUANGZHOU_2026_LOW_RES_SOURCES[url]
         if floor is None or url not in urls:
             raise ReelError(f"source_quality_exceptions 未授权或未引用的源：{url}")
         if (not isinstance(claim, dict)

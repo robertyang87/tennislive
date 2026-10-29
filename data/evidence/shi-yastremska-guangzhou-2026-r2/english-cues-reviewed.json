@@ -1,0 +1,230 @@
+{
+  "source_sha256": "108a5f5fbb654bb9af09dfc77fedcbddc1c6a20c8d0856caca71bf948c357ae4",
+  "method": "dual-ASR text and word-boundary comparison plus targeted medium replay; no human listening claimed; uncertain source words explicitly retained as uncertain, not a blanket transcript pass",
+  "cues": [
+    {
+      "start": 16.26,
+      "end": 18.44,
+      "english": "And she's found the line.",
+      "chinese": "这一球压线了。",
+      "evidence": "dual ASR agree",
+      "uncertain": false
+    },
+    {
+      "start": 18.88,
+      "end": 19.48,
+      "english": "What a start!",
+      "chinese": "多么出色的开局！",
+      "evidence": "dual ASR and targeted medium agree",
+      "uncertain": false
+    },
+    {
+      "start": 19.48,
+      "end": 22.86,
+      "english": "Yastremska has really come back well since.",
+      "chinese": "随后雅斯特雷姆斯卡很好地追回了局面。",
+      "evidence": "medium+targeted medium, player name normalized; small omitted sentence",
+      "uncertain": false
+    },
+    {
+      "start": 29.14,
+      "end": 35.8,
+      "english": "Oh, find a delicious angle. Really a spectator as that raced past her.",
+      "chinese": "",
+      "evidence": "UNCERTAIN: both ASRs malformed; recommended omit source19.5-35.9 rather than invent subtitle",
+      "uncertain": true
+    },
+    {
+      "start": 42.98,
+      "end": 46.38,
+      "english": "Oh, it's another belter of a backhand.",
+      "chinese": "又是一记强劲的反手！",
+      "evidence": "dual ASR agree; belter normalized from small belt over",
+      "uncertain": false
+    },
+    {
+      "start": 53.36,
+      "end": 56.38,
+      "english": "Ooh, a chance not taken.",
+      "chinese": "这次机会没能把握住。",
+      "evidence": "dual ASR; medium omits Ooh; medium trailing boundary56.38 includes likely elongation, next TTS56.5",
+      "uncertain": false
+    },
+    {
+      "start": 63.0,
+      "end": 64.34,
+      "english": "What an angle!",
+      "chinese": "这角度太漂亮了！",
+      "evidence": "dual ASR and targeted agree",
+      "uncertain": false
+    },
+    {
+      "start": 65.32,
+      "end": 66.8,
+      "english": "What a start / shot / star she is.",
+      "chinese": "",
+      "evidence": "UNCERTAIN: small start, medium start, targeted what a start she is; omit this short reaction after previous point ended if possible",
+      "uncertain": true
+    },
+    {
+      "start": 71.2,
+      "end": 72.0,
+      "english": "Wide.",
+      "chinese": "出界。",
+      "evidence": "dual ASR; targeted shifted start71.7",
+      "uncertain": false
+    },
+    {
+      "start": 73.06,
+      "end": 73.76,
+      "english": "Well, that's brilliant.",
+      "chinese": "太精彩了。",
+      "evidence": "dual ASR and targeted agree",
+      "uncertain": false
+    },
+    {
+      "start": 74.42,
+      "end": 78.08,
+      "english": "Tremendous start to the set, and tremendous end to the set.",
+      "chinese": "这一盘开局出色，收尾同样出色。",
+      "evidence": "small+targeted medium agree; whole-source medium dropped most of sentence",
+      "uncertain": false
+    },
+    {
+      "start": 84.74,
+      "end": 86.22,
+      "english": "Fifteen love.",
+      "chinese": "十五比零。",
+      "evidence": "whole-source medium only; likely umpire call; small skipped",
+      "uncertain": false
+    },
+    {
+      "start": 86.22,
+      "end": 88.14,
+      "english": "Right on the line.",
+      "chinese": "正好压线。",
+      "evidence": "dual ASR and medium word bounds; small stretches the line to89.62",
+      "uncertain": false
+    },
+    {
+      "start": 100.34,
+      "end": 102.72,
+      "english": "That's really good play from Yastremska.",
+      "chinese": "雅斯特雷姆斯卡这一分处理得很好。",
+      "evidence": "dual ASR and targeted agree; article a uncertain but does not affect meaning",
+      "uncertain": false
+    },
+    {
+      "start": 102.72,
+      "end": 103.2,
+      "english": "Giving...",
+      "chinese": "",
+      "evidence": "UNCERTAIN clipped fragment in both ASRs/targeted; do not invent continuation",
+      "uncertain": true
+    },
+    {
+      "start": 108.22,
+      "end": 109.9,
+      "english": "Oh, I say!",
+      "chinese": "哇，漂亮！",
+      "evidence": "dual ASR and targeted agree",
+      "uncertain": false
+    },
+    {
+      "start": 109.9,
+      "end": 113.6,
+      "english": "Serving for the match here, Shi Han, five-four.",
+      "chinese": "施晗五比四，来到发球胜赛局。",
+      "evidence": "semantic reconstruction of dual ASR and targeted; precise here/She wording uncertain. Prefer omit tail after Oh I say if avoiding uncertain wording.",
+      "uncertain": true
+    },
+    {
+      "start": 118.22,
+      "end": 120.72,
+      "english": "But it's Yastremska with the first point.",
+      "chinese": "",
+      "evidence": "UNCERTAIN and semantically conflicts with source transition; both ASRs+targeted agree approximate sound but first point may be first serve. Recommended omit this dead-ball utterance; keep deuce point through118.2, rejoin120.75.",
+      "uncertain": true
+    },
+    {
+      "start": 120.72,
+      "end": 123.2,
+      "english": "And now she's got herself a match point.",
+      "chinese": "现在，她拿到了赛点。",
+      "evidence": "dual ASR+targeted agree",
+      "uncertain": false
+    },
+    {
+      "start": 128.7,
+      "end": 134.08,
+      "english": "A wonderful, wonderful win for Shi Han.",
+      "chinese": "施晗拿下了一场精彩的胜利！",
+      "evidence": "dual ASR agree after normalizing official player name; small way->medium win",
+      "uncertain": false
+    },
+    {
+      "start": 134.54,
+      "end": 136.6,
+      "english": "And there's the first sign of emotion.",
+      "chinese": "她终于流露出了激动的情绪。",
+      "evidence": "dual ASR agree; small side->medium sign",
+      "uncertain": false
+    },
+    {
+      "start": 137.78,
+      "end": 141.08,
+      "english": "That is some win against Dayana Yastremska.",
+      "chinese": "击败雅斯特雷姆斯卡，这场胜利意义不凡。",
+      "evidence": "medium complete surname, small cuts at Dayana; normalized official spelling",
+      "uncertain": false
+    }
+  ],
+  "tts_candidate_gaps": [
+    [
+      0,
+      16.1
+    ],
+    [
+      35.9,
+      42.85
+    ],
+    [
+      46.5,
+      53.2
+    ],
+    [
+      56.5,
+      62.85
+    ],
+    [
+      66.9,
+      71.05
+    ],
+    [
+      78.2,
+      84.6
+    ],
+    [
+      88.25,
+      100.2
+    ],
+    [
+      103.3,
+      108.1
+    ],
+    [
+      113.7,
+      118.2
+    ],
+    [
+      123.3,
+      128.55
+    ]
+  ],
+  "notes": [
+    "Gaps are candidate timing from automatic words, not phoneme-perfect silence proof.",
+    "Whole-source and targeted ASR disagree/miss fragments. Avoid publishing uncertain subtitles as exact original words.",
+    "Do not use near/far actor labels unless separately verified in the intended clip; both players wear bright lime/yellow.",
+    "Cold-open suggested128.6-136.75 with full wonderful-win + emotion statements; full ending must cover same interval and handshake may continue141.2."
+  ]
+}

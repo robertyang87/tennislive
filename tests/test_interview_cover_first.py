@@ -386,10 +386,11 @@ def test_第二份ASR在subs那一趟跑_排在切行提交之后(tmp_path):
         f"第二份 ASR 的模型缓存 subs 和 render 要同一把键：{keys}")
 
 
-#: `--stage` 各档要不要 ffmpeg：会走 `yt_download` 下源片或音轨的要（Brightcove
-#: HLS、合流、抽帧都靠它）；只拉字幕／故事板的不要。新加一档必须在这儿归类——
+#: `--stage` 各档要不要 ffmpeg：下载源片或音轨、合流、抽帧与解码都要。
+#: seal 虽不下载源片，自动听审的 run_asr 仍用 ffmpeg 解码冻结 MP3 为 PCM；
+#: 只拉字幕／故事板的不要。新加一档必须在这儿归类——
 #: 下面那条先拿 argparse 的 `choices` 对一遍，漏归类当场红。
-_MEDIA_STAGES = {"verify", "cover", "cover-scan", "render"}
+_MEDIA_STAGES = {"verify", "cover", "cover-scan", "render", "seal"}
 _CAPTION_ONLY_STAGES = {"subs", "sheet"}
 
 
@@ -400,7 +401,7 @@ def test_会下载媒体的每一档都先装ffmpeg():
     job 级的判据照样绿（review 指出：tennistv.com 那 12 条是 Brightcove HLS）。
 
     所以按 **mode** 推：对 dispatch 表单里的每一档，走一遍它真会跑的步骤，
-    凡是跑 `build_interview_clip.py --stage <要下媒体的那几档>` 的，前面必须
+    凡是跑 `build_interview_clip.py --stage <需要媒体工具的那几档>` 的，前面必须
     有一步真调了 `ensure_ffmpeg`（去掉注释再认——注释里写着 ffmpeg 不算装了）。"""
     import ast  # noqa: PLC0415
     import re  # noqa: PLC0415
@@ -424,6 +425,8 @@ def test_会下载媒体的每一档都先装ffmpeg():
         for step in _steps():
             code = "\n".join(ln for ln in str(step.get("run") or "").splitlines()
                              if not ln.lstrip().startswith("#"))
+            # render / seal 的命令用 shell 续行；按逻辑命令检查，不能漏掉下一行的 --stage。
+            code = re.sub(r"\\\r?\n", " ", code)
             # 只有「跑 --stage」和「装 ffmpeg」这两类步骤是主语；别的步骤的 if 里有
             # push／ref_name／always() 这类 `_holds` 不认的写法，本来也不用算
             if "build_interview_clip.py" not in code and "ensure_ffmpeg" not in code:
@@ -434,12 +437,13 @@ def test_会下载媒体的每一档都先装ffmpeg():
                 if stage in _MEDIA_STAGES:
                     checked.append(f"{mode}:{stage}")
                     assert ready, (
-                        f"mode={mode} 的「{step.get('name')}」跑 --stage {stage}（要下媒体），"
+                        f"mode={mode} 的「{step.get('name')}」跑 --stage {stage}（需要媒体工具），"
                         "前面却没有一步 `ensure_ffmpeg`——缺了它报的是 yt-dlp 下不动，"
                         "看起来像源的问题")
             if re.search(r"(?<![\w-])ensure_ffmpeg(?![\w-])", code):
                 ready = True
-    assert {"subs:verify", "render:verify", "cover:cover", "render:cover"} <= set(checked), (
+    assert {"subs:verify", "render:verify", "cover:cover", "render:cover",
+            "render:render", "render:seal"} <= set(checked), (
         f"判据的主语没了：只校到 {sorted(set(checked))}")
 
 

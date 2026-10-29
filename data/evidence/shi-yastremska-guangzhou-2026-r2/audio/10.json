@@ -1,0 +1,20 @@
+{
+  "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112",
+  "source_sha256": "108a5f5fbb654bb9af09dfc77fedcbddc1c6a20c8d0856caca71bf948c357ae4",
+  "method": "asr_cross_checked",
+  "reviewer": "Independent assistant plus producer; two full ASRs and three targeted medium passes; no human listening claimed",
+  "reviewed_at": "2026-10-28T19:12:21.466386+00:00",
+  "status": "complete",
+  "reviewed_from": 66.9,
+  "reviewed_to": 71.05,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_sources": [
+    "data/evidence/shi-yastremska-guangzhou-2026-r2/small.en.json",
+    "data/evidence/shi-yastremska-guangzhou-2026-r2/medium.en.json",
+    "data/evidence/shi-yastremska-guangzhou-2026-r2/targeted-medium.json",
+    "data/evidence/shi-yastremska-guangzhou-2026-r2/english-cues-reviewed.json"
+  ],
+  "limits": "Automatic evidence, not human auditory review. Uncertain source phrases are omitted in their entirety during dead-ball windows; no unsupported reconstruction. Targeted first word of next clause is20.04s, after first retained window ends19.6s.",
+  "no_foreground_english_reason": "Both full ASR word tables compared with targeted review: selected window is before or after the complete English clauses; only real court sound under Chinese TTS."
+}
