@@ -26,3 +26,8 @@ def test_片尾母版转码不许进git_清理步骤要删它():
     assert abs(outro_at - voice_at) < 400, "删 _outro.mp4 要和删 voice_*.mp3 在同一步"
     assert outro_at < code.index("git add"), "删中间物要排在 git add 之前"
     assert re.search(r"rm -f \"\$OUT_DIR\"/_outro\.mp4", code)
+
+
+def test_native_motion_intermediates_are_cleaned_before_commit():
+    text = (ROOT / ".github/workflows/explainer.yml").read_text()
+    assert text.index('rm -f "$OUT_DIR"/slide_*.transition.mp4') < text.index('git add "$OUTDIR"')
