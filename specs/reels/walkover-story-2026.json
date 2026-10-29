@@ -1,0 +1,425 @@
+{
+  "slug": "walkover-story-2026",
+  "date": "2026-10-30",
+  "_column": "网球有故事",
+  "title": "不战而胜，为啥叫走",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "与账号故事条同一把嗓子（edge 云健），不加情绪风格。",
+  "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "story_kind": "other",
+    "subject": "Walkover 不战而胜",
+    "hook": "WALK OVER\n赢球，为什么靠「走」？",
+    "_hook_why": "账号所有者 2026-10-30 定稿（组合二骨架并入组合一问句，用户定：问句更好）：第一行术语砸脸，第二行问句开缺口——点开靠封面、看下去靠开场 20 秒内兑现这个词。",
+    "narration": "赢球，为什么靠走？",
+    "_narration_why": "念的就是海报第二行那句问句（引号不入声）。",
+    "topic": "不战而胜：walkover 是怎么来的",
+    "portrait": {
+      "image": "assets/reel/walkover-story-2026/cover-draft-a.png",
+      "fit": "cover",
+      "focus": 0.5,
+      "focus_y": 0.0,
+      "zoom": 1.0,
+      "_credit": "自制签表图（代码绘制，cover/make_cover_drafts.py 留在制作目录；1080×1440 原生画布，无外部图片素材）",
+      "_portrait_why": "账号所有者 2026-10-30 定版 A 版（块阵全幅）：刘婧文的照片本站无任何正规图源（Getty 站内枚举 0 张、WTA 图库未出），所有者改定自制签表——一堆签表块里只有西尼亚科娃→刘婧文那条路的比分位是 W/O，绿色晋级线连到八强空比分块，画面本身就是本期论点。真签表裁图 W1/W2 降为片中证据图（见 seg2/seg9）。"
+    }
+  },
+  "push": {
+    "auto": false,
+    "_no_auto_why": "本 spec 未完整：五段动画（孙心然进程/赛马起源/一分之线＋连胜断片/积分账本/获利者时间轴）在现行管线里没有合法段结构（见 _animation_blocker），segments 只含可合法落位的 11 段。关自动推送防半成品经自动链外发；动画落位定案、五段补齐并重过 preflight 后，改回 auto=true 的默认口径（所有者 2026-10-13 起默认自动推送）。",
+    "summary": "不战而胜，为啥叫走",
+    "lead": "西尼亚科娃赛前退赛，刘婧文一分没打进了广州八强。这种赢法英文叫 walk over——走着，就把球赢了。"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "一分没打就晋级、积分照拿、白赚一天休息的 walkover，为什么要用一个「走」字？它对下一轮的对手公平吗？",
+    "thesis": "walkover 源于赛马：只剩一匹马也必须走完赛道才算赢。它有硬线（开打前才算）、有账本（WTA 三层给分）、有反直觉的后续（样本里获利者下一场 3 胜 3 负，统计上测不出影响）——它送走的从来不是胜负，是确定性。",
+    "beats": [
+      "冷开场：广州，西尼亚科娃退赛，刘婧文一分没打进八强（实拍＋官方签表证据图）",
+      "对照：孙心然同日带伤打满 2 小时 41 分（进程动画，备用文案版）",
+      "词源：赛马借词＋Eclipse 18 胜约一半是走出来的（动画）",
+      "硬线与账目：一分之线、连胜断片、WTA 积分三层（动画）",
+      "名场面：2022 温网纳达尔发布会原声＋克耶高斯走进决赛；2014 总决赛费德勒场内宣布原声＋官方签表证据图",
+      "走进去之后：获利者下一场 3 胜 3 负的反差样本（时间轴动画）",
+      "收尾：回到广州八强对阵，站队题收口"
+    ],
+    "chapters": [
+      "广州开场",
+      "词源：赛马",
+      "硬线与账本",
+      "名场面",
+      "走进去之后",
+      "回到广州"
+    ],
+    "human_context": {
+      "angle": "自家角度：不从规则条文讲起，从本周广州这场真实的 walkover 讲起——一个以逸待劳、一个刚从悬崖边爬回来，下一轮正好相遇；再用赛马词源解释「走」，用获利者后续的反差样本拆掉「省力＝占便宜」的直觉，最后把规则该不该留交还给观众。",
+      "facts": [
+        "广州 R2：西尼亚科娃右肩伤赛前退赛，刘婧文 walkover 进八强（直播吧/toptennisnews 2026-10-29）；刘 R1 4-6 7-6(5) 6-4 胜鲁季奇，2 小时 52 分；孙心然 R2 6-3 4-6 7-6(3) 胜蒂莫费娃，2 小时 41 分，决胜盘 2-5 挽救赛点（新华社）",
+        "词源：walkover 源于 19 世纪初英国赛马，只剩一匹马须走完赛道才算赢；Eclipse 18 胜约一半为 walkover（Outplayed / FreeDictionary）",
+        "WTA 规则书 Section VIII「Walkovers」原文三层给分口径；ATP 规则书第十节按如同打了给分；walkover 不计官方胜负/交手记录，连胜不 +1",
+        "2022 温网：纳达尔腹肌撕裂半决赛前退赛，克耶高斯 walkover 进决赛（Reuters）；决赛德约 4-6 6-3 6-4 7-6(3) 胜（AP）",
+        "2014 总决赛：费德勒决赛前背伤退赛，德约 walkover 夺冠，赛事 45 年首次决赛 walkover；一周后费德勒助瑞士夺戴维斯杯首冠（Wikipedia/AP/ESPN）",
+        "获利者样本：穆雷 2012 迈阿密两收 walkover 决赛负德约；德约 2014 迈阿密两收 walkover 决赛胜纳达尔；德约 2024 温网收德米纳尔 walkover 后决赛负阿尔卡拉斯；格拉诺列斯 2016 法网收纳达尔 walkover 下一轮负蒂姆；佩内塔 2013 温网收阿扎伦卡 walkover 后打出五年温网最佳。样本下一场 3 胜 3 负；Tennis Abstract 统计：walkover 对下一场无可测影响"
+      ],
+      "sources": [
+        "WTA 2024 规则书 Section VIII（ITF 托管 PDF）",
+        "https://www.youtube.com/watch?v=9vGOrRkqAK4（Wimbledon 官方：纳达尔退赛发布会）",
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1023/MDS.pdf（广州官方签表，WO 标记）",
+        "https://www.protennislive.com/posting/2014/605/mds.pdf（2014 总决赛官方签表，wo. 标记）"
+      ]
+    },
+    "takeaway": {
+      "close": {
+        "point": "省力不等于占便宜",
+        "ask": "一分没打就晋级，这条规矩该留吗？",
+        "_why": "reel 线 spec 无 takeaway 字段先例（近 7 期故事 spec 均无；该结构属采访线，TAKEAWAY_MAX_CHARS=34）。此处按 spec 阶段预算先拟并自数：point 8 字＋ask 16 字＝24 字 ≤34，暂存 editorial 内备主线取用，未自创顶层字段。"
+      }
+    }
+  },
+  "_facts": {
+    "etymology": "walkover 源于英国赛马（19 世纪初）：对手全退、只剩一匹马时，须独自走完赛道才算赢（Outplayed；FreeDictionary 词条）。Eclipse 18 场胜利约一半为 walkover（Outplayed）。",
+    "boundary": "walkover 只限开赛前退赛；开打后退赛是 retirement，记比分、计胜负（多源一致）。不计入官方胜负记录与交手记录；连胜数不 +1（19 连胜中收一个 walkover 再胜一场＝20 连胜）。",
+    "points": "WTA 规则书 Section VIII：①首轮收到且无替补——按上一轮给分；②后续轮次但本人未打过——按上一轮给分；③已打且赢过之后收到（非首轮）——按所达轮次给分。刘婧文属③（R1 已胜），八强积分照拿；奖金按所达轮次。ATP 规则书第十节：按如同打了这场给分。",
+    "guangzhou": "西尼亚科娃 R1 2-6 6-1 6-4 胜塔拉鲁迪（10-28，大阪夺冠后六连胜），R2 因右肩伤赛前退赛；刘婧文 R1 4-6 7-6(5) 6-4 胜鲁季奇（2 小时 52 分，二号场，无官方集锦）；孙心然 R2 6-3 4-6 7-6(3) 胜蒂莫费娃（2 小时 41 分；第二盘 4-5 局间医疗暂停包扎膝盖；决胜盘 2-5 落后、第三盘第九局挽救赛点回破；抢七 7-3）。八强孙 vs 刘，10-30 15:30 中心场。",
+    "wimbledon2022": "纳达尔 2022-07-07 晚发布会宣布腹肌撕裂退赛（半决赛前夜）；克耶高斯 walkover 进决赛（生涯唯一大满贯决赛），决赛负德约 4-6 6-3 6-4 7-6(3)（以德约视角为胜方比分）。",
+    "finals2014": "费德勒 2014-11-16 决赛开打前约一小时在 O2 场内向观众宣布背伤退赛；德约 walkover 夺冠（赛事 45 年首次决赛 walkover），随后与穆雷打表演赛安抚观众。费德勒一周后（11-21~23 里尔）戴维斯杯决赛：周五单打负孟菲尔斯、周六双打胜、周日胜加斯奎特锁定 3-1，瑞士队史首冠。",
+    "followups": "穆雷 2012 迈阿密两收 walkover（拉奥尼奇、纳达尔）决赛 1-6 6-7(4) 负德约，赛后自承接发/节奏问题（Reuters）；德约 2014 迈阿密两收 walkover（迈尔、锦织圭）决赛 6-3 6-3 胜纳达尔，纳达尔半决赛亦收贝尔迪赫 walkover（AFP）；德约 2024 温网 QF 收德米纳尔（臀伤）walkover，SF 胜穆塞蒂，F 2-6 2-6 6-7(4) 负阿尔卡拉斯；格拉诺列斯 2016 法网收纳达尔（左腕）walkover，R4 负蒂姆；佩内塔 2013 温网收阿扎伦卡（右膝骨挫伤）walkover，R3 逆转科内特，五年温网最佳。六例下一场 3 胜 3 负；Tennis Abstract：无可测影响。稿中只作案例反差，不作统计断言。"
+  },
+  "sources": {
+    "sin": "https://github.com/robertyang87/tennislive/releases/download/source-4_KotR_9410/4_KotR_9410.mp4",
+    "nad": "https://github.com/robertyang87/tennislive/releases/download/source-9vGOrRkqAK4/9vGOrRkqAK4.mp4",
+    "fin": "https://github.com/robertyang87/tennislive/releases/download/source-z4ONBmQSdmQ/z4ONBmQSdmQ.mp4",
+    "fed": "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4"
+  },
+  "source_quality_exceptions": {
+    "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "账号所有者 2026-10-30 定：先查 Tennis TV/ATP 官网库，无官方源则 720p 可以。复查结论：Tennis TV 无场内宣布独立条目、ATP 官网无可检索视频档案；本条为转播翻录 720p（1278×720），是费德勒场内宣布这一历史画面现存最佳版本，本期单段破例。注意：render 前须把本 URL 加入 tools/build_match_reel.py 的 APPROVED_LOW_RES_SOURCES 白名单（代码变更，待所有者/主线落）——白名单未落前 render 的原生画质闸会拦下本源。"
+    }
+  },
+  "mixed_fps": {
+    "fed": "源片 30 fps 落到 25 fps 输出，按时间重采样；场内宣布为固定机位口播镜头，无回合快剪，看不出顿挫"
+  },
+  "_primary_why": "主源是 sources 第一个键 sin（WTA 官方广州集锦 1080p25），输出 25 fps；其余源同为 25 fps，仅 fed 为 30 fps（见 mixed_fps）。",
+  "_why_sources": "四条源全部经 download-video 存进 Release 并 probe 实测（字节与 data/source_asr 的 sha256 一致，2026-10-30 本地下载 sin/fin 复核无误）：sin＝WTA 官方广州 R1 集锦 4_KotR_9410（1920×1080/383.55s）；nad＝Wimbledon 官方纳达尔退赛发布会 9vGOrRkqAK4（1920×1080/678.12s）；fin＝Wimbledon 官方决赛 Final Story z4ONBmQSdmQ（1920×1080/120.14s）；fed＝费德勒 2014 场内宣布 YFLvy8rLfiA（1278×720/159.38s，非官方翻录，所有者 2026-10-30 批准 720p 破例，见 source_quality_exceptions）。另两条已存档备选未用：0ZC8kJbxa_A 克耶高斯赛后采访（稿中无对应原声位）、M7vMOgfCIyc 德约赛后采访（其 probe 的存档改写未生效、双档 ASR 未落库，用之必红 asr_plan，故不用；存档本体已核实）。刘婧文 R1 在二号场无官方影像、孙心然 R2 官方集锦未上架——两人的画面按所有者定案分别由官方签表证据图与进程动画承载（见 seg2 与 _animation_blocker）。",
+  "_production_status": "2026-10-30：spec 已写、preflight 全闸过（asr_plan 仅余单档 soft 提示，见提交说明）；未完整——五段动画无管线合法结构（见 _animation_blocker），push 已关自动（见 push._no_auto_why）；render 前另须落 fed 的 720p 白名单（见 source_quality_exceptions）。",
+  "_animation_blocker": {
+    "status": "阻塞：现行管线没有『本地自制动画视频段』的合法结构，本 spec 的 segments 只含可合法落位的 11 段；五段动画的旁白已逐字保存在 missing_segments，落位定案后按 after_seg 序号插入，其余段不需改动。",
+    "evidence": "tools/build_match_reel.py 的 parse_segments 只认四种视觉段：①视频窗（source/start/end，source 须为 sources 里可下载的 URL）；②image 整屏静图段（仓库内 PNG/JPG，PIL 打开校验）；③title_card 现渲字卡；④stat_card 现渲数据图。_REAL_FIELDS 的 segment 字段表无任何自制视频/动画字段。动画 mp4 目前只有赛马段 11 秒样片（anim-proof/proof.mp4），五段生产版尚未渲染，没有 Release 存档可钉——钉不存在的存档违反『源从一开始就钉 Release 存档』的字节绑定规矩；且 asr_plan 对每个被窗口引用的源都要求 data/source_asr 双档转写先行落库。已查 main 上最近 7 期网球有故事 spec（wawrinka-basel-farewell、sun-chengdu-title-run-2026、goffin-retirement-2026、musetti-lyon-story-2026、tiebreak-history-2026、one-handed-backhand-story-2026、china-open-withdrawals-story-2026），均无动画段先例；let-not-net-2026 的『动画』是 Tennis TV 现成规则动画片经规整后作普通源存档（reel-src- 标签），属路线甲的先例。",
+    "routes": [
+      "甲（有先例）：五段动画先行生产（沿 anim-proof 的渲染器与色板）→ 逐条上传 Release 存档，tag 须以 source- 开头以过 preflight 钉源闸 → 派 source-asr 落双档转写（动画无英文人声，转写应为空）→ 在 spec 里按普通视频窗补进 segments 并重跑 asr_plan check/write-review。",
+      "乙（动闸）：给 build_match_reel 新增自制视频段类型（如 generated_video＋仓库内 mp4 路径），同步改 _REAL_FIELDS、审听闸与测试——属配置/代码变更，须账号所有者批准，本 spec 步不做。"
+    ],
+    "missing_segments": [
+      {
+        "after_seg": 2,
+        "name": "孙心然进程动画（备用文案版）",
+        "est_seconds": 26,
+        "narration": "隔壁场上，16 岁的孙心然这一场打了 2 小时 41 分钟。第二盘 4 比 5 落后，她叫了医疗暂停，包扎膝盖；到了决胜盘，绷带拆了硬撑，2 比 5 落后、对方手握赛点——她一分一分往回爬，抢七 7 比 3 拿下。终场哨响，她哭了。",
+        "_why": "所有者 2026-10-30 定：孙心然 R2 官方集锦未上架则换备用文案——进程动画：比分时钟 0:00→2:41、盘分条 6-3/4-6 落位、第二盘 4-5 亮医疗十字、决胜盘 2-5 亮『赛点』红点、连追至 6-6、抢七 7-3 收束；数据全出锚点表（sources-guangzhou.md §1c），不演打球、不冒充实拍。孙 R1 集锦对手是萨王卡娥，与本段叙述对不上，禁用冒充。若中午复查后实拍源到位，主线另行决定是否换回实拍段。"
+      },
+      {
+        "after_seg": 2,
+        "name": "赛马起源动画（样片生产版）",
+        "est_seconds": 50,
+        "narration": "不战而胜，英文就是 walk over——走着赢。可一场没开打的比赛，为什么偏偏要用一个「走」字？因为它根本不是网球发明的，是从赛马借来的。两百年前的英国赛马，对手如果全部退赛，只剩一匹马，按规矩它也不能直接领奖，必须自己慢慢走完整个赛道，才算赢。18 世纪那匹传奇赛马 Eclipse 强到没人敢跟它跑，18 场胜利里差不多一半，是这么「走」出来的。后来这个词进了网球：对手来不了，你就等于独自走完了这场比赛。",
+        "_why": "样片已过目（anim-proof/proof.mp4：晨光空赛道、独马恒速走完、过终点线、WALK OVER 排字、Eclipse 18 点计数）。生产版按同一渲染器延展至全段；旁白较长，生产时可在此内部再分两段（词源提问／赛马史话），切点在『是从赛马借来的』句后。"
+      },
+      {
+        "after_seg": 2,
+        "name": "一分之线＋连胜断片动画",
+        "est_seconds": 36,
+        "narration": "但 walkover 有一条硬线：必须是开打之前。只要打了哪怕一分再退，那叫退赛，要记比分、算胜负。刘婧文这种一分没打的，不算一场胜利，不进胜负记录，也不进两个人的交手记录。连胜纪录还会在这里断片：你正处在 19 连胜，中间收到一个 walkover，再赢一场，官方连胜是 20，不是 21——因为中间那一场，根本不存在。",
+        "_why": "动画设计（anim-proof/brief.md 延展 2/3）：同一根琥珀线做母题——点在开赛线前停住＝w/o、越线后停住＝退赛；计数点阵数到 19，中间一格空缺熄灭，再续到 20。"
+      },
+      {
+        "after_seg": 2,
+        "name": "积分账本动画",
+        "est_seconds": 30,
+        "narration": "那积分和奖金呢？这笔账分三层。WTA 规则书写得明明白白：首轮白捡的，只按上一轮给分；打过、赢过之后再收到的，按所达轮次给分。刘婧文首轮赢了球，所以她的八强积分，照拿。她真正多赚的不是积分，是那一整天的休息，和对手身上那 2 小时 41 分钟的消耗。",
+        "_why": "动画设计（brief 延展 4）：点阵升级为两列对照账本（积分 ✓／胜场 ✗），只用点与线，不做表格字卡；三层给分按 WTA 规则书 Section VIII 原文口径。"
+      },
+      {
+        "after_seg": 10,
+        "name": "获利者时间轴动画",
+        "est_seconds": 140,
+        "narration": "好玩的在后面：收到 walkover 的人，下一场到底占没占到便宜？先看一对同站对照。2012 年迈阿密，穆雷一站收到两次 walkover 进决赛，还是输了，他赛后自己说，接发不在状态，开场需要几局找节奏——决赛第一盘他 1 比 6 就交了学费。两年后同一站，德约也收到两次 walkover，决赛 6 比 3、6 比 3 横扫纳达尔夺冠。有意思的是，纳达尔那届半决赛也收到一个 walkover，两个受益者在决赛对撞，一个捧杯，一个亚军。再看德约自己。2024 年温网，四分之一决赛德米纳尔退赛，他省力进四强，半决赛直落三盘赢了；可决赛呢？2 比 6、2 比 6、6 比 7，被阿尔卡拉斯打得没有还手之力。多休的那一天，没换来冠军。克耶高斯走进决赛那次，6 比 4 先拿一盘，最后连丢三盘。格拉诺列斯 2016 年在法网躲开了纳达尔，下一轮就被蒂姆送走，只多留了一轮。佩内塔 2013 年温网收到阿扎伦卡的退赛礼，下一场先吞一个 0 比 6，再逆转，打出了自己五年来在温网的最好成绩——白捡的便宜，她兑现得最实在。而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于占便宜，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
+        "_why": "动画设计：时间轴自 2012 滑到 2024，六个案例依次落点（胜＝琥珀点、负＝描边点），尾端 3 胜 3 负点阵收束到结论句。旁白约 600 字，生产时按案例分 3–4 段（同站对照／德约 2024／克耶高斯＋格拉诺列斯＋佩内塔／费德勒反转＋结论），切点已在句间。全部比分见 _facts.followups。"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "source": "sin",
+      "start": 32.6,
+      "end": 45.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "昨天广州，一场球没打，有人直接进了八强。西尼亚科娃右肩受伤，赛前退赛。就在前一天，她刚打完一场三盘鏖战，",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口起于集锦剪辑切点 32.60（西尼亚科娃近景反应镜头），止于 45.00——本地抽帧实测 44.6/45.5 两帧均为分与分之间（记分牌 2-4、0-15，球员走动/发球准备），不在一分进行中切走。",
+      "_why": "冷开场上半：WTA 官方广州 R1 集锦。窗口整段落在双档 ASR 静默空当（20.56–44.86）内；本地下载存档字节与 ASR 记录 sha256 复核一致（573580de…）。"
+    },
+    {
+      "source": "sin",
+      "start": 49.56,
+      "end": 59.42,
+      "cx": 0.5,
+      "track": false,
+      "narration": "大阪夺冠后的连胜已经来到第六场；第二天，她的名字从签表上消失了。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口起于剪辑切点 49.56，止于 59.42；抽帧实测 59.4/60.6 两帧西尼亚科娃在底线后走动（盘点后分间），不在一分进行中。",
+      "_why": "冷开场下半：同源静默空当（49.00–59.42）。旁白与上一段连读为定稿开场前两段（口播稿的『就在前一天』已并入上一段尾）。"
+    },
+    {
+      "image": "assets/reel/walkover-story-2026/draw-guangzhou-wo.png",
+      "seconds": 17,
+      "narration": "她的对手刘婧文，一分没打，晋级。刘婧文自己的首轮也打了近三个小时，她多赚的，是整整一天休息。签表上，她的名字旁边记着一个记号：walkover。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "_card_why": "刘婧文 R1 在二号场，全网无官方影像（侦察实证）；所有者定案真签表裁图 W1 作片中证据图——WTA 官方广州签表原件（2026-10-29 生成版）裁切：刘婧文八强栏下印着紫色 WO，正是旁白说的那个记号。口播稿里的『w/o』是画面字，旁白读本词 walkover 与图互证；记号印法（WO/wo./W/O）所有者明确不在意。"
+    },
+    {
+      "title_card": "最大的舞台\n也发生过",
+      "kicker": "名场面",
+      "seconds": 10,
+      "narration": "这种事，在最大的舞台上也发生过。2022 年温网，纳达尔腹肌撕裂，半决赛前开发布会退赛。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      }
+    },
+    {
+      "source": "nad",
+      "start": 20.5,
+      "end": 27.3,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.34,
+          "end": 3.32,
+          "text": "Unfortunately, as you can imagine,\n很遗憾，正如你们能想到的"
+        },
+        {
+          "at": 3.32,
+          "end": 6.64,
+          "text": "I have to pull out from the tournament.\n我必须退出这项赛事。"
+        }
+      ],
+      "_quote_kind": "player_quote",
+      "_quote_why": "原声位 1（上）：2022 温网纳达尔退赛发布会（Wimbledon 官方），宣布退赛原句。窗口 20.50–27.30 沿双档 ASR 句界定（medium 20.84–27.14、small 20.68–26.82 均在窗内完整），cue 按 medium 句界切分、覆盖两档句子；英文字卡为发布会原话（官方字幕核对），中文逐行 ≤13 字、英文 ≤40 字符（约 ≤800px，952px 上限内）。"
+    },
+    {
+      "source": "nad",
+      "start": 41.1,
+      "end": 59.95,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.88,
+          "end": 3.74,
+          "text": "And yeah, that's confirmed.\n已经确诊了。"
+        },
+        {
+          "at": 4.04,
+          "end": 8.72,
+          "text": "I have a tear in the abdominal muscle.\n我的腹肌撕裂了。"
+        },
+        {
+          "at": 8.72,
+          "end": 13.44,
+          "text": "So the communication is too late,\n通报来得太晚了，"
+        },
+        {
+          "at": 13.44,
+          "end": 14.5,
+          "text": "because even like that,\n即便如此，"
+        },
+        {
+          "at": 14.5,
+          "end": 16.5,
+          "text": "I was thinking during the whole day\n我考虑了整整一天，"
+        },
+        {
+          "at": 16.5,
+          "end": 18.8,
+          "text": "about the decision to make.\n就是这个决定。"
+        }
+      ],
+      "_quote_kind": "player_quote",
+      "_quote_why": "原声位 1（下）：确诊腹肌撕裂原句。窗口 41.10–59.95：medium 长句 41.24–54.00 与 54.00–59.74 被 cue 并集完整覆盖（逐词时间码定界）；small 的 56.98–67.18 句尾巴越出窗尾、medium 的 60.44 句在窗外——asr_plan 只报单档 soft（另一档没看到），非硬伤。『in the abdominal muscle』为字幕精简（原话 in the muscle, in the abdominal），义不变。"
+    },
+    {
+      "source": "fin",
+      "start": 34.0,
+      "end": 42.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "克耶高斯直接走进了决赛——他职业生涯唯一一个大满贯决赛，是走进去的。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "温网官方 Finals Story 蒙太奇的整段 B-roll（本地抽帧：33.2 球落地特写、37.0 克耶高斯发球、40.8 德约击球），配旁白讲『走进决赛』这件事本身，不讲任何一分；源片自带快剪，无单分完整性可切之说（同 let 篇 seg1 口径）。入场/捧杯逐帧秒点未核——本窗是赛中蒙太奇而非入场段，风险已标注，render 验片时复看本窗三帧即可。",
+      "_why": "窗口落在双档 ASR 静默空当（31.06–55.18）内；存档字节与 ASR sha256 复核一致（ff771823…）。"
+    },
+    {
+      "title_card": "决赛第一次\n没打成",
+      "kicker": "名场面 · 2014",
+      "seconds": 9,
+      "narration": "2014 年年终总决赛更夸张。费德勒在决赛开打前约一小时宣布背伤退赛。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      }
+    },
+    {
+      "source": "fed",
+      "start": 13.2,
+      "end": 60.2,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.22,
+          "end": 0.86,
+          "text": "Well, good evening.\n大家晚上好。"
+        },
+        {
+          "at": 1.66,
+          "end": 3.8,
+          "text": "I'm sorry, I'm here in a tracksuit,\n很抱歉，我穿着运动服"
+        },
+        {
+          "at": 3.8,
+          "end": 5.42,
+          "text": "and not in a match outfit.\n而不是比赛服。"
+        },
+        {
+          "at": 6.32,
+          "end": 7.68,
+          "text": "Unfortunately, I'm not match fit\n很遗憾，我的身体状态"
+        },
+        {
+          "at": 7.68,
+          "end": 9.86,
+          "text": "to play the match tonight.\n没法打今晚这场比赛。"
+        },
+        {
+          "at": 10.68,
+          "end": 16.4,
+          "text": "Clearly, I wish it wasn't so.\n我真希望不是这样。"
+        },
+        {
+          "at": 16.4,
+          "end": 17.52,
+          "text": "You try all year to be ready\n你一整年的努力"
+        },
+        {
+          "at": 17.52,
+          "end": 18.95,
+          "text": "for the ATP World Tour Finals,\n都是为了年终总决赛。"
+        },
+        {
+          "at": 19.22,
+          "end": 20.74,
+          "text": "and I didn't want it to end this way,\n我不想让它这样收场，"
+        },
+        {
+          "at": 20.74,
+          "end": 23.58,
+          "text": "but I tried everything I could last night.\n但昨晚我试了一切办法。"
+        },
+        {
+          "at": 23.82,
+          "end": 27.2,
+          "text": "Also today, painkillers, treatment,\n今天也一样，止痛药、治疗"
+        },
+        {
+          "at": 27.2,
+          "end": 30.44,
+          "text": "rest, warm up till the very end.\n休息、热身，一直撑到最后。"
+        },
+        {
+          "at": 30.78,
+          "end": 34.58,
+          "text": "But just, I can't compete at this level\n但我没法在这个级别比赛，"
+        },
+        {
+          "at": 34.58,
+          "end": 38.48,
+          "text": "with Novak, in a Finals like this.\n对诺瓦克，还是决赛。"
+        },
+        {
+          "at": 38.48,
+          "end": 40.68,
+          "text": "It would be too risky at my age\n以我的年纪，太冒险了。"
+        },
+        {
+          "at": 40.68,
+          "end": 41.7,
+          "text": "to do this right now,\n现在这样做，"
+        },
+        {
+          "at": 41.7,
+          "end": 43.18,
+          "text": "and I hope you understand.\n希望你们能理解。"
+        },
+        {
+          "at": 43.18,
+          "end": 45.7,
+          "text": "I wanted to come out personally\n我想亲自出来，"
+        },
+        {
+          "at": 45.7,
+          "end": 46.86,
+          "text": "and excuse myself for not playing.\n为不能出场向大家致歉。"
+        }
+      ],
+      "_quote_kind": "player_quote",
+      "_quote_why": "原声位 2：费德勒 2014 总决赛决赛前在 O2 场内向观众宣布退赛（转播翻录，所有者批准 720p 破例）。窗口 13.20–60.20 覆盖宣布全程（问候→运动服→打不了→整年备战→昨晚今天都试过→没法与诺瓦克竞争→年纪风险→亲自致歉）。cue 按双档 ASR 逐词时间码切分：medium 全部句子被 cue 并集覆盖；small 的两处合并长句（15.22–20.10、20.10–29.84）中段有 >0.6s 的 cue 缝、57.00–72.52 长句尾巴越出窗尾——asr_plan 只报 single-model soft，非硬伤。英文按官方字幕口径（ASR 把 try 听成 dry 已校；『rest, warm up』省去 and so forth 填充词），中文逐行 ≤13 字、英文逐行 ≤42 字符。"
+    },
+    {
+      "image": "assets/reel/walkover-story-2026/draw-atp2014-wo.png",
+      "seconds": 15,
+      "narration": "德约科维奇不战而冠，那是这项赛事四十五年历史上，决赛第一次没打成。组委会临时拉来穆雷，陪德约打了一场表演赛，给买了票的观众一个交代。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "_card_why": "证据图 W2：ATP 官方 2014 总决赛竞赛签表（protennislive 存档，落款决赛日）裁切——Semi-Final/Final/Champion 三栏完整，Champion 栏德约名字正下方印着小写 wo.，决赛未赛的官方记号。德约捧杯与表演赛均无官方视频（Tennis TV 仅有一条颁奖页、runner 取不了流，稿中各一句带过），按所有者定案以官方签表证据图承载本段。"
+    },
+    {
+      "source": "sin",
+      "start": 63.6,
+      "end": 101.68,
+      "cx": 0.5,
+      "track": false,
+      "narration": "下一轮，休息了一整天的刘婧文，对上刚从悬崖边爬回来的孙心然。这一场，就是这条规矩最新的一次现场考试。要是由你来定规矩：一分没打就晋级，积分照拿，还白赚一天休息——这条规矩，该留吗？",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口＝集锦里第一盘那记最长回合的完整镜头：起于剪辑切点 63.60（该分开始），止于 101.68；抽帧实测 101.4/103.4 两帧西尼亚科娃已在底线后走动（该分已结束、SET POINT 图卡），不在分中切走。解说 101.88 起正称这一分为全场最长。",
+      "_why": "收尾：站队题落在全场最长回合的完整播放上（旁白约 22 秒，余下为回合本身打完——以逸待劳的对照收在她还在跑的画面上）。窗口在双档 ASR 静默空当（61.66–101.68）内。结尾口径按所有者定：不绑八强赛果，只交代下一轮对阵是他俩。"
+    }
+  ]
+}
