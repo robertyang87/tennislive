@@ -14,6 +14,9 @@
  "sources": {
   "rg15": "https://www.youtube.com/watch?v=JzLC_CVvLdw",
   "rg15qf": "https://www.youtube.com/watch?v=91kNzC5OeWU",
+  "uso16bh": "https://www.youtube.com/watch?v=QRLsLbg0mEU",
+  "fed": "https://www.youtube.com/watch?v=XpA-Cs2poEU",
+  "wbh": "https://www.youtube.com/watch?v=kyplW6HyR9c",
   "st": "https://www.youtube.com/watch?v=Kk87xmyiYVE",
   "rg06": "https://www.youtube.com/watch?v=aIm63srdIkA",
   "thiem": "https://www.youtube.com/watch?v=zujq-bvo2SM"
@@ -95,17 +98,28 @@
  "_social_search_why": "本期是打法话题片（单反为什么越来越少），不是当事人声明类选题；瓦林卡退役由头只一句带过。",
  "segments": [
   {
-   "source": "rg15",
-   "start": 64.7,
-   "end": 74.6,
+   "source": "uso16bh",
+   "start": 19.9,
+   "end": 30.9,
+   "kind": "quote",
    "frame": "court",
    "cx": 0.5,
    "track": false,
    "fit": "crop",
    "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
-   "_why": "法网官方 2015 决赛 Day 15 集锦：低机位从瓦林卡身后跟拍底线相持，单反与正手连续发力（64.7 起），74.6 切到德约科维奇之前收住。冷开场只取画面最有冲击力的一分，不承担结局。",
-   "point_end_ok": "窗内一分打完（约 74 秒死球），74.6 收在切镜头之前。",
-   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
+   "_quote_kind": "broadcast",
+   "_quote_why": "美网官方『Stan Wawrinka Backhand Winner in 2016 US Open Final vs Novak Djokovic』转播解说：两档转写 small.en『the big winner from Stan』、medium.en『The big winner from Stanford』（后者把 Stan 和下一个 he 连读误识），按画面与上下文定为 Stan；30.9 收在下一句『He holds…』（31.2）开口之前。",
+   "_why": "美网官方 2016 决赛单反制胜分短片（1920×1080）：一分长相持后段（19.9 起，瓦林卡在近端），约 26 秒瓦林卡单反制胜，接他握拳怒吼近景（27.3–30.7）；30.9 切慢放回放之前收住。冷开场只取这一记单反，不承担结局。",
+   "point_end_ok": "这一分约 26.7 打完，之后是他握拳怒吼的反应镜头。",
+   "_ending_payoff_required": false,
+   "_ending_payoff_why": "冷开场是 2016 美网决赛一记单反制胜分，作为话题钩子；本片讲单反这件事，不重放这场比赛的结局。",
+   "quote": [
+    {
+     "at": 8.1,
+     "end": 10.1,
+     "text": "The big winner from Stan.\n瓦林卡 一记大力制胜"
+    }
+   ]
   },
   {
    "source": "rg15",
@@ -195,6 +209,34 @@
    "_why": "法网官方 2015 男单 1/4 决赛瓦林卡对费德勒集锦：近端瓦林卡（白衣）底线连续发力相持（78.7 起，约 81.5、83.5 两拍单反），约 86.2 一分打完，接他回身近景，88.3 切费德勒之前收住。两档转写 78.68–104.74 无英文（asr_plan gaps）。",
    "point_end_ok": "窗内一分约 86.2 打完，之后是瓦林卡近景反应。",
    "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
+  },
+  {
+   "source": "fed",
+   "start": 0.0,
+   "end": 20.3,
+   "kind": "quote",
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "_quote_kind": "broadcast",
+   "_quote_why": "Tennis TV『10 MINUTES OF: Roger Federer Backhands』首段转播解说，两档转写逐字一致（7.9–14.6、15.6–20.2）；20.3 收在切下一分（20.4）之前。",
+   "_why": "Tennis TV 官方费德勒反手合集首段（上海大师赛）：费德勒在近端一分打完、单反制胜（0–7.8），接近景与两个角度的慢放回放；20.3 切下一分之前收住。",
+   "_tennistv_trim": "**片尾**：本段取 0–20.3s，源片 606.5s，片尾订阅卡远在窗外。**台标**：Tennis TV 台标烧在左上角（源片 x≈50~390），3:4 取景窗 cx=0.5 只取 555~1365，台标在窗外。",
+   "point_end_ok": "这一分约 7.8 打完，之后是近景与慢放回放。",
+   "quote": [
+    {
+     "at": 7.9,
+     "end": 14.6,
+     "text": "That one simply didn't deviate from its path for one second, that was very well struck.\n这一拍没偏一点 打得真扎实"
+    },
+    {
+     "at": 15.6,
+     "end": 20.2,
+     "text": "Well this goes straight into the portfolio of astonishing backhands from Roger Federer.\n收进费德勒的神级反手集"
+    }
+   ]
   },
   {
    "title_card": "2024年2月\n前十没有单反",
@@ -362,6 +404,34 @@
    ]
   },
   {
+   "source": "wbh",
+   "start": 13.7,
+   "end": 21.1,
+   "kind": "quote",
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "_quote_kind": "broadcast",
+   "_quote_why": "Tennis TV『Stan Wawrinka: Best-Ever ATP Backhands』2017 印第安维尔斯决赛那一分的慢放段解说，两档转写逐字一致（17.2–19.3、约 20.0–21.0）；13.7 起避开前面两档不一致的那声惊呼（11.5–12.4）。",
+   "_why": "Tennis TV 官方瓦林卡最佳反手合集：2017 印第安维尔斯决赛对费德勒，瓦林卡远端单反打穿的慢放回放（13.7 起：他的近景、费德勒近端、瓦林卡单反挥拍、球落界内）；21.1 切下一分之前收住。",
+   "_tennistv_trim": "**片尾**：本段取 13.7–21.1s，源片 411.6s，6:45 起是订阅卡，远在窗外。**台标**：Tennis TV 台标烧在左上角（源片 x≈50~390），3:4 取景窗 cx=0.5 只取 555~1365，台标在窗外。",
+   "point_end_ok": "慢放回放完整走到球落地（约 20.8），21.1 收在切镜头之前。",
+   "quote": [
+    {
+     "at": 3.5,
+     "end": 5.6,
+     "text": "That was some high octane hitting.\n真是火力全开的对攻"
+    },
+    {
+     "at": 6.3,
+     "end": 7.3,
+     "text": "It really was.\n确实如此"
+    }
+   ]
+  },
+  {
    "title_card": "单反\n还会回来吗",
    "kicker": "你怎么看",
    "seconds": 9.5,
@@ -390,19 +460,43 @@
    "width": 1920,
    "height": 1080,
    "fps": "60000/1001"
+  },
+  "uso16bh": {
+   "why": "官方源（Release source-QRLsLbg0mEU）本地实测 ffprobe 1920×1080、30000/1001，SHA256 0aafbe8a2beca9f27b2809139d9fc6fc37e0909d52bbe667af1f031272384ef3；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "fed": {
+   "why": "官方源（Release source-XpA-Cs2poEU）本地实测 ffprobe 1920×1080、30000/1001，SHA256 aef45ccabf31eec09176d921c2739d5493efb8c35811f68fc08d509667ad0bc0；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "30000/1001"
+  },
+  "wbh": {
+   "why": "官方源（Release source-kyplW6HyR9c）本地实测 ffprobe 1920×1080、25/1，SHA256 b76abaef7b2bc3ead9aa0749a58b4022ae0ca5cc2d602a1b1c6768150c89ed23；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
   }
  },
  "mixed_fps": {
   "rg15qf": "25fps（法网官方集锦），与主片一致。",
   "rg06": "25fps（法网官方 2006 决赛集锦，probe.json 实测），与主片一致；4:3 老转播居中 3:4 裁切。",
   "st": "实测原生60000/1001（美网官方 Extended Highlights，probe.json），按实际时长转换主片25fps，不改变速度。",
-  "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。"
+  "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。",
+  "uso16bh": "实测原生30000/1001（美网官方），按实际时长转换主片25fps，不改变速度。",
+  "fed": "实测原生30000/1001（Tennis TV 官方），按实际时长转换主片25fps，不改变速度。",
+  "wbh": "25fps（Tennis TV 官方），与主片一致。"
  },
  "source_fallbacks": {
   "rg15": "https://github.com/robertyang87/tennislive/releases/download/source-JzLC_CVvLdw/JzLC_CVvLdw.mp4",
   "rg15qf": "https://github.com/robertyang87/tennislive/releases/download/source-91kNzC5OeWU/91kNzC5OeWU.mp4",
   "st": "https://github.com/robertyang87/tennislive/releases/download/source-Kk87xmyiYVE/Kk87xmyiYVE.mp4",
   "rg06": "https://github.com/robertyang87/tennislive/releases/download/source-aIm63srdIkA/aIm63srdIkA.mp4",
-  "thiem": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4"
+  "thiem": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4",
+  "uso16bh": "https://github.com/robertyang87/tennislive/releases/download/source-QRLsLbg0mEU/QRLsLbg0mEU.mp4",
+  "fed": "https://github.com/robertyang87/tennislive/releases/download/source-XpA-Cs2poEU/XpA-Cs2poEU.mp4",
+  "wbh": "https://github.com/robertyang87/tennislive/releases/download/source-kyplW6HyR9c/kyplW6HyR9c.mp4"
  }
 }
