@@ -1,0 +1,128 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4",
+  "source_sha256": "37c03857a86e404fb52476b62a2256b203d9b6b5bc8e6ade8ecb7a4ba10ecb14",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-29T17:38:23+00:00",
+  "reviewed_from": 13.2,
+  "reviewed_to": 60.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 13.42,
+      "end": 14.06,
+      "en": "Well, good evening.",
+      "zh": "大家晚上好。"
+    },
+    {
+      "start": 14.86,
+      "end": 17.0,
+      "en": "I'm sorry, I'm here in a tracksuit,",
+      "zh": "很抱歉，我穿着运动服"
+    },
+    {
+      "start": 17.0,
+      "end": 18.62,
+      "en": "and not in a match outfit.",
+      "zh": "而不是比赛服。"
+    },
+    {
+      "start": 19.52,
+      "end": 20.88,
+      "en": "Unfortunately, I'm not match fit",
+      "zh": "很遗憾，我的身体状态"
+    },
+    {
+      "start": 20.88,
+      "end": 23.06,
+      "en": "to play the match tonight.",
+      "zh": "没法打今晚这场比赛。"
+    },
+    {
+      "start": 23.88,
+      "end": 29.6,
+      "en": "Clearly, I wish it wasn't so.",
+      "zh": "我真希望不是这样。"
+    },
+    {
+      "start": 29.6,
+      "end": 30.72,
+      "en": "You try all year to be ready",
+      "zh": "你一整年的努力"
+    },
+    {
+      "start": 30.72,
+      "end": 32.15,
+      "en": "for the ATP World Tour Finals,",
+      "zh": "都是为了年终总决赛。"
+    },
+    {
+      "start": 32.42,
+      "end": 33.94,
+      "en": "and I didn't want it to end this way,",
+      "zh": "我不想让它这样收场，"
+    },
+    {
+      "start": 33.94,
+      "end": 36.78,
+      "en": "but I tried everything I could last night.",
+      "zh": "但昨晚我试了一切办法。"
+    },
+    {
+      "start": 37.02,
+      "end": 40.4,
+      "en": "Also today, painkillers, treatment,",
+      "zh": "今天也一样，止痛药、治疗"
+    },
+    {
+      "start": 40.4,
+      "end": 43.64,
+      "en": "rest, warm up till the very end.",
+      "zh": "休息、热身，一直撑到最后。"
+    },
+    {
+      "start": 43.98,
+      "end": 47.78,
+      "en": "But just, I can't compete at this level",
+      "zh": "但我没法在这个级别比赛，"
+    },
+    {
+      "start": 47.78,
+      "end": 51.68,
+      "en": "with Novak, in a Finals like this.",
+      "zh": "对诺瓦克，还是决赛。"
+    },
+    {
+      "start": 51.68,
+      "end": 53.88,
+      "en": "It would be too risky at my age",
+      "zh": "以我的年纪，太冒险了。"
+    },
+    {
+      "start": 53.88,
+      "end": 54.9,
+      "en": "to do this right now,",
+      "zh": "现在这样做，"
+    },
+    {
+      "start": 54.9,
+      "end": 56.38,
+      "en": "and I hope you understand.",
+      "zh": "希望你们能理解。"
+    },
+    {
+      "start": 56.38,
+      "end": 58.9,
+      "en": "I wanted to come out personally",
+      "zh": "我想亲自出来，"
+    },
+    {
+      "start": 58.9,
+      "end": 60.06,
+      "en": "and excuse myself for not playing.",
+      "zh": "为不能出场向大家致歉。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 37c03857a86e404fb52476b62a2256b203d9b6b5bc8e6ade8ecb7a4ba10ecb14，存于 data/source_asr/YFLvy8rLfiA/small.en.json 与 data/source_asr/YFLvy8rLfiA/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
