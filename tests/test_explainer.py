@@ -1355,7 +1355,7 @@ def test_台头和副标题在每一屏上都常驻():
         explainer_column,
     )
 
-    topic_span = re.compile(r'<span class="topic">(.*?)</span>')
+    topic_span = re.compile(r'<span class="topic"(?:\s[^>]*)?>(.*?)</span>')
     slugs = slides = 0
     missing_brand: list[str] = []
     missing_topic: list[str] = []

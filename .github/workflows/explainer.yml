@@ -23,6 +23,10 @@ on:
       # default voice in code changed nothing: every dispatch silently put
       # the old voice back on the command line. Three decks were regenerated
       # that way and came out in the voice that had just been replaced.
+      asset_paths:
+        description: "可选的精确素材路径，每行一项；留空保持完整素材检出"
+        required: false
+        default: ""
       voice:
         description: "edge-tts 中文语音（留空＝用代码默认：云健）"
         required: false
@@ -78,6 +82,7 @@ jobs:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        if: inputs.asset_paths == ''
         with:
           # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
           # checkout 因此每次要一分半到三分钟。
@@ -92,6 +97,24 @@ jobs:
             src
             tests
             tools
+
+      # Reviewed inputs can avoid downloading unrelated source media.
+      # Default dispatches retain the original complete assets checkout.
+      - uses: actions/checkout@v4
+        if: inputs.asset_paths != ''
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/*/
+            /.github/
+            /src/
+            /tools/
+            /data/
+            /docs/
+            /specs/
+            /tests/
+            ${{ inputs.asset_paths }}
 
       - uses: actions/setup-python@v5
         with:
