@@ -1,0 +1,50 @@
+name: import-walkover-tlm-sources
+run-name: "import-walkover-tlm-sources · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）获利者时间轴「叙事版」三段动画源存档。
+# seg15 旁白 697 字、narration dry-run 离线估长 114.17s，原 18.0s 动画
+# （wo26timeln1）speed 0.4 拉满 45.0s 仍装不下；年份分组的延展版 ext1/2/3
+# 与旁白叙事顺序冲突（无费德勒反转画面、迫使定稿旁白重排），已弃用。
+# 本地按旁白句组叙事顺序重渲三段（timeline-a/b/c.mp4，38/41/41s，
+# 自检报告 anim-tlm-report.md），照 import-walkover-anim-ext 先例走 runner：
+# 文件先暂存 research/walkover-story-2026/anim-src/，本工作流逐段建
+# source-<id> Release 并 gh release upload；完成后暂存 mp4 另行提交移除
+# （Release 为唯一正本），记录补 research/walkover-story-2026/anim-src/SOURCES.md。
+# 归整口径：视频流逐字节复制自本地 timeline-a/b/c.mp4（流哈希双向核验），
+# 只补一条静音 AAC 轨（anullsrc 48kHz）——source-asr 解码需要音轨存在。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-tlm-sources
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 建 Release 并上传时间轴叙事版三段
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          for f in wo26tmlna01 wo26tmlnb01 wo26tmlnc01; do
+            sha256sum "$f.mp4"
+            tag="source-$f"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 自制动画源存档：$f（获利者时间轴叙事版三段之一，本地按旁白叙事顺序重渲 timeline-a/b/c.mp4，视频流逐字节一致，仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+            gh release upload "$tag" "$f.mp4" --clobber
+            gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
