@@ -426,7 +426,9 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: st
                 "thresholds": {"MAX_INNER_GAP": MAX_INNER_GAP, "MAX_CPS": MAX_CPS,
                                "MAX_INDEL": MAX_INDEL, "MAX_RUN_DELETE": MAX_RUN_DELETE,
                                "MAX_SUB_RATIO": MAX_SUB_RATIO},
-                "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+                "seams": ("原生解说按每段实际音频时长组装并保留首尾静音；本工具未另行检查成片混音接缝"
+                          if spec_path.parent.name == "episodes" else
+                          "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝"),
                 "reviewed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "pass": ok, "sentence_splits": splits, "entries": rows,
                 "audio": list(per.values())}

@@ -2017,6 +2017,12 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # Final run 40867828797: SHA cd522e616764, 212.433s, 1080x1440/30fps,
+    # mobile H.264 High / 4:2:0, AV delta 51ms; 25 actual frames reviewed.
+    # Native sealed speech suite and read-only publication gate passed; all 12
+    # actual AAC sections match approved sources, zero offset; actual outro ASR passed.
+    # Exact evidence: output/2026-10-29/explainer/djokovic-basel-wildcard-2026/qc_attestation.json.
+    "djokovic-basel-wildcard-2026",
     # run 37368614614 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
     "medvedev-beijing-default-2026",
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。

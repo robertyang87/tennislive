@@ -49,3 +49,11 @@
 - https://www.erstebank-open.com/en/news/storys/carlos-alcaraz-kommt-nach-wien
 
 上述194.633秒版本为追加前已审参考片；正式发布以追加后的新文件与新审核为准，未使用旧版批准代替新片。发布前发现通用声音闸尚未识别packaged explainer，补上原生来源识别并在实际合成调用期间捕获完整冻结请求，沿既有自动五项检查出具原生审核，不豁免检查。
+
+## 含阿卡对照的最终手机版验收
+
+- 正式成片run 40867828797，SHA256 `cd522e61676417ff91397d5ff690fea38446cff64803da7c825af58d8dd6ed0f`，7,917,872字节，212.433秒，1080×1440/30fps，H.264 High / 4:2:0，声画差51毫秒。25处实际成片帧已查看。
+- 实际合成调用期间用原生tts_bundle_session捕获12段请求、MP3及成对词边界，库存已由原生render_inputs封存。沿voice_auto_review做完整度、多音字、停顿、语速、整句检查；11段精确未变声音复用对应哈希的测量，阿卡段变过的MP3独立复查，未用近似波形替代字节检查。
+- 全部12段实际成片AAC与各自已审的准确源音频完整波形比较通过、起点零偏移；实际品牌片尾单独ASR通过。没有真人听审声明，B档低置信策略未放宽。
+- 原生voice_quality_gate.require_publish只读检查已通过。本片后来的正式手机版审核取代上面的194.633秒参考版；声音报告中的复用身份明确记录，未沿用旧电影批准。
+- 最终轻量凭据：render_inputs.json、voice_quality_inventory.json、voice_auto_review.json、voice_quality_review.json、final-audio-identity.json、qc_attestation.json、qc_contact.jpg。冻结MP3包留工作流artifact，不进入Git。
