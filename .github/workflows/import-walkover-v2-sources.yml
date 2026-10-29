@@ -1,0 +1,49 @@
+name: import-walkover-v2-sources
+run-name: "import-walkover-v2-sources · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）六段动画 v2 源存档。
+# 来路：render run 40943446442 死在 reel_source_audio_policy——2026-10-13
+# 起的新规「正常制作不调整原声」禁止任何段 speed≠1，本片七段动画原靠
+# speed 拟合旁白（0.43–0.99）。改法不动旁白、不动事实：六段动画按旁白
+# 真 TTS 实测时长以 1.0 原速重产（本地 anim/*-v2.mp4，密帧自检报告
+# anim-v2-*-report.md），本工作流照 import-walkover-tlm-sources 先例
+# 逐段建 source-<id> Release 并上传；完成后暂存 mp4 另行提交移除
+# （Release 为唯一正本），记录补 research/walkover-story-2026/anim-src/SOURCES.md。
+# 归整口径：视频流逐字节复制自本地 v2 文件（流哈希双向核验），只补一条
+# 静音 AAC 轨（anullsrc 48kHz）——source-asr 解码需要音轨存在。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-v2-sources
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 建 Release 并上传六段 v2 动画
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          for f in wo26sunpr02 wo26horse03 wo26notat02 wo26ledger2 wo26tmlnb02 wo26tmlnc02; do
+            sha256sum "$f.mp4"
+            tag="source-$f"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 自制动画源存档：$f（v2：按旁白实测时长 1.0 原速重产，视频流与本地定版逐字节一致，仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+            gh release upload "$tag" "$f.mp4" --clobber
+            gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
