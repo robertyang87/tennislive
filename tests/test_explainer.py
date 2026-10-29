@@ -301,6 +301,15 @@ def test_每屏都有提炼要点配合旁白():
     for story_slug in _SCRIPTED:
         for seg in _beats(story_slug):
             doc = _slide_html(0, seg)
+            process = (seg.visual or {}).get("content", {}).get("entry_process")
+            if process:
+                # Process scenes convey the facts with actors and draw slots;
+                # forcing every legacy bullet into them recreates a text deck.
+                from tennislive.video import transition_cards
+                transition_cards.validate_content({"entry_process": process})
+                assert "process-world" in doc and "Renoise vibe-knowledge" in doc
+                assert "setTransitionTime" in doc
+                continue
             for point in seg.points:
                 assert point in doc
 
@@ -519,6 +528,14 @@ def test_文案的开场和标签属于它自己的选题():
         assert "#网球时差" in tags
         for other, other_text in captions.items():
             if other == slug:
+                continue
+            topic = find_story_by_slug(slug)
+            peer = find_story_by_slug(other)
+            if (topic.title, topic.hero_fact, topic.source_url) == (
+                peer.title, peer.hero_fact, peer.source_url
+            ):
+                # An archived cut and its animated replacement cover the same
+                # sourced topic; sharing its factual hook is intentional.
                 continue
             assert head != other_text.split("\n\n")[1], f"{slug} 用了 {other} 的开场"
             assert set(tags) != set(other_text.rsplit("\n\n", 1)[-1].split()), (

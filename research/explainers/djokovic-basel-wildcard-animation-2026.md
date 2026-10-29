@@ -29,3 +29,10 @@
 原片事实审查沿用research/explainers/djokovic-basel-wildcard-2026.md。阿卡外卡直核采用奥地利网协公告 https://www.oetv.at/news-detail/erste-bank-open-letzte-wien-wildcard-an-landaluce-lacambra ，临时加赛与2号种子采用 https://www.erstebank-open.com/en/news/storys/carlos-alcaraz-kommt-nach-wien 。此前索引出现的withdrawal分发页直接访问404，已在新稿来源中替换。
 
 按Renoise要求进行了独立对抗编辑审查：开头钩子保留，删除无源的“比赛状态”字样，去掉32格逐格编号与整句备注，独立验证32格不变及6秒后仍有过程动作；正式成片、字体/logo实际像素、音频与发布回执待成片后补记。
+
+
+## 成片核对与发布资格（2026-10-29）
+
+完整渲染 run 40881358677，artifact 12901740677；Release 实际下载 8,129,759 字节，SHA256 `74a0dbd5babae00db82fc86d1641bd69d4969fe07f4ebfb00459aca3804ef57f`，1080×1440、30fps、212.433333 秒，H.264 High / 4:2:0，音画差 51.333ms。已查看25张实际成片帧，入签表、32席固定、本土3张外卡、未用额外名额回流、种子与同周阿卡对照均覆盖，品牌logo/得意黑标题/Noto正文及原生片尾可见。冻结配音包逐字节相同，24条音频/请求一致，WordBoundary数组语义相同（只是JSON键顺序变化）；整条最终音轨解码PCM逐字节等同已审核成片。新片身份的 voice_auto_review / voice_quality_review 已生成，原生只读发布闸通过；没有真人听审，不把低置信多音字自动结果宣称成确定识别。详见 output 对应 qc_attestation.json 与 final-audio-identity.json。
+
+完整CI首轮6620项通过、两项失败：旧测试要求所有提炼要点强行出现在屏幕HTML，另一项误把同题归档版/重制版共用事实开场视作跨题借稿。修正测试语义：过程场景验证实际动画结构和来源合同；只有标题、hero_fact、官方来源完全相同的版本允许共用同题文案。没有改旁白或渲染输入，无需重渲。最终CI与原生发布回执另据实跟进。

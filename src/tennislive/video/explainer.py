@@ -2017,6 +2017,12 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # Renoise process remake, run 40881358677, SHA 74a0dbd5baba: 212.433s,
+    # 1080x1440/30fps H264 High 4:2:0; 25 actual frames, logo/fonts and
+    # fixed32 draw/queue/unused-slot/seed motions verified. Frozen speech and
+    # whole final decoded PCM equal reviewed film; fresh native voice gate passed.
+    # Evidence: output/2026-10-29/explainer/djokovic-basel-wildcard-animation-2026/qc_attestation.json.
+    "djokovic-basel-wildcard-animation-2026",
     # Final run 40867828797: SHA cd522e616764, 212.433s, 1080x1440/30fps,
     # mobile H.264 High / 4:2:0, AV delta 51ms; 25 actual frames reviewed.
     # Native sealed speech suite and read-only publication gate passed; all 12
