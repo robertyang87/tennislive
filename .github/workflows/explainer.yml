@@ -308,7 +308,9 @@ jobs:
           if [ -n "$VOICE" ]; then ARGS+=(--voice "$VOICE"); fi
           if [ -n "$RATE" ]; then ARGS+=(--rate "$RATE"); fi
           echo "生成参数：${ARGS[*]}"
-          tennislive explainer "${ARGS[@]}"
+          # Installed console scripts do not put the repository/tools on sys.path.
+          # Native transition cards load the existing title-card renderer there.
+          PYTHONPATH="$PWD:$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" tennislive explainer "${ARGS[@]}"
           ls -la "$OUT_DIR"
           # 视频体积可观，仅保留成片与幻灯，丢弃中间音频。
           rm -f "$OUT_DIR"/voice_*.mp3
