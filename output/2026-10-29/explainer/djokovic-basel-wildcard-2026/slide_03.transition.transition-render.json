@@ -1,0 +1,189 @@
+{
+  "version": 2,
+  "key": "fcca82be46363d5fb3dbae880ebf5c1a9733cacb72bba08645f15b5f4f9908ee",
+  "sha256": "fbb87ee70a5b492b827c4ed4c13234def07147c7e2af1a54ef75b5acf0355f70",
+  "seconds": 18.666666666666668,
+  "fps": "30",
+  "size": [
+    1080,
+    1440
+  ],
+  "plan": {
+    "canvas_width": 1080,
+    "kind": "comparison",
+    "lines": [
+      "名单按报名形成",
+      "空位按规则递补"
+    ],
+    "font_px": 96,
+    "nodes": [
+      {
+        "label": "排名",
+        "value": "达到条件",
+        "source": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
+      },
+      {
+        "label": "报名",
+        "value": "按时提交",
+        "source": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
+      }
+    ],
+    "direction": "horizontal",
+    "groups": [],
+    "proof_h": 218,
+    "node_height": 86,
+    "kicker_y": 394.12,
+    "headline_y": 478.12,
+    "proof_y": 791.88,
+    "safe_bottom": 1244,
+    "photo": null,
+    "highlight": "",
+    "kicker": "进入常规录取队列的条件",
+    "content": {
+      "comparison": {
+        "metric": "进入常规录取队列的条件",
+        "nodes": [
+          {
+            "label": "排名",
+            "value": "达到条件",
+            "source": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
+          },
+          {
+            "label": "报名",
+            "value": "按时提交",
+            "source": "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf"
+          }
+        ]
+      }
+    },
+    "notes": []
+  },
+  "browser_evidence": {
+    "boxes": [
+      {
+        "text": "名单按报名形成",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 478.109375,
+          "width": 940,
+          "height": 122.875,
+          "top": 478.109375,
+          "right": 1010,
+          "bottom": 600.984375,
+          "left": 70
+        }
+      },
+      {
+        "text": "空位按规则递补",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 600.984375,
+          "width": 940,
+          "height": 122.875,
+          "top": 600.984375,
+          "right": 1010,
+          "bottom": 723.859375,
+          "left": 70
+        }
+      },
+      {
+        "text": "排名",
+        "width": 402,
+        "scroll": 402,
+        "rect": {
+          "x": 106,
+          "y": 817.875,
+          "width": 402,
+          "height": 39.1875,
+          "top": 817.875,
+          "right": 508,
+          "bottom": 857.0625,
+          "left": 106
+        }
+      },
+      {
+        "text": "达到条件",
+        "width": 402,
+        "scroll": 402,
+        "rect": {
+          "x": 106,
+          "y": 869.0625,
+          "width": 402,
+          "height": 97.5,
+          "top": 869.0625,
+          "right": 508,
+          "bottom": 966.5625,
+          "left": 106
+        }
+      },
+      {
+        "text": "报名",
+        "width": 402,
+        "scroll": 402,
+        "rect": {
+          "x": 572,
+          "y": 817.875,
+          "width": 402,
+          "height": 39.1875,
+          "top": 817.875,
+          "right": 974,
+          "bottom": 857.0625,
+          "left": 572
+        }
+      },
+      {
+        "text": "按时提交",
+        "width": 402,
+        "scroll": 402,
+        "rect": {
+          "x": 572,
+          "y": 869.0625,
+          "width": 402,
+          "height": 97.5,
+          "top": 869.0625,
+          "right": 974,
+          "bottom": 966.5625,
+          "left": 572
+        }
+      }
+    ],
+    "content": [
+      {
+        "x": 299,
+        "y": 394.109375,
+        "width": 482,
+        "height": 56,
+        "top": 394.109375,
+        "right": 781,
+        "bottom": 450.109375,
+        "left": 299
+      },
+      {
+        "x": 70,
+        "y": 478.109375,
+        "width": 940,
+        "height": 245.75,
+        "top": 478.109375,
+        "right": 1010,
+        "bottom": 723.859375,
+        "left": 70
+      },
+      {
+        "x": 90,
+        "y": 791.875,
+        "width": 900,
+        "height": 198.6875,
+        "top": 791.875,
+        "right": 990,
+        "bottom": 990.5625,
+        "left": 90
+      }
+    ],
+    "story": null
+  },
+  "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
+}
