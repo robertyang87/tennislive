@@ -14285,7 +14285,7 @@ def assemble_explainer_video(
             # ⚠️ 别把 crf 再往上推：卡片是深绿底上的浅色小字，26 以上开始出块。
             # 改之前抽一帧放大比对，别按比例推。
             "-c:v", "libx264", "-preset", "slow", "-tune", "stillimage",
-            "-crf", "26",
+            "-crf", "26", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "64k", "-ac", "1",
             "-movflags", "+faststart", str(output),
         ]
