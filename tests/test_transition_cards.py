@@ -110,3 +110,12 @@ def test_explainer_actual_transition_movie_keeps_its_audio_window(tmp_path,monke
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(output)]))
     assert {s['codec_type'] for s in probe['streams']}=={'video','audio'}
     assert abs(float(probe['format']['duration'])-1.1)<.1
+
+
+def test_explainer_motion_keeps_the_column_header_and_topic():
+    from tennislive.video.explainer import ExplainerSegment, _slide_html
+    segment = ExplainerSegment(kind="cause", label="报名", title="排名够资格", narration="排名够资格。", visual={"layout":"transition", "content":{"highlight":"排名"}})
+    page = _slide_html(1, segment, topic="报名与外卡", column="网球有故事")
+    assert 'class="explainer-head"' in page
+    assert "网球时差 · 网球有故事" in page
+    assert 'class="topic"' in page and "报名与外卡" in page

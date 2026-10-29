@@ -11862,7 +11862,8 @@ def _slide_html(
         visual = segment.visual
         return build_transition(visual.get("headline", segment.title),
                                 content=visual.get("content"), kicker=visual.get("kicker", ""),
-                                size=(W, height))
+                                size=(W, height),
+                                header=({"brand": f"网球时差 · {column}", "topic": topic} if topic else None))
     if segment.visual:
         from .source_story_cards import source_slide_html
 
@@ -12377,7 +12378,8 @@ def render_explainer_slides(
                         visual = seg.visual
                         sidecar.write_text(json.dumps({"text": visual.get("headline", seg.title),
                             "kicker": visual.get("kicker", ""), "content": visual.get("content"),
-                            "size": [W, height]}, ensure_ascii=False))
+                            "size": [W, height],
+                            "header": ({"brand": f"网球时差 · {column}", "topic": topic} if topic else None)}, ensure_ascii=False))
                     else:
                         sidecar.unlink(missing_ok=True)
                     paths.append(out)
