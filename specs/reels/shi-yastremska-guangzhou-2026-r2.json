@@ -174,46 +174,11 @@
       "_quote_evidence": "data/evidence/shi-yastremska-guangzhou-2026-r2/english-cues-reviewed.json"
     },
     {
-      "source": "main",
-      "start": 0,
-      "end": 16.2,
-      "cx": 0.5,
-      "track": false,
-      "fit": "crop",
-      "score_inset": true,
-      "subtitle_bottom": 304,
+      "title_card": "施晗对阵亚斯特雷姆斯卡\n广州第二轮",
+      "kicker": "外卡球员的突破",
+      "seconds": 11.2,
       "narration": "北京时间十月二十八日晚，广州二百五十赛第二轮。施晗凭外卡出战，对阵亚斯特雷姆斯卡。开局，她先破发。",
-      "crosses_cut": "Official highlight edits retained; adjacent source windows continue the same original rally without removing its ball flight.",
-      "point_end_ok": "Whole narrative point retained across contiguous same-source TTS/broadcast subsegments; no point is claimed complete at an internal audio boundary. Actual serve/result frames independently reviewed.",
-      "_story_node": "开场：施晗先破发"
-    },
-    {
-      "source": "main",
-      "start": 16.2,
-      "end": 19.6,
-      "cx": 0.5,
-      "track": false,
-      "fit": "crop",
-      "score_inset": true,
-      "subtitle_bottom": 304,
-      "narration": "",
-      "crosses_cut": "Official highlight edits retained; adjacent source windows continue the same original rally without removing its ball flight.",
-      "point_end_ok": "Whole narrative point retained across contiguous same-source TTS/broadcast subsegments; no point is claimed complete at an internal audio boundary. Actual serve/result frames independently reviewed.",
-      "_story_node": "开局与对手回应的原声",
-      "quote": [
-        {
-          "at": 0.06,
-          "end": 2.24,
-          "text": "And she's found the line.\n这一球压线了。"
-        },
-        {
-          "at": 2.68,
-          "end": 3.28,
-          "text": "What a start!\n多么出色的开局！"
-        }
-      ],
-      "_quote_kind": "broadcast",
-      "_quote_evidence": "data/evidence/shi-yastremska-guangzhou-2026-r2/english-cues-reviewed.json"
+      "_story_node": "比赛日期、赛事、轮次与双方的简短介绍；正文继续完整关键回合"
     },
     {
       "source": "main",
@@ -750,10 +715,6 @@
     ],
     "first_retained_rallies": [
       [
-        0,
-        19.6
-      ],
-      [
         34.4,
         46.5
       ],
@@ -785,7 +746,8 @@
         120.72,
         141.3
       ]
-    ]
+    ],
+    "opening_change": "Original0–19.6 full opening point omitted together: source native board has no filled games and unsupported blue-gray body. Existing native title_card introduction11.2s, then seven complete later rallies. Do not falsify score_inset:false or relax scoreboard geometry."
   },
   "_source_quality_why": "Official site native highest720p. Official WTA YouTube uploads checked at19:01UTC, roughly6h after site publication13:13UTC, no Shi/Yastremska match in latest15 spanning today and yesterday. Use requested site source; never pretend1080p. Probe-blocked run40750299231.",
   "_facts": [
@@ -795,5 +757,12 @@
   "_production_timing": {
     "first_retained_source_check_dispatch": "2026-10-28T19:00:09Z",
     "why": "Observed GitHub read-only source-check run40750299231; exact user message receipt timestamp unavailable. Do not equate with message receipt."
+  },
+  "source_quality_exceptions": {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112": {
+      "min_height": 720,
+      "approved_by": "user",
+      "reason": "2026-10-29 用户明确答复：这场允许用官网720p继续。仅本场及该官方Brightcove源，不以显示缩放冒充原生1080p。"
+    }
   }
 }
