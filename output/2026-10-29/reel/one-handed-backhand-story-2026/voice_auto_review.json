@@ -1,0 +1,849 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "ae138c641dfea797352d1c8c1f85daf2daa61c5c7fff38bc73e691ef8111cbcc",
+    "render_inputs_sha256": "9cdeff1c034ed1ef775fc02a947be167f261006b688236ffbec567f10358a047",
+    "spec_sha256": "558e11bd059eda4070553a4ce6a86d210255dd0ab072f3481d111c1f0555690c",
+    "film_sha256": "706a7d75d73de77fa13db19c42d9482ce51a961b4df6c73d9632c83de1eb57ff",
+    "inventory_sha256": "41ffdb1f4aec7ad7277b4edb8aeb97a5313d3680df7b037ca2dc0e4c00ff0aba"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-29T04:21:39+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:023674b00d2ee0ec1efffba964687ca6bd9c33bfeef2e2cd1011fab22e0ae09b",
+      "audio_sha256": "5ed96dc956795e2a4a641f965c6b37c17879a44d9e545280843ad2c1550fc31a",
+      "pass": true,
+      "result_of": "bundle:023674b00d2ee0ec1efffba964687ca6bd9c33bfeef2e2cd1011fab22e0ae09b"
+    },
+    {
+      "id": "bundle:372d23189392b8b32921f4bd3aa0bdbb4e9cca81f20c4914cc5ecf08236a2088",
+      "audio_sha256": "bde66a08a86cf05ee44ec0a2b6aade2e5ace43e486d860ed5cd8cbaae718e1dc",
+      "pass": true,
+      "result_of": "bundle:372d23189392b8b32921f4bd3aa0bdbb4e9cca81f20c4914cc5ecf08236a2088"
+    },
+    {
+      "id": "bundle:4e46dfb6335487684d8692a3228747a4d4b64902106d3164392b622c62e24ace",
+      "audio_sha256": "0ee84c483901f78fa706a772458d17bcdd5187691bbab031a6c32a1449b0ba62",
+      "pass": true,
+      "result_of": "bundle:4e46dfb6335487684d8692a3228747a4d4b64902106d3164392b622c62e24ace"
+    },
+    {
+      "id": "bundle:54ceb82a0214bc4dfea39692ba57e3e935595ce68a222fc6d6be6e15bb9bafd2",
+      "audio_sha256": "7c5ce67dff53a835132f18a42dc9a237604648e9952dc5163a91c9167dca28b3",
+      "pass": true,
+      "result_of": "bundle:54ceb82a0214bc4dfea39692ba57e3e935595ce68a222fc6d6be6e15bb9bafd2"
+    },
+    {
+      "id": "bundle:63e77f0f2c4eb3548c66d1d3091c8e6e5b52cf934064601afcc1a7590959d01c",
+      "audio_sha256": "1281030792de1f6d1c960ac11bffe91d4c6279b819b75e18045dd06d1d9acf10",
+      "pass": true,
+      "result_of": "bundle:63e77f0f2c4eb3548c66d1d3091c8e6e5b52cf934064601afcc1a7590959d01c"
+    },
+    {
+      "id": "bundle:7e9fd30449859f7a8f4e676f9c4ddb63ace33262d56ebc73103119a8a6ff0cf9",
+      "audio_sha256": "d837df52b8e21a18afc0c40897ce49bc94e222c0d2488e5e0f141ac7b33d29c7",
+      "pass": true,
+      "result_of": "bundle:7e9fd30449859f7a8f4e676f9c4ddb63ace33262d56ebc73103119a8a6ff0cf9"
+    },
+    {
+      "id": "bundle:b7cd8a5cbf20a1512ce57fe8fa1fb2a9b85948a777ae1f3fb577c0326d57621f",
+      "audio_sha256": "1bbba23fa6cd7f0e2bf34b62bc6583a1120b9cddcc61f5dfed56e6937b3bfccd",
+      "pass": true,
+      "result_of": "bundle:b7cd8a5cbf20a1512ce57fe8fa1fb2a9b85948a777ae1f3fb577c0326d57621f"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "616692b87da2908dc3f1329f9b0b96dfe70a4a15dbfe38b4d311e4b61e700511",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:baca34552de6d9e47781cc34ed8093b1e4f85d29fd3612f820104fa551a70b65",
+      "audio_sha256": "a4d41c0fba0111779c335aa3adfcae41b53c4c3d48678b90ad664330c259e932",
+      "pass": true,
+      "result_of": "bundle:baca34552de6d9e47781cc34ed8093b1e4f85d29fd3612f820104fa551a70b65"
+    },
+    {
+      "id": "bundle:c000b027e98645478ded81fed1360cc61152364ac438ae13c848224ada658758",
+      "audio_sha256": "62a17ce3d9b1d9bd1a2a8395722b8c63e58444b6fa543cdf45266d24403d32f8",
+      "pass": true,
+      "result_of": "bundle:c000b027e98645478ded81fed1360cc61152364ac438ae13c848224ada658758"
+    },
+    {
+      "id": "bundle:c54da9413a4f399af2aaeb0f44e277be6204651206d066904dcf6e60080fc8d1",
+      "audio_sha256": "5a18bb9d9a3502b8ad3c17708eda674914510979142238c70682871e2a5303ad",
+      "pass": true,
+      "result_of": "bundle:c54da9413a4f399af2aaeb0f44e277be6204651206d066904dcf6e60080fc8d1"
+    },
+    {
+      "id": "bundle:d9c2571aa532b4a84d93f27e1ffab7ad5fc241d80090283e5ac3497b8351f777",
+      "audio_sha256": "d61ab9758c78887152f40004e50e201bdb5e9be528bd09b46b075fb3e9cae660",
+      "pass": true,
+      "result_of": "bundle:d9c2571aa532b4a84d93f27e1ffab7ad5fc241d80090283e5ac3497b8351f777"
+    },
+    {
+      "id": "bundle:e14200614c77e0b42e74c3b11cef2b7068652bb3f54aa33d5cd86df50ab00196",
+      "audio_sha256": "f94599aa11262325fd23038143203203cf3fe9607826ed85d4b203ffcac6d06d",
+      "pass": true,
+      "result_of": "bundle:e14200614c77e0b42e74c3b11cef2b7068652bb3f54aa33d5cd86df50ab00196"
+    },
+    {
+      "id": "bundle:e14937c0062cb5b0f64f98bab77ab1a389e7b192631a49206a33cf34a12c4ee4",
+      "audio_sha256": "d3cf80c25423b3d2179f109bda6ed7cd9623d5aa3db24127be5c1174c6619d05",
+      "pass": true,
+      "result_of": "bundle:e14937c0062cb5b0f64f98bab77ab1a389e7b192631a49206a33cf34a12c4ee4"
+    },
+    {
+      "id": "bundle:fbd30d3f42153ed4d8382e29d98c390eca2075e7a23b589f27d40fffe455925f",
+      "audio_sha256": "d225ab168ba95dec05882ae82d5c95b7c15ebda8814152f60995c1f349fd9305",
+      "pass": true,
+      "result_of": "bundle:fbd30d3f42153ed4d8382e29d98c390eca2075e7a23b589f27d40fffe455925f"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "a4d41c0fba0111779c335aa3adfcae41b53c4c3d48678b90ad664330c259e932",
+      "pass": true,
+      "result_of": "bundle:baca34552de6d9e47781cc34ed8093b1e4f85d29fd3612f820104fa551a70b65"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "5ed96dc956795e2a4a641f965c6b37c17879a44d9e545280843ad2c1550fc31a",
+      "pass": true,
+      "result_of": "bundle:023674b00d2ee0ec1efffba964687ca6bd9c33bfeef2e2cd1011fab22e0ae09b"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "1281030792de1f6d1c960ac11bffe91d4c6279b819b75e18045dd06d1d9acf10",
+      "pass": true,
+      "result_of": "bundle:63e77f0f2c4eb3548c66d1d3091c8e6e5b52cf934064601afcc1a7590959d01c"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "1bbba23fa6cd7f0e2bf34b62bc6583a1120b9cddcc61f5dfed56e6937b3bfccd",
+      "pass": true,
+      "result_of": "bundle:b7cd8a5cbf20a1512ce57fe8fa1fb2a9b85948a777ae1f3fb577c0326d57621f"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "62a17ce3d9b1d9bd1a2a8395722b8c63e58444b6fa543cdf45266d24403d32f8",
+      "pass": true,
+      "result_of": "bundle:c000b027e98645478ded81fed1360cc61152364ac438ae13c848224ada658758"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "d3cf80c25423b3d2179f109bda6ed7cd9623d5aa3db24127be5c1174c6619d05",
+      "pass": true,
+      "result_of": "bundle:e14937c0062cb5b0f64f98bab77ab1a389e7b192631a49206a33cf34a12c4ee4"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "7c5ce67dff53a835132f18a42dc9a237604648e9952dc5163a91c9167dca28b3",
+      "pass": true,
+      "result_of": "bundle:54ceb82a0214bc4dfea39692ba57e3e935595ce68a222fc6d6be6e15bb9bafd2"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "f94599aa11262325fd23038143203203cf3fe9607826ed85d4b203ffcac6d06d",
+      "pass": true,
+      "result_of": "bundle:e14200614c77e0b42e74c3b11cef2b7068652bb3f54aa33d5cd86df50ab00196"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "bde66a08a86cf05ee44ec0a2b6aade2e5ace43e486d860ed5cd8cbaae718e1dc",
+      "pass": true,
+      "result_of": "bundle:372d23189392b8b32921f4bd3aa0bdbb4e9cca81f20c4914cc5ecf08236a2088"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "d61ab9758c78887152f40004e50e201bdb5e9be528bd09b46b075fb3e9cae660",
+      "pass": true,
+      "result_of": "bundle:d9c2571aa532b4a84d93f27e1ffab7ad5fc241d80090283e5ac3497b8351f777"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "d837df52b8e21a18afc0c40897ce49bc94e222c0d2488e5e0f141ac7b33d29c7",
+      "pass": true,
+      "result_of": "bundle:7e9fd30449859f7a8f4e676f9c4ddb63ace33262d56ebc73103119a8a6ff0cf9"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "d225ab168ba95dec05882ae82d5c95b7c15ebda8814152f60995c1f349fd9305",
+      "pass": true,
+      "result_of": "bundle:fbd30d3f42153ed4d8382e29d98c390eca2075e7a23b589f27d40fffe455925f"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "5a18bb9d9a3502b8ad3c17708eda674914510979142238c70682871e2a5303ad",
+      "pass": true,
+      "result_of": "bundle:c54da9413a4f399af2aaeb0f44e277be6204651206d066904dcf6e60080fc8d1"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "0ee84c483901f78fa706a772458d17bcdd5187691bbab031a6c32a1449b0ba62",
+      "pass": true,
+      "result_of": "bundle:4e46dfb6335487684d8692a3228747a4d4b64902106d3164392b622c62e24ace"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "616692b87da2908dc3f1329f9b0b96dfe70a4a15dbfe38b4d311e4b61e700511",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:023674b00d2ee0ec1efffba964687ca6bd9c33bfeef2e2cd1011fab22e0ae09b",
+      "text": "可就在今年，四大满贯男单半决赛，十六个席位，没有一个单反。据统计，这是一八七七年第一届温网以来的第一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可就在今年四大满冠难耽半决赛16个席位没有一个单反。据统计,这是1877年第一届温王以来的第一次。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 8.903,
+        "cps": 5.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 就 ｜ 在 ｜ 今年 ｜ 四 ｜ 大满贯 ｜ 男单 ｜ 半决赛 ｜ 十六个 ｜ 席位 ｜ 没有 ｜ 一个 ｜ 单反 ｜ 据 ｜ 统计 ｜ 这是 ｜ 一八七七年 ｜ 第一届 ｜ 温网 ｜ 以来 ｜ 的 ｜ 第一次"
+      }
+    },
+    {
+      "id": "bundle:372d23189392b8b32921f4bd3aa0bdbb4e9cca81f20c4914cc5ecf08236a2088",
+      "text": "第三，从小学的就是双反。费德勒说：现在大多数教练自己就是双反，而且教孩子双反，要容易得多。他自己的一个孩子，正在从双反改成单反，正在体会这有多难。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 64,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三,从小学的就是双反。费德勒说,现在大多数教练自己就是双反,而且教孩子双反要容易得多。他自己的一个孩子正在从双反改成单反,正在体会这有多难。"
+      },
+      "polyphones": [
+        {
+          "index": 42,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 64,
+        "speech_s": 13.974,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第 ｜ 三 ｜ 从小 ｜ 学 ｜ 的 ｜ 就 ｜ 是 ｜ 双反 ｜ 费德勒 ｜ 说 ｜ 现在 ｜ 大多数 ｜ 教练 ｜ 自己 ｜ 就 ｜ 是 ｜ 双反 ｜ 而且 ｜ 教 ｜ 孩子 ｜ 双反 ｜ 要 ｜ 容易 ｜ 得 ｜ 多 ｜ 他 ｜ 自己 ｜ 的 ｜ 一个 ｜ 孩子 ｜ 正在 ｜ 从 ｜ 双反 ｜ 改 ｜ 成 ｜ 单反 ｜ 正在 ｜ 体会 ｜ 这 ｜ 有 ｜ 多 ｜ 难"
+      }
+    },
+    {
+      "id": "bundle:4e46dfb6335487684d8692a3228747a4d4b64902106d3164392b622c62e24ace",
+      "text": "大满贯男单半决赛，149年来，首次没有单反。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "大满冠难耽半决赛,149年来,首次没有单反。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 4.21,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "大满贯 ｜ 男单 ｜ 半决赛 ｜ 149 ｜ 年 ｜ 来 ｜ 首次 ｜ 没有 ｜ 单反"
+      }
+    },
+    {
+      "id": "bundle:54ceb82a0214bc4dfea39692ba57e3e935595ce68a222fc6d6be6e15bb9bafd2",
+      "text": "第一，怕高球。弹到肩膀那么高的上旋球，一只手很难发力。纳达尔对费德勒，用的就是这一招，一拍一拍压向他的反手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.021,
+        "longest_deletion": 0,
+        "transcript": "第一,爬高球。谈到肩膀那么高的上旋球,一只手很难发力。纳达尔对费德勒,用的就是这一招,一拍一拍,压向他的反手。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.283,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一 ｜ 怕 ｜ 高球 ｜ 弹 ｜ 到 ｜ 肩膀 ｜ 那么 ｜ 高 ｜ 的 ｜ 上旋 ｜ 球 ｜ 一 ｜ 只 ｜ 手 ｜ 很难 ｜ 发 ｜ 力 ｜ 纳达尔 ｜ 对 ｜ 费德勒 ｜ 用 ｜ 的 ｜ 就 ｜ 是 ｜ 这 ｜ 一 ｜ 招 ｜ 一 ｜ 拍 ｜ 一 ｜ 拍 ｜ 压 ｜ 向 ｜ 他 ｜ 的 ｜ 反手"
+      }
+    },
+    {
+      "id": "bundle:63e77f0f2c4eb3548c66d1d3091c8e6e5b52cf934064601afcc1a7590959d01c",
+      "text": "一九七三年，ATP 公布第一份排名。前十名里九个人打单反，唯一的例外，是康纳斯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "1973年,ATP公布第一份排名,前十名离九个人打单反,唯一的例外是康纳斯。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 7.146,
+        "cps": 4.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一九七三年 ｜ ATP ｜ 公布 ｜ 第一份 ｜ 排名 ｜ 前十名 ｜ 里 ｜ 九个 ｜ 人 ｜ 打 ｜ 单反 ｜ 唯一 ｜ 的 ｜ 例外 ｜ 是 ｜ 康纳斯"
+      }
+    },
+    {
+      "id": "bundle:7e9fd30449859f7a8f4e676f9c4ddb63ace33262d56ebc73103119a8a6ff0cf9",
+      "text": "男子大满贯最后一个单反冠军，是二零二零年美网的蒂姆。决赛他先丢两盘，逆转了兹维列夫。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "男子大猛冠最后一个单反冠军是2020年没网的地姆。决赛他先丢两盘,逆转了自为列夫。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.96,
+        "cps": 4.77,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "男子 ｜ 大满贯 ｜ 最后 ｜ 一个 ｜ 单反 ｜ 冠军 ｜ 是 ｜ 二零二零年 ｜ 美 ｜ 网 ｜ 的 ｜ 蒂姆 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 两盘 ｜ 逆转 ｜ 了 ｜ 兹维列夫"
+      }
+    },
+    {
+      "id": "bundle:b7cd8a5cbf20a1512ce57fe8fa1fb2a9b85948a777ae1f3fb577c0326d57621f",
+      "text": "单反好看，一只手把整个身体甩出去，打得平，打得狠。瓦林卡就靠这一拍，抢下了三座大满贯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "单凡好看,一只手把整个身体甩出去,打得平,打得很。瓦林卡就靠这一派,抢下了三座大满罐。"
+      },
+      "polyphones": [
+        {
+          "index": 18,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 22,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.861,
+              "confidence": null,
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.337,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "单反 ｜ 好看 ｜ 一 ｜ 只 ｜ 手 ｜ 把 ｜ 整个 ｜ 身体 ｜ 甩 ｜ 出去 ｜ 打 ｜ 得 ｜ 平 ｜ 打 ｜ 得 ｜ 狠 ｜ 瓦林卡 ｜ 就 ｜ 靠 ｜ 这 ｜ 一 ｜ 拍 ｜ 抢 ｜ 下 ｜ 了 ｜ 三座 ｜ 大满贯"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:baca34552de6d9e47781cc34ed8093b1e4f85d29fd3612f820104fa551a70b65",
+      "text": "这一记单反直线，让瓦林卡拿下二零一五年法网。十月二十七日，四十一岁的他在巴塞尔退役了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一季单反直线,让瓦林卡拿下2015年罚网。10月27日,41岁的他在巴塞尔退役了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.066,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 记 ｜ 单 ｜ 反 ｜ 直线 ｜ 让 ｜ 瓦林卡 ｜ 拿下 ｜ 二零一五年 ｜ 法网 ｜ 十月二十七日 ｜ 四十一岁 ｜ 的 ｜ 他 ｜ 在 ｜ 巴塞尔 ｜ 退役 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:c000b027e98645478ded81fed1360cc61152364ac438ae13c848224ada658758",
+      "text": "五十年后，二零二四年二月，西西帕斯跌出前十。ATP 前十，第一次一个单反都没有。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "50年后,2024年2月,西西帕斯跌出前时,ATP前时第一次一个单反都没有。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.84,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五十 ｜ 年 ｜ 后 ｜ 二零二 ｜ 四 ｜ 年 ｜ 二月 ｜ 西西帕斯 ｜ 跌 ｜ 出 ｜ 前十 ｜ ATP ｜ 前十 ｜ 第一 ｜ 次 ｜ 一个 ｜ 单反 ｜ 都 ｜ 没有"
+      }
+    },
+    {
+      "id": "bundle:c54da9413a4f399af2aaeb0f44e277be6204651206d066904dcf6e60080fc8d1",
+      "text": "费德勒说，单反不会消失，它还会回来。瓦林卡走了，你身边，还有人打单反吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "费德勒说,单反不会消失,他还会回来。瓦林卡走了,你身边还有人打单反吗?"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.224,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 28,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.501,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 7.052,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "费德勒 ｜ 说 ｜ 单反 ｜ 不会 ｜ 消失 ｜ 它 ｜ 还 ｜ 会 ｜ 回来 ｜ 瓦林卡 ｜ 走 ｜ 了 ｜ 你 ｜ 身边 ｜ 还有 ｜ 人 ｜ 打 ｜ 单反 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:d9c2571aa532b4a84d93f27e1ffab7ad5fc241d80090283e5ac3497b8351f777",
+      "text": "最后的单反。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 5,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后的单反。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 5,
+        "speech_s": 1.002,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 的 ｜ 单反"
+      }
+    },
+    {
+      "id": "bundle:e14200614c77e0b42e74c3b11cef2b7068652bb3f54aa33d5cd86df50ab00196",
+      "text": "第二，来不及。谢尔顿这一发，时速两百零八公里，西西帕斯单手伸出去，只能把球挡回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "第二,来不及。谢尔顿这一发,时速208公里,西西帕斯单手伸出去,只能把球挡回来。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.689,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第 ｜ 二 ｜ 来不及 ｜ 谢尔顿 ｜ 这 ｜ 一发 ｜ 时速 ｜ 两百零八公里 ｜ 西西帕斯 ｜ 单手 ｜ 伸 ｜ 出去 ｜ 只能 ｜ 把 ｜ 球 ｜ 挡 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:e14937c0062cb5b0f64f98bab77ab1a389e7b192631a49206a33cf34a12c4ee4",
+      "text": "单反，为什么越来越少？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "单反,为什么越来越少?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 1.934,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "单反 ｜ 为什么 ｜ 越来越 ｜ 少"
+      }
+    },
+    {
+      "id": "bundle:fbd30d3f42153ed4d8382e29d98c390eca2075e7a23b589f27d40fffe455925f",
+      "text": "今年美网，西西帕斯是签表里剩到最后的单反。第四轮对谢尔顿，他一个破发点都没拿到，直落三盘出局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年眉网,西西帕斯是千表里胜到最后的单反。第四轮对谢尔顿,他一个破发点都没拿到,直落三盘出局。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 41,
+          "char": "落",
+          "word": "直落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.108,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.632,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.809,
+        "cps": 4.77,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 美 ｜ 网 ｜ 西西帕斯 ｜ 是 ｜ 签表 ｜ 里 ｜ 剩 ｜ 到 ｜ 最后 ｜ 的 ｜ 单反 ｜ 第四轮 ｜ 对 ｜ 谢尔顿 ｜ 他 ｜ 一个 ｜ 破发 ｜ 点 ｜ 都 ｜ 没 ｜ 拿 ｜ 到 ｜ 直落 ｜ 三盘 ｜ 出局"
+      }
+    }
+  ]
+}

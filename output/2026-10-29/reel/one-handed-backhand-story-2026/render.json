@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-one-handed-backhand-story-2026-0c8d6f937a903f8b",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-one-handed-backhand-story-2026-0c8d6f937a903f8b/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40810624991"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40816424609"
   },
   "cover_seconds": 5.338,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 145.8,
+  "segments_seconds": 174.6,
   "topbar": null,
-  "film_seconds": 155.72,
+  "film_seconds": 184.52,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -30,15 +30,15 @@
     "2": 9.792,
     "3": 8.04,
     "4": 9.216,
-    "5": 7.704,
-    "6": 2.784,
-    "7": 11.16,
-    "8": 8.568,
-    "9": 14.856,
-    "10": 1.872,
-    "11": 8.832,
-    "12": 9.696,
-    "14": 7.92
+    "6": 7.704,
+    "7": 2.784,
+    "8": 11.16,
+    "9": 8.568,
+    "10": 14.856,
+    "11": 1.872,
+    "12": 8.832,
+    "13": 9.696,
+    "16": 7.92
   },
   "face_checks": {
     "cover": {
@@ -111,44 +111,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "2742fa48338e02d1edf295fadd46f9e3a411599b40af85ab57615f4af8796722",
+  "render_inputs_sha256": "9cdeff1c034ed1ef775fc02a947be167f261006b688236ffbec567f10358a047",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "one-handed-backhand-story-2026",
-    "received_at": "2026-10-29T03:10:31Z",
-    "artifact_ready_at": "2026-10-29T03:17:47Z",
-    "elapsed_seconds": 436.855,
+    "received_at": "2026-10-29T04:12:25Z",
+    "artifact_ready_at": "2026-10-29T04:19:52Z",
+    "elapsed_seconds": 447.075,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "9254561d77de7e21e7401b6a8b630645e43cca7f6a9c4e2409cbd38d7de91cc1",
-    "spec_sha256": "752950acb0c810e6bc179623dd59b8cfceedf93eb35827f4ed516db1926e34fb",
-    "run_id": "40810624991",
+    "film_sha256": "706a7d75d73de77fa13db19c42d9482ce51a961b4df6c73d9632c83de1eb57ff",
+    "spec_sha256": "558e11bd059eda4070553a4ce6a86d210255dd0ab072f3481d111c1f0555690c",
+    "run_id": "40816424609",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-29T03:14:00Z",
-        "run_id": "40810624991"
+        "at": "2026-10-29T04:16:05Z",
+        "run_id": "40816424609"
       }
     ],
-    "render_seconds": 227.855,
-    "pre_render_seconds": 209.0
+    "render_seconds": 227.075,
+    "pre_render_seconds": 220.0
   },
-  "film_sha256": "9254561d77de7e21e7401b6a8b630645e43cca7f6a9c4e2409cbd38d7de91cc1",
-  "film_bytes": 65923845,
-  "qc_attestation_sha256": "0add8ced4edcfb29308dd5a01e660c0cabbbe0eec7f3b5dde33778e91a473046",
+  "film_sha256": "706a7d75d73de77fa13db19c42d9482ce51a961b4df6c73d9632c83de1eb57ff",
+  "film_bytes": 76846517,
+  "qc_attestation_sha256": "911f162f9d5ebe7e670390c19c4cfac1d5e4d2c7ccfeb6e854ccb9b3ede70fb5",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-29T03:14:00Z",
-      "run_id": "40810624991"
+      "at": "2026-10-29T04:16:05Z",
+      "run_id": "40816424609"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-29T03:17:53Z",
-      "run_id": "40810624991"
+      "at": "2026-10-29T04:19:55Z",
+      "run_id": "40816424609"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-one-handed-backhand-story-2026/one-handed-backhand-story-2026.mp4",
-  "video_bytes": 65923845
+  "video_bytes": 76846517
 }
