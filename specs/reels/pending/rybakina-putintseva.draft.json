@@ -18,7 +18,16 @@
       }
     ],
     "winner": "莱巴金娜",
-    "result": "6-2 6-3"
+    "result": "6-2 6-3",
+    "portrait": {
+      "image": "assets/reel/rybakina-putintseva-cover.jpg",
+      "focus": 0.756,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_gates": "① 点名：说明／文件名有「elena rybakina」「Tokyo」，日期对上当地 2026-10-29（Asia/Tokyo；日期来源 flashscore dc_1_tvqJg7Am）；EXIF 拍摄 2026:10:29 17:25:04+09:00。② 分辨率：4824×3216，zoom 1 铺 1080×1440 是 2.23×（不放大）。③ 认人：最大那张脸像 莱巴金娜 0.46（≥ 0.34）。④ 睁眼：EAR 0.2434（≥ 0.16）。⑤ 钩子带：脸落在 y394~494，钩子顶边 790。排序：[True, False, False, True, False, 100, 0.4579]（眼睛睁开／决赛捧杯／赢球那一刻／偏正面／清楚／脸高／相似度）。⚠️ 情绪对不对题机器只认得捧杯和赢球那一刻两种，别的不判。",
+      "_source_url": "https://photoresources.wtatennis.com/wta/photo/2026/10/29/b84ea31f-3c0d-4026-b4db-d6d10e70de17/Rybakina-R2-RK.jpg",
+      "_portrait_why": "自动链照片接口（tools/refresh_reel_cover.py → cover_upgrade.pick_for_draft）：wta-photos 渠道 https://photoresources.wtatennis.com/wta/photo/2026/10/29/b84ea31f-3c0d-4026-b4db-d6d10e70de17/Rybakina-R2-RK.jpg（条目 #4600642，接口发布 2026-10-29T09:12:25Z，EXIF 拍摄 2026:10:29 17:25:04+09:00（UTC 2026-10-29T08:25:04Z），原图 4824×3216），说明原文「Elena Rybakina, Tokyo 2026 · Kazakhstan's Elena Rybakina hits a return againstÂ Kazakhstan's Yulia Putintseva during the WTA Pan Pacific Open tennis tournament at Ariake Coliseum in Tokyo on October 29, 2026. (Photo by Rie KIKUCHI / AFP)」，署名 Rie Kikuchi/AFP via Getty Images；RIE KIKUCHI；AFP or licensors；AFP via Getty Images。"
+    }
   },
   "_production": {
     "kind": "orchestrated_reel",
@@ -243,5 +252,14 @@
     "⚠️ 文案起草已随模型通道移除——钩子/论点/beats/旁白留给终审手写。",
     "封面官方实拍：比赛页上还没有这一场的赛后稿（页面共 0 篇文章，没有一篇 slug 含这两个姓）。Match Reaction 一般赛后一小时内上线——等会儿再试，别当成「没有实拍」。",
     "⚠️ 封面没抓到（稿子没挂或没有实拍），portrait 留空，render 前 cover_photo_problem 闸会要求认领 frame_at/_frame_why"
-  ]
+  ],
+  "_cover_api": {
+    "times": {
+      "flashscore_id": "tvqJg7Am",
+      "start_utc": "2026-10-29T08:05:00Z",
+      "end_utc": "2026-10-29T09:19:24Z",
+      "source": "flashscore dc_1_tvqJg7Am（DC／DD）"
+    },
+    "replaced_under": ""
+  }
 }
