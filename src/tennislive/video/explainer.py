@@ -11547,19 +11547,23 @@ _OPENINGS: dict[str, dict] = {
 
 # This episode keeps its reviewed script, diagrams and evidence in package data.
 # The existing renderer and preflight still consume the same registries.
-_DEFAULT_EPISODE = json.loads(
-    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
-        encoding="utf-8"))
-_DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
-_SCRIPTS[_DEFAULT_SLUG] = tuple(
-    (beat["kind"], beat["label"], beat["title"], beat["narration"],
-     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
-     beat.get("diagram", ""), beat.get("question", ""))
-    for beat in _DEFAULT_EPISODE["beats"]
-)
-_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
-_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
-_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+_EPISODES = {
+    episode["slug"]: episode
+    for path in sorted((Path(__file__).parent / "episodes").glob("*.json"))
+    for episode in [json.loads(path.read_text(encoding="utf-8"))]
+}
+_DEFAULT_SLUG = "medvedev-beijing-default-2026"
+_DEFAULT_EPISODE = _EPISODES[_DEFAULT_SLUG]
+for _episode_slug, _episode in _EPISODES.items():
+    _SCRIPTS[_episode_slug] = tuple(
+        (beat["kind"], beat["label"], beat["title"], beat["narration"],
+         beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+         beat.get("diagram", ""), beat.get("question", ""))
+        for beat in _episode["beats"]
+    )
+    _OPENINGS[_episode_slug] = _episode["opening"]
+    _CAPTIONS[_episode_slug] = _episode["caption"]
+    _CLAIMS[_episode_slug] = _episode["claims"]
 
 
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
@@ -11677,9 +11681,9 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
-        if story.slug == _DEFAULT_SLUG:
+        if story.slug in _EPISODES:
             beats = [dataclasses.replace(segment, visual=spec.get("visual"))
-                     for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
+                     for segment, spec in zip(beats, _EPISODES[story.slug]["beats"])]
         beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
