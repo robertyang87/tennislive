@@ -1,0 +1,408 @@
+{
+ "slug": "one-handed-backhand-story-2026",
+ "title": "单反：149年来第一次",
+ "date": "2026-10-29",
+ "_column": "网球有故事",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "本地制作环境没有 Azure Speech 钥匙。网球有故事近期成片用云健 Yunjian、语速 +6%，不另加音高。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +6%（网球有故事既定口径）。",
+ "preserve_source_audio": true,
+ "primary": "rg15",
+ "_primary_why": "冷开场与第一章主源：法网官方 2015 决赛集锦 1920×1080@25（wawrinka-career-story-2026 已实测）。",
+ "sources": {
+  "rg15": "https://www.youtube.com/watch?v=JzLC_CVvLdw",
+  "rg15qf": "https://www.youtube.com/watch?v=91kNzC5OeWU",
+  "st": "https://www.youtube.com/watch?v=Kk87xmyiYVE",
+  "rg06": "https://www.youtube.com/watch?v=aIm63srdIkA",
+  "thiem": "https://www.youtube.com/watch?v=zujq-bvo2SM"
+ },
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "story_kind": "other",
+  "subject": "瓦林卡",
+  "_subject_why": "封面画面主体是瓦林卡（2015 法网夺冠那一刻正脸），按仓库语义 subject 填画面主体；本片是打法话题片，story_kind 写 other。",
+  "hook": "大满贯男单半决赛\n149年来首次没单反",
+  "_hook_why": "第一行交代范围（大满贯男单半决赛），第二行是这件事本身和它有多罕见（149 年来首次、没有单反）；两行同一件事铺垫→落点。范围词写在钩子里（2026-10-18 不许有歧义）：只说男单，不碰女单。149 年＝1877 首届温网到 2026（tennismajors 原文）。零术语：单反是本片话题词。",
+  "narration": "大满贯男单半决赛，149年来，首次没有单反。",
+  "topic": "单反：瓦林卡退役之后",
+  "_topic_why": "story_kind=other 不要求「名字：」，但用「单反：」点明话题，后半句交代由头（瓦林卡 10-27 退役），11 字内。",
+  "portrait": {
+   "source": "rg15",
+   "frame_at": 169.1,
+   "fit": "cover",
+   "focus": 0.36,
+   "focus_y": 0.5,
+   "zoom": 1.0,
+   "_frame_why": "官方高清实拍：本会话在 runner 上查了 ATP Media 照片接口（probe-blocked run 40805121189，2026-10-29），有『2026 Basel Wawrinka』『2026 Lyon Wawrinka』等官方图，但本会话网络策略拒绝 atpmedia/AP/赛事图库全部图片站，也拒绝 Actions 附件下载，图取不进仓库（结果是取不到，不是没有）。按 2026-09-26 常设授权用抽帧：法网官方 2015 决赛集锦 169.1s，冠军点那记反手直线落地后约 1.7 秒，他转身望向计时牌，正脸、双眼睁开、合焦（rank_frame_sharpness 在 168.3–169.1 五帧里最锐）。脸在画面上部：眼睛约 y0.24、下巴约 y0.43，台头带（0–170/1440）和钩子带（790 起）都不碰；右上 RG 台标与左下记分条都在 3:4 窗口外。",
+   "_low_res_why": "源片 1920×1080，3:4 窗口 810×1080 铺 1080×1440 放大 1.33 倍；官方照片取不进来（见 _frame_why）。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "_why": "账号所有者 2026-10-13 起所有 spec 默认自动推送；质检通过即合并推送。",
+  "summary": "单反还剩几个",
+  "lead": "瓦林卡在巴塞尔退役了。可就在今年，四大满贯男单半决赛16个席位，没有一个人打单反——据统计，这是1877年以来第一次。单反为什么越来越少？"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "你身边，还有人打单反吗？",
+  "thesis": "瓦林卡退役之际，单反在男子网坛顶端第一次整年缺席大满贯半决赛：高点上旋、更快的发球、从小学双反的训练体系，一起把它挤出了顶端。",
+  "beats": [
+   "冷开场：2015 法网冠军点反手直线",
+   "由头：瓦林卡退役＋麦肯罗原声",
+   "钩子事实：2026 男单大满贯半决赛 16 人 0 单反，1877 年以来首次",
+   "01 曾是主流：1973 前十 9 人单反 → 2024.02 前十 0 人",
+   "02 为什么：高点上旋、发球提速、教练与孩子都学双反",
+   "03 最后的单反：蒂姆 2020 美网、西西帕斯 2026 美网第四轮出局",
+   "结尾一问"
+  ],
+  "chapters": [
+   "冷开场",
+   "01 · 它曾经是主流",
+   "02 · 它为什么在消失",
+   "03 · 最后的单反"
+  ],
+  "human_context": {
+   "angle": "不懂网球也成立的主线：一种最好看的打法，正在从顶端消失——最后一批会它的人一个个走了。由头是瓦林卡退役，主体是单反本身；他的生涯同栏目已发（wawrinka-career-story-2026），这里只一句带过。",
+   "facts": [
+    "2026 年四大满贯男单半决赛：澳网 阿尔卡拉斯/兹维列夫/德约科维奇/辛纳；法网 兹维列夫/门西克/科博利/阿纳尔迪；温网 辛纳/德约科维奇/兹维列夫/费里；美网 谢尔顿/蒂亚福/兹维列夫/哈恰诺夫，全部双反（tennismajors：美网前「Twelve places, twelve two-handed backhands」；美网四场仓库自有 spec）。",
+    "tennismajors 2026-09-06：「A man with a one-handed backhand has reached the semi-finals of a Grand Slam in every year since the first one was played, at Wimbledon in 1877」（文中称 by one count，片中旁白写「据统计」）；西西帕斯是 2026 美网签表里最后一个单反，世界第 53。",
+    "2026 美网第四轮谢尔顿 6-2 6-3 6-4 胜西西帕斯，12 个 ACE、未面对破发点（ATP/tennismajors 报道）。",
+    "1973-08-23 首份 ATP 排名前十 9 人单反，唯一例外康纳斯；2024 年 2 月西西帕斯跌出前十，前十首次无单反（ATP 官网、tennismajors）。",
+    "费德勒（puntodebreak 2026-08-25）：现在多数教练是双反，教孩子双反容易得多；他的一个孩子正从双反改单反、正体会其中的难。",
+    "蒂姆 2020 美网 2-6 4-6 6-4 6-3 7-6(6) 逆转兹维列夫，是最后一个以单反拿下大满贯单打冠军的人（tennis.com）。",
+    "2015 法网决赛瓦林卡 4-6 6-4 6-3 6-4 胜德约科维奇，第二个赛点以反手直线（全场第 60 个制胜分）收官（Al Jazeera）。"
+   ],
+   "sources": [
+    "https://www.tennismajors.com/us-open-news/one-handed-backhand-tsitsipas-has-a-149-year-streak-to-save-and-shelton-is-standing-in-front-of-it-860402.html",
+    "https://www.si.com/onsi/serve/news/fall-one-handed-backhand-2026-us-open-01m23vwfvzkn",
+    "https://tennismajors.com/atp/history-made-as-no-one-handed-backhand-players-in-atp-top-10-for-first-time-744073.html",
+    "https://www.atptour.com/en/news/no-one-handed-backhands-in-top-10-february-2024",
+    "https://www.puntodebreak.com/en/2026/08/25/federer-explains-why-the-one-handed-backhand-is-on-the-brink-of-extinction",
+    "https://www.tennis.com/news/articles/10-things-to-know-about-dominic-thiem-s-career-as-he-retires-from-professional-tennis-in-vienna",
+    "https://www.aljazeera.com/sports/2015/6/7/wawrinka-humbles-top-seed-djokovic-to-win-french-open"
+   ]
+  }
+ },
+ "_claims": {
+  "1877 年以来每年都有单反打进大满贯男单半决赛，2026 年第一次断": "https://www.tennismajors.com/us-open-news/one-handed-backhand-tsitsipas-has-a-149-year-streak-to-save-and-shelton-is-standing-in-front-of-it-860402.html ；https://www.si.com/onsi/serve/news/fall-one-handed-backhand-2026-us-open-01m23vwfvzkn",
+  "ATP 前十第一次没有单反（2024 年 2 月）": "https://tennismajors.com/atp/history-made-as-no-one-handed-backhand-players-in-atp-top-10-for-first-time-744073.html ；https://www.atptour.com/en/news/no-one-handed-backhands-in-top-10-february-2024",
+  "蒂姆是最后一个单反大满贯冠军": "https://www.tennis.com/news/articles/10-things-to-know-about-dominic-thiem-s-career-as-he-retires-from-professional-tennis-in-vienna ；https://en.wikipedia.org/wiki/Dominic_Thiem"
+ },
+ "_social_search_why": "本期是打法话题片（单反为什么越来越少），不是当事人声明类选题；瓦林卡退役由头只一句带过。",
+ "segments": [
+  {
+   "source": "rg15",
+   "start": 64.7,
+   "end": 74.6,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "_why": "法网官方 2015 决赛 Day 15 集锦：低机位从瓦林卡身后跟拍底线相持，单反与正手连续发力（64.7 起），74.6 切到德约科维奇之前收住。冷开场只取画面最有冲击力的一分，不承担结局。",
+   "point_end_ok": "窗内一分打完（约 74 秒死球），74.6 收在切镜头之前。",
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
+  },
+  {
+   "source": "rg15",
+   "start": 161.9,
+   "end": 171.2,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "这一记单反直线，让瓦林卡拿下二〇一五年法网。十月二十七日，四十一岁的他在巴塞尔退役了。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "法网官方 2015 决赛集锦：冠军点完整回合（161.9 发球起，记分条 AD），瓦林卡反手直线制胜（约 167.4，Al Jazeera：第二个赛点、全场第 60 个制胜分、反手直线），切近景振臂、转向 3:12 计时牌；171.2 收在看台齐喊（medium.en 171.26 起误识成英文）之前。",
+   "point_end_ok": "冠军点 162–167.5 秒打完，之后是他的振臂反应镜头。",
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
+  },
+  {
+   "title_card": "16个半决赛席位\n没有一个单反",
+   "kicker": "2026 男子大满贯",
+   "seconds": 11.0,
+   "narration": "可就在今年，四大满贯男单半决赛，十六个席位，没有一个单反。据统计，这是一八七七年第一届温网以来的第一次。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "transition_card": {
+    "events": [
+     {
+      "label": "2026 四大满贯男单半决赛",
+      "value": "16人 全是双反",
+      "source": "https://www.tennismajors.com/us-open-news/one-handed-backhand-tsitsipas-has-a-149-year-streak-to-save-and-shelton-is-standing-in-front-of-it-860402.html"
+     },
+     {
+      "label": "1877 年起",
+      "value": "每年都有单反进半决赛",
+      "source": "https://www.tennismajors.com/us-open-news/one-handed-backhand-tsitsipas-has-a-149-year-streak-to-save-and-shelton-is-standing-in-front-of-it-860402.html"
+     },
+     {
+      "label": "2026",
+      "value": "第一次断档",
+      "source": "https://www.si.com/onsi/serve/news/fall-one-handed-backhand-2026-us-open-01m23vwfvzkn"
+     }
+    ]
+   }
+  },
+  {
+   "title_card": "1973年\n前十里9个单反",
+   "kicker": "01 · 它曾经是主流",
+   "seconds": 9.5,
+   "narration": "一九七三年，ATP 公布第一份排名。前十名里九个人打单反，唯一的例外，是康纳斯。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "transition_card": {
+    "events": [
+     {
+      "label": "1973 首份 ATP 排名",
+      "value": "前十 9 人单反",
+      "source": "https://www.atptour.com/en/news/no-one-handed-backhands-in-top-10-february-2024"
+     },
+     {
+      "label": "唯一的双反",
+      "value": "康纳斯",
+      "source": "https://tennismajors.com/atp/history-made-as-no-one-handed-backhand-players-in-atp-top-10-for-first-time-744073.html"
+     }
+    ]
+   }
+  },
+  {
+   "source": "rg15qf",
+   "start": 78.7,
+   "end": 88.3,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "单反好看，一只手把整个身体甩出去，打得平，打得狠。瓦林卡就靠这一拍，抢下了三座大满贯。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "法网官方 2015 男单 1/4 决赛瓦林卡对费德勒集锦：近端瓦林卡（白衣）底线连续发力相持（78.7 起，约 81.5、83.5 两拍单反），约 86.2 一分打完，接他回身近景，88.3 切费德勒之前收住。两档转写 78.68–104.74 无英文（asr_plan gaps）。",
+   "point_end_ok": "窗内一分约 86.2 打完，之后是瓦林卡近景反应。",
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
+  },
+  {
+   "title_card": "2024年2月\n前十没有单反",
+   "kicker": "50年后",
+   "seconds": 9.0,
+   "narration": "五十年后，二〇二四年二月，西西帕斯跌出前十。ATP 前十，第一次一个单反都没有。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "transition_card": {
+    "events": [
+     {
+      "label": "2024.02 ATP 前十",
+      "value": "0 人单反",
+      "source": "https://tennismajors.com/atp/history-made-as-no-one-handed-backhand-players-in-atp-top-10-for-first-time-744073.html"
+     },
+     {
+      "label": "历史上",
+      "value": "第一次",
+      "source": "https://www.atptour.com/en/news/no-one-handed-backhands-in-top-10-february-2024"
+     }
+    ]
+   }
+  },
+  {
+   "title_card": "单反为什么\n越来越少",
+   "kicker": "02 · 它为什么在消失",
+   "seconds": 3.6,
+   "narration": "单反，为什么越来越少？",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   }
+  },
+  {
+   "source": "rg06",
+   "start": 273.3,
+   "end": 287.5,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "第一，怕高球。弹到肩膀那么高的上旋球，一只手很难发力。纳达尔对费德勒，用的就是这一招，一拍一拍压向他的反手。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "法网官方 2006 年男单决赛集锦（片头字卡『R. FEDERER - R. NADAL Final - Sunday 11th June 2006』）：底线后机位跟拍费德勒（蓝衣近端）与纳达尔的一分完整相持，费德勒多拍反手（273.3 起），286.0 切费德勒近景之前收住。源为 4:3 老转播（1920×1080 内 1440 宽画面），居中 3:4 裁切落在画面内。",
+   "point_end_ok": "窗内一分约 285.7 死球，286 切费德勒近景反应，记分条约 286.24 翻牌，287.5 收住（翻牌后留 1.2 秒）。",
+   "_quote_skip_why": "集锦段落只有现场声与球场广播，无前景英文解说。",
+   "crosses_cut": "286.24 从底线后机位切到费德勒近景，是同一分之后的反应镜头，人没换。"
+  },
+  {
+   "source": "st",
+   "start": 602.6,
+   "end": 612.3,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "第二，来不及。谢尔顿这一发，时速两百零八公里，西西帕斯单手伸出去，只能把球挡回来。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "美网官方 2026 第四轮 Extended Highlights：一分完整呈现（602.6 起远景，607.7 谢尔顿握拳近景），随后官方慢放回放：610 发球（屏显 129 MPH SERVE SPEED）、611–612.3 西西帕斯单反伸拍够接发；612.3 在解说下一句（612.6 起）开口之前收住。",
+   "point_end_ok": "一分 602.6–607.7 打完，之后是握拳近景与回放首段（发球与接发），612.3 收在回放镜头内、解说开口之前。",
+   "_quote_skip_why": "这一段旁白垫在现场声上；两档转写（small.en/medium.en）602.6–612.3 无英文解说，第一句解说 612.6 才开口，窗口之外。",
+   "crosses_cut": "608.06 从远景切谢尔顿握拳近景、610 进官方回放，都是同一分；旁白讲的就是这一分的发球和接发。"
+  },
+  {
+   "title_card": "教孩子\n双反容易得多",
+   "kicker": "第三个难处",
+   "seconds": 15.6,
+   "narration": "第三，从小学的就是双反。费德勒说：现在大多数教练自己就是双反，而且教孩子双反，要容易得多。他自己的一个孩子，正在从双反改成单反，正在体会这有多难。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "transition_card": {
+    "events": [
+     {
+      "label": "费德勒",
+      "value": "多数教练是双反",
+      "source": "https://www.puntodebreak.com/en/2026/08/25/federer-explains-why-the-one-handed-backhand-is-on-the-brink-of-extinction"
+     },
+     {
+      "label": "费德勒",
+      "value": "教孩子双反更容易",
+      "source": "https://www.puntodebreak.com/en/2026/08/25/federer-explains-why-the-one-handed-backhand-is-on-the-brink-of-extinction"
+     }
+    ]
+   }
+  },
+  {
+   "title_card": "最后的\n单反",
+   "kicker": "03 · 最后的单反",
+   "seconds": 2.8,
+   "narration": "最后的单反。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   }
+  },
+  {
+   "source": "thiem",
+   "start": 1820.8,
+   "end": 1830.3,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "男子大满贯最后一个单反冠军，是二〇二〇年美网的蒂姆。决赛他先丢两盘，逆转了兹维列夫。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "美网官方 2020 男单决赛 Condensed Match：冠军点完整回合（1820.8 发球前起，屏显 CHAMPIONSHIP POINT），兹维列夫回球出界后蒂姆仰面倒地、俯拍镜头；1830.3 收在解说报比分（medium.en 1830.5 起）之前。",
+   "point_end_ok": "冠军点约 1827.6 打完，之后是倒地与俯拍反应镜头。",
+   "_quote_skip_why": "窗口内无前景英文：medium.en 前一句 1814.2–1819.3 在窗口之前、报比分 1830.5 起在窗口之后；small.en 把同一段报比分并成 1816.9–1837.5 的长段（跨静音合并），两档对 1820.8–1830.3 都没有可辨解说。"
+  },
+  {
+   "source": "st",
+   "start": 654.9,
+   "end": 671.1,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "今年美网，西西帕斯是签表里剩到最后的单反。第四轮对谢尔顿，他一个破发点都没拿到，直落三盘出局。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
+   "_why": "美网官方 2026 第四轮 Extended Highlights：西西帕斯慢跑近景（654.9，上一句解说 654.52 已说完）、谢尔顿近景、第三盘一分完整相持（约 657–666.5，近端白衣为西西帕斯）、谢尔顿发球前近景；671.1 收在『Double match point』（671.38）开口之前。两档转写 654.86–671.14 无英文（asr_plan gaps）。",
+   "point_end_ok": "窗内相持约 666.5 打完，之后是谢尔顿近景。",
+   "crosses_cut": "窗内换镜头都在同一场同一局的分与分之间（西西帕斯近景→谢尔顿近景→远景一分→谢尔顿近景），旁白讲的就是这场的结局。",
+   "_quote_skip_why": "两档转写 654.86–671.14 无英文解说。"
+  },
+  {
+   "source": "st",
+   "start": 671.2,
+   "end": 677.6,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "kind": "quote",
+   "_quote_kind": "broadcast",
+   "_quote_why": "美网官方 Extended Highlights 转播解说『Double match point』，两档转写一致（small.en 671.78、medium.en 671.38）；677.6 收在赛点打完、下一句解说开口之前（两档转写 673.1–686.9 无字，YouTube 字幕轨 677.72 才有下一句）。",
+   "_why": "美网官方 2026 第四轮 Extended Highlights：双赛点近景（671.2，记分条 MATCH POINT）、赛点完整回合（约 673–677.6）。",
+   "point_end_ok": "赛点约 677.6 打完，段尾收在这一分落地。",
+   "quote": [
+    {
+     "at": 0.18,
+     "end": 1.92,
+     "text": "Double match point.\n双赛点"
+    }
+   ]
+  },
+  {
+   "title_card": "单反\n还会回来吗",
+   "kicker": "你怎么看",
+   "seconds": 9.5,
+   "narration": "费德勒说，单反不会消失，它还会回来。瓦林卡走了，你身边，还有人打单反吗？",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   }
+  }
+ ],
+ "_no_probe_why": {
+  "rg15": {
+   "why": "官方实际源已下载实测并校SHA256 2b119ec337de2826c4c24d3fb18c73f3c8df45aa422a577c38d5c65fe557397b（wawrinka-career-story-2026 同源）；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rg15qf": {
+   "why": "官方实际源已下载实测并校SHA256 6b9fe7b4c1f0dc0cb8837eeb7973b4ae5a4b304cb727a575644c70f6832cda35（wawrinka-career-story-2026 同源）；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "thiem": {
+   "why": "本会话 probe 一趟未落库；官方实际源（Release source-zujq-bvo2SM）已下载本地实测 ffprobe 1920×1080、60000/1001，SHA256 a07386f30929e53ed811655c0009981fc884e11e13cd197012df7cf08eddd61b；非最终成片QC。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "60000/1001"
+  }
+ },
+ "mixed_fps": {
+  "rg15qf": "25fps（法网官方集锦），与主片一致。",
+  "rg06": "25fps（法网官方 2006 决赛集锦，probe.json 实测），与主片一致；4:3 老转播居中 3:4 裁切。",
+  "st": "实测原生60000/1001（美网官方 Extended Highlights，probe.json），按实际时长转换主片25fps，不改变速度。",
+  "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。"
+ },
+ "source_fallbacks": {
+  "rg15": "https://github.com/robertyang87/tennislive/releases/download/source-JzLC_CVvLdw/JzLC_CVvLdw.mp4",
+  "rg15qf": "https://github.com/robertyang87/tennislive/releases/download/source-91kNzC5OeWU/91kNzC5OeWU.mp4",
+  "st": "https://github.com/robertyang87/tennislive/releases/download/source-Kk87xmyiYVE/Kk87xmyiYVE.mp4",
+  "rg06": "https://github.com/robertyang87/tennislive/releases/download/source-aIm63srdIkA/aIm63srdIkA.mp4",
+  "thiem": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4"
+ }
+}
