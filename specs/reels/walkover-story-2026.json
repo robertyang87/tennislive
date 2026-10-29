@@ -107,7 +107,10 @@
   "not": "https://github.com/robertyang87/tennislive/releases/download/source-wo26notat01/wo26notat01.mp4",
   "led": "https://github.com/robertyang87/tennislive/releases/download/source-wo26ledger1/wo26ledger1.mp4",
   "tml": "https://github.com/robertyang87/tennislive/releases/download/source-wo26timeln1/wo26timeln1.mp4",
-  "sun": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunpr01/wo26sunpr01.mp4"
+  "sun": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunpr01/wo26sunpr01.mp4",
+  "tla": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlna01/wo26tmlna01.mp4",
+  "tlb": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnb01/wo26tmlnb01.mp4",
+  "tlc": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnc01/wo26tmlnc01.mp4"
  },
  "source_quality_exceptions": {
   "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4": {
@@ -126,21 +129,24 @@
  },
  "_primary_why": "主源是 sources 第一个键 sin（WTA 官方广州集锦 1080p25），输出 25 fps；其余源同为 25 fps，仅 fed 为 30 fps（见 mixed_fps）。",
  "_why_sources": "四条源全部经 download-video 存进 Release 并 probe 实测（字节与 data/source_asr 的 sha256 一致，2026-10-30 本地下载 sin/fin 复核无误）：sin＝WTA 官方广州 R1 集锦 4_KotR_9410（1920×1080/383.55s）；nad＝Wimbledon 官方纳达尔退赛发布会 9vGOrRkqAK4（1920×1080/678.12s）；fin＝Wimbledon 官方决赛 Final Story z4ONBmQSdmQ（1920×1080/120.14s）；fed＝费德勒 2014 场内宣布 YFLvy8rLfiA（1278×720/159.38s，非官方翻录，所有者 2026-10-30 批准 720p 破例，见 source_quality_exceptions）。另两条已存档备选未用：0ZC8kJbxa_A 克耶高斯赛后采访（稿中无对应原声位）、M7vMOgfCIyc 德约赛后采访（其 probe 的存档改写未生效、双档 ASR 未落库，用之必红 asr_plan，故不用；存档本体已核实）。刘婧文 R1 在二号场无官方影像、孙心然 R2 官方集锦未上架——两人的画面按所有者定案分别由官方签表证据图与进程动画承载（见 seg2 与 _animation_blocker）。另五条自制动画源（路线甲，2026-10-30 落位）：hor＝赛马起源 wo26horse01（11.0s）、not＝签表记号/一分之线/连胜断片 wo26notat01（17.0s）、led＝积分账本 wo26ledger1（11.0s）、tml＝获利者时间轴 wo26timeln1（18.0s）、sun＝孙心然进程 wo26sunpr01（13.0s），均为 1080×1440/30fps 本地代码绘制，存档版视频流与本地生产版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落库（静音幻听单字不计）。详见 _animation_route_a。",
- "_production_status": "2026-10-30：16 段已补齐——五段动画路线甲落位（Release 存档＋双档 ASR 落库）、费德勒 720p 白名单已落 main（commit 0baf0642）；asr_plan check＋write-review 已随本版同步重跑、preflight 复检全过（见提交说明）。push.auto 保持 false（推送阶段由主线处理）。已知红项：赛马（hor）与时间轴（tml）两段动画时长不足以承载整段旁白，speed 已到 0.4 下限仍预计超限，见 _animation_route_a.red_items，narration 实测后由主线定夺。 2026-10-30 续：cover 补 winner=刘婧文（甲案，消费点零视觉影响已核完），asr_plan check＋write-review 同轮重跑后重派 narration。 narration 首派被 human_context.sources 首项非链接拦下，已换成 ITF 托管 2024 WTA 规则书 PDF 直链（与事实卡出处同一份），同轮重跑审听包再派。 2026-10-30 第二轮换源：赛马延展版 wo26horse02 已存档＋ASR 落库并换源（speed 0.96，有效 35.4s ≥ dry-run 估长 34.78s），红项消解；时间轴延展版因案例分组与旁白叙事顺序冲突未换源（见 _animation_route_a.red_items），narration 待主线裁定后重派。",
+ "_production_status": "2026-10-30：16 段已补齐——五段动画路线甲落位（Release 存档＋双档 ASR 落库）、费德勒 720p 白名单已落 main（commit 0baf0642）；asr_plan check＋write-review 已随本版同步重跑、preflight 复检全过（见提交说明）。push.auto 保持 false（推送阶段由主线处理）。已知红项：赛马（hor）与时间轴（tml）两段动画时长不足以承载整段旁白，speed 已到 0.4 下限仍预计超限，见 _animation_route_a.red_items，narration 实测后由主线定夺。 2026-10-30 续：cover 补 winner=刘婧文（甲案，消费点零视觉影响已核完），asr_plan check＋write-review 同轮重跑后重派 narration。 narration 首派被 human_context.sources 首项非链接拦下，已换成 ITF 托管 2024 WTA 规则书 PDF 直链（与事实卡出处同一份），同轮重跑审听包再派。 2026-10-30 第二轮换源：赛马延展版 wo26horse02 已存档＋ASR 落库并换源（speed 0.96，有效 35.4s ≥ dry-run 估长 34.78s），红项消解；时间轴延展版因案例分组与旁白叙事顺序冲突未换源（见 _animation_route_a.red_items），narration 待主线裁定后重派。 2026-10-30 第三轮换源：时间轴叙事版三段 wo26tmlna01/b01/c01 已存档（run 40935837484）＋ASR 落库，原 seg15 拆三段（16→18 段）换源、旁白逐字未改，asr_plan check＋write-review 同轮重跑、preflight 复检后重派 narration。",
  "_animation_route_a": {
-  "status": "已消解（2026-10-30）：所有者 01:23 批准路线甲＋费德勒 720p 白名单，两项均已执行落盘。 第二轮（同日）：赛马延展换源 wo26horse02 已落盘；时间轴延展因案例分组与旁白叙事顺序冲突暂缓，见 red_items。",
+  "status": "已消解（2026-10-30）：所有者 01:23 批准路线甲＋费德勒 720p 白名单，两项均已执行落盘。 第二轮（同日）：赛马延展换源 wo26horse02 已落盘；时间轴延展因案例分组与旁白叙事顺序冲突暂缓，见 red_items。 第三轮（同日）：时间轴按主线裁定「旁白逐字不改、动画按叙事顺序重渲」落位——叙事版三段 wo26tmlna01/b01/c01 已存档＋ASR 落库，原 seg15 拆三段换源（16→18 段），见 red_items。",
   "route": "五段动画本地生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）逐条存档为 source-<11 位 id>（tag/文件名照 download-video 惯例，probe_claims.video_key 可认领）；暂存 mp4 已提交移除（commit 7bcf2b1a），记录留 research/walkover-story-2026/anim-src/SOURCES.md。source-asr 五趟全 success（runs 40922411938 / 40922425680 / 40922435138 / 40922448648 / 40922463762），双档转写落 data/source_asr/<id>/ 且 source_sha256 与存档一致；转写仅静音幻听单字「You」（两档时间码不一致、no_speech_prob 0.8+），asr_plan 按 doubtful 不计。",
   "archives": {
    "sun": "source-wo26sunpr01/wo26sunpr01.mp4（孙心然进程，13.0s）",
    "hor": "source-wo26horse02/wo26horse02.mp4（赛马起源延展版，34.0s；首轮 wo26horse01 11.0s 已替换）",
    "not": "source-wo26notat01/wo26notat01.mp4（记号/一分之线/连胜断片，17.0s）",
    "led": "source-wo26ledger1/wo26ledger1.mp4（积分账本，11.0s）",
-   "tml": "source-wo26timeln1/wo26timeln1.mp4（获利者时间轴，18.0s）"
+   "tml": "source-wo26timeln1/wo26timeln1.mp4（获利者时间轴首版，18.0s；第三轮已被叙事版三段取代，保留作存档记录）",
+   "tla": "source-wo26tmlna01/wo26tmlna01.mp4（时间轴叙事版 a：同站对照，38.0s）",
+   "tlb": "source-wo26tmlnb01/wo26tmlnb01.mp4（时间轴叙事版 b：德约2024＋克耶高斯＋格拉诺列斯＋佩内塔，41.0s）",
+   "tlc": "source-wo26tmlnc01/wo26tmlnc01.mp4（时间轴叙事版 c：费德勒反转＋收束，41.0s）"
   },
   "speed_fits": "孙/记号/账本三段以 speed 慢放把成片段长拉到旁白估长之上：sun 0.65→20.0s（估 ≈17.3s）、not 0.6→28.3s（估 ≈24.8s）、led 0.45→24.4s（估 ≈20.2s）。估长为管线离线估长器 speech_seconds 按 +18% 语速修正，误差带 ±2.2s，真值以 narration 步 TTS 实测为准。",
   "red_items": [
    "赛马段（hor）：已消解（2026-10-30 第二轮）——延展重渲 34.0s 换源 wo26horse02，speed 0.96 成片有效 35.4s ≥ dry-run 估长 34.78s。",
-   "时间轴段（tml）：动画 18.0s，speed 0.4 成片 45.0s << 旁白估长（narration dry-run 口径 114.17s）。延展版 timeline-ext1/2/3（36/36/40s）已在本地生产并自检，但**未存档、未换源**：其案例分组按年份（穆雷+佩内塔／德约2014+格拉诺列斯／克耶高斯+德约2024+收束），与本段旁白的叙事顺序（同站对照→德约2024→克耶高斯→格拉诺列斯→佩内塔→费德勒反转→收束）不一致、无费德勒反转段画面，与本条原定分组（同站对照／德约2024／克耶高斯＋格拉诺列斯＋佩内塔／费德勒反转＋结论）亦不一致；按 ext 分组切分旁白将迫使定稿旁白重排、且漏费德勒反转 104 字，与「旁白逐字不改」冲突，已停报主线裁定。候选：按叙事顺序重渲三段（句组估长：同站对照 ≈36.2s／德约2024＋克耶高斯＋格拉诺列斯＋佩内塔 ≈39.0s／费德勒反转＋收束 ≈39.0s，与 ext 现总长 36/36/40 近似，可复用现有案例场景重组＋补费德勒戴维斯杯一拍），或所有者批准旁白重排。"
+   "时间轴段（tml）：已消解（2026-10-30 第三轮）——主线裁定旁白逐字不改、动画按叙事顺序重渲三段（wo26tmlna01/b01/c01，38/41/41s，存档 run 40935837484），原 seg15 按句组连续拆为三段换源、旁白拼接 diff 逐字一致；speed 0.99/1.0/1.0，有效 38.4/41.0/41.0s ≥ 各段估长 ≈36.2/39.0/38.9s。年份分组 ext 版弃用（本地留痕、未存档）。"
   ],
   "note": "五段旁白逐字未改（所有者定稿）。插入位按稿面顺序：四段在原 seg2（签表图）之后；时间轴在原 seg9（2014 签表图）之后、收尾段之前——missing_segments 原记 after_seg=10 与四段的 after_seg=2 计基不一致（前者按一基、后者按零基），以稿面顺序为准。"
  },
@@ -459,19 +465,49 @@
    "_card_why": "证据图 W2：ATP 官方 2014 总决赛竞赛签表（protennislive 存档，落款决赛日）裁切——Semi-Final/Final/Champion 三栏完整，Champion 栏德约名字正下方印着小写 wo.，决赛未赛的官方记号。德约捧杯与表演赛均无官方视频（Tennis TV 仅有一条颁奖页、runner 取不了流，稿中各一句带过），按所有者定案以官方签表证据图承载本段。"
   },
   {
-   "source": "tml",
+   "source": "tla",
    "start": 0,
-   "end": 18.0,
-   "speed": 0.4,
+   "end": 38.0,
+   "speed": 0.99,
    "cx": 0.5,
    "track": false,
-   "narration": "好玩的在后面：收到 walkover 的人，下一场到底占没占到便宜？先看一对同站对照。2012 年迈阿密，穆雷一站收到两次 walkover 进决赛，还是输了，他赛后自己说，接发不在状态，开场需要几局找节奏——决赛第一盘他 1 比 6 就交了学费。两年后同一站，德约也收到两次 walkover，决赛 6 比 3、6 比 3 横扫纳达尔夺冠。有意思的是，纳达尔那届半决赛也收到一个 walkover，两个受益者在决赛对撞，一个捧杯，一个亚军。再看德约自己。2024 年温网，四分之一决赛德米纳尔退赛，他省力进四强，半决赛直落三盘赢了；可决赛呢？2 比 6、2 比 6、6 比 7，被阿尔卡拉斯打得没有还手之力。多休的那一天，没换来冠军。克耶高斯走进决赛那次，6 比 4 先拿一盘，最后连丢三盘。格拉诺列斯 2016 年在法网躲开了纳达尔，下一轮就被蒂姆送走，只多留了一轮。佩内塔 2013 年温网收到阿扎伦卡的退赛礼，下一场先吞一个 0 比 6，再逆转，打出了自己五年来在温网的最好成绩——白捡的便宜，她兑现得最实在。而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于占便宜，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
+   "narration": "好玩的在后面：收到 walkover 的人，下一场到底占没占到便宜？先看一对同站对照。2012 年迈阿密，穆雷一站收到两次 walkover 进决赛，还是输了，他赛后自己说，接发不在状态，开场需要几局找节奏——决赛第一盘他 1 比 6 就交了学费。两年后同一站，德约也收到两次 walkover，决赛 6 比 3、6 比 3 横扫纳达尔夺冠。有意思的是，纳达尔那届半决赛也收到一个 walkover，两个受益者在决赛对撞，一个捧杯，一个亚军。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
-   "point_end_ok": "自制时间轴动画（wo26timeln1）0–18.0s 整条入窗：无比赛回合可切；speed 已到管线下限 0.4，成片 45.0s 仍远短于旁白估长 ≈102.6s——预计 narration 超限 ≈57.6s，红项见 _animation_route_a.red_items，待主线定夺（按原注按案例延展重渲 3–4 段或重排承载）。",
-   "_why": "动画路线甲落位（所有者 2026-10-30 01:23 批准）：本地代码绘制生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）存档为 source-wo26timeln1，视频流与本地版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落 data/source_asr/wo26timeln1/。旁白逐字取自原 _animation_blocker.missing_segments 的「获利者时间轴动画」条（记录已消解为 _animation_route_a）。"
+   "point_end_ok": "自制时间轴动画（wo26tmlna01）0–38.0s 整条入窗：无比赛回合可切；叙事版 a 段（引子＋迈阿密同站对照），speed 0.99、成片有效 38.4s ≥ 旁白估长 ≈36.2s。",
+   "_why": "动画路线甲第三轮落位（主线裁定：旁白逐字不改、动画按旁白叙事顺序重渲）：原 seg15（tml，wo26timeln1 18.0s、speed 0.4 拉满 45.0s）装不下 697 字旁白（narration dry-run 估长 114.17s），拆三段换源。本段钉叙事版 a（source-wo26tmlna01，38.0s，存档 run 40935837484／ASR run 40936240753），旁白为原 seg15 句0–3（引子＋迈阿密同站对照，221 字），三段拼接与原旁白逐字一致（本地 diff 已核）。视频流与本地 timeline-a.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlna01/。"
+  },
+  {
+   "source": "tlb",
+   "start": 0,
+   "end": 41.0,
+   "speed": 1.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "再看德约自己。2024 年温网，四分之一决赛德米纳尔退赛，他省力进四强，半决赛直落三盘赢了；可决赛呢？2 比 6、2 比 6、6 比 7，被阿尔卡拉斯打得没有还手之力。多休的那一天，没换来冠军。克耶高斯走进决赛那次，6 比 4 先拿一盘，最后连丢三盘。格拉诺列斯 2016 年在法网躲开了纳达尔，下一轮就被蒂姆送走，只多留了一轮。佩内塔 2013 年温网收到阿扎伦卡的退赛礼，下一场先吞一个 0 比 6，再逆转，打出了自己五年来在温网的最好成绩——白捡的便宜，她兑现得最实在。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "自制时间轴动画（wo26tmlnb01）0–41.0s 整条入窗：无比赛回合可切；叙事版 b 段（德约 2024＋克耶高斯＋格拉诺列斯＋佩内塔），speed 1.0、成片有效 41.0s ≥ 旁白估长 ≈39.0s。",
+   "_why": "同上拆段第二段：钉叙事版 b（source-wo26tmlnb01，41.0s，存档 run 40935837484／ASR run 40936245241），旁白为原 seg15 句4–9（德约 2024→克耶高斯→格拉诺列斯→佩内塔，238 字），拼接与原旁白逐字一致。视频流与本地 timeline-b.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlnb01/。"
+  },
+  {
+   "source": "tlc",
+   "start": 0,
+   "end": 41.0,
+   "speed": 1.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于占便宜，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "自制时间轴动画（wo26tmlnc01）0–41.0s 整条入窗：无比赛回合可切；叙事版 c 段（费德勒反转＋收束定格），speed 1.0、成片有效 41.0s ≥ 旁白估长 ≈38.9s。",
+   "_why": "同上拆段第三段：钉叙事版 c（source-wo26tmlnc01，41.0s，存档 run 40935837484／ASR run 40936248613），旁白为原 seg15 句10–15（费德勒反转＋收束四句，238 字），拼接与原旁白逐字一致。视频流与本地 timeline-c.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlnc01/。"
   },
   {
    "source": "sin",
