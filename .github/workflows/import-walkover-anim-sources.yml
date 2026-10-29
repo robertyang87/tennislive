@@ -1,0 +1,49 @@
+name: import-walkover-anim-sources
+run-name: "import-walkover-anim-sources · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）五段本地自制动画的源存档。
+# 动画在本地用 PIL/numpy 逐帧代码绘制（渲染脚本在制作目录 anim/render_*.py），
+# 本地直传 uploads.github.com 被凭据 401 挡住，故照 import-sun-cvetkovic
+# 先例走 runner：文件先暂存 research/walkover-story-2026/anim-src/，
+# 本工作流逐条建 source-<id> Release 并 gh release upload；完成后暂存
+# mp4 另行提交移除（Release 存档为唯一正本，记录留在 SOURCES.md）。
+# 归整口径：视频流逐字节复制自本地生产版 *-final.mp4，只补一条静音
+# AAC 轨——source-asr 的 PyAV 解码需要音轨存在（转写应为空）。
+# id 形状照 download-video 存档惯例（source-<11 位 id>/<id>.mp4），
+# probe_claims.video_key 与 asr_plan 按它认领、落 data/source_asr/<id>/。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-anim-sources
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 逐条建 Release 并上传五段动画
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          sha256sum *.mp4
+          for f in wo26horse01 wo26notat01 wo26ledger1 wo26timeln1 wo26sunpr01; do
+            tag="source-$f"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 自制动画源存档：$f（本地代码绘制生产版，视频流与本地 *-final.mp4 逐字节一致，仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+            gh release upload "$tag" "$f.mp4" --clobber
+            gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
