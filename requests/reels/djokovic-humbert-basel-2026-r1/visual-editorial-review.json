@@ -1,0 +1,231 @@
+{
+  "method": "timecoded contact sheets, source scoreboard crops, two English ASR outputs and source captions",
+  "actual_human_listening": false,
+  "source_sha256": "83bd85e40b84f88ef603d25e298fd89c924011db66efd325a39479c7ab96b1ce",
+  "cold_open": {
+    "start": 210.08,
+    "end": 224.2,
+    "kind": "winner_celebration",
+    "winner_visible": true,
+    "confidence": 0.99,
+    "evidence": "210.5德约握拳、212.5团队庆祝、216.5德约特写和握手；对应烧录最终盘分6-4。"
+  },
+  "ending": {
+    "start": 203.24,
+    "end": 224.2,
+    "kind": "match_point",
+    "winner_visible": true,
+    "confidence": 0.99,
+    "evidence": "204.5–208.5发球胜赛局40-15完整回合，210.5德约握拳，220.5网前握手。覆盖冷开场全部窗口。"
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "德约科维奇",
+    "confidence": 0.99,
+    "evidence": "Getty IPTC明确2026-10-28对安贝尔巴塞尔；球衣球场与源片一致；EXIF17:05:30Z位于比赛窗口，原图正脸双眼睁开，实际海报字不遮脸。"
+  },
+  "sheets": {
+    "output/2026-10-29/reel/djokovic-humbert-basel-2026-r1/contact_00.jpg": "b4128be72d284b8dc6a6cf4a352919e71e0751ecfb8aba7b1bde377753fbccc1",
+    "output/2026-10-29/reel/djokovic-humbert-basel-2026-r1/contact_02.jpg": "155d63538f21ee964bb0abd22eabda74f3d3d1b1bfec48a05359328e71a7c585",
+    "output/2026-10-29/reel/djokovic-humbert-basel-2026-r1/contact_03.jpg": "02d0e570cbc1b38ca26ae632b7ffcab75c95b0e0810ced137c60cb4d111aa259",
+    "output/2026-10-29/reel/djokovic-humbert-basel-2026-r1/contact_01.jpg": "417d56c5707bf1f7f0d694a38d203e0edc117696ae4056098ac29fb16d45c440",
+    "output/2026-10-29/reel/djokovic-humbert-basel-2026-r1/contact_04.jpg": "d6f4525bb0fad16d108d5047feb11fd96bb66c15a2dd6fc2996a94977427c8c2"
+  },
+  "score_crops": "6ec95071116f8c6e97294d044303818f5a231d1a53449f4d3c0283442cd875c8",
+  "editorial_node_review": [
+    {
+      "edit_id": "cold_open",
+      "source_window": [
+        210.08,
+        224.2
+      ],
+      "introduction": "",
+      "verified_frame_context": "赛点落地后德约握拳、团队起身、网前致意；正文203.24–224.2完整覆盖。"
+    },
+    {
+      "edit_id": "opening_break",
+      "source_window": [
+        0,
+        23.7
+      ],
+      "introduction": "北京时间十月二十八号晚上，巴塞尔男单首轮。拿外卡参赛的德约，对上安贝尔。首盘一比一，德约被逼到破发点。长回合的底线对抗，这一分，安贝尔抢了下来。",
+      "verified_frame_context": "开局长回合按源可见部分保留，24秒仅从旁白切为原声，下段24–28.94无缝延续源时间，得分及反应未删。"
+    },
+    {
+      "edit_id": "first_break_reaction",
+      "source_window": [
+        23.7,
+        27.98
+      ],
+      "introduction": "",
+      "verified_frame_context": "首盘破发之后安贝尔近景与整句精彩解说。"
+    },
+    {
+      "edit_id": "first_set_pressure",
+      "source_window": [
+        41.14,
+        57.56
+      ],
+      "introduction": "接发局三十比零，德约看到了机会。安贝尔把压力扛住，守住发球局，仍然领先一次破发。",
+      "verified_frame_context": "首盘2-3安贝尔发球，德约接发30-0当前完整回合；该局随后安贝尔保发2-4，省略分不冒充完整局。"
+    },
+    {
+      "edit_id": "first_save",
+      "source_window": [
+        57.56,
+        71.8
+      ],
+      "introduction": "二比四，德约又面对破发点。这一分再丢，首盘就更难追了。他把这一关守住，追到三比四，继续咬住比分。",
+      "verified_frame_context": "首盘2-4德约发球对手AD，完整发球、长回合、得分与反应；72秒后源解说整句在75.14结束，本段不引用，旁白会在此前结束。"
+    },
+    {
+      "edit_id": "first_save_commentary",
+      "source_window": [
+        71.8,
+        75.4
+      ],
+      "introduction": "",
+      "verified_frame_context": "首盘2-4德约发球对手AD，完整发球、长回合、得分与反应；72秒后源解说整句在75.14结束，本段不引用，旁白会在此前结束。"
+    },
+    {
+      "edit_id": "first_set_end",
+      "source_window": [
+        75.4,
+        89.7
+      ],
+      "introduction": "",
+      "verified_frame_context": "首盘3-4安贝尔发球15-40当前分、随后4-5安贝尔盘点发球；保留两分结束及三个ACE整句原声。"
+    },
+    {
+      "edit_id": "second_set_break",
+      "source_window": [
+        89.7,
+        102.48
+      ],
+      "introduction": "",
+      "verified_frame_context": "次盘德约1-0接发40-30，完整破发到2-0与团队反应；语境原话用双ASR一致文本。"
+    },
+    {
+      "edit_id": "consolidate_break",
+      "source_window": [
+        102.48,
+        114.96
+      ],
+      "introduction": "次盘先救下两个破发点，再破发。德约二比零领先，接下来要做的，就是把优势守住。",
+      "verified_frame_context": "先一句回顾次盘首局救险和第二局破发，再接2-0德约发球局当前回合；不拿该回合冒充首局救破发点。"
+    },
+    {
+      "edit_id": "second_set_midgame",
+      "source_window": [
+        114.96,
+        123.6
+      ],
+      "introduction": "三比一，德约继续稳住发球。安贝尔还在冲击，领先远没有变成轻松。",
+      "verified_frame_context": "次盘3-1德约发球30-0及4-1安贝尔发球30-15两个完整回合；分段介绍先对当前3-1再概括守住优势。"
+    },
+    {
+      "edit_id": "second_set_midgame_commentary",
+      "source_window": [
+        123.6,
+        126.56
+      ],
+      "introduction": "",
+      "verified_frame_context": "次盘3-1德约发球30-0及4-1安贝尔发球30-15两个完整回合；分段介绍先对当前3-1再概括守住优势。"
+    },
+    {
+      "edit_id": "second_set_midgame_later",
+      "source_window": [
+        126.56,
+        138.38
+      ],
+      "introduction": "四比一以后，安贝尔仍在用进攻寻找机会。德约没再让出自己的发球局，优势就这样留住了。",
+      "verified_frame_context": "次盘3-1德约发球30-0及4-1安贝尔发球30-15两个完整回合；分段介绍先对当前3-1再概括守住优势。"
+    },
+    {
+      "edit_id": "second_set_point",
+      "source_window": [
+        138.38,
+        155.74
+      ],
+      "introduction": "",
+      "verified_frame_context": "次盘5-3德约发球局30-15当前回合及AD盘点，完整保留盘点得分、看台反应和整句解说；6-3扳平。"
+    },
+    {
+      "edit_id": "decider_save",
+      "source_window": [
+        155.74,
+        167.12
+      ],
+      "introduction": "决胜盘开局，德约又救下破发点，追到一比一。安贝尔没有后退，两个人仍在底线僵持，谁也甩不开谁。",
+      "verified_frame_context": "先一句回顾决胜盘0-1德约救BP保发的已核逐分，再接当前1-1安贝尔发球0-30回合；不冒认当前是救破发点。"
+    },
+    {
+      "edit_id": "decisive_break",
+      "source_window": [
+        167.12,
+        181.5
+      ],
+      "introduction": "二比二，机会来了。安贝尔的发球局打到占先，德约在第二个破发点拿下这一分，三比二，决胜盘终于领先。",
+      "verified_frame_context": "决胜盘2-2德约接发AD，完整回合至安贝尔失误、德约得分反应；跨到183.02新回合之前结束。"
+    },
+    {
+      "edit_id": "humbert_last_hold",
+      "source_window": [
+        192.4,
+        200.9
+      ],
+      "introduction": "五比三，德约还在争取提前收尾。安贝尔顶住压力，把比赛继续留下。",
+      "verified_frame_context": "决胜盘5-3德约接发15-30完整精彩回合、安贝尔近景；该局随后安贝尔保发5-4，源后续省略分不冒充已全展示。"
+    },
+    {
+      "edit_id": "humbert_last_hold_commentary",
+      "source_window": [
+        200.9,
+        203.24
+      ],
+      "introduction": "",
+      "verified_frame_context": "决胜盘5-3德约接发15-30完整精彩回合、安贝尔近景；该局随后安贝尔保发5-4，源后续省略分不冒充已全展示。"
+    },
+    {
+      "edit_id": "match_point",
+      "source_window": [
+        203.24,
+        224.2
+      ],
+      "introduction": "",
+      "verified_frame_context": "决胜盘5-4德约发球40-15，完整发球回合至制胜、握拳、团队起身、握手；完整覆盖210.08–224.2冷开场。"
+    },
+    {
+      "edit_id": "stats_brief",
+      "source_window": [
+        null,
+        null
+      ],
+      "introduction": "全场六个破发点，德约救下五个。下一轮，他将对阵施特鲁夫。",
+      "verified_frame_context": "用户要求缩短字卡，只留这一张6.8秒统计卡；下一轮对手来自官方签表。"
+    },
+    {
+      "edit_id": "emotional_payoff",
+      "source_window": [
+        224.2,
+        241.0
+      ],
+      "introduction": "",
+      "verified_frame_context": "向看台致意，完整保留原声回顾从首盘受压到越打越好的整句，无数据堆叠。"
+    },
+    {
+      "edit_id": "next_round_question",
+      "source_window": [
+        null,
+        null
+      ],
+      "introduction": "下一轮面对施特鲁夫，德约能再次守住这些关键分吗？",
+      "verified_frame_context": "本场官方高清救球实拍作短收尾，无独立大字卡；具体对手与本场救险主题相扣。"
+    }
+  ],
+  "notes": [
+    "完整比赛190个发球分母与188个逐分总分不一致，保留各行原供应商值，不混用口径作计算或旁白论证。",
+    "剪辑中的次盘首局救2BP、决胜盘首个发球局救BP由逐分确认，叙述明确是回顾，当前画面不冒充这些没收录的得分。",
+    "第一次probe slug为djokovic-youtube-MwcZYYG4hvE；正式制作统一有效小写slug。"
+  ]
+}
