@@ -14,7 +14,6 @@
  "sources": {
   "rg15": "https://www.youtube.com/watch?v=JzLC_CVvLdw",
   "rg15qf": "https://www.youtube.com/watch?v=91kNzC5OeWU",
-  "mce": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinkamce/wawrinkamce.mp4",
   "st": "https://www.youtube.com/watch?v=Kk87xmyiYVE",
   "rg06": "https://www.youtube.com/watch?v=aIm63srdIkA",
   "thiem": "https://www.youtube.com/watch?v=zujq-bvo2SM"
@@ -106,78 +105,31 @@
    "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
    "_why": "法网官方 2015 决赛 Day 15 集锦：低机位从瓦林卡身后跟拍底线相持，单反与正手连续发力（64.7 起），74.6 切到德约科维奇之前收住。冷开场只取画面最有冲击力的一分，不承担结局。",
    "point_end_ok": "窗内一分打完（约 74 秒死球），74.6 收在切镜头之前。",
-   "_quote_skip_why": "集锦本身无解说（wawrinka-career-story-2026 同源两档转写只有观众声与球场广播噪声），无前景英文。"
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
   },
   {
-   "title_card": "41岁\n退役",
-   "kicker": "2026.10.27 巴塞尔",
-   "seconds": 10.0,
-   "narration": "这是瓦林卡的单手反拍。十月二十七日，四十一岁的他在家乡巴塞尔，打完了职业生涯的最后一场。",
+   "source": "rg15",
+   "start": 161.9,
+   "end": 171.2,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "这一记单反直线，让瓦林卡拿下二〇一五年法网。十月二十七日，四十一岁的他在巴塞尔退役了。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
    },
-   "transition_card": {
-    "events": [
-     {
-      "label": "瑞士室内赛首轮",
-      "value": "5-7 6-7 负莱赫奇卡",
-      "source": "https://www.bote.ch/nachrichten/sport/stan-wawrinka-beendet-karriere-bei-den-swiss-indoors-basel-art-1729070"
-     },
-     {
-      "label": "2026.10.27 巴塞尔",
-      "value": "最后一场",
-      "source": "https://www.bluewin.ch/en/sport/wawrinka-s-career-ends-with-a-loss-in-basel-li.3651310"
-     }
-    ]
-   }
-  },
-  {
-   "source": "mce",
-   "start": 11.6,
-   "end": 15.6,
-   "kind": "quote",
-   "frame": "person",
-   "track": false,
-   "_quote_kind": "ceremony",
-   "_quote_why": "麦肯罗在巴塞尔告别仪式上的视频致辞（英语，wawrinka-basel-farewell 同源同句，双档 ASR 一致），只取单反那一句。",
-   "quote": [
-    {
-     "at": 0.23,
-     "end": 3.72,
-     "text": "Thank you for showing that the one-handed backhand can still do it.\n谢谢你证明，单反依然能登顶。"
-    }
-   ],
-   "cx": 0.582,
-   "cx_face": {
-    "samples": [
-     0.5685,
-     0.5741,
-     0.5887,
-     0.592,
-     0.5962,
-     0.5874,
-     0.5729,
-     0.5877,
-     0.5712
-    ],
-    "frames": 9,
-    "detected": 9,
-    "source_size": [
-     1920,
-     1080
-    ],
-    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
-    "measured_at": "2026-10-29T02:33:05+00:00",
-    "median": 0.5874,
-    "spread": 0.0277
-   }
+   "_why": "法网官方 2015 决赛集锦：冠军点完整回合（161.9 发球起，记分条 AD），瓦林卡反手直线制胜（约 167.4，Al Jazeera：第二个赛点、全场第 60 个制胜分、反手直线），切近景振臂、转向 3:12 计时牌；171.2 收在看台齐喊（medium.en 171.26 起误识成英文）之前。",
+   "point_end_ok": "冠军点 162–167.5 秒打完，之后是他的振臂反应镜头。",
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
   },
   {
    "title_card": "16个半决赛席位\n没有一个单反",
    "kicker": "2026 男子大满贯",
-   "seconds": 17.8,
-   "narration": "可就在今年，澳网、法网、温网、美网，男单半决赛一共十六个席位，没有一个人打单反。据统计，从一八七七年第一届温网算起，每一年都至少有一个单反打进半决赛。今年，第一次断了。",
+   "seconds": 12.5,
+   "narration": "可就在今年，四大满贯男单半决赛，十六个席位，没有一个单反。据统计，这是一八七七年第一届温网以来的第一次。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
@@ -242,7 +194,7 @@
    },
    "_why": "法网官方 2015 男单 1/4 决赛瓦林卡对费德勒集锦：近端瓦林卡（白衣）底线连续发力相持（78.7 起，约 81.5、83.5 两拍单反），约 86.2 一分打完，接他回身近景，88.3 切费德勒之前收住。两档转写 78.68–104.74 无英文（asr_plan gaps）。",
    "point_end_ok": "窗内一分约 86.2 打完，之后是瓦林卡近景反应。",
-   "_quote_skip_why": "集锦本身无解说，只有现场声，无前景英文。"
+   "_quote_skip_why": "集锦本身无解说（两档转写窗口内无英文），只有现场声。"
   },
   {
    "title_card": "2024年2月\n前十没有单反",
@@ -269,10 +221,10 @@
    }
   },
   {
-   "title_card": "肩膀那么高的球\n一只手顶不住",
+   "title_card": "单反为什么\n越来越少",
    "kicker": "02 · 它为什么在消失",
-   "seconds": 9.5,
-   "narration": "单反最怕的，是弹到肩膀那么高的上旋球。一只手在那个高度很难发力，只能往回挡。",
+   "seconds": 3.6,
+   "narration": "单反，为什么越来越少？",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
@@ -287,7 +239,7 @@
    "track": false,
    "fit": "crop",
    "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
-   "narration": "纳达尔对费德勒，用的就是这一招：左手的上旋，一拍一拍压向费德勒的反手。二〇〇六年法网决赛，费德勒还是输了。",
+   "narration": "第一，怕高球。弹到肩膀那么高的上旋球，一只手很难发力。纳达尔对费德勒，用的就是这一招，一拍一拍压向他的反手。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
@@ -298,16 +250,6 @@
    "crosses_cut": "286.24 从底线后机位切到费德勒近景，是同一分之后的反应镜头，人没换。"
   },
   {
-   "title_card": "发球越来越快\n引拍来不及",
-   "kicker": "第二个难处",
-   "seconds": 9.5,
-   "narration": "第二，发球越来越快。单反要先把拍子引到身后，面对时速两百多公里的发球，常常来不及。",
-   "voice": {
-    "pitch": "+0Hz",
-    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
-   }
-  },
-  {
    "source": "st",
    "start": 602.6,
    "end": 612.3,
@@ -316,7 +258,7 @@
    "track": false,
    "fit": "crop",
    "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
-   "narration": "谢尔顿这一发，时速一百二十九英里，两百零八公里。西西帕斯单手伸出去，只能勉强挡回来。",
+   "narration": "第二，来不及。谢尔顿这一发，时速两百零八公里，西西帕斯单手伸出去，只能把球挡回来。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
@@ -351,27 +293,13 @@
    }
   },
   {
-   "title_card": "2020年美网\n蒂姆",
+   "title_card": "最后的\n单反",
    "kicker": "03 · 最后的单反",
-   "seconds": 9.5,
-   "narration": "男子大满贯最后一个单反冠军，是二〇二〇年美网的蒂姆。决赛他先丢两盘，逆转了兹维列夫。",
+   "seconds": 2.8,
+   "narration": "最后的单反。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
-   },
-   "transition_card": {
-    "events": [
-     {
-      "label": "最后一个单反大满贯冠军",
-      "value": "蒂姆",
-      "source": "https://www.tennis.com/news/articles/10-things-to-know-about-dominic-thiem-s-career-as-he-retires-from-professional-tennis-in-vienna"
-     },
-     {
-      "label": "2020 美网决赛",
-      "value": "先丢两盘 逆转",
-      "source": "https://en.wikipedia.org/wiki/2020_US_Open_%E2%80%93_Men%27s_singles"
-     }
-    ]
    }
   },
   {
@@ -383,33 +311,33 @@
    "track": false,
    "fit": "crop",
    "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "男子大满贯最后一个单反冠军，是二〇二〇年美网的蒂姆。决赛他先丢两盘，逆转了兹维列夫。",
+   "voice": {
+    "pitch": "+0Hz",
+    "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
+   },
    "_why": "美网官方 2020 男单决赛 Condensed Match：冠军点完整回合（1820.8 发球前起，屏显 CHAMPIONSHIP POINT），兹维列夫回球出界后蒂姆仰面倒地、俯拍镜头；1830.3 收在解说报比分（medium.en 1830.5 起）之前。",
    "point_end_ok": "冠军点约 1827.6 打完，之后是倒地与俯拍反应镜头。",
    "_quote_skip_why": "窗口内无前景英文：medium.en 前一句 1814.2–1819.3 在窗口之前、报比分 1830.5 起在窗口之后；small.en 把同一段报比分并成 1816.9–1837.5 的长段（跨静音合并），两档对 1820.8–1830.3 都没有可辨解说。"
   },
   {
-   "title_card": "最后一个单反\n第四轮出局",
-   "kicker": "2026 美网",
-   "seconds": 9.0,
-   "narration": "今年美网，西西帕斯是签表里剩到最后的单反。第四轮，他直落三盘，输给了谢尔顿。",
+   "source": "st",
+   "start": 654.9,
+   "end": 671.1,
+   "frame": "court",
+   "cx": 0.5,
+   "track": false,
+   "fit": "crop",
+   "_frame_why": "比赛画面，按 2026-09-29 全局规则固定球场中心，不跟随。",
+   "narration": "今年美网，西西帕斯是签表里剩到最后的单反。第四轮对谢尔顿，他一个破发点都没拿到，直落三盘出局。",
    "voice": {
     "pitch": "+0Hz",
     "_why": "云健+6%/+0Hz完整语义整句合成（网球有故事既定口径），不拆句不加速。"
    },
-   "transition_card": {
-    "events": [
-     {
-      "label": "2026 美网",
-      "value": "签表里最后一个单反",
-      "source": "https://www.tennismajors.com/us-open-news/one-handed-backhand-tsitsipas-has-a-149-year-streak-to-save-and-shelton-is-standing-in-front-of-it-860402.html"
-     },
-     {
-      "label": "第四轮",
-      "value": "2-6 3-6 4-6 负谢尔顿",
-      "source": "https://www.si.com/onsi/serve/news/fall-one-handed-backhand-2026-us-open-01m23vwfvzkn"
-     }
-    ]
-   }
+   "_why": "美网官方 2026 第四轮 Extended Highlights：西西帕斯慢跑近景（654.9，上一句解说 654.52 已说完）、谢尔顿近景、第三盘一分完整相持（约 657–666.5，近端白衣为西西帕斯）、谢尔顿发球前近景；671.1 收在『Double match point』（671.38）开口之前。两档转写 654.86–671.14 无英文（asr_plan gaps）。",
+   "point_end_ok": "窗内相持约 666.5 打完，之后是谢尔顿近景。",
+   "crosses_cut": "窗内换镜头都在同一场同一局的分与分之间（西西帕斯近景→谢尔顿近景→远景一分→谢尔顿近景），旁白讲的就是这场的结局。",
+   "_quote_skip_why": "两档转写 654.86–671.14 无英文解说。"
   },
   {
    "source": "st",
@@ -467,7 +395,6 @@
  "mixed_fps": {
   "rg15qf": "25fps（法网官方集锦），与主片一致。",
   "rg06": "25fps（法网官方 2006 决赛集锦，probe.json 实测），与主片一致；4:3 老转播居中 3:4 裁切。",
-  "mce": "25fps（Blick/JW 官方片），与主片一致。",
   "st": "实测原生60000/1001（美网官方 Extended Highlights，probe.json），按实际时长转换主片25fps，不改变速度。",
   "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。"
  },
