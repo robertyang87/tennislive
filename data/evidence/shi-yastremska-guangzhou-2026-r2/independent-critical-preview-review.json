@@ -1,0 +1,70 @@
+{
+  "kind": "independent_critical_native_preview_review",
+  "publication_approved": false,
+  "blocking_findings": [],
+  "manifest_sha256": "7f6da4096d51329799228abf4ee12f9d5405eb141e889c88ffb946021c714bd2",
+  "spec_file_sha256": "aafe6947b2e0d52b6b61b80fd01e0ea68622602e379ba80954cea2c075af625f",
+  "ass_sha256": "44b388b4dc07f9fe0002a10777c6c5e91c45757721cac1239c5a6e42490ca21d",
+  "samples": [
+    {
+      "file": "caption-01.png",
+      "sha256": "971d8d240604c6ca021fcc1cce9c586a2e95f0ba6945e861154d4b5c269a923d",
+      "film_time": 35.93,
+      "source_time": 49.98
+    },
+    {
+      "file": "caption-02.png",
+      "sha256": "e276cd43e6fea1a6894c97af40ea9407a888f96089a20fff2b21064529c915f3",
+      "film_time": 39.95,
+      "source_time": 54.0
+    },
+    {
+      "file": "caption-03.png",
+      "sha256": "831e4d60c45950496c033babbef5339df0849d764f2415b1dd113fbcf367fb81",
+      "film_time": 52.48000000000001,
+      "source_time": 68.98
+    },
+    {
+      "file": "caption-04.png",
+      "sha256": "98154aaf581bc987905a6a87f2aeee66c8f868dab1d0f69603dd6c0a8c004bdd",
+      "film_time": 57.99000000000001,
+      "source_time": 74.49
+    },
+    {
+      "file": "caption-05.png",
+      "sha256": "b791d47e1005799577ebd45fafa303537365bfffbdbe200aa5ff819bde070f34",
+      "film_time": 107.99000000000001,
+      "source_time": 124.49
+    },
+    {
+      "file": "caption-06.png",
+      "sha256": "8794b51deb890888b3a98852e988e789449579c0d25c682f7615750bd68a9e80",
+      "film_time": 109.47000000000001,
+      "source_time": 125.97
+    },
+    {
+      "file": "caption-07.png",
+      "sha256": "70b8ebd67f4f5c006faa5686dd25202be6971cc38f85bd67338123c50d335021",
+      "film_time": 118.37,
+      "source_time": 134.87
+    },
+    {
+      "file": "caption-08.png",
+      "sha256": "0b211f919c4437fda80a597c826276fa5317690ef558229b664826283158f746",
+      "film_time": 128.8,
+      "source_time": null
+    }
+  ],
+  "observations": [
+    "35.93/39.95: SET POINT header,4-5 30-40 board and narration/original bilingual subtitles have separate readable areas.",
+    "52.48: SET POINT#2 header and6-5 40-15 score match Shi set-point narration.",
+    "57.99: source scoreboard has disappeared on player close-up and overlay is absent; no retained rectangular court patch.",
+    "107.99/109.47: MATCH POINT header,7-5 previous set/5-4 Ad live score and Chinese narration all legible without overlap.",
+    "118.37: player identity/celebration match source; emotion subtitles do not cross face.",
+    "128.8: full statistics card readable to bottom row; correct7-5,6-4 and rank/country/name ordering, no topbar or subtitle overlap."
+  ],
+  "limits": [
+    "Native preview before final compression and dissolves.",
+    "Audio and actual final film still require separate checks."
+  ]
+}

@@ -119,3 +119,27 @@ def test_existing_jodar_source_approval_is_episode_and_native_height_bound(monke
     spec['slug'] = 'another-reel'
     with pytest.raises(reel.ReelError, match='仅限'):
         reel.source_quality_exceptions(spec)
+
+
+def test_shi_guangzhou_approval_keeps_episode_url_and_native_floor(monkeypatch):
+    reel = _reel()
+    url = "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112"
+    spec = {"slug": "shi-yastremska-guangzhou-2026-r2",
+            "sources": {"main": url},
+            "source_quality_exceptions": {
+                url: {"min_height": 720, "approved_by": "user",
+                      "reason": "这场允许用官网720p继续"}}}
+    monkeypatch.setattr(reel, "probe_size", lambda _: (1280, 720))
+    reel.check_native_quality_exceptions(spec, {"main": Path("source.mp4")})
+    monkeypatch.setattr(reel, "probe_size", lambda _: (854, 480))
+    with pytest.raises(reel.ReelError, match="低于明确授权"):
+        reel.check_native_quality_exceptions(spec, {"main": Path("source.mp4")})
+    spec["slug"] = "other-episode"
+    with pytest.raises(reel.ReelError, match="仅限施晗"):
+        reel.source_quality_exceptions(spec)
+    spec["slug"] = "shi-yastremska-guangzhou-2026-r2"
+    other = url.replace("6407534173112", "6407534173113")
+    spec["sources"]["main"] = other
+    spec["source_quality_exceptions"][other] = spec["source_quality_exceptions"].pop(url)
+    with pytest.raises(reel.ReelError, match="未授权"):
+        reel.source_quality_exceptions(spec)
