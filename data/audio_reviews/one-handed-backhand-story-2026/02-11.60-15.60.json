@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wawrinkamce/wawrinkamce.mp4",
+  "source_sha256": "c2ea4e2c5cd2bebd4de2e47d14b8b245da381a8ed1d0a6b96debb81b9b37d188",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-29T02:44:19+00:00",
+  "reviewed_from": 11.6,
+  "reviewed_to": 15.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 11.83,
+      "end": 15.32,
+      "en": "Thank you for showing that the one-handed backhand can still do it.",
+      "zh": "谢谢你证明，单反依然能登顶。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 c2ea4e2c5cd2bebd4de2e47d14b8b245da381a8ed1d0a6b96debb81b9b37d188，存于 data/source_asr/wawrinkamce/small.en.json 与 data/source_asr/wawrinkamce/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
