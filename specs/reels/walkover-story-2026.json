@@ -68,7 +68,7 @@
     "获利者样本：穆雷 2012 迈阿密两收 walkover 决赛负德约；德约 2014 迈阿密两收 walkover 决赛胜纳达尔；德约 2024 温网收德米纳尔 walkover 后决赛负阿尔卡拉斯；格拉诺列斯 2016 法网收纳达尔 walkover 下一轮负蒂姆；佩内塔 2013 温网收阿扎伦卡 walkover 后打出五年温网最佳。样本下一场 3 胜 3 负；Tennis Abstract 统计：walkover 对下一场无可测影响"
    ],
    "sources": [
-    "WTA 2024 规则书 Section VIII（ITF 托管 PDF）",
+    "https://www.itftennis.com/media/11824/2024-wta-rulebook.pdf",
     "https://www.youtube.com/watch?v=9vGOrRkqAK4（Wimbledon 官方：纳达尔退赛发布会）",
     "https://wtafiles.wtatennis.com/pdf/draws/2026/1023/MDS.pdf（广州官方签表，WO 标记）",
     "https://www.protennislive.com/posting/2014/605/mds.pdf（2014 总决赛官方签表，wo. 标记）"
@@ -119,7 +119,7 @@
  },
  "_primary_why": "主源是 sources 第一个键 sin（WTA 官方广州集锦 1080p25），输出 25 fps；其余源同为 25 fps，仅 fed 为 30 fps（见 mixed_fps）。",
  "_why_sources": "四条源全部经 download-video 存进 Release 并 probe 实测（字节与 data/source_asr 的 sha256 一致，2026-10-30 本地下载 sin/fin 复核无误）：sin＝WTA 官方广州 R1 集锦 4_KotR_9410（1920×1080/383.55s）；nad＝Wimbledon 官方纳达尔退赛发布会 9vGOrRkqAK4（1920×1080/678.12s）；fin＝Wimbledon 官方决赛 Final Story z4ONBmQSdmQ（1920×1080/120.14s）；fed＝费德勒 2014 场内宣布 YFLvy8rLfiA（1278×720/159.38s，非官方翻录，所有者 2026-10-30 批准 720p 破例，见 source_quality_exceptions）。另两条已存档备选未用：0ZC8kJbxa_A 克耶高斯赛后采访（稿中无对应原声位）、M7vMOgfCIyc 德约赛后采访（其 probe 的存档改写未生效、双档 ASR 未落库，用之必红 asr_plan，故不用；存档本体已核实）。刘婧文 R1 在二号场无官方影像、孙心然 R2 官方集锦未上架——两人的画面按所有者定案分别由官方签表证据图与进程动画承载（见 seg2 与 _animation_blocker）。另五条自制动画源（路线甲，2026-10-30 落位）：hor＝赛马起源 wo26horse01（11.0s）、not＝签表记号/一分之线/连胜断片 wo26notat01（17.0s）、led＝积分账本 wo26ledger1（11.0s）、tml＝获利者时间轴 wo26timeln1（18.0s）、sun＝孙心然进程 wo26sunpr01（13.0s），均为 1080×1440/30fps 本地代码绘制，存档版视频流与本地生产版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落库（静音幻听单字不计）。详见 _animation_route_a。",
- "_production_status": "2026-10-30：16 段已补齐——五段动画路线甲落位（Release 存档＋双档 ASR 落库）、费德勒 720p 白名单已落 main（commit 0baf0642）；asr_plan check＋write-review 已随本版同步重跑、preflight 复检全过（见提交说明）。push.auto 保持 false（推送阶段由主线处理）。已知红项：赛马（hor）与时间轴（tml）两段动画时长不足以承载整段旁白，speed 已到 0.4 下限仍预计超限，见 _animation_route_a.red_items，narration 实测后由主线定夺。 2026-10-30 续：cover 补 winner=刘婧文（甲案，消费点零视觉影响已核完），asr_plan check＋write-review 同轮重跑后重派 narration。",
+ "_production_status": "2026-10-30：16 段已补齐——五段动画路线甲落位（Release 存档＋双档 ASR 落库）、费德勒 720p 白名单已落 main（commit 0baf0642）；asr_plan check＋write-review 已随本版同步重跑、preflight 复检全过（见提交说明）。push.auto 保持 false（推送阶段由主线处理）。已知红项：赛马（hor）与时间轴（tml）两段动画时长不足以承载整段旁白，speed 已到 0.4 下限仍预计超限，见 _animation_route_a.red_items，narration 实测后由主线定夺。 2026-10-30 续：cover 补 winner=刘婧文（甲案，消费点零视觉影响已核完），asr_plan check＋write-review 同轮重跑后重派 narration。 narration 首派被 human_context.sources 首项非链接拦下，已换成 ITF 托管 2024 WTA 规则书 PDF 直链（与事实卡出处同一份），同轮重跑审听包再派。",
  "_animation_route_a": {
   "status": "已消解（2026-10-30）：所有者 01:23 批准路线甲＋费德勒 720p 白名单，两项均已执行落盘。",
   "route": "五段动画本地生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）逐条存档为 source-<11 位 id>（tag/文件名照 download-video 惯例，probe_claims.video_key 可认领）；暂存 mp4 已提交移除（commit 7bcf2b1a），记录留 research/walkover-story-2026/anim-src/SOURCES.md。source-asr 五趟全 success（runs 40922411938 / 40922425680 / 40922435138 / 40922448648 / 40922463762），双档转写落 data/source_asr/<id>/ 且 source_sha256 与存档一致；转写仅静音幻听单字「You」（两档时间码不一致、no_speech_prob 0.8+），asr_plan 按 doubtful 不计。",
