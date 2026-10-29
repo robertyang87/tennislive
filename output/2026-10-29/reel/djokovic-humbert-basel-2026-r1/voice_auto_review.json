@@ -1,0 +1,741 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "61c530a822ff96d6ded5bafd8cfc7b00afafb06c2d9d1c98422e0ef211ed3b9d",
+    "render_inputs_sha256": "0105d2eeebf56265272fae3a618b66e180e8c68cb3cc7546b208bca38fcb89ab",
+    "spec_sha256": "39c575cb00f1a5538985578c9f80652524a0d9948e1907e21c86326ac60e6e0b",
+    "film_sha256": "3501f25fda3b43dc6e5899124239974f909172f711c7e46f65572d6c90abbb90",
+    "inventory_sha256": "37492636981410416810cae9bb6299f4a743f5d9b35740813904e7e79601d8e3"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-29T03:04:06+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:2f768d32a8ad018f23aaba339d4afbe24908cb6b711c34755db531919b19d83c",
+      "audio_sha256": "7d0f6b3dbde72cede7d0b2b0e3397a07a78edbef26ed432719606e0f568b1cd0",
+      "pass": true,
+      "result_of": "bundle:2f768d32a8ad018f23aaba339d4afbe24908cb6b711c34755db531919b19d83c"
+    },
+    {
+      "id": "bundle:43ea30b2bc426b087dfcfdb714c2d32542f7d812c5ab62edb5f6c37e3a77a949",
+      "audio_sha256": "9306025f3b5d928c352f2f96b53354547750568efd291293e55a4f121dd334e0",
+      "pass": true,
+      "result_of": "bundle:43ea30b2bc426b087dfcfdb714c2d32542f7d812c5ab62edb5f6c37e3a77a949"
+    },
+    {
+      "id": "bundle:5f8abd55ff134f7afc114eae909db306e2b78aedb31abb923cd8b6cda6682cc7",
+      "audio_sha256": "67f714e4f183327b62b7ef319bd4322d1468899e768662eca0d51383642927a6",
+      "pass": true,
+      "result_of": "bundle:5f8abd55ff134f7afc114eae909db306e2b78aedb31abb923cd8b6cda6682cc7"
+    },
+    {
+      "id": "bundle:644490da0dcf1310c74760d75dad685abe25d18a581ad8faf0af68be0ec3f142",
+      "audio_sha256": "92a84e0e50161994367c784df9e130e120a5d8dccf7370746dc8533c3cdf2843",
+      "pass": true,
+      "result_of": "bundle:644490da0dcf1310c74760d75dad685abe25d18a581ad8faf0af68be0ec3f142"
+    },
+    {
+      "id": "bundle:73011257f498da235b73f38caa7e1c3cec0a664809187f2c97c3f326fdca3c67",
+      "audio_sha256": "9b79779733a2206d940a08c120d6df22a2c58efbf0d01a8a8bec61cc6ea255af",
+      "pass": true,
+      "result_of": "bundle:73011257f498da235b73f38caa7e1c3cec0a664809187f2c97c3f326fdca3c67"
+    },
+    {
+      "id": "bundle:8f1ac8f4c1e457caca12dcd49d0ad28a660a216ee88a07d0f4f1a94c18e70abf",
+      "audio_sha256": "486b3f67d9363178cbb8fb10cab1a481cd858d64718a6ee08d85146bb7f99437",
+      "pass": true,
+      "result_of": "bundle:8f1ac8f4c1e457caca12dcd49d0ad28a660a216ee88a07d0f4f1a94c18e70abf"
+    },
+    {
+      "id": "bundle:90e7338160a1d8bd8205f861fa1982bed9ec7fa8f1bfb43dd8d8a2a7a08e0bd1",
+      "audio_sha256": "7a963e445f71d2a7bd453bcb632948eadbdbbe5ee4e1c43720e55b08c7c6a15a",
+      "pass": true,
+      "result_of": "bundle:90e7338160a1d8bd8205f861fa1982bed9ec7fa8f1bfb43dd8d8a2a7a08e0bd1"
+    },
+    {
+      "id": "bundle:a31286c9b20a4d3a43ade7c080689e6a7ba50e24f8470318183a3483aa475094",
+      "audio_sha256": "ee4edcdeb9feaa867cbf9098de52bc1e5503f9a0f2359b96b4fda87472ffc0be",
+      "pass": true,
+      "result_of": "bundle:a31286c9b20a4d3a43ade7c080689e6a7ba50e24f8470318183a3483aa475094"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "dfd0faaf32aaa63940202431b94e4fa6cbf70f7a6cae906e58bd03aa24d0f60c",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:e3f3cd7ed4bc2756f5a9262bb03a3c27821c35cde6fbbe0ba8d56d85768d0eca",
+      "audio_sha256": "e0609de3e10c289c37ab648640bfc3c020c9cdce6e41c5436274111654a07026",
+      "pass": true,
+      "result_of": "bundle:e3f3cd7ed4bc2756f5a9262bb03a3c27821c35cde6fbbe0ba8d56d85768d0eca"
+    },
+    {
+      "id": "bundle:ecde2ecab48b56d64373573fd21c32437312925812e693d257293a2f00d43525",
+      "audio_sha256": "06361720605dcf33caafd23a4a45c5eae8507fe31867b395cb1a0ee250c10733",
+      "pass": true,
+      "result_of": "bundle:ecde2ecab48b56d64373573fd21c32437312925812e693d257293a2f00d43525"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "67f714e4f183327b62b7ef319bd4322d1468899e768662eca0d51383642927a6",
+      "pass": true,
+      "result_of": "bundle:5f8abd55ff134f7afc114eae909db306e2b78aedb31abb923cd8b6cda6682cc7"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "7a963e445f71d2a7bd453bcb632948eadbdbbe5ee4e1c43720e55b08c7c6a15a",
+      "pass": true,
+      "result_of": "bundle:90e7338160a1d8bd8205f861fa1982bed9ec7fa8f1bfb43dd8d8a2a7a08e0bd1"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "ee4edcdeb9feaa867cbf9098de52bc1e5503f9a0f2359b96b4fda87472ffc0be",
+      "pass": true,
+      "result_of": "bundle:a31286c9b20a4d3a43ade7c080689e6a7ba50e24f8470318183a3483aa475094"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "e0609de3e10c289c37ab648640bfc3c020c9cdce6e41c5436274111654a07026",
+      "pass": true,
+      "result_of": "bundle:e3f3cd7ed4bc2756f5a9262bb03a3c27821c35cde6fbbe0ba8d56d85768d0eca"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "9b79779733a2206d940a08c120d6df22a2c58efbf0d01a8a8bec61cc6ea255af",
+      "pass": true,
+      "result_of": "bundle:73011257f498da235b73f38caa7e1c3cec0a664809187f2c97c3f326fdca3c67"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "9306025f3b5d928c352f2f96b53354547750568efd291293e55a4f121dd334e0",
+      "pass": true,
+      "result_of": "bundle:43ea30b2bc426b087dfcfdb714c2d32542f7d812c5ab62edb5f6c37e3a77a949"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "06361720605dcf33caafd23a4a45c5eae8507fe31867b395cb1a0ee250c10733",
+      "pass": true,
+      "result_of": "bundle:ecde2ecab48b56d64373573fd21c32437312925812e693d257293a2f00d43525"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "92a84e0e50161994367c784df9e130e120a5d8dccf7370746dc8533c3cdf2843",
+      "pass": true,
+      "result_of": "bundle:644490da0dcf1310c74760d75dad685abe25d18a581ad8faf0af68be0ec3f142"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "7d0f6b3dbde72cede7d0b2b0e3397a07a78edbef26ed432719606e0f568b1cd0",
+      "pass": true,
+      "result_of": "bundle:2f768d32a8ad018f23aaba339d4afbe24908cb6b711c34755db531919b19d83c"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "486b3f67d9363178cbb8fb10cab1a481cd858d64718a6ee08d85146bb7f99437",
+      "pass": true,
+      "result_of": "bundle:8f1ac8f4c1e457caca12dcd49d0ad28a660a216ee88a07d0f4f1a94c18e70abf"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "dfd0faaf32aaa63940202431b94e4fa6cbf70f7a6cae906e58bd03aa24d0f60c",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:2f768d32a8ad018f23aaba339d4afbe24908cb6b711c34755db531919b19d83c",
+      "text": "三比二领先后，德约又救下破发点。现在五比三，安贝尔还在奋力延长比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "3比20先后,德约又就下破发点。现在5比3,安贝尔还在分离延长比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 25,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.46,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 30,
+          "char": "长",
+          "word": "延长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.234,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.144,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三比二 ｜ 领先 ｜ 后 ｜ 德约 ｜ 又 ｜ 救 ｜ 下 ｜ 破发 ｜ 点 ｜ 现在 ｜ 五比 ｜ 三 ｜ 安贝尔 ｜ 还 ｜ 在 ｜ 奋力 ｜ 延长 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:43ea30b2bc426b087dfcfdb714c2d32542f7d812c5ab62edb5f6c37e3a77a949",
+      "text": "四比一以后，安贝尔仍在用底线进攻寻找机会。德约想把比赛拖进决胜盘，就必须一直守住自己的发球局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.047,
+        "longest_deletion": 0,
+        "transcript": "4比1以后,安贝尔仍在用底线进攻寻找机会。德约想把比赛托进局上盘,就必须一直守住自己的发球局。"
+      },
+      "polyphones": [
+        {
+          "index": 43,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.42,
+        "cps": 5.11,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四比一 ｜ 以后 ｜ 安贝尔 ｜ 仍 ｜ 在 ｜ 用 ｜ 底线 ｜ 进攻 ｜ 寻找 ｜ 机会 ｜ 德约 ｜ 想 ｜ 把 ｜ 比赛 ｜ 拖 ｜ 进 ｜ 决胜 ｜ 盘 ｜ 就 ｜ 必须 ｜ 一直 ｜ 守 ｜ 住 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:5f8abd55ff134f7afc114eae909db306e2b78aedb31abb923cd8b6cda6682cc7",
+      "text": "北京时间十月二十八号晚上，巴塞尔男单首轮。拿外卡参赛的德约，对上安贝尔。首盘一比一，德约被逼到破发点。两人把角度越拉越开，德约的防线经受考验。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间10月28号晚上,巴塞尔南丹首轮。拿外卡参赛的德约对上安贝尔。手盘一比一,德约被逼倒破发点。两人把角度越拉越开,德约的防线经受考验。"
+      },
+      "polyphones": [
+        {
+          "index": 48,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 13.962,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月二十八号 ｜ 晚上 ｜ 巴塞尔 ｜ 男单 ｜ 首轮 ｜ 拿 ｜ 外卡 ｜ 参赛 ｜ 的 ｜ 德 ｜ 约 ｜ 对 ｜ 上 ｜ 安贝尔 ｜ 首盘 ｜ 一比一 ｜ 德 ｜ 约 ｜ 被 ｜ 逼 ｜ 到 ｜ 破发 ｜ 点 ｜ 两 ｜ 人 ｜ 把 ｜ 角度 ｜ 越 ｜ 拉 ｜ 越 ｜ 开 ｜ 德 ｜ 约 ｜ 的 ｜ 防线 ｜ 经受 ｜ 考验"
+      }
+    },
+    {
+      "id": "bundle:644490da0dcf1310c74760d75dad685abe25d18a581ad8faf0af68be0ec3f142",
+      "text": "二比二，机会来了。安贝尔的发球局打到占先，这是德约这一局的第二个破发点。这一分，能不能打破僵局？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2比2机会来了。安贝尔的发球局打到战线。这是德约这一局的第二个破发点。这一分能不能打破将局。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 33,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.88,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二比二 ｜ 机会 ｜ 来 ｜ 了 ｜ 安贝尔 ｜ 的 ｜ 发球 ｜ 局 ｜ 打 ｜ 到 ｜ 占先 ｜ 这是 ｜ 德 ｜ 约 ｜ 这 ｜ 一 ｜ 局 ｜ 的 ｜ 第二个 ｜ 破发 ｜ 点 ｜ 这 ｜ 一 ｜ 分 ｜ 能不能 ｜ 打破 ｜ 僵局"
+      }
+    },
+    {
+      "id": "bundle:73011257f498da235b73f38caa7e1c3cec0a664809187f2c97c3f326fdca3c67",
+      "text": "三比一，德约继续稳住发球。安贝尔还在冲击，领先远没有变成轻松。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "3比1,德约继续稳住发球。安贝尔还在冲击,领先远没有变成轻松。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.481,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 5.731,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三比一 ｜ 德 ｜ 约 ｜ 继续 ｜ 稳住 ｜ 发球 ｜ 安贝尔 ｜ 还 ｜ 在 ｜ 冲击 ｜ 领先 ｜ 远 ｜ 没有 ｜ 变成 ｜ 轻松"
+      }
+    },
+    {
+      "id": "bundle:8f1ac8f4c1e457caca12dcd49d0ad28a660a216ee88a07d0f4f1a94c18e70abf",
+      "text": "六个破发点，德约救下五个。下一轮面对斯特鲁夫，他能再守住关键分吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "六个破发点,德约就下五个。下一轮面对斯特鲁夫,他能再守住关键分吗?"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.38,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六个 ｜ 破发 ｜ 点 ｜ 德约 ｜ 救 ｜ 下 ｜ 五个 ｜ 下 ｜ 一 ｜ 轮 ｜ 面对 ｜ 斯特鲁夫 ｜ 他 ｜ 能 ｜ 再 ｜ 守 ｜ 住 ｜ 关键 ｜ 分 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:90e7338160a1d8bd8205f861fa1982bed9ec7fa8f1bfb43dd8d8a2a7a08e0bd1",
+      "text": "接发局三十比零，德约看到了机会。安贝尔这一局必须守住，否则领先的一次破发，就保不住了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "揭发局30比0,德约看到了机会。安贝尔这局必须守住,否则领先的一次破发就保不住了。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.63,
+        "cps": 4.98,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "接 ｜ 发 ｜ 局 ｜ 三十比零 ｜ 德约 ｜ 看到 ｜ 了 ｜ 机会 ｜ 安贝尔 ｜ 这 ｜ 一 ｜ 局 ｜ 必须 ｜ 守 ｜ 住 ｜ 否则 ｜ 领先 ｜ 的 ｜ 一次 ｜ 破发 ｜ 就 ｜ 保不住 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:a31286c9b20a4d3a43ade7c080689e6a7ba50e24f8470318183a3483aa475094",
+      "text": "二比四，德约又面对破发点。这一分再丢，首盘就更难追了。他必须守住这一关，才有机会继续追赶。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "2比4,德约又面对破发点。这一分再丢,手盘就更难追了。他必须守住这一关,才有机会继续追他。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.951,
+        "cps": 4.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二比四 ｜ 德 ｜ 约 ｜ 又 ｜ 面对 ｜ 破发 ｜ 点 ｜ 这 ｜ 一 ｜ 分 ｜ 再 ｜ 丢 ｜ 首盘 ｜ 就 ｜ 更 ｜ 难 ｜ 追 ｜ 了 ｜ 他 ｜ 必须 ｜ 守 ｜ 住 ｜ 这 ｜ 一 ｜ 关 ｜ 才有 ｜ 机会 ｜ 继续 ｜ 追赶"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:e3f3cd7ed4bc2756f5a9262bb03a3c27821c35cde6fbbe0ba8d56d85768d0eca",
+      "text": "次盘先救下两个破发点，再破发。德约二比零领先，接下来要做的，就是把优势守住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "刺盘先揪下两个破发点,再破发。德约2比0领先,接下来要做的就是把优势守住。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.875,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "次 ｜ 盘 ｜ 先 ｜ 救 ｜ 下 ｜ 两个 ｜ 破发 ｜ 点 ｜ 再 ｜ 破发 ｜ 德 ｜ 约 ｜ 二比零 ｜ 领先 ｜ 接下来 ｜ 要 ｜ 做 ｜ 的 ｜ 就 ｜ 是 ｜ 把 ｜ 优势 ｜ 守 ｜ 住"
+      }
+    },
+    {
+      "id": "bundle:ecde2ecab48b56d64373573fd21c32437312925812e693d257293a2f00d43525",
+      "text": "决胜盘开局，德约又救下破发点，追到一比一。安贝尔没有后退，两个人仍在底线僵持，谁也甩不开谁。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝声盘开局,德约又就下破发点,追倒一比一。安贝尔没有后退,两个人仍在底线僵持,谁也甩不开谁。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.609,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 开局 ｜ 德约 ｜ 又 ｜ 救 ｜ 下 ｜ 破发 ｜ 点 ｜ 追 ｜ 到 ｜ 一比一 ｜ 安贝尔 ｜ 没有 ｜ 后退 ｜ 两个 ｜ 人 ｜ 仍 ｜ 在 ｜ 底线 ｜ 僵持 ｜ 谁 ｜ 也 ｜ 甩 ｜ 不 ｜ 开 ｜ 谁"
+      }
+    }
+  ]
+}
