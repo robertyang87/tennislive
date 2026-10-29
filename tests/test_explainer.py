@@ -385,7 +385,7 @@ def test_every_story_has_a_renderable_script():
                 # Native motion uses typed, source-bound graphics instead of SVG strings.
                 from tennislive.video.transition_cards import validate_content
                 content = validate_content(segment.visual.get("content"))
-                assert any(k in content for k in ("events", "comparison", "comparisons", "photo", "scores"))
+                assert any(k in content for k in ("events", "comparison", "comparisons", "photo", "scores", "entry_process"))
             else:
                 assert segment.image or segment.diagram, (
                     f"{story.slug} 有既没图也没示意图的一屏"

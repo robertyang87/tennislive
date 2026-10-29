@@ -38,9 +38,32 @@ def validate_content(content: dict | None) -> dict:
         return {}
     if not isinstance(content, dict):
         raise ValueError("transition_card 必须是对象")
-    unknown = content.keys() - {"scores", "events", "comparison", "comparisons", "photo", "highlight", "summary"}
+    unknown = content.keys() - {"scores", "events", "comparison", "comparisons", "photo", "highlight", "summary", "entry_process"}
     if unknown:
         raise ValueError(f"transition_card 不支持的字段：{sorted(unknown)}")
+    if "entry_process" in content:
+        item = content["entry_process"]
+        scenes = {"identity", "deadline", "queue", "late_entry", "schedule", "motivation", "reserved", "locals", "insert", "unused", "seeding", "alcaraz", "summary"}
+        if (set(content) != {"entry_process"} or not isinstance(item, dict)
+                or item.keys() - {"scene", "source", "cues", "case"} or item.get("scene") not in scenes
+                or not isinstance(item.get("source"), str) or not item["source"].startswith("https://")):
+            raise ValueError("规则演示必须有已知scene及正式source")
+        case = item.get("case")
+        required = {"player", "seed", "event", "locals", "peer", "peer_seed", "peer_event", "deadline", "postponed_from", "postponed_to", "news_date", "goal", "draw_size"}
+        if (not isinstance(case, dict) or set(case) != required or case.get("draw_size") != 32
+                or type(case.get("seed")) is not int or not 1 <= case["seed"] <= 8
+                or type(case.get("peer_seed")) is not int or not 1 <= case["peer_seed"] <= 8
+                or not isinstance(case.get("locals"), list) or len(case["locals"]) != 3
+                or any(not isinstance(v, str) or not v.strip() for v in case["locals"])
+                or any(not isinstance(case[k], str) or not case[k].strip()
+                       for k in required - {"seed", "peer_seed", "draw_size", "locals"})):
+            raise ValueError("规则演示需要完整且已核实的32席案例参数")
+        cues = item.get("cues", [.15, .4, .65, .83])
+        if (not isinstance(cues, list) or len(cues) != 4
+                or any(type(c) not in (int, float) or not math.isfinite(c) for c in cues)
+                or not 0 < cues[0] < cues[1] < cues[2] < cues[3] < 1):
+            raise ValueError("规则演示时序必须递增且位于配音窗口内")
+        return json.loads(json.dumps(content, ensure_ascii=False))
     kinds = [k for k in ("scores", "events", "comparison", "comparisons", "photo") if k in content]
     if len(kinds) > 1:
         raise ValueError("一张转场卡只表达一种信息关系 请编辑拆卡")
@@ -113,6 +136,11 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
     if "comparison" in c and c["comparison"]["metric"] not in text:
         kicker = c["comparison"]["metric"]
     tc = _tc()
+    if "entry_process" in c:
+        return {"canvas_width": size[0], "kind": "entry_process", "lines": text.splitlines(),
+                "font_px": 62, "nodes": [], "content": c, "safe_bottom": size[1]-170,
+                "notes": [], "photo": None, "direction": "horizontal", "kicker": kicker,
+                "highlight": "", "groups": [], "proof_h": 850}
     if problem := tc.length_problem(text):
         raise ValueError(problem)
     lines = tc.semantic_lines(text)
@@ -188,6 +216,9 @@ def build(text: str, *, content=None, kicker="", size=(1080, 1440),
     """One HTML source for previews and motion, preserving the native brand rail."""
     tc = _tc()
     p = plan(text, content, size=size, kicker=kicker)
+    if p["kind"] == "entry_process":
+        from .transition_motion import entry_process
+        return entry_process(p["content"]["entry_process"], text=text, size=size, seconds=seconds, header=header)
     page = tc.build(text, kicker=p["kicker"], size=size, handle_bottom=handle_bottom, story_label=story_label)
     e = html.escape
     lines = []
@@ -259,16 +290,34 @@ em:after{{content:'';position:absolute;left:0;right:0;bottom:-6px;height:3px;bac
         if (not isinstance(header, dict) or set(header) != {"brand", "topic"}
                 or any(not isinstance(v, str) or not v.strip() for v in header.values())):
             raise ValueError("解说台头需要完整品牌与主题")
-        page += ('<div class="explainer-head" style="position:absolute;z-index:20;left:70px;right:70px;top:43px;'
-                 'font-family:TL Sans SC,Noto Sans CJK SC,sans-serif;color:#edf1f5;line-height:1.2">'
-                 '<div style="font-size:38px;font-weight:700">' + e(header["brand"]) + '</div>'
-                 '<span class="topic" style="display:block;white-space:nowrap;font-size:27px;'
-                 'color:#c1ccd6;margin-top:8px">' + e(header["topic"]) + '</span></div>')
+        from .explainer import _data_uri
+        from .outro_page import ICON
+        if not ICON.is_file():
+            raise ValueError("解说台头缺少正式账号logo")
+        page += ('<div class="explainer-head" style="position:absolute;z-index:20;left:70px;right:70px;top:44px;'
+                 'display:flex;align-items:center;gap:14px;color:#edf1f5;line-height:1.2">'
+                 '<img class="brand-icon" style="width:52px;height:52px;object-fit:contain" src="'+_data_uri(ICON)+'">'
+                 '<div><div class="brand" style="font-family:TL Display SC;font-size:38px;font-weight:400;letter-spacing:1px">' + e(header["brand"]) + '</div>'
+                 '<span class="topic" style="display:block;white-space:nowrap;font-family:TL Sans SC;font-size:27px;font-weight:700;'
+                 'color:#c1ccd6;margin-top:2px">' + e(header["topic"]) + '</span></div></div>')
     from .transition_motion import enhance
     return enhance(page + css + photo + proof + clock, p, size=size, seconds=seconds)
 
 
 def check_page(page, p: dict) -> dict:
+    if p["kind"] == "entry_process":
+        proof = page.evaluate("""() => ({slots:document.querySelectorAll('.draw-slot').length,
+            brand: getComputedStyle(document.querySelector('.brand')).fontFamily,
+            heading: getComputedStyle(document.querySelector('.process-heading')).fontFamily,
+            logo: document.querySelector('.brand-icon').naturalWidth,
+            notes: document.querySelector('.process-note').scrollWidth <= 940,
+            labels: [...document.querySelectorAll('.process-label')].every(e => {
+                const r=e.getBoundingClientRect();return r.left>=20 && r.right<=1060 && r.top>=340 && r.bottom<=1210;})})""")
+        if (proof['slots'] not in (0,32) or not proof['logo'] or not proof['notes']
+                or 'TL Display SC' not in proof['brand'] or 'TL Display SC' not in proof['heading']
+                or not proof['labels']):
+            raise ValueError('规则演示的名额 字体 logo 或安全区不合格：'+str(proof))
+        return proof
     evidence = page.evaluate('''()=>{
       const rect=el=>el.getBoundingClientRect().toJSON();
       return {boxes:[...document.querySelectorAll('.transition-line,.node-label,.node-value,.metric-title,.chart-label,.chart-value,.result-label,.result-value,.summary-label,.summary-value')].map(el=>({text:el.innerText,width:el.clientWidth,scroll:el.scrollWidth,rect:rect(el)})),
@@ -300,7 +349,8 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
     p = plan(text, content, size=size, kicker=kicker)
     document = build(text, content=content, kicker=kicker, size=size,
                      handle_bottom=handle_bottom, story_label=story_label, seconds=seconds, header=header)
-    motion_window = min(6.0, max(.1, seconds - .3))
+    motion_window = (max(.1, seconds - .16) if p["kind"] == "entry_process"
+                     else min(6.0, max(.1, seconds - .3)))
     engine_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     key = hashlib.sha256((str(VERSION)+engine_sha+document+json.dumps([seconds,str(fps),p['content']],ensure_ascii=False)).encode()).hexdigest()
     receipt = out.with_suffix('.transition-render.json')
@@ -322,6 +372,7 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
                 page = browser.new_page(viewport={'width':w,'height':h},device_scale_factor=1)
                 page.goto(source.as_uri());page.evaluate('document.fonts.ready')
                 page.wait_for_function('window.transitionMotion || window.transitionMotionError')
+                page.evaluate('document.fonts.ready')
                 if issue := page.evaluate('window.transitionMotionError || null'):
                     raise ValueError(issue)
                 page.wait_for_function('Array.from(document.images).every(i=>i.complete&&i.naturalWidth>0)')

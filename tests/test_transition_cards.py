@@ -119,3 +119,56 @@ def test_explainer_motion_keeps_the_column_header_and_topic():
     assert 'class="explainer-head"' in page
     assert "网球时差 · 网球有故事" in page
     assert 'class="topic"' in page and "报名与外卡" in page
+
+
+def _entry_content(scene='reserved'):
+    from tennislive.video.explainer import explainer_script
+    from tennislive.render.tournament_story import find_story_by_slug
+    segments = explainer_script(find_story_by_slug('djokovic-basel-wildcard-animation-2026'))
+    return next(s.visual['content'] for s in segments[1:]
+                if s.visual['content']['entry_process']['scene'] == scene)
+
+
+@pytest.mark.parametrize('change', ['slots', 'source', 'timing', 'case'])
+def test_rule_process_rejects_unbound_or_false_slot_geometry(change):
+    content = json.loads(json.dumps(_entry_content()))
+    item = content['entry_process']
+    if change == 'slots':
+        item['case']['draw_size'] = 33
+    elif change == 'source':
+        item.pop('source')
+    elif change == 'timing':
+        item['cues'] = [.8, .2, .4, .6]
+    else:
+        item['case']['locals'] = ['one', 'two']
+    with pytest.raises(ValueError):
+        cards.validate_content(content)
+
+
+def test_rule_process_moves_after_six_seconds_and_keeps_fixed_draw(tmp_path):
+    from playwright.sync_api import sync_playwright
+    from tennislive.chromium import launch_chromium
+    content = _entry_content()
+    with sync_playwright() as pw:
+        browser = launch_chromium(pw)
+        page = browser.new_page(viewport={'width':1080,'height':1440})
+        page.set_content(cards.build('外卡进入预留名额', content=content, seconds=20,
+            header={'brand':'网球时差 · 网球有故事','topic':'报名与外卡'}))
+        page.evaluate('document.fonts.ready')
+        page.wait_for_function('window.transitionMotion || window.transitionMotionError')
+        page.evaluate('document.fonts.ready')
+        assert page.evaluate('window.transitionMotionError || null') is None
+        assert page.evaluate('window.transitionMotion.library') == 'Renoise vibe-knowledge'
+        evidence, pictures = [], []
+        for t in (7, 13.5, 18, 7):
+            page.evaluate('(t)=>window.setTransitionTime(t)',t)
+            evidence.append(page.eval_on_selector('[data-player="德约"]', 'e=>({transform:e.getAttribute("transform"),r:e.getBoundingClientRect().toJSON()})'))
+            pictures.append(page.screenshot())
+            assert page.locator('.draw-slot').count() == 32
+            assert page.locator('.brand-icon').evaluate('e=>e.naturalWidth') > 0
+            cards.check_page(page, cards.plan('外卡进入预留名额',content))
+        assert evidence[0] != evidence[1] != evidence[2]
+        assert evidence[0]['transform'] == evidence[3]['transform']
+        assert pictures[0] == pictures[3], 'Seeking back must reproduce identical rendered pixels'
+        assert page.locator('.brand').evaluate('e=>getComputedStyle(e).fontFamily') == '"TL Display SC"'
+        browser.close()

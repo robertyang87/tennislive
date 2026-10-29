@@ -12349,6 +12349,7 @@ def render_explainer_slides(
                     if seg.visual and seg.visual.get("layout") == "transition":
                         from .transition_cards import plan as transition_plan, check_page
                         page.wait_for_function("window.transitionMotion || window.transitionMotionError")
+                        page.evaluate("document.fonts.ready")
                         if issue := page.evaluate("window.transitionMotionError || null"):
                             raise ValueError(issue)
                         page.evaluate("window.setTransitionTime(window.transitionMotion.horizon)")
