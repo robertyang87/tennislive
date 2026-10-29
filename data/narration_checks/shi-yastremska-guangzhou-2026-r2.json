@@ -1,6 +1,6 @@
 {
   "slug": "shi-yastremska-guangzhou-2026-r2",
-  "checked_at": "2026-10-29T00:46:21Z",
+  "checked_at": "2026-10-29T01:01:03Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -60,24 +60,20 @@
       "spoken": 4.344,
       "picture": 5.3
     },
-    "3544cd84aa1ef908": {
+    "6b70b3ec0c39db9f": {
       "segment": 22,
-      "spoken": 6.384,
+      "spoken": 6.456,
       "picture": 10.0
     }
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "c7c3924312aac856ceac70c3c22468629981f8b9e0da9dbb71704546598c36a9",
+    "bundle_sha256": "1ddb30f1626d4d4785b8077f97f56856b675f902563c0772a805452ff90fa9d1",
     "request_count": 12,
-    "mode": "strict_import",
-    "strict_reused": true,
+    "mode": "capture_export",
+    "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true,
-    "transport": "repository",
-    "repository_commit": "273171ec0ff4c8d020588b751e58970e662440fb",
-    "file_name": "tts_bundle.zip",
-    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/273171ec0ff4c8d020588b751e58970e662440fb/assets/tts-bundles/shi-yastremska-guangzhou-2026-r2/c7c3924312aac856ceac70c3c22468629981f8b9e0da9dbb71704546598c36a9/tts_bundle.zip"
+    "audio_decoding_verified": true
   }
 }
