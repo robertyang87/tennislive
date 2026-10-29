@@ -1,0 +1,158 @@
+{
+  "scoreboard_qc_sha256": "ecfdefb544ac6043c6b27e350e08e265240ccf33c3eeb341d6ae3769ce5cc2fc",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "6744f3eb72a93005fb4ccf24833986be29cbbfce089a20b3d4c1cc00a0d45fc8",
+    "request_count": 12,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-djokovic-humbert-basel-2026-r1-6744f3eb72a93005",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-djokovic-humbert-basel-2026-r1-6744f3eb72a93005/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40800199617"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 246.42,
+  "topbar": {
+    "line1": "2026 ATP500 巴塞尔 首轮",
+    "line2": "德约科维奇 4-6 6-3 6-4 安贝尔",
+    "start": 1.2,
+    "end": 247.62
+  },
+  "film_seconds": 252.2,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 14.568,
+    "3": 7.992,
+    "4": 10.176,
+    "8": 7.752,
+    "9": 6.624,
+    "11": 7.944,
+    "13": 9.456,
+    "14": 9.096,
+    "15": 6.504,
+    "18": 6.576,
+    "19": 5.04
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 2,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 4,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 10,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 12,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 14,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 15,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 16,
+          "named": "安贝尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 14,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "e08846eed19d476ed071148ea9d1aee002ee19b1edb7ab9c519dc0806b28e3e6",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "djokovic-humbert-basel-2026-r1",
+    "received_at": "2026-10-29T01:24:13Z",
+    "artifact_ready_at": "2026-10-29T01:31:07Z",
+    "elapsed_seconds": 414.185,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "ae6094020d49b306898f9898a8f6da65c08c93c82fff5203b41c3b50e4f86aac",
+    "spec_sha256": "1af93e037e9c381b161d8b91540fee86b4dc1525b380215a603a00b2e3ed9198",
+    "run_id": "40800199617",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-29T01:26:35Z",
+        "run_id": "40800199617"
+      }
+    ],
+    "render_seconds": 272.185,
+    "pre_render_seconds": 142.0
+  },
+  "film_sha256": "ae6094020d49b306898f9898a8f6da65c08c93c82fff5203b41c3b50e4f86aac",
+  "film_bytes": 140238903,
+  "qc_attestation_sha256": "d5d3ae6bf8294a94724f5dc9b0889930129b19cdb643cecca3f685ce96f3c0f7",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-29T01:26:35Z",
+      "run_id": "40800199617"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-29T01:31:11Z",
+      "run_id": "40800199617"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-djokovic-humbert-basel-2026-r1/djokovic-humbert-basel-2026-r1.mp4",
+  "video_bytes": 140238903
+}
