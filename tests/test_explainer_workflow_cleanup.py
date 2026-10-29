@@ -29,5 +29,7 @@ def test_片尾母版转码不许进git_清理步骤要删它():
 
 
 def test_native_motion_intermediates_are_cleaned_before_commit():
-    text = (ROOT / ".github/workflows/explainer.yml").read_text()
+    import yaml
+    workflow = yaml.safe_load((ROOT / ".github/workflows/explainer.yml").read_text())
+    text = "\n".join(step.get("run", "") for step in workflow["jobs"]["explainer"]["steps"])
     assert text.index('rm -f "$OUT_DIR"/slide_*.transition.mp4') < text.index('git add "$OUTDIR"')
