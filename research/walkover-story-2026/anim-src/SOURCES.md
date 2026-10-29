@@ -65,3 +65,26 @@ run 40935837484，success）：
 timeline-ext1/2/3 就此弃用（本地保留留痕，不存档）；上节「暂缓」结论
 由本节 supersede。spec seg15 据此拆为三段换源（旁白逐字未改、仅按
 句组连续切分，拼接与原文 diff 逐字一致），speed 拟合 0.99/1.0/1.0。
+
+## 动画 v2 原速版（2026-10-30 第四轮）
+
+render run 40943446442 死在 `reel_source_audio_policy`（2026-10-13 新规：
+正常制作不调整原声，任何段 speed≠1 即红）。本片七段动画原靠 speed
+拟合旁白（sun 0.64／led 0.43／not ≈0.59／tlb 0.93／hor 0.95／tla·tlc 0.99）。
+处置不动旁白与事实：六段按旁白真 TTS 实测时长（run 40939316191）以
+1.0 原速重产——拉开拍点/加密度，不慢放、不冻结凑时长，数据逐项与 v1
+一致，各段密帧自检报告在制作目录 anim/anim-v2-*-report.md；tla 旁白
+35.14s＜源 38.0s，只摘 speed 不换源。照同一路线存档（工作流
+import-walkover-v2-sources，run 40948524018，success）：
+
+| 本地 v2 | 存档 id（tag `source-<id>`） | 时长 | 旁白实测 | 存档文件 sha256 |
+|---|---|---|---|---|
+| sun-process-v2.mp4（孙心然进程） | wo26sunpr02 | 21.5s | 19.49s | 002451b9591171e29b78e895e025709349c44e5f4d5bdac238d361868d0b86d8 |
+| horse-v2.mp4（赛马起源） | wo26horse03 | 37.0s | 34.92s | 4d5270f4e32e43b7b2108ff6c7f9325e149f58685aebf7e5438edeede8a5bcb4 |
+| notation-v2.mp4（记号/一分之线/连胜断片） | wo26notat02 | 29.0s | 26.95s | d997e918e7b59dcd58938884cc9102e41d91f3dcce0334c6b13b20b98f18282d |
+| ledger-v2.mp4（积分账本） | wo26ledger2 | 27.0s | 24.94s | eee4327350245d41ed7d025fab2d4abfd19997d8dcb7f3cc0bc57c8d92446aa2 |
+| timeline-b-v2.mp4（时间轴 b） | wo26tmlnb02 | 45.5s | 43.25s | 4b1cb51298f138d17b3f7baa666069b364d7a2c9f6cdd960e4a73b0a024f13a0 |
+| timeline-c-v2.mp4（时间轴 c） | wo26tmlnc02 | 43.5s | 41.21s | 1fd27d0b28eddd42261659b77c96b8e41562fbd06588179903a333d1f47236f7 |
+
+视频流与本地 v2 逐字节一致（流哈希双向核验），只补静音 AAC 轨。
+spec 同轮换源＋摘除全部 speed（见 spec `_geometry_why` 追记）。
