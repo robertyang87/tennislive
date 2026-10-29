@@ -15,3 +15,5 @@ W/UE为Flashscore Match原行19/39及24/39，双方完整证据与列序已入sp
 剩余：原生narration快照、真实voice auto suite、正式render、成片/QC/字幕抽帧、当前HEAD选择范围CI、合并、PushPlus及pushed.json；没有这些不称成片完成或发布。
 
 原生narration成功40799342957，最终快照6744f3eb72a93005fb4ccf24833986be29cbbfce089a20b3d4c1cc00a0d45fc8，12请求已公开发布；第一次render40799642226在发布文案前检因末屏任意照片被拦，没有进入编码。已修为本场完整赛点短回放，原生production_preflight通过，当前请求可严格复用同一快照。
+
+最终文字已统一斯特鲁夫，并改掉比赛打完前提前宣布得分的旁白。最终语音快照9861fa0f2c7a98df，narration run40802705971成功。第二次正式编码run40802914814完成252.2秒，但被首版旧库存拒绝；新影片未发布。旧库存/放行/清单/凭证与旧spec、native输入存档引用已按原字节保存到prior-render/ae6094020d49b306，SHA见archive-manifest。清除当前输出的5份旧凭据后，重新跑完整原生产线，不沿用首版审批，不关闭任何质检。
