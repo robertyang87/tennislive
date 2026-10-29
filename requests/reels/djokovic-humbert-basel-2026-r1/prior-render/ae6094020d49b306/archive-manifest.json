@@ -1,0 +1,27 @@
+{
+  "reason": "First unpublished render used older speech inputs; changing wording correctly made the immutable inventory differ. Preserve old actual records before fresh render; never alter their pass/fail conclusions.",
+  "first_success_run": 40800199617,
+  "first_film_sha256": "ae6094020d49b306898f9898a8f6da65c08c93c82fff5203b41c3b50e4f86aac",
+  "first_spec_commit": "afbba4887e9847e5bea1b78755168dfb7e3e93fd",
+  "blocked_retry_run": 40802914814,
+  "failed_retry_artifact": 12866663594,
+  "current_final_frozen_bundle_sha256": "9861fa0f2c7a98dfbb3101972c03b609514d3867ca78a476ce252fa823a9025b",
+  "archived_sha256": {
+    "voice_quality_inventory.json": "3ed51fdb8e2923c89d4219ba3a7bb4878ba17e6d8a2a851a8bb18531d1b493ad",
+    "voice_quality_review.json": "3b622e6c950925823f1d73a008baa866a9ee1400eaa91305aa0e4872101af0d5",
+    "voice_auto_review.json": "79b4d0b8612316c9884733aec4a7f075700b5af3c645c90fa0ba5aeee124287d",
+    "render_inputs.json": "e08846eed19d476ed071148ea9d1aee002ee19b1edb7ab9c519dc0806b28e3e6",
+    "qc_attestation.json": "d5d3ae6bf8294a94724f5dc9b0889930129b19cdb643cecca3f685ce96f3c0f7",
+    "render.json": "c2e3ff1a6abdabbc5e9ff741e1ba95025088f3bb31fb86385c672efd4f940611",
+    "native_input_archive.json": "bc2d793f640bf6abbfe42607fbb7ecb31b8c10da9056e78269984c1d24495ba0",
+    "spec.json": "1af93e037e9c381b161d8b91540fee86b4dc1525b380215a603a00b2e3ed9198"
+  },
+  "cleared_from_current_output": [
+    "voice_quality_inventory.json",
+    "voice_quality_review.json",
+    "voice_auto_review.json",
+    "render_inputs.json",
+    "qc_attestation.json"
+  ],
+  "replacement_policy": "Native render must recapture actual frozen speech, seal a new input manifest, pass native video/ASS/source-board QC, and pass the actual-byte five-item voice suite before publication."
+}

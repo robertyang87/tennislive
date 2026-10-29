@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-MwcZYYG4hvE/MwcZYYG4hvE.mp4",
+  "source_sha256": "83bd85e40b84f88ef603d25e298fd89c924011db66efd325a39479c7ab96b1ce",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex: two independent English ASR outputs cross-checked against source captions and time-coded frames",
+  "actual_listening_performed": false,
+  "reviewed_at": "2026-10-29T01:13:36.364731+00:00",
+  "status": "complete",
+  "reviewed_from": 126.56,
+  "reviewed_to": 138.38,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_files": {
+    "small.en.json": "15efb825f0f5e630c201951809754475c44d1b626d55dc7471c9ba3c351e7d71",
+    "youtube-captions.txt": "3655a2e6cbcb6fc8b007fe63c39e1b2ffd91d7a3797b8f535970962d1d6cb93f",
+    "medium.en.json": "9b4eb02358a21fb39a836c3c29198b5ec7edcc869b45e7414c42d451371a0f41"
+  },
+  "review_notes": "引用采用双ASR共同文本；人名地名以官方签表和片内标识纠正。不是人工听审，不声称重音自然度人工验收。",
+  "no_foreground_english_reason": "本窗口在双ASR与YouTube字幕中无一致的可辨识英文解说；主要为击球、现场声，中文旁白安排在已确认英文窗口之间。"
+}

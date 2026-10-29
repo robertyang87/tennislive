@@ -1,0 +1,78 @@
+{
+  "slug": "djokovic-humbert-basel-2026-r1",
+  "checked_at": "2026-10-29T02:53:27Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "0f49227c5ef9eb44": {
+      "segment": 2,
+      "spoken": 14.832,
+      "picture": 23.7
+    },
+    "45028c8a8849697e": {
+      "segment": 4,
+      "spoken": 8.496,
+      "picture": 16.42
+    },
+    "8f09cc26a43d92ea": {
+      "segment": 5,
+      "spoken": 9.84,
+      "picture": 14.24
+    },
+    "01fb73a33930e77e": {
+      "segment": 9,
+      "spoken": 7.752,
+      "picture": 12.48
+    },
+    "5b2662ae3089644f": {
+      "segment": 10,
+      "spoken": 6.624,
+      "picture": 8.64
+    },
+    "d243e38fa57076ac": {
+      "segment": 12,
+      "spoken": 9.288,
+      "picture": 11.82
+    },
+    "fc2cbe2861bcab74": {
+      "segment": 14,
+      "spoken": 9.456,
+      "picture": 11.38
+    },
+    "f867886d4e7d93db": {
+      "segment": 15,
+      "spoken": 9.744,
+      "picture": 14.38
+    },
+    "bb7ac6ed918d39cf": {
+      "segment": 16,
+      "spoken": 7.008,
+      "picture": 8.5
+    },
+    "a1ee9023430876d8": {
+      "segment": 19,
+      "spoken": 7.248,
+      "picture": 8.56
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "ad646c4f108590b1c08062c5b2e2c287b34372d15307df297a0708c6314c430d",
+    "request_count": 11,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-djokovic-humbert-basel-2026-r1-ad646c4f108590b1",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-djokovic-humbert-basel-2026-r1-ad646c4f108590b1/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40808855298"
+  }
+}
