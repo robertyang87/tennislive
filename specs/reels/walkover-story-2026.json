@@ -103,13 +103,13 @@
     "nad": "https://github.com/robertyang87/tennislive/releases/download/source-9vGOrRkqAK4/9vGOrRkqAK4.mp4",
     "fin": "https://github.com/robertyang87/tennislive/releases/download/source-z4ONBmQSdmQ/z4ONBmQSdmQ.mp4",
     "fed": "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4",
-    "hor": "https://github.com/robertyang87/tennislive/releases/download/source-wo26horse02/wo26horse02.mp4",
-    "not": "https://github.com/robertyang87/tennislive/releases/download/source-wo26notat01/wo26notat01.mp4",
-    "led": "https://github.com/robertyang87/tennislive/releases/download/source-wo26ledger1/wo26ledger1.mp4",
-    "sun": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunpr01/wo26sunpr01.mp4",
+    "hor": "https://github.com/robertyang87/tennislive/releases/download/source-wo26horse03/wo26horse03.mp4",
+    "not": "https://github.com/robertyang87/tennislive/releases/download/source-wo26notat02/wo26notat02.mp4",
+    "led": "https://github.com/robertyang87/tennislive/releases/download/source-wo26ledger2/wo26ledger2.mp4",
+    "sun": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunpr02/wo26sunpr02.mp4",
     "tla": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlna01/wo26tmlna01.mp4",
-    "tlb": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnb01/wo26tmlnb01.mp4",
-    "tlc": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnc01/wo26tmlnc01.mp4"
+    "tlb": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnb02/wo26tmlnb02.mp4",
+    "tlc": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnc02/wo26tmlnc02.mp4"
   },
   "source_quality_exceptions": {
     "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4": {
@@ -193,8 +193,7 @@
     {
       "source": "sun",
       "start": 0,
-      "end": 13.0,
-      "speed": 0.64,
+      "end": 21.5,
       "cx": 0.5,
       "track": false,
       "narration": "隔壁场上，16 岁的孙心然这一场打了 2 小时 41 分钟。第二盘 4 比 5 落后，她叫了医疗暂停，包扎膝盖；到了决胜盘，绷带拆了硬撑，2 比 5 落后、对方手握赛点——她一分一分往回爬，抢七 7 比 3 拿下。终场哨响，她哭了。",
@@ -202,14 +201,13 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制进程动画（wo26sunpr01）0–13.0s 整条入窗：无比赛回合可切，窗口即全片；speed 0.64 把成片段长拉到 20.3s，容纳旁白（narration 真 TTS 实测 19.49s，余量 +0.8s；原 speed 0.65 实测余量 +0.51s，微调留厚）。",
+      "point_end_ok": "自制进程动画 v2（wo26sunpr02）0–21.5s 整条入窗：无比赛回合可切，窗口即全片；按旁白真 TTS 实测 19.49s 以 1.0 原速重产（余量 +2.0s）——2026-10-30 speed 政策（正常制作不调整原声）后动画不再变速拟合，旧版 wo26sunpr01＋speed 0.64 退役。",
       "_why": "动画路线甲落位（所有者 2026-10-30 01:23 批准）：本地代码绘制生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）存档为 source-wo26sunpr01，视频流与本地版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落 data/source_asr/wo26sunpr01/。旁白逐字取自原 _animation_blocker.missing_segments 的「孙心然进程动画（备用文案版）」条（记录已消解为 _animation_route_a）。"
     },
     {
       "source": "hor",
       "start": 0,
-      "end": 34.0,
-      "speed": 0.95,
+      "end": 37.0,
       "cx": 0.5,
       "track": false,
       "narration": "不战而胜，英文就是 walk over——走着赢。可一场没开打的比赛，为什么偏偏要用一个「走」字？因为它根本不是网球发明的，是从赛马借来的。两百年前的英国赛马，对手如果全部退赛，只剩一匹马，按规矩它也不能直接领奖，必须自己慢慢走完整个赛道，才算赢。18 世纪那匹传奇赛马 Eclipse 强到没人敢跟它跑，18 场胜利里差不多一半，是这么「走」出来的。后来这个词进了网球：对手来不了，你就等于独自走完了这场比赛。",
@@ -217,14 +215,13 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制赛马动画延展版（wo26horse02）0–34.0s 整条入窗：无比赛回合可切；speed 0.95 近自然速拟合，成片有效 35.8s ≥ narration 真 TTS 实测 35.14s（余量 +0.7s；原 speed 0.96 实测余量仅 +0.28s，微调留厚）。",
+      "point_end_ok": "自制赛马动画 v2（wo26horse03）0–37.0s 整条入窗：无比赛回合可切，窗口即全片；按旁白真 TTS 实测 34.92s 以 1.0 原速重产（余量 +2.1s），旧版 wo26horse02＋speed 0.95 退役（speed 政策）。",
       "_why": "动画路线甲落位（所有者 2026-10-30 01:23 批准）：首轮本地生产版存档为 source-wo26horse01（11.0s，speed 0.4 拟合 27.5s）。第二轮换源（同日）：narration dry-run 离线估长 34.78s 超首轮拟合上限，本地延展重渲 horse-ext（34.0s，加拍「独自领奖」＋排字/点阵停留，走马步态同构，自检 anim-ext-report.md）经一次性工作流 import-walkover-anim-ext（run 40931196836）存档为 source-wo26horse02，视频流与本地版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落 data/source_asr/wo26horse02/（run 40931285788，source_sha256 与存档逐条一致）。旁白逐字未改。"
     },
     {
       "source": "not",
       "start": 0,
-      "end": 17.0,
-      "speed": 0.6,
+      "end": 29.0,
       "cx": 0.5,
       "track": false,
       "narration": "但 walkover 有一条硬线：必须是开打之前。只要打了哪怕一分再退，那叫退赛，要记比分、算胜负。刘婧文这种一分没打的，不算一场胜利，不进胜负记录，也不进两个人的交手记录。连胜纪录还会在这里断片：你正处在 19 连胜，中间收到一个 walkover，再赢一场，官方连胜是 20，不是 21——因为中间那一场，根本不存在。",
@@ -232,14 +229,13 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制记号动画（wo26notat01）0–17.0s 整条入窗：无比赛回合可切；speed 0.6 把成片段长拉到 28.3s，容纳旁白（离线估长 ≈24.8s）。",
+      "point_end_ok": "自制记号动画 v2（wo26notat02）0–29.0s 整条入窗：无比赛回合可切，窗口即全片；按旁白真 TTS 实测 26.95s 以 1.0 原速重产（余量 +2.1s），旧版 wo26notat01＋speed 0.6 退役（speed 政策）。",
       "_why": "动画路线甲落位（所有者 2026-10-30 01:23 批准）：本地代码绘制生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）存档为 source-wo26notat01，视频流与本地版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落 data/source_asr/wo26notat01/。旁白逐字取自原 _animation_blocker.missing_segments 的「一分之线＋连胜断片动画」条（记录已消解为 _animation_route_a）。"
     },
     {
       "source": "led",
       "start": 0,
-      "end": 11.0,
-      "speed": 0.43,
+      "end": 27.0,
       "cx": 0.5,
       "track": false,
       "narration": "那积分和奖金呢？这笔账分三层。WTA 规则书里写得明明白白：首轮白捡的，只按上一轮给分；打过、赢过之后再收到的，按所达轮次给分。刘婧文首轮赢了球，所以她四分之一决赛的积分，照拿。她真正多赚的不是积分，是那一整天的休息，和对手身上那 2 小时 41 分钟的消耗。",
@@ -247,7 +243,7 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制账本动画（wo26ledger1）0–11.0s 整条入窗：无比赛回合可切；speed 0.43 把成片段长拉到 25.6s，容纳旁白（narration 真 TTS 实测 24.94s，余量 +0.6s；原 speed 0.45 有效 24.4s、实测超出 0.49s，故降速）。",
+      "point_end_ok": "自制账本动画 v2（wo26ledger2）0–27.0s 整条入窗：无比赛回合可切，窗口即全片；按旁白真 TTS 实测 24.94s 以 1.0 原速重产（余量 +2.1s），旧版 wo26ledger1＋speed 0.43 退役（speed 政策）。",
       "_why": "动画路线甲落位（所有者 2026-10-30 01:23 批准）：本地代码绘制生产版经一次性工作流 import-walkover-anim-sources（run 40922175859）存档为 source-wo26ledger1，视频流与本地版逐字节一致、仅补静音 AAC 轨；双档 ASR 已落 data/source_asr/wo26ledger1/。旁白逐字取自原 _animation_blocker.missing_segments 的「积分账本动画」条（记录已消解为 _animation_route_a）。"
     },
     {
@@ -470,7 +466,6 @@
       "source": "tla",
       "start": 0,
       "end": 38.0,
-      "speed": 0.99,
       "cx": 0.5,
       "track": false,
       "narration": "好玩的在后面：收到 walkover 的人，下一场到底占没占到便宜？先看一对同站对照。2012 年迈阿密，穆雷一站收到两次 walkover 进决赛，还是输了，他赛后自己说，接发不在状态，开场需要几局找节奏——决赛第一盘他 1 比 6 就交了学费。两年后同一站，德约也收到两次 walkover，决赛 6 比 3、6 比 3 横扫纳达尔夺冠。有意思的是，纳达尔那届半决赛也收到一个 walkover，两个受益者在决赛对撞，一个捧杯，一个亚军。",
@@ -478,14 +473,13 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制时间轴动画（wo26tmlna01）0–38.0s 整条入窗：无比赛回合可切；叙事版 a 段（引子＋迈阿密同站对照），speed 0.99、成片有效 38.4s ≥ narration 真 TTS 实测 35.16s（余量 +3.2s）。",
+      "point_end_ok": "自制时间轴动画（wo26tmlna01）0–38.0s 整条入窗：无比赛回合可切；叙事版 a 段（引子＋迈阿密同站对照），旁白真 TTS 实测 35.14s ≤ 源长 38.0s，1.0 原速（余量 +2.9s；原 speed 0.99 已按 speed 政策摘除）。",
       "_why": "动画路线甲第三轮落位（主线裁定：旁白逐字不改、动画按旁白叙事顺序重渲）：原 seg15（tml，wo26timeln1 18.0s、speed 0.4 拉满 45.0s）装不下 697 字旁白（narration dry-run 估长 114.17s），拆三段换源。本段钉叙事版 a（source-wo26tmlna01，38.0s，存档 run 40935837484／ASR run 40936240753），旁白为原 seg15 句0–3（引子＋迈阿密同站对照，221 字），三段拼接与原旁白逐字一致（本地 diff 已核）。视频流与本地 timeline-a.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlna01/。"
     },
     {
       "source": "tlb",
       "start": 0,
-      "end": 41.0,
-      "speed": 0.93,
+      "end": 45.5,
       "cx": 0.5,
       "track": false,
       "narration": "再看德约自己。2024 年温网，四分之一决赛德米纳尔退赛，他省力进四强，半决赛直落三盘赢了；可决赛呢？2 比 6、2 比 6、6 比 7，被阿尔卡拉斯打得没有还手之力。多休的那一天，没换来冠军。克耶高斯走进决赛那次，6 比 4 先拿一盘，最后连丢三盘。格拉诺列斯 2016 年在法网躲开了纳达尔，下一轮就被蒂姆送走，只多留了一轮。佩内塔 2013 年温网收到阿扎伦卡的退赛礼，下一场先吞一个 0 比 6，再逆转，打出了自己五年来在温网的最好成绩——白捡的便宜，她兑现得最实在。",
@@ -493,14 +487,13 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制时间轴动画（wo26tmlnb01）0–41.0s 整条入窗：无比赛回合可切；叙事版 b 段（德约 2024＋克耶高斯＋格拉诺列斯＋佩内塔），speed 0.93、成片有效 44.1s ≥ narration 真 TTS 实测 43.46s（余量 +0.6s；原 speed 1.0 实测超出 2.46s，降速在动画预留的 ±10% playbackRate 吸收区内）。",
+      "point_end_ok": "自制时间轴动画 v2（wo26tmlnb02）0–45.5s 整条入窗：无比赛回合可切；叙事版 b 段（德约 2024＋克耶高斯＋格拉诺列斯＋佩内塔）按旁白真 TTS 实测 43.25s 以 1.0 原速重产（余量 +2.3s），旧版 wo26tmlnb01＋speed 0.93 退役（speed 政策）。",
       "_why": "同上拆段第二段：钉叙事版 b（source-wo26tmlnb01，41.0s，存档 run 40935837484／ASR run 40936245241），旁白为原 seg15 句4–9（德约 2024→克耶高斯→格拉诺列斯→佩内塔，238 字），拼接与原旁白逐字一致。视频流与本地 timeline-b.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlnb01/。"
     },
     {
       "source": "tlc",
       "start": 0,
-      "end": 41.0,
-      "speed": 0.99,
+      "end": 43.5,
       "cx": 0.5,
       "track": false,
       "narration": "而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于占便宜，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
@@ -508,7 +501,7 @@
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制时间轴动画（wo26tmlnc01）0–41.0s 整条入窗：无比赛回合可切；叙事版 c 段（费德勒反转＋收束定格），speed 0.99、成片有效 41.4s ≥ narration 真 TTS 实测 40.80s（余量 +0.6s；原 speed 1.0 实测余量仅 +0.20s，微调留厚）。",
+      "point_end_ok": "自制时间轴动画 v2（wo26tmlnc02）0–43.5s 整条入窗：无比赛回合可切；叙事版 c 段（费德勒反转＋收束定格）按旁白真 TTS 实测 41.21s 以 1.0 原速重产（余量 +2.3s），旧版 wo26tmlnc01＋speed 0.99 退役（speed 政策）。",
       "_why": "同上拆段第三段：钉叙事版 c（source-wo26tmlnc01，41.0s，存档 run 40935837484／ASR run 40936248613），旁白为原 seg15 句10–15（费德勒反转＋收束四句，238 字），拼接与原旁白逐字一致。视频流与本地 timeline-c.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlnc01/。"
     },
     {
@@ -552,5 +545,5 @@
   "archival": {
     "fed": "2014 年终总决赛费德勒场内宣布退赛的转播翻录，现存最佳版本 1278×720：Tennis TV 无场内宣布独立条目、ATP 官网无可检索视频档案（2026-10-30 复查）；账号所有者 2026-10-30 单段破例授权（见 source_quality_exceptions）。整幅 contain 展示，不裁切、不放大冒充高清。"
   },
-  "_geometry_why": "2026-10-30 render dry-run 的 check_sources_match 预演拦下：自制动画 1080×1440 与 fed 1278×720 和主源 sin 1920×1080 尺寸不同。按仓库既有认领机制落位：动画七源走 source_crop 原生几何（窗口即全帧）；fed 走 archival＋seg12 fit=contain（戈芬篇 1280×720 存档同款）；tla/tlb/tlc 补 mixed_fps 认领（与 hor/not/led/sun 同文）；sources 里已无段引用的旧时间轴源 tml 移除（三段叙事版 tla/tlb/tlc 已替代之，Release 存档与 ASR 保留不动）。"
+  "_geometry_why": "2026-10-30 render dry-run 的 check_sources_match 预演拦下：自制动画 1080×1440 与 fed 1278×720 和主源 sin 1920×1080 尺寸不同。按仓库既有认领机制落位：动画七源走 source_crop 原生几何（窗口即全帧）；fed 走 archival＋seg12 fit=contain（戈芬篇 1280×720 存档同款）；tla/tlb/tlc 补 mixed_fps 认领（与 hor/not/led/sun 同文）；sources 里已无段引用的旧时间轴源 tml 移除（三段叙事版 tla/tlb/tlc 已替代之，Release 存档与 ASR 保留不动）。 追记（同日第四轮）：render run 40943446442 死在 reel_source_audio_policy（2026-10-13 新规，正常制作任何段 speed≠1 即红）——六段动画按旁白真 TTS 实测时长以 1.0 原速重产并换源（sun wo26sunpr02 21.5s／hor wo26horse03 37.0s／not wo26notat02 29.0s／led wo26ledger2 27.0s／tlb wo26tmlnb02 45.5s／tlc wo26tmlnc02 43.5s，存档记录见 research/walkover-story-2026/anim-src/SOURCES.md 第四轮），tla 旁白短于源长只摘 speed；全片再无 speed/mute/bed。"
 }
