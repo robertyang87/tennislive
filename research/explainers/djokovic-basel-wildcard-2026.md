@@ -32,3 +32,11 @@
 ## 原生制作入口
 
 `src/tennislive/video/episodes/djokovic-basel-wildcard-2026.json` 为本片内容真相，沿现有packaged episode格式接入原生explainer注册表、渲染、预检、发布；没有另起平行剪辑器。
+
+## 最终成片验收（2026-10-29）
+
+- 仓库原生explainer工作流40864283299已成功，最终Release文件SHA256为`f70863bf3c4804c1a3f79f88470f0362dbdff2967b90786cd3ebeb94d3614328`，7,108,458字节。
+- 194.633秒，1080×1440，30fps，声画差约59毫秒；23个实际编码帧复核，所有解释动画保留栏目和主题台头，原生品牌片尾完整。响度mean -23.8dB / peak -4.1dB。
+- 最终文件整段解码PCM（含片尾）与已完成机器检查的实际成片音频逐字节相等，绑定相同审核而非套用另一份TTS：11段旁白和片尾完整度、停顿及语速检查通过，13个多音字目标按既有策略通过。一次small模型错转保留原记录，medium模型复核通过。低置信多音字不冒称所有声调已确证；没有真人听审声明。
+- 精确成片、全音频同一性、逐项机器检查与画面抽帧见`output/2026-10-29/explainer/djokovic-basel-wildcard-2026/qc_attestation.json`及`qc_contact.jpg`。artifact内render.json遗留字节数已依据实际Release修正。
+- 仅在本次最终成片验证后加入AUTO_PUSH_SLUGS；待当前head CI通过再合并，自动推送实际回执另存发布账本。
