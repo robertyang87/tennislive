@@ -9029,6 +9029,7 @@ OWNER_APPROVED_FRAME_COVERS = frozenset({
     "rublev-jacquet-hangzhou-2026-sf",
     "medvedev-safiullin-hangzhou-2026-sf",  # 2026-09-26 常设授权；官方图四类源查过无可用高清，见 spec _frame_why。
     "wangxiyu-wangxinyu-wuhan-2026-r1",  # 2026-09-26 常设授权；终场约一个半小时官方图未上线，267.2秒正脸握拳帧，见 spec _frame_why。
+    "one-handed-backhand-story-2026",  # 2026-09-26常设授权；ATP Media接口有巴塞尔官方图但本会话网络拒图片站与Actions附件、取不进来，2015法网官方集锦169.1秒夺冠后正脸帧，见spec/_frame_why。
 })
 
 #: 「封面大图一律用官方高清实拍」这条规矩（账号所有者 2026-08-16 重申）立起来
