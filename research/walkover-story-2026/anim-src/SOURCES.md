@@ -22,3 +22,24 @@ render_three.py、anim-A-report.md / anim-B-report.md）。
 
 存档直链形如：
 `https://github.com/robertyang87/tennislive/releases/download/source-wo26horse01/wo26horse01.mp4`
+
+## 延展版（2026-10-30 第二轮）
+
+赛马段旁白在 narration dry-run 的离线装填估算为 34.78s，超过原 11.0s
+动画 speed 0.4 拟合上限（27.5s），本地延展重渲为 34.0s（horse-ext.mp4：
+加拍「独自领奖」＋排字/点阵停留，走马步态与原版逐帧同构；自检报告
+anim-ext-report.md）。照同一路线存档：
+
+| 本地延展版 | 存档 id（tag `source-<id>`） | 时长 | 存档文件 sha256 |
+|---|---|---|---|
+| horse-ext.mp4（赛马起源延展版） | wo26horse02 | 34.0s | 8009e6f72391f39879a892697ff086f46bd37d16c93cac4c27bd6f7d0809b264 |
+
+视频流与本地 horse-ext.mp4 逐字节一致（流哈希 0a84dd4a26d255f05c4ec282f69760906d30b28310681a49f6df470b6be43f4e 双向核验），只补静音 AAC 轨。存档工作流 import-walkover-anim-ext（run 40931196836，success）。
+
+**时间轴延展版暂缓**：timeline-ext1/2/3（36/36/40s）已在本地生产并自检，
+但其案例分组按年份（穆雷+佩内塔／德约2014+格拉诺列斯／克耶高斯+德约2024+收束），
+与 spec seg15 旁白的叙事顺序（同站对照→德约2024→克耶高斯→格拉诺列斯→佩内塔→
+费德勒反转→收束）不一致，且无费德勒反转段画面；与本文件上方 red_items
+原定分组（同站对照／德约2024／克耶高斯＋格拉诺列斯＋佩内塔／费德勒反转＋结论）
+亦不一致。旁白为所有者定稿逐字不可重排，故三段暂不存档、不换源，
+等主线/所有者裁定（按叙事顺序重渲，或批准旁白重排）。
