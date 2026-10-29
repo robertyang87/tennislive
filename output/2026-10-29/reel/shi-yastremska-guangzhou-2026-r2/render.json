@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "d1e55c0c74aedb760ca57e47f7c5e9d6effdf856d2753c01b08d4cb13ec7eacb",
+  "scoreboard_qc_sha256": "10323b82603c2ddbb0af2e5896f0e23dde2a980dcf5efb7bc9bead415a56c6f6",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-shi-yastremska-guangzhou-2026-r2-1ddb30f1626d4d47",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shi-yastremska-guangzhou-2026-r2-1ddb30f1626d4d47/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40797892200"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40800632515"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -115,44 +115,44 @@
       "faces": 1
     }
   },
-  "render_inputs_sha256": "463dd086c982d43efc7bb2a22249333eb75e341ec0ed1c382b93e7305cab8703",
+  "render_inputs_sha256": "a614f7f4f3ecc5d003ff42d7f649692329e872b36854758ca397b130c4278288",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shi-yastremska-guangzhou-2026-r2",
-    "received_at": "2026-10-29T01:02:10Z",
-    "artifact_ready_at": "2026-10-29T01:08:22Z",
-    "elapsed_seconds": 372.73,
+    "received_at": "2026-10-29T01:28:32Z",
+    "artifact_ready_at": "2026-10-29T01:33:24Z",
+    "elapsed_seconds": 292.608,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "177650b7c9a05ecc72934ae9ab5a977e4048c094b10c7acd115e83e20fcf0aa0",
-    "spec_sha256": "03567a538944e53137e18492a7cdcab0d1948ebc7d325b3407dc8b73735cc695",
-    "run_id": "40797892200",
+    "film_sha256": "66951c4d372ae7802de0b223a11548ebae5b808e2379e8f8d77b496c469f5bd2",
+    "spec_sha256": "d0dd3c0852faa3ec67a12cb0d23101724388acfad170b9c199f9f237d94360fc",
+    "run_id": "40800632515",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-29T01:05:25Z",
-        "run_id": "40797892200"
+        "at": "2026-10-29T01:31:00Z",
+        "run_id": "40800632515"
       }
     ],
-    "render_seconds": 177.73,
-    "pre_render_seconds": 195.0
+    "render_seconds": 144.608,
+    "pre_render_seconds": 148.0
   },
-  "film_sha256": "177650b7c9a05ecc72934ae9ab5a977e4048c094b10c7acd115e83e20fcf0aa0",
-  "film_bytes": 48961569,
-  "qc_attestation_sha256": "964534c53618ae4b2abf55e4d87e2292d96cbce4a4a7b0c3bbff67c8b0549e3a",
+  "film_sha256": "66951c4d372ae7802de0b223a11548ebae5b808e2379e8f8d77b496c469f5bd2",
+  "film_bytes": 48975229,
+  "qc_attestation_sha256": "adce872081984d703cbe2a8547a0d8ef2027ef922227bf358a56ee889b3b5bb9",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-29T01:05:25Z",
-      "run_id": "40797892200"
+      "at": "2026-10-29T01:31:00Z",
+      "run_id": "40800632515"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-29T01:08:27Z",
-      "run_id": "40797892200"
+      "at": "2026-10-29T01:33:27Z",
+      "run_id": "40800632515"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shi-yastremska-guangzhou-2026-r2/shi-yastremska-guangzhou-2026-r2.mp4",
-  "video_bytes": 48961569
+  "video_bytes": 48975229
 }
