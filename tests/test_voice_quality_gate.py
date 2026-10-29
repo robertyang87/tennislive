@@ -241,3 +241,29 @@ def test_证据身份不是当前这一版不认(episode):
     write(out/gate.REVIEW, review)
     with pytest.raises(gate.VoiceQualityError, match='stale'):
         gate.require_publish(out, root=root)
+
+
+def test_packaged_explainer_keeps_all_actual_byte_review_requirements(episode):
+    root, out, _, spec = episode
+    packaged = root / 'src/tennislive/video/episodes' / spec.name
+    packaged.parent.mkdir(parents=True)
+    spec.replace(packaged)
+    # Same actual source bytes, same sealed inventory and review; lane discovery only.
+    approve(episode)
+    assert gate.require_publish(out, root=root)['film_sha256']
+    packaged.write_text(packaged.read_text() + '\n')
+    with pytest.raises(gate.VoiceQualityError, match='spec differs'):
+        gate.require_publish(out, root=root)
+
+
+def test_packaged_explainer_checks_its_native_formal_filename(episode):
+    root, out, _, spec = episode
+    packaged = root / 'src/tennislive/video/episodes' / spec.name
+    packaged.parent.mkdir(parents=True)
+    spec.replace(packaged)
+    (out / f'{out.name}.mp4').replace(out / 'explainer.mp4')
+    approve(episode)
+    assert gate.require_publish(out, root=root)
+    (out / 'explainer.mp4').write_bytes(b'replacement-film')
+    with pytest.raises(gate.VoiceQualityError, match='native explainer differs'):
+        gate.require_publish(out, root=root)

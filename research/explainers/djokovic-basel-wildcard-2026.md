@@ -40,3 +40,12 @@
 - 最终文件整段解码PCM（含片尾）与已完成机器检查的实际成片音频逐字节相等，绑定相同审核而非套用另一份TTS：11段旁白和片尾完整度、停顿及语速检查通过，13个多音字目标按既有策略通过。一次small模型错转保留原记录，medium模型复核通过。低置信多音字不冒称所有声调已确证；没有真人听审声明。
 - 精确成片、全音频同一性、逐项机器检查与画面抽帧见`output/2026-10-29/explainer/djokovic-basel-wildcard-2026/qc_attestation.json`及`qc_contact.jpg`。artifact内render.json遗留字节数已依据实际Release修正。
 - 仅在本次最终成片验证后加入AUTO_PUSH_SLUGS；待当前head CI通过再合并，自动推送实际回执另存发布账本。
+
+## 用户追加：阿尔卡拉斯同周对照
+
+维也纳10月15日官方外卡公告明确其外卡身份；另一则官方公告明确六王表演赛延期后赛事总监联系团队，临时敲定参赛，列2号种子。新增一屏双人对照，不据此断言两站额外名额制度完全相同。来源：
+
+- https://www.erstebank-open.com/en/news/storys/alcaraz-vienna-2026-withdrawal
+- https://www.erstebank-open.com/en/news/storys/carlos-alcaraz-kommt-nach-wien
+
+上述194.633秒版本为追加前已审参考片；正式发布以追加后的新文件与新审核为准，未使用旧版批准代替新片。发布前发现通用声音闸尚未识别packaged explainer，补上原生来源识别并在实际合成调用期间捕获完整冻结请求，沿既有自动五项检查出具原生审核，不豁免检查。

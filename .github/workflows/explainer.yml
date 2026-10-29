@@ -333,7 +333,36 @@ jobs:
           echo "生成参数：${ARGS[*]}"
           # Installed console scripts do not put the repository/tools on sys.path.
           # Native transition cards load the existing title-card renderer there.
-          PYTHONPATH="$PWD:$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" tennislive explainer "${ARGS[@]}"
+          if [ -f "src/tennislive/video/episodes/$SLUG.json" ]; then
+            PYTHONPATH="$PWD:$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" python - "$OUT_DIR" "${ARGS[@]}" <<'PY_CAPTURE'
+          import json, sys
+          from pathlib import Path
+          from tennislive.cli import main
+          from tennislive.video.tts import tts_bundle_session
+          from tennislive.video.tts_bundle import validate_bundle
+          from voice_quality_gate import capture_inventory
+          from render_inputs import sha256_file
+          out = Path(sys.argv[1])
+          with tts_bundle_session(output_path=out / 'tts_bundle.zip'):
+              result = main(['explainer', *sys.argv[2:]])
+              if result:
+                  raise SystemExit(result)
+          render = out / 'render.json'
+          data = json.loads(render.read_text()) if render.exists() else {}
+          bundle = validate_bundle(out / 'tts_bundle.zip')
+          data.update(film_sha256=sha256_file(out / 'explainer.mp4'),
+                      tts_bundle={'bundle_sha256': bundle['bundle_sha256'],
+                                  'request_count': bundle['request_count']})
+          render.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+          # A regenerated film cannot inherit a previous native speech inventory.
+          for name in ('voice_quality_inventory.json', 'voice_quality_review.json',
+                       'voice_auto_review.json', 'render_inputs.json'):
+              (out / name).unlink(missing_ok=True)
+          capture_inventory(out)
+          PY_CAPTURE
+          else
+            PYTHONPATH="$PWD:$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" tennislive explainer "${ARGS[@]}"
+          fi
           ls -la "$OUT_DIR"
           # 视频体积可观，仅保留成片与幻灯，丢弃中间音频。
           rm -f "$OUT_DIR"/voice_*.mp3
@@ -508,6 +537,17 @@ jobs:
                           encoding="utf-8")
           print("render.json 记下 video_url")
           PY
+          if [ -f "src/tennislive/video/episodes/$SLUG.json" ]; then
+            PYTHONPATH="$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" python - "$OUTDIR" "$SLUG" <<'PY_SEAL'
+          import sys
+          from pathlib import Path
+          from render_inputs import record
+          out, slug = Path(sys.argv[1]), sys.argv[2]
+          record(Path('src/tennislive/video/episodes') / (slug + '.json'),
+                 out, out / 'explainer.mp4', Path.cwd())
+          PY_SEAL
+          fi
+          rm -f "$OUTDIR/tts_bundle.zip"
           rm -f "$CLIP"
           # **重渲 push.html。** 它是「生成解说视频」那一步写的，那一刻
           # render.json 还没有 video_url，▶ 按钮拼的是 jsDelivr 老路——而这条

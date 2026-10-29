@@ -376,9 +376,13 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: st
     identity["inventory_sha256"] = _file_sha(inventory_path)
     if _file_sha(bundle) != inventory.get("bundle_sha256"):
         raise SystemExit("小包和封存的配音库存不是同一份")
-    spec_path = next(p for p in (ROOT / f"specs/{k}/{outdir.name}.json"
-                                 for k in ("reels", "interviews")) if p.is_file())
+    spec_paths = [ROOT / f"specs/{k}/{outdir.name}.json" for k in ("reels", "interviews")]
+    spec_paths.append(ROOT / f"src/tennislive/video/episodes/{outdir.name}.json")
+    spec_path = next(p for p in spec_paths if p.is_file())
     spec = json.loads(spec_path.read_text("utf-8"))
+    if spec_path.parent.name == "episodes":
+        spec["segments"] = [{"narration": row["narration"]} for row in
+                            [spec["opening"], *spec["beats"]]]
     names = _names(spec)
     with tempfile.TemporaryDirectory() as tmp:
         entries = load_bundle(bundle, Path(tmp))

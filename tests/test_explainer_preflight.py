@@ -227,12 +227,13 @@ from tennislive.video.transition_cards import validate_content
 def test_basel_episode_preserves_native_motion_and_entry_identity():
     segments = E.explainer_script(find_story_by_slug('djokovic-basel-wildcard-2026'))
     assert segments[0].kind == 'cover'
-    assert len(segments) == 11
+    assert len(segments) == 12
     for segment in segments[1:]:
         assert segment.visual['layout'] == 'transition'
         validate_content(segment.visual['content'])
     text = ''.join(s.narration for s in segments)
     assert '二十八天' in text and '四号种子' in text
+    assert '阿尔卡拉斯参加维也纳，也是外卡，却列二号种子' in text
     assert '下一位合资格球员' in text
 
 
