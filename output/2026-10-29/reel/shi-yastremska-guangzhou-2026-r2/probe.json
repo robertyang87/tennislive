@@ -81,6 +81,40 @@
   "board": {
     "version": 1,
     "fps": 5,
+    "t0": 35.0,
+    "frames": 25,
+    "source_window": [
+      35.0,
+      40.0
+    ],
+    "scans": [
+      {
+        "box": [
+          58,
+          550,
+          380,
+          656
+        ],
+        "frames": 25,
+        "profiles": {
+          "wta": {
+            "present": 25,
+            "unresolved": 0,
+            "runs": [
+              [
+                25,
+                378,
+                378
+              ]
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "_original_full_probe_board": {
+    "version": 1,
+    "fps": 5,
     "t0": 0.0,
     "frames": 707,
     "scans": [
@@ -681,5 +715,7 @@
         }
       }
     ]
-  }
+  },
+  "source_sha256": "108a5f5fbb654bb9af09dfc77fedcbddc1c6a20c8d0856caca71bf948c357ae4",
+  "_custom_scorebox_calibration_why": "Actual native1280x720 source35–40s scanned at5fps with existing WTA detector, exact custom box; this is finite calibration only, NOT full-source board approval. Full-scoped original probe retained. All selected source windows independently passed native25fps alpha preview."
 }
