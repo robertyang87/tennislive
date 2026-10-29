@@ -7214,6 +7214,13 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 无更高清版本；该段是本片原声位 1、内容不可替代。白名单只加这条存档 URL，
     # 不及于 nau.ch 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-wawrinkafed/wawrinkafed.mp4': 720,
+    # 《Walkover》（walkover-story-2026）费德勒 2014 总决赛场内宣布段：账号
+    # 所有者 2026-10-30 亲批登记 720p 例外（原话：先查其他源，没有的话 720
+    # 可以）。复查结论：Tennis TV 无场内宣布独立条目、ATP 官网无可检索的
+    # 视频档案入口；本条为转播翻录存档（1278×720），是该历史画面现存最佳
+    # 版本，本片原声位、内容不可替代。白名单只加这条存档 URL，不及于
+    # YouTube 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4': 720,
 }
 
 
@@ -13196,4 +13203,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
