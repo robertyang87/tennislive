@@ -1066,6 +1066,21 @@ jobs:
           PY
           rm -f "$CLIP"
 
+      # **配音封印排在这儿，是位置决定的。** 放行记录绑 `render.json` 的
+      # 字节哈希：终审封面与上面发 Release 两步都往同一个文件合并写，
+      # 在「剪 + 烧字幕」里封印绑的必然是定稿前的字节，推送时一律判
+      # stale（2026-10-29 伊埃拉东京首版就卡在这儿：封印产物齐全，
+      # 推送仍报 Voice approval is stale）。出片那一档只把实际口播捕获
+      # 成冻结小包留在出片目录，这一档在提交之前把它封成库存＋清单＋
+      # 自动听审放行；听审没过这一步红，下面的提交就不会跑。
+      - name: 配音封印（库存 + 清单 + 自动听审）
+        if: github.event.inputs.mode == 'render'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          PYTHONPATH=src python tools/build_interview_clip.py \
+            --spec "specs/interviews/${{ github.event.inputs.slug }}.json" --stage seal
+
       # **复制页要在提交之前写。** 这一步只落文件，由下面的提交步骤带进仓库；
       # 真正发微信排在提交之后（GitHub Pages 只服务 main，链接才取得到）。
       # 这条规矩在别的线上踩过四次，别在这儿再踩第五次。

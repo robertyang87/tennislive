@@ -1,0 +1,72 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "00df9737714fc7d37c7088393d1765fe3ef742c61ba451f8321e3d626b4adb8e",
+    "render_inputs_sha256": "5d3f099d05fd92ebd3c39c4cd84a83dc9f84d30da80a69cb431b90eaefd640bb",
+    "spec_sha256": "20bf6e00a2b6c109d6cfe22edb41f84df56326ffc990e3db9531c6260845c3b2",
+    "film_sha256": "37d964a1b85360dc916708a743ce1c678e3fa4966f9f5008b3e2d886b3979cdb",
+    "inventory_sha256": "80f6e121f0a6f64e9427a827134102428b83dd58732c7e79c18b70b2878f98a0"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-28T19:56:45+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:60f814cf0bf4dfb7e86cdda17f47ac6a9cb4acd6d79d2f400df4a23fe621cce2",
+      "audio_sha256": "f65cd135113b2619e109ad0da4631a1ec38518bf469fa6f9e5713144d21508bc",
+      "pass": true,
+      "result_of": "bundle:60f814cf0bf4dfb7e86cdda17f47ac6a9cb4acd6d79d2f400df4a23fe621cce2"
+    },
+    {
+      "id": "_tkvoice_close/voice_00.mp3",
+      "audio_sha256": "f65cd135113b2619e109ad0da4631a1ec38518bf469fa6f9e5713144d21508bc",
+      "pass": true,
+      "result_of": "bundle:60f814cf0bf4dfb7e86cdda17f47ac6a9cb4acd6d79d2f400df4a23fe621cce2"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:60f814cf0bf4dfb7e86cdda17f47ac6a9cb4acd6d79d2f400df4a23fe621cce2",
+      "text": "先丢一盘，她连赢最后九局。四分之一决赛再战施耐德，这次能复仇吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先丢一盘,他连赢最后九局。四分之一决赛,在战士奈德,这次能复仇吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.768,
+        "cps": 4.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 她 ｜ 连 ｜ 赢 ｜ 最后 ｜ 九局 ｜ 四分之一 ｜ 决赛 ｜ 再 ｜ 战 ｜ 施耐德 ｜ 这次 ｜ 能 ｜ 复仇 ｜ 吗"
+      }
+    }
+  ]
+}
