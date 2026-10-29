@@ -77,6 +77,19 @@ class TournamentStory:
 
 STORIES = (
     TournamentStory(
+        slug="djokovic-basel-wildcard-animation-2026", aliases=("basel wildcard animation",),
+        title="德约为何要外卡", location="巴塞尔 · 瑞士", level="ATP 500",
+        surface="室内硬地", founded="2026 案例", kind="rule",
+        hero_fact="排名够仍须报名；德约临时持A+外卡参赛，并列4号种子。",
+        facts=("常规报名提前28天；外卡与种子分别计算。",),
+        moments=(), venue="报名截止与额外外卡",
+        image=ASSETS.parent / "reel/djokovic-humbert-basel-2026-r1-cover.jpg",
+        image_credit="ATP Media / Getty Images · 2026巴塞尔首轮",
+        source_url="https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2026-10-26_Djokovic-joins-the-fray-on-Wednesday.php", source_label="赛事公告与2026 ATP规则",
+        image_source_url="https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/28/5bb937db-fb19-4401-8f58-2d9b49c643c3/GettyImages-2301895775.jpg",
+        evidence_urls=('https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf', 'https://www.watson.ch/sport/novak-djokovic/709075666-so-kam-es-zum-deal-zwischen-den-swiss-indoors-und-novak-djokovic', 'https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/202610-19_Wild-Cards-fuer-die-Swiss-Indoors-Basel-2026.php'),
+    ),
+    TournamentStory(
         slug="djokovic-basel-wildcard-2026", aliases=("djokovic basel wildcard",),
         title="德约为何要外卡", location="巴塞尔 · 瑞士", level="ATP 500",
         surface="室内硬地", founded="2026 案例", kind="rule",

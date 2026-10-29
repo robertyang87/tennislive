@@ -1,0 +1,68 @@
+{
+  "version": 2,
+  "key": "523276dfbd1392352284e40ac3436f138e1ca491cb38a46bd234465603a46ce6",
+  "sha256": "4ba0de55c6ad36bae9cfb2f9f6440bd1a4f91e687b3b5190a70fa114ecc2cd35",
+  "seconds": 17.3,
+  "fps": "30",
+  "size": [
+    1080,
+    1440
+  ],
+  "plan": {
+    "canvas_width": 1080,
+    "kind": "entry_process",
+    "lines": [
+      "外卡入场"
+    ],
+    "font_px": 62,
+    "nodes": [],
+    "content": {
+      "entry_process": {
+        "scene": "identity",
+        "source": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2026-10-26_Djokovic-joins-the-fray-on-Wednesday.php",
+        "cues": [
+          0.12,
+          0.36,
+          0.62,
+          0.84
+        ],
+        "case": {
+          "player": "德约",
+          "seed": 4,
+          "event": "巴塞尔",
+          "locals": [
+            "瓦林卡",
+            "基姆",
+            "施特里克"
+          ],
+          "peer": "阿尔卡拉斯",
+          "peer_seed": 2,
+          "peer_event": "维也纳",
+          "deadline": "9月28日",
+          "postponed_from": "10月",
+          "postponed_to": "12月",
+          "news_date": "10月14日",
+          "goal": "都灵资格",
+          "draw_size": 32
+        }
+      }
+    },
+    "safe_bottom": 1270,
+    "notes": [],
+    "photo": null,
+    "direction": "horizontal",
+    "kicker": "01 / 外卡与种子",
+    "highlight": "",
+    "groups": [],
+    "proof_h": 850
+  },
+  "browser_evidence": {
+    "slots": 32,
+    "brand": "\"TL Display SC\"",
+    "heading": "\"TL Display SC\"",
+    "logo": 512,
+    "notes": true,
+    "labels": true
+  },
+  "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
+}

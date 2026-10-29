@@ -27,6 +27,10 @@ on:
         description: "可选的精确素材路径，每行一项；留空保持完整素材检出"
         required: false
         default: ""
+      tts_run_id:
+        description: "可选的已核实冻结配音来源run；仅严格复用相同请求，不重新合成"
+        required: false
+        default: ""
       voice:
         description: "edge-tts 中文语音（留空＝用代码默认：云健）"
         required: false
@@ -307,6 +311,16 @@ jobs:
           restore-keys: |
             explainer-tts-v1-${{ inputs.slug || 'hawkeye' }}-${{ hashFiles('src/tennislive/video/tts.py', 'src/tennislive/video/azure_tts.py') }}-
 
+      - name: 取已核实的冻结配音输入（可选）
+        if: inputs.tts_run_id != ''
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.tts_run_id }}
+          pattern: explainer-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/explainer-inputs
+
       - name: 生成解说视频
         id: gen
         run: |
@@ -335,15 +349,26 @@ jobs:
           # Native transition cards load the existing title-card renderer there.
           if [ -f "src/tennislive/video/episodes/$SLUG.json" ]; then
             PYTHONPATH="$PWD:$PWD/tools${PYTHONPATH:+:$PYTHONPATH}" python - "$OUT_DIR" "${ARGS[@]}" <<'PY_CAPTURE'
-          import json, sys
+          import json, sys, os
           from pathlib import Path
           from tennislive.cli import main
-          from tennislive.video.tts import tts_bundle_session
+          from tennislive.video import explainer as E
+          from tennislive.render.tournament_story import find_story_by_slug
+          from tennislive.video.tts import tts_bundle_session, tts_request
           from tennislive.video.tts_bundle import validate_bundle
           from voice_quality_gate import capture_inventory
           from render_inputs import sha256_file
           out = Path(sys.argv[1])
-          with tts_bundle_session(output_path=out / 'tts_bundle.zip'):
+          frozen = Path(os.environ['RUNNER_TEMP']) / 'explainer-inputs/tts_bundle.zip'
+          requests = None
+          if frozen.is_file():
+              args = sys.argv[2:]
+              voice = args[args.index('--voice')+1] if '--voice' in args else E.DEFAULT_VOICE
+              rate = args[args.index('--rate')+1] if '--rate' in args else E.DEFAULT_RATE
+              requests = [tts_request(E.speakable(s.narration), voice, rate, E.DEFAULT_PITCH)
+                          for s in E.explainer_script(find_story_by_slug(out.name))]
+          with tts_bundle_session(input_path=frozen if frozen.is_file() else None,
+                                  expected_requests=requests, output_path=out / 'tts_bundle.zip'):
               result = main(['explainer', *sys.argv[2:]])
               if result:
                   raise SystemExit(result)
