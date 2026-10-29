@@ -764,5 +764,9 @@
       "approved_by": "user",
       "reason": "2026-10-29 用户明确答复：这场允许用官网720p继续。仅本场及该官方Brightcove源，不以显示缩放冒充原生1080p。"
     }
-  }
+  },
+  "source_fallbacks": {
+    "main": "https://github.com/robertyang87/tennislive/releases/download/source-6407534173112/6407534173112.mp4"
+  },
+  "_reviewed_source_transport_why": "stage_reel_sources fetches this same official video archive directly and checks expected source SHA108a5f5fbb654bb9af09dfc77fedcbddc1c6a20c8d0856caca71bf948c357ae4 before replacement. Primary official URL and all reviewed source/audio identity remain unchanged; never reselect another codec rendition."
 }
