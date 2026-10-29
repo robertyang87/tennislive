@@ -2,7 +2,7 @@
 
 用户指定：https://www.youtube.com/watch?v=MwcZYYG4hvE 。追加：内容丰富一点，字卡的时间少一点。正式slug `djokovic-humbert-basel-2026-r1`，分支 `codex/djokovic-MwcZYYG4hvE-reel`。
 
-官方签表4-6 6-3 6-4；逐分188分与总分99/89一致，逐盘44/50/55分钟，全场2:29。首盘先丢发球局，次盘首局救2BP后破发，决胜盘2-2破发并守住领先。现原生spec约4分钟：多个完整关键分、准确双语原声，独立统计卡6.8秒，封面1.2秒，无长章节字卡；末尾6.8秒本场高清实拍配下一轮具体问题。
+官方签表4-6 6-3 6-4；逐分188分与总分99/89一致，逐盘44/50/55分钟，全场2:29。首盘先丢发球局，次盘首局救2BP后破发，决胜盘2-2破发并守住领先。现原生spec约4分钟：多个完整关键分、准确双语原声，独立统计卡6.8秒，封面1.2秒，无长章节字卡；末尾8.56秒完整赛点短回放配下一轮具体问题。
 
 源片50fps 1080p，原生生产入口按现有规则整除到25fps，非伪称源生25fps；SHA83bd85e40b84f88ef603d25e298fd89c924011db66efd325a39479c7ab96b1ce。原始probe/存档/ASR run均在request.json。正式probe使用同一Release字节和实测定制比分搜索框98,920,488,1030，5fps全片量板1257帧。
 
@@ -13,3 +13,5 @@
 W/UE为Flashscore Match原行19/39及24/39，双方完整证据与列序已入spec。发球分母合计190与逐分188不同，保留供应商原行，不用这些分母推总分。另一个自动pending/djokovic-humbert.draft.json是同场TennisTV短源未完成草稿；本期已接手用户指定YouTube源，正式片不可再同栏目重复生产。
 
 剩余：原生narration快照、真实voice auto suite、正式render、成片/QC/字幕抽帧、当前HEAD选择范围CI、合并、PushPlus及pushed.json；没有这些不称成片完成或发布。
+
+原生narration成功40799342957，最终快照6744f3eb72a93005fb4ccf24833986be29cbbfce089a20b3d4c1cc00a0d45fc8，12请求已公开发布；第一次render40799642226在发布文案前检因末屏任意照片被拦，没有进入编码。已修为本场完整赛点短回放，原生production_preflight通过，当前请求可严格复用同一快照。
