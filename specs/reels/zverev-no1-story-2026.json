@@ -188,7 +188,9 @@
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S0 冷开场上半：法网 2026 决赛长集锦（Roland-Garros 官方）赛点后起身、网前拥抱与向观众致意段；倒地帧本身留给 S5c 独占（同一镜头全片只用一次）。"
+      "_why": "S0 冷开场上半：法网 2026 决赛长集锦（Roland-Garros 官方）赛点后起身、网前拥抱与向观众致意段；倒地帧本身留给 S5c 独占（同一镜头全片只用一次）。",
+      "_ending_payoff_required": true,
+      "_ending_payoff_why": "冷开场（法网夺冠后起身/拥抱/致意）是结局预告：包含结果确认与庆祝。声明 true，正文在 S5 原声段（rg26 1020.4–1066）完整重放冷开场全幅并继续走到捧杯（1086–1103），兑现承诺。"
     },
     {
       "source": "rg22",
@@ -395,13 +397,13 @@
       "end": 418.2,
       "cx": 0.5,
       "track": false,
-      "narration": "二〇二六年的一月，同样的剧本差点又演一遍：澳网半决赛，他和阿尔卡拉斯打了五小时二十七分钟，",
+      "narration": "二〇二六年的一月，同样的剧本差点又演一遍：澳网半决赛，他和阿尔卡拉斯打了五小时二十七分钟。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S5 上-1：2026 澳网半决赛长集锦决胜盘五比四局内空当（ASR 406.28–418.40 静默）；5 小时 27 分、澳网史上最长男单半决赛（事实卡 §4a）。原窗 398–420 内有三句解说，asr_plan 闸据此拆段，旁白原文一字未删。"
+      "_why": "S5 上-1：2026 澳网半决赛长集锦决胜盘五比四局内空当（ASR 406.28–418.40 静默）；5 小时 27 分、澳网史上最长男单半决赛（事实卡 §4a）。原窗 398–420 内有三句解说，asr_plan 闸据此拆段；拆分点原稿为逗号长句，落字时改句号成句（标点层调整、语义未动），免配音听审的跨段断句告警。"
     },
     {
       "source": "ao26",
@@ -448,7 +450,7 @@
     {
       "source": "rg26",
       "start": 1020.4,
-      "end": 1044,
+      "end": 1066,
       "cx": 0.5,
       "track": false,
       "kind": "quote",
@@ -470,7 +472,7 @@
         }
       ],
       "_quote_kind": "broadcast_quote",
-      "_quote_why": "S5 原声段：冠军点余波与倒地庆祝全程走现场声——全场欢呼＋夺冠闪访原声（ASR 1020.60–1029.56）。asr_plan 要求原声段英文全覆盖，三条字卡逐字照录、中文只直译不添义：两句为他受访碎句，第三条为解说播报的比分数字（源片原声如此，不做归属推断）。该倒地镜头全片仅此一次完整使用，S0 只用赛后起身/拥抱段（1046–1066），不重叠。本段不占选手原声保底。"
+      "_quote_why": "S5 原声段：冠军点余波、倒地庆祝、起身拥抱全程走现场声——全场欢呼＋夺冠闪访原声（ASR 1020.60–1029.56）。asr_plan 要求原声段英文全覆盖，三条字卡逐字照录、中文只直译不添义：两句为他受访碎句，第三条为解说播报的比分数字（源片原声如此，不做归属推断）。窗口延到 1066：冷开场（第 1 段 1046–1066）是这一刻的预告，正文在此完整重放（_ending_payoff_required=true 的兑现），倒地镜头在正文仅此一次完整使用。1044–1066 只有欢呼声、无英文语句。本段不占选手原声保底。"
     },
     {
       "source": "a2",
@@ -496,13 +498,28 @@
       "quote": [
         {
           "at": 0.3,
+          "end": 3.1,
+          "text": "I was laying on this court with an injury\n我曾躺在这片球场上，带着伤"
+        },
+        {
+          "at": 3.1,
           "end": 6.0,
-          "text": "I was laying on this court with an injury that I didn't know if I would ever come back from.\n我曾躺在这片球场上，伤得不知道还能不能回来。"
+          "text": "that I didn't know if I would ever come back from.\n不知道自己还能不能回来"
         },
         {
           "at": 6.3,
+          "end": 8.7,
+          "text": "I lost a Grand Slam final here.\n我在这里输过大满贯决赛"
+        },
+        {
+          "at": 8.7,
+          "end": 12.7,
+          "text": "All of those memories — they're not wiped out, they're still with me.\n那些记忆不会被抹去，都还跟着我"
+        },
+        {
+          "at": 12.7,
           "end": 15.9,
-          "text": "I lost a Grand Slam final here. All of those memories — they're not wiped out, they're still with me. But this one will beat all of them.\n我在这里输过一场大满贯决赛。那些记忆不会被抹去，都还跟着我。但这一次，会盖过它们全部。"
+          "text": "But this one will beat all of them.\n但这一次，会盖过它们全部"
         }
       ],
       "_quote_kind": "player_quote",
@@ -565,8 +582,13 @@
         },
         {
           "at": 4.96,
+          "end": 6.9,
+          "text": "Alexander Zverev.\n亚历山大·兹维列夫"
+        },
+        {
+          "at": 6.9,
           "end": 9.0,
-          "text": "Alexander Zverev — Zverev doesn't know he's winning.\n亚历山大·兹维列夫——兹维列夫还不知道，自己已经赢了。"
+          "text": "Zverev doesn't know he's winning.\n兹维列夫还不知道自己已经赢了"
         },
         {
           "at": 9.98,
@@ -587,13 +609,23 @@
       "quote": [
         {
           "at": 0.4,
+          "end": 4.6,
+          "text": "We went 30 years without winning a Grand Slam title\n我们等了三十年没拿过大满贯"
+        },
+        {
+          "at": 4.6,
           "end": 8.0,
-          "text": "We went 30 years without winning a Grand Slam title and now we've won two within the span of three months.\n我们等了三十年没拿过大满贯，如今三个月里拿了两个。"
+          "text": "and now we've won two within the span of three months.\n如今三个月里拿了两个"
         },
         {
           "at": 15.2,
+          "end": 20.2,
+          "text": "God has seen how hard we worked,\n上天看见了我们有多拼"
+        },
+        {
+          "at": 20.2,
           "end": 29.8,
-          "text": "God has seen how hard we worked, how much we suffered, how much pain we went through.\n上天看见了我们有多拼、多能扛、受过多少苦。"
+          "text": "how much we suffered, how much pain we went through.\n我们多能扛，受过多少苦"
         }
       ],
       "_quote_kind": "player_quote",
@@ -623,13 +655,23 @@
       "quote": [
         {
           "at": 0.3,
+          "end": 4.2,
+          "text": "That I clinched year-end No. 1 is, of course,\n锁定年终第一这件事"
+        },
+        {
+          "at": 4.2,
           "end": 8.5,
-          "text": "That I clinched year-end No. 1 is, of course, with Jannik being out, unfortunate.\n在辛纳缺席的情况下锁定年终第一，当然不走运。"
+          "text": "with Jannik being out, unfortunate.\n在辛纳缺席的情况下，当然不走运"
         },
         {
           "at": 8.5,
+          "end": 12.3,
+          "text": "But I think, once it happens\n但我想，等它真的发生"
+        },
+        {
+          "at": 12.3,
           "end": 16.5,
-          "text": "But I think, once it happens it will be a special moment for me.\n但等它真的发生，会是属于我的特殊时刻。"
+          "text": "it will be a special moment for me.\n会是属于我的特殊时刻"
         }
       ],
       "_quote_kind": "player_quote_card",
@@ -673,13 +715,23 @@
       "quote": [
         {
           "at": 0.2,
+          "end": 2.9,
+          "text": "Very quickly — and at a Grand Slam, it took longer.\n来得都很快，只有大满贯等得最久"
+        },
+        {
+          "at": 2.9,
           "end": 5.1,
-          "text": "Very quickly — and at a Grand Slam, it took longer. And now, no matter what happens —\n来得都很快——只有大满贯，等得最久。而现在，无论发生什么——"
+          "text": "And now, no matter what happens —\n而现在，无论发生什么"
         },
         {
           "at": 5.1,
+          "end": 7.3,
+          "text": "I will always be a Grand Slam champion,\n我永远都是大满贯冠军"
+        },
+        {
+          "at": 7.3,
           "end": 9.14,
-          "text": "I will always be a Grand Slam champion, and nobody can take that away from me.\n我永远都是大满贯冠军——没人能把这个夺走。"
+          "text": "and nobody can take that away from me.\n没人能把这个夺走"
         },
         {
           "at": 9.14,
