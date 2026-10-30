@@ -120,12 +120,13 @@
     ],
     "_why": "全称断言逐条认领两个独立来源（不同主机优先）：两个『最老』分口径登记（首登＝AFP 系两家独立报纸＋ATP 锁定稿佐证登顶日；年终＝ATP 锁定稿原文直书＋纪录清单站）；125 胜与四连败名单出自澳网官网综述并配第二源；0-5 账本以 Tennis.com 交手逐项列表＋Tennis Gazette 五场综述互证。"
   },
-  "_why_sources": "十七条源全部先经 download-video 存进 Release 存档（source-<id>），再 probe 实测、双档 ASR 落库后才入 spec；无一条 YouTube 直链。实拍十三条：rg26＝Roland-Garros 官方 2026 决赛长集锦 JmpbWq0qkEg（1920×1080/1113s）；presser＝RG 官方夺冠发布会 g_6522aZuv4（591s，原声 1 与结尾金句）；rg22＝RG 官方经典全场 7tpaxZTTi2w（1406s）；rg24＝RG 官方 2024 决赛长集锦 nwofBAmsDpE（2507s）；ao25＝AO 官方 2025 决赛长集锦 F5B1QpU0Evo（490s）；ao26＝AO 官方 2026 半决赛长集锦 kYlFxO1HA_A（488s，先前已存档）；wim26＝Wimbledon 官方 2026 决赛长集锦 t88oAZbdtX8（834s）；uso26＝US Open 官方 2026 决赛长集锦 zqTAG7tEC1k（734s，先前已存档）；ceremony＝US Open 官方颁奖礼全程 5xvs0FC_A-M（951s，原声 2）；shl＝上海官方集锦 8ze0KoQm6nA（135s）；vienna＝Tennis TV 维也纳官方集锦 FlikB32EESM（156s）；atpfeat＝ATP 官方锁定年终第一特辑 Gt65rDLQSa8（120s）。uso20＝US Open 官方 2020 决赛浓缩版 zujq-bvo2SM（1876s，双档 ASR 已落库；其 2390s 长集锦版 2WjkzGb4u84 实测 1280×720、802s 版 hsm03aUs4-w 已不可用——浓缩版分辨率以 probe 落盘为准，若同为 720p 则 S2 两段按所有者破例口径另行报批，见 _production_status）。自制动画四条（路线甲，本地 PIL 代码绘制、系列 tokens，存档版与本地生产版视频流一致、仅补静音 AAC 轨）：a1＝两个『最老』双轴 zv26a1old01（21.0s）、a2＝125/41 累积 zv26a2wait1（14.0s）、a3＝0-5 账本 zv26a3ledg1（22.0s）、a4＝2026 战绩条 zv26a4repo1（14.0s）。上海原声 3 无可用官方视频（R4 场内采访与 SF 发布会双档 ASR 逐句核过均无该句），按预案降级引语卡（见 seg『原声 3』_quote_why）。",
-  "_production_status": "2026-10-30 第二阶段：事实卡/脚本已获所有者批准；取材落源、动画（对齐标准自检：标题首行墨迹顶 y=197≥190、与 builder 标题块净距 71px；A1 下方标签叠印已修 +16px 间距复检干净；光晕中间档 R445/blur52/峰值 180）、封面（FFT 官方捧杯图 focus 0.50）均已落位。待回项：① uso20 浓缩版 probe 分辨率落盘（若 720p，S2 两段须所有者按费德勒先例破例批准后才许进 render，本 spec 先以该源建 spec 过 preflight/narration，不自批）；② rg24 probe.json 仍在跑（ASR 已落库，不挡 preflight）；③ 旁白 S3 两处事实层修正（三个多小时/第二盘还没打完）已按事实卡 §2 与源片自带字幕落字，实质未动。narration 实测回来后动画/窗口按实测原速复核，再交主线 render。",
+  "_why_sources": "十七条源全部先经 download-video 存进 Release 存档（source-<id>），再 probe 实测、双档 ASR 落库后才入 spec；无一条 YouTube 直链。实拍十三条：rg26＝Roland-Garros 官方 2026 决赛长集锦 JmpbWq0qkEg（1920×1080/1113s）；presser＝RG 官方夺冠发布会 g_6522aZuv4（591s，原声 1 与结尾金句）；rg22＝RG 官方经典全场 7tpaxZTTi2w（1406s）；rg24＝RG 官方 2024 决赛长集锦 nwofBAmsDpE（2507s）；ao25＝AO 官方 2025 决赛长集锦 F5B1QpU0Evo（490s）；ao26＝AO 官方 2026 半决赛长集锦 kYlFxO1HA_A（488s，先前已存档）；wim26＝Wimbledon 官方 2026 决赛长集锦 t88oAZbdtX8（834s）；uso26＝US Open 官方 2026 决赛长集锦 zqTAG7tEC1k（734s，先前已存档）；ceremony＝US Open 官方颁奖礼全程 5xvs0FC_A-M（951s，原声 2）；shl＝上海官方集锦 8ze0KoQm6nA（135s）；vienna＝Tennis TV 维也纳官方集锦 FlikB32EESM（156s）；atpfeat＝ATP 官方锁定年终第一特辑 Gt65rDLQSa8（120s）。uso20 两源分工：S2 上（五比三发球胜赛局）用官方浓缩版 zujq-bvo2SM（1876s，双档 ASR 已落库、句界实锚；分辨率待 probe 落盘）；S2 下（抢七与赛点）用官方长集锦版 2WjkzGb4u84（2390s，probe 实测 1280×720/29.97fps，接触表已验窗，抢七段有两段长解说空当——浓缩版同段解说密布且比分播报糊字，故换源拆段）；802s 版 hsm03aUs4-w 已不可用。S2 两源若均为 720p，按所有者破例口径另行报批（见 _production_status），本阶段不自批。自制动画四条（路线甲，本地 PIL 代码绘制、系列 tokens，存档版与本地生产版视频流一致、仅补静音 AAC 轨）：a1＝两个『最老』双轴 zv26a1old01（21.0s）、a2＝125/41 累积 zv26a2wait1（14.0s）、a3＝0-5 账本 zv26a3ledg1（22.0s）、a4＝2026 战绩条 zv26a4repo1（14.0s）。上海原声 3 无可用官方视频（R4 场内采访与 SF 发布会双档 ASR 逐句核过均无该句），按预案降级引语卡（见 seg『原声 3』_quote_why）。",
+  "_production_status": "2026-10-30 第二阶段：事实卡/脚本已获所有者批准；取材落源、动画（对齐标准自检：标题首行墨迹顶 y=197≥190、与 builder 标题块净距 71px；A1 下方标签叠印已修 +16px 间距复检干净；光晕中间档 R445/blur52/峰值 180）、封面（FFT 官方捧杯图 focus 0.50）均已落位。待回项：① S2 分辨率：S2 下源 2WjkzGb4u84 已实测 720p、S2 上浓缩版 zujq 待 probe 落盘——S2 进 render 前须所有者按费德勒 720p 先例破例批准（或换源），本 spec 先过 preflight/narration，不自批；② rg24 与 zujq 的 probe.json 仍未落盘（ASR 均已落库，不挡 preflight；render 前须补齐）；③ 动画 a2 存档 probe 须复核为 14.0s 终版（首版 probe 记 15.0s）；④ 旁白 S3 两处事实层修正（三个多小时/第二盘还没打完）已按事实卡 §2 与源片自带字幕落字，实质未动；⑤ asr_plan 闸处置：S6 原单段拆三段（空当旁白＋赛点解说原声引语段）、S2 下换长集锦源拆三段，旁白原文均一字未删。narration 实测回来后动画/窗口按实测原速复核，再交主线 render。",
   "sources": {
     "rg26": "https://github.com/robertyang87/tennislive/releases/download/source-JmpbWq0qkEg/JmpbWq0qkEg.mp4",
     "rg22": "https://github.com/robertyang87/tennislive/releases/download/source-7tpaxZTTi2w/7tpaxZTTi2w.mp4",
     "uso20": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4",
+    "uso20x": "https://github.com/robertyang87/tennislive/releases/download/source-2WjkzGb4u84/2WjkzGb4u84.mp4",
     "rg24": "https://github.com/robertyang87/tennislive/releases/download/source-nwofBAmsDpE/nwofBAmsDpE.mp4",
     "ao25": "https://github.com/robertyang87/tennislive/releases/download/source-F5B1QpU0Evo/F5B1QpU0Evo.mp4",
     "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4",
@@ -143,6 +144,7 @@
   },
   "source_quality_exceptions": {},
   "mixed_fps": {
+    "uso20x": "2020 年官方长集锦源 29.97 fps（30000/1001）落到 25 fps 输出，按时间重采样；集锦剪辑源、非连续实拍，不产生可感顿挫",
     "a1": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
     "a2": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
     "a3": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
@@ -261,21 +263,52 @@
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S2：2020 美网决赛官方片，决胜盘五比三发球胜赛局窗口（窗口待 probe/ASR 回填）。"
+      "_why": "S2 上：2020 美网决赛官方浓缩版（US Open），决胜盘五比三发球胜赛局窗口——双档 ASR 句界实锚（『5-3 for Sasha Zverev』1481–1485、被破发后 5-4 于 1499–1515），窗口据此落位。"
     },
     {
-      "source": "uso20",
-      "start": 1796,
-      "end": 1849.0,
+      "source": "uso20x",
+      "start": 2294.8,
+      "end": 2311.6,
       "cx": 0.5,
       "track": false,
-      "narration": "然后，剧本翻了：蒂姆连扳两盘，抢七锁定胜局。四小时零两分钟，兹维列夫把到手的冠军打了出去。那年他说，自己总有一天会站回来。没人想到，这一天要等六年；更没人想到，等他的先是一张轮椅。",
+      "narration": "然后，剧本翻了：蒂姆连扳两盘，抢七锁定胜局。四小时零两分钟，兹维列夫把到手的冠军打了出去。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S2：决胜盘抢七与赛点窗口（窗口待 probe/ASR 回填）。比分口径蒂姆 2-6 4-6 6-4 6-3 7-6(6)、4 小时 02 分（事实卡 §1）。"
+      "_why": "S2 下-1：换官方长集锦版（2WjkzGb4u84）抢七前段——浓缩版该段解说密布无长空当，长集锦版 ASR 空当 2294.54–2311.84 且接触表已验（抢七 2312–2360、冠军点约 2362）；旁白原文前半一字未改。"
+    },
+    {
+      "source": "uso20x",
+      "start": 2333.4,
+      "end": 2352.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "那年他说，自己总有一天会站回来。没人想到，这一天要等六年；更没人想到，等他的先是一张轮椅。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+      "_why": "S2 下-2：抢七后段空当（ASR 2333.12–2352.24 静默）；旁白原文后半一字未改，收束到轮椅伏笔，接 S3 的 2022 伤退。"
+    },
+    {
+      "source": "uso20x",
+      "start": 2362.8,
+      "end": 2373.45,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 8.06,
+          "end": 10.6,
+          "text": "Such a match.\n怎样的一场比赛。"
+        }
+      ],
+      "_quote_kind": "broadcast_quote",
+      "_quote_why": "S2 下-3 赛点原声（转播解说）：冠军点落定、蒂姆倒地庆祝（接触表 2372–2384 为倒地段，本窗含其起势），解说一句感叹（ASR 2370.86–2373.40 逐字干净）。其后 2373.40 起的比分播报 ASR 糊字、不可逐字核，窗口止于 2373.45 不纳入。本段不占选手原声保底。"
     },
     {
       "source": "rg22",
