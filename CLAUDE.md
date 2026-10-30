@@ -63,6 +63,7 @@
 | `tennis-video-craft` | 剪窗口、调字幕、配音、改取景混音；成片听感观感不对 |
 | `tennis-editorial` | 写旁白和文案、定叙事结构、拿不准措辞口径 |
 | `tennis-dev-practices` | 写判据、做反向验证、排查测试或 CI 异常 |
+| `vibetennis-production` | 做 vibetennis（16:9 3D 科普）的选题、渲染、封面、质检、推送（正文在 `skills/`，`.claude/skills/` 里是软链接） |
 
 ⭐⭐ **做视频之前先加载 `tennis-owner-taste`、过开工前清单，发 render 之前跑 `python3 tools/taste_preflight.py --slug <slug>`**（账号所有者 2026-09-27：「形成一个通用的规则在做视频前就烂掉，而不是说做了一半又返工」，原话如此，「烂掉」指拦掉；钩子口径以它为准，含同日定的「钩子里破发、抢七也不用」）。
 
