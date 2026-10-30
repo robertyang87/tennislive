@@ -1,0 +1,661 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "8dd049bf9a934b8ebfe8f817478a7f839038893ab7742d38dccfbf6ebff7e654",
+    "render_inputs_sha256": "7203c3795335b572a7df52226f71c1d70dd6c68b31e51bbf169a64d364e73b29",
+    "spec_sha256": "411d076c670b8669d512bac2db784773e71aa374885965ef1a794e29f679006f",
+    "film_sha256": "169a8e36b60ace44b376cc58c818f63424f4dc186fa94402730a37d8cac3798d",
+    "inventory_sha256": "1fdd7d0dde21421ea699ebed9a89834dd1c07c4471d4276d09a4df8e989c8f4b"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-30T13:15:19+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:2d584d35bbbb3bfb2398a491310224290fbf0c17f0f2c3a0171c979b3483bbe9",
+      "audio_sha256": "4d8991deac891303864df9bed832e0d02fef25b46730b70e75959afff8ff60e9",
+      "pass": true,
+      "result_of": "bundle:2d584d35bbbb3bfb2398a491310224290fbf0c17f0f2c3a0171c979b3483bbe9"
+    },
+    {
+      "id": "bundle:46362c0e3facbd35f5764c349cca56d3dfafc689830d879b933b67b9cb3e5643",
+      "audio_sha256": "e039a747bb0d29623a3946b159ad1f017ee7a656a42fcce1ee0b87f388640fc9",
+      "pass": true,
+      "result_of": "bundle:46362c0e3facbd35f5764c349cca56d3dfafc689830d879b933b67b9cb3e5643"
+    },
+    {
+      "id": "bundle:53debacbad63d0ddbd1523481f437a7750eacdfb70c60b27f37567c067557228",
+      "audio_sha256": "f499810f29e7f779e4d68c8b6fe0799292fa77b241fe0aec8da9340a4106b715",
+      "pass": true,
+      "result_of": "bundle:53debacbad63d0ddbd1523481f437a7750eacdfb70c60b27f37567c067557228"
+    },
+    {
+      "id": "bundle:5b32b702990a8a6c0bbb35593e8e88e21cc35d584860fca3c983bee98749662c",
+      "audio_sha256": "222081d55c8bf611e49aa0d3e85846b6668e7588bab4d1beac394581e331ca19",
+      "pass": true,
+      "result_of": "bundle:5b32b702990a8a6c0bbb35593e8e88e21cc35d584860fca3c983bee98749662c"
+    },
+    {
+      "id": "bundle:5da671f60e6aeb78748227309d08beaf7567bf647021288d6fcda26cabb5469b",
+      "audio_sha256": "fadfe836a129e7c3236cc75e050bbe5d0f1dd545d3236cba17d03a1a807cced4",
+      "pass": true,
+      "result_of": "bundle:5da671f60e6aeb78748227309d08beaf7567bf647021288d6fcda26cabb5469b"
+    },
+    {
+      "id": "bundle:71e32c376c9e340b6aac03f5dd176424bc7f61614fb2b48f77cd7664d991c6d8",
+      "audio_sha256": "2e01060733a955fefee9ae50cc25bbd3043998ebfcc5e732891841021aa20119",
+      "pass": true,
+      "result_of": "bundle:71e32c376c9e340b6aac03f5dd176424bc7f61614fb2b48f77cd7664d991c6d8"
+    },
+    {
+      "id": "bundle:7e2035df68759997d030522029560a6be9176a05380fa3f995e1f5583c8190c6",
+      "audio_sha256": "31d356ce2fbe0661fefe9df3032ffb3b86dfbbe7a947cebea22c963058e993e7",
+      "pass": true,
+      "result_of": "bundle:7e2035df68759997d030522029560a6be9176a05380fa3f995e1f5583c8190c6"
+    },
+    {
+      "id": "bundle:8786267af4c26ec9872616154473d34c114e881f8bced3407d76015c5448b84d",
+      "audio_sha256": "0ac15b1fee449f505845be77cb211d1400e6e354d9954a34bb298d0815716593",
+      "pass": true,
+      "result_of": "bundle:8786267af4c26ec9872616154473d34c114e881f8bced3407d76015c5448b84d"
+    },
+    {
+      "id": "bundle:8ad58c8d396edc11a2c2fbf9dd560552fead0cfcc2325ccf5d0f4a3613cb6a9e",
+      "audio_sha256": "17266192ad619bcbd37275aeb88ff365e62e5efed1e0db2db78ffe96bc83576c",
+      "pass": true,
+      "result_of": "bundle:8ad58c8d396edc11a2c2fbf9dd560552fead0cfcc2325ccf5d0f4a3613cb6a9e"
+    },
+    {
+      "id": "bundle:aa80d9c51ae4c31d584be6fc778e46a175aa580b7fa99f82de485c1bd1aac970",
+      "audio_sha256": "8592aea7101f4e2d2221375e221ccdc88e0529bc8c17e0a1d279c9a53b9aea53",
+      "pass": true,
+      "result_of": "bundle:aa80d9c51ae4c31d584be6fc778e46a175aa580b7fa99f82de485c1bd1aac970"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "c29df68c21b7391ae0a49e0d8f2ed19a6f2e6c5243d19ee4d93293cbfdc250a2",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bb579840f66bd1b111d097eaa8b38d5b2f4fb80468f4063383e6aaad40a6292b",
+      "audio_sha256": "398c8971231fece557446c2057d0b784c8ef91e12595a67a7b125f166511ac64",
+      "pass": true,
+      "result_of": "bundle:bb579840f66bd1b111d097eaa8b38d5b2f4fb80468f4063383e6aaad40a6292b"
+    },
+    {
+      "id": "bundle:ffd19ab653529387b1c9f6a735f8ff757d45eaec5ce43bd9b975e2b1e0edd992",
+      "audio_sha256": "a6de98d5f8e58b33e96af4354c92019300f00a46598dd7be65db5434d3c91f6b",
+      "pass": true,
+      "result_of": "bundle:ffd19ab653529387b1c9f6a735f8ff757d45eaec5ce43bd9b975e2b1e0edd992"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "31d356ce2fbe0661fefe9df3032ffb3b86dfbbe7a947cebea22c963058e993e7",
+      "pass": true,
+      "result_of": "bundle:7e2035df68759997d030522029560a6be9176a05380fa3f995e1f5583c8190c6"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "a6de98d5f8e58b33e96af4354c92019300f00a46598dd7be65db5434d3c91f6b",
+      "pass": true,
+      "result_of": "bundle:ffd19ab653529387b1c9f6a735f8ff757d45eaec5ce43bd9b975e2b1e0edd992"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "fadfe836a129e7c3236cc75e050bbe5d0f1dd545d3236cba17d03a1a807cced4",
+      "pass": true,
+      "result_of": "bundle:5da671f60e6aeb78748227309d08beaf7567bf647021288d6fcda26cabb5469b"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "17266192ad619bcbd37275aeb88ff365e62e5efed1e0db2db78ffe96bc83576c",
+      "pass": true,
+      "result_of": "bundle:8ad58c8d396edc11a2c2fbf9dd560552fead0cfcc2325ccf5d0f4a3613cb6a9e"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "398c8971231fece557446c2057d0b784c8ef91e12595a67a7b125f166511ac64",
+      "pass": true,
+      "result_of": "bundle:bb579840f66bd1b111d097eaa8b38d5b2f4fb80468f4063383e6aaad40a6292b"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "4d8991deac891303864df9bed832e0d02fef25b46730b70e75959afff8ff60e9",
+      "pass": true,
+      "result_of": "bundle:2d584d35bbbb3bfb2398a491310224290fbf0c17f0f2c3a0171c979b3483bbe9"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "8592aea7101f4e2d2221375e221ccdc88e0529bc8c17e0a1d279c9a53b9aea53",
+      "pass": true,
+      "result_of": "bundle:aa80d9c51ae4c31d584be6fc778e46a175aa580b7fa99f82de485c1bd1aac970"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "e039a747bb0d29623a3946b159ad1f017ee7a656a42fcce1ee0b87f388640fc9",
+      "pass": true,
+      "result_of": "bundle:46362c0e3facbd35f5764c349cca56d3dfafc689830d879b933b67b9cb3e5643"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "222081d55c8bf611e49aa0d3e85846b6668e7588bab4d1beac394581e331ca19",
+      "pass": true,
+      "result_of": "bundle:5b32b702990a8a6c0bbb35593e8e88e21cc35d584860fca3c983bee98749662c"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "2e01060733a955fefee9ae50cc25bbd3043998ebfcc5e732891841021aa20119",
+      "pass": true,
+      "result_of": "bundle:71e32c376c9e340b6aac03f5dd176424bc7f61614fb2b48f77cd7664d991c6d8"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "0ac15b1fee449f505845be77cb211d1400e6e354d9954a34bb298d0815716593",
+      "pass": true,
+      "result_of": "bundle:8786267af4c26ec9872616154473d34c114e881f8bced3407d76015c5448b84d"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "f499810f29e7f779e4d68c8b6fe0799292fa77b241fe0aec8da9340a4106b715",
+      "pass": true,
+      "result_of": "bundle:53debacbad63d0ddbd1523481f437a7750eacdfb70c60b27f37567c067557228"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "c29df68c21b7391ae0a49e0d8f2ed19a6f2e6c5243d19ee4d93293cbfdc250a2",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:2d584d35bbbb3bfb2398a491310224290fbf0c17f0f2c3a0171c979b3483bbe9",
+      "text": "真正的险关在五比六。自己的发球局，刘婧文一次次拿到盘点，她必须一分一分救回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "真正的显观在五比六。自己的发球局,刘婧文一次次拿到盘点,他必须一分一分救回来。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.087,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "真正 ｜ 的 ｜ 险关 ｜ 在 ｜ 五比六 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 刘婧文 ｜ 一次次 ｜ 拿 ｜ 到 ｜ 盘点 ｜ 她 ｜ 必须 ｜ 一 ｜ 分 ｜ 一 ｜ 分 ｜ 救 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:46362c0e3facbd35f5764c349cca56d3dfafc689830d879b933b67b9cb3e5643",
+      "text": "六个盘点，一个没让对手兑现。六比六，孙心然把比赛带到抢七，这一次，她要把胜利拿到手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6个盘点,1个没让对手对线。6比6,孙心然把比赛带到抢七,这一次他要把胜利拿到手。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.748,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六个 ｜ 盘点 ｜ 一个 ｜ 没 ｜ 让 ｜ 对手 ｜ 兑现 ｜ 六比六 ｜ 孙心然 ｜ 把 ｜ 比赛 ｜ 带 ｜ 到 ｜ 抢 ｜ 七 ｜ 这 ｜ 一次 ｜ 她 ｜ 要 ｜ 把 ｜ 胜利 ｜ 拿 ｜ 到手"
+      }
+    },
+    {
+      "id": "bundle:53debacbad63d0ddbd1523481f437a7750eacdfb70c60b27f37567c067557228",
+      "text": "走到网前，和对手握手，现场的掌声还在继续。第二次参加巡回赛正赛，她已经站到四强。这一次，你会记住她救回的哪一分？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "走到往前,和对手握手,现场的掌声还在继续。第二次参加巡回赛正赛,他已经占到四墙。这一次,你会记住他就回得哪一分。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.436,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.932,
+        "cps": 4.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "走 ｜ 到 ｜ 网 ｜ 前 ｜ 和 ｜ 对手 ｜ 握手 ｜ 现场 ｜ 的 ｜ 掌声 ｜ 还 ｜ 在 ｜ 继续 ｜ 第二次 ｜ 参加 ｜ 巡回 ｜ 赛 ｜ 正 ｜ 赛 ｜ 她 ｜ 已经 ｜ 站 ｜ 到 ｜ 四 ｜ 强 ｜ 这 ｜ 一次 ｜ 你 ｜ 会 ｜ 记住 ｜ 她 ｜ 救 ｜ 回 ｜ 的 ｜ 哪 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:5b32b702990a8a6c0bbb35593e8e88e21cc35d584860fca3c983bee98749662c",
+      "text": "抢七先拿一分，她继续向前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "抢七仙拿一分,他继续向前。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.288,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢 ｜ 七 ｜ 先 ｜ 拿 ｜ 一 ｜ 分 ｜ 她 ｜ 继续 ｜ 向前"
+      }
+    },
+    {
+      "id": "bundle:5da671f60e6aeb78748227309d08beaf7567bf647021288d6fcda26cabb5469b",
+      "text": "刘婧文追到五比五。孙心然随后再破一局，六比五，又轮到她为这一盘发球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "刘婧文追到5比5。孙心然随后再破一局,6比5,又轮到他为这一盘发球。"
+      },
+      "polyphones": [
+        {
+          "index": 31,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.368,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "刘婧文 ｜ 追 ｜ 到 ｜ 五比五 ｜ 孙心然 ｜ 随后 ｜ 再 ｜ 破 ｜ 一 ｜ 局 ｜ 六比五 ｜ 又 ｜ 轮 ｜ 到 ｜ 她 ｜ 为 ｜ 这 ｜ 一 ｜ 盘 ｜ 发球"
+      }
+    },
+    {
+      "id": "bundle:71e32c376c9e340b6aac03f5dd176424bc7f61614fb2b48f77cd7664d991c6d8",
+      "text": "二比一之后，孙心然拉开差距。六比二，赛点来到自己这边。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2比1之后,孙心然拉开差距。6比2,赛点来到自己这边。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 5.035,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二比一 ｜ 之后 ｜ 孙心然 ｜ 拉开 ｜ 差距 ｜ 六比二 ｜ 赛点 ｜ 来到 ｜ 自己 ｜ 这边"
+      }
+    },
+    {
+      "id": "bundle:7e2035df68759997d030522029560a6be9176a05380fa3f995e1f5583c8190c6",
+      "text": "北京时间十月三十号，广州四分之一决赛。十六岁的孙心然，七比五、七比六击败刘婧文，首次闯进巡回赛四强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间十月三十号,广州四分之一决赛。十六岁的孙心然,七比五,七比六击败刘婧文,首次闯进循回赛四墙。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.281,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十月三十号 ｜ 广州 ｜ 四分之一 ｜ 决赛 ｜ 十六岁 ｜ 的 ｜ 孙心然 ｜ 七比五 ｜ 七比六 ｜ 击败 ｜ 刘婧文 ｜ 首次 ｜ 闯进 ｜ 巡回 ｜ 赛 ｜ 四 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:8786267af4c26ec9872616154473d34c114e881f8bced3407d76015c5448b84d",
+      "text": "制胜分二十三比三十八，非受迫性失误二十二比四十四。她赢的，是更少送掉的机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.059,
+        "longest_deletion": 0,
+        "transcript": "区称分23比38,非受迫性15, 22比44。他赢的,是更少送掉的机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.205,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "制胜 ｜ 分 ｜ 二十三 ｜ 比 ｜ 三十八 ｜ 非 ｜ 受迫 ｜ 性 ｜ 失误 ｜ 二十二比 ｜ 四十四 ｜ 她 ｜ 赢 ｜ 的 ｜ 是 ｜ 更 ｜ 少 ｜ 送 ｜ 掉 ｜ 的 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:8ad58c8d396edc11a2c2fbf9dd560552fead0cfcc2325ccf5d0f4a3613cb6a9e",
+      "text": "七比五，首盘收好。第二盘没有那么快分出高下，双方一路守到后半盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "7比5,手盘收好,第二盘没有那么快分出高下,双方一路守到后半盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.203,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七比五 ｜ 首盘 ｜ 收 ｜ 好 ｜ 第二盘 ｜ 没有 ｜ 那么 ｜ 快 ｜ 分出 ｜ 高下 ｜ 双方 ｜ 一路 ｜ 守 ｜ 到 ｜ 后 ｜ 半 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:aa80d9c51ae4c31d584be6fc778e46a175aa580b7fa99f82de485c1bd1aac970",
+      "text": "两个盘点，先救这一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两个盘点,先就这一分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 1.981,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两个 ｜ 盘点 ｜ 先 ｜ 救 ｜ 这 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bb579840f66bd1b111d097eaa8b38d5b2f4fb80468f4063383e6aaad40a6292b",
+      "text": "次盘四比五，自己的发球局必须守住。孙心然把球送向对手两侧，再争一次主动。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "次盘4比5,自己的发球局必须守住。孙心然把球送向对手两侧,再争一次主动。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.557,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "次 ｜ 盘 ｜ 四比五 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 必须 ｜ 守 ｜ 住 ｜ 孙心然 ｜ 把 ｜ 球 ｜ 送 ｜ 向 ｜ 对手 ｜ 两侧 ｜ 再 ｜ 争 ｜ 一次 ｜ 主动"
+      }
+    },
+    {
+      "id": "bundle:ffd19ab653529387b1c9f6a735f8ff757d45eaec5ce43bd9b975e2b1e0edd992",
+      "text": "首盘五比三领先，孙心然在底线拉开角度，这一拍反手终于打穿。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘5比3领先,孙心然在底线拉开角度,这一拍反手终于打穿。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.165,
+        "cps": 5.03,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 五比三 ｜ 领先 ｜ 孙心然 ｜ 在 ｜ 底线 ｜ 拉开 ｜ 角度 ｜ 这 ｜ 一 ｜ 拍反手 ｜ 终于 ｜ 打穿"
+      }
+    }
+  ]
+}
