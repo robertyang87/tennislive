@@ -200,8 +200,10 @@ add(300,301,(S,lt,d)=>{
 // ===== 封面 C（许先森风，t=302）：高空斜俯整座球场，12 道视线在将落地的球上汇聚 =====
 add(302,303,(S,lt,d)=>{
   S.setCams(1,0.25); S.coneMat.uniforms.uOp.value=0.32; S.bloom.strength=1.05;
-  const tb=S.TB-0.06; S.setBall(tb,1,0.12,0.06);
+  // 球正好落在底线上：球心在底线外沿外 3.5 cm，接触椭圆压住 10 cm 宽的底线（所有者 2026-10-30：落点要压在底线）
+  S.baseStripMat.opacity=1; S.replayFoot.material.opacity=0.95; S.replayFootRim.material.opacity=1;
+  S.setBall(S.TB,1,0.16,0.06);
   S.camRigs.forEach(c=>S.setRay(c,S.ball.position.clone(),0.9));
-  S.hitFlare.position.copy(S.ball.position); S.hitFlare.material.opacity=0.7; S.hitFlare.scale.setScalar(2.2);
-  S.cam(S.V(-26,30,S.L+30),S.V(-1.0,0,S.L-6),40);
+  S.hitFlare.position.copy(S.LAND); S.hitFlare.material.opacity=0.55; S.hitFlare.scale.setScalar(1.2);
+  S.cam(S.V(-17,19,S.L+17),S.V(-1.3,0,S.L-2.5),38);
 });
