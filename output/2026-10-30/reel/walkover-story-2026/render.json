@@ -1,0 +1,100 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "95305110d209520cc24ac11d79529199da5b0a79fdf9a70d7dbb5fd7349ecf92",
+    "request_count": 17,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-walkover-story-2026-95305110d209520c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-walkover-story-2026-95305110d209520c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40979907717"
+  },
+  "cover_seconds": 2.41,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 433.49,
+  "topbar": null,
+  "film_seconds": 440.5,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 11.088,
+    "1": 6.504,
+    "2": 14.016,
+    "3": 19.608,
+    "4": 34.92,
+    "5": 27.696,
+    "6": 24.936,
+    "7": 9.072,
+    "10": 6.768,
+    "11": 7.536,
+    "13": 11.832,
+    "14": 35.136,
+    "15": 43.248,
+    "16": 41.232,
+    "17": 17.4
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "158d4845a24b3e40c03f5f49374c623cda03168656dc8fc679258e9dd1f68eec",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "walkover-story-2026",
+    "received_at": "2026-10-30T00:28:37Z",
+    "artifact_ready_at": "2026-10-30T00:40:01Z",
+    "elapsed_seconds": 684.711,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "0ec6d1336452f1a3533f7b492fa777a02fad8b5306b239dfdcc656c6ce9f9654",
+    "spec_sha256": "0f4e109959d73de65d9a9e4e969c69849fc035d2496c81c1555a0ed1ead55cc8",
+    "run_id": "40979907717",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-30T00:32:25Z",
+        "run_id": "40979907717"
+      }
+    ],
+    "render_seconds": 456.711,
+    "pre_render_seconds": 228.0
+  },
+  "film_sha256": "0ec6d1336452f1a3533f7b492fa777a02fad8b5306b239dfdcc656c6ce9f9654",
+  "film_bytes": 138300573,
+  "qc_attestation_sha256": "3390dc616193235e399c84d8e3e928d73f9ba51b283794ed021643d66509621d",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-30T00:32:25Z",
+      "run_id": "40979907717"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-30T00:40:05Z",
+      "run_id": "40979907717"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-walkover-story-2026/walkover-story-2026.mp4",
+  "video_bytes": 138300573
+}
