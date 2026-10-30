@@ -115,7 +115,7 @@
 
 ## 2026-10-30：新开第四个栏目 vibetennis（16:9 3D 科普）
 
-账号所有者原话：「你帮我单独在 tennislive 里建一个新的子栏目，叫 vibetennis」。Vibe 知识风格的网球感知/科学现象科普：16:9 横屏、宏大有质感的科幻 3D 全息场景、字幕锚定在内容旁边（不压底部）、音效跟画面对齐、无旁白、时长随内容约 3 分钟；左上角「网球时差」＋官方图标，片中不出现「VIBE 知识」。成片在本地预渲（Three.js），spec 在 `specs/vibetennis/`、产物在 `output/<日期>/vibetennis/<slug>/`，质检/门禁/推送是 `tools/vibetennis/` 自己的（标题、正文、复制页、PushPlus、发布账本复用赛场之上那套）。照「片子做完就合并、就推微信」：QC 过了 `push.auto=true`，合并即由 `auto-push-vibetennis.yml` 推送。流程与 TODO（16:9 片尾母版、BGM 授权、中文显示名）见 [docs/vibetennis.md](docs/vibetennis.md)，开工清单见 `skills/vibetennis-production/SKILL.md`。
+账号所有者原话：「你帮我单独在 tennislive 里建一个新的子栏目，叫 vibetennis」。Vibe 知识风格的网球感知/科学现象科普：16:9 横屏、宏大有质感的科幻 3D 全息场景、字幕锚定在内容旁边（不压底部）、音效跟画面对齐、无旁白、时长随内容约 3 分钟；左上角「网球时差」＋官方图标，片中不出现「VIBE 知识」。成片在本地预渲（Three.js），spec 在 `specs/vibetennis/`、产物在 `output/<日期>/vibetennis/<slug>/`，质检/门禁/推送是 `tools/vibetennis/` 自己的（标题、正文、复制页、PushPlus、发布账本复用赛场之上那套）。照「片子做完就合并、就推微信」：QC 过了 `push.auto=true`，合并即由 `auto-push-vibetennis.yml` 推送。流程与 TODO（16:9 片尾母版、BGM 授权、中文显示名）见 [docs/vibetennis.md](docs/vibetennis.md)，开工清单见 `skills/vibetennis-production/SKILL.md`。栏目使命（所有者同日原话）：「内容一定要精确且详实，同时深入浅出让普通人都能看得懂，同时用动画特效呈现效果抓住观众注意力，能持续看下去，并能引爆共鸣和二次传播」；六条怎么落地见该 skill「栏目使命」。
 
 ## 2026-10-23：全栏目转场卡按内容自适应并复用共用动效
 
