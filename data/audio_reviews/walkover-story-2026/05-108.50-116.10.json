@@ -1,0 +1,14 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4",
+  "source_sha256": "c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-30T07:34:41+00:00",
+  "reviewed_from": 108.5,
+  "reviewed_to": 116.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e，存于 data/source_asr/wo26sunwta1/small.en.json 与 data/source_asr/wo26sunwta1/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文",
+  "no_foreground_english_reason": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e，存于 data/source_asr/wo26sunwta1/small.en.json 与 data/source_asr/wo26sunwta1/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文。108.50–116.10s 两档转写都没有英文句子（疑似幻听的单档低置信句不计）。"
+}
