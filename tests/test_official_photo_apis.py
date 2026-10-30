@@ -407,9 +407,9 @@ def test_是不是决赛_看顶栏和轮次():
 
 # ---------------------------------------------------------------- ⑦ 预裁的抽帧也是抽帧
 
-#: 当前库存仍使用预裁视频帧的四条。Fernandez 已在 09-28 20:53Z 升级为 WTA 官方照片，
+#: 当前库存仍使用预裁视频帧的五条。Fernandez 已在 09-28 20:53Z 升级为 WTA 官方照片，
 #: 历史抽帧状态由 cover_upgrades 账本中的 previous_portrait 单独回放。
-PRECROPPED_FRAMES = {"cerundolo-zhou-chengdu-2026-r1",
+PRECROPPED_FRAMES = {"shi-tagger-guangzhou-2026-qf", "cerundolo-zhou-chengdu-2026-r1",
                      "shang-mannarino-chengdu-2026-r1", "tabilo-mannarino-chengdu-2026-r2",
                      "vacherot-harris-chengdu-2026-r2"}
 
