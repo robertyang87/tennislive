@@ -154,3 +154,14 @@ def test_修订单不许换成片(tmp_path):
     repo, slug, out, _ = _cover_revision_repo(tmp_path)
     with pytest.raises(publish_gate.Skip, match="成片"):
         publish_gate.revision_fingerprint(repo, slug, out, "e" * 64)
+
+
+def test_推送按钮写横版_别的栏目不变():
+    push = importlib.import_module("push")
+    from tennislive.render import push_style as ps
+    html = f'<p>x</p><a href="u">{ps.VIDEO_BUTTON_TEXT}</a>'
+    out = push.landscape_button(html)
+    assert "▶ 打开横版成片" in out and "竖版" not in out
+    assert ps.VIDEO_BUTTON_TEXT == "▶ 打开竖版成片", "共用模板（其他栏目）的按钮文字不该被改"
+    with pytest.raises(SystemExit):
+        push.landscape_button("<p>没有按钮</p>")
