@@ -2542,9 +2542,15 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{BG};
     return _render_html(html, out)
 
 
+#: 截图倍率。默认 1＝成片里那张 1080×1440；vibetennis 的高清封面（账号所有者
+#: 2026-10-30：「缺一张 3:4 的高清封面」）把它临时调成 2，同一份版式渲成
+#: 2160×2880，**版式、字号、留白一个都不变**，只是像素翻倍。
+POSTER_SCALE = 1
+
+
 def _render_html(html: str, out: Path) -> Path:
-    """把一段 HTML 渲成 1080×1440 的 JPEG。solo 和 VS 两条版式共用这一段，
-    免得浏览器查找的那串兜底路径在两处各写一遍、改一处漏一处。"""
+    """把一段 HTML 渲成 1080×1440 的 JPEG（`POSTER_SCALE` 倍像素）。solo 和 VS
+    两条版式共用这一段，免得浏览器查找的那串兜底路径在两处各写一遍、改一处漏一处。"""
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
@@ -2556,7 +2562,7 @@ def _render_html(html: str, out: Path) -> Path:
         # （tennislive.chromium：CHROMIUM_PATH → playwright 自报 → 通配 glob）
         browser = launch_chromium(pw, args=["--no-sandbox"])
         tab = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
-                               device_scale_factor=1)
+                               device_scale_factor=POSTER_SCALE)
         tab.goto(page.resolve().as_uri())
         tab.wait_for_timeout(600)
         tab.screenshot(path=str(out), type="jpeg", quality=95)

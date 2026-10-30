@@ -1,0 +1,131 @@
+name: auto-push-vibetennis
+
+# vibetennis 栏目：**合进 main 就自动发微信**（标题＋正文＋海报＋成片＋复制页）。
+#
+# 和 `auto-push-reel.yml` 同一个形状，闸全在 `tools/vibetennis/publish_gate.py`：
+# 路径形状 / L2 凭证与 spec·文案·海报·成片字节一致 / push.auto=true / 账本与
+# pushed.json 没发过 / 海报在仓库里 / 一趟最多一条。
+#
+# 这一栏的成片是会话里预渲好的 16:9 3D 整片（没有源片、没有旁白），所以这里不渲、
+# 不合成语音，只发消息。成片走 GitHub Release（`tools/vibetennis/release.py`）。
+on:
+  push:
+    branches: [main]
+    paths:
+      - "output/*/vibetennis/*/render.json"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: auto-push-vibetennis
+  cancel-in-progress: false
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout: |
+            .github
+            data/vibetennis_publish_ledger
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: |
+          pip install -q -e .
+          python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+
+      - name: 挑出该自动发的那一条
+        id: gate
+        run: |
+          CHANGED=$(git diff --diff-filter=AM --name-only HEAD^ HEAD -- 'output/*/vibetennis/*/render.json')
+          if [ -z "$CHANGED" ]; then
+            echo "[vibetennis] 这次没有动到任何 render.json。"
+            exit 0
+          fi
+          for f in $CHANGED; do git sparse-checkout add "$(dirname "$f")"; done
+          # shellcheck disable=SC2086
+          python tools/vibetennis/publish_gate.py --changed $CHANGED
+
+      - name: 预占发布账本（发送前）
+        id: reserve
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python tools/vibetennis/publish_gate.py --reserve "${{ steps.gate.outputs.outdir }}" \
+            --run "$RUN_URL" --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/vibetennis_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "vibetennis: 预占推送 ${{ steps.gate.outputs.slug }}"
+          source tools/git_push_retry.sh
+          if ! push_with_rebase_retry main 5; then
+            echo "::error::发送前账本没有落进 main，不允许发送"; exit 1
+          fi
+
+      - name: 推送到微信
+        if: steps.gate.outputs.found == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
+          TENNISLIVE_COPYPAGE_ATTEMPTS: "60"
+          TENNISLIVE_COPYPAGE_RETRY_SECONDS: "40"
+        run: |
+          python tools/vibetennis/push.py --outdir "${{ steps.gate.outputs.outdir }}" \
+            --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
+
+      - name: 记下已经推送过
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          python tools/vibetennis/publish_gate.py \
+            --record "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)" \
+            --receipt-file "$RUNNER_TEMP/pushplus-receipt.json"
+          python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
+            --slug "${{ steps.gate.outputs.slug }}" --summary "$GITHUB_STEP_SUMMARY" \
+            || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
+          git add --sparse "${{ steps.gate.outputs.outdir }}/pushed.json" \
+            "data/vibetennis_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          python tools/check_staged_file_sizes.py
+          git commit -m "vibetennis: ${{ steps.gate.outputs.slug }} 已自动推送"
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+
+      - name: 已预占后失败则标记状态不明
+        if: failure() && steps.reserve.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python tools/vibetennis/publish_gate.py --uncertain "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "data/vibetennis_publish_ledger/${{ steps.gate.outputs.slug }}.json"
+          git commit -m "vibetennis: ${{ steps.gate.outputs.slug }} 推送状态待核实" || exit 0
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main 5
+
+      - name: 失败时告警
+        if: failure() || cancelled()
+        run: |
+          {
+            echo "## ⚠️ vibetennis 自动推送失败"
+            echo "- slug：\`${{ steps.gate.outputs.slug }}\`"
+            echo "- 运行日志：${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "- 先看日志确认微信到底发出去没有，别盲目重发。"
+          } >> "$GITHUB_STEP_SUMMARY"
