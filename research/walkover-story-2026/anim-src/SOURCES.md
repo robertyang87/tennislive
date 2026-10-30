@@ -105,3 +105,34 @@ import-walkover-tlm-c03，run 40979021217，success）：
 
 视频流与本地 v3 逐字节一致（流哈希 7646599b… 双向核验），只补静音
 AAC 轨。spec 同轮换源 tlc → wo26tmlnc03（见 spec 改稿提交）。
+
+
+## 动画对齐版＋孙段实拍（2026-10-30 第六轮·v2 对齐重推）
+
+所有者 2026-10-30 13:25 拍板：本期全量对齐重推、孙心然段换实拍。六段
+动画按定版对齐标准（style-audit §6–7：系列 tokens／小签墨迹双轴居中
+≤2px／自带标题避让左上安全区、墨迹顶 ≥y190／光晕中间档视觉等效）重渲，
+时长与 v2 原速版逐项一致、旁白与画面文案逐字未动；孙段原进程动画
+（wo26sunpr02）退役，换 WTA 官网本场官方集锦实拍三窗＋医疗暂停补位
+动画一窗。存档工作流 import-walkover-aligned-sources（run 41017191635，
+success）：
+
+| 本地定版 | 存档 id（tag `source-<id>`） | 时长 | 存档文件 sha256 |
+|---|---|---|---|
+| horse-aligned.mp4（赛马起源·对齐版） | wo26horse04 | 37.0s | 9a291e2c5768d3f00752daa81c1df959d3d019c0e9cfea663f1d569acacbf09a |
+| notation-aligned.mp4（记号·对齐版） | wo26notat03 | 29.0s | c865394ea846fe7335cb67c2507c03af82cbfe6144fbf798b24faa19c6a47248 |
+| ledger-aligned-v3.mp4（积分账本·定版标杆） | wo26ledger3 | 27.0s | 0c1fb700b0da2e26c180279e77c620c3a2278b7dfca659c53b622562c296eb63 |
+| timeline-a-aligned.mp4（时间轴 a·对齐版） | wo26tmlna02 | 38.0s | 7603e66355eabd7ac5b37f7eb0efe089963369cfe3b6aeecad059654a01ee5e6 |
+| timeline-b-aligned.mp4（时间轴 b·对齐版） | wo26tmlnb03 | 45.5s | 34faaabcd10ae086ccf7768148190ee7acc91e19d80df8b1b985a1f89d2e5008 |
+| timeline-c-aligned.mp4（时间轴 c·对齐版） | wo26tmlnc04 | 43.5s | 4de7458706e6f8ca1f257773cf373e1793b026a5e53a4ac3b201e8f00805e475 |
+| sun-mto-aligned.mp4（孙段医疗暂停补位拍） | wo26sunmto1 | 5.5s | 3964fbefb3197c14abf138a393f83eb8115d9542a3d00bec521b57ce5e24e5f8 |
+| WTA 官网集锦（广州 R2 孙心然 vs 蒂莫费娃） | wo26sunwta1 | 290.1s | c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e |
+
+动画七段视频流与本地定版逐字节一致（流哈希双向核验），只补静音 AAC
+轨。wo26sunwta1 为 77,072,826 B，超 Git Data API 单 blob 上限，未走暂存
+提交：由存档工作流在 runner 上按金库 wta_download 同法（Brightcove
+Playback API，mediaId 6407619997112）直拉，上传前 sha256 与本地正本
+逐字一致校验通过；文件自带转播音轨、不补静音轨。其 720p 例外经所有者
+拍板，spec source_quality_exceptions 与 tools/build_match_reel.py 低清
+白名单（提交 d9cf6c77）双登记。spec 同轮换源（孙段按原句界拆四段、旁白
+拼接与原稿逐字一致），双档 ASR 与 probe 认领同轮补齐。
