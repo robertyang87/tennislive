@@ -88,3 +88,20 @@ import-walkover-v2-sources，run 40948524018，success）：
 
 视频流与本地 v2 逐字节一致（流哈希双向核验），只补静音 AAC 轨。
 spec 同轮换源＋摘除全部 speed（见 spec `_geometry_why` 追记）。
+
+## 时间轴 c 金句换字版（2026-10-30 第五轮）
+
+render run 40950042912 死在配音自动听审：定性句「省力不等于占便宜」
+的「便」uncertain。所有者定改法（本期金句四处同步）：「省力不等于
+躺赢」——spec 旁白 idx16、`editorial.takeaway.point`、xhs.txt 正文、
+时间轴 c 动画收尾卡面。render_tlm_v2.py 收尾卡同步换字重渲
+timeline-c-v3.mp4（43.5s 不变；与 v2 逐帧对照：费德勒场与汇总帧
+像素级一致，仅金句行变），照同一路线存档（工作流
+import-walkover-tlm-c03，run 40979021217，success）：
+
+| 本地 v3 | 存档 id（tag `source-<id>`） | 时长 | 存档文件 sha256 |
+|---|---|---|---|
+| timeline-c-v3.mp4（时间轴 c） | wo26tmlnc03 | 43.5s | 74c67d16a1340e90dbf4242e625258fe8dbe69d2e473e56a4898660329df0dc1 |
+
+视频流与本地 v3 逐字节一致（流哈希 7646599b… 双向核验），只补静音
+AAC 轨。spec 同轮换源 tlc → wo26tmlnc03（见 spec 改稿提交）。
