@@ -67,6 +67,9 @@ def test_每条spec的发布标题和正文都过得了推送那几道闸():
         assert column == "vibetennis"
         assert title.startswith("10.30vibetennis|") and len(title) <= 20
         assert body.strip()
+        # 所有者 2026-10-31：这一栏必带 #vibe知识大赏，不带两个中国赛季活动 tag
+        assert "#vibe知识大赏" in body and "#网球时差" in body
+        assert "#网球中国赛季来了" not in body and "#网球时间到" not in body
 
 
 def test_门禁只认这一栏的路径形状():

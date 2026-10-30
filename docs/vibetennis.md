@@ -40,6 +40,7 @@
 ## 7. 发布（tennislive 仓库）
 - 新建一集：`tools/vibetennis/episodes/`，输出放在 `output/<日期>/vibetennis/<slug>/`。
 - 推送标题格式：`MM.DDvibetennis|四字主题`。正文风格和其他子栏目一致。按钮文字是「▶ 打开横版成片」。
+- 正文 tag：必带 `#vibe知识大赏` 和 `#网球时差`，**不带** `#网球中国赛季来了`、`#网球时间到` 两个中国赛季活动 tag，总数 ≤5。由 `src/tennislive/render/hashtags.py` 的 `COLUMN_REQUIRED_TAGS` / `CAMPAIGN_EXEMPT_COLUMNS` 在推送正文和复制页两处统一处理（只对 vibetennis 生效，其他栏目不变）。
 - vibetennis 是新流水线，只要满足基本的业务流程要求就行，老栏目的检查项不能卡住它。
 - 通过 QC 后直接推送到微信，不用再问。推送完把 PushPlus 链接发给 Robert。
 - PushPlus 发出去的页面改不了。要换封面或文案只能重新推送，推之前先说明会多发一条消息。

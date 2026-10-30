@@ -863,17 +863,20 @@ def prepare_copy(copy_path: Path, outdir: Path, *, column: str = "", date: str =
     # 活动期必带的 tag 在**上限检查之后**补：手写超了照旧报错（那是写的人的事），
     # 没超的由这儿腾位置接上。复制页和微信正文都从这一段字出，spec 里手写的
     # `.xhs.txt` 不用逐条改。补成什么样打印出来，别默默改。
+    # 栏目先定下来：有的栏目（vibetennis）不带活动 tag、另有必带 tag，见
+    # `hashtags.COLUMN_REQUIRED_TAGS` / `CAMPAIGN_EXEMPT_COLUMNS`。
+    column = column or column_of(Path(copy_path))
     before = copy_text
-    copy_text = with_campaign_tags(copy_text)
+    copy_text = with_campaign_tags(copy_text, column=column)
     if copy_text != before:
-        print(f"[文案] 活动 tag 已补齐：{copy_text.splitlines()[-1]}")
+        print(f"[文案] 活动/栏目 tag 已补齐：{copy_text.splitlines()[-1]}")
 
     # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
     # 标题单独复制；正文不再带一遍日期、栏目和标题。
     # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
     # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
-    column = column or column_of(Path(copy_path))
+    # （`column` 已在上面补 tag 之前定好。）
     # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
     # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
     # 标题发出去。
