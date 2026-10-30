@@ -153,3 +153,9 @@ https://www.cnbc.com/2023/09/09/how-sonys-hawk-eye-works-at-the-us-open.html
 - 原链接现在 302 跳到新闻首页；页面当年是前端渲染，Wayback 四份快照与葡萄牙国家档案 Arquivo（2025-07-07）正文字数都是 0，接口无存档，Common Crawl 无抓取
 - 《每日电讯报》赛事报道：50 人团队、控制室名 "Ball Traffic Control"、每块场地 12 台相机；NZ Herald：50 名操作员、每场 12 台
 - 结论：「每块场地 12 台、50 名操作员」= BBC ＋ 电讯报 ＋ NZ Herald 三方一致；「144 块屏幕」只有 BBC
+
+## 17. 视频回看（video review）≠ 挑战电子司线（2026-10-30 所有者问起后查；搜索交叉，ATP 官网本会话读不到）
+- 温网 2026（2026-03 宣布）：中央球场、1 号球场等六块场地启用视频回看，不限次数；可回看 not-up、foul shot、touch 等主裁判罚；**电子司线的判罚不能挑战**（AP：Players will not be able to challenge the decisions of the electronic line calling (ELC) system）
+- 美网：2023 年起视频回看（首个大满贯；当年每盘 3 次，可回看两跳、触身、触网、干扰）；澳网 2025 年起
+- ATP 官方 2026 赛季公告：视频回看 2025 年覆盖全部大师赛，2026 年 ATP 500 全部场地，2027 年上 ATP 250；Live 电子司线继续覆盖全部 ATP 赛事
+- ⚠️ 所以第 13 节 BBC「no challenges … video replays are not used」只描述温网 2025，片中不再引用这句的「不放回放」
