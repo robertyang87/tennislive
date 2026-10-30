@@ -2,15 +2,20 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "one-handed-backhand-story-2026",
-  "written_at": "2026-10-29T03:17:46Z",
-  "code_sha": "7c72ee960e3333be0cf69f5082e6c36ff0685501",
-  "spec_sha256": "752950acb0c810e6bc179623dd59b8cfceedf93eb35827f4ed516db1926e34fb",
-  "film_sha256": "9254561d77de7e21e7401b6a8b630645e43cca7f6a9c4e2409cbd38d7de91cc1",
-  "film_bytes": 65923845,
-  "projection_sha256": "9c93339ade1657bd6369b2d65c708d1ba52d4030f79ca9fd969ded0ec939c79f",
+  "written_at": "2026-10-29T04:19:50Z",
+  "code_sha": "c4c41a09ae703e56e4df2a896a7cca7734cea5c0",
+  "spec_sha256": "558e11bd059eda4070553a4ce6a86d210255dd0ab072f3481d111c1f0555690c",
+  "film_sha256": "706a7d75d73de77fa13db19c42d9482ce51a961b4df6c73d9632c83de1eb57ff",
+  "film_bytes": 76846517,
+  "projection_sha256": "f575127084897ab53fd67918401e2a219845ba1a7e0d2d74e2309683d2ed6a87",
   "claims": [
     [
       "_claims"
+    ],
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
     ],
     [
       "cover",
@@ -22,7 +27,22 @@
     ],
     [
       "segments",
-      13,
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      5,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      14,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      15,
       "_quote_kind"
     ],
     [
@@ -42,7 +62,7 @@
     ],
     [
       "segments",
-      7,
+      5,
       "_frame_why"
     ],
     [
@@ -52,7 +72,7 @@
     ],
     [
       "segments",
-      11,
+      9,
       "_frame_why"
     ],
     [
@@ -67,8 +87,13 @@
     ],
     [
       "segments",
-      0,
-      "_quote_skip_why"
+      14,
+      "_frame_why"
+    ],
+    [
+      "segments",
+      15,
+      "_frame_why"
     ],
     [
       "segments",
@@ -82,22 +107,22 @@
     ],
     [
       "segments",
-      7,
-      "_quote_skip_why"
-    ],
-    [
-      "segments",
       8,
       "_quote_skip_why"
     ],
     [
       "segments",
-      11,
+      9,
       "_quote_skip_why"
     ],
     [
       "segments",
       12,
+      "_quote_skip_why"
+    ],
+    [
+      "segments",
+      13,
       "_quote_skip_why"
     ],
     [
@@ -127,12 +152,6 @@
     [
       "segments",
       4,
-      "voice",
-      "_why"
-    ],
-    [
-      "segments",
-      5,
       "voice",
       "_why"
     ],
@@ -180,17 +199,23 @@
     ],
     [
       "segments",
-      14,
+      13,
+      "voice",
+      "_why"
+    ],
+    [
+      "segments",
+      16,
       "voice",
       "_why"
     ]
   ],
   "assets": {},
   "artifacts": {
-    "audio_review_binding.json": "6750fb1fff0c2c3d555486c4c76142c7bac6530b4aedc9d7ef2a93dd4cf930ce",
-    "subtitles.ass": "f497cc20010b5dd99c7642ba813831b0dd00171776a2d293a7bd808291242b95",
+    "audio_review_binding.json": "e7f4c542fe34b5a5d769e4161f112ed19050c318baa675a209e428fba7e08a6b",
+    "subtitles.ass": "7a5f6703f4ac9d29d32b2822c473133e8c611e95fc77deddfe0b8480f8c7a4ba",
     "poster.jpg": "b059ced3d0c7d6b7e6c3c99e071261ebd00c71b25dc2d40d094314d52835a4ec",
-    "voice_quality_inventory.json": "fa3952b3b47ce97a9bab01a51a10dc2ab4922580ebd3537a7304042380aadbb3"
+    "voice_quality_inventory.json": "41ffdb1f4aec7ad7277b4edb8aeb97a5313d3680df7b037ca2dc0e4c00ff0aba"
   },
   "projection": {
     "slug": "one-handed-backhand-story-2026",
@@ -205,6 +230,9 @@
     "sources": {
       "rg15": "https://www.youtube.com/watch?v=JzLC_CVvLdw",
       "rg15qf": "https://www.youtube.com/watch?v=91kNzC5OeWU",
+      "uso16bh": "https://www.youtube.com/watch?v=QRLsLbg0mEU",
+      "fed": "https://www.youtube.com/watch?v=XpA-Cs2poEU",
+      "wbh": "https://www.youtube.com/watch?v=kyplW6HyR9c",
       "st": "https://www.youtube.com/watch?v=Kk87xmyiYVE",
       "rg06": "https://www.youtube.com/watch?v=aIm63srdIkA",
       "thiem": "https://www.youtube.com/watch?v=zujq-bvo2SM"
@@ -269,14 +297,22 @@
     },
     "segments": [
       {
-        "source": "rg15",
-        "start": 64.7,
-        "end": 74.6,
+        "source": "uso16bh",
+        "start": 19.9,
+        "end": 30.9,
+        "kind": "quote",
         "frame": "court",
         "cx": 0.5,
         "track": false,
         "fit": "crop",
-        "point_end_ok": "窗内一分打完（约 74 秒死球），74.6 收在切镜头之前。"
+        "point_end_ok": "这一分约 26.7 打完，之后是他握拳怒吼的反应镜头。",
+        "quote": [
+          {
+            "at": 8.1,
+            "end": 10.1,
+            "text": "The big winner from Stan.\n瓦林卡 一记大力制胜"
+          }
+        ]
       },
       {
         "source": "rg15",
@@ -356,6 +392,29 @@
           "pitch": "+0Hz"
         },
         "point_end_ok": "窗内一分约 86.2 打完，之后是瓦林卡近景反应。"
+      },
+      {
+        "source": "fed",
+        "start": 0.0,
+        "end": 20.3,
+        "kind": "quote",
+        "frame": "court",
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "point_end_ok": "这一分约 7.8 打完，之后是近景与慢放回放。",
+        "quote": [
+          {
+            "at": 7.9,
+            "end": 14.6,
+            "text": "That one simply didn't deviate from its path for one second, that was very well struck.\n这一拍没偏一点 打得真扎实"
+          },
+          {
+            "at": 15.6,
+            "end": 20.2,
+            "text": "Well this goes straight into the portfolio of astonishing backhands from Roger Federer.\n收进费德勒的神级反手集"
+          }
+        ]
       },
       {
         "title_card": "2024年2月\n前十没有单反",
@@ -499,6 +558,29 @@
         ]
       },
       {
+        "source": "wbh",
+        "start": 13.7,
+        "end": 21.1,
+        "kind": "quote",
+        "frame": "court",
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "point_end_ok": "慢放回放完整走到球落地（约 20.8），21.1 收在切镜头之前。",
+        "quote": [
+          {
+            "at": 3.5,
+            "end": 5.6,
+            "text": "That was some high octane hitting.\n真是火力全开的对攻"
+          },
+          {
+            "at": 6.3,
+            "end": 7.3,
+            "text": "It really was.\n确实如此"
+          }
+        ]
+      },
+      {
         "title_card": "单反\n还会回来吗",
         "kicker": "你怎么看",
         "seconds": 9.5,
@@ -512,14 +594,20 @@
       "rg15qf": "25fps（法网官方集锦），与主片一致。",
       "rg06": "25fps（法网官方 2006 决赛集锦，probe.json 实测），与主片一致；4:3 老转播居中 3:4 裁切。",
       "st": "实测原生60000/1001（美网官方 Extended Highlights，probe.json），按实际时长转换主片25fps，不改变速度。",
-      "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。"
+      "thiem": "实测原生60000/1001（美网官方 Condensed Match），按实际时长转换主片25fps，不改变速度。",
+      "uso16bh": "实测原生30000/1001（美网官方），按实际时长转换主片25fps，不改变速度。",
+      "fed": "实测原生30000/1001（Tennis TV 官方），按实际时长转换主片25fps，不改变速度。",
+      "wbh": "25fps（Tennis TV 官方），与主片一致。"
     },
     "source_fallbacks": {
       "rg15": "https://github.com/robertyang87/tennislive/releases/download/source-JzLC_CVvLdw/JzLC_CVvLdw.mp4",
       "rg15qf": "https://github.com/robertyang87/tennislive/releases/download/source-91kNzC5OeWU/91kNzC5OeWU.mp4",
       "st": "https://github.com/robertyang87/tennislive/releases/download/source-Kk87xmyiYVE/Kk87xmyiYVE.mp4",
       "rg06": "https://github.com/robertyang87/tennislive/releases/download/source-aIm63srdIkA/aIm63srdIkA.mp4",
-      "thiem": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4"
+      "thiem": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4",
+      "uso16bh": "https://github.com/robertyang87/tennislive/releases/download/source-QRLsLbg0mEU/QRLsLbg0mEU.mp4",
+      "fed": "https://github.com/robertyang87/tennislive/releases/download/source-XpA-Cs2poEU/XpA-Cs2poEU.mp4",
+      "wbh": "https://github.com/robertyang87/tennislive/releases/download/source-kyplW6HyR9c/kyplW6HyR9c.mp4"
     }
   }
 }

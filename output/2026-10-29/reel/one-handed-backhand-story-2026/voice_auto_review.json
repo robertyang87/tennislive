@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "bdb2de218e9b2eb6a2f43db52ef2b006fcdf60117fbb062130a5f8db9899daae",
-    "render_inputs_sha256": "2742fa48338e02d1edf295fadd46f9e3a411599b40af85ab57615f4af8796722",
-    "spec_sha256": "752950acb0c810e6bc179623dd59b8cfceedf93eb35827f4ed516db1926e34fb",
-    "film_sha256": "9254561d77de7e21e7401b6a8b630645e43cca7f6a9c4e2409cbd38d7de91cc1",
-    "inventory_sha256": "fa3952b3b47ce97a9bab01a51a10dc2ab4922580ebd3537a7304042380aadbb3"
+    "render_sha256": "ae138c641dfea797352d1c8c1f85daf2daa61c5c7fff38bc73e691ef8111cbcc",
+    "render_inputs_sha256": "9cdeff1c034ed1ef775fc02a947be167f261006b688236ffbec567f10358a047",
+    "spec_sha256": "558e11bd059eda4070553a4ce6a86d210255dd0ab072f3481d111c1f0555690c",
+    "film_sha256": "706a7d75d73de77fa13db19c42d9482ce51a961b4df6c73d9632c83de1eb57ff",
+    "inventory_sha256": "41ffdb1f4aec7ad7277b4edb8aeb97a5313d3680df7b037ca2dc0e4c00ff0aba"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-29T03:19:49+00:00",
+  "reviewed_at": "2026-10-29T04:21:39+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -137,55 +137,55 @@
       "result_of": "bundle:b7cd8a5cbf20a1512ce57fe8fa1fb2a9b85948a777ae1f3fb577c0326d57621f"
     },
     {
-      "id": "voice_05.mp3",
+      "id": "voice_06.mp3",
       "audio_sha256": "62a17ce3d9b1d9bd1a2a8395722b8c63e58444b6fa543cdf45266d24403d32f8",
       "pass": true,
       "result_of": "bundle:c000b027e98645478ded81fed1360cc61152364ac438ae13c848224ada658758"
     },
     {
-      "id": "voice_06.mp3",
+      "id": "voice_07.mp3",
       "audio_sha256": "d3cf80c25423b3d2179f109bda6ed7cd9623d5aa3db24127be5c1174c6619d05",
       "pass": true,
       "result_of": "bundle:e14937c0062cb5b0f64f98bab77ab1a389e7b192631a49206a33cf34a12c4ee4"
     },
     {
-      "id": "voice_07.mp3",
+      "id": "voice_08.mp3",
       "audio_sha256": "7c5ce67dff53a835132f18a42dc9a237604648e9952dc5163a91c9167dca28b3",
       "pass": true,
       "result_of": "bundle:54ceb82a0214bc4dfea39692ba57e3e935595ce68a222fc6d6be6e15bb9bafd2"
     },
     {
-      "id": "voice_08.mp3",
+      "id": "voice_09.mp3",
       "audio_sha256": "f94599aa11262325fd23038143203203cf3fe9607826ed85d4b203ffcac6d06d",
       "pass": true,
       "result_of": "bundle:e14200614c77e0b42e74c3b11cef2b7068652bb3f54aa33d5cd86df50ab00196"
     },
     {
-      "id": "voice_09.mp3",
+      "id": "voice_10.mp3",
       "audio_sha256": "bde66a08a86cf05ee44ec0a2b6aade2e5ace43e486d860ed5cd8cbaae718e1dc",
       "pass": true,
       "result_of": "bundle:372d23189392b8b32921f4bd3aa0bdbb4e9cca81f20c4914cc5ecf08236a2088"
     },
     {
-      "id": "voice_10.mp3",
+      "id": "voice_11.mp3",
       "audio_sha256": "d61ab9758c78887152f40004e50e201bdb5e9be528bd09b46b075fb3e9cae660",
       "pass": true,
       "result_of": "bundle:d9c2571aa532b4a84d93f27e1ffab7ad5fc241d80090283e5ac3497b8351f777"
     },
     {
-      "id": "voice_11.mp3",
+      "id": "voice_12.mp3",
       "audio_sha256": "d837df52b8e21a18afc0c40897ce49bc94e222c0d2488e5e0f141ac7b33d29c7",
       "pass": true,
       "result_of": "bundle:7e9fd30449859f7a8f4e676f9c4ddb63ace33262d56ebc73103119a8a6ff0cf9"
     },
     {
-      "id": "voice_12.mp3",
+      "id": "voice_13.mp3",
       "audio_sha256": "d225ab168ba95dec05882ae82d5c95b7c15ebda8814152f60995c1f349fd9305",
       "pass": true,
       "result_of": "bundle:fbd30d3f42153ed4d8382e29d98c390eca2075e7a23b589f27d40fffe455925f"
     },
     {
-      "id": "voice_14.mp3",
+      "id": "voice_16.mp3",
       "audio_sha256": "5a18bb9d9a3502b8ad3c17708eda674914510979142238c70682871e2a5303ad",
       "pass": true,
       "result_of": "bundle:c54da9413a4f399af2aaeb0f44e277be6204651206d066904dcf6e60080fc8d1"
@@ -332,7 +332,7 @@
         "substituted": 1,
         "sub_ratio": 0.021,
         "longest_deletion": 0,
-        "transcript": "第一,爬高球,谈到肩膀那么高的上旋球,一只手很难发力。纳达尔对费德勒,用的就是这一招,一拍一拍,压向他的反手。"
+        "transcript": "第一,爬高球。谈到肩膀那么高的上旋球,一只手很难发力。纳达尔对费德勒,用的就是这一招,一拍一拍,压向他的反手。"
       },
       "polyphones": [
         {
@@ -409,7 +409,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "男子大猛冠最后一个单反冠军是2020年美网的地姆。决赛他先丢两盘,逆转了自为列夫。"
+        "transcript": "男子大猛冠最后一个单反冠军是2020年没网的地姆。决赛他先丢两盘,逆转了自为列夫。"
       },
       "polyphones": [],
       "pauses": {
@@ -467,13 +467,13 @@
             "dei3"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "de2",
-              "verdict": "correct",
-              "score": 0.968,
-              "confidence": "low",
+              "verdict": "unreliable",
+              "score": 0.861,
+              "confidence": null,
               "near": "intended"
             }
           ],
@@ -617,13 +617,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "unreliable",
-              "score": 0.144,
-              "confidence": null,
+              "verdict": "correct",
+              "score": 0.224,
+              "confidence": "low",
               "near": null
             }
           ],
@@ -643,7 +643,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.516,
+              "score": 0.501,
               "confidence": "medium",
               "near": null
             }
@@ -814,19 +814,19 @@
             "lao4"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "la4",
-              "verdict": "correct",
-              "score": 0.466,
-              "confidence": "medium",
+              "verdict": "uncertain",
+              "score": 0.108,
+              "confidence": null,
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "correct",
-              "score": 0.648,
+              "score": 0.632,
               "confidence": "medium",
               "near": null
             }
