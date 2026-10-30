@@ -24,6 +24,15 @@ _EXPENDABLE = (
     "#赛场之上", "#赛后开麦", "#网球有故事", "#vibetennis",
 )
 _PROTECTED = ("#网球时差",)
+
+# 栏目级 tag 规则（只管列在这里的栏目，别的栏目照旧走活动 tag）。
+# vibetennis：账号所有者 2026-10-31「#vibe知识大赏 我们这个管线视频带上这个 tag，
+# 把之前中国相关的两个 tag 拿掉」——这一栏**必带** `#vibe知识大赏`、**不带**
+# `CAMPAIGN_TAGS`（手写进正文的也剔掉）。键是 `push_reel.column_of` 读出的栏目名。
+COLUMN_REQUIRED_TAGS: dict[str, tuple[str, ...]] = {
+    "vibetennis": ("#vibe知识大赏",),
+}
+CAMPAIGN_EXEMPT_COLUMNS = frozenset({"vibetennis"})
 _HASHTAG_RE = re.compile(r"(?<!\w)#[^\s#]+")
 
 
@@ -74,13 +83,19 @@ def _tidy(text: str) -> str:
 
 
 def with_campaign_tags(text: str, today: date | None = None,
-                       limit: int = MAX_HASHTAGS) -> str:
+                       limit: int = MAX_HASHTAGS, *, column: str = "") -> str:
     """把活动 tag 接到正文最后一行 tag 的末尾，总数仍然不超过 ``limit``。
 
     超了就按 `_EXPENDABLE` 的顺序先挤泛词和栏目名，再从末尾往前挤，
     `_PROTECTED` 最后才动。正文里本来就写了活动 tag 的，挪到末尾、不重复。
     活动期外原样返回。
+
+    传了 ``column`` 且它在 `CAMPAIGN_EXEMPT_COLUMNS` / `COLUMN_REQUIRED_TAGS` 里的，
+    改走 `_with_column_tags`：剔掉活动 tag、补上栏目必带 tag。
     """
+    column = (column or "").strip()
+    if column in CAMPAIGN_EXEMPT_COLUMNS or column in COLUMN_REQUIRED_TAGS:
+        return _with_column_tags(text, column, limit)
     required = campaign_tags(today)
     if not required:
         return text
@@ -100,6 +115,37 @@ def with_campaign_tags(text: str, today: date | None = None,
     last = max((i for i, ln in enumerate(lines) if _HASHTAG_RE.search(ln)),
                default=-1)
     added = " ".join(required)
+    if last < 0:
+        return f"{text}\n\n{added}" if text else added
+    lines[last] = f"{lines[last]} {added}"
+    return "\n".join(lines)
+
+
+def _with_column_tags(text: str, column: str, limit: int = MAX_HASHTAGS) -> str:
+    """栏目级规则：豁免活动 tag 的栏目剔掉 `CAMPAIGN_TAGS`；必带 tag 已写就原地不动，
+    没写就接到最后一行 tag 末尾。超上限时按 `_EXPENDABLE` 挤，必带和 `_PROTECTED` 不挤。"""
+    if column in CAMPAIGN_EXEMPT_COLUMNS:
+        for tag in CAMPAIGN_TAGS:
+            text = _drop_tag(text, tag)
+    required = COLUMN_REQUIRED_TAGS.get(column, ())
+    present = set(_HASHTAG_RE.findall(text))
+    missing = [t for t in required if t not in present]
+    others = [t for t in dict.fromkeys(_HASHTAG_RE.findall(text)) if t not in required]
+    budget = max(0, limit - len(required))
+    while len(others) > budget:
+        victim = next((t for t in _EXPENDABLE if t in others), None)
+        if victim is None:
+            rest = [t for t in others if t not in _PROTECTED]
+            victim = rest[-1] if rest else others[-1]
+        others.remove(victim)
+        text = _drop_tag(text, victim)
+    text = _tidy(text)
+    if not missing:
+        return text
+    lines = text.splitlines()
+    last = max((i for i, ln in enumerate(lines) if _HASHTAG_RE.search(ln)),
+               default=-1)
+    added = " ".join(missing)
     if last < 0:
         return f"{text}\n\n{added}" if text else added
     lines[last] = f"{lines[last]} {added}"

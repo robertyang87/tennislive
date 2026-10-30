@@ -74,5 +74,39 @@ def test_三条视频线的出口都接了活动tag():
     # 竖版短片／采访片走 push_reel，解说片走 explainer_xiaohongshu——少接一处就有一条线漏。
     from pathlib import Path
     root = Path(__file__).resolve().parents[1]
-    assert "with_campaign_tags(copy_text)" in (root / "tools/push_reel.py").read_text(encoding="utf-8")
+    assert "with_campaign_tags(copy_text, column=column)" in (root / "tools/push_reel.py").read_text(encoding="utf-8")
     assert "return with_campaign_tags(" in (root / "src/tennislive/video/explainer.py").read_text(encoding="utf-8")
+
+
+# ── 栏目级规则：vibetennis 必带 #vibe知识大赏、不带两个活动 tag（所有者 2026-10-31）──
+from tennislive.render.hashtags import COLUMN_REQUIRED_TAGS  # noqa: E402
+
+
+def test_vibetennis不带活动tag_必带vibe知识大赏():
+    assert COLUMN_REQUIRED_TAGS["vibetennis"] == ("#vibe知识大赏",)
+    text = "正文。\n\n#vibetennis #vibe知识大赏 #网球 #视觉科学 #网球时差"
+    out = with_campaign_tags(text, _IN, column="vibetennis")
+    assert out == text  # 已经写齐的原样不动、不挪位置
+    for tag in CAMPAIGN_TAGS:
+        assert tag not in out
+
+
+def test_vibetennis手写了活动tag也剔掉_缺必带的补上且不超上限():
+    text = "正文。\n\n#vibetennis #网球 #视觉科学 #网球时差 #网球时间到"
+    out = with_campaign_tags(text, _IN, column="vibetennis")
+    last = out.splitlines()[-1]
+    assert "#网球时间到" not in out and "#网球中国赛季来了" not in out
+    assert last.endswith("#vibe知识大赏") and "#网球时差" in last
+    assert hashtag_count(out) <= MAX_HASHTAGS
+    full = "正文。\n\n#vibetennis #网球 #视觉科学 #光学 #网球时差"
+    out = with_campaign_tags(full, _IN, column="vibetennis")
+    assert hashtag_count(out) == MAX_HASHTAGS
+    assert "#vibe知识大赏" in out and "#网球时差" in out and "#网球 " not in out + " "
+
+
+def test_别的栏目照旧带活动tag_不带vibe知识大赏():
+    reel = "正文。\n\n#赫瓦林斯卡 #奥利尼科娃 #网球时差"
+    for column in ("", "赛场之上", "赛后开麦", "网球有故事"):
+        out = with_campaign_tags(reel, _IN, column=column)
+        assert out == with_campaign_tags(reel, _IN)
+        assert "#网球时间到" in out and "#vibe知识大赏" not in out
