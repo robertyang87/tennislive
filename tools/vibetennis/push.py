@@ -25,8 +25,20 @@ sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parents[1] / "src"))
 
 import push_reel as pr  # noqa: E402
+from tennislive.render import push_style as ps  # noqa: E402
 from common import SPEC_DIR  # noqa: E402
 from publish_gate import validate_qc  # noqa: E402
+
+
+# 这一栏是 16:9 横屏成片；共用推送模板的按钮写的是「竖版」。只在这一栏替换按钮文字，
+# 不改 push_style / push_reel（别的栏目不变，reel 修订单钉住的主题源码哈希也不动）。
+LANDSCAPE_BUTTON_TEXT = "▶ 打开横版成片"
+
+
+def landscape_button(html: str) -> str:
+    if html.count(ps.VIDEO_BUTTON_TEXT) != 1:
+        raise SystemExit(f"推送 HTML 里「{ps.VIDEO_BUTTON_TEXT}」不是恰好一处，模板变了，先看一眼")
+    return html.replace(ps.VIDEO_BUTTON_TEXT, LANDSCAPE_BUTTON_TEXT)
 
 
 def compose(outdir: Path) -> tuple[str, str, str, str]:
@@ -44,7 +56,7 @@ def compose(outdir: Path) -> tuple[str, str, str, str]:
         raise SystemExit("海报不在，不推")
     html = pr.build_html(url, pr.copy_page_url(outdir), meta.get("lead", ""), text, poster,
                          column=column)
-    return title, body, html, url
+    return title, body, landscape_button(html), url
 
 
 def main() -> int:
