@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "9eb7a2b160c5fa1fc4b12c9c12bbd15ed261890beb3551cb5285025979fb46de",
-    "render_inputs_sha256": "58badcfc8d2f1af6147c7f803db7a396cf1e2b221e410ea38d5aad7d1e91de99",
-    "spec_sha256": "20c95b40f143f104a200f36e0f309589548f301dc67902d057950ac4b97709d1",
-    "film_sha256": "dc4279b4cf3cd56f8c0144cc81689ab064fad69fec3abbe92b2cc92f66cd6c6f",
+    "render_sha256": "8154cf32872497dc7b6d16182c2274bdd9d2859d61b3aa45c9c0c54c90c43d7d",
+    "render_inputs_sha256": "c27b4866642c5c91bde965c2a4d9db09511ce6853ebc723c4fd17e359ed1f928",
+    "spec_sha256": "16438ddc54a5b5e0aa8f3885566988f6d922b61a8c1f2fb27438894abcf538ce",
+    "film_sha256": "b7f2a216760417cb8f4a12b24dc470ea6db7af668f6612c1edc184846a5150ad",
     "inventory_sha256": "90c67f482a4bfa6ad9eddeafeed32f1324841a5587cecb11b166a906639e509f"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-30T11:36:19+00:00",
+  "reviewed_at": "2026-10-30T12:14:15+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -441,7 +441,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "然后,剧本翻了,地母连班两盘,抢妻所定胜局。四小时零两分钟,自为列夫把到手的冠军打得出去。"
+        "transcript": "然后,剧本翻了,地母连班两盘,抢七所定胜局。四小时零两分钟,自为列夫把到手的冠军打得出去。"
       },
       "polyphones": [],
       "pauses": {
@@ -518,7 +518,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2026年的1月,同样的剧本差点又演一遍。澳网半决赛,他和阿尔卡拉斯打了5小时27分钟。"
+        "transcript": "2026年的1月,同样的剧本差点又演一遍,澳网半决赛,他和阿尔卡拉斯打了5小时27分钟。"
       },
       "polyphones": [],
       "pauses": {
@@ -656,7 +656,7 @@
         "substituted": 2,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "半年后,巴黎,这一回,千表先替他让开了路,阿尔卡拉斯因伤缺席新纳第二轮暴冷出局,得约止步第三轮,他一路没碰上一个世界前史。绝在对科博利,他第四盘抢七三比一领先被翻盘,还抽了剑。"
+        "transcript": "半年后,巴黎,这一回,千表先替他让开了路,阿尔卡拉斯因伤缺席新纳第二轮暴冷出局,得约止步第三轮,他一路没碰上一个世界前史。绝在对科博利,他第四盘抢七三比一领先被翻盘,还抽了箭。"
       },
       "polyphones": [
         {
@@ -823,12 +823,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 81,
-        "deleted": 0,
+        "deleted": 1,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "下周一,29岁的自维列夫,名字后面将第一次坠上世界第一。以他的年龄首登榜首,52年来只有一个人比他更晚。而第一次当上年终第一这件事,他比阿加西的记录还要老三天,是历史第一人。"
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 1,
+        "transcript": "下周一,29岁的自卫列夫名字后面将第一次坠上世界第一。以他的年龄手灯绑手,52年来只有一个人比他更晚。而第一次当上年中低着这件事,他比阿加西的记录还要老三天是历史低人。"
       },
       "polyphones": [
         {
@@ -1049,7 +1049,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决赛,他3比1拿下谢尔顿。赛点兑现的那一刻,他甚至没意识到比赛已经结束,转身走回底线,准备接发球,几秒之后才反应过来。30年了,德国人又一次在纽约捧碑。"
+        "transcript": "绝赛,他3比1拿下谢尔顿。赛点兑现的那一刻,他甚至没意识到比赛已经结束,转身走回底线,准备接发球,几秒之后才反应过来。30年了,德国人又一次在纽约捧碑。"
       },
       "polyphones": [
         {
@@ -1094,7 +1094,7 @@
         "substituted": 1,
         "sub_ratio": 0.025,
         "longest_deletion": 0,
-        "transcript": "2020年纽约、空荡荡的阿瑟、阿世球场。23岁的自卫列夫,第一次站上大满冠决赛,对手地姆。"
+        "transcript": "2020年纽约、空荡荡的阿瑟、阿世球场。23岁的自卫列夫第一次站上大满冠决赛对手地姆。"
       },
       "polyphones": [],
       "pauses": {
@@ -1158,7 +1158,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但账本的另一面必须摊开。这一年,他对辛纳灵圣武父全年只从对方手里抢下一盘,罚网夺冠,他没碰前十,年中第一,是在辛纳宣布赛季报销六天之后锁定的。质疑者说,这不是封王,是让位。而他的回答是。"
+        "transcript": "但账本的另一面必须摊开。这一年,他对辛纳灵圣武傅全年只从对方手里抢下一盘,罚网夺冠,他没碰前十,年中第一,是在辛纳宣布赛季报销六天之后锁定的。质疑者说,这不是封王,是让位。而他的回答是。"
       },
       "polyphones": [],
       "pauses": {
@@ -1190,7 +1190,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "故事到这里本来已经够圆满,但今年还没晚,温网他职业生涯第一次打进决赛,先赢一盘还是输给了辛娜。"
+        "transcript": "故事到这里本来已经够圆满,但今年还没晚,温网他职业生涯第一次打进决赛,先赢一盘,还是输给了辛娜。"
       },
       "polyphones": [
         {
@@ -1383,7 +1383,7 @@
         "substituted": 1,
         "sub_ratio": 0.011,
         "longest_deletion": 0,
-        "transcript": "诊断结果,又缴怀三条外侧韧带全部撕裂,随即手术。秋季又查出骨髓肿,整个赛季报销。七个月后,他才重新站上赛场,而他自己的说法是,网球又花了一年才找回来。那时没人再提2020年那句站回来,能站回来走路,已经算赢了。"
+        "transcript": "诊断结果,又缴怀三条外侧韧带全部撕裂随即手术。秋季又查出骨髓肿,整个赛季报销。七个月后,他才重新站上赛场,而他自己的说法是,网球又花了一年才找回来。那时没人再提2020年那句站回来,能站回来走路已经算赢了。"
       },
       "polyphones": [
         {

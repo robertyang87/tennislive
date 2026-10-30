@@ -5,15 +5,15 @@
     "schema": "tennislive.frozen-tts-bundle.v1",
     "bundle_sha256": "4972a522be98408fc21e094cf9f6bc1533de094e1ee597414158e66b7ed00ce3",
     "request_count": 27,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "release_tag": "reel-tts-zverev-no1-story-2026-4972a522be98408f",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zverev-no1-story-2026-4972a522be98408f/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41046543757"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41050994745"
   },
   "cover_seconds": 3.826,
   "cover_narrated": true,
@@ -67,44 +67,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "58badcfc8d2f1af6147c7f803db7a396cf1e2b221e410ea38d5aad7d1e91de99",
+  "render_inputs_sha256": "c27b4866642c5c91bde965c2a4d9db09511ce6853ebc723c4fd17e359ed1f928",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "zverev-no1-story-2026",
-    "received_at": "2026-10-30T11:13:42Z",
-    "artifact_ready_at": "2026-10-30T11:31:52Z",
-    "elapsed_seconds": 1090.405,
+    "received_at": "2026-10-30T11:50:49Z",
+    "artifact_ready_at": "2026-10-30T12:09:55Z",
+    "elapsed_seconds": 1146.713,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "dc4279b4cf3cd56f8c0144cc81689ab064fad69fec3abbe92b2cc92f66cd6c6f",
-    "spec_sha256": "20c95b40f143f104a200f36e0f309589548f301dc67902d057950ac4b97709d1",
-    "run_id": "41046543757",
+    "film_sha256": "b7f2a216760417cb8f4a12b24dc470ea6db7af668f6612c1edc184846a5150ad",
+    "spec_sha256": "16438ddc54a5b5e0aa8f3885566988f6d922b61a8c1f2fb27438894abcf538ce",
+    "run_id": "41050994745",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-30T11:18:31Z",
-        "run_id": "41046543757"
+        "at": "2026-10-30T11:56:26Z",
+        "run_id": "41050994745"
       }
     ],
-    "render_seconds": 801.405,
-    "pre_render_seconds": 289.0
+    "render_seconds": 809.713,
+    "pre_render_seconds": 337.0
   },
-  "film_sha256": "dc4279b4cf3cd56f8c0144cc81689ab064fad69fec3abbe92b2cc92f66cd6c6f",
-  "film_bytes": 344454334,
-  "qc_attestation_sha256": "0e4482ef99e996d33d96459e6d80673d9d4cd3e5aca74d90a41115ec8081f0bc",
+  "film_sha256": "b7f2a216760417cb8f4a12b24dc470ea6db7af668f6612c1edc184846a5150ad",
+  "film_bytes": 344151976,
+  "qc_attestation_sha256": "ab376c223934d7be250b54c12f05e178665e9ff582ba170979c74b48040a7588",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-30T11:18:31Z",
-      "run_id": "41046543757"
+      "at": "2026-10-30T11:56:26Z",
+      "run_id": "41050994745"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-30T11:31:57Z",
-      "run_id": "41046543757"
+      "at": "2026-10-30T12:10:03Z",
+      "run_id": "41050994745"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-no1-story-2026/zverev-no1-story-2026.mp4",
-  "video_bytes": 344454334
+  "video_bytes": 344151976
 }
