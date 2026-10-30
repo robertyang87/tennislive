@@ -3,20 +3,11 @@
   "profile": "wta-tour-v1",
   "segments": [
     {
-      "segment": 0,
-      "frames": 120,
-      "present_frames": 36,
-      "tag_frames": 32,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         330,
         365
-      ],
-      "right": 366,
-      "source_bounds": [
-        60,
-        552,
-        426,
-        653
       ],
       "body_bounds": [
         [
@@ -74,6 +65,11 @@
           103
         ]
       ],
+      "frames": 120,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -106,36 +102,31 @@
           27
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "418b829e86c3107a5caccae5630d06ab1e5e0d7dd21a647d81b238282f3ea5a4",
       "measured_present_frames": 36,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-01.mkv",
-      "mask_sha256": "418b829e86c3107a5caccae5630d06ab1e5e0d7dd21a647d81b238282f3ea5a4"
-    },
-    {
-      "segment": 2,
-      "frames": 303,
-      "present_frames": 303,
-      "tag_frames": 303,
-      "board_edges": [
-        318,
-        318
-      ],
-      "right": 318,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 36,
+      "right": 366,
+      "segment": 0,
       "source_bounds": [
         60,
         552,
-        378,
+        426,
         653
+      ],
+      "tag_frames": 32,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-01.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        318,
+        318
       ],
       "body_bounds": [
         [
@@ -144,6 +135,11 @@
           318,
           103
         ]
+      ],
+      "frames": 303,
+      "geometry_origin": [
+        60,
+        550
       ],
       "header_bounds": [
         [
@@ -159,36 +155,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "a9d5fd37ac778d42f1ccd8c7e3391609a275989c5a4876867469e0662c34776f",
       "measured_present_frames": 303,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-03.mkv",
-      "mask_sha256": "a9d5fd37ac778d42f1ccd8c7e3391609a275989c5a4876867469e0662c34776f"
-    },
-    {
-      "segment": 3,
-      "frames": 116,
-      "present_frames": 86,
-      "tag_frames": 71,
-      "board_edges": [
-        278,
-        332
-      ],
-      "right": 332,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 303,
+      "right": 318,
+      "segment": 2,
       "source_bounds": [
         60,
         552,
-        392,
+        378,
         653
+      ],
+      "tag_frames": 303,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-03.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        278,
+        332
       ],
       "body_bounds": [
         [
@@ -276,6 +267,11 @@
           103
         ]
       ],
+      "frames": 116,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -338,36 +334,31 @@
           26
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "124038a0541ae9bfd3b82e2896de7d33afba6b576e50874a5cf66df02df3f0a2",
       "measured_present_frames": 86,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 86,
+      "right": 332,
+      "segment": 3,
+      "source_bounds": [
+        60,
+        552,
+        392,
+        653
+      ],
+      "tag_frames": 71,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-04.mkv",
-      "mask_sha256": "124038a0541ae9bfd3b82e2896de7d33afba6b576e50874a5cf66df02df3f0a2"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-04.mkv"
     },
     {
-      "segment": 5,
-      "frames": 425,
-      "present_frames": 425,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         318,
         318
-      ],
-      "right": 318,
-      "source_bounds": [
-        60,
-        578,
-        378,
-        653
       ],
       "body_bounds": [
         [
@@ -377,37 +368,37 @@
           103
         ]
       ],
-      "header_bounds": [],
+      "frames": 425,
       "geometry_origin": [
         60,
         550
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "18742801acd83301a70343bb47870f5faf6c89664c4a9d5fe1aa1b88529adf67",
       "measured_present_frames": 425,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 425,
+      "right": 318,
+      "segment": 5,
+      "source_bounds": [
+        60,
+        578,
+        378,
+        653
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-06.mkv",
-      "mask_sha256": "18742801acd83301a70343bb47870f5faf6c89664c4a9d5fe1aa1b88529adf67"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-06.mkv"
     },
     {
-      "segment": 6,
-      "frames": 135,
-      "present_frames": 135,
-      "tag_frames": 13,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         318,
         370
-      ],
-      "right": 370,
-      "source_bounds": [
-        60,
-        552,
-        430,
-        653
       ],
       "body_bounds": [
         [
@@ -495,6 +486,11 @@
           103
         ]
       ],
+      "frames": 135,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -509,36 +505,31 @@
           28
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "3a0c3255928303706dfdb19e4e7c09112d17ea7bf1dab0f953e96b76653a6ea7",
       "measured_present_frames": 135,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-07.mkv",
-      "mask_sha256": "3a0c3255928303706dfdb19e4e7c09112d17ea7bf1dab0f953e96b76653a6ea7"
-    },
-    {
-      "segment": 8,
-      "frames": 290,
-      "present_frames": 260,
-      "tag_frames": 221,
-      "board_edges": [
-        338,
-        356
-      ],
-      "right": 356,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 135,
+      "right": 370,
+      "segment": 6,
       "source_bounds": [
         60,
         552,
-        416,
+        430,
         653
+      ],
+      "tag_frames": 13,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-07.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        338,
+        356
       ],
       "body_bounds": [
         [
@@ -650,6 +641,11 @@
           103
         ]
       ],
+      "frames": 290,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -694,36 +690,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "836957b39e49de5ff41aad3692f4203c37a12d291ac7d98e7c0e905f2f1aa85b",
       "measured_present_frames": 260,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-09.mkv",
-      "mask_sha256": "836957b39e49de5ff41aad3692f4203c37a12d291ac7d98e7c0e905f2f1aa85b"
-    },
-    {
-      "segment": 9,
-      "frames": 120,
-      "present_frames": 95,
-      "tag_frames": 68,
-      "board_edges": [
-        304,
-        340
-      ],
-      "right": 340,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 260,
+      "right": 356,
+      "segment": 8,
       "source_bounds": [
         60,
         552,
-        400,
+        416,
         653
+      ],
+      "tag_frames": 221,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-09.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        304,
+        340
       ],
       "body_bounds": [
         [
@@ -768,6 +759,11 @@
           339,
           103
         ]
+      ],
+      "frames": 120,
+      "geometry_origin": [
+        60,
+        550
       ],
       "header_bounds": [
         [
@@ -819,36 +815,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "14e7a8016b7ea71185ab6ef2897fa5f6de1fc63af34934381b649c8e6a480689",
       "measured_present_frames": 95,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 95,
+      "right": 340,
+      "segment": 9,
+      "source_bounds": [
+        60,
+        552,
+        400,
+        653
+      ],
+      "tag_frames": 68,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-10.mkv",
-      "mask_sha256": "14e7a8016b7ea71185ab6ef2897fa5f6de1fc63af34934381b649c8e6a480689"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-10.mkv"
     },
     {
-      "segment": 10,
-      "frames": 355,
-      "present_frames": 355,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         340,
         340
-      ],
-      "right": 340,
-      "source_bounds": [
-        60,
-        578,
-        400,
-        653
       ],
       "body_bounds": [
         [
@@ -858,37 +849,37 @@
           103
         ]
       ],
-      "header_bounds": [],
+      "frames": 355,
       "geometry_origin": [
         60,
         550
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "e0c564532ee7f13e07a19c2015acd1baaf25299b38b19f5b0a53028b078a04bd",
       "measured_present_frames": 355,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 355,
+      "right": 340,
+      "segment": 10,
+      "source_bounds": [
+        60,
+        578,
+        400,
+        653
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-11.mkv",
-      "mask_sha256": "e0c564532ee7f13e07a19c2015acd1baaf25299b38b19f5b0a53028b078a04bd"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-11.mkv"
     },
     {
-      "segment": 11,
-      "frames": 123,
-      "present_frames": 123,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         339,
         340
-      ],
-      "right": 340,
-      "source_bounds": [
-        60,
-        576,
-        400,
-        653
       ],
       "body_bounds": [
         [
@@ -910,37 +901,37 @@
           103
         ]
       ],
-      "header_bounds": [],
+      "frames": 123,
       "geometry_origin": [
         60,
         550
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "d58af75ec113f08148964d15e1c6a3c9dcd2808f4b55a8eb46862214366f25b6",
       "measured_present_frames": 123,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 123,
+      "right": 340,
+      "segment": 11,
+      "source_bounds": [
+        60,
+        576,
+        400,
+        653
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-12.mkv",
-      "mask_sha256": "d58af75ec113f08148964d15e1c6a3c9dcd2808f4b55a8eb46862214366f25b6"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-12.mkv"
     },
     {
-      "segment": 12,
-      "frames": 139,
-      "present_frames": 110,
-      "tag_frames": 95,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         304,
         362
-      ],
-      "right": 362,
-      "source_bounds": [
-        60,
-        552,
-        422,
-        653
       ],
       "body_bounds": [
         [
@@ -998,6 +989,11 @@
           103
         ]
       ],
+      "frames": 139,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -1048,36 +1044,31 @@
           27
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "62652e1bc3bbbb4b85d8c020f69406200209163aca9b3a6826523e57edf2e95c",
       "measured_present_frames": 110,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-13.mkv",
-      "mask_sha256": "62652e1bc3bbbb4b85d8c020f69406200209163aca9b3a6826523e57edf2e95c"
-    },
-    {
-      "segment": 14,
-      "frames": 375,
-      "present_frames": 375,
-      "tag_frames": 375,
-      "board_edges": [
-        362,
-        376
-      ],
-      "right": 376,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 110,
+      "right": 362,
+      "segment": 12,
       "source_bounds": [
         60,
         552,
-        436,
+        422,
         653
+      ],
+      "tag_frames": 95,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-13.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        362,
+        376
       ],
       "body_bounds": [
         [
@@ -1135,6 +1126,11 @@
           103
         ]
       ],
+      "frames": 375,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -1149,36 +1145,36 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "e30129bae6b870b207beee06c3f63b125b560798b3d0548e4764dca269cf111b",
       "measured_present_frames": 375,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-15.mkv",
-      "mask_sha256": "e30129bae6b870b207beee06c3f63b125b560798b3d0548e4764dca269cf111b"
-    },
-    {
-      "segment": 15,
-      "frames": 95,
-      "present_frames": 68,
-      "tag_frames": 68,
-      "board_edges": [
-        340,
-        362
-      ],
-      "right": 362,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 375,
+      "right": 376,
+      "segment": 14,
       "source_bounds": [
         60,
         552,
-        422,
+        436,
         653
+      ],
+      "tag_frames": 375,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-15.mkv"
+    },
+    {
+      "allowed_source_windows": [
+        [
+          192.5,
+          195.2
+        ]
+      ],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        340,
+        362
       ],
       "body_bounds": [
         [
@@ -1217,6 +1213,11 @@
           361,
           103
         ]
+      ],
+      "frames": 95,
+      "geometry_origin": [
+        60,
+        550
       ],
       "header_bounds": [
         [
@@ -1262,41 +1263,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "603af0c4b2bfefe4b1bd5c01ab1fc86575293921725a9f145e21a88ebb5308d5",
       "measured_present_frames": 68,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 27,
       "measurement_scope": "reviewed_windows_only",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [
-        [
-          192.5,
-          195.2
-        ]
-      ],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-16.mkv",
-      "mask_sha256": "603af0c4b2bfefe4b1bd5c01ab1fc86575293921725a9f145e21a88ebb5308d5"
-    },
-    {
-      "segment": 17,
-      "frames": 253,
-      "present_frames": 253,
-      "tag_frames": 253,
-      "board_edges": [
-        362,
-        362
-      ],
+      "outside_window_frames_not_scanned": 27,
+      "present_frames": 68,
       "right": 362,
+      "segment": 15,
       "source_bounds": [
         60,
         552,
         422,
         653
+      ],
+      "tag_frames": 68,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-16.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        362,
+        362
       ],
       "body_bounds": [
         [
@@ -1305,6 +1296,11 @@
           361,
           103
         ]
+      ],
+      "frames": 253,
+      "geometry_origin": [
+        60,
+        550
       ],
       "header_bounds": [
         [
@@ -1320,36 +1316,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "dc7c2e61c6c17466d22c51284826d2e4a0f5c6b60ea8b920e047b78f531cbb47",
       "measured_present_frames": 253,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 253,
+      "right": 362,
+      "segment": 17,
+      "source_bounds": [
+        60,
+        552,
+        422,
+        653
+      ],
+      "tag_frames": 253,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-18.mkv",
-      "mask_sha256": "dc7c2e61c6c17466d22c51284826d2e4a0f5c6b60ea8b920e047b78f531cbb47"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-18.mkv"
     },
     {
-      "segment": 18,
-      "frames": 142,
-      "present_frames": 142,
-      "tag_frames": 80,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         340,
         373
-      ],
-      "right": 374,
-      "source_bounds": [
-        60,
-        550,
-        434,
-        653
       ],
       "body_bounds": [
         [
@@ -1431,6 +1422,11 @@
           103
         ]
       ],
+      "frames": 142,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -1463,36 +1459,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "b6d3a56f6517111b9b493054cd7ef582971657a08f3b2b831907f667282008ab",
       "measured_present_frames": 142,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 142,
+      "right": 374,
+      "segment": 18,
+      "source_bounds": [
+        60,
+        550,
+        434,
+        653
+      ],
+      "tag_frames": 80,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-19.mkv",
-      "mask_sha256": "b6d3a56f6517111b9b493054cd7ef582971657a08f3b2b831907f667282008ab"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-19.mkv"
     },
     {
-      "segment": 20,
-      "frames": 745,
-      "present_frames": 745,
-      "tag_frames": 0,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         360,
         376
-      ],
-      "right": 376,
-      "source_bounds": [
-        60,
-        576,
-        436,
-        653
       ],
       "body_bounds": [
         [
@@ -1550,37 +1541,37 @@
           103
         ]
       ],
-      "header_bounds": [],
+      "frames": 745,
       "geometry_origin": [
         60,
         550
       ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "header_bounds": [],
+      "mask_sha256": "df89c045af26a6a17197bf1bf096927956c5c798d698db9b0c1fd5dce7d65695",
       "measured_present_frames": 745,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 745,
+      "right": 376,
+      "segment": 20,
+      "source_bounds": [
+        60,
+        576,
+        436,
+        653
+      ],
+      "tag_frames": 0,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-21.mkv",
-      "mask_sha256": "df89c045af26a6a17197bf1bf096927956c5c798d698db9b0c1fd5dce7d65695"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-21.mkv"
     },
     {
-      "segment": 21,
-      "frames": 109,
-      "present_frames": 109,
-      "tag_frames": 13,
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
       "board_edges": [
         360,
         362
-      ],
-      "right": 362,
-      "source_bounds": [
-        60,
-        552,
-        422,
-        653
       ],
       "body_bounds": [
         [
@@ -1596,6 +1587,11 @@
           103
         ]
       ],
+      "frames": 109,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           1,
@@ -1604,36 +1600,31 @@
           29
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "a06f426ee711004613db3f27279b245fa63efd94f3ea56fd4810e5c2fd554981",
       "measured_present_frames": 109,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
-      "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
-      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-22.mkv",
-      "mask_sha256": "a06f426ee711004613db3f27279b245fa63efd94f3ea56fd4810e5c2fd554981"
-    },
-    {
-      "segment": 22,
-      "frames": 624,
-      "present_frames": 299,
-      "tag_frames": 295,
-      "board_edges": [
-        330,
-        376
-      ],
-      "right": 376,
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 109,
+      "right": 362,
+      "segment": 21,
       "source_bounds": [
         60,
         552,
-        436,
+        422,
         653
+      ],
+      "tag_frames": 13,
+      "window_excluded_present_frames": 0,
+      "window_excluded_present_frames_scope": "post_debounce_defense_only",
+      "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-22.mkv"
+    },
+    {
+      "allowed_source_windows": [],
+      "alpha_geometry": "native-body-and-header-rows",
+      "board_edges": [
+        330,
+        376
       ],
       "body_bounds": [
         [
@@ -1769,6 +1760,11 @@
           103
         ]
       ],
+      "frames": 624,
+      "geometry_origin": [
+        60,
+        550
+      ],
       "header_bounds": [
         [
           0,
@@ -1819,20 +1815,24 @@
           27
         ]
       ],
-      "geometry_origin": [
-        60,
-        550
-      ],
-      "alpha_geometry": "native-body-and-header-rows",
+      "mask_sha256": "1c3565935fd5cffdd71160f0c496552f7c6f4e1739782fb4e0891001093be9bf",
       "measured_present_frames": 299,
-      "window_excluded_present_frames": 0,
-      "outside_window_frames_not_scanned": 0,
       "measurement_scope": "full_segment",
+      "outside_window_frames_not_scanned": 0,
+      "present_frames": 299,
+      "right": 376,
+      "segment": 22,
+      "source_bounds": [
+        60,
+        552,
+        436,
+        653
+      ],
+      "tag_frames": 295,
+      "window_excluded_present_frames": 0,
       "window_excluded_present_frames_scope": "post_debounce_defense_only",
-      "allowed_source_windows": [],
       "window_policy": "relative-frame-time-half-open-before-geometry-and-after-debounce",
-      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-23.mkv",
-      "mask_sha256": "1c3565935fd5cffdd71160f0c496552f7c6f4e1739782fb4e0891001093be9bf"
+      "mask": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/score_masks/segment-23.mkv"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "a699e5ead5f098f34e04df2cb3ad973d505b19f744c942c83192c46b3964d640",
+  "scoreboard_qc_sha256": "0c576c1251ed02c93eadbad742d806b0d22edb3ec50f9c83f40f49b9d1cabb10",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-shi-tagger-guangzhou-2026-qf-d17f0e6c72d924b3",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shi-tagger-guangzhou-2026-qf-d17f0e6c72d924b3/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41085591762"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41088771004"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -111,44 +111,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "73b33c6d5c284d71592209246e2a8ffc409d9eb1ac02ee82cf60be070f267acc",
+  "render_inputs_sha256": "2258a907052254fcbb21da0a940f878fe6fc7ab357b389e1aeef386b4b365c78",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shi-tagger-guangzhou-2026-qf",
-    "received_at": "2026-10-30T15:58:25Z",
-    "artifact_ready_at": "2026-10-30T16:04:52Z",
-    "elapsed_seconds": 387.112,
+    "received_at": "2026-10-30T16:19:10Z",
+    "artifact_ready_at": "2026-10-30T16:26:51Z",
+    "elapsed_seconds": 461.929,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "7f4ccb25597026d917e4602befbd6cdb5505641c16c5f1367618a02934046c63",
-    "spec_sha256": "7b4e638998b5fa98ebdd61ab73c4559fee4a2b544b58fa6c0577ddae704be03c",
-    "run_id": "41085591762",
+    "film_sha256": "d82e494c478aabbf821846f7cd95f5b6a8c9d2a1c19cfb0c40fb9cbf141e90ff",
+    "spec_sha256": "fcd6874f525b42cabc956cddfe4fc7fdb5ae043e349e2dcbad480c29fcd6273b",
+    "run_id": "41088771004",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-30T16:01:09Z",
-        "run_id": "41085591762"
+        "at": "2026-10-30T16:22:59Z",
+        "run_id": "41088771004"
       }
     ],
-    "render_seconds": 223.112,
-    "pre_render_seconds": 164.0
+    "render_seconds": 232.929,
+    "pre_render_seconds": 229.0
   },
-  "film_sha256": "7f4ccb25597026d917e4602befbd6cdb5505641c16c5f1367618a02934046c63",
-  "film_bytes": 79063268,
-  "qc_attestation_sha256": "6b035412871197c86b7236c2f8973ccba62959483e9f2d2f54748e3fbef6e142",
+  "film_sha256": "d82e494c478aabbf821846f7cd95f5b6a8c9d2a1c19cfb0c40fb9cbf141e90ff",
+  "film_bytes": 79059395,
+  "qc_attestation_sha256": "30dd71388adbf31ed60d176114245b82f4078e7e265da658f7ce29fc730b0960",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-30T16:01:09Z",
-      "run_id": "41085591762"
+      "at": "2026-10-30T16:22:59Z",
+      "run_id": "41088771004"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-30T16:04:55Z",
-      "run_id": "41085591762"
+      "at": "2026-10-30T16:26:56Z",
+      "run_id": "41088771004"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shi-tagger-guangzhou-2026-qf/shi-tagger-guangzhou-2026-qf.mp4",
-  "video_bytes": 79063268
+  "video_bytes": 79059395
 }
