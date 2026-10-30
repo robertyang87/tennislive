@@ -68,3 +68,11 @@ output/**/segments_local_*.jpg
 # git 仓库。stop hook 看见未跟踪文件会催「请提交并推送」，这一条就是给它的答案：
 # 该忽略，不是该提交。
 .claude/worktrees/
+
+# vibetennis：成片走 GitHub Release，不进 git；本地推送预览看完即弃；3D 渲染依赖与中间产物
+output/**/vibetennis/**/*.mp4
+output/**/vibetennis/**/push_preview.html
+tools/vibetennis/episodes/*/r3d/node_modules/
+tools/vibetennis/episodes/*/r3d/seg/
+tools/vibetennis/episodes/*/r3d/stills*/
+tools/vibetennis/episodes/*/sfx/

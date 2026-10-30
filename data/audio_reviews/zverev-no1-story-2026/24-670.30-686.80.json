@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-zqTAG7tEC1k/zqTAG7tEC1k.mp4",
+  "source_sha256": "505d9b970b085f7be29a3b0a73431fd5000c2070a4e23c0e80ec3fbd43a16251",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-30T16:04:36+00:00",
+  "reviewed_from": 670.3,
+  "reviewed_to": 686.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 670.6,
+      "end": 675.2,
+      "en": "Game, set and match — Zverev.",
+      "zh": "全场比赛结束——兹维列夫夺冠。"
+    },
+    {
+      "start": 675.26,
+      "end": 677.2,
+      "en": "Alexander Zverev.",
+      "zh": "亚历山大·兹维列夫"
+    },
+    {
+      "start": 677.2,
+      "end": 679.3,
+      "en": "Zverev doesn't know he's winning.",
+      "zh": "兹维列夫还不知道自己已经赢了"
+    },
+    {
+      "start": 680.28,
+      "end": 681.7,
+      "en": "He doesn't even know he's winning.",
+      "zh": "他甚至不知道自己赢了。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 505d9b970b085f7be29a3b0a73431fd5000c2070a4e23c0e80ec3fbd43a16251，存于 data/source_asr/zqTAG7tEC1k/small.en.json 与 data/source_asr/zqTAG7tEC1k/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

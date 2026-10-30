@@ -1,0 +1,63 @@
+{
+  "slug": "vibetennis-live-faster-2026",
+  "_column": "vibetennis：同一个网球，为什么现场看比电视上快，而足球反过来？用角速度、转播机位、纵深运动与 Brown 窗口效应回答。",
+  "column": "vibetennis",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "_cover_why": "账号所有者 2026-10-30 更正：封面不放进视频开头、不合进视频；成片就是母片 tennis_live_faster_v2b.mp4 原样，3:4 高清封面单独一张图（poster.jpg），只作推送第一屏和平台封面。",
+    "outro_seconds": 0,
+    "_outro_why": "16:9 的 vibetennis 品牌片尾母版还没做（column_outro 三份母版都是 1080×1440）；本集以片内收束卡结尾，见 docs/vibetennis.md 的 TODO。",
+    "captions": "anchored",
+    "narration": "none",
+    "audio": {
+      "music": "We Never (Remix)",
+      "_music_why": "所有者在会话里选定的预览 BGM，来自 vibeknowledge 仓库；版权未核，公开平台发布前需所有者确认或换曲。另备只含音效的版本。",
+      "sfx": "tools/vibetennis/sfx.py 合成，按画面事件对齐",
+      "loudness": "SFX -18 LUFS、音乐 -16 LUFS，总混 -14 LUFS / -1.5 dBTP"
+    }
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-live-faster-2026/cover/make_cover.py",
+    "hook": "现场看网球\n为什么更快？",
+    "subject": "现场 vs 电视",
+    "topic": "视觉科学 · 角速度、机位与窗口",
+    "_why": "所有者 2026-10-30 逐版审定的 v9 定制封面（参照比特新语的版式：左上 logo＋网球时差、两行衬线大标题、单一线稿场景、底部白/黄两行＋灰色小字）。画面直接讲论点：同一个发球，场边眼睛的张角扇形宽、转播机位的窄。球场按 ITF 尺寸透视投影（hero.py），文字与扇形在 make_cover.py；重跑两步可逐字节复现 poster.jpg。初版 solo 模板封面已随首次推送发出（见 pushed_original.json）。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "现场更快",
+    "lead": "同一个200公里的发球，坐在场边它每秒在你眼里扫过约138°，电视上只有约19°。转播机位把球场纵深压扁，人眼又对纵深运动更迟钝；足球正好反过来——看台把整块球场装进视野，球就慢了。"
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "为什么网球现场看比电视上快，而足球在电视上更快？",
+    "thesis": "大脑判断快慢看的是物体在视网膜上扫过的角速度，不是物理速度。网球转播主机位在底线后高处，球主要沿纵深飞，角速度小且纵深运动灵敏度更低；场边看是横向扫过，远超平滑追踪上限。足球则相反：看台视野装下整块105米球场，电视只框约40米并推近切换，按 Brown 的窗口效应，同样速度在大窗口里显得更慢。",
+    "beats": [
+      "现象：网球现场更快、足球电视更快",
+      "网球有多快：200km/h 发球约0.4秒落地、0.7秒到接发者",
+      "转播机位：底线后高处、俯角约12°，纵深被压缩",
+      "角速度：场边约138°/秒 vs 电视约19°/秒，约7倍",
+      "眼睛：平滑追踪约70°/秒上限；纵深运动灵敏度约为横向的1/3",
+      "窗口：Brown 1931，窗口大2倍需快约1.94倍才显得一样快",
+      "回到生活：隔着屏幕看别人的回合都显得从容"
+    ],
+    "sources": [
+      "J.F. Brown (1931). The visual perception of velocity. Psychologische Forschung 14:199–232",
+      "H. Wallach (1939). On constancy of visual speed. Psychological Review 46:541–552",
+      "C.W. Tyler (1971). Stereoscopic depth movement: two eyes less sensitive than one. Science 174:958–961",
+      "Meyer, Lasker & Robinson (1985). The upper limit of human smooth pursuit velocity. Vision Research 25:561–563",
+      "Regan & Gray (2000). Visually guided collision avoidance and collision achievement. Trends in Cognitive Sciences 4:99–107",
+      "ATP 250 TV Production Manual (2023): Camera 1 sightline",
+      "David Foster Wallace (2006). Federer as Religious Experience. The New York Times"
+    ],
+    "_assumptions": "角速度与发球时间按简化模型估算；机位距离、座位与屏幕尺寸为示意假设，片尾参考页已注明。"
+  }
+}

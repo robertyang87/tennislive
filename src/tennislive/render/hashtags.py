@@ -21,7 +21,7 @@ CAMPAIGN_LAST_DAY = date(2026, 10, 31)
 # `masters-format` 会撞成同一组（`test_文案的开场和标签属于它自己的选题`）。
 _EXPENDABLE = (
     "#网球", "#网球运动", "#网球科普", "#网球冷知识",
-    "#赛场之上", "#赛后开麦", "#网球有故事",
+    "#赛场之上", "#赛后开麦", "#网球有故事", "#vibetennis",
 )
 _PROTECTED = ("#网球时差",)
 _HASHTAG_RE = re.compile(r"(?<!\w)#[^\s#]+")

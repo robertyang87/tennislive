@@ -1,0 +1,40 @@
+name: import-zv-anims
+run-name: "import-zv-anim · ${{ inputs.aid }}"
+
+# One-off: upload a staged animation file to Release source-<aid>.
+on:
+  workflow_dispatch:
+    inputs:
+      aid:
+        description: "archive id (release tag = source-<aid>, asset = <aid>.mp4)"
+        required: true
+        type: string
+      path:
+        description: "staged file path in repo"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  up:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ inputs.path }}
+          sparse-checkout-cone-mode: false
+      - name: Upload
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AID: ${{ inputs.aid }}
+          P: ${{ inputs.path }}
+        run: |
+          set -euo pipefail
+          cp "$P" "$AID.mp4"
+          TAG="source-$AID"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "source · $AID" --notes "zverev-no1-story-2026 animation"
+          gh release upload "$TAG" "$AID.mp4" --clobber
+          ls -la "$AID.mp4"

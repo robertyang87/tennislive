@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407661187112/6407661187112.mp4",
+  "source_sha256": "c68bd7376677ba3f2f52433af099563b0999a97b97b0eef29fb20e571962c4f2",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant：完整small.en/medium.en、局部medium复核及源记分条交叉；非真人听审。",
+  "reviewed_at": "2026-10-30T15:40:22.142955+00:00",
+  "reviewed_from": 43.9,
+  "reviewed_to": 48.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 44.24,
+      "end": 48.42,
+      "en": "Oh yes, that's a beauty.",
+      "zh": "好球 这一拍真漂亮"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-recheck.json": "b2820833be74293b526d2b46c18e09106303d49a4caf5856fb00ebeacaeebf51",
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-medium.json": "f896be4a5ec0cd2c1c03060c210ff156cd3e693e7fbf1aca5abdbaac9348a1e2",
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-small.json": "3923f51e0946216dcc1bbca28106540deac143c0c99034e675d54905e89eef5d"
+  },
+  "visual_window_note": "同一长相持最后落点及塔格尔握拳；Oh yes, that is a beauty完整原声，未把这一分说成施晗获胜。",
+  "evidence": "完整两档与局部复核的可保留完整句；Tagger/Shi按官方拼写。95/101秒与212秒后半句不确定段未采用；317秒so仅一档且局部未复现，不作为检出语句。"
+}

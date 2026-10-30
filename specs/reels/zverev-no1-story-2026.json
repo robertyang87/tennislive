@@ -1,0 +1,1255 @@
+{
+ "slug": "zverev-no1-story-2026",
+ "date": "2026-10-31",
+ "_column": "网球有故事",
+ "title": "他凭什么封王？",
+ "cx": 0.5,
+ "track": false,
+ "tts_backend": "edge",
+ "_tts_backend_why": "与账号故事条同一把嗓子（edge 云健），不加情绪风格。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "layout": "solo",
+  "story_kind": "other",
+  "subject": "兹维列夫封王",
+  "winner": "兹维列夫",
+  "_winner_why": "本期主体即 2026 法网/美网冠军与年终第一本人；字段只喂措辞闸人名盘点（让标题与小红书首行的『兹维列夫』被认出），无 result/matchup 字段时海报与记分牌消费点惰性（walkover 甲案同判例已核）。",
+  "hook": "第四次决赛才捧杯\n他凭什么一年封王？",
+  "_hook_why": "所有者定 C1：问句优先；钩子两行各 9 字，海报字号按较长行算仍在 94px 下限之上（分行预算先算，walkover 删逗号教训在前）。副行数字组『125 场胜利 · 29 岁 · 两个「最老」纪录』在 topic/lead 承载。",
+  "narration": "第四次决赛才捧杯，他凭什么一年封王？",
+  "_narration_why": "封面口播与海报钩子同句（dry-run 闸：字集重合须 ≥0.7；原只念后半句 0.50 被拦）——C1 钩子本就是一整句，口播照原句全念。",
+  "topic": "兹维列夫封王：125 场胜利 · 29 岁 · 两个最老纪录",
+  "portrait": {
+   "image": "assets/reel/zverev-rg-2026-trophy.jpg",
+   "fit": "cover",
+   "focus": 0.5,
+   "focus_y": 0.5,
+   "zoom": 1.0,
+   "_credit": "FFT 官方摄影 Jean-Baptiste Autissier / FFT，rolandgarros.com 决赛战报《Zverev breaks Grand Slam duck in Paris》原图 3000×1999，仓内为 2400w q88 版（commit 50ecb7db）。",
+   "_portrait_why": "构图实测（本地合成 mock）：focus 0.50 时奖杯杯体、亲吻与托杯手同入 3:4 画幅；focus 0.60 为大头特写已否。正面捧杯庆祝、真实比赛图，合系列封面规范。"
+  }
+ },
+ "push": {
+  "auto": false,
+  "_no_auto_why": "第二阶段停在 narration：旁白实测时长回来后，动画段与个别窗口还要按实测复核（原速重制/窗口调整），render 与推送由主线在本阶段验收后接手；防半成品经自动链外发。",
+  "summary": "他凭什么封王？",
+  "lead": "四次大满贯决赛、三次失利、一次轮椅离场——兹维列夫用一百二十五场胜利换来第一座奖杯，又在二十九岁成为史上最老的第一次年终第一。这个第一，是熬出来的，还是让出来的？"
+ },
+ "editorial": {
+  "mode": "match_review",
+  "question": "四次决赛、三次失利、一次重伤、一百二十五场胜利换来的年终第一，是六年坚持熬出来的实力兑现，还是对手缺席的时代让位？",
+  "thesis": "兹维列夫的 2026 是公开赛年代最长的夺冠等待（第 125 胜捧杯、第 41 次参赛）叠上两个年龄纪录（首登世界第一历史第二老、第一次年终第一历史最老）。账本另一面同样真实：对辛纳 0 胜 5 负、法网一路未遇前十、年终第一在辛纳宣布赛季结束六天后锁定。片子不下判——把账本、他自己的全句回答和六年时间线一起摊开，结论留给观众站队。",
+  "beats": [
+   "冷开场：2026 法网倒地捧杯 ↔ 2022 同场轮椅，金句回环",
+   "当下：上海锁定年终第一、维也纳钉死积分、两个「最老」分口径（动画 A1）",
+   "2020 美网：两盘领先、发球胜赛局、把冠军打出去",
+   "2022 法网：三条韧带撕裂、轮椅离场、赛季报销",
+   "2024/2025：两场决赛再败，四连败名单的门槛",
+   "2026 法网：抢七被翻盘、抽筋、决胜盘收官、第 125 胜（动画 A2）＋发布会原声",
+   "2026 温网/美网：再负辛纳、纽约夺冠与赛点走回底线＋颁奖原声",
+   "争议正面：0-5 账本（动画 A3）＋上海八强场边采访原声（让位回答）",
+   "收束：2026 战绩条（动画 A4）、站队题、结尾金句原声"
+  ],
+  "chapters": [
+   "冷开场",
+   "当下：封王",
+   "2020 美网",
+   "2022 重伤",
+   "两次决赛",
+   "2026 法网",
+   "温网与美网",
+   "争议账本",
+   "收束"
+  ],
+  "human_context": {
+   "angle": "自家角度：不写『迟到的正义』式煽情，也不接质疑方的『让位』定性。把同一年的两本账并排摊开——125 胜/41 次/两个年龄纪录的等待成本，对 0-5/未遇前十/六天时间差的成色折扣——再放他本人对辛纳缺席的全句回答，让观众自己称重。开头的倒地与轮椅、结尾的发布会金句都取自同一片球场、相隔四年的两个时刻，时间线本身就是论点。",
+   "facts": [
+    "登顶：兹维列夫 2026-10-12 锁定 ATP 年终世界第一（阿尔卡拉斯上海 R3 负贝尔格斯后），2026-11-02 正式登顶周排名第一；ATP 第 30 位世界第一、第 20 位年终第一；德国第一位年终第一、继贝克尔 1991 年后第二位德国世界第一（ATP 锁定稿 2026-10-12 / ATP 年终第一纪录稿）",
+    "两个『最老』分口径：首登周排名第一 29 岁 196 天＝史上第二晚（纽康姆 30 岁 11 天居首、穆雷 29 岁 176 天第三）；首登年终第一 29 岁 217 天＝史上最晚，超阿加西 29 岁 214 天恰 3 天（ATP 纪录稿；年龄按登顶当日计）",
+    "法网首冠：2026-06-07 决赛 6-1 4-6 6-4 6-7(5) 6-1 胜科博利；这一胜本身是他的大满贯第 125 胜（决赛前 124 胜）——公开赛年代首冠前胜场之最（伊万尼塞维奇 105 胜）；第 41 次大满贯参赛（参赛次数纪录 48 次同为伊万尼塞维奇）（ausopen.com 综述）",
+    "三次决赛失利：2020 美网两盘领先、决胜盘 5-3 发球胜赛局被蒂姆逆转（2-6 4-6 6-4 6-3 7-6(6)，4 小时 02 分）；2024 法网 2-1 领先负阿尔卡拉斯；2025 澳网负辛纳（辛纳全场未送一个破发点）；公开赛年代仅伦德尔与穆雷以大满贯决赛四连败开局（事实卡 §1/§3，ausopen.com）",
+    "重伤：2022 法网半决赛对纳达尔，第二盘 6-6 时右脚踝三条外侧韧带全部撕裂、随即手术，秋季又查出骨水肿、赛季报销，2022-12-31 才复出（RG 官方经典全场片内字幕同述 three ligaments torn；其本人 2026 年『七条韧带』自述与官方诊断冲突，不采用）",
+    "账本另一面：2026 年对辛纳 0 胜 5 负（印第安维尔斯/迈阿密/蒙特卡洛半决赛、马德里/温网决赛），全年只抢下一盘（温网决赛首盘）；法网夺冠一路未遇世界前十；辛纳右膝炎症 2026-10-06 宣布赛季结束（无手术），年终第一锁定在其后第 6 天；美网决赛 6-3 7-6(2) 5-7 6-2 胜谢尔顿，赛点兑现时他未意识到比赛已结束（Tennis.com 交手逐项表 / ATP 伤情稿 / 事实卡 §4d、§9、§10）"
+   ],
+   "sources": [
+    "https://www.atptour.com/en/news/alexander-zverev-clinches-year-end-no-1-2026",
+    "https://ausopen.com/articles/news/after-lows-zverev-experiences-high-grand-slam-victory",
+    "https://www.atptour.com/en/news/atp-year-end-no-1-honours-zverev-2026-history",
+    "https://www.atptour.com/en/news/sinner-2026-injury-announcement-october"
+   ]
+  },
+  "takeaway": {
+   "close": {
+    "point": "六年熬出来的第一",
+    "ask": "是实力兑现，还是时代让位？",
+    "_why": "point 8 字＋ask 13 字＝21 字 ≤34（TAKEAWAY_MAX_CHARS 口径）；ask 与 S7 站队题同题。"
+   }
+  }
+ },
+ "_facts": {
+  "finals_path": "2020 美网负蒂姆（2-0 领先被逆转，2-6 4-6 6-4 6-3 7-6(6)，4:02）→ 2024 法网负阿尔卡拉斯（2-1 领先被逆转）→ 2025 澳网负辛纳（直落三盘，对方零破发点）→ 2026 法网胜科博利首冠（6-1 4-6 6-4 6-7(5) 6-1）→ 2026 温网负辛纳亚军 → 2026 美网胜谢尔顿第二冠（6-3 7-6(2) 5-7 6-2，3:33）。",
+  "injury_2022": "2022-06-03 法网半决赛对纳达尔，7-6(8) 6-6 时追正手扭伤右脚踝：三条外侧韧带全部撕裂（官方诊断；其 2026『七条』自述不用），手术，秋季骨水肿，赛季报销；2022-12-31 联合会杯复出（约七个月）。",
+  "wait_records": "法网夺冠战＝大满贯第 125 胜（决赛前 124 胜），公开赛年代夺冠等待胜场之最（次名伊万尼塞维奇 105）；第 41 次大满贯正赛夺冠，仅次于伊万尼塞维奇 48 次；夺冠前已攒 25 个巡回赛冠军。",
+  "oldest_records": "首登世界第一（2026-11-02）：29 岁 196 天，历史第二老，仅次于纽康比 30 岁 11 天（1974-06-03），比穆雷首登大 20 天。第一次年终第一：29 岁 217 天（2026-11-23 年终榜），历史最老，超阿加西 1999 年 29 岁 214 天恰 3 天。禁裸写『最老世界第一』（最年长保持者为德约）。",
+  "german_firsts": "德国第一位年终第一；继贝克尔（1991）之后第二位德国世界第一；ATP 史上第 30 位世界第一、第 20 位年终第一。禁写『德国第一位世界第一』。",
+  "ledger_vs_sinner": "2026 对辛纳 0 胜 5 负（印第安维尔斯 SF 6-2 6-4／迈阿密 SF 6-3 7-6／蒙特卡洛 SF／马德里 F／温网 F 7-6(7) 6-7(2) 3-6 4-6），全年只赢一盘（温网首盘；此前辛纳已连赢 14 盘）。蒙特卡洛/马德里盘分未单独复核，片中不写。",
+  "sinner_absence": "辛纳右膝炎症、无手术：最后出赛 2026-07-12 温网决赛，2026-10-06 宣布赛季结束；兹维列夫年终第一 2026-10-12 锁定（阿尔卡拉斯上海 R3 负贝尔斯），相隔六天。维也纳 10-29 胜格里克斯普尔 6-4 7-5 钉死积分，2026-11-02 正式登顶。",
+  "rg26_draw": "法网 2026：阿尔卡拉斯赛前因伤退赛、辛纳次轮爆冷出局、德约第三轮出局，兹维列夫全程未遇世界前十夺冠（法网 38 年来第一人，澳网官网口径）。",
+  "quotes": "发布会回环句/记忆句/金句（事实卡 §8c，ausopen.com 原文）；美网颁奖 30 年句＋God has seen 句（§8d，ATP 战报直引）；上海让位回答原声（上海八强赛后场边采访，官方频道 KlSx2iN2c4I 61.50–78.92，2026-10-30 所有者选定候选 B；原 §8a 文章句全网无原声载体，弃用）——引语一律照原文全句。"
+ },
+ "_claims": {
+  "公开赛年代只有伦德尔和穆雷以大满贯决赛四连败开局": [
+   "https://ausopen.com/articles/news/after-lows-zverev-experiences-high-grand-slam-victory",
+   "https://www.tennisworldusa.org/tennis/news/ATP_Tennis/167202/remember-alexander-zverev-s-painful-admission-after-2025-australian-open-final-loss/"
+  ],
+  "德国网球史上第一位年终第一": [
+   "https://www.atptour.com/en/news/alexander-zverev-clinches-year-end-no-1-2026",
+   "https://www.mondiaries.com/2026/10/shanghai-masters-alcaraz-suffers-shock.html"
+  ],
+  "史上最老的第一次年终第一（29岁217天，超阿加西3天）": [
+   "https://www.atptour.com/en/news/alexander-zverev-clinches-year-end-no-1-2026",
+   "https://punditfeed.com/sports-news/tennis/atp-year-end-number-1-explained/"
+  ],
+  "首登世界第一历史第二老（29岁196天，仅次于纽康比）": [
+   "https://www.straitstimes.com/sport/tennis/germanys-alexander-zverev-becomes-tennis-world-no-1",
+   "https://www.gulf-times.com/article/736992/sport/tennis/germanys-zverev-becomes-world-no-1/amp"
+  ],
+  "公开赛年代没人为了第一座奖杯赢下过这么多场（第125胜夺冠）": [
+   "https://ausopen.com/articles/news/after-lows-zverev-experiences-high-grand-slam-victory",
+   "https://www.atptour.com/en/news/atp-year-end-no-1-honours-zverev-2026-history"
+  ],
+  "这一年对辛纳零胜五负、全年只抢下一盘": [
+   "https://www.tennis.com/tournaments/wimbledon/matches/j-sinner-vs-a-zverev-2026-07-12",
+   "https://www.thetennisgazette.com/news/alexander-zverev-totally-disagrees-with-what-people-have-been-saying-about-how-jannik-sinners-absence-has-affected-him/"
+  ],
+  "年终第一在辛纳宣布赛季结束后六天锁定": [
+   "https://www.atptour.com/en/news/sinner-2026-injury-announcement-october",
+   "https://www.atptour.com/en/news/alexander-zverev-clinches-year-end-no-1-2026"
+  ],
+  "_why": "全称断言逐条认领两个独立来源（不同主机优先）：两个『最老』分口径登记（首登＝AFP 系两家独立报纸＋ATP 锁定稿佐证登顶日；年终＝ATP 锁定稿原文直书＋纪录清单站）；125 胜与四连败名单出自澳网官网综述并配第二源；0-5 账本以 Tennis.com 交手逐项列表＋Tennis Gazette 五场综述互证。"
+ },
+ "_why_sources": "十八条源全部先经 download-video 存进 Release 存档（source-<id>），再 probe 实测、双档 ASR 落库后才入 spec；无一条 YouTube 直链。实拍十四条：rg26＝Roland-Garros 官方 2026 决赛长集锦 JmpbWq0qkEg（1920×1080/1113s）；presser＝RG 官方夺冠发布会 g_6522aZuv4（591s，原声 1 与结尾金句）；rg22＝RG 官方经典全场 7tpaxZTTi2w（1406s）；rg24＝RG 官方 2024 决赛长集锦 nwofBAmsDpE（2507s）；ao25＝AO 官方 2025 决赛长集锦 F5B1QpU0Evo（490s）；ao26＝AO 官方 2026 半决赛长集锦 kYlFxO1HA_A（488s，先前已存档）；wim26＝Wimbledon 官方 2026 决赛长集锦 t88oAZbdtX8（834s）；uso26＝US Open 官方 2026 决赛长集锦 zqTAG7tEC1k（734s，先前已存档）；ceremony＝US Open 官方颁奖礼全程 5xvs0FC_A-M（951s，原声 2）；shl＝上海官方集锦 8ze0KoQm6nA（135s）；shqf＝上海官方八强场边采访 KlSx2iN2c4I（98s，原声 3，2026-10-30 补存档）；vienna＝Tennis TV 维也纳官方集锦 FlikB32EESM（156s）；atpfeat＝ATP 官方锁定年终第一特辑 Gt65rDLQSa8（120s）。uso20 全段统一用 US Open 官方浓缩版 zujq-bvo2SM（1876s，probe 实测 1920×1080/29.97fps，双档 ASR 已落库、句界实锚）；长集锦版 2WjkzGb4u84 实测 1280×720 与主源尺寸不合（dry-run 尺寸闸＋1080p 硬规），弃用；802s 版 hsm03aUs4-w 已不可用。S2 一度悬着的 720p 破例问题就此消解，不需要所有者破例。自制动画四条（路线甲，本地 PIL 代码绘制、系列 tokens，存档版与本地生产版视频流一致、仅补静音 AAC 轨）：a1＝两个『最老』双轴 zv26a1old01（21.0s）、a2＝125/41 累积 zv26a2wait1（14.0s）、a3＝0-5 账本 zv26a3ledg1（22.0s）、a4＝2026 战绩条 zv26a4repo1（14.0s）。上海原声 3 的文章原句无可用官方视频（R4 场内采访与 SF 发布会双档 ASR 逐句核过均无该句），2026-10-30 所有者改定同站八强场边采访真原声 shqf（见 seg『原声 3』_quote_why）。",
+ "_production_status": "2026-10-30 第二阶段：事实卡/脚本已获所有者批准；取材落源、动画（对齐标准自检：标题首行墨迹顶 y=197≥190、与 builder 标题块净距 71px；A1 下方标签叠印已修 +16px 间距复检干净；光晕中间档 R445/blur52/峰值 180）、封面（FFT 官方捧杯图 focus 0.50）均已落位。待回项：① 全部 probe 已落盘（zujq 1920×1080/29.97、rg24 1920×1080/25），S2 的 720p 破例问题消解（长集锦版 720p 已弃用）；② a2 存档 probe.json 时长字段仍记 15.0s（Release 资产实测 2,209,372 字节＝14.0s 终版，render 前请主线复核该 probe）；③ 旁白 S3 两处事实层修正（三个多小时/第二盘还没打完）与 S5a 拆分点标点调整（逗号改句号）已落字，语义与脚本实质未动；④ asr_plan/dry-run 闸处置链：S6 拆三段、S2 按空当拆段、S5c 旁白＋原声引语段、引语字卡按行宽拆条（本地 quote_overflow_rows 复审 0 超宽）、冷开场 payoff 声明＋正文重放延窗、三处 point-end 按记分翻牌时刻延窗/看图认领，均已落 spec；⑤ dry-run 仍有一条已接受告警：A3 末『而他的回答是——』接 S7 首句被判整句拆段——已批脚本的悬念句式（中间隔着原声 3 引语卡即他的回答），按脚本原样保留。narration 实测回来后动画/窗口按实测原速复核，再交主线 render。",
+ "sources": {
+  "rg26": "https://github.com/robertyang87/tennislive/releases/download/source-JmpbWq0qkEg/JmpbWq0qkEg.mp4",
+  "rg22": "https://github.com/robertyang87/tennislive/releases/download/source-7tpaxZTTi2w/7tpaxZTTi2w.mp4",
+  "uso20": "https://github.com/robertyang87/tennislive/releases/download/source-zujq-bvo2SM/zujq-bvo2SM.mp4",
+  "rg24": "https://github.com/robertyang87/tennislive/releases/download/source-nwofBAmsDpE/nwofBAmsDpE.mp4",
+  "ao25": "https://github.com/robertyang87/tennislive/releases/download/source-F5B1QpU0Evo/F5B1QpU0Evo.mp4",
+  "ao26": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4",
+  "wim26": "https://github.com/robertyang87/tennislive/releases/download/source-t88oAZbdtX8/t88oAZbdtX8.mp4",
+  "uso26": "https://github.com/robertyang87/tennislive/releases/download/source-zqTAG7tEC1k/zqTAG7tEC1k.mp4",
+  "presser": "https://github.com/robertyang87/tennislive/releases/download/source-g_6522aZuv4/g_6522aZuv4.mp4",
+  "ceremony": "https://github.com/robertyang87/tennislive/releases/download/source-5xvs0FC_A-M/5xvs0FC_A-M.mp4",
+  "shl": "https://github.com/robertyang87/tennislive/releases/download/source-8ze0KoQm6nA/8ze0KoQm6nA.mp4",
+  "shqf": "https://github.com/robertyang87/tennislive/releases/download/source-KlSx2iN2c4I/KlSx2iN2c4I.mp4",
+  "vienna": "https://github.com/robertyang87/tennislive/releases/download/source-FlikB32EESM/FlikB32EESM.mp4",
+  "atpfeat": "https://github.com/robertyang87/tennislive/releases/download/source-Gt65rDLQSa8/Gt65rDLQSa8.mp4",
+  "a1": "https://github.com/robertyang87/tennislive/releases/download/source-zv26a1old01/zv26a1old01.mp4",
+  "a2": "https://github.com/robertyang87/tennislive/releases/download/source-zv26a2wait1/zv26a2wait1.mp4",
+  "a3": "https://github.com/robertyang87/tennislive/releases/download/source-zv26a3ledg1/zv26a3ledg1.mp4",
+  "a4": "https://github.com/robertyang87/tennislive/releases/download/source-zv26a4repo1/zv26a4repo1.mp4"
+ },
+ "source_quality_exceptions": {},
+ "mixed_fps": {
+  "uso20": "2020 年官方浓缩版源 29.97 fps（30000/1001）落到 25 fps 输出，按时间重采样；集锦剪辑源、非连续实拍，不产生可感顿挫",
+  "uso26": "2026 美网官方长集锦源 29.97 fps（30000/1001）落到 25 fps 输出，按时间重采样；同上",
+  "ceremony": "2026 美网官方颁奖礼源 29.97 fps（30000/1001）落到 25 fps 输出，按时间重采样；同上",
+  "a1": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+  "a2": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+  "a3": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+  "a4": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题"
+ },
+ "_primary_why": "主源是 sources 第一个键 rg26（Roland-Garros 官方 2026 决赛长集锦，1920×1080/25fps），输出 25 fps；其余实拍源同为 25 fps 或按 mixed_fps/各源 probe 实测落位，自制动画四源为 30 fps（见 mixed_fps）。",
+ "source_crop": {
+  "a1": {
+   "reason": "自制动画（两个「最老」双轴对照）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，3:4 窗口即全帧，不与主源 1920×1080 共享裁切窗口。"
+  },
+  "a2": {
+   "reason": "自制动画（125/41 累积）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+  },
+  "a3": {
+   "reason": "自制动画（0-5 账本卡）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+  },
+  "a4": {
+   "reason": "自制动画（2026 战绩条）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+  }
+ },
+ "archival": {},
+ "segments": [
+  {
+   "source": "rg26",
+   "start": 1046,
+   "end": 1066,
+   "cx": 0.5,
+   "track": false,
+   "narration": "四年前，就在这片球场上，他坐着轮椅离开，不知道自己还能不能回来。四年后，他躺倒在同一片红土上——这一次，是以冠军的身份。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S0 冷开场上半：法网 2026 决赛长集锦（Roland-Garros 官方）赛点后起身、网前拥抱与向观众致意段；倒地帧本身留给 S5c 独占（同一镜头全片只用一次）。",
+   "_ending_payoff_required": true,
+   "_ending_payoff_why": "冷开场（法网夺冠后起身/拥抱/致意）是结局预告：包含结果确认与庆祝。声明 true，正文在 S5 原声段（rg26 1020.4–1066）完整重放冷开场全幅并继续走到捧杯（1086–1103），兑现承诺。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+    "label": {
+     "topic": "法网决赛",
+     "date": "2026.06.07",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 科博利",
+     "score": "6-1 4-6 6-4 6-7(5) 6-1",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-1 4-6 6-4 6-7(5) 6-1",
+      "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+     }
+    }
+   }
+  },
+  {
+   "source": "rg22",
+   "start": 1381,
+   "end": 1391,
+   "cx": 0.5,
+   "track": false,
+   "narration": "中间隔着的，是三次大满贯决赛失利，和整整一百二十五场胜利。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S0 冷开场下半：2022 法网半决赛官方经典全场（Roland-Garros）轮椅特写＋拄拐返场挥手，与 S3 伤退段窗口（1330–1380）不重叠。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+    "label": {
+     "topic": "法网半决赛",
+     "date": "2022.06.03",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 纳达尔",
+     "event": "第二盘伤退"
+    }
+   }
+  },
+  {
+   "source": "shl",
+   "start": 89,
+   "end": 107,
+   "cx": 0.5,
+   "track": false,
+   "narration": "就在这个十月，他把这一年收了个尾：上海，阿尔卡拉斯提前出局，年终世界第一提前锁定——他是德国网球史上第一位年终第一。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S1 当下：上海大师赛官方集锦（兹维列夫—布勃利克）无解说空当（双档 ASR 89–107 静默）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-shl.png",
+    "label": {
+     "topic": "锁定年终第一",
+     "date": "2026.10.12",
+     "place": "上海大师赛",
+     "people": "兹维列夫 vs 布布利克",
+     "score": "7-6(6) 4-6 7-6(1)",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "7-6(6) 4-6 7-6(1)",
+      "source": "https://tennisnow.com/zverev-withstands-nemesis-bublik-for-40th-atp-masters-1000-quarterfinal/"
+     }
+    }
+   }
+  },
+  {
+   "source": "vienna",
+   "start": 84,
+   "end": 96,
+   "cx": 0.5,
+   "track": false,
+   "narration": "维也纳，他用一场胜利把积分钉死。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S1：Tennis TV 维也纳官方集锦中段无解说回合空当（ASR 81–101 静默）；10-29 胜格里克斯普尔 6-4 7-5 锁定积分（事实卡 §6）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-vienna.png",
+    "label": {
+     "topic": "锁定世界第一",
+     "date": "2026.10.29",
+     "place": "维也纳",
+     "people": "兹维列夫 vs 格里克斯普尔",
+     "score": "6-4 7-5",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-4 7-5",
+      "source": "https://www.tennismajors.com/atp/zverev-clinches-world-no-1-in-style-beating-griekspoor-to-reach-vienna-quarterfinals-864371.html"
+     }
+    }
+   }
+  },
+  {
+   "source": "a1",
+   "start": 0,
+   "end": 21,
+   "cx": 0.5,
+   "track": false,
+   "narration": "下周一，二十九岁的兹维列夫，名字后面将第一次缀上「世界第一」。以他的年龄首登榜首，五十二年来只有一个人比他更晚；而「第一次当上年终第一」这件事，他比阿加西的纪录还要老三天，是历史第一人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S1 动画 A1（两个「最老」双轴对照）：自制代码动画，系列 tokens；口径分开落点——首登第二老（纽康比 30 岁 11 天在前）、年终第一最老（超阿加西 3 天），事实卡 §7。"
+  },
+  {
+   "source": "atpfeat",
+   "start": 56,
+   "end": 63,
+   "cx": 0.5,
+   "track": false,
+   "narration": "你可以说这个第一来得晚。但在他看来，它先得回答另一个问题：他到底配不配。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S1 收束转悬念：ATP 官方《How Zverev Clinched Year-End No. 1》特辑访谈空当（ASR 56–63 静默）。"
+  },
+  {
+   "source": "uso20",
+   "start": 1462,
+   "end": 1481.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二〇年，纽约，空荡荡的阿瑟·阿什球场。二十三岁的兹维列夫第一次站上大满贯决赛，对手蒂姆。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S2 上-1：2020 美网决赛官方浓缩版（US Open）决胜盘窗口前段——旁白落在解说空当（ASR 下一句 1481.58 起为比分播报，本窗止于 1481.3）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2020.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 蒂姆",
+     "score": "6-2 6-4 4-6 3-6 6-7(6)",
+     "result": {
+      "winner": "蒂姆",
+      "score": "2-6 4-6 6-4 6-3 7-6(6)",
+      "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso20",
+   "start": 1484.4,
+   "end": 1498.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "他两盘在手，决胜盘打到五比三，迎来自己的发球胜赛局——离奖杯，只剩两分。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S2 上-2：发球胜赛局本身（ASR 空当 1484.10–1498.70；前后两句比分播报『5-3 for Sasha Zverev』『it's five four』被切在段外，asr_plan 旁白不压英文整句闸据此拆段，旁白原文一字未删）。比分口径蒂姆 2-6 4-6 6-4 6-3 7-6(6)、4 小时 02 分（事实卡 §1）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2020.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 蒂姆",
+     "score": "6-2 6-4 4-6 3-6 6-7(6)",
+     "result": {
+      "winner": "蒂姆",
+      "score": "2-6 4-6 6-4 6-3 7-6(6)",
+      "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso20",
+   "start": 1796,
+   "end": 1813.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "然后，剧本翻了：蒂姆连扳两盘，抢七锁定胜局。四小时零两分钟，兹维列夫把到手的冠军打了出去。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S2 下-1：抢七前段空当（ASR 1814.04 起一句解说、本窗止于 1813.8）。旁白原文前半一字未改。长集锦版 2WjkzGb4u84 实测 720p 与主源尺寸不合（dry-run 尺寸闸），S2 全段统一用浓缩版（probe 实测 1920×1080）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2020.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 蒂姆",
+     "score": "6-2 6-4 4-6 3-6 6-7(6)",
+     "result": {
+      "winner": "蒂姆",
+      "score": "2-6 4-6 6-4 6-3 7-6(6)",
+      "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso20",
+   "start": 1819.5,
+   "end": 1830.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "那年他说，自己总有一天会站回来。没人想到，这一天要等六年；更没人想到，等他的先是一张轮椅。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S2 下-2：抢七末段空当（ASR 1819.26–1830.46 静默），冠军点在窗内收束；其后比分播报（1830.46 起，ASR 糊字不可逐字卡）整段让出，章节由旁白收束接 S3 轮椅。旁白原文后半一字未改。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2020.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 蒂姆",
+     "score": "6-2 6-4 4-6 3-6 6-7(6)",
+     "result": {
+      "winner": "蒂姆",
+      "score": "2-6 4-6 6-4 6-3 7-6(6)",
+      "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+     }
+    }
+   }
+  },
+  {
+   "source": "rg22",
+   "start": 1330,
+   "end": 1356,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二二年，巴黎半决赛，对面是纳达尔。三个多小时，第二盘还没打完，比分七比六、六比六。第二盘的最后一个球，他追一记正手，右脚踝在红土上拧成了不该有的角度。惨叫声里，他坐着轮椅离开了球场。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S3 上：2022 半决赛第二盘末局至受伤倒地（接触表实测 1350.5s 受伤分、1352.5s 起倒地）。旁白两处按事实卡 §2/§12 与源片自带字幕（After 3h03 minutes）修正：『两个多小时，只打了一盘半』→『三个多小时，第二盘还没打完』（事实层唯一改法，已批脚本实质未动）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+    "label": {
+     "topic": "法网半决赛",
+     "date": "2022.06.03",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 纳达尔",
+     "event": "第二盘伤退"
+    }
+   }
+  },
+  {
+   "source": "rg22",
+   "start": 1356,
+   "end": 1380,
+   "cx": 0.5,
+   "track": false,
+   "narration": "诊断结果：右脚踝三条外侧韧带全部撕裂，随即手术。秋季又查出骨水肿，整个赛季报销。七个月后他才重新站上赛场，而他自己的说法是：网球，又花了一年才找回来。那时没人再提二〇二〇年那句「站回来」——能站回来走路，已经算赢了。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S3 下：倒地特写、治疗、被搀扶离场与轮椅段（接触表 1356–1380）；源片自带字幕同述『three ligaments torn』，与官方诊断一致（事实卡 §2）。三条韧带用官方诊断，不用其 2026『七条』自述（§12-2）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+    "label": {
+     "topic": "法网半决赛",
+     "date": "2022.06.03",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 纳达尔",
+     "event": "第二盘伤退"
+    }
+   }
+  },
+  {
+   "source": "rg24",
+   "start": 2410.9,
+   "end": 2425.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "可他真的一步一步打了回来。二〇二四年，还是巴黎，决赛对阿尔卡拉斯，他一度两盘比一盘领先——然后又被连扳两盘。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S4 上：2024 法网决赛长集锦决胜盘窗口——旁白整段落在解说空当（ASR：2409.33–2410.85 一句欢呼解说让出、窗起 2410.9；2425.25 起解说密布，窗止 2425.0）。比分 6-3 2-6 5-7 6-1 6-2（事实卡 §3a）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg24.png",
+    "label": {
+     "topic": "法网决赛",
+     "date": "2024.06.09",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 阿尔卡拉斯",
+     "score": "3-6 6-2 7-5 1-6 2-6",
+     "result": {
+      "winner": "阿尔卡拉斯",
+      "score": "6-3 2-6 5-7 6-1 6-2",
+      "source": "https://www.atptour.com/en/news/alcaraz-zverev-roland-garros-2024-final/"
+     }
+    }
+   }
+  },
+  {
+   "source": "ao25",
+   "start": 408,
+   "end": 448,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二五年，墨尔本决赛对辛纳，对方全场没有送出一个破发点，直落三盘把他打回更衣室。三次大满贯决赛，三次亚军。奥运会金牌、总决赛冠军、大师赛冠军，他什么都有，只差这一座。「最强的无冕之王」——这句话从夸奖，慢慢变成了判决。而且面前只剩最后一级台阶：公开赛年代，只有伦德尔和穆雷，是以决赛四连败开局的。再输一次，他就要和这份名单并排站着。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S4 下：2025 澳网决赛长集锦末盘（ASR 稀疏、全窗无整句解说压旁白）；辛纳全场零破发点（事实卡 §3b）；四连败开局名单伦德尔/穆雷（§3c，ausopen.com 穷举口径）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-ao25.png",
+    "label": {
+     "topic": "澳网决赛",
+     "date": "2025.01.26",
+     "place": "墨尔本",
+     "people": "兹维列夫 vs 辛纳",
+     "score": "3-6 6-7(4) 3-6",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-3 7-6(4) 6-3",
+      "source": "https://www.atptour.com/en/news/sinner-zverev-australian-open-2025-final"
+     }
+    }
+   }
+  },
+  {
+   "source": "ao26",
+   "start": 406.5,
+   "end": 418.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二六年的一月，同样的剧本差点又演一遍：澳网半决赛，他和阿尔卡拉斯打了五小时二十七分钟。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S5 上-1：2026 澳网半决赛长集锦决胜盘五比四局内空当（ASR 406.28–418.40 静默）；5 小时 27 分、澳网史上最长男单半决赛（事实卡 §4a）。原窗 398–420 内有三句解说，asr_plan 闸据此拆段；拆分点原稿为逗号长句，落字时改句号成句（标点层调整、语义未动），免配音听审的跨段断句告警。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-ao26.png",
+    "label": {
+     "topic": "澳网半决赛",
+     "date": "2026.01.30",
+     "place": "墨尔本",
+     "people": "兹维列夫 vs 阿尔卡拉斯",
+     "score": "4-6 6-7(5) 7-6(3) 7-6(4) 5-7",
+     "result": {
+      "winner": "阿尔卡拉斯",
+      "score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+      "source": "https://www.atptour.com/en/news/alcaraz-australian-open-2026-reaction-friday"
+     }
+    }
+   }
+  },
+  {
+   "source": "ao26",
+   "start": 422.7,
+   "end": 431.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决胜盘五比四，又一次发球胜赛——又一次被破。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S5 上-2：同局后段空当（ASR 422.50–431.86 静默），被破发的一局在窗内收束。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-ao26.png",
+    "label": {
+     "topic": "澳网半决赛",
+     "date": "2026.01.30",
+     "place": "墨尔本",
+     "people": "兹维列夫 vs 阿尔卡拉斯",
+     "score": "4-6 6-7(5) 7-6(3) 7-6(4) 5-7",
+     "result": {
+      "winner": "阿尔卡拉斯",
+      "score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+      "source": "https://www.atptour.com/en/news/alcaraz-australian-open-2026-reaction-friday"
+     }
+    }
+   }
+  },
+  {
+   "source": "rg26",
+   "start": 900,
+   "end": 948,
+   "cx": 0.5,
+   "track": false,
+   "narration": "半年后，巴黎。这一回，签表先替他让开了路：阿尔卡拉斯因伤缺席，辛纳第二轮爆冷出局，德约止步第三轮——他一路没碰上一个世界前十。决赛对科博利，他第四盘抢七三比一领先被翻盘，还抽了筋。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S5 中：法网 2026 决赛第四盘抢七（接触表实测抢七 866–950，记分牌进程与旁白三比一领先被翻盘对应）；签表背景如实交代（事实卡 §4b），质疑段 S6 再摆一次。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+    "label": {
+     "topic": "法网决赛",
+     "date": "2026.06.07",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 科博利",
+     "score": "6-1 4-6 6-4 6-7(5) 6-1",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-1 4-6 6-4 6-7(5) 6-1",
+      "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+     }
+    }
+   }
+  },
+  {
+   "source": "rg26",
+   "start": 1012,
+   "end": 1020.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决胜盘，他六比一收官。冠军点落地，他倒在红土上，久久没有起来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S5 中-后：决胜盘赛点回合（接触表实测赛点约 1022 落点、倒地 1024 起）；旁白在闪访原声起音（ASR 1020.60）前收住，倒地庆祝整段让给下段原声。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+    "label": {
+     "topic": "法网决赛",
+     "date": "2026.06.07",
+     "place": "巴黎",
+     "people": "兹维列夫 vs 科博利",
+     "score": "6-1 4-6 6-4 6-7(5) 6-1",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-1 4-6 6-4 6-7(5) 6-1",
+      "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+     }
+    }
+   }
+  },
+  {
+   "source": "rg26",
+   "start": 1020.4,
+   "end": 1068.1,
+   "cx": 0.5,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.2,
+     "end": 2.22,
+     "text": "Yeah, very much.\n是的，非常。"
+    },
+    {
+     "at": 4.0,
+     "end": 4.66,
+     "text": "Thank you very much.\n非常感谢。"
+    },
+    {
+     "at": 5.08,
+     "end": 6.4,
+     "text": "Six-un, quatre-six.\n六比一，四比六。"
+    },
+    {
+     "at": 6.4,
+     "end": 9.16,
+     "text": "Six-quatre, six-sept, six-un.\n六比四，六比七，六比一。"
+    }
+   ],
+   "_quote_kind": "broadcast_quote",
+   "_quote_why": "S5 原声段：冠军点余波、倒地庆祝、起身拥抱全程走现场声——全场欢呼＋夺冠闪访原声（ASR 1020.60–1029.56）。asr_plan 要求原声段英文全覆盖，三条字卡逐字照录、中文只直译不添义：两句为他受访碎句，第三条为解说播报的比分数字（源片原声如此，不做归属推断）。窗口延到 1068.1：冷开场（第 1 段 1046–1066）是这一刻的预告，正文在此完整重放（_ending_payoff_required=true 的兑现），倒地镜头在正文仅此一次完整使用；point-end 检测器对赛后图形翻牌的估计随窗漂移，本段已按接触表实测认领（见 point_end_ok）。1044–1068 只有欢呼声、无英文语句。本段不占选手原声保底。",
+   "point_end_ok": "已核接触表（本期侦察实测）：1020.4–1068.1 全段是冠军点之后的倒地、起身、网前拥抱与向观众致意，比赛早已结束、无任何进行中的分；检测器所报翻牌是转播全场比分图形的切换，不是回合结束点。切点在比赛结束之后。",
+   "frame": "court",
+   "_frame_why": "本段是法网夺冠后的赛后庆祝蒙太奇（倒地、起身、网前拥抱、向观众致意），不是坐姿采访：按 tools/measure_person_center.py 同口径量测（9 点采样、insightface 最大脸），仅 4/9 帧检出人脸，不足人物中心闸的 5 帧下限；检出帧脸中心 0.4178–0.5547 本就贴近画面中心，且镜头在多个机位间切换、无单一固定人物构图，故按画面中心取景。"
+  },
+  {
+   "source": "a2",
+   "start": 0,
+   "end": 14,
+   "cx": 0.5,
+   "track": false,
+   "narration": "这一胜，是他大满贯的第一百二十五场胜利——公开赛年代，没有人为了第一座奖杯，赢下过这么多场比赛。第四十一次参赛，他终于捧杯。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S5 动画 A2（125/41 累积）：口径按事实卡 §5 修正——夺冠战本身即第 125 胜（决赛前 124 胜）；41 次仅次于伊万尼塞维奇 48 次。"
+  },
+  {
+   "source": "presser",
+   "start": 341.8,
+   "end": 358.2,
+   "cx": 0.491,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.3,
+     "end": 3.1,
+     "text": "I was laying on this court with an injury\n我曾躺在这片球场上，带着伤"
+    },
+    {
+     "at": 3.1,
+     "end": 6.0,
+     "text": "that I didn't know if I would ever come back from.\n不知道自己还能不能回来"
+    },
+    {
+     "at": 6.3,
+     "end": 8.7,
+     "text": "I lost a Grand Slam final here.\n我在这里输过大满贯决赛"
+    },
+    {
+     "at": 8.7,
+     "end": 12.7,
+     "text": "All of those memories — they're not wiped out, they're still with me.\n那些记忆不会被抹去，都还跟着我"
+    },
+    {
+     "at": 12.7,
+     "end": 15.9,
+     "text": "But this one will beat all of them.\n但这一次，会盖过它们全部"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声 1（S5 末，法网夺冠画面之后）：2026-06-07 法网夺冠赛后发布会（Roland-Garros 官方）回环句组，与 S0 开头化引同句呼应。窗口沿双档 ASR 句界（medium 342.1–357.7 在窗内完整）；英文为 ausopen.com 发布会原文（事实卡 §8c）。",
+   "frame": "person",
+   "cx_face": {
+    "samples": [
+     0.4849,
+     0.4801,
+     0.5095,
+     0.4704,
+     0.46,
+     0.4909,
+     0.5218,
+     0.5153,
+     0.5182
+    ],
+    "source_size": [
+     1920,
+     1080
+    ]
+   }
+  },
+  {
+   "source": "wim26",
+   "start": 692,
+   "end": 712,
+   "cx": 0.5,
+   "track": false,
+   "narration": "故事到这里，本来已经够圆满。但今年还没完：温网，他职业生涯第一次打进决赛，先赢一盘，还是输给了辛纳。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S6 上：2026 温网决赛长集锦第四盘无解说空当（ASR 691–713 静默）；比分 7-6(7) 6-7(2) 3-6 4-6（事实卡 §4c）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-wim26.png",
+    "label": {
+     "topic": "温网决赛",
+     "date": "2026.07.12",
+     "place": "伦敦",
+     "people": "兹维列夫 vs 辛纳",
+     "score": "7-6(7) 6-7(2) 3-6 4-6",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-7(7) 7-6(2) 6-3 6-4",
+      "source": "http://www.atptour.com/en/news/sinner-zverev-wimbledon-2026-final-sunday"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso26",
+   "start": 629.1,
+   "end": 643.1,
+   "cx": 0.5,
+   "track": false,
+   "narration": "两个月后在纽约，他成了头号种子——辛纳因膝伤提前结束了赛季。首轮，他离出局只差两分；次轮，他打满五盘。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S6 中-1：2026 美网决赛长集锦决胜局前空当（双档 ASR：629.02 前为观众杂音段、643.22 起一句解说，本窗 629.1–643.1 纯空当）；旁白先行交代他这一站的来路（事实卡 §4d）。与下段之间跳过 643.22–646.70 的一句解说（局间话，切点落在分与分之间）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso26.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2026.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 谢尔顿",
+     "score": "6-3 7-6(2) 5-7 6-2",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-3 7-6(2) 5-7 6-2",
+      "source": "http://www.atptour.com/en/news/zverev-shelton-us-open-2026-final-report"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso26",
+   "start": 646.8,
+   "end": 670.3,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决赛，他三比一拿下谢尔顿。赛点兑现的那一刻，他甚至没意识到比赛已经结束，转身走回底线，准备接发球，几秒之后才反应过来：三十年了，德国人又一次在纽约捧杯。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S6 中-2：最后一局回合段（ASR 空当 646.70–670.42）；旁白收束到赛点落点，画面与下段原声在 670.3 无缝相接（同一分连续播放、只换声音处理，不构成中途切分）。比分 6-3 7-6(2) 5-7 6-2（事实卡 §4d，NDTV 异源 6-4 判错见 §12-1）。",
+   "inset": {
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "top_pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "animate": false,
+    "image": "assets/reel/zverev-no1-story-2026/label-uso26.png",
+    "label": {
+     "topic": "美网决赛",
+     "date": "2026.09.13",
+     "place": "纽约",
+     "people": "兹维列夫 vs 谢尔顿",
+     "score": "6-3 7-6(2) 5-7 6-2",
+     "result": {
+      "winner": "兹维列夫",
+      "score": "6-3 7-6(2) 5-7 6-2",
+      "source": "http://www.atptour.com/en/news/zverev-shelton-us-open-2026-final-report"
+     }
+    }
+   }
+  },
+  {
+   "source": "uso26",
+   "start": 670.3,
+   "end": 686.8,
+   "cx": 0.5,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.3,
+     "end": 4.9,
+     "text": "Game, set and match — Zverev.\n全场比赛结束——兹维列夫夺冠。"
+    },
+    {
+     "at": 4.96,
+     "end": 6.9,
+     "text": "Alexander Zverev.\n亚历山大·兹维列夫"
+    },
+    {
+     "at": 6.9,
+     "end": 9.0,
+     "text": "Zverev doesn't know he's winning.\n兹维列夫还不知道自己已经赢了"
+    },
+    {
+     "at": 9.98,
+     "end": 11.4,
+     "text": "He doesn't even know he's winning.\n他甚至不知道自己赢了。"
+    }
+   ],
+   "_quote_kind": "broadcast_quote",
+   "_quote_why": "S6 中-3 赛点原声（转播解说）：冠军点落网与他转身走回底线、准备接发的名场面（事实卡 §4d 点名镜头），解说两句（ASR 675.26–679.30 / 680.28–681.70，逐字干净）就是现场第一反应。首句呼告（670.60–675.26）ASR 糊字，字卡只录可确证的呼告本体『Game, set and match — Zverev』，糊掉的尾巴不录、不猜（asr_plan 要求引语段全覆盖窗内英文，故补此条）。本段不占选手原声保底（发布会＋颁奖礼 2 处）。asr_plan 闸要求旁白不压英文整句，原 S6 单段据此拆为三段，旁白原文一字未删。"
+  },
+  {
+   "source": "ceremony",
+   "start": 480.5,
+   "end": 511.0,
+   "cx": 0.362,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.4,
+     "end": 4.6,
+     "text": "We went 30 years without winning a Grand Slam title\n我们等了三十年没拿过大满贯"
+    },
+    {
+     "at": 4.6,
+     "end": 8.0,
+     "text": "and now we've won two within the span of three months.\n如今三个月里拿了两个"
+    },
+    {
+     "at": 15.2,
+     "end": 20.2,
+     "text": "God has seen how hard we worked,\n上天看见了我们有多拼"
+    },
+    {
+     "at": 20.2,
+     "end": 29.8,
+     "text": "how much we suffered, how much pain we went through.\n我们多能扛，受过多少苦"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声 2（S6 美网画面后）：2026 美网颁奖礼（US Open 官方全程）致谢团队段，两句连读（脚本原声表备选连读版）；窗口沿 ASR 句界（480.9–488.5、496.7–510.3；第二卡 at 提前至 15.2 盖住 495.70–496.74 的起音碎响『I think』，卡面仍用 ATP 核定的整句），英文为 ATP 官方战报直引（事实卡 §8d）。",
+   "frame": "person",
+   "cx_face": {
+    "samples": [
+     0.3233,
+     0.3848,
+     0.3415,
+     0.441,
+     0.3299,
+     0.3546,
+     0.3088,
+     0.3409,
+     0.2822
+    ],
+    "source_size": [
+     1920,
+     1080
+    ]
+   }
+  },
+  {
+   "source": "a3",
+   "start": 0,
+   "end": 22,
+   "cx": 0.5,
+   "track": false,
+   "narration": "但账本的另一面，必须摊开：这一年，他对辛纳零胜五负，全年只从对方手里抢下一盘；法网夺冠，他没碰前十；年终第一，是在辛纳宣布赛季报销六天之后锁定的。质疑者说：这不是封王，是让位。而他的回答是……",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S6 动画 A3（0-5 账本卡）：五站逐项（印第安维尔斯/迈阿密/蒙特卡洛半决赛、马德里/温网决赛）只列站名轮次，不写蒙特卡洛/马德里盘分（事实卡 §10、§12-8）；辛纳 10-06 宣布赛季结束（§9），锁定 10-12（§6），相隔六天。段尾标点调整（逐项报备）：脚本原文以破折号『——』悬念收尾引出原声 3，但配音硬闸（voice_auto_review.split_sentences）判『整句拆进两段分开合成』为硬伤、无认领口——按其自带改法『在段尾收成一句』的最小形式，仅将段尾『——』换成终止标点『……』，字词与语义一字未动、悬念语气保留，TTS 以收尾语调合成；渲染前请所有者复核此标点。"
+  },
+  {
+   "source": "shqf",
+   "start": 61.5,
+   "end": 78.92,
+   "cx": 0.562,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.1,
+     "end": 2.64,
+     "text": "Once Yannick unfortunately did the announcement\n自从辛纳不幸宣布"
+    },
+    {
+     "at": 2.64,
+     "end": 5.08,
+     "text": "that he's not gonna play for the rest of the year,\n他今年余下的比赛都不打了"
+    },
+    {
+     "at": 6.06,
+     "end": 8.5,
+     "text": "I'm four and a half thousand points ahead of everyone else,\n我领先所有人四千五百分"
+    },
+    {
+     "at": 8.52,
+     "end": 10.68,
+     "text": "so I feel like I have to trust myself enough\n所以我只能相信自己"
+    },
+    {
+     "at": 10.68,
+     "end": 13.38,
+     "text": "that I'm gonna win at least a couple of matches\n能至少赢下几场比赛"
+    },
+    {
+     "at": 13.38,
+     "end": 14.4,
+     "text": "until the end of the year.\n打到今年结束"
+    },
+    {
+     "at": 15.26,
+     "end": 17.36,
+     "text": "So I wasn't too worried about that.\n所以我没太担心"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声 3（所有者 2026-10-30 选定候选 B，替换原 ATP 文字稿引语卡）：上海大师赛八强赛后场边采访（Rolex Shanghai Masters 官方频道 KlSx2iN2c4I），问及锁定年终第一是否释压，他亲口谈辛纳宣布赛季报销、自己领先四千五百分、'没太担心'——即旁白所引'他的回答'。窗口 61.50–78.92 按 medium.en 逐词时码落完整答句（首词 Once 61.60、末词 that 78.86，下一句 78.98 起，不切词、不压前句 because 的词尾）；卡面英文照原句逐字（ASR 转写形 Janik/4,500 不取，姓名与数字词形以实声与所有者核定原句为准），中文为原句直译，不残留旧文章句译文。画面即采访本身：frame=person，9 点采样脸中心 0.497–0.628、cx 0.562（1080p 正本实测）。原文章句（ATP 2026-10-13 文字稿）全网无原声载体（9 个官方载体 ASR 逐字核过），所有者拍板换此真原声。",
+   "frame": "person",
+   "cx_face": {
+    "samples": [
+     0.5645,
+     0.5703,
+     0.5677,
+     0.4967,
+     0.5165,
+     0.5705,
+     0.5936,
+     0.5663,
+     0.6278
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-30T15:41:50+00:00",
+    "median": 0.5677,
+    "spread": 0.1311
+   }
+  },
+  {
+   "source": "a4",
+   "start": 0,
+   "end": 14,
+   "cx": 0.5,
+   "track": false,
+   "narration": "他说，他想和最强的人同场竞技，哪怕今年被对方赢了五次。这个月，巴黎和都灵还在等他——这个「第一」的成色，接下来三周，还得他自己一场一场验。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S7 动画 A4（2026 战绩条）：25 胜 2 负＝澳网四强/法网冠军/温网亚军/美网冠军（事实卡 §0、§4）；首句为其一贯表态的旁白转述（§8b 使用等级：转述、不上引语卡；另有 2026-06 Sky Sport Italia 与温网决赛后两场合公开表态同向，见汇报）。"
+  },
+  {
+   "source": "rg26",
+   "start": 1086,
+   "end": 1103,
+   "cx": 0.5,
+   "track": false,
+   "narration": "所以最后，把问题留给你：四次决赛、三次失利、一次重伤、一百二十五场胜利——这个年终第一，是六年坚持熬出来的实力兑现，还是对手缺席的时代让位？你站哪边，评论区见。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+   },
+   "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+   "_why": "S7 收束：法网 2026 捧杯段（接触表实测捧杯/亲吻奖杯 1090–1103，片尾卡 1104 起，窗口止于 1103）；站队题与脚本定稿一致。"
+  },
+  {
+   "source": "presser",
+   "start": 242.04,
+   "end": 260.96,
+   "cx": 0.5,
+   "track": false,
+   "kind": "quote",
+   "quote": [
+    {
+     "at": 0.2,
+     "end": 2.9,
+     "text": "Very quickly — and at a Grand Slam, it took longer.\n来得都很快，只有大满贯等得最久"
+    },
+    {
+     "at": 2.9,
+     "end": 5.1,
+     "text": "And now, no matter what happens —\n而现在，无论发生什么"
+    },
+    {
+     "at": 5.1,
+     "end": 7.3,
+     "text": "I will always be a Grand Slam champion,\n我永远都是大满贯冠军"
+    },
+    {
+     "at": 7.3,
+     "end": 9.14,
+     "text": "and nobody can take that away from me.\n没人能把这个夺走"
+    },
+    {
+     "at": 9.14,
+     "end": 18.72,
+     "text": "And maybe that does give me some freedom.\n也许，这反而给了我一种自由。"
+    }
+   ],
+   "_quote_kind": "player_quote",
+   "_quote_why": "结尾金句原声（金句锁结尾落点）：同场发布会原文 3（事实卡 §8c），与 S0 开头化引成对。窗口按 medium.en 句界扩整（242.24–260.76 三个 ASR 块整段纳入，asr_plan 切句/覆盖闸）：金句本体为中卡（英文从句在块界被 ASR 切开，『away from me』三词的音频落在第三卡时段内，字卡按完整原句落在中卡、第三卡只录其后的自由句——字幕跨卡衔接，逐字以 ausopen.com 发布会原文为准）。前后两卡为同答原话逐字照录、中译直译。"
+  }
+ ]
+}

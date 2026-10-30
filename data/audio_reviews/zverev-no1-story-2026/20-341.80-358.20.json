@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-g_6522aZuv4/g_6522aZuv4.mp4",
+  "source_sha256": "730497a56d3237abd359bb4f39e5a4388dcc5b60e1dd9419a68122a41a6e7281",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-30T16:04:36+00:00",
+  "reviewed_from": 341.8,
+  "reviewed_to": 358.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 342.1,
+      "end": 344.9,
+      "en": "I was laying on this court with an injury",
+      "zh": "我曾躺在这片球场上，带着伤"
+    },
+    {
+      "start": 344.9,
+      "end": 347.8,
+      "en": "that I didn't know if I would ever come back from.",
+      "zh": "不知道自己还能不能回来"
+    },
+    {
+      "start": 348.1,
+      "end": 350.5,
+      "en": "I lost a Grand Slam final here.",
+      "zh": "我在这里输过大满贯决赛"
+    },
+    {
+      "start": 350.5,
+      "end": 354.5,
+      "en": "All of those memories — they're not wiped out, they're still with me.",
+      "zh": "那些记忆不会被抹去，都还跟着我"
+    },
+    {
+      "start": 354.5,
+      "end": 357.7,
+      "en": "But this one will beat all of them.",
+      "zh": "但这一次，会盖过它们全部"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 730497a56d3237abd359bb4f39e5a4388dcc5b60e1dd9419a68122a41a6e7281，存于 data/source_asr/g_6522aZuv4/small.en.json 与 data/source_asr/g_6522aZuv4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

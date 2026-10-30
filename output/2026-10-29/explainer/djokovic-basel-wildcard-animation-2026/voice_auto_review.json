@@ -1,0 +1,861 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "1f64e4a3e4cbf6185b5e8319183721b86a8352b6e97d064c1b38014601234034",
+    "render_inputs_sha256": "654a02e9bc8cf1a00025eee0ab2803485964c355df185077f26d9db6ae4b8710",
+    "spec_sha256": "b28492915de9462bbff4e0ff3877db0618a6023459a7d5b1979378509f9d7193",
+    "film_sha256": "74a0dbd5babae00db82fc86d1641bd69d4969fe07f4ebfb00459aca3804ef57f",
+    "inventory_sha256": "94d00c65f15af1722787a126d04b66c77ab672ea69ec8600d2a4028d2d99a7ca"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "新版整条实际音轨解码为24kHz单声道s16le后与上一份已审成片逐字节相同，12段旁白、接缝和片尾均覆盖；音频请求/字节不变，WordBoundary数组语义相同（仅JSON键顺序变化）。旧片实际AAC全段波形核对及片尾ASR证据由哈希引用，见final-audio-identity.json。没有真人听审。",
+  "reviewed_at": "2026-10-29T13:34:41.730687+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:31e113abf68c0209596257d8e67968180aaec16d0913a7db4c7981f272deb1da",
+      "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+      "pass": true,
+      "result_of": "bundle:31e113abf68c0209596257d8e67968180aaec16d0913a7db4c7981f272deb1da"
+    },
+    {
+      "id": "bundle:3589e455dce728432c8212029135c0deff2c0ca9b23e0e347a37ddaa99ba1499",
+      "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+      "pass": true,
+      "result_of": "bundle:3589e455dce728432c8212029135c0deff2c0ca9b23e0e347a37ddaa99ba1499"
+    },
+    {
+      "id": "bundle:387d69f86cce532c5710daff807e6c20b8dfa38d669d876f066da46b7d926783",
+      "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+      "pass": true,
+      "result_of": "bundle:387d69f86cce532c5710daff807e6c20b8dfa38d669d876f066da46b7d926783"
+    },
+    {
+      "id": "bundle:390762f12c005afd2126f22529bd48c22a93b247c2ed35bbe6b923110c4fb401",
+      "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+      "pass": true,
+      "result_of": "bundle:390762f12c005afd2126f22529bd48c22a93b247c2ed35bbe6b923110c4fb401"
+    },
+    {
+      "id": "bundle:3a491b749c21aadb072685af91fa1e91d47f814c14ca9a4ac83c5488651e1669",
+      "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+      "pass": true,
+      "result_of": "bundle:3a491b749c21aadb072685af91fa1e91d47f814c14ca9a4ac83c5488651e1669"
+    },
+    {
+      "id": "bundle:467466682c806c38eef3dff13fd703b3fcc8fec9669477cd127f22f0191db5b6",
+      "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+      "pass": true,
+      "result_of": "bundle:467466682c806c38eef3dff13fd703b3fcc8fec9669477cd127f22f0191db5b6"
+    },
+    {
+      "id": "bundle:6353c27815a63f2fa39756d9a255d1e99e94ac514cfde014340b11e21d1029ba",
+      "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+      "pass": true,
+      "result_of": "bundle:6353c27815a63f2fa39756d9a255d1e99e94ac514cfde014340b11e21d1029ba"
+    },
+    {
+      "id": "bundle:71a0e485337e67ffe4845bf0ed263805ee9ab0b33286c29bf363d000e6157fb3",
+      "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+      "pass": true,
+      "result_of": "bundle:71a0e485337e67ffe4845bf0ed263805ee9ab0b33286c29bf363d000e6157fb3"
+    },
+    {
+      "id": "bundle:7ed08dff75b4ae59bb83d32c9ccbad10f5450a62029310651492146b06c0abbd",
+      "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+      "pass": true,
+      "result_of": "bundle:7ed08dff75b4ae59bb83d32c9ccbad10f5450a62029310651492146b06c0abbd"
+    },
+    {
+      "id": "bundle:8a56c4c5ee65e2f35b7bd21756678f33f6ae2c69704c61a9611c3f9ea79b93b4",
+      "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+      "pass": true,
+      "result_of": "bundle:8a56c4c5ee65e2f35b7bd21756678f33f6ae2c69704c61a9611c3f9ea79b93b4"
+    },
+    {
+      "id": "bundle:8a85769f7307141b24f323d51d2951d37da2bbe663f76aaedd808d7398ff03ae",
+      "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+      "pass": true,
+      "result_of": "bundle:8a85769f7307141b24f323d51d2951d37da2bbe663f76aaedd808d7398ff03ae"
+    },
+    {
+      "id": "bundle:df16a1677257215768694c833890c06b5c5f7d0289d7f47db16a73344075ebb5",
+      "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+      "pass": true,
+      "result_of": "bundle:df16a1677257215768694c833890c06b5c5f7d0289d7f47db16a73344075ebb5"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "83dccba60e631dab3645148e8e43e213b5fc63da20bce188362f05fe40658a8c",
+      "pass": true,
+      "result_of": "bundle:6353c27815a63f2fa39756d9a255d1e99e94ac514cfde014340b11e21d1029ba"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "38010c61c3b13ae931a3f4403b0c4495fe82bffc70bafc0a6023f1c5a2322fa8",
+      "pass": true,
+      "result_of": "bundle:467466682c806c38eef3dff13fd703b3fcc8fec9669477cd127f22f0191db5b6"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "b4fa50a5762bce0793ce92956f15d794648d2dcebcca295e8785ba821454eeb0",
+      "pass": true,
+      "result_of": "bundle:8a56c4c5ee65e2f35b7bd21756678f33f6ae2c69704c61a9611c3f9ea79b93b4"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "7697a958abc6481b61a6027e34f688a49b4820571c077b799fb2de50b68e5754",
+      "pass": true,
+      "result_of": "bundle:3589e455dce728432c8212029135c0deff2c0ca9b23e0e347a37ddaa99ba1499"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "1c0243abfef234b80c3a87d7a69a170fd7b739f91ea563dfe8e3d3c485b767c6",
+      "pass": true,
+      "result_of": "bundle:7ed08dff75b4ae59bb83d32c9ccbad10f5450a62029310651492146b06c0abbd"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "4d519267af0a13244ffd3a4f0e1d0d4a67e54a560a9554b8e1216f82974dd644",
+      "pass": true,
+      "result_of": "bundle:390762f12c005afd2126f22529bd48c22a93b247c2ed35bbe6b923110c4fb401"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "19ae7619bd0c0517432ad76bc2ba1167ee99018e6c3860629aaf50833ad2fe2d",
+      "pass": true,
+      "result_of": "bundle:31e113abf68c0209596257d8e67968180aaec16d0913a7db4c7981f272deb1da"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "2fee243d4b28f3cf1986db7984884a75ca8c289ba1afb8f82ab4c89f006aa296",
+      "pass": true,
+      "result_of": "bundle:8a85769f7307141b24f323d51d2951d37da2bbe663f76aaedd808d7398ff03ae"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "41e0916960538b1b48a39c5ccbba5d573792f75a9e961c6c899f11b771f6824c",
+      "pass": true,
+      "result_of": "bundle:387d69f86cce532c5710daff807e6c20b8dfa38d669d876f066da46b7d926783"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "f717edd3f0b561efe0706f81279ae242effd2f65740eaaa88bb2efeb15ffb065",
+      "pass": true,
+      "result_of": "bundle:3a491b749c21aadb072685af91fa1e91d47f814c14ca9a4ac83c5488651e1669"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "60f5cf97930ce9f85f34710abc88f545172af416e28ac559828bbdf302edcd36",
+      "pass": true,
+      "result_of": "bundle:df16a1677257215768694c833890c06b5c5f7d0289d7f47db16a73344075ebb5"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "3d9c58b607010979c8612367dea98e1a30032f6d6733033fe5bef639c2155de8",
+      "pass": true,
+      "result_of": "bundle:71a0e485337e67ffe4845bf0ed263805ee9ab0b33286c29bf363d000e6157fb3"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:31e113abf68c0209596257d8e67968180aaec16d0913a7db4c7981f272deb1da",
+      "text": "那他有没有抢走本土球员的机会？这次要分清两类名额。本届巴塞尔有三张常规外卡，规则另设一张有条件的额外外卡，给赛事指定的A加球员。瑞士媒体对这次参赛的报道，明确将德约这张卡列为A加外卡。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 83,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那他有没有抢走本土球员的机会?这次要分清两类名额。本届巴塞尔有三张常规外卡,规则另设一张有条件的额外外卡,给赛事指定的A加球员。瑞士媒体对这次参赛的报道,明确将得约这张卡列为A加外卡。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 83,
+        "speech_s": 15.246,
+        "cps": 5.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 他 ｜ 有没有 ｜ 抢 ｜ 走 ｜ 本土 ｜ 球员 ｜ 的 ｜ 机会 ｜ 这次 ｜ 要 ｜ 分清 ｜ 两类 ｜ 名额 ｜ 本届 ｜ 巴塞尔 ｜ 有 ｜ 三张 ｜ 常规 ｜ 外卡 ｜ 规则 ｜ 另 ｜ 设 ｜ 一 ｜ 张 ｜ 有 ｜ 条件 ｜ 的 ｜ 额外 ｜ 外卡 ｜ 给 ｜ 赛事 ｜ 指定 ｜ 的 ｜ A ｜ 加 ｜ 球员 ｜ 瑞士 ｜ 媒体 ｜ 对 ｜ 这次 ｜ 参赛 ｜ 的 ｜ 报道 ｜ 明确 ｜ 将 ｜ 德 ｜ 约 ｜ 这 ｜ 张 ｜ 卡 ｜ 列为 ｜ A ｜ 加 ｜ 外卡"
+      }
+    },
+    {
+      "id": "bundle:3589e455dce728432c8212029135c0deff2c0ca9b23e0e347a37ddaa99ba1499",
+      "text": "ATP规则明确，球员须在期限内完成正式报名，才能进入这条按排名录取和递补的队列。即使后来有人退赛，也要先从合资格的报名球员里递补。高排名，并不意味着可以在开赛前随时插入这条队列。于是问题变成了：德约为什么这么晚才决定来？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 98,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "ATP规则明确,球员需在期限内完成正式报名,才能进入这条安排名录取和递补的对恋。即使后来有人退赛,也要先从和资格的报名球员里递补。高排名并不意味着可以在开赛前随时插入这条对恋。于是问题变成了,德约为什么这么晚才决定来?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 98,
+        "speech_s": 17.879,
+        "cps": 5.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "ATP ｜ 规则 ｜ 明确 ｜ 球员 ｜ 须 ｜ 在 ｜ 期限 ｜ 内 ｜ 完成 ｜ 正式 ｜ 报名 ｜ 才能 ｜ 进入 ｜ 这 ｜ 条 ｜ 按 ｜ 排名 ｜ 录取 ｜ 和 ｜ 递补 ｜ 的 ｜ 队列 ｜ 即使 ｜ 后来 ｜ 有人 ｜ 退赛 ｜ 也 ｜ 要 ｜ 先 ｜ 从 ｜ 合 ｜ 资格 ｜ 的 ｜ 报名 ｜ 球员 ｜ 里 ｜ 递补 ｜ 高 ｜ 排名 ｜ 并 ｜ 不 ｜ 意味着 ｜ 可以 ｜ 在 ｜ 开赛 ｜ 前 ｜ 随时 ｜ 插入 ｜ 这 ｜ 条 ｜ 队列 ｜ 于是 ｜ 问题 ｜ 变成 ｜ 了 ｜ 德 ｜ 约 ｜ 为什么 ｜ 这么 ｜ 晚 ｜ 才 ｜ 决定 ｜ 来"
+      }
+    },
+    {
+      "id": "bundle:387d69f86cce532c5710daff807e6c20b8dfa38d669d876f066da46b7d926783",
+      "text": "这张额外外卡，也不是赛事随时能送给任何人的第四张卡。球员要符合指定条件，并且最晚在赛事周之前的周五、美国东部时间上午十点报出名字。若没有用掉，席位交给录取名单里下一位合资格球员。因此，本土三张卡没少，不等于这个额外名额对其他球员的入围机会毫无影响。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 114,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这张额外外卡也不是赛事随时能送给任何人的第四张卡。球员要符合指定条件,并且最晚在赛事周之前的周五,美国东部时间上50点爆出名字。若没有用掉,席位交给录取名单里下一位和自个球员。因此,本土三张卡没少,不等于这个额外名额对其他球员的入围机会毫无影响。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 114,
+        "speech_s": 20.082,
+        "cps": 5.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 张 ｜ 额外 ｜ 外卡 ｜ 也 ｜ 不是 ｜ 赛事 ｜ 随时 ｜ 能 ｜ 送给 ｜ 任何 ｜ 人 ｜ 的 ｜ 第四张 ｜ 卡 ｜ 球员 ｜ 要 ｜ 符合 ｜ 指定 ｜ 条件 ｜ 并且 ｜ 最 ｜ 晚 ｜ 在 ｜ 赛事 ｜ 周 ｜ 之前 ｜ 的 ｜ 周五 ｜ 美国 ｜ 东部 ｜ 时间 ｜ 上午十点 ｜ 报 ｜ 出 ｜ 名字 ｜ 若 ｜ 没有 ｜ 用 ｜ 掉 ｜ 席位 ｜ 交给 ｜ 录取 ｜ 名单 ｜ 里 ｜ 下 ｜ 一 ｜ 位 ｜ 合 ｜ 资格 ｜ 球员 ｜ 因此 ｜ 本土 ｜ 三张 ｜ 卡 ｜ 没 ｜ 少 ｜ 不 ｜ 等于 ｜ 这个 ｜ 额外 ｜ 名额 ｜ 对 ｜ 其他 ｜ 球员 ｜ 的 ｜ 入围 ｜ 机会 ｜ 毫无 ｜ 影响"
+      }
+    },
+    {
+      "id": "bundle:390762f12c005afd2126f22529bd48c22a93b247c2ed35bbe6b923110c4fb401",
+      "text": "时间控出来，是他能够来；争取年终总决赛资格，是这次加赛的竞技意义。赛事和德约自己的官网都提到，他需要积分，争取都灵席位。二零一一年之后，他隔了十五年，再次来到巴塞尔。把他带回来的，是赛季末仍然要争的一张门票。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 92,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "时间空出来,是他能够来,争取年终总决赛资格是这次加赛的竞技意义。赛事和德约自己的官网都提到,他需要积分争取都领席位。2011年之后,他隔了15年,再次来到巴赛尔。把他带回来的,是赛季末仍然要争的一张门票。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 92,
+        "speech_s": 17.07,
+        "cps": 5.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "时间 ｜ 控 ｜ 出来 ｜ 是 ｜ 他 ｜ 能够 ｜ 来 ｜ 争取 ｜ 年终 ｜ 总决赛 ｜ 资格 ｜ 是 ｜ 这次 ｜ 加 ｜ 赛 ｜ 的 ｜ 竞技 ｜ 意义 ｜ 赛事 ｜ 和 ｜ 德 ｜ 约 ｜ 自己 ｜ 的 ｜ 官网 ｜ 都 ｜ 提到 ｜ 他 ｜ 需要 ｜ 积分 ｜ 争取 ｜ 都灵 ｜ 席位 ｜ 二零一一年 ｜ 之后 ｜ 他 ｜ 隔 ｜ 了 ｜ 十五年 ｜ 再次 ｜ 来到 ｜ 巴塞尔 ｜ 把 ｜ 他 ｜ 带 ｜ 回来 ｜ 的 ｜ 是 ｜ 赛季 ｜ 末 ｜ 仍然 ｜ 要 ｜ 争 ｜ 的 ｜ 一 ｜ 张 ｜ 门票"
+      }
+    },
+    {
+      "id": "bundle:3a491b749c21aadb072685af91fa1e91d47f814c14ca9a4ac83c5488651e1669",
+      "text": "现在回到开头：为什么外卡和四号种子能同时出现？外卡记录的是参赛渠道，种子依据的是排种子时适用的最新ATP排名。规则明确允许外卡球员成为种子。进入正赛之后，德约按排名取得四号种子的位置，两种身份各管一件事，完全可以同时成立。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 99,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 3,
+        "sub_ratio": 0.03,
+        "longest_deletion": 0,
+        "transcript": "现在回到开头,为什么瓦卡和4号种子能同时出现?瓦卡记录的是参赛渠道,种子依据的是排种子实施用的最新ATP排名。规则明确允许瓦卡球员成为种子。进入正赛之后,德约岸排名取得4号种子的位置,两种身份各管一件事,完全可以同时成立。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.141,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 34,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "uncertain",
+              "score": 0.05,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 41,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "uncertain",
+              "score": 0.147,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 67,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "uncertain",
+              "score": 0.036,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 83,
+          "char": "得",
+          "word": "取得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 86,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.376,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 93,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.738,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 99,
+        "speech_s": 18.381,
+        "cps": 5.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "现在 ｜ 回到 ｜ 开头 ｜ 为什么 ｜ 外卡 ｜ 和 ｜ 四号 ｜ 种子 ｜ 能 ｜ 同时 ｜ 出现 ｜ 外卡 ｜ 记录 ｜ 的 ｜ 是 ｜ 参赛 ｜ 渠道 ｜ 种子 ｜ 依据 ｜ 的 ｜ 是 ｜ 排 ｜ 种子 ｜ 时 ｜ 适用 ｜ 的 ｜ 最新 ｜ ATP ｜ 排名 ｜ 规则 ｜ 明确 ｜ 允许 ｜ 外卡 ｜ 球员 ｜ 成为 ｜ 种子 ｜ 进入 ｜ 正 ｜ 赛 ｜ 之后 ｜ 德 ｜ 约 ｜ 按 ｜ 排名 ｜ 取得 ｜ 四号 ｜ 种子 ｜ 的 ｜ 位置 ｜ 两种 ｜ 身份 ｜ 各 ｜ 管 ｜ 一件 ｜ 事 ｜ 完全 ｜ 可以 ｜ 同时 ｜ 成立"
+      }
+    },
+    {
+      "id": "bundle:467466682c806c38eef3dff13fd703b3fcc8fec9669477cd127f22f0191db5b6",
+      "text": "德约科维奇参加二零二六年巴塞尔站，用的是外卡，却又是四号种子。排名够，为什么还要一张邀请？关键在于，能排进名单，和已经报了名，是两回事。更特别的是，他拿的这张卡，还没有占掉给瑞士球员的三张常规外卡。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 87,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "德约科维奇参加2026年巴塞尔战用的是外卡却又是4号种子。排名购为什么还要一张邀请?关键在于能排进名单和已经报了名是两回事。更特别的是,他拿的这张卡还没有占掉给瑞士球员的三张常规外卡。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.036,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 38,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.295,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 81,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.534,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 87,
+        "speech_s": 16.516,
+        "cps": 5.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德约科维奇 ｜ 参加 ｜ 二零二六年 ｜ 巴塞尔站 ｜ 用 ｜ 的 ｜ 是 ｜ 外卡 ｜ 却 ｜ 又是 ｜ 四号 ｜ 种子 ｜ 排名 ｜ 够 ｜ 为什么 ｜ 还要 ｜ 一 ｜ 张 ｜ 邀请 ｜ 关键 ｜ 在于 ｜ 能 ｜ 排 ｜ 进 ｜ 名单 ｜ 和 ｜ 已经 ｜ 报 ｜ 了 ｜ 名 ｜ 是 ｜ 两回事 ｜ 更 ｜ 特别 ｜ 的 ｜ 是 ｜ 他 ｜ 拿 ｜ 的 ｜ 这 ｜ 张 ｜ 卡 ｜ 还 ｜ 没有 ｜ 占 ｜ 掉 ｜ 给 ｜ 瑞士 ｜ 球员 ｜ 的 ｜ 三张 ｜ 常规 ｜ 外卡"
+      }
+    },
+    {
+      "id": "bundle:6353c27815a63f2fa39756d9a255d1e99e94ac514cfde014340b11e21d1029ba",
+      "text": "德约排名够，为什么还要外卡？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "德约排名购为什么还要外卡?"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.281,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.121,
+        "cps": 5.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德 ｜ 约 ｜ 排名 ｜ 够 ｜ 为什么 ｜ 还要 ｜ 外卡"
+      }
+    },
+    {
+      "id": "bundle:71a0e485337e67ffe4845bf0ed263805ee9ab0b33286c29bf363d000e6157fb3",
+      "text": "所以，德约这次需要外卡，解决的是常规报名之后临时加入的问题。外卡不只帮助排名不足的新人，也能让临时调整日程的高排名球员参赛。看懂一张签表，要把排名、报名、外卡和种子分开看。你更支持把额外名额留给临时参赛的名将，还是交给下一位报名球员？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 106,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以,德约这次需要外卡,解决的是常规报名之后临时加入的问题。外卡不只帮助排名不足的新人,也能让临时调整日程的高排名球员参赛。看懂一张签表,要把排名、报名、外卡和种子分开看。你更支持把额外名额留给临时参赛的名将,还是交给下一位报名球员。"
+      },
+      "polyphones": [
+        {
+          "index": 80,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.596,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 105,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.399,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 106,
+        "speech_s": 19.764,
+        "cps": 5.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 德 ｜ 约 ｜ 这次 ｜ 需要 ｜ 外卡 ｜ 解决 ｜ 的 ｜ 是 ｜ 常规 ｜ 报名 ｜ 之后 ｜ 临时 ｜ 加入 ｜ 的 ｜ 问题 ｜ 外卡 ｜ 不只 ｜ 帮助 ｜ 排名 ｜ 不足 ｜ 的 ｜ 新人 ｜ 也 ｜ 能 ｜ 让 ｜ 临时 ｜ 调整 ｜ 日程 ｜ 的 ｜ 高 ｜ 排名 ｜ 球员 ｜ 参赛 ｜ 看 ｜ 懂 ｜ 一 ｜ 张 ｜ 签表 ｜ 要 ｜ 把 ｜ 排名 ｜ 报名 ｜ 外卡 ｜ 和 ｜ 种子 ｜ 分开 ｜ 看 ｜ 你 ｜ 更 ｜ 支持 ｜ 把 ｜ 额外 ｜ 名额 ｜ 留给 ｜ 临时 ｜ 参赛 ｜ 的 ｜ 名将 ｜ 还是 ｜ 交给 ｜ 下 ｜ 一 ｜ 位 ｜ 报名 ｜ 球员"
+      }
+    },
+    {
+      "id": "bundle:7ed08dff75b4ae59bb83d32c9ccbad10f5450a62029310651492146b06c0abbd",
+      "text": "这次临时参赛，有具体的日程背景。十月十四日，六王大满贯表演赛宣布推迟到十二月。瑞士媒体采访巴塞尔赛事总监后报道，德约原本计划参加那场表演赛，空档出现后，双方在两天内达成了巴塞尔参赛协议。十月十六日，赛事官宣他回归。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 97,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这次临时参赛,有具体的日程背景。10月14日,六王大满冠表演赛宣布推迟到12月。瑞士媒体采访巴塞尔赛事总监后报道,得越原本计划参加那场表演赛,空档出现后,双方在两天内达成了巴塞尔参赛协议。10月16日,赛事官宣他回归。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 97,
+        "speech_s": 17.654,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这次 ｜ 临时 ｜ 参赛 ｜ 有 ｜ 具体 ｜ 的 ｜ 日程 ｜ 背景 ｜ 十月十四日 ｜ 六 ｜ 王 ｜ 大满贯 ｜ 表演赛 ｜ 宣布 ｜ 推迟 ｜ 到 ｜ 十二月 ｜ 瑞士 ｜ 媒体 ｜ 采访 ｜ 巴塞尔 ｜ 赛事 ｜ 总监 ｜ 后 ｜ 报道 ｜ 德 ｜ 约 ｜ 原本 ｜ 计划 ｜ 参加 ｜ 那 ｜ 场 ｜ 表演赛 ｜ 空 ｜ 档 ｜ 出现 ｜ 后 ｜ 双方 ｜ 在 ｜ 两天 ｜ 内 ｜ 达成 ｜ 了 ｜ 巴塞尔 ｜ 参赛 ｜ 协议 ｜ 十月十六日 ｜ 赛事 ｜ 官 ｜ 宣 ｜ 他 ｜ 回归"
+      }
+    },
+    {
+      "id": "bundle:8a56c4c5ee65e2f35b7bd21756678f33f6ae2c69704c61a9611c3f9ea79b93b4",
+      "text": "先看报名的时钟。巴塞尔属于ATP五百赛，常规单打正赛报名在赛事周周一之前二十八天截止。正赛十月二十六日开始，按通则推算，截止节点是九月二十八日，美国东部时间中午十二点。这里适用的是四周，不能照搬大满贯常见的六周。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 94,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先看报名的时钟。巴塞尔属于ATP500赛,常规单打正赛报名在赛事周周一之前28天截止。正赛10月26日开始,按通则推算截止节点是9月28日,美国东部时间中52点。这里适用的是四周,不能照搬大满罐常见的六周。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 94,
+        "speech_s": 17.828,
+        "cps": 5.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 报名 ｜ 的 ｜ 时钟 ｜ 巴塞尔 ｜ 属于 ｜ ATP ｜ 五百 ｜ 赛 ｜ 常规 ｜ 单打 ｜ 正 ｜ 赛 ｜ 报名 ｜ 在 ｜ 赛事 ｜ 周周一 ｜ 之前 ｜ 二十八天 ｜ 截止 ｜ 正 ｜ 赛 ｜ 十月二十六日 ｜ 开始 ｜ 按 ｜ 通则 ｜ 推算 ｜ 截止 ｜ 节点 ｜ 是 ｜ 九月二十八日 ｜ 美国 ｜ 东部 ｜ 时间 ｜ 中午十二点 ｜ 这里 ｜ 适用 ｜ 的 ｜ 是 ｜ 四周 ｜ 不能 ｜ 照搬 ｜ 大满贯 ｜ 常见 ｜ 的 ｜ 六周"
+      }
+    },
+    {
+      "id": "bundle:8a85769f7307141b24f323d51d2951d37da2bbe663f76aaedd808d7398ff03ae",
+      "text": "看本届实际名单，就更清楚了。赛事十月十九日公告，三名正赛外卡球员是瓦林卡、基姆和施特里克。德约用的是额外通道，没有挤掉这三张。不过，额外外卡仍在原有签表名额之内，不会让三十二人的签表突然变成三十三人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 90,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.011,
+        "longest_deletion": 0,
+        "transcript": "看本届实际名单就更清楚了。赛事10月19日公告,三名正在外卡球员是瓦林卡、基姆和施特里克。德约用的是额外通道,没有挤掉这三张。不过,额外外卡仍在原有千表名额之内,不会让32人的千表突然变成33人。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 90,
+        "speech_s": 17.336,
+        "cps": 5.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "看 ｜ 本届 ｜ 实际 ｜ 名单 ｜ 就 ｜ 更 ｜ 清楚 ｜ 了 ｜ 赛事 ｜ 十月十九日 ｜ 公告 ｜ 三名 ｜ 正 ｜ 赛 ｜ 外卡 ｜ 球员 ｜ 是 ｜ 瓦林卡 ｜ 基姆 ｜ 和 ｜ 施特里克 ｜ 德 ｜ 约 ｜ 用 ｜ 的 ｜ 是 ｜ 额外 ｜ 通道 ｜ 没有 ｜ 挤 ｜ 掉 ｜ 这 ｜ 三张 ｜ 不过 ｜ 额外 ｜ 外卡 ｜ 仍 ｜ 在 ｜ 原有 ｜ 签表 ｜ 名额 ｜ 之内 ｜ 不会 ｜ 让 ｜ 三十二 ｜ 人 ｜ 的 ｜ 签表 ｜ 突然 ｜ 变成 ｜ 三十三 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:df16a1677257215768694c833890c06b5c5f7d0289d7f47db16a73344075ebb5",
+      "text": "同一周，阿尔卡拉斯参加维也纳，也是外卡，却列二号种子。维也纳赛事官方说明，六王表演赛延期后，总监联系他的团队，双方很快敲定参赛。所以，顶尖球员拿外卡，不一定是排名不够，也可能是常规报名早已截止后，临时调整了赛程。",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 93,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "同一周,阿尔卡拉斯参加维也纳,也是外卡,却列二号种子。维也纳赛是官方说明,六王表演赛延期后,总监联系他的团队,双方很快敲定参赛。所以,顶尖球员拿外卡,不一定是排名不够,也可能是常规报名早已截止后,临时调整了赛程。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "uncertain",
+              "score": 0.109,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 93,
+        "speech_s": 17.049,
+        "cps": 5.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "同一周 ｜ 阿尔卡拉 ｜ 斯 ｜ 参加 ｜ 维也纳 ｜ 也是 ｜ 外卡 ｜ 却 ｜ 列 ｜ 二号 ｜ 种子 ｜ 维也纳 ｜ 赛事 ｜ 官方 ｜ 说明 ｜ 六 ｜ 王 ｜ 表演赛 ｜ 延期 ｜ 后 ｜ 总监 ｜ 联系 ｜ 他 ｜ 的 ｜ 团队 ｜ 双方 ｜ 很快 ｜ 敲定 ｜ 参赛 ｜ 所以 ｜ 顶尖 ｜ 球员 ｜ 拿 ｜ 外卡 ｜ 不一定 ｜ 是 ｜ 排名 ｜ 不够 ｜ 也 ｜ 可能 ｜ 是 ｜ 常规 ｜ 报名 ｜ 早已 ｜ 截止 ｜ 后 ｜ 临时 ｜ 调整 ｜ 了 ｜ 赛程"
+      },
+      "pass": true
+    }
+  ],
+  "reused_review": {
+    "evidence_sha256": "8fb320f86b0eb1efc494a6fe9af6dca33f04f39080c379bd6427482b2492fb4f",
+    "identity": {
+      "render_sha256": "1252a2939aeeaa2204d7821bad0618c343e204fb19d439e78140383e6d2512c4",
+      "render_inputs_sha256": "a93f3fd2e6c6301804e63d9aca6fd3ca78f249ecd9a0bf3dbe055dd038e0613b",
+      "spec_sha256": "df07b490d306d959f4e8a2fcd76e9662760853f657e122d9cf940d43ee946163",
+      "film_sha256": "cd522e61676417ff91397d5ff690fea38446cff64803da7c825af58d8dd6ed0f",
+      "inventory_sha256": "3699bafec732555d0a9c97431249ff961d1517b4d3c5119af6d95b2188467ff5"
+    },
+    "binding_proof_sha256": "ae40a0f644e73188dc5fa42593f3dc3677dfafdbfc1474be450484ab34363ea7",
+    "unchanged_audio_entries": 24,
+    "all_word_boundaries_equal": true,
+    "full_final_pcm_identical": true
+  }
+}

@@ -1,0 +1,1277 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "31294ef32c7f83fd18950a39169e22074bc55e0ad77b750d6a371b8321b995c8",
+    "render_inputs_sha256": "01d275a31af1552497b0299e32f4d897174a9306a8a09d49db97ee687c47ba46",
+    "spec_sha256": "e4ee9efb9e4782d6cc9670de5fb7481d96a096b1f755ad8ac18f316492064cf2",
+    "film_sha256": "d58b28040c5b588cb730fea556791dd99e5d8bd0b5ac662f2ebf15df500441d4",
+    "inventory_sha256": "c16ef243345b37384e2f0df56234de5ed6f0dde18bff8d565817abaf3a240d94"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-30T08:23:57+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1122785406bd9713070d3d1f5c8e619fc1704300729bb21b3492cf12cd7ae089",
+      "audio_sha256": "7cda2c7e8937531c0ecccf908e92a1af9d04c5064a9bb911a78b70062bd5b883",
+      "pass": true,
+      "result_of": "bundle:1122785406bd9713070d3d1f5c8e619fc1704300729bb21b3492cf12cd7ae089"
+    },
+    {
+      "id": "bundle:27788fba6a19344023fdf4ab567bd03f684b7e091a89788436ff9635f20c4df7",
+      "audio_sha256": "d114da4e3c4de02587636780bd7fba6c2bfeab7fce63e7517d2bfb02517aab35",
+      "pass": true,
+      "result_of": "bundle:27788fba6a19344023fdf4ab567bd03f684b7e091a89788436ff9635f20c4df7"
+    },
+    {
+      "id": "bundle:353b5bea16776946fa712ec735ff3424b215c02e173156c5f89e327a7ec11672",
+      "audio_sha256": "95ef5137b09927e1d5738cff152e270ace8c9813456d748e7b092ed075d7cc13",
+      "pass": true,
+      "result_of": "bundle:353b5bea16776946fa712ec735ff3424b215c02e173156c5f89e327a7ec11672"
+    },
+    {
+      "id": "bundle:45955a601f9922643fb10c0201ada6784b07224ac4ae174791564e848f2643f9",
+      "audio_sha256": "20aadeb3dffbfb3179219b41aa81cccbeb49896085e312af50fb8391c1899bd1",
+      "pass": true,
+      "result_of": "bundle:45955a601f9922643fb10c0201ada6784b07224ac4ae174791564e848f2643f9"
+    },
+    {
+      "id": "bundle:494527b2a273f243f6372ffd6d9ae14879f7bfc260b90a4797d1c456bec36db8",
+      "audio_sha256": "dd00a83ad990cef812fc4f94e47213d0ccb3130f7ee8841977cc5106236307cc",
+      "pass": true,
+      "result_of": "bundle:494527b2a273f243f6372ffd6d9ae14879f7bfc260b90a4797d1c456bec36db8"
+    },
+    {
+      "id": "bundle:4c702edd09be19bd1d9e4b8d3c889f4af02330bdae36f93a2b01683074154a30",
+      "audio_sha256": "b458b1e4b91382089fa1b99e30e19a31a74fdce3bdf5251cafa6ad450321c490",
+      "pass": true,
+      "result_of": "bundle:4c702edd09be19bd1d9e4b8d3c889f4af02330bdae36f93a2b01683074154a30"
+    },
+    {
+      "id": "bundle:5048daca2db4b4b0e284230655fef179a075f989f0132a7b9fb032de865c605a",
+      "audio_sha256": "10e87fdb22be9f965d944c8a303211e0728d44aa1ad522b87e0ce9f6074a62c0",
+      "pass": true,
+      "result_of": "bundle:5048daca2db4b4b0e284230655fef179a075f989f0132a7b9fb032de865c605a"
+    },
+    {
+      "id": "bundle:5dafe1d0723f3d517b7e1ea22c5c056ce1fa22d1fa5e78068c303e04cbfbc4b3",
+      "audio_sha256": "d9b485b618b2f49a01cdb9db3d3ce1373d12c9ec6bbc9e3abe369824353e2c62",
+      "pass": true,
+      "result_of": "bundle:5dafe1d0723f3d517b7e1ea22c5c056ce1fa22d1fa5e78068c303e04cbfbc4b3"
+    },
+    {
+      "id": "bundle:6c63db4ce5c9bcac160d22f6a419246f51bd8a2300c5e79269ba645bfe3ba4e6",
+      "audio_sha256": "831be50099b2359d63776b9ce2c8b82502f2af4a3ba5e389f038189bfd36740e",
+      "pass": true,
+      "result_of": "bundle:6c63db4ce5c9bcac160d22f6a419246f51bd8a2300c5e79269ba645bfe3ba4e6"
+    },
+    {
+      "id": "bundle:8ef5554c313e9ae4ee850e422d1d44c39b92f9a9af8fbceae1c3395d50cfd29a",
+      "audio_sha256": "6cd98050ed67f107752c44e90029356a38ae802ba1647334f05f0cb4bc2583ef",
+      "pass": true,
+      "result_of": "bundle:8ef5554c313e9ae4ee850e422d1d44c39b92f9a9af8fbceae1c3395d50cfd29a"
+    },
+    {
+      "id": "bundle:a4bbf7e6b7a23d0e3396b645e9564a0f104379a692f91ccdf45dd078fafb3e2c",
+      "audio_sha256": "118b7a01417388c3bc0d4624777b6abca15d371ea9c138ca3a4843fa9b318d55",
+      "pass": true,
+      "result_of": "bundle:a4bbf7e6b7a23d0e3396b645e9564a0f104379a692f91ccdf45dd078fafb3e2c"
+    },
+    {
+      "id": "bundle:b028b749d0111be27f1a23f34aeecc17d340b631a8782f666de33dfaeef0a419",
+      "audio_sha256": "b912b974934953f270c5c7da4ce57165c5dab6a049ed994a27329c2679735a36",
+      "pass": true,
+      "result_of": "bundle:b028b749d0111be27f1a23f34aeecc17d340b631a8782f666de33dfaeef0a419"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "329863408d19b651ad207b3ddd15948600466c7c5dc7fe4084f1a469fd2be8ab",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:cf0b60040f72ebf38a89cde659ffac81791f8d537b61a9a7fa0f6e6068953a09",
+      "audio_sha256": "4461578a53dc43e2966910039330c9689b49c805420cff43359b92dd35167c43",
+      "pass": true,
+      "result_of": "bundle:cf0b60040f72ebf38a89cde659ffac81791f8d537b61a9a7fa0f6e6068953a09"
+    },
+    {
+      "id": "bundle:d593676ebf39813132c950f6a600f569c9892f1593286ee102784c058d3e6b60",
+      "audio_sha256": "52c7a28430ba78cb89b4cd980175acbdce8c33cade8532edc28b52e272d428d8",
+      "pass": true,
+      "result_of": "bundle:d593676ebf39813132c950f6a600f569c9892f1593286ee102784c058d3e6b60"
+    },
+    {
+      "id": "bundle:e030f8e033a6821dc2bd02a822cca3c45f84d451fe65caea15e3e42ba8399066",
+      "audio_sha256": "8dc918cbdded8f1903fb122e30b56e4d3e4d833661bc27df58bf8a94755f4db9",
+      "pass": true,
+      "result_of": "bundle:e030f8e033a6821dc2bd02a822cca3c45f84d451fe65caea15e3e42ba8399066"
+    },
+    {
+      "id": "bundle:e10b97333fd122ab5e32e229f9dd00b180d588298efc899f71aac895e703d7a5",
+      "audio_sha256": "01bc6d87c4d30b089f1a817ab4175ba2ffbb9a41a6df0568c21ed5e72bc58997",
+      "pass": true,
+      "result_of": "bundle:e10b97333fd122ab5e32e229f9dd00b180d588298efc899f71aac895e703d7a5"
+    },
+    {
+      "id": "bundle:ecdb8eb8e696339bc4e5018e6f6706d45dfee1a30cb2fbf35b7eb67f7d8ca41d",
+      "audio_sha256": "f60fc9f31f3133ac9df89af64e571b3476af9d4411b014cd9a767c1b18e4ea43",
+      "pass": true,
+      "result_of": "bundle:ecdb8eb8e696339bc4e5018e6f6706d45dfee1a30cb2fbf35b7eb67f7d8ca41d"
+    },
+    {
+      "id": "bundle:ee7d3e989f4ed3bded04bbffd24f9cdceba266e557af01142e024637ce091728",
+      "audio_sha256": "fa0a702e9db728078efe6bc82278bc44ecb66bc6d3f9935e59b8b22092d580c2",
+      "pass": true,
+      "result_of": "bundle:ee7d3e989f4ed3bded04bbffd24f9cdceba266e557af01142e024637ce091728"
+    },
+    {
+      "id": "bundle:f4ed01eead122b94aed9e8e99a9ca6e8dfcd6ad367b9d11f3ef5e497624a6fac",
+      "audio_sha256": "b5ae496eecd1828a941b80eaf91b4cf0bae391796221dfd17587b33d0608d132",
+      "pass": true,
+      "result_of": "bundle:f4ed01eead122b94aed9e8e99a9ca6e8dfcd6ad367b9d11f3ef5e497624a6fac"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "d114da4e3c4de02587636780bd7fba6c2bfeab7fce63e7517d2bfb02517aab35",
+      "pass": true,
+      "result_of": "bundle:27788fba6a19344023fdf4ab567bd03f684b7e091a89788436ff9635f20c4df7"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "b458b1e4b91382089fa1b99e30e19a31a74fdce3bdf5251cafa6ad450321c490",
+      "pass": true,
+      "result_of": "bundle:4c702edd09be19bd1d9e4b8d3c889f4af02330bdae36f93a2b01683074154a30"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "4461578a53dc43e2966910039330c9689b49c805420cff43359b92dd35167c43",
+      "pass": true,
+      "result_of": "bundle:cf0b60040f72ebf38a89cde659ffac81791f8d537b61a9a7fa0f6e6068953a09"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "7cda2c7e8937531c0ecccf908e92a1af9d04c5064a9bb911a78b70062bd5b883",
+      "pass": true,
+      "result_of": "bundle:1122785406bd9713070d3d1f5c8e619fc1704300729bb21b3492cf12cd7ae089"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "118b7a01417388c3bc0d4624777b6abca15d371ea9c138ca3a4843fa9b318d55",
+      "pass": true,
+      "result_of": "bundle:a4bbf7e6b7a23d0e3396b645e9564a0f104379a692f91ccdf45dd078fafb3e2c"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "b912b974934953f270c5c7da4ce57165c5dab6a049ed994a27329c2679735a36",
+      "pass": true,
+      "result_of": "bundle:b028b749d0111be27f1a23f34aeecc17d340b631a8782f666de33dfaeef0a419"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "dd00a83ad990cef812fc4f94e47213d0ccb3130f7ee8841977cc5106236307cc",
+      "pass": true,
+      "result_of": "bundle:494527b2a273f243f6372ffd6d9ae14879f7bfc260b90a4797d1c456bec36db8"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "01bc6d87c4d30b089f1a817ab4175ba2ffbb9a41a6df0568c21ed5e72bc58997",
+      "pass": true,
+      "result_of": "bundle:e10b97333fd122ab5e32e229f9dd00b180d588298efc899f71aac895e703d7a5"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "20aadeb3dffbfb3179219b41aa81cccbeb49896085e312af50fb8391c1899bd1",
+      "pass": true,
+      "result_of": "bundle:45955a601f9922643fb10c0201ada6784b07224ac4ae174791564e848f2643f9"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "8dc918cbdded8f1903fb122e30b56e4d3e4d833661bc27df58bf8a94755f4db9",
+      "pass": true,
+      "result_of": "bundle:e030f8e033a6821dc2bd02a822cca3c45f84d451fe65caea15e3e42ba8399066"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "95ef5137b09927e1d5738cff152e270ace8c9813456d748e7b092ed075d7cc13",
+      "pass": true,
+      "result_of": "bundle:353b5bea16776946fa712ec735ff3424b215c02e173156c5f89e327a7ec11672"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "d9b485b618b2f49a01cdb9db3d3ce1373d12c9ec6bbc9e3abe369824353e2c62",
+      "pass": true,
+      "result_of": "bundle:5dafe1d0723f3d517b7e1ea22c5c056ce1fa22d1fa5e78068c303e04cbfbc4b3"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "b5ae496eecd1828a941b80eaf91b4cf0bae391796221dfd17587b33d0608d132",
+      "pass": true,
+      "result_of": "bundle:f4ed01eead122b94aed9e8e99a9ca6e8dfcd6ad367b9d11f3ef5e497624a6fac"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "f60fc9f31f3133ac9df89af64e571b3476af9d4411b014cd9a767c1b18e4ea43",
+      "pass": true,
+      "result_of": "bundle:ecdb8eb8e696339bc4e5018e6f6706d45dfee1a30cb2fbf35b7eb67f7d8ca41d"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "10e87fdb22be9f965d944c8a303211e0728d44aa1ad522b87e0ce9f6074a62c0",
+      "pass": true,
+      "result_of": "bundle:5048daca2db4b4b0e284230655fef179a075f989f0132a7b9fb032de865c605a"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "6cd98050ed67f107752c44e90029356a38ae802ba1647334f05f0cb4bc2583ef",
+      "pass": true,
+      "result_of": "bundle:8ef5554c313e9ae4ee850e422d1d44c39b92f9a9af8fbceae1c3395d50cfd29a"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "52c7a28430ba78cb89b4cd980175acbdce8c33cade8532edc28b52e272d428d8",
+      "pass": true,
+      "result_of": "bundle:d593676ebf39813132c950f6a600f569c9892f1593286ee102784c058d3e6b60"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "fa0a702e9db728078efe6bc82278bc44ecb66bc6d3f9935e59b8b22092d580c2",
+      "pass": true,
+      "result_of": "bundle:ee7d3e989f4ed3bded04bbffd24f9cdceba266e557af01142e024637ce091728"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "831be50099b2359d63776b9ce2c8b82502f2af4a3ba5e389f038189bfd36740e",
+      "pass": true,
+      "result_of": "bundle:6c63db4ce5c9bcac160d22f6a419246f51bd8a2300c5e79269ba645bfe3ba4e6"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "329863408d19b651ad207b3ddd15948600466c7c5dc7fe4084f1a469fd2be8ab",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1122785406bd9713070d3d1f5c8e619fc1704300729bb21b3492cf12cd7ae089",
+      "text": "隔壁场上，16 岁的孙心然这一场打了 2 小时 41 分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "隔壁场上16岁的孙心然这场打了2小时41分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.517,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "隔壁 ｜ 场 ｜ 上 ｜ 16 岁 ｜ 的 ｜ 孙心然 ｜ 这 ｜ 一 ｜ 场 ｜ 打 ｜ 了 ｜ 2 小时 ｜ 41 分钟"
+      }
+    },
+    {
+      "id": "bundle:27788fba6a19344023fdf4ab567bd03f684b7e091a89788436ff9635f20c4df7",
+      "text": "昨天广州，一场球没打，有人直接进了八强。西尼亚科娃右肩受伤，赛前退赛。就在前一天，她刚打完一场三盘鏖战。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "昨天广州,一场球没打,有人直接进了八墙。西尼亚科娃右肩手伤,赛前退赛。就在前一天,她刚打完一场三盘熬战。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 10.212,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "昨天 ｜ 广州 ｜ 一 ｜ 场 ｜ 球 ｜ 没 ｜ 打 ｜ 有人 ｜ 直接 ｜ 进 ｜ 了 ｜ 八 ｜ 强 ｜ 西尼亚科娃 ｜ 右 ｜ 肩 ｜ 受伤 ｜ 赛 ｜ 前 ｜ 退赛 ｜ 就 ｜ 在 ｜ 前一天 ｜ 她 ｜ 刚 ｜ 打 ｜ 完 ｜ 一 ｜ 场 ｜ 三 ｜ 盘 ｜ 鏖战"
+      }
+    },
+    {
+      "id": "bundle:353b5bea16776946fa712ec735ff3424b215c02e173156c5f89e327a7ec11672",
+      "text": "这种事，在最大的舞台上也发生过。2022 年温网，纳达尔腹肌撕裂，半决赛前开发布会退赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这种事,在最大的舞台上也发生过。2022年温网,纳达尔复基斯列,半决赛前开发部会退赛。"
+      },
+      "polyphones": [
+        {
+          "index": 1,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.35,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 12,
+          "char": "发",
+          "word": "发生",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 38,
+          "char": "发",
+          "word": "开发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.184,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这种 ｜ 事 ｜ 在 ｜ 最大 ｜ 的 ｜ 舞台 ｜ 上 ｜ 也 ｜ 发生 ｜ 过 ｜ 2022 ｜ 年温网 ｜ 纳达尔 ｜ 腹肌 ｜ 撕裂 ｜ 半决赛 ｜ 前 ｜ 开发布会 ｜ 退赛"
+      }
+    },
+    {
+      "id": "bundle:45955a601f9922643fb10c0201ada6784b07224ac4ae174791564e848f2643f9",
+      "text": "但 walkover 有一条硬线：必须是开打之前。只要打了哪怕一分再退，那叫退赛，要记比分、算胜负。刘婧文这一场，一分没打。不算一场胜利，不进胜负记录，也不进两个人的交手记录。连胜纪录还会在这里断片：你正处在 19 连胜，中间收到一个 walkover，再赢一场，官方连胜是 20，不是 21——因为中间那一场，根本不存在。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 120,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但Walkover有一条硬线,必须是开打之前。只要打了,哪怕一分再退,那叫退赛,要记比分,算胜负。刘婧文这一场,一分没打。不算一场胜利,不进胜负记录,也不进两个人的交手记录。联胜记录还会在这里断片,你正处在19联胜,中间收到一个Walkover,再赢一场。官方联胜是20,不是21,因为中间那一场根本不存在。"
+      },
+      "polyphones": [
+        {
+          "index": 92,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": -0.119,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 119,
+        "speech_s": 26.828,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ walkover ｜ 有 ｜ 一条 ｜ 硬线 ｜ 必须 ｜ 是 ｜ 开打 ｜ 之前 ｜ 只要 ｜ 打 ｜ 了 ｜ 哪怕 ｜ 一 ｜ 分 ｜ 再 ｜ 退 ｜ 那 ｜ 叫 ｜ 退赛 ｜ 要 ｜ 记 ｜ 比分 ｜ 算 ｜ 胜负 ｜ 刘婧文 ｜ 这 ｜ 一 ｜ 场 ｜ 一 ｜ 分 ｜ 没 ｜ 打 ｜ 不 ｜ 算 ｜ 一 ｜ 场 ｜ 胜利 ｜ 不 ｜ 进 ｜ 胜负 ｜ 记录 ｜ 也 ｜ 不 ｜ 进 ｜ 两个 ｜ 人 ｜ 的 ｜ 交手 ｜ 记录 ｜ 连胜 ｜ 纪录 ｜ 还 ｜ 会 ｜ 在 ｜ 这里 ｜ 断片 ｜ 你 ｜ 正 ｜ 处在 ｜ 19 ｜ 连胜 ｜ 中间 ｜ 收到 ｜ 一个 ｜ walkover ｜ 再 ｜ 赢 ｜ 一 ｜ 场 ｜ 官方 ｜ 连胜 ｜ 是 ｜ 20 ｜ 不是 ｜ 21 ｜ 因为 ｜ 中间 ｜ 那 ｜ 一 ｜ 场 ｜ 根本 ｜ 不 ｜ 存在"
+      }
+    },
+    {
+      "id": "bundle:494527b2a273f243f6372ffd6d9ae14879f7bfc260b90a4797d1c456bec36db8",
+      "text": "抢七 7 比 3 拿下。终场哨响，她哭了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "搶七七比三拿下,中场少响,他哭了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.856,
+        "cps": 3.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢 ｜ 七 ｜ 7 比 3 ｜ 拿下 ｜ 终场 ｜ 哨 ｜ 响 ｜ 她 ｜ 哭 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:4c702edd09be19bd1d9e4b8d3c889f4af02330bdae36f93a2b01683074154a30",
+      "text": "大阪夺冠后的连胜已经来到第六场；第二天，她的名字从签表上消失了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.034,
+        "longest_deletion": 0,
+        "transcript": "大阪夺冠后的连胜已经来到第六场,第二天,他的名字从千鸟上消失了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.625,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "大阪 ｜ 夺冠 ｜ 后 ｜ 的 ｜ 连胜 ｜ 已经 ｜ 来到 ｜ 第六场 ｜ 第二天 ｜ 她 ｜ 的 ｜ 名字 ｜ 从 ｜ 签表 ｜ 上 ｜ 消失 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:5048daca2db4b4b0e284230655fef179a075f989f0132a7b9fb032de865c605a",
+      "text": "好玩的在后面：收到 walkover 的人，下一场到底占没占到便宜？先看一对同站对照。2012 年迈阿密，穆雷一站收到两次 walkover 进决赛，还是输了，他赛后自己说，接发不在状态，开场需要几局找节奏——决赛第一盘他 1 比 6 就交了学费。两年后同一站，德约也收到两次 walkover，决赛 6 比 3、6 比 3 横扫纳达尔夺冠。有意思的是，纳达尔那届半决赛也收到一个 walkover，两个受益者在决赛对撞，一个捧杯，一个亚军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 153,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.007,
+        "longest_deletion": 0,
+        "transcript": "好玩的在后面,收到walk over的人,下一场到底占没占到便宜?先看一对同战对照,2012年麦阿密,穆雷一战收到两次walk over进决赛,还是输了,他在后自己说,揭发不在状态,开场需要几局找节奏,决赛第一盘他1比6就交了学费,两年后同一战,德约也收到两次walk over,决赛6比3,6比3横扫纳达尔夺冠。有意思的是,纳达尔纳界半决赛也收到一个walk over,两个受益者在决赛对撞,一个捧杯,一个亚军。"
+      },
+      "polyphones": [
+        {
+          "index": 31,
+          "char": "便",
+          "word": "便宜",
+          "intended": "pian2",
+          "wrong": [
+            "bian4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "bian4",
+              "verdict": "correct",
+              "score": 0.335,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "胼蹁骈"
+        },
+        {
+          "index": 75,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.082,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 88,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 151,
+        "speech_s": 34.234,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "好玩 ｜ 的 ｜ 在 ｜ 后面 ｜ 收到 ｜ walkover ｜ 的 ｜ 人 ｜ 下 ｜ 一 ｜ 场 ｜ 到底 ｜ 占 ｜ 没 ｜ 占 ｜ 到 ｜ 便宜 ｜ 先 ｜ 看 ｜ 一对 ｜ 同 ｜ 站 ｜ 对照 ｜ 2012 ｜ 年 ｜ 迈阿密 ｜ 穆雷 ｜ 一 ｜ 站 ｜ 收到 ｜ 两次 ｜ walkover ｜ 进 ｜ 决赛 ｜ 还是 ｜ 输 ｜ 了 ｜ 他 ｜ 赛 ｜ 后 ｜ 自己 ｜ 说 ｜ 接 ｜ 发 ｜ 不在 ｜ 状态 ｜ 开场 ｜ 需要 ｜ 几局 ｜ 找 ｜ 节奏 ｜ 决赛 ｜ 第一盘 ｜ 他 ｜ 1 比 6 ｜ 就 ｜ 交 ｜ 了 ｜ 学费 ｜ 两年 ｜ 后 ｜ 同 ｜ 一 ｜ 站 ｜ 德约 ｜ 也 ｜ 收到 ｜ 两次 ｜ walkover ｜ 决赛 ｜ 6 比 3 ｜ 6 比 3 ｜ 横扫 ｜ 纳达尔 ｜ 夺冠 ｜ 有 ｜ 意思 ｜ 的 ｜ 是 ｜ 纳达尔 ｜ 那 ｜ 届 ｜ 半决赛 ｜ 也 ｜ 收到 ｜ 一个 ｜ walkover ｜ 两个 ｜ 受益者 ｜ 在 ｜ 决赛 ｜ 对撞 ｜ 一个 ｜ 捧杯 ｜ 一个 ｜ 亚军"
+      }
+    },
+    {
+      "id": "bundle:5dafe1d0723f3d517b7e1ea22c5c056ce1fa22d1fa5e78068c303e04cbfbc4b3",
+      "text": "克耶高斯直接走进了决赛——他职业生涯唯一一个大满贯决赛，是走进去的。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "克耶高斯直接走进了决赛,他职业生涯唯一一个大满冠决赛是走进去的。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.884,
+        "cps": 5.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "克耶高斯 ｜ 直接 ｜ 走进 ｜ 了 ｜ 决赛 ｜ 他 ｜ 职业 ｜ 生涯 ｜ 唯一 ｜ 一个 ｜ 大满贯 ｜ 决赛 ｜ 是 ｜ 走 ｜ 进去 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:6c63db4ce5c9bcac160d22f6a419246f51bd8a2300c5e79269ba645bfe3ba4e6",
+      "text": "赢球为什么靠走？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 7,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "赢球为什么靠走?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 7,
+        "speech_s": 1.309,
+        "cps": 5.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赢 ｜ 球 ｜ 为什么 ｜ 靠 ｜ 走"
+      }
+    },
+    {
+      "id": "bundle:8ef5554c313e9ae4ee850e422d1d44c39b92f9a9af8fbceae1c3395d50cfd29a",
+      "text": "再看德约自己。2024 年温网，四分之一决赛德米纳尔退赛，他省力进四强，半决赛直落三盘赢了；可决赛呢？2 比 6、2 比 6、6 比 7，被阿尔卡拉斯打得没有还手之力。多休的那一天，没换来冠军。克耶高斯走进决赛那次，6 比 4 先拿一盘，最后连丢三盘。格拉诺列斯 2016 年在法网躲开了纳达尔，下一轮就被蒂姆送走，只多留了一轮。佩内塔 2013 年温网收到阿扎伦卡的退赛礼，下一场先吞一个 0 比 6，再逆转，打出了自己五年来在温网的最好成绩——白捡的便宜，她兑现得最实在。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 202,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "在看德约自己,2024年温网,四分之一决赛德米纳尔推赛,他省力尽四强,半决赛直落三盘赢了,可决赛呢?2比6,2比6,6比7,被阿尔卡拉斯打得没有还手之力。多休的那一天,没换来冠军。克耶高斯走进决赛那次,6比4先拿一盘,最后连丢三盘。格拉诺列斯2016年在乏网躲开了纳达尔下一轮就被蒂姆送走只多留了一轮佩内塔2013年温网收到阿扎伦卡的退赛里下一场先吞一个0比6在逆转打出了自己五年来在温网的最好成绩白减的便宜他对线的最实在"
+      },
+      "polyphones": [
+        {
+          "index": 227,
+          "char": "便",
+          "word": "便宜",
+          "intended": "pian2",
+          "wrong": [
+            "bian4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "bian4",
+              "verdict": "correct",
+              "score": 0.339,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "胼蹁骈"
+        },
+        {
+          "index": 40,
+          "char": "落",
+          "word": "直落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.26,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.278,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 76,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 79,
+          "char": "还",
+          "word": "还手",
+          "intended": "huan2",
+          "wrong": [
+            "hai2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hai2",
+              "verdict": "correct",
+              "score": 1.0,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "桓环洹"
+        },
+        {
+          "index": 233,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 196,
+        "speech_s": 42.359,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 看 ｜ 德 ｜ 约 ｜ 自己 ｜ 2024 ｜ 年温 ｜ 网 ｜ 四分之一 ｜ 决赛 ｜ 德米纳尔 ｜ 退赛 ｜ 他 ｜ 省力 ｜ 进 ｜ 四 ｜ 强 ｜ 半决赛 ｜ 直落 ｜ 三 ｜ 盘 ｜ 赢 ｜ 了 ｜ 可 ｜ 决赛 ｜ 呢 ｜ 2 比 6 ｜ 2 比 6 ｜ 6 比 7 ｜ 被 ｜ 阿尔卡拉 ｜ 斯 ｜ 打 ｜ 得 ｜ 没有 ｜ 还手 ｜ 之 ｜ 力 ｜ 多休 ｜ 的 ｜ 那 ｜ 一天 ｜ 没 ｜ 换 ｜ 来 ｜ 冠军 ｜ 克耶高斯 ｜ 走进 ｜ 决赛 ｜ 那 ｜ 次 ｜ 6 比 4 ｜ 先 ｜ 拿 ｜ 一 ｜ 盘 ｜ 最后 ｜ 连 ｜ 丢 ｜ 三 ｜ 盘 ｜ 格拉诺 ｜ 列斯 ｜ 2016 ｜ 年 ｜ 在 ｜ 法网 ｜ 躲开 ｜ 了 ｜ 纳达尔 ｜ 下 ｜ 一 ｜ 轮 ｜ 就 ｜ 被 ｜ 蒂姆 ｜ 送 ｜ 走 ｜ 只 ｜ 多 ｜ 留 ｜ 了 ｜ 一 ｜ 轮 ｜ 佩内塔 ｜ 2013 ｜ 年温网 ｜ 收到 ｜ 阿扎伦卡 ｜ 的 ｜ 退赛礼 ｜ 下 ｜ 一 ｜ 场 ｜ 先 ｜ 吞 ｜ 一个 ｜ 0 ｜ 比 ｜ 6 ｜ 再 ｜ 逆转 ｜ 打 ｜ 出 ｜ 了 ｜ 自己 ｜ 五 ｜ 年 ｜ 来 ｜ 在 ｜ 温网 ｜ 的 ｜ 最好 ｜ 成绩 ｜ 白 ｜ 捡 ｜ 的 ｜ 便宜 ｜ 她 ｜ 兑 ｜ 现得 ｜ 最 ｜ 实在"
+      }
+    },
+    {
+      "id": "bundle:a4bbf7e6b7a23d0e3396b645e9564a0f104379a692f91ccdf45dd078fafb3e2c",
+      "text": "第二盘 4 比 5 落后，她叫了医疗暂停，缠好绷带。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 19,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘四比五落后,他叫了医疗暂停,缠好崩带。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.194,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.189,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 19,
+        "speech_s": 3.844,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 4 比 5 ｜ 落后 ｜ 她 ｜ 叫 ｜ 了 ｜ 医疗 ｜ 暂停 ｜ 缠 ｜ 好 ｜ 绷带"
+      }
+    },
+    {
+      "id": "bundle:b028b749d0111be27f1a23f34aeecc17d340b631a8782f666de33dfaeef0a419",
+      "text": "到了决胜盘，绷带拆了硬撑，2 比 5 落后、对方手握赛点——她一分一分往回爬。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.067,
+        "longest_deletion": 0,
+        "transcript": "到了决胜盘,崩带差的硬撑,二比五落后对方守卧赛点,他一分一分往回爬。"
+      },
+      "polyphones": [
+        {
+          "index": 19,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.369,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.233,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.226,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "到 ｜ 了 ｜ 决胜 ｜ 盘 ｜ 绷带 ｜ 拆 ｜ 了 ｜ 硬撑 ｜ 2 比 5 ｜ 落后 ｜ 对方 ｜ 手 ｜ 握 ｜ 赛点 ｜ 她 ｜ 一 ｜ 分 ｜ 一 ｜ 分 ｜ 往回 ｜ 爬"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.231,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:cf0b60040f72ebf38a89cde659ffac81791f8d537b61a9a7fa0f6e6068953a09",
+      "text": "她的对手刘婧文，一分没打，晋级。刘婧文自己的首轮也打了近三个小时，她多赚的，是整整一天休息。签表上，她的名字旁边记着一个记号：walkover。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 55,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.018,
+        "longest_deletion": 0,
+        "transcript": "他的对手刘婧文一分没打,竞技。刘婧文自己的手轮也打了近三个小时,他多转的是整整一天休息。千表上,他的名字旁边记着一个记号,Walkover。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 55,
+        "speech_s": 13.125,
+        "cps": 4.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 的 ｜ 对手 ｜ 刘婧文 ｜ 一 ｜ 分 ｜ 没 ｜ 打 ｜ 晋级 ｜ 刘婧文 ｜ 自己 ｜ 的 ｜ 首轮 ｜ 也 ｜ 打 ｜ 了 ｜ 近 ｜ 三个小时 ｜ 她 ｜ 多 ｜ 赚 ｜ 的 ｜ 是 ｜ 整整 ｜ 一天 ｜ 休息 ｜ 签表 ｜ 上 ｜ 她 ｜ 的 ｜ 名字 ｜ 旁边 ｜ 记 ｜ 着 ｜ 一个 ｜ 记号 ｜ walkover"
+      }
+    },
+    {
+      "id": "bundle:d593676ebf39813132c950f6a600f569c9892f1593286ee102784c058d3e6b60",
+      "text": "而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于躺赢，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 181,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "而退赛的人呢? 费德勒2014年退掉总决赛决赛,整整一周后,戴维斯贝决赛,周五他戴上书了单打,周六双打赢了,周日直落三盘锁定胜局,邦瑞士拿到对市第一座戴维斯贝。当时,被骂琉璃的一次退赛,七天后,成了布局。把这些样本摆在一起,收到Walkover的人下一场是三胜三负。也有统计研究专门算过Walkover对下一场测不出任何正向或负向的影响所以结论可能有点反直觉省力不等于躺赢没打比赛也不等于没状态Walkover送走的从来不是胜负是确定性"
+      },
+      "polyphones": [
+        {
+          "index": 58,
+          "char": "落",
+          "word": "直落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.19,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.255,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 179,
+        "speech_s": 40.354,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 退赛 ｜ 的 ｜ 人 ｜ 呢 ｜ 费德勒 ｜ 2014 ｜ 年 ｜ 退掉 ｜ 总决赛 ｜ 决赛 ｜ 整整 ｜ 一周 ｜ 后 ｜ 戴维斯 ｜ 杯 ｜ 决赛 ｜ 周五 ｜ 他 ｜ 带 ｜ 伤 ｜ 输 ｜ 了 ｜ 单打 ｜ 周六 ｜ 双打 ｜ 赢 ｜ 了 ｜ 周日 ｜ 直落 ｜ 三盘 ｜ 锁定 ｜ 胜 ｜ 局 ｜ 帮 ｜ 瑞士 ｜ 拿 ｜ 到 ｜ 队 ｜ 史 ｜ 第一座 ｜ 戴维斯 ｜ 杯 ｜ 当时 ｜ 被 ｜ 骂 ｜ 留 ｜ 力 ｜ 的 ｜ 一次 ｜ 退赛 ｜ 七天 ｜ 后 ｜ 成 ｜ 了 ｜ 布局 ｜ 把 ｜ 这些 ｜ 样本 ｜ 摆 ｜ 在 ｜ 一起 ｜ 收到 ｜ walkover ｜ 的 ｜ 人 ｜ 下 ｜ 一 ｜ 场 ｜ 是 ｜ 3 ｜ 胜 ｜ 3 ｜ 负 ｜ 也有 ｜ 统计 ｜ 研究 ｜ 专门 ｜ 算 ｜ 过 ｜ walkover ｜ 对 ｜ 下 ｜ 一 ｜ 场 ｜ 测 ｜ 不 ｜ 出 ｜ 任何 ｜ 正 ｜ 向 ｜ 或 ｜ 负 ｜ 向 ｜ 的 ｜ 影响 ｜ 所以 ｜ 结论 ｜ 可能 ｜ 有点 ｜ 反 ｜ 直觉 ｜ 省力 ｜ 不 ｜ 等于 ｜ 躺 ｜ 赢 ｜ 没 ｜ 打 ｜ 比赛 ｜ 也 ｜ 不 ｜ 等于 ｜ 没 ｜ 状态 ｜ walkover ｜ 送 ｜ 走 ｜ 的 ｜ 从来 ｜ 不是 ｜ 胜负 ｜ 是 ｜ 确定 ｜ 性"
+      }
+    },
+    {
+      "id": "bundle:e030f8e033a6821dc2bd02a822cca3c45f84d451fe65caea15e3e42ba8399066",
+      "text": "那积分和奖金呢？这笔账分三层。WTA 规则书里写得明明白白：首轮白捡的，只按上一轮给分；打过、赢过之后再收到的，按所达轮次给分。刘婧文首轮赢了球，所以她四分之一决赛的积分，照拿。她真正多赚的不是积分，是那一整天的休息，和对手身上那 2 小时 41 分钟的消耗。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 109,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.009,
+        "longest_deletion": 0,
+        "transcript": "那积分和奖金呢?这比账分三层。WTA规则书里写的明明白白,手轮白简的只按上一轮给分,打过,赢过之后再收到的按所达轮次给分。刘婧文手轮赢了球,所以他四分之一决赛的积分照拿。他真正多转的不是积分,是那一整天的休息和对手身上那两小时41分钟的消耗。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": 0.094,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 108,
+        "speech_s": 24.033,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 积分 ｜ 和 ｜ 奖金 ｜ 呢 ｜ 这 ｜ 笔 ｜ 账 ｜ 分 ｜ 三层 ｜ WTA ｜ 规则书 ｜ 里 ｜ 写 ｜ 得 ｜ 明明白白 ｜ 首轮 ｜ 白 ｜ 捡 ｜ 的 ｜ 只 ｜ 按 ｜ 上 ｜ 一 ｜ 轮 ｜ 给 ｜ 分 ｜ 打 ｜ 过 ｜ 赢 ｜ 过 ｜ 之后 ｜ 再 ｜ 收到 ｜ 的 ｜ 按 ｜ 所 ｜ 达 ｜ 轮次 ｜ 给 ｜ 分 ｜ 刘婧文 ｜ 首轮 ｜ 赢 ｜ 了 ｜ 球 ｜ 所以 ｜ 她 ｜ 四分之一 ｜ 决赛 ｜ 的 ｜ 积分 ｜ 照 ｜ 拿 ｜ 她 ｜ 真正 ｜ 多 ｜ 赚 ｜ 的 ｜ 不是 ｜ 积分 ｜ 是 ｜ 那 ｜ 一整天 ｜ 的 ｜ 休息 ｜ 和 ｜ 对手 ｜ 身上 ｜ 那 ｜ 2 小时 ｜ 41 分钟 ｜ 的 ｜ 消耗"
+      }
+    },
+    {
+      "id": "bundle:e10b97333fd122ab5e32e229f9dd00b180d588298efc899f71aac895e703d7a5",
+      "text": "不战而胜，英文就是 walk over——走着赢。可一场没开打的比赛，为什么偏偏要用一个「走」字？因为它根本不是网球发明的，是从赛马借来的。两百年前的英国赛马，对手如果全部退赛，只剩一匹马，按规矩它也不能直接领奖，必须自己慢慢走完整个赛道，才算赢。18 世纪那匹传奇赛马 Eclipse 强到没人敢跟它跑，18 场胜利里差不多一半，是这么「走」出来的。后来这个词进了网球：对手来不了，你就等于独自走完了这场比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 161,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.006,
+        "longest_deletion": 0,
+        "transcript": "不战而胜,英文就是Walk over,走之营。可一场没开打的比赛,为什么偏偏要用一个走字?因为它根本不是网球发明的,是从赛马借来的。两百年前的英国赛马,对手如果全部退赛,只剩一匹马,按规矩它,也不能直接领奖,必须自己慢慢走完整个赛道,才算营。十八世纪那匹传奇赛马,liquitz,强到没人敢跟它跑,十八场胜利里差不多一半,是这么走出来的。后来这个词进了网球对手来不了你就等于独自走完了这场比赛"
+      },
+      "polyphones": [
+        {
+          "index": 58,
+          "char": "发",
+          "word": "发明",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 161,
+        "speech_s": 34.021,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "不战而胜 ｜ 英文 ｜ 就 ｜ 是 ｜ walk ｜ over ｜ 走 ｜ 着 ｜ 赢 ｜ 可 ｜ 一 ｜ 场 ｜ 没 ｜ 开打 ｜ 的 ｜ 比赛 ｜ 为什么 ｜ 偏偏 ｜ 要 ｜ 用 ｜ 一个 ｜ 走 ｜ 字 ｜ 因为 ｜ 它 ｜ 根本 ｜ 不是 ｜ 网球 ｜ 发明 ｜ 的 ｜ 是 ｜ 从 ｜ 赛马 ｜ 借 ｜ 来 ｜ 的 ｜ 两百年 ｜ 前 ｜ 的 ｜ 英国 ｜ 赛马 ｜ 对手 ｜ 如果 ｜ 全部 ｜ 退赛 ｜ 只 ｜ 剩 ｜ 一 ｜ 匹 ｜ 马 ｜ 按 ｜ 规矩 ｜ 它 ｜ 也 ｜ 不能 ｜ 直接 ｜ 领奖 ｜ 必须 ｜ 自己 ｜ 慢慢 ｜ 走 ｜ 完 ｜ 整个 ｜ 赛道 ｜ 才 ｜ 算 ｜ 赢 ｜ 18 世纪 ｜ 那 ｜ 匹 ｜ 传奇 ｜ 赛马 ｜ Eclipse ｜ 强 ｜ 到 ｜ 没 ｜ 人 ｜ 敢 ｜ 跟 ｜ 它 ｜ 跑 ｜ 18 ｜ 场 ｜ 胜利 ｜ 里 ｜ 差不多 ｜ 一半 ｜ 是 ｜ 这么 ｜ 走 ｜ 出来 ｜ 的 ｜ 后来 ｜ 这个 ｜ 词 ｜ 进 ｜ 了 ｜ 网球 ｜ 对手 ｜ 来 ｜ 不了 ｜ 你 ｜ 就 ｜ 等于 ｜ 独自 ｜ 走 ｜ 完 ｜ 了 ｜ 这 ｜ 场 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:ecdb8eb8e696339bc4e5018e6f6706d45dfee1a30cb2fbf35b7eb67f7d8ca41d",
+      "text": "德约科维奇不战而冠，那是这项赛事四十五年历史上，决赛第一次没打成。组委会临时拉来穆雷，陪德约打了一场表演赛，给买了票的观众一个交代。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 60,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "德约科维奇不乍而惯,那时这项赛事四十五年历史上决赛第一次没打成。卒伟会临时拉来木雷,裴德约打了一场表演赛给买了票的观众一个交代。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 60,
+        "speech_s": 10.943,
+        "cps": 5.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德约科维奇 ｜ 不 ｜ 战 ｜ 而 ｜ 冠 ｜ 那 ｜ 是 ｜ 这 ｜ 项 ｜ 赛事 ｜ 四十五 ｜ 年 ｜ 历史 ｜ 上 ｜ 决赛 ｜ 第一 ｜ 次 ｜ 没 ｜ 打成 ｜ 组委会 ｜ 临时 ｜ 拉来 ｜ 穆雷 ｜ 陪德 ｜ 约 ｜ 打 ｜ 了 ｜ 一 ｜ 场 ｜ 表演赛 ｜ 给 ｜ 买 ｜ 了 ｜ 票 ｜ 的 ｜ 观众 ｜ 一个 ｜ 交代"
+      }
+    },
+    {
+      "id": "bundle:ee7d3e989f4ed3bded04bbffd24f9cdceba266e557af01142e024637ce091728",
+      "text": "下一轮，休息了一整天的刘婧文，对上刚从悬崖边爬回来的孙心然。这一场，就是这条规矩最新的一次现场考试。要是由你来定规矩：一分没打就晋级，积分照拿，还白赚一天休息——这条规矩，该留吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "下一轮,休息了一整天的刘婧文,对上刚从悬崖边爬回来的孙心然。这场,就是这条规矩最新的一次现场考试。要是有你来定规矩,一分没打就进急,几分照拿,还白转一天休息,这条规矩该留吗?"
+      },
+      "polyphones": [
+        {
+          "index": 72,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.343,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 16.533,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "下 ｜ 一 ｜ 轮 ｜ 休息 ｜ 了 ｜ 一整天 ｜ 的 ｜ 刘婧文 ｜ 对 ｜ 上 ｜ 刚 ｜ 从 ｜ 悬崖 ｜ 边 ｜ 爬 ｜ 回来 ｜ 的 ｜ 孙心然 ｜ 这 ｜ 一 ｜ 场 ｜ 就 ｜ 是 ｜ 这 ｜ 条 ｜ 规矩 ｜ 最新 ｜ 的 ｜ 一次 ｜ 现场 ｜ 考试 ｜ 要是 ｜ 由 ｜ 你 ｜ 来 ｜ 定 ｜ 规矩 ｜ 一 ｜ 分 ｜ 没 ｜ 打 ｜ 就 ｜ 晋级 ｜ 积分 ｜ 照 ｜ 拿 ｜ 还 ｜ 白 ｜ 赚 ｜ 一天 ｜ 休息 ｜ 这 ｜ 条 ｜ 规矩 ｜ 该 ｜ 留 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:f4ed01eead122b94aed9e8e99a9ca6e8dfcd6ad367b9d11f3ef5e497624a6fac",
+      "text": "2014 年年终总决赛更夸张。费德勒在决赛开打前约一小时宣布背伤退赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2014年年中总决赛更夸张,费德勒在决赛开打前约一小时宣布被伤退赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 6.651,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "2014 ｜ 年 ｜ 年终 ｜ 总决赛 ｜ 更 ｜ 夸张 ｜ 费德勒 ｜ 在 ｜ 决赛 ｜ 开打 ｜ 前 ｜ 约 ｜ 一小时 ｜ 宣布 ｜ 背 ｜ 伤 ｜ 退赛"
+      }
+    }
+  ]
+}

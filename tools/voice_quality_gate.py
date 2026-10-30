@@ -192,9 +192,15 @@ def _identity(outdir, root, render):
     spec_sha = manifest.get('spec_sha256')
     candidates = [root / f'specs/{kind}/{outdir.name}.json'
                   for kind in ('reels', 'interviews', 'explainers')]
+    candidates.append(root / f'src/tennislive/video/episodes/{outdir.name}.json')
     spec = next((p for p in candidates if p.is_file()), None)
     if spec is None:
         raise VoiceQualityError('Current reel/interview spec is unavailable; other lanes need explicit native provenance support')
+    if spec.parent == root / 'src/tennislive/video/episodes':
+        native_film = outdir / 'explainer.mp4'
+        if native_film.is_file() and (_file_sha(native_film) != film_sha
+                                      or native_film.stat().st_size != manifest.get('film_bytes')):
+            raise VoiceQualityError('Local native explainer differs from current render')
     if _file_sha(spec) != spec_sha:
         raise VoiceQualityError('Current spec differs from actual render')
     if not re.fullmatch('[0-9a-f]{64}', str(spec_sha)):

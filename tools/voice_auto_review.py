@@ -376,9 +376,13 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: st
     identity["inventory_sha256"] = _file_sha(inventory_path)
     if _file_sha(bundle) != inventory.get("bundle_sha256"):
         raise SystemExit("小包和封存的配音库存不是同一份")
-    spec_path = next(p for p in (ROOT / f"specs/{k}/{outdir.name}.json"
-                                 for k in ("reels", "interviews")) if p.is_file())
+    spec_paths = [ROOT / f"specs/{k}/{outdir.name}.json" for k in ("reels", "interviews")]
+    spec_paths.append(ROOT / f"src/tennislive/video/episodes/{outdir.name}.json")
+    spec_path = next(p for p in spec_paths if p.is_file())
     spec = json.loads(spec_path.read_text("utf-8"))
+    if spec_path.parent.name == "episodes":
+        spec["segments"] = [{"narration": row["narration"]} for row in
+                            [spec["opening"], *spec["beats"]]]
     names = _names(spec)
     with tempfile.TemporaryDirectory() as tmp:
         entries = load_bundle(bundle, Path(tmp))
@@ -422,7 +426,9 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: st
                 "thresholds": {"MAX_INNER_GAP": MAX_INNER_GAP, "MAX_CPS": MAX_CPS,
                                "MAX_INDEL": MAX_INDEL, "MAX_RUN_DELETE": MAX_RUN_DELETE,
                                "MAX_SUB_RATIO": MAX_SUB_RATIO},
-                "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+                "seams": ("原生解说按每段实际音频时长组装并保留首尾静音；本工具未另行检查成片混音接缝"
+                          if spec_path.parent.name == "episodes" else
+                          "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝"),
                 "reviewed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "pass": ok, "sentence_splits": splits, "entries": rows,
                 "audio": list(per.values())}

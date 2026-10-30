@@ -654,7 +654,7 @@ def copy_body_only(text: str, title: str) -> str:
     `spec_wording.title_echo_problem` 在 dry-run 管）。
     """
     lines = text.strip().splitlines()
-    dated = re.compile(r"^(?:🎾\s*)?\d{1,2}[./月]\d{1,2}(?:日)?\s*(?:赛场之上|赛后开麦|网球有故事)\s*[|｜·丨]")
+    dated = re.compile(r"^(?:🎾\s*)?\d{1,2}[./月]\d{1,2}(?:日)?\s*(?:赛场之上|赛后开麦|网球有故事|vibetennis)\s*[|｜·丨]")
     tail = re.split(r"[|｜丨]", title)[-1]
 
     def bare(s: str) -> str:

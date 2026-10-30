@@ -1,0 +1,88 @@
+{
+  "slug": "sun-liu-guangzhou-2026-qf",
+  "checked_at": "2026-10-30T13:32:08Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "d7e28de8c6c9ff22": {
+      "segment": 2,
+      "spoken": 10.512,
+      "picture": 12.0
+    },
+    "813cc7928aa1734a": {
+      "segment": 3,
+      "spoken": 6.048,
+      "picture": 8.3
+    },
+    "9a99f0f7dde41716": {
+      "segment": 5,
+      "spoken": 7.248,
+      "picture": 9.0
+    },
+    "746cf9e1e696e56f": {
+      "segment": 7,
+      "spoken": 7.056,
+      "picture": 8.0
+    },
+    "dbc4221e59ef886b": {
+      "segment": 8,
+      "spoken": 7.44,
+      "picture": 21.0
+    },
+    "f30be645b1d68cd0": {
+      "segment": 10,
+      "spoken": 7.968,
+      "picture": 10.0
+    },
+    "51465d1ba12c6162": {
+      "segment": 11,
+      "spoken": 2.856,
+      "picture": 4.6
+    },
+    "2213c6c5f987ac5f": {
+      "segment": 14,
+      "spoken": 8.616,
+      "picture": 10.0
+    },
+    "f12c0a668702c880": {
+      "segment": 15,
+      "spoken": 3.168,
+      "picture": 5.6
+    },
+    "2b0357fd657013ec": {
+      "segment": 17,
+      "spoken": 5.904,
+      "picture": 10.0
+    },
+    "b7678dca1c5c4d3a": {
+      "segment": 20,
+      "spoken": 8.088,
+      "picture": 11.0
+    },
+    "93e734568ec24dfd": {
+      "segment": 21,
+      "spoken": 11.808,
+      "picture": 13.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "4fce1cb5cd974d991f0657e4539470ed88f1d278ffd30eca9d0d95dc8d5a1558",
+    "request_count": 13,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41063810899"
+  }
+}

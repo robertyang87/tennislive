@@ -11,7 +11,7 @@ import unicodedata
 from pathlib import Path
 
 COPY_TITLE_MAX = 20
-_COLUMNS = r"赛场之上|赛后开麦|网球有故事|昨日好球|历史上的今天|今日球局|今日赛程|开球之前"
+_COLUMNS = r"赛场之上|赛后开麦|网球有故事|vibetennis|昨日好球|历史上的今天|今日球局|今日赛程|开球之前"
 _PREFIX = re.compile(rf"^(?:[🎾🏆💥🔥📅📖])?(\d{{1,2}})[./](\d{{1,2}})({_COLUMNS})[|｜丨]")
 COPY_TITLES_PATH = Path(__file__).resolve().parents[3] / "data" / "copy_titles.json"
 

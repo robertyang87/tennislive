@@ -29,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from publication_ledger import read_receipt_file, receipt_fields  # noqa: E402
 
-LEDGER_COLUMNS = ("reel", "interview", "explainer")
+LEDGER_COLUMNS = ("reel", "interview", "explainer", "vibetennis")
 
 
 def _load(path: Path) -> dict:
@@ -50,6 +50,7 @@ def pushes(repo: Path, slug: str = "") -> list[dict]:
     want = slug or "*"
     for pattern, column in ((f"output/*/reel/{want}/pushed.json", "reel"),
                             (f"output/*/explainer/{want}/pushed.json", "explainer"),
+                            (f"output/*/vibetennis/{want}/pushed.json", "vibetennis"),
                             (f"output/interviews/{want}/pushed.json", "interview")):
         for p in glob.glob(str(repo / pattern)):
             data = _load(Path(p))

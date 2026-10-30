@@ -351,7 +351,8 @@ def test_看板品牌与主题跟着token走():
 def test_分段控件有aria_pressed_筛选不重建按钮():
     html = (DASH / "index.html").read_text(encoding="utf-8")
     seg = html.split('id="filters"', 1)[1].split("</div>", 1)[0]
-    assert seg.count("aria-pressed") == 4 and 'aria-pressed="true"' in seg
+    # 全部 ＋ 四个栏目（2026-10-30 加了 vibetennis）
+    assert seg.count("aria-pressed") == 5 and 'aria-pressed="true"' in seg
     app = (DASH / "app.js").read_text(encoding="utf-8")
     assert '$("filters").innerHTML' not in app, "重建按钮会把键盘焦点丢掉"
     assert 'setAttribute("aria-pressed"' in app

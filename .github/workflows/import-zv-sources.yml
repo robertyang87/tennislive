@@ -1,0 +1,68 @@
+name: import-zv-sources
+run-name: "import-zv · ${{ inputs.vid }}"
+
+# One-off source archiver for zverev-no1-story-2026: download a YouTube source
+# with the same yt-dlp recipe as tools/build_match_reel.py (client ladder,
+# bv*[height<=1080]+ba, sort res:1080,fps,vcodec:h264,acodec:m4a) and upload
+# it to Release tag source-<vid> as <vid>.mp4. Remove after the episode ships.
+
+on:
+  workflow_dispatch:
+    inputs:
+      vid:
+        description: "YouTube video id (original case)"
+        required: true
+        type: string
+      url:
+        description: "YouTube watch URL"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-zv-${{ inputs.vid }}
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download (client ladder, same recipe as probe)
+        env:
+          VID: ${{ inputs.vid }}
+          URL: ${{ inputs.url }}
+        run: |
+          set -uo pipefail
+          pip install -q "yt-dlp[default]"
+          mkdir -p dl
+          ok=0
+          for client in "" "android_vr" "tv_simply" "web_embedded" "android,ios"; do
+            args=(--js-runtimes node --socket-timeout 30 --no-warnings
+                  -f "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
+                  -S "res:1080,fps,vcodec:h264,acodec:m4a"
+                  --merge-output-format mp4 -o "dl/$VID.mp4")
+            if [ -n "$client" ]; then
+              args+=(--extractor-args "youtube:player_client=$client")
+            fi
+            echo "== attempt client='${client:-default}'"
+            if timeout 1500 yt-dlp "${args[@]}" "$URL" && [ -s "dl/$VID.mp4" ]; then
+              ok=1; break
+            fi
+            rm -f "dl/$VID.mp4"
+          done
+          [ "$ok" = 1 ] || { echo "::error::all clients failed"; exit 1; }
+          ffprobe -v error -show_entries stream=width,height,codec_name -of csv "dl/$VID.mp4" || true
+          ls -la dl/
+      - name: Upload to Release source-<vid>
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VID: ${{ inputs.vid }}
+        run: |
+          set -euo pipefail
+          TAG="source-$VID"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "source · $VID" --notes "archived source for zverev-no1-story-2026"
+          gh release upload "$TAG" "dl/$VID.mp4" --clobber
+          echo "uploaded: https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$VID.mp4"

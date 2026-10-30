@@ -1,0 +1,154 @@
+{
+  "scoreboard_qc_sha256": "a699e5ead5f098f34e04df2cb3ad973d505b19f744c942c83192c46b3964d640",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d17f0e6c72d924b3f3c671f7d0162c1706bee11ffdb067f815830e6cdd2eca85",
+    "request_count": 16,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-shi-tagger-guangzhou-2026-qf-d17f0e6c72d924b3",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shi-tagger-guangzhou-2026-qf-d17f0e6c72d924b3/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41085591762"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 270.685,
+  "topbar": {
+    "line1": "2026 WTA250 广州 1/4决赛",
+    "line2": "塔格尔 6-4 3-6 7-5 施晗",
+    "start": 1.2,
+    "end": 271.885
+  },
+  "film_seconds": 276.48,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 15.744,
+    "2": 6.312,
+    "4": 7.344,
+    "5": 8.136,
+    "7": 8.472,
+    "8": 6.0,
+    "10": 6.216,
+    "13": 9.552,
+    "14": 7.224,
+    "16": 9.24,
+    "17": 7.08,
+    "19": 8.4,
+    "20": 7.992,
+    "23": 12.024,
+    "24": 16.464
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "施晗",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 6,
+          "named": "施晗",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 9,
+          "named": "施晗",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 11,
+          "named": "塔格尔",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 15,
+          "named": "施晗",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 21,
+          "named": "施晗",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 12,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "73b33c6d5c284d71592209246e2a8ffc409d9eb1ac02ee82cf60be070f267acc",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "shi-tagger-guangzhou-2026-qf",
+    "received_at": "2026-10-30T15:58:25Z",
+    "artifact_ready_at": "2026-10-30T16:04:52Z",
+    "elapsed_seconds": 387.112,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "7f4ccb25597026d917e4602befbd6cdb5505641c16c5f1367618a02934046c63",
+    "spec_sha256": "7b4e638998b5fa98ebdd61ab73c4559fee4a2b544b58fa6c0577ddae704be03c",
+    "run_id": "41085591762",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-30T16:01:09Z",
+        "run_id": "41085591762"
+      }
+    ],
+    "render_seconds": 223.112,
+    "pre_render_seconds": 164.0
+  },
+  "film_sha256": "7f4ccb25597026d917e4602befbd6cdb5505641c16c5f1367618a02934046c63",
+  "film_bytes": 79063268,
+  "qc_attestation_sha256": "6b035412871197c86b7236c2f8973ccba62959483e9f2d2f54748e3fbef6e142",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-30T16:01:09Z",
+      "run_id": "41085591762"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-30T16:04:55Z",
+      "run_id": "41085591762"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shi-tagger-guangzhou-2026-qf/shi-tagger-guangzhou-2026-qf.mp4",
+  "video_bytes": 79063268
+}

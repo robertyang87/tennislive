@@ -1,0 +1,37 @@
+对阵: 孙心然 vs 刘婧文（flashscore_id: rgAMA1e4）
+制胜分 / 非受迫失误：**flashscore 这场没有提供完整两项**——保留已取得的字段，不等于这场没有数据。
+  按同一场比赛并行补查，不把任何一家当成必经站：
+  1. 官方比赛统计及赛后稿：ATP / WTA / 赛事官网的 Match Reaction、by-the-numbers，按两人姓名、日期、赛事和比分确认场次。
+  2. 官方同场转播 / 集锦：自行抽取 MATCH SUMMARY / MATCH STATS 全场技术表，保存视频 URL、时间码和帧；不默认让用户提供截图。
+  3. Match Charting Project：tools/mcp_stats.py find --who <姓> --year <年>，再用 show <唯一slug>；记下索引日期和标注者，明确是志愿者标注，正反手分项不能替代总数。
+  4. TNNS：仅在可正常访问时用 tools/tnns_stats.py；遇安全验证停止，不换出口或接口绕过。
+  每个来源分别记录：已取得 / 本源缺字段 / 暂未收录 / 访问受阻 / 解析失败，并写明时间及证据位置。访问失败不能写成数据不存在；冲突未解决不能混填。
+  已核实全场范围、球员列序和统计口径后才填写；仍缺项要列清已查来源与各自结果，再按发布闸处理。结构化记录保存到 stats._winners_ue_evidence / _winners_ue_check。
+{
+  "a": {
+    "aces": 7,
+    "df": 1,
+    "first_in": 46,
+    "first_won": 31,
+    "second_total": 41,
+    "second_won": 25,
+    "bp_conv": 2,
+    "bp_chances": 8,
+    "pts_won": 87,
+    "pts_total": 166,
+    "first_total": 87
+  },
+  "b": {
+    "aces": 7,
+    "df": 3,
+    "first_in": 54,
+    "first_won": 34,
+    "second_total": 25,
+    "second_won": 14,
+    "bp_conv": 1,
+    "bp_chances": 7,
+    "pts_won": 79,
+    "pts_total": 166,
+    "first_total": 79
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "scoreboard_qc_sha256": "fa9522abe165c2ffe3da3802a2865de75fe79085229b5b9695518444a6090392",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "4fce1cb5cd974d991f0657e4539470ed88f1d278ffd30eca9d0d95dc8d5a1558",
+    "request_count": 13,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41064149536"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 247.8,
+  "topbar": {
+    "line1": "2026 WTA250 广州 1/4决赛",
+    "line2": "孙心然 7-5 7-6(2) 刘婧文",
+    "start": 1.2,
+    "end": 249.0
+  },
+  "film_seconds": 253.56,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 10.512,
+    "2": 6.048,
+    "4": 7.248,
+    "6": 7.056,
+    "7": 7.44,
+    "9": 7.968,
+    "10": 2.856,
+    "13": 8.616,
+    "14": 3.168,
+    "16": 5.904,
+    "19": 8.088,
+    "20": 11.808
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [
+        {
+          "segment": 3,
+          "named": "孙心然",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 8,
+          "named": "孙心然",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        },
+        {
+          "segment": 17,
+          "named": "孙心然",
+          "frames": 2,
+          "faces": 0,
+          "named_seen": 0,
+          "other_seen": 0
+        }
+      ],
+      "findings": [],
+      "frames": 6,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "6fd361cddc710d96da95a7a031e311ec228aaa7ab2f80e9cfc7d8a3807b22fad",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sun-liu-guangzhou-2026-qf",
+    "received_at": "2026-10-30T13:32:57Z",
+    "artifact_ready_at": "2026-10-30T13:39:37Z",
+    "elapsed_seconds": 400.979,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "22afbb6f023e26c59e7fef54bda0eac4bcc90102b67a1ce2b754df0af0a7db67",
+    "spec_sha256": "d25a852aa940f75889fc6f70004d82215c2fbefc192af1f7bb6766d1537b78e3",
+    "run_id": "41064149536",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-30T13:35:37Z",
+        "run_id": "41064149536"
+      }
+    ],
+    "render_seconds": 240.979,
+    "pre_render_seconds": 160.0
+  },
+  "film_sha256": "22afbb6f023e26c59e7fef54bda0eac4bcc90102b67a1ce2b754df0af0a7db67",
+  "film_bytes": 78293664,
+  "qc_attestation_sha256": "acad76a80e972081cdec73994fc6c8a1f4eadc997cb99abd9e5e3951435e132b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-30T13:35:37Z",
+      "run_id": "41064149536"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-30T13:39:41Z",
+      "run_id": "41064149536"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-liu-guangzhou-2026-qf/sun-liu-guangzhou-2026-qf.mp4",
+  "video_bytes": 78293664
+}

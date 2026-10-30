@@ -2017,6 +2017,18 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # Renoise process remake, run 40881358677, SHA 74a0dbd5baba: 212.433s,
+    # 1080x1440/30fps H264 High 4:2:0; 25 actual frames, logo/fonts and
+    # fixed32 draw/queue/unused-slot/seed motions verified. Frozen speech and
+    # whole final decoded PCM equal reviewed film; fresh native voice gate passed.
+    # Evidence: output/2026-10-29/explainer/djokovic-basel-wildcard-animation-2026/qc_attestation.json.
+    "djokovic-basel-wildcard-animation-2026",
+    # Final run 40867828797: SHA cd522e616764, 212.433s, 1080x1440/30fps,
+    # mobile H.264 High / 4:2:0, AV delta 51ms; 25 actual frames reviewed.
+    # Native sealed speech suite and read-only publication gate passed; all 12
+    # actual AAC sections match approved sources, zero offset; actual outro ASR passed.
+    # Exact evidence: output/2026-10-29/explainer/djokovic-basel-wildcard-2026/qc_attestation.json.
+    "djokovic-basel-wildcard-2026",
     # run 37368614614 的实际3:4成片已抽帧、字幕与原声质检；见 docs/research/medvedev-beijing-default-2026-qc.json。
     "medvedev-beijing-default-2026",
     # 2026-10-01：run 36808709110 的 133.67s 成片已逐屏、字幕与音量质检；见 docs/research/atp250-medvedev-hangzhou-2026-qc.json。
@@ -11547,19 +11559,23 @@ _OPENINGS: dict[str, dict] = {
 
 # This episode keeps its reviewed script, diagrams and evidence in package data.
 # The existing renderer and preflight still consume the same registries.
-_DEFAULT_EPISODE = json.loads(
-    (Path(__file__).parent / "episodes/medvedev-beijing-default-2026.json").read_text(
-        encoding="utf-8"))
-_DEFAULT_SLUG = _DEFAULT_EPISODE["slug"]
-_SCRIPTS[_DEFAULT_SLUG] = tuple(
-    (beat["kind"], beat["label"], beat["title"], beat["narration"],
-     beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
-     beat.get("diagram", ""), beat.get("question", ""))
-    for beat in _DEFAULT_EPISODE["beats"]
-)
-_OPENINGS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["opening"]
-_CAPTIONS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["caption"]
-_CLAIMS[_DEFAULT_SLUG] = _DEFAULT_EPISODE["claims"]
+_EPISODES = {
+    episode["slug"]: episode
+    for path in sorted((Path(__file__).parent / "episodes").glob("*.json"))
+    for episode in [json.loads(path.read_text(encoding="utf-8"))]
+}
+_DEFAULT_SLUG = "medvedev-beijing-default-2026"
+_DEFAULT_EPISODE = _EPISODES[_DEFAULT_SLUG]
+for _episode_slug, _episode in _EPISODES.items():
+    _SCRIPTS[_episode_slug] = tuple(
+        (beat["kind"], beat["label"], beat["title"], beat["narration"],
+         beat.get("image", ""), beat.get("credit", ""), tuple(beat["points"]),
+         beat.get("diagram", ""), beat.get("question", ""))
+        for beat in _episode["beats"]
+    )
+    _OPENINGS[_episode_slug] = _episode["opening"]
+    _CAPTIONS[_episode_slug] = _episode["caption"]
+    _CLAIMS[_episode_slug] = _episode["claims"]
 
 
 def _fixture_lines(spec: dict) -> tuple[str, ...]:
@@ -11677,9 +11693,9 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
-        if story.slug == _DEFAULT_SLUG:
+        if story.slug in _EPISODES:
             beats = [dataclasses.replace(segment, visual=spec.get("visual"))
-                     for segment, spec in zip(beats, _DEFAULT_EPISODE["beats"])]
+                     for segment, spec in zip(beats, _EPISODES[story.slug]["beats"])]
         beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
@@ -11858,7 +11874,8 @@ def _slide_html(
         visual = segment.visual
         return build_transition(visual.get("headline", segment.title),
                                 content=visual.get("content"), kicker=visual.get("kicker", ""),
-                                size=(W, height))
+                                size=(W, height),
+                                header=({"brand": f"网球时差 · {column}", "topic": topic} if topic else None))
     if segment.visual:
         from .source_story_cards import source_slide_html
 
@@ -12338,6 +12355,7 @@ def render_explainer_slides(
                     if seg.visual and seg.visual.get("layout") == "transition":
                         from .transition_cards import plan as transition_plan, check_page
                         page.wait_for_function("window.transitionMotion || window.transitionMotionError")
+                        page.evaluate("document.fonts.ready")
                         if issue := page.evaluate("window.transitionMotionError || null"):
                             raise ValueError(issue)
                         page.evaluate("window.setTransitionTime(window.transitionMotion.horizon)")
@@ -12373,7 +12391,8 @@ def render_explainer_slides(
                         visual = seg.visual
                         sidecar.write_text(json.dumps({"text": visual.get("headline", seg.title),
                             "kicker": visual.get("kicker", ""), "content": visual.get("content"),
-                            "size": [W, height]}, ensure_ascii=False))
+                            "size": [W, height],
+                            "header": ({"brand": f"网球时差 · {column}", "topic": topic} if topic else None)}, ensure_ascii=False))
                     else:
                         sidecar.unlink(missing_ok=True)
                     paths.append(out)
@@ -14279,7 +14298,7 @@ def assemble_explainer_video(
             # ⚠️ 别把 crf 再往上推：卡片是深绿底上的浅色小字，26 以上开始出块。
             # 改之前抽一帧放大比对，别按比例推。
             "-c:v", "libx264", "-preset", "slow", "-tune", "stillimage",
-            "-crf", "26",
+            "-crf", "26", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "64k", "-ac", "1",
             "-movflags", "+faststart", str(output),
         ]

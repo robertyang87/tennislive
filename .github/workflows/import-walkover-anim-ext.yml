@@ -1,0 +1,48 @@
+name: import-walkover-anim-ext
+run-name: "import-walkover-anim-ext · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）延展版动画源存档（本趟仅赛马一段）。
+# 赛马旁白实测估长超过原 11.0s 动画的拟合上限，本地延展重渲为 34.0s
+# （horse-ext.mp4，加拍独自领奖＋排字/点阵停留，走马速度与原版同构）。
+# 照 import-walkover-anim-sources 先例走 runner：文件先暂存
+# research/walkover-story-2026/anim-src/，本工作流建 source-<id> Release
+# 并 gh release upload；完成后暂存 mp4 另行提交移除（Release 为唯一正本）。
+# 归整口径：视频流逐字节复制自本地 horse-ext.mp4（流哈希双向核验），
+# 只补一条静音 AAC 轨（anullsrc 48kHz）——source-asr 解码需要音轨存在。
+# 时间轴三段延展版（timeline-ext1/2/3）因案例分组与旁白叙事顺序冲突
+# 暂缓存档，等主线裁定（见 SOURCES.md 延展版一节）。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-anim-ext
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 建 Release 并上传赛马延展版
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          sha256sum wo26horse02.mp4
+          f=wo26horse02
+          tag="source-$f"
+          gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 自制动画延展版源存档：$f（赛马起源延展版，本地 horse-ext.mp4，视频流逐字节一致，仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+          gh release upload "$tag" "$f.mp4" --clobber
+          gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'

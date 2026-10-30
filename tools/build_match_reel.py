@@ -2050,6 +2050,13 @@ _MUCHOVA_NATIVE_720_CROP_URLS = frozenset({
 # exception bound to this episode and the three actual official 720p sources;
 # it does not relax the native floor or archival defaults for other films.
 _NATIVE_720_CROP_URLS_BY_EPISODE = {
+    # 《Walkover》（walkover-story-2026）v2 对齐重推·孙心然段：账号所有者
+    # 2026-10-30 拍板换实拍。WTA 官网本场（广州 R2 孙心然 vs 蒂莫费娃）
+    # 官方集锦仅 1280×720 一档；所有者要全画布裁切呈现（与主源 sin 同款
+    # 按原生几何取窗），不走 contain 档案位。只登记这条存档 URL。
+    "walkover-story-2026": frozenset({
+        "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4",
+    }),
     "muchova-finals-2026": _MUCHOVA_NATIVE_720_CROP_URLS,
     "rybakina-finals-2026": frozenset({
         "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
@@ -7214,6 +7221,20 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 无更高清版本；该段是本片原声位 1、内容不可替代。白名单只加这条存档 URL，
     # 不及于 nau.ch 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-wawrinkafed/wawrinkafed.mp4': 720,
+    # 《Walkover》（walkover-story-2026）费德勒 2014 总决赛场内宣布段：账号
+    # 所有者 2026-10-30 亲批登记 720p 例外（原话：先查其他源，没有的话 720
+    # 可以）。复查结论：Tennis TV 无场内宣布独立条目、ATP 官网无可检索的
+    # 视频档案入口；本条为转播翻录存档（1278×720），是该历史画面现存最佳
+    # 版本，本片原声位、内容不可替代。白名单只加这条存档 URL，不及于
+    # YouTube 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4': 720,
+    # 《Walkover》（walkover-story-2026）v2 对齐重推·孙心然段换实拍：账号所有者
+    # 2026-10-30 13:25 拍板本期全量对齐重推、孙段换实拍（原话widget选项「这期
+    # 全量对齐重推，孙段换实拍」）。WTA 官网本场（2026 广州 R2 孙心然 vs
+    # 蒂莫费娃）官方集锦 Brightcove 直链仅 1280×720 一档、无 1080p（中午复检
+    # 实证，见制作目录 sources-wta-sun.md）；本段为本片核心实拍、内容不可替
+    # 代。白名单只加这条存档 URL，不及于 WTA 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4': 720,
 }
 
 
@@ -7257,6 +7278,21 @@ SHI_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
     "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112": 720,
 }
 
+# 2026-10-30: owner approved this match's official WTA source: “可以用 720”.
+# The archive preserves the same Brightcove 6407657170112 bytes.
+SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407657170112": 720,
+    "https://github.com/robertyang87/tennislive/releases/download/source-6407657170112/6407657170112.mp4": 720,
+}
+
+# The owner's current-session “可以用 720” preference also applies to the next
+# requested WTA reel. Register this episode and these exact official bytes;
+# do not turn the session preference into a global source-quality exemption.
+SHI_TAGGER_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407661187112": 720,
+    "https://github.com/robertyang87/tennislive/releases/download/source-6407661187112/6407661187112.mp4": 720,
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -7266,6 +7302,14 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in SHI_TAGGER_GUANGZHOU_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "shi-tagger-guangzhou-2026-qf":
+                raise ReelError("source_quality_exceptions 此源授权仅限施晗2026广州1/4决赛")
+            floor = SHI_TAGGER_GUANGZHOU_2026_LOW_RES_SOURCES[url]
+        if url in SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "sun-liu-guangzhou-2026-qf":
+                raise ReelError("source_quality_exceptions 此源授权仅限孙心然2026广州1/4决赛")
+            floor = SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES[url]
         if url in NISHIKORI_FAREWELL_LOW_RES_SOURCES:
             if spec.get("slug") != "nishikori-career-farewell":
                 raise ReelError("source_quality_exceptions 此档案低清授权仅限锦织圭生涯告别影片")
@@ -13196,4 +13240,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

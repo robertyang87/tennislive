@@ -1,0 +1,79 @@
+{
+  "schema": "tennislive.final-visual-review.v1",
+  "method": "visual_inspection_of_actual_native_PNGs",
+  "film_sha256": "d82e494c478aabbf821846f7cd95f5b6a8c9d2a1c19cfb0c40fb9cbf141e90ff",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "samples": [
+    {
+      "film_time": 0.6,
+      "file": "000.60.png",
+      "sha256": "109e7cc66ab577b95e293a2d3c3f784d454911fe5def774efa9259f6976c4aae",
+      "frame_index": 15
+    },
+    {
+      "film_time": 159,
+      "file": "159.00.png",
+      "sha256": "bebd0076c9a2b61b9bac9d4dacbdfb26b36f8d80efae77f4ebcd9ad88c4b61e6",
+      "frame_index": 3975
+    },
+    {
+      "film_time": 225,
+      "file": "225.00.png",
+      "sha256": "3b8c10fb20d37a5402417326d96f04245627f9c288714809482f77880d086f3b",
+      "frame_index": 5625
+    },
+    {
+      "film_time": 238,
+      "file": "238.00.png",
+      "sha256": "3e6f300e488a8e82d069ee49cceafb668478b77d86cff92fec3f8ea72c29c18b",
+      "frame_index": 5950
+    },
+    {
+      "film_time": 241,
+      "file": "241.00.png",
+      "sha256": "88435801387e6282afe40ba1b954db9b94b4aeca95c82ccef8090eb9c4e2fa1d",
+      "frame_index": 6025
+    },
+    {
+      "film_time": 247,
+      "file": "247.00.png",
+      "sha256": "e792eb1e7f4dcd3a853ce3f37d0029fb08b1c7f7a2458fd862c2ee45ee709e2b",
+      "frame_index": 6175
+    },
+    {
+      "film_time": 250,
+      "file": "250.00.png",
+      "sha256": "4a39d2159cc3bfca44c474e3b25bd0e332e28d873ede1039706b52fbfcadd4bb",
+      "frame_index": 6250
+    },
+    {
+      "film_time": 262,
+      "file": "262.00.png",
+      "sha256": "658c8cc4d1b9ccca8472de33d2a0ed39b7c68e860707761ced68f9dfcbad8a9f",
+      "frame_index": 6550
+    },
+    {
+      "film_time": 276,
+      "file": "276.00.png",
+      "sha256": "7bfae4ab901ce6c19308c913d9002d01ffe31f8c8f5ba767f854a96887c81772",
+      "frame_index": 6900
+    }
+  ],
+  "findings": {
+    "cover_background": "fills entire canvas; no blank lower section",
+    "stats_caption": "top margin, all nine statistical rows unobscured after entrance completes",
+    "scoreboard_headers": "MATCH POINT and MATCH POINT #2 visible in sampled retained windows",
+    "ending": "complete last-point-to-handshake sequence retained in spec; sampled handshake and final column outro visually verified"
+  },
+  "limitations": [
+    "Sampled PNG review; does not claim every final frame was inspected.",
+    "Voice checks are automated_voice_suite, no human listening approval."
+  ],
+  "render_json_sha256": "2c040c7195ca85484430c99342953a8f1f7399d33a7a093a779228db01338e97",
+  "qc_attestation_sha256": "30dd71388adbf31ed60d176114245b82f4078e7e265da658f7ce29fc730b0960",
+  "render_workflow_run": 41088771004
+}
