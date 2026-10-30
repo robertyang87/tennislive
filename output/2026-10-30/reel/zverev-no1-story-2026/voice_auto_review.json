@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "8154cf32872497dc7b6d16182c2274bdd9d2859d61b3aa45c9c0c54c90c43d7d",
-    "render_inputs_sha256": "c27b4866642c5c91bde965c2a4d9db09511ce6853ebc723c4fd17e359ed1f928",
-    "spec_sha256": "16438ddc54a5b5e0aa8f3885566988f6d922b61a8c1f2fb27438894abcf538ce",
-    "film_sha256": "b7f2a216760417cb8f4a12b24dc470ea6db7af668f6612c1edc184846a5150ad",
+    "render_sha256": "78ece323fbbeb96fd469f62cc4299ca820a2cffdb84fa3a512c591b9d8686b19",
+    "render_inputs_sha256": "c7de335b92bc271e87aaaf33363412c29d4bb73238c9e0f006cc622e9b0d6831",
+    "spec_sha256": "2c47fc734c8b09cb59e9b5450e2886b5ed727383103dbc0a36f568e413bc1c1c",
+    "film_sha256": "83822cddcc9a173c03ac37d532205a7fb56d1470d16efa6d76fc1d6f29a08af9",
     "inventory_sha256": "90c67f482a4bfa6ad9eddeafeed32f1324841a5587cecb11b166a906639e509f"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-10-30T12:14:15+00:00",
+  "reviewed_at": "2026-10-30T15:21:25+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -366,7 +366,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "所以最后,把问题留给你,四次决赛,三次失利,以此重伤,一百二十五场胜利。这个年中第一,是六年坚持熬出来的实力对线,还是对手缺席的时代让位。你站哪边,评论区建。"
+        "transcript": "所以最后,把问题留给你,四次决赛,三次失利,以此重伤,一百二十五场胜利。这个年中第一,是六年坚持熬出来的实力对线,还是对手缺席的时代让位。你站哪边,评论区间。"
       },
       "polyphones": [
         {
@@ -441,7 +441,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "然后,剧本翻了,地母连班两盘,抢七所定胜局。四小时零两分钟,自为列夫把到手的冠军打得出去。"
+        "transcript": "然后,剧本翻了,地母连班两盘,抢妻所定胜局。四小时零两分钟,自为列夫把到手的冠军打得出去。"
       },
       "polyphones": [],
       "pauses": {
@@ -550,7 +550,7 @@
         "substituted": 2,
         "sub_ratio": 0.014,
         "longest_deletion": 0,
-        "transcript": "2025年,莫尔本决赛对新纳,对方全场没有送出一个破发点,直落三盘把他打回更衣室。三次大满冠决赛,三次亚军。奥运会金牌,总决赛冠军,大师赛冠军,他什么都有,只差这一座。最强的无眠之王,这句话从夸奖慢慢变成了判决。而且,面前只剩最后一期台阶,公开赛年代,只有伦德尔和穆雷是以决赛四连败开局的。再说一次,他就要和这份名单并排站着。"
+        "transcript": "2025年,莫尔本决赛对辛纳,对方全场没有送出一个破发点,直落三盘把他打回更衣室。三次大满冠决赛,三次亚军。奥运会金牌,总决赛冠军,大师赛冠军,他什么都有,只差这一座。最强的无眠之王,这句话从夸奖慢慢变成了判决。而且,面前只剩最后一期台阶,公开赛年代,只有伦德尔和穆雷是以决赛四连败开局的。再说一次,他就要和这份名单并排站着。"
       },
       "polyphones": [
         {
@@ -624,7 +624,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "中间隔着的是三次大满冠决赛失利和整整125场胜利。"
+        "transcript": "中间隔着的是三次大满罐决赛失利和整整125场胜利。"
       },
       "polyphones": [],
       "pauses": {
@@ -656,7 +656,7 @@
         "substituted": 2,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "半年后,巴黎,这一回,千表先替他让开了路,阿尔卡拉斯因伤缺席新纳第二轮暴冷出局,得约止步第三轮,他一路没碰上一个世界前史。绝在对科博利,他第四盘抢七三比一领先被翻盘,还抽了箭。"
+        "transcript": "半年后,巴黎,这一回,千表先替他让开了路,阿尔卡拉斯因伤缺席,新纳第二轮暴冷出局,得约止步第三轮,他一路没碰上一个世界前史。绝在对科博利,他第四盘抢七三比一领先被翻盘,还抽了剑。"
       },
       "polyphones": [
         {
@@ -823,12 +823,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 81,
-        "deleted": 1,
+        "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.012,
-        "longest_deletion": 1,
-        "transcript": "下周一,29岁的自卫列夫名字后面将第一次坠上世界第一。以他的年龄手灯绑手,52年来只有一个人比他更晚。而第一次当上年中低着这件事,他比阿加西的记录还要老三天是历史低人。"
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "下周一,29岁的自维列夫,名字后面将第一次坠上世界第一。以他的年龄首登榜首,52年来只有一个人比他更晚。而第一次当上年中第一这件事,他比阿加西的记录还要老三天,是历史第一人。"
       },
       "polyphones": [
         {
@@ -933,10 +933,10 @@
         "ref_syllables": 30,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.033,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他两盘在手,决胜盘达到5比3,迎来自己的发球胜赛局,离奖杯只剩2分。"
+        "transcript": "他两盘在手,决胜盘达到5比3,迎来自己的发球胜赛局,离奖杯只剩两分。"
       },
       "polyphones": [
         {
@@ -981,7 +981,7 @@
         "substituted": 1,
         "sub_ratio": 0.031,
         "longest_deletion": 0,
-        "transcript": "你可以说这个第一来的网,但在他看来,他先得回答另一个问题,他到底配不配。"
+        "transcript": "你可以说这个第一来的网。但在他看来,他先得回答另一个问题,他到底配不配。"
       },
       "polyphones": [
         {
@@ -1049,7 +1049,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "绝赛,他3比1拿下谢尔顿。赛点兑现的那一刻,他甚至没意识到比赛已经结束,转身走回底线,准备接发球,几秒之后才反应过来。30年了,德国人又一次在纽约捧碑。"
+        "transcript": "决赛,他3比1拿下谢尔顿。赛点兑现的那一刻,他甚至没意识到比赛已经结束,转身走回底线,准备接发球,几秒之后才反应过来。30年了,德国人又一次在纽约捧碑。"
       },
       "polyphones": [
         {
@@ -1094,7 +1094,7 @@
         "substituted": 1,
         "sub_ratio": 0.025,
         "longest_deletion": 0,
-        "transcript": "2020年纽约、空荡荡的阿瑟、阿世球场。23岁的自卫列夫第一次站上大满冠决赛对手地姆。"
+        "transcript": "2020年纽约空荡荡的阿瑟、阿世球场。23岁的自卫列夫第一次站上大满冠决赛对手地姆。"
       },
       "polyphones": [],
       "pauses": {
@@ -1158,7 +1158,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但账本的另一面必须摊开。这一年,他对辛纳灵圣武傅全年只从对方手里抢下一盘,罚网夺冠,他没碰前十,年中第一,是在辛纳宣布赛季报销六天之后锁定的。质疑者说,这不是封王,是让位。而他的回答是。"
+        "transcript": "但账本的另一面必须摊开。这一年,他对辛纳灵圣武父全年只从对方手里抢下一盘,罚网夺冠,他没碰前十,年中第一,是在辛纳宣布赛季报销六天之后锁定的。质疑者说,这不是封王,是让位。而他的回答是。"
       },
       "polyphones": [],
       "pauses": {
@@ -1525,7 +1525,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那年他说自己总有一天会站回来,没人想到这一天要等六年更没人想到等他的先是一张轮椅。"
+        "transcript": "那年他说自己总有一天会站回来,没人想到这一天要等六年,更没人想到等他的先是一张轮椅。"
       },
       "polyphones": [],
       "pauses": {
@@ -1557,7 +1557,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决胜盘,他6比1收关,冠军点落地,他倒在红土上,久久没有起来。"
+        "transcript": "决胜盘他6比1收关,冠军点落地他倒在红土上久久没有起来。"
       },
       "polyphones": [
         {
@@ -1619,7 +1619,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "两个月后在纽约,他成了头号种子,新纳因西商提前结束了赛季。首轮,他离出局只差两分,次轮,他打满五盘。"
+        "transcript": "两个月后在纽约,他成了头号种子,新纳因西商提前结束了赛季。首轮,他离出局只差两分。次轮,他打满五盘。"
       },
       "polyphones": [
         {

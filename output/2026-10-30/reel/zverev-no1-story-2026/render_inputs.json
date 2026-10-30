@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "zverev-no1-story-2026",
-  "written_at": "2026-10-30T12:09:54Z",
-  "code_sha": "74fcaa01e77f28934725674631e4e0f18d6367bd",
-  "spec_sha256": "16438ddc54a5b5e0aa8f3885566988f6d922b61a8c1f2fb27438894abcf538ce",
-  "film_sha256": "b7f2a216760417cb8f4a12b24dc470ea6db7af668f6612c1edc184846a5150ad",
-  "film_bytes": 344151976,
-  "projection_sha256": "6a11cae82a51c7e3600324496aa787c3281c2555574434598b038f8274a70d48",
+  "written_at": "2026-10-30T15:17:32Z",
+  "code_sha": "cbc725ad96dfbb019cc682693d47f1a1ef937b88",
+  "spec_sha256": "2c47fc734c8b09cb59e9b5450e2886b5ed727383103dbc0a36f568e413bc1c1c",
+  "film_sha256": "83822cddcc9a173c03ac37d532205a7fb56d1470d16efa6d76fc1d6f29a08af9",
+  "film_bytes": 350007065,
+  "projection_sha256": "d2a17b4ad203d7a99a770f8da43c326b42aa2b4656b2540b64983e96e6de5039",
   "claims": [
     [
       "_claims"
@@ -20,6 +20,11 @@
     [
       "cover",
       "_narration_why"
+    ],
+    [
+      "segments",
+      18,
+      "_frame_why"
     ],
     [
       "_tts_backend_why"
@@ -176,6 +181,16 @@
     ]
   ],
   "assets": {
+    "assets/reel/zverev-no1-story-2026/label-ao25.png": "8aba1f794123485012b1ced01a7c7c8ff5873ea43e4bcad22d4ef19421715fbf",
+    "assets/reel/zverev-no1-story-2026/label-ao26.png": "e7160f5b187da1f046516eb1a09cc4917acf99ea431c773a4e538958ba331125",
+    "assets/reel/zverev-no1-story-2026/label-rg22.png": "f7b0e80bd21596aec4604327e558aaeca2ca170bcd41fb81db08b1e213ec5ba4",
+    "assets/reel/zverev-no1-story-2026/label-rg24.png": "575f721a24ea4fcc1e351cdff057acff2952941e3c9f908cd55a57135c3f8a14",
+    "assets/reel/zverev-no1-story-2026/label-rg26.png": "11b776c1fe237c2ec284ed6d26f9633ff53949faf3b838ddd3c785866ef960a7",
+    "assets/reel/zverev-no1-story-2026/label-shl.png": "ec6b228ac00c26ebbc285f83fdeaaca7a8d6edc75b4c2ee75121d9ce71bc5728",
+    "assets/reel/zverev-no1-story-2026/label-uso20.png": "3991d79794a209519c1920eaff57936578cff0789d74fb0d6edc64ec2989a714",
+    "assets/reel/zverev-no1-story-2026/label-uso26.png": "8815eb8ce92f8a1a1b28949c52435064d3fe9395fce0937814cb1d09c266c4b9",
+    "assets/reel/zverev-no1-story-2026/label-vienna.png": "0cd1ebb04f8ffaeb9cf3f5e51455b155155a6a92fca7422282d5fbcf753cfcaf",
+    "assets/reel/zverev-no1-story-2026/label-wim26.png": "603fc317f0f31df1683f77b9074d79252ff41b6928ea3aaad7caea121cfb12f4",
     "assets/reel/zverev-rg-2026-trophy.jpg": "46ad1f900a7a080b760464a148e0da965b4b36ef9fa63dce731d6aae0bd651df"
   },
   "artifacts": {
@@ -314,7 +329,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+          "label": {
+            "topic": "法网决赛",
+            "date": "2026.06.07",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 科博利",
+            "score": "6-1 4-6 6-4 6-7(5) 6-1",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-1 4-6 6-4 6-7(5) 6-1",
+              "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+            }
+          }
+        }
       },
       {
         "source": "rg22",
@@ -326,7 +365,26 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+          "label": {
+            "topic": "法网半决赛",
+            "date": "2022.06.03",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 纳达尔",
+            "event": "第二盘伤退"
+          }
+        }
       },
       {
         "source": "shl",
@@ -338,7 +396,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-shl.png",
+          "label": {
+            "topic": "锁定年终第一",
+            "date": "2026.10.12",
+            "place": "上海大师赛",
+            "people": "兹维列夫 vs 布布利克",
+            "score": "7-6(6) 4-6 7-6(1)",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "7-6(6) 4-6 7-6(1)",
+              "source": "https://tennisnow.com/zverev-withstands-nemesis-bublik-for-40th-atp-masters-1000-quarterfinal/"
+            }
+          }
+        }
       },
       {
         "source": "vienna",
@@ -350,7 +432,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-vienna.png",
+          "label": {
+            "topic": "锁定世界第一",
+            "date": "2026.10.29",
+            "place": "维也纳",
+            "people": "兹维列夫 vs 格里克斯普尔",
+            "score": "6-4 7-5",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-4 7-5",
+              "source": "https://www.tennismajors.com/atp/zverev-clinches-world-no-1-in-style-beating-griekspoor-to-reach-vienna-quarterfinals-864371.html"
+            }
+          }
+        }
       },
       {
         "source": "a1",
@@ -386,7 +492,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2020.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 蒂姆",
+            "score": "6-2 6-4 4-6 3-6 6-7(6)",
+            "result": {
+              "winner": "蒂姆",
+              "score": "2-6 4-6 6-4 6-3 7-6(6)",
+              "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+            }
+          }
+        }
       },
       {
         "source": "uso20",
@@ -398,7 +528,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2020.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 蒂姆",
+            "score": "6-2 6-4 4-6 3-6 6-7(6)",
+            "result": {
+              "winner": "蒂姆",
+              "score": "2-6 4-6 6-4 6-3 7-6(6)",
+              "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+            }
+          }
+        }
       },
       {
         "source": "uso20",
@@ -410,7 +564,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2020.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 蒂姆",
+            "score": "6-2 6-4 4-6 3-6 6-7(6)",
+            "result": {
+              "winner": "蒂姆",
+              "score": "2-6 4-6 6-4 6-3 7-6(6)",
+              "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+            }
+          }
+        }
       },
       {
         "source": "uso20",
@@ -422,7 +600,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso20.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2020.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 蒂姆",
+            "score": "6-2 6-4 4-6 3-6 6-7(6)",
+            "result": {
+              "winner": "蒂姆",
+              "score": "2-6 4-6 6-4 6-3 7-6(6)",
+              "source": "https://www.atptour.com/en/news/thiem-zverev-us-open-2020-final/"
+            }
+          }
+        }
       },
       {
         "source": "rg22",
@@ -434,7 +636,26 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+          "label": {
+            "topic": "法网半决赛",
+            "date": "2022.06.03",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 纳达尔",
+            "event": "第二盘伤退"
+          }
+        }
       },
       {
         "source": "rg22",
@@ -446,7 +667,26 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg22.png",
+          "label": {
+            "topic": "法网半决赛",
+            "date": "2022.06.03",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 纳达尔",
+            "event": "第二盘伤退"
+          }
+        }
       },
       {
         "source": "rg24",
@@ -458,7 +698,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg24.png",
+          "label": {
+            "topic": "法网决赛",
+            "date": "2024.06.09",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 阿尔卡拉斯",
+            "score": "3-6 6-2 7-5 1-6 2-6",
+            "result": {
+              "winner": "阿尔卡拉斯",
+              "score": "6-3 2-6 5-7 6-1 6-2",
+              "source": "https://www.atptour.com/en/news/alcaraz-zverev-roland-garros-2024-final/"
+            }
+          }
+        }
       },
       {
         "source": "ao25",
@@ -470,7 +734,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-ao25.png",
+          "label": {
+            "topic": "澳网决赛",
+            "date": "2025.01.26",
+            "place": "墨尔本",
+            "people": "兹维列夫 vs 辛纳",
+            "score": "3-6 6-7(4) 3-6",
+            "result": {
+              "winner": "辛纳",
+              "score": "6-3 7-6(4) 6-3",
+              "source": "https://www.atptour.com/en/news/sinner-zverev-australian-open-2025-final"
+            }
+          }
+        }
       },
       {
         "source": "ao26",
@@ -482,7 +770,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-ao26.png",
+          "label": {
+            "topic": "澳网半决赛",
+            "date": "2026.01.30",
+            "place": "墨尔本",
+            "people": "兹维列夫 vs 阿尔卡拉斯",
+            "score": "4-6 6-7(5) 7-6(3) 7-6(4) 5-7",
+            "result": {
+              "winner": "阿尔卡拉斯",
+              "score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+              "source": "https://www.atptour.com/en/news/alcaraz-australian-open-2026-reaction-friday"
+            }
+          }
+        }
       },
       {
         "source": "ao26",
@@ -494,7 +806,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-ao26.png",
+          "label": {
+            "topic": "澳网半决赛",
+            "date": "2026.01.30",
+            "place": "墨尔本",
+            "people": "兹维列夫 vs 阿尔卡拉斯",
+            "score": "4-6 6-7(5) 7-6(3) 7-6(4) 5-7",
+            "result": {
+              "winner": "阿尔卡拉斯",
+              "score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+              "source": "https://www.atptour.com/en/news/alcaraz-australian-open-2026-reaction-friday"
+            }
+          }
+        }
       },
       {
         "source": "rg26",
@@ -506,7 +842,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+          "label": {
+            "topic": "法网决赛",
+            "date": "2026.06.07",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 科博利",
+            "score": "6-1 4-6 6-4 6-7(5) 6-1",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-1 4-6 6-4 6-7(5) 6-1",
+              "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+            }
+          }
+        }
       },
       {
         "source": "rg26",
@@ -518,7 +878,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-rg26.png",
+          "label": {
+            "topic": "法网决赛",
+            "date": "2026.06.07",
+            "place": "巴黎",
+            "people": "兹维列夫 vs 科博利",
+            "score": "6-1 4-6 6-4 6-7(5) 6-1",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-1 4-6 6-4 6-7(5) 6-1",
+              "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+            }
+          }
+        }
       },
       {
         "source": "rg26",
@@ -549,7 +933,8 @@
             "text": "Six-quatre, six-sept, six-un.\n六比四，六比七，六比一。"
           }
         ],
-        "point_end_ok": "已核接触表（本期侦察实测）：1020.4–1068.1 全段是冠军点之后的倒地、起身、网前拥抱与向观众致意，比赛早已结束、无任何进行中的分；检测器所报翻牌是转播全场比分图形的切换，不是回合结束点。切点在比赛结束之后。"
+        "point_end_ok": "已核接触表（本期侦察实测）：1020.4–1068.1 全段是冠军点之后的倒地、起身、网前拥抱与向观众致意，比赛早已结束、无任何进行中的分；检测器所报翻牌是转播全场比分图形的切换，不是回合结束点。切点在比赛结束之后。",
+        "frame": "court"
       },
       {
         "source": "a2",
@@ -567,7 +952,7 @@
         "source": "presser",
         "start": 341.8,
         "end": 358.2,
-        "cx": 0.5,
+        "cx": 0.491,
         "track": false,
         "kind": "quote",
         "quote": [
@@ -596,7 +981,25 @@
             "end": 15.9,
             "text": "But this one will beat all of them.\n但这一次，会盖过它们全部"
           }
-        ]
+        ],
+        "frame": "person",
+        "cx_face": {
+          "samples": [
+            0.4849,
+            0.4801,
+            0.5095,
+            0.4704,
+            0.46,
+            0.4909,
+            0.5218,
+            0.5153,
+            0.5182
+          ],
+          "source_size": [
+            1920,
+            1080
+          ]
+        }
       },
       {
         "source": "wim26",
@@ -608,7 +1011,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-wim26.png",
+          "label": {
+            "topic": "温网决赛",
+            "date": "2026.07.12",
+            "place": "伦敦",
+            "people": "兹维列夫 vs 辛纳",
+            "score": "7-6(7) 6-7(2) 3-6 4-6",
+            "result": {
+              "winner": "辛纳",
+              "score": "6-7(7) 7-6(2) 6-3 6-4",
+              "source": "http://www.atptour.com/en/news/sinner-zverev-wimbledon-2026-final-sunday"
+            }
+          }
+        }
       },
       {
         "source": "uso26",
@@ -620,7 +1047,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso26.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2026.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 谢尔顿",
+            "score": "6-3 7-6(2) 5-7 6-2",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-3 7-6(2) 5-7 6-2",
+              "source": "http://www.atptour.com/en/news/zverev-shelton-us-open-2026-final-report"
+            }
+          }
+        }
       },
       {
         "source": "uso26",
@@ -632,7 +1083,31 @@
         "voice": {
           "pitch": "+10Hz"
         },
-        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。"
+        "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
+        "inset": {
+          "kind": "story_text",
+          "corner": "tr",
+          "width": 0.6,
+          "pad": 0.043,
+          "top_pad": 0.043,
+          "show_after": 0,
+          "show_for": 8,
+          "motion": "editorial",
+          "animate": false,
+          "image": "assets/reel/zverev-no1-story-2026/label-uso26.png",
+          "label": {
+            "topic": "美网决赛",
+            "date": "2026.09.13",
+            "place": "纽约",
+            "people": "兹维列夫 vs 谢尔顿",
+            "score": "6-3 7-6(2) 5-7 6-2",
+            "result": {
+              "winner": "兹维列夫",
+              "score": "6-3 7-6(2) 5-7 6-2",
+              "source": "http://www.atptour.com/en/news/zverev-shelton-us-open-2026-final-report"
+            }
+          }
+        }
       },
       {
         "source": "uso26",
@@ -668,7 +1143,7 @@
         "source": "ceremony",
         "start": 480.5,
         "end": 511.0,
-        "cx": 0.5,
+        "cx": 0.362,
         "track": false,
         "kind": "quote",
         "quote": [
@@ -692,7 +1167,25 @@
             "end": 29.8,
             "text": "how much we suffered, how much pain we went through.\n我们多能扛，受过多少苦"
           }
-        ]
+        ],
+        "frame": "person",
+        "cx_face": {
+          "samples": [
+            0.3233,
+            0.3848,
+            0.3415,
+            0.441,
+            0.3299,
+            0.3546,
+            0.3088,
+            0.3409,
+            0.2822
+          ],
+          "source_size": [
+            1920,
+            1080
+          ]
+        }
       },
       {
         "source": "a3",
