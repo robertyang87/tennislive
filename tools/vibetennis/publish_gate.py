@@ -13,6 +13,12 @@
 6. 海报 `poster.jpg` 在仓库里（推送第一屏）
 7. 一趟最多一条
 
+**已推过之后只换封面**（所有者审定新封面、要求重推）：成片字节不变，产物目录里放一份
+受跟踪的 `publication_revision.json`（kind=cover-correction），原 `pushed.json` 改名归档
+（`previous_pushed.path`），新海报重跑 QC。这时账本指纹是 `cover-revision:<海报 sha256>`
+而不是成片 sha256——同一张封面不会发第二次；修订单还必须指向账本里**最近一次已发**的
+流水号，归档回执与它逐字段一致，且账本里没有 sending/uncertain 挂着。见 `revision_fingerprint`。
+
     publish_gate.py --changed <文件…>        # 选出该发的那一条（写 GITHUB_OUTPUT）
     publish_gate.py --reserve <outdir> --run URL --now T
     publish_gate.py --record <outdir> --run URL --now T --receipt-file R
@@ -33,9 +39,11 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parents[1] / "src"))
 
-from common import LEDGER_COLUMN, MARKER, POSTER_NAME, RENDER_JSON, SPEC_DIR  # noqa: E402
-from publication_ledger import (blocking_attempt, read_receipt_file,  # noqa: E402
-                                receipt_fields, write as write_ledger)
+import re  # noqa: E402
+
+from common import LEDGER_COLUMN, MARKER, POSTER_NAME, RENDER_JSON, REVISION_NAME, SPEC_DIR  # noqa: E402
+from publication_ledger import (blocking_attempt, load as load_ledger,  # noqa: E402
+                                read_receipt_file, receipt_fields, write as write_ledger)
 
 
 class Skip(Exception):
@@ -88,6 +96,50 @@ def validate_qc(repo: Path, slug: str, outdir: Path) -> str:
     return qc["film_sha256"]
 
 
+def revision_fingerprint(repo: Path, slug: str, outdir: Path, film_hash: str) -> str:
+    """账本指纹：首发用成片 sha256；有「只换封面」修订单时用 `cover-revision:<海报 sha>`。
+
+    修订单不合规就 Skip（不发），绝不回落成首发指纹。"""
+    manifest = outdir / REVISION_NAME
+    if not tracked(repo, manifest):
+        if (repo / manifest).exists():
+            raise Skip(f"{slug}：{REVISION_NAME} 没提交进仓库")
+        return film_hash
+    m = json.loads(blob(repo, manifest))
+    if (m.get("version") != 1 or m.get("kind") != "cover-correction" or m.get("slug") != slug
+            or not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,79}", str(m.get("revision_id", "")))):
+        raise Skip(f"{slug}：修订单身份不对（version/kind/slug/revision_id）")
+    if m.get("film_sha256") != film_hash:
+        raise Skip(f"{slug}：修订单只许换封面——成片必须是同一份字节")
+    poster_sha = _sha(blob(repo, outdir / POSTER_NAME))
+    if m.get("poster_sha256") != poster_sha:
+        raise Skip(f"{slug}：修订单批的不是现在这张 {POSTER_NAME}")
+    prev = m.get("previous_pushed") or {}
+    name = str(prev.get("path") or "")
+    if not re.fullmatch(r"pushed_[a-z0-9-]+\.json", name):
+        raise Skip(f"{slug}：上一次的回执要归档成 pushed_<名>.json，不能是 {MARKER} 本身")
+    if not tracked(repo, outdir / name) or prev.get("sha256") != _sha(blob(repo, outdir / name)):
+        raise Skip(f"{slug}：归档回执 {name} 不在仓库里或字节对不上")
+    archived = json.loads(blob(repo, outdir / name))
+    parent = str(m.get("parent_receipt") or "")
+    if not re.fullmatch(r"[0-9a-fA-F]{32}", parent) or archived.get("pushplus_receipt") != parent:
+        raise Skip(f"{slug}：归档回执与 parent_receipt 不是同一条")
+    key_prefix = f"pushplus:{LEDGER_COLUMN}:{slug}:"
+    rows = [r for r in load_ledger(repo, LEDGER_COLUMN, slug)["attempts"]
+            if str(r.get("key", "")).startswith(key_prefix)]
+    fingerprint = f"cover-revision:{poster_sha}"
+    if any(r.get("status") in {"sending", "uncertain"} and r.get("fingerprint") != fingerprint
+           for r in rows):
+        raise Skip(f"{slug}：账本里还有一条 sending/uncertain 没核实，先别再发")
+    sent = [r for r in rows if r.get("status") == "sent" and r.get("pushplus_receipt")]
+    latest = max(sent, key=lambda r: str(r.get("at", ""))) if sent else None
+    if latest is None or latest.get("pushplus_receipt") != parent:
+        raise Skip(f"{slug}：parent_receipt 不是账本里最近一次已发的那条")
+    if any(archived.get(f) != latest.get(f) for f in ("at", "run")):
+        raise Skip(f"{slug}：归档回执和账本里那次发送对不上（at/run）")
+    return fingerprint
+
+
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     if not tracked(repo, outdir / "render.json"):
         raise Skip(f"{slug}：render.json 已不在仓库里")
@@ -98,7 +150,8 @@ def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
     auto = (json.loads(spec.read_text(encoding="utf-8")).get("push") or {}).get("auto")
     if auto is not True:
         raise Skip(f"{slug}：spec 里没写 push.auto=true（布尔量），不自动发")
-    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
+    fingerprint = revision_fingerprint(repo, slug, outdir, film_hash)
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint)
     if previous:
         raise Skip(f"{slug}：发布账本已有 {previous.get('status')}（{previous.get('at')}），不重复发")
     if tracked(repo, outdir / MARKER):
@@ -131,10 +184,11 @@ def pick(changed: list[str], repo: Path):
 def ledger(repo: Path, outdir: Path, status: str, run: str, now: str, receipt: str = "") -> None:
     slug = outdir.name
     film_hash = validate_qc(repo, slug, outdir)
-    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, film_hash)
+    fingerprint = revision_fingerprint(repo, slug, outdir, film_hash)
+    previous = blocking_attempt(repo, LEDGER_COLUMN, slug, fingerprint)
     if status == "sending" and previous:
         raise SystemExit(f"{slug} 已有 {previous.get('status')} 发布记录，禁止盲目重发")
-    write_ledger(repo, LEDGER_COLUMN, slug, film_hash, status=status, run_url=run, now=now,
+    write_ledger(repo, LEDGER_COLUMN, slug, fingerprint, status=status, run_url=run, now=now,
                  receipt=receipt)
 
 
