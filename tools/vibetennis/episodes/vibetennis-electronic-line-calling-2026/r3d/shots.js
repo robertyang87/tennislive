@@ -197,3 +197,11 @@ add(300,301,(S,lt,d)=>{
   S.cam(S.V(S.LAND.x+0.25,0.42,S.LAND.z+2.2),S.V(S.LAND.x+0.05,0.95,S.LAND.z-3.0),52);
   S.proj('ball',S.ball.position); S.proj('land',S.LAND);
 });
+// ===== 封面 C（许先森风，t=302）：高空斜俯整座球场，12 道视线在将落地的球上汇聚 =====
+add(302,303,(S,lt,d)=>{
+  S.setCams(1,0.25); S.coneMat.uniforms.uOp.value=0.32; S.bloom.strength=1.05;
+  const tb=S.TB-0.06; S.setBall(tb,1,0.12,0.06);
+  S.camRigs.forEach(c=>S.setRay(c,S.ball.position.clone(),0.9));
+  S.hitFlare.position.copy(S.ball.position); S.hitFlare.material.opacity=0.7; S.hitFlare.scale.setScalar(2.2);
+  S.cam(S.V(-26,30,S.L+30),S.V(-1.0,0,S.L-6),40);
+});
