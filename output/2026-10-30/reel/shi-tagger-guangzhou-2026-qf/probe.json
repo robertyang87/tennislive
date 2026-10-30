@@ -1,5 +1,5 @@
 {
-  "url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407661187112",
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-6407661187112/6407661187112.mp4",
   "width": 1280,
   "height": 720,
   "duration": 353.985,
@@ -122,6 +122,43 @@
   "captions": null,
   "board": {
     "version": 1,
-    "error": "WTA board present but complete two-player body geometry is unmeasurable"
+    "fps": 5,
+    "t0": 0.0,
+    "frames": 25,
+    "source_window": [
+      0,
+      5
+    ],
+    "scans": [
+      {
+        "box": [
+          60,
+          579,
+          414,
+          653
+        ],
+        "frames": 25,
+        "profiles": {
+          "wta": {
+            "present": 25,
+            "unresolved": 0,
+            "runs": [
+              [
+                25,
+                378,
+                378
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "_scope": "实际0–5秒自定义框校准；不冒称全片通过。原生蒙版另逐段核验。"
+  },
+  "_original_probe_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407661187112",
+  "_same_bytes_verification": {
+    "original_sha256": "c68bd7376677ba3f2f52433af099563b0999a97b97b0eef29fb20e571962c4f2",
+    "archive_sha256": "c68bd7376677ba3f2f52433af099563b0999a97b97b0eef29fb20e571962c4f2",
+    "method": "完整下载官方Brightcove与Release，实际SHA256相等；原测量未改，仅存档URL映射。"
   }
 }

@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407661187112/6407661187112.mp4",
+  "source_sha256": "c68bd7376677ba3f2f52433af099563b0999a97b97b0eef29fb20e571962c4f2",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant：完整small.en/medium.en、局部medium复核及源记分条交叉；非真人听审。",
+  "reviewed_at": "2026-10-30T15:40:22.143346+00:00",
+  "reviewed_from": 114.1,
+  "reviewed_to": 118.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 114.36,
+      "end": 115.64,
+      "en": "Oh, what a backhand!",
+      "zh": "这一拍反手 太精彩了"
+    },
+    {
+      "start": 116.88,
+      "end": 118.28,
+      "en": "Just unleashes on the ball.",
+      "zh": "迎着来球 充分释放力量"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-recheck.json": "b2820833be74293b526d2b46c18e09106303d49a4caf5856fb00ebeacaeebf51",
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-medium.json": "f896be4a5ec0cd2c1c03060c210ff156cd3e693e7fbf1aca5abdbaac9348a1e2",
+    "data/evidence/shi-tagger-guangzhou-2026-qf/asr-small.json": "3923f51e0946216dcc1bbca28106540deac143c0c99034e675d54905e89eef5d"
+  },
+  "visual_window_note": "同一分结束后的完整两句原声，Oh what a backhand / Just unleashes on the ball；保留施晗近景握拳。",
+  "evidence": "完整两档与局部复核的可保留完整句；Tagger/Shi按官方拼写。95/101秒与212秒后半句不确定段未采用；317秒so仅一档且局部未复现，不作为检出语句。"
+}
