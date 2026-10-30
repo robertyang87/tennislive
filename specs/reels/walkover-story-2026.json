@@ -35,7 +35,9 @@
       "zoom": 1.0,
       "_credit": "自制签表图（代码绘制，制作目录 cover/make_cover_final_a2.py；1080×1440 原生画布，无外部图片素材）",
       "_portrait_why": "账号所有者 2026-10-30 定版 A2（同路径替换 A 版）：整幅官方签表语言——R16 八场全卡（16 人英文全名＋旗标＋真实比分，逐格抄 WTA 官方签表 PDF）连出 QF 四块全名单；Claire Liu 挂美国旗（此前误标中国旗已纠正），Xinran Sun 在 Liu 上方，Liu 卡比分位是放大的全称 Walkover；Sun–Liu 的 #3 组绿线为全场唯一高亮。真签表裁图 W1/W2 降为片中证据图（见 seg2/seg9）。"
-    }
+    },
+    "approved_image": "assets/reel/walkover-story-2026/cover-draft-a.png",
+    "_approved_by_user": "账号所有者 2026-10-30 定版 A2 自制签表封面（删逗号版已同步重渲入仓，本文件即定稿）：整幅海报已含 WALK OVER＋问句钩子烘焙字。render run 40950042912 验片发现 solo 模板会在图上再叠印 hook＋台头（三重渲染、白色叠印遮签表关键行），经主线按所有者授权改走 approved_image 直用定版图——片内封面与推送 poster.jpg 均为 A2 原图逐字节，不再二次排字。"
   },
   "push": {
     "auto": false,
@@ -83,7 +85,7 @@
     },
     "takeaway": {
       "close": {
-        "point": "省力不等于占便宜",
+        "point": "省力不等于躺赢",
         "ask": "一分没打就晋级，这条规矩该留吗？",
         "_why": "reel 线 spec 无 takeaway 字段先例（近 7 期故事 spec 均无；该结构属采访线，TAKEAWAY_MAX_CHARS=34）。此处按 spec 阶段预算先拟并自数：point 8 字＋ask 16 字＝24 字 ≤34，暂存 editorial 内备主线取用，未自创顶层字段。"
       }
@@ -109,7 +111,7 @@
     "sun": "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunpr02/wo26sunpr02.mp4",
     "tla": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlna01/wo26tmlna01.mp4",
     "tlb": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnb02/wo26tmlnb02.mp4",
-    "tlc": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnc02/wo26tmlnc02.mp4"
+    "tlc": "https://github.com/robertyang87/tennislive/releases/download/source-wo26tmlnc03/wo26tmlnc03.mp4"
   },
   "source_quality_exceptions": {
     "https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4": {
@@ -196,7 +198,7 @@
       "end": 21.5,
       "cx": 0.5,
       "track": false,
-      "narration": "隔壁场上，16 岁的孙心然这一场打了 2 小时 41 分钟。第二盘 4 比 5 落后，她叫了医疗暂停，包扎膝盖；到了决胜盘，绷带拆了硬撑，2 比 5 落后、对方手握赛点——她一分一分往回爬，抢七 7 比 3 拿下。终场哨响，她哭了。",
+      "narration": "隔壁场上，16 岁的孙心然这一场打了 2 小时 41 分钟。第二盘 4 比 5 落后，她叫了医疗暂停，缠好绷带；到了决胜盘，绷带拆了硬撑，2 比 5 落后、对方手握赛点——她一分一分往回爬，抢七 7 比 3 拿下。终场哨响，她哭了。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -224,7 +226,7 @@
       "end": 29.0,
       "cx": 0.5,
       "track": false,
-      "narration": "但 walkover 有一条硬线：必须是开打之前。只要打了哪怕一分再退，那叫退赛，要记比分、算胜负。刘婧文这种一分没打的，不算一场胜利，不进胜负记录，也不进两个人的交手记录。连胜纪录还会在这里断片：你正处在 19 连胜，中间收到一个 walkover，再赢一场，官方连胜是 20，不是 21——因为中间那一场，根本不存在。",
+      "narration": "但 walkover 有一条硬线：必须是开打之前。只要打了哪怕一分再退，那叫退赛，要记比分、算胜负。刘婧文这一场，一分没打。不算一场胜利，不进胜负记录，也不进两个人的交手记录。连胜纪录还会在这里断片：你正处在 19 连胜，中间收到一个 walkover，再赢一场，官方连胜是 20，不是 21——因为中间那一场，根本不存在。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -496,12 +498,12 @@
       "end": 43.5,
       "cx": 0.5,
       "track": false,
-      "narration": "而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于占便宜，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
+      "narration": "而退赛的人呢？费德勒 2014 年退掉总决赛决赛，整整一周后，戴维斯杯决赛：周五他带伤输了单打，周六双打赢了，周日直落三盘锁定胜局，帮瑞士拿到队史第一座戴维斯杯。当时被骂「留力」的一次退赛，七天后，成了布局。把这些样本摆在一起，收到 walkover 的人下一场是 3 胜 3 负。也有统计研究专门算过：walkover 对下一场，测不出任何正向或负向的影响。所以结论可能有点反直觉：省力不等于躺赢，没打比赛也不等于没状态。walkover 送走的，从来不是胜负，是确定性。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
-      "point_end_ok": "自制时间轴动画 v2（wo26tmlnc02）0–43.5s 整条入窗：无比赛回合可切；叙事版 c 段（费德勒反转＋收束定格）按旁白真 TTS 实测 41.21s 以 1.0 原速重产（余量 +2.3s），旧版 wo26tmlnc01＋speed 0.99 退役（speed 政策）。",
+      "point_end_ok": "自制时间轴动画 v3（wo26tmlnc03）0–43.5s 整条入窗：无比赛回合可切；叙事版 c 段（费德勒反转＋收束定格）按旁白真 TTS 实测 41.21s 以 1.0 原速排定（余量 +2.3s）。2026-10-30 金句换字版：收尾卡面与旁白定性句同步「省力不等于占便宜」→「省力不等于躺赢」（所有者定改法；原句「便」在 render run 40950042912 配音听审判 uncertain，按账号规则改稿避字）；与 v2 逐帧对照仅金句行变，其余拍像素级一致。旧版 wo26tmlnc02 退役。",
       "_why": "同上拆段第三段：钉叙事版 c（source-wo26tmlnc01，41.0s，存档 run 40935837484／ASR run 40936248613），旁白为原 seg15 句10–15（费德勒反转＋收束四句，238 字），拼接与原旁白逐字一致。视频流与本地 timeline-c.mp4 逐字节一致、仅补静音 AAC 轨；双档 ASR 落 data/source_asr/wo26tmlnc01/。"
     },
     {
