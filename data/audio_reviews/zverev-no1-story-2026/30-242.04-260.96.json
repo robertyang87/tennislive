@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-g_6522aZuv4/g_6522aZuv4.mp4",
+  "source_sha256": "730497a56d3237abd359bb4f39e5a4388dcc5b60e1dd9419a68122a41a6e7281",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-30T10:27:42+00:00",
+  "reviewed_from": 242.04,
+  "reviewed_to": 260.96,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 242.24,
+      "end": 244.94,
+      "en": "Very quickly — and at a Grand Slam, it took longer.",
+      "zh": "来得都很快，只有大满贯等得最久"
+    },
+    {
+      "start": 244.94,
+      "end": 247.14,
+      "en": "And now, no matter what happens —",
+      "zh": "而现在，无论发生什么"
+    },
+    {
+      "start": 247.14,
+      "end": 249.34,
+      "en": "I will always be a Grand Slam champion,",
+      "zh": "我永远都是大满贯冠军"
+    },
+    {
+      "start": 249.34,
+      "end": 251.18,
+      "en": "and nobody can take that away from me.",
+      "zh": "没人能把这个夺走"
+    },
+    {
+      "start": 251.18,
+      "end": 260.76,
+      "en": "And maybe that does give me some freedom.",
+      "zh": "也许，这反而给了我一种自由。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 730497a56d3237abd359bb4f39e5a4388dcc5b60e1dd9419a68122a41a6e7281，存于 data/source_asr/g_6522aZuv4/small.en.json 与 data/source_asr/g_6522aZuv4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
