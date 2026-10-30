@@ -205,5 +205,6 @@ add(302,303,(S,lt,d)=>{
   S.setBall(S.TB,1,0.16,0.06);
   S.camRigs.forEach(c=>S.setRay(c,S.ball.position.clone(),0.9));
   S.hitFlare.position.copy(S.LAND); S.hitFlare.material.opacity=0.55; S.hitFlare.scale.setScalar(1.2);
-  S.cam(S.V(-17,19,S.L+17),S.V(-1.3,0,S.L-2.5),38);
+  // 仿第 1 集：机位在近端底线后方正中、抬高，顺着球场纵向看，球场竖直居中
+  S.cam(S.V(0,24,S.L+19),S.V(0,0,S.L*0.18),42);
 });
