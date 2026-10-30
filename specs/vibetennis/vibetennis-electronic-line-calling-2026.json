@@ -1,6 +1,6 @@
 {
   "slug": "vibetennis-electronic-line-calling-2026",
-  "_status": "draft：证据链已按原文核过（ITF 28.1、Hawk-Eye 2016、Mather 2008、Cross 2014 手稿、Whitney 2008，摘录见 papers/vibetennis-electronic-line-calling-2026/sources.md）；3D 场景、音效、封面、成片都还没做；BGM 授权未定。",
+  "_status": "制作中：3D、字幕、音效、封面脚本已在 tools/vibetennis/episodes/vibetennis-electronic-line-calling-2026/；成片渲完过 qc.py 再走发布。BGM 授权未定，这一版只有合成音效。",
   "_column": "vibetennis：现在网球大多是电子司线了，它靠不靠谱？以使用最广的 Hawk-Eye 为例，讲清它怎么从十来台相机算出一个落点、ITF 的标准要它准到什么程度、它准在哪、不准在哪；以及为什么法网至今还在看球印。",
   "column": "vibetennis",
   "pipeline": "tools/vibetennis",
@@ -28,7 +28,7 @@
     "hook": "电子司线\n真的准吗？",
     "subject": "电子司线",
     "topic": "视觉科学 · 三角定位与误差",
-    "_why": "沿用第一集版式：蓝色底线特写，十来道相机射线从上方汇聚到一个落地的球，落点是一个压线的椭圆脚印，旁边一把毫米刻度尺。脚本还没写。 所有者 2026-10-30：现在不叫鹰眼了，都叫电子司线——观众看得到的字一律写「电子司线」，Hawk-Eye 只作厂商名留在出处里。"
+    "_why": "版式照第 1 集所有者审定的 v9：左上 logo＋网球时差、两行衬线问句「电子司线／真的准吗？」、一行英文灰字、单一 3D 场景（12 道相机视线汇聚到将落地的球上，渲染机位 r3d/shots.js 的 t=300）、底部白「回放里那个椭圆，」黄「不是拍下来的」＋灰字。观众看得到的字一律写「电子司线」，Hawk-Eye 只作厂商名（所有者 2026-10-30）。待所有者确认定稿（docs/vibetennis.md §6）。"
   },
   "push": {
     "auto": true,

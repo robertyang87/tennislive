@@ -1,7 +1,7 @@
 # vibetennis 第 2 集提纲：电子司线，真的准吗？
 
 状态：证据链已按原文核过，摘录见 `papers/vibetennis-electronic-line-calling-2026/sources.md`（ITF 28.1、Hawk-Eye 2016、Mather 2008、Cross 2014 手稿、Whitney 2008）。3D 场景、音效、封面都还没做。
-做完后把 spec 挪回 `specs/vibetennis/`：`test_vibetennis` 会要求封面脚本存在。
+spec 已挪回 `specs/vibetennis/`。画法调整：第 1 段「像玻璃一样碎开」在渲染里做成「回放冻结、故障闪烁、扫描线扫过、露出全息线框」。
 
 无旁白，字幕锚在画面里被讲到的东西旁边；时长约 3 分 55 秒，下表秒数是预估。每段末尾的钩子写进锚定字幕。
 
