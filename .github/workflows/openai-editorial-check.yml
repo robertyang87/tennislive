@@ -1,0 +1,64 @@
+name: OpenAI editorial check
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_path:
+        description: "Repository text/spec path; blank runs a fictional smoke test"
+        required: false
+        type: string
+      model:
+        description: "OpenAI model"
+        default: gpt-4.1-mini
+        type: string
+  push:
+    branches: [codex/openai-editorial-check-20261030]
+    paths: [.github/workflows/openai-editorial-check.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            specs
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate input and call OpenAI once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          REVIEW_INPUT: ${{ inputs.input_path }}
+          REVIEW_MODEL: ${{ inputs.model || 'gpt-4.1-mini' }}
+        run: |
+          python - <<'PY'
+          import os
+          import pathlib
+          import subprocess
+          import sys
+          cmd = [sys.executable, "tools/openai_editorial_check.py", "--model", os.environ["REVIEW_MODEL"]]
+          value = os.environ.get("REVIEW_INPUT", "").strip()
+          if value:
+              root = pathlib.Path("specs").resolve()
+              path = pathlib.Path(value).resolve()
+              if not path.is_relative_to(root) or not path.is_file():
+                  raise SystemExit("input_path must be an existing file under specs/")
+              cmd += ["--input", str(path)]
+          subprocess.run(cmd, check=True)
+          PY
+      - name: Upload review and token usage
+        uses: actions/upload-artifact@v4
+        with:
+          name: openai-editorial-review
+          path: openai-review/
+          if-no-files-found: error
+          retention-days: 7
