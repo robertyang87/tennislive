@@ -7278,6 +7278,13 @@ SHI_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
     "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407534173112": 720,
 }
 
+# 2026-10-30: owner approved this match's official WTA source: “可以用 720”.
+# The archive preserves the same Brightcove 6407657170112 bytes.
+SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6407657170112": 720,
+    "https://github.com/robertyang87/tennislive/releases/download/source-6407657170112/6407657170112.mp4": 720,
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -7287,6 +7294,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "sun-liu-guangzhou-2026-qf":
+                raise ReelError("source_quality_exceptions 此源授权仅限孙心然2026广州1/4决赛")
+            floor = SUN_LIU_GUANGZHOU_2026_LOW_RES_SOURCES[url]
         if url in NISHIKORI_FAREWELL_LOW_RES_SOURCES:
             if spec.get("slug") != "nishikori-career-farewell":
                 raise ReelError("source_quality_exceptions 此档案低清授权仅限锦织圭生涯告别影片")
