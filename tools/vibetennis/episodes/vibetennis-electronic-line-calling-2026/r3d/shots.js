@@ -51,7 +51,7 @@ add(28,35,(S,lt,d)=>{
 add(35,43,(S,lt,d)=>{
   S.eyes.visible=true; S.tennis.visible=false; S.rigGroup.visible=false; S['cones'].visible=false;
   const u=easeIO(lt/d); S.cam(S.V(lerp(0.46,0.36,u),300+lerp(0.16,0.12,u),lerp(0.34,0.24,u)),S.V(-0.02,299.97,-0.2),40);
-  S.eyeRays.forEach((r,i)=>r.material.opacity=0.9*ramp(lt,1.0+i*0.5,1.8+i*0.5)); S.eyeHit.material.opacity=ramp(lt,2.6,3.2);
+  S.eyeRays.forEach((r,i)=>r.material.opacity=0.35*ramp(lt,1.0+i*0.5,1.8+i*0.5)); S.eyeFlows.forEach((r,i)=>r.material.opacity=0.95*ramp(lt,1.0+i*0.5,1.8+i*0.5)); S.eyeHit.material.opacity=ramp(lt,2.6,3.2);
   S.proj('eyeL',S.V(-0.032,300,0)); S.proj('cup',S.cupP.clone().add(S.V(0,300.05,0))); fadeIO(S,lt,d,0.5,0.4);
 });
 add(43,60,(S,lt,d)=>{
@@ -61,7 +61,7 @@ add(43,60,(S,lt,d)=>{
   S.setBall(tb,1,freeze?0:0.08,0.06);
   // rays: 2 → 3 → all 12
   const nR=lt<2?2:(lt<3.5?3:12);
-  S.camRigs.forEach((c,i)=>{ const show=i<nR?ramp(lt,i<2?0.3:(i<3?2.0:3.5),(i<2?0.9:(i<3?2.5:4.4))):0; c.ray.visible=show>0.01; if(c.ray.visible){ S.setLine(c.ray,[c.p,S.ball.position.clone()]); c.ray.material.opacity=0.9*show*(freeze?1:Math.max(0.15,1-(lt-7.5)*0.4)); } });
+  S.camRigs.forEach((c,i)=>{ const show=i<nR?ramp(lt,i<2?0.3:(i<3?2.0:3.5),(i<2?0.9:(i<3?2.5:4.4))):0; S.setRay(c,S.ball.position.clone(),show*(freeze?1:Math.max(0.15,1-(lt-7.5)*0.4))); });
   S.hitFlare.position.copy(S.ball.position); S.hitFlare.material.opacity=freeze?ramp(lt,0.9,1.4)*1.2:0.6; S.hitFlare.scale.setScalar(1.6);
   if(!freeze){ const n=Math.min(frames,Math.floor((tb-0.0)/((S.TB)/frames))+1); const pts=[]; for(let i=0;i<n;i++) pts.push(S.traj(i*S.TB/frames)); S.ghostGroup&&0; S.setGhosts(pts,0.07,0.9); }
   else S.setGhosts([],0,0);
@@ -192,7 +192,7 @@ add(236,244.5,(S,lt,d)=>{
 add(300,301,(S,lt,d)=>{
   S.setCams(1,0); S.baseStripMat.opacity=0.9;
   const tb=S.TB-0.035; S.setBall(tb,1,0.10,0.05);
-  S.camRigs.forEach(c=>{ c.ray.visible=true; S.setLine(c.ray,[c.p,S.ball.position.clone()]); c.ray.material.opacity=0.75; });
+  S.camRigs.forEach(c=>S.setRay(c,S.ball.position.clone(),0.85));
   S.hitFlare.position.copy(S.ball.position); S.hitFlare.material.opacity=0.35; S.hitFlare.scale.setScalar(0.45);
   S.cam(S.V(S.LAND.x+0.25,0.42,S.LAND.z+2.2),S.V(S.LAND.x+0.05,0.95,S.LAND.z-3.0),52);
   S.proj('ball',S.ball.position); S.proj('land',S.LAND);

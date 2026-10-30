@@ -33,7 +33,7 @@ let seed=7654321; const rnd=()=>{seed=(seed*16807)%2147483647;return seed/214748
 const V=(x,y,z)=>new THREE.Vector3(x,y,z);
 
 // ---------- helpers ----------
-const lineMats=[];
+const lineMats=[]; const flowMats=[]; const eyeFlowMats=[];
 function lineMat(color,width,opacity,dashed=false,dash=1){
   const m=new LineMaterial({color,linewidth:width,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending,worldUnits:false,dashed,dashSize:dash,gapSize:dash*0.7});
   m.resolution.set(W,H); lineMats.push(m); return m;
@@ -123,22 +123,25 @@ for(const s of [-1,1]) for(const x of [-6.5,0,6.5]) CAMPOS.push(V(x,13,s*(L+14))
 for(const p of CAMPOS){ const g=new THREE.Group(); g.position.copy(p); rigGroup.add(g);
   const box=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.55,1.2),new THREE.MeshBasicMaterial({color:0x1a2b4a})); g.add(box);
   const edge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.7,0.55,1.2)),new THREE.LineBasicMaterial({color:CYAN,transparent:true,opacity:1})); g.add(edge);
-  const lens=glowSprite(CYAN,2.4); lens.position.z=-0.75; g.add(lens);
+  // 相机是被动拍摄、不发光的：只在机身顶部留一个小状态灯，不画镜头光晕（所有者 2026-10-30 指出光晕不符合事实）
+  const lens=glowSprite(CYAN,0.32); lens.position.set(0,0.34,0.45); g.add(lens);
   const tgt=V(p.x*0.15,0,p.z*0.15); g.lookAt(tgt); g.rotateY(Math.PI); // box -z faces target after flip
   // frustum (towards its half of the court)
   const fr=new THREE.Group(); scene.add(fr); const cn=[]; const dir=tgt.clone().sub(p).normalize(); const side=new THREE.Vector3().crossVectors(dir,V(0,1,0)).normalize();
   for(const [a,b] of [[-1,-1],[1,-1],[1,1],[-1,1]]){ const q=tgt.clone().add(side.clone().multiplyScalar(a*9)).add(dir.clone().multiplyScalar(b*7)); q.y=0; cn.push(q); fatLine([p,q],CYAN,1.0,0.28,fr); }
   fatLine([...cn,cn[0]],CYAN,1.0,0.22,fr);
-  const ray=fatLine([p,p.clone().add(V(0,-1,0))],GOLD,1.8,0.0);
-  camRigs.push({g,p,edge,lens,box,fr,ray,on:1});
+  // 视线：一条淡的实线＋一串从球流向镜头的光点（光是从球进到相机里，不是相机往外射）
+  const ray=fatLine([p,p.clone().add(V(0,-1,0))],GOLD,1.2,0.0); const flow=fatLine([p,p.clone().add(V(0,-1,0))],GOLD,2.6,0.0,scene,true,0.5); flowMats.push(flow.material);
+  camRigs.push({g,p,edge,lens,box,fr,ray,flow,on:1});
 }
-function setCams(on,frustum=0,rays=0){ camRigs.forEach((c,i)=>{ const o=typeof on==='function'?on(i):on; c.g.visible=o>0.001; c.lens.material.opacity=o; c.edge.material.opacity=o; c.fr.visible=frustum>0.001&&o>0.001; c.fr.children.forEach(l=>l.material.opacity=0.28*frustum*o); c.ray.visible=false; c.on=o; }); }
+function setCams(on,frustum=0,rays=0){ camRigs.forEach((c,i)=>{ const o=typeof on==='function'?on(i):on; c.g.visible=o>0.001; c.lens.material.opacity=o; c.edge.material.opacity=o; c.fr.visible=frustum>0.001&&o>0.001; c.fr.children.forEach(l=>l.material.opacity=0.28*frustum*o); c.ray.visible=false; c.flow.visible=false; c.on=o; }); }
+function setRay(c,ballPos,op){ c.ray.visible=c.flow.visible=op>0.01; if(op<=0.01) return; setLine(c.ray,[ballPos,c.p]); setLine(c.flow,[ballPos,c.p]); c.ray.material.opacity=0.35*op; c.flow.material.opacity=0.95*op; }
 // 6 foot-fault cameras: low, looking along the baselines & centre marks
 const ffGroup=new THREE.Group(); scene.add(ffGroup); const ffRays=[];
 for(const s of [-1,1]) for(const x of [-DW-2.2,0,DW+2.2]){
   const p=V(x,0.6,s*(L+(x===0?5.5:1.2))); const g=new THREE.Group(); g.position.copy(p); ffGroup.add(g);
   g.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.45,0.35,0.7)),new THREE.LineBasicMaterial({color:GOLD})));
-  const s2=glowSprite(GOLD,1.2); g.add(s2);
+  const s2=glowSprite(GOLD,0.3); s2.position.y=0.25; g.add(s2);
   const tgt=x===0?V(0,0,s*L):V(-Math.sign(x)*SW*0.6,0,s*L); ffRays.push(fatLine([p,tgt],GOLD,1.4,0.6,ffGroup));
 }
 const booth=new THREE.Group(); ffGroup.add(booth); booth.position.set(-DW-12,4,L+10);
@@ -190,7 +193,8 @@ const eyeBalls=[]; for(const x of [-0.032,0.032]){ const e=new THREE.Group(); e.
 const cupP=V(0.0,-0.06,-0.45); const cup=new THREE.Group(); cup.position.copy(cupP); eyes.add(cup);
 { const pts=[]; for(let i=0;i<=32;i++){const a=i/32*Math.PI*2; pts.push(V(0.035*Math.cos(a),0.05,0.035*Math.sin(a)));} fatLine(pts,WHITE,2,0.8,cup); const pb=[]; for(let i=0;i<=32;i++){const a=i/32*Math.PI*2; pb.push(V(0.028*Math.cos(a),-0.05,0.028*Math.sin(a)));} fatLine(pb,WHITE,2,0.8,cup);
   for(const a of [0,Math.PI/2,Math.PI,Math.PI*1.5]) fatLine([V(0.035*Math.cos(a),0.05,0.035*Math.sin(a)),V(0.028*Math.cos(a),-0.05,0.028*Math.sin(a))],WHITE,1.5,0.6,cup); }
-const eyeRays=eyeBalls.map(e=>fatLine([e.position.clone(),cupP.clone().add(V(0,0.05,0))],GOLD,2,0.9,eyes));
+const eyeRays=eyeBalls.map(e=>fatLine([cupP.clone().add(V(0,0.05,0)),e.position.clone()],GOLD,1.4,0.9,eyes));
+const eyeFlows=eyeBalls.map(e=>{ const l=fatLine([cupP.clone().add(V(0,0.05,0)),e.position.clone()],GOLD,2.6,0,eyes,true,0.025); eyeFlowMats.push(l.material); return l; });
 const eyeHit=glowSprite(GOLD,0.06); eyeHit.position.copy(cupP).add(V(0,0.05,0)); eyes.add(eyeHit);
 
 // ================= LAB (centimetres, at y=1000) =================
@@ -295,7 +299,7 @@ function proj(name,v,group){ const w=v.clone(); if(group) group.localToWorld(w);
 const val=(n,v)=>{anchors[n]=v;};
 function cam(pos,tgt,fov,up){ camera.up.set(...(up||[0,1,0])); camera.position.copy(pos); camera.fov=fov; camera.lookAt(tgt); camera.updateProjectionMatrix(); camera.updateMatrixWorld(true); }
 const STATE={THREE,scene,camera,cam,V,L,DW,SW,BR,LAND,TB,TE,R,traj,setBall,setGhosts,ghosts,trajLine,setLine,hitFlare,replayFoot,replayFootRim,surfMat,baseStripMat,courtLines,tennis,
-  camRigs,CAMPOS,setCams,rigGroup,ffGroup,ffRays,booth,btn,umpGlow,ljChair,chairs,eyes,eyeRays,eyeHit,cupP,lab,groundU,labBall,labBallU,fuzz,fuzzTouch,contactRing,sysEllipse,markTrue,inspect,ruler,bump,pathA,pathB,dotA,dotB,
+  camRigs,CAMPOS,setCams,setRay,eyeFlows,rigGroup,ffGroup,ffRays,booth,btn,umpGlow,ljChair,chairs,eyes,eyeRays,eyeHit,cupP,lab,groundU,labBall,labBallU,fuzz,fuzzTouch,contactRing,sysEllipse,markTrue,inspect,ruler,bump,pathA,pathB,dotA,dotB,
   strobe,strobeBalls,strobeGap,bloom,finalPass,gridMat,coneMat,cones,tBowl,proj,val,ball,ballGlow,ballCore,glowSprite,GOLD,CYAN,WHITE,BALLC};
 function hideAll(){
   for(const o of [ffGroup,eyes,lab,chairs,ghostGroup,strobe,ruler,bump]) o.visible=false;
@@ -307,12 +311,13 @@ function hideAll(){
   labBallU.uFloor.value=-R-1; labBallU.uBulge.value=0; labBallU.uOp.value=1; labBall.visible=true; labBall.position.set(0,R,0); fuzz.visible=true; fuzz.position.set(0,R,0); fuzz.material.uniforms.uOp.value=0.9; fuzzTouch.material.opacity=0;
   contactRing.material.opacity=0; sysEllipse.material.opacity=0; markTrue.forEach(m=>m.material.opacity=0); inspect.material.opacity=0;
   pathA.material.opacity=0; pathB.material.opacity=0; dotA.material.opacity=0; dotB.material.opacity=0; strobeGap.forEach(l=>l.material.opacity=0);
-  eyeRays.forEach(r=>r.material.opacity=0); eyeHit.material.opacity=0; btn.material.opacity=1; ffRays.forEach(r=>r.material.opacity=0.6);
+  eyeRays.forEach(r=>r.material.opacity=0); eyeFlows.forEach(r=>r.material.opacity=0); eyeHit.material.opacity=0; btn.material.opacity=1; ffRays.forEach(r=>r.material.opacity=0.6);
 }
 window.renderAt=function(t){
   for(const k in anchors) delete anchors[k];
   hideAll(); scene.fog.density=0.0018; gridMat.uniforms.uOp.value=1; coneMat.uniforms.uOp.value=0.2;
   const fp=finalPass.uniforms; fp.uT.value=t; fp.uFlash.value=0; fp.uFade.value=1; fp.uGlitch.value=0; fp.uScan.value=-1; fp.uTV.value=0; bloom.strength=0.85;
+  for(const m of flowMats) m.dashOffset=-t*7.0; for(const m of eyeFlowMats) m.dashOffset=-t*0.35;
   let shot=SHOTS[SHOTS.length-1]; for(const s of SHOTS){ if(t>=s.t0 && t<s.t1){ shot=s; break; } }
   const lt=t-shot.t0, d=shot.t1-shot.t0;
   shot.fn(STATE,lt,d,t);

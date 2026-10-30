@@ -141,3 +141,10 @@ https://www.cnbc.com/2023/09/09/how-sonys-hawk-eye-works-at-the-us-open.html
 - ⚠️ 同文写全赛共 204 台相机、17 块场地：17 × 12 = 204，与 17 × 18 = 306 对不上（这是所有者的推算，原文没解释）。片中不写「每块场地 18 台」，不做总数推演
 - 脚误怎么判、有没有挑战：CNBC 没写。脚误流程仍只有 Tennisnet 林茨一篇
 - 340 fps：Sony 厂商说明（up to）＋ CNBC 美网陈述，两处原文
+
+## 15. Cosmos Magazine：Paul Connolly《Order in the court》（2021-02-10；所有者经 Wayback 快照逐字核过）
+> "Hawk-Eye's website says its 'ultra-motion cameras' operate at 340 fps"
+- 340 fps 的出处链：Hawk-Eye 官网（经 Cosmos 转述）→ Sony「up to 340」→ CNBC 美网「track the ball at 340 frames per second」
+- ⚠️ 同句里「160 km/h 的球两帧间飞 12.3 cm」算错了：44.4 m/s ÷ 340 ≈ 13.1 cm。不引用；片中的 16 cm 是按 200 km/h 自己算的
+- ⚠️ 这是挑战时代的文章（每场 10 台、每盘 3 次不成功挑战），只用来坐实 340 的出处，别的不引
+- 旁证：它提到 ITF 校验用 2000 fps 高速相机，与 Cross 2014 所述当年 ITF 测试 2000 fps 一致
