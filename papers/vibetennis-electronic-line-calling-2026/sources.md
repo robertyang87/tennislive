@@ -117,3 +117,13 @@ https://www.itftennis.com/en/about-us/tennis-tech/classified-elc-systems/
 
 ## 11. BBC Sport：温网控制室（所有者转来的原句，待与温网官网原文对账）
 > "There is a line-calling hub inside Wimbledon's grounds, where 50 operators use 144 screens to monitor the ball-tracking footage from 12 cameras on each court."
+
+## 12. Tennisnet：Hawk-Eye Live 的相机与脚误（2020-11-06，WTA 林茨站；所有者在浏览器逐字核过）
+https://www.tennisnet.com/en/news/wta-linz-for-the-first-time-hawk-eye-live-at-an-all-women-tournament
+> "Twelve high-speed cameras for ball tracking determine whether balls are 'in' or 'out'."
+> "An additional six 'Foot Fault' cameras check the base and center line"
+> "When he presses a button, the electronic 'Foot Fault' call occurs."
+- 脚误：6 台相机盯底线和中线，画面给场外复核官员，由人判断、按按钮触发电子喊声——「机器看、人来判」，不是全自动
+- 12 + 6 = 18 出自这一篇原文本身，不需要另找总数出处
+- ⚠️ 范围：这是 2020 年林茨站的配置。温网 2025 的脚误流程没有原文，片中写「以 Hawk-Eye Live 的公开介绍为例」
+- ACM（cacmb4.acm.org/news/246601）读不到：Cloudflare 522，新站搜不到，不作出处
