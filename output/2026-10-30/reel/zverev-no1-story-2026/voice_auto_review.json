@@ -1,0 +1,1659 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "9eb7a2b160c5fa1fc4b12c9c12bbd15ed261890beb3551cb5285025979fb46de",
+    "render_inputs_sha256": "58badcfc8d2f1af6147c7f803db7a396cf1e2b221e410ea38d5aad7d1e91de99",
+    "spec_sha256": "20c95b40f143f104a200f36e0f309589548f301dc67902d057950ac4b97709d1",
+    "film_sha256": "dc4279b4cf3cd56f8c0144cc81689ab064fad69fec3abbe92b2cc92f66cd6c6f",
+    "inventory_sha256": "90c67f482a4bfa6ad9eddeafeed32f1324841a5587cecb11b166a906639e509f"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-30T11:36:19+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:047423cc963ecfc676b229b10cd83309bb3561d3dcd7cc7030020ec432548cab",
+      "audio_sha256": "62e4b7f6427bc4281c088981474318f523e49bdaf3a0e73a8bad1e14d22c07cc",
+      "pass": true,
+      "result_of": "bundle:047423cc963ecfc676b229b10cd83309bb3561d3dcd7cc7030020ec432548cab"
+    },
+    {
+      "id": "bundle:0c05b113dabee738575c0490c7e033474e508bc226d7e6f4ba0bfcf41e7b039a",
+      "audio_sha256": "91ba0cc52004d0c7573f929d669a9328291759d0917c6312d74460655bbbe991",
+      "pass": true,
+      "result_of": "bundle:0c05b113dabee738575c0490c7e033474e508bc226d7e6f4ba0bfcf41e7b039a"
+    },
+    {
+      "id": "bundle:1d72aa3e4c1673434f6f718a750e313659bfc86b17981292f0b1f30f893439b1",
+      "audio_sha256": "f62d8f0b12a2981d2cfb0ef2c58a9daa9c3339106901f67758cc4d17d99a0632",
+      "pass": true,
+      "result_of": "bundle:1d72aa3e4c1673434f6f718a750e313659bfc86b17981292f0b1f30f893439b1"
+    },
+    {
+      "id": "bundle:1fc817da66c70ffe8a007340a88a4df34218b6074c757f62cb6a0c552919ab16",
+      "audio_sha256": "24008f1ba1c93cfaf3943c45041b469abb30e5348386b31d417ec99d8aa8027f",
+      "pass": true,
+      "result_of": "bundle:1fc817da66c70ffe8a007340a88a4df34218b6074c757f62cb6a0c552919ab16"
+    },
+    {
+      "id": "bundle:2454c063bd094acb1ae77e41e9717eaaebe7dd565bb8f98e9c55409cedc39f3b",
+      "audio_sha256": "5cc94ea1b1f0cd34278c23bd9089f058646bfa2f6fe48b0dbfd32521c9250b27",
+      "pass": true,
+      "result_of": "bundle:2454c063bd094acb1ae77e41e9717eaaebe7dd565bb8f98e9c55409cedc39f3b"
+    },
+    {
+      "id": "bundle:26465e59ab80cb88a36a6279663a96f284761cf45ee05ec20f1b29ac422e4fca",
+      "audio_sha256": "f16a0a03576c26207cd95da5794534bc4c85f9269ec6234fb1e77f1f40ce379a",
+      "pass": true,
+      "result_of": "bundle:26465e59ab80cb88a36a6279663a96f284761cf45ee05ec20f1b29ac422e4fca"
+    },
+    {
+      "id": "bundle:499a82f9f61bb20fceaff6b2d0c34596bad21d8adff716987445681ca9307d54",
+      "audio_sha256": "c25eb35f025409ea8cdf27ce0b750b7aacb3d74a184f33064d0bc7cf99c754a1",
+      "pass": true,
+      "result_of": "bundle:499a82f9f61bb20fceaff6b2d0c34596bad21d8adff716987445681ca9307d54"
+    },
+    {
+      "id": "bundle:4ab5be9cb7af427866089ed8f756691849305f95e5c8c812a80ddd3edac8b20f",
+      "audio_sha256": "decce5ffbead29a9179b833674764dbaaf2abdf2be29c8aed7ccb137de0448ab",
+      "pass": true,
+      "result_of": "bundle:4ab5be9cb7af427866089ed8f756691849305f95e5c8c812a80ddd3edac8b20f"
+    },
+    {
+      "id": "bundle:64a4c60e5a733be1ccbc8acd21e2cd1bd3f6cb570365e40f61bb4d53685b14b5",
+      "audio_sha256": "a00274206580188c839655299b6a3c54923e81cd29fbe3dcb764851003d576fb",
+      "pass": true,
+      "result_of": "bundle:64a4c60e5a733be1ccbc8acd21e2cd1bd3f6cb570365e40f61bb4d53685b14b5"
+    },
+    {
+      "id": "bundle:71c080ffc59cea6c2af654a82dc9961067bab5e3b9d13fbf4e53f27f02d9ebe4",
+      "audio_sha256": "39f3906abfd60f26b1aaa4bb03d2dc241ee1978ffe1d2664f7d0dab25febbdf5",
+      "pass": true,
+      "result_of": "bundle:71c080ffc59cea6c2af654a82dc9961067bab5e3b9d13fbf4e53f27f02d9ebe4"
+    },
+    {
+      "id": "bundle:7a86a6ab0e3ece2b5afb3c3ee7f3e073c43957652a0dde1e3ee9ae9a187d2058",
+      "audio_sha256": "1548bbeabeac5739a116cc5647da42e2c733e67070692de7c7511780ecf3d6cc",
+      "pass": true,
+      "result_of": "bundle:7a86a6ab0e3ece2b5afb3c3ee7f3e073c43957652a0dde1e3ee9ae9a187d2058"
+    },
+    {
+      "id": "bundle:8e9ce29e279de0244b05030635ada4bf6e2eb21b473b48025a3451b39f34de9c",
+      "audio_sha256": "2469066069242896a54b4570c89d8c4a6a9726eabae936a10340cec987853296",
+      "pass": true,
+      "result_of": "bundle:8e9ce29e279de0244b05030635ada4bf6e2eb21b473b48025a3451b39f34de9c"
+    },
+    {
+      "id": "bundle:8f6cef2f05e0d87e1f1de7663ed63a77f6db358b9b921ebb0a320ed8e1f3c3d3",
+      "audio_sha256": "ee08f2a1000d9d0f9f2352a295176f59c014cb8378620864f6420297ebb972a3",
+      "pass": true,
+      "result_of": "bundle:8f6cef2f05e0d87e1f1de7663ed63a77f6db358b9b921ebb0a320ed8e1f3c3d3"
+    },
+    {
+      "id": "bundle:9a52cc0bea428c6c4781256b882f6694613f27e52793cb054ec9309a20f77480",
+      "audio_sha256": "31e18858b9f5a145a0ba0d3ed5d67460e19d40fac5489f78ba6347f67afd4109",
+      "pass": true,
+      "result_of": "bundle:9a52cc0bea428c6c4781256b882f6694613f27e52793cb054ec9309a20f77480"
+    },
+    {
+      "id": "bundle:9aa0bb94ec79652ef14881c05a8dfd39878f741abe8efe818e1cfc26e3e78c77",
+      "audio_sha256": "ef2d49e55bf3190684a34cad0018bbcee228843a1153f1a2e1895a99c2491a8f",
+      "pass": true,
+      "result_of": "bundle:9aa0bb94ec79652ef14881c05a8dfd39878f741abe8efe818e1cfc26e3e78c77"
+    },
+    {
+      "id": "bundle:a557e3268705ac06214eb1cd0ad337cf01bbea782e25d2fd23dc275dd554b02b",
+      "audio_sha256": "722ec60d20f9fcc1a67faca3ba1e1a02fc327e81646152a9523481960af9161b",
+      "pass": true,
+      "result_of": "bundle:a557e3268705ac06214eb1cd0ad337cf01bbea782e25d2fd23dc275dd554b02b"
+    },
+    {
+      "id": "bundle:a967dec0b9ec9b604b886817972ed2b406e36168f5ade43dd5f73356cb0c30cb",
+      "audio_sha256": "4a9eb9b0e535e811219395c265e7d19e36ac40854b8629552888d318f3362a26",
+      "pass": true,
+      "result_of": "bundle:a967dec0b9ec9b604b886817972ed2b406e36168f5ade43dd5f73356cb0c30cb"
+    },
+    {
+      "id": "bundle:abe5f478c4a916831e26b35f73067e0ba2af4119e18b0fce8aa70f1e9bed73d8",
+      "audio_sha256": "f0c068fd60a086f6bebdeceac51ddb5dc2532d39cd7fc1bc565706f6ec0b1bb2",
+      "pass": true,
+      "result_of": "bundle:abe5f478c4a916831e26b35f73067e0ba2af4119e18b0fce8aa70f1e9bed73d8"
+    },
+    {
+      "id": "bundle:ad1223895a68b5ccc18b09adb9c3776ce61df6a90c39dfa6c28cd925a105620b",
+      "audio_sha256": "eadff0a7d8ee068bb2f4dedb9d5f82175e91a820385f88e065123709fa45eafe",
+      "pass": true,
+      "result_of": "bundle:ad1223895a68b5ccc18b09adb9c3776ce61df6a90c39dfa6c28cd925a105620b"
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "audio_sha256": "eacb577c623a5937ba7a39d6597a15de28cb3b5c1a6a20d4746582ee5b9b63e5",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    },
+    {
+      "id": "bundle:bba3349961dcaeebc9b2373836c89fa8f9f0febb6e9f8383c1daa75b9c66c181",
+      "audio_sha256": "9f7db4eaea606128db070c2f6e48fcd807f3dc02c8f8c6b48d32e93bc1199d86",
+      "pass": true,
+      "result_of": "bundle:bba3349961dcaeebc9b2373836c89fa8f9f0febb6e9f8383c1daa75b9c66c181"
+    },
+    {
+      "id": "bundle:c16c45299489221f007a6f587790ddc288bce9b09189ca7a4a023c35d7d0e6f4",
+      "audio_sha256": "714fdb7b98d0b4b0951cdfb4f9fc15025ad52353f0f15c33e207abeab78f8f0d",
+      "pass": true,
+      "result_of": "bundle:c16c45299489221f007a6f587790ddc288bce9b09189ca7a4a023c35d7d0e6f4"
+    },
+    {
+      "id": "bundle:dbd8b3d6e8ec62b03e8d72c5133474a0deb2ab6f15d52bdaa7cb2258402268b8",
+      "audio_sha256": "792469d430f49a21bce9ae4ae966f74003043b52cb12a73f471f5fecfad034a5",
+      "pass": true,
+      "result_of": "bundle:dbd8b3d6e8ec62b03e8d72c5133474a0deb2ab6f15d52bdaa7cb2258402268b8"
+    },
+    {
+      "id": "bundle:dde9ce209ccf82a27d3361c6df18c39ff9a195c1c8b2fc4539f50cad9de8dcb8",
+      "audio_sha256": "024fd1031d851dbbc3ec7a3fa790d68aa2ba4aea3deb42a4d953f36b2f98dc6f",
+      "pass": true,
+      "result_of": "bundle:dde9ce209ccf82a27d3361c6df18c39ff9a195c1c8b2fc4539f50cad9de8dcb8"
+    },
+    {
+      "id": "bundle:e25a93bb9bd85c4f75987fa9b5037605248d2d8d1adc5de6198a619cef71fac8",
+      "audio_sha256": "d43b1aad81996fa09b3a9f0c27637350ac2179c95811ad58de9b80435c854776",
+      "pass": true,
+      "result_of": "bundle:e25a93bb9bd85c4f75987fa9b5037605248d2d8d1adc5de6198a619cef71fac8"
+    },
+    {
+      "id": "bundle:e3828341f03321b9afb8f996a95fcf6fae72f8dcaac2582440a611008e7c4c07",
+      "audio_sha256": "0f3c2a5d2e79b24e5bb5fa4473394504648e5803bb629d57d631aa84d1f6e11c",
+      "pass": true,
+      "result_of": "bundle:e3828341f03321b9afb8f996a95fcf6fae72f8dcaac2582440a611008e7c4c07"
+    },
+    {
+      "id": "bundle:ef3df02269cdf827acd62c45c28432ef30efa0ffb1969057cd79d210e55cae6f",
+      "audio_sha256": "f24c960af3cedf1075b262eda8a77f7f5a8d7ed7861c8512f3a9284aa1680a28",
+      "pass": true,
+      "result_of": "bundle:ef3df02269cdf827acd62c45c28432ef30efa0ffb1969057cd79d210e55cae6f"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "decce5ffbead29a9179b833674764dbaaf2abdf2be29c8aed7ccb137de0448ab",
+      "pass": true,
+      "result_of": "bundle:4ab5be9cb7af427866089ed8f756691849305f95e5c8c812a80ddd3edac8b20f"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "f16a0a03576c26207cd95da5794534bc4c85f9269ec6234fb1e77f1f40ce379a",
+      "pass": true,
+      "result_of": "bundle:26465e59ab80cb88a36a6279663a96f284761cf45ee05ec20f1b29ac422e4fca"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "a00274206580188c839655299b6a3c54923e81cd29fbe3dcb764851003d576fb",
+      "pass": true,
+      "result_of": "bundle:64a4c60e5a733be1ccbc8acd21e2cd1bd3f6cb570365e40f61bb4d53685b14b5"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "9f7db4eaea606128db070c2f6e48fcd807f3dc02c8f8c6b48d32e93bc1199d86",
+      "pass": true,
+      "result_of": "bundle:bba3349961dcaeebc9b2373836c89fa8f9f0febb6e9f8383c1daa75b9c66c181"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "1548bbeabeac5739a116cc5647da42e2c733e67070692de7c7511780ecf3d6cc",
+      "pass": true,
+      "result_of": "bundle:7a86a6ab0e3ece2b5afb3c3ee7f3e073c43957652a0dde1e3ee9ae9a187d2058"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "31e18858b9f5a145a0ba0d3ed5d67460e19d40fac5489f78ba6347f67afd4109",
+      "pass": true,
+      "result_of": "bundle:9a52cc0bea428c6c4781256b882f6694613f27e52793cb054ec9309a20f77480"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "722ec60d20f9fcc1a67faca3ba1e1a02fc327e81646152a9523481960af9161b",
+      "pass": true,
+      "result_of": "bundle:a557e3268705ac06214eb1cd0ad337cf01bbea782e25d2fd23dc275dd554b02b"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "ee08f2a1000d9d0f9f2352a295176f59c014cb8378620864f6420297ebb972a3",
+      "pass": true,
+      "result_of": "bundle:8f6cef2f05e0d87e1f1de7663ed63a77f6db358b9b921ebb0a320ed8e1f3c3d3"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "91ba0cc52004d0c7573f929d669a9328291759d0917c6312d74460655bbbe991",
+      "pass": true,
+      "result_of": "bundle:0c05b113dabee738575c0490c7e033474e508bc226d7e6f4ba0bfcf41e7b039a"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "d43b1aad81996fa09b3a9f0c27637350ac2179c95811ad58de9b80435c854776",
+      "pass": true,
+      "result_of": "bundle:e25a93bb9bd85c4f75987fa9b5037605248d2d8d1adc5de6198a619cef71fac8"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "2469066069242896a54b4570c89d8c4a6a9726eabae936a10340cec987853296",
+      "pass": true,
+      "result_of": "bundle:8e9ce29e279de0244b05030635ada4bf6e2eb21b473b48025a3451b39f34de9c"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "792469d430f49a21bce9ae4ae966f74003043b52cb12a73f471f5fecfad034a5",
+      "pass": true,
+      "result_of": "bundle:dbd8b3d6e8ec62b03e8d72c5133474a0deb2ab6f15d52bdaa7cb2258402268b8"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "714fdb7b98d0b4b0951cdfb4f9fc15025ad52353f0f15c33e207abeab78f8f0d",
+      "pass": true,
+      "result_of": "bundle:c16c45299489221f007a6f587790ddc288bce9b09189ca7a4a023c35d7d0e6f4"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "5cc94ea1b1f0cd34278c23bd9089f058646bfa2f6fe48b0dbfd32521c9250b27",
+      "pass": true,
+      "result_of": "bundle:2454c063bd094acb1ae77e41e9717eaaebe7dd565bb8f98e9c55409cedc39f3b"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "24008f1ba1c93cfaf3943c45041b469abb30e5348386b31d417ec99d8aa8027f",
+      "pass": true,
+      "result_of": "bundle:1fc817da66c70ffe8a007340a88a4df34218b6074c757f62cb6a0c552919ab16"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "f62d8f0b12a2981d2cfb0ef2c58a9daa9c3339106901f67758cc4d17d99a0632",
+      "pass": true,
+      "result_of": "bundle:1d72aa3e4c1673434f6f718a750e313659bfc86b17981292f0b1f30f893439b1"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "c25eb35f025409ea8cdf27ce0b750b7aacb3d74a184f33064d0bc7cf99c754a1",
+      "pass": true,
+      "result_of": "bundle:499a82f9f61bb20fceaff6b2d0c34596bad21d8adff716987445681ca9307d54"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "0f3c2a5d2e79b24e5bb5fa4473394504648e5803bb629d57d631aa84d1f6e11c",
+      "pass": true,
+      "result_of": "bundle:e3828341f03321b9afb8f996a95fcf6fae72f8dcaac2582440a611008e7c4c07"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "4a9eb9b0e535e811219395c265e7d19e36ac40854b8629552888d318f3362a26",
+      "pass": true,
+      "result_of": "bundle:a967dec0b9ec9b604b886817972ed2b406e36168f5ade43dd5f73356cb0c30cb"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "eadff0a7d8ee068bb2f4dedb9d5f82175e91a820385f88e065123709fa45eafe",
+      "pass": true,
+      "result_of": "bundle:ad1223895a68b5ccc18b09adb9c3776ce61df6a90c39dfa6c28cd925a105620b"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "f24c960af3cedf1075b262eda8a77f7f5a8d7ed7861c8512f3a9284aa1680a28",
+      "pass": true,
+      "result_of": "bundle:ef3df02269cdf827acd62c45c28432ef30efa0ffb1969057cd79d210e55cae6f"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "ef2d49e55bf3190684a34cad0018bbcee228843a1153f1a2e1895a99c2491a8f",
+      "pass": true,
+      "result_of": "bundle:9aa0bb94ec79652ef14881c05a8dfd39878f741abe8efe818e1cfc26e3e78c77"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "f0c068fd60a086f6bebdeceac51ddb5dc2532d39cd7fc1bc565706f6ec0b1bb2",
+      "pass": true,
+      "result_of": "bundle:abe5f478c4a916831e26b35f73067e0ba2af4119e18b0fce8aa70f1e9bed73d8"
+    },
+    {
+      "id": "voice_28.mp3",
+      "audio_sha256": "024fd1031d851dbbc3ec7a3fa790d68aa2ba4aea3deb42a4d953f36b2f98dc6f",
+      "pass": true,
+      "result_of": "bundle:dde9ce209ccf82a27d3361c6df18c39ff9a195c1c8b2fc4539f50cad9de8dcb8"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "62e4b7f6427bc4281c088981474318f523e49bdaf3a0e73a8bad1e14d22c07cc",
+      "pass": true,
+      "result_of": "bundle:047423cc963ecfc676b229b10cd83309bb3561d3dcd7cc7030020ec432548cab"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "39f3906abfd60f26b1aaa4bb03d2dc241ee1978ffe1d2664f7d0dab25febbdf5",
+      "pass": true,
+      "result_of": "bundle:71c080ffc59cea6c2af654a82dc9961067bab5e3b9d13fbf4e53f27f02d9ebe4"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "eacb577c623a5937ba7a39d6597a15de28cb3b5c1a6a20d4746582ee5b9b63e5",
+      "pass": true,
+      "result_of": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:047423cc963ecfc676b229b10cd83309bb3561d3dcd7cc7030020ec432548cab",
+      "text": "所以最后，把问题留给你：四次决赛、三次失利、一次重伤、一百二十五场胜利——这个年终第一，是六年坚持熬出来的实力兑现，还是对手缺席的时代让位？你站哪边，评论区见。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 68,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以最后,把问题留给你,四次决赛,三次失利,以此重伤,一百二十五场胜利。这个年中第一,是六年坚持熬出来的实力对线,还是对手缺席的时代让位。你站哪边,评论区建。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "重",
+          "word": "重伤",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.409,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "仲众"
+        },
+        {
+          "index": 58,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.56,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 68,
+        "speech_s": 12.383,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 最后 ｜ 把 ｜ 问题 ｜ 留给 ｜ 你 ｜ 四次 ｜ 决赛 ｜ 三次 ｜ 失利 ｜ 一次 ｜ 重伤 ｜ 一百二十五场 ｜ 胜利 ｜ 这个 ｜ 年终 ｜ 第一 ｜ 是 ｜ 六年 ｜ 坚持 ｜ 熬 ｜ 出来 ｜ 的 ｜ 实力 ｜ 兑现 ｜ 还是 ｜ 对手 ｜ 缺席 ｜ 的 ｜ 时代 ｜ 让位 ｜ 你 ｜ 站 ｜ 哪边 ｜ 评论 ｜ 区 ｜ 见"
+      }
+    },
+    {
+      "id": "bundle:0c05b113dabee738575c0490c7e033474e508bc226d7e6f4ba0bfcf41e7b039a",
+      "text": "然后，剧本翻了：蒂姆连扳两盘，抢七锁定胜局。四小时零两分钟，兹维列夫把到手的冠军打了出去。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "然后,剧本翻了,地母连班两盘,抢妻所定胜局。四小时零两分钟,自为列夫把到手的冠军打得出去。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.083,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "然后 ｜ 剧本 ｜ 翻 ｜ 了 ｜ 蒂姆 ｜ 连 ｜ 扳 ｜ 两盘 ｜ 抢 ｜ 七 ｜ 锁定 ｜ 胜 ｜ 局 ｜ 四小时零两分钟 ｜ 兹维列夫 ｜ 把 ｜ 到手 ｜ 的 ｜ 冠军 ｜ 打 ｜ 了 ｜ 出去"
+      }
+    },
+    {
+      "id": "bundle:1d72aa3e4c1673434f6f718a750e313659bfc86b17981292f0b1f30f893439b1",
+      "text": "决胜盘五比四，又一次发球胜赛——又一次被破。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝声盘5比4,又一次发球胜赛,又一次被迫。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.39,
+        "cps": 5.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 五比四 ｜ 又 ｜ 一次 ｜ 发球 ｜ 胜 ｜ 赛 ｜ 又 ｜ 一次 ｜ 被 ｜ 破"
+      }
+    },
+    {
+      "id": "bundle:1fc817da66c70ffe8a007340a88a4df34218b6074c757f62cb6a0c552919ab16",
+      "text": "二零二六年的一月，同样的剧本差点又演一遍：澳网半决赛，他和阿尔卡拉斯打了五小时二十七分钟。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2026年的1月,同样的剧本差点又演一遍。澳网半决赛,他和阿尔卡拉斯打了5小时27分钟。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 7.055,
+        "cps": 5.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二六年 ｜ 的 ｜ 一月 ｜ 同样 ｜ 的 ｜ 剧本 ｜ 差点 ｜ 又 ｜ 演 ｜ 一遍 ｜ 澳 ｜ 网 ｜ 半决赛 ｜ 他 ｜ 和 ｜ 阿尔卡拉 ｜ 斯 ｜ 打 ｜ 了 ｜ 五小时二十七分钟"
+      }
+    },
+    {
+      "id": "bundle:2454c063bd094acb1ae77e41e9717eaaebe7dd565bb8f98e9c55409cedc39f3b",
+      "text": "二零二五年，墨尔本决赛对辛纳，对方全场没有送出一个破发点，直落三盘把他打回更衣室。三次大满贯决赛，三次亚军。奥运会金牌、总决赛冠军、大师赛冠军，他什么都有，只差这一座。「最强的无冕之王」——这句话从夸奖，慢慢变成了判决。而且面前只剩最后一级台阶：公开赛年代，只有伦德尔和穆雷，是以决赛四连败开局的。再输一次，他就要和这份名单并排站着。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 144,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "2025年,莫尔本决赛对新纳,对方全场没有送出一个破发点,直落三盘把他打回更衣室。三次大满冠决赛,三次亚军。奥运会金牌,总决赛冠军,大师赛冠军,他什么都有,只差这一座。最强的无眠之王,这句话从夸奖慢慢变成了判决。而且,面前只剩最后一期台阶,公开赛年代,只有伦德尔和穆雷是以决赛四连败开局的。再说一次,他就要和这份名单并排站着。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 30,
+          "char": "落",
+          "word": "直落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.328,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.306,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 144,
+        "speech_s": 29.513,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二五年 ｜ 墨尔本 ｜ 决赛 ｜ 对 ｜ 辛纳 ｜ 对方 ｜ 全场 ｜ 没有 ｜ 送 ｜ 出 ｜ 一个 ｜ 破发 ｜ 点 ｜ 直落 ｜ 三盘 ｜ 把 ｜ 他 ｜ 打 ｜ 回 ｜ 更衣室 ｜ 三次 ｜ 大满贯 ｜ 决赛 ｜ 三次 ｜ 亚军 ｜ 奥运会 ｜ 金牌 ｜ 总决赛 ｜ 冠军 ｜ 大师 ｜ 赛 ｜ 冠军 ｜ 他 ｜ 什么 ｜ 都 ｜ 有 ｜ 只 ｜ 差 ｜ 这 ｜ 一 ｜ 座 ｜ 最 ｜ 强 ｜ 的 ｜ 无冕之王 ｜ 这 ｜ 句 ｜ 话 ｜ 从 ｜ 夸奖 ｜ 慢慢 ｜ 变成 ｜ 了 ｜ 判决 ｜ 而且 ｜ 面前 ｜ 只 ｜ 剩 ｜ 最后 ｜ 一级 ｜ 台阶 ｜ 公开赛 ｜ 年代 ｜ 只有 ｜ 伦德尔 ｜ 和 ｜ 穆雷 ｜ 是 ｜ 以 ｜ 决赛 ｜ 四 ｜ 连 ｜ 败 ｜ 开局 ｜ 的 ｜ 再 ｜ 输 ｜ 一次 ｜ 他 ｜ 就要 ｜ 和 ｜ 这 ｜ 份 ｜ 名单 ｜ 并排 ｜ 站 ｜ 着"
+      }
+    },
+    {
+      "id": "bundle:26465e59ab80cb88a36a6279663a96f284761cf45ee05ec20f1b29ac422e4fca",
+      "text": "中间隔着的，是三次大满贯决赛失利，和整整一百二十五场胜利。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "中间隔着的是三次大满冠决赛失利和整整125场胜利。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 4.693,
+        "cps": 5.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "中间 ｜ 隔 ｜ 着 ｜ 的 ｜ 是 ｜ 三次 ｜ 大满贯 ｜ 决赛 ｜ 失利 ｜ 和 ｜ 整整 ｜ 一百二十五场 ｜ 胜利"
+      }
+    },
+    {
+      "id": "bundle:499a82f9f61bb20fceaff6b2d0c34596bad21d8adff716987445681ca9307d54",
+      "text": "半年后，巴黎。这一回，签表先替他让开了路：阿尔卡拉斯因伤缺席，辛纳第二轮爆冷出局，德约止步第三轮——他一路没碰上一个世界前十。决赛对科博利，他第四盘抢七三比一领先被翻盘，还抽了筋。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "半年后,巴黎,这一回,千表先替他让开了路,阿尔卡拉斯因伤缺席新纳第二轮暴冷出局,得约止步第三轮,他一路没碰上一个世界前史。绝在对科博利,他第四盘抢七三比一领先被翻盘,还抽了剑。"
+      },
+      "polyphones": [
+        {
+          "index": 85,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.268,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 15.233,
+        "cps": 5.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半年 ｜ 后 ｜ 巴黎 ｜ 这 ｜ 一 ｜ 回 ｜ 签表 ｜ 先 ｜ 替 ｜ 他 ｜ 让开 ｜ 了 ｜ 路 ｜ 阿尔卡拉 ｜ 斯 ｜ 因 ｜ 伤 ｜ 缺席 ｜ 辛纳 ｜ 第二轮 ｜ 爆冷 ｜ 出局 ｜ 德 ｜ 约 ｜ 止步 ｜ 第三轮 ｜ 他 ｜ 一路 ｜ 没 ｜ 碰 ｜ 上 ｜ 一个世界 ｜ 前十 ｜ 决赛 ｜ 对 ｜ 科博利 ｜ 他 ｜ 第四盘 ｜ 抢 ｜ 七 ｜ 三比一 ｜ 领先 ｜ 被 ｜ 翻盘 ｜ 还 ｜ 抽 ｜ 了 ｜ 筋"
+      }
+    },
+    {
+      "id": "bundle:4ab5be9cb7af427866089ed8f756691849305f95e5c8c812a80ddd3edac8b20f",
+      "text": "四年前，就在这片球场上，他坐着轮椅离开，不知道自己还能不能回来。四年后，他躺倒在同一片红土上——这一次，是以冠军的身份。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四年前,就在这片球场上,他坐着轮椅离开,不知道自己还能不能回来。四年后,他躺倒在同一片红土上,这一次是以冠军的身份。"
+      },
+      "polyphones": [
+        {
+          "index": 25,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.217,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.011,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四年 ｜ 前 ｜ 就 ｜ 在 ｜ 这 ｜ 片 ｜ 球场 ｜ 上 ｜ 他 ｜ 坐 ｜ 着 ｜ 轮椅 ｜ 离开 ｜ 不 ｜ 知道 ｜ 自己 ｜ 还 ｜ 能不能 ｜ 回来 ｜ 四年 ｜ 后 ｜ 他 ｜ 躺倒 ｜ 在 ｜ 同 ｜ 一片 ｜ 红土上 ｜ 这 ｜ 一次 ｜ 是 ｜ 以 ｜ 冠军 ｜ 的 ｜ 身份"
+      }
+    },
+    {
+      "id": "bundle:64a4c60e5a733be1ccbc8acd21e2cd1bd3f6cb570365e40f61bb4d53685b14b5",
+      "text": "就在这个十月，他把这一年收了个尾：上海，阿尔卡拉斯提前出局，年终世界第一提前锁定——他是德国网球史上第一位年终第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "就在这个10月,他把这一年收了各位,上海、阿尔卡拉斯提前出局,年中世界第一提前锁定,他是德国网球史上第一位年中第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 8.369,
+        "cps": 6.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "就 ｜ 在 ｜ 这个 ｜ 十月 ｜ 他 ｜ 把 ｜ 这 ｜ 一 ｜ 年 ｜ 收 ｜ 了 ｜ 个 ｜ 尾 ｜ 上海 ｜ 阿尔卡拉 ｜ 斯 ｜ 提前 ｜ 出局 ｜ 年终 ｜ 世界 ｜ 第一 ｜ 提前 ｜ 锁定 ｜ 他 ｜ 是 ｜ 德国 ｜ 网球 ｜ 史 ｜ 上 ｜ 第一位 ｜ 年终 ｜ 第一"
+      }
+    },
+    {
+      "id": "bundle:71c080ffc59cea6c2af654a82dc9961067bab5e3b9d13fbf4e53f27f02d9ebe4",
+      "text": "第四次决赛才捧杯，他凭什么一年封王？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第四次决赛才捧碑,他凭什么一年风亡?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 2.775,
+        "cps": 5.76,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第四次 ｜ 决赛 ｜ 才 ｜ 捧杯 ｜ 他 ｜ 凭 ｜ 什么 ｜ 一年 ｜ 封王"
+      }
+    },
+    {
+      "id": "bundle:7a86a6ab0e3ece2b5afb3c3ee7f3e073c43957652a0dde1e3ee9ae9a187d2058",
+      "text": "下周一，二十九岁的兹维列夫，名字后面将第一次缀上「世界第一」。以他的年龄首登榜首，五十二年来只有一个人比他更晚；而「第一次当上年终第一」这件事，他比阿加西的纪录还要老三天，是历史第一人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 81,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "下周一,29岁的自维列夫,名字后面将第一次坠上世界第一。以他的年龄首登榜首,52年来只有一个人比他更晚。而第一次当上年终第一这件事,他比阿加西的记录还要老三天,是历史第一人。"
+      },
+      "polyphones": [
+        {
+          "index": 80,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "misread",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "misread",
+              "score": -0.307,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 81,
+        "speech_s": 13.782,
+        "cps": 5.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "下周一 ｜ 二十九岁 ｜ 的 ｜ 兹维列夫 ｜ 名字 ｜ 后面 ｜ 将 ｜ 第一次 ｜ 缀 ｜ 上 ｜ 世界 ｜ 第一 ｜ 以 ｜ 他 ｜ 的 ｜ 年龄 ｜ 首 ｜ 登 ｜ 榜首 ｜ 五十二年 ｜ 来 ｜ 只有一个人 ｜ 比 ｜ 他 ｜ 更 ｜ 晚 ｜ 而 ｜ 第一次 ｜ 当 ｜ 上 ｜ 年终 ｜ 第一 ｜ 这 ｜ 件 ｜ 事 ｜ 他 ｜ 比 ｜ 阿加西 ｜ 的 ｜ 纪录 ｜ 还要 ｜ 老 ｜ 三天 ｜ 是 ｜ 历史 ｜ 第一 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:8e9ce29e279de0244b05030635ada4bf6e2eb21b473b48025a3451b39f34de9c",
+      "text": "二零二二年，巴黎半决赛，对面是纳达尔。三个多小时，第二盘还没打完，比分七比六、六比六。第二盘的最后一个球，他追一记正手，右脚踝在红土上拧成了不该有的角度。惨叫声里，他坐着轮椅离开了球场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 81,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2022年,巴黎半决赛,对面是纳达尔。三个多小时,第二盘还没打完,比分7比6,6比6。第二盘的最后一个球,他追一技正手,右脚怀在红土上凝成了不该有的角度。残教生理,他坐着轮椅离开了球场。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.525,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 81,
+        "speech_s": 15.583,
+        "cps": 5.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二二年 ｜ 巴黎 ｜ 半决赛 ｜ 对面 ｜ 是 ｜ 纳达尔 ｜ 三 ｜ 个 ｜ 多 ｜ 小时 ｜ 第二 ｜ 盘 ｜ 还 ｜ 没 ｜ 打 ｜ 完 ｜ 比分 ｜ 七比六 ｜ 六比六 ｜ 第二 ｜ 盘 ｜ 的 ｜ 最后 ｜ 一个 ｜ 球 ｜ 他 ｜ 追 ｜ 一 ｜ 记 ｜ 正手 ｜ 右脚踝 ｜ 在 ｜ 红土上 ｜ 拧成 ｜ 了 ｜ 不该 ｜ 有的 ｜ 角度 ｜ 惨叫 ｜ 声 ｜ 里 ｜ 他 ｜ 坐 ｜ 着 ｜ 轮椅 ｜ 离开 ｜ 了 ｜ 球场"
+      }
+    },
+    {
+      "id": "bundle:8f6cef2f05e0d87e1f1de7663ed63a77f6db358b9b921ebb0a320ed8e1f3c3d3",
+      "text": "他两盘在手，决胜盘打到五比三，迎来自己的发球胜赛局——离奖杯，只剩两分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.033,
+        "longest_deletion": 0,
+        "transcript": "他两盘在手,决胜盘达到5比3,迎来自己的发球胜赛局,离奖杯只剩2分。"
+      },
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.826,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 两盘 ｜ 在 ｜ 手 ｜ 决胜 ｜ 盘 ｜ 打 ｜ 到 ｜ 五比三 ｜ 迎来 ｜ 自己 ｜ 的 ｜ 发球 ｜ 胜 ｜ 赛 ｜ 局 ｜ 离 ｜ 奖杯 ｜ 只 ｜ 剩 ｜ 两分"
+      }
+    },
+    {
+      "id": "bundle:9a52cc0bea428c6c4781256b882f6694613f27e52793cb054ec9309a20f77480",
+      "text": "你可以说这个第一来得晚。但在他看来，它先得回答另一个问题：他到底配不配。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
+        "longest_deletion": 0,
+        "transcript": "你可以说这个第一来的网,但在他看来,他先得回答另一个问题,他到底配不配。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "得",
+          "word": "来得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": -0.127,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 20,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 5.604,
+        "cps": 5.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "你 ｜ 可以 ｜ 说 ｜ 这个 ｜ 第一 ｜ 来得 ｜ 晚 ｜ 但 ｜ 在 ｜ 他 ｜ 看来 ｜ 它 ｜ 先 ｜ 得 ｜ 回答 ｜ 另一个 ｜ 问题 ｜ 他 ｜ 到底 ｜ 配 ｜ 不配"
+      }
+    },
+    {
+      "id": "bundle:9aa0bb94ec79652ef14881c05a8dfd39878f741abe8efe818e1cfc26e3e78c77",
+      "text": "决赛，他三比一拿下谢尔顿。赛点兑现的那一刻，他甚至没意识到比赛已经结束，转身走回底线，准备接发球，几秒之后才反应过来：三十年了，德国人又一次在纽约捧杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 67,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛,他3比1拿下谢尔顿。赛点兑现的那一刻,他甚至没意识到比赛已经结束,转身走回底线,准备接发球,几秒之后才反应过来。30年了,德国人又一次在纽约捧碑。"
+      },
+      "polyphones": [
+        {
+          "index": 46,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 67,
+        "speech_s": 12.246,
+        "cps": 5.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 他 ｜ 三比一 ｜ 拿下 ｜ 谢尔顿 ｜ 赛点 ｜ 兑现 ｜ 的 ｜ 那 ｜ 一刻 ｜ 他 ｜ 甚至 ｜ 没 ｜ 意识到 ｜ 比赛 ｜ 已经 ｜ 结束 ｜ 转身 ｜ 走 ｜ 回 ｜ 底线 ｜ 准备 ｜ 接 ｜ 发球 ｜ 几秒 ｜ 之后 ｜ 才 ｜ 反应 ｜ 过来 ｜ 三十年 ｜ 了 ｜ 德国 ｜ 人 ｜ 又 ｜ 一次 ｜ 在 ｜ 纽约 ｜ 捧杯"
+      }
+    },
+    {
+      "id": "bundle:a557e3268705ac06214eb1cd0ad337cf01bbea782e25d2fd23dc275dd554b02b",
+      "text": "二零二零年，纽约，空荡荡的阿瑟·阿什球场。二十三岁的兹维列夫第一次站上大满贯决赛，对手蒂姆。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.025,
+        "longest_deletion": 0,
+        "transcript": "2020年纽约、空荡荡的阿瑟、阿世球场。23岁的自卫列夫,第一次站上大满冠决赛,对手地姆。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 7.775,
+        "cps": 5.14,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二零年 ｜ 纽约 ｜ 空荡荡 ｜ 的 ｜ 阿瑟 ｜ 阿什 ｜ 球场 ｜ 二十三岁 ｜ 的 ｜ 兹维列夫 ｜ 第一次 ｜ 站 ｜ 上 ｜ 大满贯 ｜ 决赛 ｜ 对手 ｜ 蒂姆"
+      }
+    },
+    {
+      "id": "bundle:a967dec0b9ec9b604b886817972ed2b406e36168f5ade43dd5f73356cb0c30cb",
+      "text": "这一胜，是他大满贯的第一百二十五场胜利——公开赛年代，没有人为了第一座奖杯，赢下过这么多场比赛。第四十一次参赛，他终于捧杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.019,
+        "longest_deletion": 0,
+        "transcript": "这一声,是他大蛮惯的第125场胜利,公开在年代,没有人为了第一座奖杯赢下过这么多场比赛。第41次参赛,他终于捧杯。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 9.555,
+        "cps": 5.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一 ｜ 胜 ｜ 是 ｜ 他 ｜ 大满贯 ｜ 的 ｜ 第一百二十五场 ｜ 胜利 ｜ 公开赛 ｜ 年代 ｜ 没有 ｜ 人 ｜ 为了 ｜ 第一座 ｜ 奖杯 ｜ 赢 ｜ 下 ｜ 过 ｜ 这么 ｜ 多 ｜ 场 ｜ 比赛 ｜ 第四十一 ｜ 次 ｜ 参赛 ｜ 他 ｜ 终于 ｜ 捧杯"
+      }
+    },
+    {
+      "id": "bundle:abe5f478c4a916831e26b35f73067e0ba2af4119e18b0fce8aa70f1e9bed73d8",
+      "text": "但账本的另一面，必须摊开：这一年，他对辛纳零胜五负，全年只从对方手里抢下一盘；法网夺冠，他没碰前十；年终第一，是在辛纳宣布赛季报销六天之后锁定的。质疑者说：这不是封王，是让位。而他的回答是……",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 82,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但账本的另一面必须摊开。这一年,他对辛纳灵圣武父全年只从对方手里抢下一盘,罚网夺冠,他没碰前十,年中第一,是在辛纳宣布赛季报销六天之后锁定的。质疑者说,这不是封王,是让位。而他的回答是。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 82,
+        "speech_s": 16.472,
+        "cps": 4.98,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 账本 ｜ 的 ｜ 另 ｜ 一面 ｜ 必须 ｜ 摊开 ｜ 这 ｜ 一 ｜ 年 ｜ 他 ｜ 对 ｜ 辛纳 ｜ 零 ｜ 胜 ｜ 五 ｜ 负 ｜ 全年 ｜ 只 ｜ 从 ｜ 对方 ｜ 手 ｜ 里 ｜ 抢 ｜ 下 ｜ 一 ｜ 盘 ｜ 法网 ｜ 夺冠 ｜ 他 ｜ 没 ｜ 碰 ｜ 前十 ｜ 年终 ｜ 第一 ｜ 是 ｜ 在 ｜ 辛纳 ｜ 宣布 ｜ 赛季 ｜ 报销 ｜ 六天 ｜ 之后 ｜ 锁定 ｜ 的 ｜ 质疑 ｜ 者 ｜ 说 ｜ 这 ｜ 不是 ｜ 封王 ｜ 是 ｜ 让位 ｜ 而 ｜ 他 ｜ 的 ｜ 回答 ｜ 是"
+      }
+    },
+    {
+      "id": "bundle:ad1223895a68b5ccc18b09adb9c3776ce61df6a90c39dfa6c28cd925a105620b",
+      "text": "故事到这里，本来已经够圆满。但今年还没完：温网，他职业生涯第一次打进决赛，先赢一盘，还是输给了辛纳。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "故事到这里本来已经够圆满,但今年还没晚,温网他职业生涯第一次打进决赛,先赢一盘还是输给了辛娜。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.32,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 42,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.654,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.157,
+        "cps": 5.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "故事 ｜ 到 ｜ 这里 ｜ 本来 ｜ 已经 ｜ 够 ｜ 圆满 ｜ 但 ｜ 今年 ｜ 还 ｜ 没完 ｜ 温网 ｜ 他 ｜ 职业 ｜ 生涯 ｜ 第一次 ｜ 打 ｜ 进 ｜ 决赛 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 还是 ｜ 输 ｜ 给 ｜ 了 ｜ 辛纳"
+      }
+    },
+    {
+      "id": "bundle:b6b701a1d35638907d942cc1327b9c71d0a6167b8365565fabd163c8f5ae1164",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.892,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bba3349961dcaeebc9b2373836c89fa8f9f0febb6e9f8383c1daa75b9c66c181",
+      "text": "维也纳，他用一场胜利把积分钉死。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "维也纳,他用一场胜利把积分盯死。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 2.574,
+        "cps": 5.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "维也纳 ｜ 他 ｜ 用 ｜ 一 ｜ 场 ｜ 胜利 ｜ 把 ｜ 积分 ｜ 钉 ｜ 死"
+      }
+    },
+    {
+      "id": "bundle:c16c45299489221f007a6f587790ddc288bce9b09189ca7a4a023c35d7d0e6f4",
+      "text": "可他真的一步一步打了回来。二零二四年，还是巴黎，决赛对阿尔卡拉斯，他一度两盘比一盘领先——然后又被连扳两盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可他真的一步一步打了回来。2024年,还是巴黎,决赛对阿尔卡拉斯,他一度两盘比一盘领先,然后又被连搬两盘。"
+      },
+      "polyphones": [
+        {
+          "index": 19,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.023,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 8.4,
+        "cps": 5.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 他 ｜ 真 ｜ 的 ｜ 一 ｜ 步 ｜ 一 ｜ 步 ｜ 打 ｜ 了 ｜ 回来 ｜ 二零二四年 ｜ 还是 ｜ 巴黎 ｜ 决赛 ｜ 对 ｜ 阿尔卡拉 ｜ 斯 ｜ 他 ｜ 一度 ｜ 两盘 ｜ 比 ｜ 一 ｜ 盘 ｜ 领先 ｜ 然后 ｜ 又 ｜ 被 ｜ 连 ｜ 扳 ｜ 两盘"
+      }
+    },
+    {
+      "id": "bundle:dbd8b3d6e8ec62b03e8d72c5133474a0deb2ab6f15d52bdaa7cb2258402268b8",
+      "text": "诊断结果：右脚踝三条外侧韧带全部撕裂，随即手术。秋季又查出骨水肿，整个赛季报销。七个月后他才重新站上赛场，而他自己的说法是：网球，又花了一年才找回来。那时没人再提二零二零年那句「站回来」——能站回来走路，已经算赢了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 93,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.011,
+        "longest_deletion": 0,
+        "transcript": "诊断结果,又缴怀三条外侧韧带全部撕裂,随即手术。秋季又查出骨髓肿,整个赛季报销。七个月后,他才重新站上赛场,而他自己的说法是,网球又花了一年才找回来。那时没人再提2020年那句站回来,能站回来走路,已经算赢了。"
+      },
+      "polyphones": [
+        {
+          "index": 46,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.317,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 93,
+        "speech_s": 18.665,
+        "cps": 4.98,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "诊断 ｜ 结果 ｜ 右 ｜ 脚踝 ｜ 三条 ｜ 外 ｜ 侧 ｜ 韧带 ｜ 全部 ｜ 撕裂 ｜ 随即 ｜ 手术 ｜ 秋季 ｜ 又 ｜ 查出 ｜ 骨 ｜ 水肿 ｜ 整个 ｜ 赛季 ｜ 报销 ｜ 七个月 ｜ 后 ｜ 他 ｜ 才 ｜ 重新 ｜ 站 ｜ 上 ｜ 赛场 ｜ 而 ｜ 他 ｜ 自己 ｜ 的 ｜ 说法 ｜ 是 ｜ 网球 ｜ 又 ｜ 花 ｜ 了 ｜ 一年 ｜ 才 ｜ 找 ｜ 回来 ｜ 那时 ｜ 没 ｜ 人 ｜ 再 ｜ 提 ｜ 二零二零年 ｜ 那 ｜ 句 ｜ 站 ｜ 回来 ｜ 能 ｜ 站 ｜ 回来 ｜ 走路 ｜ 已经 ｜ 算 ｜ 赢 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:dde9ce209ccf82a27d3361c6df18c39ff9a195c1c8b2fc4539f50cad9de8dcb8",
+      "text": "他说，他想和最强的人同场竞技，哪怕今年被对方赢了五次。这个月，巴黎和都灵还在等他——这个「第一」的成色，接下来三周，还得他自己一场一场验。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 58,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 1,
+        "transcript": "他说,他想和最强的人同场竞技,哪怕今年被对方赢了五次。这个月,巴黎和都林还在等他,这个低的成色,接下来三周还得他自己一场一场宴。"
+      },
+      "polyphones": [
+        {
+          "index": 36,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.159,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 58,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.049,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 59,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 58,
+        "speech_s": 10.572,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "他 ｜ 说 ｜ 他 ｜ 想 ｜ 和 ｜ 最 ｜ 强 ｜ 的 ｜ 人 ｜ 同 ｜ 场 ｜ 竞技 ｜ 哪怕 ｜ 今年 ｜ 被 ｜ 对方 ｜ 赢 ｜ 了 ｜ 五次 ｜ 这个 ｜ 月 ｜ 巴黎 ｜ 和 ｜ 都灵 ｜ 还 ｜ 在 ｜ 等 ｜ 他 ｜ 这个 ｜ 第一 ｜ 的 ｜ 成色 ｜ 接下来 ｜ 三周 ｜ 还 ｜ 得 ｜ 他 ｜ 自己 ｜ 一 ｜ 场 ｜ 一 ｜ 场 ｜ 验"
+      }
+    },
+    {
+      "id": "bundle:e25a93bb9bd85c4f75987fa9b5037605248d2d8d1adc5de6198a619cef71fac8",
+      "text": "那年他说，自己总有一天会站回来。没人想到，这一天要等六年；更没人想到，等他的先是一张轮椅。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那年他说自己总有一天会站回来,没人想到这一天要等六年更没人想到等他的先是一张轮椅。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.786,
+        "cps": 5.01,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 年 ｜ 他 ｜ 说 ｜ 自己 ｜ 总有一天 ｜ 会 ｜ 站 ｜ 回来 ｜ 没 ｜ 人 ｜ 想到 ｜ 这 ｜ 一天 ｜ 要 ｜ 等 ｜ 六年 ｜ 更 ｜ 没 ｜ 人 ｜ 想到 ｜ 等 ｜ 他 ｜ 的 ｜ 先是 ｜ 一 ｜ 张 ｜ 轮椅"
+      }
+    },
+    {
+      "id": "bundle:e3828341f03321b9afb8f996a95fcf6fae72f8dcaac2582440a611008e7c4c07",
+      "text": "决胜盘，他六比一收官。冠军点落地，他倒在红土上，久久没有起来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 26,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决胜盘,他6比1收关,冠军点落地,他倒在红土上,久久没有起来。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "落",
+          "word": "落地",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.861,
+              "confidence": "high",
+              "near": "intended"
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.833,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 26,
+        "speech_s": 5.646,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 他 ｜ 六比一 ｜ 收官 ｜ 冠军 ｜ 点 ｜ 落地 ｜ 他 ｜ 倒在 ｜ 红土上 ｜ 久久 ｜ 没有 ｜ 起来"
+      }
+    },
+    {
+      "id": "bundle:ef3df02269cdf827acd62c45c28432ef30efa0ffb1969057cd79d210e55cae6f",
+      "text": "两个月后在纽约，他成了头号种子——辛纳因膝伤提前结束了赛季。首轮，他离出局只差两分；次轮，他打满五盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "两个月后在纽约,他成了头号种子,新纳因西商提前结束了赛季。首轮,他离出局只差两分,次轮,他打满五盘。"
+      },
+      "polyphones": [
+        {
+          "index": 13,
+          "char": "种",
+          "word": "种子",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.422,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 9.174,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "两个月 ｜ 后 ｜ 在 ｜ 纽约 ｜ 他 ｜ 成 ｜ 了 ｜ 头号 ｜ 种子 ｜ 辛纳 ｜ 因 ｜ 膝 ｜ 伤 ｜ 提前 ｜ 结束 ｜ 了 ｜ 赛季 ｜ 首轮 ｜ 他 ｜ 离 ｜ 出局 ｜ 只 ｜ 差 ｜ 两分 ｜ 次 ｜ 轮 ｜ 他 ｜ 打 ｜ 满 ｜ 五盘"
+      }
+    }
+  ]
+}
