@@ -1,0 +1,73 @@
+{
+  "slug": "vibetennis-electronic-line-calling-2026",
+  "_status": "draft：选题、证据链和镜头提纲已写；3D 场景、音效、封面、成片都还没做；BGM 授权未定。几份一手文件（ITF 认证程序、Hawk-Eye 原理说明、Cross 2014 原文）不在本会话网络名单里，渲染前要读原文核数。",
+  "_column": "vibetennis：现在网球都是电子司线了，它靠不靠谱？讲清它怎么从十来台相机算出一个落点、平均误差 3.6 毫米是什么意思、它准在哪、不准在哪。",
+  "column": "vibetennis",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "outro_seconds": 0,
+    "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），沿用第一集的片内收束卡。",
+    "captions": "anchored",
+    "narration": "none",
+    "audio": {
+      "music": "待定",
+      "_music_why": "第一集那首版权未核；先只做音效版，BGM 等所有者定。",
+      "sfx": "复用 sfx.py 的击球/弹地/扫描/快门音，按画面事件对齐"
+    }
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-electronic-line-calling-2026/cover/make_cover.py",
+    "hook": "鹰眼判的界内\n真的准吗？",
+    "subject": "电子司线",
+    "topic": "视觉科学 · 三角定位与误差",
+    "_why": "沿用第一集版式：蓝色底线特写，十来道相机射线从上方汇聚到一个落地的球，落点是一个压线的椭圆脚印，旁边一把毫米刻度尺。脚本还没写。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "鹰眼准吗",
+    "lead": "回放里那个压线的椭圆，不是照片，是算出来的：十来台相机各拍一帧找到球心，三角定位成 3D 轨迹，再推算球落地时压扁、滑出来的脚印。厂商说平均误差约 3.6 毫米——比人眼准一个数量级，但“界内 1 毫米”已经比它的平均误差还小。"
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "现在都是电子司线了，它到底靠不靠谱？",
+    "thesis": "电子司线不拍「落地那一下」，而是算出来的：每片场地十来台标定好的相机逐帧找球心，多台交会三角定位出 3D 位置，连成轨迹后推算落地点，再按球的压扁和滑行推出一个椭圆脚印，脚印碰到线就是界内。厂商给的平均误差约 3.6 毫米（2000 年代 ITF 用贴地高速相机对照测得），ITF 认证同时考平均误差和最大误差。它比人眼准一个数量级（Mather 2008：人的定位不确定度在 40 毫米以内），但有三处要知道：平均误差不等于每一球的误差，厂商不公布最大误差；脚印是从空中轨迹推出来的，不是量出来的（Cross 2014）；真正出过的大错往往不在算法——2025 温网有一局系统被操作员误关。",
+    "beats": [
+      "钩子：回放里那个压线的椭圆，是拍下来的吗？不是，是算出来的",
+      "相机：每片场地十来台相机，各自逐帧找到球心（2D）",
+      "三角定位：多条视线交会成一个 3D 点；一帧一个点，连成轨迹",
+      "脚印：球落地会压扁、往前滑，轨迹推出一个约 10 厘米长的椭圆，碰线即界内",
+      "精度：平均误差约 3.6 毫米；人眼约 40 毫米——差一个数量级",
+      "不完美：平均≠每一球；脚印靠推算；光影和风会影响相机",
+      "真出事：2025 温网系统被误关一局，赛后取消了关机功能",
+      "收束：它不是绝对正确，只是比任何人都更不容易错"
+    ],
+    "sources": [
+      "Hawk-Eye Innovations (2016). Electronic Line Calling Technology: How it works（resources.platform.pulselive.com）",
+      "ITF (2025/2026). Electronic Line-Calling Systems: Evaluation Procedures, Revision 28 / 28.1；ITF 2025-07 金银铜分级公告",
+      "R. Cross (2014). The footprint of a tennis ball. Sports Engineering 17: 239–247",
+      "G. Mather (2008). Perceptual uncertainty and line-call challenges in professional tennis. Proc. R. Soc. B 275: 1645–1651",
+      "AELTC / Sky Sports / AP（2025-07-06）：温网中央球场 Pavlyuchenkova vs Kartal 一局电子司线被误关",
+      "ATP（2023-04）：2025 年起巡回赛全面使用电子司线；AELTC（2024-10-09）：温网 2025 取消人工司线"
+    ],
+    "_claims": {
+      "原理（2D球心→三角定位→轨迹→落地脚印）": "Hawk-Eye 2016 原理说明的原句（经搜索摘要转引）与 Global Tennis Network、Wikipedia 一致；原 PDF 本会话打不开",
+      "相机数": "来源不一：Wikipedia「最多十台」、Al Jazeera 报温网「每片场 12 台」、另有 18 台（含 6 台看脚误）的说法。片中写「十来台」，不押具体数",
+      "帧率": "没有官方数字（博客说 150 fps 未核）——片中不写",
+      "3.6 mm": "Hawk-Eye 自述平均误差，对照贴地高速相机测得；另有文件写 2.6 mm／2006 年、有报道称后来 2.2 mm，均未核实原文。片中写「约 3.6 毫米（厂商数据）」",
+      "ITF 考平均和最大误差": "ITF 2025 第 28 版程序的搜索摘要；具体毫米门槛没读到，片中不写门槛数",
+      "脚印约 10 厘米、竖直落地接触直径约 42 mm、Hawk-Eye 椭圆约 126 mm": "Cross 2014 的搜索摘要，原文未读；片中只用「约 10 厘米长的椭圆」，渲染前读原文",
+      "人眼 <40 mm": "Mather 2008 摘要",
+      "2025 温网误关": "Sky Sports、AP 转载多家一致：误关一局（AP 有一篇说三分），赛后道歉并取消操作员关机权限（CNN 报道）",
+      "⚠️ 不说的": "不说「鹰眼会出错 X%」——没有可靠的逐球误差统计；不说「比人准 10 倍」这种精确倍数，只说「一个数量级」"
+    },
+    "_assumptions": "相机位置、射线、脚印形状为示意；椭圆尺寸按 Cross 2014 的典型值画，不是某一球的实测。"
+  }
+}
