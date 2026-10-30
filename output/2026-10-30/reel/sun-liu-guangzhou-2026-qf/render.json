@@ -1,19 +1,19 @@
 {
-  "scoreboard_qc_sha256": "f4f70d86e35c03cb907723441a1e0b38dfdcfd2122a984d0ccdb794db26a52d4",
+  "scoreboard_qc_sha256": "fa9522abe165c2ffe3da3802a2865de75fe79085229b5b9695518444a6090392",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "06783673f2988bf32b489e9ff302ce6e32c17fa9be70192acd3da3d396e6c30b",
+    "bundle_sha256": "4fce1cb5cd974d991f0657e4539470ed88f1d278ffd30eca9d0d95dc8d5a1558",
     "request_count": 13,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-sun-liu-guangzhou-2026-qf-06783673f2988bf3",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-liu-guangzhou-2026-qf-06783673f2988bf3/tts_bundle.zip",
+    "release_tag": "reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sun-liu-guangzhou-2026-qf-4fce1cb5cd974d99/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41060346519"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41064149536"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -31,7 +31,7 @@
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
   "narration_seconds": {
-    "1": 10.152,
+    "1": 10.512,
     "2": 6.048,
     "4": 7.248,
     "6": 7.056,
@@ -84,44 +84,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "7203c3795335b572a7df52226f71c1d70dd6c68b31e51bbf169a64d364e73b29",
+  "render_inputs_sha256": "6fd361cddc710d96da95a7a031e311ec228aaa7ab2f80e9cfc7d8a3807b22fad",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "sun-liu-guangzhou-2026-qf",
-    "received_at": "2026-10-30T13:05:29Z",
-    "artifact_ready_at": "2026-10-30T13:13:39Z",
-    "elapsed_seconds": 490.602,
+    "received_at": "2026-10-30T13:32:57Z",
+    "artifact_ready_at": "2026-10-30T13:39:37Z",
+    "elapsed_seconds": 400.979,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "169a8e36b60ace44b376cc58c818f63424f4dc186fa94402730a37d8cac3798d",
-    "spec_sha256": "411d076c670b8669d512bac2db784773e71aa374885965ef1a794e29f679006f",
-    "run_id": "41060346519",
+    "film_sha256": "22afbb6f023e26c59e7fef54bda0eac4bcc90102b67a1ce2b754df0af0a7db67",
+    "spec_sha256": "d25a852aa940f75889fc6f70004d82215c2fbefc192af1f7bb6766d1537b78e3",
+    "run_id": "41064149536",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-30T13:08:09Z",
-        "run_id": "41060346519"
+        "at": "2026-10-30T13:35:37Z",
+        "run_id": "41064149536"
       }
     ],
-    "render_seconds": 330.602,
+    "render_seconds": 240.979,
     "pre_render_seconds": 160.0
   },
-  "film_sha256": "169a8e36b60ace44b376cc58c818f63424f4dc186fa94402730a37d8cac3798d",
-  "film_bytes": 78288205,
-  "qc_attestation_sha256": "387fda7d8b02c242da9df8db6c8c16143361716efd8e672300d5fa99bce08138",
+  "film_sha256": "22afbb6f023e26c59e7fef54bda0eac4bcc90102b67a1ce2b754df0af0a7db67",
+  "film_bytes": 78293664,
+  "qc_attestation_sha256": "acad76a80e972081cdec73994fc6c8a1f4eadc997cb99abd9e5e3951435e132b",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-30T13:08:09Z",
-      "run_id": "41060346519"
+      "at": "2026-10-30T13:35:37Z",
+      "run_id": "41064149536"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-30T13:13:43Z",
-      "run_id": "41060346519"
+      "at": "2026-10-30T13:39:41Z",
+      "run_id": "41064149536"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sun-liu-guangzhou-2026-qf/sun-liu-guangzhou-2026-qf.mp4",
-  "video_bytes": 78288205
+  "video_bytes": 78293664
 }
