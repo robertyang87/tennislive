@@ -127,3 +127,8 @@ https://www.tennisnet.com/en/news/wta-linz-for-the-first-time-hawk-eye-live-at-a
 - 12 + 6 = 18 出自这一篇原文本身，不需要另找总数出处
 - ⚠️ 范围：这是 2020 年林茨站的配置。温网 2025 的脚误流程没有原文，片中写「以 Hawk-Eye Live 的公开介绍为例」
 - ACM（cacmb4.acm.org/news/246601）读不到：Cloudflare 522，新站搜不到，不作出处
+
+## 13. 温网 2025 没有挑战、不用回放（BBC Sport 2025-07 事故后续报道；BBC 原站读不到，所有者在三份独立全文转载里逐字对过：Accra Street Journal、MyJoyOnline 的 BBC 原稿存档、Bashk）
+> "There are no challenges under the current system and video replays are not used."
+- 备用：TNT Sports 赛事期间报道 "There is also not an option for players to challenge calls."
+- 主裁介入：见第 10 节事故声明（系统故障时停赛商议、该分重打）
