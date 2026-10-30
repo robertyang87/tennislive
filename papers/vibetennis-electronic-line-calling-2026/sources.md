@@ -57,3 +57,8 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC2652013/
 ## 没读到的
 - Cross (2014) The footprint of a tennis ball：researchgate 403，Springer 不在放行名单。「脚印约 10 cm、渲染椭圆约 12.6 cm、偏向判 IN」这些说法**不用**。
 - Mather (2008)：royalsocietypublishing.org 不在放行名单。「人眼约 4 cm」**不用**。
+
+## 4. 补充（2026-10-30 自查时加的，均为新闻报道，非一手文件）
+- 法网 2026 仍保留人工司线、看红土球印，是四大满贯里唯一的：Sky Sports（2025-09）、Arab News、SuperSport；赛事总监 Mauresmo「The machine is not 100% reliable」见 AP 转载（WTOP / TSN / theScore，2026-06）。Ruud–Fonseca 那一分各家说法不一，不用。
+- FoxTenn 自称用贴地高速相机＋激光扫描直接拍落地瞬间，不靠轨迹推算（WTA 官网 2018、Scroll.in 2019，都是厂商口径；相机数、帧率各报道不一）。
+- Whitney 2008 原文另两句：「a ball that lands on a line, even a tiny fraction of the line, is still considered in play」；「In the 2007 Wimbledon championship, there were over 140 player challenges, and more than 25% of these resulted in overturned calls」。
