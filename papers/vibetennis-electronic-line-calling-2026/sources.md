@@ -115,7 +115,7 @@ https://www.itftennis.com/en/about-us/tennis-tech/classified-elc-systems/
 - 片中口径：系统被误关一局，其间三个判罚没被系统接住，前两个由主裁自己判，第三个停赛商议后重打；赛后取消了操作员手动关闭的权限。重打结果不写
 - 球员：Anastasia Pavlyuchenkova（帕夫柳琴科娃）vs Sonay Kartal（卡尔塔尔，英国）
 
-## 11. BBC Sport：温网控制室（所有者转来的原句，待与温网官网原文对账）
+## 11. BBC Sport：温网控制室（所有者转来的原句；温网官网原文已下线，出处挂 BBC）
 > "There is a line-calling hub inside Wimbledon's grounds, where 50 operators use 144 screens to monitor the ball-tracking footage from 12 cameras on each court."
 
 ## 12. Tennisnet：Hawk-Eye Live 的相机与脚误（2020-11-06，WTA 林茨站；所有者在浏览器逐字核过）
@@ -148,3 +148,8 @@ https://www.cnbc.com/2023/09/09/how-sonys-hawk-eye-works-at-the-us-open.html
 - ⚠️ 同句里「160 km/h 的球两帧间飞 12.3 cm」算错了：44.4 m/s ÷ 340 ≈ 13.1 cm。不引用；片中的 16 cm 是按 200 km/h 自己算的
 - ⚠️ 这是挑战时代的文章（每场 10 台、每盘 3 次不成功挑战），只用来坐实 340 的出处，别的不引
 - 旁证：它提到 ITF 校验用 2000 fps 高速相机，与 Cross 2014 所述当年 ITF 测试 2000 fps 一致
+
+## 16. 温网官网《The precision operation》（2025-07-03）已下线——出处改挂 BBC，另有两家佐证（所有者 2026-10-30 查）
+- 原链接现在 302 跳到新闻首页；页面当年是前端渲染，Wayback 四份快照与葡萄牙国家档案 Arquivo（2025-07-07）正文字数都是 0，接口无存档，Common Crawl 无抓取
+- 《每日电讯报》赛事报道：50 人团队、控制室名 "Ball Traffic Control"、每块场地 12 台相机；NZ Herald：50 名操作员、每场 12 台
+- 结论：「每块场地 12 台、50 名操作员」= BBC ＋ 电讯报 ＋ NZ Herald 三方一致；「144 块屏幕」只有 BBC
