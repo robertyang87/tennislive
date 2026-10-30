@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6407657170112/6407657170112.mp4",
+  "source_sha256": "ae2d327a4201c134dd77f351dc5dc02fc0abae2329d2ec5d8a60c208eb6fe672",
+  "method": "asr_cross_checked",
+  "reviewer": "current_assistant：完整small.en/medium.en和定点medium.en词级结果，逐句交叉核对及中译；不声称真人听审。",
+  "reviewed_at": "2026-10-30T13:04:12.533428+00:00",
+  "reviewed_from": 247.2,
+  "reviewed_to": 286.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 253.58,
+      "end": 255.9,
+      "en": "Still can't get it done.",
+      "zh": "还是没能拿下"
+    },
+    {
+      "start": 259.54,
+      "end": 262.1,
+      "en": "Another set point saved.",
+      "zh": "又救回一个盘点"
+    },
+    {
+      "start": 266.58,
+      "end": 268.38,
+      "en": "Drops just wide.",
+      "zh": "落点 稍稍出了边线"
+    },
+    {
+      "start": 282.84,
+      "end": 284.64,
+      "en": "Oh, my!",
+      "zh": "太惊人了"
+    }
+  ],
+  "corpus_sha256": {
+    "data/evidence/sun-liu-guangzhou-2026-qf/source-asr-small.json": "b89b0ce59f3118ce5d87bc9dbdabeb14457b51f990be5640041610dc46650c69",
+    "data/evidence/sun-liu-guangzhou-2026-qf/source-asr-medium.json": "74e192d1c63c3e377eb8fc7c4c6b026595dda7fbc174a916139c91f18ebf7e77",
+    "data/evidence/sun-liu-guangzhou-2026-qf/source-asr-recheck.json": "8df637a01f82556cf4981bcbfead09eb8d5f23fd728177ad87a6590a12ba880b"
+  },
+  "evidence": "同字节实际源完整small/medium两档与定点medium复核；规范官方球员Sun；原声完整句逐句保留及中译，解说之外不将体能/伤病意见写为旁白事实。",
+  "visual_window_note": "5-6长局多次接发占先，逐点回到平分，末尾完成保发后的反应；六个盘点均在本局，逐分与源记分条互证。"
+}
