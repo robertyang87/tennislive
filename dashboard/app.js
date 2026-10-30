@@ -4,7 +4,7 @@
 // - 刷新失败不抹掉上一次的状态：保留、标「已过期」、给重试
 // - 平台已接收 ≠ 手机送达，两句话钉死
 const $ = (id) => document.getElementById(id);
-const TYPE_LABELS = { reel: "赛场之上", interview: "赛后开麦", explainer: "网球有故事" };
+const TYPE_LABELS = { reel: "赛场之上", interview: "赛后开麦", explainer: "网球有故事", vibetennis: "vibetennis" };
 // 和首屏「流程状态」同一套词（build_dashboard_snapshot.STAGE_FIELDS）
 const STAGES = [["discovered", "发现"], ["orchestrated", "编排"], ["spec", "Spec"],
   ["rendered", "渲染"], ["qc", "质检"], ["pushed", "推送"]];

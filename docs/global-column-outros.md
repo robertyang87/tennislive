@@ -34,3 +34,7 @@ PYTHONPATH=src:tools python tools/build_column_outros.py
 ## 验证与范围
 
 `tests/test_column_outro.py`检查实际母版/编码音轨、三个原生产入口、故事比赛剪辑的栏目选择、标准球场线位、未知栏目及25/30/29.97fps目标流适配。实际渲染另检查主标题边界、原生画面与入场样帧；解码成功不冒充听审。新生成的视频使用新版；历史影片及微信推送记录不变。
+
+## vibetennis（2026-10-30 新开）还没有片尾母版
+
+上面三份母版都是 1080×1440 竖版，第四个栏目 vibetennis 是 16:9 横屏，**还没做横屏母版，也没登记进 `column_outro.COLUMNS`**（登记了就必须有母版，否则 `master_for` 会在出片时报错）。第一集以片内收束卡结尾、`film.outro_seconds=0`。要补时按同一套 logo 动效和口播出一份 1920×1080 母版，见 [vibetennis](vibetennis.md) 的 TODO。

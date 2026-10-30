@@ -68,7 +68,8 @@ WORKFLOW_GROUPS = [
     ("Spec", ["reel-auto-ready", "reel-dispatch-queue"]),
     ("渲染", ["match-reel", "interview-auto-render", "interview-clip", "explainer"]),
     ("质检", ["match-reel", "interview-auto-render", "interview-clip", "explainer"]),
-    ("推送", ["auto-push-reel", "auto-push-interview", "auto-push-explainer"]),
+    ("推送", ["auto-push-reel", "auto-push-interview", "auto-push-explainer",
+            "auto-push-vibetennis"]),
     ("监控", ["pipeline-health"]),
 ]
 #: 只由 workflow_dispatch 触发、`run-name` 是我们自己写死的出片工作流：标题按「 · 」
@@ -120,8 +121,9 @@ FAILURES = {"failure", "timed_out", "action_required", "startup_failure"}
 OK = {"success", "skipped", "neutral"}
 BLOCKED_WINDOW = timedelta(hours=24)
 KIND_DIRS = {"reel": "reel", "interview": "interview", "interviews": "interview",
-             "explainer": "explainer"}
-SPEC_DIRS = {"reel": "reels", "interview": "interviews", "explainer": "explainers"}
+             "explainer": "explainer", "vibetennis": "vibetennis"}
+SPEC_DIRS = {"reel": "reels", "interview": "interviews", "explainer": "explainers",
+             "vibetennis": "vibetennis"}
 #: 小写连字符词（`bu-majchrzak-hangzhou-2026-r2`、`ranking-math`）
 _SLUGGY = re.compile(r"(?<![a-z0-9-])[a-z0-9]+(?:-[a-z0-9]+)+(?![a-z0-9-])")
 #: run 标题里按段位读出来的 slug：单段的也算（解说片有 `hawkeye`、`roof` 这种老 slug）
@@ -516,6 +518,7 @@ def collect_content(root: Path):
         "reel": root / "data/reel_publish_ledger",
         "interview": root / "data/interview_publish_ledger",
         "explainer": root / "data/explainer_publish_ledger",
+        "vibetennis": root / "data/vibetennis_publish_ledger",
     }
     for kind, directory in type_dirs.items():
         for path in directory.glob("*.json"):
