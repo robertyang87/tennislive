@@ -568,13 +568,13 @@
           "text": "We went 30 years without winning a Grand Slam title and now we've won two within the span of three months.\n我们等了三十年没拿过大满贯，如今三个月里拿了两个。"
         },
         {
-          "at": 16.2,
+          "at": 15.2,
           "end": 29.8,
           "text": "God has seen how hard we worked, how much we suffered, how much pain we went through.\n上天看见了我们有多拼、多能扛、受过多少苦。"
         }
       ],
       "_quote_kind": "player_quote",
-      "_quote_why": "原声 2（S6 美网画面后）：2026 美网颁奖礼（US Open 官方全程）致谢团队段，两句连读（脚本原声表备选连读版）；窗口沿 ASR 句界（480.9–488.5、496.7–510.3），英文为 ATP 官方战报直引（事实卡 §8d）。"
+      "_quote_why": "原声 2（S6 美网画面后）：2026 美网颁奖礼（US Open 官方全程）致谢团队段，两句连读（脚本原声表备选连读版）；窗口沿 ASR 句界（480.9–488.5、496.7–510.3；第二卡 at 提前至 15.2 盖住 495.70–496.74 的起音碎响『I think』，卡面仍用 ATP 核定的整句），英文为 ATP 官方战报直引（事实卡 §8d）。"
     },
     {
       "source": "a3",
@@ -642,20 +642,30 @@
     },
     {
       "source": "presser",
-      "start": 246.0,
-      "end": 253.0,
+      "start": 242.04,
+      "end": 260.96,
       "cx": 0.5,
       "track": false,
       "kind": "quote",
       "quote": [
         {
-          "at": 0.4,
-          "end": 6.4,
-          "text": "Now no matter what happens, I will always be a Grand Slam champion, and nobody can take that away from me.\n从今往后，无论发生什么，我永远都是大满贯冠军——没人能把这个夺走。"
+          "at": 0.2,
+          "end": 5.1,
+          "text": "Very quickly — and at a Grand Slam, it took longer. And now, no matter what happens —\n来得都很快——只有大满贯，等得最久。而现在，无论发生什么——"
+        },
+        {
+          "at": 5.1,
+          "end": 9.14,
+          "text": "I will always be a Grand Slam champion, and nobody can take that away from me.\n我永远都是大满贯冠军——没人能把这个夺走。"
+        },
+        {
+          "at": 9.14,
+          "end": 18.72,
+          "text": "And maybe that does give me some freedom.\n也许，这反而给了我一种自由。"
         }
       ],
       "_quote_kind": "player_quote",
-      "_quote_why": "结尾金句原声（金句锁结尾落点）：同场发布会原文 3（事实卡 §8c），ASR 句界 247.1–251.2 在窗内；与 S0 开头化引成对。"
+      "_quote_why": "结尾金句原声（金句锁结尾落点）：同场发布会原文 3（事实卡 §8c），与 S0 开头化引成对。窗口按 medium.en 句界扩整（242.24–260.76 三个 ASR 块整段纳入，asr_plan 切句/覆盖闸）：金句本体为中卡（英文从句在块界被 ASR 切开，『away from me』三词的音频落在第三卡时段内，字卡按完整原句落在中卡、第三卡只录其后的自由句——字幕跨卡衔接，逐字以 ausopen.com 发布会原文为准）。前后两卡为同答原话逐字照录、中译直译。"
     }
   ]
 }
