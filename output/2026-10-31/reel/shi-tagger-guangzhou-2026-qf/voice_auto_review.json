@@ -1,0 +1,926 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "8e683db1f2b0dfe5bdb9f140b823e93af7a58f44ea5a927ae32d8868d96fbfc1",
+    "render_inputs_sha256": "73b33c6d5c284d71592209246e2a8ffc409d9eb1ac02ee82cf60be070f267acc",
+    "spec_sha256": "7b4e638998b5fa98ebdd61ab73c4559fee4a2b544b58fa6c0577ddae704be03c",
+    "film_sha256": "7f4ccb25597026d917e4602befbd6cdb5505641c16c5f1367618a02934046c63",
+    "inventory_sha256": "ae4e998fa1bf5815b554e1f11cf1cff0c1635da41d7ab11cda86d95dc5425bc2"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-10-30T16:06:32+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0ddd1f48f908b2ddb7fdb3dc38be924f1e89389221717ff0bb6306e351bb9196",
+      "audio_sha256": "0bfc303a52500f1e911a9ced9bc3a4ad4a9d3592efc5bcd4c2f5b37ccd85dfef",
+      "pass": true,
+      "result_of": "bundle:0ddd1f48f908b2ddb7fdb3dc38be924f1e89389221717ff0bb6306e351bb9196"
+    },
+    {
+      "id": "bundle:170c009562d0f1567d79950a676bb3dcd404b1ec670a7084a47cabee81c0f1d0",
+      "audio_sha256": "af0b3dd3678787c966ca6860e9c0ac8c806bc3326859801db4f8c05d117c9a16",
+      "pass": true,
+      "result_of": "bundle:170c009562d0f1567d79950a676bb3dcd404b1ec670a7084a47cabee81c0f1d0"
+    },
+    {
+      "id": "bundle:19425dc72dcd9142436d4694193b88eba4bb8a7dbde6c2a223045f1bb3a1ceb6",
+      "audio_sha256": "44f40c729df0f6419f03c28b2f489b14b91412d05d1f44725faad90abe513374",
+      "pass": true,
+      "result_of": "bundle:19425dc72dcd9142436d4694193b88eba4bb8a7dbde6c2a223045f1bb3a1ceb6"
+    },
+    {
+      "id": "bundle:2cc50ad7eb18d7d1f0caa72e498817508fe520fca7f38f42016393c8db234e0c",
+      "audio_sha256": "06ba36e12feadd6dd3891805218e99f4b88ba226dafd4a031ac81d85fd33e465",
+      "pass": true,
+      "result_of": "bundle:2cc50ad7eb18d7d1f0caa72e498817508fe520fca7f38f42016393c8db234e0c"
+    },
+    {
+      "id": "bundle:3183e077fa846c535a85dc955b70742da8017339d423fa07d2f9da8ddb3825e7",
+      "audio_sha256": "c8fe2002e9be8cd5f8ce918b8d993bff07d367c3fdbc2bf48a431d6150de044c",
+      "pass": true,
+      "result_of": "bundle:3183e077fa846c535a85dc955b70742da8017339d423fa07d2f9da8ddb3825e7"
+    },
+    {
+      "id": "bundle:5db93b7ac72bd838826e45694f2641aa1c3c94e99c5ddac0c274a88912c663dc",
+      "audio_sha256": "4064a4e8fb0f0a30c2f2d2118de20538eab37b6aba76d8ef464cdcfe5dabc718",
+      "pass": true,
+      "result_of": "bundle:5db93b7ac72bd838826e45694f2641aa1c3c94e99c5ddac0c274a88912c663dc"
+    },
+    {
+      "id": "bundle:73c1460852bc27c6278c927bbc067456c31b73bc03de5552d07463467a190943",
+      "audio_sha256": "8e775a686aa662c7167eeeca31f6f674165aba0ef1e7c723fa9fb50f0977bbe9",
+      "pass": true,
+      "result_of": "bundle:73c1460852bc27c6278c927bbc067456c31b73bc03de5552d07463467a190943"
+    },
+    {
+      "id": "bundle:8bed8b999d05e2ffb64710d888a927e5eef444c8bb14a7890883c8ab184e1a0e",
+      "audio_sha256": "0063bcc17213621a36aaf48919caf5544dc22bcc0e76ae022f11b379e75def7f",
+      "pass": true,
+      "result_of": "bundle:8bed8b999d05e2ffb64710d888a927e5eef444c8bb14a7890883c8ab184e1a0e"
+    },
+    {
+      "id": "bundle:9855661d4b65728731fc4fa27cedcade582e9c76d919b8947251b647f2628ed1",
+      "audio_sha256": "85031ccd046b5e3b875da85c8a0fb716f802d756bfa8b33c67e81bc978359409",
+      "pass": true,
+      "result_of": "bundle:9855661d4b65728731fc4fa27cedcade582e9c76d919b8947251b647f2628ed1"
+    },
+    {
+      "id": "bundle:b46d61aa35f02b5fedb4e810962b6febf0941fd2e41de6a552a9cd15967a2a4a",
+      "audio_sha256": "f21d7c86104c93f9e5ddccf305528fbef30c12698af4fc6b021d021cfc854c1b",
+      "pass": true,
+      "result_of": "bundle:b46d61aa35f02b5fedb4e810962b6febf0941fd2e41de6a552a9cd15967a2a4a"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "82559ee833552ece2684d1fde38b1b444d06f8af9e0d91c91a130e2c2337c19d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ba0f88ec241955100a3c28252215d540f6bb5d787d6243baf4e9a5efc86aeeb0",
+      "audio_sha256": "7e04dc833d130713916e4e1195683705b7077ee5408d11b1db2b6e16e3890653",
+      "pass": true,
+      "result_of": "bundle:ba0f88ec241955100a3c28252215d540f6bb5d787d6243baf4e9a5efc86aeeb0"
+    },
+    {
+      "id": "bundle:caacd84d282d8785bf874b59398ff2abfb0d9df529801c880ca11cc6abeaffb9",
+      "audio_sha256": "7352beb001bbff7e93b91767df08bf4a46cb585b9f9e14e2632304066ba1dbde",
+      "pass": true,
+      "result_of": "bundle:caacd84d282d8785bf874b59398ff2abfb0d9df529801c880ca11cc6abeaffb9"
+    },
+    {
+      "id": "bundle:da3aa3f8a3d80fdc1482f66c4889e393deb0a0e6f676516e20cb99b8166460a5",
+      "audio_sha256": "7b05d374d97fc679bdb7c58120e5871696a9202e5561c1ba3851df0c5e1ee842",
+      "pass": true,
+      "result_of": "bundle:da3aa3f8a3d80fdc1482f66c4889e393deb0a0e6f676516e20cb99b8166460a5"
+    },
+    {
+      "id": "bundle:e1fc089113c42f41fc39d6fffaae4d85cd5910367bff617d0b960d61124193b1",
+      "audio_sha256": "0bbeff5e4b24ff12e9ffd27b267ed43984e0f1c88899eef14962adc5eb79c0e8",
+      "pass": true,
+      "result_of": "bundle:e1fc089113c42f41fc39d6fffaae4d85cd5910367bff617d0b960d61124193b1"
+    },
+    {
+      "id": "bundle:fdad18ef7b6461e976c993f3d3b1bc284f95b6499ef3acae2cf291244fe80c92",
+      "audio_sha256": "3b4ed0c2071a7ddaf5808071c19083c5784cab9f3a725a64639e0324d64342e5",
+      "pass": true,
+      "result_of": "bundle:fdad18ef7b6461e976c993f3d3b1bc284f95b6499ef3acae2cf291244fe80c92"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "44f40c729df0f6419f03c28b2f489b14b91412d05d1f44725faad90abe513374",
+      "pass": true,
+      "result_of": "bundle:19425dc72dcd9142436d4694193b88eba4bb8a7dbde6c2a223045f1bb3a1ceb6"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "0bfc303a52500f1e911a9ced9bc3a4ad4a9d3592efc5bcd4c2f5b37ccd85dfef",
+      "pass": true,
+      "result_of": "bundle:0ddd1f48f908b2ddb7fdb3dc38be924f1e89389221717ff0bb6306e351bb9196"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "06ba36e12feadd6dd3891805218e99f4b88ba226dafd4a031ac81d85fd33e465",
+      "pass": true,
+      "result_of": "bundle:2cc50ad7eb18d7d1f0caa72e498817508fe520fca7f38f42016393c8db234e0c"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "7e04dc833d130713916e4e1195683705b7077ee5408d11b1db2b6e16e3890653",
+      "pass": true,
+      "result_of": "bundle:ba0f88ec241955100a3c28252215d540f6bb5d787d6243baf4e9a5efc86aeeb0"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "0bbeff5e4b24ff12e9ffd27b267ed43984e0f1c88899eef14962adc5eb79c0e8",
+      "pass": true,
+      "result_of": "bundle:e1fc089113c42f41fc39d6fffaae4d85cd5910367bff617d0b960d61124193b1"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "af0b3dd3678787c966ca6860e9c0ac8c806bc3326859801db4f8c05d117c9a16",
+      "pass": true,
+      "result_of": "bundle:170c009562d0f1567d79950a676bb3dcd404b1ec670a7084a47cabee81c0f1d0"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "4064a4e8fb0f0a30c2f2d2118de20538eab37b6aba76d8ef464cdcfe5dabc718",
+      "pass": true,
+      "result_of": "bundle:5db93b7ac72bd838826e45694f2641aa1c3c94e99c5ddac0c274a88912c663dc"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "7b05d374d97fc679bdb7c58120e5871696a9202e5561c1ba3851df0c5e1ee842",
+      "pass": true,
+      "result_of": "bundle:da3aa3f8a3d80fdc1482f66c4889e393deb0a0e6f676516e20cb99b8166460a5"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "3b4ed0c2071a7ddaf5808071c19083c5784cab9f3a725a64639e0324d64342e5",
+      "pass": true,
+      "result_of": "bundle:fdad18ef7b6461e976c993f3d3b1bc284f95b6499ef3acae2cf291244fe80c92"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "7352beb001bbff7e93b91767df08bf4a46cb585b9f9e14e2632304066ba1dbde",
+      "pass": true,
+      "result_of": "bundle:caacd84d282d8785bf874b59398ff2abfb0d9df529801c880ca11cc6abeaffb9"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "f21d7c86104c93f9e5ddccf305528fbef30c12698af4fc6b021d021cfc854c1b",
+      "pass": true,
+      "result_of": "bundle:b46d61aa35f02b5fedb4e810962b6febf0941fd2e41de6a552a9cd15967a2a4a"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "8e775a686aa662c7167eeeca31f6f674165aba0ef1e7c723fa9fb50f0977bbe9",
+      "pass": true,
+      "result_of": "bundle:73c1460852bc27c6278c927bbc067456c31b73bc03de5552d07463467a190943"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "0063bcc17213621a36aaf48919caf5544dc22bcc0e76ae022f11b379e75def7f",
+      "pass": true,
+      "result_of": "bundle:8bed8b999d05e2ffb64710d888a927e5eef444c8bb14a7890883c8ab184e1a0e"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "85031ccd046b5e3b875da85c8a0fb716f802d756bfa8b33c67e81bc978359409",
+      "pass": true,
+      "result_of": "bundle:9855661d4b65728731fc4fa27cedcade582e9c76d919b8947251b647f2628ed1"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "c8fe2002e9be8cd5f8ce918b8d993bff07d367c3fdbc2bf48a431d6150de044c",
+      "pass": true,
+      "result_of": "bundle:3183e077fa846c535a85dc955b70742da8017339d423fa07d2f9da8ddb3825e7"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "82559ee833552ece2684d1fde38b1b444d06f8af9e0d91c91a130e2c2337c19d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0ddd1f48f908b2ddb7fdb3dc38be924f1e89389221717ff0bb6306e351bb9196",
+      "text": "开场二比零，施晗先拿到优势。可是这一局，她又被逼到破发点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "开场2比0是韩鲜拿到优势,可是这一局他又被逼到破发点。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.448,
+        "cps": 4.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "开场 ｜ 二比零 ｜ 施晗 ｜ 先 ｜ 拿 ｜ 到 ｜ 优势 ｜ 可是 ｜ 这 ｜ 一 ｜ 局 ｜ 她 ｜ 又 ｜ 被 ｜ 逼 ｜ 到 ｜ 破发 ｜ 点"
+      }
+    },
+    {
+      "id": "bundle:170c009562d0f1567d79950a676bb3dcd404b1ec670a7084a47cabee81c0f1d0",
+      "text": "一比二，施晗拿到破发点。她用反手打出角度，把比分追回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "1-2 诗涵拿到破发点,他用反手打出角度,把比分追回来。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.142,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一比二 ｜ 施晗 ｜ 拿 ｜ 到 ｜ 破发 ｜ 点 ｜ 她 ｜ 用 ｜ 反手 ｜ 打 ｜ 出 ｜ 角度 ｜ 把 ｜ 比分 ｜ 追 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:19425dc72dcd9142436d4694193b88eba4bb8a7dbde6c2a223045f1bb3a1ceb6",
+      "text": "这一次，她没能跨过最后这道关。北京时间十月三十号晚上，广州四分之一决赛，施晗四比六、六比三、五比七惜败塔格尔。第一次走到巡回赛八强，她已经把机会握到了决胜盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 70,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一次,他没能跨过最后这道关。北京时间10月30号晚上,广州四分之一决赛,施韩4比6,6比3,5比7西败塔格尔。第一次走到循回赛八强,他已经把机会握到了决胜盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 70,
+        "speech_s": 14.894,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一次 ｜ 她 ｜ 没 ｜ 能 ｜ 跨过 ｜ 最后 ｜ 这 ｜ 道 ｜ 关 ｜ 北京时间 ｜ 十月三十号 ｜ 晚上 ｜ 广州 ｜ 四分之一 ｜ 决赛 ｜ 施晗 ｜ 四比六 ｜ 六比三 ｜ 五比七 ｜ 惜 ｜ 败 ｜ 塔格尔 ｜ 第一次 ｜ 走 ｜ 到 ｜ 巡回 ｜ 赛 ｜ 八 ｜ 强 ｜ 她 ｜ 已经 ｜ 把 ｜ 机会 ｜ 握 ｜ 到 ｜ 了 ｜ 决胜 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:2cc50ad7eb18d7d1f0caa72e498817508fe520fca7f38f42016393c8db234e0c",
+      "text": "领先被追平，首盘来到三比三。施晗仍在底线咬住相持，双方都不肯先松手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "领先被追平﹑手盘来到3比3﹑施韩仍在底线咬住相迟﹑双方都不肯先松手。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.486,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "领先 ｜ 被 ｜ 追 ｜ 平 ｜ 首盘 ｜ 来到 ｜ 三比三 ｜ 施晗 ｜ 仍 ｜ 在 ｜ 底线 ｜ 咬住 ｜ 相持 ｜ 双方 ｜ 都 ｜ 不肯 ｜ 先 ｜ 松手"
+      }
+    },
+    {
+      "id": "bundle:3183e077fa846c535a85dc955b70742da8017339d423fa07d2f9da8ddb3825e7",
+      "text": "走到网前，握手告别，这趟广州之旅结束了。遗憾很重，第一次巡回赛八强也是真的。愿施晗带着这些好球继续往前走。下一次握住领先，你最期待她把哪一个环节练得更稳？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "走到往前,握手告别,这趟广州之旅结束了。遗憾很重,第一次巡回在巴墙也是真的。愿世韩带着这些好球,继续往前走。下一次握住领先,你最期待他把哪一个环节链的更稳。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "重",
+          "word": "重",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.291,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "仲众"
+        },
+        {
+          "index": 73,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 15.601,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "走 ｜ 到 ｜ 网 ｜ 前 ｜ 握手 ｜ 告别 ｜ 这 ｜ 趟 ｜ 广州 ｜ 之 ｜ 旅 ｜ 结束 ｜ 了 ｜ 遗憾 ｜ 很 ｜ 重 ｜ 第一次 ｜ 巡回 ｜ 赛 ｜ 八 ｜ 强 ｜ 也是 ｜ 真 ｜ 的 ｜ 愿 ｜ 施晗 ｜ 带 ｜ 着 ｜ 这些 ｜ 好 ｜ 球 ｜ 继续 ｜ 往前 ｜ 走 ｜ 下 ｜ 一次 ｜ 握住 ｜ 领先 ｜ 你 ｜ 最 ｜ 期待 ｜ 她 ｜ 把 ｜ 哪 ｜ 一个 ｜ 环节 ｜ 练 ｜ 得 ｜ 更 ｜ 稳"
+      }
+    },
+    {
+      "id": "bundle:5db93b7ac72bd838826e45694f2641aa1c3c94e99c5ddac0c274a88912c663dc",
+      "text": "四比三领先后，她继续把塔格尔调向两侧，等到机会，再把球送进空当。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "4比3领先后,他继续把塔格尔调向两侧,等到机会再把球送进空档。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.354,
+        "cps": 5.23,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四比三 ｜ 领先 ｜ 后 ｜ 她 ｜ 继续 ｜ 把 ｜ 塔格尔 ｜ 调 ｜ 向 ｜ 两侧 ｜ 等到 ｜ 机会 ｜ 再 ｜ 把 ｜ 球 ｜ 送 ｜ 进 ｜ 空当"
+      }
+    },
+    {
+      "id": "bundle:73c1460852bc27c6278c927bbc067456c31b73bc03de5552d07463467a190943",
+      "text": "第一个赛点，她救了回来，五比五。但到了五比六，自己的发球局，她仍然没能把比赛带进抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第一个赛点﹑他救了回来﹑5比5。但到了5比6﹑自己的发球局﹑他仍然没能把比赛带进抢七。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.547,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第一个 ｜ 赛点 ｜ 她 ｜ 救 ｜ 了 ｜ 回来 ｜ 五比五 ｜ 但 ｜ 到 ｜ 了 ｜ 五比六 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 她 ｜ 仍然 ｜ 没 ｜ 能 ｜ 把 ｜ 比赛 ｜ 带 ｜ 进 ｜ 抢 ｜ 七"
+      }
+    },
+    {
+      "id": "bundle:8bed8b999d05e2ffb64710d888a927e5eef444c8bb14a7890883c8ab184e1a0e",
+      "text": "五比六，施晗拿到保发机会。双方在底线来回调动，她还在用正反手争取这一局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "5比6,诗涵拿到爆发机会。双方在底线来回调动,他还在用正反手争取这一局。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 24,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.546,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.123,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五比六 ｜ 施晗 ｜ 拿 ｜ 到 ｜ 保发 ｜ 机会 ｜ 双方 ｜ 在 ｜ 底线 ｜ 来回 ｜ 调动 ｜ 她 ｜ 还 ｜ 在 ｜ 用 ｜ 正反 ｜ 手 ｜ 争取 ｜ 这 ｜ 一 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:9855661d4b65728731fc4fa27cedcade582e9c76d919b8947251b647f2628ed1",
+      "text": "施晗打出二十六个制胜分，比对手更多。但五十八次非受迫性失误，决胜盘就有三十五次。她打出了冲击力，也为不稳定付出了代价。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "施罕打出26个制胜分,比对手更多。但58次非受迫性失误,决胜盘就有35次。他打出了冲击力,也为不稳定付出了代价。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.156,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "施晗 ｜ 打 ｜ 出 ｜ 二十六个 ｜ 制胜 ｜ 分 ｜ 比 ｜ 对手 ｜ 更多 ｜ 但 ｜ 五十八次 ｜ 非 ｜ 受迫 ｜ 性 ｜ 失误 ｜ 决胜 ｜ 盘 ｜ 就 ｜ 有 ｜ 三十五次 ｜ 她 ｜ 打 ｜ 出 ｜ 了 ｜ 冲击力 ｜ 也 ｜ 为 ｜ 不 ｜ 稳定 ｜ 付出 ｜ 了 ｜ 代价"
+      }
+    },
+    {
+      "id": "bundle:b46d61aa35f02b5fedb4e810962b6febf0941fd2e41de6a552a9cd15967a2a4a",
+      "text": "四比五，对手拿到赛点。她仍然顶住相持，把球打回去，机会还没有结束。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.036,
+        "longest_deletion": 0,
+        "transcript": "4比5,对手拿到赛脸,他仍然顶住相持,把球打回去,机会还没有结束。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.314,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.215,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四比五 ｜ 对手 ｜ 拿 ｜ 到 ｜ 赛点 ｜ 她 ｜ 仍然 ｜ 顶住 ｜ 相持 ｜ 把 ｜ 球 ｜ 打 ｜ 回去 ｜ 机会 ｜ 还 ｜ 没有 ｜ 结束"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:ba0f88ec241955100a3c28252215d540f6bb5d787d6243baf4e9a5efc86aeeb0",
+      "text": "施晗贴着底线左右移动，反手顶回去，再用正手把球送向另一侧。对手也始终没有退。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "施涵贴着底线左右移动,反手顶回去,再用正手把球送向另一次。对手也始终没有退。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.276,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "施晗 ｜ 贴 ｜ 着 ｜ 底线 ｜ 左右 ｜ 移动 ｜ 反手 ｜ 顶 ｜ 回去 ｜ 再 ｜ 用 ｜ 正手 ｜ 把 ｜ 球 ｜ 送 ｜ 向 ｜ 另 ｜ 一侧 ｜ 对手 ｜ 也 ｜ 始终 ｜ 没有 ｜ 退"
+      }
+    },
+    {
+      "id": "bundle:caacd84d282d8785bf874b59398ff2abfb0d9df529801c880ca11cc6abeaffb9",
+      "text": "随后，她把比分带到四比二。但塔格尔连追三局，领先变成四比五，施晗又被推到必须守住的关头。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "随后,他把比分带到4比2,但塔格尔连追三局,领先变成4比5,施寒又被推到必须守住的关头。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.349,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "随后 ｜ 她 ｜ 把 ｜ 比分 ｜ 带 ｜ 到 ｜ 四比二 ｜ 但 ｜ 塔格尔 ｜ 连 ｜ 追 ｜ 三局 ｜ 领先 ｜ 变成 ｜ 四比五 ｜ 施晗 ｜ 又 ｜ 被 ｜ 推 ｜ 到 ｜ 必须 ｜ 守 ｜ 住 ｜ 的 ｜ 关头"
+      }
+    },
+    {
+      "id": "bundle:da3aa3f8a3d80fdc1482f66c4889e393deb0a0e6f676516e20cb99b8166460a5",
+      "text": "六比三，一盘一盘拿回来。决胜盘，她先守住长局，又在一比一时争到破发机会，这次反手再添一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6比3,一盘一盘拿回来。决胜盘,他先守住长局,又在一比一时争到破发机会,这次反手再添一分。"
+      },
+      "polyphones": [
+        {
+          "index": 20,
+          "char": "长",
+          "word": "长局",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.666,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        },
+        {
+          "index": 32,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.679,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比三 ｜ 一 ｜ 盘 ｜ 一 ｜ 盘 ｜ 拿 ｜ 回来 ｜ 决胜 ｜ 盘 ｜ 她 ｜ 先 ｜ 守 ｜ 住 ｜ 长局 ｜ 又 ｜ 在 ｜ 一比一 ｜ 时 ｜ 争 ｜ 到 ｜ 破发 ｜ 机会 ｜ 这次 ｜ 反手 ｜ 再 ｜ 添 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:e1fc089113c42f41fc39d6fffaae4d85cd5910367bff617d0b960d61124193b1",
+      "text": "首盘四比六。第二盘又是零比二落后，施晗没有让比赛这样滑走，她追上来，再把主动拿回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘四比六。第二盘又是零比二落后,施韩没有让比赛这样划走,他追上来,再把主动拿回来。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.289,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.224,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.606,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 四比六 ｜ 第二盘 ｜ 又是 ｜ 零比二 ｜ 落后 ｜ 施晗 ｜ 没有 ｜ 让 ｜ 比赛 ｜ 这样 ｜ 滑 ｜ 走 ｜ 她 ｜ 追 ｜ 上来 ｜ 再 ｜ 把 ｜ 主动 ｜ 拿 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:fdad18ef7b6461e976c993f3d3b1bc284f95b6499ef3acae2cf291244fe80c92",
+      "text": "一比一，十五比四十。施晗先用反手压住对手，再把这次机会打成领先。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一比一,十五比四十。施韩先用反手压住对手,再把这次机会打成领先。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 6.333,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一比一 ｜ 十五比四十 ｜ 施晗 ｜ 先 ｜ 用 ｜ 反手 ｜ 压 ｜ 住 ｜ 对手 ｜ 再 ｜ 把 ｜ 这次 ｜ 机会 ｜ 打 ｜ 成 ｜ 领先"
+      }
+    }
+  ]
+}
