@@ -1,9 +1,13 @@
 {
-  "status": "preflight_passed",
+  "status": "ready_for_publication",
   "formal_spec_promoted": true,
-  "rendered": false,
-  "pushed": false,
+  "rendered": true,
   "source_quality_authorization": "existing_session_user_preference_可以用720",
   "new_user_confirmation_claimed": false,
-  "tts_bundle_sha256": "d17f0e6c72d924b3f3c671f7d0162c1706bee11ffdb067f815830e6cdd2eca85"
+  "tts_bundle_sha256": "d17f0e6c72d924b3f3c671f7d0162c1706bee11ffdb067f815830e6cdd2eca85",
+  "final_film_sha256": "d82e494c478aabbf821846f7cd95f5b6a8c9d2a1c19cfb0c40fb9cbf141e90ff",
+  "qc_attestation": "output/2026-10-31/reel/shi-tagger-guangzhou-2026-qf/qc_attestation.json",
+  "voice_gate": "automated_voice_suite passed on actual final-film bytes",
+  "render_run": 41088771004,
+  "publication_evidence": "Final delivery is established only by the subsequently committed output pushed.json receipt."
 }
