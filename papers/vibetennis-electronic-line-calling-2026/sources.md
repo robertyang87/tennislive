@@ -132,3 +132,12 @@ https://www.tennisnet.com/en/news/wta-linz-for-the-first-time-hawk-eye-live-at-a
 > "There are no challenges under the current system and video replays are not used."
 - 备用：TNT Sports 赛事期间报道 "There is also not an option for players to challenge calls."
 - 主裁介入：见第 10 节事故声明（系统故障时停赛商议、该分重打）
+
+## 14. CNBC：How Sony's Hawk-Eye works at the US Open（2023-09-09 发，09-12 更新；cnbc.com 对会话 403，所有者在浏览器读到的原句）
+https://www.cnbc.com/2023/09/09/how-sonys-hawk-eye-works-at-the-us-open.html
+> "We have 12 tracking cameras around all the courts. And then we also have six foot-fault cameras."
+> "The cameras track the ball at 340 frames per second"
+- 「12 台追球 + 6 台脚误」的结构：美网（CNBC）与林茨（Tennisnet）两站原文互证
+- ⚠️ 同文写全赛共 204 台相机、17 块场地：17 × 12 = 204，与 17 × 18 = 306 对不上（这是所有者的推算，原文没解释）。片中不写「每块场地 18 台」，不做总数推演
+- 脚误怎么判、有没有挑战：CNBC 没写。脚误流程仍只有 Tennisnet 林茨一篇
+- 340 fps：Sony 厂商说明（up to）＋ CNBC 美网陈述，两处原文
