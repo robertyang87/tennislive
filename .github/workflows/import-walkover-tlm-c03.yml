@@ -1,0 +1,48 @@
+name: import-walkover-tlm-c03
+run-name: "import-walkover-tlm-c03 · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）时间轴 c 段金句换字版源存档。
+# 所有者 2026-10-30 定金句改法：「省力不等于占便宜」→「省力不等于躺赢」
+# （原句「便」配音听审 uncertain，按账号规则改稿避字）。render_tlm_v2.py
+# 收尾卡同步换字重渲 timeline-c-v3.mp4（43.5s 不变，其余拍/版式/影调不动），
+# 照 import-walkover-tlm-sources 先例走 runner：文件先暂存
+# research/walkover-story-2026/anim-src/，本工作流建 source-wo26tmlnc03
+# Release 并 gh release upload；完成后暂存 mp4 另行提交移除（Release 为
+# 唯一正本），记录补 research/walkover-story-2026/anim-src/SOURCES.md。
+# 归整口径：视频流逐字节复制自本地 timeline-c-v3.mp4（流哈希双向核验），
+# 只补一条静音 AAC 轨（anullsrc 48kHz）——source-asr 解码需要音轨存在。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-tlm-c03
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 建 Release 并上传时间轴 c 金句换字版
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          f=wo26tmlnc03
+          sha256sum "$f.mp4"
+          tag="source-$f"
+          gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 自制动画源存档：$f（时间轴 c 段金句换字版：收尾卡「省力不等于躺赢」，本地重渲 timeline-c-v3.mp4，视频流逐字节一致，仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+          gh release upload "$tag" "$f.mp4" --clobber
+          gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
