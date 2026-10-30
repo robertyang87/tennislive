@@ -95,3 +95,25 @@ https://www.itftennis.com/en/about-us/tennis-tech/classified-elc-systems/
 - 场地不平：> local variations in the height of the contact surface, even as small as 1 mm, can alter the initial contact point of a ball on the court by up to 3 or 4 mm when the ball is incident at a small angle
 - 像素：作者估算——若每台相机以 1920 像素横向覆盖约 12 m，一像素约 6 mm（是假设性估算，不是 Hawk-Eye 的实际参数）
 - 对当年 ITF 测试的批评：当年按 2000 fps 高速相机测，作者认为看清落地头 0.1 ms 要 10000 fps 以上。⚠️ 这是 2014 年对当年流程的批评，现行第 28.1 版的测试帧率原文没写，片中不把它说成现状
+
+## 9. Sony：相机与帧率（所有者 2026-10-30 在浏览器读到的原句；会话网络读不到 sony 两站）
+- https://community.sony.dk/t5/blogs/blogarticleprintpage/blog-id/Discover_DI_EN/article-id/214?nobounce（页脚注明改编自 https://www.sony.net/SonyInfo/technology/stories/Hawk-Eye/）
+> "typically, between eight and twelve cameras running at frame rates of up to 340 frames per second will be recording the game"
+- 旁证：Cosmos Magazine 称 Hawk-Eye 官网写其相机 340 fps；RedShark News 同样写 340 fps
+- 片中口径：「厂商说明：相机最高 340 帧/秒」——原句是 up to，是上限，不是某场实测
+- 由此估算（片中标「按 340 帧/秒估算」）：两帧间隔 1/340 ≈ 2.94 ms；Cross 2014 实测触地 4.72 ms（Wilson 球）→ 触地全程约 1.6 个帧间隔，最多拍到一两帧；200 km/h = 55.6 m/s × 2.94 ms ≈ 16 cm/帧
+- ⚠️ 不要引 WUSF/NPR「12 台只用 8 台、4 台备用」——那是 NFL 测首攻的系统
+
+## 10. 2025 温网中央球场误关事故（所有者转来的原句，与 Sky Sports、AOL 的转述一致）
+- 俱乐部周日声明（AFP 全文转载）：系统 "deactivated in error"，持续一局；
+> "In that time, there were three calls not picked up by live ELC on the affected part of the court. Two of these were called by the chair umpire, who was not made aware that the system had been deactivated"
+> "Following the third, the chair umpire stopped the match and consulted with the review official. It was determined that the point should be replayed."
+- 俱乐部给 BBC Sport 的声明：
+> "Following our review, we have now removed the ability for Hawk-Eye operators to manually deactivate the ball tracking"
+- AP，CEO Sally Bolton 周一发布会：
+> "the technology was 'inadvertently deactivated' by someone for three points at Centre Court"
+- 片中口径：系统被误关一局，其间三个判罚没被系统接住，前两个由主裁自己判，第三个停赛商议后重打；赛后取消了操作员手动关闭的权限。重打结果不写
+- 球员：Anastasia Pavlyuchenkova（帕夫柳琴科娃）vs Sonay Kartal（卡尔塔尔，英国）
+
+## 11. BBC Sport：温网控制室（所有者转来的原句，待与温网官网原文对账）
+> "There is a line-calling hub inside Wimbledon's grounds, where 50 operators use 144 screens to monitor the ball-tracking footage from 12 cameras on each court."
