@@ -85,3 +85,16 @@ data/vibetennis_publish_ledger/       发布账本（和赛场之上同一套 pu
 - **3D 渲染还在本地**：没有 GitHub Actions 渲染工作流（SwiftShader 软渲一集要几十分钟）。
 - **中文显示名**：栏目名照所有者原话叫 `vibetennis`；要不要改中文名由他定。
 - **dashboard**：已登记类型 `vibetennis`，但看板的「渲染/质检」阶段没有对应工作流可盯（渲染在本地）。
+
+## 已推送后只换封面再推（cover-correction）
+
+第一集首推（2026-10-30，流水号 `08db91620dfc46148a6866a05d0d2245`）用的是 solo 模板封面；所有者随后逐版审定了 v9 定制封面，要求换封面重推。流程（成片字节、标题、正文都不动）：
+
+1. 新封面生成脚本进 `tools/vibetennis/episodes/<slug>/cover/`，spec 的 `cover.layout=custom`、`cover.script` 指过去；产物目录的 `poster.jpg` 换成定稿图。
+2. `git mv pushed.json pushed_<名>.json` 归档上一次回执（门禁只认 `pushed.json` 不在仓库里才发）。
+3. 写 `publication_revision.json`：`kind=cover-correction`、`revision_id`、`film_sha256`（必须是原片）、`poster_sha256`、`parent_receipt`（账本里**最近一次已发**的流水号）、`previous_pushed{path,sha256}`。
+4. 重跑 `tools/vibetennis/qc.py`（海报 sha 变了 → 新凭证 → `render.json` 跟着变，合并即触发 `auto-push-vibetennis`）。
+
+门禁（`publish_gate.revision_fingerprint`）此时用 `cover-revision:<海报 sha256>` 记账：同一张封面只发一次；父回执不是最近一次已发、归档回执字节或 at/run 对不上、账本里有 sending/uncertain、或成片换了，一律不发。
+
+v9 封面复现：`VT_COVER_WORK=<目录> VT_FONTS=<Noto CJK Black OTF 所在目录> python3 tools/vibetennis/episodes/vibetennis-live-faster-2026/cover/hero.py && … make_cover.py`，输出与 `poster.jpg` 逐字节一致。

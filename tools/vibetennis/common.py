@@ -26,6 +26,7 @@ CANVAS = (1920, 1080)
 POSTER_NAME = "poster.jpg"
 COVER_FRAME_NAME = "cover_16x9.jpg"   # 不再生成；qc 确认它不在（封面不进视频）
 MARKER = "pushed.json"
+REVISION_NAME = "publication_revision.json"   # 已推送后的「只换封面」修订单
 # `output/2026-10-30/vibetennis/vibetennis-live-faster-2026/render.json`
 RENDER_JSON = re.compile(r"^output/(\d{4}-\d\d-\d\d)/vibetennis/([^/]+)/render\.json$")
 # 时长随内容走，但这一栏承诺的是「三分钟左右讲清一件事」：
@@ -66,8 +67,14 @@ def spec_problems(spec: dict, slug: str) -> list[str]:
     if list(film.get("canvas") or []) != list(CANVAS):
         bad.append(f"film.canvas 必须是 {list(CANVAS)}（这一栏是 16:9 横屏）")
     cover = spec.get("cover") or {}
-    if cover.get("layout") != "solo" or not (cover.get("portrait") or {}).get("image"):
-        bad.append("封面走仓库的 solo 海报模板，cover.portrait.image 要指向原生高清渲染帧")
+    if cover.get("layout") == "custom":
+        # 所有者逐版审定的定制封面（2026-10-30 第一集起）：poster.jpg 由仓库里的脚本生成
+        script = str(cover.get("script") or "")
+        if not script.startswith("tools/vibetennis/episodes/") or not script.endswith(".py"):
+            bad.append("cover.layout=custom 时 cover.script 要指向 tools/vibetennis/episodes/ 下的生成脚本")
+    elif cover.get("layout") != "solo" or not (cover.get("portrait") or {}).get("image"):
+        bad.append("封面走仓库的 solo 海报模板（cover.portrait.image 指向原生高清渲染帧），"
+                   "或 layout=custom ＋ cover.script")
     if film.get("cover_in_film") is not False:
         bad.append("film.cover_in_film 必须是 false——封面单独一张图，不合进视频（所有者 2026-10-30）")
     if not str(cover.get("hook", "")).strip():

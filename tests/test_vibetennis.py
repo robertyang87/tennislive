@@ -34,8 +34,9 @@ def test_至少有一条spec_而且每条都自洽():
         spec = json.loads(path.read_text(encoding="utf-8"))
         assert common.spec_problems(spec, path.stem) == [], path.name
         assert path.with_suffix(".xhs.txt").is_file(), f"{path.name} 缺文案"
-        image = ROOT / spec["cover"]["portrait"]["image"]
-        assert image.is_file(), f"{path.name} 的封面素材 {image} 不在"
+        cover = spec["cover"]
+        src = cover["script"] if cover.get("layout") == "custom" else cover["portrait"]["image"]
+        assert (ROOT / src).is_file(), f"{path.name} 的封面来源 {src} 不在"
 
 
 def test_spec合同会拦住竖屏和空出处():
@@ -97,3 +98,59 @@ def test_一趟两条一条都不发(tmp_path, monkeypatch):
     with pytest.raises(SystemExit):
         publish_gate.pick(["output/2026-10-30/vibetennis/a/render.json",
                            "output/2026-10-30/vibetennis/b/render.json"], tmp_path)
+
+
+def _cover_revision_repo(tmp_path: Path, *, parent="a" * 32, extra_rows=()):
+    """一条已推过、准备只换封面重推的最小仓库。"""
+    import hashlib
+    repo = _repo(tmp_path)
+    slug = "demo-ep"
+    out = repo / "output/2026-10-30/vibetennis" / slug
+    out.mkdir(parents=True)
+    sha = lambda b: hashlib.sha256(b).hexdigest()  # noqa: E731
+    film = "f" * 64
+    (out / "poster.jpg").write_bytes(b"new-cover")
+    archived = {"at": "2026-10-30T14:38:29Z", "run": "https://x/runs/1",
+                "pushplus_receipt": "a" * 32}
+    raw = (json.dumps(archived) + "\n").encode()
+    (out / "pushed_original.json").write_bytes(raw)
+    rows = [{"key": f"pushplus:vibetennis:{slug}:{film}", "fingerprint": film, "status": "sent",
+             **archived}, *extra_rows]
+    led = repo / "data/vibetennis_publish_ledger" / f"{slug}.json"
+    led.parent.mkdir(parents=True)
+    led.write_text(json.dumps({"slug": slug, "channel": "pushplus", "attempts": rows}), encoding="utf-8")
+    manifest = {"version": 1, "kind": "cover-correction", "slug": slug, "revision_id": "cover-v2",
+                "film_sha256": film, "poster_sha256": sha(b"new-cover"), "parent_receipt": parent,
+                "previous_pushed": {"path": "pushed_original.json", "sha256": sha(raw)}}
+    (out / "publication_revision.json").write_text(json.dumps(manifest), encoding="utf-8")
+    subprocess.run(["git", "-C", str(repo), "add", "."], check=True)
+    return repo, slug, out.relative_to(repo), film
+
+
+def test_只换封面的修订单用海报指纹记账(tmp_path):
+    repo, slug, out, film = _cover_revision_repo(tmp_path)
+    fp = publish_gate.revision_fingerprint(repo, slug, out, film)
+    assert fp.startswith("cover-revision:") and fp != film
+
+
+def test_修订单的父回执不是最近一次已发就不发(tmp_path):
+    repo, slug, out, film = _cover_revision_repo(tmp_path, parent="b" * 32)
+    with pytest.raises(publish_gate.Skip, match="parent_receipt|归档回执"):
+        publish_gate.revision_fingerprint(repo, slug, out, film)
+
+
+def test_同一张封面发过了就不再发(tmp_path):
+    import hashlib
+    poster_fp = "cover-revision:" + hashlib.sha256(b"new-cover").hexdigest()
+    later = {"key": f"pushplus:vibetennis:demo-ep:{poster_fp}", "fingerprint": poster_fp,
+             "status": "sent", "at": "2026-10-30T16:00:00Z", "run": "https://x/runs/2",
+             "pushplus_receipt": "c" * 32}
+    repo, slug, out, film = _cover_revision_repo(tmp_path, extra_rows=[later])
+    with pytest.raises(publish_gate.Skip, match="parent_receipt"):
+        publish_gate.revision_fingerprint(repo, slug, out, film)
+
+
+def test_修订单不许换成片(tmp_path):
+    repo, slug, out, _ = _cover_revision_repo(tmp_path)
+    with pytest.raises(publish_gate.Skip, match="成片"):
+        publish_gate.revision_fingerprint(repo, slug, out, "e" * 64)
