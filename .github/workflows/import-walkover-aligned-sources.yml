@@ -1,0 +1,85 @@
+name: import-walkover-aligned-sources
+run-name: "import-walkover-aligned-sources · walkover-story-2026"
+
+# 一次性：《Walkover》（walkover-story-2026）v2 对齐重推八个新源存档。
+# 来路：账号所有者 2026-10-30 13:25 拍板本期全量对齐重推、孙心然段换实拍。
+# 六段动画按定版对齐标准（style-audit §6–7：系列 tokens／小签双轴居中
+# ≤2px／标题避让左上安全区／光晕中间档视觉等效）重渲，时长沿用 v2 原速版
+# （37.0／29.0／27.0／38.0／45.5／43.5s）；孙段医疗暂停补位拍为新渲短动画
+# （5.5s）。动画七段归整口径同前轮：视频流逐字节复制自本地定版，只补
+# 一条静音 AAC 轨（anullsrc 48kHz）——source-asr 解码需要音轨存在；本工
+# 作流逐段建 source-<id> Release 并上传，完成后暂存 mp4 另行提交移除
+# （Release 为唯一正本），记录补 research/walkover-story-2026/anim-src/
+# SOURCES.md。
+# 例外：wo26sunwta1（WTA 官网广州 R2 孙心然 vs 蒂莫费娃官方集锦，
+# 77,072,826 B）超 GitHub Git Data API 单 blob 上限，暂存提交进不了仓库；
+# 改由本工作流在 runner 上按金库同法（tennis-material-library/sources/
+# wta-unlocked/wta_download.py：Brightcove Playback API + 公开 policy
+# key，mediaId 6407619997112）直拉同一文件后上传，上传前打印 sha256，
+# 须与本地正本 c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e
+# 一致才继续（不一致即红）。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-walkover-aligned-sources
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/walkover-story-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 建 Release 并上传七段动画
+        run: |
+          set -euo pipefail
+          cd research/walkover-story-2026/anim-src
+          for f in wo26horse04 wo26notat03 wo26ledger3 wo26tmlna02 wo26tmlnb03 wo26tmlnc04 wo26sunmto1; do
+            sha256sum "$f.mp4"
+            tag="source-$f"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 v2 对齐重推源存档：$f（定版对齐重渲、视频流与本地定版逐字节一致、仅补静音 AAC 轨）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+            gh release upload "$tag" "$f.mp4" --clobber
+            gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
+
+      - name: WTA 孙段实拍直拉并上传（sha 须与本地正本一致）
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          python3 - <<'PYEOF'
+          import json, re, subprocess, urllib.request
+          ACCOUNT = "6041795521001"
+          MEDIA = "6407619997112"
+          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"}
+          def fetch(url, headers=None):
+              req = urllib.request.Request(url, headers={**UA, **(headers or {})})
+              with urllib.request.urlopen(req, timeout=120) as r:
+                  return r.read()
+          js = fetch(f"https://players.brightcove.net/{ACCOUNT}/te01Hqw71_default/index.min.js").decode("utf-8", "replace")
+          pk = re.search(r"BCpk[A-Za-z0-9._\-]{20,}", js).group(0)
+          data = json.loads(fetch(f"https://edge.api.brightcove.com/playback/v1/accounts/{ACCOUNT}/videos/{MEDIA}",
+                                  {"Accept": f"application/json;pk={pk}"}))
+          mp4s = [s for s in data.get("sources", []) if s.get("container") == "MP4" and (s.get("src") or "").startswith("https")]
+          assert mp4s, "no progressive MP4 source"
+          print(data.get("name"), "| duration", data.get("duration"), "ms")
+          subprocess.run(["curl", "-sSL", "-o", "wo26sunwta1.mp4", mp4s[0]["src"]], check=True)
+          PYEOF
+          ls -la wo26sunwta1.mp4
+          echo "c9d7326f271542005f0c1e58478b18e7ada71f18347bd8eb08a316870b6c658e  wo26sunwta1.mp4" | sha256sum -c -
+          tag="source-wo26sunwta1"
+          gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《Walkover》walkover-story-2026 v2 对齐重推源存档：wo26sunwta1（WTA 官网广州 R2 孙心然 vs 蒂莫费娃官方集锦原始文件、1280×720、自带转播音轨；runner 按金库 wta_download 同法直拉，sha256 与本地正本一致）。归档记录 research/walkover-story-2026/anim-src/SOURCES.md"
+          gh release upload "$tag" "wo26sunwta1.mp4" --clobber
+          gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
