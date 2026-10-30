@@ -1,0 +1,111 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d6358755aba9de6551a59bb02578134461237483797f981dae69c878f1717b14",
+    "request_count": 27,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-zverev-no1-story-2026-d6358755aba9de65",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-zverev-no1-story-2026-d6358755aba9de65/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41086905337"
+  },
+  "cover_seconds": 3.826,
+  "cover_narrated": true,
+  "outro_seconds": 4.122,
+  "layout": "full",
+  "segments_seconds": 602.84,
+  "topbar": null,
+  "film_seconds": 610.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+18%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 10.8,
+    "1": 5.496,
+    "2": 9.168,
+    "3": 3.36,
+    "4": 14.568,
+    "5": 6.384,
+    "6": 8.568,
+    "7": 6.624,
+    "8": 8.88,
+    "9": 8.592,
+    "10": 16.368,
+    "11": 19.44,
+    "12": 9.192,
+    "13": 30.288,
+    "14": 7.848,
+    "15": 4.176,
+    "16": 16.032,
+    "17": 6.432,
+    "19": 10.344,
+    "21": 8.952,
+    "22": 9.96,
+    "23": 13.056,
+    "26": 17.256,
+    "28": 11.352,
+    "29": 13.152
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "1d2a44c4d07fb0db0f1233f1de2746033ac1a9190e12615b98060460bd608690",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "zverev-no1-story-2026",
+    "received_at": "2026-10-30T16:06:55Z",
+    "artifact_ready_at": "2026-10-30T16:25:43Z",
+    "elapsed_seconds": 1128.176,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "ba5c0aef1803136d91a9002ae684046e01f37871d012588606bb068ca835c459",
+    "spec_sha256": "20b149324d2bf788bb9419c5292fd0365a53f202f69f1662b2eb4e599dde4df2",
+    "run_id": "41086905337",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-10-30T16:12:06Z",
+        "run_id": "41086905337"
+      }
+    ],
+    "render_seconds": 817.176,
+    "pre_render_seconds": 311.0
+  },
+  "film_sha256": "ba5c0aef1803136d91a9002ae684046e01f37871d012588606bb068ca835c459",
+  "film_bytes": 355613770,
+  "qc_attestation_sha256": "a055815bfd9aac7bf1cb9c2296b5fca5e3e7299244cb68178cec6bd2eb441c7f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-10-30T16:12:06Z",
+      "run_id": "41086905337"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-10-30T16:25:50Z",
+      "run_id": "41086905337"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-no1-story-2026/zverev-no1-story-2026.mp4",
+  "video_bytes": 355613770,
+  "_release_tag_note": "2026-10-30T16:26:03Z run 41086905337 把这一份（video_bytes 355613770）传上 tag `reel-zverev-no1-story-2026`（--clobber），那一刻 tag 上就是这一份；同一个 tag 还被 output/2026-10-30/reel/zverev-no1-story-2026 共用，那几份记的是更早传上去的版本。之后再有重渲，以更晚传上去的那一份为准。要确认 tag 上现在是哪一份，量 Range: bytes=0-1 回来的 Content-Range 总长，和各份的 video_bytes 比。"
+}
