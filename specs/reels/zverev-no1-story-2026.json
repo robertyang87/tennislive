@@ -48,7 +48,7 @@
    "2024/2025：两场决赛再败，四连败名单的门槛",
    "2026 法网：抢七被翻盘、抽筋、决胜盘收官、第 125 胜（动画 A2）＋发布会原声",
    "2026 温网/美网：再负辛纳、纽约夺冠与赛点走回底线＋颁奖原声",
-   "争议正面：0-5 账本（动画 A3）＋上海全句引语卡",
+   "争议正面：0-5 账本（动画 A3）＋上海八强场边采访原声（让位回答）",
    "收束：2026 战绩条（动画 A4）、站队题、结尾金句原声"
   ],
   "chapters": [
@@ -96,7 +96,7 @@
   "ledger_vs_sinner": "2026 对辛纳 0 胜 5 负（印第安维尔斯 SF 6-2 6-4／迈阿密 SF 6-3 7-6／蒙特卡洛 SF／马德里 F／温网 F 7-6(7) 6-7(2) 3-6 4-6），全年只赢一盘（温网首盘；此前辛纳已连赢 14 盘）。蒙特卡洛/马德里盘分未单独复核，片中不写。",
   "sinner_absence": "辛纳右膝炎症、无手术：最后出赛 2026-07-12 温网决赛，2026-10-06 宣布赛季结束；兹维列夫年终第一 2026-10-12 锁定（阿尔卡拉斯上海 R3 负贝尔斯），相隔六天。维也纳 10-29 胜格里克斯普尔 6-4 7-5 钉死积分，2026-11-02 正式登顶。",
   "rg26_draw": "法网 2026：阿尔卡拉斯赛前因伤退赛、辛纳次轮爆冷出局、德约第三轮出局，兹维列夫全程未遇世界前十夺冠（法网 38 年来第一人，澳网官网口径）。",
-  "quotes": "发布会回环句/记忆句/金句（事实卡 §8c，ausopen.com 原文）；美网颁奖 30 年句＋God has seen 句（§8d，ATP 战报直引）；上海 unfortunate 全句（§8a，ATP 2026-10-13）——引语一律照原文全句。"
+  "quotes": "发布会回环句/记忆句/金句（事实卡 §8c，ausopen.com 原文）；美网颁奖 30 年句＋God has seen 句（§8d，ATP 战报直引）；上海让位回答原声（上海八强赛后场边采访，官方频道 KlSx2iN2c4I 61.50–78.92，2026-10-30 所有者选定候选 B；原 §8a 文章句全网无原声载体，弃用）——引语一律照原文全句。"
  },
  "_claims": {
   "公开赛年代只有伦德尔和穆雷以大满贯决赛四连败开局": [
@@ -129,7 +129,7 @@
   ],
   "_why": "全称断言逐条认领两个独立来源（不同主机优先）：两个『最老』分口径登记（首登＝AFP 系两家独立报纸＋ATP 锁定稿佐证登顶日；年终＝ATP 锁定稿原文直书＋纪录清单站）；125 胜与四连败名单出自澳网官网综述并配第二源；0-5 账本以 Tennis.com 交手逐项列表＋Tennis Gazette 五场综述互证。"
  },
- "_why_sources": "十七条源全部先经 download-video 存进 Release 存档（source-<id>），再 probe 实测、双档 ASR 落库后才入 spec；无一条 YouTube 直链。实拍十三条：rg26＝Roland-Garros 官方 2026 决赛长集锦 JmpbWq0qkEg（1920×1080/1113s）；presser＝RG 官方夺冠发布会 g_6522aZuv4（591s，原声 1 与结尾金句）；rg22＝RG 官方经典全场 7tpaxZTTi2w（1406s）；rg24＝RG 官方 2024 决赛长集锦 nwofBAmsDpE（2507s）；ao25＝AO 官方 2025 决赛长集锦 F5B1QpU0Evo（490s）；ao26＝AO 官方 2026 半决赛长集锦 kYlFxO1HA_A（488s，先前已存档）；wim26＝Wimbledon 官方 2026 决赛长集锦 t88oAZbdtX8（834s）；uso26＝US Open 官方 2026 决赛长集锦 zqTAG7tEC1k（734s，先前已存档）；ceremony＝US Open 官方颁奖礼全程 5xvs0FC_A-M（951s，原声 2）；shl＝上海官方集锦 8ze0KoQm6nA（135s）；vienna＝Tennis TV 维也纳官方集锦 FlikB32EESM（156s）；atpfeat＝ATP 官方锁定年终第一特辑 Gt65rDLQSa8（120s）。uso20 全段统一用 US Open 官方浓缩版 zujq-bvo2SM（1876s，probe 实测 1920×1080/29.97fps，双档 ASR 已落库、句界实锚）；长集锦版 2WjkzGb4u84 实测 1280×720 与主源尺寸不合（dry-run 尺寸闸＋1080p 硬规），弃用；802s 版 hsm03aUs4-w 已不可用。S2 一度悬着的 720p 破例问题就此消解，不需要所有者破例。自制动画四条（路线甲，本地 PIL 代码绘制、系列 tokens，存档版与本地生产版视频流一致、仅补静音 AAC 轨）：a1＝两个『最老』双轴 zv26a1old01（21.0s）、a2＝125/41 累积 zv26a2wait1（14.0s）、a3＝0-5 账本 zv26a3ledg1（22.0s）、a4＝2026 战绩条 zv26a4repo1（14.0s）。上海原声 3 无可用官方视频（R4 场内采访与 SF 发布会双档 ASR 逐句核过均无该句），按预案降级引语卡（见 seg『原声 3』_quote_why）。",
+ "_why_sources": "十八条源全部先经 download-video 存进 Release 存档（source-<id>），再 probe 实测、双档 ASR 落库后才入 spec；无一条 YouTube 直链。实拍十四条：rg26＝Roland-Garros 官方 2026 决赛长集锦 JmpbWq0qkEg（1920×1080/1113s）；presser＝RG 官方夺冠发布会 g_6522aZuv4（591s，原声 1 与结尾金句）；rg22＝RG 官方经典全场 7tpaxZTTi2w（1406s）；rg24＝RG 官方 2024 决赛长集锦 nwofBAmsDpE（2507s）；ao25＝AO 官方 2025 决赛长集锦 F5B1QpU0Evo（490s）；ao26＝AO 官方 2026 半决赛长集锦 kYlFxO1HA_A（488s，先前已存档）；wim26＝Wimbledon 官方 2026 决赛长集锦 t88oAZbdtX8（834s）；uso26＝US Open 官方 2026 决赛长集锦 zqTAG7tEC1k（734s，先前已存档）；ceremony＝US Open 官方颁奖礼全程 5xvs0FC_A-M（951s，原声 2）；shl＝上海官方集锦 8ze0KoQm6nA（135s）；shqf＝上海官方八强场边采访 KlSx2iN2c4I（98s，原声 3，2026-10-30 补存档）；vienna＝Tennis TV 维也纳官方集锦 FlikB32EESM（156s）；atpfeat＝ATP 官方锁定年终第一特辑 Gt65rDLQSa8（120s）。uso20 全段统一用 US Open 官方浓缩版 zujq-bvo2SM（1876s，probe 实测 1920×1080/29.97fps，双档 ASR 已落库、句界实锚）；长集锦版 2WjkzGb4u84 实测 1280×720 与主源尺寸不合（dry-run 尺寸闸＋1080p 硬规），弃用；802s 版 hsm03aUs4-w 已不可用。S2 一度悬着的 720p 破例问题就此消解，不需要所有者破例。自制动画四条（路线甲，本地 PIL 代码绘制、系列 tokens，存档版与本地生产版视频流一致、仅补静音 AAC 轨）：a1＝两个『最老』双轴 zv26a1old01（21.0s）、a2＝125/41 累积 zv26a2wait1（14.0s）、a3＝0-5 账本 zv26a3ledg1（22.0s）、a4＝2026 战绩条 zv26a4repo1（14.0s）。上海原声 3 的文章原句无可用官方视频（R4 场内采访与 SF 发布会双档 ASR 逐句核过均无该句），2026-10-30 所有者改定同站八强场边采访真原声 shqf（见 seg『原声 3』_quote_why）。",
  "_production_status": "2026-10-30 第二阶段：事实卡/脚本已获所有者批准；取材落源、动画（对齐标准自检：标题首行墨迹顶 y=197≥190、与 builder 标题块净距 71px；A1 下方标签叠印已修 +16px 间距复检干净；光晕中间档 R445/blur52/峰值 180）、封面（FFT 官方捧杯图 focus 0.50）均已落位。待回项：① 全部 probe 已落盘（zujq 1920×1080/29.97、rg24 1920×1080/25），S2 的 720p 破例问题消解（长集锦版 720p 已弃用）；② a2 存档 probe.json 时长字段仍记 15.0s（Release 资产实测 2,209,372 字节＝14.0s 终版，render 前请主线复核该 probe）；③ 旁白 S3 两处事实层修正（三个多小时/第二盘还没打完）与 S5a 拆分点标点调整（逗号改句号）已落字，语义与脚本实质未动；④ asr_plan/dry-run 闸处置链：S6 拆三段、S2 按空当拆段、S5c 旁白＋原声引语段、引语字卡按行宽拆条（本地 quote_overflow_rows 复审 0 超宽）、冷开场 payoff 声明＋正文重放延窗、三处 point-end 按记分翻牌时刻延窗/看图认领，均已落 spec；⑤ dry-run 仍有一条已接受告警：A3 末『而他的回答是——』接 S7 首句被判整句拆段——已批脚本的悬念句式（中间隔着原声 3 引语卡即他的回答），按脚本原样保留。narration 实测回来后动画/窗口按实测原速复核，再交主线 render。",
  "sources": {
   "rg26": "https://github.com/robertyang87/tennislive/releases/download/source-JmpbWq0qkEg/JmpbWq0qkEg.mp4",
@@ -143,6 +143,7 @@
   "presser": "https://github.com/robertyang87/tennislive/releases/download/source-g_6522aZuv4/g_6522aZuv4.mp4",
   "ceremony": "https://github.com/robertyang87/tennislive/releases/download/source-5xvs0FC_A-M/5xvs0FC_A-M.mp4",
   "shl": "https://github.com/robertyang87/tennislive/releases/download/source-8ze0KoQm6nA/8ze0KoQm6nA.mp4",
+  "shqf": "https://github.com/robertyang87/tennislive/releases/download/source-KlSx2iN2c4I/KlSx2iN2c4I.mp4",
   "vienna": "https://github.com/robertyang87/tennislive/releases/download/source-FlikB32EESM/FlikB32EESM.mp4",
   "atpfeat": "https://github.com/robertyang87/tennislive/releases/download/source-Gt65rDLQSa8/Gt65rDLQSa8.mp4",
   "a1": "https://github.com/robertyang87/tennislive/releases/download/source-zv26a1old01/zv26a1old01.mp4",
@@ -1115,37 +1116,75 @@
    "_why": "S6 动画 A3（0-5 账本卡）：五站逐项（印第安维尔斯/迈阿密/蒙特卡洛半决赛、马德里/温网决赛）只列站名轮次，不写蒙特卡洛/马德里盘分（事实卡 §10、§12-8）；辛纳 10-06 宣布赛季结束（§9），锁定 10-12（§6），相隔六天。段尾标点调整（逐项报备）：脚本原文以破折号『——』悬念收尾引出原声 3，但配音硬闸（voice_auto_review.split_sentences）判『整句拆进两段分开合成』为硬伤、无认领口——按其自带改法『在段尾收成一句』的最小形式，仅将段尾『——』换成终止标点『……』，字词与语义一字未动、悬念语气保留，TTS 以收尾语调合成；渲染前请所有者复核此标点。"
   },
   {
-   "source": "shl",
-   "start": 32,
-   "end": 49,
-   "cx": 0.5,
+   "source": "shqf",
+   "start": 61.5,
+   "end": 78.92,
+   "cx": 0.562,
    "track": false,
    "kind": "quote",
    "quote": [
     {
-     "at": 0.3,
-     "end": 4.2,
-     "text": "That I clinched year-end No. 1 is, of course,\n锁定年终第一这件事"
+     "at": 0.1,
+     "end": 2.64,
+     "text": "Once Yannick unfortunately did the announcement\n自从辛纳不幸宣布"
     },
     {
-     "at": 4.2,
+     "at": 2.64,
+     "end": 5.08,
+     "text": "that he's not gonna play for the rest of the year,\n他今年余下的比赛都不打了"
+    },
+    {
+     "at": 6.06,
      "end": 8.5,
-     "text": "with Jannik being out, unfortunate.\n在辛纳缺席的情况下，当然不走运"
+     "text": "I'm four and a half thousand points ahead of everyone else,\n我领先所有人四千五百分"
     },
     {
-     "at": 8.5,
-     "end": 12.3,
-     "text": "But I think, once it happens\n但我想，等它真的发生"
+     "at": 8.52,
+     "end": 10.68,
+     "text": "so I feel like I have to trust myself enough\n所以我只能相信自己"
     },
     {
-     "at": 12.3,
-     "end": 16.5,
-     "text": "it will be a special moment for me.\n会是属于我的特殊时刻"
+     "at": 10.68,
+     "end": 13.38,
+     "text": "that I'm gonna win at least a couple of matches\n能至少赢下几场比赛"
+    },
+    {
+     "at": 13.38,
+     "end": 14.4,
+     "text": "until the end of the year.\n打到今年结束"
+    },
+    {
+     "at": 15.26,
+     "end": 17.36,
+     "text": "So I wasn't too worried about that.\n所以我没太担心"
     }
    ],
-   "_quote_kind": "player_quote_card",
-   "_quote_why": "原声 3 降级引语卡（所有者预案）：该全句出自上海赛后发布会（ATP 官方稿 2026-10-13 直引，事实卡 §8a），但上海官方频道仅发布 R4 场内采访（xYeyKSld2n0）与 SF 发布会（ZkO6mtWRAIg），双档 ASR 逐句核过均无此句，Tennis TV/粉丝频道不在官方源白名单——按预案降级为引语卡：全句照录、禁只截『unfortunate』，画面用上海官方集锦无解说空当（ASR 32–49 静默）。原声保底仍有发布会与颁奖礼 2 处。",
-   "point_end_ok": "已核缩略图墙 contact_00：本窗 32–49s 为一整段回合（约 48s 前打完）＋分后走位特写，49.4s 记分翻牌落在特写段内、非回合中途；引语卡底图切点在分与分之间。"
+   "_quote_kind": "player_quote",
+   "_quote_why": "原声 3（所有者 2026-10-30 选定候选 B，替换原 ATP 文字稿引语卡）：上海大师赛八强赛后场边采访（Rolex Shanghai Masters 官方频道 KlSx2iN2c4I），问及锁定年终第一是否释压，他亲口谈辛纳宣布赛季报销、自己领先四千五百分、'没太担心'——即旁白所引'他的回答'。窗口 61.50–78.92 按 medium.en 逐词时码落完整答句（首词 Once 61.60、末词 that 78.86，下一句 78.98 起，不切词、不压前句 because 的词尾）；卡面英文照原句逐字（ASR 转写形 Janik/4,500 不取，姓名与数字词形以实声与所有者核定原句为准），中文为原句直译，不残留旧文章句译文。画面即采访本身：frame=person，9 点采样脸中心 0.497–0.628、cx 0.562（1080p 正本实测）。原文章句（ATP 2026-10-13 文字稿）全网无原声载体（9 个官方载体 ASR 逐字核过），所有者拍板换此真原声。",
+   "frame": "person",
+   "cx_face": {
+    "samples": [
+     0.5645,
+     0.5703,
+     0.5677,
+     0.4967,
+     0.5165,
+     0.5705,
+     0.5936,
+     0.5663,
+     0.6278
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-10-30T15:41:50+00:00",
+    "median": 0.5677,
+    "spread": 0.1311
+   }
   },
   {
    "source": "a4",
