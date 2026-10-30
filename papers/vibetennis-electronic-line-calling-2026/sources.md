@@ -44,7 +44,7 @@ https://resources.platform.pulselive.com/HawkEye/document/2016/08/15/1e6cdaa4-2b
 > … testing … Wind (and therefore camera wobble), Bright sunlight …, Shadows …, Dark or overcast conditions, Artificial floodlights
 > … high speed video footage (1000fps), similar to that obtained during ITF testing
 
-⚠️ 网上流传的「3.6 mm」和这份官方文件对不上，片子用 2.6 mm。帧率文件里没写系统自己的，1000fps 是测试用的高速相机。
+⚠️ 「3.6 mm」也出自 Hawk-Eye：Cross 2014 引的是 Hawk-Eye 官网「约 3.6 mm」，Mather 2008 引 Fischetti 2007「3 mm 以内」。2.6 mm 是这份 2016 文件写的 2006 年 ITF 测试结果。几个数说的不是同一次测量，片子只用 2.6 mm，字幕带「2006 年测试」。帧率文件里没写系统自己的，1000fps 是测试用的高速相机。
 
 ## 3. Whitney, Wurnitsch, Hontiveros & Louie (2008), Current Biology 18(20): R947–R949
 
@@ -54,9 +54,6 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC2652013/
 
 （这一集不一定用，留作人眼对照的出处。）
 
-## 没读到的
-- Cross (2014) The footprint of a tennis ball：researchgate 403，Springer 不在放行名单。「脚印约 10 cm、渲染椭圆约 12.6 cm、偏向判 IN」这些说法**不用**。
-- Mather (2008)：royalsocietypublishing.org 不在放行名单。「人眼约 4 cm」**不用**。
 
 ## 4. 补充（2026-10-30 自查时加的，均为新闻报道，非一手文件）
 - 法网 2026 仍保留人工司线、看红土球印，是四大满贯里唯一的：Sky Sports（2025-09）、Arab News、SuperSport；赛事总监 Mauresmo「The machine is not 100% reliable」见 AP 转载（WTOP / TSN / theScore，2026-06）。Ruud–Fonseca 那一分各家说法不一，不用。
@@ -74,3 +71,27 @@ https://www.itftennis.com/en/about-us/tennis-tech/classified-elc-systems/
 - 澳网、美网：2021 年起全场 Hawk-Eye Live（ESPN、SportBusiness、NPR 2022、Tennishead）
 - 温网：2025 年起 Hawk-Eye Live（SVG Europe、Sport Resolutions）
 - 2026 年没见到任何一家更换系统的公告，但也没找到 2026 年的官方确认
+
+## 7. Mather (2008) Proc. R. Soc. B 275: 1645–1651, doi:10.1098/rspb.2008.0211
+所有者 2026-10-30 上传的 Royal Society 原版 PDF（7 页，2008 年制作）。
+- 数据：ATP 提供的 **1473 次挑战、246 名球员、15 站 ATP 赛事、2006–2007 年**（不是温网专项）
+- > a significant proportion (39.3%) of the challenged line calls turned out to be incorrect according to the Hawk-Eye data
+- 摘要：> Both players and line judges are remarkably accurate at judging ball bounce position, with a positional uncertainty of less than 40 mm. Line judges are more reliable than players. Judgements are more difficult for balls bouncing near base and service lines than those bouncing near side and centre lines. There is no evidence for significant errors in localization due to image motion.
+- 位置不确定度（模型参数 space constant，单位 mm）：总体 球员 30 / 司线 22；Table 1 底线与发球线 球员 46 / 司线 32；边线 26 / 14；中线 26 / 14。原文：uncertainty for both players and line judges is doubled for base and service lines
+- 结论：> The model predicts that 8.2% of all line calls involving balls within 100 mm of a court line will be called incorrectly by line judges
+- 球和场地的接触面宽 44 mm（引 Fischetti 2007）
+- ⚠️ 和 Whitney 2008 结论相反：Whitney 说错判多数顺着运动方向偏，Mather 说没有证据表明运动造成显著定位误差（中点只偏 14.4 mm，约接触面宽度的三分之一）
+
+## 8. Cross (2014) The footprint of a tennis ball, Sports Engineering 17: 239–247
+所有者 2026-10-30 上传的作者手稿版（19 页 TeX，2014-05-01 生成，无期刊页眉；和正式版可能有排版差异）。
+- 摘要：> The Hawk-Eye line calling system in tennis uses a footprint of the ball to determine whether the ball was in or out. However, the footprint itself is not measured. It is the ball trajectory through the air that is measured.
+- > The method used to estimate the footprint with the Hawk-Eye system has not been published as far as the author is aware
+- 接触时长：Wilson 球 total impact duration 4.72 ± 0.01 ms
+- 竖直落地：maximum contact diameter 42 ± 1 mm
+- 斜落地实验（水平 21.1 m/s、竖直 6.8 m/s，黑板撒粉）：footprint length 100 ± 1 mm、width 44 ± 1 mm
+- Hawk-Eye 转播画面（2014-01-02 布里斯班）：> The footprint shown in the Hawk-Eye system is an ellipse that is typically about 126 mm long and about 45 mm wide for a fast first serve. If the ball slides throughout the bounce, then a 126 mm long footprint implies that the average horizontal speed … is about 28 m/s, approximately as expected.
+  ⚠️ 原文没有「椭圆偏大 20–25%」「偏向判 IN」的结论
+- 绒毛：> Fibres extending out from the ball contact the court surface about 10 mm before the ball begins to compress … the effect can probably be ignored since it is unlikely to be detected by players or line referees. Nevertheless, there is no requirement in the rules of tennis that the effect should be ignored. If any part of the ball touches a line, then the ball is conventionally assumed to be "in".
+- 场地不平：> local variations in the height of the contact surface, even as small as 1 mm, can alter the initial contact point of a ball on the court by up to 3 or 4 mm when the ball is incident at a small angle
+- 像素：作者估算——若每台相机以 1920 像素横向覆盖约 12 m，一像素约 6 mm（是假设性估算，不是 Hawk-Eye 的实际参数）
+- 对当年 ITF 测试的批评：当年按 2000 fps 高速相机测，作者认为看清落地头 0.1 ms 要 10000 fps 以上。⚠️ 这是 2014 年对当年流程的批评，现行第 28.1 版的测试帧率原文没写，片中不把它说成现状
