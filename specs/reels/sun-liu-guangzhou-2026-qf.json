@@ -127,7 +127,7 @@
       "title_card": "六次没让比赛进第三盘\n孙心然闯进四强",
       "kicker": "广州1/4决赛 · 孙心然",
       "seconds": 12,
-      "narration": "北京时间十月三十号，广州四分之一决赛。十六岁的孙心然，七比五、七比六击败刘婧文，首次闯进巡回赛四强。"
+      "narration": "北京时间十月三十号傍晚，广州四分之一决赛。十六岁的孙心然，七比五、七比六击败刘婧文，首次闯进巡回赛四强。"
     },
     {
       "start": 57.2,
@@ -434,7 +434,9 @@
     "winner_result": "7-5 7-6(2)",
     "loser_result": "5-7 6-7(2)",
     "date": "2026-10-30",
-    "_match_day_why": "官方LS006 MatchState F，2026-10-30中心场；官方WTA视频4601489同日发布并确认赛果。"
+    "_match_day_why": "官方LS006 MatchState F，2026-10-30中心场；官方WTA视频4601489同日发布并确认赛果。",
+    "start_utc": "2026-10-30T09:47:44.08+00:00",
+    "_start_time_why": "WTA官方LS006 MatchTimeStamp09:47:44UTC=北京时间17:47，逐分第一分10:02:23UTC=18:02，均为傍晚。开场不报未经核准的精确开球分钟。"
   },
   "_evidence_files": [
     "data/evidence/sun-liu-guangzhou-2026-qf/draft-status.json",
@@ -464,7 +466,6 @@
     }
   },
   "_tts_backend_why": "沿用赛场之上YunjianNeural +6%，本片不使用Azure专属情绪风格；实际音频仍走五项自动审查。",
-  "broadcast_profile": "wta",
   "_scorebox_why": "原生1280x720，从完整记分条核验：x60起，y579-653；次盘最右分数及徽标至400，留14px余量。WTA紫色广州球场官方记分条，保持原纵坐标。",
   "_hit_data": {
     "break_points": "官方WTA视频4601489明确：次盘挽救六个盘点；LS006次盘5-6记分条逐帧互证。",
@@ -572,5 +573,6 @@
     "pbp_rejected_for_total": "逐分pointWinner存在占先球赢后却回到平分的矛盾标签，故不重算汇总。比赛结果/盘点依官方比分和实拍记分条。",
     "headshots": "孙为本场官方高清照片；刘为本场WTA官方视频79.5秒近景，身份由米白上衣绿裙及官方比分条互证。",
     "tnns": "75838102明确列序Sun/Liu；两盘合计完全等于全场，实际run41059852651。"
-  }
+  },
+  "scoreboard_profile": "wta"
 }

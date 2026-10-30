@@ -36,7 +36,7 @@ jobs:
           URL: ${{ inputs.url }}
         run: |
           set -uo pipefail
-          pip install -q yt-dlp
+          pip install -q "yt-dlp[default]"
           mkdir -p dl
           ok=0
           for client in "" "android_vr" "tv_simply" "web_embedded" "android,ios"; do
