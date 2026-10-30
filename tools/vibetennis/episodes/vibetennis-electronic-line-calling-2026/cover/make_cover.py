@@ -138,15 +138,16 @@ def style_B(_hero, out):
 
 
 def style_C(hero_path, out):
-    img = shade(Image.open(hero_path).convert("RGB").resize((W, H), Image.LANCZOS), 0.34, 0.74, 0.9, 0.9)
+    # 文案整体放在球场下方的暗场里，上半屏只留 logo，不压球场（所有者 2026-10-30）
+    img = shade(Image.open(hero_path).convert("RGB").resize((W, H), Image.LANCZOS), 0.12, 0.62, 0.7, 0.92)
     d = ImageDraw.Draw(img); logo(img, d)
-    ftt = font(SERIF, 200)
-    d.text((134, 290), "电子司线", font=ftt, fill=WH)
-    runs(d, (134, 510), "【真的准吗】？", ftt, WH, Y)
-    f1 = font(SERIF, 112)
-    d.text((140, 2450), "12 台相机盯着一颗球", font=f1, fill=WH)
-    d.text((140, 2600), "落点却是算出来的", font=f1, fill=Y)
-    d.text((146, 2780), "温网每块场地 12 台相机 · 以 Hawk-Eye 为例", font=font(SANS, 44), fill=GR)
+    ftt = font(SERIF, 190)
+    d.text((134, 1840), "电子司线", font=ftt, fill=WH)
+    runs(d, (134, 2050), "【真的准吗】？", ftt, WH, Y)
+    f1 = font(SERIF, 96)
+    d.text((140, 2420), "12 台相机盯着一颗球，", font=f1, fill=WH)
+    d.text((140, 2550), "落点却是算出来的", font=f1, fill=Y)
+    d.text((146, 2760), "温网每块场地 12 台相机 · 以 Hawk-Eye 为例", font=font(SANS, 44), fill=GR)
     img.save(out, quality=94, subsampling=0)
 
 
