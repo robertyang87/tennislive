@@ -1,0 +1,447 @@
+stats	Set up job	﻿2026-10-30T15:27:21.8994231Z Current runner version: '2.338.0'
+stats	Set up job	2026-10-30T15:27:21.9021346Z ##[group]Runner Image Provisioner
+stats	Set up job	2026-10-30T15:27:21.9022271Z Hosted Compute Agent
+stats	Set up job	2026-10-30T15:27:21.9022888Z Version: 20261021.618
+stats	Set up job	2026-10-30T15:27:21.9023696Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+stats	Set up job	2026-10-30T15:27:21.9024503Z Build Date: 2026-10-21T00:45:21Z
+stats	Set up job	2026-10-30T15:27:21.9025237Z Worker ID: {25663727-205c-42d0-b1ef-3a4e88c9eb18}
+stats	Set up job	2026-10-30T15:27:21.9026081Z Region: eastus2
+stats	Set up job	2026-10-30T15:27:21.9026736Z Cloud: Azure
+stats	Set up job	2026-10-30T15:27:21.9027405Z ##[endgroup]
+stats	Set up job	2026-10-30T15:27:21.9028977Z ##[group]Operating System
+stats	Set up job	2026-10-30T15:27:21.9029625Z Ubuntu
+stats	Set up job	2026-10-30T15:27:21.9030265Z 24.04.5
+stats	Set up job	2026-10-30T15:27:21.9031001Z LTS
+stats	Set up job	2026-10-30T15:27:21.9031854Z ##[endgroup]
+stats	Set up job	2026-10-30T15:27:21.9032464Z ##[group]Runner Image
+stats	Set up job	2026-10-30T15:27:21.9033599Z Image: ubuntu-24.04
+stats	Set up job	2026-10-30T15:27:21.9034289Z Version: 20261025.353.1
+stats	Set up job	2026-10-30T15:27:21.9035473Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+stats	Set up job	2026-10-30T15:27:21.9037402Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+stats	Set up job	2026-10-30T15:27:21.9038427Z ##[endgroup]
+stats	Set up job	2026-10-30T15:27:21.9039596Z ##[group]GITHUB_TOKEN Permissions
+stats	Set up job	2026-10-30T15:27:21.9042862Z Contents: read
+stats	Set up job	2026-10-30T15:27:21.9043551Z Metadata: read
+stats	Set up job	2026-10-30T15:27:21.9044162Z ##[endgroup]
+stats	Set up job	2026-10-30T15:27:21.9046351Z Secret source: Actions
+stats	Set up job	2026-10-30T15:27:21.9047321Z Cache mode: write
+stats	Set up job	2026-10-30T15:27:21.9049304Z Prepare workflow directory
+stats	Set up job	2026-10-30T15:27:21.9387527Z Prepare all required actions
+stats	Set up job	2026-10-30T15:27:21.9435844Z Getting action download info
+stats	Set up job	2026-10-30T15:27:22.1698052Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+stats	Set up job	2026-10-30T15:27:22.2963057Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+stats	Set up job	2026-10-30T15:27:22.4826208Z Complete job name: stats
+stats	Run actions/checkout@v4	﻿2026-10-30T15:27:22.5748720Z ##[group]Run actions/checkout@v4
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5749637Z with:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5750135Z   sparse-checkout: tools
+stats	Run actions/checkout@v4	src
+stats	Run actions/checkout@v4	pyproject.toml
+stats	Run actions/checkout@v4	
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5750976Z   repository: robertyang87/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5754763Z   token: ***
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5755204Z   ssh-strict: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5755646Z   ssh-user: git
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5756092Z   persist-credentials: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5756575Z   clean: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5757020Z   sparse-checkout-cone-mode: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5757539Z   fetch-depth: 1
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5757963Z   fetch-tags: false
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5758396Z   show-progress: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5758845Z   lfs: false
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5759262Z   submodules: false
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5759710Z   set-safe-directory: true
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5760220Z   allow-unsafe-pr-checkout: false
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.5761159Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8709599Z Syncing repository: robertyang87/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8712348Z ##[group]Getting Git version info
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8713375Z Working directory is '/home/runner/work/tennislive/tennislive'
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8714886Z [command]/usr/bin/git version
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8835408Z git version 2.56.0
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8862588Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8878810Z Temporarily overriding HOME='/home/runner/work/_temp/84cdb228-33a5-4791-9487-99eb86e694c6' before making global git config changes
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8882461Z Adding repository directory to the temporary git global config as a safe directory
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8886269Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8958962Z Deleting the contents of '/home/runner/work/tennislive/tennislive'
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8964033Z ##[group]Initializing the repository
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.8972411Z [command]/usr/bin/git init /home/runner/work/tennislive/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9124689Z hint: Using 'master' as the name for the initial branch. This default branch name
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9127746Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9129897Z hint: to use in all of your new repositories, which will suppress this warning,
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9131787Z hint: call:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9132816Z hint:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9134020Z hint: 	git config --global init.defaultBranch <name>
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9135387Z hint:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9136578Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9138626Z hint: 'development'. The just-created branch can be renamed via this command:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9140152Z hint:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9141474Z hint: 	git branch -m <name>
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9142644Z hint:
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9143998Z hint: Disable this message with "git config set advice.defaultBranchName false"
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9146309Z Initialized empty Git repository in /home/runner/work/tennislive/tennislive/.git/
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9160243Z [command]/usr/bin/git remote add origin https://github.com/robertyang87/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9235660Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9237433Z ##[group]Disabling automatic garbage collection
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9241588Z [command]/usr/bin/git config --local gc.auto 0
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9288402Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9289975Z ##[group]Setting up auth
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9298650Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9363371Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9852543Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+stats	Run actions/checkout@v4	2026-10-30T15:27:22.9906674Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0179732Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0231736Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0481436Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0532127Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0533864Z ##[group]Fetching the repository
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.0546313Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin +42f53ab66571af864d6e76be20dba2d3d779b296:refs/remotes/origin/main
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4620414Z From https://github.com/robertyang87/tennislive
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4623972Z  * [new ref]         42f53ab66571af864d6e76be20dba2d3d779b296 -> origin/main
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4630424Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4633433Z ##[group]Determining the checkout info
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4636264Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4638916Z ##[group]Setting up sparse checkout
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4641933Z [command]/usr/bin/git sparse-checkout set tools src pyproject.toml
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4707153Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4709013Z ##[group]Checking out the ref
+stats	Run actions/checkout@v4	2026-10-30T15:27:23.4711547Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+stats	Run actions/checkout@v4	2026-10-30T15:27:24.3377880Z Switched to a new branch 'main'
+stats	Run actions/checkout@v4	2026-10-30T15:27:24.3383662Z branch 'main' set up to track 'origin/main'.
+stats	Run actions/checkout@v4	2026-10-30T15:27:24.3402547Z ##[endgroup]
+stats	Run actions/checkout@v4	2026-10-30T15:27:24.3474768Z [command]/usr/bin/git log -1 --format=%H
+stats	Run actions/checkout@v4	2026-10-30T15:27:24.3511746Z 42f53ab66571af864d6e76be20dba2d3d779b296
+stats	Run actions/setup-python@v5	﻿2026-10-30T15:27:24.3783484Z ##[group]Run actions/setup-python@v5
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3783834Z with:
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3784058Z   python-version: 3.11
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3784288Z   check-latest: false
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3786578Z   token: ***
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3786799Z   update-environment: true
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3787312Z   allow-prereleases: false
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3787544Z   freethreaded: false
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.3787757Z ##[endgroup]
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.5180244Z ##[group]Installed versions
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.5286142Z (node:2335) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.5287469Z (Use `node --trace-deprecation ...` to show where the warning was created)
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.5288323Z Successfully set up CPython (3.11.17)
+stats	Run actions/setup-python@v5	2026-10-30T15:27:24.5289210Z ##[endgroup]
+stats	装 Chromium	﻿2026-10-30T15:27:24.5479416Z ##[group]Run python -m pip install -q playwright
+stats	装 Chromium	2026-10-30T15:27:24.5480165Z [36;1mpython -m pip install -q playwright[0m
+stats	装 Chromium	2026-10-30T15:27:24.5481044Z [36;1m# ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风**（CLAUDE.md[0m
+stats	装 Chromium	2026-10-30T15:27:24.5481629Z [36;1m# 那条「一次静静烧了 13 分 42 秒」）。240 秒是 4~48 倍余量；[0m
+stats	装 Chromium	2026-10-30T15:27:24.5482115Z [36;1m# **别调小**——apt 只是慢不是挂死，把「慢」误判成「挂死」，重试[0m
+stats	装 Chromium	2026-10-30T15:27:24.5482567Z [36;1m# 就从救场变成三倍的浪费。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5577461Z [36;1m#[0m
+stats	装 Chromium	2026-10-30T15:27:24.5577887Z [36;1m# ⚠️⚠️ **第一次超时会毒死第二次，所以重试之前必须等 dpkg 锁松开。**[0m
+stats	装 Chromium	2026-10-30T15:27:24.5578294Z [36;1m# `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get[0m
+stats	装 Chromium	2026-10-30T15:27:24.5578759Z [36;1m# 活了下来并攥着 `/var/lib/dpkg/lock-frontend`**——run 31003290962[0m
+stats	装 Chromium	2026-10-30T15:27:24.5579220Z [36;1m# 的日志里第 2 次只活了两秒就死在 `Could not get lock`。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5579608Z [36;1m# 这一段是从 `match-reel.yml` 抄的，**连注释一起抄**：这个仓库的[0m
+stats	装 Chromium	2026-10-30T15:27:24.5579976Z [36;1m# 注释就是教训的存放处，只抄结构会把坑再踩一遍（CLAUDE.md 明写）。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5580410Z [36;1m#[0m
+stats	装 Chromium	2026-10-30T15:27:24.5580698Z [36;1m# ⚠️ 用 `pgrep -x`（按可执行名精确匹配），不是 `pgrep -f`——`-f`[0m
+stats	装 Chromium	2026-10-30T15:27:24.5581382Z [36;1m# 扫整条命令行会把循环自己数进去（CLAUDE.md 那条经典）。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5581675Z [36;1mpw_wait_apt() {[0m
+stats	装 Chromium	2026-10-30T15:27:24.5581914Z [36;1m  for _ in $(seq 1 22); do[0m
+stats	装 Chromium	2026-10-30T15:27:24.5582485Z [36;1m    if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then[0m
+stats	装 Chromium	2026-10-30T15:27:24.5582946Z [36;1m      return 0[0m
+stats	装 Chromium	2026-10-30T15:27:24.5583169Z [36;1m    fi[0m
+stats	装 Chromium	2026-10-30T15:27:24.5583369Z [36;1m    sleep 5[0m
+stats	装 Chromium	2026-10-30T15:27:24.5583577Z [36;1m  done[0m
+stats	装 Chromium	2026-10-30T15:27:24.5583957Z [36;1m  echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次八成会在两秒内死在 Could not get lock，不是 apt 装不上"[0m
+stats	装 Chromium	2026-10-30T15:27:24.5584479Z [36;1m  # ⚠️⚠️ 2026-08-19（run 32211814483，tnns-stats）：等满 110 秒，锁**仍然**[0m
+stats	装 Chromium	2026-10-30T15:27:24.5584893Z [36;1m  # 没松——被 `timeout` 杀掉的那层壳没能把信号传给它派生出来的[0m
+stats	装 Chromium	2026-10-30T15:27:24.5585247Z [36;1m  # apt-get（这正是上面那条注释说的「派生的 apt-get 活了下来」），[0m
+stats	装 Chromium	2026-10-30T15:27:24.5585595Z [36;1m  # 那个孤儿这次不是挂死，是在镜像上慢慢下一个字体包，110 秒不够它[0m
+stats	装 Chromium	2026-10-30T15:27:24.5585902Z [36;1m  # 下完。而这一层已经贴着步骤预算的上限（`test_等dpkg锁的预算够长[0m
+stats	装 Chromium	2026-10-30T15:27:24.5586211Z [36;1m  # 又不许撑爆步骤预算` 钉的 110~120 秒）——**再往上加等待时间不是[0m
+stats	装 Chromium	2026-10-30T15:27:24.5586501Z [36;1m  # 出路**：上一次从 60 秒加到 110 秒就是这么来的，这次撞上同一个[0m
+stats	装 Chromium	2026-10-30T15:27:24.5586784Z [36;1m  # 天花板，说明「多等一会」这条路已经走到头了。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5587030Z [36;1m  #[0m
+stats	装 Chromium	2026-10-30T15:27:24.5587263Z [36;1m  # 我们不需要保住那个孤儿的进度：它已经下进[0m
+stats	装 Chromium	2026-10-30T15:27:24.5587558Z [36;1m  # `/var/cache/apt/archives` 的包，下一次重试照样会复用（ci.yml[0m
+stats	装 Chromium	2026-10-30T15:27:24.5587883Z [36;1m  # 那条注释早说过）。所以**主动结束它，不再指望它自己让开**——[0m
+stats	装 Chromium	2026-10-30T15:27:24.5588164Z [36;1m  # 这比继续加大等待预算快得多，也不会撞步骤超时。[0m
+stats	装 Chromium	2026-10-30T15:27:24.5588451Z [36;1m  sudo pkill -9 apt-get 2>/dev/null || true[0m
+stats	装 Chromium	2026-10-30T15:27:24.5588773Z [36;1m  sudo pkill -9 dpkg 2>/dev/null || true[0m
+stats	装 Chromium	2026-10-30T15:27:24.5589098Z [36;1m  sudo dpkg --configure -a 2>/dev/null || true[0m
+stats	装 Chromium	2026-10-30T15:27:24.5589403Z [36;1m}[0m
+stats	装 Chromium	2026-10-30T15:27:24.5589978Z [36;1mfor i in 1 2; do[0m
+stats	装 Chromium	2026-10-30T15:27:24.5590333Z [36;1m  timeout 240 python -m playwright install --with-deps chromium && break[0m
+stats	装 Chromium	2026-10-30T15:27:24.5591124Z [36;1m  echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"[0m
+stats	装 Chromium	2026-10-30T15:27:24.5591518Z [36;1m  pw_wait_apt[0m
+stats	装 Chromium	2026-10-30T15:27:24.5591742Z [36;1mdone[0m
+stats	装 Chromium	2026-10-30T15:27:24.5638415Z shell: /usr/bin/bash -e {0}
+stats	装 Chromium	2026-10-30T15:27:24.5639161Z env:
+stats	装 Chromium	2026-10-30T15:27:24.5639621Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	装 Chromium	2026-10-30T15:27:24.5640440Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+stats	装 Chromium	2026-10-30T15:27:24.5641396Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	装 Chromium	2026-10-30T15:27:24.5642053Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	装 Chromium	2026-10-30T15:27:24.5642506Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	装 Chromium	2026-10-30T15:27:24.5643125Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+stats	装 Chromium	2026-10-30T15:27:24.5643728Z ##[endgroup]
+stats	装 Chromium	2026-10-30T15:27:27.5005987Z Installing dependencies...
+stats	装 Chromium	2026-10-30T15:27:27.5075179Z Switching to root user to install dependencies...
+stats	装 Chromium	2026-10-30T15:27:27.5904175Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+stats	装 Chromium	2026-10-30T15:27:27.6256305Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+stats	装 Chromium	2026-10-30T15:27:27.6258104Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+stats	装 Chromium	2026-10-30T15:27:27.6278650Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+stats	装 Chromium	2026-10-30T15:27:27.6331922Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+stats	装 Chromium	2026-10-30T15:27:27.6352360Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+stats	装 Chromium	2026-10-30T15:27:27.7826511Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [682 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8200265Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [617 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8211885Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1408 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8280241Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8299051Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1708 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8378534Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8398256Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1813 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8494885Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [412 kB]
+stats	装 Chromium	2026-10-30T15:27:27.8509543Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+stats	装 Chromium	2026-10-30T15:27:27.9483241Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1146 kB]
+stats	装 Chromium	2026-10-30T15:27:27.9537165Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+stats	装 Chromium	2026-10-30T15:27:27.9553541Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1223 kB]
+stats	装 Chromium	2026-10-30T15:27:28.0031171Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+stats	装 Chromium	2026-10-30T15:27:31.2250128Z Fetched 10.5 MB in 1s (9415 kB/s)
+stats	装 Chromium	2026-10-30T15:27:32.3595837Z Reading package lists...
+stats	装 Chromium	2026-10-30T15:27:32.3906424Z Reading package lists...
+stats	装 Chromium	2026-10-30T15:27:32.6078787Z Building dependency tree...
+stats	装 Chromium	2026-10-30T15:27:32.6086833Z Reading state information...
+stats	装 Chromium	2026-10-30T15:27:32.7582074Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+stats	装 Chromium	2026-10-30T15:27:32.7583206Z libasound2t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7583966Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7584651Z libatk-bridge2.0-0t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7585237Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7586360Z libatk1.0-0t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7587145Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7587655Z libatspi2.0-0t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7588088Z libcairo2 is already the newest version (1.18.0-3build1).
+stats	装 Chromium	2026-10-30T15:27:32.7588524Z libcairo2 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7588965Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+stats	装 Chromium	2026-10-30T15:27:32.7589714Z libcups2t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7590362Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+stats	装 Chromium	2026-10-30T15:27:32.7591264Z libdbus-1-3 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7591718Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+stats	装 Chromium	2026-10-30T15:27:32.7592184Z libdrm2 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7592708Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+stats	装 Chromium	2026-10-30T15:27:32.7593158Z libgbm1 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7593603Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.10).
+stats	装 Chromium	2026-10-30T15:27:32.7594081Z libglib2.0-0t64 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7594622Z libnspr4 is already the newest version (2:4.35-1.1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7595055Z libnspr4 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7595468Z libnss3 is already the newest version (2:3.98-1ubuntu0.3).
+stats	装 Chromium	2026-10-30T15:27:32.7595902Z libnss3 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7596325Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7596827Z libpango-1.0-0 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7597268Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+stats	装 Chromium	2026-10-30T15:27:32.7597700Z libx11-6 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7598151Z libxcb1 is already the newest version (1.15-1ubuntu2).
+stats	装 Chromium	2026-10-30T15:27:32.7598469Z libxcb1 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7598794Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+stats	装 Chromium	2026-10-30T15:27:32.7599156Z libxcomposite1 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7599511Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7599851Z libxdamage1 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7600167Z libxext6 is already the newest version (2:1.3.4-1build2).
+stats	装 Chromium	2026-10-30T15:27:32.7600487Z libxext6 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7601048Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+stats	装 Chromium	2026-10-30T15:27:32.7601500Z libxfixes3 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7601832Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+stats	装 Chromium	2026-10-30T15:27:32.7602178Z libxkbcommon0 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7602507Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+stats	装 Chromium	2026-10-30T15:27:32.7602836Z libxrandr2 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7603156Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+stats	装 Chromium	2026-10-30T15:27:32.7603594Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+stats	装 Chromium	2026-10-30T15:27:32.7604078Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+stats	装 Chromium	2026-10-30T15:27:32.7604437Z libfontconfig1 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7604796Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+stats	装 Chromium	2026-10-30T15:27:32.7605168Z libfreetype6 set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7605502Z fonts-liberation is already the newest version (1:2.1.5-3).
+stats	装 Chromium	2026-10-30T15:27:32.7606087Z fonts-liberation set to manually installed.
+stats	装 Chromium	2026-10-30T15:27:32.7606420Z The following additional packages will be installed:
+stats	装 Chromium	2026-10-30T15:27:32.7606747Z   xfonts-encodings xfonts-utils
+stats	装 Chromium	2026-10-30T15:27:32.7607012Z Recommended packages:
+stats	装 Chromium	2026-10-30T15:27:32.7607257Z   fonts-ipafont-mincho fonts-tlwg-loma
+stats	装 Chromium	2026-10-30T15:27:32.7784510Z The following NEW packages will be installed:
+stats	装 Chromium	2026-10-30T15:27:32.7785363Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+stats	装 Chromium	2026-10-30T15:27:32.7791436Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+stats	装 Chromium	2026-10-30T15:27:32.7792478Z   xfonts-utils
+stats	装 Chromium	2026-10-30T15:27:32.7992232Z 0 upgraded, 9 newly installed, 0 to remove and 6 not upgraded.
+stats	装 Chromium	2026-10-30T15:27:32.7992682Z Need to get 21.1 MB of archives.
+stats	装 Chromium	2026-10-30T15:27:32.7993034Z After this operation, 79.5 MB of additional disk space will be used.
+stats	装 Chromium	2026-10-30T15:27:32.7993449Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+stats	装 Chromium	2026-10-30T15:27:32.8372627Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+stats	装 Chromium	2026-10-30T15:27:33.3344126Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+stats	装 Chromium	2026-10-30T15:27:33.9951871Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+stats	装 Chromium	2026-10-30T15:27:34.0287134Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+stats	装 Chromium	2026-10-30T15:27:34.3631606Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+stats	装 Chromium	2026-10-30T15:27:35.1282981Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+stats	装 Chromium	2026-10-30T15:27:35.1932783Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+stats	装 Chromium	2026-10-30T15:27:35.2207740Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+stats	装 Chromium	2026-10-30T15:27:35.2721939Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+stats	装 Chromium	2026-10-30T15:27:35.5699020Z Fetched 21.1 MB in 3s (8410 kB/s)
+stats	装 Chromium	2026-10-30T15:27:35.5943212Z Selecting previously unselected package fonts-ipafont-gothic.
+stats	装 Chromium	2026-10-30T15:27:35.6207221Z (Reading database ... 
+stats	装 Chromium	2026-10-30T15:27:35.6207856Z (Reading database ... 5%
+stats	装 Chromium	2026-10-30T15:27:35.6208374Z (Reading database ... 10%
+stats	装 Chromium	2026-10-30T15:27:35.6208719Z (Reading database ... 15%
+stats	装 Chromium	2026-10-30T15:27:35.6209073Z (Reading database ... 20%
+stats	装 Chromium	2026-10-30T15:27:35.6209399Z (Reading database ... 25%
+stats	装 Chromium	2026-10-30T15:27:35.6209722Z (Reading database ... 30%
+stats	装 Chromium	2026-10-30T15:27:35.6210061Z (Reading database ... 35%
+stats	装 Chromium	2026-10-30T15:27:35.6211247Z (Reading database ... 40%
+stats	装 Chromium	2026-10-30T15:27:35.6211743Z (Reading database ... 45%
+stats	装 Chromium	2026-10-30T15:27:35.6212306Z (Reading database ... 50%
+stats	装 Chromium	2026-10-30T15:27:35.6247303Z (Reading database ... 55%
+stats	装 Chromium	2026-10-30T15:27:35.7363640Z (Reading database ... 60%
+stats	装 Chromium	2026-10-30T15:27:35.8733550Z (Reading database ... 65%
+stats	装 Chromium	2026-10-30T15:27:36.0805165Z (Reading database ... 70%
+stats	装 Chromium	2026-10-30T15:27:36.2751276Z (Reading database ... 75%
+stats	装 Chromium	2026-10-30T15:27:36.4272671Z (Reading database ... 80%
+stats	装 Chromium	2026-10-30T15:27:36.5626964Z (Reading database ... 85%
+stats	装 Chromium	2026-10-30T15:27:36.6776205Z (Reading database ... 90%
+stats	装 Chromium	2026-10-30T15:27:36.8137327Z (Reading database ... 95%
+stats	装 Chromium	2026-10-30T15:27:36.8137996Z (Reading database ... 100%
+stats	装 Chromium	2026-10-30T15:27:36.8138774Z (Reading database ... 215504 files and directories currently installed.)
+stats	装 Chromium	2026-10-30T15:27:36.8183806Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:36.8290148Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+stats	装 Chromium	2026-10-30T15:27:37.0719553Z Selecting previously unselected package fonts-freefont-ttf.
+stats	装 Chromium	2026-10-30T15:27:37.0862551Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.0869641Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+stats	装 Chromium	2026-10-30T15:27:37.1773140Z Selecting previously unselected package fonts-tlwg-loma-otf.
+stats	装 Chromium	2026-10-30T15:27:37.1914515Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.1923410Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+stats	装 Chromium	2026-10-30T15:27:37.2162608Z Selecting previously unselected package fonts-unifont.
+stats	装 Chromium	2026-10-30T15:27:37.2304109Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.2312890Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+stats	装 Chromium	2026-10-30T15:27:37.3484402Z Selecting previously unselected package fonts-wqy-zenhei.
+stats	装 Chromium	2026-10-30T15:27:37.3627228Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.3739225Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+stats	装 Chromium	2026-10-30T15:27:37.8662183Z Selecting previously unselected package xfonts-encodings.
+stats	装 Chromium	2026-10-30T15:27:37.8807553Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.8815711Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+stats	装 Chromium	2026-10-30T15:27:37.9152614Z Selecting previously unselected package xfonts-utils.
+stats	装 Chromium	2026-10-30T15:27:37.9301314Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.9309798Z Unpacking xfonts-utils (1:7.7+6build3) ...
+stats	装 Chromium	2026-10-30T15:27:37.9725464Z Selecting previously unselected package xfonts-cyrillic.
+stats	装 Chromium	2026-10-30T15:27:37.9875033Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:37.9883546Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+stats	装 Chromium	2026-10-30T15:27:38.0261436Z Selecting previously unselected package xfonts-scalable.
+stats	装 Chromium	2026-10-30T15:27:38.0405210Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+stats	装 Chromium	2026-10-30T15:27:38.0413661Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+stats	装 Chromium	2026-10-30T15:27:38.0908280Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+stats	装 Chromium	2026-10-30T15:27:38.1036517Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+stats	装 Chromium	2026-10-30T15:27:38.1058186Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+stats	装 Chromium	2026-10-30T15:27:38.1079972Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+stats	装 Chromium	2026-10-30T15:27:38.1101073Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+stats	装 Chromium	2026-10-30T15:27:38.1169767Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+stats	装 Chromium	2026-10-30T15:27:38.1187991Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+stats	装 Chromium	2026-10-30T15:27:38.1209726Z Setting up xfonts-utils (1:7.7+6build3) ...
+stats	装 Chromium	2026-10-30T15:27:38.1257018Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+stats	装 Chromium	2026-10-30T15:27:38.1572566Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+stats	装 Chromium	2026-10-30T15:27:38.1864554Z Processing triggers for man-db (2.12.0-4build2) ...
+stats	装 Chromium	2026-10-30T15:27:38.1888376Z Not building database; man-db/auto-update is not 'true'.
+stats	装 Chromium	2026-10-30T15:27:38.1903505Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+stats	装 Chromium	2026-10-30T15:27:38.9595160Z 
+stats	装 Chromium	2026-10-30T15:27:38.9595944Z Running kernel seems to be up-to-date.
+stats	装 Chromium	2026-10-30T15:27:38.9596333Z 
+stats	装 Chromium	2026-10-30T15:27:38.9596529Z No services need to be restarted.
+stats	装 Chromium	2026-10-30T15:27:38.9596823Z 
+stats	装 Chromium	2026-10-30T15:27:38.9597001Z No containers need to be restarted.
+stats	装 Chromium	2026-10-30T15:27:38.9597312Z 
+stats	装 Chromium	2026-10-30T15:27:38.9597522Z No user sessions are running outdated binaries.
+stats	装 Chromium	2026-10-30T15:27:38.9597876Z 
+stats	装 Chromium	2026-10-30T15:27:38.9598213Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+stats	装 Chromium	2026-10-30T15:27:40.0511806Z Downloading Chrome for Testing 156.0.8078.4 (playwright chromium v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-linux64.zip
+stats	装 Chromium	2026-10-30T15:27:40.4595503Z |                                                                                |   0% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:40.6189697Z |■■■■■■■■                                                                        |  10% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:40.7040249Z |■■■■■■■■■■■■■■■■                                                                |  20% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:40.8021140Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:40.8675098Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:40.9554622Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:41.0612891Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:41.1293370Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:41.2355915Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:41.3202978Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:41.3927800Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 191.1 MiB
+stats	装 Chromium	2026-10-30T15:27:44.5180020Z Chrome for Testing 156.0.8078.4 (playwright chromium v1248) downloaded to /home/runner/.cache/ms-playwright/chromium-1248
+stats	装 Chromium	2026-10-30T15:27:44.5184892Z Downloading FFmpeg (playwright ffmpeg v1013) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1013/ffmpeg-linux.zip
+stats	装 Chromium	2026-10-30T15:27:44.9986680Z |                                                                                |   0% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0081335Z |■■■■■■■■                                                                        |  10% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0131429Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0162798Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0185760Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0206659Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0225351Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0243830Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0257879Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0277689Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0284536Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.2 MiB
+stats	装 Chromium	2026-10-30T15:27:45.0879436Z FFmpeg (playwright ffmpeg v1013) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1013
+stats	装 Chromium	2026-10-30T15:27:45.0883519Z Downloading Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-headless-shell-linux64.zip
+stats	装 Chromium	2026-10-30T15:27:45.5048803Z |                                                                                |   0% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.6014294Z |■■■■■■■■                                                                        |  10% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.6675959Z |■■■■■■■■■■■■■■■■                                                                |  20% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.7312258Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.8082602Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.8509795Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.8937576Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.9531098Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:45.9915766Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:46.0319407Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:46.0826498Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 120 MiB
+stats	装 Chromium	2026-10-30T15:27:48.6559512Z Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1248
+stats	取这一场的统计	﻿2026-10-30T15:27:48.6871941Z ##[group]Run ARGS=()
+stats	取这一场的统计	2026-10-30T15:27:48.6872258Z [36;1mARGS=()[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6872494Z [36;1mIFS=',' read -ra WS <<< "$T_WHO"[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6872858Z [36;1mfor w in "${WS[@]}"; do [ -n "$w" ] && ARGS+=(--who "$w"); done[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6873276Z [36;1m[ -n "$T_MATCH_ID" ] && ARGS+=(--match-id "$T_MATCH_ID")[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6873679Z [36;1m[ -n "$T_DATE" ] && ARGS+=(--date "$T_DATE")[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6874029Z [36;1mpython tools/tnns_stats.py fetch "${ARGS[@]}"[0m
+stats	取这一场的统计	2026-10-30T15:27:48.6895511Z shell: /usr/bin/bash -e {0}
+stats	取这一场的统计	2026-10-30T15:27:48.6895775Z env:
+stats	取这一场的统计	2026-10-30T15:27:48.6896043Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	取这一场的统计	2026-10-30T15:27:48.6896486Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+stats	取这一场的统计	2026-10-30T15:27:48.6896927Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	取这一场的统计	2026-10-30T15:27:48.6897328Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	取这一场的统计	2026-10-30T15:27:48.6897720Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+stats	取这一场的统计	2026-10-30T15:27:48.6898140Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+stats	取这一场的统计	2026-10-30T15:27:48.6898469Z   T_WHO: Tagger,Shi
+stats	取这一场的统计	2026-10-30T15:27:48.6898668Z   T_MATCH_ID: 
+stats	取这一场的统计	2026-10-30T15:27:48.6898854Z   T_DATE: 2026-10-30
+stats	取这一场的统计	2026-10-30T15:27:48.6899058Z ##[endgroup]
+stats	取这一场的统计	2026-10-30T15:28:35.0715836Z [TNNS] 打开 https://tnnslive.com/
+stats	取这一场的统计	2026-10-30T15:28:35.0717292Z [TNNS] 页面内取 https://api.tnnslive.com/v1/matches?date=2026-10-30&web=true
+stats	取这一场的统计	2026-10-30T15:28:35.0718212Z [TNNS] 按 date=2026-10-30 取到 149832 字节、325 场
+stats	取这一场的统计	2026-10-30T15:28:35.0718834Z [TNNS] 认到这一场：id=75838100
+stats	取这一场的统计	2026-10-30T15:28:35.0719425Z [TNNS] 打开 https://tnnslive.com/match/75838100
+stats	取这一场的统计	2026-10-30T15:28:35.0719837Z 
+stats	取这一场的统计	2026-10-30T15:28:35.0720090Z === TNNS 单场统计 id=75838100 ===
+stats	取这一场的统计	2026-10-30T15:28:35.0720571Z hasExtendedStats: True
+stats	取这一场的统计	2026-10-30T15:28:35.0721443Z 制胜分       [16, 26]
+stats	取这一场的统计	2026-10-30T15:28:35.0721891Z 非受迫失误   [40, 58]
+stats	取这一场的统计	2026-10-30T15:28:35.0722196Z （选手顺序 ['Tagger', 'Shi']）
+stats	取这一场的统计	2026-10-30T15:28:35.0722538Z   [Set 1] 制胜分 [7, 6]　非受迫失误 [8, 15]
+stats	取这一场的统计	2026-10-30T15:28:35.0722929Z   [Set 2] 制胜分 [4, 10]　非受迫失误 [13, 8]
+stats	取这一场的统计	2026-10-30T15:28:35.0723288Z   [Set 3] 制胜分 [5, 10]　非受迫失误 [19, 35]
+stats	取这一场的统计	2026-10-30T15:28:35.0723707Z   自证 winners：分盘合计 [16, 26] vs 全场 [16, 26]  ✅
+stats	取这一场的统计	2026-10-30T15:28:35.0724128Z   自证 ue：分盘合计 [40, 58] vs 全场 [40, 58]  ✅
+stats	取这一场的统计	2026-10-30T15:28:35.0724351Z 
+stats	取这一场的统计	2026-10-30T15:28:35.0724809Z 粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：
+stats	取这一场的统计	2026-10-30T15:28:35.0725585Z   "winners": 16,  "ue": 40    ← Tagger
+stats	取这一场的统计	2026-10-30T15:28:35.0725962Z   "winners": 26,  "ue": 58    ← Shi
+stats	Post Run actions/setup-python@v5	﻿2026-10-30T15:28:35.1090692Z Post job cleanup.
+stats	Post Run actions/setup-python@v5	2026-10-30T15:28:35.2386398Z (node:3225) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+stats	Post Run actions/setup-python@v5	2026-10-30T15:28:35.2387693Z (Use `node --trace-deprecation ...` to show where the warning was created)
+stats	Post Run actions/checkout@v4	﻿2026-10-30T15:28:35.2653587Z Post job cleanup.
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3562227Z [command]/usr/bin/git version
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3610459Z git version 2.56.0
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3683002Z Temporarily overriding HOME='/home/runner/work/_temp/ecc299fc-b882-4097-ad55-c38a65d37888' before making global git config changes
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3684611Z Adding repository directory to the temporary git global config as a safe directory
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3689371Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/tennislive/tennislive
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3737999Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.3781156Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4253761Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4284563Z http.https://github.com/.extraheader
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4304041Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4372192Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4793320Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+stats	Post Run actions/checkout@v4	2026-10-30T15:28:35.4846062Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+stats	Complete job	﻿2026-10-30T15:28:35.5383770Z Cleaning up orphan processes
+stats	Complete job	2026-10-30T15:28:35.5783220Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
