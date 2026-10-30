@@ -2050,6 +2050,13 @@ _MUCHOVA_NATIVE_720_CROP_URLS = frozenset({
 # exception bound to this episode and the three actual official 720p sources;
 # it does not relax the native floor or archival defaults for other films.
 _NATIVE_720_CROP_URLS_BY_EPISODE = {
+    # 《Walkover》（walkover-story-2026）v2 对齐重推·孙心然段：账号所有者
+    # 2026-10-30 拍板换实拍。WTA 官网本场（广州 R2 孙心然 vs 蒂莫费娃）
+    # 官方集锦仅 1280×720 一档；所有者要全画布裁切呈现（与主源 sin 同款
+    # 按原生几何取窗），不走 contain 档案位。只登记这条存档 URL。
+    "walkover-story-2026": frozenset({
+        "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4",
+    }),
     "muchova-finals-2026": _MUCHOVA_NATIVE_720_CROP_URLS,
     "rybakina-finals-2026": frozenset({
         "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
