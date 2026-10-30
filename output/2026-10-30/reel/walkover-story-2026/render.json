@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "95305110d209520cc24ac11d79529199da5b0a79fdf9a70d7dbb5fd7349ecf92",
-    "request_count": 17,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "bundle_sha256": "78d7610aa54508abc3d712d8e38021c64afcae2456ff6fe94c499557ad775fcf",
+    "request_count": 20,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-walkover-story-2026-95305110d209520c",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-walkover-story-2026-95305110d209520c/tts_bundle.zip",
+    "release_tag": "reel-tts-walkover-story-2026-78d7610aa54508ab",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-walkover-story-2026-78d7610aa54508ab/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/40979907717"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41023941866"
   },
   "cover_seconds": 2.41,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 433.49,
+  "segments_seconds": 444.06,
   "topbar": null,
-  "film_seconds": 440.5,
+  "film_seconds": 451.1,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -29,18 +29,21 @@
     "0": 11.088,
     "1": 6.504,
     "2": 14.016,
-    "3": 19.608,
-    "4": 34.92,
-    "5": 27.696,
-    "6": 24.936,
-    "7": 9.072,
-    "10": 6.768,
-    "11": 7.536,
-    "13": 11.832,
-    "14": 35.136,
-    "15": 43.248,
-    "16": 41.232,
-    "17": 17.4
+    "3": 5.4,
+    "4": 4.704,
+    "5": 7.104,
+    "6": 4.728,
+    "7": 34.92,
+    "8": 27.696,
+    "9": 24.936,
+    "10": 9.072,
+    "13": 6.768,
+    "14": 7.536,
+    "16": 11.832,
+    "17": 35.136,
+    "18": 43.248,
+    "19": 41.232,
+    "20": 17.4
   },
   "face_checks": {
     "cover": {
@@ -57,44 +60,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "158d4845a24b3e40c03f5f49374c623cda03168656dc8fc679258e9dd1f68eec",
+  "render_inputs_sha256": "01d275a31af1552497b0299e32f4d897174a9306a8a09d49db97ee687c47ba46",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "walkover-story-2026",
-    "received_at": "2026-10-30T00:28:37Z",
-    "artifact_ready_at": "2026-10-30T00:40:01Z",
-    "elapsed_seconds": 684.711,
+    "received_at": "2026-10-30T08:03:55Z",
+    "artifact_ready_at": "2026-10-30T08:16:10Z",
+    "elapsed_seconds": 735.989,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "0ec6d1336452f1a3533f7b492fa777a02fad8b5306b239dfdcc656c6ce9f9654",
-    "spec_sha256": "0f4e109959d73de65d9a9e4e969c69849fc035d2496c81c1555a0ed1ead55cc8",
-    "run_id": "40979907717",
+    "film_sha256": "d58b28040c5b588cb730fea556791dd99e5d8bd0b5ac662f2ebf15df500441d4",
+    "spec_sha256": "e4ee9efb9e4782d6cc9670de5fb7481d96a096b1f755ad8ac18f316492064cf2",
+    "run_id": "41023941866",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-10-30T00:32:25Z",
-        "run_id": "40979907717"
+        "at": "2026-10-30T08:08:03Z",
+        "run_id": "41023941866"
       }
     ],
-    "render_seconds": 456.711,
-    "pre_render_seconds": 228.0
+    "render_seconds": 487.989,
+    "pre_render_seconds": 248.0
   },
-  "film_sha256": "0ec6d1336452f1a3533f7b492fa777a02fad8b5306b239dfdcc656c6ce9f9654",
-  "film_bytes": 138300573,
-  "qc_attestation_sha256": "3390dc616193235e399c84d8e3e928d73f9ba51b283794ed021643d66509621d",
+  "film_sha256": "d58b28040c5b588cb730fea556791dd99e5d8bd0b5ac662f2ebf15df500441d4",
+  "film_bytes": 135041084,
+  "qc_attestation_sha256": "7bf32b025e11da54f27bc01f347923a6f376f8e26f586358235f4ce04bdb312d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-10-30T00:32:25Z",
-      "run_id": "40979907717"
+      "at": "2026-10-30T08:08:03Z",
+      "run_id": "41023941866"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-10-30T00:40:05Z",
-      "run_id": "40979907717"
+      "at": "2026-10-30T08:16:15Z",
+      "run_id": "41023941866"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-walkover-story-2026/walkover-story-2026.mp4",
-  "video_bytes": 138300573
+  "video_bytes": 135041084
 }
