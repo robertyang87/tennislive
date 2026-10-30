@@ -7221,6 +7221,13 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 版本，本片原声位、内容不可替代。白名单只加这条存档 URL，不及于
     # YouTube 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-YFLvy8rLfiA/YFLvy8rLfiA.mp4': 720,
+    # 《Walkover》（walkover-story-2026）v2 对齐重推·孙心然段换实拍：账号所有者
+    # 2026-10-30 13:25 拍板本期全量对齐重推、孙段换实拍（原话widget选项「这期
+    # 全量对齐重推，孙段换实拍」）。WTA 官网本场（2026 广州 R2 孙心然 vs
+    # 蒂莫费娃）官方集锦 Brightcove 直链仅 1280×720 一档、无 1080p（中午复检
+    # 实证，见制作目录 sources-wta-sun.md）；本段为本片核心实拍、内容不可替
+    # 代。白名单只加这条存档 URL，不及于 WTA 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4': 720,
 }
 
 
