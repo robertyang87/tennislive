@@ -12,8 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools" / "vibetennis"))
 sys.path.insert(0, str(ROOT / "tools"))
 
-import common  # noqa: E402
-import publish_gate  # noqa: E402
+import importlib  # noqa: E402
+
+# 仓库内的模块（tools/vibetennis/），不是第三方包——按名字现取，免得被当成依赖
+common = importlib.import_module("common")
+publish_gate = importlib.import_module("publish_gate")
 
 SPECS = sorted((ROOT / "specs/vibetennis").glob("*.json"))
 
@@ -55,7 +58,7 @@ def test_标题规则认得这个栏目():
 
 
 def test_每条spec的发布标题和正文都过得了推送那几道闸():
-    import push_reel  # noqa: PLC0415
+    push_reel = importlib.import_module("push_reel")
 
     for path in SPECS:
         out = Path("output/2026-10-30/vibetennis") / path.stem
