@@ -24,11 +24,11 @@
 ```
 specs/vibetennis/<slug>.json          spec（栏目、画幅、封面、推送、编辑判断、出处）
 specs/vibetennis/<slug>.xhs.txt       发布文案：第一行标题主题，正文，末行 tag（≤5）
-assets/vibetennis/<slug>/             封面用的原生高清 3D 渲染帧（竖版 + 16:9）
+assets/vibetennis/<slug>/             封面用的原生高清 3D 渲染帧（竖版）
 tools/vibetennis/                     这一栏的共用工具（下面逐个说）
 tools/vibetennis/episodes/<slug>/     这一集的 3D 场景、镜头表、叠字、音效脚本（按集存）
 output/<日期>/vibetennis/<slug>/      产物：render.json / qc_attestation.json / poster.jpg /
-                                      cover_16x9.jpg / qc_contact.jpg / copy.html / pushed.json
+                                      qc_contact.jpg / copy.html / pushed.json
 data/vibetennis_publish_ledger/       发布账本（和赛场之上同一套 publication_ledger）
 ```
 
@@ -49,12 +49,13 @@ data/vibetennis_publish_ledger/       发布账本（和赛场之上同一套 pu
 5. **音效与混音**：`sfx.py` 全部用 numpy/scipy 合成（不下载素材），按画面事件对齐；
    `assemble.sh` 混音：SFX -18 LUFS、音乐 -16 LUFS，总混 -14 LUFS / -1.5 dBTP，
    另出一版只有音效的（方便换 BGM）。
-6. **封面**：`tools/vibetennis/cover.py`——3:4 海报走仓库**同一套 solo 海报模板**
+6. **封面**：`tools/vibetennis/cover.py`——**单独一张** 3:4 海报，走仓库同一套 solo 海报模板
    （`versus_poster`，台头「网球时差 · vibetennis」），按 2 倍像素出 **2160×2880 高清**；
    素材是同一场景**按竖版重新渲染**的原生帧（`r3d/still_hd.js`），不是从 16:9 裁。
-   同时出 `cover_16x9.jpg`：16:9 背景帧压暗虚化，海报整张居中。
-7. **定稿**：`tools/vibetennis/finalize.py`——成片第一屏是封面帧（停 `film.cover_seconds`
-   ＝1.2 秒、静音，和赛场之上同一条约定），再接母片；交付版 H.264 约 8 Mbps、TV 范围 yuv420p。
+   ⚠️ 所有者 2026-10-30 更正：**封面不放进视频开头、不合进视频**——它只作推送第一屏
+   （`poster.jpg`）和各平台上传时的封面（spec 里 `film.cover_in_film: false`）。
+7. **定稿**：`tools/vibetennis/finalize.py`——母片**原样**拷进产物目录（字节核对、不重新编码），
+   写 `render.json`。
 8. **质检**：`tools/vibetennis/qc.py`（L2，查产物）全绿才写 `qc_attestation.json`。
    它不代替人看一遍整片：`checks.human_full_watch_claimed` 如实写 false。
 9. **上传与复制页**：`tools/vibetennis/release.py`——传 Release、回写 `video_url`，

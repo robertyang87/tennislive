@@ -7,10 +7,10 @@
 
 1. spec 自洽（`common.spec_problems`）
 2. 画布 1920×1080、H.264 yuv420p、帧率与 spec 一致；AAC 48 kHz 双声道
-3. 片长在 90–300 秒之间，并且 ＝ 封面秒数 ＋ 母片秒数（±0.5s）
+3. 片长在 90–300 秒之间，并且 ＝ 母片秒数（±0.5s）
 4. 音视频首尾对齐（各 <1s），封面之后正文里没有 >3s 的数字静音
 5. 响度：正文 -14 LUFS ±2、真峰值 ≤ -1.0 dBTP（混音合同是 -14 / -1.5）
-6. 第一屏就是封面帧（和 `cover_16x9.jpg` 逐像素比，平均差 < 8/255）
+6. 封面**不在**片子里，成片和母片字节一致（所有者 2026-10-30 更正）
 7. 3:4 海报在、比例对、至少 1080×1440
 8. 出一张 qc_contact.jpg 抽帧总览给人看一眼（不代替看片）
 
@@ -110,9 +110,11 @@ def main() -> int:
         print(f"\n共 {len(bad)} 项不合格"); return 1
     render = json.loads((outdir / "render.json").read_text(encoding="utf-8"))
     film_cfg = spec["film"]
-    cover_s = float(render["cover_seconds"])
-    check(abs(cover_s - float(film_cfg.get("cover_seconds", 1.2))) < 1e-6,
-          f"封面停 {cover_s}s，和 spec 一致")
+    cover_s = float(render.get("cover_seconds") or 0.0)
+    check(cover_s == 0.0 and render.get("cover_in_film") is False and film_cfg.get("cover_in_film") is False,
+          "封面不在片子里（所有者 2026-10-30：封面单独一张图，不合进视频）")
+    if render.get("master_sha256"):
+        check(sha256(film) == render["master_sha256"], "成片就是母片原样（字节一致，未重编码）")
 
     info = ffprobe(film)
     v = next(s for s in info["streams"] if s["codec_type"] == "video")
@@ -141,9 +143,7 @@ def main() -> int:
         check(not quiet, "正文没有 >3s 的数字静音" + (f"：{quiet}" if quiet else ""))
     else:
         lufs = tp = None
-    frame = outdir / COVER_FRAME_NAME
-    diff = first_frame_diff(film, frame, min(0.5, cover_s / 2)) if frame.is_file() else 255.0
-    check(diff < 8.0, f"第一屏是封面帧（平均像素差 {diff:.2f}/255）")
+    check(not (outdir / COVER_FRAME_NAME).exists(), "产物目录里没有片头封面帧（封面不进视频）")
     poster = outdir / POSTER_NAME
     if poster.is_file():
         from PIL import Image  # noqa: PLC0415
@@ -174,7 +174,7 @@ def main() -> int:
             "cover_seconds": cover_s,
             "loudness_lufs": round(lufs, 2) if lufs is not None else None,
             "true_peak_dbtp": round(tp, 2) if tp is not None else None,
-            "cover_frame_diff": round(diff, 2),
+            "cover_in_film": False,
             "audio_start_max_s": 1.0,
             "audio_tail_max_s": 1.0,
             "narration": "none",

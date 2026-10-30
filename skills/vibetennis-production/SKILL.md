@@ -22,7 +22,7 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
 2. 写 `specs/vibetennis/<slug>.json`（`column`/`cover.eyebrow` = `vibetennis`，`film.canvas` = [1920,1080]，
    `editorial.sources` 不能空，`push.auto` = true）和 `.xhs.txt`（第一行完整问题，正文数字与片子一致，末尾问句，tag ≤5）
 3. 复制上一集 `tools/vibetennis/episodes/<slug>/` 改场景与镜头表；本地 3D 分段渲 → `overlay.py` → `sfx.py` → `assemble.sh`
-4. `r3d/still_hd.js` 渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出 2160×2880 海报和 16:9 封面帧
-5. `finalize.py`（封面帧 1.2s 开头）→ `qc.py`（全绿才有凭证）→ 看 `qc_contact.jpg`，最好整片看一遍
+4. `r3d/still_hd.js` 渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出**单独一张** 2160×2880 海报（封面**不进视频**，所有者 2026-10-30）
+5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证）→ 看 `qc_contact.jpg`，最好整片看一遍
 6. `release.py`（Release ＋ copy.html）→ `push.py --dry-run` 看标题正文 → 提交（不提交 mp4）→ PR
 7. 合并即推（CLAUDE.md「片子做完就合并、就推微信」）；推完用 `tools/push_link.py --slug <slug>` 取消息网页链接发给所有者

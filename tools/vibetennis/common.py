@@ -23,9 +23,8 @@ SPEC_DIR = Path("specs/vibetennis")
 OUT_KIND = "vibetennis"
 LEDGER_COLUMN = "vibetennis"
 CANVAS = (1920, 1080)
-COVER_SECONDS = 1.2
 POSTER_NAME = "poster.jpg"
-COVER_FRAME_NAME = "cover_16x9.jpg"
+COVER_FRAME_NAME = "cover_16x9.jpg"   # 不再生成；qc 确认它不在（封面不进视频）
 MARKER = "pushed.json"
 # `output/2026-10-30/vibetennis/vibetennis-live-faster-2026/render.json`
 RENDER_JSON = re.compile(r"^output/(\d{4}-\d\d-\d\d)/vibetennis/([^/]+)/render\.json$")
@@ -69,6 +68,8 @@ def spec_problems(spec: dict, slug: str) -> list[str]:
     cover = spec.get("cover") or {}
     if cover.get("layout") != "solo" or not (cover.get("portrait") or {}).get("image"):
         bad.append("封面走仓库的 solo 海报模板，cover.portrait.image 要指向原生高清渲染帧")
+    if film.get("cover_in_film") is not False:
+        bad.append("film.cover_in_film 必须是 false——封面单独一张图，不合进视频（所有者 2026-10-30）")
     if not str(cover.get("hook", "")).strip():
         bad.append("cover.hook 是空的")
     ed = spec.get("editorial") or {}
