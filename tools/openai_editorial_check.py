@@ -26,6 +26,8 @@ def review(text, model, api_key):
         raise ValueError("输入须为 1–20000 字符")
     payload = {"model": model, "instructions": INSTRUCTIONS, "input": text,
                "max_output_tokens": 1600, "store": False}
+    if model == "gpt-6-luna" or model.startswith("gpt-6-luna-"):
+        payload["reasoning"] = {"effort": "none"}
     request = urllib.request.Request(
         "https://api.openai.com/v1/responses",
         data=json.dumps(payload).encode(),
@@ -57,7 +59,7 @@ def review(text, model, api_key):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path)
-    parser.add_argument("--model", default="gpt-4.1-mini")
+    parser.add_argument("--model", default="gpt-6-luna")
     parser.add_argument("--outdir", type=Path, default=Path("openai-review"))
     args = parser.parse_args()
     text = (args.input.read_text(encoding="utf-8") if args.input else
