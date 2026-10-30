@@ -313,7 +313,8 @@ function hideAll(){
   pathA.material.opacity=0; pathB.material.opacity=0; dotA.material.opacity=0; dotB.material.opacity=0; strobeGap.forEach(l=>l.material.opacity=0);
   eyeRays.forEach(r=>r.material.opacity=0); eyeFlows.forEach(r=>r.material.opacity=0); eyeHit.material.opacity=0; btn.material.opacity=1; ffRays.forEach(r=>r.material.opacity=0.6);
 }
-window.renderAt=function(t){
+// noRender=true 只算这一帧的 2D 锚点、不出画面（渲染中断后补锚点用，画面逻辑完全相同）
+window.renderAt=function(t,noRender){
   for(const k in anchors) delete anchors[k];
   hideAll(); scene.fog.density=0.0018; gridMat.uniforms.uOp.value=1; coneMat.uniforms.uOp.value=0.2;
   const fp=finalPass.uniforms; fp.uT.value=t; fp.uFlash.value=0; fp.uFade.value=1; fp.uGlitch.value=0; fp.uScan.value=-1; fp.uTV.value=0; bloom.strength=0.85;
@@ -325,7 +326,7 @@ window.renderAt=function(t){
   // 机位离某台相机太近时，把它的灯头压暗，免得一团光糊住画面
   for(const c of camRigs){ const dc=camera.position.distanceTo(c.p); if(dc<14){ const k=Math.max(0.05,(dc-3)/11); c.lens.material.opacity*=k; } }
   { const dd=camera.position.distanceTo(ball.position); ballGlow.scale.setScalar(Math.min(4,Math.max(0.12,dd*0.03))); }
-  composer.render();
+  if(!noRender) composer.render();
   return JSON.stringify(anchors);
 };
 window.READY=true;
