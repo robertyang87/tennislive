@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import ROOT, outdir_for, sha256, spec_paths  # noqa: E402
+from common import ROOT, load_spec, outdir_for, release_slug, sha256, spec_paths  # noqa: E402
 
 
 # ⚠️ 2026-10-31：Claude Code 会话里 GitHub GraphQL 被挡（403「use the REST API」），而
@@ -61,8 +61,11 @@ def main() -> int:
     qc = json.loads((outdir / "qc_attestation.json").read_text(encoding="utf-8"))
     if qc.get("status") != "pass" or qc.get("film_sha256") != sha256(film):
         raise SystemExit("成片没有通过 tools/vibetennis/qc.py，或质检后被改过——不上传")
-    tag = f"vibetennis-{args.slug}"
-    rel = _release(tag, args.title or f"vibetennis · {args.slug}")
+    spec = load_spec(args.slug)
+    # 语言版（如 `<slug>-en`）传进原版那一集的 Release，两个附件并列；原版附件一个字节都不动
+    tag = f"vibetennis-{release_slug(spec)}"
+    variant = release_slug(spec) != args.slug
+    rel = _release(tag, "" if variant else (args.title or f"vibetennis · {args.slug}"))
     asset = next((x for x in rel["assets"] if x["name"] == film.name), None)
     if asset and asset["size"] != qc["film_bytes"]:
         raise SystemExit("Release 上已有同名附件且字节数不同——拒绝覆盖，先人工确认")

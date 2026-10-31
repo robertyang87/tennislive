@@ -10,6 +10,7 @@ name: vibetennis 成片上传 Release
 #   upload/<slug>/manifest.json   [{"name": "<slug>.mp4", "sha256": "…", "dir": "push"},
 #                                  {"name": "<slug>_master.mp4", "sha256": "…", "dir": "master"}]
 #   upload/<slug>/qc_attestation.json
+#   upload/<slug>/release_tag     （可选，仅语言版：原版那一集的 tag，如 vibetennis-vibetennis-live-faster-2026）
 #   upload/<slug>/<dir>/part.00 …
 on:
   push:
@@ -45,6 +46,14 @@ jobs:
           # 块分几次推（一次推 1 GB 会被代理 413），清单最后一次才放进来——没有清单就是还没推齐
           if [ ! -f "$DIR/manifest.json" ]; then echo "清单还没到，块没推齐，这一趟不动"; exit 0; fi
           QC=$(python3 -c "import json;print(json.load(open('$DIR/qc_attestation.json'))['film_sha256'])")
+          # 语言版（<slug>-en）传进原版那一集的 Release，并列放；原版 Release 必须已经在，不新建
+          if [ -f "$DIR/release_tag" ]; then
+            TAG=$(tr -d '[:space:]' < "$DIR/release_tag")
+            echo "$TAG" | grep -Eq '^vibetennis-vibetennis-[a-z0-9-]+$' || { echo "release_tag 不合规：$TAG"; exit 1; }
+            test "${SLUG}" != "${TAG#vibetennis-}" || { echo "release_tag 和 slug 一样，不用写"; exit 1; }
+            case "$SLUG" in "${TAG#vibetennis-}"-en) ;; *) echo "$SLUG 不是 ${TAG#vibetennis-} 的语言版"; exit 1;; esac
+            gh release view "$TAG" >/dev/null || { echo "原版 Release $TAG 不在——语言版不新建 Release"; exit 1; }
+          fi
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --title "vibetennis · ${SLUG}" \
               --notes "vibetennis 栏目成片（16:9），按 tools/vibetennis/qc.py 质检后上传。${SLUG}.mp4 是推送版，${SLUG}_master.mp4 是高码率母版（存档）。"

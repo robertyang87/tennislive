@@ -74,7 +74,28 @@ def test_集数表连续且每条spec都登记了():
     table = json.loads((ROOT / "data/vibetennis_episodes.json").read_text(encoding="utf-8"))
     episodes = table["episodes"]
     assert sorted(episodes.values()) == list(range(1, len(episodes) + 1))
-    assert {p.stem for p in SPECS} <= set(episodes)
+    # 语言版（<slug>-en）不单独登记，跟原版同一集
+    assert {json.loads(p.read_text(encoding="utf-8")).get("variant_of") or p.stem for p in SPECS} <= set(episodes)
+
+
+def test_英文版和原版同一集_同一个Release():
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.render.copy_title import make_copy_title, variant_base  # noqa: PLC0415
+
+    assert variant_base("vibetennis-live-faster-2026-en") == "vibetennis-live-faster-2026"
+    assert variant_base("vibetennis-live-faster-2026") == "vibetennis-live-faster-2026"
+    assert make_copy_title("", "vibetennis", "Live",
+                           slug="vibetennis-live-faster-2026-en") == "EP01.vibetennis|Live"
+    with pytest.raises(SystemExit):
+        make_copy_title("", "vibetennis", "Live", slug="vibetennis-not-registered-en")
+    spec = json.loads(SPECS[0].read_text(encoding="utf-8"))
+    en = json.loads(json.dumps(spec))
+    en.update(slug=spec["slug"] + "-en", lang="en", variant_of=spec["slug"])
+    assert common.spec_problems(en, en["slug"]) == []
+    assert common.release_slug(en) == spec["slug"] and common.release_slug(spec) == spec["slug"]
+    bad = dict(en, variant_of="something-else")
+    assert any("variant_of" in p for p in common.spec_problems(bad, bad["slug"]))
+    assert any("lang" in p for p in common.spec_problems(dict(spec, lang="fr"), spec["slug"]))
 
 
 def test_每条spec的发布标题和正文都过得了推送那几道闸():
@@ -187,3 +208,5 @@ def test_推送按钮写横版_别的栏目不变():
     assert ps.VIDEO_BUTTON_TEXT == "▶ 打开竖版成片", "共用模板（其他栏目）的按钮文字不该被改"
     with pytest.raises(SystemExit):
         push.landscape_button("<p>没有按钮</p>")
+    en = push.landscape_button(html, "en")
+    assert "▶ Watch the video" in en and "竖版" not in en
