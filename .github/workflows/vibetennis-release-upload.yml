@@ -30,6 +30,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          # 只要 upload/ 那几块，output/ 一个字节都不碰（全量检出白等一分半）
+          sparse-checkout: |
+            upload
       - name: 拼回、核对指纹、上传 Release
         env:
           GH_TOKEN: ${{ github.token }}
