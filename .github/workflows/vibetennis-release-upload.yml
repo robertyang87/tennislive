@@ -1,0 +1,73 @@
+name: vibetennis 成片上传 Release
+# vibetennis 的成片是在会话里本地渲的（Three.js），而 Claude Code 会话的令牌**不许建/改 Release**
+# （2026-10-31 实测 403「Creating, editing, or deleting releases is not permitted for this session type」）。
+# 账号所有者 2026-10-31 授权：由这条工作流代传——会话把推送版和母版各切成 <100 MB 的块，连同清单和
+# 质检凭证推到临时分支 `vibetennis-upload/<slug>`；这里逐个拼回、按清单的 sha256 逐字节核对
+# （推送版另须等于 qc_attestation.json 的 film_sha256），建 Release 并上传，最后删掉临时分支
+# （块不进 main 的历史）。之后会话里重跑 `tools/vibetennis/release.py`：附件已在，它只核字节、
+# 写 video_url 和复制页。
+#
+#   upload/<slug>/manifest.json   [{"name": "<slug>.mp4", "sha256": "…", "dir": "push"},
+#                                  {"name": "<slug>_master.mp4", "sha256": "…", "dir": "master"}]
+#   upload/<slug>/qc_attestation.json
+#   upload/<slug>/<dir>/part.00 …
+on:
+  push:
+    branches: ["vibetennis-upload/**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vibetennis-upload-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: 拼回、核对指纹、上传 Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          SLUG="${BRANCH#vibetennis-upload/}"
+          DIR="upload/${SLUG}"
+          TAG="vibetennis-${SLUG}"
+          # 块分几次推（一次推 1 GB 会被代理 413），清单最后一次才放进来——没有清单就是还没推齐
+          if [ ! -f "$DIR/manifest.json" ]; then echo "清单还没到，块没推齐，这一趟不动"; exit 0; fi
+          QC=$(python3 -c "import json;print(json.load(open('$DIR/qc_attestation.json'))['film_sha256'])")
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --title "vibetennis · ${SLUG}" \
+              --notes "vibetennis 栏目成片（16:9），按 tools/vibetennis/qc.py 质检后上传。${SLUG}.mp4 是推送版，${SLUG}_master.mp4 是高码率母版（存档）。"
+          fi
+          python3 -c "import json;[print(x['name'],x['sha256'],x['dir']) for x in json.load(open('$DIR/manifest.json'))]" |
+          while read -r NAME WANT SUB; do
+            cat "$DIR/$SUB"/part.* > "$NAME"
+            GOT=$(sha256sum "$NAME" | cut -d' ' -f1)
+            echo "$NAME 清单 $WANT / 拼回 $GOT"
+            test "$WANT" = "$GOT" || { echo "$NAME 拼回来的和清单不一致——不上传"; exit 1; }
+            if [ "$NAME" = "${SLUG}.mp4" ]; then
+              test "$GOT" = "$QC" || { echo "推送版不是质检过的那一份——不上传"; exit 1; }
+            fi
+            SIZE=$(gh release view "$TAG" --json assets -q ".assets[] | select(.name==\"$NAME\") | .size" || true)
+            if [ -n "$SIZE" ]; then
+              test "$SIZE" = "$(stat -c %s "$NAME")" || { echo "Release 上已有同名附件 $NAME 且字节数不同——拒绝覆盖"; exit 1; }
+              echo "$NAME 已在、字节一致，不重复上传"
+            else
+              gh release upload "$TAG" "$NAME"
+            fi
+            rm -f "$NAME"
+          done
+          gh release view "$TAG" --json assets -q '.assets[] | .name + " " + (.size|tostring) + " " + .url'
+      - name: 删掉临时分支
+        if: success()
+        run: |
+          B="${{ github.ref_name }}"
+          test -f "upload/${B#vibetennis-upload/}/manifest.json" || { echo "还没推齐，分支留着"; exit 0; }
+          git push origin --delete "$B"
