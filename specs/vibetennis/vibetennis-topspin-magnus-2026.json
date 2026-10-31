@@ -1,0 +1,65 @@
+{
+  "slug": "vibetennis-topspin-magnus-2026",
+  "_column": "vibetennis 第 3 集：上旋球为什么会突然往下坠？用马格努斯效应、Cross & Lindsey 的实测升力系数和 Cross 的弹道模型回答：上旋球从出拍起就一直多背着一份向下的力，偏离越积越多，到后半程才显出来。",
+  "column": "vibetennis",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [1920, 1080],
+    "fps": 30,
+    "cover_in_film": false,
+    "outro_seconds": 0,
+    "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO）；本集片尾回到开场 3D 球场重放同一拍（不转出界 vs 4000 转进），收在一句结束语和参考资料页。",
+    "captions": "anchored",
+    "narration": "edge-tts zh-CN-YunjianNeural +18%（多音字逐句声学比对，强制读音：弹起→谈起、差距→插距、转→赚、背着→杯着；字幕保持原字）",
+    "audio": {
+      "music": "bgm.m4a（第 1 集同一首）",
+      "_music_why": "所有者 2026-10-31 指定沿用第 1 集的 BGM（「库里有」）；版权仍未核，公开平台发布前需所有者确认或换曲。",
+      "sfx": "按画面事件合成对齐（击球、弹地、球拼字、芯片、片尾重放）",
+      "loudness": "人声 -16 LUFS、音效 -22、BGM -26 并以人声 sidechain 压低；无旁白的标题段音乐比人声低 10 dB；总混 -14 LUFS / -3 dBTP"
+    },
+    "_release_asset": "推送和 Release 用 topspin_share.mp4（H.264 High 1080p30 ≈7.6 Mbps、AAC 320k、faststart），不是高码率母版——手机边下边播不卡（docs/vibetennis.md §5）。"
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-topspin-magnus-2026/cover/make_cover.py",
+    "hook": "上旋球为什么会\n突然往下坠？",
+    "subject": "上旋下坠",
+    "topic": "马格努斯效应",
+    "_why": "所有者 2026-10-31 从 A（比特新语）/B（小作坊）/C（许先森）三个方案里选定 B：黑底金色发光网球，上下两股风（迎风≈148 km/h、顺风≈68 km/h）、尾流上偏、马格努斯力 0.41 N 向下；顶部问句「上旋球为什么会突然往下坠？」，大字「上 旋 下 坠」配 WHY TOPSPIN DIVES，底部「3200 转/分时，向下的力≈自重的 73%」与 F = ½·C_L·ρ·A·v²（≈1.7 倍重力）。make_cover.py B 生成（依赖会话里的原生高清渲染帧）。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "上旋下坠",
+    "lead": "同一拍、同样时速108公里和15.2度仰角：不转的球飞出32.1米出界，每分钟4000转的上旋落在22.5米。上旋球从出拍起就一直多背着一份向下的力，七成多的偏离发生在后半程——它从没突然坠落，只是你后半程才看见。"
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "上旋球为什么会突然往下坠？",
+    "thesis": "旋转的球会受到马格努斯力：上旋时球底顺着气流转，边界层贴得更久、被往上甩，尾流整体上偏，反作用力把球往下压。Cross & Lindsey（2014）实测 128 个新球，升力系数 0.1–0.3、随转速增大；按 Cross 的模型，108 km/h、3200 rpm 时向下的力约 0.41 N，而 57 g 的球重约 0.56 N，相当于重力放大到 1.7 倍。这份力从出拍起一直都在，偏离越积越多：前半段上旋球只比不转的低 0.9 米，后半段拉到 3.1 米——所以看起来像「突然」下坠。",
+    "beats": [
+      "钩子：108 km/h 的正手过网离地 2.5 米、高出球网 1.6 米，最后落在底线里 1 米（按模型算）",
+      "历史：1672 牛顿信件里的弯曲网球；1852 马格努斯的实验论文",
+      "机制①：上旋时球顶迎风、球底顺风，相对空气约 148 vs 68 km/h（按模型算）",
+      "机制②：绒毛让边界层湍流化，球底一侧分离更晚，尾流上偏，反作用力向下（Cross & Lindsey 300 帧背光拍摄）",
+      "机制③：C_L 0.1–0.3；3200 rpm 时约 0.41 N，对比自重 0.56 N，约 1.7 倍重力",
+      "证据①：同样 108 km/h、15.2°：不转 32.1 米、1900 转 26.7 米、3200 转 23.9 米、4000 转 22.5 米",
+      "证据②：偏离七成多发生在后半程（0.9 米 → 3.1 米）；同一落点要 7.4° vs 15.2°，落地角 15.2° → 24.1°",
+      "证据③：硬地反弹 0.8 米 vs 1.5 米，竖直速度 4.6 → 6.8 米/秒",
+      "真实比赛：ATP 前十正手平均 2708 转；鲁德 3291、阿尔卡拉斯 3316；纳达尔平均 3200、最高接近 5000",
+      "结论 + 片尾：回到开场那一拍重放——它从没突然坠落，只是你后半程才看见"
+    ],
+    "sources": [
+      "I. Newton (1672). Letter on Light and Colours. Philosophical Transactions",
+      "Lord Rayleigh (1877). On the Irregular Flight of a Tennis-Ball. Messenger of Mathematics 7:14–16",
+      "R. Cross & C. Lindsey (2014). Measurements of drag and lift on tennis balls in flight. Sports Engineering 17:89–96",
+      "S. Goodwill, S. Chin & S. Haake (2004). Aerodynamics of spinning and non-spinning tennis balls. J. Wind Eng. Ind. Aerodyn. 92:935–958",
+      "R. Mehta et al. (2008). A review of tennis ball aerodynamics. Sports Technology 1:7–16",
+      "R. Cross. Calculations of groundstroke trajectories in tennis（弹道与硬地反弹模型）",
+      "ATP Infosys Beyond The Numbers (2024-10-30) · TDI / Hawk-Eye 转速数据",
+      "J. Yandell 高速摄像统计，见 NYT (2006-06-27)、TIME (2009)；ITF Rules of Tennis 2026（球径）",
+      "O. Cant et al. (2019). J. Sports Sci. 38:296（鹰眼转速误差）"
+    ],
+    "_assumptions": "标注「按模型算」的数字依据 Cross 公开模型计算（C_D=0.55、C_L=0.6·S；无风、转速恒定；硬地反弹 μ=0.73、e_x=0.1），不是实测；片中已逐处标注。"
+  }
+}
