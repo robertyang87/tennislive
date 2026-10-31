@@ -63,6 +63,7 @@
 | `tennis-video-craft` | 剪窗口、调字幕、配音、改取景混音；成片听感观感不对 |
 | `tennis-editorial` | 写旁白和文案、定叙事结构、拿不准措辞口径 |
 | `tennis-dev-practices` | 写判据、做反向验证、排查测试或 CI 异常 |
+| `vibetennis-production` | 做 vibetennis（16:9 3D 科普）的选题、渲染、封面、质检、推送（正文在 `skills/`，`.claude/skills/` 里是软链接） |
 
 ⭐⭐ **做视频之前先加载 `tennis-owner-taste`、过开工前清单，发 render 之前跑 `python3 tools/taste_preflight.py --slug <slug>`**（账号所有者 2026-09-27：「形成一个通用的规则在做视频前就烂掉，而不是说做了一半又返工」，原话如此，「烂掉」指拦掉；钩子口径以它为准，含同日定的「钩子里破发、抢七也不用」）。
 
@@ -114,7 +115,7 @@
 
 ## 2026-10-30：新开第四个栏目 vibetennis（16:9 3D 科普）
 
-账号所有者原话：「你帮我单独在 tennislive 里建一个新的子栏目，叫 vibetennis」。Vibe 知识风格的网球感知/科学现象科普：16:9 横屏、宏大有质感的科幻 3D 全息场景、字幕锚定在内容旁边（不压底部）、音效跟画面对齐、无旁白、时长随内容约 3 分钟；左上角「网球时差」＋官方图标，片中不出现「VIBE 知识」。成片在本地预渲（Three.js），spec 在 `specs/vibetennis/`、产物在 `output/<日期>/vibetennis/<slug>/`，质检/门禁/推送是 `tools/vibetennis/` 自己的（标题、正文、复制页、PushPlus、发布账本复用赛场之上那套）。照「片子做完就合并、就推微信」：QC 过了 `push.auto=true`，合并即由 `auto-push-vibetennis.yml` 推送。流程与 TODO（16:9 片尾母版、BGM 授权、中文显示名）见 [docs/vibetennis.md](docs/vibetennis.md)，开工清单见 `skills/vibetennis-production/SKILL.md`。
+账号所有者原话：「你帮我单独在 tennislive 里建一个新的子栏目，叫 vibetennis」。Vibe 知识风格的网球感知/科学现象科普：16:9 横屏、宏大有质感的科幻 3D 全息场景、字幕锚定在内容旁边（不压底部）、音效跟画面对齐、无旁白、时长随内容约 3 分钟；左上角「网球时差」＋官方图标，片中不出现「VIBE 知识」。成片在本地预渲（Three.js），spec 在 `specs/vibetennis/`、产物在 `output/<日期>/vibetennis/<slug>/`，质检/门禁/推送是 `tools/vibetennis/` 自己的（标题、正文、复制页、PushPlus、发布账本复用赛场之上那套）。照「片子做完就合并、就推微信」：QC 过了 `push.auto=true`，合并即由 `auto-push-vibetennis.yml` 推送。流程与 TODO（16:9 片尾母版、BGM 授权、中文显示名）见 [docs/vibetennis.md](docs/vibetennis.md)，开工清单见 `skills/vibetennis-production/SKILL.md`。栏目使命（所有者同日原话）：「内容一定要精确且详实，同时深入浅出让普通人都能看得懂，同时用动画特效呈现效果抓住观众注意力，能持续看下去，并能引爆共鸣和二次传播」；六条怎么落地见该 skill「栏目使命」。
 
 ## 2026-10-23：全栏目转场卡按内容自适应并复用共用动效
 

@@ -1,0 +1,104 @@
+{
+  "slug": "vibetennis-electronic-line-calling-2026",
+  "_status": "制作中：3D、字幕、音效、封面脚本已在 tools/vibetennis/episodes/vibetennis-electronic-line-calling-2026/；成片渲完过 qc.py 再走发布。BGM 授权未定，这一版只有合成音效。",
+  "_column": "vibetennis：现在网球大多是电子司线了，它靠不靠谱？以使用最广的 Hawk-Eye 为例，讲清它怎么从十来台相机算出一个落点、ITF 的标准要它准到什么程度、它准在哪、不准在哪；以及为什么法网至今还在看球印。",
+  "column": "vibetennis",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "outro_seconds": 0,
+    "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），沿用第一集的片内收束卡。",
+    "captions": "anchored",
+    "narration": "none",
+    "audio": {
+      "music": "待定",
+      "_music_why": "第一集那首版权未核；先只做音效版，BGM 等所有者定。",
+      "sfx": "复用 sfx.py 的击球/弹地/扫描/快门音，按画面事件对齐"
+    }
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-electronic-line-calling-2026/cover/make_cover.py",
+    "hook": "电子司线\n真的准吗？",
+    "subject": "电子司线",
+    "topic": "视觉科学 · 三角定位与误差",
+    "_why": "所有者 2026-10-31 从三个方案里选定 C（许先森风）：仿第 1 集，球场竖直居中，12 道视线汇聚到压在近端底线上的落点（3D 封面机位 r3d/shots.js t=302.5），标题「电子司线／真的准吗？」在球场上方，副标题「12 台相机盯着一颗球，落点却是算出来的」在底线下方。另两版：A 比特新语风、B 小作坊风（cover/make_cover.py A|B）。观众看得到的字写「电子司线」，Hawk-Eye 只作厂商名。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "电子司线",
+    "lead": "电子司线回放里那个压线的椭圆，不是拍下来的，是算出来的：十来台相机找到球心、交会成 3D 轨迹，再推出一个「假定的」落地脚印——球和地面只接触约 5 毫秒，脚印本身从没被直接量过。人工司线判落点的不确定度在 2 厘米上下，ITF 最高一级认证要求机器离线 5 毫米以外 100% 判对。"
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "现在都是电子司线了，它判的到底准不准？",
+    "thesis": "以使用最广的 Hawk-Eye 为例，它不拍「落地那一下」，而是算出来的：最多十台标定好的相机逐帧找到球心（2D），多台交会三角定位出 3D 位置，逐帧连成轨迹（4D），再用轨迹推出球在弹地时的接触区（Hawk-Eye 2016）。脚印本身没有被测量，用的是一个假定的脚印，推算方法没有公开（Cross 2014）。之所以只能算：球和地面只接触约 4.7 毫秒；落地会压扁，竖直落下接触面最大约 4.2 厘米，高速斜落还会往前滑，实验里拖出约 10 厘米长的脚印；第一下碰地的点很难确定，地上的球印也不可信——红土印可能偏大，硬地印可能偏小（ITF §2、Cross 2014）。判罚规则：球碰到线的任何一点都算界内（Whitney 2008、Cross 2014）。精度：2006 年 ITF 测试，Hawk-Eye 平均误差 2.6 毫米（Hawk-Eye 2016）；现行 ITF 金级认证要求离线 10 厘米以内的测试球，在 ±5 毫米容差下 100% 判对，喊 OUT 约 0.15 秒（ITF 28.1）。人工对照：2006–07 年 15 站 ATP 赛事 1473 次挑战，被挑战的判罚 39.3% 是错的；司线判落点的位置不确定度约 22 毫米，底线和发球线约 32 毫米、边线约 14 毫米（Mather 2008）。它不是绝对正确：5 毫米以内是允许的容差；场地 1 毫米的不平能让发球的第一落点差 3–4 毫米、球的绒毛会比球体先碰到地面约 10 毫米（Cross 2014）；风、阴影、灯光都要过测试（Hawk-Eye 2016）；2025 温网出过操作员误关系统的事故。法网 2026 仍是唯一保留人工司线、看球印的大满贯；而 ITF 名单上三家金级系统都有红土实时认证。 帧率：厂商说明相机最高 340 帧/秒，按此估算两帧间隔约 2.94 毫秒、200 公里/时的球两帧之间飞约 16 厘米，触地 4.72 毫秒内最多拍到一两帧——落地那一下本来就拍不全，只能靠轨迹推（Sony；Cross 2014）。温网每块场地 12 台追球相机、50 名操作员、144 块屏幕（BBC）。界内出界由电子司线直接判，球员不能申请回看复核；球员能申请视频回看的，只有主裁判的判罚，如两跳、触身、触网（美网 2023 年起，温网 2026 年起，温网明说电子司线的判罚不在其内）。脚误：以 Hawk-Eye Live 的公开介绍为例（2020 林茨），另有 6 台相机盯底线和中线，由场外复核官员看画面、按按钮触发电子喊声（Tennisnet）。",
+    "beats": [
+      "钩子：电子司线回放里那个压线的椭圆，是拍下来的吗？以 Hawk-Eye 为例：不是，是算出来的",
+      "规则：球碰到线的任何一点，都算界内",
+      "相机：温网每块场地 12 台追球相机，每一帧先各自找到球心（2D）",
+      "三角定位：多条视线交会成一个 3D 点；逐帧连成轨迹（4D）",
+      "拍得到吗：相机最高 340 帧/秒，两帧之间隔约 3 毫秒，200 公里/时的球飞出约 16 厘米；球贴地只有约 4.7 毫秒，最多拍到一两帧",
+      "所以脚印是推出来的：竖直落下接触面约 4 厘米，高速斜落滑出约 10 厘米；系统用的是假定脚印，没直接量过",
+      "球印也不可信：红土印可能偏大，硬地印可能偏小；而法网至今还在看球印",
+      "精度：2006 年测试平均误差 2.6 毫米；金级认证要求离线 5 毫米以外 100% 判对，喊 OUT 约 0.15 秒",
+      "人工对照：司线判落点的不确定度约 2 厘米（底线约 3 厘米）；2006–07 年 ATP 被挑战的判罚 39% 是错的",
+      "不完美：5 毫米以内是容差；场地 1 毫米不平就能让落点差 3–4 毫米；球的绒毛比球体先碰地",
+      "人还剩什么：界内出界由电子司线直接判、不能申请回看，能申请视频回看的只有两跳、触网这类；脚误仍由人看画面判；系统出故障时主裁介入——2025 温网误关一局，争议分重打",
+      "收束：它不是绝对正确，但它把误差从厘米级压到了毫米级"
+    ],
+    "sources": [
+      "ITF (2026). Electronic Line-Calling Systems: Evaluation Procedures, Revision 28.1；ITF Classified ELC Systems 名单",
+      "Sony：Hawk-Eye 技术说明（community.sony.dk，改编自 sony.net）——8 到 12 台相机、最高 340 帧/秒",
+      "BBC Sport（2025-07）：温网控制室与「no challenges under the current system」",
+      "Tennisnet（2020-11-06）：WTA 林茨 Hawk-Eye Live——12 台追球、6 台脚误、复核官员按键",
+      "CNBC（2023-09-09）：How Sony's Hawk-Eye works at the US Open——12 台追球＋6 台脚误、340 帧/秒",
+      "Hawk-Eye Innovations (2016). Electronic Line Calling Technology: How it works",
+      "G. Mather (2008). Perceptual uncertainty and line-call challenges in professional tennis. Proc. R. Soc. B 275: 1645–1651",
+      "R. Cross (2014). The footprint of a tennis ball. Sports Engineering 17: 239–247",
+      "D. Whitney et al. (2008). Perceptual mislocalization of bouncing balls by professional tennis referees. Current Biology 18(20): R947–R949",
+      "AELTC / Sky Sports / AP（2025-07-06）：温网中央球场一局电子司线被误关",
+      "Roland-Garros 2026 保留人工司线：Sky Sports（2025-09）、AP 转载（2026-06）",
+      "ATP（2023-04）：2025 年起巡回赛全面电子司线；AELTC（2024-10-09）：温网 2025 起取消人工司线",
+      "ATP（2026-03）Wimbledon video review announcement；ATP 2026 赛季公告；AP（2026-03-21）温网六块场地引入视频回看；美网 2023 视频回看报道"
+    ],
+    "_claims": {
+      "2025 温网误关": "Sky Sports、AP 转载多家一致：误关一局（AP 有一篇说三分），赛后道歉并取消操作员关机权限（CNN 报道）",
+      "⚠️ 不说的": "不说「电子司线会出错 X%」——没有逐球误差统计；不说「比人准 N 倍」",
+      "原理五步": "Hawk-Eye 2016 原文（2D 找球心 → 3D 三角定位 → 4D 轨迹 → 由轨迹算弹地接触区），摘录见 papers/…/sources.md",
+      "相机数": "温网每块场地 12 台：BBC 原句＋电讯报＋NZ Herald 三方一致（温网官网原文已下线）；Sony「8 到 12 台」；结构「12 台追球 + 6 台脚误」见 CNBC 美网与 Tennisnet 林茨。CNBC 全赛 204 台 = 17×12，不写 18 台总数",
+      "帧率": "Sony「up to 340 frames per second」＋ CNBC「The cameras track the ball at 340 frames per second」；片中标「按 340 帧/秒估算」",
+      "金级门槛": "ITF 28.1 附录 A2.2.5 原文：±100 mm 内、±5 mm 容差下判对率 100%；单线平均 ≤5 mm；最大 ≤10 mm",
+      "0.15 秒": "ITF 28.1 附录 A2.2.2：落地到喊 OUT 0.15 ± 0.05 秒",
+      "压扁/滑行/球印": "ITF 28.1 §2.1–2.2 原文",
+      "风、阳光、阴影、灯光": "Hawk-Eye 2016 原文列出的测试条件",
+      "界内规则": "Whitney 2008 原文：a ball that lands on a line, even a tiny fraction of the line, is still considered in play",
+      "法网 2026 人工司线": "Sky Sports、Arab News、SuperSport 多家报道一致；Mauresmo「The machine is not 100% reliable」见 AP 转载（WTOP、TSN、theScore）。Ruud–Fonseca 那一分的细节各家说法不一，片中不讲那一分",
+      "FoxTenn": "厂商说法（贴地高速相机＋激光、拍真实图像），相机数各报道不一（40 余台、2500/3000 fps），片中只说「也有系统直接拍落地瞬间（厂商说法）」，不给数字",
+      "⚠️ 适用范围": "「算出来的」只对 Hawk-Eye 这类轨迹法成立，字幕要写「以 Hawk-Eye 为例」，不能写成所有电子司线",
+      "⚠️ 金级标准的读法": "是认证测试门槛（发球机打 10 厘米范围内的测试球），不是比赛里逐球的保证；字幕写「认证要求」",
+      "2.6 mm": "Hawk-Eye 2016 原文：2006 年 ITF 测试的平均误差。Cross 2014 引 Hawk-Eye 官网「约 3.6 mm」、Mather 2008 引 Fischetti 2007「3 mm 以内」——都是 Hawk-Eye 的说法、不同时期。片中只用 2.6 mm 并带年份",
+      "脚印没被测量": "Cross 2014 摘要原文：the footprint itself is not measured. It is the ball trajectory through the air that is measured；推算方法未公开",
+      "4.7 ms / 42 mm / 100 mm / 126 mm": "Cross 2014 原文：接触 4.72 ms；竖直最大接触直径 42 ± 1 mm；斜落（水平 21.1 m/s）脚印长 100 ± 1 mm；转播里 Hawk-Eye 发球椭圆约 126 × 45 mm，作者说与球速推算「大致相符」——不说偏大",
+      "绒毛 10 mm": "Cross 2014 原文；作者同时说实际上大概可以忽略，片中要把这半句也带上",
+      "1 mm 不平 → 3–4 mm": "Cross 2014 结论原文（低角度来球，如快速发球）",
+      "人工对照": "Mather 2008 原文：1473 次挑战、15 站 ATP、2006–07；39.3% 被挑战的判罚是错的；位置不确定度司线 22 mm（底线/发球线 32、边线 14），球员 30 mm",
+      "⚠️ 两篇心理学研究结论相反": "Whitney 2008：温网司线错判 84% 顺着运动方向偏；Mather 2008：没有证据表明运动造成显著定位误差。片中不讲「人眼被运动带偏」",
+      "⚠️ 厘米级 vs 毫米级": "人眼用的是 Mather 的位置不确定度（模型参数），机器用的是 ITF 容差和 2006 年测试平均误差——量法不同，只说量级，不算倍数",
+      "⚠️ 被否掉的整理稿": "2026-10-30 收到的 AI 整理稿说 Cross「椭圆偏大 20–25%、偏向判 IN」、Mather「研究温网、感知滞后」——对照原文都不成立，不用",
+      "法网与红土认证": "ITF 名单：Hawk-Eye、Foxtenn、Bolt6 三家金级都有红土实时认证；法网保留人工是赛事自己的选择",
+      "2.94 ms / 16 cm / 一两帧": "由 Sony 340 fps 与 Cross 4.72 ms 推算：1/340 s≈2.94 ms；55.6 m/s×2.94 ms≈16 cm；4.72/2.94≈1.6 个帧间隔",
+      "没有挑战": "⚠️ 2026-10-30 订正：BBC 2025-07「no challenges under the current system and video replays are not used」只描述 2025 年的温网。温网 2026 起在六块场地引入视频回看（不限次数），但明说电子司线的判罚不能挑战；视频回看管 not-up、foul shot、touch 这类主裁判罚。美网 2023 起、澳网 2025 起已有视频回看。片中写「界内出界：电子司线直接判，不能申请回看」＋「能申请视频回看的，只有两跳、触身、触网这类（美网 2023 年起，温网 2026 年起）」。用词：所有者 2026-10-30 指出不说「能不能挑战」，说「能不能申请回看」",
+      "脚误": "Tennisnet 2020 林茨原句；只代表公开介绍的配置，不说成温网 2025",
+      "事故": "见 sources §10：误关一局、三个判罚未接住、前两个主裁判、第三个重打；取消操作员手动关闭权限。重打结果不写",
+      "ATP 视频回看推进": "ATP 官方 2026 赛季公告：2025 年大师赛全部有视频回看，2026 年 ATP 500 全部场地，2027 年上 ATP 250；Live 电子司线继续覆盖全部 ATP 赛事。片中不写"
+    },
+    "_assumptions": "相机位置、射线、脚印形状为示意；椭圆尺寸按 Cross 2014 的典型值画，不是某一球的实测。"
+  }
+}
