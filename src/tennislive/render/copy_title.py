@@ -83,7 +83,9 @@ def episode_number(slug: str) -> int:
         table = json.loads(EPISODES_PATH.read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         raise SystemExit(f"集数表 {EPISODES_PATH.name} 读失败：{exc}") from exc
-    episodes = {k: v for k, v in table.items() if not k.startswith("_")}
+    episodes = table.get("episodes") if isinstance(table, dict) else None
+    if not isinstance(episodes, dict):
+        raise SystemExit(f"集数表 {EPISODES_PATH.name} 要有 episodes：slug → 集数")
     if sorted(episodes.values()) != list(range(1, len(episodes) + 1)):
         raise SystemExit(f"集数表 {EPISODES_PATH.name} 必须从 1 连续编号、不重号：{episodes}")
     if slug not in episodes:

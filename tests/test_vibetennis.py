@@ -72,7 +72,7 @@ def test_标题规则认得这个栏目():
 
 def test_集数表连续且每条spec都登记了():
     table = json.loads((ROOT / "data/vibetennis_episodes.json").read_text(encoding="utf-8"))
-    episodes = {k: v for k, v in table.items() if not k.startswith("_")}
+    episodes = table["episodes"]
     assert sorted(episodes.values()) == list(range(1, len(episodes) + 1))
     assert {p.stem for p in SPECS} <= set(episodes)
 
