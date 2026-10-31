@@ -2,7 +2,8 @@
 """把一条 vibetennis 成片推到微信（PushPlus）：标题＋正文＋海报＋成片＋复制页。
 
 **正文和标题完全复用赛场之上那套**（`tools/push_reel.py`）：
-`prepare_copy` 出标题（`10.30vibetennis|现场更快` 这种「日期＋栏目＋|＋主题」，≤20 字、
+`prepare_copy` 出标题（`EP01.vibetennis|现场更快` 这种「EP 两位集数＋.＋栏目＋|＋主题」，不写日期，
+集数登记在 `data/vibetennis_episodes.json`；≤20 字、
 无空白）和去掉标题的正文（≤5 个 tag，活动期自动补活动 tag），`build_html` 排版，
 `wait_for_delivery` 先等复制页和成片链接真的能打开，再 `push`。
 
