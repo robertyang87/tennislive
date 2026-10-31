@@ -233,8 +233,8 @@ Brain Game Tennis / Tennis Abstract / Hugh Clarke 等专业分析提供取材方
 
 读者能不能从内容本身看出它属于哪个？能：横屏、3D、没有比赛画面——点开就知道。
 
-- 栏目名：`vibetennis`（印在封面药丸「网球时差 · vibetennis」和标题 `10.30vibetennis|…` 上）。
-  ⚠️ 标题整句 ≤20 字，`M.D` + `vibetennis` + `|` 就占掉 15–16 个，**主题只剩 4–5 个字**。
+- 栏目名：`vibetennis`（印在封面药丸「网球时差 · vibetennis」和标题 `EP01.vibetennis|…` 上；这一栏按集数命名、不写日期，集数登记在 `data/vibetennis_episodes.json`）。
+  ⚠️ 标题整句 ≤20 字，`EPNN.` + `vibetennis` + `|` 就占掉 16 个，**主题只剩 4 个字**。
   要不要改一个中文显示名，是账号所有者的决定，没定之前照他说的叫 `vibetennis`
 - spec：`specs/vibetennis/<slug>.json` + `.xhs.txt`；产物：`output/<日期>/vibetennis/<slug>/`
 - 生产、质检、推送：[docs/vibetennis.md](vibetennis.md)、`skills/vibetennis-production/SKILL.md`

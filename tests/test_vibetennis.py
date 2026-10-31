@@ -51,11 +51,30 @@ def test_spec合同会拦住竖屏和空出处():
 
 def test_标题规则认得这个栏目():
     sys.path.insert(0, str(ROOT / "src"))
-    from tennislive.render.copy_title import make_copy_title  # noqa: PLC0415
+    from tennislive.render.copy_title import (  # noqa: PLC0415
+        copy_title, make_copy_title, validate_copy_title)
 
-    assert make_copy_title("10.30", "vibetennis", "现场更快") == "10.30vibetennis|现场更快"
+    # 所有者 2026-10-31：vibetennis 按集数命名 EPNN.vibetennis|主题，不写日期
+    assert make_copy_title("10.30", "vibetennis", "现场更快", episode=1) == "EP01.vibetennis|现场更快"
+    assert make_copy_title("10.31", "vibetennis", "上旋下坠",
+                           slug="vibetennis-topspin-magnus-2026") == "EP03.vibetennis|上旋下坠"
+    assert copy_title("EP02.vibetennis｜电子司线") == "EP02.vibetennis|电子司线"
+    assert validate_copy_title("EP02.vibetennis|电子司线", require_prefix=True)
     with pytest.raises(SystemExit):
-        make_copy_title("10.30", "vibetennis", "网球为什么现场更快")   # 超 20 字要报错，不许截断
+        make_copy_title("10.30", "vibetennis", "网球为什么现场更快", episode=1)   # 超 20 字要报错，不许截断
+    with pytest.raises(SystemExit):
+        validate_copy_title("10.30vibetennis|现场更快", require_prefix=True)   # 旧的日期格式不再认
+    with pytest.raises(SystemExit):
+        make_copy_title("10.30", "vibetennis", "现场更快", slug="vibetennis-not-registered")
+    # 别的栏目照旧是日期
+    assert make_copy_title("10.30", "赛场之上", "郑钦文胜").startswith("10.30赛场之上|")
+
+
+def test_集数表连续且每条spec都登记了():
+    table = json.loads((ROOT / "data/vibetennis_episodes.json").read_text(encoding="utf-8"))
+    episodes = table["episodes"]
+    assert sorted(episodes.values()) == list(range(1, len(episodes) + 1))
+    assert {p.stem for p in SPECS} <= set(episodes)
 
 
 def test_每条spec的发布标题和正文都过得了推送那几道闸():
@@ -65,7 +84,7 @@ def test_每条spec的发布标题和正文都过得了推送那几道闸():
         out = Path("output/2026-10-30/vibetennis") / path.stem
         column, title, body = push_reel.prepare_copy(path.with_suffix(".xhs.txt"), out)
         assert column == "vibetennis"
-        assert title.startswith("10.30vibetennis|") and len(title) <= 20
+        assert title.startswith("EP") and ".vibetennis|" in title and len(title) <= 20
         assert body.strip()
         # 所有者 2026-10-31：这一栏必带 #vibe知识大赏，不带两个中国赛季活动 tag
         assert "#vibe知识大赏" in body and "#网球时差" in body

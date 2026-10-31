@@ -1,5 +1,10 @@
 """Final copy titles: mandatory date+column+|, no whitespace, <=20 characters.
 
+Exception: the ``vibetennis`` column numbers its episodes instead of dating them
+(owner 2026-10-31): ``EP02.vibetennis|上旋下坠`` -- two-digit episode, a dot, the
+column, ``|``, the hook. Episode numbers live in ``data/vibetennis_episodes.json``
+(slug -> number), so spec bytes pinned by QC attestations never change.
+
 Every digit and punctuation mark counts as one. In-frame typography and legacy
 intermediate headline interfaces are separate from final publishing fields.
 """
@@ -13,7 +18,10 @@ from pathlib import Path
 COPY_TITLE_MAX = 20
 _COLUMNS = r"赛场之上|赛后开麦|网球有故事|vibetennis|昨日好球|历史上的今天|今日球局|今日赛程|开球之前"
 _PREFIX = re.compile(rf"^(?:[🎾🏆💥🔥📅📖])?(\d{{1,2}})[./](\d{{1,2}})({_COLUMNS})[|｜丨]")
+_EP_PREFIX = re.compile(r"^EP(\d{2})\.(vibetennis)[|｜丨]")
+EPISODE_COLUMNS = frozenset({"vibetennis"})
 COPY_TITLES_PATH = Path(__file__).resolve().parents[3] / "data" / "copy_titles.json"
+EPISODES_PATH = Path(__file__).resolve().parents[3] / "data" / "vibetennis_episodes.json"
 
 
 def _space(char: str) -> bool:
@@ -26,7 +34,10 @@ def compact_copy_title(title: str) -> str:
     title = re.sub(r"(?<=\d)\s+(?=\d+[-:])", "，", title)
     title = "".join(char for char in title if not _space(char))
     match = _PREFIX.match(title)
-    if match:
+    episode = _EP_PREFIX.match(title)
+    if episode:
+        title = f"EP{episode[1]}.{episode[2]}|" + title[episode.end():]
+    elif match:
         title = f"{int(match[1])}.{int(match[2])}{match[3]}|" + title[match.end():]
     title = re.sub(r"(?<!\d)[，,；;、：:]|[，,；;、：:](?!\d)", "", title)
     return title.strip("。！!．")
@@ -42,9 +53,11 @@ def validate_copy_title(title: str, *, require_prefix: bool = False) -> str:
             f"可复制标题 {len(title)} 个字符，超过 {COPY_TITLE_MAX}：{title}\n"
             "日期、栏目、分隔符、每个数字和标点都算字符；请精简主题，不能删前缀或硬截断。")
     if require_prefix:
-        prefix = _PREFIX.match(title)
+        prefix = _EP_PREFIX.match(title) or _PREFIX.match(title)
         if not prefix:
-            raise SystemExit(f"可复制标题必须保留日期+栏目+|：{title}")
+            raise SystemExit(f"可复制标题必须保留日期+栏目+|（vibetennis 是 EPNN.vibetennis|）：{title}")
+        if prefix.re is _PREFIX and prefix[3] in EPISODE_COLUMNS:
+            raise SystemExit(f"{prefix[3]} 的标题不写日期，要写成 EPNN.{prefix[3]}|主题：{title}")
         if prefix.end() == len(title):
             raise SystemExit("可复制标题主题不能为空")
     return title
@@ -53,6 +66,31 @@ def validate_copy_title(title: str, *, require_prefix: bool = False) -> str:
 def copy_title(title: str) -> str:
     """Normalize an existing field without ever stripping its prefix."""
     return validate_copy_title(compact_copy_title(title))
+
+
+def episode_prefix(episode: int, column: str = "vibetennis") -> str:
+    """`EP02.vibetennis|`: two-digit episode number, dot, column, `|`; no date."""
+    if column not in EPISODE_COLUMNS:
+        raise SystemExit(f"栏目 {column!r} 不按集数命名")
+    if isinstance(episode, bool) or not isinstance(episode, int) or not 1 <= episode <= 99:
+        raise SystemExit(f"集数要是 1–99 的整数：{episode!r}")
+    return f"EP{episode:02d}.{column}|"
+
+
+def episode_number(slug: str) -> int:
+    """Look up a vibetennis episode number by slug in data/vibetennis_episodes.json."""
+    try:
+        table = json.loads(EPISODES_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise SystemExit(f"集数表 {EPISODES_PATH.name} 读失败：{exc}") from exc
+    episodes = table.get("episodes") if isinstance(table, dict) else None
+    if not isinstance(episodes, dict):
+        raise SystemExit(f"集数表 {EPISODES_PATH.name} 要有 episodes：slug → 集数")
+    if sorted(episodes.values()) != list(range(1, len(episodes) + 1)):
+        raise SystemExit(f"集数表 {EPISODES_PATH.name} 必须从 1 连续编号、不重号：{episodes}")
+    if slug not in episodes:
+        raise SystemExit(f"{slug!r} 还没在 {EPISODES_PATH.name} 里登记集数（EP 几）")
+    return episodes[slug]
 
 
 def title_prefix(date_label: str, column: str) -> str:
@@ -82,7 +120,20 @@ def publication_hook(slug: str, default: str) -> str:
     return hooks.get(slug, default)
 
 
-def make_copy_title(date_label: str, column: str, hook: str, *, slug: str = "") -> str:
-    """Count the complete required prefix and hook; never silently truncate."""
-    whole = title_prefix(date_label, column) + compact_copy_title(publication_hook(slug, hook))
+def make_copy_title(date_label: str, column: str, hook: str, *, slug: str = "",
+                    episode: int | None = None) -> str:
+    """Count the complete required prefix and hook; never silently truncate.
+
+    Episode-numbered columns (vibetennis) ignore ``date_label``: the episode comes
+    from ``episode`` or, failing that, from the slug's entry in the episode table.
+    """
+    if column in EPISODE_COLUMNS:
+        if episode is None:
+            if not slug:
+                raise SystemExit(f"{column} 的标题要集数：传 episode= 或 slug=")
+            episode = episode_number(slug)
+        prefix = episode_prefix(episode, column)
+    else:
+        prefix = title_prefix(date_label, column)
+    whole = prefix + compact_copy_title(publication_hook(slug, hook))
     return validate_copy_title(whole, require_prefix=True)

@@ -35,7 +35,8 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
 
 1. 选题过「妈妈、高中生、上班族都会说『对』」测试；一个现象，一个反直觉转折，一条有出处的证据链
 2. 写 `specs/vibetennis/<slug>.json`（`column`/`cover.eyebrow` = `vibetennis`，`film.canvas` = [1920,1080]，
-   `editorial.sources` 不能空，`push.auto` = true）和 `.xhs.txt`（第一行完整问题，正文数字与片子一致，末尾问句，tag ≤5）
+   `editorial.sources` 不能空，`push.auto` = true）和 `.xhs.txt`（第一行完整问题，正文数字与片子一致，末尾问句，tag ≤5）；
+   在 `data/vibetennis_episodes.json` 登记这一集的集数（下一个号）——推送标题是 `EPNN.vibetennis|四字主题`，不写日期
 3. 复制上一集 `tools/vibetennis/episodes/<slug>/` 改场景与镜头表；本地 3D 分段渲 → `overlay.py` → `sfx.py` → `assemble.sh`
 4. `r3d/still_hd.js` 渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出**单独一张** 2160×2880 海报（封面**不进视频**，所有者 2026-10-30）
 5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证）→ 看 `qc_contact.jpg`，最好整片看一遍
