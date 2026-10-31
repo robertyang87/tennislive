@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=N6FzVa8YsdQ",
+  "source_sha256": "21880e213139a95dd1cdadfbb6df8bc699a965d64a5f1ce35a1a3792e2072b33",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-10-16T17:09:10+00:00",
+  "reviewed_from": 1075.5,
+  "reviewed_to": 1082.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 1075.7,
+      "end": 1082.2,
+      "en": "And the final point goes Iga Swiatek's way.",
+      "zh": "最后一分，属于斯瓦泰克。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 21880e213139a95dd1cdadfbb6df8bc699a965d64a5f1ce35a1a3792e2072b33，存于 data/source_asr/N6FzVa8YsdQ/small.en.json 与 data/source_asr/N6FzVa8YsdQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
