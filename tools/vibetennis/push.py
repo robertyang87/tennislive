@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -34,12 +35,14 @@ from publish_gate import validate_qc  # noqa: E402
 # 这一栏是 16:9 横屏成片；共用推送模板的按钮写的是「竖版」。只在这一栏替换按钮文字，
 # 不改 push_style / push_reel（别的栏目不变，reel 修订单钉住的主题源码哈希也不动）。
 LANDSCAPE_BUTTON_TEXT = "▶ 打开横版成片"
+# 英文版（spec.lang=en）的按钮写英文，链接指向英文成片
+BUTTON_TEXT_BY_LANG = {"zh": LANDSCAPE_BUTTON_TEXT, "en": "▶ Watch the video"}
 
 
-def landscape_button(html: str) -> str:
+def landscape_button(html: str, lang: str = "zh") -> str:
     if html.count(ps.VIDEO_BUTTON_TEXT) != 1:
         raise SystemExit(f"推送 HTML 里「{ps.VIDEO_BUTTON_TEXT}」不是恰好一处，模板变了，先看一眼")
-    return html.replace(ps.VIDEO_BUTTON_TEXT, LANDSCAPE_BUTTON_TEXT)
+    return html.replace(ps.VIDEO_BUTTON_TEXT, BUTTON_TEXT_BY_LANG[lang])
 
 
 def compose(outdir: Path) -> tuple[str, str, str, str]:
@@ -57,7 +60,8 @@ def compose(outdir: Path) -> tuple[str, str, str, str]:
         raise SystemExit("海报不在，不推")
     html = pr.build_html(url, pr.copy_page_url(outdir), meta.get("lead", ""), text, poster,
                          column=column)
-    return title, body, landscape_button(html), url
+    lang = json.loads((SPEC_DIR / f"{slug}.json").read_text(encoding="utf-8")).get("lang", "zh")
+    return title, body, landscape_button(html, lang), url
 
 
 def main() -> int:

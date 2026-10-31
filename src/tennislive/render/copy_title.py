@@ -20,6 +20,9 @@ _COLUMNS = r"赛场之上|赛后开麦|网球有故事|vibetennis|昨日好球|�
 _PREFIX = re.compile(rf"^(?:[🎾🏆💥🔥📅📖])?(\d{{1,2}})[./](\d{{1,2}})({_COLUMNS})[|｜丨]")
 _EP_PREFIX = re.compile(r"^EP(\d{2})\.(vibetennis)[|｜丨]")
 EPISODE_COLUMNS = frozenset({"vibetennis"})
+# Language variants (owner 2026-10-31: English versions of each episode) reuse the
+# episode number of the original: ``<slug>-en`` is EP of ``<slug>``.
+LANG_VARIANT = re.compile(r"^(?P<base>.+)-(?P<lang>en)$")
 COPY_TITLES_PATH = Path(__file__).resolve().parents[3] / "data" / "copy_titles.json"
 EPISODES_PATH = Path(__file__).resolve().parents[3] / "data" / "vibetennis_episodes.json"
 
@@ -77,8 +80,18 @@ def episode_prefix(episode: int, column: str = "vibetennis") -> str:
     return f"EP{episode:02d}.{column}|"
 
 
+def variant_base(slug: str) -> str:
+    """``vibetennis-live-faster-2026-en`` -> ``vibetennis-live-faster-2026``; others unchanged."""
+    m = LANG_VARIANT.match(slug or "")
+    return m["base"] if m else slug
+
+
 def episode_number(slug: str) -> int:
-    """Look up a vibetennis episode number by slug in data/vibetennis_episodes.json."""
+    """Look up a vibetennis episode number by slug in data/vibetennis_episodes.json.
+
+    A language variant (``<slug>-en``) is not registered on its own: it is the same
+    episode, so it takes the number of its base slug.
+    """
     try:
         table = json.loads(EPISODES_PATH.read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
@@ -88,6 +101,8 @@ def episode_number(slug: str) -> int:
         raise SystemExit(f"集数表 {EPISODES_PATH.name} 要有 episodes：slug → 集数")
     if sorted(episodes.values()) != list(range(1, len(episodes) + 1)):
         raise SystemExit(f"集数表 {EPISODES_PATH.name} 必须从 1 连续编号、不重号：{episodes}")
+    if slug not in episodes and variant_base(slug) in episodes:
+        return episodes[variant_base(slug)]
     if slug not in episodes:
         raise SystemExit(f"{slug!r} 还没在 {EPISODES_PATH.name} 里登记集数（EP 几）")
     return episodes[slug]

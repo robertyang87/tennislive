@@ -1,0 +1,67 @@
+{
+  "slug": "vibetennis-live-faster-2026-en",
+  "_column": "vibetennis EP01 English version: same film as vibetennis-live-faster-2026, no narration, all on-screen text and subtitles in English.",
+  "column": "vibetennis",
+  "lang": "en",
+  "variant_of": "vibetennis-live-faster-2026",
+  "_variant_why": "所有者 2026-10-31：「我想把这 3 期都做成有英文版的……英文版的不要有配音，上面的文案和字幕是英文……放到那个 Release 里面并列着，然后再推一版英文的」。品牌名英文写 Tennis Jetlag（所有者 2026-10-31）。",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "_cover_why": "账号所有者 2026-10-30 更正：封面不放进视频开头、不合进视频；成片就是母片 tennis_live_faster_v2b.mp4 原样，3:4 高清封面单独一张图（poster.jpg），只作推送第一屏和平台封面。",
+    "outro_seconds": 0,
+    "captions": "anchored",
+    "narration": "none",
+    "subtitles": "burned-in English captions anchored next to the content, same timing as the Chinese captions",
+    "audio": {
+      "music": "We Never (Remix)",
+      "_music_why": "所有者在会话里选定的预览 BGM，来自 vibeknowledge 仓库；版权未核，公开平台发布前需所有者确认或换曲。另备只含音效的版本。",
+      "sfx": "tools/vibetennis/sfx.py 合成，按画面事件对齐",
+      "loudness": "与中文版同一条混音（音乐＋音效，无配音）：-14 LUFS / -1.5 dBTP"
+    }
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-live-faster-2026/cover/make_cover_en.py",
+    "hook": "Why does tennis\nlook faster live?",
+    "subject": "Courtside vs TV",
+    "topic": "Angular speed, camera angle and window",
+    "_why": "中文版 v9 封面的英文版：画面层完全相同（hero.py），文字换英文，左上 logo＋Tennis Jetlag。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "Live",
+    "_summary_why": "标题规则 ≤20 字符、无空白；EP01.vibetennis| 已占 16 个字符，英文主题只剩 4 个字符。",
+    "lead": "The same 200 km/h serve sweeps about 138° a second across your view courtside, but only about 19° on TV. The broadcast camera squashes the court's depth, and our eyes are less sensitive to motion in depth. Football is the other way round: the stands show the whole pitch, so the ball looks slower."
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "Why does tennis look faster live than on TV, while football looks faster on TV?",
+    "thesis": "The brain judges speed by the angle an object sweeps across the retina per second, not by its physical speed. Tennis's main TV camera sits high behind the baseline, so the ball mostly travels in depth: a small angular speed, and depth motion is detected less sensitively. Courtside, the ball sweeps sideways, far beyond the smooth-pursuit limit. Football is the reverse: the stands show the whole 105 m pitch, TV frames only about 40 m, and by Brown's window effect the same speed looks slower in a bigger window.",
+    "beats": [
+      "Puzzle: tennis looks faster live, football looks faster on TV",
+      "How fast: a 200 km/h serve lands in ~0.4 s and reaches the returner in ~0.7 s",
+      "Camera: high behind the baseline, tilted ~12° down; depth is squashed",
+      "Angular speed: courtside ~138°/s vs TV ~19°/s, about 7×",
+      "Eyes: smooth pursuit tops out ~70°/s; depth-motion sensitivity ~1/3 of sideways",
+      "Window: Brown 1931, a 2× window needs ~1.94× the speed to look as fast",
+      "Real life: through a screen, other people's rallies look easy"
+    ],
+    "sources": [
+      "J.F. Brown (1931). The visual perception of velocity. Psychologische Forschung 14:199–232",
+      "H. Wallach (1939). On constancy of visual speed. Psychological Review 46:541–552",
+      "C.W. Tyler (1971). Stereoscopic depth movement: two eyes less sensitive than one. Science 174:958–961",
+      "Meyer, Lasker & Robinson (1985). The upper limit of human smooth pursuit velocity. Vision Research 25:561–563",
+      "Regan & Gray (2000). Visually guided collision avoidance and collision achievement. Trends in Cognitive Sciences 4:99–107",
+      "ATP 250 TV Production Manual (2023): Camera 1 sightline",
+      "David Foster Wallace (2006). Federer as Religious Experience. The New York Times"
+    ],
+    "_assumptions": "Angular speeds and serve times are simplified-model estimates; camera distance, seats and screen size are illustrative assumptions (stated on the references card)."
+  }
+}

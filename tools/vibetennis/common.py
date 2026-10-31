@@ -32,6 +32,7 @@ RENDER_JSON = re.compile(r"^output/(\d{4}-\d\d-\d\d)/vibetennis/([^/]+)/render\.
 # 时长随内容走，但这一栏承诺的是「三分钟左右讲清一件事」：
 # 一分半以下讲不清，五分钟以上就不是这个栏目了。
 MIN_SECONDS, MAX_SECONDS = 90.0, 300.0
+LANGS = frozenset({"zh", "en"})
 
 
 def sha256(path: Path) -> str:
@@ -87,7 +88,22 @@ def spec_problems(spec: dict, slug: str) -> list[str]:
     push = spec.get("push") or {}
     if not str(push.get("summary", "")).strip():
         bad.append("push.summary 是空的（标题末尾那一格）")
+    # 语言版（所有者 2026-10-31：每集出英文版，无配音、文字和字幕全英文，和中文版放同一个 Release）
+    lang = spec.get("lang", "zh")
+    if lang not in LANGS:
+        bad.append(f"lang 只能是 {sorted(LANGS)}，写的是 {lang!r}")
+    elif lang != "zh":
+        want = slug[: -len(f"-{lang}")] if slug.endswith(f"-{lang}") else None
+        if not want or spec.get("variant_of") != want:
+            bad.append(f"{lang} 版的 slug 要以 -{lang} 结尾，variant_of 写原版 slug（{want!r}）")
+    elif spec.get("variant_of"):
+        bad.append("中文原版不写 variant_of")
     return bad
+
+
+def release_slug(spec: dict) -> str:
+    """成片放进哪一集的 Release：语言版和原版并列在同一个 Release 里。"""
+    return spec.get("variant_of") or spec["slug"]
 
 
 def outdir_for(date: str, slug: str, root: Path = ROOT) -> Path:
