@@ -34,7 +34,7 @@ def test_photo_fills_canvas_but_evidence_keeps_subtitle_guard(tmp_path):
         reel.parse_segments(spec, {'main': 'url'}, 'main')
 
 
-def test_photo_movie_preserves_canvas_and_requires_the_same_safety(tmp_path):
+def test_photo_movie_preserves_canvas_and_requires_the_same_safety(tmp_path, monkeypatch):
     if not shutil.which('ffmpeg'):
         pytest.skip('ffmpeg unavailable')
     path = tmp_path / 'photos.mp4'
@@ -52,10 +52,18 @@ def test_photo_movie_preserves_canvas_and_requires_the_same_safety(tmp_path):
     reel.cut_still_segment(parsed, tmp_path / 'part.mp4',
                            command_sink=lambda *args: command.extend(args))
     assert 'scale=1080:1440' in command[command.index('-vf') + 1]
+    # Native dry-run / reattest precedes installation of ffprobe. Read real
+    # sample-entry dimensions, rather than trusting a dimension claim in spec.
+    monkeypatch.setattr(reel.shutil, 'which', lambda name: None)
+    monkeypatch.setattr(reel, 'probe_size', lambda path: pytest.fail('early validation called ffprobe'))
+    assert reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')[0].full_bleed
     del raw['_photo_source']
     with pytest.raises(reel.ReelError, match='来源'):
         reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')
     raw['_photo_source'] = 'https://example.org/gallery'
     movie('1080x1080')
     with pytest.raises(reel.ReelError, match='不许拉伸'):
+        reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')
+    path.write_bytes(path.read_bytes()[:40])
+    with pytest.raises(reel.ReelError, match='尺寸无法核验'):
         reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')

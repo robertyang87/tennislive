@@ -8,5 +8,6 @@
   "retained": "原23段顺序、20条音频请求、全部完整回合、本人及解说原声",
   "change": "原13段纯字卡换成两段2019家庭训练与11段照片，原5照片卡也换轮播；共16照片轮播+7原始影像段",
   "tests": "33 passed；旧实现反向验证两个新增重叠/照片视频判据均失败；全片渲后再验字幕与片头位置",
-  "previous_film_sha256": "8a0e2714a7ab8d06090f2fa6a102330ceceea32eb620203da07ec0cd4392816d"
+  "previous_film_sha256": "8a0e2714a7ab8d06090f2fa6a102330ceceea32eb620203da07ec0cd4392816d",
+  "early_validation": "云端dry-run在ffprobe安装前执行：无ffprobe时读取真实MP4 moov/trak/video sample entry；完整渲染仍用ffprobe校验，不信spec尺寸声明。23段真实spec在无ffprobe条件下通过；损坏与方形片段拒绝。"
 }

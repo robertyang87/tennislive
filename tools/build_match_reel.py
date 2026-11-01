@@ -3819,7 +3819,14 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 if Path(s["image"]).suffix.lower() == ".mp4":
                     # Photo sequences use the existing silent image-movie
                     # path; keep the same provenance and geometry contract.
-                    photo_w, photo_h = probe_size(Path(s["image"]))
+                    if shutil.which("ffprobe"):
+                        photo_w, photo_h = probe_size(Path(s["image"]))
+                    else:
+                        from tennislive.video.mp4_geometry import photo_movie_size
+                        try:
+                            photo_w, photo_h = photo_movie_size(Path(s["image"]))
+                        except (OSError, ValueError) as exc:
+                            raise ReelError(f"照片视频尺寸无法核验：{exc}") from exc
                 else:
                     with Image.open(s["image"]) as photo:
                         photo_w, photo_h = photo.size
