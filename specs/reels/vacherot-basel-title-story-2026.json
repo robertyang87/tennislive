@@ -813,7 +813,7 @@
       }
     ]
   },
-  "_local_tts_review": "本地全句实测已通过时长与人名切词。Release上传本地快照遇uploads.github.com 401，未宣称远端可复用；正式首次render按现有工作流合成、自动审查并保留其实际字节。",
+  "_local_tts_review": "本地全句实测通过时长与人名切词；Release上传401后，已用既有有界repository transport固定并实际取回同一511KiB快照，完整校验hash和13个请求。正式render严格复用这些字节，并须通过实际配音五项自动检查。",
   "_original_source_urls": {
     "final": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
     "r1": "https://www.tennistv.com/videos/4599139/basel-2026-r1-vacherot-navone-short-highlights",
