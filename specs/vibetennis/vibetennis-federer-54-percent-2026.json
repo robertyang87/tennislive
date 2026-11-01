@@ -14,14 +14,15 @@
     "outro_seconds": 0,
     "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），片尾是收束问句＋参考资料页。",
     "captions": "anchored（只用画面上的锚定文案；配音不另加底部字幕——所有者 2026-11-01「不用再多加多余的字幕。就用画面上当前的一些文案」）",
-    "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03）；配音稿 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/narration.json（39 句，按画面落位，最晚比画面晚 0.7 s）；多音字静态预检（tools/check_polyphones.py）报 2 处，合成文本换同音字：几乎→机乎、打转→打赚，另按 EP03 差距→插距 把 差不到→插不到；字幕保持原字，屏幕数字用阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
+    "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03）；配音稿 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/narration.json（48 句，按画面落位，最晚比画面晚 0.7 s；2026-11-01 改版新增 9 句：马尔可夫的发现 6 句、片尾金句 3 句，静态多音字预检 0 处）；多音字静态预检（tools/check_polyphones.py）报 2 处，合成文本换同音字：几乎→机乎、打转→打赚，另按 EP03 差距→插距 把 差不到→插不到；字幕保持原字，屏幕数字用阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
     "_narration_why": "账号所有者 2026-11-01：「中文版的加上中文的配音……就是有 TTS 的，跟 EP 三一样的」。",
     "audio": {
       "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge assets/music/we-never-remix-hi-noise-qiucheng.m4a，抖音 Vibe 知识赛道统一配乐）",
       "_music_why": "账号所有者 2026-11-01：「不要 bgm」「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」。从曲子 0.309 s 起取（74 BPM，标题锁定转金落在拍上），铺底 -20 LUFS；版权归原作者，库内 README 注明发布时优先用平台曲库同曲。",
       "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS，低于 BGM 3 dB",
       "loudness": "中文版：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB（同 EP03）；英文版：BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
-    }
+    },
+    "_revision_2026_11_01": "所有者：「感觉缺少一个最后的金句」「同时你没有简单介绍马尔可夫链是什么。以及是他是怎么发现的」。标题后插入 32.3 s「1906 涅克拉索夫之争 → 1913《奥涅金》两万字母 → 两状态链」，片尾换成「生涯输掉 108,336 分 → 每局从 0-0 重新开始 → 你不用赢下每一分，只要输掉一分之后，还能打好下一分」；插入长度取整小节，BGM 在小节线上重复相应小节。出处：Seneta (2006)；Markov (1913) 英译 Link (2006) Science in Context 19: 591–600；108,336 = 236,038 − 127,702（UTS）。"
   },
   "cover": {
     "eyebrow": "vibetennis",

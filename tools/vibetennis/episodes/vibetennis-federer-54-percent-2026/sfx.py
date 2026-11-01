@@ -7,7 +7,15 @@ from scipy import signal
 HERE=os.path.dirname(os.path.abspath(__file__)); WORK=os.environ.get('VT_WORK',HERE)
 os.makedirs(os.path.join(WORK,'sfx'),exist_ok=True)
 SR=48000
-TOTAL=188.2; N=int(TOTAL*SR)+SR
+# 2026-11-01 改版：时间轴插入新段 A（马尔可夫的发现）、片尾换成新段 B（金句），映射与 r3d/shots.js 的 WARP 一致
+WARP=dict(A0=15.5,LA=32.32,B_OLD=176.2,B_DROP=3.8,LB=19.96); B0=WARP['B_OLD']+WARP['LA']
+def toNew(t):
+    w=WARP
+    if t<w['A0']: return t
+    if t<w['B_OLD']: return t+w['LA']
+    if t<w['B_OLD']+w['B_DROP']: return None
+    return t+w['LA']+w['LB']-w['B_DROP']
+TOTAL=188.2+WARP['LA']+WARP['LB']-WARP['B_DROP']; N=int(TOTAL*SR)+SR
 rng=np.random.default_rng(54)
 out=np.zeros((N,2)); EV=[]
 def tt(d): return np.arange(int(d*SR))/SR
@@ -134,7 +142,10 @@ def counter_roll(d=1.6):
     return x
 
 
-def E(t,x,g=1.0,pan=0.0,name=None): place(x,t,g,pan=pan,name=name)
+def E(t,x,g=1.0,pan=0.0,name=None):   # 旧时间轴上的事件：映射到新时间；落在被替掉的旧 [176.2,180) 里的就不放
+    tn=toNew(t)
+    if tn is not None: place(x,tn,g,pan=pan,name=name)
+def EN(t,x,g=1.0,pan=0.0,name=None): place(x,t,g,pan=pan,name=name)   # 新时间轴上的事件
 
 # ---------- 音高与低频脉冲（音效用） ----------
 def hz(m): return 440*2**((m-69)/12)
@@ -219,13 +230,48 @@ E(162.6,sub(hz(33),1.4),0.5)
 E(164.0,sparkle(4.0,30),0.35,name='sea'); E(168.2,swish(1.6,300,2000),0.35); E(170.0,ding(660),0.5,name='only-a-point')
 E(176.2,ding(880),0.3)
 
+# ================= 新段 A：马尔可夫的发现（新时间 15.5–47.82） =================
+A=WARP['A0']
+EN(A+0.15,number_pop(),0.8,name='1906'); EN(A+0.15,hit(),0.5)
+EN(A+3.4,swish(1.4,3000,600),0.4,name='scatter'); EN(A+3.4,crackle(1.4,600),0.6)
+EN(A+6.0,swish(1.2,300,2500),0.45,name='links')
+for k in range(6): EN(A+6.5+k*0.2,click(),0.55,pan=-0.5+k*0.2)
+EN(A+10.2,swish(1.4,400,4000),0.4,name='onegin'); EN(A+10.3,sparkle(1.6,40),0.35)
+EN(A+13.6,counter_roll(1.8),0.5,name='count-20000'); EN(A+15.3,tick(),0.7)
+EN(A+16.8,hit(),0.5,name='two-nodes'); EN(A+17.2,power_on(2),0.5)
+ONEGIN_TXT='Мой дядя самых честных правил Когда не в шутку занемог Он уважать себя заставил И лучше выдумать не мог Его пример другим наука'
+SEQ=[1 if ch in 'аеёиоуыэюяАЕЁИОУЫЭЮЯ' else 0 for ch in ONEGIN_TXT if ch.isalpha() and ch not in 'ъьЪЬ']
+for k in range(24):   # 令牌每跳一下：落到元音（左，金）音高一点，落到辅音（右，蓝）低一点
+    th=A+18.4+k*0.42+0.3
+    if th<A+28.4: v=SEQ[k+1]; EN(th,blip(2100 if v else 1500,0.05,1.05,0.5),0.22,pan=-0.45 if v else 0.45,name='hop' if k==0 else None)
+EN(A+17.6,ding(1320),0.4,name='12.8%'); EN(A+20.7,ding(990),0.4,name='66.3%')
+EN(A+26.6,chime([69,74,78]),0.5,name='markov-chain')
+EN(A+29.0,number_pop(),0.7,name='0-0'); EN(A+31.4,swish(0.9,600,4000),0.4)
+# ================= 新段 B：金句（新时间 208.52–228.48） =================
+EN(B0+0.5,swish(2.2,2000,200),0.45,name='lost-drift'); EN(B0+0.6,crackle(3.0,220),0.6)
+EN(B0+0.9,counter_roll(2.0),0.45,name='count-108336')
+EN(B0+4.2,power_on(2),0.45,name='game-chain'); EN(B0+4.5,ding(880),0.4,name='0-0-reset')
+EN(B0+10.4,boom(3.5),0.4,name='golden'); EN(B0+10.4,ding(660),0.45); EN(B0+10.5,sparkle(2.0,30),0.3)
+EN(B0+15.9,ding(880),0.3,name='question')
+
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')
 BGM_OFF=0.309   # 曲子 74 BPM、拍点 0.097+k·0.808 s；从 0.309 s 起取，标题锁定转金（片中 11.1 s）正好落在拍上
 BGM_LUFS=-20.0  # 铺底响度；音效叠在上面，整片之后再归一到 -14 LUFS
-raw=subprocess.run(['ffmpeg','-v','error','-ss',str(BGM_OFF),'-i',BGM,'-t',str(TOTAL),'-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
-bgm=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
+raw=subprocess.run(['ffmpeg','-v','error','-ss',str(BGM_OFF),'-i',BGM,'-t','188.2','-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
+bgm0=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
+# 插入整小节（标题锁定 11.1 s 在拍上，小节线 11.1+3.232·m）：17.564 s 处重复其后 10 小节（＝新段 A 的长度）；
+# 175.932 s 处重复其前 5 小节（＝新段 B 净增的长度）。拼缝 10 ms 交叉淡化，免得爆音
+def cut(a,b): return bgm0[int(a*SR):int(b*SR)]
+parts=[cut(0,49.884),cut(17.564,175.932),cut(159.772,175.932),cut(175.932,188.2)]
+xf=int(0.006*SR); r=np.linspace(0,1,xf)[:,None]
+for i_,p_ in enumerate(parts):
+    p_=p_.copy()
+    if i_>0: p_[:xf]*=r
+    if i_<len(parts)-1: p_[-xf:]*=r[::-1]
+    parts[i_]=p_
+bgm=np.concatenate(parts)   # 长度与新时间轴严格一致（不重叠），拼缝处各 6 ms 淡入淡出
 tmp=os.path.join(WORK,'sfx','_bgm_raw.wav'); sf.write(tmp,bgm.astype(np.float32),SR,subtype='FLOAT')
 meas=subprocess.run(['ffmpeg','-hide_banner','-i',tmp,'-af','ebur128','-f','null','-'],capture_output=True,text=True).stderr
 I=float(re.findall(r"I:\s+(-?[\d.]+) LUFS",meas)[-1]); os.remove(tmp)
@@ -233,7 +279,7 @@ bgm*=10**((BGM_LUFS-I)/20)
 B=np.zeros((N,2)); B[:min(N,len(bgm))]=bgm[:N]
 SFX_GAIN=0.2   # 音效整体约 -23 LUFS，比 BGM 铺底低 3 dB：BGM 是主体，音效在画面事件上点亮
 mix=out*SFX_GAIN+B
-fade=np.ones(N); k=int(186.5*SR); fade[k:]=np.linspace(1,0,N-k)**2; mix*=fade[:,None]
+fade=np.ones(N); k=int(toNew(186.5)*SR); fade[k:]=np.linspace(1,0,N-k)**2; mix*=fade[:,None]
 sf.write(os.path.join(WORK,'sfx','sfx_bed.wav'),mix.astype(np.float32),SR,subtype='FLOAT')
 sf.write(os.path.join(WORK,'sfx','sfx_only.wav'),(out*SFX_GAIN).astype(np.float32),SR,subtype='FLOAT')
 sf.write(os.path.join(WORK,'sfx','bgm_bed.wav'),(B*fade[:,None]).astype(np.float32),SR,subtype='FLOAT')   # 中文版配音混音（voice.py）用：BGM 单独一轨

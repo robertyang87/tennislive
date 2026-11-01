@@ -240,12 +240,13 @@ CAPS=[
 (172.6,3.4,tr("每一分只多 4 个百分点，一层层放大，就是天壤之别","Four points in a hundred, amplified layer by layer, make all the difference"),('s',960,880,C,42)),
 (176.2,3.6,tr("你打球时，最放不下的是哪一分？","Which point can't you let go of?"),('s',960,880,C,50)),
 ]
-SECT=[(0,7,"00",tr("问题","QUESTION")),(15.5,33,"01",tr("一分","A POINT")),(33,64,"02",tr("一局","A GAME")),(64,95,"03",tr("套娃","NESTING")),(95,117,"04",tr("放大曲线","AMPLIFIER")),
-      (117,140,"05",tr("验证","CHECK")),(140,164,"06",tr("局限","LIMITS")),(164,180,"07",tr("一分","ONE POINT"))]
+SECT=[(0,7,"00",tr("问题","QUESTION")),(15.5,33,"02",tr("一分","A POINT")),(33,64,"03",tr("一局","A GAME")),(64,95,"04",tr("套娃","NESTING")),(95,117,"05",tr("放大曲线","AMPLIFIER")),
+      (117,140,"06",tr("验证","CHECK")),(140,164,"07",tr("局限","LIMITS")),(164,180,"08",tr("一分","ONE POINT"))]
 SRC=["Federer, R. (2024). Dartmouth Commencement Address, 9 June 2024",
 "Newton, P. K. & Keller, J. B. (2005). Probability of Winning at Tennis I. Stud. Appl. Math. 114: 241–269",
 "Klaassen, F. & Magnus, J. (2001). Are Points in Tennis i.i.d.? JASA 96: 500–509",
 "Seneta, E. (2006). Markov and the creation of Markov chains",
+"Markov, A. A. (1913). An Example of Statistical Investigation of the Text Eugene Onegin… Transl. D. Link, Science in Context 19 (2006): 591–600",
 "ATP career stats · Roland-Garros “Federer's career in figures” · Al Jazeera (2022)",
 "Ultimate Tennis Statistics · Wimbledon 2019 men's final match statistics",
 "",
@@ -278,7 +279,7 @@ BLUE_C=(0.45,0.62,1.0)
 # 中文版有 TTS 配音，但不加底部配音字幕（账号所有者 2026-11-01：「不用再多加多余的字幕。就用画面上当前的一些文案」）
 NARR=[]
 
-def draw(c,t,an,hist):
+def draw_old(c,t,an,hist):
     g=lambda k: an.get(k)
     brand(c)
     for t0,t1,n,lab in SECT:
@@ -397,6 +398,100 @@ def draw(c,t,an,hist):
             y+=50
     for s,d,txt,pl in CAPS:
         if pl and s<=t<s+d+0.35: caption(c,t,s,d,txt,pl,an)
+
+
+# ===================== 2026-11-01 改版：新段 A（马尔可夫链是什么、怎么发现的）与新段 B（金句） =====================
+# 时间映射与 r3d/shots.js 的 WARP 一致：旧镜头、旧字幕一个字不改，按旧时间画
+WARP=dict(A0=15.5,LA=32.32,B_OLD=176.2,B_DROP=3.8,LB=19.96)
+B0=WARP['B_OLD']+WARP['LA']
+TOTAL_NEW=188+WARP['LA']+WARP['LB']-WARP['B_DROP']
+def toOld(t):
+    w=WARP
+    if t<w['A0']: return t
+    if t<w['A0']+w['LA']: return None
+    if t<B0: return t-w['LA']
+    if t<B0+w['LB']: return None
+    return t-w['LA']-w['LB']+w['B_DROP']
+def toNew(t):
+    w=WARP
+    if t<w['A0']: return t
+    if t<w['B_OLD']: return t+w['LA']
+    if t<w['B_OLD']+w['B_DROP']: return None
+    return t+w['LA']+w['LB']-w['B_DROP']
+# 出处：Seneta (2006)；Markov (1913) 英译 Link (2006)：前 20,000 字母，元音 8,638；p1=1104/8638=0.128，p0=7534/11362=0.663
+CAPS_A=[
+(0.5,2.4,tr("1906 年，有人断言：","1906. Someone claimed:"),('a','yrBot',0,110,C,960,760,50)),
+(2.4,3.5,tr("只有互不相干的事件，长期平均才会稳定","only independent events settle to a stable long-run average"),('s',960,900,C,46)),
+(6.1,3.9,tr("马尔可夫偏要证明：一环扣一环的事件，也可以","Markov set out to prove that linked events can, too"),('s',960,880,C,46)),
+(10.4,3.0,tr("1913 年，普希金长诗《叶甫盖尼·奥涅金》","1913: Pushkin's verse novel Eugene Onegin"),('s',960,250,C,46)),
+(13.5,3.4,tr("前 【20,000】 个字母，逐个分成元音和辅音","Its first 【20,000】 letters, sorted into vowels and consonants"),('s',960,900,C,46)),
+(17.6,3.0,tr("元音后面再跟元音：只有 【12.8%】","Vowel after a vowel: only 【12.8%】"),('s',960,210,C,48)),
+(20.7,3.0,tr("辅音后面跟元音：【66.3%】","Vowel after a consonant: 【66.3%】"),('s',960,900,C,48)),
+(23.9,2.7,tr("下一个字母是什么，只看眼前这一个","The next letter depends only on this one"),('s',960,210,C,48)),
+(26.6,2.5,tr("这就是 【马尔可夫链】：下一步，只取决于现在","That is a 【Markov chain】: the next step depends only on now"),('s',960,900,C,46)),
+(29.1,2.8,tr("网球的比分，正是这样一条链","And a tennis score is exactly such a chain"),('a','n00Bot',0,110,C,960,760,48)),
+]
+# 108,336 = 236,038 − 127,702（UTS 生涯总分与赢分）
+CAPS_B=[
+(0.6,3.6,tr("他生涯输掉了 【108,336】 分","He lost 【108,336】 points in his career"),('s',960,210,C,54)),
+(4.5,3.0,tr("可每一局，都从 【0-0】 重新开始","Yet every game starts again at 【0–0】"),('a','g00',70,-40,L,1150,260,48)),
+(7.6,2.8,tr("上一分，不会跟到下一分","The last point doesn't follow you into the next"),('s',960,900,C,48)),
+(10.6,5.0,tr("你不用赢下每一分","You don't have to win every point"),('s',960,250,C,62)),
+(12.9,2.7,tr("只要输掉一分之后，还能打好下一分","Just play the next one well, after you lose one"),('s',960,880,C,52)),
+(15.9,3.6,tr("你打球时，最放不下的是哪一分？","Which point can't you let go of?"),('s',960,880,C,50)),
+]
+RU_V='аеёиоуыэюяАЕЁИОУЫЭЮЯ'
+ONEGIN_TXT='Мой дядя самых честных правил Когда не в шутку занемог Он уважать себя заставил И лучше выдумать не мог Его пример другим наука'
+ONEGIN_SEQ=[(ch,1 if ch in RU_V else 0) for ch in ONEGIN_TXT if ch.isalpha() and ch not in 'ъьЪЬ']
+CYR=skia.Typeface.MakeFromName('DejaVu Sans Mono',skia.FontStyle.Bold())
+def chip(c,n,lab,a):
+    text(c,n,1630,82,26,GOLD,a,MONO,align='l',glow=0.5); c.drawLine(1672,62,1672,88,P(GOLD,a*0.6,stroke=2)); text(c,lab,1686,82,26,WHITE,a*0.85,SANS,align='l')
+def fmt(n): return f"{n:,}"
+def drawA(c,u,an):
+    g=lambda k: an.get(k)
+    chip(c,"01",tr("马尔可夫","MARKOV"),min(1,u/0.6,(WARP['LA']-u)/0.4))
+    # 奥涅金：图例与计数
+    if 10.6<=u<17.0:
+        a=secA(u,10.8,17.0); v=g('ogBot'); y=(v[1] if onv(v,5) else 640)
+        text(c,tr("《奥涅金》第一章第一行","Onegin, chapter 1, line 1"),960,y+20,22,GRAY,a,SANS)
+        text(c,tr("● 元音","● vowel"),900,y+62,24,GOLD,a,SANS,align='r'); text(c,tr("● 辅音","● consonant"),1020,y+62,24,BLUE_C,a,SANS,align='l')
+    if 13.5<=u<17.0:
+        a=secA(u,13.5,17.0); v=g('og'); y=(v[1] if onv(v,5) else 540)-120
+        n=int(20000*ease((u-13.6)/1.8)); text(c,fmt(n),960,y,64,WHITE,a,MONO,glow=0.4)
+        a2=a*ease((u-15.3)/0.4); text(c,tr("元音 8,638 · 辅音 11,362","vowels 8,638 · consonants 11,362"),960,y+44,24,GRAY,a2,MONO)
+    # 两状态图：节点标签、边上的概率、字母流
+    op=an.get('mkOp',0)
+    if op>0.01:
+        for k,lab,pc,cc in (('mkV',tr("元音","VOWEL"),"43.2%",GOLD),('mkC',tr("辅音","CONSONANT"),"56.8%",BLUE_C)):
+            v=g(k)
+            if onv(v,10): text(c,lab,v[0],v[1]-122,30,cc,op,SANS,glow=0.4); text(c,pc,v[0],v[1]-92,22,GRAY,op,MONO)
+        for k,pc,t0,cc in (('mkVV',"12.8%",17.6,GOLD),('mkCV',"66.3%",20.7,GOLD),('mkVC',"87.2%",22.6,BLUE_C),('mkCC',"33.7%",22.6,BLUE_C)):
+            v=g(k)
+            if onv(v,10): tag(c,v[0],v[1]+(-34 if k in ('mkVC',) else 44 if k=='mkCV' else 0),pc,op*ease((u-t0)/0.4),cc,24)
+        i=an.get('mkI')
+        if i is not None and u>=18.4:
+            a=op*ease((u-18.4)/0.5); f=F(CYR,40); x0=960-7*48
+            for j in range(-6,9):
+                k=i+j
+                if k<0 or k>=len(ONEGIN_SEQ): continue
+                ch,isv=ONEGIN_SEQ[k]; x=960+j*48-(an.get('mkU',0)*48 if j!=0 else 0)*0
+                al=a*(1.0 if j in (0,1) else 0.35)*(1-abs(j)/10)
+                cc=GOLD if isv else BLUE_C
+                if j==0: c.drawRoundRect(skia.Rect.MakeXYWH(x-22,978,44,54),8,8,P(WHITE,a*0.9,stroke=2))
+                c.drawString(ch,x-f.measureText(ch)/2,1020,f,P(cc,al))
+    for s0,d,txt,pl in CAPS_A:
+        if s0<=u<s0+d+0.35: caption(c,u,s0,d,txt,pl,an)
+def drawB(c,u,an):
+    chip(c,"08",tr("一分","ONE POINT"),min(1,(WARP['LB']-u)/0.4))
+    if 0.8<=u<4.2:
+        a=secA(u,0.9,4.2); n=int(108336*ease((u-0.9)/2.0)); text(c,fmt(n),960,900,56,BLUE_C,a,MONO,glow=0.4)
+        text(c,"= 236,038 − 127,702",960,948,22,GRAY,a*ease((u-2.8)/0.4),MONO)
+    for s0,d,txt,pl in CAPS_B:
+        if s0<=u<s0+d+0.35: caption(c,u,s0,d,txt,pl,an)
+def draw(c,t,an,hist):
+    if WARP['A0']<=t<WARP['A0']+WARP['LA']: brand(c); drawA(c,t-WARP['A0'],an); return
+    if B0<=t<B0+WARP['LB']: brand(c); drawB(c,t-B0,an); return
+    draw_old(c,toOld(t),an,hist)
 
 def main(inp,out,anchors_files):
     an={}
