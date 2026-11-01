@@ -1,0 +1,152 @@
+{
+  "schema": "tennislive.bounded-native-preview-review.v1",
+  "status": "six_samples_reviewed_source_graphic_artifact_resolved",
+  "publication_approved": false,
+  "preview_only": true,
+  "preview_manifest": "/workspace/scratch/vacherot-basel/caption-preview-v2/preview_manifest.json",
+  "preview_manifest_sha256": "b4247237dfbcbd13c5fff502b5fd8b3d928d87e26e880c02df4c1034e9ef957d",
+  "spec_file_sha256": "33c2e761734ba1846b606b7029b1cd36ae962126f7889abef8e80061c83aa4ed",
+  "ass_sha256": "dd7ac68541faceb403e89295cc6847a0f45b5799bc0d5cb992b30b5900466a48",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "image_sha256": "f0e1bfa58f2ec36c2b20278d583d05d2c884041747875b10ce429296773ad4f4",
+      "segment": 8,
+      "film_time": 98.274,
+      "source": "final",
+      "source_time": null,
+      "source_sha256": null,
+      "cue_text": "10个破发点 他化解了9个",
+      "opened_actual_image": true,
+      "result": "pass_sample",
+      "observations": "中文单行10个破发点句完整，底边约1345；品牌约1395，间隔可见；卡片主标题、两条数据和顶部品牌互不重叠。无英文cue。"
+    },
+    {
+      "image": "caption-02.png",
+      "image_sha256": "0a4b5d1adbb48416c36fb5c1505bd231a2bc2fbdd3e11534f89c802bfb8b80cf",
+      "segment": 17,
+      "film_time": 198.99399999999997,
+      "source": "final",
+      "source_time": 328.84,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": "Set point.\n盘点",
+      "opened_actual_image": true,
+      "result": "needs_source_overlay_review",
+      "observations": "Set point.与盘点两行居中完整，未压选手或越界；但画布左下x0–45,y约1298–1375有黄色转播提示条残片，文字POINT仅剩OIN等部分，源转播图形被裁断。"
+    },
+    {
+      "image": "caption-03.png",
+      "image_sha256": "8d235f234665cee6578df45bbda5b9903299e6ce72ebb9fd29232052b5364ec7",
+      "segment": 2,
+      "film_time": 37.153999999999996,
+      "source": "shanghai",
+      "source_time": 129.54,
+      "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "cue_text": "Valentin Vacherot puts the icing on the cake to a fairy tale week in Shanghai.\n瓦舍罗为上海童话画下圆满句号",
+      "opened_actual_image": true,
+      "result": "pass_sample",
+      "observations": "英文两行和中文一行均完整，英文Shanghai.句尾可见。字幕居底，没有压到瓦舍罗脸。人物因固定中心裁切位于画布左侧，属于画面取景，未将其误记字幕故障。"
+    },
+    {
+      "image": "caption-04.png",
+      "image_sha256": "edc7ec102233229db08db0a58960ef090dcf9567cd4c3e6de16a431ae65a5d8f",
+      "segment": 17,
+      "film_time": 205.11399999999998,
+      "source": "final",
+      "source_time": 334.96,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": "Well, he took the scenic route serving it out, but he got there in the end.\n发球胜盘有些曲折 他最终拿下",
+      "opened_actual_image": true,
+      "result": "pass_sample",
+      "observations": "英文两行完整并在语义处断行，中文单行完整。字幕在下方场地/腿部，不压头脸；顶部品牌与人物头部有间距。未见记分残片。"
+    },
+    {
+      "image": "caption-05.png",
+      "image_sha256": "da44532fddc60b1807231b1853160ed1cdc2cf052a843d54ffc20079aed6b0cf",
+      "segment": 9,
+      "film_time": 122.354,
+      "source": "qf",
+      "source_time": 142.0,
+      "source_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+      "cue_text": "Fourth time he has achieved that at tour level in his career.\n他第四次打进巡回赛半决赛",
+      "opened_actual_image": true,
+      "result": "pass_sample",
+      "observations": "英文两行与中文单行完整、不越界。当前画面主体在右边缘仅露手臂，属于该镜头瞬时取景，不是字幕压脸；该单帧不能证明整段人物持续可见。"
+    },
+    {
+      "image": "caption-06.png",
+      "image_sha256": "6f8b0881e48a5c22a59fa00a5a32c94ca744a994912f5479bb9aca15777defe4",
+      "segment": 13,
+      "film_time": 166.594,
+      "source": "final",
+      "source_time": 49.14,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": "Perfect start for the Czech, looking very calm and composed.\n捷克人的开局完美 沉着冷静",
+      "opened_actual_image": true,
+      "result": "pass_sample",
+      "observations": "英文两行与中文单行完整、清楚。字幕跨下部球衣/腿部但不压脸；品牌在上左，与莱赫奇卡头部互不重叠。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "source-yellow-point-fragment",
+      "severity": "visible_artifact",
+      "sample": "caption-02.png",
+      "segment_index_zero_based": 17,
+      "source_time": 328.84,
+      "film_time": 198.994,
+      "region_pixels": [
+        0,
+        1298,
+        45,
+        1375
+      ],
+      "description": "源转播黄色盘点提示条在左下边缘留半截文字，字幕本身正常。",
+      "action": "由主制作按当前crop/scoreboard策略修复或记录既有规则下的处理判断；本报告不擅自修改spec或新建发布门禁。",
+      "resolution": {
+        "action": "Segment 17 crop_zoom=1.10, fixed cx=0.5 and track=false; no audio/caption changes.",
+        "preview_manifest_sha256": "870b2b1cb3d04dfcdcc3cc6a1e098a7dbee86dc61e508bd28fe926ebf0e5e237",
+        "spec_file_sha256": "82f8fe06be0fa8b2995c484afe69d33095a92c56d044e61712c854959f4f7b5e",
+        "image_sha256": "53b521231ab42dcf21cacfa763378de33c778a978f27d91f3181029fd5ac9dc4",
+        "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+        "film_time": 198.994,
+        "opened_actual_image": true,
+        "result": "resolved_bounded_sample",
+        "observations": "实际打开修正版原生1080x1440帧：黄色提示条残片已消失；英文Set point.和中文盘点完整；两位选手头脚可见，顶部品牌无重叠。仅该受影响采样，不代替完整成片QC。"
+      }
+    }
+  ],
+  "poster_final": {
+    "path": "/workspace/scratch/vacherot-basel/poster-final.jpg",
+    "sha256": "338b33aa1235ed82e95d04327c215ff30b1ddaf68beef529c869138af10e25af",
+    "opened_actual_image": true,
+    "result": "pass_bounded_visual_check",
+    "observations": "真实举杯帧，带正式logo、栏目和副标题。品牌和副题完整；钩子两行完整，未压眼睛至下巴；脸可辨。杯主体可见，第一行钩子跨杯脚，源右上TennisTV台标自然裁出。不是高清摄影，继续保持临时帧的分辨率取舍记录。"
+  },
+  "title_card_stills": {
+    "opened": [
+      "title_card_02.jpg",
+      "title_card_04.jpg",
+      "title_card_05.jpg",
+      "title_card_07.jpg",
+      "title_card_09.jpg",
+      "title_card_11.jpg",
+      "title_card_13.jpg",
+      "title_card_15.jpg",
+      "title_card_17.jpg",
+      "title_card_19.jpg"
+    ],
+    "result": "no_observed_text_overflow_or_brand_overlap",
+    "scope": "静态卡图，不证明转场、字幕时序或完整影片质量。"
+  },
+  "limitations": [
+    "仅核6张原生字幕预览与最终封面及10张卡静帧，未看完整最终成片。",
+    "未评估本次完整音频，不以语句文字/ASR证明听审。",
+    "未核溶解接缝、最终H264压缩或所有记分条宽度变化。",
+    "此结果不代表整片QC通过、微信发送或发布授权。"
+  ]
+}
