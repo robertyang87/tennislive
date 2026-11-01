@@ -1,0 +1,91 @@
+{
+  "schema": "tennislive.visual-preview-review.v1",
+  "status": "story_text_overlap_confirmed_requires_repair",
+  "kind": "visual_preview_only",
+  "publication_approved": false,
+  "spec_sha256": "7edfd7f3169db0a717582d0f04086f24e2b87e41db1743b81df16a322efe3fca",
+  "spec_canonical_sha256": "698973cdff8c46506e3f1ec5cd8d630b879bedbd3c94b3db0c235c1fd7ae6274",
+  "preview_manifest": "/workspace/scratch/vacherot-basel/caption-preview-v4/preview_manifest.json",
+  "preview_manifest_sha256": "b80ac745054d22e88dd1571efabae8207e8cce24452d6102af97c03d45fcc802",
+  "ass_sha256": "10be6bd18700c85ced2ff4c2af2f3955b7da9651b14f5dbe8255f79615c44aef",
+  "canvas": [
+    1080,
+    1440
+  ],
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "image_sha256": "e3af6f21294ee5d3039ce37444c00f39738800dba00d685a8abc25872f192bb2",
+      "segment": 2,
+      "film_time": 23.994,
+      "source": "shanghai",
+      "source_time": 116.38000000000001,
+      "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "cue_text": null,
+      "observation": "Old30/40 fragment absent and serve body retained, but right-top story_text overlaps far-court Vacherot head/face and body; this corrects earlier missed overlap."
+    },
+    {
+      "image": "caption-02.png",
+      "image_sha256": "6c988ba5fa5424589c6c37d91cc7efd36195678fd3bb0109941fe1063203979a",
+      "segment": 5,
+      "film_time": 67.994,
+      "source": "r1",
+      "source_time": 135.56,
+      "source_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+      "cue_text": null,
+      "observation": "R1 yellow prompt absent; source close-up is cropped at right and includes arm/body; brand and inset readable, not crossing face."
+    },
+    {
+      "image": "caption-03.png",
+      "image_sha256": "c679582bcb38716ce5a24171bca2c9aa72eb1fc5a791301cbafbc42b540f3c5e",
+      "segment": 11,
+      "film_time": 132.55399999999997,
+      "source": "sf",
+      "source_time": 131.2,
+      "source_sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+      "cue_text": null,
+      "observation": "SF yellow prompt absent; close-up face below inset and brand; no overlap."
+    },
+    {
+      "image": "caption-04.png",
+      "image_sha256": "d8c2ab9b152b249de6a3095171b9ee24c586b12a21db1487415c31eba02b79c7",
+      "segment": 17,
+      "film_time": 198.75399999999996,
+      "source": "final",
+      "source_time": 328.59999999999997,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": null,
+      "observation": "Final source328.60 yellow sliver absent; both players complete in this sample; far player to right of top brand."
+    },
+    {
+      "image": "caption-05.png",
+      "image_sha256": "2e7933de3ad88e13cd932c2822ae229d7fc92416906785d0135c5efa35d906c6",
+      "segment": 17,
+      "film_time": 210.51399999999998,
+      "source": "final",
+      "source_time": 340.35999999999996,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": null,
+      "observation": "Final source340.36 yellow absent; far player near top and to right of brand with no visible overlap; near player outside left edge in this sampled camera position."
+    },
+    {
+      "image": "caption-06.png",
+      "image_sha256": "693111baabeb0a51c11372d4b7416bf9ed65eb69a9a381ebdd717c96d9736d7b",
+      "segment": 17,
+      "film_time": 214.51399999999998,
+      "source": "final",
+      "source_time": 344.35999999999996,
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "cue_text": null,
+      "observation": "Final source344.36 yellow absent; far player to right of brand with no overlap; near player partially outside left edge, consistent with raw fixed-center contact."
+    }
+  ],
+  "caption_limit": "All six requested samples have cue_text=null, and no English/Chinese subtitle is visible in actual PNGs. This review cannot establish current subtitle layout correctness. Earlier v2 subtitle samples remain bounded to their own spec/frame identities.",
+  "limitations": [
+    "No final H264 review or whole-film approval.",
+    "Interior native previews exclude actual dissolve compositing.",
+    "Raw contact covers final328.4–352.4 at0.5s; not every frame.",
+    "No listening/audio QC."
+  ],
+  "correction_evidence": "data/evidence/vacherot-basel-title-story-2026/shanghai-story-inset-overlap-review.json"
+}

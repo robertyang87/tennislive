@@ -1,0 +1,218 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "base.en",
+  "source_key": "r1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4599139/4599139.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/r1/4599139.mp4",
+  "source_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 42,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "time_base": "1/19200",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 2894976,
+        "duration": "150.780000",
+        "bit_rate": "7948526",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "7539",
+        "extradata_size": 42,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Video Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 7238656,
+        "duration": "150.805333",
+        "bit_rate": "125388",
+        "nb_frames": "7071",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Sound Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/vacherot-fixed/r1/4599139.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "150.805333",
+      "size": "152361415",
+      "bit_rate": "8082547",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "reviewed_from": 134.0,
+  "reviewed_to": 141.84,
+  "segment_index_at_run": 5,
+  "utterances": [
+    {
+      "start": 138.94,
+      "end": 141.08,
+      "text": " That's a good win in Straits, to say the least.",
+      "words": [
+        {
+          "word": " That's",
+          "start": 138.94,
+          "end": 139.42,
+          "probability": 0.7661324143409729
+        },
+        {
+          "word": " a",
+          "start": 139.42,
+          "end": 139.46,
+          "probability": 0.9791221022605896
+        },
+        {
+          "word": " good",
+          "start": 139.46,
+          "end": 139.56,
+          "probability": 0.9962292313575745
+        },
+        {
+          "word": " win",
+          "start": 139.56,
+          "end": 139.74,
+          "probability": 0.9224813580513
+        },
+        {
+          "word": " in",
+          "start": 139.74,
+          "end": 139.9,
+          "probability": 0.9928439259529114
+        },
+        {
+          "word": " Straits,",
+          "start": 139.9,
+          "end": 140.36,
+          "probability": 0.4927675873041153
+        },
+        {
+          "word": " to",
+          "start": 140.52,
+          "end": 140.6,
+          "probability": 0.9851640462875366
+        },
+        {
+          "word": " say",
+          "start": 140.6,
+          "end": 140.76,
+          "probability": 0.9969037175178528
+        },
+        {
+          "word": " the",
+          "start": 140.76,
+          "end": 140.9,
+          "probability": 0.9968822002410889
+        },
+        {
+          "word": " least.",
+          "start": 140.9,
+          "end": 141.08,
+          "probability": 0.9988659620285034
+        }
+      ]
+    }
+  ]
+}

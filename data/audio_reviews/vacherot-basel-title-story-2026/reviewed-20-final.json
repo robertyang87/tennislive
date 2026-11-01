@@ -1,0 +1,38 @@
+{
+  "index": 20,
+  "source": "final",
+  "reviewed_from": 473.02,
+  "reviewed_to": 483.54,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Two independent whole-window VAD ASRs plus medium VAD found no foreground English; only crowd/applause during actual trophy presentation. Isolated no-VAD low-confidence hallucination retained and rejected as explained in review_notes.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-20-small.en.json",
+      "sha256": "4f15a760d24b72891d2695779db6b489758f0c1257f4a129d6b7da81b5addd14"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-20-base.en.json",
+      "sha256": "f730eaf32628e0ea9f551eca9b62271d0d998f4f28fa9e193501a54695894863"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-trophy-medium.en.json",
+      "sha256": "c7931eaf9064bf13d9b1b1b387024c32431acbcc98330b026909dcfcefdb4be5"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-trophy-vad-medium.en.json",
+      "sha256": "86dd8a577925a34eec69ac454845433a51a1abc17c37ea42ff5a2525aacfcac4"
+    }
+  ],
+  "review_notes": [
+    "small.en VAD and base.en VAD both returned empty. medium.en VAD returned empty. No-VAD medium hallucinated Thank you at480.72–483.52 with Thank probability0.01548; rejected as isolated model hallucination, retained raw. Actual coverage is podium lift and applause/confetti; no confirmed foreground English."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

@@ -1,0 +1,103 @@
+{
+  "index": 7,
+  "source": "r2",
+  "reviewed_from": 134.72,
+  "reviewed_to": 148.3,
+  "source_local": "/workspace/scratch/vacherot-fixed/r2/4600907.mp4",
+  "source_local_sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 139.02,
+      "end": 142.56,
+      "en": "It is victory for Vacherot.",
+      "zh": "瓦舍罗赢下了比赛。"
+    },
+    {
+      "start": 143.5,
+      "end": 146.14,
+      "en": "Big win for the Monegasque.",
+      "zh": "摩纳哥人的一场重要胜利。"
+    },
+    {
+      "start": 146.38,
+      "end": 147.36,
+      "en": "Top 20 victory.",
+      "zh": "击败了世界前二十的对手。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-07-small.en.json",
+      "sha256": "c1b0320d464f07265075bf51cb9433e82612b1e89988d78af136488c72970b38"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-07-base.en.json",
+      "sha256": "ae5dfd4601d1fa14c60258bcbca464a4290e9a4f9f5a6506355e2cabf475aab2"
+    }
+  ],
+  "review_notes": [
+    "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4600907/4600907.mp4",
+  "historical_raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-07-small.en.json",
+      "sha256": "bfec979b4ba63b3e119cb342cfdb8efae0550b2317f830ed2ab4f1a051ddda2b"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-07-base.en.json",
+      "sha256": "7f49e5bfd56a8623becbe0b9241d0fd794217e5308343a7dff870b66c0872672"
+    }
+  ],
+  "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+  "source_sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "start_time": "0.000000",
+        "duration": "157.260000"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "start_time": "0.000000",
+        "duration": "157.290667"
+      }
+    ],
+    "format": {
+      "start_time": "0.000000",
+      "duration": "157.290667",
+      "size": "159372517"
+    }
+  },
+  "fixed_content_cross_check": {
+    "status": "same_utterance_content_confirmed_on_new_bytes",
+    "new_full_window_asr_models": [
+      "small.en",
+      "base.en"
+    ],
+    "new_foreground_english_count": 3,
+    "new_extra_foreground_english": [],
+    "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+  },
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

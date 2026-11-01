@@ -1,0 +1,125 @@
+{
+  "status": "ready_for_rerender_not_publication",
+  "publication_approved": false,
+  "failed_render_sha256": "812f65e1b63f68e34f1b91d6424845c3207c8ae0d2418e08b13fc781d5817b96",
+  "spec_sha256": "7edfd7f3169db0a717582d0f04086f24e2b87e41db1743b81df16a322efe3fca",
+  "selected_source_windows_unchanged": true,
+  "fixed_horizontal_center": true,
+  "changes": [
+    {
+      "segment": 2,
+      "crop_zoom": 1.14,
+      "fill_y": 0.5
+    },
+    {
+      "segment": 5,
+      "crop_zoom": 1.2,
+      "fill_y": 0.0
+    },
+    {
+      "segment": 11,
+      "crop_zoom": 1.2,
+      "fill_y": 0.0
+    },
+    {
+      "segment": 17,
+      "crop_zoom": 1.22,
+      "fill_y": 0.75
+    }
+  ],
+  "method": "Actual decoded source windows, R1/SF/final17 at2fps and Shanghai1fps; root opened all7 walls. Cover agent independently reviewed R1/SF/Shanghai and is reviewing balanced final17. Source contacts contain no rendered subtitles/brand; native preview/final check remain required. Cover agent independently opened all7 corrected contacts and all6 actual native PNGs; root also opened all.",
+  "observations": [
+    "source graphics absent in corrected contacts",
+    "R1 and SF full service-to-result actions retained; no observed new missing head/feet in point samples",
+    "Shanghai near player already partly exits left in original fixed center; no tracking introduced",
+    "Rejected top-aligned final17 which cut lower body during third set",
+    "Balanced final17 lower edge is1030, same as old1.10 window; sample point action restored and prompt maximum sourcex621 excluded by new effectiveleft628"
+  ],
+  "contacts": [
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/r1-contact.jpg",
+      "sha256": "17de8e433bb5854f28078108c71adcfae47f9b14bc7a21372eff45999f2d6294"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/shanghai-contact.jpg",
+      "sha256": "564ac257279ffdda7e91277ca6f58c2b0d78588112de9cd10148c73478a050ab"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/sf-contact-0.jpg",
+      "sha256": "f955d158ae3d6f2fd8535db295ad8f211e7e251a594fa3704a96d87a39f80249"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/sf-contact-1.jpg",
+      "sha256": "11271545ed482f0956e2e923b401be937ab5737b12b83f81e73f599374c33cb6"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/final17-balanced-0.jpg",
+      "sha256": "e96639741ad227a274c9d2cecda584943d60f973fc0cdb796c7490421d0d7dcf"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/final17-balanced-1.jpg",
+      "sha256": "ac1b8ec9d7b058383f8e06c106e436fe32a8d1d9fd9e0769a2032f7bed1d6647"
+    },
+    {
+      "path": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/final17-balanced-2.jpg",
+      "sha256": "686116b03efca466121391e3110dea8459ffb6382d111dc4c6ff1ac23272e5ba"
+    }
+  ],
+  "not_claimed": [
+    "whole film QC pass",
+    "all-frame pixel audit",
+    "human audio listening",
+    "publication or WeChat sent"
+  ],
+  "native_preview": {
+    "manifest_sha256": "b80ac745054d22e88dd1571efabae8207e8cce24452d6102af97c03d45fcc802",
+    "spec_sha256": "7edfd7f3169db0a717582d0f04086f24e2b87e41db1743b81df16a322efe3fca",
+    "ass_sha256": "10be6bd18700c85ced2ff4c2af2f3955b7da9651b14f5dbe8255f79615c44aef",
+    "samples": [
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-01.png",
+        "sha256": "e3af6f21294ee5d3039ce37444c00f39738800dba00d685a8abc25872f192bb2",
+        "film_time": 23.994,
+        "source_time": 116.38000000000001,
+        "cue_text": null
+      },
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-02.png",
+        "sha256": "6c988ba5fa5424589c6c37d91cc7efd36195678fd3bb0109941fe1063203979a",
+        "film_time": 67.994,
+        "source_time": 135.56,
+        "cue_text": null
+      },
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-03.png",
+        "sha256": "c679582bcb38716ce5a24171bca2c9aa72eb1fc5a791301cbafbc42b540f3c5e",
+        "film_time": 132.55399999999997,
+        "source_time": 131.2,
+        "cue_text": null
+      },
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-04.png",
+        "sha256": "d8c2ab9b152b249de6a3095171b9ee24c586b12a21db1487415c31eba02b79c7",
+        "film_time": 198.75399999999996,
+        "source_time": 328.59999999999997,
+        "cue_text": null
+      },
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-05.png",
+        "sha256": "2e7933de3ad88e13cd932c2822ae229d7fc92416906785d0135c5efa35d906c6",
+        "film_time": 210.51399999999998,
+        "source_time": 340.35999999999996,
+        "cue_text": null
+      },
+      {
+        "image": "data/evidence/vacherot-basel-title-story-2026/crop-correction-frames/native-caption-06.png",
+        "sha256": "693111baabeb0a51c11372d4b7416bf9ed65eb69a9a381ebdd717c96d9736d7b",
+        "film_time": 214.51399999999998,
+        "source_time": 344.35999999999996,
+        "cue_text": null
+      }
+    ],
+    "result": "No old graphic fragments, no distant-player/brand overlap in six samples. These6 timestamps carry no caption text, so this is geometry/brand review, not caption-layout approval."
+  },
+  "native_ass_cross_segment_check": "No extra English cue intersects any Chinese TTS segment in actual v4 ASS with sealed native timeline; final film binding/QC still pending."
+}

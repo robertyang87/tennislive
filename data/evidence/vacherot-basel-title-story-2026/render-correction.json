@@ -1,0 +1,21 @@
+{
+  "failed_run": 41336686621,
+  "status": "corrected_for_rerender_not_publication",
+  "failure": "foreground_audio_gate: narration window contains English cue",
+  "cause": "Set point cue began at segment17 at=0; ASS rounded 198.554 down to198.55, 4ms before previous card ends. Actual speech begins source328.72, 0.32s into segment.",
+  "correction": "Align cue at=0.30 with reviewed actual speech; no speech deleted, no check weakened. Correct nonpublic R2 point_end_ok serve annotation.",
+  "unchanged": [
+    "all selected media windows and bytes",
+    "all TTS requests and frozen audio bytes",
+    "all reviewed source packets and ASR",
+    "video geometry and trophy sequence"
+  ],
+  "audio_plan_rebound_by": "foreground_audio_gate.rebind_plan validates immutable reviewed packets against current plan",
+  "pending": [
+    "actual rerender",
+    "film QC",
+    "voice suite",
+    "current head CI",
+    "publication and PushPlus receipt"
+  ]
+}

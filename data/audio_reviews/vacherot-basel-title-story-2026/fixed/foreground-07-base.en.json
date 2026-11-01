@@ -1,0 +1,248 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "base.en",
+  "source_key": "r2",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4600907/4600907.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/r2/4600907.mp4",
+  "source_sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 42,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "time_base": "1/19200",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 3019392,
+        "duration": "157.260000",
+        "bit_rate": "7972125",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "7863",
+        "extradata_size": 42,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Video Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 7549952,
+        "duration": "157.290667",
+        "bit_rate": "125387",
+        "nb_frames": "7375",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Sound Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/vacherot-fixed/r2/4600907.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "157.290667",
+      "size": "159372517",
+      "bit_rate": "8105885",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "reviewed_from": 134.72,
+  "reviewed_to": 148.3,
+  "segment_index_at_run": 7,
+  "utterances": [
+    {
+      "start": 139.02,
+      "end": 147.36,
+      "text": " It is victory for Vacherot. Big win for the Mod of Gas, top 20 victory.",
+      "words": [
+        {
+          "word": " It",
+          "start": 139.02,
+          "end": 139.5,
+          "probability": 0.7156444191932678
+        },
+        {
+          "word": " is",
+          "start": 139.5,
+          "end": 139.8,
+          "probability": 0.993977427482605
+        },
+        {
+          "word": " victory",
+          "start": 139.8,
+          "end": 141.08,
+          "probability": 0.4866473376750946
+        },
+        {
+          "word": " for",
+          "start": 141.08,
+          "end": 141.92,
+          "probability": 0.9142099022865295
+        },
+        {
+          "word": " Vacherot.",
+          "start": 141.92,
+          "end": 142.46,
+          "probability": 0.2838234872906469
+        },
+        {
+          "word": " Big",
+          "start": 143.62,
+          "end": 144.42,
+          "probability": 0.948916494846344
+        },
+        {
+          "word": " win",
+          "start": 144.42,
+          "end": 144.66,
+          "probability": 0.9973071813583374
+        },
+        {
+          "word": " for",
+          "start": 144.66,
+          "end": 145.44,
+          "probability": 0.9599884748458862
+        },
+        {
+          "word": " the",
+          "start": 145.44,
+          "end": 145.57999999999998,
+          "probability": 0.886975109577179
+        },
+        {
+          "word": " Mod",
+          "start": 145.57999999999998,
+          "end": 145.72,
+          "probability": 0.327487975358963
+        },
+        {
+          "word": " of",
+          "start": 145.72,
+          "end": 145.82,
+          "probability": 0.15558627247810364
+        },
+        {
+          "word": " Gas,",
+          "start": 145.82,
+          "end": 146.0,
+          "probability": 0.7855901122093201
+        },
+        {
+          "word": " top",
+          "start": 146.32,
+          "end": 146.54,
+          "probability": 0.571526825428009
+        },
+        {
+          "word": " 20",
+          "start": 146.54,
+          "end": 146.94,
+          "probability": 0.9729821085929871
+        },
+        {
+          "word": " victory.",
+          "start": 146.94,
+          "end": 147.36,
+          "probability": 0.9668838381767273
+        }
+      ]
+    }
+  ]
+}

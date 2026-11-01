@@ -1,0 +1,26 @@
+{
+  "status": "ready_for_render_not_publication",
+  "owner_outline_approval": "用户已回复做吧，约4分钟结构批准；按完整过程调整至约4分45秒。",
+  "editorial": "前情简短，巴塞尔五轮实际官方画面，完整冠军点427.8起及真实473.02举杯；无虚构心理/动作。",
+  "formal_original_audio_gate": "通过，11个完整源窗口、26条英中前景语句，6份固定媒体源sha精确绑定；新5源重新双ASR，未冒称人工听审。",
+  "native_previews": [
+    "三张原生章节卡已实看，深蓝、两行语义、无孤字",
+    "最终logo封面已实看，杯与脸完整、文字不压眼至下巴；临时本场帧等待摄影按既有O4机制升级"
+  ],
+  "source_identity": "固定6源核真实赛事/年份/轮次/人物，固定版本A/V相似度及代表帧独立核对留档，非替换旧审查源hash。",
+  "tts": "本地全部全句TTS实测时长通过，无人名边界切词。最终render会生成其实际配音冻结包并自动五项核验后才可发布。",
+  "pending": [
+    "正式render",
+    "实际电影/字幕/音轨/片尾QC",
+    "实际配音五项自动检查",
+    "当前head CI所选范围",
+    "合并后PushPlus唯一回执及pushed.json"
+  ],
+  "tts_transport": {
+    "kind": "repository",
+    "commit": "18c5aeaa7cf0a7cdf304288d08d6381b02a6a065",
+    "bundle_sha256": "ebb8750faeb47a91f9d90499b5afbccb3f8148b858b8f1f1a08cc1f17eb13258",
+    "bytes": 522774,
+    "restore_and_request_check": "pass, actual immutable URL fetched; same13requests; not audio-quality approval"
+  }
+}

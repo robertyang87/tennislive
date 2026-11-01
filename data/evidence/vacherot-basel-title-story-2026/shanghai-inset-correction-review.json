@@ -1,0 +1,25 @@
+{
+  "status": "bounded_native_inset_correction_reviewed_pending_final_render",
+  "publication_approved": false,
+  "spec_sha256": "4f5d108f96203269fe4c3b0bc0712f7ec1c9fb390bf7b10064005b906c6b3efc",
+  "ass_sha256": "10be6bd18700c85ced2ff4c2af2f3955b7da9651b14f5dbe8255f79615c44aef",
+  "change": "Shanghai inset show_after6.2, show_for8 unchanged; true source120.9–128.9",
+  "native_method": "Direct existing preview_reel_captions.render_frames over actual parsed current segments, existing unchanged v4 ASS and actual6 sources. No card raster regeneration needed; native FFmpeg segment/decorations commands are retained in manifest.",
+  "observations": [
+    "root and cover agent each opened six native full-canvas PNGs",
+    "right-upper story_text does not cover faces at these6 samples",
+    "actual English+Chinese subtitles complete, in bounds and away from faces",
+    "first sample far player hat brim touches lower edge of left brand, face remains below words; remaining celebration closeups clearly separated"
+  ],
+  "supersedes": "caption-preview-v4 caption01 no-overlap conclusion was withdrawn; old film not publishable",
+  "user_steering": [
+    "比赛视频铺满整幅1080×1440，全部11个源视频窗口fit=crop、cx=.5、track=false",
+    "转场用原生深蓝字卡；无比赛视频抽帧截图作转场图片；需要照片时对应本场官方高清实拍"
+  ],
+  "pending": [
+    "new final film QC",
+    "formal actual-film voice suite",
+    "current head CI",
+    "PushPlus receipt and persistent record"
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "base.en",
+  "source_key": "shanghai",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4380470/4380470.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+  "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 50,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/12800",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 1880064,
+        "duration": "146.880000",
+        "bit_rate": "3678168",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "3672",
+        "extradata_size": 43,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Video Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "44100",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/44100",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 6474585,
+        "duration": "146.815986",
+        "bit_rate": "128008",
+        "nb_frames": "6325",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Sound Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "146.880000",
+      "size": "69995758",
+      "bit_rate": "3812405",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "reviewed_from": 114.7,
+  "reviewed_to": 137.4,
+  "segment_index_at_run": 2,
+  "utterances": [
+    {
+      "start": 125.08,
+      "end": 133.58,
+      "text": " Valentin Vacherot. Puts the icing on the cake to a fairy tale, Wiccan Shanghai.",
+      "words": [
+        {
+          "word": " Valentin",
+          "start": 125.08,
+          "end": 126.04,
+          "probability": 0.4571690857410431
+        },
+        {
+          "word": " Vacherot.",
+          "start": 126.04,
+          "end": 126.92,
+          "probability": 0.06666736702512328
+        },
+        {
+          "word": " Puts",
+          "start": 127.2,
+          "end": 127.68,
+          "probability": 0.30874304473400116
+        },
+        {
+          "word": " the",
+          "start": 127.68,
+          "end": 128.42000000000002,
+          "probability": 0.9872896075248718
+        },
+        {
+          "word": " icing",
+          "start": 128.42000000000002,
+          "end": 128.88,
+          "probability": 0.99903404712677
+        },
+        {
+          "word": " on",
+          "start": 128.88,
+          "end": 129.48,
+          "probability": 0.9534664154052734
+        },
+        {
+          "word": " the",
+          "start": 129.48,
+          "end": 129.74,
+          "probability": 0.9974305033683777
+        },
+        {
+          "word": " cake",
+          "start": 129.74,
+          "end": 130.1,
+          "probability": 0.998916506767273
+        },
+        {
+          "word": " to",
+          "start": 130.1,
+          "end": 131.06,
+          "probability": 0.9272319674491882
+        },
+        {
+          "word": " a",
+          "start": 131.06,
+          "end": 131.42000000000002,
+          "probability": 0.9915474057197571
+        },
+        {
+          "word": " fairy",
+          "start": 131.42000000000002,
+          "end": 131.92000000000002,
+          "probability": 0.647867739200592
+        },
+        {
+          "word": " tale,",
+          "start": 131.92000000000002,
+          "end": 132.72,
+          "probability": 0.9629797339439392
+        },
+        {
+          "word": " Wiccan",
+          "start": 132.9,
+          "end": 133.3,
+          "probability": 0.3535962601502736
+        },
+        {
+          "word": " Shanghai.",
+          "start": 133.3,
+          "end": 133.58,
+          "probability": 0.7802959680557251
+        }
+      ]
+    }
+  ]
+}

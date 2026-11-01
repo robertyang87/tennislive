@@ -1,0 +1,108 @@
+{
+  "index": 9,
+  "source": "qf",
+  "reviewed_from": 120,
+  "reviewed_to": 145.55,
+  "source_local": "/workspace/scratch/vacherot-fixed/qf/4601599.mp4",
+  "source_local_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 132.55,
+      "end": 138.29,
+      "en": "Vacherot books his spot in the final four in Basel.",
+      "zh": "瓦舍罗跻身巴塞尔半决赛。"
+    },
+    {
+      "start": 140.67,
+      "end": 143.31,
+      "en": "Fourth time he has achieved that at tour level in his career.",
+      "zh": "他第四次打进巡回赛半决赛。"
+    },
+    {
+      "start": 143.47,
+      "end": 144.45,
+      "en": "A semi-final place.",
+      "zh": "拿到了半决赛席位。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-09-small.en.json",
+      "sha256": "08a64f44a24299ca9b725444ea7ea2939cfdf1fee8ea69c04b6d72cd94011431"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-09-base.en.json",
+      "sha256": "d7d224ddf3ce53458e97be02cbf250be18dbeeec39527fb501ca6105e329d321"
+    }
+  ],
+  "review_notes": [
+    "Focused medium resolves books (not booked), and precise Fourth start140.72 after long pause; subject he has restored from contracted speech, identity spelling normalized.",
+    "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4601599/4601599.mp4",
+  "historical_raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-09-small.en.json",
+      "sha256": "401626e2a6318be79b030bb504d20402745adcdf854755e2191f624ae31a0e03"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-09-base.en.json",
+      "sha256": "9371112031999c535284af95f9d7de8ce6c19fb8210796967e7063f7491e0275"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-qf-medium.en.json",
+      "sha256": "310b7915f53310e5b677a0a2d2dbc148f3d8c1aae6d8992159a703ab18e4871f"
+    }
+  ],
+  "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+  "source_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "start_time": "0.000000",
+        "duration": "154.520000"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "start_time": "0.000000",
+        "duration": "154.538667"
+      }
+    ],
+    "format": {
+      "start_time": "0.000000",
+      "duration": "154.538667",
+      "size": "156395963"
+    }
+  },
+  "fixed_content_cross_check": {
+    "status": "same_utterance_content_confirmed_on_new_bytes",
+    "new_full_window_asr_models": [
+      "small.en",
+      "base.en"
+    ],
+    "new_foreground_english_count": 3,
+    "new_extra_foreground_english": [],
+    "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+  },
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}
