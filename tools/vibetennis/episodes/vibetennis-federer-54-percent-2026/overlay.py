@@ -127,7 +127,6 @@ def caption(c,t,s,d,txt,pl,an):
     size=50; leader=None
     if pl[0]=='s':
         x,y,al=pl[1],pl[2],pl[3]; size=pl[4] if len(pl)>4 else size
-        if NARR and y>=860: y=y-90   # 中文版底部有配音字幕：底部居中的锚定字幕整体上移
     else:
         _,k,dx,dy,al,fx,fy=pl[:7]; size=pl[7] if len(pl)>7 else size; v=an.get(k)
         if onscreen(v): x,y=v[0]+dx,v[1]+dy; leader=(v[0],v[1])
@@ -276,23 +275,8 @@ def pool_hud(c,an,kw,kl,kn,wkey,lkey,a,label_w,label_l):
         text(c,tr("%d 局","%d games")%cnt if kn!='mn' or True else "",x,y+20,20,GRAY,a,MONO)
 BLUE_C=(0.45,0.62,1.0)
 
-# 中文版配音字幕：voice.py 写的时间表（每句按 TTS 词边界切成 ≤16 字的短句），屏幕用阿拉伯数字（TTS 稿写汉字）
+# 中文版有 TTS 配音，但不加底部配音字幕（账号所有者 2026-11-01：「不用再多加多余的字幕。就用画面上当前的一些文案」）
 NARR=[]
-if LANG=='zh' and os.path.exists(os.path.join(HERE,'voice','schedule.json')):
-    sys.path.insert(0,os.path.join(REPO,'src'))
-    from tennislive.video.explainer import arabic_numerals
-    for _l in json.load(open(os.path.join(HERE,'voice','schedule.json'))):
-        for _p in _l['phrases']: NARR.append((_p['t0'],_p['t1'],arabic_numerals(_p['text'])))
-def narr_sub(c,t):
-    for i,(t0,t1,s) in enumerate(NARR):
-        t1x=max(t1,t0+0.9)+0.15
-        if i+1<len(NARR): t1x=min(t1x,NARR[i+1][0])
-        if t0-0.05<=t<t1x:
-            a=min(1,(t-t0+0.05)/0.12,(t1x-t)/0.12)
-            f=F(SANS,40); w=f.measureText(s)
-            c.drawRoundRect(skia.Rect.MakeXYWH(960-w/2-26,1002-44,w+52,62),12,12,P((0,0,0),a*0.42))
-            text(c,s,960,1002,40,WHITE,a,SANS)
-            return
 
 def draw(c,t,an,hist):
     g=lambda k: an.get(k)
@@ -321,8 +305,8 @@ def draw(c,t,an,hist):
             if onv(v,10): text(c,"%d"%cnt,v[0],v[1]+110,64,col,a,SANS,glow=0.5); text(c,lab,v[0],v[1]+146,22,GRAY,a,MONO)
         if 25.9<=t: v=g('coin'); aa=secA(t,26.2,33); 
         if 25.9<=t and onv(g('coin'),10): v=g('coin'); text(c,"50 : 50",v[0],v[1]+130,32,WHITE,aa*0.9,MONO)
-        if 28.5<=t<33 and LANG=='zh': aa=secA(t,28.7,33); text(c,"“When you lose every second point, on average, you learn not to dwell on every shot.”",960,938-(90 if NARR else 0),22,GRAY,aa,MONO)
-        if 28.5<=t<33: aa=secA(t,28.7,33); text(c,tr("—— 费德勒，2024 年达特茅斯学院毕业演讲","— Roger Federer, Dartmouth Commencement, 2024"),960,(974-(90 if NARR else 0)) if LANG=='zh' else 1040,20,GRAY,aa*0.8,SANSR)
+        if 28.5<=t<33 and LANG=='zh': aa=secA(t,28.7,33); text(c,"“When you lose every second point, on average, you learn not to dwell on every shot.”",960,938,22,GRAY,aa,MONO)
+        if 28.5<=t<33: aa=secA(t,28.7,33); text(c,tr("—— 费德勒，2024 年达特茅斯学院毕业演讲","— Roger Federer, Dartmouth Commencement, 2024"),960,974 if LANG=='zh' else 1040,20,GRAY,aa*0.8,SANSR)
     # 03 一局：比分节点与水库
     if 34<=t<64:
         a=secA(t,35.4,64)
@@ -382,7 +366,7 @@ def draw(c,t,an,hist):
             ar=a*ease((t-127.4-i*1.5)/0.5)
             if onv(vr,5) and ar>0: text(c,tr("真实 ","real ")+realtxt[i],vr[0]+70,vr[1]-14,24,GOLD,ar,MONO,align='l',glow=0.3)
             if onv(vr,5) and t>=130.8: ad=a*ease((t-131-i*0.3)/0.4); tag(c,vr[0],vr[1]-70,"Δ %.1f"%(abs(model[i]-real[i])*100),ad,(0.5,1,0.7),22)
-        text(c,tr("真实值：ATP 官方、罗兰·加洛斯官网、Ultimate Tennis Statistics；赢局率由保发率与破发率推算","Real: ATP, Roland-Garros, Ultimate Tennis Statistics; games won derived from hold/break rates"),960,1036 if not NARR else 1064,20,GRAY,a,MONO if LANG=='en' else SANSR)
+        text(c,tr("真实值：ATP 官方、罗兰·加洛斯官网、Ultimate Tennis Statistics；赢局率由保发率与破发率推算","Real: ATP, Roland-Garros, Ultimate Tennis Statistics; games won derived from hold/break rates"),960,1036,20,GRAY,a,MONO if LANG=='en' else SANSR)
     # 07 局限
     if 140<=t<148:
         a=secA(t,140.4,148)
@@ -390,7 +374,7 @@ def draw(c,t,an,hist):
         if onv(vb,5): text(c,tr("赢下整场","Matches won"),vb[0],vb[1]+40,26,WHITE,a,SANS)
         if onv(vm,5): text(c,tr("模型 85.9%（三盘两胜）","model 85.9% (Bo3)"),vm[0]-90,vm[1]-10,22,(1,0.45,0.4) if t>143 else CYAN,a,MONO,align='r')
         if onv(vr,5) and t>=142.4: text(c,tr("真实 82.0%（1251 胜 275 负）","real 82.0% (1,251–275)"),vr[0]+90,vr[1]-10,24,GOLD,a*ease((t-142.4)/0.4),MONO,align='l')
-        if t>=143.7: text(c,"Klaassen & Magnus (2001) · "+tr("481 场温网、近 9 万分","481 Wimbledon matches, ~90,000 points"),960,1036 if not NARR else 1064,20,GRAY,a,MONO if LANG=='en' else SANSR)
+        if t>=143.7: text(c,"Klaassen & Magnus (2001) · "+tr("481 场温网、近 9 万分","481 Wimbledon matches, ~90,000 points"),960,1036,20,GRAY,a,MONO if LANG=='en' else SANSR)
     if 148.4<=t<157:
         a=secA(t,148.8,157)
         for k,kb,name,key,col in (('ves0','ves0b',tr("费德勒","Federer"),'p0',GOLD),('ves1','ves1b',tr("德约科维奇","Djokovic"),'p1',BLUE_C)):
@@ -399,7 +383,7 @@ def draw(c,t,an,hist):
         if t>=153.8:
             v=g('ves1')
             if onv(v,5): tag(c,v[0],v[1]+40,tr("冠军","CHAMPION"),a*ease((t-154)/0.4),GOLD,26,tf=SANS)
-        text(c,"7-6(5)  1-6  7-6(4)  4-6  13-12(3)",960,1036 if not NARR else 1064,24,GRAY,a,MONO)
+        text(c,"7-6(5)  1-6  7-6(4)  4-6  13-12(3)",960,1036,24,GRAY,a,MONO)
     # 08 收束：引语原文
     if 168.6<=t<178.2:
         a=secA(t,169.2,178.2); v=g('oneBot'); y=(v[1] if onv(v,5) else 700)+40
@@ -413,7 +397,6 @@ def draw(c,t,an,hist):
             y+=50
     for s,d,txt,pl in CAPS:
         if pl and s<=t<s+d+0.35: caption(c,t,s,d,txt,pl,an)
-    if NARR and t<180: narr_sub(c,t)
 
 def main(inp,out,anchors_files):
     an={}

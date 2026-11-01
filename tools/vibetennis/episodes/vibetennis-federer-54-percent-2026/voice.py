@@ -1,4 +1,4 @@
-"""vibetennis 第 4 集中文配音：TTS 人声轨、底部配音字幕的时间表、中文版混音。
+"""vibetennis 第 4 集中文配音：TTS 人声轨与中文版混音（不加底部配音字幕：所有者 2026-11-01「不用再多加多余的字幕。就用画面上当前的一些文案」）。
 
 账号所有者 2026-11-01：「中文版的加上中文的配音……就是有 TTS 的，跟 EP 三一样的」。声线与语速同 EP03
 （edge-tts zh-CN-YunjianNeural +18%）；配音稿 narration.json（text 为字幕原文，tts 为合成文本，多音字换同音字）；
@@ -6,7 +6,7 @@
 混音同 EP03：人声 -16 LUFS、音效 -22、BGM -26，人声开口时 BGM 再压 8 dB（sidechain），整片之后归一到 -14 LUFS。
 
     python3 voice.py        # 先跑过 sfx.py（要 sfx/sfx_only.wav 与 sfx/bgm_bed.wav）
-产物：voice/schedule.json（overlay.py 画底部字幕用）、sfx/sfx_bed_zh.wav（assemble 中文版用）
+产物：voice/schedule.json（每句实际落位，留作核对）、sfx/sfx_bed_zh.wav（assemble 中文版用）
 """
 import json, os, re, subprocess
 import numpy as np, soundfile as sf

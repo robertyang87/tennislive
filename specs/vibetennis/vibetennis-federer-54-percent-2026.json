@@ -13,7 +13,7 @@
     "cover_in_film": false,
     "outro_seconds": 0,
     "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），片尾是收束问句＋参考资料页。",
-    "captions": "anchored（锚定字幕）＋ 中文版底部配音字幕（按 TTS 词边界切成 ≤16 字的短句）",
+    "captions": "anchored（只用画面上的锚定文案；配音不另加底部字幕——所有者 2026-11-01「不用再多加多余的字幕。就用画面上当前的一些文案」）",
     "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03）；配音稿 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/narration.json（39 句，按画面落位，最晚比画面晚 0.7 s）；多音字静态预检（tools/check_polyphones.py）报 2 处，合成文本换同音字：几乎→机乎、打转→打赚，另按 EP03 差距→插距 把 差不到→插不到；字幕保持原字，屏幕数字用阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
     "_narration_why": "账号所有者 2026-11-01：「中文版的加上中文的配音……就是有 TTS 的，跟 EP 三一样的」。",
     "audio": {
