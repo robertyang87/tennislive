@@ -45,7 +45,12 @@ function fatLine(pts,color,width,opacity=1,group=scene,opt={}){
   const g=new LineGeometry(); g.setPositions(pts.flatMap(p=>[p.x,p.y,p.z]));
   const l=new Line2(g,lineMat(color,width,opacity,opt)); l.computeLineDistances(); l.frustumCulled=false; group.add(l); return l;
 }
-function setLine(l,pts){ l.geometry.setPositions(pts.flatMap(p=>[p.x,p.y,p.z])); l.computeLineDistances(); }
+// 点数变了就换一个新的 LineGeometry：three.js 会在第一次绘制时记住实例数（_maxInstanceCount），
+// 之后同一个几何体再 setPositions 加长也只画前几段——S 曲线「从 2 个点长到 121 个点」整段只露出最左边一截
+// （2026-11-01 所有者看成片：「这里没有曲线啊」）。点数不变的（扫描线、球的拖尾）照旧原地更新
+function setLine(l,pts){ const a=pts.flatMap(p=>[p.x,p.y,p.z]);
+  if(l.userData.nPts!==pts.length){ l.geometry.dispose(); l.geometry=new LineGeometry(); l.userData.nPts=pts.length; }
+  l.geometry.setPositions(a); l.computeLineDistances(); }
 const glowTex=(()=>{ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
   const gr=g.createRadialGradient(64,64,0,64,64,64); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(0.15,'rgba(255,255,255,0.6)'); gr.addColorStop(0.45,'rgba(255,255,255,0.12)'); gr.addColorStop(1,'rgba(255,255,255,0)');
   g.fillStyle=gr; g.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); })();

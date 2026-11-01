@@ -8,7 +8,8 @@ HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-python3}"; L="${1:-zh}"; cd "$H
 SLUG=vibetennis-federer-54-percent-2026; [ "$L" = en ] && SLUG=$SLUG-en
 SEG=${SEG:-seg2}   # 2026-11-01 二改：splice3d.sh 拼好的 r3d/seg2/p0..p8（帧号已是新时间轴）
 ls r3d/$SEG/p*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
-OVR=""; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,6181:7145:r3d/seg_en/c3.mp4"   # c3＝c2 帧号 +291：新时间轴 206.03–238.18（「这只是一分」＋新段 B 的粒子字），VT_LANG=en 渲
+# 放大曲线那一段（新第 4110–4771 帧）用修过 setLine 的重渲覆盖：旧渲染里 S 曲线只露最左边一截（所有者 2026-11-01「这里没有曲线啊」）
+OVR="4110:4441:r3d/seg2/ch0.mp4,4441:4771:r3d/seg2/ch1.mp4"; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,$OVR,6181:7145:r3d/seg_en/c3.mp4"   # c3＝c2 帧号 +291：新时间轴 206.03–238.18（「这只是一分」＋新段 B 的粒子字），VT_LANG=en 渲
 [ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L VT_OVERRIDE=$OVR "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls r3d/$SEG/p*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
 # 音频：英文版＝BGM 铺底＋音效（sfx.py → sfx/sfx_bed.wav）；中文版另加 TTS 配音（voice.py → sfx/sfx_bed_zh.wav，人声 -16 / 音效 -22 / BGM -26 并 sidechain）
 [ -f sfx/final_$L.m4a ] || {
