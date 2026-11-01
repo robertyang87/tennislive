@@ -5,9 +5,17 @@
     {
       "key": "pushplus:reel:shnaider-fernandez-tokyo-2026-final:49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
       "fingerprint": "49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
-      "status": "uncertain",
+      "status": "failed_before_send",
       "at": "2026-11-01T07:50:20Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/41286294414"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/41286294414",
+      "reconciled_at": "2026-11-01T07:51:56.124219+00:00",
+      "evidence": {
+        "run": "https://github.com/robertyang87/tennislive/actions/runs/41286294414",
+        "step": "推送到微信（可选）",
+        "error": "waiting_voice_quality_review: Current spec differs from actual render",
+        "send_called": false,
+        "basis": "push_reel.py require_publish fails before push(); workflow log at 2026-11-01T07:50:20.578Z, no PushPlus request or receipt"
+      }
     }
   ]
 }
