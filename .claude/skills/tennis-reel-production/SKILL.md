@@ -15,7 +15,7 @@ The current production assistant writes editorial copy and reviews footage direc
 
 1. Establish a structured match fact packet before writing or inspecting anything. Derive winner-perspective score once and preserve source URLs, event, round, court, rankings, countries, and timestamps.
 2. Load `references/editorial.md` for editorial and PushPlus copy. Write using only verified facts. Require schema-valid JSON and reject unsupported claims.
-3. Probe the complete source video. Select contact sheets evenly across its full duration and preserve their hashes.
+3. Probe the complete source video. Select contact sheets evenly across its full duration and preserve their hashes. For a title-run recap, also source actual footage from earlier rounds; follow the title-run rules in `references/visual-evidence.md`.
 4. Load `references/visual-evidence.md` for cold-open, ending, and cover review. Require time-coded visual evidence and confidence; never accept a bare pass/fail answer.
 5. Apply `references/quality-gates.md`. Promote a pending draft only when every hard gate passes. A retryable infrastructure failure may wait; a deterministic content failure must stop.
 6. Render from the promoted spec, run deterministic QC, then publish through PushPlus and record `pushed.json`. Never treat a successful workflow shell as proof that these stages completed.

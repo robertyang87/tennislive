@@ -24,6 +24,16 @@ Every timestamp cited in a reason must fall inside that item's returned `start`/
 
 If decisive visual evidence occurs after the proposed `end`, extend `end` to a valid adjacent cut instead of citing later evidence while keeping the shorter window.
 
+## Title-run recaps: earlier-round footage
+
+Owner feedback, 2026-11-01: future title-run episodes must include actual footage from preceding matches, rather than explaining the entire path through result cards and narration alone. When the supplied link covers only the final, proactively find additional official earlier-round sources.
+
+Use brief, representative earlier-round moments to establish the path, then give the main emphasis to the final's turning points, complete championship point, and trophy moment. Follow existing complete-point and broadcast-audio rules; do not invent equal screen time or fixed clip quotas.
+
+For each additional source, preserve its URL, event/year, round, opponent, and selected source timecodes. Verify the visible players, scoreboard, and event marks. Label the round/opponent clearly and use that match's score information; do not carry the final's result banner onto earlier-round footage. Match narration to the actual selected action. Search for missing material and document genuine gaps internally; never substitute another match.
+
+Apply this to future productions. The accepted `shnaider-fernandez-tokyo-2026-final` episode must not be recut, rerendered, or repushed for this feedback.
+
 ## Published positive reference
 
 For `fils-cobolli-cincinnati-2026-sf`, the accepted cold open is 317.72–329.50 seconds and the ending is 317.50–329.50 seconds. The sequence contains match point, winner Fils celebrating, the loser reaction, and English broadcast confirmation; the cover is a same-match close-up of the winner celebrating.
