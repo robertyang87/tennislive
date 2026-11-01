@@ -1,15 +1,18 @@
 Federer won only 54% of his points. How did he win 82% of his matches?
 
-Federer played 1,526 singles matches and won 1,251 — 82%. Yet he won only 54% of his points: "When you lose every second point, on average, you learn not to dwell on every shot."
+He won 1,251 of 1,526 singles matches, but only 54% of points.
 
-The answer is the scoring, a Markov chain that amplifies a small edge layer by layer:
+The answer is a Markov chain: states, transition probabilities, and one rule — only the present matters. In 1913 Andrey Markov found it in Pushkin's Eugene Onegin: across 20,000 letters, a vowel followed a vowel only 12.8% of the time, but a consonant 66.3%.
+
+Tennis scoring is such a chain, and it amplifies a small edge layer by layer:
 54% per point → 60% per game → 76% per set → 91% best-of-five.
-Win 1% more points and best-of-five goes from 50% to 63%.
 
-With his real serve and return stats, the model predicts 89.7% of service games held and 25.6% broken. ATP: 89% and 27%.
+From his real serve and return stats the model predicts 89.7% holds and 25.6% breaks. ATP: 89% and 27%.
 
-The limit: for whole matches the model says 86%+, reality 82%. At Wimbledon 2019 he won 14 more points, held two championship points, and still lost.
+The limit: for whole matches the model says 86%+, reality 82%. At Wimbledon 2019 he won 14 more points and still lost.
 
-It's only a point. Which point can't you let go of?
+He lost 108,336 points in his career. But every game starts again at 0–0. You don't have to win every point — just play the next one well after you lose one.
+
+Which point can't you let go of?
 
 #vibetennis #vibe知识大赏 #网球时差 #Federer #tennis

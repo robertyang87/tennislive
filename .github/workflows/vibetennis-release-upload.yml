@@ -11,6 +11,7 @@ name: vibetennis 成片上传 Release
 #                                  {"name": "<slug>_master.mp4", "sha256": "…", "dir": "master"}]
 #   upload/<slug>/qc_attestation.json
 #   upload/<slug>/release_tag     （可选，仅语言版：原版那一集的 tag，如 vibetennis-vibetennis-live-faster-2026）
+#   upload/<slug>/replace         （可选，仅改版重渲：每行「<附件名> <Release 上旧附件的 sha256>」，对上才替换）
 #   upload/<slug>/<dir>/part.00 …
 on:
   push:
@@ -68,6 +69,15 @@ jobs:
               test "$GOT" = "$QC" || { echo "推送版不是质检过的那一份——不上传"; exit 1; }
             fi
             SIZE=$(gh release view "$TAG" --json assets -q ".assets[] | select(.name==\"$NAME\") | .size" || true)
+            # 改版重渲（所有者要求改片）：upload/<slug>/replace 逐行写「<附件名> <旧附件 sha256>」，
+            # 只有 Release 上那份的 digest 正好是登记的旧 sha256 才删掉重传——写错一个字就照旧拒绝
+            if [ -n "$SIZE" ] && [ -f "$DIR/replace" ] && [ "$SIZE" != "$(stat -c %s "$NAME")" ]; then
+              OLD=$(awk -v n="$NAME" '$1==n{print $2}' "$DIR/replace")
+              HAVE=$(gh api "repos/${{ github.repository }}/releases/tags/$TAG" -q ".assets[] | select(.name==\"$NAME\") | .digest" | sed 's/^sha256://')
+              if [ -n "$OLD" ] && [ "$OLD" = "$HAVE" ]; then
+                echo "$NAME 按 replace 登记替换（旧 $OLD）"; gh release delete-asset "$TAG" "$NAME" -y; SIZE=""
+              fi
+            fi
             if [ -n "$SIZE" ]; then
               test "$SIZE" = "$(stat -c %s "$NAME")" || { echo "Release 上已有同名附件 $NAME 且字节数不同——拒绝覆盖"; exit 1; }
               echo "$NAME 已在、字节一致，不重复上传"

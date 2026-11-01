@@ -50,12 +50,14 @@ def phrases(text, words, t0):
     return out
 
 sched, prev = [], 0.0
-total = int(190 * SR); V = np.zeros((total, 2))
+total = int((sf.info("sfx/sfx_only.wav").duration + 1) * SR)   # 跟着音效床走，不再写死片长
+V = np.zeros((total, 2))
 for i, l in enumerate(L):
-    wb = [w for w in json.load(open(f"voice/n{i:02d}.json")) if w["type"] == "WordBoundary"]
+    fn = l.get("file", f"n{i:02d}")
+    wb = [w for w in json.load(open(f"voice/{fn}.json")) if w["type"] == "WordBoundary"]
     s0 = wb[0]["off"]; sp = wb[-1]["off"] + wb[-1]["dur"]
     start = max(l["at"], prev + GAP - s0); prev = start + sp
-    a = dec(f"voice/n{i:02d}.mp3"); k = int(start * SR); V[k:k + len(a)] += a[:total - k]
+    a = dec(f"voice/{fn}.mp3"); k = int(start * SR); V[k:k + len(a)] += a[:total - k]
     sched.append({"i": i, "start": round(start, 3), "speech_from": round(start + s0, 3), "speech_to": round(start + sp, 3), "late": round(start - l["at"], 3), "text": l["text"], "phrases": phrases(l["text"], wb, start)})
 json.dump(sched, open("voice/schedule.json", "w"), ensure_ascii=False, indent=1)
 print("late max %.2f s" % max(s["late"] for s in sched))

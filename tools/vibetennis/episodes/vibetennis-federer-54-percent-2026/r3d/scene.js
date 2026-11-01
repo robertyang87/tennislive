@@ -12,7 +12,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
-import { SHOTS } from './shots.js';
+import { SHOTS, NEWSHOTS, toOld } from './shots.js';
 
 const Q=new URLSearchParams(location.search); const LANG=Q.get('lang')||'zh';
 const W=+(Q.get('w')||1920), H=+(Q.get('h')||1080);
@@ -45,7 +45,12 @@ function fatLine(pts,color,width,opacity=1,group=scene,opt={}){
   const g=new LineGeometry(); g.setPositions(pts.flatMap(p=>[p.x,p.y,p.z]));
   const l=new Line2(g,lineMat(color,width,opacity,opt)); l.computeLineDistances(); l.frustumCulled=false; group.add(l); return l;
 }
-function setLine(l,pts){ l.geometry.setPositions(pts.flatMap(p=>[p.x,p.y,p.z])); l.computeLineDistances(); }
+// 点数变了就换一个新的 LineGeometry：three.js 会在第一次绘制时记住实例数（_maxInstanceCount），
+// 之后同一个几何体再 setPositions 加长也只画前几段——S 曲线「从 2 个点长到 121 个点」整段只露出最左边一截
+// （2026-11-01 所有者看成片：「这里没有曲线啊」）。点数不变的（扫描线、球的拖尾）照旧原地更新
+function setLine(l,pts){ const a=pts.flatMap(p=>[p.x,p.y,p.z]);
+  if(l.userData.nPts!==pts.length){ l.geometry.dispose(); l.geometry=new LineGeometry(); l.userData.nPts=pts.length; }
+  l.geometry.setPositions(a); l.computeLineDistances(); }
 const glowTex=(()=>{ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
   const gr=g.createRadialGradient(64,64,0,64,64,64); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(0.15,'rgba(255,255,255,0.6)'); gr.addColorStop(0.45,'rgba(255,255,255,0.12)'); gr.addColorStop(1,'rgba(255,255,255,0)');
   g.fillStyle=gr; g.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); })();
@@ -405,14 +410,104 @@ function proj(name,v,group){ const w=v.clone(); if(group) group.localToWorld(w);
 const val=(n,v)=>{anchors[n]=v;};
 function cam(pos,tgt,fov,up){ camera.up.set(...(up||[0,1,0])); camera.position.copy(pos); camera.fov=fov; camera.lookAt(tgt); camera.updateProjectionMatrix(); camera.updateMatrixWorld(true); }
 
+// ================= 新增（2026-11-01 所有者：「没有简单介绍马尔可夫链是什么，以及他是怎么发现的」＋片尾金句） =================
+// 用独立的随机数，不碰上面那串 rnd（否则旧镜头的模拟对局会全变）
+let seed2=19061913; const rnd2=()=>{seed2=(seed2*48271)%2147483647;return seed2/2147483647;};
+// 普希金《叶甫盖尼·奥涅金》第一章第一节开头（马尔可夫 1913 年数的就是这部长诗的前 20,000 个字母）
+const ONEGIN_LINE='Мой дядя самых честных правил';
+const ONEGIN_TXT='Мой дядя самых честных правил Когда не в шутку занемог Он уважать себя заставил И лучше выдумать не мог Его пример другим наука';
+const RU_V='аеёиоуыэюяАЕЁИОУЫЭЮЯ';
+// 马尔可夫只数字母，不数 ъ ь（Link 2006 译本：excluding ъ and ь）
+const ONEGIN_SEQ=[...ONEGIN_TXT].filter(ch=>/[а-яё]/i.test(ch)&&!'ъьЪЬ'.includes(ch)).map(ch=>({ch,v:RU_V.includes(ch)?1:0}));
+function textShapeCol(str,font,width,colFn){   // 逐字着色：colFn(字符, 序号) → 颜色
+  const c=document.createElement('canvas'); c.width=2048; c.height=512; const g=c.getContext('2d');
+  g.fillStyle='#000'; g.fillRect(0,0,2048,512); g.fillStyle='#fff'; g.font=font; g.textAlign='left'; g.textBaseline='middle';
+  let mw=g.measureText(str).width; if(mw>1900){ g.font=font.replace('300px',Math.floor(300*1900/mw)+'px'); mw=g.measureText(str).width; }
+  const x0=1024-mw/2; g.fillText(str,x0,262);
+  const bounds=[]; for(let i=0;i<=str.length;i++) bounds.push(x0+g.measureText(str.slice(0,i)).width);
+  const d=g.getImageData(0,0,2048,512).data; const pts=[]; let minx=1e9,maxx=-1e9;
+  for(let yy=0;yy<512;yy+=3) for(let xx=0;xx<2048;xx+=3){ if(d[(yy*2048+xx)*4]>140){ let k=0; while(k+1<str.length&&xx>=bounds[k+1]) k++; pts.push([xx,yy,k]); if(xx<minx)minx=xx; if(xx>maxx)maxx=xx; } }
+  const sc=width/(maxx-minx); const out=new Float32Array(NM*3), cc=new Float32Array(NM*3);
+  for(let i=pts.length-1;i>0;i--){ const j=Math.floor(rnd2()*(i+1)); [pts[i],pts[j]]=[pts[j],pts[i]]; }
+  for(let i=0;i<NM;i++){ const k=0.7+rnd2()*0.4;
+    if(i<pts.length*1.6){ const p=pts[i%pts.length]; out[i*3]=(p[0]-1024)*sc+(rnd2()-0.5)*0.04; out[i*3+1]=-(p[1]-262)*sc+(rnd2()-0.5)*0.04; out[i*3+2]=(rnd2()-0.5)*0.16;
+      const cl=colFn(str[p[2]],p[2]); cc[i*3]=cl.r*k; cc[i*3+1]=cl.g*k; cc[i*3+2]=cl.b*k; }
+    else { const a=rnd2()*6.283, r=width*(0.55+rnd2()*0.9); out[i*3]=Math.cos(a)*r; out[i*3+1]=Math.sin(a)*r*0.35; out[i*3+2]=(rnd2()-0.5)*20; const kk=0.1*k; cc[i*3]=DIMB.r*kk; cc[i*3+1]=DIMB.g*kk; cc[i*3+2]=DIMB.b*kk; } }
+  return {p:out,c:cc};
+}
+// 互不相干：均匀撒开的独立点，没有任何结构
+function indepShape(){ const out=new Float32Array(NM*3), cc=new Float32Array(NM*3);
+  for(let i=0;i<NM;i++){ out[i*3]=(rnd2()-0.5)*110; out[i*3+1]=(rnd2()-0.5)*46; out[i*3+2]=(rnd2()-0.5)*40; const k=i<2600?0.9+rnd2()*0.4:0.12+rnd2()*0.15; cc[i*3]=WHITE.r*k*0.85; cc[i*3+1]=WHITE.g*k*0.9; cc[i*3+2]=WHITE.b*k; }
+  return {p:out,c:cc}; }
+// 一环扣一环：11 个椭圆环，横竖交替，套成一条链
+function chainShape(){ const out=new Float32Array(NM*3), cc=new Float32Array(NM*3); const NL=11, Lx=7.2, ra=4.6, rb=2.3, tube=0.32;
+  for(let i=0;i<NM;i++){ const k=0.75+rnd2()*0.4;
+    if(i<NM*0.85){ const li=i%NL; const a=rnd2()*6.283, b=rnd2()*6.283; const cx=(li-(NL-1)/2)*Lx;
+      const x=Math.cos(a)*(ra+tube*Math.cos(b)), y=Math.sin(a)*(rb+tube*Math.cos(b)), z=tube*Math.sin(b);
+      if(li%2===0){ out[i*3]=cx+x; out[i*3+1]=y; out[i*3+2]=z; } else { out[i*3]=cx+x; out[i*3+1]=z; out[i*3+2]=y; }
+      const cl=li%2?GOLD:WHITE.clone().lerp(GOLD,0.35); cc[i*3]=cl.r*k; cc[i*3+1]=cl.g*k; cc[i*3+2]=cl.b*k; }
+    else { const a=rnd2()*6.283, r=40+rnd2()*40; out[i*3]=Math.cos(a)*r; out[i*3+1]=Math.sin(a)*r*0.3; out[i*3+2]=(rnd2()-0.5)*20; const kk=0.1*k; cc[i*3]=DIMB.r*kk; cc[i*3+1]=DIMB.g*kk; cc[i*3+2]=DIMB.b*kk; } }
+  return {p:out,c:cc}; }
+// 两团：43.2% 金（元音 8,638）、56.8% 蓝（辅音 11,362），正好落在状态图两个节点上
+const MK_V=V(-17,0,0), MK_C=V(17,0,0), MK_R=4.2;
+function twoNodeShape(){ const out=new Float32Array(NM*3), cc=new Float32Array(NM*3); const nv=Math.round(NM*0.85*0.4319);
+  for(let i=0;i<NM;i++){ const k=0.7+rnd2()*0.5;
+    if(i<NM*0.85){ const isV=i<nv; const c0=isV?MK_V:MK_C; const z=2*rnd2()-1, th=rnd2()*6.283, s=Math.sqrt(1-z*z), r=MK_R*Math.cbrt(rnd2());
+      out[i*3]=c0.x+s*Math.cos(th)*r; out[i*3+1]=c0.y+s*Math.sin(th)*r; out[i*3+2]=c0.z+z*r; const cl=isV?GOLD:BLUE; cc[i*3]=cl.r*k; cc[i*3+1]=cl.g*k; cc[i*3+2]=cl.b*k; }
+    else { const a=rnd2()*6.283, r=30+rnd2()*45; out[i*3]=Math.cos(a)*r; out[i*3+1]=Math.sin(a)*r*0.3; out[i*3+2]=(rnd2()-0.5)*20; const kk=0.1*k; cc[i*3]=DIMB.r*kk; cc[i*3+1]=DIMB.g*kk; cc[i*3+2]=DIMB.b*kk; } }
+  return {p:out,c:cc}; }
+// 输掉的 108,336 分：一大团蓝色微尘（少量金色留在中间）
+function lostShape(){ const out=new Float32Array(NM*3), cc=new Float32Array(NM*3);
+  for(let i=0;i<NM;i++){ const z=2*rnd2()-1, th=rnd2()*6.283, s=Math.sqrt(1-z*z); const gold=rnd2()<0.541; const rr=gold?3+Math.pow(rnd2(),0.7)*7:11+Math.pow(rnd2(),0.6)*36;
+    out[i*3]=s*Math.cos(th)*rr; out[i*3+1]=s*Math.sin(th)*rr*0.6; out[i*3+2]=z*rr; const cl=gold?GOLD:BLUE; const k=gold?0.3+rnd2()*0.3:0.8+rnd2()*0.6; cc[i*3]=cl.r*k; cc[i*3+1]=cl.g*k; cc[i*3+2]=cl.b*k; }
+  return {p:out,c:cc}; }
+SHAPES.n1906=textShapeCol('1906',NUMF,30,()=>WHITE);
+SHAPES.indep=indepShape();
+SHAPES.links=chainShape();
+SHAPES.onegin=textShapeCol(ONEGIN_LINE,SERIF.replace('"Noto Serif CJK SC"','"Noto Serif","DejaVu Serif","Noto Serif CJK SC"'),74,ch=>RU_V.includes(ch)?GOLD.clone().multiplyScalar(1.5):CYAN.clone().lerp(BLUE,0.4).multiplyScalar(1.4));
+SHAPES.twoNode=twoNodeShape();
+SHAPES.n00=textShapeCol('0-0',NUMF,26,()=>WHITE);
+SHAPES.lost=lostShape();
+// 两状态马尔可夫链：元音 / 辅音；边宽 ∝ 转移概率（马尔可夫 1913：p1=0.128，p0=0.663）
+const MK=new THREE.Group(); scene.add(MK); MK.visible=false;
+const MKP={VV:0.128,VC:0.872,CV:0.663,CC:0.337};
+function arcPts(a,b,bend,n=40){ const pts=[]; const m=a.clone().lerp(b,0.5).add(V(0,bend,0)); for(let i=0;i<=n;i++){ const u=i/n; const p=a.clone().multiplyScalar((1-u)*(1-u)).add(m.clone().multiplyScalar(2*u*(1-u))).add(b.clone().multiplyScalar(u*u)); pts.push(p); } return pts; }
+function loopPts(c,dir,n=48){ // 自环：画在节点外侧（dir=-1 左边，+1 右边），从贴着节点的那一点出发绕一圈回来
+  const cc=c.clone().add(V(dir*(MK_R+3.6),0,0)); const a0=dir<0?0:Math.PI; const pts=[]; for(let i=0;i<=n;i++){ const a=a0+i/n*Math.PI*2*(dir<0?1:-1); pts.push(cc.clone().add(V(Math.cos(a)*4.4,Math.sin(a)*3.8,0))); } return pts; }
+const MK_PATH={
+  VV:loopPts(MK_V,-1), CC:loopPts(MK_C,1),
+  VC:arcPts(MK_V.clone().add(V(MK_R*0.8,MK_R*0.6,0)),MK_C.clone().add(V(-MK_R*0.8,MK_R*0.6,0)),9),
+  CV:arcPts(MK_C.clone().add(V(-MK_R*0.8,-MK_R*0.6,0)),MK_V.clone().add(V(MK_R*0.8,-MK_R*0.6,0)),-9)};
+const MK_E={}; for(const k in MK_PATH){ const col=k[1]==='V'?GOLD:BLUE; MK_E[k]={glow:fatLine(MK_PATH[k],col,0.25+MKP[k]*2.6,0.1,MK,{world:true}),core:fatLine(MK_PATH[k],col,0.12+MKP[k]*1.1,0.6,MK,{world:true}),
+  head:glowSprite(col,3.2,0.6,MK)}; MK_E[k].head.position.copy(MK_PATH[k][MK_PATH[k].length-1]); }
+const MK_N={V:{rg:ringSprite(GOLD,MK_R*2.9,0.9,MK),gl:glowSprite(GOLD,MK_R*7,0.25,MK)},C:{rg:ringSprite(BLUE,MK_R*2.9,0.9,MK),gl:glowSprite(BLUE,MK_R*7,0.25,MK)}};
+MK_N.V.rg.position.copy(MK_V); MK_N.V.gl.position.copy(MK_V); MK_N.C.rg.position.copy(MK_C); MK_N.C.gl.position.copy(MK_C);
+const MK_TOK=glowSprite(WHITE,5,0,MK); const MK_TOK2=ringSprite(WHITE,2.6,0,MK);
+// t：从第一跳开始的秒数；hop：每跳秒数。令牌沿着奥涅金开头真实的元音/辅音序列走
+function setMK(op,t,{hop=0.42,edgeOp=1,show={VV:1,VC:1,CV:1,CC:1},nodeHi=0,edgeHi=0}={}){   // nodeHi / edgeHi：讲「状态」「转移概率」时把节点 / 边点亮
+  MK.visible=op>0.001; if(!MK.visible) return null;
+  let cur=null;
+  const idx=Math.floor(Math.max(0,t)/hop), u=easeIO((Math.max(0,t)/hop)-idx);
+  const i0=idx%(ONEGIN_SEQ.length-1); const a=ONEGIN_SEQ[i0], b=ONEGIN_SEQ[i0+1]; const key=(a.v?'V':'C')+(b.v?'V':'C');
+  for(const k in MK_E){ const e=MK_E[k]; const on=k===key&&t>=0; const s=show[k]??1;
+    e.core.material.opacity=op*edgeOp*s*(0.35+edgeHi*0.4+(on?0.5*(1-u*0.5):0)); e.glow.material.opacity=op*edgeOp*s*(0.06+edgeHi*0.12+(on?0.12:0)); e.head.material.opacity=op*edgeOp*s*(0.5+edgeHi*0.5); }
+  const pul=nodeHi*(0.5+0.5*Math.sin(t*6)); MK_N.V.rg.material.opacity=op*Math.min(1,0.85+nodeHi*0.15); MK_N.C.rg.material.opacity=op*Math.min(1,0.85+nodeHi*0.15); MK_N.V.gl.material.opacity=op*(0.18+0.3*pul); MK_N.C.gl.material.opacity=op*(0.18+0.3*pul);
+  MK_N.V.rg.scale.setScalar(MK_R*2.9*(1+0.12*pul)); MK_N.C.rg.scale.setScalar(MK_R*2.9*(1+0.12*pul));
+  if(t>=0){ const P=MK_PATH[key]; const f=u*(P.length-1); const j=Math.min(P.length-2,Math.floor(f)); const p=P[j].clone().lerp(P[j+1],f-j);
+    MK_TOK.position.copy(p); MK_TOK.material.opacity=op*0.95; MK_TOK2.position.copy(p); MK_TOK2.material.opacity=op*0.8; (b.v?MK_N.V:MK_N.C).gl.material.opacity=op*(0.18+0.25*ease(u)); cur={i:i0,from:a,to:b,key,u}; }
+  else { MK_TOK.material.opacity=0; MK_TOK2.material.opacity=0; }
+  return cur;
+}
+const MK_MID={VV:MK_PATH.VV[24],CC:MK_PATH.CC[24],VC:MK_PATH.VC[20],CV:MK_PATH.CV[20]};
+
 const S={THREE,V,cam,proj,val,ease,easeIO,easeOutBack,clamp01,setMorph,morphPos,ball,ballMat,ballGlow,flare,ballTrail,shock,shock2,setRays,setScale,SC,GAME,SET,MATCH,setChain,
-  chart,setChart,CURVES,chartX,chartY,CH,BARS,setBar,hideBars,barsG,court,VES,setVessels,bloom,finalPass,gridMat,grid,skyMat,stars,dust,setLine,pGame,pSet,pMatch,GOLD,CYAN,WHITE,BLUE,BALLC,RED,DIMB,GAL_N};
+  chart,setChart,CURVES,chartX,chartY,CH,BARS,setBar,hideBars,barsG,court,VES,setVessels,bloom,finalPass,gridMat,grid,skyMat,stars,dust,setLine,pGame,pSet,pMatch,GOLD,CYAN,WHITE,BLUE,BALLC,RED,DIMB,GAL_N,setMK,MK,MK_V,MK_C,MK_R,MK_MID,ONEGIN_SEQ};
 window.__S=S;
 function hideAll(){
   morph.visible=false; ball.visible=false; ballGlow.visible=false; flare.material.opacity=0; ballTrail.visible=false; shock.material.opacity=0; shock2.material.opacity=0; shock.material.color.copy(GOLD); setRays(0);
   scale.visible=false; SC.coin.visible=false; GAME.g.visible=false; SET.g.visible=false; MATCH.g.visible=false;
   [GAME,SET,MATCH].forEach(C=>{ C.g.scale.setScalar(1); }); GAME.g.position.set(0,15,0); SET.g.position.set(0,15,0); MATCH.g.position.set(0,12,0);
-  chart.visible=false; hideBars(); barsG.position.set(0,0,0); court.visible=false;
+  chart.visible=false; hideBars(); MK.visible=false; ballMat.uniforms.uOp.value=1; barsG.position.set(0,0,0); court.visible=false;
   gridMat.uniforms.uOp.value=1; grid.visible=true; grid.position.y=-40; gridMat.uniforms.uS.value=4; skyMat.uniforms.uWarm.value=0; skyMat.uniforms.uOp.value=1; stars.material.uniforms.uOp.value=1; dust.material.uniforms.uOp.value=1;
 }
 window.renderAt=function(t,noRender){
@@ -421,7 +516,9 @@ window.renderAt=function(t,noRender){
   allClouds.forEach(c=>c.material.uniforms.uT.value=t);
   const fp=finalPass.uniforms; fp.uT.value=t; fp.uFlash.value=0; fp.uFade.value=1; fp.uGlitch.value=0; fp.uShake.value=0; fp.uZoom.value=0; bloom.strength=0.4;
   dust.rotation.y=t*0.01;
-  for(const s of SHOTS){ if(t>=s.t0&&t<s.t1){ s.fn(S,t-s.t0,s.t1-s.t0,t); break; } }
+  // 新时间轴：先看是不是新插的段；否则映射回旧时间，旧镜头原样调用（2026-11-01 改版）
+  let done=false; for(const s of NEWSHOTS){ if(t>=s.t0&&t<s.t1){ s.fn(S,t-s.t0,s.t1-s.t0,t); done=true; break; } }
+  if(!done){ const to=toOld(t); if(to!==null) for(const s of SHOTS){ if(to>=s.t0&&to<s.t1){ s.fn(S,to-s.t0,s.t1-s.t0,to); break; } } }
   if(!noRender) composer.render();
   return JSON.stringify(anchors);
 };

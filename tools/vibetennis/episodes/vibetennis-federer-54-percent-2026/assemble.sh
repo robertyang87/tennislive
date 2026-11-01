@@ -1,14 +1,16 @@
 set -e
 # 用法：PY=python3 bash assemble.sh zh|en
 # 前置：render3d.sh 已把 3D 渲到 r3d/seg/s0..s3.mp4（+ .anchors.json）；
-#       英文版另需 r3d/seg_en/t.mp4（第 210–465 帧，标题粒子字）与 r3d/seg_en/c.mp4（第 4920–5400 帧，收束粒子字），VT_LANG=en 渲；
+#       英文版另需 r3d/seg_en/t.mp4（第 210–465 帧，标题粒子字）与 r3d/seg_en/c2.mp4（第 5890–6854 帧，收束粒子字＋金句段），VT_LANG=en 渲；
 #       cover/ 下已出 16:9 横版封面 thumb_16x9_<lang>.jpg（make_cover.py <选定方案> wide）。
 # 成片 = 片头 3 帧横版封面（0.1 s，docs/vibetennis.md §9）＋ 3D＋叠加层 ＋ BGM（vibeknowledge 库）与合成音效；中文版另加 TTS 配音与底部配音字幕（-14 LUFS / 真峰值 ≤ -1 dBTP）。
 HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-python3}"; L="${1:-zh}"; cd "$HERE"; mkdir -p sfx
 SLUG=vibetennis-federer-54-percent-2026; [ "$L" = en ] && SLUG=$SLUG-en
-ls r3d/seg/s*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
-OVR=""; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,4920:5400:r3d/seg_en/c.mp4"
-[ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L VT_OVERRIDE=$OVR "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 r3d/seg/s*.mp4.anchors.json 2>&1 | grep -v -i fontconfig
+SEG=${SEG:-seg2}   # 2026-11-01 二改：splice3d.sh 拼好的 r3d/seg2/p0..p8（帧号已是新时间轴）
+ls r3d/$SEG/p*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
+# 放大曲线那一段（新第 4110–4771 帧）用修过 setLine 的重渲覆盖：旧渲染里 S 曲线只露最左边一截（所有者 2026-11-01「这里没有曲线啊」）
+OVR="4110:4441:r3d/seg2/ch0.mp4,4441:4771:r3d/seg2/ch1.mp4"; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,$OVR,6181:7145:r3d/seg_en/c3.mp4"   # c3＝c2 帧号 +291：新时间轴 206.03–238.18（「这只是一分」＋新段 B 的粒子字），VT_LANG=en 渲
+[ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L VT_OVERRIDE=$OVR "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls r3d/$SEG/p*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
 # 音频：英文版＝BGM 铺底＋音效（sfx.py → sfx/sfx_bed.wav）；中文版另加 TTS 配音（voice.py → sfx/sfx_bed_zh.wav，人声 -16 / 音效 -22 / BGM -26 并 sidechain）
 [ -f sfx/final_$L.m4a ] || {
   [ -f sfx/sfx_bed.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
@@ -26,9 +28,9 @@ M=${SLUG}_master.mp4; P=${SLUG}_push.mp4
   -filter_complex "[0:v]scale=1920:1080,format=yuv420p,setsar=1[a];[1:v]format=yuv420p,setsar=1[b];[a][b]concat=n=2:v=1:a=0[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 30 -c:a copy -shortest -movflags +faststart "$M"
 # 两遍都钉 cfr 30：null 输出默认不补帧、mp4 会补，两遍帧数不一致就报「Incomplete MB-tree stats file」（2026-11-01 实测）
-# 推送版：H.264 High 1080p，两遍 7.3 Mbps（188 s ≈ 175 MB，≤ 200 MB），AAC 直接拷贝
-ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 7300k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
-ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7300k -maxrate 10000k -bufsize 14000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
+# 推送版：H.264 High 1080p，两遍 6.0 Mbps（2026-11-01 改版后 246 s ≈ 192 MB，≤ 200 MB；原 7.3 Mbps 会到 226 MB），AAC 直接拷贝
+ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 6000k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
+ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 6000k -maxrate 9000k -bufsize 12000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
 # 嵌入横版封面作为 attached_pic
 for f in "$M" "$P"; do
   src=$([ "$f" = "$P" ] && echo sfx/tmp_$L.mp4 || echo "$M")

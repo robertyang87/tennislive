@@ -77,6 +77,13 @@ JASA 96(454): 500–509（检索：Tilburg 大学、RePEc、Semantic Scholar 的
 
 - Seneta (2006)，讲马尔可夫 1906 年论文的史学文章（原文，PDF）：「chains first appear in his work in a paper of 1906 … when Markov was 50 years old」。
 - 大英百科、EBSCO（检索）给出了同样的年份和背景：为了反驳 Nekrasov 而写，把大数定律推广到相依的随机变量。
+- Seneta (2006) 第 3 页原文：「The paper is motivated by the need to construct a counterexample to what Markov interpreted as a claim in 1902 of P.A. Nekrasov … that pairwise independence of summands was necessary as well as sufficient for the WLLN to hold.」→ 片中「1906 年，有人断言：只有互不相干的事件，长期平均才会稳定；马尔可夫偏要证明一环扣一环的事件也可以」（WLLN＝弱大数定律，「长期平均才会稳定」是它的白话）。
+- **1913 年《叶甫盖尼·奥涅金》**（2026-11-01 改版新增，原文核过）：Markov, A. A. (1913) 英译 Link (2006)《An Example of Statistical Investigation of the Text Eugene Onegin Concerning the Connection of Samples in Chains》, *Science in Context* 19(4): 591–600（alpha60.de 公开 PDF，经 runner 抓取）。原文：「a text excerpt containing 20,000 Russian letters … excluding ъ and ь, from Pushkin's novel Eugene Onegin」；「p = 0.4319 = 0.432」；「vowel, vowel … 1104 … 1104/8638 = 0.128」；「7534/11,362 → 0.663」（原文写作 7534 ÷ 11,361 中的 7534，概率 0.663）。
+  - 片中上屏：前 **20,000** 个字母；元音后接元音 **12.8%**；辅音后接元音 **66.3%**；两团粒子 43.2% / 56.8%（元音 8,638 / 辅音 11,362）；另两条边 87.2%、33.7% 是 1 减去前两个数。
+  - 配音为口语取整：「八分之一左右」（12.8%）、「接近三分之二」（66.3%）。
+  - 独立第二源：英文维基百科 Andrey Markov 条目：「In 1913, he conducted a study on the distribution of vowels and consonants in the first 20,000 letters of Alexander Pushkin's Eugene Onegin」。
+  - 片中滚动的字母取自《奥涅金》第一章第一节开头（Мой дядя самых честных правил …），只作演示，按马尔可夫的口径不计 ъ ь。
+- **片尾 108,336 分**＝ UTS 生涯总分 236,038 − 赢分 127,702（第一节数字核对表那两行）。
 
 **把网球的一局建成「吸收型马尔可夫链」**：这是教科书级的标准建模。依据如下：
 - Kemeny & Snell《Finite Markov Chains》（1960）第 III 章「Absorbing Markov Chains」（检索）。
