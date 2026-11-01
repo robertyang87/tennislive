@@ -107,6 +107,11 @@ def test_视频id按YouTube和TennisTV认_认不出的不认领():
 
 # ------------------------------------------------------------------ probe 那一步
 
+def test_brightcove数字id的Release存档可识别():
+    url = "https://github.com/robertyang87/tennislive/releases/download/source-6407705092112/6407705092112.mp4"
+    assert probe_claims.video_key(url) == "6407705092112"
+    assert probe_claims.video_key(url.replace("6407705092112", "arbitrary-long-slug")) is None
+
 
 def test_probe开跑就往main上推认领_不碰当前分支和工作区(repo, monkeypatch, capsys):
     monkeypatch.chdir(repo.work)
