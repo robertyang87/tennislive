@@ -1,0 +1,724 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "322abd8c2f3341731b607c9190660883403e4b390bf1c1dcac33658b786a7e47",
+    "render_inputs_sha256": "3c8413c2702b945e145cab96290cb6898ce181a4b21349b69c687d990301681f",
+    "spec_sha256": "4f5d108f96203269fe4c3b0bc0712f7ec1c9fb390bf7b10064005b906c6b3efc",
+    "film_sha256": "1bb51e1b0c07f4d662331224fcc0cd1264ef82dde33a09599ac974673d0308e2",
+    "inventory_sha256": "53508d23541e0adb73aaa033a6b3b9ffcf8d9c4ad8b8485a59ac2477828268e0"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-01T19:13:55+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:048f0dd381799f96bdf480c87a51ecd2040e361404a86e7a583d5b0d79c200af",
+      "audio_sha256": "75cb39b9134527f3a056108cf88ad138ae6d8d0c8d93a6bae397b3e5ad5b2eb6",
+      "pass": true,
+      "result_of": "bundle:048f0dd381799f96bdf480c87a51ecd2040e361404a86e7a583d5b0d79c200af"
+    },
+    {
+      "id": "bundle:1e83825e505b701c8ad0de5bf504f3beb6db0916581e371d059f81c4670ed223",
+      "audio_sha256": "53132723fa733a6f0e0ed14ddaea0825e548005f1b4b46d76109dbaafa7513ee",
+      "pass": true,
+      "result_of": "bundle:1e83825e505b701c8ad0de5bf504f3beb6db0916581e371d059f81c4670ed223"
+    },
+    {
+      "id": "bundle:281c535adb3fcb17e774841b37bde7e36a2e8f994830e961eae635cb6d028d03",
+      "audio_sha256": "4a93029df386a060e83672429bff6ba66dd3fc33de8c9d2bd1f6baee0a533957",
+      "pass": true,
+      "result_of": "bundle:281c535adb3fcb17e774841b37bde7e36a2e8f994830e961eae635cb6d028d03"
+    },
+    {
+      "id": "bundle:3662c68a8daddf10e2ad1b767b02a39344aed28a0134aae1ed15f3eda6d948c4",
+      "audio_sha256": "24fded5c57f5fdb4875a4aed943e26d35632e0383f1829b82450a7ce2a373a48",
+      "pass": true,
+      "result_of": "bundle:3662c68a8daddf10e2ad1b767b02a39344aed28a0134aae1ed15f3eda6d948c4"
+    },
+    {
+      "id": "bundle:76528da968e2b325a15de85863413786ab91077758978cf6a24f80e41731efb0",
+      "audio_sha256": "a1561c8e0b155bb0da82083dd26ed20494b424d8430d90d3603ec44a325d5aed",
+      "pass": true,
+      "result_of": "bundle:76528da968e2b325a15de85863413786ab91077758978cf6a24f80e41731efb0"
+    },
+    {
+      "id": "bundle:8106b69250e2adaf239bf032f34776ab6039453d0e2a152f9dee5a0fe82ba839",
+      "audio_sha256": "92fde190cfe1731b627a1885e84ca286d34e88c022abd55c7245353cdef0d720",
+      "pass": true,
+      "result_of": "bundle:8106b69250e2adaf239bf032f34776ab6039453d0e2a152f9dee5a0fe82ba839"
+    },
+    {
+      "id": "bundle:95077e1ab36d2dab670e8d76858cebf97857941359e81f0839891fbd4f61c62c",
+      "audio_sha256": "e639775c565b15301e7d58f6191ca2fe2651c4ebc5a8456f63508ecc108bb0e5",
+      "pass": true,
+      "result_of": "bundle:95077e1ab36d2dab670e8d76858cebf97857941359e81f0839891fbd4f61c62c"
+    },
+    {
+      "id": "bundle:a59a37d793aa8e33688fa3dbed4243c9367beab8ad18574e2d61840528455a6b",
+      "audio_sha256": "3ac7b3f790f04c8b464606070e462ce90af06f70ea960621a7bfed31bd2de19a",
+      "pass": true,
+      "result_of": "bundle:a59a37d793aa8e33688fa3dbed4243c9367beab8ad18574e2d61840528455a6b"
+    },
+    {
+      "id": "bundle:b678e28460f394b2c5bc413a73a8b321ebbf0b445da6983337df78163c20484e",
+      "audio_sha256": "ac9b08cb8b60fd1bfbd90d28e63ebc4818b566edbb991522d6c2bfa72e7eec84",
+      "pass": true,
+      "result_of": "bundle:b678e28460f394b2c5bc413a73a8b321ebbf0b445da6983337df78163c20484e"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "1defae34861bea2b8d779a299a432bc3ac212c2c4ebfecf3729d2ecd951cb5c1",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c21ac3a16afec1658894ce3b327486e44695bae4e2103360981f2977275c9611",
+      "audio_sha256": "7bf023971fe9321453319840ff3e3b23a030402ca64c82a7579b5392110dd4f2",
+      "pass": true,
+      "result_of": "bundle:c21ac3a16afec1658894ce3b327486e44695bae4e2103360981f2977275c9611"
+    },
+    {
+      "id": "bundle:c6cf42a7c595b0b71d89096cf34b54c7bf01c233763aa920bd30b560afc44029",
+      "audio_sha256": "786e99c563979dd0caf649a2b885724fa78c2e8dcc42d61464c64238a0085d7e",
+      "pass": true,
+      "result_of": "bundle:c6cf42a7c595b0b71d89096cf34b54c7bf01c233763aa920bd30b560afc44029"
+    },
+    {
+      "id": "bundle:cd5a6b7efd439e4551871146a0567263ddfd80107c4aed1ca12c9399831b37ef",
+      "audio_sha256": "576a3c9845506ca7d434a036eb6bceab2e7b5e4d4970aea8635f3505a4129a92",
+      "pass": true,
+      "result_of": "bundle:cd5a6b7efd439e4551871146a0567263ddfd80107c4aed1ca12c9399831b37ef"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "24fded5c57f5fdb4875a4aed943e26d35632e0383f1829b82450a7ce2a373a48",
+      "pass": true,
+      "result_of": "bundle:3662c68a8daddf10e2ad1b767b02a39344aed28a0134aae1ed15f3eda6d948c4"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "92fde190cfe1731b627a1885e84ca286d34e88c022abd55c7245353cdef0d720",
+      "pass": true,
+      "result_of": "bundle:8106b69250e2adaf239bf032f34776ab6039453d0e2a152f9dee5a0fe82ba839"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "a1561c8e0b155bb0da82083dd26ed20494b424d8430d90d3603ec44a325d5aed",
+      "pass": true,
+      "result_of": "bundle:76528da968e2b325a15de85863413786ab91077758978cf6a24f80e41731efb0"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "7bf023971fe9321453319840ff3e3b23a030402ca64c82a7579b5392110dd4f2",
+      "pass": true,
+      "result_of": "bundle:c21ac3a16afec1658894ce3b327486e44695bae4e2103360981f2977275c9611"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "786e99c563979dd0caf649a2b885724fa78c2e8dcc42d61464c64238a0085d7e",
+      "pass": true,
+      "result_of": "bundle:c6cf42a7c595b0b71d89096cf34b54c7bf01c233763aa920bd30b560afc44029"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "e639775c565b15301e7d58f6191ca2fe2651c4ebc5a8456f63508ecc108bb0e5",
+      "pass": true,
+      "result_of": "bundle:95077e1ab36d2dab670e8d76858cebf97857941359e81f0839891fbd4f61c62c"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "53132723fa733a6f0e0ed14ddaea0825e548005f1b4b46d76109dbaafa7513ee",
+      "pass": true,
+      "result_of": "bundle:1e83825e505b701c8ad0de5bf504f3beb6db0916581e371d059f81c4670ed223"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "576a3c9845506ca7d434a036eb6bceab2e7b5e4d4970aea8635f3505a4129a92",
+      "pass": true,
+      "result_of": "bundle:cd5a6b7efd439e4551871146a0567263ddfd80107c4aed1ca12c9399831b37ef"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "3ac7b3f790f04c8b464606070e462ce90af06f70ea960621a7bfed31bd2de19a",
+      "pass": true,
+      "result_of": "bundle:a59a37d793aa8e33688fa3dbed4243c9367beab8ad18574e2d61840528455a6b"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "ac9b08cb8b60fd1bfbd90d28e63ebc4818b566edbb991522d6c2bfa72e7eec84",
+      "pass": true,
+      "result_of": "bundle:b678e28460f394b2c5bc413a73a8b321ebbf0b445da6983337df78163c20484e"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "75cb39b9134527f3a056108cf88ad138ae6d8d0c8d93a6bae397b3e5ad5b2eb6",
+      "pass": true,
+      "result_of": "bundle:048f0dd381799f96bdf480c87a51ecd2040e361404a86e7a583d5b0d79c200af"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "4a93029df386a060e83672429bff6ba66dd3fc33de8c9d2bd1f6baee0a533957",
+      "pass": true,
+      "result_of": "bundle:281c535adb3fcb17e774841b37bde7e36a2e8f994830e961eae635cb6d028d03"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "1defae34861bea2b8d779a299a432bc3ac212c2c4ebfecf3729d2ecd951cb5c1",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:048f0dd381799f96bdf480c87a51ecd2040e361404a86e7a583d5b0d79c200af",
+      "text": "上海之后，再捧冠军。你是从上海，还是巴塞尔记住他的？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "上海之后,再捧冠军。你是从上海,还是巴塞尔记住他的?"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": -0.022,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.578,
+        "cps": 3.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "上海 ｜ 之后 ｜ 再 ｜ 捧 ｜ 冠军 ｜ 你 ｜ 是 ｜ 从 ｜ 上海 ｜ 还是 ｜ 巴塞尔 ｜ 记住 ｜ 他 ｜ 的"
+      }
+    },
+    {
+      "id": "bundle:1e83825e505b701c8ad0de5bf504f3beb6db0916581e371d059f81c4670ed223",
+      "text": "决赛，对面是莱赫奇卡。不到一个月前，他在东京刚输给过这个对手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛对面是莱赫奇卡。不到一个月前,他在东京刚输给过这个对手。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 5.495,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对面 ｜ 是 ｜ 莱赫奇卡 ｜ 不 ｜ 到 ｜ 一个月 ｜ 前 ｜ 他 ｜ 在 ｜ 东京 ｜ 刚 ｜ 输 ｜ 给 ｜ 过 ｜ 这个 ｜ 对手"
+      }
+    },
+    {
+      "id": "bundle:281c535adb3fcb17e774841b37bde7e36a2e8f994830e961eae635cb6d028d03",
+      "text": "上海夺冠一年后，他在巴塞尔再捧杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "上海夺冠一年后,他在巴塞尔在捧碑。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.007,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "上海 ｜ 夺冠 ｜ 一 ｜ 年 ｜ 后 ｜ 他 ｜ 在 ｜ 巴塞尔 ｜ 再 ｜ 捧杯"
+      }
+    },
+    {
+      "id": "bundle:3662c68a8daddf10e2ad1b767b02a39344aed28a0134aae1ed15f3eda6d948c4",
+      "text": "去年上海，世界第二百零四的瓦舍罗，从资格赛一路赢到大师赛冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.036,
+        "longest_deletion": 0,
+        "transcript": "去年上海,世界第204的瓦舍罗从资格赛一路引导大师赛冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.33,
+        "cps": 5.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 上海 ｜ 世界 ｜ 第二百零四 ｜ 的 ｜ 瓦舍罗 ｜ 从 ｜ 资格赛 ｜ 一路 ｜ 赢到 ｜ 大师 ｜ 赛 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:76528da968e2b325a15de85863413786ab91077758978cf6a24f80e41731efb0",
+      "text": "到了巴塞尔，先过纳沃内。六比三，七比六，拿下首轮。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "到了巴塞尔、先国纳沃内, 6比3,7比6,拿下手轮。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 20,
+        "speech_s": 4.882,
+        "cps": 4.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "到 ｜ 了 ｜ 巴塞尔 ｜ 先 ｜ 过 ｜ 纳沃内 ｜ 六比三 ｜ 七比六 ｜ 拿下 ｜ 首轮"
+      }
+    },
+    {
+      "id": "bundle:8106b69250e2adaf239bf032f34776ab6039453d0e2a152f9dee5a0fe82ba839",
+      "text": "此后在巴黎打进8强，今年在蒙卡打进4强。随后左脚受伤，法网第二轮赛前退赛，也错过温网。复出以后，他又在东京打进4强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "此后在巴黎打进八强,今年在蒙卡打进四强。随后左脚受伤,发往第二轮赛前退赛,也错过温网。复述以后,他又在东京打进四强。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.792,
+        "cps": 4.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "此后 ｜ 在 ｜ 巴黎 ｜ 打 ｜ 进 ｜ 8 ｜ 强 ｜ 今年 ｜ 在 ｜ 蒙卡 ｜ 打 ｜ 进 ｜ 4 ｜ 强 ｜ 随后 ｜ 左 ｜ 脚 ｜ 受伤 ｜ 法网 ｜ 第二轮 ｜ 赛 ｜ 前 ｜ 退赛 ｜ 也 ｜ 错过 ｜ 温网 ｜ 复出 ｜ 以后 ｜ 他 ｜ 又 ｜ 在 ｜ 东京 ｜ 打 ｜ 进 ｜ 4 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:95077e1ab36d2dab670e8d76858cebf97857941359e81f0839891fbd4f61c62c",
+      "text": "半决赛，再过弗里茨。上海之后，瓦舍罗又打进了巡回赛决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "半决赛,再过弗里茨。上海之后,瓦舍罗又打进了循回赛决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.554,
+        "cps": 4.32,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 再 ｜ 过弗里茨 ｜ 上海 ｜ 之后 ｜ 瓦舍罗 ｜ 又 ｜ 打进 ｜ 了 ｜ 巡回 ｜ 赛 ｜ 决赛"
+      }
+    },
+    {
+      "id": "bundle:a59a37d793aa8e33688fa3dbed4243c9367beab8ad18574e2d61840528455a6b",
+      "text": "这次破发让他拉开差距。六比三，瓦舍罗把比赛带进决胜盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 24,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这次破发,让他拉开差距。6比3,瓦舍罗把比赛,带进决胜盘。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 24,
+        "speech_s": 5.401,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这次 ｜ 破发 ｜ 让 ｜ 他 ｜ 拉开 ｜ 差距 ｜ 六 ｜ 比 ｜ 三 ｜ 瓦舍罗 ｜ 把 ｜ 比赛 ｜ 带 ｜ 进 ｜ 决胜盘"
+      }
+    },
+    {
+      "id": "bundle:b678e28460f394b2c5bc413a73a8b321ebbf0b445da6983337df78163c20484e",
+      "text": "决胜盘开局破发后，他守住了领先。最后一步，还要赢下冠军点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决胜盘开局破发后,他守住了灵线。最后一步还要赢下冠军点。"
+      },
+      "polyphones": [
+        {
+          "index": 6,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 21,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.313,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.649,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘开局 ｜ 破发 ｜ 后 ｜ 他 ｜ 守 ｜ 住 ｜ 了 ｜ 领先 ｜ 最后 ｜ 一 ｜ 步 ｜ 还要 ｜ 赢 ｜ 下 ｜ 冠军 ｜ 点"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.231,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c21ac3a16afec1658894ce3b327486e44695bae4e2103360981f2977275c9611",
+      "text": "第二轮，两次抢七都拿下。瓦舍罗，三盘闯过霍达尔。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二轮,两次抢七斗拿下。瓦舍罗三盘闯过霍达尔。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 20,
+        "speech_s": 4.859,
+        "cps": 4.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二 ｜ 轮 ｜ 两次 ｜ 抢 ｜ 七都 ｜ 拿下 ｜ 瓦舍罗 ｜ 三盘 ｜ 闯 ｜ 过 ｜ 霍达尔"
+      }
+    },
+    {
+      "id": "bundle:c6cf42a7c595b0b71d89096cf34b54c7bf01c233763aa920bd30b560afc44029",
+      "text": "对鲁内，首盘拿下，又被追平。十个破发点，他化解了九个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "对鲁内,手盘拿下,右北追一平。十个破发点,他化解了九个。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.425,
+        "cps": 4.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "对 ｜ 鲁内 ｜ 首盘 ｜ 拿下 ｜ 又 ｜ 被 ｜ 追 ｜ 平 ｜ 十个 ｜ 破发 ｜ 点 ｜ 他 ｜ 化解 ｜ 了 ｜ 九个"
+      }
+    },
+    {
+      "id": "bundle:cd5a6b7efd439e4551871146a0567263ddfd80107c4aed1ca12c9399831b37ef",
+      "text": "首盘二比六落后。第二盘，他先稳住发球，再去争取机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘2比6落后。第二盘,他先稳住发球,再去争取机会。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.31,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.147,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 16,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 5.248,
+        "cps": 4.19,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 二比六 ｜ 落后 ｜ 第二 ｜ 盘 ｜ 他 ｜ 先 ｜ 稳住 ｜ 发球 ｜ 再 ｜ 去 ｜ 争取 ｜ 机会"
+      }
+    }
+  ]
+}

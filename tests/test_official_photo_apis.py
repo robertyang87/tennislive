@@ -412,7 +412,7 @@ def test_是不是决赛_看顶栏和轮次():
 #: 历史抽帧状态由 cover_upgrades 账本中的 previous_portrait 单独回放。
 PRECROPPED_FRAMES = {"shi-tagger-guangzhou-2026-qf", "cerundolo-zhou-chengdu-2026-r1",
                      "shang-mannarino-chengdu-2026-r1", "tabilo-mannarino-chengdu-2026-r2",
-                     "vacherot-harris-chengdu-2026-r2", "vacherot-basel-title-story-2026"}
+                     "vacherot-harris-chengdu-2026-r2"}
 
 
 def test_预裁进仓库的抽帧_O4认得出_官方实拍的一张都不误认():

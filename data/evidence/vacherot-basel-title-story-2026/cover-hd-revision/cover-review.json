@@ -1,0 +1,53 @@
+{
+  "status": "native_hd_photo_cover_reviewed_ready_for_rerender",
+  "publication_approved": false,
+  "owner_requirement": "封面必须要找高清大图啊",
+  "source_original_dimensions": [
+    8099,
+    5399
+  ],
+  "source_asset_sha256": "12710daf13f75808c7c617445946fb5e106b0d8744a4503cd7b1b14a71b2ed83",
+  "source_asset_bytes": 8814490,
+  "source_asset": "assets/reel/vacherot-basel-2026-trophy-ap.jpg",
+  "source_page": "https://apnews.com/article/vacherot-lehecka-swiss-indoors-basel-f3daa5e5c244b2a564310190aaa64343",
+  "spec_sha256": "bf562071d04838aa71a52800789651fc80dd59a52bd9f3574bf83119e3732dcd",
+  "native_poster_sha256": "6ba9091a0d4342dbdf4d9b020876f68704c34d165031436e1e86d9607fa9ac3f",
+  "native_poster": "data/evidence/vacherot-basel-title-story-2026/cover-hd-revision/poster-preview.jpg",
+  "render_method": "Existing resolve_cover_payload + versus_poster native Chromium renderer, same template/fonts/brand and actual original JPEG. Native command-line render_cover_local on selected spec also completed.",
+  "geometry": {
+    "fit": "cover",
+    "zoom": 1.4,
+    "focus": 0.5,
+    "focus_y": 0,
+    "pixel_display_scale": 0.37340248194110015,
+    "upscaled": false
+  },
+  "actual_visual_review": {
+    "reviewers": [
+      "root",
+      "independent cover agent"
+    ],
+    "opened_original_and_native_poster": true,
+    "observations": [
+      "AP原生摄影，Nikon Z9，Georgios Kefalas/Keystone via AP，IPTC及正文图注均指本日巴塞尔冠军捧杯",
+      "瓦舍罗正面微笑，双眼和面部清楚；所有人的眼至下巴均避开标题",
+      "双手、冠军杯双柄、杯身和底座完整保留",
+      "两行标题保持原文、完整可读，第二行略贴杯盖饰件；不影响杯主体辨认",
+      "照片铺满1080×1440，不铺虚化/留空条"
+    ]
+  },
+  "unchanged_body": {
+    "segments": 21,
+    "source_windows": 11,
+    "all_narration_requests": 13,
+    "subtitles_and_timing": "unchanged",
+    "full_championship_point_and_real_trophy_video": "preserved"
+  },
+  "history": "Prior rendered outputs and exact old spec preserved in prior-render-1bb51e1b before requested cover revision. Old frame census entry removed because this is now genuine photography; old sent ledger remains, old pushed marker removed for real new-film repush.",
+  "pending": [
+    "native film rerender",
+    "new film hash-bound QC and automated voice suite",
+    "current-head CI",
+    "merge and actual new PushPlus receipt"
+  ]
+}
