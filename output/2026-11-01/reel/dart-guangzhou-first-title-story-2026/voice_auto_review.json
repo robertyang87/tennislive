@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "ba76321e8b4b8fabc29537fc2b4de49920646ca91b9874a61af3a86188d3d7b0",
-    "render_inputs_sha256": "94096d478cd38ca32f327fc0ee0a88a3fcb3feeae97f3968b8f837d63d7a3543",
-    "spec_sha256": "745015de778b23cf4c96624eebf05d38287854e1fccd8c5aa788d33f677544e6",
-    "film_sha256": "86a1770b7a0d462d61dcd33ae169c0cadae176a3dfb475c9338ee7295a8a67c5",
+    "render_sha256": "8bc834969d1ec7ec1d21d3f6fc250cecf86f55340b3e4058c45818a115ca50a0",
+    "render_inputs_sha256": "879ebff99d3425da58a637ed83d856cca8f9163d6d4efe83d3edf8b735f08bd3",
+    "spec_sha256": "ed4b6382118d36b51a71492a546120c86a3fdd76dd2f8efcccaa079fa99a2760",
+    "film_sha256": "f53357313746892d59e05b119265ed0527eac40e456831ca9a21619d00b775d2",
     "inventory_sha256": "9c5cf851a0c787cea066e217905186b8a33a47f8e35ebe31b9980c3e0e3bdf22"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-01T13:35:48+00:00",
+  "reviewed_at": "2026-11-01T14:23:34+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -318,7 +318,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 1,
-        "transcript": "可是,网上走的日子并不连续。2015年的脚伤让他修占了大约半年。2016年,宽布又受伤,对名还在建立职业生涯的球员来说,他需要先重新回到球场。"
+        "transcript": "可是网上走的日子并不连续,2015年的脚伤让它修占了大约半年,2016年宽布又受伤,对名还在建立职业生涯的球员来说,它需要先重新回到球场。"
       },
       "polyphones": [
         {
@@ -335,7 +335,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.421,
+              "score": 0.407,
               "confidence": "medium",
               "near": null
             }
@@ -356,7 +356,7 @@
             {
               "wrong": "zhong4",
               "verdict": "unreliable",
-              "score": 0.217,
+              "score": 0.358,
               "confidence": null,
               "near": null
             }
@@ -393,7 +393,7 @@
         "substituted": 1,
         "sub_ratio": 0.015,
         "longest_deletion": 0,
-        "transcript": "她在采访里说,大约十三岁时开始认真想做职业球员。2011年,她出站职业赛事,2014年,拿到第一座低级别职业赛单打冠军。4年,第一次站上循回赛单打正赛。"
+        "transcript": "她在采访里说,大约十三岁时,开始认真想做职业球员。2011年,她出站职业赛事,2014年,拿到第一座低级别职业赛单打冠军。4年,第一次站上循回赛单打正赛。"
       },
       "polyphones": [],
       "pauses": {
@@ -457,7 +457,7 @@
         "substituted": 2,
         "sub_ratio": 0.033,
         "longest_deletion": 0,
-        "transcript": "第二年,她又从澳网资格赛打起。这次,手轮打了将近三个小时,她逆转土居美笑,拿到澳网正在手上。一年前一局未得的球场,她终于带走了一场胜利。"
+        "transcript": "第二年,她又从澳网资格赛打起。这次,首轮打了将近三个小时,她逆转土居美笑,拿到澳网正在手上。一年前一局未得的球场,她终于带走了一场胜利。"
       },
       "polyphones": [
         {
@@ -515,14 +515,14 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "correct",
-              "score": 0.999,
-              "confidence": "high",
-              "near": "intended"
+              "verdict": "uncertain",
+              "score": -0.045,
+              "confidence": null,
+              "near": null
             }
           ],
           "ok_refs": "孩骸"
@@ -602,7 +602,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "正赛手轮﹑三盘﹑第二轮﹑三盘﹑四分之一决赛对巴多萨还是三盘,等他战上决赛,已经连赢六场。对他来说,这一周的难度藏在每一场都要重新开始的决胜盘里。"
+        "transcript": "正赛首轮﹑三盘﹑第二轮﹑三盘﹑四分之一决赛对巴多萨还是三盘,等他站上决赛,已经连赢六场。对他来说,这一周的难度藏在每一场都要重新开始的决胜盘里。"
       },
       "polyphones": [
         {
@@ -619,8 +619,8 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.381,
-              "confidence": "low",
+              "score": 0.414,
+              "confidence": "medium",
               "near": null
             }
           ],
@@ -635,13 +635,13 @@
             "zhong4"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "zhong4",
-              "verdict": "correct",
-              "score": 0.694,
-              "confidence": "medium",
+              "verdict": "unreliable",
+              "score": 0.254,
+              "confidence": null,
               "near": null
             }
           ],
@@ -677,7 +677,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2024年,变化继续发生。1月,他在堪培拉的125级赛事,拿到丹达亚军。2月,在克鲁日第一次收获巡回赛丹达四强成绩。他越来越接近决赛,但还没有到。"
+        "transcript": "2024年变化继续发生。1月,他在堪培拉的125级赛事拿到丹达亚军。2月,在克鲁日第一次收获巡回赛丹达四强成绩。他越来越接近决赛,但还没有到。"
       },
       "polyphones": [
         {
@@ -706,7 +706,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.323,
+              "score": 0.306,
               "confidence": "low",
               "near": null
             }
@@ -760,7 +760,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.992,
+              "score": 0.985,
               "confidence": "high",
               "near": "intended"
             }
@@ -846,7 +846,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.437,
+              "score": 0.393,
               "confidence": "medium",
               "near": null
             }
@@ -883,7 +883,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "哈利亚特、达特出生在伦敦汉普斯特德。七岁时,他在家附近的坎波兰草地网球俱乐部开始打球。爸爸妈妈也在那里相识。他的网球故事有一个很生活化的起点。"
+        "transcript": "哈利亚特·达特出生在伦敦汉普斯特德。七岁时,他在家附近的坎波兰草地网球俱乐部开始打球。爸爸妈妈也在那里相识。他的网球故事有一个很生活化的起点。"
       },
       "polyphones": [],
       "pauses": {
@@ -964,7 +964,7 @@
             {
               "wrong": "dang1",
               "verdict": "correct",
-              "score": 0.404,
+              "score": 0.464,
               "confidence": "low",
               "near": null
             }
@@ -1033,7 +1033,7 @@
         "substituted": 1,
         "sub_ratio": 0.015,
         "longest_deletion": 0,
-        "transcript": "半决赛,他面对16岁的中国姑娘孙心然。先输5比7,第二盘4比5,又轮到自己发球。孙心然两次在评分后战先,拿到赛脸。达特先后就回两个。这一分是其中的第一次。"
+        "transcript": "半决赛,他面对16岁的中国姑娘孙心然,先输5比7,第二盘4比5,又轮到自己发球。孙心然两次在评分后战先,拿到赛脸,达特先后就回两个。这一分是其中的第一次。"
       },
       "polyphones": [
         {
@@ -1096,7 +1096,7 @@
             {
               "wrong": "de2",
               "verdict": "uncertain",
-              "score": 0.117,
+              "score": 0.061,
               "confidence": null,
               "near": null
             }
@@ -1117,7 +1117,7 @@
             {
               "wrong": "hai2",
               "verdict": "misread",
-              "score": -0.491,
+              "score": -0.431,
               "confidence": "medium",
               "near": null
             }
@@ -1186,7 +1186,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那时她接受采访,说自己过去长音一场失利,难受好几个星期。后来,她学着把眼光放回每天的工作,一直努力却等不到结果,已经是她非常熟悉的经历。"
+        "transcript": "那时她接受采访,说自己过去长音一场失利,难受好几个星期。后来,她学着把眼光放回每天的工作。一直努力,却等不到结果,已经是她非常熟悉的经历。"
       },
       "polyphones": [],
       "pauses": {
@@ -1235,15 +1235,15 @@
           "runs": [
             {
               "wrong": "la4",
-              "verdict": "correct",
-              "score": 0.273,
-              "confidence": "low",
+              "verdict": "uncertain",
+              "score": 0.103,
+              "confidence": null,
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "uncertain",
-              "score": 0.124,
+              "score": -0.012,
               "confidence": null,
               "near": null
             }
@@ -1280,7 +1280,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决胜盘5比4,达特发球,40比15。这是他的第三个冠军点。先把前两个没兑现的机会放下。再发一球,再借一次来球。这一次,终于轮到他。"
+        "transcript": "决胜盘5比4、达特发球40比15。这是他的第三个冠军点。先把前两个没兑现的机会放下。再发一球,再借一次来球。这一次,终于轮到他。"
       },
       "polyphones": [
         {
@@ -1337,7 +1337,7 @@
         "substituted": 1,
         "sub_ratio": 0.016,
         "longest_deletion": 1,
-        "transcript": "决赛对面的塔格尔只有18岁,已经拿过巡回赛单打冠军。达特30岁,第一次打仗的决赛。先输4比6,再以6比3追回。他又一次,要在第三盘里争取结果。"
+        "transcript": "决赛对面的塔格尔,只有十八岁,已经拿过巡回赛单打冠军。达特三十岁,第一次打仗的决赛。先输四比六,再以六比三追回。他又一次,要在第三盘里争取结果。"
       },
       "polyphones": [],
       "pauses": {
@@ -1369,7 +1369,7 @@
         "substituted": 1,
         "sub_ratio": 0.017,
         "longest_deletion": 0,
-        "transcript": "2019年澳王,22岁的达特联营三场资格赛,终于走进正赛。对面是他欣赏多年的莎拉波娃。他第一次来到澳王正赛的结果,却是2个0比6。"
+        "transcript": "2019年澳王,22岁的达特联赢三场资格赛,终于走进正赛。对面是他欣赏多年的莎拉波娃。他第一次来到澳王正赛的结果,却是2个0比6。"
       },
       "polyphones": [],
       "pauses": {
