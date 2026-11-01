@@ -75,8 +75,8 @@
       "focus_y": 0.24,
       "zoom": 1,
       "source_url": "https://photoresources.wtatennis.com/wta/photo/2026/11/01/4f484e5b-74ed-45d2-b8e8-760e4f6d162d/Diana-Shnaider-Tokyo-2026.jpg",
-      "_frame_why": "本场官方相机实拍4078×2719，11月1日14:50:02当地拍摄，WTA当天决赛稿及冠军奖盘互证，不是转播抽帧。",
-      "_portrait_why": "用户点名捧杯时刻；以亲吻冠军奖盘的完整情绪动作收束。闭眼是主动亲吻奖盘的自然动作，非抓拍眨眼；人物身份、对焦和奖盘均明确。正式渲染仍须核验脸部与文字安全区。"
+      "_portrait_why": "用户点名捧杯时刻；以亲吻冠军奖盘的完整情绪动作收束。闭眼是主动亲吻奖盘的自然动作，非抓拍眨眼；人物身份、对焦和奖盘均明确。正式渲染仍须核验脸部与文字安全区。",
+      "_photo_source_why": "本场官方相机实拍4078×2719，11月1日14:50:02当地拍摄，WTA当天决赛稿及冠军奖盘互证，不是转播抽帧。"
     },
     "scoreboard": {
       "court": "Center Court",
@@ -496,7 +496,8 @@
     "lead": "第二盘4比0领先，却被费尔南德斯拖进决胜盘。施奈德从0比40保住发球局，2比2后连赢4局，最终6-4、5-7、6-2夺冠。回顾三场晋级之路，重点保留决赛转折、完整赛点与捧杯。",
     "matchup": "施奈德 vs 费尔南德斯",
     "score": "6-4 5-7 6-2",
-    "event": "WTA500 东京 决赛"
+    "event": "WTA500 东京 决赛",
+    "_no_auto_why": "本期先在制作分支渲染并完成成片QC与当前head CI，合并main后立即手动mode=push；避免分支成片在复制页上线前发送，不等待额外确认。"
   },
   "_heat_why": "用户明确点名本届夺冠复盘；施奈德世界第13，东京WTA500冠军。",
   "_ending_payoff_required": true,
@@ -772,5 +773,30 @@
     "second_set": "4-0context;full4-1breakback157.8-186.8;counterrally186.92-205.9;5-5breakpointandsetpoint206.16-241.64",
     "deciding_set": "complete0-40passingpoint241.64-254.0;verified3savedBPand2-2four-gamerunfact;fullmatchpoint255.88-305.8",
     "trophy": "actualacceptance,kissandlift527.48-541.92"
-  }
+  },
+  "_hit_data": [
+    {
+      "kind": "break_conversion",
+      "winner": "6/8",
+      "loser": "4/12",
+      "source": "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches/LS001/stats"
+    },
+    {
+      "kind": "winners_unforced_errors",
+      "winner": [
+        26,
+        19
+      ],
+      "loser": [
+        41,
+        35
+      ],
+      "source": "data/evidence/shnaider-fernandez-tokyo-2026-final/winners-ue-derived.json"
+    },
+    {
+      "kind": "decider_turning_point",
+      "description": "首次发球局0-40连救三个破发点，2-2后连赢4局。",
+      "source": "https://www.wtatennis.com/news/4602333/shnaider-survives-fernandez-fightback-to-win-sixth-career-crown-in-tokyo"
+    }
+  ]
 }
