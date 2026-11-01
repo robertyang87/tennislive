@@ -1,0 +1,58 @@
+{
+  "method": "automated source ASR cross-check with targeted large-v3-turbo review; not human listening",
+  "changes_to_original_full_source_asr": false,
+  "cases": [
+    {
+      "source": "MTEwygrmhvk",
+      "window": [
+        321.8,
+        335.3
+      ],
+      "issue": "Both full-clip English models hallucinated entire clauses/counting in applause. Targeted VAD English transcription resolves The test passed for Carlos Alcaraz.",
+      "evidence": "sf-turbo.json"
+    },
+    {
+      "source": "-aWA_dfZdpY",
+      "window": [
+        478.7,
+        484.45
+      ],
+      "issue": "medium.en merges previous clause week for the American with But sentence; targeted words show previous sentence ends478.04, new sentence starts478.94.",
+      "evidence": "tokyo25-turbo.json"
+    },
+    {
+      "source": "sm_1Aj5lesU",
+      "window": [
+        464.1,
+        468.4
+      ],
+      "issue": "small.en gives long gap before He; medium.en and short VAD model agree first actual next word468.74/468.84. Entire ceremonywindow has no foreground English.",
+      "evidence": "tokyo26-turbo.json"
+    },
+    {
+      "source": "WHKHtg2bIQQ",
+      "window": [
+        293.2,
+        322.05
+      ],
+      "issue": "Proper names and How is the defence there misrecognised as That was a deep inch; targeted short VAD model and small.en agree defensive question; proper name from source players and official facts.",
+      "evidence": "final-bp-turbo.json"
+    },
+    {
+      "source": "WHKHtg2bIQQ",
+      "window": [
+        408.3,
+        418.65
+      ],
+      "issue": "medium.en trailing her420.26-423.12 is unsupported by small.en; actual Vienna champion for the first time ends418.38; next A virtuoso performance begins423.12. Keep complete championship call."
+    },
+    {
+      "source": "5vvb2iyvNxs",
+      "window": [
+        177.1,
+        188.7
+      ],
+      "issue": "small.en merges He went the wrong way repeated with next point Got him again at193.64. medium.en separates repeated complete sentences to188.38. No next-point speech selected."
+    }
+  ]
+}

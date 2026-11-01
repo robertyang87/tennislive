@@ -191,6 +191,10 @@ def _gate(why: str, read_by: str, where: str | tuple[str, ...] = (),
 #: 渲染/质检路径上被读、但**只进闸不进成片**的 `_` 键（raise 或 print）。
 #: 值不进指纹；闸读它的那个位置上算数的，重核对时必须仍然算数（见模块 docstring）。
 GATE_ANNOTATIONS: dict[str, Gate] = {
+    "_trim_top_why": _gate("_seg_picture_edits：上边裁切的几何及用户依据，仅做校验",
+                           "_seg_picture_edits", "segments[]._trim_top_why"),
+    "_visual_end_why": _gate("_seg_picture_edits：真实尾帧定格、原声保留的依据，仅做校验",
+                             "_seg_picture_edits", "segments[]._visual_end_why"),
     "_stats_availability_why": _gate(
         "team_exhibition_scope.video_without_tour_stats：实际团体表演赛缺巡回赛统计的说明，"
         "只控制备片校验，不控制画面；自动发布仍须统计合同",

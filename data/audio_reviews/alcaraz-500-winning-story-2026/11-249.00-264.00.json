@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-vI40Uo0zDuk/vI40Uo0zDuk.mp4",
+  "source_sha256": "68d274fb6156780327d632488cb284bad78f039042f69f56d709c6430ea66187",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 249.0,
+  "reviewed_to": 264.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 257.84,
+      "end": 260.6,
+      "en": "It's a match that lived up to the billing",
+      "zh": "这场比赛不负期待，"
+    },
+    {
+      "start": 260.6,
+      "end": 263.7,
+      "en": "when the tournament draw was announced.",
+      "zh": "正如签表公布时大家所盼。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 68d274fb6156780327d632488cb284bad78f039042f69f56d709c6430ea66187，存于 data/source_asr/vI40Uo0zDuk/small.en.json 与 data/source_asr/vI40Uo0zDuk/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。"
+}

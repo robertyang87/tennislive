@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-5vvb2iyvNxs/5vvb2iyvNxs.mp4",
+  "source_sha256": "6e1e209ca8e28ab7667c253ecdaa589d711820e2b954eebb755535e3e8d6aad9",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: source full small.en/medium.en cross-check; ambiguous SF and timing gaps additionally resolved using large-v3-turbo short-window transcription. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:07:22+00:00",
+  "reviewed_from": 177.1,
+  "reviewed_to": 188.7,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 184.78,
+      "end": 186.25,
+      "en": "He went the wrong way!",
+      "zh": "他判断错了方向！"
+    },
+    {
+      "start": 186.25,
+      "end": 188.4,
+      "en": "He went the wrong way!",
+      "zh": "他判断错了方向！"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 6e1e209ca8e28ab7667c253ecdaa589d711820e2b954eebb755535e3e8d6aad9，存于 data/source_asr/5vvb2iyvNxs/small.en.json 与 data/source_asr/5vvb2iyvNxs/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 额外短窗转写及模型全文保存在data/story_research/alcaraz-500-winning-story-2026/。"
+}

@@ -1,0 +1,21 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source--aWA_dfZdpY/-aWA_dfZdpY.mp4",
+  "source_sha256": "a9de42853c952ad8c10d7eba27dd56b39b6d42403ca9bbda7c60b00a876d3eb5",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 478.7,
+  "reviewed_to": 484.45,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 478.94,
+      "end": 484.3,
+      "en": "But it is Carlos celebrating in the Colosseum at Ariake.",
+      "zh": "此刻，在有明庆祝的是卡洛斯。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 a9de42853c952ad8c10d7eba27dd56b39b6d42403ca9bbda7c60b00a876d3eb5，存于 data/source_asr/-aWA_dfZdpY/small.en.json 与 data/source_asr/-aWA_dfZdpY/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。",
+  "asr_timing_correction": "Previous sentence ends478.04, actual But sentence begins478.94. Video freezes at482.8 while the same original audio sentence finishes484.3."
+}

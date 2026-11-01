@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-m7gaabLa0Y4/m7gaabLa0Y4.mp4",
+  "source_sha256": "ef7b11664d8af2c3df108140c59840b6438c187bae870e6aab5c9920710b0002",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 464.95,
+  "reviewed_to": 471.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 465.68,
+      "end": 470.96,
+      "en": "Your 2025 champion, Carlos Alcaraz!",
+      "zh": "2025年冠军，阿尔卡拉斯！"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 ef7b11664d8af2c3df108140c59840b6438c187bae870e6aab5c9920710b0002，存于 data/source_asr/m7gaabLa0Y4/small.en.json 与 data/source_asr/m7gaabLa0Y4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。"
+}

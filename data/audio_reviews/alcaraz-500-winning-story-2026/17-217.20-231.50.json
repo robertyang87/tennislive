@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-7PZ_Jt0XEbI/7PZ_Jt0XEbI.mp4",
+  "source_sha256": "b6dbdba7e9990ab373b8b7335f4cd8a7f4442a80a8b1fa61c37a8874fed5edde",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 217.2,
+  "reviewed_to": 231.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 217.72,
+      "end": 219.12,
+      "en": "Oh!",
+      "zh": "噢！"
+    },
+    {
+      "start": 227.86,
+      "end": 231.1,
+      "en": "Another test for Carlos Alcaraz, which he passes.",
+      "zh": "又一道考验，阿尔卡拉斯过关。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 b6dbdba7e9990ab373b8b7335f4cd8a7f4442a80a8b1fa61c37a8874fed5edde，存于 data/source_asr/7PZ_Jt0XEbI/small.en.json 与 data/source_asr/7PZ_Jt0XEbI/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。"
+}

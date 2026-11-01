@@ -3128,6 +3128,10 @@ class Segment:
     # Explicit top-level source_crop claim, copied at parse time. Native geometry,
     # not an upscale/conform declaration and not a per-segment spec field.
     native_crop: dict | None = None
+    # Explicit source-pixel header trim for landscape picture-area footage.
+    trim_top: int = 0
+    # Stop the visual before a source end card while original speech finishes.
+    visual_end: float | None = None
 
     @property
     def length(self) -> float:
@@ -3322,6 +3326,24 @@ def _seg_gain_db(s: dict, index: int) -> float:
         raise ReelError(f"第 {index + 1} 段同时写了 mute 和 gain_db——mute 已把"
                         "现场声压到地板，增益对它没有意义；二选一")
     return v
+
+
+def _seg_picture_edits(s: dict, index: int) -> tuple[int, float | None]:
+    top = s.get("trim_top", 0)
+    if isinstance(top, bool) or not isinstance(top, int) or not 0 <= top <= 256 or top % 2:
+        raise ReelError(f"第 {index + 1} 段 trim_top 须为0~256的偶数源像素")
+    if top and (s.get("fit") not in {"contain", "full_source"}
+                or s.get("image") or not str(s.get("_trim_top_why") or "").strip()
+                or s.get("score_inset") or s.get("source_scorebox")):
+        raise ReelError("trim_top 只用于无回贴的横幅图片区，须说明裁切依据")
+    stop = s.get("visual_end")
+    if stop is not None:
+        if (isinstance(stop, bool) or not isinstance(stop, (int, float))
+                or not math.isfinite(stop) or s.get("image") or s.get("visual_image")
+                or not float(s.get("start", 0)) < stop < float(s.get("end", 0))
+                or s.get("speed", 1) != 1 or not str(s.get("_visual_end_why") or "").strip()):
+            raise ReelError("visual_end 须在原声窗内，保持原速，并说明真实画面定格的依据")
+    return top, stop
 
 
 def _seg_audio_tail(s: dict, index: int) -> str:
@@ -3789,6 +3811,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
         return tuple(result)
 
     def _one(s: dict, i: int) -> Segment:
+        trim_top, visual_end = _seg_picture_edits(s, i)
         if "title_card_story_label" in s and not s.get("title_card"):
             raise ReelError(f"第 {i + 1} 段 title_card_story_label 只能用于 title_card 段")
         if s.get("visual_image"):
@@ -3876,6 +3899,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        contain_keep=_seg_contain_keep(s, i),
                        crop_zoom=_seg_crop_zoom(s, i),
                        visual_image=str(s.get("visual_image") or ""),
+                       trim_top=trim_top, visual_end=visual_end,
                        native_crop=native_crops.get(str(s.get("source", primary))))
 
     segments = [replace(_one(s, i), subtitle_bottom=_seg_subtitle_bottom(s, i),
@@ -4202,7 +4226,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
                 "score_inset_windows", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
-                "kind", "kicker", "track", "transition", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image"),
+                "kind", "kicker", "track", "transition", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image", "trim_top", "visual_end"),
 }
 
 
@@ -5170,16 +5194,19 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         keep = (native_w if seg.fit == "full_source"
                 else contain_keep_width(native_w, seg.contain_keep))
         x = (native_w - keep) // 2
+        picture_h = native_h - seg.trim_top
+        if picture_h <= 0 or (seg.trim_top and (native_w < native_h or seg.score_inset or seg.source_scorebox)):
+            raise ReelError("trim_top 不得切空画面或改变记分条回贴坐标")
         if seg.source_scorebox:
             bx0, by0, bx1, by1 = seg.source_scorebox
             if not (x <= bx0 < bx1 <= x + keep and 0 <= by0 < by1 <= native_h):
                 raise ReelError("source_scorebox 原板超出真实源画面取景，不能免回贴")
         chain = (
             f"split=2[bg][fg];"
-            f"[bg]crop={keep}:{native_h}:{x}:0,"
+            f"[bg]crop={keep}:{picture_h}:{x}:{seg.trim_top},"
             f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
             f"crop={VIDEO_W}:{VIDEO_H},drawbox=color=0x{_EVIDENCE_TOKENS['background'].lstrip('#')}:t=fill[bgb];"
-            f"[fg]crop={keep}:{native_h}:{x}:0,"
+            f"[fg]crop={keep}:{picture_h}:{x}:{seg.trim_top},"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
             f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
@@ -5375,6 +5402,15 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 认领了 conform 的源：放大裁边前置到这条链最前面，只处理这一段用到的几秒
     # （`conform_sources` 不再落盘整条中间文件）。
     chain = conform_prefilter(source) + chain
+    if seg.visual_end is not None:
+        body = seg.visual_end - seg.start
+        hold = seg.end - seg.visual_end + tail + .1
+        source_fps_expr, source_fps = resolve_fps(source)
+        # Reset timestamps after cloning: some source frames carry zero duration,
+        # so tpad alone repeats their PTS and a later fps filter drops the hold.
+        chain = (f"trim=end_frame={math.ceil(body * source_fps - 1e-7)},"
+                 f"tpad=stop_mode=clone:stop={math.ceil(hold * source_fps)},"
+                 f"setpts=N/({source_fps_expr}*TB)," + chain)
     if seg.tail_hold and tail:
         # 源片在段尾之后不够溶解底料：定格最后一帧补足，`-t` 照旧截到 length+tail
         chain += f",tpad=stop_mode=clone:stop_duration={seg.tail_hold + 0.1:.3f}"
