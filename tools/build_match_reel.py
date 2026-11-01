@@ -3816,9 +3816,15 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                 if not s.get("_photo_caption_safety") or not str(s.get("_photo_source", "")).startswith("https://"):
                     raise ReelError("全屏照片必须记录来源与字幕不遮主体的目视依据")
                 from PIL import Image
-                with Image.open(s["image"]) as photo:
-                    if photo.width * VIDEO_H != photo.height * VIDEO_W:
-                        raise ReelError("全屏照片必须先按画布比例裁切，不许拉伸")
+                if Path(s["image"]).suffix.lower() == ".mp4":
+                    # Photo sequences use the existing silent image-movie
+                    # path; keep the same provenance and geometry contract.
+                    photo_w, photo_h = probe_size(Path(s["image"]))
+                else:
+                    with Image.open(s["image"]) as photo:
+                        photo_w, photo_h = photo.size
+                if photo_w * VIDEO_H != photo_h * VIDEO_W:
+                    raise ReelError("全屏照片必须先按画布比例裁切，不许拉伸")
             # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
             # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
             stray = sorted(set(s) & {"start", "end", "source", "track",

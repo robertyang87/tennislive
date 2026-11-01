@@ -195,7 +195,9 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
     headline_y = start + lead
     proof_y = headline_y + title_h + proof_gap
     if photo:
-        start = 118 if h >= 1200 else 80
+        # Respect the same top safe area as other card content. The former
+        # 118px photo override collided with the story watermark subtitle.
+        start = top + (16 if h >= 1200 else 0)
         headline_y = start + lead
         photo_top = headline_y + title_h + 40
         photo_h = bottom - photo_top - (58 if c["photo"].get("result") else 0)

@@ -1,6 +1,8 @@
 """A requested full-frame photo is distinct from a readable evidence card."""
 import sys
 from pathlib import Path
+import shutil
+import subprocess
 
 import pytest
 from PIL import Image
@@ -30,3 +32,30 @@ def test_photo_fills_canvas_but_evidence_keeps_subtitle_guard(tmp_path):
     Image.new('RGB', (1080, 1080)).save(path)
     with pytest.raises(reel.ReelError, match='不许拉伸'):
         reel.parse_segments(spec, {'main': 'url'}, 'main')
+
+
+def test_photo_movie_preserves_canvas_and_requires_the_same_safety(tmp_path):
+    if not shutil.which('ffmpeg'):
+        pytest.skip('ffmpeg unavailable')
+    path = tmp_path / 'photos.mp4'
+    def movie(size):
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i',
+                        f'color=c=blue:s={size}:r=25', '-frames:v', '2',
+                        '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(path)], check=True)
+    movie('1080x1440')
+    raw = {'image': str(path), 'image_kind': 'photo', 'seconds': 4,
+           'narration': '真实照片依次出现。', '_photo_source': 'https://example.org/gallery',
+           '_photo_caption_safety': 'Faces and trophies above caption; header reserved.'}
+    parsed = reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')[0]
+    assert parsed.full_bleed
+    command = []
+    reel.cut_still_segment(parsed, tmp_path / 'part.mp4',
+                           command_sink=lambda *args: command.extend(args))
+    assert 'scale=1080:1440' in command[command.index('-vf') + 1]
+    del raw['_photo_source']
+    with pytest.raises(reel.ReelError, match='来源'):
+        reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')
+    raw['_photo_source'] = 'https://example.org/gallery'
+    movie('1080x1080')
+    with pytest.raises(reel.ReelError, match='不许拉伸'):
+        reel.parse_segments({'segments': [raw]}, {'main': 'url'}, 'main')
