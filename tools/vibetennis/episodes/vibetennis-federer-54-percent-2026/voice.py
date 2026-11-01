@@ -50,7 +50,8 @@ def phrases(text, words, t0):
     return out
 
 sched, prev = [], 0.0
-total = int(238 * SR); V = np.zeros((total, 2))
+total = int((sf.info("sfx/sfx_only.wav").duration + 1) * SR)   # 跟着音效床走，不再写死片长
+V = np.zeros((total, 2))
 for i, l in enumerate(L):
     fn = l.get("file", f"n{i:02d}")
     wb = [w for w in json.load(open(f"voice/{fn}.json")) if w["type"] == "WordBoundary"]
