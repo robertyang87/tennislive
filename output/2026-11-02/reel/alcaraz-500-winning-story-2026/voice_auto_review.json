@@ -1,0 +1,997 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "cb34dc00ab819fbec9d482d71ed7c2f54f5296dbadf2c7e186eacd0717339965",
+    "render_inputs_sha256": "bbd2d1c588ebd25286f0904c7116332dba3032f358a219109a3ce396a496e341",
+    "spec_sha256": "6cc242e63759aa0c0bf44dc13bf1b53e775d0b9cb20f67b919fbe6abe4038d33",
+    "film_sha256": "d357f7457b54b919c31be743670554ab05a57a6a5366e5c1a18e6d5e5cd8282b",
+    "inventory_sha256": "b12cce557c8a279c61a98a82f4ec946ca6899e9f251c28f542b6f3e9f8a8f6a6"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-01T17:44:23+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0c7b505f6366e18528956b6321500333525b62aeb14d0b3953447034804ed11b",
+      "audio_sha256": "612ed9c1c0c57a7e456d8c74904671f8b66d64fa61ec8a80940df16bed0c6191",
+      "pass": true,
+      "result_of": "bundle:0c7b505f6366e18528956b6321500333525b62aeb14d0b3953447034804ed11b"
+    },
+    {
+      "id": "bundle:0e4bfea54ea36b07a986e9b88bbb4d7a4506d3be861e069b20eae91b76ae5258",
+      "audio_sha256": "9d1b02baefe476dd7be59abb3349b0c6a8611fcfef12dc48ece4ade288447097",
+      "pass": true,
+      "result_of": "bundle:0e4bfea54ea36b07a986e9b88bbb4d7a4506d3be861e069b20eae91b76ae5258"
+    },
+    {
+      "id": "bundle:27a53098d45193c2021c9979878d503ad891bfe7b2a11137c5f1ab4d9c2b7793",
+      "audio_sha256": "c2d006e934ad7bfd2ec5e6b24289d9fb5c972317e7561db85dcf3f7dd2f5a91b",
+      "pass": true,
+      "result_of": "bundle:27a53098d45193c2021c9979878d503ad891bfe7b2a11137c5f1ab4d9c2b7793"
+    },
+    {
+      "id": "bundle:2b27d763d05159c3ce2133bd3e36b14eeff59ad9b959e76db84b2855060815e4",
+      "audio_sha256": "809a98a25edf074d877b3ce2ce7e2b81cc547c3b748c8debb8ff1069c334540b",
+      "pass": true,
+      "result_of": "bundle:2b27d763d05159c3ce2133bd3e36b14eeff59ad9b959e76db84b2855060815e4"
+    },
+    {
+      "id": "bundle:58e44464599f065196dddd6136d76e33a99df11543fa9ebe241afbe96692a770",
+      "audio_sha256": "881f901449287314c39ff23b6efbf7e002caafdbe80cde074e69363b46456ded",
+      "pass": true,
+      "result_of": "bundle:58e44464599f065196dddd6136d76e33a99df11543fa9ebe241afbe96692a770"
+    },
+    {
+      "id": "bundle:735ebf4d1caec0b4fb23ddb519f89cb39bd8fadb77845109d10f7fc7736c1a1e",
+      "audio_sha256": "b5500af0340f8cdde9ef1e5bbf95794e9448ac8ed48b230d55565139e53d0ead",
+      "pass": true,
+      "result_of": "bundle:735ebf4d1caec0b4fb23ddb519f89cb39bd8fadb77845109d10f7fc7736c1a1e"
+    },
+    {
+      "id": "bundle:80fa0f0da93f7c881f8ebea4e6bb4a5863d8740c21253b23ca98ad207aa87300",
+      "audio_sha256": "3b3652657013a8119cd98247b12e53a0220610ee12a484d93ffecada110bc8d5",
+      "pass": true,
+      "result_of": "bundle:80fa0f0da93f7c881f8ebea4e6bb4a5863d8740c21253b23ca98ad207aa87300"
+    },
+    {
+      "id": "bundle:858591352c129603eb2d7820aa08ac45a0e978a440c15e706983668b8fd5dec9",
+      "audio_sha256": "52ac6fd5c894b388a071625caf4607a80a541d520a3de82e9afd46aeec3dca2e",
+      "pass": true,
+      "result_of": "bundle:858591352c129603eb2d7820aa08ac45a0e978a440c15e706983668b8fd5dec9"
+    },
+    {
+      "id": "bundle:97334bb4e9fadc225f9acc06b01b1654aabd0334ad85c625c82b257a1c7f963d",
+      "audio_sha256": "e5b5a93c2377c2ab8e1b10217b4a4e00ee002e784b2b14bbb3d3e85b75369f75",
+      "pass": true,
+      "result_of": "bundle:97334bb4e9fadc225f9acc06b01b1654aabd0334ad85c625c82b257a1c7f963d"
+    },
+    {
+      "id": "bundle:a5597208b354a8f666de073f74a0aa63071730ca4dd05816523a9abd4462c4ed",
+      "audio_sha256": "e1c0e93aee9edbf52521be62bcacefea70b39cd23322d38440a9cfff554f0f24",
+      "pass": true,
+      "result_of": "bundle:a5597208b354a8f666de073f74a0aa63071730ca4dd05816523a9abd4462c4ed"
+    },
+    {
+      "id": "bundle:aec4c8ad2f654faaa23ab1a0c7329ffdb39089d8a86b523f80ffa0d78c11b50d",
+      "audio_sha256": "d28e5f39b04bb3ec8c2381e0b0b73f3bce538b7ce9dcb1ddd4a76af57979ed48",
+      "pass": true,
+      "result_of": "bundle:aec4c8ad2f654faaa23ab1a0c7329ffdb39089d8a86b523f80ffa0d78c11b50d"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c4e6bb8025950944a4ae39910be1721c37eb2415fefbeb4e787d3235c026d817",
+      "audio_sha256": "dc08cc53e93d16b7fd90acd4018813e6f05436258bfd8b562dc12a3d614edb9c",
+      "pass": true,
+      "result_of": "bundle:c4e6bb8025950944a4ae39910be1721c37eb2415fefbeb4e787d3235c026d817"
+    },
+    {
+      "id": "bundle:c94941c7bde088448858ffb1eee3a3b096697b3a755a08e828d731fe055dfd69",
+      "audio_sha256": "46724ff48c60d7e754f3d66081ab3b84acffb91e3663b69c0185497505b1ea03",
+      "pass": true,
+      "result_of": "bundle:c94941c7bde088448858ffb1eee3a3b096697b3a755a08e828d731fe055dfd69"
+    },
+    {
+      "id": "bundle:d9e26eab0c7b18d67a67f5f27fd55830f0048fe6444e47489d30d68584440632",
+      "audio_sha256": "6c747866f9fdf1e274f4bb0274426c9e5699914cf90c1073067bf3ab2072a2a2",
+      "pass": true,
+      "result_of": "bundle:d9e26eab0c7b18d67a67f5f27fd55830f0048fe6444e47489d30d68584440632"
+    },
+    {
+      "id": "bundle:f2c7c5eef19d3cc858fbe3f39e83077a2625698b995886135a83206f113d849d",
+      "audio_sha256": "c4667154bd309fc9792f940c13a69db0467dd776098fcf6caf8b9c59a89ad6f9",
+      "pass": true,
+      "result_of": "bundle:f2c7c5eef19d3cc858fbe3f39e83077a2625698b995886135a83206f113d849d"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "6c747866f9fdf1e274f4bb0274426c9e5699914cf90c1073067bf3ab2072a2a2",
+      "pass": true,
+      "result_of": "bundle:d9e26eab0c7b18d67a67f5f27fd55830f0048fe6444e47489d30d68584440632"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "d28e5f39b04bb3ec8c2381e0b0b73f3bce538b7ce9dcb1ddd4a76af57979ed48",
+      "pass": true,
+      "result_of": "bundle:aec4c8ad2f654faaa23ab1a0c7329ffdb39089d8a86b523f80ffa0d78c11b50d"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "881f901449287314c39ff23b6efbf7e002caafdbe80cde074e69363b46456ded",
+      "pass": true,
+      "result_of": "bundle:58e44464599f065196dddd6136d76e33a99df11543fa9ebe241afbe96692a770"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "e1c0e93aee9edbf52521be62bcacefea70b39cd23322d38440a9cfff554f0f24",
+      "pass": true,
+      "result_of": "bundle:a5597208b354a8f666de073f74a0aa63071730ca4dd05816523a9abd4462c4ed"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "52ac6fd5c894b388a071625caf4607a80a541d520a3de82e9afd46aeec3dca2e",
+      "pass": true,
+      "result_of": "bundle:858591352c129603eb2d7820aa08ac45a0e978a440c15e706983668b8fd5dec9"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "3b3652657013a8119cd98247b12e53a0220610ee12a484d93ffecada110bc8d5",
+      "pass": true,
+      "result_of": "bundle:80fa0f0da93f7c881f8ebea4e6bb4a5863d8740c21253b23ca98ad207aa87300"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "612ed9c1c0c57a7e456d8c74904671f8b66d64fa61ec8a80940df16bed0c6191",
+      "pass": true,
+      "result_of": "bundle:0c7b505f6366e18528956b6321500333525b62aeb14d0b3953447034804ed11b"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "e5b5a93c2377c2ab8e1b10217b4a4e00ee002e784b2b14bbb3d3e85b75369f75",
+      "pass": true,
+      "result_of": "bundle:97334bb4e9fadc225f9acc06b01b1654aabd0334ad85c625c82b257a1c7f963d"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "c2d006e934ad7bfd2ec5e6b24289d9fb5c972317e7561db85dcf3f7dd2f5a91b",
+      "pass": true,
+      "result_of": "bundle:27a53098d45193c2021c9979878d503ad891bfe7b2a11137c5f1ab4d9c2b7793"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "dc08cc53e93d16b7fd90acd4018813e6f05436258bfd8b562dc12a3d614edb9c",
+      "pass": true,
+      "result_of": "bundle:c4e6bb8025950944a4ae39910be1721c37eb2415fefbeb4e787d3235c026d817"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "46724ff48c60d7e754f3d66081ab3b84acffb91e3663b69c0185497505b1ea03",
+      "pass": true,
+      "result_of": "bundle:c94941c7bde088448858ffb1eee3a3b096697b3a755a08e828d731fe055dfd69"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "9d1b02baefe476dd7be59abb3349b0c6a8611fcfef12dc48ece4ade288447097",
+      "pass": true,
+      "result_of": "bundle:0e4bfea54ea36b07a986e9b88bbb4d7a4506d3be861e069b20eae91b76ae5258"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "b5500af0340f8cdde9ef1e5bbf95794e9448ac8ed48b230d55565139e53d0ead",
+      "pass": true,
+      "result_of": "bundle:735ebf4d1caec0b4fb23ddb519f89cb39bd8fadb77845109d10f7fc7736c1a1e"
+    },
+    {
+      "id": "voice_25.mp3",
+      "audio_sha256": "809a98a25edf074d877b3ce2ce7e2b81cc547c3b748c8debb8ff1069c334540b",
+      "pass": true,
+      "result_of": "bundle:2b27d763d05159c3ce2133bd3e36b14eeff59ad9b959e76db84b2855060815e4"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "c4667154bd309fc9792f940c13a69db0467dd776098fcf6caf8b9c59a89ad6f9",
+      "pass": true,
+      "result_of": "bundle:f2c7c5eef19d3cc858fbe3f39e83077a2625698b995886135a83206f113d849d"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0c7b505f6366e18528956b6321500333525b62aeb14d0b3953447034804ed11b",
+      "text": "第二轮对巴西拉什维利，首盘六比一，第二盘却要救四个盘点。抢七六比七落后，这一分轮到他发球。盘分还领先，危险已经来了。他要先救回盘点，再争取结束比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 65,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.015,
+        "longest_deletion": 0,
+        "transcript": "第二轮对巴西拉什维利,手盘六比一,第二盘却要救四的盘点。抢七六比七落后,这一分轮到他发球。盘分海领先,危险已经来了。他要先救回盘点,再争取结束比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.307,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.249,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 42,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 47,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.264,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 65,
+        "speech_s": 14.186,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二轮 ｜ 对 ｜ 巴西拉什维利 ｜ 首盘 ｜ 六比一 ｜ 第二盘 ｜ 却 ｜ 要 ｜ 救 ｜ 四个 ｜ 盘点 ｜ 抢七六比七 ｜ 落后 ｜ 这 ｜ 一 ｜ 分 ｜ 轮 ｜ 到 ｜ 他 ｜ 发球 ｜ 盘 ｜ 分 ｜ 还 ｜ 领先 ｜ 危险 ｜ 已经 ｜ 来 ｜ 了 ｜ 他 ｜ 要 ｜ 先 ｜ 救 ｜ 回 ｜ 盘点 ｜ 再 ｜ 争取 ｜ 结束 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:0e4bfea54ea36b07a986e9b88bbb4d7a4506d3be861e069b20eae91b76ae5258",
+      "text": "第二盘，德米纳尔在第二、第四、第八局，都救过破发点。第八局，比分回到平分。他还在争取把局分追成四平。阿卡想要拿走冠军，必须再赢下一次这样的拉锯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘,德米纳尔在第二、第四、第八局都就过破发点。第八局,比分回到平分。他还在争取,把局分追成四平。阿卡想要拿走冠军,必须再赢下一次这样的拉具。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 38,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.367,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 13.998,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 德米纳尔 ｜ 在 ｜ 第二 ｜ 第四 ｜ 第八局 ｜ 都 ｜ 救 ｜ 过 ｜ 破发 ｜ 点 ｜ 第八局 ｜ 比分 ｜ 回到 ｜ 平分 ｜ 他 ｜ 还 ｜ 在 ｜ 争取 ｜ 把 ｜ 局分 ｜ 追 ｜ 成 ｜ 四平 ｜ 阿卡 ｜ 想 ｜ 要 ｜ 拿 ｜ 走 ｜ 冠军 ｜ 必须 ｜ 再 ｜ 赢 ｜ 下 ｜ 一次 ｜ 这样 ｜ 的 ｜ 拉锯"
+      }
+    },
+    {
+      "id": "bundle:27a53098d45193c2021c9979878d503ad891bfe7b2a11137c5f1ab4d9c2b7793",
+      "text": "接下来是保罗。对手拿到五个破发点，一个都没能兑现。阿卡六比四、七比六过关。守住的五次机会，也让他把连胜带进半决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "接下来是宝罗。对手拿到五个破发点,一个都没能兑现。阿卡6比4,7比6过关。守住的五次机会,也让他把连胜带进半决赛。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 11.616,
+        "cps": 4.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "接下来 ｜ 是 ｜ 保罗 ｜ 对手 ｜ 拿 ｜ 到 ｜ 五个 ｜ 破发 ｜ 点 ｜ 一个 ｜ 都 ｜ 没 ｜ 能 ｜ 兑现 ｜ 阿卡 ｜ 六比 ｜ 四 ｜ 七比六 ｜ 过关 ｜ 守 ｜ 住 ｜ 的 ｜ 五次 ｜ 机会 ｜ 也 ｜ 让 ｜ 他 ｜ 把 ｜ 连胜 ｜ 带 ｜ 进 ｜ 半决赛"
+      }
+    },
+    {
+      "id": "bundle:2b27d763d05159c3ce2133bd3e36b14eeff59ad9b959e76db84b2855060815e4",
+      "text": "从去年的女王杯，到今天维也纳。五次捧杯，二十六连胜。今年十六胜零负，第十一座五百赛冠军。你更佩服他的进攻，还是关键时刻守住自己的能力？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "从去年的女王碑到今天为也那。五次捧碑,二十六年胜。今年十六胜领赴,第十一座五百赛冠军。你更佩服他的进攻,还是关键时刻守住自己的能力。"
+      },
+      "polyphones": [
+        {
+          "index": 53,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.612,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 13.927,
+        "cps": 4.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 去年 ｜ 的 ｜ 女王 ｜ 杯 ｜ 到 ｜ 今天 ｜ 维也纳 ｜ 五次 ｜ 捧杯 ｜ 二十六 ｜ 连胜 ｜ 今年 ｜ 十六 ｜ 胜 ｜ 零 ｜ 负 ｜ 第十一座 ｜ 五百 ｜ 赛 ｜ 冠军 ｜ 你 ｜ 更 ｜ 佩服 ｜ 他 ｜ 的 ｜ 进攻 ｜ 还是 ｜ 关键 ｜ 时刻 ｜ 守 ｜ 住 ｜ 自己 ｜ 的 ｜ 能力"
+      }
+    },
+    {
+      "id": "bundle:58e44464599f065196dddd6136d76e33a99df11543fa9ebe241afbe96692a770",
+      "text": "来到二零二六年，多哈决赛，他以六比二、六比一战胜菲斯。又是五场胜利，又是一座五百赛冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "来到二零二六年,多哈决赛,他以6比2、6比1战胜非私。又是无场胜利,又是一座五百赛冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.326,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "来到 ｜ 二零二六年 ｜ 多哈 ｜ 决赛 ｜ 他 ｜ 以 ｜ 六比二 ｜ 六比一 ｜ 战胜 ｜ 菲斯 ｜ 又是 ｜ 五场 ｜ 胜利 ｜ 又是 ｜ 一 ｜ 座 ｜ 五百 ｜ 赛 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:735ebf4d1caec0b4fb23ddb519f89cb39bd8fadb77845109d10f7fc7736c1a1e",
+      "text": "德米纳尔随后守住了这一局。阿卡随后保发，五比四。再次接发时，对手从三十比零领先，连丢三分。阿卡第一次拿到冠军点。小球、挑高球、再回到底线，这一分，奖杯要靠最后一次对抗挣出来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 75,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "德米纳尔随后守住了这一局。阿卡随后爆发,无比四。再一次揭发时,对手从30比0领先,连丢三分。阿卡第一次拿到冠军点。小球、挑高球,再回到底线,这一分,奖杯要靠最后一次对抗挣出来。"
+      },
+      "polyphones": [
+        {
+          "index": 18,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 27,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 75,
+        "speech_s": 17.5,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德米纳尔 ｜ 随后 ｜ 守 ｜ 住 ｜ 了 ｜ 这 ｜ 一 ｜ 局 ｜ 阿卡 ｜ 随后 ｜ 保 ｜ 发 ｜ 五比四 ｜ 再次 ｜ 接 ｜ 发 ｜ 时 ｜ 对手 ｜ 从 ｜ 三十比零 ｜ 领先 ｜ 连 ｜ 丢 ｜ 三分 ｜ 阿卡 ｜ 第一次 ｜ 拿 ｜ 到 ｜ 冠军 ｜ 点 ｜ 小球 ｜ 挑高 ｜ 球 ｜ 再 ｜ 回到 ｜ 底线 ｜ 这 ｜ 一 ｜ 分 ｜ 奖杯 ｜ 要 ｜ 靠 ｜ 最后一次 ｜ 对抗 ｜ 挣 ｜ 出来"
+      }
+    },
+    {
+      "id": "bundle:80fa0f0da93f7c881f8ebea4e6bb4a5863d8740c21253b23ca98ad207aa87300",
+      "text": "可维也纳这一周，比全胜两个字惊险得多。前四场，每一场的第二盘，都要靠抢七结束。首轮对哈恰诺夫，第二盘五比四，阿卡错过三个赛点，反被破发。他随后回破，才把比赛带进抢七。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 72,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可维也纳这一周比全胜两个字惊险得多。前四场,每一场的第二盘都要靠抢7结束。首轮队哈恰诺夫,第二盘5比4,阿卡错过三个赛点,反被破发。他随后回破,才把比赛带进抢7。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 66,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 72,
+        "speech_s": 16.887,
+        "cps": 4.26,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 维也纳 ｜ 这 ｜ 一周 ｜ 比 ｜ 全胜 ｜ 两个 ｜ 字 ｜ 惊险 ｜ 得 ｜ 多 ｜ 前 ｜ 四场 ｜ 每 ｜ 一 ｜ 场 ｜ 的 ｜ 第二盘 ｜ 都 ｜ 要 ｜ 靠 ｜ 抢 ｜ 七 ｜ 结束 ｜ 首轮 ｜ 对 ｜ 哈恰诺夫 ｜ 第二盘 ｜ 五 ｜ 比 ｜ 四 ｜ 阿卡 ｜ 错过 ｜ 三个 ｜ 赛点 ｜ 反 ｜ 被 ｜ 破发 ｜ 他 ｜ 随后 ｜ 回 ｜ 破 ｜ 才 ｜ 把 ｜ 比赛 ｜ 带 ｜ 进 ｜ 抢七"
+      }
+    },
+    {
+      "id": "bundle:858591352c129603eb2d7820aa08ac45a0e978a440c15e706983668b8fd5dec9",
+      "text": "十月回到东京，他再次五战夺冠。多哈五胜，巴塞罗那一胜，东京五胜，再加这周维也纳五胜，才是今年十六胜零负的完整口径。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "10月回到东京,他再次武战夺冠。多哈武圣、巴塞罗那医圣、东京武圣,再加这周围野那武圣,才是今年16圣领赋的完整口径。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 11.085,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月 ｜ 回到 ｜ 东京 ｜ 他 ｜ 再次 ｜ 五 ｜ 战 ｜ 夺冠 ｜ 多哈 ｜ 五 ｜ 胜 ｜ 巴塞罗那 ｜ 一 ｜ 胜 ｜ 东京 ｜ 五 ｜ 胜 ｜ 再 ｜ 加 ｜ 这 ｜ 周 ｜ 维也纳 ｜ 五 ｜ 胜 ｜ 才是 ｜ 今年 ｜ 十六 ｜ 胜 ｜ 零 ｜ 负 ｜ 的 ｜ 完整 ｜ 口径"
+      }
+    },
+    {
+      "id": "bundle:97334bb4e9fadc225f9acc06b01b1654aabd0334ad85c625c82b257a1c7f963d",
+      "text": "从七平，一路打到十三比十一。阿卡直到第四个赛点才拿下比赛。全场没有丢盘，和全场没有危险，完全是两回事。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "从七平一路达到十三比十一,阿卡之道第四个赛点才拿下比赛。全场没有丢盘和全场没有威胁,完全是两回事。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 9.8,
+        "cps": 4.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 七平 ｜ 一路 ｜ 打 ｜ 到 ｜ 十三比 ｜ 十一 ｜ 阿卡 ｜ 直到 ｜ 第四个 ｜ 赛点 ｜ 才 ｜ 拿下 ｜ 比赛 ｜ 全场 ｜ 没有 ｜ 丢盘 ｜ 和 ｜ 全场 ｜ 没有 ｜ 危险 ｜ 完全 ｜ 是 ｜ 两回事"
+      }
+    },
+    {
+      "id": "bundle:a5597208b354a8f666de073f74a0aa63071730ca4dd05816523a9abd4462c4ed",
+      "text": "这里要说清一个区别。四月的巴塞罗那，他首轮获胜后，因为右手腕伤势，退出第二轮。那一胜仍然计入战绩，赛前退赛不算一场已赛失利。所以，全胜指打过的比赛，不代表每次参赛都拿冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 76,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "这里要说经一个区别。四月的巴塞罗娜,她手轮获胜后,因为又手万伤势退出第二轮。那一胜,仍然记录战技,赛前退赛不算一场以赛失利。所以,全胜只打过的比赛,不代表每次参赛都拿冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 76,
+        "speech_s": 16.568,
+        "cps": 4.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这里 ｜ 要 ｜ 说 ｜ 清 ｜ 一个 ｜ 区别 ｜ 四月 ｜ 的 ｜ 巴塞罗那 ｜ 他 ｜ 首轮 ｜ 获胜 ｜ 后 ｜ 因为 ｜ 右 ｜ 手腕 ｜ 伤势 ｜ 退出 ｜ 第二轮 ｜ 那 ｜ 一 ｜ 胜 ｜ 仍然 ｜ 计 ｜ 入 ｜ 战绩 ｜ 赛 ｜ 前 ｜ 退赛 ｜ 不 ｜ 算 ｜ 一 ｜ 场 ｜ 已 ｜ 赛 ｜ 失利 ｜ 所以 ｜ 全胜 ｜ 指 ｜ 打 ｜ 过 ｜ 的 ｜ 比赛 ｜ 不 ｜ 代表 ｜ 每次 ｜ 参赛 ｜ 都 ｜ 拿 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:aec4c8ad2f654faaa23ab1a0c7329ffdb39089d8a86b523f80ffa0d78c11b50d",
+      "text": "去年，女王杯和东京，他连续两站五战全胜。十场胜利，两座奖杯。换了城市，换了场地，这条连胜还没有停下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "去年,女王碑和东京,他连续两战五战全胜,十场胜利,两座奖碑,换了城市,换了场地,这条连胜还没有停下。"
+      },
+      "polyphones": [
+        {
+          "index": 44,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.197,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 10.33,
+        "cps": 4.07,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 女王 ｜ 杯 ｜ 和 ｜ 东京 ｜ 他 ｜ 连续 ｜ 两站 ｜ 五 ｜ 战 ｜ 全胜 ｜ 十场 ｜ 胜利 ｜ 两座 ｜ 奖杯 ｜ 换 ｜ 了 ｜ 城市 ｜ 换 ｜ 了 ｜ 场地 ｜ 这 ｜ 条 ｜ 连胜 ｜ 还 ｜ 没有 ｜ 停下"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c4e6bb8025950944a4ae39910be1721c37eb2415fefbeb4e787d3235c026d817",
+      "text": "半决赛，梅德韦杰夫带着七连胜而来。今年印第安维尔斯，他曾终结阿卡的赛季不败。室内再相遇，阿卡四次争取破发，三次成功，又在第二盘抢七，以七比二收下比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 66,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.03,
+        "longest_deletion": 0,
+        "transcript": "半决赛,梅德韦杰夫带着七连胜而来。今年印第安威尔斯,他曾终极阿卡的赛季不败。室内在相遇,阿卡四四争取破发,三次成功,又在第二盘抢期,以7比2收下比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 51,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 66,
+        "speech_s": 14.163,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 梅德韦杰夫 ｜ 带 ｜ 着 ｜ 七 ｜ 连胜 ｜ 而 ｜ 来 ｜ 今年 ｜ 印第安维尔斯 ｜ 他 ｜ 曾 ｜ 终结 ｜ 阿卡 ｜ 的 ｜ 赛季 ｜ 不 ｜ 败 ｜ 室内 ｜ 再 ｜ 相遇 ｜ 阿卡 ｜ 四次 ｜ 争取 ｜ 破发 ｜ 三次 ｜ 成功 ｜ 又 ｜ 在 ｜ 第二盘 ｜ 抢 ｜ 七 ｜ 以 ｜ 七比二 ｜ 收 ｜ 下 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:c94941c7bde088448858ffb1eee3a3b096697b3a755a08e828d731fe055dfd69",
+      "text": "决赛，德米纳尔带着今年室内十战全胜的战绩。他开局就被破发，却没有轻易交出比赛。首盘七局，五局打到平分；阿卡在这些拉锯中三次破发，才拿下六比一。这个比分，藏住了不少对抗。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 74,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "决赛,德米纳尔带着今年室内实战全胜的战绩。他开局就被迫发,却没有轻易交出比赛。手帆七局,五局打到平分,阿卡在这些拉具中三次迫发,才拿下六比一。这个比分,藏住了不少对抗。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 62,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 74,
+        "speech_s": 16.568,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 德米纳尔 ｜ 带 ｜ 着 ｜ 今年 ｜ 室内 ｜ 十 ｜ 战 ｜ 全胜 ｜ 的 ｜ 战绩 ｜ 他 ｜ 开局 ｜ 就 ｜ 被 ｜ 破发 ｜ 却 ｜ 没有 ｜ 轻易 ｜ 交出 ｜ 比赛 ｜ 首盘 ｜ 七局 ｜ 五局 ｜ 打 ｜ 到 ｜ 平分 ｜ 阿卡 ｜ 在 ｜ 这些 ｜ 拉锯 ｜ 中 ｜ 三次 ｜ 破发 ｜ 才 ｜ 拿下 ｜ 六比一 ｜ 这个 ｜ 比分 ｜ 藏 ｜ 住 ｜ 了 ｜ 不少 ｜ 对抗"
+      }
+    },
+    {
+      "id": "bundle:d9e26eab0c7b18d67a67f5f27fd55830f0048fe6444e47489d30d68584440632",
+      "text": "截至维也纳夺冠，阿卡今年在五百级赛事十六胜零负。跨赛季，则是二十六连胜。上一次在这个级别输球，还是去年巴塞罗那决赛对鲁内。先从几座奖杯，看这条连胜的来路。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "截至威也纳朵冠,阿卡今年在500级赛式16胜领赴。跨赛季则是26连胜。上一次在这个级别输球,还是去年巴塞罗纳决赛对卢内。先从级做奖杯,看这条连胜的来路。"
+      },
+      "polyphones": [
+        {
+          "index": 47,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.437,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 15.177,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "截至 ｜ 维也纳 ｜ 夺冠 ｜ 阿卡 ｜ 今年 ｜ 在 ｜ 五百级 ｜ 赛事 ｜ 十六 ｜ 胜 ｜ 零 ｜ 负 ｜ 跨 ｜ 赛季 ｜ 则 ｜ 是 ｜ 二十六 ｜ 连胜 ｜ 上 ｜ 一次 ｜ 在 ｜ 这个 ｜ 级别 ｜ 输 ｜ 球 ｜ 还是 ｜ 去年 ｜ 巴塞罗那 ｜ 决赛 ｜ 对 ｜ 鲁内 ｜ 先 ｜ 从 ｜ 几座 ｜ 奖杯 ｜ 看 ｜ 这 ｜ 条 ｜ 连胜 ｜ 的 ｜ 来路"
+      }
+    },
+    {
+      "id": "bundle:f2c7c5eef19d3cc858fbe3f39e83077a2625698b995886135a83206f113d849d",
+      "text": "阿卡500赛全胜，26连胜藏着险关。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "阿卡500赛全胜,26连胜藏着险关。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.491,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 500 ｜ 赛 ｜ 全胜 ｜ 26 ｜ 连胜 ｜ 藏 ｜ 着 ｜ 险关"
+      }
+    }
+  ]
+}

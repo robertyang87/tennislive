@@ -1,0 +1,99 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "7ec02b52d5c0f24444c87fe5fd9d982d6d965240b510989fae195fd757eb2ab6",
+    "request_count": 16,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-alcaraz-500-winning-story-2026-7ec02b52d5c0f244",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-alcaraz-500-winning-story-2026-7ec02b52d5c0f244/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41332218175"
+  },
+  "cover_seconds": 4.618,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 380.6,
+  "topbar": null,
+  "film_seconds": 389.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 16.056,
+    "2": 11.208,
+    "5": 9.192,
+    "7": 17.448,
+    "8": 11.976,
+    "10": 17.76,
+    "12": 15.072,
+    "14": 10.68,
+    "16": 12.504,
+    "18": 15.048,
+    "20": 17.448,
+    "21": 14.88,
+    "23": 18.384,
+    "25": 14.808
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "bbd2d1c588ebd25286f0904c7116332dba3032f358a219109a3ce396a496e341",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "alcaraz-500-winning-story-2026",
+    "received_at": "2026-11-01T17:35:12Z",
+    "artifact_ready_at": "2026-11-01T17:42:37Z",
+    "elapsed_seconds": 445.481,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "d357f7457b54b919c31be743670554ab05a57a6a5366e5c1a18e6d5e5cd8282b",
+    "spec_sha256": "6cc242e63759aa0c0bf44dc13bf1b53e775d0b9cb20f67b919fbe6abe4038d33",
+    "run_id": "41332218175",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-01T17:38:48Z",
+        "run_id": "41332218175"
+      }
+    ],
+    "render_seconds": 229.481,
+    "pre_render_seconds": 216.0
+  },
+  "film_sha256": "d357f7457b54b919c31be743670554ab05a57a6a5366e5c1a18e6d5e5cd8282b",
+  "film_bytes": 104815023,
+  "qc_attestation_sha256": "7baa0045424db3606898012185b905514f46d6c2a8b9c82085378556261eb9f8",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-01T17:38:48Z",
+      "run_id": "41332218175"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-01T17:42:40Z",
+      "run_id": "41332218175"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-500-winning-story-2026/alcaraz-500-winning-story-2026.mp4",
+  "video_bytes": 104815023
+}
