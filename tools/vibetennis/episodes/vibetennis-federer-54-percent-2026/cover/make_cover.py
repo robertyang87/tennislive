@@ -254,7 +254,7 @@ def style_B(size, out):
         f = font(SERIF, 70 if LANG == "zh" else 54)
         runs(d, (110, 300), T("【费德勒】只赢 【54%】 的分，", "【Federer】 won 【54%】 of points."), f, WH, GOLD)
         runs(d, (110, 400), T("凭什么赢下 【82%】 的比赛？", "How did he win 【82%】?"), f, WH, GOLD)
-        spaced(d, 330, 530, T("层层放大", "AMPLIFIED"), font(SERIF, 48), (235, 225, 200), 18)
+        spaced(d, 380, 515, T("层层放大", "AMPLIFIED"), font(SERIF, 80), (245, 232, 200), 24)
         d.text((112, 1010), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, 22), fill=GR)
     else:
         f = font(SERIF, int((150 if LANG == "zh" else 104) * k))
@@ -262,8 +262,10 @@ def style_B(size, out):
         lines = [T("【费德勒】", "【Federer】 won"), T("只赢 【54%】 的分，", "【54%】 of points."), T("凭什么赢下", "How did he win"), T("【82%】 的比赛？", "【82%】 of matches?")]
         for i, ln in enumerate(lines): runs(d, (x, y0 + i * gap), ln, f, WH, GOLD)
         my = y0 + 4 * gap + int(70 * k)
-        spaced(d, x + int(330 * k), my, T("层 层 放 大", "AMPLIFIED"), font(SERIF, int(80 * k)), (235, 225, 200), int(24 * k))
-        spaced(d, x + int(330 * k), my + int(118 * k), "MARKOV CHAIN · 1906", font(INTER, int(32 * k)), GR, int(10 * k))
+        ft, gt = font(SERIF, int(132 * k)), int(30 * k); st = T("层 层 放 大", "AMPLIFIED")
+        wt = sum(d.textlength(ch, font=ft) for ch in st) + gt * (len(st) - 1)          # 左对齐到标题边距
+        spaced(d, x + wt / 2, my, st, ft, (245, 232, 200), gt)
+        spaced(d, x + wt / 2, my + int(178 * k), "MARKOV CHAIN · 1906", font(INTER, int(40 * k)), GR, int(12 * k))
         by = int(H * 0.875)
         d.text((x, by), T("每一分只多赢 1%，五盘三胜就从 50% 变成 63%", "Win 1% more points: best-of-five goes 50% → 63%"), font=font(SANS, int(58 * k)), fill=WH)
         d.text((x + 6, by + int(104 * k)), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, int(40 * k)), fill=GR)
