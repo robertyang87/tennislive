@@ -243,3 +243,12 @@ def test_split_metric_requires_an_actual_metric(tmp_path):
     with pytest.raises(SystemExit, match="必须填写 metric"):
         render("2026 中网", "第31胜", "胜布云朝克特", tmp_path / "bad.png",
                split_metric=True)
+
+
+def test_source_with_month_only_does_not_require_an_invented_day():
+    from render_story_info_band import label_fields_problem
+    label = {"topic": "童年训练", "date": "2019.01", "place": "利恩茨",
+             "people": "塔格尔与父亲", "event": "家庭公开训练影像"}
+    assert label_fields_problem(label) is None
+    label["date"] = "2019.13"
+    assert label_fields_problem(label)

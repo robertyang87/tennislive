@@ -42,6 +42,19 @@ def test_missing_photo_falls_back_without_importing_unrelated_data():
     assert p['kind']=='turn' and p['notes'] and not p['nodes']
 
 
+def test_photo_heading_clears_the_two_line_story_watermark(tmp_path, monkeypatch):
+    from PIL import Image
+    monkeypatch.setattr(cards, 'ROOT', tmp_path)
+    (tmp_path / 'assets').mkdir()
+    Image.new('RGB', (1600, 1000), 'blue').save(tmp_path / 'assets/photo.jpg')
+    p = cards.plan('六场比赛\n一盘未失',
+                   {'photo': {'path': 'assets/photo.jpg', 'source': 'https://example.org/gallery'}},
+                   kicker='2025 法网青少年女单')
+    clear_y = reel.inset_top_clear_y({'cover': {'eyebrow': '网球有故事', 'topic': '塔格尔：成长路'}})
+    assert p['kicker_y'] >= clear_y + 20
+    assert p['photo']['top'] + p['photo']['height'] <= p['safe_bottom']
+
+
 def test_native_normalization_keeps_content_in_render_projection():
     spec={'segments':[{'title_card':'重新出发','seconds':4,'transition_card':{'highlight':'重新出发'}}]}
     reel._normalize_title_card_segments(spec)

@@ -815,7 +815,7 @@ def render(kicker: str, headline: str, detail: str, out: Path, *,
     return out
 
 
-_DATE = re.compile(r"^\d{4}\.\d{2}\.\d{2}$")
+_DATE = re.compile(r"^\d{4}\.(?:0[1-9]|1[0-2])(?:\.(?:0[1-9]|[12]\d|3[01]))?$")
 _LEGACY_CORNER_LABEL = REPO / "data" / "legacy_corner_label.json"
 _LEGACY_LABEL_FIELDS = REPO / "data" / "legacy_label_fields.json"
 
@@ -887,7 +887,8 @@ def legacy_label_fields_slugs() -> frozenset[str]:
 def label_fields_problem(label: object) -> str | None:
     """topic、date、place、people 都要有，另外还要有 score 或 event。
 
-    date 写成 ``2026.10.11``。score 只能是整场比分（``6-4`` / ``7-6(5)``），
+    date 写成 ``2026.10.11``；来源只注明月份时用 ``2026.10``，不补造日期。
+    score 只能是整场比分（``6-4`` / ``7-6(5)``），
     说明性的字写进 event。event 和 topic 是同一句时不另起一行。
     对得上返回 None。
     """
@@ -906,7 +907,7 @@ def label_fields_problem(label: object) -> str | None:
     if not score and not event:
         return "label 要有 score 或 event"
     if not _DATE.match(date):
-        return "date 写成 2026.10.11"
+        return "date 写成 2026.10.11；仅知月份时写 2026.10"
     if score and score_number_colors(score) is None:
         return f"score「{score}」不是整场比分；说明写进 event"
     if score and len(score.split()) > 5:

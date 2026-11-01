@@ -11,7 +11,8 @@
     "prague": "https://github.com/robertyang87/tennislive/releases/download/source-ZqrHYxIiFW0/ZqrHYxIiFW0.mp4",
     "gz": "https://github.com/robertyang87/tennislive/releases/download/source-6407705092112/6407705092112.mp4",
     "jj": "https://github.com/robertyang87/tennislive/releases/download/source-6384390010112/6384390010112.mp4",
-    "ao": "https://github.com/robertyang87/tennislive/releases/download/source-q0y4FBIFO-8/q0y4FBIFO-8.mp4"
+    "ao": "https://github.com/robertyang87/tennislive/releases/download/source-q0y4FBIFO-8/q0y4FBIFO-8.mp4",
+    "child": "https://github.com/robertyang87/tennislive/releases/download/source-5ZvWXYY2Y5Q/5ZvWXYY2Y5Q.mp4"
   },
   "archival": {
     "gz": "WTA官方Brightcove原生1280×720，保留完整画幅，不冒称1080p。",
@@ -41,6 +42,12 @@
       "width": 1920,
       "height": 1080,
       "fps": "50/1"
+    },
+    "child": {
+      "why": "家庭官网playtennis.at/lilli-tagger/嵌入的父亲Stephan拍摄训练原片，2019年1月利恩茨室内球场；实际下载ffprobe与逐5秒联系表核验。",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30000/1001"
     }
   },
   "cover": {
@@ -106,9 +113,9 @@
       ]
     }
   },
-  "_owner_brief": "2026-11-01用户请求塔格尔详实生动成长片，特别强调女子单反稀缺；提纲在对话呈现后，用户明确“继续做啊”。追加教练2010冠军、2011负李娜，随后要求简单说一下，已压成一句。",
+  "_owner_brief": "2026-11-01用户请求塔格尔详实生动成长片，特别强调女子单反稀缺；提纲在对话呈现后，用户明确“继续做啊”。追加教练2010冠军、2011负李娜，随后要求简单说一下，已压成一句。 2026-11-01用户反馈字卡停留过多，要求无对应视频时增加照片，并指出左上副标题可能压住卡片顶部。此次视觉修订按已授权范围继续完成。",
   "_production_status": "editorial_and_source_review_complete_pending_render",
-  "_editing_why": "用户已确认提纲；本人单反原声、九江完整救赛点+最终赛点、布拉格完整赛点都核过联系表与ASR。法网无官方比赛视频进入本片，使用官方同场获胜照片与事实卡，不用其他比赛回合冒充。教练/李娜只简述。",
+  "_editing_why": "用户已确认提纲；本人单反原声、九江完整救赛点+最终赛点、布拉格完整赛点都核过联系表与ASR。法网无官方比赛视频进入本片，使用官方同场获胜照片与事实卡，不用其他比赛回合冒充。教练/李娜只简述。 视觉第二版：13段纯字卡改为两段家庭训练实拍及照片轮播，原5段照片字卡同步改为大照片。23段顺序、原旁白20请求及时间均不变；保留全部完整关键回合和本人原声，顶部标签188px避开151px品牌区。",
   "segments": [
     {
       "source": "gz",
@@ -167,48 +174,67 @@
       }
     },
     {
-      "title_card": "她偏要用\n一只手",
-      "kicker": "塔格尔的成长路",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-01.mp4",
+      "image_kind": "photo",
       "seconds": 12.79,
       "narration": "女子网坛，单手打反拍的球员已经很少了。可这个姑娘，小时候就主动想练。她叫莉莉·塔格尔，如今已经站上广州决赛的舞台。",
-      "transition_card": {
-        "photo": {
-          "path": "assets/reel/tagger-single-backhand-story-2026/cover-guangzhou.jpg",
-          "source": "https://www.wtatennis.com/videos/4602049/tagger-drops-just-two-games-in-near-flawless-performance-to-reach-guangzhou-final"
-        }
+      "_photo_source": "https://www.wtatennis.com/videos/4602049/tagger-drops-just-two-games-in-near-flawless-performance-to-reach-guangzhou-final",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
+    },
+    {
+      "source": "child",
+      "start": 58.0,
+      "end": 70.75,
+      "cx": 0.5,
+      "track": false,
+      "fit": "contain",
+      "contain_keep": 1.0,
+      "narration": "小时候，她和教练约定：如果赢下这次比赛，就让她改练单手反拍。后来，她赢了。那个小女孩想试的一拍，也留在了她的职业生涯里。",
+      "point_end_ok": "2019年1月家庭训练影像，不是正式比赛回合；不冒称五岁首次训练或改练单反约定的那场比赛。保留原始击球声。",
+      "crosses_cut": "父亲公开的连续训练片段；保留原片镜头切换，不将剪切标成同一比赛回合。",
+      "_why": "两档英文ASR共同无前景语言窗口57.54—87.14秒内，覆盖原旁白；清楚标注2019训练，不将后期训练影像冒充首次学球。",
+      "inset": {
+        "image": "assets/reel/tagger-single-backhand-story-2026/label-child.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "label": {
+          "topic": "01 童年的约定",
+          "date": "2019.01",
+          "place": "利恩茨家庭训练",
+          "people": "塔格尔与父亲",
+          "event": "童年训练影像"
+        },
+        "animate": false,
+        "top_pad": 0.043
       }
     },
     {
-      "title_card": "赢了这场\n就练单反",
-      "kicker": "01 童年的约定",
-      "seconds": 12.75,
-      "narration": "小时候，她和教练约定：如果赢下这次比赛，就让她改练单手反拍。后来，她赢了。那个小女孩想试的一拍，也留在了她的职业生涯里。"
-    },
-    {
-      "title_card": "最初每周\n只练一小时",
-      "kicker": "从利恩茨出发",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-03.mp4",
+      "image_kind": "photo",
       "seconds": 12.48,
       "narration": "塔格尔来自奥地利利恩茨。五岁开始规律练球，最初一周只有一小时。从儿童小球场起步，她已经很喜欢往网前跑，主动把一分打完。",
-      "transition_card": {
-        "events": [
-          {
-            "label": "2008",
-            "value": "出生于奥地利",
-            "source": "https://www.asapsports.com/show_interview.php?id=208409"
-          },
-          {
-            "label": "5岁",
-            "value": "每周训练一小时",
-            "source": "https://www.playtennis.at/lilli-tagger/"
-          }
-        ]
-      }
+      "_photo_source": "https://www.playtennis.at/lilli-tagger/",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "先喜欢\n再去试",
-      "kicker": "她自己的选择",
-      "seconds": 11.95,
-      "narration": "她在法网采访里回忆，当时并不知道换打法可能有多难，只觉得打起来很有乐趣。这个选择，发生在斯齐亚沃尼成为她的教练之前。"
+      "source": "child",
+      "start": 74.0,
+      "end": 85.95,
+      "cx": 0.5,
+      "track": false,
+      "fit": "contain",
+      "contain_keep": 1.0,
+      "narration": "她在法网采访里回忆，当时并不知道换打法可能有多难，只觉得打起来很有乐趣。这个选择，发生在斯齐亚沃尼成为她的教练之前。",
+      "point_end_ok": "2019年1月家庭训练影像，不是正式比赛回合；不冒称五岁首次训练或改练单反约定的那场比赛。保留原始击球声。",
+      "crosses_cut": "父亲公开的连续训练片段；保留原片镜头切换，不将剪切标成同一比赛回合。",
+      "_why": "两档英文ASR共同无前景语言窗口57.54—87.14秒内，覆盖原旁白；清楚标注2019训练，不将后期训练影像冒充首次学球。"
     },
     {
       "source": "ao",
@@ -248,102 +274,76 @@
       "_frame_why": "官方播客是本人音频配照片轮播，没有持续的采访机位。保留官方原版整幅构图，不能假测一处人脸后套全段。"
     },
     {
-      "title_card": "懂这一拍\n也懂她的路",
-      "kicker": "02 遇见教练",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-06.mp4",
+      "image_kind": "photo",
       "seconds": 8.55,
       "narration": "二〇二三年十月，十五岁的塔格尔，开始跟随斯齐亚沃尼训练。两个人都打单手反拍。",
-      "transition_card": {
-        "photo": {
-          "path": "assets/reel/tagger-single-backhand-story-2026/coach.jpg",
-          "source": "https://www.wtatennis.com/news/4278203/fifteen-years-later-francesca-schiavone-still-hears-the-echoes-from-paris"
-        }
-      }
+      "_photo_source": "https://oetv.at/news-detail/itf-loughborough-tagger-gibt-versprechen-fuer-die-zukunft-ab-1",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "女子单反登顶大满贯\n最近一次是她",
-      "kicker": "一段中国球迷熟悉的历史",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-07.mp4",
+      "image_kind": "photo",
       "seconds": 13.06,
       "narration": "她的教练，是最近一位单反大满贯女单冠军，二〇一〇年法网的斯齐亚沃尼。次年她在决赛输给李娜，见证亚洲首座大满贯单打冠军。",
-      "transition_card": {
-        "events": [
-          {
-            "label": "2010",
-            "value": "斯齐亚沃尼法网女单冠军",
-            "source": "https://www.wtatennis.com/news/1675765/li-na-becomes-asias-first-grand-slam-champion-in-historic-2011-triumph"
-          },
-          {
-            "label": "2011",
-            "value": "李娜赢下法网女单决赛",
-            "source": "https://www.wtatennis.com/news/1675765/li-na-becomes-asias-first-grand-slam-champion-in-historic-2011-triumph"
-          }
-        ]
-      }
+      "_photo_source": "https://www.wtatennis.com/news/1675765/li-na-becomes-asias-first-grand-slam-champion-in-historic-2011-triumph",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "训练与学习\n一起往前",
-      "kicker": "意大利瓦雷泽",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-08.mp4",
+      "image_kind": "photo",
       "seconds": 15.58,
-      "narration": "她教塔格尔怎样把这一拍用进比赛，也教她怎样面对紧张、保持专注。二〇二五年的报道里，塔格尔已经在意大利生活和训练，通过博尔扎诺的学校在线学习，考试时再到学校。"
+      "narration": "她教塔格尔怎样把这一拍用进比赛，也教她怎样面对紧张、保持专注。二〇二五年的报道里，塔格尔已经在意大利生活和训练，通过博尔扎诺的学校在线学习，考试时再到学校。",
+      "_photo_source": "https://www.schiavoneteamlab.academy/en/blog-posts/lilli-tagger-protagonista-della-trasferta-australiana",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "从资格赛出发\n拿到第一座奖杯",
-      "kicker": "2025年3月 特拉萨",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-09.mp4",
+      "image_kind": "photo",
       "seconds": 12.84,
-      "narration": "喜欢网球，开始变成每天都要完成的生活。二〇二五年三月，她从资格赛出发，拿下特拉萨赛事冠军，拿到生涯首座，成人职业赛事单打奖杯。"
+      "narration": "喜欢网球，开始变成每天都要完成的生活。二〇二五年三月，她从资格赛出发，拿下特拉萨赛事冠军，拿到生涯首座，成人职业赛事单打奖杯。",
+      "_photo_source": "https://btv.oetv.at/news-detail/itf-terrassa-sensationelle-tagger-holt-mit-17-jahren-1-damentitel-1",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "六场比赛\n一盘未失",
-      "kicker": "2025 法网青少年女单",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-10.mp4",
+      "image_kind": "photo",
       "seconds": 13.3,
       "narration": "六月来到巴黎。法网青年组女单，六场比赛，一盘未失。决赛六比二、六比零，她击败克卢格曼，成为奥地利第一位，法网青年组单打冠军。",
-      "transition_card": {
-        "photo": {
-          "path": "assets/reel/tagger-single-backhand-story-2026/rg-champion.jpg",
-          "source": "https://www.rolandgarros.com/en-us/article/rg2025-tagger-and-mcdonald-land-junior-silverware",
-          "result": {
-            "value": "6-2 6-0",
-            "source": "https://www.rolandgarros.com/en-us/article/rg2025-tagger-and-mcdonald-land-junior-silverware"
-          }
-        }
-      }
+      "_photo_source": "https://www.rolandgarros.com/en-us/article/rg2025-tagger-and-mcdonald-land-junior-silverware",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "同一片红土\n两段成长",
-      "kicker": "2010—2025",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-11.mp4",
+      "image_kind": "photo",
       "seconds": 12.75,
       "narration": "十五年前，教练在这里捧杯；十五年后，学生赢下了青年组冠军。那是一次动人的呼应。接下来，她还要面对成人巡回赛的考验。",
-      "transition_card": {
-        "photo": {
-          "path": "assets/reel/tagger-single-backhand-story-2026/rg-trophy.jpg",
-          "source": "https://www.rolandgarros.com/en-us/article/rg2025-tagger-and-mcdonald-land-junior-silverware"
-        }
-      }
+      "_photo_source": "https://www.rolandgarros.com/en-us/article/rg2025-tagger-and-mcdonald-land-junior-silverware",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "好看之外\n还要能赢",
-      "kicker": "03 九江的考验",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-12.mp4",
+      "image_kind": "photo",
       "seconds": 12.55,
-      "narration": "二〇二五年十一月，九江。塔格尔第一次打，巡回赛单打正赛。半决赛对面，是卫冕冠军戈卢比奇。巧的是，她也打单反。"
+      "narration": "二〇二五年十一月，九江。塔格尔第一次打，巡回赛单打正赛。半决赛对面，是卫冕冠军戈卢比奇。巧的是，她也打单反。",
+      "_photo_source": "https://www.wtatennis.com/news/4394536/teenage-wild-card-tagger-to-meet-chinese-speaking-blinkova-in-jiujiang-final",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "决胜盘落后\n三个赛点在眼前",
-      "kicker": "从2比5到4比5",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-13.mp4",
+      "image_kind": "photo",
       "seconds": 11.11,
       "narration": "决胜盘，塔格尔二比五落后。追回两局后，她仍在四比五时面对三个连续赛点。对手再赢一分，比赛就结束。",
-      "transition_card": {
-        "scores": [
-          {
-            "label": "决胜盘",
-            "value": "2–5",
-            "source": "https://www.wtatennis.com/news/4394536/teenage-wild-card-tagger-to-meet-chinese-speaking-blinkova-in-jiujiang-final"
-          },
-          {
-            "label": "决胜盘追回两局",
-            "value": "4–5",
-            "source": "https://www.wtatennis.com/news/4394536/teenage-wild-card-tagger-to-meet-chinese-speaking-blinkova-in-jiujiang-final"
-          }
-        ]
-      }
+      "_photo_source": "https://www.wtatennis.com/news/4394536/teenage-wild-card-tagger-to-meet-chinese-speaking-blinkova-in-jiujiang-final",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
       "source": "jj",
@@ -450,56 +450,31 @@
       }
     },
     {
-      "title_card": "第一次打正赛\n就走到决赛",
-      "kicker": "2025 九江亚军",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-16.mp4",
+      "image_kind": "photo",
       "seconds": 15.79,
-      "narration": "她把三个赛点全部救了回来，最终七比五赢下决胜盘。舒展的反拍之外，人们也看到，她落后时仍在争取。第一次参加巡回赛正赛，她就打进决赛，那一周最终收获亚军。"
+      "narration": "她把三个赛点全部救了回来，最终七比五赢下决胜盘。舒展的反拍之外，人们也看到，她落后时仍在争取。第一次参加巡回赛正赛，她就打进决赛，那一周最终收获亚军。",
+      "_photo_source": "https://www.wtatennis.com/news/4394536/teenage-wild-card-tagger-to-meet-chinese-speaking-blinkova-in-jiujiang-final",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "从前一百\n到第一冠",
-      "kicker": "04 继续向上",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-17.mp4",
+      "image_kind": "photo",
       "seconds": 9.53,
       "narration": "二〇二六年四月，她在本国的林茨打进八强，首次进入世界前一百。七月，布拉格又给了她一次考验。",
-      "transition_card": {
-        "events": [
-          {
-            "label": "2026年4月",
-            "value": "林茨八强，首次进入前100",
-            "source": "https://ausopen.com/articles/news/lilli-tagger-on-coach-francesca-schiavone-its-amazing-have-her-my-side"
-          },
-          {
-            "label": "2026年7月",
-            "value": "布拉格，争取巡回赛首冠",
-            "source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague"
-          }
-        ]
-      }
+      "_photo_source": "https://www.wtatennis.com/news/4486811/rankings-watch-taggers-milestone-potapovas-rise-boost-austrian-tennis",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "首盘2比5\n她追了回来",
-      "kicker": "2026 布拉格决赛",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-18.mp4",
+      "image_kind": "photo",
       "seconds": 12.03,
       "narration": "决赛首盘，她二比五落后于斯尼古尔。她追到五比五，随后赢下抢七，再以六比二拿下第二盘，第一次成为巡回赛单打冠军。",
-      "transition_card": {
-        "scores": [
-          {
-            "label": "首盘落后",
-            "value": "2–5",
-            "source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague"
-          },
-          {
-            "label": "首盘结果",
-            "value": "7–6",
-            "source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague"
-          },
-          {
-            "label": "第二盘",
-            "value": "6–2",
-            "source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague",
-            "winning": true
-          }
-        ]
-      }
+      "_photo_source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
       "source": "prague",
@@ -571,28 +546,31 @@
       }
     },
     {
-      "title_card": "输过的一场\n也是下一场的准备",
-      "kicker": "成长没有捷径",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-20.mp4",
+      "image_kind": "photo",
       "seconds": 17.23,
-      "narration": "回看那次夺冠，她还提到了前一周的失利。到了布拉格，再遇见之前击败自己的对手，她把从败仗里学到的东西用进了比赛。进步未必立刻换来奖杯。输过的一场，也能为下一场做准备。"
+      "narration": "回看那次夺冠，她还提到了前一周的失利。到了布拉格，再遇见之前击败自己的对手，她把从败仗里学到的东西用进了比赛。进步未必立刻换来奖杯。输过的一场，也能为下一场做准备。",
+      "_photo_source": "https://www.wtatennis.com/news/4546947/teenager-tagger-captures-maiden-wta-singles-title-in-prague",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "单反很少见\n她的故事还在继续",
-      "kicker": "回到广州",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-21.mp4",
+      "image_kind": "photo",
       "seconds": 16.25,
       "narration": "现在，塔格尔已经晋级广州决赛，将争取生涯第二座巡回赛单打冠军。小时候，她只说我想这样打。走到更大的赛场，中间有教练，有训练，也有必须自己打完的难球。",
-      "transition_card": {
-        "photo": {
-          "path": "assets/reel/tagger-single-backhand-story-2026/cover-guangzhou.jpg",
-          "source": "https://www.wtatennis.com/videos/4602049/tagger-drops-just-two-games-in-near-flawless-performance-to-reach-guangzhou-final"
-        }
-      }
+      "_photo_source": "https://www.wtatennis.com/videos/4602049/tagger-drops-just-two-games-in-near-flawless-performance-to-reach-guangzhou-final",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     },
     {
-      "title_card": "你最初的喜欢\n还在坚持吗",
-      "kicker": "把故事留给下一场",
+      "image": "assets/reel/tagger-single-backhand-story-2026/visual-v2/sequence-22.mp4",
+      "image_kind": "photo",
       "seconds": 11.62,
-      "narration": "单反给了人们记住她的理由，学习与成长，让她一次次走得更远。你小时候很喜欢、后来也一直坚持的那件事，现在怎么样了？"
+      "narration": "单反给了人们记住她的理由，学习与成长，让她一次次走得更远。你小时候很喜欢、后来也一直坚持的那件事，现在怎么样了？",
+      "_photo_source": "https://www.playtennis.at/lilli-tagger/",
+      "_photo_caption_safety": "1080×1440原生照片轮播：照片保留人物全幅、落在270—1200px；日期地点标签188px，避开顶部品牌/副标题151px安全线；字幕在1284px下锚，底部品牌1385px。真实照片来源逐图登记visual-v2/credits.json；轮播对应visual-v2/sequences.json。",
+      "_visual_revision": "真实照片承接完整原旁白，按语义切换；不以其他比赛回合冒充叙述事件。"
     }
   ],
   "_claims": {
@@ -602,7 +580,8 @@
     "最近一位单反大满贯女单冠军": "https://www.usopen.org/amp/en_US/news/articles/2026-07-29/player_to_watch_lilli_tagger.html"
   },
   "mixed_fps": {
-    "ao": "澳网官方播客照片轮播1920×1080@50fps，按实际时间重采样到25fps，保留原始音频。"
+    "ao": "澳网官方播客照片轮播1920×1080@50fps，按实际时间重采样到25fps，保留原始音频。",
+    "child": "家庭公开原片1920×1080@30000/1001，按真实时间重采样到25fps；不变速，保留现场击球声。"
   },
   "conform": {
     "gz": "官方原生720p；只在滤镜中统一到1080p基准，保留完整宽画面contain，不伪称原生高清。",
