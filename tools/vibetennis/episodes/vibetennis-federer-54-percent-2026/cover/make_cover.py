@@ -92,18 +92,29 @@ def hero(t, size):
 
 
 def headline(d, size, k):
-    """完整问句：只赢 54% 的分，凭什么赢下 82% 的比赛？"""
+    """完整问句，点名费德勒（所有者 2026-11-01 选定封面加费德勒）"""
     W, H = SIZES[size]
     if size == "wide":
-        f = font(SERIF, int(96 * k)) if LANG == "zh" else font(SERIF, int(78 * k))
-        runs(d, (int(130 * k), int(300 * k)), T("只赢 【54%】 的分，", "He won 【54%】 of points."), f, WH, GOLD)
-        runs(d, (int(130 * k), int(300 * k) + int(130 * k)), T("凭什么赢下 【82%】 的比赛？", "How did he win 【82%】 of matches?"), f, WH, GOLD)
+        f = font(SERIF, int(70 * k)) if LANG == "zh" else font(SERIF, int(54 * k))
+        runs(d, (int(110 * k), int(300 * k)), T("【费德勒】只赢 【54%】 的分，", "【Federer】 won 【54%】 of points."), f, WH, GOLD)
+        runs(d, (int(110 * k), int(400 * k)), T("凭什么赢下 【82%】 的比赛？", "How did he win 【82%】?"), f, WH, GOLD)
         return
-    f = font(SERIF, int((150 if LANG == "zh" else 112) * k))
-    y0 = int(330 * k); gap = int((190 if LANG == "zh" else 150) * k)
-    runs(d, (int(134 * k), y0), T("只赢 【54%】 的分，", "He won 【54%】"), f, WH, GOLD)
-    runs(d, (int(134 * k), y0 + gap), T("凭什么赢下", "of points. How did"), f, WH, GOLD)
-    runs(d, (int(134 * k), y0 + 2 * gap), T("【82%】 的比赛？", "he win 【82%】 of matches?"), f, WH, GOLD)
+    f = font(SERIF, int((150 if LANG == "zh" else 104) * k))
+    y0 = int(330 * k); gap = int((185 if LANG == "zh" else 140) * k); x = int(134 * k)
+    lines = [T("【费德勒】", "【Federer】 won"), T("只赢 【54%】 的分，", "【54%】 of points."), T("凭什么赢下", "How did he win"), T("【82%】 的比赛？", "【82%】 of matches?")]
+    for i, ln in enumerate(lines): runs(d, (x, y0 + i * gap), ln, f, WH, GOLD)
+
+
+def add_federer(img, x, y, h, gain=0.95):
+    """把全息费德勒加色叠到一张 RGB 图上（A / C 方案用；B 方案在 style_B 里自己叠）"""
+    acc = np.asarray(img).astype(np.float32)
+    col, al = hologram(h); layer = np.zeros_like(acc); paste_add(layer, col, al, x, y, gain)
+    glow = np.asarray(Image.fromarray(np.clip(layer, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(28))).astype(np.float32)
+    mask = np.zeros(acc.shape[:2], np.float32); hh, ww = al.shape
+    x0, y0 = max(0, x), max(0, y); x1, y1 = min(acc.shape[1], x + ww), min(acc.shape[0], y + hh)
+    mask[y0:y1, x0:x1] = al[y0 - y:y1 - y, x0 - x:x1 - x]
+    out = acc * (1 - mask[..., None] * 0.7) + layer + glow * 0.3
+    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
 
 
 def ladder_line(d, x, y, f, k):
@@ -118,6 +129,8 @@ def style_A(size, out):
         img = shade(img, 0.0001, 0.80, 0, 0.85)
         a = np.asarray(img).astype(np.float32); xx = np.linspace(0, 1, W)[None, :, None]; a *= 1 - np.clip(1 - xx / 0.55, 0, 1) ** 1.2 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
+    FA = {"tall": (1250, 860, 1500, 0.75), "story": (520, 760, 900, 0.8), "wide": (1240, 60, 1000, 0.8)}[size]
+    img = add_federer(img, *FA)
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     headline(d, size, k if size != "wide" else 1.0)
     if size == "wide":
@@ -135,6 +148,8 @@ def style_C(size, out):
     if size == "wide":
         a = np.asarray(img).astype(np.float32); xx = np.linspace(0, 1, W)[None, :, None]; a *= 1 - np.clip(1 - xx / 0.6, 0, 1) ** 1.2 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
+    FC = {"tall": (1200, 820, 1550, 0.45), "story": (450, 520, 1000, 0.55), "wide": (1200, 40, 1040, 0.55)}[size]
+    img = add_federer(img, *FC)
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     headline(d, size, k if size != "wide" else 1.0)
     if size == "wide":
