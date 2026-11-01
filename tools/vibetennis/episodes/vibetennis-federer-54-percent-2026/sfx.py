@@ -8,7 +8,7 @@ HERE=os.path.dirname(os.path.abspath(__file__)); WORK=os.environ.get('VT_WORK',H
 os.makedirs(os.path.join(WORK,'sfx'),exist_ok=True)
 SR=48000
 # 2026-11-01 改版：时间轴插入新段 A（马尔可夫的发现）、片尾换成新段 B（金句），映射与 r3d/shots.js 的 WARP 一致
-WARP=dict(A0=15.5,LA=32.32,B_OLD=176.2,B_DROP=3.8,LB=19.96); B0=WARP['B_OLD']+WARP['LA']
+WARP=dict(A0=15.5,LA=42.02,B_OLD=176.2,B_DROP=3.8,LB=19.96); B0=WARP['B_OLD']+WARP['LA']   # LA 二改 32.32 → 42.02; B0=WARP['B_OLD']+WARP['LA']
 def toNew(t):
     w=WARP
     if t<w['A0']: return t
@@ -241,12 +241,15 @@ EN(A+13.6,counter_roll(1.8),0.5,name='count-20000'); EN(A+15.3,tick(),0.7)
 EN(A+16.8,hit(),0.5,name='two-nodes'); EN(A+17.2,power_on(2),0.5)
 ONEGIN_TXT='Мой дядя самых честных правил Когда не в шутку занемог Он уважать себя заставил И лучше выдумать не мог Его пример другим наука'
 SEQ=[1 if ch in 'аеёиоуыэюяАЕЁИОУЫЭЮЯ' else 0 for ch in ONEGIN_TXT if ch.isalpha() and ch not in 'ъьЪЬ']
-for k in range(24):   # 令牌每跳一下：落到元音（左，金）音高一点，落到辅音（右，蓝）低一点
+for k in range(40):   # 令牌每跳一下：落到元音（左，金）音高一点，落到辅音（右，蓝）低一点
     th=A+18.4+k*0.42+0.3
-    if th<A+28.4: v=SEQ[k+1]; EN(th,blip(2100 if v else 1500,0.05,1.05,0.5),0.22,pan=-0.45 if v else 0.45,name='hop' if k==0 else None)
+    if th<A+34.8 and k+1<len(SEQ): v=SEQ[k+1]; EN(th,blip(2100 if v else 1500,0.05,1.05,0.5),0.22,pan=-0.45 if v else 0.45,name='hop' if k==0 else None)
 EN(A+17.6,ding(1320),0.4,name='12.8%'); EN(A+20.7,ding(990),0.4,name='66.3%')
-EN(A+26.6,chime([69,74,78]),0.5,name='markov-chain')
-EN(A+29.0,number_pop(),0.7,name='0-0'); EN(A+31.4,swish(0.9,600,4000),0.4)
+EN(A+23.2,chime([69,74,78]),0.5,name='three-parts')
+for k_,tk in enumerate((25.3,27.6,31.5)): EN(A+tk,blip(1600+k_*400,0.09,1.15,0.7),0.5,name='part%d'%(k_+1))
+EN(A+31.6,swish(0.8,3000,500),0.3,name='past-fades')
+EN(A+35.6,number_pop(),0.7,name='0-0'); EN(A+36.4,zap(800,2600,0.4),0.35,pan=0.4); EN(A+36.4,zap(800,1800,0.4),0.35,pan=-0.4)
+EN(A+41.0,swish(0.9,600,4000),0.4)
 # ================= 新段 B：金句（新时间 208.52–228.48） =================
 EN(B0+0.5,swish(2.2,2000,200),0.45,name='lost-drift'); EN(B0+0.6,crackle(3.0,220),0.6)
 EN(B0+0.9,counter_roll(2.0),0.45,name='count-108336')
@@ -261,10 +264,10 @@ BGM_OFF=0.309   # 曲子 74 BPM、拍点 0.097+k·0.808 s；从 0.309 s 起取�
 BGM_LUFS=-20.0  # 铺底响度；音效叠在上面，整片之后再归一到 -14 LUFS
 raw=subprocess.run(['ffmpeg','-v','error','-ss',str(BGM_OFF),'-i',BGM,'-t','188.2','-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
 bgm0=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
-# 插入整小节（标题锁定 11.1 s 在拍上，小节线 11.1+3.232·m）：17.564 s 处重复其后 10 小节（＝新段 A 的长度）；
+# 插入整小节（标题锁定 11.1 s 在拍上，小节线 11.1+3.232·m）：17.564 s 处重复其后 13 小节（＋4 ms，＝新段 A 的长度 42.02 s）；
 # 175.932 s 处重复其前 5 小节（＝新段 B 净增的长度）。拼缝 10 ms 交叉淡化，免得爆音
 def cut(a,b): return bgm0[int(a*SR):int(b*SR)]
-parts=[cut(0,49.884),cut(17.564,175.932),cut(159.772,175.932),cut(175.932,188.2)]
+parts=[cut(0,17.564+WARP['LA']),cut(17.564,175.932),cut(175.932-16.16,175.932),cut(175.932,188.2)]   # A 段长 42.02 = 13 小节 + 4 ms
 xf=int(0.006*SR); r=np.linspace(0,1,xf)[:,None]
 for i_,p_ in enumerate(parts):
     p_=p_.copy()

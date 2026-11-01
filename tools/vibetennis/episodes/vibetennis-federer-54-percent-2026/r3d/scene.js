@@ -479,14 +479,15 @@ const MK_N={V:{rg:ringSprite(GOLD,MK_R*2.9,0.9,MK),gl:glowSprite(GOLD,MK_R*7,0.2
 MK_N.V.rg.position.copy(MK_V); MK_N.V.gl.position.copy(MK_V); MK_N.C.rg.position.copy(MK_C); MK_N.C.gl.position.copy(MK_C);
 const MK_TOK=glowSprite(WHITE,5,0,MK); const MK_TOK2=ringSprite(WHITE,2.6,0,MK);
 // t：从第一跳开始的秒数；hop：每跳秒数。令牌沿着奥涅金开头真实的元音/辅音序列走
-function setMK(op,t,{hop=0.42,edgeOp=1,show={VV:1,VC:1,CV:1,CC:1}}={}){
+function setMK(op,t,{hop=0.42,edgeOp=1,show={VV:1,VC:1,CV:1,CC:1},nodeHi=0,edgeHi=0}={}){   // nodeHi / edgeHi：讲「状态」「转移概率」时把节点 / 边点亮
   MK.visible=op>0.001; if(!MK.visible) return null;
   let cur=null;
   const idx=Math.floor(Math.max(0,t)/hop), u=easeIO((Math.max(0,t)/hop)-idx);
   const i0=idx%(ONEGIN_SEQ.length-1); const a=ONEGIN_SEQ[i0], b=ONEGIN_SEQ[i0+1]; const key=(a.v?'V':'C')+(b.v?'V':'C');
   for(const k in MK_E){ const e=MK_E[k]; const on=k===key&&t>=0; const s=show[k]??1;
-    e.core.material.opacity=op*edgeOp*s*(0.35+(on?0.5*(1-u*0.5):0)); e.glow.material.opacity=op*edgeOp*s*(0.06+(on?0.12:0)); e.head.material.opacity=op*edgeOp*s*0.5; }
-  MK_N.V.rg.material.opacity=op*0.85; MK_N.C.rg.material.opacity=op*0.85; MK_N.V.gl.material.opacity=op*0.18; MK_N.C.gl.material.opacity=op*0.18;
+    e.core.material.opacity=op*edgeOp*s*(0.35+edgeHi*0.4+(on?0.5*(1-u*0.5):0)); e.glow.material.opacity=op*edgeOp*s*(0.06+edgeHi*0.12+(on?0.12:0)); e.head.material.opacity=op*edgeOp*s*(0.5+edgeHi*0.5); }
+  const pul=nodeHi*(0.5+0.5*Math.sin(t*6)); MK_N.V.rg.material.opacity=op*Math.min(1,0.85+nodeHi*0.15); MK_N.C.rg.material.opacity=op*Math.min(1,0.85+nodeHi*0.15); MK_N.V.gl.material.opacity=op*(0.18+0.3*pul); MK_N.C.gl.material.opacity=op*(0.18+0.3*pul);
+  MK_N.V.rg.scale.setScalar(MK_R*2.9*(1+0.12*pul)); MK_N.C.rg.scale.setScalar(MK_R*2.9*(1+0.12*pul));
   if(t>=0){ const P=MK_PATH[key]; const f=u*(P.length-1); const j=Math.min(P.length-2,Math.floor(f)); const p=P[j].clone().lerp(P[j+1],f-j);
     MK_TOK.position.copy(p); MK_TOK.material.opacity=op*0.95; MK_TOK2.position.copy(p); MK_TOK2.material.opacity=op*0.8; (b.v?MK_N.V:MK_N.C).gl.material.opacity=op*(0.18+0.25*ease(u)); cur={i:i0,from:a,to:b,key,u}; }
   else { MK_TOK.material.opacity=0; MK_TOK2.material.opacity=0; }

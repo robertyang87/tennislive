@@ -402,7 +402,7 @@ def draw_old(c,t,an,hist):
 
 # ===================== 2026-11-01 改版：新段 A（马尔可夫链是什么、怎么发现的）与新段 B（金句） =====================
 # 时间映射与 r3d/shots.js 的 WARP 一致：旧镜头、旧字幕一个字不改，按旧时间画
-WARP=dict(A0=15.5,LA=32.32,B_OLD=176.2,B_DROP=3.8,LB=19.96)
+WARP=dict(A0=15.5,LA=42.02,B_OLD=176.2,B_DROP=3.8,LB=19.96)   # LA 二改 32.32 → 42.02：补「马尔可夫链就三样东西」
 B0=WARP['B_OLD']+WARP['LA']
 TOTAL_NEW=188+WARP['LA']+WARP['LB']-WARP['B_DROP']
 def toOld(t):
@@ -427,9 +427,9 @@ CAPS_A=[
 (13.5,3.4,tr("前 【20,000】 个字母，逐个分成元音和辅音","Its first 【20,000】 letters, sorted into vowels and consonants"),('s',960,900,C,46)),
 (17.6,3.0,tr("元音后面再跟元音：只有 【12.8%】","Vowel after a vowel: only 【12.8%】"),('s',960,210,C,48)),
 (20.7,3.0,tr("辅音后面跟元音：【66.3%】","Vowel after a consonant: 【66.3%】"),('s',960,900,C,48)),
-(23.9,2.7,tr("下一个字母是什么，只看眼前这一个","The next letter depends only on this one"),('s',960,210,C,48)),
-(26.6,2.5,tr("这就是 【马尔可夫链】：下一步，只取决于现在","That is a 【Markov chain】: the next step depends only on now"),('s',960,900,C,46)),
-(29.1,2.8,tr("网球的比分，正是这样一条链","And a tennis score is exactly such a chain"),('a','n00Bot',0,110,C,960,760,48)),
+(23.2,2.0,tr("马尔可夫链，就三样东西","A Markov chain has just three parts"),('s',960,210,C,50)),
+(35.8,4.8,tr("网球的比分，正是这样一条链","A tennis score is exactly such a chain"),('s',960,210,C,50)),
+(38.1,2.5,tr("比分是状态，每一分就是一次转移","The score is the state; each point, one transition"),('s',960,900,C,46)),
 ]
 # 108,336 = 236,038 − 127,702（UTS 生涯总分与赢分）
 CAPS_B=[
@@ -444,6 +444,7 @@ RU_V='аеёиоуыэюяАЕЁИОУЫЭЮЯ'
 ONEGIN_TXT='Мой дядя самых честных правил Когда не в шутку занемог Он уважать себя заставил И лучше выдумать не мог Его пример другим наука'
 ONEGIN_SEQ=[(ch,1 if ch in RU_V else 0) for ch in ONEGIN_TXT if ch.isalpha() and ch not in 'ъьЪЬ']
 CYR=skia.Typeface.MakeFromName('DejaVu Sans Mono',skia.FontStyle.Bold())
+def ramp01(x,a,b): return ease((x-a)/(b-a))
 def chip(c,n,lab,a):
     text(c,n,1630,82,26,GOLD,a,MONO,align='l',glow=0.5); c.drawLine(1672,62,1672,88,P(GOLD,a*0.6,stroke=2)); text(c,lab,1686,82,26,WHITE,a*0.85,SANS,align='l')
 def fmt(n): return f"{n:,}"
@@ -475,10 +476,31 @@ def drawA(c,u,an):
                 k=i+j
                 if k<0 or k>=len(ONEGIN_SEQ): continue
                 ch,isv=ONEGIN_SEQ[k]; x=960+j*48-(an.get('mkU',0)*48 if j!=0 else 0)*0
-                al=a*(1.0 if j in (0,1) else 0.35)*(1-abs(j)/10)
+                past=ramp01(u,31.5,32.0)
+                al=a*(1.0 if j in (0,1) else 0.35)*(1-abs(j)/10)*((1-0.75*past) if j<0 else 1)
                 cc=GOLD if isv else BLUE_C
                 if j==0: c.drawRoundRect(skia.Rect.MakeXYWH(x-22,978,44,54),8,8,P(WHITE,a*0.9,stroke=2))
                 c.drawString(ch,x-f.measureText(ch)/2,1020,f,P(cc,al))
+                if j<0 and past>0: c.drawLine(x-16,1006,x+16,1006,P(GRAY,a*past*0.6,stroke=2))
+    if 25.1<=u<35.6:
+        a=secA(u,25.1,35.6,0.4,0.4)
+        rows=((25.3,27.4,tr("① 状态：现在在哪","① State: where you are now")),
+              (27.6,31.3,tr("② 转移概率：下一步去哪，各有多大可能","② Transition probabilities: where next, and how likely")),
+              (31.5,35.4,tr("③ 只看现在：之前怎么走到这儿的，一概不管","③ Only now matters: how you got here doesn't count")))
+        text(c,tr("马尔可夫链 ＝","MARKOV CHAIN ="),168,200,30,GOLD,a,SANS,align='l',glow=0.4)
+        for k,(r0,r1,txt) in enumerate(rows):
+            ai=a*ease((u-r0)/0.35)
+            if ai<=0: continue
+            on=r0<=u<r1; y=900+k*0  # 当前这一条放大放在底部，已讲过的缩到左上
+            if on: rich(c,txt,960,900,46,ai,SANS,align='c',reveal=(u-r0)*1.2,base=WHITE)
+            text(c,txt,168,250+k*46,28,GOLD if on else WHITE,ai*(1.0 if on else 0.6),SANS,align='l')
+    if 35.8<=u<41.4:   # 0-0 → 15-0 / 0-15：每一分就是一次转移
+        a=secA(u,36.4,41.4,0.4,0.5); v=g('n00'); vl=g('n00L'); vr=g('n00R')
+        if onv(v,10) and onv(vl,10) and onv(vr,10):
+            for (tv,lab,cc) in ((vr,tr("15-0  赢这一分","15–0  win the point"),GOLD),(vl,tr("0-15  输这一分","0–15  lose the point"),BLUE_C)):
+                x0,y0=v[0]+(1 if tv is vr else -1)*120,v[1]+60; x1,y1=tv[0]+(1 if tv is vr else -1)*120,tv[1]+90
+                c.drawLine(x0,y0,x1,y1,P(cc,a*0.8,stroke=3)); c.drawCircle(x1,y1,6,P(cc,a))
+                text(c,lab,x1+(14 if tv is vr else -14),y1+10,30,cc,a,SANS,align='l' if tv is vr else 'r',glow=0.4)
     for s0,d,txt,pl in CAPS_A:
         if s0<=u<s0+d+0.35: caption(c,u,s0,d,txt,pl,an)
 def drawB(c,u,an):

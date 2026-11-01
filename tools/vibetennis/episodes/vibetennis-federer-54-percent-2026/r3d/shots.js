@@ -11,7 +11,7 @@ export const SHOTS=[]; const add=(t0,t1,fn)=>SHOTS.push({t0,t1,fn});
 //      「同时你没有简单介绍马尔可夫链是什么。以及是他是怎么发现的」）。旧镜头一帧不改，靠时间映射：
 //      新时间轴 = 旧 [0,15.5) ＋ 新段 A（32.32 s）＋ 旧 [15.5,176.2) ＋ 新段 B（19.96 s，替掉旧 [176.2,180) 的问句）＋ 旧 [180,188)
 //      插入长度取整小节（74 BPM、拍长 0.808 s、一小节 3.232 s）：A 10 小节，B 净增 5 小节 → 之后的画面仍在原来的拍上
-export const WARP={A0:15.5,LA:32.32,B_OLD:176.2,B_DROP:3.8,LB:19.96};
+export const WARP={A0:15.5,LA:42.02,B_OLD:176.2,B_DROP:3.8,LB:19.96};   // LA 2026-11-01 二改：32.32 → 42.02（＋291 帧＝9.7 s，补「马尔可夫链就三样东西」；整帧平移，旧渲染可直接复用）
 export const OLD_TOTAL=188;
 export const TOTAL=OLD_TOTAL+WARP.LA+WARP.LB-WARP.B_DROP;   // 236.48
 export const B0=WARP.B_OLD+WARP.LA;                          // 新段 B 在新时间轴上的起点 208.52
@@ -185,33 +185,35 @@ add(180,188,(S,lt,d,t)=>{
   fadeIO(S,lt,d,0.6,0.6);
 });
 
-// ======================= 新段 A（新时间 15.5–47.82）：马尔可夫链是什么、他怎么发现的 =======================
+// ======================= 新段 A（新时间 15.5–57.52）：马尔可夫链是什么、他怎么发现的 =======================
 // 出处：Seneta (2006)（1906 年论文为反驳涅克拉索夫「大数定律要求相互独立」而作）；
 //      Markov (1913)，英译 Link (2006) Science in Context 19: 591–600（《奥涅金》前 20,000 字母：元音 8,638；元音后接元音 1104/8638=0.128；辅音后接元音 7534/11362=0.663）
-const MA=[[0,'void',0],[0.15,'n1906',1.1,0.5],[3.4,'indep',1.4,0.6],[6.0,'links',1.8,0.5],[10.2,'onegin',1.8,0.6],[16.8,'twoNode',1.6,0.7],[29.0,'n00',1.2,0.5],[31.4,'void',0.9,1]];
+const MA=[[0,'void',0],[0.15,'n1906',1.1,0.5],[3.4,'indep',1.4,0.6],[6.0,'links',1.8,0.5],[10.2,'onegin',1.8,0.6],[16.8,'twoNode',1.6,0.7],[35.6,'n00',1.2,0.5],[41.1,'void',0.9,1]];
 addN(WARP.A0,WARP.A0+WARP.LA,(S,lt,d,t)=>{
   const u=lt;
   const spin=(u>=6&&u<10.2)?Math.sin((u-6)*0.55)*0.35:0;
-  S.setMorph(MA,u,{spin,op:(u>=17.4&&u<29)?0.8:1});
+  S.setMorph(MA,u,{spin,op:(u>=17.4&&u<35.6)?0.8:1});
   S.gridMat.uniforms.uOp.value=0.3; S.skyMat.uniforms.uWarm.value=0.25*ramp(u,10,11)*(1-ramp(u,16.5,17.5));
   // 镜头：1906 → 散点（稍拉远）→ 链条（环绕）→ 奥涅金（拉远放下整行）→ 两状态图 → 0-0
   let pos, tgt=S.V(0,0,0), fov=40;
   if(u<6) pos=S.V(Math.sin(u*0.3)*2,1.2,lerp(54,70,easeIO(u/6)));
   else if(u<10.2) pos=S.V(lerp(0,-10,easeIO((u-6)/4.2)),lerp(1.2,6,easeIO((u-6)/4.2)),lerp(70,62,easeIO((u-6)/4.2)));
   else if(u<16.8) pos=S.V(lerp(-10,0,easeIO((u-10.2)/1.6)),lerp(6,1,easeIO((u-10.2)/1.6)),lerp(68,78,easeIO((u-10.2)/1.4)));
-  else if(u<29) pos=S.V(Math.sin((u-16.8)*0.15)*3,lerp(1,3,easeIO((u-16.8)/12)),lerp(78,68,easeIO((u-16.8)/3)));
-  else pos=S.V(0,1,lerp(68,52,easeIO((u-29)/3)));
+  else if(u<35.6) pos=S.V(Math.sin((u-16.8)*0.15)*3,lerp(1,3,easeIO((u-16.8)/12)),lerp(78,68,easeIO((u-16.8)/3)));
+  else pos=S.V(Math.sin(18.8*0.15)*3*(1-easeIO((u-35.6)/2)),lerp(3,4,easeIO((u-35.6)/3)),lerp(68,60,easeIO((u-35.6)/3)));
   S.cam(pos,tgt,fov);
   // 两状态图：粒子凝成两团（元音金 43.2% / 辅音蓝 56.8%）之后，边和令牌出现；令牌沿《奥涅金》开头真实的元音/辅音序列跳
-  const mo=ramp(u,17.2,18.2)*(1-ramp(u,28.4,29.4));
-  const cur=S.setMK(mo,u-18.4,{hop:0.42});
+  const mo=ramp(u,17.2,18.2)*(1-ramp(u,35.0,36.0));
+  // 「马尔可夫链就三样东西」：25.3 状态（节点亮）→ 27.6 转移概率（边亮）→ 31.5 只看现在（令牌照跳，字母流里过去的变暗）
+  const nodeHi=ramp(u,25.3,25.8)*(1-ramp(u,27.3,27.8)), edgeHi=ramp(u,27.6,28.1)*(1-ramp(u,31.2,31.7));
+  const cur=S.setMK(mo,u-18.4,{hop:0.42,nodeHi,edgeHi});
   if(cur){ S.val('mkI',cur.i); S.val('mkU',cur.u); S.val('mkKey',cur.key); }
   S.val('mkOp',mo);
-  hit(S,u,0.15,0.5,0.3); hit(S,u,6.0,0.5,0.3,S.shock2,null,40); hit(S,u,16.8,0.5,0.3); hit(S,u,29.0,0.45,0.4);
+  hit(S,u,0.15,0.5,0.3); hit(S,u,6.0,0.5,0.3,S.shock2,null,40); hit(S,u,16.8,0.5,0.3); hit(S,u,35.6,0.45,0.4);
   S.proj('yr',S.V(0,0,0)); S.proj('yrBot',S.V(0,-6,0)); S.proj('links',S.V(0,0,0)); S.proj('lkBot',S.V(0,-5,0));
   S.proj('og',S.V(0,0,0)); S.proj('ogBot',S.V(0,-5.5,0));
   S.proj('mkV',S.MK_V); S.proj('mkC',S.MK_C); for(const k of ['VV','VC','CV','CC']) S.proj('mk'+k,S.MK_MID[k]);
-  S.proj('n00',S.V(0,0,0)); S.proj('n00Bot',S.V(0,-6,0));
+  S.proj('n00',S.V(0,0,0)); S.proj('n00Bot',S.V(0,-6,0)); S.proj('n00L',S.V(-9,-3,0)); S.proj('n00R',S.V(9,-3,0));
   fadeIO(S,lt,d,0.5,0.6);
 });
 
