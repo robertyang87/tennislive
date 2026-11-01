@@ -13,14 +13,14 @@
     "cover_in_film": false,
     "outro_seconds": 0,
     "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），片尾是收束问句＋参考资料页。",
-    "captions": "anchored",
-    "narration": "none",
-    "_narration_why": "栏目规则无旁白（docs/columns.md）；所有者 2026-11-01 未要求配音，资料包第六节列为待定，按推荐不配。",
+    "captions": "anchored（锚定字幕）＋ 中文版底部配音字幕（按 TTS 词边界切成 ≤16 字的短句）",
+    "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03）；配音稿 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/narration.json（39 句，按画面落位，最晚比画面晚 0.7 s）；多音字静态预检（tools/check_polyphones.py）报 2 处，合成文本换同音字：几乎→机乎、打转→打赚，另按 EP03 差距→插距 把 差不到→插不到；字幕保持原字，屏幕数字用阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
+    "_narration_why": "账号所有者 2026-11-01：「中文版的加上中文的配音……就是有 TTS 的，跟 EP 三一样的」。",
     "audio": {
       "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge assets/music/we-never-remix-hi-noise-qiucheng.m4a，抖音 Vibe 知识赛道统一配乐）",
       "_music_why": "账号所有者 2026-11-01：「不要 bgm」「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」。从曲子 0.309 s 起取（74 BPM，标题锁定转金落在拍上），铺底 -20 LUFS；版权归原作者，库内 README 注明发布时优先用平台曲库同曲。",
       "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS，低于 BGM 3 dB",
-      "loudness": "整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+      "loudness": "中文版：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB（同 EP03）；英文版：BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
     }
   },
   "cover": {
