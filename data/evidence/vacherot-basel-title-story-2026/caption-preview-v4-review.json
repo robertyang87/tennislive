@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.visual-preview-review.v1",
-  "status": "sampled_graphic_repairs_and_brand_geometry_reviewed",
+  "status": "story_text_overlap_confirmed_requires_repair",
   "kind": "visual_preview_only",
   "publication_approved": false,
   "spec_sha256": "7edfd7f3169db0a717582d0f04086f24e2b87e41db1743b81df16a322efe3fca",
@@ -22,7 +22,7 @@
       "source_time": 116.38000000000001,
       "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
       "cue_text": null,
-      "observation": "Shanghai old30/40 score fragment absent; serve body and feet retained; top brand/inset visible with no observed contact on player."
+      "observation": "Old30/40 fragment absent and serve body retained, but right-top story_text overlaps far-court Vacherot head/face and body; this corrects earlier missed overlap."
     },
     {
       "image": "caption-02.png",
@@ -86,5 +86,6 @@
     "Interior native previews exclude actual dissolve compositing.",
     "Raw contact covers final328.4–352.4 at0.5s; not every frame.",
     "No listening/audio QC."
-  ]
+  ],
+  "correction_evidence": "data/evidence/vacherot-basel-title-story-2026/shanghai-story-inset-overlap-review.json"
 }

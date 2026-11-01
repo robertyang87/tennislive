@@ -1,0 +1,113 @@
+{
+  "status": "targeted_review_complete",
+  "kind": "visual_preview_only_and_old_actual_film_samples",
+  "publication_approved": false,
+  "scope": "Requested Shanghai relocated story_text six native PNGs and old actual d7 R2/QF/final-first-set initial8-second story_text/head-face check only.",
+  "shanghai_v5": {
+    "spec_sha256": "4f5d108f96203269fe4c3b0bc0712f7ec1c9fb390bf7b10064005b906c6b3efc",
+    "ass_sha256": "10be6bd18700c85ced2ff4c2af2f3955b7da9651b14f5dbe8255f79615c44aef",
+    "manifest_sha256": "24f3b5657906bee677678884fbbf9d579270592232a355242d9f8ff16a343e84",
+    "observations": [
+      "All six actual PNGs show right-top story_text separated from head/face.",
+      "First sample source120.98 is still wide result shot: Vacherot now at left under brand; cap edge touches brand second-row lower edge while face is below text.",
+      "Remaining five samples show celebration close-ups; right-top story_text has clear separation from face.",
+      "Real burned bilingual subtitles visible: first3 contain Game,set,match,Vacherot and Chinese result; last3 contain two-line English fairy-tale comment and one Chinese line. No edge overflow or face collision observed.",
+      "Some brand pixels overlay cap in close-up samples, but no observed eye/nose/mouth overlap."
+    ],
+    "samples": [
+      {
+        "film_time": 28.594,
+        "source_time": 120.98,
+        "image": "caption-01.png",
+        "image_sha256": "0eef96c1c0b94d28170279206a3ec6fb72f7cd9fd7d225ea391ffcbd1a411d2b"
+      },
+      {
+        "film_time": 29.594,
+        "source_time": 121.98,
+        "image": "caption-02.png",
+        "image_sha256": "e8086b7e11836a812b3281f2786be4dfc66c74959453adf03f7873ede42f7871"
+      },
+      {
+        "film_time": 31.594,
+        "source_time": 123.98,
+        "image": "caption-03.png",
+        "image_sha256": "622fee18f6553ea1da5eee75eeaee5dd288671b5c4cd77bb603930b496662216"
+      },
+      {
+        "film_time": 33.594,
+        "source_time": 125.98,
+        "image": "caption-04.png",
+        "image_sha256": "ac99506e864fd193dc63dc9325df44ba91ec4275c0468622d8fbd319b142a02a"
+      },
+      {
+        "film_time": 35.594,
+        "source_time": 127.98,
+        "image": "caption-05.png",
+        "image_sha256": "8f5998c7f4d249356c2365e5ed69ac4bb1fcb00235c8980ef920e4a63edcf08c"
+      },
+      {
+        "film_time": 36.274,
+        "source_time": 128.66,
+        "image": "caption-06.png",
+        "image_sha256": "00506cc7fd93cdcb23ee39c0fc48300827b670a58c1ae0296a1d13946a914e6a"
+      }
+    ],
+    "metadata_note": "v5 cue_text entries are null, but actual PNGs visibly include subtitles using reused real ASS; conclusion based on image inspection."
+  },
+  "other_insets_old_d7": {
+    "film_sha256": "812f65e1b63f68e34f1b91d6424845c3207c8ae0d2418e08b13fc781d5817b96",
+    "sampling": "16 frames per requested segment at segment_start+0.25,+0.75,...,+7.75 (0.5-second interval); reviewed all3contact sheets plus selected1080x1440original frames.",
+    "segments": [
+      {
+        "name": "r2",
+        "segment": 7,
+        "sampled_film_range": [
+          80.724,
+          88.224
+        ],
+        "observation": "No card on face in samples. During celebration closeup approximately86.724–88.224, score/name rows cross white cap upper portion. At87.224, face starts approximatelyy250, story_text ends approximatelyy245; cap/head overlap confirmed but face uncovered.",
+        "native_example": "/workspace/scratch/vacherot-basel/inset-audit/r2/13.jpg"
+      },
+      {
+        "name": "qf",
+        "segment": 9,
+        "sampled_film_range": [
+          100.604,
+          108.104
+        ],
+        "observation": "No card crossing far-player head or face observed in requested samples; close-up head below card, later far player below card."
+      },
+      {
+        "name": "final1",
+        "segment": 13,
+        "sampled_film_range": [
+          157.484,
+          164.984
+        ],
+        "observation": "No card crossing far-player head or face observed in requested samples; right-top text separate from rally player and later audience heads."
+      }
+    ],
+    "contacts": [
+      {
+        "path": "/workspace/scratch/vacherot-basel/inset-audit/r2-contact.jpg",
+        "sha256": "b5a243953e65aaec05f3606c0c41e06c474ee1152063de291b73ff376b420b39"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-basel/inset-audit/qf-contact.jpg",
+        "sha256": "f6a85710996aec6f3ba34bcaa119dd83e778ac607c56292404158c5418c057c6"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-basel/inset-audit/final1-contact.jpg",
+        "sha256": "4dd6ce8bc644b5af4deb65ddc834d9ab2af39006ee6c4d89c5da2837e7c28a35"
+      }
+    ]
+  },
+  "limitations": [
+    "Sampled review, not all-frame guarantee.",
+    "Native previews exclude final H264/dissolve compositing.",
+    "d7 remains old failed film and is not approved.",
+    "No audio QC or publication approval."
+  ],
+  "spec_modified": false,
+  "assessment_under_existing_face_safety_requirement": "No new body-content defect identified in this targeted review. R2 cap upper-edge contact does not obscure face and is accepted under the existing requirement; no new standard or spec change requested."
+}

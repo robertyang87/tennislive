@@ -1,0 +1,48 @@
+{
+  "status": "confirmed_story_text_player_overlap",
+  "publication_approved": false,
+  "scope": "Only requested Shanghai source116.38/story card overlap risk; no other checks expanded.",
+  "film_time": 23.994,
+  "source_time": 116.38,
+  "source_start": 114.7,
+  "native_select_frame": 42,
+  "new_crop_filter": "crop=710:946:605:67,scale=1080:1440:flags=lanczos,fps=25",
+  "new_spec_sha256": "7edfd7f3169db0a717582d0f04086f24e2b87e41db1743b81df16a322efe3fca",
+  "new_approximate_player_bbox_xyxy": [
+    792,
+    84,
+    907,
+    249
+  ],
+  "new_approximate_head_face_bbox_xyxy": [
+    839,
+    84,
+    868,
+    116
+  ],
+  "actual_observation": "Far-court Vacherot is present and complete in the no-overlay crop. In v4 native PNG, story_text title 首座巡回赛冠军 crosses his head/face; date, score and player-name rows cross his torso/legs.",
+  "preexisting_in_old_d7": true,
+  "old_observation": "Same source instant in actual d7 film also overlaps: far player approximatelyx762–862,y161–306; score row covers head/face, name row covers torso. New crop moves player upward so title crosses head/face.",
+  "correction_to_previous_review": "Earlier caption-01 note saying no observed card contact was incorrect; top-right story_text overlap had been missed. That finding is retracted.",
+  "old_film_sha256": "812f65e1b63f68e34f1b91d6424845c3207c8ae0d2418e08b13fc781d5817b96",
+  "files": [
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/shanghai-116.38-source.png",
+      "sha256": "e8960d0f3aa85841669db60c5cc5f267981da5558b0e10613f2942fee5e9706d"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/shanghai-116.38-nooverlay.png",
+      "sha256": "9c050a3e5540b9f44c6512b8ab2178aa5b9d009a48f61bae7ae5028237224ff9"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/shanghai-old-d7-23.994.png",
+      "sha256": "460a0e3f53b77784b288a0be5547dfe4fd4bba0455d3fa120b848219c92eb420"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-basel/caption-preview-v4/caption-01.png",
+      "sha256": "e3af6f21294ee5d3039ce37444c00f39738800dba00d685a8abc25872f192bb2"
+    }
+  ],
+  "spec_modified": false,
+  "render_or_publication_approval": false
+}
