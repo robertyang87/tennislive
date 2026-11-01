@@ -156,7 +156,7 @@
     },
     {
       "_id": "set-one-payoff",
-      "start": 93.92,
+      "start": 55.56,
       "end": 106.48,
       "cx": 0.5,
       "track": false,
@@ -165,27 +165,47 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "已核本场源片及逐分，对应完整回合、死球与原声完整句边界；最终编码另验。",
+      "point_end_ok": "55.56近景准备之后完整保留5比2首次盘点的整段回合、5比4第二次盘点至87.12落点及全部赛后评论，至106.48下一盘切镜前结束；比分条对第一段回合存在更新滞后，盘局身份以逐分与后续SET POINT#2互证。",
       "crosses_cut": "同一官方集锦的真实转播切镜，按原生边界保留。",
       "quote": [
         {
-          "at": 2.0,
-          "end": 4.48,
+          "at": 1.88,
+          "end": 3.39,
+          "text": "All right.\n好的。"
+        },
+        {
+          "at": 13.24,
+          "end": 14.44,
+          "text": "Shnaider.\n施奈德。"
+        },
+        {
+          "at": 32.2,
+          "end": 34.44,
+          "text": "Well, she'll be delighted, Diana Shnaider,\n施奈德会很满意，"
+        },
+        {
+          "at": 34.44,
+          "end": 40.04,
+          "text": "if she was able to get things back on track after just a little blip.\n她在小波折后重回正轨。"
+        },
+        {
+          "at": 40.36,
+          "end": 42.84,
           "text": "She first tried to serve out the set.\n她曾尝试发球拿下这一盘。"
         },
         {
-          "at": 4.48,
-          "end": 7.04,
+          "at": 42.84,
+          "end": 45.4,
           "text": "She does at the second attempt.\n第二次，她做到了。"
         },
         {
-          "at": 7.2,
-          "end": 9.12,
+          "at": 45.56,
+          "end": 47.48,
           "text": "Wins the first by six games to four.\n首盘6比4。"
         },
         {
-          "at": 9.12,
-          "end": 12.34,
+          "at": 47.48,
+          "end": 50.7,
           "text": "She's one set away from becoming the champion in Tokyo.\n距离东京冠军，她还差一盘。"
         }
       ],
@@ -746,5 +766,11 @@
   "source_fallbacks": {
     "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-vKGzpmJnqIs/vKGzpmJnqIs.mp4"
   },
-  "_tts_backend_why": "沿用当前仓库云见声线+6%，本片不使用情绪样式；无需Azure或外部模型密钥。"
+  "_tts_backend_why": "沿用当前仓库云见声线+6%，本片不使用情绪样式；无需Azure或外部模型密钥。",
+  "_source_coverage": {
+    "first_set": "complete set-point rallies and reactions 55.56-106.48",
+    "second_set": "4-0context;full4-1breakback157.8-186.8;counterrally186.92-205.9;5-5breakpointandsetpoint206.16-241.64",
+    "deciding_set": "complete0-40passingpoint241.64-254.0;verified3savedBPand2-2four-gamerunfact;fullmatchpoint255.88-305.8",
+    "trophy": "actualacceptance,kissandlift527.48-541.92"
+  }
 }

@@ -55,7 +55,7 @@
   },
   "ending": {
     "start": 255.88,
-    "end": 299.16,
+    "end": 305.8,
     "kind": "match_point",
     "winner_visible": true,
     "reason": "完整覆盖冷开场并延续至280.5施奈德双臂举起、288.5微笑与294.5最终赛果。",
@@ -70,9 +70,18 @@
   "cover": {
     "same_match": true,
     "subject": "Diana Shnaider",
-    "moment": "535.4举杯候选帧",
+    "moment": "本届决赛后亲吻冠军奖盘",
     "wrong_or_old": false,
-    "reason": "同一官方源中当届领奖台与举杯，明确为转播抽帧；仅候选，未冒称官方相机实拍。",
+    "path": "assets/reel/shnaider-fernandez-tokyo-2026-final/official-trophy.jpg",
+    "sha256": "4ff01e3fecf1fe3d95eb57a0d93dfd105531ffba5c54e1ac1015a72bcd5eb67d",
+    "reason": "WTA官方决赛稿4602333与原图4602343，EXIF11月1日14:50:02当地，红色冠军奖盘和本场黄色单肩球衣与完整视频捧杯段一致。4078x2719相机实拍，非抽帧。主动吻盘动作造成自然闭眼；已核海报不压脸。",
     "confidence": 0.98
+  },
+  "inspected_contact_sheets": "all10contact sheets covering complete552.007982-second source",
+  "first_set_payoff": {
+    "start": 55.56,
+    "end": 106.48,
+    "reason": "完整首盘5比2首次盘点与5比4第二次盘点，以及之后反应和完整解说；以源片SET POINT/SET POINT#2和WTA逐分共同核盘局，不能照滞后板误读。",
+    "confidence": 0.95
   }
 }
