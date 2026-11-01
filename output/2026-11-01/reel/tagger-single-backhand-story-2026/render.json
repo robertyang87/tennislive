@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-tagger-single-backhand-story-2026-9c3e3da5dcc11182",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-tagger-single-backhand-story-2026-9c3e3da5dcc11182/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41260479094"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41265514938"
   },
   "cover_seconds": 4.306,
   "cover_narrated": true,
@@ -60,44 +60,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "bf27f4ea73a42820964fe5caeba7afb85d6c04ea4d23f56bc32cd3bf52b28878",
+  "render_inputs_sha256": "1b8e6eb134c1cd84cf6f1ccf56981eea9ccaa8ad91e0420731b77d1623cad169",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "tagger-single-backhand-story-2026",
-    "received_at": "2026-11-01T01:17:41Z",
-    "artifact_ready_at": "2026-11-01T01:25:22Z",
-    "elapsed_seconds": 461.073,
+    "received_at": "2026-11-01T02:31:01Z",
+    "artifact_ready_at": "2026-11-01T02:36:57Z",
+    "elapsed_seconds": 356.495,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "8a0e2714a7ab8d06090f2fa6a102330ceceea32eb620203da07ec0cd4392816d",
-    "spec_sha256": "686ecbc060e810943a15093637ee6f3bbe7e668d3b1c5f20ead1871fd38c4478",
-    "run_id": "41260479094",
+    "film_sha256": "dd89252a703b12c6121eefd24a40a4b48fa23adf59802cc797bac763ebb97e8a",
+    "spec_sha256": "26fa3905734e9539a90fa1d88e7548f8c628dbee47650214a56881474ff63564",
+    "run_id": "41265514938",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-01T01:20:04Z",
-        "run_id": "41260479094"
+        "at": "2026-11-01T02:33:40Z",
+        "run_id": "41265514938"
       }
     ],
-    "render_seconds": 318.073,
-    "pre_render_seconds": 143.0
+    "render_seconds": 197.495,
+    "pre_render_seconds": 159.0
   },
-  "film_sha256": "8a0e2714a7ab8d06090f2fa6a102330ceceea32eb620203da07ec0cd4392816d",
-  "film_bytes": 83179083,
-  "qc_attestation_sha256": "8eae275b139af2b5567b5f9f14ce85cd1e60f8d0cebf37d4cc0930bfd773554a",
+  "film_sha256": "dd89252a703b12c6121eefd24a40a4b48fa23adf59802cc797bac763ebb97e8a",
+  "film_bytes": 110987873,
+  "qc_attestation_sha256": "ca2b64335a32bb1ba4a751949355bc9131fd063ae09a05aa1fd011ae22d71cb4",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-01T01:20:04Z",
-      "run_id": "41260479094"
+      "at": "2026-11-01T02:33:40Z",
+      "run_id": "41265514938"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-01T01:25:24Z",
-      "run_id": "41260479094"
+      "at": "2026-11-01T02:37:00Z",
+      "run_id": "41265514938"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tagger-single-backhand-story-2026/tagger-single-backhand-story-2026.mp4",
-  "video_bytes": 83179083
+  "video_bytes": 110987873
 }
