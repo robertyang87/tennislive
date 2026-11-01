@@ -1,0 +1,1134 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "daa9ef6c4e2f8637ee8dadfedd425f2cf3d2d523ebd6883434316840886788a4",
+    "render_inputs_sha256": "bf27f4ea73a42820964fe5caeba7afb85d6c04ea4d23f56bc32cd3bf52b28878",
+    "spec_sha256": "686ecbc060e810943a15093637ee6f3bbe7e668d3b1c5f20ead1871fd38c4478",
+    "film_sha256": "8a0e2714a7ab8d06090f2fa6a102330ceceea32eb620203da07ec0cd4392816d",
+    "inventory_sha256": "0da80936366182455c39c3ae570b1f996b56314c7caca02fe293594556059526"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-01T01:27:23+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:09b4abaf6fb640f64431268f30c46face4843c6a5dfd72ce93fec6b761692035",
+      "audio_sha256": "62d2cea00ec0da321d05abf17cd32c6423ffaef72a994bcda7b7509915c30243",
+      "pass": true,
+      "result_of": "bundle:09b4abaf6fb640f64431268f30c46face4843c6a5dfd72ce93fec6b761692035"
+    },
+    {
+      "id": "bundle:110131f43c24302515646dc1bcc3f035677fcb6dfdf0786f5f46e40316c3ae49",
+      "audio_sha256": "7b74e705117f4a608609ec91c1d31e2cb30e12a173ebf9250fa701cd09d2275d",
+      "pass": true,
+      "result_of": "bundle:110131f43c24302515646dc1bcc3f035677fcb6dfdf0786f5f46e40316c3ae49"
+    },
+    {
+      "id": "bundle:336300a5e0166412530584d1fe068d019ce354578d6919c988c4bd3a83c2cd31",
+      "audio_sha256": "d44a5b2ff76f3ef00045fcd180b8a131a685c7b7bcca7cd53e687d14159b8aaa",
+      "pass": true,
+      "result_of": "bundle:336300a5e0166412530584d1fe068d019ce354578d6919c988c4bd3a83c2cd31"
+    },
+    {
+      "id": "bundle:39ea1190e0948aca8291e2d953925180961db0c3a3a182bded2a11022c14eb4a",
+      "audio_sha256": "1635dfdd71d91888716a025b797ed788ee1872ef50c9f848e29fe5e447bd5e0b",
+      "pass": true,
+      "result_of": "bundle:39ea1190e0948aca8291e2d953925180961db0c3a3a182bded2a11022c14eb4a"
+    },
+    {
+      "id": "bundle:3cee1244e9392437861e038becf14589cfd1586e5059648502cdea1db2145f7c",
+      "audio_sha256": "bd113dd040aab912c46b72f37344c40f3f11abbeebff00a7f84210e5a0ef8ab9",
+      "pass": true,
+      "result_of": "bundle:3cee1244e9392437861e038becf14589cfd1586e5059648502cdea1db2145f7c"
+    },
+    {
+      "id": "bundle:472432d5404f2706ea21c115cccf49f771bece93fd26242989681848c90f20b1",
+      "audio_sha256": "2afafc2c4bf40951a7b89f3aae816fcd719ef1dd324f1da6847dff1948084414",
+      "pass": true,
+      "result_of": "bundle:472432d5404f2706ea21c115cccf49f771bece93fd26242989681848c90f20b1"
+    },
+    {
+      "id": "bundle:5570033222a155b2edf13c8253b36383d20bb5d6590914592720b50ccb251165",
+      "audio_sha256": "564f865de47aa5c6d56e2e511f73c886f623357dbdb5e8a4d3c61f5f603a74b1",
+      "pass": true,
+      "result_of": "bundle:5570033222a155b2edf13c8253b36383d20bb5d6590914592720b50ccb251165"
+    },
+    {
+      "id": "bundle:5c475770ff50ec46b6d6ca0b393bc72408fec436c266417033690ec0e37a9bf3",
+      "audio_sha256": "e2a8d6b6cb1f311d50d9a3eb8816a364cad4d3c27fc89c6796f9e05f60708c21",
+      "pass": true,
+      "result_of": "bundle:5c475770ff50ec46b6d6ca0b393bc72408fec436c266417033690ec0e37a9bf3"
+    },
+    {
+      "id": "bundle:642c388707b9f007d2d716c8d6cf4916d3c0bfc7d62b849d53b70b1c2ba131a5",
+      "audio_sha256": "cd65d856eaa73eff8636f75b1a169850626d93c8e63f02284f52507dae16a306",
+      "pass": true,
+      "result_of": "bundle:642c388707b9f007d2d716c8d6cf4916d3c0bfc7d62b849d53b70b1c2ba131a5"
+    },
+    {
+      "id": "bundle:6e5cca2e99347b83959207be3c7c8b5d4278e5c91fb2ed6f2cc8d547e9a1b3da",
+      "audio_sha256": "e10abf2b39f1206c3a677c3ecc50a97d845312285530ff298d9d0fd17192ef2c",
+      "pass": true,
+      "result_of": "bundle:6e5cca2e99347b83959207be3c7c8b5d4278e5c91fb2ed6f2cc8d547e9a1b3da"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c0bcf2f98bf65f8e53762bda04e6ef0a0a173c61f6338bb20c2ff69b1abecf68",
+      "audio_sha256": "6b9372df2bc61681f5e35c0867d653be445b68f3d934e91abe12295768fae20b",
+      "pass": true,
+      "result_of": "bundle:c0bcf2f98bf65f8e53762bda04e6ef0a0a173c61f6338bb20c2ff69b1abecf68"
+    },
+    {
+      "id": "bundle:d21a1a03400b498b2d6e52b5848e002f45baf2259142e541b062a05741bcbc62",
+      "audio_sha256": "00fb859321612252122b195b75ee1b521c987e0c86a31603503cd869aad6b1d0",
+      "pass": true,
+      "result_of": "bundle:d21a1a03400b498b2d6e52b5848e002f45baf2259142e541b062a05741bcbc62"
+    },
+    {
+      "id": "bundle:dab283d96c0c5f11c3894d69b0ba0d46d6b9110f35c89e3f926eabe48b0743e5",
+      "audio_sha256": "327326913b8cfd613dae634fffa9131f06a7fce8d928cd7562faa3d864321dc7",
+      "pass": true,
+      "result_of": "bundle:dab283d96c0c5f11c3894d69b0ba0d46d6b9110f35c89e3f926eabe48b0743e5"
+    },
+    {
+      "id": "bundle:dcfee85dd67e7e26a2ecace381bb7f1b1fe181d8472c5b38b2960de6159090b5",
+      "audio_sha256": "1940d6b53329c763340c812003d06a3dcbd96d25029ba141b4b0fab7e0e00bac",
+      "pass": true,
+      "result_of": "bundle:dcfee85dd67e7e26a2ecace381bb7f1b1fe181d8472c5b38b2960de6159090b5"
+    },
+    {
+      "id": "bundle:e3483cda782d8a77eb708df1400908dc24e9c7c39145ecbfbde6c541f2a0bbdb",
+      "audio_sha256": "14e1977befd6c610f830f2da07c402cfe7930c1991c43e2be92d754436f26f47",
+      "pass": true,
+      "result_of": "bundle:e3483cda782d8a77eb708df1400908dc24e9c7c39145ecbfbde6c541f2a0bbdb"
+    },
+    {
+      "id": "bundle:eb35d9aa5703587173eab51fcd5855ee4ac43b6a696d77e1956d5c4f4ade31a2",
+      "audio_sha256": "873c36cee3a47aeb442034ac71be552d5766af3e6033a3a06d207c2ce9d81856",
+      "pass": true,
+      "result_of": "bundle:eb35d9aa5703587173eab51fcd5855ee4ac43b6a696d77e1956d5c4f4ade31a2"
+    },
+    {
+      "id": "bundle:f3e6a1c1c0d8dde8eb673e40a9d9184a4be6224dbe7ac004ae604c22e334c72a",
+      "audio_sha256": "b73d0dda114ec6cb34eedc1fd2954f4a2f963bf12edb38f7717c08e7a474d58d",
+      "pass": true,
+      "result_of": "bundle:f3e6a1c1c0d8dde8eb673e40a9d9184a4be6224dbe7ac004ae604c22e334c72a"
+    },
+    {
+      "id": "bundle:f5bd42ce4dc076980b2a6edb6dd10a136cb49866a41dac267d1034c41bd30719",
+      "audio_sha256": "0910c24d3aa5a519b00e95dbdbaf1c8ef73a0f24c229da8ee227c1137e38cadb",
+      "pass": true,
+      "result_of": "bundle:f5bd42ce4dc076980b2a6edb6dd10a136cb49866a41dac267d1034c41bd30719"
+    },
+    {
+      "id": "bundle:f6ef5a0389505c7fe4327023be395b410ed5ef5431bbe6db3c61aac9a735919f",
+      "audio_sha256": "8ca09e9a10442ba5642b10c52343b6cb1e0c39ceca1365eea57f9ee9251d58b2",
+      "pass": true,
+      "result_of": "bundle:f6ef5a0389505c7fe4327023be395b410ed5ef5431bbe6db3c61aac9a735919f"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "bd113dd040aab912c46b72f37344c40f3f11abbeebff00a7f84210e5a0ef8ab9",
+      "pass": true,
+      "result_of": "bundle:3cee1244e9392437861e038becf14589cfd1586e5059648502cdea1db2145f7c"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "564f865de47aa5c6d56e2e511f73c886f623357dbdb5e8a4d3c61f5f603a74b1",
+      "pass": true,
+      "result_of": "bundle:5570033222a155b2edf13c8253b36383d20bb5d6590914592720b50ccb251165"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "327326913b8cfd613dae634fffa9131f06a7fce8d928cd7562faa3d864321dc7",
+      "pass": true,
+      "result_of": "bundle:dab283d96c0c5f11c3894d69b0ba0d46d6b9110f35c89e3f926eabe48b0743e5"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "1940d6b53329c763340c812003d06a3dcbd96d25029ba141b4b0fab7e0e00bac",
+      "pass": true,
+      "result_of": "bundle:dcfee85dd67e7e26a2ecace381bb7f1b1fe181d8472c5b38b2960de6159090b5"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "e2a8d6b6cb1f311d50d9a3eb8816a364cad4d3c27fc89c6796f9e05f60708c21",
+      "pass": true,
+      "result_of": "bundle:5c475770ff50ec46b6d6ca0b393bc72408fec436c266417033690ec0e37a9bf3"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "d44a5b2ff76f3ef00045fcd180b8a131a685c7b7bcca7cd53e687d14159b8aaa",
+      "pass": true,
+      "result_of": "bundle:336300a5e0166412530584d1fe068d019ce354578d6919c988c4bd3a83c2cd31"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "7b74e705117f4a608609ec91c1d31e2cb30e12a173ebf9250fa701cd09d2275d",
+      "pass": true,
+      "result_of": "bundle:110131f43c24302515646dc1bcc3f035677fcb6dfdf0786f5f46e40316c3ae49"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "62d2cea00ec0da321d05abf17cd32c6423ffaef72a994bcda7b7509915c30243",
+      "pass": true,
+      "result_of": "bundle:09b4abaf6fb640f64431268f30c46face4843c6a5dfd72ce93fec6b761692035"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "1635dfdd71d91888716a025b797ed788ee1872ef50c9f848e29fe5e447bd5e0b",
+      "pass": true,
+      "result_of": "bundle:39ea1190e0948aca8291e2d953925180961db0c3a3a182bded2a11022c14eb4a"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "00fb859321612252122b195b75ee1b521c987e0c86a31603503cd869aad6b1d0",
+      "pass": true,
+      "result_of": "bundle:d21a1a03400b498b2d6e52b5848e002f45baf2259142e541b062a05741bcbc62"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "14e1977befd6c610f830f2da07c402cfe7930c1991c43e2be92d754436f26f47",
+      "pass": true,
+      "result_of": "bundle:e3483cda782d8a77eb708df1400908dc24e9c7c39145ecbfbde6c541f2a0bbdb"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "8ca09e9a10442ba5642b10c52343b6cb1e0c39ceca1365eea57f9ee9251d58b2",
+      "pass": true,
+      "result_of": "bundle:f6ef5a0389505c7fe4327023be395b410ed5ef5431bbe6db3c61aac9a735919f"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "0910c24d3aa5a519b00e95dbdbaf1c8ef73a0f24c229da8ee227c1137e38cadb",
+      "pass": true,
+      "result_of": "bundle:f5bd42ce4dc076980b2a6edb6dd10a136cb49866a41dac267d1034c41bd30719"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "2afafc2c4bf40951a7b89f3aae816fcd719ef1dd324f1da6847dff1948084414",
+      "pass": true,
+      "result_of": "bundle:472432d5404f2706ea21c115cccf49f771bece93fd26242989681848c90f20b1"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "873c36cee3a47aeb442034ac71be552d5766af3e6033a3a06d207c2ce9d81856",
+      "pass": true,
+      "result_of": "bundle:eb35d9aa5703587173eab51fcd5855ee4ac43b6a696d77e1956d5c4f4ade31a2"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "b73d0dda114ec6cb34eedc1fd2954f4a2f963bf12edb38f7717c08e7a474d58d",
+      "pass": true,
+      "result_of": "bundle:f3e6a1c1c0d8dde8eb673e40a9d9184a4be6224dbe7ac004ae604c22e334c72a"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "cd65d856eaa73eff8636f75b1a169850626d93c8e63f02284f52507dae16a306",
+      "pass": true,
+      "result_of": "bundle:642c388707b9f007d2d716c8d6cf4916d3c0bfc7d62b849d53b70b1c2ba131a5"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "e10abf2b39f1206c3a677c3ecc50a97d845312285530ff298d9d0fd17192ef2c",
+      "pass": true,
+      "result_of": "bundle:6e5cca2e99347b83959207be3c7c8b5d4278e5c91fb2ed6f2cc8d547e9a1b3da"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "6b9372df2bc61681f5e35c0867d653be445b68f3d934e91abe12295768fae20b",
+      "pass": true,
+      "result_of": "bundle:c0bcf2f98bf65f8e53762bda04e6ef0a0a173c61f6338bb20c2ff69b1abecf68"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:09b4abaf6fb640f64431268f30c46face4843c6a5dfd72ce93fec6b761692035",
+      "text": "喜欢网球，开始变成每天都要完成的生活。二零二五年三月，她从资格赛出发，拿下特拉萨赛事冠军，拿到生涯首座，成人职业赛事单打奖杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "喜欢网球,开始变成每天都要完成的生活。2025年3月,他从资格赛出发,拿下特拉萨赛事冠军,拿到生涯手作,成人职业赛事担打奖杯。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "发",
+          "word": "出发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 56,
+        "speech_s": 11.309,
+        "cps": 4.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "喜欢 ｜ 网球 ｜ 开始 ｜ 变成 ｜ 每天 ｜ 都 ｜ 要 ｜ 完成 ｜ 的 ｜ 生活 ｜ 二零二五年 ｜ 三月 ｜ 她 ｜ 从 ｜ 资格 ｜ 赛 ｜ 出发 ｜ 拿下 ｜ 特拉萨 ｜ 赛事 ｜ 冠军 ｜ 拿 ｜ 到 ｜ 生涯 ｜ 首座 ｜ 成人 ｜ 职业 ｜ 赛事 ｜ 单打 ｜ 奖杯"
+      }
+    },
+    {
+      "id": "bundle:110131f43c24302515646dc1bcc3f035677fcb6dfdf0786f5f46e40316c3ae49",
+      "text": "她教塔格尔怎样把这一拍用进比赛，也教她怎样面对紧张、保持专注。二零二五年的报道里，塔格尔已经在意大利生活和训练，通过博尔扎诺的学校在线学习，考试时再到学校。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 71,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他教塔格尔怎样把这一派用尽比赛,也教他怎样面对紧张、保持专注。2025年的报道里,塔格尔已经在意大利生活和训练,通过波尔扎诺的学校再现学习考试时再到学校。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 71,
+        "speech_s": 14.045,
+        "cps": 5.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 教 ｜ 塔格尔 ｜ 怎样 ｜ 把 ｜ 这 ｜ 一 ｜ 拍 ｜ 用 ｜ 进 ｜ 比赛 ｜ 也 ｜ 教 ｜ 她 ｜ 怎样 ｜ 面对 ｜ 紧张 ｜ 保持 ｜ 专注 ｜ 二零二五年 ｜ 的 ｜ 报道 ｜ 里 ｜ 塔格尔 ｜ 已经 ｜ 在 ｜ 意大利 ｜ 生活 ｜ 和 ｜ 训练 ｜ 通过 ｜ 博尔扎诺 ｜ 的 ｜ 学校 ｜ 在线 ｜ 学习 ｜ 考试 ｜ 时 ｜ 再 ｜ 到 ｜ 学校"
+      }
+    },
+    {
+      "id": "bundle:336300a5e0166412530584d1fe068d019ce354578d6919c988c4bd3a83c2cd31",
+      "text": "她的教练，是最近一位单反大满贯女单冠军，二零一零年法网的斯齐亚沃尼。次年她在决赛输给李娜，见证亚洲首座大满贯单打冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他的教练,是最近一位单凡大满冠女单冠军,2010年罚网的斯齐亚沃尼。此年,他在决赛书给里娜,见证亚洲首座大满冠单打冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 11.545,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 的 ｜ 教练 ｜ 是 ｜ 最近 ｜ 一 ｜ 位 ｜ 单反 ｜ 大满贯 ｜ 女单 ｜ 冠军 ｜ 二零一零年 ｜ 法网 ｜ 的 ｜ 斯齐亚沃尼 ｜ 次年 ｜ 她 ｜ 在 ｜ 决赛 ｜ 输 ｜ 给 ｜ 李娜 ｜ 见证 ｜ 亚洲 ｜ 首座 ｜ 大满贯 ｜ 单打 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:39ea1190e0948aca8291e2d953925180961db0c3a3a182bded2a11022c14eb4a",
+      "text": "六月来到巴黎。法网青年组女单，六场比赛，一盘未失。决赛六比二、六比零，她击败克卢格曼，成为奥地利第一位，法网青年组单打冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6月来到巴黎,罚网青年组女单六场比赛,一盘未失。决赛6比2、6比0,她击败克鲁格曼,成为奥地利第一位罚网青年组单打冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 11.769,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六月 ｜ 来到 ｜ 巴黎 ｜ 法网 ｜ 青年 ｜ 组 ｜ 女单 ｜ 六场 ｜ 比赛 ｜ 一 ｜ 盘 ｜ 未 ｜ 失 ｜ 决赛 ｜ 六比二 ｜ 六比零 ｜ 她 ｜ 击败 ｜ 克卢格曼 ｜ 成为 ｜ 奥地利 ｜ 第一位 ｜ 法网 ｜ 青年 ｜ 组 ｜ 单打 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:3cee1244e9392437861e038becf14589cfd1586e5059648502cdea1db2145f7c",
+      "text": "女子网坛，单手打反拍的球员已经很少了。可这个姑娘，小时候就主动想练。她叫莉莉·塔格尔，如今已经站上广州决赛的舞台。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "女子网谈,单手打反派的球员已经很少了。可这个姑娘,小时候就主动想练。她叫莉莉·塔格尔,如今已经站上广州决赛的舞台。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 11.262,
+        "cps": 4.44,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "女子 ｜ 网坛 ｜ 单手 ｜ 打 ｜ 反拍 ｜ 的 ｜ 球员 ｜ 已经 ｜ 很少 ｜ 了 ｜ 可 ｜ 这个 ｜ 姑娘 ｜ 小时候 ｜ 就 ｜ 主动 ｜ 想 ｜ 练 ｜ 她 ｜ 叫 ｜ 莉莉 ｜ 塔格尔 ｜ 如今 ｜ 已经 ｜ 站 ｜ 上 ｜ 广州 ｜ 决赛 ｜ 的 ｜ 舞台"
+      }
+    },
+    {
+      "id": "bundle:472432d5404f2706ea21c115cccf49f771bece93fd26242989681848c90f20b1",
+      "text": "二零二六年四月，她在本国的林茨打进八强，首次进入世界前一百。七月，布拉格又给了她一次考验。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2026年4月,他在本国的林词打进八墙,首次进入世界前一百。7月,布拉格又给了他一次考验。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 7.995,
+        "cps": 5.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二六年 ｜ 四月 ｜ 她 ｜ 在 ｜ 本国 ｜ 的 ｜ 林茨 ｜ 打 ｜ 进 ｜ 八 ｜ 强 ｜ 首次 ｜ 进入 ｜ 世界 ｜ 前 ｜ 一百 ｜ 七月 ｜ 布拉格 ｜ 又 ｜ 给 ｜ 了 ｜ 她 ｜ 一次 ｜ 考验"
+      }
+    },
+    {
+      "id": "bundle:5570033222a155b2edf13c8253b36383d20bb5d6590914592720b50ccb251165",
+      "text": "小时候，她和教练约定：如果赢下这次比赛，就让她改练单手反拍。后来，她赢了。那个小女孩想试的一拍，也留在了她的职业生涯里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 52,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "小时候,他和教练约定,如果赢下这次比赛,就让他改练单手反拍。后来,他赢了。那个小女孩响试的一拍,也留在了她的职业生压力。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 52,
+        "speech_s": 11.215,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "小时候 ｜ 她 ｜ 和 ｜ 教练 ｜ 约定 ｜ 如果 ｜ 赢 ｜ 下 ｜ 这次 ｜ 比赛 ｜ 就让 ｜ 她 ｜ 改 ｜ 练 ｜ 单手 ｜ 反拍 ｜ 后来 ｜ 她 ｜ 赢 ｜ 了 ｜ 那个 ｜ 小 ｜ 女孩 ｜ 想 ｜ 试 ｜ 的 ｜ 一 ｜ 拍 ｜ 也 ｜ 留 ｜ 在 ｜ 了 ｜ 她 ｜ 的 ｜ 职业 ｜ 生涯 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:5c475770ff50ec46b6d6ca0b393bc72408fec436c266417033690ec0e37a9bf3",
+      "text": "二零二三年十月，十五岁的塔格尔，开始跟随斯齐亚沃尼训练。两个人都打单手反拍。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2023年10月,15岁的塔格尔开始跟随斯齐亚沃尼训练,两个人都打单手反派。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.04,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二三年 ｜ 十月 ｜ 十五岁 ｜ 的 ｜ 塔格尔 ｜ 开始 ｜ 跟随 ｜ 斯齐亚沃尼 ｜ 训练 ｜ 两个 ｜ 人 ｜ 都 ｜ 打 ｜ 单手 ｜ 反 ｜ 拍"
+      }
+    },
+    {
+      "id": "bundle:642c388707b9f007d2d716c8d6cf4916d3c0bfc7d62b849d53b70b1c2ba131a5",
+      "text": "现在，塔格尔已经晋级广州决赛，将争取生涯第二座巡回赛单打冠军。小时候，她只说我想这样打。走到更大的赛场，中间有教练，有训练，也有必须自己打完的难球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 65,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.015,
+        "longest_deletion": 0,
+        "transcript": "现在,塔格尔已经晋级广州决赛,将争取生涯第二座巡回赛单打冠军。小时候,他只说,我想这样打。走到更大的赛场,中间有教练、有训练,也有必须自己打完的篮球。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 65,
+        "speech_s": 14.729,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "现在 ｜ 塔格尔 ｜ 已经 ｜ 晋级 ｜ 广州 ｜ 决赛 ｜ 将 ｜ 争取 ｜ 生涯 ｜ 第二座 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 冠军 ｜ 小时候 ｜ 她 ｜ 只 ｜ 说 ｜ 我 ｜ 想 ｜ 这样 ｜ 打 ｜ 走 ｜ 到 ｜ 更 ｜ 大 ｜ 的 ｜ 赛场 ｜ 中间 ｜ 有 ｜ 教练 ｜ 有 ｜ 训练 ｜ 也有 ｜ 必须 ｜ 自己 ｜ 打 ｜ 完 ｜ 的 ｜ 难 ｜ 球"
+      }
+    },
+    {
+      "id": "bundle:6e5cca2e99347b83959207be3c7c8b5d4278e5c91fb2ed6f2cc8d547e9a1b3da",
+      "text": "单反给了人们记住她的理由，学习与成长，让她一次次走得更远。你小时候很喜欢、后来也一直坚持的那件事，现在怎么样了？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "单凡给了人们记住他的理由,学习与成长,让他一次次走得更远。你小时候很喜欢,后来也一直坚持的那件事,现在怎么样了?"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "长",
+          "word": "成长",
+          "intended": "zhang3",
+          "wrong": [
+            "chang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chang2",
+              "verdict": "correct",
+              "score": 0.376,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "掌仉涨"
+        },
+        {
+          "index": 25,
+          "char": "得",
+          "word": "得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": -0.093,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 10.106,
+        "cps": 4.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "单反 ｜ 给 ｜ 了 ｜ 人们 ｜ 记住 ｜ 她 ｜ 的 ｜ 理由 ｜ 学习 ｜ 与 ｜ 成长 ｜ 让 ｜ 她 ｜ 一次次 ｜ 走 ｜ 得 ｜ 更 ｜ 远 ｜ 你 ｜ 小时候 ｜ 很 ｜ 喜欢 ｜ 后来 ｜ 也 ｜ 一直 ｜ 坚持 ｜ 的 ｜ 那 ｜ 件 ｜ 事 ｜ 现在 ｜ 怎么样 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c0bcf2f98bf65f8e53762bda04e6ef0a0a173c61f6338bb20c2ff69b1abecf68",
+      "text": "塔格尔偏要单手打，一路打进广州决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "塔格尔篇要单手打,一路打进广州决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.184,
+        "cps": 5.03,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "塔格尔 ｜ 偏 ｜ 要 ｜ 单手 ｜ 打 ｜ 一路 ｜ 打 ｜ 进 ｜ 广州 ｜ 决赛"
+      }
+    },
+    {
+      "id": "bundle:d21a1a03400b498b2d6e52b5848e002f45baf2259142e541b062a05741bcbc62",
+      "text": "十五年前，教练在这里捧杯；十五年后，学生赢下了青年组冠军。那是一次动人的呼应。接下来，她还要面对成人巡回赛的考验。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 50,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "十五年前,教练在这里捧碑,十五年后,学生赢下了青年组冠军。那是一次动人的呼应。接下来,他还要面对成人巡回赛的考验。"
+      },
+      "polyphones": [
+        {
+          "index": 44,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.45,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 50,
+        "speech_s": 11.238,
+        "cps": 4.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十五年 ｜ 前 ｜ 教练 ｜ 在 ｜ 这里 ｜ 捧杯 ｜ 十五年 ｜ 后 ｜ 学生 ｜ 赢 ｜ 下 ｜ 了 ｜ 青年 ｜ 组 ｜ 冠军 ｜ 那 ｜ 是 ｜ 一次 ｜ 动人 ｜ 的 ｜ 呼应 ｜ 接下来 ｜ 她 ｜ 还要 ｜ 面对 ｜ 成人 ｜ 巡回 ｜ 赛 ｜ 的 ｜ 考验"
+      }
+    },
+    {
+      "id": "bundle:dab283d96c0c5f11c3894d69b0ba0d46d6b9110f35c89e3f926eabe48b0743e5",
+      "text": "塔格尔来自奥地利利恩茨。五岁开始规律练球，最初一周只有一小时。从儿童小球场起步，她已经很喜欢往网前跑，主动把一分打完。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "塔格尔来自奥地利利恩祠。五岁开始规律练球,最初一周只有一小时。从儿童小球场起步,他已经很喜欢往往前跑,主动把一分打完。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 10.967,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "塔格尔 ｜ 来自 ｜ 奥地利利 ｜ 恩茨 ｜ 五岁 ｜ 开始 ｜ 规律 ｜ 练 ｜ 球 ｜ 最初 ｜ 一周 ｜ 只有 ｜ 一小时 ｜ 从 ｜ 儿童 ｜ 小 ｜ 球场 ｜ 起步 ｜ 她 ｜ 已经 ｜ 很 ｜ 喜欢 ｜ 往 ｜ 网 ｜ 前 ｜ 跑 ｜ 主动 ｜ 把 ｜ 一 ｜ 分 ｜ 打 ｜ 完"
+      }
+    },
+    {
+      "id": "bundle:dcfee85dd67e7e26a2ecace381bb7f1b1fe181d8472c5b38b2960de6159090b5",
+      "text": "她在法网采访里回忆，当时并不知道换打法可能有多难，只觉得打起来很有乐趣。这个选择，发生在斯齐亚沃尼成为她的教练之前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 53,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他在罚网采访里回忆,当时并不知道换打法可能有多难,只觉得打起来很有乐趣。这个选择发生在斯齐亚沃尼成为他的教练之前。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.403,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 41,
+          "char": "发",
+          "word": "发生",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 53,
+        "speech_s": 10.425,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 在 ｜ 法网 ｜ 采访 ｜ 里 ｜ 回忆 ｜ 当时 ｜ 并 ｜ 不 ｜ 知道 ｜ 换 ｜ 打法 ｜ 可能 ｜ 有 ｜ 多 ｜ 难 ｜ 只 ｜ 觉得 ｜ 打 ｜ 起来 ｜ 很 ｜ 有 ｜ 乐趣 ｜ 这个 ｜ 选择 ｜ 发生 ｜ 在 ｜ 斯齐亚沃尼 ｜ 成为 ｜ 她 ｜ 的 ｜ 教练 ｜ 之前"
+      }
+    },
+    {
+      "id": "bundle:e3483cda782d8a77eb708df1400908dc24e9c7c39145ecbfbde6c541f2a0bbdb",
+      "text": "二零二五年十一月，九江。塔格尔第一次打，巡回赛单打正赛。半决赛对面，是卫冕冠军戈卢比奇。巧的是，她也打单反。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2025年11月 9 江,塔格尔第一次打,循回赛单打正赛。半决赛对面,是为免冠军割鲁比奇。瞧的是,他也打单反。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 11.038,
+        "cps": 4.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二五年 ｜ 十一月 ｜ 九江 ｜ 塔格尔 ｜ 第一次 ｜ 打 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 正 ｜ 赛 ｜ 半决赛 ｜ 对面 ｜ 是 ｜ 卫冕 ｜ 冠军 ｜ 戈卢比奇 ｜ 巧 ｜ 的 ｜ 是 ｜ 她 ｜ 也 ｜ 打 ｜ 单反"
+      }
+    },
+    {
+      "id": "bundle:eb35d9aa5703587173eab51fcd5855ee4ac43b6a696d77e1956d5c4f4ade31a2",
+      "text": "决赛首盘，她二比五落后于斯尼古尔。她追到五比五，随后赢下抢七，再以六比二拿下第二盘，第一次成为巡回赛单打冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛手盘：他2比5落后于斯尼古尔：他追到5比5：随后赢下抢7：再以6比2拿下第二盘：第一次成为循回赛单打冠军。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.341,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.227,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.484,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 首盘 ｜ 她 ｜ 二比五 ｜ 落后 ｜ 于 ｜ 斯尼古尔 ｜ 她 ｜ 追 ｜ 到 ｜ 五比五 ｜ 随后 ｜ 赢 ｜ 下 ｜ 抢 ｜ 七 ｜ 再 ｜ 以 ｜ 六比二 ｜ 拿下 ｜ 第二盘 ｜ 第一次 ｜ 成为 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:f3e6a1c1c0d8dde8eb673e40a9d9184a4be6224dbe7ac004ae604c22e334c72a",
+      "text": "回看那次夺冠，她还提到了前一周的失利。到了布拉格，再遇见之前击败自己的对手，她把从败仗里学到的东西用进了比赛。进步未必立刻换来奖杯。输过的一场，也能为下一场做准备。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 74,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "回看那次奪冠,他还提到了前一周的失利。到了布拉格,在遇见之前击败自己的对手,他把从败仗里学到的东西用尽了比赛。进步未必立刻换来奖杯。输过的一场,也能为下一场做准备。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.483,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 74,
+        "speech_s": 15.719,
+        "cps": 4.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "回 ｜ 看 ｜ 那次 ｜ 夺冠 ｜ 她 ｜ 还 ｜ 提到 ｜ 了 ｜ 前一周 ｜ 的 ｜ 失利 ｜ 到 ｜ 了 ｜ 布拉格 ｜ 再 ｜ 遇见 ｜ 之前 ｜ 击败 ｜ 自己 ｜ 的 ｜ 对手 ｜ 她 ｜ 把 ｜ 从 ｜ 败仗 ｜ 里 ｜ 学 ｜ 到 ｜ 的 ｜ 东西 ｜ 用 ｜ 进 ｜ 了 ｜ 比赛 ｜ 进步 ｜ 未必 ｜ 立刻 ｜ 换 ｜ 来 ｜ 奖杯 ｜ 输 ｜ 过 ｜ 的 ｜ 一 ｜ 场 ｜ 也 ｜ 能 ｜ 为 ｜ 下 ｜ 一 ｜ 场 ｜ 做 ｜ 准备"
+      }
+    },
+    {
+      "id": "bundle:f5bd42ce4dc076980b2a6edb6dd10a136cb49866a41dac267d1034c41bd30719",
+      "text": "她把三个赛点全部救了回来，最终七比五赢下决胜盘。舒展的反拍之外，人们也看到，她落后时仍在争取。第一次参加巡回赛正赛，她就打进决赛，那一周最终收获亚军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 67,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他把三个赛点全部救了回来, 最终七比五赢下决胜盘。书展的反拍之外, 人们也看到他落后时仍在争取。第一次参加巡回赛正赛, 他就打进决赛,那一周最终收获亚军。"
+      },
+      "polyphones": [
+        {
+          "index": 39,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.424,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.393,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 67,
+        "speech_s": 14.387,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 把 ｜ 三个 ｜ 赛点 ｜ 全部 ｜ 救 ｜ 了 ｜ 回来 ｜ 最终 ｜ 七比五 ｜ 赢 ｜ 下 ｜ 决胜 ｜ 盘 ｜ 舒展 ｜ 的 ｜ 反 ｜ 拍 ｜ 之外 ｜ 人们 ｜ 也 ｜ 看到 ｜ 她 ｜ 落后 ｜ 时 ｜ 仍 ｜ 在 ｜ 争取 ｜ 第一次 ｜ 参加 ｜ 巡回 ｜ 赛 ｜ 正 ｜ 赛 ｜ 她 ｜ 就 ｜ 打 ｜ 进 ｜ 决赛 ｜ 那 ｜ 一周 ｜ 最终 ｜ 收获 ｜ 亚军"
+      }
+    },
+    {
+      "id": "bundle:f6ef5a0389505c7fe4327023be395b410ed5ef5431bbe6db3c61aac9a735919f",
+      "text": "决胜盘，塔格尔二比五落后。追回两局后，她仍在四比五时面对三个连续赛点。对手再赢一分，比赛就结束。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝胜盘,塔格尔2比5落后。追回两局后,他仍在4比50面对三个连续赛点。对手再赢一分,比赛就结束。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": -0.034,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.558,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.587,
+        "cps": 4.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 塔格尔 ｜ 二 ｜ 比五 ｜ 落后 ｜ 追回 ｜ 两局 ｜ 后 ｜ 她 ｜ 仍 ｜ 在 ｜ 四比五 ｜ 时 ｜ 面对 ｜ 三个 ｜ 连续 ｜ 赛点 ｜ 对手 ｜ 再 ｜ 赢 ｜ 一 ｜ 分 ｜ 比赛 ｜ 就 ｜ 结束"
+      }
+    }
+  ]
+}

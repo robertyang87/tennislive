@@ -90,7 +90,7 @@ _YT = re.compile(r"(?:youtube\.com/(?:watch\?(?:[^#\s]*&)?v=|shorts/|live/|embed
 _TTV = re.compile(r"tennistv\.com/videos/(\d+)")
 #: download-video.yml 存档的那份：`releases/download/source-<id>/<id>.mp4`——同一条片子，同一个键
 #: （probe 有存档就改用它，`tools/release_source.py`；不认的话去重和认领会把它当成另一条源片）
-_REL = re.compile(r"/releases/download/source-([A-Za-z0-9_-]{11})/")
+_REL = re.compile(r"/releases/download/source-([A-Za-z0-9_-]{11}|\d{12,})/")
 #: download-video 给非 YouTube 源建的存档：tag 是人读的 slug、文件名是 `<数字 id>-<十六进制 hash>.mp4`
 #: ——键取文件名里的数字 id（转写目录 `data/source_asr/<数字 id>/` 就是按它建的）。
 _REL_HASHED = re.compile(r"/releases/download/source-[^/]+/(\d{6,})-[0-9a-f]{8,}\.mp4")

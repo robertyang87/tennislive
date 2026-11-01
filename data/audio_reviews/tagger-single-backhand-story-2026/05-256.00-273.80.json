@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-q0y4FBIFO-8/q0y4FBIFO-8.mp4",
+  "source_sha256": "915619972d024c97df3be3eb8004199a567035b982621b588562a16d332f1590",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-01T01:16:27+00:00",
+  "reviewed_from": 256.0,
+  "reviewed_to": 273.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 256.02,
+      "end": 261.7,
+      "en": "But no, actually it was because I every time just felt more and more...",
+      "zh": "其实，是因为我越来越觉得……"
+    },
+    {
+      "start": 261.7,
+      "end": 265.44,
+      "en": "How do you say? Confident with one hand, honestly.",
+      "zh": "怎么说呢，用单手更有信心。"
+    },
+    {
+      "start": 266.14,
+      "end": 269.0,
+      "en": "Which is strange because I started to play with two hands.",
+      "zh": "这挺奇妙的，因为我最初练的是双反。"
+    },
+    {
+      "start": 269.5,
+      "end": 273.54,
+      "en": "But yeah, as soon as no one was watching, I just said, okay, no, I don't use the left hand.",
+      "zh": "没人看时，我就不用左手了。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 915619972d024c97df3be3eb8004199a567035b982621b588562a16d332f1590，存于 data/source_asr/q0y4FBIFO-8/small.en.json 与 data/source_asr/q0y4FBIFO-8/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

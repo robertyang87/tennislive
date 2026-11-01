@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6384390010112/6384390010112.mp4",
+  "source_sha256": "a6b0965cfa54493ddb91461244fe29664634889d450f1f9d4f549d5725f41d36",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-01T00:38:10+00:00",
+  "reviewed_from": 299.3,
+  "reviewed_to": 323.65,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 312.18,
+      "end": 313.42,
+      "en": "Into the net it goes.",
+      "zh": "球下网了。"
+    },
+    {
+      "start": 314.08,
+      "end": 315.1,
+      "en": "She's done it!",
+      "zh": "她做到了！"
+    },
+    {
+      "start": 315.64,
+      "end": 317.94,
+      "en": "What an extraordinary match of tennis.",
+      "zh": "多么精彩的一场网球比赛。"
+    },
+    {
+      "start": 317.94,
+      "end": 323.44,
+      "en": "This has been an absolute advert for the game.",
+      "zh": "这场比赛充分展现了网球的魅力。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 a6b0965cfa54493ddb91461244fe29664634889d450f1f9d4f549d5725f41d36，存于 data/source_asr/6384390010112/small.en.json 与 data/source_asr/6384390010112/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
