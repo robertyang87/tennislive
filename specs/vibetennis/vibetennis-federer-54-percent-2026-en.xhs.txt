@@ -2,7 +2,7 @@ Federer won only 54% of his points. How did he win 82% of his matches?
 
 He won 1,251 of 1,526 singles matches, yet only 54% of his points.
 
-The answer is a Markov chain. In 1913 Andrey Markov sorted the first 20,000 letters of Pushkin's Eugene Onegin into vowels and consonants: a vowel followed a vowel only 12.8% of the time, but a consonant 66.3%. The next letter depends only on the current one.
+The answer is a Markov chain: states, transition probabilities, and one rule — only the present matters. In 1913 Andrey Markov found it in Pushkin's Eugene Onegin: across 20,000 letters, a vowel followed a vowel only 12.8% of the time, but a consonant 66.3%.
 
 Tennis scoring is such a chain, and it amplifies a small edge layer by layer:
 54% per point → 60% per game → 76% per set → 91% best-of-five.
