@@ -1,21 +1,9 @@
 {
   "quality_approval": false,
-  "method": "native_transcription_precheck",
+  "method": "native_actual_input_precheck",
+  "pass": true,
+  "changed_requests": 3,
   "entries": [
-    {
-      "id": "bundle:13a6b93aca529a054c7481fd2c290bbf2e0339e1e2221be7824d35d04e4e46b9",
-      "text": "决胜盘五比四，达特发球，四十比十五。画面上，是她的第三个冠军点。先把前两个没兑现的机会放下。再发一球，再接一次来球。这一次，终于轮到她。",
-      "comparison": {
-        "ok": true,
-        "ref_syllables": 58,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "决胜盘5比4,达特发球,40比15。画面上,是他的第三个冠军点。先把前两个没兑现的机会放下。再发一球,再借一次来球。这一次,终于轮到他。"
-      }
-    },
     {
       "id": "bundle:1bbe1644c139221f6ffb74eace91c4babd0e1c5656f4c0d70bfe88841db50749",
       "text": "可是，往上走的日子，并不连续。二零一五年的脚伤，让她休战了大约半年。二零一六年，髋部又受伤。对一名还在建立职业生涯的球员来说，她需要先重新回到球场。",
@@ -28,7 +16,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 1,
         "transcript": "可是,网上走的日子并不连续,2015年的脚伤让它修占了大约半年,2016年宽布又受伤,对名还在建立职业生涯的球员来说,它需要先重新回到球场。"
-      }
+      },
+      "audio_sha256": "d640c62da05fa4ada19d4a870cc2081147d5b4c40948ff8d3a3a921b2b829557"
     },
     {
       "id": "bundle:2e4b36ea84c808ca12f3e3b33bea9fd10c98d04491767a90bb4449d634588969",
@@ -42,7 +31,8 @@
         "sub_ratio": 0.015,
         "longest_deletion": 0,
         "transcript": "她在采访里说,大约十三岁时,开始认真想做职业球员。2011年,她出站职业赛事,2014年,拿到第一座低级别职业赛单打冠军。4年,第一次站上循回赛单打正赛。"
-      }
+      },
+      "audio_sha256": "bd262e91e441d3c76bcb945add679f44a9db04b99d6992048538a3f39cfa8e0d"
     },
     {
       "id": "bundle:33de592cf635fd0f1bef3e2b81ded6430c306c069e3f36bdd377c0fa9b472328",
@@ -56,7 +46,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "算上资格赛,这一周他打了七场,其中六场要打三盘。五场正赛,无一例外都是三盘。加起来二十盘球,他把自己留在比赛里,也终于把这场等待带到了冠军点。"
-      }
+      },
+      "audio_sha256": "8db3f7c119df3a193731d5a7769e5eb351dfb267e6c71d5ed155ccc399c72eeb"
     },
     {
       "id": "bundle:38e8d4a75f72ad7bf333e6c8e458a489e13d5d83a2d9e182e24f5baccb18a5a5",
@@ -70,7 +61,8 @@
         "sub_ratio": 0.033,
         "longest_deletion": 0,
         "transcript": "第二年,她又从澳网资格赛打起。这次,首轮打了将近三个小时,她逆转土居美笑,拿到澳网正在手上。一年前一局未得的球场,她终于带走了一场胜利。"
-      }
+      },
+      "audio_sha256": "8eb67421ba66df35c3299eb603f027d157af8663d69a010af4669e0f9848bfd3"
     },
     {
       "id": "bundle:3b5bf0cac5d5662319c43dda6bf23c16057b2816eb396ec21f7785012a5c75d1",
@@ -84,7 +76,8 @@
         "sub_ratio": 0.016,
         "longest_deletion": 0,
         "transcript": "英雄后,他蹲在草地上,把手捂在嘴边。那个赛季,他的单打排名最高来到世界第七十。你会在大满冠基金里看见他,却还不能再寻回赛单打冠军名单里找到他。"
-      }
+      },
+      "audio_sha256": "876e88a4f6780c3f164219eeec3e3ec5bd769ec3d55b0e9aeb33f60268f9e3de"
     },
     {
       "id": "bundle:3edbee970f2310bda97256a37757e7f736f40058cde4410a0e171af5fbf2174f",
@@ -98,7 +91,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "更大的突破,等到2022年的印第安威尔斯。又是从资格赛出发,他先后击败斯维托丽娜和卡内皮打到第四轮。3月21日,25岁的达特第一次进入单打世界前100,排名第99。"
-      }
+      },
+      "audio_sha256": "14a606cdc60dca21b6fe4199de0a9942642a1e2b23a468379d379768bc7914ec"
     },
     {
       "id": "bundle:4037c93398cab01a91cd43d6f164289226651da387f6b0539c87396c4b54e649",
@@ -112,7 +106,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "正赛手轮﹑三盘﹑第二轮﹑三盘﹑四分之一决赛对巴多萨还是三盘,等他站上决赛,已经连赢六场。对他来说,这一周的难度藏在每一场都要重新开始的决胜盘里。"
-      }
+      },
+      "audio_sha256": "c6a23876f00a937170f840b5387342ba5e2363c7ceee06161db037420cb1592e"
     },
     {
       "id": "bundle:6aa04732081bc6aaa71972a3b43fb575756740d1e44f69c67f5ecf0ddb76e9c5",
@@ -126,7 +121,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "2024年变化继续发生,1月,他在堪培拉的125级赛事拿到丹达亚军,2月,在克鲁日第一次收获巡回赛丹达四强成绩,他越来越接近决赛,但还没有到。"
-      }
+      },
+      "audio_sha256": "f918162584796ca178923aa70625c923bd825e5b0edea5772737b5bfc7bc78b3"
     },
     {
       "id": "bundle:83b4eee5118be7832d1da8e2583b1ba2ff2962665524bf59f68645d9ff8224a7",
@@ -140,7 +136,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "这是夺冠前一天、半决赛后的采访。那时,他还不知道自己会成为冠军。仅仅是第一次达进巡回赛、单打决赛,就已经让30岁的达特等了很久。"
-      }
+      },
+      "audio_sha256": "5ad87affd00cb747817bf1d296681716527b3f8d4530b28f3400fe23f5018993"
     },
     {
       "id": "bundle:86698cb1938c95712e4f140195aa30cafcee992ba503ec1238603be52dc20e10",
@@ -154,7 +151,8 @@
         "sub_ratio": 0.071,
         "longest_deletion": 0,
         "transcript": "达特等到30岁,循回在丹达手冠。"
-      }
+      },
+      "audio_sha256": "72fda2553f95bba2b702ff06f1a4b266482fde07d30978f992e1cd2a1b24ce26"
     },
     {
       "id": "bundle:96fc20688af50e5e8d933dfb7a8236ee9453d8f484c2553147e438dae2149d14",
@@ -168,21 +166,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 1,
         "transcript": "来到广州时,她的单打排名是一百一十五,还要先打自个赛。地场就先丢一盘,随后靠抢七追平,再赢下决胜盘。从冠军倒着看,那只是第一步,深处其中,她先要争取一张正赛门票。"
-      }
-    },
-    {
-      "id": "bundle:97b19d17d23ce86879abbf347d1a5958b820dff77db1edb0aeffbd04507740b6",
-      "text": "她的经历里，也有争议。二零二五年鲁昂站，她对布瓦松说了涉及体味的不当言论。赛后，她公开道歉，说自己对那番话感到后悔。这也是她职业经历的一部分。",
-      "comparison": {
-        "ok": true,
-        "ref_syllables": 63,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.032,
-        "longest_deletion": 0,
-        "transcript": "她的经历里也有争议。2025年鲁王战,她对布瓦松说了涉及体位的不当言论。再后,她公开道歉,说自己对那番话感到后悔。这也是她职业经历的一部分。"
-      }
+      },
+      "audio_sha256": "39faf36693b3b1bf8863cdacd2a6fc8068fca2df194ddcf6d2b65ee998a6d174"
     },
     {
       "id": "bundle:9bdf18e241bbe37190e3608d6857ab07f18dd0d291fae3d1a61cc8740078dfd1",
@@ -196,7 +181,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "哈利亚特、达特出生在伦敦汉普斯特德。七岁时,他在家附近的坎波兰草地网球俱乐部开始打球。爸爸妈妈也在那里相识。他的网球故事有一个很生活化的起点。"
-      }
+      },
+      "audio_sha256": "34d39a927aab75d01f74b1c2ef0cc349253723efab4f26952cd3b4215e62defa"
     },
     {
       "id": "bundle:ae41cc92616cafcc40b22eda78d6b429e0c4e53e411efe76dabf86112fcfa707",
@@ -210,7 +196,23 @@
         "sub_ratio": 0.015,
         "longest_deletion": 0,
         "transcript": "到了二零二六年,他已经和拉姆斯登一起在诺丁汉和布拉格拿到巡迴赛双打冠军。所以广州这次准确地说是他的巡迴赛单打手冠。这座奖牌,他一直等到三十岁。"
-      }
+      },
+      "audio_sha256": "51ba2c2f64b67f536ca5313738c183ce4309832d3dabe91ffa966f288e92e352"
+    },
+    {
+      "id": "bundle:b1d3b4ad00abff202ed0556ddb035cfc817bf0ac1daaa9332ee65b2f22a177f0",
+      "text": "她的经历里，也有争议。二零二五年鲁昂站，她对布瓦松说了涉及体味的不当言论。赛后，她公开道歉，说自己对那番话感到后悔。",
+      "comparison": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.039,
+        "longest_deletion": 0,
+        "transcript": "她的经历里也有争议。2025年鲁王战,她对布瓦松说了涉及体位的不当言论。再后,她公开道歉,说自己对那番话感到后悔。"
+      },
+      "audio_sha256": "64e3296913afcdcd52840f9ead622eeae47b3661eedabf38f6c15923ae973f91"
     },
     {
       "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
@@ -224,21 +226,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "关注网球时差,时差归我,好球归你。"
-      }
-    },
-    {
-      "id": "bundle:b8e997fa2fe72d47ad9124b6c8bea664ad053717a0c3817d1f5630b33514eca6",
-      "text": "之后，她抢七七比一扳回一盘，决胜盘六比零，终于赢下比赛。这一次，她没有停在决赛门外。那段含着眼泪的感谢，就发生在这场胜利之后。",
-      "comparison": {
-        "ok": true,
-        "ref_syllables": 55,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "之后,她抢七七比一搬回一盘,决胜盘六比零,终于赢下比赛。这一次,她没有停在决赛门外。那段含着眼泪的感谢,就发生在这场胜利之后。"
-      }
+      },
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97"
     },
     {
       "id": "bundle:bf16ad7343978f0b780a027265a359a3801b825c5536b17e21dfbbed8b3d913b",
@@ -252,7 +241,8 @@
         "sub_ratio": 0.015,
         "longest_deletion": 0,
         "transcript": "半决赛,她面对16岁的中国姑娘孙心然,先输5比7,第二盘4比5,又轮到自己发球。孙心然两次在评分后战先,拿到赛脸。达特先后就回两个,这一分是其中的第一次。"
-      }
+      },
+      "audio_sha256": "1aa3f30ca3dcfc5b7b7e23617134d769f27f1a0fa050edfee3dc915860f3ee3b"
     },
     {
       "id": "bundle:cc25e6c30bd2044225cb6d952093a7704339050268a643f63fa60d7e2ecc563d",
@@ -266,7 +256,23 @@
         "sub_ratio": 0.013,
         "longest_deletion": 0,
         "transcript": "从小时候交朋友的俱乐部到30岁亲吻这支冠军奖牌。达特的路有伤病、失利,也有过需要道歉的时刻。而今天,他终于完成了单打的一次突破。如果结果来得很慢,你还愿意给自己多少时间?"
-      }
+      },
+      "audio_sha256": "c722d419df7252eaefb6cbd63a6c6e9a938bf2ee9afbd637cfb79e12e035c466"
+    },
+    {
+      "id": "bundle:ce309ea18a7f7f0906d0f8d49014774bc1262e49d364d96b3e81f4ee209c6009",
+      "text": "之后，她抢七七比一扳回一盘，决胜盘六比零，终于赢下比赛。这一次，她没有停在决赛门外。她赛后流泪，感谢团队一直陪伴自己。",
+      "comparison": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "之后,她抢七七比一搬回一盘,决胜盘六比零,终于赢下比赛。这一次,她没有停在决赛门外。她再后流泪,感谢团队一直陪伴自己。"
+      },
+      "audio_sha256": "f659f82eec4cc58f7b88b67a1a683ea9d21d543a63b598963efef74a11ab1b25"
     },
     {
       "id": "bundle:da72d9422ab6580c0aa0b777e09e9262d83acc80038268f3b631e2976e8d0fa9",
@@ -280,7 +286,8 @@
         "sub_ratio": 0.0,
         "longest_deletion": 0,
         "transcript": "那时她接受采访,说自己过去长音一场失礼,难受好几个星期。后来,她学着把眼光放回每天的工作。一直努力,却等不到结果,已经是她非常熟悉的经历。"
-      }
+      },
+      "audio_sha256": "c88000d932ad1a0fce40099e59209d5000a54326f8f059feb958cc2c6dd3c38f"
     },
     {
       "id": "bundle:e59caa879654b76ecc902e8e5292b72cfdba55bcbad4219486893de5c63d3bb3",
@@ -294,7 +301,23 @@
         "sub_ratio": 0.031,
         "longest_deletion": 0,
         "transcript": "童年温网第二轮,他和波尔特打到决胜盘抢时。2比6落后,黎淑仇越来越近。可达特瓦比分追了回来,最后以10比8赢下抢时。这是他第二次打进温网第三轮。"
-      }
+      },
+      "audio_sha256": "5e836b776076230572953fcf61912f0c154431153fc455cd23f1c3e50aa8fedd"
+    },
+    {
+      "id": "bundle:e96691f65fdfbae985d651448c06ea09a071cc9ba6b44c8ee8d417bede01ed33",
+      "text": "决胜盘五比四，达特发球，四十比十五。这是她的第三个冠军点。先把前两个没兑现的机会放下。再发一球，再接一次来球。这一次，终于轮到她。",
+      "comparison": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决胜盘5比4,达特发球,40比15。这是他的第三个冠军点。先把前两个没兑现的机会放下。再发一球,再借一次来球。这一次,终于轮到他。"
+      },
+      "audio_sha256": "7d413f881b25c8c6e6089b2730dcf3a18fecc02953400b8fd46c02eab318eefc"
     },
     {
       "id": "bundle:eb9f52bbe1559b735f0ec46b885a3974c3dda3d485fb2bdfd874a68c3480873c",
@@ -308,7 +331,8 @@
         "sub_ratio": 0.016,
         "longest_deletion": 1,
         "transcript": "决赛对面的塔格尔只有十八岁,已经拿过巡回赛单打冠军。达特三十岁,第一次打仗的决赛。先输四比六,再以六比三追回。他又一次,要在第三盘里争取结果。"
-      }
+      },
+      "audio_sha256": "8281922738cb06f67f781f769d9f5b8952d3a55704c0e19dc64edbd0305397f9"
     },
     {
       "id": "bundle:f7251b6b903d51d9e0873a49655036039a7c66ad9279f89fe31f902f9ab1bd1d",
@@ -322,7 +346,87 @@
         "sub_ratio": 0.017,
         "longest_deletion": 0,
         "transcript": "2019年傲王,22岁的达特联赢三场资格赛,终于走进正赛。对面是他欣赏多年的莎拉波娃。他第一次来到傲王正赛的结果,却是2个0比6。"
-      }
+      },
+      "audio_sha256": "7ca978da32265bd499b845411ae81bf3517a00f1277d2ea33c0f55490d32295d"
+    }
+  ],
+  "changed_polyphones": [
+    {
+      "index": 33,
+      "char": "当",
+      "word": "不当",
+      "intended": "dang4",
+      "wrong": [
+        "dang1"
+      ],
+      "tier": "A",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "dang1",
+          "verdict": "correct",
+          "score": 0.405,
+          "confidence": "low",
+          "near": null
+        }
+      ],
+      "ok_refs": "档荡凼"
+    },
+    {
+      "index": 9,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "wrong": [
+        "fa4"
+      ],
+      "tier": "B",
+      "verdict": "unmeasurable",
+      "why": "找不到只读 fa1 的常用字当参考"
+    },
+    {
+      "index": 44,
+      "char": "发",
+      "word": "发",
+      "intended": "fa1",
+      "wrong": [
+        "fa4"
+      ],
+      "tier": "B",
+      "verdict": "unmeasurable",
+      "why": "找不到只读 fa1 的常用字当参考"
+    }
+  ],
+  "changed_pause_speed": [
+    {
+      "inner_pauses": [],
+      "fake_tokens": [],
+      "chars": 51,
+      "speech_s": 11.097,
+      "cps": 4.6,
+      "pause_ok": true,
+      "speed_ok": true,
+      "tokens": "她 ｜ 的 ｜ 经历 ｜ 里 ｜ 也有 ｜ 争议 ｜ 二零二五年 ｜ 鲁昂站 ｜ 她 ｜ 对 ｜ 布瓦松 ｜ 说 ｜ 了 ｜ 涉及 ｜ 体味 ｜ 的 ｜ 不当 ｜ 言论 ｜ 赛 ｜ 后 ｜ 她 ｜ 公开 ｜ 道歉 ｜ 说 ｜ 自己 ｜ 对 ｜ 那 ｜ 番 ｜ 话 ｜ 感到 ｜ 后悔"
+    },
+    {
+      "inner_pauses": [],
+      "fake_tokens": [],
+      "chars": 51,
+      "speech_s": 11.781,
+      "cps": 4.33,
+      "pause_ok": true,
+      "speed_ok": true,
+      "tokens": "之后 ｜ 她 ｜ 抢 ｜ 七七比一 ｜ 扳回 ｜ 一 ｜ 盘 ｜ 决胜 ｜ 盘 ｜ 六比零 ｜ 终于 ｜ 赢 ｜ 下 ｜ 比赛 ｜ 这 ｜ 一次 ｜ 她 ｜ 没有 ｜ 停 ｜ 在 ｜ 决赛 ｜ 门 ｜ 外 ｜ 她 ｜ 赛 ｜ 后 ｜ 流泪 ｜ 感谢 ｜ 团队 ｜ 一直 ｜ 陪伴 ｜ 自己"
+    },
+    {
+      "inner_pauses": [],
+      "fake_tokens": [],
+      "chars": 56,
+      "speech_s": 13.101,
+      "cps": 4.27,
+      "pause_ok": true,
+      "speed_ok": true,
+      "tokens": "决胜 ｜ 盘 ｜ 五比四 ｜ 达特 ｜ 发球 ｜ 四十比十五 ｜ 这是 ｜ 她 ｜ 的 ｜ 第三个 ｜ 冠军 ｜ 点 ｜ 先 ｜ 把 ｜ 前 ｜ 两个 ｜ 没 ｜ 兑现 ｜ 的 ｜ 机会 ｜ 放下 ｜ 再 ｜ 发 ｜ 一 ｜ 球 ｜ 再 ｜ 接 ｜ 一次 ｜ 来 ｜ 球 ｜ 这 ｜ 一次 ｜ 终于 ｜ 轮 ｜ 到 ｜ 她"
     }
   ]
 }
