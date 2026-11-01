@@ -17,3 +17,4 @@ Call a run fully successful only when five separate artifacts are verifiable: fo
 ## Failure policy
 
 Classify missing credentials, temporary API/network errors, or unavailable artifacts as retryable. Classify fabricated facts, invalid score direction, wrong person, old cover, low-confidence evidence, malformed schema, or failed deterministic QC as blocking. Do not automatically publish or override a blocking failure.
+

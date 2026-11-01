@@ -1,0 +1,217 @@
+{
+  "provider": "TNNS live explicit full-match left/right court partitions; sums crosschecked with official WTA",
+  "method": "api",
+  "source_url": "https://api.tnnslive.com/v1/web?id=2UR9STD5G4U23sVfzbiI&mode=match_info&submode=stats&web=true",
+  "source_path": "data/evidence/shnaider-fernandez-tokyo-2026-final/tnns-raw.json",
+  "source_sha256": "aaa8463236e199121163f7b47fc93da5d7ebd7cd9bd41a469d5406f57d78c260",
+  "period": "Match",
+  "source_period": "sum FER by court Left+Right; sum SHN by court Left+Right; not the defective Match key-stats block",
+  "match_date": "2026-11-01",
+  "checked_at": "2026-11-01T07:01:05.514487+00:00",
+  "winner_result": "6-4 5-7 6-2",
+  "matchup": [
+    "Leylah Fernandez",
+    "Diana Shnaider"
+  ],
+  "winners": [
+    41,
+    26
+  ],
+  "ue": [
+    35,
+    19
+  ],
+  "partition_values": {
+    "FER by court": {
+      "winners": 41,
+      "ue": 35,
+      "parts": {
+        "Winners": [
+          18,
+          23
+        ],
+        "Unforced Errors": [
+          20,
+          15
+        ]
+      }
+    },
+    "SHN by court": {
+      "winners": 26,
+      "ue": 19,
+      "parts": {
+        "Winners": [
+          10,
+          16
+        ],
+        "Unforced Errors": [
+          13,
+          6
+        ]
+      }
+    }
+  },
+  "independent_official_checks": {
+    "FER by court": {
+      "Aces": [
+        [
+          0,
+          0
+        ],
+        0
+      ],
+      "Double Faults": [
+        [
+          4,
+          1
+        ],
+        5
+      ],
+      "1st Serve In": {
+        "parts": [
+          [
+            26,
+            41
+          ],
+          [
+            31,
+            46
+          ]
+        ],
+        "total": [
+          57,
+          87
+        ]
+      },
+      "1st Serve Points Won": {
+        "parts": [
+          [
+            18,
+            26
+          ],
+          [
+            16,
+            31
+          ]
+        ],
+        "total": [
+          34,
+          57
+        ]
+      },
+      "Service Points": {
+        "parts": [
+          [
+            22,
+            41
+          ],
+          [
+            25,
+            46
+          ]
+        ],
+        "total": [
+          47,
+          87
+        ]
+      },
+      "Total Points": {
+        "parts": [
+          [
+            41,
+            89
+          ],
+          [
+            45,
+            95
+          ]
+        ],
+        "total": [
+          86,
+          184
+        ]
+      }
+    },
+    "SHN by court": {
+      "Aces": [
+        [
+          0,
+          2
+        ],
+        2
+      ],
+      "Double Faults": [
+        [
+          0,
+          0
+        ],
+        0
+      ],
+      "1st Serve In": {
+        "parts": [
+          [
+            39,
+            48
+          ],
+          [
+            40,
+            49
+          ]
+        ],
+        "total": [
+          79,
+          97
+        ]
+      },
+      "1st Serve Points Won": {
+        "parts": [
+          [
+            25,
+            39
+          ],
+          [
+            23,
+            40
+          ]
+        ],
+        "total": [
+          48,
+          79
+        ]
+      },
+      "Service Points": {
+        "parts": [
+          [
+            29,
+            48
+          ],
+          [
+            29,
+            49
+          ]
+        ],
+        "total": [
+          58,
+          97
+        ]
+      },
+      "Total Points": {
+        "parts": [
+          [
+            48,
+            89
+          ],
+          [
+            50,
+            95
+          ]
+        ],
+        "total": [
+          98,
+          184
+        ]
+      }
+    }
+  },
+  "cross_check": "Each player Left+Right partitions match official aces, double faults, first serves in and played, first-serve points won, service points won/played and total points won. W/UE summed only within that named player, never across player columns. No missing/duplicate period rows reused."
+}
