@@ -129,7 +129,7 @@ def style_A(size, out):
         img = shade(img, 0.0001, 0.80, 0, 0.85)
         a = np.asarray(img).astype(np.float32); xx = np.linspace(0, 1, W)[None, :, None]; a *= 1 - np.clip(1 - xx / 0.55, 0, 1) ** 1.2 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
-    FA = {"tall": (1250, 860, 1500, 0.75), "story": (520, 760, 900, 0.8), "wide": (1240, 60, 1000, 0.8)}[size]
+    FA = {"tall": (1360, 1080, 1220, 0.75), "story": (520, 760, 900, 0.8), "wide": (1240, 60, 1000, 0.8)}[size]
     img = add_federer(img, *FA)
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     headline(d, size, k if size != "wide" else 1.0)
@@ -148,7 +148,7 @@ def style_C(size, out):
     if size == "wide":
         a = np.asarray(img).astype(np.float32); xx = np.linspace(0, 1, W)[None, :, None]; a *= 1 - np.clip(1 - xx / 0.6, 0, 1) ** 1.2 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
-    FC = {"tall": (1200, 820, 1550, 0.45), "story": (450, 520, 1000, 0.55), "wide": (1200, 40, 1040, 0.55)}[size]
+    FC = {"tall": (1330, 1060, 1250, 0.45), "story": (450, 520, 1000, 0.55), "wide": (1200, 40, 1040, 0.55)}[size]
     img = add_federer(img, *FC)
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     headline(d, size, k if size != "wide" else 1.0)
@@ -210,13 +210,13 @@ def style_B(size, out):
     vals = [54, 60, 76, 91]; labs = [T("一分", "POINT"), T("一局", "GAME"), T("一盘", "SET"), T("一场", "MATCH")]
     if size == "wide":
         x0, x1, base, top = 660 * S, 1260 * S, 960 * S, 560 * S
-        holo = (1180, 60, 1020)     # 人物：x, y, 高
+        holo = (1280, 220, 840)     # 人物：x, y, 高
     elif size == "story":
         x0, x1, base, top = 60 * S, 760 * S, 1520 * S, 960 * S
-        holo = (560, 700, 1000)
+        holo = (650, 880, 800)
     else:
         x0, x1, base, top = 150 * S, 1350 * S, 2380 * S, 1560 * S
-        holo = (960, 660, 1880)
+        holo = (1130, 960, 1480)
     n = len(vals); bw = (x1 - x0) / n * 0.56
     pts = []
     for i, v in enumerate(vals):
