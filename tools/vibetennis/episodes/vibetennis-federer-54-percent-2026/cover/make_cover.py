@@ -147,18 +147,61 @@ def style_C(size, out):
     img.save(out, quality=94, subsampling=0)
 
 
+def hologram(target_h):
+    """官方实拍抠图（cover/federer_2019_shanghai_cut.png）→ 金色全息：亮度映射到「深蓝→金→白」，
+    青色轮廓光、横向扫描线、轻微色散，下半身渐隐成光点。返回 RGB 图层和 alpha（加色叠加用）。"""
+    src = Image.open(HERE / "federer_2019_shanghai_cut.png").convert("RGBA")
+    k = target_h / src.height; src = src.resize((int(src.width * k), target_h), Image.LANCZOS)
+    a = np.asarray(src).astype(np.float32) / 255
+    rgb, al = a[..., :3], a[..., 3]
+    lum = (rgb @ np.array([0.30, 0.55, 0.15])) ** 0.9
+    lum = np.clip((lum - 0.08) / 0.8, 0, 1)
+    stops = np.array([[0.02, 0.04, 0.10], [0.55, 0.30, 0.06], [1.0, 0.70, 0.25], [1.0, 0.95, 0.82]])
+    pos = np.array([0, 0.35, 0.72, 1.0])
+    col = np.stack([np.interp(lum, pos, stops[:, c]) for c in range(3)], -1)
+    # 青色轮廓光：alpha 的边缘
+    edge = np.asarray(Image.fromarray((al * 255).astype(np.uint8)).filter(ImageFilter.FIND_EDGES).filter(ImageFilter.GaussianBlur(3))).astype(np.float32) / 255
+    col += edge[..., None] * np.array([0.35, 0.85, 1.0]) * 2.6
+    # 扫描线
+    yy = np.arange(col.shape[0])[:, None]
+    col *= (0.68 + 0.32 * (np.sin(yy * np.pi / 3.5) > 0))[..., None]
+    # 下半身渐隐
+    h = col.shape[0]; fade = np.clip((0.95 - yy / h) / 0.35, 0, 1) ** 1.3
+    al2 = al * fade[:, 0][:, None]
+    # 渐隐处撒光点
+    rng = np.random.default_rng(4); dots = np.zeros_like(al)
+    ys, xs = np.nonzero((al > 0.5) & (fade[:, 0][:, None] < 0.9) & (rng.random(al.shape) < 0.004))
+    for y, x in zip(ys, xs): dots[max(0, y - 1):y + 2, max(0, x - 1):x + 2] = 1
+    al2 = np.maximum(al2, dots * al * 0.9)
+    # 色散：红、蓝通道各错 3 像素
+    col[..., 0] = np.roll(col[..., 0], 3, axis=1); col[..., 2] = np.roll(col[..., 2], -3, axis=1)
+    return np.clip(col, 0, 1.4), al2
+
+
+def paste_add(base, layer, alpha, x, y, gain=1.0):
+    """把全息图层按 alpha 加色叠到底图（numpy float 0..255）"""
+    H, W = base.shape[:2]; h, w = alpha.shape
+    x0, y0 = max(0, x), max(0, y); x1, y1 = min(W, x + w), min(H, y + h)
+    if x1 <= x0 or y1 <= y0: return
+    L = layer[y0 - y:y1 - y, x0 - x:x1 - x]; A = alpha[y0 - y:y1 - y, x0 - x:x1 - x][..., None]
+    base[y0:y1, x0:x1] = base[y0:y1, x0:x1] * (1 - A * 0.85) + L * 255 * A * gain
+
+
 def style_B(size, out):
-    """黑底＋金色发光阶梯（2D 绘制）：54 → 60 → 76 → 91"""
+    """黑底＋全息费德勒（官方实拍）＋金色发光阶梯 54 → 60 → 76 → 91（2D 绘制）"""
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
     S = 2
     glow = Image.new("RGB", (W * S, H * S), (0, 0, 0)); g = ImageDraw.Draw(glow)
     vals = [54, 60, 76, 91]; labs = [T("一分", "POINT"), T("一局", "GAME"), T("一盘", "SET"), T("一场", "MATCH")]
     if size == "wide":
-        x0, x1, base, top = 1080 * S, 1820 * S, 900 * S, 300 * S
+        x0, x1, base, top = 660 * S, 1260 * S, 960 * S, 560 * S
+        holo = (1180, 60, 1020)     # 人物：x, y, 高
     elif size == "story":
-        x0, x1, base, top = 140 * S, 940 * S, 1500 * S, 820 * S
+        x0, x1, base, top = 60 * S, 760 * S, 1520 * S, 960 * S
+        holo = (560, 700, 1000)
     else:
-        x0, x1, base, top = 260 * S, 1900 * S, 2330 * S, 1420 * S
+        x0, x1, base, top = 150 * S, 1350 * S, 2380 * S, 1560 * S
+        holo = (960, 660, 1880)
     n = len(vals); bw = (x1 - x0) / n * 0.56
     pts = []
     for i, v in enumerate(vals):
@@ -173,29 +216,42 @@ def style_B(size, out):
     g.line([(x0 - 40 * S, base), (x1 + 40 * S, base)], fill=(200, 170, 110), width=3 * S)
     glow = glow.resize((W, H), Image.LANCZOS)
     bloom = glow.filter(ImageFilter.GaussianBlur(24 * k + 2)); bloom2 = glow.filter(ImageFilter.GaussianBlur(80 * k + 6))
-    a = np.asarray(glow).astype(np.float32) + np.asarray(bloom).astype(np.float32) * 0.9 + np.asarray(bloom2).astype(np.float32) * 0.6
+    # 先铺全息人物，再加阶梯（阶梯在人物前面）
+    acc = np.zeros((H, W, 3), np.float32)
+    col, al = hologram(holo[2]); paste_add(acc, col, al, holo[0], holo[1], 0.95)
+    hb = Image.fromarray(np.clip(acc, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(30 * k + 3))
+    acc += np.asarray(hb).astype(np.float32) * 0.35
+    a = acc * (1 - np.clip(np.asarray(glow).astype(np.float32).max(-1, keepdims=True) / 140, 0, 0.8)) \
+        + np.asarray(glow).astype(np.float32) + np.asarray(bloom).astype(np.float32) * 0.9 + np.asarray(bloom2).astype(np.float32) * 0.6
     img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+    img = shade(img, 0.30 if size != "wide" else 0.0001, 0.84 if size != "story" else 0.86, 0.75, 0.8)
+    if size == "wide":
+        aa = np.asarray(img).astype(np.float32); xx = np.linspace(0, 1, W)[None, :, None]; aa *= 1 - np.clip(1 - xx / 0.45, 0, 1) ** 1.3 * 0.7
+        img = Image.fromarray(aa.clip(0, 255).astype(np.uint8))
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
-    fn = font(INTER_B, int((96 if size != "story" else 64) * k if size != "wide" else 58))
-    fl = font(SANS, int((48 if size != "story" else 40) * k if size != "wide" else 30))
+    fn = font(INTER_B, 50 if size == "story" else (40 if size == "wide" else int(92 * k)))
+    fl = font(SANS, 30 if size == "story" else (24 if size == "wide" else int(46 * k)))
     for (cx, cy), v, lab in zip(pts, vals, labs):
         cx, cy = cx / S, cy / S
         t = f"{v}%"; d.text((cx - d.textlength(t, font=fn) / 2, cy - fn.size * 1.35), t, font=fn, fill=GOLD if v != 54 else CY)
         d.text((cx - d.textlength(lab, font=fl) / 2, base / S + fl.size * 0.6), lab, font=fl, fill=WH)
     if size == "wide":
-        f = font(SERIF, 78 if LANG == "zh" else 64)
-        runs(d, (120, 300), T("只赢 【54%】 的分，", "He won 【54%】 of points."), f, WH, GOLD)
-        runs(d, (120, 410), T("凭什么赢下 【82%】 的比赛？", "How did he win 【82%】?"), f, WH, GOLD)
-        spaced(d, 480, 590, T("层层放大", "AMPLIFIED"), font(SERIF, 64), (235, 225, 200), 24)
-        d.text((120, 720), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, 26), fill=GR)
+        f = font(SERIF, 70 if LANG == "zh" else 54)
+        runs(d, (110, 300), T("【费德勒】只赢 【54%】 的分，", "【Federer】 won 【54%】 of points."), f, WH, GOLD)
+        runs(d, (110, 400), T("凭什么赢下 【82%】 的比赛？", "How did he win 【82%】?"), f, WH, GOLD)
+        spaced(d, 330, 530, T("层层放大", "AMPLIFIED"), font(SERIF, 48), (235, 225, 200), 18)
+        d.text((112, 1010), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, 22), fill=GR)
     else:
-        headline(d, size, k)
-        my = int(H * (0.385 if size == "tall" else 0.33))
-        spaced(d, W / 2, my, T("层 层 放 大", "AMPLIFIED"), font(SERIF, int(96 * k)), (235, 225, 200), int(30 * k))
-        spaced(d, W / 2, my + int(140 * k), "MARKOV CHAIN · 1906", font(INTER, int(40 * k)), GR, int(14 * k))
-        by = int(H * (0.86 if size == "tall" else 0.86))
-        d.text((int(140 * k), by), T("每一分只多赢 1%，五盘三胜就从 50% 变成 63%", "Win 1% more points: best-of-five goes 50% → 63%"), font=font(SANS, int(60 * k)), fill=WH)
-        d.text((int(146 * k), by + int(110 * k)), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, int(42 * k)), fill=GR)
+        f = font(SERIF, int((150 if LANG == "zh" else 104) * k))
+        y0 = int(330 * k); gap = int((185 if LANG == "zh" else 140) * k); x = int(134 * k)
+        lines = [T("【费德勒】", "【Federer】 won"), T("只赢 【54%】 的分，", "【54%】 of points."), T("凭什么赢下", "How did he win"), T("【82%】 的比赛？", "【82%】 of matches?")]
+        for i, ln in enumerate(lines): runs(d, (x, y0 + i * gap), ln, f, WH, GOLD)
+        my = y0 + 4 * gap + int(70 * k)
+        spaced(d, x + int(330 * k), my, T("层 层 放 大", "AMPLIFIED"), font(SERIF, int(80 * k)), (235, 225, 200), int(24 * k))
+        spaced(d, x + int(330 * k), my + int(118 * k), "MARKOV CHAIN · 1906", font(INTER, int(32 * k)), GR, int(10 * k))
+        by = int(H * 0.875)
+        d.text((x, by), T("每一分只多赢 1%，五盘三胜就从 50% 变成 63%", "Win 1% more points: best-of-five goes 50% → 63%"), font=font(SANS, int(58 * k)), fill=WH)
+        d.text((x + 6, by + int(104 * k)), "P(game) = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq)", font=ImageFont.truetype(MATH, int(40 * k)), fill=GR)
     img.save(out, quality=94, subsampling=0)
 
 
