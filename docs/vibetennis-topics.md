@@ -19,12 +19,12 @@
 | EP01 | `vibetennis-live-faster-2026` | 网球为什么现场看比电视上快 | 角速度、机位与视窗 |
 | EP02 | `vibetennis-electronic-line-calling-2026` | 电子司线，真的准吗？ | 三角定位、帧率与误差 |
 | EP03 | `vibetennis-topspin-magnus-2026` | 上旋球为什么会突然往下坠？ | 马格努斯效应 |
+| EP04 | `vibetennis-federer-54-percent-2026`（＋`-en`） | 费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？ | 马尔可夫链（吸收链、层层放大）；资料包 [`sources.md`](../papers/vibetennis-federer-54-percent-2026/sources.md) |
 
 ## 制作中
 
 | 集 | slug | 主题 | 状态 |
 |---|---|---|---|
-| EP04 | `vibetennis-federer-54-percent-2026` | 费德勒只赢了 54% 的分，凭什么赢了八成多的比赛？ | 资料包已整理（数字核对表、原文摘录、模型推导、新场景设计、待拍板口径）：[`papers/vibetennis-federer-54-percent-2026/sources.md`](../papers/vibetennis-federer-54-percent-2026/sources.md)，所有者看过再开渲 |
 
 ## 候选（按推荐顺序）
 

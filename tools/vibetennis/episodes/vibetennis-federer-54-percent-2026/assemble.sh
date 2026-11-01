@@ -22,12 +22,13 @@ OVR=""; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,4920:5400:r3d/seg_en/c.mp
 THUMB=cover/thumb_16x9_$L.jpg
 [ -f "$THUMB" ] || { echo "横版封面 $THUMB 还没出（等所有者选定方案后 make_cover.py <方案> wide）——叠加层和音频已备好，先停在这"; exit 0; }
 M=${SLUG}_master.mp4; P=${SLUG}_push.mp4
-ffmpeg -y -loglevel error -loop 1 -framerate 30 -t 0.1 -i "$THUMB" -i r3d/full_ov_$L.mp4 -i sfx/final_$L.m4a \
+[ -f "$M" ] || ffmpeg -y -loglevel error -loop 1 -framerate 30 -t 0.1 -i "$THUMB" -i r3d/full_ov_$L.mp4 -i sfx/final_$L.m4a \
   -filter_complex "[0:v]scale=1920:1080,format=yuv420p,setsar=1[a];[1:v]format=yuv420p,setsar=1[b];[a][b]concat=n=2:v=1:a=0[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 30 -c:a copy -shortest -movflags +faststart "$M"
+# 两遍都钉 cfr 30：null 输出默认不补帧、mp4 会补，两遍帧数不一致就报「Incomplete MB-tree stats file」（2026-11-01 实测）
 # 推送版：H.264 High 1080p，两遍 7.3 Mbps（188 s ≈ 175 MB，≤ 200 MB），AAC 直接拷贝
-ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 7300k -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
-ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7300k -maxrate 10000k -bufsize 14000k -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
+ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 7300k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
+ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7300k -maxrate 10000k -bufsize 14000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
 # 嵌入横版封面作为 attached_pic
 for f in "$M" "$P"; do
   src=$([ "$f" = "$P" ] && echo sfx/tmp_$L.mp4 || echo "$M")
