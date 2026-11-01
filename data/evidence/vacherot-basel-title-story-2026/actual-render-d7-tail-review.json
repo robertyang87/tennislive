@@ -1,0 +1,106 @@
+{
+  "film_path": "/workspace/scratch/vacherot-basel/render-d7/vacherot-basel-title-story-2026.mp4",
+  "film_sha256": "812f65e1b63f68e34f1b91d6424845c3207c8ae0d2418e08b13fc781d5817b96",
+  "film_duration": 291.0,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "review_type": "visual_only_actual_render_tail",
+  "release_status": "NOT_RELEASED; previous d7 render only, final rerender needs identity/hash-bound recheck",
+  "coverage": {
+    "film_seconds": [
+      230.7,
+      291.0
+    ],
+    "sampling": "3fps6 sheets across230.7–290.7 plus native frames at231.24/231.8/232.4/250.72/261.50/276.48/278.8/283.0/286.4/286.8/290.5; extra5fps trophy topstrip278.2–282.2",
+    "native_frame_count": 11,
+    "audio_review": false,
+    "asr_review": false
+  },
+  "observations": [
+    {
+      "film_seconds": [
+        231.234,
+        232.4
+      ],
+      "finding": "开始为深蓝转折字卡与比赛约0.5秒交叉淡入；231.80抛球清楚，232.4发球挥拍清楚，近端莱赫奇卡/远端瓦舍罗身份与源片一致。不是从437秒相持中段起剪。",
+      "limitation": "准备阶段最早约0.5秒与字卡叠化，不说全程都无遮挡。"
+    },
+    {
+      "film_seconds": [
+        232.4,
+        250.7
+      ],
+      "finding": "冠军点长回合连续呈现至得分；没有跳过中段或拿另一分拼接成赛点。",
+      "crop_note": "固定居中3:4按现有所有者偏好执行，横向跑动极端位置出现近端球员局部出画；不据此要求跟随裁切。"
+    },
+    {
+      "film_seconds": [
+        250.9,
+        260.7
+      ],
+      "finding": "得分后瓦舍罗惊喜近景、团队鼓掌和本人笑容保留，双语字幕可见。未审音。"
+    },
+    {
+      "film_seconds": [
+        261.0,
+        269.5
+      ],
+      "finding": "网前双方握手/致意、随后与主裁握手都可见，时间连续且主体未切头。"
+    },
+    {
+      "film_seconds": [
+        275.9,
+        281.8
+      ],
+      "finding": "从接过奖杯、双手持杯到高举过头完整可见，随后稳定高举并微笑；杯身和双耳清楚。",
+      "tip_edge_note": "约278.8–279.2最高点尖饰短暂碰/越顶边，对照源475.366原画已同样碰顶，非3:4新增垂直裁掉；279.4后尖饰重新完整入画。",
+      "overlay_note": "上举经过左上品牌区域时杯盖局部短暂叠字；稳定高举段无此重叠。不为此增设新的全局验收规则。"
+    },
+    {
+      "film_seconds": [
+        281.8,
+        286.4
+      ],
+      "finding": "红毯领奖台全景、瓦舍罗举杯与金色纸花清楚，前景字幕后自然留白。"
+    },
+    {
+      "film_seconds": [
+        286.4,
+        291.0
+      ],
+      "finding": "从纸花转入品牌球logo和网球时差·网球有故事片尾，未见TennisTV广告画面或源片黑尾。290.5完整片尾文字可见。"
+    }
+  ],
+  "black_gap_check": {
+    "method": "ffmpeg blackdetect onactual230.7–291.0 tail, d=0.02,pic_th=0.99,pix_th=0.10",
+    "black_intervals_detected": [],
+    "log_path": "/workspace/scratch/vacherot-tail-review/blackdetect.log",
+    "boundary": "不代表听审或字幕全片通过"
+  },
+  "conclusion": "旧d7尾部的完整冠军点、庆祝握手和真实举杯主要要求均已在实际画面中兑现；未见广告或纯黑接缝。最终新版仍须绑定新电影哈希复核，不能据此旧片发布。",
+  "evidence_hashes": {
+    "native-290.5.jpg": "cc82aa461761be84dc96f7981904da9167692b5be70ac00b11462ba153a7a5b3",
+    "native-286.8.jpg": "25a9d516923662ed5ea87c99826311a0e636ef214239d081282e39f227a352e9",
+    "trophy-topstrip.jpg": "8b452eb83a164f0e831ff69ccae2245f728d3e82d88c0eb101d165a7fe07aba2",
+    "native-286.4.jpg": "9b3c898c6d42e092025aaf465713c88f601eb5c07cde5a8560a1a82fe44956d1",
+    "native-232.4.jpg": "f0cfe7d11be3ca7ca35b7e3d18ce1ac52f8fbc24307b6ea86aa75c5df8cffeaf",
+    "tail-260.7.jpg": "11f1189bf19ac1ce95806fcbe5848592488bc20db53b25cb221224c31dab2c13",
+    "native-261.5.jpg": "a31a3219609999bc3fde40dc2ee53b03938d96227186ba771843de7972acbbb4",
+    "tail-230.7.jpg": "965831dd164e43bcee3ff5b5a1087901a4e96410a7563cc8d6d159702953bc3e",
+    "native-231.24.jpg": "b16ba1b492f42369e5d24171a8450695671762f037e7801511020eb6c917d76f",
+    "native-276.48.jpg": "c9d103532239e0fa2fcd7d41dcb60f3688219376278682ce7de124ff1bb84c08",
+    "tail-250.7.jpg": "4205ec8e32666086c92b65354648616ed333a0f7696dca23da50b680c648c875",
+    "native-250.72.jpg": "4aeeccb4e8080c57df80d09492550e815f2abb6545491a2178e84825c515bb25",
+    "native-231.8.jpg": "0db59c4445967bf63f6094da20fbbaf440f7849f8c632ad6689c2f17ff097758",
+    "source-475.9.jpg": "1dd8e8344bb6ffa52620b8be571a48b5221ff83791323a9d3e3007770b25b061",
+    "source-475.366.jpg": "e07a811f3575225ac50fcfff6266135a00aa63e0f153fb1b22a5af6632e3a564",
+    "tail-240.7.jpg": "aebed3c29f4cdbd1a28beca6edd2fd986fc17021d16937049cffbae1c6952431",
+    "native-283.0.jpg": "930f7ffdb8d05aa88dd62d765e8091daadc5cfa792f39aa8f3b29efee393ac78",
+    "native-278.8.jpg": "c942e55a713919abb212b46c585cb71058068bc76b87267c063a3b659a3710c7",
+    "tail-270.7.jpg": "0cb0898e7a4c8a654f0393ea0b101540b4e7b8772fa00a47dae52ebf6df1b8fc",
+    "tail-280.7.jpg": "f6f798388b05eb786067507ac832d47311f24b80c2994ea3847d5198a526608a"
+  }
+}

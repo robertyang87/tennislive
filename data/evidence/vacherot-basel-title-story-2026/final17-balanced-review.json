@@ -1,0 +1,43 @@
+{
+  "status": "raw_contacts_and_six_native_preview_samples_reviewed",
+  "publication_approved": false,
+  "scope": "Visual source-frame contact sheets only; does not audit final compositing/audio/dissolves/whole film",
+  "geometry_as_reported_by_parent": {
+    "crop_zoom": 1.22,
+    "fill_y": 0.75,
+    "effective_source_window": [
+      662,
+      884,
+      628,
+      146
+    ]
+  },
+  "source_range_seconds": [
+    328.4,
+    352.4
+  ],
+  "sample_interval_seconds": 0.5,
+  "observations": [
+    "No yellow SET POINT fragment visible in the sampled corrected raw frames.",
+    "Near-player lower body is substantially restored compared with rejected top-aligned 1.20 crop, particularly source345.4–349.4.",
+    "Fixed horizontal crop still excludes parts of near player when moving to far left around source340.4–344.9; no claim of continuously complete two-player bodies.",
+    "Far player is near the upper boundary and must be checked against the actual top brand overlay in native preview.",
+    "Close-ups349.9–351.4 retain edge crops.",
+    "Native final samples328.60/340.36/344.36 show no top-brand/far-player overlap; all six native v4 samples have no subtitle cue, so subtitle layout is untested here."
+  ],
+  "contacts": [
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/final17-balanced-0.jpg",
+      "sha256": "e96639741ad227a274c9d2cecda584943d60f973fc0cdb796c7490421d0d7dcf"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/final17-balanced-1.jpg",
+      "sha256": "ac1b8ec9d7b058383f8e06c106e436fe32a8d1d9fd9e0769a2032f7bed1d6647"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-basel/crop-fix/final17-balanced-2.jpg",
+      "sha256": "686116b03efca466121391e3110dea8459ffb6382d111dc4c6ff1ac23272e5ba"
+    }
+  ],
+  "native_preview_review": "/workspace/tennis-work/data/evidence/vacherot-basel-title-story-2026/caption-preview-v4-review.json"
+}

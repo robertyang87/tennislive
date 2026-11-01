@@ -1,0 +1,125 @@
+{
+  "schema": "tennislive.actual-render-bounded-visual-review.v1",
+  "status": "needs_source_graphic_fragment_repairs",
+  "publication_approved": false,
+  "film": "/workspace/scratch/vacherot-basel/render-d7/vacherot-basel-title-story-2026.mp4",
+  "film_sha256": "812f65e1b63f68e34f1b91d6424845c3207c8ae0d2418e08b13fc781d5817b96",
+  "render_inputs_sha256": "9827447d6fbd22bfb7d2e9781417e69dd8a829a2e8a39e87cccc9fcaa325fd8d",
+  "render_code_sha": "d7f6d0d791d6803325378e085027403e8e61c1b4",
+  "spec_sha256": "82f8fe06be0fa8b2995c484afe69d33095a92c56d044e61712c854959f4f7b5e",
+  "film_duration_seconds": 291.0,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "coverage": {
+    "contact_sheets_opened": [
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-00.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-01.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-02.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-03.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-04.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-05.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-06.jpg",
+      "/workspace/scratch/vacherot-basel/audit-d7/contact-07.jpg"
+    ],
+    "sampling": "全片0至290秒每2秒，另取22个段边界+0.20秒中点；只据实际抽样判视觉",
+    "seam_sheet": "/workspace/scratch/vacherot-basel/audit-d7/cover-qc/seams.jpg",
+    "seam_offsets_seconds": [
+      4.32,
+      14.0,
+      22.52,
+      45.12,
+      60.64,
+      66.64,
+      74.48,
+      80.68,
+      93.76,
+      100.56,
+      125.56,
+      132.56,
+      150.44,
+      157.44,
+      169.2,
+      176.68,
+      191.96,
+      198.76,
+      223.44,
+      231.44,
+      276.64,
+      286.64
+    ]
+  },
+  "positive_observations": [
+    "电影实际封面包含正式logo、栏目、副题与两行钩子，脸未被钩子遮住；真实举杯。",
+    "已看样本中英字幕整体完整、可读，长英文正常分两行，无字幕越出画布、压脸或底部品牌冲突。",
+    "章节卡01/02/03及关键过程卡均深蓝，已看样本正文、数据与品牌之间留有间距。",
+    "22个接缝中点为真实溶解/转场，没有观察到纯黑/纯色中间帧；不能由中点断言每一帧无闪黑。",
+    "约276至286秒实际呈现接杯、举过头顶、金色纸屑；片尾品牌母版接入，未带TennisTV订阅尾板。"
+  ],
+  "findings": [
+    {
+      "id": "shanghai-score-fragment",
+      "film_time": 24.0,
+      "segment_index_zero_based": 2,
+      "source": "shanghai",
+      "evidence": "/workspace/scratch/vacherot-basel/audit-d7/cover-qc/frame-024.jpg",
+      "observed": "左下源记分板只剩30/40两格，姓名和其余比分已被竖裁切掉；2秒样本24、26、28均可见。",
+      "region_pixels": [
+        0,
+        1208,
+        64,
+        1332
+      ]
+    },
+    {
+      "id": "r1-match-point-fragment",
+      "film_time": 68.0,
+      "segment_index_zero_based": 5,
+      "source": "r1",
+      "evidence": "/workspace/scratch/vacherot-basel/audit-d7/cover-qc/frame-068.jpg",
+      "observed": "左下黄色MATCH POINT提示框仅剩CH POINTS文字，左右被竖裁切。该帧是发球近景；不能以宽景没残片证明整段干净。",
+      "region_pixels": [
+        0,
+        1228,
+        182,
+        1301
+      ]
+    },
+    {
+      "id": "sf-match-point-fragment",
+      "film_time": 132.56,
+      "segment_index_zero_based": 11,
+      "source": "sf",
+      "evidence": "/workspace/scratch/vacherot-basel/audit-d7/cover-qc/frame-0132.56.jpg",
+      "observed": "入段溶解中点保留黄色MATCH POINT #3右半截H POINT #3，2秒全片网格恰好没有取这帧。",
+      "region_pixels": [
+        0,
+        1228,
+        213,
+        1301
+      ]
+    },
+    {
+      "id": "final-set-point-fragment-at-seam",
+      "film_time": 198.76,
+      "segment_index_zero_based": 17,
+      "source": "final",
+      "evidence": "/workspace/scratch/vacherot-basel/audit-d7/cover-qc/frame-0198.76.jpg",
+      "observed": "段17虽已crop_zoom1.10，入段溶解时左下仍有极窄黄色T残片；之前v3 source328.84单帧已干净不能覆盖这个更早时刻。",
+      "region_pixels": [
+        0,
+        1357,
+        43,
+        1437
+      ]
+    }
+  ],
+  "known_upstream_block": "本旧版的盘点原声字幕起点提前0.30秒造成跨旁白窗口，主制作已改cue at=.30另行重渲；本审查不把旧片放行。",
+  "limitations": [
+    "未听完整音轨，字幕位置检查不等于配音/原声听审。",
+    "2秒全片采样和每缝单中点不是逐帧全片检查。",
+    "终稿必须重新绑定电影哈希，复查上述残片与已知盘点cue时序修正；本报告只对应d7旧电影。"
+  ]
+}
