@@ -1,0 +1,14 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-sm_1Aj5lesU/sm_1Aj5lesU.mp4",
+  "source_sha256": "7478a6ede96965332da716f537b39a7e7a58030859757b52ff45d253e1948c45",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 464.1,
+  "reviewed_to": 468.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 7478a6ede96965332da716f537b39a7e7a58030859757b52ff45d253e1948c45，存于 data/source_asr/sm_1Aj5lesU/small.en.json 与 data/source_asr/sm_1Aj5lesU/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。",
+  "no_foreground_english_reason": "完整颁奖窗口464.1—468.4；上句463.56结束，下句468.74起（large-v3-turbo短窗复核），仅现场欢呼，无前景英文。"
+}

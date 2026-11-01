@@ -1,0 +1,33 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-WHKHtg2bIQQ/WHKHtg2bIQQ.mp4",
+  "source_sha256": "0b272a6e6b5cecdb2257db1f11e757aa0ca9ba916687ed468be31c62194410b7",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: full small.en/medium.en cross-check and targeted medium/large-v3-turbo point audits. No human listening claimed.",
+  "reviewed_at": "2026-11-01T16:42:57+00:00",
+  "reviewed_from": 379.1,
+  "reviewed_to": 418.65,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 408.58,
+      "end": 411.3,
+      "en": "What a way to win the title!",
+      "zh": "这样拿下冠军，太精彩了！"
+    },
+    {
+      "start": 413.5,
+      "end": 414.85,
+      "en": "Carlos Alcaraz.",
+      "zh": "卡洛斯·阿尔卡拉斯。"
+    },
+    {
+      "start": 415.2,
+      "end": 418.4,
+      "en": "Vienna champion for the first time.",
+      "zh": "第一次成为维也纳冠军。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 0b272a6e6b5cecdb2257db1f11e757aa0ca9ba916687ed468be31c62194410b7，存于 data/source_asr/WHKHtg2bIQQ/small.en.json 与 data/source_asr/WHKHtg2bIQQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文; 短窗证据在data/story_research/alcaraz-500-winning-story-2026，全片ASR原记录保留。",
+  "asr_timing_correction": "Output-side seek medium without prompt/VAD returns no English379-399; full-ASR Alcaraz deadly up the line timing was dragged across a long silent gap from the preceding point. Actual championship call beginsaround408.6 and ends418.4."
+}
