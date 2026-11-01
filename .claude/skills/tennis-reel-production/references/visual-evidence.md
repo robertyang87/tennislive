@@ -31,3 +31,4 @@ For `fils-cobolli-cincinnati-2026-sf`, the accepted cold open is 317.72–329.50
 Learn the visible criteria only. Never reuse these timecodes or names for another source.
 
 Reject ordinary rallies, a payoff shown only at the beginning, a handshake that covers only half the cold open, an uncertain or wrong person, an old reference photo, or unsupported high confidence.
+
