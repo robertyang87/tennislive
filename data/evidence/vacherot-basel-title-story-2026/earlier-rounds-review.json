@@ -1,0 +1,875 @@
+{
+  "reviewer": "earlier_rounds",
+  "status": "visual_windows_reviewed; quote_candidates_not_full_audio_gate_pass",
+  "overall_window_seconds": 65.37,
+  "scope": "Four earlier rounds only; main final/trophy reviewed elsewhere. Do not mark source identity or audio gates passed solely from this packet.",
+  "rounds": [
+    {
+      "round": "r1",
+      "opponent": "Mariano Navone",
+      "winner": "Valentin Vacherot",
+      "result_winner_perspective": "6-3 7-6(4)",
+      "source_url": "https://www.tennistv.com/videos/4599139/basel-2026-r1-vacherot-navone-short-highlights",
+      "local_source": "/workspace/scratch/vacherot-rounds/r1.mp4",
+      "source_sha256": "43d9d185cdcde88203f4a466fa919b5562e22f6bb7c4c186fb14e31a5a72f8d3",
+      "probe_git_path": "output/2026-11-02/reel/vacherot-basel-2026-r1/probe.json",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25",
+      "duration": 150.805333,
+      "scorebox_candidate": "98,920,452,1029",
+      "scorebox_status": "probe guess, not fitted; do not claim precise validated board geometry",
+      "window": {
+        "start": 134,
+        "end": 141.84,
+        "serve_approximately": 135.5,
+        "point_result_scene_cut": 139.36,
+        "seconds": 7.84
+      },
+      "visual_evidence": "第二盘抢七6–4，瓦舍罗发球；完整发球后对手回球失误，随后教练席庆祝。",
+      "evidence_scope": "Actual decoded source frames at 0.5 second intervals across terminal point and reaction; not metadata-only. Frame-by-frame ball-flight and audio listening not separately certified.",
+      "dense_sheet": "/workspace/scratch/vacherot-rounds/r1-dense.jpg",
+      "dense_sheet_sha256": "0f68f3f5223c80d8822c2dba13fbbd36235e37480a8be0252a893817ecf7a60d",
+      "ad_start_scene_cut": 142.46,
+      "asr_small": [
+        {
+          "start": 138.74,
+          "end": 141.22,
+          "text": " That's a good win in straights to say the least.",
+          "words": [
+            {
+              "start": 138.74,
+              "end": 139.14,
+              "word": " That's",
+              "probability": 0.48769066482782364
+            },
+            {
+              "start": 139.14,
+              "end": 139.54,
+              "word": " a",
+              "probability": 0.9591866135597229
+            },
+            {
+              "start": 139.54,
+              "end": 139.64,
+              "word": " good",
+              "probability": 0.9921155571937561
+            },
+            {
+              "start": 139.64,
+              "end": 139.84,
+              "word": " win",
+              "probability": 0.9714877009391785
+            },
+            {
+              "start": 139.84,
+              "end": 140.02,
+              "word": " in",
+              "probability": 0.9709228277206421
+            },
+            {
+              "start": 140.02,
+              "end": 140.5,
+              "word": " straights",
+              "probability": 0.7516885995864868
+            },
+            {
+              "start": 140.5,
+              "end": 140.68,
+              "word": " to",
+              "probability": 0.679140031337738
+            },
+            {
+              "start": 140.68,
+              "end": 140.88,
+              "word": " say",
+              "probability": 0.9968175888061523
+            },
+            {
+              "start": 140.88,
+              "end": 141.0,
+              "word": " the",
+              "probability": 0.9981219172477722
+            },
+            {
+              "start": 141.0,
+              "end": 141.22,
+              "word": " least.",
+              "probability": 0.9964855909347534
+            }
+          ]
+        }
+      ],
+      "asr_base": [
+        {
+          "start": 131.0,
+          "end": 133.18,
+          "text": " Backhand pass attempt, just couldn't find the width."
+        },
+        {
+          "start": 139.06,
+          "end": 141.14,
+          "text": " That's a good win in strikes, to say the least."
+        }
+      ],
+      "quote_candidates": [
+        {
+          "at": 139.0,
+          "end": 141.25,
+          "en": "That’s a good win in straights, to say the least.",
+          "zh": "这场两盘拿下的胜利，确实相当不错。",
+          "status": "candidate; small/base align except straights/strikes; context supports straights; requires final actual-audio acceptance"
+        }
+      ]
+    },
+    {
+      "round": "r2",
+      "opponent": "Rafael Jodar",
+      "winner": "Valentin Vacherot",
+      "result_winner_perspective": "7-6(4) 2-6 7-6(5)",
+      "source_url": "https://www.tennistv.com/videos/4600907/basel-2026-r2-vacherot-jodar-short-highlights",
+      "local_source": "/workspace/scratch/vacherot-rounds/r2.mp4",
+      "source_sha256": "173b0cdd8593b433d209a97e5336f7933c03f0c643282de19a851c038a298297",
+      "probe_git_path": "output/2026-11-02/reel/vacherot-basel-2026-r2/probe.json",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25",
+      "duration": 157.290667,
+      "scorebox_candidate": "98,920,452,1029",
+      "scorebox_status": "probe guess, not fitted; do not claim precise validated board geometry",
+      "window": {
+        "start": 134.72,
+        "end": 148.3,
+        "serve_approximately": 135,
+        "point_result_scene_cut": 139.9,
+        "seconds": 13.58
+      },
+      "visual_evidence": "决胜盘抢七6–5，瓦舍罗在远端发球；多拍后赢下赛点，握拳吼叫并走向网前与霍达尔握手。",
+      "evidence_scope": "Actual decoded source frames at 0.5 second intervals across terminal point and reaction; not metadata-only. Frame-by-frame ball-flight and audio listening not separately certified.",
+      "dense_sheet": "/workspace/scratch/vacherot-rounds/r2-dense.jpg",
+      "dense_sheet_sha256": "e459c211868303916bfbb48b1f4d4bd77064e156f70f4a9a0c4de97c3d0bc1d2",
+      "ad_start_scene_cut": 148.38,
+      "asr_small": [
+        {
+          "start": 131.0,
+          "end": 141.26,
+          "text": " watch to close down the volley nicely. It's a good body serve as well it is victory",
+          "words": [
+            {
+              "start": 131.0,
+              "end": 131.24,
+              "word": " watch",
+              "probability": 0.08309045433998108
+            },
+            {
+              "start": 131.24,
+              "end": 131.46,
+              "word": " to",
+              "probability": 0.620680570602417
+            },
+            {
+              "start": 131.46,
+              "end": 131.68,
+              "word": " close",
+              "probability": 0.7225395441055298
+            },
+            {
+              "start": 131.68,
+              "end": 131.9,
+              "word": " down",
+              "probability": 0.9972915053367615
+            },
+            {
+              "start": 131.9,
+              "end": 132.0,
+              "word": " the",
+              "probability": 0.9414743781089783
+            },
+            {
+              "start": 132.0,
+              "end": 132.18,
+              "word": " volley",
+              "probability": 0.82392418384552
+            },
+            {
+              "start": 132.18,
+              "end": 132.56,
+              "word": " nicely.",
+              "probability": 0.9402581453323364
+            },
+            {
+              "start": 132.78,
+              "end": 132.8,
+              "word": " It's",
+              "probability": 0.7812362611293793
+            },
+            {
+              "start": 132.8,
+              "end": 132.94,
+              "word": " a",
+              "probability": 0.915418803691864
+            },
+            {
+              "start": 132.94,
+              "end": 133.02,
+              "word": " good",
+              "probability": 0.9889194369316101
+            },
+            {
+              "start": 133.02,
+              "end": 133.24,
+              "word": " body",
+              "probability": 0.9012976288795471
+            },
+            {
+              "start": 133.24,
+              "end": 133.56,
+              "word": " serve",
+              "probability": 0.9915668368339539
+            },
+            {
+              "start": 133.56,
+              "end": 133.74,
+              "word": " as",
+              "probability": 0.9578413367271423
+            },
+            {
+              "start": 133.74,
+              "end": 134.68,
+              "word": " well",
+              "probability": 0.9980317950248718
+            },
+            {
+              "start": 134.68,
+              "end": 139.54,
+              "word": " it",
+              "probability": 0.02831447869539261
+            },
+            {
+              "start": 139.54,
+              "end": 140.0,
+              "word": " is",
+              "probability": 0.9744464755058289
+            },
+            {
+              "start": 140.0,
+              "end": 141.26,
+              "word": " victory",
+              "probability": 0.6717849373817444
+            }
+          ]
+        },
+        {
+          "start": 141.26,
+          "end": 147.42000000000002,
+          "text": " for Vacherot big win for the Monogas top 20 victory",
+          "words": [
+            {
+              "start": 141.26,
+              "end": 142.02,
+              "word": " for",
+              "probability": 0.9575257301330566
+            },
+            {
+              "start": 142.02,
+              "end": 142.64,
+              "word": " Vacherot",
+              "probability": 0.6248761018117269
+            },
+            {
+              "start": 142.64,
+              "end": 144.5,
+              "word": " big",
+              "probability": 0.5171014666557312
+            },
+            {
+              "start": 144.5,
+              "end": 144.84,
+              "word": " win",
+              "probability": 0.996634304523468
+            },
+            {
+              "start": 144.84,
+              "end": 145.56,
+              "word": " for",
+              "probability": 0.9912660717964172
+            },
+            {
+              "start": 145.56,
+              "end": 145.7,
+              "word": " the",
+              "probability": 0.9774357676506042
+            },
+            {
+              "start": 145.7,
+              "end": 146.2,
+              "word": " Monogas",
+              "probability": 0.40325478712717694
+            },
+            {
+              "start": 146.2,
+              "end": 146.64,
+              "word": " top",
+              "probability": 0.5444198250770569
+            },
+            {
+              "start": 146.64,
+              "end": 147.1,
+              "word": " 20",
+              "probability": 0.9287744164466858
+            },
+            {
+              "start": 147.1,
+              "end": 147.42000000000002,
+              "word": " victory",
+              "probability": 0.9931870698928833
+            }
+          ]
+        }
+      ],
+      "asr_base": [
+        {
+          "start": 131.0,
+          "end": 133.94,
+          "text": " Watch to close down the volley nicely, it's a good body serve as well."
+        },
+        {
+          "start": 139.02,
+          "end": 142.56,
+          "text": " It is victory for Vachero."
+        },
+        {
+          "start": 143.98,
+          "end": 147.38,
+          "text": " Big win for the Mod of Gas, top 20 victory."
+        }
+      ],
+      "quote_candidates": [
+        {
+          "at": 139.0,
+          "end": 142.7,
+          "en": "It is victory for Vacherot.",
+          "zh": "瓦舍罗赢下了这场比赛。",
+          "status": "ASR cross-check consistent except proper-name spelling normalized"
+        },
+        {
+          "at": 143.95,
+          "end": 147.5,
+          "en": "Big win for the Monegasque. Top 20 victory.",
+          "zh": "摩纳哥小将拿到一场重要胜利，击败世界前二十球员。",
+          "status": "candidate; both models mis-transcribe Monegasque; requires final actual-audio acceptance"
+        }
+      ]
+    },
+    {
+      "round": "qf",
+      "opponent": "Holger Rune",
+      "winner": "Valentin Vacherot",
+      "result_winner_perspective": "6-3 3-6 6-3",
+      "source_url": "https://www.tennistv.com/videos/4601599/basel-2026-qf-rune-vacherot-short-highlights",
+      "local_source": "/workspace/scratch/vacherot-rounds/qf.mp4",
+      "source_sha256": "7979b02a43115f03c5d8ec1c3d78049ead34fce971214befc21f1bb2cf563eba",
+      "probe_git_path": "output/2026-11-02/reel/vacherot-basel-2026-qf/probe.json",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25",
+      "duration": 154.538667,
+      "scorebox_candidate": "98,920,406,1029",
+      "scorebox_status": "probe guess, not fitted; do not claim precise validated board geometry",
+      "window": {
+        "start": 120,
+        "end": 145.55,
+        "serve_approximately": 123,
+        "point_result_scene_cut": 131.6,
+        "seconds": 25.55
+      },
+      "visual_evidence": "决胜盘5–3、瓦舍罗发球AD；发球后完整回合，鲁内回球出界，教练席起立，瓦舍罗握拳与网前握手。",
+      "evidence_scope": "Actual decoded source frames at 0.5 second intervals across terminal point and reaction; not metadata-only. Frame-by-frame ball-flight and audio listening not separately certified.",
+      "dense_sheet": "/workspace/scratch/vacherot-rounds/qf-dense.jpg",
+      "dense_sheet_sha256": "7a9a1e3931302653ea0f69f5741a8101877ae1987a78d31856e9fe0ea1d6cc49",
+      "ad_start_scene_cut": 145.64,
+      "asr_small": [
+        {
+          "start": 133.7,
+          "end": 143.07999999999998,
+          "text": " his spot in the final four in Basel, fourth time has achieved that at tour level in his",
+          "words": [
+            {
+              "start": 133.7,
+              "end": 134.34,
+              "word": " his",
+              "probability": 0.004659223835915327
+            },
+            {
+              "start": 134.34,
+              "end": 134.98,
+              "word": " spot",
+              "probability": 0.6601090431213379
+            },
+            {
+              "start": 134.98,
+              "end": 136.36,
+              "word": " in",
+              "probability": 0.7240056395530701
+            },
+            {
+              "start": 136.36,
+              "end": 136.48,
+              "word": " the",
+              "probability": 0.9937408566474915
+            },
+            {
+              "start": 136.48,
+              "end": 136.8,
+              "word": " final",
+              "probability": 0.824273943901062
+            },
+            {
+              "start": 136.8,
+              "end": 137.3,
+              "word": " four",
+              "probability": 0.8852559328079224
+            },
+            {
+              "start": 137.3,
+              "end": 137.82,
+              "word": " in",
+              "probability": 0.43835505843162537
+            },
+            {
+              "start": 137.82,
+              "end": 138.34,
+              "word": " Basel,",
+              "probability": 0.8533599674701691
+            },
+            {
+              "start": 138.52,
+              "end": 140.8,
+              "word": " fourth",
+              "probability": 0.8395508527755737
+            },
+            {
+              "start": 140.8,
+              "end": 141.12,
+              "word": " time",
+              "probability": 0.9764921069145203
+            },
+            {
+              "start": 141.12,
+              "end": 141.26,
+              "word": " has",
+              "probability": 0.42703020572662354
+            },
+            {
+              "start": 141.26,
+              "end": 141.56,
+              "word": " achieved",
+              "probability": 0.9986496567726135
+            },
+            {
+              "start": 141.56,
+              "end": 141.84,
+              "word": " that",
+              "probability": 0.9031983017921448
+            },
+            {
+              "start": 141.84,
+              "end": 142.0,
+              "word": " at",
+              "probability": 0.6923336386680603
+            },
+            {
+              "start": 142.0,
+              "end": 142.26,
+              "word": " tour",
+              "probability": 0.5173541903495789
+            },
+            {
+              "start": 142.26,
+              "end": 142.5,
+              "word": " level",
+              "probability": 0.9919666647911072
+            },
+            {
+              "start": 142.5,
+              "end": 142.84,
+              "word": " in",
+              "probability": 0.8766075968742371
+            },
+            {
+              "start": 142.84,
+              "end": 143.07999999999998,
+              "word": " his",
+              "probability": 0.9989525079727173
+            }
+          ]
+        },
+        {
+          "start": 143.07999999999998,
+          "end": 144.52,
+          "text": " career, a semifinal place.",
+          "words": [
+            {
+              "start": 143.07999999999998,
+              "end": 143.36,
+              "word": " career,",
+              "probability": 0.028955666348338127
+            },
+            {
+              "start": 143.48,
+              "end": 143.57999999999998,
+              "word": " a",
+              "probability": 0.7256866097450256
+            },
+            {
+              "start": 143.57999999999998,
+              "end": 144.07999999999998,
+              "word": " semifinal",
+              "probability": 0.7275229245424271
+            },
+            {
+              "start": 144.07999999999998,
+              "end": 144.52,
+              "word": " place.",
+              "probability": 0.9956074357032776
+            }
+          ]
+        }
+      ],
+      "asr_base": [
+        {
+          "start": 135.18,
+          "end": 143.24,
+          "text": " In the final four, Liv Basel, fourth time has achieved that at two level in his career,"
+        },
+        {
+          "start": 143.24,
+          "end": 144.36,
+          "text": " semi-final place."
+        }
+      ],
+      "quote_candidates": [
+        {
+          "at": 132.58,
+          "end": 138.4,
+          "en": "Vacherot booked his spot in the final four in Basel.",
+          "zh": "瓦舍罗锁定了巴塞尔四强席位。",
+          "status": "focused small.en recognition; books/booked inflection and exact onset require audio confirmation"
+        },
+        {
+          "at": 138.5,
+          "end": 144.6,
+          "en": "Fourth time he’s achieved that at tour level in his career, a semi-final place.",
+          "zh": "这是他职业生涯第四次打进巡回赛半决赛。",
+          "status": "small/base/focused transcription align apart from contractions; final audio acceptance required"
+        }
+      ],
+      "asr_focused": [
+        {
+          "start": 132.58,
+          "end": 142.5,
+          "text": " Vacherot booked his spot in the final four in Basel. Fourth time has achieved that at tour level"
+        },
+        {
+          "start": 142.5,
+          "end": 144.5,
+          "text": " in his career, a semi-final place."
+        }
+      ]
+    },
+    {
+      "round": "sf",
+      "opponent": "Taylor Fritz",
+      "winner": "Valentin Vacherot",
+      "result_winner_perspective": "7-6(5) 6-3",
+      "source_url": "https://www.tennistv.com/videos/4602075/basel-2026-sf-vacherot-fritz-short-highlights",
+      "local_source": "/workspace/scratch/vacherot-rounds/sf.mp4",
+      "source_sha256": "f3fd6e32588ed53e5f650476709afda742888423dd63b9ee0c272a527ac52c71",
+      "probe_git_path": "output/2026-11-02/reel/vacherot-basel-2026-sf/probe.json",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25",
+      "duration": 157.845333,
+      "scorebox_candidate": "98,920,406,1029",
+      "scorebox_status": "probe guess, not fitted; do not claim precise validated board geometry",
+      "window": {
+        "start": 131,
+        "end": 149.4,
+        "serve_approximately": 133,
+        "point_result_scene_cut": 137.58,
+        "seconds": 18.4
+      },
+      "visual_evidence": "第二盘5–3、40–30，瓦舍罗发球；完整回合后以反手结束，举拳、观众和教练席、与弗里茨握手。",
+      "evidence_scope": "Actual decoded source frames at 0.5 second intervals across terminal point and reaction; not metadata-only. Frame-by-frame ball-flight and audio listening not separately certified.",
+      "dense_sheet": "/workspace/scratch/vacherot-rounds/sf-dense.jpg",
+      "dense_sheet_sha256": "22d49c5390b998bfd058a3c8725e3925a2d344d176ebb60cef8b70f1b88dc188",
+      "ad_start_scene_cut": 149.5,
+      "asr_small": [
+        {
+          "start": 129.0,
+          "end": 130.56,
+          "text": " Break the rhythm, you have to mix it up.",
+          "words": [
+            {
+              "start": 129.0,
+              "end": 129.16,
+              "word": " Break",
+              "probability": 0.5610895752906799
+            },
+            {
+              "start": 129.16,
+              "end": 129.34,
+              "word": " the",
+              "probability": 0.9935289025306702
+            },
+            {
+              "start": 129.34,
+              "end": 129.48,
+              "word": " rhythm,",
+              "probability": 0.7705783843994141
+            },
+            {
+              "start": 129.66,
+              "end": 129.66,
+              "word": " you",
+              "probability": 0.9615374207496643
+            },
+            {
+              "start": 129.66,
+              "end": 129.76,
+              "word": " have",
+              "probability": 0.9844552278518677
+            },
+            {
+              "start": 129.76,
+              "end": 129.88,
+              "word": " to",
+              "probability": 0.9973604083061218
+            },
+            {
+              "start": 129.88,
+              "end": 130.02,
+              "word": " mix",
+              "probability": 0.9981391429901123
+            },
+            {
+              "start": 130.02,
+              "end": 130.18,
+              "word": " it",
+              "probability": 0.9974116683006287
+            },
+            {
+              "start": 130.18,
+              "end": 130.56,
+              "word": " up.",
+              "probability": 0.9989091157913208
+            }
+          ]
+        },
+        {
+          "start": 137.56,
+          "end": 142.38,
+          "text": " Valentine Vacherot blasts his way into the final in Basel.",
+          "words": [
+            {
+              "start": 137.56,
+              "end": 138.1,
+              "word": " Valentine",
+              "probability": 0.3700999915599823
+            },
+            {
+              "start": 138.1,
+              "end": 138.64,
+              "word": " Vacherot",
+              "probability": 0.7531049052874247
+            },
+            {
+              "start": 138.64,
+              "end": 139.42,
+              "word": " blasts",
+              "probability": 0.975100040435791
+            },
+            {
+              "start": 139.42,
+              "end": 139.94,
+              "word": " his",
+              "probability": 0.98164302110672
+            },
+            {
+              "start": 139.94,
+              "end": 140.24,
+              "word": " way",
+              "probability": 0.9980029463768005
+            },
+            {
+              "start": 140.24,
+              "end": 141.2,
+              "word": " into",
+              "probability": 0.9696831703186035
+            },
+            {
+              "start": 141.2,
+              "end": 141.4,
+              "word": " the",
+              "probability": 0.997032642364502
+            },
+            {
+              "start": 141.4,
+              "end": 141.72,
+              "word": " final",
+              "probability": 0.9787260293960571
+            },
+            {
+              "start": 141.72,
+              "end": 141.96,
+              "word": " in",
+              "probability": 0.9853736162185669
+            },
+            {
+              "start": 141.96,
+              "end": 142.38,
+              "word": " Basel.",
+              "probability": 0.878321498632431
+            }
+          ]
+        },
+        {
+          "start": 143.24,
+          "end": 143.78,
+          "text": " What a finish.",
+          "words": [
+            {
+              "start": 143.24,
+              "end": 143.32,
+              "word": " What",
+              "probability": 0.9758964776992798
+            },
+            {
+              "start": 143.32,
+              "end": 143.46,
+              "word": " a",
+              "probability": 0.998815655708313
+            },
+            {
+              "start": 143.46,
+              "end": 143.78,
+              "word": " finish.",
+              "probability": 0.9984709620475769
+            }
+          ]
+        },
+        {
+          "start": 145.96,
+          "end": 148.36,
+          "text": " It's been a special shot this week, that backhands.",
+          "words": [
+            {
+              "start": 145.96,
+              "end": 146.06,
+              "word": " It's",
+              "probability": 0.9219084680080414
+            },
+            {
+              "start": 146.06,
+              "end": 146.2,
+              "word": " been",
+              "probability": 0.993590235710144
+            },
+            {
+              "start": 146.2,
+              "end": 146.5,
+              "word": " a",
+              "probability": 0.9980437755584717
+            },
+            {
+              "start": 146.5,
+              "end": 146.86,
+              "word": " special",
+              "probability": 0.9969643950462341
+            },
+            {
+              "start": 146.86,
+              "end": 147.2,
+              "word": " shot",
+              "probability": 0.9976291060447693
+            },
+            {
+              "start": 147.2,
+              "end": 147.4,
+              "word": " this",
+              "probability": 0.9914257526397705
+            },
+            {
+              "start": 147.4,
+              "end": 147.62,
+              "word": " week,",
+              "probability": 0.9978551268577576
+            },
+            {
+              "start": 147.72,
+              "end": 147.82,
+              "word": " that",
+              "probability": 0.8498793244361877
+            },
+            {
+              "start": 147.82,
+              "end": 148.36,
+              "word": " backhands.",
+              "probability": 0.8028208017349243
+            }
+          ]
+        }
+      ],
+      "asr_base": [
+        {
+          "start": 129.0,
+          "end": 130.28,
+          "text": " You have to break the grid and you have to mix it up."
+        },
+        {
+          "start": 137.74,
+          "end": 142.32,
+          "text": " Valatine Vachero blasts his way into the final in Basel."
+        },
+        {
+          "start": 143.2,
+          "end": 143.64,
+          "text": " What a finish."
+        },
+        {
+          "start": 146.07999999999998,
+          "end": 148.24,
+          "text": " Spent a special shot this week, that back counts."
+        }
+      ],
+      "quote_candidates": [
+        {
+          "at": 137.6,
+          "end": 142.45,
+          "en": "Valentin Vacherot blasts his way into the final in Basel.",
+          "zh": "瓦舍罗强势闯入巴塞尔决赛。",
+          "status": "ASR cross-check consistent; proper-name spelling normalized"
+        },
+        {
+          "at": 143.15,
+          "end": 143.85,
+          "en": "What a finish.",
+          "zh": "多么漂亮的收尾。",
+          "status": "ASR cross-check consistent"
+        },
+        {
+          "at": 145.95,
+          "end": 148.45,
+          "en": "It’s been a special shot this week, that backhand.",
+          "zh": "这一周，他的反手一直很出色。",
+          "status": "candidate; small/base differ on opening/last syllable; requires final actual-audio acceptance"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "QF focused small.en now recognizes full first clause at132.58; books/booked inflection and exact onset still require listening. Do not convert focused ASR to a claimed human audio pass.",
+    "No _quote_skip_why supplied: all four tails contain commentary; cannot falsely claim only crowd sound.",
+    "No production spec edited; main editor to place explanation on actual relevant footage, balance original sound, and finalize translations."
+  ]
+}
