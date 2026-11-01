@@ -6,9 +6,10 @@ set -e
 # 成片 = 片头 3 帧横版封面（0.1 s，docs/vibetennis.md §9）＋ 3D＋叠加层 ＋ BGM（vibeknowledge 库）与合成音效；中文版另加 TTS 配音与底部配音字幕（-14 LUFS / 真峰值 ≤ -1 dBTP）。
 HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-python3}"; L="${1:-zh}"; cd "$HERE"; mkdir -p sfx
 SLUG=vibetennis-federer-54-percent-2026; [ "$L" = en ] && SLUG=$SLUG-en
-ls r3d/seg/s*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
-OVR=""; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,5890:6854:r3d/seg_en/c2.mp4"   # c2：新时间轴 196.32–228.48（「这只是一分」＋新段 B 的粒子字），VT_LANG=en 渲
-[ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L VT_OVERRIDE=$OVR "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 r3d/seg/s*.mp4.anchors.json 2>&1 | grep -v -i fontconfig
+SEG=${SEG:-seg2}   # 2026-11-01 二改：splice3d.sh 拼好的 r3d/seg2/p0..p8（帧号已是新时间轴）
+ls r3d/$SEG/p*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
+OVR=""; [ "$L" = en ] && OVR="210:465:r3d/seg_en/t.mp4,6181:7145:r3d/seg_en/c3.mp4"   # c3＝c2 帧号 +291：新时间轴 206.03–238.18（「这只是一分」＋新段 B 的粒子字），VT_LANG=en 渲
+[ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L VT_OVERRIDE=$OVR "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls r3d/$SEG/p*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
 # 音频：英文版＝BGM 铺底＋音效（sfx.py → sfx/sfx_bed.wav）；中文版另加 TTS 配音（voice.py → sfx/sfx_bed_zh.wav，人声 -16 / 音效 -22 / BGM -26 并 sidechain）
 [ -f sfx/final_$L.m4a ] || {
   [ -f sfx/sfx_bed.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
