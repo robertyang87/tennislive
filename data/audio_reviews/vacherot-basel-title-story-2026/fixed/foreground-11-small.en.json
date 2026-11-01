@@ -1,0 +1,290 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "small.en",
+  "source_key": "sf",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4602075/4602075.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/sf/4602075.mp4",
+  "source_sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 42,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "time_base": "1/19200",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 3030144,
+        "duration": "157.820000",
+        "bit_rate": "7961953",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "7891",
+        "extradata_size": 42,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Video Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 7576576,
+        "duration": "157.845333",
+        "bit_rate": "125387",
+        "nb_frames": "7401",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Sound Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/vacherot-fixed/sf/4602075.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "157.845333",
+      "size": "159739597",
+      "bit_rate": "8096006",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "reviewed_from": 131,
+  "reviewed_to": 149.4,
+  "segment_index_at_run": 11,
+  "utterances": [
+    {
+      "start": 137.31,
+      "end": 148.3,
+      "text": " Valentin Vacherot blasts his way into the final in Basel. What a finish. It's been a special shot this week, that backhands.",
+      "words": [
+        {
+          "word": " Valentin",
+          "start": 137.31,
+          "end": 137.97,
+          "probability": 0.45585765317082405
+        },
+        {
+          "word": " Vacherot",
+          "start": 137.97,
+          "end": 138.59,
+          "probability": 0.2883685976266861
+        },
+        {
+          "word": " blasts",
+          "start": 138.59,
+          "end": 139.39,
+          "probability": 0.9578543901443481
+        },
+        {
+          "word": " his",
+          "start": 139.39,
+          "end": 139.89,
+          "probability": 0.9710710644721985
+        },
+        {
+          "word": " way",
+          "start": 139.89,
+          "end": 140.19,
+          "probability": 0.9951375126838684
+        },
+        {
+          "word": " into",
+          "start": 140.19,
+          "end": 141.19,
+          "probability": 0.979558527469635
+        },
+        {
+          "word": " the",
+          "start": 141.19,
+          "end": 141.35,
+          "probability": 0.9974485039710999
+        },
+        {
+          "word": " final",
+          "start": 141.35,
+          "end": 141.67,
+          "probability": 0.9700204730033875
+        },
+        {
+          "word": " in",
+          "start": 141.67,
+          "end": 141.89,
+          "probability": 0.9775010347366333
+        },
+        {
+          "word": " Basel.",
+          "start": 141.89,
+          "end": 142.35,
+          "probability": 0.9248815476894379
+        },
+        {
+          "word": " What",
+          "start": 143.23,
+          "end": 143.27,
+          "probability": 0.9506266117095947
+        },
+        {
+          "word": " a",
+          "start": 143.27,
+          "end": 143.43,
+          "probability": 0.998210072517395
+        },
+        {
+          "word": " finish.",
+          "start": 143.43,
+          "end": 143.77,
+          "probability": 0.9971177577972412
+        },
+        {
+          "word": " It's",
+          "start": 145.96,
+          "end": 146.0,
+          "probability": 0.9148885607719421
+        },
+        {
+          "word": " been",
+          "start": 146.0,
+          "end": 146.16,
+          "probability": 0.990898847579956
+        },
+        {
+          "word": " a",
+          "start": 146.16,
+          "end": 146.44,
+          "probability": 0.9972617626190186
+        },
+        {
+          "word": " special",
+          "start": 146.44,
+          "end": 146.82,
+          "probability": 0.9952406883239746
+        },
+        {
+          "word": " shot",
+          "start": 146.82,
+          "end": 147.16,
+          "probability": 0.9952657222747803
+        },
+        {
+          "word": " this",
+          "start": 147.16,
+          "end": 147.36,
+          "probability": 0.9871256947517395
+        },
+        {
+          "word": " week,",
+          "start": 147.36,
+          "end": 147.57999999999998,
+          "probability": 0.9969017505645752
+        },
+        {
+          "word": " that",
+          "start": 147.7,
+          "end": 147.78,
+          "probability": 0.6564760804176331
+        },
+        {
+          "word": " backhands.",
+          "start": 147.78,
+          "end": 148.3,
+          "probability": 0.7082985937595367
+        }
+      ]
+    }
+  ]
+}

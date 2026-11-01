@@ -1,0 +1,95 @@
+{
+  "index": 5,
+  "source": "r1",
+  "reviewed_from": 134.0,
+  "reviewed_to": 141.84,
+  "source_local": "/workspace/scratch/vacherot-fixed/r1/4599139.mp4",
+  "source_local_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 138.94,
+      "end": 141.16,
+      "en": "That’s a good win in straights, to say the least.",
+      "zh": "这场两盘拿下的胜利，确实相当不错。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-05-small.en.json",
+      "sha256": "d07f7d7fb5841f4bee7d8482d118814da379ebfc7c2993327e4bff29ad8e131f"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-05-base.en.json",
+      "sha256": "36b8a0e4f66c1078dd7bbc768122a9798b78e96841fe5224814cefaccd83afa0"
+    }
+  ],
+  "review_notes": [
+    "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4599139/4599139.mp4",
+  "historical_raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-05-small.en.json",
+      "sha256": "cdcdef43ea6b0457f563e8aecf94995e6d90e06c08439d66a0a76db474d50ed2"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-05-base.en.json",
+      "sha256": "ec4f1e4279e24884ad686b3ef9c08de4af4b40fc2b63037742e2bf3226f468f1"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-r1-medium.en.json",
+      "sha256": "f5dcec675ccdb1fa91a6276cd3ce4b2245bb9f467f1b9dc49c8e623837c3bde1"
+    }
+  ],
+  "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+  "source_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "start_time": "0.000000",
+        "duration": "150.780000"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "start_time": "0.000000",
+        "duration": "150.805333"
+      }
+    ],
+    "format": {
+      "start_time": "0.000000",
+      "duration": "150.805333",
+      "size": "152361415"
+    }
+  },
+  "fixed_content_cross_check": {
+    "status": "same_utterance_content_confirmed_on_new_bytes",
+    "new_full_window_asr_models": [
+      "small.en",
+      "base.en"
+    ],
+    "new_foreground_english_count": 1,
+    "new_extra_foreground_english": [],
+    "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+  },
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

@@ -1,0 +1,141 @@
+{
+  "index": 2,
+  "source": "shanghai",
+  "reviewed_from": 114.7,
+  "reviewed_to": 137.4,
+  "source_local": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+  "source_local_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 120.82,
+      "end": 123.84,
+      "en": "Game, set, match, Vacherot.",
+      "zh": "比赛结束，瓦舍罗获胜。"
+    },
+    {
+      "start": 124.34,
+      "end": 125.26,
+      "en": "Two sets to one.",
+      "zh": "大比分二比一。"
+    },
+    {
+      "start": 125.22,
+      "end": 133.9,
+      "en": "Valentin Vacherot puts the icing on the cake to a fairy tale week in Shanghai.",
+      "zh": "瓦舍罗为上海童话画下圆满句号。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-02-small.en.json",
+      "sha256": "fe46513d235ebc483650fe15b284e8b61a965f8a0234fee601fd7474c27f62a1"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-02-base.en.json",
+      "sha256": "7ded130fea3580ad61413a8c98297627fe2723afc16dceec9f36d2152069e403"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-medium.en.json",
+      "sha256": "9837f4d90e078421a98db2a072bf60c88d72bcaca5738e2d4d562f8cdffddebf"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-commentary-medium.en.json",
+      "sha256": "aac0abe2ba5e6d7d6cbcd662bc68bd90d2a9ffe43e85dd77c48c760785a44127"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-focused-small.en.json",
+      "sha256": "119cc26a8049000a3f2f27bc4c416d382739d417d12c6b25430615e1e8365dec"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-focused-base.en.json",
+      "sha256": "59098e54ab004f604455b8fd56913f0eea936971678b94df7deccefc382dd510"
+    }
+  ],
+  "review_notes": [
+    "Whole-window VAD small/base missed the quiet umpire. Focused no-VAD small/base/medium independently recovered Game set match and Two sets to one; no and added. Proper name normalized only from verified identities. ASR overlapped word boundaries125.31/125.32 are timestamp rounding across two speakers.",
+    "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding.",
+    "New fixed umpire: full-window VAD ASRs missed quiet chair audio; fresh fixed focused small/base plus medium recover same umpire words. Game onset120.82 from focused base, not forced initial-silence boundary119.8/120.0 in medium/small. New fixed commentary small gives125.22 onset, new medium verifies puts/icing/fairy tale/week/Shanghai, normalized proper-name spelling. No and inserted."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4380470/4380470.mp4",
+  "historical_raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-02-small.en.json",
+      "sha256": "d00ceca7cae04c04582254becaaca524c7d540c819244918cd26a3b42da6648b"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-02-base.en.json",
+      "sha256": "407764a7b1486d0bcfc72e9dfcc6bd3b6781b281726c0e471a692ce5da391095"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-shanghai-umpire-medium.en.json",
+      "sha256": "8fbdff84a8396e6dad7f23e3e036896ca976187e16555c4ab20a7377bcaffca2"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-umpire-focused-small.en.json",
+      "sha256": "9b764cd8db5509741a6fa9633331acc86eaece447970877eddc6965615d0b87d"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-umpire-focused-base.en.json",
+      "sha256": "406d3f8bf264fcad5761d67239e6041d4f49ae9516c12cde56de06c24e6f2885"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-shanghai-small.en.json",
+      "sha256": "8b253a979059263129e01bea33aa6e6b69d0f2e09e0c6431b73bbe662e2ad06e"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-shanghai-base.en.json",
+      "sha256": "79c444b8b7980fdd3f4eb5ac2a7bfa0a8dc59cae28e477f0bcfd926ed2c4e98a"
+    }
+  ],
+  "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+  "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "start_time": "0.000000",
+        "duration": "146.880000"
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "start_time": "0.000000",
+        "duration": "146.815986"
+      }
+    ],
+    "format": {
+      "start_time": "0.000000",
+      "duration": "146.880000",
+      "size": "69995758"
+    }
+  },
+  "fixed_content_cross_check": {
+    "status": "same_utterance_content_confirmed_on_new_bytes",
+    "new_full_window_asr_models": [
+      "small.en",
+      "base.en"
+    ],
+    "new_foreground_english_count": 3,
+    "new_extra_foreground_english": [],
+    "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+  },
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

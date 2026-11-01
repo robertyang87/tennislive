@@ -1,0 +1,1138 @@
+{
+  "created_at_utc": "2026-11-01T18:02:30.304982+00:00",
+  "status": "fixed_archives_downloaded_decode_hashes_recorded_and_content_alignment_reviewed",
+  "sources": {
+    "r1": {
+      "key": "r1",
+      "id": "4599139",
+      "workflow_run_id": 41334272003,
+      "archive_pipeline_sha": "59bc4292d46a95fb95f143b7e51ef54f491b46af",
+      "official_url": "https://www.tennistv.com/videos/4599139/basel-2026-r1-vacherot-navone-short-highlights",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-4599139/4599139.mp4",
+      "local_path": "/workspace/scratch/vacherot-fixed/r1/4599139.mp4",
+      "sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "150.780000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "150.805333"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "150.805333",
+          "size": "152361415"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-rounds/r1.mp4",
+        "sha256": "43d9d185cdcde88203f4a466fa919b5562e22f6bb7c4c186fb14e31a5a72f8d3",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "50/1",
+              "avg_frame_rate": "4523400/90457",
+              "start_time": "0.083021",
+              "duration": "150.761667"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "150.848000"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "150.848000",
+            "size": "114963498"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "bca5dbf8d6d8a967fd5c3f3513d212df2c6289be2e668cfcc748b5fad4437821",
+            "bytes": 28954624
+          },
+          "reviewed": {
+            "sha256": "0695d0d502c40e74f07f6000bf0af7955b773da0bd133f22615d0e01c34d2e74",
+            "bytes": 28962816
+          },
+          "equal": false
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "0470d62d2439e57b31f70d66fe3648b1d3bb993702c34fe0f9f0e4d85fc23bc4",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "52cbb9d39656352ebb78fbf355b663c00c2270b5139c8d7c1e94fc61ed6d5db9",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 75.4,
+            "fixed": {
+              "sha256": "5241765caf0e9bd3bef5180621d7db11a587c9c494c4c8a10b97ec6d3193d411",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "e0c0e3e49e906d5acb4a59830ac57f00de31b3d46fe012beb781e8e22fda0899",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 135.81,
+            "fixed": {
+              "sha256": "39529c49ef63e24ec7e5ccb5a6d37686b9cdee967027f43e3c82547360b8571c",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "f8ba82e3f954f4b4d822c4598a1a9fbbc6beca19b6d523373d3c8046176cfa02",
+              "bytes": 6220800
+            },
+            "equal": false
+          }
+        ],
+        "container_hash_equal": false,
+        "decoded_av_equal": false,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      },
+      "time_alignment_review": {
+        "method": "Representative native decoded frames compared after searching old timeline ±0.20s (at native fps), resized to480×270 for compression-tolerant PSNR; audio8s windows mono48k cross-correlated ±0.25s. This is content equivalence evidence, not exact-byte reuse.",
+        "video_samples": [
+          {
+            "fixed_source_second": 10.0,
+            "matching_old_source_second_approx": 10.08,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 49.0902524682642,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.39635801315307617,
+            "fixed_frame_sha256_rgb480x270": "9c5a6969a4e54cd3a669338c9c6ad106aea474ff1692f5b358a21606e77f9f26",
+            "matched_old_frame_sha256_rgb480x270": "3772b00786952a6942f4f40b6263f28651b69effe1bf28e53ff9320090b1526b"
+          },
+          {
+            "fixed_source_second": 75.4,
+            "matching_old_source_second_approx": 75.48,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 46.322299929775106,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.6276440620422363,
+            "fixed_frame_sha256_rgb480x270": "84b26f212ed34b898160004818b1dba5688d5fe95bed6a80c82463689f028572",
+            "matched_old_frame_sha256_rgb480x270": "f22be0cb5bde1de78167e80ff92d673b375f0b31e6e2c3c0a4c2583236a95dde"
+          },
+          {
+            "fixed_source_second": 135.81,
+            "matching_old_source_second_approx": 135.91,
+            "offset_old_minus_fixed_approx_seconds": 0.1,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 48.21733474732711,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.46347737312316895,
+            "fixed_frame_sha256_rgb480x270": "f5f1b3a3e6ab2b4f92d3b9191b12bfa975dc90d5d3d8deb570c9b3ab24184267",
+            "matched_old_frame_sha256_rgb480x270": "952371318958a915c4c26ca7d1f28943e4e355e924a5682081c11e60c1eecaf9"
+          }
+        ],
+        "audio_samples": [
+          {
+            "source_second": 10,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999999977789,
+            "sample_rate": 48000,
+            "duration_s": 8
+          },
+          {
+            "source_second": 75.4,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.99999999715423,
+            "sample_rate": 48000,
+            "duration_s": 8
+          }
+        ],
+        "decoded_av_hashes_equal": false,
+        "status": "same_visual_and_audio_content_after_timeline_alignment",
+        "review_reuse_boundary": "Do not reuse old source SHA attestations; foreground/subtitle review must bind current fixed file. New timeline cut boundaries still need margin/full-point verification.",
+        "manual_visual_identity_review": {
+          "status": "same_match_and_same_edit_confirmed_in_three_aligned_pairs",
+          "observations": "Basel court; VACHEROT/NAVONE board; Vacherot grey kit, Navone light top/dark-green shorts; matchpoint135.81s board6–3,6–6,6–4",
+          "sheet_local": "/workspace/scratch/vacherot-fixed/r1-compare.jpg",
+          "sheet_sha256": "3ce4fe5f6770a5309df52841cc21e44f5f6311a0a7de7a8587a11cef4f36c650",
+          "coverage": "3 native decoded representative frame pairs; not a full-video semantic audit. Earlier_rounds agent separately rechecks selected foreground and audio on fixed files.",
+          "sheet_repository_path": "data/evidence/vacherot-basel-title-story-2026/fixed-source-frames/r1-compare.jpg"
+        }
+      }
+    },
+    "r2": {
+      "key": "r2",
+      "id": "4600907",
+      "workflow_run_id": 41334274207,
+      "archive_pipeline_sha": "59bc4292d46a95fb95f143b7e51ef54f491b46af",
+      "official_url": "https://www.tennistv.com/videos/4600907/basel-2026-r2-vacherot-jodar-short-highlights",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-4600907/4600907.mp4",
+      "local_path": "/workspace/scratch/vacherot-fixed/r2/4600907.mp4",
+      "sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "157.260000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "157.290667"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "157.290667",
+          "size": "159372517"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-rounds/r2.mp4",
+        "sha256": "173b0cdd8593b433d209a97e5336f7933c03f0c643282de19a851c038a298297",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "50/1",
+              "avg_frame_rate": "943560/18869",
+              "start_time": "0.083021",
+              "duration": "157.241667"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "157.333333"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "157.333333",
+            "size": "120220157"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "13bf478651db2f138b957ca7cc6356d33bc1b1881a86835f1969c3852bf7a6e5",
+            "bytes": 30199808
+          },
+          "reviewed": {
+            "sha256": "fa09b61ebf4f7b5833000395ac6d15dc6f35777d4ccd7cd4f95bee443bbf7f2b",
+            "bytes": 30208000
+          },
+          "equal": false
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "e7d57224c79f1741fa3ac106186b89169bf24618a6cde0dbc5ecccff2da06376",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "563d9c905f6508cc30eee75eb1f4dd8512e8983cec006e2e1cbff6316b5c0557",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 78.65,
+            "fixed": {
+              "sha256": "e5cf11163d80ea28d0daddae060a5d6a044e877a6428420a86945d99780baba3",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "21c98732f1f35f73dda4b5e4adbcb2fe1adab86ce41b716489be883be49cb50c",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 142.29,
+            "fixed": {
+              "sha256": "ac7aadfc6ffcee1e0e4baaeb60dc0216572cf0fde6975ad0afb8801634f2b8a4",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "94233e841a532150d3612b705747c3e4ef771165311255f0e18ee7842732747f",
+              "bytes": 6220800
+            },
+            "equal": false
+          }
+        ],
+        "container_hash_equal": false,
+        "decoded_av_equal": false,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      },
+      "time_alignment_review": {
+        "method": "Representative native decoded frames compared after searching old timeline ±0.20s (at native fps), resized to480×270 for compression-tolerant PSNR; audio8s windows mono48k cross-correlated ±0.25s. This is content equivalence evidence, not exact-byte reuse.",
+        "video_samples": [
+          {
+            "fixed_source_second": 10.0,
+            "matching_old_source_second_approx": 10.08,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 49.072275955495485,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.41295525431632996,
+            "fixed_frame_sha256_rgb480x270": "68061286f3daf38fc24d3038cf29f540f4a2675030ac31ed90d33c8d389ed5a4",
+            "matched_old_frame_sha256_rgb480x270": "6ee23e724da97d23552a6d322b1b6c931483f27811615c3a58cb04d3d694502e"
+          },
+          {
+            "fixed_source_second": 78.65,
+            "matching_old_source_second_approx": 78.75,
+            "offset_old_minus_fixed_approx_seconds": 0.1,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 47.98802109844898,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.4835159480571747,
+            "fixed_frame_sha256_rgb480x270": "3dd522626fcd77f6e54828821c1a8f38a37282d90a82c1d9b94d7e2459f2743b",
+            "matched_old_frame_sha256_rgb480x270": "915f27d9246bd037ce20291416b965418e779452aafa51492359bd81f87294b4"
+          },
+          {
+            "fixed_source_second": 142.29,
+            "matching_old_source_second_approx": 142.39,
+            "offset_old_minus_fixed_approx_seconds": 0.1,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 48.22486195364684,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.45263373851776123,
+            "fixed_frame_sha256_rgb480x270": "fb1014cd9db6ef9a74dd694b4edff994954ef6f2d39bd0959699ef7d9490ef05",
+            "matched_old_frame_sha256_rgb480x270": "a6e92a1a6816a2cc8a073716242b4ffb61ebaa66be9fd5d0eaadd123d41ea542"
+          }
+        ],
+        "audio_samples": [
+          {
+            "source_second": 10,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999983406499,
+            "sample_rate": 48000,
+            "duration_s": 8
+          },
+          {
+            "source_second": 78.65,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999535235112,
+            "sample_rate": 48000,
+            "duration_s": 8
+          }
+        ],
+        "decoded_av_hashes_equal": false,
+        "status": "same_visual_and_audio_content_after_timeline_alignment",
+        "review_reuse_boundary": "Do not reuse old source SHA attestations; foreground/subtitle review must bind current fixed file. New timeline cut boundaries still need margin/full-point verification.",
+        "manual_visual_identity_review": {
+          "status": "same_match_and_same_edit_confirmed_in_three_aligned_pairs",
+          "observations": "Basel court; VACHEROT/JODAR board; Vacherot white cap/grey kit, Jodar pink shirt/maroon shorts; final142.29s board7–6,2–6,7–6",
+          "sheet_local": "/workspace/scratch/vacherot-fixed/r2-compare.jpg",
+          "sheet_sha256": "945baaae94f6d9f9fcf218d1e3140c5672832ade110c1c65f68a30cf5ef6d762",
+          "coverage": "3 native decoded representative frame pairs; not a full-video semantic audit. Earlier_rounds agent separately rechecks selected foreground and audio on fixed files.",
+          "sheet_repository_path": "data/evidence/vacherot-basel-title-story-2026/fixed-source-frames/r2-compare.jpg"
+        }
+      }
+    },
+    "qf": {
+      "key": "qf",
+      "id": "4601599",
+      "workflow_run_id": 41334276633,
+      "archive_pipeline_sha": "59bc4292d46a95fb95f143b7e51ef54f491b46af",
+      "official_url": "https://www.tennistv.com/videos/4601599/basel-2026-qf-rune-vacherot-short-highlights",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-4601599/4601599.mp4",
+      "local_path": "/workspace/scratch/vacherot-fixed/qf/4601599.mp4",
+      "sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "154.520000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "154.538667"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "154.538667",
+          "size": "156395963"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-rounds/qf.mp4",
+        "sha256": "7979b02a43115f03c5d8ec1c3d78049ead34fce971214befc21f1bb2cf563eba",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "50/1",
+              "avg_frame_rate": "4635600/92701",
+              "start_time": "0.083021",
+              "duration": "154.501667"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "154.581333"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "154.584688",
+            "size": "117987022"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "2513805f7a8424621ae9aa59a460d808c8c79eb7ef1aff5a79eb6273ca0109e2",
+            "bytes": 29671424
+          },
+          "reviewed": {
+            "sha256": "3abb64f9958a079476907b65fb0b883f059ab44184eb79fbd5dc8cf672a473e3",
+            "bytes": 29679616
+          },
+          "equal": false
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "f12bdce09294afe51750155cd6e3fd4daadb8895b6115eb5019d020593f2b276",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "e0a28a8e47f5eb7ebf96315d983580a321c605c12fccfea2f78d50742041b355",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 77.27,
+            "fixed": {
+              "sha256": "368f2b18e590d67435873853efa074c4e322b6404e74867c80a1cf73ca72d3eb",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "e77e56f2cfcaaaa6b99a1f616b007f2769eca2b0c8ce80584ad65ccade8d5ab5",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 139.54,
+            "fixed": {
+              "sha256": "c6af17e69d0f8ba1e62d3fb0f11df7deb3b4f867766c80d5c2ba5917d9bcac80",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "ef8c093eb7c5489bf415ebc13df69edc4792a5053f8ad0adc1a7c1714662f2a0",
+              "bytes": 6220800
+            },
+            "equal": false
+          }
+        ],
+        "container_hash_equal": false,
+        "decoded_av_equal": false,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      },
+      "time_alignment_review": {
+        "method": "Representative native decoded frames compared after searching old timeline ±0.20s (at native fps), resized to480×270 for compression-tolerant PSNR; audio8s windows mono48k cross-correlated ±0.25s. This is content equivalence evidence, not exact-byte reuse.",
+        "video_samples": [
+          {
+            "fixed_source_second": 10.0,
+            "matching_old_source_second_approx": 10.08,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 48.847614458372554,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.39638373255729675,
+            "fixed_frame_sha256_rgb480x270": "1f18bd78cd33990095b252cc2270363f0ef8fda93a48569e4bce906af7cad81f",
+            "matched_old_frame_sha256_rgb480x270": "627fa21c9e5258de4fec3bc351d21ef6d25cfe22660cb28cb7688eabbd294256"
+          },
+          {
+            "fixed_source_second": 77.27,
+            "matching_old_source_second_approx": 77.37,
+            "offset_old_minus_fixed_approx_seconds": 0.1,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 47.29125992370052,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.5156944394111633,
+            "fixed_frame_sha256_rgb480x270": "bf1aa2e29ff2270f6a65b161c20059ecfa35987385c167a4a01299333041f46d",
+            "matched_old_frame_sha256_rgb480x270": "74a2f893d00579f986639b4e364ba43c27d45402a4d45e1d7b586afd47580d84"
+          },
+          {
+            "fixed_source_second": 139.54,
+            "matching_old_source_second_approx": 139.62,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 48.509371719454265,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.4253395199775696,
+            "fixed_frame_sha256_rgb480x270": "cbb3b672d26a98c5bb36e70c008ea2bdebbecd9c0c3976b4eae591419d703683",
+            "matched_old_frame_sha256_rgb480x270": "c71761669ba012a0d88702e93708ca94f069055c488a3ebf8a6f57e3153a5eaa"
+          }
+        ],
+        "audio_samples": [
+          {
+            "source_second": 10,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999993634995,
+            "sample_rate": 48000,
+            "duration_s": 8
+          },
+          {
+            "source_second": 77.27,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999992790228,
+            "sample_rate": 48000,
+            "duration_s": 8
+          }
+        ],
+        "decoded_av_hashes_equal": false,
+        "status": "same_visual_and_audio_content_after_timeline_alignment",
+        "review_reuse_boundary": "Do not reuse old source SHA attestations; foreground/subtitle review must bind current fixed file. New timeline cut boundaries still need margin/full-point verification.",
+        "manual_visual_identity_review": {
+          "status": "same_match_and_same_edit_confirmed_in_three_aligned_pairs",
+          "observations": "Basel court; RUNE/VACHEROT board; Vacherot grey kit/white cap, Rune light kit; second-set ending/late reaction same in both versions",
+          "sheet_local": "/workspace/scratch/vacherot-fixed/qf-compare.jpg",
+          "sheet_sha256": "409026674fcec6ed933b41bb08a8abe9c74c3d3284d5144ab4c9ffd8e80d9dbf",
+          "coverage": "3 native decoded representative frame pairs; not a full-video semantic audit. Earlier_rounds agent separately rechecks selected foreground and audio on fixed files.",
+          "sheet_repository_path": "data/evidence/vacherot-basel-title-story-2026/fixed-source-frames/qf-compare.jpg"
+        }
+      }
+    },
+    "sf": {
+      "key": "sf",
+      "id": "4602075",
+      "workflow_run_id": 41334279437,
+      "archive_pipeline_sha": "59bc4292d46a95fb95f143b7e51ef54f491b46af",
+      "official_url": "https://www.tennistv.com/videos/4602075/basel-2026-sf-vacherot-fritz-short-highlights",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-4602075/4602075.mp4",
+      "local_path": "/workspace/scratch/vacherot-fixed/sf/4602075.mp4",
+      "sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "157.820000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "157.845333"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "157.845333",
+          "size": "159739597"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-rounds/sf.mp4",
+        "sha256": "f3fd6e32588ed53e5f650476709afda742888423dd63b9ee0c272a527ac52c71",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "50/1",
+              "avg_frame_rate": "4734600/94681",
+              "start_time": "0.083021",
+              "duration": "157.801667"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "48000",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "157.888000"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "157.888000",
+            "size": "120566441"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "bba31e557cf50cbdbb69a0c7b325a6ba087166ea38bc6be484bf1483e7170478",
+            "bytes": 30306304
+          },
+          "reviewed": {
+            "sha256": "5202565049e5c7452e21dabb7fe3f6964de9c69697cae46bdc7896845c2368d1",
+            "bytes": 30314496
+          },
+          "equal": false
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "b369b7882a9f3a54ec2ed58f14e191a0cbbe2274ae829d95b5ea2393726ae3b6",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "261e0da6e14086478ad943efbe10fde08b4e8649828b12edbf65072fafb3457c",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 78.92,
+            "fixed": {
+              "sha256": "40f0870fefc40930daa1d1bf27116a864ed668dfb465845500030d0502cb3962",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "fe80885beb3377cb794b6e887fa59c063f072c80482672fb78cdb8bd809af685",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 142.85,
+            "fixed": {
+              "sha256": "1caf45938ff5af4c0b0b8ecfc4d47a559a974073a6c7061cea3e0b1a2d5b6dd5",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "9c794f2070cb73ed6304735ef6cb8fe93c0370c4d3b0102b3a3e7c5586e8b2c8",
+              "bytes": 6220800
+            },
+            "equal": false
+          }
+        ],
+        "container_hash_equal": false,
+        "decoded_av_equal": false,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      },
+      "time_alignment_review": {
+        "method": "Representative native decoded frames compared after searching old timeline ±0.20s (at native fps), resized to480×270 for compression-tolerant PSNR; audio8s windows mono48k cross-correlated ±0.25s. This is content equivalence evidence, not exact-byte reuse.",
+        "video_samples": [
+          {
+            "fixed_source_second": 10.0,
+            "matching_old_source_second_approx": 10.08,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 49.08002448746384,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.3950437307357788,
+            "fixed_frame_sha256_rgb480x270": "15adc1298707c8f944a3b62d233f07f61ae0e79e72e79b6799335b7f3f73a025",
+            "matched_old_frame_sha256_rgb480x270": "fcceaf3a325db22b7aa80cff044aac36adb33b3714324f2999e902545bc037dd"
+          },
+          {
+            "fixed_source_second": 78.92,
+            "matching_old_source_second_approx": 79.0,
+            "offset_old_minus_fixed_approx_seconds": 0.08,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 46.34685984020077,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.6569470167160034,
+            "fixed_frame_sha256_rgb480x270": "99715260028e4a9da3dc1d7de5a34f454a832b2cc12db981602f779b9dcf719b",
+            "matched_old_frame_sha256_rgb480x270": "d1173c8626446f5dd30eecb2acecf4e02cea268a6c5c2d351a99eb136fba6fbd"
+          },
+          {
+            "fixed_source_second": 142.85,
+            "matching_old_source_second_approx": 142.95,
+            "offset_old_minus_fixed_approx_seconds": 0.1,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": 45.332246597315304,
+            "pixel_identical_after_alignment": false,
+            "mae_rgb": 0.8777649402618408,
+            "fixed_frame_sha256_rgb480x270": "684be1334bdc6b505300f03cab35174e4578f8c5d0fd52b21b7cdc02873b4d7a",
+            "matched_old_frame_sha256_rgb480x270": "145bc9033bd68fcc9fb50f724e8bad45444f69cbd82d38f1dd5b89a09c02455a"
+          }
+        ],
+        "audio_samples": [
+          {
+            "source_second": 10,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.999999998887788,
+            "sample_rate": 48000,
+            "duration_s": 8
+          },
+          {
+            "source_second": 78.92,
+            "lag_old_relative_to_fixed_seconds": 0.042666666666666665,
+            "aligned_pearson_correlation": 0.9999999987743622,
+            "sample_rate": 48000,
+            "duration_s": 8
+          }
+        ],
+        "decoded_av_hashes_equal": false,
+        "status": "same_visual_and_audio_content_after_timeline_alignment",
+        "review_reuse_boundary": "Do not reuse old source SHA attestations; foreground/subtitle review must bind current fixed file. New timeline cut boundaries still need margin/full-point verification.",
+        "manual_visual_identity_review": {
+          "status": "same_match_and_same_edit_confirmed_in_three_aligned_pairs",
+          "observations": "Basel court; VACHEROT/FRITZ board; Vacherot grey kit/white cap, Fritz pink shirt; audience and50fps action exactly same timing after alignment",
+          "sheet_local": "/workspace/scratch/vacherot-fixed/sf-compare.jpg",
+          "sheet_sha256": "24f754dfd47d45abdaef85ed0ea7f6031fbe5970d8e6410343d4fceb3756d3e1",
+          "coverage": "3 native decoded representative frame pairs; not a full-video semantic audit. Earlier_rounds agent separately rechecks selected foreground and audio on fixed files.",
+          "sheet_repository_path": "data/evidence/vacherot-basel-title-story-2026/fixed-source-frames/sf-compare.jpg"
+        }
+      }
+    },
+    "shanghai": {
+      "key": "shanghai",
+      "id": "4380470",
+      "workflow_run_id": 41334281866,
+      "archive_pipeline_sha": "59bc4292d46a95fb95f143b7e51ef54f491b46af",
+      "official_url": "https://www.tennistv.com/videos/4380470/shanghai-2025-final-rinderknech-vacherot-short-highlights",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-4380470/4380470.mp4",
+      "local_path": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+      "sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1",
+            "avg_frame_rate": "25/1",
+            "start_time": "0.000000",
+            "duration": "146.880000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "146.815986"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "146.880000",
+          "size": "69995758"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-basel/shanghai.mp4",
+        "sha256": "f77b72d460dfbe207f2ba7952130330c9d75e1d75e4b640445401cd5aad52b92",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "h264",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "25/1",
+              "avg_frame_rate": "25/1",
+              "start_time": "0.126016",
+              "duration": "146.880000"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "146.866213"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "147.006016",
+            "size": "68821425"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "1056d4df141633126e24d0822d37c285382b702e77fa1400e0e8c89cb832b419",
+            "bytes": 28189400
+          },
+          "reviewed": {
+            "sha256": "6db49b3805fd5ccced757a9eee81978b6bf7aa31fe2f8218a531c99626837711",
+            "bytes": 28198316
+          },
+          "equal": false
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "aa81610aadd41d2faddb533de0829b68aefb0dad7a65e58c4c53a1424f63334a",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "af765a52bc7b9fc07f35dae80c0d10fa181fe21f98d87f2cf0bc46ce472d671a",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 73.44,
+            "fixed": {
+              "sha256": "f5d3eafa41927d9e6bb39bc6bf2d4023952a089e7b148f3222d31e8cd1c893f9",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "8c3cecf77017775e3d809daa3c55c9797af770aef0d01788e312d8a7f77e50a6",
+              "bytes": 6220800
+            },
+            "equal": false
+          },
+          {
+            "source_second": 131.88,
+            "fixed": {
+              "sha256": "99456625885f6f8ebd9943126778ca10e736ab4f7d078b2379277204d4536a92",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "e3df14cee6093ae9e39287fa058c13d5921a149e80153c0f32fc3632ca4b0210",
+              "bytes": 6220800
+            },
+            "equal": false
+          }
+        ],
+        "container_hash_equal": false,
+        "decoded_av_equal": false,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      },
+      "time_alignment_review": {
+        "method": "Representative native decoded frames compared after searching old timeline ±0.20s (at native fps), resized to480×270 for compression-tolerant PSNR; audio8s windows mono48k cross-correlated ±0.25s. This is content equivalence evidence, not exact-byte reuse.",
+        "video_samples": [
+          {
+            "fixed_source_second": 10.0,
+            "matching_old_source_second_approx": 10.12,
+            "offset_old_minus_fixed_approx_seconds": 0.12,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": null,
+            "pixel_identical_after_alignment": true,
+            "mae_rgb": 0.0,
+            "fixed_frame_sha256_rgb480x270": "392067172f22317ce013a226cae8828ab9bb268df4ceaf314cc7f5d37ccb12a0",
+            "matched_old_frame_sha256_rgb480x270": "392067172f22317ce013a226cae8828ab9bb268df4ceaf314cc7f5d37ccb12a0"
+          },
+          {
+            "fixed_source_second": 73.44,
+            "matching_old_source_second_approx": 73.56,
+            "offset_old_minus_fixed_approx_seconds": 0.12,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": null,
+            "pixel_identical_after_alignment": true,
+            "mae_rgb": 0.0,
+            "fixed_frame_sha256_rgb480x270": "61f5f4ed5ddda35edd79b34ecc007072d023a3ab536c8bb774714df5ddf08b6a",
+            "matched_old_frame_sha256_rgb480x270": "61f5f4ed5ddda35edd79b34ecc007072d023a3ab536c8bb774714df5ddf08b6a"
+          },
+          {
+            "fixed_source_second": 131.88,
+            "matching_old_source_second_approx": 132.0,
+            "offset_old_minus_fixed_approx_seconds": 0.12,
+            "offset_precision": "within one native frame; selected from ±0.20s decoded neighborhood",
+            "psnr_db_rgb480x270": null,
+            "pixel_identical_after_alignment": true,
+            "mae_rgb": 0.0,
+            "fixed_frame_sha256_rgb480x270": "4547c4eee061934284079da2f908500c1c1eca1d082a1a893f348c922eac020b",
+            "matched_old_frame_sha256_rgb480x270": "4547c4eee061934284079da2f908500c1c1eca1d082a1a893f348c922eac020b"
+          }
+        ],
+        "audio_samples": [
+          {
+            "source_second": 10,
+            "lag_old_relative_to_fixed_seconds": 0.0464375,
+            "aligned_pearson_correlation": 0.9968628992074032,
+            "sample_rate": 48000,
+            "duration_s": 8
+          },
+          {
+            "source_second": 73.44,
+            "lag_old_relative_to_fixed_seconds": 0.0464375,
+            "aligned_pearson_correlation": 0.9965320361671723,
+            "sample_rate": 48000,
+            "duration_s": 8
+          }
+        ],
+        "decoded_av_hashes_equal": false,
+        "status": "same_visual_and_audio_content_after_timeline_alignment",
+        "review_reuse_boundary": "Do not reuse old source SHA attestations; foreground/subtitle review must bind current fixed file. New timeline cut boundaries still need margin/full-point verification.",
+        "manual_visual_identity_review": {
+          "status": "same_match_and_same_edit_confirmed_in_three_aligned_pairs",
+          "observations": "Shanghai court; RINDERKNECH/VACHEROT board; Vacherot white kit, Rinderknech teal shirt; final131.88s is Rinderknech close-up, not Vacherot—reviewed and fixed copies visually identical",
+          "sheet_local": "/workspace/scratch/vacherot-fixed/shanghai-compare.jpg",
+          "sheet_sha256": "a4e1556abb6f40e6db9e44c72945cba71da6042bea15e2ae092852c3803ac9f2",
+          "coverage": "3 native decoded representative frame pairs; not a full-video semantic audit. Earlier_rounds agent separately rechecks selected foreground and audio on fixed files.",
+          "sheet_repository_path": "data/evidence/vacherot-basel-title-story-2026/fixed-source-frames/shanghai-compare.jpg"
+        }
+      }
+    },
+    "final": {
+      "key": "final",
+      "id": "CGsiDxZqdzA",
+      "workflow_run_id": 41332362203,
+      "archive_pipeline_sha": "existing YouTube workflow",
+      "official_url": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
+      "release_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "local_path": "/workspace/scratch/vacherot-basel/main.mp4",
+      "sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "av1",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "493.520000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "493.586576"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "493.586576",
+          "size": "88037838"
+        }
+      },
+      "reviewed_source": {
+        "local_path": "/workspace/scratch/vacherot-basel/main.mp4",
+        "sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+        "ffprobe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "index": 0,
+              "codec_name": "av1",
+              "codec_type": "video",
+              "width": 1920,
+              "height": 1080,
+              "r_frame_rate": "50/1",
+              "avg_frame_rate": "50/1",
+              "start_time": "0.000000",
+              "duration": "493.520000"
+            },
+            {
+              "index": 1,
+              "codec_name": "aac",
+              "codec_type": "audio",
+              "sample_rate": "44100",
+              "channels": 2,
+              "r_frame_rate": "0/0",
+              "avg_frame_rate": "0/0",
+              "start_time": "0.000000",
+              "duration": "493.586576"
+            }
+          ],
+          "format": {
+            "start_time": "0.000000",
+            "duration": "493.586576",
+            "size": "88037838"
+          }
+        }
+      },
+      "comparison": {
+        "audio_pcm_s16le_48000_stereo": {
+          "fixed": {
+            "sha256": "84c4826badd43fd18132849accfb8743f5ac8926681fef116143515f40917d4e",
+            "bytes": 94768624
+          },
+          "reviewed": {
+            "sha256": "84c4826badd43fd18132849accfb8743f5ac8926681fef116143515f40917d4e",
+            "bytes": 94768624
+          },
+          "equal": true
+        },
+        "representative_rgb24_frames": [
+          {
+            "source_second": 10.0,
+            "fixed": {
+              "sha256": "d6ba8b917d9ec4c50b7739e8ffef7e13c831c78add66f6e23053baa72c337a88",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "d6ba8b917d9ec4c50b7739e8ffef7e13c831c78add66f6e23053baa72c337a88",
+              "bytes": 6220800
+            },
+            "equal": true
+          },
+          {
+            "source_second": 246.79,
+            "fixed": {
+              "sha256": "04ad3d60155848c90f3830a8ee602229a3441aa794cfcaca937b89638b95a8d4",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "04ad3d60155848c90f3830a8ee602229a3441aa794cfcaca937b89638b95a8d4",
+              "bytes": 6220800
+            },
+            "equal": true
+          },
+          {
+            "source_second": 478.59,
+            "fixed": {
+              "sha256": "7590cb4ea960c9b4c43dffe63e1101c2bf9cc7b6fb447b44de9c197fb4e9daf0",
+              "bytes": 6220800
+            },
+            "reviewed": {
+              "sha256": "7590cb4ea960c9b4c43dffe63e1101c2bf9cc7b6fb447b44de9c197fb4e9daf0",
+              "bytes": 6220800
+            },
+            "equal": true
+          }
+        ],
+        "container_hash_equal": true,
+        "decoded_av_equal": true,
+        "method": "Full audio decoded to48000Hz/stereo/s16le plus3 native-size RGB24 video frames at source times; no loudness normalization, media files unmodified."
+      }
+    }
+  },
+  "all_decoded_av_equal": false,
+  "binding_note": "All official_url values restored from spec._original_source_urls. Full PCM/representative frame hashes differ for5 alternate renditions, so exact old hash attestations remain invalid. Content equivalence after time alignment is confirmed: four-round video PSNR45–49dB and audio correlation≈1; Shanghai video pixel-identical afteralignment, audio correlation≈0.997. Foreground review/render must bind fixed file SHA256.",
+  "all_content_equivalent_after_alignment": true
+}

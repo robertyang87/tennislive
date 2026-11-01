@@ -1,0 +1,55 @@
+{
+  "index": 0,
+  "source": "final",
+  "reviewed_from": 447.5,
+  "reviewed_to": 457.2,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 447.92,
+      "end": 452.48,
+      "en": "It is another very, very special day",
+      "zh": "又是无比特别的一天"
+    },
+    {
+      "start": 452.48,
+      "end": 456.72,
+      "en": "for Valentin Vacherot. He’s the Basel champion.",
+      "zh": "瓦舍罗，他是巴塞尔冠军。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-00-small.en.json",
+      "sha256": "b53bf9844cf71310d79b2ee808f4061811bb99ea91e255190e634f987bd99bd7"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-00-base.en.json",
+      "sha256": "dbd163294e30ac4c9c1bc72b186a3cae197c04c133a30835bd36b5ecfab76591"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-cold-open-medium.en.json",
+      "sha256": "ae7d441f21c659045e68abd2730f101f0397262ea4402d56b864b8af8a1f9b64"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-small.en.json",
+      "sha256": "f92d15f8f85dedd93ea574ce4fd06d53a8f0bb2284bc429852ddf54f2b8633ed"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-base.en.json",
+      "sha256": "098941d82b125139d09045e1931e849348e9552bc996e368e5f27ea9b391dfa2"
+    }
+  ],
+  "review_notes": [
+    "Wider full-window final427.8–473.02 two-model passes cover updated cold447.5–457.2, and focused medium447.5–456.8 checks all spoken words; 456.72–457.2 no new foreground sentence before459.76."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

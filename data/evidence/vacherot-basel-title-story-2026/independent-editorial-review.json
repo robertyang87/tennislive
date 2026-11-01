@@ -1,0 +1,1750 @@
+{
+  "reviewer": "earlier_rounds independent editorial pass",
+  "spec_sha256": "be1c8a5cb72f58522d39402e37a819c6cb264b15312bbd520fec76d41f20bfaa",
+  "status": "changes_required_before_render; medium_followup_complete",
+  "scope": "Source-level independent review of current spec; no production spec mutation, no final rendered-film pass claimed.",
+  "findings": [
+    {
+      "severity": "must_fix",
+      "segment": 19,
+      "issue": "source end351.92 cuts the spoken phrase so far in the third; two ASR models end the full phrase352.81–352.87",
+      "evidence": [
+        "/workspace/scratch/vacherot-independent/s3open-small.en.json",
+        "/workspace/scratch/vacherot-independent/s3open-base.en.json"
+      ],
+      "recommendation": "Preserve full source sentence to>=353.05, while explicitly handling the video cut into next point around352s. At353.1 next point serve/action is visible, so a simple extension changes visual coverage. Medium.en requested by parent is pending."
+    },
+    {
+      "severity": "must_fix_timing",
+      "segment": 9,
+      "issue": "First subtitle ends137.2 before in Basel finishes~138.34; second starts before fourth time begins~138.52",
+      "recommendation": "medium refined source cue windows132.58–138.90,140.60–143.40,143.50–144.60; relative to120 these are12.58–18.90,20.60–23.40,23.50–24.60."
+    },
+    {
+      "severity": "must_fix_wording",
+      "segment": 19,
+      "issue": "medium.en matches Google caption: Wow, no. Another shocker. So far in the third. Current quote omits no and current Chinese over-specifies a single error.",
+      "recommendation": "Retain the No interjection, phrase through352.93, and translate shocker broadly as糟糕表现 rather than asserting a new discrete unforced error."
+    },
+    {
+      "severity": "translation_improve",
+      "segment": 17,
+      "issue": "中文“过程有些曲折，他拿下了这一盘”略去serving it out的发球胜盘局坐标；medium now confirms end (not air), exact word336.53–336.71 so segment end336.6 risks clipping its end.",
+      "recommendation": "中文可用“这个发球胜盘局有些曲折，但他最终还是拿下了。”；完整报分Set point在328.4–329.3可加入或按报分跳过认领；为end声尾保留至336.82左右或独立音尾处理。"
+    },
+    {
+      "severity": "translation_improve",
+      "segment": 2,
+      "issue": "“画上圆满句号／为这段上海童话”中文语序倒置，像两个断裂片段",
+      "recommendation": "保留英文真实分句；中文按“瓦舍罗／为这段童话般的上海之旅／画上圆满句号”组织完整语意。"
+    },
+    {
+      "severity": "translation_improve",
+      "segment": 21,
+      "issue": "What an achievement.当前中文未表达这一声赞叹",
+      "recommendation": "可补“多么了不起！”与第二冠事实形成完整翻译；不要为补字挤字幕。"
+    },
+    {
+      "severity": "minor_timing",
+      "segment": 0,
+      "issue": "cold open begins448 but automated captions giveIt is onset447.92, ASR447.52 lowconfidence; initialIt可能损失极小音头",
+      "recommendation": "安全起点447.7或447.8，并相应重排relative cues；非机械必须，需直接听核。"
+    }
+  ],
+  "visual_checks": [
+    {
+      "source": "final",
+      "window": [
+        427.8,
+        473.02
+      ],
+      "result": "Champion point is complete from near-end Lehecka serve preparation427.8/toss428.4 to long rally result447.46, then Vacherot reaction, handshakes and stands gesture. Supports final 2–6 6–3 6–3. Does not start at437, which would truncate point.",
+      "evidence": "/workspace/scratch/vacherot-independent/champion.jpg"
+    },
+    {
+      "source": "final",
+      "window": [
+        473.02,
+        483.54
+      ],
+      "result": "Actual trophy handover473.02, Vacherot raises trophy475–476 and holds overhead476–478; golden confetti wide podium480–483.5. Meets mandatory real trophy lift.",
+      "evidence": "/workspace/scratch/vacherot-independent/trophy.jpg"
+    },
+    {
+      "source": "final",
+      "window": [
+        336.6,
+        351.92
+      ],
+      "result": "Third set first game at0–0: Lehecka serves, Vacherot holds returnAD; visible result and following1–0 score confirm Vacherot break. Source opens already in serve toss motion at336.6 (official edit); do not claim availability of earlier setup not in source. At353.1 camera has moved into next point.",
+      "evidence": "/workspace/scratch/vacherot-independent/s3.jpg"
+    }
+  ],
+  "narrative_verdict": "Main structure, final identity, set/point progression and mandatory trophy footage supported. Medium resolves QF books, final shocker and second-set end. Fix timing, preserve full audible tails and make source-consistent Chinese translations before render.",
+  "asr_sources": {
+    "s1": {
+      "small.en": [
+        {
+          "start": 44.82,
+          "end": 51.480000000000004,
+          "text": " On a break for Lehecka, perfect start for the check, looking very calm and composed.",
+          "words": [
+            {
+              "word": " On",
+              "start": 44.82,
+              "end": 45.32,
+              "p": 0.2798381447792053
+            },
+            {
+              "word": " a",
+              "start": 45.32,
+              "end": 45.42,
+              "p": 0.7973524928092957
+            },
+            {
+              "word": " break",
+              "start": 45.42,
+              "end": 45.660000000000004,
+              "p": 0.9801645278930664
+            },
+            {
+              "word": " for",
+              "start": 45.660000000000004,
+              "end": 46.120000000000005,
+              "p": 0.12858355045318604
+            },
+            {
+              "word": " Lehecka,",
+              "start": 46.120000000000005,
+              "end": 46.64,
+              "p": 0.19836525360005908
+            },
+            {
+              "word": " perfect",
+              "start": 46.84,
+              "end": 47.0,
+              "p": 0.9656488299369812
+            },
+            {
+              "word": " start",
+              "start": 47.0,
+              "end": 47.480000000000004,
+              "p": 0.9227687120437622
+            },
+            {
+              "word": " for",
+              "start": 47.480000000000004,
+              "end": 49.34,
+              "p": 0.6064479351043701
+            },
+            {
+              "word": " the",
+              "start": 49.34,
+              "end": 49.480000000000004,
+              "p": 0.9787324070930481
+            },
+            {
+              "word": " check,",
+              "start": 49.480000000000004,
+              "end": 49.72,
+              "p": 0.42388030886650085
+            },
+            {
+              "word": " looking",
+              "start": 49.88,
+              "end": 50.1,
+              "p": 0.9343389272689819
+            },
+            {
+              "word": " very",
+              "start": 50.1,
+              "end": 50.42,
+              "p": 0.9935526847839355
+            },
+            {
+              "word": " calm",
+              "start": 50.42,
+              "end": 50.8,
+              "p": 0.9850974082946777
+            },
+            {
+              "word": " and",
+              "start": 50.8,
+              "end": 51.14,
+              "p": 0.9706631898880005
+            },
+            {
+              "word": " composed.",
+              "start": 51.14,
+              "end": 51.480000000000004,
+              "p": 0.9933237433433533
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 44.82,
+          "end": 51.28,
+          "text": " The break for Lehecka, perfect start for the chat, looking very calm and composed.",
+          "words": [
+            {
+              "word": " The",
+              "start": 44.82,
+              "end": 45.34,
+              "p": 0.2529579699039459
+            },
+            {
+              "word": " break",
+              "start": 45.34,
+              "end": 45.54,
+              "p": 0.777550995349884
+            },
+            {
+              "word": " for",
+              "start": 45.54,
+              "end": 46.04,
+              "p": 0.6127510666847229
+            },
+            {
+              "word": " Lehecka,",
+              "start": 46.04,
+              "end": 46.6,
+              "p": 0.10586666807648726
+            },
+            {
+              "word": " perfect",
+              "start": 46.7,
+              "end": 46.980000000000004,
+              "p": 0.977233350276947
+            },
+            {
+              "word": " start",
+              "start": 46.980000000000004,
+              "end": 47.38,
+              "p": 0.8198438882827759
+            },
+            {
+              "word": " for",
+              "start": 47.38,
+              "end": 49.24,
+              "p": 0.6398218870162964
+            },
+            {
+              "word": " the",
+              "start": 49.24,
+              "end": 49.42,
+              "p": 0.9951884746551514
+            },
+            {
+              "word": " chat,",
+              "start": 49.42,
+              "end": 49.620000000000005,
+              "p": 0.5623101592063904
+            },
+            {
+              "word": " looking",
+              "start": 49.9,
+              "end": 50.06,
+              "p": 0.9677196145057678
+            },
+            {
+              "word": " very",
+              "start": 50.06,
+              "end": 50.32,
+              "p": 0.9960993528366089
+            },
+            {
+              "word": " calm",
+              "start": 50.32,
+              "end": 50.72,
+              "p": 0.9951832890510559
+            },
+            {
+              "word": " and",
+              "start": 50.72,
+              "end": 50.96,
+              "p": 0.9912838935852051
+            },
+            {
+              "word": " composed.",
+              "start": 50.96,
+              "end": 51.28,
+              "p": 0.943860650062561
+            }
+          ]
+        }
+      ]
+    },
+    "s2break": {
+      "small.en": [
+        {
+          "start": 279.17,
+          "end": 280.93,
+          "text": " But this time he converts.",
+          "words": [
+            {
+              "word": " But",
+              "start": 279.17,
+              "end": 279.51,
+              "p": 0.5397844910621643
+            },
+            {
+              "word": " this",
+              "start": 279.51,
+              "end": 279.73,
+              "p": 0.977412760257721
+            },
+            {
+              "word": " time",
+              "start": 279.73,
+              "end": 280.09000000000003,
+              "p": 0.9982037544250488
+            },
+            {
+              "word": " he",
+              "start": 280.09000000000003,
+              "end": 280.45,
+              "p": 0.6162570714950562
+            },
+            {
+              "word": " converts.",
+              "start": 280.45,
+              "end": 280.93,
+              "p": 0.9772252440452576
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 279.17,
+          "end": 280.75,
+          "text": " At this time, he converts.",
+          "words": [
+            {
+              "word": " At",
+              "start": 279.17,
+              "end": 279.49,
+              "p": 0.18240351974964142
+            },
+            {
+              "word": " this",
+              "start": 279.49,
+              "end": 279.63,
+              "p": 0.9968307614326477
+            },
+            {
+              "word": " time,",
+              "start": 279.63,
+              "end": 280.01,
+              "p": 0.9993340373039246
+            },
+            {
+              "word": " he",
+              "start": 280.01,
+              "end": 280.39000000000004,
+              "p": 0.9798397421836853
+            },
+            {
+              "word": " converts.",
+              "start": 280.39000000000004,
+              "end": 280.75,
+              "p": 0.9910324215888977
+            }
+          ]
+        }
+      ]
+    },
+    "s2set": {
+      "small.en": [
+        {
+          "start": 328.4,
+          "end": 336.58,
+          "text": " What's that point? Well, he took the scenic route, serving it out, but he got there in the air.",
+          "words": [
+            {
+              "word": " What's",
+              "start": 328.4,
+              "end": 328.79999999999995,
+              "p": 0.4939794596284628
+            },
+            {
+              "word": " that",
+              "start": 328.79999999999995,
+              "end": 328.94,
+              "p": 0.9747998714447021
+            },
+            {
+              "word": " point?",
+              "start": 328.94,
+              "end": 329.26,
+              "p": 0.9954191446304321
+            },
+            {
+              "word": " Well,",
+              "start": 333.28,
+              "end": 333.28,
+              "p": 0.6869019865989685
+            },
+            {
+              "word": " he",
+              "start": 333.35999999999996,
+              "end": 333.35999999999996,
+              "p": 0.986401379108429
+            },
+            {
+              "word": " took",
+              "start": 333.35999999999996,
+              "end": 333.52,
+              "p": 0.9140191078186035
+            },
+            {
+              "word": " the",
+              "start": 333.52,
+              "end": 333.67999999999995,
+              "p": 0.9713905453681946
+            },
+            {
+              "word": " scenic",
+              "start": 333.67999999999995,
+              "end": 333.9,
+              "p": 0.9766870737075806
+            },
+            {
+              "word": " route,",
+              "start": 333.9,
+              "end": 334.15999999999997,
+              "p": 0.6384866833686829
+            },
+            {
+              "word": " serving",
+              "start": 334.64,
+              "end": 335.2,
+              "p": 0.844545841217041
+            },
+            {
+              "word": " it",
+              "start": 335.2,
+              "end": 335.38,
+              "p": 0.9944450259208679
+            },
+            {
+              "word": " out,",
+              "start": 335.38,
+              "end": 335.62,
+              "p": 0.9963122010231018
+            },
+            {
+              "word": " but",
+              "start": 335.82,
+              "end": 335.91999999999996,
+              "p": 0.9616349339485168
+            },
+            {
+              "word": " he",
+              "start": 335.91999999999996,
+              "end": 336.02,
+              "p": 0.9613351821899414
+            },
+            {
+              "word": " got",
+              "start": 336.02,
+              "end": 336.14,
+              "p": 0.9482810497283936
+            },
+            {
+              "word": " there",
+              "start": 336.14,
+              "end": 336.29999999999995,
+              "p": 0.9738795757293701
+            },
+            {
+              "word": " in",
+              "start": 336.29999999999995,
+              "end": 336.41999999999996,
+              "p": 0.9905746579170227
+            },
+            {
+              "word": " the",
+              "start": 336.41999999999996,
+              "end": 336.52,
+              "p": 0.9963836669921875
+            },
+            {
+              "word": " air.",
+              "start": 336.52,
+              "end": 336.58,
+              "p": 0.5848418474197388
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 328.4,
+          "end": 336.58,
+          "text": " So point. Well he took the scenic roost, serving it out, but he got there in the air.",
+          "words": [
+            {
+              "word": " So",
+              "start": 328.4,
+              "end": 328.88,
+              "p": 0.3294728994369507
+            },
+            {
+              "word": " point.",
+              "start": 328.88,
+              "end": 329.17999999999995,
+              "p": 0.6286459565162659
+            },
+            {
+              "word": " Well",
+              "start": 332.88,
+              "end": 333.23999999999995,
+              "p": 0.3057144284248352
+            },
+            {
+              "word": " he",
+              "start": 333.23999999999995,
+              "end": 333.34,
+              "p": 0.6815523505210876
+            },
+            {
+              "word": " took",
+              "start": 333.34,
+              "end": 333.46,
+              "p": 0.9693610072135925
+            },
+            {
+              "word": " the",
+              "start": 333.46,
+              "end": 333.65999999999997,
+              "p": 0.9393516778945923
+            },
+            {
+              "word": " scenic",
+              "start": 333.65999999999997,
+              "end": 333.82,
+              "p": 0.789462685585022
+            },
+            {
+              "word": " roost,",
+              "start": 333.82,
+              "end": 334.35999999999996,
+              "p": 0.5713438987731934
+            },
+            {
+              "word": " serving",
+              "start": 334.76,
+              "end": 335.12,
+              "p": 0.9294843077659607
+            },
+            {
+              "word": " it",
+              "start": 335.12,
+              "end": 335.34,
+              "p": 0.9770498275756836
+            },
+            {
+              "word": " out,",
+              "start": 335.34,
+              "end": 335.47999999999996,
+              "p": 0.9952570796012878
+            },
+            {
+              "word": " but",
+              "start": 335.88,
+              "end": 335.88,
+              "p": 0.8630701899528503
+            },
+            {
+              "word": " he",
+              "start": 335.88,
+              "end": 335.97999999999996,
+              "p": 0.9876256585121155
+            },
+            {
+              "word": " got",
+              "start": 335.97999999999996,
+              "end": 336.09999999999997,
+              "p": 0.9805117249488831
+            },
+            {
+              "word": " there",
+              "start": 336.09999999999997,
+              "end": 336.26,
+              "p": 0.9801139235496521
+            },
+            {
+              "word": " in",
+              "start": 336.26,
+              "end": 336.38,
+              "p": 0.9853289723396301
+            },
+            {
+              "word": " the",
+              "start": 336.38,
+              "end": 336.46,
+              "p": 0.9951634407043457
+            },
+            {
+              "word": " air.",
+              "start": 336.46,
+              "end": 336.58,
+              "p": 0.9496778249740601
+            }
+          ]
+        }
+      ],
+      "medium.en": [
+        {
+          "start": 332.97,
+          "end": 336.71,
+          "text": " Well, he took the scenic route serving it out, but he got there in the end.",
+          "words": [
+            {
+              "word": " Well,",
+              "start": 332.97,
+              "end": 333.29,
+              "p": 0.5293716788291931
+            },
+            {
+              "word": " he",
+              "start": 333.35,
+              "end": 333.39,
+              "p": 0.9895254373550415
+            },
+            {
+              "word": " took",
+              "start": 333.39,
+              "end": 333.55,
+              "p": 0.9866369366645813
+            },
+            {
+              "word": " the",
+              "start": 333.55,
+              "end": 333.69,
+              "p": 0.9312345385551453
+            },
+            {
+              "word": " scenic",
+              "start": 333.69,
+              "end": 333.91,
+              "p": 0.9882299900054932
+            },
+            {
+              "word": " route",
+              "start": 333.91,
+              "end": 334.27,
+              "p": 0.8408817648887634
+            },
+            {
+              "word": " serving",
+              "start": 334.27,
+              "end": 335.23,
+              "p": 0.4345286190509796
+            },
+            {
+              "word": " it",
+              "start": 335.23,
+              "end": 335.39,
+              "p": 0.9912896156311035
+            },
+            {
+              "word": " out,",
+              "start": 335.39,
+              "end": 335.67,
+              "p": 0.9940436482429504
+            },
+            {
+              "word": " but",
+              "start": 335.83,
+              "end": 335.95,
+              "p": 0.9826138615608215
+            },
+            {
+              "word": " he",
+              "start": 335.95,
+              "end": 336.03,
+              "p": 0.945542573928833
+            },
+            {
+              "word": " got",
+              "start": 336.03,
+              "end": 336.17,
+              "p": 0.989163875579834
+            },
+            {
+              "word": " there",
+              "start": 336.17,
+              "end": 336.33,
+              "p": 0.9903110265731812
+            },
+            {
+              "word": " in",
+              "start": 336.33,
+              "end": 336.43,
+              "p": 0.9895360469818115
+            },
+            {
+              "word": " the",
+              "start": 336.43,
+              "end": 336.53,
+              "p": 0.9985172152519226
+            },
+            {
+              "word": " end.",
+              "start": 336.53,
+              "end": 336.71,
+              "p": 0.9006111025810242
+            }
+          ]
+        }
+      ]
+    },
+    "s3open": {
+      "small.en": [
+        {
+          "start": 348.89,
+          "end": 352.87,
+          "text": " Well, no. Another shortcut. So far in the third.",
+          "words": [
+            {
+              "word": " Well,",
+              "start": 348.89,
+              "end": 349.37,
+              "p": 0.16772697865962982
+            },
+            {
+              "word": " no.",
+              "start": 349.49,
+              "end": 349.69,
+              "p": 0.9606607556343079
+            },
+            {
+              "word": " Another",
+              "start": 350.99,
+              "end": 351.37,
+              "p": 0.9588051438331604
+            },
+            {
+              "word": " shortcut.",
+              "start": 351.37,
+              "end": 351.67,
+              "p": 0.4240264296531677
+            },
+            {
+              "word": " So",
+              "start": 352.01,
+              "end": 352.19,
+              "p": 0.8634144067764282
+            },
+            {
+              "word": " far",
+              "start": 352.19,
+              "end": 352.41,
+              "p": 0.9993979930877686
+            },
+            {
+              "word": " in",
+              "start": 352.41,
+              "end": 352.53,
+              "p": 0.7925839424133301
+            },
+            {
+              "word": " the",
+              "start": 352.53,
+              "end": 352.65,
+              "p": 0.9906702041625977
+            },
+            {
+              "word": " third.",
+              "start": 352.65,
+              "end": 352.87,
+              "p": 0.9664701223373413
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 348.89,
+          "end": 352.81,
+          "text": " I don't know. Another chakra. So far in the third.",
+          "words": [
+            {
+              "word": " I",
+              "start": 348.89,
+              "end": 349.27,
+              "p": 0.14622169733047485
+            },
+            {
+              "word": " don't",
+              "start": 349.27,
+              "end": 349.37,
+              "p": 0.9585930705070496
+            },
+            {
+              "word": " know.",
+              "start": 349.37,
+              "end": 349.63,
+              "p": 0.9975047707557678
+            },
+            {
+              "word": " Another",
+              "start": 350.61,
+              "end": 351.25,
+              "p": 0.9593833088874817
+            },
+            {
+              "word": " chakra.",
+              "start": 351.25,
+              "end": 351.67,
+              "p": 0.2388082779943943
+            },
+            {
+              "word": " So",
+              "start": 352.15,
+              "end": 352.15,
+              "p": 0.7149149179458618
+            },
+            {
+              "word": " far",
+              "start": 352.15,
+              "end": 352.37,
+              "p": 0.9985044002532959
+            },
+            {
+              "word": " in",
+              "start": 352.37,
+              "end": 352.49,
+              "p": 0.9210048317909241
+            },
+            {
+              "word": " the",
+              "start": 352.49,
+              "end": 352.57,
+              "p": 0.9941294193267822
+            },
+            {
+              "word": " third.",
+              "start": 352.57,
+              "end": 352.81,
+              "p": 0.9730578064918518
+            }
+          ]
+        }
+      ],
+      "medium.en": [
+        {
+          "start": 348.89,
+          "end": 352.93,
+          "text": " Wow, no. Another shocker. So far in the third.",
+          "words": [
+            {
+              "word": " Wow,",
+              "start": 348.89,
+              "end": 349.39,
+              "p": 0.2502805292606354
+            },
+            {
+              "word": " no.",
+              "start": 349.53,
+              "end": 349.73,
+              "p": 0.8781470060348511
+            },
+            {
+              "word": " Another",
+              "start": 350.99,
+              "end": 351.35,
+              "p": 0.9714066982269287
+            },
+            {
+              "word": " shocker.",
+              "start": 351.35,
+              "end": 351.93,
+              "p": 0.7203005701303482
+            },
+            {
+              "word": " So",
+              "start": 352.03,
+              "end": 352.19,
+              "p": 0.659859836101532
+            },
+            {
+              "word": " far",
+              "start": 352.19,
+              "end": 352.43,
+              "p": 0.9975228905677795
+            },
+            {
+              "word": " in",
+              "start": 352.43,
+              "end": 352.55,
+              "p": 0.9208980798721313
+            },
+            {
+              "word": " the",
+              "start": 352.55,
+              "end": 352.65,
+              "p": 0.9915890097618103
+            },
+            {
+              "word": " third.",
+              "start": 352.65,
+              "end": 352.93,
+              "p": 0.9804177284240723
+            }
+          ]
+        }
+      ]
+    },
+    "champion": {
+      "small.en": [
+        {
+          "start": 447.52,
+          "end": 460.46,
+          "text": " It is another very, very special day for Valentin Vacherot. He's the Basel champion. What an achievement.",
+          "words": [
+            {
+              "word": " It",
+              "start": 447.52,
+              "end": 448.0,
+              "p": 0.6798465251922607
+            },
+            {
+              "word": " is",
+              "start": 448.0,
+              "end": 448.42,
+              "p": 0.9521268606185913
+            },
+            {
+              "word": " another",
+              "start": 448.42,
+              "end": 449.7,
+              "p": 0.8834916353225708
+            },
+            {
+              "word": " very,",
+              "start": 449.7,
+              "end": 450.64,
+              "p": 0.9587712287902832
+            },
+            {
+              "word": " very",
+              "start": 450.68,
+              "end": 451.22,
+              "p": 0.9981324076652527
+            },
+            {
+              "word": " special",
+              "start": 451.22,
+              "end": 451.86,
+              "p": 0.9723507761955261
+            },
+            {
+              "word": " day",
+              "start": 451.86,
+              "end": 452.38,
+              "p": 0.9974455833435059
+            },
+            {
+              "word": " for",
+              "start": 452.38,
+              "end": 453.58,
+              "p": 0.9327688813209534
+            },
+            {
+              "word": " Valentin",
+              "start": 453.58,
+              "end": 454.06,
+              "p": 0.20791885256767273
+            },
+            {
+              "word": " Vacherot.",
+              "start": 454.06,
+              "end": 454.64,
+              "p": 0.29846898606047034
+            },
+            {
+              "word": " He's",
+              "start": 455.34,
+              "end": 455.76,
+              "p": 0.9168383181095123
+            },
+            {
+              "word": " the",
+              "start": 455.76,
+              "end": 455.88,
+              "p": 0.993889331817627
+            },
+            {
+              "word": " Basel",
+              "start": 455.88,
+              "end": 456.26,
+              "p": 0.8677630126476288
+            },
+            {
+              "word": " champion.",
+              "start": 456.26,
+              "end": 456.72,
+              "p": 0.9010477066040039
+            },
+            {
+              "word": " What",
+              "start": 459.82,
+              "end": 459.92,
+              "p": 0.9847895503044128
+            },
+            {
+              "word": " an",
+              "start": 459.92,
+              "end": 460.06,
+              "p": 0.9963600039482117
+            },
+            {
+              "word": " achievement.",
+              "start": 460.06,
+              "end": 460.46,
+              "p": 0.9972706437110901
+            }
+          ]
+        },
+        {
+          "start": 460.72,
+          "end": 472.52,
+          "text": " A second ATP title after Shanghai last year. His first at ATP 500 level and makes a bit of history.",
+          "words": [
+            {
+              "word": " A",
+              "start": 460.72,
+              "end": 460.8,
+              "p": 0.9203130006790161
+            },
+            {
+              "word": " second",
+              "start": 460.8,
+              "end": 461.34,
+              "p": 0.9915456175804138
+            },
+            {
+              "word": " ATP",
+              "start": 461.34,
+              "end": 462.0,
+              "p": 0.9818928241729736
+            },
+            {
+              "word": " title",
+              "start": 462.0,
+              "end": 462.5,
+              "p": 0.9819834232330322
+            },
+            {
+              "word": " after",
+              "start": 462.5,
+              "end": 463.0,
+              "p": 0.9869713187217712
+            },
+            {
+              "word": " Shanghai",
+              "start": 463.0,
+              "end": 463.9,
+              "p": 0.993573009967804
+            },
+            {
+              "word": " last",
+              "start": 463.9,
+              "end": 464.44,
+              "p": 0.9845241904258728
+            },
+            {
+              "word": " year.",
+              "start": 464.44,
+              "end": 464.74,
+              "p": 0.9990347623825073
+            },
+            {
+              "word": " His",
+              "start": 467.96,
+              "end": 468.1,
+              "p": 0.9393794536590576
+            },
+            {
+              "word": " first",
+              "start": 468.1,
+              "end": 468.54,
+              "p": 0.9885353446006775
+            },
+            {
+              "word": " at",
+              "start": 468.54,
+              "end": 468.98,
+              "p": 0.6854984760284424
+            },
+            {
+              "word": " ATP",
+              "start": 468.98,
+              "end": 469.48,
+              "p": 0.9378456473350525
+            },
+            {
+              "word": " 500",
+              "start": 469.48,
+              "end": 470.04,
+              "p": 0.9473599195480347
+            },
+            {
+              "word": " level",
+              "start": 470.04,
+              "end": 470.82,
+              "p": 0.8722629547119141
+            },
+            {
+              "word": " and",
+              "start": 470.82,
+              "end": 471.6,
+              "p": 0.4688795208930969
+            },
+            {
+              "word": " makes",
+              "start": 471.6,
+              "end": 471.84,
+              "p": 0.9619070887565613
+            },
+            {
+              "word": " a",
+              "start": 471.84,
+              "end": 472.0,
+              "p": 0.9854741096496582
+            },
+            {
+              "word": " bit",
+              "start": 472.0,
+              "end": 472.1,
+              "p": 0.9947230815887451
+            },
+            {
+              "word": " of",
+              "start": 472.1,
+              "end": 472.18,
+              "p": 0.9947186708450317
+            },
+            {
+              "word": " history.",
+              "start": 472.18,
+              "end": 472.52,
+              "p": 0.9655858278274536
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 447.52,
+          "end": 472.38,
+          "text": " It is another very, very special day for Valentin Vacherot. He's the Basel champion. What an achievement, a second ATP title after Shanghai last year. His first at ATP 500 level and makes a bit of history.",
+          "words": [
+            {
+              "word": " It",
+              "start": 447.52,
+              "end": 448.02,
+              "p": 0.513619065284729
+            },
+            {
+              "word": " is",
+              "start": 448.02,
+              "end": 448.28,
+              "p": 0.9771337509155273
+            },
+            {
+              "word": " another",
+              "start": 448.28,
+              "end": 449.68,
+              "p": 0.9566723108291626
+            },
+            {
+              "word": " very,",
+              "start": 449.68,
+              "end": 450.46,
+              "p": 0.9838977456092834
+            },
+            {
+              "word": " very",
+              "start": 450.46,
+              "end": 451.1,
+              "p": 0.9979189038276672
+            },
+            {
+              "word": " special",
+              "start": 451.1,
+              "end": 451.86,
+              "p": 0.9920431971549988
+            },
+            {
+              "word": " day",
+              "start": 451.86,
+              "end": 452.32,
+              "p": 0.9979391694068909
+            },
+            {
+              "word": " for",
+              "start": 452.32,
+              "end": 453.52,
+              "p": 0.8691949248313904
+            },
+            {
+              "word": " Valentin",
+              "start": 453.52,
+              "end": 454.0,
+              "p": 0.21867859456688166
+            },
+            {
+              "word": " Vacherot.",
+              "start": 454.0,
+              "end": 454.56,
+              "p": 0.30090198704662424
+            },
+            {
+              "word": " He's",
+              "start": 455.46,
+              "end": 455.72,
+              "p": 0.8608011603355408
+            },
+            {
+              "word": " the",
+              "start": 455.72,
+              "end": 455.8,
+              "p": 0.9961511492729187
+            },
+            {
+              "word": " Basel",
+              "start": 455.8,
+              "end": 456.2,
+              "p": 0.8409416675567627
+            },
+            {
+              "word": " champion.",
+              "start": 456.2,
+              "end": 456.6,
+              "p": 0.7037212252616882
+            },
+            {
+              "word": " What",
+              "start": 459.84,
+              "end": 459.88,
+              "p": 0.9424819946289062
+            },
+            {
+              "word": " an",
+              "start": 459.88,
+              "end": 460.0,
+              "p": 0.9970417618751526
+            },
+            {
+              "word": " achievement,",
+              "start": 460.0,
+              "end": 460.3,
+              "p": 0.9995025396347046
+            },
+            {
+              "word": " a",
+              "start": 460.68,
+              "end": 460.7,
+              "p": 0.9780460596084595
+            },
+            {
+              "word": " second",
+              "start": 460.7,
+              "end": 461.12,
+              "p": 0.981830894947052
+            },
+            {
+              "word": " ATP",
+              "start": 461.12,
+              "end": 461.72,
+              "p": 0.9685247540473938
+            },
+            {
+              "word": " title",
+              "start": 461.72,
+              "end": 462.46,
+              "p": 0.8546189665794373
+            },
+            {
+              "word": " after",
+              "start": 462.46,
+              "end": 462.94,
+              "p": 0.9673274755477905
+            },
+            {
+              "word": " Shanghai",
+              "start": 462.94,
+              "end": 463.78,
+              "p": 0.9859821796417236
+            },
+            {
+              "word": " last",
+              "start": 463.78,
+              "end": 464.38,
+              "p": 0.9856626391410828
+            },
+            {
+              "word": " year.",
+              "start": 464.38,
+              "end": 464.66,
+              "p": 0.9988372921943665
+            },
+            {
+              "word": " His",
+              "start": 467.78,
+              "end": 468.04,
+              "p": 0.935482382774353
+            },
+            {
+              "word": " first",
+              "start": 468.04,
+              "end": 468.36,
+              "p": 0.9952167272567749
+            },
+            {
+              "word": " at",
+              "start": 468.36,
+              "end": 468.92,
+              "p": 0.5191587805747986
+            },
+            {
+              "word": " ATP",
+              "start": 468.92,
+              "end": 469.26,
+              "p": 0.9867109656333923
+            },
+            {
+              "word": " 500",
+              "start": 469.26,
+              "end": 469.96,
+              "p": 0.851214587688446
+            },
+            {
+              "word": " level",
+              "start": 469.96,
+              "end": 470.86,
+              "p": 0.8230034112930298
+            },
+            {
+              "word": " and",
+              "start": 470.86,
+              "end": 471.54,
+              "p": 0.4367828071117401
+            },
+            {
+              "word": " makes",
+              "start": 471.54,
+              "end": 471.74,
+              "p": 0.9942491054534912
+            },
+            {
+              "word": " a",
+              "start": 471.74,
+              "end": 471.94,
+              "p": 0.9915162324905396
+            },
+            {
+              "word": " bit",
+              "start": 471.94,
+              "end": 472.06,
+              "p": 0.9958147406578064
+            },
+            {
+              "word": " of",
+              "start": 472.06,
+              "end": 472.16,
+              "p": 0.9990480542182922
+            },
+            {
+              "word": " history.",
+              "start": 472.16,
+              "end": 472.38,
+              "p": 0.8764324188232422
+            }
+          ]
+        }
+      ]
+    },
+    "shanghai": {
+      "small.en": [
+        {
+          "start": 125.31,
+          "end": 133.83,
+          "text": " Valentin Vacherot cuts the icing on the cake to a fairy tale week in Shanghai.",
+          "words": [
+            {
+              "word": " Valentin",
+              "start": 125.31,
+              "end": 126.37
+            },
+            {
+              "word": " Vacherot",
+              "start": 126.37,
+              "end": 127.43
+            },
+            {
+              "word": " cuts",
+              "start": 127.43,
+              "end": 128.31
+            },
+            {
+              "word": " the",
+              "start": 128.31,
+              "end": 128.53
+            },
+            {
+              "word": " icing",
+              "start": 128.53,
+              "end": 129.15
+            },
+            {
+              "word": " on",
+              "start": 129.15,
+              "end": 129.61
+            },
+            {
+              "word": " the",
+              "start": 129.61,
+              "end": 129.87
+            },
+            {
+              "word": " cake",
+              "start": 129.87,
+              "end": 130.27
+            },
+            {
+              "word": " to",
+              "start": 130.27,
+              "end": 131.17000000000002
+            },
+            {
+              "word": " a",
+              "start": 131.17000000000002,
+              "end": 131.57
+            },
+            {
+              "word": " fairy",
+              "start": 131.57,
+              "end": 132.19
+            },
+            {
+              "word": " tale",
+              "start": 132.19,
+              "end": 132.79
+            },
+            {
+              "word": " week",
+              "start": 132.79,
+              "end": 133.15
+            },
+            {
+              "word": " in",
+              "start": 133.15,
+              "end": 133.45
+            },
+            {
+              "word": " Shanghai.",
+              "start": 133.45,
+              "end": 133.83
+            }
+          ]
+        }
+      ],
+      "base.en": [
+        {
+          "start": 125.35000000000001,
+          "end": 133.67000000000002,
+          "text": " Valentin Vacherot. Puts the icing on the cake to a fairy tale. Week in Shanghai.",
+          "words": [
+            {
+              "word": " Valentin",
+              "start": 125.35000000000001,
+              "end": 126.17
+            },
+            {
+              "word": " Vacherot.",
+              "start": 126.17,
+              "end": 126.99000000000001
+            },
+            {
+              "word": " Puts",
+              "start": 127.39,
+              "end": 128.21
+            },
+            {
+              "word": " the",
+              "start": 128.21,
+              "end": 128.47
+            },
+            {
+              "word": " icing",
+              "start": 128.47,
+              "end": 128.93
+            },
+            {
+              "word": " on",
+              "start": 128.93,
+              "end": 129.55
+            },
+            {
+              "word": " the",
+              "start": 129.55,
+              "end": 129.79
+            },
+            {
+              "word": " cake",
+              "start": 129.79,
+              "end": 130.13
+            },
+            {
+              "word": " to",
+              "start": 130.13,
+              "end": 131.11
+            },
+            {
+              "word": " a",
+              "start": 131.11,
+              "end": 131.47
+            },
+            {
+              "word": " fairy",
+              "start": 131.47,
+              "end": 132.01
+            },
+            {
+              "word": " tale.",
+              "start": 132.01,
+              "end": 132.77
+            },
+            {
+              "word": " Week",
+              "start": 132.97,
+              "end": 133.11
+            },
+            {
+              "word": " in",
+              "start": 133.11,
+              "end": 133.35
+            },
+            {
+              "word": " Shanghai.",
+              "start": 133.35,
+              "end": 133.67000000000002
+            }
+          ]
+        }
+      ]
+    },
+    "qf": {
+      "medium.en": [
+        {
+          "start": 132.58,
+          "end": 142.02,
+          "text": " Vacherot books his spot in the final four in Basel. Fourth time has achieved that at",
+          "words": [
+            {
+              "word": " Vacherot",
+              "start": 132.58,
+              "end": 133.32000000000002,
+              "p": 0.02475681621581316
+            },
+            {
+              "word": " books",
+              "start": 133.32000000000002,
+              "end": 133.8,
+              "p": 0.8727355003356934
+            },
+            {
+              "word": " his",
+              "start": 133.8,
+              "end": 134.64000000000001,
+              "p": 0.9570607542991638
+            },
+            {
+              "word": " spot",
+              "start": 134.64000000000001,
+              "end": 135.04000000000002,
+              "p": 0.7544378042221069
+            },
+            {
+              "word": " in",
+              "start": 135.04000000000002,
+              "end": 136.38000000000002,
+              "p": 0.939740002155304
+            },
+            {
+              "word": " the",
+              "start": 136.38000000000002,
+              "end": 136.48000000000002,
+              "p": 0.9959656000137329
+            },
+            {
+              "word": " final",
+              "start": 136.48000000000002,
+              "end": 136.82000000000002,
+              "p": 0.8430531620979309
+            },
+            {
+              "word": " four",
+              "start": 136.82000000000002,
+              "end": 137.34,
+              "p": 0.9364846348762512
+            },
+            {
+              "word": " in",
+              "start": 137.34,
+              "end": 137.84,
+              "p": 0.7690107226371765
+            },
+            {
+              "word": " Basel.",
+              "start": 137.84,
+              "end": 138.76000000000002,
+              "p": 0.8281604051589966
+            },
+            {
+              "word": " Fourth",
+              "start": 140.72,
+              "end": 140.84,
+              "p": 0.9288015961647034
+            },
+            {
+              "word": " time",
+              "start": 140.84,
+              "end": 141.14000000000001,
+              "p": 0.9637430310249329
+            },
+            {
+              "word": " has",
+              "start": 141.14000000000001,
+              "end": 141.26000000000002,
+              "p": 0.6205956339836121
+            },
+            {
+              "word": " achieved",
+              "start": 141.26000000000002,
+              "end": 141.62,
+              "p": 0.9940185546875
+            },
+            {
+              "word": " that",
+              "start": 141.62,
+              "end": 141.86,
+              "p": 0.9884096384048462
+            },
+            {
+              "word": " at",
+              "start": 141.86,
+              "end": 142.02,
+              "p": 0.9258626103401184
+            }
+          ]
+        },
+        {
+          "start": 142.02,
+          "end": 144.56,
+          "text": " Tour level in his career, a semi-final place.",
+          "words": [
+            {
+              "word": " Tour",
+              "start": 142.02,
+              "end": 142.28,
+              "p": 0.7937138676643372
+            },
+            {
+              "word": " level",
+              "start": 142.28,
+              "end": 142.54000000000002,
+              "p": 0.6841110587120056
+            },
+            {
+              "word": " in",
+              "start": 142.54000000000002,
+              "end": 142.86,
+              "p": 0.9260297417640686
+            },
+            {
+              "word": " his",
+              "start": 142.86,
+              "end": 143.08,
+              "p": 0.997940719127655
+            },
+            {
+              "word": " career,",
+              "start": 143.08,
+              "end": 143.36,
+              "p": 0.9974157810211182
+            },
+            {
+              "word": " a",
+              "start": 143.54000000000002,
+              "end": 143.58,
+              "p": 0.9295750260353088
+            },
+            {
+              "word": " semi",
+              "start": 143.58,
+              "end": 143.76000000000002,
+              "p": 0.7893788814544678
+            },
+            {
+              "word": "-final",
+              "start": 143.76000000000002,
+              "end": 144.10000000000002,
+              "p": 0.9276017248630524
+            },
+            {
+              "word": " place.",
+              "start": 144.10000000000002,
+              "end": 144.56,
+              "p": 0.9921119213104248
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "unverified": "No independent actual full-film playback yet; no final TTS, rendered subtitles or publication approval from this source review.",
+  "medium_followup": {
+    "s3open": {
+      "text": "Wow, no. Another shocker. So far in the third.",
+      "source_start": 348.89,
+      "source_end": 352.93,
+      "verification": "medium.en independently agrees with source Google caption lexical shocker; small/base were lower-confidence shortcut/chakra variants. No must be retained as an audible interjection.",
+      "translation_recommendation": "哇，糟了。决胜盘打到现在，又是糟糕的表现。",
+      "translation_note": "shocker is a broad appraisal, not necessarily a single additional unforced error; do not add a numbered statistic or diagnose nerves."
+    },
+    "qf": {
+      "text": "Vacherot books his spot in the final four in Basel. Fourth time he has achieved that at tour level in his career, a semi-final place.",
+      "books_probability": 0.8727355003356934,
+      "source_cue_recommendation": [
+        [
+          132.58,
+          138.9
+        ],
+        [
+          140.6,
+          143.4
+        ],
+        [
+          143.5,
+          144.6
+        ]
+      ],
+      "note": "medium resolves books vs booked in favour of books. Article/contraction he has/he’s acoustic reduction normalized; identity spelling normalized from known player. Fourth begins140.72 per medium word timestamps; small incorrectly extends long silence in that word."
+    },
+    "s2set": {
+      "text": "Well, he took the scenic route serving it out, but he got there in the end.",
+      "end_word_start": 336.53,
+      "end_word_end": 336.71,
+      "end_probability": 0.9006111025810242,
+      "note": "medium resolves small/base air misrecognition to end. Current end336.6 risks cutting last0.11s; extend audio safe boundary336.82 if possible. Original source switches video into next serve~336.6, do not pretend scene does not change."
+    }
+  }
+}

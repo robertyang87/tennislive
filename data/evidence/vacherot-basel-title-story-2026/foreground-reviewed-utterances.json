@@ -1,0 +1,877 @@
+{
+  "schema": "tennislive.foreground-reviewed-utterances.proposal.v1",
+  "slug": "vacherot-basel-title-story-2026",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00",
+  "method": "asr_cross_checked",
+  "status": "complete",
+  "binding_status": "All sources now have fixed Release URL and current source SHA256. Parent still must create formal gate packets/index and bind current plan hash.",
+  "spec_sha256_observed": "fab7b284c0de169e9c94f52ede12de11a45c63fb7290b0156199fae808e96abf",
+  "selected_window_count": 11,
+  "selected_window_coverage": "All11 selected source windows covered.5 changed fixed sources re-decoded and independently re-ASRed over full original reviewed ranges.6 final-source windows reuse exact-byte prior evidence. Current shorter safe tails stay within reviewed coverage.",
+  "segments": [
+    {
+      "index": 0,
+      "source": "final",
+      "reviewed_from": 447.5,
+      "reviewed_to": 457.2,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 447.92,
+          "end": 452.48,
+          "en": "It is another very, very special day",
+          "zh": "又是无比特别的一天"
+        },
+        {
+          "start": 452.48,
+          "end": 456.72,
+          "en": "for Valentin Vacherot. He’s the Basel champion.",
+          "zh": "瓦舍罗，他是巴塞尔冠军。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-00-small.en.json",
+          "sha256": "b53bf9844cf71310d79b2ee808f4061811bb99ea91e255190e634f987bd99bd7"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-00-base.en.json",
+          "sha256": "dbd163294e30ac4c9c1bc72b186a3cae197c04c133a30835bd36b5ecfab76591"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-cold-open-medium.en.json",
+          "sha256": "ae7d441f21c659045e68abd2730f101f0397262ea4402d56b864b8af8a1f9b64"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-small.en.json",
+          "sha256": "f92d15f8f85dedd93ea574ce4fd06d53a8f0bb2284bc429852ddf54f2b8633ed"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-base.en.json",
+          "sha256": "098941d82b125139d09045e1931e849348e9552bc996e368e5f27ea9b391dfa2"
+        }
+      ],
+      "review_notes": [
+        "Wider full-window final427.8–473.02 two-model passes cover updated cold447.5–457.2, and focused medium447.5–456.8 checks all spoken words; 456.72–457.2 no new foreground sentence before459.76."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    },
+    {
+      "index": 2,
+      "source": "shanghai",
+      "reviewed_from": 114.7,
+      "reviewed_to": 137.4,
+      "source_local": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+      "source_local_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 120.82,
+          "end": 123.84,
+          "en": "Game, set, match, Vacherot.",
+          "zh": "比赛结束，瓦舍罗获胜。"
+        },
+        {
+          "start": 124.34,
+          "end": 125.26,
+          "en": "Two sets to one.",
+          "zh": "大比分二比一。"
+        },
+        {
+          "start": 125.22,
+          "end": 133.9,
+          "en": "Valentin Vacherot puts the icing on the cake to a fairy tale week in Shanghai.",
+          "zh": "瓦舍罗为上海童话画下圆满句号。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-02-small.en.json",
+          "sha256": "fe46513d235ebc483650fe15b284e8b61a965f8a0234fee601fd7474c27f62a1"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-02-base.en.json",
+          "sha256": "7ded130fea3580ad61413a8c98297627fe2723afc16dceec9f36d2152069e403"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-medium.en.json",
+          "sha256": "9837f4d90e078421a98db2a072bf60c88d72bcaca5738e2d4d562f8cdffddebf"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-commentary-medium.en.json",
+          "sha256": "aac0abe2ba5e6d7d6cbcd662bc68bd90d2a9ffe43e85dd77c48c760785a44127"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-focused-small.en.json",
+          "sha256": "119cc26a8049000a3f2f27bc4c416d382739d417d12c6b25430615e1e8365dec"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-shanghai-umpire-focused-base.en.json",
+          "sha256": "59098e54ab004f604455b8fd56913f0eea936971678b94df7deccefc382dd510"
+        }
+      ],
+      "review_notes": [
+        "Whole-window VAD small/base missed the quiet umpire. Focused no-VAD small/base/medium independently recovered Game set match and Two sets to one; no and added. Proper name normalized only from verified identities. ASR overlapped word boundaries125.31/125.32 are timestamp rounding across two speakers.",
+        "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding.",
+        "New fixed umpire: full-window VAD ASRs missed quiet chair audio; fresh fixed focused small/base plus medium recover same umpire words. Game onset120.82 from focused base, not forced initial-silence boundary119.8/120.0 in medium/small. New fixed commentary small gives125.22 onset, new medium verifies puts/icing/fairy tale/week/Shanghai, normalized proper-name spelling. No and inserted."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4380470/4380470.mp4",
+      "historical_raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-02-small.en.json",
+          "sha256": "d00ceca7cae04c04582254becaaca524c7d540c819244918cd26a3b42da6648b"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-02-base.en.json",
+          "sha256": "407764a7b1486d0bcfc72e9dfcc6bd3b6781b281726c0e471a692ce5da391095"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-shanghai-umpire-medium.en.json",
+          "sha256": "8fbdff84a8396e6dad7f23e3e036896ca976187e16555c4ab20a7377bcaffca2"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-umpire-focused-small.en.json",
+          "sha256": "9b764cd8db5509741a6fa9633331acc86eaece447970877eddc6965615d0b87d"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-umpire-focused-base.en.json",
+          "sha256": "406d3f8bf264fcad5761d67239e6041d4f49ae9516c12cde56de06c24e6f2885"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-shanghai-small.en.json",
+          "sha256": "8b253a979059263129e01bea33aa6e6b69d0f2e09e0c6431b73bbe662e2ad06e"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-shanghai-base.en.json",
+          "sha256": "79c444b8b7980fdd3f4eb5ac2a7bfa0a8dc59cae28e477f0bcfd926ed2c4e98a"
+        }
+      ],
+      "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+      "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1",
+            "avg_frame_rate": "25/1",
+            "start_time": "0.000000",
+            "duration": "146.880000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "44100",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "146.815986"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "146.880000",
+          "size": "69995758"
+        }
+      },
+      "fixed_content_cross_check": {
+        "status": "same_utterance_content_confirmed_on_new_bytes",
+        "new_full_window_asr_models": [
+          "small.en",
+          "base.en"
+        ],
+        "new_foreground_english_count": 3,
+        "new_extra_foreground_english": [],
+        "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+      }
+    },
+    {
+      "index": 5,
+      "source": "r1",
+      "reviewed_from": 134.0,
+      "reviewed_to": 141.84,
+      "source_local": "/workspace/scratch/vacherot-fixed/r1/4599139.mp4",
+      "source_local_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 138.94,
+          "end": 141.16,
+          "en": "That’s a good win in straights, to say the least.",
+          "zh": "这场两盘拿下的胜利，确实相当不错。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-05-small.en.json",
+          "sha256": "d07f7d7fb5841f4bee7d8482d118814da379ebfc7c2993327e4bff29ad8e131f"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-05-base.en.json",
+          "sha256": "36b8a0e4f66c1078dd7bbc768122a9798b78e96841fe5224814cefaccd83afa0"
+        }
+      ],
+      "review_notes": [
+        "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4599139/4599139.mp4",
+      "historical_raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-05-small.en.json",
+          "sha256": "cdcdef43ea6b0457f563e8aecf94995e6d90e06c08439d66a0a76db474d50ed2"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-05-base.en.json",
+          "sha256": "ec4f1e4279e24884ad686b3ef9c08de4af4b40fc2b63037742e2bf3226f468f1"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-r1-medium.en.json",
+          "sha256": "f5dcec675ccdb1fa91a6276cd3ce4b2245bb9f467f1b9dc49c8e623837c3bde1"
+        }
+      ],
+      "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+      "source_sha256": "867cf73efc1457ce491d4b508dabb3546bcd8fc51d23e9698896a85845610f94",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "150.780000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "150.805333"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "150.805333",
+          "size": "152361415"
+        }
+      },
+      "fixed_content_cross_check": {
+        "status": "same_utterance_content_confirmed_on_new_bytes",
+        "new_full_window_asr_models": [
+          "small.en",
+          "base.en"
+        ],
+        "new_foreground_english_count": 1,
+        "new_extra_foreground_english": [],
+        "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+      }
+    },
+    {
+      "index": 7,
+      "source": "r2",
+      "reviewed_from": 134.72,
+      "reviewed_to": 148.3,
+      "source_local": "/workspace/scratch/vacherot-fixed/r2/4600907.mp4",
+      "source_local_sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 139.02,
+          "end": 142.56,
+          "en": "It is victory for Vacherot.",
+          "zh": "瓦舍罗赢下了比赛。"
+        },
+        {
+          "start": 143.5,
+          "end": 146.14,
+          "en": "Big win for the Monegasque.",
+          "zh": "摩纳哥人的一场重要胜利。"
+        },
+        {
+          "start": 146.38,
+          "end": 147.36,
+          "en": "Top 20 victory.",
+          "zh": "击败了世界前二十的对手。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-07-small.en.json",
+          "sha256": "c1b0320d464f07265075bf51cb9433e82612b1e89988d78af136488c72970b38"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-07-base.en.json",
+          "sha256": "ae5dfd4601d1fa14c60258bcbca464a4290e9a4f9f5a6506355e2cabf475aab2"
+        }
+      ],
+      "review_notes": [
+        "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4600907/4600907.mp4",
+      "historical_raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-07-small.en.json",
+          "sha256": "bfec979b4ba63b3e119cb342cfdb8efae0550b2317f830ed2ab4f1a051ddda2b"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-07-base.en.json",
+          "sha256": "7f49e5bfd56a8623becbe0b9241d0fd794217e5308343a7dff870b66c0872672"
+        }
+      ],
+      "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+      "source_sha256": "6fe853bd43936909d80d7a38ef6e30a7d3912e3e03df6bef8fe30179e87f3531",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "157.260000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "157.290667"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "157.290667",
+          "size": "159372517"
+        }
+      },
+      "fixed_content_cross_check": {
+        "status": "same_utterance_content_confirmed_on_new_bytes",
+        "new_full_window_asr_models": [
+          "small.en",
+          "base.en"
+        ],
+        "new_foreground_english_count": 3,
+        "new_extra_foreground_english": [],
+        "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+      }
+    },
+    {
+      "index": 9,
+      "source": "qf",
+      "reviewed_from": 120,
+      "reviewed_to": 145.55,
+      "source_local": "/workspace/scratch/vacherot-fixed/qf/4601599.mp4",
+      "source_local_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 132.55,
+          "end": 138.29,
+          "en": "Vacherot books his spot in the final four in Basel.",
+          "zh": "瓦舍罗跻身巴塞尔半决赛。"
+        },
+        {
+          "start": 140.67,
+          "end": 143.31,
+          "en": "Fourth time he has achieved that at tour level in his career.",
+          "zh": "他第四次打进巡回赛半决赛。"
+        },
+        {
+          "start": 143.47,
+          "end": 144.45,
+          "en": "A semi-final place.",
+          "zh": "拿到了半决赛席位。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-09-small.en.json",
+          "sha256": "08a64f44a24299ca9b725444ea7ea2939cfdf1fee8ea69c04b6d72cd94011431"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-09-base.en.json",
+          "sha256": "d7d224ddf3ce53458e97be02cbf250be18dbeeec39527fb501ca6105e329d321"
+        }
+      ],
+      "review_notes": [
+        "Focused medium resolves books (not booked), and precise Fourth start140.72 after long pause; subject he has restored from contracted speech, identity spelling normalized.",
+        "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4601599/4601599.mp4",
+      "historical_raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-09-small.en.json",
+          "sha256": "401626e2a6318be79b030bb504d20402745adcdf854755e2191f624ae31a0e03"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-09-base.en.json",
+          "sha256": "9371112031999c535284af95f9d7de8ce6c19fb8210796967e7063f7491e0275"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-qf-medium.en.json",
+          "sha256": "310b7915f53310e5b677a0a2d2dbc148f3d8c1aae6d8992159a703ab18e4871f"
+        }
+      ],
+      "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+      "source_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "154.520000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "154.538667"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "154.538667",
+          "size": "156395963"
+        }
+      },
+      "fixed_content_cross_check": {
+        "status": "same_utterance_content_confirmed_on_new_bytes",
+        "new_full_window_asr_models": [
+          "small.en",
+          "base.en"
+        ],
+        "new_foreground_english_count": 3,
+        "new_extra_foreground_english": [],
+        "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+      }
+    },
+    {
+      "index": 11,
+      "source": "sf",
+      "reviewed_from": 131,
+      "reviewed_to": 149.4,
+      "source_local": "/workspace/scratch/vacherot-fixed/sf/4602075.mp4",
+      "source_local_sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 137.29,
+          "end": 142.35,
+          "en": "Valentin Vacherot blasts his way into the final in Basel.",
+          "zh": "瓦舍罗强势挺进巴塞尔决赛。"
+        },
+        {
+          "start": 143.23,
+          "end": 143.77,
+          "en": "What a finish!",
+          "zh": "多么漂亮的收尾！"
+        },
+        {
+          "start": 145.96,
+          "end": 148.3,
+          "en": "It’s been a special shot this week, that backhand.",
+          "zh": "这一周，他的反手表现非常出色。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-11-small.en.json",
+          "sha256": "4aa27c47fa949f777b9810c4d68a88d85a7a9696abaa25e295fbebd3fccbec1f"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/fixed/foreground-11-base.en.json",
+          "sha256": "10605e57fc9200259a0239d0f8d5182de6850d43cbf028e915fb6abbe9d9d18d"
+        }
+      ],
+      "review_notes": [
+        "Changed bitrate/archive bytes: re-decoded current fixed file, ran small.en and base.en over whole original selected window, cross-checked new recognized utterances against prior editorial verification. No hash-only evidence substitution. Any old raw remains historical and non-binding."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4602075/4602075.mp4",
+      "historical_raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-11-small.en.json",
+          "sha256": "030eeb32baba9aa033fd20c036ae0932dd6c0a0f007dc9e8ddfcb99c3b301b8d"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-11-base.en.json",
+          "sha256": "de95fe0e1775287bedea7a46e7deeb19f662189fc7e532ecabfd1e50b50250dd"
+        }
+      ],
+      "historical_raw_evidence_status": "Prior bitrate/encoding only, retained for editorial history. These do not bind or certify current fixed-source bytes.",
+      "source_sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+      "ffprobe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1",
+            "avg_frame_rate": "50/1",
+            "start_time": "0.000000",
+            "duration": "157.820000"
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2,
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "start_time": "0.000000",
+            "duration": "157.845333"
+          }
+        ],
+        "format": {
+          "start_time": "0.000000",
+          "duration": "157.845333",
+          "size": "159739597"
+        }
+      },
+      "fixed_content_cross_check": {
+        "status": "same_utterance_content_confirmed_on_new_bytes",
+        "new_full_window_asr_models": [
+          "small.en",
+          "base.en"
+        ],
+        "new_foreground_english_count": 3,
+        "new_extra_foreground_english": [],
+        "metadata_source": "Actual ffprobe of fixed file;1920x1080/50fps for four rounds; historical source metadata retained from fixed-sources.json. Do not reuse25fps probe guess."
+      }
+    },
+    {
+      "index": 13,
+      "source": "final",
+      "reviewed_from": 39.78,
+      "reviewed_to": 51.54,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 45.2,
+          "end": 46.64,
+          "en": "And a break for Lehecka.",
+          "zh": "莱赫奇卡完成破发。"
+        },
+        {
+          "start": 46.84,
+          "end": 51.48,
+          "en": "Perfect start for the Czech, looking very calm and composed.",
+          "zh": "捷克人的开局完美，沉着冷静。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-13-small.en.json",
+          "sha256": "6265ca4f1fabcab7e8d66b8ec34f1ff3bb29ff3f416ce3cb1972bf503be6db92"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-13-base.en.json",
+          "sha256": "ff3b33028f3ed178e06e905756b7ae1a0f64e89c3b6244bf90de2b59c4ab8486"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+          "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+        }
+      ],
+      "review_notes": [],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    },
+    {
+      "index": 15,
+      "source": "final",
+      "reviewed_from": 266.42,
+      "reviewed_to": 281.68,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 279.51,
+          "end": 280.93,
+          "en": "This time he converts.",
+          "zh": "这一次，他把握住了破发机会。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-15-small.en.json",
+          "sha256": "976e03df9944652c84fff0d0a15d28b3486a749bff97338da13670382bcd13b9"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-15-base.en.json",
+          "sha256": "48de715dd90fafe255c33d7f4ceea9a876e53862b33e5d814d7c326f53ae5050"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+          "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+        }
+      ],
+      "review_notes": [],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    },
+    {
+      "index": 17,
+      "source": "final",
+      "reviewed_from": 328.4,
+      "reviewed_to": 353.08,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 328.72,
+          "end": 329.26,
+          "en": "Set point.",
+          "zh": "盘点。"
+        },
+        {
+          "start": 333.12,
+          "end": 336.71,
+          "en": "Well, he took the scenic route serving it out, but he got there in the end.",
+          "zh": "发球胜盘有些曲折，他最终拿下。"
+        },
+        {
+          "start": 348.89,
+          "end": 352.93,
+          "en": "Wow, no. Another shocker. So far in the third.",
+          "zh": "哇，不妙。决胜盘又是糟糕表现。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-17-small.en.json",
+          "sha256": "024cf271cd5c8e3f6272fecb0de3eb90189169529e57ab0e454ac85c7a4b93aa"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-17-base.en.json",
+          "sha256": "1e6a89ddafd5d3da0a6082288ad07bd07a651fdde6a73062eadce76e13059b36"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-s2set-medium.en.json",
+          "sha256": "99194e6addf0dfd3a633cfda993b387c67d9423e76df0642943fd9f6a145c505"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-s3open-medium.en.json",
+          "sha256": "29ea13484f6754d0ee8911efb532bb19e941b0ae35e88e90e967e16b34d7c5ac"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+          "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+        }
+      ],
+      "review_notes": [
+        "Medium confirms end (not small/base air) and Wow, no...shocker (not shortcut/chakra/shanker). Continuous source selected328.4–353.08 preserves both full clauses through352.93 despite source itself switching video near352s."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    },
+    {
+      "index": 19,
+      "source": "final",
+      "reviewed_from": 427.8,
+      "reviewed_to": 473.02,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [
+        {
+          "start": 447.92,
+          "end": 452.48,
+          "en": "It is another very, very special day",
+          "zh": "又是无比特别的一天"
+        },
+        {
+          "start": 452.48,
+          "end": 456.72,
+          "en": "for Valentin Vacherot. He’s the Basel champion.",
+          "zh": "瓦舍罗，他是巴塞尔冠军。"
+        },
+        {
+          "start": 459.84,
+          "end": 460.3,
+          "en": "What an achievement!",
+          "zh": "多么了不起！"
+        },
+        {
+          "start": 460.68,
+          "end": 464.66,
+          "en": "A second ATP title after Shanghai last year.",
+          "zh": "上海之后，第二座巡回赛冠军。"
+        },
+        {
+          "start": 468.0,
+          "end": 472.52,
+          "en": "His first at ATP 500 level, and makes a bit of history.",
+          "zh": "首座ATP500冠军，写下历史。"
+        }
+      ],
+      "no_foreground_english_reason": "",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-small.en.json",
+          "sha256": "f92d15f8f85dedd93ea574ce4fd06d53a8f0bb2284bc429852ddf54f2b8633ed"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-base.en.json",
+          "sha256": "098941d82b125139d09045e1931e849348e9552bc996e368e5f27ea9b391dfa2"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-champion-small.en.json",
+          "sha256": "b9818a65a22b8d2f497d715ca8ec46336c1df0bc90574a24b2466eacd5144d53"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-champion-base.en.json",
+          "sha256": "3e052de0ddeb903a455cac633fd3f157b43b625218b7a1c9cc67114c4be347c0"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+          "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+        }
+      ],
+      "review_notes": [
+        "Whole-window VAD ASR badly assigned initial special-day clause to435.91 crowd interval; source Google captions447.92 and focused medium447.5–456.8 plus actual result447.46 anchor real phrase. Do not reuse erroneous whole-ASR start435.91 as spoken onset."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    },
+    {
+      "index": 20,
+      "source": "final",
+      "reviewed_from": 473.02,
+      "reviewed_to": 483.54,
+      "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+      "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "method": "asr_cross_checked",
+      "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+      "status": "complete",
+      "uncertain_spans": [],
+      "foreground_english": [],
+      "no_foreground_english_reason": "Two independent whole-window VAD ASRs plus medium VAD found no foreground English; only crowd/applause during actual trophy presentation. Isolated no-VAD low-confidence hallucination retained and rejected as explained in review_notes.",
+      "raw_evidence": [
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-20-small.en.json",
+          "sha256": "4f15a760d24b72891d2695779db6b489758f0c1257f4a129d6b7da81b5addd14"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-20-base.en.json",
+          "sha256": "f730eaf32628e0ea9f551eca9b62271d0d998f4f28fa9e193501a54695894863"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-trophy-medium.en.json",
+          "sha256": "c7931eaf9064bf13d9b1b1b387024c32431acbcc98330b026909dcfcefdb4be5"
+        },
+        {
+          "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-trophy-vad-medium.en.json",
+          "sha256": "86dd8a577925a34eec69ac454845433a51a1abc17c37ea42ff5a2525aacfcac4"
+        }
+      ],
+      "review_notes": [
+        "small.en VAD and base.en VAD both returned empty. medium.en VAD returned empty. No-VAD medium hallucinated Thank you at480.72–483.52 with Thank probability0.01548; rejected as isolated model hallucination, retained raw. Actual coverage is podium lift and applause/confetti; no confirmed foreground English."
+      ],
+      "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923"
+    }
+  ],
+  "fixed_revalidation": {
+    "status": "complete",
+    "source_keys_reprocessed": [
+      "shanghai",
+      "r1",
+      "r2",
+      "qf",
+      "sf"
+    ],
+    "whole_window_new_asr_runs": 10,
+    "new_focused_fixed_shanghai_runs": 4,
+    "final_source_reused_reason": "Exact same source SHA256; no re-encoding, decoded audio unchanged as fixed-sources comparison proves.",
+    "old_raw_retained": "37 original files retained as historical evidence; never promoted by merely replacing source hash."
+  }
+}
