@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-we00o3H3O4I/we00o3H3O4I.mp4",
+  "source_sha256": "357c47d4425ab07a455a9e147a80a65c116284ccbb2a7c86881f0c9e7d6c46d9",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-01T13:05:24+00:00",
+  "reviewed_from": 420.04,
+  "reviewed_to": 434.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 420.24,
+      "end": 421.3,
+      "en": "It's been really hard.",
+      "zh": "这一路真的很难。"
+    },
+    {
+      "start": 421.3,
+      "end": 425.54,
+      "en": "And, you know, I've wanted it so much, so badly, sometimes too much.",
+      "zh": "我太想做到，有时甚至想得太多。"
+    },
+    {
+      "start": 425.54,
+      "end": 428.7,
+      "en": "But to finally be here, and be in the final means the world.",
+      "zh": "终于打进决赛，对我意义重大。"
+    },
+    {
+      "start": 429.02,
+      "end": 432.98,
+      "en": "So thank you, and thank you to my team for sticking with me.",
+      "zh": "谢谢一直陪着我的团队。"
+    },
+    {
+      "start": 433.02,
+      "end": 434.36,
+      "en": "I really appreciate you guys.",
+      "zh": "我真的很感谢你们。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 357c47d4425ab07a455a9e147a80a65c116284ccbb2a7c86881f0c9e7d6c46d9，存于 data/source_asr/we00o3H3O4I/small.en.json 与 data/source_asr/we00o3H3O4I/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

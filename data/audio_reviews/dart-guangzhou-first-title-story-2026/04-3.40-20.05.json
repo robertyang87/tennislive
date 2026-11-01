@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-FwFLEZBJnoQ/FwFLEZBJnoQ.mp4",
+  "source_sha256": "6cb5b60ef42f43e48620991784af1f92dd127ef630c72d393f47ca169eefd141",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-01T13:05:24+00:00",
+  "reviewed_from": 3.4,
+  "reviewed_to": 20.05,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 3.64,
+      "end": 8.92,
+      "en": "I loved playing tennis as a child because it was so social, I made so many friends growing up.",
+      "zh": "小时候打网球，能交很多朋友。"
+    },
+    {
+      "start": 8.92,
+      "end": 12.56,
+      "en": "And I still have loads of friends from back then now.",
+      "zh": "很多儿时球友，至今仍是朋友。"
+    },
+    {
+      "start": 14.2,
+      "end": 17.39,
+      "en": "I played at the Cumberland Lawn Tennis Club, which is my local club.",
+      "zh": "我在当地的坎伯兰俱乐部打球。"
+    },
+    {
+      "start": 17.4,
+      "end": 19.76,
+      "en": "And actually my parents met there, so it's quite a special place.",
+      "zh": "我父母在那里相识，那里很特别。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 6cb5b60ef42f43e48620991784af1f92dd127ef630c72d393f47ca169eefd141，存于 data/source_asr/FwFLEZBJnoQ/small.en.json 与 data/source_asr/FwFLEZBJnoQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
