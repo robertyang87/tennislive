@@ -1,13 +1,13 @@
 name: download-video
 run-name: "download-video · ${{ inputs.url }}"
 
-# 把单条公开 YouTube 视频或匿名免费 Tennis TV 视频下载到 runner，再作为 GitHub Release
+# 把单条公开 YouTube 视频下载到 runner，再作为 GitHub Release
 # 附件持久保存。不把大视频提交进 git 历史。
 on:
   workflow_dispatch:
     inputs:
       url:
-        description: "YouTube 或免费 Tennis TV 视频链接（请确保你有权下载和存档）"
+        description: "YouTube 视频链接（请确保你有权下载和存档）"
         required: true
         type: string
 
@@ -25,16 +25,12 @@ jobs:
     env:
       VIDEO_URL: ${{ inputs.url }}
       GH_TOKEN: ${{ github.token }}
-      # 下载和 Release 显式绑定仓库；Tennis TV 复用共享的公开 entitlement 解析器。
+      # 下载和 Release 显式绑定仓库；仅检出共享依赖安装脚本。
       GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: |
-            /tools/ci_apt_install.sh
-            /src/
-            /pyproject.toml
-            /README.md
+          sparse-checkout: tools/ci_apt_install.sh
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -44,27 +40,8 @@ jobs:
         with:
           node-version: "22"
 
-      - name: 安装下载器与共享源解析器
-        run: pip install -q -e . "yt-dlp[default]" bgutil-ytdlp-pot-provider
-
-      - name: 识别公开源类型
-        id: source
-        run: |
-          python - <<'PY'
-          import os
-          import re
-          from urllib.parse import urlsplit
-          source = urlsplit(os.environ["VIDEO_URL"])
-          kind = "youtube"
-          video_id = ""
-          if source.hostname in {"tennistv.com", "www.tennistv.com"}:
-              match = re.fullmatch(r"/videos/([0-9]+)(?:/[^?#]*)?", source.path)
-              if source.scheme != "https" or not match:
-                  raise SystemExit("Tennis TV 必须是 HTTPS /videos/<数字ID> 页面")
-              kind, video_id = "tennistv", match.group(1)
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write(f"kind={kind}\nid={video_id}\n")
-          PY
+      - name: 安装 YouTube 下载器
+        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
 
       - name: 恢复音视频工具 apt 缓存
         id: apt_cache
@@ -93,7 +70,6 @@ jobs:
       # YouTube 对机房 IP 经常要求 PO token。provider 起不来时不在
       # 这里伪造一个根因，让 yt-dlp 在下一步输出真实诊断。
       - name: 启动 PO token provider
-        if: steps.source.outputs.kind == 'youtube'
         continue-on-error: true
         run: |
           docker run --name bgutil-pot -d -p 4416:4416 \
@@ -109,7 +85,6 @@ jobs:
           docker logs bgutil-pot 2>&1 | tail -20 || true
 
       - name: 写入 YouTube cookies（如已配置）
-        if: steps.source.outputs.kind == 'youtube'
         id: cookies
         env:
           YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
@@ -125,54 +100,23 @@ jobs:
         id: video
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
-          SOURCE_KIND: ${{ steps.source.outputs.kind }}
-          ARCHIVE_VIDEO_ID: ${{ steps.source.outputs.id }}
-          # 此归档入口只允许匿名免费 Tennis TV 条目；401/无 entitlement 直接失败。
-          TENNISTV_JWT: ""
-          TENNISTV_REFRESH_TOKEN: ""
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/download"
-          if [ "$SOURCE_KIND" = tennistv ]; then
-            VIDEO_ID="$ARCHIVE_VIDEO_ID"
-            TITLE="Tennis TV source $VIDEO_ID"
-            python - <<'PY'
-          import os
-          import subprocess
-          import sys
-          from pathlib import Path
-          from tennislive.video.official import media_url
-
-          # Resolve immediately before download: anonymous playback tokens expire quickly.
-          # Never write the resolved URL to logs, spec, or Release notes.
-          resolved = media_url(os.environ["VIDEO_URL"])
-          destination = Path(os.environ["RUNNER_TEMP"]) / "download" / (os.environ["ARCHIVE_VIDEO_ID"] + ".%(ext)s")
-          result = subprocess.run([
-              sys.executable, "-m", "yt_dlp", "--quiet", "--no-warnings",
-              "--no-playlist", "--socket-timeout", "20", "--retries", "3",
-              "-f", "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b",
-              "--merge-output-format", "mp4", "--remux-video", "mp4",
-              "-o", str(destination), resolved,
-          ], capture_output=True, text=True)
-          if result.returncode:
-              raise SystemExit(f"Tennis TV 已获授权的媒体下载失败，yt-dlp exit={result.returncode}")
-          PY
-          else
-            ARGS=(--js-runtimes node)
-            if [ -n "$YT_COOKIES" ]; then
-              ARGS+=(--cookies "$YT_COOKIES")
-            fi
-
-            VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
-            TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
-            test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
-
-            yt-dlp "${ARGS[@]}" \
-              -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
-              --merge-output-format mp4 --remux-video mp4 \
-              -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \
-              "$VIDEO_URL"
+          ARGS=(--js-runtimes node)
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS+=(--cookies "$YT_COOKIES")
           fi
+
+          VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
+          TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
+          test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
+
+          mkdir -p "$RUNNER_TEMP/download"
+          yt-dlp "${ARGS[@]}" \
+            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
+            --merge-output-format mp4 --remux-video mp4 \
+            -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \
+            "$VIDEO_URL"
 
           FILE="$RUNNER_TEMP/download/$VIDEO_ID.mp4"
           test -s "$FILE" || { echo "::error::下载结束但没有生成 MP4"; exit 1; }
