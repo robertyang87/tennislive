@@ -60,6 +60,7 @@
 - slug 是原版加 `-en`（如 `vibetennis-live-faster-2026-en`），spec 写 `"lang": "en"` 和 `"variant_of": "<原版 slug>"`；集数跟原版同一个，不在 `data/vibetennis_episodes.json` 单独登记。
 - 成片作为第二个附件 `<slug>-en.mp4` 传进**原版那一集的 Release**，和中文附件并列；中文附件不动（`release.py` / 上传工作流的 `release_tag`）。
 - 英文版单独推一条微信：标题 `EPNN.vibetennis|英文主题`（仍是 ≤20 字符、无空白，英文主题最多 4 个字符），正文英文，按钮「▶ Watch the video」指向英文成片，tag 带 #vibe知识大赏 和 #网球时差。封面用原版选定的那张、文字改英文。
+- ⚠️ **中英两版的 `render.json` 不能在同一次合并里进 main**：`auto-push-vibetennis` 的闸是「一趟最多一条」，一次带两条就**两条都不发**（EP04 #1414 撞上，run 41300377665）。做法：成片、凭证和复制页可以一个 PR 一起合；如果已经一起合了，就各开一个只改那一份 `render.json` 的小 PR（加 `_push_why`，QC 凭证不钉这个文件），依次合并，一条推完再合下一条（EP04 #1415 / #1416）。
 
 ## 9. 视频内置横版封面 + 竖版封面（每集、中英文都要）
 - 所有者 2026-10-31：每一条 vibetennis 视频（中文版和英文版）都要内置 16:9 横版封面，免得平台缩略图是黑的：
