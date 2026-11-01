@@ -88,7 +88,8 @@ def test_英文版和原版同一集_同一个Release():
                            slug="vibetennis-live-faster-2026-en") == "EP01.vibetennis|Live"
     with pytest.raises(SystemExit):
         make_copy_title("", "vibetennis", "Live", slug="vibetennis-not-registered-en")
-    spec = json.loads(SPECS[0].read_text(encoding="utf-8"))
+    # 取第一条**原版** spec（按文件名排，语言版 `<slug>-en` 可能排在原版前面）
+    spec = next(x for x in (json.loads(p.read_text(encoding="utf-8")) for p in SPECS) if not x.get("variant_of"))
     en = json.loads(json.dumps(spec))
     en.update(slug=spec["slug"] + "-en", lang="en", variant_of=spec["slug"])
     assert common.spec_problems(en, en["slug"]) == []

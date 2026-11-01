@@ -3,6 +3,9 @@
   "_status": "英文版（品牌 Tennis Jetlag）：账号所有者 2026-10-31「把这一期视频转成英文版，网球时差换成 Tennis Jetlag」「然后放在中文版一起的 release 里，同时推送微信链接」。3D 画面、时间轴、音效与中文版完全相同（同一套 r3d/shots.js、sfx.py），只把叠加层换成 overlay_en.py、封面换成 cover/make_cover_en.py；成片作为附件挂在中文版那一个 Release（tag vibetennis-vibetennis-electronic-line-calling-2026）里。",
   "_column": "vibetennis：现在网球大多是电子司线了，它靠不靠谱？以使用最广的 Hawk-Eye 为例，讲清它怎么从十来台相机算出一个落点、ITF 的标准要它准到什么程度、它准在哪、不准在哪；以及为什么法网至今还在看球印。",
   "column": "vibetennis",
+  "lang": "en",
+  "variant_of": "vibetennis-electronic-line-calling-2026",
+  "_variant_why": "所有者 2026-10-31：「把这一期视频转成英文版，网球时差换成 Tennis Jetlag」「然后放在中文版一起的 release 里，同时推送微信链接」；2026-11-01「EP02 应该是这个开头了」——标题按集数 EP02.vibetennis|，跟原版同一个号（docs/vibetennis.md §8）。",
   "pipeline": "tools/vibetennis",
   "film": {
     "canvas": [
@@ -32,8 +35,9 @@
   },
   "push": {
     "auto": true,
-    "summary": "EP02",
-    "lead": "English cut of 电子司线，真的准吗？ — the oval in an electronic line-calling replay isn't filmed, it's calculated: cameras find the ball centre, triangulate a 3D trajectory, then model a footprint the system never measures. Line judges' uncertainty is about 2 cm; the ITF's top certification demands 100% correct calls beyond 5 mm."
+    "summary": "Line",
+    "lead": "English cut of 电子司线，真的准吗？ — the oval in an electronic line-calling replay isn't filmed, it's calculated: cameras find the ball centre, triangulate a 3D trajectory, then model a footprint the system never measures. Line judges' uncertainty is about 2 cm; the ITF's top certification demands 100% correct calls beyond 5 mm.",
+    "_summary_why": "标题规则 ≤20 字符、无空白；EP02.vibetennis| 已占 16 个字符，英文主题只剩 4 个字符（EP01 英文版写 Live）。"
   },
   "editorial": {
     "mode": "science_explainer",
