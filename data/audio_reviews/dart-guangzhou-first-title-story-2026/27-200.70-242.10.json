@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Af9qoVYRnag/Af9qoVYRnag.mp4",
+  "source_sha256": "bbc2ca629bc49f4942dca8b7faeb27bfa60b561d9617d5b625c126440f1b23a5",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-01T13:21:40+00:00",
+  "reviewed_from": 200.7,
+  "reviewed_to": 242.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 207.98,
+      "end": 215.0,
+      "en": "It is a first ever WTA Tour title for Harriet Dart.",
+      "zh": "达特首夺巡回赛单打冠军！"
+    },
+    {
+      "start": 216.78,
+      "end": 223.44,
+      "en": "What a moment for the 30-year-old, who has had to work so hard this week.",
+      "zh": "三十岁的她，这一周拼尽全力。"
+    },
+    {
+      "start": 223.8,
+      "end": 227.48,
+      "en": "Six of her seven matches have gone the distance.",
+      "zh": "七场比赛，有六场打满三盘。"
+    },
+    {
+      "start": 227.48,
+      "end": 232.18,
+      "en": "But Dart hits the bullseye in Guangzhou.",
+      "zh": "达特终于在广州，命中靶心！"
+    },
+    {
+      "start": 234.88,
+      "end": 241.94,
+      "en": "Been playing some great tennis in the last few months, and she gets her reward.",
+      "zh": "几个月的出色表现，结出果实。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 bbc2ca629bc49f4942dca8b7faeb27bfa60b561d9617d5b625c126440f1b23a5，存于 data/source_asr/Af9qoVYRnag/small.en.json 与 data/source_asr/Af9qoVYRnag/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

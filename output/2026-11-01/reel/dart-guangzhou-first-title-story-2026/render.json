@@ -1,0 +1,106 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "0e99c92b3775a66b11f74651b25c354de4e653e0660266c5c24e01f9d5ed713a",
+    "request_count": 23,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-dart-guangzhou-first-title-story-2026-0e99c92b3775a66b",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-dart-guangzhou-first-title-story-2026-0e99c92b3775a66b/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41310904869"
+  },
+  "cover_seconds": 4.186,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 476.57,
+  "topbar": null,
+  "film_seconds": 485.4,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "2": 13.056,
+    "3": 15.432,
+    "5": 15.648,
+    "6": 15.216,
+    "7": 12.96,
+    "9": 14.136,
+    "10": 16.488,
+    "11": 13.536,
+    "12": 15.744,
+    "13": 14.376,
+    "15": 14.304,
+    "16": 11.976,
+    "17": 14.904,
+    "18": 16.8,
+    "19": 15.696,
+    "20": 16.56,
+    "22": 12.672,
+    "24": 15.0,
+    "25": 14.736,
+    "26": 13.968,
+    "28": 17.424
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "94096d478cd38ca32f327fc0ee0a88a3fcb3feeae97f3968b8f837d63d7a3543",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "dart-guangzhou-first-title-story-2026",
+    "received_at": "2026-11-01T13:22:01Z",
+    "artifact_ready_at": "2026-11-01T13:32:10Z",
+    "elapsed_seconds": 609.879,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "86a1770b7a0d462d61dcd33ae169c0cadae176a3dfb475c9338ee7295a8a67c5",
+    "spec_sha256": "745015de778b23cf4c96624eebf05d38287854e1fccd8c5aa788d33f677544e6",
+    "run_id": "41310904869",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-01T13:25:21Z",
+        "run_id": "41310904869"
+      }
+    ],
+    "render_seconds": 409.879,
+    "pre_render_seconds": 200.0
+  },
+  "film_sha256": "86a1770b7a0d462d61dcd33ae169c0cadae176a3dfb475c9338ee7295a8a67c5",
+  "film_bytes": 116424967,
+  "qc_attestation_sha256": "44b36fd61ba2ef10fb1a68301268d1bcd5a1c1d63c5f7c0a0444368cc01ac2a6",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-01T13:25:21Z",
+      "run_id": "41310904869"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-01T13:32:13Z",
+      "run_id": "41310904869"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-dart-guangzhou-first-title-story-2026/dart-guangzhou-first-title-story-2026.mp4",
+  "video_bytes": 116424967
+}
