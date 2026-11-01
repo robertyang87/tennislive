@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "b8967c341919446f7a3c4dbf29c09b1feb7e5255716440e3bfa3674e4b25f33a",
-    "render_inputs_sha256": "71653c5a1d4ab52f2f4a64c6eab81f7870028739c6f0952164a8e71676fe3ab9",
-    "spec_sha256": "59d05672991a21b63177b7183bb0fbe870f6d2b9de23dc94ab0ab988bcfcf201",
-    "film_sha256": "49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
+    "render_sha256": "76441aac84645060fc9ac37ded3891509519eac86f681fe3cb6286cc1bda57ab",
+    "render_inputs_sha256": "01a506512e9953f834b0bf578ef47dd78d0a95e282d83749e7b4205ea1577787",
+    "spec_sha256": "df6c4d305e0cc9a58dd2509623ebbd00b27b630712788b49db1182ef16ab0ebb",
+    "film_sha256": "6fd201bad315e874565a56456ce66ba6261d5a9fcf36ea8230d27ca7870c44ca",
     "inventory_sha256": "bba86a9338116d594e9d8b9095ae305074d57b888542d350eeb9fe0fdb5f8dfa"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-01T07:35:35+00:00",
+  "reviewed_at": "2026-11-01T07:59:42+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -203,10 +203,10 @@
         "ref_syllables": 30,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.033,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "丢掉一盘之后,重新把比赛赢回来。现在,他终于可以接过属于自己的奖牌。"
+        "transcript": "丢掉一盘之后,重新把比赛赢回来。现在,他终于可以接过属于自己的奖盘。"
       },
       "polyphones": [
         {
@@ -223,7 +223,7 @@
             {
               "wrong": "zhong4",
               "verdict": "correct",
-              "score": 0.564,
+              "score": 0.576,
               "confidence": "medium",
               "near": null
             }
@@ -369,7 +369,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第二盘,施奈德继续向前施压,他要把比分上的优势变成场上的主动。"
+        "transcript": "第二盘,施奈德继续向前施压。他要把比分上的优势变成场上的主动。"
       },
       "polyphones": [],
       "pauses": {
@@ -446,7 +446,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "绝生盘首次发球局,施奈德0比40落后。面对压到往前的对手,他用穿越球化解危机。这一局,他连九三个破发点。"
+        "transcript": "决胜盘首次发球局,施奈德0比40落后。面对压道往前的对手,他用穿越球化解危机。这一局,他连九三个破发点。"
       },
       "polyphones": [
         {
@@ -476,14 +476,14 @@
             {
               "wrong": "la4",
               "verdict": "unreliable",
-              "score": 0.386,
+              "score": 0.383,
               "confidence": null,
               "near": null
             },
             {
               "wrong": "lao4",
               "verdict": "correct",
-              "score": 0.478,
+              "score": 0.481,
               "confidence": "medium",
               "near": null
             }
@@ -564,7 +564,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "北京时间11月1日上午,东京战女单决赛。施奈德先生萨斯诺维奇在过伊埃拉这一关,半决赛击败波罕科瓦。这是他本赛季第一次决赛。冠军近在眼前,却还要闯过费尔南德斯这一关。"
+        "transcript": "北京时间11月1日上午,东京战女单决赛。施奈德先生萨斯诺维奇,再过伊埃拉这一关,半决赛击败波罕科瓦。这是他本赛季第一次决赛。冠军近在眼前,却还要闯过费尔南德斯这一关。"
       },
       "polyphones": [
         {
@@ -581,7 +581,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.381,
+              "score": 0.375,
               "confidence": "medium",
               "near": null
             }
@@ -618,7 +618,7 @@
         "substituted": 1,
         "sub_ratio": 0.031,
         "longest_deletion": 0,
-        "transcript": "从四比零领先后丢盘,到零比四十保住。哪一分,最能代表施奈德这条独惯之路?"
+        "transcript": "从4比0领先后丢盘﹑到0比40保住,哪一分,最能代表施奈德这条独惯之路。"
       },
       "polyphones": [],
       "pauses": {

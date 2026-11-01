@@ -1,19 +1,19 @@
 {
-  "scoreboard_qc_sha256": "9d2ad6b873ad7ebbaef4a6ed04afa015eb9fec2be6f1a2cc339f5d5998dcda63",
+  "scoreboard_qc_sha256": "53941061bd1a68937e5012d83857259a836e1ccf5ec0736f10b19b39883ea52c",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
     "bundle_sha256": "6a1063c2dbaa95d33388ac1888888a36f49eb5085d25228dff8cfdca12a3e73c",
     "request_count": 11,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "release_tag": "reel-tts-shnaider-fernandez-tokyo-2026-final-6a1063c2dbaa95d3",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shnaider-fernandez-tokyo-2026-final-6a1063c2dbaa95d3/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41284619067"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41286473480"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -74,51 +74,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "71653c5a1d4ab52f2f4a64c6eab81f7870028739c6f0952164a8e71676fe3ab9",
+  "render_inputs_sha256": "01a506512e9953f834b0bf578ef47dd78d0a95e282d83749e7b4205ea1577787",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shnaider-fernandez-tokyo-2026-final",
-    "received_at": "2026-11-01T07:23:56Z",
-    "artifact_ready_at": "2026-11-01T07:33:46Z",
-    "elapsed_seconds": 590.537,
+    "received_at": "2026-11-01T07:52:04Z",
+    "artifact_ready_at": "2026-11-01T07:58:16Z",
+    "elapsed_seconds": 372.494,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
-    "spec_sha256": "59d05672991a21b63177b7183bb0fbe870f6d2b9de23dc94ab0ab988bcfcf201",
-    "run_id": "41284619067",
+    "film_sha256": "6fd201bad315e874565a56456ce66ba6261d5a9fcf36ea8230d27ca7870c44ca",
+    "spec_sha256": "df6c4d305e0cc9a58dd2509623ebbd00b27b630712788b49db1182ef16ab0ebb",
+    "run_id": "41286473480",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-01T07:26:02Z",
-        "run_id": "41284619067"
+        "at": "2026-11-01T07:54:08Z",
+        "run_id": "41286473480"
       }
     ],
-    "render_seconds": 464.537,
-    "pre_render_seconds": 126.0
+    "render_seconds": 248.494,
+    "pre_render_seconds": 124.0
   },
-  "film_sha256": "49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
-  "film_bytes": 150238267,
-  "qc_attestation_sha256": "c17e1362e7b65e553a03ed7dead3a852e6ca03e2f6b3f5b22dbf5c1a9e3f8845",
+  "film_sha256": "6fd201bad315e874565a56456ce66ba6261d5a9fcf36ea8230d27ca7870c44ca",
+  "film_bytes": 150278717,
+  "qc_attestation_sha256": "46213f18066861305e13a5ec172408fd75c6e9dd85151ea12c74e48641a5bc1e",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-01T07:26:02Z",
-      "run_id": "41284619067"
+      "at": "2026-11-01T07:54:08Z",
+      "run_id": "41286473480"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-01T07:33:50Z",
-      "run_id": "41284619067"
+      "at": "2026-11-01T07:58:20Z",
+      "run_id": "41286473480"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shnaider-fernandez-tokyo-2026-final/shnaider-fernandez-tokyo-2026-final.mp4",
-  "video_bytes": 150238267,
-  "reattests": [
-    {
-      "at": "2026-11-01T07:40:37Z",
-      "spec_sha256": "df6c4d305e0cc9a58dd2509623ebbd00b27b630712788b49db1182ef16ab0ebb",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/41285657674"
-    }
-  ]
+  "video_bytes": 150278717
 }
