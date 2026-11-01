@@ -1,0 +1,30 @@
+{
+  "stage": "full_match_statistics",
+  "status": "waiting_stats",
+  "official_stats": {
+    "source": "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches/LS001/advanced-stats",
+    "finding": "Shot data are suspect placeholders: Fernandez 0W/5UE and Shnaider2W/0UE equal aces/double-fault totals; contact sheets directly show multiple non-ace winners. No valid W/UE adopted."
+  },
+  "flashscore": {
+    "source": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_8MALoKP1",
+    "finding": "Same suspect values as official advanced-stats. Not a valid independent confirmation."
+  },
+  "editorial": {
+    "finding": "English, Chinese and Russian reports found score/serve/break totals but no reliable full-match winners and unforced errors."
+  },
+  "broadcast": {
+    "source": "https://www.youtube.com/watch?v=vKGzpmJnqIs",
+    "finding": "Complete 552-second source sampled throughout; no complete technical-statistics board located in this source."
+  },
+  "mcp": {
+    "source": "https://www.tennisabstract.com/charting/",
+    "finding": "Index18455 matches,23 Shnaider entries in2026, none matches20261101TokyoFinal; saved actual search."
+  },
+  "tnns": {
+    "match_id": "75838038",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/41282318116",
+    "commit": "6c13d56",
+    "finding": "hasExtendedStats true; validator rejected Set1 Winners/UE missing or duplicate. Raw response inspection run41282520990 requested; do not describe as no data."
+  },
+  "publication": "No render, PushPlus request or pushed.json created."
+}
