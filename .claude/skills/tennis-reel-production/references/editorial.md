@@ -36,4 +36,3 @@ Make every meeting ordinal and head-to-head claim agree with the packet. For exa
 Write percentages in every voice-bound editorial field as spoken Chinese, such as “百分之八十二”, never `82%` or `82％`. PushPlus display copy may retain the symbol.
 
 Reject generic praise; a score attached to the wrong player; a recap with no turn, hard number, or player context; invented quotes, injuries, records, motives, or mental states; and generic endings such as “他还能走多远”.
-

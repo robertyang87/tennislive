@@ -37,4 +37,3 @@ Approve a workflow or prompt change only when both review scores meet their thre
 ## Report outcomes
 
 For success, cite evidence for spec, render, QC, PushPlus, and `pushed.json`. For failure, report only the earliest blocking stage and its run/commit. Do not mask an upstream failure with downstream symptoms.
-
