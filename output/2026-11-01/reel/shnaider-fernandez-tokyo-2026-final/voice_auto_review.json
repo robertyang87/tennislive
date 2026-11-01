@@ -1,0 +1,636 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "b8967c341919446f7a3c4dbf29c09b1feb7e5255716440e3bfa3674e4b25f33a",
+    "render_inputs_sha256": "71653c5a1d4ab52f2f4a64c6eab81f7870028739c6f0952164a8e71676fe3ab9",
+    "spec_sha256": "59d05672991a21b63177b7183bb0fbe870f6d2b9de23dc94ab0ab988bcfcf201",
+    "film_sha256": "49d39887d8395089d5b8e48bf0c8af18fddccc0d8413a2b19928d447cfce401c",
+    "inventory_sha256": "bba86a9338116d594e9d8b9095ae305074d57b888542d350eeb9fe0fdb5f8dfa"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-01T07:35:35+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1d0e62998253c3d5126d4609e85e4d2f7c77e44e6d5c504b72c56d6d30c2899a",
+      "audio_sha256": "4a05aa490b5002342b72454b2ce40db1434359ac0f5e9c5edd5ceb7de9f4f5bc",
+      "pass": true,
+      "result_of": "bundle:1d0e62998253c3d5126d4609e85e4d2f7c77e44e6d5c504b72c56d6d30c2899a"
+    },
+    {
+      "id": "bundle:401f0a6002b302c26dc5a2113c07387575c2e1f129ee08101ad3c6cadeafd0b5",
+      "audio_sha256": "5773ee195c3789b986a3eb7c8bda45f2f5f80a6121988670ec8f08260dafad57",
+      "pass": true,
+      "result_of": "bundle:401f0a6002b302c26dc5a2113c07387575c2e1f129ee08101ad3c6cadeafd0b5"
+    },
+    {
+      "id": "bundle:6234d6be6c1e469ede25de44ac1374d8e0d49f7908001affd1beb03799de7c80",
+      "audio_sha256": "626b81ed4938007a67eaf6ab12df919a646b7c0adceb504ecc7e582b26f8fc09",
+      "pass": true,
+      "result_of": "bundle:6234d6be6c1e469ede25de44ac1374d8e0d49f7908001affd1beb03799de7c80"
+    },
+    {
+      "id": "bundle:760efb058348ee9c9c0facb2c794a305c29907e47f46fef64a0cfb1f32a89933",
+      "audio_sha256": "1e328dd8a3c3e8a19d21e007a222a2880173738dee5cf12fbb47d1bdf07156ae",
+      "pass": true,
+      "result_of": "bundle:760efb058348ee9c9c0facb2c794a305c29907e47f46fef64a0cfb1f32a89933"
+    },
+    {
+      "id": "bundle:77bbd19774075fce49ed15da856e796734421ea89221f1a630b5d8ebe78b8f37",
+      "audio_sha256": "1a4fb00d7fcde36902b7511b9a5ba45719e0d17b615cb8a5e311e216e41d3cf5",
+      "pass": true,
+      "result_of": "bundle:77bbd19774075fce49ed15da856e796734421ea89221f1a630b5d8ebe78b8f37"
+    },
+    {
+      "id": "bundle:7edd03ed6884af1678faa0609b0ab8263aa541a348f0d85bcc568c55fca50028",
+      "audio_sha256": "b92fd611e703dd6b9d70768268cfccb8c28bf3d98b0948ae770961f276a55373",
+      "pass": true,
+      "result_of": "bundle:7edd03ed6884af1678faa0609b0ab8263aa541a348f0d85bcc568c55fca50028"
+    },
+    {
+      "id": "bundle:98413a00176e9b482301670fe9e8751bd556e0711c0f9d92a55a2201e7d2247f",
+      "audio_sha256": "7dcbd6fe33afef847159dd304f660ce815abee3d4c2eb99021b0b6927b4d7979",
+      "pass": true,
+      "result_of": "bundle:98413a00176e9b482301670fe9e8751bd556e0711c0f9d92a55a2201e7d2247f"
+    },
+    {
+      "id": "bundle:a4f74f0e451fe7d05a91a068e31534c55b3973f24f6af6ce77a54bd7b7bf1383",
+      "audio_sha256": "f3e245936079ff92d311ddeae0ad2d989350f44538b817a898d915bafd7f7419",
+      "pass": true,
+      "result_of": "bundle:a4f74f0e451fe7d05a91a068e31534c55b3973f24f6af6ce77a54bd7b7bf1383"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "32b00b6d10a83f6863fbdb8ef5bb03b6a6108f7286b52530fadfc86ff9372625",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:dc7f6dec9938118db739636498747ebf23e825a6df6786a231df12ac604a0555",
+      "audio_sha256": "7500db43ba291ed5a14dc627f2b131bed4cb57d8515ecc57532f66ef36266206",
+      "pass": true,
+      "result_of": "bundle:dc7f6dec9938118db739636498747ebf23e825a6df6786a231df12ac604a0555"
+    },
+    {
+      "id": "bundle:ea1640d99f89e47cefe4f3ffbe0d00366d39683f2a0d3095943a6872581ba4c2",
+      "audio_sha256": "5984c3d60396eb058638bce0c3bc3280b58ef3582e8fde803af876246e299943",
+      "pass": true,
+      "result_of": "bundle:ea1640d99f89e47cefe4f3ffbe0d00366d39683f2a0d3095943a6872581ba4c2"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "7500db43ba291ed5a14dc627f2b131bed4cb57d8515ecc57532f66ef36266206",
+      "pass": true,
+      "result_of": "bundle:dc7f6dec9938118db739636498747ebf23e825a6df6786a231df12ac604a0555"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "626b81ed4938007a67eaf6ab12df919a646b7c0adceb504ecc7e582b26f8fc09",
+      "pass": true,
+      "result_of": "bundle:6234d6be6c1e469ede25de44ac1374d8e0d49f7908001affd1beb03799de7c80"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "b92fd611e703dd6b9d70768268cfccb8c28bf3d98b0948ae770961f276a55373",
+      "pass": true,
+      "result_of": "bundle:7edd03ed6884af1678faa0609b0ab8263aa541a348f0d85bcc568c55fca50028"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "1e328dd8a3c3e8a19d21e007a222a2880173738dee5cf12fbb47d1bdf07156ae",
+      "pass": true,
+      "result_of": "bundle:760efb058348ee9c9c0facb2c794a305c29907e47f46fef64a0cfb1f32a89933"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "1a4fb00d7fcde36902b7511b9a5ba45719e0d17b615cb8a5e311e216e41d3cf5",
+      "pass": true,
+      "result_of": "bundle:77bbd19774075fce49ed15da856e796734421ea89221f1a630b5d8ebe78b8f37"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "4a05aa490b5002342b72454b2ce40db1434359ac0f5e9c5edd5ceb7de9f4f5bc",
+      "pass": true,
+      "result_of": "bundle:1d0e62998253c3d5126d4609e85e4d2f7c77e44e6d5c504b72c56d6d30c2899a"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "f3e245936079ff92d311ddeae0ad2d989350f44538b817a898d915bafd7f7419",
+      "pass": true,
+      "result_of": "bundle:a4f74f0e451fe7d05a91a068e31534c55b3973f24f6af6ce77a54bd7b7bf1383"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "7dcbd6fe33afef847159dd304f660ce815abee3d4c2eb99021b0b6927b4d7979",
+      "pass": true,
+      "result_of": "bundle:98413a00176e9b482301670fe9e8751bd556e0711c0f9d92a55a2201e7d2247f"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "5773ee195c3789b986a3eb7c8bda45f2f5f80a6121988670ec8f08260dafad57",
+      "pass": true,
+      "result_of": "bundle:401f0a6002b302c26dc5a2113c07387575c2e1f129ee08101ad3c6cadeafd0b5"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "5984c3d60396eb058638bce0c3bc3280b58ef3582e8fde803af876246e299943",
+      "pass": true,
+      "result_of": "bundle:ea1640d99f89e47cefe4f3ffbe0d00366d39683f2a0d3095943a6872581ba4c2"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "32b00b6d10a83f6863fbdb8ef5bb03b6a6108f7286b52530fadfc86ff9372625",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1d0e62998253c3d5126d4609e85e4d2f7c77e44e6d5c504b72c56d6d30c2899a",
+      "text": "施奈德仍以五比三领先，但费尔南德斯连赢最后四局，七比五扳回一盘。已经靠近奖杯，她又被拉回起点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "施奈德仍以5比3领先,但费尔南德斯联赢最后四局,7比5搬回一盘。已经靠近奖杯,他又被拉回起点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.08,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "施奈德 ｜ 仍 ｜ 以 ｜ 五比三 ｜ 领先 ｜ 但 ｜ 费尔南德斯 ｜ 连 ｜ 赢 ｜ 最后 ｜ 四局 ｜ 七比五 ｜ 扳回 ｜ 一 ｜ 盘 ｜ 已经 ｜ 靠近 ｜ 奖杯 ｜ 她 ｜ 又 ｜ 被 ｜ 拉 ｜ 回 ｜ 起点"
+      }
+    },
+    {
+      "id": "bundle:401f0a6002b302c26dc5a2113c07387575c2e1f129ee08101ad3c6cadeafd0b5",
+      "text": "丢掉一盘之后，重新把比赛赢回来。现在，她终于可以接过属于自己的奖盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.033,
+        "longest_deletion": 0,
+        "transcript": "丢掉一盘之后,重新把比赛赢回来。现在,他终于可以接过属于自己的奖牌。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.564,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.439,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "丢掉 ｜ 一 ｜ 盘 ｜ 之后 ｜ 重新 ｜ 把 ｜ 比赛 ｜ 赢 ｜ 回来 ｜ 现在 ｜ 她 ｜ 终于 ｜ 可以 ｜ 接 ｜ 过 ｜ 属于自己 ｜ 的 ｜ 奖 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:6234d6be6c1e469ede25de44ac1374d8e0d49f7908001affd1beb03799de7c80",
+      "text": "首盘五比二领先，第一次发球胜盘却没成功。对手追到四比五，施奈德必须再来一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘5比2领先,第一次发球胜盘却没成功。对手追到4比5,施奈德必须再来一次。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 6.757,
+        "cps": 5.03,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 五比二 ｜ 领先 ｜ 第一次 ｜ 发球 ｜ 胜 ｜ 盘 ｜ 却 ｜ 没 ｜ 成功 ｜ 对手 ｜ 追 ｜ 到 ｜ 四比五 ｜ 施奈德 ｜ 必须 ｜ 再来一次"
+      }
+    },
+    {
+      "id": "bundle:760efb058348ee9c9c0facb2c794a305c29907e47f46fef64a0cfb1f32a89933",
+      "text": "看这一拍，施奈德先把对手压在底线，再跟进网前截击。她主动缩短回合，要把领先的优势继续扩大，不给对手轻松调整的机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "看这一排,施奈德先把对手压在底线,再跟进往前截击。他主动缩短回合,要把领先的优势继续扩大,不给对手轻松调整的机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.342,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "看 ｜ 这 ｜ 一 ｜ 拍 ｜ 施奈德 ｜ 先 ｜ 把 ｜ 对手 ｜ 压 ｜ 在 ｜ 底线 ｜ 再 ｜ 跟进 ｜ 网 ｜ 前 ｜ 截击 ｜ 她 ｜ 主动 ｜ 缩短 ｜ 回合 ｜ 要 ｜ 把 ｜ 领先 ｜ 的 ｜ 优势 ｜ 继续 ｜ 扩大 ｜ 不 ｜ 给 ｜ 对手 ｜ 轻松 ｜ 调整 ｜ 的 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:77bbd19774075fce49ed15da856e796734421ea89221f1a630b5d8ebe78b8f37",
+      "text": "第二盘四比零，冠军只差两局。可费尔南德斯没有退让，这场决赛的转折，从这里开始。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘4比0,冠军只差两句。可费尔南德斯没有退让,这场决赛的转折从这里开始。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.311,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 四比零 ｜ 冠军 ｜ 只 ｜ 差 ｜ 两局 ｜ 可 ｜ 费尔南德斯 ｜ 没有 ｜ 退让 ｜ 这 ｜ 场 ｜ 决赛 ｜ 的 ｜ 转折 ｜ 从 ｜ 这里 ｜ 开始"
+      }
+    },
+    {
+      "id": "bundle:7edd03ed6884af1678faa0609b0ab8263aa541a348f0d85bcc568c55fca50028",
+      "text": "第二盘，施奈德继续向前施压。她要把比分上的优势，变成场上的主动。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 28,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘,施奈德继续向前施压,他要把比分上的优势变成场上的主动。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 28,
+        "speech_s": 5.755,
+        "cps": 4.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 施奈德 ｜ 继续 ｜ 向前 ｜ 施压 ｜ 她 ｜ 要 ｜ 把 ｜ 比分 ｜ 上 ｜ 的 ｜ 优势 ｜ 变成 ｜ 场 ｜ 上 ｜ 的 ｜ 主动"
+      }
+    },
+    {
+      "id": "bundle:98413a00176e9b482301670fe9e8751bd556e0711c0f9d92a55a2201e7d2247f",
+      "text": "顶住这次危机之后，二比二起，施奈德连赢四局。全场八次破发机会，她抓住六次，终于把冠军拿回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 3,
+        "sub_ratio": 0.075,
+        "longest_deletion": 0,
+        "transcript": "秉诸这次危机之后,二比两起,施奈德联营四局。全场巴斯破发机会,他抓住六次,终于把冠军拿回来。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.632,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "顶住 ｜ 这次 ｜ 危机 ｜ 之后 ｜ 二 ｜ 比 ｜ 二 ｜ 起 ｜ 施奈德 ｜ 连 ｜ 赢 ｜ 四局 ｜ 全场 ｜ 八次 ｜ 破发 ｜ 机会 ｜ 她 ｜ 抓住 ｜ 六次 ｜ 终于 ｜ 把 ｜ 冠军 ｜ 拿 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:a4f74f0e451fe7d05a91a068e31534c55b3973f24f6af6ce77a54bd7b7bf1383",
+      "text": "决胜盘首次发球局，施奈德零比四十落后。面对压到网前的对手，她用穿越球化解危机。这一局，她连救三个破发点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝生盘首次发球局,施奈德0比40落后。面对压到往前的对手,他用穿越球化解危机。这一局,他连九三个破发点。"
+      },
+      "polyphones": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 16,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "unreliable",
+              "score": 0.386,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.478,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 49,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 10.177,
+        "cps": 4.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 首次 ｜ 发球 ｜ 局 ｜ 施奈德 ｜ 零 ｜ 比 ｜ 四十 ｜ 落后 ｜ 面对 ｜ 压 ｜ 到 ｜ 网 ｜ 前 ｜ 的 ｜ 对手 ｜ 她 ｜ 用 ｜ 穿越 ｜ 球 ｜ 化解 ｜ 危机 ｜ 这 ｜ 一 ｜ 局 ｜ 她 ｜ 连 ｜ 救 ｜ 三个 ｜ 破发 ｜ 点"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:dc7f6dec9938118db739636498747ebf23e825a6df6786a231df12ac604a0555",
+      "text": "北京时间十一月一日上午，东京站女单决赛。施奈德先胜萨斯诺维奇，再过伊埃拉这一关，半决赛击败波汉科娃。这是她本赛季第一次决赛。冠军近在眼前，却还要闯过费尔南德斯这一关。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 75,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月1日上午,东京战女单决赛。施奈德先生萨斯诺维奇在过伊埃拉这一关,半决赛击败波罕科瓦。这是他本赛季第一次决赛。冠军近在眼前,却还要闯过费尔南德斯这一关。"
+      },
+      "polyphones": [
+        {
+          "index": 70,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.381,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 75,
+        "speech_s": 16.061,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月一日 ｜ 上午 ｜ 东京站 ｜ 女单 ｜ 决赛 ｜ 施奈德 ｜ 先 ｜ 胜 ｜ 萨斯诺维奇 ｜ 再 ｜ 过 ｜ 伊埃拉 ｜ 这 ｜ 一 ｜ 关 ｜ 半决赛 ｜ 击败 ｜ 波汉科娃 ｜ 这是 ｜ 她 ｜ 本 ｜ 赛季 ｜ 第一次 ｜ 决赛 ｜ 冠军 ｜ 近在眼前 ｜ 却 ｜ 还要 ｜ 闯 ｜ 过 ｜ 费尔南德斯 ｜ 这 ｜ 一 ｜ 关"
+      }
+    },
+    {
+      "id": "bundle:ea1640d99f89e47cefe4f3ffbe0d00366d39683f2a0d3095943a6872581ba4c2",
+      "text": "从四比零领先后丢盘，到零比四十保住。哪一分，最能代表施奈德这条夺冠之路？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
+        "longest_deletion": 0,
+        "transcript": "从四比零领先后丢盘,到零比四十保住。哪一分,最能代表施奈德这条独惯之路?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.347,
+        "cps": 4.36,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 四比零 ｜ 领先 ｜ 后 ｜ 丢 ｜ 盘 ｜ 到 ｜ 零比四十 ｜ 保 ｜ 住 ｜ 哪 ｜ 一 ｜ 分 ｜ 最 ｜ 能 ｜ 代表 ｜ 施奈德 ｜ 这 ｜ 条 ｜ 夺冠 ｜ 之 ｜ 路"
+      }
+    }
+  ]
+}

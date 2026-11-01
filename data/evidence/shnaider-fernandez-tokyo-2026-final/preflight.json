@@ -1,0 +1,18 @@
+{
+  "status": "passed_static_and_actual_tts_preflight",
+  "checks": [
+    "formal spec dry-run passed",
+    "full-match statistics evidence passed",
+    "source-bound foreground caption evidence passed:22cues",
+    "all10narratedsegments actual EdgeTTS duration fits",
+    "copy title/tags/paragraph publishing preflight passed",
+    "actual1080x1440cover preview inspected:face/trophy clear, hook and score unobstructed"
+  ],
+  "not_yet_completed": [
+    "encoded video QC",
+    "automatic voice suite",
+    "current-head CI",
+    "PushPlus and pushed.json"
+  ],
+  "render_recipe": "17media units to keep bilingual source audio separate from own Chinese narration, user-authorized assistant workflow"
+}

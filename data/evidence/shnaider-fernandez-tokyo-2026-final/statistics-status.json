@@ -1,0 +1,41 @@
+{
+  "stage": "full_match_statistics",
+  "status": "verified_from_exhaustive_court_partitions",
+  "official_stats": {
+    "source": "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches/LS001/advanced-stats",
+    "finding": "Shot data are suspect placeholders: Fernandez 0W/5UE and Shnaider2W/0UE equal aces/double-fault totals; contact sheets directly show multiple non-ace winners. No valid W/UE adopted."
+  },
+  "flashscore": {
+    "source": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_8MALoKP1",
+    "finding": "Same suspect values as official advanced-stats. Not a valid independent confirmation."
+  },
+  "editorial": {
+    "finding": "English, Chinese and Russian reports found score/serve/break totals but no reliable full-match winners and unforced errors."
+  },
+  "broadcast": {
+    "source": "https://www.youtube.com/watch?v=vKGzpmJnqIs",
+    "finding": "Complete 552-second source sampled throughout; no complete technical-statistics board located in this source."
+  },
+  "mcp": {
+    "source": "https://www.tennisabstract.com/charting/",
+    "finding": "Index18455 matches,23 Shnaider entries in2026, none matches20261101TokyoFinal; saved actual search."
+  },
+  "tnns": {
+    "match_id": "75838038",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/41282318116",
+    "commit": "6c13d56",
+    "finding": "hasExtendedStats true; validator rejected Set1 Winners/UE missing or duplicate. Raw response inspection run41282520990 requested; do not describe as no data.",
+    "raw_probe_run": "https://github.com/robertyang87/tennislive/actions/runs/41282683617",
+    "raw_review": "完整10970字节已解码：Match仅0/2制胜分和5/0失误，与Ace和双误相同；Set1/2/3缺少W/UE。额外FERbycourt与SHNbycourt为球场方向拆分，不是两位球员的全场统计列，不能拿18/23等方向拆分数字冒充本场总数。"
+  },
+  "publication": "No render, PushPlus request or pushed.json created.",
+  "resolution": "Do not use defective Match/Set W/UE. Each named player has exhaustive Left+Right partitions; sum only within that player. All independent service and point totals match official. See winners-ue-derived.json with raw byte hash and exact checks.",
+  "verified_winners": {
+    "Diana Shnaider": 26,
+    "Leylah Fernandez": 41
+  },
+  "verified_unforced_errors": {
+    "Diana Shnaider": 19,
+    "Leylah Fernandez": 35
+  }
+}
