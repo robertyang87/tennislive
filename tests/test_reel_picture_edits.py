@@ -64,3 +64,75 @@ def test_hold_stops_end_card_but_preserves_same_original_audio(tmp_path,monkeypa
 def test_framing_requests_require_valid_geometry_and_reasons(edit):
     with pytest.raises(reel.ReelError):
         reel._seg_picture_edits({'start':0,'end':1,**edit},0)
+
+
+@pytest.mark.parametrize('movie', [False, True])
+def test_composed_canvas_keeps_photo_edges_without_evidence_padding(tmp_path, monkeypatch, movie):
+    from PIL import Image
+    monkeypatch.setattr(reel, 'VIDEO_W', 120)
+    monkeypatch.setattr(reel, 'VIDEO_H', 160)
+    monkeypatch.setattr(reel, 'PART_PRESET', 'ultrafast')
+    image = tmp_path / 'canvas.png'
+    im = Image.new('RGB', (120, 160), '#17394d')
+    for x in range(12):
+        for y in range(25, 120):
+            im.putpixel((x, y), (240, 20, 30))
+            im.putpixel((119-x, y), (20, 230, 30))
+    im.save(image)
+    if movie:
+        clip = tmp_path / 'canvas.mp4'
+        ff('-y', '-loop', '1', '-i', image, '-t', '0.4', '-r', '25',
+           '-c:v', 'libx264', '-pix_fmt', 'yuv420p', clip)
+        image = clip
+    raw = {'image': str(image), 'image_kind': 'canvas', 'seconds': .4,
+           'narration': '真实比赛图与事实卡', '_canvas_caption_safety': 'Captions below y128, photo y25–120.'}
+    seg = reel.parse_segments({'segments': [raw]}, {'': image}, '')[0]
+    landed = reel.cut_still_segment(seg, tmp_path / 'landed.mp4', threads=1)
+    pixels = frame(landed, .2)
+    assert pixels[70, 1, 0] > 170
+    assert pixels[70, -2, 1] > 170
+    assert seg.full_bleed
+    with pytest.raises(reel.ReelError):
+        reel.parse_segments({'segments': [{**raw, '_canvas_caption_safety': ' '}]}, {'': image}, '')
+    Image.new('RGB', (120, 100)).save(tmp_path / 'wrong.png')
+    with pytest.raises(reel.ReelError):
+        reel.parse_segments({'segments': [{**raw, 'image': str(tmp_path / 'wrong.png')}]}, {'': image}, '')
+
+
+@pytest.mark.parametrize('edit', [
+    {'score_inset_y': True}, {'score_inset_y': -2}, {'score_inset_y': 1440},
+    {'score_inset_y': 1000, 'score_inset': False},
+    {'score_inset_y': 1000, 'fit': 'crop'},
+    {'score_inset_y': 1000, '_score_inset_y_why': ' '},
+])
+def test_score_position_rejects_unclaimed_or_invalid_geometry(edit):
+    raw = {'score_inset_y': 1000, 'score_inset': True, 'fit': 'contain',
+           '_score_inset_y_why': 'Keep the same-frame board inside the picture.', **edit}
+    with pytest.raises(reel.ReelError):
+        reel._seg_score_inset_y(raw, 0)
+
+
+def test_explicit_score_position_moves_real_board_and_preserves_audio(tmp_path, monkeypatch):
+    monkeypatch.setattr(reel, 'VIDEO_W', 120)
+    monkeypatch.setattr(reel, 'VIDEO_H', 160)
+    monkeypatch.setattr(reel, 'CROP_W', 90)
+    monkeypatch.setattr(reel, 'PART_PRESET', 'ultrafast')
+    src = tmp_path / 'board-source.mp4'
+    ff('-y', '-f', 'lavfi', '-i',
+       'color=c=0x317a44:s=320x180:r=25,drawbox=x=10:y=130:w=60:h=20:color=blue:t=fill',
+       '-f', 'lavfi', '-i', 'sine=frequency=880:sample_rate=48000', '-t', '0.4',
+       '-c:v', 'libx264', '-c:a', 'aac', src)
+    raw = {'start': 0, 'end': .4, 'fit': 'contain', 'contain_keep': .62, 'cx': .5,
+           'score_inset': {'x2': 70}, 'scorebox': [10, 130, 70, 150],
+           'score_inset_y': 90, '_score_inset_y_why': 'Align board inside the picture.'}
+    seg = reel.parse_segments({'segments': [raw]}, {'': src}, '')[0]
+    moved = reel.cut_segment(src, seg, tmp_path / 'moved.mp4', 320, threads=1)
+    plain = reel.cut_segment(src, replace(seg, score_inset_y=None), tmp_path / 'default.mp4', 320, threads=1)
+    assert frame(moved, .2)[98, 10, 2] > 160
+    assert frame(plain, .2)[98, 10, 2] < 100
+    def pcm(p):
+        return ff('-i', p, '-vn', '-f', 's16le', '-ac', '1', '-ar', '16000', '-')
+    assert pcm(moved) == pcm(plain)
+    assert render_inputs.project({'segments': [raw]})['segments'][0]['score_inset_y'] == 90
+    with pytest.raises(reel.ReelError):
+        reel._scoreboard_overlay_y(replace(seg, score_inset_y=150), 0, 28)
