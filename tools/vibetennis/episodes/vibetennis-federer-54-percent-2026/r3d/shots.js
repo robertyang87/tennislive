@@ -4,7 +4,7 @@ const easeIO=x=>{x=Math.min(1,Math.max(0,x)); return x<0.5?4*x*x*x:1-Math.pow(-2
 const ramp=(x,a,b)=>ease((x-a)/(b-a));
 const lerp=(a,b,u)=>a+(b-a)*u;
 function fadeIO(S,lt,d,a=0.5,b=0.5){ S.finalPass.uniforms.uFade.value=Math.max(0,Math.min(1,a>0?lt/a:1,b>0?(d-lt)/b:1)); }
-function hit(S,t,at,dur=0.45,shake=0.6,ring=S.shock,col=null,size=60){ const u=(t-at)/dur; if(u>=0&&u<1){ ring.material.opacity=(1-u)*0.85; ring.scale.setScalar(16+u*size); if(col) ring.material.color.copy(col); S.finalPass.uniforms.uShake.value=Math.max(S.finalPass.uniforms.uShake.value,(1-u)*shake); } }
+function hit(S,t,at,dur=0.45,shake=0.6,ring=S.shock,col=null,size=60){ const u=(t-at)/dur; if(u>=0&&u<1){ ring.material.opacity=(1-u)*0.5; ring.scale.setScalar(16+u*size); if(col) ring.material.color.copy(col); S.finalPass.uniforms.uShake.value=Math.max(S.finalPass.uniforms.uShake.value,(1-u)*shake); } }
 
 export const SHOTS=[]; const add=(t0,t1,fn)=>SHOTS.push({t0,t1,fn});
 export const TOTAL=188;
@@ -32,12 +32,12 @@ add(7.0,15.5,(S,lt,d,t)=>{
   S.gridMat.uniforms.uOp.value=0.3;
   if(t<8.2){ const u=easeIO((t-7.0)/1.2); const at=uu=>S.V(lerp(-60,0,uu),lerp(18,0,uu)+Math.sin(uu*Math.PI)*6,lerp(-260,0,uu)); const p=at(u);
     S.ball.visible=true; S.ball.position.copy(p); S.ball.scale.setScalar(4.2); S.ball.rotation.set(t*9,t*6,0);
-    S.ballGlow.visible=true; S.ballGlow.position.copy(p); S.ballGlow.scale.setScalar(18); S.ballGlow.material.opacity=0.55;
+    S.ballGlow.visible=true; S.ballGlow.position.copy(p); S.ballGlow.scale.setScalar(14); S.ballGlow.material.opacity=0.3;
     S.ballTrail.visible=true; const tail=at(Math.max(0,u-0.18)); S.setLine(S.ballTrail,[tail,p]); S.ballTrail.material.opacity=0.8;
   } else S.setMorph(TITLE,t,{spin:t<11?Math.sin((t-8.2)*0.8)*0.25*(1-ease((t-9)/2)):0});
-  const ui=(t-8.18)/0.5; if(ui>=0&&ui<1){ S.finalPass.uniforms.uFlash.value=(1-ui)*0.7; S.shock2.material.opacity=(1-ui); S.shock2.scale.setScalar(10+ui*90); S.shock2.position.set(0,0,0); S.finalPass.uniforms.uShake.value=(1-ui)*1.2; }
-  const ug=(t-11.1)/1.6; if(ug>=0){ S.setRays(Math.max(0,(1-ug*0.6))*(ug<0.15?ug/0.15:1),1+ug*0.3); S.flare.material.opacity=Math.max(0,1-ug*1.6)*0.9; S.flare.position.set(0,0,-3); S.flare.scale.setScalar(60+ug*40); if(ug<0.35) S.finalPass.uniforms.uFlash.value=Math.max(S.finalPass.uniforms.uFlash.value,(0.35-ug)*0.9); }
-  S.bloom.strength=t>11.1?1.0:0.8;
+  const ui=(t-8.18)/0.5; if(ui>=0&&ui<1){ S.finalPass.uniforms.uFlash.value=(1-ui)*0.4; S.shock2.material.opacity=(1-ui); S.shock2.scale.setScalar(10+ui*90); S.shock2.position.set(0,0,0); S.finalPass.uniforms.uShake.value=(1-ui)*1.2; }
+  const ug=(t-11.1)/1.6; if(ug>=0){ S.setRays(Math.max(0,(1-ug*0.6))*(ug<0.15?ug/0.15:1),1+ug*0.3); S.flare.material.opacity=Math.max(0,1-ug*1.6)*0.4; S.flare.position.set(0,0,-3); S.flare.scale.setScalar(60+ug*40); if(ug<0.35) S.finalPass.uniforms.uFlash.value=Math.max(S.finalPass.uniforms.uFlash.value,(0.35-ug)*0.45); }
+  S.bloom.strength=t>11.1?0.55:0.45;
   const pull=easeIO((t-7)/8.5); S.cam(S.V(Math.sin(t*0.25)*2.5,lerp(4,1.2,pull),lerp(70,52,pull)),S.V(0,0.5,0),38);
   S.proj('title',S.V(0,0,0)); S.proj('titleBot',S.V(0,-7,0));
   fadeIO(S,lt,d,0.0001,0.6);
@@ -184,5 +184,5 @@ add(302,303,(S,lt,d,t)=>{   // C：比分河道大场面（粒子在流、水库
   const asp=window.innerWidth/window.innerHeight;
   if(asp<1) S.cam(S.V(0,-3,104),S.V(0,6,0),44); else S.cam(S.V(-8,2,58),S.V(0,1,0),40);
   S.setChain(S.GAME,1,9.5,{spawn:0.012,stepDur:0.28,graphOp:1});
-  S.gridMat.uniforms.uOp.value=0.25; S.bloom.strength=0.8;
+  S.gridMat.uniforms.uOp.value=0.25;
 });

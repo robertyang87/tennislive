@@ -1,6 +1,6 @@
 {
   "slug": "vibetennis-federer-54-percent-2026",
-  "_status": "EP04 制作中：资料包 papers/vibetennis-federer-54-percent-2026/sources.md（所有者 2026-11-01 看过，要求「动作动效酷炫，直白、深入浅出，让人感受到数据的魅力和这确实是理论的结论」）。3D、叠加层、音效与原创配乐在 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/。",
+  "_status": "EP04 制作中：资料包 papers/vibetennis-federer-54-percent-2026/sources.md（所有者 2026-11-01 看过，要求「动作动效酷炫，直白、深入浅出，让人感受到数据的魅力和这确实是理论的结论」）。3D、叠加层与音效（BGM 用 vibeknowledge 库自有的 We Never (Remix)）在 tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/。",
   "_column": "vibetennis 第 4 集：费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？用吸收型马尔可夫链（Newton & Keller 2005 的分层递推）把一分→一局→一盘→一场的放大过程画出来，再拿 ATP 与第三方的真实统计验证，最后用 Klaassen & Magnus 2001 与 2019 温网决赛讲模型的局限。",
   "column": "vibetennis",
   "pipeline": "tools/vibetennis",
@@ -17,10 +17,10 @@
     "narration": "none",
     "_narration_why": "栏目规则无旁白（docs/columns.md）；所有者 2026-11-01 未要求配音，资料包第六节列为待定，按推荐不配。",
     "audio": {
-      "music": "原创合成配乐（sfx.py，100 BPM，Am–F–C–G；局限段转 Am–Dm–E–Am）",
-      "_music_why": "无版权风险，节拍与画面事件逐帧对齐（资料包第六节推荐）。",
-      "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂）",
-      "loudness": "-14 LUFS / 真峰值 ≤ -1 dBTP"
+      "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge assets/music/we-never-remix-hi-noise-qiucheng.m4a，抖音 Vibe 知识赛道统一配乐）",
+      "_music_why": "账号所有者 2026-11-01：「不要 bgm」「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」。从曲子 0.309 s 起取（74 BPM，标题锁定转金落在拍上），铺底 -20 LUFS；版权归原作者，库内 README 注明发布时优先用平台曲库同曲。",
+      "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS，低于 BGM 3 dB",
+      "loudness": "整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
     }
   },
   "cover": {

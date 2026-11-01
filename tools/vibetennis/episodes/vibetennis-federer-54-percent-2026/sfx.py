@@ -1,5 +1,7 @@
-# vibetennis 第 4 集《费德勒只赢了 54% 的分》音效床与原创配乐（全部用 numpy/scipy 现场合成，不用任何外部素材）。
-# 合成工具抄自第 2 集 sfx.py；配乐和事件表是这一集的，逐条对齐 r3d/shots.js 与 overlay.py 的画面事件。
+# vibetennis 第 4 集《费德勒只赢了 54% 的分》音效床：音效全部用 numpy/scipy 现场合成，与画面事件逐条对齐；
+# BGM 不自己做（账号所有者 2026-11-01：「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」），
+# 用 robertyang87/vibeknowledge 的 assets/music/we-never-remix-hi-noise-qiucheng.m4a（抖音 Vibe 知识赛道统一配乐，
+# 版权归原作者，库内 README 注明发布时优先用平台曲库同曲）。合成工具抄自第 2 集 sfx.py。
 import numpy as np, soundfile as sf, sys, json, math, os
 from scipy import signal
 HERE=os.path.dirname(os.path.abspath(__file__)); WORK=os.environ.get('VT_WORK',HERE)
@@ -7,7 +9,7 @@ os.makedirs(os.path.join(WORK,'sfx'),exist_ok=True)
 SR=48000
 TOTAL=188.2; N=int(TOTAL*SR)+SR
 rng=np.random.default_rng(54)
-out=np.zeros((N,2)); mus=np.zeros((N,2)); EV=[]
+out=np.zeros((N,2)); EV=[]
 def tt(d): return np.arange(int(d*SR))/SR
 def bp(x,lo,hi,o=2): return signal.sosfilt(signal.butter(o,[lo,hi],'band',fs=SR,output='sos'),x)
 def lp(x,f,o=2): return signal.sosfilt(signal.butter(o,f,'low',fs=SR,output='sos'),x)
@@ -132,53 +134,12 @@ def counter_roll(d=1.6):
     return x
 
 
-def placeM(x,t,gain=1.0,pan=0.0):
-    i=int(t*SR)
-    if x.ndim==1: x=np.stack([x*math.sqrt((1-pan)/2),x*math.sqrt((1+pan)/2)],1)*1.414
-    j=min(N,i+len(x))
-    if i<0: x=x[-i:]; i=0
-    mus[i:j]+=x[:j-i]*gain
 def E(t,x,g=1.0,pan=0.0,name=None): place(x,t,g,pan=pan,name=name)
 
-# ================= 原创配乐 =================
-BPM=100; BEAT=60/BPM; BAR=4*BEAT
+# ---------- 音高与低频脉冲（音效用） ----------
 def hz(m): return 440*2**((m-69)/12)
-PROG=[(57,[57,60,64]),(53,[53,57,60]),(48,[48,52,55]),(55,[55,59,62])]      # Am F C G
-DARK=[(57,[57,60,64]),(50,[50,53,57]),(52,[52,56,59]),(57,[57,60,64])]      # Am Dm E Am（局限段）
-def intensity(t):
-    K=[(0,0.35),(7,0.35),(8.2,0.85),(15.5,0.5),(33,0.55),(44,0.75),(64,0.85),(95,0.95),(117,0.7),(140,0.45),(148,0.6),(164,0.28),(180,0.2),(188.2,0.0)]
-    for (a,va),(b,vb) in zip(K,K[1:]):
-        if a<=t<b: return va+(vb-va)*min(1,(t-a)/0.8) if b-a>0.8 else vb
-    return 0
-def pad_note(f,d):
-    t=tt(d); env=np.minimum(1,t/0.6)*np.minimum(1,(d-t)/0.5)
-    x=sum(np.sin(2*np.pi*f*dt*t+ph)*(0.5/k) for k,(dt,ph) in enumerate([(1,0),(1.004,1),(0.996,2),(2.002,0.5),(3.0,1.3)],1))
-    return lp(x,1800)*env
-def pluck(f,d=0.32):
-    t=tt(d); x=(np.sin(2*np.pi*f*t)+0.35*np.sin(2*np.pi*2*f*t)+0.15*np.sin(2*np.pi*3*f*t))*np.exp(-t/0.11)*np.minimum(1,t/0.002)
-    return x
 def sub(f,d=0.55):
     t=tt(d); return np.sin(2*np.pi*f*t*(1+0.12*np.exp(-t/0.03)))*np.exp(-t/0.25)*np.minimum(1,t/0.004)
-def hat():
-    t=tt(0.05); return hp(rng.standard_normal(len(t)),7000)*np.exp(-t/0.012)
-def build_music():
-    nb=int(TOTAL/BAR)+1
-    for b in range(nb):
-        t0=b*BAR
-        prog=DARK if 140<=t0<164 else PROG
-        root,ch=prog[b%4]
-        I=intensity(t0+0.01)
-        if I<=0: continue
-        for m in ch: placeM(pad_note(hz(m-12),BAR+0.4),t0,0.05*(0.6+0.6*I),pan=((m%3)-1)*0.3)
-        for k in range(4):
-            tb=t0+k*BEAT; Ik=intensity(tb)
-            if Ik>=0.5 or k in (0,2): placeM(sub(hz(root-24)),tb,0.22*Ik)
-            if Ik>=0.55:
-                for h in range(2):
-                    m=ch[(k*2+h)%3]+12*(1+((k+h)%2)); placeM(pluck(hz(m)),tb+h*BEAT/2,0.05*Ik,pan=0.4*(1 if h else -1))
-            if Ik>=0.8:
-                for q in range(4): placeM(hat(),tb+q*BEAT/4,0.035*(1 if q%2 else 0.6)*Ik,pan=0.3)
-build_music()
 
 # ================= 新声音 =================
 def shatter():
@@ -258,9 +219,22 @@ E(162.6,sub(hz(33),1.4),0.5)
 E(164.0,sparkle(4.0,30),0.35,name='sea'); E(168.2,swish(1.6,300,2000),0.35); E(170.0,ding(660),0.5,name='only-a-point')
 E(176.2,ding(880),0.3)
 
-mix=out*0.45+mus*2.2
-fade=np.ones(N); k=int(186.5*SR); fade[k:]=np.linspace(1,0,N-k)**2
-mix*=fade[:,None]
+# ================= BGM（vibeknowledge 库自有） =================
+import subprocess, re
+BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')
+BGM_OFF=0.309   # 曲子 74 BPM、拍点 0.097+k·0.808 s；从 0.309 s 起取，标题锁定转金（片中 11.1 s）正好落在拍上
+BGM_LUFS=-20.0  # 铺底响度；音效叠在上面，整片之后再归一到 -14 LUFS
+raw=subprocess.run(['ffmpeg','-v','error','-ss',str(BGM_OFF),'-i',BGM,'-t',str(TOTAL),'-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
+bgm=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
+tmp=os.path.join(WORK,'sfx','_bgm_raw.wav'); sf.write(tmp,bgm.astype(np.float32),SR,subtype='FLOAT')
+meas=subprocess.run(['ffmpeg','-hide_banner','-i',tmp,'-af','ebur128','-f','null','-'],capture_output=True,text=True).stderr
+I=float(re.findall(r"I:\s+(-?[\d.]+) LUFS",meas)[-1]); os.remove(tmp)
+bgm*=10**((BGM_LUFS-I)/20)
+B=np.zeros((N,2)); B[:min(N,len(bgm))]=bgm[:N]
+SFX_GAIN=0.2   # 音效整体约 -23 LUFS，比 BGM 铺底低 3 dB：BGM 是主体，音效在画面事件上点亮
+mix=out*SFX_GAIN+B
+fade=np.ones(N); k=int(186.5*SR); fade[k:]=np.linspace(1,0,N-k)**2; mix*=fade[:,None]
 sf.write(os.path.join(WORK,'sfx','sfx_bed.wav'),mix.astype(np.float32),SR,subtype='FLOAT')
+sf.write(os.path.join(WORK,'sfx','sfx_only.wav'),(out*SFX_GAIN).astype(np.float32),SR,subtype='FLOAT')
 EV.sort(); json.dump(EV,open(os.path.join(WORK,'sfx','sfx_events.json'),'w'),ensure_ascii=False,indent=0)
 print(len(EV),'events')

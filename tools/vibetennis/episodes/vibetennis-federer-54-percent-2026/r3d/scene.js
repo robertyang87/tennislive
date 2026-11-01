@@ -177,7 +177,7 @@ const ballGlow=glowSprite(BALLC,14,0.6); const flare=glowSprite(WHITE,40,0);
 const ballTrail=fatLine([V(0,0,0),V(0,0,-1)],BALLC,6,0.8);
 const shock=ringSprite(GOLD,10,0); const shock2=ringSprite(CYAN,10,0);
 const rays=new THREE.Group(); scene.add(rays); { for(let i=0;i<56;i++){ const a=i/56*Math.PI*2, r1=7+rnd()*4, r2=40+rnd()*70; fatLine([V(Math.cos(a)*r1,Math.sin(a)*r1*0.55,-2),V(Math.cos(a)*r2,Math.sin(a)*r2*0.55,-2)],GOLD,1.0+rnd()*1.6,0.35,rays); } }
-function setRays(op,s=1,col=GOLD){ rays.visible=op>0.001; rays.scale.setScalar(s); rays.children.forEach((l,i)=>{ l.material.opacity=op*(0.2+0.25*((i*7)%5)/4); l.material.color.copy(col); }); }
+function setRays(op,s=1,col=GOLD){ rays.visible=op>0.001; rays.scale.setScalar(s); rays.children.forEach((l,i)=>{ l.material.opacity=op*0.5*(0.2+0.25*((i*7)%5)/4); l.material.color.copy(col); }); }
 
 // ================= 全息天平（一分） =================
 const scale=new THREE.Group(); scene.add(scale);
@@ -187,7 +187,7 @@ const SC={}; {
   SC.base=new THREE.Mesh(new THREE.CylinderGeometry(5,6,0.6,48,1,true),addMat(CYAN,0.08)); SC.base.position.y=0.3; scale.add(SC.base);
   SC.beam=new THREE.Group(); SC.beam.position.y=16; scale.add(SC.beam);
   SC.beamBox=edgeBox(30,0.6,0.8,WHITE.clone().lerp(CYAN,0.4),0.9); SC.beam.add(SC.beamBox);
-  SC.pivot=glowSprite(GOLD,4,0.9,SC.beam);
+  SC.pivot=glowSprite(GOLD,3,0.45,SC.beam);
   SC.pans=[]; for(const sx of [-1,1]){ const pan=new THREE.Group(); scene.add(pan); scale.add(pan);
     const dish=new THREE.Mesh(new THREE.CylinderGeometry(5.5,3.2,1.6,48,1,true),addMat(sx<0?GOLD:BLUE,0.12)); pan.add(dish);
     const rim=new THREE.Mesh(new THREE.TorusGeometry(5.5,0.08,8,64),addMat(sx<0?GOLD:BLUE,0.9)); rim.rotation.x=Math.PI/2; rim.position.y=0.8; pan.add(rim);
@@ -195,7 +195,7 @@ const SC={}; {
     SC.pans.push({pan,strings,sx}); }
   // 100 颗球：54 金（左盘）46 蓝（右盘）
   SC.balls=new THREE.InstancedMesh(new THREE.SphereGeometry(0.62,16,12),new THREE.MeshBasicMaterial({transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}),100); scale.add(SC.balls);
-  SC.ballCol=[]; for(let i=0;i<100;i++){ SC.balls.setColorAt(i,(i<54?GOLD:BLUE).clone().multiplyScalar(0.7)); }
+  SC.ballCol=[]; for(let i=0;i<100;i++){ SC.balls.setColorAt(i,(i<54?GOLD:BLUE).clone().multiplyScalar(0.55)); }
   SC.drop=[...Array(100).keys()]; for(let i=99;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [SC.drop[i],SC.drop[j]]=[SC.drop[j],SC.drop[i]]; }
   SC.slot=[]; let kl=0,kr=0; for(let i=0;i<100;i++){ const left=i<54; const k=left?kl++:kr++; const layer=Math.floor(k/14), j=k%14; const a=j/14*6.283+layer*0.4, rr=j<6?1.6:3.6; SC.slot.push(V(Math.cos(a)*rr*(j<6?1:1),0.9+layer*1.05,Math.sin(a)*rr)); }
   // 硬币
@@ -258,8 +258,8 @@ function buildChain(def){
 // 返回 {w,l}：已注入水库的胜 / 负对局数
 function setChain(C,op,t,{spawn=0.02,stepDur=0.3,graphOp=1,flowOp=1,levelScale=1}={}){
   C.g.visible=op>0.001; if(!C.g.visible) return {w:0,l:0};
-  C.nodeObjs.forEach((o,i)=>{ o.rg.material.opacity=op*graphOp*0.85; o.sp.material.opacity=op*graphOp*(0.32+0.12*Math.sin(t*3+i)); });
-  C.edgeObjs.forEach(e=>{ e.core.material.opacity=op*graphOp*0.3; e.glow.material.opacity=op*graphOp*0.05; });
+  C.nodeObjs.forEach((o,i)=>{ o.rg.material.opacity=op*graphOp*0.85; o.sp.material.opacity=op*graphOp*(0.12+0.05*Math.sin(t*3+i)); });
+  C.edgeObjs.forEach(e=>{ e.core.material.opacity=op*graphOp*0.32; e.glow.material.opacity=op*graphOp*0.025; });
   let w=0,l=0;
   C.walks.forEach((wk,i)=>{
     const lt=t-i*spawn; const steps=wk.path.length-1; const f=lt/stepDur;
@@ -274,8 +274,8 @@ function setChain(C,op,t,{spawn=0.02,stepDur=0.3,graphOp=1,flowOp=1,levelScale=1
   cloudDone(C.flow); cloudDone(C.trail);
   // 水位：注入数 / 总对局数 × 池高
   C.pools.forEach(p=>{ const n=p.isWin?w:l; const h=Math.max(0.02,(n/C.N)*C.def.poolH*levelScale);
-    p.liquid.scale.y=h; p.liquid.position.y=h/2; p.surface.position.y=h; p.liquid.material.opacity=0.22*op; p.surface.material.opacity=0.55*op*(n>0?1:0);
-    p.glass.material.opacity=0.08*op; p.rimT.material.opacity=0.9*op; p.rimB.material.opacity=op; p.glow.material.opacity=0.3*op; p.glow.position.y=h; });
+    p.liquid.scale.y=h; p.liquid.position.y=h/2; p.surface.position.y=h; p.liquid.material.opacity=0.16*op; p.surface.material.opacity=0.4*op*(n>0?1:0);
+    p.glass.material.opacity=0.08*op; p.rimT.material.opacity=0.8*op; p.rimB.material.opacity=0.8*op; p.glow.material.opacity=0.1*op; p.glow.position.y=h; });
   return {w,l};
 }
 // 一局（钻石格：右下＝他赢这一分，左下＝输）。平分后在 40 平 / 占先之间打转
@@ -316,7 +316,7 @@ const chartX=p=>(p-CH.x0)/(CH.x1-CH.x0)*CH.W-CH.W/2, chartY=v=>v*CH.H;
   for(let k=0;k<=20;k++){ const x=chartX(CH.x0+k*0.01); fatLine([V(x,0,0),V(x,CH.H,0)],gc,k%5===0?1.4:0.8,k%5===0?0.3:0.1,chart); } }
 const CURVES=[ ['point',p=>p,WHITE.clone().lerp(CYAN,0.5)], ['game',pGame,CYAN], ['set',pSet,GOLD.clone().lerp(WHITE,0.25)], ['match',p=>pMatch(p,5),GOLD] ].map(([k,f,c])=>{
   const pts=[]; for(let i=0;i<=120;i++){ const p=CH.x0+(CH.x1-CH.x0)*i/120; pts.push(V(chartX(p),chartY(f(p)),0.05)); }
-  const glow=fatLine(pts,c,9,0.18,chart), core=fatLine(pts,c,3,0.95,chart); const head=glowSprite(c,3,0.9,chart); return {k,f,c,pts,glow,core,head}; });
+  const glow=fatLine(pts,c,7,0.08,chart), core=fatLine(pts,c,3,0.95,chart); const head=glowSprite(c,3,0.9,chart); return {k,f,c,pts,glow,core,head}; });
 const scanLine=fatLine([V(0,0,0.1),V(0,CH.H,0.1)],GOLD,2.5,0.9,chart,{dashed:true,dash:0.6});
 CURVES.forEach(c=>{ c.core.userData.curve=c.glow.userData.curve=true; }); scanLine.userData.curve=true;
 chart.children.forEach(o=>{ if(o.material&&o.material.isLineMaterial&&!o.userData.curve) o.userData.op0=o.material.opacity; });
@@ -326,10 +326,10 @@ function setChart(op,draw,scanP,scanOp=1){
   chart.visible=op>0.001; if(!chart.visible) return;
   chart.children.forEach(o=>{ if(o.userData.op0!==undefined) o.material.opacity=o.userData.op0*op; });
   CURVES.forEach((c,i)=>{ const u=clamp01(draw[i]); const n=Math.max(2,Math.round(u*120)+1);
-    setLine(c.core,c.pts.slice(0,n)); setLine(c.glow,c.pts.slice(0,n)); c.core.material.opacity=0.95*op*(u>0?1:0); c.glow.material.opacity=0.18*op*(u>0?1:0);
+    setLine(c.core,c.pts.slice(0,n)); setLine(c.glow,c.pts.slice(0,n)); c.core.material.opacity=0.95*op*(u>0?1:0); c.glow.material.opacity=0.08*op*(u>0?1:0);
     c.head.position.copy(c.pts[n-1]); c.head.material.opacity=(u>0&&u<1)?op:0; });
   if(scanP!==null&&scanP!==undefined){ const x=chartX(scanP); setLine(scanLine,[V(x,0,0.1),V(x,CH.H,0.1)]); scanLine.material.opacity=0.9*op*scanOp;
-    CURVES.forEach((c,i)=>{ const y=chartY(c.f(scanP)); const on=draw[i]>=1?op*scanOp:0; scanDots[i].s.position.set(x,y,0.15); scanDots[i].r.position.set(x,y,0.15); scanDots[i].s.material.opacity=on; scanDots[i].r.material.opacity=on; }); }
+    CURVES.forEach((c,i)=>{ const y=chartY(c.f(scanP)); const on=draw[i]>=1?op*scanOp:0; scanDots[i].s.position.set(x,y,0.15); scanDots[i].r.position.set(x,y,0.15); scanDots[i].s.material.opacity=on*0.45; scanDots[i].r.material.opacity=on; }); }
   else { scanLine.material.opacity=0; scanDots.forEach(d=>{ d.s.material.opacity=0; d.r.material.opacity=0; }); }
 }
 
@@ -353,7 +353,7 @@ function setBar(b,x,h,gh,op,{w=4,col=GOLD,t=0,drop=1,gcol=CYAN}={}){
   if(showG){ b.ghost.scale.set(w*1.08,gh,w*1.08); b.ghost.position.y=gh/2; b.ghostFill.scale.set(w*1.08,gh,w*1.08); b.ghostFill.position.y=gh/2; b.ghost.material.opacity=0.9*op; b.ghostFill.material.opacity=0.07*op; b.ghost.material.color.copy(gcol);
     b.gcap.scale.set(w*1.08,w*1.08,1); b.gcap.position.y=gh; b.gcap.material.opacity=0.35*op; b.gcap.material.color.copy(gcol); b.ghost.computeLineDistances(); }
   if(showS){ const yoff=(1-easeOutBack(drop))*30; b.box.scale.set(w,h,w); b.box.position.y=h/2+yoff; b.edges.scale.set(w,h,w); b.edges.position.y=h/2+yoff;
-    b.box.material.color.copy(col); b.edges.material.color.copy(col); b.cap.material.color.copy(col); b.box.material.opacity=0.1*op; b.edges.material.opacity=0.85*op; b.cap.position.set(0,h+yoff,0); b.cap.scale.setScalar(w*1.6); b.cap.material.opacity=0.45*op;
+    b.box.material.color.copy(col); b.edges.material.color.copy(col); b.cap.material.color.copy(col); b.box.material.opacity=0.1*op; b.edges.material.opacity=0.85*op; b.cap.position.set(0,h+yoff,0); b.cap.scale.setScalar(w*1.3); b.cap.material.opacity=0.2*op;
     b.ph.forEach((p,i)=>{ const yy=((p[0]+t*0.25)%1)*h; cloudSet(b.pc,i,(p[1]-0.5)*w*0.9,yy+yoff,(p[2]-0.5)*w*0.9,col.r,col.g,col.b,op*0.45*(1-yy/h*0.6)); }); cloudDone(b.pc); }
   b.base.material.color.copy(showS?col:gcol); b.base.scale.setScalar(w*1.9); b.base.material.opacity=0.5*op; b.base.position.y=0.02;
 }
@@ -379,13 +379,13 @@ const VES=[GOLD,BLUE].map((c,i)=>{ const grp=new THREE.Group(); court.add(grp); 
 function setVessels(op,n0,n1,beam1=0){
   VES.forEach((v,i)=>{ const n=i===0?n0:n1; v.glass.material.opacity=0.09*op; v.rim.material.opacity=0.9*op;
     for(let k=0;k<230;k++){ if(k<n){ const s=v.slots[k]; cloudSet(v.pc,k,s.x,s.y,s.z,v.c.r,v.c.g,v.c.b,op); } else cloudHide(v.pc,k); } cloudDone(v.pc);
-    v.beam.material.opacity=(i===1?beam1:0)*0.1*op; });
+    v.beam.material.opacity=(i===1?beam1:0)*0.06*op; });
 }
 
 // ---------- post ----------
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(W,H,{samples:4,type:THREE.HalfFloatType}));
 composer.addPass(new RenderPass(scene,camera));
-const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),0.65,0.5,0.3); composer.addPass(bloom);
+const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),0.4,0.4,0.55); composer.addPass(bloom);
 const finalPass=new ShaderPass({uniforms:{tDiffuse:{value:null},uT:{value:0},uFlash:{value:0},uFade:{value:1},uCA:{value:0.0015},uGlitch:{value:0},uShake:{value:0},uZoom:{value:0}},
   vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
   fragmentShader:`uniform sampler2D tDiffuse; uniform float uT,uFlash,uFade,uCA,uGlitch,uShake,uZoom; varying vec2 vUv;
@@ -419,7 +419,7 @@ window.renderAt=function(t,noRender){
   for(const k in anchors) delete anchors[k];
   hideAll();
   allClouds.forEach(c=>c.material.uniforms.uT.value=t);
-  const fp=finalPass.uniforms; fp.uT.value=t; fp.uFlash.value=0; fp.uFade.value=1; fp.uGlitch.value=0; fp.uShake.value=0; fp.uZoom.value=0; bloom.strength=0.65;
+  const fp=finalPass.uniforms; fp.uT.value=t; fp.uFlash.value=0; fp.uFade.value=1; fp.uGlitch.value=0; fp.uShake.value=0; fp.uZoom.value=0; bloom.strength=0.4;
   dust.rotation.y=t*0.01;
   for(const s of SHOTS){ if(t>=s.t0&&t<s.t1){ s.fn(S,t-s.t0,s.t1-s.t0,t); break; } }
   if(!noRender) composer.render();

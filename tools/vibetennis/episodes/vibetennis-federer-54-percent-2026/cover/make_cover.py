@@ -173,7 +173,7 @@ def style_B(size, out):
     g.line([(x0 - 40 * S, base), (x1 + 40 * S, base)], fill=(200, 170, 110), width=3 * S)
     glow = glow.resize((W, H), Image.LANCZOS)
     bloom = glow.filter(ImageFilter.GaussianBlur(24 * k + 2)); bloom2 = glow.filter(ImageFilter.GaussianBlur(80 * k + 6))
-    a = np.asarray(glow).astype(np.float32) + np.asarray(bloom).astype(np.float32) * 1.6 + np.asarray(bloom2).astype(np.float32) * 1.4
+    a = np.asarray(glow).astype(np.float32) + np.asarray(bloom).astype(np.float32) * 0.9 + np.asarray(bloom2).astype(np.float32) * 0.6
     img = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     fn = font(INTER_B, int((96 if size != "story" else 64) * k if size != "wide" else 58))
