@@ -28,9 +28,9 @@ M=${SLUG}_master.mp4; P=${SLUG}_push.mp4
   -filter_complex "[0:v]scale=1920:1080,format=yuv420p,setsar=1[a];[1:v]format=yuv420p,setsar=1[b];[a][b]concat=n=2:v=1:a=0[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 30 -c:a copy -shortest -movflags +faststart "$M"
 # 两遍都钉 cfr 30：null 输出默认不补帧、mp4 会补，两遍帧数不一致就报「Incomplete MB-tree stats file」（2026-11-01 实测）
-# 推送版：H.264 High 1080p，两遍 7.3 Mbps（188 s ≈ 175 MB，≤ 200 MB），AAC 直接拷贝
-ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 7300k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
-ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7300k -maxrate 10000k -bufsize 14000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
+# 推送版：H.264 High 1080p，两遍 6.0 Mbps（2026-11-01 改版后 246 s ≈ 192 MB，≤ 200 MB；原 7.3 Mbps 会到 226 MB），AAC 直接拷贝
+ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 6000k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
+ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 6000k -maxrate 9000k -bufsize 12000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
 # 嵌入横版封面作为 attached_pic
 for f in "$M" "$P"; do
   src=$([ "$f" = "$P" ] && echo sfx/tmp_$L.mp4 || echo "$M")
