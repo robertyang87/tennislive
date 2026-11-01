@@ -1,0 +1,140 @@
+{
+  "status": "selected_temporary_same_final_trophy_frame",
+  "selected": {
+    "path": "assets/reel/vacherot-basel-2026-title.jpg",
+    "source": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
+    "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+    "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+    "frame_at": 476.8,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "frame_sha256": "a5f5b8fc76c195abc4ee1200477912363315058718cebda83414e4e1a81218c5",
+    "identity": "Valentin Vacherot, same continuous final award ceremony alongside runner-up Jiri Lehecka",
+    "visible": "黑色Lotto外套、紫灰色帽衫内衬，双手将冠军杯举过头顶，正面偏侧微笑，双眼睁开可见；脸未被杯手挡",
+    "confidence": 0.98,
+    "portrait": {
+      "image": "assets/reel/vacherot-basel-2026-title.jpg",
+      "fit": "cover",
+      "focus": 0.55,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_frame_why": "临时抽帧，按tennis-cover-photos截止规则首推时无合格官方摄影即用本场帧。已查①赛事官方Impressions图库仍2025及官方新闻无本届冠军图；②ATP Media官方照片接口只有本届采访截图，10/30高清实拍属于鲁内战，ATP新闻直读403；③AP/SeattlePI图注及EXIF证实瓦舍罗图为10/31半决赛，Sky/Imago庆祝图未绑定本场，Nau球挡脸、EFE比赛照缺具体日期；④Commons/Flickr公开检索只命中2025照片及截图，未找到本届捧杯摄影。使用用户指定官方TennisTV本届决赛原片476.8秒举杯帧，待摄影上线按O4升级。",
+      "_low_res_why": "本届决赛官方源片原生1920×1080，完整举杯正脸帧；竖版1080×1440按高度铺满需1.333333倍放大。没有冒称高清摄影原图，不使用未核同场Sky图，不因封面延误首推。"
+    }
+  },
+  "candidate": {
+    "path": "assets/reel/vacherot-basel-2026-title-sky-candidate.jpg",
+    "source_page": "https://sport.sky.de/tennis/artikel/struff-bezwinger-lehecka-verpasst-titel-in-basel-vacherot-siegt/13606738/34130",
+    "source_image": "https://e6.365dm.de/26/11/2048x1152/skysport_de-tennis-vacherot_7394012.jpg?20261101165937",
+    "dimensions": [
+      2048,
+      1152
+    ],
+    "credit": "Imago",
+    "license": "unknown/unverified",
+    "caption_original": "Valentin Vacherot feiert seinen Sieg in Basel.",
+    "article_date": "2026-11-01T17:03:00Z",
+    "capture_date": null,
+    "sha256": "b9b54a5c64445eb8a3aa17e628454904df5af8e8ecab41204188eb38e993acb7",
+    "visual_review": {
+      "opened_actual_image": true,
+      "subject": "Valentin Vacherot",
+      "appearance": "无帽、白衣绿色几何袖纹、白护腕、双拳庆祝，正面偏侧，双眼可见，合焦，无图片水印/台标",
+      "moment": "庆祝，未持奖杯",
+      "identity_crosscheck": "与ATP Media本届决赛采访图4602513面部、白衣绿色几何袖纹、无帽状态相合；尚未绑定本图动作到决赛时间码",
+      "same_match": null,
+      "confidence": 0.65,
+      "reason_pending": "Sky决赛文章图注只写巴塞尔庆祝胜利，缺对手、拍摄日期和EXIF。文章日期不是照片日期。",
+      "geometry": "铺1080×1440需1.25倍放大，应写_low_res_why。脸约x0.50–0.68,y0.08–0.43，原生封面须实渲核台头/两行钩子不压眼至下巴。",
+      "focus_candidate": 0.56
+    }
+  },
+  "searches": [
+    {
+      "source": "ATP Media官方photo API最新100条",
+      "url": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/?pageSize=100&page=0",
+      "result": "11/01本届Vacherot id4602513仅1919×1079采访Screenshot PNG，带TennisTV台标；10/30的id4601601及4601597为鲁内战5118/6000px实拍，不能当决赛照。"
+    },
+    {
+      "source": "赛事官方Impressions",
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/impressions/",
+      "result": "实际图库仍2025，含SIB25-SinglesTrophy；不挪用"
+    },
+    {
+      "source": "赛事官方新闻",
+      "url": "https://www.swissindoorsbasel.ch/de/turnier/turnier-news/",
+      "result": "最新可读稿10/31半决赛，未见11/01冠军摄影辑"
+    },
+    {
+      "source": "AP直接战报和SeattlePI转载",
+      "url": "https://apnews.com/article/vacherot-lehecka-swiss-indoors-basel-f3daa5e5c244b2a564310190aaa64343",
+      "result": "已核图注、EXIF：Vacherot两张均10/31弗里茨半决赛，头图EXIF2026:10:31 15:16:53 +01:00；只有Lehecka图是11/01决赛，全部未选。"
+    },
+    {
+      "source": "MundoDeportivo/EFE",
+      "url": "https://www.mundodeportivo.com/tenis/20261101/1004245868/vacherot-remonta-lehecka-final-basilea-sumar-segundo-titulo-atp.html",
+      "result": "已看实际图，戴帽比赛照非捧杯，同场日期未明确，未选"
+    },
+    {
+      "source": "Nau/Keystone",
+      "url": "https://www.nau.ch/sport/tennis/swiss-indoors-valentin-vacherot-besiegt-im-final-jiri-lehecka-67196371",
+      "result": "已看实际图，击球时球挡左眼/脸，未选"
+    },
+    {
+      "source": "ATP新闻直链",
+      "url": "https://www.atptour.com/en/news/lehecka-vacherot-basel-2026-final-sunday",
+      "result": "HTTP403；web不可读，不算已核图片"
+    },
+    {
+      "source": "Imago公开检索",
+      "url": "https://www.imago-images.com/search?suchtext=valentin+vacherot+basel+2026&suchselect=news&datum=2026-11-01",
+      "result": "HTTP403，未绕过"
+    },
+    {
+      "source": "公共web/image检索",
+      "query": [
+        "Vacherot Basel 2026 champion trophy photo November 1",
+        "Vacherot Basel 2026 trophy Getty",
+        "Vacherot Basel 2026 trophy site:instagram.com"
+      ],
+      "result": "搜到本届决赛战报；无可核捧杯高清实拍；图搜返回2025旧图已排除"
+    },
+    {
+      "source": "Commons/Flickr public search",
+      "query": [
+        "site:commons.wikimedia.org Vacherot Basel 2026",
+        "site:flickr.com Vacherot Basel 2026"
+      ],
+      "result": "仅命中2025照片及截图，未见本届捧杯摄影。Commons上传日期2026不等于照片拍摄年，均按Date2025排除。"
+    }
+  ],
+  "next_steps": [
+    "将selected.portrait合入主spec（本agent不改spec）",
+    "品牌logo备齐后主渲染封面并再核实际输出",
+    "渲前照片预检正常执行，摄影上线后按O4升级"
+  ],
+  "official_photo_recheck": "最新100条复查仍仅id4602513本届决赛截图；没有本届捧杯摄影。",
+  "main_source_visual_crosscheck": {
+    "probe": "/workspace/scratch/vacherot-basel/final-probe/probe.json",
+    "source": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
+    "opened": "contact_07.jpg and contact_08.jpg",
+    "trophy_visible_seconds": [
+      474.5,
+      476.5,
+      478.5
+    ],
+    "observed": "474.5接杯；476.5本人将杯举过头顶；478.5全景金纸屑。不能拿Sky双拳图相似服装代替同场证明。"
+  },
+  "native_preview": {
+    "path": "/workspace/scratch/vacherot-cover/poster-raised.jpg",
+    "template": "tools/versus_poster.py build_poster solo, current spec hook/topic",
+    "rendered": true,
+    "opened": true,
+    "observations": "1080×1440原生模板实渲。主角双眼至下巴约y1085–1295，钩子约y790–1008，未压脸；杯约y80–850，第一行钩子压杯脚不遮杯身核心；裁切去掉源右上TennisTV台标，左右官员只残边。正式logo输入当前缺失，主线加载logo后须再实渲确认。",
+    "focus": 0.55,
+    "focus_y": 0.5,
+    "zoom": 1.0
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "source_url": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
+  "probe_run_id": 41331343391,
+  "probe_commit": "d56544ab",
+  "source_duration": 493.586576,
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_fps": 25,
+  "coverage": "source contact_07 and contact_08 inspected; sampled at 2s interval. Actual video not yet locally available; frame-exact cut requires source archive.",
+  "trophy_lift_confirmed": true,
+  "evidence": [
+    {
+      "source_second": 472.5,
+      "visible": "Vacherot in match clothes celebrates facing stands, both arms raised, no trophy"
+    },
+    {
+      "source_second": 474.5,
+      "visible": "Vacherot now in dark jacket on red podium; holding large silver Basel trophy at chest/head level; Lehecka in white polo stands on left"
+    },
+    {
+      "source_second": 476.5,
+      "visible": "Vacherot lifts large silver trophy above his head, both arms extended; own face visible below trophy"
+    },
+    {
+      "source_second": 478.5,
+      "visible": "Wide podium on red carpet with tournament CHAMPION SWISS INDOORS arch, team and officials; golden confetti"
+    },
+    {
+      "source_second": 480.5,
+      "visible": "Wide podium and golden confetti continues"
+    },
+    {
+      "source_second": 482.5,
+      "visible": "Wide podium and golden confetti continues"
+    },
+    {
+      "source_second": 484.5,
+      "visible": "TennisTV full-screen advert begins by this sample; do not include"
+    }
+  ],
+  "candidate_window": {
+    "start": 473.0,
+    "end": 483.0,
+    "precision": "provisional bracket from contact sheets, not frame verified",
+    "purpose": "complete actual trophy lift plus confetti celebration"
+  },
+  "sheet_hashes": {
+    "contact_06.jpg": "5b9e482b1e105948160ac5f39cf327434156d21e8eea64c4817b020d728300bf",
+    "contact_08.jpg": "c5f34494dd919211b6c7080b354d33eec59f24a7cbab81468c69ec26dc59bf08",
+    "contact_07.jpg": "492a17369e27b511fb85c1f93600d353aff8874235e6e274568869c91be5cc6a"
+  },
+  "interview": {
+    "url": "https://www.tennistv.com/videos/4602510/basel-2026-final-valentin-vacherot-interview",
+    "downloaded_local": "/workspace/scratch/vacherot-trophy/interview.mp4",
+    "duration": 123.435,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": 50,
+    "coverage": "full duration sampled every5s, 0–115s all on-court microphone close-up;120s advert",
+    "contains_trophy": false,
+    "cannot_replace_actual_lift": true,
+    "probe_run_id": 41332120062
+  },
+  "alternative_attempt": {
+    "url": "https://www.tennistv.com/videos/4602515/basel-2026-final-highlights",
+    "result": "public entitlement returned401; stopped, no media fetched"
+  },
+  "archival": {
+    "release_source_CGsiDxZqdzA": "not found when checked",
+    "next_action": "download-video dispatched by parent; wait for archive then frame-review ~473–484s before render"
+  },
+  "confidence": {
+    "identity": "high; same official final source and podium transition, opponent and trophy visible",
+    "trophy_lift": "high;476.5s sampled frame shows cup overhead",
+    "exact_window": "pending full source frame review"
+  }
+}
