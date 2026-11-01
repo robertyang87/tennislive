@@ -1,0 +1,70 @@
+{
+  "slug": "vibetennis-federer-54-percent-2026-en",
+  "_status": "EP04 英文版：同一套 3D 与叠加层（VT_LANG=en），粒子大字 MARKOV CHAIN / IT'S ONLY A POINT 单独重渲；无配音，音轨为 BGM（vibeknowledge）＋音效。",
+  "_column": "vibetennis 第 4 集：费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？用吸收型马尔可夫链（Newton & Keller 2005 的分层递推）把一分→一局→一盘→一场的放大过程画出来，再拿 ATP 与第三方的真实统计验证，最后用 Klaassen & Magnus 2001 与 2019 温网决赛讲模型的局限。",
+  "column": "vibetennis",
+  "lang": "en",
+  "variant_of": "vibetennis-federer-54-percent-2026",
+  "_variant_why": "docs/vibetennis.md §8：每集都出英文版，无配音，画面文字与字幕全英文，品牌 Tennis Jetlag，成片并列放进原版 Release。",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "outro_seconds": 0,
+    "_outro_why": "16:9 品牌片尾母版还没做（docs/vibetennis.md TODO），片尾是收束问句＋参考资料页。",
+    "captions": "anchored",
+    "narration": "none",
+    "_narration_why": "docs/vibetennis.md §8：英文版没有配音。",
+    "audio": {
+      "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge assets/music/we-never-remix-hi-noise-qiucheng.m4a，抖音 Vibe 知识赛道统一配乐）",
+      "_music_why": "账号所有者 2026-11-01：「不要 bgm」「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」。从曲子 0.309 s 起取（74 BPM，标题锁定转金落在拍上），铺底 -20 LUFS；版权归原作者，库内 README 注明发布时优先用平台曲库同曲。",
+      "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS，低于 BGM 3 dB",
+      "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+    }
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-federer-54-percent-2026/cover/make_cover.py",
+    "hook": "Federer won 54% of points.\nHow did he win 82% of matches?",
+    "subject": "54% 与 82%",
+    "topic": "马尔可夫链 · 层层放大",
+    "_why": "同中文版封面（B 底子＋全息费德勒），文字英文、品牌 Tennis Jetlag（make_cover.py B tall poster_en.jpg en）。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "Edge",
+    "_summary_why": "标题 EP04.vibetennis|Edge（主题最多 4 个字符；Edge＝每一分那一点点优势）。",
+    "lead": "Federer played 1,526 singles matches and won 1,251 (82%) — yet he won only 54% of his points. Tennis scoring amplifies a small edge layer by layer: 54% per point becomes 60% per game, 76% per set and 91% in best-of-five. Plug in his real serve and return stats and the model lands within 1 point of the ATP figures; only whole matches show a gap — at Wimbledon 2019 he won 14 more points, held two championship points, and still lost."
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？",
+    "thesis": "网球计分是一条吸收型马尔可夫链：比分是状态，每一分只决定下一步，赢局 / 输局是吸收态（Kemeny & Snell 1960；Newton & Keller 2005）。假设每一分独立同分布、胜率 54%，一局的胜率 = p⁴(1+4q+10q²) + 20p³q³·p²/(1−2pq) ≈ 59.9%；把一局当成一步，一盘（6-6 抢七）≈ 76.3%；三盘两胜 ≈ 85.9%，五盘三胜 ≈ 91.0%（解析递推与蒙特卡洛两种实现互相校验）。每一分只多赢 1%（51%），五盘三胜的胜率就从 50% 变成 63%。真实验证：代入他的生涯发球得分率约 70%、接发得分率约 40%（ATP；UTS 69.7% / 39.6%），模型算出保发 89.7%、破发 25.6%，ATP 实际 89% / 27%（罗兰·加洛斯 88.80%；UTS 88.8% / 26.6%）；赢局率模型 59.9%，实际约 58%（由保发率与破发率推算 58.0%，UTS 58.1%）。局限：整场模型 86% 以上，他实际 82%（1251–275）；每一分并非严格独立同分布，关键分上发球方更难拿分（Klaassen & Magnus 2001，481 场温网、近 9 万分）；2019 温网决赛他全场赢 218 分、德约 204 分（温网官方统计，经维基与美联社交叉核对），第五盘 8-7 发球胜赛局 40-15 两个冠军点都没拿下，最终 7-6(5) 1-6 7-6(4) 4-6 13-12(3) 落败。",
+    "beats": [
+      "开场：1526 场单打的星系，82% 的胜率，54% 的分——只比一半多一点，凭什么？",
+      "理论大标题：马尔可夫链（1906）",
+      "一分：每 100 分 54 赢 46 输，天平只歪 2.3°，几乎是抛硬币；费德勒原话「平均每两分就要输掉一分」",
+      "一局：比分河道，1200 局按每分 54% 模拟，河道宽度＝真实流量，水库稳定在 60 : 40",
+      "套娃：一局缩成一盘的一步（76%），一盘缩成一场的一步（91%，三盘两胜 86%）",
+      "放大曲线：四条 S 曲线一层比一层陡；每分多赢 1%，五盘三胜从 50% 跳到 63%",
+      "验证：代入真实发球 / 接发得分率，模型与 ATP 统计每项都差不到 2 个百分点",
+      "局限：整场模型高估（86% vs 82%）；关键分上发球方更难拿分；2019 温网决赛多赢 14 分、两个冠军点仍输",
+      "收束：「这只是一分」；你打球时最放不下的是哪一分？"
+    ],
+    "sources": [
+      "Federer, R. (2024-06-09) Dartmouth Commencement Address（官网原文）",
+      "ATP 生涯统计；Roland-Garros「Roger Federer's career in figures」；Al Jazeera 2022 图表",
+      "Ultimate Tennis Statistics 生涯统计（playerId 3819）",
+      "Newton & Keller (2005) Studies in Applied Mathematics 114: 241–269",
+      "Klaassen & Magnus (2001) JASA 96: 500–509",
+      "Seneta (2006) Markov and the creation of Markov chains",
+      "Wimbledon 2019 men's final match statistics（经维基、美联社交叉核对）"
+    ],
+    "_claims": "每个上屏数字的官方来源＋独立来源见 papers/vibetennis-federer-54-percent-2026/sources.md 第一节"
+  }
+}
