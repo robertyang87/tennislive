@@ -1,0 +1,111 @@
+{
+  "slug": "shnaider-fernandez-tokyo-2026-final",
+  "status": "facts_verified_assistant_authoring_authorized",
+  "repository_commit": "501acbb88e49903013cabb92be6748ca4ecfc6c8",
+  "user_brief": {
+    "column": "赛场之上",
+    "scope": "夺冠之路，重点决赛和捧杯",
+    "source_url": "https://youtu.be/vKGzpmJnqIs"
+  },
+  "event": {
+    "name": "Toray Pan Pacific Open",
+    "tour": "WTA",
+    "level": 500,
+    "city": "Tokyo",
+    "date": "2026-11-01",
+    "round": "Final",
+    "court": "Center Court",
+    "surface": "Hard"
+  },
+  "result": {
+    "winner": "Diana Shnaider",
+    "winner_country": "RUS",
+    "loser": "Leylah Fernandez",
+    "loser_country": "CAN",
+    "winner_perspective_sets": [
+      [
+        6,
+        4
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "source_result_string": "[3]D. Shnaider d L. Fernandez 6-4,5-7,6-2",
+    "duration": "02:18:53",
+    "source_url": "https://api.wtatennis.com/tennis/tournaments/1056/2026/matches?states=C"
+  },
+  "title_path": [
+    {
+      "match_id": "LS013",
+      "round": "2",
+      "source_result_string": "[3]D. Shnaider d A. Sasnovich 6-3,5-7,6-3",
+      "duration": "02:31:23",
+      "start_utc": "2026-10-28T06:39:40.93+00:00"
+    },
+    {
+      "match_id": "LS006",
+      "round": "Q",
+      "source_result_string": "[3]D. Shnaider d [8]A. Eala 2-6,7-6(5),6-4",
+      "duration": "02:52:59",
+      "start_utc": "2026-10-30T07:47:21.303+00:00"
+    },
+    {
+      "match_id": "LS003",
+      "round": "S",
+      "source_result_string": "[3]D. Shnaider d M. Pohankova 6-4,7-6(7)",
+      "duration": "01:46:46",
+      "start_utc": "2026-10-31T05:07:25.577+00:00"
+    },
+    {
+      "match_id": "LS001",
+      "round": "F",
+      "source_result_string": "[3]D. Shnaider d L. Fernandez 6-4,5-7,6-2",
+      "duration": "02:18:53",
+      "start_utc": "2026-11-01T02:50:58.433+00:00"
+    }
+  ],
+  "cross_source_notes": [
+    "Flashscore全场用时2:21与WTA 2:18:53不一致，采用WTA。",
+    "Flashscore制胜分/非受迫性失误与Ace/双误数值重复，视为不可信，不用于写稿。",
+    "交手记录以WTA半决赛赛后稿3-2为赛前基准，第三方网页2-2与自身列出的五场矛盾，不使用。"
+  ],
+  "point_progression_pending_video_crosscheck": {
+    "source": "https://www.flashscore.com/match/8MALoKP1/",
+    "home": "Leylah Fernandez",
+    "away": "Diana Shnaider",
+    "set2_shnaider_scores": [
+      "4-0",
+      "5-3",
+      "5-7"
+    ],
+    "set3_shnaider_scores": [
+      "0-1",
+      "1-1",
+      "1-2",
+      "2-2",
+      "3-2",
+      "4-2",
+      "5-2",
+      "6-2"
+    ],
+    "deciding_set_second_game": "Shnaider saved three consecutive break points from 0-40"
+  },
+  "source_news": [
+    "https://www.wtatennis.com/news/4600216/by-the-numbers-shnaider-eala-set-tokyo-rematch-with-three-set-victories",
+    "https://www.wtatennis.com/news/4601953/shnaider-fernandez-win-big-points-down-the-stretch-to-set-up-tokyo-final-showdown",
+    "https://www.reuters.com/sports/tennis/shnaider-downs-fernandez-pan-pacific-open-final-tokyo-2026-11-01/"
+  ],
+  "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/41281507485",
+  "pending": [
+    "Complete source probe and visual evidence.",
+    "Locate verified same-final trophy footage and cover.",
+    "Editorial, formal spec, render, QC, PushPlus and pushed.json not completed."
+  ],
+  "workflow_authorization": "User2026-11-01 explicitly removed external model requirements and authorized assistant authoring or rewritten skill."
+}
