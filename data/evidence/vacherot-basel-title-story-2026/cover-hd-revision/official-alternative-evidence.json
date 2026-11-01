@@ -1,0 +1,138 @@
+{
+  "status": "genuine_same_final_official_photograph_found_wide_composition",
+  "searched_at_utc": "2026-11-01T19:51:34.719497+00:00",
+  "instructions": "User correction overrides frame-cover deadline exception. No frame/AI/upscale candidate accepted. No spec edit or render.",
+  "skill_read": "/workspace/tennis-work/.claude/skills/tennis-cover-photos/SKILL.md",
+  "candidate": {
+    "source_page": "https://www.swissindoorsbasel.ch/de/",
+    "page_card_date": "01.11.2026",
+    "page_card_title": "Vacherot gewinnt die Swiss Indoors Basel",
+    "linked_news": "https://www.swissindoorsbasel.ch/de/turnier/turnier-news/artikel/2026-10-31-Vacherot-gewinnt-die-Swiss-Indoors-Basel.php",
+    "news_display_date": "01. Nov 2026",
+    "news_explicit_match": "Valentin Vacherot won2026Basel final against Jiri Lehecka2:6,6:3,6:3; file URL10-31 is not used as capture date.",
+    "display_image_url": "https://www.swissindoorsbasel.ch/assets/img/weblication/wThumbnails/SinglesTrophy-12-81931adc52a0befg7545b576c7599f60.jpg",
+    "original_image_url": "https://www.swissindoorsbasel.ch/assets/img/SinglesTrophy-12.jpg",
+    "original_local": "/workspace/scratch/vacherot-cover-upgrade/official/home-trophy-original.jpg",
+    "published_original_dimensions": [
+      2560,
+      1707
+    ],
+    "bytes": 6720346,
+    "sha256": "4bdeb78e613f59d084b61d68f16297e1b87b1df3ba453c17d7603b86c4fcf45a",
+    "response_headers": {
+      "date": "Sun, 01 Nov 2026 19:51:34 GMT",
+      "content-type": "image/jpeg",
+      "content-length": "1331250",
+      "server": "envoy",
+      "last-modified": "Sun, 01 Nov 2026 18:18:05 GMT",
+      "etag": "\"668b5a-65f3b0cfb17bc\"",
+      "accept-ranges": "bytes",
+      "cache-control": "max-age=2592000",
+      "expires": "Tue, 01 Dec 2026 19:49:04 GMT",
+      "x-content-type-options": "nosniff",
+      "cf-bgj": "imgq:85,h2pri",
+      "cf-polished": "ok, orig_size=6720346",
+      "priority": "u=1;i=?0,cf-chb=(262;u=4;i=?0 92401;u=5;i 645102;u=6;i)",
+      "speculation-rules": "\"/cdn-cgi/speculation\"",
+      "vary": "accept, accept-encoding",
+      "age": "150",
+      "cf-cache-status": "HIT",
+      "cf-ray": "a53d6f59bcb175b4-SEA",
+      "alt-svc": "h3=\":443\"; ma=86400",
+      "x-envoy-upstream-service-time": "94"
+    },
+    "visual_review": {
+      "actual_file_opened": true,
+      "subject": "Valentin Vacherot in black jacket and white shorts raising trophy, Jiri Lehecka alongside with runner-up plate; officials and ball kids, gold confetti.",
+      "match_binding": "Official homepage champion card dated11/1 directly uses same named image and links explicit2026final report; photographed trophy ceremony clothing/runner-up and stage match final video independently.",
+      "photography_assessment": "No TennisTV watermark/scoreboard or video composite; distinct court-level full-stage camera angle and crisp confetti photographed detail. Downloaded official photo-file bytes, no upscale performed.",
+      "sharpness": "Published2560x1707wide photo is detailed and sharp in trophy/confetti. Winner face is small because full ceremony is shown; unsuitable for a large face-led cover without heavy crop/upscale.",
+      "portrait_geometry": "A full-height3:4crop can fill1080x1440 by downsampling0.8436; face remains small. Do not claim it is a close-up portrait.",
+      "capture_date_exif": null,
+      "photographer": null,
+      "license": "unknown/unverified"
+    }
+  },
+  "channel_results": [
+    {
+      "channel": "ATP Media photo API",
+      "url": "https://api.prod.atpmedia.pulselive.com/content/atpmedia/photo/EN/?pageSize=100&page=0",
+      "http": 200,
+      "result": "Latest100items still include11/1Vacherot1919x1079interviewScreenshot;10/30Rune match5941/6000pxphotos excluded aswronground."
+    },
+    {
+      "channel": "ATP news",
+      "url": "https://www.atptour.com/en/news/lehecka-vacherot-basel-2026-final-sunday",
+      "http": 403,
+      "result": "Unavailable; no bypass attempted."
+    },
+    {
+      "channel": "Swiss official English and German Impressions",
+      "result": "Still2025gallery. Downloaded actual2560x1707originalFRITZvsVACHEROT73; metadataDateTime2025:10:23andcopyrightSwissIndoorsBasel2025provewrongyear. Excluded. Trophy lightbox also oldgallery."
+    },
+    {
+      "channel": "Swiss official media page",
+      "url": "https://www.swissindoorsbasel.ch/en/organisation/media/",
+      "result": "Photos/logos available by contacting management; no public photo archive linked. No message sent."
+    },
+    {
+      "channel": "Swiss official social profiles",
+      "result": "Instagram/FacebookpublicprofileHTMLobtained but nolatestpost/photo metadata in returnedlogged-outshell. Not counted as exhaustive archive."
+    },
+    {
+      "channel": "Same-named official trophy photo series",
+      "result": "Ten nearbynamecandidatesreturned200zero bytes; notimages. No close-up found through this limited route."
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/swiss-home.html",
+      "sha256": "e0942b06fd5420d1cb1ce4a885a8abc8e224495f8026e9bb4c896a74e408b909"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/official-home-champion-card.html",
+      "sha256": "3163111b2689e97861b02cb17674175cda5e1833583ed29e7f3ba3b6ea868b47"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/swiss-champion-news.html",
+      "sha256": "d0e932b443f7b4e6b0e0d609e6c687cf70d7af7dcb9f608c7df7c894ca8fcf81"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/atp-photo-page0.json",
+      "sha256": "8546a41af6026f958b86ba08f2cb57e08eb0b5e8ab5360d303b8b424a3c2bc33"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/swiss-impressions.html",
+      "sha256": "a2d2a66319b697c134bfeba87399a82473bb086c3a9866676595e27d58d13cb8"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/swiss-de-gallery.html",
+      "sha256": "c74b513a6c72e55051bcca00beaed5dc9f0879453c1d6602ffd55bb2799f8bfc"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/gallery-04.jpg",
+      "sha256": "98c092093403e77eeea44d0eb13c367b746f7c4d49ff1bf4ec318775faa568d7"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/gallery-downloads.json",
+      "sha256": "1314a27f2e9aba9c5eb7075841773ac3d71ef000abdf7033787bdff43055155d"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/home-photos.json",
+      "sha256": "de5d4f51a7f20aebfa8c65924c08dd7314a290cd4f73eccaea24c34783ed4d1b"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/sibling-series.json",
+      "sha256": "50adb756140d4220f24cfac230ba793b488aead512a78c74a7db1829fb24d9a8"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-cover-upgrade/official/social-status.json",
+      "sha256": "04c56b371a183842fc6594c1143eeb3ea2369d28a01cc576b0cd15db0bee6988"
+    }
+  ],
+  "not_established": [
+    "Exact camera capture timestamp absent (no EXIF/IPTC).",
+    "Photographercredit/license notpublishedinretrievedfile/page.",
+    "No usable large-face same-final official portrait found in this assigned channel set."
+  ]
+}
