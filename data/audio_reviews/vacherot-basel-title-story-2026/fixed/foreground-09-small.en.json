@@ -1,0 +1,315 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "small.en",
+  "source_key": "qf",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4601599/4601599.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/qf/4601599.mp4",
+  "source_sha256": "f0103a4257a6365dde3f6d0b3a4094d65a651fc163565e0efa4ad27323e12af4",
+  "ffprobe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 42,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1",
+        "time_base": "1/19200",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 2966784,
+        "duration": "154.520000",
+        "bit_rate": "7961761",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "7726",
+        "extradata_size": 42,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Video Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 7417856,
+        "duration": "154.538667",
+        "bit_rate": "125388",
+        "nb_frames": "7246",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "USP Sound Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/scratch/vacherot-fixed/qf/4601599.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "154.538667",
+      "size": "156395963",
+      "bit_rate": "8096146",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "reviewed_from": 120,
+  "reviewed_to": 145.55,
+  "segment_index_at_run": 9,
+  "utterances": [
+    {
+      "start": 132.55,
+      "end": 141.95,
+      "text": " Vacherot books his spot in the final four in Basel. Fourth time has achieved that at",
+      "words": [
+        {
+          "word": " Vacherot",
+          "start": 132.55,
+          "end": 133.23,
+          "probability": 0.009532203044121465
+        },
+        {
+          "word": " books",
+          "start": 133.23,
+          "end": 133.71,
+          "probability": 0.3124617338180542
+        },
+        {
+          "word": " his",
+          "start": 133.71,
+          "end": 134.57,
+          "probability": 0.9018957614898682
+        },
+        {
+          "word": " spot",
+          "start": 134.57,
+          "end": 134.91,
+          "probability": 0.837264895439148
+        },
+        {
+          "word": " in",
+          "start": 134.91,
+          "end": 136.31,
+          "probability": 0.8603138327598572
+        },
+        {
+          "word": " the",
+          "start": 136.31,
+          "end": 136.41,
+          "probability": 0.9961671233177185
+        },
+        {
+          "word": " final",
+          "start": 136.41,
+          "end": 136.75,
+          "probability": 0.7365087866783142
+        },
+        {
+          "word": " four",
+          "start": 136.75,
+          "end": 137.21,
+          "probability": 0.9387167096138
+        },
+        {
+          "word": " in",
+          "start": 137.21,
+          "end": 137.77,
+          "probability": 0.6497769951820374
+        },
+        {
+          "word": " Basel.",
+          "start": 137.77,
+          "end": 138.29,
+          "probability": 0.7300393879413605
+        },
+        {
+          "word": " Fourth",
+          "start": 140.67000000000002,
+          "end": 140.73,
+          "probability": 0.8652762174606323
+        },
+        {
+          "word": " time",
+          "start": 140.73,
+          "end": 141.07,
+          "probability": 0.9592615365982056
+        },
+        {
+          "word": " has",
+          "start": 141.07,
+          "end": 141.21,
+          "probability": 0.6125999689102173
+        },
+        {
+          "word": " achieved",
+          "start": 141.21,
+          "end": 141.51,
+          "probability": 0.9952990412712097
+        },
+        {
+          "word": " that",
+          "start": 141.51,
+          "end": 141.79,
+          "probability": 0.9585857391357422
+        },
+        {
+          "word": " at",
+          "start": 141.79,
+          "end": 141.95,
+          "probability": 0.8118927478790283
+        }
+      ]
+    },
+    {
+      "start": 141.95,
+      "end": 144.45,
+      "text": " tour level in his career, a semi-final place.",
+      "words": [
+        {
+          "word": " tour",
+          "start": 141.95,
+          "end": 142.21,
+          "probability": 0.776617705821991
+        },
+        {
+          "word": " level",
+          "start": 142.21,
+          "end": 142.45,
+          "probability": 0.9805858731269836
+        },
+        {
+          "word": " in",
+          "start": 142.45,
+          "end": 142.81,
+          "probability": 0.8881374001502991
+        },
+        {
+          "word": " his",
+          "start": 142.81,
+          "end": 143.01,
+          "probability": 0.9990482926368713
+        },
+        {
+          "word": " career,",
+          "start": 143.01,
+          "end": 143.31,
+          "probability": 0.9803471565246582
+        },
+        {
+          "word": " a",
+          "start": 143.47,
+          "end": 143.53,
+          "probability": 0.9577239155769348
+        },
+        {
+          "word": " semi",
+          "start": 143.53,
+          "end": 143.65,
+          "probability": 0.5095928311347961
+        },
+        {
+          "word": "-final",
+          "start": 143.65,
+          "end": 144.03,
+          "probability": 0.7401259392499924
+        },
+        {
+          "word": " place.",
+          "start": 144.03,
+          "end": 144.45,
+          "probability": 0.9926969408988953
+        }
+      ]
+    }
+  ]
+}

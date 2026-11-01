@@ -1,0 +1,39 @@
+{
+  "index": 15,
+  "source": "final",
+  "reviewed_from": 266.42,
+  "reviewed_to": 281.68,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 279.51,
+      "end": 280.93,
+      "en": "This time he converts.",
+      "zh": "这一次，他把握住了破发机会。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-15-small.en.json",
+      "sha256": "976e03df9944652c84fff0d0a15d28b3486a749bff97338da13670382bcd13b9"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-15-base.en.json",
+      "sha256": "48de715dd90fafe255c33d7f4ceea9a876e53862b33e5d814d7c326f53ae5050"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+      "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+    }
+  ],
+  "review_notes": [],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

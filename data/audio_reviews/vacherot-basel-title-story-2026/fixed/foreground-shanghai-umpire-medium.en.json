@@ -1,0 +1,68 @@
+{
+  "method": "independent_asr_pass_fixed_archive",
+  "model": "medium.en",
+  "source_key": "shanghai",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4380470/4380470.mp4",
+  "source_local": "/workspace/scratch/vacherot-fixed/shanghai/4380470.mp4",
+  "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+  "reviewed_from": 119.8,
+  "reviewed_to": 125.5,
+  "vad_filter": false,
+  "utterances": [
+    {
+      "start": 119.8,
+      "end": 125.24,
+      "text": " Game set match. Vacherot. Two sets to one.",
+      "words": [
+        {
+          "word": " Game",
+          "start": 119.8,
+          "end": 121.48,
+          "p": 0.278549462556839
+        },
+        {
+          "word": " set",
+          "start": 121.48,
+          "end": 121.94,
+          "p": 0.7143787741661072
+        },
+        {
+          "word": " match.",
+          "start": 121.94,
+          "end": 122.53999999999999,
+          "p": 0.9316837191581726
+        },
+        {
+          "word": " Vacherot.",
+          "start": 123.2,
+          "end": 123.84,
+          "p": 0.12340135624011357
+        },
+        {
+          "word": " Two",
+          "start": 124.53999999999999,
+          "end": 124.67999999999999,
+          "p": 0.543639063835144
+        },
+        {
+          "word": " sets",
+          "start": 124.67999999999999,
+          "end": 124.92,
+          "p": 0.9122214913368225
+        },
+        {
+          "word": " to",
+          "start": 124.92,
+          "end": 125.14,
+          "p": 0.9774847626686096
+        },
+        {
+          "word": " one.",
+          "start": 125.14,
+          "end": 125.24,
+          "p": 0.6368082761764526
+        }
+      ]
+    }
+  ]
+}

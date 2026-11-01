@@ -1,0 +1,61 @@
+{
+  "index": 17,
+  "source": "final",
+  "reviewed_from": 328.4,
+  "reviewed_to": 353.08,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 328.72,
+      "end": 329.26,
+      "en": "Set point.",
+      "zh": "盘点。"
+    },
+    {
+      "start": 333.12,
+      "end": 336.71,
+      "en": "Well, he took the scenic route serving it out, but he got there in the end.",
+      "zh": "发球胜盘有些曲折，他最终拿下。"
+    },
+    {
+      "start": 348.89,
+      "end": 352.93,
+      "en": "Wow, no. Another shocker. So far in the third.",
+      "zh": "哇，不妙。决胜盘又是糟糕表现。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-17-small.en.json",
+      "sha256": "024cf271cd5c8e3f6272fecb0de3eb90189169529e57ab0e454ac85c7a4b93aa"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-17-base.en.json",
+      "sha256": "1e6a89ddafd5d3da0a6082288ad07bd07a651fdde6a73062eadce76e13059b36"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-s2set-medium.en.json",
+      "sha256": "99194e6addf0dfd3a633cfda993b387c67d9423e76df0642943fd9f6a145c505"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-s3open-medium.en.json",
+      "sha256": "29ea13484f6754d0ee8911efb532bb19e941b0ae35e88e90e967e16b34d7c5ac"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+      "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+    }
+  ],
+  "review_notes": [
+    "Medium confirms end (not small/base air) and Wow, no...shocker (not shortcut/chakra/shanker). Continuous source selected328.4–353.08 preserves both full clauses through352.93 despite source itself switching video near352s."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

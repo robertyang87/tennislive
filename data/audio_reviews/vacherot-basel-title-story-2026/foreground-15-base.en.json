@@ -1,0 +1,49 @@
+{
+  "method": "independent_asr_pass",
+  "model": "base.en",
+  "source_key": "final",
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_from": 266.42,
+  "reviewed_to": 281.68,
+  "segment_index_at_run": 15,
+  "utterances": [
+    {
+      "start": 279.17,
+      "end": 280.75,
+      "text": " At this time, he converts.",
+      "words": [
+        {
+          "word": " At",
+          "start": 279.17,
+          "end": 279.49,
+          "probability": 0.18240351974964142
+        },
+        {
+          "word": " this",
+          "start": 279.49,
+          "end": 279.63,
+          "probability": 0.9968307614326477
+        },
+        {
+          "word": " time,",
+          "start": 279.63,
+          "end": 280.01,
+          "probability": 0.9993340373039246
+        },
+        {
+          "word": " he",
+          "start": 280.01,
+          "end": 280.39000000000004,
+          "probability": 0.9798397421836853
+        },
+        {
+          "word": " converts.",
+          "start": 280.39000000000004,
+          "end": 280.75,
+          "probability": 0.9910324215888977
+        }
+      ]
+    }
+  ]
+}

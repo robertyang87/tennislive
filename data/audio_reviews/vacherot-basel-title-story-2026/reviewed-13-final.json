@@ -1,0 +1,45 @@
+{
+  "index": 13,
+  "source": "final",
+  "reviewed_from": 39.78,
+  "reviewed_to": 51.54,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 45.2,
+      "end": 46.64,
+      "en": "And a break for Lehecka.",
+      "zh": "莱赫奇卡完成破发。"
+    },
+    {
+      "start": 46.84,
+      "end": 51.48,
+      "en": "Perfect start for the Czech, looking very calm and composed.",
+      "zh": "捷克人的开局完美，沉着冷静。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-13-small.en.json",
+      "sha256": "6265ca4f1fabcab7e8d66b8ec34f1ff3bb29ff3f416ce3cb1972bf503be6db92"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-13-base.en.json",
+      "sha256": "ff3b33028f3ed178e06e905756b7ae1a0f64e89c3b6244bf90de2b59c4ab8486"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+      "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+    }
+  ],
+  "review_notes": [],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}

@@ -1,0 +1,73 @@
+{
+  "index": 19,
+  "source": "final",
+  "reviewed_from": 427.8,
+  "reviewed_to": 473.02,
+  "source_local": "/workspace/scratch/vacherot-basel/main.mp4",
+  "source_local_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "method": "asr_cross_checked",
+  "reviewer": "independent earlier_rounds agent; small.en/base.en full windows, focused medium.en and source captions cross-check",
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 447.92,
+      "end": 452.48,
+      "en": "It is another very, very special day",
+      "zh": "又是无比特别的一天"
+    },
+    {
+      "start": 452.48,
+      "end": 456.72,
+      "en": "for Valentin Vacherot. He’s the Basel champion.",
+      "zh": "瓦舍罗，他是巴塞尔冠军。"
+    },
+    {
+      "start": 459.84,
+      "end": 460.3,
+      "en": "What an achievement!",
+      "zh": "多么了不起！"
+    },
+    {
+      "start": 460.68,
+      "end": 464.66,
+      "en": "A second ATP title after Shanghai last year.",
+      "zh": "上海之后，第二座巡回赛冠军。"
+    },
+    {
+      "start": 468.0,
+      "end": 472.52,
+      "en": "His first at ATP 500 level, and makes a bit of history.",
+      "zh": "首座ATP500冠军，写下历史。"
+    }
+  ],
+  "no_foreground_english_reason": "",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-small.en.json",
+      "sha256": "f92d15f8f85dedd93ea574ce4fd06d53a8f0bb2284bc429852ddf54f2b8633ed"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-19-base.en.json",
+      "sha256": "098941d82b125139d09045e1931e849348e9552bc996e368e5f27ea9b391dfa2"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-champion-small.en.json",
+      "sha256": "b9818a65a22b8d2f497d715ca8ec46336c1df0bc90574a24b2466eacd5144d53"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-independent-champion-base.en.json",
+      "sha256": "3e052de0ddeb903a455cac633fd3f157b43b625218b7a1c9cc67114c4be347c0"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/foreground-main-source-captions.txt",
+      "sha256": "02d1b211f36af7f90bdbe0228091cf850b5f6a1bfe4b60e8dbfe8ac3ee219ec4"
+    }
+  ],
+  "review_notes": [
+    "Whole-window VAD ASR badly assigned initial special-day clause to435.91 crowd interval; source Google captions447.92 and focused medium447.5–456.8 plus actual result447.46 anchor real phrase. Do not reuse erroneous whole-ASR start435.91 as spoken onset."
+  ],
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-CGsiDxZqdzA/CGsiDxZqdzA.mp4",
+  "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+  "reviewed_at": "2026-11-01T18:08:02.862719+00:00"
+}
