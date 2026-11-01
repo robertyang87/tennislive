@@ -1,0 +1,74 @@
+{
+  "slug": "vibetennis-topspin-magnus-2026-en",
+  "_column": "vibetennis EP03 English version: same film as vibetennis-topspin-magnus-2026, no narration, all on-screen text and subtitles in English.",
+  "column": "vibetennis",
+  "lang": "en",
+  "variant_of": "vibetennis-topspin-magnus-2026",
+  "_variant_why": "所有者 2026-11-01：「再把 ep03 转成英文版，不要配音」「然后推送微信链接」。沿用 2026-10-31 英文版规则（无配音、画面文字和字幕全英文、品牌名 Tennis Jetlag、进原版同一个 Release、单独推一条英文微信）。",
+  "pipeline": "tools/vibetennis",
+  "film": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "fps": 30,
+    "cover_in_film": false,
+    "_cover_why": "cover_in_film 指 3:4 推送海报不拼进片子；成片自带 16:9 英文横版封面（attached_pic＋片头 3 帧 0.1 s，docs/vibetennis.md §9）。",
+    "outro_seconds": 0,
+    "_outro_why": "与中文版同：片尾回到开场 3D 球场重放同一拍（不转 32.1 m 出界 vs 4000 rpm 22.5 m 进），收在结束语和参考资料页。",
+    "captions": "anchored",
+    "narration": "none",
+    "subtitles": "burned-in English captions carrying the narration content, same positions and timing as the Chinese captions",
+    "audio": {
+      "music": "bgm.m4a（第 1 集同一首，与中文版同一条 BGM 剪接）",
+      "_music_why": "所有者 2026-10-31 指定沿用第 1 集的 BGM；版权仍未核，公开平台发布前需所有者确认或换曲。",
+      "sfx": "与中文版同一条音效轨（击球、弹地、球拼字、芯片、片尾重放）",
+      "loudness": "无配音：BGM（-26 LUFS 底、不再给人声让位）＋音效（-24），总混 -14 LUFS / -2.5 dBTP"
+    },
+    "_release_asset": "推送和 Release 用 share 版（H.264 High 1080p30 ≈7.5 Mbps、AAC 320k、faststart），不是高码率母版。"
+  },
+  "cover": {
+    "eyebrow": "vibetennis",
+    "layout": "custom",
+    "script": "tools/vibetennis/episodes/vibetennis-topspin-magnus-2026/cover/make_cover_en.py",
+    "hook": "Why does topspin\nsuddenly dive?",
+    "subject": "Topspin dive",
+    "topic": "Magnus effect",
+    "_why": "中文版选定的 B（小作坊风）的英文版：画面层完全相同（raw_hd/c1.5.png），文字换英文，左上 logo＋Tennis Jetlag。另出 16:9 横版（YouTube／内嵌封面）与 9:16 竖版。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "Spin",
+    "_summary_why": "标题规则 ≤20 字符、无空白；EP03.vibetennis| 已占 16 个字符，英文主题只剩 4 个字符。",
+    "lead": "Same swing, same 108 km/h and 15.2° launch: with no spin the ball flies 32.1 m and goes out; at 4000 rpm topspin it lands at 22.5 m, in. A topspin ball carries an extra downward force from the moment it leaves the strings, and over 70% of the deviation happens in the second half. It never suddenly drops. You only see it in the second half."
+  },
+  "editorial": {
+    "mode": "science_explainer",
+    "question": "Why does a topspin ball seem to suddenly dive?",
+    "thesis": "A spinning ball feels the Magnus force. With topspin, the bottom of the ball turns with the airflow, so the boundary layer clings longer and is flung upward; the wake tilts up and the reaction pushes the ball down. Cross & Lindsey (2014) measured 128 new balls in flight: lift coefficients of 0.1–0.3, rising with spin. By Cross's model, at 108 km/h and 3200 rpm the downward force is about 0.41 N, against a weight of about 0.56 N for a 57 g ball: gravity effectively boosted to 1.7×. The force is there from the start and the deviation accumulates: topspin is only 0.9 m lower than no spin over the first half, but 3.1 m lower at landing. So it looks sudden.",
+    "beats": [
+      "Hook: a 108 km/h forehand clears the ground by 2.5 m at the net (1.6 m above the tape) yet lands 1 m inside the baseline (model estimate)",
+      "History: Newton's 1672 letter on the curving tennis ball; Magnus's 1852 paper",
+      "Mechanism 1: with topspin the top meets the air at ~148 km/h, the bottom at ~68 km/h (model estimate)",
+      "Mechanism 2: the fuzz keeps the boundary layer turbulent; the bottom side separates later, the wake tilts up, the reaction pushes down (Cross & Lindsey, 300 fps backlit filming)",
+      "Mechanism 3: C_L 0.1–0.3; about 0.41 N at 3200 rpm vs a 0.56 N weight, ~1.7× gravity",
+      "Evidence 1: same 108 km/h and 15.2°: no spin 32.1 m, 1900 rpm 26.7 m, 3200 rpm 23.9 m, 4000 rpm 22.5 m",
+      "Evidence 2: over 70% of the deviation happens late (0.9 m → 3.1 m); same landing spot needs 7.4° vs 15.2°, landing angle 15.2° → 24.1°",
+      "Evidence 3: hard-court bounce 0.8 m vs 1.5 m, vertical speed 4.6 → 6.8 m/s",
+      "Real matches: ATP top-10 forehands average 2708 rpm; Ruud 3291, Alcaraz 3316; Nadal averages 3200, peaks near 5000",
+      "Answer + ending: replay of the opening shot. It never suddenly drops. You only see it in the second half."
+    ],
+    "sources": [
+      "I. Newton (1672). Letter on Light and Colours. Philosophical Transactions",
+      "Lord Rayleigh (1877). On the Irregular Flight of a Tennis-Ball. Messenger of Mathematics 7:14–16",
+      "R. Cross & C. Lindsey (2014). Measurements of drag and lift on tennis balls in flight. Sports Engineering 17:89–96",
+      "S. Goodwill, S. Chin & S. Haake (2004). Aerodynamics of spinning and non-spinning tennis balls. J. Wind Eng. Ind. Aerodyn. 92:935–958",
+      "R. Mehta et al. (2008). A review of tennis ball aerodynamics. Sports Technology 1:7–16",
+      "R. Cross. Calculations of groundstroke trajectories in tennis (trajectory and hard-court bounce model)",
+      "ATP Infosys Beyond The Numbers (2024-10-30) · TDI / Hawk-Eye spin data",
+      "J. Yandell high-speed video, via NYT (2006-06-27) and TIME (2009); ITF Rules of Tennis 2026 (ball size)",
+      "O. Cant et al. (2019). J. Sports Sci. 38:296 (Hawk-Eye spin error)"
+    ],
+    "_assumptions": "Figures marked “model estimate” are computed from Cross's published model (C_D = 0.55, C_L = 0.6·S; no wind, constant spin; hard-court bounce μ = 0.73, e_x = 0.1), not measured; each is labelled in the film."
+  }
+}
