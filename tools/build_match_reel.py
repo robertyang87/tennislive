@@ -1417,6 +1417,27 @@ SCORE_INSET_GAP_PX = 24
 SUB_BLOCK_H_PX = 2 * 68
 
 
+def _scoreboard_overlay_y(seg: "Segment", default: int, height: int = 0) -> int:
+    """Keep the legacy board position unless a reviewed canvas position is given."""
+    explicit = getattr(seg, "score_inset_y", None)
+    y = default if explicit is None else explicit
+    if explicit is not None and (y < 0 or y + height > VIDEO_H):
+        raise ReelError("score_inset_y places the recovered scoreboard outside the canvas")
+    return y
+
+
+def _seg_score_inset_y(s: dict, i: int) -> int | None:
+    if "score_inset_y" not in s:
+        return None
+    y = s["score_inset_y"]
+    if (type(y) is not int or not 0 <= y <= VIDEO_H - 2
+            or not s.get("score_inset") or s.get("fit") != "contain"
+            or not str(s.get("_score_inset_y_why") or "").strip()):
+        raise ReelError(f"第 {i + 1} 段 score_inset_y 要是画布内整数，"
+                        "且在 contain 回贴段记录实际画面与字幕的几何依据")
+    return y
+
+
 def subtitle_margin_for_boards(segments: list["Segment"], default_margin: int) -> int:
     """全出血 + 有段回贴记分条时，字幕上锚要抬到板的自然落点之上。
 
@@ -1427,7 +1448,7 @@ def subtitle_margin_for_boards(segments: list["Segment"], default_margin: int) -
     """
     if LAYOUT == "band":
         return default_margin
-    tops = [int(round(seg.score_inset[1] * VIDEO_W / CROP_W))
+    tops = [_scoreboard_overlay_y(seg, int(round(seg.score_inset[1] * VIDEO_W / CROP_W)))
             for seg in segments if seg.score_inset]
     if not tops:
         return default_margin
@@ -1449,7 +1470,7 @@ def subtitle_bottom_for_boards(segments: list["Segment"], *, column: str) -> int
     """
     if LAYOUT == "band" or column != "赛场之上":
         return None
-    tops = [int(round(seg.score_inset[1] * VIDEO_W / CROP_W))
+    tops = [_scoreboard_overlay_y(seg, int(round(seg.score_inset[1] * VIDEO_W / CROP_W)))
             for seg in segments if seg.score_inset]
     if not tops:
         return None
@@ -3132,6 +3153,8 @@ class Segment:
     trim_top: int = 0
     # Stop the visual before a source end card while original speech finishes.
     visual_end: float | None = None
+    # Explicit canvas-pixel placement for a recovered, same-frame scoreboard.
+    score_inset_y: int | None = None
 
     @property
     def length(self) -> float:
@@ -3833,15 +3856,17 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                  if k not in ("title_card", "kicker", "title_card_story_label")}
         if s.get("image"):
             image_kind = s.get("image_kind", "evidence")
-            if image_kind not in ("evidence", "photo"):
-                raise ReelError("image_kind 只认 evidence / photo")
-            if image_kind == "photo":
-                if not s.get("_photo_caption_safety") or not str(s.get("_photo_source", "")).startswith("https://"):
+            if image_kind not in ("evidence", "photo", "canvas"):
+                raise ReelError("image_kind 只认 evidence / photo / canvas")
+            if image_kind == "canvas" and not str(s.get("_canvas_caption_safety") or "").strip():
+                raise ReelError("整幅合成图卡必须记录字幕与品牌安全区依据")
+            if image_kind in ("photo", "canvas"):
+                if image_kind == "photo" and (not s.get("_photo_caption_safety") or not str(s.get("_photo_source", "")).startswith("https://")):
                     raise ReelError("全屏照片必须记录来源与字幕不遮主体的目视依据")
                 from PIL import Image
                 if Path(s["image"]).suffix.lower() == ".mp4":
-                    # Photo sequences use the existing silent image-movie
-                    # path; keep the same provenance and geometry contract.
+                    # Precomposed photo/card movies use the silent image-movie
+                    # path and must already match the canvas ratio.
                     if shutil.which("ffprobe"):
                         photo_w, photo_h = probe_size(Path(s["image"]))
                     else:
@@ -3861,7 +3886,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                                      "quote", "inset", "speed", "mute", "audio_tail", "cx",
                                      "gain_db",
                                      "crop_zoom", "fit", "crosses_cut", "point_end_ok",
-                                     "score_inset", "score_inset_windows", "scorebox"})
+                                     "score_inset", "score_inset_windows", "score_inset_y", "scorebox"})
             if stray:
                 raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
                                 f"不认这些窗口类字段：{stray}")
@@ -3874,7 +3899,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
             return Segment(0.0, secs, 0.5, s["narration"].strip(),
                            "contain", False, primary, "", (),
                            *_seg_voice(s, i), None, 1.0, False,
-                           str(s["image"]), full_bleed=image_kind == "photo")
+                           str(s["image"]), full_bleed=image_kind in ("photo", "canvas"))
         return Segment(float(s["start"]), float(s["end"]),
                        None if s.get("cx") is None else float(s["cx"]),
                        s.get("narration", "").strip(),
@@ -3892,6 +3917,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                        score_inset=_seg_score_inset(s, i),
                        score_inset_auto=s.get("score_inset") is True,
                        score_inset_windows=_seg_score_windows(s, i),
+                       score_inset_y=_seg_score_inset_y(s, i),
                        square_pan=tuple((float(t), float(cx)) for t, cx in s.get("square_pan", [])),
                        person_frame=({"frame": "person", "cx_face": s.get("cx_face")}
                                      if s.get("frame") == "person" else None),
@@ -4224,7 +4250,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "tier", "topic", "versus", "winner"),
     "segment": ("audio_tail", "bed", "contain_keep", "crosses_cut", "crop_zoom", "cx", "cx_face", "end", "fill_y", "fit", "frame", "gain_db", "image", "image_kind",
                 "inset", "mute", "narration", "point_end_ok", "quote", "score_inset",
-                "score_inset_windows", "scorebox",
+                "score_inset_windows", "score_inset_y", "scorebox",
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
                 "kind", "kicker", "track", "transition", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image", "trim_top", "visual_end"),
 }
@@ -5220,7 +5246,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 正是账号所有者骂过的「狗皮膏药 / 补丁」那种观感。
             # 做法：贴的板和铺满段**同一个大小、同一个落点**（x=0，
             # oy = y0 × VIDEO_W/CROP_W）；contain 画面里残留的原板先 delogo 掉。
-            # 全片的板从头到尾停在同一个位置，字幕锚也就不用另算。
+            # 未显式指定 score_inset_y 时沿用旧落点；指定时须核字幕安全区。
             # 板淡出的那几秒照旧不贴（spans / 逐帧蒙版，和铺满段同一套）。
             x0, y0, x1, y1 = box
             ratio = VIDEO_W / CROP_W
@@ -5230,12 +5256,13 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 return max(2, -(-int(round(v)) // 2) * 2)
 
             fh = _even(native_h * fratio)
-            oy = int(round(y0 * ratio))
+            oy = _scoreboard_overlay_y(seg, int(round(y0 * ratio)))
             # 画面**竖向居中**，板贴在铺满段同一个落点（oy）。原来是把画面挪到
             # 「自己的板行对齐 oy」，80% 宽的窗口下画面被压到下半屏、上面空出
             # 五百多像素的模糊垫底——居中之后画面在中间，板落在画面下沿下方一点。
             top = max(0, (VIDEO_H - fh) // 2)
             sh = _even((y1 - y0) * ratio)
+            _scoreboard_overlay_y(seg, oy, sh)
             bw = _even((x1 - x0) * ratio)
             print(f"    [score] {seg.start:.1f}s 段（contain）回贴记分条 "
                   f"[{x0},{y0},{x1},{y1}] → 左下 (0,{oy}) {bw}×{sh}px；"
@@ -9817,10 +9844,10 @@ def evidence_card_overlaps_subtitle(spec: dict) -> str:
     for index, seg in enumerate(spec.get("segments") or (), 1):
         if not isinstance(seg, dict) or not seg.get("image"):
             continue
-        # Photos use the same subtitle overlay as live footage. Evidence cards
-        # still keep every text row clear; parse_segments validates photo intent,
-        # provenance and pre-cropped canvas geometry before rendering.
-        if seg.get("image_kind") == "photo":
+        # Full-canvas photos and composed pages reserve their own caption area.
+        # parse_segments requires explicit safety evidence and canvas geometry;
+        # plain evidence cards keep every text row above the subtitle anchor.
+        if seg.get("image_kind") in ("photo", "canvas"):
             continue
         # Native generated cards have no filesystem path until materialization.
         # Their payload may exceed a filesystem component's length; do not stat
