@@ -1,0 +1,142 @@
+{
+  "slug": "vacherot-basel-title-story-2026",
+  "column": "网球有故事",
+  "received_at": null,
+  "received_at_precision": "未取得原始请求时间；不将环境启动时间当请求时间",
+  "user_request": "瓦舍罗夺冠了，做一期网球有故事，简单回顾下去年上海大师赛夺冠之后的历程，重点讲这次巴塞尔的夺冠之路，必须配上捧杯时刻视频",
+  "user_source_url": "https://www.youtube.com/watch?v=CGsiDxZqdzA",
+  "status": "preproduction_outline_awaiting_owner; footage_review_pending",
+  "story_angle": "去年上海让大家记住瓦舍罗，这一年有成绩也有伤停，巴塞尔第二冠让故事继续。以事实和真实反应承载情绪，不虚构质疑、心理或退役念头。",
+  "cover_candidate": {
+    "hook": "上海夺冠一年后\n他在巴塞尔再捧杯",
+    "topic": "瓦舍罗：从上海到巴塞尔的第二冠",
+    "story_kind": "person",
+    "subject": "瓦舍罗",
+    "portrait": "PENDING_本届决赛官方实拍，未选图"
+  },
+  "approval_requirement": {
+    "source": ".claude/skills/tennis-owner-taste/SKILL.md C5",
+    "scope": "故事叙事长片渲前一页提纲",
+    "status": "已通过对话问题发送，等待回复；不将时间经过当同意"
+  },
+  "mandatory_footage": [
+    "真实巴塞尔2026决赛完整冠军点",
+    "本届颁奖真实举杯动作视频，照片或持杯定格不替代",
+    "巴塞尔此前轮次对应真实官方比赛画面"
+  ],
+  "probe": {
+    "run_id": 41331343391,
+    "url": "https://github.com/robertyang87/tennislive/actions/runs/41331343391",
+    "slug": "vacherot-basel-title-2026-final",
+    "mode": "probe",
+    "push": false,
+    "footage_watched": false
+  },
+  "outline": [
+    {
+      "target_seconds": 10,
+      "section": "当下由头",
+      "picture": "本届冠军反应/捧杯预告，待逐帧核实后确定窗口",
+      "sound": "现场声与完整解说，英文原句待转写；不得预写球员引语",
+      "narration_point": "上海夺冠一年后，瓦舍罗又举起一座冠军奖杯。"
+    },
+    {
+      "target_seconds": 40,
+      "section": "01 上海之后",
+      "picture": "去年上海短闪回；巴黎8强、蒙卡4强、左脚伤与复出用简洁深蓝时间线，不展开每站比赛",
+      "sound": "中文旁白；如选比赛视频，保留对应完整赛点并重新分配时长",
+      "narration_point": "去年上海以世界第204身份夺冠；此后巴黎8强，今年蒙卡4强，也经历左脚伤停和复出。前情只讲影响当下的经历。",
+      "fact_packet_reference": "specs/reels/vacherot-shanghai-one-year.json editorial.human_context；历史来源需按本次入片逐条复查"
+    },
+    {
+      "target_seconds": 70,
+      "section": "02 五场路从这里开始",
+      "picture": "首轮纳沃内、第二轮霍达尔、1/4决赛鲁内、半决赛弗里茨；每场切入即显示本场信息字卡，选完整赛点，必要时加一个关键回合",
+      "sound": "关键解说原声+英中字幕，旁白在空隙交代压力与推进",
+      "narration_point": "首轮两盘过关；霍达尔战两次抢七拿下；鲁内战化解10个破发点中的9个；再过弗里茨，来到上海之后首个决赛。"
+    },
+    {
+      "target_seconds": 90,
+      "section": "03 决赛翻回来",
+      "picture": "莱赫奇卡首盘优势→第二盘转折→决胜盘建立优势，真实比分逐点核对，不能只留盘点和赛点",
+      "sound": "中文旁白随具体画面推进，关键分完整原声+英中字幕",
+      "narration_point": "首盘2–6落后，随后6–3、6–3逆转。具体破发局、战术调整和动作尚未核片，不预填。"
+    },
+    {
+      "target_seconds": 25,
+      "section": "第二座奖杯",
+      "picture": "完整冠军点→庆祝/握手→实际举杯动作→网球有故事品牌片尾。若前段已含冠军点则只播放一次，避免重复拖时长。",
+      "sound": "冠军点和举杯现场声留白；精彩解说完整双语字幕；固定片尾",
+      "narration_point": "从上海到巴塞尔，第二次捧杯。结尾不宣称已经证明未来成绩。"
+    }
+  ],
+  "facts_new": [
+    {
+      "round": "R1",
+      "opponent": "Mariano Navone",
+      "winner": "Valentin Vacherot",
+      "score": "6-3 7-6(4)",
+      "source": "https://www.tennisexplorer.com/player/vacherot/?annual=2026",
+      "verification": "已见检索条目；入片前用官方签表再核",
+      "additional_source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "official_draw_verification": "已下载官方签表并读取，与本条赛果一致。PDF release 11/01/2026 17:45:34；原始PDF sha256 de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77"
+    },
+    {
+      "round": "R2",
+      "opponent": "Rafael Jodar",
+      "winner": "Valentin Vacherot",
+      "score": "7-6(4) 2-6 7-6(5)",
+      "source": "https://www.swissindoorsbasel.ch/de/turnier/turnier-news/artikel/2026-10-29Kym-schlaegt-die-Weltnummer-4.php",
+      "verification": "赛事官网正文已读；有媒体误记首盘抢七5，采用官网4",
+      "additional_source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "official_draw_verification": "已下载官方签表并读取，与本条赛果一致。PDF release 11/01/2026 17:45:34；原始PDF sha256 de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77"
+    },
+    {
+      "round": "QF",
+      "opponent": "Holger Rune",
+      "winner": "Valentin Vacherot",
+      "score": "6-3 3-6 6-3",
+      "break_points_saved": 9,
+      "break_points_faced": 10,
+      "source": "https://www.swissindoorsbasel.ch/de/turnier/turnier-news/artikel/2026-10-30Kyms-starke-Woche-endet-im-Viertelfinal.php",
+      "verification": "赛事官网正文已读",
+      "additional_source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "official_draw_verification": "已下载官方签表并读取，与本条赛果一致。PDF release 11/01/2026 17:45:34；原始PDF sha256 de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77"
+    },
+    {
+      "round": "SF",
+      "opponent": "Taylor Fritz",
+      "winner": "Valentin Vacherot",
+      "score": "7-6(5) 6-3",
+      "source": "https://www.swissindoorsbasel.ch/de/turnier/turnier-news/artikel/2026-10-30Swiss-Schweizer-Doppel-greift-nach-dem-Titel.php",
+      "verification": "赛事官网正文已读",
+      "additional_source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "official_draw_verification": "已下载官方签表并读取，与本条赛果一致。PDF release 11/01/2026 17:45:34；原始PDF sha256 de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77"
+    },
+    {
+      "round": "F",
+      "opponent": "Jiri Lehecka",
+      "winner": "Valentin Vacherot",
+      "score": "2-6 6-3 6-3",
+      "source": "https://www.tennismajors.com/atp/swiss-indoors-basel-atp-500/vacherot-joins-federer-and-djokovic-as-a-shanghai-and-basel-champion-864909.html",
+      "verification": "比分目前来自搜索摘录；TennisTV官方采访条目已核夺冠及首盘落后逆转，需签表和片中比分进一步绑定",
+      "additional_source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "official_draw_verification": "已下载官方签表并读取，与本条赛果一致。PDF release 11/01/2026 17:45:34；原始PDF sha256 de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77"
+    }
+  ],
+  "remaining": [
+    "用户结构回复",
+    "源视频身份、全片画面与原声转写审查",
+    "首轮视频窗口",
+    "捧杯视频真实举杯窗口",
+    "官方决赛照及封面预览",
+    "逐段可运行spec、真实TTS审查与字幕",
+    "taste_preflight及dry-run",
+    "render→原生成片QC→现行授权合并推送"
+  ],
+  "publication": {
+    "render_dispatched": false,
+    "pushed": false,
+    "no_claim_of_completion": true
+  }
+}
