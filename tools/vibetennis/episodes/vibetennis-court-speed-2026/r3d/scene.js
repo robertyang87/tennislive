@@ -329,10 +329,10 @@ const dust=(()=>{ const n=260, g=new THREE.BufferGeometry(), pos=new Float32Arra
 function setDust(tau){ const ln=LANES[0]; if(tau<0||tau>1.4||!ln.ball.visible){ dust.m.opacity=0; return; }
   dust.seeds.forEach((s,i)=>{ dust.pos[i*3]=s[0]*tau*1.6; dust.pos[i*3+1]=Math.max(0,s[1]*tau-2.2*tau*tau)+0.05; dust.pos[i*3+2]=ln.z+s[2]*tau; });
   dust.p.geometry.attributes.position.needsUpdate=true; dust.m.opacity=Math.max(0,0.9-tau*0.7); }
-{ const ln=LANES[1], N=9000, geo=new THREE.PlaneGeometry(0.035,0.32,1,2); geo.translate(0,0.16,0);
-  const m=new THREE.MeshStandardMaterial({color:0x4f9a3c,roughness:0.8,side:THREE.DoubleSide}), blades=new THREE.InstancedMesh(geo,m,N), d=new THREE.Object3D();
-  for(let i=0;i<N;i++){ d.position.set(-20+rnd()*60,0,ln.z+(rnd()-0.5)*5.8); d.rotation.set((rnd()-0.5)*0.35,rnd()*Math.PI,(rnd()-0.5)*0.35); const k=0.6+rnd()*0.8; d.scale.set(1,k,1); d.updateMatrix(); blades.setMatrixAt(i,d.matrix);
-    blades.setColorAt(i,new THREE.Color().setHSL(0.30+rnd()*0.04,0.45+rnd()*0.15,0.30+rnd()*0.12)); }
+{ const ln=LANES[1], N=48000, geo=new THREE.PlaneGeometry(0.05,0.30,1,2); geo.translate(0,0.15,0);
+  const m=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.75,side:THREE.DoubleSide,emissive:0x0c2a08}), blades=new THREE.InstancedMesh(geo,m,N), d=new THREE.Object3D();
+  for(let i=0;i<N;i++){ d.position.set(-14+rnd()*46,0,ln.z+(rnd()-0.5)*5.9); d.rotation.set((rnd()-0.5)*0.35,rnd()*Math.PI,(rnd()-0.5)*0.35); const k=0.6+rnd()*0.8; d.scale.set(1,k,1); d.updateMatrix(); blades.setMatrixAt(i,d.matrix);
+    const band=Math.floor((d.position.x+20)/3)%2; blades.setColorAt(i,new THREE.Color().setHSL(0.27+rnd()*0.04,0.50+rnd()*0.12,0.40+band*0.08+rnd()*0.10)); }
   labG.add(blades); }
 // --- 硬地剖面：几层丙烯酸涂层；左边颗粒大、有棱角，右边更细、更圆（Laykold：前者 M3 中速，后者 M4 中快）
 const ACR=V3(0,0,2400), acrG=new THREE.Group(); acrG.position.copy(ACR); scene.add(acrG);
