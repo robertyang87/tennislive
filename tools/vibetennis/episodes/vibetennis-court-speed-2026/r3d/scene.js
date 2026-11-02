@@ -90,6 +90,8 @@ const scl=(pts,k)=>pts.map(p=>[p[0]*k,p[1]*k]);
 function edgesOf(mesh,col,op){ const e=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry,25),lineM(col,op)); e.position.copy(mesh.position); e.rotation.copy(mesh.rotation); return e; }
 
 // 外墙贴图（按 Commons 实拍照片取色与分格，2026-11-02 对照）
+const GLASS_AO=canvasTex(1024,128,(g,w,h)=>{ g.fillStyle='#16222e'; g.fillRect(0,0,w,h); for(let x=0;x<w;x+=16){ g.fillStyle='rgba(255,214,160,0.28)'; g.fillRect(x+3,h*0.18,10,h*0.62); g.fillStyle='#0d151d'; g.fillRect(x,0,2,h);} g.fillStyle='#c9d0d6'; g.fillRect(0,h*0.06,w,3); });
+GLASS_AO.wrapS=THREE.RepeatWrapping; GLASS_AO.repeat.set(16,1);
 const FACADE={
   RG: canvasTex(1024,256,(g,w,h)=>{ // 夏蒂埃：白色横向遮阳百叶＋深色玻璃，分层
     g.fillStyle='#2b3138'; g.fillRect(0,0,w,h);
@@ -100,7 +102,7 @@ const FACADE={
     g.fillStyle='rgba(30,45,40,0.85)'; for(let x=14;x<w;x+=56) for(const y of[0.2,0.5]) g.fillRect(x,h*y,34,h*0.18); }),
   AO: canvasTex(1024,256,(g,w,h)=>{ // 罗德·拉沃尔：下层通高玻璃，上层白色斜格外壳
     g.fillStyle='#e8ecef'; g.fillRect(0,0,w,h*0.55);
-    g.strokeStyle='#b9c2ca'; g.lineWidth=3; for(let x=-h;x<w+h;x+=40){ g.beginPath(); g.moveTo(x,0); g.lineTo(x+h*0.55,h*0.55); g.stroke(); g.beginPath(); g.moveTo(x+h*0.55,0); g.lineTo(x,h*0.55); g.stroke(); }
+    g.strokeStyle='#b9c2ca'; g.lineWidth=3; for(let x=-1024;x<w+h;x+=32){ g.beginPath(); g.moveTo(x,0); g.lineTo(x+h*0.55,h*0.55); g.stroke(); g.beginPath(); g.moveTo(x+h*0.55,0); g.lineTo(x,h*0.55); g.stroke(); }
     g.fillStyle='#1b2a38'; g.fillRect(0,h*0.55,w,h*0.45); g.fillStyle='rgba(255,210,150,0.35)'; for(let x=0;x<w;x+=26) g.fillRect(x+4,h*0.62,16,h*0.3); }),
   USO: canvasTex(1024,256,(g,w,h)=>{ // 阿瑟·阿什：砖红色基座
     g.fillStyle='#8a3b2c'; g.fillRect(0,0,w,h); noise(g,w,h,20000,['#7a3326','#9a4434','#843828'],3);
@@ -131,7 +133,11 @@ function buildBowl(v,grp){
   for(let r=0;r<rows;r++){ const s0=0.36+0.6*r/rows, s1=0.36+0.6*(r+1)/rows, y=1+(top-1)*r/rows, y1=1+(top-1)*(r+1)/rows;
     band(grp,scl(out,s0),scl(out,s0),y,y1,riser); band(grp,scl(out,s0),scl(out,s1),y1,y1,seat); }
   const fh=v.k==='USO'?v.H:v.H;
-  band(grp,scl(out,1.0),scl(out,1.0),0,fh,new THREE.MeshStandardMaterial({map:FACADE[v.k],roughness:0.6,metalness:0.1,side:THREE.DoubleSide}));
+  if(v.k==='RG'){ for(const [px,pz,ry,len] of [[0,v.rz,0,v.rx*2],[0,-v.rz,Math.PI,v.rx*2],[v.rx,0,Math.PI/2,v.rz*2],[-v.rx,0,-Math.PI/2,v.rz*2]]){
+      const t=FACADE.RG.clone(); t.needsUpdate=true; t.wrapS=THREE.RepeatWrapping; t.repeat.set(len/40,1);
+      const m=new THREE.Mesh(new THREE.PlaneGeometry(len,fh),new THREE.MeshStandardMaterial({map:t,roughness:0.75,metalness:0.05})); m.position.set(px,fh/2,pz); m.rotation.y=ry; grp.add(m); } }
+  else if(v.k==='AO') band(grp,scl(out,1.0),scl(out,1.0),0,v.H*0.47,new THREE.MeshStandardMaterial({map:GLASS_AO,emissiveMap:GLASS_AO,emissive:0x6a5a44,roughness:0.2,metalness:0.4,side:THREE.DoubleSide}));
+  else band(grp,scl(out,1.0),scl(out,1.0),0,fh,new THREE.MeshStandardMaterial({map:FACADE[v.k],roughness:0.6,metalness:0.1,side:THREE.DoubleSide}));
   if(v.k==='USO') band(grp,scl(out,1.0),scl(out,0.97),fh,top+1,new THREE.MeshStandardMaterial({color:0x3a4250,roughness:0.6,side:THREE.DoubleSide}));
   else band(grp,scl(out,0.96),scl(out,1.0),v.H-3,v.H,new THREE.MeshStandardMaterial({color:0x2a3038,roughness:0.6,side:THREE.DoubleSide}));
 }
@@ -140,35 +146,40 @@ const steel=new THREE.MeshStandardMaterial({color:0xd4d8dc,roughness:0.35,metaln
 const steelBlue=new THREE.MeshStandardMaterial({color:0x2b4f8a,roughness:0.4,metalness:0.6});
 function beam(grp,a,b,r,mat){ const d=b.clone().sub(a), m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),8),mat); m.position.copy(a).add(b).multiplyScalar(0.5); m.quaternion.setFromUnitVectors(V3(0,1,0),d.normalize()); grp.add(m); return m; }
 
-function roofRG(v,grp){ // 照片：顶棚合上时是一排沿长边方向的白色膜「翼」，锯齿状起伏，四周略出挑
-  const n=11, W2=v.rx*1.06, len=v.rz*2.08, w=2*W2/n;
+function roofRG(v,grp){ // 照片：直角方盒子；顶棚合上时是 11 片沿长边方向的白色膜「翼」，锯齿起伏，四周一圈檐口收边
+  const n=11, ov=1.6, W2=v.rx+ov, L2=v.rz+ov, w=2*W2/n, y0=v.H+0.4;
   for(let i=0;i<n;i++){ const x=-W2+w*(i+0.5);
-    for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(w*0.52,len),fabric());
-      p.rotation.x=-Math.PI/2; p.rotation.y=side*0.22; p.position.set(x+side*w*0.25,v.H+3.2,0); grp.add(p); }
-    beam(grp,V3(x,v.H+3.9,-len/2),V3(x,v.H+3.9,len/2),0.35,steel);
-    beam(grp,V3(x-w/2,v.H+2.4,-len/2),V3(x-w/2,v.H+2.4,len/2),0.25,steel); }
-  const rim=new THREE.Mesh(new THREE.BoxGeometry(W2*2+1,1.2,len+1),new THREE.MeshStandardMaterial({color:0xbfc5ca,roughness:0.5,transparent:true,opacity:0.0})); grp.add(rim);
+    for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(w*0.5/Math.cos(0.22),L2*2),fabric());
+      p.rotation.x=-Math.PI/2; p.rotation.y=side*0.22; p.position.set(x+side*w*0.25,y0+1.2,0); grp.add(p); }
+    beam(grp,V3(x,y0+1.2+w*0.25*Math.tan(0.22),-L2),V3(x,y0+1.2+w*0.25*Math.tan(0.22),L2),0.3,steel); }
+  // 檐口：四边一圈，把锯齿的端头收住
+  const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=2.6;
+  for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
 }
 function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两束收在南北两端
   const out=shapePts('dodec',v.rx,v.rz);
   band(grp,scl(out,0.70),scl(out,1.05),v.H+5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
   loop(grp,scl(out,1.05),v.H+0.65,0xcfd8cf,0.9);
-  const span=v.rx*1.9;
-  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.86-i*3.2), hh=8.5-i*0.4;
-    const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*span/2,v.H+4.6+(1-u*u)*hh,z)); bot.push(V3(u*span/2*0.97,v.H+4.6+(1-u*u)*(hh-3.2),z)); }
+  // 拱桁架收在南北两端的看台上方；跨度取该处建筑的实际宽度，两端落在坡屋面外缘
+  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.66-i*3.0), hw=Math.sqrt(Math.max(0,(v.rx*0.97)**2-z*z))*0.98, hh=8.5-i*0.4, yb=v.H+1.2;
+    const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-2.8),z)); }
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,6,false),steel));
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.4,6,false),steel));
     for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.18,steel);
-    if(i<3){ const geo=new THREE.BufferGeometry(), pos=[], dz=-end*3.2; for(let j=0;j<24;j++){ const a=top[j],b=top[j+1]; pos.push(a.x,a.y,a.z, b.x,b.y,b.z, b.x,b.y-0.2,b.z+dz, a.x,a.y,a.z, b.x,b.y-0.2,b.z+dz, a.x,a.y-0.2,a.z+dz); }
-      geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,fabric(0.55))); } }
+    for(const sx of[-1,1]){ const f=top[sx<0?0:24]; const pad=new THREE.Mesh(new THREE.BoxGeometry(2.2,1.2,2.2),steel); pad.position.set(f.x,yb-0.4,z); grp.add(pad); }
+    if(i<3){ const geo=new THREE.BufferGeometry(), pos=[], dz=-end*3.0; for(let j=0;j<24;j++){ const a=top[j],b=top[j+1]; pos.push(a.x,a.y,a.z, b.x,b.y,b.z, b.x,b.y-0.2,b.z+dz, a.x,a.y,a.z, b.x,b.y-0.2,b.z+dz, a.x,a.y-0.2,a.z+dz); }
+      geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,fabric(0.6))); } }
+  // 外墙上的钟（2017 年外观照片）
+  const clock=new THREE.Mesh(new THREE.CircleGeometry(1.6,40),new THREE.MeshStandardMaterial({color:0xf3f0e6})); clock.position.set(0,v.H*0.7,v.rz*0.99+0.15); grp.add(clock);
 }
 function roofAO(v,grp){ // 照片：固定顶棚中间是长方形开口；开口两侧各一道白色弓弦桁架
   const out=shapePts('round',v.rx,v.rz), hx=v.rx*0.36, hz=v.rz*0.52;
   const sh=new THREE.Shape(scl(out,1.02).map(p=>new THREE.Vector2(p[0],p[1])));
   sh.holes.push(new THREE.Path([new THREE.Vector2(-hx,-hz),new THREE.Vector2(hx,-hz),new THREE.Vector2(hx,hz),new THREE.Vector2(-hx,hz)]));
-  const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0x8d96a0,roughness:0.5,metalness:0.4,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=v.H+1; grp.add(r);
-  for(const sx of[-1,1]){ const x=sx*(hx+3), L2=v.rz*1.05, top=[],bot=[];
-    for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(x,v.H+2+(1-u*u)*11,u*L2)); bot.push(V3(x,v.H+2,u*L2)); }
+  const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0x8d96a0,roughness:0.5,metalness:0.4,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=v.H*1.18; grp.add(r);
+  for(const sx of[-1,1]){ const x=sx*(hx+3), L2=v.rz*Math.sqrt(1-(x/v.rx)**2)*0.9, yb=v.H*1.18+1, top=[],bot=[];
+    for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(x,yb+(1-u*u)*11,u*L2)); bot.push(V3(x,yb,u*L2)); }
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.7,8,false),steel));
     beam(grp,bot[0],bot[24],0.45,steel);
     for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.22,steel); }
@@ -187,11 +198,18 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
   const n=8, cr=R*1.04; const ring=canopyOut;
   for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr);
     beam(grp,c,V3(c.x,top,c.z),1.6,new THREE.MeshStandardMaterial({color:0x8e959c,roughness:0.6})); }
-  for(let i=0;i<ring.length-1;i+=3){ const p=ring[i], q=ring[(i+6)%(ring.length-1)]; beam(grp,V3(p[0]*0.9,v.H+3,p[1]*0.9),V3(p[0],top+0.8,p[1]),0.5,steelBlue); beam(grp,V3(p[0]*0.9,v.H+3,p[1]*0.9),V3(q[0],top+0.8,q[1]),0.3,steelBlue); }
-  loop(grp,scl(ring,0.9),v.H+3,0x2b4f8a,1);
+  // 蓝色钢桁架层：基座顶部到膜顶外缘，上下两道环梁＋竖杆＋交叉斜撑（照片里很密）
+  const ringE=(()=>{ const P=ring.slice(0,ring.length-1), d=[0]; for(let i=1;i<=P.length;i++){ const a=P[i-1],b=P[i%P.length]; d.push(d[i-1]+Math.hypot(b[0]-a[0],b[1]-a[1])); }
+    const T=d[P.length], out=[]; let j=0; for(let k=0;k<96;k++){ const t=k/96*T; while(d[j+1]<t) j++; const f=(t-d[j])/(d[j+1]-d[j]), a=P[j], b=P[(j+1)%P.length]; out.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]); } out.push(out[0]); return out; })();
+  const NA=ringE.length-1, yL=v.H+1, yU=top+0.8, mid=(yL+yU)/2;
+  for(const [k,y] of [[0.90,yL],[0.95,mid],[1.0,yU]]) grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ringE.slice(0,NA).map(p=>V3(p[0]*k,y,p[1]*k)),true),200,0.45,6,true),steelBlue));
+  for(let i=0;i<NA;i+=1){ const p=ringE[i], q=ringE[(i+1)%NA];
+    beam(grp,V3(p[0]*0.90,yL,p[1]*0.90),V3(p[0],yU,p[1]),0.35,steelBlue);
+    beam(grp,V3(p[0]*0.90,yL,p[1]*0.90),V3(q[0]*0.95,mid,q[1]*0.95),0.22,steelBlue);
+    beam(grp,V3(q[0]*0.95,mid,q[1]*0.95),V3(p[0],yU,p[1]),0.22,steelBlue); }
 }
 function shellAO(v,grp){ const a=shapePts('round',v.rx*0.99,v.rz*0.99), b=shapePts('round',v.rx*1.08,v.rz*1.08), n=a.length-1, pos=[],uv=[];
-  const hy=i=>v.H*(1.0+0.32*Math.max(0,Math.cos(i/n*Math.PI*2-0.5)));
+  const hy=i=>v.H*(1.18+0.16*Math.max(0,Math.cos(i/n*Math.PI*2-0.5)));
   for(let i=0;i<n;i++){ const u0=i/n,u1=(i+1)/n; const A=[a[i][0],v.H*0.45,a[i][1]],B=[a[i+1][0],v.H*0.45,a[i+1][1]],C=[b[i+1][0],hy(i+1),b[i+1][1]],D=[b[i][0],hy(i),b[i][1]];
     pos.push(...A,...B,...C,...A,...C,...D); uv.push(u0,0.47,u1,0.47,u1,1,u0,0.47,u1,1,u0,1); }
   const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.computeVertexNormals();
@@ -235,6 +253,7 @@ const VIEW={RG:[120,115,165,0,8,-5],WIM:[90,70,115,0,10,0],AO:[105,48,150,-30,22
 const LM={RG:lmRG,AO:lmAO,USO:lmUSO};
 function only(k){ for(const v of venues) v.g.visible=(k===null||v.k===k); for(const [kk,o] of Object.entries(LM)) o.visible=(k===null||kk===k); }
 function shot(t){
+  for(const v of venues) v.g.children.forEach(c=>c.visible=true); // 每个镜头先复位，避免上一个镜头的隐藏状态带过来
   if(t>=8.5){ only(null); for(const v of venues){ v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); }
     [lmRG,lmAO,lmUSO].forEach(o=>o.visible=false);
     camera.position.set(0,62,58); camera.lookAt(0,0,0); venues.forEach((v,i)=>v.g.position.set((i-1.5)*22,0,0)); return 'lineup'; }
