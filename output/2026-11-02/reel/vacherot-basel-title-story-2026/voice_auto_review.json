@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "731537982e666e1f19d77d49e7bc43547c3a1a53d1318dca9c592d4bcf72ae5c",
-    "render_inputs_sha256": "a5e268c4d9b11010bf7b1b3d8cbb73ffc08dc224322b968fd3e6d40193b597e6",
-    "spec_sha256": "76c1ccc5605c6d69ff72f5fb6f615a9f3af5b6f6702c5be7501b6b777841fab4",
-    "film_sha256": "26f94025c8cd0f10e447ff04aea4f65e1091565458fd8d295c5d02568bc29416",
+    "render_sha256": "825cce203f72073817941026f5cd44e232f4582366cd1fed60a1acce3ba5324f",
+    "render_inputs_sha256": "6a5a473618dd0b1a92477aa6feffabd6d6032ccc5a9c6480932f8e4f22b77eb4",
+    "spec_sha256": "3f23cc859f05ea747cbc69856aae57618901794682ab8fc538d70326eb448849",
+    "film_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
     "inventory_sha256": "e6ee291cbf775101276629df5a163eaa61f8fe40890a3c06f74af1692758c823"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-02T13:03:49+00:00",
+  "reviewed_at": "2026-11-02T13:29:05+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -246,7 +246,7 @@
         "substituted": 1,
         "sub_ratio": 0.018,
         "longest_deletion": 0,
-        "transcript": "4月,回到家乡蒙特卡洛,他击败德米纳尔,在近大师赛四强,也进入了世界前二十。第一次蓬佩之后,他又一次在大师赛,走到了最后一个周末。"
+        "transcript": "4月,回到家乡蒙特卡洛,他击败德米纳尔,在近大师赛四强,也进入了世界前二十。第一次蓬佩之后,他又一次在大师赛走到了最后一个周末。"
       },
       "polyphones": [],
       "pauses": {
@@ -428,7 +428,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "7月15日复出首战,他在先丢一盘后,逆转汉夫曼,能回来比赛了,成绩却没有立刻稳定。"
+        "transcript": "7月15日复出手战,他在先丢一盘后逆转汉夫曼,能回来比赛了,成绩却没有立刻稳定。"
       },
       "polyphones": [],
       "pauses": {
@@ -460,7 +460,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决赛对手莱赫奇卡不到一个月前刚在东京击败过他。这次又是先丢一盘。2比6之后,瓦舍罗连拿两个6比3。最后一分交给现场。"
+        "transcript": "决赛对手莱赫奇卡不到一个月前刚在东京击败过他。这次,又是先丢一盘。二比六之后,瓦舍罗连拿两个六比三。最后一分,交给现场。"
       },
       "polyphones": [],
       "pauses": {
@@ -492,7 +492,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "在回上海,这次他不用等一个资格赛位置直接以种子身份出场,可未免之旅只布第三轮,4比6,2比6,输给保罗。去年的奖杯还在,今天的比赛仍然要从头打。"
+        "transcript": "在回上海,这次他不用等一个资格赛位置直接以种子身份出场,可未免之旅只布第三轮,四比六,二比六,输给保罗。去年的奖杯还在,今天的比赛仍然要从头打。"
       },
       "polyphones": [
         {
@@ -741,7 +741,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "从世界第二百零四到大师赛冠军上海让人记住了瓦舍罗,可奖杯之后的一年还有伤亭、势力也有重新打进四墙的时刻。"
+        "transcript": "从世界第二百零四到大师赛冠军上海让人记住了瓦舍罗,可奖杯之后的一年还有商庭、施力也有重新打进四墙的时刻。"
       },
       "polyphones": [
         {
@@ -906,7 +906,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "到了东京,他又逆转希西帕斯、纪拜菲斯重新打进四墙。半决赛,来和奇卡挡住了他。"
+        "transcript": "到了东京,他又逆转希西帕斯、继拜菲斯重新打进四墙。半决赛,来和奇卡挡住了他。"
       },
       "polyphones": [
         {
