@@ -420,7 +420,8 @@ function setDust(tau){ const ln=LANES[0]; if(tau<0||tau>1.4||!ln.ball.visible){ 
 // --- 硬地剖面：几层丙烯酸涂层；左边颗粒大、有棱角，右边更细、更圆（Laykold：前者 M3 中速，后者 M4 中快）
 const ACR=V3(0,0,2400), acrG=new THREE.Group(); acrG.position.copy(ACR); scene.add(acrG);
 { const layers=[[0x5b5f66,1.4,'基层'],[0x2b3138,0.5,'缓冲层'],[0x245fa8,0.25,'色层'],[0x2f73c4,0.18,'面漆']]; let y=0;
-  layers.forEach(([c,h])=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(30,h,8),new THREE.MeshStandardMaterial({color:c,roughness:0.7})); m.position.y=y+h/2; acrG.add(m); y+=h; });
+  layers.forEach(([c,h],li)=>{ const bg=new THREE.BoxGeometry(30,h,8); const m=new THREE.Mesh(bg,new THREE.MeshStandardMaterial({color:[0x1a2a44,0x22385c,0x245fa8,0x2f73c4][li],roughness:0.7,emissive:[0x050c1a,0x07122a,0x0a1e44,0x0e2a5c][li]})); m.position.y=y+h/2; acrG.add(m);
+    const e=new THREE.LineSegments(new THREE.EdgesGeometry(bg),new THREE.LineBasicMaterial({color:0x7fd8ff,transparent:true,opacity:0.55})); e.position.copy(m.position); acrG.add(e); y+=h; });
   acrG.userData.top=y; const top=y, d=new THREE.Object3D();
   const coarse=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.11,0),new THREE.MeshStandardMaterial({color:0xd8cfb8,roughness:0.6,flatShading:true}),900);
   const fine=new THREE.InstancedMesh(new THREE.SphereGeometry(0.045,8,6),new THREE.MeshStandardMaterial({color:0xe6dfcc,roughness:0.5}),2600);
@@ -430,7 +431,7 @@ const ACR=V3(0,0,2400), acrG=new THREE.Group(); acrG.position.copy(ACR); scene.a
 const fuzzTex=canvasTex(256,128,(g,w,h)=>{ g.fillStyle='#d6ee3c'; g.fillRect(0,0,w,h); noise(g,w,h,9000,['#c3dc2c','#e9f86a','#b5cd24'],2); });
 const acrBalls=[-1,1].map(sx=>{ const b=new THREE.Mesh(new THREE.SphereGeometry(1.4,40,28),new THREE.MeshStandardMaterial({map:fuzzTex,roughness:0.95})); acrG.add(b); return b; });
 function setAcryl(q){ const top=acrG.userData.top; acrBalls.forEach((b,i)=>{ const slow=i===0; const x0=(i===0?-13:2), dist=slow?7:11.5; const x=x0+dist*Math.min(1,q); b.position.set(x,top+1.4*0.96,0); b.rotation.z=-x/1.4*(slow?1:0.6);
-  proj(i===0?'acr_coarse':'acr_fine',acrG.localToWorld(V3(i===0?-7.5:7.5,top+5.2,0))); proj(i===0?'acr_ball0':'acr_ball1',acrG.localToWorld(V3(x,top+2.9,0))); });
+  proj(i===0?'acr_coarse':'acr_fine',acrG.localToWorld(V3(i===0?-7.5:7.5,top+3.9,0))); proj(i===0?'acr_ball0':'acr_ball1',acrG.localToWorld(V3(x,top+2.9,0))); });
   proj('acr_layers',acrG.localToWorld(V3(-15,1.0,4))); }
 // --- 澳网逐年（2015–2026；2020 年起 GreenSet）
 const AOY={2015:1.124,2016:1.222,2017:1.156,2018:1.074,2019:1.191,2020:1.020,2021:1.189,2022:1.090,2023:1.076,2024:1.094,2025:1.103,2026:1.064};
@@ -750,7 +751,7 @@ function shotTL(t){
   if(k==='years'){ const T=f=>at(sec,f)-sec.t0, drop=sm((u-T('r8'))/1.2); const Y=yrG.position; setBowl(Y);
     camLook(Y.x+lerp(-8,6,sm(u/D)),30,Y.z+105,Y.x,11,Y.z,36); setYears(sm(u/2.0),drop); setBarFX('RG',u,drop>0.5?[2020]:null); setSnow(u-T('r7'),Y); { const g=u-T('r8'); FX_GLITCH=(g>=0&&g<0.6)?(1-g/0.6):0; FX_SHAKE=(g>=0&&g<0.4)?(1-g/0.4)*0.6:0; } return k; }
   if(k==='acryl'){ const T=f=>at(sec,f)-sec.t0, q=sm((u-T('k3'))/4.5); const A=ACR; setBowl(ACR);
-    camLook(A.x+lerp(-3,3,sm(u/D)),lerp(5.5,4.2,sm(u/D)),A.z+lerp(24,20,sm(u/D)),A.x,1.8,A.z,40); setAcryl(q); return k; }
+    camLook(A.x+lerp(-4,4,sm(u/D)),lerp(11,8.5,sm(u/D)),A.z+lerp(33,29,sm(u/D)),A.x,0.6,A.z,40); setAcryl(q); return k; }
   if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; setBowl(Y); camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); setBarFX('AO',u,u>=T('k6')-0.2?[2020,2021]:null); return k; }
   if(k==='outro'){ only(null); setBowl(V3(0,0,0),3.4); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
     const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(190,260,w),0.45); } } return k; }

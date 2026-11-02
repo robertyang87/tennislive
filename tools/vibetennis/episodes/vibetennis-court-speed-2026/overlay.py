@@ -340,7 +340,7 @@ def draw(c,t,an):
     if k=='acryl' and t>=AT['k2']:
         for key,lab in (('acr_coarse',tr('大、有棱角 → 抓住绒毛 → 慢','Big, angular → grabs the felt → slower')),('acr_fine',tr('细、圆 → 抓得少 → 快','Fine, round → less grip → faster'))):
             v=an.get(key)
-            if onscreen(v,20): text(c,lab,v[0],v[1],30,GOLD if key=='acr_coarse' else CYAN,a,SANS,glow=0.3)
+            if onscreen(v,20): text(c,lab,min(max(v[0],300),1620),max(v[1],170),30,GOLD if key=='acr_coarse' else CYAN,a,SANS,glow=0.3)  # 夹在安全区内，别顶到章节标签
     if k=='ao_years':
         for y in range(2015,2027):
             v=an.get('ay_%d'%y); vb=an.get('ayb_%d'%y); hl=(y in (2020,2021) and t>=AT['k6']-0.2)
@@ -366,7 +366,7 @@ def main(inp,out,anchors_files):
         for f,a in json.load(open(fpath)): an[f]=a
     dec=subprocess.Popen(['ffmpeg','-loglevel','error']+(['-f','concat','-safe','0'] if inp.endswith('.txt') else [])+['-i',inp,'-f','rawvideo','-pix_fmt','rgba','-'],stdout=subprocess.PIPE)
     enc=subprocess.Popen(['ffmpeg','-y','-loglevel','error','-f','rawvideo','-pix_fmt','rgba','-s','%dx%d'%(W,H),'-r',str(FPS),'-i','-','-c:v','libx264','-preset','medium','-crf','19','-maxrate','30M','-bufsize','60M','-pix_fmt','yuv420p','-movflags','+faststart',out],stdin=subprocess.PIPE)
-    f=0; n=W*H*4
+    f=int(os.environ.get('OV_F0','0')); n=W*H*4  # OV_F0：只渲一段补丁时，输入第 0 帧对应的全片帧号
     while True:
         buf=dec.stdout.read(n)
         if len(buf)<n: break
