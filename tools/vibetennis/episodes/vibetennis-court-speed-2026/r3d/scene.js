@@ -78,7 +78,7 @@ function shapePts(shape,rx,rz,n=192){ const pts=[];
   for(let i=0;i<=n;i++){ const a=i/n*Math.PI*2, c=Math.cos(a), s=Math.sin(a);
     if(shape==='round') pts.push([c*rx,s*rz]);
     else if(shape==='dodec'){ const k=Math.PI/6, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
-    else { const p=shape==='box'?40:(shape==='rr'?5:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
+    else { const p=shape==='box'?40:(shape==='rr'?3.4:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
   return pts; }
 const lineM=(col,op)=>new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op});
 function loop(grp,pts,y,col,op){ grp.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.map(p=>V3(p[0],y,p[1]))),lineM(col,op))); }
@@ -117,7 +117,7 @@ for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.se
 const VENUES=[
   {k:'RG', shape:'box',  rx:56,rz:58,H:30, glow:0xffa070, seat:0x5a5f66},
   {k:'WIM',shape:'dodec',rx:56,rz:52,H:22, glow:0x8dffa0, seat:0x1f4a2c},
-  {k:'AO', shape:'rr',rx:54,rz:62,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
+  {k:'AO', shape:'rr',rx:50,rz:66,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
   {k:'USO',shape:'round',rx:76,rz:76,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
 function buildCore(v,grp){ // 球场＋球网（并排镜头只保留这些）
@@ -183,24 +183,22 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 外墙上的钟（2017 年外观照片）
   const clock=new THREE.Mesh(new THREE.CircleGeometry(1.6,40),new THREE.MeshStandardMaterial({color:0xf3f0e6})); clock.position.set(0,v.H*0.7,v.rz*0.99+0.15); grp.add(clock);
 }
-function roofAO(v,grp){ // 官方视频《RLA gets a roof upgrade》（澳网 2019）航拍：米白色顶棚，顺长轴一条窄长的开口（两片可滑动的顶板打开后）；
-  // 开口两侧各一道通长的白色弓形桁架，两端各一道横向桁架把它们连成一个框，落在外沿的柱头上
-  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.22, hz=v.rz*0.60, yR=v.H*1.18;
+function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）俯拍：顶棚打开时两片可移动顶板退到长轴两端、架高在固定屋面上；
+  // 中间露出近方形的开口；白色弓形桁架横跨短边（每端两道），两脚落到外沿
+  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.60, hz=v.rz*0.33, yR=v.H*1.18, pz=v.rz*0.40, px=v.rx*0.66;
   const sh=new THREE.Shape(scl(out,1.02).map(p=>new THREE.Vector2(p[0],p[1])));
   sh.holes.push(new THREE.Path([new THREE.Vector2(-hx,-hz),new THREE.Vector2(hx,-hz),new THREE.Vector2(hx,hz),new THREE.Vector2(-hx,hz)]));
-  const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xe6e2d6,roughness:0.6,metalness:0.1,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=yR; grp.add(r);
-  for(let q=-6;q<=6;q++){ if(q===0) continue; const x=q*v.rx*0.13; if(Math.abs(x)<hx) continue; beam(grp,V3(x,yR+0.15,-v.rz*0.93),V3(x,yR+0.15,v.rz*0.93),0.12,new THREE.MeshStandardMaterial({color:0xc9c4b6,roughness:0.7})); } // 顶板的接缝
-  const L2=v.rz*0.94, yb=yR+0.6;
-  for(const sx of[-1,1]){ const x=sx*(hx+1.5), top=[],bot=[];
-    for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(x,yb+(1-u*u)*7,u*L2)); bot.push(V3(x,yb,u*L2)); }
-    grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,8,false),steel));
-    beam(grp,bot[0],bot[24],0.4,steel);
-    for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.2,steel); }
-  for(const sz of[-1,1]){ const z=sz*(hz+2.0), w=v.rx*0.92, h0=yb+(1-((hz+2)/L2)**2)*7;
-    beam(grp,V3(-w,yb,z),V3(w,yb,z),0.35,steel); beam(grp,V3(-hx-1.5,h0,z),V3(hx+1.5,h0,z),0.35,steel);
-    for(let q=0;q<10;q++){ const x0=-w+q*w*0.2, x1=x0+w*0.2; beam(grp,V3(x0,yb,z),V3(x1,yb+2.2,z),0.16,steel); beam(grp,V3(x1,yb+2.2,z),V3(x1,yb,z),0.16,steel); }
-    beam(grp,V3(-w,yb+2.2,z),V3(w,yb+2.2,z),0.25,steel);
-    for(const sx of[-1,1]){ const m=V3(sx*w,0,z*1.02); beam(grp,m,V3(sx*w,yb+2.2,z),0.6,steel); } } // 外沿的白色桅杆
+  const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xcfd2d0,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=yR; grp.add(r);
+  const panM=new THREE.MeshStandardMaterial({color:0xe4e4de,roughness:0.55,metalness:0.15}), rib=new THREE.MeshStandardMaterial({color:0xb9bcb8,roughness:0.6});
+  for(const sz of[-1,1]){ const zc=sz*(hz+pz/2);
+    const pan=new THREE.Mesh(new THREE.BoxGeometry(px*2,1.6,pz),panM); pan.position.set(0,yR+2.2,zc); grp.add(pan);
+    for(let q=-5;q<=5;q++) beam(grp,V3(q*px/5.5,yR+3.05,zc-pz/2),V3(q*px/5.5,yR+3.05,zc+pz/2),0.14,rib);
+    for(const f of[0.22,0.78]){ const z=sz*(hz+pz*f), w=Math.sqrt(Math.max(0,1-(Math.abs(z)/v.rz)**3))*v.rx*0.98, yb=yR+0.4, top=[],bot=[];
+      for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*w,yb+(1-u*u)*9,z)); bot.push(V3(u*w*0.97,yb+(1-u*u)*5.5,z)); }
+      grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,8,false),steel));
+      grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.38,8,false),steel));
+      for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.18,steel);
+      for(const sx of[-1,1]){ const m=top[sx<0?0:24]; beam(grp,V3(m.x,v.H*0.3,m.z),m,0.5,steel); } } } // 外沿落地的白柱
 }
 function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起的「枕头」，蓝色钢桁架斜撑落在外柱上，中间可开合
   const top=v.H+14, R=v.rx*1.12;
@@ -208,7 +206,8 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=out[i]; return [p[0]*0.6+q[0]*0.4,p[1]*0.6+q[1]*0.4]; });
   { const NA=canopyOut.length-1, NR=14, pos=[]; const F0=0.56; const P=(i,k)=>{ const f=F0+(1-F0)*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
       const dome=15*Math.sqrt(Math.max(0,1-Math.pow((f-F0)/(1-F0),2))), puff=6.5*Math.pow(Math.abs(Math.cos(2*a)),3)*Math.sin(Math.PI*Math.min(1,(f-F0)/(1-F0)));
-      return [c[0]*f, top+1.2+dome+puff, c[1]*f]; };
+      const t=(f-F0)/(1-F0), q=out[i%NA]; // 无人机俯拍（Invincible Storm Films 2020）：开口是方角的正方形，外缘才是圆鼓的枕头
+      return [q[0]*F0*0.92*(1-t)+c[0]*t, top+1.2+dome+puff, q[1]*F0*0.92*(1-t)+c[1]*t]; };
     for(let i=0;i<NA;i++) for(let k=0;k<NR;k++){ const A=P(i,k),B=P(i+1,k),C=P(i+1,k+1),D=P(i,k+1); pos.push(...A,...B,...C,...A,...C,...D); }
     const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); grp.add(new THREE.Mesh(g,fabric()));
     const lip=[]; for(let i=0;i<=NA;i++){ const q=P(i,NR); lip.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lip,true),220,0.9,6,true),new THREE.MeshStandardMaterial({color:0xe6e9ec,roughness:0.5})));  { const inner=[]; for(let i=0;i<=NA;i++){ const q=P(i,0); inner.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(inner,true),220,0.7,6,true),steelBlue)); } }
