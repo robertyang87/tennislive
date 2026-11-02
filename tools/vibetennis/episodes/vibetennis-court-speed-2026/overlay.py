@@ -273,9 +273,9 @@ def citylabels(c,an):
     for k,(m,lab,col) in CITYLAB.items():
         v=an.get('city_'+k); on=an.get('city_on_'+k,0)
         if on and on>0.02 and onscreen(v,40):
-            dx=36 if k in ('AO','USO') else -36; al='l' if dx>0 else 'r'
-            c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]-26,P(col,on*0.8,stroke=1.5))
-            text(c,m,v[0]+dx,v[1]-34,30,col,on,MONO,align=al,glow=0.4); text(c,lab,v[0]+dx,v[1]-4,22,WHITE,on*0.9,SANS,align=al)
+            dx,dy={'AO':(46,0),'USO':(46,0),'RG':(56,62),'WIM':(-56,-56)}[k]; al='l' if dx>0 else 'r'  # 巴黎和伦敦只隔 340 km：一个标右下、一个标左上，别叠在一起
+            c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]+dy-26,P(col,on*0.8,stroke=1.5))
+            text(c,lab,v[0]+dx,v[1]+dy-30,36,WHITE,on,SANS,align=al,glow=0.4); text(c,m,v[0]+dx,v[1]+dy+8,26,col,on*0.95,MONO,align=al)  # 所有者 2026-11-02：每个点标「城市 · 赛事」，字放大
 MARK=(1.0,0.84,0.0); MRED=(1.0,0.32,0.28)
 def mline(c,x0,y0,x1,y1,a,cc=MARK,w=6):  # 马克笔线：深色描边＋亮色主线
     c.drawLine(x0,y0,x1,y1,P((0,0,0),a*0.55,stroke=w+5)); c.drawLine(x0,y0,x1,y1,P(cc,a,stroke=w))
@@ -321,7 +321,7 @@ def draw(c,t,an):
         v=an.get('slo_reticle')
         if onscreen(v,10): reticle(c,v[0],v[1],t,min(1,(t-AT['p2'])/0.4,(AT['p3']-t)/0.4),tr("接触点 · 锁定","CONTACT · LOCKED"))
     s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
-    if k in ('lanes_all','lane_RG','lane_WIM'):
+    if k in ('lanes_all','lane_RG','lane_WIM') and not an.get('globe_alt'):  # 切到地球后泳道已隐藏，别留下飘着的「红土/草地/硬地」
         for ln in ('RG','WIM','AO'):
             v=an.get('lane_'+ln)
             if onscreen(v,40): hudlabel(c,v[0],v[1],LANE_LAB[ln],a*0.9,LANE_COL[ln],dx=30,dy=-50,size=26)

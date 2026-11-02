@@ -156,12 +156,13 @@ const FACADE={
 };
 for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.set(5,1); }
 
+// 美网：所有者 2026-11-02「看台围成的也是八边形，不是圆形」
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
   {k:'RG', shape:'box',  rx:54.5,rz:54.5,H:30, glow:0xffa070, seat:0x9aa0a6},
   {k:'WIM',shape:'chamf',rx:63.5,rz:55,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'rr',rx:55.5,rz:63,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
-  {k:'USO',shape:'round',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
+  {k:'USO',shape:'oct',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
 function buildCore(v,grp){ // 球场＋球网（并排镜头只保留这些）
   const court=new THREE.Mesh(new THREE.PlaneGeometry(FW,FL),new THREE.MeshStandardMaterial({map:SURF[v.k],roughness:ROUGH[v.k],metalness:0}));
@@ -220,7 +221,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 所有者给的航拍（AELTC 俯拍）：10 道白色桁架打开时每端收 5 道，桁架之间的白色膜像手风琴一样折起、往下垂成一个个鼓包，
   // 两端各成一大团白色膜堆，盖住开口的南北两头；跨度取该处建筑实际宽度，两脚落在坡屋面外缘
   for(const end of[-1,1]){ const T=[];
-    for(let i=0;i<5;i++){ const z=end*(v.rz*0.76-i*3.3), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 5.2→3.3 m、整体贴向两端）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
+    for(let i=0;i<5;i++){ const z=end*(v.rz*0.82-i*2.3), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 5.2→2.3 m、整体贴到两端；同日第二次要求「再紧一点」）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
       const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.2),z)); }
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.5,6,false),steel));
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.35,6,false),steel));
@@ -550,7 +551,9 @@ function setGlobe(q,t,{loop=false,active=-1}={}){ globeG.visible=q>=0; if(q<0) r
   const w=sm((fr-0.45)*1.8), om=Math.acos(Math.min(1,a.dot(b))); GLOBE_DIR.copy(om<1e-3?a:a.clone().multiplyScalar(Math.sin((1-w)*om)/Math.sin(om)).add(b.clone().multiplyScalar(Math.sin(w*om)/Math.sin(om)))).normalize();
   globeR.rotation.set(0,0,0); globeR.updateMatrixWorld(true); }
 const GLOBE_DIR=new THREE.Vector3(0,0,1);
-function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); val('globe_alt',Math.round((dist-GRAD)/GRAD*6371)); val('globe_lat',CITY.reduce((m,C)=>m,0)); { const side=new THREE.Vector3().crossVectors(V3(0,1,0),d).normalize(); earthMat.uniforms.uSun.value.copy(d).addScaledVector(side,-1.7).add(V3(0,0.3,0)).normalize(); } /* 太阳从画面左上侧打过来：看得到昼夜分界和右侧的城市夜光 */ camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); }
+function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); val('globe_alt',Math.round((dist-GRAD)/GRAD*6371)); val('globe_lat',CITY.reduce((m,C)=>m,0)); { const side=new THREE.Vector3().crossVectors(V3(0,1,0),d).normalize(); earthMat.uniforms.uSun.value.copy(d).addScaledVector(side,-1.7).add(V3(0,0.3,0)).normalize(); } /* 太阳从画面左上侧打过来：看得到昼夜分界和右侧的城市夜光 */ camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); 
+  camera.updateMatrixWorld(true); CITY.forEach(C=>{ const w=globeR.localToWorld(llv(C.la,C.lo,GRAD*1.02)); proj('city_'+C.k,w); /* 镜头移完再投影：setGlobe 里那次用的是上一帧的机位，标签全飞到画面外 */
+    if(w.clone().sub(GLB).normalize().dot(camera.position.clone().sub(w).normalize())<0.12) anchors['city_'+C.k][2]=0; }); }
 function val(n,v){ anchors[n]=v; }
 
 // --- 画板式拆解的节拍表（红土 15.3 s / 草地 6.8 s；与 overlay.py 的 tele 画线一一对应）
@@ -720,7 +723,7 @@ function shotTL(t){
   setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
     const per=4.0, H1=at(sec,'h1')-sec.t0, H2=at(sec,'h2')-sec.t0, BT=u>=H1&&u<H2-0.2; let tau=cl(ramp((u%per)-1.0),-0.9,1.3); if(BT) tau=0.13; /* 子弹时间：h1 那句话时间冻结在落地后 0.13 s，镜头绕三个落点转半圈 */
-    setBowl(LAB); if(COVER) camLook(LX+8,27,LZ+25,LX+8,0,LZ-4,40); else if(BT){ const q=sm((u-H1)/(H2-0.2-H1)); const a=lerp(-1.25,1.25,q); camLook(LX+0.6+Math.sin(a)*15,lerp(6,9,Math.sin(q*Math.PI)),LZ+Math.cos(a)*15,LX+0.6,0.4,LZ,40); } else if(u<per){ const q=sm(u/per); camLook(LX+34-6*q,lerp(7,5,q),LZ+lerp(10,6,q),LX-14,0.6,LZ,36); /* 所有者：先从远处打过来（从接球一端看球飞来），再切近景 */ } else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); if(BT){ FX_FREEZE=Math.min(1,(u-H1)/0.25,(H2-0.2-u)/0.25); } else FX_SHAKE=(tau>=0&&tau<0.18)?(1-tau/0.18)*0.9:0; if(u>=H2&&!COVER){ labG.visible=false; setBowl(null); FX_SHAKE=0; const q=cl((u-H2-0.15)/(D-H2-1.0)); setGlobe(q,t); globeCam(lerp(230,175,sm((u-H2)/(D-H2))),0.3); /* 讲到「一年四个大满贯」：拉到地球，按赛季顺序点亮四站 */ }
+    setBowl(LAB); if(COVER) camLook(LX+3.5,27,LZ+25,LX+3.5,0,LZ-4,40); /* 所有者 2026-11-02：球场线往右扩，右边别空 */ else if(BT){ const q=sm((u-H1)/(H2-0.2-H1)); const a=lerp(-1.25,1.25,q); camLook(LX+0.6+Math.sin(a)*15,lerp(6,9,Math.sin(q*Math.PI)),LZ+Math.cos(a)*15,LX+0.6,0.4,LZ,40); } else if(u<per){ const q=sm(u/per); camLook(LX+34-6*q,lerp(7,5,q),LZ+lerp(10,6,q),LX-14,0.6,LZ,36); /* 所有者：先从远处打过来（从接球一端看球飞来），再切近景 */ } else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); if(BT){ FX_FREEZE=Math.min(1,(u-H1)/0.25,(H2-0.2-u)/0.25); } else FX_SHAKE=(tau>=0&&tau<0.18)?(1-tau/0.18)*0.9:0; if(u>=H2&&!COVER){ labG.visible=false; setBowl(null); FX_SHAKE=0; const q=cl((u-H2-0.15)/(D-H2-1.0)); setGlobe(q,t); globeCam(lerp(150,118,sm((u-H2)/(D-H2))),0.3); /* 讲到「一年四个大满贯」：拉到地球，按赛季顺序点亮四站 */ }
     setMorph([[0,'void',0],[H2+0.1,'four',1.1,0.5],[D-0.9,'void',0.8,0.4]],u,{mz:60,my:15.5}); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ // 画板式拆解（Lemo-Opuscar「Sports Telestrator」的剪辑语法）：先看一遍 → 倒带 → 慢放 → 定格画线 → 再慢放 → 定格量角度
     const RG=k==='lane_RG', show=RG?[1,0,0]:[1,1,0], ln=RG?LANES[0]:LANES[1]; setBowl(LAB); const P=telePlan(RG,sec,u,D); let tau=P.tau;
@@ -755,7 +758,7 @@ function shotTL(t){
     camLook(A.x+lerp(-4,4,sm(u/D)),lerp(11,8.5,sm(u/D)),A.z+lerp(33,29,sm(u/D)),A.x,0.6,A.z,40); setAcryl(q); return k; }
   if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; setBowl(Y); camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); setBarFX('AO',u,u>=T('k6')-0.2?[2020,2021]:null); return k; }
   if(k==='outro'){ only(null); setBowl(V3(0,0,0),3.4); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
-    const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(190,260,w),0.45); } } return k; }
+    const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(135,170,w),0.45); } } return k; }
   return k; }
 const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); motes.visible=!globeG.visible; composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
