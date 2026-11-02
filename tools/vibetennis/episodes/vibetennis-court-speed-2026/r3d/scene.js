@@ -171,7 +171,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   band(grp,scl(out,0.70),scl(out,1.05),v.H+5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
   loop(grp,scl(out,1.05),v.H+0.65,0xcfd8cf,0.9);
   // 拱桁架收在南北两端的看台上方；跨度取该处建筑的实际宽度，两端落在坡屋面外缘
-  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.66-i*3.0), hw=Math.sqrt(Math.max(0,(v.rx*0.97)**2-z*z))*0.98, hh=8.5-i*0.4, yb=v.H+1.2;
+  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.66-i*3.0), hw=Math.sqrt(Math.max(0,(v.rx*0.97)**2-z*z))*0.98, hh=13.5-i*0.5, yb=v.H+2.0; // 拱要整根架在坡屋面之上：下弦在屋面内沿（0.70R、高 H+5）处也要高出屋面，脚落在外沿屋面上
     const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-2.8),z)); }
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,6,false),steel));
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.4,6,false),steel));
@@ -206,11 +206,11 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
   // 外柱与蓝色斜撑
   // 照片（Commons「Arthur Ashe Stadium with retractible roof」）：顶棚由一圈蓝色钢柱托着，柱子贴着砖红基座外侧落地，
   // 柱间是从地面斜拉到顶棚外缘的大 X 形蓝色斜撑——不是离开建筑、单独立着的灰色细杆
-  const n=8, cr=v.rx*1.04; const ring=canopyOut;
+  const n=8, cr=v.rx*1.005; const ring=canopyOut;
   for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr), T=V3(c.x,top+0.8,c.z);
-    beam(grp,c,T,1.5,steelBlue);
+    beam(grp,c,T,0.8,steelBlue);
     for(const s of [-1,1]){ const b=a+s*Math.PI/n*0.95, e=V3(Math.cos(b)*cr*1.02,v.H*0.55,Math.sin(b)*cr*1.02);
-      beam(grp,V3(c.x,v.H*0.12,c.z),e,0.7,steelBlue); beam(grp,e,V3(Math.cos(b)*R*0.98,top+0.8,Math.sin(b)*R*0.98),0.7,steelBlue); } }
+      beam(grp,V3(c.x,v.H*0.12,c.z),e,0.4,steelBlue); beam(grp,e,V3(Math.cos(b)*R*0.98,top+0.8,Math.sin(b)*R*0.98),0.4,steelBlue); } }
   // 蓝色钢桁架层：基座顶部到膜顶外缘，上下两道环梁＋竖杆＋交叉斜撑（照片里很密）
   const ringE=(()=>{ const P=ring.slice(0,ring.length-1), d=[0]; for(let i=1;i<=P.length;i++){ const a=P[i-1],b=P[i%P.length]; d.push(d[i-1]+Math.hypot(b[0]-a[0],b[1]-a[1])); }
     const T=d[P.length], out=[]; let j=0; for(let k=0;k<96;k++){ const t=k/96*T; while(d[j+1]<t) j++; const f=(t-d[j])/(d[j+1]-d[j]), a=P[j], b=P[(j+1)%P.length]; out.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]); } out.push(out[0]); return out; })();
@@ -249,12 +249,12 @@ function skyline(col){ const g=new THREE.Group(); seed=4242;
     b.position.set(x,h/2,z); g.add(b); g.add(edgesOf(b,col,0.3)); }
   return g; }
 
-const POS={RG:[-340,-320],WIM:[340,-320],AO:[-340,320],USO:[340,320]};
+const POS={AO:[-340,-320],RG:[340,-320],WIM:[-340,320],USO:[340,320]}; // 按一年里的大满贯顺序：澳网 → 法网 → 温网 → 美网
 const RG_ROOF={};
 const venues=VENUES.map(v=>{ const g=new THREE.Group(); buildCore(v,g); buildBowl(v,g);
   ROOF[v.k](v,g); if(v.k==='AO') shellAO(v,g); g.position.set(POS[v.k][0],0,POS[v.k][1]); scene.add(g); return {...v,g}; });
 // 周边：法网——布洛涅林边的树和巴黎的低层建筑；澳网——墨尔本市中心天际线；美网——地球仪雕塑
-const lmRG=new THREE.Group(); lmRG.add(trees(160,85,190,0x3d5a34)); lmRG.add(paris()); lmRG.position.set(POS.RG[0],0,POS.RG[1]); scene.add(lmRG);
+const lmRG=new THREE.Group(); lmRG.add(paris()); lmRG.position.set(POS.RG[0],0,POS.RG[1]); scene.add(lmRG); // 所有者：法网旁边不画树
 const lmAO=skyline(0x6cc0ff); lmAO.position.set(POS.AO[0]-150,0,POS.AO[1]-200); lmAO.scale.set(0.8,0.8,0.8); lmAO.rotation.y=0.64; scene.add(lmAO);
 const lmUSO=unisphere(0x9cc2ff); lmUSO.position.set(POS.USO[0]-150,0,POS.USO[1]+60); scene.add(lmUSO);
 
@@ -419,7 +419,7 @@ function orbit(cx,cz,r,h,ang,ty=10,fov=36){ camLook(cx+Math.cos(ang)*r,h,cz+Math
 function resetWorld(){ for(const v of venues){ v.g.visible=true; v.g.position.set(POS[v.k][0],0,POS[v.k][1]); v.g.children.forEach(c=>c.visible=true); }
   for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setLanes(-5,[0,0,0]); }
 function lineupWorld(){ only(null); for(const v of venues) v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); Object.values(LM).forEach(o=>o.visible=false);
-  venues.forEach((v,i)=>v.g.position.set((['RG','WIM','AO','USO'].indexOf(v.k)-1.5)*22,0,0)); }
+  venues.forEach((v,i)=>v.g.position.set((['AO','RG','WIM','USO'].indexOf(v.k)-1.5)*22,0,0)); } // 大满贯顺序，澳网在最左
 function at(sec,f){ return sec.lines[f]; }
 function hideWorld(){ for(const v of venues) v.g.visible=false; Object.values(LM).forEach(o=>o.visible=false); }
 function shotTL(t){
