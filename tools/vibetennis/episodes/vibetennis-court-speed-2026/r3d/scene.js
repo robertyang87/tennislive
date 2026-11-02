@@ -181,15 +181,15 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 所有者给的航拍（AELTC 俯拍）：10 道白色桁架打开时每端收 5 道，桁架之间的白色膜像手风琴一样折起、往下垂成一个个鼓包，
   // 两端各成一大团白色膜堆，盖住开口的南北两头；跨度取该处建筑实际宽度，两脚落在坡屋面外缘
   for(const end of[-1,1]){ const T=[];
-    for(let i=0;i<5;i++){ const z=end*(v.rz*0.66-i*5.2), hw=(v.rx-Math.max(0,Math.abs(z)-v.rz*0.76))*0.95, hh=7.0, yb=v.H+2.6;
-      const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.8),z)); }
+    for(let i=0;i<5;i++){ const z=end*(v.rz*0.66-i*5.2), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者：顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
+      const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.2),z)); }
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.5,6,false),steel));
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.35,6,false),steel));
       for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.16,steel);
       for(const sx of[-1,1]){ const f=top[sx<0?0:24]; const pad=new THREE.Mesh(new THREE.BoxGeometry(2.2,1.2,2.6),steel); pad.position.set(f.x,yb-0.4,z); grp.add(pad); }
       T.push(top.map(q=>V3(q.x,q.y-0.3,q.z))); }
     const geo=new THREE.BufferGeometry(), pos=[];
-    for(let i=0;i<4;i++){ const A=T[i],B=T[i+1]; const M=A.map((a,j)=>{ const b=B[j], u=j/24*2-1; return V3((a.x+b.x)/2,(a.y+b.y)/2-1.6*(1-u*u)-0.5,(a.z+b.z)/2); });
+    for(let i=0;i<4;i++){ const A=T[i],B=T[i+1]; const M=A.map((a,j)=>{ const b=B[j], u=j/24*2-1; return V3((a.x+b.x)/2,(a.y+b.y)/2-0.9*(1-u*u)-0.3,(a.z+b.z)/2); });
       for(let j=0;j<24;j++){ for(const [P,Q] of [[A,M],[M,B]]){ const a=P[j],b=P[j+1],c=Q[j+1],d=Q[j]; pos.push(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z, a.x,a.y,a.z,c.x,c.y,c.z,d.x,d.y,d.z); } } }
     geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xf2f3ef,roughness:0.55,metalness:0.05,side:THREE.DoubleSide}))); }
   // 外墙上的钟（2017 年外观照片）
