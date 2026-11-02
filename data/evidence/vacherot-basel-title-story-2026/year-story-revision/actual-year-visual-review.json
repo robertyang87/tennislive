@@ -1,0 +1,283 @@
+{
+  "schema": "story.actual-year-visual-review.v1",
+  "reviewed_at": "2026-11-02T01:41:29.137668+00:00",
+  "reviewer_role": "Independent story editor, actual movie pixel review",
+  "scope": {
+    "film_seconds": [
+      0,
+      169
+    ],
+    "claim": "Bounded actual-raster sampling and full-window black detection, not continuous real-time playback, formal whole-film QC, audio approval or publication approval. The prior workflow rejection remains outside this visual result.",
+    "outside_scope": "The Basel closing chapter after169s, new workflow41373370282 status and formal voice five-check gates."
+  },
+  "movie": {
+    "path": "/workspace/scratch/vacherot-year-revision/failed-render-41372108657/vacherot-basel-title-story-2026.mp4",
+    "sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
+    "size_bytes": 94310099,
+    "ffprobe": {
+      "duration_seconds": 282.68,
+      "width": 1080,
+      "height": 1440,
+      "fps": "25/1",
+      "has_audio_stream": true
+    },
+    "sha_matches_parent_assignment": true
+  },
+  "methods": {
+    "census": "85 decoded frames from ffmpeg fps=1/2 across0–170s, approximately1,3,...169s; all8 contact sheets inspected.",
+    "native_resolution": "7 actual movie frames at75,93,125,145,153,159,163s inspected at native1080×1440.",
+    "boundaries": {
+      "frames": 57,
+      "centers_seconds": [
+        4.186,
+        13.886,
+        26.686,
+        38.686,
+        61.306,
+        73.266,
+        84.506,
+        90.826,
+        105.186,
+        123.586,
+        134.426,
+        142.466,
+        151.906,
+        168.506,
+        77.306,
+        95.106,
+        147.666,
+        157.426,
+        159.746
+      ],
+      "offsets_seconds": [
+        -0.12,
+        0.24,
+        0.64
+      ],
+      "all_four_boundary_sheets_inspected": true,
+      "note": "Budget plan used only to locate candidate boundaries; screenshots are independently decoded actual movie pixels, not a claim that plan is measured timeline."
+    },
+    "black_detection": {
+      "window_seconds": [
+        0,
+        169
+      ],
+      "ffmpeg_filter": "blackdetect=d=0.08:pix_th=0.05:pic_th=0.98",
+      "log_path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/blackdetect.log",
+      "log_sha256": "d5f8a9f69b13124ce65dd6100d5af42044a0f55dc475899e6096a4a8a2e4e996",
+      "detected_events": 0,
+      "limit": "Does not establish absence of every sub80ms black event."
+    }
+  },
+  "actual_issues": [],
+  "observations": [
+    {
+      "window_seconds": [
+        0,
+        14.6
+      ],
+      "result": "Actual photographic trophy cover then Vacherot Basel winning reaction; hook and subject identity agree. No frame-grab substituted for the selected photographic cover."
+    },
+    {
+      "window_seconds": [
+        26.6,
+        61.95
+      ],
+      "result": "2025 Shanghai setup and real lastpoint/reaction carry visible2025.10.12 final label, cousin opponent and4-6 6-3 6-3 result. Sampled court action and reaction pixels retain clear subject; inset does not obscure a face in checked frames."
+    },
+    {
+      "window_seconds": [
+        61.2,
+        84.6
+      ],
+      "result": "2025 Basel first-round loss toFritz is distinguished from later2026. Paris photographedsecondround is labelled2025.10.29 secondround, then separately summarizes eventualQF/year-end31. No photo mislabeled asQF."
+    },
+    {
+      "window_seconds": [
+        84.4,
+        105.9
+      ],
+      "result": "AO firstGrandSlam thirdround and MonteCarlo high use2026. MonteCarlo photo saysApril10QF, subsequentcard saysSF/Top20, so photographedround and ultimatefinish are distinguished."
+    },
+    {
+      "window_seconds": [
+        105.1,
+        134.6
+      ],
+      "result": "Leftfoot injury/RGwithdrawal beforeR2 and Wimbledon absence are legible. Gstaad explicitly shows2026,July15 comebackfirstmatch and4-6 6-3 6-4 versusHanfmann in subtitles/cards. Tokyo is not portrayed as the firstreturn."
+    },
+    {
+      "window_seconds": [
+        134.3,
+        151.95
+      ],
+      "result": "Chengdu callsfirstmatchloss afterR1bye, avoidingR1loss confusion. Tokyo photo labelsOct2secondround, separateOct5SFcard namesLehecka loss. Actualphoto matches retainedoriginal."
+    },
+    {
+      "window_seconds": [
+        151.8,
+        169
+      ],
+      "result": "Shanghai2026 photo labelsOct12thirdround, both images are clearly in-match action; none is represented as a post-loss reaction. Resultcard statesdefence endedR3,4-6/2-6 toPaul. Transition then moves intoBaselclosingchapter."
+    },
+    {
+      "window_seconds": [
+        0,
+        169
+      ],
+      "result": "In inspected census/native/boundary frames, subtitles remain withinframe, do not collide with headers/footer, and photo captions sit beneath image area rather than over faces. Expectedbrief cross-dissolve ghosting is visible at joins and resolves by checkedpostjoinframes; no sampled blank canvas, droppedscene or erroneous identity jump found."
+    }
+  ],
+  "photo_identity_cross_checks": [
+    {
+      "photo_key": "paris-official-r2",
+      "actual_native_frame_seconds": 75,
+      "actual_label": "2025.10.29 巴黎大师赛 第二轮",
+      "metadata_path": "/workspace/scratch/vacherot-year-revision/photos/paris-official-r2.metadata.json",
+      "metadata_sha256": "1384f8a35dee0e6a51543d3678f75c99a4bd441f8e8a2cefdb3da2b3aa7f9eb5",
+      "source_url": "https://images.prismic.io/app-rpm/aQIVWLpReVYa3y1u_LW_20418.JPG",
+      "native_source_dimensions": [
+        3000,
+        2000
+      ],
+      "verdict": "Actual pixels show Vacherot and agree with the locally retained original photo/date/event evidence. Round label refers to the photographed match; later result appears on a separate card."
+    },
+    {
+      "photo_key": "monte-official-qf1990",
+      "actual_native_frame_seconds": 93,
+      "actual_label": "2026.04.10 蒙特卡洛 1/4决赛",
+      "metadata_path": "/workspace/scratch/vacherot-year-revision/photos/monte-official-qf1990.metadata.json",
+      "metadata_sha256": "32c14fd68a17e1a6983266c1741b387903464c6d7d9056d9aa644a8a3025ec1f",
+      "source_url": "https://montecarlotennismasters.com/wp-content/uploads/2026/04/vacherot-de-minaur-f-boukla-1990.jpg",
+      "native_source_dimensions": [
+        5000,
+        3333
+      ],
+      "verdict": "Actual pixels show Vacherot and agree with the locally retained original photo/date/event evidence. Round label refers to the photographed match; later result appears on a separate card."
+    },
+    {
+      "photo_key": "atp-4585737",
+      "actual_native_frame_seconds": 145,
+      "actual_label": "2026.10.02 东京 第二轮",
+      "metadata_path": "/workspace/scratch/vacherot-year-revision/photos/atp-4585737.metadata.json",
+      "metadata_sha256": "6dc8f84a9427d6edc1f69a8eeae10a5539197b6d8c50773e1810b60e3432c43b",
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/02/8572cb09-ae80-4e7e-8d31-6115c6a9f4e4/1KH04278-2.jpg",
+      "native_source_dimensions": [
+        5616,
+        3744
+      ],
+      "verdict": "Actual pixels show Vacherot and agree with the locally retained original photo/date/event evidence. Round label refers to the photographed match; later result appears on a separate card."
+    },
+    {
+      "photo_key": "atp-4591063",
+      "actual_native_frame_seconds": 153,
+      "actual_label": "2026.10.12 上海大师赛 第三轮",
+      "metadata_path": "/workspace/scratch/vacherot-year-revision/photos/atp-4591063.metadata.json",
+      "metadata_sha256": "a894aa8a4c8162c43e8940b282fbe22e885a8761a28bb9d84dd61fe51af1e4a0",
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/bdc257ca-e7ab-4813-b854-63618f7a4c96/Tommy-PAUL-vs-Valentin-VACHEROT9506.jpg",
+      "native_source_dimensions": [
+        5392,
+        3592
+      ],
+      "verdict": "Actual pixels show Vacherot and agree with the locally retained original photo/date/event evidence. Round label refers to the photographed match; later result appears on a separate card."
+    },
+    {
+      "photo_key": "atp-4591062",
+      "actual_native_frame_seconds": 159,
+      "actual_label": "2026.10.12 上海大师赛 第三轮",
+      "metadata_path": "/workspace/scratch/vacherot-year-revision/photos/atp-4591062.metadata.json",
+      "metadata_sha256": "5b7783774fbe88bc9a7c8dbfe1d5ac0fe320688f05e322709c2b416a41bd700f",
+      "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/080a7a36-6396-43cd-987b-7b1921f0da62/Tommy-PAUL-vs-Valentin-VACHEROT3318.jpg",
+      "native_source_dimensions": [
+        4000,
+        2667
+      ],
+      "verdict": "Actual pixels show Vacherot and agree with the locally retained original photo/date/event evidence. Round label refers to the photographed match; later result appears on a separate card."
+    }
+  ],
+  "evidence": {
+    "root": "/workspace/scratch/vacherot-year-revision/independent-actual-visual",
+    "contact_sheets": [
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/boundaries-00.jpg",
+        "sha256": "fd1bf80812abc686fc3a72d55b2c7f504caa8c7fb1943228b56ec811e97456a2"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/boundaries-01.jpg",
+        "sha256": "b02f49815f9279927e8eb248bb3154e57e44569e437f626d4c58155cb725c8aa"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/boundaries-02.jpg",
+        "sha256": "4f70f35421f459cbef5a6d4d8322f5f09c406ed22b56edca1b8096d236620e8c"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/boundaries-03.jpg",
+        "sha256": "69586e7b27e95bbec1d02db179ac053f0a600b5559bc8d04c848066a560106da"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-00.jpg",
+        "sha256": "6ec63d240b46bd7ade7597ab2e09b48bad0a9f131a8b864126257ba1fde300cf"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-01.jpg",
+        "sha256": "b72df80f1dbc88638f1cdf45f075c0303e129fed7df473fc2da2f5cb1d2851b9"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-02.jpg",
+        "sha256": "7afa3735c48e57559caaaca7735627408c959df43b2bb4a46bed4441f2964a25"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-03.jpg",
+        "sha256": "415d1a996fb5d7be7c51e55f11057e1b6536f56afac3ac2b5b16db9ccce87b83"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-04.jpg",
+        "sha256": "595bf2e7ea2f986ff101077119052f8281570eb80b7146bc39566e73f609129c"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-05.jpg",
+        "sha256": "e8b88913274c9a5e6fee37ab70219e609e88aa5eff37baa2efbbe76c0b9e376f"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-06.jpg",
+        "sha256": "fb0240bf40df14a0d1e179f5aa4968d8e1bc8df455409ffb7f7dbbea94e17fb9"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/sheets/sheet-07.jpg",
+        "sha256": "6906396d0ed5d6d43d22f5bdf74c583aebf214024b5739ae08da64940c2a1677"
+      }
+    ],
+    "native_frames": [
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-125.jpg",
+        "sha256": "932c82a286c9f5f0b24b3a49fa3f9b7cfba395a42a670bcccf1ba796864d6be2"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-145.jpg",
+        "sha256": "1841720203447383a9d60e745b15919e391c3d7aeec97d037df13609797ec73c"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-153.jpg",
+        "sha256": "ef549e2829a61186c2f113047482e1b92069eebd5d512e7ce69bfa00ba38a1ae"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-159.jpg",
+        "sha256": "c657922db858d4b3095d82615d9f5ecea28e982d07acadbe7a0cc4e5805d7f3f"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-163.jpg",
+        "sha256": "48e3dba9edf5e624e7b6c7ac34300b1ef658723bfb8977acf0653c92567dd0b7"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-75.jpg",
+        "sha256": "7f9d6e38638b6028b2c325e8c947a465cf247e2f5254a6326edc59ca1bc8916f"
+      },
+      {
+        "path": "/workspace/scratch/vacherot-year-revision/independent-actual-visual/native-93.jpg",
+        "sha256": "c7ecfb832964e1e50b0b3d00fa4a565638610f085e063fc583ad5103c1405b4e"
+      }
+    ]
+  },
+  "conclusion": "No actionable visual/factual issue found within the bounded0–169s review. This is an independent actual-pixel finding only; it does not clear the failedworkflow or assert formalQC/voiceapproval.",
+  "reuse_rule": "Reusable for the subsequently accepted movie only if its SHA256 is exactly97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad; any changedmovie requires review of the new actualbytes."
+}

@@ -1,0 +1,22 @@
+{
+  "status": "official_movie_QC_and_actual_voice_suite_pass_CI_pending",
+  "formal_render_run": 41373370282,
+  "formal_generated_head": "d097a0a3b5298cfa6825c9c7450e00acf5049514",
+  "film_sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
+  "film_bytes": 94310099,
+  "film_seconds": 282.68,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "qc_attestation_sha256": "20d97e19885364800816ccf0c0037127db41b24497a60bad2f2b0d0a43274e59",
+  "render_sha256": "1de4d646f73c3495d53413a32cc247af3498a8a7ea2650c6380bbf7899d14de4",
+  "render_inputs_sha256": "b375e168adb0818a184e5b4186d4603fa87fdebfc2877bdae9391acbe79ac06e",
+  "voice_review_sha256": "aa65aa6bb3540102d1e7bacbae3b22335b3857c30c744c2b534350175c8fb709",
+  "voice_auto_evidence_sha256": "4af476663f7d0825f9ceb50f6c74fbdd62185ad0ec8e58747c5f6ab23de3c80d",
+  "voice_method": "automated_voice_suite",
+  "actual_frozen_request_count": 17,
+  "voice_checks": "five actual-byte automated checks passed; not human listening",
+  "pixel_review_identity": "formal movie exactSHA matches independent actual-year and points/trophy reviews; original rendering failed only after pixels due stale old inventory and did not grant QC approval",
+  "publication": "not yet sent; awaiting current-head CI and clean merge"
+}

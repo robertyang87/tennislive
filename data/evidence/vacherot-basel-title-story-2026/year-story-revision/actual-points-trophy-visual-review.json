@@ -1,0 +1,298 @@
+{
+  "schema": "tennislive.actual-points-trophy-visual-review.v1",
+  "status": "visual_content_confirmed_with_disclosed_crop_boundaries_not_formal_qc",
+  "reviewed_at": "2026-11-02T01:41:13.420664+00:00",
+  "movie": {
+    "path": "/workspace/scratch/vacherot-year-revision/failed-render-41372108657/vacherot-basel-title-story-2026.mp4",
+    "sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
+    "bytes": 94310099,
+    "duration": 282.68,
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "workflow": 41372108657,
+    "workflow_outcome": "VoiceQualityError: Existing inventory differs; preserve original actual inputs"
+  },
+  "scope": "Actual decoded raster inspection only. No new ASR, no audio listening claim, no formal QC or voice pass. Reuse for another render only if final movie SHA is identical; otherwise review that movie.",
+  "sampling": {
+    "method": "Decoded scaled contact sheets visually viewed in full; selected original-resolution 1080x1440 native frames also visually inspected. Section clocks checked against burned ASS cues and native serving/trophy/outro frames, not solely inferred from plan.",
+    "point_sections_fps": 3,
+    "cup_fps": 5,
+    "ending_fps": 3,
+    "not_every_native_frame_reviewed": true,
+    "contact_time_labels": "Nominal bin centres; source extraction fps selection has at most half-bin uncertainty. Native PNG filenames are direct requested film seek times, quantized to decoded 25fps frames.",
+    "samples": [
+      {
+        "name": "shanghai",
+        "from": 38.68,
+        "to": 61.32,
+        "fps": 3,
+        "decoded_frame_count": 68
+      },
+      {
+        "name": "sf",
+        "from": 190.9,
+        "to": 208.8,
+        "fps": 3,
+        "decoded_frame_count": 54
+      },
+      {
+        "name": "final",
+        "from": 222.9,
+        "to": 268.14,
+        "fps": 3,
+        "decoded_frame_count": 136
+      },
+      {
+        "name": "trophy",
+        "from": 268.12,
+        "to": 278.16,
+        "fps": 5,
+        "decoded_frame_count": 50
+      },
+      {
+        "name": "ending",
+        "from": 278.12,
+        "to": 282.64,
+        "fps": 3,
+        "decoded_frame_count": 14
+      }
+    ]
+  },
+  "observations": [
+    {
+      "section": "Shanghai championship point",
+      "film_range_approx": [
+        38.69,
+        61.31
+      ],
+      "source_window": [
+        114.7,
+        137.32
+      ],
+      "seen": "Card dissolves into live serving preparation; near player tosses and serves around39.5–40.2s. Rally continues to result around45.2s. Cut to Vacherot white-shirt close-up, mouth/face covered in emotion, then net handshake/embrace around59–61.2s. Real result and hug remain; no ad seen.",
+      "native_evidence": [
+        "native-film-38.68.png",
+        "native-film-39.48.png"
+      ],
+      "qualification": "Start dissolve covers a brief portion of preparation but toss, delivery and rally are visible. Fixed centre crop briefly takes a near player partly outside the left edge around42–43s."
+    },
+    {
+      "section": "Basel semifinal match point",
+      "film_range_approx": [
+        190.91,
+        208.79
+      ],
+      "source_window": [
+        131,
+        148.88
+      ],
+      "seen": "Prep close-up of Vacherot in grey and white cap; cut to wide court at toss/serve around193s, rally and winning finish around196–197s; pointing/fist celebration, coach and crowd reaction, opponent handshake and embrace around207–208.8s. No ad seen.",
+      "native_evidence": [
+        "native-film-193.08.png"
+      ],
+      "qualification": "Fixed centre crop takes the player partly out of the side during some celebration walking shots."
+    },
+    {
+      "section": "Basel final championship point",
+      "film_range_approx": [
+        222.91,
+        268.13
+      ],
+      "source_window": [
+        427.8,
+        473.02
+      ],
+      "seen": "Starts on near-player service setup beneath dissolving prior card; full toss/delivery around223.4–224.1s. Long continuous rally through about242.4s, followed by Vacherot winning close-up, coach celebration, smiling approach to net, handshake/hug with Lehecka around253.7–254.7s and chair-umpire acknowledgement. Ends on Vacherot raising/pointing arms. Source427.8 start is retained, not the former mid-rally437 start.",
+      "native_evidence": [
+        "native-film-223.44.png",
+        "native-film-242.48.png"
+      ],
+      "qualification": "Fixed centre crop clips near-side runner at the left/right extremes, noticeably around226.4s and231–232.4s and237s. It preserves temporal entirety but does not keep every lateral movement inside the portrait image."
+    },
+    {
+      "section": "Real trophy receive, lift and gold confetti",
+      "film_range_approx": [
+        268.13,
+        278.13
+      ],
+      "source_window": [
+        473.02,
+        483
+      ],
+      "seen": "Actual video begins with presenter releasing/handing trophy to Vacherot around268.2–268.6s. He takes both handles, brings cup to front and raises it around269.6–271.2s. Cup body and both handles remain visible during lift. He smiles while holding it overhead. At about273.8s broadcast cuts to wide red-carpet podium; he still holds cup overhead amid continuous gold confetti through278.1s. Different hand, face and confetti positions confirm motion, not a frozen photograph. No TennisTV ad appeared.",
+      "native_evidence": [
+        "native-film-268.12.png",
+        "native-film-268.44.png",
+        "native-film-270.48.png",
+        "native-film-271.20.png",
+        "native-film-273.80.png",
+        "native-film-278.12.png"
+      ],
+      "qualification": "At about270.48s cup finial touches/is minutely cut by the top edge and header overlaps the upper cup region. Native official source475.366s shows the finial itself also at its upper image edge, so this is a broadcast framing limit plus normal header overlay. Later overhead frames restore clear space above finial. No claim that the entire cup is unobstructed at every frame."
+    },
+    {
+      "section": "Trophy to branded ending",
+      "film_range_approx": [
+        278.12,
+        282.68
+      ],
+      "seen": "Gold confetti dissolves directly into the blue branded tennis-clock animation, followed by readable 网球时差·网球有故事 and slogan. Native282.64s remains a clean branded final frame. No blank black seam, advertising or black tail was seen.",
+      "native_evidence": [
+        "native-film-278.12.png",
+        "native-film-278.60.png",
+        "native-film-282.64.png"
+      ]
+    }
+  ],
+  "geometry": "1080x1440 full-canvas fixed-centre court/video crop. No blurred padding or old narrow banner detected. Lateral loss is disclosed as the specified owner composition preference, not hidden or treated as a temporal cut.",
+  "automated_support": {
+    "blackdetect_tail": {
+      "from": 222.5,
+      "to": 282.68,
+      "filter": "blackdetect=d=0.02:pix_th=0.1",
+      "reported_black_intervals": [],
+      "log": "/workspace/scratch/vacherot-year-revision/points-trophy-review/blackdetect-tail.log",
+      "limitation": "Supplementary full-black detection only; visual observations come from actual decoded sheets/native frames."
+    }
+  },
+  "source_comparison": {
+    "official_source_frame": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-source-475.366.png",
+    "film_frame": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-270.48.png",
+    "finding": "Both show same cup orientation/raise and finial at source upper edge. Full cup body/handles and hands are visible."
+  },
+  "evidence_files": [
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/shanghai-00.jpg",
+      "sha256": "f3942536dda8c9e05534cda0783566cbab088f1e70e350d82b902821ee5e8ebd"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/shanghai-01.jpg",
+      "sha256": "ea7427a1f19cd38ade80f085882c7e12f10e712ffdf19416fa52c8f0332fdf65"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/shanghai-02.jpg",
+      "sha256": "0956ba1ddd49f85e8bbe4ab8944cef113f6a8d67eceaeda9ebb7663343e9aed8"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/shanghai-03.jpg",
+      "sha256": "6ac7dddc57bcc766ad62a91b96f7bd9094fc1ee594cb4064a1800def18574e6c"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/sf-00.jpg",
+      "sha256": "807230a889f16d99cc72317fca9db900609f7555f49256f7c0890fade37e275f"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/sf-01.jpg",
+      "sha256": "6d0ec1dce89be503f48cf11d7827df34dd3207c4e98efff095d9d89de396a290"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/sf-02.jpg",
+      "sha256": "993ba549bf56183aff058673b2308a3d8f58b931d0ec6bf003e5fae8b622363b"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-00.jpg",
+      "sha256": "96c70c3a72cf657b732a840f737075447ce928ee1ac3e0f58d6c7349b7cd49f7"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-01.jpg",
+      "sha256": "ed28ec31745199db2778f9d9222b0b07d0a85ce67777eb6a04147e6f94376087"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-02.jpg",
+      "sha256": "bde08c6f9ab51e04477ca2d0bed3f94073a67b2bdf42f9d6b7cbe8d427d28d8e"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-03.jpg",
+      "sha256": "1056cdaf2d290893c193a3444301eaa2958e4e1cd5cbd804b3b16b0ebf983d9f"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-04.jpg",
+      "sha256": "6bfc0c3d76f9c8496491325576675ded9c6f24c7bbb56ae2f095c30c27fe59b5"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-05.jpg",
+      "sha256": "7048a8900fcc19b5734c76af849ef95f4cef0598925525d6805b3cb2088bd62f"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/final-06.jpg",
+      "sha256": "25a9721b8eeb40775f51bf7d9008a3ef70298e57ef05b5e653cab940147c11c2"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/trophy-00.jpg",
+      "sha256": "7090eb6981468d4863e94de903ce30cadaa75b07e360d1106a0ab89445146853"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/trophy-01.jpg",
+      "sha256": "8a0f185e59d4816a54d36fade4678730f4d7ff19a75e4b3f850248d5ae5921c1"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/trophy-02.jpg",
+      "sha256": "9602cd0c178c9f964fc48c2e5c5d7f31c0743f01fa84d449cce492d281d043a6"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/ending-00.jpg",
+      "sha256": "54221594a60f1c4dc7db9fd23601a6ff570cc023566fe7d5cf950a3d093ab3b9"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-193.08.png",
+      "sha256": "697ab174a56db1a56b763522e8057c499641905f4e8a317c6fb082ffde311c87"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-223.44.png",
+      "sha256": "6ddf5046018a762a3afed538b48b3ad6b8fcef70e42f288ce36c266f0b12d9ea"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-242.48.png",
+      "sha256": "25fb944d047bb9d259e9b885e545a14219e9f3bad241db46cb8409cefbccd31e"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-268.12.png",
+      "sha256": "f8cf697543ed0d8777652bdc284fb7c49c5fe88c699a9aeeba4291a65d1f5ce6"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-268.44.png",
+      "sha256": "4c20ee15bbb7fe12f71c166c54ca122f8918f560fa90b5a6f52fd7446481c612"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-270.48.png",
+      "sha256": "78a5ceb0fc00194577f4027984e327dfc3098ea0b5a5073fe3e6f2e6133bed77"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-271.20.png",
+      "sha256": "fb0324c14d1607ec47013438c6f4e3e698d5382b64a3958d25132d5a3fa06648"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-273.80.png",
+      "sha256": "50cccdefea973309bbb1190ba6e318d4f331f3e5ce01c09190d265a589bc85bc"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-278.12.png",
+      "sha256": "3ed418616dc3cabc5a3214d519a82ae46f7ade4d3e597426cb3d9a6e7466309a"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-278.60.png",
+      "sha256": "832dcf17cb458a0fc8831b33fdf42c1d021a7daf34596aa0181d698dd2795f5f"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-282.64.png",
+      "sha256": "f157d69e5d54ea0fed56760e83a52b4a884b2e03a5ca8e333a0eecba9bd5bff8"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-38.68.png",
+      "sha256": "cd06629b6bc1990c534638aae19039b78f22bffdf38e16f6d7b9381252d91fc0"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-film-39.48.png",
+      "sha256": "cc9beceddd13b17e7f662c32905addc1381a19b046beefeab654cf22ebbbc06e"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-year-revision/points-trophy-review/native-source-475.366.png",
+      "sha256": "f2175287db67d4ccc3866aeb6a32069ca1fd988c5135e912a7ed074fe56e6339"
+    }
+  ],
+  "new_asr_generated": false,
+  "audio_review_claimed": false,
+  "formal_qc_approved": false,
+  "voice_quality_pass_claimed": false
+}
