@@ -20,10 +20,10 @@
     "narration": "none",
     "_narration_why": "docs/vibetennis.md §8：英文版没有配音。",
     "audio": {
-      "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge assets/music/we-never-remix-hi-noise-qiucheng.m4a，抖音 Vibe 知识赛道统一配乐）",
-      "_music_why": "账号所有者 2026-11-01：「不要 bgm」「不要自己创造 BGM，用那个 vibeknowledge 库里面的 BGM」「只是需要创造声效和音效」。从曲子 0.309 s 起取（74 BPM，标题锁定转金落在拍上），铺底 -20 LUFS；版权归原作者，库内 README 注明发布时优先用平台曲库同曲。",
-      "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS，低于 BGM 3 dB",
-      "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+      "music": "无（只有音效）",
+      "_music_why": "原用《We Never (Remix)》（vibeknowledge 库，铺底 -20 LUFS）致本集英文版 2026-11-02 在 Instagram 被 Content ID 判原声含他人内容、在所有者地区静音。所有者 2026-11-02 定：英文版成片不带 BGM，音乐改走 Instagram 曲库、由所有者在 App 上传时挂。本集改用 sfx.py 一并写出的 sfx_only.wav 纯音效轨。",
+      "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS（原混音里低于 BGM 3 dB；无 BGM 版单独归一到总混标准）",
+      "loudness": "无 BGM：只有音效，整片 -14 LUFS / 真峰值 ≤ -1 dBTP（sfx_only 轨经 ln.py -14 / -2.5＋限幅，照 EP04 原音频链去掉 BGM 床）"
     }
   },
   "cover": {
