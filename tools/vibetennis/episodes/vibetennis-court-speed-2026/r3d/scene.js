@@ -512,24 +512,22 @@ function setSnow(te,Y){ if(te<0||!Y){ SNOW.visible=false; return; } SNOW.visible
 
 // --- 全息地球（2026-11-02，讲故事的主线：一年四站——墨尔本 1 月 → 巴黎 5–6 月 → 伦敦 6–7 月 → 纽约 8–9 月；开场点亮、片尾拉回）
 const GLB=V3(0,0,4200), globeG=new THREE.Group(), globeR=new THREE.Group(); globeG.position.copy(GLB); globeG.add(globeR); scene.add(globeG); const GRAD=40;
-{ // 大陆轮廓：粗略多边形（经度、纬度，10° 级精度，只为让人认得出是地球；城市位置用真实经纬度）
-  const LAND=[[[-168,66],[-140,70],[-95,72],[-75,62],[-60,52],[-66,44],[-75,35],[-81,25],[-97,25],[-105,20],[-90,15],[-83,9],[-78,8],[-95,16],[-105,22],[-117,32],[-124,40],[-124,48],[-135,58],[-150,60],[-165,62]],
-    [[-80,8],[-60,10],[-50,0],[-35,-7],[-40,-22],[-48,-28],[-58,-38],[-65,-55],[-72,-50],[-73,-35],[-71,-18],[-81,-5]],
-    [[-10,36],[-9,43],[-1,46],[-5,48],[0,50],[8,54],[5,58],[10,63],[20,70],[40,68],[60,70],[80,73],[100,77],[130,72],[160,70],[180,66],[170,60],[160,55],[140,50],[135,43],[128,35],[121,30],[118,23],[108,20],[106,10],[100,13],[98,8],[103,1],[98,18],[92,22],[88,22],[80,15],[77,8],[72,20],[66,25],[57,25],[52,30],[48,30],[56,24],[59,22],[52,16],[43,13],[35,28],[32,31],[28,36],[26,41],[20,40],[15,38],[12,44],[8,44],[3,43],[-5,36]],
-    [[-17,21],[-16,12],[-8,5],[5,5],[9,4],[10,-2],[12,-6],[13,-17],[18,-33],[25,-34],[32,-28],[35,-20],[40,-15],[40,-5],[51,11],[43,12],[37,20],[32,31],[20,32],[10,37],[-6,36],[-10,30]],
-    [[114,-22],[122,-17],[130,-12],[137,-12],[142,-11],[146,-19],[153,-26],[151,-34],[145,-38],[138,-35],[131,-31],[115,-34]],
-    [[-55,60],[-42,60],[-20,70],[-20,80],[-60,82],[-72,78],[-55,70]],[[-5,50],[1,51],[0,53],[-2,56],[-5,58],[-6,55],[-3,54]],[[130,31],[135,34],[140,36],[142,41],[141,45],[139,38],[132,34]]];
-  const inPoly=(x,y,P)=>{ let c=false; for(let i=0,j=P.length-1;i<P.length;j=i++){ const [xi,yi]=P[i],[xj,yj]=P[j]; if(((yi>y)!=(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi)) c=!c; } return c; };
-  const n=26000, P=cloud(n,0.7,5,globeR,0.3); const ga=Math.PI*(3-Math.sqrt(5)); for(let i=0;i<n;i++){ const y=1-2*(i+0.5)/n, r=Math.sqrt(1-y*y), a=i*ga; const x=Math.cos(a)*r, z=Math.sin(a)*r;
-    const lat=Math.asin(y)*180/Math.PI, lon=Math.atan2(-z,x)*180/Math.PI, land=LAND.some(Pl=>inPoly(lon,lat,Pl)); const k=land?0.9+0.3*frnd():0.18+0.1*frnd();
-    cset(P,i,x*GRAD,y*GRAD,z*GRAD,(land?0.55:0.3)*k,(land?0.8:0.5)*k,1.0*k,land?1:0.5); } cdone(P);
-  const lm=new THREE.LineBasicMaterial({color:0x5fa8ff,transparent:true,opacity:0.22,blending:THREE.AdditiveBlending,depthWrite:false});
-  for(let la=-60;la<=60;la+=30){ const pts=[]; for(let j=0;j<=96;j++){ const a=j/96*Math.PI*2, c=Math.cos(la*Math.PI/180)*GRAD*1.002; pts.push(V3(Math.cos(a)*c,Math.sin(la*Math.PI/180)*GRAD*1.002,Math.sin(a)*c)); } globeR.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lm)); }
-  for(let lo=0;lo<180;lo+=30){ const pts=[]; for(let j=0;j<=96;j++){ const a=j/96*Math.PI*2; pts.push(V3(Math.cos(a)*Math.cos(lo*Math.PI/180)*GRAD*1.002,Math.sin(a)*GRAD*1.002,-Math.cos(a)*Math.sin(lo*Math.PI/180)*GRAD*1.002)); } globeR.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lm)); }
-  const atm=new THREE.Mesh(new THREE.SphereGeometry(GRAD*1.08,64,32),new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.BackSide,
-    vertexShader:`varying vec3 vN,vV; void main(){ vN=normalize(normalMatrix*normal); vec4 mv=modelViewMatrix*vec4(position,1.); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
-    fragmentShader:`varying vec3 vN,vV; void main(){ float d=clamp(abs(dot(normalize(vN),normalize(vV))),0.0,1.0); float f=clamp(pow(1.0-d,2.5),0.0,1.0); gl_FragColor=vec4(clamp(vec3(0.25,0.55,1.0)*f*0.9,0.0,1.0),f); }`})); globeG.add(atm); // 边缘处 dot→0、未归一化的法线会溢出成一个白方块，夹住
-  const core=new THREE.Mesh(new THREE.SphereGeometry(GRAD*0.985,48,24),new THREE.MeshBasicMaterial({color:0x020818})); globeR.add(core); }
+// 所有者：「要用真实的地球，现在这个太丑了」——NASA Blue Marble 白天地表＋ Earth at Night 城市夜光（公有领域，见 tex/SOURCE.md），带昼夜分界、海面高光、大气辉光
+const TEXL=new THREE.TextureLoader(); const EARTH_READY=Promise.all(['tex/earth_bluemarble_4096.jpg','tex/earth_night_2048.jpg'].map(f=>new Promise(res=>TEXL.load(f,t=>{ t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; res(t); }))));
+const earthMat=new THREE.ShaderMaterial({uniforms:{uDay:{value:null},uNight:{value:null},uSun:{value:new THREE.Vector3(0.6,0.35,0.7).normalize()}},
+  vertexShader:`varying vec2 vUv; varying vec3 vN,vW,vV; void main(){ vUv=uv; vN=normalize(mat3(modelMatrix)*normal); vec4 w=modelMatrix*vec4(position,1.); vW=w.xyz; vV=normalize(cameraPosition-w.xyz); gl_Position=projectionMatrix*viewMatrix*w; }`,
+  fragmentShader:`uniform sampler2D uDay,uNight; uniform vec3 uSun; varying vec2 vUv; varying vec3 vN,vW,vV;
+    void main(){ vec3 n=normalize(vN), v=normalize(vV); vec3 day=texture2D(uDay,vUv).rgb, night=texture2D(uNight,vUv).rgb; float nd=dot(n,uSun);
+      float dl=smoothstep(-0.18,0.25,nd); float ocean=smoothstep(0.02,0.10,day.b-max(day.r,day.g)*0.85);
+      vec3 h=normalize(uSun+v); float spec=pow(max(dot(n,h),0.0),60.0)*ocean*0.25*(1.0-smoothstep(0.35,0.6,max(day.r,max(day.g,day.b))));
+      vec3 col=day*(0.06+0.95*max(nd,0.0))*dl + night*vec3(1.0,0.82,0.55)*1.6*(1.0-dl)*(1.0-ocean*0.8) + vec3(1.0,0.95,0.85)*spec*dl;
+      float fr=pow(1.0-clamp(dot(n,v),0.0,1.0),3.0); col+=vec3(0.25,0.5,1.0)*fr*0.7*(0.3+0.7*dl);
+      gl_FragColor=vec4(col,1.0); }`});
+EARTH_READY.then(([d,n])=>{ earthMat.uniforms.uDay.value=d; earthMat.uniforms.uNight.value=n; });
+const earth=new THREE.Mesh(new THREE.SphereGeometry(GRAD,128,64),earthMat); globeR.add(earth);
+{ const atm=new THREE.Mesh(new THREE.SphereGeometry(GRAD*1.06,96,48),new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.BackSide,
+    vertexShader:`varying vec3 vN,vV; void main(){ vN=normalize(mat3(modelMatrix)*normal); vec4 w=modelMatrix*vec4(position,1.); vV=normalize(cameraPosition-w.xyz); gl_Position=projectionMatrix*viewMatrix*w; }`,
+    fragmentShader:`varying vec3 vN,vV; void main(){ float d=clamp(dot(normalize(vN),normalize(vV)),0.0,1.0); float f=clamp(pow(d,3.0)*1.4,0.0,1.0); gl_FragColor=vec4(vec3(0.3,0.6,1.0)*f,f); }`})); globeG.add(atm); }
 const llv=(la,lo,r=GRAD)=>{ la*=Math.PI/180; lo*=Math.PI/180; return V3(r*Math.cos(la)*Math.cos(lo),r*Math.sin(la),-r*Math.cos(la)*Math.sin(lo)); };
 const CITY=[{k:'AO',la:-37.82,lo:144.98,c:0x5fc2ff},{k:'RG',la:48.85,lo:2.25,c:0xff8a4a},{k:'WIM',la:51.43,lo:-0.21,c:0x7dff8a},{k:'USO',la:40.75,lo:-73.85,c:0x6f8cff}];
 CITY.forEach(C=>{ C.p=llv(C.la,C.lo); C.glow=glowSprite(C.c,9,0,globeR); C.glow.position.copy(llv(C.la,C.lo,GRAD*1.02));
@@ -549,7 +547,7 @@ function setGlobe(q,t,{loop=false,active=-1}={}){ globeG.visible=q>=0; if(q<0) r
   const w=sm((fr-0.45)*1.8), om=Math.acos(Math.min(1,a.dot(b))); GLOBE_DIR.copy(om<1e-3?a:a.clone().multiplyScalar(Math.sin((1-w)*om)/Math.sin(om)).add(b.clone().multiplyScalar(Math.sin(w*om)/Math.sin(om)))).normalize();
   globeR.rotation.set(0,0,0); globeR.updateMatrixWorld(true); }
 const GLOBE_DIR=new THREE.Vector3(0,0,1);
-function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); }
+function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); { const side=new THREE.Vector3().crossVectors(V3(0,1,0),d).normalize(); earthMat.uniforms.uSun.value.copy(d).addScaledVector(side,-1.7).add(V3(0,0.3,0)).normalize(); } /* 太阳从画面左上侧打过来：看得到昼夜分界和右侧的城市夜光 */ camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); }
 function val(n,v){ anchors[n]=v; }
 
 // ================= 2026-11-02 重做的特效层（所有者：「整体不精致……要有酷炫的动画、粒子动效，比例和物理也要合理」） =================
@@ -717,5 +715,5 @@ function shotTL(t){
     const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(190,260,w),0.45); } } return k; }
   return k; }
 const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
-window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
-window.READY=true;
+window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); motes.visible=!globeG.visible; composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
+EARTH_READY.then(()=>{ window.READY=true; });
