@@ -119,7 +119,8 @@ function shapePts(shape,rx,rz,n=192){ const pts=[];
       let best=1e9; for(let j=0;j<8;j++){ const A=V[j],B=V[(j+1)%8], ax=A[0]*rx,az=A[1]*rz,bx=B[0]*rx,bz=B[1]*rz, ex=bx-ax,ez=bz-az, den=c*ez-s*ex; if(Math.abs(den)<1e-9) continue; const t=(ax*ez-az*ex)/den; if(t>0&&t<best) best=t; } pts.push([c*best,s*best]); }
     else if(shape==='oct'){ const k=Math.PI/4, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else if(shape==='dodec'){ const k=Math.PI/6, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
-    else { const p=shape==='box'?40:(shape==='rr'?3.4:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
+    else if(shape==='boxp'){ const p=40; pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } // 旧参数化，只给美网膜顶内缘用（膜面按它对齐过）
+    else { const p=shape==='box'?40:(shape==='rr'?3.4:9), r=Math.pow(Math.pow(Math.abs(c),p)+Math.pow(Math.abs(s),p),-1/p); pts.push([c*r*rx,s*r*rz]); } } // 极坐标形式的超椭圆：旧写法 sign(c)·|c|^(2/p) 在 cos≈1e-16 处跳成 0.15，看台缺一块楔形（所有者 2026-11-02 截图）
   return pts; }
 const lineM=(col,op)=>new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op});
 function loop(grp,pts,y,col,op){ grp.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.map(p=>V3(p[0],y,p[1]))),lineM(col,op))); }
@@ -219,7 +220,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 所有者给的航拍（AELTC 俯拍）：10 道白色桁架打开时每端收 5 道，桁架之间的白色膜像手风琴一样折起、往下垂成一个个鼓包，
   // 两端各成一大团白色膜堆，盖住开口的南北两头；跨度取该处建筑实际宽度，两脚落在坡屋面外缘
   for(const end of[-1,1]){ const T=[];
-    for(let i=0;i<5;i++){ const z=end*(v.rz*0.66-i*5.2), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者：顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
+    for(let i=0;i<5;i++){ const z=end*(v.rz*0.76-i*3.3), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 5.2→3.3 m、整体贴向两端）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
       const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.2),z)); }
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.5,6,false),steel));
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.35,6,false),steel));
@@ -252,7 +253,7 @@ function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）�
 }
 function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起的「枕头」，蓝色钢桁架斜撑落在外柱上，中间可开合
   const top=v.H+14, R=v.rx*1.06; // 膜顶外缘 ≈ OSM 建筑轮廓 157 m
-  const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
+  const out=shapePts('boxp',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
   const oc=shapePts('oct',R*1.04,R*1.04); // 俯拍（Constructify 2025）：膜顶外缘是切了角的八边形
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=oc[i]; return [p[0]*0.25+q[0]*0.75,p[1]*0.25+q[1]*0.75]; });
   { const NA=canopyOut.length-1, NR=14, pos=[]; const F0=0.56; const P=(i,k)=>{ const f=F0+(1-F0)*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
@@ -627,7 +628,7 @@ const SCAN={}; venues.forEach(v=>{ const g=new THREE.Group(); v.g.add(g); g.user
   SCAN[v.k]={g,ring,P,sd,col:new THREE.Color(v.glow)}; g.visible=false; });
 function scanFX(k,y,a=1){ for(const kk in SCAN) SCAN[kk].g.visible=false; if(!k) return; const S=SCAN[k]; S.g.visible=true; S.ring.position.y=y; S.ring.material.opacity=0.9*a;
   for(let j=0;j<S.sd.length;j++){ const d=S.sd[j]; cset(S.P,j,d[0],y+d[2]*d[3]*1.5,d[1],S.col.r,S.col.g,S.col.b,a*(1-d[3])*0.9); } cdone(S.P); }
-const VTOP={RG:48,WIM:40,AO:52,USO:62};
+const VTOP={RG:48,WIM:40,AO:52,USO:72}; // 美网膜顶鼓包最高到约 65 m：扫描面到 62 就停会把鼓包削出四个洞（2026-11-02 俯拍才看出来）
 function buildVenue(k,te){ const q=sm(te/2.2); const y=lerp(-2,VTOP[k],q); if(q<1){ CLIP.constant=y; scanFX(k,y,1); } else { CLIP.constant=1e5; scanFX(k,VTOP[k],Math.max(0,1-(te-2.2)/0.5)); } }
 // --- 慢镜：滑动时接触点向后喷出摩擦火花，接触点发热（橙）→ 咬住（青）
 const SLO_P=cloud(1600,0.12,12,sloG,0.3), SLO_SD=[]; for(let j=0;j<1600;j++) SLO_SD.push([frnd(),3+frnd()*7,0.6+frnd()*2.8,(frnd()-0.5)*3.2,frnd()]);
@@ -735,10 +736,10 @@ function shotTL(t){
     return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
-    if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],150-25*q,200-20*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
-    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],150-20*q,190,0.7+0.6*q,0); return 'v_WIM'; }
-    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],140,190,1.0+0.4*q,0); return 'v_AO'; }
-    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],180,240,1.45+0.35*q,0); return 'v_USO'; }
+    if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],105-20*q,265-15*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
+    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95-15*q,250,0.7+0.6*q,0); return 'v_WIM'; }
+    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95,265,1.0+0.4*q,0); return 'v_AO'; }
+    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],115,320,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); setBowl(V3(0,0,0),1); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
   if(k==='lineup'){ lineupWorld(); setBowl(V3(0,0,0),1); camLook(Math.sin(u*0.2)*6,62-u*2,58-u*2,0,0,0,34); setMorph([[0,'void',0],[0.05,'q',1.2,0.6],[D-0.9,'void',0.9,0.5]],u,{mz:60,my:12}); return k; }
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
