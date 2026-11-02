@@ -197,12 +197,12 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
   const top=v.H+14, R=v.rx*1.12;
   const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=out[i]; return [p[0]*0.6+q[0]*0.4,p[1]*0.6+q[1]*0.4]; });
-  { const NA=canopyOut.length-1, NR=14, pos=[]; const P=(i,k)=>{ const f=0.30+0.70*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
-      const dome=15*Math.sqrt(Math.max(0,1-Math.pow((f-0.30)/0.70,2))), puff=6.5*Math.pow(Math.abs(Math.cos(2*a)),3)*Math.sin(Math.PI*Math.min(1,(f-0.3)/0.7));
+  { const NA=canopyOut.length-1, NR=14, pos=[]; const F0=0.56; const P=(i,k)=>{ const f=F0+(1-F0)*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
+      const dome=15*Math.sqrt(Math.max(0,1-Math.pow((f-F0)/(1-F0),2))), puff=6.5*Math.pow(Math.abs(Math.cos(2*a)),3)*Math.sin(Math.PI*Math.min(1,(f-F0)/(1-F0)));
       return [c[0]*f, top+1.2+dome+puff, c[1]*f]; };
     for(let i=0;i<NA;i++) for(let k=0;k<NR;k++){ const A=P(i,k),B=P(i+1,k),C=P(i+1,k+1),D=P(i,k+1); pos.push(...A,...B,...C,...A,...C,...D); }
     const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); grp.add(new THREE.Mesh(g,fabric()));
-    const lip=[]; for(let i=0;i<=NA;i++){ const q=P(i,NR); lip.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lip,true),220,0.9,6,true),new THREE.MeshStandardMaterial({color:0xe6e9ec,roughness:0.5}))); }
+    const lip=[]; for(let i=0;i<=NA;i++){ const q=P(i,NR); lip.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lip,true),220,0.9,6,true),new THREE.MeshStandardMaterial({color:0xe6e9ec,roughness:0.5})));  { const inner=[]; for(let i=0;i<=NA;i++){ const q=P(i,0); inner.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(inner,true),220,0.7,6,true),steelBlue)); } }
   // 外柱与蓝色斜撑
   const n=8, cr=R*1.04; const ring=canopyOut;
   for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr);
