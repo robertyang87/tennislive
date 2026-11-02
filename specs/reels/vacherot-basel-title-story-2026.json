@@ -591,7 +591,7 @@
       "track": false,
       "narration": "到了东京，他又逆转西西帕斯，击败菲斯，重新打进4强。半决赛，莱赫奇卡挡住了他。",
       "point_end_ok": "Openingordinarypoint at1-1: Vacherotnearserves frominitialpreparation, rally finishes~9s thenwalkaway; no nextpoint liveball beforeend+0.5s11.3. Nativecropchecked0,2.5,3.5,5.5,7.5,8.5,9.5,10.5; nearplayerbrieflynearleftedge~7.5 butvisible. This isillustrativeR2action, notSF ormatchpoint.",
-      "_why": "Openingordinarypoint at1-1: Vacherotnearserves frominitialpreparation, rally finishes~9s thenwalkaway; no nextpoint liveball beforeend+0.5s11.3. Nativecropchecked0,2.5,3.5,5.5,7.5,8.5,9.5,10.5; nearplayerbrieflynearleftedge~7.5 butvisible. This isillustrativeR2action, notSF ormatchpoint. 右上信息仅在结果后8.8秒出现2.8秒，避免挡住相持中的远端西西帕斯头脸；实际样帧已暴露该遮挡，本片按人物可见性延后。 10.8–12.1已逐0.1秒核过，11.6为下一分发球准备前退场，0.5秒过渡余料未进入下一分活球；fresh fixed双模型补审到12.1。",
+      "_why": "Openingordinarypoint at1-1: Vacherotnearserves frominitialpreparation, rally finishes~9s thenwalkaway; no nextpoint liveball beforeend+0.5s11.3. Nativecropchecked0,2.5,3.5,5.5,7.5,8.5,9.5,10.5; nearplayerbrieflynearleftedge~7.5 butvisible. This isillustrativeR2action, notSF ormatchpoint. 右上信息仅在结果后8.8秒出现2.8秒，避免挡住相持中的远端西西帕斯头脸；实际样帧已暴露该遮挡，本片按人物可见性延后。 10.8–12.1已逐0.1秒核过，11.6为下一分发球准备前退场，0.5秒过渡余料未进入下一分活球；fresh fixed双模型补审到12.1。 正式26f电影逐帧发现11.2后内部切镜远端脸再次进入右上区；已核固定源8.0不安全、8.2至11.1安全，因此本次仅将info改为8.2–11.0，保持2.8秒可读与原0–11.6完整源窗/全部配音原声不变。",
       "crosses_cut": "Selected single complete point from preparation through result/reaction; no next livepoint or English sentence cut.",
       "inset": {
         "image": "assets/reel/vacherot-basel-title-story-2026/rich-tokyo-label.png",
@@ -600,7 +600,7 @@
         "width": 0.6,
         "pad": 0.043,
         "top_pad": 0.043,
-        "show_after": 8.8,
+        "show_after": 8.2,
         "show_for": 2.8,
         "motion": "editorial",
         "animate": false,
