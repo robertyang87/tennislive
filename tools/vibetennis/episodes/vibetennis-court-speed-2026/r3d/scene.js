@@ -238,7 +238,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
 }
 function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）俯拍：顶棚打开时两片可移动顶板退到长轴两端、架高在固定屋面上；
   // 中间露出近方形的开口；白色弓形桁架横跨短边（每端两道），两脚落到外沿
-  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.60, hz=v.rz*0.33, yR=v.H*1.18, pz=v.rz*0.40, px=v.rx*0.66;
+  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.66, hz=v.rz*0.50, yR=v.H*1.18, pz=v.rz*0.30 /* 所有者 2026-11-02：顶棚再收紧，让场地全露出来 */, px=v.rx*0.66;
   const sh=new THREE.Shape(scl(out,1.02).map(p=>new THREE.Vector2(p[0],p[1])));
   sh.holes.push(new THREE.Path([new THREE.Vector2(-hx,-hz),new THREE.Vector2(hx,-hz),new THREE.Vector2(hx,hz),new THREE.Vector2(-hx,hz)]));
   const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xcfd2d0,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=yR; grp.add(r);
