@@ -1,0 +1,135 @@
+{
+  "schema": "story.editorial-independent-review.v1",
+  "reviewed_at": "2026-11-02T01:09:46.513966+00:00",
+  "scope": "Independent script and XHS editorial review only; no new web search, no spec/text modification, no claim of actual film QC or current TTS duration verification.",
+  "inputs": {
+    "spec_path": "/workspace/tennis-work/specs/reels/vacherot-basel-title-story-2026.json",
+    "spec_sha256": "0abca2737306c40df094358016c4a64966cbc635e0af9e5d430d5adae2cb8f56",
+    "xhs_path": "/workspace/tennis-work/specs/reels/vacherot-basel-title-story-2026.xhs.txt",
+    "xhs_sha256": "8e50df498ff0241beb6af0ab0d1a7eada8bfe94f885793be1b9edf9f39c7b058",
+    "fact_packet": "/workspace/scratch/vacherot-year-revision/fact-timeline.json"
+  },
+  "segment_count": 19,
+  "user_goal_alignment": "Year after Shanghai2025 is now the main arc: post-title Basel loss, Paris, AustralianOpen, MonteCarlo, injury/absence, realGstaad return, Chengdu/Tokyo fluctuations, failedShanghai defence. Basel2026 is the closing second-title payoff with concise early-round summary. No recommendation to add every earlier round.",
+  "status": "one_wording_revision_recommended; no factual_result_blocker_found",
+  "actual_issues": [
+    {
+      "priority": "fix_before_finalizing_tts",
+      "segment_index": 14,
+      "field": "narration",
+      "current": "去年在这里输掉的对手，这次，瓦舍罗赢了。",
+      "issue": "输掉的对手 is an incorrect/ambiguous attachment: it can describe Fritz as the one who lost last year, although Vacherot lost to him. This is the central2025/2026 callback and should be unambiguous.",
+      "suggested": "去年巴塞尔，瓦舍罗输给弗里茨。今年半决赛，他赢了。",
+      "factual_basis": "2025/10/22 BaselR1 Fritzwon4-6 7-6(4)7-5;2026/10/31 BaselSF Vacherotwon7-6(5)6-3. XHS already expresses this clearly."
+    }
+  ],
+  "fact_checks": [
+    {
+      "segments": [
+        1,
+        2,
+        3
+      ],
+      "verdict": "supported",
+      "details": "Shanghai2025 world204, qualifier,9matches incl qualifying,6wins from a set down, first title and cousinRinderknech final all match existing verified packet;2025.10.12 label correct."
+    },
+    {
+      "segments": [
+        4,
+        14,
+        15
+      ],
+      "verdict": "facts_supported_wording_fix_above",
+      "details": "2025 Basel first-round loss toFritz after Shanghai versus2026 semifinal win overFritz. Spoken chronology is2025 until transition今年; visual labels must retain correct year."
+    },
+    {
+      "segments": [
+        5
+      ],
+      "verdict": "supported_from_existing_packet",
+      "details": "Paris2025 beatRinderknech thenNorrie, finishedQF. Year-endrank31 carried from existing one-year verified packet; not a new live-ranking claim."
+    },
+    {
+      "segments": [
+        6
+      ],
+      "verdict": "supported",
+      "details": "AO2026 reached firstGrandSlamR3 thenlostShelton. Does not misstate16强 or quarterfinal."
+    },
+    {
+      "segments": [
+        7
+      ],
+      "verdict": "supported",
+      "details": "AprilMonteCarlo deMinaurwin toSF and entry intoTop20 consistent with official event interview; this is a new high afterShanghai, not first MastersSF."
+    },
+    {
+      "segments": [
+        8,
+        9
+      ],
+      "verdict": "supported",
+      "details": "RGfirst-round win thenwithdrawal beforeR2 with leftfoot injury; Wimbledon absence; roughly7weeks/near2months without tournament play untilJuly15Gstaad. Does not claim match retirement or surgery. Gstaad firstreturnwin overHanfmann correct."
+    },
+    {
+      "segments": [
+        10
+      ],
+      "verdict": "supported_from_existing_packet",
+      "details": "Chengdu2026 topseed, first-roundbye thenopeningmatch loss toqualifierLloydHarris. Spoken firstmatch not firstround; title首战出局 is accurate."
+    },
+    {
+      "segments": [
+        11,
+        16
+      ],
+      "verdict": "supported",
+      "details": "Tokyo2026 beatTsitsipas/Fils toSF, lostLeheckaOctober5; same opponent inNovember1Baselfinal means不到一个月前 is correct. Tokyo no longer misidentified as comeback firststop."
+    },
+    {
+      "segments": [
+        12
+      ],
+      "verdict": "supported",
+      "details": "Shanghai2026 seeded, first-roundbye, second-roundwin overBaez, third-round4-6 2-6 loss toPaul. Does not callopeningmatchloss. Last sentence is factual reflection rather than invented athlete psychology."
+    },
+    {
+      "segments": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "verdict": "supported",
+      "details": "Basel2026 sequenceNavone→Jodar→Rune→Fritz→Lehecka, twoTBs vsJodar,9/10BPs savedvsRune, final2-6 6-3 6-3, secondtourtitle/first500 all supported. Existing selected championshippoint/trophy windows fulfill narrative payoff on source evidence; final film still must be reviewed."
+    }
+  ],
+  "xhs_review": {
+    "facts": "No incorrect result/year/round found. Chronology and Vacherot2025loss/2026win callback clear.",
+    "optional_copy_cleanup": "“七月格施塔德才是真正的复出首战”可简化为“七月十五日，他在格施塔德复出，逆转汉夫曼获胜。”；删掉面向制作纠错的才是真正，保留观众需要的事实。",
+    "ending": "Question about firsttitle versus hard-earned secondtitle matches documented highs/injury/setbacks and invites reflection without inventing motives."
+  },
+  "optional_condensation": [
+    {
+      "segments": [
+        1,
+        2
+      ],
+      "suggestion": "If actual newTTS/film exceeds agreedoutline, first shortensegment1’s repeatedworld204-toMasterschampion summary; segment2 plus actualShanghai championpoint already carries that origin. Keep enough time coordinate for new viewers."
+    },
+    {
+      "segments": [
+        13,
+        14
+      ],
+      "suggestion": "If necessary combineBasel early-round/path introduction into one concise lead-in, prioritizing2025/2026Fritz callback. Do not solve length by adding early-roundclips or truncating selected fullmatchpoint/trophy."
+    }
+  ],
+  "not_reviewed": [
+    "New actualTTS package durations and pronunciation",
+    "Replacement truephotography composites for5/7/11/12; parent is already preparing these, placeholders are not treated as final failures",
+    "Actual rendered visual/text/voice seams and finalpublication gates"
+  ]
+}

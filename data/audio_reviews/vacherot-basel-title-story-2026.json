@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
-  "plan_sha256": "a8ba052f5328198fa2655b4be94f9e0943cb0e3ee5189536deb750069b3602d0",
+  "plan_sha256": "6133233633a572ae28af41aa0208d1a47354fe27be60a0dc1e1d47b4975c1f83",
   "segments": [
     {
       "index": 0,
@@ -8,54 +8,39 @@
       "transcript_sha256": "b26b73c9d6cd4b47ff84d12e0b3e75f686503caa7e288296fb80ec309310a43a"
     },
     {
-      "index": 2,
+      "index": 3,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-02-shanghai.json",
       "transcript_sha256": "8d3ab8d082e236e0fca343dbeda4cfd02ea6a1f61304cd9becf61d5fd5229950"
     },
     {
-      "index": 5,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-05-r1.json",
-      "transcript_sha256": "f88b94836cd1d7c43dd438922c5c29eb3a312f0287c4ed496abfa2aabaf05f74"
-    },
-    {
-      "index": 7,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-07-r2.json",
-      "transcript_sha256": "d74221db183f86b00c68277360cdf97e8ffd73860eb124fd120ea54d0edd24fc"
-    },
-    {
-      "index": 9,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-09-qf.json",
-      "transcript_sha256": "21a6a308ca9c5514723e184b6e00615f944d2e7386f85b789669aa0bbd56dd40"
-    },
-    {
-      "index": 11,
+      "index": 15,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-11-sf.json",
       "transcript_sha256": "ec401c9650691035f554d187ea8866345f84f7176e57811978848d1b037a21dc"
     },
     {
-      "index": 13,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-13-final.json",
-      "transcript_sha256": "01ee4182256acfa7541fa41eb4ec93237b83aabc169c6393055e923402e8b049"
-    },
-    {
-      "index": 15,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-15-final.json",
-      "transcript_sha256": "5466838edf744f5078fac4827234af6d87d9e3b6d6369269c71f04191ceb33b2"
-    },
-    {
       "index": 17,
-      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-17-final.json",
-      "transcript_sha256": "2d065089d5b9c8f15d90ba506fb87a8e8f063393f5fc08fab1c4b063f6a797b6"
-    },
-    {
-      "index": 19,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-19-final.json",
       "transcript_sha256": "3ba2fa0861b3eb53a40d8e04c5c34e3cbddd7bdc835537eca4f05dfc5333906f"
     },
     {
-      "index": 20,
+      "index": 18,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-20-final.json",
       "transcript_sha256": "17149f1d57b89f13c6072bcaa83ee78382a5fc9a91ed3d0256c7fe8ebf9bd2f1"
     }
-  ]
+  ],
+  "plan_reuse_provenance": {
+    "prior_index_sha256": "b98802a59f1a499b31e4050fd6d52722bc0ea81056164fdc4603ad1efbb81503",
+    "prior_plan_sha256": "a8ba052f5328198fa2655b4be94f9e0943cb0e3ee5189536deb750069b3602d0",
+    "old_to_new_indices": {
+      "0": 0,
+      "2": 3,
+      "11": 15,
+      "19": 17,
+      "20": 18
+    },
+    "rebound_at": "2026-11-02T01:16:22.537631+00:00",
+    "method": "foreground_audio_gate.rebind_plan validates unchanged immutable packets and coverage; inspect binds actual fixed source bytes. Original ASR reviewer, raw evidence, conclusions, reviewed_at and all packet hashes unchanged.",
+    "new_asr_generated": false,
+    "new_listening_claimed": false
+  }
 }

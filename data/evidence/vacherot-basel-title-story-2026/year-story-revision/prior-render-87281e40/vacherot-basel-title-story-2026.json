@@ -1,0 +1,84 @@
+{
+  "slug": "vacherot-basel-title-story-2026",
+  "checked_at": "2026-11-01T18:02:40Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "bbbcfc1af8332c23": {
+      "segment": 2,
+      "spoken": 6.216,
+      "picture": 8.5
+    },
+    "7f9925129d1a70e1": {
+      "segment": 4,
+      "spoken": 12.648,
+      "picture": 15.5
+    },
+    "a0a2d779c20da2a3": {
+      "segment": 5,
+      "spoken": 5.76,
+      "picture": 6.0
+    },
+    "6891feb79d2acd45": {
+      "segment": 7,
+      "spoken": 5.736,
+      "picture": 6.2
+    },
+    "6797f7071c3cac45": {
+      "segment": 9,
+      "spoken": 6.312,
+      "picture": 6.8
+    },
+    "2ccbba5838db33c9": {
+      "segment": 11,
+      "spoken": 6.432,
+      "picture": 7.0
+    },
+    "75a3c4435424d740": {
+      "segment": 13,
+      "spoken": 6.36,
+      "picture": 7.0
+    },
+    "19f1d34664938c78": {
+      "segment": 15,
+      "spoken": 6.144,
+      "picture": 7.5
+    },
+    "babb868a5932f47a": {
+      "segment": 17,
+      "spoken": 6.288,
+      "picture": 6.8
+    },
+    "347d79f3b2b5f242": {
+      "segment": 19,
+      "spoken": 6.504,
+      "picture": 8.0
+    },
+    "6c534430b4f26abc": {
+      "segment": 21,
+      "spoken": 6.432,
+      "picture": 10.52
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "ebb8750faeb47a91f9d90499b5afbccb3f8148b858b8f1f1a08cc1f17eb13258",
+    "request_count": 13,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "18c5aeaa7cf0a7cdf304288d08d6381b02a6a065",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/18c5aeaa7cf0a7cdf304288d08d6381b02a6a065/assets/tts-bundles/vacherot-basel-title-story-2026/ebb8750faeb47a91f9d90499b5afbccb3f8148b858b8f1f1a08cc1f17eb13258/tts_bundle.zip"
+  },
+  "_transport_why": "Release上传401，使用已有有界repository transport固定511KiB语音与词边界，不含原片或成片，不宣称音频QC通过。"
+}
