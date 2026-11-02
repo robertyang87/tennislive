@@ -317,8 +317,47 @@ const YRS=Object.keys(RGY).map(Number), yrG=new THREE.Group(); yrG.position.set(
 { const t=SURF.RG.clone(); t.needsUpdate=true; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(1.5,0.4);
   const fl=new THREE.Mesh(new THREE.PlaneGeometry(90,30),new THREE.MeshStandardMaterial({map:t,roughness:0.9})); fl.rotation.x=-Math.PI/2; yrG.add(fl); }
 YRS.forEach((y,i)=>{ const c=0xff9a5a; const m=new THREE.Mesh(new THREE.BoxGeometry(4.6,1,4.6),glowMat(c,0.6)); m.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(4.6,1,4.6)),lineM(c,1))); m.position.x=(i-5)*7; yrG.add(m); ybars[y]=m; });
-function setYears(p,drop){ YRS.forEach((y,i)=>{ const k=Math.max(0,Math.min(1,p*1.5-i*0.05)); const v=RGY[y]; if(y===2020){ ybars[y].material.color.setRGB(lerp(1,1,drop),lerp(0.6,0.25,drop),lerp(0.35,0.25,drop)); ybars[y].children[0].material.color.setRGB(1,lerp(0.6,0.3,drop),lerp(0.35,0.3,drop)); }
+function setYears(p,drop){ YRS.forEach((y,i)=>{ const k=Math.max(0,Math.min(1,p*1.5-i*0.05)); const v=RGY[y]; if(y===2020){ const c0=new THREE.Color(0xff9a5a), c1=new THREE.Color(0xff3a3a); ybars[y].material.color.lerpColors(c0,c1,drop); ybars[y].children[0].material.color.lerpColors(c0,c1,drop); }
   const h=Math.max(0.01,v*30*k), m=ybars[y]; m.scale.y=h; m.position.y=h/2; proj('yr_'+y,yrG.localToWorld(V3((i-5)*7,h+2.5,0))); proj('yrb_'+y,yrG.localToWorld(V3((i-5)*7,-1.5,3))); }); }
+
+
+seed=20260502;
+// --- 红土落地扬尘、草叶（让红土和草地有实感）
+const dust=(()=>{ const n=260, g=new THREE.BufferGeometry(), pos=new Float32Array(n*3); g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const m=new THREE.PointsMaterial({color:0xd9764a,size:0.16,transparent:true,opacity:0,depthWrite:false}); const p=new THREE.Points(g,m); labG.add(p);
+  const seeds=[]; for(let i=0;i<n;i++) seeds.push([ (rnd()-0.3)*3.2, rnd()*1.6+0.4, (rnd()-0.5)*2.6 ]); return {p,m,pos,seeds}; })();
+function setDust(tau){ const ln=LANES[0]; if(tau<0||tau>1.4||!ln.ball.visible){ dust.m.opacity=0; return; }
+  dust.seeds.forEach((s,i)=>{ dust.pos[i*3]=s[0]*tau*1.6; dust.pos[i*3+1]=Math.max(0,s[1]*tau-2.2*tau*tau)+0.05; dust.pos[i*3+2]=ln.z+s[2]*tau; });
+  dust.p.geometry.attributes.position.needsUpdate=true; dust.m.opacity=Math.max(0,0.9-tau*0.7); }
+{ const ln=LANES[1], N=9000, geo=new THREE.PlaneGeometry(0.035,0.32,1,2); geo.translate(0,0.16,0);
+  const m=new THREE.MeshStandardMaterial({color:0x4f9a3c,roughness:0.8,side:THREE.DoubleSide}), blades=new THREE.InstancedMesh(geo,m,N), d=new THREE.Object3D();
+  for(let i=0;i<N;i++){ d.position.set(-20+rnd()*60,0,ln.z+(rnd()-0.5)*5.8); d.rotation.set((rnd()-0.5)*0.35,rnd()*Math.PI,(rnd()-0.5)*0.35); const k=0.6+rnd()*0.8; d.scale.set(1,k,1); d.updateMatrix(); blades.setMatrixAt(i,d.matrix);
+    blades.setColorAt(i,new THREE.Color().setHSL(0.30+rnd()*0.04,0.45+rnd()*0.15,0.30+rnd()*0.12)); }
+  labG.add(blades); }
+// --- 硬地剖面：几层丙烯酸涂层；左边颗粒大、有棱角，右边更细、更圆（Laykold：前者 M3 中速，后者 M4 中快）
+const ACR=V3(0,0,2400), acrG=new THREE.Group(); acrG.position.copy(ACR); scene.add(acrG);
+{ const layers=[[0x5b5f66,1.4,'基层'],[0x2b3138,0.5,'缓冲层'],[0x245fa8,0.25,'色层'],[0x2f73c4,0.18,'面漆']]; let y=0;
+  layers.forEach(([c,h])=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(30,h,8),new THREE.MeshStandardMaterial({color:c,roughness:0.7})); m.position.y=y+h/2; acrG.add(m); y+=h; });
+  acrG.userData.top=y; const top=y, d=new THREE.Object3D();
+  const coarse=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.11,0),new THREE.MeshStandardMaterial({color:0xd8cfb8,roughness:0.6,flatShading:true}),900);
+  const fine=new THREE.InstancedMesh(new THREE.SphereGeometry(0.045,8,6),new THREE.MeshStandardMaterial({color:0xe6dfcc,roughness:0.5}),2600);
+  for(let i=0;i<900;i++){ d.position.set(-14.5+rnd()*13.5,top+0.04,(rnd()-0.5)*7.6); d.rotation.set(rnd()*6,rnd()*6,rnd()*6); d.scale.setScalar(0.7+rnd()*0.7); d.updateMatrix(); coarse.setMatrixAt(i,d.matrix); }
+  for(let i=0;i<2600;i++){ d.position.set(1+rnd()*13.5,top+0.02,(rnd()-0.5)*7.6); d.rotation.set(0,0,0); d.scale.setScalar(0.8+rnd()*0.4); d.updateMatrix(); fine.setMatrixAt(i,d.matrix); }
+  acrG.add(coarse,fine); const div=new THREE.Mesh(new THREE.PlaneGeometry(0.06,1.2),glowMat(0xffffff,0.7)); div.position.set(0,top+0.6,4); acrG.add(div); }
+const fuzzTex=canvasTex(256,128,(g,w,h)=>{ g.fillStyle='#d6ee3c'; g.fillRect(0,0,w,h); noise(g,w,h,9000,['#c3dc2c','#e9f86a','#b5cd24'],2); });
+const acrBalls=[-1,1].map(sx=>{ const b=new THREE.Mesh(new THREE.SphereGeometry(1.4,40,28),new THREE.MeshStandardMaterial({map:fuzzTex,roughness:0.95})); acrG.add(b); return b; });
+function setAcryl(q){ const top=acrG.userData.top; acrBalls.forEach((b,i)=>{ const slow=i===0; const x0=(i===0?-13:2), dist=slow?7:11.5; const x=x0+dist*Math.min(1,q); b.position.set(x,top+1.4*0.96,0); b.rotation.z=-x/1.4*(slow?1:0.6);
+  proj(i===0?'acr_coarse':'acr_fine',acrG.localToWorld(V3(i===0?-7.5:7.5,top+5.2,0))); proj(i===0?'acr_ball0':'acr_ball1',acrG.localToWorld(V3(x,top+2.9,0))); });
+  proj('acr_layers',acrG.localToWorld(V3(-15,1.0,4))); }
+// --- 澳网逐年（2015–2026；2020 年起 GreenSet）
+const AOY={2015:1.124,2016:1.222,2017:1.156,2018:1.074,2019:1.191,2020:1.020,2021:1.189,2022:1.090,2023:1.076,2024:1.094,2025:1.103,2026:1.064};
+const AYRS=Object.keys(AOY).map(Number), aoG=new THREE.Group(); aoG.position.set(0,0,2800); scene.add(aoG); const abars={};
+{ const t=SURF.AO.clone(); t.needsUpdate=true; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(1.5,0.4);
+  const fl=new THREE.Mesh(new THREE.PlaneGeometry(96,30),new THREE.MeshStandardMaterial({map:t,roughness:0.6})); fl.rotation.x=-Math.PI/2; aoG.add(fl); }
+AYRS.forEach((y,i)=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(4.6,1,4.6),glowMat(0x7cc8ff,0.6)); m.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(4.6,1,4.6)),lineM(0x7cc8ff,1))); m.position.x=(i-5.5)*7.2; aoG.add(m); abars[y]=m; });
+function setAOYears(p,hi){ AYRS.forEach((y,i)=>{ const k=Math.max(0,Math.min(1,p*1.5-i*0.05)), h=Math.max(0.01,AOY[y]*24*k), m=abars[y]; m.scale.y=h; m.position.y=h/2;
+  const on=hi&&(y===2020||y===2021); m.material.color.set(on?0xffc04a:0x7cc8ff); m.children[0].material.color.set(on?0xffd27a:0x7cc8ff);
+  proj('ay_'+y,aoG.localToWorld(V3((i-5.5)*7.2,h+2.5,0))); proj('ayb_'+y,aoG.localToWorld(V3((i-5.5)*7.2,-1.5,3))); }); }
 
 // ---------- 后期 ----------
 const composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera));
@@ -359,12 +398,13 @@ function hideWorld(){ for(const v of venues) v.g.visible=false; Object.values(LM
 function shotTL(t){
   resetWorld(); const sec=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[TL.sections.length-1]; const u=t-sec.t0, D=sec.t1-sec.t0, k=sec.kind;
   const LX=LAB.x, LZ=LAB.z;
-  if(['lanes_all','lane_RG','lane_WIM','slow','years'].includes(k)) hideWorld();
+  const LABS={lanes_all:labG,lane_RG:labG,lane_WIM:labG,slow:sloG,years:yrG,acryl:acrG,ao_years:aoG}; [labG,sloG,yrG,acrG,aoG].forEach(g=>g.visible=(LABS[k]===g));
+  setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
-    const per=4.0, tau=cl(((u%per)-1.0)*0.55,-0.9,1.3); setLanes(tau,[1,1,1]);
-    camLook(LX+lerp(1,4,sm(u/D)),3.2,LZ+lerp(27,23,sm(u/D)),LX+3,2.2,LZ-2,38); return k; }
+    const per=4.0, tau=cl(((u%per)-1.0)*0.55,-0.9,1.3);
+    camLook(LX+lerp(1,4,sm(u/D)),3.2,LZ+lerp(27,23,sm(u/D)),LX+3,2.2,LZ-2,38); setLanes(tau,[1,1,1]); setDust(tau); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ const per=4.6, tau=cl(((u%per)-1.2)*0.45,-0.9,1.3), show=k==='lane_RG'?[1,0,0]:[1,1,0];
-    setLanes(tau,show); const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*1.5,2.4,LZ+ln.z+17,LX+3.5,2.0,LZ+ln.z,40); return k; }
+    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*1.5,2.4,LZ+ln.z+17,LX+3.5,2.0,LZ+ln.z,40); setLanes(tau,show); setDust(tau); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,140-30*q,0.9+0.5*q,6); return 'v_RG'; }
@@ -376,12 +416,15 @@ function shotTL(t){
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
     const T=f=>at(sec,f)-sec.t0, k1=T('p1'), k2=T('p2'), k3=T('p3'), k4=T('p4');
     let q; if(u<k1) q=0.25*u/k1; else if(u<k2) q=0.25+0.25*(u-k1)/(k2-k1); else if(u<k3) q=0.5+0.22*(u-k2)/(k3-k2); else if(u<k4) q=0.72+0.28*(u-k3)/(k4-k3); else q=Math.min(0.66,0.66*(u-k4)/3.0);
-    const ph=setSlow(q); const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-2,3,sm(u/D)),3.0,SZ+15,SX+1.5,1.8,SZ,30); return 'slow_'+ph; }
-  if(k==='pillars'||k==='pillars_hi'){ lineupWorld(); const g=k==='pillars'?sm((u-(at(sec,'d2')-sec.t0)+1.0)/3.5):1; setPillars(g,k==='pillars_hi'?['WIM','AO']:null);
-    camLook(0,lerp(70,58,sm(u/D)),lerp(110,96,sm(u/D)),0,16,0,36); return k; }
+    const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-2,3,sm(u/D)),3.0,SZ+15,SX+1.5,1.8,SZ,30); const ph=setSlow(q); return 'slow_'+ph; }
+  if(k==='pillars'||k==='pillars_hi'){ lineupWorld(); const g=k==='pillars'?sm((u-(at(sec,'d2')-sec.t0)+1.0)/3.5):1; 
+    camLook(0,lerp(70,58,sm(u/D)),lerp(110,96,sm(u/D)),0,16,0,36); setPillars(g,k==='pillars_hi'?['WIM','AO']:null); return k; }
   if(k==='wim'){ only('WIM'); const P=POS.WIM; orbit(P[0],P[1],150,60,2.2+0.5*u/D,6); return k; }
-  if(k==='years'){ const T=f=>at(sec,f)-sec.t0, drop=sm((u-T('r8'))/1.2); setYears(sm(u/2.0),drop); const Y=yrG.position;
-    camLook(Y.x+lerp(-8,6,sm(u/D)),30,Y.z+105,Y.x,11,Y.z,36); return k; }
+  if(k==='years'){ const T=f=>at(sec,f)-sec.t0, drop=sm((u-T('r8'))/1.2); const Y=yrG.position;
+    camLook(Y.x+lerp(-8,6,sm(u/D)),30,Y.z+105,Y.x,11,Y.z,36); setYears(sm(u/2.0),drop); return k; }
+  if(k==='acryl'){ const T=f=>at(sec,f)-sec.t0, q=sm((u-T('k3'))/4.5); const A=ACR;
+    camLook(A.x+lerp(-3,3,sm(u/D)),lerp(5.5,4.2,sm(u/D)),A.z+lerp(24,20,sm(u/D)),A.x,1.8,A.z,40); setAcryl(q); return k; }
+  if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); return k; }
   if(k==='outro'){ only(null); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
     const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); return k; }
   return k; }

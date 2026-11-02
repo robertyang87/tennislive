@@ -188,12 +188,12 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 # ---------------- 文案（锚在被讲的东西旁边） ----------------
 # (句子, 截止到哪一句开口[None=下一句], 文案, 位置)
 CAPS=[
-('h0',None,tr("同一颗球 · 同样的速度 · 同样的角度","Same ball · same speed · same angle"),('s',960,200,C,46)),
+('h0',None,tr("同一颗球 · 同样的速度 · 红土 / 草地 / 硬地","Same ball · same speed · clay / grass / hard"),('s',960,200,C,46)),
 ('h1',None,tr("弹出来，是三个不同的球","Three surfaces, three different bounces"),('s',960,200,C,46)),
 ('h2',None,tr("一年四个大满贯，像四种比赛","Four Slams a year — four different games"),('s',960,200,C,48)),
 ('s0',None,tr("法网 · 菲利普·夏蒂埃球场 · 【红土】","Roland-Garros · Court Philippe-Chatrier · 【clay】"),('s',168,900,L,42)),
 ('s1',None,tr("温网 · 中心球场 · 【草地】","Wimbledon · Centre Court · 【grass】"),('s',168,900,L,42)),
-('s2',None,tr("澳网 · 罗德·拉沃尔球场 / 美网 · 阿瑟·阿什球场 · 【硬地】","AO · Rod Laver Arena / US Open · Arthur Ashe · 【hard】"),('s',168,900,L,40)),
+('s2',None,tr("澳网 · 罗德·拉沃尔球场 / 美网 · 阿瑟·阿什球场 · 都是【硬地】，却不是同一种","AO · Rod Laver / US Open · Arthur Ashe · both 【hard】, but not the same"),('s',168,900,L,40)),
 ('s3',None,tr("同一群球员，换一块地，打法就要跟着变","Same players, different ground, different game"),('s',960,940,C,44)),
 ('q0',None,tr("地面，凭什么能左右一场比赛？","How can the ground change a match?"),('s',960,540,C,60)),
 ('p0',None,tr("落地，只有几毫秒","A bounce lasts a few milliseconds"),('s',960,200,C,46)),
@@ -202,19 +202,25 @@ CAPS=[
 ('p3',None,tr("→ 决定离地时还剩多少【水平速度】","→ sets how much 【horizontal speed】 is left"),('s',960,200,C,44)),
 ('p4',None,tr("弹性：地面把球往上【顶回去】多少","Restitution: how hard the ground 【pushes back up】"),('a','slo_nr',60,-40,L,1300,320,44)),
 ('p5',None,tr("快不快，主要看两个数：【摩擦】和【弹性】","Pace comes down to two numbers: 【friction】 and 【restitution】"),('s',960,200,C,46)),
-('p6',None,tr("国际网联评场地速度，首先看【摩擦】","The ITF rates court pace — friction first"),('s',960,200,C,44)),
-('n0',None,tr("红土：摩擦系数最高可达 【0.9】","Clay: friction coefficient up to 【0.9】"),('a','lane_RG_hit',-40,-150,R,700,300,46)),
+('p6',None,tr("国际网联 2002：场地速度评级 ＝ 100 ×（1 − 【摩擦系数】）","ITF, 2002: surface pace rating = 100 × (1 − 【friction】)"),('s',960,200,C,44)),
+('n0',None,tr("红土：球斜着落地时，摩擦系数最高可达 【0.9】","Clay: friction up to 【0.9】 at low angles"),('a','lane_RG_hit',-40,-150,R,700,300,46)),
 ('n1',None,tr("细沙 → 对鞋：像【滚珠】，能滑步","Fine grit → under shoes: 【ball bearings】"),('s',960,200,C,44)),
 ('n2',None,tr("细沙 → 对球：像【砂纸】，把球拖住","Fine grit → on the ball: 【sandpaper】"),('s',960,200,C,44)),
 ('n3',None,tr("砸出小坑，被顶得更高（竖直弹性约 【0.85】）","It digs a dent and kicks up (vertical restitution ≈ 【0.85】)"),('a','lane_RG',40,-80,L,1200,300,42)),
-('n4',None,tr("草地：摩擦只有 【0.5–0.6】，又低又快","Grass: friction only 【0.5–0.6】 — low and fast"),('a','lane_WIM',40,-90,L,1200,300,44)),
-('n5',None,tr("硬地：介于两者之间（竖直弹性约 【0.75】）","Hard courts: in between (restitution ≈ 【0.75】)"),('s',960,200,C,44)),
+('n4',None,tr("温网草地：摩擦只有 【0.5–0.6】，又低又快","Wimbledon grass: friction only 【0.5–0.6】 — low and fast"),('a','lane_WIM',40,-90,L,1200,300,44)),
 ('d0',None,tr("理论 vs 比赛数据","Theory vs match data"),('s',960,975,C,50)),
 ('d1',None,tr("1991 年以来 ATP 技术统计 · 给四大满贯算【发球指数】","ATP match stats since 1991 · a 【serve index】 for each Slam"),('s',960,975,C,42)),
-('d2',None,tr("指数 > 1：发球在这里比平时【更占便宜】","Index > 1: serving is 【easier】 here than usual"),('s',960,975,C,44)),
+('d2',None,tr("指数 > 1：这里的 ACE，比按球员平时水平预计的【更多】","Index > 1: 【more aces】 than the players’ usual level predicts"),('s',960,975,C,44)),
 ('d3',None,tr("近十年（2015–2026）","Last decade (2015–2026)"),('s',960,975,C,44)),
-('r1',None,tr("论摩擦，草地最快；按 ACE 算，最占便宜的是【澳网】","By friction, grass is fastest; by aces, 【the AO】 gives most"),('s',960,975,C,42)),
+('r1',None,tr("论摩擦，温网草地最快；按 ACE 算，近十年最占便宜的是【澳网】","By friction, Wimbledon grass is fastest; by aces, 【the AO】 leads"),('s',960,975,C,42)),
 ('r2',None,tr("「低角度更快的场地，高角度不一定更快」—— Cross, 2003","“A court faster at low angles isn’t necessarily faster at high ones” — Cross, 2003"),('s',960,975,C,38)),
+('k0',None,tr("澳网和美网：为什么也不一样快？","AO vs US Open: why aren’t they equally fast?"),('s',960,975,C,46)),
+('k1',None,tr("硬地 ＝ 刷在地面上的几层【丙烯酸涂层】，像油漆","A hard court = layers of 【acrylic coating】, like paint"),('a','acr_layers',40,-60,L,300,800,42)),
+('k2',None,tr("快慢，看最上面那层漆里掺的【沙子】","Pace comes from the 【sand】 in the top coat"),('s',960,975,C,44)),
+('k3',None,tr("美网面层厂家 Laykold：大而有棱角的沙 → 中速；细而圆的沙 → 中快","US Open supplier Laykold: big angular sand → medium; fine round sand → medium-fast"),('s',960,975,C,36)),
+('k4',None,tr("澳网用 GreenSet 的涂层，每年还能改变粗糙程度","The AO uses GreenSet’s coating — its grit can be tuned year to year"),('s',960,975,C,40)),
+('k5',None,tr("2021：德约说「15 年来最快」；赛事方：赛前检测和上一年差不多","2021: Djokovic — fastest in his 15 years; organisers — tests similar to last year"),('s',960,975,C,36)),
+('k6',None,tr("发球指数：2020 年 【1.02】 → 2021 年 【1.19】","Serve index: 【1.02】 in 2020 → 【1.19】 in 2021"),('s',960,975,C,44)),
 ('r3',None,tr("传言：温网 2001 年换了草种，变慢了","The story: Wimbledon slowed after a 2001 grass change"),('s',960,200,C,44)),
 ('r4',None,tr("温网官方：改为 100% 黑麦草是为耐磨，「不影响场地的体感速度」","Wimbledon: 100% ryegrass for durability, “without affecting the perceived speed”"),('s',960,200,C,38)),
 ('r5',None,tr("我们的数据：看不出温网变慢","Our data: no sign Wimbledon slowed"),('s',960,200,C,44)),
@@ -252,6 +258,17 @@ def draw(c,t,an):
         v=an.get('pil_ref')
         if onscreen(v,10): text(c,tr("1.00 = 平时水平","1.00 = usual"),v[0]+10,v[1]-10,22,GRAY,a,SANS,align='l')
         text(c,tr("发球指数 ＝ 实际 ACE ÷ 按发球人、接发人当年水平算出的期望值；数据：Sackmann 公开数据，ATP 男单","Serve index = actual aces ÷ expected from each server’s and returner’s season; data: Sackmann, ATP men"),960,1062,18,GRAY,a*0.9,SANSR)
+    if k=='acryl' and t>=AT['k2']:
+        for key,lab in (('acr_coarse',tr('大、有棱角 → 抓住绒毛 → 慢','Big, angular → grabs the felt → slower')),('acr_fine',tr('细、圆 → 抓得少 → 快','Fine, round → less grip → faster'))):
+            v=an.get(key)
+            if onscreen(v,20): text(c,lab,v[0],v[1],30,GOLD if key=='acr_coarse' else CYAN,a,SANS,glow=0.3)
+    if k=='ao_years':
+        for y in range(2015,2027):
+            v=an.get('ay_%d'%y); vb=an.get('ayb_%d'%y); hl=(y in (2020,2021) and t>=AT['k6']-0.2)
+            val={2015:1.124,2016:1.222,2017:1.156,2018:1.074,2019:1.191,2020:1.020,2021:1.189,2022:1.090,2023:1.076,2024:1.094,2025:1.103,2026:1.064}[y]
+            if onscreen(v,10): text(c,f"{val:.2f}",v[0],v[1],26,GOLD if hl else WHITE,a,MONO)
+            if onscreen(vb,10): text(c,str(y),vb[0],vb[1]+30,24,GOLD if hl else GRAY,a,SANS)
+        text(c,tr("澳网发球指数（2020 年起 GreenSet 涂层）","AO serve index (GreenSet coating from 2020)"),960,1062,20,GRAY,a*0.9,SANSR)
     if k=='years':
         for y,val in RGY.items():
             v=an.get('yr_%d'%y); vb=an.get('yrb_%d'%y)

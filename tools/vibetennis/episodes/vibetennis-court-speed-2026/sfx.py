@@ -155,7 +155,7 @@ def EN(t,x,g=1.0,pan=0.0,name=None): place(x,t,g,pan=pan,name=name)
 def lane_bounces(sec,per,lead,gain=0.7):
     t=sec['t0']+lead
     while t<sec['t1']-0.2: EN(t,bounce(0.8),gain,name='bounce-'+sec['name']); EN(t,crackle(0.25,300),0.25); t+=per
-for name in ('hook','hard'): lane_bounces(SEC[name],4.0,1.0)
+lane_bounces(SEC['hook'],4.0,1.0)
 lane_bounces(SEC['clay'],4.6,1.2); lane_bounces(SEC['grass'],4.6,1.2)
 for s in TL['sections'][1:]: EN(s['t0']-0.25,swish(0.9,400,2600),0.35,name='cut-'+s['name'])
 # 场馆：每换一座一记过场；法网顶棚打开时一段低沉的机械运转
@@ -168,6 +168,10 @@ EN(NAR['p2']+1.0,click(),0.7,name='grip'); EN(NAR['p3'],swish(0.8,300,3000),0.4,
 # 数据：光柱升起、刻度、高亮
 d=SEC['data']; EN(NAR['d2']-1.0,riser(3.4),0.45,name='pillars-rise'); EN(NAR['d3'],number_pop(),0.5,name='values')
 EN(NAR['r1'],ding(1320),0.4,name='ao-hi'); EN(NAR['r3'],glitch(0.6),0.5,name='rumor'); EN(NAR['r4'],panel(),0.4,name='official')
+h=SEC['hard']; EN(h['t0']+0.3,hit(),0.4,name='hardcourt'); EN(NAR['k2'],crackle(1.5,500),0.6,name='sand'); EN(NAR['k3']+0.3,slide(4.5),0.8,name='slide-coarse'); EN(NAR['k3']+0.3,crackle(4.5,220),0.5)
+ao=SEC['aoy']
+for i in range(12): EN(ao['t0']+0.2+i*0.12,tick(),0.5)
+EN(NAR['k6'],number_pop(),0.6,name='ao-2021'); EN(NAR['k6'],ding(990),0.4)
 y=SEC['rev3']
 for i in range(11): EN(y['t0']+0.2+i*0.12,tick(),0.5)
 EN(NAR['r8'],number_pop(),0.6,name='2020-low'); EN(NAR['r8'],ding(660),0.4)
