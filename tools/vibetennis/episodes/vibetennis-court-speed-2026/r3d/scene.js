@@ -156,11 +156,12 @@ const FACADE={
 };
 for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.set(5,1); }
 
+// 温网：所有者 2026-11-02「长边更长一些，现在看起来像正方形」——127×110 m 的外轮廓带切角后读成方形，长边沿球场方向（和顶棚收在南北两端一致），长短边比放大到 1.34
 // 美网：所有者 2026-11-02「看台围成的也是八边形，不是圆形」
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
   {k:'RG', shape:'box',  rx:54.5,rz:54.5,H:30, glow:0xffa070, seat:0x9aa0a6},
-  {k:'WIM',shape:'chamf',rx:63.5,rz:55,H:22, glow:0x8dffa0, seat:0x1f4a2c},
+  {k:'WIM',shape:'chamf',rx:53,rz:71,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'rr',rx:55.5,rz:63,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
   {k:'USO',shape:'oct',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
@@ -608,7 +609,7 @@ MSH.q=textShape(EN?'How can the ground change a match?':'地面，凭什么能�
 MSH.idx=textShape(EN?'SERVE INDEX':'发球指数',SERIF,EN?30:24,CGOLD);
 MSH.mu9=textShape('μ  0.9',NUMF,16,CCLAY);
 MSH.mu56=textShape('μ  0.5–0.6',NUMF,22,CGRASS);
-MSH.four=textShape(EN?'Four surfaces · four games':'四块地 · 四种比赛',SERIF,EN?40:34,CWHITE);
+MSH.four=textShape(EN?'Four courts, four games':'四块场地，四种比赛',SERIF,EN?40:36,CWHITE);
 MSH.end=textShape(EN?'The ground is a player too':'球场的地面，也是比赛的一方',SERIF,EN?44:38,CGOLD);
 const ioe=x=>{x=cl(x); return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
 // keys：[[时刻,形状,过渡秒数,旋涡],...]；mz 为离镜头的距离，my 为上下偏移
@@ -740,7 +741,7 @@ function shotTL(t){
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],105-20*q,265-15*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
-    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95-15*q,250,0.7+0.6*q,0); return 'v_WIM'; }
+    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],100-15*q,290,0.7+0.6*q,0); return 'v_WIM'; }
     if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95,265,1.0+0.4*q,0); return 'v_AO'; }
     if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],115,320,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); setBowl(V3(0,0,0),1); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
