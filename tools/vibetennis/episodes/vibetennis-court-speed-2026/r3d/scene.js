@@ -315,9 +315,12 @@ function setLanes(tau,show){ LANES.forEach((ln,i)=>{ ln.ball.visible=ln.trail.vi
   if(show[i]){ const w=labG.localToWorld(lanePos(ln,Math.min(tau,0.75)).clone()); proj('lane_'+ln.k,w); proj('lane_'+ln.k+'_hit',labG.localToWorld(V3(0,0,ln.z))); } }); }
 // --- 落地慢镜：一个大球压在地面上，先滑后咬住；摩擦（金）向后、支持力（青）向上
 const SLO=V3(0,0,1600), sloG=new THREE.Group(); sloG.position.copy(SLO); scene.add(sloG);
-{ const t=SURF.AO.clone(); t.needsUpdate=true; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(0.6,0.6);
-  const fl=new THREE.Mesh(new THREE.PlaneGeometry(40,24),new THREE.MeshStandardMaterial({map:t,roughness:0.75})); fl.rotation.x=-Math.PI/2; sloG.add(fl); }
-const BR=2.0, bigBall=new THREE.Group(); sloG.add(bigBall);
+{ // 所有者：球太大、地面不够宽也不够深——地面铺到很远（240×160），只留一条白线做参照，往远处渐隐进黑底
+  const t=canvasTex(1024,1024,(g,w,h)=>{ g.fillStyle='#2f8fc8'; g.fillRect(0,0,w,h); noise(g,w,h,60000,['rgba(255,255,255,0.05)','rgba(0,0,0,0.06)'],1.4); }); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(24,16);
+  const fade=canvasTex(16,512,(g,w,h)=>{ const gr=g.createLinearGradient(0,0,0,h); gr.addColorStop(0,'#000'); gr.addColorStop(0.30,'#000'); gr.addColorStop(0.52,'#fff'); gr.addColorStop(1,'#fff'); g.fillStyle=gr; g.fillRect(0,0,w,h); }); fade.colorSpace=THREE.NoColorSpace;
+  const fl=new THREE.Mesh(new THREE.PlaneGeometry(240,160),new THREE.MeshStandardMaterial({map:t,alphaMap:fade,transparent:true,roughness:0.75})); fl.rotation.x=-Math.PI/2; sloG.add(fl);
+  const ln=new THREE.Mesh(new THREE.PlaneGeometry(120,0.35),new THREE.MeshBasicMaterial({color:0xf2f6f8,alphaMap:fade,transparent:true})); ln.rotation.x=-Math.PI/2; ln.position.set(0,0.01,2.6); sloG.add(ln); }
+const BR=1.3, bigBall=new THREE.Group(); sloG.add(bigBall);
 { const tex=canvasTex(512,256,(g,w,h)=>{ g.fillStyle='#d6ee3c'; g.fillRect(0,0,w,h); noise(g,w,h,30000,['#c8e030','#e2f55a','#b9d128'],2); g.strokeStyle='#f6f8ee'; g.lineWidth=10; g.beginPath(); for(let x=0;x<=w;x+=4){ const y=h/2+Math.sin(x/w*Math.PI*4)*h*0.28; x?g.lineTo(x,y):g.moveTo(x,y);} g.stroke(); });
   bigBall.add(new THREE.Mesh(new THREE.SphereGeometry(BR,48,32),new THREE.MeshStandardMaterial({map:tex,roughness:0.85}))); }
 function arrow(col){ const g=new THREE.Group(); const m=glowMat(col,0.95); const sh=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.09,1,10),m); sh.position.y=0.5; const hd=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.6,16),m); hd.position.y=1.15; g.add(sh,hd); g.userData={sh,hd}; sloG.add(g); return g; }
@@ -334,7 +337,7 @@ function setSlow(q){ const xIn=-9, ang=16*Math.PI/180; let x,y,sq=1,rot,phase;
   // 旋转：滑动时转得比滚动慢，咬住后转速追上
   rot=-(phase==='in'?0: phase==='slide'?(x)*0.25/BR : phase==='grip'?(1.6*0.25+(x-1.6))/BR : (1.6*0.25+0.9+(x-2.5)*0.8)/BR); bigBall.rotation.z=rot;
   const fr=phase==='slide'?3.2:phase==='grip'?1.6*(1-(q-0.5)/0.22)+0.4:0, nr=(phase==='slide'||phase==='grip')?4.2:0;
-  arF.position.set(x,0.25,1.2); setArrow(arF,fr); arN.position.set(x,0.05,-1.2); setArrow(arN,nr);
+  arF.position.set(x,0.25,1.2); setArrow(arF,fr*0.75); arN.position.set(x,0.05,-1.2); setArrow(arN,nr*0.7);
   patch.position.x=x; patch.material.opacity=(phase==='slide'||phase==='grip')?0.75:0; patch.material.color.set(phase==='grip'?0x5fe0ff:0xffb347);
   proj('slo_ball',sloG.localToWorld(V3(x,y+BR,0))); proj('slo_contact',sloG.localToWorld(V3(x,0,0))); proj('slo_fr',sloG.localToWorld(V3(x-fr-0.4,0.25,1.2))); proj('slo_nr',sloG.localToWorld(V3(x,nr+0.6,-1.2)));
   return phase; }
@@ -475,7 +478,7 @@ function shotTL(t){
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
     const T=f=>at(sec,f)-sec.t0, k1=T('p1'), k2=T('p2'), k3=T('p3'), k4=T('p4');
     let q; if(u<k1) q=0.25*u/k1; else if(u<k2) q=0.25+0.25*(u-k1)/(k2-k1); else if(u<k3) q=0.5+0.22*(u-k2)/(k3-k2); else if(u<k4) q=0.72+0.28*(u-k3)/(k4-k3); else q=Math.min(0.66,0.66*(u-k4)/3.0);
-    const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-2,3,sm(u/D)),3.0,SZ+15,SX+1.5,1.8,SZ,30); const ph=setSlow(q); return 'slow_'+ph; }
+    const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-1.5,2.5,sm(u/D)),4.6,SZ+13,SX+1.2,0.9,SZ-1,32); const ph=setSlow(q); return 'slow_'+ph; }
   if(k==='pillars'||k==='pillars_hi'){ lineupWorld(); const g=k==='pillars'?sm((u-(at(sec,'d2')-sec.t0)+1.0)/3.5):1; 
     camLook(0,lerp(70,58,sm(u/D)),lerp(110,96,sm(u/D)),0,16,0,36); setPillars(g,k==='pillars_hi'?['WIM','AO']:null); return k; }
   if(k==='wim'){ only('WIM'); const P=POS.WIM; orbit(P[0],P[1],150,60,2.2+0.5*u/D,6); return k; }
