@@ -197,6 +197,11 @@ for i,tm in enumerate(st): EN(tm+0.05,zap(300,2400,1.6),0.35,name='scan-build-%d
 EN(NAR['p2'],hum(NAR['p3']-NAR['p2'],98),0.8,name='orbit-drone'); EN(NAR['p2'],freeze_in(),0.4)
 EN(NAR['r7'],wind(SEC['rev3']['t1']-NAR['r7']),0.9,name='cold-wind'); EN(NAR['r8'],glitch(0.6),0.6,name='glitch-2020'); EN(NAR['r8'],sub_boom(),0.5)
 
+# 地球：拉远的呼啸，四站依次亮起的叮声（与 scene.js setGlobe 的节奏一致），片尾拉回地球
+D=H['t1']-H['t0']; EN(H2-0.05,swish(1.4,200,2400),0.5,name='to-globe'); EN(H2,boom(2.5),0.3)
+for i,f in enumerate((880,1047,1175,1319)): EN(H2+0.15+(i/4)*(D-(H2-H['t0'])-1.0)+0.05,ding(f),0.45,name='city-%d'%i)
+EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([1047,1319,1568],0.16,0.35),0.5,name='loop-closed')
+
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')

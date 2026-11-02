@@ -262,8 +262,17 @@ def reticle(c,x,y,t,a,lab):  # 全息瞄准环：两圈反向转的刻度＋十�
     c.drawCircle(x,y,60,P(CYAN,a*0.35,stroke=1.5))
     for dx,dy in ((1,0),(-1,0),(0,1),(0,-1)): c.drawLine(x+dx*20,y+dy*20,x+dx*44,y+dy*44,P(CYAN,a*0.8,stroke=2))
     text(c,lab,x+120,y-84,22,CYAN,a,SANS,align='l',glow=0.4)
+CITYLAB={'AO':(tr("1 月","JAN"),tr("墨尔本 · 澳网","Melbourne · AO"),(0.45,0.8,1.0)),'RG':(tr("5–6 月","MAY–JUN"),tr("巴黎 · 法网","Paris · Roland-Garros"),(1.0,0.6,0.35)),
+ 'WIM':(tr("6–7 月","JUN–JUL"),tr("伦敦 · 温网","London · Wimbledon"),(0.55,1.0,0.6)),'USO':(tr("8–9 月","AUG–SEP"),tr("纽约 · 美网","New York · US Open"),(0.5,0.62,1.0))}
+def citylabels(c,an):
+    for k,(m,lab,col) in CITYLAB.items():
+        v=an.get('city_'+k); on=an.get('city_on_'+k,0)
+        if on and on>0.02 and onscreen(v,40):
+            dx=36 if k in ('AO','USO') else -36; al='l' if dx>0 else 'r'
+            c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]-26,P(col,on*0.8,stroke=1.5))
+            text(c,m,v[0]+dx,v[1]-34,30,col,on,MONO,align=al,glow=0.4); text(c,lab,v[0]+dx,v[1]-4,22,WHITE,on*0.9,SANS,align=al)
 def draw(c,t,an):
-    brand(c); chapter(c,t); s=sec_of(t)
+    brand(c); chapter(c,t); citylabels(c,an); s=sec_of(t)
     if s['kind']=='slow' and AT['p2']<=t<AT['p3']:
         v=an.get('slo_reticle')
         if onscreen(v,10): reticle(c,v[0],v[1],t,min(1,(t-AT['p2'])/0.4,(AT['p3']-t)/0.4),tr("接触点 · 锁定","CONTACT · LOCKED"))
