@@ -1,6 +1,6 @@
 {
  "slug": "vibetennis-court-speed-2026",
- "_status": "EP05 制作中：资料包 papers/vibetennis-court-speed-2026/sources.md；3D、叠加层、音效、配音在 tools/vibetennis/episodes/vibetennis-court-speed-2026/（plan.py 按配音排时间轴）。",
+ "_status": "EP05：资料包 papers/vibetennis-court-speed-2026/sources.md；3D、叠加层、音效、配音在 tools/vibetennis/episodes/vibetennis-court-speed-2026/（plan.py 按配音排时间轴）。",
  "_column": "vibetennis 第 5 集：为什么红土慢、草地快？四大满贯中心球场（按实拍照片自建）→ 落地那几毫秒「先滑、后咬住」（Cross 2003/2008）→ 三种地面的摩擦与弹性 → 自算的四大满贯发球指数（Sackmann ATP 数据）→ 三个反转：按 ACE 澳网最多、温网「变慢」官方否认且数据看不出、2020 秋季法网近十年最低。",
  "column": "vibetennis",
  "pipeline": "tools/vibetennis",
@@ -13,7 +13,7 @@
   "cover_in_film": false,
   "outro_seconds": 0,
   "captions": "anchored（只用画面上的锚定文案，不加底部配音字幕，同 EP04）",
-  "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03/EP04）；配音稿 narration.json（43 句，plan.py 按实测时长落位，最晚 0.0 s）；合成文本数字写汉字、ACE 读「爱斯」；「弹」字在三处改写（飞出来 / 离地时 / 被顶得更高）、「调」改「改变」，避免读错；字幕保持阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
+  "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03/EP04）；配音稿 narration.json（43 句，plan.py 按实测时长落位，最晚 0.0 s）；合成文本数字写汉字、ACE 直接写英文（编辑规矩「ACE 不写中文」，实测读成一个音节）；「弹」字在三处改写（飞出来 / 离地时 / 被顶得更高）、「调」改「改变」，避免读错；字幕保持阿拉伯数字。英文版不配音（docs/vibetennis.md §8）。",
   "audio": {
    "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04），从 0.309 s 起取、片尾 3 s 淡出",
    "sfx": "sfx.py 合成，事件对齐 r3d/timeline.json（每次落地、顶棚打开、慢镜的滑与咬住、光柱升起、2020 高亮）",
