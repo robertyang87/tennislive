@@ -1,186 +1,1086 @@
 {
   "version": 2,
-  "key": "d0aae7c368e9d27bd36eef1cf0c63af71dc24f36d8d176a2419d8818d75dcd41",
-  "sha256": "cde80eb005699e5d16edc79913cc6b5b65f343cb5fce0e9711fc091997427504",
-  "seconds": 11.36,
+  "key": "e83def1f1ebe99b9a8fb56ed0e1ad162cbd457e15bc36fba21566cb1ce3338f7",
+  "sha256": "9ee5c79044141521d86951380157c402ad03f29dee7d938246be7cb803b66479",
+  "seconds": 11.04,
   "fps": "25",
   "size": [
     1080,
     1440
   ],
   "plan": {
-    "canvas_width": 1080,
-    "kind": "chronology",
-    "lines": [
-      "同一座球场",
-      "再遇弗里茨"
-    ],
-    "font_px": 96,
-    "nodes": [
-      {
-        "label": "第一盘",
-        "value": "7-6⁵",
-        "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-      },
-      {
-        "label": "第二盘",
-        "value": "6-3",
-        "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-      }
-    ],
-    "direction": "vertical",
-    "groups": [],
-    "proof_h": 280,
-    "node_height": 140,
-    "kicker_y": 363.12,
-    "headline_y": 447.12,
-    "proof_y": 760.88,
-    "safe_bottom": 1244,
-    "photo": null,
-    "highlight": "",
-    "kicker": "2026 巴塞尔半决赛",
+    "kind": "scene",
     "content": {
-      "events": [
+      "scene": {
+        "blocks": [
+          {
+            "kind": "headline",
+            "start": 0,
+            "duration": 11.04,
+            "lines": [
+              "巴塞尔三关",
+              "再次接近决赛"
+            ],
+            "source": "https://github.com/robertyang87/tennislive/blob/main/specs/reels/vacherot-shanghai-one-year.json",
+            "kicker": "03 第二座奖杯",
+            "frame": [
+              70,
+              240,
+              940,
+              360
+            ]
+          },
+          {
+            "kind": "nodes",
+            "start": 0.8,
+            "duration": 10.24,
+            "nodes": [
+              {
+                "label": "第一轮 纳沃内",
+                "value": "6-3 7-6⁴",
+                "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+              },
+              {
+                "label": "第二轮 霍达尔",
+                "value": "7-6⁴ 2-6 7-6⁵",
+                "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+              },
+              {
+                "label": "1/4决赛 鲁内",
+                "value": "6-3 3-6 6-3",
+                "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+              }
+            ],
+            "source": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+            "frame": [
+              90,
+              640,
+              900,
+              500
+            ]
+          }
+        ]
+      }
+    },
+    "canvas_width": 1080,
+    "safe_bottom": 1244
+  },
+  "browser_evidence": [
+    {
+      "time": 0.5,
+      "visible_text": [
         {
-          "label": "第一盘",
-          "value": "7-6⁵",
-          "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 267.39312744140625,
+            "width": 940,
+            "height": 45.996002197265625,
+            "top": 267.39312744140625,
+            "right": 1010,
+            "bottom": 313.3891296386719,
+            "left": 70
+          }
         },
         {
-          "label": "第二盘",
-          "value": "6-3",
-          "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 365.7571105957031,
+            "width": 940,
+            "height": 97.76296997070312,
+            "top": 365.7571105957031,
+            "right": 1010,
+            "bottom": 463.52008056640625,
+            "left": 70
+          }
         }
       ]
     },
-    "notes": []
-  },
-  "browser_evidence": {
-    "boxes": [
-      {
-        "text": "同一座球场",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 447.109375,
+    {
+      "time": 1.656,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
           "width": 940,
-          "height": 122.875,
-          "top": 447.109375,
-          "right": 1010,
-          "bottom": 569.984375,
-          "left": 70
-        }
-      },
-      {
-        "text": "再遇弗里茨",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 569.984375,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
           "width": 940,
-          "height": 122.875,
-          "top": 569.984375,
-          "right": 1010,
-          "bottom": 692.859375,
-          "left": 70
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865.017333984375,
+            "width": 212,
+            "height": 49,
+            "top": 865.017333984375,
+            "right": 380,
+            "bottom": 914.017333984375,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865.017333984375,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865.017333984375,
+            "right": 970,
+            "bottom": 914.017333984375,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 982.769775390625,
+            "width": 195,
+            "height": 48.95751953125,
+            "top": 982.769775390625,
+            "right": 363,
+            "bottom": 1031.727294921875,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 982.769775390625,
+            "width": 209,
+            "height": 48.95751953125,
+            "top": 982.769775390625,
+            "right": 970,
+            "bottom": 1031.727294921875,
+            "left": 761
+          }
         }
-      },
-      {
-        "text": "第一盘",
-        "width": 84,
-        "scroll": 84,
-        "rect": {
-          "x": 130,
-          "y": 810.78125,
-          "width": 84,
-          "height": 39.1875,
-          "top": 810.78125,
-          "right": 214,
-          "bottom": 849.96875,
-          "left": 130
+      ]
+    },
+    {
+      "time": 2.3360000000000003,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
         }
-      },
-      {
-        "text": "7-6⁵",
-        "width": 75,
-        "scroll": 75,
-        "rect": {
-          "x": 879.40625,
-          "y": 805.375,
-          "width": 74.59375,
-          "height": 50,
-          "top": 805.375,
-          "right": 954,
-          "bottom": 855.375,
-          "left": 879.40625
+      ]
+    },
+    {
+      "time": 5.52,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
         }
-      },
-      {
-        "text": "第二盘",
-        "width": 84,
-        "scroll": 84,
-        "rect": {
-          "x": 130,
-          "y": 950.78125,
-          "width": 84,
-          "height": 39.1875,
-          "top": 950.78125,
-          "right": 214,
-          "bottom": 989.96875,
-          "left": 130
+      ]
+    },
+    {
+      "time": 5.92,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
         }
-      },
-      {
-        "text": "6-3",
-        "width": 58,
-        "scroll": 58,
-        "rect": {
-          "x": 896,
-          "y": 945.375,
-          "width": 58,
-          "height": 50,
-          "top": 945.375,
-          "right": 954,
-          "bottom": 995.375,
-          "left": 896
+      ]
+    },
+    {
+      "time": 9.383999999999999,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
         }
-      }
-    ],
-    "content": [
-      {
-        "x": 345,
-        "y": 363.109375,
-        "width": 390,
-        "height": 56,
-        "top": 363.109375,
-        "right": 735,
-        "bottom": 419.109375,
-        "left": 345
-      },
-      {
-        "x": 70,
-        "y": 447.109375,
-        "width": 940,
-        "height": 245.75,
-        "top": 447.109375,
-        "right": 1010,
-        "bottom": 692.859375,
-        "left": 70
-      },
-      {
-        "x": 90,
-        "y": 760.875,
-        "width": 900,
-        "height": 280,
-        "top": 760.875,
-        "right": 990,
-        "bottom": 1040.875,
-        "left": 90
-      }
-    ],
-    "story": null
-  },
+      ]
+    },
+    {
+      "time": 9.504000000000001,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
+        }
+      ]
+    },
+    {
+      "time": 10.84,
+      "visible_text": [
+        {
+          "text": "03 第二座奖杯",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 266.203125,
+            "width": 940,
+            "height": 46,
+            "top": 266.203125,
+            "right": 1010,
+            "bottom": 312.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "巴塞尔三关",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 352.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 352.203125,
+            "right": 1010,
+            "bottom": 451,
+            "left": 70
+          }
+        },
+        {
+          "text": "再次接近决赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 475,
+            "width": 940,
+            "height": 98.796875,
+            "top": 475,
+            "right": 1010,
+            "bottom": 573.796875,
+            "left": 70
+          }
+        },
+        {
+          "text": "第一轮 纳沃内",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 751,
+            "width": 212,
+            "height": 49,
+            "top": 751,
+            "right": 380,
+            "bottom": 800,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 7-6⁴",
+          "scroll": 147,
+          "width": 147,
+          "rect": {
+            "x": 823,
+            "y": 751,
+            "width": 147,
+            "height": 49,
+            "top": 751,
+            "right": 970,
+            "bottom": 800,
+            "left": 823
+          }
+        },
+        {
+          "text": "第二轮 霍达尔",
+          "scroll": 212,
+          "width": 212,
+          "rect": {
+            "x": 168,
+            "y": 865,
+            "width": 212,
+            "height": 49,
+            "top": 865,
+            "right": 380,
+            "bottom": 914,
+            "left": 168
+          }
+        },
+        {
+          "text": "7-6⁴ 2-6 7-6⁵",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 737.015625,
+            "y": 865,
+            "width": 232.984375,
+            "height": 49,
+            "top": 865,
+            "right": 970,
+            "bottom": 914,
+            "left": 737.015625
+          }
+        },
+        {
+          "text": "1/4决赛 鲁内",
+          "scroll": 195,
+          "width": 195,
+          "rect": {
+            "x": 168,
+            "y": 979,
+            "width": 195,
+            "height": 49,
+            "top": 979,
+            "right": 363,
+            "bottom": 1028,
+            "left": 168
+          }
+        },
+        {
+          "text": "6-3 3-6 6-3",
+          "scroll": 209,
+          "width": 209,
+          "rect": {
+            "x": 761,
+            "y": 979,
+            "width": 209,
+            "height": 49,
+            "top": 979,
+            "right": 970,
+            "bottom": 1028,
+            "left": 761
+          }
+        }
+      ]
+    }
+  ],
   "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
 }

@@ -1,0 +1,65 @@
+{
+  "source": "tokyo",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4585425/4585425.mp4",
+  "source_sha256": "183b22e7ffe9507ec0184d2f972877bb1216df9bce3aff0d8121c464ea031c7a",
+  "method": "asr_cross_checked",
+  "reviewer": "earlier_rounds independent agent and root; fixed-source multi-model transcription cross-check plus native source/crop inspection; no human listening claimed",
+  "reviewed_at": "2026-11-02T12:15:14.016606+00:00",
+  "status": "complete",
+  "uncertain_spans": [],
+  "reviewed_from": 0,
+  "reviewed_to": 12.1,
+  "foreground_english": [],
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-opening-small.en.json",
+      "sha256": "ebab17174278d72cc18719c951f955f41395daff1f10f9f5ab5f71fc88e75565"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-opening-base.en.json",
+      "sha256": "6345b70200969e3061257ac6dbc0ed816e9f2ba0ade6f724fb93f6c7ee10bc9c"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-opening-medium.en.json",
+      "sha256": "18ef0eb2bbe8d7edd07904909c4b4d735922f50752488df71d0b07731b5f98be"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-opening-vad-base.en.json",
+      "sha256": "18ac45a59ee6684522f604c0fe6b8bb36db06915f1b39d906723ef97b848458b"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-opening-vad-small.en.json",
+      "sha256": "1a6a6487c65a984dd8886f374fe99f9519a10c38e67a1afd2df494fe47e055fe"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-extended-12p1-small.en.json",
+      "sha256": "c9e7db833a3372a2d768a7a2bd1499231f10ce682e089a9383c2a15f1b4a327e"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-extended-12p1-medium.en.json",
+      "sha256": "36d9dbb1a87291542cc7e79210665f3243e53115f4c03db1f1037ad4b5e1b9c4"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-extended-12p1-vad-small.en.json",
+      "sha256": "f3d2fb4fb146e9a122ac3d0c69ca53e36c485334f7e4a48fedf45e09798bc264"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-tokyo-review-extended-12p1-vad-medium.en.json",
+      "sha256": "e7457441b786671fb1bd3c0f601142f901e1fff475637a68837e7dae42d4d1a3"
+    }
+  ],
+  "review_notes": [
+    "small noVAD genericThanksforwatching hasThanksprob.004; baseYouprob.013; medium blank, fullsourceandVADcrosschecks confirm no reliableEnglishwithin0–11.4. These are recorded ASRhallucinations, not silentlydeletedraw.",
+    "Openingordinarypoint at1-1: Vacherotnearserves frominitialpreparation, rally finishes~9s thenwalkaway; no nextpoint liveball beforeend+0.5s11.3. Nativecropchecked0,2.5,3.5,5.5,7.5,8.5,9.5,10.5; nearplayerbrieflynearleftedge~7.5 butvisible. This isillustrativeR2action, notSF ormatchpoint.",
+    "Extension toproduction0–11.6 andactualsource+0.5stail12.1 independentlychecked onfixedsource. Decodedactualsource10.8–12.8 at10fps: sourceinternalcut~11.2 enters nextpointpreparation; at12.1 theplayerispreparing/raisingarm, andchecked12.75stillprecontact. No secondpoint liveball isentered by12.1. Thisbriefpreparation is not representedaspartofthepreviousrally.",
+    "Freshsmall.en/medium.en noVAD againstfixed0–12.1 generatedgenericThanksforwatching; firstwordprobabilities.003497/.015583, withmediumentirephrasecollapsedinto11.78–11.96 (0.18s). BothareASRhallucinations, retainedverbatiminraw. Freshsame2modelswithVAD againstentirefixed0–12.1 bothreturnedemptysegments. Crosscheckedwithpriorfullandfocusedsourceevidence, no reliableforegroundEnglish found; nohumanlisteningclaimed.",
+    "Actualboundarycontactsheet /workspace/scratch/vacherot-year-footage/tokyo/fixed/extended-boundary.jpg; prior11.3packetpreservedat /workspace/scratch/vacherot-year-footage/tokyo/fixed/reviewed-year-tokyo-before-12p1.json."
+  ],
+  "no_foreground_english_reason": "Production0–11.6plus0.5stailthrough12.1 crosscheckedwithfreshfixedsmall/mediumASR withandwithoutVAD. No reliableforegroundEnglish; genericlowprobability/temporallyimpossibleThanksforwatching outputs explicitlyretainedandrejected. Actualboundaryframes shownextpointpreparationonly, no secondservecontact/liveball by12.1.",
+  "production_window": {
+    "source_start": 0,
+    "source_end": 11.6,
+    "source_tail_seconds": 0.5,
+    "reviewed_through": 12.1
+  }
+}

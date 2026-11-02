@@ -1,0 +1,60 @@
+{
+  "schema": "story-source-candidate-visual-review.v1",
+  "source_key": "ao",
+  "source_video_id": "6388215420112",
+  "reviewed_local_source": "/workspace/scratch/vacherot-year-revision/extra-photos/ao-2026-r3-shelton-vacherot.mp4",
+  "reviewed_source_sha256": "2a9574ea6e96c3af5e2420e9b8cda768d315756d74e4c89a0578b3b1f324b4e3",
+  "official_identity": "Ben Shelton v Valentin Vacherot Highlights | Australian Open 2026 Third Round",
+  "official_match_report": "https://ausopen.com/articles/news/shelton-sends-warning-italian-men-make-ao-history",
+  "source_size": [
+    1920,
+    1080
+  ],
+  "reviewed_geometry": {
+    "crop": [
+      554,
+      0,
+      810,
+      1080
+    ],
+    "canvas": [
+      1080,
+      1440
+    ],
+    "motion": "fixed center, no tracking"
+  },
+  "scope": "Whole source at2s intervals (90 frames), then three candidate spans sampled at0.5s with the actual fixed center3:4 crop. This is source-window screening, not final movie QC.",
+  "candidate_verdicts": [
+    {
+      "window": [
+        8.5,
+        18.5
+      ],
+      "accepted": false,
+      "reason": "First wide-shot entrance already shows serve follow-through; no intact service preparation at the cut-in."
+    },
+    {
+      "window": [
+        19.5,
+        36.6
+      ],
+      "accepted": false,
+      "reason": "Actual crop contact shows near-side Shelton outside the right crop during preparation/service around20.5–25.5. The proposed long point therefore fails the required fixed-center framing.",
+      "contact": "/workspace/scratch/vacherot-year-revision/extra-photos/ao-candidate-first-set-crop.jpg"
+    },
+    {
+      "window": [
+        137.5,
+        150.5
+      ],
+      "accepted": false,
+      "reason": "Actual crop contact shows far-side Vacherot moving outside the right edge around145.5; cannot mark whole-player safe.",
+      "contact": "/workspace/scratch/vacherot-year-revision/extra-photos/ao-candidate-match-crop.jpg"
+    }
+  ],
+  "accepted_windows": [],
+  "audio_review": "Not performed: every screened candidate failed visual requirements first. No reviewed-year-ao.json or passing audio package fabricated.",
+  "fixed_release": "Parent has source-6388215420112; its byte identity and final source window are not certified by this local screening.",
+  "editorial_fallback": "Parent explicitly allowed retaining the short AO card when no suitable whole point fits.",
+  "photography_limitations": "AO official full hero1600x750; alternate1080x810; Getty2048 public comp visibly watermarked. None copied as HD production photography."
+}

@@ -126,12 +126,20 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
             return min(edge, cap) if cap is not None else edge
         # A recognised two-row container may still have an observable border
         # even when dark background joins the entire colour scan.
-    if two_rows and blue_cols.sum() >= 6:
-        edge = point_container_edge(band, blue_cols, edge)
+    # Some ATP graphics highlight the current set in yellow-green rather than
+    # blue (Paris 2025). Its dark digits must not become an internal "edge".
+    # Require substantial colour in BOTH player rows: a match-point yellow
+    # tag attached to only one row is not a set-cell anchor.
+    yellow = yellow_mask(band)
+    highlighted_cols = ((yellow[:h // 2].mean(axis=0) > .25)
+                        & (yellow[h // 2:].mean(axis=0) > .25))
+    score_cols = blue_cols | highlighted_cols if two_rows else blue_cols
+    if two_rows and score_cols.sum() >= 6:
+        edge = point_container_edge(band, score_cols, edge)
     elif two_rows:
         edge = opaque_container_edge(band, white, edge)
-    anchor = (int(np.flatnonzero(blue_cols).max()) + 1 + POINTS_MAX
-              if blue_cols.any() else edge)
+    anchor = (int(np.flatnonzero(score_cols).max()) + 1 + POINTS_MAX
+              if score_cols.any() else edge)
     return beyond_hint(edge, cap, anchor)
 
 
@@ -182,7 +190,8 @@ def opaque_container_edge(band: np.ndarray, white: np.ndarray, edge: int) -> int
 def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> int:
     """Separate the translucent point cell from a similarly coloured backdrop.
 
-    A recognised two-row board has one point cell after its last blue set cell.
+    A recognised two-row board has one point cell after its last signature set
+    cell (blue or a two-row yellow-green highlight).
     Dark green close-ups can otherwise join the point cell for hundreds of
     pixels. Its top and bottom borders still end together: look for that shared
     opacity step within one cell of the last blue anchor. The cell width comes
@@ -195,6 +204,9 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         first -= 1
     cell = last - first + 1
     after = last + 1
+    # A highlighted set cell can fail the navy colour scan itself. The
+    # independently observed signature is still part of the actual board.
+    edge = max(edge, after)
     # Normal colour boundaries (including a withdrawn point cell) remain exact.
     # Antialiasing removes a few pixels from the blue run, hence the allowance.
     h = band.shape[0]
@@ -205,12 +217,36 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         0.008 < points[:h // 2].mean() < 0.25,
         0.008 < points[h // 2:].mean() < 0.25))
     point_digits = bool(point_rows and all(point_rows))
-    if cell < 18 or (edge <= after + 6 and not point_digits):
+    point_present = bool(point_rows and any(point_rows))
+    if cell < 18 or (edge <= after + 6 and not point_present):
         return edge
     if after + cell + 8 <= edge <= after + cell + 10:
         return edge
     if h < 24:
         return edge
+    divider_edge = None
+    highlighted = yellow_mask(band[:, first:after]).mean() > .25
+    point_borders = np.concatenate((points[:7], points[-7:]))
+    if highlighted and point_present and point_borders.mean() < .1:
+        # A single AD row is valid. On dark close-ups the translucent outer
+        # border can merge with the backdrop, while the thin horizontal rule
+        # between the two player rows still visibly ends at the native edge.
+        # Require a long, coherent rule plus sparse point glyphs, not a white
+        # sleeve or a cell width inferred from the spec rectangle.
+        middle = h // 2
+        baseline = (np.median(pixels[middle - 7:middle - 3], axis=0)
+                    + np.median(pixels[middle + 3:middle + 7], axis=0)) / 2
+        divider = (pixels[middle - 2:middle + 2].mean(axis=2).max(axis=0)
+                   - baseline.mean(axis=1))
+        lo, hi = after + 8, min(after + cell + 16, len(divider) - 3)
+        core = divider[lo:after + cell - 4]
+        contrast = np.median(core) if len(core) else 0
+        strong = divider > max(2, contrast * .1)
+        if contrast >= 8 and strong[lo:after + cell - 4].mean() > .85:
+            for x in range(after + cell // 2, hi):
+                if not strong[x:x + 3].any():
+                    divider_edge = x
+                    break
     top = np.median(pixels[2:7], axis=0)
     bottom = np.median(pixels[h - 10:h - 3], axis=0)
     top_step = np.mean(np.diff(top, axis=0), axis=1)
@@ -235,6 +271,10 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     if hi <= lo:
         return edge
     candidate = int(np.argmax(shared[lo - 1:hi - 1])) + lo
+    if divider_edge is not None:
+        # An independent outer contour can end before a background stripe
+        # that resembles the divider; keep the nearer observed border.
+        return min(divider_edge, candidate) if shared[candidate - 1] >= 4 else divider_edge
     if shared[candidate - 1] >= 4:
         return candidate
     if not (point_rows and any(point_rows)) and edge > after + cell + 16:

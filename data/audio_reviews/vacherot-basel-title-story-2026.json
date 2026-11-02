@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
-  "plan_sha256": "6133233633a572ae28af41aa0208d1a47354fe27be60a0dc1e1d47b4975c1f83",
+  "plan_sha256": "67b4ede47c4015f72336e22debdb91efc076b6d6f1ae6a4ad72beb0f752aff48",
   "segments": [
     {
       "index": 0,
@@ -13,34 +13,45 @@
       "transcript_sha256": "8d3ab8d082e236e0fca343dbeda4cfd02ea6a1f61304cd9becf61d5fd5229950"
     },
     {
-      "index": 15,
+      "index": 4,
+      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-year-basel2025.json",
+      "transcript_sha256": "4e96656b0c396b83461408688e3af72f8a88d3bf027090899985bbed50ba5d82"
+    },
+    {
+      "index": 5,
+      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-year-paris.json",
+      "transcript_sha256": "dc881775362e078d490869b09a4fa53d1c7387ff6c40179f3650aa81f9045460"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-year-monte.json",
+      "transcript_sha256": "6e60b498f7330b861f30904ba9b7090707ee8c0fb04a1f6e2c63a8ebdd3408bb"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-year-chengdu.json",
+      "transcript_sha256": "1eea7a2b193207bee3544cc7a1faed7b695b06edfe2181de817a2da631f35780"
+    },
+    {
+      "index": 12,
+      "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-year-tokyo.json",
+      "transcript_sha256": "c29dfdcc8b2321a83825e7326e86921ad99763be357da10f75c196f840cf5139"
+    },
+    {
+      "index": 16,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-11-sf.json",
       "transcript_sha256": "ec401c9650691035f554d187ea8866345f84f7176e57811978848d1b037a21dc"
     },
     {
-      "index": 17,
+      "index": 18,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-19-final.json",
       "transcript_sha256": "3ba2fa0861b3eb53a40d8e04c5c34e3cbddd7bdc835537eca4f05dfc5333906f"
     },
     {
-      "index": 18,
+      "index": 19,
       "transcript_path": "data/audio_reviews/vacherot-basel-title-story-2026/reviewed-20-final.json",
       "transcript_sha256": "17149f1d57b89f13c6072bcaa83ee78382a5fc9a91ed3d0256c7fe8ebf9bd2f1"
     }
   ],
-  "plan_reuse_provenance": {
-    "prior_index_sha256": "b98802a59f1a499b31e4050fd6d52722bc0ea81056164fdc4603ad1efbb81503",
-    "prior_plan_sha256": "a8ba052f5328198fa2655b4be94f9e0943cb0e3ee5189536deb750069b3602d0",
-    "old_to_new_indices": {
-      "0": 0,
-      "2": 3,
-      "11": 15,
-      "19": 17,
-      "20": 18
-    },
-    "rebound_at": "2026-11-02T01:16:22.537631+00:00",
-    "method": "foreground_audio_gate.rebind_plan validates unchanged immutable packets and coverage; inspect binds actual fixed source bytes. Original ASR reviewer, raw evidence, conclusions, reviewed_at and all packet hashes unchanged.",
-    "new_asr_generated": false,
-    "new_listening_claimed": false
-  }
+  "provenance": "Unchanged sourcewindows reuse immutable prior packets verbatim; five genuinely newsource windows bind freshly reviewed fixedsource packets. No copied pass or invented listening. Tokyo expanded to11.6 with genuinely fresh fixedsource reviews to12.1; prior11.3 packet/raw retained in source extension evidence."
 }

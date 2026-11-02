@@ -1,0 +1,43 @@
+{
+  "method": "faster-whisper",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "word_timestamps": true,
+  "vad_filter": false,
+  "vad_parameters": null,
+  "condition_on_previous_text": false,
+  "language": "en",
+  "source_file": "/workspace/scratch/vacherot-year-footage/basel-2025/4387963.mp4",
+  "source_sha256": "d02356c3ca41771fd7792c43f43b7bc67274e2a72b5bb5c8e63a8ca9a457a7b5",
+  "source_window": [
+    0,
+    12.5
+  ],
+  "input_wav": "/workspace/scratch/vacherot-year-footage/basel-2025/review/review-0-12.5.wav",
+  "input_wav_sha256": "065d8c1ffc691d002b0e17ab0602bc7f7c22fb38a9a2ed0b28a078efbec2905a",
+  "decode": "ffmpeg mono16k PCM -> numpyf32; no PyAV decode",
+  "duration": 12.5,
+  "duration_after_vad": 12.5,
+  "elapsed_seconds": 62.37766236199968,
+  "segments": [
+    {
+      "start": 8.2,
+      "end": 9.6,
+      "source_start": 8.2,
+      "source_end": 9.6,
+      "text": " Oh",
+      "avg_logprob": -1.140128642320633,
+      "no_speech_prob": 0.3483305871486664,
+      "words": [
+        {
+          "start": 8.2,
+          "end": 9.6,
+          "word": " Oh",
+          "probability": 0.015849655494093895
+        }
+      ]
+    }
+  ]
+}

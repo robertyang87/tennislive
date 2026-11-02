@@ -1,0 +1,30 @@
+{
+  "method": "faster-whisper",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "word_timestamps": true,
+  "language": "en",
+  "condition_on_previous_text": false,
+  "vad_filter": true,
+  "vad_parameters": {
+    "min_silence_duration_ms": 150,
+    "speech_pad_ms": 80
+  },
+  "source_file": "/workspace/scratch/vacherot-year-footage/chengdu/fixed/4582098.mp4",
+  "source_sha256": "c973bac22c2528b6c1b941a74ab5b1f5b1520baf326e7118b0faed65ba0379a9",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4582098/4582098.mp4",
+  "official_url": "https://www.tennistv.com/videos/4582098/chengdu-2026-r2-vacherot-harris-short-highlights",
+  "source_window": [
+    85.2,
+    94.5
+  ],
+  "actual_input_pcm_sha256": "7b9d2784e6b02b3a5fa27eec87a4d0a35ca4abdfa3a4a4eb08e33e6667ceb3e7",
+  "actual_input_wav_sha256": "d978061e4665fe6aa0bb59ca9b8f5a1cbca22236a1c49b01b6239152c10a15c7",
+  "decode": "ffmpeg mono16k f32le -> numpy",
+  "duration": 9.3,
+  "duration_after_vad": 0.0,
+  "elapsed_seconds": 0.030743486997380387,
+  "segments": []
+}

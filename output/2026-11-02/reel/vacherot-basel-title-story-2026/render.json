@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": null,
+  "scoreboard_qc_sha256": "3ce751d1f8b662b6cd264338ac8f81620bf6fc994371aa78f101c4b47a490596",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-vacherot-basel-title-story-2026-14e89459a83acaa7",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-vacherot-basel-title-story-2026-14e89459a83acaa7/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41373370282"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41451992710"
   },
   "cover_seconds": 4.186,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 273.92,
+  "segments_seconds": 298.46,
   "topbar": null,
-  "film_seconds": 282.68,
+  "film_seconds": 307.24,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -32,15 +32,15 @@
     "5": 10.128,
     "6": 5.208,
     "7": 13.224,
-    "8": 16.992,
-    "9": 9.72,
-    "10": 6.912,
-    "11": 8.328,
-    "12": 15.48,
-    "13": 9.936,
-    "14": 10.224,
-    "16": 13.008,
-    "18": 5.064
+    "9": 16.992,
+    "10": 9.72,
+    "11": 6.912,
+    "12": 8.328,
+    "13": 15.48,
+    "14": 9.936,
+    "15": 10.224,
+    "17": 13.008,
+    "19": 5.064
   },
   "face_checks": {
     "cover": {
@@ -57,44 +57,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "b375e168adb0818a184e5b4186d4603fa87fdebfc2877bdae9391acbe79ac06e",
+  "render_inputs_sha256": "6a5a473618dd0b1a92477aa6feffabd6d6032ccc5a9c6480932f8e4f22b77eb4",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "vacherot-basel-title-story-2026",
-    "received_at": "2026-11-02T01:36:38Z",
-    "artifact_ready_at": "2026-11-02T01:44:11Z",
-    "elapsed_seconds": 453.039,
+    "received_at": "2026-11-02T13:19:37Z",
+    "artifact_ready_at": "2026-11-02T13:27:34Z",
+    "elapsed_seconds": 477.36,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
-    "spec_sha256": "4c6fca24f8aab7858eecaf3bd9b27e7223e25094bc3050e7e2a7547f3e60786c",
-    "run_id": "41373370282",
+    "film_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+    "spec_sha256": "3f23cc859f05ea747cbc69856aae57618901794682ab8fc538d70326eb448849",
+    "run_id": "41451992710",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-02T01:39:58Z",
-        "run_id": "41373370282"
+        "at": "2026-11-02T13:23:53Z",
+        "run_id": "41451992710"
       }
     ],
-    "render_seconds": 253.039,
-    "pre_render_seconds": 200.0
+    "render_seconds": 221.36,
+    "pre_render_seconds": 256.0
   },
-  "film_sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
-  "film_bytes": 94310099,
-  "qc_attestation_sha256": "20d97e19885364800816ccf0c0037127db41b24497a60bad2f2b0d0a43274e59",
+  "film_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+  "film_bytes": 143275302,
+  "qc_attestation_sha256": "966d19f8315f59553762f7899046334c0bdea107a25d62b8aa23540220e1e85a",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-02T01:39:58Z",
-      "run_id": "41373370282"
+      "at": "2026-11-02T13:23:53Z",
+      "run_id": "41451992710"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-02T01:44:13Z",
-      "run_id": "41373370282"
+      "at": "2026-11-02T13:27:38Z",
+      "run_id": "41451992710"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-vacherot-basel-title-story-2026/vacherot-basel-title-story-2026.mp4",
-  "video_bytes": 94310099
+  "video_bytes": 143275302
 }

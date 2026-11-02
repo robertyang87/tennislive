@@ -1,0 +1,20 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/tokyo/fixed/4585425.mp4",
+  "source_sha256": "183b22e7ffe9507ec0184d2f972877bb1216df9bce3aff0d8121c464ea031c7a",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4585425/4585425.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4585425/tokyo-2026-r2-vacherot-tsitsipas-short-highlights",
+  "model": "medium.en",
+  "method": "asr_not_human_listening",
+  "window_start": 0,
+  "window_end": 11.4,
+  "options": {
+    "vad_filter": false,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": []
+}

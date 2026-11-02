@@ -1,0 +1,20 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/paris-r2/fixed/4392293.mp4",
+  "source_sha256": "d7d2d6e9ada937da8e5a5f0b6ff5cad82f618f7aba4fd71ccf63d00794ffd9d1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4392293/4392293.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4392293/paris-2025-r2-rinderknech-vacherot-short-highlights",
+  "model": "small.en",
+  "method": "asr_not_human_listening",
+  "window_start": 115,
+  "window_end": 129.0,
+  "options": {
+    "vad_filter": true,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": []
+}

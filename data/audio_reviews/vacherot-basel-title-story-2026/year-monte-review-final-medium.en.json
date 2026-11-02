@@ -1,0 +1,78 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/monte/fixed/4485679.mp4",
+  "source_sha256": "51c6e79aa16723bd83dbecd161c1cc8473fb5bfa8c10a592eab6e4d33f5c67ec",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4485679/4485679.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4485679/monte-carlo-2026-qf-vacherot-de-minaur-short-highlights",
+  "model": "medium.en",
+  "method": "asr_not_human_listening",
+  "window_start": 128.88,
+  "window_end": 149.0,
+  "options": {
+    "vad_filter": false,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": [
+    {
+      "start": 138.64,
+      "end": 143.44,
+      "text": " On he goes, the semi-finals are calling",
+      "avg_logprob": -0.601587515610915,
+      "no_speech_prob": 0.3534672260284424,
+      "words": [
+        {
+          "start": 138.64,
+          "end": 139.64,
+          "word": " On",
+          "probability": 0.4083039462566376
+        },
+        {
+          "start": 139.64,
+          "end": 139.92,
+          "word": " he",
+          "probability": 0.9918935894966125
+        },
+        {
+          "start": 139.92,
+          "end": 140.42,
+          "word": " goes,",
+          "probability": 0.9974103569984436
+        },
+        {
+          "start": 141.54,
+          "end": 141.68,
+          "word": " the",
+          "probability": 0.9794232249259949
+        },
+        {
+          "start": 141.68,
+          "end": 142.18,
+          "word": " semi",
+          "probability": 0.8069257736206055
+        },
+        {
+          "start": 142.18,
+          "end": 142.62,
+          "word": "-finals",
+          "probability": 0.90505450963974
+        },
+        {
+          "start": 142.62,
+          "end": 142.94,
+          "word": " are",
+          "probability": 0.975060224533081
+        },
+        {
+          "start": 142.94,
+          "end": 143.44,
+          "word": " calling",
+          "probability": 0.9943768382072449
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/paris-r2/fixed/4392293.mp4",
+  "source_sha256": "d7d2d6e9ada937da8e5a5f0b6ff5cad82f618f7aba4fd71ccf63d00794ffd9d1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4392293/4392293.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4392293/paris-2025-r2-rinderknech-vacherot-short-highlights",
+  "model": "small.en",
+  "method": "asr_not_human_listening",
+  "window_start": 115,
+  "window_end": 144.6,
+  "options": {
+    "vad_filter": false,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": [
+    {
+      "start": 130.32,
+      "end": 139.1,
+      "text": " It is victory for Vacherow again for the second time this month he gets the better",
+      "avg_logprob": -0.5521160472523082,
+      "no_speech_prob": 0.5359718203544617,
+      "words": [
+        {
+          "start": 130.32,
+          "end": 131.14,
+          "word": " It",
+          "probability": 0.3414204716682434
+        },
+        {
+          "start": 131.14,
+          "end": 131.82,
+          "word": " is",
+          "probability": 0.9305785298347473
+        },
+        {
+          "start": 131.82,
+          "end": 132.26,
+          "word": " victory",
+          "probability": 0.8643452525138855
+        },
+        {
+          "start": 132.26,
+          "end": 132.98,
+          "word": " for",
+          "probability": 0.7573822140693665
+        },
+        {
+          "start": 132.98,
+          "end": 133.5,
+          "word": " Vacherow",
+          "probability": 0.5195004542668661
+        },
+        {
+          "start": 133.5,
+          "end": 133.88,
+          "word": " again",
+          "probability": 0.9361807107925415
+        },
+        {
+          "start": 133.88,
+          "end": 135.74,
+          "word": " for",
+          "probability": 0.3170642852783203
+        },
+        {
+          "start": 135.74,
+          "end": 135.9,
+          "word": " the",
+          "probability": 0.9926561117172241
+        },
+        {
+          "start": 135.9,
+          "end": 136.1,
+          "word": " second",
+          "probability": 0.9805235266685486
+        },
+        {
+          "start": 136.1,
+          "end": 136.57999999999998,
+          "word": " time",
+          "probability": 0.9968865513801575
+        },
+        {
+          "start": 136.57999999999998,
+          "end": 136.96,
+          "word": " this",
+          "probability": 0.9796437621116638
+        },
+        {
+          "start": 136.96,
+          "end": 137.28,
+          "word": " month",
+          "probability": 0.9966758489608765
+        },
+        {
+          "start": 137.28,
+          "end": 138.56,
+          "word": " he",
+          "probability": 0.19624145328998566
+        },
+        {
+          "start": 138.56,
+          "end": 138.76,
+          "word": " gets",
+          "probability": 0.9942195415496826
+        },
+        {
+          "start": 138.76,
+          "end": 138.96,
+          "word": " the",
+          "probability": 0.9780141115188599
+        },
+        {
+          "start": 138.96,
+          "end": 139.1,
+          "word": " better",
+          "probability": 0.9903817772865295
+        }
+      ]
+    },
+    {
+      "start": 139.1,
+      "end": 139.62,
+      "text": " of his cousin.",
+      "avg_logprob": -0.894289663859776,
+      "no_speech_prob": 0.3140835165977478,
+      "words": [
+        {
+          "start": 139.1,
+          "end": 139.24,
+          "word": " of",
+          "probability": 0.07369331270456314
+        },
+        {
+          "start": 139.24,
+          "end": 139.36,
+          "word": " his",
+          "probability": 0.9830378293991089
+        },
+        {
+          "start": 139.36,
+          "end": 139.62,
+          "word": " cousin.",
+          "probability": 0.9748924374580383
+        }
+      ]
+    }
+  ]
+}

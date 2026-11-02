@@ -3,11 +3,11 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "1de4d646f73c3495d53413a32cc247af3498a8a7ea2650c6380bbf7899d14de4",
-    "render_inputs_sha256": "b375e168adb0818a184e5b4186d4603fa87fdebfc2877bdae9391acbe79ac06e",
-    "spec_sha256": "4c6fca24f8aab7858eecaf3bd9b27e7223e25094bc3050e7e2a7547f3e60786c",
-    "film_sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
-    "inventory_sha256": "0d739fef355a9ddd130daa16550f8648a4cdd5b1b99337e4160ce65ca4c86e48"
+    "render_sha256": "825cce203f72073817941026f5cd44e232f4582366cd1fed60a1acce3ba5324f",
+    "render_inputs_sha256": "6a5a473618dd0b1a92477aa6feffabd6d6032ccc5a9c6480932f8e4f22b77eb4",
+    "spec_sha256": "3f23cc859f05ea747cbc69856aae57618901794682ab8fc538d70326eb448849",
+    "film_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+    "inventory_sha256": "e6ee291cbf775101276629df5a163eaa61f8fe40890a3c06f74af1692758c823"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-02T01:45:49+00:00",
+  "reviewed_at": "2026-11-02T13:29:05+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -161,55 +161,55 @@
       "result_of": "bundle:3816e0b774abe88549e488991f799f7fa24cf07c5cd00201cfaad44df7d311c3"
     },
     {
-      "id": "voice_08.mp3",
+      "id": "voice_09.mp3",
       "audio_sha256": "fc199fa29f84f72c524c003933c82eab14821050c1a014dc3916b7adde1f9855",
       "pass": true,
       "result_of": "bundle:6fe2b3f6e4635d0da259535808b4f8d71a72c2308f86280b524b5b3d3f660c45"
     },
     {
-      "id": "voice_09.mp3",
+      "id": "voice_10.mp3",
       "audio_sha256": "3ffd57e3a47b677380ea375ab8767b40d4e87413660dd7b45e23a8401dc2e388",
       "pass": true,
       "result_of": "bundle:763dbfbd3cc1da497c448c80a68e6ff743294430720d0e74a092bacd82bf5e49"
     },
     {
-      "id": "voice_10.mp3",
+      "id": "voice_11.mp3",
       "audio_sha256": "0abfb149e9019bd699a9bea4cfa4346af6aecfeaf5af3b4d7c9e7e84cb92416d",
       "pass": true,
       "result_of": "bundle:44236ea7ad43e27777644af0a4db0b88c2065da979ccb0181bdf65ae50128cb0"
     },
     {
-      "id": "voice_11.mp3",
+      "id": "voice_12.mp3",
       "audio_sha256": "3f172be967440f6127bd27b68042fe60d923cfa458c90cd114704b0f6c122784",
       "pass": true,
       "result_of": "bundle:fe08090798823e3aa5ac094531de9051d513552ae88dce34677e2d3aaf8edaea"
     },
     {
-      "id": "voice_12.mp3",
+      "id": "voice_13.mp3",
       "audio_sha256": "76c872bf2a51bf744879481c3a9f52f27c10ea657269f9ec06235ad569ddcb7a",
       "pass": true,
       "result_of": "bundle:974ab01f49086bf5a1afb39b819a54a0f6c4afee849652c8929d3f92bcc9a9f2"
     },
     {
-      "id": "voice_13.mp3",
+      "id": "voice_14.mp3",
       "audio_sha256": "aff9d29cd8b64dbfe3d742ec6fe6a77d0e79c4b3cd8334518859e2317a94cd95",
       "pass": true,
       "result_of": "bundle:f4295f947f8bd126b3a959a93317b4e9b4ebe8253fdaa0c9e2a3e6b0efb3ea6f"
     },
     {
-      "id": "voice_14.mp3",
+      "id": "voice_15.mp3",
       "audio_sha256": "0ba11fa1feaf1a9727b7718b000e3509a41155764f9098a18a9aab7bc2ac9da3",
       "pass": true,
       "result_of": "bundle:db242b99f4360b88c4c4302993296ac58660c77995717189e1c778fc12d65992"
     },
     {
-      "id": "voice_16.mp3",
+      "id": "voice_17.mp3",
       "audio_sha256": "22b16a56cc73ba1b8ef2d24710027e163a74d7754e34588b4dc9805c6989388a",
       "pass": true,
       "result_of": "bundle:940cf3b126ce25920580ae8adae2b682a2be4f2582969edaaf517f25e68a03c4"
     },
     {
-      "id": "voice_18.mp3",
+      "id": "voice_19.mp3",
       "audio_sha256": "a7337b5317f7c673aec56d1576f2b430df2250b243c4977ca42d52b2818b7a2c",
       "pass": true,
       "result_of": "bundle:545465de4bb07a609f63726e21a72881bfadbbf30ebe460aec684eabfd4f3cf4"
@@ -243,10 +243,10 @@
         "ref_syllables": 57,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.018,
         "longest_deletion": 0,
-        "transcript": "4月,回到家乡蒙特卡洛,他击败德米纳尔,在近大师赛四强,也进入了世界前二十。第一次捧碑之后,他又一次在大师赛走到了最后一个周末。"
+        "transcript": "4月,回到家乡蒙特卡洛,他击败德米纳尔,在近大师赛四强,也进入了世界前二十。第一次蓬佩之后,他又一次在大师赛走到了最后一个周末。"
       },
       "polyphones": [],
       "pauses": {
@@ -310,7 +310,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "9月成都,作为头号种子,手轮轮空后,他第一场就输给资格赛球员哈里斯。"
+        "transcript": "9月成都﹑作为头号种子﹑手轮轮空后﹑他第一场就输给资格赛球员哈里斯。"
       },
       "polyphones": [
         {
@@ -326,10 +326,10 @@
           "runs": [
             {
               "wrong": "zhong4",
-              "verdict": "unreliable",
-              "score": 0.91,
+              "verdict": "uncertain",
+              "score": 0.076,
               "confidence": null,
-              "near": "intended"
+              "near": null
             }
           ],
           "ok_refs": "肿冢"
@@ -364,7 +364,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第一次夺冠和爹爹撞撞后再捧碑,哪一次更打动你。"
+        "transcript": "第一次夺冠,和爹爹撞撞后再捧碑,哪一次更打动你。"
       },
       "polyphones": [],
       "pauses": {
@@ -428,7 +428,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "7月15日复出首战,他在先丢一盘后逆转汉夫曼,能回来比赛了,成绩却没有立刻稳定。"
+        "transcript": "7月15日复出手战,他在先丢一盘后逆转汉夫曼,能回来比赛了,成绩却没有立刻稳定。"
       },
       "polyphones": [],
       "pauses": {
@@ -460,7 +460,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决赛对手莱赫奇卡不到一个月前刚在东京击败过他。这次,又是先丢一盘。2比6之后,瓦舍罗连拿两个6比3。最后一分,交给现场。"
+        "transcript": "决赛对手莱赫奇卡不到一个月前刚在东京击败过他。这次,又是先丢一盘。二比六之后,瓦舍罗连拿两个六比三。最后一分,交给现场。"
       },
       "polyphones": [],
       "pauses": {
@@ -492,7 +492,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "在回上海,这次他不用等一个资格赛位置直接以种子身份出场,可未免之旅只布第三轮,4比6,2比6,输给保罗。去年的奖杯还在,今天的比赛仍然要从头打。"
+        "transcript": "在回上海,这次他不用等一个资格赛位置直接以种子身份出场,可未免之旅只布第三轮,四比六,二比六,输给保罗。去年的奖杯还在,今天的比赛仍然要从头打。"
       },
       "polyphones": [
         {
@@ -509,7 +509,7 @@
             {
               "wrong": "zhong4",
               "verdict": "uncertain",
-              "score": 0.062,
+              "score": 0.058,
               "confidence": null,
               "near": null
             }
@@ -530,7 +530,7 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.339,
+              "score": 0.347,
               "confidence": "low",
               "near": null
             }
@@ -741,7 +741,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "从世界第二百零四到大师赛冠军上海让人记住了瓦舍罗,可奖杯之后的一年还有伤亭、势力也有重新打进四强的时刻。"
+        "transcript": "从世界第二百零四到大师赛冠军上海让人记住了瓦舍罗,可奖杯之后的一年还有商庭、施力也有重新打进四墙的时刻。"
       },
       "polyphones": [
         {
@@ -758,8 +758,8 @@
             {
               "wrong": "huan2",
               "verdict": "correct",
-              "score": 0.411,
-              "confidence": "medium",
+              "score": 0.2,
+              "confidence": "low",
               "near": null
             }
           ],
@@ -779,7 +779,7 @@
             {
               "wrong": "zhong4",
               "verdict": "unreliable",
-              "score": 0.158,
+              "score": 0.303,
               "confidence": null,
               "near": null
             }
@@ -816,7 +816,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "去年10月,从资格赛出发,连营九场,六次先丢一盘后逆转。最后,他击败表哥林德克内希,第一次捧起循回赛冠军奖杯。"
+        "transcript": "去年10月,从资格赛出发,连营九场,六次先丢一盘后逆转。最后,他击败表哥林德克内希第一次捧起循回赛冠军奖杯。"
       },
       "polyphones": [
         {
@@ -906,7 +906,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "到了东京,他又逆转希西帕斯、纪拜菲斯重新打进四墙。半决赛,来和奇卡挡住了他。"
+        "transcript": "到了东京,他又逆转希西帕斯、继拜菲斯重新打进四墙。半决赛,来和奇卡挡住了他。"
       },
       "polyphones": [
         {
@@ -923,7 +923,7 @@
             {
               "wrong": "zhong4",
               "verdict": "correct",
-              "score": 0.454,
+              "score": 0.322,
               "confidence": "medium",
               "near": null
             }

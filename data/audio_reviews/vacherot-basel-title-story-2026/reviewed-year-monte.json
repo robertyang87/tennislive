@@ -1,0 +1,38 @@
+{
+  "source": "monte",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4485679/4485679.mp4",
+  "source_sha256": "51c6e79aa16723bd83dbecd161c1cc8473fb5bfa8c10a592eab6e4d33f5c67ec",
+  "method": "asr_cross_checked",
+  "reviewer": "earlier_rounds independent agent and root; fixed-source multi-model transcription cross-check plus native source/crop inspection; no human listening claimed",
+  "reviewed_at": "2026-11-02T11:48:22.935396+00:00",
+  "status": "complete",
+  "uncertain_spans": [],
+  "reviewed_from": 128.88,
+  "reviewed_to": 148.7,
+  "foreground_english": [
+    {
+      "start": 138.56,
+      "end": 143.6,
+      "en": "On he goes, the semi-finals are calling.",
+      "zh": "他继续前进，半决赛在向他招手。"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-monte-review-final-small.en.json",
+      "sha256": "06b1691fdac6155bf707a1ccb7a63f61fd75ac7f8bc49e328f76b8e39c7de617"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-monte-review-final-base.en.json",
+      "sha256": "18e2517b739651c139f031715b1ccb5f1ea6dc37a5962303088098eb35cc4023"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-monte-review-final-medium.en.json",
+      "sha256": "b1abb13f7044bad399f448f308afbbd0ab8f0ef308c3d26010cce6c05aeb3669"
+    }
+  ],
+  "review_notes": [
+    "base.en noVAD emitted lowconfidencebaseline/genericThankyou fragments aftermaincall, unsupportedbysmall/medium anddo not formreliablecontext; rawretained. medium hasonlytheonequotedcall.",
+    "Finalpoint: nearcourtdeMinaurserves atdecidingset3-5AD, Vacherotfarreturns; terminalresult133s→Vacherotarmsraise/face→handshake146–148. Fixedcx.5 810×1080 isusable in inspectedkeyframes. Priorfirstsetlongrally rejected because nearcourtwideexcursions."
+  ]
+}

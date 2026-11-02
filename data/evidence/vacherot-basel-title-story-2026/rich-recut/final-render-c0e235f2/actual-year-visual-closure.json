@@ -1,0 +1,235 @@
+{
+  "schema": "independent-actual-year-visual-closure.v1",
+  "status": "no_open_visual_issue_in_reviewed_scope",
+  "reviewer": "cover independent agent",
+  "movie": "/workspace/scratch/vacherot-rich-recut/actual-film-final/vacherot-basel-title-story-2026.mp4",
+  "movie_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+  "movie_bytes": 143275302,
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1080,
+        "height": 1440,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "duration": "307.240000",
+        "nb_frames": "7681",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "codec_type": "audio",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "duration": "307.200000",
+        "nb_frames": "14401"
+      }
+    ],
+    "format": {
+      "duration": "307.240000",
+      "size": "143275302"
+    }
+  },
+  "formal_run_id": "41451992710",
+  "producer_directory": "/workspace/tennis-work/output/2026-11-02/reel/vacherot-basel-title-story-2026",
+  "producer_render_sha256": "825cce203f72073817941026f5cd44e232f4582366cd1fed60a1acce3ba5324f",
+  "render_inputs_sha256": "6a5a473618dd0b1a92477aa6feffabd6d6032ccc5a9c6480932f8e4f22b77eb4",
+  "ass_sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb",
+  "own_identity_checks": {
+    "movie_sha_matches_producer_render_and_inputs": true,
+    "ASS_and_audio_review_timeline_identical_to_old": true,
+    "sole_projection_delta": [
+      {
+        "path": ".segments[12].inset.show_after",
+        "old": 8.8,
+        "new": 8.2
+      }
+    ]
+  },
+  "actual_new_movie_visual_scope": {
+    "distinct_actual_frames_viewed": 34,
+    "Tokyo_dense_frames": 22,
+    "other_sentinel_frames": 12,
+    "all_contact_walls_actually_opened": [
+      "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/contact-00.jpg",
+      "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/contact-01.jpg",
+      "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/contact-02.jpg",
+      "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/contact-03.jpg"
+    ],
+    "critical_native_frames_additionally_opened": [
+      {
+        "frame": 4327,
+        "film_time": 173.08,
+        "reasons": [
+          "Tokyo-local-8.24"
+        ],
+        "image": "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/native-011.png",
+        "sha256": "b5361e557db6a13523f26a2ed49baba69151729976af19bc2616d452e6b90107",
+        "actually_viewed": true,
+        "view_method": "Actual new encoded movie frame visually opened in contact-00..03; selected critical frames additionally opened at native1080x1440.",
+        "native_additionally_opened": true
+      },
+      {
+        "frame": 4396,
+        "film_time": 175.84,
+        "reasons": [
+          "Tokyo-local-11"
+        ],
+        "image": "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/native-026.png",
+        "sha256": "ce1049417c6f531c0b825f559602af38bdbee2e4816e0962764e65ae8e1b3fd9",
+        "actually_viewed": true,
+        "view_method": "Actual new encoded movie frame visually opened in contact-00..03; selected critical frames additionally opened at native1080x1440.",
+        "native_additionally_opened": true
+      },
+      {
+        "frame": 4397,
+        "film_time": 175.88,
+        "reasons": [
+          "Tokyo-local-11.04"
+        ],
+        "image": "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/native-027.png",
+        "sha256": "29cf07a81ace4241d5996df6b52cfa0ef0c9aba6491edaef9c1c4a097e6e94bb",
+        "actually_viewed": true,
+        "view_method": "Actual new encoded movie frame visually opened in contact-00..03; selected critical frames additionally opened at native1080x1440.",
+        "native_additionally_opened": true
+      },
+      {
+        "frame": 4411,
+        "film_time": 176.44,
+        "reasons": [
+          "Tokyo-local-11.59"
+        ],
+        "image": "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/native-029.png",
+        "sha256": "4557a31129cbdc50c892e7d372637e6c1f6a013e35bcfc33906a00c43964b684",
+        "actually_viewed": true,
+        "view_method": "Actual new encoded movie frame visually opened in contact-00..03; selected critical frames additionally opened at native1080x1440.",
+        "native_additionally_opened": true
+      }
+    ],
+    "sample_manifest": "/workspace/scratch/vacherot-rich-recut/actual-final-tokyo-samples/manifest.json",
+    "sample_manifest_sha256": "6219987fcecb7522df9a9fbd74c2efc8dd624d35888b1f076c2c42ce6446b294",
+    "Tokyo_sample_actual_film_range": [
+      172.84,
+      176.44
+    ],
+    "Tokyo_requested_local_times": [
+      8,
+      8.16,
+      8.2,
+      8.24,
+      8.4,
+      8.6,
+      8.8,
+      9,
+      9.2,
+      9.4,
+      9.6,
+      9.8,
+      10,
+      10.2,
+      10.4,
+      10.6,
+      10.8,
+      10.96,
+      11,
+      11.04,
+      11.4,
+      11.59
+    ],
+    "sentinel_actual_film_times": [
+      1.8,
+      14.64,
+      22.48,
+      28.88,
+      80.72,
+      95.32,
+      143.2,
+      194.0,
+      294.88,
+      297.36,
+      302.36,
+      306.92
+    ]
+  },
+  "closed_issue": {
+    "id": "Tokyo-right-info-late-far-face-overlap",
+    "old_movie_sha256": "26f94025c8cd0f10e447ff04aea4f65e1091565458fd8d295c5d02568bc29416",
+    "actual_successor_observation": "Info absent atfilm173.04, active by173.08 with far player head/face clear to its left. Across sampled active window player moves left. Still active175.84 and absent175.88; source next-shot preparation at176.24/176.44 has no info over far Vacherot head/face. Thus the previously observed late11.4–11.59 face overlap is removed in actual new H264 samples.",
+    "result": "closed_in_actual_successor_samples"
+  },
+  "sentinel_observations": [
+    "Complete left brand/topic text visible in all34 inspected new samples; former PNG-preview missing-glyph symptom did not reproduce in these actual H264 samples.",
+    "AP Basel trophy and Shanghai2025 date tabs remain above faces/cup in sampled intro; full-frame photo/card layout remains filled.",
+    "Paris complete AD scoreboard and lifted caption remain legible at80.72; Monte/Gstaad photo sentinel layouts intact.",
+    "Basel card at194.0 and real trophy/raising/confetti at294.88/297.36/302.36 intact; no large new info card over cup; final brand/outro complete at306.92."
+  ],
+  "limited_reuse_of_prior_review": {
+    "prior_review": "/workspace/scratch/vacherot-rich-recut/actual-year-visual-review-26f94025.json",
+    "prior_review_sha256": "62d33687fa90b973726264d62f6272a09cf2d99be0f0319f93d2716a8b19b6d8",
+    "prior_total_distinct_frames_actually_viewed": 181,
+    "reuse_excludes_film_seconds": [
+      172,
+      177.5
+    ],
+    "scope": "Only prior finite visual observations outside excludedTokyo range are reused. Original181-frame report remains historical; it is not a claim that181 successor frames were re-watched. NewTokyo risk independently reviewed above.",
+    "reused_observations": [
+      "Verified year-photo/date/round layouts and faces",
+      "Story timeline/card legibility",
+      "Paris AD restoration and caption safety",
+      "NonTokyo actual source info/subtitle samples",
+      "Previously sampled21 segment-boundary centres and filled canvas",
+      "Real trophy payoff and brand completeness within observed scope"
+    ],
+    "parent_supplied_actual_movie_comparison": {
+      "path": "/workspace/scratch/vacherot-rich-recut/final-delta/identity-and-visual-delta.json",
+      "sha256": "ab68f5627511d204ccedd938da36bf06f2a6daad79e678fbc20ef90521dd88d8",
+      "evidence": {
+        "old_sha256": "26f94025c8cd0f10e447ff04aea4f65e1091565458fd8d295c5d02568bc29416",
+        "new_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+        "projection_delta": [
+          [
+            ".segments[12].inset.show_after",
+            8.8,
+            8.2
+          ]
+        ],
+        "all_render_assets_byte_identical": true,
+        "actual_ass_byte_identical": true,
+        "actual_source_audio_timeline_and_reviews_identical": true,
+        "actual_complete_encoded_audio_packet_hash_identical": true,
+        "audio_packet_sha256": "SHA256=a0a19e3528801d42b602897e2c4d6a47bca01bbde717c3c464ff55bc7527b46d",
+        "pixel_comparison_excludes_film_seconds": [
+          172,
+          177.5
+        ],
+        "full_body": {
+          "frames": 7543,
+          "mean": 0.9999580217420125,
+          "minimum": 0.996569,
+          "frames_below_.98": 0
+        },
+        "native_header": {
+          "frames": 7543,
+          "mean": 0.9998833313005435,
+          "minimum": 0.9951,
+          "frames_below_.98": 0
+        },
+        "method": "decode both actual movies; compare every non-Tokyo frame at540x720, and every corresponding native700x125 brandregion; SSIM statistics are evidence for unchanged-content review reuse, not standalone finalQC; actual changedTokyoframes independently inspected"
+      },
+      "attribution": "Actual full nonTokyo frame SSIM and AAC packet comparison performed by parent/root; this reviewer read and binds its results, not claiming independent execution of that analysis."
+    }
+  },
+  "open_issues": [],
+  "limits": [
+    "Independent visual sampling only; not every final film frame manually watched.",
+    "Reused observations retain original181-frame report bounds and exclusions.",
+    "No listening/acoustic-QC assessment or publication approval is asserted by this report."
+  ],
+  "publication_approved": false,
+  "acoustic_QC_assessed": false
+}

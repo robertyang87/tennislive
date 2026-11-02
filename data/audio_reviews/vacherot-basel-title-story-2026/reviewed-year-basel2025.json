@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "source": "basel2025",
+  "reviewed_from": 0,
+  "reviewed_to": 12.5,
+  "source_local": "/workspace/scratch/vacherot-year-footage/basel-2025/fixed/4387963.mp4",
+  "source_local_sha256": "313b91729ee6ba75cdaa29ac280103848cf728fa453032f3533f41aa4a752589",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4387963/4387963.mp4",
+  "source_sha256": "313b91729ee6ba75cdaa29ac280103848cf728fa453032f3533f41aa4a752589",
+  "official_source_url": "https://www.tennistv.com/videos/4387963/basel-2025-r1-fritz-vacherot-short-highlights",
+  "method": "asr_cross_checked",
+  "reviewer": "trophy_source agent; fresh fixed-byte small.en/medium.en candidate-window cross-check; not human listening",
+  "status": "complete",
+  "reviewed_at": "2026-11-02T07:01:13.174380+00:00",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Fresh actual fixed-source small.en and medium.en on the exact reviewed PCM window detect no foreground lexical English. Both VAD passes return no speech segments. Supplementary no-VAD diagnostics are explicitly preserved and interpreted below; this is ASR cross-checking, not human listening.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-basel2025-small.en.json",
+      "sha256": "03d897fb50a99b803145e3165b654f8c8778386ff3e5906ca967c5a255d2a1fd"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-basel2025-medium.en.json",
+      "sha256": "afed21d89b17e594d67d6d2d359e33be240e87c9ac0a314e475b29847f5d25b6"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-basel2025-fixed-identity.json",
+      "sha256": "572c7559280bc61d284b20c035da62a7689d39ac63418703352e0e55ee902f4f"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-basel2025-prior-container-small.en-no-vad.json",
+      "sha256": "299f5993d1357c8d5f73421b8b4fe54b8effdeac0b6330c87ac9c0c1c71bd899",
+      "scope": "Historical old-container supplementary no-VAD inference; current candidate PCM and PTS equivalence checked separately."
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-basel2025-prior-container-medium.en-no-vad.json",
+      "sha256": "47461b346ecab2bed8a07d6fdab880a7ad3dc85c61cffe1f6c1260ce476d59b5",
+      "scope": "Historical old-container supplementary no-VAD inference; current candidate PCM and PTS equivalence checked separately."
+    }
+  ],
+  "review_notes": [
+    "Proposed production window0.00–12.00; reviewed to12.50 includes0.5s source-tail reserve for transition. No speech conclusion extends beyond the reviewed window.",
+    "Historical no-VAD small.en emits one Oh at1.42 with word probability0.0206; medium.en emits Oh at8.2 with probability0.0158. The locations disagree and no lexical utterance is reproduced. These are treated as nonlexical impact/grunt forced-English artifacts, not silently deleted raw evidence.",
+    "Current fixed bytes and prior local candidate PCM compare byte-for-byte at same source PTS; representative decoded RGB frame hashes match, so prior visual geometry is aligned. Fresh fixed-source ASR is separately rerun, not relabelled historical output.",
+    "First-set set point at Fritz4–Vacherot5 AD. Source0 starts with Fritz serving preparation, toss by~0.6, delivery~1.2, full rally, point concludes around11.5 and both players stop/walk before12.0. Vacherot wins this set6–4; this is NOT the final-match losing point.",
+    "Fixed centre crop[555,0,810,1080]→1080x1440 retains court centreline. Lateral runner excursions outside portrait are expected; original left-bottom scoreboard needs normal production recovery/overlay. New actual film still requires native visual and final caption/audio gates."
+  ]
+}

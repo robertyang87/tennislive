@@ -1,0 +1,465 @@
+{
+  "schema": "independent-actual-movie-points-trophy-pixel-review/v1",
+  "reviewed_at_utc": "2026-11-02T13:14:18.452940+00:00",
+  "status": "pass_for_requested_actual_pixel_scope_with_disclosed_boundaries",
+  "scope": "Independent visual inspection of decoded frames from this actual newly encoded MP4: four complete key points, trophy receiving/raising/confetti, portrait fill, overlay placement, ending transitions. No sound was listened to or acoustically judged for this review.",
+  "does_not_certify": [
+    "acoustic/no-English/ASR correctness",
+    "voice inventory or TTS acceptance",
+    "whole-film continuous audiovisual QC",
+    "publication readiness",
+    "every native frame of the 307.24-second movie"
+  ],
+  "run_id": 41447992209,
+  "input_revision": "00e2f19cb",
+  "native_input_artifact_id": 13142944351,
+  "movie": {
+    "path": "/workspace/scratch/vacherot-rich-recut/actual-film/vacherot-basel-title-story-2026.mp4",
+    "sha256": "26f94025c8cd0f10e447ff04aea4f65e1091565458fd8d295c5d02568bc29416",
+    "bytes": 143283675,
+    "duration": 307.24,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25.0
+  },
+  "binding": {
+    "path": "/workspace/scratch/vacherot-rich-recut/formal-artifacts/audio_review_binding.json",
+    "sha256": "eb8b802bfa9bad3ae6c36938d2aad3875e9a9b635e78bc321bd93d340a5a54e9",
+    "plan_sha256": "67b4ede47c4015f72336e22debdb91efc076b6d6f1ae6a4ad72beb0f752aff48"
+  },
+  "method": {
+    "all_four_points_contact_sampling_fps": 3,
+    "trophy_contact_sampling_fps": 5,
+    "point_plus_trophy_decoded_samples_visually_inspected": 366,
+    "ending_samples_visually_inspected": 14,
+    "contact_sheets_visually_inspected": 21,
+    "native_resolution_png_generated": 41,
+    "native_resolution_png_visually_inspected": 20,
+    "native_selection": [
+      {
+        "section": "shanghai",
+        "requested_local_time": 1.2,
+        "actual_film_time": 39.88,
+        "nominal_source_time": 115.894,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-shanghai-1.20-film-39.88.png",
+        "sha256": "47feece220943c993f590d6da112241b601e8df5ffcdf559f1b265debe63f0da"
+      },
+      {
+        "section": "shanghai",
+        "requested_local_time": 6.3,
+        "actual_film_time": 45.0,
+        "nominal_source_time": 121.01399999999998,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-shanghai-6.30-film-45.00.png",
+        "sha256": "7b8421e37aad00bb584b8b39c90ec8fab9e98690c494b598316378ee643c66ab"
+      },
+      {
+        "section": "monte",
+        "requested_local_time": 2,
+        "actual_film_time": 109.48,
+        "nominal_source_time": 130.87400000000002,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-monte-2.00-film-109.48.png",
+        "sha256": "b686001251c05a9695328ccfb32a77c9d414fea9e5cd02518c7de9cc46805891"
+      },
+      {
+        "section": "monte",
+        "requested_local_time": 10.8,
+        "actual_film_time": 118.28,
+        "nominal_source_time": 139.67399999999998,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-monte-10.80-film-118.28.png",
+        "sha256": "743c502c830b69b79b45ed80a537c295fb0138f5954602ac9597d43309dd368a"
+      },
+      {
+        "section": "monte",
+        "requested_local_time": 18.5,
+        "actual_film_time": 126.0,
+        "nominal_source_time": 147.394,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-monte-18.50-film-126.00.png",
+        "sha256": "c365f5f39383facfc6d1420630fda36d021874926125ca4291d3c56c8cd0dd32"
+      },
+      {
+        "section": "sf",
+        "requested_local_time": 2.4,
+        "actual_film_time": 217.84,
+        "nominal_source_time": 133.394,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-sf-2.40-film-217.84.png",
+        "sha256": "4fe4e8b59ebd26c1b0af8290a641688a61ba4df8a2e013e40c525d92afbb2381"
+      },
+      {
+        "section": "sf",
+        "requested_local_time": 6.5,
+        "actual_film_time": 221.96,
+        "nominal_source_time": 137.514,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-sf-6.50-film-221.96.png",
+        "sha256": "3a8dd0cbf9871555579856cf112237273046ca2142c1874eb876f96b62f06025"
+      },
+      {
+        "section": "sf",
+        "requested_local_time": 12.4,
+        "actual_film_time": 227.84,
+        "nominal_source_time": 143.394,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-sf-12.40-film-227.84.png",
+        "sha256": "796ddf6197a883a716d9190c61a8aeaad1764484778ff63860c3fabb3edf29cc"
+      },
+      {
+        "section": "sf",
+        "requested_local_time": 17,
+        "actual_film_time": 232.44,
+        "nominal_source_time": 147.99399999999997,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-sf-17.00-film-232.44.png",
+        "sha256": "e5158628e6753a29120d0955c997a3895c833b42f1016c171a981312cb6cca37"
+      },
+      {
+        "section": "final",
+        "requested_local_time": 1.2,
+        "actual_film_time": 248.64,
+        "nominal_source_time": 428.994,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-final-1.20-film-248.64.png",
+        "sha256": "e1c8699cf87386cec7d8bd7a9df00e05201d7a6da38e176e3e6f2dda522c8c83"
+      },
+      {
+        "section": "final",
+        "requested_local_time": 21.2,
+        "actual_film_time": 268.64,
+        "nominal_source_time": 448.994,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-final-21.20-film-268.64.png",
+        "sha256": "b58046c3b635487eb87856973ebe22118c39c980a8e246d292a8e319ae95c274"
+      },
+      {
+        "section": "final",
+        "requested_local_time": 31.2,
+        "actual_film_time": 278.64,
+        "nominal_source_time": 458.994,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-final-31.20-film-278.64.png",
+        "sha256": "1699fcd7bc0635bde4d0f08ce79c69b9d41d2bec1942295fb2631aa20bea846d"
+      },
+      {
+        "section": "final",
+        "requested_local_time": 44.4,
+        "actual_film_time": 291.84,
+        "nominal_source_time": 472.19399999999996,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-final-44.40-film-291.84.png",
+        "sha256": "d8ac978f13dc095d1d4d7d36243ae80bbe98fce8919fedd52dbfd37d295263b2"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 0.32,
+        "actual_film_time": 293.0,
+        "nominal_source_time": 473.3539999999999,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-0.32-film-293.00.png",
+        "sha256": "b883d8a44bd60404ddf56e9870f9aeabd4e1b057fc1ee06e43995ea2e957b706"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 1.28,
+        "actual_film_time": 293.96,
+        "nominal_source_time": 474.31399999999996,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-1.28-film-293.96.png",
+        "sha256": "7363317f3c431123e81777085b5f04fb702174474a9306b85bbdc2a94220a171"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 2.36,
+        "actual_film_time": 295.04,
+        "nominal_source_time": 475.3939999999999,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-2.36-film-295.04.png",
+        "sha256": "631fd1b75e6f6c0914dd5f16bb29c29493fb4e9e57b10860c32e5a1a23c3b261"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 4,
+        "actual_film_time": 296.68,
+        "nominal_source_time": 477.034,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-4.00-film-296.68.png",
+        "sha256": "a41614311020352b1c2d39037f5058b30afb746d3c3eb041e76c5d73d900812c"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 7.4,
+        "actual_film_time": 300.08,
+        "nominal_source_time": 480.43399999999986,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-7.40-film-300.08.png",
+        "sha256": "cf11dd91f77d9ed04888097710f1edddb2c624000bcd10285af96a8315d64aba"
+      },
+      {
+        "section": "trophy",
+        "requested_local_time": 9.6,
+        "actual_film_time": 302.28,
+        "nominal_source_time": 482.6339999999999,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-trophy-9.60-film-302.28.png",
+        "sha256": "a498c10d565481154afe77df48da2a2602a1354f1fd47dcb23b49f3a35635b93"
+      },
+      {
+        "section": "last_frame",
+        "actual_film_time": 307.2,
+        "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-last-frame.png",
+        "sha256": "6f08eea26a8877e435396e1f2bbe6a3cb3010c45dd1b9f51a470521a7c1d4639"
+      }
+    ],
+    "time_precision": "Contact labels are nominal fps-bin centres, within half-bin; native samples use actual25fps rounded film clock. Source/film arithmetic uses actual artifact offsets; encoded native frames are on a 25fps grid. Action timings here are approximate, not subframe measurements.",
+    "identity": "Actual movie SHA checked during sampling and rechecked before writing this report. No old-movie or browser-preview approval substituted."
+  },
+  "sections": [
+    {
+      "name": "shanghai",
+      "segment": 3,
+      "source_key": "shanghai",
+      "source_window": [
+        114.7,
+        137.32
+      ],
+      "film_window": [
+        38.686,
+        61.306
+      ],
+      "source_sha256": "feb55509c0194aaab9e87e5dc02a2d02961699990713f04f412d4819bf839353",
+      "fps": 3,
+      "sample_frame_count": 68,
+      "sheets": [
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/shanghai-00.jpg",
+          "sha256": "368d74afc6864ac9789c0235d954512b4940fa420ae63767dd3832eb52248ebf"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/shanghai-01.jpg",
+          "sha256": "555c1fb49a23775362cc27e63ce80861f9ae5d769ec63ab782b2b197b1ba3929"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/shanghai-02.jpg",
+          "sha256": "580d6aa10249fe84b618d05ae2003d5471eff8cf0af2082829a16e373ce4582c"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/shanghai-03.jpg",
+          "sha256": "4fc3ba2fea538a03fac2a553d7acafb27ace861696aac28a95585ec38b9a8a04"
+        }
+      ],
+      "observed_sequence": "Incoming photo-card dissolve, service preparation and toss/delivery around 39–40.2s, uninterrupted rally to result around 45.2s, emotional white-shirt winner close-ups, net handshake/hug around 59–61.2s.",
+      "complete_point_temporally_observed": true,
+      "text_observation": "Right-side 2025.10.12 / Shanghai final / 4–6 6–3 6–3 information appears after result. Bilingual subtitles sit low over body/background; sampled main-player eyes/mouth remain clear.",
+      "composition_boundary": "Near player briefly exits left edge around 42–43s under fixed centre portrait crop; the temporal point is preserved.",
+      "visual_assessment": "pass_with_disclosed_composition_boundaries"
+    },
+    {
+      "name": "monte",
+      "segment": 8,
+      "source_key": "monte",
+      "source_window": [
+        128.88,
+        148.2
+      ],
+      "film_window": [
+        107.486,
+        126.80600000000001
+      ],
+      "source_sha256": "51c6e79aa16723bd83dbecd161c1cc8473fb5bfa8c10a592eab6e4d33f5c67ec",
+      "fps": 3,
+      "sample_frame_count": 58,
+      "sheets": [
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/monte-00.jpg",
+          "sha256": "71a201cfeac830e4c039f003284fff5d1849b2fcda15720787cc38e4e8634c88"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/monte-01.jpg",
+          "sha256": "b6ade7c7c6519cd427b3532207e709c85abfd126ea6302c6dea4e7b18baf3d17"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/monte-02.jpg",
+          "sha256": "24fb50f78bbb45c1848e0562bdb330ade7ce2ca3c231de0ddec1e637a8b4413e"
+        }
+      ],
+      "observed_sequence": "Incoming photo-card/source dissolve, service preparation around 107.9–108.4s, toss/delivery around 108.9–109.5s, point concludes around 111.5s, smiling burgundy-shirt winner close-up and handshake around 125.9–126.6s.",
+      "complete_point_temporally_observed": true,
+      "text_observation": "Right-side 2026.04.10 / Monte Carlo quarter-final / 6–4 3–6 6–3 information is intentionally delayed to local 5.4s, after live point. English On he goes, the semi-finals are calling. and Chinese remain legible below the main-player mouth.",
+      "composition_boundary": "Owner-approved delayed information avoids covering the far player during live point. No demand to restore an immediate overlay.",
+      "visual_assessment": "pass_with_disclosed_composition_boundaries"
+    },
+    {
+      "name": "sf",
+      "segment": 16,
+      "source_key": "sf",
+      "source_window": [
+        131,
+        148.88
+      ],
+      "film_window": [
+        215.44600000000003,
+        233.32600000000002
+      ],
+      "source_sha256": "758fd1f13ab228cc99d0e37c3592c51ff6711709208ff1679f60e4e5b27d33e7",
+      "fps": 3,
+      "sample_frame_count": 54,
+      "sheets": [
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/sf-00.jpg",
+          "sha256": "26fce08baf31ecca1c79e59ac130708025dae26f2054e6a54af933c94895f761"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/sf-01.jpg",
+          "sha256": "845e7b84fcaea541adcba1aaa05584abcdd41120f335fcd47f60c2c6c6f1c450"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/sf-02.jpg",
+          "sha256": "c874916c3b085784c09bbdb00c70189f03d4e203fc95d7ccc0bc6d4d456259fd"
+        }
+      ],
+      "observed_sequence": "Incoming title-card dissolve, close-up preparation then toss/delivery around 217.6–218.3s, final rally to result around 221.5s, pointing/fist, crowd/coach reaction and net handshake around 232–233s.",
+      "complete_point_temporally_observed": true,
+      "text_observation": "Right-side 2026.10.31 / Basel semi-final / 7–6(5) 6–3 information and bilingual English/Chinese are readable. A long English clause wraps to two lines without clipping.",
+      "composition_boundary": "What a finish! crowd-reaction subtitle occupies lower-edge spectator face/body area. This is not a claim that every spectator face is clear; sampled main-player eyes/mouth remain unobstructed.",
+      "visual_assessment": "pass_with_disclosed_composition_boundaries"
+    },
+    {
+      "name": "final",
+      "segment": 18,
+      "source_key": "final",
+      "source_window": [
+        427.8,
+        473.02
+      ],
+      "film_window": [
+        247.44600000000003,
+        292.66600000000005
+      ],
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "fps": 3,
+      "sample_frame_count": 136,
+      "sheets": [
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-00.jpg",
+          "sha256": "775c288200be52a48a97f7b1a84f43f9e759f9b8e851d7176e5e168ee8e36c3d"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-01.jpg",
+          "sha256": "f00736bf769ec620114bb1192f3aa4640a168684fb62a454037e18e40efa7e7f"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-02.jpg",
+          "sha256": "4e4c7c070450de03b84701659abfaa4d42532ddbec252037fc3b40e39c73c1d4"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-03.jpg",
+          "sha256": "159fe106511457bd127077036be0f61257203886ec44aa1727815533b28ea1fb"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-04.jpg",
+          "sha256": "39f8af882fc4a2008015c7c4933c9e900e02643b72e4c5ab95d808576b2da90f"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-05.jpg",
+          "sha256": "357485db6d5195ca119457ef2317bff1916e5bca9aa21faac2d43d0d5284f160"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/final-06.jpg",
+          "sha256": "8c0ebff2bb6d8f5513bf3d030f11a03d50576c6b02afc129ec8291d55a00ebfa"
+        }
+      ],
+      "observed_sequence": "Incoming result-card dissolve, service preparation/toss around 247.9–248.3s, delivery around 248.6s; continuous long final rally through about 267s; winner close-up from 267.3s, coach celebration around 271.9s, approach/net handshake around 278.2–279s, chair acknowledgement around 281–285s, arms-up celebration through 292.6s.",
+      "complete_point_temporally_observed": true,
+      "text_observation": "Actual final bilingual cues are visible, including It is another very, very special day / 又是无比特别的一天 and His first at ATP 500 level, and makes a bit of history. / 首座ATP500冠军 写下历史. They remain low over torso/background, without sampled main-player eye/mouth obstruction. Final has no right-side info overlay by design.",
+      "composition_boundary": "Fixed centre portrait crop lets near player leave left/right edge during lateral movement (examples around 250.9, 255.6–257.3, 261.6s). Complete temporal point does not mean every lateral move is in frame.",
+      "visual_assessment": "pass_with_disclosed_composition_boundaries"
+    },
+    {
+      "name": "trophy",
+      "segment": 19,
+      "source_key": "final",
+      "source_window": [
+        473.02,
+        483
+      ],
+      "film_window": [
+        292.66600000000005,
+        302.6460000000001
+      ],
+      "source_sha256": "4b7c98c329c9a4b8de0c5529c9b36daf8d747babc6cf36a7a6cd7456e0edf923",
+      "fps": 5,
+      "sample_frame_count": 50,
+      "sheets": [
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/trophy-00.jpg",
+          "sha256": "7e32169d6cfd497aa8c1384aca5dbfed94de6cafdcb6ac96a79a4f2ee6275e46"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/trophy-01.jpg",
+          "sha256": "2159688fbafa2a092408ab1d7a00300b8507806fd9bb088e43d1190895a6c0bd"
+        },
+        {
+          "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/trophy-02.jpg",
+          "sha256": "e2e8eaefa39be3661367d8afabc70d7f85b22c3de3ced7c58af5bf594381a3d1"
+        }
+      ],
+      "observed_sequence": "Presenter hands/releases actual cup around 292.76–293s; Vacherot secures both handles around 293.2–294.1s; raises cup around 294.3–295.6s; holds overhead through close-up around 295.8–298s; broadcast cuts wide around 298.16s showing raised cup, red podium and falling gold confetti through 302.56s.",
+      "actual_receiving_raising_and_confetti_observed": true,
+      "live_motion_evidence": "Changing hand positions, cup height, expression and falling confetti across 50 decoded frames; not a still-photo substitute.",
+      "text_observation": "Closing Chinese question is below the main-player face. Cup physically passes in front of the face during raising, not a typographic obstruction.",
+      "composition_boundary": "At native film 295.04s (nominal source 475.394s), finial touches/is minutely cut by upper frame/source edge and brand header overlaps upper cup lid. Cup body, both handles, hands and raising action remain visible; later raised close-up regains top headroom. This existing source/header boundary is retained, not concealed by this review.",
+      "visual_assessment": "pass_with_disclosed_composition_boundaries"
+    }
+  ],
+  "ending": {
+    "film_window": [
+      302.6460000000001,
+      307.24
+    ],
+    "sheet": "/workspace/scratch/vacherot-rich-recut/actual-points-review/ending-00.jpg",
+    "sheet_sha256": "5c620dd0fc23ac88d35a1afd56807a09778a3a0efb7f0a771bc82ebf15db8c06",
+    "observed_sequence": "Gold confetti and raised cup dissolve into the blue branded clock/logo animation around 302.8–303.2s; branded ending settled around 305.5s and clean through actual final frame 307.20s.",
+    "no_advertisement_observed": true,
+    "no_black_seam_or_black_tail_observed": true,
+    "status": "pass_in_sampled_tail"
+  },
+  "cross_section_findings": {
+    "portrait_fill": "Actual frame is 1080x1440; match footage fills the portrait canvas with fixed centre crop, without letterbox borders in inspected samples.",
+    "video_footer": "No persistent bottom handle/endmark on match/trophy video. Incoming roughly 0.5s photo/title-card dissolves can carry residual previous-card lettering before clearing.",
+    "overlay_faces": "Main-player eye/mouth remains clear in sampled native subtitles/info frames. Crowd-reaction subtitle boundary and natural trophy-face occlusion are explicitly disclosed above.",
+    "advertising_black_freeze": "No ad interstitial, black seam/tail, or still-photo substitution was observed within the sampled requested windows. Dense sampling is not an exhaustive every-frame freeze detector.",
+    "blackdetect_support": {
+      "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/blackdetect-tail.log",
+      "film_window": [
+        247.446,
+        307.24
+      ],
+      "filter": "blackdetect=d=0.02:pix_th=0.1",
+      "reported_black_intervals": [],
+      "scope": "Supplementary tail pixel check, not whole-film QC."
+    }
+  },
+  "critical_blocking_visual_findings_in_requested_scope": [],
+  "evidence_files": [
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/actual-sampling-manifest.json",
+      "sha256": "2ef17d4385e014f14b633f5e69199655a40de5795f0b0dbed765248d3375dd4c"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/ffprobe.json",
+      "sha256": "9c5d1bef0e5b3cad494ba3c0e2f5ceceb6daf43673446b59495bc61b8e06d525"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/blackdetect-tail.log",
+      "sha256": "367feb57ee1090c13db675699d038594a5f497ff1e1f3f516ea4b012f29389ce"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/actual-points-review/native-viewed-selection.json",
+      "sha256": "8603ccb733e1ad262ccd6c49ba7eebc7a49aa32932f6c4244f5e79536c3f9471"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/formal-artifacts/qc_attestation.json",
+      "sha256": "e178be3e5b2987ba62295696703736219745de08cb93b84e836b6e08df5e5147"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/formal-artifacts/subtitles.ass",
+      "sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/formal-artifacts/render.json",
+      "sha256": "dc466bce609c137ab5a4c0019644ce65f9b9aaa312d9d0efef99e10fd9051e1c"
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/formal-artifacts/audio_review_binding.json",
+      "sha256": "eb8b802bfa9bad3ae6c36938d2aad3875e9a9b635e78bc321bd93d340a5a54e9"
+    }
+  ],
+  "repository_changes": "None for this review. Evidence only in scratch."
+}

@@ -1,0 +1,33 @@
+{
+  "old_sha256": "26f94025c8cd0f10e447ff04aea4f65e1091565458fd8d295c5d02568bc29416",
+  "new_sha256": "c0e235f213d5e9ec9ca4ca191faceff393216a45e1a94d998ef5b25849a852ee",
+  "projection_delta": [
+    [
+      ".segments[12].inset.show_after",
+      8.8,
+      8.2
+    ]
+  ],
+  "all_render_assets_byte_identical": true,
+  "actual_ass_byte_identical": true,
+  "actual_source_audio_timeline_and_reviews_identical": true,
+  "actual_complete_encoded_audio_packet_hash_identical": true,
+  "audio_packet_sha256": "SHA256=a0a19e3528801d42b602897e2c4d6a47bca01bbde717c3c464ff55bc7527b46d",
+  "pixel_comparison_excludes_film_seconds": [
+    172,
+    177.5
+  ],
+  "full_body": {
+    "frames": 7543,
+    "mean": 0.9999580217420125,
+    "minimum": 0.996569,
+    "frames_below_.98": 0
+  },
+  "native_header": {
+    "frames": 7543,
+    "mean": 0.9998833313005435,
+    "minimum": 0.9951,
+    "frames_below_.98": 0
+  },
+  "method": "decode both actual movies; compare every non-Tokyo frame at540x720, and every corresponding native700x125 brandregion; SSIM statistics are evidence for unchanged-content review reuse, not standalone finalQC; actual changedTokyoframes independently inspected"
+}

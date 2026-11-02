@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "key": "032713f3ddfc951e1ffb328f9c5e90b5d0f46bbad2d307069d066e73903e0383",
-  "sha256": "443ba854b41e061aeaf462fc0ae6d1e43bcc374fff37c223831bf0a6b2fe2e9b",
+  "key": "ec17f5c9920890336e89a82ecd931a1671c28a070130557d2869450cdfdd069c",
+  "sha256": "4c1096a7099b9edc47549c2be4e0084c6c297b8d4e5cbc2098eb774faac6909e",
   "seconds": 6.32,
   "fps": "25",
   "size": [
@@ -9,84 +9,263 @@
     1440
   ],
   "plan": {
+    "kind": "scene",
+    "content": {
+      "scene": {
+        "blocks": [
+          {
+            "kind": "headline",
+            "start": 0,
+            "duration": 6.32,
+            "lines": [
+              "澳网第三轮",
+              "继续闯新的赛场"
+            ],
+            "source": "https://github.com/robertyang87/tennislive/blob/main/specs/reels/vacherot-shanghai-one-year.json",
+            "kicker": "2026 澳大利亚网球公开赛"
+          }
+        ]
+      }
+    },
     "canvas_width": 1080,
-    "kind": "turn",
-    "lines": [
-      "澳网第三轮",
-      "新的赛场继续闯"
-    ],
-    "font_px": 96,
-    "nodes": [],
-    "direction": "horizontal",
-    "groups": [],
-    "proof_h": 0,
-    "node_height": 86,
-    "kicker_y": 505.12,
-    "headline_y": 589.12,
-    "proof_y": 902.88,
-    "safe_bottom": 1244,
-    "photo": null,
-    "highlight": "",
-    "kicker": "2026 澳大利亚网球公开赛",
-    "content": {},
-    "notes": []
+    "safe_bottom": 1244
   },
-  "browser_evidence": {
-    "boxes": [
-      {
-        "text": "澳网第三轮",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 589.109375,
+  "browser_evidence": [
+    {
+      "time": 0.5,
+      "visible_text": [
+        {
+          "text": "2026 澳大利亚网球公开赛",
+          "scroll": 940,
           "width": 940,
-          "height": 122.875,
-          "top": 589.109375,
-          "right": 1010,
-          "bottom": 711.984375,
-          "left": 70
-        }
-      },
-      {
-        "text": "新的赛场继续闯",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 711.984375,
+          "rect": {
+            "x": 70,
+            "y": 327.39312744140625,
+            "width": 940,
+            "height": 45.996002197265625,
+            "top": 327.39312744140625,
+            "right": 1010,
+            "bottom": 373.3891296386719,
+            "left": 70
+          }
+        },
+        {
+          "text": "澳网第三轮",
+          "scroll": 940,
           "width": 940,
-          "height": 122.875,
-          "top": 711.984375,
-          "right": 1010,
-          "bottom": 834.859375,
-          "left": 70
+          "rect": {
+            "x": 70,
+            "y": 425.7571105957031,
+            "width": 940,
+            "height": 97.76296997070312,
+            "top": 425.7571105957031,
+            "right": 1010,
+            "bottom": 523.5200805664062,
+            "left": 70
+          }
         }
-      }
-    ],
-    "content": [
-      {
-        "x": 285,
-        "y": 505.109375,
-        "width": 510,
-        "height": 56,
-        "top": 505.109375,
-        "right": 795,
-        "bottom": 561.109375,
-        "left": 285
-      },
-      {
-        "x": 70,
-        "y": 589.109375,
-        "width": 940,
-        "height": 245.75,
-        "top": 589.109375,
-        "right": 1010,
-        "bottom": 834.859375,
-        "left": 70
-      }
-    ],
-    "story": null
-  },
+      ]
+    },
+    {
+      "time": 0.948,
+      "visible_text": [
+        {
+          "text": "2026 澳大利亚网球公开赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 326.203125,
+            "width": 940,
+            "height": 46,
+            "top": 326.203125,
+            "right": 1010,
+            "bottom": 372.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "澳网第三轮",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 412.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 412.203125,
+            "right": 1010,
+            "bottom": 511,
+            "left": 70
+          }
+        },
+        {
+          "text": "继续闯新的赛场",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 536.039794921875,
+            "width": 940,
+            "height": 98.79034423828125,
+            "top": 536.039794921875,
+            "right": 1010,
+            "bottom": 634.8301391601562,
+            "left": 70
+          }
+        }
+      ]
+    },
+    {
+      "time": 3.16,
+      "visible_text": [
+        {
+          "text": "2026 澳大利亚网球公开赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 326.203125,
+            "width": 940,
+            "height": 46,
+            "top": 326.203125,
+            "right": 1010,
+            "bottom": 372.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "澳网第三轮",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 412.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 412.203125,
+            "right": 1010,
+            "bottom": 511,
+            "left": 70
+          }
+        },
+        {
+          "text": "继续闯新的赛场",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 535,
+            "width": 940,
+            "height": 98.796875,
+            "top": 535,
+            "right": 1010,
+            "bottom": 633.796875,
+            "left": 70
+          }
+        }
+      ]
+    },
+    {
+      "time": 5.372,
+      "visible_text": [
+        {
+          "text": "2026 澳大利亚网球公开赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 326.203125,
+            "width": 940,
+            "height": 46,
+            "top": 326.203125,
+            "right": 1010,
+            "bottom": 372.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "澳网第三轮",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 412.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 412.203125,
+            "right": 1010,
+            "bottom": 511,
+            "left": 70
+          }
+        },
+        {
+          "text": "继续闯新的赛场",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 535,
+            "width": 940,
+            "height": 98.796875,
+            "top": 535,
+            "right": 1010,
+            "bottom": 633.796875,
+            "left": 70
+          }
+        }
+      ]
+    },
+    {
+      "time": 6.12,
+      "visible_text": [
+        {
+          "text": "2026 澳大利亚网球公开赛",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 326.203125,
+            "width": 940,
+            "height": 46,
+            "top": 326.203125,
+            "right": 1010,
+            "bottom": 372.203125,
+            "left": 70
+          }
+        },
+        {
+          "text": "澳网第三轮",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 412.203125,
+            "width": 940,
+            "height": 98.796875,
+            "top": 412.203125,
+            "right": 1010,
+            "bottom": 511,
+            "left": 70
+          }
+        },
+        {
+          "text": "继续闯新的赛场",
+          "scroll": 940,
+          "width": 940,
+          "rect": {
+            "x": 70,
+            "y": 535,
+            "width": 940,
+            "height": 98.796875,
+            "top": 535,
+            "right": 1010,
+            "bottom": 633.796875,
+            "left": 70
+          }
+        }
+      ]
+    }
+  ],
   "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
 }
