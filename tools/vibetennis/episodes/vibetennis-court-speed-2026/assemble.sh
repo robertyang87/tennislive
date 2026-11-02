@@ -21,8 +21,8 @@ M=${SLUG}_master.mp4; P=${SLUG}_push.mp4
 [ -f "$M" ] || ffmpeg -y -loglevel error -loop 1 -framerate 30 -t 0.1 -i "$THUMB" -i r3d/full_ov_$L.mp4 -i sfx/final_$L.m4a \
   -filter_complex "[0:v]scale=1920:1080,format=yuv420p,setsar=1[a];[1:v]format=yuv420p,setsar=1[b];[a][b]concat=n=2:v=1:a=0[v]" \
   -map "[v]" -map 2:a -c:v libx264 -preset medium -crf 16 -pix_fmt yuv420p -r 30 -c:a copy -shortest -movflags +faststart "$M"
-ffmpeg -y -loglevel error -i "$M" -map 0:v -c:v libx264 -profile:v high -preset medium -b:v 7500k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
-ffmpeg -y -loglevel error -i "$M" -map 0:v -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7500k -maxrate 11000k -bufsize 15000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
+ffmpeg -y -loglevel error -i "$M" -map 0:v:0 -c:v libx264 -profile:v high -preset medium -b:v 7500k -fps_mode cfr -r 30 -pass 1 -passlogfile sfx/x264_$L -an -f null /dev/null
+ffmpeg -y -loglevel error -i "$M" -map 0:v:0 -map 0:a -c:v libx264 -profile:v high -preset medium -b:v 7500k -maxrate 11000k -bufsize 15000k -fps_mode cfr -r 30 -pass 2 -passlogfile sfx/x264_$L -pix_fmt yuv420p -c:a copy -movflags +faststart sfx/tmp_$L.mp4
 for f in "$M" "$P"; do
   src=$([ "$f" = "$P" ] && echo sfx/tmp_$L.mp4 || echo "$M")
   ffmpeg -y -loglevel error -i "$src" -i "$THUMB" -map 0 -map 1 -c copy -disposition:v:1 attached_pic -movflags +faststart sfx/att_$L.mp4 && mv sfx/att_$L.mp4 "$f"
