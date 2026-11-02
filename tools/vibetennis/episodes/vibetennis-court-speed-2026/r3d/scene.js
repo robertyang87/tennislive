@@ -165,7 +165,7 @@ function roofRG(v,grp){
       const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals();
       wg.add(new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0xf3f4f2,roughness:0.5,metalness:0.1,side:THREE.DoubleSide})));
       beam(wg,V3(-W2,1.0+hA+0.1,0),V3(W2,1.0+hA+0.1,0),0.28,new THREE.MeshStandardMaterial({color:0x7d858c,roughness:0.5,metalness:0.5})); }
-    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.45+i*w*0.24, yo:(n-1-i)*1.0, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
+    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.45+i*w*0.24, yo:(n-1-i)*0.6, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
   const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=3.6; // 航拍：屋顶一圈是顶棚滑轨的钢框，比较厚
   for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
     const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
@@ -173,7 +173,7 @@ function roofRG(v,grp){
 }
 // 打开时从南往北依次收拢（最南的一片最先动）
 function setRGRoof(p){ const n=RGW.length; RGW.forEach((r,i)=>{ const k=Math.max(0,Math.min(1,(p*1.6-(n-1-i)/(n-1)*0.6))); const e=k*k*(3-2*k);
-  r.g.position.set(0,r.y0+r.yo*e,r.zc+(r.zo-r.zc)*e); r.g.rotation.x=0.26*e; }); } // 收拢时每片翼外侧抬起，像瓦片一样叠，一道道肋露出来（航拍）
+  r.g.position.set(0,r.y0+r.yo*e,r.zc+(r.zo-r.zc)*e);  }); } // 收拢时每片翼外侧抬起，像瓦片一样叠，一道道肋露出来（航拍）
 function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两束收在南北两端
   const out=shapePts(v.shape,v.rx,v.rz);
   band(grp,scl(out,0.76),scl(out,1.05),v.H+4.5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
@@ -288,8 +288,21 @@ const LAB=V3(0,0,1300), LANES=[{k:'RG',mu:0.9,e:0.85,col:0xff8a4a},{k:'WIM',mu:0
 const VIN=25, ANG=16*Math.PI/180, G=9.81;
 LANES.forEach((ln,i)=>{ const vx=VIN*Math.cos(ANG), vy=VIN*Math.sin(ANG); ln.vx2=Math.max(vx-ln.mu*(1+ln.e)*vy,0.55*vx); ln.vy2=ln.e*vy; ln.vx=vx; ln.vy=vy; ln.z=(i-1)*7; ln.out=Math.atan2(ln.vy2,ln.vx2)*180/Math.PI; });
 const labG=new THREE.Group(); labG.position.copy(LAB); scene.add(labG);
-LANES.forEach(ln=>{ const t=SURF[ln.k].clone(); t.needsUpdate=true; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(2.2,0.3);
+// 泳道 60×6 m（x −20…40）。所有者：标线要和来球方向一致、一条泳道就是一块场地从左到右——
+// 整块单打场沿 x 摆：左底线 −18、球网 −6、右发球线 0.4（落点 x=0 就在发球线附近）、右底线 5.77；宽度压到泳道内（示意）
+const NETX=-6;
+function laneTex(k){ const P2=40, w=60*P2, h=6*P2, X=x=>(x+20)*P2, Z=z=>(z+3)*P2;
+  return canvasTex(w,h,(g)=>{
+    if(k==='RG'){ g.fillStyle='#b9562f'; g.fillRect(0,0,w,h); noise(g,w,h,60000,['#c8653a','#a94b28','#d27446','#9c4423'],2.2); }
+    else if(k==='WIM'){ for(let i=0;i<20;i++){ g.fillStyle=i%2?'#3f7431':'#4b843a'; g.fillRect(i*w/20,0,w/20+1,h); } noise(g,w,h,80000,['#355f2a','#5a9446','#3f7533','#64a04c'],1.6); }
+    else { g.fillStyle='#2a9bd9'; g.fillRect(0,0,w,h); g.fillStyle='#3486b8'; g.fillRect(X(NETX-L),Z(-2.7),L*2*P2,5.4*P2); noise(g,w,h,30000,['rgba(255,255,255,0.04)','rgba(0,0,0,0.05)'],1.2); }
+    g.strokeStyle=k==='RG'?'#f4efe6':'#ffffff'; g.lineWidth=0.06*P2; const R=(x0,z0,x1,z1)=>{ g.beginPath(); g.moveTo(X(x0),Z(z0)); g.lineTo(X(x1),Z(z1)); g.stroke(); };
+    const b0=NETX-L, b1=NETX+L; R(b0,-2.7,b1,-2.7); R(b0,2.7,b1,2.7); R(b0,-2.7,b0,2.7); R(b1,-2.7,b1,2.7);
+    R(NETX-SL,-2.7,NETX-SL,2.7); R(NETX+SL,-2.7,NETX+SL,2.7); R(NETX-SL,0,NETX+SL,0); R(b0,0,b0+0.12,0); R(b1,0,b1-0.12,0); }); }
+LANES.forEach(ln=>{ const t=laneTex(ln.k);
   const m=new THREE.Mesh(new THREE.PlaneGeometry(60,6),new THREE.MeshStandardMaterial({map:t,roughness:0.8})); m.rotation.x=-Math.PI/2; m.position.set(10,0,ln.z); labG.add(m);
+  const net=new THREE.Mesh(new THREE.PlaneGeometry(6.2,0.914),new THREE.MeshStandardMaterial({color:0x111418,transparent:true,opacity:0.6,side:THREE.DoubleSide})); net.rotation.y=Math.PI/2; net.position.set(NETX,0.457,ln.z); labG.add(net);
+  const tp=new THREE.Mesh(new THREE.BoxGeometry(0.05,0.06,6.2),new THREE.MeshStandardMaterial({color:0xffffff})); tp.position.set(NETX,0.914,ln.z); labG.add(tp);
   ln.ball=new THREE.Mesh(new THREE.SphereGeometry(0.34,24,16),new THREE.MeshStandardMaterial({color:0xd8f040,emissive:0x7a8a18,roughness:0.6})); labG.add(ln.ball);
   ln.trail=new THREE.Mesh(new THREE.BufferGeometry(),glowMat(ln.col,0.95)); labG.add(ln.trail);
   ln.ring=new THREE.Mesh(new THREE.RingGeometry(0.3,0.5,32),glowMat(ln.col,0)); ln.ring.rotation.x=-Math.PI/2; ln.ring.position.set(0,0.03,ln.z); labG.add(ln.ring); });
@@ -453,10 +466,10 @@ function shotTL(t){
     const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*0.8,10,LZ+ln.z+11,LX+3.5,0.3,LZ+ln.z,42); setLanes(tau,show); setDust(tau); setFX(tau,show,u); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
-    if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,120-30*q,2.95-0.45*q,6); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
-    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; orbit(P[0],P[1],170-30*q,80,0.7+0.6*q,8); return 'v_WIM'; }
-    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; orbit(P[0],P[1],170,55,1.0+0.4*q,18); return 'v_AO'; }
-    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; orbit(P[0],P[1],260,75,1.45+0.35*q,25); return 'v_USO'; }
+    if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],150-25*q,200-20*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
+    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; orbit(P[0],P[1],150-20*q,190,0.7+0.6*q,0); return 'v_WIM'; }
+    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; orbit(P[0],P[1],140,190,1.0+0.4*q,0); return 'v_AO'; }
+    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; orbit(P[0],P[1],180,240,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
   if(k==='lineup'){ lineupWorld(); camLook(Math.sin(u*0.2)*6,62-u*2,58-u*2,0,0,0,34); return k; }
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
