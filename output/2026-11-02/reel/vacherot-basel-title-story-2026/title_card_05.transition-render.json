@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "key": "596006d89d78b4365e8c20022793e32d89f3c383c2d47cc7b92af707d175bfc0",
-  "sha256": "6afe82a48aef6ffcd89d93c6b6f1cd63f8ee2933b9f9f28b091e75658228e6c5",
-  "seconds": 6.0,
+  "key": "05c9e5a9e0e12fcb649a5bab25926edf6734fb2961dadee47cf2a7d8ad916879",
+  "sha256": "4f409cbc5756ccb24d815a7a24645522a243b253eca6d71b11a18aa781aee817",
+  "seconds": 11.96,
   "fps": "25",
   "size": [
     1080,
@@ -10,80 +10,174 @@
   ],
   "plan": {
     "canvas_width": 1080,
-    "kind": "turn",
+    "kind": "chronology",
     "lines": [
-      "02 巴塞尔",
-      "从首轮再出发"
+      "第一座奖杯之后",
+      "下一站就输了"
     ],
     "font_px": 96,
-    "nodes": [],
-    "direction": "horizontal",
+    "nodes": [
+      {
+        "label": "首盘",
+        "value": "6-4",
+        "source": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2025-10-23_Top-stars-live-up-to-their-billing-.php"
+      },
+      {
+        "label": "后两盘",
+        "value": "6-7⁴ 5-7",
+        "source": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2025-10-23_Top-stars-live-up-to-their-billing-.php"
+      }
+    ],
+    "direction": "vertical",
     "groups": [],
-    "proof_h": 0,
-    "node_height": 86,
-    "kicker_y": 505.12,
-    "headline_y": 589.12,
-    "proof_y": 902.88,
+    "proof_h": 280,
+    "node_height": 140,
+    "kicker_y": 363.12,
+    "headline_y": 447.12,
+    "proof_y": 760.88,
     "safe_bottom": 1244,
     "photo": null,
     "highlight": "",
-    "kicker": "第一轮",
-    "content": {},
+    "kicker": "2025 巴塞尔",
+    "content": {
+      "events": [
+        {
+          "label": "首盘",
+          "value": "6-4",
+          "source": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2025-10-23_Top-stars-live-up-to-their-billing-.php"
+        },
+        {
+          "label": "后两盘",
+          "value": "6-7⁴ 5-7",
+          "source": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2025-10-23_Top-stars-live-up-to-their-billing-.php"
+        }
+      ]
+    },
     "notes": []
   },
   "browser_evidence": {
     "boxes": [
       {
-        "text": "02 巴塞尔",
+        "text": "第一座奖杯之后",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 589.109375,
+          "y": 447.109375,
           "width": 940,
           "height": 122.875,
-          "top": 589.109375,
+          "top": 447.109375,
           "right": 1010,
-          "bottom": 711.984375,
+          "bottom": 569.984375,
           "left": 70
         }
       },
       {
-        "text": "从首轮再出发",
+        "text": "下一站就输了",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 711.984375,
+          "y": 569.984375,
           "width": 940,
           "height": 122.875,
-          "top": 711.984375,
+          "top": 569.984375,
           "right": 1010,
-          "bottom": 834.859375,
+          "bottom": 692.859375,
           "left": 70
+        }
+      },
+      {
+        "text": "首盘",
+        "width": 56,
+        "scroll": 56,
+        "rect": {
+          "x": 130,
+          "y": 810.78125,
+          "width": 56,
+          "height": 39.1875,
+          "top": 810.78125,
+          "right": 186,
+          "bottom": 849.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "6-4",
+        "width": 58,
+        "scroll": 58,
+        "rect": {
+          "x": 896,
+          "y": 805.375,
+          "width": 58,
+          "height": 50,
+          "top": 805.375,
+          "right": 954,
+          "bottom": 855.375,
+          "left": 896
+        }
+      },
+      {
+        "text": "后两盘",
+        "width": 84,
+        "scroll": 84,
+        "rect": {
+          "x": 130,
+          "y": 950.78125,
+          "width": 84,
+          "height": 39.1875,
+          "top": 950.78125,
+          "right": 214,
+          "bottom": 989.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "6-7⁴ 5-7",
+        "width": 142,
+        "scroll": 142,
+        "rect": {
+          "x": 811.8125,
+          "y": 945.375,
+          "width": 142.1875,
+          "height": 50,
+          "top": 945.375,
+          "right": 954,
+          "bottom": 995.375,
+          "left": 811.8125
         }
       }
     ],
     "content": [
       {
-        "x": 459,
-        "y": 505.109375,
-        "width": 162,
+        "x": 405,
+        "y": 363.109375,
+        "width": 270,
         "height": 56,
-        "top": 505.109375,
-        "right": 621,
-        "bottom": 561.109375,
-        "left": 459
+        "top": 363.109375,
+        "right": 675,
+        "bottom": 419.109375,
+        "left": 405
       },
       {
         "x": 70,
-        "y": 589.109375,
+        "y": 447.109375,
         "width": 940,
         "height": 245.75,
-        "top": 589.109375,
+        "top": 447.109375,
         "right": 1010,
-        "bottom": 834.859375,
+        "bottom": 692.859375,
         "left": 70
+      },
+      {
+        "x": 90,
+        "y": 760.875,
+        "width": 900,
+        "height": 280,
+        "top": 760.875,
+        "right": 990,
+        "bottom": 1040.875,
+        "left": 90
       }
     ],
     "story": null

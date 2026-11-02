@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "key": "55bb2ee9317af0ad9696029882446bdfd51136847d368ca9fa09639b4db02f60",
-  "sha256": "c1dd0c2f5a79567847401ca02e6ac8032469ba2b9acae6e20a12735db8b8245d",
-  "seconds": 7.0,
+  "key": "c680cb8f3bdff4016b586846e49cdc6b0f864ecd967dcef1b8411f5cfd130f59",
+  "sha256": "afc8cd842bedddb7552fb12c563ccc875c3dddd5ce829bcac174cb2d5f59a66d",
+  "seconds": 8.04,
   "fps": "25",
   "size": [
     1080,
@@ -10,80 +10,174 @@
   ],
   "plan": {
     "canvas_width": 1080,
-    "kind": "turn",
+    "kind": "chronology",
     "lines": [
-      "又一次",
-      "站到决赛门前"
+      "成都头号种子",
+      "首战出局"
     ],
     "font_px": 96,
-    "nodes": [],
-    "direction": "horizontal",
+    "nodes": [
+      {
+        "label": "第一盘",
+        "value": "4-6",
+        "source": "https://www.protennislive.com/posting/2026/7581/mds.pdf"
+      },
+      {
+        "label": "第二盘",
+        "value": "6-7⁵",
+        "source": "https://www.protennislive.com/posting/2026/7581/mds.pdf"
+      }
+    ],
+    "direction": "vertical",
     "groups": [],
-    "proof_h": 0,
-    "node_height": 86,
-    "kicker_y": 505.12,
-    "headline_y": 589.12,
-    "proof_y": 902.88,
+    "proof_h": 280,
+    "node_height": 140,
+    "kicker_y": 363.12,
+    "headline_y": 447.12,
+    "proof_y": 760.88,
     "safe_bottom": 1244,
     "photo": null,
     "highlight": "",
-    "kicker": "半决赛",
-    "content": {},
+    "kicker": "2026 成都",
+    "content": {
+      "events": [
+        {
+          "label": "第一盘",
+          "value": "4-6",
+          "source": "https://www.protennislive.com/posting/2026/7581/mds.pdf"
+        },
+        {
+          "label": "第二盘",
+          "value": "6-7⁵",
+          "source": "https://www.protennislive.com/posting/2026/7581/mds.pdf"
+        }
+      ]
+    },
     "notes": []
   },
   "browser_evidence": {
     "boxes": [
       {
-        "text": "又一次",
+        "text": "成都头号种子",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 589.109375,
+          "y": 447.109375,
           "width": 940,
           "height": 122.875,
-          "top": 589.109375,
+          "top": 447.109375,
           "right": 1010,
-          "bottom": 711.984375,
+          "bottom": 569.984375,
           "left": 70
         }
       },
       {
-        "text": "站到决赛门前",
+        "text": "首战出局",
         "width": 940,
         "scroll": 940,
         "rect": {
           "x": 70,
-          "y": 711.984375,
+          "y": 569.984375,
           "width": 940,
           "height": 122.875,
-          "top": 711.984375,
+          "top": 569.984375,
           "right": 1010,
-          "bottom": 834.859375,
+          "bottom": 692.859375,
           "left": 70
+        }
+      },
+      {
+        "text": "第一盘",
+        "width": 84,
+        "scroll": 84,
+        "rect": {
+          "x": 130,
+          "y": 810.78125,
+          "width": 84,
+          "height": 39.1875,
+          "top": 810.78125,
+          "right": 214,
+          "bottom": 849.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "4-6",
+        "width": 58,
+        "scroll": 58,
+        "rect": {
+          "x": 896,
+          "y": 805.375,
+          "width": 58,
+          "height": 50,
+          "top": 805.375,
+          "right": 954,
+          "bottom": 855.375,
+          "left": 896
+        }
+      },
+      {
+        "text": "第二盘",
+        "width": 84,
+        "scroll": 84,
+        "rect": {
+          "x": 130,
+          "y": 950.78125,
+          "width": 84,
+          "height": 39.1875,
+          "top": 950.78125,
+          "right": 214,
+          "bottom": 989.96875,
+          "left": 130
+        }
+      },
+      {
+        "text": "6-7⁵",
+        "width": 75,
+        "scroll": 75,
+        "rect": {
+          "x": 879.40625,
+          "y": 945.375,
+          "width": 74.59375,
+          "height": 50,
+          "top": 945.375,
+          "right": 954,
+          "bottom": 995.375,
+          "left": 879.40625
         }
       }
     ],
     "content": [
       {
-        "x": 459,
-        "y": 505.109375,
-        "width": 162,
+        "x": 425,
+        "y": 363.109375,
+        "width": 230,
         "height": 56,
-        "top": 505.109375,
-        "right": 621,
-        "bottom": 561.109375,
-        "left": 459
+        "top": 363.109375,
+        "right": 655,
+        "bottom": 419.109375,
+        "left": 425
       },
       {
         "x": 70,
-        "y": 589.109375,
+        "y": 447.109375,
         "width": 940,
         "height": 245.75,
-        "top": 589.109375,
+        "top": 447.109375,
         "right": 1010,
-        "bottom": 834.859375,
+        "bottom": 692.859375,
         "left": 70
+      },
+      {
+        "x": 90,
+        "y": 760.875,
+        "width": 900,
+        "height": 280,
+        "top": 760.875,
+        "right": 990,
+        "bottom": 1040.875,
+        "left": 90
       }
     ],
     "story": null
