@@ -204,9 +204,13 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
     const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); grp.add(new THREE.Mesh(g,fabric()));
     const lip=[]; for(let i=0;i<=NA;i++){ const q=P(i,NR); lip.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lip,true),220,0.9,6,true),new THREE.MeshStandardMaterial({color:0xe6e9ec,roughness:0.5})));  { const inner=[]; for(let i=0;i<=NA;i++){ const q=P(i,0); inner.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(inner,true),220,0.7,6,true),steelBlue)); } }
   // 外柱与蓝色斜撑
-  const n=8, cr=R*1.04; const ring=canopyOut;
-  for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr);
-    beam(grp,c,V3(c.x,top,c.z),1.6,new THREE.MeshStandardMaterial({color:0x8e959c,roughness:0.6})); }
+  // 照片（Commons「Arthur Ashe Stadium with retractible roof」）：顶棚由一圈蓝色钢柱托着，柱子贴着砖红基座外侧落地，
+  // 柱间是从地面斜拉到顶棚外缘的大 X 形蓝色斜撑——不是离开建筑、单独立着的灰色细杆
+  const n=8, cr=v.rx*1.04; const ring=canopyOut;
+  for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr), T=V3(c.x,top+0.8,c.z);
+    beam(grp,c,T,1.5,steelBlue);
+    for(const s of [-1,1]){ const b=a+s*Math.PI/n*0.95, e=V3(Math.cos(b)*cr*1.02,v.H*0.55,Math.sin(b)*cr*1.02);
+      beam(grp,V3(c.x,v.H*0.12,c.z),e,0.7,steelBlue); beam(grp,e,V3(Math.cos(b)*R*0.98,top+0.8,Math.sin(b)*R*0.98),0.7,steelBlue); } }
   // 蓝色钢桁架层：基座顶部到膜顶外缘，上下两道环梁＋竖杆＋交叉斜撑（照片里很密）
   const ringE=(()=>{ const P=ring.slice(0,ring.length-1), d=[0]; for(let i=1;i<=P.length;i++){ const a=P[i-1],b=P[i%P.length]; d.push(d[i-1]+Math.hypot(b[0]-a[0],b[1]-a[1])); }
     const T=d[P.length], out=[]; let j=0; for(let k=0;k<96;k++){ const t=k/96*T; while(d[j+1]<t) j++; const f=(t-d[j])/(d[j+1]-d[j]), a=P[j], b=P[(j+1)%P.length]; out.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]); } out.push(out[0]); return out; })();
