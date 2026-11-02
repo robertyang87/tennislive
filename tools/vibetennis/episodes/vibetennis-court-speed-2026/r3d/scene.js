@@ -77,6 +77,8 @@ const V3=(x,y,z)=>new THREE.Vector3(x,y,z);
 function shapePts(shape,rx,rz,n=192){ const pts=[];
   for(let i=0;i<=n;i++){ const a=i/n*Math.PI*2, c=Math.cos(a), s=Math.sin(a);
     if(shape==='round') pts.push([c*rx,s*rz]);
+    else if(shape==='chamf'){ const ch=0.24, V=[[1,1-ch],[1-ch*rz/rx,1],[-(1-ch*rz/rx),1],[-1,1-ch],[-1,-(1-ch)],[-(1-ch*rz/rx),-1],[1-ch*rz/rx,-1],[1,-(1-ch)]];
+      let best=1e9; for(let j=0;j<8;j++){ const A=V[j],B=V[(j+1)%8], ax=A[0]*rx,az=A[1]*rz,bx=B[0]*rx,bz=B[1]*rz, ex=bx-ax,ez=bz-az, den=c*ez-s*ex; if(Math.abs(den)<1e-9) continue; const t=(ax*ez-az*ex)/den; if(t>0&&t<best) best=t; } pts.push([c*best,s*best]); }
     else if(shape==='oct'){ const k=Math.PI/4, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else if(shape==='dodec'){ const k=Math.PI/6, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else { const p=shape==='box'?40:(shape==='rr'?3.4:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
@@ -116,10 +118,10 @@ for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.se
 
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
-  {k:'RG', shape:'box',  rx:56,rz:58,H:30, glow:0xffa070, seat:0x9aa0a6},
-  {k:'WIM',shape:'dodec',rx:56,rz:52,H:22, glow:0x8dffa0, seat:0x1f4a2c},
-  {k:'AO', shape:'rr',rx:50,rz:66,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
-  {k:'USO',shape:'round',rx:76,rz:76,H:28, glow:0x86b0ff, seat:0x22427e},
+  {k:'RG', shape:'box',  rx:54.5,rz:54.5,H:30, glow:0xffa070, seat:0x9aa0a6},
+  {k:'WIM',shape:'chamf',rx:63.5,rz:55,H:22, glow:0x8dffa0, seat:0x1f4a2c},
+  {k:'AO', shape:'rr',rx:55.5,rz:63,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
+  {k:'USO',shape:'round',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
 function buildCore(v,grp){ // 球场＋球网（并排镜头只保留这些）
   const court=new THREE.Mesh(new THREE.PlaneGeometry(FW,FL),new THREE.MeshStandardMaterial({map:SURF[v.k],roughness:ROUGH[v.k],metalness:0}));
@@ -159,7 +161,7 @@ function roofRG(v,grp){
     for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(W2*2,w*0.5/Math.cos(tilt)),fabric());
       p.rotation.x=-Math.PI/2+side*tilt; p.position.set(0,1.2,side*w*0.25); wg.add(p); }
     beam(wg,V3(-W2,1.2+w*0.25*Math.tan(tilt),0),V3(W2,1.2+w*0.25*Math.tan(tilt),0),0.3,steel);
-    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.55+i*w*0.36, yo:(n-1-i)*0.55, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
+    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.5+i*w*0.22, yo:(n-1-i)*0.55, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
   const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=2.6;
   for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
     const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
@@ -169,11 +171,11 @@ function roofRG(v,grp){
 function setRGRoof(p){ const n=RGW.length; RGW.forEach((r,i)=>{ const k=Math.max(0,Math.min(1,(p*1.6-(n-1-i)/(n-1)*0.6))); const e=k*k*(3-2*k);
   r.g.position.set(0,r.y0+r.yo*e,r.zc+(r.zo-r.zc)*e); }); }
 function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两束收在南北两端
-  const out=shapePts('dodec',v.rx,v.rz);
+  const out=shapePts(v.shape,v.rx,v.rz);
   band(grp,scl(out,0.70),scl(out,1.05),v.H+5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
   loop(grp,scl(out,1.05),v.H+0.65,0xcfd8cf,0.9);
   // 拱桁架收在南北两端的看台上方；跨度取该处建筑的实际宽度，两端落在坡屋面外缘
-  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.66-i*3.0), hw=Math.sqrt(Math.max(0,(v.rx*0.97)**2-z*z))*0.98, hh=13.5-i*0.5, yb=v.H+2.0; // 拱要整根架在坡屋面之上：下弦在屋面内沿（0.70R、高 H+5）处也要高出屋面，脚落在外沿屋面上
+  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.66-i*3.0), hw=(v.rx-Math.max(0,Math.abs(z)-v.rz*0.76))*0.95, /* 切角处按 45° 收窄 */ hh=13.5-i*0.5, yb=v.H+2.0; // 拱要整根架在坡屋面之上：下弦在屋面内沿（0.70R、高 H+5）处也要高出屋面，脚落在外沿屋面上
     const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-2.8),z)); }
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,6,false),steel));
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.4,6,false),steel));
@@ -202,7 +204,7 @@ function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）�
       for(const sx of[-1,1]){ const m=top[sx<0?0:24]; beam(grp,V3(m.x,v.H*0.3,m.z),m,0.5,steel); } } } // 外沿落地的白柱
 }
 function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起的「枕头」，蓝色钢桁架斜撑落在外柱上，中间可开合
-  const top=v.H+14, R=v.rx*1.12;
+  const top=v.H+14, R=v.rx*1.06; // 膜顶外缘 ≈ OSM 建筑轮廓 157 m
   const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
   const oc=shapePts('oct',R*1.04,R*1.04); // 俯拍（Constructify 2025）：膜顶外缘是切了角的八边形
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=oc[i]; return [p[0]*0.25+q[0]*0.75,p[1]*0.25+q[1]*0.75]; });
@@ -234,13 +236,7 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
 function shellAO(v,grp){ // 外墙：下层通高玻璃（buildBowl 里），上层白色横向分层；斜格的白色弧形外壳只在一侧入口（2020 年 Commons 照片）
   const o=shapePts(v.shape,v.rx,v.rz), n=o.length-1, yR=v.H*1.18;
   band(grp,scl(o,1.0),scl(o,1.0),v.H*0.47,yR,new THREE.MeshStandardMaterial({map:FACADE.AO,roughness:0.5,metalness:0.1,side:THREE.DoubleSide}));
-  const a=shapePts(v.shape,v.rx*1.0,v.rz*1.0), b=shapePts(v.shape,v.rx*1.09,v.rz*1.09), pos=[],uv=[], c0=0.25, wd=0.42;
-  const hy=i=>{ const d=Math.abs(((i/n*Math.PI*2-c0+Math.PI)%(Math.PI*2))-Math.PI)/wd; return d>=1?null:v.H*(0.6+0.55*Math.cos(d*Math.PI/2)); };
-  for(let i=0;i<n;i++){ const h0=hy(i),h1=hy(i+1); if(h0===null||h1===null) continue; const u0=i/n*6,u1=(i+1)/n*6;
-    const A=[a[i][0],0,a[i][1]],B=[a[i+1][0],0,a[i+1][1]],C=[b[i+1][0],h1,b[i+1][1]],D=[b[i][0],h0,b[i][1]];
-    pos.push(...A,...B,...C,...A,...C,...D); uv.push(u0,0,u1,0,u1,1,u0,0,u1,1,u0,1); }
-  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.computeVertexNormals();
-  grp.add(new THREE.Mesh(g,new THREE.MeshStandardMaterial({map:DIAG_AO,roughness:0.45,metalness:0.15,side:THREE.DoubleSide,transparent:true,opacity:0.95})));
+  // 一侧入口的斜格外壳：所有者 2026-11-02 要求拿掉
   grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(scl(o,1.01).map(p=>V3(p[0],yR+0.2,p[1])),true),200,0.6,6,true),steel)); }
 const ROOF={RG:roofRG,WIM:roofWIM,AO:roofAO,USO:roofUSO};
 
