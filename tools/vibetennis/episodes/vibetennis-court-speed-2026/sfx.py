@@ -177,6 +177,26 @@ for i in range(11): EN(y['t0']+0.2+i*0.12,tick(),0.5)
 EN(NAR['r8'],number_pop(),0.6,name='2020-low'); EN(NAR['r8'],ding(660),0.4)
 e=SEC['end']; EN(NAR['e1'],boom(3.5),0.45,name='golden'); EN(NAR['e1'],ding(880),0.45); EN(NAR['e1']+0.1,sparkle(2.0,30),0.3); EN(NAR['e2'],ding(1320),0.3,name='question-end')
 
+# ---- 2026-11-02 新增：子弹时间、粒子聚字、扫描建馆、慢镜环绕、风雪、故障 ----
+def wind(d=8.0):
+    t=tt(d); x=bp(rng.standard_normal(len(t)),250,1800,2)*(0.6+0.4*np.sin(2*np.pi*0.23*t)); env=np.minimum(1,np.minimum(t/1.5,(d-t)/1.5)); return x*env*0.5
+def freeze_in():   # 时间冻结：下扫的气声＋低频嗡
+    t=tt(1.4); f=2400*np.exp(-t*3)+120; x=bp(rng.standard_normal(len(t)),300,4000)*np.exp(-t/0.5)*0.5+np.sin(2*np.pi*np.cumsum(f)/SR)*np.exp(-t/0.6)*0.3; return verb(x,0.4)
+def sub_boom():
+    t=tt(0.9); return np.sin(2*np.pi*np.cumsum(55*np.exp(-t*4)+38)/SR)*np.exp(-t/0.35)*0.9
+H=SEC['hook']; H1=NAR['h1']; H2=NAR['h2']
+EN(H1-0.05,freeze_in(),0.6,name='bullet-time'); EN(H1,hum(H2-H1,62),0.9,name='time-stop-drone'); EN(H2-0.25,swish(0.8,400,3000),0.45,name='time-resume')
+t=H['t0']+1.0
+while t<H['t1']-0.2:
+    if not (H1<=t<H2): EN(t,sub_boom(),0.55,name='impact-sub')
+    t+=4.0
+for tm,nm in ((H2+0.1,'morph-four'),(SEC['q']['t0']+0.05,'morph-q'),(SEC['clay']['t0']+0.3,'morph-mu9'),(SEC['grass']['t0']+0.3,'morph-mu56'),(SEC['data']['t0']+0.3,'morph-idx'),(NAR['e1']-0.3,'morph-end')):
+    EN(tm,sparkle(1.6,70),0.4,name=nm); EN(tm,riser(1.0),0.25)
+v=SEC['venues']; st=[v['t0'],NAR['s1'],NAR['s2'],(NAR['s2']+NAR['s3'])/2]
+for i,tm in enumerate(st): EN(tm+0.05,zap(300,2400,1.6),0.35,name='scan-build-%d'%i)
+EN(NAR['p2'],hum(NAR['p3']-NAR['p2'],98),0.8,name='orbit-drone'); EN(NAR['p2'],freeze_in(),0.4)
+EN(NAR['r7'],wind(SEC['rev3']['t1']-NAR['r7']),0.9,name='cold-wind'); EN(NAR['r8'],glitch(0.6),0.6,name='glitch-2020'); EN(NAR['r8'],sub_boom(),0.5)
+
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')

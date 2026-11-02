@@ -253,8 +253,21 @@ def chapter(c,t):  # 右上角章节标签（第 3、4 集同款）
             while nxt and nxt[0]['name'] in CHAP and CHAP[nxt[0]['name']][0]==n: t1=nxt[0]['t1']; nxt=nxt[1:]
             a=max(0,min(1,(t-t0)/0.6,(t1-t)/0.4))
             text(c,n,1630,82,26,GOLD,a,MONO,align='l',glow=0.5); c.drawLine(1672,62,1672,88,P(GOLD,a*0.6,stroke=2)); text(c,lab,1686,82,26,WHITE,a*0.85,SANS,align='l')
+import math
+def reticle(c,x,y,t,a,lab):  # 全息瞄准环：两圈反向转的刻度＋十字＋标签（慢镜咬住时锁定接触点）
+    for r,sp,n in ((78,0.9,24),(104,-0.5,36)):
+        for i in range(n):
+            ang=i/n*2*math.pi+t*sp; L=10 if i%6==0 else 5
+            c.drawLine(x+math.cos(ang)*r,y+math.sin(ang)*r,x+math.cos(ang)*(r+L),y+math.sin(ang)*(r+L),P(CYAN,a*(0.9 if i%6==0 else 0.45),stroke=2))
+    c.drawCircle(x,y,60,P(CYAN,a*0.35,stroke=1.5))
+    for dx,dy in ((1,0),(-1,0),(0,1),(0,-1)): c.drawLine(x+dx*20,y+dy*20,x+dx*44,y+dy*44,P(CYAN,a*0.8,stroke=2))
+    text(c,lab,x+120,y-84,22,CYAN,a,SANS,align='l',glow=0.4)
 def draw(c,t,an):
-    brand(c); chapter(c,t); s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
+    brand(c); chapter(c,t); s=sec_of(t)
+    if s['kind']=='slow' and AT['p2']<=t<AT['p3']:
+        v=an.get('slo_reticle')
+        if onscreen(v,10): reticle(c,v[0],v[1],t,min(1,(t-AT['p2'])/0.4,(AT['p3']-t)/0.4),tr("接触点 · 锁定","CONTACT · LOCKED"))
+    s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
     if k in ('lanes_all','lane_RG','lane_WIM'):
         for ln in ('RG','WIM','AO'):
             v=an.get('lane_'+ln)
