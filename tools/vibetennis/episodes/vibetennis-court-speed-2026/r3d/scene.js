@@ -112,7 +112,7 @@ for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.se
 
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
-  {k:'RG', shape:'box',  rx:50,rz:66,H:30, glow:0xffa070, seat:0x5a5f66},
+  {k:'RG', shape:'box',  rx:56,rz:58,H:30, glow:0xffa070, seat:0x5a5f66},
   {k:'WIM',shape:'dodec',rx:56,rz:52,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'round',rx:54,rz:62,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
   {k:'USO',shape:'round',rx:76,rz:76,H:28, glow:0x86b0ff, seat:0x22427e},
@@ -146,13 +146,15 @@ const steel=new THREE.MeshStandardMaterial({color:0xd4d8dc,roughness:0.35,metaln
 const steelBlue=new THREE.MeshStandardMaterial({color:0x2b4f8a,roughness:0.4,metalness:0.6});
 function beam(grp,a,b,r,mat){ const d=b.clone().sub(a), m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),8),mat); m.position.copy(a).add(b).multiplyScalar(0.5); m.quaternion.setFromUnitVectors(V3(0,1,0),d.normalize()); grp.add(m); return m; }
 
-function roofRG(v,grp){ // 照片：直角方盒子；顶棚合上时是 11 片沿长边方向的白色膜「翼」，锯齿起伏，四周一圈檐口收边
-  const n=11, ov=1.6, W2=v.rx+ov, L2=v.rz+ov, w=2*W2/n, y0=v.H+0.4;
-  for(let i=0;i<n;i++){ const x=-W2+w*(i+0.5);
-    for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(w*0.5/Math.cos(0.22),L2*2),fabric());
-      p.rotation.x=-Math.PI/2; p.rotation.y=side*0.22; p.position.set(x+side*w*0.25,y0+1.2,0); grp.add(p); }
-    beam(grp,V3(x,y0+1.2+w*0.25*Math.tan(0.22),-L2),V3(x,y0+1.2+w*0.25*Math.tan(0.22),L2),0.3,steel); }
-  // 檐口：四边一圈，把锯齿的端头收住
+// 法网顶棚：11 片「翼」横跨球场（沿 x，跨过两条边线方向），沿球场长度方向（z）一片接一片排开；
+// 打开时收拢叠放到北看台上方（-z 一端）。依据：场内照片（翼从一侧边线跨到另一侧）、官方「每片桁架跨度约 105 米、收起叠在北看台」
+function roofRG(v,grp,open=false){
+  const n=11, ov=1.6, W2=v.rx+ov, L2=v.rz+ov, w=2*L2/n, y0=v.H+0.4, tilt=0.22;
+  const wings=new THREE.Group(); grp.add(wings);
+  for(let i=0;i<n;i++){ const z=open? -L2+w*0.75+i*w*0.28 : -L2+w*(i+0.5), dy=open? i*0.9 : 0;
+    for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(W2*2,w*0.5/Math.cos(tilt)),fabric());
+      p.rotation.x=-Math.PI/2+side*tilt; p.position.set(0,y0+1.2+dy,z+side*w*0.25); wings.add(p); }
+    beam(wings,V3(-W2,y0+1.2+dy+w*0.25*Math.tan(tilt),z),V3(W2,y0+1.2+dy+w*0.25*Math.tan(tilt),z),0.3,steel); }
   const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=2.6;
   for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
     const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
@@ -237,7 +239,9 @@ function skyline(col){ const g=new THREE.Group(); seed=4242;
   return g; }
 
 const POS={RG:[-340,-320],WIM:[340,-320],AO:[-340,320],USO:[340,320]};
-const venues=VENUES.map(v=>{ const g=new THREE.Group(); buildCore(v,g); buildBowl(v,g); ROOF[v.k](v,g); if(v.k==='AO') shellAO(v,g); g.position.set(POS[v.k][0],0,POS[v.k][1]); scene.add(g); return {...v,g}; });
+const RG_ROOF={};
+const venues=VENUES.map(v=>{ const g=new THREE.Group(); buildCore(v,g); buildBowl(v,g);
+  if(v.k==='RG'){ for(const st of['closed','open']){ const r=new THREE.Group(); roofRG(v,r,st==='open'); r.visible=st==='closed'; RG_ROOF[st]=r; g.add(r); } } else ROOF[v.k](v,g); if(v.k==='AO') shellAO(v,g); g.position.set(POS[v.k][0],0,POS[v.k][1]); scene.add(g); return {...v,g}; });
 // 周边：法网——布洛涅林边的树和巴黎的低层建筑；澳网——墨尔本市中心天际线；美网——地球仪雕塑
 const lmRG=new THREE.Group(); lmRG.add(trees(160,85,190,0x3d5a34)); lmRG.add(paris()); lmRG.position.set(POS.RG[0],0,POS.RG[1]); scene.add(lmRG);
 const lmAO=skyline(0x6cc0ff); lmAO.position.set(POS.AO[0]-150,0,POS.AO[1]-200); lmAO.scale.set(0.8,0.8,0.8); lmAO.rotation.y=0.64; scene.add(lmAO);
@@ -254,6 +258,8 @@ const LM={RG:lmRG,AO:lmAO,USO:lmUSO};
 function only(k){ for(const v of venues) v.g.visible=(k===null||v.k===k); for(const [kk,o] of Object.entries(LM)) o.visible=(k===null||kk===k); }
 function shot(t){
   for(const v of venues) v.g.children.forEach(c=>c.visible=true); // 每个镜头先复位，避免上一个镜头的隐藏状态带过来
+  const rgOpen=t>=9.5&&t<10.5; RG_ROOF.closed.visible=!rgOpen; RG_ROOF.open.visible=rgOpen;
+  if(rgOpen){ only('RG'); const x=POS.RG[0], z=POS.RG[1]; camera.fov=36; camera.updateProjectionMatrix(); camera.position.set(x+95,120,z+150); camera.lookAt(x,0,z-5); return 'RG roof open'; }
   if(t>=8.5){ only(null); for(const v of venues){ v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); }
     [lmRG,lmAO,lmUSO].forEach(o=>o.visible=false);
     camera.position.set(0,62,58); camera.lookAt(0,0,0); venues.forEach((v,i)=>v.g.position.set((i-1.5)*22,0,0)); return 'lineup'; }
