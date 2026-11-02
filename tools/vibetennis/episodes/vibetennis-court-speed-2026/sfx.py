@@ -141,7 +141,8 @@ def sparkle(d=1.5,dens=60):
     for c in rng.uniform(0,d,int(d*dens)):
         i=int(c*SR); s=blip(rng.uniform(3000,6500),0.05,1.0,rng.uniform(0.1,0.35)); k=min(len(t)-i,len(s)); x[i:i+k]+=s[:k]
     return verb(x,0.4)
-def chime(notes,gap=0.18,amp=0.4):
+def hz(m): return 440*2**((m-69)/12)
+def chime(notes,gap=0.18,amp=0.4):  # notes 为 MIDI 音高
     d=gap*len(notes)+1.4; x=np.zeros(int(d*SR))
     for k,m in enumerate(notes):
         t=tt(1.4); s=(np.sin(2*np.pi*hz(m)*t)+0.3*np.sin(2*np.pi*hz(m)*2.01*t))*np.exp(-t/0.4)*amp; i=int(k*gap*SR); x[i:i+len(s)]+=s
@@ -200,7 +201,7 @@ EN(NAR['r7'],wind(SEC['rev3']['t1']-NAR['r7']),0.9,name='cold-wind'); EN(NAR['r8
 # 地球：拉远的呼啸，四站依次亮起的叮声（与 scene.js setGlobe 的节奏一致），片尾拉回地球
 D=H['t1']-H['t0']; EN(H2-0.05,swish(1.4,200,2400),0.5,name='to-globe'); EN(H2,boom(2.5),0.3)
 for i,f in enumerate((880,1047,1175,1319)): EN(H2+0.15+(i/4)*(D-(H2-H['t0'])-1.0)+0.05,ding(f),0.45,name='city-%d'%i)
-EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([1047,1319,1568],0.16,0.35),0.5,name='loop-closed')
+EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([84,88,91],0.16,0.35),0.5,name='loop-closed')
 
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
