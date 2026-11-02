@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: [{"key": "monte", "id": "4485679", "slug": "monte-carlo-2026-qf-vacherot-de-minaur-short-highlights"}, {"key": "tokyo", "id": "4585425", "slug": "tokyo-2026-r2-vacherot-tsitsipas-short-highlights"}, {"key": "shanghai", "id": "4591083", "slug": "shanghai-2026-r3-paul-vacherot-short-highlights"}, {"key": "paris-r2", "id": "4392293", "slug": "paris-2025-r2-rinderknech-vacherot-short-highlights"}, {"key": "paris-r3", "id": "4393082", "slug": "paris-2025-r3-norrie-vacherot-short-highlights"}, {"key": "basel-2025", "id": "4387963", "slug": "basel-2025-r1-fritz-vacherot-short-highlights"}, {"key": "chengdu", "id": "4582098", "slug": "chengdu-2026-r2-vacherot-harris-short-highlights"}]
+        include: [{"key":"ao","id":"6388215420112","slug":"ao-2026-r3-shelton-vacherot"}]
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
