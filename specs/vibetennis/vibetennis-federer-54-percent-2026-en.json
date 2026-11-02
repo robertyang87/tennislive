@@ -23,7 +23,7 @@
       "music": "无（只有音效）",
       "_music_why": "原用《We Never (Remix)》（vibeknowledge 库，铺底 -20 LUFS）致本集英文版 2026-11-02 在 Instagram 被 Content ID 判原声含他人内容、在所有者地区静音。所有者 2026-11-02 定：英文版成片不带 BGM，音乐改走 Instagram 曲库、由所有者在 App 上传时挂。本集改用 sfx.py 一并写出的 sfx_only.wav 纯音效轨。",
       "sfx": "sfx.py 合成，61 个事件对齐 r3d/shots.js（天平 100 颗球按真实落点时刻、四条曲线的扫频、真实柱落地、冠军点碎裂），约 -23 LUFS（原混音里低于 BGM 3 dB；无 BGM 版单独归一到总混标准）",
-      "loudness": "无 BGM：只有音效，整片 -14 LUFS / 真峰值 ≤ -1 dBTP（sfx_only 轨经 ln.py -14 / -2.5＋限幅，照 EP04 原音频链去掉 BGM 床）"
+      "loudness": "无 BGM：只有音效。sfx_only 轨（带原混音的结尾淡出）＋照 EP02 sfx.py 的配方补一条连续氛围床打底（低通噪声＋55 Hz，原 BGM 在事件间隙之外本无内容、纯为免数字静音），ln.py 归一（目标 -10.7，抵限幅与 AAC 的约 5 dB 损耗）＋限幅 0.50，整片实测 -15.8 LUFS / 真峰值 -1.5 dBTP（QC -14±2 内）"
     }
   },
   "cover": {
