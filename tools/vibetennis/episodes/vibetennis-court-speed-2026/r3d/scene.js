@@ -77,6 +77,7 @@ const V3=(x,y,z)=>new THREE.Vector3(x,y,z);
 function shapePts(shape,rx,rz,n=192){ const pts=[];
   for(let i=0;i<=n;i++){ const a=i/n*Math.PI*2, c=Math.cos(a), s=Math.sin(a);
     if(shape==='round') pts.push([c*rx,s*rz]);
+    else if(shape==='oct'){ const k=Math.PI/4, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else if(shape==='dodec'){ const k=Math.PI/6, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else { const p=shape==='box'?40:(shape==='rr'?3.4:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
   return pts; }
@@ -98,8 +99,8 @@ const DIAG_AO=canvasTex(1024,256,(g,w,h)=>{ g.fillStyle='#eef1f3'; g.fillRect(0,
 DIAG_AO.wrapS=THREE.RepeatWrapping;
 const FACADE={
   RG: canvasTex(1024,256,(g,w,h)=>{ // 夏蒂埃：白色横向遮阳百叶＋深色玻璃，分层
-    g.fillStyle='#2b3138'; g.fillRect(0,0,w,h);
-    for(let r=0;r<5;r++){ const y=r*h/5; g.fillStyle='#e9ebec'; g.fillRect(0,y+6,w,10); g.fillStyle='#cfd4d8'; g.fillRect(0,y+18,w,4); g.fillStyle='rgba(120,150,170,0.35)'; g.fillRect(0,y+24,w,h/5-26); }
+    g.fillStyle='#8f989f'; g.fillRect(0,0,w,h); // 航拍：浅灰色，一层层白色楼板挑出来，楼板之间是灰玻璃
+    for(let r=0;r<5;r++){ const y=r*h/5; g.fillStyle='#f1f2f2'; g.fillRect(0,y+4,w,12); g.fillStyle='#d6dadd'; g.fillRect(0,y+16,w,4); g.fillStyle='rgba(70,82,92,0.55)'; g.fillRect(0,y+22,w,h/5-24); }
     for(let x=0;x<w;x+=32){ g.fillStyle='rgba(230,235,238,0.55)'; g.fillRect(x,0,2,h); } }),
   WIM: canvasTex(1024,256,(g,w,h)=>{ // 中心球场：外墙爬满绿植（2017 年外观照片），露出一格格窗
     g.fillStyle='#4f6a2a'; g.fillRect(0,0,w,h); noise(g,w,h,60000,['#6e8a2e','#8a9a35','#4d6b27','#a3a347','#3c5a22','#7b5a2a'],3.5);
@@ -115,7 +116,7 @@ for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.se
 
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
-  {k:'RG', shape:'box',  rx:56,rz:58,H:30, glow:0xffa070, seat:0x5a5f66},
+  {k:'RG', shape:'box',  rx:56,rz:58,H:30, glow:0xffa070, seat:0x9aa0a6},
   {k:'WIM',shape:'dodec',rx:56,rz:52,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'rr',rx:50,rz:66,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
   {k:'USO',shape:'round',rx:76,rz:76,H:28, glow:0x86b0ff, seat:0x22427e},
@@ -158,7 +159,7 @@ function roofRG(v,grp){
     for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(W2*2,w*0.5/Math.cos(tilt)),fabric());
       p.rotation.x=-Math.PI/2+side*tilt; p.position.set(0,1.2,side*w*0.25); wg.add(p); }
     beam(wg,V3(-W2,1.2+w*0.25*Math.tan(tilt),0),V3(W2,1.2+w*0.25*Math.tan(tilt),0),0.3,steel);
-    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.75+i*w*0.28, yo:i*0.9, y0}); grp.add(wg); }
+    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.55+i*w*0.36, yo:(n-1-i)*0.55, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
   const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=2.6;
   for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
     const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
@@ -203,7 +204,8 @@ function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）�
 function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起的「枕头」，蓝色钢桁架斜撑落在外柱上，中间可开合
   const top=v.H+14, R=v.rx*1.12;
   const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
-  const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=out[i]; return [p[0]*0.6+q[0]*0.4,p[1]*0.6+q[1]*0.4]; });
+  const oc=shapePts('oct',R*1.04,R*1.04); // 俯拍（Constructify 2025）：膜顶外缘是切了角的八边形
+  const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=oc[i]; return [p[0]*0.25+q[0]*0.75,p[1]*0.25+q[1]*0.75]; });
   { const NA=canopyOut.length-1, NR=14, pos=[]; const F0=0.56; const P=(i,k)=>{ const f=F0+(1-F0)*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
       const dome=15*Math.sqrt(Math.max(0,1-Math.pow((f-F0)/(1-F0),2))), puff=6.5*Math.pow(Math.abs(Math.cos(2*a)),3)*Math.sin(Math.PI*Math.min(1,(f-F0)/(1-F0)));
       const t=(f-F0)/(1-F0), q=out[i%NA]; // 无人机俯拍（Invincible Storm Films 2020）：开口是方角的正方形，外缘才是圆鼓的枕头
