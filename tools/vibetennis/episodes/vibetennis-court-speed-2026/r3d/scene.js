@@ -95,10 +95,9 @@ const FACADE={
     g.fillStyle='#2b3138'; g.fillRect(0,0,w,h);
     for(let r=0;r<5;r++){ const y=r*h/5; g.fillStyle='#e9ebec'; g.fillRect(0,y+6,w,10); g.fillStyle='#cfd4d8'; g.fillRect(0,y+18,w,4); g.fillStyle='rgba(120,150,170,0.35)'; g.fillRect(0,y+24,w,h/5-26); }
     for(let x=0;x<w;x+=32){ g.fillStyle='rgba(230,235,238,0.55)'; g.fillRect(x,0,2,h); } }),
-  WIM: canvasTex(1024,256,(g,w,h)=>{ // 中心球场：深绿外墙＋窗带（绿植待核，只用很淡的纹理）
-    g.fillStyle='#1d3a28'; g.fillRect(0,0,w,h); noise(g,w,h,9000,['#23462f','#2a5236','#183222'],3);
-    g.fillStyle='#0d1f15'; for(let x=20;x<w;x+=64) g.fillRect(x,h*0.22,34,h*0.16);
-    g.fillStyle='#6b3f73'; g.fillRect(0,h*0.06,w,6); }),
+  WIM: canvasTex(1024,256,(g,w,h)=>{ // 中心球场：外墙爬满绿植（2017 年外观照片），露出一格格窗
+    g.fillStyle='#4f6a2a'; g.fillRect(0,0,w,h); noise(g,w,h,60000,['#6e8a2e','#8a9a35','#4d6b27','#a3a347','#3c5a22','#7b5a2a'],3.5);
+    g.fillStyle='rgba(30,45,40,0.85)'; for(let x=14;x<w;x+=56) for(const y of[0.2,0.5]) g.fillRect(x,h*y,34,h*0.18); }),
   AO: canvasTex(1024,256,(g,w,h)=>{ // 罗德·拉沃尔：下层通高玻璃，上层白色斜格外壳
     g.fillStyle='#e8ecef'; g.fillRect(0,0,w,h*0.55);
     g.strokeStyle='#b9c2ca'; g.lineWidth=3; for(let x=-h;x<w+h;x+=40){ g.beginPath(); g.moveTo(x,0); g.lineTo(x+h*0.55,h*0.55); g.stroke(); g.beginPath(); g.moveTo(x+h*0.55,0); g.lineTo(x,h*0.55); g.stroke(); }
@@ -112,7 +111,7 @@ for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.se
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
   {k:'RG', shape:'box',  rx:50,rz:66,H:30, glow:0xffa070, seat:0x5a5f66},
-  {k:'WIM',shape:'dodec',rx:52,rz:52,H:26, glow:0x8dffa0, seat:0x1f4a2c},
+  {k:'WIM',shape:'dodec',rx:56,rz:52,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'round',rx:54,rz:62,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
   {k:'USO',shape:'round',rx:76,rz:76,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
@@ -152,10 +151,11 @@ function roofRG(v,grp){ // 照片：顶棚合上时是一排沿长边方向的�
 }
 function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两束收在南北两端
   const out=shapePts('dodec',v.rx,v.rz);
-  band(grp,scl(out,0.80),scl(out,1.04),v.H+2.5,v.H+0.6,new THREE.MeshStandardMaterial({color:0xe9ece6,roughness:0.6,side:THREE.DoubleSide}));
+  band(grp,scl(out,0.70),scl(out,1.05),v.H+5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
+  loop(grp,scl(out,1.05),v.H+0.65,0xcfd8cf,0.9);
   const span=v.rx*1.9;
-  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.86-i*3.2), hh=15-i*0.6;
-    const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*span/2,v.H+2.6+(1-u*u)*hh,z)); bot.push(V3(u*span/2*0.97,v.H+2.6+(1-u*u)*(hh-3.2),z)); }
+  for(const end of[-1,1]) for(let i=0;i<4;i++){ const z=end*(v.rz*0.86-i*3.2), hh=8.5-i*0.4;
+    const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*span/2,v.H+4.6+(1-u*u)*hh,z)); bot.push(V3(u*span/2*0.97,v.H+4.6+(1-u*u)*(hh-3.2),z)); }
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.55,6,false),steel));
     grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.4,6,false),steel));
     for(let j=1;j<24;j++) beam(grp,j%2?bot[j]:top[j],j%2?top[j+1]:bot[j+1],0.18,steel);
@@ -177,9 +177,12 @@ function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起�
   const top=v.H+14, R=v.rx*1.12;
   const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=out[i]; return [p[0]*0.6+q[0]*0.4,p[1]*0.6+q[1]*0.4]; });
-  const K=10; for(let k=0;k<K;k++){ const s0=0.40+0.6*k/K, s1=0.40+0.6*(k+1)/K; const h=f=>top+1+11*Math.sqrt(Math.max(0,1-Math.pow((f-0.40)/0.6,2)));
-    band(grp,scl(canopyOut,s0),scl(canopyOut,s1),h(s0),h(s1),fabric()); }
-  loop(grp,scl(canopyOut,0.40),top+12.1,0x9aa3ad,1);
+  { const NA=canopyOut.length-1, NR=14, pos=[]; const P=(i,k)=>{ const f=0.30+0.70*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
+      const dome=15*Math.sqrt(Math.max(0,1-Math.pow((f-0.30)/0.70,2))), puff=6.5*Math.pow(Math.abs(Math.cos(2*a)),3)*Math.sin(Math.PI*Math.min(1,(f-0.3)/0.7));
+      return [c[0]*f, top+1.2+dome+puff, c[1]*f]; };
+    for(let i=0;i<NA;i++) for(let k=0;k<NR;k++){ const A=P(i,k),B=P(i+1,k),C=P(i+1,k+1),D=P(i,k+1); pos.push(...A,...B,...C,...A,...C,...D); }
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals(); grp.add(new THREE.Mesh(g,fabric()));
+    const lip=[]; for(let i=0;i<=NA;i++){ const q=P(i,NR); lip.push(V3(q[0],q[1],q[2])); } grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lip,true),220,0.9,6,true),new THREE.MeshStandardMaterial({color:0xe6e9ec,roughness:0.5}))); }
   // 外柱与蓝色斜撑
   const n=8, cr=R*1.04; const ring=canopyOut;
   for(let i=0;i<n;i++){ const a=(i+0.5)/n*Math.PI*2, c=V3(Math.cos(a)*cr,0,Math.sin(a)*cr);
@@ -228,7 +231,7 @@ composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),0.25,0.5,0.97)); com
 
 // ---------- 镜头 ----------
 // t=0 四座全景；t=1..4 逐个场馆外观（含地标）；t=5..8 场地材质特写；t=9 四块场地并排
-const VIEW={RG:[120,115,165,0,8,-5],WIM:[90,70,115,0,10,0],AO:[105,48,150,-30,22,-60],USO:[-20,40,290,-40,30,0]};
+const VIEW={RG:[120,115,165,0,8,-5],WIM:[90,70,115,0,10,0],AO:[105,48,150,-30,22,-60],USO:[-20,58,290,-40,30,0]};
 const LM={RG:lmRG,AO:lmAO,USO:lmUSO};
 function only(k){ for(const v of venues) v.g.visible=(k===null||v.k===k); for(const [kk,o] of Object.entries(LM)) o.visible=(k===null||kk===k); }
 function shot(t){
