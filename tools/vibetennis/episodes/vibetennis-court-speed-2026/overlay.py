@@ -195,7 +195,7 @@ CAPS=[
 ('s1',None,tr("温网 · 中心球场 · 【草地】","Wimbledon · Centre Court · 【grass】"),('s',168,900,L,42)),
 ('s2',None,tr("澳网 · 罗德·拉沃尔球场 / 美网 · 阿瑟·阿什球场 · 都是【硬地】，却不是同一种","AO · Rod Laver / US Open · Arthur Ashe · both 【hard】, but not the same"),('s',168,900,L,40)),
 ('s3',None,tr("同一群球员，换一块地，打法就要跟着变","Same players, different ground, different game"),('s',960,940,C,44)),
-('q0',None,tr("地面，凭什么能左右一场比赛？","How can the ground change a match?"),('s',960,540,C,60)),
+# ('q0',None,tr("地面，凭什么能左右一场比赛？","How can the ground change a match?"),('s',960,540,C,60)),  # 改由 3D 粒子聚字（scene.js setMorph）
 ('p0',None,tr("落地，只有几毫秒","A bounce lasts a few milliseconds"),('s',960,200,C,46)),
 ('p1',None,tr("① 底部先往前【滑】","① The bottom 【slides】 forward"),('a','slo_contact',-60,90,R,700,800,44)),
 ('p2',None,tr("② 摩擦拖住它，很快被地面【咬住】","② Friction drags it until it 【grips】"),('a','slo_fr',-40,-90,R,700,320,44)),
@@ -229,7 +229,7 @@ CAPS=[
 ('r8',None,tr("2020：【0.60】，近十年最低","2020: 【0.60】 — lowest in a decade"),('a','yr_2020',40,-70,L,1200,300,46)),
 ('r9',None,tr("温网官方：阴冷潮湿时，球「更重、更慢」","Wimbledon: on cold, damp days the ball feels “heavier and slower”"),('s',960,200,C,40)),
 ('e0',None,tr("快慢：地面、球、天气，一起决定","Pace: surface, ball and weather together"),('s',960,200,C,50)),
-('e1',None,tr("球场的地面，也是比赛的一方","The ground is a player too"),('s',960,540,C,64)),
+# ('e1',None,tr("球场的地面，也是比赛的一方","The ground is a player too"),('s',960,540,C,64)),  # 改由 3D 粒子聚字（scene.js setMorph）
 ('e2',None,tr("你在哪种场地上，打得最顺手？","Which surface suits your game?"),('s',960,940,C,48)),
 ]
 CAPS=[(span(f,u)[0],span(f,u)[1],txt,pl) for f,u,txt,pl in CAPS]
@@ -241,8 +241,20 @@ LANE_LAB={'RG':tr('红土','Clay'),'WIM':tr('草地','Grass'),'AO':tr('硬地','
 LANE_COL={'RG':(1,0.6,0.35),'WIM':(0.55,1,0.6),'AO':(0.45,0.8,1)}
 PIL=[('RG',tr('法网','RG'),0.75),('USO',tr('美网','USO'),1.02),('WIM',tr('温网','WIM'),1.09),('AO',tr('澳网','AO'),1.12)]
 RGY={2015:0.755,2016:0.793,2017:0.823,2018:0.818,2019:0.743,2020:0.597,2021:0.842,2022:0.737,2023:0.635,2024:0.715,2025:0.721}
+CHAP={'hook':("01",tr("现象","PHENOMENON")),'venues':("02",tr("四大满贯","THE SLAMS")),'q':("03",tr("机制","MECHANISM")),'slow':("03",tr("机制","MECHANISM")),
+ 'clay':("03",tr("机制","MECHANISM")),'grass':("03",tr("机制","MECHANISM")),'data':("04",tr("证据","EVIDENCE")),'rev1':("04",tr("证据","EVIDENCE")),
+ 'hard':("05",tr("硬地","HARD COURTS")),'aoy':("05",tr("硬地","HARD COURTS")),'rev2':("06",tr("反常","ANOMALIES")),'rev3':("06",tr("反常","ANOMALIES")),'end':("07",tr("结论","CONCLUSION"))}
+def chapter(c,t):  # 右上角章节标签（第 3、4 集同款）
+    for s in TL['sections']:
+        if s['t0']<=t<s['t1'] and s['name'] in CHAP:
+            n,lab=CHAP[s['name']]; prev=[x for x in TL['sections'] if x['t1']<=s['t0']+1e-6]; t0=s['t0']
+            while prev and prev[-1]['name'] in CHAP and CHAP[prev[-1]['name']][0]==n: t0=prev[-1]['t0']; prev=prev[:-1]
+            nxt=[x for x in TL['sections'] if x['t0']>=s['t1']-1e-6]; t1=s['t1']
+            while nxt and nxt[0]['name'] in CHAP and CHAP[nxt[0]['name']][0]==n: t1=nxt[0]['t1']; nxt=nxt[1:]
+            a=max(0,min(1,(t-t0)/0.6,(t1-t)/0.4))
+            text(c,n,1630,82,26,GOLD,a,MONO,align='l',glow=0.5); c.drawLine(1672,62,1672,88,P(GOLD,a*0.6,stroke=2)); text(c,lab,1686,82,26,WHITE,a*0.85,SANS,align='l')
 def draw(c,t,an):
-    brand(c); s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
+    brand(c); chapter(c,t); s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
     if k in ('lanes_all','lane_RG','lane_WIM'):
         for ln in ('RG','WIM','AO'):
             v=an.get('lane_'+ln)
