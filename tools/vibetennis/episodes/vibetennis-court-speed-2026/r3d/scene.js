@@ -448,9 +448,9 @@ function shotTL(t){
   setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
     const per=4.0, tau=cl(((u%per)-1.0)*0.55,-0.9,1.3);
-    camLook(LX+lerp(-1,3,sm(u/D)),lerp(12,10,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3.5,0.2,LZ-1.5,42); setLanes(tau,[1,1,1]); setDust(tau); setFX(tau,[1,1,1],u); return k; }
+    if(COVER) camLook(LX+8,27,LZ+25,LX+8,0,LZ-4,40); else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(tau); setFX(tau,[1,1,1],u); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ const per=4.6, tau=cl(((u%per)-1.2)*0.45,-0.9,1.3), show=k==='lane_RG'?[1,0,0]:[1,1,0];
-    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+2+Math.sin(u*0.15)*1.5,6.5,LZ+ln.z+15,LX+4,0.6,LZ+ln.z,42); setLanes(tau,show); setDust(tau); setFX(tau,show,u); return k; }
+    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*0.8,10,LZ+ln.z+11,LX+3.5,0.3,LZ+ln.z,42); setLanes(tau,show); setDust(tau); setFX(tau,show,u); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,120-30*q,2.95-0.45*q,6); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
@@ -474,6 +474,6 @@ function shotTL(t){
   if(k==='outro'){ only(null); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
     const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); return k; }
   return k; }
-const PREVIEW=Q.get('preview')==='1';
+const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; const s=PREVIEW?previewShot(t):shotTL(t); composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
 window.READY=true;

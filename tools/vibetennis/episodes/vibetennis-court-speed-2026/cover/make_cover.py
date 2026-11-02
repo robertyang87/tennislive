@@ -5,9 +5,9 @@ docs/vibetennis.md §6：每期至少 3 个风格方案。标题完整问句，�
   B 小作坊风：黑底，金色发光的三条弹跳弧（2D 绘制）；顶部问句、中间字距拉开的大标题、底部发球指数
   C 许先森风：3D 大场面——四座中心球场全景（3D 底图 t=150）
 底图（r3d/ 下起着静态服务）：
-    (cd r3d && W=2160 H=2880 PORT=8766 OUT=stills_cover node still_cover.js 3.0 158)
-    (cd r3d && W=1920 H=1080 PORT=8766 OUT=stills_cover169 node still_cover.js 3.0 158)
-    (cd r3d && W=1080 H=1920 PORT=8766 OUT=stills_cover916 node still_cover.js 3.0 158)
+    (cd r3d && COVER=1 W=2160 H=2880 PORT=8766 OUT=stills_cover node still_cover.js 3.0 158)
+    (cd r3d && COVER=1 W=1920 H=1080 PORT=8766 OUT=stills_cover169 node still_cover.js 3.0 158)
+    (cd r3d && COVER=1 W=1080 H=1920 PORT=8766 OUT=stills_cover916 node still_cover.js 3.0 158)
 合成：python3 cover/make_cover.py A|B|C tall|wide|story <输出.jpg> [zh|en]
 """
 import math
@@ -108,10 +108,10 @@ def foot(d, size, k, x, y):
 def style_A(size, out):
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
     img = hero(2.0, size)
-    if size == "wide":   # 整体下移，顶部留暗给标题
-        base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - 190)), (0, 190)); img = shade(base, 0.0001, 0.86, 0, 0.92)
-    elif size == "tall":   # 稍放大，裁掉右下角泳道尽头的黑三角
-        z = 1.16; big = img.resize((int(W * z), int(H * z)), Image.LANCZOS); img = big.crop((0, int(H * (z - 1) * 0.5), W, int(H * (z - 1) * 0.5) + H))
+    # 镜头改成正前方俯看（所有者：场地朝屏幕倾斜）后泳道整体偏上，三种尺寸都把画面整体下移，顶部留暗给标题，标题不压在红土上
+    dy = {"wide": 170, "tall": 0, "story": 0}[size]   # 封面静帧另用 cover=1 退远的机位，泳道已经在下半部
+    if dy: base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - dy)), (0, dy)); img = base
+    if size == "wide": img = shade(img, 0.0001, 0.86, 0, 0.92)
     img = shade(img, 0.42 if size != "wide" else 0.0001, 0.80, 0.9, 0.9)
     if size == "wide":
         a = np.asarray(img).astype(np.float32); yy = np.linspace(0, 1, H)[:, None, None]; a *= 1 - np.clip(1 - yy / 0.45, 0, 1) ** 1.3 * 0.85
