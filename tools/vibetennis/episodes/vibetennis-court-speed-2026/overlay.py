@@ -264,6 +264,11 @@ def reticle(c,x,y,t,a,lab):  # 全息瞄准环：两圈反向转的刻度＋十�
     text(c,lab,x+120,y-84,22,CYAN,a,SANS,align='l',glow=0.4)
 CITYLAB={'AO':(tr("1 月","JAN"),tr("墨尔本 · 澳网","Melbourne · AO"),(0.45,0.8,1.0)),'RG':(tr("5–6 月","MAY–JUN"),tr("巴黎 · 法网","Paris · Roland-Garros"),(1.0,0.6,0.35)),
  'WIM':(tr("6–7 月","JUN–JUL"),tr("伦敦 · 温网","London · Wimbledon"),(0.55,1.0,0.6)),'USO':(tr("8–9 月","AUG–SEP"),tr("纽约 · 美网","New York · US Open"),(0.5,0.62,1.0))}
+def altimeter(c,an):  # 卫星简报式的高度读数（Lemo-Opuscar「Satellite Briefing」：仪表只放屏幕角落）
+    alt=an.get('globe_alt')
+    if not alt: return
+    c.drawRect(skia.Rect.MakeXYWH(1560,930,320,96),P((0.02,0.04,0.08),0.75)); c.drawLine(1560,930,1880,930,P(WHITE,0.6,stroke=2))
+    text(c,tr("轨道高度","ALTITUDE"),1580,962,18,(0.7,0.78,0.9),0.9,SANS,align='l',spacing=2); text(c,f"{alt:,} km",1580,1008,40,WHITE,1,MONO,align='l')
 def citylabels(c,an):
     for k,(m,lab,col) in CITYLAB.items():
         v=an.get('city_'+k); on=an.get('city_on_'+k,0)
@@ -271,8 +276,47 @@ def citylabels(c,an):
             dx=36 if k in ('AO','USO') else -36; al='l' if dx>0 else 'r'
             c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]-26,P(col,on*0.8,stroke=1.5))
             text(c,m,v[0]+dx,v[1]-34,30,col,on,MONO,align=al,glow=0.4); text(c,lab,v[0]+dx,v[1]-4,22,WHITE,on*0.9,SANS,align=al)
+MARK=(1.0,0.84,0.0); MRED=(1.0,0.32,0.28)
+def mline(c,x0,y0,x1,y1,a,cc=MARK,w=6):  # 马克笔线：深色描边＋亮色主线
+    c.drawLine(x0,y0,x1,y1,P((0,0,0),a*0.55,stroke=w+5)); c.drawLine(x0,y0,x1,y1,P(cc,a,stroke=w))
+def card(c,x,y,zh,en,a,cc=MARK):  # 画板标签：黑卡片＋左侧色条＋中文＋小号英文
+    f=skia.Font(SANS,34); w=max(f.measureText(zh),200)+48
+    c.drawRect(skia.Rect.MakeXYWH(x,y,w,86),P((0.04,0.05,0.07),a*0.88)); c.drawRect(skia.Rect.MakeXYWH(x,y,7,86),P(cc,a))
+    text(c,zh,x+24,y+44,34,WHITE,a,SANS,align='l'); text(c,en,x+24,y+72,16,(0.75,0.8,0.88),a*0.9,SANSR,align='l',spacing=2)
+def tele(c,t,an):
+    m=an.get('tele_mode')
+    if not m: return
+    k=an.get('tele_k',0); fid=an.get('tele_freeze',0)
+    tag={'rewind':"◀◀  "+tr("倒带","REWIND"),'slow':"▶ ½  "+tr("慢放","SLOW"),'freeze':"||  "+tr("定格","FREEZE")}.get(m)
+    if tag: c.drawRect(skia.Rect.MakeXYWH(40,118,210,44),P((0.04,0.05,0.07),0.8)); text(c,tag,58,149,24,MARK if m!='rewind' else WHITE,1,MONO,align='l')
+    if m=='rewind':
+        for i in range(4):
+            y=(t*900+i*277)%1080; c.drawRect(skia.Rect.MakeXYWH(0,y,1920,10+i*3),P(WHITE,0.35))
+        text(c,"◀◀",960,560,150,WHITE,0.9,SANS,glow=0.4); text(c,tr("倒带","REWIND"),960,650,40,WHITE,0.9,SANS,spacing=6)
+    if m!='freeze': return
+    h,rx,rz=an.get('tele_hit'),an.get('tele_rx'),an.get('tele_rz')
+    if fid==1 and h and rx and rz:
+        ax=math.hypot(rx[0]-h[0],rx[1]-h[1]); az=math.hypot(rz[0]-h[0],rz[1]-h[1]); rect=skia.Rect.MakeLTRB(h[0]-ax,h[1]-az,h[0]+ax,h[1]+az)
+        c.drawArc(rect,-90,360*ease(k),False,P((0,0,0),0.5,stroke=11)); c.drawArc(rect,-90,360*ease(k),False,P(MARK,1,stroke=6))
+        if k>0.6: card(c,h[0]+ax+40,h[1]-140,tr("细沙像砂纸，把球拖住","Grit drags the ball"),"CLAY · FRICTION μ≈0.9",min(1,(k-0.6)/0.3))
+    if fid in (2,3) and h:
+        g,o=an.get('tele_gx'),an.get('tele_out')
+        if g and o:
+            a1=math.degrees(math.atan2(g[1]-h[1],g[0]-h[0])); a2=math.degrees(math.atan2(o[1]-h[1],o[0]-h[0])); r=170
+            mline(c,h[0],h[1],h[0]+(g[0]-h[0])*1.6,h[1]+(g[1]-h[1])*1.6,1,WHITE,3)
+            L=ease(k); mline(c,h[0],h[1],h[0]+(o[0]-h[0])*L,h[1]+(o[1]-h[1])*L,1)
+            da=((a1-a2+180)%360)-180; c.drawArc(skia.Rect.MakeLTRB(h[0]-r,h[1]-r,h[0]+r,h[1]+r),a2,da*ease(k),False,P(MARK,1,stroke=4))
+            deg=24 if fid==2 else 15
+            mx=(h[0]+o[0])/2; cx=min(max(mx-170,40),1420)
+            if k>0.5: card(c,cx,max(h[1],o[1])+70,tr(f"出射角 ≈ {deg}°（模型）",f"Exit angle ≈ {deg}° (model)"),"CLAY · BOUNCES HIGHER" if fid==2 else "GRASS · SKIDS LOW & FAST",min(1,(k-0.5)/0.3),MARK if fid==2 else (0.55,1,0.6))
+        if fid==3:
+            pts=[an.get('tele_ghost%d'%q) for q in range(9)]
+            for q in range(8):
+                p0,p1=pts[q],pts[q+1]
+                if p0 and p1 and q%2==0: mline(c,p0[0],p0[1],p1[0],p1[1],0.85*ease(k),(1.0,0.6,0.35),4)
+            if pts[8] and k>0.5: text(c,tr("红土 ≈ 24°","Clay ≈ 24°"),pts[8][0]+20,pts[8][1]-10,26,(1.0,0.6,0.35),min(1,(k-0.5)/0.3),SANS,align='l')
 def draw(c,t,an):
-    brand(c); chapter(c,t); citylabels(c,an); s=sec_of(t)
+    brand(c); chapter(c,t); citylabels(c,an); altimeter(c,an); tele(c,t,an); s=sec_of(t)
     if s['kind']=='slow' and AT['p2']<=t<AT['p3']:
         v=an.get('slo_reticle')
         if onscreen(v,10): reticle(c,v[0],v[1],t,min(1,(t-AT['p2'])/0.4,(AT['p3']-t)/0.4),tr("接触点 · 锁定","CONTACT · LOCKED"))
@@ -282,6 +326,7 @@ def draw(c,t,an):
             v=an.get('lane_'+ln)
             if onscreen(v,40): hudlabel(c,v[0],v[1],LANE_LAB[ln],a*0.9,LANE_COL[ln],dx=30,dy=-50,size=26)
     if k in ('pillars','pillars_hi'):
+        text(c,tr("1 片 ＝ 0.05　·　每第 10 片换成黄铜","1 disc = 0.05  ·  every 10th disc in brass"),60,1000,22,(0.85,0.75,0.45),a*0.9,SANS,align='l')
         hi=('WIM','AO') if k=='pillars_hi' else None
         for key,lab,val in PIL:
             v=an.get('pil_'+key)

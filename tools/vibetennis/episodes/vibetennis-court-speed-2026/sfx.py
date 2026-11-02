@@ -203,6 +203,23 @@ D=H['t1']-H['t0']; EN(H2-0.05,swish(1.4,200,2400),0.5,name='to-globe'); EN(H2,bo
 for i,f in enumerate((880,1047,1175,1319)): EN(H2+0.15+(i/4)*(D-(H2-H['t0'])-1.0)+0.05,ding(f),0.45,name='city-%d'%i)
 EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([84,88,91],0.16,0.35),0.5,name='loop-closed')
 
+# 画板式拆解（红土 / 草地）：倒带的磁带声、定格的闷响＋闪、马克笔的吱声；发球指数：金属片一片片落下的叮当
+def tape_rewind(d=0.6):
+    t=tt(d); f=900+2600*(t/d); x=np.sin(2*np.pi*np.cumsum(f)/SR)*0.25+bp(rng.standard_normal(len(t)),1500,6000)*0.4; return x*np.minimum(1,np.minimum(t/0.05,(d-t)/0.08))
+def marker(d=0.5):
+    t=tt(d); x=bp(rng.standard_normal(len(t)),2000,5000)*(0.6+0.4*np.sin(2*np.pi*38*t)); return x*np.minimum(1,np.minimum(t/0.03,(d-t)/0.1))*0.5
+def clink(f=2400):
+    t=tt(0.18); return (np.sin(2*np.pi*f*t)+0.5*np.sin(2*np.pi*f*2.76*t))*np.exp(-t/0.035)*0.35+hp(rng.standard_normal(len(t)),4000)*np.exp(-t/0.004)*0.3
+cs=SEC['clay']; n2=NAR['n2']; n3=NAR['n3']
+EN(cs['t0']+4.6,tape_rewind(0.6),0.6,name='rewind'); EN(n2,slam(),0.55,name='freeze-1'); EN(n2+0.35,marker(0.8),0.5,name='marker-ring')
+EN(n3,slam(),0.55,name='freeze-2'); EN(n3+0.2,marker(0.9),0.5,name='marker-angle')
+gs=SEC['grass']; EN(gs['t0']+2.9,slam(),0.55,name='freeze-3'); EN(gs['t0']+3.1,marker(0.9),0.5)
+dd=SEC['data']; g0=NAR['d2']-1.0
+for k,n in (('AO',23),('RG',15),('WIM',22),('USO',21)):
+    for i in range(n):
+        tm=g0+3.5*(i/n)**0.9+0.05
+        if i%3==0: EN(tm,clink(2200+((i*37)%7)*120 if (i+1)%10 else 1500),0.35 if (i+1)%10 else 0.5)
+
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')
