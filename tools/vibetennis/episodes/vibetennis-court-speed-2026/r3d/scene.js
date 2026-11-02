@@ -489,7 +489,16 @@ const BOWL=new THREE.Group(); scene.add(BOWL); { const n=36000, P=cloud(n,0.5,4,
     vertexShader:`varying vec2 vU; void main(){ vU=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
     fragmentShader:`varying vec2 vU; void main(){ float k=exp(-pow((vU.y-0.25)*3.0,2.0)); gl_FragColor=vec4(vec3(0.05,0.09,0.22)*k,k*0.22); }`}));
   haze.scale.set(1.3,1,1); haze.position.y=30; BOWL.add(haze); }
-function setBowl(center){ BOWL.visible=!!center; if(center) BOWL.position.copy(center); }
+// 所有者（看着第 3 集的画面）：「把场地换掉，周边的环境不动」——照第 3 集：一大片饱和的深蓝地面，细细的白色发光长线一直延伸到地平线，地平线一圈亮线
+{ const fl=new THREE.Mesh(new THREE.PlaneGeometry(900,900),new THREE.ShaderMaterial({depthWrite:true,
+    vertexShader:`varying vec3 vW; void main(){ vec4 w=modelMatrix*vec4(position,1.); vW=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }`,
+    fragmentShader:`varying vec3 vW; uniform vec3 uC; float ln(float v,float s,float w){ float q=abs(fract(v/s-0.5)-0.5)*s; return 1.0-smoothstep(0.0,w*fwidth(v)*1.5+0.02,q); }
+      void main(){ float d=length((vW.xz-uC.xz)*vec2(0.75,1.0)); vec3 base=mix(vec3(0.003,0.010,0.12),vec3(0.03,0.045,0.13),smoothstep(60.,300.,d));
+        float g=max(ln(vW.x-uC.x,23.77,1.0),ln(vW.z-uC.z,10.97,1.0))*0.22*exp(-d*0.006);
+        gl_FragColor=vec4(base+vec3(0.35,0.5,0.9)*g,1.0); }`,uniforms:{uC:{value:new THREE.Vector3()}}}));
+  fl.rotation.x=-Math.PI/2; fl.position.y=-0.08; BOWL.add(fl); BOWL.userData.floor=fl;
+  const hz=new THREE.Mesh(new THREE.TorusGeometry(1,0.004,6,180),new THREE.MeshBasicMaterial({color:0x9fc8ff,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false})); hz.rotation.x=Math.PI/2; hz.scale.set(240*1.3,240,240); hz.position.y=0.2; BOWL.add(hz); }
+function setBowl(center){ BOWL.visible=!!center; if(center){ BOWL.position.copy(center); BOWL.updateMatrixWorld(true); BOWL.userData.floor.material.uniforms.uC.value.copy(center); } }
 
 // ================= 2026-11-02 重做的特效层（所有者：「整体不精致……要有酷炫的动画、粒子动效，比例和物理也要合理」） =================
 const MOTE_SCALE={v_RG:7,v_WIM:7,v_AO:7,v_USO:8,lineup:3,pillars:3,pillars_hi:3,wim:6,outro:22,years:2.5,ao_years:2.5,acryl:0.6,slow:0.5};
