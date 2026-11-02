@@ -24,3 +24,10 @@
 
 ## 场馆建模参照
 - 维基共享资源照片（RG 2022 航拍、WIM 2019 场内、RLA 2020 外观、Ashe 2016 外观），只作建模参照，不进成片
+
+## 现成 3D 模型：评估过、不用（2026-11-02）
+- 温网：Sketchfab《THE ALL ENGLAND LAWN TENNIS CLUB》（PeeJaa，Free Standard + NoAI）——授权允许渲染进视频，但**不允许把模型文件以独立形式提供给他人**（Sketchfab 帮助页：不能让他人以独立资产方式使用或获取）；NoAI 标注。只能放在不公开的地方本地加载，不进公开仓库
+- 澳网：3D Warehouse（MartinLeRoy，2014）——无 2019 年改造后的白色斜格外壳，样子过时，不用
+- 美网：3D Warehouse（3D Warehouse Staff，2014）——无 2016 年顶棚，不用；3D Warehouse 通用模型授权同样不允许单独分发模型
+- 法网：免费渠道没有可用的夏蒂埃模型
+- 结论：四座场馆用 `tools/vibetennis/episodes/vibetennis-court-speed-2026/r3d/scene.js` 里按实拍照片自建的模型；`assets/3d`（main 上的 a6a6c5893）按所有者决定从公开仓库历史中移除
