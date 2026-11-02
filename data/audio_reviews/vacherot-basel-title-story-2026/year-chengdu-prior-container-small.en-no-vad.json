@@ -1,0 +1,73 @@
+{
+  "method": "faster-whisper",
+  "model": "small.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "word_timestamps": true,
+  "vad_filter": false,
+  "vad_parameters": null,
+  "condition_on_previous_text": false,
+  "language": "en",
+  "source_file": "/workspace/scratch/vacherot-year-footage/chengdu/4582098.mp4",
+  "source_sha256": "e0fe4775b7cb8879a04dfe54466d10473ac7e461ee244ebfac5a4675ecd95013",
+  "source_window": [
+    82,
+    94.5
+  ],
+  "input_wav": "/workspace/scratch/vacherot-year-footage/chengdu/review/review-82-94.5.wav",
+  "input_wav_sha256": "1d9a29189e8ccd1a3e26f5f8f92ccf59b6ee4a4d284223a1145609660a0f0b4f",
+  "decode": "ffmpeg mono16k PCM -> numpyf32; no PyAV decode",
+  "duration": 12.5,
+  "duration_after_vad": 12.5,
+  "elapsed_seconds": 33.781349985001725,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 10.58,
+      "source_start": 82.0,
+      "source_end": 92.58,
+      "text": " Oh, oh, oh, oh, oh, oh.",
+      "avg_logprob": -1.0862808704376221,
+      "no_speech_prob": 0.5063564777374268,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.0,
+          "word": " Oh,",
+          "probability": 0.01293265912681818
+        },
+        {
+          "start": 0.02,
+          "end": 0.02,
+          "word": " oh,",
+          "probability": 0.11365830153226852
+        },
+        {
+          "start": 0.02,
+          "end": 8.42,
+          "word": " oh,",
+          "probability": 0.8306133151054382
+        },
+        {
+          "start": 8.42,
+          "end": 8.42,
+          "word": " oh,",
+          "probability": 0.8692920207977295
+        },
+        {
+          "start": 8.42,
+          "end": 8.46,
+          "word": " oh,",
+          "probability": 0.8908979892730713
+        },
+        {
+          "start": 8.46,
+          "end": 10.58,
+          "word": " oh.",
+          "probability": 0.9120524525642395
+        }
+      ]
+    }
+  ]
+}

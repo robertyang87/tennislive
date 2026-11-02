@@ -1,0 +1,141 @@
+{
+  "schema": "independent-native-year-preview-closure.v1",
+  "iteration": "native-v2",
+  "status": "partial_closure_paris_scorebox_still_open",
+  "publication_approved": false,
+  "prior_review": "/workspace/scratch/vacherot-rich-recut/independent-year-preview-review.json",
+  "scope": "Only the six actually opened corrected native PNGs listed below. Both new manifests are complete and each listed PNG hash matches its own manifest. This does not re-review all39 images or certify final MP4/compression/dissolves/audio.",
+  "manifests": [
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-0/preview_manifest.json",
+      "sha256": "2544dee9c1c82a074c8ee6735ddead9781542e2c85be0afb248de8c32860aef0",
+      "spec_file_sha256": "f8dd17f241fdc686a54be561769a5863634cf2bcbaf1ff4206397436d26f9375",
+      "spec_canonical_sha256": "1649c65506d0973e53fd18773171fcc65dda3a73a26c403c0ff7d6939c6083e9",
+      "ass_sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb",
+      "sample_count": 20
+    },
+    {
+      "path": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-1/preview_manifest.json",
+      "sha256": "cde111d513c73d5e910d9ca86cc45879a9788f1c09a6de067be140f4c6c22b69",
+      "spec_file_sha256": "f8dd17f241fdc686a54be561769a5863634cf2bcbaf1ff4206397436d26f9375",
+      "spec_canonical_sha256": "1649c65506d0973e53fd18773171fcc65dda3a73a26c403c0ff7d6939c6083e9",
+      "ass_sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb",
+      "sample_count": 19
+    }
+  ],
+  "actually_opened_samples": [
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-0/caption-03.png",
+      "sha256": "bb576e831f5292036a0482299a948928138eb96b8c28d74e2e7e9167efa1dd40",
+      "segment": 1,
+      "segment_time": 12.0,
+      "film_time": 25.886,
+      "source_time": null,
+      "resolved_scorebox": null,
+      "actually_opened": true
+    },
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-0/caption-04.png",
+      "sha256": "2b0d0a306ab0eebad003cea6fd730749dd219aaecd2d8abb4354bdf1fa112e7f",
+      "segment": 2,
+      "segment_time": 2.2,
+      "film_time": 28.886,
+      "source_time": null,
+      "resolved_scorebox": null,
+      "actually_opened": true
+    },
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-0/caption-08.png",
+      "sha256": "a1ae38ec4bdb0446e409cf99e4108c73ab8ec792e4d7f20d1e8a239c8e1bcc88",
+      "segment": 5,
+      "segment_time": 7.4,
+      "film_time": 80.706,
+      "source_time": 122.4,
+      "resolved_scorebox": [
+        192,
+        904,
+        556,
+        1000
+      ],
+      "actually_opened": true
+    },
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-0/caption-09.png",
+      "sha256": "a3e427377ee0a1ab11f3e11fcb380981941be593f080fe7a5321aeeecedd0245",
+      "segment": 5,
+      "segment_time": 12.68,
+      "film_time": 85.98599999999999,
+      "source_time": 127.68,
+      "resolved_scorebox": [
+        192,
+        904,
+        556,
+        1000
+      ],
+      "actually_opened": true
+    },
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-1/caption-04.png",
+      "sha256": "284b3736d07610f5c7f2cb7ec07f3870606b460f5046d6cc4df3aad4593162d6",
+      "segment": 12,
+      "segment_time": 6.36,
+      "film_time": 171.20600000000005,
+      "source_time": 6.36,
+      "resolved_scorebox": null,
+      "actually_opened": true
+    },
+    {
+      "image": "/workspace/scratch/vacherot-rich-recut/native-v2/frames-1/caption-05.png",
+      "sha256": "434d5085cc586694d44eb45a8511b07ffcd3391e5c96151306bd6449a4f02fda",
+      "segment": 12,
+      "segment_time": 10.8,
+      "film_time": 175.64600000000004,
+      "source_time": 10.8,
+      "resolved_scorebox": null,
+      "actually_opened": true
+    }
+  ],
+  "issue_results": [
+    {
+      "id": "AP_DATE_CUP",
+      "status": "closed_in_targeted_preview",
+      "observation": "New AP date tab at y220 is above the central face/trophy. Face, both handles, cup body and base are visible; bottom headline clears the cup."
+    },
+    {
+      "id": "SHANGHAI2025_DATE_FACE",
+      "status": "closed_in_targeted_preview",
+      "observation": "New date tab at y220 sits in upper background; Vacherot face is visible and unobscured. Date/final label and narration subtitle remain legible."
+    },
+    {
+      "id": "TOKYO_INFO_FACE",
+      "status": "closed_in_targeted_preview",
+      "observation": "Earlier sample has info absent and far-side player face visible. Later result sample has info on right while far-side player has moved left; original right-info overlap is removed in these actual samples. Not a claim of every frame sampled."
+    },
+    {
+      "id": "PARIS_SCORE_FRAGMENT",
+      "status": "partly_fixed_but_full_board_not_restored",
+      "observation": "Left AD remnant is gone and raised narration subtitle clears the restored score graphic. However the restored graphic omits the original rightmost point/AD column. Original source122.4 PNG actually opened and shows AD. New manifest resolves scorebox right edge556, despite spec604; ffmpeg crops364x96 from192,904.",
+      "resolved_scorebox": [
+        192,
+        904,
+        556,
+        1000
+      ],
+      "requested_spec_scorebox": [
+        192,
+        904,
+        604,
+        1000
+      ],
+      "source_comparison": "/workspace/scratch/vacherot-rich-recut/paris-source-122.4.png",
+      "source_comparison_sha256": "bb5914b3f2920bbc2f1f1d4940221fa670e84a68b90e207152921ce6d20abb38",
+      "next_check": "Repeat with rightmost point column retained and actual measured full board; verify caption separation."
+    },
+    {
+      "id": "NATIVE_CARD_BRAND_GLYPHS",
+      "status": "final_movie_verification_required",
+      "observation": "New AP03 header appears complete, Shanghai04 still shows missing portions in this preview. Parent reports identical-command repeated03 restored text, suggesting preview nondeterminism, but no global correction or final-film resolution is claimed by this independent review."
+    }
+  ],
+  "remaining_gate": "Paris full scoreboard actual corrected preview, then final actual MP4 must verify complete branding and these repaired visual risks. No sound or release approval supplied."
+}

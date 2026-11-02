@@ -1,0 +1,40 @@
+{
+  "source": "paris",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4392293/4392293.mp4",
+  "source_sha256": "d7d2d6e9ada937da8e5a5f0b6ff5cad82f618f7aba4fd71ccf63d00794ffd9d1",
+  "method": "asr_cross_checked",
+  "reviewer": "earlier_rounds independent agent and root; fixed-source multi-model transcription cross-check plus native source/crop inspection; no human listening claimed",
+  "reviewed_at": "2026-11-02T11:48:22.939090+00:00",
+  "status": "complete",
+  "uncertain_spans": [],
+  "reviewed_from": 115,
+  "reviewed_to": 129.0,
+  "foreground_english": [],
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-paris-review-final-small.en.json",
+      "sha256": "31d4341ad6555f19c19c19268999c8cafb6ecc0179685c16364361c176d88603"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-paris-review-final-base.en.json",
+      "sha256": "a108e04b19045c551fa7511b928b65f3b263503818b942caf84c2b58039ea68d"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-paris-review-final-medium.en.json",
+      "sha256": "3d0e62c2076cd4613ba96bcd9d71fe1b7d84055bc43d81bcfd7374beee7935fa"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-paris-review-tts-vad-base.en.json",
+      "sha256": "4c57c7f4ea35d5e47ce5454764b7d393b2beaea517a21e6305a92503ddf2de8d"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-paris-review-tts-vad-small.en.json",
+      "sha256": "aaff64412a4ffc2a4e247e324675ce57374ffd70c68779f9a3213d8334f8df08"
+    }
+  ],
+  "review_notes": [
+    "Allthreefixedfullfocusmodels placefirstreliableEnglishat130.16–130.4, beyondselectedend128.5+0.5. EarlieroldcontainerfocusedweakHe/Peace/Itwassoc hallucinations notcorroborated; retainhistoricalraw. Theactualvictory/cousincall130–139.7 isdeliberatelyexcluded fromproductionwindow.",
+    "Finalpoint: Rinderknechnearservesat4-5AD, Vacherotfarreturns; completesresultby128s. NearRinderknechbrieflytouches/partlycrossesleftcropduringintermediateexchanges~119/122, butserve,returnandterminalresult are visible. Root explicitlyaccepted briefedge movement. Not a claim ofeverylimb/ballpixel remaininginside."
+  ],
+  "no_foreground_english_reason": "Production window and0.5s tail cross-checked on actualfixedsource with full/focused ASR. No reliable foregroundEnglish. ASR hallucinations explicitly retained/explained; not a human listening claim."
+}

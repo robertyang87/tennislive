@@ -1,0 +1,138 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/paris-r2/fixed/4392293.mp4",
+  "source_sha256": "d7d2d6e9ada937da8e5a5f0b6ff5cad82f618f7aba4fd71ccf63d00794ffd9d1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4392293/4392293.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4392293/paris-2025-r2-rinderknech-vacherot-short-highlights",
+  "model": "base.en",
+  "method": "asr_not_human_listening",
+  "window_start": 115,
+  "window_end": 144.6,
+  "options": {
+    "vad_filter": false,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": [
+    {
+      "start": 130.4,
+      "end": 144.57999999999998,
+      "text": " It is victory for Vachero again for the second time this month, he gets the better of his",
+      "avg_logprob": -0.6460156059265136,
+      "no_speech_prob": 0.2324373573064804,
+      "words": [
+        {
+          "start": 130.4,
+          "end": 131.24,
+          "word": " It",
+          "probability": 0.19214119017124176
+        },
+        {
+          "start": 131.24,
+          "end": 131.78,
+          "word": " is",
+          "probability": 0.964246392250061
+        },
+        {
+          "start": 131.78,
+          "end": 131.98,
+          "word": " victory",
+          "probability": 0.8357599377632141
+        },
+        {
+          "start": 131.98,
+          "end": 132.82,
+          "word": " for",
+          "probability": 0.8027165532112122
+        },
+        {
+          "start": 132.82,
+          "end": 133.42000000000002,
+          "word": " Vachero",
+          "probability": 0.4413592765728633
+        },
+        {
+          "start": 133.42000000000002,
+          "end": 133.72,
+          "word": " again",
+          "probability": 0.9644887447357178
+        },
+        {
+          "start": 133.72,
+          "end": 134.14,
+          "word": " for",
+          "probability": 0.4212547838687897
+        },
+        {
+          "start": 134.14,
+          "end": 135.8,
+          "word": " the",
+          "probability": 0.9879536628723145
+        },
+        {
+          "start": 135.8,
+          "end": 136.12,
+          "word": " second",
+          "probability": 0.9902560114860535
+        },
+        {
+          "start": 136.12,
+          "end": 136.54,
+          "word": " time",
+          "probability": 0.997590184211731
+        },
+        {
+          "start": 136.54,
+          "end": 136.86,
+          "word": " this",
+          "probability": 0.9695076942443848
+        },
+        {
+          "start": 136.86,
+          "end": 137.12,
+          "word": " month,",
+          "probability": 0.9967970252037048
+        },
+        {
+          "start": 137.12,
+          "end": 138.52,
+          "word": " he",
+          "probability": 0.7341557741165161
+        },
+        {
+          "start": 138.52,
+          "end": 138.72,
+          "word": " gets",
+          "probability": 0.9949959516525269
+        },
+        {
+          "start": 138.72,
+          "end": 138.92000000000002,
+          "word": " the",
+          "probability": 0.9882334470748901
+        },
+        {
+          "start": 138.92000000000002,
+          "end": 139.07999999999998,
+          "word": " better",
+          "probability": 0.9906638860702515
+        },
+        {
+          "start": 139.07999999999998,
+          "end": 144.57999999999998,
+          "word": " of",
+          "probability": 0.9984158277511597
+        },
+        {
+          "start": 144.57999999999998,
+          "end": 144.57999999999998,
+          "word": " his",
+          "probability": 0.9974046349525452
+        }
+      ]
+    }
+  ]
+}

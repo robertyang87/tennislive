@@ -1,0 +1,53 @@
+{
+  "status": "targeted_native_preview_pass_not_final_film_qc",
+  "atp_implementation_sha256": "231f80fa5658246b3e756c200230b45924b52720b56875a0291bf2b90256a775",
+  "proof": "atp-final-window-scan.json",
+  "paris_native_samples": [
+    {
+      "source_time": 115.24,
+      "resolved_scorebox": [
+        192,
+        904,
+        606,
+        1000
+      ],
+      "image_sha256": "9cdf3797315e71275a5c07ee10e318c45ae7469d8da4d837a3ad25ce83784830"
+    },
+    {
+      "source_time": 117.2,
+      "resolved_scorebox": [
+        192,
+        904,
+        606,
+        1000
+      ],
+      "image_sha256": "d4601df30bd5d864c0b8d8c0676fbc5221109c98720b31f1f1c0fa4ebb07a4db"
+    },
+    {
+      "source_time": 122.4,
+      "resolved_scorebox": [
+        192,
+        904,
+        606,
+        1000
+      ],
+      "image_sha256": "8db74cde05248ad4248778531c3b0e04f4cda71bb06ca0d7c860bdd919ec352f"
+    },
+    {
+      "source_time": 128.28,
+      "resolved_scorebox": [
+        192,
+        904,
+        606,
+        1000
+      ],
+      "image_sha256": "001adf3f3c97b2056445ed9b9f273a867aa11e11f2496240b5a9fe5a7f7eaaeb"
+    }
+  ],
+  "actual_root_visual_review": "Opened native-v5caption01source115.24 andcaption03source122.4: fullplayer names/set scores/ADpointcolumn visible, leftpartialboard covered, narrationaboveboard, topinfo clear of mainface; full3:4 canvas andno bottomaccountfooter. Briefnearplayerintermediateleftedge movement retained as declared.",
+  "other_closure": "independent-year-preview-closure-v2.json; actualH264 headerprobe10frames clear, fullmovieheader stilltoinspect",
+  "tests": {
+    "motion_shared_and_consumers": "78passed; additional actualsecondphoto regression1passed",
+    "atp_native_adaptive_cache": "101passed;350of350actualsourceframes preserveAD"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema": "actual_h264_header_probe.v1",
+  "status": "no_missing_header_glyphs_observed_in_actual_encoded_samples",
+  "movie": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe.mp4",
+  "movie_sha256": "5b2cf449b8082e4bddd5bf5bb2d483ad5822ba82de3801cda974f2cbc30756be",
+  "source_manifest": "/workspace/scratch/vacherot-rich-recut/native-v4/frames-0/preview_manifest.json",
+  "source_manifest_sha256": "82b105d16754234108f91611e2eee2e5a62e6536d661eb8f4c7679aca5762073",
+  "spec_file_sha256": "55648d14c3ebabfd924307c8f610594901afaf0486979c59d1b5f1695c54b7ec",
+  "ass_sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1080,
+        "height": 1440,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "duration": "12.800000",
+        "nb_frames": "320"
+      }
+    ],
+    "format": {
+      "duration": "12.800000",
+      "size": "3733395"
+    }
+  },
+  "samples": [
+    {
+      "frame": 0,
+      "time": 0.0,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-00.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-00.png",
+      "header_sha256": "bf40ca32fa9162d9d281361dad0f1cfc2dc50a1f2e834f6104d525c1ccb9b503"
+    },
+    {
+      "frame": 35,
+      "time": 1.4,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-01.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-01.png",
+      "header_sha256": "9e746725a2cb1acbf3fb22e6eb782a7b154b6ff0f98749c4447f9d7450259d4b"
+    },
+    {
+      "frame": 71,
+      "time": 2.84,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-02.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-02.png",
+      "header_sha256": "e906119675977bcdf37a561fe04c0e7e87a2a694c492770c4e87fb8378798c46"
+    },
+    {
+      "frame": 106,
+      "time": 4.24,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-03.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-03.png",
+      "header_sha256": "c5e5c1a5568470dc7316b9bfffee830c8704edbcd88fbe6c180fa6c1e5be4d26"
+    },
+    {
+      "frame": 142,
+      "time": 5.68,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-04.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-04.png",
+      "header_sha256": "506c245aff88e6dd8457e70a17c48a509632bb724171842ef151fd9e695d42c9"
+    },
+    {
+      "frame": 177,
+      "time": 7.08,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-05.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-05.png",
+      "header_sha256": "713e54c058815be5d4696b526bfbab75b641ffe6c5c88f38174e7f991c2d1d1b"
+    },
+    {
+      "frame": 213,
+      "time": 8.52,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-06.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-06.png",
+      "header_sha256": "618c072dc72383cdb1e236a7ddc7980cc0a590e4eddff73fed084250312a9b7c"
+    },
+    {
+      "frame": 248,
+      "time": 9.92,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-07.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-07.png",
+      "header_sha256": "da857611c62379bf8a5791c852008a6b8b19b1dec484abbee6ce5314d1837a99"
+    },
+    {
+      "frame": 284,
+      "time": 11.36,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-08.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-08.png",
+      "header_sha256": "94887930893fdcd8d9be6f0b07a31874f060b93384224b442a9099a8f9422a02"
+    },
+    {
+      "frame": 319,
+      "time": 12.76,
+      "header": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-09.png",
+      "full": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/full-09.png",
+      "header_sha256": "0500830cb66f255d8a545e50d039d5b4f899b717d2d7221c0e02f189546dd6da"
+    }
+  ],
+  "publication_approved": false,
+  "limitations": "One12.8s card encoded using actual native preview composition. Does not certify final whole movie, other cards, dissolves or sound.",
+  "actual_visual_review": {
+    "method": "Actually opened the10 native1080x180 top strips together in the encoded contact wall and independently opened full native frames71 and248. All images extracted from the actual H264 MP4, not HTML/template PNGs.",
+    "frames": [
+      0,
+      35,
+      71,
+      106,
+      142,
+      177,
+      213,
+      248,
+      284,
+      319
+    ],
+    "times": [
+      0,
+      1.4,
+      2.84,
+      4.24,
+      5.68,
+      7.08,
+      8.52,
+      9.92,
+      11.36,
+      12.76
+    ],
+    "brand_text": "网球时差 · 网球有故事",
+    "topic_text": "瓦舍罗：两座奖杯之间的一年",
+    "observation": "All10 inspected actual encoded headers contain complete readable brand and topic strings plus logo; no random missing glyphs observed. Both photo pages and actual narration captions remain in the full-frame samples.",
+    "contact": "/workspace/scratch/vacherot-rich-recut/header-encoded-probe-samples/header-contact.png",
+    "defects_observed": []
+  },
+  "input_bindings": {
+    "native_card": "/workspace/scratch/vacherot-rich-recut/native-v4/title_card_02.mp4",
+    "native_card_sha256": "20e510a895d9a6de462d830df2f1b3ee08d10958a4e48be9e952bd8c45c02d66",
+    "actual_ass_sha256": "3f5b42d7317c8a1cd983309b667e5eb5f77ad12ce17f08cdbda31e56bf653ceb",
+    "watermark": "/workspace/scratch/vacherot-rich-recut/native-v4/frames-0/_preview_watermark.png",
+    "watermark_sha256": "4d35b36fb8efd6d251c6b97113ee98d94599924d7e03212c50cc067728170df2",
+    "watermark_offset": [
+      59,
+      33
+    ],
+    "ass_global_offset_seconds": 13.886,
+    "PTS_reset": "Only after ASS and watermark composition, immediately before H264 encode"
+  },
+  "conclusion": "The previous random missing-glyph PNG observations did not reproduce in these10 actual H264 samples of this12.8s composition. This supports a preview-only issue for this tested case; it does not prove a general root cause or clear the complete final movie.",
+  "final_movie_requirement": "Final actual full movie must still verify full branding across scenes. No final movie, audio or publication approval granted."
+}
