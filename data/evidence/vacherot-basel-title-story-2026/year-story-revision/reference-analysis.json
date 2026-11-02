@@ -1,0 +1,226 @@
+{
+  "reference": {
+    "spec": "specs/reels/alcaraz-500-winning-story-2026-hd.json",
+    "photo_plan": "assets/reel/alcaraz-500-winning-story-2026-hd/photo-plan.json",
+    "photo_sequences": "assets/reel/alcaraz-500-winning-story-2026-hd/photo-sequences.json",
+    "read_method": "spec from current filesystem; both photo JSONs read from HEAD blobs because sparse worktree omitted them. No reference production files changed.",
+    "film_release": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-500-winning-story-2026-hd/alcaraz-500-winning-story-2026-hd.mp4",
+    "film_local": "/workspace/scratch/vacherot-year-revision/reference-film.mp4",
+    "film_sha256": "02f63069e7f2417ab5b8540c36fec4156a841e6f6b1620c6fa688f8ad830acba",
+    "film_duration": 389.8,
+    "inspection_scope": "Read full spec and photo-plan/sequence metadata; sampled two native final-film frames and12 native sequence frames (sequence01 and10), measured motion/transition on actual sequence10. Not a full-film audio/music audit.",
+    "native_examples": [
+      {
+        "source_second": 113,
+        "path": "/workspace/scratch/vacherot-year-revision/reference-hd-photo-113.png",
+        "observed": "Actual HD final-film photographer photo fills1080×950 at y250–1200; date/chapter above, captions/footer below; no blur padding."
+      },
+      {
+        "source_second": 131,
+        "path": "/workspace/scratch/vacherot-year-revision/reference-hd-match-131.png",
+        "observed": "Actual HD final-film match picture fills1080×980 at y230–1210; fixed center1190×1080 source window, real scoreboard restored at y1064; no old1080×608 narrow match banner."
+      }
+    ],
+    "structure": {
+      "narrated_canvas_segments": 13,
+      "photo_shot_appearances": 12,
+      "unique_photos": 9,
+      "card_shot_appearances": 18,
+      "narrated_canvas_raw_seconds": 197.0,
+      "live_video_raw_seconds": 183.6,
+      "raw_segment_total": 380.6,
+      "arc": [
+        "10.35s current trophy-winning cold open with original commentary, full champion point replayed later",
+        "Historical trajectory explained through photo/card narration, separated by real trophy lifts",
+        "Native stats cards define statistical scope; retreat/withdrawal is explained rather than erased",
+        "For current rounds: photo or card sets concrete stakes, then a complete selected point plus original commentary/English-Chinese subtitles",
+        "Finale: narrated setup → long complete point → real trophy video → closing question/brand outro"
+      ],
+      "transfer_principle": "Borrow the grammar and geometry, not the6min30 length or Alcaraz-specific number of match clips."
+    },
+    "visual_language": {
+      "canvas": [
+        1080,
+        1440
+      ],
+      "palette": "deep navy, one lime accent, white/gray type; no blurred-background padding",
+      "photo_area": {
+        "x": 0,
+        "y": 250,
+        "width": 1080,
+        "height": 950,
+        "fit": "cover with explicit subject focus; default in reference0.5,0.4"
+      },
+      "match_area": {
+        "x": 0,
+        "y": 230,
+        "width": 1080,
+        "height": 980,
+        "crop": "fixed center source1190×1080, contain_keep0.62 for1920×1080 sources",
+        "scoreboard": "same-frame original board placed leftbottom at y1064, not recreated figures"
+      },
+      "captions": "below picture, aroundy1284; date/chapter rail above photo; footer aroundy1385",
+      "photos_are_real_camera_files": true,
+      "photo_movement": {
+        "actual_example": "sequence10, same photo0.7→8.0s",
+        "matched_ORB_features": 1292,
+        "estimated_scale_ratio": 1.0106853182078004,
+        "translation_px": [
+          -6.2067,
+          -3.9994
+        ],
+        "interpretation": "subtle centered push (~1.07% enlargement over7.3s), no sweeping camera move or face tracking",
+        "measurement_file": "/workspace/scratch/vacherot-year-revision/reference-photo-motion-measure.json"
+      },
+      "transitions": {
+        "actual_example": "sequence10 first photo→second photo",
+        "measured_blend_interval_approx": [
+          9.34,
+          9.62
+        ],
+        "duration_approx": 0.28,
+        "method": "native25fps photo-area RGB blend fit; alpha≈0.136 at9.38,0.558 at9.50,0.985 at9.62",
+        "interpretation": "short soft dissolves, preserve quiet photo motion and narrated continuity"
+      },
+      "page_rhythm": "2–3 shots per narrated segment, usually5–10s per shot; photos trade places with native cards. Timing in plan is a budget, not permission to hold silence."
+    }
+  },
+  "recommendation": {
+    "main_line": "上海第一冠让他走上更高一级的赛场；接下来一年有高点、伤停、复出、早退与再回升，巴塞尔第二冠是这一年的收束。",
+    "priority": "新片全年起伏是主体；巴塞尔只作简明路程＋完整冠军点＋真实捧杯。不要沿用旧Basel五轮逐场长复盘的结构。",
+    "duration_budget_seconds": 270.3,
+    "duration_target": "约4–4分半，以上270.3s为预算，真实TTS/完整原声决定最终长度，不为了凑4分半停空页。",
+    "year_context_budget_seconds": 166,
+    "basel_budget_seconds": 94.2,
+    "blocks": [
+      {
+        "id": "cold",
+        "seconds_budget": 6,
+        "scope": "current_hook",
+        "content": "真实巴塞尔捧杯短开场，旁白把问题指向这一年的起伏。",
+        "visual": "同源473.02–479.02附近短冷开场；结尾仍完整兑现举杯。",
+        "assets": "fixed main CGsiDxZqdzA source, existing actual trophy evidence"
+      },
+      {
+        "id": "01-shanghai-door",
+        "seconds_budget": 20,
+        "scope": "year",
+        "content": "2025上海首冠改变起点：世界第204，从资格赛走到冠军；此后才是本片主体。不再讲去年九场全过程，也不延伸2024伤病。",
+        "visual": "上海2025官方捧杯实拍缓推→204/冠军/排名跃升等核实事实卡；不需要再放去年的完整比赛赛点。",
+        "assets": "assets/reel/vacherot-shanghai-2025-title.jpg；specs/reels/vacherot-shanghai-one-year.json fact packet；fixed source4380470如只需采访/奖杯画面另核窗口"
+      },
+      {
+        "id": "01-heights",
+        "seconds_budget": 33,
+        "scope": "year",
+        "content": "巴黎8强、澳网第三轮、主场蒙卡4强三个高点，证明冠军之后也有后续成绩；每站一句，不念每场比分。",
+        "visual": "巴黎/澳网/蒙卡当站真实摄影照片，配少量成绩卡；每页约5–7s，按口播节点换页。",
+        "assets": "旧one-year facts已保存；蒙卡官方短片4485679已列源但不是已固定素材，若只用照片不必补视频；新当站摄影照片待补，不能拿巴塞尔照假充这些时期"
+      },
+      {
+        "id": "02-injury",
+        "seconds_budget": 30,
+        "scope": "year",
+        "content": "五月左脚伤，法网第二轮赛前退出、缺席温网；这次中断发生在蒙卡上升之后。不编造绝望、质疑或身体康复细节。",
+        "visual": "2026法网真实当站摄影→深蓝伤停时间线；缺真实伤情画面就用卡，不能给无关动作配伤情故事。",
+        "assets": "旧one-year fact packet与injury-2026.json可作事实线索；视觉按最新原生卡重建，照片待补"
+      },
+      {
+        "id": "02-return",
+        "seconds_budget": 21,
+        "scope": "year",
+        "content": "7月15日格施塔德才是真正复出；接着说明重新进入比赛节奏。东京不能再叫复出。",
+        "visual": "格施塔德当站摄影缓推→复出日期/首战结果卡；不默认塞一场完整回合。",
+        "assets": "父代理本轮核实7/15格施塔德；旧one-year记录赢汉夫曼，可追溯原官方链接；照片待补"
+      },
+      {
+        "id": "02-chengdu",
+        "seconds_budget": 15,
+        "scope": "year",
+        "content": "成都作为头号种子，首轮轮空后首场比赛输给资格赛选手哈里斯。用“首战出局”，不误写首轮出局。",
+        "visual": "现有成都对哈里斯实拍→一张简明成绩卡，避免反复讲失败。",
+        "assets": "assets/reel/vacherot-harris-chengdu-2026-r2.jpg；旧one-year成都事实"
+      },
+      {
+        "id": "03-tokyo",
+        "seconds_budget": 19,
+        "scope": "year",
+        "content": "随后东京赢西西帕斯、菲斯，打进4强，再输莱赫奇卡。这是伤停复出后的回升，不是又一次复出。",
+        "visual": "东京当站摄影1–2张，第四强成绩卡；若想用本人原声，须另核同场原声来源与完整cue。",
+        "assets": "旧one-year东京源4585425与facts可追溯；不是自动沿用老容器审查。摄影待补"
+      },
+      {
+        "id": "03-shanghai-defence",
+        "seconds_budget": 28,
+        "scope": "year",
+        "content": "2026上海，冠军回到旧地，10/12第三轮4–6、2–6负保罗，卫冕结束；这才接巴塞尔。不能从东京直接跳到新冠军，抹掉上海失利。",
+        "visual": "去年捧杯和今年上海实拍做对照→第三轮比分卡；不拿两届不同照片混作同日。",
+        "assets": "父代理本轮已核2026上海败保罗；新对应实拍待补；可复用去年上海捧杯照作为明确标年对照"
+      },
+      {
+        "id": "04-basel-route",
+        "seconds_budget": 25,
+        "scope": "basel",
+        "content": "纳沃内、霍达尔、鲁内、弗里茨四轮简述，重点是重新来到巡回赛决赛；轮次照片带日期/对手，正文不逐盘报数。",
+        "visual": "四张同届各轮真实摄影轮播，约每张5–7s；可叠简明轮次/比分。全部用照片即可，不强塞四个赛点视频。",
+        "assets": "四轮source4599139/4600907/4601599/4602075已经固定并审查，可供核对人物/日期但不要把视频截图当官方摄影替代；若同轮照片缺，先补找，仍缺就用事实卡"
+      },
+      {
+        "id": "04-final-setup",
+        "seconds_budget": 14,
+        "scope": "basel",
+        "content": "决赛对莱赫奇卡，2–6落后，6–3追平，决胜盘开局破发，再到最终冠军点。仅一句完整梳理，不回到旧片90秒决赛复盘。",
+        "visual": "当场官方实拍1张→三盘结果/最后关口原生事实卡，最后一两秒给原声起点。",
+        "assets": "assets/reel/vacherot-basel-2026-title.jpg或vacherot-basel-2026-trophy-ap.jpg按真实来源/时刻挑，不用举杯照假作赛中动作；现有final-review.json事实与窗口已核"
+      },
+      {
+        "id": "04-champion-point",
+        "seconds_budget": 45.22,
+        "scope": "basel",
+        "content": "完整发球准备、全回合、得分反应、团队庆祝和握手，保留结果原声及已核英中字幕。",
+        "visual": "main source427.80–473.02；新片改为参考HD的1080×980图片区/原板回贴后必须再核球员、球路、字幕与接缝。",
+        "assets": "source-CGsiDxZqdzA，sha4b7c98c3…；现有源/原声/最终尾部review可作窗口证据，新电影仍重新绑定QC"
+      },
+      {
+        "id": "04-trophy",
+        "seconds_budget": 9.98,
+        "scope": "basel",
+        "content": "真实接杯→高举→金纸；收束到“这一年有起有落，故事继续”，不要又变成决赛技术总结。",
+        "visual": "沿现有实际捧杯窗473.02–483.00附近，具体秒数以最终spec已审窗为准；杯顶源片触边边界如实保留。",
+        "assets": "同一固定main source；现有trophy-review/final-review，不能用静态照片代替"
+      },
+      {
+        "id": "outro",
+        "seconds_budget": 4.1,
+        "scope": "brand",
+        "content": "网球时差·网球有故事统一片尾",
+        "visual": "既有栏目母版",
+        "assets": "现有正式片尾"
+      }
+    ],
+    "simplification": [
+      "去年上海只保留一次成功的坐标，不复述资格赛每一轮或2024前情。",
+      "巴黎/澳网/蒙卡用三站合段，不给每站完整赛点和逐盘比分。",
+      "伤停—7月格施塔德复出单独形成转折；东京明确叫后续回升。",
+      "成都首战失利和上海卫冕出局都保留，但各一两句；它们解释一年不是连续向上。",
+      "巴塞尔前四轮优先照片/事实卡合计约25s，不因已有视频就全部塞入。",
+      "决赛只用14s交代三盘走向；省出的时间给一整年。",
+      "原声主要放在当下短冷开场、最终完整冠军点和捧杯现场声。若补本人采访，只选一句同年同场已核原声，并从照片旁白预算中置换时间。"
+    ],
+    "implementation_notes": [
+      "沿用参考HD画布和图片区位置，照片缓推约1–2%/8–10s，切换约0.28s软溶解；不新增花哨运镜。",
+      "同站2–3张摄影照片与一张事实卡交替；每张照片可追溯年份/赛事/人物/来源。",
+      "官方摄影缺口用native chronology/score card说明，不能拿视频截图伪称摄影。",
+      "照片/字卡的具体切换点跟真实配音词边界，不能机械每6秒一页。",
+      "照片区1080×950，比赛区1080×980；字幕与品牌各有固定空间。",
+      "参考示例是389.8s，不因“模仿阿卡”就复制它的时长或26个段落。"
+    ]
+  },
+  "evidence_files": {
+    "reference-hd-photo-113.png": "eca7ec513f3ce17421cb08f2e148f7d15e8ba8a6422c819c37f08f6f876ba1b6",
+    "reference-hd-match-131.png": "ca51768582490d6c750a0cbd69cb6aa7584bb8b750a853983365f5dc78a1ebb0",
+    "reference-sequence-wall.jpg": "c57d59c92df111fbb78de91a24e31d24eeaaeac21c9d390701f587152820fb89",
+    "reference-photo-motion-measure.json": "4016f6a42748502680987e3fe4699c0b79f783c32733f3a4e54fa934aaf66433"
+  },
+  "production_mutation": "none; reference read-only, all outputs under scratch"
+}

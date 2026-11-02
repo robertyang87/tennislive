@@ -1,0 +1,17 @@
+{
+  "status": "actual_visual_reviews_apply_to_exact_formal_release_bytes_official_QC_and_voice_pass_CI_pending",
+  "first_pixel_review_run": 41372108657,
+  "formal_render_run": 41373370282,
+  "actual_movie_sha256": "97bad26edc8d445d804ff61c057f96a14357ecc79c8075c855c8173b7ac181ad",
+  "bytes": 94310099,
+  "duration_seconds": 282.68,
+  "release_asset_id": 700133779,
+  "identity_evidence": "Both independently read local full movies SHA256 match each other and GitHub Release digest; no visual/text/TTS request changes between runs. First failure was stale speech inventory, preserved separately.",
+  "actual_visual_scope": {
+    "year": "0-169s:85frames at2s +7native +57boundary samples",
+    "points_and_trophy": "322samples:match3fps/cup5fps+native keyframes",
+    "root": "last4contact sheets of2-second actual movie census, native24-frame preview and native cover"
+  },
+  "formal_approval": "not granted here: require automated voice suite, official QC attestation, current-head CI and clean mergeability",
+  "formal_quality_evidence": "formal-render-validation.json"
+}

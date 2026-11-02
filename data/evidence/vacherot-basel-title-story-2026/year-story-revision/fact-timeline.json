@@ -1,0 +1,631 @@
+{
+  "schema": "tennis-story-fact-timeline.v1",
+  "created_at": "2026-11-02T00:51:50.357837+00:00",
+  "scope": "上海2025首冠后一年起伏为主体；巴塞尔2026第二冠为结尾，简讲晋级。只作事实调研，未改制作spec。",
+  "legacy_spec_sha256": "919df942b2d023b55e5ddebf24cf91b87c8e5e1fc66164df3c7b103fe1197b17",
+  "date_policy": "未特殊注明的比赛日期均为赛事当地日期；不要自动当北京时间。跨时区时建议月份叙述，正式信息字卡再核开球时间/转换。",
+  "source_table": {
+    "legacy": {
+      "url": "https://github.com/robertyang87/tennislive/blob/main/specs/reels/vacherot-shanghai-one-year.json",
+      "local_path": "/workspace/tennis-work/specs/reels/vacherot-shanghai-one-year.json",
+      "sha256": "919df942b2d023b55e5ddebf24cf91b87c8e5e1fc66164df3c7b103fe1197b17",
+      "type": "existing article-backed production fact packet",
+      "read_status": "read current local file; Shanghai2025 figures carried from its documented official sources, not newly re-opened this pass"
+    },
+    "shanghai2025": {
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/rinderknech-vacherot-shanghai-2025-final-sunday",
+      "type": "official event report",
+      "read_status": "existing verified packet source"
+    },
+    "shanghai2025journey": {
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/vacherot-snyder-shanghai-2025-feature",
+      "type": "official event feature",
+      "read_status": "existing verified packet source for9wins/6comebacks"
+    },
+    "basel2025": {
+      "url": "https://www.swissindoorsbasel.ch/en/tournament/tournament-news/articles/2025-10-23_Top-stars-live-up-to-their-billing-.php",
+      "type": "official event report",
+      "read_status": "existing packet; match date22October corroborated current TennisMajors andATP day3 notes"
+    },
+    "basel2025date": {
+      "url": "https://www.tennismajors.com/atp/swiss-indoors-fritz-makes-second-round-defeating-vacherot-838259.html",
+      "type": "dated match report",
+      "read_status": "search text retrieved this pass;22October2025/Wednesday evening andFritz4-6 7-6(4)7-5"
+    },
+    "parisNorrie": {
+      "url": "https://www.rolexparismasters.com/en/news/article/round-of-16-valentin-vacherot-victory-cameron-norrie",
+      "type": "official event report",
+      "read_status": "full article opened this pass",
+      "article_date": "2025-10-30",
+      "facts_read": "Vacherot beat Norrie7-6(4)6-4 to reach quarterfinals"
+    },
+    "parisFelix": {
+      "url": "https://www.rolexparismasters.com/en/news/article/quarter-finals-singles-felix-auger-aliassime-victory-valentin-vacherot",
+      "type": "official event report",
+      "read_status": "dated search text and official draw read this pass",
+      "article_date": "2025-10-31",
+      "facts_read": "Auger-Aliassime won6-2 6-2 in quarterfinal"
+    },
+    "aoR2": {
+      "url": "https://www.reuters.com/sports/tennis/vacherot-shows-shanghai-success-was-no-fluke-by-shining-melbourne-2026-01-22/",
+      "type": "Reuters match report",
+      "read_status": "search text read this pass and existing verified packet",
+      "article_date": "2026-01-22",
+      "facts_read": "Vacherot beat Hijikata6-1 6-3 4-6 6-2; first Monegasque man to reachGrandSlamR3"
+    },
+    "aoR3": {
+      "url": "https://ausopen.com/articles/news/shelton-sends-warning-italian-men-make-ao-history",
+      "type": "official AO report",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-01-24",
+      "facts_read": "Shelton won6-4 6-4 7-6(5) onSaturday inR3"
+    },
+    "monteSF": {
+      "url": "https://montecarlotennismasters.com/en/vacherot-nothing-left-to-prove-i-belong-here/",
+      "type": "official tournament feature/interview",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-04-11",
+      "facts_read": "Vacherot finished home run inSF vsAlcaraz; direct quoteI’m here,I belong here appears after this defeat. Article mistakenly calls him25; do not inherit age."
+    },
+    "monteQF": {
+      "url": "https://www.atptour.com/en/news/vacherot-de-minaur-monte-carlo-2026-friday",
+      "type": "official ATP match report",
+      "read_status": "search text+official draw read this pass; primary full body inaccessible403",
+      "facts_read": "6-4 3-6 6-3 overdeMinaur; firstMonegasqueSF atMonteCarlo"
+    },
+    "rgInjury": {
+      "url": "https://www.reuters.com/sports/tennis/french-open-day-four-2026-05-27/",
+      "type": "Reuters live report",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-05-27",
+      "facts_read": "Before second round vsTabilo withdrew with left-foot injury"
+    },
+    "rgR1": {
+      "url": "https://www.lequipe.fr/Tennis/Actualites/Valentin-vacherot-au-sujet-de-son-pied-gauche-pas-parfait-mais-pas-horrible-non-plus/1679078",
+      "type": "L’Équipe match reaction",
+      "read_status": "dated search text read this pass",
+      "article_date": "2026-05-26",
+      "facts_read": "After6-3 6-4 3-6 7-6(6) first-round win overFaurel, leftfoot painful"
+    },
+    "wimbledon": {
+      "url": "https://www.wimbledon.com/pdf/update/referees/2026/QS_Entries.pdf",
+      "type": "official entry-list update",
+      "read_status": "downloaded andtext read this pass",
+      "local_path": "/workspace/scratch/vacherot-year-revision/sources/wimbledon-2026-entries.txt",
+      "facts_read": "16/06/2026 AlexMolcan in main draw forVACHEROT; proves withdrawal not cause"
+    },
+    "injuryContext": {
+      "url": "https://www.tennisactu.net/news-wimbledon-valentin-vacherot-apres-sa-blessure-le-gazon-c-est-mort-124905.html",
+      "type": "TennisActu report of own PrimeVideo documentary statement",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-06-09",
+      "facts_read": "Left-foot injury, missedRome, grass season/Wimbledon planned out; avoid expanding to medical diagnosis unless retaining attribution"
+    },
+    "gstaadATP": {
+      "url": "https://www.atptour.com/en/news/vacherot-hanfmann-gstaad-2026-wednesday",
+      "type": "official ATP report",
+      "read_status": "dated search text+official draw read this pass; full body403",
+      "article_date": "2026-07-15",
+      "facts_read": "First match back from injury;4-6 6-3 6-4 victoryR2"
+    },
+    "gstaadNews": {
+      "url": "https://news.mc/2026/07/16/monacos-valentin-vacherot-marks-winning-return-to-tour-at-gstaad/",
+      "type": "Monaco local news",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-07-16",
+      "facts_read": "WednesdayJuly15 first appearance sinceRGwithdrawal; missedgrass/Wimbledon; same victory overHanfmann. Its next-opponent passage conflicts with official draw, so not reused."
+    },
+    "usopen": {
+      "url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-04/frances_tiafoe_reaches_2026_us_open_round_4_with_victory_over_vacherot.html",
+      "type": "official USOpen report",
+      "read_status": "search text+existing packet read",
+      "article_date": "2026-09-04",
+      "facts_read": "Tiafoe beatVacherot6-4 6-2 6-4 inR3, Fridaynight localNewYork"
+    },
+    "tokyo": {
+      "url": "https://www.japanopentennis.com/atp/en/news-and-media/news/2026105-lehecka-overwhelms-eighth-seed-vacherot/",
+      "type": "official JapanTennisAssociation match report",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-10-05",
+      "facts_read": "Lehecka won6-4 6-2 in69minutes inSF; not Vacherot’s first return from injury"
+    },
+    "shanghaiBaez": {
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/alcaraz-cerundolo-shanghai-2026-saturday",
+      "type": "official tournament report",
+      "read_status": "dated search text+official draw read",
+      "article_date": "2026-10-10",
+      "facts_read": "Vacherot began defence with6-4 7-6(5) win overBaez"
+    },
+    "shanghaiPaul": {
+      "url": "https://en.rolexshanghaimasters.com/en/media/news/vacherot-shattered-by-low-performance-against-paul",
+      "type": "official tournament match reaction",
+      "read_status": "full article opened this pass",
+      "article_date": "2026-10-12",
+      "facts_read": "Defending champion lostR3toPaul6-4 6-2; his own disappointment/physicalfeeling stated. Not opening-round defeat."
+    },
+    "draw_paris-2025": {
+      "url": "https://www.protennislive.com/posting/2025/352/mds.pdf",
+      "sha256": "af0abea191b4357260f383c6130f27fd1811f6d1fec1fc1ac82b705bd1b5da18",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/paris-2025.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/paris-2025.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_montecarlo-2026": {
+      "url": "https://www.protennislive.com/posting/2026/410/mds.pdf",
+      "sha256": "f303f8b8a2d3a139c17cb73aa9e0defe239751f59a673c51cfe540e12b307a78",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/montecarlo-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/montecarlo-2026.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_gstaad-2026": {
+      "url": "https://www.protennislive.com/posting/2026/314/mds.pdf",
+      "sha256": "3fc294cffba67904a79bc2362601daab98bbf39461036df1571ba33a49ac0a3a",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/gstaad-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/gstaad-2026.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_tokyo-2026": {
+      "url": "https://www.protennislive.com/posting/2026/329/mds.pdf",
+      "sha256": "643d7e38d98522cab892af008527a0ca9df4f3f758d0e4cad86847486ba033e8",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/tokyo-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/tokyo-2026.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_shanghai-2026": {
+      "url": "https://www.protennislive.com/posting/2026/5014/mds.pdf",
+      "sha256": "892a62fe8fcc5d45f868319369503e161f523840bf48193b70c9024451764220",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/shanghai-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/shanghai-2026.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_basel-2026": {
+      "url": "https://www.protennislive.com/posting/2026/328/mds.pdf",
+      "sha256": "de5bf21492e00b6251fa922a2c3999281c764eba443cacfa7c107ed4a0b57e77",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/basel-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/basel-2026.txt",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    },
+    "draw_ao-2026": {
+      "url": "https://www.protennislive.com/posting/2026/580/mds.pdf",
+      "sha256": "eaf906597d4921ed8af6cd9dbd721bd69f6da3fe33651a4fd6dec568b31dc4fe",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/ao-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/ao-2026.txt",
+      "status": "not_usable_placeholder",
+      "reason": "PDF正文是Tournament Information Not Yet Available，不作真实签表证据",
+      "type": "official ATP draw PDF",
+      "read_status": "not usable: placeholderPDF"
+    },
+    "draw_rg-2026": {
+      "url": "https://www.protennislive.com/posting/2026/520/mds.pdf",
+      "sha256": "eaf906597d4921ed8af6cd9dbd721bd69f6da3fe33651a4fd6dec568b31dc4fe",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/rg-2026.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/rg-2026.txt",
+      "status": "not_usable_placeholder",
+      "reason": "PDF正文是Tournament Information Not Yet Available，不作真实签表证据",
+      "type": "official ATP draw PDF",
+      "read_status": "not usable: placeholderPDF"
+    },
+    "draw_wimbledon-entry-update": {
+      "url": "https://www.wimbledon.com/pdf/update/referees/2026/QS_Entries.pdf",
+      "pdf": "/workspace/scratch/vacherot-year-revision/sources/wimbledon-2026-entries.pdf",
+      "text": "/workspace/scratch/vacherot-year-revision/sources/wimbledon-2026-entries.txt",
+      "sha256": "8374ab72a1f84c4e5ba6cf37b358e7ab708736750eedb4413f8f712960fb8198",
+      "type": "official ATP draw PDF",
+      "read_status": "downloaded and matching Vacherot bracket text inspected"
+    }
+  },
+  "timeline": [
+    {
+      "id": "shanghai-first-title",
+      "date": "2025-10-12",
+      "role": "origin",
+      "selected": true,
+      "facts": [
+        "上海大师赛从资格赛夺冠，世界第204；决赛逆转表哥林德克内希。",
+        "9场全胜含2场资格赛；其中6场先丢首盘后逆转。",
+        "夺冠后排名从204升至40（164位）。这组数来自已验证旧production事实包，不把当年突破延伸成未来保证。"
+      ],
+      "result": {
+        "winner": "Valentin Vacherot",
+        "loser": "Arthur Rinderknech",
+        "score_winner_perspective": "4-6 6-3 6-3"
+      },
+      "sources": [
+        "legacy",
+        "shanghai2025",
+        "shanghai2025journey"
+      ]
+    },
+    {
+      "id": "basel-after-shanghai-loss",
+      "date": "2025-10-22",
+      "role": "early_setback_and_end_echo",
+      "selected": true,
+      "facts": [
+        "上海首冠之后的下一站巴塞尔，外卡出战首轮，先赢一盘后输给弗里茨。",
+        "可与2026巴塞尔半决赛再胜弗里茨呼应；两场年份必须清楚。"
+      ],
+      "result": {
+        "winner": "Taylor Fritz",
+        "loser": "Valentin Vacherot",
+        "score_winner_perspective": "4-6 7-6(4) 7-5"
+      },
+      "sources": [
+        "legacy",
+        "basel2025",
+        "basel2025date"
+      ]
+    },
+    {
+      "id": "paris-quarterfinal",
+      "date_range": [
+        "2025-10-28",
+        "2025-10-31"
+      ],
+      "date_key_win": "2025-10-30",
+      "date_exit": "2025-10-31",
+      "role": "high_then_limit",
+      "selected": true,
+      "facts": [
+        "巴黎先胜莱赫奇卡、再胜林德克内希，10月30日7-6(4)6-4击败诺里晋级8强。",
+        "10月31日1/4决赛被阿利亚西姆6-2 6-2击败。",
+        "可以说上海之后仍打进大师赛8强，不说巴黎四强。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Jiri Lehecka",
+          "score_winner_perspective": "6-1 6-3"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Arthur Rinderknech",
+          "score_winner_perspective": "6-7(9) 6-3 6-4"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Cameron Norrie",
+          "score_winner_perspective": "7-6(4) 6-4"
+        },
+        {
+          "winner": "Felix Auger-Aliassime",
+          "loser": "Valentin Vacherot",
+          "score_winner_perspective": "6-2 6-2"
+        }
+      ],
+      "sources": [
+        "parisNorrie",
+        "parisFelix",
+        "draw_paris-2025"
+      ]
+    },
+    {
+      "id": "ao-third-round",
+      "date_qualification": "2026-01-22",
+      "date_exit": "2026-01-24",
+      "role": "new_terrain_high",
+      "selected": true,
+      "facts": [
+        "1月22日击败土方凛辉，首次进入大满贯第三轮。",
+        "公开赛年代首位摩纳哥男单球员打进大满贯第三轮；须保留男单/公开赛年代范围。",
+        "1月24日第三轮三盘负谢尔顿；成绩写第三轮，不写16强。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Rinky Hijikata",
+          "score_winner_perspective": "6-1 6-3 4-6 6-2"
+        },
+        {
+          "winner": "Ben Shelton",
+          "loser": "Valentin Vacherot",
+          "score_winner_perspective": "6-4 6-4 7-6(5)"
+        }
+      ],
+      "sources": [
+        "aoR2",
+        "aoR3"
+      ]
+    },
+    {
+      "id": "montecarlo-home-sf",
+      "date_qualification": "2026-04-10",
+      "date_exit": "2026-04-11",
+      "role": "year_main_high",
+      "selected": true,
+      "facts": [
+        "4月10日1/4决赛三盘击败德米纳尔，成为公开赛年代首位在蒙卡进入半决赛的摩纳哥球员。",
+        "4月11日半决赛负阿尔卡拉斯，年度这站成绩4强。",
+        "本人赛后官方采访有I’m here,I belong here，可忠实翻译我在这里，我属于这里；语境是对阿卡半决赛后，不冒充对德米纳尔的场上采访。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Alex de Minaur",
+          "score_winner_perspective": "6-4 3-6 6-3"
+        },
+        {
+          "winner": "Carlos Alcaraz",
+          "loser": "Valentin Vacherot",
+          "score_winner_perspective": "6-4 6-4"
+        }
+      ],
+      "sources": [
+        "monteQF",
+        "monteSF",
+        "draw_montecarlo-2026"
+      ]
+    },
+    {
+      "id": "left-foot-rg-withdrawal",
+      "date_first_round": "2026-05-26",
+      "date_withdrawal_reported": "2026-05-27",
+      "role": "physical_low",
+      "selected": true,
+      "facts": [
+        "5月26日法网首轮四盘赢福雷尔，当时左脚已有不适。",
+        "5月27日已公开确认因左脚伤退出法网第二轮，对塔比洛比赛没有进行。",
+        "不写第二轮输球，不写比赛中途伤退，不虚构术后/退役念头。"
+      ],
+      "first_round_result": {
+        "winner": "Valentin Vacherot",
+        "loser": "Thomas Faurel",
+        "score_winner_perspective": "6-3 6-4 3-6 7-6(6)"
+      },
+      "second_round": {
+        "scheduled_opponent": "Alejandro Tabilo",
+        "status": "walkover_before_match",
+        "score": null
+      },
+      "sources": [
+        "rgR1",
+        "rgInjury",
+        "injuryContext"
+      ],
+      "date_note": "部分摘要把塔比洛获轮空写5月28日；此表使用Reuters5月27日当日已报道退赛的确定日期。若制作卡不需要到日，写5月底更稳。"
+    },
+    {
+      "id": "wimbledon-absence",
+      "date_confirmation": "2026-06-16",
+      "role": "physical_low_continued",
+      "selected": true,
+      "facts": [
+        "因左脚伤继续缺席草地季及温网。",
+        "温网官方入围名单6月16日记录Molcan递补VACHEROT，确认退赛；伤因由本人纪录片发言报道和复出稿互证。"
+      ],
+      "sources": [
+        "wimbledon",
+        "injuryContext",
+        "gstaadNews"
+      ]
+    },
+    {
+      "id": "gstaad-return",
+      "date": "2026-07-15",
+      "role": "return",
+      "selected": true,
+      "facts": [
+        "真正的伤后巡回赛复出在7月15日格施塔德，不是东京。",
+        "首轮轮空，第二轮4-6 6-3 6-4逆转汉夫曼，复出首战获胜并进8强。",
+        "从5月底至此约7周；可说近两个月，但不把全季每一次停赛混为一段。"
+      ],
+      "result": {
+        "winner": "Valentin Vacherot",
+        "loser": "Yannick Hanfmann",
+        "score_winner_perspective": "4-6 6-3 6-4"
+      },
+      "sources": [
+        "gstaadATP",
+        "gstaadNews",
+        "draw_gstaad-2026"
+      ]
+    },
+    {
+      "id": "usopen-third-round",
+      "date_local_new_york": "2026-09-04",
+      "date_beijing": "2026-09-05",
+      "role": "optional_bridge",
+      "selected": false,
+      "facts": [
+        "首次参加美网正赛走到第三轮，三盘负蒂亚福。",
+        "4分半片中可一句带过，不必把四大满贯机械逐场铺开。"
+      ],
+      "result": {
+        "winner": "Frances Tiafoe",
+        "loser": "Valentin Vacherot",
+        "score_winner_perspective": "6-4 6-2 6-4"
+      },
+      "sources": [
+        "usopen"
+      ]
+    },
+    {
+      "id": "tokyo-sf",
+      "date_qf": "2026-10-04",
+      "date_exit": "2026-10-05",
+      "role": "return_high_then_basel_callback",
+      "selected": true,
+      "facts": [
+        "东京先逆转西西帕斯，再三盘赢菲斯，进入4强。",
+        "10月5日半决赛4-6 2-6输给莱赫奇卡，东京不是伤后首站。",
+        "可与巴塞尔决赛击败同一对手呼应，不用复仇/宿敌来夸大。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Stefanos Tsitsipas",
+          "score_winner_perspective": "4-6 7-6(5) 6-4"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Arthur Fils",
+          "score_winner_perspective": "7-5 4-6 6-4"
+        },
+        {
+          "winner": "Jiri Lehecka",
+          "loser": "Valentin Vacherot",
+          "score_winner_perspective": "6-4 6-2"
+        }
+      ],
+      "sources": [
+        "tokyo",
+        "draw_tokyo-2026"
+      ]
+    },
+    {
+      "id": "shanghai-title-defence",
+      "date_opening": "2026-10-10",
+      "date_exit": "2026-10-12",
+      "role": "late_low_before_payoff",
+      "selected": true,
+      "facts": [
+        "卫冕上海首轮轮空，10月10日第二轮胜巴埃斯。",
+        "10月12日第三轮4-6 2-6负汤米·保罗，卫冕结束；不能写首战出局。",
+        "赛后本人表达失望、称身体状态不理想，并承认保罗打得好；如使用情绪，只归于这次有来源的自述。",
+        "本表不采用新实时排名：赛事文稿14、官方签表18存在时点差异；无需排名也足够讲清起伏。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Sebastian Baez",
+          "score_winner_perspective": "6-4 7-6(5)"
+        },
+        {
+          "winner": "Tommy Paul",
+          "loser": "Valentin Vacherot",
+          "score_winner_perspective": "6-4 6-2"
+        }
+      ],
+      "sources": [
+        "shanghaiBaez",
+        "shanghaiPaul",
+        "draw_shanghai-2026"
+      ]
+    },
+    {
+      "id": "basel-second-title",
+      "date_range": [
+        "2026-10-26",
+        "2026-11-01"
+      ],
+      "date_title": "2026-11-01",
+      "role": "ending_payoff",
+      "selected": true,
+      "facts": [
+        "依次击败纳沃内、霍达尔、鲁内、弗里茨，决赛2-6 6-3 6-3逆转莱赫奇卡。",
+        "这是生涯第二座巡回赛单打冠军、第一座ATP500冠军。",
+        "2025同站首轮负弗里茨→2026半决赛胜弗里茨；东京半决赛负莱赫奇卡→巴塞尔决赛逆转他。",
+        "本版巴塞尔只承担年历程收束；精简此前轮次介绍，保留完整冠军点和真实捧杯。"
+      ],
+      "results": [
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Mariano Navone",
+          "score_winner_perspective": "6-3 7-6(4)"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Rafael Jodar",
+          "score_winner_perspective": "7-6(4) 2-6 7-6(5)"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Holger Rune",
+          "score_winner_perspective": "6-3 3-6 6-3"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Taylor Fritz",
+          "score_winner_perspective": "7-6(5) 6-3"
+        },
+        {
+          "winner": "Valentin Vacherot",
+          "loser": "Jiri Lehecka",
+          "score_winner_perspective": "2-6 6-3 6-3"
+        }
+      ],
+      "sources": [
+        "draw_basel-2026"
+      ]
+    }
+  ],
+  "selected_storyline": [
+    {
+      "section": "开头对照",
+      "target_seconds": 15,
+      "nodes": [
+        "shanghai-first-title",
+        "basel-second-title"
+      ],
+      "purpose": "以两座真实奖杯框定时间跨度，然后回到上海之后。"
+    },
+    {
+      "section": "首冠之后仍有输赢",
+      "target_seconds": 35,
+      "nodes": [
+        "basel-after-shanghai-loss",
+        "paris-quarterfinal",
+        "ao-third-round"
+      ],
+      "purpose": "去年巴塞尔首轮失利，一周后巴黎8强；新年澳网第三轮，形成持续进步而非一帆风顺。"
+    },
+    {
+      "section": "家乡的高点",
+      "target_seconds": 35,
+      "nodes": [
+        "montecarlo-home-sf"
+      ],
+      "purpose": "主场4强和本人归属感原话；不堆多站战绩。"
+    },
+    {
+      "section": "被伤病打断",
+      "target_seconds": 30,
+      "nodes": [
+        "left-foot-rg-withdrawal",
+        "wimbledon-absence"
+      ],
+      "purpose": "明确左脚伤、法网次轮赛前退出、缺席温网。"
+    },
+    {
+      "section": "重新回到赛场",
+      "target_seconds": 35,
+      "nodes": [
+        "gstaad-return",
+        "tokyo-sf"
+      ],
+      "purpose": "真正复出首胜在格施塔德，东京4强是后续回升，为结尾莱赫奇卡埋下事实呼应。"
+    },
+    {
+      "section": "重回上海的失落",
+      "target_seconds": 30,
+      "nodes": [
+        "shanghai-title-defence"
+      ],
+      "purpose": "去年夺冠地，今年第三轮止步；用本人赛后真实反应承载情绪。"
+    },
+    {
+      "section": "巴塞尔第二冠收束",
+      "target_seconds": 85,
+      "nodes": [
+        "basel-second-title"
+      ],
+      "purpose": "简讲前四轮，点到弗里茨与莱赫奇卡两条历史呼应；完整冠军点、真实捧杯与品牌片尾。"
+    }
+  ],
+  "nominal_plan_seconds": 265,
+  "editorial_boundaries": [
+    "不臆造外界质疑、退役念头、绝望、伤病心理或未来保证。",
+    "巴黎2025是8强，澳网2026是第三轮，蒙卡与东京是4强；不是全季无成绩。",
+    "格施塔德是伤后真正复出首站；东京是恢复后高点。",
+    "上海2026不是首战出局，必须保留轮空→第二轮胜→第三轮败事实。",
+    "所有result.score_winner_perspective赢家在前；给瓦舍罗视角展示时交现有比分翻转代码。",
+    "AO/RG的protennislive580/520链接本轮返回placeholder，不把下载200或PDF格式当真实签表。",
+    "本文只核实事实与来源，不表示片段已取得、原声已转写或成片QC通过。"
+  ]
+}
