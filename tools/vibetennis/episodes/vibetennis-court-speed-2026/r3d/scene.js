@@ -359,6 +359,29 @@ function setAOYears(p,hi){ AYRS.forEach((y,i)=>{ const k=Math.max(0,Math.min(1,p
   const on=hi&&(y===2020||y===2021); m.material.color.set(on?0xffc04a:0x7cc8ff); m.children[0].material.color.set(on?0xffd27a:0x7cc8ff);
   proj('ay_'+y,aoG.localToWorld(V3((i-5.5)*7.2,h+2.5,0))); proj('ayb_'+y,aoG.localToWorld(V3((i-5.5)*7.2,-1.5,3))); }); }
 
+
+// --- 泳道特效：光晕拖尾、残影、落地火花、扫光、全息网格（只用固定种子随机）
+seed=8080;
+{ const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+  vertexShader:`varying vec2 vP; void main(){ vP=position.xy; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`varying vec2 vP; float g(vec2 p,float s){ vec2 q=abs(fract(p/s-0.5)-0.5)/fwidth(p/s); return 1.-min(min(q.x,q.y),1.);} void main(){ float k=g(vP,1.0)*0.25+g(vP,5.0)*0.55; float f=exp(-length(vP*vec2(0.025,0.06))); gl_FragColor=vec4(vec3(0.3,0.65,1.0)*k*f,k*f*0.6);} `});
+  const gp=new THREE.Mesh(new THREE.PlaneGeometry(120,60),m); gp.rotation.x=-Math.PI/2; gp.position.set(10,-0.05,0); labG.add(gp); }
+const sweep=new THREE.Mesh(new THREE.PlaneGeometry(4.0,24),new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uA:{value:0}},
+  vertexShader:`varying vec2 vU; void main(){ vU=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`uniform float uA; varying vec2 vU; void main(){ float k=exp(-pow((vU.x-0.5)*5.0,2.0)); gl_FragColor=vec4(vec3(0.55,0.85,1.0)*k*uA,k*uA); }`}));
+sweep.rotation.x=-Math.PI/2; sweep.position.y=0.04; labG.add(sweep);
+LANES.forEach(ln=>{ ln.halo=new THREE.Mesh(new THREE.BufferGeometry(),glowMat(ln.col,0.22)); labG.add(ln.halo);
+  ln.ghosts=[1,2,3,4,5].map(i=>{ const g=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,10),glowMat(0xe8ff60,0.35/i)); labG.add(g); return g; });
+  const n=90, geo=new THREE.BufferGeometry(), pos=new Float32Array(n*3); geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  ln.spark={pts:new THREE.Points(geo,new THREE.PointsMaterial({color:ln.col,size:0.14,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false})),pos,seeds:[]};
+  for(let i=0;i<n;i++){ const a=rnd()*Math.PI*2, v=2+rnd()*5; ln.spark.seeds.push([Math.cos(a)*v,1+rnd()*4,Math.sin(a)*v*0.6]); } labG.add(ln.spark.pts); });
+function setFX(tau,show,u){ LANES.forEach((ln,i)=>{ const on=!!show[i]; ln.halo.visible=on; ln.ghosts.forEach(g=>g.visible=on&&tau>-0.85); ln.spark.pts.visible=on;
+  if(!on) return; ln.halo.geometry.dispose();
+  { const pts=[]; for(let k=0;k<=60;k++){ const tt=-0.9+(tau+0.9)*k/60; pts.push(lanePos(ln,tt)); } ln.halo.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),80,0.26,8,false); }
+  ln.ghosts.forEach((g,j)=>g.position.copy(lanePos(ln,tau-(j+1)*0.035)));
+  const st=tau; ln.spark.pts.material.opacity=(st>=0&&st<0.6)?(1-st/0.6):0; ln.spark.seeds.forEach((sd,j)=>{ ln.spark.pos[j*3]=sd[0]*st; ln.spark.pos[j*3+1]=Math.max(0.02,sd[1]*st-4.9*st*st); ln.spark.pos[j*3+2]=ln.z+sd[2]*st; }); ln.spark.pts.geometry.attributes.position.needsUpdate=true; });
+  const w=((u||0)*0.35)%1; sweep.position.x=-20+w*60; sweep.material.uniforms.uA.value=Math.sin(Math.PI*w)*0.35; }
+
 // ---------- 后期 ----------
 const composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera));
 composer.addPass(new UnrealBloomPass(new THREE.Vector2(W,H),0.25,0.5,0.97)); composer.addPass(new OutputPass());
@@ -390,7 +413,7 @@ const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), sm=x=>{x=cl(x);return x*x*(3-2*
 function camLook(px,py,pz,tx,ty,tz,fov=36){ camera.fov=fov; camera.updateProjectionMatrix(); camera.position.set(px,py,pz); camera.lookAt(tx,ty,tz); camera.updateMatrixWorld(true); }
 function orbit(cx,cz,r,h,ang,ty=10,fov=36){ camLook(cx+Math.cos(ang)*r,h,cz+Math.sin(ang)*r,cx,ty,cz,fov); }
 function resetWorld(){ for(const v of venues){ v.g.visible=true; v.g.position.set(POS[v.k][0],0,POS[v.k][1]); v.g.children.forEach(c=>c.visible=true); }
-  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(0); setLanes(-5,[0,0,0]); }
+  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setLanes(-5,[0,0,0]); }
 function lineupWorld(){ only(null); for(const v of venues) v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); Object.values(LM).forEach(o=>o.visible=false);
   venues.forEach((v,i)=>v.g.position.set((['RG','WIM','AO','USO'].indexOf(v.k)-1.5)*22,0,0)); }
 function at(sec,f){ return sec.lines[f]; }
@@ -402,9 +425,9 @@ function shotTL(t){
   setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
     const per=4.0, tau=cl(((u%per)-1.0)*0.55,-0.9,1.3);
-    camLook(LX+lerp(1,4,sm(u/D)),3.2,LZ+lerp(27,23,sm(u/D)),LX+3,2.2,LZ-2,38); setLanes(tau,[1,1,1]); setDust(tau); return k; }
+    camLook(LX+lerp(-1,3,sm(u/D)),lerp(12,10,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3.5,0.2,LZ-1.5,42); setLanes(tau,[1,1,1]); setDust(tau); setFX(tau,[1,1,1],u); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ const per=4.6, tau=cl(((u%per)-1.2)*0.45,-0.9,1.3), show=k==='lane_RG'?[1,0,0]:[1,1,0];
-    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*1.5,2.4,LZ+ln.z+17,LX+3.5,2.0,LZ+ln.z,40); setLanes(tau,show); setDust(tau); return k; }
+    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+2+Math.sin(u*0.15)*1.5,6.5,LZ+ln.z+15,LX+4,0.6,LZ+ln.z,42); setLanes(tau,show); setDust(tau); setFX(tau,show,u); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,140-30*q,0.9+0.5*q,6); return 'v_RG'; }

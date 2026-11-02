@@ -107,14 +107,18 @@ def foot(d, size, k, x, y):
 
 def style_A(size, out):
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
-    img = hero(3.0, size)
+    img = hero(2.0, size)
+    if size == "wide":   # 整体下移，顶部留暗给标题
+        base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - 190)), (0, 190)); img = shade(base, 0.0001, 0.86, 0, 0.92)
+    elif size == "tall":   # 稍放大，裁掉右下角泳道尽头的黑三角
+        z = 1.16; big = img.resize((int(W * z), int(H * z)), Image.LANCZOS); img = big.crop((0, int(H * (z - 1) * 0.5), W, int(H * (z - 1) * 0.5) + H))
     img = shade(img, 0.42 if size != "wide" else 0.0001, 0.80, 0.9, 0.9)
     if size == "wide":
         a = np.asarray(img).astype(np.float32); yy = np.linspace(0, 1, H)[:, None, None]; a *= 1 - np.clip(1 - yy / 0.45, 0, 1) ** 1.3 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     if size == "wide":
-        title(d, size, 1, 110, 290); foot(d, size, 1, 112, 900)
+        title(d, size, 1, 110, 270); foot(d, size, 1, 112, 985)
     else:
         title(d, size, k, int(134 * k), int(360 * k)); foot(d, size, k, int(140 * k), int(H * 0.86))
     img.save(out, quality=94, subsampling=0)
