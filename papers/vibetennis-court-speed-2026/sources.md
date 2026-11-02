@@ -14,6 +14,13 @@
 - ITF Court Surface Classification Scheme，ISSS Technical Meeting, Nyon 2002：Surface Pace Rating = 100×(1−μ)
 - ⚠️ 现行 CPR（含 150×(0.81−e) 项）与五档分级只有二手来源，未上屏前不用
 
+## 硬地：两种（2026-11-02 补，原文已读）
+- Laykold「US Open pace consistency in a can」：「Court pace is controlled by the sand」；面漆里预混大颗、有棱角的沙 → 中速（M3 CPR，球的绒毛被大颗粒抓住而变慢）；细而圆的沙 → 中快（M4 CPR）。厂家资料
+- Laykold「Flushing's blue courts are red-hot-fast」：ITF 把场地分 1–5 档，中快场地 CPR 40–45（厂家转述）；美网 2020 年起用 Laykold
+- 纽约时报 Futterman 2021-02-15（Globe and Mail 转载）：澳网的丙烯酸涂层「essentially the paint」，由 GreenSet 供应（2020 年起）；速度可逐年按涂层粗糙程度调整，「像往油漆里加沙」；2021 年德约称场地比他在此 15 年里任何时候都快，蒂姆称是「打过最快的大满贯场地」；赛事方称赛前检测结果与上一年相近；2020 年有球员抱怨太慢
+- 发球指数（自算）：澳网 2020 = 1.02、2021 = 1.19（2016 = 1.22，所以 2021 不是最高，片中只说「升到 1.19」）
+- ⚠️ 片中硬地的落地轨迹只作示意（硬地摩擦系数无公开数，不上屏）
+
 ## 场地／场馆事实
 - 温网官方 Media Fact Sheet – Grounds 2023：2001 年起 100% 多年生黑麦草（此前 70/30），为耐磨，「不影响场地的体感速度」；弹跳主要由土壤决定；阴冷潮湿时球更重更慢
 - 美网：1978–2019 DecoTurf，2020 起 Laykold（维基 + Laykold 官网新闻）
