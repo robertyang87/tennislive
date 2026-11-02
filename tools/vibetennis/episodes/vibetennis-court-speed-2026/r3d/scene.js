@@ -21,7 +21,7 @@ renderer.localClippingEnabled=true; const CLIP=new THREE.Plane(new THREE.Vector3
 // 背景与第 4 集一致（所有者：背景颜色用前几期那个）：深蓝夜空＋地平线辉光、星点、漂浮微尘
 const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,uniforms:{uWarm:{value:0}},
   vertexShader:`varying vec3 vD; void main(){ vD=normalize(position); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);} `,
-  fragmentShader:`varying vec3 vD; uniform float uWarm; void main(){ float h=vD.y; float g=exp(-abs(h+0.02)*7.0); vec3 top=vec3(0.006,0.01,0.024); vec3 hz=mix(vec3(0.018,0.032,0.075),vec3(0.07,0.04,0.012),uWarm); vec3 vi=vec3(0.04,0.022,0.07); float side=0.5+0.5*vD.x; gl_FragColor=vec4(top+hz*g+vi*g*g*side*0.6*(1.-uWarm),1.);} `});
+  fragmentShader:`varying vec3 vD; uniform float uWarm; void main(){ float h=vD.y; float g=exp(-abs(h+0.02)*7.0); vec3 top=vec3(0.006,0.01,0.026); vec3 hz=mix(vec3(0.035,0.06,0.15),vec3(0.07,0.04,0.012),uWarm); vec3 vi=vec3(0.04,0.022,0.07); float side=0.5+0.5*vD.x; gl_FragColor=vec4(top+hz*g+vi*g*g*side*0.6*(1.-uWarm),1.);} `});
 const sky=new THREE.Mesh(new THREE.SphereGeometry(9000,48,24),skyMat); sky.frustumCulled=false; scene.add(sky);
 
 
@@ -480,6 +480,17 @@ function setImpacts(tau,show){ IMP.forEach((im,i)=>{ const on=!!show[i]&&tau>=0;
 const ramp=s=>0.55*(s-0.24*Math.tanh(s/0.4));
 
 
+// --- 第 3 集同款背景：实验场四周一圈全息看台（光点排成的一层层看台），跟着当前实验场走
+const BOWL=new THREE.Group(); scene.add(BOWL); { const n=36000, P=cloud(n,0.5,4,BOWL,0.25); let i=0;
+  for(let r=0;r<40&&i<n;r++){ const R=70+r*2.4, y=1+r*1.3, m=Math.floor(2*Math.PI*R*1.3/1.6); for(let j=0;j<m&&i<n;j++,i++){ const a=j/m*Math.PI*2+(r%2)*0.01; const k=0.35+0.4*frnd();
+    cset(P,i,Math.cos(a)*R*1.3,y,Math.sin(a)*R,0.7*k,0.85*k,1.0*k,frnd()<0.85?1.0:0.3); } }
+  for(;i<n;i++) cset(P,i,0,-999,0,0,0,0,0); cdone(P);
+  const haze=new THREE.Mesh(new THREE.CylinderGeometry(150,150,70,64,1,true),new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.BackSide,blending:THREE.AdditiveBlending,
+    vertexShader:`varying vec2 vU; void main(){ vU=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+    fragmentShader:`varying vec2 vU; void main(){ float k=exp(-pow((vU.y-0.25)*3.0,2.0)); gl_FragColor=vec4(vec3(0.05,0.09,0.22)*k,k*0.22); }`}));
+  haze.scale.set(1.3,1,1); haze.position.y=30; BOWL.add(haze); }
+function setBowl(center){ BOWL.visible=!!center; if(center) BOWL.position.copy(center); }
+
 // ================= 2026-11-02 重做的特效层（所有者：「整体不精致……要有酷炫的动画、粒子动效，比例和物理也要合理」） =================
 const MOTE_SCALE={v_RG:7,v_WIM:7,v_AO:7,v_USO:8,lineup:3,pillars:3,pillars_hi:3,wim:6,outro:22,years:2.5,ao_years:2.5,acryl:0.6,slow:0.5};
 // --- 场馆「扫描建起」：裁剪面从地面升到楼顶，切口处一圈光环＋粒子
@@ -563,7 +574,7 @@ const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), sm=x=>{x=cl(x);return x*x*(3-2*
 function camLook(px,py,pz,tx,ty,tz,fov=36){ camera.fov=fov; camera.updateProjectionMatrix(); camera.position.set(px,py,pz); camera.lookAt(tx,ty,tz); camera.updateMatrixWorld(true); }
 function orbit(cx,cz,r,h,ang,ty=10,fov=36){ camLook(cx+Math.cos(ang)*r,h,cz+Math.sin(ang)*r,cx,ty,cz,fov); }
 function resetWorld(){ for(const v of venues){ v.g.visible=true; v.g.position.set(POS[v.k][0],0,POS[v.k][1]); v.g.children.forEach(c=>c.visible=true); }
-  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setLanes(-5,[0,0,0]); setImpacts(-1,[0,0,0]); CLIP.constant=1e5; scanFX(null); setSloFX(-1); setPilFX(0); setBarFX(null); setArcs(0); }
+  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setLanes(-5,[0,0,0]); setImpacts(-1,[0,0,0]); CLIP.constant=1e5; setBowl(null); scanFX(null); setSloFX(-1); setPilFX(0); setBarFX(null); setArcs(0); }
 function lineupWorld(){ only(null); for(const v of venues) v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); Object.values(LM).forEach(o=>o.visible=false);
   venues.forEach((v,i)=>v.g.position.set((['AO','RG','WIM','USO'].indexOf(v.k)-1.5)*22,0,0)); } // 大满贯顺序，澳网在最左
 function at(sec,f){ return sec.lines[f]; }
@@ -575,9 +586,9 @@ function shotTL(t){
   setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
     const per=4.0, tau=cl(ramp((u%per)-1.0),-0.9,1.3);
-    if(COVER) camLook(LX+8,27,LZ+25,LX+8,0,LZ-4,40); else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); return k; }
+    setBowl(LAB); if(COVER) camLook(LX+8,27,LZ+25,LX+8,0,LZ-4,40); else if(u<per){ const q=sm(u/per); camLook(LX+34-6*q,lerp(7,5,q),LZ+lerp(10,6,q),LX-14,0.6,LZ,36); /* 所有者：先从远处打过来（从接球一端看球飞来），再切近景 */ } else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ const per=4.6, tau=cl(ramp((u%per)-1.2)*0.85,-0.9,1.3), show=k==='lane_RG'?[1,0,0]:[1,1,0];
-    const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+3+Math.sin(u*0.15)*0.8,10,LZ+ln.z+11,LX+3.5,0.3,LZ+ln.z,42); setLanes(tau,show); setDust(-1); setFX(tau,show,u); setImpacts(tau,show); return k; }
+    const ln=k==='lane_RG'?LANES[0]:LANES[1]; setBowl(LAB); if(u<per) camLook(LX+30,5,LZ+ln.z+4,LX-12,0.6,LZ+ln.z,34); else camLook(LX+3+Math.sin(u*0.15)*0.8,10,LZ+ln.z+11,LX+3.5,0.3,LZ+ln.z,42); setLanes(tau,show); setDust(-1); setFX(tau,show,u); setImpacts(tau,show); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],150-25*q,200-20*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
@@ -589,15 +600,15 @@ function shotTL(t){
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
     const T=f=>at(sec,f)-sec.t0, k1=T('p1'), k2=T('p2'), k3=T('p3'), k4=T('p4');
     let q; if(u<k1) q=0.25*u/k1; else if(u<k2) q=0.25+0.25*(u-k1)/(k2-k1); else if(u<k3) q=0.5+0.22*(u-k2)/(k3-k2); else if(u<k4) q=0.72+0.28*(u-k3)/(k4-k3); else q=Math.min(0.66,0.66*(u-k4)/3.0);
-    const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-1.5,2.5,sm(u/D)),4.6,SZ+13,SX+1.2,0.9,SZ-1,32); const ph=setSlow(q); setSloFX(q); return 'slow'; }
+    setBowl(SLO); const SX=SLO.x, SZ=SLO.z; camLook(SX+lerp(-1.5,2.5,sm(u/D)),4.6,SZ+13,SX+1.2,0.9,SZ-1,32); const ph=setSlow(q); setSloFX(q); return 'slow'; }
   if(k==='pillars'||k==='pillars_hi'){ lineupWorld(); const g=k==='pillars'?sm((u-(at(sec,'d2')-sec.t0)+1.0)/3.5):1; 
     camLook(0,lerp(70,58,sm(u/D)),lerp(110,96,sm(u/D)),0,16,0,36); setPillars(g,k==='pillars_hi'?['WIM','AO']:null); setPilFX(g,k==='pillars_hi'?['WIM','AO']:null,u); return k; }
   if(k==='wim'){ only('WIM'); const P=POS.WIM; orbit(P[0],P[1],150,60,2.2+0.5*u/D,6); return k; }
-  if(k==='years'){ const T=f=>at(sec,f)-sec.t0, drop=sm((u-T('r8'))/1.2); const Y=yrG.position;
+  if(k==='years'){ const T=f=>at(sec,f)-sec.t0, drop=sm((u-T('r8'))/1.2); const Y=yrG.position; setBowl(Y);
     camLook(Y.x+lerp(-8,6,sm(u/D)),30,Y.z+105,Y.x,11,Y.z,36); setYears(sm(u/2.0),drop); setBarFX('RG',u,drop>0.5?[2020]:null); return k; }
-  if(k==='acryl'){ const T=f=>at(sec,f)-sec.t0, q=sm((u-T('k3'))/4.5); const A=ACR;
+  if(k==='acryl'){ const T=f=>at(sec,f)-sec.t0, q=sm((u-T('k3'))/4.5); const A=ACR; setBowl(ACR);
     camLook(A.x+lerp(-3,3,sm(u/D)),lerp(5.5,4.2,sm(u/D)),A.z+lerp(24,20,sm(u/D)),A.x,1.8,A.z,40); setAcryl(q); return k; }
-  if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); setBarFX('AO',u,u>=T('k6')-0.2?[2020,2021]:null); return k; }
+  if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; setBowl(Y); camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); setBarFX('AO',u,u>=T('k6')-0.2?[2020,2021]:null); return k; }
   if(k==='outro'){ only(null); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
     const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); return k; }
   return k; }
