@@ -5,6 +5,7 @@ cd "$(dirname "$0")/r3d"; mkdir -p seg
 # 同一时刻只许一份整片渲染：两份并跑会往同一批 seg/s*.mp4 里写，文件写坏且日志交错看不出来（2026-11-02 踩过）
 exec 9>seg/.render.lock; flock -n 9 || { echo "已有一份渲染在跑（seg/.render.lock），不重复开" >&2; exit 3; }
 if pgrep -f "^node cap.js" >/dev/null; then echo "还有 cap.js 进程在跑：$(pgrep -fa '^node cap.js' | head -4)" >&2; exit 3; fi
-N=5918; K=4; STEP=$(( (N+K-1)/K ))
+# 帧数 N 跟着 plan.py 写的 timeline.json 总长走（2026-11-02 加长后不再是 5918）
+N=$(python3 -c "import json;print(round(json.load(open('timeline.json'))['total']*30))"); K=4; STEP=$(( (N+K-1)/K ))
 for i in $(seq 0 $((K-1))); do a=$((i*STEP)); b=$(( (i+1)*STEP<N ? (i+1)*STEP : N )); node cap.js $a $b seg/s$i.mp4 1920 1080 8766 > seg/s$i.log 2>&1 & sleep 8; done
 wait; echo done

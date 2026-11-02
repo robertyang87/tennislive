@@ -208,7 +208,7 @@ def q0_of(q):
     return 1.0
 GT=lambda seg: H2+0.15+q0_of(seg/4)*(D-(H2-H['t0'])-1.0)
 for i,f in enumerate((880,1047,1175,1319)): EN(GT(i+0.3),ding(f),0.45,name='city-%d'%i)  # 所有者 2026-11-02「音效先播放了」：等光点亮满（seg=i+0.3）再响
-for i,(d,lo,hi) in enumerate(((1.3,180,2000),(0.6,500,2600),(0.9,260,2200))): EN(GT(i+0.4),swish(d,lo,hi),0.3,name='fly-%d'%i)  # 起飞：越远的一跳越长越低沉
+for i,(d,lo,hi) in enumerate(((1.3,180,2000),(0.6,500,2600),(0.9,260,2200))): EN(GT(i+0.5),swish(d,lo,hi),0.3,name='fly-%d'%i)  # 起飞：越远的一跳越长越低沉
 EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([84,88,91],0.16,0.35),0.5,name='loop-closed')
 
 # 画板式拆解（红土 / 草地）：倒带的磁带声、定格的闷响＋闪、马克笔的吱声；发球指数：金属片一片片落下的叮当
