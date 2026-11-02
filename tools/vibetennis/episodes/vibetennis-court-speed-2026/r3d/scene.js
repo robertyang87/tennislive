@@ -53,9 +53,10 @@ const SURF={
     const n=16; for(let i=0;i<n;i++){ g.fillStyle=i%2?'#3f7431':'#4b843a'; g.fillRect(0,i*h/n,w,h/n+1); }
     noise(g,w,h,120000,['#355f2a','#5a9446','#3f7533','#64a04c'],1.6);
     drawLines(g,w,h,'#f7f7f2',0.05); }),
-  AO: canvasTex(TW,TH,(g,w,h)=>{ // 澳网：2020、2023 年照片里场内外是同一种蓝
-    g.fillStyle='#2386d1'; g.fillRect(0,0,w,h);
-    noise(g,w,h,40000,['rgba(255,255,255,0.05)','rgba(0,0,0,0.06)'],1.2);
+  AO: canvasTex(TW,TH,(g,w,h)=>{ // 澳网：场内略深的蓝、四周更亮的青蓝（2020、2023 年照片取色；2008 年起的双色方案，对比很弱）
+    g.fillStyle='#2a9bd9'; g.fillRect(0,0,w,h);
+    g.fillStyle='#3486b8'; g.fillRect(w/2-DW*PX,h/2-L*PX,DW*2*PX,L*2*PX);
+    noise(g,w,h,40000,['rgba(255,255,255,0.04)','rgba(0,0,0,0.05)'],1.2);
     drawLines(g,w,h,'#ffffff',0.05); }),
   USO: canvasTex(TW,TH,(g,w,h)=>{ // 美网：场内蓝、四周绿（2005 年起）
     g.fillStyle='#3d8a57'; g.fillRect(0,0,w,h);
