@@ -1,226 +1,371 @@
 {
   "version": 2,
-  "key": "7b1e65980c2d5693f29c2216540b0a2848b9ec7c06145498b9a8549f71d44763",
-  "sha256": "739d170b3d6e3ed9f756da2ed24215a91c21b08e9da6bc7649be197c81c60cd6",
-  "seconds": 11.04,
+  "key": "b226eca1d4124689ee424a1632cae2f8e160dbbcb240673858782deaf9b02871",
+  "sha256": "d0bd03511ea9d159cfda7684c219e19607fc94cb8218c5e872202488bf8c0331",
+  "seconds": 16.64,
   "fps": "25",
   "size": [
     1080,
     1440
   ],
   "plan": {
-    "canvas_width": 1080,
-    "kind": "chronology",
-    "lines": [
-      "巴塞尔四关",
-      "一步步回到决赛"
-    ],
-    "font_px": 96,
-    "nodes": [
-      {
-        "label": "第一轮 纳沃内",
-        "value": "6-3 7-6⁴",
-        "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-      },
-      {
-        "label": "第二轮 霍达尔",
-        "value": "7-6⁴ 2-6 7-6⁵",
-        "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-      },
-      {
-        "label": "四分之一决赛 鲁内",
-        "value": "6-3 3-6 6-3",
-        "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-      }
-    ],
-    "direction": "vertical",
-    "groups": [],
-    "proof_h": 420,
-    "node_height": 140,
-    "kicker_y": 293.12,
-    "headline_y": 377.12,
-    "proof_y": 690.88,
-    "safe_bottom": 1244,
-    "photo": null,
-    "highlight": "",
-    "kicker": "03 第二座奖杯",
+    "kind": "scene",
     "content": {
-      "events": [
+      "scene": {
+        "blocks": [
+          {
+            "kind": "photo",
+            "start": 0,
+            "duration": 16.6,
+            "pages": [
+              {
+                "path": "assets/reel/vacherot-basel-title-story-2026/year-story/atp-4591062.jpg",
+                "source": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/080a7a36-6396-43cd-987b-7b1921f0da62/Tommy-PAUL-vs-Valentin-VACHEROT3318.jpg",
+                "date": "2026.10.12",
+                "event": "上海大师赛 第三轮",
+                "headline": "卫冕止步第三轮",
+                "kicker": "SHANGHAI",
+                "focus": [
+                  0.5,
+                  0.43
+                ]
+              },
+              {
+                "path": "assets/reel/vacherot-basel-title-story-2026/year-story/atp-4591063.jpg",
+                "source": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/12/bdc257ca-e7ab-4813-b854-63618f7a4c96/Tommy-PAUL-vs-Valentin-VACHEROT9506.jpg",
+                "date": "2026.10.12",
+                "event": "上海大师赛 第三轮",
+                "headline": "卫冕止步第三轮",
+                "kicker": "SHANGHAI",
+                "focus": [
+                  0.5,
+                  0.43
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "canvas_width": 1080,
+    "safe_bottom": 1244
+  },
+  "browser_evidence": [
+    {
+      "time": 0.5,
+      "visible_text": [
         {
-          "label": "第一轮 纳沃内",
-          "value": "6-3 7-6⁴",
-          "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 869.1464233398438,
+            "width": 551,
+            "height": 107.796875,
+            "top": 869.1464233398438,
+            "right": 615,
+            "bottom": 976.9432983398438,
+            "left": 64
+          }
         },
         {
-          "label": "第二轮 霍达尔",
-          "value": "7-6⁴ 2-6 7-6⁵",
-          "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
-        },
-        {
-          "label": "四分之一决赛 鲁内",
-          "value": "6-3 3-6 6-3",
-          "source": "https://www.protennislive.com/posting/2026/328/mds.pdf"
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 63.870540618896484,
+            "y": 989.6863403320312,
+            "width": 448.2589111328125,
+            "height": 95.62725830078125,
+            "top": 989.6863403320312,
+            "right": 512.129451751709,
+            "bottom": 1085.3135986328125,
+            "left": 63.870540618896484
+          }
         }
       ]
     },
-    "notes": []
-  },
-  "browser_evidence": {
-    "boxes": [
-      {
-        "text": "巴塞尔四关",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 377.109375,
-          "width": 940,
-          "height": 122.875,
-          "top": 377.109375,
-          "right": 1010,
-          "bottom": 499.984375,
-          "left": 70
+    {
+      "time": 2.49,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "一步步回到决赛",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 499.984375,
-          "width": 940,
-          "height": 122.875,
-          "top": 499.984375,
-          "right": 1010,
-          "bottom": 622.859375,
-          "left": 70
+      ]
+    },
+    {
+      "time": 2.9050000000000002,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "第一轮 纳沃内",
-        "width": 174,
-        "scroll": 174,
-        "rect": {
-          "x": 130,
-          "y": 740.78125,
-          "width": 174,
-          "height": 39.1875,
-          "top": 740.78125,
-          "right": 304,
-          "bottom": 779.96875,
-          "left": 130
+      ]
+    },
+    {
+      "time": 7.055000000000001,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "6-3 7-6⁴",
-        "width": 142,
-        "scroll": 142,
-        "rect": {
-          "x": 811.8125,
-          "y": 735.375,
-          "width": 142.1875,
-          "height": 50,
-          "top": 735.375,
-          "right": 954,
-          "bottom": 785.375,
-          "left": 811.8125
+      ]
+    },
+    {
+      "time": 8.3,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "第二轮 霍达尔",
-        "width": 174,
-        "scroll": 174,
-        "rect": {
-          "x": 130,
-          "y": 880.78125,
-          "width": 174,
-          "height": 39.1875,
-          "top": 880.78125,
-          "right": 304,
-          "bottom": 919.96875,
-          "left": 130
+      ]
+    },
+    {
+      "time": 11.205000000000002,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "7-6⁴ 2-6 7-6⁵",
-        "width": 226,
-        "scroll": 226,
-        "rect": {
-          "x": 728.21875,
-          "y": 875.375,
-          "width": 225.78125,
-          "height": 50,
-          "top": 875.375,
-          "right": 954,
-          "bottom": 925.375,
-          "left": 728.21875
+      ]
+    },
+    {
+      "time": 14.110000000000001,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "四分之一决赛 鲁内",
-        "width": 230,
-        "scroll": 230,
-        "rect": {
-          "x": 130,
-          "y": 1020.78125,
-          "width": 230,
-          "height": 39.1875,
-          "top": 1020.78125,
-          "right": 360,
-          "bottom": 1059.96875,
-          "left": 130
+      ]
+    },
+    {
+      "time": 15.355,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      },
-      {
-        "text": "6-3 3-6 6-3",
-        "width": 192,
-        "scroll": 192,
-        "rect": {
-          "x": 762,
-          "y": 1015.375,
-          "width": 192,
-          "height": 50,
-          "top": 1015.375,
-          "right": 954,
-          "bottom": 1065.375,
-          "left": 762
+      ]
+    },
+    {
+      "time": 16.400000000000002,
+      "visible_text": [
+        {
+          "text": "SHANGHAI",
+          "scroll": 551,
+          "width": 551,
+          "rect": {
+            "x": 64,
+            "y": 868.609375,
+            "width": 551,
+            "height": 107.796875,
+            "top": 868.609375,
+            "right": 615,
+            "bottom": 976.40625,
+            "left": 64
+          }
+        },
+        {
+          "text": "卫冕止步第三轮",
+          "scroll": 448,
+          "width": 448,
+          "rect": {
+            "x": 64,
+            "y": 984.609375,
+            "width": 448,
+            "height": 94.390625,
+            "top": 984.609375,
+            "right": 512,
+            "bottom": 1079,
+            "left": 64
+          }
         }
-      }
-    ],
-    "content": [
-      {
-        "x": 389,
-        "y": 293.109375,
-        "width": 302,
-        "height": 56,
-        "top": 293.109375,
-        "right": 691,
-        "bottom": 349.109375,
-        "left": 389
-      },
-      {
-        "x": 70,
-        "y": 377.109375,
-        "width": 940,
-        "height": 245.75,
-        "top": 377.109375,
-        "right": 1010,
-        "bottom": 622.859375,
-        "left": 70
-      },
-      {
-        "x": 90,
-        "y": 690.875,
-        "width": 900,
-        "height": 420,
-        "top": 690.875,
-        "right": 990,
-        "bottom": 1110.875,
-        "left": 90
-      }
-    ],
-    "story": null
-  },
+      ]
+    }
+  ],
   "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
 }

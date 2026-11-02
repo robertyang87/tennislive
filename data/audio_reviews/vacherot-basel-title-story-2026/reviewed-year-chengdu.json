@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "source": "chengdu",
+  "reviewed_from": 85.2,
+  "reviewed_to": 94.5,
+  "source_local": "/workspace/scratch/vacherot-year-footage/chengdu/fixed/4582098.mp4",
+  "source_local_sha256": "c973bac22c2528b6c1b941a74ab5b1f5b1520baf326e7118b0faed65ba0379a9",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4582098/4582098.mp4",
+  "source_sha256": "c973bac22c2528b6c1b941a74ab5b1f5b1520baf326e7118b0faed65ba0379a9",
+  "official_source_url": "https://www.tennistv.com/videos/4582098/chengdu-2026-r2-vacherot-harris-short-highlights",
+  "method": "asr_cross_checked",
+  "reviewer": "trophy_source agent; fresh fixed-byte small.en/medium.en candidate-window cross-check; not human listening",
+  "status": "complete",
+  "reviewed_at": "2026-11-02T07:01:13.180623+00:00",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "no_foreground_english_reason": "Fresh actual fixed-source small.en and medium.en on the exact reviewed PCM window detect no foreground lexical English. Both VAD passes return no speech segments. Supplementary no-VAD diagnostics are explicitly preserved and interpreted below; this is ASR cross-checking, not human listening.",
+  "raw_evidence": [
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-chengdu-small.en.json",
+      "sha256": "be032b2ae5200e40dfc0711ededd6f0758192135298ebc35853f344254f5fe80"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-chengdu-medium.en.json",
+      "sha256": "43514c1724be7b50db030b4dcb330bc69be152c3247ae13e600b295cfbcee5c2"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-chengdu-fixed-identity.json",
+      "sha256": "f4f3710c14f0d1651b4c2a1f122ca960a9b8ee0cda92c22d97220731b0b183d2"
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-chengdu-prior-container-small.en-no-vad.json",
+      "sha256": "3a3d7adebf3c043c15f00ae1ff62084ad3828d3ec0bf049f82374d51f73f2ee1",
+      "scope": "Historical old-container supplementary no-VAD inference; current candidate PCM and PTS equivalence checked separately."
+    },
+    {
+      "path": "data/audio_reviews/vacherot-basel-title-story-2026/year-chengdu-prior-container-medium.en-no-vad.json",
+      "sha256": "d4e383681761681c65d9ce1e4f14a941cffbc17e2cf6c14ac6ca4b109c740b76",
+      "scope": "Historical old-container supplementary no-VAD inference; current candidate PCM and PTS equivalence checked separately."
+    }
+  ],
+  "review_notes": [
+    "Proposed production window85.20–94.00; reviewed to94.50 includes0.5s source-tail reserve for transition. No speech conclusion extends beyond the reviewed window.",
+    "Historical broad82–94.5 no-VAD small.en emits six repetitive oh tokens, one stretched over8.4s, while medium.en emits no text. The repetition/invalid long single-word alignment is not reproduced by medium or either fixed-source VAD pass; treated as nonlexical/repetitive forced-English artifact. Raw evidence is retained, not asserted empty.",
+    "Current fixed bytes and prior local candidate PCM compare byte-for-byte at same source PTS; representative decoded RGB frame hashes match, so prior visual geometry is aligned. Fresh fixed-source ASR is separately rerun, not relabelled historical output.",
+    "Second set2–2, Vacherot serving40–0 from far side; source85.2 contains service preparation, toss/delivery around86.5–87.2, continuous rally and approach/volley, result around92.8–93.1, post-point walking through94.0. Complete ordinary game point, not match point; Vacherot wins this point on the way to ultimately losing the match.",
+    "Fixed centre crop[555,0,810,1080]→1080x1440 retains court centreline. Lateral runner excursions outside portrait are expected; original left-bottom scoreboard needs normal production recovery/overlay. New actual film still requires native visual and final caption/audio gates."
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "method": "faster-whisper",
+  "model": "medium.en",
+  "device": "cpu",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "word_timestamps": true,
+  "language": "en",
+  "condition_on_previous_text": false,
+  "vad_filter": true,
+  "vad_parameters": {
+    "min_silence_duration_ms": 150,
+    "speech_pad_ms": 80
+  },
+  "source_file": "/workspace/scratch/vacherot-year-footage/basel-2025/fixed/4387963.mp4",
+  "source_sha256": "313b91729ee6ba75cdaa29ac280103848cf728fa453032f3533f41aa4a752589",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4387963/4387963.mp4",
+  "official_url": "https://www.tennistv.com/videos/4387963/basel-2025-r1-fritz-vacherot-short-highlights",
+  "source_window": [
+    0,
+    12.5
+  ],
+  "actual_input_pcm_sha256": "d3fb8180a0a10fd23e1725467c21c704b88cd1dde50f483fb51119348c4cd132",
+  "actual_input_wav_sha256": "0ace69e2798defbbcd240db6894a4f18f11fce3753adc31b8ecb63309b7ed45e",
+  "decode": "ffmpeg mono16k f32le -> numpy",
+  "duration": 12.5,
+  "duration_after_vad": 0.0,
+  "elapsed_seconds": 0.037168402996030636,
+  "segments": []
+}

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "key": "ee7efb9405b510ddd624838e374cf48155842ebc9d9b83b8ad6bebd19454cd09",
-  "sha256": "63c9612c5ac7e3117bf093a059741a176d92fad6d9510e0926e9c74e153c4eaa",
+  "key": "76d2d3bfb17ab801a7751dcf97f73cfc209be2de567bdc4bb4f96764eda6f777",
+  "sha256": "6a596b3ee4d72d45d0c88368202a9abb031dc71647b9ee86385dd502e7babf3c",
   "seconds": 12.0,
   "fps": "25",
   "size": [
@@ -9,84 +9,247 @@
     1440
   ],
   "plan": {
+    "kind": "scene",
+    "content": {
+      "scene": {
+        "blocks": [
+          {
+            "kind": "photo",
+            "start": 0,
+            "duration": 12,
+            "pages": [
+              {
+                "path": "assets/reel/vacherot-basel-title-story-2026/year-story/atp-4380902.jpg",
+                "source": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2025/10/13/b12b9d82-571a-4988-a819-e46108666469/STADIUM-COURT-1-2-Arthur-RINDERKNECH-vs-Valentin-VACHEROT6529.jpg",
+                "date": "2025.10.12",
+                "event": "上海大师赛 决赛",
+                "headline": "9场胜利 1座奖杯",
+                "kicker": "2025",
+                "focus": [
+                  0.5,
+                  0.4
+                ]
+              }
+            ],
+            "label_y": 220
+          }
+        ]
+      }
+    },
     "canvas_width": 1080,
-    "kind": "turn",
-    "lines": [
-      "去年上海",
-      "故事从这里继续"
-    ],
-    "font_px": 96,
-    "nodes": [],
-    "direction": "horizontal",
-    "groups": [],
-    "proof_h": 0,
-    "node_height": 86,
-    "kicker_y": 505.12,
-    "headline_y": 589.12,
-    "proof_y": 902.88,
-    "safe_bottom": 1244,
-    "photo": null,
-    "highlight": "",
-    "kicker": "2025 上海大师赛",
-    "content": {},
-    "notes": []
+    "safe_bottom": 1244
   },
-  "browser_evidence": {
-    "boxes": [
-      {
-        "text": "去年上海",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 589.109375,
-          "width": 940,
-          "height": 122.875,
-          "top": 589.109375,
-          "right": 1010,
-          "bottom": 711.984375,
-          "left": 70
+  "browser_evidence": [
+    {
+      "time": 0.5,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.7245483398438,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.7245483398438,
+            "right": 297,
+            "bottom": 951.5214233398438,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 63.87056350708008,
+            "y": 964.2479248046875,
+            "width": 460.2588195800781,
+            "height": 95.660400390625,
+            "top": 964.2479248046875,
+            "right": 524.1293830871582,
+            "bottom": 1059.9083251953125,
+            "left": 63.87056350708008
+          }
         }
-      },
-      {
-        "text": "故事从这里继续",
-        "width": 940,
-        "scroll": 940,
-        "rect": {
-          "x": 70,
-          "y": 711.984375,
-          "width": 940,
-          "height": 122.875,
-          "top": 711.984375,
-          "right": 1010,
-          "bottom": 834.859375,
-          "left": 70
+      ]
+    },
+    {
+      "time": 1.7999999999999998,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.1875,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.1875,
+            "right": 297,
+            "bottom": 950.984375,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 64,
+            "y": 959.1875,
+            "width": 460,
+            "height": 94.390625,
+            "top": 959.1875,
+            "right": 524,
+            "bottom": 1053.578125,
+            "left": 64
+          }
         }
-      }
-    ],
-    "content": [
-      {
-        "x": 365,
-        "y": 505.109375,
-        "width": 350,
-        "height": 56,
-        "top": 505.109375,
-        "right": 715,
-        "bottom": 561.109375,
-        "left": 365
-      },
-      {
-        "x": 70,
-        "y": 589.109375,
-        "width": 940,
-        "height": 245.75,
-        "top": 589.109375,
-        "right": 1010,
-        "bottom": 834.859375,
-        "left": 70
-      }
-    ],
-    "story": null
-  },
+      ]
+    },
+    {
+      "time": 4.199999999999999,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.1875,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.1875,
+            "right": 297,
+            "bottom": 950.984375,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 64,
+            "y": 959.1875,
+            "width": 460,
+            "height": 94.390625,
+            "top": 959.1875,
+            "right": 524,
+            "bottom": 1053.578125,
+            "left": 64
+          }
+        }
+      ]
+    },
+    {
+      "time": 6.0,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.1875,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.1875,
+            "right": 297,
+            "bottom": 950.984375,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 64,
+            "y": 959.1875,
+            "width": 460,
+            "height": 94.390625,
+            "top": 959.1875,
+            "right": 524,
+            "bottom": 1053.578125,
+            "left": 64
+          }
+        }
+      ]
+    },
+    {
+      "time": 10.2,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.1875,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.1875,
+            "right": 297,
+            "bottom": 950.984375,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 64,
+            "y": 959.1875,
+            "width": 460,
+            "height": 94.390625,
+            "top": 959.1875,
+            "right": 524,
+            "bottom": 1053.578125,
+            "left": 64
+          }
+        }
+      ]
+    },
+    {
+      "time": 11.8,
+      "visible_text": [
+        {
+          "text": "2025",
+          "scroll": 233,
+          "width": 233,
+          "rect": {
+            "x": 64,
+            "y": 843.1875,
+            "width": 233,
+            "height": 107.796875,
+            "top": 843.1875,
+            "right": 297,
+            "bottom": 950.984375,
+            "left": 64
+          }
+        },
+        {
+          "text": "9场胜利 1座奖杯",
+          "scroll": 460,
+          "width": 460,
+          "rect": {
+            "x": 64,
+            "y": 959.1875,
+            "width": 460,
+            "height": 94.390625,
+            "top": 959.1875,
+            "right": 524,
+            "bottom": 1053.578125,
+            "left": 64
+          }
+        }
+      ]
+    }
+  ],
   "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
 }

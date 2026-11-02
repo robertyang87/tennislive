@@ -1,0 +1,144 @@
+{
+  "schema": "source.asr.raw.v1",
+  "source_path": "/workspace/scratch/vacherot-year-footage/paris-r2/fixed/4392293.mp4",
+  "source_sha256": "d7d2d6e9ada937da8e5a5f0b6ff5cad82f618f7aba4fd71ccf63d00794ffd9d1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-4392293/4392293.mp4",
+  "original_official_url": "https://www.tennistv.com/videos/4392293/paris-2025-r2-rinderknech-vacherot-short-highlights",
+  "model": "medium.en",
+  "method": "asr_not_human_listening",
+  "window_start": 115,
+  "window_end": 144.6,
+  "options": {
+    "vad_filter": false,
+    "condition_on_previous_text": false,
+    "language": "en",
+    "beam_size": 5,
+    "word_timestamps": true
+  },
+  "timestamp_basis": "source_absolute_seconds",
+  "segments": [
+    {
+      "start": 130.16,
+      "end": 139.68,
+      "text": " It is victory for Vachero again for the second time this month he gets the better of his cousin",
+      "avg_logprob": -0.2958766520023346,
+      "no_speech_prob": 0.3865509331226349,
+      "words": [
+        {
+          "start": 130.16,
+          "end": 131.0,
+          "word": " It",
+          "probability": 0.5447817444801331
+        },
+        {
+          "start": 131.0,
+          "end": 131.84,
+          "word": " is",
+          "probability": 0.9498612880706787
+        },
+        {
+          "start": 131.84,
+          "end": 132.26,
+          "word": " victory",
+          "probability": 0.9471567869186401
+        },
+        {
+          "start": 132.26,
+          "end": 132.98,
+          "word": " for",
+          "probability": 0.9297910928726196
+        },
+        {
+          "start": 132.98,
+          "end": 133.5,
+          "word": " Vachero",
+          "probability": 0.7065557241439819
+        },
+        {
+          "start": 133.5,
+          "end": 134.0,
+          "word": " again",
+          "probability": 0.9816115498542786
+        },
+        {
+          "start": 134.0,
+          "end": 135.76,
+          "word": " for",
+          "probability": 0.4448477625846863
+        },
+        {
+          "start": 135.76,
+          "end": 135.96,
+          "word": " the",
+          "probability": 0.9981531500816345
+        },
+        {
+          "start": 135.96,
+          "end": 136.14,
+          "word": " second",
+          "probability": 0.987832248210907
+        },
+        {
+          "start": 136.14,
+          "end": 136.66,
+          "word": " time",
+          "probability": 0.9982966780662537
+        },
+        {
+          "start": 136.66,
+          "end": 136.96,
+          "word": " this",
+          "probability": 0.991033136844635
+        },
+        {
+          "start": 136.96,
+          "end": 137.5,
+          "word": " month",
+          "probability": 0.9981252551078796
+        },
+        {
+          "start": 137.5,
+          "end": 138.57999999999998,
+          "word": " he",
+          "probability": 0.4798279106616974
+        },
+        {
+          "start": 138.57999999999998,
+          "end": 138.82,
+          "word": " gets",
+          "probability": 0.9977005124092102
+        },
+        {
+          "start": 138.82,
+          "end": 138.98,
+          "word": " the",
+          "probability": 0.9976882934570312
+        },
+        {
+          "start": 138.98,
+          "end": 139.14,
+          "word": " better",
+          "probability": 0.9995655417442322
+        },
+        {
+          "start": 139.14,
+          "end": 139.26,
+          "word": " of",
+          "probability": 0.9992563128471375
+        },
+        {
+          "start": 139.26,
+          "end": 139.38,
+          "word": " his",
+          "probability": 0.9984136819839478
+        },
+        {
+          "start": 139.38,
+          "end": 139.68,
+          "word": " cousin",
+          "probability": 0.9978808760643005
+        }
+      ]
+    }
+  ]
+}

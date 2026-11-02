@@ -38,9 +38,14 @@ def validate_content(content: dict | None) -> dict:
         return {}
     if not isinstance(content, dict):
         raise ValueError("transition_card 必须是对象")
-    unknown = content.keys() - {"scores", "events", "comparison", "comparisons", "photo", "highlight", "summary", "entry_process"}
+    unknown = content.keys() - {"scores", "events", "comparison", "comparisons", "photo", "highlight", "summary", "entry_process", "scene"}
     if unknown:
         raise ValueError(f"transition_card 不支持的字段：{sorted(unknown)}")
+    if "scene" in content:
+        from .story_motion import validate_scene
+        if set(content) != {"scene"}:
+            raise ValueError("scene 自行组合组件 不能再混写旧卡字段")
+        return {"scene": validate_scene(content["scene"])}
     if "entry_process" in content:
         item = content["entry_process"]
         scenes = {"identity", "deadline", "queue", "late_entry", "schedule", "motivation", "reserved", "locals", "insert", "unused", "seeding", "alcaraz", "summary"}
@@ -136,6 +141,10 @@ def plan(text: str, content: dict | None = None, *, size=(1080, 1440), kicker=""
     if "comparison" in c and c["comparison"]["metric"] not in text:
         kicker = c["comparison"]["metric"]
     tc = _tc()
+    if "scene" in c:
+        if size != (1080, 1440):
+            raise ValueError("故事组合组件目前只支持1080×1440")
+        return {"kind": "scene", "content": c, "canvas_width": size[0], "safe_bottom": 1244}
     if "entry_process" in c:
         return {"canvas_width": size[0], "kind": "entry_process", "lines": text.splitlines(),
                 "font_px": 62, "nodes": [], "content": c, "safe_bottom": size[1]-170,
@@ -218,6 +227,15 @@ def build(text: str, *, content=None, kicker="", size=(1080, 1440),
     """One HTML source for previews and motion, preserving the native brand rail."""
     tc = _tc()
     p = plan(text, content, size=size, kicker=kicker)
+    if p['kind'] == 'scene':
+        from .story_motion import build_scene
+        # Reuse native font, background and footer. Header still belongs to the
+        # caller (the native reel overlays its own story watermark).
+        base = build(text, size=size, seconds=seconds, handle_bottom=handle_bottom, header=header)
+        # Strip the old default clock: the composition owns this same API.
+        base = re.sub(r'<script>.*?</script>', '', base, flags=re.S)
+        base += '<style>.transition-proof,.tc-court,.tc-glow{display:none!important}</style>'
+        return build_scene(p['content']['scene'], base=base, seconds=seconds, root=ROOT)
     if p["kind"] == "entry_process":
         from .transition_motion import entry_process
         return entry_process(p["content"]["entry_process"], text=text, size=size, seconds=seconds, header=header)
@@ -307,6 +325,12 @@ em:after{{content:'';position:absolute;left:0;right:0;bottom:-6px;height:3px;bac
 
 
 def check_page(page, p: dict) -> dict:
+    header_boxes = page.evaluate("[...document.querySelectorAll('.explainer-head,.explainer-head .topic')].map(e=>({w:e.clientWidth,s:e.scrollWidth,b:e.getBoundingClientRect().bottom}))")
+    if any(b["s"] > b["w"] + 1 or b["b"] > 152 for b in header_boxes):
+        raise ValueError("解说台头溢出顶部安全区")
+    if p['kind'] == 'scene':
+        from .story_motion import check_scene_page
+        return check_scene_page(page)
     if p["kind"] == "entry_process":
         proof = page.evaluate("""() => ({slots:document.querySelectorAll('.draw-slot').length,
             brand: getComputedStyle(document.querySelector('.brand')).fontFamily,
@@ -325,9 +349,6 @@ def check_page(page, p: dict) -> dict:
       return {boxes:[...document.querySelectorAll('.transition-line,.node-label,.node-value,.metric-title,.chart-label,.chart-value,.result-label,.result-value,.summary-label,.summary-value')].map(el=>({text:el.innerText,width:el.clientWidth,scroll:el.scrollWidth,rect:rect(el)})),
         content:[...document.querySelectorAll('.thesis,.transition-proof,.kicker,.transition-photo,.motion-result,.motion-summary')].map(rect),
         story:document.querySelector('.story-label')?rect(document.querySelector('.story-label')):null};}''')
-    header_boxes = page.evaluate("[...document.querySelectorAll('.explainer-head,.explainer-head .topic')].map(e=>({w:e.clientWidth,s:e.scrollWidth,b:e.getBoundingClientRect().bottom}))")
-    if any(b["s"] > b["w"] + 1 or b["b"] > 152 for b in header_boxes):
-        raise ValueError("解说台头溢出顶部安全区")
     if any(b["scroll"] > b["width"] + 1 or b["rect"]["left"] < 48 or b["rect"]["right"] > p["canvas_width"] - 48 for b in evidence["boxes"]):
         raise ValueError("转场实际排版文字溢出 请缩短完整语义")
     if any(b["bottom"] > p["safe_bottom"] + 30 for b in evidence["content"]):
@@ -351,7 +372,7 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
     p = plan(text, content, size=size, kicker=kicker)
     document = build(text, content=content, kicker=kicker, size=size,
                      handle_bottom=handle_bottom, story_label=story_label, seconds=seconds, header=header)
-    motion_window = (max(.1, seconds - .16) if p["kind"] == "entry_process"
+    motion_window = (seconds if p['kind'] == 'scene' else max(.1, seconds - .16) if p["kind"] == "entry_process"
                      else min(6.0, max(.1, seconds - .3)))
     engine_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     key = hashlib.sha256((str(VERSION)+engine_sha+document+json.dumps([seconds,str(fps),p['content']],ensure_ascii=False)).encode()).hexdigest()
@@ -378,8 +399,27 @@ def render_clip(text: str, out: Path, *, seconds: float, fps=25, content=None,
                 if issue := page.evaluate('window.transitionMotionError || null'):
                     raise ValueError(issue)
                 page.wait_for_function('Array.from(document.images).every(i=>i.complete&&i.naturalWidth>0)')
-                page.evaluate('(t)=>window.setTransitionTime(t)',motion_window)
-                evidence = check_page(page,p)
+                if p['kind'] == 'scene':
+                    # Later components must be checked too, including re-entry
+                    # after a backwards seek. Full-duration scenes never freeze
+                    # at the legacy six-second animation horizon.
+                    samples = {.5, max(0, seconds-.2)}
+                    for block in p['content']['scene']['blocks']:
+                        samples.update(block['start']+block['duration']*phase for phase in (.15,.5,.85))
+                        if block['kind'] == 'photo':
+                            from .story_photo_motion import validate_block
+                            photo = validate_block({k:v for k,v in block.items() if k not in {'kind','exit'}})
+                            for photo_page in photo['pages']:
+                                samples.update(block['start']+photo_page['start']+photo_page['duration']*phase for phase in (.35,.85))
+                    samples = sorted(t for t in samples if 0 <= t < seconds)
+                    evidence = []
+                    for t in samples:
+                        page.evaluate('(t)=>window.setTransitionTime(t)', t)
+                        evidence.append({'time': t, **check_page(page, p)})
+                    page.evaluate('(t)=>window.setTransitionTime(t)', max(0, seconds-.2))
+                else:
+                    page.evaluate('(t)=>window.setTransitionTime(t)',motion_window)
+                    evidence = check_page(page,p)
                 page.screenshot(path=str(out.with_suffix('.jpg')),type='jpeg',quality=95)
                 process = subprocess.Popen(['ffmpeg','-y','-v','error','-f','rawvideo','-pix_fmt','rgb24',
                     '-s',f'{w}x{h}','-r',str(fps),'-i','-','-an','-c:v','libx264','-preset','veryfast',
@@ -411,6 +451,8 @@ def export_hyperframes(text: str, directory: Path, *, seconds: float, fps=25, co
     """Export the very same offline page/GSAP clock as an editable HF project."""
     if not math.isfinite(seconds) or seconds <= 0:
         raise ValueError("HyperFrames 导出需要实际完整时长")
+    if content and 'scene' in content:
+        raise ValueError('组合组件目前使用原生MP4导出 HyperFrames桥接尚未验收')
     directory = Path(directory); directory.mkdir(parents=True, exist_ok=True)
     page = build(text, content=content, kicker=kicker, size=size, seconds=seconds)
     width, height = size

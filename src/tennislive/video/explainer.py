@@ -11872,9 +11872,11 @@ def _slide_html(
     if segment.visual and segment.visual.get("layout") == "transition":
         from .transition_cards import build as build_transition
         visual = segment.visual
+        scene = (visual.get("content") or {}).get("scene")
+        preview_seconds = max(b["start"]+b["duration"] for b in scene["blocks"]) if scene else 6.0
         return build_transition(visual.get("headline", segment.title),
                                 content=visual.get("content"), kicker=visual.get("kicker", ""),
-                                size=(W, height),
+                                size=(W, height), seconds=preview_seconds,
                                 header=({"brand": f"网球时差 · {column}", "topic": topic} if topic else None))
     if segment.visual:
         from .source_story_cards import source_slide_html
@@ -12358,7 +12360,7 @@ def render_explainer_slides(
                         page.evaluate("document.fonts.ready")
                         if issue := page.evaluate("window.transitionMotionError || null"):
                             raise ValueError(issue)
-                        page.evaluate("window.setTransitionTime(window.transitionMotion.horizon)")
+                        page.evaluate("window.setTransitionTime(window.transitionMotion.previewTime ?? window.transitionMotion.horizon)")
                         check_page(page, transition_plan(seg.visual.get("headline", seg.title),
                             seg.visual.get("content"), size=(W, height), kicker=seg.visual.get("kicker", "")))
                     # 示意图不许压到编号药丸——字体落定之后量，放不下就等比缩，

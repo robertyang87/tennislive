@@ -107,3 +107,22 @@ PYTHONPATH=src:tools python tools/render_transition_card.py \
 
 确认版完整 Demo：
 [Google Drive 查看](https://drive.google.com/file/d/1uFQtwnmBxeL416EXrVQfIRsPkceiglAY/view?usp=drivesdk)，3分56.8秒，1080×1440，25 fps，5920帧，SHA256 `fc7bc4a35ff6aefa3d5826b1226ca6c5eebbdf75b2f8c133f772bd119d75edfc`。它保留了冷开场、完整赛点和赛后致意；已移除正片封面台头和照片下方指定小字。只认可该版，不以本机会话临时路径作为后续生产依赖。
+
+
+## 2026-11-02：按段自由组合的故事组件
+
+账号所有者要求模板化，但“不要每个事情都同一个流程”，允许根据内容自主组合。模板化的是摄影翻页、日期页签、标题、晋级节点、日历与时间线、退场这些能力；不固定整集的章节顺序，也不要求每个故事用全套组件。
+
+同一公共入口支持 `transition_card={"scene":{"blocks":[...]}}`。每块独立填写 `kind/start/duration`，可以重排、重叠、提前结束或省略。`headline` 用完整语义 `lines`（最多两行）与 `source`；`nodes` 用2至5个 `label/value/source` 节点与组件 `source`。两者可指定 `frame=[x,y,w,h]`；所有文字留出顶部160、底部1244安全区。可选 `exit={"style":"slide|fold|fade","duration":0.3}` 表示本块结束前退场，不改整集转场时长。
+
+`photo` 组件的 `pages` 每页必须有仓库相对 `path`、正式 `source`、`date`、`event`，可选 `headline/kicker/focus`。默认按本块时长均分，也可各页显式 `start/duration`；页签和照片随本段语义落点切换，不能重复套固定每两秒翻页。真实高清摄影核对人物、年份、轮次；不拿视频截图作照片。摄影模块参数说明在 `src/tennislive/video/story_photo_motion.py`。
+
+`timeline` 是两个已核日期端点之间的停顿/再出发：`events=[{date:"YYYY-MM-DD",label,source},...]` 恰好两端；可加 `interruption={label,detail,source}`、`resume_label/gap_label/summary`。它表达已核赛程的中断，不造每日伤情、康复进度或排名曲线。可与标题、摄影组合，输入说明在 `src/tennislive/video/story_timeline_motion.py`。
+
+命令 `python tools/render_transition_card.py --scene scene.json --seconds 12 --out scene.mp4` 与原有 `--text/--content` 共用原生字体、品牌、确定性时钟、编码、缓存与检查。新组件可在6秒之后继续演出；同一个 `setTransitionTime` 支持前后跳转。预览需检查所有出现阶段的原生帧、文字自然宽度与字幕区，不能把技术编码成功写成整片已审。
+
+选择方式：有对应比赛先用真实视频；时间/地点过门可用摄影加页签；伤停空白用短时间线；多轮路径可用晋级节点。可以一段只用摄影，也可以标题与节点同屏后交回实拍。不要把每段都处理成“照片→日历→节点”。视频源继续用正常 `source/start/end` 入口，铺满1080×1440并保留完整回合、原声和审听。此组件不接受视频素材，也不通过canvas绕过源/音轨门禁。
+
+视频段不显示底部 `@网球时差 · TENNIS JETLAG` 尾标，保留现行左上品牌；照片/纯图形按原品牌规范。正式片尾仍使用栏目母版。视觉比例随素材与故事判断，不编造统一视频百分比门槛；发现长段只有文字时主动补真实视频/摄影或删减铺陈。
+
+组合 scene 当前交付原生 MP4；旧关系卡的 HyperFrames 导出保持原入口，scene 的 HyperFrames 桥接尚未验收，CLI会前置拒绝该组合。
