@@ -101,8 +101,8 @@ const DIAG_AO=canvasTex(1024,256,(g,w,h)=>{ g.fillStyle='#eef1f3'; g.fillRect(0,
 DIAG_AO.wrapS=THREE.RepeatWrapping;
 const FACADE={
   RG: canvasTex(1024,256,(g,w,h)=>{ // 夏蒂埃：白色横向遮阳百叶＋深色玻璃，分层
-    g.fillStyle='#8f989f'; g.fillRect(0,0,w,h); // 航拍：浅灰色，一层层白色楼板挑出来，楼板之间是灰玻璃
-    for(let r=0;r<5;r++){ const y=r*h/5; g.fillStyle='#f1f2f2'; g.fillRect(0,y+4,w,12); g.fillStyle='#d6dadd'; g.fillRect(0,y+16,w,4); g.fillStyle='rgba(70,82,92,0.55)'; g.fillRect(0,y+22,w,h/5-24); }
+    g.fillStyle='#b4bbc0'; g.fillRect(0,0,w,h); // 航拍：浅灰色，一层层白色楼板挑出来，楼板之间是灰玻璃
+    for(let r=0;r<5;r++){ const y=r*h/5; g.fillStyle='#f1f2f2'; g.fillRect(0,y+4,w,12); g.fillStyle='#d6dadd'; g.fillRect(0,y+16,w,4); g.fillStyle='rgba(88,100,110,0.45)'; g.fillRect(0,y+22,w,h/5-24); }
     for(let x=0;x<w;x+=32){ g.fillStyle='rgba(230,235,238,0.55)'; g.fillRect(x,0,2,h); } }),
   WIM: canvasTex(1024,256,(g,w,h)=>{ // 中心球场：外墙爬满绿植（2017 年外观照片），露出一格格窗
     g.fillStyle='#4f6a2a'; g.fillRect(0,0,w,h); noise(g,w,h,60000,['#6e8a2e','#8a9a35','#4d6b27','#a3a347','#3c5a22','#7b5a2a'],3.5);
@@ -159,18 +159,21 @@ const RGW=[];
 function roofRG(v,grp){
   const n=11, ov=1.6, W2=v.rx+ov, L2=v.rz+ov, w=2*L2/n, y0=v.H+0.4, tilt=0.22;
   for(let i=0;i<n;i++){ const wg=new THREE.Group();
-    for(const side of[-1,1]){ const p=new THREE.Mesh(new THREE.PlaneGeometry(W2*2,w*0.5/Math.cos(tilt)),fabric());
-      p.rotation.x=-Math.PI/2+side*tilt; p.position.set(0,1.2,side*w*0.25); wg.add(p); }
-    beam(wg,V3(-W2,1.2+w*0.25*Math.tan(tilt),0),V3(W2,1.2+w*0.25*Math.tan(tilt),0),0.3,steel);
-    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.5+i*w*0.22, yo:(n-1-i)*0.55, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
-  const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=2.6;
+    { // 航拍（dupleix0 2024）：每片翼截面是上拱的弧，收拢后一片压一片，顶面成一道道白色波纹，朝球场一侧的收边呈波浪形
+      const NZ=14, pos=[], hA=1.9; for(let k=0;k<NZ;k++){ const z0=-w/2*1.04+w*1.04*k/NZ, z1=-w/2*1.04+w*1.04*(k+1)/NZ, y0=1.0+hA*Math.cos(Math.PI*z0/(w*1.04)), y1=1.0+hA*Math.cos(Math.PI*z1/(w*1.04));
+        pos.push(-W2,y0,z0, W2,y0,z0, W2,y1,z1, -W2,y0,z0, W2,y1,z1, -W2,y1,z1); }
+      const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.computeVertexNormals();
+      wg.add(new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:0xf3f4f2,roughness:0.5,metalness:0.1,side:THREE.DoubleSide})));
+      beam(wg,V3(-W2,1.0+hA+0.1,0),V3(W2,1.0+hA+0.1,0),0.28,new THREE.MeshStandardMaterial({color:0x7d858c,roughness:0.5,metalness:0.5})); }
+    RGW.push({g:wg, zc:-L2+w*(i+0.5), zo:-L2+w*0.45+i*w*0.24, yo:(n-1-i)*1.0, y0}); grp.add(wg); } // 航拍（dupleix0 2024）：打开后 11 片翼收成一大片白色肋板，盖满北看台、约占进深三分之一，朝北一侧更高
+  const fas=new THREE.MeshStandardMaterial({color:0xc9cfd4,roughness:0.45,metalness:0.4}), fh=3.6; // 航拍：屋顶一圈是顶棚滑轨的钢框，比较厚
   for(const [sx,sz,lx,lz] of [[0,-L2,W2*2+0.6,0.6],[0,L2,W2*2+0.6,0.6],[-W2,0,0.6,L2*2+0.6],[W2,0,0.6,L2*2+0.6]]){
     const m=new THREE.Mesh(new THREE.BoxGeometry(lx,fh,lz),fas); m.position.set(sx,y0+0.9,sz); grp.add(m); }
   setRGRoof(0);
 }
 // 打开时从南往北依次收拢（最南的一片最先动）
 function setRGRoof(p){ const n=RGW.length; RGW.forEach((r,i)=>{ const k=Math.max(0,Math.min(1,(p*1.6-(n-1-i)/(n-1)*0.6))); const e=k*k*(3-2*k);
-  r.g.position.set(0,r.y0+r.yo*e,r.zc+(r.zo-r.zc)*e); }); }
+  r.g.position.set(0,r.y0+r.yo*e,r.zc+(r.zo-r.zc)*e); r.g.rotation.x=0.26*e; }); } // 收拢时每片翼外侧抬起，像瓦片一样叠，一道道肋露出来（航拍）
 function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两束收在南北两端
   const out=shapePts(v.shape,v.rx,v.rz);
   band(grp,scl(out,0.76),scl(out,1.05),v.H+4.5,v.H+0.6,new THREE.MeshStandardMaterial({color:0x34553e,roughness:0.7,side:THREE.DoubleSide}));
@@ -450,7 +453,7 @@ function shotTL(t){
     const ln=k==='lane_RG'?LANES[0]:LANES[1]; camLook(LX+2+Math.sin(u*0.15)*1.5,6.5,LZ+ln.z+15,LX+4,0.6,LZ+ln.z,42); setLanes(tau,show); setDust(tau); setFX(tau,show,u); return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
-    if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,140-30*q,0.9+0.5*q,6); return 'v_RG'; }
+    if(u<t1){ only('RG'); const q=u/t1; setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],230-50*q,120-30*q,2.95-0.45*q,6); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
     if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; orbit(P[0],P[1],170-30*q,80,0.7+0.6*q,8); return 'v_WIM'; }
     if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; orbit(P[0],P[1],170,55,1.0+0.4*q,18); return 'v_AO'; }
     if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; orbit(P[0],P[1],260,75,1.45+0.35*q,25); return 'v_USO'; }
