@@ -20,11 +20,13 @@
 | EP02 | `vibetennis-electronic-line-calling-2026` | 电子司线，真的准吗？ | 三角定位、帧率与误差 |
 | EP03 | `vibetennis-topspin-magnus-2026` | 上旋球为什么会突然往下坠？ | 马格努斯效应 |
 | EP04 | `vibetennis-federer-54-percent-2026`（＋`-en`） | 费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？ | 马尔可夫链（吸收链、层层放大）；资料包 [`sources.md`](../papers/vibetennis-federer-54-percent-2026/sources.md) |
+| EP05 | `vibetennis-court-speed-2026`（＋`-en`） | 四大满贯的场地快慢（原物理／感知类第 4 条） | 摩擦与竖直恢复系数；资料包 [`sources.md`](../papers/vibetennis-court-speed-2026/sources.md) |
 
 ## 制作中
 
 | 集 | slug | 主题 | 状态 |
 |---|---|---|---|
+| EP06（规划） | `vibetennis-flash-lag-2026` | 人眼为什么总把界内球看成出界？（P1） | 资料包与镜头提纲初稿 [`sources.md`](../papers/vibetennis-flash-lag-2026/sources.md)，等所有者看过再开渲；Mather 2008 原文待补 |
 
 ## 选题的讲法：「一个有名有姓的理论 → 套在网球上 → 算出反直觉的结论 → 真实数据验证」
 
