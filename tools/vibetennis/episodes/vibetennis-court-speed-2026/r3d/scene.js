@@ -222,7 +222,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 所有者给的航拍（AELTC 俯拍）：10 道白色桁架打开时每端收 5 道，桁架之间的白色膜像手风琴一样折起、往下垂成一个个鼓包，
   // 两端各成一大团白色膜堆，盖住开口的南北两头；跨度取该处建筑实际宽度，两脚落在坡屋面外缘
   for(const end of[-1,1]){ const T=[];
-    for(let i=0;i<5;i++){ const z=end*(v.rz*0.74-i*4.0), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 4.0 m、收在两端；同日先嫌松、后嫌太紧「和真实的不一样」，取中间）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
+    for(let i=0;i<5;i++){ const z=end*(v.rz*0.74-i*4.0), hw=v.rx*0.80, hh=2.6, yb=v.H+5.0; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 4.0 m、收在两端；同日先嫌松、后嫌太紧「和真实的不一样」，取中间）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
       const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.2),z)); }
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.5,6,false),steel));
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.35,6,false),steel));
@@ -232,7 +232,11 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
     const geo=new THREE.BufferGeometry(), pos=[];
     for(let i=0;i<4;i++){ const A=T[i],B=T[i+1]; const M=A.map((a,j)=>{ const b=B[j], u=j/24*2-1; return V3((a.x+b.x)/2,(a.y+b.y)/2-0.9*(1-u*u)-0.3,(a.z+b.z)/2); });
       for(let j=0;j<24;j++){ for(const [P,Q] of [[A,M],[M,B]]){ const a=P[j],b=P[j+1],c=Q[j+1],d=Q[j]; pos.push(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z, a.x,a.y,a.z,c.x,c.y,c.z,d.x,d.y,d.z); } } }
-    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xf2f3ef,roughness:0.55,metalness:0.05,side:THREE.DoubleSide}))); }
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xf2f3ef,roughness:0.55,metalness:0.05,side:THREE.DoubleSide})));
+    { // 所有者 2026-11-03「顶棚有活口、像有孔」：桁架脚原来插进坡屋面里，膜面和屋面互相穿插露出深色三角；整束抬到屋面之上，底下垫一块白色收拢膜，把一束顶棚补成实的
+      const z0=end*(v.rz*0.74), z1=end*(v.rz*0.74-16), hw=v.rx*0.80, yb=v.H+5.0;
+      const base=new THREE.Mesh(new THREE.BoxGeometry(hw*2+2.4,0.8,Math.abs(z1-z0)+3.2),new THREE.MeshStandardMaterial({color:0xe9ebe6,roughness:0.6})); base.position.set(0,yb-0.3,(z0+z1)/2); grp.add(base);
+      for(const zz of [z0+end*1.6, z1-end*1.6]){ const T=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; T.push(new THREE.Vector2(u*hw,(1-u*u)*2.6)); } const sh=new THREE.Shape(T); const cap=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xeef0eb,roughness:0.6,side:THREE.DoubleSide})); cap.position.set(0,yb-0.3,zz); grp.add(cap); } } }
   // 外墙上的钟（2017 年外观照片）
   const clock=new THREE.Mesh(new THREE.CircleGeometry(1.6,40),new THREE.MeshStandardMaterial({color:0xf3f0e6})); clock.position.set(0,v.H*0.7,v.rz*0.99+0.15); grp.add(clock);
 }
