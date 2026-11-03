@@ -186,12 +186,12 @@ def style_A(size, out):
     else:
         kk, tx, ty = k, int(134 * k), int(360 * k); ft = font(SERIF, int((176 if LANG == "zh" else 120) * k))
     l1, l2 = T("为什么【红土】慢、", "Why is 【clay】 slow"), T("【草地】快？", "and 【grass】 fast?")
-    CLAY, GRASS = (255, 140, 64), (120, 228, 100)   # 所有者 2026-11-03：「草地」用草地的绿色——红土也跟着用红土的橙色，和下面泳道同色
+    CLAY, GRASS = (212, 102, 60), (120, 228, 100)   # 所有者 2026-11-03：「草地」用草地的绿色，「红土」用红土的砖红（取自泳道实色 193,99,63，暗底上提亮一档）
     glow_text(img, (tx, ty), l1, ft, WH, [CLAY], int(ft.size * 0.18)); glow_text(img, (tx, ty + int(ft.size * 1.22)), l2, ft, WH, [GRASS], int(ft.size * 0.18))
     d = ImageDraw.Draw(img); fs = font(SANS, int((54 if size != "wide" else 34) * (k if size != "wide" else 1)))
     d.text((tx + 4, ty + int(ft.size * 2.62)), T("同一颗球，落地那几毫秒：是被咬住，还是一路滑", "Same ball, a few milliseconds: grip, or slide through"), font=fs, fill=(200, 210, 225))
     tk = (k if size != "wide" else 0.55); xr = W - int(60 * tk) if size != "wide" else W - 40
-    tags = [("RG", (255, 140, 70), T("红土", "Clay"), T("摩擦系数 最高 0.9", "Friction up to 0.9"), 1, T("慢", "SLOW")),
+    tags = [("RG", (226, 112, 66), T("红土", "Clay"), T("摩擦系数 最高 0.9", "Friction up to 0.9"), 1, T("慢", "SLOW")),
             ("WIM", (130, 240, 130), T("草地", "Grass"), T("摩擦系数 0.5–0.6", "Friction 0.5–0.6"), 3, T("快", "FAST")),
             ("AO", (120, 200, 255), T("硬地", "Hard"), T("看面漆里的沙子", "Depends on the grit"), 2, T("居中", "MID"))]
     for key, col, nm, val, sp, wd in tags:
