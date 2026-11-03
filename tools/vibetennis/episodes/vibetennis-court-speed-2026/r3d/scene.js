@@ -224,6 +224,11 @@ const RG_READY=Promise.all(['models/rg_open.glb','models/rg_closed.glb'].map(f=>
   const C={}; cl.scene.traverse(o=>{ if(/^Wing\d+$/.test(o.name)) C[o.name]={p:o.position.clone(),q:o.quaternion.clone()}; });
   root.traverse(o=>{ if(/^Wing\d+$/.test(o.name)&&C[o.name]) RG_GLB.wings.push({o,i:+o.name.slice(4),p0:C[o.name].p,q0:C[o.name].q,p1:o.position.clone(),q1:o.quaternion.clone()}); });
   RG_GLB.wings.sort((a,b)=>a.i-b.i); g.add(root); RG_GLB.ready=true; setRGRoof(0); });
+// 所有者 2026-11-03 给的阿瑟·阿什球场模型（Blender 重建，顶棚打开的一版，1 单位＝1 m，外轮廓约 158×162 m、膜顶高 57.7 m，和 OSM 157×157 m 对得上）：整座替换自建的美网
+const USO_READY=new Promise((res,rej)=>new GLTFLoader().load('models/uso_open.glb',res,undefined,rej)).then(gl=>{
+  const g=venues.find(x=>x.k==='USO').g; g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));
+  gl.scene.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
+  g.add(gl.scene); });
 function setRGRoof(p){ if(RG_GLB.ready){ const n=RG_GLB.wings.length; RG_GLB.wings.forEach(w=>{ const k=Math.max(0,Math.min(1,p*1.6-w.i/(n-1)*0.6)), e=k*k*(3-2*k);   // Wing0 在最南边、走得最远，最先动
       w.o.position.lerpVectors(w.p0,w.p1,e); w.o.quaternion.slerpQuaternions(w.q0,w.q1,e); }); return; }
   const n=RGW.length; RGW.forEach((r,i)=>{ const k=Math.max(0,Math.min(1,(p*1.6-(n-1-i)/(n-1)*0.6))); const e=k*k*(3-2*k);
@@ -783,4 +788,4 @@ function shotTL(t){
   return k; }
 const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); motes.visible=!globeG.visible; composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
-Promise.all([EARTH_READY,RG_READY]).then(()=>{ window.READY=true; });
+Promise.all([EARTH_READY,RG_READY,USO_READY]).then(()=>{ window.READY=true; });
