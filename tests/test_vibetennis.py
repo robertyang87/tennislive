@@ -211,3 +211,66 @@ def test_推送按钮写横版_别的栏目不变():
         push.landscape_button("<p>没有按钮</p>")
     en = push.landscape_button(html, "en")
     assert "▶ Watch the video" in en and "竖版" not in en
+
+
+# ---- 2026-11-03 产线 review 补的三道：配音检查、渲前审片包、背景声铺满 ----
+voice_check = importlib.import_module("voice_check")
+
+
+def test_配音检查的老集豁免只许减():
+    assert voice_check.LEGACY <= {"vibetennis-federer-54-percent-2026", "vibetennis-court-speed-2026"}
+    qc = importlib.import_module("qc")
+    assert qc.VOICE_NO_PROJECT <= {"vibetennis-topspin-magnus-2026"}
+
+
+def _fake_episode(tmp_path: Path, name: str, lines: list[tuple[str, float, float, str]]) -> Path:
+    ep = tmp_path / name
+    (ep / "voice").mkdir(parents=True)
+    for fid, _, end, _ in lines:
+        (ep / "voice" / f"{fid}.mp3").write_bytes(b"\0" * 2000)
+        (ep / "voice" / f"{fid}.json").write_text(json.dumps(
+            [{"type": "WordBoundary", "off": 0.1, "dur": end - 0.1, "text": "x"}]), encoding="utf-8")
+    (ep / "narration.json").write_text(json.dumps({"rate": "+18%", "lines": [
+        {"at": at, "text": t, "tts": t, "file": fid} for fid, at, _, t in lines]}, ensure_ascii=False), encoding="utf-8")
+    return ep
+
+
+def test_配音重叠要拦_尾巴静音不算(tmp_path):
+    # a 念到 0+2.0=2.0s；b 在 1.9s 开口（差 0.1 在容差内）不拦，c 在 b 念完（1.9+2.0）前 0.5s 开口要拦
+    ep = _fake_episode(tmp_path, "vibetennis-new-2026",
+                       [("a", 0.0, 2.0, "红土。"), ("b", 1.9, 2.0, "草地。"), ("c", 3.4, 1.0, "硬地。")])
+    bad, _ = voice_check.problems(ep)
+    assert len(bad) == 1 and bad[0].startswith("c：b 还没念完"), bad
+
+
+def test_多音字没认领要拦_认领了放行(tmp_path):
+    ep = _fake_episode(tmp_path, "vibetennis-new-2026", [("a", 0.0, 2.0, "球贴着地面往前窜。")])
+    bad, _ = voice_check.problems(ep)
+    assert any("多音字「着」" in b for b in bad), bad
+    nar = json.loads((ep / "narration.json").read_text(encoding="utf-8"))
+    nar["lines"][0]["poly_ok"] = {"着": "实测成片听过读 zhe"}
+    (ep / "narration.json").write_text(json.dumps(nar, ensure_ascii=False), encoding="utf-8")
+    assert voice_check.problems(ep)[0] == []
+
+
+def test_渲前审片包每节每句字幕都有帧():
+    sys.path.insert(0, str(ROOT / "tools" / "vibetennis" / "engine"))
+    review_pack = importlib.import_module("review_pack")
+    tl = json.loads((ROOT / "tools/vibetennis/episodes/vibetennis-court-speed-2026/r3d/timeline.json").read_text())
+    labels = {lab for _, lab in review_pack.pick_times(tl, None)}
+    for sec in tl["sections"]:
+        assert any(lab.split("·")[0] == sec["name"] for lab in labels), sec["name"]
+        for key in sec.get("lines") or {}:
+            assert f"{sec['name']}·{key}" in labels, (sec["name"], key)
+
+
+@pytest.mark.skipif(subprocess.run(["which", "ffmpeg"], capture_output=True).returncode, reason="没装 ffmpeg")
+def test_背景声断了要拦(tmp_path):
+    qc = importlib.import_module("qc")
+    wav = tmp_path / "bed.wav"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "sine=f=440:d=10,volume=4", "-f", "lavfi",
+                    "-i", "sine=f=440:d=10,volume=0.05", "-filter_complex", "[0][1]concat=n=2:v=0:a=1", str(wav)],
+                   check=True)
+    thin = qc.quiet_stretches(wav, 0, 20)
+    assert thin and thin[0][1] >= 19, thin          # 后 10 秒只剩零星声，要报
+    assert qc.quiet_stretches(wav, 0, 9) == []      # 前 10 秒正常，不许误报
