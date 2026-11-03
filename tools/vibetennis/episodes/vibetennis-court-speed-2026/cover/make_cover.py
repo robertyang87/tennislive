@@ -105,19 +105,30 @@ def foot(d, size, k, x, y):
     d.text((x, y + int(f1.size * 1.6)), T("摩擦系数：红土最高可达 0.9 · 草地 0.5–0.6", "Friction: clay up to 0.9 · grass 0.5–0.6"), font=f2, fill=GR)
 
 
+def runs_multi(d, xy, s, f, base, his):
+    """【】里的字依次用 his 里的颜色（第一个【】用 his[0]……）"""
+    x, y = xy; on = False; n = -1
+    for ch in s:
+        if ch == "【": on = True; n += 1; continue
+        if ch == "】": on = False; continue
+        d.text((x, y), ch, font=f, fill=his[n] if on else base); x += d.textlength(ch, font=f)
+
+
 def glow_text(img, xy, s, f, base, hi, blur, strength=1.0):
     """标题：高亮字（【】里）下面垫一层同色辉光，让金字在暗底上发光"""
     W, H = img.size
+    his = hi if isinstance(hi, list) else [hi] * 9
     g = Image.new("RGB", (W, H), (0, 0, 0)); gd = ImageDraw.Draw(g)
-    x, y = xy; on = False
+    x, y = xy; on = False; n = -1
     for ch in s:
-        if ch in "【】": on = ch == "【"; continue
-        if on: gd.text((x, y), ch, font=f, fill=hi)
+        if ch == "【": on = True; n += 1; continue
+        if ch == "】": on = False; continue
+        if on: gd.text((x, y), ch, font=f, fill=his[n])
         x += gd.textlength(ch, font=f)
     g = g.filter(ImageFilter.GaussianBlur(blur))
     a = np.asarray(img).astype(np.float32) + np.asarray(g).astype(np.float32) * 0.9 * strength
     img.paste(Image.fromarray(a.clip(0, 255).astype(np.uint8)))
-    runs(ImageDraw.Draw(img), xy, s, f, base, hi)
+    runs_multi(ImageDraw.Draw(img), xy, s, f, base, his)
 
 
 def ball_glow(img, pts, r):
@@ -175,7 +186,8 @@ def style_A(size, out):
     else:
         kk, tx, ty = k, int(134 * k), int(360 * k); ft = font(SERIF, int((176 if LANG == "zh" else 120) * k))
     l1, l2 = T("为什么【红土】慢、", "Why is 【clay】 slow"), T("【草地】快？", "and 【grass】 fast?")
-    glow_text(img, (tx, ty), l1, ft, WH, GOLD, int(ft.size * 0.18)); glow_text(img, (tx, ty + int(ft.size * 1.22)), l2, ft, WH, GOLD, int(ft.size * 0.18))
+    CLAY, GRASS = (255, 140, 64), (120, 228, 100)   # 所有者 2026-11-03：「草地」用草地的绿色——红土也跟着用红土的橙色，和下面泳道同色
+    glow_text(img, (tx, ty), l1, ft, WH, [CLAY], int(ft.size * 0.18)); glow_text(img, (tx, ty + int(ft.size * 1.22)), l2, ft, WH, [GRASS], int(ft.size * 0.18))
     d = ImageDraw.Draw(img); fs = font(SANS, int((54 if size != "wide" else 34) * (k if size != "wide" else 1)))
     d.text((tx + 4, ty + int(ft.size * 2.62)), T("同一颗球，落地那几毫秒：是被咬住，还是一路滑", "Same ball, a few milliseconds: grip, or slide through"), font=fs, fill=(200, 210, 225))
     tk = (k if size != "wide" else 0.55); xr = W - int(60 * tk) if size != "wide" else W - 40
