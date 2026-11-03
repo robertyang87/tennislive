@@ -229,6 +229,17 @@ const USO_READY=new Promise((res,rej)=>new GLTFLoader().load('models/uso_open.gl
   const g=venues.find(x=>x.k==='USO').g; g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));
   gl.scene.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
   g.add(gl.scene); });
+// 所有者 2026-11-03 给的罗德·拉沃尔球场模型（开／合两版，1 单位＝1 m）：两片活动顶板 RoofN/RoofS 和 56 根肋在两版之间沿球场长轴滑开
+const AO_GLB={parts:[],ready:false};
+const AO_READY=Promise.all(['models/ao_open.glb','models/ao_closed.glb'].map(f=>new Promise((res,rej)=>new GLTFLoader().load(f,res,undefined,rej)))).then(([op,cl])=>{
+  const g=venues.find(x=>x.k==='AO').g; g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));
+  const root=op.scene; root.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
+  const C={}; cl.scene.traverse(o=>{ if(/^Roof(N|S|Rib)/.test(o.name)) C[o.name]=o; });
+  root.traverse(o=>{ if(!/^Roof(N|S|Rib)/.test(o.name)||!C[o.name]) return; const c=C[o.name];
+    let p0=c.position.clone(); if(o.name==='RoofN'||o.name==='RoofS'){ o.geometry.computeBoundingBox(); c.geometry.computeBoundingBox(); p0=o.position.clone().add(new THREE.Vector3(0,0,c.geometry.boundingBox.min.z-o.geometry.boundingBox.min.z)); }  // 顶板两版几何本身差一个 z 平移
+    AO_GLB.parts.push({o,p0,p1:o.position.clone()}); });
+  g.add(root); AO_GLB.ready=true; setAORoof(1); });
+function setAORoof(p){ if(!AO_GLB.ready) return; const e=p*p*(3-2*p); AO_GLB.parts.forEach(w=>w.o.position.lerpVectors(w.p0,w.p1,e)); }
 function setRGRoof(p){ if(RG_GLB.ready){ const n=RG_GLB.wings.length; RG_GLB.wings.forEach(w=>{ const k=Math.max(0,Math.min(1,p*1.6-w.i/(n-1)*0.6)), e=k*k*(3-2*k);   // Wing0 在最南边、走得最远，最先动
       w.o.position.lerpVectors(w.p0,w.p1,e); w.o.quaternion.slerpQuaternions(w.q0,w.q1,e); }); return; }
   const n=RGW.length; RGW.forEach((r,i)=>{ const k=Math.max(0,Math.min(1,(p*1.6-(n-1-i)/(n-1)*0.6))); const e=k*k*(3-2*k);
@@ -737,7 +748,7 @@ const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), sm=x=>{x=cl(x);return x*x*(3-2*
 function camLook(px,py,pz,tx,ty,tz,fov=36){ camera.fov=fov; camera.updateProjectionMatrix(); camera.position.set(px,py,pz); camera.lookAt(tx,ty,tz); camera.updateMatrixWorld(true); }
 function orbit(cx,cz,r,h,ang,ty=10,fov=36){ camLook(cx+Math.cos(ang)*r,h,cz+Math.sin(ang)*r,cx,ty,cz,fov); }
 function resetWorld(){ for(const v of venues){ v.g.visible=true; v.g.position.set(POS[v.k][0],0,POS[v.k][1]); v.g.children.forEach(c=>c.visible=true); }
-  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setLanes(-5,[0,0,0]); setImpacts(-1,[0,0,0]); CLIP.constant=1e5; setBowl(null); scanFX(null); MORPH.visible=false; hideStacks(); FX_SHAKE=FX_GLITCH=FX_FREEZE=FX_FLASH=FX_TILT=0; setSnow(-1); setGlobe(-1,0); setSloFX(-1); setPilFX(0); setBarFX(null); setArcs(0); }
+  for(const o of Object.values(LM)) o.visible=true; Object.values(pillars).forEach(m=>m.visible=false); ref1.visible=false; setRGRoof(1); setAORoof(1); setLanes(-5,[0,0,0]); setImpacts(-1,[0,0,0]); CLIP.constant=1e5; setBowl(null); scanFX(null); MORPH.visible=false; hideStacks(); FX_SHAKE=FX_GLITCH=FX_FREEZE=FX_FLASH=FX_TILT=0; setSnow(-1); setGlobe(-1,0); setSloFX(-1); setPilFX(0); setBarFX(null); setArcs(0); }
 function lineupWorld(){ only(null); for(const v of venues) v.g.children.forEach(c=>{ if(!c.userData.core) c.visible=false; }); Object.values(LM).forEach(o=>o.visible=false);
   venues.forEach((v,i)=>v.g.position.set((['AO','RG','WIM','USO'].indexOf(v.k)-1.5)*22,0,0)); } // 大满贯顺序，澳网在最左
 function at(sec,f){ return sec.lines[f]; }
@@ -767,7 +778,7 @@ function shotTL(t){
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],105-20*q,265-15*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
     if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],100-15*q,290,0.7+0.6*q,0); return 'v_WIM'; }
-    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95,265,1.0+0.4*q,0); return 'v_AO'; }
+    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); setAORoof(Math.max(0,Math.min(1,(q-0.35)/0.5))); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],120,345,1.0+0.4*q,0); return 'v_AO'; }
     if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],115,320,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); setBowl(V3(0,0,0),1); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
   if(k==='lineup'){ lineupWorld(); setBowl(V3(0,0,0),1); camLook(Math.sin(u*0.2)*6,62-u*2,58-u*2,0,0,0,34); setMorph([[0,'void',0],[0.05,'q',1.2,0.6],[D-0.9,'void',0.9,0.5]],u,{mz:60,my:12}); return k; }
@@ -788,4 +799,4 @@ function shotTL(t){
   return k; }
 const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); motes.visible=!globeG.visible; composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
-Promise.all([EARTH_READY,RG_READY,USO_READY]).then(()=>{ window.READY=true; });
+Promise.all([EARTH_READY,RG_READY,USO_READY,AO_READY]).then(()=>{ window.READY=true; });
