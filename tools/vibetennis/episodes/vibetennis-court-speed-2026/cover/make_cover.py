@@ -1,13 +1,13 @@
 """vibetennis 第 5 集《为什么红土慢、草地快？》封面（不进视频）。
 
 docs/vibetennis.md §6：每期至少 3 个风格方案。标题完整问句，左上角网球时差 logo 加文字对齐，金色为主。
-  A 比特新语风：画面直接讲概念——三条泳道（红土 / 草地 / 硬地），同一颗球砸下去，弹出三条不同的轨迹（3D 底图 t=3.0）
+  A 比特新语风：画面直接讲概念——三条泳道（红土 / 草地 / 硬地），同一颗球砸下去，弹出三条不同的轨迹（3D 底图 t=2.3）
   B 小作坊风：黑底，金色发光的三条弹跳弧（2D 绘制）；顶部问句、中间字距拉开的大标题、底部发球指数
   C 许先森风：3D 大场面——四座中心球场全景（3D 底图 t=150）
 底图（r3d/ 下起着静态服务）：
-    (cd r3d && COVER=1 W=2160 H=2880 PORT=8766 OUT=stills_cover node still_cover.js 3.0 158)
-    (cd r3d && COVER=1 W=1920 H=1080 PORT=8766 OUT=stills_cover169 node still_cover.js 3.0 158)
-    (cd r3d && COVER=1 W=1080 H=1920 PORT=8766 OUT=stills_cover916 node still_cover.js 3.0 158)
+    (cd r3d && COVER=1 W=2160 H=2880 PORT=8766 OUT=stills_cover node still_cover.js 2.3 158)
+    (cd r3d && COVER=1 W=1920 H=1080 PORT=8766 OUT=stills_cover169 node still_cover.js 2.3 158)
+    (cd r3d && COVER=1 W=1080 H=1920 PORT=8766 OUT=stills_cover916 node still_cover.js 2.3 158)
 合成：python3 cover/make_cover.py A|B|C tall|wide|story <输出.jpg> [zh|en]
 """
 import math
@@ -107,7 +107,7 @@ def foot(d, size, k, x, y):
 
 def style_A(size, out):
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
-    img = hero(2.0, size)
+    img = hero(2.3, size)  # 所有者 2026-11-02：球场线往右扩、右边别空——机位左移、取球刚过底线那一刻
     # 镜头改成正前方俯看（所有者：场地朝屏幕倾斜）后泳道整体偏上，三种尺寸都把画面整体下移，顶部留暗给标题，标题不压在红土上
     dy = {"wide": 170, "tall": 0, "story": 0}[size]   # 封面静帧另用 cover=1 退远的机位，泳道已经在下半部
     if dy: base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - dy)), (0, dy)); img = base

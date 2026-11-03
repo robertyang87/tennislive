@@ -11,7 +11,10 @@
 - Cross, R. "Tennis physics, anyone?" Physics Today, 2008-09：红土滑动摩擦系数小角度可达 0.9；温网草地 0.5–0.6；竖直恢复系数 硬地≈0.75、草地 0.6–0.75、红土≈0.85
 - Cross, R. (2003) Sports Engineering 6:95–111, DOI 10.1007/BF02903531：大角度入射时球「咬住」场地但不滚动；低角度更快的场地在高角度不一定更快；红土在所有角度都慢
 - ScienceDaily 2001-08-30（Cross, The Physics Teacher）：红土细沙对鞋像滚珠，对球的绒毛像砂纸
-- ITF Court Surface Classification Scheme，ISSS Technical Meeting, Nyon 2002：Surface Pace Rating = 100×(1−μ)
+- ITF Court Surface Classification Scheme，ISSS Technical Meeting, Nyon 2002：Surface Pace Rating = 100×(1−μ)（最初只看摩擦）
+- ⚠️ 2026-11-03 自查：现行 ITF 场地速度评级（Court Pace Rating, CPR）摩擦和竖直弹性一起算——ITF 场地测试手册列出常数 a=150、b=0.81（各类场地平均恢复系数）及温度修正；ITF 场地评估项目手册：弹得越高的场地打起来越慢（球员有更多时间）。片中不再说「2002 年就是拿摩擦算的」，改说「摩擦和弹性都算」，不上公式。出处：itftennis.com 场地评估手册 https://m.itftennis.com/media/2014/itf-court-surface-assessment-programmes-brochure.pdf ；ITF 技术手册转载 https://www.scribd.com/doc/243160232/165935
+- ⚠️ 2026-11-03 自查：球「被咬住」不是必然——Cross（Am. J. Phys. 70:1093, 2002；Physics Today 2008）：入射角小于约 20°或场地较滑时，球全程打滑；角度更大时底部才停下、咬住。片中改成「摩擦够大才咬住，不够就一路滑」；泳道模型（入射 16°）里红土咬住、草地一路滑，与此一致
+- 草地竖直恢复系数取 0.72（Cross 2008 给的 0.6–0.75 区间内）：模型出射角红土 23.9°、草地 15.8°（入射 16°）
 - ⚠️ 现行 CPR（含 150×(0.81−e) 项）与五档分级只有二手来源，未上屏前不用
 
 ## 硬地：两种（2026-11-02 补，原文已读）

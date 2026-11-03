@@ -200,7 +200,15 @@ EN(NAR['r7'],wind(SEC['rev3']['t1']-NAR['r7']),0.9,name='cold-wind'); EN(NAR['r8
 
 # 地球：拉远的呼啸，四站依次亮起的叮声（与 scene.js setGlobe 的节奏一致），片尾拉回地球
 D=H['t1']-H['t0']; EN(H2-0.05,swish(1.4,200,2400),0.5,name='to-globe'); EN(H2,boom(2.5),0.3)
-for i,f in enumerate((880,1047,1175,1319)): EN(H2+0.15+(i/4)*(D-(H2-H['t0'])-1.0)+0.05,ding(f),0.45,name='city-%d'%i)
+# 地球段的时间不是线性的（scene.js：墨尔本→巴黎分到 40%），音效按同一张表反推：第 i 站在 seg=i 亮起、镜头在 seg=i+0.2 起飞
+QK=[(0,0),(0.4,0.25),(0.66,0.5),(0.87,0.75),(1,1)]
+def q0_of(q):
+    for (a0,b0),(a1,b1) in zip(QK,QK[1:]):
+        if b0<=q<=b1: return a0+(a1-a0)*(q-b0)/(b1-b0)
+    return 1.0
+GT=lambda seg: H2+0.15+q0_of(seg/4)*(D-(H2-H['t0'])-1.0)
+for i,f in enumerate((880,1047,1175,1319)): EN(GT(i+0.3),ding(f),0.45,name='city-%d'%i)  # 所有者 2026-11-02「音效先播放了」：等光点亮满（seg=i+0.3）再响
+for i,(d,lo,hi) in enumerate(((1.3,180,2000),(0.6,500,2600),(0.9,260,2200))): EN(GT(i+0.5),swish(d,lo,hi),0.3,name='fly-%d'%i)  # 起飞：越远的一跳越长越低沉
 EN(NAR['e2']-0.35,swish(1.2,200,2400),0.45,name='outro-globe'); EN(NAR['e2']+1.4,chime([84,88,91],0.16,0.35),0.5,name='loop-closed')
 
 # 画板式拆解（红土 / 草地）：倒带的磁带声、定格的闷响＋闪、马克笔的吱声；发球指数：金属片一片片落下的叮当

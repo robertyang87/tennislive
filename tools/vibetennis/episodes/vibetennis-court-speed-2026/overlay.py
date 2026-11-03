@@ -198,11 +198,11 @@ CAPS=[
 # ('q0',None,tr("地面，凭什么能左右一场比赛？","How can the ground change a match?"),('s',960,540,C,60)),  # 改由 3D 粒子聚字（scene.js setMorph）
 ('p0',None,tr("落地，只有几毫秒","A bounce lasts a few milliseconds"),('s',960,200,C,46)),
 ('p1',None,tr("① 底部先往前【滑】","① The bottom 【slides】 forward"),('a','slo_contact',-60,90,R,700,800,44)),
-('p2',None,tr("② 摩擦拖住它，很快被地面【咬住】","② Friction drags it until it 【grips】"),('a','slo_fr',-40,-90,R,700,320,44)),
+('p2',None,tr("② 摩擦往回拖：够大就被【咬住】，不够就一路【滑】","② Friction drags back: enough → it 【grips】; not enough → it 【slides】 through"),('a','slo_fr',-40,-90,R,700,320,44)),
 ('p3',None,tr("→ 决定离地时还剩多少【水平速度】","→ sets how much 【horizontal speed】 is left"),('s',960,200,C,44)),
 ('p4',None,tr("弹性：地面把球往上【顶回去】多少","Restitution: how hard the ground 【pushes back up】"),('a','slo_nr',60,-40,L,1300,320,44)),
 ('p5',None,tr("快不快，主要看两个数：【摩擦】和【弹性】","Pace comes down to two numbers: 【friction】 and 【restitution】"),('s',960,200,C,46)),
-('p6',None,tr("国际网联 2002：场地速度评级 ＝ 100 ×（1 − 【摩擦系数】）","ITF, 2002: surface pace rating = 100 × (1 − 【friction】)"),('s',960,200,C,44)),
+('p6',None,tr("国际网联场地速度评级：【摩擦】越大、【弹】得越高 → 越慢","ITF court pace rating: more 【friction】, higher 【bounce】 → slower"),('s',960,200,C,44)),
 ('n0',None,tr("红土：球斜着落地时，摩擦系数最高可达 【0.9】","Clay: friction up to 【0.9】 at low angles"),('a','lane_RG_hit',-40,-150,R,700,300,46)),
 ('n1',None,tr("细沙 → 对鞋：像【滚珠】，能滑步","Fine grit → under shoes: 【ball bearings】"),('s',960,200,C,44)),
 ('n2',None,tr("细沙 → 对球：像【砂纸】，把球拖住","Fine grit → on the ball: 【sandpaper】"),('s',960,200,C,44)),
@@ -273,9 +273,9 @@ def citylabels(c,an):
     for k,(m,lab,col) in CITYLAB.items():
         v=an.get('city_'+k); on=an.get('city_on_'+k,0)
         if on and on>0.02 and onscreen(v,40):
-            dx=36 if k in ('AO','USO') else -36; al='l' if dx>0 else 'r'
-            c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]-26,P(col,on*0.8,stroke=1.5))
-            text(c,m,v[0]+dx,v[1]-34,30,col,on,MONO,align=al,glow=0.4); text(c,lab,v[0]+dx,v[1]-4,22,WHITE,on*0.9,SANS,align=al)
+            dx,dy={'AO':(46,0),'USO':(46,0),'RG':(56,62),'WIM':(-56,-56)}[k]; al='l' if dx>0 else 'r'  # 巴黎和伦敦只隔 340 km：一个标右下、一个标左上，别叠在一起
+            c.drawLine(v[0],v[1],v[0]+dx*0.8,v[1]+dy-26,P(col,on*0.8,stroke=1.5))
+            text(c,lab,v[0]+dx,v[1]+dy-30,36,WHITE,on,SANS,align=al,glow=0.4); text(c,m,v[0]+dx,v[1]+dy+8,26,col,on*0.95,MONO,align=al)  # 所有者 2026-11-02：每个点标「城市 · 赛事」，字放大
 MARK=(1.0,0.84,0.0); MRED=(1.0,0.32,0.28)
 def mline(c,x0,y0,x1,y1,a,cc=MARK,w=6):  # 马克笔线：深色描边＋亮色主线
     c.drawLine(x0,y0,x1,y1,P((0,0,0),a*0.55,stroke=w+5)); c.drawLine(x0,y0,x1,y1,P(cc,a,stroke=w))
@@ -306,7 +306,7 @@ def tele(c,t,an):
             mline(c,h[0],h[1],h[0]+(g[0]-h[0])*1.6,h[1]+(g[1]-h[1])*1.6,1,WHITE,3)
             L=ease(k); mline(c,h[0],h[1],h[0]+(o[0]-h[0])*L,h[1]+(o[1]-h[1])*L,1)
             da=((a1-a2+180)%360)-180; c.drawArc(skia.Rect.MakeLTRB(h[0]-r,h[1]-r,h[0]+r,h[1]+r),a2,da*ease(k),False,P(MARK,1,stroke=4))
-            deg=24 if fid==2 else 15
+            deg=24 if fid==2 else 16  # 模型：入射 16°；红土咬住 → 23.9°，草地（μ0.55、e0.72）一路滑 → 15.8°
             mx=(h[0]+o[0])/2; cx=min(max(mx-170,40),1420)
             if k>0.5: card(c,cx,max(h[1],o[1])+70,tr(f"出射角 ≈ {deg}°（模型）",f"Exit angle ≈ {deg}° (model)"),"CLAY · BOUNCES HIGHER" if fid==2 else "GRASS · SKIDS LOW & FAST",min(1,(k-0.5)/0.3),MARK if fid==2 else (0.55,1,0.6))
         if fid==3:
@@ -321,7 +321,7 @@ def draw(c,t,an):
         v=an.get('slo_reticle')
         if onscreen(v,10): reticle(c,v[0],v[1],t,min(1,(t-AT['p2'])/0.4,(AT['p3']-t)/0.4),tr("接触点 · 锁定","CONTACT · LOCKED"))
     s=sec_of(t); k=s['kind']; u=t-s['t0']; a=min(1,u/0.5,(s['t1']-t)/0.4)
-    if k in ('lanes_all','lane_RG','lane_WIM'):
+    if k in ('lanes_all','lane_RG','lane_WIM') and not an.get('globe_alt'):  # 切到地球后泳道已隐藏，别留下飘着的「红土/草地/硬地」
         for ln in ('RG','WIM','AO'):
             v=an.get('lane_'+ln)
             if onscreen(v,40): hudlabel(c,v[0],v[1],LANE_LAB[ln],a*0.9,LANE_COL[ln],dx=30,dy=-50,size=26)

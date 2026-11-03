@@ -119,7 +119,8 @@ function shapePts(shape,rx,rz,n=192){ const pts=[];
       let best=1e9; for(let j=0;j<8;j++){ const A=V[j],B=V[(j+1)%8], ax=A[0]*rx,az=A[1]*rz,bx=B[0]*rx,bz=B[1]*rz, ex=bx-ax,ez=bz-az, den=c*ez-s*ex; if(Math.abs(den)<1e-9) continue; const t=(ax*ez-az*ex)/den; if(t>0&&t<best) best=t; } pts.push([c*best,s*best]); }
     else if(shape==='oct'){ const k=Math.PI/4, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
     else if(shape==='dodec'){ const k=Math.PI/6, a0=Math.floor((a+k/2)/k)*k-k/2, f=Math.cos(k/2)/Math.cos(a-a0-k/2); pts.push([c*rx*f,s*rz*f]); }
-    else { const p=shape==='box'?40:(shape==='rr'?3.4:9); pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } }
+    else if(shape==='boxp'){ const p=40; pts.push([Math.sign(c)*Math.pow(Math.abs(c),2/p)*rx,Math.sign(s)*Math.pow(Math.abs(s),2/p)*rz]); } // 旧参数化，只给美网膜顶内缘用（膜面按它对齐过）
+    else { const p=shape==='box'?40:(shape==='rr'?3.4:9), r=Math.pow(Math.pow(Math.abs(c),p)+Math.pow(Math.abs(s),p),-1/p); pts.push([c*r*rx,s*r*rz]); } } // 极坐标形式的超椭圆：旧写法 sign(c)·|c|^(2/p) 在 cos≈1e-16 处跳成 0.15，看台缺一块楔形（所有者 2026-11-02 截图）
   return pts; }
 const lineM=(col,op)=>new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op});
 function loop(grp,pts,y,col,op){ grp.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.map(p=>V3(p[0],y,p[1]))),lineM(col,op))); }
@@ -155,12 +156,14 @@ const FACADE={
 };
 for(const t of Object.values(FACADE)){ t.wrapS=THREE.RepeatWrapping; t.repeat.set(5,1); }
 
+// 温网：所有者 2026-11-02「长边更长一些，现在看起来像正方形」——127×110 m 的外轮廓带切角后读成方形，长边沿球场方向（和顶棚收在南北两端一致），长短边比放大到 1.34
+// 美网：所有者 2026-11-02「看台围成的也是八边形，不是圆形」
 // seat：看台座椅颜色（照片：法网灰、温网深绿、澳网蓝、美网蓝）
 const VENUES=[
   {k:'RG', shape:'box',  rx:54.5,rz:54.5,H:30, glow:0xffa070, seat:0x9aa0a6},
-  {k:'WIM',shape:'chamf',rx:63.5,rz:55,H:22, glow:0x8dffa0, seat:0x1f4a2c},
+  {k:'WIM',shape:'chamf',rx:53,rz:71,H:22, glow:0x8dffa0, seat:0x1f4a2c},
   {k:'AO', shape:'rr',rx:55.5,rz:63,H:30, glow:0x6cc0ff, seat:0x1f4f9a},
-  {k:'USO',shape:'round',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
+  {k:'USO',shape:'oct',rx:74,rz:74,H:28, glow:0x86b0ff, seat:0x22427e},
 ];
 function buildCore(v,grp){ // 球场＋球网（并排镜头只保留这些）
   const court=new THREE.Mesh(new THREE.PlaneGeometry(FW,FL),new THREE.MeshStandardMaterial({map:SURF[v.k],roughness:ROUGH[v.k],metalness:0}));
@@ -219,7 +222,7 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
   // 所有者给的航拍（AELTC 俯拍）：10 道白色桁架打开时每端收 5 道，桁架之间的白色膜像手风琴一样折起、往下垂成一个个鼓包，
   // 两端各成一大团白色膜堆，盖住开口的南北两头；跨度取该处建筑实际宽度，两脚落在坡屋面外缘
   for(const end of[-1,1]){ const T=[];
-    for(let i=0;i<5;i++){ const z=end*(v.rz*0.66-i*5.2), hw=v.rx*0.82, hh=2.6, yb=v.H+4.2; // 所有者：顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
+    for(let i=0;i<5;i++){ const z=end*(v.rz*0.74-i*4.0), hw=v.rx*0.80, hh=2.6, yb=v.H+5.0; // 所有者 2026-11-02：收起后再紧一点（5 道桁架间距 4.0 m、收在两端；同日先嫌松、后嫌太紧「和真实的不一样」，取中间）；顶棚不要冒出来——收拢的膜堆贴着坡屋面，只略高一点
       const top=[],bot=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; top.push(V3(u*hw,yb+(1-u*u)*hh,z)); bot.push(V3(u*hw*0.97,yb+(1-u*u)*(hh-1.2),z)); }
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(top),48,0.5,6,false),steel));
       grp.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(bot),48,0.35,6,false),steel));
@@ -229,13 +232,17 @@ function roofWIM(v,grp){ // 照片：顶棚打开时，白色拱形桁架分两�
     const geo=new THREE.BufferGeometry(), pos=[];
     for(let i=0;i<4;i++){ const A=T[i],B=T[i+1]; const M=A.map((a,j)=>{ const b=B[j], u=j/24*2-1; return V3((a.x+b.x)/2,(a.y+b.y)/2-0.9*(1-u*u)-0.3,(a.z+b.z)/2); });
       for(let j=0;j<24;j++){ for(const [P,Q] of [[A,M],[M,B]]){ const a=P[j],b=P[j+1],c=Q[j+1],d=Q[j]; pos.push(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z, a.x,a.y,a.z,c.x,c.y,c.z,d.x,d.y,d.z); } } }
-    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xf2f3ef,roughness:0.55,metalness:0.05,side:THREE.DoubleSide}))); }
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.computeVertexNormals(); grp.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xf2f3ef,roughness:0.55,metalness:0.05,side:THREE.DoubleSide})));
+    { // 所有者 2026-11-03「顶棚有活口、像有孔」：桁架脚原来插进坡屋面里，膜面和屋面互相穿插露出深色三角；整束抬到屋面之上，底下垫一块白色收拢膜，把一束顶棚补成实的
+      const z0=end*(v.rz*0.74), z1=end*(v.rz*0.74-16), hw=v.rx*0.80, yb=v.H+5.0;
+      const base=new THREE.Mesh(new THREE.BoxGeometry(hw*2+2.4,0.8,Math.abs(z1-z0)+3.2),new THREE.MeshStandardMaterial({color:0xe9ebe6,roughness:0.6})); base.position.set(0,yb-0.3,(z0+z1)/2); grp.add(base);
+      for(const zz of [z0+end*1.6, z1-end*1.6]){ const T=[]; for(let j=0;j<=24;j++){ const u=j/24*2-1; T.push(new THREE.Vector2(u*hw,(1-u*u)*2.6)); } const sh=new THREE.Shape(T); const cap=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xeef0eb,roughness:0.6,side:THREE.DoubleSide})); cap.position.set(0,yb-0.3,zz); grp.add(cap); } } }
   // 外墙上的钟（2017 年外观照片）
   const clock=new THREE.Mesh(new THREE.CircleGeometry(1.6,40),new THREE.MeshStandardMaterial({color:0xf3f0e6})); clock.position.set(0,v.H*0.7,v.rz*0.99+0.15); grp.add(clock);
 }
 function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）俯拍：顶棚打开时两片可移动顶板退到长轴两端、架高在固定屋面上；
   // 中间露出近方形的开口；白色弓形桁架横跨短边（每端两道），两脚落到外沿
-  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.60, hz=v.rz*0.33, yR=v.H*1.18, pz=v.rz*0.40, px=v.rx*0.66;
+  const out=shapePts(v.shape,v.rx,v.rz), hx=v.rx*0.66, hz=v.rz*0.50, yR=v.H*1.18, pz=v.rz*0.30 /* 所有者 2026-11-02：顶棚再收紧，让场地全露出来 */, px=v.rx*0.66;
   const sh=new THREE.Shape(scl(out,1.02).map(p=>new THREE.Vector2(p[0],p[1])));
   sh.holes.push(new THREE.Path([new THREE.Vector2(-hx,-hz),new THREE.Vector2(hx,-hz),new THREE.Vector2(hx,hz),new THREE.Vector2(-hx,hz)]));
   const r=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshStandardMaterial({color:0xcfd2d0,roughness:0.6,metalness:0.2,side:THREE.DoubleSide})); r.rotation.x=Math.PI/2; r.position.y=yR; grp.add(r);
@@ -252,7 +259,7 @@ function roofAO(v,grp){ // 澳网官方《RLA gets a roof upgrade》（2019）�
 }
 function roofUSO(v,grp){ // 照片：圆角方形的白色膜顶像一块鼓起的「枕头」，蓝色钢桁架斜撑落在外柱上，中间可开合
   const top=v.H+14, R=v.rx*1.06; // 膜顶外缘 ≈ OSM 建筑轮廓 157 m
-  const out=shapePts('box',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
+  const out=shapePts('boxp',R,R).map(p=>[p[0],p[1]]), sq=shapePts('round',1,1);
   const oc=shapePts('oct',R*1.04,R*1.04); // 俯拍（Constructify 2025）：膜顶外缘是切了角的八边形
   const canopyOut=shapePts('round',R,R).map((p,i)=>{ const q=oc[i]; return [p[0]*0.25+q[0]*0.75,p[1]*0.25+q[1]*0.75]; });
   { const NA=canopyOut.length-1, NR=14, pos=[]; const F0=0.56; const P=(i,k)=>{ const f=F0+(1-F0)*k/NR, a=i/NA*Math.PI*2, c=canopyOut[i%NA];
@@ -322,8 +329,8 @@ function proj(name,v){ const p=v.clone().project(camera); anchors[name]=[(p.x*0.
 const glowMat=(c,o=1)=>new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o,blending:THREE.AdditiveBlending,depthWrite:false});
 // --- 落地对比：来球 25 m/s、入射 16°；摩擦与弹性取 Cross（Physics Today 2008）：红土 μ 可达 0.9、e≈0.85；草地 μ 0.5–0.6、e 0.6–0.75；硬地 e≈0.75
 // 水平出速 vx'=max(vx−μ(1+e)vy, 0.55·vx)（滑动到咬住为止）；硬地 μ 无公开数，只作示意、不上屏
-const LAB=V3(0,0,1300), LANES=[{k:'RG',mu:0.9,e:0.85,col:0xff8a4a},{k:'WIM',mu:0.55,e:0.67,col:0x7dff8a},{k:'AO',mu:0.65,e:0.75,col:0x5fc2ff}];
-const VIN=25, ANG=16*Math.PI/180, G=9.81;
+const LAB=V3(0,0,1300), LANES=[{k:'RG',mu:0.9,e:0.85,col:0xff8a4a},{k:'WIM',mu:0.55,e:0.72,col:0x7dff8a},{k:'AO',mu:0.65,e:0.75,col:0x5fc2ff}];
+const VIN=25, ANG=16*Math.PI/180 /* 草地竖直恢复系数取 0.72（Cross：0.6–0.75）：0.67 会让草地出射角比入射还低，和「草地差不多原角度弹出」的实测说法不符 */, G=9.81;
 LANES.forEach((ln,i)=>{ const vx=VIN*Math.cos(ANG), vy=VIN*Math.sin(ANG); ln.vx2=Math.max(vx-ln.mu*(1+ln.e)*vy,0.55*vx); ln.vy2=ln.e*vy; ln.vx=vx; ln.vy=vy; ln.z=(i-1)*7; ln.out=Math.atan2(ln.vy2,ln.vx2)*180/Math.PI; });
 const labG=new THREE.Group(); labG.position.copy(LAB); scene.add(labG);
 // 泳道 60×6 m（x −20…40）。所有者：标线要和来球方向一致、一条泳道就是一块场地从左到右——
@@ -537,19 +544,24 @@ CITY.forEach(C=>{ C.p=llv(C.la,C.lo); C.glow=glowSprite(C.c,9,0,globeR); C.glow.
   C.ring=new THREE.Mesh(new THREE.RingGeometry(1.2,1.7,40),glowMat(C.c,0)); C.ring.position.copy(dir.clone().multiplyScalar(GRAD*1.01)); C.ring.quaternion.setFromUnitVectors(V3(0,0,1),dir); globeR.add(C.ring); });
 const GARC=[]; for(let i=0;i<4;i++){ const A=CITY[i], B=CITY[(i+1)%4], a=A.p.clone().normalize(), b=B.p.clone().normalize(), om=Math.acos(Math.min(1,a.dot(b))), pts=[];
   for(let j=0;j<=80;j++){ const u=j/80, v=a.clone().multiplyScalar(Math.sin((1-u)*om)/Math.sin(om)).add(b.clone().multiplyScalar(Math.sin(u*om)/Math.sin(om))); pts.push(v.multiplyScalar(GRAD*(1.01+0.28*Math.sin(Math.PI*u)*om/Math.PI))); }
-  const geo=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),120,0.35,8,false), m=new THREE.Mesh(geo,glowMat(0xbfe2ff,0.85)); globeR.add(m); const dot=glowSprite(0xffffff,5,0,globeR); GARC.push({m,n:geo.index.count,curve:new THREE.CatmullRomCurve3(pts),dot}); }
+  const geo=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),120,i===1?0.09:0.35,8,false) /* 巴黎→伦敦只在俯冲时近看，细一点 */, m=new THREE.Mesh(geo,glowMat(0xbfe2ff,0.85)); globeR.add(m); const dot=glowSprite(0xffffff,5,0,globeR); GARC.push({m,n:geo.index.count,curve:new THREE.CatmullRomCurve3(pts),dot}); }
 const thetaOf=C=>-C.lo*Math.PI/180-Math.PI/2;
 // q：0–1 依次点亮四站（第 i 站在 i/4 处亮起，弧线在两站之间画出）；loop=true 时第 4 段弧连回墨尔本
 function setGlobe(q,t,{loop=false,active=-1}={}){ globeG.visible=q>=0; if(q<0) return; const seg=q*4;
   CITY.forEach((C,i)=>{ const on=cl((seg-i)*3); C.glow.material.opacity=on; const pul=1+0.25*Math.sin(t*5+i); C.glow.scale.set(9*pul,9*pul,1); C.beam.material.opacity=0; C.beam.visible=false; C.ring.material.opacity=on*0.8*(0.6+0.4*Math.sin(t*3+i)); const sc=1+((t*0.9+i*0.3)%1)*2.5; C.ring.scale.set(sc,sc,1);
     proj('city_'+C.k,globeR.localToWorld(llv(C.la,C.lo,GRAD*1.08))); val('city_on_'+C.k,on); });
-  GARC.forEach((A,i)=>{ const f=i<3?cl(seg-i-0.4):(loop?cl(seg-3.2):0); A.m.geometry.setDrawRange(0,Math.floor(A.n*f/3)*3); A.m.visible=f>0; A.dot.material.opacity=(f>0&&f<1)?1:0; if(f>0) A.dot.position.copy(A.curve.getPoint(f)); });
+  GARC.forEach((A,i)=>{ A.m.material.opacity=0.85; const f=i<3?cl(seg-i-0.4):(loop?cl(seg-3.2):0); A.m.geometry.setDrawRange(0,Math.floor(A.n*f/3)*3); A.m.visible=f>0; A.dot.material.opacity=(f>0&&f<1)?1:0; if(f>0) A.dot.position.copy(A.curve.getPoint(f)); });
   // 镜头绕着地球飞：从当前一站的方向看过去，慢慢转到下一站（地球本身不转，保证亮起的城市在画面中间）
   const idx=active>=0?active:Math.min(3,Math.floor(seg)), fr=cl(seg-idx), C0=CITY[idx], C1=CITY[Math.min(3,idx+1)], a=C0.p.clone().normalize(), b=C1.p.clone().normalize();
-  const w=sm((fr-0.45)*1.8), om=Math.acos(Math.min(1,a.dot(b))); GLOBE_DIR.copy(om<1e-3?a:a.clone().multiplyScalar(Math.sin((1-w)*om)/Math.sin(om)).add(b.clone().multiplyScalar(Math.sin(w*om)/Math.sin(om)))).normalize();
+  const w=sm((fr-0.4)/0.6), om=Math.acos(Math.min(1,a.dot(b))); GLOBE_DIR.copy(om<1e-3?a:a.clone().multiplyScalar(Math.sin((1-w)*om)/Math.sin(om)).add(b.clone().multiplyScalar(Math.sin(w*om)/Math.sin(om)))).normalize();
+  { const LOW=68, hop=LOW+75*om, fly=lerp(LOW,hop,Math.sin(Math.PI*w)); GFLY=seg<0.4?lerp(185,fly,sm(seg/0.4)):fly; GIDX=idx; }
   globeR.rotation.set(0,0,0); globeR.updateMatrixWorld(true); }
+let GFLY=150, GIDX=0; // 所有者 2026-11-02「不应该固定一个高度的视角」：高度随每一跳的远近变（墨尔本→巴黎飞得最高，巴黎→伦敦贴着飞）
 const GLOBE_DIR=new THREE.Vector3(0,0,1);
-function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); val('globe_alt',Math.round((dist-GRAD)/GRAD*6371)); val('globe_lat',CITY.reduce((m,C)=>m,0)); { const side=new THREE.Vector3().crossVectors(V3(0,1,0),d).normalize(); earthMat.uniforms.uSun.value.copy(d).addScaledVector(side,-1.7).add(V3(0,0.3,0)).normalize(); } /* 太阳从画面左上侧打过来：看得到昼夜分界和右侧的城市夜光 */ camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); }
+function globeCam(dist,up=0.25,fov=34){ const d=GLOBE_DIR.clone(); d.y+=up; d.normalize(); val('globe_alt',Math.round((dist-GRAD)/GRAD*6371)); val('globe_lat',CITY.reduce((m,C)=>m,0)); { const side=new THREE.Vector3().crossVectors(V3(0,1,0),d).normalize(); earthMat.uniforms.uSun.value.copy(d).addScaledVector(side,-1.7).add(V3(0,0.3,0)).normalize(); } /* 太阳从画面左上侧打过来：看得到昼夜分界和右侧的城市夜光 */ camLook(GLB.x+d.x*dist,GLB.y+d.y*dist,GLB.z+d.z*dist,GLB.x,GLB.y,GLB.z,fov); 
+  { const k=Math.min(1,Math.max(0.25,(dist-GRAD)/100)); CITY.forEach(C=>{ C.glow.scale.multiplyScalar(k); C.ring.scale.multiplyScalar(k); }); GARC.forEach(A=>A.dot.scale.set(5*k,5*k,1)); } /* 俯冲到低空时光点别糊满屏 */
+  camera.updateMatrixWorld(true); CITY.forEach(C=>{ const w=globeR.localToWorld(llv(C.la,C.lo,GRAD*1.02)); proj('city_'+C.k,w); /* 镜头移完再投影：setGlobe 里那次用的是上一帧的机位，标签全飞到画面外 */
+    if(w.clone().sub(GLB).normalize().dot(camera.position.clone().sub(w).normalize())<0.12) anchors['city_'+C.k][2]=0; }); }
 function val(n,v){ anchors[n]=v; }
 
 // --- 画板式拆解的节拍表（红土 15.3 s / 草地 6.8 s；与 overlay.py 的 tele 画线一一对应）
@@ -604,7 +616,7 @@ MSH.q=textShape(EN?'How can the ground change a match?':'地面，凭什么能�
 MSH.idx=textShape(EN?'SERVE INDEX':'发球指数',SERIF,EN?30:24,CGOLD);
 MSH.mu9=textShape('μ  0.9',NUMF,16,CCLAY);
 MSH.mu56=textShape('μ  0.5–0.6',NUMF,22,CGRASS);
-MSH.four=textShape(EN?'Four surfaces · four games':'四块地 · 四种比赛',SERIF,EN?40:34,CWHITE);
+MSH.four=textShape(EN?'Four courts, four games':'四块场地，四种比赛',SERIF,EN?40:36,CWHITE);
 MSH.end=textShape(EN?'The ground is a player too':'球场的地面，也是比赛的一方',SERIF,EN?44:38,CGOLD);
 const ioe=x=>{x=cl(x); return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
 // keys：[[时刻,形状,过渡秒数,旋涡],...]；mz 为离镜头的距离，my 为上下偏移
@@ -627,7 +639,7 @@ const SCAN={}; venues.forEach(v=>{ const g=new THREE.Group(); v.g.add(g); g.user
   SCAN[v.k]={g,ring,P,sd,col:new THREE.Color(v.glow)}; g.visible=false; });
 function scanFX(k,y,a=1){ for(const kk in SCAN) SCAN[kk].g.visible=false; if(!k) return; const S=SCAN[k]; S.g.visible=true; S.ring.position.y=y; S.ring.material.opacity=0.9*a;
   for(let j=0;j<S.sd.length;j++){ const d=S.sd[j]; cset(S.P,j,d[0],y+d[2]*d[3]*1.5,d[1],S.col.r,S.col.g,S.col.b,a*(1-d[3])*0.9); } cdone(S.P); }
-const VTOP={RG:48,WIM:40,AO:52,USO:62};
+const VTOP={RG:48,WIM:40,AO:52,USO:72}; // 美网膜顶鼓包最高到约 65 m：扫描面到 62 就停会把鼓包削出四个洞（2026-11-02 俯拍才看出来）
 function buildVenue(k,te){ const q=sm(te/2.2); const y=lerp(-2,VTOP[k],q); if(q<1){ CLIP.constant=y; scanFX(k,y,1); } else { CLIP.constant=1e5; scanFX(k,VTOP[k],Math.max(0,1-(te-2.2)/0.5)); } }
 // --- 慢镜：滑动时接触点向后喷出摩擦火花，接触点发热（橙）→ 咬住（青）
 const SLO_P=cloud(1600,0.12,12,sloG,0.3), SLO_SD=[]; for(let j=0;j<1600;j++) SLO_SD.push([frnd(),3+frnd()*7,0.6+frnd()*2.8,(frnd()-0.5)*3.2,frnd()]);
@@ -719,7 +731,7 @@ function shotTL(t){
   setDust(-1); if(['lanes_all','lane_RG','lane_WIM','slow','years','acryl','ao_years'].includes(k)) hideWorld();
   if(k==='lanes_all'){ // 三条泳道一起：同一颗球砸向三种地面（0.6 倍慢放，循环）
     const per=4.0, H1=at(sec,'h1')-sec.t0, H2=at(sec,'h2')-sec.t0, BT=u>=H1&&u<H2-0.2; let tau=cl(ramp((u%per)-1.0),-0.9,1.3); if(BT) tau=0.13; /* 子弹时间：h1 那句话时间冻结在落地后 0.13 s，镜头绕三个落点转半圈 */
-    setBowl(LAB); if(COVER) camLook(LX+8,27,LZ+25,LX+8,0,LZ-4,40); else if(BT){ const q=sm((u-H1)/(H2-0.2-H1)); const a=lerp(-1.25,1.25,q); camLook(LX+0.6+Math.sin(a)*15,lerp(6,9,Math.sin(q*Math.PI)),LZ+Math.cos(a)*15,LX+0.6,0.4,LZ,40); } else if(u<per){ const q=sm(u/per); camLook(LX+34-6*q,lerp(7,5,q),LZ+lerp(10,6,q),LX-14,0.6,LZ,36); /* 所有者：先从远处打过来（从接球一端看球飞来），再切近景 */ } else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); if(BT){ FX_FREEZE=Math.min(1,(u-H1)/0.25,(H2-0.2-u)/0.25); } else FX_SHAKE=(tau>=0&&tau<0.18)?(1-tau/0.18)*0.9:0; if(u>=H2&&!COVER){ labG.visible=false; setBowl(null); FX_SHAKE=0; const q=cl((u-H2-0.15)/(D-H2-1.0)); setGlobe(q,t); globeCam(lerp(230,175,sm((u-H2)/(D-H2))),0.3); /* 讲到「一年四个大满贯」：拉到地球，按赛季顺序点亮四站 */ }
+    setBowl(LAB); if(COVER) camLook(LX+3.5,27,LZ+25,LX+3.5,0,LZ-4,40); /* 所有者 2026-11-02：球场线往右扩，右边别空 */ else if(BT){ const q=sm((u-H1)/(H2-0.2-H1)); const a=lerp(-1.25,1.25,q); camLook(LX+0.6+Math.sin(a)*15,lerp(6,9,Math.sin(q*Math.PI)),LZ+Math.cos(a)*15,LX+0.6,0.4,LZ,40); } else if(u<per){ const q=sm(u/per); camLook(LX+34-6*q,lerp(7,5,q),LZ+lerp(10,6,q),LX-14,0.6,LZ,36); /* 所有者：先从远处打过来（从接球一端看球飞来），再切近景 */ } else camLook(LX+3+lerp(-0.6,0.6,sm(u/D)),lerp(21,19,sm(u/D)),LZ+lerp(21,19,sm(u/D)),LX+3,0,LZ-0.8,40); /* 所有者：场地朝屏幕倾斜（正前方俯看），不是左右斜 */ setLanes(tau,[1,1,1]); setDust(-1); setFX(tau,[1,1,1],u); setImpacts(tau,[1,1,1]); if(BT){ FX_FREEZE=Math.min(1,(u-H1)/0.25,(H2-0.2-u)/0.25); } else FX_SHAKE=(tau>=0&&tau<0.18)?(1-tau/0.18)*0.9:0; if(u>=H2&&!COVER){ labG.visible=false; setBowl(null); FX_SHAKE=0; const q0=cl((u-H2-0.15)/(D-H2-1.0)), q=q0<0.4?q0/0.4*0.25:(q0<0.66?0.25+(q0-0.4)/0.26*0.25:(q0<0.87?0.5+(q0-0.66)/0.21*0.25:0.75+(q0-0.87)/0.13*0.25)); setGlobe(q,t); { globeCam(GFLY,0.04+0.26*cl((GFLY-68)/110)); const low=cl((GFLY-68)/70); GARC.forEach((A,i)=>{ if(i<GIDX) A.m.material.opacity=0.85*low*low; }); } /* 所有者 2026-11-02「墨尔本到巴黎好快」：这一跳最远，分到 40% 的时间；每一跳先在城市上空停 40%，再飞 60%（同日「每个地方停的太短了」，地球段也加长到约 8 秒）*/; /* 讲到「一年四个大满贯」：拉到地球，按赛季顺序点亮四站 */ }
     setMorph([[0,'void',0],[H2+0.1,'four',1.1,0.5],[D-0.9,'void',0.8,0.4]],u,{mz:60,my:15.5}); return k; }
   if(k==='lane_RG'||k==='lane_WIM'){ // 画板式拆解（Lemo-Opuscar「Sports Telestrator」的剪辑语法）：先看一遍 → 倒带 → 慢放 → 定格画线 → 再慢放 → 定格量角度
     const RG=k==='lane_RG', show=RG?[1,0,0]:[1,1,0], ln=RG?LANES[0]:LANES[1]; setBowl(LAB); const P=telePlan(RG,sec,u,D); let tau=P.tau;
@@ -735,10 +747,10 @@ function shotTL(t){
     return k; }
   if(k==='venues'){ // 法网（顶棚打开）→ 温网 → 澳网 → 美网 → 并排
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
-    if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],150-25*q,200-20*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
-    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],150-20*q,190,0.7+0.6*q,0); return 'v_WIM'; }
-    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],140,190,1.0+0.4*q,0); return 'v_AO'; }
-    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],180,240,1.45+0.35*q,0); return 'v_USO'; }
+    if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],105-20*q,265-15*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
+    if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],100-15*q,290,0.7+0.6*q,0); return 'v_WIM'; }
+    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95,265,1.0+0.4*q,0); return 'v_AO'; }
+    if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],115,320,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); setBowl(V3(0,0,0),1); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
   if(k==='lineup'){ lineupWorld(); setBowl(V3(0,0,0),1); camLook(Math.sin(u*0.2)*6,62-u*2,58-u*2,0,0,0,34); setMorph([[0,'void',0],[0.05,'q',1.2,0.6],[D-0.9,'void',0.9,0.5]],u,{mz:60,my:12}); return k; }
   if(k==='slow'){ // 慢镜：p0 来球 → p1 滑 → p2 咬住 → p3 弹出；p4 起再放一遍，停在咬住处展示两支箭头
@@ -754,7 +766,7 @@ function shotTL(t){
     camLook(A.x+lerp(-4,4,sm(u/D)),lerp(11,8.5,sm(u/D)),A.z+lerp(33,29,sm(u/D)),A.x,0.6,A.z,40); setAcryl(q); return k; }
   if(k==='ao_years'){ const T=f=>at(sec,f)-sec.t0; const Y=aoG.position; setBowl(Y); camLook(Y.x+lerp(-8,6,sm(u/D)),28,Y.z+100,Y.x,10,Y.z,36); setAOYears(sm(u/2.0),u>=T('k6')-0.2); setBarFX('AO',u,u>=T('k6')-0.2?[2020,2021]:null); return k; }
   if(k==='outro'){ only(null); setBowl(V3(0,0,0),3.4); Object.values(LM).forEach(o=>o.visible=false); venues.forEach(v=>v.g.position.set(POS[v.k][0]*0.40,0,POS[v.k][1]*0.40));
-    const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(190,260,w),0.45); } } return k; }
+    const q=sm(u/D); camLook(0,lerp(420,640,q),lerp(520,760,q),0,-10,lerp(25,40,q),lerp(30,24,q)); setArcs(sm(u/2.0),u); { const e1=at(sec,'e1')-sec.t0, e2=at(sec,'e2')-sec.t0; setMorph([[0,'void',0],[e1-0.3,'end',1.2,0.6],[e2-0.5,'void',0.9,0.5]],u,{mz:60,my:2}); } { const e2=at(sec,'e2')-sec.t0; if(u>=e2-0.3){ only(null); for(const v of venues) v.g.visible=false; setArcs(0); setBowl(null); const w=sm((u-e2+0.3)/(D-e2)); setGlobe(lerp(0.85,1.06,sm((u-e2+0.3)/2.0)),t,{active:2,loop:true}); globeCam(lerp(135,170,w),0.45); } } return k; }
   return k; }
 const PREVIEW=Q.get('preview')==='1', COVER=Q.get('cover')==='1'; // 封面用：镜头再退远一点，三条泳道都装进画面下半部
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t); const s=PREVIEW?previewShot(t):shotTL(t); setTransition(t); setMotes(t,MOTE_SCALE[s]||1); motes.visible=!globeG.visible; composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
