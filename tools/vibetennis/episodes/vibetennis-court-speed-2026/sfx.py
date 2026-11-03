@@ -232,8 +232,18 @@ for k,n in (('AO',23),('RG',15),('WIM',22),('USO',21)):
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')
 BGM_OFF=0.309; BGM_LUFS=-20.0
-raw=subprocess.run(['ffmpeg','-v','error','-ss',str(BGM_OFF),'-i',BGM,'-t',str(TOTAL+1),'-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
-bgm=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
+raw=subprocess.run(['ffmpeg','-v','error','-i',BGM,'-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
+song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
+# 曲子 189.9 s；2026-11-03 加长后全片 210 s，曲子在片尾前约 25 s 就放完了（英文版没有配音，QC 报 >3 s 数字静音）。
+# 照第 4 集的办法在小节线上重复整小节：拍点 0.097 + 0.8082·n（scratchpad/bgm_beats.npy 实测），一小节 4 拍 3.2328 s；
+# 在约 97 s 的小节线处把它前面的 k 小节再放一遍，拼缝 10 ms 交叉淡化
+BAR=4*0.80815; need=TOTAL+1+BGM_OFF-len(song)/SR+8.0   # 曲尾约 8 s 是淡出加数字静音，多补几小节
+if need>0:
+    nb=int(np.ceil(need/BAR)); t1=0.097+BAR*30; a1=int(t1*SR); L=int(nb*BAR*SR); xf=int(0.01*SR)
+    rep=song[a1-L:a1].copy(); tail=song[a1:].copy()
+    w=np.linspace(0,1,xf)[:,None]; rep[:xf]=song[a1:a1+xf]*(1-w)+rep[:xf]*w; tail[:xf]=rep[-1:]*0+song[a1-xf:a1]*(1-w)+tail[:xf]*w
+    song=np.concatenate([song[:a1],rep,tail])
+bgm=song[int(BGM_OFF*SR):int((BGM_OFF+TOTAL+1)*SR)]
 tmp=os.path.join(WORK,'sfx','_bgm_raw.wav'); sf.write(tmp,bgm.astype(np.float32),SR,subtype='FLOAT')
 meas=subprocess.run(['ffmpeg','-hide_banner','-i',tmp,'-af','ebur128','-f','null','-'],capture_output=True,text=True).stderr
 I=float(re.findall(r"I:\s+(-?[\d.]+) LUFS",meas)[-1]); os.remove(tmp)
