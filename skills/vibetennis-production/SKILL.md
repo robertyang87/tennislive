@@ -38,7 +38,8 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
 2. 写 `specs/vibetennis/<slug>.json`（`column`/`cover.eyebrow` = `vibetennis`，`film.canvas` = [1920,1080]，
    `editorial.sources` 不能空，`push.auto` = true）和 `.xhs.txt`（第一行完整问题，正文数字与片子一致，末尾问句，tag ≤5）；
    在 `data/vibetennis_episodes.json` 登记这一集的集数（下一个号）——推送标题是 `EPNN.vibetennis|四字主题`，不写日期
-3. 复制**最近一集**（目前 EP05 `vibetennis-court-speed-2026`）的 `r3d/scene.js`、`overlay.py`、`sfx.py`、`plan.py` 改场景与镜头表；
+3. 写镜头提纲时先翻 [docs/vibetennis-fx-catalog.md](../../docs/vibetennis-fx-catalog.md)（已有的特效／音色／后期旋钮各适合讲什么，以及调研过的升级工具与授权）
+   复制**最近一集**（目前 EP05 `vibetennis-court-speed-2026`）的 `r3d/scene.js`、`overlay.py`、`sfx.py`、`plan.py` 改场景与镜头表；
    渲染脚本不再复制，用共用引擎 `tools/vibetennis/engine/`（`render3d.sh <集目录>` 分块可续渲、`patch.sh <集目录> render|splice` 局部补渲、`serve.sh` 起静态服务）
    - ⭐ **整片渲之前先出审片包**：`python3 tools/vibetennis/engine/review_pack.py <集目录>` 每节、每句字幕各渲静帧拼成总览图（约 120 张，几分钟），
      **发给所有者看过再整片渲**（EP05 的看台缺块、顶棚有孔、地球固定高度都是整段渲完才看出来的，73 个提交、推了三版）
