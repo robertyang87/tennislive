@@ -20,6 +20,7 @@
 | EP02 | `vibetennis-electronic-line-calling-2026` | 电子司线，真的准吗？ | 三角定位、帧率与误差 |
 | EP03 | `vibetennis-topspin-magnus-2026` | 上旋球为什么会突然往下坠？ | 马格努斯效应 |
 | EP04 | `vibetennis-federer-54-percent-2026`（＋`-en`） | 费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？ | 马尔可夫链（吸收链、层层放大）；资料包 [`sources.md`](../papers/vibetennis-federer-54-percent-2026/sources.md) |
+| EP05 | `vibetennis-court-speed-2026`（＋`-en`） | 为什么红土慢、草地快？ | 摩擦与恢复系数（Cross 抓地/打滑、ITF 场地速度评级 CPR）；资料包 [`sources.md`](../papers/vibetennis-court-speed-2026/sources.md) |
 
 ## 制作中
 

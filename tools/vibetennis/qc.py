@@ -177,7 +177,8 @@ def main() -> int:
             "cover_in_film": False,
             "audio_start_max_s": 1.0,
             "audio_tail_max_s": 1.0,
-            "narration": "none",
+            # 照 spec 记：中文版自 EP03 起有 TTS 旁白，写死 "none" 会让凭证说假话
+            "narration": "none" if str(spec.get("narration") or film_cfg.get("narration") or "none").strip() == "none" else "tts",
             "human_full_watch_claimed": False,
         },
     }
