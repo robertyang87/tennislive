@@ -325,8 +325,8 @@ function proj(name,v){ const p=v.clone().project(camera); anchors[name]=[(p.x*0.
 const glowMat=(c,o=1)=>new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o,blending:THREE.AdditiveBlending,depthWrite:false});
 // --- 落地对比：来球 25 m/s、入射 16°；摩擦与弹性取 Cross（Physics Today 2008）：红土 μ 可达 0.9、e≈0.85；草地 μ 0.5–0.6、e 0.6–0.75；硬地 e≈0.75
 // 水平出速 vx'=max(vx−μ(1+e)vy, 0.55·vx)（滑动到咬住为止）；硬地 μ 无公开数，只作示意、不上屏
-const LAB=V3(0,0,1300), LANES=[{k:'RG',mu:0.9,e:0.85,col:0xff8a4a},{k:'WIM',mu:0.55,e:0.67,col:0x7dff8a},{k:'AO',mu:0.65,e:0.75,col:0x5fc2ff}];
-const VIN=25, ANG=16*Math.PI/180, G=9.81;
+const LAB=V3(0,0,1300), LANES=[{k:'RG',mu:0.9,e:0.85,col:0xff8a4a},{k:'WIM',mu:0.55,e:0.72,col:0x7dff8a},{k:'AO',mu:0.65,e:0.75,col:0x5fc2ff}];
+const VIN=25, ANG=16*Math.PI/180 /* 草地竖直恢复系数取 0.72（Cross：0.6–0.75）：0.67 会让草地出射角比入射还低，和「草地差不多原角度弹出」的实测说法不符 */, G=9.81;
 LANES.forEach((ln,i)=>{ const vx=VIN*Math.cos(ANG), vy=VIN*Math.sin(ANG); ln.vx2=Math.max(vx-ln.mu*(1+ln.e)*vy,0.55*vx); ln.vy2=ln.e*vy; ln.vx=vx; ln.vy=vy; ln.z=(i-1)*7; ln.out=Math.atan2(ln.vy2,ln.vx2)*180/Math.PI; });
 const labG=new THREE.Group(); labG.position.copy(LAB); scene.add(labG);
 // 泳道 60×6 m（x −20…40）。所有者：标线要和来球方向一致、一条泳道就是一块场地从左到右——
