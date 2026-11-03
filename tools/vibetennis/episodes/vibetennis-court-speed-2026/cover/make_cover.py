@@ -101,13 +101,13 @@ def title(d, size, k, x, y):
 def foot(d, size, k, x, y):
     f1 = font(SANS, int((58 if size != "wide" else 38) * (k if size != "wide" else 1)))
     f2 = font(SANSR, int((42 if size != "wide" else 28) * (k if size != "wide" else 1)))
-    d.text((x, y), T("同一颗球，落地那几毫秒：先滑，再被咬住", "Same ball, a few milliseconds: slide, then grip"), font=f1, fill=WH)
+    d.text((x, y), T("同一颗球，落地那几毫秒：是被咬住，还是一路滑", "Same ball, a few milliseconds: grip, or slide through"), font=f1, fill=WH)  # 2026-11-03 摩擦段自查：不是每次都会被咬住
     d.text((x, y + int(f1.size * 1.6)), T("摩擦系数：红土最高可达 0.9 · 草地 0.5–0.6", "Friction: clay up to 0.9 · grass 0.5–0.6"), font=f2, fill=GR)
 
 
 def style_A(size, out):
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
-    img = hero(2.3, size)  # 所有者 2026-11-02：球场线往右扩、右边别空——机位左移、取球刚过底线那一刻
+    img = hero(2.15, size)  # 2026-11-03 再往右挪（LX+1.5）； 所有者 2026-11-02：球场线往右扩、右边别空——机位左移、取球刚过底线那一刻
     # 镜头改成正前方俯看（所有者：场地朝屏幕倾斜）后泳道整体偏上，三种尺寸都把画面整体下移，顶部留暗给标题，标题不压在红土上
     dy = {"wide": 170, "tall": 0, "story": 0}[size]   # 封面静帧另用 cover=1 退远的机位，泳道已经在下半部
     if dy: base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - dy)), (0, dy)); img = base
