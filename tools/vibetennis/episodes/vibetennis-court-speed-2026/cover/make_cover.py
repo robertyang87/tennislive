@@ -101,13 +101,70 @@ def title(d, size, k, x, y):
 def foot(d, size, k, x, y):
     f1 = font(SANS, int((58 if size != "wide" else 38) * (k if size != "wide" else 1)))
     f2 = font(SANSR, int((42 if size != "wide" else 28) * (k if size != "wide" else 1)))
-    d.text((x, y), T("同一颗球，落地那几毫秒：先滑，再被咬住", "Same ball, a few milliseconds: slide, then grip"), font=f1, fill=WH)
+    d.text((x, y), T("同一颗球，落地那几毫秒：是被咬住，还是一路滑", "Same ball, a few milliseconds: grip, or slide through"), font=f1, fill=WH)  # 2026-11-03 摩擦段自查：不是每次都会被咬住
     d.text((x, y + int(f1.size * 1.6)), T("摩擦系数：红土最高可达 0.9 · 草地 0.5–0.6", "Friction: clay up to 0.9 · grass 0.5–0.6"), font=f2, fill=GR)
+
+
+def runs_multi(d, xy, s, f, base, his):
+    """【】里的字依次用 his 里的颜色（第一个【】用 his[0]……）"""
+    x, y = xy; on = False; n = -1
+    for ch in s:
+        if ch == "【": on = True; n += 1; continue
+        if ch == "】": on = False; continue
+        d.text((x, y), ch, font=f, fill=his[n] if on else base); x += d.textlength(ch, font=f)
+
+
+def glow_text(img, xy, s, f, base, hi, blur, strength=1.0):
+    """标题：高亮字（【】里）下面垫一层同色辉光，让金字在暗底上发光"""
+    W, H = img.size
+    his = hi if isinstance(hi, list) else [hi] * 9
+    g = Image.new("RGB", (W, H), (0, 0, 0)); gd = ImageDraw.Draw(g)
+    x, y = xy; on = False; n = -1
+    for ch in s:
+        if ch == "【": on = True; n += 1; continue
+        if ch == "】": on = False; continue
+        if on: gd.text((x, y), ch, font=f, fill=his[n])
+        x += gd.textlength(ch, font=f)
+    g = g.filter(ImageFilter.GaussianBlur(blur))
+    a = np.asarray(img).astype(np.float32) + np.asarray(g).astype(np.float32) * 0.9 * strength
+    img.paste(Image.fromarray(a.clip(0, 255).astype(np.uint8)))
+    runs_multi(ImageDraw.Draw(img), xy, s, f, base, his)
+
+
+def ball_glow(img, pts, r):
+    """三颗球再亮一点：加一圈柔光（加色混合）"""
+    W, H = img.size; yy, xx = np.mgrid[0:H, 0:W]
+    a = np.asarray(img).astype(np.float32)
+    for (x, y), col in pts:
+        d2 = ((xx - x) ** 2 + (yy - y) ** 2) / (r * r)
+        m = np.exp(-d2)[..., None] * 0.55 + np.exp(-d2 * 9)[..., None] * 0.6
+        a += m * np.array(col, np.float32)[None, None, :]
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8))
+
+
+def lane_tag(img, x1, y, k, col, name, val, speed, word):
+    """全息标签（右对齐到 x1）：地面名 ＋ 摩擦系数 ＋ 速度格（1–3 格），玻璃底、彩色描边"""
+    fN = font(SANS, int(66 * k)); fV = font(INTER_B if LANG == "en" else SANS, int(44 * k)); fW = font(SANS, int(40 * k))
+    d0 = ImageDraw.Draw(img)
+    w = int(max(d0.textlength(name, font=fN) + 40 * k + 3 * 46 * k + d0.textlength(word, font=fW) + 30 * k, d0.textlength(val, font=fV)) + 90 * k)
+    h = int(196 * k); x0 = x1 - w
+    ov = Image.new("RGBA", img.size, (0, 0, 0, 0)); od = ImageDraw.Draw(ov)
+    od.rounded_rectangle((x0, y, x1, y + h), radius=int(26 * k), fill=(6, 12, 30, 178), outline=col + (235,), width=max(2, int(4 * k)))
+    od.rounded_rectangle((x0 + int(14 * k), y + int(22 * k), x0 + int(24 * k), y + h - int(22 * k)), radius=int(5 * k), fill=col + (255,))
+    img.paste(Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB"))
+    d = ImageDraw.Draw(img); tx = x0 + int(52 * k)
+    d.text((tx, y + int(22 * k)), name, font=fN, fill=WH)
+    cx = tx + d.textlength(name, font=fN) + int(34 * k); cy = y + int(22 * k) + int(fN.size * 0.62)
+    for i in range(3):   # 速度格：▶ 越多越快
+        on = i < speed; px = cx + i * int(46 * k); hw = int(17 * k)
+        d.polygon([(px, cy - hw), (px + hw + int(8 * k), cy), (px, cy + hw)], fill=col if on else (60, 70, 92))
+    d.text((cx + 3 * int(46 * k) + int(10 * k), cy - int(fW.size * 0.62)), word, font=fW, fill=col)
+    d.text((tx, y + int(118 * k)), val, font=fV, fill=GOLD)
 
 
 def style_A(size, out):
     W, H = SIZES[size]; k = W / 2160 if size != "wide" else 1.0
-    img = hero(2.3, size)  # 所有者 2026-11-02：球场线往右扩、右边别空——机位左移、取球刚过底线那一刻
+    img = hero(2.15, size)  # 2026-11-03 再往右挪（LX+1.5）； 所有者 2026-11-02：球场线往右扩、右边别空——机位左移、取球刚过底线那一刻
     # 镜头改成正前方俯看（所有者：场地朝屏幕倾斜）后泳道整体偏上，三种尺寸都把画面整体下移，顶部留暗给标题，标题不压在红土上
     dy = {"wide": 170, "tall": 0, "story": 0}[size]   # 封面静帧另用 cover=1 退远的机位，泳道已经在下半部
     if dy: base = Image.new("RGB", (W, H), (2, 4, 10)); base.paste(img.crop((0, 0, W, H - dy)), (0, dy)); img = base
@@ -116,11 +173,30 @@ def style_A(size, out):
     if size == "wide":
         a = np.asarray(img).astype(np.float32); yy = np.linspace(0, 1, H)[:, None, None]; a *= 1 - np.clip(1 - yy / 0.45, 0, 1) ** 1.3 * 0.85
         img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
+    # 2026-11-03 所有者「封面再精致一些，第一眼抓住人」：标题金字发光、三颗球加柔光、每条泳道右侧挂全息标签
+    # （地面名＋摩擦系数＋速度格），底部那两行说明撤掉——数字搬进标签里，一眼对上哪条地面多快
+    import json
+    an = json.load(open(HERE.parent / "r3d" / BASE[size] / "s_0002.15.json"))
+    S = W / {"tall": 2160, "wide": 1920, "story": 1080}[size]
+    P = {kk: (an["lane_" + kk][0] * S, an["lane_" + kk][1] * S + dy) for kk in ("RG", "WIM", "AO")}
+    img = ball_glow(img, [(P["RG"], (255, 150, 70)), (P["WIM"], (150, 255, 140)), (P["AO"], (130, 200, 255))], int(70 * (k if size != "wide" else 0.6)))
     d = ImageDraw.Draw(img); logo(img, d, k if size != "wide" else 0.9)
     if size == "wide":
-        title(d, size, 1, 110, 270); foot(d, size, 1, 112, 985)
+        kk, tx, ty = 1.0, 110, 270; ft = font(SERIF, 84 if LANG == "zh" else 64)
     else:
-        title(d, size, k, int(134 * k), int(360 * k)); foot(d, size, k, int(140 * k), int(H * 0.86))
+        kk, tx, ty = k, int(134 * k), int(360 * k); ft = font(SERIF, int((176 if LANG == "zh" else 120) * k))
+    l1, l2 = T("为什么【红土】慢、", "Why is 【clay】 slow"), T("【草地】快？", "and 【grass】 fast?")
+    CLAY, GRASS = (212, 102, 60), (120, 228, 100)   # 所有者 2026-11-03：「草地」用草地的绿色，「红土」用红土的砖红（取自泳道实色 193,99,63，暗底上提亮一档）
+    glow_text(img, (tx, ty), l1, ft, WH, [CLAY], int(ft.size * 0.18)); glow_text(img, (tx, ty + int(ft.size * 1.22)), l2, ft, WH, [GRASS], int(ft.size * 0.18))
+    d = ImageDraw.Draw(img); fs = font(SANS, int((54 if size != "wide" else 34) * (k if size != "wide" else 1)))
+    d.text((tx + 4, ty + int(ft.size * 2.62)), T("同一颗球，落地那几毫秒：是被咬住，还是一路滑", "Same ball, a few milliseconds: grip, or slide through"), font=fs, fill=(200, 210, 225))
+    tk = (k if size != "wide" else 0.55); xr = W - int(60 * tk) if size != "wide" else W - 40
+    tags = [("RG", (226, 112, 66), T("红土", "Clay"), T("摩擦系数 最高 0.9", "Friction up to 0.9"), 1, T("慢", "SLOW")),
+            ("WIM", (130, 240, 130), T("草地", "Grass"), T("摩擦系数 0.5–0.6", "Friction 0.5–0.6"), 3, T("快", "FAST")),
+            ("AO", (120, 200, 255), T("硬地", "Hard"), T("看面漆里的沙子", "Depends on the grit"), 2, T("居中", "MID"))]
+    for key, col, nm, val, sp, wd in tags:
+        ty_ = int(P[key][1] + 70 * tk) if size != "wide" else min(int(P[key][1] - 98 * tk), H - int(206 * tk))   # 横版：标签和球同高，最下一条别出画
+        lane_tag(img, xr, ty_, tk, col, nm, val, sp, wd)
     img.save(out, quality=94, subsampling=0)
 
 

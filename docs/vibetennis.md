@@ -1,6 +1,6 @@
 # vibetennis 科普视频制作流程
 
-参考样片：《网球为什么现场看比电视上快》（vibetennis-live-faster-2026）。代码模板：`/workspace/tennis_ep/v2`（`r3d/` 是 Three.js 渲染，`overlay.py` 负责字幕和品牌标，`assemble.sh` 负责合成，`sfx/` 是音效）。发布工具在 tennislive 仓库的 `tools/vibetennis/`（`cover.py`、`qc.py`、`finalize.py`、`release.py`、`publish_gate.py`、`push.py`）。
+参考样片：《网球为什么现场看比电视上快》（vibetennis-live-faster-2026）。代码模板：复制仓库里最近一集 `tools/vibetennis/episodes/<slug>/`（目前 EP05 `vibetennis-court-speed-2026` 最全；旧路径 `/workspace/tennis_ep/v2` 已不存在。`r3d/` 是 Three.js 渲染，`overlay.py` 负责字幕和品牌标，`assemble.sh` 负责合成，`sfx/` 是音效）。发布工具在 tennislive 仓库的 `tools/vibetennis/`（`cover.py`、`qc.py`、`finalize.py`、`release.py`、`publish_gate.py`、`push.py`）。
 
 ## 0. 栏目使命
 账号所有者 2026-10-30：内容**精确且详实**、**深入浅出**让普通人都能看懂、用**动画特效**抓住注意力、让人**持续看下去**、能**引爆共鸣和二次传播**。六条各自怎么检查，见 `skills/vibetennis-production/SKILL.md`「栏目使命」。
@@ -23,7 +23,7 @@
 - 右上角标注沿用 tennislive 的规范：字体跟品牌标一致，右对齐，和品牌标在同一高度。
 
 ## 3. 声音
-- 旁白加音效，音效要和画面动作同步（击球、出现、转场），不能只有背景音乐。
+- 中文版自 EP03 起有 TTS 旁白（见 SKILL.md）；旁白加音效，音效要和画面动作同步（击球、出现、转场），不能只有背景音乐。
 - BGM 要有授权，确认不了就先不放，标注出来请 Robert 定。
 
 ## 4. 自检

@@ -37,7 +37,7 @@
 | EP02 ✔ | 电子司线，真的准吗？ | 三角测量原理＋采样帧率误差 | 物理／工程 |
 | EP03 ✔ | 上旋球为什么会突然往下坠？ | **马格努斯效应** | 流体力学 |
 | EP04 ✔ | 费德勒 54% 的分赢 82% 的比赛 | 马尔可夫链 | 数学 |
-| EP05 ✔ | 四大满贯的场地快慢 | 库仑摩擦定律＋恢复系数 | 力学 |
+| EP05 ✔ | 为什么红土慢、草地快？ | 库仑摩擦定律＋恢复系数 | 力学 |
 | PHY-01 | 网球拍抛起来为什么总会翻面 | 网球拍定理（中间轴定理／贾尼别科夫效应） | 刚体力学 |
 | PHY-02 | 旋转球落地后为什么跳得出人意料 | 库仑摩擦（抓地—滑动转换） | 力学 |
 | PHY-03 | 敲一下拍线就能听出磅数 | 梅森定律（弦振动） | 声学 |
@@ -175,7 +175,7 @@
 | EP02 | `vibetennis-electronic-line-calling-2026` | 电子司线，真的准吗？ | 三角定位、帧率与误差 |
 | EP03 | `vibetennis-topspin-magnus-2026` | 上旋球为什么会突然往下坠？ | 马格努斯效应 |
 | EP04 | `vibetennis-federer-54-percent-2026`（＋`-en`） | 费德勒只赢了 54% 的分，凭什么赢了 82% 的比赛？ | 马尔可夫链（吸收链、层层放大）；资料包 [`sources.md`](../papers/vibetennis-federer-54-percent-2026/sources.md) |
-| EP05 | `vibetennis-court-speed-2026`（＋`-en`） | 四大满贯的场地快慢（原物理／感知类候选） | 摩擦与竖直恢复系数；资料包 [`sources.md`](../papers/vibetennis-court-speed-2026/sources.md) |
+| EP05 | `vibetennis-court-speed-2026`（＋`-en`） | 为什么红土慢、草地快？ | 摩擦与恢复系数（Cross 抓地/打滑、ITF 场地速度评级 CPR）；资料包 [`sources.md`](../papers/vibetennis-court-speed-2026/sources.md) |
 
 ## 制作中
 
