@@ -216,8 +216,9 @@ function roofRG(v,grp){
 // 打开时从南往北依次收拢（最南的一片最先动）
 // 所有者 2026-11-03 给的夏蒂埃模型（Blender 重建，开／合两版，1 单位＝1 m，和 OSM 外轮廓 109×109 m 对得上）：
 // 用「开」那一版当整座球场，11 片翼的位置/姿态在「合」→「开」两版之间插值，就是顶棚打开的动画
+const USE_GLB=false; // 所有者 2026-11-03：「这几个球场全部回退」——外部模型还要再改，三座都退回自建版；模型留在 models/，改好后把这里改成 true
 const RG_GLB={wings:[],ready:false};
-const RG_READY=Promise.all(['models/rg_open.glb','models/rg_closed.glb'].map(f=>new Promise((res,rej)=>new GLTFLoader().load(f,res,undefined,rej)))).then(([op,cl])=>{
+const RG_READY=!USE_GLB?Promise.resolve():Promise.all(['models/rg_open.glb','models/rg_closed.glb'].map(f=>new Promise((res,rej)=>new GLTFLoader().load(f,res,undefined,rej)))).then(([op,cl])=>{
   const v=venues.find(x=>x.k==='RG'), g=v.g;
   g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));   // 自建的看台/顶棚/外墙拿掉，只留并排镜头要用的球场
   const root=op.scene; root.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
@@ -225,13 +226,13 @@ const RG_READY=Promise.all(['models/rg_open.glb','models/rg_closed.glb'].map(f=>
   root.traverse(o=>{ if(/^Wing\d+$/.test(o.name)&&C[o.name]) RG_GLB.wings.push({o,i:+o.name.slice(4),p0:C[o.name].p,q0:C[o.name].q,p1:o.position.clone(),q1:o.quaternion.clone()}); });
   RG_GLB.wings.sort((a,b)=>a.i-b.i); g.add(root); RG_GLB.ready=true; setRGRoof(0); });
 // 所有者 2026-11-03 给的阿瑟·阿什球场模型（Blender 重建，顶棚打开的一版，1 单位＝1 m，外轮廓约 158×162 m、膜顶高 57.7 m，和 OSM 157×157 m 对得上）：整座替换自建的美网
-const USO_READY=new Promise((res,rej)=>new GLTFLoader().load('models/uso_open.glb',res,undefined,rej)).then(gl=>{
+const USO_READY=!USE_GLB?Promise.resolve():new Promise((res,rej)=>new GLTFLoader().load('models/uso_open.glb',res,undefined,rej)).then(gl=>{
   const g=venues.find(x=>x.k==='USO').g; g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));
   gl.scene.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
   g.add(gl.scene); });
 // 所有者 2026-11-03 给的罗德·拉沃尔球场模型（开／合两版，1 单位＝1 m）：两片活动顶板 RoofN/RoofS 和 56 根肋在两版之间沿球场长轴滑开
 const AO_GLB={parts:[],ready:false};
-const AO_READY=Promise.all(['models/ao_open.glb','models/ao_closed.glb'].map(f=>new Promise((res,rej)=>new GLTFLoader().load(f,res,undefined,rej)))).then(([op,cl])=>{
+const AO_READY=!USE_GLB?Promise.resolve():Promise.all(['models/ao_open.glb','models/ao_closed.glb'].map(f=>new Promise((res,rej)=>new GLTFLoader().load(f,res,undefined,rej)))).then(([op,cl])=>{
   const g=venues.find(x=>x.k==='AO').g; g.children.filter(c=>!c.userData.core).forEach(c=>g.remove(c));
   const root=op.scene; root.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=[CLIP]; if(m.map) m.map.anisotropy=8; }); } });
   const C={}; cl.scene.traverse(o=>{ if(/^Roof(N|S|Rib)/.test(o.name)) C[o.name]=o; });
@@ -778,7 +779,7 @@ function shotTL(t){
     const t1=at(sec,'s1')-sec.t0, t2=at(sec,'s2')-sec.t0, t3=at(sec,'s3')-sec.t0, t25=(t2+t3)/2;
     if(u<t1){ only('RG'); const q=u/t1; buildVenue('RG',u); FX_TILT=1; setBowl(V3(POS.RG[0],0,POS.RG[1]),1.5); setRGRoof(sm((q-0.25)/0.6)); const P=POS.RG; orbit(P[0],P[1],105-20*q,265-15*q,2.95-0.45*q,0); return 'v_RG'; /* 从侧面看，收拢的顶棚落在画面左侧（同航拍机位） */ }
     if(u<t2){ only('WIM'); const q=(u-t1)/(t2-t1), P=POS.WIM; buildVenue('WIM',u-t1); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],100-15*q,290,0.7+0.6*q,0); return 'v_WIM'; }
-    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); setAORoof(Math.max(0,Math.min(1,(q-0.35)/0.5))); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],120,345,1.0+0.4*q,0); return 'v_AO'; }
+    if(u<t25){ only('AO'); const q=(u-t2)/(t25-t2), P=POS.AO; buildVenue('AO',u-t2); setAORoof(Math.max(0,Math.min(1,(q-0.35)/0.5))); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.5); orbit(P[0],P[1],95,265,1.0+0.4*q,0); return 'v_AO'; }
     if(u<t3){ only('USO'); const q=(u-t25)/(t3-t25), P=POS.USO; buildVenue('USO',u-t25); FX_TILT=1; setBowl(V3(P[0],0,P[1]),1.6); orbit(P[0],P[1],115,320,1.45+0.35*q,0); return 'v_USO'; }
     lineupWorld(); setBowl(V3(0,0,0),1); const q=sm((u-t3)/2.5); camLook(0,lerp(110,62,q),lerp(120,58,q),0,0,0,34); return 'lineup'; }
   if(k==='lineup'){ lineupWorld(); setBowl(V3(0,0,0),1); camLook(Math.sin(u*0.2)*6,62-u*2,58-u*2,0,0,0,34); setMorph([[0,'void',0],[0.05,'q',1.2,0.6],[D-0.9,'void',0.9,0.5]],u,{mz:60,my:12}); return k; }
