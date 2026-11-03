@@ -38,8 +38,13 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
 2. 写 `specs/vibetennis/<slug>.json`（`column`/`cover.eyebrow` = `vibetennis`，`film.canvas` = [1920,1080]，
    `editorial.sources` 不能空，`push.auto` = true）和 `.xhs.txt`（第一行完整问题，正文数字与片子一致，末尾问句，tag ≤5）；
    在 `data/vibetennis_episodes.json` 登记这一集的集数（下一个号）——推送标题是 `EPNN.vibetennis|四字主题`，不写日期
-3. 复制**最近一集**（目前是 EP05 `vibetennis-court-speed-2026`：分块可续渲 `render3d.sh`、局部补渲 `patch.sh`、按配音落位 `plan.py`、BGM 按小节续长 `sfx.py`）改场景与镜头表；本地 3D 分段渲 → `overlay.py` → `sfx.py` → `assemble.sh`
+3. 复制**最近一集**（目前 EP05 `vibetennis-court-speed-2026`）的 `r3d/scene.js`、`overlay.py`、`sfx.py`、`plan.py` 改场景与镜头表；
+   渲染脚本不再复制，用共用引擎 `tools/vibetennis/engine/`（`render3d.sh <集目录>` 分块可续渲、`patch.sh <集目录> render|splice` 局部补渲、`serve.sh` 起静态服务）
+   - ⭐ **整片渲之前先出审片包**：`python3 tools/vibetennis/engine/review_pack.py <集目录>` 每节、每句字幕各渲静帧拼成总览图（约 120 张，几分钟），
+     **发给所有者看过再整片渲**（EP05 的看台缺块、顶棚有孔、地球固定高度都是整段渲完才看出来的，73 个提交、推了三版）
+   - 物理／数字类说法（摩擦、恢复系数、评级口径）在审片包之前就过一遍 `papers/<slug>/sources.md`，别等推完再自查（EP05 摩擦段推送后才改稿）
+   - 然后 `overlay.py` → `sfx.py`（BGM 要盖满全片）→ `assemble.sh`
 4. `r3d/still_cover.js`（EP05；EP01 叫 `still_hd.js`）渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出**单独一张** 2160×2880 海报（封面**不进视频**，所有者 2026-10-30）
-5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证）→ 看 `qc_contact.jpg`，最好整片看一遍
-6. `release.py`（Release ＋ copy.html）→ `push.py --dry-run` 看标题正文 → 提交（不提交 mp4）→ PR
-7. 合并即推（CLAUDE.md「片子做完就合并、就推微信」）；推完用 `tools/push_link.py --slug <slug>` 取消息网页链接发给所有者
+5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证；有旁白的中文版自动过 `voice_check.py`：配音齐、句与句不重叠、多音字换字或在 narration.json 写 `poly_ok` 认领；背景声 3 秒窗不低于 -28 LUFS）→ 看 `qc_contact.jpg`，最好整片看一遍
+6. `upload.py --slug <slug> --date <日期>`（切块代传 Release；改版自动写 replace、英文版自动写 release_tag）→ 等 `vibetennis-upload/<slug>` 分支被删 → `release.py`（video_url ＋ copy.html）→ `push.py --dry-run` 看标题正文 → 提交（不提交 mp4）→ PR
+7. 合并即推（CLAUDE.md「片子做完就合并、就推微信」）。**中英两版的 render.json 分两个 PR 依次合**（一趟只发一条）：第一个 PR 里英文版 render.json／凭证保持 main 那份，中文推完再开英文那个；重推先删各自的 `pushed.json`；推完用 `tools/push_link.py --slug <slug>` 取消息网页链接发给所有者

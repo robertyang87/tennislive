@@ -8,11 +8,12 @@
 1. spec 自洽（`common.spec_problems`）
 2. 画布 1920×1080、H.264 yuv420p、帧率与 spec 一致；AAC 48 kHz 双声道
 3. 片长在 90–300 秒之间，并且 ＝ 母片秒数（±0.5s）
-4. 音视频首尾对齐（各 <1s），封面之后正文里没有 >3s 的数字静音
+4. 音视频首尾对齐（各 <1s），封面之后正文里没有 >3s 的数字静音，背景声铺满全片（3 秒窗不低于 -28 LUFS）
 5. 响度：正文 -14 LUFS ±2、真峰值 ≤ -1.0 dBTP（混音合同是 -14 / -1.5）
 6. 封面**不在**片子里，成片和母片字节一致（所有者 2026-10-30 更正）
 7. 3:4 海报在、比例对、至少 1080×1440
-8. 出一张 qc_contact.jpg 抽帧总览给人看一眼（不代替看片）
+8. 有旁白的中文版过 `voice_check.py`（配音齐、不重叠、多音字换字或认领）
+9. 出一张 qc_contact.jpg 抽帧总览给人看一眼（不代替看片）
 
 全绿写 `qc_attestation.json`（绑定 spec / 文案 / 海报 / 成片的 sha256 与字节数），
 并把成片指纹写回 `render.json`。发布门禁（`publish_gate.py`）只认这份凭证。
@@ -35,6 +36,8 @@ from common import (CANVAS, COVER_FRAME_NAME, MAX_SECONDS, MIN_SECONDS,  # noqa:
                     POSTER_NAME, outdir_for, sha256, spec_paths, spec_problems)
 
 LUFS_TARGET, LUFS_TOL, TP_MAX = -14.0, 2.0, -1.0
+# 有旁白、工程目录却没进仓库的老集（EP03 构建会话结束就丢了，见它的 README）。只许减不许加。
+VOICE_NO_PROJECT = frozenset({"vibetennis-topspin-magnus-2026"})
 
 
 def ffprobe(film: Path) -> dict:
@@ -60,6 +63,25 @@ def silences(film: Path, start: float) -> list[tuple[float, float]]:
     starts = [float(x) + start for x in re.findall(r"silence_start: (-?[\d.]+)", err)]
     ends = [float(x) + start for x in re.findall(r"silence_end: (-?[\d.]+)", err)]
     return list(zip(starts, ends + [math.inf] * (len(starts) - len(ends))))
+
+
+BED_MIN_LUFS = -28.0
+
+
+def quiet_stretches(film: Path, start: float, end: float) -> list[tuple[float, float]]:
+    """短时响度（3 秒窗）低于 BED_MIN_LUFS 的区间。数字静音那道（-60 dB）抓不到「BGM 先没了、只剩零星音效」：
+    EP05 第二版片尾那几秒只剩音效，QC 全绿、所有者听出来「最后一段视频没有背景音」。成片正常段落最低约 -18。"""
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(film), "-vn", "-af", "ebur128", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    out: list[tuple[float, float]] = []
+    for t, st in re.findall(r"t:\s*([\d.]+)\s.*?S:\s*(-?[\d.]+|-inf)", err):
+        t = float(t)
+        if start + 3 <= t <= end and (st == "-inf" or float(st) < BED_MIN_LUFS):
+            if out and t - out[-1][1] <= 0.25:
+                out[-1] = (out[-1][0], t)
+            else:
+                out.append((t, t))
+    return [(round(a - 3, 1), round(b, 1)) for a, b in out]
 
 
 def first_frame_diff(film: Path, frame: Path, at: float) -> float:
@@ -141,6 +163,9 @@ def main() -> int:
         check(tp <= TP_MAX, f"真峰值 {tp:.1f} dBTP（要 ≤ {TP_MAX}）")
         quiet = [(s, e) for s, e in silences(film, cover_s) if s < dur - 6]
         check(not quiet, "正文没有 >3s 的数字静音" + (f"：{quiet}" if quiet else ""))
+        thin = quiet_stretches(film, cover_s, dur - 3)
+        check(not thin, f"背景声铺满全片（3 秒窗响度不低于 {BED_MIN_LUFS:.0f} LUFS，片尾 3 秒除外）"
+              + (f"：{thin}" if thin else ""))
     else:
         lufs = tp = None
     check(not (outdir / COVER_FRAME_NAME).exists(), "产物目录里没有片头封面帧（封面不进视频）")
@@ -151,6 +176,17 @@ def main() -> int:
         check(pw * 4 == ph * 3 and pw >= 1080, f"海报 {pw}×{ph}（3:4，至少 1080×1440）")
     else:
         check(False, f"海报 {poster.name} 在")
+    narration = str(spec.get("narration") or film_cfg.get("narration") or "none").strip()
+    if narration != "none":
+        ep = Path(__file__).resolve().parent / "episodes" / args.slug
+        if (ep / "narration.json").is_file():
+            from voice_check import problems as voice_problems  # noqa: PLC0415
+            vbad, vnotes = voice_problems(ep)
+            for n in vnotes:
+                print(f"[提示] {n}")
+            check(not vbad, "中文旁白：配音齐全、句与句不重叠、多音字已换字或认领" + ("：" + "；".join(vbad) if vbad else ""))
+        else:
+            check(args.slug in VOICE_NO_PROJECT, f"spec 说有旁白，可工程目录里没有 {ep.name}/narration.json，查不了配音")
     contact_sheet(film, outdir / "qc_contact.jpg", dur)
     print(f"[QC] 抽帧总览 → {outdir / 'qc_contact.jpg'}（给人看一眼，不代替看片）")
 
