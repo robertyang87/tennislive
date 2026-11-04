@@ -1,0 +1,48 @@
+name: cobolli-official-source-once
+on:
+  push:
+    branches: [feat/cobolli-finals-2026]
+    paths: [.github/workflows/cobolli-official-source-once.yml]
+permissions:
+  contents: write
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+            pyproject.toml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install native downloader requirements
+        run: |
+          pip install -q -e . 'yt-dlp[default]' numpy edge-tts
+          source tools/ci_apt_install.sh
+          ensure_ffmpeg
+      - name: Archive only the verified free official Acapulco source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          PYTHONPATH=src:tools python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          from build_match_reel import download
+          url='https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights'
+          p=pathlib.Path('4459713-04ce8c621061760c.mp4')
+          download(url,p)
+          actual=hashlib.sha256(p.read_bytes()).hexdigest()
+          if actual!='04ce8c621061760c1ad166a0e17bafc4e345770b07b7b0514026475c7a04b018':
+              raise ValueError('Official source container differs from reviewed exact bytes: '+actual)
+          probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=width,height,r_frame_rate','-of','json',str(p)]))['streams'][0]
+          if (probe['width'],probe['height'],probe['r_frame_rate'])!=(1920,1080,'25/1'):
+              raise ValueError('Official source geometry differs')
+          print(json.dumps({'source':url,'sha256':actual,'bytes':p.stat().st_size,'geometry':probe}))
+          PY
+          gh release view source-4459713 >/dev/null
+          gh release upload source-4459713 4459713-04ce8c621061760c.mp4 --clobber
