@@ -13,7 +13,7 @@ with zipfile.ZipFile(O/'tts_bundle.zip') as z:
  bm=json.loads(z.read('manifest.json'));byid={e['request_id']:e for e in bm['entries']}
  for occ in bm['occurrences']:
   rid=occ['request_id'];name=occ['output_name'];assert Path(name).name==name and name.startswith('voice_') and name.endswith('.mp3')
-  audio=z.read(f'requests/{rid}/audio.mp3');marks=json.loads(z.read(f'requests/{rid}/marks.json'));assert hashlib.sha256(audio).hexdigest()==byid[rid]['audio_sha256'];(O/name).write_bytes(audio);(O/name).with_suffix('.words.json').write_text(json.dumps(marks,ensure_ascii=False))
+  audio=z.read(f'requests/{rid}/audio.mp3');marks=json.loads(z.read(f'requests/{rid}/marks.json'));assert hashlib.sha256(audio).hexdigest()==byid[rid]['audio_sha256'];(O/name).write_bytes(audio)
 import sys
 sys.path.insert(0,str(R/'tools'))
 from voice_quality_gate import require_publish
