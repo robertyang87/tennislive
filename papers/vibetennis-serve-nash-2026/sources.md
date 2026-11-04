@@ -149,6 +149,16 @@
 - Zhu & Naikar (2026) arXiv:2602.22527 预印本：机器学习按上下文猜一发方向（外角／追身／中路），男子约 49%、女子约 44%；未经同行评审。
 - Spiliopoulos (2018) *Judgment and Decision Making* 13(5)：大样本下连世界第一都有显著序列相关；顶尖球员「换得不够」、排名越低越「换太多」（摘要转述，原文未读）。
 
+## 一手出处 PDF 的来路与核对（所有者 2026-11-04 取来）
+
+PDF 不进仓库（JSTOR／Springer 的使用条款），这里只记来路和核对点，下次要重核照这个找。
+
+| 文献 | 文件（页数） | 来路 | 核对过的点 |
+|---|---|---|---|
+| von Neumann, „Zur Theorie der Gesellschaftsspiele“, *Math. Annalen* 100 (1928) 295–320, DOI 10.1007/BF01448847 | 26 页，刊页 295–320 全 | Springer 走机构授权、无公开直链；用 Internet Archive 全卷扫描 `sim_mathematische-annalen_1928_100`，按 `page_numbers.json`（刊页 295＝leaf 300，320＝leaf 325）切出全卷 PDF 第 301–326 页——同一原刊卷的原件扫描 | 首页题名、作者、Einleitung，脚注「am 7. XII. 1926 der Göttinger Math. Ges. vorgetragen」；末页刊页 320、「Eingegangen am 24. 7. 1927」；下一页是 Baldus p.321，没有多切少切。我方另读：p.303 Morra／石头剪刀布与 Max Min≠Min Max、p.305「selbst er nicht!」、p.306 等概率混出、第 III 节 Max Min＝Min Max 的证明 |
+| Nash, „Equilibrium Points in n-Person Games“, *PNAS* 36(1) (1950) 48–49, DOI 10.1073/pnas.36.1.48（PMC1063129） | 3 页＝JSTOR 封面＋刊页 48–49 | JSTOR | 「A self-countering n-tuple is called an equilibrium point.」「we infer from Kakutani's theorem that the mapping has a fixed point… Hence there is an equilibrium point.」（p.49）。刊页 48 上半是上一篇的尾注，原刊版式如此，不是串页。我方另读：「In the two-person zero-sum case the "main theorem" and the existence of an equilibrium point are equivalent.」 |
+| Robinson, „An Iterative Method of Solving a Game“, *Annals of Mathematics* 2nd Ser. 54(2) (1951) 296–301，JSTOR stable 1969530 | 7 页＝JSTOR 封面＋刊页 296–301 | JSTOR | p.296「we shall show the validity of an iterative procedure suggested by George W. Brown… each player choosing in turn the best pure strategy against the accumulated mixed strategy of his opponent up to then.」；p.301 结论 lim min U(t)/t ＝ lim max V(t)/t ＝ v，「which completes the proof of the theorem」，署 The RAND Corporation。支撑字幕「你多发哪边 → 对手多猜哪边 → 你该多发另一边」和螺旋收进均衡点 |
+
 ## 删掉的内容（所有者第三轮：「没有被理论证实的就不讲了」）
 
 - 原第 7 段「关键分针对弱点」：比例偏了几个百分点是实测，但「为什么偏、该偏多少」没有被理论检验过——不讲。数据留在上面当背景。
