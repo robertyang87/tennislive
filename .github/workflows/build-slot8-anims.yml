@@ -43,6 +43,18 @@ jobs:
           sparse-checkout: |
             assets
             tools
+      # apt 走共享脚本的本地缓存（照 explainer.yml：restore → 装 → 这趟真下了新包才 save）
+      - name: 缓存 apt 包
+        id: apt_cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: apt-pkgs-${{ runner.os }}-24.04-slot8-v1-${{ github.run_id }}
+          restore-keys: |
+            apt-pkgs-${{ runner.os }}-24.04-slot8-v1-
+            apt-pkgs-${{ runner.os }}-24.04-ci-v2-
       - name: Deps
         timeout-minutes: 15
         run: |
@@ -51,6 +63,14 @@ jobs:
           apt_install_cached fonts-noto-cjk
           ensure_ffmpeg
           ls assets/fonts/ && ls /usr/share/fonts/opentype/noto/ | head
+      - name: 回写 apt 缓存（这趟真下了新包才存）
+        if: env.APT_CACHE_DIRTY == '1' && steps.apt_cache.outputs.cache-primary-key != ''
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.cache/apt-archives
+            ~/.cache/apt-lists
+          key: ${{ steps.apt_cache.outputs.cache-primary-key }}
       - name: Render
         env:
           WHICH: ${{ inputs.which }}
