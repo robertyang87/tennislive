@@ -43,16 +43,16 @@ def a2_frame(dur):
     def fn(t):
         img = BG.copy(); d = ImageDraw.Draw(img, "RGBA")
         title_block(d, t, "THE CUT LINE MOVED", "门槛，抬高了一名")
-        bar_row(d, t, P(1.0), 470, "穆霍娃", "RACE 7", 4665, 4665, "10 月 21 日 · 名额才落定", False)
-        bar_row(d, t, P(5.0), 740, "诺斯科娃", "RACE 8", 4343, 4665, "10 月 9 日 · 官宣入围", True)
-        bar_row(d, t, P(9.0), 1010, "斯瓦泰克", "RACE 9", 4188, 4665, "只差 155 分", False,
+        bar_row(d, t, P(1.0), 440, "穆霍娃", "RACE 7", 4665, 4665, "10 月 21 日 · 名额才落定", False)
+        bar_row(d, t, P(5.0), 700, "诺斯科娃", "RACE 8", 4343, 4665, "10 月 9 日 · 官宣入围", True)
+        bar_row(d, t, P(9.0), 960, "斯瓦泰克", "RACE 9", 4188, 4665, "只差 155 分", False,
                 note="追回来也进不去")
         va = ease((t - P(15.5)) / 0.9)
         if va > 0:
             vt = "分少的人先上车 · 分多的多等 12 天"
-            d.rounded_rectangle([120, 1300, 960, 1382], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
+            d.rounded_rectangle([120, 1158, 960, 1240], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
             b = d.textbbox((0, 0), vt, font=F_VERDICT)
-            d.text((W / 2 - (b[0] + b[2]) / 2, 1341 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
+            d.text((W / 2 - (b[0] + b[2]) / 2, 1199 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
         return img
     return fn
 
@@ -95,9 +95,9 @@ def a1_frame(dur):
         va = ease((t - P(20.5)) / 0.9)
         if va > 0:
             vt = "第八个名额不排队 · 它先找冠军"
-            d.rounded_rectangle([120, 1300, 960, 1382], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
+            d.rounded_rectangle([120, 1158, 960, 1240], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
             b = d.textbbox((0, 0), vt, font=F_VERDICT)
-            d.text((W / 2 - (b[0] + b[2]) / 2, 1341 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
+            d.text((W / 2 - (b[0] + b[2]) / 2, 1199 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
         return img
     return fn
 
@@ -155,7 +155,7 @@ def a4_frame(dur):
         rule_row(d, t, P(12.6), 1180, "周一首战", "萨巴伦卡 vs 穆霍娃", False)
         va = ease((t - P(17.0)) / 0.9)
         if va > 0:
-            text_c(d, W / 2, 1330, "温网决赛重演？先各自出线 · 最早半决赛见",
+            text_c(d, W / 2, 894, "温网决赛重演？先各自出线 · 最早半决赛见",
                    ImageFont.truetype(CJK_B, 38), with_a(BRAND, 255 * va))
         return img
     return fn
