@@ -16,20 +16,21 @@
   "narration": "none",
   "players": "CC0 写实男性基础人体（BoQsc/Godot-Male-Base-Mesh），透明全息材质，身高 1.87 m（ANSUR II 子集均值）；所有者 2026-11-04 否掉 Mixamo X Bot 后选定",
   "audio": {
-   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04/EP05），从 0.309 s 起取、片尾 3 s 淡出",
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04/EP05）；112.3 BPM，按整小节循环拼接（主段→间奏→主段→回到主段），不放尾段，片尾 3 s 淡出；起点让前奏进主段的小节线落在「纳什均衡」砸下来那一刻（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）",
    "sfx": "sfx.py 合成，事件钉在 r3d/timeline.json 的画面事件上（「纳什均衡」砸下、慢放发球、连发 6 个外角与回击冲击波、石头剪刀布三下与亮出、均衡点、天平倒光点与光柱、光点暴雨与方砖变红、关键分卡片心跳、硬币）",
-   "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+   "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "sync": "卡点：段落切换、每句旁白开口推到拍点上（plan.py）；石头剪刀布三下在第 1–3 拍、第 4 拍亮出，连发外角一球一小节，关键分卡片隔两拍、心跳按拍子（scene.js 与 sfx.py 同一套 TL.beat）"
   },
   "_narration_why": "docs/vibetennis.md §8：英文版没有配音。"
  },
  "cover": {
   "eyebrow": "vibetennis",
   "layout": "custom",
-  "script": "tools/vibetennis/episodes/vibetennis-serve-nash-2026/cover/make_cover.py",
+  "script": "tools/vibetennis/episodes/vibetennis-serve-nash-2026/cover/make_cover_ep03.py",
   "hook": "Serve:\nwhich side?",
   "subject": "发球方向",
   "topic": "博弈论 · 纳什均衡 · 2,151 场检验",
-  "_why": "同中文版封面方案 A（两条发球轨迹分叉），文字英文、品牌 Tennis Jetlag。"
+  "_why": "同中文版（EP03 版式的方案 A），文字英文、品牌 Tennis Jetlag。"
  },
  "push": {
   "auto": true,

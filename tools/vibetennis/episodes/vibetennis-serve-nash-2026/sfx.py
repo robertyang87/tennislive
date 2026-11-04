@@ -154,6 +154,7 @@ def rain_hiss(d):             # 光点暴雨：密集的细碎落点
     return x*np.minimum(1,np.minimum(t/0.8,(d-t)/1.0))*0.6
 def EN(t,x,g=1.0,pan=0.0,name=None): place(x,t,g,pan=pan,name=name)
 def E(sec,k,dflt): s=SEC[sec]; return s['t0']+s['ev'].get(k,dflt)
+BT=TL['beat']; onB=lambda x: math.ceil(x/BT-1e-6)*BT   # 与 scene.js 同一套拍点
 
 # ================= 事件 =================
 for s in TL['sections'][1:]: EN(s['t0']-0.25,swish(0.9,400,2600),0.35,name='cut-'+s['name'])
@@ -167,18 +168,18 @@ while u<a['t1']-a['t0']-0.3:
     EN(a['t0']+u+0.1,toss(),0.4); EN(a['t0']+u+0.55*cyc,pock(0.45),0.9,name='slowmo-serve'); EN(a['t0']+u+0.55*cyc,hum(0.4*cyc,98),0.6); EN(a['t0']+u+0.9*cyc,bounce(0.5),0.6,name='slowmo-bounce'); u+=cyc
 EN(a['t0']+0.62*cyc,ding(1568),0.25,name='time-ring')
 # 总发一边：连发 6 个外角（scene.js shotPile：per=max(2.2,(D-0.6)/6)，k=0.45 出手、0.7 落地，第 6 球 k>0.72 被打回、k=0.86 红色冲击波）
-p=SEC['pile']; D=p['t1']-p['t0']; per=max(2.2,(D-0.6)/6)
+p=SEC['pile']; D=p['t1']-p['t0']; per=4*BT if 6*4*BT+0.6<=D else max(2.2,(D-0.6)/6); sh=2*BT-0.45*per   # scene.js：一球一小节、出手在第 3 拍
 for n in range(6):
-    t0=p['t0']+n*per; EN(t0+0.45*per,pock(1.0),0.7,pan=-0.2,name='pile-serve-%d'%(n+1)); EN(t0+0.7*per,bounce(1.0),0.55,pan=-0.5); EN(t0+0.7*per,ding(660+n*70),0.12+0.04*n)
-EN(p['t0']+5*per+0.74*per,pock(1.1),0.9,pan=0.3,name='return-winner'); EN(p['t0']+5*per+0.86*per,hit(),0.6,name='shockwave')
+    t0=p['t0']+sh+n*per; EN(t0+0.45*per,pock(1.0),0.7,pan=-0.2,name='pile-serve-%d'%(n+1)); EN(t0+0.7*per,bounce(1.0),0.55,pan=-0.5); EN(t0+0.7*per,ding(660+n*70),0.12+0.04*n)
+EN(p['t0']+sh+5*per+0.74*per,pock(1.1),0.9,pan=0.3,name='return-winner'); EN(p['t0']+sh+5*per+0.86*per,hit(),0.6,name='shockwave')
 # 03 理论：年份光环（三环依次落下）→ 石头剪刀布两局 → 2×2 方块＋螺旋收进均衡点
 th=SEC['theory']; HA=E('theory','hands',9.5); MX=E('theory','matrix',19.5); CV=E('theory','conv',MX+6)
 for i in range(3): EN(th['t0']+0.6+i*(HA-th['t0']-2)/3,chime([72+i*4]),0.45,name='year-ring-%d'%i)
-RL=(MX-HA)/2
+RL=min((MX-HA)/2,8*BT); PU=3*BT   # scene.js：一局两小节，三下落在拍上，第 4 拍亮出
 for r in range(2):
     b=HA+r*RL
-    for k in range(3): EN(b+(k+0.5)*2.0/3,rps_shake(),0.6,name='rps-%d-%d'%(r,k))
-    EN(b+2.15,slam(),0.35,name='rps-reveal-%d'%r); EN(b+2.5,blip(1800,0.15,0.6,0.5),0.4,name='paper-wins-%d'%r)
+    for k in range(3): EN(b+(k+1)*PU/3-0.02,rps_shake(),0.6,name='rps-%d-%d'%(r,k))
+    EN(b+PU,slam(),0.35,name='rps-reveal-%d'%r); EN(b+PU+0.4,blip(1800,0.15,0.6,0.5),0.4,name='paper-wins-%d'%r)
 EN(MX,panel(),0.5,name='matrix'); 
 for i in range(4): EN(MX+i*0.4,blip(1400+i*300,0.06,1.2,0.5),0.4)
 EN(CV-3,riser(5.5),0.35,name='spiral'); EN(CV+2.5,chime([79,84,88],0.12,0.4),0.55,name='equilibrium-star'); EN(CV+2.5,sparkle(1.5,40),0.3)
@@ -195,8 +196,9 @@ EN(TI,panel(),0.35,name='tiles'); EN(RD,glitch(0.5),0.55,name='red-5.3'); EN(RD,
 k=SEC['keypts']
 for row,key,dflt in ((0,'row0',1.2),(1,'row1',10.7)):
     for c in range(3):
-        t0=E('keypts',key,dflt)+c*0.9; EN(t0,panel(),0.3,name='card-%d-%d'%(row,c)); EN(t0+0.5,heartbeat(),0.55)
-        EN(t0+1.35,heartbeat(),0.4); EN(t0+2.2,blip(2600,0.08,1.0,0.4),0.3)
+        k0=SEC['keypts']['t0']; t0=k0+onB(E('keypts',key,dflt)-k0)+c*2*BT; EN(t0,panel(),0.3,name='card-%d-%d'%(row,c))
+        for q in range(3): EN(t0+q*2*BT,heartbeat(),0.55-0.12*q)   # 心跳与画面同拍
+        EN(t0+2.2,blip(2600,0.08,1.0,0.4),0.3)
 # 06 新研究：比分树一层层点亮，三行结论依次出现
 l=SEC['latest']; RS=E('latest','res',9)
 for j in range(7): EN(l['t0']+1+j,blip(900+j*180,0.12,1.1,0.4),0.3,name='tree-level-%d'%j)
@@ -208,18 +210,22 @@ EN(e['t0']+6.2,toss(),0.5); EN(e['t0']+7.3,pock(1.0),0.9,name='final-serve'); EN
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
 BGM=os.environ.get('VT_BGM','/home/user/robertyang87/vibeknowledge/assets/music/we-never-remix-hi-noise-qiucheng.m4a')
-BGM_OFF=0.309; BGM_LUFS=-20.0
+BGM_LUFS=-20.0
 raw=subprocess.run(['ffmpeg','-v','error','-i',BGM,'-ac','2','-ar',str(SR),'-f','f32le','-'],capture_output=True,check=True).stdout
 song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
-# 曲子 189.9 s，这一集 136.7 s 用不完；下面那段只有片长超过曲长才会补小节（第 5 集 210 s 时加的），曲子在片尾前约 25 s 就放完了（英文版没有配音，QC 报 >3 s 数字静音）。
-# 照第 4 集的办法在小节线上重复整小节：拍点 0.097 + 0.8082·n（scratchpad/bgm_beats.npy 实测），一小节 4 拍 3.2328 s；
-# 在约 97 s 的小节线处把它前面的 k 小节再放一遍，拼缝 10 ms 交叉淡化
-BAR=4*0.80815; need=TOTAL+1+BGM_OFF-len(song)/SR+8.0   # 曲尾约 8 s 是淡出加数字静音，多补几小节
-if need>0:
-    nb=int(np.ceil(need/BAR)); t1=0.097+BAR*30; a1=int(t1*SR); L=int(nb*BAR*SR); xf=int(0.01*SR)
-    rep=song[a1-L:a1].copy(); tail=song[a1:].copy()
-    w=np.linspace(0,1,xf)[:,None]; rep[:xf]=song[a1:a1+xf]*(1-w)+rep[:xf]*w; tail[:xf]=rep[-1:]*0+song[a1-xf:a1]*(1-w)+tail[:xf]*w
-    song=np.concatenate([song[:a1],rep,tail])
+# 循环＋卡点（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）：曲子 112.3 BPM，小节 4×0.53194 s，曲内第一个强拍 0.4757 s（librosa 实测）。
+# 小节号 → 段落：0–7 前奏、8–39 主段、40–47 间奏（轻）、48–63 主段、64 起尾段淡出。起点 BGM_OFF 由 plan.py 定（「纳什均衡」那一刻＝第 8 小节线，主段进来），
+# 之后按「主段 → 间奏 → 主段 → 再从第 8 小节循环」整小节往后拼，不放尾段；拼缝都在小节线上，10 ms 交叉淡化
+BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=TL['bgm_off']
+order=[(BGM_OFF,bar(40)),(bar(40),bar(48)),(bar(48),bar(64))]
+while sum(b1-b0 for b0,b1 in order)<TOTAL+2: order.append((bar(8),bar(40)))
+xf=int(0.01*SR); parts=[]
+for b0,b1 in order:
+    seg=song[int(b0*SR):int(b1*SR)+xf].copy()
+    if parts:   # 前一段尾巴多留的 xf 和这一段开头交叉淡化
+        w=np.linspace(0,1,xf)[:,None]; prev=parts[-1]; seg[:xf]=prev[-xf:]*(1-w)+seg[:xf]*w; parts[-1]=prev[:-xf]
+    parts.append(seg)
+song=np.concatenate(parts); BGM_OFF=0.0
 bgm=song[int(BGM_OFF*SR):int((BGM_OFF+TOTAL+1)*SR)]
 tmp=os.path.join(WORK,'sfx','_bgm_raw.wav'); sf.write(tmp,bgm.astype(np.float32),SR,subtype='FLOAT')
 meas=subprocess.run(['ffmpeg','-hide_banner','-i',tmp,'-af','ebur128','-f','null','-'],capture_output=True,text=True).stderr

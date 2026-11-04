@@ -320,7 +320,7 @@ const endLine=textSprite(T('最好的发球，是连你自己都不知道下一�
 
 // ---------- 镜头与段落 ----------
 const anchors={};
-function proj(name,v){ const p=v.clone().project(camera); anchors[name]=[(p.x*0.5+0.5)*W,(1-(p.y*0.5+0.5))*H,(p.z<1&&p.z>-1)?1:0]; }
+function proj(name,v){ camera.updateMatrixWorld(); const p=v.clone().project(camera); /* 先刷新相机矩阵：同一帧里刚 look() 过，不刷新就按上一帧的机位投影 */ anchors[name]=[(p.x*0.5+0.5)*W,(1-(p.y*0.5+0.5))*H,(p.z<1&&p.z>-1)?1:0]; }
 function look(px,py,pz,tx,ty,tz){ camera.position.set(px,py,pz); camera.lookAt(tx,ty,tz); }
 const DOF={on:false,focus:10,ap:0.00012};
 function hideAll(){
@@ -351,7 +351,8 @@ function shotHook(u,D){ const S=ev('slam',4.7); // 「纳什均衡」开口的�
   players(u,{serveK:lerp(0.2,0.5,ss(0,1.4,u))}); receiver.g.visible=u>S+2.6; receiver.racket.visible=u>S+2.6; // 镜头升到够远才露出接发人，别在镜头旁露半截 MOTE_SPEED=0.15;
   const apex=new THREE.Vector3(SP.x-0.1,3.25,SP.z-0.05); const p=u<1.4?tossBall(lerp(0.3,0.5,ss(0,1.4,u)))||apex:apex;
   showBall(p); flareLight.visible=true; flareLight.position.copy(p); rimL.intensity=6; rimR.intensity=6; rimL.position.set(-6,4,-2); rimR.position.set(6,4,-2);
-  const k=ss(S+0.6,D,u); const cr=k*k; look(lerp(-1.6,-6,cr),lerp(1.75,9,cr),lerp(-L-3.2,-L-9,cr),lerp(0.4,0,cr),lerp(2.1,0.5,cr),lerp(L,0,cr)); // 接发人视角：两道轨迹朝镜头扑来、一左一右分开
+  const k=ss(S+0.6,D,u); const cr=k*k; look(lerp(-1.6,-6,cr),lerp(1.75,9,cr),lerp(-L-3.2,-L-9,cr),lerp(0.4,0,cr),lerp(2.1,0.5,cr),lerp(L,0,cr));
+  if(Q.get('cover')) look(+(Q.get('cx')||1.0),+(Q.get('cy')||2.2),-L-(+(Q.get('cz')||9)),+(Q.get('tx')||1.0),+(Q.get('ty')||1.6),L*0.35); // 封面机位：退后、居中，两条轨迹和两个落点都进画面 // 接发人视角：两道轨迹朝镜头扑来、一左一右分开
   DOF.on=true; DOF.focus=camera.position.distanceTo(p); DOF.ap=lerp(0.00025,0.00004,ss(S-0.7,S+2.3,u));
   const draw=ss(0.8,2.2,u);
   const curve=tg=>{ const pts=[]; for(let i=0;i<=40;i++){ const tau=i/40*draw; const q=serveAt(tg,tau); q.x+=(p.x-SP.x)*(1-tau); q.y+=(p.y-SP.y)*(1-tau); q.z+=(p.z-SP.z)*(1-tau); pts.push(q); } return pts; };
@@ -371,7 +372,8 @@ function shotHook(u,D){ const S=ev('slam',4.7); // 「纳什均衡」开口的�
   FX_FLASH=sh>0&&sh<0.08?0.45:0; FX_SHAKE=sh>0&&sh<0.25?0.8:0;
   // 文字：问题先出，原理接着砸进来
   const front=(d,dy)=>camera.position.clone().add(new THREE.Vector3(0,dy,-d).applyQuaternion(camera.quaternion));
-  hookQ.position.copy(front(7,1.75)); op(hookQ,ss(0.3,0.8,u)*(1-ss(S-0.3,S+0.1,u)));
+  hookQ.position.copy(front(7,1.75)); op(hookQ,Q.get('cover')?0:ss(0.3,0.8,u)*(1-ss(S-0.3,S+0.1,u))); // 封面模式不出 3D 问句，标题由封面自己排
+  proj('tgtWide',TGT.wide); proj('tgtT',TGT.T);
   const slam=ss(S,S+0.3,u); hookTitle.position.copy(front(8,1.45)); const sc=lerp(2.2,1,slam); hookTitle.scale.set(hookTitle.userData.w0*sc,1.25*sc,1); op(hookTitle,slam*(1-ss(D-1.2,D-0.4,u)));
   hookSub.position.copy(front(8,0.62)); op(hookSub,ss(S+0.5,S+1.1,u)*(1-ss(D-1.2,D-0.4,u)));
   proj('ball',p);
@@ -387,9 +389,10 @@ function shotArena(u,D){
   const ring=t3d('tlt05','< 0.5 s',0xd8f2ff,0.55); ring.g.position.copy(p).add(new THREE.Vector3(0,0.9,0)); ring.g.quaternion.copy(camera.quaternion); t3op(ring,vis?ss(0.6,0.66,k)*(1-ss(0.95,1,k)):0);
   proj('ball',p);
 }
+const BT=TL.beat||0.53194; const onBeat=x=>Math.ceil(x/BT-1e-6)*BT; /* 卡点：段头都在拍点上（plan.py），段内按拍数排 */
 function shotPile(u,D){
   // 连发 6 个外角：落点越堆越亮（警示红）；接发残影一次比一次早；第 6 球被打回，红色冲击波
-  const per=Math.max(2.2,(D-0.6)/6), n=Math.min(6,Math.floor(u/per)+1), k=(u-(n-1)*per)/per; const early=(n-1)/5;
+  const per=6*4*BT+0.6<=D?4*BT:Math.max(2.2,(D-0.6)/6); u=Math.max(0,u-(2*BT-0.45*per)); const n=Math.min(6,Math.floor(u/per)+1), k=(u-(n-1)*per)/per; /* 一球一小节，出手（k=0.45）落在第 3 拍 */ const early=(n-1)/5;
   players(u,{serveK:ss(0,0.45,k)*0.85,lean:-1.2*early,ghostK:early});
   beamMat.uniforms.uOp.value=0.22; beamMat.uniforms.uC.value.set(0xff8a7a);
   look(-11.5+u*0.03,6.2,-15.5,-2.4,0.2,-6.5);
@@ -411,14 +414,14 @@ function shotTheory(u,D){
       const y=t3d('y'+g.userData.y,g.userData.y,[0xa78bfa,0x6fa8ff,0xf0e6ff][i],1.1,g); y.g.position.set(lerp(0,-8+i*8,a),3.6,9+i*1.6); y.g.quaternion.copy(camera.quaternion); t3op(y,a*(1-out));
       g.userData.sl.position.set(y.g.position.x,2.5,y.g.position.z); op(g.userData.sl,ss(0.6,1,a)*(1-out)); });
     return; }
-  if(u<MX){ const v=u-HA, RL=(MX-HA)/2; // 石头剪刀布：两只手各自上下晃三下，第三下亮出；左手（对手）一直出布，右手连续两局出石头
+  if(u<MX){ const v=u-HA, RL=Math.min((MX-HA)/2,8*BT), PU=3*BT; /* 一局两小节：三下按在第 1、2、3 拍，第 4 拍亮出 */ // 石头剪刀布：两只手各自上下晃三下，第三下亮出；左手（对手）一直出布，右手连续两局出石头
     courtG.visible=false; look(0,0.3,6.2,0,0.3,0); handL.holder.visible=true; handR.holder.visible=true; DOF.on=true; DOF.focus=6.2; DOF.ap=0.00006;
-    const round=v<RL?0:1, w=v-round*RL; const pump=w<2.0?Math.abs(Math.sin(w/2.0*Math.PI*3))*0.6:0; const reveal=ss(2.0,2.3,w);
+    const round=v<RL?0:1, w=v-round*RL; const pump=w<PU?Math.abs(Math.sin(w/PU*Math.PI*3))*0.6:0; const reveal=ss(PU,PU+0.25,w);
     handR.holder.position.set(1.55,-1.15+pump,0); handR.holder.scale.setScalar(11); handR.holder.rotation.set(0,-0.35,0); handR.rig.set('rock');
     handL.holder.position.set(-1.55,-1.15+pump,0); handL.holder.scale.setScalar(11); handL.holder.rotation.set(0,0.35,0); handL.rig.set('rock',1,'paper',reveal);
-    const win=ss(2.4,2.8,w)*(1-ss(RL-0.6,RL,w)); rpsWin.position.set(-1.55,0.25,-0.3); rpsWin.rotation.x=0; rpsWin.scale.setScalar(3+win*1.5); rpsWin.material.opacity=win*0.8;
+    const win=ss(PU+0.35,PU+0.75,w)*(1-ss(RL-0.6,RL,w)); rpsWin.position.set(-1.55,0.25,-0.3); rpsWin.rotation.x=0; rpsWin.scale.setScalar(3+win*1.5); rpsWin.material.opacity=win*0.8;
     handR.mat.emissiveIntensity=0.35-0.25*win; handL.mat.emissiveIntensity=0.35+0.9*win;
-    rpsLabel.position.set(1.55,-2.25,0.3); op(rpsLabel,ss(2.5,2.9,v)*(1-ss(2*RL-0.6,2*RL,v))); return; }
+    rpsLabel.position.set(1.55,-2.25,0.3); op(rpsLabel,ss(PU+0.45,PU+0.85,v)*(1-ss(2*RL-0.6,2*RL,v))); return; }
   const v=u-MX, C0=CV-MX; matG.visible=true; brPanel.visible=true;
   look(lerp(0,1.5,ss(0,4,v)),5.6,17,0.4,3.4,-1);
   cubes.forEach(g=>{ const {s,r,lv}=g.userData; const a=ss((s*2+r)*0.4,1.6+(s*2+r)*0.4,v); g.visible=a>0.01; g.position.set(-3.8+(r-0.5)*2.7,3.3+(1-s)*2.7-0.5,-1); g.scale.setScalar(a);
@@ -473,9 +476,9 @@ function shotKeypoints(u,D){
   // 两排卡片：上排发球方自己的局点／盘点／赛点，下排对手的破发点／盘点／赛点；每张两根光柱（外角、中路）随心跳升到几乎同一高度
   courtG.visible=false; look(-1.3,3.0,20,-1.3,2.4,1.6); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
   op(kpTitle,ss(0.3,1.2,u)); kpTitle.position.set(-1.3,7.9,1.6);
-  KP.forEach((k,i)=>{ const row=Math.floor(i/3), c=i%3; const t0=(row?ev('row1',10.7):ev('row0',1.2))+c*0.9; const a=ss(t0,t0+0.7,u); k.g.visible=a>0.01;
+  KP.forEach((k,i)=>{ const row=Math.floor(i/3), c=i%3; const t0=onBeat(row?ev('row1',10.7):ev('row0',1.2))+c*2*BT; /* 每张卡隔两拍 */ const a=ss(t0,t0+0.7,u); k.g.visible=a>0.01;
     k.g.position.set(-4.0+c*4.0,row?-0.6:3.9,1.6); k.g.scale.setScalar(lerp(0.7,0.92,a));
-    const beat=Math.exp(-Math.pow(((u-t0)%0.85)/0.08,2))*(u>t0&&u<t0+2.6?1:0);
+    const beat=Math.exp(-Math.pow(((u-t0)%(2*BT))/0.08,2))*(u>t0&&u<t0+2.6?1:0); /* 心跳也按拍子 */
     k.cols.forEach((cc,j)=>{ const h=ss(t0+0.5,t0+2,u)*k.v[j]*2.8; cc.scale.y=Math.max(0.001,h); cc.material.opacity=0.45+0.4*beat; k.caps[j].position.y=0.1+h; k.caps[j].material.opacity=ss(t0+0.5,t0+0.9,u); });
     k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+2.2,t0+2.8,u)); if(k.note) op(k.note,ss(t0+2.4,t0+3,u)); });
   kpRowLab[0].position.set(-7.6,5.6,1.6); kpRowLab[0].material.rotation=0; op(kpRowLab[0],ss(1,1.8,u)); kpRowLab[1].position.set(-7.0,1.1,1.6); op(kpRowLab[1],ss(ev('row1',10.7)-0.3,ev('row1',10.7)+0.5,u));

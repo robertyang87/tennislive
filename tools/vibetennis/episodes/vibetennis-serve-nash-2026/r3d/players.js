@@ -39,11 +39,23 @@ export function makePlayer(gltf,color,scene){
   const wire=new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0.1,blending:THREE.AdditiveBlending,depthWrite:false});
   const skinned=[]; root.traverse(o=>{ if(o.isSkinnedMesh){ skinned.push(o); o.frustumCulled=false; o.material=body; } });
   for(const m of skinned){ const w=new THREE.SkinnedMesh(m.geometry,wire); w.bind(m.skeleton,m.bindMatrix); w.frustumCulled=false; m.parent.add(w); }
-  // 球拍：单独挂在场景里，每帧按前臂方向对齐
-  const rk=new THREE.Group(); const fr=new THREE.Mesh(new THREE.TorusGeometry(13,1.1,10,48),new THREE.MeshStandardMaterial({color:0xf2f6ff,metalness:0.6,roughness:0.25,emissive:col,emissiveIntensity:0.5}));
-  fr.scale.set(1,1.35,1); fr.position.y=46; rk.add(fr);
-  const strings=new THREE.Mesh(new THREE.CircleGeometry(12.5,32),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.4,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false})); strings.scale.set(1,1.35,1); strings.position.y=46; rk.add(strings);
-  const hd=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.6,28,10),new THREE.MeshStandardMaterial({color:0x1a1f2e,metalness:0.3,roughness:0.6})); hd.position.y=14; rk.add(hd);
+  // 球拍：单独挂在场景里，每帧按前臂方向对齐。单位 cm（整体 ×0.01），按网球拍的实际尺寸：全长 68.5、拍框 33×26（椭圆）、
+  // 拍喉两根梁 V 形接到拍框、八角拍柄 2 cm 粗＋柄尾、16×19 拍线（所有者 2026-11-04「网球拍的样子不对，不要像羽毛球拍」——
+  // 原来是细长柄配小圆环，头小柄长、没有拍喉，比例像羽毛球拍）
+  const rk=new THREE.Group(); const HC=51, HA=13, HB=16.5;   // 拍框中心高度、半宽、半高
+  const frameMat=new THREE.MeshStandardMaterial({color:0xf2f6ff,metalness:0.6,roughness:0.25,emissive:col,emissiveIntensity:0.5});
+  const ell=new THREE.EllipseCurve(0,HC,HA,HB,0,Math.PI*2);   const fpts=ell.getPoints(96).map(p=>new THREE.Vector3(p.x,p.y,0));
+  rk.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(fpts,true),120,1.05,10,true),frameMat));
+  for(const sx of [-1,1]){ const th=new THREE.CatmullRomCurve3([new THREE.Vector3(sx*1.4,20,0),new THREE.Vector3(sx*4.5,28,0),new THREE.Vector3(sx*HA*0.62,HC-HB*0.8,0)]);
+    rk.add(new THREE.Mesh(new THREE.TubeGeometry(th,24,0.95,8,false),frameMat)); }
+  const hd=new THREE.Mesh(new THREE.CylinderGeometry(1.75,1.75,20,8),new THREE.MeshStandardMaterial({color:0x1a1f2e,metalness:0.3,roughness:0.6})); hd.position.y=10.5; rk.add(hd);
+  const cap=new THREE.Mesh(new THREE.CylinderGeometry(1.95,1.95,1.2,8),frameMat); cap.position.y=0.6; rk.add(cap);
+  const sp=[]; const inside=(x)=>HB*Math.sqrt(Math.max(0,1-(x/HA)**2))*0.97;
+  for(let i=0;i<16;i++){ const x=-HA*0.92+i*(HA*1.84/15); const h=inside(x); sp.push(x,HC-h,0,x,HC+h,0); }                 // 竖线 16
+  for(let j=0;j<19;j++){ const y=-HB*0.92+j*(HB*1.84/18); const w=HA*Math.sqrt(Math.max(0,1-(y/HB)**2))*0.97; sp.push(-w,HC+y,0,w,HC+y,0); } // 横线 19
+  const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
+  rk.add(new THREE.LineSegments(sg,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false})));
+  const bed=new THREE.Mesh(new THREE.CircleGeometry(1,48),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.12,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false})); bed.scale.set(HA,HB,1); bed.position.y=HC; rk.add(bed);
   rk.scale.setScalar(0.01); scene.add(rk);
   const R0=[]; root.traverse(o=>{ if(o.isBone) R0.push([o,o.position.clone(),o.quaternion.clone()]); });
   return {g,root,B,racket:rk,skinned,
@@ -55,7 +67,7 @@ export function makePlayer(gltf,color,scene){
       for(const k of ['RightUpLeg','LeftUpLeg','RightLeg','LeftLeg','RightArm','RightForeArm','LeftArm','LeftForeArm']){ if(!keys[k]) continue; aim(B[k],B[CHILD[k]],keys[k].clone().applyQuaternion(wq)); }
       this.syncRacket(); },
     syncRacket(){ const h=B.RightHand.getWorldPosition(new THREE.Vector3()), e=B.RightForeArm.getWorldPosition(new THREE.Vector3());
-      const d=h.clone().sub(e).normalize(); rk.position.copy(h).addScaledVector(d,0.06); rk.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d); },
+      const d=h.clone().sub(e).normalize(); rk.position.copy(h).addScaledVector(d,-0.08); rk.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d); }, // 手握在柄中段：柄尾露出手外约 8 cm
     serveKeys(k){ // 关键姿势之间插值
       let i=0; while(i<SERVE_KEYS.length-2&&k>SERVE_KEYS[i+1][0]) i++; const [k0,a]=SERVE_KEYS[i],[k1,b]=SERVE_KEYS[i+1]; const m=THREE.MathUtils.clamp((k-k0)/(k1-k0),0,1); const s=m*m*(3-2*m);
       const out={}; for(const n in a) out[n]=a[n].clone().lerp(b[n],s).normalize(); return out; } };
