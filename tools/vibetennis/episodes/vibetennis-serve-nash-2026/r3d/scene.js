@@ -307,7 +307,9 @@ const nodeLabs=NODES.map(n=>textSprite(`${SCORE[n.a]}-${SCORE[n.b]}`,{color:'#e8
 const gauge=new THREE.Mesh(new THREE.TorusGeometry(1.6,0.09,12,128,0.01),new THREE.MeshBasicMaterial({color:0xf2efe6,transparent:true,opacity:0,blending:THREE.AdditiveBlending})); scene.add(gauge);
 const gaugeBg=new THREE.Mesh(new THREE.TorusGeometry(1.6,0.05,8,128),new THREE.MeshBasicMaterial({color:0x2a2d55,transparent:true,opacity:0})); scene.add(gaugeBg);
 const latestTitle=textSprite(T('2025 · 把比分算进去的新研究','2025 · A study that adds the score'),{color:'#f2efe6',size:0.55,glow:'rgba(124,131,255,1)'});
-const latestSub=textSprite(T('纳达尔对德约科维奇的保发率（若对手不调整）','Nadal’s hold rate vs Djokovic (if the returner doesn’t adapt)'),{color:'#d8dbff',size:0.45});
+// 所有者 2026-11-04：上屏的东西一定要经过验证——JPE 的 71%→91.5% 是「对手不调整」的模型推算、没有实地验证，不上屏；只上统计检验的结论
+const latestRes=[textSprite(T('把比分和追身也算进来检验','Test with the score and body serves included'),{color:'#e8e9ff',size:0.5}),textSprite(T('费德勒、纳达尔、德约科维奇等多数顶尖球员','Federer, Nadal, Djokovic and most elite servers'),{color:'#f2efe6',size:0.55,glow:'rgba(124,131,255,1)'}),textSprite(T('都没有完全做到均衡','do not fully play the equilibrium'),{color:'#ffffff',size:0.75,glow:'rgba(124,131,255,1)'})];
+const latestSub=textSprite('',{size:0.1});
 const latestNote=textSprite(T('比分树为示意','Score tree is illustrative'),{color:'#8f93c8',size:0.32});
 
 // ---------- 段 10：硬币 ----------
@@ -330,7 +332,7 @@ function hideAll(){
   yearG.visible=false; matG.visible=false; brPanel.visible=false; op(rpsLabel,0); rpsWin.material.opacity=0; balG.visible=false; chide(rain); rainCols.forEach(c=>c.g.visible=false);
   for(const k in ERA){ op(ERA[k].titleS,0); if(ERA[k].labS) ERA[k].labS.forEach(s=>op(s,0)); } for(const y in yearCache) op(yearCache[y],0);
   weakZone.material.opacity=0; kpBars.visible=false; KP.forEach(k=>{ k.g.visible=false; }); op(kpLegend,0); kpRowLab.forEach(x=>op(x,0)); tileG.visible=false; kpWin.forEach(s=>op(s,0)); op(kpTitle,0); kpOpen.material.opacity=0;
-  chainG.visible=false; treeG.visible=false; gauge.material.opacity=0; gaugeBg.material.opacity=0; op(latestTitle,0); op(latestSub,0); op(latestNote,0);
+  chainG.visible=false; treeG.visible=false; gauge.material.opacity=0; gaugeBg.material.opacity=0; op(latestTitle,0); op(latestSub,0); latestRes.forEach(x=>op(x,0)); op(latestNote,0);
   coin.visible=false; coinGlow.visible=false; op(endLine,0); for(const k in text3D) t3op(text3D[k],0);
   beamMat.uniforms.uOp.value=0; flareLight.visible=false; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; }
 function players(t,{serveK=null,lean=0,ghostK=0,ready=true}={}){
@@ -490,11 +492,8 @@ function shotLatest(u,D){
   const focus=NODES[3*4+2]; // 40-30：示意一个节点上的三向扇面
   treeFan.forEach((l,i)=>{ const p=focus.m.position.clone().add(treeG.position); const dir=new THREE.Vector3(Math.cos(1.2+i*0.35),Math.sin(1.2+i*0.35),0); const len=[0.9,0.4,1.3][i]*ss(7,8.5,u);
     setLine(l,[p,p.clone().addScaledVector(dir,len)]); l.material.opacity=ss(7,8,u); });
-  gaugeBg.position.set(5.2,2.6,0); gaugeBg.material.opacity=ss(8,9,u); const val=lerp(0.71,0.915,ss(10,13.5,u));
-  gauge.geometry.dispose(); gauge.geometry=new THREE.TorusGeometry(1.6,0.09,12,128,Math.PI*2*val*ss(8.5,10,u)+0.001); gauge.position.copy(gaugeBg.position); gauge.rotation.z=Math.PI/2; gauge.material.opacity=ss(8,9,u);
-  const a71=t3d('g71','71%',0xf2efe6,0.6), a915=t3d('g915','91.5%',0xffffff,0.6); a71.g.position.set(5.2,2.6,0); a915.g.position.set(5.2,2.6,0);
-  t3op(a71,ss(9,9.6,u)*(1-ss(12.5,13.2,u))); t3op(a915,ss(13,13.6,u));
-  latestTitle.position.set(1.4,5.2,0); op(latestTitle,ss(0.3,1.2,u)); latestSub.position.set(5.2,0.4,0); op(latestSub,ss(9,10,u)); latestNote.position.set(-1.0,-2.3,0); op(latestNote,ss(2,3,u));
+  latestRes.forEach((x,i)=>{ x.position.set(5.6,3.6-i*1.05,0); op(x,ss(9+i*1.2,9.8+i*1.2,u)); });
+  latestTitle.position.set(1.4,5.2,0); op(latestTitle,ss(0.3,1.2,u)); latestSub.position.set(5.2,0.4,0);  latestNote.position.set(-1.0,-1.75,0); op(latestNote,ss(2,3,u));
 }
 function shotCoin(u,D){
   players(u,{serveK:u>6?clamp((u-6)/2.4)*0.85:0}); look(3.2,2.4,L+4.8,0.6,2.2,L-1); rimL.intensity=4; rimR.intensity=4; rimL.position.set(-3,4,L+2); rimR.position.set(4,4,L+2);
