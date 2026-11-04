@@ -78,8 +78,12 @@ jobs:
           cd out
           for f in *.mp4; do
             key=$(echo "$f" | sed -E 's/^slot8-(a[0-9]).*/\1/')
-            tag="source-slot8$key"
-            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "source · slot8$key" --notes "code-drawn animation source for wta-finals-slot8-2026 ($VER)"
-            gh release upload "$tag" "$f" --clobber
-            echo "uploaded $f -> $tag"
+            case "$key" in
+              a1) id=s8a1rule022;; a2) id=s8a2pnts018;; a3) id=s8a3y202420;; a4) id=s8a4draw029;; a5) id=s8a5atpc034;;
+            esac
+            cp "$f" "$id.mp4"
+            tag="source-$id"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "source $id" --notes "code-drawn animation source for wta-finals-slot8-2026 ($VER)"
+            gh release upload "$tag" "$id.mp4" --clobber
+            echo "uploaded $f -> $tag/$id.mp4"
           done
