@@ -19,13 +19,34 @@ function aim(bone,child,dirWorld){
   const q=new THREE.Quaternion().setFromUnitVectors(cur,dirWorld);
   const pq=bone.parent.getWorldQuaternion(new THREE.Quaternion());
   bone.quaternion.premultiply(pq.clone().invert().multiply(q).multiply(pq)); bone.updateMatrixWorld(true); }
+// 体型：X Bot 腰身太细，不像 ATP 球员（所有者 2026-11-04「人的模型腰身太细，不像 atp 球员」）。
+// 不缩放骨骼（非均匀缩放会让手臂、头被剪切拉歪），而是在绑定姿势下把躯干网格的顶点沿水平方向往外推：
+// 每个顶点按它绑在躯干各骨上的权重插值出加厚系数，以那几根骨在绑定姿势里的位置为轴心。几何体被所有克隆共享，只改一次。
+// 目标是倒三角：肩宽、胸背厚而不前凸、腰直不收、胯不宽、四肢粗。躯干骨 [横向, 前后]，四肢骨一个数＝绕骨轴的径向加粗。
+export const BUILD={Hips:[0.97,1.0],Spine:[1.38,1.04],Spine1:[1.32,1.0],Spine2:[1.26,0.94],
+  LeftShoulder:1.12,RightShoulder:1.12,LeftArm:1.2,RightArm:1.2,LeftForeArm:1.12,RightForeArm:1.12,LeftUpLeg:1.14,RightUpLeg:1.14,LeftLeg:1.1,RightLeg:1.1,Neck:1.15};
+export const SHOULDER_OUT=1.14; // 上臂骨根部沿锁骨方向外移的倍数：肩更宽
+function thicken(m){
+  const geo=m.geometry; if(geo.userData.built) return; geo.userData.built=true;
+  const bones=m.skeleton.bones, nm=bones.map(b=>b.name.replace(/^mixamorig:?/,''));
+  const bp=m.skeleton.boneInverses.map(inv=>new THREE.Vector3().setFromMatrixPosition(inv.clone().invert())); // 绑定姿势下骨的位置（骨架空间）
+  const ax=bones.map((b,i)=>{ const ch=b.children.find(c=>c.isBone); if(!ch) return null; const j=bones.indexOf(ch); return bp[j].clone().sub(bp[i]).normalize(); });
+  const pos=geo.attributes.position, si=geo.attributes.skinIndex, sw=geo.attributes.skinWeight, v=new THREE.Vector3(), o=new THREE.Vector3(), d=new THREE.Vector3();
+  for(let i=0;i<pos.count;i++){
+    v.fromBufferAttribute(pos,i).applyMatrix4(m.bindMatrix); o.set(0,0,0); let W=0;
+    for(let j=0;j<4;j++){ const w=sw.getComponent(i,j); if(!w) continue; const b=si.getComponent(i,j), f=BUILD[nm[b]]; if(f===undefined) continue; W+=w;
+      if(Array.isArray(f)){ d.set((v.x-bp[b].x)*(f[0]-1),0,(v.z-bp[b].z)*(f[1]-1)); }   // 躯干：竖直轴，横向／前后分开
+      else { const a=ax[b]||new THREE.Vector3(0,1,0); d.copy(v).sub(bp[b]); d.addScaledVector(a,-d.dot(a)).multiplyScalar(f-1); } // 四肢：只推垂直于骨轴的那部分
+      o.addScaledVector(d,w); }
+    if(!W) continue; v.add(o).applyMatrix4(m.bindMatrixInverse); pos.setXYZ(i,v.x,v.y,v.z); }
+  pos.needsUpdate=true; geo.computeVertexNormals(); geo.computeBoundingSphere(); }
 export function makePlayer(gltf,color,scene){
   const root=SkeletonUtils.clone(gltf.scene); const g=new THREE.Group(); g.add(root); scene.add(g);
   const col=new THREE.Color(color);
   const body=new THREE.MeshPhysicalMaterial({color:0x0b1020,metalness:0.75,roughness:0.28,clearcoat:1,clearcoatRoughness:0.15,emissive:col.clone().multiplyScalar(0.25)});
   const joints=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:1.6,metalness:0.2,roughness:0.4});
   const wire=new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0.07,blending:THREE.AdditiveBlending,depthWrite:false});
-  const skinned=[]; root.traverse(o=>{ if(o.isSkinnedMesh){ skinned.push(o); o.frustumCulled=false; o.material=/Joints/.test(o.name)?joints:body; } });
+  const skinned=[]; root.traverse(o=>{ if(o.isSkinnedMesh){ thicken(o); skinned.push(o); o.frustumCulled=false; o.material=/Joints/.test(o.name)?joints:body; } });
   for(const m of skinned){ const w=new THREE.SkinnedMesh(m.geometry,wire); w.bind(m.skeleton,m.bindMatrix); w.frustumCulled=false; m.parent.add(w); }
   const B={}; root.traverse(o=>{ if(o.isBone) B[o.name.replace(/^mixamorig:?/,'')]=o; });
   // 球拍：挂在右手骨上
@@ -35,10 +56,10 @@ export function makePlayer(gltf,color,scene){
   const hd=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.6,28,10),new THREE.MeshStandardMaterial({color:0x1a1f2e,metalness:0.3,roughness:0.6})); hd.position.y=14; rk.add(hd);
   rk.scale.setScalar(0.01); scene.add(rk); // 球拍单独挂在场景里，每帧按前臂方向对齐（Mixamo 手骨的局部轴不可靠）
   const mixer=new THREE.AnimationMixer(root); const idle=mixer.clipAction(gltf.animations.find(a=>a.name==='idle')); idle.play();
-  const rest={}; for(const k in B) rest[k]=B[k].quaternion.clone();
+  const rest={}; for(const k in B) rest[k]=B[k].quaternion.clone(); const armPos={L:B.LeftArm.position.clone().multiplyScalar(SHOULDER_OUT),R:B.RightArm.position.clone().multiplyScalar(SHOULDER_OUT)};
   return {g,root,B,mixer,racket:rk,
     pose(t,keys){ // keys: {骨:球员自身坐标方向}；先放待机动画，再把指定的骨瞄准
-      mixer.setTime(t); root.updateMatrixWorld(true);
+      mixer.setTime(t); B.LeftArm.position.copy(armPos.L); B.RightArm.position.copy(armPos.R); root.updateMatrixWorld(true);
       if(!keys){ this.syncRacket(); return; } const wq=g.getWorldQuaternion(new THREE.Quaternion());
       for(const k of ['RightUpLeg','LeftUpLeg','RightLeg','LeftLeg','RightArm','RightForeArm','LeftArm','LeftForeArm']){ if(!keys[k]) continue; aim(B[k],B[CHILD[k]],keys[k].clone().applyQuaternion(wq)); }
       this.syncRacket(); },
