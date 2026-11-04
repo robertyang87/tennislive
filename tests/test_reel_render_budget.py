@@ -66,6 +66,8 @@ def test_bounded_real_ffmpeg_preserves_frames_audio_and_duration(monkeypatch, tm
         return real_run(*args, **kwargs)
 
     monkeypatch.setattr(reel, 'run', record)
+    # 寻址安全的 remux（`_seek_safe_source`）是切段前的准备步骤，不带线程预算参数；钉成原档，commands[0] 才是切段那一条
+    monkeypatch.setattr(reel, '_seek_safe_source', lambda p: p)
     seg = reel.Segment(.2, 1.2, .5, '', track=False)
     output = tmp_path / 'part.mp4'
     if kind == 'still':

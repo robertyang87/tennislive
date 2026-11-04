@@ -1,0 +1,71 @@
+{
+ "slug": "vibetennis-serve-nash-2026-en",
+ "_status": "EP06 英文版：3D 用 lang=en 另渲一份（场景里有 3D 文字），叠加层 VT_LANG=en；无配音，音轨为 BGM（vibeknowledge）＋音效。",
+ "_column": "vibetennis 第 6 集：发球该往哪边发？一发不到半秒、接发只能猜 → 总发一边会被猜中 → 冯·诺依曼 1928／纳什 1950：混合策略均衡（石头剪刀布）→ 混着发不等于一半一半（辛纳占先区）→ 自算 2023 年以来 2,151 场男子比赛的均衡检验 → 六种关键分 → JPE 2025：算进比分后多数顶尖球员没完全做到 → 「连他自己也不知道」。",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "players": "CC0 写实男性基础人体（BoQsc/Godot-Male-Base-Mesh），透明全息材质，身高 1.87 m（ANSUR II 子集均值）；所有者 2026-11-04 否掉 Mixamo X Bot 后选定",
+  "audio": {
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04/EP05）；112.3 BPM，按整小节循环拼接（主段→间奏→主段→回到主段），不放尾段，片尾 3 s 淡出；起点让前奏进主段的小节线落在「纳什均衡」砸下来那一刻（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）",
+   "sfx": "sfx.py 合成，事件钉在 r3d/timeline.json 的画面事件上（「纳什均衡」砸下、慢放发球、连发 6 个外角与回击冲击波、石头剪刀布三下与亮出、均衡点、天平倒光点与光柱、光点暴雨与方砖变红、关键分卡片心跳、硬币）",
+   "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "sync": "卡点：段落切换、每句旁白开口推到拍点上（plan.py）；石头剪刀布三下在第 1–3 拍、第 4 拍亮出，连发外角一球一小节，关键分卡片隔两拍、心跳按拍子（scene.js 与 sfx.py 同一套 TL.beat）"
+  },
+  "_narration_why": "docs/vibetennis.md §8：英文版没有配音。"
+ },
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-serve-nash-2026/cover/make_cover_ep03.py",
+  "hook": "Serve:\nwhich side?",
+  "subject": "发球方向",
+  "topic": "博弈论 · 纳什均衡 · 2,151 场检验",
+  "_why": "同中文版（EP03 版式的方案 A），文字英文、品牌 Tennis Jetlag。"
+ },
+ "push": {
+  "auto": true,
+  "summary": "Nash",
+  "_summary_why": "标题 EP06.vibetennis|Nash（主题最多 4 个字符）。",
+  "lead": "A first serve takes under half a second to land, so the returner has to guess. Game theory's answer is to mix: mix until serving wide and serving down the T give the same chance to win the point — the equilibrium von Neumann (1928) and Nash (1950) described. Mixing isn't 50–50: on the ad side Sinner serves wide 58.7% of the time and down the T 35.4%, yet wins 69.7% vs 71.1% — no statistical difference. We redid the papers' test on 2,151 men's matches since 2023: wide 65.0%, T 64.7%; only 5.3% of 1,056 groups deviate, about what chance alone gives (5%). Big points look the same. But a 2025 study that adds the score finds most top players don't fully get there."
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "发球，该往哪边发？",
+  "thesis": "发球人和接发人是零和对局：一发从出手到落地平均约 0.45 秒（鹰眼，Gauriot, Page & Wooders 2023），接发人只能预判；发球方向可预测就会被利用。冯·诺依曼 1928 证明两人零和对局允许按概率混出时 Max Min＝Min Max，原文举的就是石头剪刀布，并写下「两边各 ½ 时，没有人（连他自己也不能！）预言他会选哪边」；纳什 1950 定义均衡点并证明存在，指出两人零和情形与冯·诺依曼主定理等价；1994 年诺贝尔经济学奖。均衡的可检验推论：发球人各方向的得分率相等（Walker & Wooders 2001 AER）。Robinson 1951 证明「轮流对对方累计比例做最优应对」收敛到博弈的值。混着发不等于一半一半：辛纳 2023 年以来占先区一发外角 58.7%、中路 35.4%，得分率 69.7% 对 71.1%（p=0.23）。自算 Match Charting Project 2023 年以来男子 2,151 场：一发外角 65.0%、中路 64.7%；按 WW 2001 方法检验 1,056 组（同发球人×同接发人×同半区）只有 5.3% 在 5% 水平被拒绝；局点、盘点、赛点、破发点、对手盘点、对手赛点六类关键分外角与中路得分率都没有显著差别。局限：MCP 是志愿者标注、偏向顶尖球员与大赛，非官方统计；只算男子一发、不含抢七、不含追身；Anderson, Rosen, Rust & Wong 2025 JPE 把比分与追身发球算进动态模型后，多数顶尖球员被拒绝均衡。",
+  "beats": [
+   "开场：发球该往哪边发？答案是一个拿过诺贝尔奖的理论——纳什均衡",
+   "不到半秒：一次发球放慢，接发只能先猜",
+   "总发一边：连发 6 个外角被看穿、第 6 球被打回",
+   "理论：1928 冯·诺依曼、1950 纳什；石头剪刀布总出一样必输；2×2 表与最佳应对螺旋收进均衡点",
+   "反直觉：混着发不等于一半一半——辛纳占先区按次数偏外角、按得分率几乎一样",
+   "证据：2,151 场男子比赛重做检验，外角 65.0%、中路 64.7%，1,056 组只有 5.3% 偏离（纯随机约 5%）",
+   "关键分：局点、破发点、赛点等六类，照样分不出差别",
+   "局限：2025 JPE 新研究算进比分后，多数顶尖球员还没完全做到",
+   "落点：最好的发球，是连你自己都不知道下一个发哪边；你玩石头剪刀布会不会总出同一个？"
+  ],
+  "sources": [
+   "von Neumann, J. (1928) Zur Theorie der Gesellschaftsspiele. Mathematische Annalen 100: 295–320",
+   "Nash, J. F. (1950) Equilibrium Points in n-Person Games. PNAS 36(1): 48–49",
+   "Robinson, J. (1951) An Iterative Method of Solving a Game. Annals of Mathematics 54(2): 296–301",
+   "The Sveriges Riksbank Prize in Economic Sciences 1994（nobelprize.org）",
+   "Walker, M. & Wooders, J. (2001) Minimax Play at Wimbledon. American Economic Review 91(5): 1521–1538",
+   "Gauriot, R., Page, L. & Wooders, J. (2023) Expected Utility Theory and Strategic Play: Evidence from Tennis. Quantitative Economics",
+   "Anderson, A., Rosen, J., Rust, J. & Wong, K.-P. (2025) Disequilibrium Play in Tennis. Journal of Political Economy",
+   "Match Charting Project（Jeff Sackmann，志愿者逐拍标注），自算脚本 papers/vibetennis-serve-nash-2026/data/"
+  ],
+  "_claims": "每个上屏数字的出处见 papers/vibetennis-serve-nash-2026/sources.md（「上屏判定」一节）"
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-serve-nash-2026",
+ "_variant_why": "docs/vibetennis.md §8：每集都出英文版，无配音，画面文字全英文，品牌 Tennis Jetlag，成片并列放进原版 Release。"
+}

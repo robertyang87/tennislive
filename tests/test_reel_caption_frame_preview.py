@@ -165,6 +165,9 @@ def test_actual_command_sink_preserves_default_argv(toy, monkeypatch, tmp_path):
     seen = []
     monkeypatch.setattr(reel, '_has_audio', lambda _p: True)
     monkeypatch.setattr(reel, 'run', lambda *args: seen.append(args))
+    # 寻址安全的 remux（`_seek_safe_source`，slot8 加的）只在第一次切段时跑、之后走缓存，
+    # 不属于「同一条切段命令」的比较——钉成原档，两次调用才比的是同一件事
+    monkeypatch.setattr(reel, '_seek_safe_source', lambda p: p)
     dest = tmp_path / 'part.mp4'
     reel.cut_segment(source, seg, dest, 320, threads=1)
     captured = []
