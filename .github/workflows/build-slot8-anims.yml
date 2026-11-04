@@ -37,10 +37,19 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 不碰 output/（只读 tools/slot8_anims 和 assets/fonts，产物传 Release），稀疏检出省掉那 1.36 GB——
+          # 判据 test_不碰产物的工作流不许把output拉下来；照 assets.yml
+          sparse-checkout: |
+            assets
+            tools
       - name: Deps
+        timeout-minutes: 15
         run: |
           pip install -q pillow numpy
-          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg >/dev/null
+          source tools/ci_apt_install.sh   # 不裸调 apt：走共享脚本的缓存与重试（test_工作流不许裸调apt要走共享脚本）
+          apt_install_cached fonts-noto-cjk
+          ensure_ffmpeg
           ls assets/fonts/ && ls /usr/share/fonts/opentype/noto/ | head
       - name: Render
         env:

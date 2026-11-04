@@ -48,7 +48,7 @@ jobs:
         run: for e in ${{ steps.eps.outputs.list }}; do python3 tools/vibetennis/tts_synth.py "$e"; done
       - name: 提交回分支
         run: |
-          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name 'Claude'; git config user.email 'noreply@anthropic.com'
           for e in ${{ steps.eps.outputs.list }}; do git add -A "$e/voice"; done
           git diff --cached --quiet && { echo "没有变化"; exit 0; }
           python3 tools/check_staged_file_sizes.py   # 体积闸：单个文件超限当场停，别等 GitHub 拒收（稀疏检出 tools/vibetennis 时 tools/ 根下的文件也在）
