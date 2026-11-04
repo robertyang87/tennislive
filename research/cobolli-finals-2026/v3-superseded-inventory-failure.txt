@@ -1,0 +1,574 @@
+reel	render — 出成片	﻿2026-11-04T11:18:43.3578270Z ##[group]Run SPEC="specs/reels/cobolli-finals-2026.json"
+reel	render — 出成片	2026-11-04T11:18:43.3579056Z [36;1mSPEC="specs/reels/cobolli-finals-2026.json"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3579767Z [36;1mOUTDIR="output/2026-11-04/reel/cobolli-finals-2026"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3580386Z [36;1mSLUG="cobolli-finals-2026"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3581027Z [36;1mtest -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }[0m
+reel	render — 出成片	2026-11-04T11:18:43.3581722Z [36;1mFROZEN_TTS="$RUNNER_TEMP/$SLUG-frozen-tts.zip"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3582428Z [36;1mpython tools/reel_tts_release.py restore --slug "$SLUG" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3583366Z [36;1m  --metadata "data/narration_checks/$SLUG.json" --fallback-metadata "$OUTDIR/render.json" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3584162Z [36;1m  --output "$FROZEN_TTS"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3584668Z [36;1mTTS_BUNDLE_ARGS=()[0m
+reel	render — 出成片	2026-11-04T11:18:43.3585164Z [36;1mif [ -f "$FROZEN_TTS" ]; then[0m
+reel	render — 出成片	2026-11-04T11:18:43.3586083Z [36;1m  # Cheap identity/request check before expensive source fetch; decode once in render.[0m
+reel	render — 出成片	2026-11-04T11:18:43.3587155Z [36;1m  python tools/build_match_reel.py render --check-tts-bundle --tts-bundle-in "$FROZEN_TTS" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3588051Z [36;1m    --spec "$SPEC" --voice "zh-CN-YunjianNeural" --rate "+6%"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3588754Z [36;1m  TTS_BUNDLE_ARGS=(--tts-bundle-in "$FROZEN_TTS")[0m
+reel	render — 出成片	2026-11-04T11:18:43.3589334Z [36;1mfi[0m
+reel	render — 出成片	2026-11-04T11:18:43.3589800Z [36;1m# 普通赛场之上保留现场声大小，不再为响度预测重复取 probe。[0m
+reel	render — 出成片	2026-11-04T11:18:43.3590419Z [36;1m# 审听 sha256 必须是这一趟真正编码的文件。先落到 outdir，render 见到[0m
+reel	render — 出成片	2026-11-04T11:18:43.3591099Z [36;1m# source_*.mp4 就不再重下。选择器先用任务书的 avc1≤1080，失败再走 download()。[0m
+reel	render — 出成片	2026-11-04T11:18:43.3591897Z [36;1mpython tools/stage_reel_sources.py --spec "$SPEC" --outdir "$OUTDIR"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3592620Z [36;1m# 600 秒是性能目标，不是内容闸。超线照样做完、照样过 L2 和发布；[0m
+reel	render — 出成片	2026-11-04T11:18:43.3593252Z [36;1m# `finish` 会在产物与 job summary 留 FAIL + warning，供后续定点修复。[0m
+reel	render — 出成片	2026-11-04T11:18:43.3593964Z [36;1m# tee + pipefail：失败原话（TTS 装不下 / 哑场 / ReelError）要留给[0m
+reel	render — 出成片	2026-11-04T11:18:43.3594665Z [36;1m# 「判据回喂模型修一轮」那一步当输入，见 dry-run 步的同款注释。[0m
+reel	render — 出成片	2026-11-04T11:18:43.3595221Z [36;1mset -o pipefail[0m
+reel	render — 出成片	2026-11-04T11:18:43.3595935Z [36;1mRENDER_STARTED=$(date -u +%FT%TZ)[0m
+reel	render — 出成片	2026-11-04T11:18:43.3596785Z [36;1mpython tools/video_sla.py mark --timeline "$RUNNER_TEMP/production-timeline.json" --phase render[0m
+reel	render — 出成片	2026-11-04T11:18:43.3597688Z [36;1mpython tools/build_match_reel.py render \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3598270Z [36;1m  --spec "$SPEC" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3598817Z [36;1m  --voice "zh-CN-YunjianNeural" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3599365Z [36;1m  --rate "+6%" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3600004Z [36;1m  "${TTS_BUNDLE_ARGS[@]}" --tts-bundle-out "$RUNNER_TEMP/$SLUG-tts.zip" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3600809Z [36;1m  --outdir "$OUTDIR" 2>&1 | tee -a /tmp/render-findings.log[0m
+reel	render — 出成片	2026-11-04T11:18:43.3601617Z [36;1mpython tools/reel_tts_release.py publish --slug "$SLUG" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3602442Z [36;1m  --bundle "$RUNNER_TEMP/$SLUG-tts.zip" --metadata "$OUTDIR/render.json"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3603416Z [36;1mpython tools/video_sla.py finish --spec "$SPEC" --timeline "$RUNNER_TEMP/production-timeline.json" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3604250Z [36;1m  --received-at "2026-11-04T11:16:35Z" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3604822Z [36;1m  --render-started-at "$RENDER_STARTED" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3605656Z [36;1m  --artifact "$OUTDIR/$SLUG.mp4" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3606394Z [36;1m  --metadata "$OUTDIR/render.json" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3607005Z [36;1m  --pipeline match-reel --slug "$SLUG" \[0m
+reel	render — 出成片	2026-11-04T11:18:43.3607609Z [36;1m  --summary "$GITHUB_STEP_SUMMARY"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3608146Z [36;1mls -la "$OUTDIR"[0m
+reel	render — 出成片	2026-11-04T11:18:43.3630742Z shell: /usr/bin/bash -e {0}
+reel	render — 出成片	2026-11-04T11:18:43.3631236Z env:
+reel	render — 出成片	2026-11-04T11:18:43.3631756Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	render — 出成片	2026-11-04T11:18:43.3632526Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+reel	render — 出成片	2026-11-04T11:18:43.3633271Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	render — 出成片	2026-11-04T11:18:43.3634195Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	render — 出成片	2026-11-04T11:18:43.3634890Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	render — 出成片	2026-11-04T11:18:43.3635602Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+reel	render — 出成片	2026-11-04T11:18:43.3639550Z   GH_TOKEN: ***
+reel	render — 出成片	2026-11-04T11:18:43.3640006Z   AZURE_SPEECH_KEY: 
+reel	render — 出成片	2026-11-04T11:18:43.3640471Z   AZURE_SPEECH_REGION: 
+reel	render — 出成片	2026-11-04T11:18:43.3641013Z   TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
+reel	render — 出成片	2026-11-04T11:18:43.3641770Z   TENNISLIVE_SCOREBOARD_MASK_CACHE: ~/.cache/tennislive-scoreboard-masks
+reel	render — 出成片	2026-11-04T11:18:43.3642521Z   YT_COOKIES: /home/runner/work/_temp/yt-cookies.txt
+reel	render — 出成片	2026-11-04T11:18:43.3643099Z   YT_POT_PROVIDER: 1
+reel	render — 出成片	2026-11-04T11:18:43.3643549Z ##[endgroup]
+reel	render — 出成片	2026-11-04T11:18:43.7520349Z Restored exact TTS bytes: 3e1a1293ab1555ea773f565b997afbf07d124f1d6146636602993e6a4096d552
+reel	render — 出成片	2026-11-04T11:18:44.1113257Z [片长] 325.0s = 5 分 24 秒，按实测 12560 kb/s 估 487 MiB —— 成片一律走 Release 附件，不进 git
+reel	render — 出成片	2026-11-04T11:18:44.1114410Z [TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：沿用年终之路已确认的自然云健；不请求Edge不支持的情绪、SSML或重音控制。整句、+6%、+0Hz。
+reel	render — 出成片	2026-11-04T11:18:44.1115598Z [配音] 没有 Azure，栏目「网球有故事」不套基调（TENNISLIVE_TTS_BACKEND=edge 显式关掉了 Azure（spec 的 `tts_backend` 或环境变量），这一趟走 edge-tts）
+reel	render — 出成片	2026-11-04T11:18:44.1116551Z {
+reel	render — 出成片	2026-11-04T11:18:44.1117053Z   "schema": "tennislive.frozen-tts-bundle.v1",
+reel	render — 出成片	2026-11-04T11:18:44.1117847Z   "bundle_sha256": "3e1a1293ab1555ea773f565b997afbf07d124f1d6146636602993e6a4096d552",
+reel	render — 出成片	2026-11-04T11:18:44.1118578Z   "request_count": 20,
+reel	render — 出成片	2026-11-04T11:18:44.1119081Z   "artifact_kind": "native_tts_inputs",
+reel	render — 出成片	2026-11-04T11:18:44.1119624Z   "quality_approval": false,
+reel	render — 出成片	2026-11-04T11:18:44.1120112Z   "implementation": {
+reel	render — 出成片	2026-11-04T11:18:44.1120782Z     "azure_tts.py": "bab46582b80d2fc939250d3238abd97d2a7104bf5cb6523222762e86fad40c51",
+reel	render — 出成片	2026-11-04T11:18:44.1121726Z     "pronounce.py": "7091b501fec9d98e6c3621cbe744e4ff7aaa62ba0e584e6d4e7d55cc97275a64",
+reel	render — 出成片	2026-11-04T11:18:44.1122642Z     "tts.py": "f8fba13a2be162f7062f5e414f673a75e98e9a9ff43837e6975f22b5307ad8be",
+reel	render — 出成片	2026-11-04T11:18:44.1123551Z     "tts_bundle.py": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef"
+reel	render — 出成片	2026-11-04T11:18:44.1124249Z   },
+reel	render — 出成片	2026-11-04T11:18:44.1124661Z   "audio_decoding_verified": false,
+reel	render — 出成片	2026-11-04T11:18:44.1125234Z   "validation_level": "integrity_and_requests",
+reel	render — 出成片	2026-11-04T11:18:44.1126243Z   "metadata": {
+reel	render — 出成片	2026-11-04T11:18:44.1126681Z     "kind": "reel_native_tts",
+reel	render — 出成片	2026-11-04T11:18:44.1127191Z     "slug": "cobolli-finals-2026"
+reel	render — 出成片	2026-11-04T11:18:44.1127688Z   },
+reel	render — 出成片	2026-11-04T11:18:44.1128075Z   "entries": [
+reel	render — 出成片	2026-11-04T11:18:44.1158478Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1159138Z       "audio_sha256": "3e281fe221f1f80622f091e53a63970b27a651561f3632da9d6be171b36de628",
+reel	render — 出成片	2026-11-04T11:18:44.1159905Z       "duration_seconds": 8.232,
+reel	render — 出成片	2026-11-04T11:18:44.1160633Z       "marks_sha256": "ac2bf306b52d15973e07b24adbe8bfa25554122dc42031d11ecf2494486bcadb",
+reel	render — 出成片	2026-11-04T11:18:44.1161362Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1161811Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1162355Z         "cache_key": "0d13734c1730c2f55b942ea32af1f6e2",
+reel	render — 出成片	2026-11-04T11:18:44.1162925Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1163394Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1163848Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1164372Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1164837Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1165593Z         "text": "第五盘一比六，他与冠军擦肩。法网亚军的一千三百分，是他本季最大的一笔单站积分。",
+reel	render — 出成片	2026-11-04T11:18:44.1166303Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1166827Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1167434Z       "request_id": "1c8e68c80f1b9223671e3160e3a7a3261c9c4e507cd606c9ff6e08b8dcc51d78"
+reel	render — 出成片	2026-11-04T11:18:44.1168140Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1168542Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1169152Z       "audio_sha256": "93372ed88b1c4471354364fe32c1daf0bee487f15a98011d25f80dcb6320ea4b",
+reel	render — 出成片	2026-11-04T11:18:44.1169886Z       "duration_seconds": 10.224,
+reel	render — 出成片	2026-11-04T11:18:44.1170604Z       "marks_sha256": "16754e1adf1659a01dab2ef29d31c9d906d6840f0f22e82f97b5173ec589137b",
+reel	render — 出成片	2026-11-04T11:18:44.1171600Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1172047Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1172587Z         "cache_key": "6a0f481e3b44feac0003e76dfca162c9",
+reel	render — 出成片	2026-11-04T11:18:44.1173166Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1173638Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1174107Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1174551Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1174993Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1175730Z         "text": "门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？",
+reel	render — 出成片	2026-11-04T11:18:44.1176499Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1177024Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1177632Z       "request_id": "358d85b31a6f2fee3804626a15d40b58d7dc69115da5a498d94c87d16b3242ec"
+reel	render — 出成片	2026-11-04T11:18:44.1178337Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1178727Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1179343Z       "audio_sha256": "bd0d3be869b35fbcf1c7da88e76551402d575ff592a0548f611d82293b7391d8",
+reel	render — 出成片	2026-11-04T11:18:44.1180084Z       "duration_seconds": 9.744,
+reel	render — 出成片	2026-11-04T11:18:44.1180815Z       "marks_sha256": "a0e61962986b97e862aaf2b2d446718b1794e91ee81a691b1ba7637aa80e5e16",
+reel	render — 出成片	2026-11-04T11:18:44.1181531Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1181979Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1182516Z         "cache_key": "3734e9292691c4338212a6f0da8734cd",
+reel	render — 出成片	2026-11-04T11:18:44.1183179Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1183638Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1184094Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1184531Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1184968Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1185674Z         "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+reel	render — 出成片	2026-11-04T11:18:44.1186929Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1187443Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1188052Z       "request_id": "527be1915cf5459018b0ce02b789b8e0215033ac30a809449ae86ba7ef718bd4"
+reel	render — 出成片	2026-11-04T11:18:44.1188753Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1189136Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1189733Z       "audio_sha256": "30dcaf858614e4ed8ce3b3e85523b01aedb752d6e6948f13c48f0e1d704fbe12",
+reel	render — 出成片	2026-11-04T11:18:44.1190479Z       "duration_seconds": 8.28,
+reel	render — 出成片	2026-11-04T11:18:44.1191160Z       "marks_sha256": "df03a59359e428362681c2ef8018290124876b617ec29bfb25cdf42aefffdc60",
+reel	render — 出成片	2026-11-04T11:18:44.1191853Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1192509Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1193025Z         "cache_key": "1b847c4f32d95bad0d29052ea69e182b",
+reel	render — 出成片	2026-11-04T11:18:44.1193579Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1194029Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1194470Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1194895Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1195323Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1196090Z         "text": "北京和上海，他又连续输掉首战。赛季最后的室内硬帝，能否拿到门票，依然没有答案。",
+reel	render — 出成片	2026-11-04T11:18:44.1196649Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1197159Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1197767Z       "request_id": "55c34c16cdbbbc48f2111bc820fa9ec069443fde13e07cc53775bf6fc51f8f61"
+reel	render — 出成片	2026-11-04T11:18:44.1198489Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1198874Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1199488Z       "audio_sha256": "11081c89b3eb573d1ac8161920ab5e173580608b23a6f43d251d2ca2edbde627",
+reel	render — 出成片	2026-11-04T11:18:44.1200220Z       "duration_seconds": 8.52,
+reel	render — 出成片	2026-11-04T11:18:44.1200944Z       "marks_sha256": "dc4f7ec27909c7ddca7a1b56de3d7fd16b6cf2fff8515a7fdfac70344b8800d8",
+reel	render — 出成片	2026-11-04T11:18:44.1201689Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1202122Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1202661Z         "cache_key": "36fe0da01cfa92e53ce40908993ac5a9",
+reel	render — 出成片	2026-11-04T11:18:44.1203220Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1203674Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1204121Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1204550Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1204985Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1205638Z         "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+reel	render — 出成片	2026-11-04T11:18:44.1206401Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1206909Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1207731Z       "request_id": "581e2ea32f66e5b96416674859ba26f2e17fe033a5a065416173d8b745fb1cfb"
+reel	render — 出成片	2026-11-04T11:18:44.1208416Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1208799Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1209404Z       "audio_sha256": "d92800255c1803bb3cd0812a79bdb8801a1fa7d2619ae1148d8738a5d9ec00ad",
+reel	render — 出成片	2026-11-04T11:18:44.1210147Z       "duration_seconds": 8.424,
+reel	render — 出成片	2026-11-04T11:18:44.1210855Z       "marks_sha256": "b3d9cf65761af6fb81bc7e48af3f65da423e9b0c693d61c928891e9344e65d1d",
+reel	render — 出成片	2026-11-04T11:18:44.1211568Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1211997Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1212520Z         "cache_key": "7a97ba7927a7251f554fc1e0957f6727",
+reel	render — 出成片	2026-11-04T11:18:44.1213076Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1213529Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1213979Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1214413Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1214848Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1215477Z         "text": "印第安维尔斯第三轮，迈阿密首战失利，蒙特卡洛第二轮。三月到四月，成绩仍有起伏。",
+reel	render — 出成片	2026-11-04T11:18:44.1216169Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1216668Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1217266Z       "request_id": "64d2d0fbf47d3f0416dd180fa935b3f4f4e33085e3382c643ea6df154fb28b4a"
+reel	render — 出成片	2026-11-04T11:18:44.1217954Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1218332Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1218954Z       "audio_sha256": "af60a9ea61c0eec2b78e1a3b8e2f74e5df44a2b7c46be76360c58b386ac663d9",
+reel	render — 出成片	2026-11-04T11:18:44.1219692Z       "duration_seconds": 9.072,
+reel	render — 出成片	2026-11-04T11:18:44.1220385Z       "marks_sha256": "789f3df6daea7722865835a7cc37fcb4d72c610bde1a5a823fe6b84be8c8b341",
+reel	render — 出成片	2026-11-04T11:18:44.1221091Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1221542Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1222053Z         "cache_key": "9e6e8e05e2042c647a0211413c77c489",
+reel	render — 出成片	2026-11-04T11:18:44.1222609Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1223061Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1223506Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1223947Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1224390Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1225087Z         "text": "来到里昂，他在半决赛拿到四个赛点，却还是输给穆塞蒂。错过的机会，让这段冲刺多了一层波折。",
+reel	render — 出成片	2026-11-04T11:18:44.1225863Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1226371Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1226965Z       "request_id": "69922ac3516c829b09741959e0a65c17af2912e4328dbfc8c448ea849c87a230"
+reel	render — 出成片	2026-11-04T11:18:44.1227880Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1228265Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1228879Z       "audio_sha256": "3d5cc2130ca3aae02780e085bf20eb79d4780ba7aee78b9a9625efbca4c93bbe",
+reel	render — 出成片	2026-11-04T11:18:44.1229647Z       "duration_seconds": 9.864,
+reel	render — 出成片	2026-11-04T11:18:44.1230342Z       "marks_sha256": "5bb5e15d59aa42d8502a137160360c0fa0e26441cd20c2454835aa7603dd89e7",
+reel	render — 出成片	2026-11-04T11:18:44.1231047Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1231477Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1231994Z         "cache_key": "0548119dcf95bc21df1b6bf09469ffe1",
+reel	render — 出成片	2026-11-04T11:18:44.1232551Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1233007Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1233612Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1234052Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1234493Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1235173Z         "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+reel	render — 出成片	2026-11-04T11:18:44.1235890Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1236395Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1237000Z       "request_id": "78b12b634a7b6a184d6099e29fd0bd23c96a8825dba7444e651a7e51d976b69e"
+reel	render — 出成片	2026-11-04T11:18:44.1237690Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1238077Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1238690Z       "audio_sha256": "85a08e5cdeb504dbcf7900f7e382239ab6e2727f2d47ed81cdc22dc72bf67439",
+reel	render — 出成片	2026-11-04T11:18:44.1239454Z       "duration_seconds": 9.432,
+reel	render — 出成片	2026-11-04T11:18:44.1240163Z       "marks_sha256": "0d1f2e110f8f173c25b7b9a7d8730a851dc15043e1dac3cdc071178fe2fcc9c6",
+reel	render — 出成片	2026-11-04T11:18:44.1240877Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1241310Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1241832Z         "cache_key": "57834c09fc8312eeda905ff88c29d842",
+reel	render — 出成片	2026-11-04T11:18:44.1242402Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1242850Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1243289Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1243717Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1244156Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1244827Z         "text": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
+reel	render — 出成片	2026-11-04T11:18:44.1245426Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1246060Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1246670Z       "request_id": "863e11300d0687d083d938fdfad4a00f20dd503ae548cf629ab60781b3b71eb9"
+reel	render — 出成片	2026-11-04T11:18:44.1247364Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1247751Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1248360Z       "audio_sha256": "7d22aa26192b49e2f3a84d3b3edb74f7f0ec09cb178d816c9cb04d3d896b2971",
+reel	render — 出成片	2026-11-04T11:18:44.1249092Z       "duration_seconds": 9.144,
+reel	render — 出成片	2026-11-04T11:18:44.1249784Z       "marks_sha256": "ff84193e2c5d4f650312ba855bcca3d9262997b61181145d6dad3d5fa29ae9aa",
+reel	render — 出成片	2026-11-04T11:18:44.1250477Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1250931Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1251452Z         "cache_key": "f3ee4e1c9898e0cef404ee5f6092dd99",
+reel	render — 出成片	2026-11-04T11:18:44.1252019Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1252464Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1252908Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1253360Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1253791Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1254441Z         "text": "四月的慕尼黑，他在半决赛六比三、六比三击败兹维列夫。决赛输给谢尔顿，也拿到了三百三十分。",
+reel	render — 出成片	2026-11-04T11:18:44.1255036Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1255526Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1256225Z       "request_id": "878822f0a3c45d06c25712c5b5abdb6c9a66bbe5de0294e87433c7059361d35f"
+reel	render — 出成片	2026-11-04T11:18:44.1256924Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1257302Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1257915Z       "audio_sha256": "04fda7fc7e06039dbe50f2d60f39a46e524d0ea5ef873db5918642682d575a5d",
+reel	render — 出成片	2026-11-04T11:18:44.1258651Z       "duration_seconds": 8.592,
+reel	render — 出成片	2026-11-04T11:18:44.1259353Z       "marks_sha256": "990b961086cfe7c7ee8db3f21ea7bd52d13f9321bcc995a150ec08c65975b589",
+reel	render — 出成片	2026-11-04T11:18:44.1260074Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1260509Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1261024Z         "cache_key": "5806b412d4b85fc5e1c4447615d3bf01",
+reel	render — 出成片	2026-11-04T11:18:44.1261576Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1262217Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1262662Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1263090Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1263537Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1264192Z         "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+reel	render — 出成片	2026-11-04T11:18:44.1264778Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1265275Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1265975Z       "request_id": "8b70b99863d748c8e9d7db0a378fe1b0bc208964502215bbdb53686305fbeb91"
+reel	render — 出成片	2026-11-04T11:18:44.1266679Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1267056Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1267670Z       "audio_sha256": "c134e4390daf25a7a1f1c5f1ecb2c9e8d6b5645b786a3d3a6e18987cf3b47f66",
+reel	render — 出成片	2026-11-04T11:18:44.1268570Z       "duration_seconds": 8.328,
+reel	render — 出成片	2026-11-04T11:18:44.1269273Z       "marks_sha256": "dad0193455a036d0bf878b339efa044c1ee1542d5fb78a7f7e7f59cfcfeca8d8",
+reel	render — 出成片	2026-11-04T11:18:44.1269994Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1270431Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1270963Z         "cache_key": "6ed674b2c181bde654fbb29c06baab16",
+reel	render — 出成片	2026-11-04T11:18:44.1271550Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1272013Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1272455Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1272890Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1273335Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1273962Z         "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+reel	render — 出成片	2026-11-04T11:18:44.1274537Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1275038Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1275653Z       "request_id": "a3b8c7e2a0cc3488f1758aefe76e770ac91937c676de3d622b4993e4dbb60581"
+reel	render — 出成片	2026-11-04T11:18:44.1276656Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1277046Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1277676Z       "audio_sha256": "d8be93f56e2806dd37423eb5887595f496d240cb7eac77a190d1b61743233643",
+reel	render — 出成片	2026-11-04T11:18:44.1278419Z       "duration_seconds": 8.352,
+reel	render — 出成片	2026-11-04T11:18:44.1279163Z       "marks_sha256": "0dec5ab0fa921b6180068541edd419c52d14012f6ccaf8eb62bc2f8f826dc422",
+reel	render — 出成片	2026-11-04T11:18:44.1279884Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1280325Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1280852Z         "cache_key": "60cb1387bbf62305f59aded5bdb52ecd",
+reel	render — 出成片	2026-11-04T11:18:44.1281411Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1281878Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1282311Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1282753Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1283201Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1283846Z         "text": "乌马格和加拿大站都没赢球。来到辛辛那提，他连续四场打满三盘，第一次闯进大师赛四强。",
+reel	render — 出成片	2026-11-04T11:18:44.1284426Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1284930Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1285539Z       "request_id": "a867cc087ad0e59d3bf9e7bbd63a24dd1ae571c1ada76adab417dc3d5de5fb43"
+reel	render — 出成片	2026-11-04T11:18:44.1286386Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1286781Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1287402Z       "audio_sha256": "99d40edf2418e4afb78af413d3c4481cfca37f73953fe0376e49ebdb2798b4bc",
+reel	render — 出成片	2026-11-04T11:18:44.1288144Z       "duration_seconds": 9.24,
+reel	render — 出成片	2026-11-04T11:18:44.1289016Z       "marks_sha256": "be67d97801961bc4ec31fbca51ff96719eb99b0da92b41fc8ffdbee7b0a43858",
+reel	render — 出成片	2026-11-04T11:18:44.1289738Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1290160Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1290681Z         "cache_key": "47852b515f0af2762bb4c5fbdb74823c",
+reel	render — 出成片	2026-11-04T11:18:44.1291249Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1291700Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1292139Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1292571Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1293009Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1293674Z         "text": "决赛七比六、六比四击败蒂亚福，拿下生涯首座硬帝巡回赛冠军。五百分到手，赛季终于有了亮色。",
+reel	render — 出成片	2026-11-04T11:18:44.1294265Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1294780Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1295378Z       "request_id": "ab9886b31c2b058ef9b256655bbf412b141dcbe2c7cc1a7a84fd3e33b5e06bd2"
+reel	render — 出成片	2026-11-04T11:18:44.1296187Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1296564Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1297184Z       "audio_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+reel	render — 出成片	2026-11-04T11:18:44.1297937Z       "duration_seconds": 4.104,
+reel	render — 出成片	2026-11-04T11:18:44.1298647Z       "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+reel	render — 出成片	2026-11-04T11:18:44.1299357Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1299778Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1300307Z         "cache_key": "20da8f5468902afbbecb78daefb15d83",
+reel	render — 出成片	2026-11-04T11:18:44.1300865Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1301318Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1301762Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1302198Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1302633Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1303194Z         "text": "关注网球时插，时插归我，好球归你。",
+reel	render — 出成片	2026-11-04T11:18:44.1303864Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1304368Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1304981Z       "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+reel	render — 出成片	2026-11-04T11:18:44.1305678Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1306186Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1306821Z       "audio_sha256": "9f6a780cc78a0f44531da964a252619999eedce14923ab4e79472f7a19ba7633",
+reel	render — 出成片	2026-11-04T11:18:44.1307570Z       "duration_seconds": 7.704,
+reel	render — 出成片	2026-11-04T11:18:44.1308268Z       "marks_sha256": "af566588637ed9c73a1de976965e37428a5bdd908a89a7e9fa334f5e672b4d73",
+reel	render — 出成片	2026-11-04T11:18:44.1308981Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1309403Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1309920Z         "cache_key": "94f8c7307c772e0721d815fa89a8a702",
+reel	render — 出成片	2026-11-04T11:18:44.1310482Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1310932Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1311376Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1311802Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1312251Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1312864Z         "text": "年初四连败，年末第一次入围总决赛。科博利的这一年，中间隔着多少次重新出发？",
+reel	render — 出成片	2026-11-04T11:18:44.1313429Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1313929Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1314535Z       "request_id": "da36673bc447eff873a1f55c987b0fa83af7cc13ed2580e1862f962c518885e8"
+reel	render — 出成片	2026-11-04T11:18:44.1315244Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1315624Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1316325Z       "audio_sha256": "923064621d0f2f9472f04873195aae942d1926901e6911ae0b279365cee2a5f4",
+reel	render — 出成片	2026-11-04T11:18:44.1317035Z       "duration_seconds": 8.04,
+reel	render — 出成片	2026-11-04T11:18:44.1317731Z       "marks_sha256": "c1c0a492830d72d4669a05265b2b23a30d120bb15d207ea10ba1f1e0fe3ddeef",
+reel	render — 出成片	2026-11-04T11:18:44.1318443Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1318875Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1319393Z         "cache_key": "74b860605d8d280ffeb6432210e0e3ef",
+reel	render — 出成片	2026-11-04T11:18:44.1319960Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1320422Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1320883Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1321311Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1321749Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1322382Z         "text": "决赛对面，又是兹维列夫。第四盘抢七，科博利把比赛拖进决胜盘，冠军还没有分出。",
+reel	render — 出成片	2026-11-04T11:18:44.1322955Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1323617Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1324236Z       "request_id": "df396c71b22c3a2b8e71d51d63ef174039faee02d0a3f4a4eecc415ce4cfcaeb"
+reel	render — 出成片	2026-11-04T11:18:44.1324947Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1325325Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1326095Z       "audio_sha256": "7a21a4319c97696b9f537bc71afea944ce99c390d95ba0160a480a023c9bc6f7",
+reel	render — 出成片	2026-11-04T11:18:44.1326835Z       "duration_seconds": 8.04,
+reel	render — 出成片	2026-11-04T11:18:44.1327515Z       "marks_sha256": "0f5f3f66177160de6090b88bba6307d08a2f52e3407fd03f234baccaaea4cf7a",
+reel	render — 出成片	2026-11-04T11:18:44.1328238Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1328662Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1329179Z         "cache_key": "5ac5b0b584e640595baecb6118edba79",
+reel	render — 出成片	2026-11-04T11:18:44.1329756Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1330198Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1330640Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1331080Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1331508Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1332150Z         "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+reel	render — 出成片	2026-11-04T11:18:44.1332749Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1333247Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1333849Z       "request_id": "dff7854138e6633f53efc8274e6b7623865965b3e815bb1170e507b1113debc6"
+reel	render — 出成片	2026-11-04T11:18:44.1334546Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1334917Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1335529Z       "audio_sha256": "5ba008b7cf35ed55179ded91eac984a256b240c4e04f03034b1ead87ecd1b3ce",
+reel	render — 出成片	2026-11-04T11:18:44.1336404Z       "duration_seconds": 8.016,
+reel	render — 出成片	2026-11-04T11:18:44.1337125Z       "marks_sha256": "7fb47b5f5617cbe7370cb1cfc13e27594a7aaf4e06cb58ff618b0ef95c85760a",
+reel	render — 出成片	2026-11-04T11:18:44.1337846Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1338433Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1338965Z         "cache_key": "923e85ea04b149e9a8b3fa8d3491df97",
+reel	render — 出成片	2026-11-04T11:18:44.1339536Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1339993Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1340452Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1340903Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1341334Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1341962Z         "text": "他先连赢五场，打进四强。半决赛阿纳尔迪赛前退赛，科博利第一次站上大满贯决赛。",
+reel	render — 出成片	2026-11-04T11:18:44.1353359Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1353925Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1354546Z       "request_id": "ed3f079da6e6593b2e9049f719f8e5f35417ad128e2d27edd55283ec2285cb7e"
+reel	render — 出成片	2026-11-04T11:18:44.1355259Z     },
+reel	render — 出成片	2026-11-04T11:18:44.1355654Z     {
+reel	render — 出成片	2026-11-04T11:18:44.1356395Z       "audio_sha256": "18496475656d54a41750ceb67c5551e752da90adfb5669b6a1e8bf88b8c05922",
+reel	render — 出成片	2026-11-04T11:18:44.1357142Z       "duration_seconds": 8.808,
+reel	render — 出成片	2026-11-04T11:18:44.1357854Z       "marks_sha256": "246455f27a8137ed193f29488d0a4a90263659be2f4b4affd6b204febe00c3de",
+reel	render — 出成片	2026-11-04T11:18:44.1358594Z       "request": {
+reel	render — 出成片	2026-11-04T11:18:44.1359030Z         "backend": "edge",
+reel	render — 出成片	2026-11-04T11:18:44.1359559Z         "cache_key": "c62fd55933a2187d5263c31ed3ab8689",
+reel	render — 出成片	2026-11-04T11:18:44.1360119Z         "lead_pause": 0.0,
+reel	render — 出成片	2026-11-04T11:18:44.1360587Z         "pitch": "+0Hz",
+reel	render — 出成片	2026-11-04T11:18:44.1361040Z         "rate": "+6%",
+reel	render — 出成片	2026-11-04T11:18:44.1361469Z         "style": "",
+reel	render — 出成片	2026-11-04T11:18:44.1361910Z         "styledegree": "",
+reel	render — 出成片	2026-11-04T11:18:44.1362616Z         "text": "直到德尔雷比奇，他才又连续赢球，打进四强。接下来的阿卡普尔科，这一次，他把奖杯带走了。",
+reel	render — 出成片	2026-11-04T11:18:44.1363225Z         "voice": "zh-CN-YunjianNeural"
+reel	render — 出成片	2026-11-04T11:18:44.1363726Z       },
+reel	render — 出成片	2026-11-04T11:18:44.1364347Z       "request_id": "ff9ec21648f72f8fd40e61d48d81b54e883edbb180d51945374e8ba4f6a34eaf"
+reel	render — 出成片	2026-11-04T11:18:44.1365050Z     }
+reel	render — 出成片	2026-11-04T11:18:44.1365448Z   ]
+reel	render — 出成片	2026-11-04T11:18:44.1365959Z }
+reel	render — 出成片	2026-11-04T11:18:53.2514156Z [cookies] 用 /home/runner/work/_temp/yt-cookies.txt
+reel	render — 出成片	2026-11-04T11:18:53.2514986Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2515726Z [geometry] ao_r1: 1920×1080 @ 25/1 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2516546Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2517050Z [geometry] acapulco_final: 1920×1080 @ 25/1 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2517990Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2518482Z [geometry] munich_final: 1920×1080 @ 25 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2518955Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2519436Z [geometry] rg_final: 1920×1080 @ 25 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2519885Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2520363Z [geometry] wimbledon_qf: 1920×1080 @ 25/1 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2520848Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:18:53.2521330Z [geometry] cincinnati_sf: 1920×1080 @ 25 (25.00000) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2521998Z [fps] 高帧率源整除降采样：60000/1001 / 2 → 30000/1001 = 29.970
+reel	render — 出成片	2026-11-04T11:18:53.2522502Z [geometry] us_r3: 1920×1080 @ 30000/1001 (29.97003) duration-check via ffprobe next
+reel	render — 出成片	2026-11-04T11:18:53.2523276Z [audio-review] /home/runner/work/tennislive/tennislive/data/audio_reviews/cobolli-finals-2026.json 通过 foreground_audio_gate.require
+reel	render — 出成片	2026-11-04T11:19:06.1809513Z [片长] 325.0s = 5 分 24 秒，按实测 12560 kb/s 估 487 MiB —— 成片一律走 Release 附件，不进 git
+reel	render — 出成片	2026-11-04T11:19:06.1810490Z [TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：沿用年终之路已确认的自然云健；不请求Edge不支持的情绪、SSML或重音控制。整句、+6%、+0Hz。
+reel	render — 出成片	2026-11-04T11:19:06.1811239Z [配音] 没有 Azure，栏目「网球有故事」不套基调（TENNISLIVE_TTS_BACKEND=edge 显式关掉了 Azure（spec 的 `tts_backend` 或环境变量），这一趟走 edge-tts）
+reel	render — 出成片	2026-11-04T11:19:06.1812176Z [口味] 只报：给人看的字里的数字写成了汉字：钩子「四连败」、副标题「四连败」——账号所有者 2026-09-16「给用户看的文案里的数字不要用汉字，就用 2025 之类的阿拉伯数字」（TTS 底稿照旧写汉字；序数、抢七、万不换）。
+reel	render — 出成片	2026-11-04T11:19:06.1812854Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1813216Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1813572Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1813992Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1814358Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1814702Z [fps] 高帧率源整除降采样：50/1 / 2 → 25 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1815101Z [fps] 高帧率源整除降采样：60000/1001 / 2 → 30000/1001 = 29.970
+reel	render — 出成片	2026-11-04T11:19:06.1815655Z [fps] us_r3 是 30000/1001，重采样到主源的 25/1——实际60000/1001fps原片按主源25fps等时长取样，保留原速，不加速。
+reel	render — 出成片	2026-11-04T11:19:06.1816415Z [原声] source_ao_r1.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1816841Z [原声] source_acapulco_final.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1817265Z [原声] source_munich_final.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1817652Z [原声] source_rg_final.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1818035Z [原声] source_wimbledon_qf.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1818430Z [原声] source_cincinnati_sf.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1818808Z [原声] source_us_r3.mp4 音频流存在；原样保留，不测响度
+reel	render — 出成片	2026-11-04T11:19:06.1819169Z [fps] 成片跟着源片走：25/1 = 25.000
+reel	render — 出成片	2026-11-04T11:19:06.1819499Z 源片 1920×1080，491.0s
+reel	render — 出成片	2026-11-04T11:19:06.1819865Z [裁切] 源片 1920×1080 → 3:4 窗口 810×1080（横幅）
+reel	render — 出成片	2026-11-04T11:19:06.1820231Z [章节卡] 第 2 段「四场连败
+reel	render — 出成片	2026-11-04T11:19:06.1820581Z 澳网止步首轮」→ title_card_02.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1820920Z [章节卡] 第 4 段「重新赢球
+reel	render — 出成片	2026-11-04T11:19:06.1821254Z 第一座硬地冠军」→ title_card_04.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1821899Z [章节卡] 第 7 段「冠军之后
+reel	render — 出成片	2026-11-04T11:19:06.1822223Z 仍有起伏」→ title_card_07.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1822569Z [章节卡] 第 10 段「带着起伏
+reel	render — 出成片	2026-11-04T11:19:06.1822895Z 来到巴黎」→ title_card_10.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1823229Z [章节卡] 第 12 段「拼到第五盘
+reel	render — 出成片	2026-11-04T11:19:06.1823561Z 冠军仍有悬念」→ title_card_12.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1823903Z [章节卡] 第 16 段「连续两年
+reel	render — 出成片	2026-11-04T11:19:06.1824215Z 温网八强」→ title_card_16.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1824552Z [章节卡] 第 18 段「四场三盘大战
+reel	render — 出成片	2026-11-04T11:19:06.1824885Z 首次大师赛四强」→ title_card_18.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1825227Z [章节卡] 第 21 段「纽约连过两轮
+reel	render — 出成片	2026-11-04T11:19:06.1825546Z 止步第三轮」→ title_card_21.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1826031Z [章节卡] 第 23 段「最后的冲刺
+reel	render — 出成片	2026-11-04T11:19:06.1826579Z 门票尚未落定」→ title_card_23.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1826939Z [章节卡] 第 24 段「四个赛点
+reel	render — 出成片	2026-11-04T11:19:06.1827263Z 都没能兑现」→ title_card_24.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1827604Z [章节卡] 第 25 段「维也纳伤退
+reel	render — 出成片	2026-11-04T11:19:06.1827926Z 随后退出巴黎」→ title_card_25.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1828289Z [章节卡] 第 26 段「巴黎当地11月3日
+reel	render — 出成片	2026-11-04T11:19:06.1828615Z 都灵门票落定」→ title_card_26.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1828947Z [章节卡] 第 27 段「第一次年终
+reel	render — 出成片	2026-11-04T11:19:06.1829264Z 在意大利等他」→ title_card_27.mp4（1080×1440）
+reel	render — 出成片	2026-11-04T11:19:06.1829615Z     [耗时] 章节卡（剪进片子） 10.03s
+reel	render — 出成片	2026-11-04T11:19:06.2953515Z [贴图] 这个栏目画常驻角标，顶角的 inset 一律让到 y ≥ 151
+reel	render — 出成片	2026-11-04T11:19:06.2954194Z [封面] 没有配音，定长停 1.2s
+reel	render — 出成片	2026-11-04T11:19:06.2954545Z     [耗时] 片尾配音 0.00s
+reel	render — 出成片	2026-11-04T11:19:06.3139906Z [片尾] 口播 4.10s + 尾 0.45s = 4.55s，动效要 4.10s → 取 口播 的 4.55s
+reel	render — 出成片	2026-11-04T11:19:06.3140377Z 27 段，画面共 329.5s（含封面 1.20s、片尾 4.55s）
+reel	render — 出成片	2026-11-04T11:19:06.3140784Z [注意] 超过两分钟（329.5s），按要求应当再砍
+reel	render — 出成片	2026-11-04T11:19:06.3141395Z [配音] 没有 Azure，栏目「网球有故事」不套基调（TENNISLIVE_TTS_BACKEND=edge 显式关掉了 Azure（spec 的 `tts_backend` 或环境变量），这一趟走 edge-tts）
+reel	render — 出成片	2026-11-04T11:19:06.3141977Z     [耗时] TTS 合成 0.01s
+reel	render — 出成片	2026-11-04T11:19:06.5109296Z [查哑场] 没人说话合计 7.6s / 323.8s（2%），提示线：单段 4.0s
+reel	render — 出成片	2026-11-04T11:19:06.5110038Z [片尾] 口播落在 324.96s，画面上已印着同样的话，不另排字幕
+reel	render — 出成片	2026-11-04T11:19:06.5110715Z 字幕 83 行 → subtitles.ass（画布 1080×1440，上锚 MarginV=1284，左右 150）
+reel	render — 出成片	2026-11-04T11:19:06.5111410Z     [耗时] 字幕预检 0.02s
+reel	render — 出成片	2026-11-04T11:19:06.7038744Z [0;93m2026-11-04 11:19:06.701723522 [W:onnxruntime:Default, device_discovery.cc:95 GetPciBusId] Skipping pci_bus_id for PCI path at "/sys/devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/5620e0c7-8062-4dce-aeb7-520c7ef76171" because filename "5620e0c7-8062-4dce-aeb7-520c7ef76171" did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+[m
+reel	render — 出成片	2026-11-04T11:19:08.2828351Z [拼接] 2×2 中间视频保留原生音频和帧时钟；全尺寸溶解接入最终编码
+reel	render — 出成片	2026-11-04T11:19:08.2828859Z     [耗时] 封面海报 1.76s
+reel	render — 出成片	2026-11-04T11:19:08.5674906Z     [封面] 网球有故事海报 solo → poster.jpg
+reel	render — 出成片	2026-11-04T11:19:08.5675468Z     [耗时] 封面编码 0.28s
+reel	render — 出成片	2026-11-04T11:19:18.3687397Z [分段编码] 4 个并行任务，每个解码/滤镜/编码池 1 线程
+reel	render — 出成片	2026-11-04T11:19:18.3706564Z     [耗时] 分段编码·并行 9.28s
+reel	render — 出成片	2026-11-04T11:19:21.6497458Z     [耗时] 分段编码·并行 9.83s
+reel	render — 出成片	2026-11-04T11:19:25.8468469Z     [耗时] 分段编码·并行 13.65s
+reel	render — 出成片	2026-11-04T11:19:27.5447864Z     [耗时] 分段编码·并行 18.52s
+reel	render — 出成片	2026-11-04T11:19:33.2207149Z     [耗时] 分段编码·并行 10.66s
+reel	render — 出成片	2026-11-04T11:19:33.8977658Z     [耗时] 分段编码·并行 11.40s
+reel	render — 出成片	2026-11-04T11:19:37.1067955Z     [耗时] 分段编码·并行 8.54s
+reel	render — 出成片	2026-11-04T11:19:45.5019061Z     [耗时] 分段编码·并行 10.60s
+reel	render — 出成片	2026-11-04T11:19:49.9314450Z     [耗时] 分段编码·并行 16.24s
+reel	render — 出成片	2026-11-04T11:19:50.4526397Z     [耗时] 分段编码·并行 16.76s
+reel	render — 出成片	2026-11-04T11:19:52.0017638Z     [耗时] 分段编码·并行 10.62s
+reel	render — 出成片	2026-11-04T11:19:57.4597679Z     [耗时] 分段编码·并行 7.20s
+reel	render — 出成片	2026-11-04T11:19:57.9989365Z     [耗时] 分段编码·并行 8.51s
+reel	render — 出成片	2026-11-04T11:20:04.9093805Z     [耗时] 分段编码·并行 11.47s
+reel	render — 出成片	2026-11-04T11:20:04.9137255Z     [耗时] 分段编码 56.35s
+reel	render — 出成片	2026-11-04T11:20:05.3298034Z     [耗时] 片尾母版转码 0.42s
+reel	render — 出成片	2026-11-04T11:20:18.7609621Z   [拼接] 29 段溶解成 329.52s（段落合计 329.51s）
+reel	render — 出成片	2026-11-04T11:20:18.7610292Z     [耗时] 拼接 13.43s
+reel	render — 出成片	2026-11-04T11:20:23.2485085Z [原声] 源片增益 1.0，不随旁白闪避；保留既有转场淡入淡出
+reel	render — 出成片	2026-11-04T11:20:23.2485716Z     [耗时] 混音 4.49s
+reel	render — 出成片	2026-11-04T11:23:05.9715342Z [峰值] 混音真峰值 -3.89 dBTP，未过 -1 dBTP 天花板，混音原样
+reel	render — 出成片	2026-11-04T11:23:05.9716233Z [字幕垫] 默认不垫（2026-09-17 起）：字幕靠 4px 描边＋1px 影站住；忙背景真压不住再在 spec 写 subtitle_scrim: true
+reel	render — 出成片	2026-11-04T11:23:05.9716827Z [角标] 常驻角标「网球时差 · 网球有故事」：封面那个位置，只盖 1.20~324.96s（封面和片尾不带）
+reel	render — 出成片	2026-11-04T11:23:05.9717285Z     [耗时] 烧字幕+成片 154.65s
+reel	render — 出成片	2026-11-04T11:23:06.2208875Z     [耗时] 溶解帧时钟复核 0.25s
+reel	render — 出成片	2026-11-04T11:23:06.3438869Z   [分段认人] 查了 0 段 0 帧，0 帧有够大的脸，0 处画面和旁白对不上（只报不拦）
+reel	render — 出成片	2026-11-04T11:23:06.3439621Z 成片 output/2026-11-04/reel/cobolli-finals-2026/cobolli-finals-2026.mp4（329.5s，118.0 MB）
+reel	render — 出成片	2026-11-04T11:23:06.3439977Z 
+reel	render — 出成片	2026-11-04T11:23:06.3440191Z === 耗时明细（墙钟合计 241.7s，4 核）===
+reel	render — 出成片	2026-11-04T11:23:06.3440565Z     154.6s   64.0%  烧字幕+成片
+reel	render — 出成片	2026-11-04T11:23:06.3440897Z      56.3s   23.3%  分段编码
+reel	render — 出成片	2026-11-04T11:23:06.3441217Z      13.4s    5.6%  拼接
+reel	render — 出成片	2026-11-04T11:23:06.3441557Z      10.0s    4.2%  章节卡（剪进片子）
+reel	render — 出成片	2026-11-04T11:23:06.3441899Z       4.5s    1.9%  混音
+reel	render — 出成片	2026-11-04T11:23:06.3442277Z       1.8s    0.7%  封面海报
+reel	render — 出成片	2026-11-04T11:23:06.3442615Z       0.4s    0.2%  片尾母版转码
+reel	render — 出成片	2026-11-04T11:23:06.3442934Z       0.3s    0.1%  封面编码
+reel	render — 出成片	2026-11-04T11:23:06.3443258Z       0.2s    0.1%  溶解帧时钟复核
+reel	render — 出成片	2026-11-04T11:23:06.3443588Z       0.0s    0.0%  字幕预检
+reel	render — 出成片	2026-11-04T11:23:06.3443896Z       0.0s    0.0%  TTS 合成
+reel	render — 出成片	2026-11-04T11:23:06.3444234Z       0.0s    0.0%  片尾配音
+reel	render — 出成片	2026-11-04T11:23:06.3444637Z     163.3s  （并行累加 ×14，已含在上面的墙钟里，不计份额）  分段编码·并行
+reel	render — 出成片	2026-11-04T11:23:06.3444863Z 
+reel	render — 出成片	2026-11-04T11:23:06.3445052Z === 耗时明细（墙钟合计 241.7s，4 核）===
+reel	render — 出成片	2026-11-04T11:23:06.3445395Z     154.6s   64.0%  烧字幕+成片
+reel	render — 出成片	2026-11-04T11:23:06.3445728Z      56.3s   23.3%  分段编码
+reel	render — 出成片	2026-11-04T11:23:06.3446281Z      13.4s    5.6%  拼接
+reel	render — 出成片	2026-11-04T11:23:06.3446595Z      10.0s    4.2%  章节卡（剪进片子）
+reel	render — 出成片	2026-11-04T11:23:06.3446928Z       4.5s    1.9%  混音
+reel	render — 出成片	2026-11-04T11:23:06.3447236Z       1.8s    0.7%  封面海报
+reel	render — 出成片	2026-11-04T11:23:06.3447548Z       0.4s    0.2%  片尾母版转码
+reel	render — 出成片	2026-11-04T11:23:06.3447867Z       0.3s    0.1%  封面编码
+reel	render — 出成片	2026-11-04T11:23:06.3448183Z       0.2s    0.1%  溶解帧时钟复核
+reel	render — 出成片	2026-11-04T11:23:06.3448533Z       0.0s    0.0%  字幕预检
+reel	render — 出成片	2026-11-04T11:23:06.3448850Z       0.0s    0.0%  TTS 合成
+reel	render — 出成片	2026-11-04T11:23:06.3449157Z       0.0s    0.0%  片尾配音
+reel	render — 出成片	2026-11-04T11:23:06.3449512Z     163.3s  （并行累加 ×14，已含在上面的墙钟里，不计份额）  分段编码·并行
+reel	render — 出成片	2026-11-04T11:23:06.3449873Z Traceback (most recent call last):
+reel	render — 出成片	2026-11-04T11:23:06.3456130Z   File "/home/runner/work/tennislive/tennislive/tools/build_match_reel.py", line 13360, in <module>
+reel	render — 出成片	2026-11-04T11:23:06.3474293Z     raise SystemExit(main())
+reel	render — 出成片	2026-11-04T11:23:06.3474797Z                      ^^^^^^
+reel	render — 出成片	2026-11-04T11:23:06.3475553Z   File "/home/runner/work/tennislive/tennislive/tools/build_match_reel.py", line 13338, in main
+reel	render — 出成片	2026-11-04T11:23:06.3511065Z     capture_inventory(outdir, spec=Path(args.spec),
+reel	render — 出成片	2026-11-04T11:23:06.3512006Z   File "/home/runner/work/tennislive/tennislive/tools/voice_quality_gate.py", line 220, in capture_inventory
+reel	render — 出成片	2026-11-04T11:23:06.3526489Z ##[error]    raise VoiceQualityError('Existing inventory differs; preserve original actual inputs')
+reel	render — 出成片	2026-11-04T11:23:06.3527973Z voice_quality_gate.VoiceQualityError: Existing inventory differs; preserve original actual inputs
+reel	render — 出成片	2026-11-04T11:23:06.4260625Z ##[error]Process completed with exit code 1.

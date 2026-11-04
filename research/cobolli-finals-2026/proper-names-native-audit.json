@@ -1,0 +1,1471 @@
+{
+  "schema": "cobolli-native-proper-names-audit/v1",
+  "reviewer": "/root/cobolli_season_facts",
+  "generated_at_utc": "2026-11-04T11:26:39.550911+00:00",
+  "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+  "xhs_sha256": "3b0e5ce8469ff5d381149b71d481d61dea263395891c7611fe3c0972ca60c754",
+  "scope": "All public-facing text from 19 narration entries, title, cover text, push summary/lead, xhs, title cards and 7 inset labels. Person identity inventory is manually exhaustive, then every occurrence is matched against actual native player_zh (curated dictionary + authoritative top500 override) and existing PLAYER_ZH_ALIASES. Tournament names distinguish legitimate abbreviations/city references from different Chinese root translations. Not a fuzzy-spelling-gate-only audit.",
+  "native_sources": [
+    {
+      "path": "/workspace/cobolli-production/native/src/tennislive/zh/players.py",
+      "sha256": "2d0b0f501f22434c7c01e57b83aa10ecae3e9a5717290c3d5652e5f1bf6de9b9"
+    },
+    {
+      "path": "/workspace/cobolli-production/native/src/tennislive/zh/player_names_top500.json",
+      "sha256": "3074bc51c509002537883e615efef31dcb9fbd6e05305176745191e62441cf80"
+    },
+    {
+      "path": "/workspace/cobolli-production/native/src/tennislive/zh/tournaments.py",
+      "sha256": "00ef91d1c777e22899a384d3da950d83efd18a65edaf95b0993fd2c4301ebc1f"
+    },
+    {
+      "path": "/workspace/cobolli-production/native/src/tennislive/zh/__init__.py",
+      "sha256": "7b815072dcddd86ee5033cfb28f1289e093f5581c9495e04f6c21380a0248e23"
+    }
+  ],
+  "person_count": 17,
+  "event_context_count": 26,
+  "people": [
+    {
+      "identity_en": "Flavio Cobolli",
+      "native_output": "科博利",
+      "terms_scanned": [
+        "科博利"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "title",
+          "text": "科博利：从四连败到年终门票",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "cover.subject",
+          "text": "科博利",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "cover.topic",
+          "text": "科博利：从四连败到年终门票",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "push.summary",
+          "text": "科博利首获年终门票",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[0](opening).narration",
+          "text": "年初四连败，年末第一次入围总决赛。科博利的这一年，中间隔着多少次重新出发？",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[2](ao_terminal).inset.label.people",
+          "text": "科博利 vs 费里",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[5](acapulco_terminal).inset.label.people",
+          "text": "科博利 vs 蒂亚福",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[8](munich_terminal).inset.label.people",
+          "text": "科博利 vs 谢尔顿",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[10](rg_first_final).narration",
+          "text": "他先连赢五场，打进四强。半决赛阿尔纳尔迪赛前退赛，科博利第一次站上大满贯决赛。",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[11](rg_turning_setup).narration",
+          "text": "决赛对面，又是兹维列夫。第四盘抢七，科博利把比赛拖进决胜盘，冠军还没有分出。",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[13](rg_terminal).inset.label.people",
+          "text": "科博利 vs 兹维列夫",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[16](wimbledon_terminal).inset.label.people",
+          "text": "科博利 vs 费里",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[18](cincy_result).narration",
+          "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[19](cincy_terminal).inset.label.people",
+          "text": "科博利 vs 菲斯",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[21](us_terminal).inset.label.people",
+          "text": "科博利 vs 布洛克斯",
+          "matched": [
+            "科博利"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).narration",
+          "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+          "matched": [
+            "科博利"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Arthur Fery",
+      "native_output": "费里",
+      "terms_scanned": [
+        "费里"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[2](ao_terminal).inset.label.people",
+          "text": "科博利 vs 费里",
+          "matched": [
+            "费里"
+          ]
+        },
+        {
+          "field": "segments[15](wimbledon_setup).narration",
+          "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+          "matched": [
+            "费里"
+          ]
+        },
+        {
+          "field": "segments[16](wimbledon_terminal).inset.label.people",
+          "text": "科博利 vs 费里",
+          "matched": [
+            "费里"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Frances Tiafoe",
+      "native_output": "蒂亚福",
+      "terms_scanned": [
+        "蒂亚福"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "蒂亚福"
+          ]
+        },
+        {
+          "field": "segments[4](acapulco_setup).narration",
+          "text": "决赛七比六、六比四击败蒂亚福，拿下生涯首座硬地巡回赛冠军。五百分到手，赛季终于有了亮色。",
+          "matched": [
+            "蒂亚福"
+          ]
+        },
+        {
+          "field": "segments[5](acapulco_terminal).inset.label.people",
+          "text": "科博利 vs 蒂亚福",
+          "matched": [
+            "蒂亚福"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Alexander Zverev",
+      "native_output": "兹维列夫",
+      "terms_scanned": [
+        "兹维列夫"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "兹维列夫"
+          ]
+        },
+        {
+          "field": "segments[7](munich_setup).narration",
+          "text": "四月的慕尼黑，他在半决赛六比三、六比三击败兹维列夫。决赛输给谢尔顿，也拿到了三百三十分。",
+          "matched": [
+            "兹维列夫"
+          ]
+        },
+        {
+          "field": "segments[11](rg_turning_setup).narration",
+          "text": "决赛对面，又是兹维列夫。第四盘抢七，科博利把比赛拖进决胜盘，冠军还没有分出。",
+          "matched": [
+            "兹维列夫"
+          ]
+        },
+        {
+          "field": "segments[13](rg_terminal).inset.label.people",
+          "text": "科博利 vs 兹维列夫",
+          "matched": [
+            "兹维列夫"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Ben Shelton",
+      "native_output": "谢尔顿",
+      "terms_scanned": [
+        "谢尔顿"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[7](munich_setup).narration",
+          "text": "四月的慕尼黑，他在半决赛六比三、六比三击败兹维列夫。决赛输给谢尔顿，也拿到了三百三十分。",
+          "matched": [
+            "谢尔顿"
+          ]
+        },
+        {
+          "field": "segments[8](munich_terminal).inset.label.people",
+          "text": "科博利 vs 谢尔顿",
+          "matched": [
+            "谢尔顿"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Daniil Medvedev",
+      "native_output": "梅德韦杰夫",
+      "terms_scanned": [
+        "梅德韦杰夫",
+        "梅德韦德夫"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[9](madrid_to_paris).narration",
+          "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+          "matched": [
+            "梅德韦杰夫"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Matteo Arnaldi",
+      "native_output": "阿尔纳尔迪",
+      "terms_scanned": [
+        "阿尔纳尔迪",
+        "阿纳尔迪"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "阿尔纳尔迪"
+          ]
+        },
+        {
+          "field": "segments[10](rg_first_final).narration",
+          "text": "他先连赢五场，打进四强。半决赛阿尔纳尔迪赛前退赛，科博利第一次站上大满贯决赛。",
+          "matched": [
+            "阿尔纳尔迪"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Alex de Minaur",
+      "native_output": "德米纳尔",
+      "terms_scanned": [
+        "德米纳尔"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[15](wimbledon_setup).narration",
+          "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+          "matched": [
+            "德米纳尔"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Tommy Paul",
+      "native_output": "保罗",
+      "terms_scanned": [
+        "保罗"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[18](cincy_result).narration",
+          "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+          "matched": [
+            "保罗"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Arthur Fils",
+      "native_output": "菲斯",
+      "terms_scanned": [
+        "菲斯"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[18](cincy_result).narration",
+          "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+          "matched": [
+            "菲斯"
+          ]
+        },
+        {
+          "field": "segments[19](cincy_terminal).inset.label.people",
+          "text": "科博利 vs 菲斯",
+          "matched": [
+            "菲斯"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Francisco Comesana",
+      "native_output": "科梅萨尼亚",
+      "terms_scanned": [
+        "科梅萨尼亚",
+        "科梅萨纳"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[20](us_setup).narration",
+          "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+          "matched": [
+            "科梅萨尼亚"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Tristan Schoolkate",
+      "native_output": "斯库尔凯特",
+      "terms_scanned": [
+        "斯库尔凯特"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[20](us_setup).narration",
+          "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+          "matched": [
+            "斯库尔凯特"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Alexander Blockx",
+      "native_output": "布洛克斯",
+      "terms_scanned": [
+        "布洛克斯"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[20](us_setup).narration",
+          "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+          "matched": [
+            "布洛克斯"
+          ]
+        },
+        {
+          "field": "segments[21](us_terminal).inset.label.people",
+          "text": "科博利 vs 布洛克斯",
+          "matched": [
+            "布洛克斯"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Lorenzo Musetti",
+      "native_output": "穆塞蒂",
+      "terms_scanned": [
+        "穆塞蒂"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[23](lyon_missed_chances).narration",
+          "text": "来到里昂，他在半决赛拿到四个赛点，却还是输给穆塞蒂。错过的机会，让这段冲刺多了一层波折。",
+          "matched": [
+            "穆塞蒂"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Matteo Berrettini",
+      "native_output": "贝雷蒂尼",
+      "terms_scanned": [
+        "贝雷蒂尼"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "segments[24](injury_withdrawals).narration",
+          "text": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
+          "matched": [
+            "贝雷蒂尼"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Casper Ruud",
+      "native_output": "鲁德",
+      "terms_scanned": [
+        "鲁德"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "鲁德"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "鲁德"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).narration",
+          "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+          "matched": [
+            "鲁德"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Rafael Jodar",
+      "native_output": "霍达尔",
+      "terms_scanned": [
+        "霍达尔"
+      ],
+      "native_aliases": [],
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "霍达尔"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "霍达尔"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).narration",
+          "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+          "matched": [
+            "霍达尔"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    }
+  ],
+  "events": [
+    {
+      "identity_en": "United Cup",
+      "native_output": "联合杯",
+      "terms_scanned": [
+        "联合杯"
+      ],
+      "usage_classification": "exact",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "联合杯"
+          ]
+        },
+        {
+          "field": "segments[1](early_losses).narration",
+          "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+          "matched": [
+            "联合杯"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Australian Open",
+      "native_output": "澳大利亚网球公开赛",
+      "terms_scanned": [
+        "澳网"
+      ],
+      "usage_classification": "established_abbreviation",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "澳网"
+          ]
+        },
+        {
+          "field": "segments[1](early_losses).narration",
+          "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+          "matched": [
+            "澳网"
+          ]
+        },
+        {
+          "field": "segments[1](early_losses).title_card",
+          "text": "四场连败\n澳网止步首轮",
+          "matched": [
+            "澳网"
+          ]
+        },
+        {
+          "field": "segments[2](ao_terminal).inset.label.topic",
+          "text": "澳网首轮止步",
+          "matched": [
+            "澳网"
+          ]
+        },
+        {
+          "field": "segments[2](ao_terminal).inset.label.place",
+          "text": "澳网首轮",
+          "matched": [
+            "澳网"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Montpellier",
+      "native_output": "蒙彼利埃站",
+      "terms_scanned": [
+        "蒙彼利埃"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "蒙彼利埃"
+          ]
+        },
+        {
+          "field": "segments[1](early_losses).narration",
+          "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+          "matched": [
+            "蒙彼利埃"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Dallas",
+      "native_output": "达拉斯公开赛",
+      "terms_scanned": [
+        "达拉斯"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "达拉斯"
+          ]
+        },
+        {
+          "field": "segments[1](early_losses).narration",
+          "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+          "matched": [
+            "达拉斯"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Delray Beach",
+      "native_output": "德尔雷海滩公开赛",
+      "terms_scanned": [
+        "德尔雷海滩",
+        "德尔雷比奇"
+      ],
+      "usage_classification": "root_translation_check",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "德尔雷海滩"
+          ]
+        },
+        {
+          "field": "segments[3](delray_acapulco).narration",
+          "text": "直到德尔雷海滩，他才又连续赢球，打进四强。接下来的阿卡普尔科，这一次，他把奖杯带走了。",
+          "matched": [
+            "德尔雷海滩"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Acapulco",
+      "native_output": "阿卡普尔科站",
+      "terms_scanned": [
+        "阿卡普尔科"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "阿卡普尔科"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "阿卡普尔科"
+          ]
+        },
+        {
+          "field": "segments[3](delray_acapulco).narration",
+          "text": "直到德尔雷海滩，他才又连续赢球，打进四强。接下来的阿卡普尔科，这一次，他把奖杯带走了。",
+          "matched": [
+            "阿卡普尔科"
+          ]
+        },
+        {
+          "field": "segments[5](acapulco_terminal).inset.label.place",
+          "text": "阿卡普尔科决赛",
+          "matched": [
+            "阿卡普尔科"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Indian Wells",
+      "native_output": "印第安维尔斯站",
+      "terms_scanned": [
+        "印第安维尔斯"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[6](spring_brief).narration",
+          "text": "印第安维尔斯第三轮，迈阿密首战失利，蒙特卡洛第二轮。三月到四月，成绩仍有起伏。",
+          "matched": [
+            "印第安维尔斯"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Miami",
+      "native_output": "迈阿密大师赛",
+      "terms_scanned": [
+        "迈阿密"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[6](spring_brief).narration",
+          "text": "印第安维尔斯第三轮，迈阿密首战失利，蒙特卡洛第二轮。三月到四月，成绩仍有起伏。",
+          "matched": [
+            "迈阿密"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Monte Carlo",
+      "native_output": "蒙特卡洛大师赛",
+      "terms_scanned": [
+        "蒙特卡洛"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[6](spring_brief).narration",
+          "text": "印第安维尔斯第三轮，迈阿密首战失利，蒙特卡洛第二轮。三月到四月，成绩仍有起伏。",
+          "matched": [
+            "蒙特卡洛"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Munich",
+      "native_output": "慕尼黑公开赛",
+      "terms_scanned": [
+        "慕尼黑"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "慕尼黑"
+          ]
+        },
+        {
+          "field": "segments[7](munich_setup).narration",
+          "text": "四月的慕尼黑，他在半决赛六比三、六比三击败兹维列夫。决赛输给谢尔顿，也拿到了三百三十分。",
+          "matched": [
+            "慕尼黑"
+          ]
+        },
+        {
+          "field": "segments[8](munich_terminal).inset.label.topic",
+          "text": "慕尼黑亚军",
+          "matched": [
+            "慕尼黑"
+          ]
+        },
+        {
+          "field": "segments[8](munich_terminal).inset.label.place",
+          "text": "慕尼黑决赛",
+          "matched": [
+            "慕尼黑"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Madrid",
+      "native_output": "马德里公开赛",
+      "terms_scanned": [
+        "马德里"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "马德里"
+          ]
+        },
+        {
+          "field": "segments[9](madrid_to_paris).narration",
+          "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+          "matched": [
+            "马德里"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Rome",
+      "native_output": "罗马站",
+      "terms_scanned": [
+        "罗马"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[9](madrid_to_paris).narration",
+          "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+          "matched": [
+            "罗马"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Hamburg",
+      "native_output": "汉堡站",
+      "terms_scanned": [
+        "汉堡"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[9](madrid_to_paris).narration",
+          "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+          "matched": [
+            "汉堡"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Roland Garros",
+      "native_output": "法国网球公开赛",
+      "terms_scanned": [
+        "法网"
+      ],
+      "usage_classification": "established_abbreviation",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "法网"
+          ]
+        },
+        {
+          "field": "segments[13](rg_terminal).inset.label.topic",
+          "text": "法网亚军",
+          "matched": [
+            "法网"
+          ]
+        },
+        {
+          "field": "segments[13](rg_terminal).inset.label.place",
+          "text": "法网决赛",
+          "matched": [
+            "法网"
+          ]
+        },
+        {
+          "field": "segments[14](rg_points).narration",
+          "text": "第五盘一比六，他与冠军擦肩。法网亚军的一千三百分，是他本季最大的一笔单站积分。",
+          "matched": [
+            "法网"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Halle",
+      "native_output": "哈雷站",
+      "terms_scanned": [
+        "哈雷"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[15](wimbledon_setup).narration",
+          "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+          "matched": [
+            "哈雷"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Wimbledon",
+      "native_output": "温布尔登网球锦标赛",
+      "terms_scanned": [
+        "温网"
+      ],
+      "usage_classification": "established_abbreviation",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "温网"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "温网"
+          ]
+        },
+        {
+          "field": "segments[15](wimbledon_setup).narration",
+          "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+          "matched": [
+            "温网"
+          ]
+        },
+        {
+          "field": "segments[15](wimbledon_setup).title_card",
+          "text": "连续两年\n温网八强",
+          "matched": [
+            "温网"
+          ]
+        },
+        {
+          "field": "segments[16](wimbledon_terminal).inset.label.topic",
+          "text": "温网止步8强",
+          "matched": [
+            "温网"
+          ]
+        },
+        {
+          "field": "segments[16](wimbledon_terminal).inset.label.place",
+          "text": "温网1/4决赛",
+          "matched": [
+            "温网"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Umag",
+      "native_output": "乌马格站",
+      "terms_scanned": [
+        "乌马格"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "segments[17](cincy_setup).narration",
+          "text": "乌马格和加拿大站都没赢球。来到辛辛那提，他连续四场打满三盘，第一次闯进大师赛四强。",
+          "matched": [
+            "乌马格"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "National Bank Open",
+      "native_output": "加拿大站",
+      "terms_scanned": [
+        "加拿大站"
+      ],
+      "usage_classification": "exact",
+      "locations": [
+        {
+          "field": "segments[17](cincy_setup).narration",
+          "text": "乌马格和加拿大站都没赢球。来到辛辛那提，他连续四场打满三盘，第一次闯进大师赛四强。",
+          "matched": [
+            "加拿大站"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Cincinnati",
+      "native_output": "辛辛那提站",
+      "terms_scanned": [
+        "辛辛那提"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "辛辛那提"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "辛辛那提"
+          ]
+        },
+        {
+          "field": "segments[17](cincy_setup).narration",
+          "text": "乌马格和加拿大站都没赢球。来到辛辛那提，他连续四场打满三盘，第一次闯进大师赛四强。",
+          "matched": [
+            "辛辛那提"
+          ]
+        },
+        {
+          "field": "segments[19](cincy_terminal).inset.label.place",
+          "text": "辛辛那提半决赛",
+          "matched": [
+            "辛辛那提"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "US Open",
+      "native_output": "美国网球公开赛",
+      "terms_scanned": [
+        "美网"
+      ],
+      "usage_classification": "established_abbreviation",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "美网"
+          ]
+        },
+        {
+          "field": "segments[20](us_setup).narration",
+          "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+          "matched": [
+            "美网"
+          ]
+        },
+        {
+          "field": "segments[21](us_terminal).inset.label.topic",
+          "text": "美网止步第三轮",
+          "matched": [
+            "美网"
+          ]
+        },
+        {
+          "field": "segments[21](us_terminal).inset.label.place",
+          "text": "美网第三轮",
+          "matched": [
+            "美网"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Beijing",
+      "native_output": "中国网球公开赛",
+      "terms_scanned": [
+        "北京"
+      ],
+      "usage_classification": "host_city_as_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "北京"
+          ]
+        },
+        {
+          "field": "segments[22](asian_brief).narration",
+          "text": "北京和上海，他又连续输掉首战。赛季最后的室内硬地，能否拿到门票，依然没有答案。",
+          "matched": [
+            "北京"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Shanghai",
+      "native_output": "上海大师赛",
+      "terms_scanned": [
+        "上海"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "上海"
+          ]
+        },
+        {
+          "field": "segments[22](asian_brief).narration",
+          "text": "北京和上海，他又连续输掉首战。赛季最后的室内硬地，能否拿到门票，依然没有答案。",
+          "matched": [
+            "上海"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Lyon",
+      "native_output": "Lyon",
+      "terms_scanned": [
+        "里昂"
+      ],
+      "usage_classification": "city_not_dictionary_event_key",
+      "locations": [
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "里昂"
+          ]
+        },
+        {
+          "field": "segments[23](lyon_missed_chances).narration",
+          "text": "来到里昂，他在半决赛拿到四个赛点，却还是输给穆塞蒂。错过的机会，让这段冲刺多了一层波折。",
+          "matched": [
+            "里昂"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": [],
+      "note": "Native tournament dictionary has no Lyon key. Public prose uses the correct host-city name 里昂, verified in the actual 2026 Lyon event; no incorrect competing native Chinese translation to replace. This is not falsely reported as an exact dictionary match."
+    },
+    {
+      "identity_en": "Vienna",
+      "native_output": "维也纳站",
+      "terms_scanned": [
+        "维也纳"
+      ],
+      "usage_classification": "city_short_form",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "维也纳"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "维也纳"
+          ]
+        },
+        {
+          "field": "segments[24](injury_withdrawals).narration",
+          "text": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
+          "matched": [
+            "维也纳"
+          ]
+        },
+        {
+          "field": "segments[24](injury_withdrawals).title_card",
+          "text": "维也纳伤退\n随后退出巴黎",
+          "matched": [
+            "维也纳"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    },
+    {
+      "identity_en": "Paris",
+      "native_output": "巴黎大师赛",
+      "terms_scanned": [
+        "巴黎"
+      ],
+      "usage_classification": "city_context_split_RG_and_Masters",
+      "locations": [
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[9](madrid_to_paris).narration",
+          "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[9](madrid_to_paris).title_card",
+          "text": "带着起伏\n来到巴黎",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[24](injury_withdrawals).narration",
+          "text": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[24](injury_withdrawals).title_card",
+          "text": "维也纳伤退\n随后退出巴黎",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).narration",
+          "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+          "matched": [
+            "巴黎"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).title_card",
+          "text": "巴黎当地11月3日\n都灵门票落定",
+          "matched": [
+            "巴黎"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": [],
+      "note": "巴黎 in the RG section is city Paris; subsequent withdrawn-Paris and qualification clauses refer to Paris Masters with context. Do not convert every city Paris into the Masters name."
+    },
+    {
+      "identity_en": "ATP Finals",
+      "native_output": "ATP年终总决赛",
+      "terms_scanned": [
+        "ATP年终总决赛",
+        "年终总决赛",
+        "总决赛",
+        "年终"
+      ],
+      "usage_classification": "unambiguous_series_context_abbreviation",
+      "locations": [
+        {
+          "field": "title",
+          "text": "科博利：从四连败到年终门票",
+          "matched": [
+            "年终"
+          ]
+        },
+        {
+          "field": "cover.topic",
+          "text": "科博利：从四连败到年终门票",
+          "matched": [
+            "年终"
+          ]
+        },
+        {
+          "field": "push.summary",
+          "text": "科博利首获年终门票",
+          "matched": [
+            "年终"
+          ]
+        },
+        {
+          "field": "push.lead",
+          "text": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+          "matched": [
+            "年终总决赛",
+            "总决赛",
+            "年终"
+          ]
+        },
+        {
+          "field": "xhs",
+          "text": "年初四连败，年末第一次拿到总决赛门票。科博利的2026年，有过捧杯，也有过与冠军擦肩的遗憾。\n\n联合杯之后，澳网、蒙彼利埃和达拉斯接连输球。德尔雷海滩打进四强，让他重新连续赢球；阿卡普尔科决赛击败蒂亚福，收下生涯第一座硬地巡回赛冠军。\n\n到了红土，慕尼黑击败兹维列夫后获得亚军，马德里再进八强。巴黎，他先连赢五场；半决赛阿尔纳尔迪赛前退赛，科博利首次晋级大满贯决赛。决赛把兹维列夫拖进第五盘，最终收下亚军与1300分，这是他本季最大的一笔单站积分。\n\n温网连续第二年晋级八强，辛辛那提连续四场三盘大战后首次打进大师赛四强。美网首轮生涯第一次让二追三，第三轮出局。突破和失利，一直交替出现。\n\n秋天的冲刺也不顺：北京、上海首战失利，里昂半决赛错过四个赛点，维也纳伤退，随后退出巴黎。\n\n巴黎当地11月3日晚，鲁德击败霍达尔，科博利终于锁定资格。\n\n门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？\n\n#科博利 #网球有故事 #网球时差 #ATP年终总决赛 #网球时间到\n",
+          "matched": [
+            "ATP年终总决赛",
+            "年终总决赛",
+            "总决赛",
+            "年终"
+          ]
+        },
+        {
+          "field": "segments[0](opening).narration",
+          "text": "年初四连败，年末第一次入围总决赛。科博利的这一年，中间隔着多少次重新出发？",
+          "matched": [
+            "总决赛"
+          ]
+        },
+        {
+          "field": "segments[18](cincy_result).narration",
+          "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+          "matched": [
+            "年终总决赛",
+            "总决赛",
+            "年终"
+          ]
+        },
+        {
+          "field": "segments[25](qualification).narration",
+          "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+          "matched": [
+            "年终总决赛",
+            "总决赛",
+            "年终"
+          ]
+        },
+        {
+          "field": "segments[26](ending).narration",
+          "text": "门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？",
+          "matched": [
+            "年终"
+          ]
+        },
+        {
+          "field": "segments[26](ending).title_card",
+          "text": "第一次年终\n在意大利等他",
+          "matched": [
+            "年终"
+          ]
+        }
+      ],
+      "status": "pass",
+      "mismatches": []
+    }
+  ],
+  "other_place_names": [
+    {
+      "name": "都灵",
+      "identity": "Turin, Italy",
+      "status": "pass",
+      "note": "Tournament host city, not asserted hometown."
+    },
+    {
+      "name": "意大利",
+      "identity": "Italy",
+      "status": "pass",
+      "note": "Home-country crowd, not mistaken birthplace or hometown."
+    }
+  ],
+  "nonplayer_credit": {
+    "name": "Loïc Wacziak",
+    "source": "©Loïc Wacziak / FFT from official RG gallery",
+    "status": "pass",
+    "note": "Photographer credit metadata; no invented Chinese player mapping."
+  },
+  "issues": [],
+  "distinct_corrections_required": [],
+  "status": "pass"
+}

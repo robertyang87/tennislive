@@ -1,0 +1,41 @@
+{
+  "status": "superseded_not_final",
+  "film_sha256": "f04819199714564116e2b111f833f26914842f97e2554b76df18ab5081c6863e",
+  "run": 41818122396,
+  "bot_commit": "d2e35a4c7f38cf7846f4b5f4054cf20bc26e4536",
+  "reason": "V3 changed actual TTS. Native inventory correctly refused overwrite. Preserve original V2 sealed evidence; remove only stale voice inventory/reviews from current output to let new actual render generate and seal its own evidence.",
+  "files": [
+    {
+      "path": "voice_quality_inventory.json",
+      "sha256": "499db94f9dd50846ee3c1e6a15c6c58185b3aa3542f5a806bbd60515a9735971"
+    },
+    {
+      "path": "voice_quality_review.json",
+      "sha256": "525072390c7b23fc4f84ca95fe76b467e76caa2bd31d89d467a2f13c54647617"
+    },
+    {
+      "path": "voice_auto_review.json",
+      "sha256": "010c3e65e57c7756522d1d2394d5238adf3d54757d260a67f810fc80eae53ca7"
+    },
+    {
+      "path": "render.json",
+      "sha256": "9faba0beaf969f6b58e447ca1c2572a6b976358ecbdd9c7c47ef8286d2558bd2"
+    },
+    {
+      "path": "render_inputs.json",
+      "sha256": "63b97f043da46950fa33766737391ee03bb76bf391ff75b315eca21c0c488cf4"
+    },
+    {
+      "path": "qc_attestation.json",
+      "sha256": "79df548203a8e100f4d2d6981a94255dec8b006ff7fce5dd6ab8d8bd79a298c6"
+    },
+    {
+      "path": "audio_review_binding.json",
+      "sha256": "2e46990c8031c4a99d2adacebb92358cac5352faa4492364b28d3be6e5d1e96e"
+    },
+    {
+      "path": "subtitles.ass",
+      "sha256": "e28b12029a354b5eb16bc98f5ad1964a75b0fba580a62b4cd8073316714db835"
+    }
+  ]
+}
