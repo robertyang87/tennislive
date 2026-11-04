@@ -5,19 +5,35 @@
 > 按 docs/vibetennis.md「先整理资料、后做视频」：所有者看过资料包和审片包再整片渲。
 > ✅ = 会话里读过原文（2026-11-04）；⚠️ = 只有二手／读不到，**不上屏**。
 
+## 自查记录（2026-11-04，所有者「再去 review 下你的数据和资料是否完整且严谨」）
+| # | 问题 | 处理 |
+|---|---|---|
+| 1 | 「麦克斯韦黏弹性模型」管掉磅——**物理上不准**：Cross 2000 实测张力随**时间的对数**线性下降（「a plot of tension vs. log(time) is linear after the first 100 s, even over a period of several days」），单一弛豫时间的麦克斯韦模型给的是指数衰减 | 改成「**应力松弛**（麦克斯韦 1867 年最早提出『弛豫时间』这个概念）」；片中画对数曲线，**不画指数曲线、不说『麦克斯韦模型算出来』** |
+| 2 | 「力量几乎没变」说宽了：线材对比只在实验室，Lindsey 2021 只比了尼龙和聚酯，羊肠线 vs 聚酯**没有场上实测** | 改成「实验室里，线材本身对球速影响很小」；**不说「四代线力量都一样」** |
+| 3 | 「全部比赛平均拍数变化小（4.08 → 4.93）」——那是 **+21%**，「变化小」写错了 | 已改为照写数字 |
+| 4 | 原创数据会不会被几个明星球员带偏 | 补了稳健性检验（见「打法确实变了」）：去掉每个年代被标注最多的 3 人、或每人等权，下降都还在 |
+| 5 | 几条「✅」其实是**厂家或单一当事人的说法**，没标来源性质 | 逐条补标：Babolat 年份（公司自述）、混搭 25%→33%（Ashaway 新闻稿）、Luxilon 70%（报道未给统计来源）、断线 50→5 根和「男子全部用聚酯」（一位穿线主管的估计） |
+| 6 | 意大利面拍的发明人只有 Cross 一个来源（另一来源写 Erwin） | 读了美国专利 US 4,273,331 原件：发明人 **Werner Fischer**（联邦德国），1977-12-08 申请、1981-06-16 授权；「1971 年发明」仍只有 Cross，片中不写 1971 |
+| 7 | 库仑摩擦「球在线床上先滑后滚」缺直接证据 | 补 Goodwill & Haake 2004 摘要：所有线的摩擦系数都足够大，「the ball begins to roll during impact」 |
+| 8 | Kawazoe「润滑多转 30%」只有 3 次、1 名测试者 | 降为 ⚠️，不上屏这个数 |
+| 9 | 「四代线」里混搭线不是一种材料；凯夫拉、多股丝没讲 | 片中把混搭线说成「搭配方式」；凯夫拉、多股丝不展开 |
+| 10 | 分镜第 1 段「从将近一半跌到 4%」用的是 1970–89 年（只 90 名发球人、偏少） | 改用 1990 年代 39.5% → 2020 年代 4.3% |
+| 11 | 分镜第 2 段说羊肠线「最有弹性」，和「力量几乎没差」打架 | 改成「最软」 |
+| 12 | 可截出去那句还写「三代线」、并把有争议的「不是材料」当结论 | 重写 |
+
 ## 一句话（2026-11-04 按所有者口径重写）
 所有者：「不要改成聚酯线，我们其实想说的是这个球拍线的演变。然后提升是否跟网球的发展有关系？以及这个技战术水平演进有关系？」「不只是说聚酯线。」
 **主线：一百五十年四代线——羊肠线 → 合成线 → 聚酯线 → 混搭线。每一代改变了什么，同一时期网球打法发生了什么，两者能不能对上。**
-理论（第七条，原始文献已读，见「理论出处」）：**牛顿碰撞定律**（恢复系数，管力量）＋**库仑摩擦定律**（管转速）＋**麦克斯韦黏弹性模型**（弛豫时间，管掉磅）。
-反直觉：换了四代线，**力量几乎没变**；打法变化最剧烈的一次（发球上网在 2000–05 年断崖式消失）落在聚酯线普及那几年，但**同一时期球拍、球、场地、体能都在变，没有任何研究把拍线单独剥离出来**——片子要讲清「对得上」和「分得开」是两回事。
+理论（第七条，原始文献已读，见「理论出处」）：**牛顿碰撞定律**（恢复系数，管力量）＋**库仑摩擦定律**（管转速）＋**应力松弛**（麦克斯韦 1867 年最早提出「弛豫时间」，管掉磅；拍线实测是按时间的对数下降，不是单一弛豫时间的指数曲线）。
+反直觉：实验室里，**线材本身对球速影响很小**；打法变化最剧烈的一次（发球上网在 2000–05 年断崖式消失）落在聚酯线普及那几年，但**同一时期球拍、球、场地、体能都在变，没有任何研究把拍线单独剥离出来**——片子要讲清「对得上」和「分得开」是两回事。
 
 ## 四代线一览（每代：改变了什么 → 同期打法 → 能不能对上）
 | 代 | 时间 | 改变了什么（物理） | 同期打法 | 能不能对上 |
 |---|---|---|---|---|
-| ① 羊肠线 | ✅ 1875 Babolat「first tennis string」；✅ 1925「perfects the natural gut string」 | 最软（动态硬度最低）、掉磅最慢（Cross 等 2000） | ⚠️ 1990 年以前逐分数据样本少（MCP 1970–89 共 253 场男子） | 只讲「起点」，不讲对打法的影响 |
+| ① 羊肠线 | ✅ 1875 Babolat「first tennis string」；✅ 1925「perfects the natural gut string」（**公司自述**） | 最软（动态硬度最低）、掉磅最慢（Cross 等 2000） | ⚠️ 1990 年以前逐分数据样本少（MCP 1970–89 共 253 场男子） | 只讲「起点」，不讲对打法的影响 |
 | ② 合成线（尼龙、多股丝） | ✅ 1955 Babolat「first synthetic string」（只是这一家）；⚠️ 普及年代没有出处 | 比羊肠线硬、掉磅较快；耐用、便宜——⚠️「让业余球员打得起」只有常识，**要找出处** | ✅ 1997 年前后职业球员仍用「either gut or nylon synthetic」（温网穿线主管，Tennis.com 2010） | **没有数据**说它改变了职业打法；所有者定之前，这一代只讲材料和普及 |
-| ③ 聚酯线 | ✅ 1997 库尔滕（Tennis.com、ESPN）；✅ Cross「popular after about 2005」；✅ 2010 温网「all the players on the men's side and almost all on the women's side use poly」 | 最硬（凯夫拉除外）、掉磅最快、几乎不断（温网断线每天约 50 根→约 5 根）；转速：正反两方（见「转速」） | ✅ 发球上网占比 2000–04 年 17.1% → 2005–09 年 5.7%（MCP 原创计算，见下） | **时间对得上；分不开**（同期变化见「同期变化」） |
-| ④ 混搭线 | ✅ 温网混搭比例 2006 年 25% → 2014 年 33%（行业杂志转引穿线记录） | ⚠️ 没有同行评审数据 | — | 只讲趋势 |
+| ③ 聚酯线 | ✅ 1997 库尔滕（Tennis.com、ESPN）；✅ Cross「popular after about 2005」；✅ 2010 温网「all the players on the men's side and almost all on the women's side use poly」（**一位穿线主管的说法**） | 最硬（凯夫拉除外）、掉磅最快、几乎不断（温网断线每天约 50 根→约 5 根，**同一位穿线主管的估计**）；转速：正反两方（见「转速」） | ✅ 发球上网占比 2000–04 年 17.1% → 2005–09 年 5.7%（MCP 原创计算，见下） | **时间对得上；分不开**（同期变化见「同期变化」） |
+| ④ 混搭线（不是新材料，是主线横线两种线的搭配） | ✅ 温网混搭比例 2006 年 25% → 2014 年 33%（**拍线厂 Ashaway 的新闻稿**，引「stringing logs」，原始记录未见） | ⚠️ 没有同行评审数据 | — | 只讲趋势 |
 
 ## 技战术演进：数据和归因（2026-11-04）
 
@@ -25,7 +41,8 @@
 | 数 | 上下文 | 出处 |
 |---|---|---|
 | ✅ 发球上网：1990 年代 39.5% → 2005–09 年 5.7% → 2020–26 年 4.3% | 男子；去掉 ACE 的发球分里，发球方上网的比例；温网单列 73.1% → 10.3% → 6.2%。**志愿者逐拍标注、偏重名场面和顶尖球员**（1990 年代 734 场、2000–04 年 445 场；温网 2000–04 年只有 38 场） | **原创计算**：Match Charting Project，脚本 `data/mcp_serve_volley_trend.py`，结果 `data/mcp_serve_volley_trend_result.txt` |
-| ✅ 平均每分拍数（温网）3.04（1990 年代）→ 4.21（2005–09） | 同上；全部比赛变化小（4.08 → 4.93） | 同上 |
+| ✅ 稳健性：不是几个明星带出来的 | 去掉每个年代被标注最多的 3 人：1990 年代 35.1% → 2005–09 年 6.5%；每人等权（≥200 分的发球人）：27.9% → 9.1%；「一个发球上网都没有」的场次占比 3.3% → 12.2%（说明不是早年标注漏记「+」——漏记会让早年偏低，方向相反）；发球人数 149 → 120 | **原创计算**：`data/mcp_serve_volley_robust.py`，结果 `data/mcp_serve_volley_robust_result.txt` |
+| ✅ 平均每分拍数（温网）3.04（1990 年代）→ 4.21（2005–09） | 同上；全部比赛 4.08 → 4.93（+21%） | 同上 |
 | ✅ 温网决赛每分「barely two shots」，法网决赛「almost six」（1980 年代中） | Sackmann 用 MCP 的 223 场大满贯决赛（1985–2015），作者自己提示有选手构成偏差 | Tennis Abstract「The Grass is Slowing」2016-06-11 |
 | ✅ 1997–99 年温网每分平均 4.3 秒、底线回合只占 19.7% 的分，法网 51.9% | 四大满贯单打 | O'Donoghue & Ingram (2001)《J Sports Sci》19:107（PMID 11217009 摘要） |
 | ✅ ACE 率：1991 年不到 7% → 现在略超 10% | 全部 ATP 比赛 | Sackmann「Surface Speed Convergence, One More Time」2025-12-10 |
@@ -60,14 +77,15 @@
 |---|---|---|
 | ✅ 1875 | Babolat「invents the first tennis string」——原文**没写羊肠线**；羊肠线是 1925 年那条（「perfects the natural gut string and creates "VS"」） | Babolat 官网历史页 babolat.com/us/history |
 | ✅ 1955 | Babolat「launches its first synthetic string」——**只是这一家**；「尼龙 60 年代普及」没有权威出处，不上屏 | 同上 |
-| ✅ 1971 | 德国园艺师维尔纳·菲舍尔发明「意大利面穿线法」：主线不和横线编织 | Cross「Spaghetti strung racquets」页（physics.usyd.edu.au/~cross） |
+| ✅ 专利 | 美国专利 US 4,273,331「Tennis-Racket」：发明人 **Werner Fischer**（联邦德国 Vilsbiburg），1977-12-08 申请、1981-06-16 授权，有联邦德国优先权——**专利原件已读** | patentimages.storage.googleapis.com/pdfs/US4273331.pdf |
+| ⚠️ 1971 | 「1971 年发明」「园艺师」只有 Cross 一个来源；另一来源（BNP Paribas 网站）把名字写成 Erwin，专利原件证实是 Werner。**片中不写 1971** | Cross「Spaghetti strung racquets」页 |
 | ✅ 转速约 2 倍 | 典型斜向撞击下，意大利面拍给球的转速「almost twice」普通穿法；实验室测量 | Goodwill & Haake (2002)《The Engineering of Sport 4》231–237（shura.shu.ac.uk/2237） |
 | ✅ 1978 年写进规则 | ITF 官方：「This rule was introduced in 1978 in response to a stringing system patented the previous year (US Patent 4273331, 8 December 1977)」；Cross 也写 1978。1977-10 临时禁令只见二手（SI、NYT 原稿读不到），**片中写 1978** | ITF「Rackets and strings – strings」 |
 | ✅ 今天的规则 | 线「shall be alternately interlaced or bonded where they cross」，疏密「generally uniform」，中间不比别处稀；拍面上不许有第二套线（规则 4 案例 1） | ITF《2026 网球规则》附录二(b)、规则 4 |
 | ✅ 1997 | 库尔滕用 Luxilon 聚酯线拿下法网（「secret weapon … Luxilon Original string」）；**型号说法不一，不写「Big Banger」** | Tennis.com 2015-10-08（Tignor）、TIME |
-| ✅ 2009：前 20 里 70% | 「70 percent of today's Top 20 ATP tour players」用 Luxilon 的聚酯线——**只算 Luxilon 一家**，聚酯总占比更高、无权威统计 | Tennis.com 2009-12-23 |
+| ✅ 2009：前 20 里 70% | 「70 percent of today's Top 20 ATP tour players」用 Luxilon 的聚酯线——**只算 Luxilon 一家；报道没给统计来源**，聚酯总占比更高、无权威统计；上屏要写「据报道」 | Tennis.com 2009-12-23 |
 | ✅ 约 2005 年后聚酯普及 | Cross：「polyester strings become popular after about 2005」 | Cross「Spaghetti」页 |
-| ✅ 混搭线 25%→33% | 「According to stringing logs, 33% of players at Wimbledon 2014 used hybrid setups, compared to 25% in 2006」——行业杂志转引，原始穿线记录未见 | Racquet Sports Industry 2015-04-08 |
+| ✅ 混搭线 25%→33% | 「According to stringing logs, 33% of players at Wimbledon 2014 used hybrid setups, compared to 25% in 2006」——**电头是「Ashaway, RI」，即拍线厂新闻稿**，原始穿线记录未见；上屏写「据拍线厂统计」 | Racquet Sports Industry 2015-04-08 |
 
 ### 五面体检
 | 方面 | 数 | 上下文 | 出处 |
@@ -78,14 +96,14 @@
 | 转速·反方 | ✅ 国际网联官方 | 「no appreciable difference in spin produced by rough or smooth, low- or high-tension strings」；「thinner strings are believed to impart more spin … little empirical evidence」 | ITF「Rackets and strings – strings」（2019-11） |
 | 转速·中间 | ✅ 和线的硬度有关 | Goodwill 等 2006：「the magnitude of the ball rebound spin was dependent on string stiffness」——摘要没点名聚酯，每种线只测一次 | 《The Engineering of Sport 6》doi:10.1007/978-0-387-46050-5_67 |
 | 转速·综述 | ✅ 同行评审综述的判断 | Allen, Choppin & Knudson (2016)《Sports Engineering》19：Goodwill 等发现转速「independent of string material, diameter and tension」；减少横线、给线润滑有类似但更小的效果 | shura.shu.ac.uk/10215 |
-| **转速·大家都同意的机制** | ✅ 线能滑开再弹回 | Haake 等 2012（《Proc IMechE J》摘要）：主要作用「in the string movement rather than the coefficient of friction」；Kawazoe 等 2012：给交叉点润滑，转速多 30%（3 次平均、一名测试者）；Nicolaides 等 2013：横线从 19 根减到 13 根，转速 117→170 rad/s（实验室） | 各篇摘要／全文 |
+| **转速·大家都同意的机制** | ✅ 线能滑开再弹回 | Haake 等 2012（《Proc IMechE J》摘要）：主要作用「in the string movement rather than the coefficient of friction」；⚠️ Kawazoe 等 2012：给交叉点润滑，转速多 30%（**3 次平均、一名测试者，不上屏这个数**）；Nicolaides 等 2013：横线从 19 根减到 13 根，转速 117→170 rad/s（实验室） | 各篇摘要／全文 |
 | 转速·机制 | ✅ 弹回不到千分之一秒 | 主线被拨歪后「snap back … in less than 1/1000 second」 | Lindsey，TWU |
 | 转速·理论 | ✅ 物理模型 | Cross (2010)《Am. J. Phys.》78:716–720：线床的横向柔性能增加转速；对聚酯线流行的原因只说「Anecdotal evidence suggests … probably」 | Cross 2010 |
 | 转速·对照 | ✅ 纳达尔快赶上意大利面拍 | Cross 原话「players like Nadal can now generate almost as much spin as Fisher could in the 1970s」——**作者判断，没给转速数** | Cross「Spaghetti」页 |
 | 转速·场上 | ⚠️ 没有可追溯的场上实测 | 「纳达尔 3,200 转、桑普拉斯 1,800 转」原始出处读不到（tennisplayer.net 404/403）；鹰眼转速估计本身在 4,500 转以上就不准（Cant 等 2020《J Sports Sci》PMID 31783720）；没有同一球员换线前后的场上对比——**不上屏任何球员转速数** | — |
 | **力量** | ✅ 回弹差别可以忽略 | 90 种线：能量损耗「too small to make any significant difference in resilience between different strings」 | Cross, Lindsey & Andruczyk (2000)《Sports Engineering》（usyd PUBLICATIONS/14） |
 | 力量 | ✅ 都还回约 95% | 「All strings are about equally powerful and resilient. They all return about 95% of the energy」；硬线「力量小」只因为吃进去的能量少、球压得更扁 | Lindsey，TWU「Why Is String Stiffness So Important To Power?」 |
-| 力量 | ✅ 球速只差一点 | 「string tension and material have only a small effect on ball speed」；夹住的拍框、落锤撞击（约相当于 50–60 英里/小时的发球力度），**不是场上实测** | Lindsey，TWU 2021-09-07 |
+| 力量 | ✅ 球速只差一点 | 「string tension and material have only a small effect on ball speed」；夹住的拍框、落锤撞击（约相当于 50–60 英里/小时的发球力度），**只比了尼龙和聚酯两种、不是场上实测；羊肠线 vs 聚酯没有场上数据** | Lindsey，TWU 2021-09-07 |
 | 力量·磅数 | ✅ 磅数降 20%，底线球快 2–3%、发球不到 1% | 精英球员场上实测；180 N 108.1 km/h vs 280 N 105.3 km/h | Bower & Cross (2005)《J Sports Sci》 |
 | 力量·硬度排序 | ✅ 羊肠线＜尼龙＜聚酯＜凯夫拉 | 动态硬度，四类之间「no significant overlap」 | Cross 等 2000 |
 | **控制** | ✅ 线松了，球员会自己慢下来 | 精英球员：松线出球角度更高、更难控制，球员「elected to control the ball by reducing their swing speed」 | Bower & Cross (2008)《Sports Engineering》 |
@@ -103,8 +121,8 @@
 | 理论 | 管哪一段 | 原始文献（已读） |
 |---|---|---|
 | ✅ 牛顿碰撞定律（恢复系数） | 力量：碰撞后分开的相对速度和碰前之比是个常数 | 牛顿《自然哲学的数学原理》定律附注（Motte 1729 英译）：「the balls always receding one from the other with a relative velocity, which was to the relative velocity with which they met as about 5 to 9」 |
-| ✅ 库仑摩擦定律 | 转速：球在线床上先滑后滚，摩擦力和压力成正比 | 库仑《Théorie des machines simples》（1781 年获法国科学院奖，1821 年版）：「le frottement est proportionnel aux pressions」；库仑本人注明阿蒙东 1699 年最早提出 |
-| ✅ 麦克斯韦黏弹性模型（弛豫时间） | 掉磅：拉紧的线，应力按「弛豫时间」慢慢松掉 | 麦克斯韦 1867《Phil. Trans.》157:49–88：「a time T, which may be called the "time of relaxation"」「the stress … is therefore relaxed at a rate proportional to itself」 |
+| ✅ 库仑摩擦定律 | 转速：球在线床上先滑后滚，摩擦力和压力成正比；✅ 拍线上的直接证据：Goodwill & Haake 2004 摘要「all strings exhibit a sufficiently large friction coefficient that the ball begins to roll during impact」 | 库仑《Théorie des machines simples》（1781 年获法国科学院奖，1821 年版）：「le frottement est proportionnel aux pressions」；库仑本人注明阿蒙东 1699 年最早提出 |
+| ✅ 应力松弛（麦克斯韦最早提出「弛豫时间」） | 掉磅：拉紧后长度固定，应力自己慢慢松掉 | 麦克斯韦 1867《Phil. Trans.》157:49–88：「a time T, which may be called the "time of relaxation"」。⚠️ 他的单一弛豫时间模型给的是指数衰减；**拍线实测不是**：Cross 等 2000「a plot of tension vs. log(time) is linear after the first 100 s, even over a period of several days」——片中讲概念用麦克斯韦，画曲线按 Cross 的实测（对数），不说「麦克斯韦模型算出来」 |
 - Cross 的论文里直接用「恢复系数」「摩擦系数」测拍线（Sports Eng 2003「the first measurements of the coefficient of sliding friction between a tennis ball and the strings」）；**没读到他用「库仑」这个名字**，片中把理论名和 Cross 的测量分开说
 
 ### 场上为什么要换拍子（所有者 2026-11-04：「球员好像打了一会，就要在球场上换那个线，是为什么？这也要讲清楚」）
@@ -125,19 +143,19 @@
 **一句话讲清**：聚酯线不容易断，但掉磅快；磅数一掉，球在线上停得更久、出球角度变高，球就往界外飞。职业球员要每一拍都是同一个手感，所以每次换新球就换一支刚穿好、磅数一样的拍子。
 
 ### 「科技对技术水平」——本集只讲到这里，总结放第三集
-- ❌ **没有任何同行评审研究量化过「拍线改变了打法」**（多拍、上网少、制胜分／失误）。PubMed 检索为 0。片中只能说「被广泛认为」
-- 有数据的在第三集：Haake 等 2000（男子抢七比例三十年上升，作者推测因发球变快）、Haake 等 2007（球拍＋球让发球快约 17.5%）、Bayram & Barla 2026《Sci Rep》（约 19.8 万场 ATP，1991 年后单场长约 16.5 分钟，作者未单独归因到线）
+- 本集的打法部分见上「技战术演进」；结论只到「时间对得上、分不开」
+- 留给第三集的：Haake 等 2000（摘要：男子抢七比例三十年上升，作者推测因发球变快）、Haake 等 2007（摘要：球拍＋球让发球快约 17.5%）
 
 ## 镜头提纲（2026-11-04 第二版：四代线 → 打法；约 3 分钟；中文版配 TTS 旁白，英文版只留 BGM＋音效）
-1. **钩子（0–10s）**：全息拍框里四根线依次亮起——羊肠、尼龙、聚酯、混搭；背后一条曲线：发球上网的比例从将近一半跌到 4%。问：「是线改变了网球吗？」
-2. **① 羊肠线（10–30s）**：1875 年第一根网球线；最软、最「有弹性」。牛顿碰撞定律出场：球和线分开的速度与碰撞速度之比——**恢复系数**。
+1. **钩子（0–10s）**：全息拍框里四根线依次亮起——羊肠、尼龙、聚酯、混搭；背后一条曲线：发球上网的比例从 1990 年代的 39.5% 跌到如今的 4.3%（逐分数据自算）。问：「是线改变了网球吗？」
+2. **① 羊肠线（10–30s）**：1875 年第一根网球线（Babolat 自述）；四类线里最软、掉磅最慢。牛顿碰撞定律出场：球和线分开的速度与碰撞速度之比——**恢复系数**。
 3. **② 合成线（30–50s）**：1955 年第一根合成线；更耐用、更便宜（⚠️ 普及与「打得起」待补出处，补不到就只讲材料）。钩子：「可职业球员一直没换——直到 1990 年代末。」
-4. **插曲：被禁的意大利面拍（50–75s）**：主线横线不编织，线能滑开再弹回，转速接近 2 倍；1978 年国际网联写进规则。库仑摩擦定律出场：球在线床上先滑后滚。
-5. **③ 聚酯线（75–115s）**：1997 库尔滕；2010 年温网男子全部用聚酯；几乎不断线（每天 50 根→5 根）。它到底更转吗？正反两方并摆（零售商实验 +20%～25% vs 同行评审测不出材料差别），大家都同意的是「线的滑动和回弹」。
-6. **反转：力量几乎没变（115–130s）**：四代线都能还回约 95% 的能量。
-7. **代价：为什么场上要换拍子（130–150s）**：麦克斯韦弛豫时间——聚酯掉磅最快，刚穿完就低约 30%；出球变高、往界外飞；每次换新球就换一支刚穿好的拍子（多伦多一天 130–200 支）。
+4. **插曲：被禁的意大利面拍（50–75s）**：德国人维尔纳·菲舍尔 1977 年申请专利；主线横线不编织，线能滑开再弹回，转速接近 2 倍；1978 年国际网联写进规则。库仑摩擦定律出场：球在线床上先滑后滚。
+5. **③ 聚酯线（75–115s）**：1997 库尔滕；2010 年温网男子全部用聚酯；几乎不断线（每天 50 根→5 根）。它到底更转吗？正反两方并摆（Tennis Warehouse 科普站发表的实验 +20%～25% vs 同行评审测不出材料差别），大家都同意的是「线的滑动和回弹」。
+6. **反转：线材本身几乎不改球速（115–130s）**：实验室里各种线都能把吃进去的能量还回约 95%；磅数降 20%，底线球也只快 2–3%。
+7. **代价：为什么场上要换拍子（130–150s）**：应力松弛（麦克斯韦的「弛豫时间」）——张力按时间的对数一路往下掉；聚酯掉磅最快，刚穿完就低约 30%；出球变高、往界外飞；每次换新球就换一支刚穿好的拍子（多伦多一天 130–200 支）。
 8. **线改变了打法吗？（150–175s）**：原创数据——发球上网 1990 年代 39.5% → 2005–09 年 5.7%（温网 73% → 10%）；分析师说是线；同一时期球拍、球、场地也在变，**没有研究能单独算出线的作用**。④ 混搭线一句带过（2006 年 25% → 2014 年 33%）。
 9. **片尾（175–190s）**：「线管不了一切——下一集，球拍。」问句：「你现在用的是什么线？」
 
 ## 可单独截出去转发的那句
-「换了三代线，球几乎没变快；让球更转的不是线的材料，是线能不能滑开再弹回。」（力量：Cross 等 2000、Lindsey；转速：Goodwill & Haake 2004、ITF、意大利面拍。⚠️ 「几乎没变快」只指线材本身，**球拍和球不算在内**；「不是材料」要配上「正方实验测到 +20%」的争议，不能截成定论）
+「发球上网，在聚酯线普及的那几年里从四成跌到不到一成。」（1990 年代 39.5% → 2005–09 年 5.7%，Match Charting Project 男子逐分自算、去掉 ACE；⚠️ 单独截出去会被读成「是线造成的」——必须同句或紧接一句「同一时期球拍、球、场地也在变」）
