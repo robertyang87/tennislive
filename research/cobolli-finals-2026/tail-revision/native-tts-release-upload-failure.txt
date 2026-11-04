@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 184, in publish
+    gh('release', 'upload', tag, str(named))
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 48, in gh
+    raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or 'GitHub transport failed')
+RuntimeError: HTTP 401: Bad credentials (https://uploads.github.com/repos/robertyang87/tennislive/releases/433911950/assets?label=&name=tts_bundle.zip)
+Try authenticating with:  gh auth login
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 225, in <module>
+    main()
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 219, in main
+    publish(args.slug, args.bundle, args.metadata)
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 187, in publish
+    download(tag, sha, Path(tmp) / 'verified.zip', slug=slug, record=record)
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 78, in download
+    gh('release', 'download', tag, '--pattern', ASSET, '--dir', tmp)
+  File "/workspace/cobolli-tail-revision/native/tools/reel_tts_release.py", line 48, in gh
+    raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or 'GitHub transport failed')
+RuntimeError: no assets to download

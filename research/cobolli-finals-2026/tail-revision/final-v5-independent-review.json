@@ -1,0 +1,85 @@
+{
+  "schema": "cobolli-tail-final-independent-review/v1",
+  "status": "pass",
+  "checked_at": "2026-11-04T13:05:36.426084+00:00",
+  "reviewer": "/root/cobolli_tail_qc",
+  "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+  "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+  "film_bytes": 120062506,
+  "film_seconds": 313.84,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": "25/1",
+  "ass_sha256": "f181743b2c54725c6a3e4f30c9dc3d2ec41130a7edc542ff81fecad62d3f7a57",
+  "render_inputs_sha256": "916f320398ba1907c0490f99c96fe5a8532a493ba97b2dbbe6dbfa474caa1c45",
+  "scope": "Independent actual-encoded sampled visual inspection, exact source/ASS identity and cue/timing audit, actual original/new frozen audio/marks ZIP comparison, and reading actual native automated voice results. Not human audio listening or fullcontinuous movie/point-action playback.",
+  "actual_frames_inspected": {
+    "all_root_sheets_opened": 8,
+    "root_frame_count": 91,
+    "dense_tail_sheets_opened": 4,
+    "dense_tail_frame_count": 38,
+    "full_size_frames_opened": [
+      "frame-085-0280.712.jpg",
+      "frame-086-0286.416.jpg",
+      "frame-087-0294.028.jpg",
+      "frame-088-0303.932.jpg",
+      "frame-008-0025.032.jpg",
+      "frame-030-0109.120.jpg",
+      "frame-057-0210.340.jpg",
+      "frame-077-0263.428.jpg"
+    ],
+    "root_manifest_sha256": "5f8b313ee6c994303b99c4649290c2132133516d7929ef8e9c6633ab3797d31a",
+    "dense_manifest_sha256": "d5431bd6c304374687f3ea28dfe7885cc4159d169d0e81492e7d4027203a792a"
+  },
+  "tail_change": {
+    "old_title_cards": 5,
+    "new_title_cards": 1,
+    "new_photo_segments": 3,
+    "old_seconds": 47.048,
+    "new_seconds": 31.216,
+    "reduction_seconds": 15.832,
+    "actual_shape": "Actual dense tail goes US net reaction→Shanghai Cobolli photo→same-match Lyon Musetti photo→single qualification date card with joint injury/withdrawal/qualification narration→2026RGarchive closing photo→native brand outro. No leftover old Asian/Lyon/injury/ending title cards seen."
+  },
+  "visual_findings": {
+    "photos": "Actual pictures fill3:4canvas; named subjects eyes/mouth clear; no blurred padding; Musetti identity and saving4MP statement agree. Shanghai illustration not called Beijing footage. Closing photo explicitly seasonarchive, not qualification-day reaction.",
+    "captions": "Actual changed narration burned subtitles and one Paris-local November3 card are clear; 14 original bilingual cue midpoints retained; AO/Munich long captions fit in full-size spotchecks.",
+    "source_labels": "Sampled7 original source segments retain transparent info cards; Wimbledon/USraised geometry and numeric1/4 preserved. No info overlays on tail photos/card.",
+    "ending": "Single qualifier card plus photographic seasonal callback resolves first-year-finals hook, accurate Paris local date; no recovery promise or invented injury image."
+  },
+  "unchanged_prefix": "Finalspec first22 segment dictionaries,7source URLs,8 selected windows and14cue declarations are exact against published V4. Actual point/court/reaction samples remain present; fullpoint selection retained from baseline, not independently rewatched continuously.",
+  "audio_input_verification": {
+    "new_bundle_sha256": "31d24caea6ea49f564fe680379f5e518c0656b0dfa36208f219f8f833817d7b9",
+    "actual_request_count": 19,
+    "old_shared_requests": 16,
+    "new_requests": 3,
+    "method": "Direct independent read of both original V4 and final V5 ZIP manifest/member bytes; all16shared request audio.mp3+marks.json are byte-identical. Three new requests correspond to revised Asia/Lyon/joint qualification text."
+  },
+  "native_voice_verification": {
+    "method": "automated_voice_suite",
+    "suite_pass": true,
+    "entry_references": 38,
+    "all_references_pass": true,
+    "voice_report_sha256": "63c8999b9b8ea87d7182b4c3aa186c9e9b5070a4b4b7b225ba6e1ff8372ab353",
+    "identity": {
+      "render_sha256": "68fb971d5b99c1e85d9b7686db725bf506be0a5aaa9dcbe42031a8f7034fa8a6",
+      "render_inputs_sha256": "916f320398ba1907c0490f99c96fe5a8532a493ba97b2dbbe6dbfa474caa1c45",
+      "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+      "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+      "inventory_sha256": "cd6de5b45d1c50f4fcae9230f50846e04965c62991cbec66ef5137ba8b9a8da6"
+    }
+  },
+  "native_actual_qc_status": "pass",
+  "source_ass_audit": {
+    "path": "/workspace/cobolli-tail-revision/qc/final-v5-source-ass-audit.json",
+    "sha256": "c8c4e6cd35a221b408aad5b105db310a35c89e128904e8599751f7a57432e3cc",
+    "native_verify_final": "PASS, actual file hashes and current native review index supplied",
+    "sources": 7,
+    "windows": 8,
+    "raw_transcripts": 21,
+    "bilingual_cues": 14
+  },
+  "blockers": [],
+  "publication_note": "Does not claim CI/merge/push already completed; producer must still use exact-current-head CI and native publication/receipt flow."
+}
