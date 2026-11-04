@@ -15,19 +15,19 @@
   "subject": "总决赛第八席",
   "winner": "诺斯科娃",
   "_winner_why": "本期主体即以温网冠军身份拿下第八席的诺斯科娃本人；字段只喂措辞闸人名盘点，无 result/matchup 字段时海报与记分牌消费点惰性（zverev 期同判例）。",
-  "hook": "积分只差155分，她为啥先进？\n第八席不排队，先找冠军",
-  "_hook_why": "所有者定稿封面钩子（script-final.md）：问句行＋答案翻转行；行 1 含数字 155（TL Score 数字面），两行字号按较长行核算。",
-  "narration": "积分只差155分，她为啥先进？第八席不排队，先找冠军",
+  "hook": "差155分，她先进？\n第八席不排队先找冠军",
+  "_hook_why": "所有者定稿封面钩子（script-final.md）为『积分只差155分，她为啥先进？／第八席不排队，先找冠军』，两行 13/12 字超封面 94px 闸的每行 ≤10 字预算（build_interview_clip 冻结口径，walkover 删逗号先例）——生产层最小压缩为『差155分，她先进？／第八席不排队先找冠军』（10/10 字）：问句＋答案翻转、金句与 155 数字全保留，仅删『积分/为啥』与行内逗号。此压缩已在生产汇报中向所有者明示。",
+  "narration": "差155分，她先进？第八席不排队先找冠军",
   "_narration_why": "封面口播与海报钩子同句（字集重合闸口径），照钩子全文念。",
   "topic": "总决赛第八席：155 分之差 · 冠军专座 · 抽签揭晓",
   "portrait": {
-   "image": "assets/reel/wta-finals-slot8-2026/cover-wim-trophy.jpg",
+   "image": "assets/reel/wta-finals-slot8-2026/cover-noskova-ap.jpg",
    "fit": "cover",
-   "focus": 0.5,
+   "focus": 0.55,
    "focus_y": 0.42,
    "zoom": 1.0,
-   "_credit": "温网官方决赛集锦（source-L4lde2qREYU，Wimbledon 官方频道）524s 帧：诺斯科娃（左，冠军盘）与穆霍娃（右，亚军盘）捧杯同框，1920×1080 原帧。",
-   "_portrait_why": "脚本封面预案首选『诺斯科娃温网捧杯正面高清图』；此帧冠亚军正面同框、双盘齐全，正是本期『一场温网决赛决定两个人十一月』的主题画面，比单人帧更扣题。两人面部居上半区，focus_y 0.42 保面部与奖杯同入 3:4。"
+   "_credit": "AP 摄影 Kirsty Wigglesworth（Inquirer 2026-07-12 温网决赛报道 og:image 原图 2500×1668）：诺斯科娃捧 Venus Rosewater Dish 正面特写。",
+   "_portrait_why": "脚本封面预案首选即『诺斯科娃温网捧杯正面高清图（官方源）』——此 AP 原图正是该画面：正面、笑、奖杯完整，2500×1668 裁 3:4 得 1251×1668（不放大）。初版曾用决赛集锦 1920×1080 抽帧，被『撑不满卡片』闸拦（需放大 1.33 倍）后改官方图。focus 0.55 使奖杯（x≈750–1620）与面部（x≈1730）同入裁窗；focus_y 0.42 保面部在上半区。"
   }
  },
  "push": {
@@ -77,12 +77,12 @@
     "总决赛：2026 WTA Finals 于印第安维尔斯举行，11-08 开赛、11-15 决赛；莱巴金娜为卫冕冠军且已锁定 WTA 年终第一（2026-10-29）"
    ],
    "sources": [
-    "WTA 官网 Race 页与 Championship Leaders PDF（2026-11-02）",
-    "WTA 2026-10-09 官宣稿（wtatennis.com/news/4586608）",
-    "The National（卡萨金娜原话、克雷吉茨科娃 21 胜）",
-    "Reuters/AP（温网决赛与发布会）",
-    "Desert Sun（官方前两日赛程）",
-    "rallyhub.au / wtaschedule.com（2026 WTA Rulebook 资格顺位转引）"
+    "https://www.wtatennis.com/news/4598033/road-to-the-wta-finals-the-year-linda-noskova-broke-into-the-elite-tier",
+    "https://www.reuters.com/sports/tennis/noskova-beats-muchova-win-wimbledon-womens-singles-title-2026-07-11/",
+    "https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown",
+    "https://www.arabnews.com/node/2578424",
+    "https://english.news.cn/20260503/2813b65f561c4f0a8f88ea79c860f500/c.html",
+    "http://www.skysports.com/tennis/news/20876/13249907/wta-finals-barbora-krejcikova-and-coco-gauff-through-to-semi-finals-with-iga-swiatek-knocked-out"
    ]
   },
   "takeaway": {
@@ -120,14 +120,15 @@
   "ext": "https://github.com/robertyang87/tennislive/releases/download/source-XfE9M6__724/XfE9M6__724.mp4",
   "presser": "https://github.com/robertyang87/tennislive/releases/download/source-QyAz0wUzWgE/QyAz0wUzWgE.mp4",
   "wim24": "https://github.com/robertyang87/tennislive/releases/download/source-8FvC0efZ5QI/8FvC0efZ5QI.mp4",
-  "riyadh": "https://github.com/robertyang87/tennislive/releases/download/source-keddB4b7-B8/keddB4b7-B8.mp4",
+  "a6": "https://github.com/robertyang87/tennislive/releases/download/source-s8a6riyad12/s8a6riyad12.mp4",
+  "a7": "https://github.com/robertyang87/tennislive/releases/download/source-s8a7kasat36/s8a7kasat36.mp4",
   "madrid": "https://github.com/robertyang87/tennislive/releases/download/source-FTTBcO6RWic/FTTBcO6RWic.mp4",
   "wuhan": "https://github.com/robertyang87/tennislive/releases/download/source-ATsKkPJBY3s/ATsKkPJBY3s.mp4",
-  "a1": "https://github.com/robertyang87/tennislive/releases/download/source-slot8a1/slot8-a1-rules-v1.mp4",
-  "a2": "https://github.com/robertyang87/tennislive/releases/download/source-slot8a2/slot8-a2-points-v1.mp4",
-  "a3": "https://github.com/robertyang87/tennislive/releases/download/source-slot8a3/slot8-a3-2024-v1.mp4",
-  "a4": "https://github.com/robertyang87/tennislive/releases/download/source-slot8a4/slot8-a4-draw-v1.mp4",
-  "a5": "https://github.com/robertyang87/tennislive/releases/download/source-slot8a5/slot8-a5-atp-v1.mp4"
+  "a1": "https://github.com/robertyang87/tennislive/releases/download/source-s8a1rule022/s8a1rule022.mp4",
+  "a2": "https://github.com/robertyang87/tennislive/releases/download/source-s8a2pnts018/s8a2pnts018.mp4",
+  "a3": "https://github.com/robertyang87/tennislive/releases/download/source-s8a3y202417/s8a3y202417.mp4",
+  "a4": "https://github.com/robertyang87/tennislive/releases/download/source-s8a4draw029/s8a4draw029.mp4",
+  "a5": "https://github.com/robertyang87/tennislive/releases/download/source-s8a5atpc034/s8a5atpc034.mp4"
  },
  "source_quality_exceptions": {},
  "mixed_fps": {
@@ -135,7 +136,9 @@
   "a2": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
   "a3": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
   "a4": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
-  "a5": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题"
+  "a5": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+  "a6": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+  "a7": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题"
  },
  "_primary_why": "主源为温网官方决赛集锦（1920×1080/25）：本期事实主体（诺斯科娃冠军专座）即由这场决赛产生，捧杯、握手、冠军点全在其中。",
  "source_crop": {
@@ -153,6 +156,12 @@
   },
   "a5": {
    "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+  },
+  "a6": {
+   "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+  },
+  "a7": {
+   "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
   }
  },
  "archival": {},
@@ -160,7 +169,7 @@
   {
    "source": "a2",
    "start": 0,
-   "end": 24,
+   "end": 18,
    "cx": 0.5,
    "track": false,
    "narration": "今年总决赛的名单，有个地方不对劲。积分第七的穆霍娃，等到十月二十一号，名额才落定；积分第八的诺斯科娃，十月九号就官宣入围了。分少的人先上车，分多的人，在门口多等了十二天。",
@@ -250,7 +259,7 @@
   {
    "source": "a1",
    "start": 0,
-   "end": 30,
+   "end": 22,
    "cx": 0.5,
    "track": false,
    "narration": "把规则拆开看。前七个名额，按全年积分，也就是 Race 排名，依次直入。第八个名额，是留给冠军的专座：今年四大满贯的冠军里，谁还没入围、又排在第八到第二十名之间，顺位最高的，这个座就是她的；没有这样的人，才轮到第八名。",
@@ -381,7 +390,7 @@
    "end": 502.7,
    "cx": 0.5,
    "track": false,
-   "narration": "她在温网决赛打完最后一分、看着冠军奖杯时说的是这一句：",
+   "narration": "她在温网决赛打完最后一分、看着冠军奖杯时，说的是这一句。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -393,7 +402,7 @@
    "source": "presser",
    "start": 188.6,
    "end": 200.4,
-   "cx": 0.5,
+   "cx": 0.536,
    "track": false,
    "kind": "quote",
    "quote": [
@@ -417,21 +426,43 @@
    "_quote_why": "S2b 原声 A（全片原声保底 1/2）：诺斯科娃温网冠军发布会（Wimbledon 官方）自述决胜盘前的心态——双档 ASR 逐字对位（medium 188.78–200.36；small 档同段印证『on court』，medium 误听『awkward』已按 small＋语义校正）。她当场说了两遍，取第二遍：与脚本引文（Reuters 版）三句一一对应——『I was looking at the big one』『I am taking this one no matter what』『leave my soul on court in the third set』；cue 英文照音频逐字（含开头的 Yeah, no 与 and I was like 口语，不删改），中文为直译。cx_face：60/200/400s 三帧实测人脸中心 ≈0.54。",
    "point_end_ok": "发布会固定机位整段问答，无比赛分；切点在问答间隙。",
    "frame": "person",
-   "cx_face": 0.54
+   "cx_face": {
+    "samples": [
+     0.5326,
+     0.5386,
+     0.5386,
+     0.5386,
+     0.5386,
+     0.5387,
+     0.5387,
+     0.5387,
+     0.5398
+    ],
+    "frames": 9,
+    "detected": 9,
+    "source_size": [
+     1920,
+     1080
+    ],
+    "measured_with": "face_checks.largest_face（insightface buffalo_s）",
+    "measured_at": "2026-11-04T02:28:55+00:00",
+    "median": 0.5386,
+    "spread": 0.0072
+   }
   },
   {
    "source": "wim24",
    "start": 690,
-   "end": 725,
+   "end": 725.3,
    "cx": 0.5,
    "track": false,
-   "narration": "这条规则其实非常年轻，二零二四年才被 WTA 写进规则书。在这之前，总决赛的名单就是积分前八，一个不多，一个不少，几十年没变过。它要解决的问题很现实：总决赛是全年最后一场大戏，如果这一年拿过最大冠军的人，因为积分零零碎碎不够而缺席，这份『全年最佳八人』的名单，自己先心虚。所以 WTA 提前把第八个座，从排队通道里划了出来。",
+   "narration": "这条规则其实非常年轻，二零二四年才被 WTA 写进规则书。在这之前，总决赛的名单就是积分前八，一个不多，一个不少，几十年没变过。它要解决的问题很现实：总决赛是全年最后一场大戏，如果这一年拿过最大冠军的人，因为积分零零碎碎不够而缺席，这份『全年最佳八人』的名单，自己先心虚。所以 WTA 提前把第八个座，从排队通道里划了出来。规则出生第一年，就改了一张名单。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
    "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-   "_why": "S3 来历：2024 温网决赛冠军点与庆祝段（克雷吉茨科娃正是新规元年的受益者，画面即论点）。",
+   "_why": "S3 来历：2024 温网决赛决胜局至冠军点庆祝段（690.48 场景切入；赛点约 724.3 兑现、庆祝起势，725.3 收——记分条 727.84 才翻牌属图形更新，球已落地、胜负已分，不算切在一分中途，point_end_ok 已认领）。克雷吉茨科娃正是新规元年的受益者，画面即论点。末句『规则出生第一年，就改了一张名单』自 S4 段首前移一句（文字与顺序不变，段界调整）：原置于 A3 动画段首，现压在本段 2024 决赛画面上引入先例，且解本段旁白/窗口时长差（35s 窗 vs 估 29s 的哑场闸）。",
    "inset": {
     "kind": "story_text",
     "corner": "tr",
@@ -460,10 +491,10 @@
   {
    "source": "a3",
    "start": 0,
-   "end": 22,
+   "end": 17,
    "cx": 0.5,
    "track": false,
-   "narration": "规则出生第一年，就改了一张名单。二零二四年，温网冠军克雷吉茨科娃全年只赢了二十一场比赛，Race 排第十二，按老规矩连候补都排不上。新规则把她直接送进总决赛，挤掉的是排第八的纳瓦罗，纳瓦罗干脆拒绝去当候补。",
+   "narration": "二零二四年，温网冠军克雷吉茨科娃全年只赢了二十一场比赛，Race 排第十二，按老规矩连候补都排不上。新规则把她直接送进总决赛，挤掉的是排第八的纳瓦罗，纳瓦罗干脆拒绝去当候补。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -472,9 +503,9 @@
    "_why": "S4 2024 先例：自制动画 A3（3568 vs 2706 对照条＋四强答卷），系列 tokens 定版。"
   },
   {
-   "source": "riyadh",
-   "start": 241.28,
-   "end": 252.68,
+   "source": "a6",
+   "start": 0,
+   "end": 12,
    "cx": 0.5,
    "track": false,
    "narration": "然后呢？克雷吉茨科娃在小组赛接连赢了佩古拉和高芙，小组第一出线，打进四强。规则的第一年，就交出了这样一份答卷。",
@@ -483,50 +514,26 @@
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
    "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-   "_why": "S4 先例下半：2024 利雅得总决赛小组赛官方集锦（克雷吉茨科娃胜高芙、小组头名）。",
-   "inset": {
-    "kind": "story_text",
-    "corner": "tr",
-    "width": 0.6,
-    "pad": 0.043,
-    "top_pad": 0.043,
-    "show_after": 0,
-    "show_for": 8,
-    "motion": "editorial",
-    "animate": false,
-    "image": "assets/reel/wta-finals-slot8-2026/label-riyadh24.png",
-    "label": {
-     "topic": "总决赛小组赛",
-     "date": "2024.11.07",
-     "place": "利雅得",
-     "people": "克雷吉茨科娃 vs 高芙",
-     "score": "7-5 6-4",
-     "result": {
-      "winner": "克雷吉茨科娃",
-      "score": "7-5 6-4",
-      "source": "https://www.arabnews.com/node/2578424"
-     }
-    }
-   }
+   "_why": "S4 先例下半：自制动画 A6「利雅得的答卷」（胜佩古拉 6-3 6-3／胜高芙 7-5 6-4／半决赛负郑钦文 3-6 5-7／小组第一出线）。不用利雅得实拍的原因：WTA 官方该届集锦全系列最高 720p（keddB4b7-B8、YepXEFdE_-U、FpzYCo0zHU0、iKpQKLsjSn4 四条实测 1280×720），触 1080p 硬闸；按所有者定规『无视频可阐述处用动画补位』改动画承载，事实与旁白不变。"
   },
   {
-   "source": "riyadh",
-   "start": 39.36,
-   "end": 50.6,
+   "source": "a7",
+   "start": 0,
+   "end": 11.2,
    "cx": 0.5,
    "track": false,
-   "narration": "但不服气的人，到今天也没服。最敢说的是卡萨金娜。她那年是第一候补，临上场替补打了一场，只赢了一局。赛后她把话挑明了：",
+   "narration": "但不服气的人，到今天也没服。最敢说的是卡萨金娜。她那年是第一候补，临上场替补打了一场，只赢了一局。赛后，她把话挑明了。",
    "voice": {
     "pitch": "+10Hz",
     "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
    },
    "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-   "_why": "S5 存废之争引子：利雅得总决赛赛场段（卡萨金娜即在此替补出场一轮），旁白转述其背景。"
+   "_why": "S5 存废之争引子：自制动画 A7「第一候补」上半（佩古拉退赛→替补出场→负斯瓦泰克 1-6 0-6／51 分钟只赢一局），与下段引言卡共用同一动画源连续窗。"
   },
   {
-   "source": "riyadh",
-   "start": 93.9,
-   "end": 118.2,
+   "source": "a7",
+   "start": 11.2,
+   "end": 35.5,
    "cx": 0.5,
    "track": false,
    "kind": "quote",
@@ -563,8 +570,8 @@
     }
    ],
    "_quote_kind": "player_quote_card",
-   "_quote_why": "卡萨金娜原话引言卡（脚本预案）：利雅得发布会原声视频在官方源未探得（WTA/赛事官方频道无此段），按脚本定稿预案降级引言卡——The National 2024-11 利雅得现场记录全文照录（2026-11-04 深化核查逐字复核，含 v1 漏掉的『You won the Grand Slam,』一句），中文为字幕大意。底图用同届利雅得总决赛赛场段。原声保底：诺斯科娃发布会原声段（S2b）＋温网决赛冠军点现场声（S6 段内转播声）仍在。",
-   "point_end_ok": "引言卡底图为利雅得集锦整段回合＋分后走位，窗口两端落在集锦切点，不切一分进行中。"
+   "_quote_why": "卡萨金娜原话引言卡（脚本预案）：利雅得发布会原声视频在官方源未探得（WTA/赛事官方频道无此段），按脚本定稿预案降级引言卡——The National 2024-11 利雅得现场记录全文照录（2026-11-04 深化核查逐字复核，含 v1 漏掉的『You won the Grand Slam,』一句），中文为字幕大意。底图为自制动画 A7 下半（暗场背板）：利雅得实拍官方源全系列最高 720p 触 1080p 硬闸，按所有者动画补位定规不用实拍。原声保底：诺斯科娃发布会原声段（S2b）＋温网决赛冠军点现场声（S6 段内转播声）仍在。",
+   "point_end_ok": "引言卡底图为自制动画（无比赛分），不涉及切分。"
   },
   {
    "source": "madrid",
@@ -697,7 +704,7 @@
   {
    "source": "a5",
    "start": 0,
-   "end": 24,
+   "end": 34,
    "cx": 0.5,
    "track": false,
    "narration": "男子那边，别以为只有女子搞特殊。ATP 总决赛有一条几乎一模一样的规则：前七直入，第八席同样先给大满贯冠军。只不过今年男子的四座大满贯，被辛纳、阿尔卡拉斯和兹维列夫包揽，全都排在积分前七，专座空着没人用，第八名才安安静静轮到排队的人；后来辛纳赛季报销，这个座又顺延给了第九名。同一条规则，在女网这边改写了一张名单，在男网那边，躺了一整年。",
@@ -711,7 +718,7 @@
   {
    "source": "a4",
    "start": 0,
-   "end": 24,
+   "end": 29,
    "cx": 0.5,
    "track": false,
    "narration": "所以记住这句话：第八个名额不排队，它先找冠军。今年这八个人，人人手里都有一座大满贯或者一千赛的冠军，成色没的挑。本周日，总决赛就在印第安维尔斯开打。抽签已经揭晓：两个人没能分进同一组——诺斯科娃的第一场，就是整个总决赛的揭幕战，对手是卫冕冠军莱巴金娜；穆霍娃周一首战，要打萨巴伦卡。",
