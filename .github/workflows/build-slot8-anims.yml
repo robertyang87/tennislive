@@ -1,0 +1,85 @@
+name: build-slot8-anims
+run-name: "slot8 anims · ${{ inputs.which }} ${{ inputs.ver }}"
+
+# One-off animation builder for wta-finals-slot8-2026: renders the code-drawn
+# animation segments (scripts in tools/slot8_anims/) and uploads each mp4 to
+# Release tag source-slot8<which> as slot8<which>.mp4. Remove after ship.
+
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        description: "a1|a2|a3|a4|a5|all"
+        required: true
+        type: string
+        default: "all"
+      dur:
+        description: "duration override seconds (single 'which' only; blank = base)"
+        required: false
+        type: string
+        default: ""
+      ver:
+        description: "version tag for filenames"
+        required: true
+        type: string
+        default: "v1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-slot8-anims
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deps
+        run: |
+          pip install -q pillow numpy
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg >/dev/null
+          ls assets/fonts/ && ls /usr/share/fonts/opentype/noto/ | head
+      - name: Render
+        env:
+          WHICH: ${{ inputs.which }}
+          DUR: ${{ inputs.dur }}
+          VER: ${{ inputs.ver }}
+        run: |
+          set -euo pipefail
+          mkdir -p work out
+          cp tools/slot8_anims/*.py work/
+          cd work
+          sed -i "s|/home/hatch/workspace/tlrun/assets/fonts|$GITHUB_WORKSPACE/assets/fonts|" anim_common.py render_anims.py build_a5.py
+          sed -i "s|/home/hatch/workspace/wta-finals-slot8-20261103/prod/anim/|$GITHUB_WORKSPACE/out/|" render_anims.py build_a5.py
+          if [ "$WHICH" = "all" ]; then
+            python3 render_anims.py a1 30 "$VER"
+            python3 render_anims.py a2 24 "$VER"
+            python3 render_anims.py a3 22 "$VER"
+            python3 render_anims.py a4 24 "$VER"
+            python3 build_a5.py 24 "$VER"
+          elif [ "$WHICH" = "a5" ]; then
+            python3 build_a5.py ${DUR:-24} "$VER"
+          else
+            case "$WHICH" in
+              a1) D=${DUR:-30};; a2) D=${DUR:-24};; a3) D=${DUR:-22};; a4) D=${DUR:-24};;
+            esac
+            python3 render_anims.py "$WHICH" "$D" "$VER"
+          fi
+          ls -la "$GITHUB_WORKSPACE/out/"
+      - name: Upload to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VER: ${{ inputs.ver }}
+        run: |
+          set -euo pipefail
+          cd out
+          for f in *.mp4; do
+            key=$(echo "$f" | sed -E 's/^slot8-(a[0-9]).*/\1/')
+            tag="source-slot8$key"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "source · slot8$key" --notes "code-drawn animation source for wta-finals-slot8-2026 ($VER)"
+            gh release upload "$tag" "$f" --clobber
+            echo "uploaded $f -> $tag"
+          done
