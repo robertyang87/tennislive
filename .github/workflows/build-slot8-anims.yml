@@ -60,6 +60,8 @@ jobs:
             python3 render_anims.py a3 17 "$VER"
             python3 render_anims.py a4 29 "$VER"
             python3 build_a5.py 34 "$VER"
+            python3 build_a6a7.py a6 12 "$VER" "$GITHUB_WORKSPACE/out"
+            python3 build_a6a7.py a7 36 "$VER" "$GITHUB_WORKSPACE/out"
           elif [ "$WHICH" = "a5" ]; then
             python3 build_a5.py ${DUR:-24} "$VER"
           elif [ "$WHICH" = "a6" ]; then
