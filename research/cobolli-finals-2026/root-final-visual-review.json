@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "scope": "Final V4 actual encoded movie sampled visual review only; publication also requires native voice checks, independent source/visual review, exact-current-head CI and clean normal merge",
+  "checked_at": "2026-11-04T11:40:14.885466+00:00",
+  "movie_sha256": "fa18171e12a63ef5b86150a4ea1a91a3972d4ce737ec9cb0c9f60d1e5adf5ba8",
+  "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+  "render_meta_sha256": "145717cfdbfa0e8fc6014caa3681344a93dcc9075491ac7ffb0ab8d1bf4294fe",
+  "method": "Root independently opened all 8 contact sheets covering 92 actual-encoded frames; additionally opened 4 full-size AO/RG/Wimbledon/US information-card frames and 3 actual changed-name subtitle frames. Sampled visual inspection, not full continuous viewing and not human audio listening.",
+  "findings": {
+    "cover": "Face/eyes/mouth/fist clear; hook and brand legible",
+    "crop": "3:4 full canvas, centered court framing, no blurred padding",
+    "information_cards": "Current main transparent right-hand style on real footage; numeric 1/4; no information labels on standalone cards; raised Wimbledon/US label geometry clear",
+    "changed_names": "Actual burned subtitle frames show 德尔雷海滩 / 梅德韦杰夫 / 阿尔纳尔迪 correctly",
+    "bilingual": "All 14 sampled bilingual cue midpoints fit frame",
+    "ending": "Paris-local November 3 qualification card visible; accurate retirement/Paris withdrawal context; native outro present"
+  },
+  "blockers": [],
+  "manifest": "root-frames/manifest.json"
+}
