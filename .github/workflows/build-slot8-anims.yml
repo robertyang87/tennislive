@@ -55,11 +55,11 @@ jobs:
           sed -i "s|/home/hatch/workspace/tlrun/assets/fonts|$GITHUB_WORKSPACE/assets/fonts|" anim_common.py render_anims.py build_a5.py
           sed -i "s|/home/hatch/workspace/wta-finals-slot8-20261103/prod/anim/|$GITHUB_WORKSPACE/out/|" render_anims.py build_a5.py
           if [ "$WHICH" = "all" ]; then
-            python3 render_anims.py a1 30 "$VER"
-            python3 render_anims.py a2 24 "$VER"
-            python3 render_anims.py a3 22 "$VER"
-            python3 render_anims.py a4 24 "$VER"
-            python3 build_a5.py 24 "$VER"
+            python3 render_anims.py a1 22 "$VER"
+            python3 render_anims.py a2 18 "$VER"
+            python3 render_anims.py a3 20 "$VER"
+            python3 render_anims.py a4 29 "$VER"
+            python3 build_a5.py 34 "$VER"
           elif [ "$WHICH" = "a5" ]; then
             python3 build_a5.py ${DUR:-24} "$VER"
           else
