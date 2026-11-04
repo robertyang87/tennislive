@@ -30,8 +30,8 @@
 ## 四代线一览（每代：改变了什么 → 同期打法 → 能不能对上）
 | 代 | 时间 | 改变了什么（物理） | 同期打法 | 能不能对上 |
 |---|---|---|---|---|
-| ① 羊肠线 | ✅ 1875 Babolat「first tennis string」；✅ 1925「perfects the natural gut string」（**公司自述**） | 最软（动态硬度最低）、掉磅最慢（Cross 等 2000） | ⚠️ 1990 年以前逐分数据样本少（MCP 1970–89 共 253 场男子） | 只讲「起点」，不讲对打法的影响 |
-| ② 合成线（尼龙、多股丝） | ✅ 1955 Babolat「first synthetic string」（只是这一家）；⚠️ 普及年代没有出处 | 比羊肠线硬、掉磅较快；耐用、便宜——⚠️「让业余球员打得起」只有常识，**要找出处** | ✅ 1997 年前后职业球员仍用「either gut or nylon synthetic」（温网穿线主管，Tennis.com 2010） | **没有数据**说它改变了职业打法；所有者定之前，这一代只讲材料和普及 |
+| ① 羊肠线 | ✅ **1874**：国际网联「The first lawn tennis rackets, used in 1874, were strung with the stretchy, outer skin of sheep intestine, known as serosa」；二战后羊肠短缺改用牛肠；✅ 1875 Babolat「first tennis string」、1925「perfects the natural gut string」（**公司自述**） | 最软（动态硬度最低）、掉磅最慢（Cross 等 2000） | ⚠️ 1990 年以前逐分数据样本少（MCP 1970–89 共 253 场男子） | 只讲「起点」，不讲对打法的影响 |
+| ② 合成线（尼龙、多股丝） | ✅ 1955 Babolat「first synthetic string」（只是这一家）；⚠️ 普及年代没有出处 | 比羊肠线硬、掉磅较快。✅ **为什么要有合成线**（国际网联）：「Two main drawbacks of natural gut … the cost of natural gut is comparatively high. Additionally, durability in terms of wear and moisture resistance is mediocre」；「Nylon is the most favoured of the man-made materials」。⚠️「让业余球员打得起」仍无出处，片中只说「贵、不耐磨、怕潮」 | ✅ 1997 年前后职业球员仍用「either gut or nylon synthetic」（温网穿线主管，Tennis.com 2010） | **没有数据**说它改变了职业打法；所有者定之前，这一代只讲材料和普及 |
 | ③ 聚酯线 | ✅ 1997 库尔滕（Tennis.com、ESPN）；✅ Cross「popular after about 2005」；✅ 2010 温网「all the players on the men's side and almost all on the women's side use poly」（**一位穿线主管的说法**） | 最硬（凯夫拉除外）、掉磅最快、几乎不断（温网断线每天约 50 根→约 5 根，**同一位穿线主管的估计**）；转速：正反两方（见「转速」） | ✅ 发球上网占比 2000–04 年 17.1% → 2005–09 年 5.7%（MCP 原创计算，见下） | **时间对得上；分不开**（同期变化见「同期变化」） |
 | ④ 混搭线（不是新材料，是主线横线两种线的搭配） | ✅ 温网混搭比例 2006 年 25% → 2014 年 33%（**拍线厂 Ashaway 的新闻稿**，引「stringing logs」，原始记录未见） | ⚠️ 没有同行评审数据 | — | 只讲趋势 |
 
