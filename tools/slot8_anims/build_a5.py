@@ -18,9 +18,9 @@ def a5_frame(dur):
         va = ease((t - P(19.0)) / 0.9)
         if va > 0:
             vt = "同一张入场券 · 两种发法"
-            d.rounded_rectangle([120, 1300, 960, 1382], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
+            d.rounded_rectangle([120, 1158, 960, 1240], radius=16, outline=with_a(BRAND, int(240 * va)), width=3)
             b = d.textbbox((0, 0), vt, font=F_VERDICT)
-            d.text((W / 2 - (b[0] + b[2]) / 2, 1341 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
+            d.text((W / 2 - (b[0] + b[2]) / 2, 1199 - (b[1] + b[3]) / 2), vt, font=F_VERDICT, fill=with_a(BRAND, 255 * va))
         return img
     return fn
 
