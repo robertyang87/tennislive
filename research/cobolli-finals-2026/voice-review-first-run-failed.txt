@@ -1,0 +1,26 @@
+reel	配音自动听审（实际配音字节，五项全过才放行）	﻿2026-11-04T10:55:56.3443666Z ##[group]Run set -o pipefail
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3443930Z [36;1mset -o pipefail[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3444178Z [36;1mpip install -q -e ".[polyphone]" faster-whisper[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3444458Z [36;1mpython tools/voice_auto_review.py \[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3444745Z [36;1m  --outdir "output/2026-11-04/reel/cobolli-finals-2026" \[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3445074Z [36;1m  --bundle "$RUNNER_TEMP/cobolli-finals-2026-tts.zip" \[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3445367Z [36;1m  2>&1 | tee -a /tmp/render-findings.log[0m
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3461811Z shell: /usr/bin/bash -e {0}
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3462025Z env:
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3462253Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3462591Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3462904Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3463197Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3463491Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3463811Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:55:56.3464070Z ##[endgroup]
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:56:02.8561661Z 
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:56:02.8562520Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:56:02.8562915Z [notice] To update, run: pip install --upgrade pip
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:56:43.1295759Z Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:35.4594728Z [配音自动听审] ❌ 没过（20 条实际配音）
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:35.4595383Z   「1/4决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。」
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:35.4596186Z     完整：漏 1 多 3 替 0，转写「四分之一决赛、逆转保罗、半决赛、树给菲斯。四百分到手,科博利继续向第一次年终总决赛靠近。」
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:35.4596695Z   「哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，1/4决赛输给费里，连续第二年停在这里。」
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:35.4597171Z     完整：漏 1 多 3 替 0，转写「哈雷首轮出局,温网又打进八强。第四轮三盘淘汰德米纳尔,四分之一决赛输给费礼,连续第二年停在这里。」
+reel	配音自动听审（实际配音字节，五项全过才放行）	2026-11-04T10:57:36.0870260Z ##[error]Process completed with exit code 1.
