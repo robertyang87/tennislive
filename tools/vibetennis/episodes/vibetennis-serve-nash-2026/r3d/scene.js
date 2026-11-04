@@ -166,7 +166,7 @@ function setTrail(fn,tau,col=[0.9,1,0.5],vis=true){ if(!vis){ chide(trail); retu
 // ---------- 球员（X Bot）与手（generic-hand），模型加载后建 ----------
 let server=null, receiver=null, ghosts=[], handL=null, handR=null;
 const MODELS_READY=Promise.all([
-  new Promise((res,rej)=>new GLTFLoader().load('models/Xbot.glb',res,undefined,rej)),
+  new Promise((res,rej)=>new GLTFLoader().load('models/male_base.glb',res,undefined,rej)),
   new Promise((res,rej)=>new GLTFLoader().load('models/hand_left.glb',res,undefined,rej)),
   new Promise((res,rej)=>new GLTFLoader().load('models/hand_right.glb',res,undefined,rej))]).then(([bot,hl,hr])=>{
   server=makePlayer(bot,0xffb347,scene); receiver=makePlayer(bot,0x4fe3ff,scene);

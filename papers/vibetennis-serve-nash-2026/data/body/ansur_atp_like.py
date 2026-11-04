@@ -1,7 +1,8 @@
 """ATP 球员体型的比例来源：ANSUR II（2012 美军人体测量，男性公开数据 4,082 人）。
 数据：https://tools.openlab.psu.edu/publicData/ANSUR_II_MALE_Public.csv（Penn State OpenLab 转存；原始发布 Army Public Health Center）。
 子集：身高 1.83–1.98 m、BMI 20–24、35 岁以下——ATP 前列球员的典型身形；结果 98 人，平均 1.87 m／78 kg。
-各部位除以身高取均值，写进 atp_like.json；players.js 的 HUMAN／LEN／BUILD 按它定，模型量出来的比例在 model_measured.json。
+各部位除以身高取均值，写进 atp_like.json；players.js 的 STATURE（球员身高 1.87 m）取自这里。
+（2026-11-04 先拿它把 X Bot 调成 ATP 比例，所有者随后「不要这个模型的人」，换成 CC0 写实人体，那套调形代码和模型量值一并删了。）
 
     python3 ansur_atp_like.py ANSUR_II_MALE_Public.csv
 """
