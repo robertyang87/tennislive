@@ -2387,6 +2387,7 @@ def probe_size(path: Path) -> tuple[int, int]:
     out = run("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=width,height",
               "-of", "csv=p=0:s=x", str(path)).stdout.strip()
+    out = [ln for ln in out.splitlines() if ln.strip()][0]
     w, h = out.split("x")[:2]
     return int(w), int(h)
 
@@ -5104,6 +5105,44 @@ def _canvas_fit() -> str:
     return f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
 
 
+_SEEK_SAFE_CACHE: dict[str, Path] = {}
+_SEEK_SAFE_LOCK = __import__("threading").Lock()
+
+
+def _seek_safe_source(source: Path) -> Path:
+    """编码输入先流拷贝 remux 成单 program 工作副本（内容一帧不变）。
+
+    yt-dlp 的 DASH remux 是多 program 容器：BtbN ffmpeg 对它做输入寻址
+    （`-ss` 在 `-i` 前）时，个别窗口会晚落数秒——段头画面整段丢失、音轨
+    却完好（2026-11-04 wta-finals-slot8-2026 实测：fin@511 丢 5.2s、
+    madrid@220.5 丢 5.06s，坏 part 的视频轨 start_time≈5.2、帧数不足，
+    拼接在首个坏段处把整条视频流截断）。流拷贝 remux（`-map 0:v:0
+    -map 0:a:0 -c copy`）把容器结构归一后，同样的寻址逐帧精确（同窗
+    对照实测）。原档不动：字节绑定/审听包认的仍是原档，这里只换编码
+    输入。remux 失败就退回原档——归一化不许反而把能编的段编不了。"""
+    key = str(source)
+    cached = _SEEK_SAFE_CACHE.get(key)
+    if cached is not None:
+        return cached
+    with _SEEK_SAFE_LOCK:
+        cached = _SEEK_SAFE_CACHE.get(key)
+        if cached is not None:
+            return cached
+        dest = source.with_name(source.stem + ".seekwork.mp4")
+        try:
+            if (not dest.is_file()
+                    or dest.stat().st_mtime < source.stat().st_mtime):
+                tmp = source.with_name(source.stem + ".seekwork.tmp.mp4")
+                run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-i", str(source), "-map", "0:v:0", "-map", "0:a:0",
+                    "-c", "copy", str(tmp))
+                tmp.replace(dest)
+        except Exception:
+            dest = source
+        _SEEK_SAFE_CACHE[key] = dest
+        return dest
+
+
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None,
                 tail: float = 0.0, *, threads: int | None = None, command_sink=None) -> Path:
@@ -5460,6 +5499,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
     # ⚠️ **这儿不许再出现 `fade=`。** 淡入淡出收在拼接那一步的 `xfade`：
     # 在这儿淡是「各自淡到黑」，接缝中间必然有一帧全黑（量过，见 SEG_FADE）。
+    # 编码输入换成寻址安全的工作副本（见 `_seek_safe_source`）：多 program
+    # 的 DASH remux 源做输入寻址会晚落数秒、整段丢掉段头画面。
+    source = _seek_safe_source(source)
     with stage(SEGMENT_STAGE):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             *filter_args, *thread_args,
