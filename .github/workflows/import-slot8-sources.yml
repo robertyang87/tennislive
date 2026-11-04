@@ -30,6 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
+      - name: cookies (same secret as match-reel)
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "cookies written: $(wc -l < "$RUNNER_TEMP/yt-cookies.txt") lines"
+          else
+            echo "::warning::YT_COOKIES_TXT not configured"
+          fi
       - name: Download (client ladder, same recipe as probe)
         env:
           VID: ${{ inputs.vid }}
@@ -41,6 +51,7 @@ jobs:
           ok=0
           for client in "" "android_vr" "tv_simply" "web_embedded" "android,ios"; do
             args=(--js-runtimes node --socket-timeout 30 --no-warnings
+                  --cookies "$RUNNER_TEMP/yt-cookies.txt"
                   -f "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
                   -S "res:1080,fps,vcodec:h264,acodec:m4a"
                   --merge-output-format mp4 -o "dl/$VID.mp4")
