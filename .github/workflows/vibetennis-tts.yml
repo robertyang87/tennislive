@@ -1,0 +1,56 @@
+name: vibetennis-tts
+
+# vibetennis 中文配音：会话沙箱连不上 speech.platform.bing.com（edge-tts 走 WebSocket，代理不放行），
+# 所以 narration.json 一推上来就在 runner 上合成，把 voice/*.mp3 和词边界 voice/*.json 提交回同一分支。
+# 只重合成文本变了的句子（tools/vibetennis/tts_synth.py 按哈希判断）。用 GITHUB_TOKEN 推的提交不会再触发本工作流。
+
+on:
+  push:
+    branches: ['claude/vibetennis-**']
+    paths: ['tools/vibetennis/episodes/*/narration.json']
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "集目录，如 tools/vibetennis/episodes/vibetennis-serve-nash-2026"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vibetennis-tts-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          sparse-checkout: |
+            tools/vibetennis
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 安装 edge-tts
+        timeout-minutes: 5
+        run: pip install -q edge-tts
+      - name: 找出要合成的集
+        id: eps
+        run: |
+          if [ -n "${{ github.event.inputs.episode }}" ]; then echo "list=${{ github.event.inputs.episode }}" >> "$GITHUB_OUTPUT"; exit 0; fi
+          L=$(git diff --name-only HEAD~1 HEAD -- 'tools/vibetennis/episodes/*/narration.json' | xargs -r -n1 dirname | sort -u | tr '\n' ' ')
+          echo "list=$L" >> "$GITHUB_OUTPUT"; echo "要合成：$L"
+      - name: 合成
+        timeout-minutes: 12
+        run: for e in ${{ steps.eps.outputs.list }}; do python3 tools/vibetennis/tts_synth.py "$e"; done
+      - name: 提交回分支
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for e in ${{ steps.eps.outputs.list }}; do git add -A "$e/voice"; done
+          git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          python3 tools/check_staged_file_sizes.py   # 体积闸：单个文件超限当场停，别等 GitHub 拒收（稀疏检出 tools/vibetennis 时 tools/ 根下的文件也在）
+          git commit -m "vibetennis 配音：runner 合成（edge-tts）"
+          for i in 1 2 3 4; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep $((2**i)); done; exit 1
