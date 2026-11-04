@@ -75,7 +75,7 @@ def a7_frame(dur):
         if a3 > 0:
             chip(d, W / 2, 1010, "全场 51 分钟 · 只赢一局", F_CHIP, RED, RED,
                  fill_a=int(120 * a3))
-            text_c(d, W / 2, 1096, "赛后，她把话挑明了", F_ROWS,
+            text_c(d, W / 2, 1096, "赛后，她把话说透了", F_ROWS,
                    with_a(CREAM_DIM, int(255 * a3)))
         if dim < 1.0:
             veil = Image.new("RGBA", (W, H), (8, 14, 29, int(190 * (1 - dim))))
