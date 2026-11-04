@@ -68,7 +68,15 @@ jobs:
           set -euo pipefail
           curl -sSL --fail --retry 2 -o "$RUNNER_TEMP/ao-source.mp4" https://github.com/robertyang87/tennislive/releases/download/source-dSafV4sp0OM/dSafV4sp0OM.mp4
           mkdir -p review
-          python tools/source_asr.py --source "$RUNNER_TEMP/ao-source.mp4" --model large-v3 --from 436 --to 447 --out review/ao-large-v3-436-447.json
+          SOURCE_PATH="$RUNNER_TEMP/ao-source.mp4" PYTHONPATH=tools python - <<'PY_AO'
+          import json,os,pathlib
+          from source_asr import transcribe,shift,sha256
+          source=pathlib.Path(os.environ['SOURCE_PATH'])
+          segments,duration=transcribe(source,'large-v3',436,447)
+          doc={'model':'large-v3','source_sha256':sha256(source),'clip':[436.0,447.0],'duration':duration,'segments':shift(segments,436.0),'review_scope':'One bounded extra local-ASR cross-check, not human listening or production approval.'}
+          pathlib.Path('review/ao-large-v3-436-447.json').write_text(json.dumps(doc,ensure_ascii=False,indent=1)+'\n')
+          for row in doc['segments']:print(row['start'],row['end'],row['text'])
+          PY_AO
       - uses: actions/upload-artifact@v4
         with:
           name: cobolli-ao-bounded-third-model
