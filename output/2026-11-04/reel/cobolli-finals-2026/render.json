@@ -3,25 +3,25 @@
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "7d8b4e95b8b0b5f7a23ef9dcff0a3ebe6655eec9733a8e0d7b2489ef04bbe60e",
-    "request_count": 20,
+    "bundle_sha256": "31d24caea6ea49f564fe680379f5e518c0656b0dfa36208f219f8f833817d7b9",
+    "request_count": 19,
     "mode": "strict_import",
     "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
-    "release_tag": "reel-tts-cobolli-finals-2026-7d8b4e95b8b0b5f7",
-    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-cobolli-finals-2026-7d8b4e95b8b0b5f7/tts_bundle.zip",
+    "release_tag": "reel-tts-cobolli-finals-2026-31d24caea6ea49f5",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-cobolli-finals-2026-31d24caea6ea49f5/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41821049178"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41832828316"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 323.876,
+  "segments_seconds": 308.044,
   "topbar": null,
-  "film_seconds": 329.64,
+  "film_seconds": 313.84,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -40,11 +40,10 @@
     "17": 8.352,
     "18": 8.592,
     "20": 9.744,
-    "22": 8.28,
-    "23": 9.072,
-    "24": 9.432,
-    "25": 8.04,
-    "26": 10.224
+    "22": 4.968,
+    "23": 5.64,
+    "24": 8.784,
+    "25": 10.224
   },
   "face_checks": {
     "cover": {
@@ -61,44 +60,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "b9b30fd510d6760357a4ef6a175c26dca60ac484d262ba9e9b12bb6b467d81de",
+  "render_inputs_sha256": "916f320398ba1907c0490f99c96fe5a8532a493ba97b2dbbe6dbfa474caa1c45",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "cobolli-finals-2026",
-    "received_at": "2026-11-04T11:27:49Z",
-    "artifact_ready_at": "2026-11-04T11:35:54Z",
-    "elapsed_seconds": 485.803,
+    "received_at": "2026-11-04T12:51:07Z",
+    "artifact_ready_at": "2026-11-04T12:58:13Z",
+    "elapsed_seconds": 426.717,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "fa18171e12a63ef5b86150a4ea1a91a3972d4ce737ec9cb0c9f60d1e5adf5ba8",
-    "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
-    "run_id": "41821049178",
+    "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+    "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+    "run_id": "41832828316",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-04T11:29:58Z",
-        "run_id": "41821049178"
+        "at": "2026-11-04T12:53:43Z",
+        "run_id": "41832828316"
       }
     ],
-    "render_seconds": 356.803,
-    "pre_render_seconds": 129.0
+    "render_seconds": 270.717,
+    "pre_render_seconds": 156.0
   },
-  "film_sha256": "fa18171e12a63ef5b86150a4ea1a91a3972d4ce737ec9cb0c9f60d1e5adf5ba8",
-  "film_bytes": 118096833,
-  "qc_attestation_sha256": "efe4078a0567b429733fed0babd4f6747b17e18d8bdfea214a3e8da642bb57a5",
+  "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+  "film_bytes": 120062506,
+  "qc_attestation_sha256": "0716fd1fa8c48d0f449f742cd533b2f03837a9bd4ef7a7b9dc1cb9f4bc0db090",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-04T11:29:58Z",
-      "run_id": "41821049178"
+      "at": "2026-11-04T12:53:43Z",
+      "run_id": "41832828316"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-04T11:35:58Z",
-      "run_id": "41821049178"
+      "at": "2026-11-04T12:58:16Z",
+      "run_id": "41832828316"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-cobolli-finals-2026/cobolli-finals-2026.mp4",
-  "video_bytes": 118096833
+  "video_bytes": 120062506
 }
