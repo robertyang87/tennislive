@@ -48,6 +48,23 @@
 | 伤病 | ✅ 硬线软线没差别 | 600 名德国业余联赛球员回顾问卷：慢性上肢不适在硬线、软线两组之间「no significant differences」——问卷研究，不是实验 | Open Access J Sports Med 2024（PMC11226988） |
 | 伤病 | ✅ 厂家承认没数据 | Ashaway：「We don't have any statistics on this」 | Racquet Sports Industry 2014-08-19 |
 
+### 场上为什么要换拍子（所有者 2026-11-04：「球员好像打了一会，就要在球场上换那个线，是为什么？这也要讲清楚」）
+先说清一个常见误会：球员在场上换的是**另一支刚穿好线的球拍**，换下来的那支由球童送去赛事的穿线房重穿，**不是当场拆线**。
+
+| 数／事 | 上下文 | 出处 |
+|---|---|---|
+| ✅ 「每次换球就换一支新穿的拍子」 | 「They like to use a fresh racquet every ball change, and there's about six ball changes if you go three sets」；「Most of the time, the players don't break the strings. They restring the racquets just to keep the same tension」——2025 年加拿大大师赛（ATP 1000，多伦多）穿线主管 Jared Horwood | The Globe and Mail 2025-08-05 |
+| ✅ 一天 130–200 支 | 同上：8 人团队，每支 12–20 分钟，整届约 1,600–1,700 支；每名单打球员每天送来 3–6 支 | 同上 |
+| ✅ 比赛中途送去重穿 | 温网穿线点要同时应付「the players who ask to have their racquets restrung during the match」；每人每天平均约 30 支、每支约 20 分钟，第一轮最忙的一天近 500 支 | Babolat 官网「Stringers Wimbledon 23」 |
+| ✅ 不是怕断线，是怕掉磅 | 伊斯内尔 2010 温网比赛中把拍子全部送去重穿：「It wasn't because he was afraid of breaking strings—polyester is almost bulletproof. He wanted to maintain string tension for better control, as polyester loses its tension quicker than any other string type」；聚酯线普及后温网每天断线从约 50 根降到约 5 根 | Tennis.com 2010-06-28（温网穿线点） |
+| ✅ 换球的时机由规则定 | ITF 规则：换球按约定的**奇数局数**进行，「the first ball change in the match shall take place two games earlier than for the rest of the match, to make allowance for the warm-up」；抢七局开始时不换球 | ITF《2026 网球规则》 |
+| ⚠️ 「7 局、之后每 9 局」 | 这是巡回赛常见的约定，**ITF 规则原文没写具体局数**；上屏写「每隔若干局换一次新球」或核到当站赛事规程再写数 | — |
+| ✅ 线「死了」是什么感觉 | 球员说聚酯线打「2–20 小时」后会「goes dead」；Lindsey 的测量：掉磅后球在线床上停留更久、**出球角度变高**——「control goes dead due to longer dwell time and the consequent change in launch angle」，球「traveling farther and wider」，**不是变没力，是变得管不住** | Lindsey，TWU「How Tennis Strings Go Dead – Part 1」2013-03-21 |
+| ✅ 每一拍都在掉 | 实验室锤击：每次撞击后张力先升再迅速下降，撞击后的张力比撞击前低，**第一次撞击掉得最多** | Cross, Lindsey & Andruczyk (2000) |
+| ✅ 刚穿完就低 30% | 见上「掉磅」 | Cross & Bower (2001) |
+
+**一句话讲清**：聚酯线不容易断，但掉磅快；磅数一掉，球在线上停得更久、出球角度变高，球就往界外飞。职业球员要每一拍都是同一个手感，所以每次换新球就换一支刚穿好、磅数一样的拍子。
+
 ### 「科技对技术水平」——本集只讲到这里，总结放第三集
 - ❌ **没有任何同行评审研究量化过「拍线改变了打法」**（多拍、上网少、制胜分／失误）。PubMed 检索为 0。片中只能说「被广泛认为」
 - 有数据的在第三集：Haake 等 2000（男子抢七比例三十年上升，作者推测因发球变快）、Haake 等 2007（球拍＋球让发球快约 17.5%）、Bayram & Barla 2026《Sci Rep》（约 19.8 万场 ATP，1991 年后单场长约 16.5 分钟，作者未单独归因到线）
@@ -58,8 +75,9 @@
 3. **被禁的意大利面拍（35–70s）**：主线横线不编织，球一碰线床，线被拨歪再弹回；转速条拉到普通拍的约 2 倍；国际网联规则原文「交错编织」盖章禁掉。钩子：「可几十年后，同一个原理又回来了。」
 4. **聚酯线：合法地「滑」（70–105s）**：编织的线也能被拨歪再弹回（千分之一秒），转速 +20%；库尔滕 1997 法网一句；2009 年前 20 里 70% 用它。
 5. **反转：力量几乎没变（105–135s）**：能量回弹约 95% 是所有线的共同天花板；磅数降 20%，底线球只快 2–3%。钩子：「那它到底亏了什么？」
-6. **代价与误会（135–165s）**：掉磅最快（分子链一根根松开）；「伤手肘」「避震器护手」没有证据——避震器不减少前臂振动。
-7. **片尾（165–180s）**：「线让球更转，那球拍呢？」→ 三部曲第二集预告；问句：「你的线多久换一次？」
+6. **代价：为什么场上要换拍子（135–160s）**：掉磅最快（分子链一根根松开，刚穿完就低约 30%，每一拍还在掉）→ 球在线上停得更久、出球变高、往界外飞；所以职业球员每次换新球就换一支刚穿好的拍子，换下的送去穿线房（多伦多一天 130–200 支）。钩子：「那业余球友要不要也这么勤？」
+7. **误会（160–170s）**：「聚酯线伤手肘」「避震器护手」没有证据——避震器不减少前臂振动。
+8. **片尾（170–185s）**：「线让球更转，那球拍呢？」→ 三部曲第二集预告；问句：「你的线多久换一次？」
 
 ## 可单独截出去转发的那句
 「一百五十年换了三代线，球几乎没变快——变的是转。」（力量：Cross 2000、Lindsey；转速：Lindsey +20.2%。⚠️ 「几乎没变快」只指线材本身，**球拍和球的变化不算在内**，上屏要带这个范围）
