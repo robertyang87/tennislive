@@ -262,6 +262,7 @@
 |---|---|---|---|
 | ~~EP06（规划）~~ | `vibetennis-flash-lag-2026` | ~~人眼为什么总把界内球看成出界？（PSY-01）~~ | **停做**（2026-11-03）：所有者「司线都退出赛场了」——过不了「今天的比赛里还在发生」；加上 Mather 2008 原文与 Whitney 结论相反。资料包 [`sources.md`](../papers/vibetennis-flash-lag-2026/sources.md) 留档；EP06 号码空出来，从总榜 27 分里另选 |
 | EP06（规划） | `vibetennis-jet-lag-2026` | 时差到底能不能打垮一个球员？（BIO-02） | 资料包与镜头提纲初稿 [`sources.md`](../papers/vibetennis-jet-lag-2026/sources.md)，等所有者看过再出审片包、整片渲 |
+| EP07（规划） | `vibetennis-serve-nash-2026` | 发球，该往哪边发？（MAT-01，纳什均衡／极小极大定理） | 资料包＋分镜 [`sources.md`](../papers/vibetennis-serve-nash-2026/sources.md)（WW 2001、GPW 2023 全文已读；Match Charting Project 2023–26 自算）；3D 场景初版已搭（9 段），等所有者看过再写配音、整片渲 |
 
 ## 选题的讲法：「一个有名有姓的理论 → 套在网球上 → 算出反直觉的结论 → 真实数据验证」
 
