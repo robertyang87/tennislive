@@ -1,0 +1,50 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-s8a7kasat38/s8a7kasat38.mp4",
+  "source_sha256": "e0b644cd4154a430615c4b9729ed1cbb2d6d92b76f29da8df387bb12a292030a",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-04T03:49:56+00:00",
+  "reviewed_from": 13.4,
+  "reviewed_to": 38.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 13.6,
+      "end": 17.5,
+      "en": "In my opinion, the WTA Race is the WTA Race.",
+      "zh": "在我看来，Race 就是 Race"
+    },
+    {
+      "start": 17.5,
+      "end": 22.1,
+      "en": "So it's about the how many points you earn during the year.",
+      "zh": "只看你这一年挣了多少分"
+    },
+    {
+      "start": 22.1,
+      "end": 26.3,
+      "en": "If you win a Grand Slam, you already got what you achieved.",
+      "zh": "赢了大满贯，该得的都得了"
+    },
+    {
+      "start": 26.3,
+      "end": 30.7,
+      "en": "You won the Grand Slam, points, money, glory, everything.",
+      "zh": "积分、奖金、荣耀，全都有了"
+    },
+    {
+      "start": 30.7,
+      "end": 33.3,
+      "en": "Here it's the WTA Race.",
+      "zh": "而这里，是 Race 的比赛"
+    },
+    {
+      "start": 33.3,
+      "end": 37.0,
+      "en": "So I think in this scenario, it has to go by points.",
+      "zh": "所以这种场合，就该只认积分"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 e0b644cd4154a430615c4b9729ed1cbb2d6d92b76f29da8df387bb12a292030a，存于 data/source_asr/s8a7kasat38/small.en.json 与 data/source_asr/s8a7kasat38/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
