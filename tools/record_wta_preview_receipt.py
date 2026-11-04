@@ -1,0 +1,5 @@
+from pathlib import Path
+import json,sys,datetime,hashlib,os
+O=Path('output/2026-11-04/explainer/wta-finals-preview-2026');slug=O.name;r=json.loads(Path(sys.argv[1]).read_text());receipt=r['receipt'];assert receipt
+render=json.loads((O/'render.json').read_text());at=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds');row={'status':'sent','at':at,'run':sys.argv[2],'pushplus_receipt':receipt,'message_url':r['message_url'],'film_sha256':render['film_sha256'],'channel':'wechat','delivery_status':'unverified','note':'Explicit owner request to send the final no-scoreboard preview. API accepted; phone delivery not asserted.'}
+(O/'pushed.json').write_text(json.dumps(dict(row,slug=slug),ensure_ascii=False,indent=2)+'\n');p=Path('data/explainer_publish_ledger')/f'{slug}.json';p.parent.mkdir(parents=True,exist_ok=True);old=json.loads(p.read_text()) if p.exists() else {'slug':slug,'attempts':[]};assert not any(x.get('pushplus_receipt')==receipt for x in old['attempts']);old['attempts'].append(row);p.write_text(json.dumps(old,ensure_ascii=False,indent=2)+'\n');print(r['message_url'])

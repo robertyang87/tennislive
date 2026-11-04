@@ -41,7 +41,7 @@ on:
         default: ""
 
 permissions:
-  contents: read
+  contents: write
   # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
@@ -65,12 +65,19 @@ jobs:
             data
             src
             tools
+            specs/explainers
+            output/2026-11-04/explainer/wta-finals-preview-2026
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
       - name: Install package
         run: pip install -q -e .
+      - name: Restore exact approved WTA preview and publish its media
+        if: inputs.slug == 'wta-finals-preview-2026' && inputs.scope == 'explainer'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/prepare_wta_preview_wechat.py
       - name: Push existing package
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -79,6 +86,8 @@ jobs:
           INPUT_SCOPE: ${{ github.event_name == 'push' && 'explainer' || inputs.scope }}
           INPUT_SLUG: ${{ github.event_name == 'push' && 'zheng-china-wuhan-wildcards-v2' || inputs.slug }}
           # Fresh GitHub Pages assets can take several minutes to propagate.
+          TENNISLIVE_COPYPAGE_ATTEMPTS: '1'
+          TENNISLIVE_COPYPAGE_RETRY_SECONDS: '0'
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
@@ -115,3 +124,17 @@ jobs:
           python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
             --slug "${INPUT_SLUG:-$SCOPE}" --summary "$GITHUB_STEP_SUMMARY" \
             || echo "::warning::推送网页链接没写进摘要（消息已发，不影响记账）"
+
+      - name: Persist actual WTA preview receipt
+        if: inputs.slug == 'wta-finals-preview-2026' && inputs.scope == 'explainer'
+        env:
+          PUBLISH_BRANCH: ${{ github.ref_name }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python tools/record_wta_preview_receipt.py "$RUNNER_TEMP/pushplus-receipt.json" "$RUN_URL"
+          git config user.name "Codex"
+          git config user.email "codex@users.noreply.github.com"
+          git add --sparse output/2026-11-04/explainer/wta-finals-preview-2026/pushed.json data/explainer_publish_ledger/wta-finals-preview-2026.json
+          python tools/check_staged_file_sizes.py
+          git commit -m "publish: record WTA Finals preview WeChat receipt"
+          git push origin "HEAD:$PUBLISH_BRANCH"

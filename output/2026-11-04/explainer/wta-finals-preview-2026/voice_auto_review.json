@@ -1,0 +1,996 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "39366862502d38795ede4a20466105f3e81358d74492b653fb0d6d3deca1be8d",
+    "render_inputs_sha256": "d402703cb154d16705e90a581c01f26c63b1851e2f80ca3e2cf82588ac011ec6",
+    "spec_sha256": "11069399a02e030d7d736c7d46497cd106c18977ac145406769f03840cb83765",
+    "film_sha256": "091f7594bfb5f0b366293f65cbfe73117d77202266f33b4b3573a13616525030",
+    "inventory_sha256": "487c5d5b7d12fd3d26a8af615c44637879e352d2295d69134d3116fcbe929c80"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-04T08:29:32+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1692b016a848902be64a9637c316a0cc3fbd2ca2d9b5fa445af6e9228a2cb5df",
+      "audio_sha256": "bf17e1d893fed64112ec1d9eafc2e4f1242ba35532985ed7fb88b7bbf6b20686",
+      "pass": true,
+      "result_of": "bundle:1692b016a848902be64a9637c316a0cc3fbd2ca2d9b5fa445af6e9228a2cb5df"
+    },
+    {
+      "id": "bundle:1f50f7b38d1e8e65de99462ca00955272f7931912bbb3129269813b90077093e",
+      "audio_sha256": "a4a5b47dd46bb455f2cea5bf045e903c9dda9d4d9f59d06b5243f559359a3c43",
+      "pass": true,
+      "result_of": "bundle:1f50f7b38d1e8e65de99462ca00955272f7931912bbb3129269813b90077093e"
+    },
+    {
+      "id": "bundle:3596a8609e8a549c24a11efc2aa08c515ed474c92c0815967fbf1bc4b1d00af6",
+      "audio_sha256": "052a43e89a9856e65fa230ad025387c8f78cef80f619e0684d95fb49ad1625d0",
+      "pass": true,
+      "result_of": "bundle:3596a8609e8a549c24a11efc2aa08c515ed474c92c0815967fbf1bc4b1d00af6"
+    },
+    {
+      "id": "bundle:42c8e4f9065f6a61091cee49844fb93a5c23b73b71487c7568f0c7097df2ddc4",
+      "audio_sha256": "283371a90426da56452023a756ff271b0c37e42b025b924b096abdb5331affb4",
+      "pass": true,
+      "result_of": "bundle:42c8e4f9065f6a61091cee49844fb93a5c23b73b71487c7568f0c7097df2ddc4"
+    },
+    {
+      "id": "bundle:49a3fde403a4b2694dfdfa228bcc98281ef3902e1088974c7986a7fe0ed64f72",
+      "audio_sha256": "e674c72fa74a084e3f3fa3b9869cfa2f0f7125df65fa171f6708ee916e84f057",
+      "pass": true,
+      "result_of": "bundle:49a3fde403a4b2694dfdfa228bcc98281ef3902e1088974c7986a7fe0ed64f72"
+    },
+    {
+      "id": "bundle:5051c42f92daeefe82ee0dd797cdcbc49623c395aa4029bd32942ec480c40222",
+      "audio_sha256": "6ed0fbf38f57bd07fe76d74a2f194cfa6096465c92c636facd3061b16209269c",
+      "pass": true,
+      "result_of": "bundle:5051c42f92daeefe82ee0dd797cdcbc49623c395aa4029bd32942ec480c40222"
+    },
+    {
+      "id": "bundle:6046c0dbcb1b16e0ced645a00c73475f005c7267084ef2d193e84913e53d79f0",
+      "audio_sha256": "7205f40370990cc45287f1b65f2d7b5fa70f32755bd25847192da138ec19cbe1",
+      "pass": true,
+      "result_of": "bundle:6046c0dbcb1b16e0ced645a00c73475f005c7267084ef2d193e84913e53d79f0"
+    },
+    {
+      "id": "bundle:93addf989e3203278b8c591609f688f98267f26db0e0d265681324fcc78a9de8",
+      "audio_sha256": "ef8ad4156e9cffdd84a230b59dfbf3138f9f038452509677d9e4dee3267c57fa",
+      "pass": true,
+      "result_of": "bundle:93addf989e3203278b8c591609f688f98267f26db0e0d265681324fcc78a9de8"
+    },
+    {
+      "id": "bundle:962aa41bc879cb363ba3ba3f2492c7e89d247b5337d88b3c33231f7a0c987d30",
+      "audio_sha256": "c1bc99e91846efd60ce4071f8ed1be84004e06cfbc1982d964955322bbe6195e",
+      "pass": true,
+      "result_of": "bundle:962aa41bc879cb363ba3ba3f2492c7e89d247b5337d88b3c33231f7a0c987d30"
+    },
+    {
+      "id": "bundle:c3601372d6eb1f523ce88766f6630ded1d4e344839c75bbbc0d78625db16580e",
+      "audio_sha256": "68cb2843ff901f4da768702618bdb7e44a10c21b02170d487aa87ddf3582194b",
+      "pass": true,
+      "result_of": "bundle:c3601372d6eb1f523ce88766f6630ded1d4e344839c75bbbc0d78625db16580e"
+    },
+    {
+      "id": "bundle:c60410d9111f97e459c06a9d34a482619a0284b0fa0dc6187696c5569fc1d887",
+      "audio_sha256": "8c1e78a54166c68d49583cf89ed5952a4c535c847d1a7d18e71152d1c73b164d",
+      "pass": true,
+      "result_of": "bundle:c60410d9111f97e459c06a9d34a482619a0284b0fa0dc6187696c5569fc1d887"
+    },
+    {
+      "id": "bundle:d73ff04025a86562b0ee85a88bf13b20c5bad2cba8e84d2b3749f6529c3faa9f",
+      "audio_sha256": "aa5792c7fe57a7e8070e1afd6e16b900582a1666ca8303ec98b4a3c63c68e839",
+      "pass": true,
+      "result_of": "bundle:d73ff04025a86562b0ee85a88bf13b20c5bad2cba8e84d2b3749f6529c3faa9f"
+    },
+    {
+      "id": "bundle:dca207443563b2552e889838961bf2e2fe739a8457b353155bc6b5db819ee0ef",
+      "audio_sha256": "7c242cc5eef99ef75c98fc35408a6ffa8cd4c40eddb9907144fc22006039cdfa",
+      "pass": true,
+      "result_of": "bundle:dca207443563b2552e889838961bf2e2fe739a8457b353155bc6b5db819ee0ef"
+    },
+    {
+      "id": "bundle:dd757dbf84c1aa8ff9817d06960ef0c0f770d41fd242f95d162aa2f1633b32ed",
+      "audio_sha256": "92545d12222bf9c246a6ffbbc450d75607e43fd91a94bb9a5a758e06b11f763b",
+      "pass": true,
+      "result_of": "bundle:dd757dbf84c1aa8ff9817d06960ef0c0f770d41fd242f95d162aa2f1633b32ed"
+    },
+    {
+      "id": "bundle:e8e96abae181eb79a367f441e47a1ba07898495ae88e09bd38ef6e4128fcced8",
+      "audio_sha256": "037c10545b4f6355ca757d9767a04f58996f594526c9f473de1ddfc34c019d9d",
+      "pass": true,
+      "result_of": "bundle:e8e96abae181eb79a367f441e47a1ba07898495ae88e09bd38ef6e4128fcced8"
+    },
+    {
+      "id": "bundle:ece3523b99b010363e1faf9fa476154da128a551318205bd1c74bab0a336a7e6",
+      "audio_sha256": "02adc7e272872390276c0637ab98fc21b9525a38d6b56b27001e40f7c9813670",
+      "pass": true,
+      "result_of": "bundle:ece3523b99b010363e1faf9fa476154da128a551318205bd1c74bab0a336a7e6"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "052a43e89a9856e65fa230ad025387c8f78cef80f619e0684d95fb49ad1625d0",
+      "pass": true,
+      "result_of": "bundle:3596a8609e8a549c24a11efc2aa08c515ed474c92c0815967fbf1bc4b1d00af6"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "aa5792c7fe57a7e8070e1afd6e16b900582a1666ca8303ec98b4a3c63c68e839",
+      "pass": true,
+      "result_of": "bundle:d73ff04025a86562b0ee85a88bf13b20c5bad2cba8e84d2b3749f6529c3faa9f"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "283371a90426da56452023a756ff271b0c37e42b025b924b096abdb5331affb4",
+      "pass": true,
+      "result_of": "bundle:42c8e4f9065f6a61091cee49844fb93a5c23b73b71487c7568f0c7097df2ddc4"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "ef8ad4156e9cffdd84a230b59dfbf3138f9f038452509677d9e4dee3267c57fa",
+      "pass": true,
+      "result_of": "bundle:93addf989e3203278b8c591609f688f98267f26db0e0d265681324fcc78a9de8"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "6ed0fbf38f57bd07fe76d74a2f194cfa6096465c92c636facd3061b16209269c",
+      "pass": true,
+      "result_of": "bundle:5051c42f92daeefe82ee0dd797cdcbc49623c395aa4029bd32942ec480c40222"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "a4a5b47dd46bb455f2cea5bf045e903c9dda9d4d9f59d06b5243f559359a3c43",
+      "pass": true,
+      "result_of": "bundle:1f50f7b38d1e8e65de99462ca00955272f7931912bbb3129269813b90077093e"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "c1bc99e91846efd60ce4071f8ed1be84004e06cfbc1982d964955322bbe6195e",
+      "pass": true,
+      "result_of": "bundle:962aa41bc879cb363ba3ba3f2492c7e89d247b5337d88b3c33231f7a0c987d30"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "92545d12222bf9c246a6ffbbc450d75607e43fd91a94bb9a5a758e06b11f763b",
+      "pass": true,
+      "result_of": "bundle:dd757dbf84c1aa8ff9817d06960ef0c0f770d41fd242f95d162aa2f1633b32ed"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "bf17e1d893fed64112ec1d9eafc2e4f1242ba35532985ed7fb88b7bbf6b20686",
+      "pass": true,
+      "result_of": "bundle:1692b016a848902be64a9637c316a0cc3fbd2ca2d9b5fa445af6e9228a2cb5df"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "68cb2843ff901f4da768702618bdb7e44a10c21b02170d487aa87ddf3582194b",
+      "pass": true,
+      "result_of": "bundle:c3601372d6eb1f523ce88766f6630ded1d4e344839c75bbbc0d78625db16580e"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "7205f40370990cc45287f1b65f2d7b5fa70f32755bd25847192da138ec19cbe1",
+      "pass": true,
+      "result_of": "bundle:6046c0dbcb1b16e0ced645a00c73475f005c7267084ef2d193e84913e53d79f0"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "e674c72fa74a084e3f3fa3b9869cfa2f0f7125df65fa171f6708ee916e84f057",
+      "pass": true,
+      "result_of": "bundle:49a3fde403a4b2694dfdfa228bcc98281ef3902e1088974c7986a7fe0ed64f72"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "7c242cc5eef99ef75c98fc35408a6ffa8cd4c40eddb9907144fc22006039cdfa",
+      "pass": true,
+      "result_of": "bundle:dca207443563b2552e889838961bf2e2fe739a8457b353155bc6b5db819ee0ef"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "037c10545b4f6355ca757d9767a04f58996f594526c9f473de1ddfc34c019d9d",
+      "pass": true,
+      "result_of": "bundle:e8e96abae181eb79a367f441e47a1ba07898495ae88e09bd38ef6e4128fcced8"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "8c1e78a54166c68d49583cf89ed5952a4c535c847d1a7d18e71152d1c73b164d",
+      "pass": true,
+      "result_of": "bundle:c60410d9111f97e459c06a9d34a482619a0284b0fa0dc6187696c5569fc1d887"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "02adc7e272872390276c0637ab98fc21b9525a38d6b56b27001e40f7c9813670",
+      "pass": true,
+      "result_of": "bundle:ece3523b99b010363e1faf9fa476154da128a551318205bd1c74bab0a336a7e6"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1692b016a848902be64a9637c316a0cc3fbd2ca2d9b5fa445af6e9228a2cb5df",
+      "text": "高芙四十七胜，辛辛那提夺冠，温网和美网都进了四强。佩古拉五十胜，拿下迪拜和查尔斯顿，两人的赛季表现都够硬。我略偏高芙，主要依据是今年直接交手两胜，加上她的移动防守。但近期也都有疑问：高芙北京十六强后因疲劳退出武汉，佩古拉伤停回归后在武汉首战输给奥斯塔彭科。夏天的好状态，需要在年终重新证明。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 131,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.015,
+        "longest_deletion": 0,
+        "transcript": "高福四十七胜、新西纳提多冠、文网和美网都进了四墙。佩古拉五十胜,拿下迪拜和查尔斯顿,两人的赛迹表现都够硬。我略偏高福,主要依据是,今年直接交手两胜,加上他的移动防守。但近期也都有一问,高福北京十六墙后殷疲劳退出武汉。佩古拉商庭回归后,在武汉守寨树给奥斯塔彭科。夏天的好状态,需要在年中重新证明。"
+      },
+      "polyphones": [
+        {
+          "index": 140,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.484,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 131,
+        "speech_s": 28.408,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "高芙 ｜ 四十七 ｜ 胜 ｜ 辛辛那提 ｜ 夺冠 ｜ 温 ｜ 网 ｜ 和美 ｜ 网 ｜ 都 ｜ 进 ｜ 了 ｜ 四 ｜ 强 ｜ 佩古拉 ｜ 五十 ｜ 胜 ｜ 拿下 ｜ 迪拜 ｜ 和 ｜ 查尔斯顿 ｜ 两 ｜ 人 ｜ 的 ｜ 赛季 ｜ 表现 ｜ 都 ｜ 够 ｜ 硬 ｜ 我 ｜ 略 ｜ 偏 ｜ 高芙 ｜ 主要 ｜ 依据 ｜ 是 ｜ 今年 ｜ 直接 ｜ 交手 ｜ 两 ｜ 胜 ｜ 加上 ｜ 她 ｜ 的 ｜ 移动 ｜ 防守 ｜ 但 ｜ 近期 ｜ 也 ｜ 都 ｜ 有 ｜ 疑问 ｜ 高芙 ｜ 北京 ｜ 十六强 ｜ 后 ｜ 因 ｜ 疲劳 ｜ 退出 ｜ 武汉 ｜ 佩古拉 ｜ 伤 ｜ 停 ｜ 回归 ｜ 后 ｜ 在 ｜ 武汉 ｜ 首战 ｜ 输 ｜ 给 ｜ 奥斯塔彭科 ｜ 夏天 ｜ 的 ｜ 好 ｜ 状态 ｜ 需要 ｜ 在 ｜ 年终 ｜ 重新 ｜ 证明"
+      }
+    },
+    {
+      "id": "bundle:1f50f7b38d1e8e65de99462ca00955272f7931912bbb3129269813b90077093e",
+      "text": "穆霍娃对萨巴伦卡三比二领先，但今年布里斯班是萨巴伦卡赢了，不能只看历史总数。安德烈耶娃对斯维托丽娜一比一，今年澳网赢球的是斯维托丽娜。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "穆霍娃对萨巴伦卡3比2领先,但今年布里斯班是萨巴伦卡赢了,不能只看历史总数。安德烈耶娃对斯维托丽娜1比1,今年傲网赢球的是斯维托丽娜。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 11.745,
+        "cps": 5.28,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "穆霍娃 ｜ 对 ｜ 萨巴伦卡 ｜ 三比二 ｜ 领先 ｜ 但 ｜ 今年 ｜ 布里斯班 ｜ 是 ｜ 萨巴伦卡 ｜ 赢 ｜ 了 ｜ 不能 ｜ 只 ｜ 看 ｜ 历史 ｜ 总数 ｜ 安德烈耶娃 ｜ 对 ｜ 斯维托丽娜 ｜ 一比一 ｜ 今年 ｜ 澳 ｜ 网 ｜ 赢 ｜ 球 ｜ 的 ｜ 是 ｜ 斯维托丽娜"
+      }
+    },
+    {
+      "id": "bundle:3596a8609e8a549c24a11efc2aa08c515ed474c92c0815967fbf1bc4b1d00af6",
+      "text": "这次年终分组，最有意思的是谁恰好克谁。先看十二组历史交锋，再看今年状态，最后给出我的四强和冠军选择。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这次年中分组,最有意思的是谁恰好客水。先看十二组历史交锋,再看今年状态,最后给出我的四强和冠军选择。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 9.54,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这次 ｜ 年终 ｜ 分组 ｜ 最 ｜ 有 ｜ 意思 ｜ 的 ｜ 是 ｜ 谁 ｜ 恰好 ｜ 克 ｜ 谁 ｜ 先 ｜ 看 ｜ 十二组 ｜ 历史 ｜ 交锋 ｜ 再 ｜ 看 ｜ 今年 ｜ 状态 ｜ 最后 ｜ 给 ｜ 出 ｜ 我 ｜ 的 ｜ 四 ｜ 强 ｜ 和 ｜ 冠军 ｜ 选择"
+      }
+    },
+    {
+      "id": "bundle:42c8e4f9065f6a61091cee49844fb93a5c23b73b71487c7568f0c7097df2ddc4",
+      "text": "她对诺斯科娃也三比零，不过今年没有交手。高芙和佩古拉则是五比五；更有参考价值的是今年两次交手，高芙都赢了，其中一次就是辛辛那提决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 60,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "她对诺斯科娃也3比0,不过今年没有交手。高福和佩古拉则是5比5,更有参考价值的是今年两次交手,高福都赢了,其中一次就是辛辛纳提决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 60,
+        "speech_s": 11.946,
+        "cps": 5.02,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 对 ｜ 诺斯科娃 ｜ 也 ｜ 三比零 ｜ 不过 ｜ 今年 ｜ 没有 ｜ 交手 ｜ 高芙 ｜ 和 ｜ 佩古拉 ｜ 则 ｜ 是 ｜ 五比五 ｜ 更 ｜ 有 ｜ 参考 ｜ 价值 ｜ 的 ｜ 是 ｜ 今年 ｜ 两次 ｜ 交手 ｜ 高芙 ｜ 都 ｜ 赢 ｜ 了 ｜ 其中 ｜ 一次 ｜ 就 ｜ 是 ｜ 辛辛那提 ｜ 决赛"
+      }
+    },
+    {
+      "id": "bundle:49a3fde403a4b2694dfdfa228bcc98281ef3902e1088974c7986a7fe0ed64f72",
+      "text": "安德烈耶娃五十胜、三冠，法网拿到首个大满贯，最近还打进北京决赛。所以我看好她，不只因为成长快，而是今年确实有成绩支撑。但法网是红土；在这组硬帝对抗里，她对斯维托丽娜的最新一场又输了。这个第二名选择，我只给她微弱优势。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 96,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.01,
+        "longest_deletion": 0,
+        "transcript": "安德烈、耶瓦五十圣、三冠、法网拿到首个大网冠,最近还打进北京决赛。所以我看好他,不只因为成长快,而是今年确实有成绩支撑。但法网是红土,在这组硬帝对抗里,他对斯维托丽娜的最新一场又输了。这个第二名选择,我只给他微弱优势。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.354,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 44,
+          "char": "长",
+          "word": "成长",
+          "intended": "zhang3",
+          "wrong": [
+            "chang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chang2",
+              "verdict": "correct",
+              "score": 0.977,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "掌仉涨"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 96,
+        "speech_s": 20.979,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "安德烈耶娃 ｜ 五十 ｜ 胜 ｜ 三 ｜ 冠 ｜ 法网 ｜ 拿 ｜ 到 ｜ 首个 ｜ 大满贯 ｜ 最近 ｜ 还 ｜ 打 ｜ 进 ｜ 北京 ｜ 决赛 ｜ 所以 ｜ 我 ｜ 看好 ｜ 她 ｜ 不只 ｜ 因为 ｜ 成长 ｜ 快 ｜ 而是 ｜ 今年 ｜ 确实 ｜ 有 ｜ 成绩 ｜ 支撑 ｜ 但 ｜ 法网 ｜ 是 ｜ 红土 ｜ 在 ｜ 这 ｜ 组 ｜ 硬 ｜ 帝 ｜ 对抗 ｜ 里 ｜ 她 ｜ 对 ｜ 斯维托丽娜 ｜ 的 ｜ 最新 ｜ 一 ｜ 场 ｜ 又 ｜ 输 ｜ 了 ｜ 这个 ｜ 第二名 ｜ 选择 ｜ 我 ｜ 只 ｜ 给 ｜ 她 ｜ 微弱 ｜ 优势"
+      }
+    },
+    {
+      "id": "bundle:5051c42f92daeefe82ee0dd797cdcbc49623c395aa4029bd32942ec480c40222",
+      "text": "第二组，萨巴伦卡对安德烈耶娃四比二，对斯维托丽娜六比一。不过安德烈耶娃赢了最近一次交手，就是去年的印第安维尔斯决赛。今年两人还没有碰过面。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二组,萨巴伦卡对安德烈耶娃4比2,对斯维托丽娜6比1。不过安德烈耶娃赢了最近一次交手,就是去年的印第安威尔斯决赛。今年两人还没有碰过面。"
+      },
+      "polyphones": [
+        {
+          "index": 62,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.476,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 12.335,
+        "cps": 5.11,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二组 ｜ 萨巴伦卡 ｜ 对 ｜ 安德烈耶娃 ｜ 四比二 ｜ 对 ｜ 斯维托丽娜 ｜ 六比一 ｜ 不过 ｜ 安德烈耶娃 ｜ 赢 ｜ 了 ｜ 最近 ｜ 一次 ｜ 交手 ｜ 就 ｜ 是 ｜ 去年 ｜ 的 ｜ 印第安维尔斯 ｜ 决赛 ｜ 今年 ｜ 两 ｜ 人 ｜ 还 ｜ 没有 ｜ 碰 ｜ 过 ｜ 面"
+      }
+    },
+    {
+      "id": "bundle:6046c0dbcb1b16e0ced645a00c73475f005c7267084ef2d193e84913e53d79f0",
+      "text": "萨巴伦卡今年四十七胜、三冠，拿到印第安维尔斯和迈阿密的阳光双冠。这里的夺冠经历，是她争冠的重要依据。不过最近武汉首战就输给了安·李，她并非带着连胜来到年终。我的判断是第二组仍先选她，但要看进攻失误能否控制住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 94,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "萨巴伦卡今年47胜、三冠、拿到印第安威尔斯和麦阿密的阳光双冠。这里的夺冠经历是他征冠的重要依据。不过最近武汉首战就输给了安·李,他并非带着廉盛来到年中。我的判断是第二组仍先选他,但要看进攻失误能否控制住。"
+      },
+      "polyphones": [
+        {
+          "index": 45,
+          "char": "重",
+          "word": "重要",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.459,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "仲众"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 94,
+        "speech_s": 20.071,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "萨巴伦卡 ｜ 今年 ｜ 四十七 ｜ 胜 ｜ 三 ｜ 冠 ｜ 拿 ｜ 到 ｜ 印第安维尔斯 ｜ 和 ｜ 迈阿密 ｜ 的 ｜ 阳光 ｜ 双 ｜ 冠 ｜ 这里 ｜ 的 ｜ 夺冠 ｜ 经历 ｜ 是 ｜ 她 ｜ 争冠 ｜ 的 ｜ 重要 ｜ 依据 ｜ 不过 ｜ 最近 ｜ 武汉 ｜ 首战 ｜ 就 ｜ 输 ｜ 给 ｜ 了 ｜ 安 ｜ 李 ｜ 她 ｜ 并非 ｜ 带 ｜ 着 ｜ 连胜 ｜ 来到 ｜ 年终 ｜ 我 ｜ 的 ｜ 判断 ｜ 是 ｜ 第二组 ｜ 仍 ｜ 先 ｜ 选 ｜ 她 ｜ 但 ｜ 要 ｜ 看 ｜ 进攻 ｜ 失误 ｜ 能否 ｜ 控制 ｜ 住"
+      }
+    },
+    {
+      "id": "bundle:93addf989e3203278b8c591609f688f98267f26db0e0d265681324fcc78a9de8",
+      "text": "诺斯科娃是这组的搅局者。她对高芙一比二，却赢了今年马德里那场；对佩古拉更是三比一领先。但马德里是红土，今年伯林对佩古拉那场是草地，不能直接照搬到硬帝。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 68,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "诺斯科娃是这组的角局者。她对高福一比二,却赢了今年马德里那场,对佩古拉更是三比一领先。但马德里是红土,今年柏林对佩古拉那场是草地,不能直接照搬到硬地。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 68,
+        "speech_s": 13.998,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "诺斯科娃 ｜ 是 ｜ 这 ｜ 组 ｜ 的 ｜ 搅局 ｜ 者 ｜ 她 ｜ 对 ｜ 高芙 ｜ 一比二 ｜ 却 ｜ 赢 ｜ 了 ｜ 今年 ｜ 马德里 ｜ 那 ｜ 场 ｜ 对 ｜ 佩古拉 ｜ 更 ｜ 是 ｜ 三比一 ｜ 领先 ｜ 但 ｜ 马德里 ｜ 是 ｜ 红土 ｜ 今年 ｜ 伯林 ｜ 对 ｜ 佩古拉 ｜ 那 ｜ 场 ｜ 是 ｜ 草地 ｜ 不能 ｜ 直接 ｜ 照搬 ｜ 到 ｜ 硬 ｜ 帝"
+      }
+    },
+    {
+      "id": "bundle:962aa41bc879cb363ba3ba3f2492c7e89d247b5337d88b3c33231f7a0c987d30",
+      "text": "最后两组，安德烈耶娃对穆霍娃一比零，但唯一一场是二零二四年宁波，穆霍娃伤退，参考价值有限。斯维托丽娜对穆霍娃三比一，今年斯图加特那次却是穆霍娃获胜。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 67,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后两组,安德烈耶娃对穆霍娃1比0,但唯一一场是2024年宁波穆霍娃商退参考价值有限。斯维托丽娜对穆霍娃3比1,今年斯圖加特那次却是穆霍娃获胜。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 67,
+        "speech_s": 13.514,
+        "cps": 4.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 两组 ｜ 安德烈耶娃 ｜ 对 ｜ 穆霍娃 ｜ 一比零 ｜ 但 ｜ 唯一 ｜ 一 ｜ 场 ｜ 是 ｜ 二零二四年 ｜ 宁波 ｜ 穆霍娃 ｜ 伤 ｜ 退 ｜ 参考 ｜ 价值 ｜ 有限 ｜ 斯维托丽娜 ｜ 对 ｜ 穆霍娃 ｜ 三比一 ｜ 今年 ｜ 斯图加特 ｜ 那次 ｜ 却 ｜ 是 ｜ 穆霍娃 ｜ 获胜"
+      }
+    },
+    {
+      "id": "bundle:c3601372d6eb1f523ce88766f6630ded1d4e344839c75bbbc0d78625db16580e",
+      "text": "诺斯科娃今年三十五胜，伯林和温网两冠，三月还在印第安维尔斯进了四强。她有硬帝竞争力，绝不只是草地高手。但十月因左小腿伤退出武汉，这次又是年终首秀。我的判断是：她能改变小组走势，能否稳定出线，还要看身体和发球能否连续三场撑住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 101,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.01,
+        "longest_deletion": 0,
+        "transcript": "诺斯科娃今年35胜,柏林和温王两贯,3月还在印第安威尔斯进了四墙。她有印第竞争力,绝不只是草地高手。但10月因左小腿伤退出武汉,这次又是年终手绣。我的判断是,她能改变小组走势,能否稳定出现,还要看身体和发球,能否连续三场撑住。"
+      },
+      "polyphones": [
+        {
+          "index": 21,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": -0.044,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 95,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.448,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 101,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 101,
+        "speech_s": 22.064,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "诺斯科娃 ｜ 今年 ｜ 三十五 ｜ 胜 ｜ 伯林 ｜ 和 ｜ 温 ｜ 网 ｜ 两 ｜ 冠 ｜ 三月 ｜ 还 ｜ 在 ｜ 印第安维尔斯 ｜ 进 ｜ 了 ｜ 四 ｜ 强 ｜ 她 ｜ 有 ｜ 硬 ｜ 帝 ｜ 竞争力 ｜ 绝不 ｜ 只是 ｜ 草地 ｜ 高手 ｜ 但 ｜ 十月 ｜ 因 ｜ 左 ｜ 小腿 ｜ 伤 ｜ 退出 ｜ 武汉 ｜ 这次 ｜ 又是 ｜ 年终 ｜ 首秀 ｜ 我 ｜ 的 ｜ 判断 ｜ 是 ｜ 她 ｜ 能 ｜ 改变 ｜ 小组 ｜ 走势 ｜ 能否 ｜ 稳定 ｜ 出线 ｜ 还要 ｜ 看 ｜ 身体 ｜ 和 ｜ 发球 ｜ 能否 ｜ 连续 ｜ 三场 ｜ 撑住"
+      }
+    },
+    {
+      "id": "bundle:c60410d9111f97e459c06a9d34a482619a0284b0fa0dc6187696c5569fc1d887",
+      "text": "综合交锋、今年成绩和近期情况，第一组我选莱巴金娜、高芙，前提是莱巴金娜身体允许。第二组我选萨巴伦卡、安德烈耶娃。最想提醒的是第二组第二名：斯维托丽娜和穆霍娃都有明确的反对理由，这个位置最容易改写预测。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 90,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "综合交锋,今年成绩和近期情况,第一组我选莱巴金娜,高福,前提是莱巴金娜身体允许。第二组我选萨巴伦卡,安德列耶娃。最想提醒的是第二组第二名,思维托丽娜和穆霍娃都有明确的反对理由,这个位置最容易改写预测。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 90,
+        "speech_s": 18.821,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "综合 ｜ 交锋 ｜ 今年 ｜ 成绩 ｜ 和 ｜ 近期 ｜ 情况 ｜ 第一组 ｜ 我 ｜ 选 ｜ 莱巴金娜 ｜ 高芙 ｜ 前提 ｜ 是 ｜ 莱巴金娜 ｜ 身体 ｜ 允许 ｜ 第二组 ｜ 我 ｜ 选 ｜ 萨巴伦卡 ｜ 安德烈耶娃 ｜ 最 ｜ 想 ｜ 提醒 ｜ 的 ｜ 是 ｜ 第二组 ｜ 第二名 ｜ 斯维托丽娜 ｜ 和 ｜ 穆霍娃 ｜ 都 ｜ 有 ｜ 明确 ｜ 的 ｜ 反对 ｜ 理由 ｜ 这个 ｜ 位置 ｜ 最 ｜ 容易 ｜ 改写 ｜ 预测"
+      }
+    },
+    {
+      "id": "bundle:d73ff04025a86562b0ee85a88bf13b20c5bad2cba8e84d2b3749f6529c3faa9f",
+      "text": "先看第一组。莱巴金娜对高芙二比一，对佩古拉六比三。今年对这两人合计五战全胜，所以她的优势有交锋依据，绝不只是世界第一这个排名。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 57,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先看第一组。莱巴金娜对高福二比一、对佩古拉六比三。今年对这两人合计五战全胜,所以他的优势有交锋依据,绝不只是世界第一这个排名。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 57,
+        "speech_s": 11.663,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 第一组 ｜ 莱巴金娜 ｜ 对 ｜ 高芙 ｜ 二比一 ｜ 对 ｜ 佩古拉 ｜ 六比三 ｜ 今年 ｜ 对 ｜ 这 ｜ 两 ｜ 人 ｜ 合计 ｜ 五 ｜ 战 ｜ 全胜 ｜ 所以 ｜ 她 ｜ 的 ｜ 优势 ｜ 有 ｜ 交锋 ｜ 依据 ｜ 绝不 ｜ 只是 ｜ 世界 ｜ 第一 ｜ 这个 ｜ 排名"
+      }
+    },
+    {
+      "id": "bundle:dca207443563b2552e889838961bf2e2fe739a8457b353155bc6b5db819ee0ef",
+      "text": "斯维托丽娜四十八胜、两冠，奥克兰和罗马都拿了冠军；亚洲赛季在北京、武汉连续进八强。她还有二零一八年年终夺冠经验。以近况和今年对安德烈耶娃的胜利来看，她是我最防的第二名竞争者。若安德烈耶娃在常回合里缺少耐心，这个名额完全可能易主。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 104,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.01,
+        "longest_deletion": 0,
+        "transcript": "斯维托利娜、四十八胜、两冠、奥克兰和罗马都拿了冠军,亚洲赛季在北京、武汉连续进八墙。他还有2018年年中夺冠经验。以近况和今年对安德烈耶瓦的胜利来看,他是我最防的第二名竞争者。若安德烈耶瓦在常回合里缺少耐心,这个名额完全可能一处。"
+      },
+      "polyphones": [
+        {
+          "index": 42,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.386,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 104,
+        "speech_s": 21.993,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "斯维托丽娜 ｜ 四十八 ｜ 胜 ｜ 两 ｜ 冠 ｜ 奥克兰 ｜ 和 ｜ 罗马 ｜ 都 ｜ 拿 ｜ 了 ｜ 冠军 ｜ 亚洲 ｜ 赛季 ｜ 在 ｜ 北京 ｜ 武汉 ｜ 连续 ｜ 进 ｜ 八 ｜ 强 ｜ 她 ｜ 还有 ｜ 二零一八 ｜ 年 ｜ 年终 ｜ 夺冠 ｜ 经验 ｜ 以 ｜ 近况 ｜ 和 ｜ 今年 ｜ 对 ｜ 安德烈耶娃 ｜ 的 ｜ 胜利 ｜ 来看 ｜ 她 ｜ 是 ｜ 我 ｜ 最 ｜ 防 ｜ 的 ｜ 第二名 ｜ 竞争 ｜ 者 ｜ 若 ｜ 安德烈耶娃 ｜ 在 ｜ 常 ｜ 回合 ｜ 里 ｜ 缺少 ｜ 耐心 ｜ 这个 ｜ 名额 ｜ 完全 ｜ 可能 ｜ 易 ｜ 主"
+      }
+    },
+    {
+      "id": "bundle:dd757dbf84c1aa8ff9817d06960ef0c0f770d41fd242f95d162aa2f1633b32ed",
+      "text": "交锋看完，再看今年状态。莱巴金娜五十四胜、四冠，澳网和美网都夺冠，宁波也刚拿下冠军。这是我看好她的底气。但十月三十日，她因颈部伤情退出东京。接下来最需要确认的是恢复程度，不能把此前的强势直接当作现在完全健康。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 93,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "交锋看完再看今年状态,莱巴金娜54胜、四冠、奥网和梅网都奪冠,凝波也刚拿下冠军。这是我看好他的底气,但10月30日他因颈部伤情退出东京。接下来最需要确认的是恢复程度,不能把此前的强势直接当作现在完全健康。"
+      },
+      "polyphones": [
+        {
+          "index": 95,
+          "char": "当",
+          "word": "当作",
+          "intended": "dang4",
+          "wrong": [
+            "dang1"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "dang1",
+              "verdict": "correct",
+              "score": 0.411,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "档荡凼"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 93,
+        "speech_s": 21.415,
+        "cps": 4.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "交锋 ｜ 看 ｜ 完 ｜ 再 ｜ 看 ｜ 今年 ｜ 状态 ｜ 莱巴金娜 ｜ 五十四 ｜ 胜 ｜ 四 ｜ 冠 ｜ 澳 ｜ 网 ｜ 和美 ｜ 网 ｜ 都 ｜ 夺冠 ｜ 宁波 ｜ 也 ｜ 刚 ｜ 拿下 ｜ 冠军 ｜ 这是 ｜ 我 ｜ 看好 ｜ 她 ｜ 的 ｜ 底气 ｜ 但 ｜ 十月三十日 ｜ 她 ｜ 因 ｜ 颈 ｜ 部 ｜ 伤情 ｜ 退出 ｜ 东京 ｜ 接下来 ｜ 最 ｜ 需要 ｜ 确认 ｜ 的 ｜ 是 ｜ 恢复 ｜ 程度 ｜ 不能 ｜ 把 ｜ 此前 ｜ 的 ｜ 强势 ｜ 直接 ｜ 当作 ｜ 现在 ｜ 完全 ｜ 健康"
+      }
+    },
+    {
+      "id": "bundle:e8e96abae181eb79a367f441e47a1ba07898495ae88e09bd38ef6e4128fcced8",
+      "text": "穆霍娃四十一胜、两冠，多哈夺冠，温网打进决赛。她的放短和上网，能给三位底线型对手不同的压力。但最近武汉止步十六强，今年对萨巴伦卡也输了。我的判断是她有制造冷门的对位能力，出线却还需要把变化转化成连续两三场的稳定执行。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 98,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "穆霍娃41胜、两冠、多哈多冠、温王打进决赛。他的放短和上网能给三位底线型对手不同的压力。但最近武汉止步16强,今年对萨巴伦卡也输了。我的判断是他有制造冷门的对位能力,出现却还需要把变化转化成连续两三场的稳定执行。"
+      },
+      "polyphones": [
+        {
+          "index": 88,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": -0.166,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 106,
+          "char": "行",
+          "word": "执行",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.303,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 98,
+        "speech_s": 21.262,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "穆霍娃 ｜ 四十一 ｜ 胜 ｜ 两 ｜ 冠 ｜ 多哈 ｜ 夺冠 ｜ 温 ｜ 网 ｜ 打 ｜ 进 ｜ 决赛 ｜ 她 ｜ 的 ｜ 放 ｜ 短 ｜ 和 ｜ 上网 ｜ 能 ｜ 给 ｜ 三位 ｜ 底线 ｜ 型 ｜ 对手 ｜ 不同 ｜ 的 ｜ 压力 ｜ 但 ｜ 最近 ｜ 武汉 ｜ 止步 ｜ 十六强 ｜ 今年 ｜ 对 ｜ 萨巴伦卡 ｜ 也 ｜ 输 ｜ 了 ｜ 我 ｜ 的 ｜ 判断 ｜ 是 ｜ 她 ｜ 有 ｜ 制造 ｜ 冷门 ｜ 的 ｜ 对位 ｜ 能力 ｜ 出线 ｜ 却 ｜ 还 ｜ 需要 ｜ 把 ｜ 变化 ｜ 转化 ｜ 成 ｜ 连续 ｜ 两三场 ｜ 的 ｜ 稳定 ｜ 执行"
+      }
+    },
+    {
+      "id": "bundle:ece3523b99b010363e1faf9fa476154da128a551318205bd1c74bab0a336a7e6",
+      "text": "冠军我仍倾向莱巴金娜，前提是颈部恢复到能正常发球和连续比赛。她和萨巴伦卡今年四次交手各赢两场，差距很小。如果恢复不理想，我会把萨巴伦卡放到第一顺位。这个预测最大的开关，是健康；最难判断的出线位，是第二组第二名。你会把谁换进四强？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 103,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "冠军我仍倾向来巴金娜,前提是颈布恢复到能正常发球和连续比赛。他和萨巴伦卡今年四次交手各赢两场,差距很小。如果恢复不理想,我会把萨巴伦卡放到第一顺位。这个预测最大的开关是健康,最难判断的出现位是第二组第二名。你会把谁换进四墙。"
+      },
+      "polyphones": [
+        {
+          "index": 22,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 103,
+        "speech_s": 22.972,
+        "cps": 4.48,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "冠军 ｜ 我 ｜ 仍 ｜ 倾向 ｜ 莱巴金娜 ｜ 前提 ｜ 是 ｜ 颈 ｜ 部 ｜ 恢复 ｜ 到 ｜ 能 ｜ 正常 ｜ 发球 ｜ 和 ｜ 连续 ｜ 比赛 ｜ 她 ｜ 和 ｜ 萨巴伦卡 ｜ 今年 ｜ 四次 ｜ 交手 ｜ 各 ｜ 赢 ｜ 两场 ｜ 差距 ｜ 很 ｜ 小 ｜ 如果 ｜ 恢复 ｜ 不 ｜ 理想 ｜ 我 ｜ 会 ｜ 把 ｜ 萨巴伦卡 ｜ 放 ｜ 到 ｜ 第一 ｜ 顺位 ｜ 这个 ｜ 预测 ｜ 最大 ｜ 的 ｜ 开关 ｜ 是 ｜ 健康 ｜ 最 ｜ 难 ｜ 判断 ｜ 的 ｜ 出线 ｜ 位 ｜ 是 ｜ 第二组 ｜ 第二名 ｜ 你 ｜ 会 ｜ 把 ｜ 谁 ｜ 换 ｜ 进 ｜ 四 ｜ 强"
+      }
+    }
+  ]
+}
