@@ -1,0 +1,60 @@
+name: fix-slot8-anims
+run-name: "fix-slot8-anims · v3 repair upload"
+
+# One-off repair for wta-finals-slot8-2026 (R6-2): re-render A1/A2/A4/A5 with
+# the verdict banner / draw footnote moved out of the subtitle band
+# (card text bottom <= 1240) and clobber-upload them to the EXISTING source
+# tags the spec already points at, under the identical asset names.
+# Durations match the shipped sources exactly (a1=22 a2=18 a4=29 a5=34).
+# Remove after the repaired film ships.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fix-slot8-anims
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deps
+        run: |
+          pip install -q pillow numpy
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg >/dev/null
+          ls assets/fonts/ && ls /usr/share/fonts/opentype/noto/ | head
+      - name: Render fixed anims (exact shipped durations)
+        run: |
+          set -euo pipefail
+          mkdir -p work out
+          cp tools/slot8_anims/*.py work/
+          cd work
+          sed -i "s|/home/hatch/workspace/tlrun/assets/fonts|$GITHUB_WORKSPACE/assets/fonts|" anim_common.py render_anims.py build_a5.py
+          sed -i "s|/home/hatch/workspace/wta-finals-slot8-20261103/prod/anim/|$GITHUB_WORKSPACE/out/|" render_anims.py build_a5.py
+          python3 render_anims.py a1 22 v3
+          python3 render_anims.py a2 18 v3
+          python3 render_anims.py a4 29 v3
+          python3 build_a5.py 34 v3
+          ls -la "$GITHUB_WORKSPACE/out/"
+      - name: Upload to existing s8a source tags (clobber, same asset names)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE/out"
+          cp slot8-a1-rules-v3.mp4 s8a1rule022.mp4
+          cp slot8-a2-points-v3.mp4 s8a2pnts018.mp4
+          cp slot8-a4-draw-v3.mp4 s8a4draw029.mp4
+          cp slot8-a5-atp-v3.mp4 s8a5atpc034.mp4
+          for id in s8a1rule022 s8a2pnts018 s8a4draw029 s8a5atpc034; do
+            gh release upload "source-$id" "$id.mp4" --clobber
+            echo "uploaded $id.mp4 -> source-$id"
+          done
+          sha256sum s8a1rule022.mp4 s8a2pnts018.mp4 s8a4draw029.mp4 s8a5atpc034.mp4
+          ls -la s8a1rule022.mp4 s8a2pnts018.mp4 s8a4draw029.mp4 s8a5atpc034.mp4
