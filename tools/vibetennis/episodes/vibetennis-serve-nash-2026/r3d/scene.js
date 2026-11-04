@@ -308,7 +308,7 @@ const gauge=new THREE.Mesh(new THREE.TorusGeometry(1.6,0.09,12,128,0.01),new THR
 const gaugeBg=new THREE.Mesh(new THREE.TorusGeometry(1.6,0.05,8,128),new THREE.MeshBasicMaterial({color:0x2a2d55,transparent:true,opacity:0})); scene.add(gaugeBg);
 const latestTitle=textSprite(T('2025 · 把比分算进去的新研究','2025 · A study that adds the score'),{color:'#f2efe6',size:0.55,glow:'rgba(124,131,255,1)'});
 // 所有者 2026-11-04：上屏的东西一定要经过验证——JPE 的 71%→91.5% 是「对手不调整」的模型推算、没有实地验证，不上屏；只上统计检验的结论
-const latestRes=[textSprite(T('把比分和追身也算进来检验','Test with the score and body serves included'),{color:'#e8e9ff',size:0.5}),textSprite(T('费德勒、纳达尔、德约科维奇等多数顶尖球员','Federer, Nadal, Djokovic and most elite servers'),{color:'#f2efe6',size:0.55,glow:'rgba(124,131,255,1)'}),textSprite(T('都没有完全做到均衡','do not fully play the equilibrium'),{color:'#ffffff',size:0.75,glow:'rgba(124,131,255,1)'})];
+const latestRes=[textSprite(T('把比分和追身也算进来检验','Score and body serves added'),{color:'#e8e9ff',size:T(0.5,0.44)}),textSprite(T('费德勒、纳达尔、德约科维奇等多数顶尖球员','Federer, Nadal, Djokovic, most top servers'),{color:'#f2efe6',size:T(0.55,0.46),glow:'rgba(124,131,255,1)'}),textSprite(T('都没有完全做到均衡','are not fully at equilibrium'),{color:'#ffffff',size:T(0.75,0.61),glow:'rgba(124,131,255,1)'})];
 const latestSub=textSprite('',{size:0.1});
 const latestNote=textSprite(T('比分树为示意','Score tree is illustrative'),{color:'#8f93c8',size:0.32});
 
@@ -496,8 +496,8 @@ function shotLatest(u,D){
   const focus=NODES[3*4+2]; // 40-30：示意一个节点上的三向扇面
   treeFan.forEach((l,i)=>{ const p=focus.m.position.clone().add(treeG.position); const dir=new THREE.Vector3(Math.cos(1.2+i*0.35),Math.sin(1.2+i*0.35),0); const len=[0.9,0.4,1.3][i]*ss(7,8.5,u);
     setLine(l,[p,p.clone().addScaledVector(dir,len)]); l.material.opacity=ss(7,8,u); });
-  const RS=ev('res',9); latestRes.forEach((x,i)=>{ x.position.set(5.6,3.6-i*1.05,0); op(x,ss(RS-1.2+i*1.0,RS-0.4+i*1.0,u)); });
-  latestTitle.position.set(1.4,5.2,0); op(latestTitle,ss(0.3,1.2,u)); latestSub.position.set(5.2,0.4,0);  latestNote.position.set(-1.0,-1.75,0); op(latestNote,ss(2,3,u));
+  const RS=ev('res',9); latestRes.forEach((x,i)=>{ x.position.set(LANG==='en'?6.0:5.6,3.6-i*1.05,0); op(x,ss(RS-1.2+i*1.0,RS-0.4+i*1.0,u)); });
+  latestTitle.position.set(1.4,5.2,0); op(latestTitle,ss(0.3,1.2,u)); latestSub.position.set(5.2,0.4,0);  latestNote.position.set(-1.0,LANG==='en'?-2.2:-1.75,0); /* 英文那行长，压到 0-0 节点上，往下挪（2026-11-04 英文版质检看出来的） */ op(latestNote,ss(2,3,u));
 }
 function shotCoin(u,D){
   players(u,{serveK:u>6?clamp((u-6)/2.4)*0.85:0}); look(3.2,2.4,L+4.8,0.6,2.2,L-1); rimL.intensity=4; rimR.intensity=4; rimL.position.set(-3,4,L+2); rimR.position.set(4,4,L+2);
