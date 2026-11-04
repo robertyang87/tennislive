@@ -46,3 +46,31 @@ jobs:
           PY
           gh release view source-4459713 >/dev/null
           gh release upload source-4459713 4459713-01d711954a47ee48.mp4 --clobber
+  ao_english_review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/source_asr.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: cobolli-ao-bounded-large-v3-v1
+      - name: Install native read-only source ASR
+        run: pip install -q faster-whisper
+      - name: One bounded third-model reading of the unchanged official audio
+        run: |
+          set -euo pipefail
+          curl -sSL --fail --retry 2 -o "$RUNNER_TEMP/ao-source.mp4" https://github.com/robertyang87/tennislive/releases/download/source-dSafV4sp0OM/dSafV4sp0OM.mp4
+          mkdir -p review
+          python tools/source_asr.py --source "$RUNNER_TEMP/ao-source.mp4" --model large-v3 --from 436 --to 447 --out review/ao-large-v3-436-447.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cobolli-ao-bounded-third-model
+          path: review/ao-large-v3-436-447.json
+          retention-days: 3
