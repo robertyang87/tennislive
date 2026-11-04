@@ -86,8 +86,8 @@ jobs:
           INPUT_SCOPE: ${{ github.event_name == 'push' && 'explainer' || inputs.scope }}
           INPUT_SLUG: ${{ github.event_name == 'push' && 'zheng-china-wuhan-wildcards-v2' || inputs.slug }}
           # Fresh GitHub Pages assets can take several minutes to propagate.
-          TENNISLIVE_COPYPAGE_ATTEMPTS: '1'
-          TENNISLIVE_COPYPAGE_RETRY_SECONDS: '0'
+          TENNISLIVE_COPYPAGE_ATTEMPTS: '6'
+          TENNISLIVE_COPYPAGE_RETRY_SECONDS: '10'
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
@@ -120,6 +120,20 @@ jobs:
           test -s "${OUT_DIR}/xiaohongshu.txt"
           test -n "${PUSHPLUS_TOKEN}"
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          # This owner-requested resend must include the working copy entry.
+          python - <<'PY'
+          import requests
+          from pathlib import Path
+          from tennislive.render.pushmsg import copy_page_fingerprint
+          p = Path("output/2026-11-04/explainer/wta-finals-preview-2026/copy.html")
+          u = "https://robertyang87.github.io/tennislive/" + p.as_posix()
+          r = requests.get(u, timeout=45)
+          r.raise_for_status()
+          r.encoding = "utf-8"
+          assert copy_page_fingerprint(p) in r.text
+          assert 'data-copy="title"' in r.text and 'data-copy="body"' in r.text
+          print("Published title/caption copy page verified before POST")
+          PY
           tennislive publish pushplus --dir "${OUT_DIR}" --receipt-out "$RUNNER_TEMP/pushplus-receipt.json"
           python tools/push_link.py --receipt-file "$RUNNER_TEMP/pushplus-receipt.json" \
             --slug "${INPUT_SLUG:-$SCOPE}" --summary "$GITHUB_STEP_SUMMARY" \
