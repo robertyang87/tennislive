@@ -272,16 +272,19 @@ const kpNumS=[textSprite(T('外角 48.3% → 50.5%','Wide 48.3% → 50.5%'),{col
 const kpWin=[textSprite(T('外角 61.8%','Wide 61.8%'),{color:'#ffd2bc',size:1.3,glow:'rgba(255,122,61,1)'}),textSprite(T('中路 62.0%','T 62.0%'),{color:'#c9ffe9',size:1.3,glow:'rgba(52,245,168,1)'})];
 const kpTitle=textSprite(T('关键分上，理论还成立吗？','Does it still hold on the big points?'),{color:'#fff0e6',size:0.7,glow:'rgba(255,122,61,1)'});
 const kpOpen=flatRing(0x34f5a8);
-const KP_DATA=[[T('局点','Game point'),[0.662,0.659],'66.2% · 65.9%',null],[T('破发点','Break point'),[0.618,0.620],'61.8% · 62.0%',null],[T('盘点','Set point'),[0.651,0.658],'65.1% · 65.8%',null],[T('赛点','Match point'),[0.662,0.632],'66.2% · 63.2%',T('样本小 · 差别不显著','small sample · not significant')]];
+const KP_DATA=[ // 2023–26 男子一发，外角 vs 中路得分率；上排＝发球方自己的关键分，下排＝对手的关键分（发球方在挽救）
+  [T('局点','Game point'),[0.662,0.659],'66.2% · 65.9%',null],[T('盘点','Set point'),[0.678,0.683],'67.8% · 68.3%',null],[T('赛点','Match point'),[0.683,0.667],'68.3% · 66.7%',null],
+  [T('破发点','Break point'),[0.618,0.620],'61.8% · 62.0%',null],[T('对手盘点','Opp. set point'),[0.608,0.619],'60.8% · 61.9%',null],[T('对手赛点','Opp. match point'),[0.626,0.572],'62.6% · 57.2%',T('样本小 · 差别不显著','small sample · not significant')]];
 const KP=KP_DATA.map(([nm,v,txt,note])=>{ const g=new THREE.Group(); scene.add(g);
-  const panel=new THREE.Mesh(new THREE.PlaneGeometry(3.0,4.6),new THREE.MeshBasicMaterial({color:0x2a1206,transparent:true,opacity:0,depthWrite:false})); panel.position.y=1.9; g.add(panel);
-  const fr=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.0,4.6)),new THREE.LineBasicMaterial({color:0xffb08a,transparent:true,opacity:0.6})); fr.position.y=1.9; g.add(fr);
+  const panel=new THREE.Mesh(new THREE.PlaneGeometry(3.0,3.6),new THREE.MeshBasicMaterial({color:0x2a1206,transparent:true,opacity:0,depthWrite:false})); panel.position.y=1.5; g.add(panel);
+  const fr=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.0,3.6)),new THREE.LineBasicMaterial({color:0xffb08a,transparent:true,opacity:0.6})); fr.position.y=1.5; g.add(fr);
   const cols=[0,1].map(j=>{ const m=new THREE.Mesh(new THREE.CylinderGeometry(0.36,0.36,1,40,1,true),new THREE.MeshBasicMaterial({color:j?0x34f5a8:0xff7a3d,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false})); m.geometry.translate(0,0.5,0); m.position.set(j?0.55:-0.55,0.1,0.05); g.add(m); return m; });
   const caps=[0,1].map(j=>{ const c=glowSprite(j?0x34f5a8:0xff7a3d,0.9,0,g); c.position.x=j?0.55:-0.55; return c; });
-  const name=textSprite(nm,{color:'#fff0e6',size:0.55,glow:'rgba(255,122,61,1)'},g); name.position.set(0,4.55,0.1);
+  const name=textSprite(nm,{color:'#fff0e6',size:0.55,glow:'rgba(255,122,61,1)'},g); name.position.set(0,3.6,0.1);
   const vals=textSprite(txt,{color:'#ffffff',size:0.5,font:'800 120px "Inter",sans-serif'},g); vals.position.set(0,-0.35,0.1);
   const nt=note?textSprite(note,{color:'#ffcfb8',size:0.3},g):null; if(nt) nt.position.set(0,-0.85,0.1);
   return {g,panel,cols,caps,name,vals,note:nt,v}; });
+const kpRowLab=[textSprite(T('发球方自己的关键分','The server’s own big points'),{color:'#ffd9c4',size:0.45},),textSprite(T('对手的关键分（发球方在挽救）','The returner’s big points (server saving)'),{color:'#ffd9c4',size:0.45})];
 const kpLegend=textSprite(T('橙＝外角　绿＝中路　· 2023–2026 男子一发得分率','Orange = wide · Green = T · men’s first-serve win rates 2023–26'),{color:'#ffe6d8',size:0.4});
 
 // ---------- 段 8：换边珠链 ----------
@@ -326,7 +329,7 @@ function hideAll(){
   reticle.visible=false; op(hookQ,0); op(hookTitle,0); op(hookSub,0); for(const k in cornerGlow) cornerGlow[k].material.opacity=0;
   yearG.visible=false; matG.visible=false; brPanel.visible=false; op(rpsLabel,0); rpsWin.material.opacity=0; balG.visible=false; chide(rain); rainCols.forEach(c=>c.g.visible=false);
   for(const k in ERA){ op(ERA[k].titleS,0); if(ERA[k].labS) ERA[k].labS.forEach(s=>op(s,0)); } for(const y in yearCache) op(yearCache[y],0);
-  weakZone.material.opacity=0; kpBars.visible=false; KP.forEach(k=>{ k.g.visible=false; }); op(kpLegend,0); tileG.visible=false; kpWin.forEach(s=>op(s,0)); op(kpTitle,0); kpOpen.material.opacity=0;
+  weakZone.material.opacity=0; kpBars.visible=false; KP.forEach(k=>{ k.g.visible=false; }); op(kpLegend,0); kpRowLab.forEach(x=>op(x,0)); tileG.visible=false; kpWin.forEach(s=>op(s,0)); op(kpTitle,0); kpOpen.material.opacity=0;
   chainG.visible=false; treeG.visible=false; gauge.material.opacity=0; gaugeBg.material.opacity=0; op(latestTitle,0); op(latestSub,0); op(latestNote,0);
   coin.visible=false; coinGlow.visible=false; op(endLine,0); for(const k in text3D) t3op(text3D[k],0);
   beamMat.uniforms.uOp.value=0; flareLight.visible=false; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; }
@@ -464,14 +467,16 @@ function shotRain(u,D){
   proj('colWide',new THREE.Vector3(-SW+0.45,rise*vv[0]*4,-SL+0.7)); proj('colT',new THREE.Vector3(-0.45,rise*vv[1]*4,-SL+0.7));
 }
 function shotKeypoints(u,D){
-  // 局点／破发点／盘点／赛点：四张悬浮卡片依次点亮，每张两根光柱（外角、中路）随心跳升到几乎同一高度
-  courtG.visible=false; look(0,3.6,15.5,0,3.0,1.6); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
-  op(kpTitle,ss(0.3,1.2,u)); kpTitle.position.set(0,6.3,1.6);
-  KP.forEach((k,i)=>{ const t0=1.5+i*4.2; const a=ss(t0,t0+0.8,u); k.g.visible=a>0.01; k.g.position.set(-5.25+i*3.5,0.75,1.6); k.g.scale.setScalar(lerp(0.7,1,a));
-    const beat=Math.exp(-Math.pow(((u-t0)%0.85)/0.08,2))*(u>t0&&u<t0+3?1:0);
-    k.cols.forEach((c,j)=>{ const h=ss(t0+0.6,t0+2.2,u)*k.v[j]*3.6; c.scale.y=Math.max(0.001,h); c.material.opacity=0.45+0.4*beat; k.caps[j].position.y=0.1+h; k.caps[j].material.opacity=ss(t0+0.6,t0+1,u); });
-    k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+2,t0+2.6,u)); if(k.note) op(k.note,ss(t0+2.6,t0+3.2,u)); });
-  op(kpLegend,ss(1.5,2.3,u)); kpLegend.position.set(0,-0.75,1.8);
+  // 两排卡片：上排发球方自己的局点／盘点／赛点，下排对手的破发点／盘点／赛点；每张两根光柱（外角、中路）随心跳升到几乎同一高度
+  courtG.visible=false; look(-1.3,3.0,20,-1.3,2.4,1.6); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
+  op(kpTitle,ss(0.3,1.2,u)); kpTitle.position.set(-1.3,7.9,1.6);
+  KP.forEach((k,i)=>{ const row=Math.floor(i/3), c=i%3; const t0=1.2+row*9.5+c*2.6; const a=ss(t0,t0+0.7,u); k.g.visible=a>0.01;
+    k.g.position.set(-4.0+c*4.0,row?-0.6:3.9,1.6); k.g.scale.setScalar(lerp(0.7,0.92,a));
+    const beat=Math.exp(-Math.pow(((u-t0)%0.85)/0.08,2))*(u>t0&&u<t0+2.6?1:0);
+    k.cols.forEach((cc,j)=>{ const h=ss(t0+0.5,t0+2,u)*k.v[j]*2.8; cc.scale.y=Math.max(0.001,h); cc.material.opacity=0.45+0.4*beat; k.caps[j].position.y=0.1+h; k.caps[j].material.opacity=ss(t0+0.5,t0+0.9,u); });
+    k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+1.8,t0+2.4,u)); if(k.note) op(k.note,ss(t0+2.4,t0+3,u)); });
+  kpRowLab[0].position.set(-7.6,5.6,1.6); kpRowLab[0].material.rotation=0; op(kpRowLab[0],ss(1,1.8,u)); kpRowLab[1].position.set(-7.0,1.1,1.6); op(kpRowLab[1],ss(10.5,11.3,u));
+  op(kpLegend,ss(1.5,2.3,u)); kpLegend.position.set(-1.3,-2.75,1.8);
 }
 function shotLatest(u,D){
   treeG.visible=true; look(lerp(-1,1,ss(0,D,u)),2.4,12.5,1.4,2.0,0);
