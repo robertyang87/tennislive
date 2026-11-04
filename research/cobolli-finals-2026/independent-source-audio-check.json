@@ -1,0 +1,344 @@
+{
+  "checked_at": "2026-11-04T10:36:39.057524+00:00",
+  "scope": "All eight selected actual-source windows and fourteen bilingual cues only. This is not the final whole-film/native spec, TTS review or human listening. Final production must rebind its real segment indices/plan and verify actual burned ASS/movie.",
+  "method": "Native foreground_audio_gate.require, actual source SHA binding, raw ASR evidence hash/source SHA checks, quote_overflow_rows; not human listening",
+  "plan_sha256": "0d1572a58a9e0265b3eb84568ecdbb7f1ca9badbe55f8a89951ba73286b4569c",
+  "selected_window_count": 8,
+  "source_count": 7,
+  "required_bilingual_cue_count": 14,
+  "required_cues": [
+    {
+      "segment": 0,
+      "start": 0.9799999999999613,
+      "end": 4.7999999999999545,
+      "en": "Fery's second break in the third set.",
+      "zh": "费里在第三盘第二次破发。"
+    },
+    {
+      "segment": 0,
+      "start": 4.7999999999999545,
+      "end": 10.21999999999997,
+      "en": "Scoreline looking very, very positive for the Brit.",
+      "zh": "比分对这位英国选手非常有利。"
+    },
+    {
+      "segment": 0,
+      "start": 26.579999999999984,
+      "end": 31.799999999999955,
+      "en": "And on debut, Arthur Fery is through to the second round.",
+      "zh": "澳网首秀，费里闯进第二轮。"
+    },
+    {
+      "segment": 0,
+      "start": 31.799999999999955,
+      "end": 35.5,
+      "en": "It's a huge win. Straight sets.",
+      "zh": "一场大胜，直落三盘。"
+    },
+    {
+      "segment": 1,
+      "start": 2.4399999999999977,
+      "end": 6.319999999999993,
+      "en": "Acapulco belongs to Flavio.",
+      "zh": "阿卡普尔科，属于弗拉维奥。"
+    },
+    {
+      "segment": 1,
+      "start": 6.319999999999993,
+      "end": 8.839999999999975,
+      "en": "Cobolli the champion.",
+      "zh": "科博利，冠军！"
+    },
+    {
+      "segment": 1,
+      "start": 10.599999999999994,
+      "end": 13.259999999999991,
+      "en": "A second ATP 500 title.",
+      "zh": "第二座五百分赛冠军。"
+    },
+    {
+      "segment": 2,
+      "start": 3.2799999999999727,
+      "end": 12.479999999999961,
+      "en": "Ben Shelton is the 2026 BMW Open by Bitpanda champion here in Munich.",
+      "zh": "谢尔顿是二〇二六年慕尼黑冠军！"
+    },
+    {
+      "segment": 2,
+      "start": 12.479999999999961,
+      "end": 15.420000000000016,
+      "en": "Runner-up 12 months ago.",
+      "zh": "十二个月前，他是亚军。"
+    },
+    {
+      "segment": 5,
+      "start": 2.8999999999999773,
+      "end": 6.920000000000016,
+      "en": "Oh, what days these are for Arthur Fery!",
+      "zh": "费里迎来了多么美好的日子！"
+    },
+    {
+      "segment": 5,
+      "start": 10.699999999999989,
+      "end": 15.699999999999989,
+      "en": "The British wild card in the semi-finals of Wimbledon.",
+      "zh": "这位英国外卡选手，闯进温网半决赛。"
+    },
+    {
+      "segment": 6,
+      "start": 2.1599999999999966,
+      "end": 8.719999999999999,
+      "en": "It is Arthur Fils into the final here in Cincinnati.",
+      "zh": "菲斯打进辛辛那提决赛。"
+    },
+    {
+      "segment": 7,
+      "start": 4.5,
+      "end": 9.099999999999909,
+      "en": "One of the performances of Alexander Blockx's career.",
+      "zh": "布洛克斯职业生涯的代表作之一。"
+    },
+    {
+      "segment": 7,
+      "start": 9.67999999999995,
+      "end": 12.919999999999959,
+      "en": "One of the performances in the U.S. Open so far.",
+      "zh": "也是本届美网至今的代表作之一。"
+    }
+  ],
+  "raw_evidence_checks": [
+    {
+      "packet": "australian-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-small.en.json",
+      "actual_sha256": "87f87f270a7a2faa432f66fa82f4a65897ba65193195f1f3cc05299f5c018c27",
+      "source_sha256": "5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0",
+      "clip": [
+        425.0,
+        475.0
+      ]
+    },
+    {
+      "packet": "australian-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-medium.en.json",
+      "actual_sha256": "49f9afe7b562a4fa3cbc42af6e9dad1d5ad60b45b87d11bd339e34fa538a11de",
+      "source_sha256": "5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0",
+      "clip": [
+        425.0,
+        475.0
+      ]
+    },
+    {
+      "packet": "australian-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-large-v3-436-447.json",
+      "actual_sha256": "eee0a1f718072613dddc6c00ecc663f0897023de4a792575f4e8ccdea72c3f53",
+      "source_sha256": "5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0",
+      "clip": [
+        436.0,
+        447.0
+      ]
+    },
+    {
+      "packet": "acapulco-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/4459713-small.en.json",
+      "actual_sha256": "29f6a908404350cc40e03180bdcdf179d001dad4fcee23f7a0281cb6f1575d4b",
+      "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+      "clip": [
+        120.0,
+        156.0
+      ]
+    },
+    {
+      "packet": "acapulco-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/4459713-medium.en.json",
+      "actual_sha256": "762ef5c95d91ca5b1b3d3216f9383a3dae59bfb62057b7a3aae64846e2049ed1",
+      "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+      "clip": [
+        120.0,
+        156.0
+      ]
+    },
+    {
+      "packet": "munich-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-small.en.json",
+      "actual_sha256": "38638acd7c88503c8f8eefa32137c814b610acc7759935908be86d2ed4f4fee6",
+      "source_sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+      "clip": [
+        420.0,
+        465.0
+      ]
+    },
+    {
+      "packet": "munich-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-medium.en.json",
+      "actual_sha256": "71bef6c876a00ae41b83e48d3b503946e4861463c11e828852cf57d6d4f1462b",
+      "source_sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+      "clip": [
+        420.0,
+        465.0
+      ]
+    },
+    {
+      "packet": "munich-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-tight-small.en.json",
+      "actual_sha256": "dd51f6c2e257fb90ea9796f9b870b7b40a83e7ad95d2ba62b47412484e2c0363",
+      "source_sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+      "clip": [
+        441.0,
+        446.0
+      ]
+    },
+    {
+      "packet": "munich-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-tight-medium.en.json",
+      "actual_sha256": "d9b6d177faa98785712f2ae0625b66a03bb0150bced9f39e1048284ef1fb10b1",
+      "source_sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+      "clip": [
+        441.0,
+        446.0
+      ]
+    },
+    {
+      "packet": "rg-fourth-set-point.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-small.en.json",
+      "actual_sha256": "bb9028cdd8f29cdd592ba9e50b7abf8405f7c3086f384898888483f0f0384767",
+      "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "clip": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "packet": "rg-fourth-set-point.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-medium.en.json",
+      "actual_sha256": "5723f8f292ece7bf370f6959a472f34acaf0c7bb93134434725946174689c657",
+      "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "clip": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "packet": "rg-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-small.en.json",
+      "actual_sha256": "bb9028cdd8f29cdd592ba9e50b7abf8405f7c3086f384898888483f0f0384767",
+      "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "clip": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "packet": "rg-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-medium.en.json",
+      "actual_sha256": "5723f8f292ece7bf370f6959a472f34acaf0c7bb93134434725946174689c657",
+      "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "clip": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "packet": "wimbledon-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-small.en.json",
+      "actual_sha256": "6f69474bff927e0e474275bc40358ddfd6b7a66f7bc7b19a5e85e586b26bb5de",
+      "source_sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+      "clip": [
+        445.0,
+        480.0
+      ]
+    },
+    {
+      "packet": "wimbledon-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-medium.en.json",
+      "actual_sha256": "d89d97cf667201310b4a10cc13839118a3f61fcf98e7e1825724e37969e9e5b1",
+      "source_sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+      "clip": [
+        445.0,
+        480.0
+      ]
+    },
+    {
+      "packet": "wimbledon-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-tight-small.en.json",
+      "actual_sha256": "7ef5c1f89ac1aef779a1ed8bdebe4e431ce382dd4c094bb136e608ef16631bed",
+      "source_sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+      "clip": [
+        461.5,
+        470.0
+      ]
+    },
+    {
+      "packet": "wimbledon-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-tight-medium.en.json",
+      "actual_sha256": "01f34d2f5e9915311abde9de27cc32277a2434faca3e3bbc46d25ab97d063dd4",
+      "source_sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+      "clip": [
+        461.5,
+        470.0
+      ]
+    },
+    {
+      "packet": "cincinnati-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/hL72qAXJWOY-small.en.json",
+      "actual_sha256": "2d4026edaaaf4a630333954427b9c1498f0c729606ddb945fde0fb36072d1297",
+      "source_sha256": "e9ba5d4b930d069895d31337f620ccbf39efbadd611545e612ba3d5fdd844549",
+      "clip": [
+        85.0,
+        106.0
+      ]
+    },
+    {
+      "packet": "cincinnati-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/hL72qAXJWOY-medium.en.json",
+      "actual_sha256": "49df17c8c2aa4d26ddfa250c54b298900143447bea9c728cce0a0d29bfcb8730",
+      "source_sha256": "e9ba5d4b930d069895d31337f620ccbf39efbadd611545e612ba3d5fdd844549",
+      "clip": [
+        85.0,
+        106.0
+      ]
+    },
+    {
+      "packet": "us-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-tight-small.en.json",
+      "actual_sha256": "bd333fe44e89bda75fdcdc749b96874c42eac23bae922963b70079e93b3ae37e",
+      "source_sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+      "clip": [
+        674.2,
+        690.0
+      ]
+    },
+    {
+      "packet": "us-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-tight-medium.en.json",
+      "actual_sha256": "ef139fb2451e84215c123b65c657673bcdd138cc0b168ff1132d8850b7411926",
+      "source_sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+      "clip": [
+        674.2,
+        690.0
+      ]
+    },
+    {
+      "packet": "us-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-small.en.json",
+      "actual_sha256": "9d8e6f9bb7f97688fd25c3bef103e3e07fa049e2b8ca44c7bcdd6448e6d718a5",
+      "source_sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+      "clip": [
+        665.0,
+        705.0
+      ]
+    },
+    {
+      "packet": "us-open-matchpoint.json",
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-medium.en.json",
+      "actual_sha256": "aaea4cd00230145b4c2b42b2121b132d9ea32f620d885d4f24a977da7a4a7816",
+      "source_sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+      "clip": [
+        665.0,
+        705.0
+      ]
+    }
+  ],
+  "raw_unique_count": 21,
+  "quote_overflow_rows": [],
+  "result": "PASS for the exact selected eight-window sandbox"
+}

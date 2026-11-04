@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=nYClQO4RiIw",
+  "source_sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:18:34.526875+00:00",
+  "reviewed_from": 674.2,
+  "reviewed_to": 689.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 678.7,
+      "end": 683.3,
+      "en": "One of the performances of Alexander Blockx's career.",
+      "zh": "布洛克斯职业生涯的代表作之一。"
+    },
+    {
+      "start": 683.88,
+      "end": 687.12,
+      "en": "One of the performances in the U.S. Open so far.",
+      "zh": "也是本届美网至今的代表作之一。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-tight-small.en.json",
+      "sha256": "bd333fe44e89bda75fdcdc749b96874c42eac23bae922963b70079e93b3ae37e",
+      "model": "small.en",
+      "source_window": [
+        674.2,
+        690.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-tight-medium.en.json",
+      "sha256": "ef139fb2451e84215c123b65c657673bcdd138cc0b168ff1132d8850b7411926",
+      "model": "medium.en",
+      "source_window": [
+        674.2,
+        690.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-small.en.json",
+      "sha256": "9d8e6f9bb7f97688fd25c3bef103e3e07fa049e2b8ca44c7bcdd6448e6d718a5",
+      "model": "small.en",
+      "source_window": [
+        665.0,
+        705.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/nYClQO4RiIw-medium.en.json",
+      "sha256": "aaea4cd00230145b4c2b42b2121b132d9ea32f620d885d4f24a977da7a4a7816",
+      "model": "medium.en",
+      "source_window": [
+        665.0,
+        705.0
+      ]
+    }
+  ],
+  "review_notes": "Final start674.20 was independently opened by media-b: Blockx is bent forward and stationary before the toss near676, so the complete serving action remains. The prior sentence668.62–673.76 in the full665–705 small.en is excluded with additional boundary space. A dedicated674.20–690 two-model pass produces stable full winning clauses678.88–686.88; the full medium.en pass had a malformed long trailing token and omitted U.S. Open, so it is not used to infer a missing sentence or to pull this window later. The dedicated small.en and medium.en agree on the lexical content and proper-name sound; Blockx is normalized from Blox. The second-clause preposition is of in small.en and in in medium.en; subtitle follows the coherent medium.en “in the U.S. Open” with unchanged meaning, and both raw readings are retained. Punctuation and U.S. typography are normalized. Next new source-commentary sentence starts692.50, beyond nominal end689.80 and its native dissolve margin. No human listening or verbatim unanimous agreement is claimed.",
+  "source_identity": {
+    "video_id": "nYClQO4RiIw",
+    "source_path": "/workspace/cobolli-research/media-b/nYClQO4RiIw.mp4",
+    "sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+    "bytes": 279145174,
+    "duration": 727.2722,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "visual_boundary_evidence": {
+    "local_path": "/workspace/cobolli-research/media-b/us-674.20.jpg",
+    "sha256": "05d94e97269a3418283350a4a7df7a6b3366ec643e017abc9c781f77382529e7",
+    "scope": "Media-b opened exact674.20 frame and verified pre-toss serving preparation; source visual evidence must be copied/bound by producer."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=GwHNGXakf8s",
+  "source_sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:36:37.889844+00:00",
+  "reviewed_from": 430.3,
+  "reviewed_to": 445.9,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 433.58,
+      "end": 442.78,
+      "en": "Ben Shelton is the 2026 BMW Open by Bitpanda champion here in Munich.",
+      "zh": "谢尔顿是二〇二六年慕尼黑冠军！"
+    },
+    {
+      "start": 442.78,
+      "end": 445.72,
+      "en": "Runner-up 12 months ago.",
+      "zh": "十二个月前，他是亚军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-small.en.json",
+      "sha256": "38638acd7c88503c8f8eefa32137c814b610acc7759935908be86d2ed4f4fee6",
+      "model": "small.en",
+      "source_window": [
+        420.0,
+        465.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-medium.en.json",
+      "sha256": "71bef6c876a00ae41b83e48d3b503946e4861463c11e828852cf57d6d4f1462b",
+      "model": "medium.en",
+      "source_window": [
+        420.0,
+        465.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-tight-small.en.json",
+      "sha256": "dd51f6c2e257fb90ea9796f9b870b7b40a83e7ad95d2ba62b47412484e2c0363",
+      "model": "small.en",
+      "source_window": [
+        441.0,
+        446.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/GwHNGXakf8s-tight-medium.en.json",
+      "sha256": "d9b6d177faa98785712f2ae0625b66a03bb0150bced9f39e1048284ef1fb10b1",
+      "model": "medium.en",
+      "source_window": [
+        441.0,
+        446.0
+      ]
+    }
+  ],
+  "review_notes": "ROOT BOUNDED BOUNDARY DECISION2026-11-04: exact source frames429.16/430.30/.50/.70/.90/431.10/.30/.50 were opened;430.30 remains serving preparation and430.90 enters toss, so430.30 retains the complete point after previous commentary ends430.12. Full420–465 small.en and medium.en agree on the complete Ben Shelton winning sentence through Munich442.70/.74 and the next complete Runner-up12monthsago clause through445.60/.72. Official event-brand spelling BMW Open by Bitpanda replaces recognizer opened/Bipanda/bit panda only; Ben Shelton spelling is unchanged. Tight441–446 two-model evidence has Munich ending442.64/.78, runner-up clause ending445.52/.58, and neither recognizer reports the following Make/Made sentence through446.00. In the full pass small.en places its next Make onset446.96(probability.931), while medium.en stretches its low-confidence initial make back to445.72, the preceding clause tail, as it similarly stretches the earlier runner-up token. Root inspected the raw evidence and accepted final end445.90 after the complete runner-up clause, before that next distinct sentence. No claim of a human-heard exact word boundary is made. Nominal source audio430.30–445.90 remains unaltered at unit gain with complete match point and actual celebration/handshake; native audio_tail:silence is only for additional dissolve continuation, not for muting the selected nominal window. No further model or source-ASR run is needed.",
+  "source_identity": {
+    "video_id": "GwHNGXakf8s",
+    "source_path": "/workspace/cobolli-research/media-a/GwHNGXakf8s.mp4",
+    "sha256": "c9c965182345bc1e18ece3b98fbc79547d3208d1a6a60d2c2997b460c44401af",
+    "bytes": 106254113,
+    "duration": 481.721179,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "review_decision_by": "root production editor, bounded actual-source-frame and two-scale ASR timing review; not human listening",
+  "visual_boundary_evidence": {
+    "local_path": "/workspace/cobolli-production/root-source-check/munich-start-contact.jpg",
+    "sha256": "d370b175a2adaaee374615df5fd2a2364d092ab7b0ff53507727ede59f99bc7f",
+    "scope": "Root exact serving-preparation frames, supporting430.30 start; actual frame review is separate from audio-language assessment."
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=dSafV4sp0OM",
+  "source_sha256": "5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:34:09.632190+00:00",
+  "reviewed_from": 436.1,
+  "reviewed_to": 471.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 437.08,
+      "end": 440.9,
+      "en": "Fery's second break in the third set.",
+      "zh": "费里在第三盘第二次破发。"
+    },
+    {
+      "start": 440.9,
+      "end": 446.32,
+      "en": "Scoreline looking very, very positive for the Brit.",
+      "zh": "比分对这位英国选手非常有利。"
+    },
+    {
+      "start": 462.68,
+      "end": 467.9,
+      "en": "And on debut, Arthur Fery is through to the second round.",
+      "zh": "澳网首秀，费里闯进第二轮。"
+    },
+    {
+      "start": 467.9,
+      "end": 471.6,
+      "en": "It's a huge win. Straight sets.",
+      "zh": "一场大胜，直落三盘。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-small.en.json",
+      "sha256": "87f87f270a7a2faa432f66fa82f4a65897ba65193195f1f3cc05299f5c018c27",
+      "model": "small.en",
+      "source_window": [
+        425.0,
+        475.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-medium.en.json",
+      "sha256": "49f9afe7b562a4fa3cbc42af6e9dad1d5ad60b45b87d11bd339e34fa538a11de",
+      "model": "medium.en",
+      "source_window": [
+        425.0,
+        475.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/dSafV4sp0OM-large-v3-436-447.json",
+      "sha256": "eee0a1f718072613dddc6c00ecc663f0897023de4a792575f4e8ccdea72c3f53",
+      "model": "large-v3",
+      "source_window": [
+        436.0,
+        447.0
+      ],
+      "workflow_run": "https://github.com/robertyang87/tennislive/actions/runs/41814054848",
+      "artifact_name": "cobolli-ao-bounded-third-model"
+    }
+  ],
+  "review_notes": "ROOT EDITORIAL DECISION2026-11-04: accepted ASR editorial normalization, not human-confirmed verbatim hearing. Three actual unchanged-source recognizers consistently recover second break/third set/scoreline looking/very very positive for the Brit. large-v3 and original full medium.en support in; weak leading words and alternate prepositions remain in the original research. Leading So is a discourse filler omitted only from captions while full source audio remains. very→Fery's is a proper-name spelling decision grounded in verified identity, scoreboard and the Brit referent; this is explicitly editorial inference from ASR/context, not an official caption or human-hearing claim. Accepted display text is Fery's second break in the third set. Scoreline looking very, very positive for the Brit. The first cue split follows full medium.en boundary440.90. Both original models later recover on debut/Fery/through to the second round and huge win/straight sets; Berry/ferry→Arthur Fery and Daebou→debut are normalized using verified identity and AO-debut context. It's/That's is a retained raw function-word difference; original small.en It's is selected without meaning change or a claim of word-perfect consensus. Nominal audio436.10–471.80 stays unchanged at unit gain and includes first-serve fault+second serve+full winning rally and reactions. The next score announcement starts473.13 or later outside the window. Native audio_tail:silence affects only extra dissolve continuation, never nominal audio. complete means selected-window semantic-caption review and source identity are complete; it is not full_audio_listening or proof of every phoneme.",
+  "source_identity": {
+    "video_id": "dSafV4sp0OM",
+    "source_path": "/workspace/cobolli-research/media-a/dSafV4sp0OM.mp4",
+    "sha256": "5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0",
+    "bytes": 66309092,
+    "duration": 491.009161,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "review_decision_by": "root production editor, bounded ASR/context interpretation; not a user audio confirmation or human-hearing approval",
+  "raw_transcription_disagreements": [
+    {
+      "scope": [
+        436.0,
+        440.9
+      ],
+      "raw": "so very second break ... / So very second break ... / It's a very second break ... / short Second break ...",
+      "resolved_for_display": "Fery's second break in the third set.",
+      "basis": "Bounded three-model and verified identity/context editorial normalization; original source audio retained, raw models unchanged."
+    },
+    {
+      "scope": [
+        467.9,
+        471.6
+      ],
+      "raw": "it's a huge win / that's a huge win / straight sets / straight six",
+      "resolved_for_display": "It's a huge win. Straight sets.",
+      "basis": "Original small.en complete tennis expression; raw alternative pronoun and recognition error retained."
+    }
+  ]
+}
