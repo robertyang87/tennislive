@@ -384,7 +384,7 @@ function shotArena(u,D){
   beamMat.uniforms.uOp.value=0.22; beamMat.uniforms.uC.value.set(0xd8f2ff);
   if(u<cyc){ look(-SW-1.8,2.3,-L-5.2,0.8,1.0,2); DOF.on=true; DOF.focus=camera.position.distanceTo(p); DOF.ap=0.00018; }
   else { const a=(u-cyc)*0.04; look(21*Math.cos(0.35+a),8.5,21*Math.sin(0.35+a),0,0.5,0); }
-  const ring=t3d('t045','0.45 s',0xd8f2ff,0.55); ring.g.position.copy(p).add(new THREE.Vector3(0,0.9,0)); ring.g.quaternion.copy(camera.quaternion); t3op(ring,vis?ss(0.6,0.66,k)*(1-ss(0.95,1,k)):0);
+  const ring=t3d('tlt05','< 0.5 s',0xd8f2ff,0.55); ring.g.position.copy(p).add(new THREE.Vector3(0,0.9,0)); ring.g.quaternion.copy(camera.quaternion); t3op(ring,vis?ss(0.6,0.66,k)*(1-ss(0.95,1,k)):0);
   proj('ball',p);
 }
 function shotPile(u,D){

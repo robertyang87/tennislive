@@ -106,7 +106,8 @@ def wrap_en(s,size,maxw=930,tf=None):
         o=s2.count('【'); cl=s2.count('】'); openhi = o>cl
         out.append(s2+('】' if openhi else ''))
     return out
-def wrap(s,size,maxw=930,tf=None): return (wrap_en if LANG=='en' else wrap_zh)(s,size,maxw,tf)
+def wrap(s,size,maxw=930,tf=None):  # 文案里写了 \n 就按它分行（语义分行，别让自动折行把一个词拆开）
+    return [l for p in s.split('\n') for l in (wrap_en if LANG=='en' else wrap_zh)(p,size,maxw,tf)]
 def hudlabel(c,x,y,s,a,cc=CYAN,dx=60,dy=-60,size=28,align='l'):
     # leader line from anchor to label
     c.drawCircle(x,y,6,P(cc,a,stroke=2)); c.drawCircle(x,y,2.5,P(cc,a))
@@ -210,6 +211,7 @@ CAPS=[
 ('k3',0,3.2,tr("六种关键分：统计上都【分不出差别】","Six kinds of big points: 【no statistical difference】 in any"),BOT),
 ('k3',3.4,None,tr("压力再大，照样【混着发】","Even under pressure, they 【keep mixing】"),BOT),
 ('l2',3.0,None,tr("每一分平均打平；按比分细看，【还不完美】","Level on average per point — 【not perfect】 score by score"),BOT),
+('e0',0,None,tr("冯·诺依曼，1928：两边各一半\n没有人能预言他选哪边——【连他自己也不能】","von Neumann, 1928: at ½–½,\nno one can predict his choice — 【not even himself】"),TOP),
 ('e1',0,None,tr("你玩石头剪刀布，会不会【总出同一个】？","Playing rock-paper-scissors, do you 【keep throwing the same】?"),('s',960,930,C,52)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
@@ -220,7 +222,7 @@ def sec_of(t):
 MCP=tr("数据：Match Charting Project（志愿者逐拍标注，非官方统计）· 2023 年 1 月以来 · 一发 · 不含抢七","Data: Match Charting Project (volunteer point-by-point charting, not official) · since Jan 2023 · first serves · tiebreaks excluded")
 NOTE={  # 每段底部的出处
  'fast':tr("鹰眼实测平均值：Gauriot, Page & Wooders, Quantitative Economics, 2023","Hawk-Eye average: Gauriot, Page & Wooders, Quantitative Economics, 2023"),
- 'theory':tr("von Neumann, Mathematische Annalen, 1928 · Nash, PNAS, 1950 · 1994 年诺贝尔经济学奖 · 2×2 方块为示意","von Neumann, Math. Annalen 1928 · Nash, PNAS 1950 · Nobel Prize in Economics 1994 · 2×2 table illustrative"),
+ 'theory':tr("von Neumann, Mathematische Annalen, 1928 · Nash, PNAS, 1950 · Robinson, Annals of Mathematics, 1951 · 1994 年诺贝尔经济学奖 · 2×2 方块为示意","von Neumann, Math. Annalen 1928 · Nash, PNAS 1950 · Robinson, Annals of Math. 1951 · Nobel Prize in Economics 1994 · 2×2 table illustrative"),
  'mix':MCP,'today':MCP,'keypts':tr("橙＝外角　绿＝中路　· ","Orange = wide · Green = T · ")+MCP,
  'latest':tr("Anderson, Rosen, Rust & Wong, “Disequilibrium Play in Tennis”, Journal of Political Economy, 2025 · 比分树为示意","Anderson, Rosen, Rust & Wong, “Disequilibrium Play in Tennis”, Journal of Political Economy, 2025 · score tree illustrative")}
 CHAP={'hook':("01",tr("问题","QUESTION")),'fast':("02",tr("为什么要猜","WHY GUESS")),'pile':("02",tr("为什么要猜","WHY GUESS")),'theory':("03",tr("理论","THEORY")),
