@@ -13,14 +13,17 @@ GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
 SECTIONS = [  # (段名, 镜头类型)；句子按 narration.json 里的 sec 归段
     ("hook", "hook"), ("fast", "arena"), ("pile", "pile"), ("theory", "theory"), ("mix", "balance"),
     ("today", "rain"), ("keypts", "keypoints"), ("latest", "latest"), ("end", "coin")]
-HOLD = {"f2": 3.0, "p0": 2.6, "p1": 3.4, "p2": 6.5,          # 「总发外角」要让 6 个发球打完
-        "t2": 5.6, "t4": 5.5, "t7": 3.4, "t8": 5.5,                     # 年份环、石头剪刀布两局、螺旋收进均衡点
-        "b2": 3.2, "b3": 6.0, "r2": 4.6, "r4": 4.2, "k1": 4.0, "k2": 4.0, "k3": 4.2, "k4": 4.6, "l2": 5.0, "l3": 3.6, "e0": 4.4}
-MIN_SEC = {"hook": 9.5, "fast": 9.0, "pile": 14.0, "theory": 34.0, "mix": 17.0, "today": 22.0, "keypts": 22.0, "latest": 15.0, "end": 11.0}
+# 第 2 版（20 句）：旁白只讲结论，句间的留白给特效——HOLD 按每个镜头的动画需要的时长给（从这句开口算到下一句开口）
+HOLD = {"h1": 5.5, "f0": 4.6, "f1": 4.6, "p0": 13.5,                    # p0：6 个外角发球打完（shotPile 每球 ≥2.2 s）
+        "t1": 7.5, "t3": 8.0, "t5": 6.6, "t8": 6.8,                    # 年份环 ≥7 s；石头剪刀布两局各 ≥3.5 s；矩阵铺开 6 s 后螺旋才收
+        "b0": 6.2, "b3": 8.0,                                          # 光点倒进托盘 5 s；光柱升起再停稳
+        "r1": 7.0, "r2": 5.8, "r4": 7.5,                               # 光点暴雨落地 → 两根光柱 → 1,056 块方砖、56 块变红
+        "k0": 6.6, "k3": 6.2, "l1": 5.6, "l2": 7.0, "e0": 5.0}
+MIN_SEC = {"hook": 9.0, "fast": 9.0, "pile": 14.0, "theory": 29.0, "mix": 14.5, "today": 20.0, "keypts": 13.0, "latest": 13.0, "end": 10.0}
 # 画面事件：(段, 事件名, 句子, 句内第几个字开始) —— 取这个字在 TTS 词边界里的开口时刻
 EV = [("hook", "slam", "h1", "纳什均衡"), ("hook", "eq", "h1", "诺贝尔"), ("theory", "hands", "t3", None), ("theory", "matrix", "t5", None),
-      ("theory", "conv", "t7", None), ("mix", "rise", "b3", None), ("mix", "pour", "b1", None), ("today", "cols", "r2", None), ("today", "tiles", "r3", None),
-      ("today", "red", "r4", "只有"), ("keypts", "row0", "k1", None), ("keypts", "row1", "k2", None), ("latest", "res", "l2", None), ("end", "line", "e0", None), ("end", "q", "e1", None)]
+      ("theory", "conv", "t8", None), ("mix", "pour", "b0", None), ("mix", "rise", "b3", "两边"), ("today", "cols", "r2", None), ("today", "tiles", "r4", None),
+      ("today", "red", "r4", "偏离"), ("keypts", "row0", "k0", "局点"), ("keypts", "row1", "k0", "破发点"), ("latest", "res", "l2", None), ("end", "line", "e0", None), ("end", "q", "e1", None)]
 
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 def wb(f): return json.load(open(f"voice/{f}.json"))

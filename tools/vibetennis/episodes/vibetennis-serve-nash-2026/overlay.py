@@ -178,45 +178,41 @@ AT={l['file']:l['at'] for l in NAR['lines']}
 def speak(f):
     wb=json.load(open(os.path.join(HERE,'voice',f+'.json'))); return AT[f]+wb[0]['off'], AT[f]+wb[-1]['off']+wb[-1]['dur']
 ORDER=[l['file'] for l in NAR['lines']]
-def span(f,until=None,pad=0.25):
-    s,e=speak(f)
+def span(f,off=0.0,until=None,pad=0.25):
+    """字幕起止：从句子 f 开口后 off 秒起；until=None 到下一句开口前，数字＝持续秒数，句子名＝到那句开口前。
+    第 2 版旁白只有 20 句、句间留白长，所以一句底下可以挂几条字幕，用 off 往后排。"""
+    s,e=speak(f); s=s+off
+    if isinstance(until,(int,float)): return s-0.1, until
     if until: e=speak(until)[0]-pad
     else:
         i=ORDER.index(f); e=(speak(ORDER[i+1])[0]-pad) if i+1<len(ORDER) else e+2.5
     return s-0.1, max(1.0,e-s+0.1)
 TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
-# (句子, 截止到哪一句开口[None=下一句], 文案, 位置)
+# (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)——旁白只讲结论，数字细节交给字幕和画面
 CAPS=[
-('f0',None,tr("男子一发：出手 → 落地，平均【不到半秒】","Men’s first serve: racket to bounce in 【under half a second】 on average"),('a','ball',40,-80,L,960,205,44)),
-('f1',None,tr("来不及看清，只能【先猜】","No time to see it — the returner 【has to guess】"),TOP),
-('f2',None,tr("所以发球的人，最怕被【猜中】","So the server’s worst fear: 【being read】"),TOP),
-('p0',None,tr("要是总发外角……","Serve wide every time…"),TOP),
-('p1',None,tr("对手会提前站过去","…and the returner starts leaning there"),TOP),
-('p2',None,tr("被猜中的发球 ＝ 送给对手的【机会】","A predictable serve is a 【gift】 to the returner"),TOP),
-('t0',None,tr("这个问题，数学家早就算过","Mathematicians solved this long ago"),BOT),
-('t3',None,tr("总出石头 → 一定被【布】吃掉","Always rock → paper 【always wins】"),BOT),
-('t4',None,tr("最好的办法：【混着出】","The answer: 【mix it up】"),BOT),
-('t5',None,tr("一张 2×2 的表：你发哪边 × 对手猜哪边","A 2×2 table: where you serve × where they guess"),TOP),
-('t6',None,tr("你多发哪边 → 对手多猜哪边 → 你该多发【另一边】","Serve one side more → they guess it more → serve 【the other】 more"),TOP),
-('t7',None,tr("两边来回调整，收到【一个点】上","Adjust back and forth → it settles on 【one point】"),TOP),
-('t8',None,tr("均衡：发外角、发中路，【赢下这一分的机会一样大】","Equilibrium: wide or T, 【the same chance to win the point】"),TOP),
-('b0',None,tr("混着发 ≠ 【一半一半】","Mixing ≠ 【50–50】"),BOT),
-('b1',None,tr("辛纳 · 占先区一发：外角 【58.7%】 · 中路 【35.4%】","Sinner · ad-court firsts: wide 【58.7%】 · T 【35.4%】"),BOT),
-('b2',None,tr("按次数看：明显偏向外角","By count: clearly tilted to wide"),BOT),
-('b3',None,tr("按得分率看：统计上【分不出差别】","By win rate: 【no statistical difference】"),BOT),
-('b4',None,tr("看的是【得分率】，不是次数","It’s the 【win rate】 that matters, not the count"),BOT),
-('r0',None,tr("这不是个例","It’s not just one player"),BOT),
-('r1',None,tr("按论文里的检验方法，在今天的数据上【重做一遍】","The same test as the papers, 【redone】 on today’s data"),BOT),
-('r2',None,tr("外角、中路：赢下这一分的比例【几乎一样】","Wide vs T: 【almost the same】 chance to win the point"),BOT),
-('r3',None,tr("一组 ＝ 同一个发球人 × 同一个接发人 × 同一个半区","One group = same server × same returner × same court side"),BOT),
-('k3',None,tr("六种关键分：统计上都【分不出差别】","Six kinds of big points: 【no statistical difference】 in any"),BOT),
-('k5',None,tr("压力再大，照样【混着发】","Even under pressure, they 【keep mixing】"),BOT),
-('l0',None,tr("故事还没讲完","But that’s not the whole story"),TOP),
-('l3',None,tr("每一分平均打平；按比分细看，【还不完美】","Level on average per point — 【not perfect】 score by score"),BOT),
-('e1',None,tr("你玩石头剪刀布，会不会【总出同一个】？","Playing rock-paper-scissors, do you 【keep throwing the same】?"),('s',960,930,C,52)),
+('f0',0,None,tr("男子一发：出手 → 落地，平均【不到半秒】","Men’s first serve: racket to bounce in 【under half a second】 on average"),('a','ball',40,-80,L,960,205,44)),
+('f1',0,None,tr("来不及看清，只能【先猜】","No time to see it — the returner 【has to guess】"),TOP),
+('p0',0,4.4,tr("要是总发外角……","Serve wide every time…"),TOP),
+('p0',4.6,4.4,tr("对手会提前站过去","…and the returner starts leaning there"),TOP),
+('p0',9.2,None,tr("被猜中的发球 ＝ 送给对手的【机会】","A predictable serve is a 【gift】 to the returner"),TOP),
+('t1',0,None,tr("1928 冯·诺依曼【极小极大定理】 · 1950 纳什【均衡】","1928 von Neumann’s 【minimax theorem】 · 1950 Nash 【equilibrium】"),BOT),
+('t3',0,None,tr("总出石头 → 一定被【布】吃掉","Always rock → paper 【always wins】"),BOT),
+('t5',0,3.2,tr("一张 2×2 的表：你发哪边 × 对手猜哪边","A 2×2 table: where you serve × where they guess"),TOP),
+('t5',3.4,None,tr("你多发哪边 → 对手多猜哪边 → 你该多发【另一边】","Serve one side more → they guess it more → serve 【the other】 more"),TOP),
+('t8',0,None,tr("均衡：发外角、发中路，【赢下这一分的机会一样大】","Equilibrium: wide or T, 【the same chance to win the point】"),TOP),
+('b0',0,None,tr("混着发 ≠ 【一半一半】","Mixing ≠ 【50–50】"),BOT),
+('b3',0,3.0,tr("辛纳 · 占先区一发：外角 【58.7%】 · 中路 【35.4%】","Sinner · ad-court firsts: wide 【58.7%】 · T 【35.4%】"),BOT),
+('b3',3.2,None,tr("看的是【得分率】，不是次数：统计上分不出差别","It’s the 【win rate】 that matters, not the count: no statistical difference"),BOT),
+('r1',0,None,tr("按论文里的检验方法，在今天的数据上【重做一遍】","The same test as the papers, 【redone】 on today’s data"),BOT),
+('r2',0,None,tr("外角、中路：赢下这一分的比例【几乎一样】","Wide vs T: 【almost the same】 chance to win the point"),BOT),
+('r4',0,None,tr("一组 ＝ 同一个发球人 × 同一个接发人 × 同一个半区","One group = same server × same returner × same court side"),BOT),
+('k3',0,3.2,tr("六种关键分：统计上都【分不出差别】","Six kinds of big points: 【no statistical difference】 in any"),BOT),
+('k3',3.4,None,tr("压力再大，照样【混着发】","Even under pressure, they 【keep mixing】"),BOT),
+('l2',3.0,None,tr("每一分平均打平；按比分细看，【还不完美】","Level on average per point — 【not perfect】 score by score"),BOT),
+('e1',0,None,tr("你玩石头剪刀布，会不会【总出同一个】？","Playing rock-paper-scissors, do you 【keep throwing the same】?"),('s',960,930,C,52)),
 ]
-CAPS=[(span(f,u)[0],span(f,u)[1],txt,pl) for f,u,txt,pl in CAPS]
+CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
     for s in TL['sections']:
         if s['t0']<=t<s['t1']: return s
