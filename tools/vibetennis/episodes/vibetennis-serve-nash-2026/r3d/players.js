@@ -23,8 +23,8 @@ function aim(bone,child,dirWorld){
 // 不缩放骨骼（非均匀缩放会让手臂、头被剪切拉歪），而是在绑定姿势下把躯干网格的顶点沿水平方向往外推：
 // 每个顶点按它绑在躯干各骨上的权重插值出加厚系数，以那几根骨在绑定姿势里的位置为轴心。几何体被所有克隆共享，只改一次。
 // 目标是倒三角：肩宽、胸背厚而不前凸、腰直不收、胯不宽、四肢粗。躯干骨 [横向, 前后]，四肢骨一个数＝绕骨轴的径向加粗。
-export const BUILD={Hips:[0.97,1.0],Spine:[1.38,1.04],Spine1:[1.32,1.0],Spine2:[1.26,0.94],
-  LeftShoulder:1.12,RightShoulder:1.12,LeftArm:1.2,RightArm:1.2,LeftForeArm:1.12,RightForeArm:1.12,LeftUpLeg:1.14,RightUpLeg:1.14,LeftLeg:1.1,RightLeg:1.1,Neck:1.15};
+export const BUILD={Hips:[0.88,0.84],Spine:[1.42,1.0],Spine1:[1.36,0.95],Spine2:[1.28,0.84],
+  LeftShoulder:1.12,RightShoulder:1.12,LeftArm:1.2,RightArm:1.2,LeftForeArm:1.12,RightForeArm:1.12,LeftUpLeg:1.08,RightUpLeg:1.08,LeftLeg:1.1,RightLeg:1.1,Neck:1.15};
 export const SHOULDER_OUT=1.14; // 上臂骨根部沿锁骨方向外移的倍数：肩更宽
 function thicken(m){
   const geo=m.geometry; if(geo.userData.built) return; geo.userData.built=true;
