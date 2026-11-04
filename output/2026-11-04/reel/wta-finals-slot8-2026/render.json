@@ -1,0 +1,104 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "daccd0d45948962392e455e9c5267daf8e3f1dcfbe2c9c49984ef14494aa945e",
+    "request_count": 21,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-wta-finals-slot8-2026-daccd0d459489623",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wta-finals-slot8-2026-daccd0d459489623/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41780843105"
+  },
+  "cover_seconds": 5.722,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 370.08,
+  "topbar": null,
+  "film_seconds": 380.4,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 16.224,
+    "1": 12.84,
+    "2": 7.896,
+    "3": 20.184,
+    "4": 12.144,
+    "5": 9.72,
+    "6": 13.296,
+    "7": 5.712,
+    "9": 33.408,
+    "10": 16.104,
+    "11": 11.616,
+    "12": 12.888,
+    "14": 16.248,
+    "15": 9.648,
+    "16": 19.92,
+    "17": 15.816,
+    "18": 32.064,
+    "19": 26.784,
+    "20": 17.784
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "f7407e27a8cb71ae402691725284d97dec828d7b71934e846eeb1ff89e243081",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "wta-finals-slot8-2026",
+    "received_at": "2026-11-04T05:42:08Z",
+    "artifact_ready_at": "2026-11-04T05:50:32Z",
+    "elapsed_seconds": 504.327,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "0d8c253c9813dc33f578abfaa53b74ea3cd0c9a49d92159250122c4a6fb5f2f2",
+    "spec_sha256": "bd2c41e622f81a0eb527e8f2a4724c27c4c5dd514838d97272d062f86eb6a344",
+    "run_id": "41780843105",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-04T05:46:48Z",
+        "run_id": "41780843105"
+      }
+    ],
+    "render_seconds": 224.327,
+    "pre_render_seconds": 280.0
+  },
+  "film_sha256": "0d8c253c9813dc33f578abfaa53b74ea3cd0c9a49d92159250122c4a6fb5f2f2",
+  "film_bytes": 137848417,
+  "qc_attestation_sha256": "9521cf11b6f9d8a8ed257eb8859e54be048c9bca7643808f97388a181801679b",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-04T05:46:48Z",
+      "run_id": "41780843105"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-04T05:50:36Z",
+      "run_id": "41780843105"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wta-finals-slot8-2026/wta-finals-slot8-2026.mp4",
+  "video_bytes": 137848417
+}

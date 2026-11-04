@@ -1,0 +1,1096 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "b898b2108bcc4fc37d5d69e1d0d4b3ef7e68f5913e6cb736715e31841b139329",
+    "render_inputs_sha256": "f7407e27a8cb71ae402691725284d97dec828d7b71934e846eeb1ff89e243081",
+    "spec_sha256": "bd2c41e622f81a0eb527e8f2a4724c27c4c5dd514838d97272d062f86eb6a344",
+    "film_sha256": "0d8c253c9813dc33f578abfaa53b74ea3cd0c9a49d92159250122c4a6fb5f2f2",
+    "inventory_sha256": "6190b7e58dea5f438c0a2381052ad6d66466bda1cefa165a4a695db94b266ac4"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-04T05:52:45+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:05b36679b9cf2763ec6da18bbbbf28cdc72d6df7ee3174b06f25486818f1797e",
+      "audio_sha256": "19d8c627425a20901afe6ccb1ef6845d74c9c88d651d6189c7687ce2632c2e97",
+      "pass": true,
+      "result_of": "bundle:05b36679b9cf2763ec6da18bbbbf28cdc72d6df7ee3174b06f25486818f1797e"
+    },
+    {
+      "id": "bundle:116cb3e17662410db96cddb7317babe84e7eb010863bb318dc5759471ed3e703",
+      "audio_sha256": "7cfdc5fe22b5e4652346f316c02709aeaa8bed433cae6e9a35d999283473b0fc",
+      "pass": true,
+      "result_of": "bundle:116cb3e17662410db96cddb7317babe84e7eb010863bb318dc5759471ed3e703"
+    },
+    {
+      "id": "bundle:1cd7a2611cf21003370afb4579458bf2745eda50919f8922c4a17bd212cece2c",
+      "audio_sha256": "5f3e6b01c4d2c9c1d76b36f8f6f55e492ca82c1ebb7733f026b80ab4f1079a65",
+      "pass": true,
+      "result_of": "bundle:1cd7a2611cf21003370afb4579458bf2745eda50919f8922c4a17bd212cece2c"
+    },
+    {
+      "id": "bundle:2cca79795d7e4e5b9e146ad3ca2b3ffbe651e2bb341f4e25b0822540e52c6651",
+      "audio_sha256": "a412ae09b0889822d3bf0ce3bc43f52665f51caaaa0d3b2e85b7f710733b8fb9",
+      "pass": true,
+      "result_of": "bundle:2cca79795d7e4e5b9e146ad3ca2b3ffbe651e2bb341f4e25b0822540e52c6651"
+    },
+    {
+      "id": "bundle:2efd22ccb97af97fa228c3c4de07ab13284d4f3d11c7332d658909f361ec7729",
+      "audio_sha256": "7350fdd465e30ffa76bc3a1a485a62ac72fcec23467a9208f8c2f57af93b7de6",
+      "pass": true,
+      "result_of": "bundle:2efd22ccb97af97fa228c3c4de07ab13284d4f3d11c7332d658909f361ec7729"
+    },
+    {
+      "id": "bundle:362aa3f9a88b13756aef67453ba1fbd90c94dcadc7c48e23f58dee6aafb3aaa9",
+      "audio_sha256": "da09d8a217db2c51bda08915c16f30c69a9bb10239b8d3ff664ec96b67db2740",
+      "pass": true,
+      "result_of": "bundle:362aa3f9a88b13756aef67453ba1fbd90c94dcadc7c48e23f58dee6aafb3aaa9"
+    },
+    {
+      "id": "bundle:723434fa335b0870617335c58f68bed20aa08c25139c66d484b5c6c10ca6a230",
+      "audio_sha256": "decfabf8b8f4de510736120c5736981ee6d68bbc410b39a896680abe71401d37",
+      "pass": true,
+      "result_of": "bundle:723434fa335b0870617335c58f68bed20aa08c25139c66d484b5c6c10ca6a230"
+    },
+    {
+      "id": "bundle:8316bd9d38cff6d5f54383974d0dd3e92967f18dd769bb7706b576dd9cd1985a",
+      "audio_sha256": "67c9295145d413e6c98f5ffad3bc351f524fa3e58a44ce83b39356463ca4de13",
+      "pass": true,
+      "result_of": "bundle:8316bd9d38cff6d5f54383974d0dd3e92967f18dd769bb7706b576dd9cd1985a"
+    },
+    {
+      "id": "bundle:8792b6cb5189e3540bcf1f5960615970f1e73e96b89c396beec94d1f103ee5e5",
+      "audio_sha256": "afd6832bb902c8fe14620b13cc5c075320e8c6c03e2fe37158dca0923c6ded2f",
+      "pass": true,
+      "result_of": "bundle:8792b6cb5189e3540bcf1f5960615970f1e73e96b89c396beec94d1f103ee5e5"
+    },
+    {
+      "id": "bundle:8871f595358827f8446652913e560e4b00d8800dd301db46c5aca172c62b919a",
+      "audio_sha256": "f525db85a1bb4cf7434659e84c17ecc13ed40e4244fc978a29bf6f32fcb60dd4",
+      "pass": true,
+      "result_of": "bundle:8871f595358827f8446652913e560e4b00d8800dd301db46c5aca172c62b919a"
+    },
+    {
+      "id": "bundle:a44dbab2dbb6be30b050a8ca3fdebf016eb1d76aa0950e5ccf45d4587b034112",
+      "audio_sha256": "14297599bb03e0b54bed9be6a41920e7be8caa1de56c4db6fa506204c15baa9a",
+      "pass": true,
+      "result_of": "bundle:a44dbab2dbb6be30b050a8ca3fdebf016eb1d76aa0950e5ccf45d4587b034112"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "2d5d93468049351ad1fdafff28f5930c1907e6f8a0a0581ed650aa83c39e0953",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bdd076596f3068e70503716b9a9ab67bfac4f11dacafddbdaada34e7af4ec4db",
+      "audio_sha256": "cc7a037ae247d968c36aa48982288a9f0b1e8ceef027e1de5431c161cf32cfbd",
+      "pass": true,
+      "result_of": "bundle:bdd076596f3068e70503716b9a9ab67bfac4f11dacafddbdaada34e7af4ec4db"
+    },
+    {
+      "id": "bundle:c95f3e532514d183cd6766010545f7646aa59187d3b3a255b378faaad262e4c9",
+      "audio_sha256": "0e77287812260a1ca6c553b99831793855f97c365feb1e6b7af665ba2303d334",
+      "pass": true,
+      "result_of": "bundle:c95f3e532514d183cd6766010545f7646aa59187d3b3a255b378faaad262e4c9"
+    },
+    {
+      "id": "bundle:d04bc16b75c7719b600b5e5f801d1d662d35fa00daaf59cf92b40c0bde251fc1",
+      "audio_sha256": "a08638b32539963656996ee08e438dbac44b10d4f51cad1f515010a0301a7543",
+      "pass": true,
+      "result_of": "bundle:d04bc16b75c7719b600b5e5f801d1d662d35fa00daaf59cf92b40c0bde251fc1"
+    },
+    {
+      "id": "bundle:d7ca9f36e0ef5d7cef20aec7f0beb4229d4bca14c3c26e9f36c06613a5f4c2af",
+      "audio_sha256": "dcc2bfd9ab025942196f4955a559ef343b19aa64edcb437f5e03a5d364ff11d0",
+      "pass": true,
+      "result_of": "bundle:d7ca9f36e0ef5d7cef20aec7f0beb4229d4bca14c3c26e9f36c06613a5f4c2af"
+    },
+    {
+      "id": "bundle:ea939c1629bcd8528ad9e0baea1597e51b3a94a0570d6eeda55fc91d8f442ab0",
+      "audio_sha256": "04f8ef36c0e92a1eab19542f4d79f5057b1bc490e7ed363c01a93ffa300b8079",
+      "pass": true,
+      "result_of": "bundle:ea939c1629bcd8528ad9e0baea1597e51b3a94a0570d6eeda55fc91d8f442ab0"
+    },
+    {
+      "id": "bundle:f44f144ca25ae62f8287c17ff26d8fd282f476f67d2d6b5f57a123214c2c8600",
+      "audio_sha256": "1f65cfdccdc730026290f66772ab82618168c94cdfb5c777d8c92e4b2e16d370",
+      "pass": true,
+      "result_of": "bundle:f44f144ca25ae62f8287c17ff26d8fd282f476f67d2d6b5f57a123214c2c8600"
+    },
+    {
+      "id": "bundle:f45fe25f73e295f6bebc9ac74aa6cf1454386408348330b9bdaefea1b5aeefeb",
+      "audio_sha256": "a1eca352caa2abd7ed284cd1262e548a7866eb5e774b53b9976a6b227947d97d",
+      "pass": true,
+      "result_of": "bundle:f45fe25f73e295f6bebc9ac74aa6cf1454386408348330b9bdaefea1b5aeefeb"
+    },
+    {
+      "id": "bundle:f58d357c3eeafea1879b430202cf9827e175d2d97ed29e833341654e575410d9",
+      "audio_sha256": "ba5d9d411cba6fa220f5bceb71eedece273068e290adee3f30217bbcecf65f43",
+      "pass": true,
+      "result_of": "bundle:f58d357c3eeafea1879b430202cf9827e175d2d97ed29e833341654e575410d9"
+    },
+    {
+      "id": "bundle:fe2e1a84976e5ee9bcdd9b54e8fd626bb52ac3eb58892c29e9809c89b8ea6610",
+      "audio_sha256": "4efe9790585028fca8312a0f2a2e3330523650b06063c17b1ef3bb926cdbb994",
+      "pass": true,
+      "result_of": "bundle:fe2e1a84976e5ee9bcdd9b54e8fd626bb52ac3eb58892c29e9809c89b8ea6610"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "19d8c627425a20901afe6ccb1ef6845d74c9c88d651d6189c7687ce2632c2e97",
+      "pass": true,
+      "result_of": "bundle:05b36679b9cf2763ec6da18bbbbf28cdc72d6df7ee3174b06f25486818f1797e"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "7350fdd465e30ffa76bc3a1a485a62ac72fcec23467a9208f8c2f57af93b7de6",
+      "pass": true,
+      "result_of": "bundle:2efd22ccb97af97fa228c3c4de07ab13284d4f3d11c7332d658909f361ec7729"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "decfabf8b8f4de510736120c5736981ee6d68bbc410b39a896680abe71401d37",
+      "pass": true,
+      "result_of": "bundle:723434fa335b0870617335c58f68bed20aa08c25139c66d484b5c6c10ca6a230"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "da09d8a217db2c51bda08915c16f30c69a9bb10239b8d3ff664ec96b67db2740",
+      "pass": true,
+      "result_of": "bundle:362aa3f9a88b13756aef67453ba1fbd90c94dcadc7c48e23f58dee6aafb3aaa9"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "14297599bb03e0b54bed9be6a41920e7be8caa1de56c4db6fa506204c15baa9a",
+      "pass": true,
+      "result_of": "bundle:a44dbab2dbb6be30b050a8ca3fdebf016eb1d76aa0950e5ccf45d4587b034112"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "a412ae09b0889822d3bf0ce3bc43f52665f51caaaa0d3b2e85b7f710733b8fb9",
+      "pass": true,
+      "result_of": "bundle:2cca79795d7e4e5b9e146ad3ca2b3ffbe651e2bb341f4e25b0822540e52c6651"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "f525db85a1bb4cf7434659e84c17ecc13ed40e4244fc978a29bf6f32fcb60dd4",
+      "pass": true,
+      "result_of": "bundle:8871f595358827f8446652913e560e4b00d8800dd301db46c5aca172c62b919a"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "4efe9790585028fca8312a0f2a2e3330523650b06063c17b1ef3bb926cdbb994",
+      "pass": true,
+      "result_of": "bundle:fe2e1a84976e5ee9bcdd9b54e8fd626bb52ac3eb58892c29e9809c89b8ea6610"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "dcc2bfd9ab025942196f4955a559ef343b19aa64edcb437f5e03a5d364ff11d0",
+      "pass": true,
+      "result_of": "bundle:d7ca9f36e0ef5d7cef20aec7f0beb4229d4bca14c3c26e9f36c06613a5f4c2af"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "a08638b32539963656996ee08e438dbac44b10d4f51cad1f515010a0301a7543",
+      "pass": true,
+      "result_of": "bundle:d04bc16b75c7719b600b5e5f801d1d662d35fa00daaf59cf92b40c0bde251fc1"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "04f8ef36c0e92a1eab19542f4d79f5057b1bc490e7ed363c01a93ffa300b8079",
+      "pass": true,
+      "result_of": "bundle:ea939c1629bcd8528ad9e0baea1597e51b3a94a0570d6eeda55fc91d8f442ab0"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "0e77287812260a1ca6c553b99831793855f97c365feb1e6b7af665ba2303d334",
+      "pass": true,
+      "result_of": "bundle:c95f3e532514d183cd6766010545f7646aa59187d3b3a255b378faaad262e4c9"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "5f3e6b01c4d2c9c1d76b36f8f6f55e492ca82c1ebb7733f026b80ab4f1079a65",
+      "pass": true,
+      "result_of": "bundle:1cd7a2611cf21003370afb4579458bf2745eda50919f8922c4a17bd212cece2c"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "1f65cfdccdc730026290f66772ab82618168c94cdfb5c777d8c92e4b2e16d370",
+      "pass": true,
+      "result_of": "bundle:f44f144ca25ae62f8287c17ff26d8fd282f476f67d2d6b5f57a123214c2c8600"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "afd6832bb902c8fe14620b13cc5c075320e8c6c03e2fe37158dca0923c6ded2f",
+      "pass": true,
+      "result_of": "bundle:8792b6cb5189e3540bcf1f5960615970f1e73e96b89c396beec94d1f103ee5e5"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "67c9295145d413e6c98f5ffad3bc351f524fa3e58a44ce83b39356463ca4de13",
+      "pass": true,
+      "result_of": "bundle:8316bd9d38cff6d5f54383974d0dd3e92967f18dd769bb7706b576dd9cd1985a"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "cc7a037ae247d968c36aa48982288a9f0b1e8ceef027e1de5431c161cf32cfbd",
+      "pass": true,
+      "result_of": "bundle:bdd076596f3068e70503716b9a9ab67bfac4f11dacafddbdaada34e7af4ec4db"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "ba5d9d411cba6fa220f5bceb71eedece273068e290adee3f30217bbcecf65f43",
+      "pass": true,
+      "result_of": "bundle:f58d357c3eeafea1879b430202cf9827e175d2d97ed29e833341654e575410d9"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "a1eca352caa2abd7ed284cd1262e548a7866eb5e774b53b9976a6b227947d97d",
+      "pass": true,
+      "result_of": "bundle:f45fe25f73e295f6bebc9ac74aa6cf1454386408348330b9bdaefea1b5aeefeb"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "7cfdc5fe22b5e4652346f316c02709aeaa8bed433cae6e9a35d999283473b0fc",
+      "pass": true,
+      "result_of": "bundle:116cb3e17662410db96cddb7317babe84e7eb010863bb318dc5759471ed3e703"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "2d5d93468049351ad1fdafff28f5930c1907e6f8a0a0581ed650aa83c39e0953",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:05b36679b9cf2763ec6da18bbbbf28cdc72d6df7ee3174b06f25486818f1797e",
+      "text": "今年总决赛的名单，有个地方不对劲。积分第七的穆霍娃，等到十月二十一号，名额才落定；积分第八的诺斯科娃，十月九号就官宣入围了。分少的人先上车，分多的人，在门口多等了十二天。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 75,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年总决赛的名单有个地方不对劲。击分第七的穆霍娃,等到10月21号名额才落定,击分第八的诺斯科娃,10月9号就官宣入围了。分少的人先上车,分多的人,在门口多等了12天。"
+      },
+      "polyphones": [
+        {
+          "index": 38,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.985,
+              "confidence": "high",
+              "near": "intended"
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.969,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 75,
+        "speech_s": 15.33,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 总决赛 ｜ 的 ｜ 名单 ｜ 有 ｜ 个 ｜ 地方 ｜ 不对劲 ｜ 积分 ｜ 第七 ｜ 的 ｜ 穆霍娃 ｜ 等到 ｜ 十月二十一号 ｜ 名额 ｜ 才 ｜ 落 ｜ 定 ｜ 积分 ｜ 第八 ｜ 的 ｜ 诺斯科娃 ｜ 十月九号 ｜ 就 ｜ 官 ｜ 宣 ｜ 入围 ｜ 了 ｜ 分 ｜ 少 ｜ 的 ｜ 人 ｜ 先 ｜ 上车 ｜ 分 ｜ 多 ｜ 的 ｜ 人 ｜ 在 ｜ 门口 ｜ 多 ｜ 等 ｜ 了 ｜ 十二天"
+      }
+    },
+    {
+      "id": "bundle:116cb3e17662410db96cddb7317babe84e7eb010863bb318dc5759471ed3e703",
+      "text": "差155分，她先进？第八席不排队先找冠军",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 20,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "差155分,他先进。第八席不排队,先找冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 4.587,
+        "cps": 3.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "差 ｜ 155分 ｜ 她 ｜ 先进 ｜ 第八席 ｜ 不 ｜ 排队 ｜ 先 ｜ 找 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:1cd7a2611cf21003370afb4579458bf2745eda50919f8922c4a17bd212cece2c",
+      "text": "今年呢？今年被这条规则改变命运的两个人，全程一言不发。科斯秋克为了追赶第七名，必须连赢两站比赛，结果在宁波第一场就伤退了；斯瓦泰克十月二十号宣布赛季结束，只说身体需要休息。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年呢?今年被这条规则改变命运的两个人全程一言不发。科斯秋克为了追赶第七名,必须联赢两战比赛,结果在宁波第一场就伤退了。斯瓦泰克11月20号宣布赛季结束,只说身体需要休息。"
+      },
+      "polyphones": [
+        {
+          "index": 25,
+          "char": "发",
+          "word": "一言不发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 15.366,
+        "cps": 5.08,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 呢 ｜ 今年 ｜ 被 ｜ 这 ｜ 条 ｜ 规则 ｜ 改变 ｜ 命运 ｜ 的 ｜ 两个 ｜ 人 ｜ 全程 ｜ 一言不发 ｜ 科斯秋克 ｜ 为了 ｜ 追赶 ｜ 第七名 ｜ 必须 ｜ 连 ｜ 赢 ｜ 两站 ｜ 比赛 ｜ 结果 ｜ 在 ｜ 宁波 ｜ 第一场 ｜ 就 ｜ 伤 ｜ 退 ｜ 了 ｜ 斯瓦泰克 ｜ 十月二十号 ｜ 宣布 ｜ 赛季 ｜ 结束 ｜ 只 ｜ 说 ｜ 身体 ｜ 需要 ｜ 休息"
+      }
+    },
+    {
+      "id": "bundle:2cca79795d7e4e5b9e146ad3ca2b3ffbe651e2bb341f4e25b0822540e52c6651",
+      "text": "而她这个温网冠军，还是从赛点上抢回来的：第三轮对科斯蒂亚，她离出局只剩一分，硬是救回来，一路打到捧杯。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "而他这个温网冠军还是从赛点上抢回来的第三轮队科斯蒂亚,他离出局只剩一分,硬是救回来,一路打到捧碑。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.411,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 8.833,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 她 ｜ 这个 ｜ 温 ｜ 网 ｜ 冠军 ｜ 还是 ｜ 从 ｜ 赛点 ｜ 上 ｜ 抢 ｜ 回来 ｜ 的 ｜ 第三轮 ｜ 对 ｜ 科斯蒂亚 ｜ 她 ｜ 离 ｜ 出局 ｜ 只 ｜ 剩 ｜ 一 ｜ 分 ｜ 硬是 ｜ 救 ｜ 回来 ｜ 一路 ｜ 打 ｜ 到 ｜ 捧杯"
+      }
+    },
+    {
+      "id": "bundle:2efd22ccb97af97fa228c3c4de07ab13284d4f3d11c7332d658909f361ec7729",
+      "text": "更不对劲的是第九名斯瓦泰克：连续五年打进总决赛、拿过冠军的她，和诺斯科娃只差一百五十五分。可就算她把这点分全追回来，也一样进不去。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "更不对劲的是第九名斯瓦泰克,连续五年打进总决赛,拿过冠军的他和诺斯科瓦只差155分。可就算他把这点分权追回来,也一样进不去。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 11.969,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "更 ｜ 不对劲 ｜ 的 ｜ 是 ｜ 第九名 ｜ 斯瓦泰克 ｜ 连续 ｜ 五年 ｜ 打 ｜ 进 ｜ 总决赛 ｜ 拿 ｜ 过 ｜ 冠军 ｜ 的 ｜ 她 ｜ 和 ｜ 诺斯科娃 ｜ 只 ｜ 差 ｜ 一百五十五分 ｜ 可 ｜ 就算 ｜ 她 ｜ 把 ｜ 这点 ｜ 分 ｜ 全 ｜ 追 ｜ 回来 ｜ 也 ｜ 一样 ｜ 进 ｜ 不 ｜ 去"
+      }
+    },
+    {
+      "id": "bundle:362aa3f9a88b13756aef67453ba1fbd90c94dcadc7c48e23f58dee6aafb3aaa9",
+      "text": "把规则拆开看。前七个名额，按全年积分，也就是 Race 排名，依次直入。第八个名额，是留给冠军的专座：今年四大满贯的冠军里，谁不在前七、又排在第八到第二十名之间，顺位最高的，这个座就是她的；没有这样的人，才轮到第八名。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "把规则拆开看。前七个名额,按全年积分,也就是Race排名,依此植入。第八个名额,是留给冠军的专作。今年四大满冠的冠军里,谁不在前期,又排在第八到第二十名之间,顺位最高的,这个座就是他的。没有这样的人,才轮到第八名。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 19.304,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "把 ｜ 规则 ｜ 拆开 ｜ 看 ｜ 前 ｜ 七 ｜ 个 ｜ 名额 ｜ 按 ｜ 全年 ｜ 积分 ｜ 也 ｜ 就 ｜ 是 ｜ Race ｜ 排名 ｜ 依次 ｜ 直 ｜ 入 ｜ 第八个 ｜ 名额 ｜ 是 ｜ 留给 ｜ 冠军 ｜ 的 ｜ 专座 ｜ 今年 ｜ 四 ｜ 大满贯 ｜ 的 ｜ 冠军 ｜ 里 ｜ 谁 ｜ 不在 ｜ 前七 ｜ 又 ｜ 排 ｜ 在 ｜ 第八 ｜ 到 ｜ 第二十 ｜ 名 ｜ 之间 ｜ 顺位 ｜ 最高 ｜ 的 ｜ 这个 ｜ 座 ｜ 就 ｜ 是 ｜ 她 ｜ 的 ｜ 没有 ｜ 这样 ｜ 的 ｜ 人 ｜ 才 ｜ 轮 ｜ 到 ｜ 第八名"
+      }
+    },
+    {
+      "id": "bundle:723434fa335b0870617335c58f68bed20aa08c25139c66d484b5c6c10ca6a230",
+      "text": "因为总决赛的第八个名额，根本不排队。它先要问一句：今年的大满贯冠军，是谁？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "因为总决赛的第八个名额根本不排队,他先要问一句,今年的大满贯冠军是谁。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.017,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "因为 ｜ 总决赛 ｜ 的 ｜ 第八个 ｜ 名额 ｜ 根本 ｜ 不 ｜ 排队 ｜ 它 ｜ 先 ｜ 要 ｜ 问 ｜ 一 ｜ 句 ｜ 今年 ｜ 的 ｜ 大满贯 ｜ 冠军 ｜ 是 ｜ 谁"
+      }
+    },
+    {
+      "id": "bundle:8316bd9d38cff6d5f54383974d0dd3e92967f18dd769bb7706b576dd9cd1985a",
+      "text": "最戏剧性的是穆霍娃。温网决赛，她输给的正是诺斯科娃：那场球她要是赢了，冠军专座就是她的，十月那十二天的等待，根本不会发生。一场温网决赛，同时决定了两个人的十一月。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 72,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最戏剧性的是穆霍娃。温网决赛,他输给的正式诺斯科娃。那场球他要是赢了,冠军专作就是他的十月那十二天的等待,根本不会发生。一场温网决赛,同时决定了两个人的十一月。"
+      },
+      "polyphones": [
+        {
+          "index": 58,
+          "char": "发",
+          "word": "发生",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 72,
+        "speech_s": 14.929,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最 ｜ 戏剧性 ｜ 的 ｜ 是 ｜ 穆霍娃 ｜ 温 ｜ 网 ｜ 决赛 ｜ 她 ｜ 输 ｜ 给 ｜ 的 ｜ 正是 ｜ 诺斯科娃 ｜ 那 ｜ 场 ｜ 球 ｜ 她 ｜ 要是 ｜ 赢 ｜ 了 ｜ 冠军 ｜ 专座 ｜ 就 ｜ 是 ｜ 她 ｜ 的 ｜ 十月 ｜ 那 ｜ 十二天 ｜ 的 ｜ 等待 ｜ 根本 ｜ 不会 ｜ 发生 ｜ 一 ｜ 场 ｜ 温网 ｜ 决赛 ｜ 同时 ｜ 决定 ｜ 了 ｜ 两个 ｜ 人 ｜ 的 ｜ 十一月"
+      }
+    },
+    {
+      "id": "bundle:8792b6cb5189e3540bcf1f5960615970f1e73e96b89c396beec94d1f103ee5e5",
+      "text": "再把规则推到极端。今年四位大满贯冠军里，三位是靠积分直入的，专座只用了一次。要是四位冠军全排在第八到第二十名之间呢？只有顺位最高的一位能进，第二位只能去当第一候补，剩下两位，和所有人一起重新排队。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "在把规则推到极端。今年四位大满冠军里,三位是靠积分植入的,专作只用了一次。要是四位冠军全排在第八到第二十名之间呢。只有顺位最高的一位能进,第二位只能去当第一后补,剩下两位和所有人一起重新排队。"
+      },
+      "polyphones": [
+        {
+          "index": 93,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.934,
+              "confidence": null,
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 19.021,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 把 ｜ 规则 ｜ 推 ｜ 到 ｜ 极端 ｜ 今年 ｜ 四位 ｜ 大满贯 ｜ 冠军 ｜ 里 ｜ 三位 ｜ 是 ｜ 靠 ｜ 积分 ｜ 直 ｜ 入 ｜ 的 ｜ 专座 ｜ 只 ｜ 用 ｜ 了 ｜ 一次 ｜ 要是 ｜ 四位 ｜ 冠军 ｜ 全 ｜ 排 ｜ 在 ｜ 第八到 ｜ 第二十名 ｜ 之间 ｜ 呢 ｜ 只有 ｜ 顺位 ｜ 最高 ｜ 的 ｜ 一 ｜ 位 ｜ 能 ｜ 进 ｜ 第二位 ｜ 只能 ｜ 去 ｜ 当 ｜ 第一 ｜ 候补 ｜ 剩下 ｜ 两位 ｜ 和 ｜ 所有 ｜ 人 ｜ 一起 ｜ 重新 ｜ 排队"
+      }
+    },
+    {
+      "id": "bundle:8871f595358827f8446652913e560e4b00d8800dd301db46c5aca172c62b919a",
+      "text": "十月九号，WTA 官宣她入围。从那天起，她的名额就和积分脱钩了：哪怕她最后掉到第十三名、第十五名，只要还在前二十，这个座，谁也抢不走。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "10月9号,WTA官宣他入围。从那天起,他的名额就和积分脱钩了,哪怕他最后掉到第13名、第15名,只要还在前20,这个做,谁也抢不走。"
+      },
+      "polyphones": [
+        {
+          "index": 51,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.577,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 12.429,
+        "cps": 4.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月九号 ｜ WTA ｜ 官 ｜ 宣 ｜ 她 ｜ 入围 ｜ 从那天起 ｜ 她 ｜ 的 ｜ 名额 ｜ 就 ｜ 和 ｜ 积分 ｜ 脱钩 ｜ 了 ｜ 哪怕 ｜ 她 ｜ 最后 ｜ 掉 ｜ 到 ｜ 第十三名 ｜ 第十五名 ｜ 只要 ｜ 还 ｜ 在 ｜ 前二十 ｜ 这个 ｜ 座 ｜ 谁 ｜ 也 ｜ 抢 ｜ 不 ｜ 走"
+      }
+    },
+    {
+      "id": "bundle:a44dbab2dbb6be30b050a8ca3fdebf016eb1d76aa0950e5ccf45d4587b034112",
+      "text": "今年的冠军，澳网和美网是莱巴金娜，法网是安德列娃，温网是诺斯科娃。前两位早早入围，只剩诺斯科娃站在第八名，专座归她。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.039,
+        "longest_deletion": 0,
+        "transcript": "今年的冠军,澳网和美网是来巴金的,法网是安德烈娃,温网是诺斯科娃。前两位早早入围,只剩诺斯科娃站在第八名,专所归他。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.262,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年 ｜ 的 ｜ 冠军 ｜ 澳 ｜ 网 ｜ 和美 ｜ 网 ｜ 是 ｜ 莱巴金娜 ｜ 法网 ｜ 是 ｜ 安德列娃 ｜ 温 ｜ 网 ｜ 是 ｜ 诺斯科娃 ｜ 前 ｜ 两位 ｜ 早早 ｜ 入围 ｜ 只 ｜ 剩 ｜ 诺斯科娃 ｜ 站 ｜ 在 ｜ 第八名 ｜ 专座 ｜ 归 ｜ 她"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bdd076596f3068e70503716b9a9ab67bfac4f11dacafddbdaada34e7af4ec4db",
+      "text": "男子那边，别以为只有女子搞特殊。ATP 总决赛有一条几乎相同的规则：前七直入，第八席同样先给大满贯冠军。只不过今年男子的四座大满贯，被辛纳、阿尔卡拉斯和兹维列夫包揽，全都排在积分前七，专座控着没人用，第八名才安安静静轮到排队的人；后来辛纳赛季报销，这个座又顺延给了第九名。同一条规则，在女网这边改写了一张名单，在男网那边，躺了一整年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 146,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.007,
+        "longest_deletion": 0,
+        "transcript": "男子那边,别以为只有女子搞特殊。ATP总决赛有一条几乎相同的规则,前期植入,第八席,同样先给大满冠冠军。只不过,今年男子的四座大满冠,被辛娜、阿尔卡拉斯和茲维列夫包揽,全都排在积分前期,专作控制没人用,第八名才安安静静轮到排队的人。后来辛娜赛季报销,这个左右顺延给了第九名。同一条规则,在女网这边改写了一张名单,在南网那边躺了一整年。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "几",
+          "word": "几乎",
+          "intended": "ji1",
+          "wrong": [
+            "ji3"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ji3",
+              "verdict": "correct",
+              "score": 0.979,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "击基箕"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 146,
+        "speech_s": 31.173,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "男子 ｜ 那边 ｜ 别 ｜ 以为 ｜ 只有 ｜ 女子 ｜ 搞 ｜ 特殊 ｜ ATP ｜ 总决赛 ｜ 有 ｜ 一条 ｜ 几乎 ｜ 相同 ｜ 的 ｜ 规则 ｜ 前 ｜ 七 ｜ 直 ｜ 入 ｜ 第八席 ｜ 同样 ｜ 先 ｜ 给 ｜ 大满贯 ｜ 冠军 ｜ 只不过 ｜ 今年 ｜ 男子 ｜ 的 ｜ 四座 ｜ 大满贯 ｜ 被 ｜ 辛纳 ｜ 阿尔卡拉 ｜ 斯 ｜ 和 ｜ 兹维列夫 ｜ 包揽 ｜ 全都 ｜ 排 ｜ 在 ｜ 积分 ｜ 前七 ｜ 专座 ｜ 控 ｜ 着 ｜ 没 ｜ 人 ｜ 用 ｜ 第八名 ｜ 才 ｜ 安安静静 ｜ 轮 ｜ 到 ｜ 排队 ｜ 的 ｜ 人 ｜ 后来 ｜ 辛纳 ｜ 赛季 ｜ 报销 ｜ 这个 ｜ 座 ｜ 又 ｜ 顺延 ｜ 给 ｜ 了 ｜ 第九名 ｜ 同 ｜ 一条 ｜ 规则 ｜ 在 ｜ 女 ｜ 网 ｜ 这边 ｜ 改写 ｜ 了 ｜ 一 ｜ 张 ｜ 名单 ｜ 在 ｜ 男 ｜ 网 ｜ 那边 ｜ 躺 ｜ 了 ｜ 一整年"
+      }
+    },
+    {
+      "id": "bundle:c95f3e532514d183cd6766010545f7646aa59187d3b3a255b378faaad262e4c9",
+      "text": "但不服气的人，到今天也没服。最敢说的是卡萨金娜。她那年是第一候补，临上场替补打了一场，只赢了一局。赛后，她把话说透了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.02,
+        "longest_deletion": 0,
+        "transcript": "但不服气的人到今天也没服。最敢说的是卡萨金娜。她那年是第一后补、林尚厂替不打了一场,只赢了一局。再后,她把话说透了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.993,
+        "cps": 4.25,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 不 ｜ 服气 ｜ 的 ｜ 人 ｜ 到 ｜ 今天 ｜ 也 ｜ 没 ｜ 服 ｜ 最 ｜ 敢 ｜ 说 ｜ 的 ｜ 是 ｜ 卡萨金娜 ｜ 她 ｜ 那 ｜ 年 ｜ 是 ｜ 第一 ｜ 候补 ｜ 临 ｜ 上场 ｜ 替补 ｜ 打 ｜ 了 ｜ 一 ｜ 场 ｜ 只 ｜ 赢 ｜ 了 ｜ 一 ｜ 局 ｜ 赛 ｜ 后 ｜ 她 ｜ 把 ｜ 话 ｜ 说透 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:d04bc16b75c7719b600b5e5f801d1d662d35fa00daaf59cf92b40c0bde251fc1",
+      "text": "二零二四年，温网冠军克雷吉茨科娃全年只赢了二十一场比赛，Race 排第十二，按老规矩连候补都排不上。新规则把她直接送进总决赛，挤掉的是排第八的纳瓦罗，纳瓦罗干脆拒绝去当候补。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 75,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2024年,温网冠军克雷吉茨科娃全年,只赢了21场比赛,Race排第12。按老规矩,连后补都排不上。新规则,把他直接送进总决赛,挤掉的是排第8的纳瓦罗,纳瓦罗干脆拒绝去当后补。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 75,
+        "speech_s": 15.212,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二四年 ｜ 温 ｜ 网 ｜ 冠军 ｜ 克雷吉茨科娃 ｜ 全年 ｜ 只 ｜ 赢 ｜ 了 ｜ 二十一场 ｜ 比赛 ｜ Race ｜ 排 ｜ 第十二 ｜ 按 ｜ 老规矩 ｜ 连 ｜ 候补 ｜ 都 ｜ 排 ｜ 不 ｜ 上 ｜ 新 ｜ 规则 ｜ 把 ｜ 她 ｜ 直接 ｜ 送 ｜ 进 ｜ 总决赛 ｜ 挤 ｜ 掉 ｜ 的 ｜ 是 ｜ 排 ｜ 第八 ｜ 的 ｜ 纳瓦罗 ｜ 纳瓦罗 ｜ 干脆 ｜ 拒绝 ｜ 去 ｜ 当 ｜ 候补"
+      }
+    },
+    {
+      "id": "bundle:d7ca9f36e0ef5d7cef20aec7f0beb4229d4bca14c3c26e9f36c06613a5f4c2af",
+      "text": "这条规则其实非常年轻，二零二四年才被 WTA 写进规则书。在这之前，总决赛的名单就是积分前八，一个不多，一个不少，几十年没变过。它要解决的问题很现实：总决赛是全年最后一场大戏，如果这一年拿过最大冠军的人，因为积分零零碎碎不够而缺席，这份『全年最佳八人』的名单，自己先心虚。所以 WTA 提前把第八个座，从排队通道里划了出来。规则出生第一年，就改了一张名单。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 149,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.007,
+        "longest_deletion": 0,
+        "transcript": "这条规则其实非常年轻,2024年才被WTA写进规则书。在这之前,总决赛的名单就是积分前8,一个不多,一个不少,几十年没变过。它要解决的问题很现实,总决赛是全年最后一场大戏。如果这一年拿过最大冠军的人,因为积分00岁岁不够而缺席,这份全年最佳8人的名单自己先心虚。所以,WTA提前把第八个座从排队通道里滑得出来。规则出生第一年,就改了一张名单。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 149,
+        "speech_s": 32.488,
+        "cps": 4.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 条 ｜ 规则 ｜ 其实 ｜ 非常 ｜ 年轻 ｜ 二零二四年 ｜ 才 ｜ 被 ｜ WTA ｜ 写 ｜ 进 ｜ 规则书 ｜ 在 ｜ 这 ｜ 之前 ｜ 总决赛 ｜ 的 ｜ 名单 ｜ 就 ｜ 是 ｜ 积分 ｜ 前八 ｜ 一个 ｜ 不 ｜ 多 ｜ 一个 ｜ 不少 ｜ 几十年 ｜ 没 ｜ 变 ｜ 过 ｜ 它 ｜ 要 ｜ 解决 ｜ 的 ｜ 问题 ｜ 很 ｜ 现实 ｜ 总决赛 ｜ 是 ｜ 全年 ｜ 最后 ｜ 一 ｜ 场 ｜ 大戏 ｜ 如果 ｜ 这 ｜ 一 ｜ 年 ｜ 拿 ｜ 过 ｜ 最大 ｜ 冠军 ｜ 的 ｜ 人 ｜ 因为 ｜ 积分 ｜ 零零碎碎 ｜ 不够 ｜ 而 ｜ 缺席 ｜ 这 ｜ 份 ｜ 全年 ｜ 最佳 ｜ 八 ｜ 人 ｜ 的 ｜ 名单 ｜ 自己 ｜ 先 ｜ 心虚 ｜ 所以 ｜ WTA ｜ 提前 ｜ 把 ｜ 第八个 ｜ 座 ｜ 从 ｜ 排队 ｜ 通道 ｜ 里 ｜ 划 ｜ 了 ｜ 出来 ｜ 规则 ｜ 出生 ｜ 第一年 ｜ 就 ｜ 改 ｜ 了 ｜ 一 ｜ 张 ｜ 名单"
+      }
+    },
+    {
+      "id": "bundle:ea939c1629bcd8528ad9e0baea1597e51b3a94a0570d6eeda55fc91d8f442ab0",
+      "text": "然后呢？克雷吉茨科娃在小组赛接连赢了佩古拉和高芙，小组第一出线，打进四强。规则的第一年，就交出了这样一份答卷。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "然后呢,克雷吉茨科娃在小组赛,接连赢了佩古拉和高福,小组第一出现,打进四墙。规则的第一年,就交出了这样一份答卷。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.731,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "然后 ｜ 呢 ｜ 克雷吉茨科娃 ｜ 在 ｜ 小组 ｜ 赛 ｜ 接连 ｜ 赢 ｜ 了 ｜ 佩古拉 ｜ 和 ｜ 高芙 ｜ 小组 ｜ 第一 ｜ 出线 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 规则 ｜ 的 ｜ 第一年 ｜ 就 ｜ 交出 ｜ 了 ｜ 这样 ｜ 一 ｜ 份 ｜ 答卷"
+      }
+    },
+    {
+      "id": "bundle:f44f144ca25ae62f8287c17ff26d8fd282f476f67d2d6b5f57a123214c2c8600",
+      "text": "科斯秋克伤退后只写了一句：『手腕的疼痛又回来了……明年亚洲见。』吵架的从来不是当事人，是规则之外看球的我们。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "科斯秋克商退后只写了一句,手腕的疼痛又回来了,明年亚洲界吵架的从来不是当事人,是规则之外看球的我们。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 8.774,
+        "cps": 5.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "科斯秋 ｜ 克 ｜ 伤 ｜ 退后 ｜ 只 ｜ 写 ｜ 了 ｜ 一 ｜ 句 ｜ 手腕 ｜ 的 ｜ 疼痛 ｜ 又 ｜ 回来 ｜ 了 ｜ 明年 ｜ 亚洲 ｜ 见 ｜ 吵架 ｜ 的 ｜ 从来 ｜ 不是 ｜ 当事人 ｜ 是 ｜ 规则 ｜ 之外 ｜ 看 ｜ 球 ｜ 的 ｜ 我们"
+      }
+    },
+    {
+      "id": "bundle:f45fe25f73e295f6bebc9ac74aa6cf1454386408348330b9bdaefea1b5aeefeb",
+      "text": "温网决赛的两个人想在十一月再打一场，要先各自从小组里杀出来，最早，半决赛见。最后，把规矩交给你们：最后一个名额，一边是整年最稳的人，一边是拿过最大冠军的人。要是由你来定，你给谁？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "温网决赛的两个人想在11月再打一场,要先各自从小组里杀出来,最早半决赛剑。最后,把规矩交给你们,最后一个名额一边是整年最稳的人,一边是拿过最大冠军的人。要是有你来定,你给谁?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 16.899,
+        "cps": 4.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "温 ｜ 网 ｜ 决赛 ｜ 的 ｜ 两个 ｜ 人 ｜ 想 ｜ 在 ｜ 十一月 ｜ 再 ｜ 打 ｜ 一 ｜ 场 ｜ 要 ｜ 先 ｜ 各自 ｜ 从 ｜ 小组 ｜ 里 ｜ 杀 ｜ 出来 ｜ 最早 ｜ 半决赛 ｜ 见 ｜ 最后 ｜ 把 ｜ 规矩 ｜ 交给 ｜ 你们 ｜ 最后 ｜ 一个 ｜ 名额 ｜ 一边 ｜ 是 ｜ 整年 ｜ 最 ｜ 稳 ｜ 的 ｜ 人 ｜ 一边 ｜ 是 ｜ 拿 ｜ 过 ｜ 最大 ｜ 冠军 ｜ 的 ｜ 人 ｜ 要是 ｜ 由 ｜ 你 ｜ 来 ｜ 定 ｜ 你 ｜ 给 ｜ 谁"
+      }
+    },
+    {
+      "id": "bundle:f58d357c3eeafea1879b430202cf9827e175d2d97ed29e833341654e575410d9",
+      "text": "所以记住这句话：第八个名额不排队，它先找冠军。今年这八个人，人人手里都有一座大满贯或者一千赛的冠军，成色没的挑。本周日，总决赛就在印第安维尔斯开打。抽签已经揭晓：两个人没能分进同一组——诺斯科娃的第一场，就是整个总决赛的揭幕战，对手是卫冕冠军莱巴金娜；穆霍娃周一首战，要打萨巴伦卡。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 125,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以记住这句话,第八个名额不排队,他先找冠军。今年这八个人,人人手里都有一座大满冠或者一千赛的冠军,橙色梅的跳。本周日,总决赛就在印第安威尔斯开打。抽签已经揭晓,两个人没能分禁同一组。诺斯科娃的第一场,就是整个总决赛的揭幕战,对手是未免冠军来扒金娜,穆霍娃周一手战,要打萨巴伦卡。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 125,
+        "speech_s": 25.896,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 记住 ｜ 这 ｜ 句 ｜ 话 ｜ 第八个 ｜ 名额 ｜ 不 ｜ 排队 ｜ 它 ｜ 先 ｜ 找 ｜ 冠军 ｜ 今年 ｜ 这 ｜ 八个 ｜ 人 ｜ 人人 ｜ 手 ｜ 里 ｜ 都 ｜ 有 ｜ 一 ｜ 座 ｜ 大满贯 ｜ 或者 ｜ 一千 ｜ 赛 ｜ 的 ｜ 冠军 ｜ 成色 ｜ 没的 ｜ 挑 ｜ 本周日 ｜ 总决赛 ｜ 就 ｜ 在 ｜ 印第安维尔斯 ｜ 开打 ｜ 抽签 ｜ 已经 ｜ 揭晓 ｜ 两个 ｜ 人 ｜ 没 ｜ 能 ｜ 分 ｜ 进 ｜ 同一 ｜ 组 ｜ 诺斯科娃 ｜ 的 ｜ 第一场 ｜ 就 ｜ 是 ｜ 整个 ｜ 总决赛 ｜ 的 ｜ 揭幕 ｜ 战 ｜ 对手 ｜ 是 ｜ 卫冕 ｜ 冠军 ｜ 莱巴金娜 ｜ 穆霍娃 ｜ 周一 ｜ 首战 ｜ 要 ｜ 打 ｜ 萨巴伦卡"
+      }
+    },
+    {
+      "id": "bundle:fe2e1a84976e5ee9bcdd9b54e8fd626bb52ac3eb58892c29e9809c89b8ea6610",
+      "text": "她在温网决赛打完最后一分、看着冠军奖杯时，说的是这一句。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他在温网决赛打完最后一分,看着冠军奖杯时说的是这一句。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 4.823,
+        "cps": 5.18,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 在 ｜ 温 ｜ 网 ｜ 决赛 ｜ 打 ｜ 完 ｜ 最后 ｜ 一 ｜ 分 ｜ 看 ｜ 着 ｜ 冠军 ｜ 奖杯 ｜ 时 ｜ 说 ｜ 的 ｜ 是 ｜ 这 ｜ 一 ｜ 句"
+      }
+    }
+  ]
+}
