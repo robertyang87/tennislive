@@ -13,7 +13,7 @@
     "portrait": {
       "image": "assets/reel/cobolli-finals-2026/cover-rg-fist-2026.jpg",
       "fit": "cover",
-      "focus": 0.44,
+      "focus": 0.2,
       "focus_y": 0.45,
       "zoom": 1.0,
       "source_url": "https://www.rolandgarros.com/en-us/photo-gallery/gallery-photos-final-men-singles-zverev-cobolli",
@@ -201,8 +201,8 @@
     },
     {
       "_id": "rg_points",
-      "narration": "第五盘一比六，他与冠军擦肩。法网亚军的一千三百分，成了他本赛季争取年终门票的最大一笔积分。",
-      "seconds": 9.448,
+      "narration": "第五盘一比六，他与冠军擦肩。法网亚军的一千三百分，是他本季最大的一笔单站积分。",
+      "seconds": 8.632,
       "voice": {
         "pitch": "+0Hz",
         "_why": "沿用年终之路系列自然云健+6%，整句合成；以完整语义与停顿表达，不临时加速挤时窗。"
@@ -404,13 +404,25 @@
     "basis": "2026-11-04 conversation commentary: 20/55/85/70/65/5 second six-part outline",
     "outline": "research/cobolli-finals-2026/editorial-outline.json"
   },
-  "_integration_state": "COVER-ONLY draft assembly: only actual narrated photo/card scenes are present. Source-video windows and their audio evidence are not yet integrated. This draft must never be rendered or published as the finished film.",
+  "_integration_state": "COVER-ONLY draft assembly v2: full source-video recipe and audio evidence remain outside this temporary preview recipe, not a publishable movie.",
   "_no_probe_why": {
     "ao_r1": {
-      "why": "Actual original official source independently downloaded and ffprobed by media producer; SHA256 5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0. Source video is unused by this cover-only assembly.",
+      "why": "Actual official source exact archived bytes independently downloaded, ffprobed and frame-reviewed; SHA256 5bb3ea95c316a01fc9511dc2e7786195bba9fbab3ea109835ed1cc31e693e4b0. Source selection and raw audio evidence retained in this episode research.",
       "width": 1920,
       "height": 1080,
       "fps": "25/1"
     }
+  },
+  "_story_label_style": {
+    "basis": "current main native render_story_info_band.py",
+    "source_fonts": [
+      81,
+      66,
+      89
+    ],
+    "scrim": "F edge-fade dark-navy55%",
+    "show_after": 0,
+    "max_seconds": 8,
+    "title_card_labels": false
   }
 }
