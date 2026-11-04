@@ -2938,7 +2938,7 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
             "-vf", ((f"crop={crop}," if crop else "")
-                    + f"scale={tile_w}:-2,"
+                    + f"scale={tile_w}:-2,format=yuvj420p,"
                     f"drawtext=text='{t:.1f}s':x=8:y=8:fontsize=26:"
                     f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
             "-q:v", "3", str(frame))
