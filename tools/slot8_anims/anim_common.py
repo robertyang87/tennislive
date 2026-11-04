@@ -140,9 +140,12 @@ def panel(d, x0, y0, x1, y1, a, outline_a=150):
 def render(frames_fn, dur, out):
     n = int(FPS * dur)
     proc = subprocess.Popen(["ffmpeg", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
-                             "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-an",
+                             "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
+                             "-f", "lavfi", "-i", "anullsrc=cl=stereo:r=48000",
+                             "-map", "0:v:0", "-map", "1:a:0",
                              "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20",
-                             "-preset", "veryfast", "-movflags", "+faststart", out],
+                             "-preset", "veryfast", "-c:a", "aac", "-b:a", "64k",
+                             "-shortest", "-movflags", "+faststart", out],
                             stdin=subprocess.PIPE, stderr=subprocess.DEVNULL)
     for i in range(n):
         proc.stdin.write(fade_io(finish(frames_fn(i / FPS), i / FPS), i / FPS, dur).tobytes())
