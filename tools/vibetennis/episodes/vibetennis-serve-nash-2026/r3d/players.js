@@ -76,10 +76,11 @@ const SIDE=k=>k.startsWith('Left')?[k,'Right'+k.slice(4)]:[k];
 export function makePlayer(gltf,color,scene){
   const root=SkeletonUtils.clone(gltf.scene); const g=new THREE.Group(); g.add(root); scene.add(g);
   const col=new THREE.Color(color);
-  // 不发光（所有者 2026-11-04：「不要腰部发光，全身都不要」）：关节和身体都是实体材质，没有自发光、没有叠加发光的线框；
-  // 两个人靠底色区分（发球人橙、接发人青）
-  const body=new THREE.MeshPhysicalMaterial({color:col.clone().multiplyScalar(0.8),metalness:0.3,roughness:0.42,clearcoat:0.6,clearcoatRoughness:0.3});
-  const joints=body; // 关节和身体同一种材质：分色会让腰那一圈读成一道缝，像分段的人台
+  // 材质换回原来的透明全息（所有者 2026-11-04：「还是换回原来透明的人吧」）：深色玻璃体＋同色微光＋叠加线框。
+  // 关节不再单独高亮（同日「不要腰部发光」）：和身体同一种材质，腰那颗关节球不会再亮成一圈。体型仍按 ATP 比例（见上）。
+  const body=new THREE.MeshPhysicalMaterial({color:0x0b1020,metalness:0.75,roughness:0.28,clearcoat:1,clearcoatRoughness:0.15,emissive:col.clone().multiplyScalar(0.25)});
+  const joints=body;
+  const wire=new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0.07,blending:THREE.AdditiveBlending,depthWrite:false});
   const B={}; root.traverse(o=>{ if(o.isBone) B[o.name.replace(/^mixamorig:?/,'')]=o; });
   const sk=[]; root.traverse(o=>{ if(o.isSkinnedMesh) sk.push(o); });
   const lenPos=[]; for(const k in LEN){ if(k==='Head') continue; for(const n of SIDE(k)) lenPos.push([B[n],B[n].position.clone().multiplyScalar(LEN[k])]); }
@@ -97,10 +98,11 @@ export function makePlayer(gltf,color,scene){
   const applyLen=()=>{ for(const [b,p] of lenPos) b.position.copy(p); B.Head.scale.setScalar(LEN.Head); B.Hips.position.add(hipOff); };
   const skinned=[]; if(!PROFILE) PROFILE=profile(sk); sk.forEach(m=>thicken(m,sk));
   root.traverse(o=>{ if(o.isSkinnedMesh){ skinned.push(o); o.frustumCulled=false; o.material=/Joints/.test(o.name)?joints:body; } });
+  for(const m of skinned){ const w=new THREE.SkinnedMesh(m.geometry,wire); w.bind(m.skeleton,m.bindMatrix); w.frustumCulled=false; m.parent.add(w); }
   // 球拍：挂在右手骨上
-  const rk=new THREE.Group(); const fr=new THREE.Mesh(new THREE.TorusGeometry(13,1.1,10,48),new THREE.MeshStandardMaterial({color:0xf2f6ff,metalness:0.6,roughness:0.25}));
+  const rk=new THREE.Group(); const fr=new THREE.Mesh(new THREE.TorusGeometry(13,1.1,10,48),new THREE.MeshStandardMaterial({color:0xf2f6ff,metalness:0.6,roughness:0.25,emissive:col,emissiveIntensity:0.5}));
   fr.scale.set(1,1.35,1); fr.position.y=46; rk.add(fr);
-  const strings=new THREE.Mesh(new THREE.CircleGeometry(12.5,32),new THREE.MeshStandardMaterial({color:0xdde3ee,transparent:true,opacity:0.35,side:THREE.DoubleSide,depthWrite:false,roughness:0.8})); strings.scale.set(1,1.35,1); strings.position.y=46; rk.add(strings);
+  const strings=new THREE.Mesh(new THREE.CircleGeometry(12.5,32),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.4,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false})); strings.scale.set(1,1.35,1); strings.position.y=46; rk.add(strings);
   const hd=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.6,28,10),new THREE.MeshStandardMaterial({color:0x1a1f2e,metalness:0.3,roughness:0.6})); hd.position.y=14; rk.add(hd);
   rk.scale.setScalar(0.01); scene.add(rk); // 球拍单独挂在场景里，每帧按前臂方向对齐（Mixamo 手骨的局部轴不可靠）
   const mixer=new THREE.AnimationMixer(root); const idle=mixer.clipAction(gltf.animations.find(a=>a.name==='idle')); idle.play();
