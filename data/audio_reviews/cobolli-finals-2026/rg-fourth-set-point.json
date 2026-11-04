@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+  "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:09:48.736066+00:00",
+  "reviewed_from": 422.4,
+  "reviewed_to": 441.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-small.en.json",
+      "sha256": "bb9028cdd8f29cdd592ba9e50b7abf8405f7c3086f384898888483f0f0384767",
+      "model": "small.en",
+      "source_window": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-medium.en.json",
+      "sha256": "5723f8f292ece7bf370f6959a472f34acaf0c7bb93134434725946174689c657",
+      "model": "medium.en",
+      "source_window": [
+        410.0,
+        670.0
+      ]
+    }
+  ],
+  "review_notes": "Actual native ASR covers410–670. In422.40–441.30, medium.en reports no speech. small.en alone emits432.74–440.52 “And now it's time to win the World Cup.” at avg_logprob -1.507; this single-model low-confidence phrase is discarded as hallucination by the native asr_plan doubtful criterion. It does not establish actual English commentary. Video roles and point identity independently verified by media-b. Original court sound/cheers retained at unit gain; this is not a silent-audio claim.",
+  "source_identity": {
+    "video_id": "WfxpIK_TvEQ",
+    "source_path": "/workspace/cobolli-research/media-b/WfxpIK_TvEQ.mp4",
+    "sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+    "bytes": 250669751,
+    "duration": 727.457959,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "no_foreground_english_reason": "Selected window contains court/impact/crowd sound. No consistent foreground English across the two exact-source recognizers; the lone low-confidence World Cup hypothesis is excluded by the existing native hallucination criterion. No invented English subtitle is added."
+}

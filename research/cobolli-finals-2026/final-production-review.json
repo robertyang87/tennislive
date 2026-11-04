@@ -1,0 +1,31 @@
+{
+  "stage": "formal_render_and_all_independent_reviews_pass",
+  "run_id": 41821049178,
+  "head_sha": "921debd86d15ce70a0251dd702baa981d85e46e0",
+  "bot_commit": "ba4b9d62c41834186b7a8eb24c22c8142b48307d",
+  "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+  "film_sha256": "fa18171e12a63ef5b86150a4ea1a91a3972d4ce737ec9cb0c9f60d1e5adf5ba8",
+  "film_bytes": 118096833,
+  "film_seconds": 329.64,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "voice_method": "automated_voice_suite",
+  "voice_pass": true,
+  "voice_reference_count": 40,
+  "actual_frozen_requests": 20,
+  "voice_report_sha256": "744358dea029a50bb89897e06c67b9d4dab5410c6e47e02a30265500ade21fa9",
+  "full_human_listening_claimed": false,
+  "shared_gate_or_renderer_changed": false,
+  "publication_status": "Not merged or pushed at review capture; final exact-head CI and normal merge still required.",
+  "independent_reports": {
+    "independent-final-copy-review.json": "15440ca714ae718f38c390c9b58e02674cb691eabc9646555cd8bc2934be7a4e",
+    "proper-names-native-audit.json": "96970c24b53c492e63a9c8a298f577e8b011ff428c9667a0394c8de37dabff4e",
+    "final-v4-source-ass-audit.json": "5fa80c70de6cf4beb75fca72941c300a0dd1de85808b18e55010fbfc9f8d2cf1",
+    "final-v4-actual-film-independent-qc.json": "36c7ef2c48969d7ec7eaab13da816de107d9b2bb900e3a2f22ee2fd07b0376af",
+    "root-final-visual-review.json": "7d59b87f8ebcbff40f8f623b0a3b54004831d6b0f485d577ba90aa3d85e2043e",
+    "root-release-identity-check.json": "a9161ea6873cd3b3e5fbf415049d00726607eb6271a2f21c5363e11f4aeeab76"
+  },
+  "independent_visual_scope": "Actual movie sampled visual review; no full continuous human watching or human hearing claimed."
+}

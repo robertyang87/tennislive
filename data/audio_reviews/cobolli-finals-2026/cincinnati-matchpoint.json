@@ -1,0 +1,56 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=hL72qAXJWOY",
+  "source_sha256": "e9ba5d4b930d069895d31337f620ccbf39efbadd611545e612ba3d5fdd844549",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:13:48.810640+00:00",
+  "reviewed_from": 96.48,
+  "reviewed_to": 105.78,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 98.64,
+      "end": 105.2,
+      "en": "It is Arthur Fils into the final here in Cincinnati.",
+      "zh": "菲斯打进辛辛那提决赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/hL72qAXJWOY-small.en.json",
+      "sha256": "2d4026edaaaf4a630333954427b9c1498f0c729606ddb945fde0fb36072d1297",
+      "model": "small.en",
+      "source_window": [
+        85.0,
+        106.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/hL72qAXJWOY-medium.en.json",
+      "sha256": "49df17c8c2aa4d26ddfa250c54b298900143447bea9c728cce0a0d29bfcb8730",
+      "model": "medium.en",
+      "source_window": [
+        85.0,
+        106.0
+      ]
+    }
+  ],
+  "review_notes": "Both exact-source recognizers end the prior sentence “So good again” before the selected96.48 boundary (small96.24, medium94.95). Winning sentence agrees on the into-the-final clause and Cincinnati, ending105.02/105.16. small.en spells Arthur Fils as Artifis; medium.en missegments the same name as “at a feast”, with a low-confidence He/It initial-token difference. Subtitle follows the coherent small.en wording, normalizes the verified proper name only, and preserves the whole sentence/word range across both timing hypotheses. Raw alternatives are retained, not claimed unanimously word-identical or human-heard. End105.78 retains actual winning reaction before the observed105.9 title card. Additional dissolve audio must not continue past the nominal window.",
+  "source_identity": {
+    "video_id": "hL72qAXJWOY",
+    "source_path": "/workspace/cobolli-research/media-a/hL72qAXJWOY.mp4",
+    "sha256": "e9ba5d4b930d069895d31337f620ccbf39efbadd611545e612ba3d5fdd844549",
+    "bytes": 30846292,
+    "duration": 125.643175,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim"
+}

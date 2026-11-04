@@ -1,0 +1,236 @@
+{
+  "schema": "tennislive.source-selection-research.v1",
+  "created_at": "2026-11-04T10:03:27.049489+00:00",
+  "sources": [
+    {
+      "key": "rg_final",
+      "id": "WfxpIK_TvEQ",
+      "event": "Roland-Garros 2026",
+      "round": "Final",
+      "date": "2026-06-07",
+      "opponent": "Alexander Zverev",
+      "winner": "Alexander Zverev",
+      "winner_score": "6-1 4-6 6-4 6-7(5) 6-1",
+      "official_identity": "Roland-Garros verified channel shown in web result; corresponding official RG highlights page",
+      "official_page": "https://www.rolandgarros.com/en-us/video/highlights-by-emirates-zverev-vs-cobolli-mens-final",
+      "windows": [
+        {
+          "kind": "optional_turning_point",
+          "start": 422.4,
+          "end": 441.3,
+          "score_before": "Fourth set tie-break: Cobolli leads 6-5; sets Zverev 2-1",
+          "server": "Alexander Zverev",
+          "server_position": "near baseline",
+          "identity": "Zverev black kit/headband; Cobolli purple shirt white shorts far court",
+          "action": "Zverev serves; full rally; Cobolli running forehand winner levels sets at 2-2; Cobolli raises arms and shouts",
+          "point_result_at_approx": 433.4,
+          "review_frames": [
+            "rg-setpoint-detail.jpg",
+            "rg-setpoint-full.jpg"
+          ],
+          "visual_review_method": "Actually opened full-source contact sheets at 0.5-second intervals for selected point, plus full-size source-score identity frames. ASR/audio review delegated separately; no human-hearing claim.",
+          "audio_boundaries": "provisional pending source-audio reviewer complete-sentence audit; do not trim serve/point to fit audio"
+        },
+        {
+          "kind": "terminal_matchpoint",
+          "start": 640.3,
+          "end": 665.3,
+          "score_before": "Sets 2-2; Cobolli serving 1-5, 15-40 in fifth set",
+          "server": "Flavio Cobolli",
+          "server_position": "near baseline",
+          "identity": "Cobolli purple shirt white shorts; Zverev black kit far court",
+          "action": "Serve preparation visible at 641.5; full serve and rally; Cobolli overhead out; Zverev falls to clay and celebrates",
+          "point_result_at_approx": 657.3,
+          "review_frames": [
+            "rg-matchpoint-detail.jpg",
+            "rg-matchpoint-full.jpg"
+          ],
+          "visual_review_method": "Actually opened full-source contact sheets at 0.5-second intervals for selected point, plus full-size source-score identity frames. ASR/audio review delegated separately; no human-hearing claim.",
+          "audio_boundaries": "provisional pending source-audio reviewer complete-sentence audit; do not trim serve/point to fit audio"
+        }
+      ],
+      "local_path": "/workspace/cobolli-research/media-b/WfxpIK_TvEQ.mp4",
+      "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-WfxpIK_TvEQ/WfxpIK_TvEQ.mp4",
+      "sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "av1",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "50/1"
+          },
+          {
+            "codec_name": "aac",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "727.457959",
+          "size": "250669751"
+        }
+      }
+    },
+    {
+      "key": "wimbledon_qf",
+      "id": "05ZtcEHhYqM",
+      "event": "Wimbledon 2026",
+      "round": "Quarter-final",
+      "date": "2026-07-08",
+      "opponent": "Arthur Fery",
+      "winner": "Arthur Fery",
+      "winner_score": "6-4 7-6(4) 6-0",
+      "official_identity": "Wimbledon verified official YouTube channel, independently confirmed in search result displaying By: Wimbledon; publication 2026-07-08.",
+      "official_page": "https://www.wimbledon.com/en_GB/players/overview/atpc0e9",
+      "windows": [
+        {
+          "kind": "terminal_matchpoint",
+          "start": 461.5,
+          "end": 477.4,
+          "score_before": "Fery leads 2 sets and 5-0, 40-0 in third set",
+          "server": "Arthur Fery",
+          "server_position": "far baseline",
+          "identity": "Fery white cap/collared shirt; Cobolli black cap near court",
+          "action": "Fery face closeup before serve; complete serve and point; Fery celebrates, falls and lies on grass",
+          "point_result_at_approx": 465.0,
+          "review_frames": [
+            "wim-matchpoint-detail.jpg",
+            "wim-matchpoint-full.jpg",
+            "wim-461.50.jpg",
+            "wim-start-boundary.jpg"
+          ],
+          "visual_review_method": "Actually opened full-source contact sheets at 0.5-second intervals for selected point, plus full-size source-score identity frames. ASR/audio review delegated separately; no human-hearing claim.",
+          "audio_boundaries": "provisional pending source-audio reviewer complete-sentence audit; do not trim serve/point to fit audio",
+          "previous_research_window": [
+            458.5,
+            474.0
+          ],
+          "start_confirmation": "Exact 461.50 full-size frame actually opened: Fery bends head/body preparing; 3MATCHPOINTS 40-0 scoreboard; toss has not begun. Tight dual ASR places prior all before start; downstream reviewer owns packet.",
+          "rejected_alternative": {
+            "window": [
+              454.2,
+              477.4
+            ],
+            "reason": "Exact454.20 frame still shows previous-point ball airborne. Rejected to avoid a partial additional rally."
+          }
+        }
+      ],
+      "local_path": "/workspace/cobolli-research/media-b/05ZtcEHhYqM.mp4",
+      "source_url": "https://www.youtube.com/watch?v=05ZtcEHhYqM",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-05ZtcEHhYqM/05ZtcEHhYqM.mp4",
+      "sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "av1",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "25/1"
+          },
+          {
+            "codec_name": "aac",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "502.735238",
+          "size": "68336300"
+        }
+      },
+      "official_metadata_evidence": {
+        "url": "https://www.youtube.com/watch?v=05ZtcEHhYqM",
+        "channel": "Wimbledon",
+        "verified": true,
+        "published": "2026-07-08",
+        "method": "web search exact video ID returned uploader/channel metadata; not inferred from watermark",
+        "observed_on": "2026-11-04"
+      }
+    },
+    {
+      "key": "us_open_r3",
+      "id": "nYClQO4RiIw",
+      "event": "US Open 2026",
+      "round": "Round 3",
+      "date": "2026-09-05",
+      "opponent": "Alexander Blockx",
+      "winner": "Alexander Blockx",
+      "winner_score": "6-7(4) 6-3 6-0 6-3",
+      "official_identity": "US Open Tennis Championships verified official YouTube channel, independently confirmed in search result displaying channel metadata; publication 2026-09-06.",
+      "official_page": "https://www.usopen.org/en_US/video/watch/2026/blockx-vs-cobolli-extended-highlights-2026-round-3/17887244756548415",
+      "windows": [
+        {
+          "kind": "terminal_matchpoint",
+          "start": 674.2,
+          "end": 689.8,
+          "score_before": "Blockx leads 2 sets to 1 and 5-3, 40-0 in fourth set",
+          "server": "Alexander Blockx",
+          "server_position": "near baseline",
+          "identity": "Blockx light blue polo; Cobolli white-green-black shirt far baseline",
+          "action": "Blockx prepares and serves; full point with immediate service winner; smiles/turns; Cobolli reaction; net handshake",
+          "point_result_at_approx": 678.0,
+          "review_frames": [
+            "us-matchpoint-detail.jpg",
+            "us-674.20.jpg",
+            "us-start-boundary.jpg"
+          ],
+          "visual_review_method": "Actually opened full-source contact sheets at 0.5-second intervals for selected point, plus full-size source-score identity frames. ASR/audio review delegated separately; no human-hearing claim.",
+          "audio_boundaries": "provisional pending source-audio reviewer complete-sentence audit; do not trim serve/point to fit audio",
+          "previous_research_window": [
+            673.8,
+            689.8
+          ],
+          "start_confirmation": "Exact674.20 full-size frame actually opened: Blockx bends stationary preparing to serve at40-0, toss has not begun. Narrowing avoids previous speech tail while preserving full terminal point."
+        }
+      ],
+      "local_path": "/workspace/cobolli-research/media-b/nYClQO4RiIw.mp4",
+      "source_url": "https://www.youtube.com/watch?v=nYClQO4RiIw",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-nYClQO4RiIw/nYClQO4RiIw.mp4",
+      "sha256": "61829b5e700fe9d04bf41de123aacd2f8a9d386c60b62d74089c84ff233f4e3a",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "av1",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "60000/1001"
+          },
+          {
+            "codec_name": "aac",
+            "r_frame_rate": "0/0"
+          }
+        ],
+        "format": {
+          "duration": "727.272200",
+          "size": "279145174"
+        }
+      },
+      "official_metadata_evidence": {
+        "url": "https://www.youtube.com/watch?v=nYClQO4RiIw",
+        "channel": "US Open Tennis Championships",
+        "verified": true,
+        "published": "2026-09-06",
+        "method": "web search exact video ID returned uploader/channel metadata; corroborated corresponding official US Open extended highlights page",
+        "observed_on": "2026-11-04"
+      }
+    }
+  ],
+  "unused_official_candidates": [
+    {
+      "id": "tEd8AwZZiJE",
+      "event": "Roland-Garros QF Auger-Aliassime vs Cobolli",
+      "status": "official verified Roland-Garros search result; not downloaded because final already provides one extra rally + terminal point"
+    },
+    {
+      "id": "JmpbWq0qkEg",
+      "event": "Roland-Garros final extended",
+      "status": "official verified alternative; not downloaded because WfxpIK_TvEQ sufficient"
+    }
+  ]
+}

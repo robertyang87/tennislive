@@ -1,0 +1,585 @@
+{
+  "schema": "cobolli-independent-copy-review/v1",
+  "reviewer": "/root/cobolli_season_facts",
+  "generated_at_utc": "2026-11-04T10:25:34.224806+00:00",
+  "scope": "Independent written facts and final-card-score review only: canonical full 27-scene spec, 19 TTS texts, cover/title/push/xhs and 7 real-match information labels. Does not review actual voice, source utterance fidelity, point completeness or encoded film.",
+  "status": "pass",
+  "spec_path": "/workspace/cobolli-production/native/specs/reels/cobolli-finals-2026.json",
+  "xhs_sha256": "3b0e5ce8469ff5d381149b71d481d61dea263395891c7611fe3c0972ca60c754",
+  "integration_state": "Selected source windows and current-plan original-audio evidence verified; complete narration inputs strictly restored; native cover V2 and local content/copy/style preflight passed. Formal render, actual automatic voice suite and final encoded-film QC remain required.",
+  "narration_count_reviewed": 19,
+  "narration_checks": [
+    {
+      "index": 0,
+      "id": "opening",
+      "text": "年初四连败，年末第一次入围总决赛。科博利的这一年，中间隔着多少次重新出发？",
+      "assessment": "开年四连败与首次资格",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/cobolli-nitto-atp-finals-2026-qualification",
+        "https://www.delraybeachopen.com/en/tournament/news/cobolli-atmane-delray-beach-2026-wednesday"
+      ]
+    },
+    {
+      "index": 1,
+      "id": "early_losses",
+      "text": "从联合杯到澳网，再到蒙彼利埃和达拉斯，四场单打连败。这个赛季，他的开局很难。",
+      "assessment": "四连败范围",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/cobolli-nitto-atp-finals-2026-qualification",
+        "https://www.delraybeachopen.com/en/tournament/news/cobolli-atmane-delray-beach-2026-wednesday"
+      ]
+    },
+    {
+      "index": 3,
+      "id": "delray_acapulco",
+      "text": "直到德尔雷海滩，他才又连续赢球，打进四强。接下来的阿卡普尔科，这一次，他把奖杯带走了。",
+      "assessment": "德尔雷4强在阿卡冠军之前",
+      "status": "pass",
+      "sources": [
+        "https://www.delraybeachopen.com/en/tournament/news/cobolli-atmane-delray-beach-2026-wednesday",
+        "https://www.atptour.com/en/news/cobolli-tiafoe-acapulco-2026-final"
+      ]
+    },
+    {
+      "index": 4,
+      "id": "acapulco_setup",
+      "text": "决赛七比六、六比四击败蒂亚福，拿下生涯首座硬地巡回赛冠军。五百分到手，赛季终于有了亮色。",
+      "assessment": "阿卡决赛7-6/6-4、首个巡回赛硬地冠军、500分",
+      "status": "pass",
+      "sources": [
+        "https://www.atptour.com/en/news/cobolli-tiafoe-acapulco-2026-final",
+        "https://www.atptour.com/en/rankings/rankings-faq"
+      ]
+    },
+    {
+      "index": 6,
+      "id": "spring_brief",
+      "text": "印第安维尔斯第三轮，迈阿密首战失利，蒙特卡洛第二轮。三月到四月，成绩仍有起伏。",
+      "assessment": "IW第三轮、Miami首战、Monte Carlo第二轮",
+      "status": "pass",
+      "sources": [
+        "https://en.tennistemple.com/player/flavio-cobolli/results"
+      ]
+    },
+    {
+      "index": 7,
+      "id": "munich_setup",
+      "text": "四月的慕尼黑，他在半决赛六比三、六比三击败兹维列夫。决赛输给谢尔顿，也拿到了三百三十分。",
+      "assessment": "慕尼黑SF胜兹维列夫6-3/6-3、决赛负谢尔顿、330分",
+      "status": "pass",
+      "sources": [
+        "https://www.atptour.com/en/news/zverev-cobolli-munich-2026-sfs",
+        "https://www.nittoatpfinals.com/en/news/shelton-cobolli-munich-2026-final",
+        "https://www.atptour.com/en/rankings/rankings-faq"
+      ]
+    },
+    {
+      "index": 9,
+      "id": "madrid_to_paris",
+      "text": "马德里击败梅德韦杰夫，打进八强。罗马第三轮、汉堡首轮出局之后，他带着起伏来到巴黎。",
+      "assessment": "Madrid胜Medvedev进QF、RomeR3/HamburgR1",
+      "status": "pass",
+      "sources": [
+        "https://en.tennistemple.com/player/flavio-cobolli/results"
+      ]
+    },
+    {
+      "index": 10,
+      "id": "rg_first_final",
+      "text": "他先连赢五场，打进四强。半决赛阿尔纳尔迪赛前退赛，科博利第一次站上大满贯决赛。",
+      "assessment": "RG五场实打胜、SF阿尔纳尔迪赛前WO、首个大满贯决赛",
+      "status": "pass",
+      "sources": [
+        "https://www.rolandgarros.com/en-us/article/2026-edition-arnaldi-illness-sends-cobolli-through-to-first-slam-final"
+      ]
+    },
+    {
+      "index": 11,
+      "id": "rg_turning_setup",
+      "text": "决赛对面，又是兹维列夫。第四盘抢七，科博利把比赛拖进决胜盘，冠军还没有分出。",
+      "assessment": "RG决赛第四盘抢七扳平并进第五盘",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+      ]
+    },
+    {
+      "index": 14,
+      "id": "rg_points",
+      "text": "第五盘一比六，他与冠军擦肩。法网亚军的一千三百分，是他本季最大的一笔单站积分。",
+      "assessment": "RG第五盘1-6、亚军1300为本季最大单站",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report",
+        "https://www.atptour.com/en/rankings/rankings-faq",
+        "https://setlex.co/en/player/cobolli/activity"
+      ]
+    },
+    {
+      "index": 15,
+      "id": "wimbledon_setup",
+      "text": "哈雷首轮出局，温网又打进八强。第四轮三盘淘汰德米纳尔，四分之一决赛输给费里，连续第二年停在这里。",
+      "assessment": "HalleR1、Wimbledon第二年QF、R4三盘胜deMinaur/QF负Fery",
+      "status": "pass",
+      "sources": [
+        "https://www.atptour.com/en/news/cobolli-fery-wimbledon-2026-qf",
+        "https://www.nittoatpfinals.com/en/news/cobolli-pif-atp-live-race-to-turin-wimbledon-2026"
+      ]
+    },
+    {
+      "index": 17,
+      "id": "cincy_setup",
+      "text": "乌马格和加拿大站都没赢球。来到辛辛那提，他连续四场打满三盘，第一次闯进大师赛四强。",
+      "assessment": "Umag/Canada无实打胜场、Cincy四场三盘/首个大师赛SF",
+      "status": "pass",
+      "sources": [
+        "https://en.tennistemple.com/player/flavio-cobolli/results",
+        "https://cincinnatiopen.com/news/fantastic-four-mens-semifinal-preview/"
+      ]
+    },
+    {
+      "index": 18,
+      "id": "cincy_result",
+      "text": "四分之一决赛逆转保罗，半决赛输给菲斯。四百分到手，科博利继续向第一次年终总决赛靠近。",
+      "assessment": "Cincy QF逆转Paul、SF负Fils、400分",
+      "status": "pass",
+      "sources": [
+        "https://cincinnatiopen.com/news/fantastic-four-mens-semifinal-preview/",
+        "https://www.atptour.com/en/news/cobolli-fils-cincinnati-2026-sf-saturday",
+        "https://www.atptour.com/en/rankings/rankings-faq"
+      ]
+    },
+    {
+      "index": 20,
+      "id": "us_setup",
+      "text": "美网首轮，两盘落后，他连扳三盘击败科梅萨尼亚。第二轮再逆转斯库尔凯特，第三轮输给布洛克斯。",
+      "assessment": "US前两轮逆转、R3负Blockx",
+      "status": "pass",
+      "sources": [
+        "https://ausopen.com/articles/news/cobolli-overcomes-comesana-dramatic-us-open-comeback",
+        "https://www.usopen.org/amp/en_US/news/articles/2026-09-05/alexander_blockx_upsets_flavio_cobolli_at_2026_us_open_in_biggest_career_win.html",
+        "https://en.tennistemple.com/player/flavio-cobolli/results"
+      ]
+    },
+    {
+      "index": 22,
+      "id": "asian_brief",
+      "text": "北京和上海，他又连续输掉首战。赛季最后的室内硬地，能否拿到门票，依然没有答案。",
+      "assessment": "Beijing/Shanghai首战失利、当时未锁资格",
+      "status": "pass",
+      "sources": [
+        "https://en.tennistemple.com/player/flavio-cobolli/results",
+        "https://www.nittoatpfinals.com/en/news/cobolli-nitto-atp-finals-2026-qualification"
+      ]
+    },
+    {
+      "index": 23,
+      "id": "lyon_missed_chances",
+      "text": "来到里昂，他在半决赛拿到四个赛点，却还是输给穆塞蒂。错过的机会，让这段冲刺多了一层波折。",
+      "assessment": "LyonSF四个赛点后负Musetti",
+      "status": "pass",
+      "sources": [
+        "https://en.tennistemple.com/player/flavio-cobolli/results",
+        "https://www.tennismajors.com/atp/musetti-saves-four-match-points-to-beat-cobolli-and-reach-lyon-final-863959.html",
+        "https://www.reuters.com/sports/tennis/atp-roundup-taylor-fritz-face-lorenzo-musetti-lyon-title-match--flm-2026-10-25/"
+      ]
+    },
+    {
+      "index": 24,
+      "id": "injury_withdrawals",
+      "text": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
+      "assessment": "ViennaR2首盘2-5伤退、Paris赛前退出",
+      "status": "pass",
+      "sources": [
+        "https://www.erstebank-open.com/en/news/storys/berrettini-cobolli-vienna-2026-message",
+        "https://www.ansa.it/sito/notizie/sport/tennis/internazionali_di_tennis/2026/11/02/masters-parigi-cobolli-rinuncia-non-voglio-rischiare-infortuni_05c52ee7-c04c-4914-ae56-15d17820e82c.html",
+        "https://sport.sky.it/tennis/2026/11/02/cobolli-infortunio-condizioni-news-atp-parigi"
+      ]
+    },
+    {
+      "index": 25,
+      "id": "qualification",
+      "text": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
+      "assessment": "11月3日本地晚Ruud胜Jodar触发首次资格",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/cobolli-nitto-atp-finals-2026-qualification"
+      ]
+    },
+    {
+      "index": 26,
+      "id": "ending",
+      "text": "门票在场外落定，通往都灵的路，是他一场场打出来的。第一次年终，在意大利的主场球迷面前，他还能走多远？",
+      "assessment": "场外锁票、本土意大利、首次年终；结尾问句无预测",
+      "status": "pass",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/cobolli-nitto-atp-finals-2026-qualification"
+      ]
+    }
+  ],
+  "cover": {
+    "status": "pass",
+    "subject": "科博利",
+    "hook": "从四连败出发\n他拿到了都灵门票",
+    "assessment": "四连败→首次年终门票成立；法网决赛肖像没有冒充冠军/资格当日。",
+    "portrait_composition_note": "focus changed from 0.44 to 0.2; source and public copy unchanged. Framing/face visual QC belongs to cover reviewer."
+  },
+  "title": {
+    "status": "pass",
+    "value": "科博利：从四连败到年终门票",
+    "assessment": "使用native标题字段，不另手拼栏目重复前缀。"
+  },
+  "push": {
+    "status": "pass",
+    "summary": "科博利首获年终门票",
+    "lead": "年初四连败，阿卡普尔科夺冠、法网获亚军，温网打进八强、辛辛那提闯进四强，把科博利推向都灵。维也纳伤退、退出巴黎后，巴黎当地11月3日晚，鲁德击败霍达尔，他终于锁定首次年终总决赛资格。",
+    "assessment": "赛季成绩、伤退顺序与资格触发原因正确；full assembly push.auto=true仅为发布配置，不代表已发送。"
+  },
+  "xhs": {
+    "status": "pass",
+    "facts_reviewed": [
+      "德尔雷4强",
+      "阿卡硬地首冠",
+      "Munich亚军/MadridQF",
+      "RG五实打胜+W/O+五盘亚军1300",
+      "第二年WimbledonQF",
+      "首个CincyM1000SF",
+      "生涯首次让二追三",
+      "Lyon四赛点/Vienna伤退/Paris退出",
+      "11月3日Ruud胜Jodar资格",
+      "首次本土年终"
+    ],
+    "name_note": "全部17人名与26赛事语境按native实际lookup和已有alias穷尽复核；阿尔纳尔迪、德尔雷海滩已实际更正。"
+  },
+  "material_errors": [],
+  "limitations": [
+    "PASS is bound only to current exact spec SHA81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86 and exact XHS bytes. Any later public wording or score changes require fresh fact review; source/audio changes require the appropriate independent audio/film reviews.",
+    "本文仅核文字事实；原声英中字幕、发球到结果完整性、人物裁切和最终混音另由素材/成片审计。",
+    "ATPpoints官方全文403，使用当年FAQ索引与Setlex完整逐站表交叉；不把403算全文已读。"
+  ],
+  "label_checks": [
+    {
+      "segment_index": 2,
+      "segment_id": "ao_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "澳网首轮止步",
+        "date": "2026.01.18",
+        "place": "澳网首轮",
+        "people": "科博利 vs 费里",
+        "score": "6-7(1) 4-6 1-6",
+        "result": {
+          "winner": "费里",
+          "score": "7-6(1) 6-4 6-1",
+          "source": "https://www.lta.org.uk/fan-zone/wimbledon-championships/news/who-is-british-wild-card-arthur-fery"
+        }
+      },
+      "independent_result": {
+        "winner": "费里",
+        "score": "7-6(1) 6-4 6-1",
+        "source": "https://www.lta.org.uk/fan-zone/wimbledon-championships/news/who-is-british-wild-card-arthur-fery"
+      },
+      "expected_subject_score": "6-7(1) 4-6 1-6",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 5,
+      "segment_id": "acapulco_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "首座硬地冠军",
+        "date": "2026.02.28",
+        "place": "阿卡普尔科决赛",
+        "people": "科博利 vs 蒂亚福",
+        "score": "7-6(4) 6-4",
+        "result": {
+          "winner": "科博利",
+          "score": "7-6(4) 6-4",
+          "source": "https://www.atptour.com/en/news/cobolli-tiafoe-acapulco-2026-final"
+        }
+      },
+      "independent_result": {
+        "winner": "科博利",
+        "score": "7-6(4) 6-4",
+        "source": "https://www.atptour.com/en/news/cobolli-tiafoe-acapulco-2026-final"
+      },
+      "expected_subject_score": "7-6(4) 6-4",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 8,
+      "segment_id": "munich_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "慕尼黑亚军",
+        "date": "2026.04.19",
+        "place": "慕尼黑决赛",
+        "people": "科博利 vs 谢尔顿",
+        "score": "2-6 5-7",
+        "result": {
+          "winner": "谢尔顿",
+          "score": "6-2 7-5",
+          "source": "https://www.nittoatpfinals.com/en/news/shelton-cobolli-munich-2026-final"
+        }
+      },
+      "independent_result": {
+        "winner": "谢尔顿",
+        "score": "6-2 7-5",
+        "source": "https://www.nittoatpfinals.com/en/news/shelton-cobolli-munich-2026-final"
+      },
+      "expected_subject_score": "2-6 5-7",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 13,
+      "segment_id": "rg_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "法网亚军",
+        "date": "2026.06.07",
+        "place": "法网决赛",
+        "people": "科博利 vs 兹维列夫",
+        "score": "1-6 6-4 4-6 7-6(5) 1-6",
+        "result": {
+          "winner": "兹维列夫",
+          "score": "6-1 4-6 6-4 6-7(5) 6-1",
+          "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+        }
+      },
+      "independent_result": {
+        "winner": "兹维列夫",
+        "score": "6-1 4-6 6-4 6-7(5) 6-1",
+        "source": "https://www.nittoatpfinals.com/en/news/zverev-cobolli-roland-garros-2026-final-report"
+      },
+      "expected_subject_score": "1-6 6-4 4-6 7-6(5) 1-6",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 16,
+      "segment_id": "wimbledon_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "温网止步8强",
+        "date": "2026.07.08",
+        "place": "温网1/4决赛",
+        "people": "科博利 vs 费里",
+        "score": "4-6 6-7(4) 0-6",
+        "result": {
+          "winner": "费里",
+          "score": "6-4 7-6(4) 6-0",
+          "source": "https://www.atptour.com/en/news/cobolli-fery-wimbledon-2026-qf"
+        }
+      },
+      "independent_result": {
+        "winner": "费里",
+        "score": "6-4 7-6(4) 6-0",
+        "source": "https://www.atptour.com/en/news/cobolli-fery-wimbledon-2026-qf"
+      },
+      "expected_subject_score": "4-6 6-7(4) 0-6",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 19,
+      "segment_id": "cincy_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "首次大师赛4强",
+        "date": "2026.08.22",
+        "place": "辛辛那提半决赛",
+        "people": "科博利 vs 菲斯",
+        "score": "3-6 4-6",
+        "result": {
+          "winner": "菲斯",
+          "score": "6-3 6-4",
+          "source": "https://www.atptour.com/en/news/cobolli-fils-cincinnati-2026-sf-saturday"
+        }
+      },
+      "independent_result": {
+        "winner": "菲斯",
+        "score": "6-3 6-4",
+        "source": "https://www.atptour.com/en/news/cobolli-fils-cincinnati-2026-sf-saturday"
+      },
+      "expected_subject_score": "3-6 4-6",
+      "native_label_result_problem": null,
+      "errors": []
+    },
+    {
+      "segment_index": 21,
+      "segment_id": "us_terminal",
+      "status": "pass",
+      "label": {
+        "topic": "美网止步第三轮",
+        "date": "2026.09.05",
+        "place": "美网第三轮",
+        "people": "科博利 vs 布洛克斯",
+        "score": "7-6(4) 3-6 0-6 3-6",
+        "result": {
+          "winner": "布洛克斯",
+          "score": "6-7(4) 6-3 6-0 6-3",
+          "source": "https://en.tennistemple.com/match/blockx-cobolli-us-open-2026/9480018/"
+        }
+      },
+      "independent_result": {
+        "winner": "布洛克斯",
+        "score": "6-7(4) 6-3 6-0 6-3",
+        "source": "https://en.tennistemple.com/match/blockx-cobolli-us-open-2026/9480018/"
+      },
+      "expected_subject_score": "7-6(4) 3-6 0-6 3-6",
+      "native_label_result_problem": null,
+      "errors": []
+    }
+  ],
+  "label_count_reviewed": 7,
+  "label_status": "pass",
+  "native_score_flip_checker": "tools/render_story_info_band.py::label_result_problem (actual import and execution)",
+  "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+  "canonical_full_restored": true,
+  "canonical_segment_count": 27,
+  "canonical_source_keys": [
+    "ao_r1",
+    "acapulco_final",
+    "munich_final",
+    "rg_final",
+    "wimbledon_qf",
+    "cincinnati_sf",
+    "us_r3"
+  ],
+  "updated_at_utc": "2026-11-04T11:26:39.620187+00:00",
+  "public_text_equivalence_to_reviewed_snapshot": {
+    "all_19_narration_texts_and_order_equal_after_explicit_approved_normalizations": true,
+    "normalizations": [
+      "1/4决赛→四分之一决赛 in two actual TTS strings; on-screen labels retain 1/4.",
+      "梅德韦德夫→梅德韦杰夫 per native dictionary.",
+      "阿纳尔迪→阿尔纳尔迪 per native dictionary.",
+      "德尔雷比奇→德尔雷海滩 per native tournament dictionary."
+    ],
+    "title_equal": true,
+    "cover_public_copy_equal": true,
+    "push_summary_equal": true,
+    "push_lead_difference_reviewed": "Only adds Paris local time qualifier to Nov3 evening, supported by official qualification story.",
+    "xhs_difference_reviewed": "Paris local Nov3 evening explicitly stated; Arnaldi and Delray names corrected to native dictionary forms. Same result and qualification facts."
+  },
+  "release_or_audio_pass_claimed": false,
+  "native_proper_names_audit": {
+    "path": "/workspace/cobolli-research/facts/proper-names-native-audit.json",
+    "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+    "person_count": 17,
+    "event_context_count": 26,
+    "status": "pass",
+    "issues": []
+  },
+  "normalization_closure": {
+    "previous_spec_sha256": "ff6c0a386cdb015a1994ea31f36cd1f468801da921dcacdeaf5a8bd84cdd1bcf",
+    "issues_found": [
+      "阿纳尔迪→阿尔纳尔迪",
+      "德尔雷比奇→德尔雷海滩"
+    ],
+    "actual_current_text_verified": true,
+    "audio_verification_claimed": false
+  },
+  "title_card_checks": [
+    {
+      "segment_id": "early_losses",
+      "text": "四场连败\n澳网止步首轮",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "delray_acapulco",
+      "text": "重新赢球\n第一座硬地冠军",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "spring_brief",
+      "text": "冠军之后\n仍有起伏",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "madrid_to_paris",
+      "text": "带着起伏\n来到巴黎",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "rg_turning_setup",
+      "text": "拼到第五盘\n冠军仍有悬念",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "wimbledon_setup",
+      "text": "连续两年\n温网八强",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "cincy_setup",
+      "text": "四场三盘大战\n首次大师赛四强",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "us_setup",
+      "text": "纽约连过两轮\n止步第三轮",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "asian_brief",
+      "text": "最后的冲刺\n门票尚未落定",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "lyon_missed_chances",
+      "text": "四个赛点\n都没能兑现",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "injury_withdrawals",
+      "text": "维也纳伤退\n随后退出巴黎",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "qualification",
+      "text": "巴黎当地11月3日\n都灵门票落定",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    },
+    {
+      "segment_id": "ending",
+      "text": "第一次年终\n在意大利等他",
+      "status": "pass",
+      "assessment": "赛事进程和历史节点与独立事实包相符；资格卡明确巴黎当地11月3日。"
+    }
+  ],
+  "earlier_review_history": {
+    "spec_sha256_text_review": "1e13e5a1ce90f0b2eb431d36e2166e6867ed8f6f67be351c31f2f42b7949409d",
+    "pending_full_spec_path": "/workspace/cobolli-production/full-spec-v2-pending.json",
+    "pending_full_spec_sha256": "bb38f12b10595d408177c316e49680da41ce89f10807b1926e5ed0dbdb65f5b9",
+    "pending_full_public_text_equivalence": {
+      "narration_text_order_equal": true,
+      "narration_count": 19,
+      "title_equal": true,
+      "cover_equal": false,
+      "push_equal": false,
+      "cover_copy_fields_equal": true,
+      "push_summary_lead_equal": true,
+      "object_differences_explained": [
+        "cover.portrait.focus 0.44→0.2: composition setting only, no public copy change; visual pass belongs to cover QC.",
+        "push.auto false→true: intended final pipeline enabled; no public summary/lead change."
+      ]
+    }
+  }
+}

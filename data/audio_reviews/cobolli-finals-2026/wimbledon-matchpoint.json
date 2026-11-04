@@ -1,0 +1,85 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=05ZtcEHhYqM",
+  "source_sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex source_audio: actual native small.en and medium.en timestamped-source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-04T10:18:34.526875+00:00",
+  "reviewed_from": 461.5,
+  "reviewed_to": 477.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 464.4,
+      "end": 468.42,
+      "en": "Oh, what days these are for Arthur Fery!",
+      "zh": "费里迎来了多么美好的日子！"
+    },
+    {
+      "start": 472.2,
+      "end": 477.2,
+      "en": "The British wild card in the semi-finals of Wimbledon.",
+      "zh": "这位英国外卡选手，闯进温网半决赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-small.en.json",
+      "sha256": "6f69474bff927e0e474275bc40358ddfd6b7a66f7bc7b19a5e85e586b26bb5de",
+      "model": "small.en",
+      "source_window": [
+        445.0,
+        480.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-medium.en.json",
+      "sha256": "d89d97cf667201310b4a10cc13839118a3f61fcf98e7e1825724e37969e9e5b1",
+      "model": "medium.en",
+      "source_window": [
+        445.0,
+        480.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-tight-small.en.json",
+      "sha256": "7ef5c1f89ac1aef779a1ed8bdebe4e431ce382dd4c094bb136e608ef16631bed",
+      "model": "small.en",
+      "source_window": [
+        461.5,
+        470.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/05ZtcEHhYqM-tight-medium.en.json",
+      "sha256": "01f34d2f5e9915311abde9de27cc32277a2434faca3e3bbc46d25ab97d063dd4",
+      "model": "medium.en",
+      "source_window": [
+        461.5,
+        470.0
+      ]
+    }
+  ],
+  "review_notes": "Final point start461.50 was independently opened at exact source time by media-b: Fery is still bent forward preparing, not tossing; scoreboard40–0/three match points. This begins after the previous rally and its commentary. The full445–480 small.en detects the winning exclamation464.40–468.18; a tight461.50–470 medium.en independently recognizes the same full wording464.72–468.24. Both tight recognizers have no prior “all” at or after461.50; the full medium.en last-word span459.16–463.92 is a stretched trailing token rather than evidence of actual speech continuing through the preparation. Final British-wild-card clause472.20–477.12 agrees in both full-source recognizers. Proper name is normalized from Ferry/Ferri to verified Fery. The initial unrelated exclamation454–459 is excluded entirely, so no extra prior point is imported and no unrelated speech is subtitled. Raw documents preserve all hypotheses; no human listening is claimed.",
+  "source_identity": {
+    "video_id": "05ZtcEHhYqM",
+    "source_path": "/workspace/cobolli-research/media-b/05ZtcEHhYqM.mp4",
+    "sha256": "9117d7cee87a21da417b6c88df2afa94266bbba0146c320915106cbda0b28cd3",
+    "bytes": 68336300,
+    "duration": 502.735238,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "visual_boundary_evidence": {
+    "local_path": "/workspace/cobolli-research/media-b/wim-461.50.jpg",
+    "sha256": "c4882d4748811b2e8651ae50ae050e6c6a4ea8a74f0ddff826e6a9f0c1dd1732",
+    "scope": "Media-b opened exact461.50 frame and verified pre-toss serving preparation; source visual evidence must be copied/bound by producer."
+  }
+}
