@@ -62,6 +62,10 @@ jobs:
             python3 build_a5.py 34 "$VER"
           elif [ "$WHICH" = "a5" ]; then
             python3 build_a5.py ${DUR:-24} "$VER"
+          elif [ "$WHICH" = "a6" ]; then
+            python3 build_a6a7.py a6 ${DUR:-12} "$VER" "$GITHUB_WORKSPACE/out"
+          elif [ "$WHICH" = "a7" ]; then
+            python3 build_a6a7.py a7 ${DUR:-36} "$VER" "$GITHUB_WORKSPACE/out"
           else
             case "$WHICH" in
               a1) D=${DUR:-30};; a2) D=${DUR:-24};; a3) D=${DUR:-22};; a4) D=${DUR:-24};;
@@ -79,7 +83,7 @@ jobs:
           for f in *.mp4; do
             key=$(echo "$f" | sed -E 's/^slot8-(a[0-9]).*/\1/')
             case "$key" in
-              a1) id=s8a1rule022;; a2) id=s8a2pnts018;; a3) id=s8a3y202417;; a4) id=s8a4draw029;; a5) id=s8a5atpc034;;
+              a1) id=s8a1rule022;; a2) id=s8a2pnts018;; a3) id=s8a3y202417;; a4) id=s8a4draw029;; a5) id=s8a5atpc034;; a6) id=s8a6riyad12;; a7) id=s8a7kasat36;;
             esac
             cp "$f" "$id.mp4"
             tag="source-$id"
