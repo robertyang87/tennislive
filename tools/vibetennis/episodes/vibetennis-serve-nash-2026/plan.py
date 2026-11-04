@@ -20,7 +20,7 @@ MIN_SEC = {"hook": 9.5, "fast": 9.0, "pile": 14.0, "theory": 34.0, "mix": 17.0, 
 # 画面事件：(段, 事件名, 句子, 句内第几个字开始) —— 取这个字在 TTS 词边界里的开口时刻
 EV = [("hook", "slam", "h1", "纳什均衡"), ("hook", "eq", "h1", "诺贝尔"), ("theory", "hands", "t3", None), ("theory", "matrix", "t5", None),
       ("theory", "conv", "t7", None), ("mix", "rise", "b3", None), ("mix", "pour", "b1", None), ("today", "cols", "r2", None), ("today", "tiles", "r3", None),
-      ("today", "red", "r4", "只有"), ("keypts", "row0", "k1", None), ("keypts", "row1", "k2", None), ("latest", "res", "l2", None), ("end", "line", "e0", None)]
+      ("today", "red", "r4", "只有"), ("keypts", "row0", "k1", None), ("keypts", "row1", "k2", None), ("latest", "res", "l2", None), ("end", "line", "e0", None), ("end", "q", "e1", None)]
 
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 def wb(f): return json.load(open(f"voice/{f}.json"))

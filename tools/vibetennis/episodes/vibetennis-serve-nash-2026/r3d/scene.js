@@ -316,7 +316,7 @@ const latestNote=textSprite(T('比分树为示意','Score tree is illustrative')
 const coinTex=(s,col)=>{ const c=document.createElement('canvas'); c.width=c.height=256; const g=c.getContext('2d'); g.fillStyle=col; g.beginPath(); g.arc(128,128,124,0,7); g.fill(); g.strokeStyle='rgba(255,255,255,0.7)'; g.lineWidth=8; g.beginPath(); g.arc(128,128,108,0,7); g.stroke(); g.fillStyle='#1a1200'; g.font='800 120px "Noto Sans CJK SC",sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(s,128,136); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; };
 const coin=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.32,0.04,64),[new THREE.MeshPhysicalMaterial({color:0xd9a640,metalness:1,roughness:0.2,clearcoat:1}),new THREE.MeshStandardMaterial({map:coinTex(T('左','L'),'#ffcc55'),metalness:0.6,roughness:0.3,emissive:0x4a3008}),new THREE.MeshStandardMaterial({map:coinTex(T('右','R'),'#7fe8ff'),metalness:0.6,roughness:0.3,emissive:0x0a3a48})]);
 scene.add(coin); const coinGlow=glowSprite(0xffc24a,1.6,0.6);
-const endLine=textSprite(T('最好的发球，是连你自己都不知道下一个发哪边','The best serve is one even you can’t predict'),{color:'#ffffff',size:0.5,glow:'rgba(255,194,74,0.9)'});
+const endLine=textSprite(T('最好的发球，是连你自己都不知道下一个发哪边','The best serve is one even you can’t predict'),{color:'#ffffff',size:0.5,glow:'rgba(255,194,74,0.9)'}); endLine.material.depthTest=false; endLine.renderOrder=10; // 别被发球人身体挡住
 
 // ---------- 镜头与段落 ----------
 const anchors={};
@@ -346,34 +346,34 @@ function tossBall(k){ // 抛球：左手送球到最高点，再落到击球点
   if(k<0.25) return null; if(k<0.62){ const u=(k-0.25)/0.37; const apex=3.25; const y=hand.y+(apex-hand.y)*Math.sin(Math.PI*0.5*Math.min(1,u/0.7))-(u>0.7?(u-0.7)/0.3*(apex-SP.y):0); return new THREE.Vector3(lerp(hand.x,SP.x,u),y,lerp(hand.z,SP.z,u)); }
   return null; }
 
-function shotHook(u,D){
+function shotHook(u,D){ const S=ev('slam',4.7); // 「纳什均衡」开口的时刻
   // 0–4 s：抛球升到最高点冻结；两条可能的轨迹像闪电分叉；准星在两角之间跳。4–5 s：两边一样亮，天平放平，「纳什均衡」砸进来
-  players(u,{serveK:lerp(0.2,0.5,ss(0,1.4,u))}); receiver.g.visible=u>5.6; receiver.racket.visible=u>5.6; MOTE_SPEED=0.15;
+  players(u,{serveK:lerp(0.2,0.5,ss(0,1.4,u))}); receiver.g.visible=u>S+2.6; receiver.racket.visible=u>S+2.6; // 镜头升到够远才露出接发人，别在镜头旁露半截 MOTE_SPEED=0.15;
   const apex=new THREE.Vector3(SP.x-0.1,3.25,SP.z-0.05); const p=u<1.4?tossBall(lerp(0.3,0.5,ss(0,1.4,u)))||apex:apex;
   showBall(p); flareLight.visible=true; flareLight.position.copy(p); rimL.intensity=6; rimR.intensity=6; rimL.position.set(-6,4,-2); rimR.position.set(6,4,-2);
-  const k=ss(5.2,9,u); const cr=k*k; look(lerp(-1.6,-6,cr),lerp(1.75,9,cr),lerp(-L-3.2,-L-9,cr),lerp(0.4,0,cr),lerp(2.1,0.5,cr),lerp(L,0,cr)); // 接发人视角：两道轨迹朝镜头扑来、一左一右分开
-  DOF.on=true; DOF.focus=camera.position.distanceTo(p); DOF.ap=lerp(0.00025,0.00004,ss(4,7,u));
+  const k=ss(S+0.6,D,u); const cr=k*k; look(lerp(-1.6,-6,cr),lerp(1.75,9,cr),lerp(-L-3.2,-L-9,cr),lerp(0.4,0,cr),lerp(2.1,0.5,cr),lerp(L,0,cr)); // 接发人视角：两道轨迹朝镜头扑来、一左一右分开
+  DOF.on=true; DOF.focus=camera.position.distanceTo(p); DOF.ap=lerp(0.00025,0.00004,ss(S-0.7,S+2.3,u));
   const draw=ss(0.8,2.2,u);
   const curve=tg=>{ const pts=[]; for(let i=0;i<=40;i++){ const tau=i/40*draw; const q=serveAt(tg,tau); q.x+=(p.x-SP.x)*(1-tau); q.y+=(p.y-SP.y)*(1-tau); q.z+=(p.z-SP.z)*(1-tau); pts.push(q); } return pts; };
   setLine(pathWide,curve(TGT.wide)); setLine(pathT,curve(TGT.T));
-  const eq=ss(4.0,4.8,u); const flick=0.6+0.4*Math.sin(u*23)*Math.sin(u*7.3);
+  const eq=ss(S-0.7,S+0.1,u); const flick=0.6+0.4*Math.sin(u*23)*Math.sin(u*7.3);
   pathWide.material.opacity=draw*(eq>0?1:flick); pathT.material.opacity=draw*(eq>0?1:0.6+0.4*Math.sin(u*19+1)*Math.sin(u*5.1));
   pathWide.material.color.set(C(0x30e8ff).lerp(C(0x34f5a8),eq)); pathT.material.color.set(C(0xff3fd0).lerp(C(0x34f5a8),eq));
   for(const l of [pathWide,pathT]) l.material.dashOffset=-u*1.5;
   // 准星：在两个角之间来回跳（接发人在猜）
-  reticle.visible=u>1.4&&u<4.6; reticle.scale.multiplyScalar(1);  const jump=Math.floor((u-1.4)*2.2)%2; const tg=jump?TGT.T:TGT.wide; reticle.position.set(tg.x,0.05,tg.z); reticle.rotation.x=-Math.PI/2; reticle.scale.setScalar(1+0.25*Math.sin(u*14));
+  reticle.visible=u>1.4&&u<S-0.1; reticle.scale.multiplyScalar(1);  const jump=Math.floor((u-1.4)*2.2)%2; const tg=jump?TGT.T:TGT.wide; reticle.position.set(tg.x,0.05,tg.z); reticle.rotation.x=-Math.PI/2; reticle.scale.setScalar(1+0.25*Math.sin(u*14));
   reticle.userData.m.color.set(jump?0xff3fd0:0x30e8ff);
   for(const [kk,gl] of Object.entries(cornerGlow)){ gl.position.set(TGT[kk].x,0.03,TGT[kk].z); gl.scale.setScalar(1.6+0.3*Math.sin(u*9)); gl.material.opacity=draw*(eq>0?0.9:(kk==='wide'?(jump?0.25:0.9):(jump?0.9:0.25))); if(eq>0) gl.material.color.set(0x34f5a8); else gl.material.color.set(kk==='wide'?0x30e8ff:0xff3fd0); }
   // 天平：网上一道光梁从倾斜放平
-  const lvl=ss(4.0,4.7,u); const tilt=(1-lvl)*0.35*Math.sin(u*6); setLine(levelBar,[new THREE.Vector3(-DW,1.8-tilt*3,0),new THREE.Vector3(DW,1.8+tilt*3,0)]); levelBar.material.opacity=ss(3.6,4.0,u)*(1-ss(7.5,8.5,u));
-  const sh=u-4.7; shock.position.set(0,0.05,0); shock.scale.setScalar(1+Math.max(0,sh)*40); shock.material.opacity=sh>0?Math.max(0,0.9-sh*1.2):0;
+  const lvl=ss(S-0.7,S,u); const tilt=(1-lvl)*0.35*Math.sin(u*6); setLine(levelBar,[new THREE.Vector3(-DW,1.8-tilt*3,0),new THREE.Vector3(DW,1.8+tilt*3,0)]); levelBar.material.opacity=ss(S-1.1,S-0.7,u)*(1-ss(D-2,D-1,u));
+  const sh=u-S; shock.position.set(0,0.05,0); shock.scale.setScalar(1+Math.max(0,sh)*40); shock.material.opacity=sh>0?Math.max(0,0.9-sh*1.2):0;
   shock2.position.set(0,0.05,0); shock2.scale.setScalar(1+Math.max(0,sh-0.12)*28); shock2.material.opacity=sh>0.12?Math.max(0,0.9-(sh-0.12)*1.4):0;
   FX_FLASH=sh>0&&sh<0.08?0.45:0; FX_SHAKE=sh>0&&sh<0.25?0.8:0;
   // 文字：问题先出，原理接着砸进来
   const front=(d,dy)=>camera.position.clone().add(new THREE.Vector3(0,dy,-d).applyQuaternion(camera.quaternion));
-  hookQ.position.copy(front(7,1.75)); op(hookQ,ss(0.6,1.2,u)*(1-ss(4.4,4.8,u)));
-  const slam=ss(4.7,5.0,u); hookTitle.position.copy(front(8,1.45)); const sc=lerp(2.2,1,slam); hookTitle.scale.set(hookTitle.userData.w0*sc,1.25*sc,1); op(hookTitle,slam*(1-ss(8.3,9,u)));
-  hookSub.position.copy(front(8,0.62)); op(hookSub,ss(5.2,5.8,u)*(1-ss(8.3,9,u)));
+  hookQ.position.copy(front(7,1.75)); op(hookQ,ss(0.3,0.8,u)*(1-ss(S-0.3,S+0.1,u)));
+  const slam=ss(S,S+0.3,u); hookTitle.position.copy(front(8,1.45)); const sc=lerp(2.2,1,slam); hookTitle.scale.set(hookTitle.userData.w0*sc,1.25*sc,1); op(hookTitle,slam*(1-ss(D-1.2,D-0.4,u)));
+  hookSub.position.copy(front(8,0.62)); op(hookSub,ss(S+0.5,S+1.1,u)*(1-ss(D-1.2,D-0.4,u)));
   proj('ball',p);
 }
 function shotArena(u,D){
@@ -389,7 +389,7 @@ function shotArena(u,D){
 }
 function shotPile(u,D){
   // 连发 6 个外角：落点越堆越亮（警示红）；接发残影一次比一次早；第 6 球被打回，红色冲击波
-  const per=3.0, n=Math.min(6,Math.floor(u/per)+1), k=(u-(n-1)*per)/per; const early=(n-1)/5;
+  const per=Math.max(2.2,(D-0.6)/6), n=Math.min(6,Math.floor(u/per)+1), k=(u-(n-1)*per)/per; const early=(n-1)/5;
   players(u,{serveK:ss(0,0.45,k)*0.85,lean:-1.2*early,ghostK:early});
   beamMat.uniforms.uOp.value=0.22; beamMat.uniforms.uC.value.set(0xff8a7a);
   look(-11.5+u*0.03,6.2,-15.5,-2.4,0.2,-6.5);
@@ -403,82 +403,83 @@ function shotPile(u,D){
 }
 function shotTheory(u,D){
   // 0–9 s 年份光环；9–19 s 写实手打石头剪刀布（总出石头 → 被布吃）；19–30 s 2×2 方块＋最佳应对螺旋收进均衡点
-  courtG.visible=true; courtG.userData.mat.opacity=1-0.65*ss(8,10,u);
-  if(u<9.5){ yearG.visible=true; look(0,14,26,0,1,0);
-    yearRings.forEach(g=>{ const i=g.userData.i, a=ss(0.6+i*2.6,2.4+i*2.6,u), out=ss(8.3,9.3,u);
+  const HA=ev('hands',9.5), MX=ev('matrix',19.5), CV=ev('conv',MX+6);
+  courtG.visible=true; courtG.userData.mat.opacity=1-0.65*ss(HA-1.5,HA,u);
+  if(u<HA){ yearG.visible=true; look(0,14,26,0,1,0);
+    yearRings.forEach(g=>{ const i=g.userData.i, a=ss(0.6+i*(HA-2)/3,2.4+i*(HA-2)/3,u), out=ss(HA-1.2,HA-0.2,u);
       g.position.set(0,lerp(26,2.5+i*0.9,a),lerp(-60,0,a)); g.userData.r.material.opacity=0.9*a*(1-out); g.userData.r.rotation.z=u*0.2*(i%2?1:-1);
       const y=t3d('y'+g.userData.y,g.userData.y,[0xa78bfa,0x6fa8ff,0xf0e6ff][i],1.1,g); y.g.position.set(lerp(0,-8+i*8,a),3.6,9+i*1.6); y.g.quaternion.copy(camera.quaternion); t3op(y,a*(1-out));
       g.userData.sl.position.set(y.g.position.x,2.5,y.g.position.z); op(g.userData.sl,ss(0.6,1,a)*(1-out)); });
     return; }
-  if(u<19.5){ const v=u-9.5; // 石头剪刀布：两只手各自上下晃三下，第三下亮出；左手（对手）一直出布，右手连续两局出石头
+  if(u<MX){ const v=u-HA, RL=(MX-HA)/2; // 石头剪刀布：两只手各自上下晃三下，第三下亮出；左手（对手）一直出布，右手连续两局出石头
     courtG.visible=false; look(0,0.3,6.2,0,0.3,0); handL.holder.visible=true; handR.holder.visible=true; DOF.on=true; DOF.focus=6.2; DOF.ap=0.00006;
-    const round=v<5?0:1, w=v-round*5; const pump=w<2.4?Math.abs(Math.sin(w/2.4*Math.PI*3))*0.6:0; const reveal=ss(2.4,2.7,w);
+    const round=v<RL?0:1, w=v-round*RL; const pump=w<2.0?Math.abs(Math.sin(w/2.0*Math.PI*3))*0.6:0; const reveal=ss(2.0,2.3,w);
     handR.holder.position.set(1.55,-1.15+pump,0); handR.holder.scale.setScalar(11); handR.holder.rotation.set(0,-0.35,0); handR.rig.set('rock');
     handL.holder.position.set(-1.55,-1.15+pump,0); handL.holder.scale.setScalar(11); handL.holder.rotation.set(0,0.35,0); handL.rig.set('rock',1,'paper',reveal);
-    const win=ss(2.8,3.2,w)*(1-ss(4.4,5,w)); rpsWin.position.set(-1.55,0.25,-0.3); rpsWin.rotation.x=0; rpsWin.scale.setScalar(3+win*1.5); rpsWin.material.opacity=win*0.8;
+    const win=ss(2.4,2.8,w)*(1-ss(RL-0.6,RL,w)); rpsWin.position.set(-1.55,0.25,-0.3); rpsWin.rotation.x=0; rpsWin.scale.setScalar(3+win*1.5); rpsWin.material.opacity=win*0.8;
     handR.mat.emissiveIntensity=0.35-0.25*win; handL.mat.emissiveIntensity=0.35+0.9*win;
-    rpsLabel.position.set(1.55,-2.25,0.3); op(rpsLabel,ss(2.9,3.3,v)*(1-ss(9.2,9.8,v))); return; }
-  const v=u-19.5; matG.visible=true; brPanel.visible=true;
+    rpsLabel.position.set(1.55,-2.25,0.3); op(rpsLabel,ss(2.5,2.9,v)*(1-ss(2*RL-0.6,2*RL,v))); return; }
+  const v=u-MX, C0=CV-MX; matG.visible=true; brPanel.visible=true;
   look(lerp(0,1.5,ss(0,4,v)),5.6,17,0.4,3.4,-1);
   cubes.forEach(g=>{ const {s,r,lv}=g.userData; const a=ss((s*2+r)*0.4,1.6+(s*2+r)*0.4,v); g.visible=a>0.01; g.position.set(-3.8+(r-0.5)*2.7,3.3+(1-s)*2.7-0.5,-1); g.scale.setScalar(a);
     g.userData.liq.scale.y=Math.max(0.001,ss(1.5,3.5,v)*lv); g.rotation.y=Math.sin(u*0.3+s+r)*0.08; });
   const la=ss(1.5,2.5,v); op(matLabels[0],la); matLabels[0].position.set(-8.0,5.0,-1); op(matLabels[1],la); matLabels[1].position.set(-8.0,2.3,-1);
   op(matLabels[2],la); matLabels[2].position.set(-5.15,6.8,-1); op(matLabels[3],la); matLabels[3].position.set(-2.45,6.8,-1); op(matNote,la*0.8); matNote.position.set(-1.3,0.8,-1);
   brPanel.position.set(4.0,3.6,-1); const pa=ss(3,4,v); brPanel.scale.setScalar(pa);
-  const s=clamp((v-4)/6.5); const c=new THREE.Vector2(0.58,0.42); const pts=[];
+  const s=clamp((v-(C0-3))/(5.5)); const c=new THREE.Vector2(0.58,0.42); const pts=[];
   for(let i=0;i<=120;i++){ const ss_=s*i/120; const r=0.46*Math.exp(-3.2*ss_), th=2*Math.PI*3.2*ss_+0.6; pts.push(new THREE.Vector3(4.0+(c.x+r*Math.cos(th)-0.5)*4*pa,3.6+(c.y+r*Math.sin(th)-0.5)*4*pa,-0.99)); }
-  setLine(brPath,pts); brPath.material.opacity=pa*(v>4?1:0); brPath.material.color.set(0xf0e6ff);
-  const last=pts[pts.length-1]; brDot.position.set((last.x-4.0),(last.y-3.6),0.02).divideScalar(Math.max(pa,0.001)); brDot.material.opacity=v>4?1:0;
-  brStar.position.set((c.x-0.5)*4,(c.y-0.5)*4,0.02); brStar.material.opacity=ss(10,10.6,v); brStar.scale.setScalar(1.6+0.4*Math.sin(u*5));
+  setLine(brPath,pts); brPath.material.opacity=pa*(v>C0-3?1:0); brPath.material.color.set(0xf0e6ff);
+  const last=pts[pts.length-1]; brDot.position.set((last.x-4.0),(last.y-3.6),0.02).divideScalar(Math.max(pa,0.001)); brDot.material.opacity=v>C0-3?1:0;
+  brStar.position.set((c.x-0.5)*4,(c.y-0.5)*4,0.02); brStar.material.opacity=ss(C0+2.5,C0+3.1,v); brStar.scale.setScalar(1.6+0.4*Math.sin(u*5));
   brLabX.position.set(0,-2.4,0); op(brLabX,pa); brLabY.position.set(-2.5,0,0); brLabY.material.rotation=Math.PI/2; op(brLabY,pa);
-  brEq.position.set((c.x-0.5)*4+0.1,(c.y-0.5)*4+0.55,0.05); op(brEq,ss(10.2,10.8,v));
+  brEq.position.set((c.x-0.5)*4+0.1,(c.y-0.5)*4+0.55,0.05); op(brEq,ss(C0+2.7,C0+3.3,v));
 }
 function shotBalance(u,D){
   courtG.visible=true; balG.visible=true; look(Math.sin(u*0.08)*2.5,4.6,14.5,0,3.2,0); beamMat.uniforms.uOp.value=0.18; beamMat.uniforms.uC.value.set(0x9affd8);
   // 0–6 s：33 和 51 颗光点按次数落进托盘，天平倒向多的一边；6–12 s：得分率光柱长出来（64%／63%），天平回到水平
-  const {nL,nR,rL,rR}=BAL; const pour=ss(0.5,5.5,u); const rise=ss(6.5,10,u);
-  const damp=u>10?Math.exp(-(u-10)*1.4)*Math.cos((u-10)*5)*0.05:0;
-  const ang=lerp(-0.16*pour,(rL-rR)*0.6,ss(7,10.5,u))+damp; beam.rotation.z=-ang; // 先按次数倒向外角（多的一边），再按得分率回到几乎水平
+  const {nL,nR,rL,rR}=BAL; const PO=ev('pour',0.5), RI=ev('rise',6.5); const pour=ss(PO,PO+5,u); const rise=ss(RI,RI+3.5,u);
+  const damp=u>RI+3.5?Math.exp(-(u-RI-3.5)*1.4)*Math.cos((u-RI-3.5)*5)*0.05:0;
+  const ang=lerp(-0.16*pour,(rL-rR)*0.6,ss(RI+0.5,RI+4,u))+damp; beam.rotation.z=-ang; // 先按次数倒向外角（多的一边），再按得分率回到几乎水平
   pans.forEach(p=>{ p.g.rotation.z=ang; const rate=p.s<0?rL:rR; p.col.scale.y=Math.max(0.001,rise*rate*4.2); p.cap.position.y=-0.88+rise*rate*4.2; p.cap.material.opacity=rise;
     p.name.position.set(p.s*0.6,-1.75,0.6); op(p.name,ss(1,2,u));
-    const num=t3d(p.s<0?'bL':'bR',p.s<0?'69.7%':'71.1%',p.s<0?0x34f5a8:0x4fe3ff,0.5); const wp=new THREE.Vector3(); p.g.getWorldPosition(wp); num.g.position.set(wp.x,wp.y-0.88+rise*rate*4.2+0.75,wp.z); num.g.quaternion.copy(camera.quaternion); t3op(num,ss(9,10,u)); });
-  for(let i=0;i<84;i++){ const left=i<nL, j=left?i:i-nL, n=left?nL:nR; const t0=0.5+5*j/n; const a=ss(t0,t0+0.4,u);
+    const num=t3d(p.s<0?'bL':'bR',p.s<0?'69.7%':'71.1%',p.s<0?0x34f5a8:0x4fe3ff,0.5); const wp=new THREE.Vector3(); p.g.getWorldPosition(wp); num.g.position.set(wp.x,wp.y-0.88+rise*rate*4.2+0.75,wp.z); num.g.quaternion.copy(camera.quaternion); t3op(num,ss(RI+2.5,RI+3.5,u)); });
+  for(let i=0;i<84;i++){ const left=i<nL, j=left?i:i-nL, n=left?nL:nR; const t0=PO+5*j/n; const a=ss(t0,t0+0.4,u);
     const pw=new THREE.Vector3(); pans[left?0:1].g.getWorldPosition(pw); fseed=500+i; const ox=gauss()*0.3, oz=gauss()*0.3;
     cset(balDots,i,pw.x+ox,lerp(pw.y+4,pw.y-0.84+0.05*(j%5),a),pw.z+oz,left?0.3:0.35,left?1:0.9,left?0.7:1,a>0?1:0); } cdone(balDots);
-  const lv=ss(10.6,10.9,u)*(1-ss(11.4,12.5,u)); levelFlash.position.set(0,3.3,0); levelFlash.rotation.x=0; const s=1+ss(10.6,12,u)*6; levelFlash.scale.set(s,s,1); levelFlash.material.opacity=lv*0.8;
+  const lv=ss(RI+4.1,RI+4.4,u)*(1-ss(RI+4.9,RI+6,u)); levelFlash.position.set(0,3.3,0); levelFlash.rotation.x=0; const s=1+ss(RI+4.1,RI+5.5,u)*6; levelFlash.scale.set(s,s,1); levelFlash.material.opacity=lv*0.8;
   balTitle.position.set(0,6.4,0); op(balTitle,ss(0.3,1.2,u));
 }
 function shotRain(u,D){
   // 0–11 s：2023–26 年男子一发的光点暴雨（取样 2.4 万粒），外角／中路两根光柱长到几乎同一高度；11–20 s：1,056 块方砖铺满半空，56 块亮红（5.3%）
-  courtG.visible=true; setupRain('now'); const fall=5.5, v=u;
+  courtG.visible=true; setupRain('now'); const CO=ev('cols',6), TI=ev('tiles',11), RD=ev('red',14); const fall=Math.max(2.5,CO-1.5), v=u;
   const k=ss(0,3,u); look(lerp(-0.5,1.0,k)+Math.sin(u*0.1)*0.6,lerp(6,9,k),lerp(5,4.5,k),-1.9,lerp(0.3,1.8,k),-SL-0.5);
   for(let i=0;i<RAIN_N;i++){ const [x,z,d,wide,sx,h]=RAIN[i];
-    const t0=d*fall, a=clamp((v-t0)/1.2); const y=lerp(h,0.03,a*a); const c=wide?[1,0.75,0.28]:[0.8,0.92,1]; cset(rain,i,lerp(x+sx,x,a),y,lerp(z-6,z,a),c[0],c[1],c[2],v>t0?(a<1?0.9:0.55)*(1-0.85*ss(10.5,11.5,u)):0); } cdone(rain);
+    const t0=d*fall, a=clamp((v-t0)/1.2); const y=lerp(h,0.03,a*a); const c=wide?[1,0.75,0.28]:[0.8,0.92,1]; cset(rain,i,lerp(x+sx,x,a),y,lerp(z-6,z,a),c[0],c[1],c[2],v>t0?(a<1?0.9:0.55)*(1-0.85*ss(TI-0.5,TI+0.5,u)):0); } cdone(rain);
   rain.material.uniforms.uSize.value=0.07;
-  const vv=ERA.now.v; const rise=ss(fall+0.5,fall+2.5,v);
-  rainCols.forEach((c,i)=>{ c.g.visible=u<11.5; c.g.position.set(i===0?-SW+0.45:-0.45,0,-SL+0.7); c.col.scale.y=Math.max(0.001,rise*vv[i]*4); c.cap.position.y=rise*vv[i]*4; c.cap.material.opacity=rise; c.ring.material.opacity=rise*0.6; });
-  ERA.now.labS.forEach((s,i)=>{ s.position.set(i===0?-SW+0.2:-0.2,rise*vv[i]*4+0.8,-SL+0.7); op(s,ss(fall+2,fall+2.6,v)*(1-ss(10.5,11.2,v))); });
-  const ttl=ERA.now.titleS; ttl.position.set(-1.9,3.9,-SL-4.5); op(ttl,ss(0.2,0.8,v)*(1-ss(10.5,11.2,v)));
-  const tw=ss(11,12.5,u); tileG.visible=tw>0.01; tileG.position.copy(camera.position).add(new THREE.Vector3(0,0.2,-12).applyQuaternion(camera.quaternion)); tileG.quaternion.copy(camera.quaternion);
+  const vv=ERA.now.v; const rise=ss(CO,CO+2,v);
+  rainCols.forEach((c,i)=>{ c.g.visible=u<TI+0.5; c.g.position.set(i===0?-SW+0.45:-0.45,0,-SL+0.7); c.col.scale.y=Math.max(0.001,rise*vv[i]*4); c.cap.position.y=rise*vv[i]*4; c.cap.material.opacity=rise; c.ring.material.opacity=rise*0.6; });
+  ERA.now.labS.forEach((s,i)=>{ s.position.set(i===0?-SW+0.2:-0.2,rise*vv[i]*4+0.8,-SL+0.7); op(s,ss(CO+1.5,CO+2.1,v)*(1-ss(TI-0.5,TI+0.2,v))); });
+  const ttl=ERA.now.titleS; ttl.position.set(-1.9,3.9,-SL-4.5); // 顶部字幕在这段改放底部，不和这行抢 op(ttl,ss(0.2,0.8,v)*(1-ss(TI-0.5,TI+0.2,v)));
+  const tw=ss(TI,TI+1.5,u); tileG.visible=tw>0.01; tileG.position.copy(camera.position).add(new THREE.Vector3(0,0.2,-12).applyQuaternion(camera.quaternion)); tileG.quaternion.copy(camera.quaternion);
   const cols=44, rows=24, m4=new THREE.Matrix4(), col=new THREE.Color();
-  for(let i=0;i<TILES;i++){ const r=Math.floor(i/cols), c=i%cols; const appear=ss(11+(i/TILES)*1.8,11.3+(i/TILES)*1.8,u);
+  for(let i=0;i<TILES;i++){ const r=Math.floor(i/cols), c=i%cols; const appear=ss(TI+(i/TILES)*1.8,TI+0.3+(i/TILES)*1.8,u);
     m4.compose(new THREE.Vector3((c-cols/2+0.5)*0.19,(rows/2-r-0.5)*0.19,0),new THREE.Quaternion(),new THREE.Vector3(appear,appear,appear)); tileMesh.setMatrixAt(i,m4);
-    const bad=TILE_ORDER.indexOf(i)<TILE_REJ; const red=bad?ss(14,15,u):0; col.setRGB(lerp(0.2,1.6,red),lerp(0.24,0.2,red),lerp(0.3,0.15,red)); if(red>0) tileMesh.material.emissiveIntensity=0.12; tileMesh.setColorAt(i,col); }
+    const bad=TILE_ORDER.indexOf(i)<TILE_REJ; const red=bad?ss(RD,RD+1,u):0; col.setRGB(lerp(0.2,1.6,red),lerp(0.24,0.2,red),lerp(0.3,0.15,red)); if(red>0) tileMesh.material.emissiveIntensity=0.12; tileMesh.setColorAt(i,col); }
   tileMesh.instanceMatrix.needsUpdate=true; tileMesh.instanceColor.needsUpdate=true;
-  tileTitle.position.set(0,2.95,0); op(tileTitle,ss(12.5,13.5,u)); tileNote.position.set(0,-2.95,0); op(tileNote,ss(15,16,u));
+  tileTitle.position.set(0,2.95,0); op(tileTitle,ss(RD-0.5,RD+0.5,u)); tileNote.position.set(0,-2.95,0); op(tileNote,ss(RD+2,RD+3,u));
   proj('colWide',new THREE.Vector3(-SW+0.45,rise*vv[0]*4,-SL+0.7)); proj('colT',new THREE.Vector3(-0.45,rise*vv[1]*4,-SL+0.7));
 }
 function shotKeypoints(u,D){
   // 两排卡片：上排发球方自己的局点／盘点／赛点，下排对手的破发点／盘点／赛点；每张两根光柱（外角、中路）随心跳升到几乎同一高度
   courtG.visible=false; look(-1.3,3.0,20,-1.3,2.4,1.6); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
   op(kpTitle,ss(0.3,1.2,u)); kpTitle.position.set(-1.3,7.9,1.6);
-  KP.forEach((k,i)=>{ const row=Math.floor(i/3), c=i%3; const t0=1.2+row*9.5+c*2.6; const a=ss(t0,t0+0.7,u); k.g.visible=a>0.01;
+  KP.forEach((k,i)=>{ const row=Math.floor(i/3), c=i%3; const t0=(row?ev('row1',10.7):ev('row0',1.2))+c*0.9; const a=ss(t0,t0+0.7,u); k.g.visible=a>0.01;
     k.g.position.set(-4.0+c*4.0,row?-0.6:3.9,1.6); k.g.scale.setScalar(lerp(0.7,0.92,a));
     const beat=Math.exp(-Math.pow(((u-t0)%0.85)/0.08,2))*(u>t0&&u<t0+2.6?1:0);
     k.cols.forEach((cc,j)=>{ const h=ss(t0+0.5,t0+2,u)*k.v[j]*2.8; cc.scale.y=Math.max(0.001,h); cc.material.opacity=0.45+0.4*beat; k.caps[j].position.y=0.1+h; k.caps[j].material.opacity=ss(t0+0.5,t0+0.9,u); });
-    k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+1.8,t0+2.4,u)); if(k.note) op(k.note,ss(t0+2.4,t0+3,u)); });
-  kpRowLab[0].position.set(-7.6,5.6,1.6); kpRowLab[0].material.rotation=0; op(kpRowLab[0],ss(1,1.8,u)); kpRowLab[1].position.set(-7.0,1.1,1.6); op(kpRowLab[1],ss(10.5,11.3,u));
-  op(kpLegend,ss(1.5,2.3,u)); kpLegend.position.set(-1.3,-2.75,1.8);
+    k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+2.2,t0+2.8,u)); if(k.note) op(k.note,ss(t0+2.4,t0+3,u)); });
+  kpRowLab[0].position.set(-7.6,5.6,1.6); kpRowLab[0].material.rotation=0; op(kpRowLab[0],ss(1,1.8,u)); kpRowLab[1].position.set(-7.0,1.1,1.6); op(kpRowLab[1],ss(ev('row1',10.7)-0.3,ev('row1',10.7)+0.5,u));
+  op(kpLegend,0); // 图例改由字幕层写在底部出处行（和下方字幕抢位置）
 }
 function shotLatest(u,D){
   treeG.visible=true; look(lerp(-1,1,ss(0,D,u)),2.4,12.5,1.4,2.0,0);
@@ -492,7 +493,7 @@ function shotLatest(u,D){
   const focus=NODES[3*4+2]; // 40-30：示意一个节点上的三向扇面
   treeFan.forEach((l,i)=>{ const p=focus.m.position.clone().add(treeG.position); const dir=new THREE.Vector3(Math.cos(1.2+i*0.35),Math.sin(1.2+i*0.35),0); const len=[0.9,0.4,1.3][i]*ss(7,8.5,u);
     setLine(l,[p,p.clone().addScaledVector(dir,len)]); l.material.opacity=ss(7,8,u); });
-  latestRes.forEach((x,i)=>{ x.position.set(5.6,3.6-i*1.05,0); op(x,ss(9+i*1.2,9.8+i*1.2,u)); });
+  const RS=ev('res',9); latestRes.forEach((x,i)=>{ x.position.set(5.6,3.6-i*1.05,0); op(x,ss(RS-1.2+i*1.0,RS-0.4+i*1.0,u)); });
   latestTitle.position.set(1.4,5.2,0); op(latestTitle,ss(0.3,1.2,u)); latestSub.position.set(5.2,0.4,0);  latestNote.position.set(-1.0,-1.75,0); op(latestNote,ss(2,3,u));
 }
 function shotCoin(u,D){
@@ -501,7 +502,7 @@ function shotCoin(u,D){
   coin.visible=u<6; coinGlow.visible=u<6; const hp=server.B.LeftHand.getWorldPosition(new THREE.Vector3()); coin.position.set(hp.x,hp.y+0.6+Math.sin(Math.min(u,6)/6*Math.PI)*0.9,hp.z); coin.rotation.set(u*9,0.3,0.2); coinGlow.position.copy(coin.position);
   if(u>6){ const k=clamp((u-6)/2.4)*0.85; const tau=ss(7.3,8.6,u)*1.5; const p=tau>0?serveAt(TGT.T,tau):(tossBall(k)||new THREE.Vector3(0,-9,0)); showBall(p,u>6.4); setTrail(t=>serveAt(TGT.T,t),tau,[1,0.85,0.4],tau>0.05);
     look(lerp(3.2,9,ss(7,10,u)),lerp(2.4,6,ss(7,10,u)),lerp(L+4.8,L+9,ss(7,10,u)),0,0.8,-3); }
-  endLine.position.copy(camera.position).add(new THREE.Vector3(0,-1.6,-9).applyQuaternion(camera.quaternion)); op(endLine,ss(9,10.5,u));
+  endLine.position.copy(camera.position).add(new THREE.Vector3(0,-1.6,-9).applyQuaternion(camera.quaternion)); op(endLine,ss(ev('line',9)+0.3,ev('line',9)+1.3,u)*(1-ss(ev('q',99)-0.6,ev('q',99),u))); // 最后一问开口前让位
 }
 
 // ---------- 后期：景深、辉光、色差、暗角、颗粒 ----------
@@ -516,7 +517,7 @@ const finalPass=new ShaderPass({uniforms:{tDiffuse:{value:null},uT:{value:0},uFl
      else col=vec3(texture2D(tDiffuse,uv+c*uCA).r,texture2D(tDiffuse,uv).g,texture2D(tDiffuse,uv-c*uCA).b);
      float vig=smoothstep(1.05,0.3,length(c*vec2(1.0,0.85))); col*=mix(0.5,1.0,vig); col+=(h(uv*vec2(1920.,1080.)+uT)-0.5)*0.022; col=mix(col,vec3(1.),uFlash); gl_FragColor=vec4(col,1.); }`});
 composer.addPass(finalPass); composer.addPass(new OutputPass());
-let FX_SHAKE=0, FX_FLASH=0;
+let FX_SHAKE=0, FX_FLASH=0, EV={}; const ev=(k,d)=>(EV[k]!==undefined?EV[k]:d); // 画面事件钉在旁白上（plan.py 写进 timeline 的 ev）
 function setTransition(t){ let z=0,f=0; for(const sc of TL.sections){ const d=t-sc.t0; if(sc.t0>0&&d>=0&&d<0.45){ const k=1-d/0.45; z=k*k*0.9; f=Math.max(0,1-d/0.12)*0.35; } }
   finalPass.uniforms.uZoom.value=z; finalPass.uniforms.uFlash.value=Math.max(f,FX_FLASH); finalPass.uniforms.uT.value=t; finalPass.uniforms.uShake.value=FX_SHAKE; }
 function setPalette(t){ // 段落开头 1 秒内从上一段的配色过渡过来
@@ -527,7 +528,7 @@ function setPalette(t){ // 段落开头 1 秒内从上一段的配色过渡过�
 
 function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[TL.sections.length-1]; const u=t-sc.t0, D=sc.t1-sc.t0;
   hideAll(); FX_SHAKE=0; FX_FLASH=0;
-  ({hook:shotHook,arena:shotArena,pile:shotPile,theory:shotTheory,balance:shotBalance,rain:shotRain,keypoints:shotKeypoints,latest:shotLatest,coin:shotCoin})[sc.kind](u,D);
+  EV=sc.ev||{}; ({hook:shotHook,arena:shotArena,pile:shotPile,theory:shotTheory,balance:shotBalance,rain:shotRain,keypoints:shotKeypoints,latest:shotLatest,coin:shotCoin})[sc.kind](u,D);
   return sc.kind; }
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t);
   const s=shotTL(t); const ac=setPalette(t); setTransition(t); setMotes(t,ac);
