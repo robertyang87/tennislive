@@ -49,7 +49,7 @@ const PAL={
   theory:  {top:0x06041a,hz:0x1d1250,vi:0x2b0d55,a:0xa78bfa,b:0x6fa8ff,c:0xf0e6ff},   // 紫罗兰＋星蓝
   balance: {top:0x020c0a,hz:0x063828,vi:0x062a2a,a:0x34f5a8,b:0x4fe3ff,c:0xeafff6},   // 翡翠＋青
   rain:    {top:0x0b0802,hz:0x3a2608,vi:0x2a1a04,a:0xffbf47,b:0xd8f2ff,c:0xffffff},   // 琥珀＋冰白
-  keypoint:{top:0x0c0504,hz:0x3a1608,vi:0x0a3024,a:0xff7a3d,b:0x34f5a8,c:0xffffff},   // 橙红＋翡翠
+  keypoints:{top:0x0c0504,hz:0x3a1608,vi:0x0a3024,a:0xff7a3d,b:0x34f5a8,c:0xffffff},  // 橙红＋翡翠（关键分）
   chains:  {top:0x0d0310,hz:0x3a0a32,vi:0x3a1a08,a:0xff4fd8,b:0xff9b3d,c:0xffffff},   // 洋红＋橙
   latest:  {top:0x04040e,hz:0x14163a,vi:0x1a1a2e,a:0xf2efe6,b:0x7c83ff,c:0xffffff},   // 白金＋靛
   coin:    {top:0x050505,hz:0x2a2008,vi:0x08202a,a:0xffc24a,b:0x4fe3ff,c:0xffffff}};  // 金＋青
@@ -234,10 +234,10 @@ const pans=[-1,1].map(s=>{ const g=new THREE.Group(); g.position.x=s*4.1; beam.a
   const col=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.42,1,40,1,true),new THREE.MeshBasicMaterial({color:s<0?0x34f5a8:0x4fe3ff,transparent:true,opacity:0.38,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false}));
   col.geometry.translate(0,0.5,0); col.position.y=-0.88; g.add(col);
   const cap=glowSprite(s<0?0x34f5a8:0x4fe3ff,1.2,0.9,g);
-  const name=textSprite(s<0?T('发左 33 次','33 to the left'):T('发右 51 次','51 to the right'),{color:'#e6fff6',size:0.5},g);
+  const name=textSprite(s<0?T('外角 4,111 个','Wide: 4,111'):T('中路 2,479 个','T: 2,479'),{color:'#e6fff6',size:0.5},g);
   return {g,col,cap,name,s}; });
-const balDots=cloud(84,0.3,40,balG); const levelFlash=flatRing(0xffffff,balG);
-const balTitle=textSprite(T('桑普拉斯 · 1997 美网 · 占先区','Sampras · 1997 US Open · ad court'),{color:'#e6fff6',size:0.55},balG);
+const balDots=cloud(84,0.3,40,balG); const BAL={nL:52,nR:32,rL:0.697,rR:0.711}; /* 52:32 ≈ 4,111:2,479；得分率 69.7% vs 71.1% */ const levelFlash=flatRing(0xffffff,balG);
+const balTitle=textSprite(T('辛纳 · 2023–2026 · 占先区一发','Sinner · 2023–26 · ad-court first serves'),{color:'#e6fff6',size:0.55},balG);
 
 // ---------- 段 6：光点暴雨（三个年代） ----------
 const RAIN_N=24000; const rain=cloud(RAIN_N,0.07,6,scene,0.15); const RAIN=[]; let RAIN_MODE=null;
@@ -252,8 +252,14 @@ const rainCols=[0,1].map(i=>{ const g=new THREE.Group(); scene.add(g);
   return {g,col,cap,ring}; });
 const ERA={ww:{v:[0.64,0.65],lab:[T('发左 64%','Left 64%'),T('发右 65%','Right 65%')],title:T('1974–1997 · 10 场录像 · 3,026 个一发','1974–1997 · 10 matches · 3,026 first serves')},
   hawk:{v:[0.65,0.65],lab:null,title:T('鹰眼 2005–2009 · 3,172 场 · 近 50 万个发球 · 男子吻合','Hawk-Eye 2005–09 · 3,172 matches · ~500k serves · men fit')},
-  now:{v:[0.657,0.652],lab:[T('外角 65.7%','Wide 65.7%'),T('中路 65.2%','T 65.2%')],title:T('2023–2026 · 2,151 场男子比赛 · 平分区一发','2023–26 · 2,151 men’s matches · deuce-court firsts')}};
+  now:{v:[0.650,0.647],lab:[T('外角 65.0%','Wide 65.0%'),T('中路 64.7%','T 64.7%')],title:T('2023–2026 · 2,151 场男子比赛 · 33.7 万个一发','2023–26 · 2,151 men’s matches · 337k first serves')}};
 for(const k in ERA){ ERA[k].titleS=textSprite(ERA[k].title,{color:'#fff4dc',size:0.55,glow:'rgba(255,191,71,0.9)'}); ERA[k].labS=ERA[k].lab?ERA[k].lab.map((s,i)=>textSprite(s,{color:i?'#e6f6ff':'#ffe2a0',size:0.8,glow:i?'rgba(200,235,255,1)':'rgba(255,191,71,1)'})):null; }
+const TILES=1056, TILE_REJ=56; const tileG=new THREE.Group(); scene.add(tileG); // 1,056 个发球局面，56 个在 5% 水平被拒绝（5.3%）
+const tileMesh=new THREE.InstancedMesh(new THREE.BoxGeometry(0.16,0.16,0.04),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:0.12,metalness:0.3,roughness:0.4}),TILES); tileG.add(tileMesh);
+const TILE_ORDER=(()=>{ fseed=777; const a=[...Array(TILES).keys()]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(frnd()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; })();
+const tileBack=new THREE.Mesh(new THREE.PlaneGeometry(9.0,5.1),new THREE.MeshBasicMaterial({color:0x07060a,transparent:true,opacity:0.92,depthWrite:false})); tileBack.position.z=-0.05; tileG.add(tileBack);
+const tileTitle=textSprite(T('1,056 个发球局面 · 偏离理论的只有 5.3%','1,056 server–returner matchups · only 5.3% deviate'),{color:'#fff4dc',size:0.5,glow:'rgba(255,191,71,0.9)'},tileG);
+const tileNote=textSprite(T('纯随机也会有约 5%','~5% expected by pure chance'),{color:'#e8f6ff',size:0.4},tileG);
 const yearCache={}; function yearSprite(y){ if(!yearCache[y]) yearCache[y]=textSprite(String(y),{color:'#fff4dc',size:1.2,font:'800 140px "Inter",sans-serif',glow:'rgba(255,191,71,1)'}); return yearCache[y]; }
 
 // ---------- 段 7：关键分 ----------
@@ -264,8 +270,19 @@ const kpLabs=[textSprite(T('其他分','Other points'),{color:'#ffe6d8',size:0.4
 const kpNums=[[0.483,0.085,0.432],[0.505,0.081,0.414]];
 const kpNumS=[textSprite(T('外角 48.3% → 50.5%','Wide 48.3% → 50.5%'),{color:'#ffd2bc',size:0.5,glow:'rgba(255,122,61,1)'},kpBars),textSprite(T('二发打反手 69.0% → 71.6%','2nd serves to backhand 69.0% → 71.6%'),{color:'#ffd2bc',size:0.5,glow:'rgba(255,122,61,1)'},kpBars)];
 const kpWin=[textSprite(T('外角 61.8%','Wide 61.8%'),{color:'#ffd2bc',size:1.3,glow:'rgba(255,122,61,1)'}),textSprite(T('中路 62.0%','T 62.0%'),{color:'#c9ffe9',size:1.3,glow:'rgba(52,245,168,1)'})];
-const kpTitle=textSprite(T('破发点 · 2023–2026 男子比赛','Break points · men 2023–26'),{color:'#ffe6d8',size:0.55});
+const kpTitle=textSprite(T('关键分上，理论还成立吗？','Does it still hold on the big points?'),{color:'#fff0e6',size:0.7,glow:'rgba(255,122,61,1)'});
 const kpOpen=flatRing(0x34f5a8);
+const KP_DATA=[[T('局点','Game point'),[0.662,0.659],'66.2% · 65.9%',null],[T('破发点','Break point'),[0.618,0.620],'61.8% · 62.0%',null],[T('盘点','Set point'),[0.651,0.658],'65.1% · 65.8%',null],[T('赛点','Match point'),[0.662,0.632],'66.2% · 63.2%',T('样本小 · 差别不显著','small sample · not significant')]];
+const KP=KP_DATA.map(([nm,v,txt,note])=>{ const g=new THREE.Group(); scene.add(g);
+  const panel=new THREE.Mesh(new THREE.PlaneGeometry(3.0,4.6),new THREE.MeshBasicMaterial({color:0x2a1206,transparent:true,opacity:0,depthWrite:false})); panel.position.y=1.9; g.add(panel);
+  const fr=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.0,4.6)),new THREE.LineBasicMaterial({color:0xffb08a,transparent:true,opacity:0.6})); fr.position.y=1.9; g.add(fr);
+  const cols=[0,1].map(j=>{ const m=new THREE.Mesh(new THREE.CylinderGeometry(0.36,0.36,1,40,1,true),new THREE.MeshBasicMaterial({color:j?0x34f5a8:0xff7a3d,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false})); m.geometry.translate(0,0.5,0); m.position.set(j?0.55:-0.55,0.1,0.05); g.add(m); return m; });
+  const caps=[0,1].map(j=>{ const c=glowSprite(j?0x34f5a8:0xff7a3d,0.9,0,g); c.position.x=j?0.55:-0.55; return c; });
+  const name=textSprite(nm,{color:'#fff0e6',size:0.55,glow:'rgba(255,122,61,1)'},g); name.position.set(0,4.55,0.1);
+  const vals=textSprite(txt,{color:'#ffffff',size:0.5,font:'800 120px "Inter",sans-serif'},g); vals.position.set(0,-0.35,0.1);
+  const nt=note?textSprite(note,{color:'#ffcfb8',size:0.3},g):null; if(nt) nt.position.set(0,-0.85,0.1);
+  return {g,panel,cols,caps,name,vals,note:nt,v}; });
+const kpLegend=textSprite(T('橙＝外角　绿＝中路　· 2023–2026 男子一发得分率','Orange = wide · Green = T · men’s first-serve win rates 2023–26'),{color:'#ffe6d8',size:0.4});
 
 // ---------- 段 8：换边珠链 ----------
 const chainG=new THREE.Group(); scene.add(chainG);
@@ -309,7 +326,7 @@ function hideAll(){
   reticle.visible=false; op(hookQ,0); op(hookTitle,0); op(hookSub,0); for(const k in cornerGlow) cornerGlow[k].material.opacity=0;
   yearG.visible=false; matG.visible=false; brPanel.visible=false; op(rpsLabel,0); rpsWin.material.opacity=0; balG.visible=false; chide(rain); rainCols.forEach(c=>c.g.visible=false);
   for(const k in ERA){ op(ERA[k].titleS,0); if(ERA[k].labS) ERA[k].labS.forEach(s=>op(s,0)); } for(const y in yearCache) op(yearCache[y],0);
-  weakZone.material.opacity=0; kpBars.visible=false; kpWin.forEach(s=>op(s,0)); op(kpTitle,0); kpOpen.material.opacity=0;
+  weakZone.material.opacity=0; kpBars.visible=false; KP.forEach(k=>{ k.g.visible=false; }); op(kpLegend,0); tileG.visible=false; kpWin.forEach(s=>op(s,0)); op(kpTitle,0); kpOpen.material.opacity=0;
   chainG.visible=false; treeG.visible=false; gauge.material.opacity=0; gaugeBg.material.opacity=0; op(latestTitle,0); op(latestSub,0); op(latestNote,0);
   coin.visible=false; coinGlow.visible=false; op(endLine,0); for(const k in text3D) t3op(text3D[k],0);
   beamMat.uniforms.uOp.value=0; flareLight.visible=false; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; }
@@ -412,14 +429,14 @@ function shotTheory(u,D){
   brEq.position.set((c.x-0.5)*4+0.1,(c.y-0.5)*4+0.55,0.05); op(brEq,ss(10.2,10.8,v));
 }
 function shotBalance(u,D){
-  courtG.visible=true; balG.visible=true; look(Math.sin(u*0.08)*2.5,4.2,12.5,0,2.6,0); beamMat.uniforms.uOp.value=0.18; beamMat.uniforms.uC.value.set(0x9affd8);
+  courtG.visible=true; balG.visible=true; look(Math.sin(u*0.08)*2.5,4.6,14.5,0,3.2,0); beamMat.uniforms.uOp.value=0.18; beamMat.uniforms.uC.value.set(0x9affd8);
   // 0–6 s：33 和 51 颗光点按次数落进托盘，天平倒向多的一边；6–12 s：得分率光柱长出来（64%／63%），天平回到水平
-  const nL=33,nR=51; const pour=ss(0.5,5.5,u); const rise=ss(6.5,10,u);
+  const {nL,nR,rL,rR}=BAL; const pour=ss(0.5,5.5,u); const rise=ss(6.5,10,u);
   const damp=u>10?Math.exp(-(u-10)*1.4)*Math.cos((u-10)*5)*0.05:0;
-  const ang=lerp(0.16*pour,(0.64-0.63)*0.6,ss(7,10.5,u))+damp; beam.rotation.z=-ang;
-  pans.forEach(p=>{ p.g.rotation.z=ang; const rate=p.s<0?0.64:0.63; p.col.scale.y=Math.max(0.001,rise*rate*4.2); p.cap.position.y=-0.88+rise*rate*4.2; p.cap.material.opacity=rise;
+  const ang=lerp(-0.16*pour,(rL-rR)*0.6,ss(7,10.5,u))+damp; beam.rotation.z=-ang; // 先按次数倒向外角（多的一边），再按得分率回到几乎水平
+  pans.forEach(p=>{ p.g.rotation.z=ang; const rate=p.s<0?rL:rR; p.col.scale.y=Math.max(0.001,rise*rate*4.2); p.cap.position.y=-0.88+rise*rate*4.2; p.cap.material.opacity=rise;
     p.name.position.set(p.s*0.6,-1.75,0.6); op(p.name,ss(1,2,u));
-    const num=t3d(p.s<0?'b64':'b63',p.s<0?'64%':'63%',p.s<0?0x34f5a8:0x4fe3ff,0.5); const wp=new THREE.Vector3(); p.g.getWorldPosition(wp); num.g.position.set(wp.x,wp.y-0.88+rise*rate*4.2+0.75,wp.z); num.g.quaternion.copy(camera.quaternion); t3op(num,ss(9,10,u)); });
+    const num=t3d(p.s<0?'bL':'bR',p.s<0?'69.7%':'71.1%',p.s<0?0x34f5a8:0x4fe3ff,0.5); const wp=new THREE.Vector3(); p.g.getWorldPosition(wp); num.g.position.set(wp.x,wp.y-0.88+rise*rate*4.2+0.75,wp.z); num.g.quaternion.copy(camera.quaternion); t3op(num,ss(9,10,u)); });
   for(let i=0;i<84;i++){ const left=i<nL, j=left?i:i-nL, n=left?nL:nR; const t0=0.5+5*j/n; const a=ss(t0,t0+0.4,u);
     const pw=new THREE.Vector3(); pans[left?0:1].g.getWorldPosition(pw); fseed=500+i; const ox=gauss()*0.3, oz=gauss()*0.3;
     cset(balDots,i,pw.x+ox,lerp(pw.y+4,pw.y-0.84+0.05*(j%5),a),pw.z+oz,left?0.3:0.35,left?1:0.9,left?0.7:1,a>0?1:0); } cdone(balDots);
@@ -427,48 +444,34 @@ function shotBalance(u,D){
   balTitle.position.set(0,6.4,0); op(balTitle,ss(0.3,1.2,u));
 }
 function shotRain(u,D){
-  // 三个年代：0–8.5 s 1974–97 录像（3,026 个光点＝3,026 个一发）；8.5–16 s 鹰眼近 50 万（取样 2.4 万粒）；16–26 s 我们算的 2023–26
-  courtG.visible=true; const era=u<8.5?'ww':u<16?'hawk':'now', e0=era==='ww'?0:era==='hawk'?8.5:16, v=u-e0; setupRain(era);
-  const n=era==='ww'?3026:RAIN_N; const fall=era==='ww'?5:5.5;
+  // 0–11 s：2023–26 年男子一发的光点暴雨（取样 2.4 万粒），外角／中路两根光柱长到几乎同一高度；11–20 s：1,056 块方砖铺满半空，56 块亮红（5.3%）
+  courtG.visible=true; setupRain('now'); const fall=5.5, v=u;
   const k=ss(0,3,u); look(lerp(-0.5,1.0,k)+Math.sin(u*0.1)*0.6,lerp(6,9,k),lerp(5,4.5,k),-1.9,lerp(0.3,1.8,k),-SL-0.5);
-  for(let i=0;i<RAIN_N;i++){ if(i>=n){ cset(rain,i,0,-99,0,0,0,0,0); continue; } const [x,z,d,wide,sx,h]=RAIN[i];
-    const t0=d*fall, a=clamp((v-t0)/1.2); const y=lerp(h,0.03,a*a); const c=wide?[1,0.75,0.28]:[0.8,0.92,1]; cset(rain,i,lerp(x+sx,x,a),y,lerp(z-6,z,a),c[0],c[1],c[2],v>t0?(a<1?0.9:0.55):0); } cdone(rain);
-  rain.material.uniforms.uSize.value=era==='ww'?0.11:0.07;
-  const vv=ERA[era].v; const rise=ss(fall+0.5,fall+2.5,v);
-  rainCols.forEach((c,i)=>{ c.g.visible=true; c.g.position.set(i===0?-SW+0.45:-0.45,0,-SL+0.7); c.col.scale.y=Math.max(0.001,rise*vv[i]*4); c.cap.position.y=rise*vv[i]*4; c.cap.material.opacity=rise; c.ring.material.opacity=rise*0.6; });
-  if(ERA[era].labS) ERA[era].labS.forEach((s,i)=>{ s.position.set(i===0?-SW+0.2:-0.2,rise*vv[i]*4+0.8,-SL+0.7); op(s,ss(fall+2,fall+2.6,v)); });
-  const ttl=ERA[era].titleS; ttl.position.set(-1.9,3.9,-SL-4.5); op(ttl,ss(0.2,0.8,v)*(1-ss((era==='now'?10:7.2),(era==='now'?10:7.6),v)));
-  const yr=era==='ww'?Math.round(lerp(1974,1997,ss(0,4,v))):era==='hawk'?Math.round(lerp(2005,2009,ss(0,3,v))):Math.round(lerp(2023,2026,ss(0,3,v)));
-  const ys=yearSprite(yr); ys.position.set(3.2,3.3,-SL-3); op(ys,0.95);
+  for(let i=0;i<RAIN_N;i++){ const [x,z,d,wide,sx,h]=RAIN[i];
+    const t0=d*fall, a=clamp((v-t0)/1.2); const y=lerp(h,0.03,a*a); const c=wide?[1,0.75,0.28]:[0.8,0.92,1]; cset(rain,i,lerp(x+sx,x,a),y,lerp(z-6,z,a),c[0],c[1],c[2],v>t0?(a<1?0.9:0.55)*(1-0.85*ss(10.5,11.5,u)):0); } cdone(rain);
+  rain.material.uniforms.uSize.value=0.07;
+  const vv=ERA.now.v; const rise=ss(fall+0.5,fall+2.5,v);
+  rainCols.forEach((c,i)=>{ c.g.visible=u<11.5; c.g.position.set(i===0?-SW+0.45:-0.45,0,-SL+0.7); c.col.scale.y=Math.max(0.001,rise*vv[i]*4); c.cap.position.y=rise*vv[i]*4; c.cap.material.opacity=rise; c.ring.material.opacity=rise*0.6; });
+  ERA.now.labS.forEach((s,i)=>{ s.position.set(i===0?-SW+0.2:-0.2,rise*vv[i]*4+0.8,-SL+0.7); op(s,ss(fall+2,fall+2.6,v)*(1-ss(10.5,11.2,v))); });
+  const ttl=ERA.now.titleS; ttl.position.set(-1.9,3.9,-SL-4.5); op(ttl,ss(0.2,0.8,v)*(1-ss(10.5,11.2,v)));
+  const tw=ss(11,12.5,u); tileG.visible=tw>0.01; tileG.position.copy(camera.position).add(new THREE.Vector3(0,0.2,-12).applyQuaternion(camera.quaternion)); tileG.quaternion.copy(camera.quaternion);
+  const cols=44, rows=24, m4=new THREE.Matrix4(), col=new THREE.Color();
+  for(let i=0;i<TILES;i++){ const r=Math.floor(i/cols), c=i%cols; const appear=ss(11+(i/TILES)*1.8,11.3+(i/TILES)*1.8,u);
+    m4.compose(new THREE.Vector3((c-cols/2+0.5)*0.19,(rows/2-r-0.5)*0.19,0),new THREE.Quaternion(),new THREE.Vector3(appear,appear,appear)); tileMesh.setMatrixAt(i,m4);
+    const bad=TILE_ORDER.indexOf(i)<TILE_REJ; const red=bad?ss(14,15,u):0; col.setRGB(lerp(0.2,1.6,red),lerp(0.24,0.2,red),lerp(0.3,0.15,red)); if(red>0) tileMesh.material.emissiveIntensity=0.12; tileMesh.setColorAt(i,col); }
+  tileMesh.instanceMatrix.needsUpdate=true; tileMesh.instanceColor.needsUpdate=true;
+  tileTitle.position.set(0,2.95,0); op(tileTitle,ss(12.5,13.5,u)); tileNote.position.set(0,-2.95,0); op(tileNote,ss(15,16,u));
   proj('colWide',new THREE.Vector3(-SW+0.45,rise*vv[0]*4,-SL+0.7)); proj('colT',new THREE.Vector3(-0.45,rise*vv[1]*4,-SL+0.7));
 }
-function shotKeypoint(u,D){
-  // 破发点：接发人反手一侧亮起「弱点」；比例条只往那边挪一小截；接发人往反手挪护，另一边露出空当
-  const k=ss(9,15,u); players(u,{serveK:u>15?ss(15,17.5,u)*0.85:0,lean:lerp(0,-0.9,ss(9,12,u))});
-  beamMat.uniforms.uOp.value=0.2; beamMat.uniforms.uC.value.set(0xffb08a);
-  look(lerp(3.5,2,k),lerp(6.5,4.6,k),lerp(L+8,L+6,k),-1.6,0.6,-5);
-  weakZone.position.set(-SW/2,0.02,-SL/2-0.1); weakZone.material.opacity=ss(1,2.5,u)*(0.35+0.15*Math.sin(u*6));
-  kpBars.visible=true; kpBars.position.copy(camera.position).add(new THREE.Vector3(0,-1.25,-6).applyQuaternion(camera.quaternion)); kpBars.quaternion.copy(camera.quaternion);
-  const mix=ss(4,6.5,u); const nums=kpNums[0].map((x,i)=>lerp(x,kpNums[1][i],mix)); const totW=4.2; let x0=-totW/2;
-  kpSeg.forEach((m,i)=>{ const w=nums[i]/nums.reduce((a,b)=>a+b)*totW; m.scale.x=Math.max(0.001,w*ss(2.5,3.5,u)); m.position.set(x0+w/2,0,0); x0+=w; });
-  op(kpLabs[0],ss(2.5,3.5,u)*(1-mix)); kpLabs[0].position.set(-totW/2-0.9,0,0); op(kpLabs[1],mix); kpLabs[1].position.set(-totW/2-0.9,0,0);
-  kpNumS[0].position.set(0,0.55,0); op(kpNumS[0],ss(5,6,u)*(1-ss(10.5,11,u))); kpNumS[1].position.set(0,0.55,0); op(kpNumS[1],ss(11,12,u)*(1-ss(16.5,17,u)));
-  op(kpTitle,ss(0.5,1.5,u)*(1-ss(17,18,u))); kpTitle.position.copy(camera.position).add(new THREE.Vector3(0,2.0,-7).applyQuaternion(camera.quaternion));
-  // 15 s 起：发到另一边（中路）——对手在护反手，那边是空当
-  if(u>15){ const sk=ss(15,17.5,u)*0.85; const tau=ss(16.4,17.6,u)*1.4; const p=tau>0?serveAt(TGT.T,tau):(tossBall(sk)||new THREE.Vector3(0,-9,0)); showBall(p,u>15.6); setTrail(t=>serveAt(TGT.T,t),tau,[0.4,1,0.7],tau>0.05);
-    const a=u-17.3; kpOpen.position.set(TGT.T.x,0.03,TGT.T.z); kpOpen.scale.setScalar(1+Math.max(0,a)*5); kpOpen.material.opacity=a>0?Math.max(0,0.9-a*0.9):0; }
-  // 18 s 起：破发点上两边得分率仍相等
-  kpWin.forEach((s,i)=>{ s.position.set(i===0?-SW-0.6:0.9,2.4,-SL+0.6); op(s,ss(19,20,u)); });
-}
-function shotChains(u,D){
-  chainG.visible=true; look(0,0.6,13,0,0.3,0); const shift=u*1.6, gap=0.62;
-  chains.forEach(ch=>{ const y=ch.row?-1.6:1.9; const pts=[];
-    ch.beads.forEach((b,i)=>{ const x=i*gap-shift-9; const yy=y+(ch.seq[i]?0.32:-0.32); b.position.set(x,yy,0); b.visible=x>-13&&x<13; if(x>-13&&x<13) pts.push(new THREE.Vector3(x,yy,-0.05)); });
-    if(pts.length>1){ setLine(ch.line,pts); ch.line.material.opacity=0.8; } });
-  chainLabs[0].position.set(-5.2,3.1,0); op(chainLabs[0],ss(0.3,1.2,u)); chainLabs[1].position.set(-5.8,-0.4,0); op(chainLabs[1],ss(1,2,u));
-  scan.position.set(lerp(-11,11,(u*0.12)%1),-1.6,0.3); scan.scale.y=0.5;
-  chainStat.position.set(0,-3.4,0); op(chainStat,ss(7,8,u));
-  const n=t3d('c418','41.8%',0xff4fd8,0.9); n.g.position.set(5.8,-3.4,0); t3op(n,0);
+function shotKeypoints(u,D){
+  // 局点／破发点／盘点／赛点：四张悬浮卡片依次点亮，每张两根光柱（外角、中路）随心跳升到几乎同一高度
+  courtG.visible=false; look(0,3.6,15.5,0,3.0,1.6); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
+  op(kpTitle,ss(0.3,1.2,u)); kpTitle.position.set(0,6.3,1.6);
+  KP.forEach((k,i)=>{ const t0=1.5+i*4.2; const a=ss(t0,t0+0.8,u); k.g.visible=a>0.01; k.g.position.set(-5.25+i*3.5,0.75,1.6); k.g.scale.setScalar(lerp(0.7,1,a));
+    const beat=Math.exp(-Math.pow(((u-t0)%0.85)/0.08,2))*(u>t0&&u<t0+3?1:0);
+    k.cols.forEach((c,j)=>{ const h=ss(t0+0.6,t0+2.2,u)*k.v[j]*3.6; c.scale.y=Math.max(0.001,h); c.material.opacity=0.45+0.4*beat; k.caps[j].position.y=0.1+h; k.caps[j].material.opacity=ss(t0+0.6,t0+1,u); });
+    k.panel.material.opacity=0.35*a; op(k.name,a); op(k.vals,ss(t0+2,t0+2.6,u)); if(k.note) op(k.note,ss(t0+2.6,t0+3.2,u)); });
+  op(kpLegend,ss(1.5,2.3,u)); kpLegend.position.set(0,-0.75,1.8);
 }
 function shotLatest(u,D){
   treeG.visible=true; look(lerp(-1,1,ss(0,D,u)),2.4,12.5,1.4,2.0,0);
@@ -513,14 +516,14 @@ let FX_SHAKE=0, FX_FLASH=0;
 function setTransition(t){ let z=0,f=0; for(const sc of TL.sections){ const d=t-sc.t0; if(sc.t0>0&&d>=0&&d<0.45){ const k=1-d/0.45; z=k*k*0.9; f=Math.max(0,1-d/0.12)*0.35; } }
   finalPass.uniforms.uZoom.value=z; finalPass.uniforms.uFlash.value=Math.max(f,FX_FLASH); finalPass.uniforms.uT.value=t; finalPass.uniforms.uShake.value=FX_SHAKE; }
 function setPalette(t){ // 段落开头 1 秒内从上一段的配色过渡过来
-  const i=TL.sections.findIndex(s=>t>=s.t0&&t<s.t1); const cur=PAL[TL.sections[Math.max(0,i)].kind]||PAL.hook, prev=i>0?PAL[TL.sections[i-1].kind]:cur;
+  const i=TL.sections.findIndex(s=>t>=s.t0&&t<s.t1); const cur=PAL[TL.sections[Math.max(0,i)].kind]||PAL.hook, prev=i>0?(PAL[TL.sections[i-1].kind]||cur):cur;
   const k=i>0?ss(TL.sections[i].t0,TL.sections[i].t0+1.0,t):1;
   skyMat.uniforms.uTop.value.set(prev.top).lerp(C(cur.top),k); skyMat.uniforms.uHz.value.set(prev.hz).lerp(C(cur.hz),k); skyMat.uniforms.uVi.value.set(prev.vi).lerp(C(cur.vi),k);
   scene.userData.grid.uniforms.uC.value.set(prev.a).lerp(C(cur.a),k).multiplyScalar(0.55); return C(prev.a).lerp(C(cur.a),k); }
 
 function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[TL.sections.length-1]; const u=t-sc.t0, D=sc.t1-sc.t0;
   hideAll(); FX_SHAKE=0; FX_FLASH=0;
-  ({hook:shotHook,arena:shotArena,pile:shotPile,theory:shotTheory,balance:shotBalance,rain:shotRain,keypoint:shotKeypoint,chains:shotChains,latest:shotLatest,coin:shotCoin})[sc.kind](u,D);
+  ({hook:shotHook,arena:shotArena,pile:shotPile,theory:shotTheory,balance:shotBalance,rain:shotRain,keypoints:shotKeypoints,latest:shotLatest,coin:shotCoin})[sc.kind](u,D);
   return sc.kind; }
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t);
   const s=shotTL(t); const ac=setPalette(t); setTransition(t); setMotes(t,ac);
