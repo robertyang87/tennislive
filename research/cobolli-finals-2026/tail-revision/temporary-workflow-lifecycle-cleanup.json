@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-11-04T13:09:51.157416+00:00",
+  "scope": "Lifecycle cleanup of completed temporary repair workflow; required current CI otherwise fails3existing policy tests. No test or shared gate changed.",
+  "path": ".github/workflows/fix-slot8-anims.yml",
+  "removed_file_sha256": "2dcca22a3395fb64fa60d7b07dde314d8b565838f565c9d50f1caad6a99c1edc",
+  "existing_instruction": "Remove after the repaired film ships.",
+  "repair_run": {
+    "id": 41827515700,
+    "html_url": "https://github.com/robertyang87/tennislive/actions/runs/41827515700",
+    "head_sha": "1085a9e3039a668ade452ba0ba50d11d4fd28d21",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-11-04T12:20:09Z"
+  },
+  "shipping_confirmation": {
+    "key": "pushplus:reel:wta-finals-slot8-2026:fd87830324fca0dbdd9f4847d7ede3bf8bde55fce120552f81dedbda14fee433",
+    "fingerprint": "fd87830324fca0dbdd9f4847d7ede3bf8bde55fce120552f81dedbda14fee433",
+    "status": "sent",
+    "at": "2026-11-04T13:05:35Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/41834668760",
+    "pushplus_receipt": "f91dfaffb9bc4f71821ac3ca82379da3",
+    "message_url": "https://www.pushplus.plus/shortMessage/f91dfaffb9bc4f71821ac3ca82379da3"
+  },
+  "root_instruction": "Parent independently verified lifecycle condition and instructed removal in this same evidence commit."
+}

@@ -1,0 +1,44 @@
+{
+  "status": "pass",
+  "scope": "Root actual V5 tail visual check plus sampled unchanged-prefix check; separate native and independent checks and final exact-head CI still apply",
+  "checked_at": "2026-11-04T13:04:11.737129+00:00",
+  "movie_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+  "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+  "reviewed_prefix_contacts": [
+    0,
+    4,
+    6,
+    7
+  ],
+  "reviewed_dense_tail_contacts": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "dense_tail_frames_actually_opened": 38,
+  "full_size_tail_frames": [
+    280.712,
+    286.416,
+    294.028,
+    303.932
+  ],
+  "findings": {
+    "standalone_tail_cards": 1,
+    "photo_tail_segments": 3,
+    "old_tail_seconds": 47.048,
+    "new_tail_seconds": 31.216,
+    "shorter_seconds": 15.832,
+    "full_film_seconds": 313.84,
+    "subject_identity": "Shanghai Cobolli, same-match Lyon Musetti explicitly named in narration, RG Cobolli season bookend; no false qualification-day celebration",
+    "canvas_and_subtitles": "Full canvas; eyes and mouth clear; actual qualification date and captions legible; source info cards retained on sampled RG/Wimbledon/US footage",
+    "closing": "One date card, then photo and native outro; no five-card sequence"
+  },
+  "voice_evidence": {
+    "method": "automated_voice_suite",
+    "pass": true,
+    "actual_references": 38,
+    "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b"
+  },
+  "method": "Actual encoded film frames opened. Not a continuous full-film playback and not human listening. Full91-frame extraction also supplied for independent reviewer; root opened selected prefix contact sheets, all38 dense-tail samples and four full-size tail frames."
+}
