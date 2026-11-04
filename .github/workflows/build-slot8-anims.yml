@@ -57,7 +57,7 @@ jobs:
           if [ "$WHICH" = "all" ]; then
             python3 render_anims.py a1 22 "$VER"
             python3 render_anims.py a2 18 "$VER"
-            python3 render_anims.py a3 20 "$VER"
+            python3 render_anims.py a3 17 "$VER"
             python3 render_anims.py a4 29 "$VER"
             python3 build_a5.py 34 "$VER"
           elif [ "$WHICH" = "a5" ]; then
@@ -79,7 +79,7 @@ jobs:
           for f in *.mp4; do
             key=$(echo "$f" | sed -E 's/^slot8-(a[0-9]).*/\1/')
             case "$key" in
-              a1) id=s8a1rule022;; a2) id=s8a2pnts018;; a3) id=s8a3y202420;; a4) id=s8a4draw029;; a5) id=s8a5atpc034;;
+              a1) id=s8a1rule022;; a2) id=s8a2pnts018;; a3) id=s8a3y202417;; a4) id=s8a4draw029;; a5) id=s8a5atpc034;;
             esac
             cp "$f" "$id.mp4"
             tag="source-$id"
