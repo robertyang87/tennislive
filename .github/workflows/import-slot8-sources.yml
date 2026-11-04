@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - name: cookies (same secret as match-reel)
         env:
           YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
