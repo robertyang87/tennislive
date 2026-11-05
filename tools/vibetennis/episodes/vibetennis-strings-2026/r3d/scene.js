@@ -90,9 +90,12 @@ const rimL=new THREE.PointLight(0xff3fd0,0,40,1.5); scene.add(rimL); const rimR=
 // ---------- 文字：中文用精灵（全息发光字），关键数字用 3D 立体字 ----------
 function textSprite(str,{color='#ffffff',size=1,font='700 120px "Noto Sans CJK SC","Inter",sans-serif',glow='rgba(120,200,255,0.9)'}={},group=scene){
   const c=document.createElement('canvas'); const g=c.getContext('2d'); g.font=font; const w=Math.ceil(g.measureText(str).width)+80; c.width=w; c.height=200;
-  g.font=font; g.textAlign='center'; g.textBaseline='middle'; g.shadowColor=glow; g.shadowBlur=30; g.fillStyle=color; g.fillText(str,w/2,104); g.shadowBlur=0; g.fillText(str,w/2,104);
+  g.font=font; g.textAlign='center'; g.textBaseline='middle';
+  // 字的光晕收小收淡、加一圈深色细描边，字本身略低于泛光阈值——所有者 2026-11-05「字体的光晕太亮，感觉看不清楚真正的文字」
+  g.globalAlpha=0.45; g.shadowColor=glow; g.shadowBlur=14; g.fillStyle=color; g.fillText(str,w/2,104); g.globalAlpha=1; g.shadowBlur=0;
+  g.lineJoin='round'; g.lineWidth=7; g.strokeStyle='rgba(0,0,0,0.6)'; g.strokeText(str,w/2,104); g.fillText(str,w/2,104);
   const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,opacity:0})); s.scale.set(size*w/200,size,1); group.add(s); return s; }
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,opacity:0,color:0xd8d8d8,depthTest:false})); s.renderOrder=20; /* 字永远压在 3D 物体上面，不被球拍挡住 */ s.scale.set(size*w/200,size,1); group.add(s); return s; }
 const NOTEXT=!!Q.get('notext');   // 封面底图：3D 里的字全部不出，标题由封面脚本自己排
 const op=(s,v)=>{ s.material.opacity=NOTEXT?0:v; };
 let FONT=null; const FONT_READY=new Promise(res=>new FontLoader().load('./node_modules/three/examples/fonts/helvetiker_bold.typeface.json',f=>{ FONT=f; res(); }));
@@ -100,7 +103,7 @@ const text3D={};
 function t3d(key,str,color,size=1,group=scene){ // 3D 立体数字：金属挤出＋发光描边
   if(text3D[key]) return text3D[key];
   const geo=new TextGeometry(str,{font:FONT,size,depth:size*0.22,curveSegments:8,bevelEnabled:true,bevelThickness:size*0.04,bevelSize:size*0.025,bevelSegments:3}); geo.center();
-  const m=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x0c1018,metalness:0.9,roughness:0.18,clearcoat:1,emissive:C(color),emissiveIntensity:0.9,transparent:true,opacity:0}));
+  const m=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x0c1018,metalness:0.9,roughness:0.18,clearcoat:1,emissive:C(color),emissiveIntensity:0.6,transparent:true,opacity:0}));
   const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,30),new THREE.LineBasicMaterial({color,transparent:true,opacity:0,blending:THREE.AdditiveBlending})); m.add(e);
   const g=new THREE.Group(); g.add(m); group.add(g); text3D[key]={g,m,e}; return text3D[key]; }
 function t3op(o,v){ if(NOTEXT) v=0; o.m.material.opacity=v; o.e.material.opacity=v*0.8; o.g.visible=v>0.003; }
@@ -161,14 +164,19 @@ function makeRacket(group=scene,{nm=16,nc=19}={}){
   // 拍喉照真拍子（所有者 2026-11-05「拍喉那块和真实的不一样」，对照 Commons「Tennis racket and ball.JPG」）：
   // 两根拍杆从拍框两侧约 4 点半／7 点半处顺着拍框切线分出来，往下收拢成拍喉，拍框底边（拍桥）和两根拍杆围出一个开口三角；
   // 再接粗握把（八角）和略大的底盖。比例按 27 英寸球拍：拍框外高 3.52（约 34 cm），全长约 7.1。
-  const TH=-A-1.25; // 两杆收拢处（拍喉底）
+  const TH=-A-0.75; // 两杆收拢处（下面拍杆沿切线走到 x=±0.15 时 y≈-A-0.746）
   const neck=new THREE.Group(); g.add(neck);   // 库仑横截面那一镜把拍子放平，只留拍框和线床
-  for(const s of [-1,1]){ const a0=-Math.PI/2+s*0.62, p0=new THREE.Vector3((B+0.06)*Math.cos(a0),(A+0.06)*Math.sin(a0),0);
-    const th=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([p0,new THREE.Vector3(s*0.62,-A-0.2,0),new THREE.Vector3(s*0.33,-A-0.85,0),new THREE.Vector3(s*0.15,TH,0)]),48,0.105,12),frameMat); th.scale.z=0.7; neck.add(th); }
-  const throat=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.19,0.45,10),frameMat); throat.position.y=TH-0.18; neck.add(throat);
+  // 2026-11-05 第二轮（所有者「弧度是拍面的切线」「开孔太大了」，对照 Safin 签名 Head 拍与 Wilson 拍的正面照）：
+  // 拍杆从拍框约 4 点／8 点处沿拍框的切线方向直着出去，收拢点只比拍框底低 0.75（开口高约拍面宽的 1/4）
+  const DL=0.85, bx=B+0.06, ay=A+0.06;
+  for(const s of [-1,1]){ const el=d=>new THREE.Vector3(s*bx*Math.sin(d),-ay*Math.cos(d),0);
+    const p0=el(DL), pre=el(DL+0.12); const dir=new THREE.Vector3(-s*bx*Math.cos(DL),-ay*Math.sin(DL),0).normalize();
+    const L=(Math.abs(p0.x)-0.15)/Math.abs(dir.x); const end=p0.clone().addScaledVector(dir,L);
+    const th=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([pre,p0,p0.clone().lerp(end,0.5),end]),48,0.1,12),frameMat); th.scale.z=0.7; neck.add(th); }
+  const throat=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.19,0.9,10),frameMat); throat.position.y=TH-0.4; neck.add(throat);
   const gripMat=new THREE.MeshPhysicalMaterial({color:0x464e63,metalness:0.15,roughness:0.55,emissive:0x101828,emissiveIntensity:0.6,transparent:true});
-  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.19,0.2,1.95,8),gripMat); handle.position.y=TH-0.4-0.975; neck.add(handle);
-  const butt=new THREE.Mesh(new THREE.CylinderGeometry(0.23,0.21,0.13,8),gripMat); butt.position.y=TH-0.4-1.95-0.065; neck.add(butt);
+  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.19,0.2,1.95,8),gripMat); handle.position.y=TH-0.85-0.975; neck.add(handle);
+  const butt=new THREE.Mesh(new THREE.CylinderGeometry(0.23,0.21,0.13,8),gripMat); butt.position.y=TH-0.85-1.95-0.065; neck.add(butt);
   const mx=[...Array(nm).keys()].map(i=>-B*0.86+i*(2*B*0.86)/(nm-1)), cy=[...Array(nc).keys()].map(i=>-A*0.86+i*(2*A*0.86)/(nc-1));
   const mains=mx.map(x=>({x,line:fatLine(0xffffff,2.2)})), crosses=cy.map(y=>({y,line:fatLine(0xffffff,2.2)}));
   [...mains,...crosses].forEach(s=>{ scene.remove(s.line); g.add(s.line); });
@@ -278,7 +286,7 @@ function shotHook(u,D){
 function R_spin(R,u,amp=0.35){ R.g.rotation.y=Math.sin(u*0.45)*amp; R.g.rotation.x=-0.08; }
 function shotGut(u,D){
   const HI=ev('hit',3.2), CO=ev('cor',10.2);
-  rk.g.visible=true; rk.g.rotation.set(0,-0.55,0); rk.g.position.set(1.2,0,0); look(lerp(4.2,3.4,ss(0,D,u)),0.9,7.8,0.4,0.0,0); DOF.on=true; DOF.focus=8.2; DOF.ap=0.00006; rk.g.updateMatrixWorld(true);
+  rk.g.visible=true; rk.g.rotation.set(0,-0.55,0); rk.g.position.set(1.2,0,0); look(lerp(4.6,3.8,ss(0,D,u)),1.2,8.8,0.4,0.35,0); DOF.on=true; DOF.focus=9.2; DOF.ap=0.00006; rk.g.updateMatrixWorld(true);
   rimL.intensity=6; rimL.position.set(-3,2,3); rimL.color.set(0xffb347);
   setBed(rk,{cm:STR.gut,cc:STR.gut,width:2.8});
   const t1=tx('gut1874',T('1874 · 第一批草地网球拍：羊肠衣','1874 · First lawn-tennis rackets: sheep gut'),{color:'#ffe9c8',size:0.5,glow:GOLD}); hud(t1,0,2.05); op(t1,ss(0.3,1,u)*(1-ss(HI-0.5,HI,u)));
@@ -298,7 +306,7 @@ function shotGut(u,D){
   const fn=tx('corN',T('牛顿最早测量这个比值 · 《自然哲学的数学原理》1687','First measured by Newton · Principia, 1687'),{color:'#ffe9c8',size:0.38}); hud(fn,0,1.55); op(fn,ss(CO+0.3,CO+1,u));
 }
 function shotSynth(u,D){
-  const SW_=ev('swap',4.0); rk.g.visible=true; R_spin(rk,u,0.25); look(0,0.3,8.2,0,0.2,0); rimL.intensity=4; rimL.position.set(-3,2,3);
+  const SW_=ev('swap',4.0); rk.g.visible=true; R_spin(rk,u,0.25); look(0,0.55,9.6,0,0.55,0); rimL.intensity=4; rimL.position.set(-3,2,3);
   const k=ss(SW_-0.2,SW_+1.2,u); const cmix=C(STR.gut).lerp(C(STR.nylon),k).getHex();
   setBed(rk,{cm:cmix,cc:cmix,width:2.6});
   // 水珠挂在线上（怕潮）、交叉点冒火花（磨损）——换成合成线后消失
