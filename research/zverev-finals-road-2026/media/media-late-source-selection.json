@@ -1,0 +1,128 @@
+{
+  "schema": "tennislive.research.source-selection.v1",
+  "scope": "Media agent proposal only; parent owns final spec and dispatch.",
+  "review_method": "Opened full contact sheets plus .25s selected serve/rally detail frames. This is sampled original-frame visual inspection, not a claim of continuous watching or human hearing. Source ASR handled by zverev_source_audio agent.",
+  "matches": [
+    {
+      "event": "US Open 2026 final",
+      "date": "2026-09-13",
+      "players": [
+        "Alexander Zverev",
+        "Ben Shelton"
+      ],
+      "winner": "Alexander Zverev",
+      "winner_score": "6-3 7-6(2) 5-7 6-2",
+      "official_account": "US Open Tennis Championships",
+      "title": "Alexander Zverev's Title-Winning Moment | 2026 US Open",
+      "source_url": "https://www.youtube.com/watch?v=b40hO04eyLo",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-b40hO04eyLo/b40hO04eyLo.mp4",
+      "selected_window": [
+        9.0,
+        54.3
+      ],
+      "point": "9.0 close-up before service, 10.5 court-wide pre-serve,11.5 toss/12.5 service strike,13.0-14.0 return/rally/terminal point,15.0 natural non-reaction,16-25 delayed realisation,26.0 arms-open smile;28.5 headband gesture. Same championship point board40-15 before point. No first-serve fault seen in continuous quarter-second sampled service sequence.",
+      "audio": "Short window retains full umpire match-call plus two does-not-know commentary sentences and There you go; exact new ASR package pending audio agent. Long window keeps additional second-major/first-USOpen statement.",
+      "existing_review": "native/data/audio_reviews/year-end-no1-zverev-2026/uso-final-last.json",
+      "extra_point": null,
+      "source_path": "/workspace/zverev-finals-production/research/media-late/b40hO04eyLo.mp4",
+      "source_sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+      "video": {
+        "codec_name": "av1",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "60000/1001"
+      },
+      "duration": 303.275828,
+      "reviewed_contact": "/workspace/zverev-finals-production/research/media-late/b40hO04eyLo-contact.jpg",
+      "reviewed_point_detail": "/workspace/zverev-finals-production/research/media-late/b40hO04eyLo-point-detail.jpg",
+      "crop": {
+        "fit": "crop",
+        "cx": 0.5,
+        "track": false,
+        "source_crop_x": [
+          555,
+          1365
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      },
+      "optional_compact_window": [
+        9.0,
+        28.5
+      ],
+      "parent_decision": "Parent selected9.0-54.3 to preserve complete second-major/first-USOpen commentary."
+    },
+    {
+      "event": "Shanghai 2026 semifinal",
+      "date": "2026-10-17",
+      "players": [
+        "Alejandro Davidovich Fokina",
+        "Alexander Zverev"
+      ],
+      "winner": "Alejandro Davidovich Fokina",
+      "winner_score": "5-7 6-4 6-3",
+      "official_account": "ATP Tour / @ATPTour",
+      "title": "Alejandro Davidovich Fokina vs Alexander Zverev Highlights | Shanghai 2026 Semi-Final",
+      "source_url": "https://www.youtube.com/watch?v=NKFVL_lELNE",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-NKFVL_lELNE/NKFVL_lELNE-ca0f94dbbb70dc2f.mp4",
+      "selected_window": [
+        137.2,
+        153.2
+      ],
+      "point": "137.2 Davidovich close-up before service,138.0 court-wide pre-serve,138.75 toss/139.5 strike,140-141.25 terminal rally,142.5 actual Davidovich smile,150.0 Zverev walk to net,153.0 net handshake begins. Board Zverev7 4 3 / Davidovich5 6 5,15-40 before point,final7 4 3/5 6 6 after.",
+      "audio": "First full commentary sentence142.76-152.74; safe cut153.2,next sentence157.38. Exact captions available source_asr and audio agent.",
+      "publisher_endcard_at": 184.68,
+      "existing_review": "native/data/audio_reviews/davidovich-zverev-shanghai-2026-sf.json",
+      "extra_point": null,
+      "source_path": "/workspace/zverev-finals-production/research/media-late/NKFVL_lELNE.mp4",
+      "source_sha256": "ca0f94dbbb70dc2f9318a792af879f25c6da863edd151928e14a43040dc752c4",
+      "video": {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "25/1"
+      },
+      "duration": 198.112653,
+      "reviewed_contact": "/workspace/zverev-finals-production/research/media-late/NKFVL_lELNE-contact.jpg",
+      "reviewed_point_detail": "/workspace/zverev-finals-production/research/media-late/NKFVL_lELNE-point-detail.jpg",
+      "crop": {
+        "fit": "crop",
+        "cx": 0.5,
+        "track": false,
+        "source_crop_x": [
+          555,
+          1365
+        ],
+        "output": [
+          1080,
+          1440
+        ]
+      }
+    }
+  ],
+  "unselected": [
+    {
+      "event": "Madrid2026final",
+      "source_url": "https://www.youtube.com/watch?v=U111uQCv6yc",
+      "official_account": "Tennis TV (verified)",
+      "title": "Jannik Sinner vs Alexander Zverev For The Title | Madrid 2026 Final Highlights",
+      "date": "2026-05-03",
+      "winner": "Jannik Sinner",
+      "winner_score": "6-1 6-2",
+      "status": "Official source URL and match metadata discovered through web search; not downloaded or visually reviewed. Native yt-dlp failed proxy403; no archived Release found. Recommend same-match official photo+one sentence for compact film, or parent may dispatch native probe if wants selected full match point."
+    },
+    {
+      "event": "Paris2026R2vsMusetti",
+      "status": "No actual official video URL discovered across web queries, TennisTV index still cachedNov2; local official feed lists all failedProxyError, not evidence no footage exists. Use verified same-match official photo/short narration if parent finds one. Do not substitute2025Vienna/2022Madrid/Nov2Hurkacz footage."
+    },
+    {
+      "rejected_source_key": "_TGshnZNILc",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-_TGshnZNILc/_TGshnZNILc.mp4",
+      "actual_identity": "Casper Ruud vs Rafael Jodar, Paris2026. BoardRUUD/JODAR at0/30/90/180, Jodar close-up150. Complete ASR talksRuud. Not Zverev/Musetti.",
+      "source_sha256": "113d8068baded0e1348ed3b89f6572434ca8842106a293123c251d3fbcda6c26",
+      "reviewed_contact": "/workspace/zverev-finals-production/research/media-late/_TGshnZNILc-contact.jpg"
+    }
+  ]
+}

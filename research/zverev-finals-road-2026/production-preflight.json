@@ -1,0 +1,31 @@
+{
+  "spec_sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3",
+  "sources": 5,
+  "complete_terminal_points": 5,
+  "extra_rallies": 0,
+  "source_bilingual_cues": 23,
+  "photographic_groups": 14,
+  "unique_true_photographs": 24,
+  "frozen_request_count": 16,
+  "bundle_sha256": "0b02895caa5e19d65bd0d4f22eedaa798e3c8eb061168fdb967bb55465a628b7",
+  "checks": {
+    "native_dry_run": "passed;zero subtitlewide/shorttail warnings",
+    "native_actual_narration": "passed;all14bodyrequests+.4s",
+    "all_frozen_requests_wordboundary": "passed;16requests,no fake/protectedpause/speed failures;notphonetic approval",
+    "target_tests": "60passed after genuine one-line baseline event classification;no tests altered",
+    "native_preview_segments": "executed;5missingprobe pictures not used as visual proof;actualsource selections and actualphotographicinput captures reviewed separately"
+  },
+  "baseline_schema_repair": {
+    "path": "specs/reels/paris-decisive-night-2026.json",
+    "commit": "2af02989",
+    "change": "Only cover.story_kind=other: this held multi-player Finals final-berth event chronology is an event story;printedcopy/images/narration/hold andpush.autofalse unchanged."
+  },
+  "transport": "Release upload actual HTTP401; use existing bounded immutable repository nativeTTS capsule, no credential changes.",
+  "pending": [
+    "Actual formal master encode and native QC",
+    "Actual automated5voice_suite on finalinputs/film",
+    "Root and independent actual finalmovie visual review",
+    "Exact finalhead requiredCI",
+    "Normal merge and native PushPlus receipt/ledger"
+  ]
+}
