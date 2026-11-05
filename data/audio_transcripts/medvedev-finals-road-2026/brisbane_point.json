@@ -1,52 +1,174 @@
 {
   "schema": "tennislive.foreground-audio-transcript.v1",
-  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-DTXfZGAjiRl/DTXfZGAjiRl.mp4",
-  "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
+  "original_source_url": "https://www.youtube.com/watch?v=XLyIURu_Yq0",
+  "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
   "method": "asr_cross_checked",
-  "reviewer": "OpenAI Codex source-audio audit agent; actual raw ASR and local audio classifier comparison, not human listening",
-  "reviewed_at": "2026-11-05T06:44:43.960337+00:00",
+  "reviewer": "OpenAI Codex source-audio audit agent; directly compared six actual original-source ASR outputs, word timestamps and retained official-channel auto captions; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T09:15:50.133416+00:00",
   "status": "complete",
-  "reviewed_from": 0,
-  "reviewed_to": 17.5,
+  "reviewed_from": 443.84,
+  "reviewed_to": 465.0,
   "human_listening_performed": false,
-  "foreground_english": [],
-  "uncertain_spans": [],
-  "asr_evidence": [
+  "foreground_english": [
     {
-      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/medium.en.json",
-      "sha256": "747e777372001896b169346a48b1089148350efdc98f68128654faf753a3a0e6",
-      "model": "medium.en",
-      "clip": [
-        0,
-        41.237333
-      ],
-      "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1"
+      "start": 453.58,
+      "end": 461.16,
+      "en": "Finishes in style as 2026 starts in magical fashion for Daniil Medvedev.",
+      "zh": "漂亮收官，2026梦幻开局！"
     },
     {
-      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/small.en.json",
-      "sha256": "ae7b0dda0a56bdf005166efa07eaf5a00799e8fb533d5536abb7de9c92b65ad7",
+      "start": 461.5,
+      "end": 464.36,
+      "en": "He is the Brisbane International champion.",
+      "zh": "他是布里斯班国际赛冠军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/0fefbe58bfa1d734ca8346e697f64d2138897089/small.en.json",
+      "sha256": "e9841c2d1ef71a6efe4a5833d6092563db04428cf5f7a25e632c5c03ba242398",
       "model": "small.en",
       "clip": [
-        0,
-        41.237333
+        405,
+        475
       ],
-      "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1"
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "repository_path": "data/source_asr/XLyIURu_Yq0/small.en.json",
+      "fixed_commit": "0fefbe58bfa1d734ca8346e697f64d2138897089",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/0fefbe58bfa1d734ca8346e697f64d2138897089/data/source_asr/XLyIURu_Yq0/small.en.json",
+      "git_blob_sha1": "ec8b5740d4e0cf471976e3235fdf4babdfeac5b6",
+      "identity_note": "Unchanged retained raw; SHA256 and Git blob SHA1 equal pre-existing verified snapshot index and native retained file. No times or ASR words altered.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/0fefbe58bfa1d734ca8346e697f64d2138897089/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/0fefbe58bfa1d734ca8346e697f64d2138897089/medium.en.json",
+      "sha256": "d266fd8c12ffaa3a3c33c89e11c850f2698da1692b33f3e18b8d185861972b5d",
+      "model": "medium.en",
+      "clip": [
+        405,
+        475
+      ],
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "repository_path": "data/source_asr/XLyIURu_Yq0/medium.en.json",
+      "fixed_commit": "0fefbe58bfa1d734ca8346e697f64d2138897089",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/0fefbe58bfa1d734ca8346e697f64d2138897089/data/source_asr/XLyIURu_Yq0/medium.en.json",
+      "git_blob_sha1": "7ce5a04b3c417fa59491054a9b3937c6b6d7bbeb",
+      "identity_note": "Unchanged retained raw; SHA256 and Git blob SHA1 equal pre-existing verified snapshot index and native retained file. No times or ASR words altered.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/0fefbe58bfa1d734ca8346e697f64d2138897089/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/medium.en-443.84-465.0.json",
+      "sha256": "b067c31c5a1a8300b9e6dec94404fdf70ed5504c01712d62df9771790653462c",
+      "model": "medium.en",
+      "clip": [
+        443.84,
+        465.0
+      ],
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "method": "Fresh local faster-whisper CPU int8, cached original model; exact command retained refine_brisbane_timing.py",
+      "fixed_commit_url": null,
+      "note": "New local raw, not yet committed; do not invent a commit link.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/medium.en-443.84-465.0.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/medium.en-450.0-465.5.json",
+      "sha256": "43415c98f6b2e9a8f1fe4b01cc2464aade31e621cb8e4e2562c230d35565e996",
+      "model": "medium.en",
+      "clip": [
+        450.0,
+        465.5
+      ],
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "method": "Fresh local faster-whisper CPU int8, cached original model; exact command retained refine_brisbane_timing.py",
+      "fixed_commit_url": null,
+      "note": "New local raw, not yet committed; do not invent a commit link.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/medium.en-450.0-465.5.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/small.en-443.84-465.0.json",
+      "sha256": "0b487e54ea35a708f1c5fe118eac6850cc4295d2ed1082f88b6a329f0be564b2",
+      "model": "small.en",
+      "clip": [
+        443.84,
+        465.0
+      ],
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "method": "Fresh local faster-whisper CPU int8, cached original model; exact command retained refine_brisbane_timing.py",
+      "fixed_commit_url": null,
+      "note": "New local raw, not yet committed; do not invent a commit link.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/small.en-443.84-465.0.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/raw/XLyIURu_Yq0/small.en-450.0-465.5.json",
+      "sha256": "455f2208668a557e1113b6d007b1c1521aa32e535f8765d8b13c4f4ce7b0b352",
+      "model": "small.en",
+      "clip": [
+        450.0,
+        465.5
+      ],
+      "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "method": "Fresh local faster-whisper CPU int8, cached original model; exact command retained refine_brisbane_timing.py",
+      "fixed_commit_url": null,
+      "note": "New local raw, not yet committed; do not invent a commit link.",
+      "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/raw/XLyIURu_Yq0/small.en-450.0-465.5.json"
     }
   ],
   "source_identity": {
-    "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/DTXfZGAjiRl.mp4",
+    "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/XLyIURu_Yq0.mp4",
     "actual_geometry": {
-      "width": 1080,
-      "height": 1920,
-      "fps": "30/1",
-      "duration": 41.237333
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 484.461134,
+      "bytes": 80476594
     }
   },
-  "no_foreground_english_reason": "Actual point/court impacts and nonlexical crowd/celebration sound. small.en full source emits no lexical commentary during0–17.5. medium.en emits generic YouTube signoff at13.84–24.64 that is absent in small, and is not adopted as authentic foreground English. Local AST supports court/bounce and crowd rather than music, Music probability0.004765 at0–10 and0.014074 at10–20. No coherent independent English utterance is established in the selected window; no invented subtitles. This records non-auditory cross-check evidence, not a human no-speech verdict or proof that absolutely no background music exists.",
-  "review_notes": "Parent reviewed actual full-window evidence and approved retaining official IG source sound unchanged0–17.5. No audio replacement/gain/filtering/BGM addition. ASR disagreement and discarded generic signoff are preserved in raw; no automatic transcript copied as spoken quotation.",
-  "supporting_audio_classifier": {
-    "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/brisbane-ig-audio-classification.json",
-    "sha256": "8113d48495586938e73ec9a283d9d3ebc1b70e2ef1a4cff8c24b80aa5f450490",
-    "scope": "automated supporting evidence, not human listening or absolute no-music proof"
-  }
+  "caption_evidence": {
+    "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/fixed-center/captions/XLyIURu_Yq0-original.txt",
+    "sha256": "448e47f9f3f1c9314baa1f9f634f12dd6a4f26868581f7c67b0db539d981a1e4",
+    "source": "Tennis TV official YouTube channel auto timed captions, flattened native probe output",
+    "repository_path": "output/2026-11-05/reel/source-xlyiuruyq0/captions.txt",
+    "note": "Actual retained flattened captions, not human-authored or manually heard. Original json3 is not in this packet.",
+    "original_research_path": "/workspace/medvedev-center-crop-fix/research/audio/captions/XLyIURu_Yq0-original.txt"
+  },
+  "uncertain_spans": [],
+  "review_notes": "Entire443.84–465 selected window covered. Previous comment ends443.0(medium)/443.74(small), before selection. Next complete comment begins465.88(small)/465.96(medium), after selection. Two complete selected sentences retained. All original and new outputs inspected, including disagreement: medium tight says This is in star (This p0.005), wide medium says finishes in start, while both fresh small + original small and official auto captions say finishes in style; accepted style. Daniel/Daniel Medford auto-caption output normalized only to verified athlete spelling Daniil Medvedev. First-word onset does NOT use stretched452.76/452.96/452.82 envelopes. Original wide medium gives high-confidence Finishes453.58(p0.956) to454.10; official auto caption starts453.76. Adopt453.58 as non-auditory cross-context onset, not a claimed acoustic sample boundary. First ending461.16 retains maximum observed complete-name end. Second onset461.50 is confirmed by both fresh tight small461.52/461.54 and medium461.50/461.62; original medium461.06 is an extended He envelope and is rejected. Second ending464.36 retains original medium maximum complete champion end; all fresh runs end464.12–464.26. Window465.0 leaves sentence-tail margin and stops before next sentence. No IG transcript or source identity reused. Native line-width preflight required concise Chinese subtitle: athlete name is contextual and omitted in this line; source English remains complete.",
+  "timing_decisions": {
+    "first_onset": {
+      "chosen": 453.58,
+      "rejected_stretched_envelopes": [
+        452.76,
+        452.96,
+        452.82,
+        452.98
+      ],
+      "supports": [
+        "original medium.en Finishes word453.58–454.10 p0.956",
+        "official auto caption453.76; finish/style text corroborated small models"
+      ]
+    },
+    "second_onset": {
+      "chosen": 461.5,
+      "rejected_stretched_envelope": 461.06,
+      "supports": [
+        "fresh443.84–465 medium He461.50",
+        "fresh443.84–465 small He461.54",
+        "fresh450–465.5 small He461.52 / medium He461.62"
+      ]
+    }
+  },
+  "internal_visual_gap": "Official horizontal highlight begins at toss; no pre-toss preparation. Actual serve contact about444.2, all championship rally contacts retained to about453.7 and authentic reaction. Previous6-0 point must not be substituted for pre-serve preparation.",
+  "native_quote": [
+    {
+      "at": 9.74,
+      "end": 17.32,
+      "text": "Finishes in style as 2026 starts in magical fashion for Daniil Medvedev.\n漂亮收官，2026梦幻开局！"
+    },
+    {
+      "at": 17.66,
+      "end": 20.52,
+      "text": "He is the Brisbane International champion.\n他是布里斯班国际赛冠军。"
+    }
+  ]
 }

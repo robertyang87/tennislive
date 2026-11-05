@@ -1,0 +1,150 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:14:14.723385+00:00",
+  "model": "medium.en",
+  "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+  "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/XLyIURu_Yq0.mp4",
+  "clip": [
+    450.0,
+    465.5
+  ],
+  "duration": 15.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 452.98,
+      "end": 463.0,
+      "text": "Finishes in star as 2026 starts in magical fashion for Daniel Medvedev, he is the Brisbane",
+      "avg_logprob": -0.4051216059717639,
+      "no_speech_prob": 0.30662426352500916,
+      "words": [
+        {
+          "w": " Finishes",
+          "s": 452.98,
+          "e": 454.1,
+          "p": 0.5916590467095375
+        },
+        {
+          "w": " in",
+          "s": 454.1,
+          "e": 454.32,
+          "p": 0.8507426381111145
+        },
+        {
+          "w": " star",
+          "s": 454.32,
+          "e": 454.74,
+          "p": 0.39749953150749207
+        },
+        {
+          "w": " as",
+          "s": 454.74,
+          "e": 455.86,
+          "p": 0.5937086343765259
+        },
+        {
+          "w": " 2026",
+          "s": 455.86,
+          "e": 456.88,
+          "p": 0.9611403346061707
+        },
+        {
+          "w": " starts",
+          "s": 456.88,
+          "e": 457.84,
+          "p": 0.9441167712211609
+        },
+        {
+          "w": " in",
+          "s": 457.84,
+          "e": 458.1,
+          "p": 0.9851163029670715
+        },
+        {
+          "w": " magical",
+          "s": 458.1,
+          "e": 458.66,
+          "p": 0.9855310916900635
+        },
+        {
+          "w": " fashion",
+          "s": 458.66,
+          "e": 459.22,
+          "p": 0.9963504076004028
+        },
+        {
+          "w": " for",
+          "s": 459.22,
+          "e": 459.86,
+          "p": 0.8440845608711243
+        },
+        {
+          "w": " Daniel",
+          "s": 459.86,
+          "e": 460.22,
+          "p": 0.9714944958686829
+        },
+        {
+          "w": " Medvedev,",
+          "s": 460.22,
+          "e": 461.06,
+          "p": 0.9828049143155416
+        },
+        {
+          "w": " he",
+          "s": 461.62,
+          "e": 462.08,
+          "p": 0.8813436031341553
+        },
+        {
+          "w": " is",
+          "s": 462.08,
+          "e": 462.38,
+          "p": 0.9867440462112427
+        },
+        {
+          "w": " the",
+          "s": 462.38,
+          "e": 462.7,
+          "p": 0.9873521327972412
+        },
+        {
+          "w": " Brisbane",
+          "s": 462.7,
+          "e": 463.0,
+          "p": 0.9744117259979248
+        }
+      ]
+    },
+    {
+      "start": 463.0,
+      "end": 464.2,
+      "text": "International Champion.",
+      "avg_logprob": -0.4051216059717639,
+      "no_speech_prob": 0.30662426352500916,
+      "words": [
+        {
+          "w": " International",
+          "s": 463.0,
+          "e": 463.64,
+          "p": 0.8655378222465515
+        },
+        {
+          "w": " Champion.",
+          "s": 463.64,
+          "e": 464.2,
+          "p": 0.8776090145111084
+        }
+      ]
+    }
+  ]
+}
