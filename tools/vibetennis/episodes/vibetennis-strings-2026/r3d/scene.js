@@ -8,6 +8,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
@@ -253,7 +254,13 @@ const rackG=new THREE.Group(); scene.add(rackG); const rackR=[0,1,2,3,4,5].map((
 // ================== 镜头 ==================
 const anchors={};
 function proj(name,v){ camera.updateMatrixWorld(); const p=v.clone().project(camera); anchors[name]=[(p.x*0.5+0.5)*W,(1-(p.y*0.5+0.5))*H,(p.z<1&&p.z>-1)?1:0]; }
-function look(px,py,pz,tx_,ty,tz){ camera.position.set(px,py,pz); camera.lookAt(tx_,ty,tz); }
+// 运镜全局标准（所有者 2026-11-05「动画的转场和运镜要做的丝滑且有吸引力」，docs/vibetennis.md「转场与运镜」）：
+// 每个镜头（两次切换之间）在镜头自己的机位上再缓缓推近 MOVE.push、绕目标转 MOVE.orbit 弧度——不许有静止不动的机位
+const MOVE={push:0.06, orbit:0.06, xf:0.6, xfPush:0.04};
+let CAMMOVE=null; const UPV=new THREE.Vector3(0,1,0);
+function look(px,py,pz,tx_,ty,tz){ const P=new THREE.Vector3(px,py,pz), Tg=new THREE.Vector3(tx_,ty,tz);
+  if(CAMMOVE){ const k=ss(0,1,CAMMOVE.u/CAMMOVE.L); const d=P.clone().sub(Tg); d.applyAxisAngle(UPV,(k-0.5)*MOVE.orbit*CAMMOVE.dir); d.multiplyScalar(1-MOVE.push*k); P.copy(Tg).add(d); }
+  camera.position.copy(P); camera.lookAt(Tg); }
 const DOF={on:false,focus:10,ap:0.00012};
 const allRk=[rk,...rkPow,...rackR];
 
@@ -290,7 +297,7 @@ const mfMat=new THREE.MeshPhysicalMaterial({color:0x9fb8cc,emissive:0x0c1822,emi
   coatSleeve(micMulti,1.08,3.2,0.6,0x6f8396,0.92); }
 const micMono=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,3.2,48),new THREE.MeshPhysicalMaterial({color:0xc9b8ff,emissive:0x5a46a8,emissiveIntensity:0.35,metalness:0.2,roughness:0.12,clearcoat:1,transparent:true})); micG.add(micMono);
 // 交叉处：主线竖、横线压在上面，主线表面一道凹槽（示意）
-const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xaec4d6));   // 整根占半屏，纯白会把 bright 冲过 5% micG.add(micMain);
+const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xaec4d6)); micG.add(micMain);   // 整根占半屏，纯白会把 bright 冲过 5%
 const micCross=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0x9aa8dc)); micCross.rotation.z=Math.PI/2; micG.add(micCross);
 const micGrooveH=new THREE.Group(); micG.add(micGrooveH); micGrooveH.rotation.y=-Math.PI/6;
 const micGroove=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.16,14,64,Math.PI*2/3),new THREE.MeshBasicMaterial({color:new THREE.Color(0xffb347).multiplyScalar(GLOW.k*1.6),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); micGroove.rotation.x=Math.PI/2; micGrooveH.add(micGroove);
@@ -400,7 +407,7 @@ function shotSpag(u,D){
     const bn=tx('ban',T('1978 · 国际网联：主线横线必须交错编织或粘合','1978 · ITF: strings must be interlaced or bonded'),{color:'#ffffff',size:0.55,glow:RED}); hud(bn,0,2.05); op(bn,ss(BA,BA+0.6,u)*(1-ss(RO-0.4,RO,u)));
     const st=tx('stamp',T('禁','BANNED'),{color:'#ffd8d2',size:2.2,font:'900 170px "Noto Sans CJK SC","Inter",sans-serif',glow:'rgba(255,60,40,1)'}); hud(st,1.2,-0.2,8); const sk=ss(BA+0.1,BA+0.35,u); st.scale.set(st.userData.w0||(st.userData.w0=st.scale.x),2.2,1); st.material.rotation=-0.2; op(st,sk*(1-ss(BA+2.6,BA+3.2,u)));
     stampRing.position.copy(st.position); stampRing.quaternion.copy(camera.quaternion); stampRing.scale.setScalar(lerp(6,3.2,sk)); stampRing.material.opacity=sk*(1-ss(BA+2.6,BA+3.2,u))*0.9;
-    if(u>BA&&u<BA+0.2){ FX_FLASH=0.3; FX_SHAKE=0.8; }
+    if(u>BA&&u<BA+0.2){ FX_FLASH=0.12; FX_SHAKE=0.5; }
     return; }
   // 库仑：横截面慢放——球贴着线滑（摩擦力∝压力），接触点停住后滚起来
   const v=u-RO; look(0,0.6,6.2,0,0.4,0); DOF.on=false;
@@ -524,8 +531,15 @@ const finalPass=new ShaderPass({uniforms:{tDiffuse:{value:null},uT:{value:0},uFl
      else col=vec3(texture2D(tDiffuse,uv+c*uCA).r,texture2D(tDiffuse,uv).g,texture2D(tDiffuse,uv-c*uCA).b);
      float vig=smoothstep(1.05,0.3,length(c*vec2(1.0,0.85))); col*=mix(0.5,1.0,vig); col+=(h(uv*vec2(1920.,1080.)+uT)-0.5)*0.022; col=mix(col,vec3(1.),uFlash); gl_FragColor=vec4(col,1.); }`});
 composer.addPass(finalPass); composer.addPass(new OutputPass());
+const rtPrev=new THREE.WebGLRenderTarget(W,H,{type:THREE.HalfFloatType});
+const copyQuad=new FullScreenQuad(new THREE.ShaderMaterial({uniforms:{tDiffuse:{value:null}},vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }`,fragmentShader:`uniform sampler2D tDiffuse; varying vec2 vUv; void main(){ gl_FragColor=texture2D(tDiffuse,vUv); }`}));
+const xfPass=new ShaderPass({uniforms:{tDiffuse:{value:null},tPrev:{value:null},uMix:{value:1},uPush:{value:0}},
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+  fragmentShader:`uniform sampler2D tDiffuse,tPrev; uniform float uMix,uPush; varying vec2 vUv; void main(){ vec4 cur=texture2D(tDiffuse,vUv); vec4 pre=texture2D(tPrev,0.5+(vUv-0.5)*(1.0-uPush)); gl_FragColor=mix(pre,cur,uMix); }`});
+xfPass.uniforms.tPrev.value=rtPrev.texture;   // ShaderPass 会克隆 uniforms，渲染目标的贴图克隆不过去，得事后再挂
+xfPass.enabled=false; composer.addPass(xfPass);
 let FX_SHAKE=0, FX_FLASH=0, EV={}; const ev=(k,d)=>(EV[k]!==undefined?EV[k]:d);
-function setTransition(t){ let z=0,f=0; for(const sc of TL.sections){ const d=t-sc.t0; if(sc.t0>0&&d>=0&&d<0.45){ const k=1-d/0.45; z=k*k*0.9; f=Math.max(0,1-d/0.12)*0.35; } }
+function setTransition(t){ const z=0,f=0;   // 2026-11-05 起切换一律交叉溶解（见 renderAt），不再闪白＋径向模糊
   finalPass.uniforms.uZoom.value=z; finalPass.uniforms.uFlash.value=Math.max(f,FX_FLASH); finalPass.uniforms.uT.value=t; finalPass.uniforms.uShake.value=FX_SHAKE; }
 function setPalette(t){ const i=TL.sections.findIndex(s=>t>=s.t0&&t<s.t1); const cur=PAL[TL.sections[Math.max(0,i)].kind]||PAL.hook, prev=i>0?(PAL[TL.sections[i-1].kind]||cur):cur;
   const k=i>0?ss(TL.sections[i].t0,TL.sections[i].t0+1.0,t):1;
@@ -536,8 +550,30 @@ function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[T
   ({hook:shotHook,gut:shotGut,synth:shotSynth,spaghetti:shotSpag,poly:shotPoly,power:shotPower,tension:shotTension,tactics:shotTactics,end:shotEnd})[sc.kind](u,D);
   if(Q.get('cam')){ const c=Q.get('cam').split(',').map(Number); look(...c); }   // 封面机位覆盖
   return sc.kind; }
-window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t);
+// 镜头切换点：载入时按机位跳变自动找（粗扫 10 fps、跳变附近细到 1/240 s），再并上段落起点
+let CUTS=[];
+function rawCam(t){ CAMMOVE=null; shotTL(t); return [camera.position.clone(), new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion)]; }
+function jumped(a,b,dp,da){ return a[0].distanceTo(b[0])>dp || a[1].angleTo(b[1])>da; }
+function findCuts(){ const out=new Set(TL.sections.filter(s=>s.t0>0).map(s=>+s.t0.toFixed(4))); const step=0.1; let prev=rawCam(0);
+  for(let t=step;t<TL.total;t+=step){ const cur=rawCam(t);
+    if(jumped(prev,cur,0.6,0.12)){ let lo=t-step, hi=t, pl=rawCam(lo);   // 二分到 1/240 s
+      while(hi-lo>1/240){ const m=(lo+hi)/2, pm=rawCam(m); if(jumped(pl,pm,0.6*(m-lo)/step+0.05,0.12*(m-lo)/step+0.01)){ hi=m; } else { lo=m; pl=pm; } }
+      if(jumped(rawCam(lo),rawCam(hi),0.15,0.03)) out.add(+hi.toFixed(4)); }
+    prev=cur; }
+  const v=[...out].sort((x,y)=>x-y); return v.filter((c,i)=>i===0||c-v[i-1]>0.1); }
+function segOf(t){ let a=0,b=TL.total,i=0; for(const c of CUTS){ if(c<=t){ a=c; i++; } else { b=c; break; } } return {a,b,i}; }
+function setState(t){ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t);
+  const g=segOf(t); CAMMOVE={u:t-g.a,L:Math.max(1,g.b-g.a),dir:(g.i%2?1:-1)};
   const s=shotTL(t); const ac=setPalette(t); setTransition(t); setMotes(t,ac);
   bokeh.enabled=DOF.on; if(DOF.on){ bokeh.uniforms.focus.value=DOF.focus; bokeh.uniforms.aperture.value=DOF.ap; bokeh.uniforms.maxblur.value=0.009; }
-  composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
-Promise.all([FONT_READY,document.fonts.ready]).then(()=>{ window.READY=true; }).catch(e=>console.error('READY failed',e));
+  return s; }
+window.renderAt=(t)=>{
+  const c=CUTS.find(c=>t>=c&&t<c+MOVE.xf);
+  if(c!==undefined){ // 交叉溶解：切换前最后一帧缓缓推近、淡出，新镜头淡入
+    setState(c-1/60); xfPass.enabled=false; composer.renderToScreen=false; composer.render();
+    copyQuad.material.uniforms.tDiffuse.value=composer.readBuffer.texture; renderer.setRenderTarget(rtPrev); copyQuad.render(renderer); renderer.setRenderTarget(null);
+    composer.renderToScreen=true; const k=ss(0,MOVE.xf,t-c); xfPass.enabled=true; xfPass.uniforms.uMix.value=k; xfPass.uniforms.uPush.value=MOVE.xfPush*k; }
+  else xfPass.enabled=false;
+  const s=setState(t); composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
+window.CUTS=()=>CUTS;
+Promise.all([FONT_READY,document.fonts.ready]).then(()=>{ CUTS=findCuts(); window.READY=true; }).catch(e=>console.error('READY failed',e));

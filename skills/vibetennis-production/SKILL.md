@@ -46,6 +46,8 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
    - 物理／数字类说法（摩擦、恢复系数、评级口径）在审片包之前就过一遍 `papers/<slug>/sources.md`，别等推完再自查（EP05 摩擦段推送后才改稿）
    - ⭐ **光晕标准**（所有者 2026-11-05「所有动效里的光晕都很亮……设定好一个全局标准」）：`scene.js` 抄 `GLOW` 常量（泛光 0.22/0.3/0.93、叠加发光 ×0.5、自发光彩色 ≤0.35／白色 ≤0.15），
      整片渲之前同帧开关泛光各渲一张跑 `tools/vibetennis/glow_check.py --pair`，超标先改再渲。上限和量法见 [docs/vibetennis.md](../../docs/vibetennis.md)「光晕标准」
+   - ⭐ **转场与运镜标准**（所有者 2026-11-05「动画的转场和运镜要做的丝滑且有吸引力」）：切换一律 0.6 s 交叉溶解（自动找切换点），每个镜头缓推 6%＋绕转 3.4°，不许硬切、闪白、静止机位；
+     成片跑 `tools/vibetennis/motion_check.py`（相邻帧差 > 12 即超标）。见 docs/vibetennis.md「转场与运镜」
    - 然后 `overlay.py` → `sfx.py`（BGM 要盖满全片）→ `assemble.sh`
 4. `r3d/still_cover.js`（EP05；EP01 叫 `still_hd.js`）渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出**单独一张** 2160×2880 海报（封面**不进视频**，所有者 2026-10-30）
 5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证；有旁白的中文版自动过 `voice_check.py`：配音齐、句与句不重叠、多音字换字或在 narration.json 写 `poly_ok` 认领；背景声 3 秒窗不低于 -28 LUFS）→ 看 `qc_contact.jpg`，最好整片看一遍

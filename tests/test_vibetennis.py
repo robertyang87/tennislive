@@ -329,3 +329,36 @@ def test_光晕判据反向验证():
     assert _glow_problems(good + "; emissive:c,emissiveIntensity:0.8")
     assert _glow_problems(good + "; emissive:0xffffff,emissiveIntensity:0.6")
     assert _glow_problems("nothing")
+
+
+# ---------- 转场与运镜全局标准（所有者 2026-11-05「动画的转场和运镜要做的丝滑且有吸引力」）----------
+def _motion_problems(js: str) -> list[str]:
+    import re
+    m = re.search(r"const MOVE=\{push:([\d.]+),\s*orbit:([\d.]+),\s*xf:([\d.]+),\s*xfPush:([\d.]+)\}", js)
+    if not m:
+        return ["没有 `const MOVE={push:…, orbit:…, xf:…, xfPush:…}`"]
+    push, orbit, xf, xfp = map(float, m.groups())
+    bad = []
+    if push <= 0 or orbit <= 0: bad.append("运镜推近／绕转为 0，等于静止机位")
+    if xf < 0.4: bad.append(f"交叉溶解 {xf}s 太短（≥0.4）")
+    for need in ("findCuts(", "xfPass", "CAMMOVE"):
+        if need not in js: bad.append(f"缺 {need}")
+    if re.search(r"FX_FLASH=0\.(?:[2-9]|1[3-9])", js): bad.append("闪白 > 0.12")
+    return bad
+
+
+def test_转场运镜全局标准_新一集的scene都按MOVE来():
+    eps = sorted(p for p in (ROOT / "tools/vibetennis/episodes").iterdir() if (p / "r3d/scene.js").is_file())
+    problems = {p.name: _motion_problems((p / "r3d/scene.js").read_text(encoding="utf-8")) for p in eps if p.name not in GLOW_LEGACY}
+    assert problems, "一集都没查到——判据自己哑了"
+    bad = {k: v for k, v in problems.items() if v}
+    assert not bad, f"转场／运镜不合标准：{bad}"
+
+
+def test_转场运镜判据反向验证():
+    good = "const MOVE={push:0.06, orbit:0.06, xf:0.6, xfPush:0.04}; findCuts(); xfPass; CAMMOVE; FX_FLASH=0.12;"
+    assert _motion_problems(good) == []
+    assert _motion_problems(good.replace("xf:0.6", "xf:0.2"))
+    assert _motion_problems(good.replace("push:0.06", "push:0"))
+    assert _motion_problems(good.replace("findCuts();", ""))
+    assert _motion_problems(good.replace("FX_FLASH=0.12", "FX_FLASH=0.3"))
