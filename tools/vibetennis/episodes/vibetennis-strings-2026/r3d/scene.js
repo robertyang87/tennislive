@@ -223,7 +223,7 @@ const knot=glowSprite(0xffffff,2.2,0,confG);
 // 掉磅段：张力—log(时间) 曲线（示意形状，按 Cross 2000 实测「随时间的对数线性下降」）
 const tenG=new THREE.Group(); scene.add(tenG);
 const tenAxis=[fatLine(0xffffff,2),fatLine(0xffffff,2)]; const tenCurves=[['gut',STR.gut,0.040],['nylon',STR.nylon,0.055],['poly',STR.poly,0.085]].map(([k,c,s])=>({k,c,s,l:fatLine(c,5)}));
-const tenTicks=[['10 s',1],['100 s',2],[T('15 分钟','15 min'),2.95],[T('1 天','1 day'),4.94],[T('3 天','3 days'),5.41]].map(([s,lx])=>({lx,sp:textSprite(s,{color:'#ffe6d8',size:0.38},tenG)}));
+const tenTicks=[['10 s',1],['100 s',2],[T('15 分钟','15 min'),2.95],[T('1 天','1 d'),4.94],[T('3 天','3 d'),5.41]].map(([s,lx])=>({lx,sp:textSprite(s,{color:'#ffe6d8',size:0.38},tenG)}));
 // 场上：线一松，出球更高、往界外飞（示意）
 const flyGood=fatLine(0x34f5a8,5,true), flyDead=fatLine(0xff5a4a,5,true);
 // 换拍：球拍架
@@ -373,11 +373,11 @@ function shotTension(u,D){
   const CU=ev('curve',2.6), FL=ev('fly',10.2), SWP=ev('swap',13.6);
   if(u<FL-0.3){ // 张力随 log(时间)
     tenG.visible=true; look(0,1.8,11.5,0,1.8,0); tenG.position.set(-3.6,-0.15,0);
-    const X=x=>x*1.45, Y=y=>y*4.6;            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
+    const X=x=>x*1.45, Y=y=>y*4.3;            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
     setLine(tenAxis[0],[new THREE.Vector3(0,0,0),new THREE.Vector3(X(5.6),0,0)].map(p=>p.add(tenG.position))); setLine(tenAxis[1],[new THREE.Vector3(0,0,0),new THREE.Vector3(0,Y(1.05),0)].map(p=>p.add(tenG.position)));
     tenAxis.forEach(a=>a.material.opacity=0.7*ss(0,0.6,u));
     tenTicks.forEach(tk=>{ tk.sp.position.set(X(tk.lx),-0.35,0); op(tk.sp,ss(0.3,0.9,u)); });
-    const top=tx('t100',T('拉线机设定 100%','Pull tension 100%'),{color:'#ffe6d8',size:0.34},tenG); top.position.set(-1.35,Y(1.0),0); op(top,ss(0.3,0.9,u));
+    const top=tx('t100',T('拉线机设定 100%','Set: 100%'),{color:'#ffe6d8',size:0.34},tenG); top.position.set(-1.35,Y(0.84),0); op(top,ss(0.3,0.9,u));
     const dr=ss(CU,CU+4,u);
     tenCurves.forEach(c=>{ const pts=[new THREE.Vector3(0,Y(1),0)]; for(let i=0;i<=40;i++){ const lx=1+i/40*4.41*dr; const y=0.72-c.s*(lx-1); pts.push(new THREE.Vector3(X(lx),Y(y),0)); }
       setLine(c.l,pts.map(p=>p.add(tenG.position))); c.l.material.opacity=ss(CU,CU+0.4,u); });
@@ -385,7 +385,7 @@ function shotTension(u,D){
     const nm=[[T('羊肠线','Gut'),'#ffd28a'],[T('尼龙','Nylon'),'#eaf6ff'],[T('聚酯 掉得最快','Polyester — fastest'),'#c9d6ff']];
     tenCurves.forEach((c,i)=>{ const s=tx('tn'+i,nm[i][0],{color:nm[i][1],size:0.36},tenG); s.position.set(X(5.6)+0.9,Y(0.72-c.s*4.41*dr),0); op(s,ss(CU+3,CU+4,u)); });
     const note=tx('tnote',T('曲线形状为示意：实测是随时间的对数线性下降（Cross 等 2000）','Shape illustrative: tension falls linearly with log(time) (Cross et al. 2000)'),{color:'#c8a898',size:0.3},tenG); note.visible=false;
-    const rel=tx('relax',T('应力松弛 · 麦克斯韦最早提出「弛豫时间」','Stress relaxation · Maxwell’s “time of relaxation”'),{color:'#ffffff',size:0.5,glow:'rgba(255,122,61,1)'});
+    const rel=tx('relax',T('应力松弛 · 麦克斯韦最早提出「弛豫时间」','Stress relaxation · Maxwell\'s “time of relaxation”'),{color:'#ffffff',size:0.5,glow:'rgba(255,122,61,1)'});
     const yl=tx('tenY',T('张力','Tension'),{color:'#ffe6d8',size:0.36},tenG); yl.position.set(-0.6,Y(0.55),0); op(yl,ss(0.3,0.9,u));
     const xl=tx('tenX',T('时间（对数刻度）','Time (log scale)'),{color:'#ffe6d8',size:0.34},tenG); xl.position.set(X(5.6)+1.1,0.35,0); op(xl,ss(0.3,0.9,u)); hud(rel,0,2.05); op(rel,ss(0.4,1.1,u));
     return; }
@@ -400,10 +400,10 @@ function shotTension(u,D){
     return; }
   // 换拍：一排刚穿好的拍子
   const v=u-SWP; rackG.visible=true; look(0,0.6,9,0,0.2,0); rimL.intensity=5; rimL.color.set(0xffb08a); rimL.position.set(-3,2,3);
-  rackR.forEach((r,i)=>{ r.g.visible=true; r.g.position.set((i-2.5)*1.45,0.8,0); r.g.rotation.set(0,Math.sin(v*0.5+i)*0.2,0); r.g.scale.setScalar(0.42); setBed(r,{cm:STR.poly,cc:STR.poly,width:1.4,opm:ss(i*0.25,i*0.25+0.5,v),opc:ss(i*0.25,i*0.25+0.5,v)}); });
+  rackR.forEach((r,i)=>{ r.g.visible=true; r.g.position.set((i-2.5)*1.3,1.45,0); r.g.rotation.set(0,Math.sin(v*0.5+i)*0.2,0); r.g.scale.setScalar(0.3); setBed(r,{cm:STR.poly,cc:STR.poly,width:1.4,opm:ss(i*0.25,i*0.25+0.5,v),opc:ss(i*0.25,i*0.25+0.5,v)}); });
   const a=tx('swA',T('每换一次新球，就换一支刚穿好的拍子','A fresh racket at every ball change'),{color:'#ffffff',size:0.6,glow:'rgba(255,122,61,1)'}); hud(a,0,2.05); op(a,ss(0.2,0.9,v));
-  const b=tx('swB',T('「大多数时候不是断线，是为了保持同样的磅数」· 2025 加拿大大师赛穿线主管','“Not broken strings — the same tension” · Canadian Open head stringer, 2025'),{color:'#ffe0d0',size:0.36}); b.position.set(0,-1.7,0); op(b,ss(0.8,1.5,v));
-  const c=tx('swC',T('穿线房一天 130–200 支','130–200 rackets strung a day'),{color:'#ffd2bc',size:0.5,glow:'rgba(255,122,61,1)'}); c.position.set(0,-2.4,0); op(c,ss(1.6,2.3,v));
+  const b=tx('swB',T('「大多数时候不是断线，是为了保持同样的磅数」· 2025 加拿大大师赛穿线主管','“Not broken strings — the same tension” · Canadian Open head stringer, 2025'),{color:'#ffe0d0',size:0.36}); b.position.set(0,-0.45,0); op(b,ss(0.8,1.5,v));
+  const c=tx('swC',T('穿线房一天 130–200 支','130–200 rackets strung a day'),{color:'#ffd2bc',size:0.5,glow:'rgba(255,122,61,1)'}); c.position.set(0,-1.0,0); op(c,ss(1.6,2.3,v));
 }
 function shotTactics(u,D){
   const BR=ev('bars',1.5), BD=ev('band',8.0), CF=ev('conf',12.5), NO=ev('none',17.5);
@@ -421,7 +421,7 @@ function shotTactics(u,D){
     setLine(c.th,pts.map(p=>p.add(confG.position))); c.th.material.opacity=ss(c.i*0.3+0.3,c.i*0.3+1,v); });
   knot.position.set(0,0.6,0); knot.material.opacity=ss(1.5,2.5,v)*(0.7+0.3*Math.sin(u*4));
   const t=tx('confT',T('同一时期也在变','Changing at the same time'),{color:'#efe6ff',size:0.6,glow:VIO}); hud(t,0,2.05); op(t,ss(0.2,0.9,v)*(1-ss(NO-CF-0.4,NO-CF,v)));
-  const n=tx('noneT',T('至今没有研究能把线的作用单独算出来','No study has yet isolated the strings’ effect'),{color:'#ffffff',size:0.62,glow:VIO}); hud(n,0,2.05); op(n,ss(NO-CF,NO-CF+0.7,v));
+  const n=tx('noneT',T('至今没有研究能把线的作用单独算出来','No study has yet isolated the strings\' effect'),{color:'#ffffff',size:0.62,glow:VIO}); hud(n,0,2.05); op(n,ss(NO-CF,NO-CF+0.7,v));
 }
 function shotEnd(u,D){
   const QQ=ev('q',7.0); rk.g.visible=true; R_spin(rk,u,0.5); look(0,0.3,lerp(8.5,10,ss(0,D,u)),0,0.2,0); rimL.intensity=5; rimR.intensity=5; rimL.position.set(-4,3,4); rimR.position.set(4,3,4); rimL.color.set(0xffc24a); rimR.color.set(0x4fe3ff);

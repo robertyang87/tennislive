@@ -200,8 +200,8 @@ CAPS=[
 ('p3',0,None,tr("正反两方都是【实验室】数据：拍框夹住、斜向发射","Both sides are 【lab】 data: clamped racket, ball fired at an angle"),BOT),
 ('w0',0,None,tr("磅数降 20%：底线球只快【2–3%】，发球不到【1%】（场上实测）","20% lower tension: groundstrokes only 【2–3%】 faster, serves under 【1%】 (on court)"),BOT),
 ('t1',0,None,tr("【应力松弛】：拉紧后长度不变，张力自己往下掉","【Stress relaxation】: length held fixed, tension keeps falling"),BOT),
-('t3',0,None,tr("换下来的拍子送去【穿线房】重穿，不是当场拆线","The swapped racket goes to the 【stringing room】 — no restringing on court"),BOT),
-('k0',0,None,tr("温网：【73.1%】 → 【10.3%】","Wimbledon: 【73.1%】 → 【10.3%】"),BOT),
+('t3',0,None,tr("换下来的拍子送去【穿线房】重穿，不是当场拆线","Old rackets go back to the 【stringing room】 — not restrung courtside"),BOT),
+('k0',0,None,tr("温网：1990 年代【73.1%】 → 2005–09 年【10.3%】","Wimbledon: 【73.1%】 in the 1990s → 【10.3%】 in 2005–09"),BOT),
 ('k3',0,None,tr("分析师认为线是主因——但那是按【时间先后】推的，不是对照研究","Analysts blame the strings — but that’s 【timing】, not a controlled study"),BOT),
 ('e1',0,None,tr("评论区说说：【羊肠、尼龙、聚酯】，还是混搭？","Tell us: 【gut, nylon, polyester】 — or a hybrid?"),('s',960,965,C,48)),
 ]
