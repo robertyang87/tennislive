@@ -481,3 +481,46 @@ def test_sawangkaew_confirmed_media_name_survives_snapshot_sync():
     assert _translation_lookup()[_normalize("Mananchaya Sawangkaew")][0] == "萨王凯"
     # Same surname alone must not turn an unrelated person into the confirmed player.
     assert player_zh("Other Sawangkaew") == "Other Sawangkaew"
+
+
+def test_owner_medvedev_name_is_consistent_across_english_and_exact_chinese_aliases():
+    from tennislive.zh.players import PLAYER_ZH, normalize_player_zh
+
+    assert PLAYER_ZH["Daniil Medvedev"] == "梅德韦德夫"
+    for supplied in ("Daniil Medvedev", "D. Medvedev", "Medvedev D.",
+                     "梅德韦德夫", "梅德韦杰夫", "梅德维德夫"):
+        assert player_zh(supplied) == "梅德韦德夫"
+        assert player_name_en(supplied) == "daniil medvedev"
+    for historical in ("梅德韦杰夫", "梅德维德夫"):
+        assert normalize_player_zh(historical) == "梅德韦德夫"
+    # A surname or one-character resemblance cannot merge a different person.
+    for other in ("Dmitry Medvedev", "梅德韦德娃", "梅德韦杰夫和某人"):
+        assert player_zh(other) == other
+        assert player_name_en(other) == other
+        assert normalize_player_zh(other) == other
+
+
+def test_owner_medvedev_override_wins_over_a_stale_snapshot(tmp_path, monkeypatch):
+    from tools import update_player_names as updater
+
+    stale = tmp_path / "stale-top500.json"
+    stale.write_text(json.dumps({"tours": {"ATP": [{
+        "name_en": "Daniil Medvedev", "name_zh": "梅德韦杰夫",
+        "translation_source": "curated-media", "translation_source_url": "",
+    }]}}, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(updater, "OUTPUT", stale)
+    monkeypatch.setattr(updater, "LEGACY_OUTPUT", tmp_path / "absent.json")
+    translation, source, identity_url = updater._translation_lookup()[
+        updater._normalize("Daniil Medvedev")]
+    assert translation == "梅德韦德夫"
+    assert "账号所有者明确指定" in source
+    assert "/daniil-medvedev/mm58/" in identity_url
+
+
+def test_bilingual_scoreboard_resolves_both_medvedev_chinese_forms():
+    from tools import versus_poster
+
+    for name in ("梅德韦德夫", "梅德韦杰夫", "梅德维德夫"):
+        assert versus_poster._english_display(name, {}, "test") == "D. MEDVEDEV"
+    with pytest.raises(SystemExit, match="缺 `name_en`"):
+        versus_poster._english_display("梅德韦德娃", {}, "test")
