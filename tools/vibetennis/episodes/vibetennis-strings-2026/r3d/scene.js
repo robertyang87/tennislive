@@ -260,7 +260,7 @@ function shotHook(u,D){
   const gi=clamp(Math.floor((u-0.4)/((DR-0.4)/4)),0,3); const gk=((u-0.4)/((DR-0.4)/4))%1; const [,lab,cm,cc]=GEN[gi];
   setBed(rk,{cm,cc,opm:ss(0,0.6,u),opc:ss(0,0.6,u)});
   genLab.forEach((s,i)=>{ hud(s,0,2.05); op(s,(i===gi?ss(0,0.15,gk)*(u<DR?1:1-ss(DR,DR+0.4,u)):0)); });
-  barsG.visible=u>DR-0.2; barsG.position.set(1.9,-2.6,0); barsG.scale.setScalar(0.78); setBars(bars,ss(DR,DR+2.6,u)); barsTitle.position.set(0,6.6,0); op(barsTitle,ss(DR+0.2,DR+0.9,u)*(1-ss(QQ-0.3,QQ+0.2,u)));
+  barsG.visible=u>DR-0.2; barsG.position.set(1.9,-1.7,0); barsG.scale.setScalar(0.74); setBars(bars,ss(DR,DR+2.6,u)); barsTitle.position.set(0,6.6,0); op(barsTitle,ss(DR+0.2,DR+0.9,u)*(1-ss(QQ-0.3,QQ+0.2,u)));
   barsNote.position.set(0,-1.1,0.5); op(barsNote,ss(DR+1,DR+1.8,u));
   const q=tx('hookQ',T('是线，改变了网球吗？','Did the strings change tennis?'),{color:'#ffffff',size:1.0,font:'900 150px "Noto Sans CJK SC","Inter",sans-serif',glow:GOLD});
   hud(q,0,2.0); op(q,ss(QQ,QQ+0.5,u)); proj('racket',rk.g.position);
@@ -321,12 +321,12 @@ function shotSpag(u,D){
     return; }
   // 库仑：横截面慢放——球贴着线滑（摩擦力∝压力），接触点停住后滚起来
   const v=u-RO; look(0,0.6,6.2,0,0.4,0); DOF.on=false;
-  const strip=rk; strip.g.visible=true; strip.g.rotation.set(-Math.PI/2+0.02,0,0); strip.g.position.set(0,-0.6,0); strip.g.scale.setScalar(1.6); setBed(strip,{cm:0xff8a7a,cc:0xff8a7a,width:3}); strip.frameMat.opacity=0.25;
-  const k=clamp(v/6.0); const xs=lerp(-2.6,2.6,k); const rol=ss(0.45,0.55,k); const by=-0.6+0.53+0.02;
+  const strip=rk; strip.g.visible=true; strip.g.rotation.set(-Math.PI/2+0.02,0,0); strip.g.position.set(0,0.1,0); strip.g.scale.setScalar(1.6); setBed(strip,{cm:0xff8a7a,cc:0xff8a7a,width:3}); strip.frameMat.opacity=0.25;
+  const k=clamp(v/6.0); const xs=lerp(-2.6,2.6,k); const rol=ss(0.45,0.55,k); const by=0.1+0.53+0.02;
   showB(ball,new THREE.Vector3(xs,by,0)); ball.m.scale.setScalar(1.6); ball.m.rotation.z=-(rol>0?(xs-lerp(-2.6,2.6,0.5))/0.53:0)-(1-rol)*0.2*k;
   const fOn=1-rol; setLine(arrowF,[new THREE.Vector3(xs,-0.06,0.3),new THREE.Vector3(xs-1.3*fOn-0.01,-0.06,0.3)]); arrowF.material.opacity=0.95*fOn*ss(0,0.1,k);
   setLine(arrowN,[new THREE.Vector3(xs,by+1.3,0.3),new THREE.Vector3(xs,by+0.55,0.3)]); arrowN.material.opacity=0.8*ss(0,0.1,k);
-  const lf=tx('fric',T('摩擦力 ∝ 压力（库仑）','Friction ∝ normal force (Coulomb)'),{color:'#ffd2c8',size:0.5,glow:RED}); lf.position.set(clamp(xs-0.4,-1.6,1.6),-0.25,0.9); op(lf,fOn*ss(0,0.1,k));
+  const lf=tx('fric',T('摩擦力 ∝ 压力（库仑）','Friction ∝ normal force (Coulomb)'),{color:'#ffd2c8',size:0.5,glow:RED}); lf.position.set(clamp(xs-0.4,-1.6,1.6),0.45,0.9); op(lf,fOn*ss(0,0.1,k));
   const ph=tx(rol>0.5?'roll':'slide',rol>0.5?T('接触点停住 → 滚起来','Contact point stops → rolling'):T('先滑','Sliding first'),{color:'#ffffff',size:0.62,glow:GOLD}); hud(ph,0,2.05); op(ph,ss(0,0.1,k));
   const src=tx('rollSrc',T('所有线的摩擦都大到让球在撞击中滚起来 · Goodwill & Haake 2004','All strings grip enough for the ball to roll · Goodwill & Haake 2004'),{color:'#d8c09a',size:0.32}); hud(src,0,1.55); op(src,ss(0.5,0.6,k));
   proj('ball',new THREE.Vector3(xs,by,0));
@@ -371,22 +371,22 @@ function shotPower(u,D){
 function shotTension(u,D){
   const CU=ev('curve',2.6), FL=ev('fly',10.2), SWP=ev('swap',13.6);
   if(u<FL-0.3){ // 张力随 log(时间)
-    tenG.visible=true; look(0,1.8,11.5,0,1.8,0); tenG.position.set(-4.2,-1.2,0);
-    const X=x=>x*1.45, Y=y=>y*6.0;            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
+    tenG.visible=true; look(0,1.8,11.5,0,1.8,0); tenG.position.set(-3.6,-0.15,0);
+    const X=x=>x*1.45, Y=y=>y*4.6;            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
     setLine(tenAxis[0],[new THREE.Vector3(0,0,0),new THREE.Vector3(X(5.6),0,0)].map(p=>p.add(tenG.position))); setLine(tenAxis[1],[new THREE.Vector3(0,0,0),new THREE.Vector3(0,Y(1.05),0)].map(p=>p.add(tenG.position)));
     tenAxis.forEach(a=>a.material.opacity=0.7*ss(0,0.6,u));
     tenTicks.forEach(tk=>{ tk.sp.position.set(X(tk.lx),-0.35,0); op(tk.sp,ss(0.3,0.9,u)); });
-    const top=tx('t100',T('拉线机设定 100%','Pull tension 100%'),{color:'#ffe6d8',size:0.34},tenG); top.position.set(0.1,Y(1.0)+0.35,0); op(top,ss(0.3,0.9,u));
+    const top=tx('t100',T('拉线机设定 100%','Pull tension 100%'),{color:'#ffe6d8',size:0.34},tenG); top.position.set(-1.35,Y(1.0),0); op(top,ss(0.3,0.9,u));
     const dr=ss(CU,CU+4,u);
     tenCurves.forEach(c=>{ const pts=[new THREE.Vector3(0,Y(1),0)]; for(let i=0;i<=40;i++){ const lx=1+i/40*4.41*dr; const y=0.72-c.s*(lx-1); pts.push(new THREE.Vector3(X(lx),Y(y),0)); }
       setLine(c.l,pts.map(p=>p.add(tenG.position))); c.l.material.opacity=ss(CU,CU+0.4,u); });
     const d30=tx('d30',T('刚穿好：比设定低约 30%（Cross & Bower 2001）','Right after stringing: ~30% below pull tension'),{color:'#ffd2bc',size:0.4,glow:'rgba(255,122,61,1)'},tenG); d30.position.set(X(2.6),Y(0.86),0); op(d30,ss(CU+0.4,CU+1.2,u));
     const nm=[[T('羊肠线','Gut'),'#ffd28a'],[T('尼龙','Nylon'),'#eaf6ff'],[T('聚酯 掉得最快','Polyester — fastest'),'#c9d6ff']];
     tenCurves.forEach((c,i)=>{ const s=tx('tn'+i,nm[i][0],{color:nm[i][1],size:0.36},tenG); s.position.set(X(5.6)+0.9,Y(0.72-c.s*4.41*dr),0); op(s,ss(CU+3,CU+4,u)); });
-    const note=tx('tnote',T('曲线形状为示意：实测是随时间的对数线性下降（Cross 等 2000）','Shape illustrative: tension falls linearly with log(time) (Cross et al. 2000)'),{color:'#c8a898',size:0.3},tenG); note.position.set(X(2.8),-1.45,0); op(note,ss(CU+1.5,CU+2.3,u));
+    const note=tx('tnote',T('曲线形状为示意：实测是随时间的对数线性下降（Cross 等 2000）','Shape illustrative: tension falls linearly with log(time) (Cross et al. 2000)'),{color:'#c8a898',size:0.3},tenG); note.visible=false;
     const rel=tx('relax',T('应力松弛 · 麦克斯韦最早提出「弛豫时间」','Stress relaxation · Maxwell’s “time of relaxation”'),{color:'#ffffff',size:0.5,glow:'rgba(255,122,61,1)'});
     const yl=tx('tenY',T('张力','Tension'),{color:'#ffe6d8',size:0.36},tenG); yl.position.set(-0.6,Y(0.55),0); op(yl,ss(0.3,0.9,u));
-    const xl=tx('tenX',T('时间（对数刻度）','Time (log scale)'),{color:'#ffe6d8',size:0.34},tenG); xl.position.set(X(5.0),-0.85,0); op(xl,ss(0.3,0.9,u)); hud(rel,0,2.05); op(rel,ss(0.4,1.1,u));
+    const xl=tx('tenX',T('时间（对数刻度）','Time (log scale)'),{color:'#ffe6d8',size:0.34},tenG); xl.position.set(X(5.6)+1.1,0.35,0); op(xl,ss(0.3,0.9,u)); hud(rel,0,2.05); op(rel,ss(0.4,1.1,u));
     return; }
   if(u<SWP-0.2){ // 场上：线一松，出球角度变高，往界外飞（示意）
     courtG.visible=true; look(-27,7.5,-0.5,0,1.2,-0.5); beamMat.uniforms.uOp.value=0.15; beamMat.uniforms.uC.value.set(0xffb08a);
@@ -406,7 +406,7 @@ function shotTension(u,D){
 }
 function shotTactics(u,D){
   const BR=ev('bars',1.5), BD=ev('band',8.0), CF=ev('conf',12.5), NO=ev('none',17.5);
-  if(u<CF-0.2){ barsG.visible=true; barsG.position.set(0,-2.4,0); barsG.scale.setScalar(0.92); look(0,1.4,14.5,0,1.0,0); setBars(bars,ss(BR,BR+3.2,u));
+  if(u<CF-0.2){ barsG.visible=true; barsG.position.set(0,-1.5,0); barsG.scale.setScalar(0.82); look(0,1.4,14.5,0,1.0,0); setBars(bars,ss(BR,BR+3.2,u));
     barsTitle.position.set(0,6.6,0); op(barsTitle,ss(BR,BR+0.7,u)); barsNote.position.set(0,-1.1,0.5); op(barsNote,ss(BR+1,BR+1.8,u));
     const bk=ss(BD,BD+0.8,u); bandMesh.position.set((bars.bars[1].x+bars.bars[2].x)/2,3.6,-0.6); bandMesh.scale.set((bars.bars[2].x-bars.bars[1].x)+2.4,7.6,1); bandMesh.material.opacity=0.07*bk;
     bandLab.position.set(bandMesh.position.x,8.0,0); op(bandLab,bk);
@@ -414,11 +414,11 @@ function shotTactics(u,D){
     return; }
   // 同期变化：五股线缠成一个结，解不开
   confG.visible=true; look(0,0.5,11,0,0.3,0); const v=u-CF;
-  confNodes.forEach(c=>{ const a0=c.i/5*Math.PI*2+v*0.2; const rad=lerp(4.2,4.0,ss(0,2,v)); const pos=new THREE.Vector3(Math.cos(a0)*rad*1.3,Math.sin(a0)*rad*0.75+0.3,0);
+  confNodes.forEach(c=>{ const a0=c.i/5*Math.PI*2+v*0.2; const rad=lerp(3.7,3.5,ss(0,2,v)); const pos=new THREE.Vector3(Math.cos(a0)*rad*1.35,Math.sin(a0)*rad*0.48+0.6,0);
     c.n.position.copy(pos); c.n.material.opacity=ss(c.i*0.3,c.i*0.3+0.6,v); c.lab.position.copy(pos).add(new THREE.Vector3(0,-0.7,0.2)); op(c.lab,ss(c.i*0.3+0.2,c.i*0.3+0.8,v));
-    const pts=[]; for(let j=0;j<=30;j++){ const s=j/30; const wob=Math.sin(s*Math.PI*3+c.i*1.3+v)*0.35*(1-s); pts.push(pos.clone().lerp(new THREE.Vector3(0,0.3,0),s).add(new THREE.Vector3(wob,wob*0.7,0))); }
+    const pts=[]; for(let j=0;j<=30;j++){ const s=j/30; const wob=Math.sin(s*Math.PI*3+c.i*1.3+v)*0.35*(1-s); pts.push(pos.clone().lerp(new THREE.Vector3(0,0.6,0),s).add(new THREE.Vector3(wob,wob*0.7,0))); }
     setLine(c.th,pts.map(p=>p.add(confG.position))); c.th.material.opacity=ss(c.i*0.3+0.3,c.i*0.3+1,v); });
-  knot.position.set(0,0.3,0); knot.material.opacity=ss(1.5,2.5,v)*(0.7+0.3*Math.sin(u*4));
+  knot.position.set(0,0.6,0); knot.material.opacity=ss(1.5,2.5,v)*(0.7+0.3*Math.sin(u*4));
   const t=tx('confT',T('同一时期也在变','Changing at the same time'),{color:'#efe6ff',size:0.6,glow:VIO}); hud(t,0,2.05); op(t,ss(0.2,0.9,v)*(1-ss(NO-CF-0.4,NO-CF,v)));
   const n=tx('noneT',T('至今没有研究能把线的作用单独算出来','No study has yet isolated the strings’ effect'),{color:'#ffffff',size:0.62,glow:VIO}); hud(n,0,2.05); op(n,ss(NO-CF,NO-CF+0.7,v));
 }
