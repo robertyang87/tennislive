@@ -6,6 +6,7 @@
 |---|---|---|---|---|---|
 | `US3999756.pdf` | Prince / Howard Head 大拍面专利全文（15 页扫描件，1976-12-28 授权，含 1985 年复审证书） | USPTO 官方下载 `https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/3999756` | 美国专利，公有领域 | ✅ | 专利原件出场、引用原文 |
 | `US3999756-drawing-02..05.png` | 专利附图 4 页（Sheet 1–4），灰度 2685×3944 | 同上，`pdftoppm -r 250` 后缩到 1/3 | 公有领域 | ✅ | Sheet 2 的 FIG.5A/5B、6A/6B 把大拍面和「PRIOR ART」旧式拍的区域分布并排画出——3D 甜点区动画照它的轮廓做 |
+| `1893-lawn-tennis-player-racket.jpg` | 1893 年《The game of lawn tennis and how to play it》插图：持拍站立的球员，拍头是早期平顶偏方的形状（1280×2115） | Wikimedia Commons「File:The game of lawn tennis and how to play it (1893) (14798604783).jpg」，Internet Archive Book Images 扫描 | 公有领域（1893 年出版） | ✅ | 历史段开头：最早的球拍长什么样；也作 1890 年代拍头形状的建模参考 |
 | `ref/wood-racket-maxply-commons.jpg` | 一支木拍实物照（960px 缩略图） | Wikimedia Commons「File:Dunlop_Maxply.jpg」，作者 Partynia，2024-12-06 | CC BY 4.0 | ❌（拍身有品牌标志） | 只做 3D 木拍建模参考：拍头形状、胶合木条、喉部楔块 |
 
 ## 3D 模型
