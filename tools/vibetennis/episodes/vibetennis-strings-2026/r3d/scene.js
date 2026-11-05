@@ -93,7 +93,8 @@ function textSprite(str,{color='#ffffff',size=1,font='700 120px "Noto Sans CJK S
   g.font=font; g.textAlign='center'; g.textBaseline='middle'; g.shadowColor=glow; g.shadowBlur=30; g.fillStyle=color; g.fillText(str,w/2,104); g.shadowBlur=0; g.fillText(str,w/2,104);
   const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
   const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,opacity:0})); s.scale.set(size*w/200,size,1); group.add(s); return s; }
-const op=(s,v)=>{ s.material.opacity=v; };
+const NOTEXT=!!Q.get('notext');   // 封面底图：3D 里的字全部不出，标题由封面脚本自己排
+const op=(s,v)=>{ s.material.opacity=NOTEXT?0:v; };
 let FONT=null; const FONT_READY=new Promise(res=>new FontLoader().load('./node_modules/three/examples/fonts/helvetiker_bold.typeface.json',f=>{ FONT=f; res(); }));
 const text3D={};
 function t3d(key,str,color,size=1,group=scene){ // 3D 立体数字：金属挤出＋发光描边
@@ -102,7 +103,7 @@ function t3d(key,str,color,size=1,group=scene){ // 3D 立体数字：金属挤�
   const m=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x0c1018,metalness:0.9,roughness:0.18,clearcoat:1,emissive:C(color),emissiveIntensity:0.9,transparent:true,opacity:0}));
   const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,30),new THREE.LineBasicMaterial({color,transparent:true,opacity:0,blending:THREE.AdditiveBlending})); m.add(e);
   const g=new THREE.Group(); g.add(m); group.add(g); text3D[key]={g,m,e}; return text3D[key]; }
-function t3op(o,v){ o.m.material.opacity=v; o.e.material.opacity=v*0.8; o.g.visible=v>0.003; }
+function t3op(o,v){ if(NOTEXT) v=0; o.m.material.opacity=v; o.e.material.opacity=v*0.8; o.g.visible=v>0.003; }
 
 // ---------- 球场（ITF 尺寸，蓝色、带清漆反光） ----------
 const L=23.77/2, DW=10.97/2, SW=8.23/2, SL=6.40;
@@ -451,6 +452,7 @@ function setPalette(t){ const i=TL.sections.findIndex(s=>t>=s.t0&&t<s.t1); const
 function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[TL.sections.length-1]; const u=t-sc.t0, D=sc.t1-sc.t0;
   hideAll(); FX_SHAKE=0; FX_FLASH=0; EV=sc.ev||{};
   ({hook:shotHook,gut:shotGut,synth:shotSynth,spaghetti:shotSpag,poly:shotPoly,power:shotPower,tension:shotTension,tactics:shotTactics,end:shotEnd})[sc.kind](u,D);
+  if(Q.get('cam')){ const c=Q.get('cam').split(',').map(Number); look(...c); }   // 封面机位覆盖
   return sc.kind; }
 window.renderAt=(t)=>{ for(const k in anchors) delete anchors[k]; allClouds.forEach(c=>c.material.uniforms.uT.value=t);
   const s=shotTL(t); const ac=setPalette(t); setTransition(t); setMotes(t,ac);
