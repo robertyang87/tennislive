@@ -1,7 +1,7 @@
 {
  "slug": "vibetennis-racket-2026",
  "_status": "EP08（规划稿，放在 drafts/：封面脚本和 3D 工程还没建）：资料包与镜头提纲 papers/vibetennis-racket-2026/sources.md（含主会话复核、提纲自审）；素材 papers/vibetennis-racket-2026/materials/。开工时把 spec 和 .xhs.txt 挪回 specs/vibetennis/。",
- "_column": "vibetennis 第 8 集（器材三部曲②球拍）：木拍一百年拍面约 70 平方英寸 → 拉科斯特钢拍专利（1963 授权，→威尔逊 T2000）与挤压铝框 → 霍华德·黑德大拍面专利（1976）把拍面往手柄方向拉长去包住打击中心 → 1980 年前后碳纤维复合材料成主流（据国际网联：头大 40%、硬 3 倍、轻 30%）→ 国际网联只限尺寸。物理：甜点是三个点（最大回弹点、振动节点、打击中心）；宽拍头＝绕长轴转动惯量大，打偏时左右几乎不偏但明显变慢、真实挥拍里飞得更高更远；更硬对打在节点上的球几乎没影响，帮的是打不准的人和发球；更轻挥得更快但很不敏感。打法：国际网联认为转向力量和旋转，没有研究单独算出球拍的作用。",
+ "_column": "vibetennis 第 8 集（器材三部曲②球拍）：木拍一百年拍面约 70 平方英寸 → 拉科斯特钢拍专利（1963 授权，→威尔逊 T2000）与挤压铝框 → 霍华德·黑德大拍面专利（1976）把拍面往手柄方向拉长去包住打击中心 → 1980 年前后碳纤维复合材料成主流（更大、更轻、更硬；拍框频率约 80–120 Hz → 100–180 Hz）→ 国际网联只限尺寸。物理：甜点是三个点（最大回弹点、振动节点、打击中心）；宽拍头＝绕长轴转动惯量大，打偏时左右几乎不偏但明显变慢、真实挥拍里飞得更高更远；更硬对打在节点上的球几乎没影响，帮的是打不准的人和发球；更轻挥得更快但很不敏感。打法：国际网联认为转向力量和旋转，没有研究单独算出球拍的作用。",
  "column": "vibetennis",
  "pipeline": "tools/vibetennis",
  "cover": {
@@ -21,12 +21,12 @@
    "钩子：打偏了拍子被扭歪一大截，球左右几乎不偏——是球拍改写了网球吗？",
    "木拍一百年：拍面约 70 平方英寸",
    "金属拍：线穿金属孔的难题；拉科斯特专利 → 威尔逊 T2000；三腔铝框",
-   "大拍面：1976 专利，把拍面往手柄方向拉长、包住打击中心",
+   "大拍面：1976 专利，拍面大了四成以上，把拍面往手柄方向拉长、包住打击中心",
    "原理①：甜点是三个点，手感最好的是节点",
    "原理②：宽拍头防扭转；打偏左右几乎不偏，但明显变慢、真实挥拍里飞得更高更远",
    "碳纤维：更大更轻更硬；硬了帮的是打不准和发球；轻了挥得快但很不敏感",
    "规则：大拍面之后才设限，只限尺寸",
-   "打法：官方看法是转向力量和旋转；和线一样，时间对得上、分不开（下一集：球）"
+   "打法：官方看法是转向力量和旋转；模拟说发球更快、实测说老木拍几乎一样快；和线一样，时间对得上、分不开（下一集：球）"
   ],
   "sources": [
    "美国专利 US 3,086,777（Lacoste，1963）、US 3,752,478（Flak，1973）、US 3,999,756（Head，1976）、US 4,061,520（1977）、US 4,664,380（Kuebler，1987）——USPTO 原件",
@@ -34,7 +34,8 @@
    "International Tennis Hall of Fame 球拍展（racquets.tennisfame.com）",
    "Allen, Choppin & Knudson (2016) Sports Engineering 19:1–11；Taraborrelli et al. (2019) Applied Sciences 9:4352",
    "Brody (1981) Am J Phys；Cross (1998) Sports Eng；Cross (2004) Am J Phys；Cross & Bower (2006) J Sports Sci；Cross (2010) Sports Technology；Spurr (2017) PhD thesis, Sheffield Hallam",
-   "Haake et al. (2007) Tennis Science & Technology 3（只作旁白，不上数字）；Miller (2006) Br J Sports Med；Bayram & Barla (2026) Sci Rep"
+   "Haake et al. (2007) Tennis Science & Technology 3（只作旁白，不上数字）；Miller (2006) Br J Sports Med；Bayram & Barla (2026) Sci Rep",
+   "Brody, Cross & Lindsey (2002) The Physics and Technology of Tennis；Taraborrelli et al. (2021) Eur J Phys；Harvard Crimson 1981-12-04；Inside Tennis；SI 2013、Tennis Majors（诺阿 1983）；ITF 1999–2000 规则文本、ISO 11416:1995（第二轮补查见 papers/vibetennis-racket-2026/verification-2.md）"
   ],
   "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-racket-2026/sources.md（含「主会话复核」与「提纲自审」两节）"
  },
