@@ -1,0 +1,35 @@
+{
+  "film_sha256": "026f5722380e18ba7658bfbc3a92fe0aa24241f737544cd37128ac1fe2cd5bad",
+  "film_seconds": 268.2,
+  "film_bytes": 152193271,
+  "spec_sha256": "70aa7e66c0685e241ed0b325499f2069dd161c6fbc52c8cd370434dbb3987a9e",
+  "ass_sha256": "f33331652aa1966de54c385133c7662a45be30a1193892815bb167fae3f2aa81",
+  "native_run": 42001389259,
+  "native_input_artifact": 13403540789,
+  "tts_bundle_sha256": "7870e67db79c0f4c871140e5b7dd892a6343b873c318f6e0c9ed240b979d39e7",
+  "strict_tts_reused": true,
+  "tts_requests": 18,
+  "unique_voice_checks": 18,
+  "voice_five_suites_pass": true,
+  "native_qc_pass": true,
+  "actual_film_reviews": [
+    {
+      "file": "research/medvedev-finals-road-2026/final-qa/fixed-center/root-final-qc.json",
+      "sha256": "1d29747b71db03ec5aac072d36c991b71f832d626ab78ded3a7645e3b7f20e22"
+    },
+    {
+      "file": "research/medvedev-finals-road-2026/final-qa/fixed-center/independent-qc-report.json",
+      "sha256": "3b880c239f14eb6b70daa26210039f661ee8d71477493f7af224d4f2eca380ac"
+    },
+    {
+      "file": "research/medvedev-finals-road-2026/final-qa/fixed-center/med-newfilm-ass-audit.json",
+      "sha256": "76bcf9545d27546d181243ae7a4893973b6f5f8011ad5a19ea6734c869020480"
+    },
+    {
+      "file": "research/medvedev-finals-road-2026/final-qa/fixed-center/actual-newfilm-audio-identity.json",
+      "sha256": "bc5e58f01cd1d6fedcbcd86b342c85c70757c449325316842cb2700bf1d2021a"
+    }
+  ],
+  "ready_for_normal_merge_after_exact_head_CI": true,
+  "new_film_sent": false
+}

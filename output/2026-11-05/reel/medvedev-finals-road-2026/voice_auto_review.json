@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "f5c4e52abecd195df4921ec4e3e3c1a90cbe46c547391b6f001d915632caf76a",
-    "render_inputs_sha256": "396b4be1b31adc4a1d896e3e6995cea2f4cad89ac1440b3d89bc4f187859a43f",
-    "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
-    "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+    "render_sha256": "fcdbdbc7762b0719f526cd50e0f9947f6e030fe9a6ca68a4072791383c5cc7e1",
+    "render_inputs_sha256": "7e4b61c28788ebe2fadee014240456adb37b91ea7db947f861c61050f0c2bcb8",
+    "spec_sha256": "70aa7e66c0685e241ed0b325499f2069dd161c6fbc52c8cd370434dbb3987a9e",
+    "film_sha256": "026f5722380e18ba7658bfbc3a92fe0aa24241f737544cd37128ac1fe2cd5bad",
     "inventory_sha256": "bd2fa246feb0d162cf1a55eebda3a0abb6b11082a50be1a03ab1d18b5a816271"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-05T07:43:44+00:00",
+  "reviewed_at": "2026-11-05T09:31:32+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -254,11 +254,11 @@
         "ok": true,
         "ref_syllables": 35,
         "deleted": 0,
-        "inserted": 0,
+        "inserted": 1,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "但中网半决赛,他在失分后把球打向看台,击中观众被判施隔。这也成了他今年的低点。"
+        "transcript": "但中网半决赛,他在失分后把球打向看台,击中观众,背叛失格。这也成了他今年的第一点。"
       },
       "polyphones": [
         {
@@ -275,7 +275,7 @@
             {
               "wrong": "zhong1",
               "verdict": "correct",
-              "score": 0.515,
+              "score": 0.53,
               "confidence": "medium",
               "near": null
             }
@@ -312,7 +312,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "梅网第四轮,面对蒂亚福,再次连丢三盘。今年四战大满冠,他没有一次打进八强。"
+        "transcript": "梅网第四轮,面对迪亚福,再次连丢三盘。今年四战大满冠,他没有一次打进八强。"
       },
       "polyphones": [],
       "pauses": {
@@ -344,7 +344,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "新赛季第一战,他就在布里斯班奪冠,决赛两盘击败中岛布兰登,冠军来得很早。"
+        "transcript": "新赛季第一战,他就在布里斯班朵冠。决赛两盘击败中岛布兰登,冠军来得很早。"
       },
       "polyphones": [
         {
@@ -362,7 +362,7 @@
             {
               "wrong": "de2",
               "verdict": "correct",
-              "score": 0.429,
+              "score": 0.29,
               "confidence": "low",
               "near": null
             }
@@ -453,7 +453,7 @@
         "substituted": 2,
         "sub_ratio": 0.065,
         "longest_deletion": 0,
-        "transcript": "欧网区很快给了他一击重击。第四轮对勒纳钱,连丢三盘,第二盘还是零比六。"
+        "transcript": "欧网区很快给了他一击重击。第四轮对勒纳·钱、连丢三盘、第二盘还是零比六。"
       },
       "polyphones": [
         {
@@ -470,7 +470,7 @@
             {
               "wrong": "chong2",
               "verdict": "unreliable",
-              "score": 0.087,
+              "score": 0.337,
               "confidence": null,
               "near": null
             }
@@ -490,8 +490,8 @@
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "uncertain",
-              "score": 0.171,
+              "verdict": "unreliable",
+              "score": 0.318,
               "confidence": null,
               "near": null
             }
@@ -528,7 +528,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "上海打进四墙之后,他来到阿拉木图。决赛先丢一盘,再以6比1、6比3翻回来,拿到赛季第四冠。"
+        "transcript": "上海打进四墙之后,他来到阿拉姆土。决赛先丢一盘,再以6比1、6比3翻回来,拿到赛季第四冠。"
       },
       "polyphones": [],
       "pauses": {
@@ -560,7 +560,7 @@
         "substituted": 1,
         "sub_ratio": 0.023,
         "longest_deletion": 0,
-        "transcript": "今年拿到四个单打冠军,四大满冠,却都没进八强。去年缺席年中的梅德韦德夫,是怎样把都临门票赢回来的。"
+        "transcript": "今年拿到四个单打冠军,四大满冠,却都没进八强。去年缺席年中的梅德韦德夫,是怎样把督灵门票赢回来的。"
       },
       "polyphones": [],
       "pauses": {
@@ -688,7 +688,7 @@
         "substituted": 1,
         "sub_ratio": 0.036,
         "longest_deletion": 0,
-        "transcript": "转折出现在中国赛季,恒州决赛,两盘击败卢布列夫,拿到年度第三罐。"
+        "transcript": "转折出现在中国赛季,横州决赛,两盘击败卢布列夫,拿到年度第三罐。"
       },
       "polyphones": [],
       "pauses": {
@@ -752,7 +752,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴黎第二轮,他以4比6,4比6输给布赛。巴黎的征程结束,接下来,目光转向都领。"
+        "transcript": "巴黎第二轮,他以4比6,4比6输给布赛。巴黎的征程结束,接下来,目光转向都灵。"
       },
       "polyphones": [],
       "pauses": {
@@ -816,7 +816,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "10月30日,维也纳四分之一决赛。两盘击败马纳里诺,梅德维德夫终于锁定年中资格。"
+        "transcript": "10月30日,维也纳四分之一决赛。两盘击败马纳里诺,梅德韦德夫终于锁定年中资格。"
       },
       "polyphones": [],
       "pauses": {
@@ -848,7 +848,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "印第安威尔斯他在半决赛祭拜阿尔卡拉斯闯进大师赛决赛。两盘抢期还是输给辛娜。"
+        "transcript": "印第安威尔斯他在半决赛纪拜阿尔卡拉斯闯进大师赛决赛。两盘抢期还是输给辛娜。"
       },
       "polyphones": [
         {
@@ -860,13 +860,13 @@
             "huan2"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "correct",
-              "score": 0.28,
-              "confidence": "low",
+              "verdict": "unreliable",
+              "score": 0.659,
+              "confidence": null,
               "near": null
             }
           ],
@@ -902,7 +902,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他终于在同一战连续两年捧起冠军奖杯。二十五座单打冠军,这是他第一次成功未免。"
+        "transcript": "他终于在同一战,连续两年捧起冠军奖杯。25座单打冠军,这是他第一次成功未免。"
       },
       "polyphones": [],
       "pauses": {
@@ -934,7 +934,7 @@
         "substituted": 1,
         "sub_ratio": 0.062,
         "longest_deletion": 0,
-        "transcript": "梅德韦德夫年中路,四贯之后重返都临。"
+        "transcript": "梅德韦德夫年中路,四管之后重返都临。"
       },
       "polyphones": [
         {
@@ -951,7 +951,7 @@
             {
               "wrong": "zhong4",
               "verdict": "correct",
-              "score": 0.746,
+              "score": 0.764,
               "confidence": "medium",
               "near": null
             }
