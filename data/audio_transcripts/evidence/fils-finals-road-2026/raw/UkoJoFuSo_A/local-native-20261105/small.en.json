@@ -1,0 +1,183 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:25:53.391188+00:00",
+  "model": "small.en",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+  "clip": [
+    0.0,
+    32.0
+  ],
+  "duration": 32.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 10.86,
+      "end": 13.7,
+      "text": "The second match of Baratini.",
+      "avg_logprob": -0.7459557400299952,
+      "no_speech_prob": 0.27621734142303467,
+      "words": [
+        {
+          "w": " The",
+          "s": 10.86,
+          "e": 12.02,
+          "p": 0.036176856607198715
+        },
+        {
+          "w": " second",
+          "s": 12.02,
+          "e": 12.84,
+          "p": 0.2215001881122589
+        },
+        {
+          "w": " match",
+          "s": 12.84,
+          "e": 13.1,
+          "p": 0.299630731344223
+        },
+        {
+          "w": " of",
+          "s": 13.1,
+          "e": 13.36,
+          "p": 0.6284136176109314
+        },
+        {
+          "w": " Baratini.",
+          "s": 13.36,
+          "e": 13.7,
+          "p": 0.5341605444749197
+        }
+      ]
+    },
+    {
+      "start": 14.34,
+      "end": 19.42,
+      "text": "Matteo Baratini punches his ticket to round three.",
+      "avg_logprob": -0.7459557400299952,
+      "no_speech_prob": 0.27621734142303467,
+      "words": [
+        {
+          "w": " Matteo",
+          "s": 14.34,
+          "e": 14.9,
+          "p": 0.5406870506703854
+        },
+        {
+          "w": " Baratini",
+          "s": 14.9,
+          "e": 15.68,
+          "p": 0.913668672243754
+        },
+        {
+          "w": " punches",
+          "s": 15.68,
+          "e": 16.82,
+          "p": 0.730993926525116
+        },
+        {
+          "w": " his",
+          "s": 16.82,
+          "e": 17.4,
+          "p": 0.9341776371002197
+        },
+        {
+          "w": " ticket",
+          "s": 17.4,
+          "e": 17.82,
+          "p": 0.8903170228004456
+        },
+        {
+          "w": " to",
+          "s": 17.82,
+          "e": 18.7,
+          "p": 0.919845461845398
+        },
+        {
+          "w": " round",
+          "s": 18.7,
+          "e": 18.9,
+          "p": 0.5206019282341003
+        },
+        {
+          "w": " three.",
+          "s": 18.9,
+          "e": 19.42,
+          "p": 0.7499181628227234
+        }
+      ]
+    },
+    {
+      "start": 26.84,
+      "end": 30.58,
+      "text": "Oh, the face is sent packing here at Wimbledon.",
+      "avg_logprob": -0.7612136284510295,
+      "no_speech_prob": 0.4031248092651367,
+      "words": [
+        {
+          "w": " Oh,",
+          "s": 26.84,
+          "e": 27.48,
+          "p": 0.011513061821460724
+        },
+        {
+          "w": " the",
+          "s": 27.64,
+          "e": 27.68,
+          "p": 0.13723427057266235
+        },
+        {
+          "w": " face",
+          "s": 27.68,
+          "e": 28.02,
+          "p": 0.8330789804458618
+        },
+        {
+          "w": " is",
+          "s": 28.02,
+          "e": 29.16,
+          "p": 0.7567436099052429
+        },
+        {
+          "w": " sent",
+          "s": 29.16,
+          "e": 29.42,
+          "p": 0.4242168366909027
+        },
+        {
+          "w": " packing",
+          "s": 29.42,
+          "e": 29.82,
+          "p": 0.9015356302261353
+        },
+        {
+          "w": " here",
+          "s": 29.82,
+          "e": 30.08,
+          "p": 0.961515486240387
+        },
+        {
+          "w": " at",
+          "s": 30.08,
+          "e": 30.26,
+          "p": 0.7024811506271362
+        },
+        {
+          "w": " Wimbledon.",
+          "s": 30.26,
+          "e": 30.58,
+          "p": 0.9982740879058838
+        }
+      ]
+    }
+  ]
+}

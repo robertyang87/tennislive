@@ -1,0 +1,81 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:28:22.905920+00:00",
+  "model": "medium",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+  "clip": [
+    11.8,
+    20.0
+  ],
+  "duration": 8.2,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 13.88,
+      "end": 19.44,
+      "text": "Matteo Berettini punches his ticket to round three.",
+      "avg_logprob": -0.4759042501449585,
+      "no_speech_prob": 0.31431931257247925,
+      "words": [
+        {
+          "w": " Matteo",
+          "s": 13.88,
+          "e": 15.08,
+          "p": 0.8773331642150879
+        },
+        {
+          "w": " Berettini",
+          "s": 15.08,
+          "e": 15.78,
+          "p": 0.718802014986674
+        },
+        {
+          "w": " punches",
+          "s": 15.78,
+          "e": 16.98,
+          "p": 0.9169344902038574
+        },
+        {
+          "w": " his",
+          "s": 16.98,
+          "e": 17.58,
+          "p": 0.9915913343429565
+        },
+        {
+          "w": " ticket",
+          "s": 17.58,
+          "e": 17.9,
+          "p": 0.9901746511459351
+        },
+        {
+          "w": " to",
+          "s": 17.9,
+          "e": 18.82,
+          "p": 0.976185142993927
+        },
+        {
+          "w": " round",
+          "s": 18.82,
+          "e": 19.02,
+          "p": 0.7231354117393494
+        },
+        {
+          "w": " three.",
+          "s": 19.02,
+          "e": 19.44,
+          "p": 0.6461483240127563
+        }
+      ]
+    }
+  ]
+}

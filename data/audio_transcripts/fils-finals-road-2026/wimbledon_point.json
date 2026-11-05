@@ -1,0 +1,185 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=UkoJoFuSo_A",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-UkoJoFuSo_A/UkoJoFuSo_A.mp4",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; directly reviewed true native local ASR raw and supporting speech activity. No auditory listening claimed.",
+  "reviewed_at": "2026-11-05T09:41:32.209518+00:00",
+  "status": "complete",
+  "reviewed_from": 0.0,
+  "reviewed_to": 26.5,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 14.08,
+      "end": 19.48,
+      "en": "Matteo Berrettini punches his ticket to round three.",
+      "zh": "贝雷蒂尼晋级第三轮。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/medium.en.json",
+      "sha256": "0b82852bd65d69f14ef5524acaf643eb5da5b8fc7d3cd48d105d7d7666373a5a",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        26.5
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/context-names/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/small.en.json",
+      "sha256": "0e2f4bfd1aa240f57bedd1089ce80e4b57b629f44f51a7702c81b85d04ae73e7",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        26.5
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/context-names/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/context-names/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/medium.json",
+      "sha256": "289835cd22f1545247f8c88341eb4edbfd7e67f7b4c778c489ace236a41b5621",
+      "model": "medium",
+      "clip": [
+        11.8,
+        20.0
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/medium.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/medium.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/medium.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/medium.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/local-call-refine/medium.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/small.json",
+      "sha256": "7e02df64fc023711e4140d61f5c6d795a1b12b40b37ea62a286bb85ddd2656b1",
+      "model": "small",
+      "clip": [
+        11.8,
+        20.0
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/small.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/small.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/small.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-call-refine/small.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/local-call-refine/small.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json",
+      "sha256": "e5f3076126d29a32fc7fc6b85178b0efeb769d82aa816dede04d8c5ece4829b5",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        32.0
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/small.en.json",
+      "sha256": "782b2c3ad6393976c285ff65904762a7b0397045098cb20f2c0cc8bd8b56d5ed",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        32.0
+      ],
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/UkoJoFuSo_A/local-native-20261105/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/UkoJoFuSo_A/local-native-20261105/small.en.json"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "89.675465",
+        "size": "25254300"
+      }
+    }
+  },
+  "review_notes": "Selected0–26.5 covered by whole0–32 small.en/medium.en, native11.8–20 multilingual small/medium and0–26.5 context-name pair. The accepted complete commentary sentence agrees in all six actual runs. Correct only athlete spelling Mattheo/Baratini/Berettini to verified Matteo Berrettini. Chosen14.08 is no-prompt full medium first-name onset p0.797, original small14.34 p0.541; main speech activity starts14.368 and adds support. Do not use named-context medium13.58–14.98 long Matteo envelope or multilingual13.64/13.88 as a precise earlier onset. End19.48 is original full medium last-word end, other contexts19.28–19.44. Introductory background/crowd-covered short-call hypotheses are not stable English: original full small10.86–13.70 The second match of Baratini versus medium11–13.78 The winner is Mattheo Beratini. Neither narrow no-prompt multilingual run reproduces an independent opening phrase; context medium also omits it and context small emits prompt-bleed Fils p0.001 at0s, explicitly rejected. Do not invent a standard Game set and match formula or claim the background call was human-heard. The retained clear foreground commentary is captioned; original noisy background remains unchanged. Next complete commentary Arthur Fils is sent packing here at Wimbledon starts26.84/26.92 and ends30.58/30.64, outside chosen26.5, so no clipped selected sentence. Context prompt was only Wimbledon tennis. Arthur Fils, Matteo Berrettini.; no target sentence or umpire formula was supplied. Human listening not performed.",
+  "internal_visual_note": "Independent official Wimbledon matchpoint source; same-point preparation, toss, all contacts and authentic Berrettini celebration/handshake. Root fixed0–26.5 excludes next full defeat sentence rather than cutting it.",
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/wimbledon-speech-activity.json",
+    "sha256": "5ce040731a28847c02ede6c24608e3fc59653691f370658727129ce9a1f21e8d",
+    "scope": "Supporting activity only, not human hearing or exact quiet-syllable boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/wimbledon-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/wimbledon-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/wimbledon-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 14.08,
+      "end": 19.48,
+      "text": "Matteo Berrettini punches his ticket to round three.\n贝雷蒂尼晋级第三轮。"
+    }
+  ]
+}

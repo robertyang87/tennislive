@@ -1,0 +1,110 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:30:40.789002+00:00",
+  "model": "small.en",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+  "clip": [
+    0.0,
+    26.5
+  ],
+  "duration": 26.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2,
+    "initial_prompt": "Wimbledon tennis. Arthur Fils, Matteo Berrettini."
+  },
+  "note": "Context contains verified event/player names only; no target spoken sentence or umpire formula supplied. Original no-prompt raw remains separate.",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 13.76,
+      "text": "Fils, Matteo Berrettini.",
+      "avg_logprob": -0.7296444704899421,
+      "no_speech_prob": 0.01651499979197979,
+      "words": [
+        {
+          "w": " Fils,",
+          "s": 0.0,
+          "e": 0.0,
+          "p": 0.00129890107200481
+        },
+        {
+          "w": " Matteo",
+          "s": 9.56,
+          "e": 13.16,
+          "p": 0.49553466971474336
+        },
+        {
+          "w": " Berrettini.",
+          "s": 13.16,
+          "e": 13.76,
+          "p": 0.4373105602959792
+        }
+      ]
+    },
+    {
+      "start": 14.1,
+      "end": 19.34,
+      "text": "Matteo Berrettini punches his ticket to round three.",
+      "avg_logprob": -0.7296444704899421,
+      "no_speech_prob": 0.01651499979197979,
+      "words": [
+        {
+          "w": " Matteo",
+          "s": 14.1,
+          "e": 14.9,
+          "p": 0.49975147364150985
+        },
+        {
+          "w": " Berrettini",
+          "s": 14.9,
+          "e": 15.66,
+          "p": 0.787410149971644
+        },
+        {
+          "w": " punches",
+          "s": 15.66,
+          "e": 16.86,
+          "p": 0.5735968351364136
+        },
+        {
+          "w": " his",
+          "s": 16.86,
+          "e": 17.4,
+          "p": 0.8286661505699158
+        },
+        {
+          "w": " ticket",
+          "s": 17.4,
+          "e": 17.84,
+          "p": 0.9029353260993958
+        },
+        {
+          "w": " to",
+          "s": 17.84,
+          "e": 18.7,
+          "p": 0.9076471924781799
+        },
+        {
+          "w": " round",
+          "s": 18.7,
+          "e": 18.9,
+          "p": 0.5480301976203918
+        },
+        {
+          "w": " three.",
+          "s": 18.9,
+          "e": 19.34,
+          "p": 0.7783865928649902
+        }
+      ]
+    }
+  ]
+}

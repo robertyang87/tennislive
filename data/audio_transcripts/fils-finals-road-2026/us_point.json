@@ -1,0 +1,196 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=o8c4zZVTYjo",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-o8c4zZVTYjo/o8c4zZVTYjo.mp4",
+  "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex audio audit agent; actual original-source raw ASR and local speech activity reviewed; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T09:28:49.054060+00:00",
+  "status": "complete",
+  "reviewed_from": 150.3,
+  "reviewed_to": 171.6,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 153.54,
+      "end": 155.12,
+      "en": "Does it in style.",
+      "zh": "漂亮收官。"
+    },
+    {
+      "start": 155.42,
+      "end": 161.57,
+      "en": "Stefanos Tsitsipas, through to the second round here of the US Open.",
+      "zh": "西西帕斯晋级美网第二轮。"
+    },
+    {
+      "start": 164.7,
+      "end": 167.18,
+      "en": "A four-set winner over the number ten seed.",
+      "zh": "四盘击败10号种子。"
+    },
+    {
+      "start": 168.8,
+      "end": 170.88,
+      "en": "And that was as good as it gets.",
+      "zh": "这表现无可挑剔。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": "Two complete commentary sentences retained across four readable subtitle cues; punctuation separates spoken commentary clauses without changing words. First full medium Does152.70–153.76 p0.412 and tight medium153.16–153.80 p0.164 are stretched starts; VAD-context medium153.33–154.23 remains stretched. Do NOT stamp152.70 or153.16 as precise speech onset. Earliest local speech activity starts153.532 (threshold0.3) and153.596(0.5/0.7), consistent with source point end near153.5; caption onset153.54 is a non-auditory activity-aligned estimate, not a manually heard sample boundary. All variants recognize it in style and complete Tsitsipas/second-round statement; tight small drops opening and is not silently omitted from evidence. The US Open ending is recovered in both tight models, correcting whole medium usi. Four-set phrase: disregard small162.62–164.9 stretched four and VAD162.15–162.73 low-confidence A; explicit four164.70 in VAD model plus local speech164.732 anchors164.70 caption. Last and uses168.80 local speech activity instead of167.12/167.74 extended ASR envelope. Word that169.0 and all following words align within0.04s across models. End170.88 is original medium complete gets end; tight small/medium170.60/170.62. Next sentence starts175.52, beyond171.6.",
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/research/media-late/o8c4zZVTYjo.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60000/1001"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "197.160635",
+        "size": "74613328"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/small.en.json",
+      "sha256": "dd01d8e2fe286e77b2f2a02294758f48e347be8f12db7349544f00f6bd7aef1d",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "git_blob_sha1": "0a40e50d04fbbf337aaae95eddee6d047e88ba24",
+      "fixed_commit": "b38560f62bd58fa82a0458d2f2c5c7d35063d21c",
+      "repository_path": "data/source_asr/o8c4zZVTYjo/small.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/data/source_asr/o8c4zZVTYjo/small.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/medium.en.json",
+      "sha256": "20cdd9a4a73c8a2f043f40739e1f89b92eb21bc254dca2d6c2a1e8f03a9e28d2",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "git_blob_sha1": "8a66922b0230d4e8f98270c8cda1cd9c108dfbcd",
+      "fixed_commit": "b38560f62bd58fa82a0458d2f2c5c7d35063d21c",
+      "repository_path": "data/source_asr/o8c4zZVTYjo/medium.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/data/source_asr/o8c4zZVTYjo/medium.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/o8c4zZVTYjo/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/medium.en.json",
+      "sha256": "555482036bec9c19436a294cd63f5b1fe9ece1880fc0f57eb3be43df716fc246",
+      "model": "medium.en",
+      "clip": [
+        150.3,
+        171.6
+      ],
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/medium.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/o8c4zZVTYjo/timing-refine/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/small.en.json",
+      "sha256": "c94cfe905563107d916db18652e2dda57bedf457370fab011b86e083866728fd",
+      "model": "small.en",
+      "clip": [
+        150.3,
+        171.6
+      ],
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/small.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/o8c4zZVTYjo/timing-refine/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json",
+      "sha256": "33d7d10e9e811d0f700dcdc03d0a13ab39483901c5daac93d0fbcc91ebacdf83",
+      "model": "medium.en",
+      "clip": [
+        150.3,
+        171.6
+      ],
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/o8c4zZVTYjo/timing-refine-vad/medium.en.json"
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "sha256": "c1d72cab7d197c1496e26b9a5c3f1cc49eb3bb1fd561b5563288bf544cba21ca",
+    "scope": "Supporting local Silero activity only, not human hearing and not a quiet-syllable/sample boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/local-speech-activity.json"
+  },
+  "internal_visual_note": "Selected source verified by source agent: preparation, serve and full terminal rally followed by authentic reaction. Actual whole-source60fps60000/1001; native must preserve same SHA when mixed-fps handling.",
+  "native_quote": [
+    {
+      "at": 3.24,
+      "end": 4.82,
+      "text": "Does it in style.\n漂亮收官。"
+    },
+    {
+      "at": 5.12,
+      "end": 11.27,
+      "text": "Stefanos Tsitsipas, through to the second round here of the US Open.\n西西帕斯晋级美网第二轮。"
+    },
+    {
+      "at": 14.4,
+      "end": 16.88,
+      "text": "A four-set winner over the number ten seed.\n四盘击败10号种子。"
+    },
+    {
+      "at": 18.5,
+      "end": 20.58,
+      "text": "And that was as good as it gets.\n这表现无可挑剔。"
+    }
+  ]
+}

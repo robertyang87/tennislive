@@ -1,0 +1,180 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4476775/moment-of-the-day-fils-completes-epic-comeback",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fils26miami/fils26miami.mp4",
+  "source_sha256": "17c135c02bca30257796474783154bc18ea05796c822a346559344e1c76161c4",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; directly reviewed true native local ASR raw and supporting speech activity. No auditory listening claimed.",
+  "reviewed_at": "2026-11-05T09:41:32.101689+00:00",
+  "status": "complete",
+  "reviewed_from": 0.0,
+  "reviewed_to": 40.0,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 18.14,
+      "end": 19.36,
+      "en": "He's done it!",
+      "zh": "他做到了！"
+    },
+    {
+      "start": 20.36,
+      "end": 21.6,
+      "en": "What a conclusion!",
+      "zh": "多么精彩的结局！"
+    },
+    {
+      "start": 21.96,
+      "end": 26.38,
+      "en": "Arthur Fils is a Miami semi-finalist.",
+      "zh": "菲斯晋级迈阿密半决赛。"
+    },
+    {
+      "start": 26.4,
+      "end": 28.32,
+      "en": "Can you believe it?",
+      "zh": "你敢相信吗？"
+    },
+    {
+      "start": 28.82,
+      "end": 31.22,
+      "en": "Six-two down in the breaker.",
+      "zh": "抢七一度2比6落后。"
+    },
+    {
+      "start": 32.8,
+      "end": 39.74,
+      "en": "And somehow he's found a way.",
+      "zh": "可他竟然找到了出路。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/medium.en.json",
+      "sha256": "d9fd53d66b0801beb723b2a69e0bbeb770a219bd680b73064f873addfddb02cc",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        40.0
+      ],
+      "source_sha256": "17c135c02bca30257796474783154bc18ea05796c822a346559344e1c76161c4",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26miami/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/small.en.json",
+      "sha256": "d17cc41edf72d718f65cacdb02adf632e5b87eee7218d227eb22c153594f4067",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        40.0
+      ],
+      "source_sha256": "17c135c02bca30257796474783154bc18ea05796c822a346559344e1c76161c4",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-native-20261105/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26miami/local-native-20261105/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-term-refine/medium.json",
+      "sha256": "1055fd9b94edcb7563fd013e5d5363a18b49ef5a3cb95bcedcb7115ab7d976dc",
+      "model": "medium",
+      "clip": [
+        17.0,
+        40.0
+      ],
+      "source_sha256": "17c135c02bca30257796474783154bc18ea05796c822a346559344e1c76161c4",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-term-refine/medium.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-term-refine/medium.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-term-refine/medium.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26miami/local-term-refine/medium.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26miami/local-term-refine/medium.json"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26miami.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "79.040000",
+        "size": "38145103"
+      }
+    }
+  },
+  "review_notes": "Fresh ASR runs bind only native-archived17c135... Miami4476775 bytes, never earlier88f73 file. All0–40 original-source English small/medium raw and a no-prompt multilingual medium17–40 checked. Whole English models agree every clause but stretch first He17.42/17.46 up to18.5; multilingual He17.88–18.56 and local speech activity18.344/18.376 support chosen18.14 with200ms lead pad. What onset20.36 uses strong speech region20.36 and multilingual20.48 p0.975 instead of19.10–20.56 stretched What. Proper-name Arthur Fils corrects Arto Feis/utter feast only to actual verified player; strong local name activity21.96, multilingual22.20 supports21.96 conservative onset. Whole English small semifinalist ends26.38 and medium26.40; next Can begins26.40, preventing overlap. Full later clause is retained to39.74; fixed40 window leaves260ms tail and preserves original long rhetorical pause in somehow he has found a way, not rewritten or shortened. Tennis term breaker is normalized from both English models breakout and multilingual break-up in explicitly verified6-2 tiebreak context; all recognize break plus reduced second syllable. This is documented domain-word correction, not an independent human-listening claim. Original raw is unchanged and disagreement retained. Scores are commentary contents, not used to invent unspoken filler. No source audio replacement, source gain/filtering or BGM addition.",
+  "internal_visual_note": "Exact frozen Miami independent moment includes Paul preparation, all serve/rally, Fils winning reaction, box and handshake. Window expanded to40 only to retain full final utterance; root confirmed fixed0–40.",
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/miami-speech-activity.json",
+    "sha256": "7fce76955a3dc4fa2ebadd8d6cda5d20aab2e693ab966d1e1c6791ac334e4692",
+    "scope": "Supporting activity only, not human hearing or exact quiet-syllable boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/miami-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/miami-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/miami-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 18.14,
+      "end": 19.36,
+      "text": "He's done it!\n他做到了！"
+    },
+    {
+      "at": 20.36,
+      "end": 21.6,
+      "text": "What a conclusion!\n多么精彩的结局！"
+    },
+    {
+      "at": 21.96,
+      "end": 26.38,
+      "text": "Arthur Fils is a Miami semi-finalist.\n菲斯晋级迈阿密半决赛。"
+    },
+    {
+      "at": 26.4,
+      "end": 28.32,
+      "text": "Can you believe it?\n你敢相信吗？"
+    },
+    {
+      "at": 28.82,
+      "end": 31.22,
+      "text": "Six-two down in the breaker.\n抢七一度2比6落后。"
+    },
+    {
+      "at": 32.8,
+      "end": 39.74,
+      "text": "And somehow he's found a way.\n可他竟然找到了出路。"
+    }
+  ]
+}

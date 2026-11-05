@@ -1,0 +1,554 @@
+{
+  "audit_type": "final_native_fact_and_ass_review",
+  "reviewer": "fils_facts",
+  "reviewed_at_utc": "2026-11-05T10:18:55.435933+00:00",
+  "status": "PASS",
+  "status_scope": "Facts, actual ASS text and labels only; rejected old movie is not cleared for release",
+  "movie_visual_release_status": "REJECTED_BY_ROOT_PARIS_PROMO_TAIL",
+  "release_eligible": false,
+  "root_reported_visual_issue": "Old movie Paris tail includes TennisTV LIVE promotional material/another person at actual 300.116 seconds; root is narrowing only Paris source end 143.6 to 142.4. This factual audit does not override that visual rejection.",
+  "render_bound_spec_sha256": "61482f2e9938758630ba32f6f9e21f5b614d8dbc6970d93358f0d8164820eb82",
+  "working_spec_note": "Working native spec may already contain the narrow Paris tail revision; immutable render_inputs projection, rather than the mutable working spec, is used for all old-movie subtitle and label timelines.",
+  "open_fact_corrections": [],
+  "components": {
+    "movie": {
+      "path": "/workspace/fils-finals-production/final/native-input/fils-finals-road-2026.mp4",
+      "sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+      "bytes": 199056155
+    },
+    "ass": {
+      "path": "/workspace/fils-finals-production/final/native-input/subtitles.ass",
+      "sha256": "c5af5310b83289029f7f4e12a5f753ba64d353eddcabe05521ce432d5ddfbfd6",
+      "bytes": 8964
+    },
+    "render": {
+      "path": "/workspace/fils-finals-production/final/native-input/render.json",
+      "sha256": "86199fef7fe653b095d9287a255ddc6b0343b095baf9946145623a3acafdb392",
+      "bytes": 2626
+    },
+    "render_inputs": {
+      "path": "/workspace/fils-finals-production/final/native-input/render_inputs.json",
+      "sha256": "d1d8a043ee7f717809543572a20eda4f20ab95b85c51f02d8da56e21fac465e2",
+      "bytes": 28770
+    },
+    "spec": {
+      "path": "/workspace/fils-finals-production/native/specs/reels/fils-finals-road-2026.json",
+      "sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+      "bytes": 31550
+    },
+    "race_data": {
+      "path": "/workspace/fils-finals-production/production/race-chart/data-canonical.json",
+      "sha256": "d1968bf34725847a45bfc08aa6f9664de7c18050fdd5e1ef52c5079871ab312a",
+      "bytes": 11644
+    },
+    "race_png": {
+      "path": "/workspace/fils-finals-production/production/race-chart/race-points-qualified.png",
+      "sha256": "dbda189659eea4ae53558c0f6c61118e80f1f0bdddfca63738e6168972f50e04",
+      "bytes": 192529
+    },
+    "frozen_publication_record": {
+      "path": "/workspace/fils-finals-production/native/research/fils-finals-road-2026/frozen-publication-copy.json",
+      "sha256": "f83628ce5fb561c682864dabb49e028330c96e6d73352153a2c4f9e8d43d03b9",
+      "bytes": 515
+    },
+    "frozen_xhs": {
+      "path": "/workspace/fils-finals-production/native/specs/reels/fils-finals-road-2026.xhs.txt",
+      "sha256": "d66dc47372f99c607e13b5d2d03edc973014ee0378181001c7e5c7e8ee3d795c",
+      "bytes": 627
+    }
+  },
+  "movie_duration_seconds": 313.44,
+  "movie_binding": "Actual full movie SHA, bytes and duration independently checked; render_inputs spec, ASS and graphic hashes match.",
+  "narration": {
+    "status": "PASS",
+    "segment_count": 16,
+    "ass_event_total": 74,
+    "scope": "Actual native ASS compared with all 16 frozen TTS texts. Only punctuation, Chinese/digit typography and 1/4 display normalization.",
+    "segments": [
+      {
+        "native_segment_index": 0,
+        "start": 3.898,
+        "end": 11.906,
+        "status": "PASS",
+        "actual_ass_text": "今年四站大满贯菲斯只赢了一场比赛可今年的年终名单里第一次出现了他的名字",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 1,
+        "start": 11.906,
+        "end": 20.97,
+        "status": "PASS",
+        "actual_ass_text": "去年法网后背伤让他只又打了两场巡回赛单打今年又缺席澳网直到2月才开始新赛季",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 2,
+        "start": 20.97,
+        "end": 28.954,
+        "status": "PASS",
+        "actual_ass_text": "复出第三站 多哈 他一路打到决赛却以2比6 1比6输给阿尔卡拉斯",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 3,
+        "start": 28.954,
+        "end": 38.666,
+        "status": "PASS",
+        "actual_ass_text": "印第安维尔斯打进8强接着是迈阿密 对保罗那场1/4决赛他救回4个赛点3盘抢七翻了回来",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 5,
+        "start": 78.666,
+        "end": 87.73,
+        "status": "PASS",
+        "actual_ass_text": "迈阿密止步4强之后他在巴塞罗那两盘击败卢布列夫复出后的第一座奖杯 到手了",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 7,
+        "start": 120.43,
+        "end": 127.934,
+        "status": "PASS",
+        "actual_ass_text": "马德里 他又进了大师赛4强复出之后已经连续在大赛中走到后半程",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 8,
+        "start": 127.934,
+        "end": 137.91,
+        "status": "PASS",
+        "actual_ass_text": "可伤病再次打断了他罗马首战伤退随后因为髋伤退出法网两个大满贯 他都没能出场",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 9,
+        "start": 137.91,
+        "end": 145.942,
+        "status": "PASS",
+        "actual_ass_text": "温网先赢一轮 第二轮输给贝雷蒂尼这一胜也是他今年全部的大满贯胜场",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 11,
+        "start": 172.442,
+        "end": 181.698,
+        "status": "PASS",
+        "actual_ass_text": "辛辛那提决赛 他与蒂亚福各拿一盘决胜盘 菲斯送出6比0拿到生涯第一座大师赛冠军",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 13,
+        "start": 209.998,
+        "end": 218.846,
+        "status": "PASS",
+        "actual_ass_text": "美网 却又在首轮被西西帕斯挡住辛辛那提的冠军并没有让大满贯的难题自动消失",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 15,
+        "start": 240.146,
+        "end": 249.018,
+        "status": "PASS",
+        "actual_ass_text": "秋天 东京打进8强 上海第三轮布鲁塞尔又进4强一站一站 把积分往上加",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 16,
+        "start": 249.018,
+        "end": 258.322,
+        "status": "PASS",
+        "actual_ass_text": "巴塞尔 面对弗里茨第二盘0比2时 菲斯再次伤退年终门票还没拿到他又没能打完比赛",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 17,
+        "start": 258.322,
+        "end": 265.994,
+        "status": "PASS",
+        "actual_ass_text": "11月4日 转折来自另一场比赛阿利斯击败蒂亚福菲斯的年终资格提前锁定",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 18,
+        "start": 265.994,
+        "end": 275.514,
+        "status": "PASS",
+        "actual_ass_text": "截至11月5日菲斯3625分排在赛季积分榜第七高亮的6个人 都已拿到年终门票",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 19,
+        "start": 275.514,
+        "end": 284.986,
+        "status": "PASS",
+        "actual_ass_text": "资格到手之后 他又两盘击败马哈奇继续巴黎的征程法国男网时隔10年终于又有人入围年终",
+        "normalized_match_to_frozen_tts_text": true
+      },
+      {
+        "native_segment_index": 21,
+        "start": 300.466,
+        "end": 308.858,
+        "status": "PASS",
+        "actual_ass_text": "大满贯只有一胜却拼出了第一张年终门票第一次到都灵你看好菲斯拿下几场胜利？",
+        "normalized_match_to_frozen_tts_text": true
+      }
+    ]
+  },
+  "source_translations": {
+    "status": "PASS",
+    "cue_count": 19,
+    "cues": [
+      {
+        "source": "miami-qf",
+        "start": 56.81,
+        "end": 58.03,
+        "actual_ass_text": "He's done it!\n他做到了！",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "miami-qf",
+        "start": 59.03,
+        "end": 60.27,
+        "actual_ass_text": "What a conclusion!\n多么精彩的结局！",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "miami-qf",
+        "start": 60.63,
+        "end": 65.05,
+        "actual_ass_text": "Arthur Fils is a Miami semi-finalist.\n菲斯晋级迈阿密半决赛",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "miami-qf",
+        "start": 65.07,
+        "end": 66.99,
+        "actual_ass_text": "Can you believe it?\n你敢相信吗？",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "miami-qf",
+        "start": 67.49,
+        "end": 69.89,
+        "actual_ass_text": "Six-two down in the breaker.\n抢七一度2比6落后",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "miami-qf",
+        "start": 71.47,
+        "end": 78.41,
+        "actual_ass_text": "And somehow he's found a way.\n可他竟然找到了出路",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "barcelona-final",
+        "start": 106.63,
+        "end": 110.25,
+        "actual_ass_text": "Arthur Fils conquers Barcelona in style.\n菲斯在巴塞罗那精彩夺冠",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "barcelona-final",
+        "start": 112.03,
+        "end": 114.97,
+        "actual_ass_text": "After six months out with a back injury,\n背伤让他休战6个月",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "barcelona-final",
+        "start": 115.17,
+        "end": 118.07,
+        "actual_ass_text": "he stormed back onto the ATP Tour,\n他强势重返ATP巡回赛",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "barcelona-final",
+        "start": 118.67,
+        "end": 120.31,
+        "actual_ass_text": "playing some of his best tennis.\n打出个人顶尖水准",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "wimbledon-r2",
+        "start": 160.02,
+        "end": 165.42000000000002,
+        "actual_ass_text": "Matteo Berrettini punches his ticket to round three.\n贝雷蒂尼晋级第三轮",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "cincinnati-final",
+        "start": 191.76,
+        "end": 192.56,
+        "actual_ass_text": "Arthur Fils.\n菲斯",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "cincinnati-final",
+        "start": 194.1,
+        "end": 196.26,
+        "actual_ass_text": "Quite scintillating in Cincinnati.\n在辛辛那提大放异彩",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "cincinnati-final",
+        "start": 200.12,
+        "end": 204.12,
+        "actual_ass_text": "It is the biggest title of his young career.\n他年轻生涯分量最重的冠军",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "us-open-r1",
+        "start": 222.09,
+        "end": 223.67000000000002,
+        "actual_ass_text": "Does it in style.\n漂亮收官",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "us-open-r1",
+        "start": 223.97,
+        "end": 230.12,
+        "actual_ass_text": "Stefanos Tsitsipas, through to the second round here of the US Open.\n西西帕斯晋级美网第二轮",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "us-open-r1",
+        "start": 233.25,
+        "end": 235.73,
+        "actual_ass_text": "A four-set winner over the number ten seed.\n四盘击败10号种子",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "us-open-r1",
+        "start": 237.35,
+        "end": 239.43,
+        "actual_ass_text": "And that was as good as it gets.\n这表现无可挑剔",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      },
+      {
+        "source": "paris-r2",
+        "start": 292.40999999999997,
+        "end": 297.03,
+        "actual_ass_text": "Arthur Fils caps off what has been a fabulous French day.\n菲斯为法国球员的精彩一天收官",
+        "translation_fact_status": "PASS",
+        "meaning_note": "Faithful translation; factual result/person/round direction preserved."
+      }
+    ],
+    "context_note": "Barcelona source says six months out: consistent with the final uninterrupted absence after 2025 Toronto until February 2026. It is a faithful rendering of the authentic English source, distinct from the approximate eight-month injury period beginning at Roland-Garros."
+  },
+  "source_event_labels": {
+    "status": "PASS",
+    "labels": [
+      {
+        "source": "miami-qf",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 39.666,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/miami-qf.png",
+        "actual_movie_frame_sha256": "d7382523d6da7e1b56cd81c9dd3ec1bed7cf761d116dca6b279024fdf10111c3",
+        "label": {
+          "topic": "四赛点逆转",
+          "date": "2026.03.25",
+          "place": "迈阿密1/4决赛",
+          "people": "菲斯 vs 保罗",
+          "score": "6-7(3) 7-6(4) 7-6(6)",
+          "result": {
+            "winner": "菲斯",
+            "score": "6-7(3) 7-6(4) 7-6(6)",
+            "source": "https://www.tennistv.com/videos/4476775/moment-of-the-day-fils-completes-epic-comeback"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Arthur Fils",
+        "date_eventlocal": "2026-03-25",
+        "manual_actual_movie_frame_label_read": "PASS"
+      },
+      {
+        "source": "barcelona-final",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 88.73,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/barcelona-final.png",
+        "actual_movie_frame_sha256": "f30d30cd170163b8fe3f860ce71ee1329ef265e5c96e5ab0c0d1a83e3f79efe5",
+        "label": {
+          "topic": "复出后首冠",
+          "date": "2026.04.19",
+          "place": "巴塞罗那决赛",
+          "people": "菲斯 vs 卢布列夫",
+          "score": "6-2 7-6(2)",
+          "result": {
+            "winner": "菲斯",
+            "score": "6-2 7-6(2)",
+            "source": "https://www.tennistv.com/videos/4490110/barcelona-2026-final-rublev-fils-short-highlights"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Arthur Fils",
+        "date_eventlocal": "2026-04-19",
+        "manual_actual_movie_frame_label_read": "PASS"
+      },
+      {
+        "source": "wimbledon-r2",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 146.942,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/wimbledon-r2.png",
+        "actual_movie_frame_sha256": "7b0cdd2fd8ceb6fc6caac294ea659eeadd68f7f745d96fc93442ffdf0c08f89b",
+        "label": {
+          "topic": "大满贯唯一一胜之后",
+          "date": "2026.07.02",
+          "place": "温网第二轮",
+          "people": "菲斯 vs 贝雷蒂尼",
+          "score": "4-6 5-7 6-3 3-6",
+          "result": {
+            "winner": "贝雷蒂尼",
+            "score": "6-4 7-5 3-6 6-3",
+            "source": "https://www.youtube.com/watch?v=UkoJoFuSo_A"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Matteo Berrettini",
+        "date_eventlocal": "2026-07-02",
+        "manual_actual_movie_frame_label_read": "PASS"
+      },
+      {
+        "source": "cincinnati-final",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 182.698,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/cincinnati-final.png",
+        "actual_movie_frame_sha256": "933cb4c85e13dce6850d1dda3038e2cfaf2d0d6fa779d73a6602eb9776af7319",
+        "label": {
+          "topic": "首座大师赛冠军",
+          "date": "2026.08.23",
+          "place": "辛辛那提决赛",
+          "people": "菲斯 vs 蒂亚福",
+          "score": "6-3 1-6 6-0",
+          "result": {
+            "winner": "菲斯",
+            "score": "6-3 1-6 6-0",
+            "source": "https://www.youtube.com/watch?v=RAAXKA85t3g"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Arthur Fils",
+        "date_eventlocal": "2026-08-23",
+        "manual_actual_movie_frame_label_read": "PASS"
+      },
+      {
+        "source": "us-open-r1",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 219.846,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/us-open-r1.png",
+        "actual_movie_frame_sha256": "c3d8c9758293ebe10e1dc315a2d54e1824a9a47aad9e02d5ba94333c069c8e87",
+        "label": {
+          "topic": "首轮止步",
+          "date": "2026.08.31",
+          "place": "美网第一轮",
+          "people": "菲斯 vs 西西帕斯",
+          "score": "6-4 6-7(3) 1-6 4-6",
+          "result": {
+            "winner": "西西帕斯",
+            "score": "4-6 7-6(3) 6-1 6-4",
+            "source": "https://www.youtube.com/watch?v=o8c4zZVTYjo"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Stefanos Tsitsipas",
+        "date_eventlocal": "2026-08-31",
+        "manual_actual_movie_frame_label_read": "PASS"
+      },
+      {
+        "source": "paris-r2",
+        "status": "PASS",
+        "actual_movie_frame_seconds": 285.986,
+        "actual_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/paris-r2.png",
+        "actual_movie_frame_sha256": "b77e623f52894bf6655670cf20b6679d803d259f5ee692e1d92cd3c9dddd215f",
+        "label": {
+          "topic": "资格到手后再赢球",
+          "date": "2026.11.04",
+          "place": "巴黎第二轮",
+          "people": "菲斯 vs 马哈奇",
+          "score": "6-3 7-6(4)",
+          "result": {
+            "winner": "菲斯",
+            "score": "6-3 7-6(4)",
+            "source": "https://www.tennistv.com/videos/4604662/paris-2026-r2-fils-machac-short-highlights"
+          }
+        },
+        "fils_first_display_score_matches_ledger": true,
+        "winner_first_result_score_matches_ledger": true,
+        "true_winner": "Arthur Fils",
+        "date_eventlocal": "2026-11-04",
+        "manual_actual_movie_frame_label_read": "PASS"
+      }
+    ],
+    "scope": "Read date, event, people, display-score direction and winner from actual final movie frames; compared native label data with archived match ledger. No claim of full source-video/audio inspection in this fact audit."
+  },
+  "qualification_chronology": {
+    "status": "PASS",
+    "trigger": "Quentin Halys defeated Frances Tiafoe on 2026-11-04; Fils was qualified before beating Tomas Machac.",
+    "actual_ass_trigger_start_seconds": 258.37,
+    "actual_ass_later_machac_narration_start_seconds": 275.56,
+    "paris_label_topic": "资格到手后再赢球",
+    "first_french_singles_qualifier_since": "Gael Monfils, 2016",
+    "sources": [
+      "https://www.rolexparismasters.com/en/news/article/second-round-favourites-carlos-alcaraz-arthur-fils-wins",
+      "https://www.nittoatpfinals.com/en/news/fils-nitto-atp-finals-2026-qualification"
+    ]
+  },
+  "race": {
+    "status": "PASS",
+    "as_of": "2026-11-05, before Paris R16 matches",
+    "points_source": "Live-Tennis independent live Race, not an official ATP whole-table response",
+    "fils_points": 3625,
+    "fils_rank": 7,
+    "active_qualified_highlight_ranks": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "sinner_rank": 2,
+    "sinner_status": "withdrawn and grey, not active highlighted",
+    "rows_reviewed": 13,
+    "actual_final_movie_frame_seconds": 268.5,
+    "actual_final_movie_frame_path": "/workspace/fils-finals-production/research/facts/final-qc-frames/race-table.png",
+    "actual_final_movie_frame_sha256": "d22c6de3e218f8b5120957add2c79b4510537b8bbd65679948c90b805a38afc1",
+    "manual_graphic_and_actual_movie_frame_read": "PASS; points, names, qualification marks and dates match canonical data.",
+    "data_unchanged_from_prior_review": true
+  },
+  "publication_copy": {
+    "status": "PASS",
+    "body_bytes": 627,
+    "title": "11.5网球有故事|菲斯年终路",
+    "facts_consistent_with_film": true,
+    "body_hash_matches_frozen_record": true
+  },
+  "scope_exclusions": [
+    "Not a human voice/listening review; no pronunciation quality PASS asserted.",
+    "Not full-film motion/crop/rally continuity or source-audio timing approval.",
+    "No content, spec, ASS, graphic, publication copy or git changes made. Only external factual audit and its extracted evidence frames were written."
+  ]
+}

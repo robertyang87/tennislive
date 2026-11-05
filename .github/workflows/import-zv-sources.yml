@@ -14,7 +14,7 @@ on:
         required: true
         type: string
       url:
-        description: "YouTube watch URL"
+        description: "Official video URL (YouTube or public Tennis TV page)"
         required: true
         type: string
 
@@ -32,6 +32,20 @@ jobs:
     env:
       GH_REPO: ${{ github.repository }}
     steps:
+      - uses: actions/checkout@v4
+        if: startsWith(inputs.url, 'https://www.tennistv.com/')
+        with:
+          sparse-checkout: |
+            src
+            pyproject.toml
+            README.md
+      - uses: actions/setup-python@v5
+        if: startsWith(inputs.url, 'https://www.tennistv.com/')
+        with:
+          python-version: '3.11'
+      - name: Install public Tennis TV resolver
+        if: startsWith(inputs.url, 'https://www.tennistv.com/')
+        run: pip install -q -e .
       - name: Download (client ladder, same recipe as probe)
         env:
           VID: ${{ inputs.vid }}
@@ -43,6 +57,23 @@ jobs:
           test -x "$SOURCE_FFMPEG"
           "$SOURCE_FFMPEG" -version
           mkdir -p dl
+          # Free Tennis TV HLS entitlements expire after roughly one minute.
+          # Queue the stable official page, then resolve immediately on runner.
+          if [[ "$URL" == https://www.tennistv.com/* ]]; then
+            URL=$(python - "$URL" <<'PY'
+          import sys
+          from tennislive.video.official import OfficialVideoCandidate, fetch_tennistv_video_metadata
+          metadata = fetch_tennistv_video_metadata(
+              OfficialVideoCandidate(title='', url=sys.argv[1], tour='ATP'), jwt_token='')
+          print(metadata.playback_url)
+          PY
+            )
+            yt-dlp --socket-timeout 30 --no-warnings --ffmpeg-location "$SOURCE_FFMPEG" \
+              -f "bv*[height>=1080]+ba/b[height>=1080]" \
+              --merge-output-format mp4 -o "dl/$VID.mp4" "$URL"
+            test -s "dl/$VID.mp4"
+            exit 0
+          fi
           ok=0
           for client in "" "android_vr" "tv_simply" "web_embedded" "android,ios"; do
             args=(--js-runtimes node --socket-timeout 30 --no-warnings

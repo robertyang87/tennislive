@@ -1,0 +1,112 @@
+{
+  "reviewer": "independent media-late agent",
+  "status": "PASS_visual_QC_after_paris_tail_fix",
+  "created_at": "2026-11-05T10:33:22.944192+00:00",
+  "movie": "/workspace/fils-finals-production/final/native-input-v2/fils-finals-road-2026.mp4",
+  "movie_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+  "film_bytes": 198092528,
+  "duration_seconds": 312.24,
+  "geometry": [
+    1080,
+    1440,
+    25
+  ],
+  "spec_sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+  "prior_review": {
+    "path": "/workspace/fils-finals-production/final/independent-qc/independent-qc-91112743.json",
+    "sha256": "0f3596f9a48a0b45b3468b260bf66873d401916509c858a027650255e785fa02",
+    "status_retained": "BLOCKED_source_promo_at_paris_tail",
+    "reused_scope": "Six-source fixed-centre full-fill geometry; six real serve-strike sequences clear of opening fades; chronological point/reaction coverage; six8s information cards; Fils-perspective Wimbledon/US losing scores;19bilingual cue layout; Race canvas and no stacked cards in photos/ending. No new audio-listening approval."
+  },
+  "invariance_evidence": {
+    "other21_projection_segments_equal": true,
+    "all_asset_sha_entries_equal": true,
+    "nineteen_bilingual_ASS_lines_byte_equal": true,
+    "all18_TTS_mp3_bytes_equal": true,
+    "seven_actual_decoded_frames_pixel_identical": [
+      {
+        "time": 47.166,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "5dc94c9c3db1cbf0ffe09f51054679f8ae3395e9dcb4d0ed01aa4838e5030581",
+        "new_decoded_bgr_sha256": "5dc94c9c3db1cbf0ffe09f51054679f8ae3395e9dcb4d0ed01aa4838e5030581"
+      },
+      {
+        "time": 96.23,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "32545bbe1e2bff23cd270a2c1d7e6e51b12e039e1fcb78cd682ce1bbcba36272",
+        "new_decoded_bgr_sha256": "32545bbe1e2bff23cd270a2c1d7e6e51b12e039e1fcb78cd682ce1bbcba36272"
+      },
+      {
+        "time": 154.442,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "b237fe3e5f6ceb23e6a6fc98963251107b30230b96223cc61b5c5df59e134db3",
+        "new_decoded_bgr_sha256": "b237fe3e5f6ceb23e6a6fc98963251107b30230b96223cc61b5c5df59e134db3"
+      },
+      {
+        "time": 190.198,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "5fccccaf95fa12caf3a3e1d662c69f9e7a011c1fe1c988924230701ca1578a0e",
+        "new_decoded_bgr_sha256": "5fccccaf95fa12caf3a3e1d662c69f9e7a011c1fe1c988924230701ca1578a0e"
+      },
+      {
+        "time": 229.496,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "1fd0b56dd4b2e9279e2befdcd10a0194cb4f533b672dfb85c47bd4a5d53a47f7",
+        "new_decoded_bgr_sha256": "1fd0b56dd4b2e9279e2befdcd10a0194cb4f533b672dfb85c47bd4a5d53a47f7"
+      },
+      {
+        "time": 270.5,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "f9e6f31deaca1d5496e5f005c6ba639fddecf60dc99fbe076c95d47a26805c7c",
+        "new_decoded_bgr_sha256": "f9e6f31deaca1d5496e5f005c6ba639fddecf60dc99fbe076c95d47a26805c7c"
+      },
+      {
+        "time": 294.716,
+        "decoded_pixels_equal": true,
+        "old_decoded_bgr_sha256": "fb5aa4c9f784924186e20e7e2cad1c26d1d5f012c2aaf6a9554ed7e69f36e9f2",
+        "new_decoded_bgr_sha256": "fb5aa4c9f784924186e20e7e2cad1c26d1d5f012c2aaf6a9554ed7e69f36e9f2"
+      }
+    ],
+    "only_projected_edit": "Paris segment20.end143.6→142.4 and its human review note. Final question and brand ending move earlier1.2s."
+  },
+  "fresh_actual_visual_review": {
+    "method": "Separately decoded the new actual film at297.0–300.6s every0.2s plus299.8/300.5/303.5/306.6/307.7/309.5/310.5/311.4, then personally opened all three resulting contact sheets.",
+    "sheets": [
+      {
+        "path": "/workspace/fils-finals-production/final/independent-qc/v2/paris-tail-contact-0.jpg",
+        "sha256": "16572937a868d09a165ad2e33fafb8ebc9b6ac59062aa44ecfdd7e11db616ab3"
+      },
+      {
+        "path": "/workspace/fils-finals-production/final/independent-qc/v2/paris-tail-contact-1.jpg",
+        "sha256": "9665ae355a52c23ff4ff8eed404b0cc47c8e0d291c915b703b395332480bffaf"
+      },
+      {
+        "path": "/workspace/fils-finals-production/final/independent-qc/v2/question-ending-contact-0.jpg",
+        "sha256": "7d20179623459f5fe804447de3052d5238a88f67d7330af0460fb67e71ad5857"
+      }
+    ],
+    "findings": [
+      {
+        "check": "paris_tail_promo_removed",
+        "status": "pass",
+        "evidence": "297.0–299.2 remains the actual Machac/Fils net approach, handshake and brief embrace. At299.4/299.6 the legitimate handshake picture dissolves into the final Fils trophy photo;299.8 onward is a clean photo. No LIVE graphic, promotion or unrelated player is present."
+      },
+      {
+        "check": "point_reaction_and_quote_retained",
+        "status": "pass",
+        "evidence": "Paris source start and every preceding field are unchanged; new294.716 actual decoded frame is pixel-identical to old source-reaction frame. All19bilingual ASS lines, including Paris292.41–297.03, are identical. Handshake follows at297.6–298.6 and remains clearly visible."
+      },
+      {
+        "check": "question_and_brand_ending",
+        "status": "pass",
+        "evidence": "Fresh303.5/306.6 show complete Chinese question text within bounds;307.7 transitions cleanly toward the native outro.309.5/310.5/311.4 show the clean native brand ending, with no match information card or source promotion."
+      }
+    ]
+  },
+  "limits": [
+    "Fresh review covers the edited tail and ending; unchanged visual scope is supported by original actual-frame review plus exact projected inputs/asset/TTS/quote equality and seven actual decoded-frame checks.",
+    "No new full-film continuous listening or ASR cue-onset approval is claimed.",
+    "Source preparation gaps remain as previously recorded; no complete_prepare claim is introduced."
+  ],
+  "mutations": "External evidence/report files only; no git, encoding, release or sending."
+}

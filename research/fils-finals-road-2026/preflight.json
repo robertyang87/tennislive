@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.episode-preflight.v1",
+  "spec_sha256": "61482f2e9938758630ba32f6f9e21f5b614d8dbc6970d93358f0d8164820eb82",
+  "tts_bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+  "segments": 22,
+  "source_windows": 6,
+  "narrated_inputs": 16,
+  "tts_requests": 18,
+  "source_seconds": 164.28,
+  "narrated_picture_seconds": 140.68,
+  "cover_seconds": 3.898,
+  "outro_seconds": 4.554,
+  "expected_film_seconds": 313.412,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "sources": "single-court, fixed center cx.5, trackfalse; original reaction camera cuts retained",
+  "native_dissolve_seconds": 0.5,
+  "early_source_geometry_resolution": "Original media-early handoff includes a mislabeled9x16 candidate rectangle. Formal native uses actual1080x1440 and fixed center: source1920x1080 crop[555,0,810,1080], independently previewed in retained native manifest.",
+  "checks": {
+    "dry_run": "PASS",
+    "production_preflight": "PASS",
+    "strict18request_tts": "PASS",
+    "taste": "PASS",
+    "actual_native_pixel_preview": "PASS_root:15source/semantic-photo frames plus corrected Race actual native overlay"
+  },
+  "final_film_qc": "pending_actual_render",
+  "publication": "not_sent",
+  "race_image_sha256": "dbda189659eea4ae53558c0f6c61118e80f1f0bdddfca63738e6168972f50e04",
+  "native_preview_limitation": "Pre-render actual native PNGs, not actual final-film QC; final render still requires audio5suite and true film review."
+}
