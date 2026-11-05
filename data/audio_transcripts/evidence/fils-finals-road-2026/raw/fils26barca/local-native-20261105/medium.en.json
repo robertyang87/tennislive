@@ -1,0 +1,120 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:35:29.901464+00:00",
+  "model": "medium.en",
+  "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+  "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26barca.mp4",
+  "clip": [
+    115.5,
+    148.35
+  ],
+  "duration": 32.85,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 134.38,
+      "end": 145.48,
+      "text": "He's going to do it again.",
+      "avg_logprob": -2.0341732501983643,
+      "no_speech_prob": 0.28130319714546204,
+      "words": [
+        {
+          "w": " He's",
+          "s": 134.38,
+          "e": 135.78,
+          "p": 0.1800527749583125
+        },
+        {
+          "w": " going",
+          "s": 135.78,
+          "e": 135.78,
+          "p": 0.05908921733498573
+        },
+        {
+          "w": " to",
+          "s": 135.78,
+          "e": 137.4,
+          "p": 0.38327962160110474
+        },
+        {
+          "w": " do",
+          "s": 137.4,
+          "e": 137.4,
+          "p": 0.06778807193040848
+        },
+        {
+          "w": " it",
+          "s": 137.4,
+          "e": 145.48,
+          "p": 0.6122071743011475
+        },
+        {
+          "w": " again.",
+          "s": 145.48,
+          "e": 145.48,
+          "p": 0.16050341725349426
+        }
+      ]
+    },
+    {
+      "start": 145.48,
+      "end": 148.0,
+      "text": "for playing some of his best tennis.",
+      "avg_logprob": -0.5375708775086836,
+      "no_speech_prob": 0.1971065104007721,
+      "words": [
+        {
+          "w": " for",
+          "s": 145.48,
+          "e": 145.98,
+          "p": 0.0701216608285904
+        },
+        {
+          "w": " playing",
+          "s": 145.98,
+          "e": 146.68,
+          "p": 0.6735343933105469
+        },
+        {
+          "w": " some",
+          "s": 146.68,
+          "e": 146.86,
+          "p": 0.9927041530609131
+        },
+        {
+          "w": " of",
+          "s": 146.86,
+          "e": 147.0,
+          "p": 0.9983558058738708
+        },
+        {
+          "w": " his",
+          "s": 147.0,
+          "e": 147.18,
+          "p": 0.9924345016479492
+        },
+        {
+          "w": " best",
+          "s": 147.18,
+          "e": 147.54,
+          "p": 0.9921971559524536
+        },
+        {
+          "w": " tennis.",
+          "s": 147.54,
+          "e": 148.0,
+          "p": 0.9863401651382446
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:26:08.907819+00:00",
+  "model": "medium.en",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+  "clip": [
+    0.0,
+    32.0
+  ],
+  "duration": 32.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 11.0,
+      "end": 13.78,
+      "text": "The winner is Mattheo Beratini.",
+      "avg_logprob": -0.786876867557394,
+      "no_speech_prob": 0.1909058541059494,
+      "words": [
+        {
+          "w": " The",
+          "s": 11.0,
+          "e": 12.08,
+          "p": 0.018501628190279007
+        },
+        {
+          "w": " winner",
+          "s": 12.08,
+          "e": 13.02,
+          "p": 0.3225388526916504
+        },
+        {
+          "w": " is",
+          "s": 13.02,
+          "e": 13.56,
+          "p": 0.5921746492385864
+        },
+        {
+          "w": " Mattheo",
+          "s": 13.56,
+          "e": 13.62,
+          "p": 0.42807602137327194
+        },
+        {
+          "w": " Beratini.",
+          "s": 13.62,
+          "e": 13.78,
+          "p": 0.794099748134613
+        }
+      ]
+    },
+    {
+      "start": 14.08,
+      "end": 19.48,
+      "text": "Mattheo Beratini punches his ticket to round three.",
+      "avg_logprob": -0.786876867557394,
+      "no_speech_prob": 0.1909058541059494,
+      "words": [
+        {
+          "w": " Mattheo",
+          "s": 14.08,
+          "e": 14.94,
+          "p": 0.7973204354445139
+        },
+        {
+          "w": " Beratini",
+          "s": 14.94,
+          "e": 15.7,
+          "p": 0.9820218880971273
+        },
+        {
+          "w": " punches",
+          "s": 15.7,
+          "e": 16.9,
+          "p": 0.7513548135757446
+        },
+        {
+          "w": " his",
+          "s": 16.9,
+          "e": 17.44,
+          "p": 0.9310805201530457
+        },
+        {
+          "w": " ticket",
+          "s": 17.44,
+          "e": 17.86,
+          "p": 0.9267631769180298
+        },
+        {
+          "w": " to",
+          "s": 17.86,
+          "e": 18.76,
+          "p": 0.9521843791007996
+        },
+        {
+          "w": " round",
+          "s": 18.76,
+          "e": 18.96,
+          "p": 0.7952886819839478
+        },
+        {
+          "w": " three.",
+          "s": 18.96,
+          "e": 19.48,
+          "p": 0.493723601102829
+        }
+      ]
+    },
+    {
+      "start": 26.92,
+      "end": 30.64,
+      "text": "Arthur Feist is sent packing here at Wimbledon.",
+      "avg_logprob": -0.5422727550779071,
+      "no_speech_prob": 0.19084139168262482,
+      "words": [
+        {
+          "w": " Arthur",
+          "s": 26.92,
+          "e": 27.68,
+          "p": 0.9399276375770569
+        },
+        {
+          "w": " Feist",
+          "s": 27.68,
+          "e": 28.32,
+          "p": 0.37187597155570984
+        },
+        {
+          "w": " is",
+          "s": 28.32,
+          "e": 29.18,
+          "p": 0.924087643623352
+        },
+        {
+          "w": " sent",
+          "s": 29.18,
+          "e": 29.46,
+          "p": 0.9082046747207642
+        },
+        {
+          "w": " packing",
+          "s": 29.46,
+          "e": 29.84,
+          "p": 0.6423897743225098
+        },
+        {
+          "w": " here",
+          "s": 29.84,
+          "e": 30.1,
+          "p": 0.9853611588478088
+        },
+        {
+          "w": " at",
+          "s": 30.1,
+          "e": 30.3,
+          "p": 0.9804888963699341
+        },
+        {
+          "w": " Wimbledon.",
+          "s": 30.3,
+          "e": 30.64,
+          "p": 0.9994460344314575
+        }
+      ]
+    }
+  ]
+}

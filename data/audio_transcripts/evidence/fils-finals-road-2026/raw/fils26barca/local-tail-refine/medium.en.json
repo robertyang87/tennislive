@@ -1,0 +1,123 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:40:31.190493+00:00",
+  "model": "medium.en",
+  "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+  "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26barca.mp4",
+  "clip": [
+    142.0,
+    148.35
+  ],
+  "duration": 6.35,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 142.0,
+      "end": 147.98,
+      "text": "back injury he stormed back onto the ATP tour playing some of his best tennis.",
+      "avg_logprob": -0.3393452073398389,
+      "no_speech_prob": 0.15502987802028656,
+      "words": [
+        {
+          "w": " back",
+          "s": 142.0,
+          "e": 142.3,
+          "p": 0.20324666798114777
+        },
+        {
+          "w": " injury",
+          "s": 142.3,
+          "e": 142.74,
+          "p": 0.925734281539917
+        },
+        {
+          "w": " he",
+          "s": 142.74,
+          "e": 142.98,
+          "p": 0.42359521985054016
+        },
+        {
+          "w": " stormed",
+          "s": 142.98,
+          "e": 143.6,
+          "p": 0.752472996711731
+        },
+        {
+          "w": " back",
+          "s": 143.6,
+          "e": 144.06,
+          "p": 0.9992889165878296
+        },
+        {
+          "w": " onto",
+          "s": 144.06,
+          "e": 144.36,
+          "p": 0.9108466506004333
+        },
+        {
+          "w": " the",
+          "s": 144.36,
+          "e": 144.54,
+          "p": 0.9983336329460144
+        },
+        {
+          "w": " ATP",
+          "s": 144.54,
+          "e": 145.0,
+          "p": 0.9860954880714417
+        },
+        {
+          "w": " tour",
+          "s": 145.0,
+          "e": 145.6,
+          "p": 0.7202742099761963
+        },
+        {
+          "w": " playing",
+          "s": 145.6,
+          "e": 146.68,
+          "p": 0.45006197690963745
+        },
+        {
+          "w": " some",
+          "s": 146.68,
+          "e": 146.88,
+          "p": 0.996269702911377
+        },
+        {
+          "w": " of",
+          "s": 146.88,
+          "e": 147.0,
+          "p": 0.9995561242103577
+        },
+        {
+          "w": " his",
+          "s": 147.0,
+          "e": 147.18,
+          "p": 0.9986144304275513
+        },
+        {
+          "w": " best",
+          "s": 147.18,
+          "e": 147.6,
+          "p": 0.9993308782577515
+        },
+        {
+          "w": " tennis.",
+          "s": 147.6,
+          "e": 147.98,
+          "p": 0.9932636022567749
+        }
+      ]
+    }
+  ]
+}

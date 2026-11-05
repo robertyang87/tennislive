@@ -1,0 +1,108 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:23:25.486398+00:00",
+  "model": "medium.en",
+  "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+  "source_path": "/workspace/fils-finals-production/research/media-late/fils26paris.mp4",
+  "clip": [
+    128.12,
+    143.6
+  ],
+  "duration": 15.48,
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": true,
+    "vad_parameters": {
+      "threshold": 0.3,
+      "min_silence_duration_ms": 200,
+      "speech_pad_ms": 200
+    },
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 130.64,
+      "end": 140.13,
+      "text": "up to face caps off what has been a fabulous french day",
+      "avg_logprob": -0.5367219527562459,
+      "no_speech_prob": 0.16623122990131378,
+      "words": [
+        {
+          "w": " up",
+          "s": 130.64,
+          "e": 131.44,
+          "p": 0.03091699443757534
+        },
+        {
+          "w": " to",
+          "s": 135.75,
+          "e": 135.93,
+          "p": 0.8333252668380737
+        },
+        {
+          "w": " face",
+          "s": 135.93,
+          "e": 136.35,
+          "p": 0.7555956840515137
+        },
+        {
+          "w": " caps",
+          "s": 136.35,
+          "e": 136.91,
+          "p": 0.891900897026062
+        },
+        {
+          "w": " off",
+          "s": 136.91,
+          "e": 137.25,
+          "p": 0.9776456356048584
+        },
+        {
+          "w": " what",
+          "s": 137.25,
+          "e": 137.43,
+          "p": 0.8798303604125977
+        },
+        {
+          "w": " has",
+          "s": 137.43,
+          "e": 137.63,
+          "p": 0.9855902791023254
+        },
+        {
+          "w": " been",
+          "s": 137.63,
+          "e": 138.01,
+          "p": 0.997775137424469
+        },
+        {
+          "w": " a",
+          "s": 138.01,
+          "e": 138.33,
+          "p": 0.9875994920730591
+        },
+        {
+          "w": " fabulous",
+          "s": 138.33,
+          "e": 139.13,
+          "p": 0.9958938360214233
+        },
+        {
+          "w": " french",
+          "s": 139.13,
+          "e": 139.67,
+          "p": 0.7727863788604736
+        },
+        {
+          "w": " day",
+          "s": 139.67,
+          "e": 140.13,
+          "p": 0.9969509840011597
+        }
+      ]
+    }
+  ]
+}

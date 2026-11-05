@@ -1,0 +1,49 @@
+{
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "note": "Speech activity supports boundary review only, not human listening or intelligibility.",
+  "variants": [
+    {
+      "threshold": 0.3,
+      "regions": [
+        [
+          6.784,
+          7.584
+        ],
+        [
+          8.448,
+          8.8
+        ],
+        [
+          13.184,
+          20.0
+        ]
+      ]
+    },
+    {
+      "threshold": 0.5,
+      "regions": [
+        [
+          13.472,
+          13.888
+        ],
+        [
+          14.368,
+          19.872
+        ]
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "regions": [
+        [
+          14.368,
+          18.208
+        ],
+        [
+          18.496,
+          19.648
+        ]
+      ]
+    }
+  ]
+}

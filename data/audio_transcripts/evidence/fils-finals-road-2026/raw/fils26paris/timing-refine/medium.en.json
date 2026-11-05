@@ -1,0 +1,105 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:20:39.985114+00:00",
+  "model": "medium.en",
+  "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+  "source_path": "/workspace/fils-finals-production/research/media-late/fils26paris.mp4",
+  "clip": [
+    128.12,
+    143.6
+  ],
+  "duration": 15.48,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 134.94,
+      "end": 140.16,
+      "text": "up to face caps off what has been a fabulous french day",
+      "avg_logprob": -0.4988826354344686,
+      "no_speech_prob": 0.20269514620304108,
+      "words": [
+        {
+          "w": " up",
+          "s": 134.94,
+          "e": 135.74,
+          "p": 0.042645227164030075
+        },
+        {
+          "w": " to",
+          "s": 135.74,
+          "e": 135.92,
+          "p": 0.8587091565132141
+        },
+        {
+          "w": " face",
+          "s": 135.92,
+          "e": 136.34,
+          "p": 0.7983143925666809
+        },
+        {
+          "w": " caps",
+          "s": 136.34,
+          "e": 136.9,
+          "p": 0.9137696027755737
+        },
+        {
+          "w": " off",
+          "s": 136.9,
+          "e": 137.26,
+          "p": 0.9782512187957764
+        },
+        {
+          "w": " what",
+          "s": 137.26,
+          "e": 137.44,
+          "p": 0.9264847636222839
+        },
+        {
+          "w": " has",
+          "s": 137.44,
+          "e": 137.64,
+          "p": 0.9676328897476196
+        },
+        {
+          "w": " been",
+          "s": 137.64,
+          "e": 138.0,
+          "p": 0.9966442584991455
+        },
+        {
+          "w": " a",
+          "s": 138.0,
+          "e": 138.38,
+          "p": 0.98916095495224
+        },
+        {
+          "w": " fabulous",
+          "s": 138.38,
+          "e": 139.16,
+          "p": 0.9973639845848083
+        },
+        {
+          "w": " french",
+          "s": 139.16,
+          "e": 139.68,
+          "p": 0.847402811050415
+        },
+        {
+          "w": " day",
+          "s": 139.68,
+          "e": 140.16,
+          "p": 0.9973690509796143
+        }
+      ]
+    }
+  ]
+}

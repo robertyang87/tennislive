@@ -1,0 +1,129 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:40:22.514746+00:00",
+  "model": "small.en",
+  "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+  "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26barca.mp4",
+  "clip": [
+    142.0,
+    148.35
+  ],
+  "duration": 6.35,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 142.0,
+      "end": 147.94,
+      "text": "back injury, he stormed back onto the ATP tour. I think some of his best tennis.",
+      "avg_logprob": -0.3767174062403766,
+      "no_speech_prob": 0.11192651838064194,
+      "words": [
+        {
+          "w": " back",
+          "s": 142.0,
+          "e": 142.28,
+          "p": 0.3955514430999756
+        },
+        {
+          "w": " injury,",
+          "s": 142.28,
+          "e": 142.72,
+          "p": 0.9712888598442078
+        },
+        {
+          "w": " he",
+          "s": 142.94,
+          "e": 142.96,
+          "p": 0.9795606732368469
+        },
+        {
+          "w": " stormed",
+          "s": 142.96,
+          "e": 143.52,
+          "p": 0.9160131812095642
+        },
+        {
+          "w": " back",
+          "s": 143.52,
+          "e": 144.02,
+          "p": 0.9972472786903381
+        },
+        {
+          "w": " onto",
+          "s": 144.02,
+          "e": 144.32,
+          "p": 0.8747413158416748
+        },
+        {
+          "w": " the",
+          "s": 144.32,
+          "e": 144.5,
+          "p": 0.9952281713485718
+        },
+        {
+          "w": " ATP",
+          "s": 144.5,
+          "e": 144.94,
+          "p": 0.9876256585121155
+        },
+        {
+          "w": " tour.",
+          "s": 144.94,
+          "e": 145.54,
+          "p": 0.6819339394569397
+        },
+        {
+          "w": " I",
+          "s": 146.54,
+          "e": 146.58,
+          "p": 0.2614051401615143
+        },
+        {
+          "w": " think",
+          "s": 146.58,
+          "e": 146.7,
+          "p": 0.9717550277709961
+        },
+        {
+          "w": " some",
+          "s": 146.7,
+          "e": 146.86,
+          "p": 0.953868567943573
+        },
+        {
+          "w": " of",
+          "s": 146.86,
+          "e": 146.98,
+          "p": 0.9984161853790283
+        },
+        {
+          "w": " his",
+          "s": 146.98,
+          "e": 147.14,
+          "p": 0.9962802529335022
+        },
+        {
+          "w": " best",
+          "s": 147.14,
+          "e": 147.54,
+          "p": 0.9960365891456604
+        },
+        {
+          "w": " tennis.",
+          "s": 147.54,
+          "e": 147.94,
+          "p": 0.9888691902160645
+        }
+      ]
+    }
+  ]
+}

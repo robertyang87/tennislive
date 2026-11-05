@@ -1,0 +1,83 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T09:30:51.106949+00:00",
+  "model": "medium.en",
+  "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+  "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+  "clip": [
+    0.0,
+    26.5
+  ],
+  "duration": 26.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2,
+    "initial_prompt": "Wimbledon tennis. Arthur Fils, Matteo Berrettini."
+  },
+  "note": "Context contains verified event/player names only; no target spoken sentence or umpire formula supplied. Original no-prompt raw remains separate.",
+  "segments": [
+    {
+      "start": 13.58,
+      "end": 19.44,
+      "text": "Matteo Berrettini punches his ticket to round three.",
+      "avg_logprob": -0.6621131181716919,
+      "no_speech_prob": 0.012403049506247044,
+      "words": [
+        {
+          "w": " Matteo",
+          "s": 13.58,
+          "e": 14.98,
+          "p": 0.8901386260986328
+        },
+        {
+          "w": " Berrettini",
+          "s": 14.98,
+          "e": 15.7,
+          "p": 0.6842576165994009
+        },
+        {
+          "w": " punches",
+          "s": 15.7,
+          "e": 16.9,
+          "p": 0.9227116703987122
+        },
+        {
+          "w": " his",
+          "s": 16.9,
+          "e": 17.44,
+          "p": 0.9841874837875366
+        },
+        {
+          "w": " ticket",
+          "s": 17.44,
+          "e": 17.88,
+          "p": 0.9785900712013245
+        },
+        {
+          "w": " to",
+          "s": 17.88,
+          "e": 18.76,
+          "p": 0.9673491716384888
+        },
+        {
+          "w": " round",
+          "s": 18.76,
+          "e": 18.94,
+          "p": 0.8358219861984253
+        },
+        {
+          "w": " three.",
+          "s": 18.94,
+          "e": 19.44,
+          "p": 0.5799824595451355
+        }
+      ]
+    }
+  ]
+}
