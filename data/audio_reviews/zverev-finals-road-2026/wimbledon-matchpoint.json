@@ -1,0 +1,97 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=cuvaPZT2AIU",
+  "source_path": "/workspace/zverev-finals-production/research/media-early/cuvaPZT2AIU.mp4",
+  "source_sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex zverev_source_audio: actual fresh native small.en/medium.en timestamped source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-05T04:27:13.020662+00:00",
+  "reviewed_from": 318.0,
+  "reviewed_to": 357.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 328.2,
+      "end": 332.34,
+      "en": "How about that! How about that!",
+      "zh": "太精彩了！太精彩了！"
+    },
+    {
+      "start": 333.76,
+      "end": 335.44,
+      "en": "Sweet set-up.",
+      "zh": "漂亮的铺垫。"
+    },
+    {
+      "start": 337.08,
+      "end": 339.36,
+      "en": "Another forehand, crushed.",
+      "zh": "又一记正手，重重压下。"
+    },
+    {
+      "start": 342.24,
+      "end": 345.68,
+      "en": "Four sets of compelling tennis",
+      "zh": "4盘扣人心弦的网球，"
+    },
+    {
+      "start": 345.68,
+      "end": 349.28,
+      "en": "to finish up Wimbledon 2026.",
+      "zh": "为2026温网收官。"
+    },
+    {
+      "start": 351.3,
+      "end": 353.32,
+      "en": "A final to remember.",
+      "zh": "一场值得铭记的决赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/zverev-finals-road-2026/raw/cuvaPZT2AIU-small.en.json",
+      "research_path": "/workspace/zverev-finals-production/research/audio/raw/cuvaPZT2AIU-small.en.json",
+      "sha256": "d6989748c9b3fd7a88379a11d7f21829ff108909da0984238cfa61669cb765e8",
+      "model": "small.en",
+      "source_sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+      "clip": [
+        312.0,
+        362.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/zverev-finals-road-2026/raw/cuvaPZT2AIU-medium.en.json",
+      "research_path": "/workspace/zverev-finals-production/research/audio/raw/cuvaPZT2AIU-medium.en.json",
+      "sha256": "0e4f4517a948748444a99807aece7ce518b68bf35d80bec0f9a80cf1caf6ecbe",
+      "model": "medium.en",
+      "source_sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+      "clip": [
+        312.0,
+        362.0
+      ]
+    }
+  ],
+  "review_notes": "Native source-asr.yml run41967709128 produced genuine two-model raw with matching actual source SHA. Window318–357 includes complete Sinner serve preparation and point, plus all four commentary sentences. First How word medium has anomalously early326.66 despite small328.78 and previous same-source review328.2; conservative historical onset328.2 retained for display. Small Sweet set vs medium Sweet setup reconciled with earlier same-SHA review. No literal ASR perfect-consensus or human listening claimed.",
+  "prior_exact_source_review": {
+    "path": "data/audio_reviews/year-end-no1-zverev-2026/wim-final-last.json",
+    "sha256": "9ca0159c47995c1f537685b2470cca627c2083c295def26ce3b10376ca001ea9",
+    "reviewed_window": [
+      323.5,
+      357
+    ]
+  },
+  "source_identity": {
+    "source_path": "/workspace/zverev-finals-production/research/media-early/cuvaPZT2AIU.mp4",
+    "sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+    "bytes": 96805548,
+    "duration": 540.978503,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  }
+}
