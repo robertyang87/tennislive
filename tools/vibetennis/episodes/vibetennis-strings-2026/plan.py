@@ -11,18 +11,24 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
-SECTIONS = [("hook", "hook"), ("gut", "gut"), ("synth", "synth"), ("spaghetti", "spaghetti"), ("poly", "poly"),
-            ("power", "power"), ("tension", "tension"), ("tactics", "tactics"), ("end", "end")]
-HOLD = {"h0": 5.0, "h1": 4.5, "g1": 6.0, "g2": 3.5, "m0": 8.0, "m1": 6.0, "x0": 6.0, "x1": 6.5, "x3": 6.5, "p0": 4.5, "p1": 4.0, "p4": 5.0,
-        "w0": 6.5, "t1": 6.0, "t2": 5.0, "t3": 5.5, "k0": 7.5, "k1": 4.5, "k2": 5.0, "k3": 5.0, "e0": 6.0}
-MIN_SEC = {"hook": 14.0, "gut": 15.0, "synth": 22.0, "spaghetti": 26.0, "poly": 24.0, "power": 8.0, "tension": 22.0, "tactics": 24.0, "end": 10.0}
-EV = [("hook", "drop", "h1", "发球上网"), ("hook", "q", "h2", None), ("gut", "hit", "g1", "球撞上"), ("gut", "cor", "g2", "恢复系数"),
-      ("synth", "swap", "s1", "尼龙"), ("synth", "micro", "m0", None), ("synth", "mgut", "m0", "天然肠线"),
-      ("synth", "mmulti", "m0", "多股线"), ("synth", "mmono", "m0", "单丝线"), ("synth", "notch", "m1", "交叉"), ("spaghetti", "patent", "x0", None), ("spaghetti", "slide", "x1", "线能滑开"), ("spaghetti", "ban", "x2", "国际网联"),
-      ("spaghetti", "roll", "x3", None), ("poly", "y1997", "p0", None), ("poly", "y2010", "p1", None), ("poly", "pro", "p2", "有实验"),
-      ("poly", "con", "p3", None), ("poly", "snap", "p4", "线能不能"), ("power", "bars", "w0", "实验室"), ("tension", "curve", "t1", None),
-      ("tension", "fly", "t2", "磅数"), ("tension", "swap", "t3", None), ("tactics", "bars", "k0", "发球上网"), ("tactics", "band", "k1", None),
-      ("tactics", "conf", "k2", None), ("tactics", "none", "k3", None), ("end", "q", "e1", None)]
+SECTIONS = [("hook", "hook"), ("gut", "gut"), ("synth", "micro"), ("poly", "poly"), ("power", "power"), ("spin", "spin"),
+            ("tension", "tension"), ("tactics", "tactics"), ("end", "end")]
+# 2026-11-05 按所有者「逻辑混乱」重排：来历 → 三样（力量／旋转／磅数）逐样讲、理论当场讲完 → 打法补具体机制
+HOLD = {"h0": 5.0, "h1": 4.5, "g1": 5.5, "m0": 8.0, "m1": 6.0, "p0": 7.0, "p1": 6.5, "w0": 8.0, "w1": 4.5, "w2": 6.5, "w3": 4.0, "w4": 3.5,
+        "r1": 6.0, "r2": 7.0, "r3": 5.5, "x0": 8.5, "x2": 4.5, "p2": 8.5, "t1": 6.0, "t2": 5.0, "t3": 5.5,
+        "k0": 7.5, "k1": 9.0, "k2": 9.0, "k3": 4.5, "k4": 6.5, "e0": 7.5}
+MIN_SEC = {"hook": 14.0, "gut": 10.0, "synth": 16.0, "poly": 14.0, "power": 20.0, "spin": 30.0, "tension": 18.0, "tactics": 30.0, "end": 10.0}
+EV = [("hook", "drop", "h1", "发球上网"), ("hook", "q", "h2", None),
+      ("gut", "bad", "g1", None), ("gut", "swap", "g1", "尼龙"),
+      ("synth", "mgut", "m0", "天然肠线"), ("synth", "mmulti", "m0", "多股线"), ("synth", "mmono", "m0", "单丝线"), ("synth", "notch", "m1", "交叉"),
+      ("poly", "y1997", "p0", None), ("poly", "y2010", "p0", "2010"), ("poly", "three", "p1", None), ("poly", "tp", "p1", "力量"), ("poly", "tr", "p1", "旋转"), ("poly", "tm", "p1", "磅数"),
+      ("power", "hit", "w0", "球撞上"), ("power", "cor", "w0", "恢复系数"), ("power", "big", "w1", None), ("power", "lab", "w2", None), ("power", "loose", "w3", None), ("power", "nofast", "w4", None),
+      ("spin", "roll", "r2", "滚起来"), ("spin", "nomore", "r2", "不再打滑"), ("spin", "snap", "r3", None), ("spin", "patent", "x0", None), ("spin", "slide", "x0", "滑开"),
+      ("spin", "ban", "x2", None), ("spin", "pro", "p2", "零售商"), ("spin", "con", "p2", "同行"), ("spin", "agree", "p2", "两边都同意"),
+      ("tension", "curve", "t1", "线一拉紧"), ("tension", "fly", "t2", None), ("tension", "swap", "t3", "所以"),
+      ("tactics", "bars", "k0", "发球上网"), ("tactics", "mech", "k1", None), ("tactics", "dip", "k1", "往下坠"), ("tactics", "pass", "k1", "穿越球"),
+      ("tactics", "win", "k2", "2010"), ("tactics", "cred", "k3", None), ("tactics", "conf", "k4", None), ("tactics", "none", "k4", "至今"),
+      ("end", "q", "e1", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 PUNCT = "，。：；？！、—"

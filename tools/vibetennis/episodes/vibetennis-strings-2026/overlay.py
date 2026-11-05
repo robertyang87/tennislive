@@ -194,17 +194,19 @@ TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 CAPS=[
 ('h0',0,None,tr("1874 → 今天：网球线的【四代】","1874 → today: 【four generations】 of strings"),BOT),
 ('h1',0,None,tr("男子发球上网：1990 年代【39.5%】 → 2020 年代【4.3%】","Men’s serve-and-volley: 【39.5%】 in the 1990s → 【4.3%】 in the 2020s"),BOT),
-('g1',0,None,tr("撞上 v1 → 弹开 v2：牛顿最早测过这个【比值】","In v1 → out v2: Newton first measured this 【ratio】"),BOT),
 ('m0',0,None,tr("天然肠线是一条条【牛肠衣】绞成的，多股线是很多根尼龙细丝，单丝线是实心一根","Gut: 【beef-intestine ribbons】, twisted · Multi: nylon fibres · Mono: one strand"),BOT),
 ('m1',0,None,tr("线和线交叉的地方，打久了会磨出【凹槽】","Where strings cross, play wears 【notches】 in"),BOT),
-('x1',0,None,tr("主线、横线各自滑开，再弹回 → 把球【拨】得更转","Mains and crosses slide apart, then snap back → the ball is 【flicked】 into spin"),BOT),
-('x3',0,None,tr("【库仑摩擦定律】：摩擦力和压力成正比","【Coulomb’s law of friction】: friction is proportional to the normal force"),BOT),
-('p3',0,None,tr("正反两方都是【实验室】数据：拍框夹住、斜向发射","Both sides are 【lab】 data: clamped racket, ball fired at an angle"),BOT),
-('w0',0,None,tr("磅数降 20%：底线球只快【2–3%】，发球不到【1%】（场上实测）","20% lower tension: groundstrokes only 【2–3%】 faster, serves under 【1%】 (on court)"),BOT),
+('p1',0,None,tr("一根线能改变的只有三样：【力量、旋转、磅数】","Strings can change only three things: 【power, spin, tension】"),BOT),
+('w0',0,None,tr("撞上 v1 → 弹开 v2：两个速度之比叫【恢复系数】","In v1 → out v2: the ratio is the 【coefficient of restitution】"),BOT),
+('w1',0,None,tr("恢复系数越大 → 线还给球的能量越多 → 球【越快】","Higher restitution → more energy back to the ball → 【faster】"),BOT),
+('w3',0,None,tr("180 N 对 280 N：底线球 108.1 对 105.3 km/h，只快约【3%】（场上实测）","180 N vs 280 N: groundstrokes 108.1 vs 105.3 km/h — only about 【3%】 faster (on court)"),BOT),
+('r1',0,None,tr("【库仑摩擦定律】：摩擦力和压力成正比——就是它把球拖着转起来","【Coulomb’s law of friction】: friction ∝ normal force — that grip drags the ball into spin"),BOT),
+('r3',0,None,tr("主线被拨歪、再弹回 → 把球【拨】得更转","Mains slide sideways, then snap back → the ball is 【flicked】 into extra spin"),BOT),
+('p2',0,None,tr("正反两方都是【实验室】数据：拍框夹住、斜向发射","Both sides are 【lab】 data: clamped racket, ball fired at an angle"),BOT),
 ('t1',0,None,tr("【应力松弛】：拉紧后长度不变，张力自己往下掉","【Stress relaxation】: length held fixed, tension keeps falling"),BOT),
 ('t3',0,None,tr("换下来的拍子送去【穿线房】重穿，不是当场拆线","Old rackets go back to the 【stringing room】 — not restrung courtside"),BOT),
 ('k0',0,None,tr("温网：1990 年代【73.1%】 → 2005–09 年【10.3%】","Wimbledon: 【73.1%】 in the 1990s → 【10.3%】 in 2005–09"),BOT),
-('k3',0,None,tr("分析师认为线是主因——但那是按【时间先后】推的，不是对照研究","Analysts blame the strings — but that’s 【timing】, not a controlled study"),BOT),
+# k3 那句「分析师……按时间先后」画面里 3D 字卡已经写全（svCred），底部字幕再写一遍会叠在一起——2026-11-05 成片抽帧看到的，撤掉
 ('e1',0,None,tr("评论区说说：【羊肠、尼龙、聚酯】，还是混搭？","Tell us: 【gut, nylon, polyester】 — or a hybrid?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
@@ -216,15 +218,16 @@ MCP=tr("数据：Match Charting Project 男子逐分自算（志愿者标注，�
 ITF=tr("国际网联《Rackets and strings – strings》","ITF, “Rackets and strings – strings”")
 NOTE={  # 每段底部的出处
  'hook':MCP,
- 'gut':ITF+tr(" · 牛顿《自然哲学的数学原理》1687"," · Newton, Principia, 1687"),
- 'synth':tr("国际网联《Rackets and strings – strings》 · 放大镜头为示意：Wikipedia「Strings (tennis)」· 美国专利 US 4,449,353 · Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」","ITF, “Rackets and strings – strings” · magnified shot illustrative: Wikipedia “Strings (tennis)” · US Patent 4,449,353 · Lindsey, Tennis Warehouse “How Tennis Strings Go Dead”"),
- 'spaghetti':tr("美国专利 US 4,273,331 · Goodwill & Haake 2002、2004 · 国际网联 2026 网球规则附录二","US Patent 4,273,331 · Goodwill & Haake 2002, 2004 · ITF Rules of Tennis 2026, Appendix II"),
- 'poly':tr("Tennis.com 2015 · Tennis.com 2010（温网穿线点）· Tennis Warehouse University · Goodwill & Haake, Exp. Mech. 2004 · 国际网联","Tennis.com 2015 · Tennis.com 2010 (Wimbledon stringers) · Tennis Warehouse University · Goodwill & Haake, Exp. Mech. 2004 · ITF"),
- 'power':tr("Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Bower & Cross, J Sports Sci 2005","Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Bower & Cross, J Sports Sci 2005"),
+ 'gut':ITF,
+ 'synth':tr("放大镜头为示意：Wikipedia「Strings (tennis)」· 美国专利 US 4,449,353 · Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」","Magnified shot illustrative: Wikipedia “Strings (tennis)” · US Patent 4,449,353 · Lindsey, Tennis Warehouse “How Tennis Strings Go Dead”"),
+ 'poly':tr("Tennis.com 2015 · Tennis.com 2010（温网穿线点）","Tennis.com 2015 · Tennis.com 2010 (Wimbledon stringers)"),
+ 'power':tr("牛顿《自然哲学的数学原理》1687 · Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Lindsey, Tennis Warehouse · Bower & Cross, J Sports Sci 2005","Newton, Principia, 1687 · Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Lindsey, Tennis Warehouse · Bower & Cross, J Sports Sci 2005"),
+ 'spin':tr("库仑 1781 · Goodwill & Haake 2002、Exp. Mech. 2004 · Haake 等 2012 · Lindsey, Tennis Warehouse · 美国专利 US 4,273,331 · 国际网联 2026 网球规则附录二","Coulomb 1781 · Goodwill & Haake 2002, Exp. Mech. 2004 · Haake et al. 2012 · Lindsey, Tennis Warehouse · US Patent 4,273,331 · ITF Rules of Tennis 2026, App. II"),
  'tension':tr("Cross 等 2000 · Cross & Bower 2001 · Lindsey 2013 · The Globe and Mail 2025 · 曲线为示意，实测张力随对数时间线性下降 · 飞行轨迹为示意","Cross et al. 2000 · Cross & Bower 2001 · Lindsey 2013 · The Globe and Mail 2025 · curves illustrative (measured: linear in log time) · flight paths illustrative"),
- 'tactics':MCP+tr(" · Sackmann 2025 · 美国专利 US 3,999,756 · 国际网联规则"," · Sackmann 2025 · US Patent 3,999,756 · ITF Rules")}
-CHAP={'gut':("01",tr("羊肠线","GUT")),'synth':("02",tr("合成线","SYNTHETIC")),'spaghetti':("03",tr("被禁的穿法","BANNED")),'poly':("04",tr("聚酯线","POLYESTER")),
- 'power':("05",tr("力量","POWER")),'tension':("06",tr("掉磅","TENSION LOSS")),'tactics':("07",tr("打法","PLAYING STYLE")),'end':("08",tr("结论","CONCLUSION"))}
+ 'tactics':MCP+tr(" · Sackmann 2018、2025 · 美国专利 US 3,999,756 · 国际网联规则"," · Sackmann 2018, 2025 · US Patent 3,999,756 · ITF Rules")}
+CHAP={'gut':("01",tr("来历","ORIGINS")),'synth':("02",tr("放大看","UP CLOSE")),'poly':("03",tr("聚酯线","POLYESTER")),
+ 'power':("04",tr("力量 · 恢复系数","POWER · RESTITUTION")),'spin':("05",tr("旋转 · 库仑摩擦","SPIN · COULOMB FRICTION")),'tension':("06",tr("磅数 · 应力松弛","TENSION · STRESS RELAXATION")),
+ 'tactics':("07",tr("打法","PLAYING STYLE")),'end':("08",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return

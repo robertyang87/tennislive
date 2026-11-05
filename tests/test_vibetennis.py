@@ -363,3 +363,68 @@ def test_转场运镜判据反向验证():
     assert _motion_problems(good.replace("findCuts();", ""))
     assert _motion_problems(good.replace("FX_FLASH=0;", "FX_FLASH=0.1;"))
     assert _motion_problems(good + " FX_SHAKE=0.5;")
+
+
+# ---------- 大字标准（所有者 2026-11-05「大字字体也很 low，不精致，出现的时候也没特别的动效，比如粒子汇聚之类的效果」）----------
+# engine/typefx.js：一级大字思源黑体 Black、高分辨率实字、粒子汇聚出场；3D 数字 Inter Display Black，不再用 helvetiker。
+TYPE_LEGACY = GLOW_LEGACY   # 定标准之前已发的五集；只许减不许加
+
+
+def _type_problems(js: str, r3d) -> list[str]:
+    bad = []
+    if "typeface.json" in js: bad.append("3D 数字还在用 Three.js 自带的示例字体 helvetiker（改 Inter Display Black）")
+    if "from './typefx.js'" not in js: bad.append("没接 typefx.js（一级大字标准）")
+    if "makeTitle(" not in js: bad.append("一级大字没走 makeTitle（粒子汇聚出场）")
+    if "loadTypeFonts()" not in js: bad.append("READY 之前没 loadTypeFonts()——字体没加载完就开渲会退成系统字")
+    if r3d is not None:
+        for f in ("typefx.js", "fonts/NotoSansSC-Black-sub.ttf", "fonts/InterDisplay-Black.otf"):
+            if not (r3d / f).exists(): bad.append(f"r3d/{f} 不存在（软链接 engine/typefx.js 和 assets/fonts）")
+    return bad
+
+
+def test_大字标准_新一集的scene都按TYPE来():
+    eps = sorted(p for p in (ROOT / "tools/vibetennis/episodes").iterdir() if (p / "r3d/scene.js").is_file())
+    assert TYPE_LEGACY <= {p.name for p in eps}
+    problems = {p.name: _type_problems((p / "r3d/scene.js").read_text(encoding="utf-8"), p / "r3d") for p in eps if p.name not in TYPE_LEGACY}
+    assert problems, "一集都没查到——判据自己哑了"
+    bad = {k: v for k, v in problems.items() if v}
+    assert not bad, f"大字不合标准：{bad}"
+
+
+def test_大字判据反向验证():
+    good = "import { TYPE, loadTypeFonts, makeTitle } from './typefx.js'; makeTitle(THREE,s); Promise.all([loadTypeFonts()]);"
+    assert _type_problems(good, None) == []
+    assert _type_problems(good + " helvetiker_bold.typeface.json", None)
+    assert _type_problems(good.replace("from './typefx.js'", ""), None)
+    assert _type_problems(good.replace("makeTitle(THREE,s);", ""), None)
+    assert _type_problems(good.replace("loadTypeFonts()]", "]"), None)
+
+
+def test_typefx粒子亮度受光晕标准约束():
+    js = (ROOT / "tools/vibetennis/engine/typefx.js").read_text(encoding="utf-8")
+    import re
+    assert re.search(r"uK:\{value:k\}", js) and "k=0.5" in js, "粒子亮度要乘 GLOW.k（调用方传 k:GLOW.k）"
+    m = re.search(r"IN:([\d.]+)", js); assert m and float(m.group(1)) >= 0.8, "汇聚太快会被 motion_check 当成跳变（≥0.8 s）"
+
+
+def _code_in_comment(js: str) -> list[str]:
+    """`//` 注释写在一行代码中间，会把后半行代码吞掉（2026-11-05 EP07 栽了两次：「禁」章的 op()、三样大字的 hud()/update() 都被吞了，画面里直接不出现）。"""
+    import re
+    bad = []
+    for n, line in enumerate(js.split("\n"), 1):
+        i = line.find("//")
+        if i < 0 or "://" in line[max(0, i - 6):i + 2]:
+            continue
+        tail = line[i + 2:]
+        if re.search(r"\b(hud|op|t3op|setLine|setBed|update|look|proj|showB)\([^()]*\)\s*;", tail):
+            bad.append(f"第 {n} 行注释里有代码：{tail.strip()[:60]}")
+    return bad
+
+
+def test_scene里注释不许吞掉代码():
+    eps = sorted(p for p in (ROOT / "tools/vibetennis/episodes").iterdir() if (p / "r3d/scene.js").is_file())
+    bad = {p.name: _code_in_comment((p / "r3d/scene.js").read_text(encoding="utf-8")) for p in eps if p.name not in GLOW_LEGACY}
+    bad = {k: v for k, v in bad.items() if v}
+    assert not bad, f"注释吞掉了代码：{bad}"
+    assert _code_in_comment("const a=1;   // 说明 hud(b,x,0.25); b.update(u,st);")
+    assert not _code_in_comment("hud(b,x,0.25); b.update(u,st);   // 说明")

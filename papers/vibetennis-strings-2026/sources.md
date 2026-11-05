@@ -53,7 +53,7 @@
 | 立场 | 原话 | 出处 |
 |---|---|---|
 | ✅ 分析师：主要是拍线 | 「Modern topspin is possible largely thanks to polyester strings … polyester string was kryptonite for serve-and-volleying」——理由是接发球能压到上网者脚下；**这是按时间先后的论证，不是对照研究** | Sackmann 2025-12-10 |
-| ✅ 分析师：拍线和球拍一起 | 「Technological advances in both strings and rackets have made passing shots faster and more accurate」；2010–18 年发球上网赢分 66.8%、留在底线 72.2% | Sackmann「The Right Amount of Serve-and-Volley」2018 |
+| ✅ 分析师：拍线和球拍一起 | 「Technological advances in both strings and rackets have made passing shots faster and more accurate」；2010–18 年发球上网赢分 66.8%、留在底线 72.2% | Sackmann「The Right Amount of Serve-and-Volley」2018-09-08（2026-11-05 重读原文：「In nearly 1,500 charted matches from 2010 to the present … success rate … 66.8%. Controlling for first and second serves, the same servers, at the same tournaments, facing the same opponents, won points at a 72.2% rate when they weren’t serve-and-volleying」——男子、去掉 ACE） |
 | ✅ 国际网联：归到球拍 | 「Modern rackets have facilitated a change in playing style from one of technique to one characterised by power and spin」 | Miller (2006)《Br J Sports Med》40:401（摘要） |
 | ✅ 大样本研究：没有直接测器材 | 「While our study does not directly measure equipment effects…」；球拍技术和规则变化「were not directly modeled」 | Bayram & Barla 2026 |
 | ❌ 单独剥离拍线作用的研究 | **没找到**（PubMed 检索拍线＋打法相关为 0） | — |
@@ -104,7 +104,7 @@
 | **力量** | ✅ 回弹差别可以忽略 | 90 种线：能量损耗「too small to make any significant difference in resilience between different strings」 | Cross, Lindsey & Andruczyk (2000)《Sports Engineering》（usyd PUBLICATIONS/14） |
 | 力量 | ✅ 都还回约 95% | 「All strings are about equally powerful and resilient. They all return about 95% of the energy」；硬线「力量小」只因为吃进去的能量少、球压得更扁 | Lindsey，TWU「Why Is String Stiffness So Important To Power?」 |
 | 力量 | ✅ 球速只差一点 | 「string tension and material have only a small effect on ball speed」；夹住的拍框、落锤撞击（约相当于 50–60 英里/小时的发球力度），**只比了尼龙和聚酯两种、不是场上实测；羊肠线 vs 聚酯没有场上数据** | Lindsey，TWU 2021-09-07 |
-| 力量·磅数 | ✅ 磅数降 20%，底线球快 2–3%、发球不到 1% | 精英球员场上实测；180 N 108.1 km/h vs 280 N 105.3 km/h | Bower & Cross (2005)《J Sports Sci》 |
+| 力量·磅数 | ✅ 线穿松：180 N 对 280 N，底线球 108.1 对 105.3 km/h（快约 2.7%） | 场上：发球机送球、受试者斜线回击、雷达测速。⚠️ 2026-11-05 重读 PubMed 摘要（PMID 16195027）：**摘要里没有「磅数降 20%」也没有「发球不到 1%」**——旧版字幕这两处没有出处，已撤；180→280 N 是降 36% 不是 20% | Bower & Cross (2005)《J Sports Sci》23(7):765–771 |
 | 力量·硬度排序 | ✅ 羊肠线＜尼龙＜聚酯＜凯夫拉 | 动态硬度，四类之间「no significant overlap」 | Cross 等 2000 |
 | **控制** | ✅ 线松了，球员会自己慢下来 | 精英球员：松线出球角度更高、更难控制，球员「elected to control the ball by reducing their swing speed」 | Bower & Cross (2008)《Sports Engineering》 |
 | 控制 | ⚠️ 「硬线更好控制」 | 只有 Lindsey 的理论推导（「higher stiffness means more control」），**没有按线材测过落点**，不上屏为结论 | TWU「The Alpha and Omega」 |

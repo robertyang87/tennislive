@@ -162,54 +162,60 @@ def scrape(d=3.0):            # 球贴着线滑：带通噪声，越滑越轻
 def impacts(t0,t1,per,phase=0.5,g=0.8,rate=0.6,name=None,pan=0.0):
     t=t0+phase*per; n=0
     while t<t1-0.05: EN(t,pock(rate),g,pan=pan,name=(name+'-%d'%n) if name else None); t+=per; n+=1
-# 01 钩子：四代线依次换上（拍面换色）→ 柱状图砸下来 → 大问题
+def form(t,g=0.3,name=None):   # 粒子汇聚成大字（typefx.js：IN=1.25 s）：一段短上扬＋落定一声亮音
+    EN(t,riser(1.1),g,name=name); EN(t+1.15,ding(1480),g*0.8)
+# 2026-11-05 按「来历 → 力量／旋转／磅数 → 打法」重排后的事件表，时刻对 scene.js 各 shot 的动画节点
+# 01 钩子：四代线依次换上 → 柱状图砸下来 → 大问题（粒子汇聚）
 h=SEC['hook']; DR=E('hook','drop',5.3); QQ=E('hook','q',9.8)
 EN(h['t0']+0.1,hum(DR-h['t0'],70),0.8,name='hook-drone')
 for i in range(4): EN(h['t0']+0.4+i*(DR-h['t0']-0.4)/4,blip(1300+i*350,0.1,1.2,0.6),0.45,name='gen-%d'%i)
 EN(DR-0.7,riser(0.7),0.4); EN(DR,slam(),0.8,name='DROP-bars'); EN(DR,sub_boom(),0.5); EN(DR+0.3,riser(2.3),0.25,name='bars-rise')
-EN(QQ,chime([76,83,88],0.14,0.4),0.5,name='question')
-# 02 羊肠线：1874 字幕 → 撞击慢放（4.2 s 一次）→ 恢复系数公式
-g=SEC['gut']; HI=E('gut','hit',3.2); CO=E('gut','cor',10.2)
-EN(g['t0']+0.3,panel(),0.35,name='1874'); impacts(HI,g['t1'],4.2,g=0.85,rate=0.45,name='gut-impact')
-EN(CO-0.2,number_pop(),0.45,name='formula-e'); EN(CO+0.3,ding(1175),0.25,name='newton')
-# 03 合成线：水珠与火花（怕潮、磨损）→ 换线
-y=SEC['synth']; SW=E('synth','swap',4.0)
-EN(y['t0']+1.0,rain_hiss(SW-y['t0']-0.6),0.5,name='sparks'); EN(SW,zap(600,2800,0.5),0.5,name='swap-synthetic'); EN(SW+0.4,panel(),0.3)
-# 03b 放大看（示意）：显微镜视场打开 → 三种线依次亮出 → 横线压在主线上、抬开露出凹槽（scene.js shotMicro，镜头从 micro-0.2 起）
-MI=E('synth','micro',5.5); MB=MI-0.2; NT=E('synth','notch',MI+9)
+form(QQ-0.5,0.3,'question-form'); EN(QQ+0.7,chime([76,83,88],0.14,0.4),0.45,name='question')
+# 02 来历：1874 → 贵、不耐磨、怕潮（水珠、火花）→ 换成尼龙
+g=SEC['gut']; BAD=E('gut','bad',3.0); SW=E('gut','swap',6.0)
+EN(g['t0']+0.3,panel(),0.35,name='1874'); EN(BAD,panel(),0.3,name='gut-bad')
+EN(BAD+0.7,rain_hiss(max(0.6,SW-BAD-0.6)),0.5,name='sparks'); EN(SW,zap(600,2800,0.5),0.5,name='swap-synthetic'); EN(SW+0.4,panel(),0.3)
+# 03 放大看（示意）：显微镜视场打开 → 三种线依次亮出 → 横线压在主线上、抬开露出凹槽
+y=SEC['synth']; MB=y['t0']; NT=E('synth','notch',8.4)
 EN(MB,freeze_in(),0.5,name='microscope-in'); EN(MB+0.1,hum(NT-MB+3,96),0.5)
-for i,k in enumerate(['mgut','mmulti','mmono']): EN(E('synth',k,MI+1+2*i),blip(1500+i*400,0.12,1.25,0.6),0.45,name='sample-'+k)
+for i,k in enumerate(['mgut','mmulti','mmono']): EN(E('synth',k,1+2*i),blip(1500+i*400,0.12,1.25,0.6),0.45,name='sample-'+k)
 EN(NT-0.3,swish(0.8,300,2000),0.35,name='to-notch'); EN(NT+0.3,click(),0.45,name='cross-press'); EN(NT+1.6,swish(1.0,500,3000),0.35,name='cross-lift'); EN(NT+2.0,ding(990),0.4,name='groove')
-# 04 意面拍：专利 → 撞击慢放、线滑开（3.6 s）→「禁」章 → 库仑横截面
-p=SEC['spaghetti']; PA=E('spaghetti','patent',0.5); SL=E('spaghetti','slide',6.5); BA=E('spaghetti','ban',14.2); RO=E('spaghetti','roll',17.1)
+# 04 聚酯线 1997、2010 → 三样（三个大字依次汇聚）
+o=SEC['poly']; Y1=E('poly','y1997',0.5); Y2=E('poly','y2010',3.5); TH=E('poly','three',7.5)
+EN(Y1,chime([72]),0.45,name='1997'); EN(Y2,chime([76]),0.45,name='2010')
+for i in range(3): form(TH-0.2+i*0.45,0.28,'pillar-%d'%i)
+# 05 力量：撞击慢放（4.2 s 一次）→ 公式汇聚 → 三支拍同时撞击 → 95% → 「线，没有让球变快」
+w=SEC['power']; HI=E('power','hit',1.5); CO=E('power','cor',5.0); LAB=E('power','lab',14); NF=E('power','nofast',24)
+impacts(HI,LAB-0.3,4.2,g=0.85,rate=0.45,name='cor-impact'); form(CO-0.6,0.3,'formula-e'); EN(CO+0.9,ding(1175),0.25,name='newton')
+BP=LAB-0.3+0.6
+for i in range(3): impacts(BP+i*0.15,w['t1'],3.0,g=0.55,rate=0.9,pan=(i-1)*0.5)
+EN(BP+0.6,panel(),0.4,name='95-percent'); EN(BP+1.4,ding(1320),0.3); form(NF-0.5,0.3,'no-faster')
+# 06 旋转：库仑横截面（先滑 → 滚起来）→ 主线滑开弹回（3.4 s）→ 意面拍专利、撞击（3.6 s）、「禁」章 → 正反两方
+r=SEC['spin']; RL=E('spin','roll',10); SN=E('spin','snap',17); PA=E('spin','patent',23); SL=E('spin','slide',26); BA=E('spin','ban',31); PR=E('spin','pro',36); CN=E('spin','con',40)
+EN(r['t0']+0.2,scrape(max(1.0,RL-r['t0']-0.2)),0.7,name='coulomb-slide'); EN(RL,click(),0.5,name='contact-stops'); EN(RL,blip(900,0.25,1.6,0.5),0.4,name='rolling')
+impacts(SN,PA-0.2,3.4,g=0.8,rate=0.55,name='snap-impact')
+for q in range(int((PA-0.2-SN)/3.4)+1): EN(SN+0.5*3.4+q*3.4+0.12,zap(2600,900,0.18),0.35)
 EN(PA,panel(),0.4,name='patent'); impacts(SL,BA+0.6,3.6,g=0.85,rate=0.5,name='spag-impact')
 for q in range(int((BA+0.6-SL)/3.6)+1): EN(SL+0.5*3.6+q*3.6+0.05,scrape(0.6),0.5)
 EN(SL+2.0,number_pop(),0.35,name='2x-spin'); EN(BA+0.1,slam(),0.9,name='BAN-stamp'); EN(BA+0.1,sub_boom(),0.6)
-EN(RO,scrape(3.0),0.8,name='coulomb-slide'); EN(RO+3.0,click(),0.5,name='contact-stops'); EN(RO+3.0,blip(900,0.25,1.6,0.5),0.4,name='rolling')
-# 05 聚酯：1997、2010 → 正反两方 → 共识（线滑开再弹回，3.4 s 一次）
-o=SEC['poly']; Y1=E('poly','y1997',0.5); Y2=E('poly','y2010',5.0); PR=E('poly','pro',11.2); CN=E('poly','con',12.9); SN=E('poly','snap',18.9)
-EN(Y1,chime([72]),0.45,name='1997'); EN(Y2,chime([76]),0.45,name='2010')
 EN(PR,number_pop(),0.45,name='pro-20'); EN(CN,number_pop(),0.45,pan=0.3,name='con-0'); EN(CN+1,glitch(0.4),0.35,name='disagree')
-impacts(SN,o['t1'],3.4,g=0.8,rate=0.55,name='snap-impact')
-for q in range(int((o['t1']-SN)/3.4)+1): EN(SN+0.5*3.4+q*3.4+0.12,zap(2600,900,0.18),0.35)
-# 06 力量：三支拍同时撞击（3 s，错开 0.15 s）→ 三个 95%
-w=SEC['power']; BP=E('power','bars',1.5)
-for i in range(3): impacts(BP+i*0.15,w['t1'],3.0,g=0.55,rate=0.9,pan=(i-1)*0.5)
-EN(BP+0.6,panel(),0.4,name='95-percent'); EN(BP+1.4,ding(1320),0.3)
 # 07 掉磅：曲线往下走 → 场上球飞出界 → 一排新拍子
 n=SEC['tension']; CU=E('tension','curve',2.6); FL=E('tension','fly',10.2); SWP=E('tension','swap',13.6)
 EN(n['t0']+0.3,panel(),0.35,name='axes'); EN(CU,zap(1800,500,4.0),0.35,name='curves-fall'); EN(CU+0.4,number_pop(),0.35,name='minus-30')
 EN(FL,pock(1.0),0.8,name='fly-hit'); EN(FL+0.1,swish(2.0,300,2200),0.45); EN(FL+0.9*2.6,glitch(0.4),0.45,name='OUT')
 for i in range(6): EN(SWP+i*0.25+0.2,clink(1800+i*160),0.35,name='rack-%d'%i)
-# 08 打法：发球上网比例的柱子长出来 → 聚酯普及的色带 → 五股线缠成结 → 结论
-c=SEC['tactics']; BR=E('tactics','bars',1.5); BD=E('tactics','band',8.0); CF=E('tactics','conf',12.5); NO=E('tactics','none',17.5)
-EN(BR,riser(3.2),0.35,name='sv-bars'); EN(BR+3.2,ding(990),0.3); EN(BD,panel(),0.35,name='poly-band')
-for i in range(5): EN(CF+i*0.3,blip(700+i*220,0.18,1.0,0.45),0.35,name='node-%d'%i)
+# 08 打法：占比柱子长出来 → 场上：上旋接发压到脚下（2.4 s 一次）、穿越球 → 赢分率两个数 → 分不开的结
+c=SEC['tactics']; BR=E('tactics','bars',1.0); ME=E('tactics','mech',8); DP=E('tactics','dip',11); PS=E('tactics','pass',14); WN=E('tactics','win',18); CF=E('tactics','conf',31); NO=E('tactics','none',33)
+EN(BR,riser(3.2),0.35,name='sv-bars'); EN(BR+3.2,ding(990),0.3)
+EN(ME-0.3,swish(1.0,300,2200),0.4,name='to-court'); t=DP-1.6; q=0
+while t<WN-0.3: EN(t,pock(0.8),0.6,name='return-%d'%q); EN(t+2.2,pock(1.3),0.35); t+=2.4; q+=1
+EN(PS,swish(1.4,600,3600),0.45,name='passing'); EN(WN,number_pop(),0.45,name='sv-668'); EN(WN+0.4,number_pop(),0.45,pan=0.3,name='sv-722')
+for i in range(4): EN(CF+i*0.3,blip(700+i*220,0.18,1.0,0.45),0.35,name='node-%d'%i)
 EN(CF+1.5,hum(4.5,82),0.7,name='knot'); EN(NO,sub_boom(),0.5,name='none-isolated'); EN(NO+0.1,ding(880),0.3)
-# 09 结尾：四代线轮换 → 最后一问
+# 09 结尾：四代线轮换 → 最后一问（粒子汇聚）
 e=SEC['end']; EQ=E('end','q',7.0)
 for i in range(int((EQ-e['t0'])/1.6)): EN(e['t0']+i*1.6,blip(1500+(i%4)*250,0.08,1.1,0.4),0.25)
-EN(EQ,chime([84,88,91],0.16,0.35),0.5,name='end-question')
+form(EQ-0.5,0.3,'end-form'); EN(EQ+0.7,chime([84,88,91],0.16,0.35),0.45,name='end-question')
 
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re

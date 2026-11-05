@@ -7,7 +7,7 @@ const [,,f0,f1,out,w,h,port]=process.argv; const FPS=30, W=+(w||1920), H=+(h||10
  const b=await chromium.launch({args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
  const p=await b.newPage({viewport:{width:W,height:H}});
  p.on('console',m=>{ if(m.type()==='error') console.error('PAGE',m.text()); }); p.on('pageerror',e=>console.error('PAGEERR',e.message));
- await p.goto(`http://127.0.0.1:${P}/index.html?w=${W}&h=${H}&lang=${process.env.VT_LANG||'zh'}`,{timeout:180000}); await p.waitForFunction('window.READY===true',{timeout:120000});
+ await p.goto(`http://127.0.0.1:${P}/index.html?w=${W}&h=${H}&lang=${process.env.VT_LANG||'zh'}${process.env.VT_QS||''}`,{timeout:180000}); await p.waitForFunction('window.READY===true',{timeout:120000});
  const ff=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(FPS),'-c:v','mjpeg','-i','-','-c:v','libx264','-preset','ultrafast','-crf','12','-pix_fmt','yuv420p',out]);
  const anchors=[]; const t0=Date.now();
  for(let f=+f0;f<+f1;f++){
