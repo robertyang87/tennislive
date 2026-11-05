@@ -28,6 +28,7 @@ SRC = {
 # (源字体, 字重, 输出名)
 BUILDS = [
     ("NotoSerifSC", 900, "NotoSerifSC-Black-sub.ttf"),
+    ("NotoSansSC", 900, "NotoSansSC-Black-sub.ttf"),   # vibetennis 一级大字（2026-11-05）
     ("NotoSansSC", 700, "NotoSansSC-Bold-sub.ttf"),
     ("NotoSansSC", 400, "NotoSansSC-Regular-sub.ttf"),
 ]

@@ -17,6 +17,7 @@ import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { TL } from './shots.js';
+import { TYPE, loadTypeFonts, makeTitle } from './typefx.js';   // 大字标准（字体＋粒子汇聚），engine/typefx.js
 const Q=new URLSearchParams(location.search);
 const W=+(Q.get('w')||1920), H=+(Q.get('h')||1080), LANG=Q.get('lang')||'zh';
 const T=(zh,en)=>LANG==='en'?en:zh;
@@ -223,6 +224,7 @@ const arrowIn=fatLine(0x4fe3ff,6), arrowOut=fatLine(0xffc24a,6), arrowF=fatLine(
 const spinRing=flatRing(0xffc24a), spinRing2=flatRing(0x4fe3ff), hitRing=flatRing(0xffffff), stampRing=flatRing(0xff3a28);
 const sweat=cloud(260,0.06,14);   // 合成线段：水珠
 const sparks=cloud(400,0.05,10);  // 磨损火花
+const BIG={}; const bt=(k,s,o={})=>BIG[k]||(BIG[k]=makeTitle(THREE,s,Object.assign({k:GLOW.k,group:scene},o)));   // 一级大字：TYPE 标准
 const TT={}; const tx=(k,s,o={},grp=scene)=>TT[k]||(TT[k]=textSprite(s,o,grp));
 // HUD：贴着镜头放（x,y 是镜头前 d 处的平面坐标；d=9 时可见范围约 ±5.5 × ±3.1）。标题放顶部 y≈2.35、第二行 y≈1.85；底部留给字幕
 function hud(o,x,y,d=9){ const v=new THREE.Vector3(x,y,-d).applyQuaternion(camera.quaternion).add(camera.position); if(o.isSprite) o.position.copy(v); else { o.g.position.copy(v); o.g.quaternion.copy(camera.quaternion); } return o; }
@@ -328,7 +330,7 @@ function hideAll(){
   for(const b of [ball,ball2,...powBalls]){ b.m.visible=false; b.gl.visible=false; b.m.scale.set(1,1,1); b.m.material.opacity=1; b.gl.material.opacity=0.35; }
   for(const l of [arrowIn,arrowOut,arrowF,arrowN,flyGood,flyDead,...tenAxis,...tenCurves.map(c=>c.l),...confNodes.map(c=>c.th)]) l.material.opacity=0;
   for(const r of [spinRing,spinRing2,hitRing,stampRing]) r.material.opacity=0; chide(sweat); chide(sparks);
-  for(const k in TT) op(TT[k],0); genLab.forEach(s=>op(s,0));
+  for(const k in TT) op(TT[k],0); for(const k in BIG) BIG[k].g.visible=false; genLab.forEach(s=>op(s,0));
   micG.visible=false; micLens.visible=false; micRim.visible=false; barsG.visible=false; bandMesh.material.opacity=0; confG.visible=false; knot.material.opacity=0; tenG.visible=false; rackG.visible=false;
   for(const k in text3D) t3op(text3D[k],0); beamMat.uniforms.uOp.value=0; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; }
 const showB=(b,p,vis=true)=>{ b.m.visible=vis; b.gl.visible=vis; if(vis){ b.m.position.copy(p); b.gl.position.copy(p); } };
@@ -353,8 +355,8 @@ function shotHook(u,D){
   genLab.forEach((s,i)=>{ hud(s,0,2.05); op(s,(i===gi?ss(0,0.15,gk)*(u<DR?1:1-ss(DR,DR+0.4,u)):0)); });
   barsG.visible=u>DR-0.2; barsG.position.set(1.9,-1.7,0); barsG.scale.setScalar(0.74); setBars(bars,ss(DR,DR+2.6,u)); barsTitle.position.set(0,6.6,0); op(barsTitle,ss(DR+0.2,DR+0.9,u)*(1-ss(QQ-0.3,QQ+0.2,u)));
   barsNote.position.set(0,-1.1,0.5); op(barsNote,ss(DR+1,DR+1.8,u));
-  const q=tx('hookQ',T('是线，改变了网球吗？','Did the strings change tennis?'),{color:'#ffffff',size:1.0,font:'900 150px "Noto Sans CJK SC","Inter",sans-serif',glow:GOLD});
-  hud(q,0,2.0); op(q,ss(QQ,QQ+0.5,u)); proj('racket',rk.g.position);
+  const q=bt('hookQ',T('是线，改变了网球吗？','Did the strings change tennis?'),{color:'#ffffff',size:1.0,glow:GOLD,accent:T('线','strings')});
+  hud(q,0,2.0); q.update(u,QQ-0.5); proj('racket',rk.g.position);
 }
 function R_spin(R,u,amp=0.35){ R.g.rotation.y=Math.sin(u*0.45)*amp; R.g.rotation.x=-0.08; }
 function shotGut(u,D){
@@ -518,7 +520,7 @@ function shotEnd(u,D){
   const QQ=ev('q',7.0); rk.g.visible=true; R_spin(rk,u,0.5); look(0,0.3,lerp(8.5,10,ss(0,D,u)),0,0.2,0); rimL.intensity=5; rimR.intensity=5; rimL.position.set(-4,3,4); rimR.position.set(4,3,4); rimL.color.set(0xffc24a); rimR.color.set(0x4fe3ff);
   const gi=Math.floor(u/1.6)%4; const [,,cm,cc]=GEN[gi]; setBed(rk,{cm,cc,width:2.6});
   const a=tx('endA',T('手感 · 磅数 · 穿线规则：线改了这些','Feel · tension · stringing rules: what strings changed'),{color:'#ffffff',size:0.5,glow:GOLD}); hud(a,0,2.05); op(a,ss(0.3,1,u)*(1-ss(QQ-0.5,QQ,u)));
-  const q=tx('endQ',T('你现在用的是什么线？','What strings do you play?'),{color:'#ffffff',size:0.95,font:'900 150px "Noto Sans CJK SC","Inter",sans-serif',glow:GOLD}); hud(q,0,2.0); op(q,ss(QQ,QQ+0.6,u));
+  const q=bt('endQ',T('你现在用的是什么线？','What strings do you play?'),{color:'#ffffff',size:0.95,glow:GOLD}); hud(q,0,2.0); q.update(u,QQ-0.5);
 }
 
 // ---------- 后期 ----------
@@ -578,4 +580,4 @@ window.renderAt=(t)=>{
   else xfPass.enabled=false;
   const s=setState(t); composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
 window.CUTS=()=>CUTS;
-Promise.all([FONT_READY,document.fonts.ready]).then(()=>{ CUTS=findCuts(); window.READY=true; }).catch(e=>console.error('READY failed',e));
+Promise.all([FONT_READY,document.fonts.ready,loadTypeFonts()]).then(()=>{ CUTS=findCuts(); window.READY=true; }).catch(e=>console.error('READY failed',e));
