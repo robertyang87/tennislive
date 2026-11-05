@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "reviewer": "root direct actual-frame review",
+  "checked_at": "2026-11-05T09:43:09.921108+00:00",
+  "movie_sha256": "026f5722380e18ba7658bfbc3a92fe0aa24241f737544cd37128ac1fe2cd5bad",
+  "movie_bytes": 152193271,
+  "review_method": "Personally opened all seven full-film contact sheets (73 sampled frames), actual 25fps serve-contact sheet, and subtitle/card boundary sheet. No human listening or exhaustive continuous playback claim.",
+  "reviewed_images": [
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-00.jpg",
+      "sha256": "ecee59e4852839e6315eb0aa7d596d8221acec8754213787c2a97df566498943"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-01.jpg",
+      "sha256": "d82c3224d46fdd1a465b5a42c26f6bcec007dbd7d7ba6f3d74972be5147386e1"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-02.jpg",
+      "sha256": "9e6c07045f15b4aa42f82ab43e36068347948f59d7cc8ef13ba72fa4d5db4979"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-03.jpg",
+      "sha256": "8269c26c7962631be10b498a9784b5980bbc08523ada92a304ffd49b4874e55b"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-04.jpg",
+      "sha256": "a0461e8e428cdb3b8ea1c6a9bc0d75963881ea7d8c8a8b06c1311773f3849344"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-05.jpg",
+      "sha256": "743d9a7f992925d36e9b01f00f7078a94290dc59c002c466a10fb05089b1e22e"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-06.jpg",
+      "sha256": "a8115e2c6bb8aa58233f6e4198a5cc26da571a30bb6f46a5d83ed9eb8fd81972"
+    }
+  ],
+  "findings": {
+    "single_court_fixed_center_fullbleed": "PASS. One court; no top/bottom duplicate and no added ball-tracking crop. Court centre stays fixed while near player can leave edge.",
+    "brisbane_actual_serve": "PASS. Actual frame23.44 displays serve strike after photo dissolve clears; subsequent continuous played point and real reaction retained.",
+    "source_prepare_limit": "Earlier toss/pre-toss partly overlaps original lead-in and photo dissolve; complete server preparation is not asserted.",
+    "bilingual_new_subtitles": "PASS. Both complete sentences visibly inside canvas; actual audio/ASS separately reviewed by audio role.",
+    "other_segments_and_ending": "All sampled photo/video/ending frames readable; no information-card stack on photos or ending.",
+    "information_card": "New Brisbane card starts with video and is present30.84, gone30.90, corresponding8s."
+  },
+  "independent_reviews": [
+    "final/independent-qc/independent-qc-report.json",
+    "research/audio/med-newfilm-ass-audit.json"
+  ]
+}

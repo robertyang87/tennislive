@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "medvedev-finals-road-2026",
-  "written_at": "2026-11-05T07:42:32Z",
-  "code_sha": "edca8a29eabf7779d5653e3fe9ffe0a65f39ceab",
-  "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
-  "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
-  "film_bytes": 152158482,
-  "projection_sha256": "a75454cb1eac9fab51ff46e37f0e09bc4254ce722b0de2869028472b2d5bbc79",
+  "written_at": "2026-11-05T09:29:23Z",
+  "code_sha": "1b5cb77651ead8f7c6a2867598e1c8c3b23416a0",
+  "spec_sha256": "70aa7e66c0685e241ed0b325499f2069dd161c6fbc52c8cd370434dbb3987a9e",
+  "film_sha256": "026f5722380e18ba7658bfbc3a92fe0aa24241f737544cd37128ac1fe2cd5bad",
+  "film_bytes": 152193271,
+  "projection_sha256": "a8e13b2ed9dd93cc3e416d8c82eb9a39dd4f30d8d98fe01f2577db1294143d94",
   "claims": [
     [
       "cover",
@@ -209,11 +209,6 @@
     ],
     [
       "segments",
-      2,
-      "_quote_skip_why"
-    ],
-    [
-      "segments",
       8,
       "_quote_skip_why"
     ],
@@ -344,8 +339,8 @@
     "research/medvedev-finals-road-2026/facts/editorial-handoff-2026-11-05.json": null
   },
   "artifacts": {
-    "audio_review_binding.json": "ae7716651a31977c71f9a17f8526649f276da4bb0495fa034b8a400d09c95069",
-    "subtitles.ass": "8c383c71102503ed0d6b6a232781a754fdfc43f485a268b7d0f09bf954509baf",
+    "audio_review_binding.json": "e81d3b0989c9231a9ebb2da64a32b6ddff655957bb237e7a043cdbb5d9b22892",
+    "subtitles.ass": "f33331652aa1966de54c385133c7662a45be30a1193892815bb167fae3f2aa81",
     "poster.jpg": "fc35febb87a83f58203004496942e94fab7c49a7404acdd54b3271751d323e90",
     "voice_quality_inventory.json": "bd2fa246feb0d162cf1a55eebda3a0abb6b11082a50be1a03ab1d18b5a816271"
   },
@@ -378,7 +373,7 @@
     "tts_backend": "edge",
     "sources": {
       "ao-r4": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
-      "brisbane-final-official-ig": "https://github.com/robertyang87/tennislive/releases/download/source-DTXfZGAjiRl/DTXfZGAjiRl.mp4",
+      "brisbane-final": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
       "rg-r1": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
       "us-open-r4": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
       "almaty-title-fullpoint": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
@@ -386,25 +381,18 @@
     },
     "source_fallbacks": {
       "ao-r4": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
-      "brisbane-final-official-ig": "https://github.com/robertyang87/tennislive/releases/download/source-DTXfZGAjiRl/DTXfZGAjiRl.mp4",
+      "brisbane-final": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
       "rg-r1": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
       "us-open-r4": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
       "almaty-title-fullpoint": "https://github.com/robertyang87/tennislive/releases/download/source-med26alma01/med26alma01.mp4",
       "vienna-qualification": "https://github.com/robertyang87/tennislive/releases/download/source-AWfZeqsuqmw/AWfZeqsuqmw.mp4"
     },
     "mixed_fps": {
-      "brisbane-final-official-ig": "Actual 30/1 source sampled to25fps without source-speed change.",
       "rg-r1": "Actual 50/1 source sampled to25fps without source-speed change.",
       "us-open-r4": "Actual 60000/1001 source sampled to25fps without source-speed change.",
       "almaty-title-fullpoint": "Actual 50/1 source sampled to25fps without source-speed change."
     },
-    "source_crop": {
-      "brisbane-final-official-ig": {
-        "reason": "Actual1080x1920 official continuous same-point original two-view publication; root explicitly accepted original source composition. Independent native full3:4 crop from top keeps original upper court intact, no re-layout or conform. Actual cropped frames0/4/10 reviewed.",
-        "fill_y": 0,
-        "min_height": 1080
-      }
-    },
+    "source_crop": {},
     "preserve_source_audio": true,
     "editorial": {
       "mode": "match_review",
@@ -474,16 +462,16 @@
         }
       },
       {
-        "source": "brisbane-final-official-ig",
-        "start": 0,
-        "end": 17.5,
+        "source": "brisbane-final",
+        "start": 443.84,
+        "end": 465,
         "fit": "crop",
         "cx": 0.5,
         "track": false,
         "narration": "",
         "audio_tail": "silence",
-        "point_end_ok": "Actual selected same-match source preparation, serve, full terminal rally, result and genuine reaction verified in source visual evidence; final film remains separately reviewed.",
-        "crosses_cut": "Source selection records any natural same-match camera cuts; full terminal point mandatory.",
+        "point_end_ok": "Actual championship point serve contact about444.20, complete rally to453.70, result and reaction. Source begins at the toss; pre-toss preparation is absent from official highlight. Previous point441–443 is not substituted as preparation.",
+        "crosses_cut": "One court during serve and entire rally; source cuts to authentic same-point reaction after the point.",
         "inset": {
           "image": "assets/reel/medvedev-finals-road-2026/context-brisbane_point.png",
           "kind": "story_text",
@@ -506,7 +494,19 @@
               "source": "https://www.atptour.com/en/news/medvedev-nakashima-brisbane-2026-sunday"
             }
           }
-        }
+        },
+        "quote": [
+          {
+            "at": 9.74,
+            "end": 17.32,
+            "text": "Finishes in style as 2026 starts in magical fashion for Daniil Medvedev.\n漂亮收官，2026梦幻开局！"
+          },
+          {
+            "at": 17.66,
+            "end": 20.52,
+            "text": "He is the Brisbane International champion.\n他是布里斯班国际赛冠军。"
+          }
+        ]
       },
       {
         "image": "assets/reel/medvedev-finals-road-2026/sequences/sequence-ao_intro.mp4",

@@ -1,0 +1,111 @@
+{
+  "reviewer": "independent media-late agent; actual delivered-film visual review",
+  "status": "PASS_requested_visual_scope_no_blocking_finding",
+  "created_at": "2026-11-05T09:40:03.917938+00:00",
+  "movie": "/workspace/medvedev-center-crop-fix/final/native-input/medvedev-finals-road-2026.mp4",
+  "movie_sha256": "026f5722380e18ba7658bfbc3a92fe0aa24241f737544cd37128ac1fe2cd5bad",
+  "geometry": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 25
+  },
+  "duration_seconds": 268.2,
+  "review_method": "Personally opened all seven whole-film contact groups covering every segment, then separately decoded actual film into dense Brisbane serve/rally frames, subtitle and card boundaries, and ending frames. No spec-only or upstream PASS adopted. No external visual provider.",
+  "reviewed_sheets": [
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-00.jpg",
+      "sha256": "ecee59e4852839e6315eb0aa7d596d8221acec8754213787c2a97df566498943"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-01.jpg",
+      "sha256": "d82c3224d46fdd1a465b5a42c26f6bcec007dbd7d7ba6f3d74972be5147386e1"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-02.jpg",
+      "sha256": "9e6c07045f15b4aa42f82ab43e36068347948f59d7cc8ef13ba72fa4d5db4979"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-03.jpg",
+      "sha256": "8269c26c7962631be10b498a9784b5980bbc08523ada92a304ffd49b4874e55b"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-04.jpg",
+      "sha256": "a0461e8e428cdb3b8ea1c6a9bc0d75963881ea7d8c8a8b06c1311773f3849344"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-05.jpg",
+      "sha256": "743d9a7f992925d36e9b01f00f7078a94290dc59c002c466a10fb05089b1e22e"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/root-qc/contact-06.jpg",
+      "sha256": "a8115e2c6bb8aa58233f6e4198a5cc26da571a30bb6f46a5d83ed9eb8fd81972"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-rally-contact-0.jpg",
+      "sha256": "2c4a06e41c2c128544e1004d32e6d4dd9cc32dfde344b263a3568b4e3fe6b4ab"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-rally-contact-1.jpg",
+      "sha256": "1519e6c145f2fec80c6d098008236900cf4986c4a284ffc731cccc53796c09af"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-rally-contact-2.jpg",
+      "sha256": "fb35d6f7d17a820b68e200688fb7c890bef6ad7290d0aaba315e969844742a29"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-serve-contact-0.jpg",
+      "sha256": "db008eb285e36bb65a3ce46675e640b442afcdde7b11f471ce851ec2717df78f"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-serve-contact-1.jpg",
+      "sha256": "bff3193da646e61c80ccc1ca4ed96e4f068e4f341685c7cec9ee324d040d953a"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/subtitle-and-card-contact-0.jpg",
+      "sha256": "9b7bf98aafc2de4bcd52d141bdd9f2955d4799a268c29b4730c0242d02a4945c"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/subtitle-and-card-contact-1.jpg",
+      "sha256": "b84f99ec31e120225cad3410529a4570a1524497c67768ea64188d8dfc1e5b1d"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/final/independent-qc/bris-strike-25fps.jpg",
+      "sha256": "9f35ab1e0f03fc123d60aa20b0894ade50c7c6e29a3ff5bc4f359da15fa6e5e7"
+    }
+  ],
+  "findings": [
+    {
+      "check": "single_court_fixed_center",
+      "status": "pass",
+      "evidence": "All six match-video blocks show one full-height court or source close-up; no top/bottom duplicate court or moving crop added was observed. Brisbane court centre/service-line/net landmarks remain around the horizontal screen centre throughout the wide-view rally even when players move to an edge."
+    },
+    {
+      "check": "brisbane_serve_contact_and_rally",
+      "status": "pass_with_honest_prepare_boundary",
+      "evidence": "Dense actual-film frames at 23.32, 23.36, 23.40, 23.44, 23.48, 23.52 show the opening dissolve cleared by the visible serve strike around23.44. The single continuous wide shot then preserves the rally through the outcome around32s, followed by Medvedev actual fist reaction around33s. 25–37s separately inspected at0.5s spacing.",
+      "internal_gap": "The toss/pre-toss start overlaps the opening dissolve/source lead-in. Do not attest complete server preparation.",
+      "fixed_crop_observation": "The near player briefly exits the left edge around26–27.5s while the court centre stays fixed. No tracking was added; this is visible in the requested portrait centre crop."
+    },
+    {
+      "check": "new_brisbane_bilingual_subtitles",
+      "status": "pass_visual_and_sentence_boundaries",
+      "evidence": "32.61–40.19 renders the complete sentence Finishes in style as 2026 starts in magical fashion for Daniil Medvedev. across two English lines with a complete Chinese line. 40.53–43.39 renders He is the Brisbane International champion. with a complete Chinese line. Actual frames33.50,38.20,41.50,43.20 show no clipping or overflow."
+    },
+    {
+      "check": "eight_second_information_cards",
+      "status": "pass_visual_sampling",
+      "evidence": "Every match-video opening card appears immediately in sampled opening transition and persists at+7s, then is gone at+8.5s. Brisbane additionally sampled30.70/30.84 visible,30.90/31.05 absent, bracketing the intended22.866–30.866 card window. No photo-only information card was observed."
+    },
+    {
+      "check": "whole_film_text_and_ending",
+      "status": "pass",
+      "evidence": "All73 whole-film contact frames in groups00–06 personally inspected. Photo narration text remains readable. The late qualification/photo/Paris sequence and native brand ending show no accumulated score/context cards; independently extracted244.56,252.63,260.29,264.38,267.20 reconfirm this."
+    }
+  ],
+  "scope_limits": [
+    "Visual review used direct inspection of actual decoded frames with dense Brisbane temporal sampling; it was not continuous real-time playback of every film frame.",
+    "No new full-film listening or quote-onset approval is claimed; audio agent owns native-audio alignment.",
+    "Unchanged-other-segment/photo/TTS byte equality against the prior film was not a separate task in this visual review."
+  ],
+  "mutations": "Only external independent-qc evidence/report files written. No git, re-encode, release, or sending performed."
+}

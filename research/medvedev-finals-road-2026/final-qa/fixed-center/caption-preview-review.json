@@ -1,0 +1,25 @@
+{
+  "method": "Inspected actual native preview PNGs at film28/38/41; preview is not final film QC.",
+  "spec_sha256": "70aa7e66c0685e241ed0b325499f2069dd161c6fbc52c8cd370434dbb3987a9e",
+  "manifest_sha256": "4125d704b074985fd64c01f11b069881d54cadec5446c65d2126287ce3eb2165",
+  "findings": [
+    "Single full-canvas court source and fixed crop at28s.",
+    "At38s complete long English wraps to two lines inside safe edges; concise Chinese fits one line.",
+    "At41s second English and Chinese fit safe margins and preserve authentic post-point Medvedev closeup."
+  ],
+  "pass": true,
+  "preview_files": [
+    {
+      "path": "/workspace/medvedev-center-crop-fix/native-caption-preview/caption-01.png",
+      "sha256": "17bd476b3b8ddecb748968dc1c1eab3af22b81a06e688ee0241e1592fed7e0b0"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/native-caption-preview/caption-02.png",
+      "sha256": "9693db913efb4f7e98b362fa0664b3823cbea60af8a3372f26ff3a59e34d3625"
+    },
+    {
+      "path": "/workspace/medvedev-center-crop-fix/native-caption-preview/caption-03.png",
+      "sha256": "4f68cf8d5bac339b784d55b5552e3396266676a57f696298a24680f06948d7fb"
+    }
+  ]
+}

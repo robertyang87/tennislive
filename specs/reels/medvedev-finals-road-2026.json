@@ -31,7 +31,7 @@
   "_tts_backend_why": "年终之路自然云健+6%/+0Hz，整句合成；不使用不支持的SSML/情绪参数。",
   "sources": {
     "ao-r4": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
-    "brisbane-final-official-ig": "https://github.com/robertyang87/tennislive/releases/download/source-DTXfZGAjiRl/DTXfZGAjiRl.mp4",
+    "brisbane-final": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
     "rg-r1": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
     "us-open-r4": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
     "almaty-title-fullpoint": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
@@ -39,7 +39,7 @@
   },
   "source_fallbacks": {
     "ao-r4": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
-    "brisbane-final-official-ig": "https://github.com/robertyang87/tennislive/releases/download/source-DTXfZGAjiRl/DTXfZGAjiRl.mp4",
+    "brisbane-final": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
     "rg-r1": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
     "us-open-r4": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
     "almaty-title-fullpoint": "https://github.com/robertyang87/tennislive/releases/download/source-med26alma01/med26alma01.mp4",
@@ -52,11 +52,11 @@
       "height": 1080,
       "fps": "25/1"
     },
-    "brisbane-final-official-ig": {
-      "why": "Actual source bytes ffprobed and hash-bound. Selection status remains separately explicit; SHA256 44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
-      "width": 1080,
-      "height": 1920,
-      "fps": "30/1"
+    "brisbane-final": {
+      "why": "Actual immutable single-court horizontal Tennis TV source ffprobed and hash-bound. SHA256 f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1"
     },
     "rg-r1": {
       "why": "Actual source bytes ffprobed and hash-bound. Selection status remains separately explicit; SHA256 8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
@@ -84,18 +84,11 @@
     }
   },
   "mixed_fps": {
-    "brisbane-final-official-ig": "Actual 30/1 source sampled to25fps without source-speed change.",
     "rg-r1": "Actual 50/1 source sampled to25fps without source-speed change.",
     "us-open-r4": "Actual 60000/1001 source sampled to25fps without source-speed change.",
     "almaty-title-fullpoint": "Actual 50/1 source sampled to25fps without source-speed change."
   },
-  "source_crop": {
-    "brisbane-final-official-ig": {
-      "reason": "Actual1080x1920 official continuous same-point original two-view publication; root explicitly accepted original source composition. Independent native full3:4 crop from top keeps original upper court intact, no re-layout or conform. Actual cropped frames0/4/10 reviewed.",
-      "fill_y": 0,
-      "min_height": 1080
-    }
-  },
+  "source_crop": {},
   "preserve_source_audio": true,
   "push": {
     "auto": true,
@@ -201,18 +194,18 @@
     },
     {
       "_id": "brisbane_point",
-      "source": "brisbane-final-official-ig",
-      "start": 0,
-      "end": 17.5,
+      "source": "brisbane-final",
+      "start": 443.84,
+      "end": 465,
       "fit": "crop",
       "cx": 0.5,
       "track": false,
       "narration": "",
       "audio_tail": "silence",
       "_quote_kind": "broadcast",
-      "point_end_ok": "Actual selected same-match source preparation, serve, full terminal rally, result and genuine reaction verified in source visual evidence; final film remains separately reviewed.",
-      "crosses_cut": "Source selection records any natural same-match camera cuts; full terminal point mandatory.",
-      "_why": "Same-match actual1080 source, fixed full-canvas court center. Root final windows and native audio gate must pass.",
+      "point_end_ok": "Actual championship point serve contact about444.20, complete rally to453.70, result and reaction. Source begins at the toss; pre-toss preparation is absent from official highlight. Previous point441–443 is not substituted as preparation.",
+      "crosses_cut": "One court during serve and entire rally; source cuts to authentic same-point reaction after the point.",
+      "_why": "Owner rejected official upper/lower split-camera IG. Replacement is actual1920×1080 single-court TV source, native fixedcx0.5/trackfalse,1080×1440cover, no source-embedded digital ball tracking.",
       "inset": {
         "image": "assets/reel/medvedev-finals-road-2026/context-brisbane_point.png",
         "kind": "story_text",
@@ -236,8 +229,19 @@
           }
         }
       },
-      "_quote_skip_why": "Actual point/court impacts and nonlexical crowd/celebration sound. small.en full source emits no lexical commentary during0–17.5. medium.en emits generic YouTube signoff at13.84–24.64 that is absent in small, and is not adopted as authentic foreground English. Local AST supports court/bounce and crowd rather than music, Music probability0.004765 at0–10 and0.014074 at10–20. No coherent independent English utterance is established in the selected window; no invented subtitles. This records non-auditory cross-check evidence, not a human no-speech verdict or proof that absolutely no background music exists.",
-      "_audio_review_state": "Actual source SHA and full selected-window ASR/caption cross-check, exact bilingual absolute→relative timing; no human hearing claim."
+      "_audio_review_state": "Actual source SHA and full selected-window ASR/caption cross-check, exact bilingual absolute→relative timing; no human hearing claim.",
+      "quote": [
+        {
+          "at": 9.74,
+          "end": 17.32,
+          "text": "Finishes in style as 2026 starts in magical fashion for Daniil Medvedev.\n漂亮收官，2026梦幻开局！"
+        },
+        {
+          "at": 17.66,
+          "end": 20.52,
+          "text": "He is the Brisbane International champion.\n他是布里斯班国际赛冠军。"
+        }
+      ]
     },
     {
       "_id": "ao_intro",
@@ -692,7 +696,7 @@
   ],
   "_runtime_budget": {
     "narrated_photo_seconds": 137.872,
-    "selected_original_seconds": 117.7,
+    "selected_original_seconds": 121.36,
     "target": "Compact approximately4.5minutes; complete terminal points and original sentences, no speed compression or filler."
   }
 }
