@@ -200,41 +200,42 @@
     {
       "id": "4598989",
       "source_url": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
-      "local_path": "/workspace/medvedev-finals-production/production/almaty-native-4598989.mp4",
-      "sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/archived-med26alma01.mp4",
+      "sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
       "actual_geometry": {
         "width": 1920,
         "height": 1080,
         "fps": "50/1",
-        "duration": 160.917,
-        "video_duration": 160.881667,
+        "duration": 160.917333,
+        "video_duration": 160.9,
         "start_time": 0.0,
-        "bytes": 162015064
+        "bytes": 162015056
       },
       "key": "almaty-title-fullpoint",
-      "archive_url": null,
-      "archive_status": "not_uploaded: GitHub release create asset upload returned HTTP401; bounded retry release not found; no workaround attempted",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-med26alma01/med26alma01.mp4",
+      "archive_status": "frozen publicRelease actualbytes fetched and independentlyverified",
       "action": "阿拉木图2026决赛完整发球准备、胜赛点、首次卫冕真实反应握手；替代旧长版缺prep窗",
       "windows": [
         {
-          "start": 126.5,
+          "start": 126.6,
           "end": 151.72,
           "completepoint": true,
           "complete_prepare": true,
           "complete_rally_from_serve_contact": true,
           "pre_point_context": {
-            "from": 126.5,
-            "to": 129.04,
-            "action": "Basilashvili post-prior-point closeup and audience reaction, same Almatyfinal; retained only to preserve Usually sentence head, NOT claimed current-point preparation."
+            "from": 126.6,
+            "to": 129.1,
+            "action": "126.6 actualsameevent Basilashvili closeup afterprior15-15 point;127.5 audience;129.1dissolve tocurrentAD/#3championshippointreceiver. Retained forfullUsually sentence; not current-pointprep."
           },
           "current_matchpoint_preparation_from": 130.98,
-          "evidence": "ACTUAL NEW native SHA73a379 source viewed. 126.5 sameevent Basilashvili previous15-15 closeup,127.5 audience,129.04 dissolve toMedvedev AD/#3championship-point receiver. 130.98firstwide withBasilashvili ball in hand,131.4loweringarms,132.12–132.20toss,133.04servicecontact, continuous rally through141.0,141.5Medvedev reaction,149–151handshake,151.72stillrealposthandshake. Audio exactsafehead remains source_audio responsibility.",
-          "status": "visual_verified_for_new_native_sha_audio_timing_pending"
+          "evidence": "ACTUAL ARCHIVED9a42 bytes independentlycaptured andopened.131.0 Basilashvili stillholding ball,131.4loweringarms,131.8handslowered,132.12tossbegins,132.4raisedarm,133.04servicecontact.134–141originalframes showcontinuoussameADfinalrally.141.5–143genuinewinnerreaction,145genuinesupporterreaction,147approachingnet,149–150actualhandshake,151–151.72realposthandshake. Finalaudioexactfullsentencecheckedseparatelybysource_audio; noauditorylisteningclaimedhere.",
+          "status": "actual_archive_source_visual_pass_audio_agent_seals_sentence"
         }
       ],
       "extra_points": 0,
       "visual_evidence": [
-        "/workspace/medvedev-finals-production/research/media-late/almaty-native-point-contact.jpg"
+        "/workspace/medvedev-finals-production/research/media-late/almaty-9a42-prep-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/almaty-9a42-rally-reaction-contact.jpg"
       ],
       "identity_evidence": {
         "method": "Official TennisTV page4598989 + native anonymous free entitlement response; court/players/scorebacked by originalframes and primaryeventreport",
@@ -255,8 +256,26 @@
             "bytes": 122194757
           },
           "why": "Replaced by fresh actual native-fetch bytes, different encoding bitrate and start offset. This is not asserted to be a mere remux."
+        },
+        {
+          "local_path": "/workspace/medvedev-finals-production/production/almaty-native-4598989.mp4",
+          "sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+          "actual_geometry": {
+            "width": 1920,
+            "height": 1080,
+            "fps": "50/1",
+            "duration": 160.917,
+            "video_duration": 160.881667,
+            "start_time": 0.0,
+            "bytes": 162015064
+          },
+          "visual_evidence": [
+            "/workspace/medvedev-finals-production/research/media-late/almaty-native-point-contact.jpg"
+          ],
+          "why": "Replaced by fresh archived publicRelease bytes. Previous local native73a379 record remains historical; new archived9a42 source independently opened and checked, not inheritedPASS."
         }
-      ]
+      ],
+      "archive_id": "med26alma01"
     }
   ],
   "important": "All completepoint decisions above describe actually inspected pixels, not inherited old spec notes. Full-frame fixed center crop cx .5; source audio unity/no BGM. New canonical Chinese name 梅德韦德夫; originals unmodified.",
