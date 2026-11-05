@@ -1,0 +1,129 @@
+{
+  "audit_type": "native_v2_fact_binding_addendum",
+  "reviewer": "fils_facts",
+  "reviewed_at_utc": "2026-11-05T10:33:05.377906+00:00",
+  "status": "PASS",
+  "status_scope": "Factual content, actual ASS text and unchanged data/score bindings only",
+  "prior_fact_audit": {
+    "path": "/workspace/fils-finals-production/research/facts/final-native-fact-audit.json",
+    "sha256": "ff5e7fbe00bb963ff18e9c575092ea00e39523154425b19d0ac055e68e4dfbb4",
+    "movie_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+    "scope_preserved": true,
+    "old_movie_visual_rejection_remains_on_old_file": true
+  },
+  "new_components": {
+    "movie": {
+      "path": "/workspace/fils-finals-production/final/native-input-v2/fils-finals-road-2026.mp4",
+      "sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+      "bytes": 198092528
+    },
+    "ass": {
+      "path": "/workspace/fils-finals-production/final/native-input-v2/subtitles.ass",
+      "sha256": "bb51d4636965a293a7f95bfb173aa88bfa4230dcbb748d18ded6098fc1e503be",
+      "bytes": 8964
+    },
+    "render": {
+      "path": "/workspace/fils-finals-production/final/native-input-v2/render.json",
+      "sha256": "eb052c8275be172778e6a509e0f6c7db977d904543215c79c8d9b7e7013befb5",
+      "bytes": 2627
+    },
+    "render_inputs": {
+      "path": "/workspace/fils-finals-production/final/native-input-v2/render_inputs.json",
+      "sha256": "eacc0d29ce4189059e0eb9f3cf08b910fe2174837ad9c2f5b8b69bb2c3e8c726",
+      "bytes": 28856
+    },
+    "spec": {
+      "path": "/workspace/fils-finals-production/native/specs/reels/fils-finals-road-2026.json",
+      "sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+      "bytes": 31550
+    },
+    "race_png": {
+      "path": "/workspace/fils-finals-production/production/race-chart/race-points-qualified.png",
+      "sha256": "dbda189659eea4ae53558c0f6c61118e80f1f0bdddfca63738e6168972f50e04",
+      "bytes": 192529
+    },
+    "race_data": {
+      "path": "/workspace/fils-finals-production/production/race-chart/data-canonical.json",
+      "sha256": "d1968bf34725847a45bfc08aa6f9664de7c18050fdd5e1ef52c5079871ab312a",
+      "bytes": 11644
+    },
+    "publication_record": {
+      "path": "/workspace/fils-finals-production/native/research/fils-finals-road-2026/frozen-publication-copy.json",
+      "sha256": "f83628ce5fb561c682864dabb49e028330c96e6d73352153a2c4f9e8d43d03b9",
+      "bytes": 515
+    },
+    "publication_body": {
+      "path": "/workspace/fils-finals-production/native/specs/reels/fils-finals-road-2026.xhs.txt",
+      "sha256": "d66dc47372f99c607e13b5d2d03edc973014ee0378181001c7e5c7e8ee3d795c",
+      "bytes": 627
+    }
+  },
+  "new_movie_duration_seconds": 312.24,
+  "facts_carried_forward": {
+    "actual_ass_events": 74,
+    "actual_ass_raw_text_exactly_unchanged": true,
+    "body_narration_segments": 16,
+    "source_bilingual_cues": 19,
+    "tts_request_count": 18,
+    "tts_bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+    "tts_bundle_asset_binding_unchanged": true,
+    "tts_only_metadata_difference": "source_run changes to the v2 render run; package SHA, release, request count and all other TTS bundle fields unchanged.",
+    "cover_and_all_body_narration_text_unchanged": true,
+    "all_six_labels_including_date_fils_first_score_and_true_winner_unchanged": true,
+    "all_graphic_and_label_asset_hashes_unchanged": true,
+    "fils_race_points": 3625,
+    "fils_race_rank": 7,
+    "active_qualified_highlights": 6,
+    "sinner_withdrawn_grey": true,
+    "qualification_trigger_and_order_unchanged": true,
+    "frozen_publication_body_bytes": 627
+  },
+  "permitted_delta": {
+    "segment_index": 20,
+    "source": "paris-r2",
+    "old_source_end": 143.6,
+    "new_source_end": 142.4,
+    "source_end_delta_seconds": -1.2,
+    "point_end_ok_metadata_updated": true,
+    "commentary_text_and_all_label_data_unchanged": true,
+    "ass_timing_changes": [
+      {
+        "event_index": 70,
+        "old_start": 300.51,
+        "new_start": 299.31,
+        "delta_seconds": -1.2,
+        "text": "大满贯只有一胜"
+      },
+      {
+        "event_index": 71,
+        "old_start": 302.07,
+        "new_start": 300.87,
+        "delta_seconds": -1.2,
+        "text": "却拼出了第一张年终门票"
+      },
+      {
+        "event_index": 72,
+        "old_start": 304.5,
+        "new_start": 303.3,
+        "delta_seconds": -1.2,
+        "text": "第一次到都灵"
+      },
+      {
+        "event_index": 73,
+        "old_start": 305.78,
+        "new_start": 304.58,
+        "delta_seconds": -1.2,
+        "text": "你看好菲斯拿下几场胜利？"
+      }
+    ],
+    "other_70_ass_events_timing_unchanged": true,
+    "film_duration_delta_seconds": -1.2
+  },
+  "open_fact_corrections": [],
+  "visual_release_decision": "Root/media_late own the final visual decision; factual PASS does not independently approve the final visual tail or override them.",
+  "scope_exclusions": [
+    "No human listening/pronunciation review.",
+    "No new whole-film visual/crop/rally or promotional-tail absence PASS asserted.",
+    "No git, spec, copy, ASS, movie or image changes made. Only this external factual addendum and its helper script were written."
+  ]
+}

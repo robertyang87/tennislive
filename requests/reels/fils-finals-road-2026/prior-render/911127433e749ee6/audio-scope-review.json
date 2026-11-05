@@ -1,0 +1,675 @@
+{
+  "schema": "fils-actual-first-film-audio-scope-review.v1",
+  "status": "AUDIO_AND_ASS_SCOPE_VERIFIED; WHOLE_FILM_REJECTED_FOR_PARIS_VISUAL_PROMOTION_TAIL",
+  "actual_film_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+  "native_run": "42007438620",
+  "native_artifact_id": "13405653078",
+  "film_seconds": 313.44,
+  "film_bytes": 199056155,
+  "sources": [
+    {
+      "segment_id": null,
+      "source_key": "miami-qf",
+      "source_id": "fils26miami",
+      "source_sha256": "17c135c02bca30257796474783154bc18ea05796c822a346559344e1c76161c4",
+      "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26miami.mp4",
+      "source_window": [
+        0.0,
+        40.0
+      ],
+      "master_window": [
+        38.666,
+        78.666
+      ],
+      "native_segment_length": 40.0,
+      "packet_sha256": "60d1ffeb1f787549958d94234140b003d9c13100410e926add403f533615624e",
+      "cue_mapping": [
+        {
+          "en": "He's done it!",
+          "source": [
+            18.14,
+            19.36
+          ],
+          "actual_ass": [
+            56.81,
+            58.03
+          ],
+          "expected_ass": [
+            56.806,
+            58.025999999999996
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 20.64
+        },
+        {
+          "en": "What a conclusion!",
+          "source": [
+            20.36,
+            21.6
+          ],
+          "actual_ass": [
+            59.03,
+            60.27
+          ],
+          "expected_ass": [
+            59.025999999999996,
+            60.266
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 18.4
+        },
+        {
+          "en": "Arthur Fils is a Miami semi-finalist.",
+          "source": [
+            21.96,
+            26.38
+          ],
+          "actual_ass": [
+            60.63,
+            65.05
+          ],
+          "expected_ass": [
+            60.626,
+            65.04599999999999
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 13.620000000000001
+        },
+        {
+          "en": "Can you believe it?",
+          "source": [
+            26.4,
+            28.32
+          ],
+          "actual_ass": [
+            65.07,
+            66.99
+          ],
+          "expected_ass": [
+            65.066,
+            66.98599999999999
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 11.68
+        },
+        {
+          "en": "Six-two down in the breaker.",
+          "source": [
+            28.82,
+            31.22
+          ],
+          "actual_ass": [
+            67.49,
+            69.89
+          ],
+          "expected_ass": [
+            67.48599999999999,
+            69.886
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 8.780000000000001
+        },
+        {
+          "en": "And somehow he's found a way.",
+          "source": [
+            32.8,
+            39.74
+          ],
+          "actual_ass": [
+            71.47,
+            78.41
+          ],
+          "expected_ass": [
+            71.466,
+            78.406
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 0.259999999999998
+        }
+      ],
+      "best_lag_samples": 0,
+      "best_lag_seconds": 0.0,
+      "pcm_correlation": 0.9995719790458679,
+      "linear_gain_fit": 0.9964375495910645,
+      "samples_compared": 640000,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    },
+    {
+      "segment_id": null,
+      "source_key": "barcelona-final",
+      "source_id": "fils26barca",
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26barca.mp4",
+      "source_window": [
+        115.5,
+        148.2
+      ],
+      "master_window": [
+        87.72999999999999,
+        120.42999999999998
+      ],
+      "native_segment_length": 32.7,
+      "packet_sha256": "ca3e070905689eee4aa5e4567c44e38e34ca0ba901536a96590a98f54800f989",
+      "cue_mapping": [
+        {
+          "en": "Arthur Fils conquers Barcelona in style.",
+          "source": [
+            134.4,
+            138.02
+          ],
+          "actual_ass": [
+            106.63,
+            110.25
+          ],
+          "expected_ass": [
+            106.63,
+            110.25
+          ],
+          "rounding_delta": [
+            0.0,
+            0.0
+          ],
+          "source_tail_margin": 10.179999999999978
+        },
+        {
+          "en": "After six months out with a back injury,",
+          "source": [
+            139.8,
+            142.74
+          ],
+          "actual_ass": [
+            112.03,
+            114.97
+          ],
+          "expected_ass": [
+            112.03,
+            114.97
+          ],
+          "rounding_delta": [
+            0.0,
+            0.0
+          ],
+          "source_tail_margin": 5.4599999999999795
+        },
+        {
+          "en": "he stormed back onto the ATP Tour,",
+          "source": [
+            142.94,
+            145.84
+          ],
+          "actual_ass": [
+            115.17,
+            118.07
+          ],
+          "expected_ass": [
+            115.16999999999999,
+            118.07
+          ],
+          "rounding_delta": [
+            0.0,
+            0.0
+          ],
+          "source_tail_margin": 2.359999999999985
+        },
+        {
+          "en": "playing some of his best tennis.",
+          "source": [
+            146.44,
+            148.08
+          ],
+          "actual_ass": [
+            118.67,
+            120.31
+          ],
+          "expected_ass": [
+            118.66999999999999,
+            120.31
+          ],
+          "rounding_delta": [
+            0.0,
+            0.0
+          ],
+          "source_tail_margin": 0.11999999999997613
+        }
+      ],
+      "best_lag_samples": 1,
+      "best_lag_seconds": 6.25e-05,
+      "pcm_correlation": 0.9994035959243774,
+      "linear_gain_fit": 0.9960115551948547,
+      "samples_compared": 523199,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    },
+    {
+      "segment_id": null,
+      "source_key": "wimbledon-r2",
+      "source_id": "UkoJoFuSo_A",
+      "source_sha256": "f184d3fb2544f3b6d96d53508e357cde84d025ce9136dc46807ea93b3e4ba3b7",
+      "source_path": "/workspace/fils-finals-production/research/media-early/sources/UkoJoFuSo_A.mp4",
+      "source_window": [
+        0.0,
+        26.5
+      ],
+      "master_window": [
+        145.942,
+        172.442
+      ],
+      "native_segment_length": 26.5,
+      "packet_sha256": "122d854a1088ad026475b662f207582016c73e7744f3800600e60861a328fc4f",
+      "cue_mapping": [
+        {
+          "en": "Matteo Berrettini punches his ticket to round three.",
+          "source": [
+            14.08,
+            19.48
+          ],
+          "actual_ass": [
+            160.02,
+            165.42000000000002
+          ],
+          "expected_ass": [
+            160.02200000000002,
+            165.422
+          ],
+          "rounding_delta": [
+            -0.002,
+            -0.002
+          ],
+          "source_tail_margin": 7.02
+        }
+      ],
+      "best_lag_samples": 0,
+      "best_lag_seconds": 0.0,
+      "pcm_correlation": 0.9994945526123047,
+      "linear_gain_fit": 0.9958492517471313,
+      "samples_compared": 424000,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    },
+    {
+      "segment_id": null,
+      "source_key": "cincinnati-final",
+      "source_id": "RAAXKA85t3g",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "source_path": "/workspace/fils-finals-production/research/media-late/RAAXKA85t3g.mp4",
+      "source_window": [
+        68.7,
+        97.0
+      ],
+      "master_window": [
+        181.698,
+        209.998
+      ],
+      "native_segment_length": 28.3,
+      "packet_sha256": "2c4484cbac6afbc90ef2f5104ddfdf48aa68d0605b323ab7e351570e8892565d",
+      "cue_mapping": [
+        {
+          "en": "Arthur Fils.",
+          "source": [
+            78.76,
+            79.56
+          ],
+          "actual_ass": [
+            191.76,
+            192.56
+          ],
+          "expected_ass": [
+            191.75800000000004,
+            192.55800000000005
+          ],
+          "rounding_delta": [
+            0.002,
+            0.002
+          ],
+          "source_tail_margin": 17.439999999999998
+        },
+        {
+          "en": "Quite scintillating in Cincinnati.",
+          "source": [
+            81.1,
+            83.26
+          ],
+          "actual_ass": [
+            194.1,
+            196.26
+          ],
+          "expected_ass": [
+            194.098,
+            196.25800000000004
+          ],
+          "rounding_delta": [
+            0.002,
+            0.002
+          ],
+          "source_tail_margin": 13.739999999999995
+        },
+        {
+          "en": "It is the biggest title of his young career.",
+          "source": [
+            87.12,
+            91.12
+          ],
+          "actual_ass": [
+            200.12,
+            204.12
+          ],
+          "expected_ass": [
+            200.118,
+            204.118
+          ],
+          "rounding_delta": [
+            0.002,
+            0.002
+          ],
+          "source_tail_margin": 5.8799999999999955
+        }
+      ],
+      "best_lag_samples": 0,
+      "best_lag_seconds": 0.0,
+      "pcm_correlation": 0.9977051615715027,
+      "linear_gain_fit": 0.9913405776023865,
+      "samples_compared": 452800,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    },
+    {
+      "segment_id": null,
+      "source_key": "us-open-r1",
+      "source_id": "o8c4zZVTYjo",
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "source_path": "/workspace/fils-finals-production/research/media-late/o8c4zZVTYjo.mp4",
+      "source_window": [
+        150.3,
+        171.6
+      ],
+      "master_window": [
+        218.84600000000003,
+        240.14600000000002
+      ],
+      "native_segment_length": 21.3,
+      "packet_sha256": "675a11a532a4442cf750b3bd129f89389e309d6e8ec673e0d0b7bdd8a2354f6a",
+      "cue_mapping": [
+        {
+          "en": "Does it in style.",
+          "source": [
+            153.54,
+            155.12
+          ],
+          "actual_ass": [
+            222.09,
+            223.67000000000002
+          ],
+          "expected_ass": [
+            222.086,
+            223.666
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 16.47999999999999
+        },
+        {
+          "en": "Stefanos Tsitsipas, through to the second round here of the US Open.",
+          "source": [
+            155.42,
+            161.57
+          ],
+          "actual_ass": [
+            223.97,
+            230.12
+          ],
+          "expected_ass": [
+            223.966,
+            230.11600000000004
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 10.030000000000001
+        },
+        {
+          "en": "A four-set winner over the number ten seed.",
+          "source": [
+            164.7,
+            167.18
+          ],
+          "actual_ass": [
+            233.25,
+            235.73
+          ],
+          "expected_ass": [
+            233.24600000000004,
+            235.72600000000006
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 4.4199999999999875
+        },
+        {
+          "en": "And that was as good as it gets.",
+          "source": [
+            168.8,
+            170.88
+          ],
+          "actual_ass": [
+            237.35,
+            239.43
+          ],
+          "expected_ass": [
+            237.34600000000006,
+            239.426
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 0.7199999999999989
+        }
+      ],
+      "best_lag_samples": 0,
+      "best_lag_seconds": 0.0,
+      "pcm_correlation": 0.9987138509750366,
+      "linear_gain_fit": 0.9946820735931396,
+      "samples_compared": 340800,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    },
+    {
+      "segment_id": null,
+      "source_key": "paris-r2",
+      "source_id": "fils26paris",
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "source_path": "/workspace/fils-finals-production/research/media-late/fils26paris.mp4",
+      "source_window": [
+        128.12,
+        143.6
+      ],
+      "master_window": [
+        284.986,
+        300.466
+      ],
+      "native_segment_length": 15.48,
+      "packet_sha256": "9c95ab876dec012c4c1c1186a1f38f0e0bc5e2825437722f8afdf471e5322e59",
+      "cue_mapping": [
+        {
+          "en": "Arthur Fils caps off what has been a fabulous French day.",
+          "source": [
+            135.54,
+            140.16
+          ],
+          "actual_ass": [
+            292.40999999999997,
+            297.03
+          ],
+          "expected_ass": [
+            292.40599999999995,
+            297.02599999999995
+          ],
+          "rounding_delta": [
+            0.004,
+            0.004
+          ],
+          "source_tail_margin": 3.4399999999999977
+        }
+      ],
+      "best_lag_samples": 0,
+      "best_lag_seconds": 0.0,
+      "pcm_correlation": 0.9992043972015381,
+      "linear_gain_fit": 0.9955132603645325,
+      "samples_compared": 247680,
+      "note": "Source/final decoded16000Hz mono PCM compared. Lossy re-encoding differences remain; no bit-identical PCM or manually-heard claim."
+    }
+  ],
+  "source_count": 6,
+  "cue_count": 19,
+  "max_ass_rounding_error": 0.004,
+  "actual_raw_count": 12,
+  "actual_asr_files": [
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/RAAXKA85t3g/medium.en.json",
+      "sha256": "316e199f9f458e1248c768b7282c090fc052a27040ff64d692f34d47a2eaade9"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/RAAXKA85t3g/small.en.json",
+      "sha256": "5244098407df13fa236463bcd17b5eeeda86413f9e43a0c400895a971f5486a9"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/UkoJoFuSo_A/medium.en.json",
+      "sha256": "df6cb1b4376bc14a63c3968969e18c81b2076087acb512b75b13e76cfd52dbc4"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/UkoJoFuSo_A/small.en.json",
+      "sha256": "72d2d1a9ba8774e33fe2db591f4c3eccd71bf6f4875eb76b31ce3fc46505c140"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26barca/medium.en.json",
+      "sha256": "f64a0d24783b3e8e6ffa823e0bc729413abbd448494620de5807ba7b0ba04554"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26barca/small.en.json",
+      "sha256": "5354e0e0c15a2e8a08e642bef9057b6924b059272bd43ef0fc603cddd63b8fe3"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26miami/medium.en.json",
+      "sha256": "3104989a03017eb2e26029203dad8b195cbe6d1208a61dd57acbbae78c029356"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26miami/small.en.json",
+      "sha256": "3074af77f13aed46c209793568058c81fda6a9b762a8ade41257760bd4448a48"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26paris/medium.en.json",
+      "sha256": "4115e8c5249c921a67d7f3e2cbc5acb6d8f8cf4139b9818430b875c0853acb78"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/fils26paris/small.en.json",
+      "sha256": "444728f546537b3e53616c0eb8d61928639e55c9f8a4534c173e614ea396ee47"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/o8c4zZVTYjo/medium.en.json",
+      "sha256": "7901c449469eb6a5093d96836595e534cbed581030f68984cc4bc75af902cd51"
+    },
+    {
+      "path": "/workspace/fils-finals-production/research/audio/actual-final-audit/911127433e749ee6/o8c4zZVTYjo/small.en.json",
+      "sha256": "a2c8ca516b98c58d670424710b6e354c3726b799c4a176b721cfd9c2dc088796"
+    }
+  ],
+  "tts_bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+  "actual_18_word_files": [
+    {
+      "file": "voice_00.words.json",
+      "sha256": "bec5d9979ad70faa3b588683380a771130ced5a890bccb5094f91057bd149613"
+    },
+    {
+      "file": "voice_01.words.json",
+      "sha256": "72658152de18f186802284bcd1006bad09e10ecd7adefac0645bb302054a6d30"
+    },
+    {
+      "file": "voice_02.words.json",
+      "sha256": "af1758c1db2266bdb7d184a8e8a628deb50652b03d0d52bedc9881c2f2da3abc"
+    },
+    {
+      "file": "voice_03.words.json",
+      "sha256": "e9e6d14e2d42e425c1679df900a94eabad5616260b942e9db72815dec1caea9e"
+    },
+    {
+      "file": "voice_05.words.json",
+      "sha256": "1476da5cbf15c9207eadec3f68851fa6b8a34479e616752c51abd62ded118c7c"
+    },
+    {
+      "file": "voice_07.words.json",
+      "sha256": "516d256161c3e35c388732c9fb4cf391d3f15a9badd53d7b54a3a9985da4ad62"
+    },
+    {
+      "file": "voice_08.words.json",
+      "sha256": "939ad6e4fcd671fb7ab3e7f17f16ed7f4493c8902eb3b9d56742b2a938934504"
+    },
+    {
+      "file": "voice_09.words.json",
+      "sha256": "2aaf9b4087de99f86a6853e0272d55ce5706d1185a9a1dba1c8732d52efca6df"
+    },
+    {
+      "file": "voice_11.words.json",
+      "sha256": "cad428dfcf32204297bd88905e467f0383b928857aed44db403efb8481e48b69"
+    },
+    {
+      "file": "voice_13.words.json",
+      "sha256": "0a3aab9546ee395d461bcf05eff9451a25a4ab93ecfe83f7ca56611a13b685e4"
+    },
+    {
+      "file": "voice_15.words.json",
+      "sha256": "4f32ec308029a1ad9fb895641c01e5f64718d0394b1b5a7cd9725d1058e3e36b"
+    },
+    {
+      "file": "voice_16.words.json",
+      "sha256": "48b7ca210e3f7814dd0f172f05738739b39b4b4c3b514e5b09a3201b0642c6b2"
+    },
+    {
+      "file": "voice_17.words.json",
+      "sha256": "3e67bdfe7a316a9e4ea28c14b8096250d10f4265d01af6242560162f72dc5650"
+    },
+    {
+      "file": "voice_18.words.json",
+      "sha256": "1eff57b7b5c8887d7d3e90f3d0f32c4c33cbcdd93ac260074c193b61470dcb79"
+    },
+    {
+      "file": "voice_19.words.json",
+      "sha256": "37f157f3ffef33a14db8223433c24262540b45b281b203ff8b844df12724459f"
+    },
+    {
+      "file": "voice_21.words.json",
+      "sha256": "8e6d462876205c23ad3dd467c04a144e49010fe084a8db3965d380c367443a3a"
+    },
+    {
+      "file": "voice_cover.words.json",
+      "sha256": "e797fe1d35493fa360319d71308b3d90ea7bb32793fad76c563fd7b53f0a06ba"
+    },
+    {
+      "file": "voice_outro.words.json",
+      "sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8"
+    }
+  ],
+  "actual_asr_review": "All12 fresh actual-film small/medium raw outputs reviewed. Miami, Wimbledon, US and Paris retain expected clear commentary/endings; names have normal ASR spelling errors. Barcelona broad actual models again give incompatible generic opening hypotheses, which are rejected in favor of independently established frozen source narrow-window pair; actual source PCM r0.99940 proves the selected frozen source audio is retained. Cincy broad medium drops first two short clauses and starts biggest-title sentence with a long misplaced leading envelope; small retains all three clauses, and source PCM r0.99770 plus original approved source ASR anchors unchanged cue times. No broad low-probability envelope was used to retime captions. All accepted source spoken endings have margins before segment end; actualASR endpoints support final word presence. This is automated original-source/actual-film comparison, not human listening and not a claim every raw hypothesis agrees verbatim.",
+  "film_rejection_reason": "Root actual pixels found source143.25 Tennis TV LIVE promotion inside Paris original128.12–143.60 tail. This report does not approve old film delivery. Authorized repair changes onlyParis end to142.40; source SHA,19 cue texts/times,18 frozen TTS and first5 source windows remain unchanged.",
+  "reuse_for_repair": "Completed12 actual ASR and source identity/ASS evidence may be reused for unchanged content; new actual film still requires its true SHA,6 bounded PCM/source matches,19 actual ASS mappings,18 unchanged word-file hashes, and complete Paris final sentence within shortened end. No second full ASR sweep is needed for tail trim.",
+  "human_listening_performed": false,
+  "reviewed_at": "2026-11-05T10:21:49.893470+00:00"
+}

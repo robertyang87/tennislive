@@ -1,0 +1,91 @@
+{
+  "status": "PASS_actual_final_film_review_pending_exact_head_ci",
+  "reviewed_at": "2026-11-05T10:35:20.653919+00:00",
+  "film_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+  "film_bytes": 198092528,
+  "film_seconds": 312.24,
+  "spec_sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+  "ass_sha256": "bb51d4636965a293a7f95bfb173aa88bfa4230dcbb748d18ded6098fc1e503be",
+  "render_inputs_sha256": "eacc0d29ce4189059e0eb9f3cf08b910fe2174837ad9c2f5b8b69bb2c3e8c726",
+  "native_run": "https://github.com/robertyang87/tennislive/actions/runs/42009615797",
+  "native_input_artifact_id": 13407700249,
+  "voice_suite": {
+    "pass": true,
+    "unique_actual_audio": 18,
+    "uses": 36,
+    "checks": [
+      "completeness",
+      "polyphones",
+      "pauses",
+      "speed",
+      "whole_sentences"
+    ],
+    "sentence_splits": [],
+    "actual_evidence_path": "output/2026-11-05/reel/fils-finals-road-2026/voice_auto_review.json"
+  },
+  "strict_tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+    "request_count": 18,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-fils-finals-road-2026-de79ac47d659f000",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fils-finals-road-2026-de79ac47d659f000/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42009615797"
+  },
+  "actual_reviews": [
+    {
+      "path": "research/fils-finals-road-2026/final-qa/facts-v2-binding.json",
+      "sha256": "47fa2e4abcc6017f7aac12e6ec1b6ac993adbf64c70a0c4c935d00bac5ec9458"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/independent-visual-qc.json",
+      "sha256": "643ac5f97d17704050c8dbb655a1918753969e5f5310dbd1ce612e8b45b8f08a"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/paris-clean-end-scope.json",
+      "sha256": "9063bc50743a1198d073d43713f425320842883c55f47db55344d88c73b438f1"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/release-entire-file-verification.json",
+      "sha256": "27b5d0545216c6dae7e2b716e2dfdd267bde34e9e93d0576f76030d8b16d65e4"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/root-final-qc.json",
+      "sha256": "ca9d07ee2d7f1f34e6e863b76b0f5480fd9dc3f3c5959b503d8fe23f77a5b322"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/source-audio-evidence-v2.zip",
+      "sha256": "156815599c460442cd962e76ac5c00991f1ead04806457e8f9742b6ac4417048"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/source-audio-review.json",
+      "sha256": "ddd9c66e043fb14c77eed79bd43a4e50a4f976e9a9a0482f6aa9919897f4e601"
+    },
+    {
+      "path": "research/fils-finals-road-2026/final-qa/source-signal-ass-proof.json",
+      "sha256": "ddd9c66e043fb14c77eed79bd43a4e50a4f976e9a9a0482f6aa9919897f4e601"
+    }
+  ],
+  "scope": "Root and independent actual native-film review;6 fixed-center single-court full-canvas sources,19 bilingual cues,15 photographic inputs+dated qualified Race table, real handshake and clean ending. Original server pre-toss gap forCincy remains honestly internal; no complete_prepare claim.",
+  "paris_clean_end": {
+    "start": 128.12,
+    "end": 142.4,
+    "native_dissolve_tail": 0.5,
+    "maximum_consumed_source_time": 142.9,
+    "first_observed_promotion": 143.25,
+    "last_complete_commentary_end": 140.16,
+    "real_handshake_hug": [
+      141,
+      141.75
+    ]
+  },
+  "prior_rejected_unpublished_film": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+  "copy_identity": "research/fils-finals-road-2026/frozen-publication-copy.json",
+  "normal_merge_authorized_after_exact_head_ci": true,
+  "new_film_sent": false
+}

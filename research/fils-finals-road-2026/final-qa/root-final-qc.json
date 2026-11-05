@@ -1,0 +1,68 @@
+{
+  "status": "PASS_root_actual_final_film_visual_review",
+  "reviewer": "root direct final actual-frame inspection",
+  "at": "2026-11-05T10:34:20.314774+00:00",
+  "movie_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+  "movie_bytes": 198092528,
+  "film_seconds": 312.24,
+  "spec_sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+  "tts_bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+  "method": "Personally opened all seven contact sheets covering80 final-film frames, then all3 dense actual Paris-tail/question/ending sheets. Final film hash independently computed. No human listening or exhaustive continuous-playback claim.",
+  "reviewed_images": [
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-00.jpg",
+      "sha256": "2d943bd3475aeee2409ee58e186f2efae1af24cd0ebaeb5d211eaae1a0ac42a7"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-01.jpg",
+      "sha256": "9f08d416da3aebb43addab64a8a57716c560d5ac773529e5874aa383d061fd44"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-02.jpg",
+      "sha256": "012529aad804f0f6af663947d45e1324e0f33a91e87758d5845afd8e5e8272ba"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-03.jpg",
+      "sha256": "935a7325d078628d1a221ce8bf6ee0c85a1fe79088390385eb65583be749d25d"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-04.jpg",
+      "sha256": "af89199722f0440f4741e3115388c57f8ff21e562986899c6d474722114f1907"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-05.jpg",
+      "sha256": "7921f0f31bf027f7ccd217025b6cf1c8795eefc3de0593b3d4551ffe93fa5f9e"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/root-qc-v2/contact-06.jpg",
+      "sha256": "f3b469590a4e7fcd5f508619ab594730ec0782bd5861df93509e5204477fb2df"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/independent-qc/v2/paris-tail-contact-0.jpg",
+      "sha256": "16572937a868d09a165ad2e33fafb8ebc9b6ac59062aa44ecfdd7e11db616ab3"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/independent-qc/v2/paris-tail-contact-1.jpg",
+      "sha256": "9665ae355a52c23ff4ff8eed404b0cc47c8e0d291c915b703b395332480bffaf"
+    },
+    {
+      "path": "/workspace/fils-finals-production/final/independent-qc/v2/question-ending-contact-0.jpg",
+      "sha256": "7d20179623459f5fe804447de3052d5238a88f67d7330af0460fb67e71ad5857"
+    }
+  ],
+  "checks": {
+    "paris_promo_removed": "PASS. Actual297.6–298.6 genuine handshake/embrace remains;299.4/.6 dissolves cleanly into true title photo,299.8–300.6 no LIVE promo or unrelated player.",
+    "fixed_center_full_canvas": "All6 sampled match blocks one court/full canvas/fixed centre, no added follow-ball or top-bottom composite. Receiver can briefly leave fixed crop; this obeys user requested fixed centre.",
+    "point_contact_continuity": "Six actual serve contacts/rallies/true reactions remain, independently dense-reviewed on unchanged prefix. No invented complete server pre-toss attestation.",
+    "cards": "All6 information cards immediately at video start for8s. WIM/US Fils-first losing scores correct. No cards stacked on photos/graphic/question/outro.",
+    "captions": "19 bilingual cues visibly fit; new actual source signal/ASS independently reviewed separately.",
+    "race_chart": "Dated13row table readable with6qualified highlights/Fils3625rank7focus/Sinner withdrawn; native header/caption/source footer do not overlap.",
+    "cover_photos_ending": "Safe above-face cover hook, actual selected photos/chronology and clean native branded ending; no accumulated end cards."
+  },
+  "independent_reports": [
+    "final/independent-qc/independent-qc-26c89068.json",
+    "research/audio/repaired-film-audio-review.json",
+    "research/facts/final-native-v2-fact-binding-addendum.json"
+  ],
+  "supersedes": "Old91112743 remains explicitly rejected in root-qc/root-rejected-film-review.json and original independent report."
+}

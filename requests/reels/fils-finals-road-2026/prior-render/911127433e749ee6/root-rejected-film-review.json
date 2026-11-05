@@ -1,0 +1,34 @@
+{
+  "status": "BLOCKED_SOURCE_PROMOTIONAL_TAIL",
+  "reviewer": "root direct actual-film and source-tail pixel inspection",
+  "at": "2026-11-05T10:19:08.381908+00:00",
+  "movie_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+  "duration_seconds": 313.44,
+  "reviewed_contact_sheets": [
+    "contact-00.jpg",
+    "contact-01.jpg",
+    "contact-02.jpg",
+    "contact-03.jpg",
+    "contact-04.jpg",
+    "contact-05.jpg",
+    "contact-06.jpg"
+  ],
+  "sampled_frames": 80,
+  "blocking_finding": "Actual film300.116s corresponds to Paris source143.25 and displays TennisTV LIVE promotion with unrelated player. Source143.00 still real post-point handshake; source143.25 already promotion. This film must not be merged/sent.",
+  "evidence": {
+    "actual_movie_frame": "/workspace/fils-finals-production/final/root-qc/frame-076-0300.116.jpg",
+    "sha256": "6ee08f3353f8f81718e48fe0341f3f58bc3efa047f68ac8c2e0d273f09b100a4",
+    "source_tail_contact": "/workspace/fils-finals-production/final/paris-end-qc/source-tail-contact.jpg"
+  },
+  "repair": {
+    "paris_start": 128.12,
+    "old_end": 143.6,
+    "clean_end": 142.4,
+    "native_segment_fade_tail": 0.5,
+    "farthest_used_source": 142.9,
+    "last_commentary_end": 140.16,
+    "speech_tail_margin": 2.24,
+    "preserved": "18TTS strict bundle de79; prior5 source segments, six point identities, all narration/photo/Race/copy unchanged; full point and real handshake still inside selected clean window"
+  },
+  "other_sampled_visual_findings": "Single-court fixed-centre full canvas, corrected two loss scores, safe cover and dated Race chart all pass this sampled scope; separate final visual report still needed after clean-tail re-render."
+}

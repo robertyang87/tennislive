@@ -1,0 +1,116 @@
+{
+  "result": "PASS",
+  "review_scope": "Independent final-film photo/cover/Race visual-semantic QC. No source research rerun, movie reencode, native/git mutations or sending.",
+  "movie": "/workspace/fils-finals-production/final/native-input/fils-finals-road-2026.mp4",
+  "movie_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+  "movie_seconds": 313.44,
+  "reviewed_actual_materials": [
+    "/workspace/fils-finals-production/final/root-qc/contact-00.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-01.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-02.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-03.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-04.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-05.jpg",
+    "/workspace/fils-finals-production/final/root-qc/contact-06.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/autumn-tokyo.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/autumn-shanghai.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/autumn-brussels.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/basel-opponent-context.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/race-actual.jpg",
+    "/workspace/fils-finals-production/final/photo-qc/cover-actual.jpg"
+  ],
+  "checks": {
+    "opening_cover": {
+      "status": "PASS",
+      "actual_time": 0.8,
+      "observation": "Actual film uses approved top400 full cover. Frozen hook is above head; eyes, mouth, chin unobstructed. Real Fils raising Cincinnati trophy remains recognizable; no blur padding."
+    },
+    "autumn": {
+      "status": "PASS",
+      "actual_photos": [
+        {
+          "movie_time": 241.626,
+          "asset": "atp-4585710",
+          "meaning": "Tokyo Oct2 R16 win vs Tiafoe to reach quarterfinals",
+          "visible_caption": "秋天 东京打进8强 上海第三轮"
+        },
+        {
+          "movie_time": 242.746,
+          "asset": "atp-4591003",
+          "meaning": "Shanghai Oct12 R32 vs Van de Zandschulp",
+          "visible_caption": "秋天 东京打进8强 上海第三轮"
+        },
+        {
+          "movie_time": 244.626,
+          "asset": "atp-4599647",
+          "meaning": "Brussels Oct24 semifinal",
+          "visible_caption": "布鲁塞尔又进4强"
+        }
+      ],
+      "switches_relative_to_autumn_audio": [
+        2.110833,
+        3.349041
+      ],
+      "switches_approx_movie": [
+        242.256833,
+        243.495041
+      ],
+      "observation": "Actual three photos match ordered TTS and approved plan. Sentence-level caption contains Tokyo and Shanghai together; photo switches at actual Shanghai word. No Shanghai photo passed off as Tokyo."
+    },
+    "basel": {
+      "status": "PASS",
+      "actual_times": [
+        250.218,
+        253.67
+      ],
+      "asset": "basel-fritz-qf",
+      "pictured_subject": "Taylor Fritz",
+      "caption_at250218": "巴塞尔 面对弗里茨",
+      "caption_at253670": "第二盘0比2时 菲斯再次伤退",
+      "observation": "Opening context explicitly names actual opponent Fritz. Real exact Oct30 QF opponent photo continues through retrospective injury narration; no Fils R1/R2 substitution, no claim of medical-treatment image."
+    },
+    "rg_absence": {
+      "status": "PASS_CONTEXT_ONLY",
+      "actual_time": 132.922,
+      "asset": "atp-4496736",
+      "observation": "Genuine 2026 Madrid clay context continues under withdrawal narration. Caption says 随后因为髋伤退出法网; no RG participation label, round, scoreboard or false 2026 RG action."
+    },
+    "ao_absence": {
+      "status": "PASS_CONTEXT_ONLY",
+      "actual_time": 16.438,
+      "asset": "atp-4443907",
+      "observation": "Genuine Feb3 Montpellier comeback image accompanies retrospective 今年又缺席澳网; no AO2026 participation claim."
+    },
+    "race_table": {
+      "status": "PASS_VISUAL",
+      "actual_time": 270.754,
+      "observation": "Actual deep navy table readable: 6 active qualified rows highlighted, Sinner gray withdrawn, Fils rank7 first qualification emphasized, 梅德韦德夫 canonical spelling correct. Narration subtitle outside all rank13 entries."
+    },
+    "other_selected_photos": {
+      "status": "PASS_SAMPLED_ACTUAL_FILM",
+      "observation": "Actual film contacts00-06 cover all narrated photo chapters including Doha, Miami, Barcelona, Madrid, Wimbledon, Cincinnati, US, Paris and champion callback. Faces not covered by bottom narration subtitles or header. Towel photo occlusion is actual photographic content.",
+      "representative_movie_times": [
+        7.902,
+        16.438,
+        24.962,
+        33.81,
+        83.198,
+        124.182,
+        132.922,
+        141.926,
+        177.07,
+        214.422,
+        244.582,
+        253.67,
+        262.158,
+        280.25,
+        304.662
+      ]
+    }
+  },
+  "failed_initial_cover_preview_remains_rejected": true,
+  "final_native_cover_approval_sha256": "be39580cd4454211602b09eca98455549124a87a13ea5272a330a56e43c6dca7",
+  "frame_extraction_manifest": "/workspace/fils-finals-production/final/photo-qc/actual-frame-extraction.json",
+  "semantic_contact": "/workspace/fils-finals-production/final/photo-qc/actual-semantic-contact.jpg",
+  "limitations": "Targeted actual pixel and semantic review; not a frame-by-frame continuous full-film review or independent match-point/audio fact audit."
+}
