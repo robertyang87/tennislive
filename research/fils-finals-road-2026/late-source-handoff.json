@@ -1,0 +1,330 @@
+{
+  "status": "visual_source_handoff_not_final_film_QC",
+  "review_method": "human/model direct inspection of evenly distributed full-source contact sheets, then denser final-point frames; no external model provider",
+  "selected": [
+    {
+      "id": "RAAXKA85t3g",
+      "role": "selected_cincinnati_final",
+      "page_url": "https://www.youtube.com/watch?v=RAAXKA85t3g",
+      "publisher": "ATP Tour official YouTube",
+      "event": "Cincinnati 2026",
+      "round": "Final",
+      "opponent": "Frances Tiafoe",
+      "result_winner_perspective": "Fils 6-3 1-6 6-0",
+      "window": [
+        68.0,
+        97.0
+      ],
+      "terminal_coverage": {
+        "same_point_receiver_preparation": true,
+        "server_pre_toss_preparation": false,
+        "serve_contact": true,
+        "whole_rally": true,
+        "real_result_reaction": true,
+        "handshake": true
+      },
+      "visual_identity": "Fils curly hair, pale blue Lacoste polo, teal shorts, pink shoes, far court receiving; Tiafoe sleeveless white patterned top near court serving. P&G Stadium Court, Cincinnati event marks. Final-point scoreboard FILS 6 1 5 AD / TIAFOE 3 6 0.",
+      "internal_gap": "Source switches from Fils receiver preparation to Tiafoe already tossing ball at ~69.44; serve strike itself and entire rally are visible. Producer accepts receiver-preparation + serve-contact + whole-rally + true result; do not set complete_prepare=true.",
+      "asr_status": "fresh small.en/medium.en raw saved exact bytes, both source hashes match frozen Release; passed to race audio agent",
+      "audio_window_note": "Previous-point commentary ends at 68.60/68.66 according to both full models. Evaluate start 68.7 to retain same-final-point receiver preparation while avoiding prior-point commentary tail. Audio agent owns exact speech boundary.",
+      "local_path": "/workspace/fils-finals-production/research/media-late/RAAXKA85t3g.mp4",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-RAAXKA85t3g/RAAXKA85t3g.mp4",
+      "geometry": {
+        "source_width": 1920,
+        "source_height": 1080,
+        "output_width": 1080,
+        "output_height": 1440,
+        "court_wide_view_cx": 0.5,
+        "tracking": false,
+        "fixed_center_crop_source_rect": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "actual_final_movie_review": "pending_producer_render"
+      },
+      "probe_path": "/workspace/fils-finals-production/research/media-late/raw/RAAXKA85t3g-probe.json",
+      "raw_asr_paths": [
+        "/workspace/fils-finals-production/research/media-late/source-asr/RAAXKA85t3g/small.en.json",
+        "/workspace/fils-finals-production/research/media-late/source-asr/RAAXKA85t3g/medium.en.json"
+      ],
+      "raw_asr_attestations": [
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/RAAXKA85t3g/small.en.json",
+          "sha256": "0f3c2e0fad41633d6f6bcbedea5a2bb7874dc26c5ae0842127ef6bf752b0f117",
+          "commit": "f5fa92e97d2b80cfce80851f4058295b5a12776a",
+          "blob_sha": "d9ada7a3da05d30349e344ec3e45badcfd376f11",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/f5fa92e97d2b80cfce80851f4058295b5a12776a/data/source_asr/RAAXKA85t3g/small.en.json",
+          "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d"
+        },
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/RAAXKA85t3g/medium.en.json",
+          "sha256": "4a2fb36a2ba009fe578a7dbfd10fad945dd5b180b71c891d0ba72af0e565fae4",
+          "commit": "f5fa92e97d2b80cfce80851f4058295b5a12776a",
+          "blob_sha": "e322fc2b091b407e6cfb5beb5e55167b797b53a0",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/f5fa92e97d2b80cfce80851f4058295b5a12776a/data/source_asr/RAAXKA85t3g/medium.en.json",
+          "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d"
+        }
+      ],
+      "uniform_contact_manifest": "/workspace/fils-finals-production/research/media-late/raw/RAAXKA85t3g-contact.json",
+      "reviewed_full_source_contact": "/workspace/fils-finals-production/research/media-late/contact/RAAXKA85t3g-exact-full.jpg"
+    },
+    {
+      "id": "o8c4zZVTYjo",
+      "role": "selected_us_open_r1",
+      "page_url": "https://www.youtube.com/watch?v=o8c4zZVTYjo",
+      "publisher": "US Open official YouTube",
+      "event": "US Open 2026",
+      "round": "R1",
+      "opponent": "Stefanos Tsitsipas",
+      "result_winner_perspective": "Tsitsipas 4-6 7-6(3) 6-1 6-4",
+      "window": [
+        150.3,
+        171.6
+      ],
+      "terminal_coverage": {
+        "server_preparation": true,
+        "serve_contact": true,
+        "whole_rally": true,
+        "real_result_reaction": true,
+        "handshake": true
+      },
+      "visual_identity": "Tsitsipas white shirt, burgundy headband; Fils pale blue Lacoste polo. Louis Armstrong court and official US Open marks. Before final point scoreboard TSITSIPAS 4 7 6 5 40 / FILS 6 6 1 4 0; MATCH POINT.",
+      "internal_gap": null,
+      "asr_status": "full fresh small.en/medium.en saved exact bytes; race agent refining weak-onset cues",
+      "local_path": "/workspace/fils-finals-production/research/media-late/o8c4zZVTYjo.mp4",
+      "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-o8c4zZVTYjo/o8c4zZVTYjo.mp4",
+      "geometry": {
+        "source_width": 1920,
+        "source_height": 1080,
+        "output_width": 1080,
+        "output_height": 1440,
+        "court_wide_view_cx": 0.5,
+        "tracking": false,
+        "fixed_center_crop_source_rect": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "actual_final_movie_review": "pending_producer_render"
+      },
+      "probe_path": "/workspace/fils-finals-production/research/media-late/raw/o8c4zZVTYjo-probe.json",
+      "raw_asr_paths": [
+        "/workspace/fils-finals-production/research/media-late/source-asr/o8c4zZVTYjo/small.en.json",
+        "/workspace/fils-finals-production/research/media-late/source-asr/o8c4zZVTYjo/medium.en.json"
+      ],
+      "raw_asr_attestations": [
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/o8c4zZVTYjo/small.en.json",
+          "sha256": "dd01d8e2fe286e77b2f2a02294758f48e347be8f12db7349544f00f6bd7aef1d",
+          "commit": "b38560f62bd58fa82a0458d2f2c5c7d35063d21c",
+          "blob_sha": "0a40e50d04fbbf337aaae95eddee6d047e88ba24",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/data/source_asr/o8c4zZVTYjo/small.en.json",
+          "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb"
+        },
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/o8c4zZVTYjo/medium.en.json",
+          "sha256": "20cdd9a4a73c8a2f043f40739e1f89b92eb21bc254dca2d6c2a1e8f03a9e28d2",
+          "commit": "b38560f62bd58fa82a0458d2f2c5c7d35063d21c",
+          "blob_sha": "8a66922b0230d4e8f98270c8cda1cd9c108dfbcd",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/b38560f62bd58fa82a0458d2f2c5c7d35063d21c/data/source_asr/o8c4zZVTYjo/medium.en.json",
+          "source_sha256": "bd5309aded305cf8affa45f20fed568d51f7e7910733337429f7393d02352ceb"
+        }
+      ],
+      "reviewed_full_source_contact": "/workspace/fils-finals-production/research/media-late/contact/o8c4zZVTYjo-full.jpg"
+    },
+    {
+      "id": "fils26paris",
+      "role": "selected_latest_paris_r2",
+      "page_url": "https://www.tennistv.com/videos/4604662/paris-2026-r2-fils-machac-short-highlights",
+      "publisher": "Tennis TV official free short highlights",
+      "event": "Paris 2026",
+      "round": "R2",
+      "opponent": "Tomas Machac",
+      "result_winner_perspective": "Fils 6-3 7-6(4)",
+      "window": [
+        128.12,
+        143.6
+      ],
+      "terminal_coverage": {
+        "server_preparation": true,
+        "serve_contact": true,
+        "whole_rally": true,
+        "real_result_reaction": true,
+        "handshake": true
+      },
+      "visual_identity": "Fils braided hair, black Lacoste polo and black shorts far side serving; Machac white cap/patterned white-grey shirt/green shorts near side receiving. Rolex Paris Masters and green/grey indoor court. Score FILS 6 6 [6] / MACHAC 3 6 [4] at final point. Fils smiles and clenches fist after point, then net handshake.",
+      "internal_gap": null,
+      "factual_boundary": "Qualification happened before this match, caused by Halys beating Tiafoe; Machac match point is a latest-match victory, not a qualification-winning point.",
+      "asr_status": "full fresh small.en/medium.en saved exact bytes; race agent refining first-name onset",
+      "local_path": "/workspace/fils-finals-production/research/media-late/fils26paris.mp4",
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fils26paris/fils26paris.mp4",
+      "geometry": {
+        "source_width": 1920,
+        "source_height": 1080,
+        "output_width": 1080,
+        "output_height": 1440,
+        "court_wide_view_cx": 0.5,
+        "tracking": false,
+        "fixed_center_crop_source_rect": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "actual_final_movie_review": "pending_producer_render"
+      },
+      "probe_path": "/workspace/fils-finals-production/research/media-late/raw/fils26paris-probe.json",
+      "raw_asr_paths": [
+        "/workspace/fils-finals-production/research/media-late/source-asr/fils26paris/small.en.json",
+        "/workspace/fils-finals-production/research/media-late/source-asr/fils26paris/medium.en.json"
+      ],
+      "raw_asr_attestations": [
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/fils26paris/small.en.json",
+          "sha256": "a9b288e219c4fa40264439a15197fe1534015d5256f7eb0c30d910b685aef78d",
+          "commit": "997bf28f2186a96eb5ef8364c7f4d6f89b79da58",
+          "blob_sha": "7f5e5ebb79831043ca0ee5acb267d316090bb7bf",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/data/source_asr/fils26paris/small.en.json",
+          "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0"
+        },
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/fils26paris/medium.en.json",
+          "sha256": "f0f3ebeb5ebe1e3f9b3dfa2144e11fc1132a07978862bc91395045062ae43442",
+          "commit": "997bf28f2186a96eb5ef8364c7f4d6f89b79da58",
+          "blob_sha": "3e55af059ce009732f657ce6b405856707005e3c",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/data/source_asr/fils26paris/medium.en.json",
+          "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0"
+        }
+      ],
+      "uniform_contact_manifest": "/workspace/fils-finals-production/research/media-late/raw/fils26paris-contact.json",
+      "reviewed_full_source_contact": "/workspace/fils-finals-production/research/media-late/contact/fils26paris-exact-full.jpg"
+    },
+    {
+      "id": "fils26basel",
+      "role": "not_selected_photo_narration_backup",
+      "page_url": "https://www.tennistv.com/videos/4601649/basel-2026-qf-fritz-fils-short-highlights",
+      "publisher": "Tennis TV official free short highlights",
+      "event": "Basel 2026",
+      "round": "QF",
+      "opponent": "Taylor Fritz",
+      "result_winner_perspective": "Fritz 6-2 2-0 RET",
+      "window_candidate": [
+        100,
+        123.4
+      ],
+      "visual_identity": "Fils curly hair black polo and shorts, white wristbands; Fritz pink shirt and headband. At 107s scoreboard Fritz 6 2 / Fils 2 0; Fils points/walks to net and retires, players handshake. No championship/match-point win reaction.",
+      "internal_gap": "Retirement is actual outcome, not a point-winning match point. Producer elected sourced photo and narration, so no further audio work.",
+      "asr_status": "full fresh small.en/medium.en saved exact bytes, unused",
+      "local_path": "/workspace/fils-finals-production/research/media-late/fils26basel.mp4",
+      "source_sha256": "54d8ebf9e692e1ccf76acca1d87accdd6f1126280d3455c241c6b250a525949c",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fils26basel/fils26basel.mp4",
+      "geometry": {
+        "source_width": 1920,
+        "source_height": 1080,
+        "output_width": 1080,
+        "output_height": 1440,
+        "court_wide_view_cx": 0.5,
+        "tracking": false,
+        "fixed_center_crop_source_rect": [
+          555,
+          0,
+          810,
+          1080
+        ],
+        "actual_final_movie_review": "pending_producer_render"
+      },
+      "probe_path": "/workspace/fils-finals-production/research/media-late/raw/fils26basel-probe.json",
+      "raw_asr_paths": [
+        "/workspace/fils-finals-production/research/media-late/source-asr/fils26basel/small.en.json",
+        "/workspace/fils-finals-production/research/media-late/source-asr/fils26basel/medium.en.json"
+      ],
+      "raw_asr_attestations": [
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/fils26basel/small.en.json",
+          "sha256": "f1c52003195fee009b3e7e34534ae59b5a3c603f137c44199830f3ffcd5b6433",
+          "commit": "73859b66b1d79e8fa0ecd35ecd30e6c0cd8f9c0a",
+          "blob_sha": "ebe27b3f538f75b46b4b8557d09b7f97494164d5",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/73859b66b1d79e8fa0ecd35ecd30e6c0cd8f9c0a/data/source_asr/fils26basel/small.en.json",
+          "source_sha256": "54d8ebf9e692e1ccf76acca1d87accdd6f1126280d3455c241c6b250a525949c"
+        },
+        {
+          "path": "/workspace/fils-finals-production/research/media-late/source-asr/fils26basel/medium.en.json",
+          "sha256": "05dd1db52d4b622f0dfdc5e2d34b75e90618f987ded6656bbfe07648d3330e5b",
+          "commit": "73859b66b1d79e8fa0ecd35ecd30e6c0cd8f9c0a",
+          "blob_sha": "9decd7ecddc3bcaf557918153910b5fb07f080c4",
+          "fixed_raw_url": "https://raw.githubusercontent.com/robertyang87/tennislive/73859b66b1d79e8fa0ecd35ecd30e6c0cd8f9c0a/data/source_asr/fils26basel/medium.en.json",
+          "source_sha256": "54d8ebf9e692e1ccf76acca1d87accdd6f1126280d3455c241c6b250a525949c"
+        }
+      ]
+    }
+  ],
+  "candidates_not_selected": [
+    {
+      "event": "Cincinnati 2026",
+      "round": "SF",
+      "opponent": "Flavio Cobolli",
+      "page_url": "https://www.youtube.com/watch?v=C1uq-0bnM5A",
+      "status": "existing same-match spec source lead; not re-archived or visually re-approved this task"
+    },
+    {
+      "event": "Shanghai 2026",
+      "round": "R3",
+      "opponent": "Botic van de Zandschulp",
+      "page_url": "https://www.tennistv.com/videos/4591017/shanghai-2026-r3-fils-van-de-zandschulp-short-highlights",
+      "result": "Fils lost 5-7 4-6",
+      "status": "local nonfrozen probe downloaded1080/50fps153s, not selected/not approved"
+    },
+    {
+      "event": "Brussels 2026",
+      "round": "SF",
+      "opponent": "Jan-Lennard Struff",
+      "page_url": "https://www.tennistv.com/videos/4598331/brussels-2026-sf-fils-struff-highlights",
+      "result": "Fils lost4-6 7-6(7) 6-7(5)",
+      "status": "official page premium, not downloaded; no visual-pass claim"
+    },
+    {
+      "event": "Tokyo 2026",
+      "round": "QF",
+      "opponent": "Valentin Vacherot",
+      "page_url": "https://www.tennistv.com/videos/4586413/tokyo-2026-qf-vacherot-fils-highlights",
+      "result": "Fils lost5-7 6-4 4-6",
+      "status": "official page lead from player page only, not visually approved"
+    }
+  ],
+  "rejected_cincinnati_alternatives": [
+    {
+      "url": "https://www.youtube.com/watch?v=5eniSK6BDZU",
+      "reason": "1080p official but championship-point cut begins after serve strike at417s; remains useful same-match trophy footage468–472.6 only; no carry-forward old visual PASS"
+    },
+    {
+      "url": "https://www.tennistv.com/videos/4565361/cincinnati-2026-final-fils-tiafoe-short-highlights",
+      "reason": "current page no media-entry id"
+    },
+    {
+      "url": "https://www.tennistv.com/videos/4565377/cincinnati-2026-final-highlights",
+      "reason": "public page media entry but anonymous entitlement401"
+    },
+    {
+      "url": "https://x.com/TennisTV/status/2091650517671829636",
+      "reason": "downloaded true source576x720, below required resolution"
+    },
+    {
+      "url": "https://x.com/atptour/status/2091653598019010660",
+      "reason": "1080x1920 official but begins point at ball toss, pre-edited moving vertical crop; not preferred fixed-court master"
+    },
+    {
+      "url": "https://www.skysports.com/tennis/video/13576532/arthur-fils-vs-frances-tiafoe-cincinnati-open-highlights",
+      "reason": "official licensed page200, Brightcove media access403 forbidden by access policy; did not bypass"
+    },
+    {
+      "url": "https://www.eurosport.fr/tennis/atp-cincinnati-2026/2026/maters-1000-cincinnati-finale-arthur-fils-une-troisieme-balle-de-match-transformee-pour-un-firmament-historique_vid60094615/video.shtml",
+      "reason": "official licensed page found; current fetch bot shell and extractor metadata404"
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4490110/barcelona-2026-final-rublev-fils-short-highlights",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fils26barca/fils26barca.mp4",
+  "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; directly reviewed true native local ASR raw and supporting speech activity. No auditory listening claimed.",
+  "reviewed_at": "2026-11-05T09:46:26.560133+00:00",
+  "status": "complete",
+  "reviewed_from": 115.5,
+  "reviewed_to": 148.2,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 134.4,
+      "end": 138.02,
+      "en": "Arthur Fils conquers Barcelona in style.",
+      "zh": "菲斯在巴塞罗那精彩夺冠。"
+    },
+    {
+      "start": 139.8,
+      "end": 142.74,
+      "en": "After six months out with a back injury,",
+      "zh": "背伤让他休战6个月。"
+    },
+    {
+      "start": 142.94,
+      "end": 145.84,
+      "en": "he stormed back onto the ATP Tour,",
+      "zh": "他强势重返ATP巡回赛。"
+    },
+    {
+      "start": 146.44,
+      "end": 148.08,
+      "en": "playing some of his best tennis.",
+      "zh": "打出个人顶尖水准。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/medium.json",
+      "sha256": "25213447863f5d7d33e534a59cfaa38c5b47c3aa3edf100f504943fa7d88fe83",
+      "model": "medium",
+      "clip": [
+        134.2,
+        138.7
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/medium.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/medium.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/medium.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/medium.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-background-call/medium.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/small.json",
+      "sha256": "989f00980d572bb7c7daede2e6fe91fbd94d0efcd0aca61268d7b94b85134ff5",
+      "model": "small",
+      "clip": [
+        134.2,
+        138.7
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/small.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/small.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/small.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-background-call/small.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-background-call/small.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/medium.json",
+      "sha256": "620c80652725f415f60bc0e321cf36fd88dc706639429fd69d20546cea157fd3",
+      "model": "medium",
+      "clip": [
+        115.5,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/medium.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/medium.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/medium.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/medium.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-multilingual-20261105/medium.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/small.json",
+      "sha256": "4530ae8ce6710b7a99467630a5fa281bfecd16882cbad5874548099c2dbdb469",
+      "model": "small",
+      "clip": [
+        115.5,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/small.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/small.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/small.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-multilingual-20261105/small.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-multilingual-20261105/small.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/medium.en.json",
+      "sha256": "c8b2397d2ed7f47b3fb91f4005ac65a9dfc9cbfc83d7555d5e32086a4ba22ae3",
+      "model": "medium.en",
+      "clip": [
+        115.5,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/small.en.json",
+      "sha256": "7d6e1bb7cefb452094abbe6884f8ef893c564a4e7ef9a9ae4393305019808fe6",
+      "model": "small.en",
+      "clip": [
+        115.5,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-native-20261105/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-native-20261105/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/medium.en.json",
+      "sha256": "0743b241f1dd78c0ae95274388e4fc81520833d860dc8de6b97aa9c254f669bd",
+      "model": "medium.en",
+      "clip": [
+        138.0,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-tail-context/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/small.en.json",
+      "sha256": "a3729b1b732fb5f0b240ce9233b9684ecb988f49d7ba6b2edddb866d5ba83b4e",
+      "model": "small.en",
+      "clip": [
+        138.0,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-context/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-tail-context/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/medium.en.json",
+      "sha256": "ef7dc9897f535b02f647bb9183b474162f1ed9dcd9771c1a6e4cc031a98e4270",
+      "model": "medium.en",
+      "clip": [
+        142.0,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-tail-refine/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/small.en.json",
+      "sha256": "41f6593c804ac65263a1fb1a3cd402a48729f8eb4389e2f7d5441dd74a5beb60",
+      "model": "small.en",
+      "clip": [
+        142.0,
+        148.35
+      ],
+      "source_sha256": "cfbc52b51719dabe04d84ad154a58d77c797cde38d80ac984f627dc0a80b74c9",
+      "method": "Actual unchanged local faster-whisper output, cached native model CPU int8; parameters/script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26barca/local-tail-refine/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26barca/local-tail-refine/small.en.json"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/production/archived-sources/fils26barca.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "157.280000",
+        "size": "78181852"
+      }
+    }
+  },
+  "review_notes": "Only final native-frozen cfbc52... Barcelona4490110 bytes are reviewed; ba993/old ugTb7lPGgI8 source or its ASR is never substituted. Entire selected115.5–148.2 covered by actual small.en/medium.en and multilingual small/medium outputs, then two no-prompt tail refinements and a no-prompt134.2–138.7 local phrase pair. Initial broad English runs generated inconsistent generic He is going to be a little bit more confident / He is going to do it again with avg logprob -1.65/-2.03 and zero-length/very-low-probability words; NOT accepted or translated. Isolated real foreground134.2–138.7 native multilingual small reads Artifice conquers Barcelona in style, medium Artur Feiss conquers Barcelona in style, with conquers/Barcelona/in/style probabilities0.93–0.99 in both. Normalize only verified name Arthur Fils. Medium first pseudo-segment They have done a great job lasts0.06s with all words zero-length/p0.02–0.23 and is explicitly discarded. Chosen sentence134.40 is real medium Artur onset and stable local speech134.444/.508 supports near onset; small134.2 at clip floor is not a precise head. End138.02 is medium full style end versus small137.78. The138–148.35 actual English small/medium pair independently recovers After six months out with a back injury, he stormed back onto the ATP Tour, then playing some of his best tennis. After139.76/.80 to142.70/.74 uses full prefix instead of dropping back injury identified in narrower142s clips. He at142.94 small p0.99 corroborated multilingual medium142.84 and narrow English medium142.74. Phrase ATP Tour finishes145.54/.60 and multilingual medium145.84 retained as conservative complete endpoint. Playing146.44 is independent multilingual medium; tight English medium recognizes playing145.6–146.68 but that onset is a long envelope, so use146.44 supported by speech activity146.508. Some of his best tennis agrees in every actual run; maximum independently recognized full end148.08, leaving120ms source end margin before148.2 and staying before148.4 advertisement. All these original actual outputs and disagreements are retained with true SHA and parameters; no human hearing or model API claimed. Full two spoken sentences retained across4 readable captions; punctuation/case only segment the source sentence, no words invented or omitted.",
+  "internal_visual_note": "Source packet revised start115.5 excludes prior-point close-up/crossfade; exact terminal-point ball-in-hand preparation, toss117.25, full last rally to132.3, crouch/celebration/fist and actual handshake to148.2. End148.2 excludes advertisement at148.4.",
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/barcelona-speech-activity.json",
+    "sha256": "da43887d1ecaaa00ac39401503ea2534af45aab0d0bb20d492e1ecce9575cf47",
+    "scope": "Supporting activity only, not human hearing or exact quiet-syllable boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/barcelona-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/barcelona-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/barcelona-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 18.9,
+      "end": 22.52,
+      "text": "Arthur Fils conquers Barcelona in style.\n菲斯在巴塞罗那精彩夺冠。"
+    },
+    {
+      "at": 24.3,
+      "end": 27.24,
+      "text": "After six months out with a back injury,\n背伤让他休战6个月。"
+    },
+    {
+      "at": 27.44,
+      "end": 30.34,
+      "text": "he stormed back onto the ATP Tour,\n他强势重返ATP巡回赛。"
+    },
+    {
+      "at": 30.94,
+      "end": 32.58,
+      "text": "playing some of his best tennis.\n打出个人顶尖水准。"
+    }
+  ]
+}

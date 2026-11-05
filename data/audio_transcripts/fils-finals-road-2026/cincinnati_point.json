@@ -1,0 +1,125 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=RAAXKA85t3g",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-RAAXKA85t3g/RAAXKA85t3g.mp4",
+  "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex audio audit agent; actual original-source raw ASR and local speech activity reviewed; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T09:28:49.383869+00:00",
+  "status": "complete",
+  "reviewed_from": 68.7,
+  "reviewed_to": 97.0,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 78.76,
+      "end": 79.56,
+      "en": "Arthur Fils.",
+      "zh": "菲斯。"
+    },
+    {
+      "start": 81.1,
+      "end": 83.26,
+      "en": "Quite scintillating in Cincinnati.",
+      "zh": "在辛辛那提大放异彩。"
+    },
+    {
+      "start": 87.12,
+      "end": 91.12,
+      "en": "It is the biggest title of his young career.",
+      "zh": "他年轻生涯分量最重的冠军。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": "Only the frozen new ATP source RAAXKA85t3g and its native full small.en/medium.en raw are used; old5eniSK6BDZU ASR is not used. Previous point commentary Up and over ... for Arthur Fils ends68.60 small/68.66 medium; choose68.70 source start to exclude a clipped old clause while retaining Fils same-terminal-point receiving preparation. First name normalized from small heart of peace / medium Atafis to actual match player Arthur Fils; medium whole name78.76–79.56 has high0.982 probability, so small78.18 leading heart p0.026 is rejected. Small explicitly recognizes quite scintillating in cintinati, medium quite scintillating it is Scintillati; source city Cincinnati spelling normalized and small-supported in retained, not arbitrary new text. Quite onset81.10 is medium actual word time; small79.56–81.38 long quite envelope is rejected. Small/mid scintillating81.38/81.44 to82.34/.36 and city83.26/.24 agree. Entire biggest-title sentence is recognized by both; medium It87.12 high0.938 and full ending91.12 is chosen over shorter small ending90.66. Selected window97.0 ends before next clause As the Frenchman takes down Big Foe starts98.22/98.60. Full selected content covered; no external model API or human hearing claim.",
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/research/media-late/RAAXKA85t3g.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "118.584308",
+        "size": "30537080"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/small.en.json",
+      "sha256": "0f3c2e0fad41633d6f6bcbedea5a2bb7874dc26c5ae0842127ef6bf752b0f117",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "git_blob_sha1": "d9ada7a3da05d30349e344ec3e45badcfd376f11",
+      "fixed_commit": "f5fa92e97d2b80cfce80851f4058295b5a12776a",
+      "repository_path": "data/source_asr/RAAXKA85t3g/small.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/f5fa92e97d2b80cfce80851f4058295b5a12776a/data/source_asr/RAAXKA85t3g/small.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/medium.en.json",
+      "sha256": "4a2fb36a2ba009fe578a7dbfd10fad945dd5b180b71c891d0ba72af0e565fae4",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "git_blob_sha1": "e322fc2b091b407e6cfb5beb5e55167b797b53a0",
+      "fixed_commit": "f5fa92e97d2b80cfce80851f4058295b5a12776a",
+      "repository_path": "data/source_asr/RAAXKA85t3g/medium.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/f5fa92e97d2b80cfce80851f4058295b5a12776a/data/source_asr/RAAXKA85t3g/medium.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/medium.en.json"
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "sha256": "c1d72cab7d197c1496e26b9a5c3f1cc49eb3bb1fd561b5563288bf544cba21ca",
+    "scope": "Supporting local Silero activity only, not human hearing and not a quiet-syllable/sample boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/local-speech-activity.json"
+  },
+  "internal_visual_note": "New ATP1080p50fps source, receiver Fils same-point ready posture before toss, all serve-contact/rally through actual title reaction/handshake. Server pre-toss preparation is absent in this official edit; no complete-server-preparation claim or previous-point substitution. Start68.70 excludes prior-point commentary; first complete receiver-preparation continues to about69.44.",
+  "native_quote": [
+    {
+      "at": 10.06,
+      "end": 10.86,
+      "text": "Arthur Fils.\n菲斯。"
+    },
+    {
+      "at": 12.4,
+      "end": 14.56,
+      "text": "Quite scintillating in Cincinnati.\n在辛辛那提大放异彩。"
+    },
+    {
+      "at": 18.42,
+      "end": 22.42,
+      "text": "It is the biggest title of his young career.\n他年轻生涯分量最重的冠军。"
+    }
+  ]
+}

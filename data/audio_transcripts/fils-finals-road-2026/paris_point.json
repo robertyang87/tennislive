@@ -1,0 +1,163 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4604662/paris-2026-r2-fils-machac-short-highlights",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-fils26paris/fils26paris.mp4",
+  "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex audio audit agent; actual original-source raw ASR and local speech activity reviewed; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T09:28:49.292202+00:00",
+  "status": "complete",
+  "reviewed_from": 128.12,
+  "reviewed_to": 143.6,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 135.54,
+      "end": 140.16,
+      "en": "Arthur Fils caps off what has been a fabulous French day.",
+      "zh": "菲斯为法国球员的精彩一天收官。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": "Complete selected128.12–143.60 reviewed in original full small/medium and new local tight pair plus VAD-context medium. Previous English ends127.06(medium)/128.00(small), before selection. Arthur Fils is phonetically rendered Up to Veece/up to face by small/medium; normalize only to actual verified match player Arthur Fils. Original full medium drops the name; full small and both tight recognitions include its phonetic form. Caps off ... fabulous French day agrees across all contexts. Tight up134.88/134.94 p0.169/0.043 is a long low-confidence leading envelope; VAD-context up130.64–131.44 p0.031 is plainly displaced to prior crowd activity and rejected, not copied into accepted cue. Local strong speech begins135.736 at thresholds0.3/0.5; retain200ms pad and select135.54 as activity-aligned estimate. Exact first quiet syllable cannot be proven by ASR/VAD; no human listening claimed. Chosen caption begins near actual commentary, not130.64 or134.88. Its retained whole-clause end140.16 is tight medium maximum, original medium140.12 and small140.08. No later lexical English appears through143.60 in original/tight pair. Local130s speech-activity detection produces no consistent lexical English across retained full/tight models and is treated as court/crowd/grunt activity, not invented quotation.",
+  "source_identity": {
+    "source_path": "/workspace/fils-finals-production/research/media-late/fils26paris.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1"
+        },
+        {
+          "codec_type": "audio",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "151.936000",
+        "size": "154590060"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/small.en.json",
+      "sha256": "a9b288e219c4fa40264439a15197fe1534015d5256f7eb0c30d910b685aef78d",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "git_blob_sha1": "7f5e5ebb79831043ca0ee5acb267d316090bb7bf",
+      "fixed_commit": "997bf28f2186a96eb5ef8364c7f4d6f89b79da58",
+      "repository_path": "data/source_asr/fils26paris/small.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/data/source_asr/fils26paris/small.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/small.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/medium.en.json",
+      "sha256": "f0f3ebeb5ebe1e3f9b3dfa2144e11fc1132a07978862bc91395045062ae43442",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "git_blob_sha1": "3e55af059ce009732f657ce6b405856707005e3c",
+      "fixed_commit": "997bf28f2186a96eb5ef8364c7f4d6f89b79da58",
+      "repository_path": "data/source_asr/fils26paris/medium.en.json",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/data/source_asr/fils26paris/medium.en.json",
+      "provenance_note": "Fresh native workflow full-source raw copied byte-for-byte. Git blob SHA1 verified against retained GitHub response; source SHA unchanged.",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/medium.en.json",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26paris/997bf28f2186a96eb5ef8364c7f4d6f89b79da58/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/medium.en.json",
+      "sha256": "4218a7a9206f8549ac89544789469ae974440a5cdeb4586b05d486f0b1fd44f5",
+      "model": "medium.en",
+      "clip": [
+        128.12,
+        143.6
+      ],
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/medium.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26paris/timing-refine/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/small.en.json",
+      "sha256": "8c3e6dd5f221c251897c48b96fcd08dc92a5dadd1ff6200f629dd8e4935495d3",
+      "model": "small.en",
+      "clip": [
+        128.12,
+        143.6
+      ],
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/small.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/small.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/small.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine/small.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26paris/timing-refine/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine-vad/medium.en.json",
+      "sha256": "3eccec59f9a04773a60361db42343df9f79e2878d070bd95d27674a44a9cea65",
+      "model": "medium.en",
+      "clip": [
+        128.12,
+        143.6
+      ],
+      "source_sha256": "a8db049a6c7dffd8f4d556f9d93654206f14ebf02bd37eabbf0a72654bd285c0",
+      "method": "Local faster-whisper cached native model, CPU int8; parameters and script retained",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine-vad/medium.en.json",
+      "archived_raw_repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine-vad/medium.en.json",
+      "archived_raw_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "archived_raw_fixed_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine-vad/medium.en.json",
+      "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+      "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/raw/fils26paris/timing-refine-vad/medium.en.json",
+      "local_raw_uncommitted": false,
+      "note": "Exact original locally generated raw bytes now copied and committed by producer; byte-for-byte equality against native repository artifact verified. Source identity, transcript text, words and times unchanged.",
+      "original_research_path": "/workspace/fils-finals-production/research/audio/raw/fils26paris/timing-refine-vad/medium.en.json"
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "sha256": "c1d72cab7d197c1496e26b9a5c3f1cc49eb3bb1fd561b5563288bf544cba21ca",
+    "scope": "Supporting local Silero activity only, not human hearing and not a quiet-syllable/sample boundary proof",
+    "fixed_commit": "1cd73c8054201e05cf592fa15332234069b6b4cf",
+    "repository_path": "data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/1cd73c8054201e05cf592fa15332234069b6b4cf/data/audio_transcripts/evidence/fils-finals-road-2026/local-speech-activity.json",
+    "original_research_path": "/workspace/fils-finals-production/research/audio/local-speech-activity.json"
+  },
+  "internal_visual_note": "Selected source agent records complete same-point preparation, serve, full rally and Fils reaction/handshake. Qualification already secured before this Paris second-round victory; commentary day claim is quoted as actual broadcast.",
+  "native_quote": [
+    {
+      "at": 7.42,
+      "end": 12.04,
+      "text": "Arthur Fils caps off what has been a fabulous French day.\n菲斯为法国球员的精彩一天收官。"
+    }
+  ]
+}

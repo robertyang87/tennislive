@@ -1,0 +1,186 @@
+{
+  "audit_type": "actual_tts_text_semantic_check",
+  "reviewer": "fils_facts",
+  "reviewed_at_utc": "2026-11-05T09:45:06.216263+00:00",
+  "status": "PASS",
+  "editorial_baseline": {
+    "path": "/workspace/fils-finals-production/research/editorial-plan.json",
+    "sha256": "e695e2ad18624a16530cff8ad65166db6684ea0f37eccfe46956b97245b42620",
+    "fact_freeze_record": "/workspace/fils-finals-production/research/facts/editorial-fact-freeze-audit.json"
+  },
+  "actual_measured_segments": {
+    "path": "/workspace/fils-finals-production/production/narration-precheck/measured-segments.json",
+    "sha256": "0356c279ecdd39f424b17698d04ec60f84a62393ffd6875fbd4a4cad98a3f927",
+    "segments": 16,
+    "root_reported_tts_bundle_sha256": "de79ac47d659f000bf71cd5baa90375a7d9cdffa702ca7417e3b9d923e5cb0e1",
+    "bundle_sha_scope": "Bundle ID supplied by root; not represented as the SHA of measured-segments.json"
+  },
+  "permitted_equivalent_changes": [
+    "八强 -> 8强",
+    "四强 -> 4强",
+    "对保罗那场八强战 -> 对保罗那场四分之一决赛",
+    "东京八强 -> 东京打进8强"
+  ],
+  "segment_results": [
+    {
+      "id": "opening",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "今年四站大满贯，菲斯只赢了一场比赛。可今年的年终名单里，第一次出现了他的名字。",
+      "actual_tts_text": "今年四站大满贯，菲斯只赢了一场比赛。可今年的年终名单里，第一次出现了他的名字。",
+      "speech_seconds_reported": 7.608,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "recovery",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "去年法网后，背伤让他只又打了两场巡回赛单打。今年又缺席澳网，直到二月才开始新赛季。",
+      "actual_tts_text": "去年法网后，背伤让他只又打了两场巡回赛单打。今年又缺席澳网，直到二月才开始新赛季。",
+      "speech_seconds_reported": 8.664,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "doha",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "复出第三站，多哈。他一路打到决赛，却以二比六、一比六输给阿尔卡拉斯。",
+      "actual_tts_text": "复出第三站，多哈。他一路打到决赛，却以二比六、一比六输给阿尔卡拉斯。",
+      "speech_seconds_reported": 7.584,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "sunshine",
+      "status": "PASS",
+      "text_changed": true,
+      "old_text": "印第安维尔斯打进八强。接着是迈阿密，对保罗那场八强战，他救回四个赛点，三盘抢七翻了回来。",
+      "actual_tts_text": "印第安维尔斯打进8强。接着是迈阿密，对保罗那场四分之一决赛，他救回四个赛点，三盘抢七翻了回来。",
+      "speech_seconds_reported": 9.312,
+      "semantic_basis": "Only approved equivalent round wording/digit typography changes"
+    },
+    {
+      "id": "barcelona",
+      "status": "PASS",
+      "text_changed": true,
+      "old_text": "迈阿密止步四强之后，他在巴塞罗那两盘击败卢布列夫。复出后的第一座奖杯，到手了。",
+      "actual_tts_text": "迈阿密止步4强之后，他在巴塞罗那两盘击败卢布列夫。复出后的第一座奖杯，到手了。",
+      "speech_seconds_reported": 8.664,
+      "semantic_basis": "Only approved equivalent round wording/digit typography changes"
+    },
+    {
+      "id": "madrid",
+      "status": "PASS",
+      "text_changed": true,
+      "old_text": "马德里，他又进了大师赛四强。复出之后，已经连续在大赛中走到后半程。",
+      "actual_tts_text": "马德里，他又进了大师赛4强。复出之后，已经连续在大赛中走到后半程。",
+      "speech_seconds_reported": 7.104,
+      "semantic_basis": "Only approved equivalent round wording/digit typography changes"
+    },
+    {
+      "id": "rg_withdrawal",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "可伤病再次打断了他。罗马首战伤退，随后因为髋伤退出法网。两个大满贯，他都没能出场。",
+      "actual_tts_text": "可伤病再次打断了他。罗马首战伤退，随后因为髋伤退出法网。两个大满贯，他都没能出场。",
+      "speech_seconds_reported": 9.576,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "wimbledon",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "温网先赢一轮，第二轮输给贝雷蒂尼。这一胜，也是他今年全部的大满贯胜场。",
+      "actual_tts_text": "温网先赢一轮，第二轮输给贝雷蒂尼。这一胜，也是他今年全部的大满贯胜场。",
+      "speech_seconds_reported": 7.632,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "cincinnati",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "辛辛那提决赛，他与蒂亚福各拿一盘。决胜盘，菲斯送出六比零，拿到生涯第一座大师赛冠军。",
+      "actual_tts_text": "辛辛那提决赛，他与蒂亚福各拿一盘。决胜盘，菲斯送出六比零，拿到生涯第一座大师赛冠军。",
+      "speech_seconds_reported": 8.856,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "us_open",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "美网，却又在首轮被西西帕斯挡住。辛辛那提的冠军，并没有让大满贯的难题自动消失。",
+      "actual_tts_text": "美网，却又在首轮被西西帕斯挡住。辛辛那提的冠军，并没有让大满贯的难题自动消失。",
+      "speech_seconds_reported": 8.448,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "autumn",
+      "status": "PASS",
+      "text_changed": true,
+      "old_text": "秋天，东京八强、上海第三轮，布鲁塞尔又进四强。一站一站，把积分往上加。",
+      "actual_tts_text": "秋天，东京打进8强、上海第三轮，布鲁塞尔又进4强。一站一站，把积分往上加。",
+      "speech_seconds_reported": 8.472,
+      "semantic_basis": "Only approved equivalent round wording/digit typography changes"
+    },
+    {
+      "id": "basel",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "巴塞尔，面对弗里茨，第二盘零比二时，菲斯再次伤退。年终门票还没拿到，他又没能打完比赛。",
+      "actual_tts_text": "巴塞尔，面对弗里茨，第二盘零比二时，菲斯再次伤退。年终门票还没拿到，他又没能打完比赛。",
+      "speech_seconds_reported": 8.904,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "qualification",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "十一月四日，转折来自另一场比赛。阿利斯击败蒂亚福，菲斯的年终资格提前锁定。",
+      "actual_tts_text": "十一月四日，转折来自另一场比赛。阿利斯击败蒂亚福，菲斯的年终资格提前锁定。",
+      "speech_seconds_reported": 7.272,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "race_table",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "截至十一月五日，菲斯三千六百二十五分，排在赛季积分榜第七。高亮的六个人，都已拿到年终门票。",
+      "actual_tts_text": "截至十一月五日，菲斯三千六百二十五分，排在赛季积分榜第七。高亮的六个人，都已拿到年终门票。",
+      "speech_seconds_reported": 9.12,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "paris",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "资格到手之后，他又两盘击败马哈奇，继续巴黎的征程。法国男网时隔十年，终于又有人入围年终。",
+      "actual_tts_text": "资格到手之后，他又两盘击败马哈奇，继续巴黎的征程。法国男网时隔十年，终于又有人入围年终。",
+      "speech_seconds_reported": 9.072,
+      "semantic_basis": "Exact match with frozen narration"
+    },
+    {
+      "id": "question",
+      "status": "PASS",
+      "text_changed": false,
+      "old_text": "大满贯只有一胜，却拼出了第一张年终门票。第一次到都灵，你看好菲斯拿下几场胜利？",
+      "actual_tts_text": "大满贯只有一胜，却拼出了第一张年终门票。第一次到都灵，你看好菲斯拿下几场胜利？",
+      "speech_seconds_reported": 7.992,
+      "semantic_basis": "Exact match with frozen narration"
+    }
+  ],
+  "summary": {
+    "all_16_texts_factually_equivalent": true,
+    "changed_segments": [
+      "sunshine",
+      "barcelona",
+      "madrid",
+      "autumn"
+    ],
+    "open_fact_corrections": []
+  },
+  "scope_limits": [
+    "Reviewed the actual synthesis text recorded in measured-segments.json and compared every segment against frozen e695 narration.",
+    "No audio pronunciation or duration measurement independently performed in this factual-text review.",
+    "Does not grant unseen native ASS or rendered subtitle pixel PASS."
+  ],
+  "next_gate": "Once formal native ASS exists, review the real subtitle text and source information labels against this actual TTS text and frozen factual ledger."
+}
