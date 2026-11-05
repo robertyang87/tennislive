@@ -199,7 +199,7 @@ CAPS=[
 ('m3',0,None,tr("空心铝合金【挤压型材】：一次挤出整条带腔的框","Hollow aluminium 【extrusion】: the whole cored frame pushed out in one piece"),BOT),
 ('o0',0,None,tr("金属框更硬、更结实，才让大拍面做得出来（国际网联）","Stiffer, stronger metal frames made the oversize head possible (ITF)"),BOT),
 ('o1',0,None,tr("打击中心：球打在这里，握拍的手【不受冲击】","Centre of percussion: hit here and the hand 【feels no jolt】"),BOT),
-('o4',0,None,tr("木拍约 70 平方英寸 → 大拍面【大了四成以上】","Wood ≈ 70 sq in → oversize 【40%+ bigger】"),BOT),
+('o4',0,None,tr("木拍约 70 平方英寸 → 大拍面【大了 40% 以上】","Wood ≈ 70 sq in → oversize 【40%+ bigger】"),BOT),
 ('s0',0,None,tr("「甜点」有好几种定义，各自对应【不同的物理现象】（Brody 1981）","“Sweet spot” has several definitions, each a 【different physical effect】 (Brody 1981)"),BOT),
 ('s3',0,None,tr("握在手里时，打在哪一点，手受的力都【降不到零】（Cross 1998）","With a hand on the grip, no impact point brings the force on the hand 【to zero】 (Cross 1998)"),BOT),
 ('t0',0,None,tr("扭转惯量：拍子绕【长轴】转动的惯性，拍头越宽越大","Polar moment: resistance to twisting about the 【long axis】 — grows with head width"),BOT),

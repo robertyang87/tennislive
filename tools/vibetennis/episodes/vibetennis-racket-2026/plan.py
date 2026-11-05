@@ -26,7 +26,7 @@ EV = [("hook", "hit", "h0", None), ("hook", "fly", "h1", "球的左右"), ("hook
       ("wood", "crack", "w3", "妥协"), ("metal", "hole", "m0", "孔边"), ("metal", "patent", "m1", None), ("metal", "lift", "m1", "两道梁"),
       ("metal", "join", "m2", None), ("metal", "alu", "m3", "三格"), ("metal", "same", "m4", "还是"),
       ("oversize", "patent", "o0", None), ("oversize", "cop", "o1", "不震手"), ("oversize", "hits", "o2", "拍面正中"),
-      ("oversize", "stretch", "o3", "拉长"), ("oversize", "area", "o4", "四成"),
+      ("oversize", "stretch", "o3", "拉长"), ("oversize", "area", "o4", "百分之四十"),
       ("sweet", "split", "s0", "三个点"), ("sweet", "p1", "s1", "回弹"), ("sweet", "p2", "s1", "振动最小"), ("sweet", "p3", "s1", "不震手"),
       ("sweet", "node", "s2", "节点"), ("sweet", "grip", "s3", None),
       ("twist", "split", "t0", None), ("twist", "hitboth", "t0", "打偏时"), ("twist", "speed", "t1", "明显变慢"), ("twist", "court", "t2", None),

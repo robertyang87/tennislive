@@ -160,7 +160,7 @@ function makeBall(r,group=scene){ const m=new THREE.Mesh(new THREE.SphereGeometr
 
 // ==================== EP08 球拍：本集物件 ====================
 // 比例：1 单位 = 10 cm。木拍拍面按 Head 专利背景「长轴约 10½ 英寸、短轴约 8½ 英寸」（≈ 70 平方英寸）；
-// 大拍面按专利首选「13½ × 10½ 英寸」画形状，但片中不念这个面积（只说「大了四成以上」，两源）。示意的东西画面上标「示意」。
+// 大拍面按专利首选「13½ × 10½ 英寸」画形状，但片中不念这个面积（只说「大了 40% 以上」，两源）。示意的东西画面上标「示意」。
 const IN=0.254;                                   // 1 英寸 = 0.254 单位
 const WOOD={a:10.5/2*IN, b:8.5/2*IN}, BIG={a:13.5/2*IN, b:10.5/2*IN};
 const GOLD='rgba(255,194,74,0.95)', CYAN='rgba(79,227,255,0.95)', RED='rgba(255,90,74,0.95)', VIO='rgba(167,139,250,0.95)', MINT='rgba(52,245,168,0.95)';
@@ -469,7 +469,7 @@ function shotOversize(u,D){
   // 面积：多出来的一圈填亮
   const ak=ss(AR-CO,AR-CO+0.8,v); if(ak>0){ setFill(WOOD.a-WOOD.a,WOOD.a,WOOD.b,R.cy,R.a,R.b); fillRing.position.set(0,0,0.11); fillRing.material.opacity=0.35*ak; }
   const ol=ln(0xffffff,2,true); setLine(ol,new THREE.EllipseCurve(0,0,WOOD.b,WOOD.a,0,Math.PI*2).getPoints(100).map(p=>new THREE.Vector3(p.x,p.y,0.13))); ol.material.opacity=0.6*ss(ST-CO+0.5,ST-CO+1.2,v);
-  const ar=tx('area',T('拍面 大了四成以上','Strung area: 40%+ larger'),{color:'#ffffff',size:0.62,glow:GOLD}); ar.position.set(-3.6,1.2,0.3); op(ar,ak);
+  const ar=tx('area',T('拍面 大了 40% 以上','Strung area: 40%+ larger'),{color:'#ffffff',size:0.62,glow:GOLD}); ar.position.set(-3.6,1.2,0.3); op(ar,ak);
   const as=tx('areas',T('《Harvard Crimson》1981 · Inside Tennis','Harvard Crimson 1981 · Inside Tennis'),{color:'#cfe8ff',size:0.28}); as.position.set(-3.6,0.6,0.3); op(as,ak);
   look(lerp(0.4,0.9,ss(0,D-CO,v)),0.2,lerp(9.2,9.8,ss(ST-CO,D-CO,v)),0.6,-0.4,0); proj('cop',cop); }
 
@@ -573,7 +573,7 @@ function shotCarbon(u,D){
     const sv=ss(SV-HT,SV-HT+0.5,v); const sg=gs(0xffc24a,0.9,0.9*sv); sg.position.set(2.4,0.75*BIG.a*0.92,0.3);
     const st=tx('serveT',T('发球多打在拍头附近 · 打不准的人受益最大（Allen 2016）','Serves hit near the tip · off-centre hitters gain most (Allen 2016)'),{color:'#ffffff',size:0.42,glow:GOLD}); st.position.set(0,-BIG.a-1.6,0.3); op(st,sv);
     look(0,0,10.5,0,-0.3,0); return; }
-  // 实物数据：挥拍重量抽掉一成，挥速只长出薄薄一片（约 3%）
+  // 实物数据：挥拍重量抽掉 10%，挥速只长出薄薄一片（约 3%）
   const v=u-ST; stackG.visible=true; stackG.rotation.y=-0.4+v*0.05; const rm=ss(0.3,1.0,v);
   swPl.forEach((p,i)=>{ p.material.opacity=1; p.position.set(-1.6,0.1+i*0.2,i===9?lerp(0,4,rm):0); p.material.opacity=i===9?1-rm:1; });
   spStack.scale.set(1,2.0,1); spStack.position.set(1.6,1.0,0); const gk=ss(GR-ST,GR-ST+0.8,v); spSliver.scale.set(1,2.0*0.03*gk+0.001,1); spSliver.position.set(1.6,2.0+0.03*gk,0); spSliver.material.opacity=gk;
