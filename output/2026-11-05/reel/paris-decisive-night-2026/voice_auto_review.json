@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "f49e53eac79dba6fec93feaf82ba518361ef8cebaf5a66977b3b4dbd4a8f172c",
-    "render_inputs_sha256": "b84e5129429c78f1053200b221a49b978501ddb4eb201e0c0311184677199843",
-    "spec_sha256": "5348a30cc1036deb44f0896b22d646000219861e7d03a62520946e46662ef20e",
-    "film_sha256": "38641498d80f4ddbb2dc8cbb908a32bf5e0ffe6c9ab65e7c52b4fdb40c5f8246",
+    "render_sha256": "78bb97928a00f8c595c4201352895d2d9cecb1f8f0dd069ffa5392d004d7cafb",
+    "render_inputs_sha256": "6307da1613ab133d233dacad64b335c6dcc7ef56f79f7e3327e2d98f1dbeabf0",
+    "spec_sha256": "d4702162e85b2e949415bb2a88faf59aef7dc9ff25dbe39c246f17cfb50778a1",
+    "film_sha256": "4b0308325325080d8559251c5a4cbee70c58759dfcb32dca54b98da6636e8a53",
     "inventory_sha256": "d5a902c4333e8cdc73bc82b325fe4510e66d5d73442107855edc2d37e04f1cb0"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-05T10:01:04+00:00",
+  "reviewed_at": "2026-11-05T11:46:41+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -303,10 +303,10 @@
         "ref_syllables": 80,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.013,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "同一晚,德米纳尔也倒下六比七、三比六夫埃切维里停在三千一百七十分。门违换人,霍达尔守在三千二百三十四分上。最后一问,这是时代翻页了,还是三十九岁的身体只坏了一个晚上?评论区,战队。"
+        "transcript": "同一晚,德米纳尔也倒下,六比七,三比六夫埃切维里,停在三千一百七十分。门没换人,霍达尔守在三千二百三十四分上。最后一问,这是时代翻页了,还是三十九岁的身体只坏了一个晚上?评论区,战队。"
       },
       "polyphones": [
         {
@@ -357,10 +357,10 @@
         "ref_syllables": 74,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
         "longest_deletion": 0,
-        "transcript": "为什么第九名还算门礼?因为辛娜的西商让她提前结束了赛季,八张票顺延一位。前面四张早被锁定,科博利腿伤退赛,躺在三千六百八十分上。还悬着的,只剩最后一席和一排追赶者。"
+        "transcript": "为什么第九名还算门礼?因为辛娜的牺牲让她提前结束了赛季,八张票顺延一位。前面四张早被锁定,科博利腿伤退赛躺在三千六百八十分上。还悬着的只剩最后一席和一排追赶者。"
       },
       "polyphones": [
         {
@@ -918,7 +918,7 @@
         "substituted": 1,
         "sub_ratio": 0.077,
         "longest_deletion": 0,
-        "transcript": "督灵的门,他这次为什么没进去?"
+        "transcript": "都临的门,他这次为什么没进去?"
       },
       "polyphones": [],
       "pauses": {
@@ -950,7 +950,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "再说回那扇门,周一亲手把门推开一条缝的霍达尔,周二迎面撞上卢德。这位挪威人今年状态平平,却在最要命的夜里,打出了整年最稳的一场球。守门人自己先倒下了。"
+        "transcript": "再说回那扇门。周一亲手把门推开一条缝的霍达尔,周二迎面撞上卢德。这位挪威人今年状态平平,却在最要命的夜里打出了整年最稳的一场球。守门人自己先倒下了。"
       },
       "polyphones": [],
       "pauses": {
@@ -982,7 +982,7 @@
         "substituted": 1,
         "sub_ratio": 0.03,
         "longest_deletion": 0,
-        "transcript": "德约德仗罪难,2900分,从第一轮打起,至少打进半决赛才有机会,夺冠才稳妥。"
+        "transcript": "德约德仗罪难,2900分从第一轮打起,至少打进半决赛才有机会,夺冠才稳妥。"
       },
       "polyphones": [],
       "pauses": {
@@ -1011,10 +1011,10 @@
         "ref_syllables": 32,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.031,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "真正已经上案的,是科博利、巴塞尔夺冠,提前锁定都林,不用再看任何人的脸色。"
+        "transcript": "真正已经上案的是科博利、巴塞尔夺冠、提前锁定都领,不用再看任何人的脸色。"
       },
       "polyphones": [],
       "pauses": {
@@ -1197,7 +1197,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴黎本该是他的伏地、七座冠军、历史第一,可他上一次在这里打球还是2023年,39岁回到巴黎,第一场就是决战。"
+        "transcript": "巴黎本该是他的福地七座冠军,历史第一,可他上一次在这里打球还是二零二三年,三十九岁回到巴黎,第一场就是决战。"
       },
       "polyphones": [
         {

@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-paris-decisive-night-2026-7fbb7b3cb234fa6c",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-paris-decisive-night-2026-7fbb7b3cb234fa6c/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42005258429"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42019813682"
   },
   "cover_seconds": 3.586,
   "cover_narrated": true,
@@ -62,44 +62,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "b84e5129429c78f1053200b221a49b978501ddb4eb201e0c0311184677199843",
+  "render_inputs_sha256": "6307da1613ab133d233dacad64b335c6dcc7ef56f79f7e3327e2d98f1dbeabf0",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "paris-decisive-night-2026",
-    "received_at": "2026-11-05T09:47:22Z",
-    "artifact_ready_at": "2026-11-05T09:57:35Z",
-    "elapsed_seconds": 613.611,
+    "received_at": "2026-11-05T11:32:47Z",
+    "artifact_ready_at": "2026-11-05T11:43:19Z",
+    "elapsed_seconds": 633.0,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "38641498d80f4ddbb2dc8cbb908a32bf5e0ffe6c9ab65e7c52b4fdb40c5f8246",
-    "spec_sha256": "5348a30cc1036deb44f0896b22d646000219861e7d03a62520946e46662ef20e",
-    "run_id": "42005258429",
+    "film_sha256": "4b0308325325080d8559251c5a4cbee70c58759dfcb32dca54b98da6636e8a53",
+    "spec_sha256": "d4702162e85b2e949415bb2a88faf59aef7dc9ff25dbe39c246f17cfb50778a1",
+    "run_id": "42019813682",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-05T09:51:42Z",
-        "run_id": "42005258429"
+        "at": "2026-11-05T11:37:18Z",
+        "run_id": "42019813682"
       }
     ],
-    "render_seconds": 353.611,
-    "pre_render_seconds": 260.0
+    "render_seconds": 362.0,
+    "pre_render_seconds": 271.0
   },
-  "film_sha256": "38641498d80f4ddbb2dc8cbb908a32bf5e0ffe6c9ab65e7c52b4fdb40c5f8246",
-  "film_bytes": 156272164,
-  "qc_attestation_sha256": "a7bd5911ef0a74c9a66c5eda160d065061150a7cd9373097f75c5926d10b06f6",
+  "film_sha256": "4b0308325325080d8559251c5a4cbee70c58759dfcb32dca54b98da6636e8a53",
+  "film_bytes": 156227032,
+  "qc_attestation_sha256": "f6a4ce23e4dd3ef7432eb7eb48d4b752ee8434762415414065ed90fb02eec360",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-05T09:51:42Z",
-      "run_id": "42005258429"
+      "at": "2026-11-05T11:37:18Z",
+      "run_id": "42019813682"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-05T09:57:39Z",
-      "run_id": "42005258429"
+      "at": "2026-11-05T11:43:23Z",
+      "run_id": "42019813682"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-paris-decisive-night-2026/paris-decisive-night-2026.mp4",
-  "video_bytes": 156272164
+  "video_bytes": 156227032
 }
