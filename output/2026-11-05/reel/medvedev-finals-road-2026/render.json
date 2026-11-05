@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-medvedev-finals-road-2026-7870e67db79c0f4c",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-medvedev-finals-road-2026-7870e67db79c0f4c/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41985789039"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/41988407376"
   },
   "cover_seconds": 4.354,
   "cover_narrated": true,
@@ -58,44 +58,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "066dd98425f47e18718e9c6ecb66f0650cbd4398d361c24517f8248ae4922039",
+  "render_inputs_sha256": "396b4be1b31adc4a1d896e3e6995cea2f4cad89ac1440b3d89bc4f187859a43f",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "medvedev-finals-road-2026",
-    "received_at": "2026-11-05T07:14:14Z",
-    "artifact_ready_at": "2026-11-05T07:22:11Z",
-    "elapsed_seconds": 477.861,
+    "received_at": "2026-11-05T07:36:24Z",
+    "artifact_ready_at": "2026-11-05T07:42:34Z",
+    "elapsed_seconds": 370.117,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
-    "spec_sha256": "63b3771576019ddf4d785a0c8e7ee56b5bc42e11c05389fd282ff152be25cc44",
-    "run_id": "41985789039",
+    "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+    "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+    "run_id": "41988407376",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-05T07:17:21Z",
-        "run_id": "41985789039"
+        "at": "2026-11-05T07:39:00Z",
+        "run_id": "41988407376"
       }
     ],
-    "render_seconds": 290.861,
-    "pre_render_seconds": 187.0
+    "render_seconds": 214.117,
+    "pre_render_seconds": 156.0
   },
-  "film_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
-  "film_bytes": 152154529,
-  "qc_attestation_sha256": "2fd9c19128a58a89a4d3227aebb4af88c49716574a823709e4b724f9913d7a3b",
+  "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+  "film_bytes": 152158482,
+  "qc_attestation_sha256": "557be530fec9d389d43610d7ac7b09cd330791e62d86ba126ce47a60120d4d3f",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-05T07:17:21Z",
-      "run_id": "41985789039"
+      "at": "2026-11-05T07:39:00Z",
+      "run_id": "41988407376"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-05T07:22:16Z",
-      "run_id": "41985789039"
+      "at": "2026-11-05T07:42:37Z",
+      "run_id": "41988407376"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-medvedev-finals-road-2026/medvedev-finals-road-2026.mp4",
-  "video_bytes": 152154529
+  "video_bytes": 152158482
 }

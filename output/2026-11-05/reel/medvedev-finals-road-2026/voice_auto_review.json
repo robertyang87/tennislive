@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "17fccb03c39891d5729523258a5cea9557cba507d4a7d5185f12660bd15ef6d8",
-    "render_inputs_sha256": "066dd98425f47e18718e9c6ecb66f0650cbd4398d361c24517f8248ae4922039",
-    "spec_sha256": "63b3771576019ddf4d785a0c8e7ee56b5bc42e11c05389fd282ff152be25cc44",
-    "film_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+    "render_sha256": "f5c4e52abecd195df4921ec4e3e3c1a90cbe46c547391b6f001d915632caf76a",
+    "render_inputs_sha256": "396b4be1b31adc4a1d896e3e6995cea2f4cad89ac1440b3d89bc4f187859a43f",
+    "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+    "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
     "inventory_sha256": "bd2fa246feb0d162cf1a55eebda3a0abb6b11082a50be1a03ab1d18b5a816271"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-05T07:23:57+00:00",
+  "reviewed_at": "2026-11-05T07:43:44+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -528,7 +528,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "上海打进四墙之后,他来到阿拉姆图,决赛先丢一盘,再以6比1、6比3翻回来,拿到赛季第四冠。"
+        "transcript": "上海打进四墙之后,他来到阿拉木图。决赛先丢一盘,再以6比1、6比3翻回来,拿到赛季第四冠。"
       },
       "polyphones": [],
       "pauses": {
@@ -560,7 +560,7 @@
         "substituted": 1,
         "sub_ratio": 0.023,
         "longest_deletion": 0,
-        "transcript": "今年拿到四个单打冠军,四大满冠,却都没尽八强。去年缺席年中的梅德韦德夫,是怎样把督灵门票赢回来的。"
+        "transcript": "今年拿到四个单打冠军,四大满冠,却都没进八强。去年缺席年中的梅德韦德夫,是怎样把都临门票赢回来的。"
       },
       "polyphones": [],
       "pauses": {
@@ -688,7 +688,7 @@
         "substituted": 1,
         "sub_ratio": 0.036,
         "longest_deletion": 0,
-        "transcript": "转折出现在中国赛季,横州决赛,两盘击败卢布列夫,拿到年度第三罐。"
+        "transcript": "转折出现在中国赛季,恒州决赛,两盘击败卢布列夫,拿到年度第三罐。"
       },
       "polyphones": [],
       "pauses": {
@@ -752,7 +752,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴黎第二轮,他以4比6,4比6输给布赛。巴黎的征程结束,接下来,目光转向都灵。"
+        "transcript": "巴黎第二轮,他以4比6,4比6输给布赛。巴黎的征程结束,接下来,目光转向都领。"
       },
       "polyphones": [],
       "pauses": {
@@ -816,7 +816,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "10月30日,维也纳四分之一决赛。两盘击败马纳里诺,梅德韦德夫终于锁定年中资格。"
+        "transcript": "10月30日,维也纳四分之一决赛。两盘击败马纳里诺,梅德维德夫终于锁定年中资格。"
       },
       "polyphones": [],
       "pauses": {
@@ -848,7 +848,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "印第安威尔斯他在半决赛纪拜阿尔卡拉斯闯进大师赛决赛。两盘抢期还是输给辛娜。"
+        "transcript": "印第安威尔斯他在半决赛祭拜阿尔卡拉斯闯进大师赛决赛。两盘抢期还是输给辛娜。"
       },
       "polyphones": [
         {
@@ -902,7 +902,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "他终于在同一战连续两年捧起冠军奖杯。25座单打冠军,这是他第一次成功未免。"
+        "transcript": "他终于在同一战连续两年捧起冠军奖杯。二十五座单打冠军,这是他第一次成功未免。"
       },
       "polyphones": [],
       "pauses": {
