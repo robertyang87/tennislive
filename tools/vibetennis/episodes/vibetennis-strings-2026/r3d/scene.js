@@ -268,8 +268,10 @@ function helixBundle(n,rad,len,turns,col,fr){ const g=new THREE.Group();
   return g; }
 const micGut=helixBundle(19,1.0,3.2,0.35,0xffc27a,0.19); micG.add(micGut);
 const micMulti=new THREE.Group(); micG.add(micMulti);
+// 多股丝：所有者 2026-11-05「多股线的光晕太亮了」——白色＋自发光＋端面正对光源会冲过泛光阈值，压暗颜色、去掉自发光、降低光泽
+const mfMat=new THREE.MeshPhysicalMaterial({color:0x9fb8cc,emissive:0x0c1822,emissiveIntensity:1,metalness:0.05,roughness:0.6,clearcoat:0.2,transparent:true});
 { const r=0.11; let n=0; for(let q=-6;q<=6;q++) for(let w=-6;w<=6;w++){ const x=(q+w*0.5)*r*2.05, z=w*r*1.78; if(Math.hypot(x,z)>1.0) continue;
-    const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,3.2,10),micMat(0xe8f6ff)); m.position.set(x,0,z); micMulti.add(m); n++; }
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,3.2,10),mfMat); m.position.set(x,0,z); micMulti.add(m); n++; }
   micMulti.add(new THREE.Mesh(new THREE.CylinderGeometry(1.12,1.12,3.2,40,1,true),micMat(0x4fe3ff,0.18))); }
 const micMono=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,3.2,48),new THREE.MeshPhysicalMaterial({color:0xc9b8ff,emissive:0x5a46a8,emissiveIntensity:0.35,metalness:0.2,roughness:0.12,clearcoat:1,transparent:true})); micG.add(micMono);
 // 交叉处：主线竖、横线压在上面，主线表面一道凹槽（示意）
