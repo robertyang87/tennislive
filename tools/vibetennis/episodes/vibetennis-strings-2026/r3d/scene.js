@@ -48,6 +48,10 @@ const PAL={
   end:      {top:0x050505,hz:0x2a2008,vi:0x08202a,a:0xffc24a,b:0x4fe3ff,c:0xffffff}};  // 金＋青
 
 // ---------- 背景：夜空（颜色随段落）、星点、微尘、全息地网 ----------
+// ---------- 光晕全局标准（所有者 2026-11-05「所有动效里的光晕都很亮……设定好一个全局标准」，docs/vibetennis.md「光晕标准」）----------
+// 泛光 strength ≤ 0.25 / radius ≤ 0.35 / threshold ≥ 0.92；叠加发光（光点精灵、光环）一律乘 GLOW_K；
+// 自发光 emissiveIntensity：彩色件 ≤ 0.35，白／近白件 ≤ 0.15（深色底色的自发光只提亮暗部，不受限）。成片 glow_check.py 量化把关。
+const GLOW={bloom:[0.22,0.3,0.93], k:0.5, emissive:0.35, emissiveWhite:0.15};
 const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms:{uTop:{value:C(0x05030f)},uHz:{value:C(0x1a1048)},uVi:{value:C(0x3a0a3a)}},
   vertexShader:`varying vec3 vD; void main(){ vD=normalize(position); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);} `,
   fragmentShader:`varying vec3 vD; uniform vec3 uTop,uHz,uVi; void main(){ float h=vD.y; float g=exp(-abs(h+0.02)*6.0); float side=0.5+0.5*vD.x; gl_FragColor=vec4(uTop+uHz*g+uVi*g*g*side*0.8,1.);} `});
@@ -55,10 +59,10 @@ const sky=new THREE.Mesh(new THREE.SphereGeometry(9000,48,24),skyMat); sky.frust
 const glowTex=(()=>{ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
   const gr=g.createRadialGradient(64,64,0,64,64,64); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(0.15,'rgba(255,255,255,0.6)'); gr.addColorStop(0.45,'rgba(255,255,255,0.12)'); gr.addColorStop(1,'rgba(255,255,255,0)');
   g.fillStyle=gr; g.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); })();
-function glowSprite(color,size,op=1,group=scene){ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false})); s.scale.set(size,size,1); group.add(s); return s; }
+function glowSprite(color,size,op=1,group=scene){ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:new THREE.Color(color).multiplyScalar(GLOW.k),transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false})); s.scale.set(size,size,1); group.add(s); return s; }
 const ringTex=(()=>{ const c=document.createElement('canvas'); c.width=c.height=256; const g=c.getContext('2d'); g.strokeStyle='white';
   g.lineWidth=9; g.beginPath(); g.arc(128,128,104,0,Math.PI*2); g.stroke(); g.globalAlpha=0.35; g.lineWidth=3; g.beginPath(); g.arc(128,128,122,0,Math.PI*2); g.stroke(); return new THREE.CanvasTexture(c); })();
-function flatRing(color,group=scene){ const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:ringTex,color,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); m.rotation.x=-Math.PI/2; group.add(m); return m; }
+function flatRing(color,group=scene){ const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:ringTex,color:new THREE.Color(color).multiplyScalar(GLOW.k),transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide})); m.rotation.x=-Math.PI/2; group.add(m); return m; }
 const allClouds=[];
 function cloud(n,size,maxPx,group=scene,sparkle=0){
   const g=new THREE.BufferGeometry();
@@ -103,7 +107,7 @@ const text3D={};
 function t3d(key,str,color,size=1,group=scene){ // 3D 立体数字：金属挤出＋发光描边
   if(text3D[key]) return text3D[key];
   const geo=new TextGeometry(str,{font:FONT,size,depth:size*0.22,curveSegments:8,bevelEnabled:true,bevelThickness:size*0.04,bevelSize:size*0.025,bevelSegments:3}); geo.center();
-  const m=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x0c1018,metalness:0.9,roughness:0.18,clearcoat:1,emissive:C(color),emissiveIntensity:0.6,transparent:true,opacity:0}));
+  const m=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x0c1018,metalness:0.9,roughness:0.18,clearcoat:1,emissive:C(color),emissiveIntensity:GLOW.emissive,transparent:true,opacity:0}));
   const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,30),new THREE.LineBasicMaterial({color,transparent:true,opacity:0,blending:THREE.AdditiveBlending})); m.add(e);
   const g=new THREE.Group(); g.add(m); group.add(g); text3D[key]={g,m,e}; return text3D[key]; }
 function t3op(o,v){ if(NOTEXT) v=0; o.m.material.opacity=v; o.e.material.opacity=v*0.8; o.g.visible=v>0.003; }
@@ -124,7 +128,7 @@ const courtG=new THREE.Group(); scene.add(courtG);
   m.rotation.x=-Math.PI/2; m.renderOrder=-1; courtG.add(m); courtG.userData.mat=m.material; // 场地先画：否则半透明场地会盖住后画的光柱
   const net=new THREE.Group(); courtG.add(net);
   const np=new THREE.Mesh(new THREE.PlaneGeometry(DW*2+1.8,1.0),new THREE.MeshBasicMaterial({color:0xbfe6ff,transparent:true,opacity:0.16,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false})); np.position.set(0,0.5,0); net.add(np);
-  const band=new THREE.Mesh(new THREE.BoxGeometry(DW*2+1.8,0.07,0.02),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:0.6})); band.position.set(0,0.99,0); net.add(band);
+  const band=new THREE.Mesh(new THREE.BoxGeometry(DW*2+1.8,0.07,0.02),new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:GLOW.emissiveWhite})); band.position.set(0,0.99,0); net.add(band);
   const gridL=[]; for(let x=-DW-0.9;x<=DW+0.9;x+=0.25){ gridL.push(x,0,0,x,0.96,0); } for(let y=0.1;y<0.96;y+=0.2){ gridL.push(-DW-0.9,y,0,DW+0.9,y,0); }
   const gg=new THREE.BufferGeometry(); gg.setAttribute('position',new THREE.Float32BufferAttribute(gridL,3));
   net.add(new THREE.LineSegments(gg,new THREE.LineBasicMaterial({color:0x9fd8ff,transparent:true,opacity:0.22,blending:THREE.AdditiveBlending})));
@@ -149,7 +153,7 @@ const ballTex=(()=>{ const c=document.createElement('canvas'); c.width=512; c.he
   g.fillStyle='#d6ee3a'; g.fillRect(0,0,512,256); for(let i=0;i<6000;i++){ g.fillStyle=frnd()<0.5?'rgba(255,255,255,0.08)':'rgba(80,90,0,0.08)'; g.fillRect(frnd()*512,frnd()*256,2,2); }
   g.strokeStyle='#ffffff'; g.lineWidth=10; g.beginPath(); for(let x=0;x<=512;x+=4){ const y=128+70*Math.sin(x/512*Math.PI*4); x?g.lineTo(x,y):g.moveTo(x,y); } g.stroke();
   const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
-function makeBall(r,group=scene){ const m=new THREE.Mesh(new THREE.SphereGeometry(r,48,32),new THREE.MeshPhysicalMaterial({map:ballTex,roughness:0.75,sheen:1,sheenColor:new THREE.Color(0xf6ff9a),emissive:0x2a3200,emissiveIntensity:0.4})); group.add(m); const gl=glowSprite(0xeaff80,r*5,0.35,group); return {m,gl,r}; }
+function makeBall(r,group=scene){ const m=new THREE.Mesh(new THREE.SphereGeometry(r,48,32),new THREE.MeshPhysicalMaterial({map:ballTex,roughness:0.75,sheen:1,sheenColor:new THREE.Color(0xf6ff9a),emissive:0x2a3200,emissiveIntensity:0.25})); group.add(m); const gl=glowSprite(0xeaff80,r*5,0.35,group); return {m,gl,r}; }
 
 // ---------- 球拍与线床 ----------
 // 拍头半长 A、半宽 B（单位随场景放大，球半径按真实比例：拍头长 34 cm、球径 6.7 cm）
@@ -197,7 +201,7 @@ const slideField=(amp,cx=0,cy=0,k=0)=>{ const a=k<0.55?ss(0,0.55,k):1-ss(0.55,0.
 const SV_ERA=[['1990–99',39.5,73.1],['2000–04',17.1,41.0],['2005–09',5.7,10.3],['2010–14',4.0,8.3],['2015–19',5.2,9.7],['2020–26',4.3,6.2]];
 function makeBars(group,{w=0.9,gap=0.55,hmax=6,colors=[0xa78bfa,0x6fa8ff]}={}){
   const g=new THREE.Group(); group.add(g); const bars=SV_ERA.map((e,i)=>{ const x=(i-(SV_ERA.length-1)/2)*(w*2+gap);
-    const mk=(c,dx)=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(w,1,w),new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:0.8,transparent:true,opacity:0.85,roughness:0.2,clearcoat:1})); m.geometry.translate(0,0.5,0); m.position.set(x+dx,0,0); g.add(m); return m; };
+    const mk=(c,dx)=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(w,1,w),new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:GLOW.emissive,transparent:true,opacity:0.85,roughness:0.2,clearcoat:1})); m.geometry.translate(0,0.5,0); m.position.set(x+dx,0,0); g.add(m); return m; };
     const all=mk(colors[0],-w*0.52), wim=mk(colors[1],w*0.52);
     const lab=textSprite(e[0],{color:'#e8e2ff',size:0.42,font:'700 110px "Inter","Noto Sans CJK SC",sans-serif'},g); lab.position.set(x,-0.45,0.6);
     const va=textSprite(e[1].toFixed(1)+'%',{color:'#efe6ff',size:0.42,font:'800 110px "Inter",sans-serif',glow:'rgba(167,139,250,1)'},g);
@@ -234,7 +238,7 @@ const bandMesh=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMa
 const bandLab=tx('band',T('聚酯线普及','Polyester spreads'),{color:'#e6ecff',size:0.48,glow:'rgba(185,200,255,1)'},barsG);
 const CONF=[[T('线','Strings'),0xb9c8ff],[T('球拍：大拍面专利 1976','Rackets: oversize patent 1976'),0xffc24a],[T('球：快、中、慢三种','Balls: fast / medium / slow'),0x34f5a8],[T('场地','Courts'),0xff7a3d],[T('体能','Fitness'),0xff4fd8]];
 const confG=new THREE.Group(); scene.add(confG);
-const confNodes=CONF.map(([s,c],i)=>{ const n=new THREE.Mesh(new THREE.SphereGeometry(0.32,32,20),new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:0.9,roughness:0.2,clearcoat:1,transparent:true})); confG.add(n);
+const confNodes=CONF.map(([s,c],i)=>{ const n=new THREE.Mesh(new THREE.SphereGeometry(0.32,32,20),new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:GLOW.emissive,roughness:0.2,clearcoat:1,transparent:true})); confG.add(n);
   const lab=textSprite(s,{color:'#ffffff',size:0.42,glow:'rgba(255,255,255,0.6)'},confG); const th=fatLine(c,3); return {n,lab,th,c,i}; });
 const knot=glowSprite(0xffffff,2.2,0,confG);
 // 掉磅段：张力—log(时间) 曲线（示意形状，按 Cross 2000 实测「随时间的对数线性下降」）
@@ -258,7 +262,7 @@ const allRk=[rk,...rkPow,...rackR];
 // 多股线＝很多根尼龙细丝（同上 Multi-filament 一节）；单丝线＝实心的一根（同上：合成羊肠线几乎都是单丝）。
 // 后半：线和线交叉处磨出凹槽（Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」）。全部是示意，不按比例。
 const micG=new THREE.Group(); scene.add(micG);
-const micMat=(c,o=1)=>new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:0.25,metalness:0.1,roughness:0.35,clearcoat:0.8,transparent:true,opacity:o});
+const micMat=(c,o=1)=>new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:(new THREE.Color(c).getHSL({}).l>0.8?GLOW.emissiveWhite:0.25),metalness:0.1,roughness:0.35,clearcoat:0.8,transparent:true,opacity:o});
 function helixBundle(n,rad,len,turns,col,fr){ const g=new THREE.Group();
   const slots=[[0,0]]; for(let i=0;i<6;i++) slots.push([0.36,i/6]); for(let i=0;i<12;i++) slots.push([0.71,i/12+0.04]);
   for(const [ring,f] of slots.slice(0,n)){ const a0=f*Math.PI*2, mat=micMat(col);
@@ -275,10 +279,10 @@ const mfMat=new THREE.MeshPhysicalMaterial({color:0x9fb8cc,emissive:0x0c1822,emi
   micMulti.add(new THREE.Mesh(new THREE.CylinderGeometry(1.12,1.12,3.2,40,1,true),micMat(0x4fe3ff,0.18))); }
 const micMono=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,3.2,48),new THREE.MeshPhysicalMaterial({color:0xc9b8ff,emissive:0x5a46a8,emissiveIntensity:0.35,metalness:0.2,roughness:0.12,clearcoat:1,transparent:true})); micG.add(micMono);
 // 交叉处：主线竖、横线压在上面，主线表面一道凹槽（示意）
-const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xe8f6ff)); micG.add(micMain);
-const micCross=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xb9c8ff)); micCross.rotation.z=Math.PI/2; micG.add(micCross);
+const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xaec4d6));   // 整根占半屏，纯白会把 bright 冲过 5% micG.add(micMain);
+const micCross=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0x9aa8dc)); micCross.rotation.z=Math.PI/2; micG.add(micCross);
 const micGrooveH=new THREE.Group(); micG.add(micGrooveH); micGrooveH.rotation.y=-Math.PI/6;
-const micGroove=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.16,14,64,Math.PI*2/3),new THREE.MeshBasicMaterial({color:0xffb347,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); micGroove.rotation.x=Math.PI/2; micGrooveH.add(micGroove);
+const micGroove=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.16,14,64,Math.PI*2/3),new THREE.MeshBasicMaterial({color:new THREE.Color(0xffb347).multiplyScalar(GLOW.k*1.6),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); micGroove.rotation.x=Math.PI/2; micGrooveH.add(micGroove);
 const micLens=new THREE.Mesh(new THREE.RingGeometry(0.64,2.2,128),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0.9,depthTest:false})); micLens.renderOrder=999; scene.add(micLens);
 const micRim=new THREE.Mesh(new THREE.RingGeometry(0.632,0.642,160),new THREE.MeshBasicMaterial({color:0x4fe3ff,transparent:true,opacity:0.6,depthTest:false})); micRim.renderOrder=1000; scene.add(micRim);
 function shotMicro(v,TG,TM,TO,TN){ // v：从这一镜开始的秒数；TG/TM/TO：三种线依次亮出；TN：切到交叉凹槽
@@ -500,7 +504,7 @@ function shotEnd(u,D){
 // ---------- 后期 ----------
 const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(W,H,{samples:4,type:THREE.HalfFloatType})); composer.addPass(new RenderPass(scene,camera));
 const bokeh=new BokehPass(scene,camera,{focus:10,aperture:0.0001,maxblur:0.008}); composer.addPass(bokeh);
-const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),0.5,0.45,0.88); composer.addPass(bloom);
+const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),...GLOW.bloom); composer.addPass(bloom); if(Q.get('bloom')==='0') bloom.enabled=false;   // 光晕全局标准：glow_check 用开／关泛光两帧相减量光晕
 const finalPass=new ShaderPass({uniforms:{tDiffuse:{value:null},uT:{value:0},uFlash:{value:0},uCA:{value:0.0016},uZoom:{value:0},uShake:{value:0}},
   vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
   fragmentShader:`uniform sampler2D tDiffuse; uniform float uT,uFlash,uCA,uZoom,uShake; varying vec2 vUv; float h(vec2 p){ return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453); }

@@ -22,6 +22,29 @@
 - 品牌：左上角是网球时差 logo 加文字，用 `overlay.py` 里的 `brand()`，logo 和文字对齐，前面不加竖线。不出现「VIBE 知识」字样。
 - 右上角标注沿用 tennislive 的规范：字体跟品牌标一致，右对齐，和品牌标在同一高度。
 
+### 光晕标准（全栏目，2026-11-05 起）
+
+所有者 2026-11-05：「我感觉所有动效里的光晕都很亮，你要统一复查下，同时设定好一个全局标准」（之前分别说过「字体的光晕太亮，看不清楚真正的文字」「多股线的光晕太亮了」）。
+**发光是质感，不是主体**——字、数据、物体本身要先看得清，光只在边缘提一点亮。
+
+| 管什么 | 上限 | 在哪儿 |
+|---|---|---|
+| 泛光（UnrealBloomPass） | strength ≤ 0.25、radius ≤ 0.35、threshold ≥ 0.92 | `scene.js` 里的 `GLOW.bloom` |
+| 叠加发光（光点精灵、光环、`AdditiveBlending` 的件） | 颜色一律乘 `GLOW.k`（≤ 0.5） | `glowSprite()`、`flatRing()` |
+| 自发光 `emissiveIntensity` | 彩色件 ≤ 0.35，白／近白件 ≤ 0.15；深色底色（亮度 < 0.15）只提暗部、不限 | `GLOW.emissive` / `GLOW.emissiveWhite` |
+| 3D 文字精灵 | 光晕透明度 ≤ 0.45、模糊 ≤ 14 px，加 7 px 深色描边，字色压到泛光阈值以下，永远压在物体上面 | `textSprite()` |
+| 大面积白色物体 | 不用纯白，压到浅灰蓝 | 例：显微镜镜头的主线 `0xaec4d6` |
+
+**量化判据**（`tools/vibetennis/glow_check.py`，门槛按 EP07 定标准那一轮实测取：改前 24 帧里 14 帧超标，改后 0 帧）：
+
+- 同一帧开／关泛光各渲一张（`VT_QS="&bloom=0" node tools/vibetennis/engine/still.js …`），`--pair` 相减：平均增亮 gain ≤ 1.0、被提亮 > 20 的面积 ≤ 1.5%、> 40 的面积 ≤ 0.5%
+- 单帧：任一通道 ≥ 250 的像素 ≤ 0.4%，亮度 ≥ 200 的像素 ≤ 5%
+- 段落切换和「禁」章那种刻意的闪白（≤ 0.45 s）不算
+
+**怎么执行**：每集 `scene.js` 开头抄 `const GLOW={bloom:[0.22,0.3,0.93], k:0.5, emissive:0.35, emissiveWhite:0.15};`（数值可以更暗，不能更亮），泛光写 `new UnrealBloomPass(…, ...GLOW.bloom)`，场景要认 `?bloom=0`；
+`tests/test_vibetennis.py::test_光晕全局标准_新一集的scene都按GLOW常量来` 静态把关（定标准前已发的五集挂豁免表，只许减）；
+审片包和整片渲之前跑一遍 `glow_check.py --pair`，超标先改再渲。
+
 ## 3. 声音
 - 中文版自 EP03 起有 TTS 旁白（见 SKILL.md）；旁白加音效，音效要和画面动作同步（击球、出现、转场），不能只有背景音乐。
 - BGM 要有授权，确认不了就先不放，标注出来请 Robert 定。
