@@ -1,6 +1,6 @@
 {
- "slug": "vibetennis-racket-2026",
- "_status": "EP08（放在 drafts/：只差封面——cover.script 指的脚本还没建，测试要求它存在；封面做好就把 spec 和 .xhs.txt 挪回 specs/vibetennis/）。已完成：资料包 papers/vibetennis-racket-2026/sources.md（含主会话复核、提纲自审）与 verification-2.md、动效表 motion.md、素材 materials/；配音 41 句（narration.json，会话里 edge-tts 合成）；时间轴 plan.py（229.6 s）；3D 场景 r3d/scene.js 十段；字幕与出处 overlay.py；音效 sfx.py；渲前审片包已发所有者（2026-11-05），等点头再整片渲。",
+ "slug": "vibetennis-racket-2026-en",
+ "_status": "EP08 英文版：3D 用 lang=en 另渲一份（场景里有 3D 文字），叠加层 VT_LANG=en；无配音、无 BGM（所有者 2026-11-02），只有音效。",
  "_column": "vibetennis 第 8 集（器材三部曲②球拍）：木拍一百年拍面约 70 平方英寸 → 拉科斯特钢拍专利（1963 授权，→威尔逊 T2000）与挤压铝框 → 霍华德·黑德大拍面专利（1976）把拍面往手柄方向拉长去包住打击中心 → 1980 年前后碳纤维复合材料成主流（更大、更轻、更硬；拍框频率约 80–120 Hz → 100–180 Hz）→ 国际网联只限尺寸。物理：甜点是三个点（最大回弹点、振动节点、打击中心）；宽拍头＝绕长轴转动惯量大，打偏时左右几乎不偏但明显变慢、真实挥拍里飞得更高更远；更硬对打在节点上的球几乎没影响，帮的是打不准的人和发球；更轻挥得更快但很不敏感。打法：国际网联认为转向力量和旋转，没有研究单独算出球拍的作用。",
  "column": "vibetennis",
  "pipeline": "tools/vibetennis",
@@ -8,10 +8,10 @@
   "eyebrow": "vibetennis",
   "layout": "custom",
   "script": "tools/vibetennis/episodes/vibetennis-racket-2026/cover/make_cover.py",
-  "hook": "是球拍，\n改写了网球吗？",
+  "hook": "Did the racket\nchange tennis?",
   "subject": "球拍",
   "topic": "球拍演变 · 木 · 钢 · 大拍面 · 碳纤维",
-  "_why": "三部曲统一句式（EP07「是线，改变了网球吗？」）；封面版式沿用 EP07 所有者选的 B（粗黑体问句＋时间轴），时间轴四格：木拍约 70 平方英寸／1963 钢拍专利／1976 大拍面专利／1980 前后碳纤维。封面图待做（审片包过了再做）。（cover.script 先登记路径，脚本随封面一起建，照 EP07 的 make_cover.py）；topic 原写「球拍百年」，和旁白 h2 改成「最近五十年」同一个理由改掉：拍子定型了近一百年，变化集中在最近五十年"
+  "_why": "同中文版（B 杂志信息图），文字英文、品牌 Tennis Jetlag。"
  },
  "editorial": {
   "mode": "science_explainer",
@@ -47,21 +47,23 @@
   "fps": 30,
   "cover_in_film": false,
   "outro_seconds": 0,
-  "captions": "anchored：3D 里的锚定标签（中英两套，scene.js 的 T()）＋叠加层底部一条上下文字幕（overlay.py CAPS，只补画面上没有的出处与背景，不是逐句配音字幕）＋每节底部出处行；同 EP07",
-  "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03–EP07）；41 句，narration.json（text 上屏原字、tts 合成文本，数字写汉字、引号去掉）；会话沙箱里用 tools/vibetennis/tts_synth.py 合成（代理 CA 已内置）；英文版不配音。",
+  "captions": "anchored",
+  "narration": "none",
   "visual_standards": "照 docs/vibetennis.md：GLOW 光晕上限、MOVE 转场运镜（0.6 s 交叉溶解、缓推＋绕转），渲前 glow_check.py --pair（2026-11-05 34 帧全过）、成片 motion_check.py；子弹时间（慢放）在钩子、第 6 段、片尾回放三处，运动模糊（6 子帧累积）只开在其中球恢复常速高速飞出的 1.5–1.6 秒；3D 字由 layoutText 每帧收进安全区（画面内、y 120–880，不压底部字幕带）",
   "audio": {
-   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04–EP07）；中文版沿用，112.3 BPM 按整小节循环拼接，第 8 小节线落在开场那一球打上拍框的时刻，片尾 3 s 淡出；英文版成片不带 BGM，只有音效（所有者 2026-11-02 定：EP04 英文版被 Instagram Content ID 静音，音乐由所有者上传时从曲库挂；assemble.sh 英文版用 sfx_only.wav）",
+   "music": "none",
+   "_music_why": "所有者 2026-11-02：英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从 Instagram 曲库挂。",
    "sfx": "sfx.py 合成（111 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上（慢放击球按 0.18／0.22 倍速算出的接触时刻）；声像手动给：分屏两支拍左右分开、其余居中",
-   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
-   "_music_why": "所有者 2026-11-05 原话：「背景音乐沿用」。"
-  }
+   "loudness": "只有音效；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+  },
+  "_narration_why": "docs/vibetennis.md §8：英文版没有配音。"
  },
  "push": {
   "auto": true,
-  "summary": "球拍演变",
-  "_summary_why": "标题 EP08.vibetennis|球拍演变（四字主题，≤20 字符、无空白）",
-  "lead": "近一百年里，木拍的拍面一直只有约 70 平方英寸；1963 年拉科斯特拿到钢拍专利，1976 年霍华德·黑德拿到大拍面专利，1980 年前后碳纤维成了主流。大拍面是为了把「不震手的那个点」包进拍面；「甜点」其实是三个点；拍头变宽，打偏时拍子扭得少、球左右几乎不偏，却会明显变慢。球拍改写了打法吗？至少改写了打偏的代价。",
-  "_lead_why": "push.py 把 lead 放在推送卡正文前（EP07 有，草稿漏了）；每个数字同 xhs 正文，出处见 sources.md"
- }
+  "summary": "Head",
+  "_summary_why": "标题 EP08.vibetennis|Head（主题最多 4 个字符；racket head，也是大拍面发明人 Howard Head）。",
+  "lead": "For nearly a century wooden rackets had a strung area of about 70 square inches. In 1963 René Lacoste got a steel-racket patent (licensed to Wilson as the T2000); in 1976 Howard Head patented the oversize head; around 1980 carbon-fibre composites took over. The oversize head was designed to bring the 'no-jar' point into the middle of the face. The 'sweet spot' is really three points. A wider head twists less on an off-centre hit: the ball barely changes direction, but it comes off clearly slower. Did the racket change the game? At least it changed the cost of a miss-hit."
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-racket-2026"
 }
