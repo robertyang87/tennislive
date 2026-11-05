@@ -10,6 +10,7 @@
   "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18%。正文各段 pitch +10Hz；不写 style、lead_pause。",
   "cover": {
     "eyebrow": "网球有故事",
+    "story_kind": "other",
     "layout": "solo",
     "subject": "德约倒在都灵门口",
     "winner": "德约科维奇",
@@ -23,6 +24,7 @@
         "x": 0.5,
         "y": 0.42
       },
+      "_low_res_why": "本期指定封面瞬间（赛点后德约闭眼特写）只有本场官方集锦的 1080p 帧（1920×1080）这一张，无更高分辨率同瞬间图源；按精准优先于清晰口径认领裁切后 1.33 倍放大。",
       "_credit": "本场（2026-11-04 巴黎 R32 德约 vs 土方凛辉）Tennis TV 官方集锦 176.5s 帧：赛点后德约闭眼特写，为本期指定封面帧。"
     }
   },
@@ -312,16 +314,16 @@
     {
       "source": "basel-str",
       "start": 53.0,
-      "end": 65.7,
+      "end": 61.5,
       "cx": 0.5,
       "track": false,
-      "narration": "德约的账最难。两千九百分，从第一轮打起，至少打进半决赛才有机会，夺冠才稳妥。巴黎本该是他的福地——七座冠军，历史第一",
+      "narration": "德约的账最难。两千九百分，从第一轮打起，至少打进半决赛才有机会，夺冠才稳妥。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S5a 德约的账·上（窗口重排）：s_Hem 53.0-65.7 双档空当（德约-施特鲁夫回合段）；原文拆两段落空当。",
+      "_why": "S5a 德约的账·上（窗口重排）：s_Hem 53.0-61.5 双档空当（德约-施特鲁夫回合段）；原文按句界拆两段落空当。",
       "inset": {
         "kind": "story_text",
         "corner": "tr",
@@ -350,16 +352,16 @@
     {
       "source": "basel-str",
       "start": 121.5,
-      "end": 130.0,
+      "end": 134.5,
       "cx": 0.5,
       "track": false,
-      "narration": "；可他上一次在这里打球，还是二〇二三年。三十九岁回到巴黎，第一场，就是决战。",
+      "narration": "巴黎本该是他的福地——七座冠军，历史第一；可他上一次在这里打球，还是二〇二三年。三十九岁回到巴黎，第一场，就是决战。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
       },
       "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/局间），不切一分进行中。",
-      "_why": "S5b 德约的账·下：s_Hem 121.5-130.0 双档空当（第二盘回合段）。"
+      "_why": "S5b 德约的账·下：s_Hem 121.5-134.5 双档空当（第二盘回合段）。"
     },
     {
       "source": "sh25sf",
@@ -517,7 +519,13 @@
           "topic": "巴黎第二轮",
           "date": "2026.11.03",
           "place": "巴黎",
-          "people": "德约科维奇 vs 瓦舍罗"
+          "people": "德约科维奇 vs 瓦舍罗",
+          "score": "6-7(4) 7-5 6-1",
+          "result": {
+            "winner": "德约科维奇",
+            "score": "6-7(4) 7-5 6-1",
+            "source": "https://www.atptour.com/en/scores/current/paris/352/results"
+          }
         }
       }
     },
@@ -545,7 +553,14 @@
         "motion": "editorial",
         "animate": false,
         "image": "assets/reel/paris-decisive-night-2026/label-ruud.png",
-        "_why": "霍达尔-鲁德场信息卡：不写比分（两源冲突待裁断），只写赛事/轮次/结果。"
+        "_why": "霍达尔-鲁德场信息卡：不写比分（两源冲突待裁断），只写赛事/轮次/结果。",
+        "label": {
+          "topic": "巴黎第二轮",
+          "date": "2026.11.03",
+          "place": "巴黎",
+          "people": "霍达尔 vs 鲁德",
+          "event": "守门人倒下"
+        }
       },
       "url": "https://github.com/robertyang87/tennislive/releases/download/source-_TGshnZNILc/_TGshnZNILc.mp4"
     },
@@ -585,7 +600,7 @@
       "end": 54.8,
       "cx": 0.5,
       "track": false,
-      "narration": "轮到周二。站在他对面的，叫土方凛辉，资格赛打上来的，世界第八十三。第一盘，德约打得像回家：两次破发，六比二，三十一分钟。",
+      "narration": "到了周三。站在他对面的，叫土方凛辉，资格赛打上来的，世界第八十三。第一盘，德约打得像回家：两次破发，六比二，三十一分钟。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
@@ -603,7 +618,19 @@
         "motion": "editorial",
         "animate": false,
         "image": "assets/reel/paris-decisive-night-2026/label-hijikata.png",
-        "_why": "本场信息卡：巴黎第二轮，德约科维奇 vs 土方凛辉 2-6 6-3 6-3（土方视角）。"
+        "_why": "本场信息卡：巴黎第二轮，德约科维奇 vs 土方凛辉 2-6 6-3 6-3（土方视角）。",
+        "label": {
+          "topic": "巴黎第二轮",
+          "date": "2026.11.04",
+          "place": "巴黎",
+          "people": "德约科维奇 vs 土方凛辉",
+          "score": "6-2 3-6 3-6",
+          "result": {
+            "winner": "土方凛辉",
+            "score": "2-6 6-3 6-3",
+            "source": "https://www.atptour.com/en/scores/current/paris/352/results"
+          }
+        }
       },
       "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
     },
@@ -718,7 +745,7 @@
       "end": 529.4,
       "cx": 0.5,
       "track": false,
-      "narration": "同一晚，另一位挑战者倒下。德米纳尔六比七、三比六负埃切维里，停在三千一百七十分。门没有换人——霍达尔还守在三千二百三十四分上。门口，倒下了一个传奇。最后一问：这是时代翻页了，还是三十九岁的身体，只坏了一个晚上？评论区，站队。",
+      "narration": "同一晚，另一位挑战者倒下。德米纳尔六比七、三比六，负埃切维里，停在三千一百七十分。门没有换人——霍达尔还守在三千二百三十四分上。门口，倒下了一个传奇。最后一问：这是时代翻页了，还是三十九岁的身体，只坏了一个晚上？评论区，站队。",
       "voice": {
         "pitch": "+10Hz",
         "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
