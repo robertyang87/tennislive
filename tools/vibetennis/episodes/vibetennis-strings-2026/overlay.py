@@ -195,7 +195,7 @@ CAPS=[
 ('h0',0,None,tr("1874 → 今天：网球线的【四代】","1874 → today: 【four generations】 of strings"),BOT),
 ('h1',0,None,tr("男子发球上网：1990 年代【39.5%】 → 2020 年代【4.3%】","Men’s serve-and-volley: 【39.5%】 in the 1990s → 【4.3%】 in the 2020s"),BOT),
 ('g1',0,None,tr("撞上 v1 → 弹开 v2：牛顿最早测过这个【比值】","In v1 → out v2: Newton first measured this 【ratio】"),BOT),
-('m0',0,None,tr("天然肠线是一条条【牛肠衣】绞成的，多股线是很多根尼龙细丝，单丝线是实心一根","Natural gut: 【ribbons of beef intestine】 twisted together · multifilament: many nylon fibres · monofilament: one solid strand"),BOT),
+('m0',0,None,tr("天然肠线是一条条【牛肠衣】绞成的，多股线是很多根尼龙细丝，单丝线是实心一根","Gut: 【beef-intestine ribbons】, twisted · Multi: nylon fibres · Mono: one strand"),BOT),
 ('m1',0,None,tr("线和线交叉的地方，打久了会磨出【凹槽】","Where strings cross, play wears 【notches】 in"),BOT),
 ('x1',0,None,tr("主线、横线各自滑开，再弹回 → 把球【拨】得更转","Mains and crosses slide apart, then snap back → the ball is 【flicked】 into spin"),BOT),
 ('x3',0,None,tr("【库仑摩擦定律】：摩擦力和压力成正比","【Coulomb’s law of friction】: friction is proportional to the normal force"),BOT),

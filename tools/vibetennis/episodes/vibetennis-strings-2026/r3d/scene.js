@@ -310,7 +310,7 @@ function shotMicro(v,TG,TM,TO,TN){ // v：从这一镜开始的秒数；TG/TM/TO
     [[micGut,-2.25,TG],[micMulti,0,TM],[micMono,2.25,TO]].forEach(([o,x,t])=>{ o.visible=true; o.position.set(x,0.35,0); o.rotation.set(0.85,v*0.25,0.18); o.scale.setScalar(0.62*ss(t-0.2,t+0.5,v)*(1-notch)+0.0001); });
     micMain.visible=micCross.visible=false; micGroove.visible=false;
     const labs=[['mlg',T('天然肠线','Natural gut'),'#ffd9a8',-2.25,TG],['mlm',T('多股线','Multifilament'),'#eaf6ff',0,TM],['mlo',T('单丝线','Monofilament'),'#ddd2ff',2.25,TO]];
-    labs.forEach(([k,str,c,x,t])=>{ const l=tx(k,str,{color:c,size:0.4}); l.position.set(x,-1.25,0.5); op(l,ss(t,t+0.5,v)*(1-notch)); });
+    labs.forEach(([k,str,c,x,t])=>{ const l=tx(k,str,{color:c,size:LANG==='en'?0.3:0.4}); l.position.set(LANG==='en'?x*0.9:x,-1.25,0.5); op(l,ss(t,t+0.5,v)*(1-notch)); });
   } else { micGut.visible=micMulti.visible=micMono.visible=false; }
   if(notch>0){ const w=v-TN; look(3.6,2.8,8.2,0,0.15,0);
     micMain.visible=micCross.visible=true; micGroove.visible=true; micMain.position.set(0,0,0);
@@ -462,7 +462,7 @@ function shotTension(u,D){
   const CU=ev('curve',2.6), FL=ev('fly',10.2), SWP=ev('swap',13.6);
   if(u<FL-0.3){ // 张力随 log(时间)
     tenG.visible=true; look(0,1.8,11.5,0,1.8,0); tenG.position.set(-3.6,-0.15,0);
-    const X=x=>x*1.45, Y=y=>y*4.3;            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
+    const X=x=>x*1.45, Y=y=>y*(LANG==='en'?3.85:4.3);   // 英文标题更宽，会压到曲线起点：纵向压矮一点            // x：log10(秒)（0→1 秒）；y：张力占设定的比例
     setLine(tenAxis[0],[new THREE.Vector3(0,0,0),new THREE.Vector3(X(5.6),0,0)].map(p=>p.add(tenG.position))); setLine(tenAxis[1],[new THREE.Vector3(0,0,0),new THREE.Vector3(0,Y(1.05),0)].map(p=>p.add(tenG.position)));
     tenAxis.forEach(a=>a.material.opacity=0.7*ss(0,0.6,u));
     tenTicks.forEach(tk=>{ tk.sp.position.set(X(tk.lx),-0.35,0); op(tk.sp,ss(0.3,0.9,u)); });
