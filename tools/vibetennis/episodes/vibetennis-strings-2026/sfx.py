@@ -175,6 +175,11 @@ EN(CO-0.2,number_pop(),0.45,name='formula-e'); EN(CO+0.3,ding(1175),0.25,name='n
 # 03 合成线：水珠与火花（怕潮、磨损）→ 换线
 y=SEC['synth']; SW=E('synth','swap',4.0)
 EN(y['t0']+1.0,rain_hiss(SW-y['t0']-0.6),0.5,name='sparks'); EN(SW,zap(600,2800,0.5),0.5,name='swap-synthetic'); EN(SW+0.4,panel(),0.3)
+# 03b 放大看（示意）：显微镜视场打开 → 三种线依次亮出 → 横线压在主线上、抬开露出凹槽（scene.js shotMicro，镜头从 micro-0.2 起）
+MI=E('synth','micro',5.5); MB=MI-0.2; NT=E('synth','notch',MI+9)
+EN(MB,freeze_in(),0.5,name='microscope-in'); EN(MB+0.1,hum(NT-MB+3,96),0.5)
+for i,k in enumerate(['mgut','mmulti','mmono']): EN(E('synth',k,MI+1+2*i),blip(1500+i*400,0.12,1.25,0.6),0.45,name='sample-'+k)
+EN(NT-0.3,swish(0.8,300,2000),0.35,name='to-notch'); EN(NT+0.3,click(),0.45,name='cross-press'); EN(NT+1.6,swish(1.0,500,3000),0.35,name='cross-lift'); EN(NT+2.0,ding(990),0.4,name='groove')
 # 04 意面拍：专利 → 撞击慢放、线滑开（3.6 s）→「禁」章 → 库仑横截面
 p=SEC['spaghetti']; PA=E('spaghetti','patent',0.5); SL=E('spaghetti','slide',6.5); BA=E('spaghetti','ban',14.2); RO=E('spaghetti','roll',17.1)
 EN(PA,panel(),0.4,name='patent'); impacts(SL,BA+0.6,3.6,g=0.85,rate=0.5,name='spag-impact')

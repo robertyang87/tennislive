@@ -252,13 +252,60 @@ function proj(name,v){ camera.updateMatrixWorld(); const p=v.clone().project(cam
 function look(px,py,pz,tx_,ty,tz){ camera.position.set(px,py,pz); camera.lookAt(tx_,ty,tz); }
 const DOF={on:false,focus:10,ap:0.00012};
 const allRk=[rk,...rkPow,...rackR];
+
+// ---------- 显微镜示意（所有者 2026-11-05「加一个示意的显微镜镜头」）----------
+// 三种线的截面：羊肠线＝一缕缕胶原纤维绞成（Wikipedia「Strings (tennis)」：取自肠的浆膜、含胶原）；
+// 多股线＝很多根尼龙细丝（同上 Multi-filament 一节）；单丝线＝实心的一根（同上：合成羊肠线几乎都是单丝）。
+// 后半：线和线交叉处磨出凹槽（Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」）。全部是示意，不按比例。
+const micG=new THREE.Group(); scene.add(micG);
+const micMat=(c,o=1)=>new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:0.25,metalness:0.1,roughness:0.35,clearcoat:0.8,transparent:true,opacity:o});
+function helixBundle(n,rad,len,turns,col,fr){ const g=new THREE.Group();
+  const slots=[[0,0]]; for(let i=0;i<6;i++) slots.push([0.36,i/6]); for(let i=0;i<12;i++) slots.push([0.71,i/12+0.04]);
+  for(const [ring,f] of slots.slice(0,n)){ const a0=f*Math.PI*2, mat=micMat(col);
+    const pts=[]; for(let k=0;k<=40;k++){ const y=-len/2+len*k/40, a=a0+turns*2*Math.PI*k/40; pts.push(new THREE.Vector3(Math.cos(a)*rad*ring,y,Math.sin(a)*rad*ring)); }
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),60,fr,12),mat));
+    for(const e of [pts[0],pts[40]]){ const cap=new THREE.Mesh(new THREE.SphereGeometry(fr,14,10),mat); cap.position.copy(e); g.add(cap); } }
+  return g; }
+const micGut=helixBundle(19,1.0,3.2,0.35,0xffc27a,0.19); micG.add(micGut);
+const micMulti=new THREE.Group(); micG.add(micMulti);
+{ const r=0.11; let n=0; for(let q=-6;q<=6;q++) for(let w=-6;w<=6;w++){ const x=(q+w*0.5)*r*2.05, z=w*r*1.78; if(Math.hypot(x,z)>1.0) continue;
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,3.2,10),micMat(0xe8f6ff)); m.position.set(x,0,z); micMulti.add(m); n++; }
+  micMulti.add(new THREE.Mesh(new THREE.CylinderGeometry(1.12,1.12,3.2,40,1,true),micMat(0x4fe3ff,0.18))); }
+const micMono=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,3.2,48),new THREE.MeshPhysicalMaterial({color:0xc9b8ff,emissive:0x5a46a8,emissiveIntensity:0.35,metalness:0.2,roughness:0.12,clearcoat:1,transparent:true})); micG.add(micMono);
+// 交叉处：主线竖、横线压在上面，主线表面一道凹槽（示意）
+const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xe8f6ff)); micG.add(micMain);
+const micCross=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xb9c8ff)); micCross.rotation.z=Math.PI/2; micG.add(micCross);
+const micGrooveH=new THREE.Group(); micG.add(micGrooveH); micGrooveH.rotation.y=-Math.PI/6;
+const micGroove=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.16,14,64,Math.PI*2/3),new THREE.MeshBasicMaterial({color:0xffb347,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false})); micGroove.rotation.x=Math.PI/2; micGrooveH.add(micGroove);
+const micLens=new THREE.Mesh(new THREE.RingGeometry(0.64,2.2,128),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0.9,depthTest:false})); micLens.renderOrder=999; scene.add(micLens);
+const micRim=new THREE.Mesh(new THREE.RingGeometry(0.632,0.642,160),new THREE.MeshBasicMaterial({color:0x4fe3ff,transparent:true,opacity:0.6,depthTest:false})); micRim.renderOrder=1000; scene.add(micRim);
+function shotMicro(v,TG,TM,TO,TN){ // v：从这一镜开始的秒数；TG/TM/TO：三种线依次亮出；TN：切到交叉凹槽
+  micG.visible=true; rimL.intensity=5; rimL.color.set(0xbfe8ff); rimL.position.set(-3,3,4); rimR.intensity=3; rimR.position.set(4,1,3); DOF.on=false;
+  const notch=ss(TN-0.3,TN+0.4,v);
+  if(notch<1){ look(0,0.0,lerp(11.5,10.5,ss(0,TN,v)),0,0,0);
+    [[micGut,-2.25,TG],[micMulti,0,TM],[micMono,2.25,TO]].forEach(([o,x,t])=>{ o.visible=true; o.position.set(x,0.35,0); o.rotation.set(0.85,v*0.25,0.18); o.scale.setScalar(0.62*ss(t-0.2,t+0.5,v)*(1-notch)+0.0001); });
+    micMain.visible=micCross.visible=false; micGroove.visible=false;
+    const labs=[['mlg',T('羊肠线','Gut'),'#ffd9a8',-2.25,TG],['mlm',T('多股线','Multifilament'),'#eaf6ff',0,TM],['mlo',T('单丝线','Monofilament'),'#ddd2ff',2.25,TO]];
+    labs.forEach(([k,str,c,x,t])=>{ const l=tx(k,str,{color:c,size:0.4}); l.position.set(x,-1.25,0.5); op(l,ss(t,t+0.5,v)*(1-notch)); });
+  } else { micGut.visible=micMulti.visible=micMono.visible=false; }
+  if(notch>0){ const w=v-TN; look(3.6,2.8,8.2,0,0.15,0);
+    micMain.visible=micCross.visible=true; micGroove.visible=true; micMain.position.set(0,0,0);
+    const lift=ss(1.6,2.6,w); micCross.position.set(0,lift*3.2,1.38+lift*2.5); micCross.material.opacity=1-lift;
+    micGroove.material.opacity=0.95*ss(1.8,2.6,w)*(0.75+0.25*Math.sin(w*5));
+  }
+  const t=tx('micT',T('放大看（示意）','Magnified (illustrative)'),{color:'#ffffff',size:0.5,glow:CYAN}); hud(t,0,2.05); op(t,ss(0.2,0.8,v));
+  // 显微镜圆视场：最后放，跟着这一帧的机位
+  camera.updateMatrixWorld(); const fwd=new THREE.Vector3(); camera.getWorldDirection(fwd);
+  for(const m of [micLens,micRim]){ m.visible=true; m.position.copy(camera.position).addScaledVector(fwd,2.0); m.quaternion.copy(camera.quaternion); }
+  micLens.material.opacity=ss(0,0.6,v); micRim.material.opacity=0.6*ss(0,0.6,v);
+}
 function hideAll(){
   courtG.visible=false; allRk.forEach(r=>{ r.g.visible=false; r.g.position.set(0,0,0); r.g.rotation.set(0,0,0); r.g.scale.setScalar(r.g.parent===rackG?0.42:1); r.frameMat.opacity=1; });
   for(const b of [ball,ball2,...powBalls]){ b.m.visible=false; b.gl.visible=false; b.m.scale.set(1,1,1); }
   for(const l of [arrowIn,arrowOut,arrowF,arrowN,flyGood,flyDead,...tenAxis,...tenCurves.map(c=>c.l),...confNodes.map(c=>c.th)]) l.material.opacity=0;
   for(const r of [spinRing,spinRing2,hitRing,stampRing]) r.material.opacity=0; chide(sweat); chide(sparks);
   for(const k in TT) op(TT[k],0); genLab.forEach(s=>op(s,0));
-  barsG.visible=false; bandMesh.material.opacity=0; confG.visible=false; knot.material.opacity=0; tenG.visible=false; rackG.visible=false;
+  micG.visible=false; micLens.visible=false; micRim.visible=false; barsG.visible=false; bandMesh.material.opacity=0; confG.visible=false; knot.material.opacity=0; tenG.visible=false; rackG.visible=false;
   for(const k in text3D) t3op(text3D[k],0); beamMat.uniforms.uOp.value=0; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; }
 const showB=(b,p,vis=true)=>{ b.m.visible=vis; b.gl.visible=vis; if(vis){ b.m.position.copy(p); b.gl.position.copy(p); } };
 // 一次斜向撞击：球从 dir 方向斜着撞向线床中心，压扁、带着转离开。k 0→1；返回球心（拍子本地坐标）
@@ -306,6 +353,7 @@ function shotGut(u,D){
   const fn=tx('corN',T('牛顿最早测量这个比值 · 《自然哲学的数学原理》1687','First measured by Newton · Principia, 1687'),{color:'#ffe9c8',size:0.38}); hud(fn,0,1.55); op(fn,ss(CO+0.3,CO+1,u));
 }
 function shotSynth(u,D){
+  const MI=ev('micro',99); if(u>=MI-0.2){ const b=MI-0.2; shotMicro(u-b,ev('mgut',MI+0.5)-b,ev('mmulti',MI+2)-b,ev('mmono',MI+4)-b,ev('notch',MI+7)-b); return; }
   const SW_=ev('swap',4.0); rk.g.visible=true; R_spin(rk,u,0.25); look(0,0.55,9.6,0,0.55,0); rimL.intensity=4; rimL.position.set(-3,2,3);
   const k=ss(SW_-0.2,SW_+1.2,u); const cmix=C(STR.gut).lerp(C(STR.nylon),k).getHex();
   setBed(rk,{cm:cmix,cc:cmix,width:2.6});

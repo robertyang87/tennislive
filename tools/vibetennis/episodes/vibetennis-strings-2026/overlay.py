@@ -195,6 +195,8 @@ CAPS=[
 ('h0',0,None,tr("1874 → 今天：网球线的【四代】","1874 → today: 【four generations】 of strings"),BOT),
 ('h1',0,None,tr("男子发球上网：1990 年代【39.5%】 → 2020 年代【4.3%】","Men’s serve-and-volley: 【39.5%】 in the 1990s → 【4.3%】 in the 2020s"),BOT),
 ('g1',0,None,tr("撞上 v1 → 弹开 v2：牛顿最早测过这个【比值】","In v1 → out v2: Newton first measured this 【ratio】"),BOT),
+('m0',0,None,tr("羊肠线是一缕缕【胶原纤维】，多股线是很多根尼龙细丝，单丝线是实心一根","Gut: bundles of 【collagen fibres】 · multifilament: many nylon fibres · monofilament: one solid strand"),BOT),
+('m1',0,None,tr("线和线交叉的地方，打久了会磨出【凹槽】","Where strings cross, play wears 【notches】 in"),BOT),
 ('x1',0,None,tr("主线、横线各自滑开，再弹回 → 把球【拨】得更转","Mains and crosses slide apart, then snap back → the ball is 【flicked】 into spin"),BOT),
 ('x3',0,None,tr("【库仑摩擦定律】：摩擦力和压力成正比","【Coulomb’s law of friction】: friction is proportional to the normal force"),BOT),
 ('p3',0,None,tr("正反两方都是【实验室】数据：拍框夹住、斜向发射","Both sides are 【lab】 data: clamped racket, ball fired at an angle"),BOT),
@@ -215,7 +217,7 @@ ITF=tr("国际网联《Rackets and strings – strings》","ITF, “Rackets and 
 NOTE={  # 每段底部的出处
  'hook':MCP,
  'gut':ITF+tr(" · 牛顿《自然哲学的数学原理》1687"," · Newton, Principia, 1687"),
- 'synth':ITF,
+ 'synth':tr("国际网联《Rackets and strings – strings》 · 放大镜头为示意：Wikipedia「Strings (tennis)」· Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」","ITF, “Rackets and strings – strings” · magnified shot illustrative: Wikipedia “Strings (tennis)” · Lindsey, Tennis Warehouse “How Tennis Strings Go Dead”"),
  'spaghetti':tr("美国专利 US 4,273,331 · Goodwill & Haake 2002、2004 · 国际网联 2026 网球规则附录二","US Patent 4,273,331 · Goodwill & Haake 2002, 2004 · ITF Rules of Tennis 2026, Appendix II"),
  'poly':tr("Tennis.com 2015 · Tennis.com 2010（温网穿线点）· Tennis Warehouse University · Goodwill & Haake, Exp. Mech. 2004 · 国际网联","Tennis.com 2015 · Tennis.com 2010 (Wimbledon stringers) · Tennis Warehouse University · Goodwill & Haake, Exp. Mech. 2004 · ITF"),
  'power':tr("Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Bower & Cross, J Sports Sci 2005","Cross, Lindsey & Andruczyk, Sports Engineering 2000 · Bower & Cross, J Sports Sci 2005"),
