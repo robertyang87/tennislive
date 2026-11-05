@@ -45,6 +45,25 @@
 `tests/test_vibetennis.py::test_光晕全局标准_新一集的scene都按GLOW常量来` 静态把关（定标准前已发的五集挂豁免表，只许减）；
 审片包和整片渲之前跑一遍 `glow_check.py --pair`，超标先改再渲。
 
+### 大字标准（全栏目，2026-11-05 起）
+
+所有者原话：「视频里的大字字体也很 low，不精致，出现的时候也没特别的动效，比如粒子汇聚之类的效果」。量出来的根子：机器上思源黑体只有 Regular／Bold，写「900」退成普通 Bold；字先画在 120～150 px 的 canvas 上再放大到半屏，发虚；3D 数字用 Three.js 自带的示例字体；出场只有淡入。
+
+共用模块 `tools/vibetennis/engine/typefx.js`（各集 `r3d/typefx.js` 软链接它，`r3d/fonts` 软链接 `assets/fonts`）：
+
+| 级别 | 用在哪 | 字体 | 出场 |
+|---|---|---|---|
+| 一级大字 | 钩子问句、公式、「三样」、段落结论、片尾问句 | 思源黑体 Black（`NotoSansSC-Black-sub.ttf`，GB2312 子集；和封面 B 同一款）；英文 Inter Display Black | **粒子汇聚**：约 6000 个粒子沿弧线从四周飞来、从左到右逐字汇聚（1.25 s），落定后实体字淡入、一道光扫过；退场散成粒子 |
+| 数据大数字 | 39.5%、95%、66.8%…… | Inter Display Black 3D 挤出（`TTFLoader`，`reversed:true`——OTF 的 CFF 轮廓方向反，不设就是空心字） | 原 t3d 淡入 |
+| 标签小字 | 出处、注释 | 不变 | 淡入 |
+
+- 用法：`bt(key, 文本, {size, glow, accent})` 建一级大字，`obj.update(u, 开始汇聚的时刻, 开始散开的时刻)`；`accent` 把重点字换品牌金（同封面「是【线】」）
+- 字先在 300 px 高的 canvas 上画（竖向渐变＋深色细描边＋很淡的辉光），字边要锐
+- 粒子是叠加发光，亮度乘 `GLOW.k`（光晕标准）；汇聚是连续运动，`motion_check.py` 不会当成跳变
+- 只给一级大字和大数字加动效，标签不加，免得满屏乱飞
+- 选字过程：2026-11-05 出过三选一样片（得意黑／思源宋体 Black／思源黑体 Black），所有者让我定，定思源黑体 Black（和封面 B 一致）；`?type=A|B` 仍可切回去对比
+- 判据 `tests/test_vibetennis.py`：`test_大字标准_新一集的scene都按TYPE来`（不许再加载 `typeface.json`、必须接 typefx、READY 之前 `loadTypeFonts()`）；定标准之前已发的五集挂豁免，只许减不许加
+
 ### 转场与运镜（全栏目，2026-11-05 起）
 
 所有者 2026-11-05：「动画的转场和运镜要做的丝滑且有吸引力」。

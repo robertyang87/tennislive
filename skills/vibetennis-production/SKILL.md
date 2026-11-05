@@ -61,6 +61,7 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
    - 物理／数字类说法（摩擦、恢复系数、评级口径）在审片包之前就过一遍 `papers/<slug>/sources.md`，别等推完再自查（EP05 摩擦段推送后才改稿）
    - ⭐ **光晕标准**（所有者 2026-11-05「所有动效里的光晕都很亮……设定好一个全局标准」）：`scene.js` 抄 `GLOW` 常量（泛光 0.22/0.3/0.93、叠加发光 ×0.5、自发光彩色 ≤0.35／白色 ≤0.15），
      整片渲之前同帧开关泛光各渲一张跑 `tools/vibetennis/glow_check.py --pair`，超标先改再渲。上限和量法见 [docs/vibetennis.md](../../docs/vibetennis.md)「光晕标准」
+   - ⭐ **大字标准**（所有者 2026-11-05「大字字体也很 low，不精致……比如粒子汇聚之类的效果」）：`r3d/typefx.js` 软链接 `engine/typefx.js`、`r3d/fonts` 软链接 `assets/fonts`；一级大字用 `bt()`（思源黑体 Black＋粒子汇聚出场），3D 数字用 Inter Display Black（`TTFLoader`，`reversed:true`），不再加载 helvetiker。见 [docs/vibetennis.md](../../docs/vibetennis.md)「大字标准」
    - ⭐ **转场与运镜标准**（所有者 2026-11-05「动画的转场和运镜要做的丝滑且有吸引力」）：切换一律 0.6 s 交叉溶解（自动找切换点），每个镜头缓推 6%＋绕转 3.4°，不许硬切、闪白、静止机位；
      成片跑 `tools/vibetennis/motion_check.py`（相邻帧差 > 12 即超标）。见 docs/vibetennis.md「转场与运镜」
    - 然后 `overlay.py` → `sfx.py`（BGM 要盖满全片）→ `assemble.sh`
