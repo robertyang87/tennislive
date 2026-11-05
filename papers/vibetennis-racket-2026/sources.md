@@ -30,6 +30,8 @@
 | Cross & Bower 2006：V = C/Io^n，n = 0.27 | ✅（同站 33. SwingSpeedvsSW.pdf） |
 | 国际网联历史文件：「until 1979」「imposed in 1979」「30 to 50% larger」「40% larger head, be 3 times stiffer and 30% lighter」 | ✅ 原件逐字一致 |
 | 国际网联《2026 网球规则》附录二：「shall not exceed 73.7 cm (29.0 inches) in overall length, and 31.7 cm…」 | ✅ |
+| 旁白 w3「这个尺寸，是木头为了耐用做的妥协」 | ✅ 国际网联历史文件第 2 页逐字：「the shape, size and resulting weight (a compromise to give satisfactory durability) became largely standardised」；字幕只照这句，不外推「拍面大就要更粗更重」 |
+| 字幕 o0「金属更硬更结实，大拍面才做得出来」 | ✅ 同文件第 3 页：「the increased stiffness and strength offered by metals led one manufacturer, Prince, to develop and patent a racket with a larger than normal or 'oversize' head」 |
 | US 3,909,402 是不是碳钢拍 | ❌ 是净水装置，见第六节 |
 
 ## 一句话（事实层，不是稿子）
