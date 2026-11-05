@@ -1,0 +1,89 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
+  "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; actual fresh native-source small.en/medium.en and multilingual small/medium compared, no auditory listening claimed",
+  "reviewed_at": "2026-11-05T06:44:44.082577+00:00",
+  "status": "complete",
+  "reviewed_from": 126.6,
+  "reviewed_to": 151.72,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 126.6,
+      "end": 129.0,
+      "en": "Usually most players will be a little bit weaker, but...",
+      "zh": "多数球员这一侧稍弱，不过……"
+    },
+    {
+      "start": 141.5,
+      "end": 146.28,
+      "en": "And for the first time in his career, Daniil Medvedev",
+      "zh": "梅德韦德夫职业生涯第一次——"
+    },
+    {
+      "start": 146.28,
+      "end": 149.92,
+      "en": "successfully defends a title. 6-7, 6-1, 6-3.",
+      "zh": "成功卫冕。6-7、6-1、6-3。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native/local-native-20261105/medium.en.json",
+      "sha256": "c5a11c1b9f04635dac17f726b8795d4281ca3c4ef9e8c6e3d827854ed1a48fa4",
+      "model": "medium.en",
+      "clip": [
+        121,
+        152
+      ],
+      "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native/local-native-20261105/small.en.json",
+      "sha256": "f9f5490e97750dfe290db6b4e70b58b8c7a32c4eeb8ca20c39e81be3eb60fe14",
+      "model": "small.en",
+      "clip": [
+        121,
+        152
+      ],
+      "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native-score/local-native-20261105/medium.json",
+      "sha256": "1ddbd0071d6df4922179f1002820eb03fa4f267e3b3efcede6b36929fe6242f3",
+      "model": "medium",
+      "clip": [
+        148.3,
+        152
+      ],
+      "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native-score/local-native-20261105/small.json",
+      "sha256": "9955f6e5d3bf064dddbdc356573676ca11934d4b6c9e32ccf3e7412bdd1d5091",
+      "model": "small",
+      "clip": [
+        148.3,
+        152
+      ],
+      "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/production/almaty-native-4598989.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "duration": 160.917,
+      "bytes": 162015064
+    }
+  },
+  "review_notes": "Fresh transcription of actual stable native source73a379, never relabeling older657babe raw. Both native-source English models agree on Usually clause and victory sentence; canonical Daniil spelling and 梅德韦德夫 from verified identity. Native medium places Usually clause end129.0; full small trailing but word timestamp drifts through quiet rally and is bounded by precise full medium and independent tight-context cross-check. Fresh native-source score-only multilingual small detects English0.881 and medium English0.902; medium reads Six,seven,six,one,six,three148.3–149.92. This validates actual English score rather than fabricating from final result. Score slightly overlaps commentary tail, so the English clause and score share the final cue to prevent two simultaneous bilingual blocks. Two final victory/score cues together preserve complete sentence and utterance meaning. Forced-English medium Thank you151.x is absent in small and both multilingual score outputs and is rejected as uncorroborated default hallucination. Actual selected tail through151.72 retained. No human listening claimed.",
+  "rejected_old_source": {
+    "sha256": "657babe5207652e70197d03f303a2bdb0da8cb3c51fece029f1fbf1daef25af6",
+    "reason": "different bytes from native final input; old raw retained for research but not current source evidence"
+  }
+}

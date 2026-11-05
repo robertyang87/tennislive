@@ -1,0 +1,107 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T06:36:10.414743+00:00",
+  "model": "small.en",
+  "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+  "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/p-oeN9TwKZg.mp4",
+  "clip": [
+    158,
+    179
+  ],
+  "duration": 21.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "all_language_probs": null,
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 172.26,
+      "end": 177.62,
+      "text": "Francis Diapo is in that New York state of mind once again.",
+      "avg_logprob": -0.5293787226957434,
+      "no_speech_prob": 0.1036117747426033,
+      "words": [
+        {
+          "w": " Francis",
+          "s": 172.26,
+          "e": 173.06,
+          "p": 0.5753582119941711
+        },
+        {
+          "w": " Diapo",
+          "s": 173.06,
+          "e": 173.62,
+          "p": 0.3931930735707283
+        },
+        {
+          "w": " is",
+          "s": 173.62,
+          "e": 174.66,
+          "p": 0.902284562587738
+        },
+        {
+          "w": " in",
+          "s": 174.66,
+          "e": 174.94,
+          "p": 0.9958957433700562
+        },
+        {
+          "w": " that",
+          "s": 174.94,
+          "e": 175.16,
+          "p": 0.9691446423530579
+        },
+        {
+          "w": " New",
+          "s": 175.16,
+          "e": 175.5,
+          "p": 0.9821563363075256
+        },
+        {
+          "w": " York",
+          "s": 175.5,
+          "e": 175.84,
+          "p": 0.9929789900779724
+        },
+        {
+          "w": " state",
+          "s": 175.84,
+          "e": 176.24,
+          "p": 0.9128945469856262
+        },
+        {
+          "w": " of",
+          "s": 176.24,
+          "e": 176.42,
+          "p": 0.9512293338775635
+        },
+        {
+          "w": " mind",
+          "s": 176.42,
+          "e": 176.82,
+          "p": 0.9965422749519348
+        },
+        {
+          "w": " once",
+          "s": 176.82,
+          "e": 177.1,
+          "p": 0.9685918688774109
+        },
+        {
+          "w": " again.",
+          "s": 177.1,
+          "e": 177.62,
+          "p": 0.9992069602012634
+        }
+      ]
+    }
+  ]
+}

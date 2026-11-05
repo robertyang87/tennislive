@@ -1,0 +1,122 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T06:38:42.990802+00:00",
+  "model": "medium.en",
+  "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+  "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/p-oeN9TwKZg.mp4",
+  "clip": [
+    158,
+    179
+  ],
+  "duration": 21.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "all_language_probs": null,
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 171.96,
+      "end": 172.72,
+      "text": "Oh",
+      "avg_logprob": -0.5662173986434936,
+      "no_speech_prob": 0.3190964460372925,
+      "words": [
+        {
+          "w": " Oh",
+          "s": 171.96,
+          "e": 172.72,
+          "p": 0.016619913280010223
+        }
+      ]
+    },
+    {
+      "start": 172.72,
+      "end": 177.72,
+      "text": "Francis Teapot is in that New York state of mind once again",
+      "avg_logprob": -0.5662173986434936,
+      "no_speech_prob": 0.3190964460372925,
+      "words": [
+        {
+          "w": " Francis",
+          "s": 172.72,
+          "e": 173.1,
+          "p": 0.286548912525177
+        },
+        {
+          "w": " Teapot",
+          "s": 173.1,
+          "e": 173.72,
+          "p": 0.27943770090738934
+        },
+        {
+          "w": " is",
+          "s": 173.72,
+          "e": 174.68,
+          "p": 0.8135121464729309
+        },
+        {
+          "w": " in",
+          "s": 174.68,
+          "e": 174.96,
+          "p": 0.9917392730712891
+        },
+        {
+          "w": " that",
+          "s": 174.96,
+          "e": 175.2,
+          "p": 0.9821163415908813
+        },
+        {
+          "w": " New",
+          "s": 175.2,
+          "e": 175.54,
+          "p": 0.9570398926734924
+        },
+        {
+          "w": " York",
+          "s": 175.54,
+          "e": 175.84,
+          "p": 0.992256760597229
+        },
+        {
+          "w": " state",
+          "s": 175.84,
+          "e": 176.26,
+          "p": 0.9828166961669922
+        },
+        {
+          "w": " of",
+          "s": 176.26,
+          "e": 176.46,
+          "p": 0.997098445892334
+        },
+        {
+          "w": " mind",
+          "s": 176.46,
+          "e": 176.86,
+          "p": 0.9971808195114136
+        },
+        {
+          "w": " once",
+          "s": 176.86,
+          "e": 177.16,
+          "p": 0.9523087739944458
+        },
+        {
+          "w": " again",
+          "s": 177.16,
+          "e": 177.72,
+          "p": 0.9989769458770752
+        }
+      ]
+    }
+  ]
+}

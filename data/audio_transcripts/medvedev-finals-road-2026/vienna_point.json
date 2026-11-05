@@ -1,0 +1,86 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-AWfZeqsuqmw/AWfZeqsuqmw.mp4",
+  "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; inspected retained native raw small.en/medium.en and stated official-caption evidence; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T06:44:43.943393+00:00",
+  "status": "complete",
+  "reviewed_from": 163.48,
+  "reviewed_to": 182.72,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 166.3,
+      "end": 171.7,
+      "en": "Oh, that's missed.",
+      "zh": "噢，这球出界了。"
+    },
+    {
+      "start": 174.32,
+      "end": 176.64,
+      "en": "A patient performance.",
+      "zh": "耐心十足的一场表现。"
+    },
+    {
+      "start": 179.06,
+      "end": 182.62,
+      "en": "His third semi-final appearance here in Vienna.",
+      "zh": "他第3次闯入维也纳半决赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-medium.en.json",
+      "sha256": "a48972830309204f63413b559db702560bacaebbc0f68a09e73e9f449855b07a",
+      "model": "medium.en",
+      "clip": [
+        155.0,
+        183.0
+      ],
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-small.en.json",
+      "sha256": "4d5986133de3c93702464e3caeff73698ae3c2f6b49a99842a31cdf7bf6efaa8",
+      "model": "small.en",
+      "clip": [
+        155.0,
+        183.0
+      ],
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/medium.en.json",
+      "sha256": "1159d1eda29cadf4e6e34f8411ffcdace3470be6fab71190010729693d75446d",
+      "model": "medium.en",
+      "clip": [
+        162.0,
+        190.0
+      ],
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json",
+      "sha256": "2932e8996534bb58f5055549576344ddfaac2ae6c500158eba5274d531d8cd1b",
+      "model": "small.en",
+      "clip": [
+        162.0,
+        190.0
+      ],
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/research/media-late/AWfZeqsuqmw.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 198.251973,
+      "bytes": 23786982
+    }
+  },
+  "review_notes": "Actual source verified. Original155–183 small+medium both recognize Oh that's missed; later162–190 small confirms. Original medium and later small both recognize A patient performance, rejecting original small Delveve prefix (not replicated). Both contexts agree on third semi-final appearance; Vienna proper place corrected from Vietnam by verified event. Conservative word-time envelope retains every recognized word; Oh aligns across live rally with low probability, honest non-auditory method. No original English before163.48 appears in either raw context, previous clause finishes161.34. All four actual raw outputs checked, not only agreeing snippets.",
+  "uncertain_spans": []
+}

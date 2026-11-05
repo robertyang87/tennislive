@@ -1,0 +1,159 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "d9cf905fe6719652e25dd08c9cb55fb2aab6c7dcb0fda4f74250c621f179ce6a",
+  "segments": [
+    {
+      "index": 2,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/brisbane_point.json",
+      "transcript_sha256": "482acf34930aca3bce0b531f3e786b8671616825c85a265e11add65322ddce74"
+    },
+    {
+      "index": 4,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/ao_point.json",
+      "transcript_sha256": "68b6fe6fe01bbdf9e9cf519faae021e7432b7b78e9c7cf5d8e8831382ac6ceed"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/rg_point.json",
+      "transcript_sha256": "ce88260ab6903101d7c5686a0051c7afb5a2fcf038bcf0b8068a62f22ec65b57"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/us_point.json",
+      "transcript_sha256": "aa2c44d7d9cb15dcd6034a16197f1334bd8826646fc60b475fc986a1b4f11650"
+    },
+    {
+      "index": 15,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/almaty_point.json",
+      "transcript_sha256": "0db09bde4a02ee0384f39326afca6571670464aabeaa9e6d5d64309da859f472"
+    },
+    {
+      "index": 18,
+      "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/vienna_point.json",
+      "transcript_sha256": "f59a54a07258ad5fb024598af169b835d2f545d2d8bd5763cf08f6a37d2d3795"
+    }
+  ],
+  "method_note": "Every actual selected source SHA, complete ASR/caption packet and whole-window bilingual foreground coverage, without human listening claims.",
+  "retained_underlying_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/medium.en.json",
+      "sha256": "747e777372001896b169346a48b1089148350efdc98f68128654faf753a3a0e6",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/DTXfZGAjiRl/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/small.en.json",
+      "sha256": "ae7b0dda0a56bdf005166efa07eaf5a00799e8fb533d5536abb7de9c92b65ad7",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/DTXfZGAjiRl/local-native-20261105/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/brisbane-ig-audio-classification.json",
+      "sha256": "8113d48495586938e73ec9a283d9d3ebc1b70e2ef1a4cff8c24b80aa5f450490",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/brisbane-ig-audio-classification.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/medium.en.json",
+      "sha256": "830041d3e07adebc4e45c7b0f3cac48765eb37103de8e8166daebd8d708d2b00",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/small.en.json",
+      "sha256": "f61109f93ffc2b836b9b67dc661208c67dff411be35b00509f8b9ba4f55ef099",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/medium.en.json",
+      "sha256": "a9bf184cb361f8bdd43403fc9b7ac60e11b78b20ea082bcc7b4d7c6d49895e93",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/small.en.json",
+      "sha256": "662cf352389baa7c9e6316884f8280afc00b7ba58f54a5599d13323e18eb16cb",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/captions/Kb2AakHDzV8-ff0362da-captions.txt",
+      "sha256": "888a6a8beff6973b7ae776d197e080d7352bf0985fcc26c9868d4bddd8cf8214",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/captions/Kb2AakHDzV8-ff0362da-captions.txt"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/medium.en.json",
+      "sha256": "f580d40e81bafb775954c051b4fab3d7ce22fa0e87a3fb53c4a60bfde6ce7709",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/small.en.json",
+      "sha256": "c9d3f55650e22c41ccb8a3bc8b6ee6bf74f21bf157cc0690f235d94a3f6ab64e",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/medium.json",
+      "sha256": "dce24f8558e02f35223db00c6de7aa9e277671554a82e2b82b15d922568ba324",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Zt6JGiygrFo/local-native-20261105/medium.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/small.json",
+      "sha256": "7cc39878303ee58aca577181c97d24aba7f4030d10313a4bca90da04bee7ca0b",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/Zt6JGiygrFo/local-native-20261105/small.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/medium.en.json",
+      "sha256": "7dc391da42881862b2a1037d4ec8bdec2e8bcc6afaf13eac1774f0565ab0bea4",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/small.en.json",
+      "sha256": "4faa564ce4739c0555972e160b07abf378942b6b2a4d6724166c5f702c244588",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/medium.en.json",
+      "sha256": "0a3992e904b1b326dfffdc59c35a7d698f6d344f177fb63a2152fc4127256736",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/p-oeN9TwKZg/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/small.en.json",
+      "sha256": "86ad2ff8a8a6be1635ad512a43fcfb897446788cdbeba1e1a63713b37c507984",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/p-oeN9TwKZg/local-native-20261105/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native/local-native-20261105/medium.en.json",
+      "sha256": "c5a11c1b9f04635dac17f726b8795d4281ca3c4ef9e8c6e3d827854ed1a48fa4",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native/local-native-20261105/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native/local-native-20261105/small.en.json",
+      "sha256": "f9f5490e97750dfe290db6b4e70b58b8c7a32c4eeb8ca20c39e81be3eb60fe14",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native/local-native-20261105/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native-score/local-native-20261105/medium.json",
+      "sha256": "1ddbd0071d6df4922179f1002820eb03fa4f267e3b3efcede6b36929fe6242f3",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native-score/local-native-20261105/medium.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-native-score/local-native-20261105/small.json",
+      "sha256": "9955f6e5d3bf064dddbdc356573676ca11934d4b6c9e32ccf3e7412bdd1d5091",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native-score/local-native-20261105/small.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-medium.en.json",
+      "sha256": "a48972830309204f63413b559db702560bacaebbc0f68a09e73e9f449855b07a",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-small.en.json",
+      "sha256": "4d5986133de3c93702464e3caeff73698ae3c2f6b49a99842a31cdf7bf6efaa8",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/medium.en.json",
+      "sha256": "1159d1eda29cadf4e6e34f8411ffcdace3470be6fab71190010729693d75446d",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json",
+      "sha256": "2932e8996534bb58f5055549576344ddfaac2ae6c500158eba5274d531d8cd1b",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json"
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+{
+  "reviewed_at": "2026-11-05",
+  "reviewer": "medvedev_facts current assistant",
+  "method": "Actually read native spec, XHS and exact copy_titles entry. Compared all16 narration strings to current root plan by id. Rechecked labels against primary findings and executed actual native label_result_problem. Read actual source-bound raw ASR context for translation, not claimed human listening.",
+  "verdict": "PASS_CONTENT_AND_PUBLIC_COPY",
+  "media_or_render_verdict": "OUT_OF_SCOPE; final ASS/pixels/audio joins remain separately pending.",
+  "file_snapshots": [
+    {
+      "path": "/workspace/medvedev-finals-production/native/specs/reels/medvedev-finals-road-2026.json",
+      "sha256": "ac861a43e9b9bcad98fd15da37302a70df17e820a21cb87ed011b416cdb49943"
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/editorial-plan.json",
+      "sha256": "02759f58b1a30b541af776498d27f4ec9be0eee5405efcbec116f4924b00e5f6"
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/native/specs/reels/medvedev-finals-road-2026.xhs.txt",
+      "sha256": "e559413b7cd0b9751ba3877477b1e49ea6a27335591b3b6556146c0cbbff053f"
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/native/data/copy_titles.json",
+      "sha256": "5401853342943125e0e639fc9be5551175dcc5034987accdc477bb77c134c122"
+    }
+  ],
+  "stable_binding_method": "narration_utf8_sha256 is SHA256 of exact UTF8 narration bytes. canonical_json hashes use JSON ensure_ascii=False,sort_keys=True,separators=(comma,colon), UTF8. Voice and label/quote text component hashes intentionally exclude source windows and unrelated source metadata.",
+  "narrated_segments": [
+    {
+      "id": "opening",
+      "narration": "今年拿到四个单打冠军，四大满贯却都没进8强。去年缺席年终的梅德韦德夫，是怎样把都灵门票赢回来的？",
+      "narration_utf8_sha256": "a09f4f747fba5f2280f2d2479df35d7083adaae13df7d8b5defc31efa81a8ac9",
+      "id_narration_canonical_json_sha256": "5408fcd98ee3cecabff608e3ac6a01ac5564606e0219aa8678b24191e8980be5",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "brisbane_intro",
+      "narration": "新赛季第一站，他就在布里斯班夺冠。决赛两盘击败中岛布兰登，冠军来得很早。",
+      "narration_utf8_sha256": "8b884f2d3d9a1765536931b82f74673493135688698382d7a2377dc6b4c1b592",
+      "id_narration_canonical_json_sha256": "affd6f78c7163f02be1101f95d12bcd8e07f16c07adff93c79e0eb82b3f2c543",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "ao_intro",
+      "narration": "澳网却很快给了他一记重击。第四轮对勒纳·钱，连丢三盘，第二盘还是零比六。",
+      "narration_utf8_sha256": "b36c93e506392596e16b523e7fd00346c1f08e71ae600bc05869f912c860548f",
+      "id_narration_canonical_json_sha256": "5fa093fe38a72502e169da5c768431fa1fe0d6b0db7b7fc5398c78c2e17396f7",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "dubai",
+      "narration": "二月的迪拜，决赛对手格里克斯普尔赛前因伤退赛，他拿到本季第二座单打冠军。",
+      "narration_utf8_sha256": "042a56e195dfaa3752cd78f5095b3504dddff262195ff0f780d7267fc942a944",
+      "id_narration_canonical_json_sha256": "01c5103048c1c179d70e5236bfe96465468cbf1d952adf1821be9e7ab3f3f020",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "iw_intro",
+      "narration": "印第安维尔斯，他在半决赛击败阿尔卡拉斯，闯进大师赛决赛。两盘抢七，还是输给辛纳。",
+      "narration_utf8_sha256": "1e66f51b00a3ed43e48c39267230a902eca4b80679f34fa87d3daf17e31d12bb",
+      "id_narration_canonical_json_sha256": "8a8757f6af44cdd6063d4604c0988c986313fab002e7a35faf1c3285d8ed480b",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "redclay",
+      "narration": "红土赛季，低谷更深。蒙特卡洛两盘零比六。到了法网，首轮打满五盘。决胜盘四比二领先，却连丢四局，输给沃尔顿。",
+      "narration_utf8_sha256": "0cee510609278b969e827f63813e996d7ba2fff20587c11c39fda39b36e3d859",
+      "id_narration_canonical_json_sha256": "87e30debdd7837c379387872040d68205d1c92e142c40e679e24938d1afd279a",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "wim_intro",
+      "narration": "温网第三轮，斯特鲁夫又挡住了他。两盘抢七告负，第三盘再输五比七。",
+      "narration_utf8_sha256": "77bf2619b1e6c509ec93adaf5cf834364a38c716203769425aa9d3c6c14fb4da",
+      "id_narration_canonical_json_sha256": "0b2f7bba5a5504e76b400db4cf00c17b50d74e26820550902143a0941c8164c1",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "us_intro",
+      "narration": "美网第四轮，面对蒂亚福，再次连丢三盘。今年四站大满贯，他没有一次打进8强。",
+      "narration_utf8_sha256": "d857469ef7496a4af48dd61b6d54d6934b38f2ea5c8b31fe52a0c7a23dc33bf1",
+      "id_narration_canonical_json_sha256": "e529c41beef9c2950825b33e4551ba8c263fe152ef037d3d4a36d1dfcb528404",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "hangzhou_intro",
+      "narration": "转折出现在中国赛季。杭州决赛，两盘击败卢布列夫，拿到年度第三冠。",
+      "narration_utf8_sha256": "0f6e6409d035a791251de78fd2868f530e6a2d472adb538055afeb71926dcfdb",
+      "id_narration_canonical_json_sha256": "b5cd22fc1f8beb2bb62049de6e09628b9ca97c7739cd6f017ba6a70486448c7d",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "beijing",
+      "narration": "但中网半决赛，他在失分后把球打向看台，击中观众，被判失格。这也成了他今年的低点。",
+      "narration_utf8_sha256": "04228f2e15f850a3609512456ffb13917b9da89ca1cd98780ca3008854d85f95",
+      "id_narration_canonical_json_sha256": "e2376793347e0bab8e93c8a8756c781b19367b43eb86e3021cadf57a2e0c4a0f",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "almaty_intro",
+      "narration": "上海打进4强之后，他来到阿拉木图。决赛先丢一盘，再以六比一、六比三翻回来，拿到赛季第四冠。",
+      "narration_utf8_sha256": "999a7f9bfc5032a054c9f871cdf1b2077698c17c9b82534f909a364217d1e204",
+      "id_narration_canonical_json_sha256": "a967d30abfa5eafe5e34644cacdc7d9dcc83d1c9d41116e5152267abe0516d4c",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "defence",
+      "narration": "他终于在同一站，连续两年捧起冠军奖杯。二十五座单打冠军，这是他第一次成功卫冕。",
+      "narration_utf8_sha256": "a9979eb93574baa1a008b9557252cec8b6e60a8b4ff97a67e80143ad95ea63d8",
+      "id_narration_canonical_json_sha256": "d211c8c79994ade35c3bf381ba1318f875cfa7f62044875a969f385208100563",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "vienna_intro",
+      "narration": "十月三十日，维也纳四分之一决赛。两盘击败马纳里诺，梅德韦德夫终于锁定年终资格。",
+      "narration_utf8_sha256": "a680631b14031ffc1cf06b365e976d004523585ad5173278f7e1c3465c631048",
+      "id_narration_canonical_json_sha256": "2ea856503ea8e0e16c975a1b6d64ec5558c026a2746747463084802f385de01f",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "qualification_payoff",
+      "narration": "第七次入围，隔了一届又回来了。这张门票，是一站一站累积回来的。",
+      "narration_utf8_sha256": "50c6fac679133401a173f332e708a536d5d74dad31fecd5ed66a90a6dba6b962",
+      "id_narration_canonical_json_sha256": "763b951325a33654f695c2ea6707b1d3b59c150e7c4ef8a586c0d371dfb801a8",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "paris",
+      "narration": "巴黎第二轮，他以四比六、四比六输给布塞。巴黎的征程结束，接下来，目光转向都灵。",
+      "narration_utf8_sha256": "0feed654071c782f3f84d27252d5b39379087a5c6ce71dc78c1f95afc9dd73b3",
+      "id_narration_canonical_json_sha256": "2a4a0372e43ec1cd16efbafdf7714f3e5331aacfef9ab04ea9ddeb08e620267b",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    },
+    {
+      "id": "question",
+      "narration": "他是二零二零年的年终冠军。到了都灵，你还看好梅德韦德夫吗？",
+      "narration_utf8_sha256": "3410decdf34a54a04de4558e9bbe61c2b23500f52604a1a35f84be4ba28329ad",
+      "id_narration_canonical_json_sha256": "94b5d1e134085d30f4fe3e62371a5f9d7def2b3afe5df5133e12fee5ca812233",
+      "fact_status": "PASS",
+      "matches_current_root_by_id": true
+    }
+  ],
+  "voice_list_canonical_json_sha256": "38c4233bb56fec35dd714bea5580bce248006d339f3343c6cedaf57ad3ddc068",
+  "cover_narration_utf8_sha256": "cf9c671011d93467200c99f2476a438d8c834e036deafc541bc389ae6f9e8147",
+  "label_components": [
+    {
+      "id": "brisbane_point",
+      "label": {
+        "topic": "开季首冠",
+        "date": "2026.01.11",
+        "place": "布里斯班决赛",
+        "people": "梅德韦德夫 vs 中岛布兰登",
+        "score": "6-2 7-6(1)",
+        "result": {
+          "winner": "梅德韦德夫",
+          "score": "6-2 7-6(1)",
+          "source": "https://www.atptour.com/en/news/medvedev-nakashima-brisbane-2026-sunday"
+        }
+      },
+      "canonical_json_sha256": "7470a82be2751e5143eb1bc80445103ce80fb4482f07bdedfb28adbc521f9b93",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    },
+    {
+      "id": "ao_point",
+      "label": {
+        "topic": "澳网第四轮出局",
+        "date": "2026.01.25",
+        "place": "澳网1/8决赛",
+        "people": "梅德韦德夫 vs 勒纳·钱",
+        "score": "4-6 0-6 3-6",
+        "result": {
+          "winner": "勒纳·钱",
+          "score": "6-4 6-0 6-3",
+          "source": "https://ausopen.com/articles/news/tien-all-grown-after-mauling-medvedev-ao-2026"
+        }
+      },
+      "canonical_json_sha256": "456799a62518cdddd89426eda8694f520b4eee19985a182084b801654574d82f",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    },
+    {
+      "id": "rg_point",
+      "label": {
+        "topic": "法网首轮出局",
+        "date": "2026.05.26",
+        "place": "法网首轮",
+        "people": "梅德韦德夫 vs 沃尔顿",
+        "score": "2-6 6-1 1-6 6-1 4-6",
+        "result": {
+          "winner": "沃尔顿",
+          "score": "6-2 1-6 6-1 1-6 6-4",
+          "source": "https://www.rolandgarros.com/en-us/article/2026-edition-r1-medvedev-walton"
+        }
+      },
+      "canonical_json_sha256": "e2956851f0fe5656fc46342dca98c88460b609ca6a1b999752efe91086f36148",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    },
+    {
+      "id": "us_point",
+      "label": {
+        "topic": "美网第四轮出局",
+        "date": "2026.09.06",
+        "place": "美网1/8决赛",
+        "people": "梅德韦德夫 vs 蒂亚福",
+        "score": "6-7(1) 4-6 6-7(6)",
+        "result": {
+          "winner": "蒂亚福",
+          "score": "7-6(1) 6-4 7-6(6)",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-06/frances_tiafoe_dazzles_downs_daniil_medvedev_for_2026_us_open_qf_spot.html"
+        }
+      },
+      "canonical_json_sha256": "df83ad0ad660a0d560a438e24a4b73b2b1582c9761b53da2e3537f880e931849",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    },
+    {
+      "id": "almaty_point",
+      "label": {
+        "topic": "年度第四冠",
+        "date": "2026.10.25",
+        "place": "阿拉木图决赛",
+        "people": "梅德韦德夫 vs 巴西拉什维利",
+        "score": "6-7(6) 6-1 6-3",
+        "result": {
+          "winner": "梅德韦德夫",
+          "score": "6-7(6) 6-1 6-3",
+          "source": "https://almatyopen.kz/en/news/?id=11348"
+        }
+      },
+      "canonical_json_sha256": "18685d7ea7a9f832d6e4af9172fafd6d33296ed915a8d981b486e171a0c7b2cf",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    },
+    {
+      "id": "vienna_point",
+      "label": {
+        "topic": "锁定年终资格",
+        "date": "2026.10.30",
+        "place": "维也纳1/4决赛",
+        "people": "梅德韦德夫 vs 马纳里诺",
+        "score": "6-2 6-3",
+        "result": {
+          "winner": "梅德韦德夫",
+          "score": "6-2 6-3",
+          "source": "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification"
+        }
+      },
+      "canonical_json_sha256": "7c4e9d56fbfe9a1a01976f0d4ca69aa3c7c6a1ca3cca19c67f8a9bebf98ea88b",
+      "native_result_direction_problem": null,
+      "fact_status": "PASS",
+      "score_scope": "result.score=winner first; label.score follows left player Medvedev.",
+      "placement": "real source segment only; show_after0,show_for8."
+    }
+  ],
+  "quote_components": [
+    {
+      "segment_id": "ao_point",
+      "cue_index": 0,
+      "text": "Learner Tien. Learner has handed out a lesson.\n勒纳·钱，给对手上了一课。",
+      "text_utf8_sha256": "58ba6b7c22ef8cb86430f971651dd6fa7a0ae6ab9ca461433629c191ec58079f",
+      "at": 6.68,
+      "end": 11.12,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "ao_point",
+      "cue_index": 1,
+      "text": "It's a breakout performance from a star on the rise.\n冉冉升起的新星，打出突破表现。",
+      "text_utf8_sha256": "517e530dc62ba299b23f9aa5b5e3ce10d762100804a28b6ac01f2aaff071a0a6",
+      "at": 11.92,
+      "end": 17.94,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "ao_point",
+      "cue_index": 2,
+      "text": "We've seen something special here.\n我们见证了一场特别的比赛。",
+      "text_utf8_sha256": "5f06ef943dfa787eee4b1c208a02ecbf7912b10b1da272875307d87ad78186a7",
+      "at": 17.94,
+      "end": 20.2,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "us_point",
+      "cue_index": 0,
+      "text": "Frances Tiafoe is in that New York state of mind once again.\n蒂亚福又一次找回了属于纽约的状态。",
+      "text_utf8_sha256": "e6802980acec653f7c012497e33e88f4d4ddb454497a930bd1eee73fc8b49cba",
+      "at": 12.86,
+      "end": 18.46,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 0,
+      "text": "Usually most players will be a little bit weaker, but...\n多数球员这一侧稍弱，不过……",
+      "text_utf8_sha256": "7be1277b81ad1f60ba8124ead61ba83f229fc462d5834e2e37e7d6a53a00291c",
+      "at": 0.0,
+      "end": 2.4,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 1,
+      "text": "And for the first time in his career, Daniil Medvedev\n梅德韦德夫职业生涯第一次——",
+      "text_utf8_sha256": "a0318f89d6a4131f130c3e7ea5f7ce89c60e16c3bcef8b17c3ae1bcd944cf547",
+      "at": 14.9,
+      "end": 19.68,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 2,
+      "text": "successfully defends a title. 6-7, 6-1, 6-3.\n成功卫冕。6-7、6-1、6-3。",
+      "text_utf8_sha256": "5fd738a81c263740e673d1c0c6685d6c1f1afe3123c2a4afa5346d87c238d3a9",
+      "at": 19.68,
+      "end": 23.32,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 0,
+      "text": "Oh, that's missed.\n噢，这球出界了。",
+      "text_utf8_sha256": "309b4f6c96376d71ff6bcdc61255ac9cb31d0751d2fd14b903bfc2f2a304c902",
+      "at": 2.82,
+      "end": 8.22,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 1,
+      "text": "A patient performance.\n耐心十足的一场表现。",
+      "text_utf8_sha256": "7ec2d2217207b78556cae41904ecd910574eef989d180a8490519789a38c7180",
+      "at": 10.84,
+      "end": 13.16,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 2,
+      "text": "His third semi-final appearance here in Vienna.\n他第3次闯入维也纳半决赛。",
+      "text_utf8_sha256": "15001626f8eef1a6f46490778cfc51e9d086cc6f99de9d6640b28cce50bee2bc",
+      "at": 15.58,
+      "end": 19.14,
+      "semantic_status": "PASS",
+      "scope": "Semantic translation and factual identity only; ASR word timing and final pixels reviewed separately."
+    }
+  ],
+  "public_copy": {
+    "spec_title": "梅德韦德夫：从错过年终到带着4冠回归",
+    "cover": {
+      "subject": "梅德韦德夫",
+      "hook": "梅德韦德夫年终路\n4冠之后重返都灵",
+      "narration": "梅德韦德夫年终路，四冠之后重返都灵。",
+      "topic": "梅德韦德夫：从错过年终到带着4冠回归"
+    },
+    "push": {
+      "auto": true,
+      "summary": "梅德韦德夫：从错过年终到带着4冠回归",
+      "lead": "四大满贯都没进8强，赛季却拿下四座单打冠军。从蒙特卡洛与北京的低谷，到10月30日在维也纳锁定第七次年终资格，梅德韦德夫怎样重新拿到都灵门票？"
+    },
+    "xhs_text": "四大满贯都没进8强，却带着4座单打冠军重返都灵。梅德韦德夫的这一季，远没有冠军数量看上去那么顺。\n\n布里斯班开季夺冠，澳网第四轮遭遇重击。迪拜决赛对手赛前伤退，他拿到第二冠；印第安维尔斯两盘抢七负于辛纳。蒙特卡洛的两盘0比6、法网首轮五盘出局，草地与纽约也没能等来大满贯突破。\n\n杭州的第三冠带来转折，中网半决赛失格又跌入低谷。上海打进4强之后，阿拉木图逆转夺冠，25座单打冠军中终于有了第一次成功卫冕。\n\n10月30日，维也纳1/4决赛两盘击败马纳里诺，正式锁定第7次年终资格。巴黎第二轮出局，目光转向都灵。隔了一届再回来，你还看好这位2020年年终冠军吗？\n\n#网球有故事 #梅德韦德夫 #年终总决赛 #ATP #网球时差\n",
+    "copy_titles_entry": "梅德韦德夫年终路"
+  },
+  "public_copy_canonical_json_sha256": "8c7557afb2ff0ec6e32d5ffbccd6c69ff63e6bf7c90df657d898c6a451bab009",
+  "critical_findings": [
+    "2026四冠与25冠均为ATP巡回赛单打范围；四冠Brisbane/Dubai/Hangzhou/Almaty。",
+    "4GS终局R4/R1/R3/R4，无1/4决赛。",
+    "Dubai决赛赛前W/O，无假冠军点；Beijing5-7 3-5 DEF，未写伤退、伤人故意或诊断。",
+    "首次成功卫冕限定连续两年赢同一赛事，非首次重复赛事夺冠；Dubai已2023与2026两冠。",
+    "10月30日Vienna1/4决赛胜Mannarino后官方锁资格；第7次，2019–24六次，2025缺席后归来。",
+    "ParisR2负Buse4-6 4-6，未误写首轮。",
+    "2020冠军在London；未称2020Turin冠军。",
+    "Native16旁白与当前根稿完全一致；原审redclay逗号变句号没有更改事实。"
+  ],
+  "translation_findings": {
+    "AO": "Learner Tien姓名规范；lesson双关译“给对手上了一课”忠实；breakout/star on rise/something special未补新事实。",
+    "US": "New York state of mind译“属于纽约的状态”保留情境，不是新增战绩。",
+    "Almaty_context": "实际读取raw/4598989/local-native-20261105/{small.en,medium.en}.json及4598989-native：124秒前句被识别follow-up from his backhand wing（back-on/background wing错拼），后接Usually most players...weaker,but。中文“这一侧”衔接此前反手侧上下文，有依；未擅自增加技战术结论。",
+    "Almaty_title": "首次成功卫冕及6-7 6-1 6-3忠实且与赛事结果相符。",
+    "Vienna": "missed译出界依赖对应实际出界画面；已独立查看source末分contact及170.6–172.2原帧，最终源像素仍由root/late负责总放行。第三次ViennaSF与2022冠军、2023亚军、2026SF交叉一致。",
+    "zero_quote_sources": "Brisbane无确认lexical英语、RG法国裁判比分公告的source-skip说明不等于无原声；未伪造英文句。"
+  },
+  "upstream_original_root_audit_sha256": "803da1584dc30bb0458c39dfb912fba5b929eaea8604bef336b329aaab2dde18"
+}

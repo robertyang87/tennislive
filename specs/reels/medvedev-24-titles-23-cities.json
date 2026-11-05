@@ -3,19 +3,17 @@
   "date": "2026-09-30",
   "column": "网球有故事",
   "title": "24冠23城，梅德韦杰夫的冠军地图",
-  "canvas": [
-    1080,
-    1440
-  ],
-  "fps": 25,
   "cover": {
     "eyebrow": "网球有故事",
-    "title": [
-      "24座冠军",
-      "23座城市"
-    ],
     "hook": "Mr. Worldwide",
-    "poster": "poster.jpg"
+    "_legacy_request_metadata": {
+      "title": [
+        "24座冠军",
+        "23座城市"
+      ],
+      "poster": "poster.jpg",
+      "_why": "Historical cover request values, not consumed by native build_match_reel cover renderer; preserved verbatim without changing published media."
+    }
   },
   "push": {
     "auto": false,
@@ -479,5 +477,13 @@
       "end": 358.0,
       "narration": ""
     }
-  ]
+  ],
+  "_legacy_request_metadata": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25,
+    "_why": "Historical request metadata retained verbatim. Native build_match_reel does not consume top-level canvas/fps; its fixed1080x1440 canvas and actual source FPS determine rendering. This cleanup changes no content, source, narration, timing or publication hold."
+  }
 }
