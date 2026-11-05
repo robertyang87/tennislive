@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-_TGshnZNILc/_TGshnZNILc.mp4",
+  "source_sha256": "113d8068baded0e1348ed3b89f6572434ca8842106a293123c251d3fbcda6c26",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-05T04:36:20+00:00",
+  "reviewed_from": 178.2,
+  "reviewed_to": 193.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 181.44,
+      "end": 190.98,
+      "en": "It's a brilliant turn to finish from Casper Ruud, who makes a big statement in Paris.",
+      "zh": "卡斯珀·鲁德用漂亮的收尾，在巴黎发出了强有力的宣言。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 113d8068baded0e1348ed3b89f6572434ca8842106a293123c251d3fbcda6c26，存于 data/source_asr/_TGshnZNILc/small.en.json 与 data/source_asr/_TGshnZNILc/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
