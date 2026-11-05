@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "cobolli-finals-2026",
-  "written_at": "2026-11-04T11:35:50Z",
-  "code_sha": "921debd86d15ce70a0251dd702baa981d85e46e0",
-  "spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
-  "film_sha256": "fa18171e12a63ef5b86150a4ea1a91a3972d4ce737ec9cb0c9f60d1e5adf5ba8",
-  "film_bytes": 118096833,
-  "projection_sha256": "811e551f38890abe6ed7c20a522b08e50f885c63355f4cde997e1fcc0023f2fe",
+  "written_at": "2026-11-04T12:58:08Z",
+  "code_sha": "a21ab0423d059ab9376c0e0cd2d54cf7f7bcfe38",
+  "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+  "film_sha256": "0e1ffdefd49a66eeab6cb36a55f16998e4d0e6b93f405f9f8fcb78203e59254b",
+  "film_bytes": 120062506,
+  "projection_sha256": "e0fdc845442de7317dd1a8c511182e9d08a96f3f9813e728f527e15e86f83666",
   "claims": [
     [
       "cover",
@@ -49,6 +49,21 @@
     ],
     [
       "segments",
+      22,
+      "_photo_caption_safety"
+    ],
+    [
+      "segments",
+      23,
+      "_photo_caption_safety"
+    ],
+    [
+      "segments",
+      25,
+      "_photo_caption_safety"
+    ],
+    [
+      "segments",
       0,
       "_photo_source"
     ],
@@ -75,6 +90,21 @@
     [
       "segments",
       18,
+      "_photo_source"
+    ],
+    [
+      "segments",
+      22,
+      "_photo_source"
+    ],
+    [
+      "segments",
+      23,
+      "_photo_source"
+    ],
+    [
+      "segments",
+      25,
       "_photo_source"
     ],
     [
@@ -237,12 +267,6 @@
       25,
       "voice",
       "_why"
-    ],
-    [
-      "segments",
-      26,
-      "voice",
-      "_why"
     ]
   ],
   "assets": {
@@ -260,13 +284,15 @@
     "assets/reel/cobolli-finals-2026/munich-final-action-2026-3x4.jpg": "2da97b0e8314cc1ad14257dcbcf53ee336d294c50d355409a907a8cea3d3f543",
     "assets/reel/cobolli-finals-2026/rg-final-fist-2026-3x4.jpg": "f7463bab5625fcedbad13a44949e9917715d685f1d7fb8fc602df76922f5a50b",
     "assets/reel/cobolli-finals-2026/rg-runner-up-speech-2026-3x4.jpg": "e4bd26bd209a55082014214ccc95805d21601e9d7d04f5d7ea7a226b71d1d7a3",
+    "assets/reel/cobolli-finals-2026/tail-lyon-musetti-2026-3x4.jpg": "8a0eca8e6f8650ddff9b4a2396cedfcc02bae305afcf99846e4e8decf63cb3ba",
+    "assets/reel/cobolli-finals-2026/tail-shanghai-cobolli-2026-3x4.jpg": "9128161d6cae161c1fadb1e3db23119a1455d8a2bbe23fcace25b8d60b9a51e0",
     "research/cobolli-finals-2026/season-events-2026-11-04.json": null
   },
   "artifacts": {
-    "audio_review_binding.json": "97e19180932af60126b8f47f4fd461791d44030e6ae1bb936545579a0b6aa6fa",
-    "subtitles.ass": "e3c97e37b0b62df5de8bfda57bf399f3385df38db4a1f50f1d5c458370e94822",
+    "audio_review_binding.json": "64d677a2c6293498025d17d7c4b1222946439d9010cc42588c841807dbad70ed",
+    "subtitles.ass": "f181743b2c54725c6a3e4f30c9dc3d2ec41130a7edc542ff81fecad62d3f7a57",
     "poster.jpg": "59e5292876c75838b581820ae79b054c8980dbf34ade668ca72fc21814a37883",
-    "voice_quality_inventory.json": "e8ef1b272cb03ccb87146277cf3b0aab94273df28a2573c081f3e916e68706ab"
+    "voice_quality_inventory.json": "cd6de5b45d1c50f4fcae9230f50846e04965c62991cbec66ef5137ba8b9a8da6"
   },
   "projection": {
     "slug": "cobolli-finals-2026",
@@ -743,35 +769,26 @@
         }
       },
       {
-        "narration": "北京和上海，他又连续输掉首战。赛季最后的室内硬地，能否拿到门票，依然没有答案。",
-        "seconds": 8.68,
+        "narration": "北京、上海首战出局，冲刺年终的路又有起伏。",
+        "seconds": 5.368,
         "voice": {
           "pitch": "+0Hz"
         },
-        "title_card": "最后的冲刺\n门票尚未落定",
-        "kicker": "亚洲赛季"
+        "image": "assets/reel/cobolli-finals-2026/tail-shanghai-cobolli-2026-3x4.jpg",
+        "image_kind": "photo"
       },
       {
-        "narration": "来到里昂，他在半决赛拿到四个赛点，却还是输给穆塞蒂。错过的机会，让这段冲刺多了一层波折。",
-        "seconds": 9.472,
+        "narration": "里昂半决赛，穆塞蒂救下四个赛点，将科博利挡在决赛之外。",
+        "seconds": 6.04,
         "voice": {
           "pitch": "+0Hz"
         },
-        "title_card": "四个赛点\n都没能兑现",
-        "kicker": "十月 · 里昂"
+        "image": "assets/reel/cobolli-finals-2026/tail-lyon-musetti-2026-3x4.jpg",
+        "image_kind": "photo"
       },
       {
-        "narration": "维也纳第二轮，面对贝雷蒂尼，他在首盘二比五时伤退。随后退出巴黎，自己已经无法再上场争取积分。",
-        "seconds": 9.832,
-        "voice": {
-          "pitch": "+0Hz"
-        },
-        "title_card": "维也纳伤退\n随后退出巴黎",
-        "kicker": "伤病来袭"
-      },
-      {
-        "narration": "十一月三日晚，鲁德在巴黎击败霍达尔。这个结果，让科博利第一次锁定年终总决赛资格。",
-        "seconds": 8.44,
+        "narration": "维也纳伤退，又退出巴黎。巴黎当地十一月三日晚，鲁德击败霍达尔，科博利首次锁定年终资格。",
+        "seconds": 9.184,
         "voice": {
           "pitch": "+0Hz"
         },
@@ -784,8 +801,8 @@
         "voice": {
           "pitch": "+0Hz"
         },
-        "title_card": "第一次年终\n在意大利等他",
-        "kicker": "都灵，下一站"
+        "image": "assets/reel/cobolli-finals-2026/cover-rg-fist-2026-3x4.jpg",
+        "image_kind": "photo"
       }
     ],
     "sources": {

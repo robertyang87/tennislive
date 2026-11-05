@@ -1,9 +1,9 @@
 {
  "model": "medium.en",
- "source_sha256": "e21404c09106e535170756ce3d694270b9cc9eb8b2f339a6f9361687c4d73bc1",
+ "source_sha256": "b38d4a3563ec1a6bbb0dc583095189c1f452cb0781e20cc0a1bd123c146b0264",
  "clip": [
   0.0,
-  34.0
+  null
  ],
  "duration": 33.984,
  "segments": [
@@ -11,14 +11,29 @@
    "start": 24.32,
    "end": 25.72,
    "text": "you",
-   "avg_logprob": -0.491,
-   "no_speech_prob": 0.94,
+   "avg_logprob": -0.538,
+   "no_speech_prob": 0.935,
    "words": [
     {
      "w": " you",
      "s": 24.32,
      "e": 25.72,
-     "p": 0.425
+     "p": 0.42
+    }
+   ]
+  },
+  {
+   "start": 32.18,
+   "end": 33.58,
+   "text": ".",
+   "avg_logprob": -0.927,
+   "no_speech_prob": 0.895,
+   "words": [
+    {
+     "w": " .",
+     "s": 32.18,
+     "e": 33.58,
+     "p": 0.074
     }
    ]
   }

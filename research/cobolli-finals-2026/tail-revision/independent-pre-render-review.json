@@ -1,0 +1,65 @@
+{
+  "schema": "cobolli-tail-pre-render-independent-review/v1",
+  "status": "pass_for_spec_and_images_not_actual_movie",
+  "checked_at": "2026-11-04T12:48:18.521141+00:00",
+  "spec_sha256": "cdbecf59d63383d2e311a14c43e4065fdb412fb5fc338094ad15ad2b26453cae",
+  "baseline_spec_sha256": "81dcfb313288fe0601ff3c3ea1e2e836c4cdc78f6375345c54020665d486ee86",
+  "scope": "Final locked26-segment spec, text facts, exact unchanged source/prefix comparison, photo provenance manifest and actual cropped photo inspection. No actual new movie exists yet; no voice listening claim.",
+  "prefix_22_segments_exact": true,
+  "all_7_sources_exact": true,
+  "source_windows_8_and_quotes_14_exact": "All occur in unchanged prefix; no source/window/quote changes.",
+  "cover_and_push_exact": true,
+  "old_tail_seconds": 47.048,
+  "new_tail_seconds": 31.216,
+  "tail_title_cards": 1,
+  "tail_photos": 3,
+  "expected_actual_tts_requests": 19,
+  "public_player_names": [
+    "科博利",
+    "蒂亚福",
+    "兹维列夫",
+    "谢尔顿",
+    "梅德韦杰夫",
+    "阿尔纳尔迪",
+    "德米纳尔",
+    "费里",
+    "保罗",
+    "菲斯",
+    "科梅萨尼亚",
+    "斯库尔凯特",
+    "布洛克斯",
+    "穆塞蒂",
+    "鲁德",
+    "霍达尔"
+  ],
+  "public_player_name_count": 16,
+  "canonical_name_review": "All16 actually present public player names match existing native canonicals. Berrettini name is removed with old standalone injury narration; no false claim17 names remain.",
+  "facts": "New3narrations supported by existing verified facts. Shanghai首战 includes R2afterbye; Musetti saved4MP in LyonSF and won; Vienna retirement then ParisWD precedes November3 Paris-local qualification triggered by Ruud beating Jodar. No diagnosis/recovery promise, no played-matchclaim for Cobolli on qualification day.",
+  "images": [
+    {
+      "id": "asian_brief",
+      "sha256": "9128161d6cae161c1fadb1e3db23119a1455d8a2bbe23fcace25b8d60b9a51e0",
+      "size": [
+        1080,
+        1440
+      ],
+      "visual": "Actually opened full-size cropped photograph; correct named subject, eyes and mouth clear, fills3:4canvas. Musetti photo is honestly enlarged1.44x from1900x1000 professional photo; actual face remains clear."
+    },
+    {
+      "id": "lyon_missed_chances",
+      "sha256": "8a0eca8e6f8650ddff9b4a2396cedfcc02bae305afcf99846e4e8decf63cb3ba",
+      "size": [
+        1080,
+        1440
+      ],
+      "visual": "Actually opened full-size cropped photograph; correct named subject, eyes and mouth clear, fills3:4canvas. Musetti photo is honestly enlarged1.44x from1900x1000 professional photo; actual face remains clear."
+    }
+  ],
+  "closing_photo": "Actually opened reused2026RGfinal photograph, identical existing archive used at opening. Closing narration is full-season reflection; not described as November3reaction or a title-winning scene.",
+  "remaining": [
+    "Actual newly encoded movie sampled visual and burned-caption inspection",
+    "Native automated19-request/38-reference voice checks and actual input identities",
+    "Final actualASS14cue times and native verify_final",
+    "Exact-headCI/normalmerge/native re-push handled byproducer"
+  ]
+}
