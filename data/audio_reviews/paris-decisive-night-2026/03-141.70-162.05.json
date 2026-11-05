@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-NhicyZqdUSQ/NhicyZqdUSQ.mp4",
+  "source_sha256": "3b88518c8a4d215e9e5ab27e12f2495848c7540168b716fa27f7a959d3c83c23",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-05T04:36:20+00:00",
+  "reviewed_from": 141.7,
+  "reviewed_to": 162.05,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 141.88,
+      "end": 144.22,
+      "en": "Well, he did, but he just didn't quite hit his spot.",
+      "zh": "他是打到了，只是没打到点上。"
+    },
+    {
+      "start": 144.9,
+      "end": 147.68,
+      "en": "Jodar was waiting for it, was able to hit a good return there.",
+      "zh": "霍达尔早等在那里，回了一记漂亮的接发。"
+    },
+    {
+      "start": 152.32,
+      "end": 155.14,
+      "en": "What an absolute clinic today from Jodar.",
+      "zh": "霍达尔今天，简直是大师授课。"
+    },
+    {
+      "start": 155.3,
+      "end": 161.9,
+      "en": "A massive week for the Spaniard coming up, as he looks to try and book his spot in Turin.",
+      "zh": "对这位西班牙小将来说，这是重大的一周——他正努力锁定都灵的席位。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 3b88518c8a4d215e9e5ab27e12f2495848c7540168b716fa27f7a959d3c83c23，存于 data/source_asr/NhicyZqdUSQ/small.en.json 与 data/source_asr/NhicyZqdUSQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
