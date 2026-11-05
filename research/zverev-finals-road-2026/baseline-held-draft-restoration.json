@@ -1,0 +1,28 @@
+{
+  "source_formal_path": "specs/reels/paris-decisive-night-2026.json",
+  "pending_path": "specs/reels/pending/paris-decisive-night-2026.draft.json",
+  "original_sha256": "a57cc763f455fa2e55d8fd00ddfc857551c92232d88eaedbfe8a4f7b34793d2f",
+  "pending_sha256": "a57cc763f455fa2e55d8fd00ddfc857551c92232d88eaedbfe8a4f7b34793d2f",
+  "bytes": 37358,
+  "byte_identical_move": true,
+  "user_hold_preserved": true,
+  "push_auto": false,
+  "classification": "Current unfinished user-held multi-player event film is a draft; relocation does not declare it valid or authorize rendering/publication.",
+  "initial_ci_run": 41970280744,
+  "actual_ci_failures": [
+    "Unsupported segment keys audio/label/url",
+    "OfficialHDcover gate failed",
+    "editorial.human_context must be object",
+    "NoncanonicalChinese name 埃切韦里 vs 埃切维里",
+    "Three sourcequote lines exceed16sub_width",
+    "Segment13label lacks score/event",
+    "Time-relative今晚 without datedclaim"
+  ],
+  "promotion_condition": "Repair under existing native validate+draftpromotion workflow before returning to formalspecs/reels; all current validate/render/audio/QC/publish gates remain unchanged. No tests/legacywhitelists modified.",
+  "actual_pending_validate": {
+    "status": "blocked",
+    "exception_type": "ReelError",
+    "reason": "spec.editorial.mode 必须是 match_review",
+    "method": "Native build_match_reel.validate_spec on actual unchanged pending JSON bytes, no mutation or rendering."
+  }
+}
