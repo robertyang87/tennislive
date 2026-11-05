@@ -325,7 +325,7 @@ function shotMicro(v,TG,TM,TO,TN){ // v：从这一镜开始的秒数；TG/TM/TO
 }
 function hideAll(){
   courtG.visible=false; allRk.forEach(r=>{ r.g.visible=false; r.g.position.set(0,0,0); r.g.rotation.set(0,0,0); r.g.scale.setScalar(r.g.parent===rackG?0.42:1); r.frameMat.opacity=1; });
-  for(const b of [ball,ball2,...powBalls]){ b.m.visible=false; b.gl.visible=false; b.m.scale.set(1,1,1); }
+  for(const b of [ball,ball2,...powBalls]){ b.m.visible=false; b.gl.visible=false; b.m.scale.set(1,1,1); b.m.material.opacity=1; b.gl.material.opacity=0.35; }
   for(const l of [arrowIn,arrowOut,arrowF,arrowN,flyGood,flyDead,...tenAxis,...tenCurves.map(c=>c.l),...confNodes.map(c=>c.th)]) l.material.opacity=0;
   for(const r of [spinRing,spinRing2,hitRing,stampRing]) r.material.opacity=0; chide(sweat); chide(sparks);
   for(const k in TT) op(TT[k],0); genLab.forEach(s=>op(s,0));
@@ -339,7 +339,9 @@ function impact(R,b,k,{spin=1,ang=0.75,squash=0.35}={}){
   else if(k<0.55){ const u=(k-0.45)/0.1; const sq=Math.sin(Math.PI*u)*squash; p=new THREE.Vector3(0,0,r*(1-sq)); b.m.scale.set(1+sq*0.6,1+sq*0.6,1-sq); }
   else { const u=(k-0.55)/0.45; p=out.clone().multiplyScalar(lerp(r,6.5,u)); b.m.scale.set(1,1,1); }
   b.m.rotation.y=(k>0.5?(k-0.5)*30*spin:0); b.m.rotation.x=0.4;
-  const w=p.clone().applyMatrix4(R.g.matrixWorld); showB(b,w); return w; }
+  const w=p.clone().applyMatrix4(R.g.matrixWorld); showB(b,w);
+  const fade=ss(0,0.1,k)*(1-ss(0.9,1,k)); b.m.material.transparent=true; b.m.material.opacity=fade; b.gl.material.opacity=0.35*fade;   // 循环首尾淡入淡出，不瞬移
+  return w; }
 
 function shotHook(u,D){
   const DR=ev('drop',5.3), QQ=ev('q',9.8);
@@ -366,7 +368,7 @@ function shotGut(u,D){
   const k=u<HI?0:((u-HI)%4.2)/4.2; rk.g.updateMatrixWorld(true);
   if(u>=HI){ const p=impact(rk,ball,k,{spin:0.25,ang:0.0,squash:0.32});
     const c=new THREE.Vector3(0,0,0).applyMatrix4(rk.g.matrixWorld); const nrm=new THREE.Vector3(0,0,1).transformDirection(rk.g.matrixWorld);
-    const vin=k<0.45?ss(0,0.2,k):1-ss(0.45,0.5,k), vout=ss(0.55,0.75,k);
+    const vin=k<0.45?ss(0,0.2,k):1-ss(0.45,0.5,k), vout=ss(0.55,0.75,k)*(1-ss(0.9,1,k));
     setLine(arrowIn,[c.clone().addScaledVector(nrm,3.3),c.clone().addScaledVector(nrm,0.55)]); arrowIn.material.opacity=vin*0.9;
     setLine(arrowOut,[c.clone().addScaledVector(nrm,0.55),c.clone().addScaledVector(nrm,0.55+2.75*0.75)]); arrowOut.material.opacity=vout*0.9;
     const l1=tx('v1',T('撞上 v₁','In  v₁'),{color:'#bff4ff',size:0.42,glow:CYAN}); l1.position.copy(c.clone().addScaledVector(nrm,3.0).add(new THREE.Vector3(0,0.55,0))); op(l1,vin);
@@ -399,15 +401,15 @@ function shotSpag(u,D){
     const sl=u>=SL_&&u<BA+0.6?slideField(0.55*(1-banK),0,0,k):null;
     setBed(rk,{cm:STR.spag,cc:STR.spag,zm:z,zc:-z,crossSet:banK<0.5?[2,6,9,12,16]:null,slide:sl,width:2.8});
     if(u>=SL_&&u<BA+0.6){ const p=impact(rk,ball,k,{spin:3.0,ang:0.95,squash:0.25});
-      spinRing.position.copy(p); spinRing.quaternion.copy(camera.quaternion); spinRing.scale.setScalar(1.3+0.2*Math.sin(u*20)); spinRing.material.opacity=k>0.55?0.9:0; proj('ball',p); }
+      spinRing.position.copy(p); spinRing.quaternion.copy(camera.quaternion); spinRing.scale.setScalar(1.3+0.2*Math.sin(u*20)); spinRing.material.opacity=0.9*ss(0.5,0.6,k)*(1-ss(0.9,1,k)); proj('ball',p); }
     const pt=tx('pat',T('美国专利 US 4,273,331 · 发明人 Werner Fischer（联邦德国）· 1977 年申请','US Patent 4,273,331 · Werner Fischer (W. Germany) · filed 1977'),{color:'#ffe0da',size:0.42,glow:RED}); hud(pt,0,2.05); op(pt,ss(PA,PA+0.8,u)*(1-ss(SL_-0.3,SL_,u)));
     const pt2=tx('pat2',T('主线和横线不编织，分在两层','Mains and crosses not interlaced — two layers'),{color:'#ffffff',size:0.5,glow:RED}); hud(pt2,0,1.55); op(pt2,ss(PA+1,PA+1.8,u)*(1-ss(SL_-0.3,SL_,u)));
     const x2=tx('x2',T('转速 ≈ 普通球拍的 2 倍（实验室）','Spin ≈ 2× a conventional racket (lab)'),{color:'#ffe6b0',size:0.6,glow:GOLD}); hud(x2,0,2.05); op(x2,ss(SL_+1.5,SL_+2.3,u)*(1-ss(BA-0.3,BA,u)));
     const x2s=tx('x2s',T('Goodwill & Haake 2002','Goodwill & Haake 2002'),{color:'#d8c09a',size:0.3}); hud(x2s,0,1.55); op(x2s,ss(SL_+2,SL_+2.6,u)*(1-ss(BA-0.3,BA,u)));
     const bn=tx('ban',T('1978 · 国际网联：主线横线必须交错编织或粘合','1978 · ITF: strings must be interlaced or bonded'),{color:'#ffffff',size:0.55,glow:RED}); hud(bn,0,2.05); op(bn,ss(BA,BA+0.6,u)*(1-ss(RO-0.4,RO,u)));
-    const st=tx('stamp',T('禁','BANNED'),{color:'#ffd8d2',size:2.2,font:'900 170px "Noto Sans CJK SC","Inter",sans-serif',glow:'rgba(255,60,40,1)'}); hud(st,1.2,-0.2,8); const sk=ss(BA+0.1,BA+0.35,u); st.scale.set(st.userData.w0||(st.userData.w0=st.scale.x),2.2,1); st.material.rotation=-0.2; op(st,sk*(1-ss(BA+2.6,BA+3.2,u)));
+    const st=tx('stamp',T('禁','BANNED'),{color:'#ffd8d2',size:2.2,font:'900 170px "Noto Sans CJK SC","Inter",sans-serif',glow:'rgba(255,60,40,1)'}); hud(st,1.2,-0.2,8); const sk=ss(BA+0.05,BA+0.65,u);   // 盖章 0.6 s 落下（原 0.25 s，相邻帧差冲到 25） st.scale.set(st.userData.w0||(st.userData.w0=st.scale.x),2.2,1); st.material.rotation=-0.2; op(st,sk*(1-ss(BA+2.6,BA+3.2,u)));
     stampRing.position.copy(st.position); stampRing.quaternion.copy(camera.quaternion); stampRing.scale.setScalar(lerp(6,3.2,sk)); stampRing.material.opacity=sk*(1-ss(BA+2.6,BA+3.2,u))*0.9;
-    if(u>BA&&u<BA+0.2){ FX_FLASH=0.12; FX_SHAKE=0.5; }
+    // 不闪白、不抖屏：闪白在线性空间里混，0.1 到屏上就是三成多的亮度跳变（motion_check 抓到 65.5 s 相邻帧差 90 → 25），盖章本身的落下和光环已经够有冲击
     return; }
   // 库仑：横截面慢放——球贴着线滑（摩擦力∝压力），接触点停住后滚起来
   const v=u-RO; look(0,0.6,6.2,0,0.4,0); DOF.on=false;
@@ -444,7 +446,7 @@ function shotPoly(u,D){
   // 共识：线能不能滑开再弹回
   const v=u-SN; rk.g.rotation.set(-0.15,-0.6,0); look(5.0,1.2,7.6,0,0.2,0); DOF.on=true; DOF.focus=8.6; DOF.ap=0.00007;
   const k=(v%3.4)/3.4; rk.g.updateMatrixWorld(true); setBed(rk,{cm:STR.poly,cc:STR.poly,slide:slideField(0.28,0,0,k),width:2.6});
-  const p=impact(rk,ball,k,{spin:2.0,ang:0.95,squash:0.25}); spinRing.position.copy(p); spinRing.quaternion.copy(camera.quaternion); spinRing.scale.setScalar(1.2); spinRing.material.opacity=k>0.55?0.8:0;
+  const p=impact(rk,ball,k,{spin:2.0,ang:0.95,squash:0.25}); spinRing.position.copy(p); spinRing.quaternion.copy(camera.quaternion); spinRing.scale.setScalar(1.2); spinRing.material.opacity=0.8*ss(0.5,0.6,k)*(1-ss(0.9,1,k));
   const t=tx('snapT',T('大家都认的：线滑开 → 千分之一秒内弹回','Agreed: strings slide → snap back within 1 ms'),{color:'#ffffff',size:0.55,glow:'rgba(185,200,255,1)'}); hud(t,0,2.05); op(t,ss(0.3,1,v));
   const t2=tx('snapS',T('减少横线、给线润滑，转速也会增加（实验室）','Fewer crosses or lubricated strings also add spin (lab)'),{color:'#c8d2f0',size:0.34}); hud(t2,0,1.55); op(t2,ss(1,1.6,v));
   proj('ball',p);
@@ -568,11 +570,11 @@ function setState(t){ for(const k in anchors) delete anchors[k]; allClouds.forEa
   bokeh.enabled=DOF.on; if(DOF.on){ bokeh.uniforms.focus.value=DOF.focus; bokeh.uniforms.aperture.value=DOF.ap; bokeh.uniforms.maxblur.value=0.009; }
   return s; }
 window.renderAt=(t)=>{
-  const c=CUTS.find(c=>t>=c&&t<c+MOVE.xf);
+  const c=CUTS.find(c=>t>=c-0.01&&t<c+MOVE.xf);   // 提前 0.01 s：切换点只精确到 1/240 s，免得正好落在切换后的那一帧先硬切
   if(c!==undefined){ // 交叉溶解：切换前最后一帧缓缓推近、淡出，新镜头淡入
-    setState(c-1/60); xfPass.enabled=false; composer.renderToScreen=false; composer.render();
+    setState(c-0.02); xfPass.enabled=false; composer.renderToScreen=false; composer.render();
     copyQuad.material.uniforms.tDiffuse.value=composer.readBuffer.texture; renderer.setRenderTarget(rtPrev); copyQuad.render(renderer); renderer.setRenderTarget(null);
-    composer.renderToScreen=true; const k=ss(0,MOVE.xf,t-c); xfPass.enabled=true; xfPass.uniforms.uMix.value=k; xfPass.uniforms.uPush.value=MOVE.xfPush*k; }
+    composer.renderToScreen=true; const k=ss(-0.01,MOVE.xf,t-c); xfPass.enabled=true; xfPass.uniforms.uMix.value=k; xfPass.uniforms.uPush.value=MOVE.xfPush*k; }
   else xfPass.enabled=false;
   const s=setState(t); composer.render(); return JSON.stringify(Object.assign({_shot:s},anchors)); };
 window.CUTS=()=>CUTS;

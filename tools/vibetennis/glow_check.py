@@ -14,7 +14,9 @@
 
     python3 tools/vibetennis/glow_check.py 帧1.jpg 帧2.jpg …          # 逐帧报数，超标的标 ✗
     python3 tools/vibetennis/glow_check.py --pair 开泛光目录 关泛光目录   # 同名帧两两相减
-    python3 tools/vibetennis/glow_check.py --film 成片.mp4 --timeline r3d/timeline.json
+    python3 tools/vibetennis/glow_check.py --film 3D层.mp4 --timeline r3d/timeline.json
+      ⚠️ --film 要量 **3D 层**（叠字幕之前：ffmpeg -f concat -i r3d/list.txt -c copy 3d.mp4），不要量成片——
+      底部字幕是纯白字，单这一项 clip 就有 0.4–0.7%（EP07 成片 51 帧「超标」全是字幕，3D 层 0 帧）
 """
 from __future__ import annotations
 

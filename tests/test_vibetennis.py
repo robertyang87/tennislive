@@ -343,7 +343,7 @@ def _motion_problems(js: str) -> list[str]:
     if xf < 0.4: bad.append(f"交叉溶解 {xf}s 太短（≥0.4）")
     for need in ("findCuts(", "xfPass", "CAMMOVE"):
         if need not in js: bad.append(f"缺 {need}")
-    if re.search(r"FX_FLASH=0\.(?:[2-9]|1[3-9])", js): bad.append("闪白 > 0.12")
+    if re.search(r"FX_FLASH=0\.\d*[1-9]|FX_SHAKE=0\.\d*[1-9]", js): bad.append("用了闪白或抖屏（全局标准：一律不用）")
     return bad
 
 
@@ -356,9 +356,10 @@ def test_转场运镜全局标准_新一集的scene都按MOVE来():
 
 
 def test_转场运镜判据反向验证():
-    good = "const MOVE={push:0.06, orbit:0.06, xf:0.6, xfPush:0.04}; findCuts(); xfPass; CAMMOVE; FX_FLASH=0.12;"
+    good = "const MOVE={push:0.06, orbit:0.06, xf:0.6, xfPush:0.04}; findCuts(); xfPass; CAMMOVE; FX_FLASH=0;"
     assert _motion_problems(good) == []
     assert _motion_problems(good.replace("xf:0.6", "xf:0.2"))
     assert _motion_problems(good.replace("push:0.06", "push:0"))
     assert _motion_problems(good.replace("findCuts();", ""))
-    assert _motion_problems(good.replace("FX_FLASH=0.12", "FX_FLASH=0.3"))
+    assert _motion_problems(good.replace("FX_FLASH=0;", "FX_FLASH=0.1;"))
+    assert _motion_problems(good + " FX_SHAKE=0.5;")
