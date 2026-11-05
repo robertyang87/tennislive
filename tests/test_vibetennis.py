@@ -274,3 +274,92 @@ def test_背景声断了要拦(tmp_path):
     thin = qc.quiet_stretches(wav, 0, 20)
     assert thin and thin[0][1] >= 19, thin          # 后 10 秒只剩零星声，要报
     assert qc.quiet_stretches(wav, 0, 9) == []      # 前 10 秒正常，不许误报
+
+
+# ---------- 光晕全局标准（所有者 2026-11-05「所有动效里的光晕都很亮，你要统一复查下，同时设定好一个全局标准」）----------
+# 每集 scene.js 要定义 GLOW 常量并用它管泛光、叠加发光和自发光；数值上限见 docs/vibetennis.md「光晕标准」。
+# 定标准之前已发的六集挂在这里，只许减不许加。
+GLOW_LEGACY = {"vibetennis-live-faster-2026", "vibetennis-electronic-line-calling-2026",   # EP03 的工程没留下 scene.js，不在表里
+               "vibetennis-federer-54-percent-2026", "vibetennis-court-speed-2026", "vibetennis-serve-nash-2026"}
+GLOW_CAP = {"bloom_strength": 0.25, "bloom_radius": 0.35, "bloom_threshold": 0.92, "k": 0.5, "emissive": 0.35, "emissiveWhite": 0.15}
+
+
+def _glow_problems(js: str) -> list[str]:
+    import re
+    bad = []
+    m = re.search(r"const GLOW=\{bloom:\[([\d.]+),([\d.]+),([\d.]+)\],\s*k:([\d.]+),\s*emissive:([\d.]+),\s*emissiveWhite:([\d.]+)\}", js)
+    if not m:
+        return ["没有 `const GLOW={bloom:[strength,radius,threshold], k:…, emissive:…, emissiveWhite:…}`"]
+    st, ra, th, k, em, emw = map(float, m.groups())
+    if st > GLOW_CAP["bloom_strength"]: bad.append(f"泛光 strength {st} > {GLOW_CAP['bloom_strength']}")
+    if ra > GLOW_CAP["bloom_radius"]: bad.append(f"泛光 radius {ra} > {GLOW_CAP['bloom_radius']}")
+    if th < GLOW_CAP["bloom_threshold"]: bad.append(f"泛光 threshold {th} < {GLOW_CAP['bloom_threshold']}")
+    if k > GLOW_CAP["k"]: bad.append(f"叠加发光系数 k {k} > {GLOW_CAP['k']}")
+    if em > GLOW_CAP["emissive"]: bad.append(f"自发光上限 {em} > {GLOW_CAP['emissive']}")
+    if emw > GLOW_CAP["emissiveWhite"]: bad.append(f"白色件自发光上限 {emw} > {GLOW_CAP['emissiveWhite']}")
+    if "UnrealBloomPass(" in js and not re.search(r"UnrealBloomPass\([^\n;]*?\.\.\.GLOW\.bloom\)", js):
+        bad.append("UnrealBloomPass 没用 ...GLOW.bloom")
+    for mm in re.finditer(r"emissive:([^,}]+),emissiveIntensity:([\d.]+)", js):
+        col, val = mm.group(1).strip(), float(mm.group(2))
+        if val <= GLOW_CAP["emissive"]:
+            continue
+        h = re.fullmatch(r"0x([0-9a-fA-F]{6})", col)
+        if h:   # 深色底色的自发光只提亮暗部，不算光晕
+            r, g, b = (int(h.group(1)[i:i + 2], 16) / 255 for i in (0, 2, 4))
+            if 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.15:
+                continue
+        bad.append(f"自发光 {col} × {val} 超过 {GLOW_CAP['emissive']}（改用 GLOW.emissive）")
+    return bad
+
+
+def test_光晕全局标准_新一集的scene都按GLOW常量来():
+    eps = sorted(p for p in (ROOT / "tools/vibetennis/episodes").iterdir() if (p / "r3d/scene.js").is_file())
+    assert GLOW_LEGACY <= {p.name for p in eps}, f"豁免表里有不存在的集：{GLOW_LEGACY - {p.name for p in eps}}"
+    problems = {p.name: _glow_problems((p / "r3d/scene.js").read_text(encoding="utf-8")) for p in eps if p.name not in GLOW_LEGACY}
+    assert problems, "一集都没查到——判据自己哑了"
+    bad = {k: v for k, v in problems.items() if v}
+    assert not bad, f"光晕超标：{bad}"
+
+
+def test_光晕判据反向验证():
+    good = "const GLOW={bloom:[0.22,0.3,0.93], k:0.5, emissive:0.35, emissiveWhite:0.15}; new UnrealBloomPass(v,...GLOW.bloom); emissive:0x0a1a3a,emissiveIntensity:0.5"
+    assert _glow_problems(good) == []
+    assert _glow_problems(good.replace("0.22,0.3,0.93", "0.5,0.45,0.88"))
+    assert _glow_problems(good.replace("...GLOW.bloom", "0.5,0.45,0.88"))
+    assert _glow_problems(good + "; emissive:c,emissiveIntensity:0.8")
+    assert _glow_problems(good + "; emissive:0xffffff,emissiveIntensity:0.6")
+    assert _glow_problems("nothing")
+
+
+# ---------- 转场与运镜全局标准（所有者 2026-11-05「动画的转场和运镜要做的丝滑且有吸引力」）----------
+def _motion_problems(js: str) -> list[str]:
+    import re
+    m = re.search(r"const MOVE=\{push:([\d.]+),\s*orbit:([\d.]+),\s*xf:([\d.]+),\s*xfPush:([\d.]+)\}", js)
+    if not m:
+        return ["没有 `const MOVE={push:…, orbit:…, xf:…, xfPush:…}`"]
+    push, orbit, xf, xfp = map(float, m.groups())
+    bad = []
+    if push <= 0 or orbit <= 0: bad.append("运镜推近／绕转为 0，等于静止机位")
+    if xf < 0.4: bad.append(f"交叉溶解 {xf}s 太短（≥0.4）")
+    for need in ("findCuts(", "xfPass", "CAMMOVE"):
+        if need not in js: bad.append(f"缺 {need}")
+    if re.search(r"FX_FLASH=0\.\d*[1-9]|FX_SHAKE=0\.\d*[1-9]", js): bad.append("用了闪白或抖屏（全局标准：一律不用）")
+    return bad
+
+
+def test_转场运镜全局标准_新一集的scene都按MOVE来():
+    eps = sorted(p for p in (ROOT / "tools/vibetennis/episodes").iterdir() if (p / "r3d/scene.js").is_file())
+    problems = {p.name: _motion_problems((p / "r3d/scene.js").read_text(encoding="utf-8")) for p in eps if p.name not in GLOW_LEGACY}
+    assert problems, "一集都没查到——判据自己哑了"
+    bad = {k: v for k, v in problems.items() if v}
+    assert not bad, f"转场／运镜不合标准：{bad}"
+
+
+def test_转场运镜判据反向验证():
+    good = "const MOVE={push:0.06, orbit:0.06, xf:0.6, xfPush:0.04}; findCuts(); xfPass; CAMMOVE; FX_FLASH=0;"
+    assert _motion_problems(good) == []
+    assert _motion_problems(good.replace("xf:0.6", "xf:0.2"))
+    assert _motion_problems(good.replace("push:0.06", "push:0"))
+    assert _motion_problems(good.replace("findCuts();", ""))
+    assert _motion_problems(good.replace("FX_FLASH=0;", "FX_FLASH=0.1;"))
+    assert _motion_problems(good + " FX_SHAKE=0.5;")

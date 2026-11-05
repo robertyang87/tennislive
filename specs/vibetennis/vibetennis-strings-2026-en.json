@@ -1,0 +1,69 @@
+{
+ "slug": "vibetennis-strings-2026-en",
+ "_status": "EP07 英文版：3D 用 lang=en 另渲一份（场景里有 3D 文字），叠加层 VT_LANG=en；无配音，音轨为 BGM（vibeknowledge）＋音效。",
+ "_column": "vibetennis 第 7 集（球具三部曲①拍线）：1874 羊肠线 → 合成线 → 1977 意面拍专利、1978 被禁 → 1997 聚酯线 → 混搭；牛顿恢复系数、库仑摩擦、应力松弛（麦克斯韦弛豫时间）三条理论；转速实验两边结论相反、只有「滑开再弹回」是共识；换线材球速变化很小；掉磅与职业球员每换新球就换拍；自算 Match Charting Project 男子发球上网占比 1990 年代 → 2020 年以来，时间对上聚酯线普及，但同期球拍、球、场地都在变，没有研究单独算出线的作用。",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "audio": {
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04–EP06）；112.3 BPM，按整小节循环拼接，片尾 3 s 淡出；起点让第 8 小节线（主段进来）落在钩子里柱状图砸下来那一刻",
+   "sfx": "sfx.py 合成，事件钉在 r3d/timeline.json 的画面事件与 scene.js 的动画节点上（四代线换色、柱状图砸下、撞击慢放、公式、合成线换上、专利、意面拍滑线、「禁」章、库仑滑→滚、1997/2010、正反两方、滑开弹回、三拍同击、掉磅曲线、出界、换拍、发球上网柱子、色带、五股线打结）",
+   "loudness": "BGM -20、音效 -23；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+  },
+  "_narration_why": "docs/vibetennis.md §8：英文版没有配音。"
+ },
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-strings-2026/cover/make_cover.py",
+  "hook": "Did the strings\nchange tennis?",
+  "subject": "拍线",
+  "topic": "拍线四代 · 牛顿 · 库仑 · 麦克斯韦",
+  "_why": "同中文版（所有者 2026-11-05 选的 B 杂志信息图风），文字英文、品牌 Tennis Jetlag。"
+ },
+ "push": {
+  "auto": true,
+  "summary": "Gut",
+  "_summary_why": "标题 EP07.vibetennis|Gut（主题最多 4 个字符；gut 在网球里也指拍线）。",
+  "lead": "The first lawn-tennis rackets of 1874 were strung with sheep gut; synthetics like nylon followed, and in 1997 Kuerten won Roland-Garros on Luxilon polyester. By 2010 every man at Wimbledon used it. What did strings change? Newton first measured how fast a ball rebounds relative to how fast it hits; in the lab, changing string material barely changes ball speed. Spin studies disagree, and the one point everyone accepts is that strings slide and snap back — the 1977 'spaghetti' racket, with mains and crosses not interlaced, gave about twice the spin and was banned by the ITF in 1978. The real cost is tension loss: about 30% below the pull tension right after stringing, fastest for polyester, which is why pros switch to a freshly strung racket at every ball change. Our own count from Match Charting Project data: men's serve-and-volley (aces excluded) was about 40% of points in the 1990s and under 10% after 2005 — the same years polyester spread. But rackets, balls and courts changed too, and no study has isolated the strings' effect."
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "是线，改变了网球吗？",
+  "thesis": "拍线 150 年换了四代：1874 年羊肠线（ITF）；因贵、不耐磨、怕潮出现以尼龙为主的合成线；1977 年 Werner Fischer 申请主线横线分层不编织的「意面拍」专利（US 4,273,331），实验室转速约为普通球拍 2 倍（Goodwill & Haake 2002），1978 年 ITF 规则要求交错编织或粘合；1997 年库尔滕用 Luxilon 聚酯线夺法网，2010 年温网男选手都用聚酯线（据温网穿线师）。理论三条：牛顿碰撞定律（恢复系数）、库仑摩擦定律（球在线上先滑后滚，所有线摩擦都够大，Goodwill & Haake 2004）、应力松弛（麦克斯韦弛豫时间；实测张力随对数时间线性下降，Cross 2000）。证据：线材对球速影响很小（Cross 等 2000；磅数降 20% 底线球只快 2–3%、发球不到 1%，Bower & Cross 2005）；转速 TWU 报聚酯多约 20%（非同行评审），同行评审实验测不出线材、粗细、磅数的影响；共识是线滑开再弹回（减少横线、润滑也增转）。掉磅：刚穿好比设定低约 30%（Cross & Bower 2001），聚酯掉得最快；职业赛每换新球换一支新穿的拍（The Globe and Mail 2025，穿线房一天 130–200 支）。打法：自算 MCP 男子发球上网占比（去掉 ACE），全部标注比赛 1990–99 39.5% → 2005–09 5.7% → 2020–26 4.3%，温网 73.1% → 6.2%；去掉前三名球员、按球员等权，趋势不变。局限：MCP 志愿者标注、偏向顶尖球员与大赛，非官方统计；时间相关不等于因果，同期球拍（大拍面专利 1976）、球、场地、体能都在变，没有研究单独算出线的作用。",
+  "beats": [
+   "开场：线换了四代，发球上网十来年里近乎消失——是线改变了网球吗？",
+   "羊肠线：1874；牛顿恢复系数",
+   "合成线：羊肠线贵、不耐磨、怕潮",
+   "意面拍：1977 专利、转速约 2 倍、1978 被禁；库仑摩擦：先滑后滚",
+   "聚酯线：1997 库尔滕、2010 温网；转速实验两边结论相反，共识是滑开再弹回",
+   "力量：换线材球速变化很小",
+   "掉磅：应力松弛、刚穿好低约 3 成、聚酯掉得最快、换新球就换拍",
+   "打法：发球上网 1990 年代约 4 成 → 2005 年后不到 1 成，时间对上聚酯普及，但同期都在变，没有研究单独算出来",
+   "落点：线改了手感、磅数和穿线规矩；打法这笔账要和球拍、球一起算（三部曲下一集球拍）"
+  ],
+  "sources": [
+   "ITF 拍线资料（羊肠线 1874、合成线、1978 年穿线规则）",
+   "US Patent 4,273,331（Werner Fischer，1977 年申请，1981 年授权）",
+   "Goodwill, S. R. & Haake, S. J. (2002/2004) 拍线与转速实验（Sports Engineering / Experimental Mechanics）",
+   "Cross, R. et al. (2000) / Cross & Bower (2001) / Bower & Cross (2005) 拍线张力与球速",
+   "Lindsey, C. Tennis Warehouse University（非同行评审）",
+   "Newton, I. (1687) Principia；Maxwell, J. C. (1867) On the Dynamical Theory of Gases",
+   "The Globe and Mail (2025) 加拿大大师赛穿线房",
+   "Match Charting Project（Jeff Sackmann，志愿者逐分标注），自算脚本 papers/vibetennis-strings-2026/data/"
+  ],
+  "_claims": "每个上屏数字的出处见 papers/vibetennis-strings-2026/sources.md"
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-strings-2026",
+ "_variant_why": "docs/vibetennis.md §8：每集都出英文版，无配音，画面文字全英文，品牌 Tennis Jetlag，成片并列放进原版 Release。"
+}
