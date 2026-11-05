@@ -158,12 +158,21 @@ function makeRacket(group=scene,{nm=16,nc=19}={}){
   const curve=new THREE.EllipseCurve(0,0,B+0.06,A+0.06,0,Math.PI*2); const pts=curve.getPoints(160).map(p=>new THREE.Vector3(p.x,p.y,0));
   const frame=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts,true),200,0.075,12,true),frameMat); g.add(frame);
   const edge=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts,true),200,0.085,8,true),new THREE.MeshBasicMaterial({color:0x4fe3ff,wireframe:true,transparent:true,opacity:0.12,blending:THREE.AdditiveBlending,depthWrite:false})); g.add(edge);
-  for(const s of [-1,1]){ const th=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(s*0.55,-A+0.12,0),new THREE.Vector3(s*0.32,-A-0.7,0),new THREE.Vector3(s*0.12,-A-1.35,0)]),40,0.06,10),frameMat); g.add(th); }
-  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.15,2.4,8),new THREE.MeshPhysicalMaterial({color:0x2a2f3e,metalness:0.2,roughness:0.6,transparent:true})); handle.position.y=-A-2.55; g.add(handle);
+  // 拍喉照真拍子（所有者 2026-11-05「拍喉那块和真实的不一样」，对照 Commons「Tennis racket and ball.JPG」）：
+  // 两根拍杆从拍框两侧约 4 点半／7 点半处顺着拍框切线分出来，往下收拢成拍喉，拍框底边（拍桥）和两根拍杆围出一个开口三角；
+  // 再接粗握把（八角）和略大的底盖。比例按 27 英寸球拍：拍框外高 3.52（约 34 cm），全长约 7.1。
+  const TH=-A-1.25; // 两杆收拢处（拍喉底）
+  const neck=new THREE.Group(); g.add(neck);   // 库仑横截面那一镜把拍子放平，只留拍框和线床
+  for(const s of [-1,1]){ const a0=-Math.PI/2+s*0.62, p0=new THREE.Vector3((B+0.06)*Math.cos(a0),(A+0.06)*Math.sin(a0),0);
+    const th=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([p0,new THREE.Vector3(s*0.62,-A-0.2,0),new THREE.Vector3(s*0.33,-A-0.85,0),new THREE.Vector3(s*0.15,TH,0)]),48,0.105,12),frameMat); th.scale.z=0.7; neck.add(th); }
+  const throat=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.19,0.45,10),frameMat); throat.position.y=TH-0.18; neck.add(throat);
+  const gripMat=new THREE.MeshPhysicalMaterial({color:0x464e63,metalness:0.15,roughness:0.55,emissive:0x101828,emissiveIntensity:0.6,transparent:true});
+  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.19,0.2,1.95,8),gripMat); handle.position.y=TH-0.4-0.975; neck.add(handle);
+  const butt=new THREE.Mesh(new THREE.CylinderGeometry(0.23,0.21,0.13,8),gripMat); butt.position.y=TH-0.4-1.95-0.065; neck.add(butt);
   const mx=[...Array(nm).keys()].map(i=>-B*0.86+i*(2*B*0.86)/(nm-1)), cy=[...Array(nc).keys()].map(i=>-A*0.86+i*(2*A*0.86)/(nc-1));
   const mains=mx.map(x=>({x,line:fatLine(0xffffff,2.2)})), crosses=cy.map(y=>({y,line:fatLine(0xffffff,2.2)}));
   [...mains,...crosses].forEach(s=>{ scene.remove(s.line); g.add(s.line); });
-  return {g,frame,frameMat,handle,mains,crosses,mx,cy}; }
+  return {g,frame,frameMat,handle,neck,mains,crosses,mx,cy}; }
 const yAt=x=>A*Math.sqrt(Math.max(0,1-(x/B)**2))-0.04, xAt=y=>B*Math.sqrt(Math.max(0,1-(y/A)**2))-0.04;
 // 线床：color 主线／横线颜色；slide(x,y) 主线在 (x,y) 处的横向位移；zm／zc 主线横线所在平面（意大利面拍两层分开）；ncUse 只画前几根横线
 function setBed(R,{cm=0xffffff,cc=cm,opm=1,opc=1,slide=null,zm=0.0,zc=0.0,crossSet=null,width=2.2}={}){
@@ -322,7 +331,7 @@ function shotSpag(u,D){
     return; }
   // 库仑：横截面慢放——球贴着线滑（摩擦力∝压力），接触点停住后滚起来
   const v=u-RO; look(0,0.6,6.2,0,0.4,0); DOF.on=false;
-  const strip=rk; strip.g.visible=true; strip.g.rotation.set(-Math.PI/2+0.02,0,0); strip.g.position.set(0,0.1,0); strip.g.scale.setScalar(1.6); setBed(strip,{cm:0xff8a7a,cc:0xff8a7a,width:3}); strip.frameMat.opacity=0.25;
+  const strip=rk; strip.g.visible=true; strip.g.rotation.set(-Math.PI/2+0.02,0,0); strip.g.position.set(0,0.1,0); strip.g.scale.setScalar(1.6); strip.neck.visible=false; setBed(strip,{cm:0xff8a7a,cc:0xff8a7a,width:3}); strip.frameMat.opacity=0.25;
   const k=clamp(v/6.0); const xs=lerp(-2.6,2.6,k); const rol=ss(0.45,0.55,k); const by=0.1+0.53+0.02;
   showB(ball,new THREE.Vector3(xs,by,0)); ball.m.scale.setScalar(1.6); ball.m.rotation.z=-(rol>0?(xs-lerp(-2.6,2.6,0.5))/0.53:0)-(1-rol)*0.2*k;
   const fOn=1-rol; setLine(arrowF,[new THREE.Vector3(xs,-0.06,0.3),new THREE.Vector3(xs-1.3*fOn-0.01,-0.06,0.3)]); arrowF.material.opacity=0.95*fOn*ss(0,0.1,k);
@@ -450,7 +459,7 @@ function setPalette(t){ const i=TL.sections.findIndex(s=>t>=s.t0&&t<s.t1); const
   skyMat.uniforms.uTop.value.set(prev.top).lerp(C(cur.top),k); skyMat.uniforms.uHz.value.set(prev.hz).lerp(C(cur.hz),k); skyMat.uniforms.uVi.value.set(prev.vi).lerp(C(cur.vi),k);
   scene.userData.grid.uniforms.uC.value.set(prev.a).lerp(C(cur.a),k).multiplyScalar(0.55); return C(prev.a).lerp(C(cur.a),k); }
 function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[TL.sections.length-1]; const u=t-sc.t0, D=sc.t1-sc.t0;
-  hideAll(); FX_SHAKE=0; FX_FLASH=0; EV=sc.ev||{};
+  hideAll(); FX_SHAKE=0; FX_FLASH=0; rk.neck.visible=true; EV=sc.ev||{};
   ({hook:shotHook,gut:shotGut,synth:shotSynth,spaghetti:shotSpag,poly:shotPoly,power:shotPower,tension:shotTension,tactics:shotTactics,end:shotEnd})[sc.kind](u,D);
   if(Q.get('cam')){ const c=Q.get('cam').split(',').map(Number); look(...c); }   // 封面机位覆盖
   return sc.kind; }
