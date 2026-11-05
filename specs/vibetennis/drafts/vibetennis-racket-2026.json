@@ -50,9 +50,10 @@
   "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03–EP07）；配音稿待写；合成文本数字写汉字，多音字换同音字、字幕保留原字；英文版不配音。",
   "visual_standards": "照 docs/vibetennis.md：GLOW 光晕上限、MOVE 转场运镜（0.6 s 交叉溶解、缓推＋绕转），渲前 glow_check.py --pair、成片 motion_check.py；子弹时间与运动模糊只开在钩子和第 6 段的 2–3 秒",
   "audio": {
-   "music": "沿用 EP04–EP07 那首，⚠️ 授权来源仍无书面记录（docs/vibetennis-fx-catalog.md C5），待所有者定",
+   "music": "原创合成配乐（程序生成的铺底和弦＋节奏层，同 sfx.py 的做法），版权归本号，中英两版共用；不再用《We Never (Remix)》",
    "sfx": "sfx.py 合成，事件钉在画面节点上，声像按 3D 锚点横坐标自动算（fx-catalog A2）",
-   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "_music_why": "证据：①该曲已致 EP04 英文版被 Instagram Content ID 判含他人内容并静音（2026-11-02 通知，见 vibetennis-live-faster-2026-en.json）——是他人有版权的作品；②仓库里没有它的授权记录（docs/vibetennis-fx-catalog.md C5）；③docs/vibetennis.md §3「BGM 要有授权，确认不了就先不放」。所以自己合成；平台上要挂热门曲由所有者上传时走平台曲库（同 2026-08-29『第二种方案』）。"
   }
  },
  "push": {
