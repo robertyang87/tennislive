@@ -1,11 +1,26 @@
 {
  "model": "medium.en",
- "source_sha256": "feef267382f6517904a1773fff7f3b76d7db9aea420158dbbbcc28c697ddc7a4",
+ "source_sha256": "36bcf3572995e38e05acbcbfc184fbd31102d12a53b81c2c08f3db91d4dc4495",
  "clip": [
-  0,
-  24.0
+  0.0,
+  null
  ],
  "duration": 24.0,
- "segments": [],
- "_note": "自制动画源无音轨（ffprobe 实测仅 h264 视频流）；source-asr.yml 的 faster-whisper 在无音轨文件上因 PyAV 缺流崩溃（run 41965461993/41965466443），故按事实落空转写：全片无任何语音。"
+ "segments": [
+  {
+   "start": 2.3,
+   "end": 3.7,
+   "text": "You",
+   "avg_logprob": -0.84,
+   "no_speech_prob": 0.851,
+   "words": [
+    {
+     "w": " You",
+     "s": 2.3,
+     "e": 3.7,
+     "p": 0.106
+    }
+   ]
+  }
+ ]
 }
