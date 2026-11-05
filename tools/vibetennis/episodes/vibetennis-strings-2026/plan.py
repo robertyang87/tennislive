@@ -17,7 +17,7 @@ HOLD = {"h0": 5.0, "h1": 4.5, "g1": 6.0, "g2": 3.5, "m0": 8.0, "m1": 6.0, "x0": 
         "w0": 6.5, "t1": 6.0, "t2": 5.0, "t3": 5.5, "k0": 7.5, "k1": 4.5, "k2": 5.0, "k3": 5.0, "e0": 6.0}
 MIN_SEC = {"hook": 14.0, "gut": 15.0, "synth": 22.0, "spaghetti": 26.0, "poly": 24.0, "power": 8.0, "tension": 22.0, "tactics": 24.0, "end": 10.0}
 EV = [("hook", "drop", "h1", "发球上网"), ("hook", "q", "h2", None), ("gut", "hit", "g1", "球撞上"), ("gut", "cor", "g2", "恢复系数"),
-      ("synth", "swap", "s1", "尼龙"), ("synth", "micro", "m0", None), ("synth", "mgut", "m0", "羊肠线"),
+      ("synth", "swap", "s1", "尼龙"), ("synth", "micro", "m0", None), ("synth", "mgut", "m0", "天然肠线"),
       ("synth", "mmulti", "m0", "多股线"), ("synth", "mmono", "m0", "单丝线"), ("synth", "notch", "m1", "交叉"), ("spaghetti", "patent", "x0", None), ("spaghetti", "slide", "x1", "线能滑开"), ("spaghetti", "ban", "x2", "国际网联"),
       ("spaghetti", "roll", "x3", None), ("poly", "y1997", "p0", None), ("poly", "y2010", "p1", None), ("poly", "pro", "p2", "有实验"),
       ("poly", "con", "p3", None), ("poly", "snap", "p4", "线能不能"), ("power", "bars", "w0", "实验室"), ("tension", "curve", "t1", None),

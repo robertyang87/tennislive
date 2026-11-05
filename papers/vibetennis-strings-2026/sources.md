@@ -159,3 +159,20 @@
 
 ## 可单独截出去转发的那句
 「发球上网，在聚酯线普及的那几年里从四成跌到不到一成。」（1990 年代 39.5% → 2005–09 年 5.7%，Match Charting Project 男子逐分自算、去掉 ACE；⚠️ 单独截出去会被读成「是线造成的」——必须同句或紧接一句「同一时期球拍、球、场地也在变」）
+
+## 显微镜示意镜头（2026-11-05 加，所有者「这些显微镜对比的细节，一定要是科学的，且经过验证的」）
+
+找过真正的显微照片：Crossref 关键词（SEM／wear／notch／natural gut structure）没有网球线的同行评审显微研究；Wikipedia 页面挂着一张多股线截面 SEM 图（Commons「Structure of a tennis string.jpg」），授权页被限流没查成，**不用**。所以镜头做成 3D 示意，画面标「放大看（示意）」，每个细节对出处：
+
+| 画面里的细节 | 出处（原文） | 状态 |
+|---|---|---|
+| 天然肠线＝一条条牛肠衣绞成 | 美国专利 US 4,449,353（Tayebi，1984-05-22）第 5 栏背景：「a conventional gut string made of 16 ribbons of beef gut, each about ⅜″ in width, twisted an average of 2.36 turns/inch」；Wikipedia「Strings (tennis)」：「Natural gut is produced by drying fibers extracted from … the cow intestine called the serous membrane, or serosa」，「Sheep intestines have also been used … in the past」 | ✅ 原件已读（专利 PDF 第 1、6、8 页） |
+| 16 条按 1＋6＋9 三层排、外层螺旋角约 20.4° | 同专利第 5–6 栏、图 3：「one ribbon is located in the center core … six ribbons surround the central ribbon … the nine remaining ribbons form the outermost layer」，外径 0.050 in、「outer surface helix angle (αs) of 20.4°」 | ✅；模型按这个排、按 20.4° 算捻度；截面画成圆股是示意（实物是压扁的带子） |
+| 天然肠线外面有涂层 | Wikipedia：「Natural gut is usually offered in coated form, to reduce its tendency to unravel」 | ✅ |
+| 多股线＝很多根尼龙细丝 | Wikipedia：「Multi-filament strings … are most commonly made of many filaments of nylon」 | ✅；根数示意 |
+| 多股线外面有耐磨涂层 | Wikipedia：「Wear-resistant coatings for nylon strings are common, especially with multi-filament strings」 | ✅ |
+| 单丝线＝实心一根 | Wikipedia：「Synthetic gut is nylon, nearly always composed of a single filament」 | ✅；**不说聚酯是单丝**（这一页没直说） |
+| 线和线交叉处磨出凹槽 | Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」：「higher constant force pushing the string intersections together, increasing adhesion and notching」；「softer nylons tend to notch more easily than polyester」 | ✅ 有凹槽；⚠️「凹槽让线滑不动」在原文是**假设**，片中**不说** |
+| 三种线画成一样粗 | 专利外径 0.050 in ≈ 1.27 mm；常见线径 1.2–1.35 mm | 示意，不按比例比粗细 |
+
+**改掉的原稿**：「羊肠线是一缕缕胶原纤维」——把 1874 年的羊肠和今天的牛肠混了，又把「含胶原的浆膜」说成「胶原纤维」；改成「天然肠线是一条条牛肠衣绞成的」。

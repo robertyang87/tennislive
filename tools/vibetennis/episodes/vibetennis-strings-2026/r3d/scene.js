@@ -263,20 +263,31 @@ const allRk=[rk,...rkPow,...rackR];
 // 后半：线和线交叉处磨出凹槽（Lindsey, Tennis Warehouse「How Tennis Strings Go Dead」）。全部是示意，不按比例。
 const micG=new THREE.Group(); scene.add(micG);
 const micMat=(c,o=1)=>new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:(new THREE.Color(c).getHSL({}).l>0.8?GLOW.emissiveWhite:0.25),metalness:0.1,roughness:0.35,clearcoat:0.8,transparent:true,opacity:o});
-function helixBundle(n,rad,len,turns,col,fr){ const g=new THREE.Group();
-  const slots=[[0,0]]; for(let i=0;i<6;i++) slots.push([0.36,i/6]); for(let i=0;i<12;i++) slots.push([0.71,i/12+0.04]);
-  for(const [ring,f] of slots.slice(0,n)){ const a0=f*Math.PI*2, mat=micMat(col);
+// 天然肠线：按美国专利 US 4,449,353（Tayebi 1984）背景节写的「常规肠线」——16 条牛肠衣带，中心 1 条、中层 6 条、外层 9 条，
+// 外层螺旋角约 20.4°（图 3、第 5–6 栏）；成品通常有涂层防散开（Wikipedia「Strings (tennis)」）。截面上画成圆股，示意。
+const GUT_HELIX=20.4*Math.PI/180;
+function helixBundle(rad,len,col,fr){ const g=new THREE.Group(), mat=micMat(col);
+  const slots=[[0,0]]; for(let i=0;i<6;i++) slots.push([0.36,i/6]); for(let i=0;i<9;i++) slots.push([0.72,i/9+0.05]);
+  const turns=Math.tan(GUT_HELIX)*len/(2*Math.PI*0.72*rad);   // 外层螺旋角 20.4°
+  for(const [ring,f] of slots){ const a0=f*Math.PI*2;
     const pts=[]; for(let k=0;k<=40;k++){ const y=-len/2+len*k/40, a=a0+turns*2*Math.PI*k/40; pts.push(new THREE.Vector3(Math.cos(a)*rad*ring,y,Math.sin(a)*rad*ring)); }
     g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),60,fr,12),mat));
-    for(const e of [pts[0],pts[40]]){ const cap=new THREE.Mesh(new THREE.SphereGeometry(fr,14,10),mat); cap.position.copy(e); g.add(cap); } }
+    // 只给剥开的上端一个平切面（下端藏在涂层里）：切面朝向沿这一股的切线
+    const tg=pts[40].clone().sub(pts[39]).normalize(); const cap=new THREE.Mesh(new THREE.CircleGeometry(fr,20),mat);
+    cap.position.copy(pts[40]); cap.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),tg); g.add(cap); }
   return g; }
-const micGut=helixBundle(19,1.0,3.2,0.35,0xffc27a,0.19); micG.add(micGut);
+// 涂层套：包住下面大半截，上端剥开露出里面的结构（像剪开的电缆）
+function coatSleeve(group,rad,len,frac,col,opa){ const h=len*frac, m=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad,h,64),
+    new THREE.MeshPhysicalMaterial({color:col,metalness:0.05,roughness:0.45,clearcoat:0.6,transparent:true,opacity:opa}));
+  m.position.y=-len/2+h/2; group.add(m); return m; }
+const micGut=helixBundle(1.0,3.2,0xffc27a,0.24); micG.add(micGut); coatSleeve(micGut,1.0,3.2,0.6,0xd9a35c,0.85);
 const micMulti=new THREE.Group(); micG.add(micMulti);
 // 多股丝：所有者 2026-11-05「多股线的光晕太亮了」——白色＋自发光＋端面正对光源会冲过泛光阈值，压暗颜色、去掉自发光、降低光泽
 const mfMat=new THREE.MeshPhysicalMaterial({color:0x9fb8cc,emissive:0x0c1822,emissiveIntensity:1,metalness:0.05,roughness:0.6,clearcoat:0.2,transparent:true});
-{ const r=0.11; let n=0; for(let q=-6;q<=6;q++) for(let w=-6;w<=6;w++){ const x=(q+w*0.5)*r*2.05, z=w*r*1.78; if(Math.hypot(x,z)>1.0) continue;
-    const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,3.2,10),mfMat); m.position.set(x,0,z); micMulti.add(m); n++; }
-  micMulti.add(new THREE.Mesh(new THREE.CylinderGeometry(1.12,1.12,3.2,40,1,true),micMat(0x4fe3ff,0.18))); }
+// 多股线：很多根尼龙细丝（Wikipedia「Strings (tennis)」Multi-filament 节，根数示意），外面一层耐磨涂层（同页：nylon 线、尤其多股线常见）
+{ const r=0.11; for(let q=-6;q<=6;q++) for(let w=-6;w<=6;w++){ const x=(q+w*0.5)*r*2.05, z=w*r*1.78; if(Math.hypot(x,z)>0.98) continue;
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,3.2,10),mfMat); m.position.set(x,0,z); micMulti.add(m); }
+  coatSleeve(micMulti,1.08,3.2,0.6,0x6f8396,0.92); }
 const micMono=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,3.2,48),new THREE.MeshPhysicalMaterial({color:0xc9b8ff,emissive:0x5a46a8,emissiveIntensity:0.35,metalness:0.2,roughness:0.12,clearcoat:1,transparent:true})); micG.add(micMono);
 // 交叉处：主线竖、横线压在上面，主线表面一道凹槽（示意）
 const micMain=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,9,48),micMat(0xaec4d6));   // 整根占半屏，纯白会把 bright 冲过 5% micG.add(micMain);
@@ -291,7 +302,7 @@ function shotMicro(v,TG,TM,TO,TN){ // v：从这一镜开始的秒数；TG/TM/TO
   if(notch<1){ look(0,0.0,lerp(11.5,10.5,ss(0,TN,v)),0,0,0);
     [[micGut,-2.25,TG],[micMulti,0,TM],[micMono,2.25,TO]].forEach(([o,x,t])=>{ o.visible=true; o.position.set(x,0.35,0); o.rotation.set(0.85,v*0.25,0.18); o.scale.setScalar(0.62*ss(t-0.2,t+0.5,v)*(1-notch)+0.0001); });
     micMain.visible=micCross.visible=false; micGroove.visible=false;
-    const labs=[['mlg',T('羊肠线','Gut'),'#ffd9a8',-2.25,TG],['mlm',T('多股线','Multifilament'),'#eaf6ff',0,TM],['mlo',T('单丝线','Monofilament'),'#ddd2ff',2.25,TO]];
+    const labs=[['mlg',T('天然肠线','Natural gut'),'#ffd9a8',-2.25,TG],['mlm',T('多股线','Multifilament'),'#eaf6ff',0,TM],['mlo',T('单丝线','Monofilament'),'#ddd2ff',2.25,TO]];
     labs.forEach(([k,str,c,x,t])=>{ const l=tx(k,str,{color:c,size:0.4}); l.position.set(x,-1.25,0.5); op(l,ss(t,t+0.5,v)*(1-notch)); });
   } else { micGut.visible=micMulti.visible=micMono.visible=false; }
   if(notch>0){ const w=v-TN; look(3.6,2.8,8.2,0,0.15,0);
