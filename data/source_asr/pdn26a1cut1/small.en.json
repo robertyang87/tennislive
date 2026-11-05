@@ -1,0 +1,11 @@
+{
+ "model": "small.en",
+ "source_sha256": "15cb36649165b1e86c41b487a250c98e487c5db4e4300277e3b893dc86885736",
+ "clip": [
+  0,
+  20.0
+ ],
+ "duration": 20.0,
+ "segments": [],
+ "_note": "自制动画源无音轨（ffprobe 实测仅 h264 视频流）；source-asr.yml 的 faster-whisper 在无音轨文件上因 PyAV 缺流崩溃（run 41965461993/41965466443），故按事实落空转写：全片无任何语音。"
+}
