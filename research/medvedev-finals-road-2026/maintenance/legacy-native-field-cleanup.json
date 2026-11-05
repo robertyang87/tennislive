@@ -1,0 +1,28 @@
+{
+  "file": "specs/reels/medvedev-24-titles-23-cities.json",
+  "before_sha256": "a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5",
+  "after_sha256": "d4652f833055838d4985dc3dc2a8a99c89279eb15d2d2be625e347639252617c",
+  "moved_verbatim": {
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": 25
+  },
+  "content_and_publication_hold_unchanged": true,
+  "reason": "Exact existing field inventory fails on unconsumed legacy top-level fields. Preserve values as non-consumed request metadata; no validator or test changes.",
+  "moved_cover_verbatim": {
+    "title": [
+      "24座冠军",
+      "23座城市"
+    ],
+    "poster": "poster.jpg"
+  },
+  "native_component_sha256_before": "a36d1f80963b4ca9a4afc153b06f3341ee6d1df08972bd375a68dd287e10f80b",
+  "native_component_sha256_after": "a36d1f80963b4ca9a4afc153b06f3341ee6d1df08972bd375a68dd287e10f80b",
+  "actual_component_comparison": "exact_equal",
+  "field_inventory_test": "1 passed",
+  "status": "superseded_reverted_to_exact_frozen_original",
+  "correction_at": "2026-11-05T08:08:54.114853+00:00",
+  "correction": "This attempted cleanup was unnecessary. The original historical manifest a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5 is already covered by the unchanged narrow historical snapshot. Missing sparse-checkout evidence caused the initial local false inventory failure. Restore its exact original bytes and existing tracked evidence; do not alter snapshot, tests, exemptions or historical media. Earlier field_inventory_test pass did not validate overall historical identity."
+}

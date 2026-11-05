@@ -1,0 +1,654 @@
+{
+  "checked_at": "2026-11-05T07:45:09.631487+00:00",
+  "result": "PASS for native actual-film/source-ASS identity and exact cue/timing coverage",
+  "scope": "Actual final film hash, sealed actual ASS, actual source binding, all current selected windows/bilingual cues and actual raw-ASR documents (counts computed from current native review index). Not human listening, full-film playback, TTS voice-suite approval, or independent continuous point-action viewing. Midcue PNG pixel inspection is separately recorded after opening actual frames.",
+  "spec_path": "/workspace/medvedev-finals-production/native/specs/reels/medvedev-finals-road-2026.json",
+  "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+  "film_path": "/workspace/medvedev-finals-production/final/native-input-v2/medvedev-finals-road-2026.mp4",
+  "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+  "film_bytes": 152158482,
+  "film_seconds": 264.52,
+  "dimensions": [
+    1080,
+    1440
+  ],
+  "frame_rate": "25/1",
+  "audio_stream": {
+    "codec_name": "aac",
+    "sample_rate": "48000",
+    "channels": 2
+  },
+  "render_inputs_sha256": "396b4be1b31adc4a1d896e3e6995cea2f4cad89ac1440b3d89bc4f187859a43f",
+  "ass_sha256": "8c383c71102503ed0d6b6a232781a754fdfc43f485a268b7d0f09bf954509baf",
+  "audio_review_binding_sha256": "ae7716651a31977c71f9a17f8526649f276da4bb0495fa034b8a400d09c95069",
+  "review_index_sha256": "311d892538c3490531bce5c11da400b5b5c23bfc80da0df0bc2c13e31efd434a",
+  "plan_sha256": "4a3a0e2205d93ef768b4b7490bb236e5a0ed9f4e3c09b4cbc53db709f10961d6",
+  "native_verify_final": "PASS, actual file hashes and current native review index supplied",
+  "source_count": 6,
+  "selected_window_count": 6,
+  "packet_checks": [
+    {
+      "segment_index": 2,
+      "segment_id": "brisbane_point",
+      "source_key": "brisbane-final-official-ig",
+      "source_window": [
+        0,
+        17.5
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/brisbane_point.json",
+      "packet_sha256": "482acf34930aca3bce0b531f3e786b8671616825c85a265e11add65322ddce74",
+      "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 0
+    },
+    {
+      "segment_index": 4,
+      "segment_id": "ao_point",
+      "source_key": "ao-r4",
+      "source_window": [
+        157.96,
+        178.5
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/ao_point.json",
+      "packet_sha256": "68b6fe6fe01bbdf9e9cf519faae021e7432b7b78e9c7cf5d8e8831382ac6ceed",
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 3
+    },
+    {
+      "segment_index": 8,
+      "segment_id": "rg_point",
+      "source_key": "rg-r1",
+      "source_window": [
+        690.1,
+        706.5
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/rg_point.json",
+      "packet_sha256": "ce88260ab6903101d7c5686a0051c7afb5a2fcf038bcf0b8068a62f22ec65b57",
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 0
+    },
+    {
+      "segment_index": 11,
+      "segment_id": "us_point",
+      "source_key": "us-open-r4",
+      "source_window": [
+        159.4,
+        178.3
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/us_point.json",
+      "packet_sha256": "aa2c44d7d9cb15dcd6034a16197f1334bd8826646fc60b475fc986a1b4f11650",
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 1
+    },
+    {
+      "segment_index": 15,
+      "segment_id": "almaty_point",
+      "source_key": "almaty-title-fullpoint",
+      "source_window": [
+        126.6,
+        151.72
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/almaty_point.json",
+      "packet_sha256": "ba7d57db108b9b4b1720088baefd6d6bfeb51077b39360a7c3e772c8169f3147",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 3
+    },
+    {
+      "segment_index": 18,
+      "segment_id": "vienna_point",
+      "source_key": "vienna-qualification",
+      "source_window": [
+        163.48,
+        182.72
+      ],
+      "packet": "data/audio_transcripts/medvedev-finals-road-2026/vienna_point.json",
+      "packet_sha256": "7c703e6e66b814a7c5a97d0da14893ff9d5989ca9f141242f73e31b9d38c9a2e",
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "method": "asr_cross_checked",
+      "bilingual_cues": 3
+    }
+  ],
+  "unique_raw_asr_count": 22,
+  "raw_checks": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/medium.en.json",
+      "sha256": "747e777372001896b169346a48b1089148350efdc98f68128654faf753a3a0e6",
+      "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+      "model": "medium.en",
+      "clip": [
+        0,
+        41.237333
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/DTXfZGAjiRl/local-native-20261105/small.en.json",
+      "sha256": "ae7b0dda0a56bdf005166efa07eaf5a00799e8fb533d5536abb7de9c92b65ad7",
+      "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+      "model": "small.en",
+      "clip": [
+        0,
+        41.237333
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/medium.en.json",
+      "sha256": "830041d3e07adebc4e45c7b0f3cac48765eb37103de8e8166daebd8d708d2b00",
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "model": "medium.en",
+      "clip": [
+        150.0,
+        182.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/small.en.json",
+      "sha256": "f61109f93ffc2b836b9b67dc661208c67dff411be35b00509f8b9ba4f55ef099",
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "model": "small.en",
+      "clip": [
+        150.0,
+        182.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/medium.en.json",
+      "sha256": "a9bf184cb361f8bdd43403fc9b7ac60e11b78b20ea082bcc7b4d7c6d49895e93",
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "model": "medium.en",
+      "clip": [
+        158.0,
+        179.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/small.en.json",
+      "sha256": "662cf352389baa7c9e6316884f8280afc00b7ba58f54a5599d13323e18eb16cb",
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "model": "small.en",
+      "clip": [
+        158.0,
+        179.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/medium.en.json",
+      "sha256": "f580d40e81bafb775954c051b4fab3d7ce22fa0e87a3fb53c4a60bfde6ce7709",
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/small.en.json",
+      "sha256": "c9d3f55650e22c41ccb8a3bc8b6ee6bf74f21bf157cc0690f235d94a3f6ab64e",
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/medium.json",
+      "sha256": "dce24f8558e02f35223db00c6de7aa9e277671554a82e2b82b15d922568ba324",
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "model": "medium",
+      "clip": [
+        684,
+        708
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/small.json",
+      "sha256": "7cc39878303ee58aca577181c97d24aba7f4030d10313a4bca90da04bee7ca0b",
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "model": "small",
+      "clip": [
+        684,
+        708
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/medium.en.json",
+      "sha256": "7dc391da42881862b2a1037d4ec8bdec2e8bcc6afaf13eac1774f0565ab0bea4",
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "model": "medium.en",
+      "clip": [
+        160.0,
+        200.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/small.en.json",
+      "sha256": "4faa564ce4739c0555972e160b07abf378942b6b2a4d6724166c5f702c244588",
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "model": "small.en",
+      "clip": [
+        160.0,
+        200.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/medium.en.json",
+      "sha256": "0a3992e904b1b326dfffdc59c35a7d698f6d344f177fb63a2152fc4127256736",
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "model": "medium.en",
+      "clip": [
+        158,
+        179
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/small.en.json",
+      "sha256": "86ad2ff8a8a6be1635ad512a43fcfb897446788cdbeba1e1a63713b37c507984",
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "model": "small.en",
+      "clip": [
+        158,
+        179
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/medium-score.json",
+      "sha256": "8f0812d977dc8ff364e823d2272b099b66c907868be39d7f0d996e217c23840c",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "model": "medium",
+      "clip": [
+        148.3,
+        152
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/medium.en-full.json",
+      "sha256": "37872648d05e296d4ccc82f990002110c2dcb12773cf6112094f2bfc5d9c872d",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "model": "medium.en",
+      "clip": [
+        121,
+        152
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/small-score.json",
+      "sha256": "0f5ac97912fe215724d16b3c006a76976f91e8c84dbbe0d85a05d8b399cd4a24",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "model": "small",
+      "clip": [
+        148.3,
+        152
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/small.en-full.json",
+      "sha256": "e4eee18307b4fbfaae30bb2bb9a72e05423d005cf34b2c34e8621ee1345b390b",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "model": "small.en",
+      "clip": [
+        121,
+        152
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-medium.en.json",
+      "sha256": "a48972830309204f63413b559db702560bacaebbc0f68a09e73e9f449855b07a",
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "model": "medium.en",
+      "clip": [
+        155.0,
+        183.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/ecc24fb343a0796421cedb88019190369688b1b0/AWfZeqsuqmw-small.en.json",
+      "sha256": "4d5986133de3c93702464e3caeff73698ae3c2f6b49a99842a31cdf7bf6efaa8",
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "model": "small.en",
+      "clip": [
+        155.0,
+        183.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/medium.en.json",
+      "sha256": "1159d1eda29cadf4e6e34f8411ffcdace3470be6fab71190010729693d75446d",
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "model": "medium.en",
+      "clip": [
+        162.0,
+        190.0
+      ]
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json",
+      "sha256": "2932e8996534bb58f5055549576344ddfaac2ae6c500158eba5274d531d8cd1b",
+      "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "model": "small.en",
+      "clip": [
+        162.0,
+        190.0
+      ]
+    }
+  ],
+  "external_return_checks": [],
+  "bilingual_cue_count": 10,
+  "cue_checks": [
+    {
+      "cue_index": 0,
+      "segment_index": 4,
+      "source_key": "ao-r4",
+      "expected_film_time": [
+        54.67,
+        59.11
+      ],
+      "actual_ass_time": [
+        54.67,
+        59.11
+      ],
+      "en": "Learner Tien. Learner has handed out a lesson.",
+      "zh": "勒纳·钱，给对手上了一课。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 1,
+      "segment_index": 4,
+      "source_key": "ao-r4",
+      "expected_film_time": [
+        59.91,
+        65.93
+      ],
+      "actual_ass_time": [
+        59.91,
+        65.93
+      ],
+      "en": "It's a breakout performance from a star on the rise.",
+      "zh": "冉冉升起的新星，打出突破表现。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 2,
+      "segment_index": 4,
+      "source_key": "ao-r4",
+      "expected_film_time": [
+        65.93,
+        68.19
+      ],
+      "actual_ass_time": [
+        65.93,
+        68.19
+      ],
+      "en": "We've seen something special here.",
+      "zh": "我们见证了一场特别的比赛。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 3,
+      "segment_index": 11,
+      "source_key": "us-open-r4",
+      "expected_film_time": [
+        142.774,
+        148.374
+      ],
+      "actual_ass_time": [
+        142.77,
+        148.37
+      ],
+      "en": "Frances Tiafoe is in that New York state of mind once again.",
+      "zh": "蒂亚福又一次找回了属于纽约的状态。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 4,
+      "segment_index": 15,
+      "source_key": "almaty-title-fullpoint",
+      "expected_film_time": [
+        175.598,
+        177.998
+      ],
+      "actual_ass_time": [
+        175.6,
+        178.0
+      ],
+      "en": "Usually most players will be a little bit weaker, but...",
+      "zh": "多数球员这一侧稍弱，不过……",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 5,
+      "segment_index": 15,
+      "source_key": "almaty-title-fullpoint",
+      "expected_film_time": [
+        190.498,
+        195.278
+      ],
+      "actual_ass_time": [
+        190.5,
+        195.28
+      ],
+      "en": "And for the first time in his career, Daniil Medvedev",
+      "zh": "梅德韦德夫职业生涯第一次——",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 6,
+      "segment_index": 15,
+      "source_key": "almaty-title-fullpoint",
+      "expected_film_time": [
+        195.278,
+        198.918
+      ],
+      "actual_ass_time": [
+        195.28,
+        198.92000000000002
+      ],
+      "en": "successfully defends a title. 6-7, 6-1, 6-3.",
+      "zh": "成功卫冕。6-7、6-1、6-3。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 7,
+      "segment_index": 18,
+      "source_key": "vienna-qualification",
+      "expected_film_time": [
+        223.818,
+        226.178
+      ],
+      "actual_ass_time": [
+        223.82,
+        226.18
+      ],
+      "en": "Oh, that's missed.",
+      "zh": "噢，这球出界了。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 8,
+      "segment_index": 18,
+      "source_key": "vienna-qualification",
+      "expected_film_time": [
+        228.798,
+        231.118
+      ],
+      "actual_ass_time": [
+        228.8,
+        231.12
+      ],
+      "en": "A patient performance.",
+      "zh": "耐心十足的一场表现。",
+      "timing_tolerance_seconds": 0.011
+    },
+    {
+      "cue_index": 9,
+      "segment_index": 18,
+      "source_key": "vienna-qualification",
+      "expected_film_time": [
+        233.538,
+        237.098
+      ],
+      "actual_ass_time": [
+        233.54,
+        237.1
+      ],
+      "en": "His third semi-final appearance here in Vienna.",
+      "zh": "他第3次闯入维也纳半决赛。",
+      "timing_tolerance_seconds": 0.011
+    }
+  ],
+  "bilingual_overlaps": 0,
+  "rg_no_ghost_english_checks": [
+    {
+      "segment_index": 2,
+      "film_time": [
+        22.866,
+        40.366
+      ],
+      "unexpected_bilingual_cues": 0,
+      "scope": "Current packet has no foreground English; final ASS contains no fabricated bilingual cue for this source window"
+    },
+    {
+      "segment_index": 8,
+      "film_time": [
+        97.21,
+        113.60999999999999
+      ],
+      "unexpected_bilingual_cues": 0,
+      "scope": "Current packet has no foreground English; final ASS contains no fabricated bilingual cue for this source window"
+    }
+  ],
+  "quote_overflow_rows": [],
+  "display_normalization": "Actual native _quote_display applied before comparison, including score6-7 to6比7; raw English/Chinese retained in cue_checks. No ASS or film bytes edited.",
+  "extracted_midcue_frames": [
+    {
+      "cue_index": 0,
+      "source_key": "ao-r4",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 56.89,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-00-56.890.png",
+      "png_sha256": "64dba8d3b5d55493776100ac830493d148d3fe399b513de9775c039ff9c77b7f"
+    },
+    {
+      "cue_index": 1,
+      "source_key": "ao-r4",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 62.92,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-01-62.920.png",
+      "png_sha256": "3f3e2c7c54570715d041f38814cca7fef535318f9c78d5c436bbdd1696d0fb90"
+    },
+    {
+      "cue_index": 2,
+      "source_key": "ao-r4",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 67.06,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-02-67.060.png",
+      "png_sha256": "2afc8dce00fbf4f8d5de0439674e31d6aadd7dbfd103c63a567d99730e0c9a69"
+    },
+    {
+      "cue_index": 3,
+      "source_key": "us-open-r4",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 145.57,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-03-145.570.png",
+      "png_sha256": "038d0e5e0d6e2592e43fbbcf535cfd2f010810e33911eab588c6e12298671336"
+    },
+    {
+      "cue_index": 4,
+      "source_key": "almaty-title-fullpoint",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 176.8,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-04-176.800.png",
+      "png_sha256": "eda61d4d95d9572dcf04f2513d70a2d817a3356992b68ecd349350ee46263eb2"
+    },
+    {
+      "cue_index": 5,
+      "source_key": "almaty-title-fullpoint",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 192.89,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-05-192.890.png",
+      "png_sha256": "59c4299172e25fa099ca4c9319b6a255e4cd1f94a974ed637f4e502f976f44bc"
+    },
+    {
+      "cue_index": 6,
+      "source_key": "almaty-title-fullpoint",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 197.10000000000002,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-06-197.100.png",
+      "png_sha256": "c899e4e962de6993ad10591a8e1e89f5b7c59ffbbade42bc4db3ce1857f8a9af"
+    },
+    {
+      "cue_index": 7,
+      "source_key": "vienna-qualification",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 225.0,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-07-225.000.png",
+      "png_sha256": "cd90372f94e2801fcd0a9ea732e4833de5886cf0792605112242b9e7f3990479"
+    },
+    {
+      "cue_index": 8,
+      "source_key": "vienna-qualification",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 229.96,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-08-229.960.png",
+      "png_sha256": "b785cb13699fd2be0aa2290b0fe79c3b4e12b20c6c08c59983f0f2d19074c24d"
+    },
+    {
+      "cue_index": 9,
+      "source_key": "vienna-qualification",
+      "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+      "requested_film_time": 235.32,
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/cue-09-235.320.png",
+      "png_sha256": "d92f8b24acd04d5276bba309182aa6275d7204948cbf6adba2a2f544a8378b1b"
+    }
+  ],
+  "visual_pixel_review": {
+    "status": "PASS targeted actual-v2 corrected Vienna subtitle onset, plus unchanged other-nine ASS-line and exact-audio identity reuse",
+    "reviewed_at": "2026-11-05T07:46:49.477210+00:00",
+    "actual_v2_frames_opened": [
+      221.96,
+      223.48,
+      223.84,
+      225.0
+    ],
+    "observations": "No outcome subtitle visible at221.96 or223.48; English/Chinese cue visible at223.84 and225.00, matching sealed ASS start223.82 after source169.34/segment-relative5.86 correction. Caption is readable and inside frame. Other nine cue texts/times are exactly the same actual ASS lines as e51, whose ten midcue PNGs were opened; does not falsely claim all ten new PNGs opened or continuous film hearing.",
+    "frame_manifest": "/workspace/medvedev-finals-production/research/audio/actual-source-cue-frames/94ecc436f855ca12/vienna-onset/manifest.json",
+    "frame_manifest_sha256": "d300bb85255386a6e376a3f99933b07ae60c1775c1a674a5835f9fdfe3eb30a7"
+  },
+  "reused_actual_final_asr": {
+    "old_actual_master_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+    "old_actual_final_asr_report": {
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-first-master-asr-crosscheck.json",
+      "sha256": "35085ef15de8a0a2595418b8ccfa980748813889cb26ccaa834b251b528ba1bc",
+      "original_film_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+      "actual_raw_count": 15
+    },
+    "new_audio_identity_proof": "/workspace/medvedev-finals-production/research/audio/actual-v2-audio-reuse-audit.json",
+    "new_audio_identity_proof_sha256": "2ca3ab79bbc85d3423e2711ffa3a37ad7bf2b9582059de7db74e6fce98b1832e",
+    "identity_checks": {
+      "aac_packet_payload_hash_equal": true,
+      "decoded_pcm_s16le_hash_equal": true,
+      "aac_packet_payload_pts_framehash_equal": true,
+      "audio_stream_timing_parameters_equal": true,
+      "source_bindings_unchanged": true,
+      "entire_audio_timeline_unchanged": true,
+      "eighteen_tts_audio_bytes_unchanged": true,
+      "eighteen_word_marks_unchanged": true,
+      "ass_only_expected_vienna_first_onset_changed": true
+    },
+    "method": "All old real ASR raw files retain old e51 wholemovie SHA. New94ecc4 AAC packet payload, every packet PTS/hash, decoded audio hash, full audio timeline and eighteen TTS/marks are actually byte-identical, so prior actual-ASR is reused only as evidence for the identical audio; no raw relabeling or new human hearing claim."
+  },
+  "overall_source_audio_review_status": "PASS scoped actual six-source audio/ASS/evidence/timing review for new94ecc4 master",
+  "known_repair_closed": {
+    "source": "vienna-qualification",
+    "source_start": 169.34,
+    "segment_quote_at": 5.86,
+    "actual_ass_start": 223.82,
+    "old_actual_ass_start": 220.78,
+    "repaired_by_actual_rerender": true
+  },
+  "source_audio_policy": "unity_no_loudness_v1",
+  "native_voice_suite_scope": "Separate producer-owned native GHA actual voice-suite outcome; not certified by this source-audio/ASS audit."
+}

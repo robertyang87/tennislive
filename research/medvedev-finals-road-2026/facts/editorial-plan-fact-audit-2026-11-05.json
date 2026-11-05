@@ -1,0 +1,240 @@
+{
+  "reviewed_file": "/workspace/medvedev-finals-production/research/editorial-plan.json",
+  "reviewed_file_sha256": "3520987136e82e9a239c03ea6ce3924add3a100ac1ed3abbc1e70fc3a22d017f",
+  "review_method": "Current assistant actually read exact JSON bytes, checked every narration against selected official/tournament/direct reports and current player_zh. No external-model review claimed.",
+  "fact_verdict": "PASS_FOR_TEXT_FREEZE",
+  "mandatory_factual_changes": [],
+  "cover_verdict": "PASS:4冠/2025缺席后回都灵与主线一致；2026Almaty写真未冒充2025缺席图。",
+  "scope": "Facts and names only; no final media/render permission.",
+  "counts": {
+    "photo": 16,
+    "requested_source": 9
+  },
+  "name_check": {
+    "Daniil Medvedev": "梅德韦德夫",
+    "Brandon Nakashima": "中岛布兰登",
+    "Learner Tien": "勒纳·钱",
+    "Tallon Griekspoor": "格里克斯普尔",
+    "Carlos Alcaraz": "阿尔卡拉斯",
+    "Jannik Sinner": "辛纳",
+    "Adam Walton": "沃尔顿",
+    "Jan-Lennard Struff": "斯特鲁夫",
+    "Frances Tiafoe": "蒂亚福",
+    "Andrey Rublev": "卢布列夫",
+    "Adrian Mannarino": "马纳里诺",
+    "Ignacio Buse": "布塞"
+  },
+  "segments": [
+    {
+      "id": "opening",
+      "fact_status": "PASS",
+      "finding": "2026截至巴黎4座巡回赛单打冠军；四大满贯最终R4/R1/R3/R4，无1/4决赛；2025缺席总决赛。",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification",
+        "https://ausopen.com/articles/news/tien-all-grown-after-mauling-medvedev-ao-2026",
+        "https://www.rolandgarros.com/en-us/article/2026-edition-r1-medvedev-walton",
+        "https://www.atptour.com/en/news/medvedev-wimbledon-2026-friday-reaction",
+        "https://www.usopen.org/amp/en_US/news/articles/2026-09-06/frances_tiafoe_dazzles_downs_daniil_medvedev_for_2026_us_open_qf_spot.html"
+      ]
+    },
+    {
+      "id": "brisbane_intro",
+      "fact_status": "PASS",
+      "finding": "2026第一站Brisbane冠军；最终6-2 7-6(1)中岛布兰登。",
+      "sources": [
+        "https://www.atptour.com/en/news/medvedev-nakashima-brisbane-2026-sunday"
+      ]
+    },
+    {
+      "id": "brisbane_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "brisbane_final",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "ao_intro",
+      "fact_status": "PASS",
+      "finding": "AO第四轮4-6 0-6 3-6勒纳·钱；连丢三盘及第二盘0-6准确。",
+      "sources": [
+        "https://ausopen.com/articles/news/tien-all-grown-after-mauling-medvedev-ao-2026"
+      ]
+    },
+    {
+      "id": "ao_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "ao_r4",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "dubai",
+      "fact_status": "PASS",
+      "finding": "2月28日Dubai决赛格里克斯普尔赛前左腿筋伤W/O，未实际比赛；第二冠正确。",
+      "sources": [
+        "https://dubaidutyfreetennischampionships.com/daniil-medvedev-handed-second-dubai-duty-free-tennis-championships-title-after-tallon-griekspoor-withdrawal/"
+      ]
+    },
+    {
+      "id": "iw_intro",
+      "fact_status": "PASS",
+      "finding": "3月14日当地SF胜阿卡6-3 7-6(3)；3月15日F负辛纳6-7(6)6-7(4)，两盘抢七准确。",
+      "sources": [
+        "https://www.atptour.com/en/news/alcaraz-medvedev-indian-wells-2026-sf",
+        "https://www.atptour.com/en/news/sinner-medvedev-indian-wells-2026-final"
+      ]
+    },
+    {
+      "id": "iw_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "iw_final",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "redclay",
+      "fact_status": "PASS",
+      "finding": "MC第二轮0-6 0-6；法网R1负沃尔顿2-6 6-1 1-6 6-1 4-6，决胜盘4-2领先后连丢4局。ATP反应文章个别句把four straight错写five，原始最终比分与RG/FLM交叉支持4局，根稿的4局准确。",
+      "sources": [
+        "https://montecarlotennismasters.com/en/berrettini-routs-medvedev-to-reach-r3/",
+        "https://www.rolandgarros.com/en-us/article/2026-edition-r1-medvedev-walton",
+        "https://www.atptour.com/en/news/medvedev-reaction-roland-garros-2026-tuesday",
+        "https://fieldlevelmedia.com/atp-tour/no-6-seed-daniil-medvedev-upset-frenchman-moise-kouame-17-advances/"
+      ]
+    },
+    {
+      "id": "rg_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "rg_r1",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "wim_intro",
+      "fact_status": "PASS",
+      "finding": "Wimbledon R3斯特鲁夫，6-7(4)6-7(5)5-7；两抢七再5-7准确。",
+      "sources": [
+        "https://www.atptour.com/en/news/medvedev-wimbledon-2026-friday-reaction"
+      ]
+    },
+    {
+      "id": "wim_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "wim_r3",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "us_intro",
+      "fact_status": "PASS",
+      "finding": "US R4蒂亚福，6-7(1)4-6 6-7(6)三盘出局，全年GS无1/4决赛。",
+      "sources": [
+        "https://www.usopen.org/amp/en_US/news/articles/2026-09-06/frances_tiafoe_dazzles_downs_daniil_medvedev_for_2026_us_open_qf_spot.html"
+      ]
+    },
+    {
+      "id": "us_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "us_r4",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "hangzhou_intro",
+      "fact_status": "PASS",
+      "finding": "9月29日杭州F75 64卢布列夫，年度第3冠；杭州官方作为地点本源，NBO二手周报误写成都不用。",
+      "sources": [
+        "https://www.hangzhouopen.com/en/media/news/medvedev-rublev-hangzhou-2026-final"
+      ]
+    },
+    {
+      "id": "hangzhou_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "hangzhou_final",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "beijing",
+      "fact_status": "PASS",
+      "finding": "10月5日中网SF对德约，5-7 3-5 DEF；失分后将反弹球击向看台碰到观众，判失格。稿未宣称伤人故意或医学诊断，准确。",
+      "sources": [
+        "https://www.chinaopen.com/en/contents/353/739.html",
+        "https://www.reuters.com/sports/tennis/medvedev-disqualified-china-open-semi-after-hitting-ball-into-crowd-2026-10-05/"
+      ]
+    },
+    {
+      "id": "almaty_intro",
+      "fact_status": "PASS",
+      "finding": "10月17日ShanghaiSF负霍达尔；10月25日AlmatyF先6-7(6)后6-1 6-3逆转巴西拉什维利，年度第4冠。",
+      "sources": [
+        "https://en.rolexshanghaimasters.com/en/media/news/medvedev-jodar-shanghai-2026-saturday",
+        "https://almatyopen.kz/en/news/?id=11348"
+      ]
+    },
+    {
+      "id": "almaty_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "almaty_final",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "defence",
+      "fact_status": "PASS",
+      "finding": "25冠范围为ATP巡回赛单打，首次连续两年同赛事卫冕；并非首次在同一赛事两次夺冠，根稿用连续两年正确。",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification",
+        "https://nationalbankopen.com/news/read/2026/this-week-in-tennis-rybakina-wins-tour-leading-fourth-title-at-ningbo-open",
+        "https://www.reuters.com/sports/tennis/medvedev-defends-almaty-open-title-close-atp-finals-2026-10-25/"
+      ]
+    },
+    {
+      "id": "vienna_intro",
+      "fact_status": "PASS",
+      "finding": "10月30日ViennaQF胜Mannarino6-2 6-3后正式锁定资格；旁白四分之一中文合适，display1/4。",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification"
+      ]
+    },
+    {
+      "id": "vienna_point",
+      "fact_status": "REQUEST_IDENTITY_CORRECT",
+      "source_key": "vienna_qf",
+      "media_status": "PENDING_SEPARATE_MEDIA_QC",
+      "finding": "准确请求该赛事/轮次/对手；此事实审不批准实际视频身份、1080门槛、窗口边界、完整赛点或原声句闭合。"
+    },
+    {
+      "id": "qualification_payoff",
+      "fact_status": "PASS",
+      "finding": "第7次：2019–2024六次，缺席2025，2026回归。",
+      "sources": [
+        "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification"
+      ]
+    },
+    {
+      "id": "paris",
+      "fact_status": "PASS",
+      "finding": "11月4日ParisR2负Buse4-6 4-6，首轮bye，因此必须写R2；当前公开下一站Finals，根稿目光转向都灵未绝对承诺未来零赛程。",
+      "sources": [
+        "https://www.reuters.com/sports/tennis/sublime-musetti-stuns-world-number-one-zverev-paris-masters-2026-11-04/"
+      ]
+    },
+    {
+      "id": "question",
+      "fact_status": "PASS",
+      "finding": "2020年终冠军在London，2021起赛事迁都灵；根稿仅说2020年终冠军，随后问2026到都灵前景，未错指2020Turin。",
+      "sources": [
+        "https://www.atptour.com/en/news/thiem-medvedev-nitto-atp-finals-2020-championship",
+        "https://www.atptour.com/-/media/files/media-guide/2026/2026-atp-media-guide-full-updated.pdf"
+      ]
+    }
+  ],
+  "production_notes": [
+    "数字范围：25冠指ATP巡回赛单打冠军；不扩展到挑战赛/青少年冠军。",
+    "2020冠军地点London；任何后续字卡不要加“2020都灵冠军”。",
+    "Vienna旁白四分之一已是中文，画面显示1/4。",
+    "Dubai无真实冠军点，不替代为SF而伪称final；Beijing无实际比赛赛点。",
+    "16photo+9source为根稿数量，不等于每段source都已证据放行。"
+  ]
+}

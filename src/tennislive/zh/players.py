@@ -15,7 +15,7 @@ PLAYER_ZH: dict[str, str] = {
     "Alex de Minaur": "德米纳尔",
     "Ben Shelton": "谢尔顿",
     "Taylor Fritz": "弗里茨",
-    "Daniil Medvedev": "梅德韦杰夫",
+    "Daniil Medvedev": "梅德韦德夫",  # 2026-11-05账号所有者明确指定，ATP球员MM58。
     "Flavio Cobolli": "科博利",
     "Lorenzo Musetti": "穆塞蒂",
     "Alexander Bublik": "布勃利克",
@@ -632,6 +632,9 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    # 2026-11-05新规范名；历史译名只作精确同人输入，不改已审原声与发布封印。
+    "梅德韦杰夫": PLAYER_ZH["Daniil Medvedev"],
+    "梅德维德夫": PLAYER_ZH["Daniil Medvedev"],
     "萨旺考": PLAYER_ZH["Mananchaya Sawangkaew"],  # 旧机器音译，只保留同人归一，不作新片显示名。
     "蒙菲尔斯": PLAYER_ZH["Gael Monfils"],  # Gael Monfils的通行异译，身份仍归一为孟菲尔斯。
     # Venus Williams, WTA230220: owner nickname and existing full Chinese name.

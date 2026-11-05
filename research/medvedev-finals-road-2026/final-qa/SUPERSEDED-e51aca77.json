@@ -1,0 +1,12 @@
+{
+  "status": "superseded_do_not_publish_or_deliver",
+  "film_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+  "at": "2026-11-05T07:31:52.814127+00:00",
+  "finding": "Actual final-film dual-ASR and independent pixel timing audit confirmed Vienna first foreground caption starts about3.04seconds early. Change source utterance.start166.30 to169.34; relative quote.at2.82 to5.86. Preserve actual source windows,10 cue texts,all18TTS and16photo files. Requires genuine native rerender and new film/ASS/QC identities.",
+  "old_artifacts_preserved": [
+    "native-input-connector",
+    "root-qc",
+    "review"
+  ],
+  "replacement": "pending new actual native film; old file must not be sent or used as final"
+}

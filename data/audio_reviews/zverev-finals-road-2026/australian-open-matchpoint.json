@@ -1,0 +1,70 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=kYlFxO1HA_A",
+  "source_path": "/workspace/zverev-finals-production/research/media-early/kYlFxO1HA_A.mp4",
+  "source_sha256": "e7d2b29533eb3597fa0a9adb5b30cb52a789758d5ecc38a9fab0286021bbf3b7",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex zverev_source_audio: actual canonical small.en/medium.en timestamped source cross-check; no claim of human listening",
+  "reviewed_at": "2026-11-05T04:25:50.284476+00:00",
+  "reviewed_from": 424.45,
+  "reviewed_to": 444.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 431.78,
+      "end": 437.92,
+      "en": "A moment of brilliance from Carlos Alcaraz",
+      "zh": "阿尔卡拉斯神来一笔，"
+    },
+    {
+      "start": 437.92,
+      "end": 441.98,
+      "en": "secures a place in his very first",
+      "zh": "锁定职业生涯首次"
+    },
+    {
+      "start": 441.98,
+      "end": 444.12,
+      "en": "Australian Open final.",
+      "zh": "澳网决赛席位。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/source_asr/kYlFxO1HA_A/small.en.json",
+      "sha256": "333261979cb3efc94d530f063c17dda56691bf57bfadd29769b06176683711e6",
+      "model": "small.en",
+      "source_sha256": "e7d2b29533eb3597fa0a9adb5b30cb52a789758d5ecc38a9fab0286021bbf3b7",
+      "clip": [
+        0.0,
+        null
+      ]
+    },
+    {
+      "path": "data/source_asr/kYlFxO1HA_A/medium.en.json",
+      "sha256": "d80c8ab155b534308373f32a74cdb036b7b047007de51a44043cac09f30e6b18",
+      "model": "medium.en",
+      "source_sha256": "e7d2b29533eb3597fa0a9adb5b30cb52a789758d5ecc38a9fab0286021bbf3b7",
+      "clip": [
+        0.0,
+        null
+      ]
+    }
+  ],
+  "normalization_note": "Both actual raw models agree on sentence opening and secures...final, and both garble official Carlos Alcaraz name. Correct only official name using event/source identity and corresponding historical short-source same-utterance review; do not claim raw model emitted corrected name. Punctuation/display splits added.",
+  "review_notes": "Actual visual agent established Zverev near end serves; Alcaraz far end returns. Window starts before toss426.3, point ends431.5, entire commentary ends444.12. Source tail444.5 precedes next utterance445.96. Current review is automated ASR cross-check, not human listening.",
+  "source_identity": {
+    "source_path": "/workspace/zverev-finals-production/research/media-early/kYlFxO1HA_A.mp4",
+    "sha256": "e7d2b29533eb3597fa0a9adb5b30cb52a789758d5ecc38a9fab0286021bbf3b7",
+    "bytes": 69185109,
+    "duration": 487.688707,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
+  "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; inspected retained native raw small.en/medium.en and stated official-caption evidence; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T06:44:43.943173+00:00",
+  "status": "complete",
+  "reviewed_from": 159.4,
+  "reviewed_to": 178.3,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 172.26,
+      "end": 177.86,
+      "en": "Frances Tiafoe is in that New York state of mind once again.",
+      "zh": "蒂亚福又一次找回了属于纽约的状态。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/medium.en.json",
+      "sha256": "7dc391da42881862b2a1037d4ec8bdec2e8bcc6afaf13eac1774f0565ab0bea4",
+      "model": "medium.en",
+      "clip": [
+        160.0,
+        200.0
+      ],
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/17fa8d0fcd2cc529470be6d88672c172f60e6103/small.en.json",
+      "sha256": "4faa564ce4739c0555972e160b07abf378942b6b2a4d6724166c5f702c244588",
+      "model": "small.en",
+      "clip": [
+        160.0,
+        200.0
+      ],
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/medium.en.json",
+      "sha256": "0a3992e904b1b326dfffdc59c35a7d698f6d344f177fb63a2152fc4127256736",
+      "model": "medium.en",
+      "clip": [
+        158,
+        179
+      ],
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/p-oeN9TwKZg/local-native-20261105/small.en.json",
+      "sha256": "86ad2ff8a8a6be1635ad512a43fcfb897446788cdbeba1e1a63713b37c507984",
+      "model": "small.en",
+      "clip": [
+        158,
+        179
+      ],
+      "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/p-oeN9TwKZg.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "fps": "60000/1001",
+      "duration": 205.868118,
+      "bytes": 77291562
+    }
+  },
+  "review_notes": "Full selected159.4–178.3 now covered by new actual local158–179 small.en/medium.en AND fixed original160–200 native pair. All four agree on complete Frances Tiafoe sentence. Canonical proper-name spelling from verified same-match identity. New and original medium isolated Oh at171.9 have probability~0.036 with no small-model counterpart; rejected as uncorroborated nonlexical/crowd artifact. New phrase172.26–177.72 and original ends177.86; conservative cue envelope used. Next clause starts178.96 outside retained window. No auditory listening claimed.",
+  "uncertain_spans": []
+}

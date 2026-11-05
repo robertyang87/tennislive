@@ -1,0 +1,35 @@
+{
+  "method": "Restored original current-main published recipe exact bytes; materialized existing HEAD historical evidence omitted by local sparse checkout. Existing production_history_snapshot, tests and all known-finding inventories unchanged. This is historical identity restoration, not new QA approval.",
+  "restored_spec_sha256": "a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5",
+  "snapshot_spec_sha256": "a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5",
+  "bound_files_actual_sha256": {
+    "specs/reels/medvedev-24-titles-23-cities.json": "a18eb754f746852fbda511a0d6040da1d01899626ff672b7fd06736552f983c5",
+    "specs/reels/medvedev-24-titles-23-cities.xhs.txt": "3c9fa7489167bb4e3983a9793af5c56bf3d06dc6ef6dad6727286a54b5394b3a",
+    "data/reel_publish_ledger/medvedev-24-titles-23-cities.json": "a041ef23becfaaf179ecb324f6049c242e5a9827a4591352f51f5e777f41d269",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/public_asset_verification.json": "46a9a9b39a6c1177cb3382c242b0e0607ee35da6b4384f1822724024faf6099c",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/pushed.json": "d4fdd1bc0a9b9fce621f54d2598a66096c92887aa811508055d108698455006d",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/qc_attestation.json": "f579b54165da8146503caef023f049a2e24665bed9002d27679baad98465a9de",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/render.json": "8f9cd2e0c5c4c29b35fbe181cb4a6baaf98328e7f35e5889256342a04a1576c6",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/subtitles.ass": "ebe50a6df6f39b7dd0b715b98077e69c44db6bdb3a16cb0022d92a652b670c67",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/wechat_title.txt": "766b6ab531b17ee8d9b9409dfd88404a980635f8a72355d4cc03093307bde095",
+    "output/2026-09-30/reel/medvedev-24-titles-23-cities/xiaohongshu.txt": "3c9fa7489167bb4e3983a9793af5c56bf3d06dc6ef6dad6727286a54b5394b3a"
+  },
+  "existing_historical_rules_restored": {
+    "tests/test_match_reel.py::test_冷开场不许随手取源片开头": true,
+    "tests/test_match_reel.py::test_收尾要落在一问上不能停在数据上": true,
+    "tests/test_match_reel.py::test_栏目和封面模板要配对": true,
+    "tests/test_match_reel.py::test_封面固定版式是官方抠图加本场视频全场机位": true,
+    "tests/test_match_reel.py::test_封面上每个球员都要有国旗和即时排名": true,
+    "tests/test_match_reel.py::test_小红书正文首行要点出是谁": true,
+    "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段": true,
+    "tests/test_match_reel.py::test_每条spec的旁白都还估得下": true,
+    "tests/test_reel_asset_gates.py::test_全库存量对新闸零误报": true,
+    "tests/test_taste_gates_extra.py::test_全库已发的spec一条都不红": true,
+    "tests/test_unvoiced_quote.py::test_新片子没配音的段都有双语原声字幕": true,
+    "tests/test_probe_sources.py::test_豁免表外的手写spec每条源都认领得到probe": true,
+    "tests/test_title_echo.py::test_正文第一句不许重复标题_新片子": true
+  },
+  "previous_metadata_cleanup_status": "Superseded/reverted: it unintentionally changed an already-published frozen recipe; exact original is retained.",
+  "current_episode_spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+  "current_episode_movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c"
+}

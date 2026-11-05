@@ -1,0 +1,167 @@
+{
+  "schema": "actual-final-window-native-asr.v1",
+  "created_at": "2026-11-05T07:28:55.088067+00:00",
+  "source_path": "/workspace/medvedev-finals-production/final/native-input-connector/medvedev-finals-road-2026.mp4",
+  "source_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+  "spec_sha256": "63b3771576019ddf4d785a0c8e7ee56b5bc42e11c05389fd282ff152be25cc44",
+  "audio_binding_sha256": "0d3e0e57e7b130287b758f0ea0edf63827d6801ec7b397b65ebdf9e4e572fb35",
+  "segment_index": 18,
+  "source_key": "vienna-qualification",
+  "source_seconds": [
+    163.48,
+    182.72
+  ],
+  "film_seconds": [
+    217.95799999999997,
+    237.19799999999998
+  ],
+  "model": "medium.en",
+  "requested_language": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "parameters": {
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "word_timestamps": true,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 223.84,
+      "end": 226.82,
+      "text": "Oh, that's what it is.",
+      "avg_logprob": -0.9228452212280698,
+      "no_speech_prob": 0.5211138129234314,
+      "words": [
+        {
+          "w": " Oh,",
+          "s": 223.84,
+          "e": 225.24,
+          "p": 0.16422465443611145
+        },
+        {
+          "w": " that's",
+          "s": 225.24,
+          "e": 225.88,
+          "p": 0.9098066985607147
+        },
+        {
+          "w": " what",
+          "s": 225.88,
+          "e": 225.96,
+          "p": 0.3186766505241394
+        },
+        {
+          "w": " it",
+          "s": 225.96,
+          "e": 226.04,
+          "p": 0.1884724348783493
+        },
+        {
+          "w": " is.",
+          "s": 226.04,
+          "e": 226.82,
+          "p": 0.8892514705657959
+        }
+      ]
+    },
+    {
+      "start": 228.02,
+      "end": 231.06,
+      "text": "A patient performance.",
+      "avg_logprob": -0.9228452212280698,
+      "no_speech_prob": 0.5211138129234314,
+      "words": [
+        {
+          "w": " A",
+          "s": 228.02,
+          "e": 229.42,
+          "p": 0.12195160984992981
+        },
+        {
+          "w": " patient",
+          "s": 229.42,
+          "e": 230.3,
+          "p": 0.975202739238739
+        },
+        {
+          "w": " performance.",
+          "s": 230.3,
+          "e": 231.06,
+          "p": 0.9897689819335938
+        }
+      ]
+    },
+    {
+      "start": 231.06,
+      "end": 237.06,
+      "text": "This is his third semi-final appearance here in Vietnam.",
+      "avg_logprob": -0.6336318810780843,
+      "no_speech_prob": 0.6000049710273743,
+      "words": [
+        {
+          "w": " This",
+          "s": 231.06,
+          "e": 231.22,
+          "p": 0.04330061376094818
+        },
+        {
+          "w": " is",
+          "s": 231.22,
+          "e": 232.32,
+          "p": 0.6138083338737488
+        },
+        {
+          "w": " his",
+          "s": 232.32,
+          "e": 234.16,
+          "p": 0.2908419668674469
+        },
+        {
+          "w": " third",
+          "s": 234.16,
+          "e": 234.52,
+          "p": 0.8911718726158142
+        },
+        {
+          "w": " semi",
+          "s": 234.52,
+          "e": 234.92,
+          "p": 0.5616390109062195
+        },
+        {
+          "w": "-final",
+          "s": 234.92,
+          "e": 235.38,
+          "p": 0.9197583496570587
+        },
+        {
+          "w": " appearance",
+          "s": 235.38,
+          "e": 236.18,
+          "p": 0.9800150990486145
+        },
+        {
+          "w": " here",
+          "s": 236.18,
+          "e": 236.6,
+          "p": 0.8213610649108887
+        },
+        {
+          "w": " in",
+          "s": 236.6,
+          "e": 236.78,
+          "p": 0.9740289449691772
+        },
+        {
+          "w": " Vietnam.",
+          "s": 236.78,
+          "e": 237.06,
+          "p": 0.7672219276428223
+        }
+      ]
+    }
+  ]
+}

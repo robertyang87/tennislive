@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "39c1a2fa51d37cc04b2fd235abe567605995c3a851d052a5d00eb380a8f433a2",
+  "segments": [
+    {
+      "index": 2,
+      "transcript_path": "data/audio_reviews/zverev-finals-road-2026/australian-open-matchpoint.json",
+      "transcript_sha256": "23795dc013b28b7a6ea2b715c34e00501e88dbffd30609afa59dd9a6ff79d7d0"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/audio_reviews/zverev-finals-road-2026/rg-matchpoint.json",
+      "transcript_sha256": "77541f617d4895b04eec39caaed4f0726827ba14dab1f3cd6e29f9a84cc6707e"
+    },
+    {
+      "index": 9,
+      "transcript_path": "data/audio_reviews/zverev-finals-road-2026/wimbledon-matchpoint.json",
+      "transcript_sha256": "2884abfbdaf368672ea5f56e381391473efb1d5dc0bec787a8822c25a802d0e1"
+    },
+    {
+      "index": 12,
+      "transcript_path": "data/audio_reviews/zverev-finals-road-2026/us-open-matchpoint.json",
+      "transcript_sha256": "01762855483bf2ceead4b77d8f7b25f9109d177ab364a23c15c405a5ffb96ac3"
+    },
+    {
+      "index": 15,
+      "transcript_path": "data/audio_reviews/zverev-finals-road-2026/shanghai-matchpoint.json",
+      "transcript_sha256": "2f8a0194e377dd858ffc781c6828e94ae82609d9d73324462a2a42321a23a51a"
+    }
+  ],
+  "method_note": "Five exact source-SHA selected windows,23bilingual cues, one RGcourt/Frenchumpire window honestly has no foreground English. Current ASR and external quotation evidence explicitly distinguished; no human listening claim."
+}

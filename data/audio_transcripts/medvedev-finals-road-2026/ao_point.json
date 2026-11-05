@@ -1,0 +1,95 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
+  "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; inspected retained native raw small.en/medium.en and stated official-caption evidence; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T06:44:43.941897+00:00",
+  "status": "complete",
+  "reviewed_from": 157.96,
+  "reviewed_to": 178.5,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 164.64,
+      "end": 169.08,
+      "en": "Learner Tien. Learner has handed out a lesson.",
+      "zh": "勒纳·钱，给对手上了一课。"
+    },
+    {
+      "start": 169.88,
+      "end": 175.9,
+      "en": "It's a breakout performance from a star on the rise.",
+      "zh": "冉冉升起的新星，打出突破表现。"
+    },
+    {
+      "start": 175.9,
+      "end": 178.16,
+      "en": "We've seen something special here.",
+      "zh": "我们见证了一场特别的比赛。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/medium.en.json",
+      "sha256": "830041d3e07adebc4e45c7b0f3cac48765eb37103de8e8166daebd8d708d2b00",
+      "model": "medium.en",
+      "clip": [
+        150.0,
+        182.0
+      ],
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/23a23f79cb9e833a9e452f95024a92aa92fd886a/small.en.json",
+      "sha256": "f61109f93ffc2b836b9b67dc661208c67dff411be35b00509f8b9ba4f55ef099",
+      "model": "small.en",
+      "clip": [
+        150.0,
+        182.0
+      ],
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/medium.en.json",
+      "sha256": "a9bf184cb361f8bdd43403fc9b7ac60e11b78b20ea082bcc7b4d7c6d49895e93",
+      "model": "medium.en",
+      "clip": [
+        158.0,
+        179.0
+      ],
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Kb2AakHDzV8/3f80e81220e5b18d61dc76d539866951066bd245/small.en.json",
+      "sha256": "662cf352389baa7c9e6316884f8280afc00b7ba58f54a5599d13323e18eb16cb",
+      "model": "small.en",
+      "clip": [
+        158.0,
+        179.0
+      ],
+      "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/Kb2AakHDzV8.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "duration": 194.095601,
+      "bytes": 32397019
+    }
+  },
+  "review_notes": "Native original150–182 small reads Learner lesson; medium misses it. Tight native158–179 small AND medium recognize Learner has handed out a lesson and both subsequent sentences. Channel auto captions separately retain the initial name at164.64; transcription Lenna10 is normalized to verified match player Learner Tien. Complete selected window checked against all actual evidence, source bytes verified. This is ASR/caption cross-check, not human listening.",
+  "uncertain_spans": [],
+  "caption_evidence": {
+    "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/captions/Kb2AakHDzV8-ff0362da-captions.txt",
+    "sha256": "888a6a8beff6973b7ae776d197e080d7352bf0985fcc26c9868d4bddd8cf8214",
+    "source": "Australian Open official YouTube channel auto timed captions, flattened by native probe",
+    "native_probe_run": 41979054902,
+    "fixed_commit": "ff0362da",
+    "repository_path": "output/2026-11-05/reel/source-kb2aakhdzv8/captions.txt",
+    "note": "Original json3 not retained by native probe; this is the actual committed flattened captions artifact, not asserted human-authored subtitles."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "status": "Only unconsumed legacy request metadata migrated to explicit annotations",
+  "formal_path": "specs/reels/paris-decisive-night-2026.json",
+  "before_sha256": "bb0243a0784d246c74b917d2d160b5bde94ea85172a10fd90a2ce55821e3abbb",
+  "after_sha256": "28fa3701527de70016505da091c41e2fe382218e49ebf21962b9f5a2ac8bb74e",
+  "original_audio_plan_sha256": "6dc6b1041b3df959f821242234878577eb09b63e98a8a0b806bd445f4022eb29",
+  "migrated_audio_plan_sha256": "6dc6b1041b3df959f821242234878577eb09b63e98a8a0b806bd445f4022eb29",
+  "native_source_quote_narration_and_all_other_fields_unchanged": true,
+  "cover_and_user_hold_and_push_unchanged": true,
+  "push_auto": false,
+  "migration": [
+    {
+      "segment_index": 3,
+      "preserved_fields": {
+        "audio": "original",
+        "label": "broadcast_quote"
+      }
+    },
+    {
+      "segment_index": 13,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-_TGshnZNILc/_TGshnZNILc.mp4"
+      }
+    },
+    {
+      "segment_index": 14,
+      "preserved_fields": {
+        "audio": "original",
+        "label": "broadcast_quote",
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-_TGshnZNILc/_TGshnZNILc.mp4"
+      }
+    },
+    {
+      "segment_index": 15,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 16,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 17,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 18,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 19,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 20,
+      "preserved_fields": {
+        "audio": "original",
+        "label": "broadcast_quote",
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    },
+    {
+      "segment_index": 21,
+      "preserved_fields": {
+        "url": "https://github.com/robertyang87/tennislive/releases/download/source-mHOfMWGOL-s/mHOfMWGOL-s.mp4"
+      }
+    }
+  ],
+  "not_quality_approval": "This held film was not rendered, promoted or sent by this migration. Tests, REAL_FIELDS and legacy lists are unchanged.",
+  "latest_main_checked_before_migration": "65e9c029eb4ff87bdef98d29b04f701065a4889d",
+  "actual_regression": {
+    "test": "tests/test_match_reel.py::test_真字段表要盖住每条spec里出现过的字段",
+    "result": "1 passed in0.55s",
+    "stdout_sha256": "d5a95bff965b551d13eb2beca63615f7042912ddca10d23da4f980ed95465598",
+    "context": "Materialized the same existing output JSON/MD/TXT/ASS/JSON3 history text patterns as nativeCI so frozen published-history diagnostics have their exact expectedinputs. No tests, productionhistory manifest or exemptions changed."
+  }
+}

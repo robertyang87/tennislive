@@ -1,0 +1,473 @@
+{
+  "sources": [
+    {
+      "id": "Kb2AakHDzV8",
+      "sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/Kb2AakHDzV8.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "duration": 194.095601,
+        "bytes": 32397019
+      },
+      "key": "ao-r4",
+      "source_url": "https://www.youtube.com/watch?v=Kb2AakHDzV8",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-Kb2AakHDzV8/Kb2AakHDzV8.mp4",
+      "publisher": "Australian Open",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "windows": [
+        {
+          "start": 157.96,
+          "end": 178.5,
+          "action": "Medvedev (green) serving at 3-5 15-40; full serve and short rally; Tien (white/orange cap) wins final point; fist pump, crowd and handshake with complete commentary end.",
+          "complete_point_evidence": {
+            "prep": 158.2,
+            "toss": 159.0,
+            "serve_contact_approx": 159.5,
+            "rally_end_approx": 164.6,
+            "reaction_start_approx": 164.9,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/Kb2AakHDzV8-detail-155.jpg"
+          },
+          "status": "visual terminal point verified; opening English line still pending"
+        }
+      ],
+      "raw_asr": [
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/Kb2AakHDzV8/small.en.json",
+          "sha256": "f61109f93ffc2b836b9b67dc661208c67dff411be35b00509f8b9ba4f55ef099",
+          "model": "small.en",
+          "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+        },
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/Kb2AakHDzV8/medium.en.json",
+          "sha256": "830041d3e07adebc4e45c7b0f3cac48765eb37103de8e8166daebd8d708d2b00",
+          "model": "medium.en",
+          "source_sha256": "a877baad71b015a71215ea972cd49c69769700dc3b17a91b1a9f0ed352b7d115"
+        }
+      ],
+      "foreground_english": [
+        {
+          "source_start": 164.64,
+          "source_end": 169.08,
+          "en": "Learner Tien. Learner has handed out a lesson.",
+          "zh": "勒纳·钱，给对手上了一课。",
+          "review_status": "PENDING: opening proper-name repetition is masked by applause; small.en catches Learner has handed out a lesson, medium.en omits opening; YouTube automatic captions also repeats name; exact first words need audio review, do not attest PASS"
+        },
+        {
+          "source_start": 169.9,
+          "source_end": 175.9,
+          "en": "It's a breakout performance from a star on the rise.",
+          "zh": "一位冉冉升起的新星，交出了突破性的表现。",
+          "review_status": "dual-ASR crosschecked; proper names normalized from official match identity"
+        },
+        {
+          "source_start": 175.9,
+          "source_end": 178.16,
+          "en": "We've seen something special here.",
+          "zh": "我们见证了一场特别的比赛。",
+          "review_status": "dual-ASR crosschecked; proper names normalized from official match identity"
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Daniil Medvedev v Learner Tien Highlights | Australian Open 2026 Fourth Round",
+        "published": "2026-01-25",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979054902,
+        "download_archive": 41979607438,
+        "source_asr": 41979868706
+      }
+    },
+    {
+      "id": "XLyIURu_Yq0",
+      "sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/XLyIURu_Yq0.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "duration": 484.461134,
+        "bytes": 80476594
+      },
+      "key": "brisbane-final",
+      "source_url": "https://www.youtube.com/watch?v=XLyIURu_Yq0",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-XLyIURu_Yq0/XLyIURu_Yq0.mp4",
+      "publisher": "Tennis TV",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "windows": [
+        {
+          "start": 443.84,
+          "end": 465.0,
+          "action": "Nakashima (white/navy) serving at 1-6 in tiebreak; complete serve through rally to Medvedev winning forehand and fist-pump reaction.",
+          "complete_point_evidence": {
+            "serve_already_in_toss_on_first_wide_frame": true,
+            "serve_contact_approx": 444.2,
+            "rally_end_approx": 453.7,
+            "reaction_start_approx": 453.96,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/XLyIURu_Yq0-detail-441.jpg",
+            "firstframe_sheet": "/workspace/medvedev-finals-production/research/media-early/bris-prep.jpg"
+          },
+          "status": "GAP: native highlight omits pre-toss service preparation. All ball contacts retained. Cannot claim full prep. Alternate Nine official 199.9s highlight found but playback API returns 403 locally."
+        }
+      ],
+      "raw_asr": [
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/XLyIURu_Yq0/small.en.json",
+          "sha256": "e9841c2d1ef71a6efe4a5833d6092563db04428cf5f7a25e632c5c03ba242398",
+          "model": "small.en",
+          "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f"
+        },
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/XLyIURu_Yq0/medium.en.json",
+          "sha256": "d266fd8c12ffaa3a3c33c89e11c850f2698da1692b33f3e18b8d185861972b5d",
+          "model": "medium.en",
+          "source_sha256": "f8a540c5773b933f342e8d7301fb696d3eecf5f433c0882b466908445eddd84f"
+        }
+      ],
+      "foreground_english": [
+        {
+          "source_start": 453.58,
+          "source_end": 461.06,
+          "en": "Finishes in style as 2026 starts in magical fashion for Daniil Medvedev.",
+          "zh": "漂亮地结束比赛！梅德韦德夫的2026赛季，以梦幻般的方式开启。",
+          "review_status": "small.en says style; medium.en says start (low confidence); YouTube original captions says style. Normalized Daniil proper name."
+        },
+        {
+          "source_start": 461.46,
+          "source_end": 464.36,
+          "en": "He is the Brisbane International champion.",
+          "zh": "他是布里斯班国际赛的冠军。",
+          "review_status": "dual-ASR crosschecked; proper names normalized from official match identity"
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Daniil Medvedev vs Brandon Nakashima For The Title! | Brisbane 2026 Final Highlights",
+        "published": "2026-01-11",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979058032,
+        "download_archive": 41979610848,
+        "source_asr": 41979872013
+      }
+    },
+    {
+      "id": "8QaQEeGnLrg",
+      "sha256": "779516c89ccd0248ad3ed7a139f24a3799b80c66daa6614e837a4175be545585",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/8QaQEeGnLrg.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "duration": 494.376054,
+        "bytes": 82919387
+      },
+      "key": "wimbledon-r3",
+      "source_url": "https://www.youtube.com/watch?v=8QaQEeGnLrg",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-8QaQEeGnLrg/8QaQEeGnLrg.mp4",
+      "publisher": "Wimbledon",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "windows": [
+        {
+          "start": 438.64,
+          "end": 454.4,
+          "action": "Medvedev (white, near court) prepares and serves at 5-6 0-40, Struff wins short final point; Struff fist pump, handshake and full first commentary sentence.",
+          "complete_point_evidence": {
+            "prep": 438.64,
+            "wide_court_start": 439.84,
+            "serve_contact_approx": 440.5,
+            "rally_end_approx": 443.6,
+            "reaction_start_approx": 444.0,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/8QaQEeGnLrg-detail-431.jpg"
+          },
+          "status": "visual point verified; native dual-ASR-backed sentence boundary 453.86, end 454.4 before next sentence at454.9"
+        }
+      ],
+      "raw_asr": [
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/8QaQEeGnLrg/small.en.json",
+          "sha256": "680757e075baefcf9ef6b4aa1301820dd328ef2a994ea55f5d23000090d55820",
+          "model": "small.en",
+          "source_sha256": "779516c89ccd0248ad3ed7a139f24a3799b80c66daa6614e837a4175be545585"
+        },
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/8QaQEeGnLrg/medium.en.json",
+          "sha256": "e7f0cc73ec0d5dd2c24e8b92570366d640b69c53ee0a4095b24e779c85dd4365",
+          "model": "medium.en",
+          "source_sha256": "779516c89ccd0248ad3ed7a139f24a3799b80c66daa6614e837a4175be545585"
+        }
+      ],
+      "foreground_english": [
+        {
+          "source_start": 444.12,
+          "source_end": 453.86,
+          "en": "Jan-Lennard Struff is through to the round of 16 in Wimbledon for the very first time in his career.",
+          "zh": "斯特鲁夫职业生涯首次闯进温网16强。",
+          "review_status": "medium.en complete sentence; small.en loses in his career amid noise; proper name normalized with actual player and official identity. No human hearing claim."
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Perfect shot-making | Jan-Lennard Struff v Daniil Medvedev | Extended Highlights | Wimbledon 2026",
+        "published": "2026-07-03",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979061519,
+        "download_archive": 41979613819,
+        "source_asr": 41979875114
+      }
+    },
+    {
+      "id": "p-oeN9TwKZg",
+      "sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/p-oeN9TwKZg.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "60000/1001",
+        "duration": 205.868118,
+        "bytes": 77291562
+      },
+      "key": "us-open-r4",
+      "source_url": "https://www.youtube.com/watch?v=p-oeN9TwKZg",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-p-oeN9TwKZg/p-oeN9TwKZg.mp4",
+      "publisher": "US Open Tennis Championships",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "windows": [
+        {
+          "start": 159.4,
+          "end": 178.3,
+          "action": "Tiafoe (pink) prepares serve at 7-6 in third-set tiebreak; complete serve and rally, Medvedev final shot long; Tiafoe celebrates and crowd; full commentary first sentence ends177.86.",
+          "complete_point_evidence": {
+            "prep": 159.4,
+            "toss": 160.7,
+            "wide_court_start": 161.33,
+            "rally_end_approx": 167.7,
+            "reaction_start_approx": 167.85,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/p-oeN9TwKZg-detail-158.jpg"
+          },
+          "status": "visual point verified and native dual-ASR sentence supported; end before next speech178.96"
+        }
+      ],
+      "raw_asr": [
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/p-oeN9TwKZg/small.en.json",
+          "sha256": "4faa564ce4739c0555972e160b07abf378942b6b2a4d6724166c5f702c244588",
+          "model": "small.en",
+          "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+        },
+        {
+          "path": "/workspace/medvedev-finals-production/research/media-early/asr/p-oeN9TwKZg/medium.en.json",
+          "sha256": "7dc391da42881862b2a1037d4ec8bdec2e8bcc6afaf13eac1774f0565ab0bea4",
+          "model": "medium.en",
+          "source_sha256": "5b1070a5b3c3abc91a272466c648c7505aa965d8ab05d73a9f1d30f5886c6bcb"
+        }
+      ],
+      "foreground_english": [
+        {
+          "source_start": 172.6,
+          "source_end": 177.86,
+          "en": "Frances Tiafoe is in that New York state of mind once again.",
+          "zh": "蒂亚福又一次找回了属于纽约的状态。",
+          "review_status": "dual-ASR crosschecked; proper names normalized from official match identity"
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Daniil Medvedev vs. Frances Tiafoe Highlights | 2026 US Open Round 4",
+        "published": "2026-09-06",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979064773,
+        "download_archive": 41979617346,
+        "source_asr": 41979878017
+      }
+    },
+    {
+      "id": "cU68ZY0dnxg",
+      "sha256": "a954c376a1be5cf64286253d0574485e28f19153aa986fb6ce33e5d1387aba36",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/cU68ZY0dnxg.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "duration": 292.989388,
+        "bytes": 56524157
+      },
+      "key": "dubai-ceremony",
+      "source_url": "https://www.youtube.com/watch?v=cU68ZY0dnxg",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-cU68ZY0dnxg/cU68ZY0dnxg.mp4",
+      "publisher": "Tennis TV",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "windows": [
+        {
+          "start": 264,
+          "end": 276,
+          "action": "Actual Dubai 2026 trophy lift and group photographs, fireworks behind player.",
+          "complete_point_evidence": null,
+          "status": "Final W/O, no championship point exists. Use as narration B-roll only, actual speech should not be foreground unless separately audited.",
+          "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/cU68ZY0dnxg-tail.jpg"
+        }
+      ],
+      "raw_asr": [],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Daniil Medvedev & Tallon Griekspoor Full Trophy Ceremony | Dubai Final 2026",
+        "published": "2026-02-28",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": null,
+        "download_archive": 41979624056,
+        "source_asr": null
+      }
+    },
+    {
+      "id": "pWYku2zpgKQ",
+      "sha256": "f5399d71d90abc991ccf02589c25d61763beff31ae7e5e4de16a75433bc66ec1",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/pWYku2zpgKQ.mp4",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 484.554014,
+        "bytes": 129421986
+      },
+      "key": "indian-wells-final",
+      "source_url": "https://www.youtube.com/watch?v=pWYku2zpgKQ",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-pWYku2zpgKQ/pWYku2zpgKQ.mp4",
+      "publisher": "Tennis TV",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "raw_asr": [],
+      "windows": [
+        {
+          "start": 417.1,
+          "end": 437.0,
+          "action": "Medvedev (blue/white) serving matchpoint down6-4 in second-set tiebreak; complete last ball, Sinner (pink) wins, chest tap and Medvedev disappointed reaction.",
+          "complete_point_evidence": {
+            "wide_court_start_approx": 417.4,
+            "serve_contact_approx": 418.0,
+            "rally_end_approx": 421.3,
+            "reaction_start_approx": 421.7,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/pWYku2zpgKQ-detail-415.jpg"
+          },
+          "status": "visual terminal point verified; first wide frame already in serve motion, full pre-toss prep not in this edit; dual-ASR end pending"
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Jannik Sinner vs Daniil Medvedev For The Trophy | Indian Wells 2026 Final Highlights",
+        "published": "2026-03-15",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979673158,
+        "download_archive": 41979669909,
+        "source_asr": 41979886884
+      }
+    },
+    {
+      "id": "Zt6JGiygrFo",
+      "local_path": "/workspace/medvedev-finals-production/research/media-early/sources/Zt6JGiygrFo.mp4",
+      "sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 719.656054,
+        "bytes": 184481181
+      },
+      "key": "rg-r1",
+      "source_url": "https://www.youtube.com/watch?v=Zt6JGiygrFo",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
+      "publisher": "House of Highlights, official WBD licensed digital broadcaster named by Roland-Garros",
+      "review_status": "actual bytes and 0.5-second contact frames inspected; audio review packet pending; not production PASS",
+      "raw_asr": [],
+      "windows": [
+        {
+          "start": 690.0,
+          "end": 706.5,
+          "action": "Medvedev (dark/navy) at0-40, actual serving preparation close-up, full last serve/rally, drive volley long, Walton hands on head, actual match result and handshake.",
+          "complete_point_evidence": {
+            "prep": 690.0,
+            "toss": 690.5,
+            "serve_contact_approx": 691.1,
+            "rally_end_approx": 695.7,
+            "reaction_start_approx": 696.0,
+            "inspected_sheet": "/workspace/medvedev-finals-production/research/media-early/Zt6JGiygrFo-detail-689.jpg"
+          },
+          "status": "visual terminal verified; dual-ASR commentary end pending"
+        }
+      ],
+      "crop": {
+        "mode": "full-canvas-cover",
+        "court_cx": 0.5,
+        "track_player": false
+      },
+      "source_audio_gain": 1.0,
+      "official_metadata": {
+        "title": "Adam Walton vs Daniil Medvedev - FULL Match Highlights | Roland Garros 2026",
+        "published": "2026-05-26",
+        "uploader_verified": true,
+        "evidence_file": "/workspace/medvedev-finals-production/research/media-early/web-identity-evidence.json"
+      },
+      "native_runs": {
+        "probe": 41979721618,
+        "download_archive": 41979718135,
+        "source_asr": 41979950892
+      },
+      "rights_evidence": {
+        "url": "https://www.rolandgarros.com/en-us/article/roland-garros-2026-tv-broadcasters-france-international",
+        "file": "/workspace/medvedev-finals-production/research/media-early/rg-official-broadcasters.html",
+        "support": "2026 official broadcasters page explicitly identifies House of Highlights as WBD digital platform carrying dedicated content"
+      }
+    }
+  ],
+  "notes": [
+    "Dubai final was W/O; no final point exists; selected actual 2026 trophy ceremony only.",
+    "RG Stan Sport upload rDgJZWBYIWU is geo-restricted to Australia and excluded; HoH relation verified by RG official broadcasters article.",
+    "Foreground English packets pending actual dual-ASR review, do not treat as final PASS."
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "tennislive.source-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+  "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex zverev_source_audio: same-source-SHA exact-window reuse of genuine Cobolli native small.en/medium.en evidence; no human listening claim",
+  "reviewed_at": "2026-11-04T10:09:48.736066+00:00",
+  "reviewed_from": 640.3,
+  "reviewed_to": 665.3,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-small.en.json",
+      "sha256": "bb9028cdd8f29cdd592ba9e50b7abf8405f7c3086f384898888483f0f0384767",
+      "model": "small.en",
+      "source_window": [
+        410.0,
+        670.0
+      ]
+    },
+    {
+      "path": "data/audio_reviews/cobolli-finals-2026/raw/WfxpIK_TvEQ-medium.en.json",
+      "sha256": "5723f8f292ece7bf370f6959a472f34acaf0c7bb93134434725946174689c657",
+      "model": "medium.en",
+      "source_window": [
+        410.0,
+        670.0
+      ]
+    }
+  ],
+  "review_notes": "Native ASR on640.30–642.40 has no tokens. Existing same-source-SHA review642.40–689.00 identifies court/crowd and French umpire score announcement655–665, with no English commentary. New small.en emits mutually inconsistent “And now, the match is over”/“Thank you so much” at avg_logprob -1.123; medium.en emits different thank-you fragments at -1.209. They do not agree on an actual English utterance and are consistent with forced-English decoding of the French umpire. Original French/crowd audio is retained. Root approved honest same-SHA historical overlap use plus independent newly-added640.30–642.40 coverage. No human listening is claimed.",
+  "source_identity": {
+    "video_id": "WfxpIK_TvEQ",
+    "source_path": "/workspace/cobolli-research/media-b/WfxpIK_TvEQ.mp4",
+    "sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+    "bytes": 250669751,
+    "duration": 727.457959,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ]
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "no_foreground_english_reason": "Court and celebration sounds followed by the French umpire score announcement; no verified foreground English. Existing same-SHA642.40–689.00 review and both current raw ASR outputs support the language distinction; low-confidence inconsistent forced-English fragments are not turned into fabricated subtitles. No-English does not mean silent.",
+  "prior_exact_source_overlap": {
+    "path": "data/audio_reviews/year-end-no1-zverev-2026/rg-final-last.json",
+    "sha256": "8ebcbadc7e09ab422606530a9ca1963abdecf2156fdafed583f145c84aa2f932",
+    "source_sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+    "reviewed_window": [
+      642.4,
+      689.0
+    ],
+    "reused_overlap": [
+      642.4,
+      665.3
+    ],
+    "new_independently_checked_window": [
+      640.3,
+      642.4
+    ]
+  },
+  "reused_for": "zverev-finals-road-2026"
+}

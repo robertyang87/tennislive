@@ -1,0 +1,152 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T06:42:05.280138+00:00",
+  "model": "medium.en",
+  "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+  "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/DTXfZGAjiRl.mp4",
+  "clip": [
+    0,
+    41.237333
+  ],
+  "duration": 41.2373125,
+  "language_requested": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "all_language_probs": null,
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 13.84,
+      "end": 24.64,
+      "text": "And that's it for today, thanks for watching, and I'll see you in the next one.",
+      "avg_logprob": -1.0377940634886424,
+      "no_speech_prob": 0.4598848223686218,
+      "words": [
+        {
+          "w": " And",
+          "s": 13.84,
+          "e": 15.24,
+          "p": 0.005648190621286631
+        },
+        {
+          "w": " that's",
+          "s": 15.24,
+          "e": 15.84,
+          "p": 0.31567456759512424
+        },
+        {
+          "w": " it",
+          "s": 15.84,
+          "e": 15.84,
+          "p": 0.18263190984725952
+        },
+        {
+          "w": " for",
+          "s": 15.84,
+          "e": 15.84,
+          "p": 0.238809272646904
+        },
+        {
+          "w": " today,",
+          "s": 15.84,
+          "e": 16.56,
+          "p": 0.1945015788078308
+        },
+        {
+          "w": " thanks",
+          "s": 16.56,
+          "e": 16.56,
+          "p": 0.12453193217515945
+        },
+        {
+          "w": " for",
+          "s": 16.56,
+          "e": 17.02,
+          "p": 0.6425096988677979
+        },
+        {
+          "w": " watching,",
+          "s": 17.02,
+          "e": 19.6,
+          "p": 0.8033561706542969
+        },
+        {
+          "w": " and",
+          "s": 19.76,
+          "e": 22.68,
+          "p": 0.49660393595695496
+        },
+        {
+          "w": " I'll",
+          "s": 22.68,
+          "e": 22.68,
+          "p": 0.5419472455978394
+        },
+        {
+          "w": " see",
+          "s": 22.68,
+          "e": 22.68,
+          "p": 0.9478725790977478
+        },
+        {
+          "w": " you",
+          "s": 22.68,
+          "e": 22.68,
+          "p": 0.9816498160362244
+        },
+        {
+          "w": " in",
+          "s": 22.68,
+          "e": 23.94,
+          "p": 0.3260337710380554
+        },
+        {
+          "w": " the",
+          "s": 23.94,
+          "e": 24.64,
+          "p": 0.9045178294181824
+        },
+        {
+          "w": " next",
+          "s": 24.64,
+          "e": 24.64,
+          "p": 0.9678339958190918
+        },
+        {
+          "w": " one.",
+          "s": 24.64,
+          "e": 24.64,
+          "p": 0.4938562214374542
+        }
+      ]
+    },
+    {
+      "start": 41.12,
+      "end": 41.18,
+      "text": "Thank you!",
+      "avg_logprob": -1.1245798071225483,
+      "no_speech_prob": 0.5621147155761719,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 41.12,
+          "e": 41.16,
+          "p": 0.07893957197666168
+        },
+        {
+          "w": " you!",
+          "s": 41.16,
+          "e": 41.18,
+          "p": 0.9874358177185059
+        }
+      ]
+    }
+  ]
+}

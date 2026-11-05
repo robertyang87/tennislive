@@ -1,0 +1,273 @@
+{
+  "method": "local AudioSet AST ONNX classifier; automated supporting evidence, not human listening or proof of absence",
+  "model": "Xenova/ast-finetuned-audioset-10-10-0.4593",
+  "onnx_sha256": "807d244b58a30eaa89f0a721fb841619c696857aabe4eac93769bd0b61497f61",
+  "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+  "created_at": "2026-11-05T06:42:32.450546+00:00",
+  "windows": [
+    {
+      "from": 0,
+      "to": 10,
+      "top_labels": [
+        {
+          "label": "Basketball bounce",
+          "probability": 0.29980120062828064
+        },
+        {
+          "label": "Speech",
+          "probability": 0.045550886541604996
+        },
+        {
+          "label": "Shuffle",
+          "probability": 0.039816711097955704
+        },
+        {
+          "label": "Trickle, dribble",
+          "probability": 0.03473449870944023
+        },
+        {
+          "label": "Ping",
+          "probability": 0.03379154950380325
+        },
+        {
+          "label": "Arrow",
+          "probability": 0.02634018287062645
+        },
+        {
+          "label": "Mouse",
+          "probability": 0.0200248584151268
+        },
+        {
+          "label": "Inside, large room or hall",
+          "probability": 0.014899210073053837
+        },
+        {
+          "label": "Whoosh, swoosh, swish",
+          "probability": 0.012136943638324738
+        },
+        {
+          "label": "Animal",
+          "probability": 0.010174152441322803
+        },
+        {
+          "label": "Vehicle",
+          "probability": 0.006981449667364359
+        },
+        {
+          "label": "Slam",
+          "probability": 0.006683018058538437
+        },
+        {
+          "label": "Insect",
+          "probability": 0.005602818913757801
+        },
+        {
+          "label": "Door",
+          "probability": 0.005560856778174639
+        },
+        {
+          "label": "Music",
+          "probability": 0.004765354562550783
+        }
+      ]
+    },
+    {
+      "from": 10,
+      "to": 20,
+      "top_labels": [
+        {
+          "label": "Basketball bounce",
+          "probability": 0.7557523846626282
+        },
+        {
+          "label": "Speech",
+          "probability": 0.6189596652984619
+        },
+        {
+          "label": "Inside, large room or hall",
+          "probability": 0.02900857850909233
+        },
+        {
+          "label": "Crowd",
+          "probability": 0.02047630585730076
+        },
+        {
+          "label": "Whoosh, swoosh, swish",
+          "probability": 0.01933596283197403
+        },
+        {
+          "label": "Applause",
+          "probability": 0.017580103129148483
+        },
+        {
+          "label": "Cheering",
+          "probability": 0.016574131324887276
+        },
+        {
+          "label": "Music",
+          "probability": 0.01407420914620161
+        },
+        {
+          "label": "Trickle, dribble",
+          "probability": 0.010616137646138668
+        },
+        {
+          "label": "Inside, public space",
+          "probability": 0.008832164108753204
+        },
+        {
+          "label": "Male speech, man speaking",
+          "probability": 0.007987779565155506
+        },
+        {
+          "label": "Inside, small room",
+          "probability": 0.007590681314468384
+        },
+        {
+          "label": "Slam",
+          "probability": 0.006551067810505629
+        },
+        {
+          "label": "Ping",
+          "probability": 0.004266192205250263
+        },
+        {
+          "label": "Narration, monologue",
+          "probability": 0.003968432545661926
+        }
+      ]
+    },
+    {
+      "from": 20,
+      "to": 30,
+      "top_labels": [
+        {
+          "label": "Applause",
+          "probability": 0.7035210728645325
+        },
+        {
+          "label": "Crowd",
+          "probability": 0.24129058420658112
+        },
+        {
+          "label": "Speech",
+          "probability": 0.23094429075717926
+        },
+        {
+          "label": "Cheering",
+          "probability": 0.2258267104625702
+        },
+        {
+          "label": "Music",
+          "probability": 0.0407186858355999
+        },
+        {
+          "label": "Children shouting",
+          "probability": 0.012637008912861347
+        },
+        {
+          "label": "Clapping",
+          "probability": 0.012232030741870403
+        },
+        {
+          "label": "Male speech, man speaking",
+          "probability": 0.009966161102056503
+        },
+        {
+          "label": "Outside, urban or manmade",
+          "probability": 0.008746669627726078
+        },
+        {
+          "label": "Whoop",
+          "probability": 0.008389762602746487
+        },
+        {
+          "label": "Musical instrument",
+          "probability": 0.006643157918006182
+        },
+        {
+          "label": "Inside, public space",
+          "probability": 0.005898722447454929
+        },
+        {
+          "label": "Narration, monologue",
+          "probability": 0.004843207076191902
+        },
+        {
+          "label": "Animal",
+          "probability": 0.0044854264706373215
+        },
+        {
+          "label": "Bellow",
+          "probability": 0.004229807760566473
+        }
+      ]
+    },
+    {
+      "from": 30,
+      "to": 40,
+      "top_labels": [
+        {
+          "label": "Speech",
+          "probability": 0.7175546884536743
+        },
+        {
+          "label": "Ping",
+          "probability": 0.2623150050640106
+        },
+        {
+          "label": "Music",
+          "probability": 0.09476763010025024
+        },
+        {
+          "label": "Crowd",
+          "probability": 0.09362030774354935
+        },
+        {
+          "label": "Clapping",
+          "probability": 0.048644475638866425
+        },
+        {
+          "label": "Hubbub, speech noise, speech babble",
+          "probability": 0.04596170410513878
+        },
+        {
+          "label": "Basketball bounce",
+          "probability": 0.038346514105796814
+        },
+        {
+          "label": "Inside, public space",
+          "probability": 0.028639577329158783
+        },
+        {
+          "label": "Outside, urban or manmade",
+          "probability": 0.02747958153486252
+        },
+        {
+          "label": "Cheering",
+          "probability": 0.025935189798474312
+        },
+        {
+          "label": "Male speech, man speaking",
+          "probability": 0.024849336594343185
+        },
+        {
+          "label": "Run",
+          "probability": 0.022802051156759262
+        },
+        {
+          "label": "Applause",
+          "probability": 0.021190544590353966
+        },
+        {
+          "label": "Inside, large room or hall",
+          "probability": 0.01623580791056156
+        },
+        {
+          "label": "Animal",
+          "probability": 0.013162524439394474
+        }
+      ]
+    }
+  ]
+}

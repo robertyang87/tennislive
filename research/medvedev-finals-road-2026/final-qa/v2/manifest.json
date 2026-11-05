@@ -1,0 +1,908 @@
+{
+  "status": "extracted_only_not_visual_approval",
+  "movie": "/workspace/medvedev-finals-production/final/native-input-v2/medvedev-finals-road-2026.mp4",
+  "movie_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+  "spec": "/workspace/medvedev-finals-production/native/specs/reels/medvedev-finals-road-2026.json",
+  "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+  "render_meta_sha256": "0ed7d199f77689838b41a5fedcd33f5299acec34a78d5c8899d3d1fab40e0077",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1080,
+        "height": 1440,
+        "coded_width": 1080,
+        "coded_height": 1440,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "3:4",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/90000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 23806800,
+        "duration": "264.520000",
+        "bit_rate": "4420049",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "6613",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc63.26.100 libx264"
+        },
+        "side_data_list": [
+          {
+            "side_data_type": "ICC Profile"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 12696000,
+        "duration": "264.500000",
+        "bit_rate": "175768",
+        "nb_frames": "12399",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/medvedev-finals-production/final/native-input-v2/medvedev-finals-road-2026.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "264.520000",
+      "size": "152158482",
+      "bit_rate": "4601798",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "timeline_method": "Actual render cover_seconds + committed nominal scene durations; final per-frame rounding can differ slightly.",
+  "timeline": [
+    {
+      "index": 0,
+      "id": "opening",
+      "start": 4.354,
+      "duration": 10.456,
+      "end": 14.81
+    },
+    {
+      "index": 1,
+      "id": "brisbane_intro",
+      "start": 14.81,
+      "duration": 8.056,
+      "end": 22.866
+    },
+    {
+      "index": 2,
+      "id": "brisbane_point",
+      "start": 22.866,
+      "duration": 17.5,
+      "end": 40.366
+    },
+    {
+      "index": 3,
+      "id": "ao_intro",
+      "start": 40.366,
+      "duration": 7.624,
+      "end": 47.99
+    },
+    {
+      "index": 4,
+      "id": "ao_point",
+      "start": 47.99,
+      "duration": 20.54,
+      "end": 68.53
+    },
+    {
+      "index": 5,
+      "id": "dubai",
+      "start": 68.53,
+      "duration": 7.24,
+      "end": 75.77
+    },
+    {
+      "index": 6,
+      "id": "iw_intro",
+      "start": 75.77,
+      "duration": 8.824,
+      "end": 84.594
+    },
+    {
+      "index": 7,
+      "id": "redclay",
+      "start": 84.594,
+      "duration": 12.616,
+      "end": 97.21
+    },
+    {
+      "index": 8,
+      "id": "rg_point",
+      "start": 97.21,
+      "duration": 16.4,
+      "end": 113.61
+    },
+    {
+      "index": 9,
+      "id": "wim_intro",
+      "start": 113.61,
+      "duration": 8.056,
+      "end": 121.666
+    },
+    {
+      "index": 10,
+      "id": "us_intro",
+      "start": 121.666,
+      "duration": 8.248,
+      "end": 129.914
+    },
+    {
+      "index": 11,
+      "id": "us_point",
+      "start": 129.914,
+      "duration": 18.9,
+      "end": 148.814
+    },
+    {
+      "index": 12,
+      "id": "hangzhou_intro",
+      "start": 148.814,
+      "duration": 7.672,
+      "end": 156.486
+    },
+    {
+      "index": 13,
+      "id": "beijing",
+      "start": 156.486,
+      "duration": 8.968,
+      "end": 165.454
+    },
+    {
+      "index": 14,
+      "id": "almaty_intro",
+      "start": 165.454,
+      "duration": 10.144,
+      "end": 175.598
+    },
+    {
+      "index": 15,
+      "id": "almaty_point",
+      "start": 175.598,
+      "duration": 25.12,
+      "end": 200.718
+    },
+    {
+      "index": 16,
+      "id": "defence",
+      "start": 200.718,
+      "duration": 8.92,
+      "end": 209.638
+    },
+    {
+      "index": 17,
+      "id": "vienna_intro",
+      "start": 209.638,
+      "duration": 8.32,
+      "end": 217.958
+    },
+    {
+      "index": 18,
+      "id": "vienna_point",
+      "start": 217.958,
+      "duration": 19.24,
+      "end": 237.198
+    },
+    {
+      "index": 19,
+      "id": "qualification_payoff",
+      "start": 237.198,
+      "duration": 7.408,
+      "end": 244.606
+    },
+    {
+      "index": 20,
+      "id": "paris",
+      "start": 244.606,
+      "duration": 8.728,
+      "end": 253.334
+    },
+    {
+      "index": 21,
+      "id": "question",
+      "start": 253.334,
+      "duration": 6.592,
+      "end": 259.926
+    }
+  ],
+  "frames": [
+    {
+      "time": 0.8,
+      "tags": [
+        "cover"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-000-0000.800.jpg",
+      "sha256": "0ddd8189c9347ad1730274d44ef320be85b53e82b375a65f316ccd93615b3a71"
+    },
+    {
+      "time": 4.174,
+      "tags": [
+        "cover-before-cut"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-001-0004.174.jpg",
+      "sha256": "ae591ec5e6df3c268bf6587172c02084353d17b4c055b9f91329cfc532b578c4"
+    },
+    {
+      "time": 9.582,
+      "tags": [
+        "00-opening-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-002-0009.582.jpg",
+      "sha256": "0ae37d58cb18587c003c7e76c5a67ea33330cb7008445c70a3f610c952b2b0ae"
+    },
+    {
+      "time": 18.838,
+      "tags": [
+        "01-brisbane_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-003-0018.838.jpg",
+      "sha256": "dce851eb7b594e72585d7025fa42d86c332e54428af24497a5fb5e2b03d0a775"
+    },
+    {
+      "time": 23.116,
+      "tags": [
+        "02-brisbane_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-004-0023.116.jpg",
+      "sha256": "1391e3ccc6fd4db47032d7a7daa1abc8b557a81b053db7f83e18d7f3fbb7ed3d"
+    },
+    {
+      "time": 23.866,
+      "tags": [
+        "02-brisbane_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-005-0023.866.jpg",
+      "sha256": "76c156c30e25f05e3f68d13f8a288630b578eaf126adeefa7680228c1e83d78d"
+    },
+    {
+      "time": 26.866,
+      "tags": [
+        "02-brisbane_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-006-0026.866.jpg",
+      "sha256": "7183ce31bf88b39ac3b393f86e1b8b63fa52709a56c5fadab15af2c74778f9c5"
+    },
+    {
+      "time": 29.866,
+      "tags": [
+        "02-brisbane_point-plus7.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-007-0029.866.jpg",
+      "sha256": "12f5ac386ab798d33972eb9763f2e2a5bcc6441323e5befa9ad331f2f6df2700"
+    },
+    {
+      "time": 31.366,
+      "tags": [
+        "02-brisbane_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-008-0031.366.jpg",
+      "sha256": "80607b3a8d093cb0b333464d8866b57cb688a8068fb39b42e4021ff554633d2b"
+    },
+    {
+      "time": 31.616,
+      "tags": [
+        "02-brisbane_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-009-0031.616.jpg",
+      "sha256": "8775d85af4b95d4abc6e8c63da777b0da20f01fde3e8b798e262e51bb4ec27c5"
+    },
+    {
+      "time": 40.016,
+      "tags": [
+        "02-brisbane_point-plus17.15"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-010-0040.016.jpg",
+      "sha256": "0339447f8b8ed342ae0b95c7fefb36a034cd2a11d1ad776828fee089ad63ebf5"
+    },
+    {
+      "time": 44.178,
+      "tags": [
+        "03-ao_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-011-0044.178.jpg",
+      "sha256": "453be57e644ad412c1f1807070d04ea8d49cc3cd5c231e64f84a0dccf1f25857"
+    },
+    {
+      "time": 48.24,
+      "tags": [
+        "04-ao_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-012-0048.240.jpg",
+      "sha256": "a62f98c4b334db6fad267f7dbba8e1f8e908e9bfd38f341b1369382f6b91221f"
+    },
+    {
+      "time": 48.99,
+      "tags": [
+        "04-ao_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-013-0048.990.jpg",
+      "sha256": "d4c792ab70229bc1dd4fc12dbe9183f4e0fd86ac79245103bd747a185d4d9181"
+    },
+    {
+      "time": 51.99,
+      "tags": [
+        "04-ao_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-014-0051.990.jpg",
+      "sha256": "e1c199c54ee4cae1245f6bcb04dd56eb60256e6143223527d7f67874f3575779"
+    },
+    {
+      "time": 54.99,
+      "tags": [
+        "04-ao_point-plus7.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-015-0054.990.jpg",
+      "sha256": "617962194459812b562fcdc279f7251919faa7fed758918f8ea75c61bd8a5501"
+    },
+    {
+      "time": 56.49,
+      "tags": [
+        "04-ao_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-016-0056.490.jpg",
+      "sha256": "9c562adf286f579858c51b636951441d57411aa9000322d8e3c8439602a53f8e"
+    },
+    {
+      "time": 56.89,
+      "tags": [
+        "04-ao_point-bilingual0"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-017-0056.890.jpg",
+      "sha256": "2319e6b763fdcb52e798fd1d0cfb18e985ecb64989d79985e656d6fd676f5332"
+    },
+    {
+      "time": 58.26,
+      "tags": [
+        "04-ao_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-018-0058.260.jpg",
+      "sha256": "48d41bc7f8f607e9e26d5898b1a49d7a9d09bfe74015b3ae4566f509211fd690"
+    },
+    {
+      "time": 62.92,
+      "tags": [
+        "04-ao_point-bilingual1"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-019-0062.920.jpg",
+      "sha256": "ee37f5ece3d00b6e40bb9feb83cd7301ffa424c4296684a901982f892f7d0d36"
+    },
+    {
+      "time": 67.06,
+      "tags": [
+        "04-ao_point-bilingual2"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-020-0067.060.jpg",
+      "sha256": "fc389b9b8b3f755bf278a5abe29b4bbf6b394563fb0f1c3f8195d46b574e3207"
+    },
+    {
+      "time": 68.18,
+      "tags": [
+        "04-ao_point-plus20.19"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-021-0068.180.jpg",
+      "sha256": "52f0cb8ea1b292ccaaa23bcbf1e4a8e040a8d72ee1598a9a280e47d0711a229e"
+    },
+    {
+      "time": 72.15,
+      "tags": [
+        "05-dubai-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-022-0072.150.jpg",
+      "sha256": "6523b3f9ca214cfe3ec4e6c14b81ee01bf7ae67fb0d2f66c73cbd919bde6460d"
+    },
+    {
+      "time": 80.182,
+      "tags": [
+        "06-iw_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-023-0080.182.jpg",
+      "sha256": "6069d05dc8996ccf8f8d0c733e9a7a2fe3384ce4bb6e0102eee4a07786ea9a53"
+    },
+    {
+      "time": 90.902,
+      "tags": [
+        "07-redclay-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-024-0090.902.jpg",
+      "sha256": "e442920c0d8c21f6ba29cf4b00c3536e140f71c8190573b320f6a7e7c2a29de5"
+    },
+    {
+      "time": 97.46,
+      "tags": [
+        "08-rg_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-025-0097.460.jpg",
+      "sha256": "a15691e27dcd4801d6acbcfd78c3ebba5e517191900db9c2049e765a836556c4"
+    },
+    {
+      "time": 98.21,
+      "tags": [
+        "08-rg_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-026-0098.210.jpg",
+      "sha256": "1067ce96704867e39b750e0210bd7acc4c3ff93d3007742ce0c0600f7027382c"
+    },
+    {
+      "time": 101.21,
+      "tags": [
+        "08-rg_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-027-0101.210.jpg",
+      "sha256": "22f3ec6ca38e8a07f182537a23c5de296a9c906ecad813651f875adc6e2d3d64"
+    },
+    {
+      "time": 104.21,
+      "tags": [
+        "08-rg_point-plus7.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-028-0104.210.jpg",
+      "sha256": "387d22ee61207cfcba8dcd5f253f56c0eb7aa19dae6848c889ad713da94f6456"
+    },
+    {
+      "time": 105.41,
+      "tags": [
+        "08-rg_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-029-0105.410.jpg",
+      "sha256": "2c13b578d2c7ec25449b40d7e3775e719d640d34615d6477506023b430cdcedb"
+    },
+    {
+      "time": 105.71,
+      "tags": [
+        "08-rg_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-030-0105.710.jpg",
+      "sha256": "c015f787de60c14c6737163df4ac353b833eb9047f5aa96aa074f2b95419c738"
+    },
+    {
+      "time": 113.26,
+      "tags": [
+        "08-rg_point-plus16.05"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-031-0113.260.jpg",
+      "sha256": "861356c9943f0e1fbc0a82a16c8a23a46e3d4d9d68f4736b7d13d80ac92fe171"
+    },
+    {
+      "time": 117.638,
+      "tags": [
+        "09-wim_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-032-0117.638.jpg",
+      "sha256": "66a9ef4cb378f6beb1aea5e40c90fdfddacbf31f520974ef7f6bbf4949532a36"
+    },
+    {
+      "time": 125.79,
+      "tags": [
+        "10-us_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-033-0125.790.jpg",
+      "sha256": "b6d7f5336d721c9291535281e3b4c4eb3fd857ad294ea3a65e584ea188f1cf15"
+    },
+    {
+      "time": 130.164,
+      "tags": [
+        "11-us_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-034-0130.164.jpg",
+      "sha256": "b33c398752898bf07339d943e5c60046b9c916d365a2274231600010cc5ef5cd"
+    },
+    {
+      "time": 130.914,
+      "tags": [
+        "11-us_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-035-0130.914.jpg",
+      "sha256": "6bafb6c5c985f7338558ac9dd4d8172269a8aa629fb6a27059629e0a8e016c71"
+    },
+    {
+      "time": 133.914,
+      "tags": [
+        "11-us_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-036-0133.914.jpg",
+      "sha256": "fcabedb60c3a0763db522a9900de83f4203b69dfccfc6ed7ccb897ed59b64cfb"
+    },
+    {
+      "time": 136.914,
+      "tags": [
+        "11-us_point-plus7.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-037-0136.914.jpg",
+      "sha256": "6001250a4200e75e10cd8f1258cce25ab3b2a2b472eebc9e9f0e486314bb7bdb"
+    },
+    {
+      "time": 138.414,
+      "tags": [
+        "11-us_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-038-0138.414.jpg",
+      "sha256": "6cc454d03919466643a5bcac7b9ea37229de35f9d913d81bfd9d9859c57a724a"
+    },
+    {
+      "time": 139.364,
+      "tags": [
+        "11-us_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-039-0139.364.jpg",
+      "sha256": "6b033fcd8cbfdfc16c1fcb3901171aa65d7c070819645122770d98f9ae6bcc1f"
+    },
+    {
+      "time": 145.574,
+      "tags": [
+        "11-us_point-bilingual0"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-040-0145.574.jpg",
+      "sha256": "844f04b3ad52df74074897cd0ac5708d0d02610a695664eb27d285450bfdba34"
+    },
+    {
+      "time": 148.464,
+      "tags": [
+        "11-us_point-plus18.55"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-041-0148.464.jpg",
+      "sha256": "381cccdf5165582027e46b0f161d5599c43994995327d7b09a843bab5cb4f18c"
+    },
+    {
+      "time": 152.65,
+      "tags": [
+        "12-hangzhou_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-042-0152.650.jpg",
+      "sha256": "ed232aab8f0ddffb9d0743e77adddc779ba96974c46fa4fc360fb2ed091235c4"
+    },
+    {
+      "time": 160.97,
+      "tags": [
+        "13-beijing-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-043-0160.970.jpg",
+      "sha256": "55c6a1c644e926267ea8dc8fbe61f74d4073e6e48e0a89d538187287b07aba82"
+    },
+    {
+      "time": 170.526,
+      "tags": [
+        "14-almaty_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-044-0170.526.jpg",
+      "sha256": "6cb69ba3bddd3b85284ec4c33a71d8d7bbc06810da5a52d7eea7d8ead2d64c09"
+    },
+    {
+      "time": 175.848,
+      "tags": [
+        "15-almaty_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-045-0175.848.jpg",
+      "sha256": "aef65bc93990818ce23f9cf27ec63afb428643adb129f95e64e6ed9eb03d81be"
+    },
+    {
+      "time": 176.598,
+      "tags": [
+        "15-almaty_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-046-0176.598.jpg",
+      "sha256": "107fac20680c831058eaa7530fbea7b4e222205622a70f6eeb17227fc4bd7a99"
+    },
+    {
+      "time": 176.798,
+      "tags": [
+        "15-almaty_point-bilingual0"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-047-0176.798.jpg",
+      "sha256": "ceef7dd0170c72a0b80af8d0201d3916cc600298080c5f40f28a1e6a84faada8"
+    },
+    {
+      "time": 179.598,
+      "tags": [
+        "15-almaty_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-048-0179.598.jpg",
+      "sha256": "8283b7178f02ada9a9ebd901344a7e5f47129aefc054acb47c0089b70ba18ab7"
+    },
+    {
+      "time": 182.598,
+      "tags": [
+        "15-almaty_point-plus7.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-049-0182.598.jpg",
+      "sha256": "19af3fd893042369ca9c4d0f0dc7cf758a8d992d76f759cb705f0af4d3c538c4"
+    },
+    {
+      "time": 184.098,
+      "tags": [
+        "15-almaty_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-050-0184.098.jpg",
+      "sha256": "2b185a5672f825c4bc7d113711855406d483730db69b6046b7feef156a9b7fb1"
+    },
+    {
+      "time": 188.158,
+      "tags": [
+        "15-almaty_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-051-0188.158.jpg",
+      "sha256": "eb71fd92d6c02751575ea221436ab51ba857ae4dfa098bbbe3e97faf35dbaed3"
+    },
+    {
+      "time": 192.888,
+      "tags": [
+        "15-almaty_point-bilingual1"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-052-0192.888.jpg",
+      "sha256": "5fc5a0821b0b9e23c9044a52a9755192099878443b956db732724329fa89358e"
+    },
+    {
+      "time": 197.098,
+      "tags": [
+        "15-almaty_point-bilingual2"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-053-0197.098.jpg",
+      "sha256": "897050cf0e14f3f0147cb04d539e248859293d35d2f89e6e522a6eaeae5a5411"
+    },
+    {
+      "time": 200.368,
+      "tags": [
+        "15-almaty_point-plus24.77"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-054-0200.368.jpg",
+      "sha256": "0d1b99aaef7de96812cf19c131ff5eb055f0f80b7464e656bdb53a8ee1457247"
+    },
+    {
+      "time": 205.178,
+      "tags": [
+        "16-defence-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-055-0205.178.jpg",
+      "sha256": "696eff4f732a9e290d0d396fa82a98c76954760f563008ab88f234fb54be3e51"
+    },
+    {
+      "time": 213.798,
+      "tags": [
+        "17-vienna_intro-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-056-0213.798.jpg",
+      "sha256": "5cfc94295a13fd77e6e773ec18446ddf9d8db1fa71ce29b8e8301d01dd8891f5"
+    },
+    {
+      "time": 218.208,
+      "tags": [
+        "18-vienna_point-plus0.25"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-057-0218.208.jpg",
+      "sha256": "67f03072c1038bc095b26b37eddd190a8f4157cff25cad882c2091e624a62554"
+    },
+    {
+      "time": 218.958,
+      "tags": [
+        "18-vienna_point-plus1.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-058-0218.958.jpg",
+      "sha256": "f27d42e09f2f9c42a591eede5440e4bcaf0bd794342b01f629c1aea6bd0974c9"
+    },
+    {
+      "time": 221.958,
+      "tags": [
+        "18-vienna_point-plus4.00"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-059-0221.958.jpg",
+      "sha256": "2007f946fe731daee064f7543a424e3db67e7cc3290e46c0818d68677c28ce26"
+    },
+    {
+      "time": 224.958,
+      "tags": [
+        "18-vienna_point-plus7.00",
+        "18-vienna_point-bilingual0"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-060-0224.958.jpg",
+      "sha256": "2911e9ce367f36f918de1be1814853d10417609d05710af8c8edac1f2390a10e"
+    },
+    {
+      "time": 226.458,
+      "tags": [
+        "18-vienna_point-plus8.50"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-061-0226.458.jpg",
+      "sha256": "2a86dbd75519941f563226898fa29f1872a1e478cad0736c0cfb62ab5b8a9a88"
+    },
+    {
+      "time": 227.578,
+      "tags": [
+        "18-vienna_point-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-062-0227.578.jpg",
+      "sha256": "b08b308ab113dccd8ecdcdb3a9e156d1299263704b049989ab50aba93f562ff2"
+    },
+    {
+      "time": 229.958,
+      "tags": [
+        "18-vienna_point-bilingual1"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-063-0229.958.jpg",
+      "sha256": "e150faf494ae0220159b4d1021662119d4cfbd5d9cabaa2787c07b077b65c37b"
+    },
+    {
+      "time": 235.318,
+      "tags": [
+        "18-vienna_point-bilingual2"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-064-0235.318.jpg",
+      "sha256": "50d37e81e9e8e13c524c688ab75c0e29745e58e64f0905db6cc6c63da6303c6e"
+    },
+    {
+      "time": 236.848,
+      "tags": [
+        "18-vienna_point-plus18.89"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-065-0236.848.jpg",
+      "sha256": "4fcb63ad29f3795dd3665a016034b9df1a9e421ac0346f1d05b065ced8fc0e73"
+    },
+    {
+      "time": 240.902,
+      "tags": [
+        "19-qualification_payoff-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-066-0240.902.jpg",
+      "sha256": "793f37b7104b3ebf94b050e3ea63a11a194f2ee5f41fc39d7feb2a448de91921"
+    },
+    {
+      "time": 248.97,
+      "tags": [
+        "20-paris-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-067-0248.970.jpg",
+      "sha256": "abaf27265ac46d01f147fb8f47d6ecb4fe377e05eca4d46ab6bc669eb1186dc7"
+    },
+    {
+      "time": 256.63,
+      "tags": [
+        "21-question-middle"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-068-0256.630.jpg",
+      "sha256": "f866f4c7a44f6e6985b538b14471130756cc2d1363811dac3bc06d53c09e4f15"
+    },
+    {
+      "time": 260.726,
+      "tags": [
+        "native-outro-start"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-069-0260.726.jpg",
+      "sha256": "18650f961293edfd18be47fef7a843981072b0d8260ef98cc97685270a06edb8"
+    },
+    {
+      "time": 263.52,
+      "tags": [
+        "native-outro-final"
+      ],
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/frame-070-0263.520.jpg",
+      "sha256": "4aabf922f30357fb10473fa88a72601128778d2dd39da5a909af7ce98ba05b0e"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-00.jpg",
+      "sha256": "03ca673ba811bfef0ba2403239f2dee2eb4afbe07c322a3745e3861e2c4bc8ee"
+    },
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-01.jpg",
+      "sha256": "6cfd50d4445fa1989a35138e2cff084235cb93adf47113ff26114f31bc420e6f"
+    },
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-02.jpg",
+      "sha256": "d9f7b1ad3d98fcff6f23c708f394fe8c8fdee00fcd2d5d89907a7028b4e26ffd"
+    },
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-03.jpg",
+      "sha256": "60804f8e268462ec368adafc527fabccf62006b8999ca74cf2263e7924ae7914"
+    },
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-04.jpg",
+      "sha256": "4f05f2f836d44f0557036dfea9e7ceacff5e0a76b71506826a5f6dca25aedec7"
+    },
+    {
+      "file": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-05.jpg",
+      "sha256": "7bc3e7736cf48b8b52d702b3ea19ec04ab9c11ae2b1e75dab249c59c600a0c71"
+    }
+  ]
+}
