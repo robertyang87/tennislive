@@ -206,7 +206,7 @@ CAPS=[
 ('t1',0,None,tr("【应力松弛】：拉紧后长度不变，张力自己往下掉","【Stress relaxation】: length held fixed, tension keeps falling"),BOT),
 ('t3',0,None,tr("换下来的拍子送去【穿线房】重穿，不是当场拆线","Old rackets go back to the 【stringing room】 — not restrung courtside"),BOT),
 ('k0',0,None,tr("温网：1990 年代【73.1%】 → 2005–09 年【10.3%】","Wimbledon: 【73.1%】 in the 1990s → 【10.3%】 in 2005–09"),BOT),
-('k3',0,None,tr("分析师认为线是主因——但那是按【时间先后】推的，不是对照研究","Analysts blame the strings — but that’s 【timing】, not a controlled study"),BOT),
+# k3 那句「分析师……按时间先后」画面里 3D 字卡已经写全（svCred），底部字幕再写一遍会叠在一起——2026-11-05 成片抽帧看到的，撤掉
 ('e1',0,None,tr("评论区说说：【羊肠、尼龙、聚酯】，还是混搭？","Tell us: 【gut, nylon, polyester】 — or a hybrid?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
