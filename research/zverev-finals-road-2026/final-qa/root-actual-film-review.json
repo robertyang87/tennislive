@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-11-05T05:07:56.504684+00:00",
+  "status": "pass_for_actual_visual_edit_and_bound_native_voice_checks",
+  "film_sha256": "7584efe23af4b82d7fe7deea69198613648f56ca3b980f06cabaaf9c76b510ab",
+  "film_bytes": 180326357,
+  "film_seconds": 309.68,
+  "spec_sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3",
+  "ass_sha256": "39b59926ea5782d71db9d56ccbda096f01050203e160ba31f4be18537b69c789",
+  "root_actual_visual_scope": {
+    "method": "Opened all 7 actual-film contact sheets covering 76 extracted actual frames across every segment, every current bilingual cue midpoint, source entrances and native outro; opened actual poster and 3 full-resolution final-film frames including exact closing question. Not continuous playback or human listening.",
+    "frame_manifest_sha256": "290d6396e7dbde38767b3ccc0d80ddc62f6b293193a93a98a3eab0e4e0a51f2f",
+    "frames": 76,
+    "contact_sheets": 7,
+    "cover_and_fullscreen_photographs": "pass",
+    "court_fixed_center": "pass",
+    "current_transparent_upper_right_labels": "pass on 5 source segments; visible immediately within normal seam dissolve, absent on stable photo scenes, removed after 8 seconds",
+    "original_commentary_captions": "23 cue midframes readable, no edge clipping, no overlapping bilingual blocks",
+    "ending": "Single real No1 portrait visual callback and spoken question, followed by native column outro; no title-card stack"
+  },
+  "native_automated_voice": {
+    "pass": true,
+    "method": "automated_voice_suite",
+    "review_sha256": "02ef7a49dde4b5c698afeb1d3364129c7135281dc8fe6b40ad9f91df0719eac8",
+    "auto_evidence_sha256": "ca04b82f09169489e01251a1be8fa9a79afaa8de1451f112eab6830ceff049d4",
+    "inventory_sha256": "731dc54ecf5af211d4cf4a74fa666cc437c998098a71f89a2a331ae3c89a27af",
+    "scope": "Native five-check automated suite on actual immutable TTS bytes; not human listening or a new independent naturalness guarantee."
+  },
+  "source_ass_audit": {
+    "path": "/workspace/zverev-finals-production/final/root-qc/audio-ass-audit.json",
+    "sha256": "47075936bfc371d9d09b893b61af3a0a6285760781c29fb9b2735264e184a61f"
+  },
+  "minor_observed_limits": [
+    "Fixed centered full-canvas crop leaves fragments of original left scoreboard in some sources; added full score labels remain correct.",
+    "Fixed centered source crop partially trims a brief Shelton close-up at around213 seconds; Zverev main reaction and all complete final-point actions remain retained.",
+    "Native subtitle readable conversion retains some Chinese natural quantity words, e.g. 两盘/三站/两座; dates, scores, 4强/4盘 and cover2座 are explicitly numeric. No claim that every quantity word is Arabic."
+  ],
+  "publication_status": "pending exact-final-head required CI and real native single WeChat receipt; this visual/voice report is not publication proof"
+}

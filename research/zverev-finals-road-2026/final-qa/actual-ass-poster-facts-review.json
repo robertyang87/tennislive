@@ -1,0 +1,139 @@
+{
+  "status": "PASS_ACTUAL_ASS_POSTER_AND_FIVE_RENDERED_MATCH_LABELS_FACTS",
+  "reviewed_at_utc": "2026-11-05T05:04:36.532092+00:00",
+  "bindings": {
+    "film": {
+      "path": "/workspace/zverev-finals-production/final/native-input/zverev-finals-road-2026.mp4",
+      "sha256": "7584efe23af4b82d7fe7deea69198613648f56ca3b980f06cabaaf9c76b510ab"
+    },
+    "spec_sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3",
+    "ass": {
+      "path": "/workspace/zverev-finals-production/final/native-input/subtitles.ass",
+      "sha256": "39b59926ea5782d71db9d56ccbda096f01050203e160ba31f4be18537b69c789",
+      "dialogue_rows_reviewed": 83
+    },
+    "poster": {
+      "path": "/workspace/zverev-finals-production/final/native-input/poster.jpg",
+      "sha256": "b7fb44d3741d795a149824b87a1e57c90897b7695af34f5b53ab6b49bbfd71e2"
+    },
+    "render_json": {
+      "path": "/workspace/zverev-finals-production/final/native-input/render.json",
+      "sha256": "354b1e6da1c13437bd31a11d78e6601e6d5484ef53cc62d4ba4b1fb585f5a33a"
+    },
+    "render_inputs_json": {
+      "path": "/workspace/zverev-finals-production/final/native-input/render_inputs.json",
+      "sha256": "d7d7d59e19c03c5a8fe9814565e6744e22b8b22b70ca26848c3e628d38c19945"
+    }
+  },
+  "actual_review_scope": [
+    "Read every actualASSDialogue row after strippingASSoverride tags. No draft substitution.",
+    "Opened actualposter.jpg visually; mainhook has2座; topictitle singles scope remains explicit; no repeated duplicatehook smallcopy.",
+    "Opened5frames extracted from actualmovie around1second aftereachselectedsourcewindowstart toread actualrightcornerdate/round/opponents/score/highlightwinner.",
+    "Verified actualfilmbyteshash andartifacthashes matchrender_inputs manifest."
+  ],
+  "ass_findings": {
+    "facts_dates_scores": "PASS:8月6日 qualification;10月12日 yearendNo1;11月2日 weeklyNo1;11月15日Turinstart;Madrid1比6/2比6;RG5th6比1;US4th6比2;Paris6比7/2比6 allaccurate",
+    "proper_names": "PASS: nativeChineseplayernames,谢尔顿 without本·;达维多维奇 福基纳 shownwithnativepunctuationnormalization separatingfullnameparts; recognizedsamefullname",
+    "single_title_scope": "PASS:explicit单打 in firsttitle/yearcount statements preserved inactualASS",
+    "sourcequotes": "PASS:actual23English-Chinesesourcecaptionfactsmaintained",
+    "numeric_observation": "ActualnativeASS retains colloquialChinese一月/两盘/连续三站/一盘/两座 while rendering milestonecalendar dates,scorevalues,4强,4盘,2026 asArabic. Values remainfactuallycorrect. This is an observed nativeformatting detail, not a claim that everycountisArabic. No factualreplacement is requested."
+  },
+  "poster_findings": {
+    "mainhook": [
+      "兹维列夫年终路",
+      "2座大满贯后登顶"
+    ],
+    "top_topic": "兹维列夫：从单打无冠到登顶世界第一",
+    "status": "PASS"
+  },
+  "rendered_label_findings": [
+    {
+      "event": "AO",
+      "date": "2026.01.30",
+      "round": "半决赛",
+      "display_opponents": "兹维列夫vs阿尔卡拉斯",
+      "display_score_firstlisted_zverev": "4-6 6-7(5) 7-6(3) 7-6(4) 5-7",
+      "highlighted_winner": "阿尔卡拉斯",
+      "status": "PASS"
+    },
+    {
+      "event": "RG",
+      "date": "2026.06.07",
+      "round": "决赛",
+      "display_opponents": "兹维列夫vs科博利",
+      "display_score_firstlisted_zverev": "6-1 4-6 6-4 6-7(5) 6-1",
+      "highlighted_winner": "兹维列夫",
+      "status": "PASS"
+    },
+    {
+      "event": "Wimbledon",
+      "date": "2026.07.12",
+      "round": "决赛",
+      "display_opponents": "兹维列夫vs辛纳",
+      "display_score_firstlisted_zverev": "7-6(7) 6-7(2) 3-6 4-6",
+      "highlighted_winner": "辛纳",
+      "status": "PASS"
+    },
+    {
+      "event": "US",
+      "date": "2026.09.13",
+      "round": "决赛",
+      "display_opponents": "兹维列夫vs谢尔顿",
+      "display_score_firstlisted_zverev": "6-3 7-6(2) 5-7 6-2",
+      "highlighted_winner": "兹维列夫",
+      "status": "PASS"
+    },
+    {
+      "event": "Shanghai",
+      "date": "2026.10.17",
+      "round": "半决赛",
+      "display_opponents": "兹维列夫vs福基纳",
+      "display_score_firstlisted_zverev": "7-5 4-6 3-6",
+      "highlighted_winner": "福基纳",
+      "status": "PASS"
+    }
+  ],
+  "frame_evidence": [
+    {
+      "match": "ao",
+      "time_seconds": 28.62,
+      "path": "/workspace/zverev-finals-production/research/facts/actual-render-frames/ao-card.jpg",
+      "sha256": "693fd9e066719a65813bd43a191fb0c8436c26d8ec5f64844e34a40de02be20e"
+    },
+    {
+      "match": "rg",
+      "time_seconds": 82.24,
+      "path": "/workspace/zverev-finals-production/research/facts/actual-render-frames/rg-card.jpg",
+      "sha256": "670cfb38ff017a7db8001b2026fc591b528b05f0eee23d2d8c6d434de44d031c"
+    },
+    {
+      "match": "wim",
+      "time_seconds": 127.58,
+      "path": "/workspace/zverev-finals-production/research/facts/actual-render-frames/wim-card.jpg",
+      "sha256": "abc9de5113bb019d930de40da748097accc938f737f6335bfcbb50f0a27a0973"
+    },
+    {
+      "match": "us",
+      "time_seconds": 191.36,
+      "path": "/workspace/zverev-finals-production/research/facts/actual-render-frames/us-card.jpg",
+      "sha256": "ae321f36b8c746178d7ff09c382ab307f23d2414d3f68faa7650c94f9200c45f"
+    },
+    {
+      "match": "shanghai",
+      "time_seconds": 259.9,
+      "path": "/workspace/zverev-finals-production/research/facts/actual-render-frames/shanghai-card.jpg",
+      "sha256": "9bdede919b073846b996c2f9f91e27e700e929531e72b7a360882e98a8bd9ed3"
+    }
+  ],
+  "pending": [
+    {
+      "artifact": "nativeformattedcopy.html / PushPlusHTML",
+      "status": "PENDING_NOT_PROVIDED"
+    }
+  ],
+  "not_certified_here": [
+    "fullmovievisualcontinuity/pointcompleteness/audiofidelity;separateownersreviewthese",
+    "ASSphysicalocclusionorlinebreakqualityacrossthewholemovie;mediaQCownsactualvisualreview"
+  ],
+  "changes_requested": []
+}

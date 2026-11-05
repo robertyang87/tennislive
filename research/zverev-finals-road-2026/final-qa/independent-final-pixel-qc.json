@@ -1,0 +1,1782 @@
+{
+  "schema": "tennislive.independent-final-pixel-qc.v1",
+  "slug": "zverev-finals-road-2026",
+  "reviewer": "zverev_media_late (independent final-film visual role)",
+  "reviewed_at": "2026-11-05T05:08:04.965276+00:00",
+  "status": "sampled_final_visual_review_complete",
+  "visual_decision": "No new blocking visual defect found in the explicitly reviewed scope; nonblocking crop/transition limitations recorded. This is not an all-gates publication approval.",
+  "film": {
+    "path": "/workspace/zverev-finals-production/final/native-input/zverev-finals-road-2026.mp4",
+    "sha256": "7584efe23af4b82d7fe7deea69198613648f56ca3b980f06cabaaf9c76b510ab",
+    "bytes": 180326357,
+    "width": 1080,
+    "height": 1440,
+    "fps": "25/1",
+    "duration": 309.68,
+    "audio_duration": 309.642
+  },
+  "spec": {
+    "path": "/workspace/zverev-finals-production/native/specs/reels/zverev-finals-road-2026.json",
+    "sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3"
+  },
+  "poster": {
+    "path": "/workspace/zverev-finals-production/final/native-input/poster.jpg",
+    "sha256": "b7fb44d3741d795a149824b87a1e57c90897b7695af34f5b53ab6b49bbfd71e2",
+    "actually_opened": true
+  },
+  "scope": {
+    "method": "Actual encoded final MP4 independently decoded to full-resolutionJPEG then inspected through contact sheets and selected full frames. No raw source contact sheet is used as final-film proof.",
+    "each_segment": {
+      "count": 19,
+      "coverage": "head+.12s, midpoint,tail-.25s for all19segments",
+      "exact_frames": 57
+    },
+    "cover_and_outro": {
+      "actual_cover_time": 0.5,
+      "actual_outro_times": [
+        305.4,
+        307.5,
+        309.5
+      ]
+    },
+    "source_captions": {
+      "cue_count": 23,
+      "coverage": "Actually opened all23 bilingual cue-center final-film frames; checked legibility,English/Chinese ordering,cut-edge safety and visible semantic relation. This is visual,not new source transcription."
+    },
+    "labels": {
+      "coverage": "Each source segment head is visible in dissolve; exact7.95/8.3s frames plus dense frames verify8s upper limit and transparent-only style. Stable photo segments show no right-upper matchlabel.",
+      "latest_rule": "Owner2026-10-24 limit8seconds;2026-10-26no background."
+    },
+    "dense_matchpoints": {
+      "sample_interval": 0.5,
+      "frame_count": 130,
+      "ranges": {
+        "2": [
+          27.618,
+          36.118
+        ],
+        "9": [
+          126.58,
+          142.08
+        ],
+        "12": [
+          190.356,
+          197.856
+        ],
+        "15": [
+          258.896,
+          265.396
+        ],
+        "6": [
+          81.196,
+          105.696
+        ]
+      }
+    },
+    "audio": "Not listened continuously; original source ASR packets and actual frozenvoice suite owned by audio reviewer,not certified here.",
+    "unreviewed": "Not every one of7742video frames; not an assurance against transient defects between samples. No human continuouswatch/listen claim."
+  },
+  "checks": [
+    {
+      "name": "actual identity binding",
+      "result": "pass_in_scope",
+      "reason": "Computed actualMP4/specSHA exactly match parent supplied artifacts; coveractualposter inspected;video1080x1440@25,duration309.68s,audio309.642s."
+    },
+    {
+      "name": "cover",
+      "result": "pass_in_scope",
+      "reason": "Nov2No1crystal trophy portrait,face and eyes clear,2complete balanced hook lines,trophy visible;no added darkmask overface. Same finalfilm cover observed at0.5s as poster."
+    },
+    {
+      "name": "photo narrative",
+      "result": "pass_in_scope",
+      "reason": "All19segments head/mid/tail opened. Fullbleedphotos with dissolve/push,coherentAO/spring/Madrid/RG/Wim/Canada/US/Shanghai/No1/Paris story. No full-screenfactcard stack;qualifieddate8/6 andfirstNo1Nov2 distinct. Paris uses same-roundphoto rather than wrongRuud/Jodar video."
+    },
+    {
+      "name": "five complete terminal points",
+      "result": "pass_in_sampled_scope",
+      "segments": [
+        {
+          "i": 2,
+          "film": [
+            27.618,
+            47.668
+          ],
+          "reason": "Pre-serve standing,toss,serve,rally,runningpassing-shot result,Alcarazfall/lie andZverevreaction are present."
+        },
+        {
+          "i": 6,
+          "film": [
+            81.196,
+            106.196
+          ],
+          "reason": "Cobolliprepare,bounce/toss/serve,fullrally,terminaloverhead/pointresult,Zverevfall andlyingcelebration retained."
+        },
+        {
+          "i": 9,
+          "film": [
+            126.58,
+            165.58
+          ],
+          "reason": "Sinnercloseuppreparation,courtservice,rally andforehandresult,fall/lie,winner/losernetembrace present."
+        },
+        {
+          "i": 12,
+          "film": [
+            190.356,
+            235.656
+          ],
+          "reason": "Zverevpre-serve,toss,serve/returnresult,delayedrealisation,arms-upsmile,netembrace andtrophy-commentaryreaction retained."
+        },
+        {
+          "i": 15,
+          "film": [
+            258.896,
+            274.896
+          ],
+          "reason": "Davidovichpreparation/toss/serve,rallyfinish,smile,Zverevreaction/walktonet andstartofhandshake retained."
+        }
+      ]
+    },
+    {
+      "name": "full bleed and court center",
+      "result": "pass_with_recorded_crop_limits",
+      "reason": "All sourcepoints usefixedsymmetricalcourt-center3:4fill. No blurpadding/narrowfloatingvideo. Courtcenter notfollowplayer. Necessarytimecourse retained,but spatialsideviewcosts are recordedbelow."
+    },
+    {
+      "name": "23bilingual captions",
+      "result": "pass_in_visual_scope",
+      "reason": "All23renderedcueframesopened. BothEnglishandChineseinframe,readableandnotcutatcanvasbottom. RGhasnoinventedEnglishtext. SourceASRtruth/uncertainumpirescorehandledseparatelybyaudioagent."
+    },
+    {
+      "name": "rightupper labels",
+      "result": "pass_with_dissolve_note",
+      "reason": "Transparentunboxedrighttracklayout;currentmatchdate/round/playerandZverev-viewresultscore;noanimationdelayindependentofshotfade. Eachlabelgoneby8.3seconds. Stablephoto/transitionsnotcarryinglabel. No1/4or1/8roundoccursinthisfilm."
+    },
+    {
+      "name": "ending",
+      "result": "pass_in_scope",
+      "reason": "FinalquestionreturnstoactualNo1trophyphoto,thenbluebrandoutro. Observedentrance305.4,logo307.5,brandsettled309.5. Noofficialsourcepublisherendboardused. No continuousaudioapproval claimed."
+    }
+  ],
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    {
+      "id": "native_scoreboard_crop",
+      "severity": "recorded_spatial_limitation",
+      "where": "AO27.6–47.7,US190.4–198.x,Shanghai258.9–274.x;Wimbledon126.6 onward top-left",
+      "reason": "Fixedcenterfullbleedcrop keeps visible only trailing native scoreboard columns (names lost). Fullresultisreadableinrightupperlabelduringfirst8s. No promise of full originalnative scoregeometry afterlabelends;this tradeoff should be known to root."
+    },
+    {
+      "id": "closeup_crop",
+      "severity": "recorded_spatial_limitation",
+      "where": "USfilm212.99s (s12-mid.jpg);some movingUSZverevcloseupsnear198s",
+      "reason": "OpponentSheltonnearface partlyleaves rightedge under fixedcx.5crop. DecisiveZverevrealisation/arms-upreaction visible in other reviewedframes. No interview framing or fakeportraittracking claimed."
+    },
+    {
+      "id": "dissolve_boundary",
+      "severity": "brief_visual_overlap",
+      "where": "sourcecutheads27.738/81.316/126.70/190.476/259.016s",
+      "reason": "Normal segment dissolve: at first +0.12s the outgoing photo/new video+label are observed mixed. Current configured global seam is0.5s (native src/tennislive/design_tokens.py video_dissolve_s, directly used by tools/build_match_reel.py SEG_FADE). No independent measured opacity duration is claimed. Stable photo frames do not have the label; no independently delayed card entrance."
+    },
+    {
+      "id": "court_side_crop",
+      "severity": "recorded_spatial_limitation",
+      "where": "AOandWimwide-rallysidebounds",
+      "reason": "Fixed3:4cutnecessarilyloses lateralspace andoccasionallynearplayer/farplayer at extremes. This reviewconfirmscontinuous temporalcompletepoints,notfullhorizontalcourtvisibility."
+    }
+  ],
+  "publication_gate": {
+    "approved_here": false,
+    "reason": "Independentvisualsampledreviewonly. Frozenvoice suite/sourceaudio gates androotfinalpublication checks must complete beforepublish."
+  },
+  "actually_viewed_exact_frames": [
+    {
+      "id": "s00-head",
+      "time": 4.378,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s00-head.jpg",
+      "sha256": "c3846757d49f7bbc1c6e8d2b33cd4cb86fb26330958f7ae36f02632c3a22b7a2",
+      "group": "overview"
+    },
+    {
+      "id": "s00-mid",
+      "time": 9.258,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s00-mid.jpg",
+      "sha256": "c2e12690e2953a71a28b48c11b2f180370fa5d38b3d1117bc33a0b5f60618481",
+      "group": "overview"
+    },
+    {
+      "id": "s00-tail",
+      "time": 14.008,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s00-tail.jpg",
+      "sha256": "761281a1c6b8b5667721b50c5087ed6de9e4885f16c395cc86891db42670b942",
+      "group": "overview"
+    },
+    {
+      "id": "s01-head",
+      "time": 14.378,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s01-head.jpg",
+      "sha256": "afe7dff408b6e7de3b0641eafbff4f2e7b260b4a4d18dfd7e13802d347acb67a",
+      "group": "overview"
+    },
+    {
+      "id": "s01-mid",
+      "time": 20.938,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s01-mid.jpg",
+      "sha256": "4c5ce329f0a2376bf6bd2d082e79cab3f08e2ee00722cd65ab7ddb4ca5a1b304",
+      "group": "overview"
+    },
+    {
+      "id": "s01-tail",
+      "time": 27.368,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s01-tail.jpg",
+      "sha256": "b7857c5966fe8f853467175ca66b8f660dde85019b5e2426333f07c1ffa3d741",
+      "group": "overview"
+    },
+    {
+      "id": "s02-head",
+      "time": 27.738,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s02-head.jpg",
+      "sha256": "896fe43f53d53a8b9724869d93b57b8de8026b24568482561904e0f7dcdb4e0c",
+      "group": "overview"
+    },
+    {
+      "id": "s02-mid",
+      "time": 37.643,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s02-mid.jpg",
+      "sha256": "883f14e26108ebf6b0d643a8cf50e65d9ed16594bd3f076f1fd81835368386d3",
+      "group": "overview"
+    },
+    {
+      "id": "s02-tail",
+      "time": 47.418,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s02-tail.jpg",
+      "sha256": "06415e94b8f7a6a4112164c46abbae8306da575b348875c6a06cf8147b52cabd",
+      "group": "overview"
+    },
+    {
+      "id": "s03-head",
+      "time": 47.788,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s03-head.jpg",
+      "sha256": "35c1b7f7e4d2caf22811b245e15a114c1cf1c78dccd80f1ee9db5cb2c96e9b13",
+      "group": "overview"
+    },
+    {
+      "id": "s03-mid",
+      "time": 54.012,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s03-mid.jpg",
+      "sha256": "c7a9bc33251560e517921b6a7f6a528c8f9818950f39a09de54cd28af1940f53",
+      "group": "overview"
+    },
+    {
+      "id": "s03-tail",
+      "time": 60.106,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s03-tail.jpg",
+      "sha256": "54ced337bf91424124c46f6fbd7d79a19b9471a30daa45a13f97725dbf10e9f6",
+      "group": "overview"
+    },
+    {
+      "id": "s04-head",
+      "time": 60.476,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s04-head.jpg",
+      "sha256": "e108cfb1ab3a410f1fb5ff252a83eddbfe7bb94baae3c9005956bedd41a03b00",
+      "group": "overview"
+    },
+    {
+      "id": "s04-mid",
+      "time": 65.272,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s04-mid.jpg",
+      "sha256": "848599f3f39b2bb599b5740dc7805f4356131b2687f1af224d4d8262587710b4",
+      "group": "overview"
+    },
+    {
+      "id": "s04-tail",
+      "time": 69.938,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s04-tail.jpg",
+      "sha256": "89464d2a973cc6e50a3355cc5434b763b3026ee3b495e9e30d252303edc147de",
+      "group": "overview"
+    },
+    {
+      "id": "s05-head",
+      "time": 70.308,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s05-head.jpg",
+      "sha256": "60760e0c346b116433ed4c8a05e0a5da1255ad32ac7fe56cc4ad106f87e8ab48",
+      "group": "overview"
+    },
+    {
+      "id": "s05-mid",
+      "time": 75.692,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s05-mid.jpg",
+      "sha256": "bbb45c7e91017666ab717cb2e2868e1815a5fc9f3c0819aa7cc4ffab288138e6",
+      "group": "overview"
+    },
+    {
+      "id": "s05-tail",
+      "time": 80.946,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s05-tail.jpg",
+      "sha256": "4104daa85d5aa839e410b98e90cb31fa3878fc8f3ffe4a4a8aa92d15f0be4b79",
+      "group": "overview"
+    },
+    {
+      "id": "s06-head",
+      "time": 81.316,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s06-head.jpg",
+      "sha256": "a80af42ff07968736f9a0d2044a360b3345c8ed9dea42bc21391b128ecb99f25",
+      "group": "overview"
+    },
+    {
+      "id": "s06-mid",
+      "time": 93.696,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s06-mid.jpg",
+      "sha256": "f158c20d37f3ad16364f4c8f62f3a160215dca83ac099d0c54bdfbbeedc84db3",
+      "group": "overview"
+    },
+    {
+      "id": "s06-tail",
+      "time": 105.946,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s06-tail.jpg",
+      "sha256": "8865d91bd0232ace6d7fd84435722d5efc7ee3b8b7636d9dcd12709ac255ec33",
+      "group": "overview"
+    },
+    {
+      "id": "s07-head",
+      "time": 106.316,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s07-head.jpg",
+      "sha256": "830c207c4aaeee32b0774a90d1beb7399968b06914bb8bee5e881c2755780a86",
+      "group": "overview"
+    },
+    {
+      "id": "s07-mid",
+      "time": 110.56,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s07-mid.jpg",
+      "sha256": "d991059fdce8cbcf480852cffcb2b193024db30d9dff789302610e5915e0ed2c",
+      "group": "overview"
+    },
+    {
+      "id": "s07-tail",
+      "time": 114.674,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s07-tail.jpg",
+      "sha256": "d8b096794d3919b35c11b482171640932dc944bcd005f80121f4c117e38c96aa",
+      "group": "overview"
+    },
+    {
+      "id": "s08-head",
+      "time": 115.044,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s08-head.jpg",
+      "sha256": "7a2a4541e7cb1e47674107cc881a75f88bd0da079911119b0c08677be6c8b6c4",
+      "group": "overview"
+    },
+    {
+      "id": "s08-mid",
+      "time": 120.752,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s08-mid.jpg",
+      "sha256": "40d77238bd2226611411775954ffeefd8aa88c4b9edf053e1c5c5378d074a52b",
+      "group": "overview"
+    },
+    {
+      "id": "s08-tail",
+      "time": 126.33,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s08-tail.jpg",
+      "sha256": "307ea5694af3333a9d795cc130341b86608089a369f9ff687bbfea08f9954484",
+      "group": "overview"
+    },
+    {
+      "id": "s09-head",
+      "time": 126.7,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s09-head.jpg",
+      "sha256": "20fbaa393a4cfa6a645566d57f3cae704e73166c8232e73bd1940f0652e7ef65",
+      "group": "overview"
+    },
+    {
+      "id": "s09-mid",
+      "time": 146.08,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s09-mid.jpg",
+      "sha256": "c5c58d38b2d23e2cd497e5a8f534d30ffdacea5a948f90818c2d62f6c44f4cd2",
+      "group": "overview"
+    },
+    {
+      "id": "s09-tail",
+      "time": 165.33,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s09-tail.jpg",
+      "sha256": "7c22e4f1d857f7101314e59f95feeeadd1e6800675b1eb3182a2f964c4ae4c6b",
+      "group": "overview"
+    },
+    {
+      "id": "s10-head",
+      "time": 165.7,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s10-head.jpg",
+      "sha256": "a3140d954dd27043e81b1465765a45809582a13a61a5bd93a36d421bcc59d593",
+      "group": "overview"
+    },
+    {
+      "id": "s10-mid",
+      "time": 170.976,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s10-mid.jpg",
+      "sha256": "e83da38f6d9da045c6e93aabe7a48192144f5efb8e7b7c9e85b3501c8ddb3486",
+      "group": "overview"
+    },
+    {
+      "id": "s10-tail",
+      "time": 176.122,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s10-tail.jpg",
+      "sha256": "de4747a8f1d04b02b8eecec55055c346be5a892276b03ef4cbfc2e7f270c50aa",
+      "group": "overview"
+    },
+    {
+      "id": "s11-head",
+      "time": 176.492,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s11-head.jpg",
+      "sha256": "ae9b58e2e5d3bc2f4b5dc34d9572c22a8d0d1e983814244d90ad6339d825b527",
+      "group": "overview"
+    },
+    {
+      "id": "s11-mid",
+      "time": 183.364,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s11-mid.jpg",
+      "sha256": "e8d806f5cb40bdaf0bc43f9adbbc187449df075ee275678710446315f457d7a1",
+      "group": "overview"
+    },
+    {
+      "id": "s11-tail",
+      "time": 190.106,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s11-tail.jpg",
+      "sha256": "b970dd03bdecc89b9913f96607a0fe5c6b87a7a8b81a193dfc85efb91822350a",
+      "group": "overview"
+    },
+    {
+      "id": "s12-head",
+      "time": 190.476,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s12-head.jpg",
+      "sha256": "db96cc64bca25da066c1fb0d5c7327d1cd5d2dda1695c14217fa971a6d7b2465",
+      "group": "overview"
+    },
+    {
+      "id": "s12-mid",
+      "time": 213.006,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s12-mid.jpg",
+      "sha256": "1ba4c5bc23fcf8a607d74181a64a40a69fdc8994f8f7670231886bcf16a63e1b",
+      "group": "overview"
+    },
+    {
+      "id": "s12-tail",
+      "time": 235.406,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s12-tail.jpg",
+      "sha256": "7843719d98d575ccc9c6120cf66b7a3e50bcff3055fac0484e769b94abb374ec",
+      "group": "overview"
+    },
+    {
+      "id": "s13-head",
+      "time": 235.776,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s13-head.jpg",
+      "sha256": "fbb749abb806a5adf7dcb5b1380721575421aed43fc7c064bc823360fc4b9377",
+      "group": "overview"
+    },
+    {
+      "id": "s13-mid",
+      "time": 240.272,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s13-mid.jpg",
+      "sha256": "dbf838188e09f35800e2d621e28ce6b49a062046bfa8af48037e8aa06c0dd867",
+      "group": "overview"
+    },
+    {
+      "id": "s13-tail",
+      "time": 244.638,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s13-tail.jpg",
+      "sha256": "5302f28f57e9cfe572d5be5a7bb41e2fb6de0336622c421e21dfcbc8c1c4c650",
+      "group": "overview"
+    },
+    {
+      "id": "s14-head",
+      "time": 245.008,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s14-head.jpg",
+      "sha256": "c83492b4651912f7133249bcfed3a171fe329a287afc9f19d06f0ce15a50b4b6",
+      "group": "overview"
+    },
+    {
+      "id": "s14-mid",
+      "time": 251.892,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s14-mid.jpg",
+      "sha256": "a694c4a8c670dd1af4a0d186728686d068c6dc1fcc56d2ea31915807768c1f1a",
+      "group": "overview"
+    },
+    {
+      "id": "s14-tail",
+      "time": 258.646,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s14-tail.jpg",
+      "sha256": "e6eed6ff492f070ab8ea4e1cadfe96af83b32b5302112a11d86f4c77894d39c6",
+      "group": "overview"
+    },
+    {
+      "id": "s15-head",
+      "time": 259.016,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s15-head.jpg",
+      "sha256": "535f56ecca3ca4b8154c022b88ca922b9c833d33a3cefbe0bc5744ac4ca08998",
+      "group": "overview"
+    },
+    {
+      "id": "s15-mid",
+      "time": 266.896,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s15-mid.jpg",
+      "sha256": "e3cfae7e3291f43d57048e422eb31b46ae9ab68a30ca89acaa115bf429f7f37b",
+      "group": "overview"
+    },
+    {
+      "id": "s15-tail",
+      "time": 274.646,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s15-tail.jpg",
+      "sha256": "6fc143efdb95d679857927df2b2c327916f599391e247f6ce5d9efc0946044f0",
+      "group": "overview"
+    },
+    {
+      "id": "s16-head",
+      "time": 275.016,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s16-head.jpg",
+      "sha256": "cccc3c4ba4f2be66ea822b24fe916b41beadd132c940ea52ce03e831b0370ef9",
+      "group": "overview"
+    },
+    {
+      "id": "s16-mid",
+      "time": 279.596,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s16-mid.jpg",
+      "sha256": "19c2f84a20380500fbf700d05fd0067ec1c14463a73b388ebc18782f2325fa88",
+      "group": "overview"
+    },
+    {
+      "id": "s16-tail",
+      "time": 284.046,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s16-tail.jpg",
+      "sha256": "1f8ebc4b2a5fd9e1f350667dd974cb85750cd39cc2c3d45cfe429fb030a75c96",
+      "group": "overview"
+    },
+    {
+      "id": "s17-head",
+      "time": 284.416,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s17-head.jpg",
+      "sha256": "30ccda8f3f8dac62c8c1a7e762f24a8dd3dc699f607bf131f4e2a2b9292bf637",
+      "group": "overview"
+    },
+    {
+      "id": "s17-mid",
+      "time": 290.592,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s17-mid.jpg",
+      "sha256": "877c99c923cc481da33e5b81875fd6bf5913e5673653f4da0c8da9b1ed227450",
+      "group": "overview"
+    },
+    {
+      "id": "s17-tail",
+      "time": 296.638,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s17-tail.jpg",
+      "sha256": "bbde20ead8f738ad180b4aad661e9ffaf590f20d911ff974fb951c18111f3ba0",
+      "group": "overview"
+    },
+    {
+      "id": "s18-head",
+      "time": 297.008,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s18-head.jpg",
+      "sha256": "1d1c74c44d27b02d0e9c519e84262cbcf7f8fddcecd35cc68fee6d540a5eef2c",
+      "group": "overview"
+    },
+    {
+      "id": "s18-mid",
+      "time": 300.988,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s18-mid.jpg",
+      "sha256": "cdaf13416198cff945574da00b2e59f522bb35a251d6483d21947440c5a5a2c9",
+      "group": "overview"
+    },
+    {
+      "id": "s18-tail",
+      "time": 304.838,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/s18-tail.jpg",
+      "sha256": "7aba1b4a3430a508c378b66656f1d8ed265abba60f066cbd14148729eac7ce76",
+      "group": "overview"
+    },
+    {
+      "id": "cover",
+      "time": 0.5,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cover.jpg",
+      "sha256": "7916a62b8853e920086d940b81baced251f6dba2a9088a40f1d82571a7431cb7",
+      "group": "overview"
+    },
+    {
+      "id": "outro-start",
+      "time": 305.4,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/outro-start.jpg",
+      "sha256": "e06450e768ba6fe865dded3b1d138f6221525802de71f8c20771375a9b570486",
+      "group": "overview"
+    },
+    {
+      "id": "outro-mid",
+      "time": 307.5,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/outro-mid.jpg",
+      "sha256": "61971b6850009aa75fe7bc8205737783e5147c4bf68ef13660c49a449a6a7767",
+      "group": "overview"
+    },
+    {
+      "id": "outro-end",
+      "time": 309.5,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/outro-end.jpg",
+      "sha256": "897708cc692277f0f602010d26ef8bce52259ee2aac92735aba974cb8cbe1421",
+      "group": "overview"
+    },
+    {
+      "id": "point02-07",
+      "time": 35.568,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point02-07.jpg",
+      "sha256": "a471dd05ce81fa071a2aff698b60a8e4ff41c5315130b15464d745b755e31500",
+      "group": "points"
+    },
+    {
+      "id": "point02-08",
+      "time": 35.918,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point02-08.jpg",
+      "sha256": "25e2a164c23f3fa261d35195ba34f7cd29333ddd2544594c9775ceb27cf543dd",
+      "group": "points"
+    },
+    {
+      "id": "point06-07",
+      "time": 89.146,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point06-07.jpg",
+      "sha256": "eb16d10f94e3d1ade8f920cacfac7bf18a9a0792e8445fd6c1d613f42f7f1caa",
+      "group": "points"
+    },
+    {
+      "id": "point06-08",
+      "time": 89.496,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point06-08.jpg",
+      "sha256": "439d9a596174fb541a8f1a8d37900708b9937736e67f2f42976cd2cf98daf2e1",
+      "group": "points"
+    },
+    {
+      "id": "point09-07",
+      "time": 134.53,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point09-07.jpg",
+      "sha256": "9b8af0a7f2eca1318f9a0219a8451c0051fa839bda24f5654eea0d6c2fb24bbf",
+      "group": "points"
+    },
+    {
+      "id": "point09-08",
+      "time": 134.88,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point09-08.jpg",
+      "sha256": "67b3575570f46448733ed43ce3632ce91baa2c1a6788248d0775f27f767e68ca",
+      "group": "points"
+    },
+    {
+      "id": "point12-07",
+      "time": 198.306,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point12-07.jpg",
+      "sha256": "d3b324c4412852077aac6fc22a011ad11f9d5e18aaa37e7197b269370f9db5ca",
+      "group": "points"
+    },
+    {
+      "id": "point12-08",
+      "time": 198.656,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point12-08.jpg",
+      "sha256": "2a03ee8199630bbaa634b39963d8f17d428c2ed4bf767d036d97f76e09365c23",
+      "group": "points"
+    },
+    {
+      "id": "point15-07",
+      "time": 266.846,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point15-07.jpg",
+      "sha256": "6d5ce6c1a9cc6a750c512b1d197e6658c07430cf66321dc4a5040c7b22be6c14",
+      "group": "points"
+    },
+    {
+      "id": "point15-08",
+      "time": 267.196,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/point15-08.jpg",
+      "sha256": "e6fb59c67e062cc536b66645a86dec86839e061b63a17c2c2641f3ea0bfe46c7",
+      "group": "points"
+    },
+    {
+      "id": "cue021",
+      "time": 38.02,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue021.jpg",
+      "sha256": "1e250cef6ca71248fdd8298bb6a54a84bf55c3f6f708a36c8e519012b027a379",
+      "group": "cues"
+    },
+    {
+      "id": "cue022",
+      "time": 43.12,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue022.jpg",
+      "sha256": "89fc2eb459c0e65d083373dc135046f5d5f26ac1b00c9400a8da95b11d4f6df1",
+      "group": "cues"
+    },
+    {
+      "id": "cue023",
+      "time": 46.22,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue023.jpg",
+      "sha256": "07ae46d82380902e9e942acbf9b5f07852993eb8fccdc0e6069b2a71d2382217",
+      "group": "cues"
+    },
+    {
+      "id": "cue045",
+      "time": 138.85,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue045.jpg",
+      "sha256": "0b6c57d891ec2b15f616f1998b404690affad3eb2c99e1b511a7e65b73a031c6",
+      "group": "cues"
+    },
+    {
+      "id": "cue046",
+      "time": 143.18,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue046.jpg",
+      "sha256": "ab1254c08b5847154a1a00ee5bfa060ba7362547eddd48fa0834dcc37a368412",
+      "group": "cues"
+    },
+    {
+      "id": "cue047",
+      "time": 146.8,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue047.jpg",
+      "sha256": "70af1722babaf6e731b1bf28fa26fc3716c546ee59ff7428f52d9e2f4dc5147d",
+      "group": "cues"
+    },
+    {
+      "id": "cue048",
+      "time": 152.54,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue048.jpg",
+      "sha256": "aa606774d972090a82f3246380310ab97760ce6105a35f6a320030d6e6422d2d",
+      "group": "cues"
+    },
+    {
+      "id": "cue049",
+      "time": 156.06,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue049.jpg",
+      "sha256": "5778684d3c8e0575a0133c13c3802f51c7dbc2d830c2fe694fb2d24ac1ba3c38",
+      "group": "cues"
+    },
+    {
+      "id": "cue050",
+      "time": 160.89,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue050.jpg",
+      "sha256": "e24191bfa78c56489eda803e3033e7430f9dace964ce61e2f4d08bfd61f864fc",
+      "group": "cues"
+    },
+    {
+      "id": "cue061",
+      "time": 197.26,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue061.jpg",
+      "sha256": "16e1ec6e32f5cf5ab3aaa883ab06be91ea27cfd69c0a7389255d51f1cbea0e26",
+      "group": "cues"
+    },
+    {
+      "id": "cue062",
+      "time": 201.15,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue062.jpg",
+      "sha256": "65bbeb5ecc087af482869bfe696d48944d205d90a5259b77a2599cd16a6c49dc",
+      "group": "cues"
+    },
+    {
+      "id": "cue063",
+      "time": 203.97,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue063.jpg",
+      "sha256": "ff6b1428d157ad8b51ff3f4f8abce3c6ef8182a6fb703ff61c107b85c660ab7f",
+      "group": "cues"
+    },
+    {
+      "id": "cue064",
+      "time": 206.19,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue064.jpg",
+      "sha256": "1ae7fa690f83f5b7f6511c34f5c17abec57a0245e8674d812ada6eb0cf242115",
+      "group": "cues"
+    },
+    {
+      "id": "cue065",
+      "time": 209.18,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue065.jpg",
+      "sha256": "236482172bdf5f058405fcafdc32981c88e6041ae7b475a5b26e456537f405e7",
+      "group": "cues"
+    },
+    {
+      "id": "cue066",
+      "time": 216.93,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue066.jpg",
+      "sha256": "c03dc7b827e670e33f5e7a9a4d4f4685dc97c765de7fc0251af2744e2b3a9e15",
+      "group": "cues"
+    },
+    {
+      "id": "cue067",
+      "time": 220.44,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue067.jpg",
+      "sha256": "a636e5a7a3584b998c072c0834d2539598d592fd5ad18d880db5ab7b382242d8",
+      "group": "cues"
+    },
+    {
+      "id": "cue068",
+      "time": 223.55,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue068.jpg",
+      "sha256": "cd659367d1f692ae415c68443f2a785ba6b8d929e2069b4431a5b09a0ef2d18a",
+      "group": "cues"
+    },
+    {
+      "id": "cue069",
+      "time": 226.69,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue069.jpg",
+      "sha256": "dc7f99b36dd23cad5f88cebb93457043b289c8d782aadf7a4e23e1e5cb8bb891",
+      "group": "cues"
+    },
+    {
+      "id": "cue070",
+      "time": 230.17,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue070.jpg",
+      "sha256": "826952e1fb6235a51198ae913c34c1650feb239751c422ae389c6ebfe080e5d2",
+      "group": "cues"
+    },
+    {
+      "id": "cue071",
+      "time": 233.85,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue071.jpg",
+      "sha256": "1feecd78d9329050f38ed1da920d3474c809aae236a18067f329311808dbc20b",
+      "group": "cues"
+    },
+    {
+      "id": "cue081",
+      "time": 265.78,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue081.jpg",
+      "sha256": "3fa9923e8f1cbf5e68025b96b4f22d01a71a75206aec5ec2d56f89da85ac7fe5",
+      "group": "cues"
+    },
+    {
+      "id": "cue082",
+      "time": 269.51,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue082.jpg",
+      "sha256": "a505995685faffda1f5a1954178d87e291dfbb371846186ef4322d71e6cb8fed",
+      "group": "cues"
+    },
+    {
+      "id": "cue083",
+      "time": 272.57,
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cue083.jpg",
+      "sha256": "c138da498a47cd388d83894b5e925ece9127e753130abafdae028b60a0a2afe9",
+      "group": "cues"
+    }
+  ],
+  "actually_viewed_dense_frames": [
+    {
+      "segment": 2,
+      "frames": [
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/001.jpg",
+          "time": 27.618,
+          "sha256": "e0647fbda968c994171c88ee008c98450a68a983dce4ab08b0bc9f58c0a45b97",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/002.jpg",
+          "time": 28.118,
+          "sha256": "0a3be895dd38e45c9349a3ce4959ccf58199cc6ecd11fc6e0f15658d4193d18f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/003.jpg",
+          "time": 28.618,
+          "sha256": "cf0a53f413958e820e87420885e322bbe14eb150ec920817e9569fbe96ca936a",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/004.jpg",
+          "time": 29.118,
+          "sha256": "4bff7bf08a38660a3097e0732b7468a10653df40a79ac6fb936dd88704aa34db",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/005.jpg",
+          "time": 29.618,
+          "sha256": "9aa23cdb339d2990c6328b52e476a8011d05072d834a5df954bec5c109bf3d0d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/006.jpg",
+          "time": 30.118,
+          "sha256": "67b85756dbe7cd1ea0060ffa27f54f126e2b76d5d21e085584d4b7e10ef4ce62",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/007.jpg",
+          "time": 30.618,
+          "sha256": "69127a2937ed366d73d1ed24760f0b967e73ece632f5f8f3ca8d5e36becbff1e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/008.jpg",
+          "time": 31.118,
+          "sha256": "019773b455a81b4382cb22d8ccb5a4cacf3afa770fbad931514d84a462d96752",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/009.jpg",
+          "time": 31.618,
+          "sha256": "b465363e358699615f2b1708abd3afc75ca2b343c355b77c38a41991fb872e41",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/010.jpg",
+          "time": 32.118,
+          "sha256": "166022775f8341423e62abaa5fda8767dbbae335e24824af1493e64c75a0a5af",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/011.jpg",
+          "time": 32.618,
+          "sha256": "9a54f6c9aaeb7768dda1e3dcc4543a20b8867b6041347470049331a44592f36f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/012.jpg",
+          "time": 33.118,
+          "sha256": "51401a1880f0adfb509b40bebca06db937f2001962c7b997bad52b24acb7d77c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/013.jpg",
+          "time": 33.618,
+          "sha256": "4f81b42572faf6ddb5a108721839fa09fb5fe59306bc38830bf17a00f522e7d8",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/014.jpg",
+          "time": 34.118,
+          "sha256": "af8765892f9be5c2d3ae3a6c36e9d9bd546147f925882b2f0111f39c45280c7b",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/015.jpg",
+          "time": 34.618,
+          "sha256": "361bc8fcd44c603e87fe3d57bb6016d2e37bce12ced361544f4190e13c7eda50",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/016.jpg",
+          "time": 35.118,
+          "sha256": "3871863290a58ff11df8cb873866d6ab1d9c826b18c5854b25fdc1180f0b9db7",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/017.jpg",
+          "time": 35.618,
+          "sha256": "65078e0372ebc5b3fcd9df88a48b3237544d31b047172859ec973bf04b289441",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense02/018.jpg",
+          "time": 36.118,
+          "sha256": "5a4d2c39a65521e4b4390acaa045e6a0cbf36fb7fc8dd84b4c12c979b2add74a",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        }
+      ]
+    },
+    {
+      "segment": 9,
+      "frames": [
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/001.jpg",
+          "time": 126.58,
+          "sha256": "0ee8fe8ab6bb8536b1585d53d8c9f4fc18cac7482f1c92e2c7d74a423dc5b413",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/002.jpg",
+          "time": 127.08,
+          "sha256": "eb8c203ee1a5f995a9b36d33bce7b048808115a1ced6acc0ae36cc06af734f4c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/003.jpg",
+          "time": 127.58,
+          "sha256": "265d181d9079de9f84c4914f5ae0b83aba45312e400f066daca988f9d5e7003f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/004.jpg",
+          "time": 128.08,
+          "sha256": "3a3f92f99999feee058308f856dc5d2f7a727b011b602ae5672c41ab93b1fbb1",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/005.jpg",
+          "time": 128.58,
+          "sha256": "c89547b84062087374506c3a381d86e8b893f8d6a8155d71337a0a06982454ee",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/006.jpg",
+          "time": 129.08,
+          "sha256": "8e70e6eb585001aaf9d6f9c0e64ec1d7e07dbdc85193c39135760edd61c27b9d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/007.jpg",
+          "time": 129.58,
+          "sha256": "1b3efec16292e496df44a50795b7d46374742e3b01e301b781a79a837dea05a6",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/008.jpg",
+          "time": 130.08,
+          "sha256": "3c4fadbc0146196deca25310b2306bcbd04500f957e0847f31ac7baf6ebaeb57",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/009.jpg",
+          "time": 130.58,
+          "sha256": "67fae01c215a386924084771a0d68d64c97780bdd775dc301b7f68feffeb59d3",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/010.jpg",
+          "time": 131.08,
+          "sha256": "a08b6af8e101055978cb228b685215ba5d34b0f8441bb771bb95f6af1053c195",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/011.jpg",
+          "time": 131.58,
+          "sha256": "bb05af6ae98bce12f2be896dc7d884d8ba2ae0b8932a68d9201fda4ac7c760dc",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/012.jpg",
+          "time": 132.08,
+          "sha256": "fa6671c1cd4e281d58b697da7063391f901c9efbcb0e61368c08b1046eb56379",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/013.jpg",
+          "time": 132.58,
+          "sha256": "dd8ad05f828440e3ed648a21610bd5265ec7ac5ba6e96fb78c061e321b58a59e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/014.jpg",
+          "time": 133.08,
+          "sha256": "3d951ec00193107c67536b827f8f309f8c990670b139586baf2b5c75778581d8",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/015.jpg",
+          "time": 133.58,
+          "sha256": "0cc3d5585710c6b2ff7eaa33a985b92d583b5d19a56caf664bf6aac08df6cf02",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/016.jpg",
+          "time": 134.08,
+          "sha256": "9e7d104af5f8e37faf460013b6143458881f0e03cdccedb69ea1604216c02e39",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/017.jpg",
+          "time": 134.58,
+          "sha256": "dcda4a09eb32ec03f15ac2822e6e08ab854bbb647383ae31c468b17f31afae87",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/018.jpg",
+          "time": 135.08,
+          "sha256": "bcdda0ae57c2367ade8d34d8fd659a61ef936c2959acdf235fa07a3c5b62d370",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/019.jpg",
+          "time": 135.58,
+          "sha256": "c6f1c2ae21d57091b26d4dd73ca05db3ea33771f85abbde4599569dd1d1f71f4",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/020.jpg",
+          "time": 136.08,
+          "sha256": "5b1c922615662ed40f1ce241343529699f685b1236ef8f35990df7fad2ac4bef",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/021.jpg",
+          "time": 136.58,
+          "sha256": "4627c47a5a090beb65c8503b1147a62537020fe0189174f0125c71c0f91c975f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/022.jpg",
+          "time": 137.08,
+          "sha256": "8fd215dcfea19c4633fe9b3409f0ff7b20b7fcf2ed0eb714283f0e20a35bda4f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/023.jpg",
+          "time": 137.58,
+          "sha256": "2d7caf1b3117fa53e0da7388e542b539ebcb9615661aa44fe9378e8edd337008",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/024.jpg",
+          "time": 138.08,
+          "sha256": "c57fce6a32e4d0e7d7189804dec5d3ad397800845f6dfdeeefbce066bb3880c6",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/025.jpg",
+          "time": 138.58,
+          "sha256": "ee54fca2d630a4c5f12d64eff428dffcbd3f81e5a7f4e3e3c100182976b6e94e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/026.jpg",
+          "time": 139.08,
+          "sha256": "db0cbd95b1a8bb6a9cae93ecd5384becc55dc4e36c3aedec19fba7c1deac47e6",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/027.jpg",
+          "time": 139.58,
+          "sha256": "34627fe35830c8fb6bd2c74bcea84dd1ddfae5b125d7dab5f2cf6887cc21acb5",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/028.jpg",
+          "time": 140.08,
+          "sha256": "808866772a086a9e249f9a1ac52ca31da277104d068b99a84a7f6f7a92be762b",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/029.jpg",
+          "time": 140.58,
+          "sha256": "dab8d3b2a6976eeff2219e1b356b416d2e13f7b2f2e3a190eefcfda1ce064e9e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/030.jpg",
+          "time": 141.08,
+          "sha256": "b4246ead643c7b0791dcc63aae98ebb342ef0547fcf3014bb444c3adca45594b",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/031.jpg",
+          "time": 141.58,
+          "sha256": "7ae97d788ce80efbd1b701419936d0185a614c0e4ff6c5c5ea5e1cd0b33cdc66",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense09/032.jpg",
+          "time": 142.08,
+          "sha256": "921f4c4a5d3cbeb6896c646d8927f6e97474fcc83d8eb06f54f302b02445470c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        }
+      ]
+    },
+    {
+      "segment": 12,
+      "frames": [
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/001.jpg",
+          "time": 190.356,
+          "sha256": "cbf6dea622205310643e0bc6225763457b99abaad5c26858448da9293a841751",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/002.jpg",
+          "time": 190.856,
+          "sha256": "2887050c845bba4c97143bf12fc55641916695ba228e2454d7f37e4383bf2d4d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/003.jpg",
+          "time": 191.356,
+          "sha256": "87e4fae33fa5be889f567b9cb9c2d7a6429dfd62f6d44dd9d0a1985b5b691dc0",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/004.jpg",
+          "time": 191.856,
+          "sha256": "5fdf52138ad85b44222de40d54959a7fabfac5cdc723ef158aa593f960a54186",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/005.jpg",
+          "time": 192.356,
+          "sha256": "205f4757646164e7b1170c0470d6a40cef4d6b3ee10c46ce3a845655a7d33b7d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/006.jpg",
+          "time": 192.856,
+          "sha256": "dbaa4dc8b887409b4a84798af850dcee125ec6cf5bbedce809632f54639e71fd",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/007.jpg",
+          "time": 193.356,
+          "sha256": "a50adaa74add7e5abcbf25f5a024e70b2e092e59450b271e9890c456be340c73",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/008.jpg",
+          "time": 193.856,
+          "sha256": "eaa8c50453da3df1d706ac078fcb6b8e2740b257a9d7c49af5aa6286b94a6984",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/009.jpg",
+          "time": 194.356,
+          "sha256": "738ceb640c3c9788083dbc387f19a922d9fe0e41c4dd82301be709e5debb3d92",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/010.jpg",
+          "time": 194.856,
+          "sha256": "5c9f5ee5c955dd7607695186959009b3aa703d5fe8abdc0fabb49115ca626cb3",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/011.jpg",
+          "time": 195.356,
+          "sha256": "abcaabf5bce7c89e057077818a23c7c2c2e3ab3ce3462fa7b46cf5bf58cab13b",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/012.jpg",
+          "time": 195.856,
+          "sha256": "0a9a603402a7a728fbb39d7383ab0f90e8696b2039a5bfa990237538f62a9891",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/013.jpg",
+          "time": 196.356,
+          "sha256": "d8f8b610839ca809dec6280fb3b4a870cf0a948e6cd0bcb97984b9f9ca895af2",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/014.jpg",
+          "time": 196.856,
+          "sha256": "af58c76f1e05514ca6d172f513363d8794e3b9c991ba8270f66bb25bad7a0856",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/015.jpg",
+          "time": 197.356,
+          "sha256": "e3fec1e16d0dfed7c9e3a4e46026f9e966066d05f02f532189749666200e263c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense12/016.jpg",
+          "time": 197.856,
+          "sha256": "873f83f2dc93cf8db648cc0e5f3d04a4877ea3802252a303c7bc0e3be98e4df0",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        }
+      ]
+    },
+    {
+      "segment": 15,
+      "frames": [
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/001.jpg",
+          "time": 258.896,
+          "sha256": "025c77306cb681e6f4ca629b14dafea3b9105040d75f1fe193b73cc258aee300",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/002.jpg",
+          "time": 259.396,
+          "sha256": "5c5af79ba9a5db8fb8b5f3363e8e597d7734991c3e3de038b59cc3a859ff22c5",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/003.jpg",
+          "time": 259.896,
+          "sha256": "abf0a9b86a88e927b1f73f413a32c3073d65e7d6d2a2d9a01192158c2954bfe0",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/004.jpg",
+          "time": 260.396,
+          "sha256": "3a5a8194c699bd30193b44bfe6f68b7d2dcf257991b89b2be4ed66c433ce23b9",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/005.jpg",
+          "time": 260.896,
+          "sha256": "282a9251c6f7e35fe72bb9565937f1878b633ecf82042ee2aeed8a7388fd61a1",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/006.jpg",
+          "time": 261.396,
+          "sha256": "a84febf3fd76083643d7fd1e3c0923729004ec43811784f2516747bdb39fb207",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/007.jpg",
+          "time": 261.896,
+          "sha256": "6ab589eaa4f6e11eaea6348d69db706e46280f6907124f6db14fb99896b1cb6e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/008.jpg",
+          "time": 262.396,
+          "sha256": "37984149f720644979fa9e62e1d1897a50abf1eaa0abf3a171317bcf09f19128",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/009.jpg",
+          "time": 262.896,
+          "sha256": "7e25025d95e82a30086ed73986d6be9b2e5d2f26e16a07f348131db0c436f1f4",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/010.jpg",
+          "time": 263.396,
+          "sha256": "c30b8970fd02cc51450810dbc3f7c0187ffffc373a7801343fdcd0c390eeb691",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/011.jpg",
+          "time": 263.896,
+          "sha256": "278cbd0b02590924faba348e890510f2fbe0bb47d8c0d0f5003afc1ace8b5b11",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/012.jpg",
+          "time": 264.396,
+          "sha256": "5539aa887220032938bb81901a72388847061116b62285f4f020ba7c2f9ec30c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/013.jpg",
+          "time": 264.896,
+          "sha256": "511a91191d89e7c6a995e491a234e5aeac9adb2d81b0474a3bb9cea97b582f21",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense15/014.jpg",
+          "time": 265.396,
+          "sha256": "28a7486eee3d8abc3943f587dcc54de7060c5da9674b1932dd99a36ffb01213c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        }
+      ]
+    },
+    {
+      "segment": 6,
+      "frames": [
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/001.jpg",
+          "time": 81.196,
+          "sha256": "8ee9b07b9a9c59f39fa1ed973d3a7f18795286287fbd382aeebddbbd4f59a925",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/002.jpg",
+          "time": 81.696,
+          "sha256": "761ccce586038e5a6621d4eea9073316d0d5bb9b11e7e0085a9084977495942f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/003.jpg",
+          "time": 82.196,
+          "sha256": "21e2159113c892f6128951e912e4a70b042b6605feeb1156469b52a9fd773736",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/004.jpg",
+          "time": 82.696,
+          "sha256": "7d330704f8187527612502e514590e27dd9492278d3739188f0419c6e53aeda0",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/005.jpg",
+          "time": 83.196,
+          "sha256": "f68fd4764b79f2af58f9439851e87438bb02579b7e5905808c245087ebd4c096",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/006.jpg",
+          "time": 83.696,
+          "sha256": "8638627e0aaf3859530223b893c1075aa83c75a8318a0bb634e815298de62ee3",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/007.jpg",
+          "time": 84.196,
+          "sha256": "e4971c95092fac60e2bba622b753c289f2af8d14199a7d5bcb962dd5ca97f3ad",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/008.jpg",
+          "time": 84.696,
+          "sha256": "09d4a193fb07c39920bc1dfbca95dd06da2db76d660a8f3802cc561b8692932d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/009.jpg",
+          "time": 85.196,
+          "sha256": "5e18438a94d86a3daa4efd381fd57ed0e027f1ee728e1f6a87779e19e9a68d1a",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/010.jpg",
+          "time": 85.696,
+          "sha256": "775ad00f989d58548d7aba6807ac316e698fa026169b07f5a43a0e7e3f852a8f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/011.jpg",
+          "time": 86.196,
+          "sha256": "3f490c5641ba338c4daf2714a5765ad2a77e48e724f026790c84e8ab133cd875",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/012.jpg",
+          "time": 86.696,
+          "sha256": "fe527ef0b6e7492cbb46460418eca06758414c1b6384419c8a70bb493a4eb0a3",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/013.jpg",
+          "time": 87.196,
+          "sha256": "12e8b040625cb531250582b5921d20b35ba4be2f42ad874a16d87a7d52c79b6a",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/014.jpg",
+          "time": 87.696,
+          "sha256": "df89342bcd096c4cb47498f803275d6bc394bdc93afe3c9a92b3222e41d5043f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/015.jpg",
+          "time": 88.196,
+          "sha256": "d4b60144128d289288fcf6f519a800697038b27d6571078987b24b1ff81cfe86",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/016.jpg",
+          "time": 88.696,
+          "sha256": "0c9bf88419b1bb24f2b3fc6d1ded2fbec7f9d02a36c4ba7a046a1f610b210e0b",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/017.jpg",
+          "time": 89.196,
+          "sha256": "af6e883d640a793fa382e2e01d9969d1f4c2978138d40e8c3897dad4983fa554",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/018.jpg",
+          "time": 89.696,
+          "sha256": "d5e9872f00d5cffec13ffb74d1d12b8eb2370d8c930651a5516cf1f0f7d8d9e8",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/019.jpg",
+          "time": 90.196,
+          "sha256": "3c3fe2d44537fa03b40e674bc13eaf803e204c38a93e655a0d962f925b365a34",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/020.jpg",
+          "time": 90.696,
+          "sha256": "eb22def9b9f928917a468ee9c00386115f17c726cc955f0bf47284deb9b40b25",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/021.jpg",
+          "time": 91.196,
+          "sha256": "921f2d3a5e517136ec20f8396d05723e0b0d050f38f94dcdb06fc3e8e0b9526e",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/022.jpg",
+          "time": 91.696,
+          "sha256": "eae0cec11a210755c79472310ae0f38784653555fc653e2ebff6f950bce03126",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/023.jpg",
+          "time": 92.196,
+          "sha256": "0768586b6150f0295233426663c3e67389c2c22c3b8390b1a5e0ec91affd1118",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/024.jpg",
+          "time": 92.696,
+          "sha256": "72d76b9d47f7523af184c9fad20c475bfa944146b4005d0974434625556f9808",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/025.jpg",
+          "time": 93.196,
+          "sha256": "3a3e6b12ed30613f64f9f9d681f4638965f158b2361f484c99a2eecd6d93a992",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/026.jpg",
+          "time": 93.696,
+          "sha256": "5ecaf6bed67e9443cbd5da7c159f6c68f400b99dbde88347e49a6459aba3396c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/027.jpg",
+          "time": 94.196,
+          "sha256": "7d42218236c4e3452edb96485d8286a7456adea3dbec27165132c3911883cae1",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/028.jpg",
+          "time": 94.696,
+          "sha256": "a9548d2c897a3fd9539e160e1d4519cfefcff083c5f44671d2b78732b9e9e0fc",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/029.jpg",
+          "time": 95.196,
+          "sha256": "bea6cf13ffb5c0db562ece91e99ca8102d92df1d98e0642aa940ec944d848926",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/030.jpg",
+          "time": 95.696,
+          "sha256": "2882547f48121da6baffc1a864f917b24c45eb55a2dd13c2aa5c13c6e81e1cca",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/031.jpg",
+          "time": 96.196,
+          "sha256": "9f53edafb13fa02fc28d7957eb9b28fb22fa1b0b33d432156c1fab7ca0577b74",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/032.jpg",
+          "time": 96.696,
+          "sha256": "89ceb5a0dd30a8f77051c869ecde4b31a11f2b32710a2baa8abe7033c490cad3",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/033.jpg",
+          "time": 97.196,
+          "sha256": "07ef3eb82b7d72cfde0f57066f73603595806ecbf6c23e48035ca4070ca9f26a",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/034.jpg",
+          "time": 97.696,
+          "sha256": "c661de240ada930cbeda392cd45686b7c5f546afc7089856f7364d3909e3c986",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/035.jpg",
+          "time": 98.196,
+          "sha256": "6ed875d8e20ad02482e32864d22cb5ac4fc085c29df6f7cc36227f91845f6c86",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/036.jpg",
+          "time": 98.696,
+          "sha256": "6caad03a353a2a400f9959ba17874abe9d03566fbbc28999ccd2997eb891841f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/037.jpg",
+          "time": 99.196,
+          "sha256": "d220befad91264c8c6046a7319222182dbf58b2d8a9d7892100b21840ef6126d",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/038.jpg",
+          "time": 99.696,
+          "sha256": "79e31d3ecc3663054ae0dcdb6162ce51137b9f6d0c13cf66fee5691d2e238c25",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/039.jpg",
+          "time": 100.196,
+          "sha256": "21db2cf9a93868d4c61371dfe6350c690e1579ab12391a20cdf0b4025aa16369",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/040.jpg",
+          "time": 100.696,
+          "sha256": "f658580355c273b4633c7ac8b602a5edf53bec885832fb7b18d1fddc0c68a876",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/041.jpg",
+          "time": 101.196,
+          "sha256": "0d39d62336fe6f1ee969df09e7527366822311f4882bb00398c094de4a1c58d9",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/042.jpg",
+          "time": 101.696,
+          "sha256": "fdd6b9c987453663d6301abecd9847fbc4e85cf8813cc4be3da23d79c35b79f2",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/043.jpg",
+          "time": 102.196,
+          "sha256": "26a4a346e3cfd468aff4bb6c07418e2c8da5ea4a0a049be0d6eecb1605fee461",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/044.jpg",
+          "time": 102.696,
+          "sha256": "f169cbf2f98bbaaf1908736f97b5ffa35ffffd22967a60e86d55da6d8463723c",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/045.jpg",
+          "time": 103.196,
+          "sha256": "6ba256e4ad7cee1cb05550890acc8192c5251d1bf9e83b4810c6498aeedac64f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/046.jpg",
+          "time": 103.696,
+          "sha256": "745f9a4ae7a09f8a81670908009f1c3bdec53566ddc5c17a6758e71413f88320",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/047.jpg",
+          "time": 104.196,
+          "sha256": "702ba6bedceff9408287bffea901550386e722e05f93238e38c5504fab9ccbf6",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/048.jpg",
+          "time": 104.696,
+          "sha256": "cedbf746df19dad20c03a7401bc83abd667431883f15dff411a287862ac79b90",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/049.jpg",
+          "time": 105.196,
+          "sha256": "109a990b8eff70827fc773eef33ae948bf9a6145417159e9fd4e0b4f7d7e39b8",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        },
+        {
+          "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense06/050.jpg",
+          "time": 105.696,
+          "sha256": "67dd57d2333e50c2df703037539e29694a29057417b405647566cdd5aab50f5f",
+          "time_precision": "nominal fps2 frame time; selection interval0.5s, within about0.25s. Exact-seek overview/label frames supply boundary checks."
+        }
+      ]
+    }
+  ],
+  "actually_opened_contact_sheets": [
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-00.jpg",
+      "sha256": "6070ddb803ce57c0f047af194a70567527eafa11e38ef9bdae39bb2e19f28ec6",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-01.jpg",
+      "sha256": "f07d8089dab53f5e9da888364c01b24745d9ef2944e32a772b831cf1e451959d",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-02.jpg",
+      "sha256": "0f71b9bd6c81a183b5a480136013663f06b66d4e40fa06394688f58ee4d89ff4",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-03.jpg",
+      "sha256": "1510ebfd4e53ee069e0f5371b2c25210e0fb499e67cdeda1ae0e324b1da48852",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-04.jpg",
+      "sha256": "f040402d97f7092757aba892865b0d3d303d1fb07ab88b635a1e49778448655b",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-05.jpg",
+      "sha256": "c97a7a67b088d03cfe780c671c1237d1d1f643d8881224af0b111e502929f459",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/segments-06.jpg",
+      "sha256": "3bdf79f38619a5b76e304a40c6a7603aa7a9210a423e939426daeefaff84268d",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-02-00.jpg",
+      "sha256": "afac4d9ae8814ede590f61e737f357aca84d088f0ba2c4e9b2f100dc29842ed3",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-02-01.jpg",
+      "sha256": "4831ad81dc5c5f3c3b27e8533238aebe1eaf056e8420f152afe3360bfc56b1cb",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-06-00.jpg",
+      "sha256": "b3ffe30c04fc1c3e426263fea49dddea123ca880fc510b86c77b3ee88e647822",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-06-01.jpg",
+      "sha256": "765d492f4747a8dc44e878a10385c3bc10730cec86af1539af61ae71866525c7",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-06-02.jpg",
+      "sha256": "cba0efacae8cd58365dd660fc7765d4a4838e852b0ff297dc2b436d86eb99368",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-06-03.jpg",
+      "sha256": "0c8230189afba40f46f1038281775796ba86136b185756bbe136e062236aaad1",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-06-04.jpg",
+      "sha256": "6eb2ecd57739c8a8d0b4bf5e42f4e6fcd2488f9218768c1c666a42c963ed1a28",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-09-00.jpg",
+      "sha256": "fb6b19b12ab76a817dd44436ba4ce0b08eeff7b7b1eb19447ffc0d63ce59194c",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-09-01.jpg",
+      "sha256": "8f1694feb82daf15f8382208e942264c9f03fa071be810b068db69951d2fa0b7",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-09-02.jpg",
+      "sha256": "81b529801437c8826f5e09d9055646a743f46b0257f5edf183610e6170e5b75d",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-12-00.jpg",
+      "sha256": "1f7eec714a541bbed4657f0db0eed94faf864f6a405561678ae6a3eba4235cee",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-12-01.jpg",
+      "sha256": "da1784fbb06ce6daa60f28d4a7f66f0ccc4fe3eef8aef624f23fca17dee6827f",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-15-00.jpg",
+      "sha256": "84dfe41c85115c754b0aeb9e645503f7417f54d92630e98839dbb0d14c2818c6",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/dense-15-01.jpg",
+      "sha256": "8cd3532c85b7ffa3d67020545300dc7d38166c4f16f340286ebf56c9e773cd9c",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cues-00.jpg",
+      "sha256": "ff6e6095f0382fee718d488b4b748b79798088223bbf0d6107314a6fff9bd7fe",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cues-01.jpg",
+      "sha256": "16665336a79cd90501d59ce3eb0ff3ef3be9e431d651bb489aee1322e22136a4",
+      "actually_opened_with_view_image": true
+    },
+    {
+      "path": "/workspace/zverev-finals-production/qc/final-7584efe2/cues-02.jpg",
+      "sha256": "beab077f19895113f918431eb8e9e5bfcee297933f8a6005025dc24586c288f7",
+      "actually_opened_with_view_image": true
+    }
+  ]
+}

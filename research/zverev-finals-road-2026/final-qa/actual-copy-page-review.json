@@ -1,0 +1,33 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_COPY_PAGE_TEXT",
+  "reviewed_at_utc": "2026-11-05T05:08:46.756433+00:00",
+  "copy_html": {
+    "path": "/workspace/zverev-finals-production/native/output/2026-11-05/reel/zverev-finals-road-2026/copy.html",
+    "sha256": "fba1beea2dcda0a6823829612ca37edd8056df0b8fda55bf1acf09d62262bad3"
+  },
+  "render_json": {
+    "path": "/workspace/zverev-finals-production/native/output/2026-11-05/reel/zverev-finals-road-2026/render.json",
+    "sha256": "c79505a4f0fb2a41bc52d92ea53f013e7376ec053c1ddc7313abb69df5a94678"
+  },
+  "frozen_spec_sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3",
+  "film_sha256": "7584efe23af4b82d7fe7deea69198613648f56ca3b980f06cabaaf9c76b510ab",
+  "publication_copy_sha256": "ed11aba2514e5ee7973026d48259dcafdf5dc33d0ea4d6fc0fde17b0d79cf735",
+  "actual_fields": {
+    "title": "11.5网球有故事|兹维列夫年终路",
+    "title_characters": 17,
+    "comment": "到了都灵，兹维列夫还能继续突破吗？"
+  },
+  "checks": {
+    "title": "PASS:actualtextarea17characters with11.5date,column,separator andcorrectplayer/series",
+    "body": "PASS:actualtextarea exactly matches frozenpublication-copyandXHSbody moduloterminalwhitespace;singlestitle scope,milestonedates,ParisR2,propernamesanddisplaydigits preserved",
+    "comment": "PASS:actualtext is exactclosingquestion,containsnoextra factualclaim",
+    "clipboard_source_mapping": "PASS:HTMLbuttons data-copytitle/body/comment map sameactualtextarea ids;JS readsfield.value",
+    "render_source_binding": "PASS:actualrender metadata bindssamefrozen371bspec/7584film/180326357bytes andexpectedslug-specificvideoURL"
+  },
+  "video_url_metadata": "https://github.com/robertyang87/tennislive/releases/download/reel-zverev-finals-road-2026/zverev-finals-road-2026.mp4",
+  "not_claimed": [
+    "RemotevideoURL availabilityorremotebytehash:rootseparatelyverifiesdelivery",
+    "PushPlusreceipt,finalPushHTML,publicpage/video/posterafter sending:PENDING_FOR_ROOT_ACCEPTANCE"
+  ],
+  "changes_requested": []
+}
