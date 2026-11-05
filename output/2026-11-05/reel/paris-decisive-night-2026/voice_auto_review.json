@@ -3,9 +3,9 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "4014753628c612b5fcf7041eb18253f909e117087f66fd3596e02b4a75dee825",
-    "render_inputs_sha256": "5a8e96c60b0fbcf100a0a35c33c85d97914c2342147fa087f9f6633517bfd17d",
-    "spec_sha256": "baa1cd6a1e5d22ccf3a8a4f8d1863fd464e9a07d03b6164b50a1fa74bfdd69f1",
+    "render_sha256": "f49e53eac79dba6fec93feaf82ba518361ef8cebaf5a66977b3b4dbd4a8f172c",
+    "render_inputs_sha256": "b84e5129429c78f1053200b221a49b978501ddb4eb201e0c0311184677199843",
+    "spec_sha256": "5348a30cc1036deb44f0896b22d646000219861e7d03a62520946e46662ef20e",
     "film_sha256": "38641498d80f4ddbb2dc8cbb908a32bf5e0ffe6c9ab65e7c52b4fdb40c5f8246",
     "inventory_sha256": "d5a902c4333e8cdc73bc82b325fe4510e66d5d73442107855edc2d37e04f1cb0"
   },
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-05T07:19:01+00:00",
+  "reviewed_at": "2026-11-05T10:01:04+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -306,7 +306,7 @@
         "substituted": 1,
         "sub_ratio": 0.013,
         "longest_deletion": 0,
-        "transcript": "同一晚,德米纳尔也倒下,六比七,三比六夫埃切维里,停在三千一百七十分。门违换人,霍达尔守在三千二百三十四分上。最后一问,这是时代翻页了,还是三十九岁的身体只坏了一个晚上?评论区,战队。"
+        "transcript": "同一晚,德米纳尔也倒下六比七、三比六夫埃切维里停在三千一百七十分。门违换人,霍达尔守在三千二百三十四分上。最后一问,这是时代翻页了,还是三十九岁的身体只坏了一个晚上?评论区,战队。"
       },
       "polyphones": [
         {
@@ -435,7 +435,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "上周日他又刚拿下巴塞尔的冠军,到了巴黎,德约面前的还是他。"
+        "transcript": "上周日,他又刚拿下巴塞尔的冠军,到了巴黎,德约面前的,还是他。"
       },
       "polyphones": [
         {
@@ -678,7 +678,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决胜盘3比3,德约的发球局先丢了。这是两人第三次交手,前两次他都是直落两盘,可这一次39岁的腿,追不上25岁的正手了。"
+        "transcript": "决胜盘3比3,德约的发球局先丢了,这是两人第三次交手,前两次他都是直落两盘,可这一次39岁的腿追不上25岁的正手了。"
       },
       "polyphones": [
         {
@@ -752,7 +752,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "3比5,最后一局又是两季双雾把赛点亲手送了出去。31分钟的第一盘向一个完全不同的夜晚。"
+        "transcript": "3比5,最后一局,又是两季双雾,把赛点亲手送了出去。31分钟的第一盘,像一个完全不同的夜晚。"
       },
       "polyphones": [],
       "pauses": {
@@ -918,7 +918,7 @@
         "substituted": 1,
         "sub_ratio": 0.077,
         "longest_deletion": 0,
-        "transcript": "都临的门,他这次为什么没进去?"
+        "transcript": "督灵的门,他这次为什么没进去?"
       },
       "polyphones": [],
       "pauses": {
@@ -977,12 +977,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 33,
-        "deleted": 1,
+        "deleted": 0,
         "inserted": 0,
         "substituted": 1,
         "sub_ratio": 0.03,
-        "longest_deletion": 1,
-        "transcript": "德约德仗罪难,2,900分从第一轮打起,至少打进半决赛才有机会,夺冠才稳妥。"
+        "longest_deletion": 0,
+        "transcript": "德约德仗罪难,2900分,从第一轮打起,至少打进半决赛才有机会,夺冠才稳妥。"
       },
       "polyphones": [],
       "pauses": {
@@ -1011,10 +1011,10 @@
         "ref_syllables": 32,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.031,
         "longest_deletion": 0,
-        "transcript": "真正已经上案的是科博利、巴塞尔夺冠、提前锁定都领,不用再看任何人的脸色。"
+        "transcript": "真正已经上案的,是科博利、巴塞尔夺冠,提前锁定都林,不用再看任何人的脸色。"
       },
       "polyphones": [],
       "pauses": {
@@ -1078,7 +1078,7 @@
         "substituted": 1,
         "sub_ratio": 0.011,
         "longest_deletion": 0,
-        "transcript": "这一分要从上周说起。维也纳打完,几分绑第九和第十之间只差一分,3210对3209。十个月的赛季,最后一张门票,最后落在了一分上。一分是什么概念?大师在首轮出局,直十分。一分是这张表上最小的差距。"
+        "transcript": "这一分要从上周说起。维也纳打完,几分绑第九和第十之间只差一分,三千二百一十对三千二百零九。十个月的赛季,最后一张门票,最后落在了一分上。一分是什么概念?大师在首轮出局,直十分。一分是这张表上最小的差距。"
       },
       "polyphones": [
         {
@@ -1197,7 +1197,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴黎本该是他的伏地、七座冠军、历史第一,可他上一次在这里打球还是二零二三年,三十九岁回到巴黎,第一场就是决战。"
+        "transcript": "巴黎本该是他的伏地、七座冠军、历史第一,可他上一次在这里打球还是2023年,39岁回到巴黎,第一场就是决战。"
       },
       "polyphones": [
         {
@@ -1251,7 +1251,7 @@
         "substituted": 1,
         "sub_ratio": 0.018,
         "longest_deletion": 0,
-        "transcript": "周一,手门人换了。霍达尔在巴黎首轮六比二,六比三赢下塔比洛,净删二十五分,反超六十四分。三千二百三十四,轮到二十岁的他,站在门里。"
+        "transcript": "周一,手门人换了。霍达尔在巴黎手轮六比二,六比三赢下塔比洛,净删二十五分,反超六十四分。三千二百三十四,轮到二十岁的他,站在门里。"
       },
       "polyphones": [],
       "pauses": {
@@ -1315,7 +1315,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "门里这位,值得多看一眼。霍达尔,十九岁,西班牙人。一个月前在上海,他赢了梅德维杰夫,打进决赛,这个名字才被记住。他守的这条线,是自己一场一场打出来的。"
+        "transcript": "门里这位,值得多看一眼。霍达尔,19岁,西班牙人。一个月前在上海,他赢了梅德维杰夫,打进决赛,这个名字才被记住。他守的这条线,是自己一场一场打出来的。"
       },
       "polyphones": [
         {
