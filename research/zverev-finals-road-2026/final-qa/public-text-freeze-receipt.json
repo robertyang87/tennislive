@@ -1,0 +1,49 @@
+{
+  "status": "PASS_PUBLIC_TEXT_FREEZE",
+  "reviewed_at_utc": "2026-11-05T04:57:24.967238+00:00",
+  "scope": "Independent review of actual frozen public text fields and nativegenerated publication-copy. Does not certify rendered movie, ASR fidelity or publication delivery.",
+  "bindings": {
+    "spec": {
+      "path": "/workspace/zverev-finals-production/native/specs/reels/zverev-finals-road-2026.json",
+      "sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3"
+    },
+    "xhs": {
+      "path": "/workspace/zverev-finals-production/native/specs/reels/zverev-finals-road-2026.xhs.txt",
+      "sha256": "95a65014e7e36f22bdd8066cc9c6babb3cd5392d278bd9fff2d734908e9f8bb2"
+    },
+    "publication_copy": {
+      "path": "/workspace/zverev-finals-production/production/publication-copy.json",
+      "sha256": "ed11aba2514e5ee7973026d48259dcafdf5dc33d0ea4d6fc0fde17b0d79cf735"
+    },
+    "public_text_sha256": "b46006c2995a34f87e997876139b6081a67b89dba8e908640e20980f2c7f04ad"
+  },
+  "copytitle": {
+    "value": "11.5网球有故事|兹维列夫年终路",
+    "characters_including_date_column_separator": 17,
+    "max": 20,
+    "native_function_reexecuted": true,
+    "matches_actual_publication_copy": true,
+    "status": "PASS"
+  },
+  "publication_checks": {
+    "title_cover_topic_scope": "PASS: explicitsingle-title drought; no denial ofFebdoublescrown",
+    "push": "PASS: byte-parsed push object matches frozen spec;8月6日/2座 display; qualification andscheduleaccurate",
+    "xhs": "PASS: publicationbody matches actualXHS exceptterminalwhitespace;6月/9月/2座/2盘;Oct12vsNov2separated;ParisR2correct;都灵这一章doesnoteraseDavisCup",
+    "sourcecaptions": "PASS: all23English-Chinesecues factual;4盘display;谢尔顿canonical;firstAOFinalAlcaraz/firstUSOpenZverev/secondmajorofyear/secondMastersFinalFokinaaccurate",
+    "matchlabels": "PASS: all5dates,players,first-listed-personscore andwinner-firstresult scores agree primary;labels immediate8seconds percurrentowner requirement",
+    "new_shortened_narration": "PASS:actualUS/no1/question/coverwording remains factual; countdisplay2座updated",
+    "public_text_snapshot_comparison": "PASS: frozenactualpublicfields exactly matchlatest independently reviewed snapshot"
+  },
+  "pending_artifacts": [
+    {
+      "artifact": "actual renderedASS / displaycaptions",
+      "status": "PENDING_NOT_GENERATED_OR_NOT_PROVIDED"
+    },
+    {
+      "artifact": "actual formattedPushPlusHTML",
+      "status": "PENDING_NOT_GENERATED_OR_NOT_PROVIDED"
+    }
+  ],
+  "sources_index": "/workspace/zverev-finals-production/research/facts/editorial-plan-fact-review.json",
+  "changes_requested": []
+}

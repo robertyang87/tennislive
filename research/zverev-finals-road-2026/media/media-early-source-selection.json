@@ -1,0 +1,195 @@
+{
+  "schema": "tennislive.source-selection-research.v1",
+  "slug": "zverev-finals-road-2026",
+  "created_at": "2026-11-05",
+  "sources": [
+    {
+      "key": "ao_sf",
+      "id": "kYlFxO1HA_A",
+      "event": "Australian Open 2026",
+      "round": "Semifinal",
+      "date": "2026-01-30",
+      "opponent": "Carlos Alcaraz",
+      "winner": "Carlos Alcaraz",
+      "winner_score": "6-4 7-6(5) 6-7(3) 6-7(4) 7-5",
+      "source_url": "https://www.youtube.com/watch?v=kYlFxO1HA_A",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-kYlFxO1HA_A/kYlFxO1HA_A.mp4",
+      "local_path": "/workspace/zverev-finals-production/research/media-early/kYlFxO1HA_A.mp4",
+      "sha256": "e7d2b29533eb3597fa0a9adb5b30cb52a789758d5ecc38a9fab0286021bbf3b7",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "codec": "av1",
+        "duration": 487.688707,
+        "bytes": 69185109
+      },
+      "official_identity_evidence": {
+        "source_url": "https://www.youtube.com/watch?v=kYlFxO1HA_A",
+        "title": "Carlos Alcaraz v Alexander Zverev Extended Highlights | Australian Open 2026 Semifinal",
+        "channel": "Australian Open",
+        "verified": true,
+        "published": "2026-01-30",
+        "method": "Web search returned exact official YouTube result with verified uploader and event/year/round description.",
+        "ref": "turn622284youtube0"
+      },
+      "windows": [
+        {
+          "kind": "terminal_matchpoint",
+          "start": 424.45,
+          "end": 444.5,
+          "duration": 20.05000000000001,
+          "action": "Zverev in white shirt, dark shorts and red headband serves from near baseline at 5-6, advantage Alcaraz; Alcaraz in neon green receives far. Zverev bends/prepares before tossing; full point; Alcaraz running passing shot wins and he falls, then lies on court; Zverev reaction and match-score graphic. Old short-source note incorrectly named Alcaraz as server: corrected by actual scoreboard, kit and preparation frames.",
+          "toss_at_approx": 426.3,
+          "point_result_at_approx": 431.5,
+          "complete_serve_to_result": true,
+          "visual_review_method": "Actually opened 0.5 second interval contact sheets plus exact selection start/end full-resolution frames. Full-source ffprobe and SHA computed from local bytes. No hearing claim.",
+          "review_frames": [
+            "/workspace/zverev-finals-production/research/media-early/kYlFxO1HA_A-serve-detail.jpg",
+            "/workspace/zverev-finals-production/research/media-early/kYlFxO1HA_A-tail-contact.jpg",
+            "/workspace/zverev-finals-production/research/media-early/ao-selected-start.jpg",
+            "/workspace/zverev-finals-production/research/media-early/ao-selected-end.jpg"
+          ],
+          "audio_review": "Delegated to zverev_source_audio; obtain final transcript packet with raw ASR SHA binding; preserve full original audio, no invented English for RG."
+        }
+      ],
+      "crop_instruction": {
+        "canvas": "3:4 full bleed",
+        "court_center": 0.5,
+        "track": false,
+        "mirror": false,
+        "note": "Fixed court-center crop throughout point. Do not track near player. Interview portrait tracking does not apply."
+      }
+    },
+    {
+      "key": "rg_final",
+      "id": "WfxpIK_TvEQ",
+      "event": "Roland-Garros 2026",
+      "round": "Final",
+      "date": "2026-06-07",
+      "opponent": "Flavio Cobolli",
+      "winner": "Alexander Zverev",
+      "winner_score": "6-1 4-6 6-4 6-7(5) 6-1",
+      "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-WfxpIK_TvEQ/WfxpIK_TvEQ.mp4",
+      "local_path": "/workspace/cobolli-research/media-b/WfxpIK_TvEQ.mp4",
+      "sha256": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "codec": "av1",
+        "duration": 727.457959,
+        "bytes": 250669751
+      },
+      "official_identity_evidence": {
+        "source_url": "https://www.youtube.com/watch?v=WfxpIK_TvEQ",
+        "title": "Flavio Cobolli vs Alexander Zverev | Men's Final Highlights by Emirates | Roland-Garros 2026",
+        "channel": "Roland-Garros",
+        "verified": true,
+        "published": "2026-06-07",
+        "method": "Web search returned exact official YouTube result with verified uploader.",
+        "ref": "turn845171youtube37"
+      },
+      "windows": [
+        {
+          "kind": "terminal_matchpoint",
+          "start": 640.3,
+          "end": 665.3,
+          "duration": 25.0,
+          "action": "Cobolli in purple/white serves near at 1-5, 15-40 in deciding set. Face and full-body preparation, then toss, full final rally including high defensive ball and Cobolli overhead out; Zverev in black far drops to clay and celebrates.",
+          "toss_at_approx": 643.0,
+          "point_result_at_approx": 655.5,
+          "complete_serve_to_result": true,
+          "visual_review_method": "Actually opened 0.5 second interval contact sheets plus exact selection start/end full-resolution frames. Full-source ffprobe and SHA computed from local bytes. No hearing claim.",
+          "review_frames": [
+            "/workspace/zverev-finals-production/research/media-early/WfxpIK_TvEQ-serve-detail.jpg",
+            "/workspace/zverev-finals-production/research/media-early/WfxpIK_TvEQ-tail-contact.jpg",
+            "/workspace/zverev-finals-production/research/media-early/rg-result-detail.jpg"
+          ],
+          "audio_review": "Delegated to zverev_source_audio; obtain final transcript packet with raw ASR SHA binding; preserve full original audio, no invented English for RG."
+        }
+      ],
+      "crop_instruction": {
+        "canvas": "3:4 full bleed",
+        "court_center": 0.5,
+        "track": false,
+        "mirror": false,
+        "note": "Fixed court-center crop throughout point. Do not track near player. Interview portrait tracking does not apply."
+      }
+    },
+    {
+      "key": "wim_final",
+      "id": "cuvaPZT2AIU",
+      "event": "Wimbledon 2026",
+      "round": "Final",
+      "date": "2026-07-12",
+      "opponent": "Jannik Sinner",
+      "winner": "Jannik Sinner",
+      "winner_score": "6-7(7) 7-6(2) 6-3 6-4",
+      "source_url": "https://www.youtube.com/watch?v=cuvaPZT2AIU",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-cuvaPZT2AIU/cuvaPZT2AIU.mp4",
+      "local_path": "/workspace/zverev-finals-production/research/media-early/cuvaPZT2AIU.mp4",
+      "sha256": "e5d94ebf528e1192dde3ddf98acae5e09bc05f7d4d2a74dd6fefaa90f900409b",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "codec": "av1",
+        "duration": 540.978503,
+        "bytes": 96805548
+      },
+      "official_identity_evidence": {
+        "source_url": "https://www.youtube.com/watch?v=cuvaPZT2AIU",
+        "title": "The amazing FULL final game between Jannik Sinner and Alexander Zverev! | Wimbledon 2026",
+        "channel": "Wimbledon",
+        "verified": true,
+        "published": "2026-07-13",
+        "method": "Release title recovered from original download action metadata, then fresh exact-title Web search returned this exact YouTube ID and Verified Wimbledon uploader plus final/year description.",
+        "ref": "turn815364youtube4"
+      },
+      "windows": [
+        {
+          "kind": "terminal_matchpoint",
+          "start": 318.0,
+          "end": 357.0,
+          "duration": 39.0,
+          "action": "Sinner in white cap and green-trim polo serving far at 5-4, 40-30 in fourth set; Zverev white shirt/headband near receives. Start close-up shows Sinner looking down, gathering and preparing. Wide court from about322, stationary preparation through324 toss; full serve/rally to331; Sinner drops to turf; both players react and embrace at net by357.",
+          "toss_at_approx": 324.0,
+          "point_result_at_approx": 331.0,
+          "complete_serve_to_result": true,
+          "visual_review_method": "Actually opened 0.5 second interval contact sheets plus exact selection start/end full-resolution frames. Full-source ffprobe and SHA computed from local bytes. No hearing claim.",
+          "review_frames": [
+            "/workspace/zverev-finals-production/research/media-early/cuvaPZT2AIU-serve-detail.jpg",
+            "/workspace/zverev-finals-production/research/media-early/wim-selected-start.jpg",
+            "/workspace/zverev-finals-production/research/media-early/wim-selected-end.jpg"
+          ],
+          "audio_review": "Delegated to zverev_source_audio; obtain final transcript packet with raw ASR SHA binding; preserve full original audio, no invented English for RG."
+        }
+      ],
+      "crop_instruction": {
+        "canvas": "3:4 full bleed",
+        "court_center": 0.5,
+        "track": false,
+        "mirror": false,
+        "note": "Fixed court-center crop throughout point. Do not track near player. Interview portrait tracking does not apply."
+      }
+    }
+  ],
+  "optional_extra_point_recommendation": "None from these three: full terminal points already strong. Leave the film-wide single optional turning point slot for producer editorial need.",
+  "unused_actual_downloads": [
+    {
+      "id": "u8plp_Kb6Ss",
+      "local_path": "/workspace/zverev-finals-production/research/media-early/u8plp_Kb6Ss.mp4",
+      "sha256": "03d08cd080e523ef2fc85c3a0109cedfa55752bf4f277b0ede2205a27af85341"
+    },
+    {
+      "id": "t88oAZbdtX8",
+      "local_path": "/workspace/zverev-finals-production/research/media-early/t88oAZbdtX8.mp4",
+      "sha256": "4aef02a9a92bf7171d687b1033e9c87e9d6aad7df6895a98527a79610e38fdbb"
+    }
+  ],
+  "known_limitations": [
+    "Original sound audit and translated captions owned by audio reviewer, not claimed complete by visual-source manifest."
+  ]
+}

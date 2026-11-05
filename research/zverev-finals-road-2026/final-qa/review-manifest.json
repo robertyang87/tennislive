@@ -1,0 +1,82 @@
+{
+  "status": "actual_final_film_and_native_voice_review_complete;CIandpublicationremainpending",
+  "spec_sha256": "371b26e28a7644ec7eff66acc62af856f9b45d6ce20645104253c867f65c1aa3",
+  "film_sha256": "7584efe23af4b82d7fe7deea69198613648f56ca3b980f06cabaaf9c76b510ab",
+  "film_bytes": 180326357,
+  "film_seconds": 309.68,
+  "ass_sha256": "39b59926ea5782d71db9d56ccbda096f01050203e160ba31f4be18537b69c789",
+  "render_sha256": "c79505a4f0fb2a41bc52d92ea53f013e7376ec053c1ddc7313abb69df5a94678",
+  "qc_sha256": "996e979282e69706fce6df07e2ce7402d217f2184e2276f6f1618089fbafaaa5",
+  "voice_method": "automated_voice_suite,not humanlistening",
+  "frozen_request_count": 16,
+  "voice_references": 32,
+  "voice_suite_pass": true,
+  "voice_suite_sha256": "ca04b82f09169489e01251a1be8fa9a79afaa8de1451f112eab6830ceff049d4",
+  "selected_points": 5,
+  "source_bilingual_cues": 23,
+  "photographic_groups": 14,
+  "native_landed_check": "Actualmaster309.68s,0failures;local verification record retained separately without changing movie/spec or originalarchiveQC.",
+  "native_auto_push_gate": "Actual canonicalrender candidate eligible;no send invoked here.",
+  "review_limitations": [
+    "Sampled actual encoded frames and dense selectedpoint frames;not continuous human audiovisual listening.",
+    "Existing fixedcenter crop leaves some originalscoreboard fragments and briefedgeface clipping.",
+    "Native captions retain some Chinesequantity words;verifieddates/scores/4强/4盘/cover2座 are correct."
+  ],
+  "proofs": [
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/root-actual-film-review.json",
+      "sha256": "75c5c41b6cb79a777fe418e67fa22be49c104891494e2fc1424b3ecf41c21c42",
+      "bytes": 2879
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/original-audio-and-ass-audit.json",
+      "sha256": "47075936bfc371d9d09b893b61af3a0a6285760781c29fb9b2735264e184a61f",
+      "bytes": 29763
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/independent-final-pixel-qc.json",
+      "sha256": "886e06bd4867c1806ce5400075ca4afb89227288b756627d1fb0c30deb6ff6bc",
+      "bytes": 87620
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/public-text-freeze-receipt.json",
+      "sha256": "5181a3a42f548aa1833ac309e1a456c6f102aea24920bb4475965ed2abd4b256",
+      "bytes": 2678
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/actual-ass-poster-facts-review.json",
+      "sha256": "579f68dbfa6e75060e5afb223b8b562be44f4973e2514961a4a6df19f4ca47dd",
+      "bytes": 5986
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/actual-copy-page-review.json",
+      "sha256": "35d27254f2ce72f3e7cc9f298ade4d307e22766ebf193b811ca748316d996072",
+      "bytes": 2045
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/release-entire-file-verification.json",
+      "sha256": "df497681feb4437a67bf68c60f5200749176740d410df163320f4127c745a0a9",
+      "bytes": 488
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/cold-restore-proof.json",
+      "sha256": "559604e6912e53de7bcaf86909b32fc20978e88e03e427cd70865623f2237853",
+      "bytes": 418
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/publication-copy.json",
+      "sha256": "ed11aba2514e5ee7973026d48259dcafdf5dc33d0ea4d6fc0fde17b0d79cf735",
+      "bytes": 1535
+    },
+    {
+      "path": "research/zverev-finals-road-2026/final-qa/owner-taste-preflight.json",
+      "sha256": "ae68166f8cde0e583a862e85f08c0ffd34f61ce86e6a146f2563d562ae39b988",
+      "bytes": 21997
+    }
+  ],
+  "pending": [
+    "Exact finalhead requiredCIgreen",
+    "NormalPRmerge",
+    "Native singlePushPlus send and durablemainledger/receipt"
+  ]
+}
