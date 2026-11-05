@@ -28,6 +28,7 @@ export async function loadTypeFonts(){
   document.fonts.add(await ff.load());
   await Promise.all([document.fonts.load('900 100px "VT Title"','是'),document.fonts.load('900 100px "Inter Display"','0')]);
 }
+const lerp1=(a,b,t)=>a+(b-a)*t;
 const ss=(a,b,x)=>{ const t=Math.min(1,Math.max(0,(x-a)/(b-a))); return t*t*(3-2*t); };
 function hash(i,k){ const x=Math.sin(i*12.9898+k*78.233)*43758.5453; return x-Math.floor(x); }
 
@@ -71,15 +72,32 @@ const PFS=`uniform vec3 uC1; uniform vec3 uC2; uniform float uK; varying float v
 void main(){ vec2 q=gl_PointCoord-0.5; float r=dot(q,q); if(r>0.25) discard; float f=exp(-r*10.0);
   gl_FragColor=vec4(mix(uC1,uC2,vSeed)*f*uK*1.6, vA*f); }`;
 const TVS=`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`;
-const TFS=`uniform sampler2D map; uniform float uOp; uniform float uSweep; varying vec2 vUv;
-void main(){ vec4 c=texture2D(map,vUv); float band=exp(-pow((vUv.x-uSweep)*6.0,2.0))*0.35*c.a;   // 一道斜光扫过
-  gl_FragColor=vec4(c.rgb+band, c.a*uOp); }`;
+// 实体字的着色器：按 uMode 做出场遮罩。0 粒子（字只淡入）· 1 编织 · 2 书写 · 3 冲击 · 4 旋转 · 5 下沉回弹 · 6 疾驰刹停（3~6 的位移在 JS 里做）
+const TFS=`uniform sampler2D map; uniform float uOp; uniform float uSweep; uniform float uA; uniform int uMode; uniform vec2 uGrid; uniform vec3 uThread; uniform float uK; varying vec2 vUv;
+float hh(float x){ return fract(sin(x*12.9898)*43758.5453); }
+void main(){
+  vec2 uv=vUv; float a=uA;
+  if(uMode==1 && a>1.0) uv.y+=sin(uv.x*26.0+a*55.0)*0.012*exp(-(a-1.0)*7.0);   // 编织完：像拨了一下琴弦，抖一抖再停
+  vec4 c=texture2D(map,uv); float m=1.0; vec3 add=vec3(0.0);
+  if(uMode==1){   // 编织：竖着的主线从上往下落、横线从左往右穿，交织出字形
+    float ci=floor(uv.x*uGrid.x), ri=floor(uv.y*uGrid.y);
+    float pm=clamp((a-hh(ci)*0.35)/0.45,0.0,1.0), pc=clamp((a-0.3-hh(ri+7.0)*0.3)/0.45,0.0,1.0);
+    float main_=step(1.0-uv.y,pm)*step(fract(uv.x*uGrid.x),0.55), cross_=step(uv.x,pc)*step(fract(uv.y*uGrid.y),0.55);
+    m=max(max(main_,cross_),smoothstep(0.8,1.0,a));
+    float lm=exp(-pow((fract(uv.x*uGrid.x)-0.27)*14.0,2.0))*step(1.0-uv.y,pm), lc=exp(-pow((fract(uv.y*uGrid.y)-0.27)*14.0,2.0))*step(uv.x,pc);
+    add=uThread*uK*max(lm,lc)*(1.0-smoothstep(0.85,1.25,a))*0.9; }
+  else if(uMode==2){ m=smoothstep(a*1.15-0.04,a*1.15-0.12,uv.x); add=uThread*uK*exp(-pow((uv.x-a*1.15+0.08)*30.0,2.0))*(1.0-smoothstep(0.95,1.2,a))*1.4; }
+  else if(uMode==3){ float r=length((uv-0.5)*vec2(3.0,1.0)); add=uThread*uK*exp(-pow((r-a*1.6)*9.0,2.0))*(1.0-smoothstep(0.3,1.0,a))*1.2; }
+  float band=exp(-pow((uv.x-uSweep)*6.0,2.0))*0.35*c.a;
+  float al=c.a*m*uOp, ta=clamp(max(add.r,max(add.g,add.b)),0.0,1.0)*uOp;
+  gl_FragColor=vec4(((c.rgb+band)*al+add*uOp)/max(al+ta,0.001), clamp(al+ta,0.0,1.0)); }`;
 export function makeTitle(THREE,str,o={}){
-  const {size=1,color='#ffffff',glow='rgba(255,194,74,0.9)',tier='title',k=0.5,c1='#ffd27a',c2='#7fe4ff',group=null,n=TYPE.particles,accent=null}=o;
+  const {size=1,color='#ffffff',glow='rgba(255,194,74,0.9)',tier='title',k=0.5,c1='#ffd27a',c2='#7fe4ff',group=null,n=TYPE.particles,accent=null,fx='particles',thread='#ffd27a'}=o;
+  const MODE={particles:0,weave:1,write:2,shock:3,spin:4,sag:5,streak:6}[fx]??0;
   const {c,w,h}=drawText(str,{tier,color,glow,accent}); const HU=size*0.87, WU=HU*w/h;   // 字高占比和旧 textSprite 一致（120/200）
   const g=new THREE.Group();
   const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; tex.anisotropy=8;
-  const tm=new THREE.ShaderMaterial({uniforms:{map:{value:tex},uOp:{value:0},uSweep:{value:-1}},vertexShader:TVS,fragmentShader:TFS,transparent:true,depthTest:false,depthWrite:false});
+  const tm=new THREE.ShaderMaterial({uniforms:{map:{value:tex},uOp:{value:0},uSweep:{value:-1},uA:{value:0},uMode:{value:MODE},uGrid:{value:new THREE.Vector2(Math.max(8,Math.round(w/h*7)),7)},uThread:{value:new THREE.Color(thread)},uK:{value:k}},vertexShader:TVS,fragmentShader:TFS,transparent:true,depthTest:false,depthWrite:false});
   const mesh=new THREE.Mesh(new THREE.PlaneGeometry(WU,HU),tm); mesh.renderOrder=21; g.add(mesh);
   const P=sample(c,n), pos=new Float32Array(n*3), st=new Float32Array(n*3), ct=new Float32Array(n*3), de=new Float32Array(n), sd=new Float32Array(n);
   const [r0,r1]=TYPE.spread;
@@ -98,11 +116,19 @@ export function makeTitle(THREE,str,o={}){
   const obj={g,mesh,pts,isSprite:false,w:WU,h:HU,
     // u：本段时间；IN：开始汇聚；OUT：开始散开（不散给 Infinity）；mul：外部再乘一层透明度（切镜头时）
     update(u,IN,OUT=Infinity,mul=1){
-      const a=(u-IN)/TYPE.IN, b=(u-OUT)/TYPE.OUTDUR;
-      pm.uniforms.uIn.value=a; pm.uniforms.uOut.value=Math.max(0,b);
-      tm.uniforms.uOp.value=(notext?0:1)*mul*ss(0.72,1.0,a)*(1-ss(0.0,0.45,b));
+      const a=(u-IN)/TYPE.IN, b=(u-OUT)/TYPE.OUTDUR, on=(notext?0:1)*mul, e=1-Math.pow(1-Math.min(1,Math.max(0,a)),3), t=Math.max(0,u-IN);
+      tm.uniforms.uA.value=a; tm.uniforms.uK.value=k*mul; mesh.position.set(0,0,0); mesh.rotation.set(0,0,0); mesh.scale.set(1,1,1);
       tm.uniforms.uSweep.value=-0.3+1.6*ss(0.95,0.95+TYPE.SWEEP/TYPE.IN,a);
-      pts.visible=!notext && mul>0.003 && a>0 && (a<1.2 || (b>0&&b<1.05)); pm.uniforms.uK.value=k*mul;
+      if(MODE===0){ pm.uniforms.uIn.value=a; pm.uniforms.uOut.value=Math.max(0,b);
+        tm.uniforms.uOp.value=on*ss(0.72,1.0,a)*(1-ss(0.0,0.45,b));
+        pts.visible=!notext && mul>0.003 && a>0 && (a<1.2 || (b>0&&b<1.05)); pm.uniforms.uK.value=k*mul; }
+      else { pts.visible=false; const fade=1-ss(0.0,0.5,b);
+        tm.uniforms.uOp.value=on*fade*(MODE===1||MODE===2||MODE===3?1:ss(0,0.25,a));
+        if(MODE===3){ const s_=1+0.35*Math.pow(1-e,2); mesh.scale.set(s_,s_,1); }                      // 冲击：从大压回原尺寸，外圈一道冲击波
+        if(MODE===4){ mesh.rotation.y=(1-e)*Math.PI*0.75; }                                              // 旋转：绕竖轴转进来
+        if(MODE===5){ mesh.position.y=a<0.35?lerp1(1.2,0,ss(0,0.35,a)):0.35*Math.exp(-5*(t-0.35*TYPE.IN))*Math.sin(13*(t-0.35*TYPE.IN))*-1; }   // 下沉：落下来像松了的线，晃几下停住
+        if(MODE===6){ const r=Math.pow(1-e,3); mesh.position.x=-3.2*r; mesh.scale.x=1+1.4*r; }           // 疾驰：拉长着冲进来、刹住
+        if(b>0){ const s_=1+0.08*ss(0,0.5,b); mesh.scale.multiplyScalar(s_); } }
       g.visible=a>0 && b<1.05; return this; },
   };
   return obj;

@@ -240,7 +240,7 @@ const barsNote=tx('barsN',T('紫＝全部标注比赛　蓝＝温网　· Match 
 // 战术段：聚酯线普及的时间带、同期变化
 const bandMesh=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({color:0xb9c8ff,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false})); barsG.add(bandMesh);
 const bandLab=tx('band',T('聚酯线普及','Polyester spreads'),{color:'#e6ecff',size:0.48,glow:'rgba(185,200,255,1)'},barsG);
-const CONF=[[T('线','Strings'),0xb9c8ff],[T('球拍：大拍面专利 1976','Rackets: oversize patent 1976'),0xffc24a],[T('球：快、中、慢三种','Balls: fast / medium / slow'),0x34f5a8],[T('还有别的因素','Other factors'),0x9aa4b8]];   // 2026-11-05 删「场地」「体能」：sources.md 里场地没核实、体能没查
+const CONF=[[T('线','Strings'),0xb9c8ff],[T('球拍：大拍面专利 1976','Rackets: oversize patent 1976'),0xffc24a],[T('还有别的因素','Other factors'),0x9aa4b8]];   // 2026-11-05 删「场地」「体能」：sources.md 里场地没核实、体能没查
 const confG=new THREE.Group(); scene.add(confG);
 const confNodes=CONF.map(([s,c],i)=>{ const n=new THREE.Mesh(new THREE.SphereGeometry(0.32,32,20),new THREE.MeshPhysicalMaterial({color:c,emissive:c,emissiveIntensity:GLOW.emissive,roughness:0.2,clearcoat:1,transparent:true})); confG.add(n);
   const lab=textSprite(s,{color:'#ffffff',size:0.42,glow:'rgba(255,255,255,0.6)'},confG); const th=fatLine(c,3); return {n,lab,th,c,i}; });
@@ -357,7 +357,7 @@ function shotHook(u,D){
   genLab.forEach((s,i)=>{ hud(s,0,2.05); op(s,(i===gi?ss(0,0.15,gk)*(u<DR?1:1-ss(DR,DR+0.4,u)):0)); });
   barsG.visible=u>DR-0.2; barsG.position.set(1.9,-1.7,0); barsG.scale.setScalar(0.74); setBars(bars,ss(DR,DR+2.6,u)); barsTitle.position.set(0,6.6,0); op(barsTitle,ss(DR+0.2,DR+0.9,u)*(1-ss(QQ-0.3,QQ+0.2,u)));
   barsNote.position.set(0,-1.1,0.5); op(barsNote,ss(DR+1,DR+1.8,u));
-  const q=bt('hookQ',T('是线，改变了网球吗？','Did the strings change tennis?'),{color:'#ffffff',size:1.0,glow:GOLD,accent:T('线','strings')});
+  const q=bt('hookQ',T('是线，改变了网球吗？','Did the strings change tennis?'),{color:'#ffffff',size:1.0,glow:GOLD,accent:T('线','strings'),fx:'weave',thread:'#ffd27a'});
   hud(q,0,2.0); q.update(u,QQ-0.5); proj('racket',rk.g.position);
 }
 function R_spin(R,u,amp=0.35){ R.g.rotation.y=Math.sin(u*0.45)*amp; R.g.rotation.x=-0.08; }
@@ -397,7 +397,7 @@ function shotPoly(u,D){
   // 三样：粒子汇聚成三个大字，各带一行「这一样归哪条定律管」
   rk.g.rotation.set(-0.1,Math.sin(u*0.4)*0.3,0); look(0,0.2,11.5,0,0.2,0); rk.g.visible=false;
   const PIL=[[T('力量','Power'),T('恢复系数','restitution'),ev('tp',TH+1.5),'#ffc24a'],[T('旋转','Spin'),T('库仑摩擦','Coulomb friction'),ev('tr',TH+2.2),'#4fe3ff'],[T('磅数','Tension'),T('应力松弛','stress relaxation'),ev('tm',TH+2.9),'#ff8a5a']];
-  PIL.forEach(([w,sub,t0,c],i)=>{ const x=(i-1)*3.6; const st=TH-0.2+i*0.45; const b=bt('pil'+i,w,{size:1.15,glow:c,c1:c,c2:'#ffffff'}); hud(b,x,0.25); b.update(u,st);
+  PIL.forEach(([w,sub,t0,c],i)=>{ const x=(i-1)*3.6; const st=TH-0.2+i*0.45; const b=bt('pil'+i,w,{size:1.15,glow:c,thread:c,fx:['shock','spin','sag'][i]}); hud(b,x,0.25); b.update(u,st);   // 每个字按它的意思出场：力量＝冲击、旋转＝转进来、磅数＝下沉回弹
     const sl=tx('pils'+i,sub,{color:c,size:0.42}); hud(sl,x,-0.8); op(sl,ss(st+1.2,st+1.8,u)); });
 }
 // ① 力量：恢复系数是什么 → 越大球越快 → 实测各种线差别很小 → 线没让球变快
@@ -417,7 +417,7 @@ function shotPowerSec(u,D){
     const l2=tx('v2',T('弹开 v₂','Out  v₂'),{color:'#ffe6b0',size:0.42,glow:GOLD}); l2.position.copy(c.clone().addScaledVector(nrm,2.3).add(new THREE.Vector3(0,-0.6,0))); op(l2,vout);
     const hk=k>0.45&&k<0.6?1-Math.abs(k-0.5)/0.1:0; hitRing.position.copy(c); hitRing.quaternion.copy(rk.g.quaternion); hitRing.rotateX(Math.PI/2); hitRing.scale.setScalar(0.6+hk*1.6); hitRing.material.opacity=hk*0.8;
     proj('ball',p); }
-    const f=bt('corF',T('恢复系数 e ＝ v₂ ÷ v₁','Restitution  e = v₂ / v₁'),{size:0.78,glow:GOLD}); hud(f,0,2.0); f.update(u,CO-0.6);
+    const f=bt('corF',T('恢复系数 e ＝ v₂ ÷ v₁','Restitution  e = v₂ / v₁'),{size:0.78,glow:GOLD,fx:'write',thread:'#ffd27a'}); hud(f,0,2.0); f.update(u,CO-0.6);
     const fn=tx('corN',T('牛顿最早测量这个比值 · 《自然哲学的数学原理》1687','First measured by Newton · Principia, 1687'),{color:'#ffe9c8',size:0.38}); hud(fn,0,1.25); op(fn,ss(CO+0.8,CO+1.5,u)*(1-ss(ev('big',CO+4)-0.3,ev('big',CO+4),u)));
     const bg=tx('corBig',T('e 越大 → 线还给球的能量越多 → 球越快','Higher e → more energy back → faster ball'),{color:'#ffffff',size:0.44,glow:GOLD}); hud(bg,0,1.25); op(bg,ss(ev('big',CO+4),ev('big',CO+4)+0.6,u));
     return; }
@@ -429,7 +429,7 @@ function shotPowerSec(u,D){
   const a=tx('pwA',T('实验室：换线材，球速变化很小','Lab: changing string material barely changes ball speed'),{color:'#eafff6',size:0.58,glow:MINT}); hud(a,0,2.05); op(a,ss(BA_,BA_+0.7,u)*(1-ss(NF-LAB+0.3-0.4,NF-LAB+0.3,u)));
   const b=tx('pwB',T('各种线都能把吃进去的能量还回约 95% · 90 种线实测差别可忽略（Cross 等 2000）','Strings return ~95% of energy · 90 strings tested (Cross et al. 2000)'),{color:'#bfe8d8',size:0.32}); hud(b,0,1.55); op(b,ss(BA_+1.2,BA_+1.9,u)*(1-ss(LO-LAB+0.3-0.3,LO-LAB+0.3,u)));
   const lo=tx('pwLoose',T('场上实测 · Bower & Cross 2005','On court · Bower & Cross 2005'),{color:'#bfe8d8',size:0.32}); hud(lo,0,1.55); op(lo,ss(LO-LAB+0.3,LO-LAB+1.0,u));
-  const nf=bt('noFast',T('线，没有让球变快','Strings didn’t make the ball faster'),{size:0.72,glow:MINT,c1:'#34f5a8',c2:'#ffffff'}); hud(nf,0,2.05); nf.update(u,NF-LAB+0.3-0.5);
+  const nf=bt('noFast',T('线，没有让球变快','Strings didn’t make the ball faster'),{size:0.72,glow:MINT,fx:'streak'}); hud(nf,0,2.05); nf.update(u,NF-LAB+0.3-0.5);
 }
 // ② 旋转：斜刷先滑 → 库仑摩擦拖着转 → 很快滚起来、摩擦再大也加不了转 → 真正加转的是主线滑开弹回 → 意大利面拍（放大到极致，被禁）→ 聚酯线（有争议）
 function shotSpin(u,D){
@@ -446,15 +446,15 @@ function shotSpin(u,D){
   const ph=tx(rol>0.5?'roll':'slide',rol>0.5?T('还没离开线，就滚起来了','Rolling before it leaves the strings'):T('拍面斜刷：球先在线上滑','Brushed at an angle: the ball slides first'),{color:'#ffffff',size:0.62,glow:GOLD}); hud(ph,0,2.05); op(ph,ss(0,0.1,k));
   const src=tx('rollSrc',T('所有线的摩擦都大到让球在撞击中滚起来 · Goodwill & Haake 2004','All strings grip enough for the ball to roll · Goodwill & Haake 2004'),{color:'#d8c09a',size:0.32}); hud(src,0,1.55); op(src,ss(0.5,0.6,k));
   proj('ball',new THREE.Vector3(xs,by,0));
-    const nm=tx('noMore',T('摩擦再大，也加不了转','More friction ≠ more spin'),{color:'#ffd2c8',size:0.5,glow:RED}); hud(nm,0,1.15); op(nm,ss(NM,NM+0.6,u));
+    const nm=tx('noMore',T('一滚起来，接触点不再打滑 → 摩擦不再加转','Once rolling, the contact stops slipping → friction adds no more spin'),{color:'#ffd2c8',size:0.5,glow:RED}); hud(nm,0,1.15); op(nm,ss(NM,NM+0.6,u));
     return; }
   if(u<PA-0.2){ // 真正加转的：主线被拨歪、再弹回
     rk.g.visible=true; rimL.intensity=5; rimL.color.set(0x7c83ff); rimL.position.set(-3,2,3); rimR.intensity=4; rimR.color.set(0xc9d6ff); rimR.position.set(3,2,3);
   const v=u-SN; rk.g.rotation.set(-0.15,-0.6,0); look(5.0,1.2,7.6,0,0.2,0); DOF.on=true; DOF.focus=8.6; DOF.ap=0.00007;
   const k=(v%3.4)/3.4; rk.g.updateMatrixWorld(true); setBed(rk,{cm:STR.poly,cc:STR.poly,slide:slideField(0.28,0,0,k),width:2.6});
   const p=impact(rk,ball,k,{spin:2.0,ang:0.95,squash:0.25}); spinRing.position.copy(p); spinRing.quaternion.copy(camera.quaternion); spinRing.scale.setScalar(1.2); spinRing.material.opacity=0.8*ss(0.5,0.6,k)*(1-ss(0.9,1,k));
-  const t=tx('snapT',T('真正加转的：主线被拨歪 → 千分之一秒内弹回','What adds spin: mains slide → snap back within 1 ms'),{color:'#ffffff',size:0.55,glow:'rgba(185,200,255,1)'}); hud(t,0,2.05); op(t,ss(0.3,1,v));
-  const t2=tx('snapS',T('减少横线、给线润滑，转速也会增加（实验室）','Fewer crosses or lubricated strings also add spin (lab)'),{color:'#c8d2f0',size:0.34}); hud(t2,0,1.55); op(t2,ss(1,1.6,v));
+  const t=tx('snapT',T('真正加转的：主线被拨歪，弹回时把球再往上拨','What adds spin: mains bend aside, then flick the ball up as they snap back'),{color:'#ffffff',size:0.55,glow:'rgba(185,200,255,1)'}); hud(t,0,2.05); op(t,ss(0.3,1,v));
+  const t2=tx('snapS',T('弹回不到千分之一秒 · 减少横线、给线润滑，转速也会增加（实验室）','Snap-back < 1 ms · fewer crosses or lubricated strings also add spin (lab)'),{color:'#c8d2f0',size:0.34}); hud(t2,0,1.55); op(t2,ss(1,1.6,v));
   proj('ball',p);
     return; }
   if(u<PR-0.2){ const banK=ss(BA+0.6,BA+2.2,u); const RO=PR;
@@ -470,6 +470,7 @@ function shotSpin(u,D){
     const x2=tx('x2',T('转速 ≈ 普通球拍的 2 倍（实验室）','Spin ≈ 2× a conventional racket (lab)'),{color:'#ffe6b0',size:0.6,glow:GOLD}); hud(x2,0,2.05); op(x2,ss(SL_+1.5,SL_+2.3,u)*(1-ss(BA-0.3,BA,u)));
     const x2s=tx('x2s',T('Goodwill & Haake 2002','Goodwill & Haake 2002'),{color:'#d8c09a',size:0.3}); hud(x2s,0,1.55); op(x2s,ss(SL_+2,SL_+2.6,u)*(1-ss(BA-0.3,BA,u)));
     const bn=tx('ban',T('1978 · 国际网联：主线横线必须交错编织或粘合','1978 · ITF: strings must be interlaced or bonded'),{color:'#ffffff',size:0.55,glow:RED}); hud(bn,0,2.05); op(bn,ss(BA,BA+0.6,u)*(1-ss(RO-0.4,RO,u)));
+    const why=tx('banWhy',T('原因之一：排名不高的球员，靠超强旋转赢了顶尖选手 · Cross','One problem: lower-ranked players beat top players with the extra spin · Cross'),{color:'#ffd8d2',size:0.36}); hud(why,0,1.5); op(why,ss(BA+1.6,BA+2.3,u)*(1-ss(RO-0.4,RO,u)));
     const st=tx('stamp',T('禁','BANNED'),{color:'#ffd8d2',size:2.2,font:'900 170px "VT Title","Inter Display",sans-serif',glow:'rgba(255,60,40,1)'}); hud(st,1.2,-0.2,8); const sk=ss(BA+0.05,BA+0.65,u);   st.scale.set(st.userData.w0||(st.userData.w0=st.scale.x),2.2,1); st.material.rotation=-0.2; op(st,sk*(1-ss(BA+2.6,BA+3.2,u)));   // 盖章 0.6 s 落下（原 0.25 s，相邻帧差冲到 25）。2026-11-05：这条注释原来写在代码前面，把后半行吞了，已发的中文版里「禁」字没出来
     stampRing.position.copy(st.position); stampRing.quaternion.copy(camera.quaternion); stampRing.scale.setScalar(lerp(6,3.2,sk)); stampRing.material.opacity=sk*(1-ss(BA+2.6,BA+3.2,u))*0.9;
     // 不闪白、不抖屏：闪白在线性空间里混，0.1 到屏上就是三成多的亮度跳变（motion_check 抓到 65.5 s 相邻帧差 90 → 25），盖章本身的落下和光环已经够有冲击
@@ -484,7 +485,8 @@ function shotSpin(u,D){
     const cc=t3d('con0','0',0x4fe3ff,1.1); cc.g.position.set(3.6,2.4,0); cc.g.quaternion.copy(camera.quaternion); t3op(cc,con);
     const cl=tx('conL',T('线材、粗细、磅数都不影响转速','Material, gauge, tension: no effect on spin'),{color:'#d8f6ff',size:0.5,glow:CYAN}); cl.position.set(3.6,0.9,0); op(cl,con);
     const cs=tx('conS',T('Goodwill & Haake 2004（同行评审）· 国际网联','Goodwill & Haake 2004 (peer-reviewed) · ITF'),{color:'#a8c4d8',size:0.32}); cs.position.set(3.6,0.25,0); op(cs,con);
-    const vs=tx('vs',T('两边结论相反','The two disagree'),{color:'#ffffff',size:0.62,glow:'rgba(255,255,255,0.7)'}); vs.position.set(0,-1.2,0); op(vs,ss(CN+1,CN+1.8,u));
+    const AG=ev('agree',CN+4); const vs=tx('vs',T('两边结论相反','The two disagree'),{color:'#ffffff',size:0.62,glow:'rgba(255,255,255,0.7)'}); vs.position.set(0,-1.2,0); op(vs,ss(CN+1,CN+1.8,u)*(1-ss(AG-0.4,AG,u)));
+    const ag=tx('agree',T('两边都同意：关键是线能不能滑开、再弹回','Both agree: what matters is strings sliding and snapping back'),{color:'#ffffff',size:0.56,glow:'rgba(255,255,255,0.7)'}); ag.position.set(0,-1.2,0); op(ag,ss(AG,AG+0.7,u));
   }
 }
 function shotTension(u,D){
@@ -571,15 +573,15 @@ function shotTactics(u,D){
     const pts=[]; for(let j=0;j<=30;j++){ const s=j/30; const wob=Math.sin(s*Math.PI*3+c.i*1.3+v)*0.35*(1-s); pts.push(pos.clone().lerp(new THREE.Vector3(0,0.2,0),s).add(new THREE.Vector3(wob,wob*0.7,0))); }
     setLine(c.th,pts.map(p=>p.add(confG.position))); c.th.material.opacity=ss(c.i*0.3+0.3,c.i*0.3+1,v); });
   knot.position.set(0,0.2,0); knot.material.opacity=ss(1.5,2.5,v)*(0.7+0.3*Math.sin(u*4));
-  const t=tx('confT',T('可同一时期，球拍和球也在变','But rackets and balls changed too'),{color:'#efe6ff',size:0.6,glow:VIO}); hud(t,0,2.05); op(t,ss(0.2,0.9,v)*(1-ss(NO-CF-0.4,NO-CF,v)));
+  const t=tx('confT',T('可球拍也在变：分析把功劳记在拍线和球拍两边','Rackets changed too: analysis credits strings and rackets'),{color:'#efe6ff',size:0.6,glow:VIO}); hud(t,0,2.05); op(t,ss(0.2,0.9,v)*(1-ss(NO-CF-0.4,NO-CF,v)));
   const n=tx('noneT',T('至今没有研究能把线的作用单独算出来','No study has yet isolated the strings\' effect'),{color:'#ffffff',size:0.62,glow:VIO}); hud(n,0,2.05); op(n,ss(NO-CF,NO-CF+0.7,v));
 }
 function shotEnd(u,D){
   const QQ=ev('q',7.0); rk.g.visible=true; R_spin(rk,u,0.5); look(0,0.3,lerp(8.5,10,ss(0,D,u)),0,0.2,0); rimL.intensity=5; rimR.intensity=5; rimL.position.set(-4,3,4); rimR.position.set(4,3,4); rimL.color.set(0xffc24a); rimR.color.set(0x4fe3ff);
   const gi=Math.floor(u/1.6)%4; const [,,cm,cc]=GEN[gi]; setBed(rk,{cm,cc,width:2.6});
-  const a=tx('endA',T('没让球变快 · 让上旋更容易 · 让磅数掉得更快','Not faster · easier topspin · faster tension loss'),{color:'#ffffff',size:0.5,glow:GOLD}); hud(a,0,2.05); op(a,ss(0.3,1,u)*(1-ss(QQ-0.5,QQ,u)));
+  const a=tx('endA',T('线材没让球变快 · 多转靠线的滑动 · 聚酯掉磅最快','Material: not faster · spin: string movement · polyester loses tension fastest'),{color:'#ffffff',size:0.5,glow:GOLD}); hud(a,0,2.05); op(a,ss(0.3,1,u)*(1-ss(QQ-0.5,QQ,u)));
   const a2=tx('endB',T('打法：要和球拍、球一起算','Playing style: count rackets and balls too'),{color:'#efe6ff',size:0.4}); hud(a2,0,1.5); op(a2,ss(2.5,3.2,u)*(1-ss(QQ-0.5,QQ,u)));
-  const q=bt('endQ',T('你现在用的是什么线？','What strings do you play?'),{color:'#ffffff',size:0.95,glow:GOLD}); hud(q,0,2.0); q.update(u,QQ-0.5);
+  const q=bt('endQ',T('你现在用的是什么线？','What strings do you play?'),{color:'#ffffff',size:0.95,glow:GOLD,fx:'weave',thread:'#7fe4ff'}); hud(q,0,2.0); q.update(u,QQ-0.5);
 }
 
 // ---------- 后期 ----------
