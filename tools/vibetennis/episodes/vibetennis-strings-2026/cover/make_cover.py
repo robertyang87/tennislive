@@ -98,14 +98,14 @@ def make(opt,kind,out):
         if kind=='wide':
             hgrad(c,h,0,1250,0.9,0.15); grad(c,w,0,160,0.5,0)
             brand(c,60,92,34,44)
-            text(c,T("是线，","Did strings"),80,300,T(118,96),WHITE,1,SANS,glow=0)
-            rich(c,[(T("改变了网球吗？","change tennis?"),WHITE)],80+0,430,T(118,96),align='l',glow=0); text(c,T("线","strings"),80+T(118,96)*T(1,4.6),300,T(118,96),GOLD,1,SANS)
+            rich(c,[(T("是","Did "),WHITE),(T("线","strings"),GOLD),(T("，",""),WHITE)],80,300,T(118,96),align='l',glow=0)
+            text(c,T("改变了网球吗？","change tennis?"),80,430,T(118,96),WHITE,1,SANS)
             timeline(c,110,1050,580,26)
             text(c,BIG,80,820,92,GOLD,1,SANS,glow=0.25); text(c,CAP,84,870,28,WHITE,0.95,SANS); text(c,NOTE,84,912,20,GRAY,0.95,MONO,shadow=0)
         else:
             grad(c,w,0,h*0.62,0.92,0.2); grad(c,w,h*0.62,h,0.2,0.92)
             brand(c)
-            text(c,T("是线，","Did strings"),70,300,T(120,92),WHITE,1,SANS); text(c,T("线","strings"),70+T(120,92)*T(1,4.6),300,T(120,92),GOLD,1,SANS)
+            rich(c,[(T("是","Did "),WHITE),(T("线","strings"),GOLD),(T("，",""),WHITE)],70,300,T(120,92),align='l',glow=0)
             text(c,T("改变了网球吗？","change tennis?"),70,440,T(120,92),WHITE,1,SANS)
             timeline(c,130,950,560,28)
             text(c,BIG,70,1230,T(110,104),GOLD,1,SANS,glow=0.25); text(c,CAP,74,1290,T(30,25),WHITE,0.95,SANS); text(c,NOTE,74,1338,T(21,19),GRAY,0.95,MONO,shadow=0)
