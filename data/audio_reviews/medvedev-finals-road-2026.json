@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
-  "plan_sha256": "d9cf905fe6719652e25dd08c9cb55fb2aab6c7dcb0fda4f74250c621f179ce6a",
+  "plan_sha256": "4a3a0e2205d93ef768b4b7490bb236e5a0ed9f4e3c09b4cbc53db709f10961d6",
   "segments": [
     {
       "index": 2,
@@ -30,7 +30,7 @@
     {
       "index": 18,
       "transcript_path": "data/audio_transcripts/medvedev-finals-road-2026/vienna_point.json",
-      "transcript_sha256": "f59a54a07258ad5fb024598af169b835d2f545d2d8bd5763cf08f6a37d2d3795"
+      "transcript_sha256": "7c703e6e66b814a7c5a97d0da14893ff9d5989ca9f141242f73e31b9d38c9a2e"
     }
   ],
   "method_note": "Every actual selected source SHA, complete ASR/caption packet and whole-window bilingual foreground coverage, without human listening claims.",
@@ -159,6 +159,16 @@
       "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json",
       "sha256": "2932e8996534bb58f5055549576344ddfaac2ae6c500158eba5274d531d8cd1b",
       "original_research_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/small.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/actual-final-asr/e51aca77a61916a0/vienna-qualification/medium.en.json",
+      "sha256": "9d4178cd378e75d1562395f63a661f108e6850a55f18f13606f94ce4aeb48128",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/actual-final-asr/e51aca77a61916a0/vienna-qualification/medium.en.json"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/actual-final-asr/e51aca77a61916a0/vienna-qualification/small.en.json",
+      "sha256": "372ae2f8bfebd94ef9a4ab3a983018a356362f2da72b267d0b862de07947f85c",
+      "original_research_path": "/workspace/medvedev-finals-production/research/audio/actual-final-asr/e51aca77a61916a0/vienna-qualification/small.en.json"
     }
   ]
 }

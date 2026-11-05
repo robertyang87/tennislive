@@ -4,14 +4,14 @@
   "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
   "method": "asr_cross_checked",
   "reviewer": "OpenAI Codex source-audio audit agent; inspected retained native raw small.en/medium.en and stated official-caption evidence; no auditory listening claimed",
-  "reviewed_at": "2026-11-05T06:44:43.943393+00:00",
+  "reviewed_at": "2026-11-05T07:33:46.357188+00:00",
   "status": "complete",
   "reviewed_from": 163.48,
   "reviewed_to": 182.72,
   "human_listening_performed": false,
   "foreground_english": [
     {
-      "start": 166.3,
+      "start": 169.34,
       "end": 171.7,
       "en": "Oh, that's missed.",
       "zh": "噢，这球出界了。"
@@ -81,6 +81,28 @@
       "bytes": 23786982
     }
   },
-  "review_notes": "Actual source verified. Original155–183 small+medium both recognize Oh that's missed; later162–190 small confirms. Original medium and later small both recognize A patient performance, rejecting original small Delveve prefix (not replicated). Both contexts agree on third semi-final appearance; Vienna proper place corrected from Vietnam by verified event. Conservative word-time envelope retains every recognized word; Oh aligns across live rally with low probability, honest non-auditory method. No original English before163.48 appears in either raw context, previous clause finishes161.34. All four actual raw outputs checked, not only agreeing snippets.",
-  "uncertain_spans": []
+  "review_notes": "Actual source verified. Original155–183 small+medium both recognize Oh that's missed; later162–190 small confirms. Original medium and later small both recognize A patient performance, rejecting original small Delveve prefix (not replicated). Both contexts agree on third semi-final appearance; Vienna proper place corrected from Vietnam by verified event. Conservative word-time envelope retains every recognized word; Oh aligns across live rally with low probability, honest non-auditory method. No original English before163.48 appears in either raw context, previous clause finishes161.34. All four actual raw outputs checked, not only agreeing snippets. Actual-first-master timing repair: initial166.30 low-confidence Oh envelope placed outcome subtitle3s before independently corroborated onset. Original tight-source medium raw Oh169.34 and actual-master medium Oh223.84 (source-equivalent169.362) agree; actual-master small short utterance begins224.46. Update first utterance start to169.34, retain words/end171.70 and selected163.48–182.72. This changes actual burned-cue onset only; no human hearing claim.",
+  "uncertain_spans": [],
+  "actual_final_timing_crosscheck": {
+    "actual_first_master_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+    "master_status": "superseded; requires actual rerender with corrected caption time",
+    "method": "Actual-master small.en/medium.en compared to retained exact-source tight-medium word timing. Whole-film raw is separate supporting timing evidence, not listed as original-source ASR.",
+    "raw_files": [
+      {
+        "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/actual-final-asr/e51aca77a61916a0/vienna-qualification/medium.en.json",
+        "sha256": "9d4178cd378e75d1562395f63a661f108e6850a55f18f13606f94ce4aeb48128"
+      },
+      {
+        "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/actual-final-asr/e51aca77a61916a0/vienna-qualification/small.en.json",
+        "sha256": "372ae2f8bfebd94ef9a4ab3a983018a356362f2da72b267d0b862de07947f85c"
+      }
+    ],
+    "source_tight_medium_path": "/workspace/medvedev-finals-production/research/audio/raw/AWfZeqsuqmw/f4fa53d900431b0b02d9b1fb9ea721b804113007/medium.en.json",
+    "source_tight_medium_sha256": "1159d1eda29cadf4e6e34f8411ffcdace3470be6fab71190010729693d75446d",
+    "previous_start": 166.3,
+    "corrected_start": 169.34,
+    "caption_at_previous": 2.82,
+    "caption_at_corrected": 5.86,
+    "reviewer_note": "Local VAD indicates strongest sustained speech near171.25 but is not a precise detector of a quiet exclamation onset; chosen earliest cross-context ASR onset169.34 is retained, not inferred from VAD threshold absence."
+  }
 }
