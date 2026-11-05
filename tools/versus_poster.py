@@ -281,8 +281,10 @@ def _english_display(name: str, meta: dict, where: str) -> str:
                 for row in tour
                 if isinstance(row, dict)
             ]
+        from tennislive.zh.players import normalize_player_zh  # noqa: PLC0415
         matches = [row for row in _PLAYER_NAMES_CACHE
-                   if str(row.get("name_zh") or "").strip() == name]
+                   if normalize_player_zh(str(row.get("name_zh") or "").strip())
+                   == normalize_player_zh(name)]
         if len(matches) == 1:
             value = str(matches[0].get("name_en") or "").strip()
         elif len(matches) > 1:

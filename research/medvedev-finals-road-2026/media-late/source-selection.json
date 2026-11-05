@@ -1,0 +1,296 @@
+{
+  "schema": "medvedev-late-source-selection.v1",
+  "created_at": "2026-11-05T06:27:21.791393+00:00",
+  "human_listening_performed": false,
+  "sources": [
+    {
+      "id": "_9MGjWJe2iw",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/_9MGjWJe2iw.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-_9MGjWJe2iw/_9MGjWJe2iw.mp4",
+      "sha256": "6f9415a4ecbb80041050d643706ebbc0990f672fcee6cc4a2c9b8eea4e79a21e",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 490.126803,
+        "bytes": 77771531
+      },
+      "key": "hangzhou-title",
+      "action": "杭州决赛末分及握手；最短完整两句收尾458.60，可再留好友句至466.00",
+      "windows": [
+        {
+          "start": 444.08,
+          "end": 466.0,
+          "completepoint": false,
+          "complete_rally_from_serve_contact": true,
+          "complete_prepare": false,
+          "evidence": "First wide 444.12 has ball already tossed; earlier closeup still 30-15 from previous point. Preserve actual matchpoint serve/contact and remaining rally and genuine result/reaction; do not claim full preparation.",
+          "status": "root_decision_required_gap"
+        }
+      ],
+      "source_url": "https://www.youtube.com/watch?v=_9MGjWJe2iw",
+      "identity_evidence": {
+        "path": "/workspace/medvedev-finals-production/research/media-late/_9MGjWJe2iw-oembed.json",
+        "sha256": "a5d53a483c1d739c7350f95bc9c3a3b00c7e20950e9c867f2f8cbc5caefdcd99",
+        "method": "fresh noembed.com YouTube oEmbed response; author handle and title crosschecked against actual court and scoreboard",
+        "author": "Tennis TV"
+      },
+      "extra_points": 0,
+      "raw_asr": [
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/_9MGjWJe2iw-medium.en.json",
+          "sha256": "a7a43a877c6ebd73ff80271cd7e051f9e9356d730d6423b7153e1386f54352f9",
+          "source_sha256": "6f9415a4ecbb80041050d643706ebbc0990f672fcee6cc4a2c9b8eea4e79a21e"
+        },
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/_9MGjWJe2iw-small.en.json",
+          "sha256": "9f2ece3b12b01fa3414b7ee707c99b5ac75f9bfbfeebb8aa13321ef2271e0b6f",
+          "source_sha256": "6f9415a4ecbb80041050d643706ebbc0990f672fcee6cc4a2c9b8eea4e79a21e"
+        }
+      ],
+      "audio_packet_path": "/workspace/medvedev-finals-production/research/media-late/hangzhou-title-audio.json",
+      "visual_evidence": [
+        "/workspace/medvedev-finals-production/research/media-late/_9MGjWJe2iw-tail-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/_9MGjWJe2iw-serve-contact.jpg"
+      ]
+    },
+    {
+      "id": "caCEoWln_aU",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/caCEoWln_aU.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-caCEoWln_aU/caCEoWln_aU.mp4",
+      "sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 484.739773,
+        "bytes": 94708212
+      },
+      "key": "almaty-title",
+      "action": "阿拉木图决赛末分+首次卫冕+第4冠完整原声句",
+      "windows": [
+        {
+          "start": 431.52,
+          "end": 459.2,
+          "completepoint": false,
+          "complete_rally_from_serve_contact": true,
+          "complete_prepare": false,
+          "evidence": "First wide 431.56 shows Basilashvili already tossing, contact ~431.96; preceding closeup is same-matchpoint Medvedev receiver, not full server preparation. Last ball ~440.0 and real reaction.",
+          "status": "root_decision_required_gap"
+        }
+      ],
+      "source_url": "https://www.youtube.com/watch?v=caCEoWln_aU",
+      "identity_evidence": {
+        "path": "/workspace/medvedev-finals-production/research/media-late/caCEoWln_aU-oembed.json",
+        "sha256": "64c6e41a7c2c2541d7793da9463f5b4eaf871524012a7beb1378bff966e81d72",
+        "method": "fresh noembed.com YouTube oEmbed response; author handle and title crosschecked against actual court and scoreboard",
+        "author": "Tennis TV"
+      },
+      "extra_points": 0,
+      "raw_asr": [
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/caCEoWln_aU-medium.en.json",
+          "sha256": "da426253dc19d585263935515a158538cf784549029b985196f8416534384462",
+          "source_sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84"
+        },
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/caCEoWln_aU-small.en.json",
+          "sha256": "764b7134f6a5f8d966c3d3fb540673fb5396a29fcaaf3d59043fe27074b5b463",
+          "source_sha256": "1ced2ba354eec33f4854b987e7ff2451deccd7ea7d958c857e7a36ee9e21ac84"
+        }
+      ],
+      "audio_packet_path": "/workspace/medvedev-finals-production/research/media-late/almaty-title-audio.json",
+      "visual_evidence": [
+        "/workspace/medvedev-finals-production/research/media-late/caCEoWln_aU-serve-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/caCEoWln_aU-tail-contact.jpg"
+      ],
+      "selection": "superseded by4598989 full-preparation officialfree source; retained historicalaudio only"
+    },
+    {
+      "id": "AWfZeqsuqmw",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/AWfZeqsuqmw.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-AWfZeqsuqmw/AWfZeqsuqmw.mp4",
+      "sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "25/1",
+        "duration": 198.251973,
+        "bytes": 23786982
+      },
+      "key": "vienna-qualification",
+      "action": "锁定第7次年终资格的维也纳1/4决赛胜赛点",
+      "windows": [
+        {
+          "start": 163.48,
+          "end": 182.72,
+          "completepoint": true,
+          "complete_rally_from_serve_contact": true,
+          "complete_prepare": true,
+          "evidence": "163.48 first wide shows Medvedev stationary far server before toss, scoreboard Mannarino 2 3 30 / Medvedev 6 5 40, same matchpoint; continuous service through return/rally to ~171.8, 173.25 fist and subsequent genuine handshake. Viewed first-wide 0.1-second original-frame sheet and 2-second tail sheet.",
+          "status": "visual_verified_audio_timing_pending"
+        }
+      ],
+      "source_url": "https://www.youtube.com/watch?v=AWfZeqsuqmw",
+      "identity_evidence": {
+        "path": "/workspace/medvedev-finals-production/research/media-late/AWfZeqsuqmw-oembed.json",
+        "sha256": "84648bccb8ac0d8eefb5037f738221d0d992cad1b61b1eb72be843703956c4fe",
+        "method": "fresh noembed.com YouTube oEmbed response; author handle and title crosschecked against actual court and scoreboard",
+        "author": "ATP Tour"
+      },
+      "extra_points": 0,
+      "raw_asr": [
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/AWfZeqsuqmw-medium.en.json",
+          "sha256": "a48972830309204f63413b559db702560bacaebbc0f68a09e73e9f449855b07a",
+          "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+        },
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/raw/AWfZeqsuqmw-small.en.json",
+          "sha256": "4d5986133de3c93702464e3caeff73698ae3c2f6b49a99842a31cdf7bf6efaa8",
+          "source_sha256": "e7483face40823c48d8415d573d1bf936a9077fe051916df872dfe5cbe1a1884"
+        }
+      ],
+      "audio_packet_path": "/workspace/medvedev-finals-production/research/media-late/vienna-qualification-audio.json",
+      "visual_evidence": [
+        "/workspace/medvedev-finals-production/research/media-late/AWfZeqsuqmw-precise-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/AWfZeqsuqmw-tail-contact.jpg"
+      ]
+    },
+    {
+      "id": "YmuhzFlbLjY",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/YmuhzFlbLjY.mp4",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-YmuhzFlbLjY/YmuhzFlbLjY.mp4",
+      "sha256": "5178a62342553e825b47e46e7ccbc26bf7a9db2dc71f52fc4ad319b482fffff0",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 136.394014,
+        "bytes": 24677069
+      },
+      "key": "paris-exit",
+      "action": "巴黎2轮出局，建议照片一句话，备查此同场末分",
+      "windows": [
+        {
+          "start": 97.28,
+          "end": 126.2,
+          "completepoint": false,
+          "complete_rally_from_serve_contact": true,
+          "complete_prepare": false,
+          "evidence": "97.28 new matchpoint wide with score Buse 6 5 40 / Medvedev 4 4 30; firstwide service preparation not fully assessed. All last rally through115.52 and Buse genuine celebration, handshake through126.2. Do not mark full prepare from prior-game closeup 95.56–97.24.",
+          "status": "optional_not_selected"
+        }
+      ],
+      "source_url": "https://www.youtube.com/watch?v=YmuhzFlbLjY",
+      "identity_evidence": {
+        "path": "/workspace/medvedev-finals-production/research/media-late/YmuhzFlbLjY-oembed.json",
+        "sha256": "803f8477cf754e18c1e45a8a85f6802de43dc98b2da625e15f3f3b180da1bbb1",
+        "method": "fresh noembed.com YouTube oEmbed response; author handle and title crosschecked against actual court and scoreboard",
+        "author": "Tennis TV"
+      },
+      "extra_points": 0,
+      "raw_asr": [],
+      "audio_packet_path": null,
+      "visual_evidence": [
+        "/workspace/medvedev-finals-production/research/media-late/YmuhzFlbLjY-tail-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/YmuhzFlbLjY-precise-contact.jpg"
+      ]
+    },
+    {
+      "id": "4598989",
+      "source_url": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
+      "local_path": "/workspace/medvedev-finals-production/research/media-late/archived-med26alma01.mp4",
+      "sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "actual_geometry": {
+        "width": 1920,
+        "height": 1080,
+        "fps": "50/1",
+        "duration": 160.917333,
+        "video_duration": 160.9,
+        "start_time": 0.0,
+        "bytes": 162015056
+      },
+      "key": "almaty-title-fullpoint",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-med26alma01/med26alma01.mp4",
+      "archive_status": "frozen publicRelease actualbytes fetched and independentlyverified",
+      "action": "阿拉木图2026决赛完整发球准备、胜赛点、首次卫冕真实反应握手；替代旧长版缺prep窗",
+      "windows": [
+        {
+          "start": 126.6,
+          "end": 151.72,
+          "completepoint": true,
+          "complete_prepare": true,
+          "complete_rally_from_serve_contact": true,
+          "pre_point_context": {
+            "from": 126.6,
+            "to": 129.1,
+            "action": "126.6 actualsameevent Basilashvili closeup afterprior15-15 point;127.5 audience;129.1dissolve tocurrentAD/#3championshippointreceiver. Retained forfullUsually sentence; not current-pointprep."
+          },
+          "current_matchpoint_preparation_from": 130.98,
+          "evidence": "ACTUAL ARCHIVED9a42 bytes independentlycaptured andopened.131.0 Basilashvili stillholding ball,131.4loweringarms,131.8handslowered,132.12tossbegins,132.4raisedarm,133.04servicecontact.134–141originalframes showcontinuoussameADfinalrally.141.5–143genuinewinnerreaction,145genuinesupporterreaction,147approachingnet,149–150actualhandshake,151–151.72realposthandshake. Finalaudioexactfullsentencecheckedseparatelybysource_audio; noauditorylisteningclaimedhere.",
+          "status": "actual_archive_source_visual_pass_audio_agent_seals_sentence"
+        }
+      ],
+      "extra_points": 0,
+      "visual_evidence": [
+        "/workspace/medvedev-finals-production/research/media-late/almaty-9a42-prep-contact.jpg",
+        "/workspace/medvedev-finals-production/research/media-late/almaty-9a42-rally-reaction-contact.jpg"
+      ],
+      "identity_evidence": {
+        "method": "Official TennisTV page4598989 + native anonymous free entitlement response; court/players/scorebacked by originalframes and primaryeventreport",
+        "local_primary_page": "/workspace/medvedev-finals-production/research/media-late/tennistv-library.html"
+      },
+      "audio_packet_path": null,
+      "raw_asr": [],
+      "audio_review_owner": "/root/medvedev_source_audio",
+      "superseded_source_records": [
+        {
+          "local_path": "/workspace/medvedev-finals-production/research/media-late/tennistv-4598989-best.mp4",
+          "sha256": "657babe5207652e70197d03f303a2bdb0da8cb3c51fece029f1fbf1daef25af6",
+          "actual_geometry": {
+            "width": 1920,
+            "height": 1080,
+            "fps": "50/1",
+            "duration": 160.964688,
+            "bytes": 122194757
+          },
+          "why": "Replaced by fresh actual native-fetch bytes, different encoding bitrate and start offset. This is not asserted to be a mere remux."
+        },
+        {
+          "local_path": "/workspace/medvedev-finals-production/production/almaty-native-4598989.mp4",
+          "sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+          "actual_geometry": {
+            "width": 1920,
+            "height": 1080,
+            "fps": "50/1",
+            "duration": 160.917,
+            "video_duration": 160.881667,
+            "start_time": 0.0,
+            "bytes": 162015064
+          },
+          "visual_evidence": [
+            "/workspace/medvedev-finals-production/research/media-late/almaty-native-point-contact.jpg"
+          ],
+          "why": "Replaced by fresh archived publicRelease bytes. Previous local native73a379 record remains historical; new archived9a42 source independently opened and checked, not inheritedPASS."
+        }
+      ],
+      "archive_id": "med26alma01"
+    }
+  ],
+  "important": "All completepoint decisions above describe actually inspected pixels, not inherited old spec notes. Full-frame fixed center crop cx .5; source audio unity/no BGM. New canonical Chinese name 梅德韦德夫; originals unmodified.",
+  "source_gap_evidence": [
+    {
+      "event": "hangzhou",
+      "checked": "YouTube _9MGjWJe2iw1080 firstwide posttoss; official ATP tweet2104925180313157992 completeprep but actualmastermax1280x720; ATPtrophy tweet2104931587100184740 mastermax720; official Hangzhou-site Brightcove6405898855112 downloaded1280x720117.142s; TennisTVdaily4583637 native anonymous entitlementHTTP401 (noaccessbypass); premiumfull4583611/condensed4583618/extended4583602 recordedonly.",
+      "alternative_real_source": "/workspace/medvedev-finals-production/research/media-late/tennistv-4583597.mp4",
+      "alternative_geometry": "1920x1080 50fps70.044688s",
+      "alternative_sha256": "d4c8f120b80f68c0c461737b914677981e4a7f32cbf4062b9adb41c4129ff4e7"
+    },
+    {
+      "event": "almaty",
+      "status": "gap_resolved byactualofficialshort4598989; oldlongfirstwideposttoss remains true but no longer selected"
+    }
+  ],
+  "updated_at": "2026-11-05T06:42:04.717214+00:00"
+}

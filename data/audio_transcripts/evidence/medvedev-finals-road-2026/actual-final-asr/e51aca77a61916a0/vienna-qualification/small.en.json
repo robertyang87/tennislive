@@ -1,0 +1,140 @@
+{
+  "schema": "actual-final-window-native-asr.v1",
+  "created_at": "2026-11-05T07:28:15.707924+00:00",
+  "source_path": "/workspace/medvedev-finals-production/final/native-input-connector/medvedev-finals-road-2026.mp4",
+  "source_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+  "spec_sha256": "63b3771576019ddf4d785a0c8e7ee56b5bc42e11c05389fd282ff152be25cc44",
+  "audio_binding_sha256": "0d3e0e57e7b130287b758f0ea0edf63827d6801ec7b397b65ebdf9e4e572fb35",
+  "segment_index": 18,
+  "source_key": "vienna-qualification",
+  "source_seconds": [
+    163.48,
+    182.72
+  ],
+  "film_seconds": [
+    217.95799999999997,
+    237.19799999999998
+  ],
+  "model": "small.en",
+  "requested_language": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "parameters": {
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "word_timestamps": true,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 224.46,
+      "end": 226.14,
+      "text": "Let's waste.",
+      "avg_logprob": -1.0954170227050781,
+      "no_speech_prob": 0.3990551233291626,
+      "words": [
+        {
+          "w": " Let's",
+          "s": 224.46,
+          "e": 225.86,
+          "p": 0.5030438452959061
+        },
+        {
+          "w": " waste.",
+          "s": 225.86,
+          "e": 226.14,
+          "p": 0.3352363407611847
+        }
+      ]
+    },
+    {
+      "start": 228.9,
+      "end": 231.12,
+      "text": "A patient performance.",
+      "avg_logprob": -1.0954170227050781,
+      "no_speech_prob": 0.3990551233291626,
+      "words": [
+        {
+          "w": " A",
+          "s": 228.9,
+          "e": 228.9,
+          "p": 0.15903684496879578
+        },
+        {
+          "w": " patient",
+          "s": 228.9,
+          "e": 230.26,
+          "p": 0.8720305562019348
+        },
+        {
+          "w": " performance.",
+          "s": 230.26,
+          "e": 231.12,
+          "p": 0.3235469460487366
+        }
+      ]
+    },
+    {
+      "start": 233.1,
+      "end": 236.78,
+      "text": "His third semifinal appearance here in",
+      "avg_logprob": -1.0954170227050781,
+      "no_speech_prob": 0.3990551233291626,
+      "words": [
+        {
+          "w": " His",
+          "s": 233.1,
+          "e": 234.16,
+          "p": 0.28371763229370117
+        },
+        {
+          "w": " third",
+          "s": 234.16,
+          "e": 234.58,
+          "p": 0.9801545739173889
+        },
+        {
+          "w": " semifinal",
+          "s": 234.58,
+          "e": 235.38,
+          "p": 0.8669136166572571
+        },
+        {
+          "w": " appearance",
+          "s": 235.38,
+          "e": 236.04,
+          "p": 0.9291410446166992
+        },
+        {
+          "w": " here",
+          "s": 236.04,
+          "e": 236.56,
+          "p": 0.9556158185005188
+        },
+        {
+          "w": " in",
+          "s": 236.56,
+          "e": 236.78,
+          "p": 0.9788958430290222
+        }
+      ]
+    },
+    {
+      "start": 236.78,
+      "end": 236.98,
+      "text": "Vietnam.",
+      "avg_logprob": -1.0954170227050781,
+      "no_speech_prob": 0.3990551233291626,
+      "words": [
+        {
+          "w": " Vietnam.",
+          "s": 236.78,
+          "e": 236.98,
+          "p": 0.709555983543396
+        }
+      ]
+    }
+  ]
+}

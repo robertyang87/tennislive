@@ -1,0 +1,77 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-05T06:40:33.711474+00:00",
+  "model": "small.en",
+  "source_sha256": "44140c16d8082d43c7491324396c4277c68e674f2eb8a5e9e8f8c7937e85e7f1",
+  "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/DTXfZGAjiRl.mp4",
+  "clip": [
+    0,
+    41.237333
+  ],
+  "duration": 41.2373125,
+  "language_requested": "en",
+  "detected_language": "en",
+  "detected_language_probability": 1,
+  "all_language_probs": null,
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 0.72,
+      "text": ".",
+      "avg_logprob": -0.7025582369636086,
+      "no_speech_prob": 0.4799271821975708,
+      "words": [
+        {
+          "w": " .",
+          "s": 0.0,
+          "e": 0.72,
+          "p": 0.0013129898579791188
+        }
+      ]
+    },
+    {
+      "start": 28.58,
+      "end": 29.98,
+      "text": ".",
+      "avg_logprob": -0.7025582369636086,
+      "no_speech_prob": 0.4799271821975708,
+      "words": [
+        {
+          "w": " .",
+          "s": 28.58,
+          "e": 29.98,
+          "p": 0.8376176953315735
+        }
+      ]
+    },
+    {
+      "start": 39.78,
+      "end": 41.2,
+      "text": "Thank you.",
+      "avg_logprob": -1.0364492734273274,
+      "no_speech_prob": 0.544551432132721,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 39.78,
+          "e": 41.18,
+          "p": 0.017978031188249588
+        },
+        {
+          "w": " you.",
+          "s": 41.18,
+          "e": 41.2,
+          "p": 0.975479781627655
+        }
+      ]
+    }
+  ]
+}

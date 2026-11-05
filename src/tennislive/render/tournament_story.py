@@ -107,8 +107,8 @@ STORIES = (
         aliases=("djokovic medvedev beijing default",),
         title="德梅之战为何终止",
         location="北京 · 中国", level="ATP 500", surface="室外硬地",
-        founded="2026 案例", hero_fact="德约对梅德韦杰夫，中网半决赛因失格中止。",
-        facts=("德约以7–5、5–3的未完成比分晋级，梅德韦杰夫被判失格。",),
+        founded="2026 案例", hero_fact="德约对梅德韦德夫，中网半决赛因失格中止。",
+        facts=("德约以7–5、5–3的未完成比分晋级，梅德韦德夫被判失格。",),
         moments=(), venue="分后击球、失格规则与历史先例", kind="rule",
         image=ASSETS.parent / "explainer/medvedev-beijing-default-2026/medvedev-beijing-semifinal-getty.jpg",
         image_credit="Fred Lee / Getty Images · 2026中网男单半决赛",
@@ -122,7 +122,7 @@ STORIES = (
         aliases=("medvedev hangzhou 250",),
         title="大牌为什么也打250？",
         location="杭州 · 中国", level="ATP 250", surface="室外硬地", founded="2026 案例",
-        hero_fact="世界第 6 的梅德韦杰夫在杭州夺冠；参赛资格、500 任务和排名积分分别计算。",
+        hero_fact="世界第 6 的梅德韦德夫在杭州夺冠；参赛资格、500 任务和排名积分分别计算。",
         facts=("2026 杭州官方签表：梅总排名第 6、夺冠，冠军积分 250 分。",),
         moments=(), venue="头部球员的 250 赛先例", kind="rule",
         image=ASSETS.parent / "explainer/atp250-medvedev-hangzhou-2026/medvedev-hangzhou-r2.jpg",
@@ -478,7 +478,7 @@ STORIES = (
                 age="22 岁",
                 headline="澳网首冠 · 惊天逆转",
                 detail=(
-                    "决赛 0-2 落后梅德韦杰夫连扳三盘，"
+                    "决赛 0-2 落后梅德韦德夫连扳三盘，"
                     "为意大利拿下 48 年来首个大满贯男单冠军。"
                 ),
                 source_url="https://en.wikipedia.org/wiki/2024_Australian_Open_%E2%80%93_Men%27s_singles",
@@ -1832,7 +1832,7 @@ STORIES = STORIES + (
                     "2025 中网 `draw = 32 (4Q / 3WC)`，他那一格的席位标记是空的"
                     "——**既不是外卡也不是资格赛，是直接入围，且非种子**。"
                     "首轮 4-6 6-3 6-4 胜塞伦多洛，次轮 6-3 6-3 胜马纳里诺(Q)，"
-                    "1/4 决赛对 4 号种子穆塞蒂、半决赛对 8 号种子梅德韦杰夫"
+                    "1/4 决赛对 4 号种子穆塞蒂、半决赛对 8 号种子梅德韦德夫"
                     "**两场对手都在第三盘中途退赛**，决赛 2-6 2-6 负于辛纳。"
                     "那年的 3 张外卡给了张之臻、布云朝克特、商竣程。"
                 ),
@@ -4524,7 +4524,7 @@ STORIES = STORIES + (
             "is a very good question.」——这一段四家以上独立赛报一致。"
             "⚠️ **故意不写「七名球员中途退赛」**：那个数只有一个二手源说过，"
             "而带数字的断言要两个独立源。能确证的是辛纳因抽筋退出、"
-            "阿特曼首轮打了八局退赛、梅德韦杰夫十六强抽筋（Sky Sports 逐条点名）。",
+            "阿特曼首轮打了八局退赛、梅德韦德夫十六强抽筋（Sky Sports 逐条点名）。",
         ),
         moments=(
             ChampionMoment(

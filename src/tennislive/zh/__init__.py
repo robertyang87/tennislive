@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .countries import country_flag, country_zh
-from .players import PLAYER_ZH
+from .players import PLAYER_ZH, normalize_player_zh
 from .terms import (
     LEVEL_ZH,
     ROUND_ZH,
@@ -24,6 +24,7 @@ __all__ = [
     "SURFACE_ZH",
     "LEVEL_ZH",
     "player_zh",
+    "normalize_player_zh",
     "player_name_en",
     "tournament_zh",
     "round_zh",
@@ -132,6 +133,11 @@ def player_zh(name: str) -> str:
     """
     if not name:
         return name
+    # Exact registered Chinese aliases identify the same player; no fuzzy name
+    # match is introduced, and unknown Chinese input is still returned as-is.
+    canonical_zh = normalize_player_zh(name)
+    if canonical_zh != name:
+        return canonical_zh
     lookup = _player_lookup()
     hit = lookup.get(_normalize_name(name))
     if hit:
@@ -235,6 +241,12 @@ def player_name_en(name: str) -> str:
     if not name:
         return name
     lookup = _player_lookup()
+    # Canonical Chinese names and explicitly registered old translations can
+    # round-trip to English for source search. Ambiguous names remain untouched.
+    canonical_zh = normalize_player_zh(name)
+    matches = {en for en, zh in lookup.items() if zh == canonical_zh}
+    if len(matches) == 1:
+        return next(iter(matches))
     norm = _normalize_name(name)
     if norm in lookup:
         return norm                       # 已经是全名（或精确别名），规范化返回

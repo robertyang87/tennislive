@@ -1,0 +1,827 @@
+{
+  "schema": "actual-ass-fact-translation-audit.v1",
+  "verdict": "PASS_ACTUAL_V2_FACTS_AND_SUBTITLES",
+  "scope": "Actual264.52-second master/ASS/spec inputs binding and subtitle text facts. No re-encode or modification. Final audio/pixels independently reviewed by root and producer.",
+  "file_bindings": {
+    "ass": {
+      "path": "/workspace/medvedev-finals-production/final/native-input-v2/subtitles.ass",
+      "sha256": "8c383c71102503ed0d6b6a232781a754fdfc43f485a268b7d0f09bf954509baf"
+    },
+    "film": {
+      "path": "/workspace/medvedev-finals-production/final/native-input-v2/medvedev-finals-road-2026.mp4",
+      "sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c"
+    },
+    "spec": {
+      "path": "/workspace/medvedev-finals-production/native/specs/reels/medvedev-finals-road-2026.json",
+      "sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f"
+    },
+    "render": {
+      "path": "/workspace/medvedev-finals-production/final/native-input-v2/render.json",
+      "sha256": "0ed7d199f77689838b41a5fedcd33f5299acec34a78d5c8899d3d1fab40e0077"
+    },
+    "render_inputs": {
+      "path": "/workspace/medvedev-finals-production/final/native-input-v2/render_inputs.json",
+      "sha256": "396b4be1b31adc4a1d896e3e6995cea2f4cad89ac1440b3d89bc4f187859a43f"
+    }
+  },
+  "film_seconds": 264.52,
+  "native_narration_component_status": "All16 ASS narration groups match exact frozen spec narration after native Arabic-number and punctuation display normalization. No factual wording omitted, added or reversed.",
+  "narration_groups": [
+    {
+      "id": "opening",
+      "narration": "今年拿到四个单打冠军，四大满贯却都没进8强。去年缺席年终的梅德韦德夫，是怎样把都灵门票赢回来的？",
+      "expected_normalized": "今年拿到4个单打冠军四大满贯却都没进8强去年缺席年终的梅德韦德夫是怎样把都灵门票赢回来的？",
+      "actual_ass_normalized": "今年拿到4个单打冠军四大满贯却都没进8强去年缺席年终的梅德韦德夫是怎样把都灵门票赢回来的？",
+      "status": "PASS",
+      "narration_utf8_sha256": "a09f4f747fba5f2280f2d2479df35d7083adaae13df7d8b5defc31efa81a8ac9"
+    },
+    {
+      "id": "brisbane_intro",
+      "narration": "新赛季第一站，他就在布里斯班夺冠。决赛两盘击败中岛布兰登，冠军来得很早。",
+      "expected_normalized": "新赛季第一站他就在布里斯班夺冠决赛两盘击败中岛布兰登冠军来得很早",
+      "actual_ass_normalized": "新赛季第一站他就在布里斯班夺冠决赛两盘击败中岛布兰登冠军来得很早",
+      "status": "PASS",
+      "narration_utf8_sha256": "8b884f2d3d9a1765536931b82f74673493135688698382d7a2377dc6b4c1b592"
+    },
+    {
+      "id": "ao_intro",
+      "narration": "澳网却很快给了他一记重击。第四轮对勒纳·钱，连丢三盘，第二盘还是零比六。",
+      "expected_normalized": "澳网却很快给了他一记重击第四轮对勒纳钱连丢3盘第二盘还是0比6",
+      "actual_ass_normalized": "澳网却很快给了他一记重击第四轮对勒纳钱连丢3盘第二盘还是0比6",
+      "status": "PASS",
+      "narration_utf8_sha256": "b36c93e506392596e16b523e7fd00346c1f08e71ae600bc05869f912c860548f"
+    },
+    {
+      "id": "dubai",
+      "narration": "二月的迪拜，决赛对手格里克斯普尔赛前因伤退赛，他拿到本季第二座单打冠军。",
+      "expected_normalized": "2月的迪拜决赛对手格里克斯普尔赛前因伤退赛他拿到本季第二座单打冠军",
+      "actual_ass_normalized": "2月的迪拜决赛对手格里克斯普尔赛前因伤退赛他拿到本季第二座单打冠军",
+      "status": "PASS",
+      "narration_utf8_sha256": "042a56e195dfaa3752cd78f5095b3504dddff262195ff0f780d7267fc942a944"
+    },
+    {
+      "id": "iw_intro",
+      "narration": "印第安维尔斯，他在半决赛击败阿尔卡拉斯，闯进大师赛决赛。两盘抢七，还是输给辛纳。",
+      "expected_normalized": "印第安维尔斯他在半决赛击败阿尔卡拉斯闯进大师赛决赛两盘抢七还是输给辛纳",
+      "actual_ass_normalized": "印第安维尔斯他在半决赛击败阿尔卡拉斯闯进大师赛决赛两盘抢七还是输给辛纳",
+      "status": "PASS",
+      "narration_utf8_sha256": "1e66f51b00a3ed43e48c39267230a902eca4b80679f34fa87d3daf17e31d12bb"
+    },
+    {
+      "id": "redclay",
+      "narration": "红土赛季，低谷更深。蒙特卡洛两盘零比六。到了法网，首轮打满五盘。决胜盘四比二领先，却连丢四局，输给沃尔顿。",
+      "expected_normalized": "红土赛季低谷更深蒙特卡洛两盘0比6到了法网首轮打满5盘决胜盘4比2领先却连丢4局输给沃尔顿",
+      "actual_ass_normalized": "红土赛季低谷更深蒙特卡洛两盘0比6到了法网首轮打满5盘决胜盘4比2领先却连丢4局输给沃尔顿",
+      "status": "PASS",
+      "narration_utf8_sha256": "0cee510609278b969e827f63813e996d7ba2fff20587c11c39fda39b36e3d859"
+    },
+    {
+      "id": "wim_intro",
+      "narration": "温网第三轮，斯特鲁夫又挡住了他。两盘抢七告负，第三盘再输五比七。",
+      "expected_normalized": "温网第三轮斯特鲁夫又挡住了他两盘抢七告负第三盘再输5比7",
+      "actual_ass_normalized": "温网第三轮斯特鲁夫又挡住了他两盘抢七告负第三盘再输5比7",
+      "status": "PASS",
+      "narration_utf8_sha256": "77bf2619b1e6c509ec93adaf5cf834364a38c716203769425aa9d3c6c14fb4da"
+    },
+    {
+      "id": "us_intro",
+      "narration": "美网第四轮，面对蒂亚福，再次连丢三盘。今年四站大满贯，他没有一次打进8强。",
+      "expected_normalized": "美网第四轮面对蒂亚福再次连丢3盘今年四站大满贯他没有一次打进8强",
+      "actual_ass_normalized": "美网第四轮面对蒂亚福再次连丢3盘今年四站大满贯他没有一次打进8强",
+      "status": "PASS",
+      "narration_utf8_sha256": "d857469ef7496a4af48dd61b6d54d6934b38f2ea5c8b31fe52a0c7a23dc33bf1"
+    },
+    {
+      "id": "hangzhou_intro",
+      "narration": "转折出现在中国赛季。杭州决赛，两盘击败卢布列夫，拿到年度第三冠。",
+      "expected_normalized": "转折出现在中国赛季杭州决赛两盘击败卢布列夫拿到年度第三冠",
+      "actual_ass_normalized": "转折出现在中国赛季杭州决赛两盘击败卢布列夫拿到年度第三冠",
+      "status": "PASS",
+      "narration_utf8_sha256": "0f6e6409d035a791251de78fd2868f530e6a2d472adb538055afeb71926dcfdb"
+    },
+    {
+      "id": "beijing",
+      "narration": "但中网半决赛，他在失分后把球打向看台，击中观众，被判失格。这也成了他今年的低点。",
+      "expected_normalized": "但中网半决赛他在失分后把球打向看台击中观众被判失格这也成了他今年的低点",
+      "actual_ass_normalized": "但中网半决赛他在失分后把球打向看台击中观众被判失格这也成了他今年的低点",
+      "status": "PASS",
+      "narration_utf8_sha256": "04228f2e15f850a3609512456ffb13917b9da89ca1cd98780ca3008854d85f95"
+    },
+    {
+      "id": "almaty_intro",
+      "narration": "上海打进4强之后，他来到阿拉木图。决赛先丢一盘，再以六比一、六比三翻回来，拿到赛季第四冠。",
+      "expected_normalized": "上海打进4强之后他来到阿拉木图决赛先丢一盘再以6比16比3翻回来拿到赛季第四冠",
+      "actual_ass_normalized": "上海打进4强之后他来到阿拉木图决赛先丢一盘再以6比16比3翻回来拿到赛季第四冠",
+      "status": "PASS",
+      "narration_utf8_sha256": "999a7f9bfc5032a054c9f871cdf1b2077698c17c9b82534f909a364217d1e204"
+    },
+    {
+      "id": "defence",
+      "narration": "他终于在同一站，连续两年捧起冠军奖杯。二十五座单打冠军，这是他第一次成功卫冕。",
+      "expected_normalized": "他终于在同一站连续两年捧起冠军奖杯25座单打冠军这是他第一次成功卫冕",
+      "actual_ass_normalized": "他终于在同一站连续两年捧起冠军奖杯25座单打冠军这是他第一次成功卫冕",
+      "status": "PASS",
+      "narration_utf8_sha256": "a9979eb93574baa1a008b9557252cec8b6e60a8b4ff97a67e80143ad95ea63d8"
+    },
+    {
+      "id": "vienna_intro",
+      "narration": "十月三十日，维也纳四分之一决赛。两盘击败马纳里诺，梅德韦德夫终于锁定年终资格。",
+      "expected_normalized": "10月30日维也纳1/4决赛两盘击败马纳里诺梅德韦德夫终于锁定年终资格",
+      "actual_ass_normalized": "10月30日维也纳1/4决赛两盘击败马纳里诺梅德韦德夫终于锁定年终资格",
+      "status": "PASS",
+      "narration_utf8_sha256": "a680631b14031ffc1cf06b365e976d004523585ad5173278f7e1c3465c631048"
+    },
+    {
+      "id": "qualification_payoff",
+      "narration": "第七次入围，隔了一届又回来了。这张门票，是一站一站累积回来的。",
+      "expected_normalized": "第七次入围隔了一届又回来了这张门票是一站一站累积回来的",
+      "actual_ass_normalized": "第七次入围隔了一届又回来了这张门票是一站一站累积回来的",
+      "status": "PASS",
+      "narration_utf8_sha256": "50c6fac679133401a173f332e708a536d5d74dad31fecd5ed66a90a6dba6b962"
+    },
+    {
+      "id": "paris",
+      "narration": "巴黎第二轮，他以四比六、四比六输给布塞。巴黎的征程结束，接下来，目光转向都灵。",
+      "expected_normalized": "巴黎第二轮他以4比64比6输给布塞巴黎的征程结束接下来目光转向都灵",
+      "actual_ass_normalized": "巴黎第二轮他以4比64比6输给布塞巴黎的征程结束接下来目光转向都灵",
+      "status": "PASS",
+      "narration_utf8_sha256": "0feed654071c782f3f84d27252d5b39379087a5c6ce71dc78c1f95afc9dd73b3"
+    },
+    {
+      "id": "question",
+      "narration": "他是二零二零年的年终冠军。到了都灵，你还看好梅德韦德夫吗？",
+      "expected_normalized": "他是2020年的年终冠军到了都灵你还看好梅德韦德夫吗？",
+      "actual_ass_normalized": "他是2020年的年终冠军到了都灵你还看好梅德韦德夫吗？",
+      "status": "PASS",
+      "narration_utf8_sha256": "3410decdf34a54a04de4558e9bbe61c2b23500f52604a1a35f84be4ba28329ad"
+    }
+  ],
+  "ass_event_count": 65,
+  "ass_bilingual_count": 10,
+  "source_cues": [
+    {
+      "segment_id": "ao_point",
+      "cue_index": 0,
+      "start": "0:00:54.67",
+      "end": "0:00:59.11",
+      "english": "Learner Tien. Learner has handed out a lesson.",
+      "chinese_printed": "勒纳 钱 给对手上了一课",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "ao_point",
+      "cue_index": 1,
+      "start": "0:00:59.91",
+      "end": "0:01:05.93",
+      "english": "It's a breakout performance from a star on the rise.",
+      "chinese_printed": "冉冉升起的新星 打出突破表现",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "ao_point",
+      "cue_index": 2,
+      "start": "0:01:05.93",
+      "end": "0:01:08.19",
+      "english": "We've seen something special here.",
+      "chinese_printed": "我们见证了一场特别的比赛",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "us_point",
+      "cue_index": 0,
+      "start": "0:02:22.77",
+      "end": "0:02:28.37",
+      "english": "Frances Tiafoe is in that New York state of mind once again.",
+      "chinese_printed": "蒂亚福又一次找回了属于纽约的状态",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 0,
+      "start": "0:02:55.60",
+      "end": "0:02:58.00",
+      "english": "Usually most players will be a little bit weaker, but...",
+      "chinese_printed": "多数球员这一侧稍弱 不过",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 1,
+      "start": "0:03:10.50",
+      "end": "0:03:15.28",
+      "english": "And for the first time in his career, Daniil Medvedev",
+      "chinese_printed": "梅德韦德夫职业生涯第一次",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "almaty_point",
+      "cue_index": 2,
+      "start": "0:03:15.28",
+      "end": "0:03:18.92",
+      "english": "successfully defends a title. 6-7, 6-1, 6-3.",
+      "chinese_printed": "成功卫冕 6比7 6比1 6比3",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 0,
+      "start": "0:03:43.82",
+      "end": "0:03:46.18",
+      "english": "Oh, that's missed.",
+      "chinese_printed": "噢 这球出界了",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 1,
+      "start": "0:03:48.80",
+      "end": "0:03:51.12",
+      "english": "A patient performance.",
+      "chinese_printed": "耐心十足的一场表现",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    },
+    {
+      "segment_id": "vienna_point",
+      "cue_index": 2,
+      "start": "0:03:53.54",
+      "end": "0:03:57.10",
+      "english": "His third semi-final appearance here in Vienna.",
+      "chinese_printed": "他第3次闯入维也纳半决赛",
+      "status": "PASS_EN_EXACT_ZH_NATIVE_DISPLAY_NORMALIZED"
+    }
+  ],
+  "information_labels": [
+    {
+      "id": "brisbane_point",
+      "place": "布里斯班决赛",
+      "people": "梅德韦德夫 vs 中岛布兰登",
+      "screen_score": "6-2 7-6(1)",
+      "winner_first_result": {
+        "winner": "梅德韦德夫",
+        "score": "6-2 7-6(1)",
+        "source": "https://www.atptour.com/en/news/medvedev-nakashima-brisbane-2026-sunday"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-brisbane_point.png",
+      "asset_sha256": "50383fdf91ba8e725197c7dc0c0c6fd8b32ddf0cefef49b8ebe2a1b4b991175c",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    },
+    {
+      "id": "ao_point",
+      "place": "澳网1/8决赛",
+      "people": "梅德韦德夫 vs 勒纳·钱",
+      "screen_score": "4-6 0-6 3-6",
+      "winner_first_result": {
+        "winner": "勒纳·钱",
+        "score": "6-4 6-0 6-3",
+        "source": "https://ausopen.com/articles/news/tien-all-grown-after-mauling-medvedev-ao-2026"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-ao_point.png",
+      "asset_sha256": "a8f7ced5a4a6c62120a71ea7d6c0425ff569095841d4f3b4dc0d6af63fcea53a",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    },
+    {
+      "id": "rg_point",
+      "place": "法网首轮",
+      "people": "梅德韦德夫 vs 沃尔顿",
+      "screen_score": "2-6 6-1 1-6 6-1 4-6",
+      "winner_first_result": {
+        "winner": "沃尔顿",
+        "score": "6-2 1-6 6-1 1-6 6-4",
+        "source": "https://www.rolandgarros.com/en-us/article/2026-edition-r1-medvedev-walton"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-rg_point.png",
+      "asset_sha256": "d10b27941f5e39980c2a6ee560e3da1fe37875f8d47f15349afa9a6aee5ce113",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    },
+    {
+      "id": "us_point",
+      "place": "美网1/8决赛",
+      "people": "梅德韦德夫 vs 蒂亚福",
+      "screen_score": "6-7(1) 4-6 6-7(6)",
+      "winner_first_result": {
+        "winner": "蒂亚福",
+        "score": "7-6(1) 6-4 7-6(6)",
+        "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-06/frances_tiafoe_dazzles_downs_daniil_medvedev_for_2026_us_open_qf_spot.html"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-us_point.png",
+      "asset_sha256": "cb93c6788ac5b3d0b38bf58a4a8d2d8faefba54d2373be81e4c5d7c3d91d3cb3",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    },
+    {
+      "id": "almaty_point",
+      "place": "阿拉木图决赛",
+      "people": "梅德韦德夫 vs 巴西拉什维利",
+      "screen_score": "6-7(6) 6-1 6-3",
+      "winner_first_result": {
+        "winner": "梅德韦德夫",
+        "score": "6-7(6) 6-1 6-3",
+        "source": "https://almatyopen.kz/en/news/?id=11348"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-almaty_point.png",
+      "asset_sha256": "c57e80765622fbd597d304f60508aafdc7753c9be0072634d6df20d0dd5e0d50",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    },
+    {
+      "id": "vienna_point",
+      "place": "维也纳1/4决赛",
+      "people": "梅德韦德夫 vs 马纳里诺",
+      "screen_score": "6-2 6-3",
+      "winner_first_result": {
+        "winner": "梅德韦德夫",
+        "score": "6-2 6-3",
+        "source": "https://www.nittoatpfinals.com/en/news/daniil-medvedev-nitto-atp-finals-2026-qualification"
+      },
+      "native_direction_problem": null,
+      "rendered_label_asset": "assets/reel/medvedev-finals-road-2026/context-vienna_point.png",
+      "asset_sha256": "1a0d688b50332de4ac7282480bfe324e8011376a038ff1361fef867cf2eb401d",
+      "status": "PASS_LABEL_DATA_AND_ASSET_BINDING",
+      "scope": "These top-right information labels are PNG assets, not ASS Dialogue text. Pixel reading is root independent review."
+    }
+  ],
+  "critical_checks": {
+    "canonical_medvedev_name": "PASS: every named principal occurrence uses梅德韦德夫; no former canonical aliases in actualASS.",
+    "learner_tien_punctuation": "ASS prints勒纳 钱 because global drop_punctuation deliberately maps middle dot to space; exact native display normalization of规范名勒纳·钱, no identity change.",
+    "numbers": "4titles,25tour-levelsinglestitles,7thFinalsqualification,Oct30,2020champion,MC0-6/0-6,RG4-2then4gameslost,Paris4-6/4-6 allmatchapprovedfacts.",
+    "qualification": "ActualASS十月三十日 normalized10月30日 and1/4决赛; 第七次入围 correct.",
+    "rounds": "ASSVienna1/4决赛 correct. AO/US1/8决赛 live inPNGlabel data/assets, notASS; exactrenderedinputassetshashes verified.",
+    "Dubai": "ActualASS赛前因伤退赛; not played final or fabricated champion point.",
+    "Beijing": "ActualASS击中观众被判失格; noRET, intent, diagnosis or fabricated matchpoint.",
+    "defense": "ActualASS连续两年 + 第一次成功卫冕; nofirstrepeat-event claim.",
+    "2020": "ActualASS2020年年终冠军 then2026都灵question; no2020Turinclaim.",
+    "Almaty_translation": "这一侧 supported by preceding backhand-wing context in current frozenSHA9a42eacc fresh raw; no new independent tactical fact added.",
+    "Vienna_translation": "出界 supported by actualsource169.80 frame visibly beyond farbaseline; assistant independently opened original1920frame, so not merely inferring missed=>out."
+  },
+  "almaty_actual_source_context": [
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-frozen/9a42eaccdadd6ffa/medium-score.json",
+      "sha256": "8f0812d977dc8ff364e823d2272b099b66c907868be39d7f0d996e217c23840c",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "source_role": "CURRENT_FROZEN_SOURCE_9a42eacc",
+      "superseded_comparison_raw": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native-score/local-native-20261105/medium.json",
+      "superseded_comparison_source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+      "fresh_text_and_word_times_independently_equal_prior": true,
+      "preceding_context": []
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-frozen/9a42eaccdadd6ffa/medium.en-full.json",
+      "sha256": "37872648d05e296d4ccc82f990002110c2dcb12773cf6112094f2bfc5d9c872d",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "source_role": "CURRENT_FROZEN_SOURCE_9a42eacc",
+      "superseded_comparison_raw": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native/local-native-20261105/medium.en.json",
+      "superseded_comparison_source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+      "fresh_text_and_word_times_independently_equal_prior": true,
+      "preceding_context": [
+        {
+          "start": 123.98,
+          "end": 129.0,
+          "text": "Oh, that was a good following from his background wing. Usually most players will be a little bit weaker, but...",
+          "avg_logprob": -0.45256337833901245,
+          "no_speech_prob": 0.7872902154922485,
+          "words": [
+            {
+              "w": " Oh,",
+              "s": 123.98,
+              "e": 124.5,
+              "p": 0.06307418644428253
+            },
+            {
+              "w": " that",
+              "s": 124.66,
+              "e": 124.7,
+              "p": 0.833178699016571
+            },
+            {
+              "w": " was",
+              "s": 124.7,
+              "e": 124.84,
+              "p": 0.9373340010643005
+            },
+            {
+              "w": " a",
+              "s": 124.84,
+              "e": 125.06,
+              "p": 0.962843120098114
+            },
+            {
+              "w": " good",
+              "s": 125.06,
+              "e": 125.24,
+              "p": 0.9952479004859924
+            },
+            {
+              "w": " following",
+              "s": 125.24,
+              "e": 125.5,
+              "p": 0.3367666006088257
+            },
+            {
+              "w": " from",
+              "s": 125.5,
+              "e": 125.74,
+              "p": 0.9560622572898865
+            },
+            {
+              "w": " his",
+              "s": 125.74,
+              "e": 125.92,
+              "p": 0.9537091255187988
+            },
+            {
+              "w": " background",
+              "s": 125.92,
+              "e": 126.22,
+              "p": 0.6726212501525879
+            },
+            {
+              "w": " wing.",
+              "s": 126.22,
+              "e": 126.52,
+              "p": 0.516939640045166
+            },
+            {
+              "w": " Usually",
+              "s": 126.68,
+              "e": 127.0,
+              "p": 0.9924208521842957
+            },
+            {
+              "w": " most",
+              "s": 127.0,
+              "e": 127.26,
+              "p": 0.6953456401824951
+            },
+            {
+              "w": " players",
+              "s": 127.26,
+              "e": 127.5,
+              "p": 0.994097113609314
+            },
+            {
+              "w": " will",
+              "s": 127.5,
+              "e": 127.68,
+              "p": 0.9172201156616211
+            },
+            {
+              "w": " be",
+              "s": 127.68,
+              "e": 127.8,
+              "p": 0.994347870349884
+            },
+            {
+              "w": " a",
+              "s": 127.8,
+              "e": 127.92,
+              "p": 0.9856164455413818
+            },
+            {
+              "w": " little",
+              "s": 127.92,
+              "e": 128.08,
+              "p": 0.9924301505088806
+            },
+            {
+              "w": " bit",
+              "s": 128.08,
+              "e": 128.22,
+              "p": 0.9172399640083313
+            },
+            {
+              "w": " weaker,",
+              "s": 128.22,
+              "e": 128.46,
+              "p": 0.9990237951278687
+            },
+            {
+              "w": " but...",
+              "s": 128.98,
+              "e": 129.24,
+              "p": 0.7711377143859863
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-frozen/9a42eaccdadd6ffa/small-score.json",
+      "sha256": "0f5ac97912fe215724d16b3c006a76976f91e8c84dbbe0d85a05d8b399cd4a24",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "source_role": "CURRENT_FROZEN_SOURCE_9a42eacc",
+      "superseded_comparison_raw": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native-score/local-native-20261105/small.json",
+      "superseded_comparison_source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+      "fresh_text_and_word_times_independently_equal_prior": true,
+      "preceding_context": []
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/raw/4598989-frozen/9a42eaccdadd6ffa/small.en-full.json",
+      "sha256": "e4eee18307b4fbfaae30bb2bb9a72e05423d005cf34b2c34e8621ee1345b390b",
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+      "source_role": "CURRENT_FROZEN_SOURCE_9a42eacc",
+      "superseded_comparison_raw": "/workspace/medvedev-finals-production/research/audio/raw/4598989-native/local-native-20261105/small.en.json",
+      "superseded_comparison_source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+      "fresh_text_and_word_times_independently_equal_prior": true,
+      "preceding_context": [
+        {
+          "start": 122.58,
+          "end": 126.46,
+          "text": "Oh, that was a good follow-up from his back-on wing.",
+          "avg_logprob": -0.564814204616206,
+          "no_speech_prob": 0.5637591481208801,
+          "words": [
+            {
+              "w": " Oh,",
+              "s": 122.58,
+              "e": 123.02,
+              "p": 0.04697425663471222
+            },
+            {
+              "w": " that",
+              "s": 124.62,
+              "e": 124.7,
+              "p": 0.8464545011520386
+            },
+            {
+              "w": " was",
+              "s": 124.7,
+              "e": 124.82,
+              "p": 0.9027942419052124
+            },
+            {
+              "w": " a",
+              "s": 124.82,
+              "e": 124.9,
+              "p": 0.9585689902305603
+            },
+            {
+              "w": " good",
+              "s": 124.9,
+              "e": 125.2,
+              "p": 0.9870827198028564
+            },
+            {
+              "w": " follow",
+              "s": 125.2,
+              "e": 125.44,
+              "p": 0.50520259141922
+            },
+            {
+              "w": "-up",
+              "s": 125.44,
+              "e": 125.58,
+              "p": 0.5817318260669708
+            },
+            {
+              "w": " from",
+              "s": 125.58,
+              "e": 125.72,
+              "p": 0.6921069622039795
+            },
+            {
+              "w": " his",
+              "s": 125.72,
+              "e": 125.88,
+              "p": 0.8888691067695618
+            },
+            {
+              "w": " back",
+              "s": 125.88,
+              "e": 126.06,
+              "p": 0.7890626788139343
+            },
+            {
+              "w": "-on",
+              "s": 126.06,
+              "e": 126.24,
+              "p": 0.6070028245449066
+            },
+            {
+              "w": " wing.",
+              "s": 126.24,
+              "e": 126.46,
+              "p": 0.7361463904380798
+            }
+          ]
+        },
+        {
+          "start": 126.98,
+          "end": 139.6,
+          "text": "Usually, most players will be a little bit weaker, but...",
+          "avg_logprob": -0.564814204616206,
+          "no_speech_prob": 0.5637591481208801,
+          "words": [
+            {
+              "w": " Usually,",
+              "s": 126.98,
+              "e": 127.0,
+              "p": 0.9918835163116455
+            },
+            {
+              "w": " most",
+              "s": 127.16,
+              "e": 127.24,
+              "p": 0.9871454238891602
+            },
+            {
+              "w": " players",
+              "s": 127.24,
+              "e": 127.46,
+              "p": 0.8690968751907349
+            },
+            {
+              "w": " will",
+              "s": 127.46,
+              "e": 127.66,
+              "p": 0.931691586971283
+            },
+            {
+              "w": " be",
+              "s": 127.66,
+              "e": 127.78,
+              "p": 0.9163531064987183
+            },
+            {
+              "w": " a",
+              "s": 127.78,
+              "e": 127.9,
+              "p": 0.9842922687530518
+            },
+            {
+              "w": " little",
+              "s": 127.9,
+              "e": 128.04,
+              "p": 0.9905451536178589
+            },
+            {
+              "w": " bit",
+              "s": 128.04,
+              "e": 128.16,
+              "p": 0.9894666075706482
+            },
+            {
+              "w": " weaker,",
+              "s": 128.16,
+              "e": 128.44,
+              "p": 0.9098719358444214
+            },
+            {
+              "w": " but...",
+              "s": 129.24,
+              "e": 139.6,
+              "p": 0.7481843531131744
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "almaty_current_frozen_binding": {
+    "path": "/workspace/medvedev-finals-production/research/media-late/archived-med26alma01.mp4",
+    "sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+    "fresh_asr_proof_path": "/workspace/medvedev-finals-production/research/audio/frozen-almaty-fresh-asr-proof.json",
+    "fresh_asr_proof_sha256": "664066fb510b5c846d3e9aef55f4db4a59ea26bc22db2cc63c5920efc0848678",
+    "correction": "Earlier report mistakenly called superseded73a379 current. Current frozen source is9a42eacc. Assistant now actually read all4 fresh9a42eacc raw outputs, verified raw/source hashes and independently compared text+word timestamps to superseded73a379. Both fresh full-English outputs retain precedingbackhand-wing context. Fact/translationPASS unchanged; film/ASS/specSHA unchanged."
+  },
+  "vienna_out_visual_evidence": {
+    "path": "/workspace/medvedev-finals-production/research/media-late/vienna-ball-out-visual-check.json",
+    "sha256": "2ba7e4c2b37a45636598de62c28f817db9fda84b8d7780e785f64f7ce69f1aa7",
+    "original_frame_independently_opened": "/workspace/medvedev-finals-production/research/media-late/vienna-end-169.80.jpg"
+  },
+  "mandatory_changes": [],
+  "v2_delta_independently_checked": {
+    "actual_ass_delta": [
+      {
+        "old": "Dialogue: 0,0:03:40.78,0:03:46.18,TL,,0,0,88,,{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, that's missed.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这球出界了",
+        "new": "Dialogue: 0,0:03:43.82,0:03:46.18,TL,,0,0,88,,{\\an2}{\\fnInter 24pt SemiBold\\b0\\fs44\\bord2.5\\fsp0.6}Oh, that's missed.{\\fnNoto Sans CJK SC\\b1\\fs68\\bord4\\fsp0}\\N噢 这球出界了"
+      }
+    ],
+    "narration_16_unchanged": true,
+    "bilingual_text_10_unchanged": true,
+    "source_map_6_unchanged": true,
+    "tts_18_actual_bytes_unchanged": [
+      {
+        "filename": "voice_00.mp3",
+        "sha256": "6e941eb90ea46c567aeb60f97584562411005e8f3d12e0901c6165cdb48cd62d",
+        "words_sha256": "2f5d9740ab2decc5b13f5f5ee12c13a4f3812e41c414ae33f4aab3abae256701",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_01.mp3",
+        "sha256": "9f005841bb4446bf4da770205ad1ef5e14e0719c17f06f5c674f12bf8feb4852",
+        "words_sha256": "203dc062650342d6ab0afb89966f26e5f2b598e47a19e502f34bcad688c67275",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_03.mp3",
+        "sha256": "d389393033c56bec6e847f2d5e9e9e51824c22a97f5e522ad5e4e53fbc74f150",
+        "words_sha256": "8d59b536b35a7215f9428d08efc4ef9208ee98c6bac8683a15004e60b4cac640",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_05.mp3",
+        "sha256": "9a3cbfdec2c17518637f8d4964d5a1c88bf3ce17fa33e704ae627fb94e52b629",
+        "words_sha256": "c90ab0158259a752476ebf40686f9e0c9eb77637499faa3bcda5e09a0fece790",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_06.mp3",
+        "sha256": "cbdcf68cb42001219ba745357a34b8187adc7dc42182dceda326a2b41a4ffb37",
+        "words_sha256": "946285f50179a7c68a07d541f014f4415478b7b67669aca6fa941c639335df72",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_07.mp3",
+        "sha256": "eebbb1c080cfc9f5fa689eb6b961be60df4ef7451913b749c3b09524d8eaffe1",
+        "words_sha256": "765a71f7c735546ab212c60bfc29ea2afac23f35a16185685bce2cb1ba54518a",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_09.mp3",
+        "sha256": "4acb0cf83b6964d1dde62a75d7f8dbc14494b8f47042a5c421eae6a9265b5b01",
+        "words_sha256": "5a08d4e3ed11a2111f6ea1c0747e1c76328622f876772c3e9242b6fbc4a742fa",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_10.mp3",
+        "sha256": "16828f24945fbce417e7e726e4e325a8ed2c5c74ae605cae9868931c6dca6367",
+        "words_sha256": "5a9e4c86c724e88fe0d46262201640958c311485008ccca8acdf9514604ea357",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_12.mp3",
+        "sha256": "8f4e7709be21132dc512a67c16d0686f13409c9604e342d31d9e2d101940ce80",
+        "words_sha256": "73beb90e2b57da02712aed51a9f8f7f385020b5da8ad05563b05823870898551",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_13.mp3",
+        "sha256": "b92e8c6e93794f1dbaff211d2f242f687b4e7eeb8b3540f1af8effef5647d6fb",
+        "words_sha256": "7d2aab45aef8fe17e8d8fbbf24f1d7c7c7b2f02aa448d3e17f1fcc163f309358",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_14.mp3",
+        "sha256": "cb4c87a926661923f4e0cf87ef81526544342e9591e13b3cfc886cc7dc26c88d",
+        "words_sha256": "a24936ac27da30394e06af30a07a2d7c68cbf42682646901c155a842af4095fd",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_16.mp3",
+        "sha256": "a57c7eb7bea2af7710cb29ecfddda71c5268b2d3a2d6891806244865bd231b65",
+        "words_sha256": "e0f37de6be8d319c07ca6eb7a2d3a45909ef673c07e9d50820a3ceab989fe333",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_17.mp3",
+        "sha256": "b9c8191381bfd7926c05dfb0c2381b9b2507139c4d67139a59c9ed83dd80cd98",
+        "words_sha256": "a8cfa7febd48bc259a8ee8e2044b8e1f7658e0f2023d51cb9deb71ec389d1046",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_19.mp3",
+        "sha256": "bf2e67892d83de6d107c4eeff55daf1d5bfe4018ac9dfa5098d7ab91546aeeda",
+        "words_sha256": "b606e0de649ff26ddd5d404ef2b6fd83161033708f877614715e37d10040d533",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_20.mp3",
+        "sha256": "b2a8bcfde33dd58847c52854c9cc7017990d21d9694e5114722cf52865e38813",
+        "words_sha256": "7ec6fb5956c7b2c9fbe91e07b78e8823e8116711d9d42b420cd5e555d6876c93",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_21.mp3",
+        "sha256": "502f3de82856596ef959bac284ec1b4eb54b4a9f0ae305b359366f4329483526",
+        "words_sha256": "46284596b92c4dd9faad65a8fe765a6e4224842fad1da91f4f5518d0ef71f67c",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_cover.mp3",
+        "sha256": "bd9fc704befc03dcc5155515a705b1c737811247859fb356bfea4591ec685d13",
+        "words_sha256": "9189e6974302de021002b2d03f8265af28a9bd747ed9dea82b65f200e3c3728c",
+        "identical_v1_bytes": true
+      },
+      {
+        "filename": "voice_outro.mp3",
+        "sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+        "words_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "identical_v1_bytes": true
+      }
+    ],
+    "source_cue_change": "Vienna firstcueat2.82→5.86; end8.22unchanged; textunchanged.",
+    "old_master_sha256": "e51aca77a61916a07a57901fa0fe13f4df2a25ad45bf13ee17094f35fcb1fd57",
+    "current_master_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+    "old_ass_sha256": "63a32ca2b16b83576a61f5046eb2bd9579c3323b5ccdea3ce048419b2f4ccaf9",
+    "current_ass_sha256": "8c383c71102503ed0d6b6a232781a754fdfc43f485a268b7d0f09bf954509baf",
+    "old_audit_not_reused_as_current_binding": true
+  }
+}

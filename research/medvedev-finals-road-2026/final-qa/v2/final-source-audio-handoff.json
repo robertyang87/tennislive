@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-11-05T07:46:49.478181+00:00",
+  "status": "PASS source-audio role final scope; native voice-suite and overall publication gates remain parent/producer responsibility",
+  "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+  "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+  "film_seconds": 264.52,
+  "source_count": 6,
+  "selected_windows": 6,
+  "bilingual_cues": 10,
+  "original_source_raw_count": 22,
+  "unchanged_actual_first_master_asr_count": 15,
+  "human_listening_performed": false,
+  "reports": [
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-v2-source-ass-audit.json",
+      "sha256": "bec508ea2c6295ca5858418a1f1794cda112948483752f6621ea50ff65938192"
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-v2-audio-reuse-audit.json",
+      "sha256": "2ca3ab79bbc85d3423e2711ffa3a37ad7bf2b9582059de7db74e6fce98b1832e"
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/research/audio/actual-first-master-asr-crosscheck.json",
+      "sha256": "35085ef15de8a0a2595418b8ccfa980748813889cb26ccaa834b251b528ba1bc"
+    }
+  ],
+  "notes": [
+    "Only Vienna first subtitle onset changed in actual ASS; all other ASS dialogue lines identical.",
+    "Actual94ecc4 complete audio identity equals old e51 payload/PTS/decoded hashes; eighteen MP3s and eighteen word marks exact.",
+    "Original six source-SHA packets and22 real source-ASR docs remain correctly bound; no wholefilm raw masquerades as source raw.",
+    "Actual corrected negative/positive screen frames opened; early3.04s subtitle issue closed."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights",
+  "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; actual fresh native-source small.en/medium.en and multilingual small/medium compared, no auditory listening claimed",
+  "reviewed_at": "2026-11-05T07:12:13.731628+00:00",
+  "status": "complete",
+  "reviewed_from": 126.6,
+  "reviewed_to": 151.72,
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 126.6,
+      "end": 129.0,
+      "en": "Usually most players will be a little bit weaker, but...",
+      "zh": "多数球员这一侧稍弱，不过……"
+    },
+    {
+      "start": 141.5,
+      "end": 146.28,
+      "en": "And for the first time in his career, Daniil Medvedev",
+      "zh": "梅德韦德夫职业生涯第一次——"
+    },
+    {
+      "start": 146.28,
+      "end": 149.92,
+      "en": "successfully defends a title. 6-7, 6-1, 6-3.",
+      "zh": "成功卫冕。6-7、6-1、6-3。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/medium-score.json",
+      "sha256": "8f0812d977dc8ff364e823d2272b099b66c907868be39d7f0d996e217c23840c",
+      "model": "medium",
+      "clip": [
+        148.3,
+        152
+      ],
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/medium.en-full.json",
+      "sha256": "37872648d05e296d4ccc82f990002110c2dcb12773cf6112094f2bfc5d9c872d",
+      "model": "medium.en",
+      "clip": [
+        121,
+        152
+      ],
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/small-score.json",
+      "sha256": "0f5ac97912fe215724d16b3c006a76976f91e8c84dbbe0d85a05d8b399cd4a24",
+      "model": "small",
+      "clip": [
+        148.3,
+        152
+      ],
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/4598989-frozen/9a42eaccdadd6ffa/small.en-full.json",
+      "sha256": "e4eee18307b4fbfaae30bb2bb9a72e05423d005cf34b2c34e8621ee1345b390b",
+      "model": "small.en",
+      "clip": [
+        121,
+        152
+      ],
+      "source_sha256": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/research/media-late/archived-med26alma01.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1",
+      "duration": 160.917333,
+      "bytes": 162015056
+    },
+    "frozen_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-med26alma01/med26alma01.mp4",
+    "official_origin": "https://www.tennistv.com/videos/4598989/almaty-2026-final-medvedev-basilashvili-short-highlights"
+  },
+  "review_notes": "Fresh local inference on the full downloaded frozen Release file9a42eacc, source SHA checked before and during all four model runs. Not relabeled old raw. Full121–152 small.en/medium.en and score148.3–152 multilingual small/medium independently regenerated and inspected; all fresh text/word-time outputs happen to equal their earlier73a379 counterparts, documented separately. Both English full models agree on Usually clause and victory sentence. Fresh multilingual score models detect English0.881/0.902; medium transcribes Six,seven,six,one,six,three148.3–149.92. Canonical Daniil and 梅德韦德夫 from verified identity. Full small trailing but timestamp drifts through court silence; medium gives actual clause boundary129.0. The score overlaps commentary tail, so the final grammatical clause and score share one cue and never stack two bilingual blocks. Fresh medium.en Thank you151s is again absent from fresh small.en and both fresh multilingual score outputs and rejected as uncorroborated default hallucination. Selected126.6–151.72 remains unchanged, original source audio retained unchanged. No auditory listening is claimed.",
+  "rejected_old_source": {
+    "sha256": "657babe5207652e70197d03f303a2bdb0da8cb3c51fece029f1fbf1daef25af6",
+    "reason": "different bytes from native final input; old raw retained for research but not current source evidence"
+  },
+  "superseded_exact_source_review": {
+    "source_sha256": "73a3792860153c14dd61b412da8ee202e0d68ad7a9b819f32ba85dd35e8118c4",
+    "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/superseded/almaty-73a379286015/almaty-title.json",
+    "sha256": "9f410e6a85cd6dadd9888ebfaab28f38b234486bf1bf7628d47e45f08f64d2cd",
+    "reason": "Official-page HLS remux hash changed across runner. Prior evidence applies only to old bytes; current evidence is fresh inference on frozen9a42eacc source."
+  }
+}

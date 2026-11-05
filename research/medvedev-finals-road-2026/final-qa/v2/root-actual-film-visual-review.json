@@ -1,0 +1,53 @@
+{
+  "reviewed_at": "2026-11-05T07:46:28.025667+00:00",
+  "film_sha256": "94ecc436f855ca125e50818c990deb7df85857b2ea8d957b70f2e27471d1818c",
+  "spec_sha256": "06c60240e721f597309958c20cb716a53f106c0d93daf6b298f5c349e6c41f0f",
+  "status": "pass_actual_final_v2_sampled_pixels_and_repaired_caption",
+  "scope": "Root actually opened all6 new movie contact sheets71 frames plus12 extra actual new-movie timing/detail frames. Separate exact-source and final-audio audit required; no claim of human auditory listening.",
+  "sheets": [
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-00.jpg",
+      "sha256": "03ca673ba811bfef0ba2403239f2dee2eb4afbe07c322a3745e3861e2c4bc8ee",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-01.jpg",
+      "sha256": "6cfd50d4445fa1989a35138e2cff084235cb93adf47113ff26114f31bc420e6f",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-02.jpg",
+      "sha256": "d9f7b1ad3d98fcff6f23c708f394fe8c8fdee00fcd2d5d89907a7028b4e26ffd",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-03.jpg",
+      "sha256": "60804f8e268462ec368adafc527fabccf62006b8999ca74cf2263e7924ae7914",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-04.jpg",
+      "sha256": "4f05f2f836d44f0557036dfea9e7ceacff5e0a76b71506826a5f6dca25aedec7",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/root-qc-v2/contact-05.jpg",
+      "sha256": "7bc3e7736cf48b8b52d702b3ea19ec04ab9c11ae2b1e75dab249c59c600a0c71",
+      "actually_opened": true
+    },
+    {
+      "path": "/workspace/medvedev-finals-production/final/independent-pixel-qc-v2/extra-vienna-actual-contact.jpg",
+      "sha256": "26fb21e8b59ae006e12658ea63dc7b7e0017fa23045f3524047e79700164e500",
+      "actually_opened": true
+    }
+  ],
+  "observations": [
+    "True fullbleed photos and court footage, selected original Brisbane two-view top crop, readable canonical梅德韦德夫 throughout.",
+    "All6 event labels immediate at source onset, visible through7s, absent8.5s. Transparent background. No info label on photo-only scene middles.",
+    "71 sampled frames still cover all10 bilingual cues; corrected Vienna midpoint merges with+7s sample by native helper dedup, no omitted cue.",
+    "Corrected Vienna actual frames220.8,221.95,223.75 have no premature out caption;223.85 first visible caption aligns original Oh around223.84;224.5–225.5 phrase visible at point result, then genuine winner reaction227.6.",
+    "Almaty original complete point and true199s handshake retained, actual10 bilingual caption middles legible, factual dates/rounds/name match approved record.",
+    "Actual ending253–259s is fullbleed photograph with one short question then only nativebrand outro; no stack of final stat/title cards."
+  ],
+  "supersedes": "e51aca77 first-master sampled visual approval is no longer deliverable, marked SUPERSEDED-e51aca77.json due to fixed cue timing."
+}

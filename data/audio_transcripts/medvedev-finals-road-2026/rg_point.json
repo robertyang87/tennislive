@@ -1,0 +1,68 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Zt6JGiygrFo/Zt6JGiygrFo.mp4",
+  "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c",
+  "method": "asr_cross_checked",
+  "reviewer": "OpenAI Codex source-audio audit agent; inspected retained native raw small.en/medium.en and stated official-caption evidence; no auditory listening claimed",
+  "reviewed_at": "2026-11-05T06:44:43.944553+00:00",
+  "status": "complete",
+  "reviewed_from": 690.1,
+  "reviewed_to": 706.5,
+  "human_listening_performed": false,
+  "foreground_english": [],
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/medium.en.json",
+      "sha256": "f580d40e81bafb775954c051b4fab3d7ce22fa0e87a3fb53c4a60bfde6ce7709",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/648e305d03191e9f9a508c49769348a95b692900/small.en.json",
+      "sha256": "c9d3f55650e22c41ccb8a3bc8b6ee6bf74f21bf157cc0690f235d94a3f6ab64e",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        null
+      ],
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/medium.json",
+      "sha256": "dce24f8558e02f35223db00c6de7aa9e277671554a82e2b82b15d922568ba324",
+      "model": "medium",
+      "clip": [
+        684,
+        708
+      ],
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c"
+    },
+    {
+      "path": "data/audio_transcripts/evidence/medvedev-finals-road-2026/raw/Zt6JGiygrFo/local-native-20261105/small.json",
+      "sha256": "7cc39878303ee58aca577181c97d24aba7f4030d10313a4bca90da04bee7ca0b",
+      "model": "small",
+      "clip": [
+        684,
+        708
+      ],
+      "source_sha256": "8fcf11e4b7f8a5068427b56a03ff33a7037e708037b4d533183a46b4d0de607c"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/workspace/medvedev-finals-production/research/media-early/sources/Zt6JGiygrFo.mp4",
+    "actual_geometry": {
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1",
+      "duration": 719.656054,
+      "bytes": 184481181
+    }
+  },
+  "review_notes": "Read all actual four raw outputs, preserving original forced-English counterexamples. New multilingual detection and French score phrase provide independent evidence of voice language rather than guessing French from gibberish. No human listening claimed.",
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Actual court/crowd and French umpire score announcement. Native multilingual small detects French0.798 and medium French0.626; medium transcribes 3 manches à 2,6-2,1-6,6-1,1-6,6-4 at697.1–701.0, matching actual result. Full684–708 language evidence covers selected690.1–706.5. Forced-English small and medium incompatible fragments are not adopted as spoken English. Original French is retained; zero English cues does not mean silence."
+}
