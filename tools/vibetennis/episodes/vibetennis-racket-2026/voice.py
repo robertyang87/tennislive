@@ -1,4 +1,4 @@
-"""vibetennis 拍线篇（三部曲①）中文配音：TTS 人声轨与中文版混音（同第 5 集 voice.py；不加底部配音字幕）。
+"""vibetennis 球拍篇（三部曲②）中文配音：TTS 人声轨与中文版混音（同第 5 集 voice.py；不加底部配音字幕）。
 
 账号所有者 2026-11-01：「中文版的加上中文的配音……就是有 TTS 的，跟 EP 三一样的」。声线与语速同 EP03
 （edge-tts zh-CN-YunjianNeural +18%）；配音稿 narration.json（text 为字幕原文，tts 为合成文本，多音字换同音字）；

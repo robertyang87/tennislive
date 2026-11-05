@@ -211,7 +211,7 @@ CAPS=[
 ('r0',0,None,tr("国际网联写的是 1979 年；名人堂写 1981 年","ITF says 1979; the Hall of Fame says 1981"),BOT),
 ('r1',0,None,tr("29 英寸长度上限：2000 年 1 月 1 日起成为正式规则（国际网联）","The 29-inch limit became an official Rule of Tennis on 1 January 2000 (ITF)"),BOT),
 ('y0',0,None,tr("同一篇也写：更硬的拍＋更硬的球，传到手臂的冲击更大，可能和伤病有关","The same paper: stiffer rackets + harder balls send more shock to the arm, likely linked to injury"),BOT),
-('y3',0,None,tr("拍、线、球、场地、训练同时在变——【相关】不等于【因果】","Rackets, strings, balls, courts, training all changed at once — 【correlation】 isn't 【causation】"),BOT),
+('y3',0,None,tr("同一时期，线和球也在变（Miller 2006：球变硬了）——【时间对得上】不等于【因果】","Strings and balls changed too (Miller 2006: harder balls) — 【timing】 isn't 【causation】"),BOT),
 ('e1',0,None,tr("评论区说说：你用的是【多大拍面】？","Tell us: what 【head size】 do you play?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]

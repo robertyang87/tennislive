@@ -1,16 +1,16 @@
 set -e
 # 用法：PY=python3 bash assemble.sh zh|en
 # 前置：render3d.sh 已把 3D 渲到 r3d/seg/c*.mp4（+ .anchors.json）；cover/ 下已出 16:9 横版封面 thumb_16x9_<lang>.jpg。
-# 3D 里没有文字，中英两版共用同一份 3D；英文版只换叠加层文案、不配音（docs/vibetennis.md §8）。
+# 3D 里有中英两套标签（scene.js 的 T()），所以英文版要另渲一份 3D（VT_LANG=en）；英文版不配音、不带 BGM（docs/vibetennis.md §8）。
 # 成片 = 片头 3 帧横版封面（0.1 s，docs/vibetennis.md §9）＋ 3D＋叠加层 ＋ BGM 与合成音效；中文版另加 TTS 配音（-14 LUFS / 真峰值 ≤ -1 dBTP）。
 HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-python3}"; L="${1:-zh}"; cd "$HERE"; mkdir -p sfx
-SLUG=vibetennis-strings-2026; [ "$L" = en ] && SLUG=$SLUG-en
+SLUG=vibetennis-racket-2026; [ "$L" = en ] && SLUG=$SLUG-en
 SEG="${SEG:-r3d/seg}"   # 中文先渲完挪到 r3d/seg_zh、英文渲进 r3d/seg 时，用 SEG=r3d/seg_zh 合中文
 ls $SEG/c*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
 [ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls $SEG/c*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
 [ -f sfx/final_$L.m4a ] || {
-  [ -f sfx/sfx_bed.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
-  BED=sfx/sfx_bed.wav; [ "$L" = zh ] && { "$PY" voice.py; BED=sfx/sfx_bed_zh.wav; }
+  [ -f sfx/sfx_only.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
+  BED=sfx/sfx_only.wav; [ "$L" = zh ] && { "$PY" voice.py; BED=sfx/sfx_bed_zh.wav; }   # 英文版只有音效：所有者 2026-11-02 定英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从曲库挂
   D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 r3d/full_ov_$L.mp4)
   ffmpeg -y -loglevel error -i $BED -af "atrim=0:$D" -ac 2 -c:a pcm_f32le sfx/trim_$L.wav
   "$PY" ln.py sfx/trim_$L.wav sfx/n14_$L.wav -14 -2.5

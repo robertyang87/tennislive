@@ -1,5 +1,5 @@
-// vibetennis 器材三部曲 ① 拍线的演变——四代线（羊肠 → 合成 → 聚酯 → 混搭）改变了什么，和打法能不能对上。
-// 理论：牛顿碰撞定律（恢复系数）、库仑摩擦定律、应力松弛（麦克斯韦「弛豫时间」）。上屏数字的出处见 papers/vibetennis-strings-2026/sources.md。
+// vibetennis 器材三部曲 ② 球拍的演变——木 → 钢／铝 → 大拍面 → 碳纤维，拍子改了什么、背后的物理（甜点三个点、扭转惯量、刚度、挥拍重量），和打法能不能对上。
+// 理论与上屏数字的出处见 papers/vibetennis-racket-2026/sources.md（两源规则）；镜头动效表见 papers/vibetennis-racket-2026/motion.md。
 // 通用底座（夜空、光点、全息字、3D 字、球场、后期）沿用 EP06；球拍、线床、图表为本集新做。示意的形状都在画面上标「示意」。
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -345,7 +345,7 @@ const twistAng=(k,amp)=>k<0?0:amp*Math.sin(Math.min(k*9,Math.PI/2))*Math.exp(-Ma
 function shotHook(u,D){
   const HIT=ev('hit',0.3), FLY=ev('fly',5.8), ROW=ev('row',9.5), QQ=ev('q',13.7);
   if(u<ROW-0.3){ // 子弹时间：球打在拍面边缘，拍子绕长轴扭转，球照原方向飞
-    SLOW=[HIT+0.6,FLY+2.2];
+    SLOW=[FLY,FLY+1.6];   // 运动模糊只开在恢复常速、球高速飞出那 1.6 s（慢放里球走得慢，开了只是白花 6 倍渲染）
     const R=rkA; rkOp(R,1); R.g.position.set(0,0,0); const s=(u-HIT-0.6)*0.18+(u>FLY?(u-FLY)*0.9:0);   // 慢放时间：0.18 倍速，第二句开口后回到常速
     const tw=twistAng(s-0.5,0.32); R.g.rotation.set(0,tw,0);
     const hitP=new THREE.Vector3(R.b*0.82,R.cy+0.15,0);
@@ -502,7 +502,7 @@ function shotSweet(u,D){
 // ---------- 6 宽拍头防扭转 ----------
 function shotTwist(u,D){
   const SPL=ev('split',0.5), HB=ev('hitboth',3.8), SPD=ev('speed',10.8), CT=ev('court',13.3), OUT=ev('out',20.7);
-  if(u<CT-0.3){ SLOW=[HB-0.3,SPD+1.5];
+  if(u<CT-0.3){ SLOW=[SPD,SPD+1.5];   // 同上：只在提速飞出那段
     const L_=rkW2, Rb=rkB; setRk(L_,WOOD.a,WOOD.b); setRk(Rb,BIG.a,BIG.b); rkOp(L_,ss(SPL,SPL+0.6,u)); rkOp(Rb,ss(SPL,SPL+0.6,u));
     const s=(u-HB)*0.22+(u>SPD?(u-SPD)*0.6:0); const k=s-0.4;
     [[L_,-2.6,0.42,WOOD],[Rb,2.6,0.16,BIG]].forEach(([R,x,amp,dim],i)=>{ R.g.position.set(x,-R.cy,0); const tw=twistAng(k,amp); R.g.rotation.set(0,tw,0);
@@ -627,7 +627,7 @@ function shotStyle(u,D){
 // ---------- 10 片尾 ----------
 function shotEnd(u,D){
   const RP=ev('replay',3.3), GL=ev('glass',5.9), BA=ev('ball',11.5);
-  if(u<GL-0.3){ SLOW=[0.2,GL];   // 回放开场那一球：宽拍头偏心时的速度条明显比窄拍长
+  if(u<GL-0.3){ SLOW=[1.0,2.6];   // 回放那一球离开拍面的 1.6 s   // 回放开场那一球：宽拍头偏心时的速度条明显比窄拍长
     const R=rkA; rkOp(R,1); const s=u*0.3; R.g.rotation.set(0,twistAng(s-0.3,0.16),0); R.g.position.set(0,0,0);
     const hp=new THREE.Vector3(R.b*0.8,R.cy+0.15,0.33); { const bz=s<0.3?lerp(8,0.33,ss(0,0.3,s)):0.33+(s-0.3)*12; showB(ball,hp.clone().setZ(bz),true,s<0.3?ss(0,0.15,s):1-ss(3,5.5,bz)); }
     const k=ss(RP,RP+0.8,u); const b1=ln(0xffc24a,10), b2=ln(0x34f5a8,10); bar3(b1,new THREE.Vector3(-2.6,R.gripY-0.6,0.3),1.75*k); bar3(b2,new THREE.Vector3(-2.6,R.gripY-1.1,0.3),2.4*k); b1.material.opacity=b2.material.opacity=k;
