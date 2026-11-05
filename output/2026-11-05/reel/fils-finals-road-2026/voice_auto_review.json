@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "8c3f94eba32bfb5e840b4b4378c83d2b22c0c87f2770584f9ba5801e3fe2c221",
-    "render_inputs_sha256": "d1d8a043ee7f717809543572a20eda4f20ab95b85c51f02d8da56e21fac465e2",
-    "spec_sha256": "61482f2e9938758630ba32f6f9e21f5b614d8dbc6970d93358f0d8164820eb82",
-    "film_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
+    "render_sha256": "f30c02a49abe0da8b3f0afb382fa7c5d993cf0bd6b92af58ed120ba634db9a85",
+    "render_inputs_sha256": "eacc0d29ce4189059e0eb9f3cf08b910fe2174837ad9c2f5b8b69bb2c3e8c726",
+    "spec_sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+    "film_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
     "inventory_sha256": "753f322b11dd3c088cb85c187c37d15870cb01b824f9ecae4ec3a00f9e4c4e26"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-05T10:14:56+00:00",
+  "reviewed_at": "2026-11-05T10:30:42+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -383,10 +383,10 @@
         "ref_syllables": 33,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.03,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "11月4日,转折来自另一场比赛。阿利斯既败帝亚福,贝斯的年中资格提前锁定。"
+        "transcript": "11月4日,转折来自另一场比赛,阿利斯祭拜蒂亚福、菲斯的年中资格提前锁定。"
       },
       "polyphones": [],
       "pauses": {
@@ -482,7 +482,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "麦阿密只不四强之后,他在巴塞罗娜两盘击败卢布列夫,付出后的第一座奖杯到手了。"
+        "transcript": "迈阿弥只不四强之后,他在巴塞罗那两盘击败卢布列夫,付出后的第一座奖杯到手了。"
       },
       "polyphones": [],
       "pauses": {
@@ -514,7 +514,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "巴塞尔面对弗里茨,第二盘0比20,菲斯再次商退。年中门票还没拿到,他又没能打完比赛。"
+        "transcript": "巴塞尔面对弗里茨第二盘0比20,菲斯再次商退。年中门票还没拿到,他又没能打完比赛。"
       },
       "polyphones": [
         {
@@ -568,7 +568,7 @@
         "substituted": 2,
         "sub_ratio": 0.054,
         "longest_deletion": 0,
-        "transcript": "新西纳提决赛,他与帝亚福各拿一盘。决胜盘,贝斯送出6比0,拿到生涯第一座大失赛冠军。"
+        "transcript": "新西纳提决赛,他与帝亚福各拿一盘。决胜盘,贝斯送出6比0,拿到生涯第一座大施赛冠军。"
       },
       "polyphones": [],
       "pauses": {
@@ -632,7 +632,7 @@
         "substituted": 1,
         "sub_ratio": 0.029,
         "longest_deletion": 0,
-        "transcript": "今年四战大满冠,贝斯只赢了一场比赛。可今年的年中名单里,第一次出现了他的名字。"
+        "transcript": "今年四战大满冠,贝斯只赢了一场比赛,可今年的年中名单里,第一次出现了他的名字。"
       },
       "polyphones": [],
       "pauses": {
@@ -696,7 +696,7 @@
         "substituted": 1,
         "sub_ratio": 0.027,
         "longest_deletion": 0,
-        "transcript": "去年罚网后,贝商让他只又打了两场熏回再单打。今年又缺席澳网,直到二月才开始新赛季。"
+        "transcript": "去年罚网后,贝商让他只又打了两场巡回再单打。今年又缺席澳网,直到二月才开始新赛季。"
       },
       "polyphones": [],
       "pauses": {
@@ -851,10 +851,10 @@
         "ref_syllables": 35,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.029,
+        "substituted": 0,
+        "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "大满冠只有一胜却拼出了第一张年中门票。第一次到都临,你看好菲斯拿下极场胜利。"
+        "transcript": "大满冠只有一胜却拼出了第一张年中门票。第一次到都灵,你看好菲斯拿下极场胜利。"
       },
       "polyphones": [],
       "pauses": {

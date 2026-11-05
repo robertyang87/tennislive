@@ -13,15 +13,15 @@
     "release_tag": "reel-tts-fils-finals-road-2026-de79ac47d659f000",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fils-finals-road-2026-de79ac47d659f000/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42007438620"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42009615797"
   },
   "cover_seconds": 3.898,
   "cover_narrated": true,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 304.96,
+  "segments_seconds": 303.76,
   "topbar": null,
-  "film_seconds": 313.44,
+  "film_seconds": 312.24,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -58,44 +58,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "d1d8a043ee7f717809543572a20eda4f20ab95b85c51f02d8da56e21fac465e2",
+  "render_inputs_sha256": "eacc0d29ce4189059e0eb9f3cf08b910fe2174837ad9c2f5b8b69bb2c3e8c726",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "fils-finals-road-2026",
-    "received_at": "2026-11-05T10:03:09Z",
-    "artifact_ready_at": "2026-11-05T10:12:47Z",
-    "elapsed_seconds": 578.913,
+    "received_at": "2026-11-05T10:18:33Z",
+    "artifact_ready_at": "2026-11-05T10:28:34Z",
+    "elapsed_seconds": 601.047,
     "budget_seconds": 600,
-    "met": true,
-    "film_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
-    "spec_sha256": "61482f2e9938758630ba32f6f9e21f5b614d8dbc6970d93358f0d8164820eb82",
-    "run_id": "42007438620",
+    "met": false,
+    "film_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+    "spec_sha256": "df1f578f095d7ea4dc3500939fb8e7da61a3c7bbede804e68f9b51813dbfeef2",
+    "run_id": "42009615797",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-05T10:06:14Z",
-        "run_id": "42007438620"
+        "at": "2026-11-05T10:21:51Z",
+        "run_id": "42009615797"
       }
     ],
-    "render_seconds": 393.913,
-    "pre_render_seconds": 185.0
+    "render_seconds": 403.047,
+    "pre_render_seconds": 198.0
   },
-  "film_sha256": "911127433e749ee6d8d79255cd4b69fb600588f6b4580cc516a552124abf2c42",
-  "film_bytes": 199056155,
-  "qc_attestation_sha256": "80a35dc1e5c404b99593721d2e68cc0692c9060fb29bea2aeb96e15f5817f696",
+  "film_sha256": "26c8906881da7e3f7e558c3af8511df31fa042a18f14cda6022f1491eed2227f",
+  "film_bytes": 198092528,
+  "qc_attestation_sha256": "3dcabe97e3282e15cb56973d438e13c9f0cd12f12a50bc8f1d5e72d3244da175",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-05T10:06:14Z",
-      "run_id": "42007438620"
+      "at": "2026-11-05T10:21:51Z",
+      "run_id": "42009615797"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-05T10:12:51Z",
-      "run_id": "42007438620"
+      "at": "2026-11-05T10:28:38Z",
+      "run_id": "42009615797"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fils-finals-road-2026/fils-finals-road-2026.mp4",
-  "video_bytes": 199056155
+  "video_bytes": 198092528
 }
