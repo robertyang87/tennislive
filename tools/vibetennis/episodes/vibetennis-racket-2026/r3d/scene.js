@@ -335,7 +335,7 @@ function hideAll(){
   for(const k in TT) op(TT[k],0); for(const k in text3D) t3op(text3D[k],0); chide(pt);
   page.visible=false; page2.visible=false; page.material.opacity=0; page2.material.opacity=0; lightTable.material.opacity=0; pageG.position.set(0,0,0); pageG.rotation.set(0,0,0);
   holePlate.visible=false; secG.visible=false; [beadT,beadB,web].forEach(m=>{ m.visible=false; m.position.x=0; }); aluSec.visible=false; aluCells.forEach(c=>c.material.opacity=0);
-  tubeG.visible=false; balG.visible=false; stackG.visible=false; pzG.visible=false; scanBand.material.opacity=0; fillRing.material.opacity=0;
+  tubeG.visible=false; balG.visible=false; steelBar.visible=fibBundle.visible=true; stackG.visible=false; pzG.visible=false; scanBand.material.opacity=0; fillRing.material.opacity=0;
   beamMat.uniforms.uOp.value=0; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; SLOW=null; }
 
 // 偏心击球后的扭转（绕拍子长轴，阻尼振荡），k：击球后的秒数
@@ -487,8 +487,8 @@ function shotSweet(u,D){
   const p1k=ss(P1-SP,P1-SP+0.6,v)*(1-ss(P2-SP,P2-SP+0.3,v)*0.5); const b1=ln(0xffc24a,9); bar3(b1,new THREE.Vector3(R.b+0.4,0.0,0.2),2.2*p1k); b1.material.opacity=p1k;
   // ② 振动：拍框侧面弯曲驻波，节点处静止（示意）
   const p2k=ss(P2-SP,P2-SP+0.6,v); if(p2k>0){ const wl=ln(0x4fe3ff,4); const pts=[]; const top=R.a, bot=R.gripY-0.9; const amp=0.22*(u>NO?0.35:1);
-    for(let i=0;i<=60;i++){ const s=i/60, y=lerp(top,bot,s); const mode=Math.cos(Math.PI*2*(s-0.5))*0.9+0.1; pts.push(new THREE.Vector3(-R.b-1.2+amp*Math.sin(u*14)*mode,y,0)); } setLine(wl,pts); wl.material.opacity=p2k*0.9;
-    const nd=gs(0x4fe3ff,0.6,p2k*(u>NO?1:0.6)); nd.position.set(-R.b-1.2,0.35*R.a,0); }
+    for(let i=0;i<=60;i++){ const s=i/60, y=lerp(top,bot,s); const mode=Math.cos(Math.PI*2*(s-0.5))*0.9+0.1; pts.push(new THREE.Vector3(-R.b-0.6+amp*Math.sin(u*14)*mode,y,0)); } setLine(wl,pts); wl.material.opacity=p2k*0.9;
+    const nd=gs(0x4fe3ff,0.6,p2k*(u>NO?1:0.6)); nd.position.set(-R.b-0.6,0.35*R.a,0); }
   // ③ 打击中心：握把处受力箭头为零
   const p3k=ss(P3_-SP,P3_-SP+0.6,v); const fa=ln(0xff6a8a,6); bar3(fa,new THREE.Vector3(0.5,R.gripY,0.3),0.9*p3k*(0.15),new THREE.Vector3(1,0,0)); fa.material.opacity=p3k;
   const f0=tx('f0',T('握把受力 ≈ 0','Force at grip ≈ 0'),{color:'#ffd0dc',size:0.36}); f0.position.set(1.9,R.gripY,0.3); op(f0,p3k*(u<GR?1:0));
@@ -606,15 +606,22 @@ function shotStyle(u,D){
     const c=tx('kq3',T('转向「力量和旋转」','to "power and spin"'),{color:'#ffffff',size:0.95,font:BIGF,glow:GOLD}); c.position.set(0,-0.9,0); op(c,ss(PW,PW+0.6,u));
     const s=tx('kqs',T('Miller 2006《英国运动医学杂志》（作者来自国际网联）','Miller 2006, Br J Sports Med (ITF author)'),{color:'#cfe8ff',size:0.3}); s.position.set(0,-2.0,0); op(s,ss(QU+1,QU+1.6,u));
     look(0,0,lerp(9,8.2,ss(0,SI,u)),0,0,0); return; }
-  if(u<PZ-0.3){ balG.visible=true; balG.position.set(0,0.8,0); balMat.opacity=1;
+  if(u<PZ-0.3){ balG.visible=true; balG.position.set(0,0.8,0); balMat.opacity=1; steelBar.visible=fibBundle.visible=false;   // 这里托盘上放的是「模拟」「实测」，不是上一节的钢条和碳纤维束
     const tilt=lerp(0,0.18,ss(SI,SI+1,u))*(1-ss(RE+0.6,RE+1.8,u)); balBeam.rotation.z=tilt;
     const ls=tx('simT',T('模拟：换上今天的拍和球，发得更快（Haake 等 2007，拍和球一起算）','Simulation: today\'s racket + ball serve faster (Haake et al. 2007, racket and ball together)'),{color:'#ffe2a0',size:0.38}); ls.position.set(-3.0,-2.6,0); op(ls,ss(SI,SI+0.6,u));
     const rs=tx('realT',T('实测：老木拍发球几乎一样快（Brody 等 2002 书中，Cross）','Measured: old wood serves almost as fast (Cross, in Brody et al. 2002)'),{color:'#c8f4ff',size:0.38}); rs.position.set(3.0,-3.3,0); op(rs,ss(RE,RE+0.6,u));
-    // 两个托盘里的发球轨迹
+    // 两个托盘上方各有一段发球轨迹，球沿轨迹循环飞（周期相同＝一样快；模拟那边只有一条更亮的「快」轨迹）
     const p0=pans[0].getWorldPosition(new THREE.Vector3()), p1=pans[1].getWorldPosition(new THREE.Vector3());
-    const t1=ln(0xffc24a,4); setLine(t1,[p0.clone().add(new THREE.Vector3(-0.8,-0.9,0)),p0.clone().add(new THREE.Vector3(0.8,-0.5,0))]); t1.material.opacity=ss(SI,SI+0.6,u);
-    const t2=ln(0x4fe3ff,4), t3=ln(0x9aa6b8,4); setLine(t2,[p1.clone().add(new THREE.Vector3(-0.8,-0.85,0)),p1.clone().add(new THREE.Vector3(0.8,-0.55,0))]); setLine(t3,[p1.clone().add(new THREE.Vector3(-0.8,-0.95,0)),p1.clone().add(new THREE.Vector3(0.78,-0.63,0))]);
-    t2.material.opacity=t3.material.opacity=ss(RE,RE+0.6,u);
+    const arcP=(c,h,dy)=>{ const P=[]; for(let i=0;i<=32;i++){ const k=i/32; P.push(new THREE.Vector3(c.x-1.15+2.3*k,c.y-0.95+dy+h*4*k*(1-k),c.z+0.25)); } return P; };
+    const fly=(b,P,ph,o)=>{ const k=((u*0.9+ph)%1+1)%1, i=Math.min(31,Math.floor(k*32)), f=k*32-i; showB(b,P[i].clone().lerp(P[i+1],f),o>0.01,o*ss(0,0.08,k)*(1-ss(0.92,1,k))); b.m.scale.setScalar(0.14/b.r); };
+    const ks=ss(SI,SI+0.6,u), kr=ss(RE,RE+0.6,u);
+    const A1=arcP(p0,0.75,0); const t1=ln(0xffc24a,5); setLine(t1,A1); t1.material.opacity=0.9*ks; fly(ball,A1,0,ks);
+    const A2=arcP(p1,0.72,0), A3=arcP(p1,0.7,-0.06); const t2=ln(0x4fe3ff,4), t3=ln(0xd9a066,4); setLine(t2,A2); setLine(t3,A3); t2.material.opacity=t3.material.opacity=0.9*kr;
+    fly(ball2,A2,0.0,kr); fly(ball3,A3,0.02,kr);
+    const lp=tx('panSim',T('模拟','Simulated'),{color:'#ffe2a0',size:0.5,glow:GOLD}); lp.position.set(p0.x,p0.y-2.1,0.3); op(lp,ks);
+    const lr=tx('panReal',T('实测','Measured'),{color:'#c8f4ff',size:0.5,glow:CYAN}); lr.position.set(p1.x,p1.y-2.1,0.3); op(lr,kr);
+    const lw=tx('panWood',T('老木拍','Old wood'),{color:'#f0c890',size:0.3}); lw.position.set(p1.x+1.55,p1.y-1.15,0.3); op(lw,kr);
+    const lm=tx('panMod',T('现代拍','Modern'),{color:'#c8f4ff',size:0.3}); lm.position.set(p1.x+1.55,p1.y-0.6,0.3); op(lm,kr);
     look(0,0.6,10,0,-0.6,0); return; }
   // 三块拼图：线和拍咬在一起拆不开，球那块暗着
   const v=u-PZ; pzG.visible=true; pzG.rotation.y=Math.sin(v*0.5)*0.2; const gap=lerp(0.4,0,ss(0.2,1.4,v));
@@ -639,7 +646,7 @@ function shotEnd(u,D){
   beamMat.uniforms.uOp.value=0.16; rimL.intensity=6; rimR.intensity=6; rimL.color.set(0xffc24a); rimR.color.set(0x4fe3ff); rimL.position.set(-4,3,3); rimR.position.set(4,3,3);
   const q=tx('endQ',T('你的拍子拍面多大？打偏的时候，你感觉得到吗？','How big is your racket head? Can you feel an off-centre hit?'),{color:'#ffffff',size:0.62,glow:GOLD}); q.position.set(0,BIG.a+1.4,0.3); op(q,ss(0.3,0.9,v)*(1-ss(BA-GL-0.4,BA-GL,v)));
   const bk=ss(BA-GL,BA-GL+1.2,v); showB(ball3,new THREE.Vector3(0,lerp(6,-1.6,bk)+Math.abs(Math.sin(bk*9))*(1-bk)*0.6,1.2),bk>0,1);
-  const nx=tx('nextB',T('下一集：球','Next: the ball'),{color:'#ffffff',size:0.8,font:BIGF,glow:MINT}); nx.position.set(0,-3.0,1.2); op(nx,ss(BA-GL+0.8,BA-GL+1.4,v));
+  const nx=tx('nextB',T('下一集：球','Next: the ball'),{color:'#ffffff',size:0.8,font:BIGF,glow:MINT}); hud(nx,0,2.2); op(nx,ss(BA-GL+0.8,BA-GL+1.4,v));
   look(0,0.2,lerp(9.5,8.5,ss(0,D-GL,v)),0,-0.2,0); }
 
 // ---------- 段落配色（按情绪） ----------
