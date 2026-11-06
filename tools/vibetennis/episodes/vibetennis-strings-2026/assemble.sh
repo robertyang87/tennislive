@@ -15,7 +15,15 @@ ls $SEG/c*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
   ffmpeg -y -loglevel error -i $BED -af "atrim=0:$D" -ac 2 -c:a pcm_f32le sfx/trim_$L.wav
   "$PY" ln.py sfx/trim_$L.wav sfx/n14_$L.wav -14 -2.5
   ffmpeg -y -loglevel error -i sfx/n14_$L.wav -af "volume=1.0dB,alimiter=limit=0.56:attack=0.5:release=40:level=false" -c:a pcm_f32le sfx/lim_$L.wav
-  ffmpeg -y -loglevel error -i sfx/lim_$L.wav -af "adelay=100|100" -c:a aac -b:a 256k -ar 48000 sfx/final_$L.m4a; }
+  ffmpeg -y -loglevel error -i sfx/lim_$L.wav -af "adelay=100|100" -c:a aac -b:a 256k -ar 48000 sfx/final_$L.m4a
+  # 真峰值守门：AAC 编码会在瞬态上冲过限幅（2026-11-05 英文版没有配音、全是音效瞬态，限幅后 -3.2 dBTP，编完 +0.3）。
+  # 编完量一次，超过 -1.2 dBTP 就按超出量把整轨压低再编，直到合格。qc.py 的门槛是 ≤ -1.0。
+  for _ in 1 2 3; do
+    TP=$(ffmpeg -hide_banner -i sfx/final_$L.m4a -af ebur128=peak=true -f null - 2>&1 | grep -E "^\s+Peak:" | tail -1 | awk '{print $2}')
+    awk -v t="$TP" 'BEGIN{exit !(t>-1.2)}' || break
+    G=$(awk -v t="$TP" 'BEGIN{printf "%.2f", -1.6-t}'); echo "[真峰值] AAC 后 $TP dBTP，压 $G dB 重编"
+    ffmpeg -y -loglevel error -i sfx/lim_$L.wav -af "volume=${G}dB,adelay=100|100" -c:a aac -b:a 256k -ar 48000 sfx/final_$L.m4a
+  done; }
 THUMB=cover/thumb_16x9_$L.jpg
 [ -f "$THUMB" ] || { echo "横版封面 $THUMB 还没出（python3 cover/make_cover.py A wide cover/thumb_16x9_$L.jpg $L）——叠加层和音频已备好，先停在这"; exit 0; }
 M=${SLUG}_master.mp4; P=${SLUG}_push.mp4

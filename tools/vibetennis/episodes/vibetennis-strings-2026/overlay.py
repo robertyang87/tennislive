@@ -199,7 +199,7 @@ CAPS=[
 ('p1',0,None,tr("一根线能改变的只有三样：【力量、旋转、磅数】","Strings can change only three things: 【power, spin, tension】"),BOT),
 ('w0',0,None,tr("撞上 v1 → 弹开 v2：两个速度之比叫【恢复系数】","In v1 → out v2: the ratio is the 【coefficient of restitution】"),BOT),
 ('w1',0,None,tr("恢复系数越大 → 线还给球的能量越多 → 球【越快】","Higher restitution → more energy back to the ball → 【faster】"),BOT),
-('w3',0,None,tr("180 N 对 280 N：底线球 108.1 对 105.3 km/h，只快约【3%】（场上实测）","180 N vs 280 N: groundstrokes 108.1 vs 105.3 km/h — only about 【3%】 faster (on court)"),BOT),
+('w3',0,None,tr("180 N 对 280 N：底线球只快约【3%】（场上实测）","180 N vs 280 N: groundstrokes only ~【3%】 faster (on court)"),BOT),
 ('r1',0,None,tr("【库仑摩擦定律】：摩擦力和压力成正比——就是它把球拖着转起来","【Coulomb’s law of friction】: friction ∝ normal force — that grip drags the ball into spin"),BOT),
 ('r3',0,None,tr("主线被拨歪、再弹回 → 把球【拨】得更转","Mains slide sideways, then snap back → the ball is 【flicked】 into extra spin"),BOT),
 ('p2',0,None,tr("正反两方都是【实验室】数据：拍框夹住、斜向发射","Both sides are 【lab】 data: clamped racket, ball fired at an angle"),BOT),

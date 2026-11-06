@@ -446,7 +446,7 @@ function shotSpin(u,D){
   const ph=tx(rol>0.5?'roll':'slide',rol>0.5?T('还没离开线，就滚起来了','Rolling before it leaves the strings'):T('拍面斜刷：球先在线上滑','Brushed at an angle: the ball slides first'),{color:'#ffffff',size:0.62,glow:GOLD}); hud(ph,0,2.05); op(ph,ss(0,0.1,k));
   const src=tx('rollSrc',T('所有线的摩擦都大到让球在撞击中滚起来 · Goodwill & Haake 2004','All strings grip enough for the ball to roll · Goodwill & Haake 2004'),{color:'#d8c09a',size:0.32}); hud(src,0,1.55); op(src,ss(0.5,0.6,k));
   proj('ball',new THREE.Vector3(xs,by,0));
-    const nm=tx('noMore',T('一滚起来，接触点不再打滑 → 摩擦不再加转','Once rolling, the contact stops slipping → friction adds no more spin'),{color:'#ffd2c8',size:0.5,glow:RED}); hud(nm,0,1.15); op(nm,ss(NM,NM+0.6,u));
+    const nm=tx('noMore',T('一滚起来，接触点不再打滑 → 摩擦不再加转','Once rolling: no slip → no extra spin'),{color:'#ffd2c8',size:0.5,glow:RED}); hud(nm,0,1.15); op(nm,ss(NM,NM+0.6,u));
     return; }
   if(u<PA-0.2){ // 真正加转的：主线被拨歪、再弹回
     rk.g.visible=true; rimL.intensity=5; rimL.color.set(0x7c83ff); rimL.position.set(-3,2,3); rimR.intensity=4; rimR.color.set(0xc9d6ff); rimR.position.set(3,2,3);
