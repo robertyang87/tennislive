@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "fafef9f7f173c2bb9cda36aeb0ae38011b9175f2df603eda6e9a4efefd18670b",
-    "render_inputs_sha256": "19b4345aa658d247c301fccc756b13552e1c5f6e27a7412948f8805164648ddb",
-    "spec_sha256": "726ca89ccd191e7bcc2ca7316b716783aec410617cb92c7de1161d8c1816e79b",
-    "film_sha256": "d3433c239561a61d0bdf1c498f7d5e63c9a5b3083f4bab1e0c4d727bdc2abbe0",
+    "render_sha256": "82bcf02ee4ec529b95e476e37d0b1e2de29a69781c6d3582635322c1bcb75553",
+    "render_inputs_sha256": "61759c5b8bcd6a5cff09eaaa01ff761741535e0e35d76e9dfd470f471d74d4c2",
+    "spec_sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894",
+    "film_sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
     "inventory_sha256": "8425777c3c87f3db9c2b1d70a15ec80514ce27e917e2aed30f084a1918599418"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-06T03:00:11+00:00",
+  "reviewed_at": "2026-11-06T03:25:11+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -372,7 +372,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "四月木尼黑、两盘击败科博利赛季第二关到手。这一回,他在红土上举起奖杯。"
+        "transcript": "四月木尼黑,两盘击败科博利,赛季第二关到手。这一回,他在红土上举起奖杯。"
       },
       "polyphones": [],
       "pauses": {
@@ -500,7 +500,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "8月,加拿大大师赛,他六场比赛一盘未失,两盘击败中岛布兰登成功未免。"
+        "transcript": "8月,加拿大大师赛。他六场比赛一盘未失,两盘击败中岛布兰登成功未免。"
       },
       "polyphones": [],
       "pauses": {
@@ -564,7 +564,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "谢尔顿年中路,从温网低谷到美网亚军。"
+        "transcript": "谢尔顿年中路,从温网低谷到眉网亚军。"
       },
       "polyphones": [],
       "pauses": {
@@ -778,7 +778,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "没网,他第一次击败阿尔卡拉斯,又逆转蒂亚福,第一次打进大满冠决赛。"
+        "transcript": "没网,他第一次击败阿尔卡拉斯、又逆转蒂亚福,第一次打进大满冠决赛。"
       },
       "polyphones": [],
       "pauses": {
