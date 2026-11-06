@@ -1,0 +1,371 @@
+{
+  "schema": "shelton.actual-facts.v2",
+  "status": "PASS",
+  "reviewed_at_utc": "2026-11-06T03:26:44.466651+00:00",
+  "reviewer": "shelton_facts currentassistant; independentdirectactualASScomparison+actualv2pixelinspection",
+  "prior_pass": {
+    "path": "/workspace/shelton-finals-production/final/independent-qc/actual-facts.json",
+    "sha256": "8edf6ec1ce18c3e9215ee751cde7df256c16f3911c297e2cfab406e70e967d64",
+    "preserved": true,
+    "carried_scope": "All2026factualclaims, dates, opponents, scores, namecanonicals andsnapshot previouslyreviewed withoriginalsources; nofactualtext changed."
+  },
+  "bound_files": [
+    {
+      "path": "/workspace/shelton-finals-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+      "bytes": 153616900,
+      "sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/native-input-v2/subtitles.ass",
+      "bytes": 7035,
+      "sha256": "cf23db3d123973b2eae840676fa8c3ddd41ae835b9ea738a5bd92dc1ac58f640"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/native/specs/reels/shelton-finals-road-2026.json",
+      "bytes": 27994,
+      "sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/native-input-v2/render_inputs.json",
+      "bytes": 25093,
+      "sha256": "61759c5b8bcd6a5cff09eaaa01ff761741535e0e35d76e9dfd470f471d74d4c2"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/native-input-v2/render.json",
+      "bytes": 2619,
+      "sha256": "7dd2a34520e6cd28a5821ea4a7459448d24fb23a7c0b37a402e60a2a89b4a9ef"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/editorial-plan.json",
+      "bytes": 7187,
+      "sha256": "40f03060eab5eeef0a42adfd04fab74e292849c5077460e7c76111982cd2353f"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/production/race-chart/data-canonical.json",
+      "bytes": 9744,
+      "sha256": "67905206237ead83c01975650d72bddac46d85cc3956c562288ce21bbc269710"
+    }
+  ],
+  "film_seconds": 255.32,
+  "scope_of_changes_verified": [
+    {
+      "source": "australian-open-qf",
+      "changed_fields": {
+        "end": {
+          "before": 139.15,
+          "after": 139.65
+        },
+        "point_end_ok": {
+          "before": "Actual116.8serve-preparation/contact118.6, continuousrally to138.9, authentic Sinnerfist at139.12. Every .05s plusnativeextra tail through139.65 reviewed clean before139.7announcement; no substituted point.",
+          "after": "Actualserve-prep/contact118.6, continuous finalrally through138.9, authentic Sinnerfist from139.12 nowheld0.5s inbody before outgoingdissolve. Root source .05s review confirms bodyend139.65 plusnative.5visualtail140.15 samefist shot, noad/substitutedpoint; visualtail sourceaudio explicitlysilenced."
+        }
+      }
+    },
+    {
+      "source": "montreal-final",
+      "changed_fields": {
+        "point_end_ok": {
+          "before": "Actual terminal point visually reviewed from serve through fullrally/result and authentic reaction; exact source visual evidence retained.",
+          "after": "First truewide frame atsource1.96, Nakashima fullservepreparation through2.8toss/contact3.76–3.80, complete continuousrally/result/authentic titlecelebration. Removing0–1.92offcenter sourcecloseup avoids half-face while preserving entirepoint; sameend29 plus.5visualtail29.5clean."
+        },
+        "quote": {
+          "before": [
+            {
+              "at": 16.38,
+              "end": 20.04,
+              "text": "Ben Shelton delivers a masterful performance in Montreal,\n谢尔顿在蒙特利尔打出大师级表现，"
+            },
+            {
+              "at": 20.04,
+              "end": 23.18,
+              "text": "that will yield the most glittering of prizes.\n赢得最耀眼的奖赏。"
+            }
+          ],
+          "after": [
+            {
+              "at": 14.42,
+              "end": 18.08,
+              "text": "Ben Shelton delivers a masterful performance in Montreal,\n谢尔顿在蒙特利尔打出大师级表现，"
+            },
+            {
+              "at": 18.08,
+              "end": 21.22,
+              "text": "that will yield the most glittering of prizes.\n赢得最耀眼的奖赏。"
+            }
+          ]
+        },
+        "start": {
+          "before": 0.0,
+          "after": 1.96
+        }
+      }
+    }
+  ],
+  "actual_ass_checks": {
+    "all62_dialogue_text_fields_including_ASSformatting_identical_to_prior_actual": true,
+    "narration_dialogues": 50,
+    "source_quote_dialogues": 12,
+    "all15_render_narration_strings_exactly_match_frozen40f030plan": true,
+    "all12_source_quote_strings_exactly_match_prior_and_v2spec_projection": true,
+    "timestamps_changed_for_source_edits_only": "Montreal2quotes localoffsetssubtract1.96s, otherglobaltimestampsfollowAOplus.5/Montrealminus1.96; textunchanged.",
+    "v2_ass_sha256": "cf23db3d123973b2eae840676fa8c3ddd41ae835b9ea738a5bd92dc1ac58f640"
+  },
+  "unchanged_bytes_checks": {
+    "all_render_asset_hashes_identical": true,
+    "all5_card_label_payloads_identical": true,
+    "all15_narrations_identical": true,
+    "all17_mp3_and17_words_json_identical": true,
+    "tts_files": [
+      {
+        "name": "voice_00.mp3",
+        "old_sha256": "c280dd53a03899ba5bf383ae5b9e623577d0b7e86936da66bc58fa57d8a2d499",
+        "v2_sha256": "c280dd53a03899ba5bf383ae5b9e623577d0b7e86936da66bc58fa57d8a2d499",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_01.mp3",
+        "old_sha256": "079ddb5ed69054e4f588015dca7341f4b8a911a2f45284bb32ae9bebe40dff5d",
+        "v2_sha256": "079ddb5ed69054e4f588015dca7341f4b8a911a2f45284bb32ae9bebe40dff5d",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_03.mp3",
+        "old_sha256": "c3bf0fb79043446d76894f4ba4310b116c3fd6fbefb2c8ad50689f6bd3858bc3",
+        "v2_sha256": "c3bf0fb79043446d76894f4ba4310b116c3fd6fbefb2c8ad50689f6bd3858bc3",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_05.mp3",
+        "old_sha256": "ca1410edf528464e32a9c7c75e1bea647a5f1a1e2b450efc23cd0372c9c954ed",
+        "v2_sha256": "ca1410edf528464e32a9c7c75e1bea647a5f1a1e2b450efc23cd0372c9c954ed",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_07.mp3",
+        "old_sha256": "822a6ca1dc6d59e1a7a4f9785b5df8ca7826112cb82d34d6e5bd7714bf8d29a8",
+        "v2_sha256": "822a6ca1dc6d59e1a7a4f9785b5df8ca7826112cb82d34d6e5bd7714bf8d29a8",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_08.mp3",
+        "old_sha256": "c67c1a6dcddf7660ad48c890cf09fbc54229264b93055b445cf47a155c58f313",
+        "v2_sha256": "c67c1a6dcddf7660ad48c890cf09fbc54229264b93055b445cf47a155c58f313",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_09.mp3",
+        "old_sha256": "d44743ab81748028f5f2e6728eb552ccf51d97d36242a888a065e290d3f8f25b",
+        "v2_sha256": "d44743ab81748028f5f2e6728eb552ccf51d97d36242a888a065e290d3f8f25b",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_10.mp3",
+        "old_sha256": "b7b3bd17618e1df9379ccf56234defefdcaab6d7eb6726cbc4605857466a0d0a",
+        "v2_sha256": "b7b3bd17618e1df9379ccf56234defefdcaab6d7eb6726cbc4605857466a0d0a",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_12.mp3",
+        "old_sha256": "734d23f73e8c8287e2147b3f1e6491b527317cc88f2e813574015fdb110e619d",
+        "v2_sha256": "734d23f73e8c8287e2147b3f1e6491b527317cc88f2e813574015fdb110e619d",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_13.mp3",
+        "old_sha256": "0d9e080700b83599d886615370f19a277172ddaa5ba355efdedfcd93a18afa6d",
+        "v2_sha256": "0d9e080700b83599d886615370f19a277172ddaa5ba355efdedfcd93a18afa6d",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_15.mp3",
+        "old_sha256": "d2b12d2e72a1bda1aca63994635036936c6b88cc3ce5bebc13edf5392bd7afa4",
+        "v2_sha256": "d2b12d2e72a1bda1aca63994635036936c6b88cc3ce5bebc13edf5392bd7afa4",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_16.mp3",
+        "old_sha256": "6ecc1c530f604431abcbb513564b649103b91489f7677eacbcad9d9d4fc1a8fd",
+        "v2_sha256": "6ecc1c530f604431abcbb513564b649103b91489f7677eacbcad9d9d4fc1a8fd",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_17.mp3",
+        "old_sha256": "a9534eb88daae3c0ce5847de4d61c60da38786cb6ec4c4465023ea5797e97937",
+        "v2_sha256": "a9534eb88daae3c0ce5847de4d61c60da38786cb6ec4c4465023ea5797e97937",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_18.mp3",
+        "old_sha256": "6c8df282e356a28787925c7bf3e94762c2e7f9c522ba30953531b1d00581b8c5",
+        "v2_sha256": "6c8df282e356a28787925c7bf3e94762c2e7f9c522ba30953531b1d00581b8c5",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_19.mp3",
+        "old_sha256": "71a4fd2856af8c1e8e614a374b66719a5ef7752b89353b4ac85c256ce60de49f",
+        "v2_sha256": "71a4fd2856af8c1e8e614a374b66719a5ef7752b89353b4ac85c256ce60de49f",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_cover.mp3",
+        "old_sha256": "ce0f6cff2b5544342bb91310a368007df887287945a02b779966e93a73230519",
+        "v2_sha256": "ce0f6cff2b5544342bb91310a368007df887287945a02b779966e93a73230519",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_outro.mp3",
+        "old_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+        "v2_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_00.words.json",
+        "old_sha256": "00e0b64653a58aca5d506f7a318dc2e3d88284fa43f4f4b8fb3c881b7b0e5584",
+        "v2_sha256": "00e0b64653a58aca5d506f7a318dc2e3d88284fa43f4f4b8fb3c881b7b0e5584",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_01.words.json",
+        "old_sha256": "fd8155dc59db567689cf3daee28ede46bce93cc26303e9c74a9242deeb436604",
+        "v2_sha256": "fd8155dc59db567689cf3daee28ede46bce93cc26303e9c74a9242deeb436604",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_03.words.json",
+        "old_sha256": "af52fd9bf047f8ab0c68897a7d7d3313e00e07a8c6ebd7b664126051efb9a0b0",
+        "v2_sha256": "af52fd9bf047f8ab0c68897a7d7d3313e00e07a8c6ebd7b664126051efb9a0b0",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_05.words.json",
+        "old_sha256": "6a479a3dfb38bca85668d033151072bc23595eb188f18199bd2d28cf1addd66a",
+        "v2_sha256": "6a479a3dfb38bca85668d033151072bc23595eb188f18199bd2d28cf1addd66a",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_07.words.json",
+        "old_sha256": "0bcb2961931e7cd792348f24092946078fb62692e4da0c44e273ceffe6e76c77",
+        "v2_sha256": "0bcb2961931e7cd792348f24092946078fb62692e4da0c44e273ceffe6e76c77",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_08.words.json",
+        "old_sha256": "d7f0ac9056dae47660acdd2cc79cacfbf944dca61bb29a447ba0d810e2794df3",
+        "v2_sha256": "d7f0ac9056dae47660acdd2cc79cacfbf944dca61bb29a447ba0d810e2794df3",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_09.words.json",
+        "old_sha256": "d9874dd437cbf5f7116621f9d2739ec8be7f86432a71799192f9d5d5fc387c4d",
+        "v2_sha256": "d9874dd437cbf5f7116621f9d2739ec8be7f86432a71799192f9d5d5fc387c4d",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_10.words.json",
+        "old_sha256": "eef59795e6c2ea6e2692a3f0caf9ce5b7223de8e787c9a6d91d86b2e0ed378df",
+        "v2_sha256": "eef59795e6c2ea6e2692a3f0caf9ce5b7223de8e787c9a6d91d86b2e0ed378df",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_12.words.json",
+        "old_sha256": "cb06a77fd1471b1c8011912c5bca393945734b7239d9c577376e4bd9509e8011",
+        "v2_sha256": "cb06a77fd1471b1c8011912c5bca393945734b7239d9c577376e4bd9509e8011",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_13.words.json",
+        "old_sha256": "1df17c35ca43669b25d3aab2e0aa12f22d2d989330e957d1a999a01f00f763da",
+        "v2_sha256": "1df17c35ca43669b25d3aab2e0aa12f22d2d989330e957d1a999a01f00f763da",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_15.words.json",
+        "old_sha256": "373acb43f6d2ce8106c011b39b46762032e07582660a19c67f7b4bc44b2ec408",
+        "v2_sha256": "373acb43f6d2ce8106c011b39b46762032e07582660a19c67f7b4bc44b2ec408",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_16.words.json",
+        "old_sha256": "5fb93e072a77bef862f42229de017fcba32ea1952cbbdadcd3d9e2b9fba97018",
+        "v2_sha256": "5fb93e072a77bef862f42229de017fcba32ea1952cbbdadcd3d9e2b9fba97018",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_17.words.json",
+        "old_sha256": "1e8b43c140e18b34221ca7d0ab299786be332d7f0b1ee79a71081c3b67ac484c",
+        "v2_sha256": "1e8b43c140e18b34221ca7d0ab299786be332d7f0b1ee79a71081c3b67ac484c",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_18.words.json",
+        "old_sha256": "2e86b97e83a7242b1d1e280cf69239b2f8170657f4313478b0535844454c037c",
+        "v2_sha256": "2e86b97e83a7242b1d1e280cf69239b2f8170657f4313478b0535844454c037c",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_19.words.json",
+        "old_sha256": "36c9d34a9571d0d6095a57ae50e1f7ab2c3e0e99e401a9a96b4a2e268e767a4e",
+        "v2_sha256": "36c9d34a9571d0d6095a57ae50e1f7ab2c3e0e99e401a9a96b4a2e268e767a4e",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_cover.words.json",
+        "old_sha256": "1a7cf3b01326bb39a2216789fe201319bd4d9f120a81340d28bfd1930d742692",
+        "v2_sha256": "1a7cf3b01326bb39a2216789fe201319bd4d9f120a81340d28bfd1930d742692",
+        "status": "IDENTICAL"
+      },
+      {
+        "name": "voice_outro.words.json",
+        "old_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "v2_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+        "status": "IDENTICAL"
+      }
+    ],
+    "race_canonical_sha256": "67905206237ead83c01975650d72bddac46d85cc3956c562288ce21bbc269710",
+    "editorial_frozen_sha256": "40f03060eab5eeef0a42adfd04fab74e292849c5077460e7c76111982cd2353f"
+  },
+  "actual_v2_frame_checks": [
+    {
+      "path": "/workspace/shelton-finals-production/final/root-qc-v2/frame-036-0143.286.jpg",
+      "sha256": "4845d103f53a8185777dc41e96cccf284c6827a153cf846de46c6b2196497846",
+      "visually_reviewed_by_current_assistant": true,
+      "status": "PASS"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/root-qc-v2/frame-060-0220.820.jpg",
+      "sha256": "94cb151b968e021fdbdc610bb6fa3824312c997bfcf308158a20207d24cab98e",
+      "visually_reviewed_by_current_assistant": true,
+      "status": "PASS"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/root-qc-v2/frame-061-0228.960.jpg",
+      "sha256": "1e8013031cbfb286ea476783350c4bb6fa7e4b5f3164f1abdfa435afc8e147a5",
+      "visually_reviewed_by_current_assistant": true,
+      "status": "PASS"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/root-qc-v2/frame-062-0237.952.jpg",
+      "sha256": "93b093267dd4271e1dfc4fc8c962db068cb1c0a55e6ca453c811d1074084800c",
+      "visually_reviewed_by_current_assistant": true,
+      "status": "PASS"
+    }
+  ],
+  "actual_v2_pixel_findings": {
+    "montreal_card": "8/13localdate;6-3 7-6(4);Sheltonvs中岛布兰登;成功卫冕visibleandunchanged.",
+    "qualification": "谢尔顿连续第二年拿到都灵门票actualburnedcaptionvisible;10/18andFokinaoverJodarwordingunchangedinactualASS.",
+    "latest_paris": "Actualburnedcaption巴黎先胜诺里 再逆转林德克内希;nextASSrow8强;noPaulQFresultinvented.",
+    "race": "All15rows visuallyreadagainfromv2movie.谢尔顿4720rank4;6qualifiedhighlighted;Sinnerrank2withdrawn;梅德韦德夫/门西克correct;截至11/6巴黎1/4前captionclear."
+  },
+  "capture_manifest": {
+    "path": "/workspace/shelton-finals-production/final/root-qc-v2/manifest.json",
+    "sha256": "65ce9a6530e26ecceac6652f80adfba39aa65d9134a7ddb793b38adb8622132f",
+    "movie_and_spec_binding": "PASS"
+  },
+  "factual_issues": [],
+  "web_refetch_performed": false,
+  "native_media_or_narration_modified_by_reviewer": false,
+  "limits": [
+    "ThisreviewdoesnotrecertifythecompleteAO/Montrealpointsortheirspeechboundaryaudio; source-windowagentshandlethepoint/audioedits.",
+    "Fivecardlabels/assetsarebyteidenticaltopriorPASS; thisv2reviewdirectlyreopenedthechangedMontrealblockandqualification/Paris/Raceactualframes, whilecarryingpriorunchangedcardfactchecks."
+  ]
+}

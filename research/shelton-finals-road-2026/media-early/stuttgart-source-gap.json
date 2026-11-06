@@ -1,0 +1,42 @@
+{
+  "event": "Stuttgart 2026 Final",
+  "final_disposition": "Root approved photo+narration fallback; do not claim complete point",
+  "reason": "No valid official1920x1080 complete terminal point obtained within bounded normal source search",
+  "attempts": [
+    {
+      "url": "https://www.tennistv.com/videos/4519051/stuttgart-2026-final-shelton-fritz-short-highlights",
+      "result": "publicfree actualmanifest max1280x720; thumbnail1920x1080metadata was not video; hard1080gate correctly rejected",
+      "diagnostic": "/dev/shm/shelton-sources/stuttgart-candidate.mp4"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ApvVlaVfaFw",
+      "result": "Tennis TV verified official; single native archive failed normalbotverification; no bypass/repeatedclients"
+    },
+    {
+      "url": "https://x.com/TennisTV/status/2066160510261715391",
+      "result": "actualmax576x720 portrait22.418s; reject1080gate"
+    },
+    {
+      "url": "https://x.com/TennisTV/status/2066167530649993417",
+      "result": "actualmax576x720 portrait17.678s trophyreaction; notcomplete point"
+    },
+    {
+      "url": "https://www.tennistv.com/videos/4519057/stuttgart-2026-final-shelton-interview",
+      "result": "actualmanifest1920x1080,97s; actualwhole storyboard opened: straight interviewonly, no matchpoint; notuse",
+      "diagnostic": "/dev/shm/shelton-sources/stuttgart-interview-diagnostic.mp4",
+      "evidence": "stuttgart-interview-whole.jpg"
+    },
+    {
+      "url": "https://www.eurosport.fr/tennis/atp-stuttgart/2026/atp-stuttgart-en-video-la-balle-de-match-de-ben-shelton-pour-venir-a-bout-de-taylor-fritz-en-finale_vid60082194/video.shtml",
+      "result": "officialrights-holder publicpage44s index; normalextractor returnedAPI404; notdownloaded/bypassed"
+    },
+    {
+      "url": "https://bossopen.com/en/news/ben-shelton-becomes-the-new-boss-at-the-weissenhof",
+      "result": "officialeventreport; noactualvideoplayer/mediaasset inpage"
+    },
+    {
+      "catalog": "TennisTV public ATP_TOURNAMENT:321_2026 all78rows plus ATP_PLAYER:S0S1 eight100-rowpages",
+      "result": "no separatefinalchampionshippointitem found; no further endless source search"
+    }
+  ]
+}

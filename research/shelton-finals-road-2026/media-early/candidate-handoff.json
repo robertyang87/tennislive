@@ -1,0 +1,155 @@
+{
+  "status": "FROZEN:3 ready actual1080point windows; RG and Stuttgart Root-approved photo narration fallback",
+  "owner": "shelton_media_early",
+  "constraints": {
+    "renderCrop": "fixed center cx=.5, track=false, fill 1080x1440",
+    "point": "same terminal point serve/contact and entire rally plus true outcome/reaction",
+    "extra_point_max": 1,
+    "native_extra_tail_seconds": 0.5,
+    "audio": "complete English sentence; final immutable source SHA only",
+    "download_owner": "shelton_producer"
+  },
+  "events": [
+    {
+      "event": "Australian Open",
+      "round": "QF",
+      "date": "2026-01-28",
+      "winner": "Jannik Sinner",
+      "loser": "Ben Shelton",
+      "winner_score": "6-3 6-4 6-4",
+      "primary": {
+        "url": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
+        "source": "Australian Open own Brightcove",
+        "brightcove_account": "4447531182001",
+        "brightcove_player": "8qx9SyWTb",
+        "brightcove_video": "6388428476112",
+        "playback_url": "https://players.brightcove.net/4447531182001/8qx9SyWTb_default/index.html?videoId=6388428476112",
+        "metadata_path": "/dev/shm/shelton-ao-bc-metadata.json",
+        "metadata_duration": 181.269,
+        "max_width": 1920,
+        "max_height": 1080,
+        "local_metadata_probe": "success"
+      },
+      "youtube": {
+        "id": "WzRilBZxOn4",
+        "native_archive_attempt": "failed bot verification; no repeated retries"
+      }
+    },
+    {
+      "event": "Roland-Garros",
+      "round": "R2",
+      "date": "2026-05-28",
+      "winner": "Raphael Collignon",
+      "loser": "Ben Shelton",
+      "winner_score": "6-4 7-5 6-4",
+      "score_warning": "Standalone Reuters story incorrectly says 7-5 6-4 6-4; use RG/ATP official scores",
+      "primary_candidate": {
+        "url": "https://www.dailymotion.com/video/xabm6g8",
+        "source": "beIN SPORTS Hong Kong official rights-holder; NOT Roland-Garros event channel",
+        "uploader_id": "x1vy1cl",
+        "duration": 186,
+        "width": 1920,
+        "height": 1080,
+        "fps": 60,
+        "format": "hls-1080@60",
+        "metadata_path": "/dev/shm/shelton-rg-dm-metadata.json",
+        "local_metadata_probe": "success",
+        "verified": true,
+        "uploader_api_evidence": "rg-bein-owner.json"
+      },
+      "rejected_pending_visual": [
+        {
+          "url": "https://x.com/rolandgarros/status/2060090705385578584",
+          "reason": "406x720 maximum, portrait reaction interview"
+        },
+        {
+          "url": "https://x.com/rolandgarros/status/2060091718838448176",
+          "width": 1080,
+          "height": 1920,
+          "duration": 32.933,
+          "reason": "official portrait social edit; must inspect for split/digital tracking before considered, horizontal rights-holder preferred"
+        }
+      ],
+      "other_candidates": [
+        {
+          "url": "https://www.youtube.com/watch?v=84cAIuzesy4",
+          "source": "House of Highlights verified official TNT/Warner rights-holder; NOT RG event channel"
+        },
+        {
+          "url": "https://www.tntsports.co.uk/tennis/roland-garros/2026/tennis-roland-garros-highlights-raphael-collignon-ben-shelton_vid60077924/video.shtml",
+          "duration": 197,
+          "source": "TNT Sports official rights-holder"
+        }
+      ]
+    },
+    {
+      "event": "Dallas",
+      "round": "F",
+      "date": "2026-02-15",
+      "winner": "Ben Shelton",
+      "loser": "Taylor Fritz",
+      "winner_score": "3-6 6-3 7-5",
+      "url": "https://www.tennistv.com/videos/4451143/dallas-2026-final-fritz-shelton-short-highlights",
+      "source": "Tennis TV official free highlight candidate",
+      "editorial": "Saved three championship points; details require independent fact verification",
+      "metadata_duration": 156,
+      "max_width": 1920,
+      "max_height": 1080,
+      "local_metadata_probe": "success",
+      "rejected_daily": "4451159 public entitlement 401; NOT confirmed free"
+    },
+    {
+      "event": "Munich",
+      "round": "F",
+      "date": "2026-04-19",
+      "winner": "Ben Shelton",
+      "loser": "Flavio Cobolli",
+      "winner_score": "6-2 7-5",
+      "url": "https://www.tennistv.com/videos/4490074/munich-2026-final-cobolli-shelton-short-highlights",
+      "source": "Tennis TV official free short highlight candidate",
+      "metadata_duration": 158,
+      "max_width": 1280,
+      "max_height": 720,
+      "local_metadata_probe": "success",
+      "metadata_warning": "prior dimensions were thumbnail dimensions, NOT actual downloadable video; manifest actually max1280x720; do not freeze as1080",
+      "alternate": {
+        "url": "https://www.dailymotion.com/video/xa5ysu8",
+        "publisher": "beIN SPORTS Australia official verified broadcaster",
+        "actual_archive_id": "sh26munich",
+        "actual1080": true,
+        "sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643"
+      }
+    },
+    {
+      "event": "Stuttgart",
+      "round": "F",
+      "date": "2026-06-14",
+      "winner": "Ben Shelton",
+      "loser": "Taylor Fritz",
+      "winner_score": "6-4 2-6 6-4",
+      "url": "https://www.tennistv.com/videos/4519051/stuttgart-2026-final-shelton-fritz-short-highlights",
+      "source": "Tennis TV official free short highlight candidate",
+      "editorial_warning": "Only previous three matches came from a set down, not all four matches; final first set won",
+      "metadata_duration": 154,
+      "max_width": 1280,
+      "max_height": 720,
+      "local_metadata_probe": "success",
+      "metadata_warning": "prior dimensions were thumbnail dimensions, NOT actual downloadable video; manifest actually max1280x720; do not freeze as1080",
+      "alternate": {
+        "url": "https://www.youtube.com/watch?v=ApvVlaVfaFw",
+        "publisher": "Tennis TV official",
+        "archive_id": "sh26stutt",
+        "status": "single minimal normal native archive attempt pending; no repeated bot bypass"
+      }
+    }
+  ],
+  "final_window_index": {
+    "ao": "ao/source-window-visual.json",
+    "dallas": "dallas/source-window-visual.json",
+    "munich": "munich/source-window-visual.json"
+  },
+  "final_gaps": [
+    "rg/source-gap.json",
+    "stuttgart-source-gap.json"
+  ]
+}

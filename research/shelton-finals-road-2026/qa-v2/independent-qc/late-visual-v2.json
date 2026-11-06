@@ -1,0 +1,185 @@
+{
+  "schema": "independent-actualfilm-late-visual-qc.v2",
+  "created_utc": "2026-11-06T03:28:20.842621+00:00",
+  "reviewer": "/root/shelton_media_late",
+  "status": "PASS_LATE_VISUAL_SCOPED",
+  "movie": {
+    "path": "/workspace/shelton-finals-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+    "sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
+    "bytes": 153616900,
+    "duration_s": 255.32,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "fps": "25/1"
+  },
+  "spec": {
+    "path": "/workspace/shelton-finals-production/native/specs/reels/shelton-finals-road-2026.json",
+    "sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894"
+  },
+  "render_meta": {
+    "path": "/workspace/shelton-finals-production/final/native-input-v2/render.json",
+    "sha256": "7dd2a34520e6cd28a5821ea4a7459448d24fb23a7c0b37a402e60a2a89b4a9ef"
+  },
+  "previous_report_preserved": {
+    "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual.json",
+    "sha256": "01f555a511932b0e6d2e26c2307899c858563a8e5d815dcc1aebfbbbc13ca412",
+    "status": "Oldd343filmremainsrequiresrevision/notforpublication; not overwritten."
+  },
+  "scope": "Actualv2Montrealrevisedstart/serve/translatedcaptiondisplay/pointreaction/native.5tail; actualshiftedUSFstart/point/loserreaction/native.5tail; closingchart/outrospotcheck. Sourceidentity/audio-wordfidelityunchangedproofexplicitlyreused; nofalsefullfilmorAOaudioapproval.",
+  "method": "IndependentlyrecomputedmovieSHAandprobe. Extractedactualv2JPEGs, personallyopenedall6contactsheetsplusfour1080×1440keyframes. Didnoteditnative/downloadanothermovie/reencodevideo/callanexternalmodel.",
+  "montreal": {
+    "source_id": "sh26montmp",
+    "immutable_source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+    "source_window": [
+      1.96,
+      29
+    ],
+    "actual_window": [
+      143.036,
+      170.076
+    ],
+    "previous_half_face_finding": "RESOLVED; initialsourcecloseupremoved. Actual143.2/143.32containsonlysamewidecourtwithprecedingcupstillcrossfade; nohalf-face.",
+    "preparation_and_serve": {
+      "actual_frames_personally_opened": [
+        143.56,
+        143.68,
+        143.8,
+        143.92,
+        144.04,
+        144.16,
+        144.28,
+        144.4,
+        144.52,
+        144.64,
+        144.76,
+        144.88,
+        145,
+        145.12,
+        145.24,
+        145.48
+      ],
+      "result": "143.56alreadyfullywidewithoutphoto-ghostandserverstillpre-toss;143.92+visibleballtoss,~144.88servecontactandfollowthroughwhollyclear. No sourceprep/toss/contact swallowedby.5fade. Sameactualfixedcourt/nocroptracking/nosplit/nobars."
+    },
+    "point_and_reaction": "Continuoussamepointrecipefromimmutabletrue source retained; actual146.1/150/156.6rally/resultand157.6trueSheltonwinningreactionpersonallyopened;168.5handshake169.9hug. Intermediateunchangedsourcewholepointproofreusedwithcorrectstartoffset, notclaimedrewatchedframebyframe.",
+    "captions": {
+      "cue1_relative": [
+        14.42,
+        18.08
+      ],
+      "cue2_relative": [
+        18.08,
+        21.22
+      ],
+      "shift_from_v1_s": -1.96,
+      "actual_personally_opened": [
+        157.6,
+        159.3,
+        161.3,
+        163.9
+      ],
+      "display": "BothEnglish/Chinesephrasesvisible, highcontrastandreadablewithincanvas. FirstEnglishwrapstwolinesthenChinesebelow;secondoneEnglishlineandChineseunderneath. No clip/overlap. Audio-word/timingsemanticapprovaldedicatedaudioagent, notre-ASRhere.",
+      "natural_source_occlusion": "At161.3same-matchforegroundturquoisetoppassesveryclosetocamera; thisisrealplayerbodyfromunchangedsource, notinsertedsolidmatte ormissingfootage."
+    },
+    "native_tail": {
+      "actual_every_25fps_frame_range": [
+        170.04,
+        170.6
+      ],
+      "frames": 15,
+      "source_extra_tail_to": 29.5,
+      "result": "Onlysame-matchhugcrossfadestochosenUSOpensame-eventstill; noTennisTVLIVE/ad/promo/unrelatedperson. All15actualseamframespersonallyopened."
+    }
+  },
+  "us_open_final": {
+    "source_id": "b40hO04eyLo",
+    "immutable_source_sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+    "unchanged_source_window": [
+      9,
+      31.8
+    ],
+    "new_actual_window": [
+      186.332,
+      209.132
+    ],
+    "timeline_shift_from_v1_s": -1.46,
+    "actual_recheck": "186.84trueZverevprepcloseup,187.84widepreparation,188.6–189.6toss/contact/followthrough,190.4–192.08fullshortpoint/result;193.08umpirecaptionvisible;204.8completeThereyougocaption,207.3/208.3trueSheltonclosed-eyesloserreaction. OriginalallcuewordandpointidentityproofreusedonlyforsameSHAunchangedrecipe.",
+    "native_tail": {
+      "actual_every_25fps_frame_range": [
+        209.08,
+        209.64
+      ],
+      "frames": 15,
+      "result": "All15actualseamframesonlysame-matchnetapproachtoautumnstill; noLIVE/socialpromo/advertising/unrelatedevent."
+    }
+  },
+  "visual_style": {
+    "court": "Singlemaincourt,fixednetcentre,1080×1440fillthroughlatepointsequences; nofollowball/split/digitalpan. Far-wingextremescanleavefixedportraitcrop aspreviouslyaccepteduser-centrecroptradeoff.",
+    "information_card": "Bothlatecardsappearatvideobeginningduringitsnormal.5crossfade, readableupperright; no standaloneprecedingcardshow. Show_for10configuredunchanged; actualobservedearlyrevisedframesarevisibleandlaterreactionframesareclear, boundedunder15. Frame-exact10.000snotclaimed.",
+    "ending_spotcheck": "Actual233.7/238.5/242.5same15-rowqualificationtablewithShelton4720highlightandqualifiedrows;245closingquestionphoto/250.5cupstill/252.8&255.1ownbrandoutrocleanfullcanvas. Currentfactsvalidationroot/factsreviewowns."
+  },
+  "reuse": {
+    "unchanged_source_checks": "Originalsourcefullcontacts/terminalpointfineframes/sourceSHA+native.5tailproofinresearch/media-late/source-handoff.json andmontreal-window-correction.json preserved.",
+    "unchanged_original_audio": "Dedicated5sourceaudioledgerandv2Montrealcuewindowsealownedbyaudioagent; thisreportcertifiesactualsubtitleappearanceonly.",
+    "unchanged17TTS_and_photos": "No newnarrationorphotofactapprovalinthisscopedvisualrevision.",
+    "ao_revised_end": "Root/earlyreviewseparatelyverifiesAO139.65newtail; notsigningAOviaoldlateaudit."
+  },
+  "blocking_findings_in_reviewed_scope": [],
+  "evidence": [
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/us-final-shifted-contact.jpg",
+      "sha256": "1ede0932c5c27763a5104b87e89bdb2ee59d090ada26dfa9db5e0a0e44f69309",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/ending-shifted-contact.jpg",
+      "sha256": "05a144091f8a9e5d823f8b3071e45064ada1690828ad949026836b9c29da7249",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-cues-and-reaction-contact.jpg",
+      "sha256": "095691d7a34ae4577b52b3af43b93997d4991a79af33898ca93a5db863490de7",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-revised-tail-contact.jpg",
+      "sha256": "fa4fa37581ff0118f4aee47915942d06c29933d791eae9b05244fdf9606f37d7",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-revised-open-contact.jpg",
+      "sha256": "3adf798afd4bbbb5bf39c032503d3b7ec63e3a175b9480013341f9bb93040107",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/us-final-shifted-tail-contact.jpg",
+      "sha256": "bca42a1856ebe11c306cbfc53c3202d74904a042d5d375398037d4cb86ee2fde",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-revised-open-143.560.jpg",
+      "sha256": "af6fc322da1678f69989b82480fb12ac4e1edcd0be98a93135d9ebe62b7d6587",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-revised-open-144.880.jpg",
+      "sha256": "5fda21ee8e903b02fcfe86da4b7eb36ba4ff7a6e8aa0d400e904ed18c102fc8b",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-cues-and-reaction-157.600.jpg",
+      "sha256": "f6e786f38e47f890853d9bfcb3e2bf4fc8baaa7cc08176c92efaf037c5a0105d",
+      "personally_opened": true
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/montreal-cues-and-reaction-161.300.jpg",
+      "sha256": "0683e40ab97c7ab9e611af4c5d0bfb800d636bd6770f56a55812466f78484e86",
+      "personally_opened": true
+    }
+  ],
+  "frame_manifest": {
+    "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2/frame-manifest.json",
+    "sha256": "ef48e252e26617e65a2402c7cfaed369da3f11f40777191b5085494fa485c09b"
+  }
+}

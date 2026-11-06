@@ -1,0 +1,129 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-06T02:25:28.198389+00:00",
+  "model": "medium.en",
+  "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+  "source_path": "/dev/shm/shelton-sources/sh26montmp.mp4",
+  "clip": [
+    15.0,
+    24.5
+  ],
+  "duration": 9.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 15.0,
+      "end": 23.18,
+      "text": "Ben Shelton delivers a masterful performance in Montreal that will yield the most glittering of prizes.",
+      "avg_logprob": -0.2571612959322722,
+      "no_speech_prob": 0.1584545224905014,
+      "words": [
+        {
+          "w": " Ben",
+          "s": 15.0,
+          "e": 16.64,
+          "p": 0.7610447406768799
+        },
+        {
+          "w": " Shelton",
+          "s": 16.64,
+          "e": 17.2,
+          "p": 0.9784753918647766
+        },
+        {
+          "w": " delivers",
+          "s": 17.2,
+          "e": 17.66,
+          "p": 0.989798903465271
+        },
+        {
+          "w": " a",
+          "s": 17.66,
+          "e": 18.02,
+          "p": 0.9947570562362671
+        },
+        {
+          "w": " masterful",
+          "s": 18.02,
+          "e": 18.7,
+          "p": 0.9973351359367371
+        },
+        {
+          "w": " performance",
+          "s": 18.7,
+          "e": 19.26,
+          "p": 0.9845766425132751
+        },
+        {
+          "w": " in",
+          "s": 19.26,
+          "e": 19.54,
+          "p": 0.9927666187286377
+        },
+        {
+          "w": " Montreal",
+          "s": 19.54,
+          "e": 20.06,
+          "p": 0.9757282733917236
+        },
+        {
+          "w": " that",
+          "s": 20.06,
+          "e": 21.12,
+          "p": 0.7343124747276306
+        },
+        {
+          "w": " will",
+          "s": 21.12,
+          "e": 21.3,
+          "p": 0.9916365742683411
+        },
+        {
+          "w": " yield",
+          "s": 21.3,
+          "e": 21.58,
+          "p": 0.9969813227653503
+        },
+        {
+          "w": " the",
+          "s": 21.58,
+          "e": 21.78,
+          "p": 0.997958779335022
+        },
+        {
+          "w": " most",
+          "s": 21.78,
+          "e": 22.0,
+          "p": 0.9967177510261536
+        },
+        {
+          "w": " glittering",
+          "s": 22.0,
+          "e": 22.54,
+          "p": 0.9972605109214783
+        },
+        {
+          "w": " of",
+          "s": 22.54,
+          "e": 22.7,
+          "p": 0.996720016002655
+        },
+        {
+          "w": " prizes.",
+          "s": 22.7,
+          "e": 23.18,
+          "p": 0.9919394850730896
+        }
+      ]
+    }
+  ]
+}

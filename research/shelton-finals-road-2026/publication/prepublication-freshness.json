@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-11-06T04:14:56.396869+00:00",
+  "status": "PASS_prepublication_freshness",
+  "all15_ranks_and_points_match_dated_frozen_snapshot": true,
+  "official_active_qualified_profiles_exact_match": [
+    "Alexander Zverev",
+    "Arthur Fils",
+    "Ben Shelton",
+    "Carlos Alcaraz",
+    "Daniil Medvedev",
+    "Flavio Cobolli"
+  ],
+  "qualified_active_count": 6,
+  "shelton_points": 4720,
+  "shelton_rank": 4,
+  "scope": "Normal publicHTTPGET afterpublication-check delay beforefinalmerge/push; sourcecacheAge recorded honestly; no frozen snapshot rewrite.",
+  "sources": [
+    {
+      "url": "https://live-tennis.eu/en/atp-race",
+      "status": 200,
+      "bytes": 347611,
+      "sha256": "220b31499a790781156a84ca4676315a9759960e65306336aecf3727af882fd1",
+      "headers": {
+        "Date": "Fri, 06 Nov 2026 04:14:56 GMT",
+        "Age": "970",
+        "Last-Modified": "Fri, 06 Nov 2026 03:58:41 GMT"
+      }
+    },
+    {
+      "url": "https://www.nittoatpfinals.com/en/players/singles",
+      "status": 200,
+      "bytes": 47321,
+      "sha256": "526584845979c6371f940f919e62dc5874cc9205d894c0502c8616dd03e99eda",
+      "headers": {
+        "Date": "Fri, 06 Nov 2026 04:14:55 GMT",
+        "Age": null,
+        "Last-Modified": "Fri, 06 Nov 2026 04:14:55 GMT"
+      }
+    }
+  ]
+}

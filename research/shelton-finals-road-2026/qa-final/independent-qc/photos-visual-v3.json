@@ -1,0 +1,154 @@
+{
+  "reviewer": "independent current assistant / shelton_photos",
+  "reviewed_at_utc": "2026-11-06T04:05:30.478093+00:00",
+  "status": "PASS_FINAL_CANONICAL_V3_PHOTOGRAPHY_VISUAL_SCOPE",
+  "movie": "/workspace/shelton-finals-production/final/native-input-v3/shelton-finals-road-2026.mp4",
+  "movie_sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+  "duration_seconds": 255.32,
+  "frozen_spec": "/workspace/shelton-finals-production/native/specs/reels/shelton-finals-road-2026.json",
+  "frozen_spec_sha256": "7d47e189ee5ce23fc7d6aac89991922eff299c5c459fc219da987ab42c637484",
+  "render_meta_sha256": "8894d9e840d0afcf394bf5a4d45f7c0e61ea22d2448e88dde4126ff82e5430b4",
+  "root_qc_manifest": "/workspace/shelton-finals-production/final/root-qc-v3/manifest.json",
+  "root_qc_manifest_sha256": "6de03a23c01d2f53885d1264f81293d41346fdcafb13a71db43f7d2f0c238785",
+  "method": "Personallyopened all6freshV3actual-film contacts and4fullresolutionactualstills inallchangedphotoareas. Independentlyrecomputedfilm/specSHA and independentlyparsedexistingV2/V3decodedframeMD5files toconfirmdeltaextent. Reusedprior21photo sourceidentitydeepreview andpixel-equalportionsaccurately. Three targetedstillsextracted; reusedrootWimbledonstill. No full26frame re-extraction, no download, no movie re-encode, no native/git modification.",
+  "previous_reviews": [
+    {
+      "file": "/workspace/shelton-finals-production/final/independent-qc/photos-visual-v2.json",
+      "sha256": "d97175250b3f4304046d872ee19bfa6a1a99a152c101a8f1ed5e174fb9a1c1a3"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/independent-qc/photos-visual.json",
+      "sha256": "beec4df27fa907d3fc9205ee5659bddf0dc4a360b0d3ac2438ff7ee1b6448de1"
+    }
+  ],
+  "frame_delta_evidence": {
+    "method": "Parsedroot-produceddecodedframemd5files; didnotre-decodewholefilm inthisreview.",
+    "files": [
+      {
+        "file": "/workspace/shelton-finals-production/final/v3-diff/v2-video.framemd5",
+        "sha256": "893ae96059bbe9ca54217607fe84e63d62b5f5227966172b0e17d362528e25a9"
+      },
+      {
+        "file": "/workspace/shelton-finals-production/final/v3-diff/v3-video.framemd5",
+        "sha256": "9cace82c30e1e01147015405c49368c6241bb4bcbc153d291bcca1307aa93762"
+      }
+    ],
+    "frames_per_movie": 6383,
+    "equal_frames": 5901,
+    "changed_frames": 482,
+    "changed_ranges_inclusive": [
+      {
+        "first_frame": 2147,
+        "last_frame": 2239,
+        "start_seconds": 85.88,
+        "end_seconds": 89.56
+      },
+      {
+        "first_frame": 3062,
+        "last_frame": 3450,
+        "start_seconds": 122.48,
+        "end_seconds": 138.0
+      }
+    ]
+  },
+  "opened_actual_v3_contact_evidence": [
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-00.jpg",
+      "sha256": "f6f65fd83544a1ed69210997e0d9150d304db271b52d8d1d4efa2bb9d6d7b46f",
+      "opened_and_personally_inspected": true
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-01.jpg",
+      "sha256": "6522c99f1eb7bb3351791d6dd4a89ef4cda92c870c9ec0eb48cff17d2e570da8",
+      "opened_and_personally_inspected": true
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-02.jpg",
+      "sha256": "20cbe38df9c45268a0befe1da0c2d6b1edf991bbf6c3b590ec39e2de46e37aff",
+      "opened_and_personally_inspected": true
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-03.jpg",
+      "sha256": "604034bcf0980c6e12866d70f63e5f7cc09d7408296b34cc705b995b28c9b142",
+      "opened_and_personally_inspected": true
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-04.jpg",
+      "sha256": "6d2db986404c847002fca01cdbb9402b225d14fa480076694734c3a94cffb419",
+      "opened_and_personally_inspected": true
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-05.jpg",
+      "sha256": "f25b30057d51610454ab6da37f55b00be3dc2a103f919f514b5ca6576bd13374",
+      "opened_and_personally_inspected": true
+    }
+  ],
+  "opened_targeted_actual_v3_full_resolution": [
+    {
+      "label": "munich-second",
+      "time": 87.7,
+      "file": "/workspace/shelton-finals-production/final/independent-qc/v3-munich-second-87.700.jpg",
+      "sha256": "e8de8b4a0f8b5248274f8a198bd1aceace885b5aadf3df0a36fa9862a1681b8c",
+      "opened_full_resolution_and_personally_inspected": true
+    },
+    {
+      "label": "stuttgart-second",
+      "time": 123.8,
+      "file": "/workspace/shelton-finals-production/final/independent-qc/v3-stuttgart-second-123.800.jpg",
+      "sha256": "48434925286432264917390a09a3a16850a7f3714f3b9192e51654a070d208ba",
+      "opened_full_resolution_and_personally_inspected": true
+    },
+    {
+      "label": "montreal-first",
+      "time": 136.4,
+      "file": "/workspace/shelton-finals-production/final/independent-qc/v3-montreal-first-136.400.jpg",
+      "sha256": "e9bdc2d72c4fa296bda825064b780c628f7a96b893b44f30a97348b18d90bd7c",
+      "opened_full_resolution_and_personally_inspected": true
+    },
+    {
+      "label": "wimbledon",
+      "time": 130.196,
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/frame-034-0130.196.jpg",
+      "sha256": "c5ed1674168d433e75696723a7f014a37fdfb51fd634ee20c44d0dfd4fc3d860",
+      "opened_full_resolution_and_personally_inspected": true
+    }
+  ],
+  "blocking_findings": [],
+  "findings": [
+    {
+      "area": "Munich secondphotograph",
+      "actual_time": 87.7,
+      "status": "PASS",
+      "details": "ExactApr19MunichBMWtrophy portrait remains genuineShelton, completeface andtrophy, redclay/Munichlettering. Headeroverupperbackground/hairdoesnotcovereyes/mouth; lowercaption这一回他在红土上举起奖杯clear. Fullcanvaspersoncentredfixedcrop matchesreviewedsource."
+    },
+    {
+      "area": "Stuttgart secondphotograph",
+      "actual_time": 123.8,
+      "status": "PASS",
+      "details": "GenuineJune14BossOpenchampionshipceremony, Sheltoncentredonpodiumwithtrophyandconfetti. Wholephotographicframefills3:4; nofalseotherplayer norcornermatchcard. Caption生涯第一座草地冠军matchesevent."
+    },
+    {
+      "area": "Wimbledon",
+      "actual_time": 130.196,
+      "status": "PASS",
+      "details": "ActualJun30VirtanenR1APkneelingreaction unchangedidentityandcomposition. Eyes/nose/mouthareclear; nativebrandingcrossesupperhaironly. Subtitle他曾以8比5领先atbottomclear, nooverlaymatchcard andnotrepresented as fabricatedpointfootage."
+    },
+    {
+      "area": "Montreal firstphotograph",
+      "actual_time": 136.4,
+      "status": "PASS",
+      "details": "ActualAug13NakashimaF championshippointroar, lightbluekit, fullface. Nativeheaderabovehead/eyes andsubtitle8月加拿大大师赛onlowerbody. No wrongToronto2025/Shanghaiidentityornewcroppingproblem."
+    },
+    {
+      "area": "Remainingtimelineincludingcover,allmatchwindows,qualification,Raceandending",
+      "status": "PASS_REUSED_WITH_PIXEL_IDENTITY_AND_FRESH_CONTACT_CHECK",
+      "details": "5901decodedframesmatchV2exactly, andfresh6contactinspectionconfirmspriorapprovedphotography/centering/subtitles/faceclearance/15row6highlightRace/endingnormal. No newblackseam,straycardorsourceidentitymismatchobserved."
+    }
+  ],
+  "scope_limits": [
+    "Photography/crop/visualsemanticfinalcheckonly; audioandmatchpointcontinuityseparatereviewersretainresponsibility.",
+    "Same-eventRG/Stuttgart/Wimbledonphotographicfallbacksremainparent-authorized andnotfalsepointreconstructions.",
+    "Parentreports17TTS/34voiceandwordfiles/ASS/renderassetmanifestsunchanged; thisreviewdoesnotrelabeledthoseasnewaudio-listeningattestations.",
+    "ThisPASSappliesonlytotheexactV3movieandfrozenSPECboundabove."
+  ]
+}

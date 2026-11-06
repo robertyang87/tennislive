@@ -1,0 +1,207 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.dailymotion.com/video/xa5ysu8",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26munich/sh26munich.mp4",
+  "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_audio_race; actual local two-model ASR, refined word timing and local speech activity reviewed; no human auditory listening claimed",
+  "reviewed_at": "2026-11-06T02:35:11.211916+00:00",
+  "reviewed_from": 152.2,
+  "reviewed_to": 171.7,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 160.62,
+      "end": 165.32,
+      "en": "Ben Shelton is the 2026 BMW Open",
+      "zh": "谢尔顿夺得2026年宝马公开赛"
+    },
+    {
+      "start": 165.32,
+      "end": 168.5,
+      "en": "by Bitpanda champion here in Munich.",
+      "zh": "在慕尼黑加冕冠军。"
+    },
+    {
+      "start": 169.22,
+      "end": 171.44,
+      "en": "Runner-up twelve months ago.",
+      "zh": "十二个月前他还是亚军。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": [
+    "Actual4 full/tight runs agree on champion announcement and complete runner-up sentence. Proper tournament title Bitpanda is phonetic/name normalization of every raw Bip/BIP and the/a (165.76–166.66), not invented independent conjunction. Official identity is BMW Open by Bitpanda; visual source is BeIN SPORTS Australia verified rights-holder Dailymotion xa5ysu8, not old rejected TennisTV candidate.",
+    "Ben160.62–160.92 full-medium word has explicit .80 probability and all4 Shelton160.9+ agree; broad full-small159.96/tight159.0 envelopes rejected as exact onset. Last runner-up words end171.28–171.44 across4 models. Twelve is typographic spelling of raw12, no lexical change.",
+    "Medium-only fan Lets go Ben before point and Out low probability.03 line call are background calls, not invented foreground commentator subtitles. New sentence Make sure starts172.52; native additional0.5 tail ends172.2 so no truncated English next sentence.",
+    "Source visual owner verified full same point from side-on actual serve preparation152.2, continuous rally and final159.9; end171.7+native.5 still same-event net hug with no ad."
+  ],
+  "coverage_policy": "Only reliably established foreground commentary gets bilingual quotation. Retained uncertain or background source speech is documented honestly below, not fabricated or presented as a complete verbatim transcript.",
+  "known_untranscribed_retained_audio": [],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-sources/sh26munich.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "44100",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "173.785125",
+        "size": "125234126"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26munich/medium.en.json",
+      "sha256": "99ca66dda5a5ce9ebc25623e633b2b7dfc462186a519c4e42d7bbcccb14b6200",
+      "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+      "model": "medium.en",
+      "clip": [
+        152,
+        173.2
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26munich/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26munich/small.en.json",
+      "sha256": "1bdb02ff8386557477a14e85046eb5e6571133a301c4f2070c4fb52fdf05641d",
+      "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+      "model": "small.en",
+      "clip": [
+        152,
+        173.2
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26munich/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26munich/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26munich/medium.en.json",
+      "sha256": "9e0e36ad9efa5039d19ac6d9e4fc109ebaac688e742d1bf66e3a47ac8e54735b",
+      "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+      "model": "medium.en",
+      "clip": [
+        159.0,
+        172.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26munich/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26munich/small.en.json",
+      "sha256": "af8abfde11078a8ee90138dcb0c2d3c933745aa0b91322d4fe11ca7e77ce3f03",
+      "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+      "model": "small.en",
+      "clip": [
+        159.0,
+        172.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26munich/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26munich/small.en.json",
+      "local_raw_uncommitted": false
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/early-speech-activity.json",
+    "sha256": "0dc0062cb06a661ed82096e984e385e358a162aad0c81a38563e9bb44478aa32",
+    "scope": "Local Silero activity support only, not auditory listening or precise quiet-syllable proof.",
+    "original_research_path": "/workspace/shelton-finals-production/research/audio/early-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 8.42,
+      "end": 13.12,
+      "text": "Ben Shelton is the 2026 BMW Open\n谢尔顿夺得2026年宝马公开赛"
+    },
+    {
+      "at": 13.12,
+      "end": 16.3,
+      "text": "by Bitpanda champion here in Munich.\n在慕尼黑加冕冠军。"
+    },
+    {
+      "at": 17.02,
+      "end": 19.24,
+      "text": "Runner-up twelve months ago.\n十二个月前他还是亚军。"
+    }
+  ],
+  "proper_name_evidence": {
+    "path": "/workspace/shelton-finals-production/research/facts/sources/munich-title.txt",
+    "sha256": "56d343e106bcce35acc455cda6a846df5ed0feba5403249c4e2fb66c0223f6d3",
+    "exact_excerpt": "at the BMW Open by Bitpanda in Munich",
+    "scope": "Official Nitto/ATP article independently captured by facts role; proper event-name spelling only, not audio timing or additional words."
+  },
+  "original_review_packet": {
+    "research_path": "/workspace/shelton-finals-production/research/audio/transcripts/munich-final.json",
+    "sha256": "0774305ea6fd2ff36b0209ae35463df79eb85bf334492fa3d4f13ae82ee6060e",
+    "note": "Native integration only binds real unchanged raw repository paths; source/timestamps/cues unchanged."
+  }
+}

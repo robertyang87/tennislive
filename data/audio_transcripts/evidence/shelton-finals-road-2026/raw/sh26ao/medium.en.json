@@ -1,0 +1,87 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-06T02:29:13.428099+00:00",
+  "model": "medium.en",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+  "clip": [
+    116.4,
+    157.0
+  ],
+  "duration": 40.6,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 146.82,
+      "end": 152.74,
+      "text": "unplayable at times, but Shelton gave it his best.",
+      "avg_logprob": -0.550867473377901,
+      "no_speech_prob": 0.21774418652057648,
+      "words": [
+        {
+          "w": " unplayable",
+          "s": 146.82,
+          "e": 148.22,
+          "p": 0.6706462601820627
+        },
+        {
+          "w": " at",
+          "s": 148.22,
+          "e": 148.4,
+          "p": 0.9792693257331848
+        },
+        {
+          "w": " times,",
+          "s": 148.4,
+          "e": 149.06,
+          "p": 0.9974088072776794
+        },
+        {
+          "w": " but",
+          "s": 149.06,
+          "e": 150.1,
+          "p": 0.9807555079460144
+        },
+        {
+          "w": " Shelton",
+          "s": 150.1,
+          "e": 150.64,
+          "p": 0.7737320065498352
+        },
+        {
+          "w": " gave",
+          "s": 150.64,
+          "e": 151.58,
+          "p": 0.9511611461639404
+        },
+        {
+          "w": " it",
+          "s": 151.58,
+          "e": 151.72,
+          "p": 0.9944342970848083
+        },
+        {
+          "w": " his",
+          "s": 151.72,
+          "e": 151.84,
+          "p": 0.986906886100769
+        },
+        {
+          "w": " best.",
+          "s": 151.84,
+          "e": 152.74,
+          "p": 0.9992864727973938
+        }
+      ]
+    }
+  ]
+}

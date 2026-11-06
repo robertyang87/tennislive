@@ -1,0 +1,853 @@
+{
+  "status": "extracted_only_not_visual_approval",
+  "movie": "/workspace/shelton-finals-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+  "movie_sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
+  "spec": "/workspace/shelton-finals-production/native/specs/reels/shelton-finals-road-2026.json",
+  "spec_sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894",
+  "render_meta_sha256": "7dd2a34520e6cd28a5821ea4a7459448d24fb23a7c0b37a402e60a2a89b4a9ef",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1080,
+        "height": 1440,
+        "coded_width": 1080,
+        "coded_height": 1440,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "3:4",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/90000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 22978800,
+        "duration": "255.320000",
+        "bit_rate": "4630743",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "6383",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc63.26.101 libx264"
+        },
+        "side_data_list": [
+          {
+            "side_data_type": "ICC Profile"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 12253728,
+        "duration": "255.286000",
+        "bit_rate": "176599",
+        "nb_frames": "11968",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/shelton-finals-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "255.320000",
+      "size": "153616900",
+      "bit_rate": "4813313",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "timeline_method": "Actual render cover_seconds + committed nominal scene durations; final per-frame rounding can differ slightly.",
+  "timeline": [
+    {
+      "index": 0,
+      "id": "opening",
+      "start": 4.426,
+      "duration": 9.136,
+      "end": 13.562
+    },
+    {
+      "index": 1,
+      "id": "ao_intro",
+      "start": 13.562,
+      "duration": 5.848,
+      "end": 19.41
+    },
+    {
+      "index": 2,
+      "id": "ao_point",
+      "start": 19.41,
+      "duration": 22.85,
+      "end": 42.26
+    },
+    {
+      "index": 3,
+      "id": "dallas_intro",
+      "start": 42.26,
+      "duration": 7.168,
+      "end": 49.428
+    },
+    {
+      "index": 4,
+      "id": "dallas_point",
+      "start": 49.428,
+      "duration": 32.1,
+      "end": 81.528
+    },
+    {
+      "index": 5,
+      "id": "munich_intro",
+      "start": 81.528,
+      "duration": 8.272,
+      "end": 89.8
+    },
+    {
+      "index": 6,
+      "id": "munich_point",
+      "start": 89.8,
+      "duration": 19.5,
+      "end": 109.3
+    },
+    {
+      "index": 7,
+      "id": "rg_intro",
+      "start": 109.3,
+      "duration": 8.44,
+      "end": 117.74
+    },
+    {
+      "index": 8,
+      "id": "stuttgart_intro",
+      "start": 117.74,
+      "duration": 8.08,
+      "end": 125.82
+    },
+    {
+      "index": 9,
+      "id": "wimbledon_intro",
+      "start": 125.82,
+      "duration": 8.752,
+      "end": 134.572
+    },
+    {
+      "index": 10,
+      "id": "montreal_intro",
+      "start": 134.572,
+      "duration": 8.464,
+      "end": 143.036
+    },
+    {
+      "index": 11,
+      "id": "montreal_point",
+      "start": 143.036,
+      "duration": 27.04,
+      "end": 170.076
+    },
+    {
+      "index": 12,
+      "id": "us_open_run",
+      "start": 170.076,
+      "duration": 6.592,
+      "end": 176.668
+    },
+    {
+      "index": 13,
+      "id": "us_open_final_intro",
+      "start": 176.668,
+      "duration": 9.664,
+      "end": 186.332
+    },
+    {
+      "index": 14,
+      "id": "us_open_final_point",
+      "start": 186.332,
+      "duration": 22.8,
+      "end": 209.132
+    },
+    {
+      "index": 15,
+      "id": "autumn",
+      "start": 209.132,
+      "duration": 7.744,
+      "end": 216.876
+    },
+    {
+      "index": 16,
+      "id": "qualification",
+      "start": 216.876,
+      "duration": 7.888,
+      "end": 224.764
+    },
+    {
+      "index": 17,
+      "id": "late_season",
+      "start": 224.764,
+      "duration": 8.392,
+      "end": 233.156
+    },
+    {
+      "index": 18,
+      "id": "race_table",
+      "start": 233.156,
+      "duration": 9.592,
+      "end": 242.748
+    },
+    {
+      "index": 19,
+      "id": "question",
+      "start": 242.748,
+      "duration": 7.984,
+      "end": 250.732
+    }
+  ],
+  "frames": [
+    {
+      "time": 0.8,
+      "tags": [
+        "cover"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-000-0000.800.jpg",
+      "sha256": "0f29f1d3ee444a34d9e7033a5f3a57c2aeecd93bc483543ab29040e2b6ec00aa"
+    },
+    {
+      "time": 4.246,
+      "tags": [
+        "cover-before-cut"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-001-0004.246.jpg",
+      "sha256": "5ff61164eeb165c9ec12152ae175018488882951ae811613fa5eb61544f368e8"
+    },
+    {
+      "time": 8.994,
+      "tags": [
+        "00-opening-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-002-0008.994.jpg",
+      "sha256": "2de8084fabf28d4cfedfc2d33149850c613d55af8b809b9507e76382cd2cdc68"
+    },
+    {
+      "time": 16.486,
+      "tags": [
+        "01-ao_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-003-0016.486.jpg",
+      "sha256": "baf2d59edd9f67106d45abf649caf93ce5538c5e438b2180cf6f2634c5c144c5"
+    },
+    {
+      "time": 19.66,
+      "tags": [
+        "02-ao_point-plus0.25"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-004-0019.660.jpg",
+      "sha256": "e7f4f346484647c5658c4a642aa304ce3a0c32b8873ec3ed5f17622be2c14849"
+    },
+    {
+      "time": 20.41,
+      "tags": [
+        "02-ao_point-plus1.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-005-0020.410.jpg",
+      "sha256": "8ddfd9c7d4bdf28f55f53159cf20172a1c783213f4ebc472772327ba948ef64b"
+    },
+    {
+      "time": 23.41,
+      "tags": [
+        "02-ao_point-plus4.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-006-0023.410.jpg",
+      "sha256": "d84e3a2dfee560c16f0d063df79ee612faca099e4660b4c3bc59a708fefd50e7"
+    },
+    {
+      "time": 26.41,
+      "tags": [
+        "02-ao_point-plus7.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-007-0026.410.jpg",
+      "sha256": "749a20da1cc88876a0135dae1980afa9722a5e947718656dd0114b3c0595cea4"
+    },
+    {
+      "time": 27.91,
+      "tags": [
+        "02-ao_point-plus8.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-008-0027.910.jpg",
+      "sha256": "c2baa3ba993e3b1cc2e782098c36534fdeddf27bb1cd29686bbe9406d508e363"
+    },
+    {
+      "time": 30.835,
+      "tags": [
+        "02-ao_point-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-009-0030.835.jpg",
+      "sha256": "14fdcf1dbd21fb17815f52038c2e11c575a7213bb4d3fde742fb249537bf1fbf"
+    },
+    {
+      "time": 41.91,
+      "tags": [
+        "02-ao_point-plus22.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-010-0041.910.jpg",
+      "sha256": "302ce4768e6d66150b4d55f582a7c305f33e04ce74692e42b5b023e4941be056"
+    },
+    {
+      "time": 45.844,
+      "tags": [
+        "03-dallas_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-011-0045.844.jpg",
+      "sha256": "766732bef2e38713a56d7ed731f7d6ec6ef87b84ef36c2c8a31c58734754ecc4"
+    },
+    {
+      "time": 49.678,
+      "tags": [
+        "04-dallas_point-plus0.25"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-012-0049.678.jpg",
+      "sha256": "010c0f7986aacc3a963e1472a303da58114041061cd97b7b8cedf34d6d4a49c5"
+    },
+    {
+      "time": 50.428,
+      "tags": [
+        "04-dallas_point-plus1.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-013-0050.428.jpg",
+      "sha256": "4fdc84e5d86bf278b076e50e7307ac82de2a94eb75181345ab67cf60e5fabc74"
+    },
+    {
+      "time": 53.428,
+      "tags": [
+        "04-dallas_point-plus4.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-014-0053.428.jpg",
+      "sha256": "3054eccdfcf96d5270336080aa320b4b192933c2cc6afaacecd58abdacfbc4f3"
+    },
+    {
+      "time": 56.428,
+      "tags": [
+        "04-dallas_point-plus7.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-015-0056.428.jpg",
+      "sha256": "6524ca648960abf9c31617138fc07eeb359ab6df20f073e9f2e955b64b556556"
+    },
+    {
+      "time": 57.928,
+      "tags": [
+        "04-dallas_point-plus8.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-016-0057.928.jpg",
+      "sha256": "b01cbbd297a954fe12c5c95ef294a0e14d13d98856cc930bdec0b6b58b4e0be0"
+    },
+    {
+      "time": 65.478,
+      "tags": [
+        "04-dallas_point-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-017-0065.478.jpg",
+      "sha256": "5593efca45e842c3fd89e248caeeb520de210d881ea1590c89160c09a965e021"
+    },
+    {
+      "time": 74.228,
+      "tags": [
+        "04-dallas_point-bilingual0"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-018-0074.228.jpg",
+      "sha256": "98c4f5174934d2a836a86f73f530b5f594527ebe5f06ee6f6af8dab9904382d8"
+    },
+    {
+      "time": 80.018,
+      "tags": [
+        "04-dallas_point-bilingual1"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-019-0080.018.jpg",
+      "sha256": "dcdc1dc7c45a2d75ed38078d1683389bf5d820431201b1c9995daf48577f4cb5"
+    },
+    {
+      "time": 81.178,
+      "tags": [
+        "04-dallas_point-plus31.75"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-020-0081.178.jpg",
+      "sha256": "bff20bd8b9fbcde1075339b58ec531d53a15d9d18c3949d761516f19348652cb"
+    },
+    {
+      "time": 85.664,
+      "tags": [
+        "05-munich_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-021-0085.664.jpg",
+      "sha256": "5d9f5868816b3b69f323b3af5634af561d40f5e5ee50014e35f8e3456dceb309"
+    },
+    {
+      "time": 90.05,
+      "tags": [
+        "06-munich_point-plus0.25"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-022-0090.050.jpg",
+      "sha256": "e68d8c62fdc9388015bfa8d3a16cbaf59952013e5ac86927c027df673179f62e"
+    },
+    {
+      "time": 90.8,
+      "tags": [
+        "06-munich_point-plus1.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-023-0090.800.jpg",
+      "sha256": "c4001c7795d858c8c1f6c687d23a241368f4190d5d753b05e62552e85975d222"
+    },
+    {
+      "time": 93.8,
+      "tags": [
+        "06-munich_point-plus4.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-024-0093.800.jpg",
+      "sha256": "2e8d8b38ca5d632255dd04cc0e6a290a5e99a6237f724890a2a7d438d1ff2fac"
+    },
+    {
+      "time": 96.8,
+      "tags": [
+        "06-munich_point-plus7.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-025-0096.800.jpg",
+      "sha256": "67f7948a0e32c1906be38600fc1557e286cecba0f51b5d738a8b49184dff506e"
+    },
+    {
+      "time": 98.3,
+      "tags": [
+        "06-munich_point-plus8.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-026-0098.300.jpg",
+      "sha256": "349938504f791178998b891884a8443e01371e303eb7d25707c9b7f4ba509f71"
+    },
+    {
+      "time": 99.55,
+      "tags": [
+        "06-munich_point-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-027-0099.550.jpg",
+      "sha256": "e5d47cda9b49be75cdf56298e905c870b99fcae5eb5a44d72759d99b4ef78be8"
+    },
+    {
+      "time": 100.57,
+      "tags": [
+        "06-munich_point-bilingual0"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-028-0100.570.jpg",
+      "sha256": "2a29214bda6b8188f6ea664da2c0ad4d6f478bbec85119d74ee6fc03b8c29c8d"
+    },
+    {
+      "time": 104.51,
+      "tags": [
+        "06-munich_point-bilingual1"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-029-0104.510.jpg",
+      "sha256": "b118f0d76d161f76feeea2f5ab60f3234debf56a0e0bd28df18460e4fd312209"
+    },
+    {
+      "time": 107.93,
+      "tags": [
+        "06-munich_point-bilingual2"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-030-0107.930.jpg",
+      "sha256": "4d9bf0b51d9ead9f64531fcc53030ff730a0d3e9fc818f964973e906bf2b1a2b"
+    },
+    {
+      "time": 108.95,
+      "tags": [
+        "06-munich_point-plus19.15"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-031-0108.950.jpg",
+      "sha256": "24ea67cf983ea9e992e501b198a6998d2a66fb08e8437c07a1702754dd629f03"
+    },
+    {
+      "time": 113.52,
+      "tags": [
+        "07-rg_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-032-0113.520.jpg",
+      "sha256": "a64cacba986585d86d7cdccc90adb1db12652cfd9eaa8a8a9743d82fd1467f97"
+    },
+    {
+      "time": 121.78,
+      "tags": [
+        "08-stuttgart_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-033-0121.780.jpg",
+      "sha256": "819ff8c1f24de6081465b97a945c89e3cca4b57e7952440a0aacca51c05533fc"
+    },
+    {
+      "time": 130.196,
+      "tags": [
+        "09-wimbledon_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-034-0130.196.jpg",
+      "sha256": "9eb8c7b480ff69f61e1df0785ef7a54e9a1b31f21e3fb17783806d75851351ad"
+    },
+    {
+      "time": 138.804,
+      "tags": [
+        "10-montreal_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-035-0138.804.jpg",
+      "sha256": "0dc055bbf443cbcbf4dfa772a94f123fa8746f1800f80bc993cd16545f346211"
+    },
+    {
+      "time": 143.286,
+      "tags": [
+        "11-montreal_point-plus0.25"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-036-0143.286.jpg",
+      "sha256": "4845d103f53a8185777dc41e96cccf284c6827a153cf846de46c6b2196497846"
+    },
+    {
+      "time": 144.036,
+      "tags": [
+        "11-montreal_point-plus1.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-037-0144.036.jpg",
+      "sha256": "87ca4b6458b6224cb84dca7e507c91dbc251d570359619aaa10db87182fa85a5"
+    },
+    {
+      "time": 147.036,
+      "tags": [
+        "11-montreal_point-plus4.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-038-0147.036.jpg",
+      "sha256": "d583442956757e326cd0f21bc5dac6e0cd42167c2babca574dd9425949d3e55d"
+    },
+    {
+      "time": 150.036,
+      "tags": [
+        "11-montreal_point-plus7.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-039-0150.036.jpg",
+      "sha256": "112141fbcb83fa14c79437c5496937b37fdb677db238bc3dd6afc9fbee6074df"
+    },
+    {
+      "time": 151.536,
+      "tags": [
+        "11-montreal_point-plus8.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-040-0151.536.jpg",
+      "sha256": "bbb6e95638ebbe65915e6428b512630e2cff00177ad0837c21d7765f4044051b"
+    },
+    {
+      "time": 156.556,
+      "tags": [
+        "11-montreal_point-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-041-0156.556.jpg",
+      "sha256": "ecd94be99ff95ac97d06e8da6890a8b192bbc0342a383d85edeca297f2b420eb"
+    },
+    {
+      "time": 159.286,
+      "tags": [
+        "11-montreal_point-bilingual0"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-042-0159.286.jpg",
+      "sha256": "f147bcf30ad766d474c6e0aab9f534611a6826cdda42a9702594cf3434907b6c"
+    },
+    {
+      "time": 162.686,
+      "tags": [
+        "11-montreal_point-bilingual1"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-043-0162.686.jpg",
+      "sha256": "057551ba76accbe1ea2cc662d9a29cf835c2daf48b7e5d9f12d190434730e437"
+    },
+    {
+      "time": 169.726,
+      "tags": [
+        "11-montreal_point-plus26.69"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-044-0169.726.jpg",
+      "sha256": "1d363a96b10a9e771db54add20a3dc967e1d6a80ff1596b9f013bf095b6df3cb"
+    },
+    {
+      "time": 173.372,
+      "tags": [
+        "12-us_open_run-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-045-0173.372.jpg",
+      "sha256": "5ca2e5045dde0749a5f3451b1360e94b4d465a107bccc8737297d3d18aaa81b5"
+    },
+    {
+      "time": 181.5,
+      "tags": [
+        "13-us_open_final_intro-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-046-0181.500.jpg",
+      "sha256": "ecc8296ef85ffeb68dcde3b1a6d48768d95ee9211674455e1e40d8beb7dcf6cc"
+    },
+    {
+      "time": 186.582,
+      "tags": [
+        "14-us_open_final_point-plus0.25"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-047-0186.582.jpg",
+      "sha256": "4ea3e94a77ca0c6e856bae556ab4484b674a9273a892885bfa97c13870afc557"
+    },
+    {
+      "time": 187.332,
+      "tags": [
+        "14-us_open_final_point-plus1.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-048-0187.332.jpg",
+      "sha256": "1758082447a48409554df4a2911d8eb3babe8390f084c73fb26e3bdf0715b5b7"
+    },
+    {
+      "time": 190.332,
+      "tags": [
+        "14-us_open_final_point-plus4.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-049-0190.332.jpg",
+      "sha256": "550ac1d0c5d8fe03b793a1a8a9cadb9eaaa5a626e9fa9b674cee93e6c2cac5bf"
+    },
+    {
+      "time": 193.232,
+      "tags": [
+        "14-us_open_final_point-bilingual0"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-050-0193.232.jpg",
+      "sha256": "c5cbfad12a112bc01960c0afcb6857285c3b2ba1b25e599d95468d8d33e47a64"
+    },
+    {
+      "time": 193.332,
+      "tags": [
+        "14-us_open_final_point-plus7.00"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-051-0193.332.jpg",
+      "sha256": "f5de3235b3738da7977802d5ac237020b30d3fd17a2d47a125e5d4fb0c8a8ac3"
+    },
+    {
+      "time": 194.832,
+      "tags": [
+        "14-us_open_final_point-plus8.50"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-052-0194.832.jpg",
+      "sha256": "81e5f2d5e90e3664cd8f5625a9027918047ed0e938c5f394e93444d045a9a762"
+    },
+    {
+      "time": 197.122,
+      "tags": [
+        "14-us_open_final_point-bilingual1"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-053-0197.122.jpg",
+      "sha256": "4fd5dfa204e23c21440f58d0c389e835f1e6cd32276cca5399e61d8338b140d7"
+    },
+    {
+      "time": 197.732,
+      "tags": [
+        "14-us_open_final_point-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-054-0197.732.jpg",
+      "sha256": "794b9d6f8b3947774b7f9fdb65deb67777522e3810fe7796f66803ef99b6f02a"
+    },
+    {
+      "time": 199.942,
+      "tags": [
+        "14-us_open_final_point-bilingual2"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-055-0199.942.jpg",
+      "sha256": "b0d50c1801aabf35967d52e5fba5b7f74824ac10a1393acdaed0a9a2a9c69acf"
+    },
+    {
+      "time": 202.162,
+      "tags": [
+        "14-us_open_final_point-bilingual3"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-056-0202.162.jpg",
+      "sha256": "cf131fb2afba563dfb29b26286f7dd77e52d31330e1f1eb5431026a8a4c9c2af"
+    },
+    {
+      "time": 205.152,
+      "tags": [
+        "14-us_open_final_point-bilingual4"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-057-0205.152.jpg",
+      "sha256": "7e1bdf588d6d264d0fa0d99791a413f35ca6190da2cb4033b97b7db87e1c6cd0"
+    },
+    {
+      "time": 208.782,
+      "tags": [
+        "14-us_open_final_point-plus22.45"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-058-0208.782.jpg",
+      "sha256": "981e956a67da06eb10299bf0b99698a11f46039f136e4565cb14b28cd9dbc323"
+    },
+    {
+      "time": 213.004,
+      "tags": [
+        "15-autumn-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-059-0213.004.jpg",
+      "sha256": "e49e04a6c6ad5ec96c6acfb3f2aeac0219c45aaa32f651824f3e9abf23b7d1fc"
+    },
+    {
+      "time": 220.82,
+      "tags": [
+        "16-qualification-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-060-0220.820.jpg",
+      "sha256": "94cb151b968e021fdbdc610bb6fa3824312c997bfcf308158a20207d24cab98e"
+    },
+    {
+      "time": 228.96,
+      "tags": [
+        "17-late_season-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-061-0228.960.jpg",
+      "sha256": "1e8013031cbfb286ea476783350c4bb6fa7e4b5f3164f1abdfa435afc8e147a5"
+    },
+    {
+      "time": 237.952,
+      "tags": [
+        "18-race_table-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-062-0237.952.jpg",
+      "sha256": "93b093267dd4271e1dfc4fc8c962db068cb1c0a55e6ca453c811d1074084800c"
+    },
+    {
+      "time": 246.74,
+      "tags": [
+        "19-question-middle"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-063-0246.740.jpg",
+      "sha256": "fc882cdec8ac06d31fb84eec54c4aa188b266a35f67cc2c71cc3dd16ffd55220"
+    },
+    {
+      "time": 251.532,
+      "tags": [
+        "native-outro-start"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-064-0251.532.jpg",
+      "sha256": "b38043133d2801a1a2e935aecb3cf50c64f132077cfa019e923ba037cb39311b"
+    },
+    {
+      "time": 254.32,
+      "tags": [
+        "native-outro-final"
+      ],
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/frame-065-0254.320.jpg",
+      "sha256": "212b74a4c2ff5eef08eac2ebbdd9fe79684e54789360138586836b052abf9ac1"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-00.jpg",
+      "sha256": "f6f65fd83544a1ed69210997e0d9150d304db271b52d8d1d4efa2bb9d6d7b46f"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-01.jpg",
+      "sha256": "6522c99f1eb7bb3351791d6dd4a89ef4cda92c870c9ec0eb48cff17d2e570da8"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-02.jpg",
+      "sha256": "3f0d999f09dd60dffe4b403a6908104ec61ef368ccf37e8d55a8152284186e7b"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-03.jpg",
+      "sha256": "604034bcf0980c6e12866d70f63e5f7cc09d7408296b34cc705b995b28c9b142"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-04.jpg",
+      "sha256": "6d2db986404c847002fca01cdbb9402b225d14fa480076694734c3a94cffb419"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v2/contact-05.jpg",
+      "sha256": "f25b30057d51610454ab6da37f55b00be3dc2a103f919f514b5ca6576bd13374"
+    }
+  ]
+}

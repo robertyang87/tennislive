@@ -1,0 +1,75 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-06T02:31:25.314557+00:00",
+  "model": "medium",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+  "clip": [
+    141.7,
+    146.4
+  ],
+  "duration": 4.7,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 141.7,
+      "end": 145.76,
+      "text": "That's how brilliant, from start to finish.",
+      "avg_logprob": -0.7501040421999418,
+      "no_speech_prob": 0.5773208141326904,
+      "words": [
+        {
+          "w": " That's",
+          "s": 141.7,
+          "e": 142.9,
+          "p": 0.5033100377768278
+        },
+        {
+          "w": " how",
+          "s": 142.9,
+          "e": 143.0,
+          "p": 0.6982818245887756
+        },
+        {
+          "w": " brilliant,",
+          "s": 143.0,
+          "e": 143.54,
+          "p": 0.4654715955257416
+        },
+        {
+          "w": " from",
+          "s": 144.46,
+          "e": 144.64,
+          "p": 0.9748539924621582
+        },
+        {
+          "w": " start",
+          "s": 144.64,
+          "e": 144.9,
+          "p": 0.9959141612052917
+        },
+        {
+          "w": " to",
+          "s": 144.9,
+          "e": 145.32,
+          "p": 0.9926895499229431
+        },
+        {
+          "w": " finish.",
+          "s": 145.32,
+          "e": 145.76,
+          "p": 0.9973920583724976
+        }
+      ]
+    }
+  ]
+}
