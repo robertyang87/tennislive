@@ -1,0 +1,188 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4559432/montreal-2026-final-match-point",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26montmp/sh26montmp.mp4",
+  "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_audio_race; actual local two-model ASR, refined-window word timings and local activity reviewed; no human auditory listening claimed",
+  "reviewed_at": "2026-11-06T02:29:25.309485+00:00",
+  "reviewed_from": 0.0,
+  "reviewed_to": 29.0,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 16.38,
+      "end": 20.04,
+      "en": "Ben Shelton delivers a masterful performance in Montreal,",
+      "zh": "谢尔顿在蒙特利尔打出大师级表现，"
+    },
+    {
+      "start": 20.04,
+      "end": 23.18,
+      "en": "that will yield the most glittering of prizes.",
+      "zh": "赢得最耀眼的奖赏。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": [
+    "Both actual small.en and medium.en, in full-source and tight15–24.5 contexts, agree on the complete retained sentence. Two readable clauses preserve every lexical word, with punctuation-only comma at the clause division.",
+    "Ben onset16.38 from full small.en word; Shelton16.62–17.2 agrees across all4 runs. Medium15.68 and tight15/15.82 Ben starts are broad leading envelopes, explicitly not accepted as precise onset. Local strong speech activity16.464 supports late onset. Sentence end23.18 includes final prizes word.",
+    "Rejected small.en Here we go candidate0–14.76: Here has zero duration/probability0 and we spans11.78s; no medium/tight agreement. Rejected That's what it is23.10–23.30: zero-duration weak words, absent other3 runs. These are unsupported ASR hallucination candidates, not claimed spoken English.",
+    "No consistent foreground English after23.18. Visual reviewed source is continuous final point then title reaction and handshake/hug. Source0–29.0 plus native0.5 tail ends29.5 within clean29.52 source."
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-sources/sh26montmp.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "44100",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "29.520000",
+        "size": "14661155"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26montmp/small.en.json",
+      "sha256": "2936d72e0b81233cee14a5e346a199f0f620b6ddc6588050b84c7847da86bc69",
+      "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+      "model": "small.en",
+      "clip": [
+        0.0,
+        29.52
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26montmp/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26montmp/medium.en.json",
+      "sha256": "80115afa6fc434593243ffe3ecf1da7d6360b9aa365507385b9b5e6801cca90b",
+      "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+      "model": "medium.en",
+      "clip": [
+        0.0,
+        29.52
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26montmp/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26montmp/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26montmp/small.en.json",
+      "sha256": "f68770a17ad2b5815ab3f2cdf6dee3427a19a5c73b4d82c37c824197637a8f69",
+      "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+      "model": "small.en",
+      "clip": [
+        15.0,
+        24.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26montmp/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26montmp/medium.en.json",
+      "sha256": "e4561488ac42cdf7d1e2ce831f48876f8bd97d1aa2674f4fd39a34f069375622",
+      "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+      "model": "medium.en",
+      "clip": [
+        15.0,
+        24.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26montmp/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26montmp/medium.en.json",
+      "local_raw_uncommitted": false
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/montreal-speech-activity.json",
+    "sha256": "a481867012b08b2f192e00cbbd7e45a1a278081da9bfdffc85aa4bd8f8a3dcc2",
+    "scope": "Local Silero activity support, not human hearing or precise quiet-syllable/sample boundary proof.",
+    "original_research_path": "/workspace/shelton-finals-production/research/audio/montreal-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 16.38,
+      "end": 20.04,
+      "text": "Ben Shelton delivers a masterful performance in Montreal,\n谢尔顿在蒙特利尔打出大师级表现，"
+    },
+    {
+      "at": 20.04,
+      "end": 23.18,
+      "text": "that will yield the most glittering of prizes.\n赢得最耀眼的奖赏。"
+    }
+  ],
+  "original_review_packet": {
+    "research_path": "/workspace/shelton-finals-production/research/audio/transcripts/montreal-final.json",
+    "sha256": "73063cc1b5df8eb63b12b703fc92bfeac8482f98204ec9469d753cfc69c944f0",
+    "note": "Native integration only binds real unchanged raw repository paths; source/timestamps/cues unchanged."
+  }
+}

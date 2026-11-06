@@ -1,0 +1,184 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26ao/sh26ao.mp4",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_audio_race; actual final-window two-model local ASR, wider-context same-SHA ASR and local activity reviewed; no human auditory listening claimed",
+  "reviewed_at": "2026-11-06T02:40:50.850262+00:00",
+  "reviewed_from": 116.8,
+  "reviewed_to": 139.65,
+  "selected_window": [
+    116.8,
+    139.15
+  ],
+  "native_extra_tail": 0.5,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "no_foreground_english_reason": "Retained complete terminal point contains court/strike/crowd ambience and real brief result reaction; actual short/wide two-model crosscheck and local activity establish no reliable intelligible foreground English in116.8–139.65. Stock-phrase zero-duration hallucinations are explicitly rejected with raw evidence. Next result announcement begins outside retained window.",
+  "review_notes": [
+    "Actual new final-window plus native-tail small.en and medium.en runs cover116.8–139.65; original wide116.4–157 contexts also preserved. Raw outputs are NOT falsely claimed empty.",
+    "Short small hallucination I'll see you next time120.24–137.36 has first word probability.034, see/next zero duration and you15.7s. Short medium I'll see you in the next video138.22–139.62 has first word probability.0305 and all6 following words zero duration at139.62. Neither aligns with wide-context actual raws; no consistent real lexical foreground sentence is established inside selected point. Rejected spurious transcription, not a partially comprehensible live sentence.",
+    "Actual full-point local Silero activity thresholds.3/.5/.7 return no speech regions for116.8–140.3. This supports, but is not alone proof of, no foreground English. Previous wider post-point activity confirms next stable speech139.984/140.016; first wide-context attempted result word139.7, outside retained139.65.",
+    "Previous116.4 pre-point dubious What's the ends116.76, before new116.8. Uncertain142–146 commentary and reliable147.5–152.74 sentence are entirely excluded from new window. They are not declared resolved or erased.",
+    "Source visual owner inspected .05s intervals: serve-prep117–118.2/contact118.6, continuous final rally to138.9, real result close-up139.12 Sinner fist, native tail139.65 extends same fist reaction. No substituted point/preparation. Native requested end139.15 plus.5=139.65 remains before result announcement."
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "181.269333",
+        "size": "83978142"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/short-final-point/sh26ao/small.en.json",
+      "sha256": "28338fb08f7a155f5e4c0bfa3ebb721edacbacde4ca854a9ec7cb6e1e326cd98",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "small.en",
+      "clip": [
+        116.8,
+        139.65
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/short-final-point/sh26ao/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/small.en.json",
+      "fixed_commit": "792ed49a96e8bea14192fe64cd5008f694da9dc9",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/792ed49a96e8bea14192fe64cd5008f694da9dc9/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/short-final-point/sh26ao/medium.en.json",
+      "sha256": "813b4ec21f0808e5752f514571e0bc139daa030284cf11d9e04757b23efcd6fc",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "medium.en",
+      "clip": [
+        116.8,
+        139.65
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/short-final-point/sh26ao/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/medium.en.json",
+      "fixed_commit": "792ed49a96e8bea14192fe64cd5008f694da9dc9",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/792ed49a96e8bea14192fe64cd5008f694da9dc9/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/short-final-point/sh26ao/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/small.en.json",
+      "sha256": "f7a9eef7c10c5db2bd27dcbd847789c397c2b78493decf9ccf8f2f93cfb5901c",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "small.en",
+      "clip": [
+        116.4,
+        157.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/small.en.json",
+      "fixed_commit": "792ed49a96e8bea14192fe64cd5008f694da9dc9",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/792ed49a96e8bea14192fe64cd5008f694da9dc9/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/medium.en.json",
+      "sha256": "f3a9d08b1a1f95b087a9ead70de9126807b87cae46ecabcddc84b3f90e631240",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "medium.en",
+      "clip": [
+        116.4,
+        157.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/medium.en.json",
+      "fixed_commit": "792ed49a96e8bea14192fe64cd5008f694da9dc9",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/792ed49a96e8bea14192fe64cd5008f694da9dc9/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26ao/medium.en.json",
+      "local_raw_uncommitted": false
+    }
+  ],
+  "timing_support": [
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/ao-short-final-point-speech-activity.json",
+      "sha256": "b5381232202e47850dcd464fd88c912df7c858b60202eaf22d2fd99035286fc5"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/early-speech-activity.json",
+      "sha256": "0dc0062cb06a661ed82096e984e385e358a162aad0c81a38563e9bb44478aa32"
+    }
+  ],
+  "supersedes_selected_window": {
+    "prior_packet_path": "/workspace/shelton-finals-production/research/audio/transcripts/australian-open-qf.json",
+    "prior_packet_sha256": "0c662073f750d0cac17b7b6014ea1c60ef465d9a5e13b9e20a178c3d56bbb579",
+    "prior_window": [
+      116.8,
+      153.3
+    ],
+    "retention": "Prior uncertain packet and6 raw contexts remain unchanged as historical research. New short window excludes all prior uncertain post-point speech; nothing is relabeled resolved."
+  },
+  "native_quote": [],
+  "original_review_packet": {
+    "research_path": "/workspace/shelton-finals-production/research/audio/transcripts/australian-open-qf-short.json",
+    "sha256": "205158bbf0b36c0b5d77bcc0183ce299bfe88ae768d0af9e66ed59086a343dff",
+    "note": "Short selectedpoint only, originaluncertainwidepacket retained unchanged; no lexical resolution invented."
+  }
+}

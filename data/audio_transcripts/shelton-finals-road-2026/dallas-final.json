@@ -1,0 +1,189 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4451143/dallas-2026-final-fritz-shelton-short-highlights",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26dallas/sh26dallas.mp4",
+  "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_audio_race; actual local two-model ASR, refined word timing and local speech activity reviewed; no human auditory listening claimed",
+  "reviewed_at": "2026-11-06T02:35:10.751963+00:00",
+  "reviewed_from": 112.3,
+  "reviewed_to": 144.4,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 134.72,
+      "end": 139.48,
+      "en": "Ben Shelton stands alone in the Lone Star State.",
+      "zh": "谢尔顿在孤星之州独占鳌头。"
+    },
+    {
+      "start": 141.72,
+      "end": 144.06,
+      "en": "A new champion crowned in Dallas.",
+      "zh": "达拉斯迎来新王。"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": [
+    "All4 true small.en/medium.en full/tight runs agree on both commentator sentences. Ben raw envelopes133.0–135.04 are not used as exact onset: common Shelton starts135.02/135.04 and local strong speech134.816 support onset134.72. Final a/new words align141.9; full-medium A141.64–141.96 supports141.72, rejecting tight broad139.44–141.92 envelope.",
+    "Unconfirmed medium-only counting One two three four over the21s rally has very high no_speech0.6977, zero-duration words/seconds-long gaps, absent both small and tight runs; do not manufacture counting captions. Medium-only Two sets to one in139.86–141.64 is background umpire overlapping commentary and is not claimed reliable full quotation. Source audio preserved.",
+    "Visual owner confirmed complete same terminal point serve-prep112.3, contact113.1 and long rally ending133.1; actual title reaction retained. Final Dallas word144.06 completed; clean native additional.5s144.9 before ad at148."
+  ],
+  "coverage_policy": "Only reliably established foreground commentary gets bilingual quotation. Retained uncertain or background source speech is documented honestly below, not fabricated or presented as a complete verbatim transcript.",
+  "known_untranscribed_retained_audio": [],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-sources/sh26dallas.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "44100",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "156.640000",
+        "size": "73092724"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26dallas/medium.en.json",
+      "sha256": "553a916b2500b327b6a5a19685c2cff24f17470e5ddc4dd7613820ed850c0851",
+      "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+      "model": "medium.en",
+      "clip": [
+        112.2,
+        147.3
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26dallas/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26dallas/small.en.json",
+      "sha256": "0a411cc3d5ac7159f3a4065b09c8d64a46d50b677d16a618ba292e87d858ce83",
+      "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+      "model": "small.en",
+      "clip": [
+        112.2,
+        147.3
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26dallas/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/sh26dallas/small.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26dallas/medium.en.json",
+      "sha256": "5088d0d3a79ad7919291189ee33e2355620c735c043a48ddfea1e369156add83",
+      "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+      "model": "medium.en",
+      "clip": [
+        133.0,
+        144.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26dallas/medium.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/medium.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/medium.en.json",
+      "local_raw_uncommitted": false
+    },
+    {
+      "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26dallas/small.en.json",
+      "sha256": "c3afdef0b661c0cda710baf096ebde0a69949c2d2958ac9b440d7d8ecac35578",
+      "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+      "model": "small.en",
+      "clip": [
+        133.0,
+        144.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "original_research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26dallas/small.en.json",
+      "repository_path": "data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/small.en.json",
+      "fixed_commit": "9f3d2c52b470f993e2ade5f8cbb57f895f7896ee",
+      "fixed_commit_url": "https://github.com/robertyang87/tennislive/blob/9f3d2c52b470f993e2ade5f8cbb57f895f7896ee/data/audio_transcripts/evidence/shelton-finals-road-2026/raw/refined/sh26dallas/small.en.json",
+      "local_raw_uncommitted": false
+    }
+  ],
+  "timing_support": {
+    "path": "data/audio_transcripts/evidence/shelton-finals-road-2026/early-speech-activity.json",
+    "sha256": "0dc0062cb06a661ed82096e984e385e358a162aad0c81a38563e9bb44478aa32",
+    "scope": "Local Silero activity support only, not auditory listening or precise quiet-syllable proof.",
+    "original_research_path": "/workspace/shelton-finals-production/research/audio/early-speech-activity.json"
+  },
+  "native_quote": [
+    {
+      "at": 22.42,
+      "end": 27.18,
+      "text": "Ben Shelton stands alone in the Lone Star State.\n谢尔顿在孤星之州独占鳌头。"
+    },
+    {
+      "at": 29.42,
+      "end": 31.76,
+      "text": "A new champion crowned in Dallas.\n达拉斯迎来新王。"
+    }
+  ],
+  "original_review_packet": {
+    "research_path": "/workspace/shelton-finals-production/research/audio/transcripts/dallas-final.json",
+    "sha256": "8d0f57e2ed6bc8fd8c2ada02a248f8a23925438f9a2d50121750a5ffafd4e6ab",
+    "note": "Native integration only binds real unchanged raw repository paths; source/timestamps/cues unchanged."
+  }
+}
