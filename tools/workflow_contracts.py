@@ -145,8 +145,12 @@ def _calling_functions(tree: ast.Module, names: set[str]) -> set[str]:
 
 def pages_entries(root: Path) -> tuple[set[str], set[str]]:
     """Discover actual Pages callers, including one-film adapters, from source AST."""
-    probes = {"drop_dead_copy_button", "wait_for_copy_page", "trigger_pages_build"}
-    scripts = {path.name for path in (root / "tools").glob("*.py")
+    # `wait_for_delivery`（push_reel）把 `wait_for_copy_page` 当函数对象交给线程池，AST 里不是一次调用，
+    # 所以要单列；vibetennis 的 `tools/vibetennis/push.py` 经它等复制页、派发 Pages 补部署（2026-11-06
+    # EP08 英文版：缺 actions: write，派发回 403，复制页一直 404），子目录也要扫到。
+    probes = {"drop_dead_copy_button", "wait_for_copy_page", "trigger_pages_build", "wait_for_delivery"}
+    paths = [*(root / "tools").glob("*.py"), *(root / "tools" / "vibetennis").glob("*.py")]
+    scripts = {path.name for path in paths
                if _calling_functions(ast.parse(path.read_text(encoding="utf-8")), probes)}
     cli = root / "src/tennislive/cli.py"
     channels = set()

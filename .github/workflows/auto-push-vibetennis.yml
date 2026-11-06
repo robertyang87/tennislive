@@ -13,9 +13,19 @@ on:
     branches: [main]
     paths:
       - "output/*/vibetennis/*/render.json"
+  # 补发入口：自动那一趟没发出去（比如 2026-11-06 EP08 英文版：Pages 部署撞车、复制页一直 404，
+  # 推送步骤在等复制页时整趟超时被取消），核实微信确实没发之后，指定那份 render.json 再走一遍同样的闸。
+  workflow_dispatch:
+    inputs:
+      render_json:
+        description: "output/<日期>/vibetennis/<slug>/render.json（只认 main 上已有的那份）"
+        required: true
+        type: string
 
 permissions:
   contents: write
+  # push.py 等复制页时会派发 pages.yml 补一次部署；没有这一条，派发回 403（2026-11-06 实测）
+  actions: write
 
 concurrency:
   group: auto-push-vibetennis
@@ -24,7 +34,9 @@ concurrency:
 jobs:
   push:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    # 整趟上限要比推送那一步的上限宽：推送步骤自己超时算「失败」，后面「标记状态不明」那一步还能跑；
+    # 整趟超时算「取消」，那一步不跑，账本里会留一条 sending 挂着（2026-11-06 EP08 英文版就是这样）
+    timeout-minutes: 60
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
     steps:
@@ -50,8 +62,16 @@ jobs:
 
       - name: 挑出该自动发的那一条
         id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+          RENDER_JSON: ${{ inputs.render_json }}   # 走环境变量，不直接拼进脚本
         run: |
-          CHANGED=$(git diff --diff-filter=AM --name-only HEAD^ HEAD -- 'output/*/vibetennis/*/render.json')
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            CHANGED="$RENDER_JSON"
+            case "$CHANGED" in output/*/vibetennis/*/render.json) ;; *) echo "::error::render_json 形状不对：$CHANGED"; exit 1;; esac
+          else
+            CHANGED=$(git diff --diff-filter=AM --name-only HEAD^ HEAD -- 'output/*/vibetennis/*/render.json')
+          fi
           if [ -z "$CHANGED" ]; then
             echo "[vibetennis] 这次没有动到任何 render.json。"
             exit 0
@@ -78,6 +98,8 @@ jobs:
 
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
+        # 复制页最多等 60 × 40 s = 40 分钟；这一步自己超时算失败，好让后面把账本标成「状态不明」
+        timeout-minutes: 45
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
