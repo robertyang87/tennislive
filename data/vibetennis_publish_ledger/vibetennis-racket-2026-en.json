@@ -1,0 +1,16 @@
+{
+  "slug": "vibetennis-racket-2026-en",
+  "channel": "pushplus",
+  "attempts": [
+    {
+      "key": "pushplus:vibetennis:vibetennis-racket-2026-en:6285b93fa32afbf73bbd29300c43bad069818ce9cacd98a7315ea6570cbb081a",
+      "fingerprint": "6285b93fa32afbf73bbd29300c43bad069818ce9cacd98a7315ea6570cbb081a",
+      "status": "sent",
+      "at": "2026-11-06T12:53:28Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/42221059206",
+      "_why": "2026-11-06 会话核实：这趟 run 在「推送到微信」步骤里一直停在 push.py 的 wait_for_delivery（POST 之前等复制页上线）。复制页从头到尾 404：pages.yml 对 5d1d05ac7 的部署撞上上一趟进行中的部署失败（Deployment request failed … due to in progress deployment），push.py 自己派发 pages 补部署回 403（工作流缺 actions: write）；12:12:44Z 整趟 35 分钟超时被取消，pr.push 一次都没调到，日志里没有「已推送」、没有流水号。所以微信没有发出去；改成 not_sent，用 workflow_dispatch 补发。",
+      "pushplus_receipt": "7b4650cb5d794a0681e02c8a63f7c1c1",
+      "message_url": "https://www.pushplus.plus/shortMessage/7b4650cb5d794a0681e02c8a63f7c1c1"
+    }
+  ]
+}

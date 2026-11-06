@@ -5,15 +5,15 @@
     "schema": "tennislive.frozen-tts-bundle.v1",
     "bundle_sha256": "81dd31c67769a1efdc4684e15b043ebab76b2d7ce888e6899f97429e6d37643e",
     "request_count": 22,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "release_tag": "reel-tts-wta-finals-hotmic-2026-81dd31c67769a1ef",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-wta-finals-hotmic-2026-81dd31c67769a1ef/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42203815208"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42245833536"
   },
   "cover_seconds": 5.362,
   "cover_narrated": true,
@@ -62,44 +62,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "ec2d2155d1a0c586ba2c0eee521d24793fa662c62cadec0a0bb422c0e59e1b8d",
+  "render_inputs_sha256": "d1eab621a62cc90bb45240ea9530f6abfcf45d069d5e4494a448f271ff63dd52",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "wta-finals-hotmic-2026",
-    "received_at": "2026-11-06T10:35:24Z",
-    "artifact_ready_at": "2026-11-06T10:44:51Z",
-    "elapsed_seconds": 567.904,
+    "received_at": "2026-11-06T15:44:29Z",
+    "artifact_ready_at": "2026-11-06T15:54:19Z",
+    "elapsed_seconds": 590.986,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "3a4ca90b4142be974342d363c5187b26416d88b5e24fe0642f6f76875d9a57ac",
-    "spec_sha256": "20ae305d3e46618a882722a13960efa8b7c1b5c3d80738cb2170b0fb3668ef97",
-    "run_id": "42203815208",
+    "film_sha256": "ca1dc4a91d3e2e0720496970e3bb3761d22ba0275b2952486c183e7491704af2",
+    "spec_sha256": "4c930fae5e295093d3fd6a18795a39edcc2f1ae646d4e38c5ebc858b4ef371b8",
+    "run_id": "42245833536",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-06T10:40:26Z",
-        "run_id": "42203815208"
+        "at": "2026-11-06T15:49:52Z",
+        "run_id": "42245833536"
       }
     ],
-    "render_seconds": 265.904,
-    "pre_render_seconds": 302.0
+    "render_seconds": 267.986,
+    "pre_render_seconds": 323.0
   },
-  "film_sha256": "3a4ca90b4142be974342d363c5187b26416d88b5e24fe0642f6f76875d9a57ac",
-  "film_bytes": 123337877,
-  "qc_attestation_sha256": "b548a1c0b9b7e3d339acaf2fb2882976637e2e11f7558b89a04d1fa0943b8a72",
+  "film_sha256": "ca1dc4a91d3e2e0720496970e3bb3761d22ba0275b2952486c183e7491704af2",
+  "film_bytes": 123201254,
+  "qc_attestation_sha256": "81724de2191c198d012f3cb3c550a5fce4d9035dcc7359df95f4dcab1b6958c6",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-06T10:40:26Z",
-      "run_id": "42203815208"
+      "at": "2026-11-06T15:49:52Z",
+      "run_id": "42245833536"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-06T10:44:56Z",
-      "run_id": "42203815208"
+      "at": "2026-11-06T15:54:23Z",
+      "run_id": "42245833536"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-wta-finals-hotmic-2026/wta-finals-hotmic-2026.mp4",
-  "video_bytes": 123337877
+  "video_bytes": 123201254
 }
