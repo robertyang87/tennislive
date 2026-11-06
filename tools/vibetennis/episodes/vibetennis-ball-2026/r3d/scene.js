@@ -480,8 +480,11 @@ function shotMake(u,D){
 function shotColor(u,D){
   const WB=ev('wb',0.5), TV=ev('tv',3.7), YE=ev('yel',5.7), WI=ev('wim',8.9);
   if(u<WI-0.3){ heroOp(hero,1); hero.g.rotation.set(0.3,u*0.7,0.1);
-    const ph=u<TV?(Math.floor((u-WB)/1.2)%2+2)%2:-1; const map=u<YE?(ph===1?TEX.black:TEX.white):TEX.yellow; heroOp(hero,1,map);
-    const flash=ss(YE,YE+0.25,u)*(1-ss(YE+0.25,YE+0.9,u)); hero.g.scale.setScalar(1+0.08*flash);
+    /* 白、黑、黄三颗同位叠放、透明度交叉过渡（原来按 1.2 s 换贴图，motion_check 在 75–78 s 量到 14–15 的跳变） */
+    const blk=u<TV?0.5-0.5*Math.cos(Math.PI*Math.max(0,u-WB)/1.2):lerp(0.5-0.5*Math.cos(Math.PI*(TV-WB)/1.2),0,ss(TV,TV+0.8,u)), yel=ss(YE-0.4,YE+0.4,u);
+    const flash=ss(YE,YE+0.25,u)*(1-ss(YE+0.25,YE+0.9,u));
+    heroOp(hero,1,TEX.white); heroOp(hero2,blk*(1-yel),TEX.black); heroOp(hero3,yel,TEX.yellow);
+    [hero,hero2,hero3].forEach((H,i)=>{ H.g.rotation.copy(hero.g.rotation); H.g.scale.setScalar((1+0.08*flash)*(1+0.003*i)); });
     const lb=tx('cWB',T('白，或黑：看场地的颜色','White or black, depending on the court'),{color:'#ffffff',size:0.36}); lb.position.set(0,-1.7,0.5); op(lb,ss(WB,WB+0.6,u)*(1-ss(TV-0.4,TV,u)));
     pnOp(tvP,ss(TV,TV+0.6,u)); tvP.position.set(0,0,-0.3);
     const y=t3d('y1972','1972','#ffd27a',0.7); y.g.position.set(-2.1,1.25,0.2); t3op(y,ss(TV+0.2,TV+0.8,u));
@@ -499,7 +502,7 @@ function shotImpact(u,D){
   const SR=ev('str',0.5), WA=ev('wall',5.3), SQ=ev('squash',7.6), BU=ev('bub',15.2), AI=ev('air',18.5), SE=ev('serve',21.7), FL=ev('fluff',25.8), BA=ev('bald',29.3), CO=ev('cold',32.0), AL=ev('alt',38.5);
   if(u<WA-0.3){ // 线床上停留：慢放、毫秒计数
     SLOW=[SR+0.2,SR+1.0]; bedG.visible=true; bedG.rotation.y=0.5; bedG.position.set(0,0,0);
-    const ms=clamp((u-SR-0.8)/3.2)*4.5; const inC=u>SR+0.8&&ms<4.5; const z=u<SR+0.8?lerp(6,0.95,ss(SR,SR+0.8,u)):(ms<4.5?0.95-0.35*Math.sin(ms/4.5*Math.PI):0.95+(u-SR-4)*4);
+    const ms=clamp((u-SR-0.8)/3.2)*4.5; const inC=u>SR+0.8&&ms<4.5; const z=u<SR+0.8?lerp(3.0,0.95,ss(SR,SR+0.8,u)):(ms<4.5?0.95-0.35*Math.sin(ms/4.5*Math.PI):0.95+(u-SR-4)*4);
     heroOp(hero,1); hero.g.position.set(0,0,0).add(V(Math.sin(0.5)*z,0,Math.cos(0.5)*z)); const sq=inC?0.35*Math.sin(ms/4.5*Math.PI):0; hero.g.rotation.set(0,0.5,0); hero.g.scale.set(1+sq*0.4,1+sq*0.4,1-sq);
     const n=Math.min(9,Math.round(ms*2)); const c=tx('ms'+n,T(fmt(n/2)+' 毫秒',fmt(n/2)+' ms'),{color:'#ffffff',size:0.6,glow:GOLD}); hud(c,-3.2,1.9); op(c,ss(SR+0.6,SR+1,u));
     const l=tx('pStr',T('在线床上：4 到 5 毫秒','On the strings: 4–5 ms'),{color:'#ffe2a0',size:0.36,glow:GOLD}); hud(l,-3.2,1.2); op(l,ss(SR+1.4,SR+2,u));
@@ -652,7 +655,7 @@ function shotFuture(u,D){
   if(u<GR-0.3){ pile.visible=true; pile.material.opacity=1; const k=ss(PI_,PI_+2.5,u); const sink=ss(FI,FI+2.5,u)*2.0;
     for(let i=0;i<PILE_N;i++){ const p=PILE[i]; const show=p[4]<k; const drop=show?Math.max(0,(1-ss(p[4]*2.5+PI_,p[4]*2.5+PI_+0.8,u)))*6:20; dummy.position.set(p[0],p[1]+drop-sink,p[2]); dummy.rotation.set(p[3],p[3]*2,0); dummy.scale.setScalar(show?1:0.0001); dummy.updateMatrix(); pile.setMatrixAt(i,dummy.matrix); }
     pile.instanceMatrix.needsUpdate=true;
-    if(u>FI-0.3){ layer.visible=true; layer.material.color.set(0x3a2a1c); layer.material.emissive.set(0x140a04); layer.position.set(0,lerp(-2,0.6,ss(FI,FI+2.5,u)),0); layer.material.opacity=0.95; }
+    if(u>FI-0.3){ layer.visible=true; layer.material.color.set(0x3a2a1c); layer.material.emissive.set(0x140a04); layer.position.set(0,lerp(-2,0.6,ss(FI,FI+2.5,u)),0); layer.material.opacity=0.95*ss(FI-0.3,FI+0.6,u); }   /* 淡入（原来整块突然出现，240.1 s 跳变 44） */
     const l=tx('fP',T('每年生产：数以亿计','Made every year: hundreds of millions'),{color:'#ffffff',size:0.44,plate:true}); hud(l,0,2.5); op(l,ss(PI_,PI_+0.6,u)*(1-ss(FI-0.3,FI,u)));
     const l2=tx('fF',T('橡胶和毛毡拆不开 · 大多填埋','Rubber and felt can\'t be separated · mostly landfill'),{color:'#ffd2a8',size:0.4,glow:RED,plate:true}); hud(l2,0,2.5); op(l2,ss(FI,FI+0.6,u)*(1-ss(NO-0.3,NO,u)));
     const l3=tx('fN',T('威尔逊 2023：职业标准、又能完全回收的球，还没有','Wilson, 2023: no fully recyclable ball meets elite specs yet'),{color:'#ffe2a0',size:0.38,glow:GOLD,plate:true}); hud(l3,0,2.5); op(l3,ss(NO,NO+0.6,u));
@@ -661,7 +664,7 @@ function shotFuture(u,D){
     const v=u-GR;
     if(u<NE-0.3){ layer.visible=true; layer.material.color.set(0x1b5aa3); layer.material.emissive.set(0x082650); layer.position.set(0,-0.25,0); layer.scale.set(1,lerp(0.05,1,ss(0.5,3.5,v)),1); layer.material.opacity=1;
       for(let i=0;i<4000;i++){ const p=CR[i]; const life=(p[3]+v*0.4)%1; cset(crumbs,i,(p[0]-0.5)*14,lerp(6,0.1,life),(p[1]-0.5)*14,0.85,0.95,0.4,0.6*(1-ss(0.9,1,life))*ss(0,0.6,v)); } cdone(crumbs);
-      courtG.visible=v>1.5; courtG.position.y=0.26; courtG.userData.mat.opacity=ss(1.5,3.5,v);
+      /* 不再叠球场：球网是不透明的，跟着 v>1.5 一下子冒出来（251.2 s 跳变 49）；底层自己就是蓝色球场面 */
       const l=tx('fG',T('旧球碾碎，铺进球场底层','Old balls ground into a court\'s base layer'),{color:'#ffffff',size:0.38}); hud(l,0,2.5); op(l,ss(0.2,0.8,v));
       look(lerp(9,7,ss(0,NE-GR,v)),5,9,0,0,0); rims(0xd6ee3a,0x4fe3ff,4); return; }
     const w=u-NE; grass.visible=true; grass.material.opacity=1; nest.visible=true; nest.position.set(0,0.33,0); nest.rotation.y=-0.3+w*0.1; nest.scale.setScalar(3);
