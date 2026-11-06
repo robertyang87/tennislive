@@ -1,11 +1,11 @@
 {
   "schema": "tennislive.foreground-audio-review.v1",
-  "plan_sha256": "3060566dbc668f3bbfb0e313eab9541c5116d082caac5a4c5682f0af3d9a0942",
+  "plan_sha256": "69915c11a1c6dc82e7289c2df0049a96f29001b687877d2cd19708422cd2bea0",
   "segments": [
     {
       "index": 2,
-      "transcript_path": "data/audio_transcripts/shelton-finals-road-2026/australian-open-qf-short.json",
-      "transcript_sha256": "4c55c8d22cfe1c9d6bb688ae79f2a5e3290855391e020b169ab238126eb444fc"
+      "transcript_path": "data/audio_transcripts/shelton-finals-road-2026/australian-open-qf-13965end.json",
+      "transcript_sha256": "b76e7d1490bf6a06a0520820cfa0ba34b85ad5860fb508dc630d8cd7ee5a8319"
     },
     {
       "index": 4,
@@ -19,8 +19,8 @@
     },
     {
       "index": 11,
-      "transcript_path": "data/audio_transcripts/shelton-finals-road-2026/montreal-final.json",
-      "transcript_sha256": "c8aa685e70442eb55d75fc28b0b991e38409e5fc9129c1d20f3416f6ab8d3947"
+      "transcript_path": "data/audio_transcripts/shelton-finals-road-2026/montreal-final-start196.json",
+      "transcript_sha256": "b68e259fc9eef7f0bf1a92a2ced22029b47ff8094ad69bd68e4dd0210400f7a0"
     },
     {
       "index": 14,
@@ -28,5 +28,5 @@
       "transcript_sha256": "04843c28534a6dc3765fbf29abacd0584b9193a980c58f3ec16d7596e6829b6b"
     }
   ],
-  "method_note": "Actual5immutable sources, real full-selectedwindow crossmodelraw evidence and retained sourceaudio; no human hearing claim, no hidden unresolvedphrase. AOwideuncertainties remain outside newselectedpoint and preservedpriorpacket."
+  "method_note": "v2actualsourcewindows after blockedv1picture review. AO139.65bodyend retains reaction and silent.5visualtail; Montrealfirstwide1.96 excludes half-face with entirepoint. Same sourceSHA/unchangedraw/TTS. Actualv2filmQA required."
 }

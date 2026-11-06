@@ -1,0 +1,315 @@
+{
+  "reviewer": "/root/shelton_media_late",
+  "created_utc": "2026-11-06T02:24:15.483292+00:00",
+  "crop_requirement": {
+    "cx": 0.5,
+    "track": false,
+    "fit": "fill",
+    "canvas": [
+      1080,
+      1440
+    ]
+  },
+  "sources": [
+    {
+      "key": "us-open-final",
+      "source_id": "b40hO04eyLo",
+      "official_url": "https://www.youtube.com/watch?v=b40hO04eyLo",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-b40hO04eyLo/b40hO04eyLo.mp4",
+      "local_shared_path": "/workspace/zverev-finals-production/research/media-late/b40hO04eyLo.mp4",
+      "sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+      "size_bytes": 109152434,
+      "duration_s": 303.275828,
+      "width": 1920,
+      "height": 1080,
+      "fps": "60000/1001",
+      "reviewed_window": [
+        9,
+        31.8
+      ],
+      "native_tail_s": 0.5,
+      "tail_reviewed_through": 32.3005,
+      "point_stages": {
+        "prep": [
+          9,
+          11.4
+        ],
+        "toss": 11.5,
+        "contact": 12.25,
+        "rally_result_by": 14.5,
+        "true_shelton_loser_reaction": [
+          30,
+          31
+        ],
+        "native_tail": "same-match players approach net; no promo or next spoken sentence"
+      },
+      "result": "Zverev d Shelton 6-3 7-6(2) 5-7 6-2; 2026 US Open final",
+      "visual_status": "personally-opened full-source 12 evenly-spaced frames, dense point contact, 30–34.85s tail, every-frame 31.8–32.3005s native tail; PASS for selected window",
+      "audio_reference": "/workspace/zverev-finals-production/research/audio/packets/us-open-matchpoint.json",
+      "audio_status": "sent selected 9–31.8 to dedicated audio reviewer; no ASR rerun by this reviewer",
+      "notes": "Full source ends with US Open social-media promo around302s, not in selected window. Existing contact b40hO04eyLo-contact covers first60s only; true full303s sheet is us-final-whole-contact.jpg."
+    },
+    {
+      "key": "montreal-final",
+      "source_id": "sh26montmp",
+      "official_url": "https://www.tennistv.com/videos/4559432/montreal-2026-final-match-point",
+      "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26montmp/sh26montmp.mp4",
+      "local_shared_path": "/dev/shm/shelton-sources/sh26montmp.mp4",
+      "sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+      "size_bytes": 14661155,
+      "duration_s": 29.52,
+      "width": 1920,
+      "height": 1080,
+      "fps": "25/1",
+      "reviewed_window": [
+        0,
+        29
+      ],
+      "native_tail_s": 0.5,
+      "tail_reviewed_through": 29.48,
+      "point_stages": {
+        "receiver_closeup_prep": [
+          0,
+          1.8
+        ],
+        "wide_server_pre_toss": [
+          2.2,
+          2.6
+        ],
+        "toss_and_contact": [
+          3,
+          3.8
+        ],
+        "continuous_rally": [
+          4.2,
+          15.5
+        ],
+        "true_winner_reaction": [
+          16,
+          20
+        ],
+        "handshake_hug": [
+          27,
+          29.48
+        ]
+      },
+      "result": "Shelton d Nakashima 6-3 7-6(4); Montreal2026 final; defended2025 Canadian Masters title, not first Masters",
+      "visual_status": "personally-opened full29.52s source 18 evenly-spaced frames, dense serve/result18frames, tail12frames and every frame29.0–29.48; PASS candidate window0–29.0",
+      "audio_status": "same immutable SHA handed to dedicated audio reviewer; final endpoint can shorten only following complete source sentence review",
+      "notes": "Single continuous main court through terminal rally; real same-point reaction cuts only. No split/composite/follow-ball source. Entire source ends29.52; require selected29.0+native0.5<=29.52. Native source tmpfs only temporary; immutable Release is permanent authoritative bytes."
+    },
+    {
+      "key": "wimbledon-r1",
+      "status": "UNRESOLVED_COMPLETE_TERMINALPOINT_NATIVE1080",
+      "result": "Virtanen d Shelton6-4 3-6 6-7(8)6-2 7-6(9);30June2026",
+      "official_youtube": [
+        "https://www.youtube.com/watch?v=a6HvkxUiuo0",
+        "https://www.youtube.com/watch?v=Jmg39_oW4jY"
+      ],
+      "official_social_candidate": "https://x.com/Wimbledon/status/2071988727195291655",
+      "official_broadcaster_candidate": "https://x.com/espn/status/2071986111220429117",
+      "social_identity_proof": "https://tennisnow.com/opportunity-missed-fourth-seeded-shelton-falls-to-virtanen-on-day-2-at-wimbledon/ (embedded official June30post)",
+      "block": "Producer normal YouTube archive hit bot gate; no bypass requested. Official site slamtracker only page shell and no standalone public player extracted. X candidates given producer for normal native archive, may be image not video until probed.",
+      "additional_official_player_candidates": [
+        {
+          "url": "https://www.wimbledon.com/en_GB/video/OttoVirtanenFirstRoundPostmatchInterview",
+          "identity": "Official tournament web player",
+          "public_exclusive_flag": false,
+          "body_duration_s": 161,
+          "hls_manifest": "https://content.wimbledon.com/is/content/AELTC/Otto+Virtanen+First+Round+Post-match+Interview-AVS.m3u8?packagedStreaming=true",
+          "pixel_review_status": "not acquired; could include lead-in but unproven"
+        },
+        {
+          "url": "https://www.rsi.ch/play/tv/sport-rsi/video/wimbledon-highlights-di-virtanen-shelton-30-06-2026?urn=urn%3Arsi%3Avideo%3A3857624",
+          "identity": "Official Swiss broadcaster RSI",
+          "pixel_review_status": "candidate only; do not bypass geographical or auth block"
+        }
+      ],
+      "search_evidence": [
+        "wimbledon-content-june30-response.json",
+        "wimbledon-content-1148.json",
+        "wimbledon-content-atps0s1.json",
+        "wimbledon-content-atpv0am.json",
+        "wimbledon-virtanen-interview-player.json"
+      ],
+      "verified_rejections": [
+        {
+          "url": "https://x.com/Wimbledon/status/2071988727195291655",
+          "reason": "Native producer archive: no video found; official post is not usable video",
+          "run": 42150316317
+        },
+        {
+          "url": "https://www.wimbledon.com/en_GB/video/OttoVirtanenFirstRoundPostmatchInterview",
+          "reason": "Actual public HLS first12s0/1 audience then2–11 microphone interview; no terminalpoint lead-in. Low-res diagnostic only, not production source.",
+          "visual_evidence": "wim-interview-candidate-first12-contact.jpg"
+        },
+        {
+          "url": "https://x.com/espn/status/2071986111220429117",
+          "reason": "Actual full24.725333s personally viewed16frames: starts after point atVirtanen armsup, entireclipreactions/net; no point. 1280×720 also below production source requirement.",
+          "sha256": "ec7be1b3e9eb1227a8ee35d6898f0e1d058237d97354011b162cbb0284204cad",
+          "visual_evidence": "wim-espn-candidate-whole-contact.jpg",
+          "probe_evidence": "espn-wim-candidate-probe.json"
+        },
+        {
+          "url": "https://x.com/sportsonmaxfi/status/2071988932653260872",
+          "reason": "Publicmetadata lists1920×1080MP4 but producer actualGET403; not bypassed/retried. Mynormalyt-dlpformatlist only4MP4/no HLS; proto:m3u8 appears merelysortpreference. No actualpixels reviewed.",
+          "metadata_evidence": "maxfi-public-formats.json",
+          "producer_run": 42150894585
+        },
+        {
+          "url": "https://x.com/TSN_Sports/status/2071987061750436009",
+          "reason": "Normalpublicmetadata24.682s highest1280×720; source requirementreject, no full source download.",
+          "metadata_evidence": "tsn-public-formats.json"
+        },
+        {
+          "url": "https://www.rsi.ch/play/tv/sport-rsi/video/wimbledon-highlights-di-virtanen-shelton-30-06-2026?urn=urn%3Arsi%3Avideo%3A3857624",
+          "reason": "Ordinary requestsGET404 and normalyt-dlp404; no access bypass."
+        },
+        {
+          "url": "https://www.wimbledon.com/en_GB/video/after_career_best_win_virtanen_staying_grounded",
+          "reason": "Public nonexclusive150s websitefeature diagnostic512full source inspected24even frames and100–132everysecond33frames. 103–108Virtanenreceivercloseup;109alreadyreturning;Sheltonterminalpointserve preparation/toss/contact entirelynotshown;109–117lowangleonlyreceiverdoesnotshowfullboth-sideballpath. Largebakedletterboxing andmiddle10–9/11–9score. Authentic same-match artistic B-roll but cannotservecompletepoint rule. No production archive dispatched.",
+          "visual_evidence": [
+            "wim-feature-candidate-full-contact.jpg",
+            "wim-feature-candidate-point-detail.jpg"
+          ],
+          "player_evidence": "wimbledon-virtanen-feature-player.json"
+        }
+      ],
+      "final_disposition": "Root accepted honest gap: same-match genuine AP still photograph with accurate frozen narration. No Wimbledon source archived or represented as complete terminal point.",
+      "interview_full_review": "Additional161sinterviewlowdiagnosticfullsource24evenframes personallyopened, allinterview/crowd, nohiddenrallyreplay; wim-interview-candidate-full-contact.jpg."
+    }
+  ],
+  "evidence_jpeg_sha256": {
+    "montreal-serve-result-15.50.jpg": "60a1b4f4348db641bcad10c32c2a8c6464371ce93205846c1fb88fe4ab2961fe",
+    "montreal-26.00.jpg": "cf15107591c11e36a57d46008e4041f3b2b5fc6d8e4db6b6353ddc49a254045a",
+    "montreal-serve-result-01.80.jpg": "b1b7399dbaba5ab6070bf833f1b9a4d3f486f59d6d0a5efa18d7835f724ca05e",
+    "us-final-native-tail-06.jpg": "9b197b475f81bceabd88178fa4689bc49577b295b4fecee04e621591cf1dad65",
+    "us-final-native-tail-25.jpg": "1779c2b467d36023b757c64a9de27116ba23239c15731d198b47445140d3d9a3",
+    "us-final-whole-0082.50.jpg": "7e239011cf001b286a2cfb78e4b1df69b462f9119ab7ebb0a809e71d57dedbf8",
+    "montreal-native-tail-08.jpg": "3f6075aec52ce4af5375c57f2e29f17fdd519842c6663a89ff26c56b9369b2f0",
+    "wim-espn-candidate-whole-contact.jpg": "3a1874ce379aa55d61888a7ffa0537bb55c5dc233fb7c4a7fd5382968bb5cc91",
+    "montreal-22.00.jpg": "c742de45944104102a5ea65a0eefe1585c5efcff935e9de1dd1d7d1629ce2c9f",
+    "us-final-clean-tail-0034.00.jpg": "80685e3ece73aceb9cedd757784c21c7c9d4e6f25e4f951d795538fec3008572",
+    "us-final-native-tail-30.jpg": "7b83ed19423c97d3238562064f5cfae1d11819e73b43a9f4fa43305d2a2bd3ae",
+    "us-final-native-tail-18.jpg": "4a2da4fda1c6fa06898566c0293f07794035e9e23d8e7065c0ed39e28d14a872",
+    "montreal-tail-28.60.jpg": "cc868005ae2786d5ef656375e929622f5801f4ccbdb6f33706278df0bfa4a757",
+    "us-final-clean-tail-0034.60.jpg": "86f0596b80973bbea2598d2d6e0ec3662b28183d1886a0f184bdcbdd19efb257",
+    "montreal-native-tail-00.jpg": "149930dcd95120acae7ab52c53ad04062967e454893e4962acd74d3703b77598",
+    "montreal-serve-result-03.40.jpg": "cfde4cec385bd8ae55c324b14fd9e7b65356d21e43f7d96f53dc367528a6df37",
+    "montreal-whole-contact.jpg": "9508d0cda1a12d00b0115090adc75a7bd1ac75f4a30eeaa08896f5dcd82f9a05",
+    "montreal-tail-29.12.jpg": "02c75b090e022f9917334e1b9db34542dadc83407f78b3b4724f9811190fa499",
+    "montreal-02.00.jpg": "cad9a22a8aa8604a7591d1c3f50e6d76db3448ec37a4e450a11545ac055ea1a4",
+    "us-final-native-tail-11.jpg": "7588f1c004266c9b20c4606b5fa76c7af28247e210fb2dec136b2c28aad8a09f",
+    "us-final-native-tail-17.jpg": "75eac97371906cbd690d14bff65120bce2303aa0fd49cd26066906ef0453ecd2",
+    "montreal-tail-29.48.jpg": "62eb866e35b091280b787237700a29c5036566d57b6024a6ea3b3a286dcda2c4",
+    "montreal-serve-result-03.80.jpg": "dd957ac811f5f43756ce35612a29900eaa2f706d7453cc4cd27752aba50763dd",
+    "us-final-native-tail-08.jpg": "05c34f5579938031a1eb999f182f624031cc90e485525ffc96f115d68fe1e703",
+    "montreal-08.00.jpg": "061b40cd02ae1f2d454b88d6d23e9581b986689b851c8b06ec10749c28e100d3",
+    "montreal-serve-result-01.40.jpg": "db226bb1c66d03b9fa2def06ce3fe7a7f58b1a05400606d8b4b68df14159062f",
+    "us-final-whole-0247.50.jpg": "e238efdbb5b3e27609630b199d8c813f61bee6e21169cdb091254d8dc14b757d",
+    "montreal-serve-result-13.00.jpg": "a334e00e4a9112d86257cb70f4ae11a8f9ad4c23fec343d24518ce714f8eb6b6",
+    "us-final-whole-0220.00.jpg": "62a4102b490d7b4805e4c66a680a36bcc9ee442ca3186aa3fd9fd912aada8706",
+    "montreal-20.00.jpg": "24256e6746f2514d9a4782be5de239b036baeb6e1d7963e067d436cebeaf27bd",
+    "montreal-tail-29.24.jpg": "9e1449b9a29f24568836617bc1b45a889c805f6288718bac317707a3a2a4f40a",
+    "montreal-tail-contact.jpg": "5b2c4cf51978824a0116c4df3b02b321d901936e72b55c7217138d81d604dd69",
+    "us-final-native-tail-23.jpg": "87c92f381153f140c23310adeb579415474f418c29f18542cf79f8c9bf11869d",
+    "us-final-native-tail-07.jpg": "eecf6653d42495b6bae2b15ede55ff2a0ec6d86692b6819dd6aed3aa68c67f02",
+    "us-final-clean-tail-0031.00.jpg": "96e4c3185b92ced9f5ac2bff3563b9f06f645fed455fff30c1d6af5f73b43ae2",
+    "montreal-06.00.jpg": "2278a6dadea23a1485a75f0166a3c77a2ea5bc02f0d08df9d24b7de6e87bbd29",
+    "montreal-10.00.jpg": "364104cd1a92ab2d4631ecac386c2e13047fb12dcab1e2e1b801279dd8209823",
+    "montreal-native-tail-03.jpg": "29bf9b4898c802f6a4c3f36a0d8eca35149b6d935012149bab66255235b8c2fe",
+    "us-final-native-tail-01.jpg": "01cef55ec08112e287c61d8042d6c90c11faf8b2e3f6645c0cf9ded3b13f4bb3",
+    "us-final-whole-0110.00.jpg": "b94b3c40bd683a4dd9c85af219525a3b0de3fb4ebcfac15f80a458eadac3108f",
+    "us-final-whole-0165.00.jpg": "fcb35c846401c6c4302adf6692e0ac675c6a9a503ce08bf1f3c26051cf03f164",
+    "us-final-clean-tail-0034.40.jpg": "cad6f9a70626d0f9c31c7491bb772361bd93057fe81fa3c1d4b89ede0def6a6c",
+    "montreal-serve-result-14.00.jpg": "a4fd7e077b0a5f7f62d01eb300e45da9b573a50fc8dbd9648a2b8a6d62a58e37",
+    "montreal-28.00.jpg": "785690e4020a9b4ed1beb10d7e2dad023a7fa8a34f7362fcfae03a75f8e195e1",
+    "us-final-whole-0000.00.jpg": "e6998280504abb9e6f6e542003819d73302088ef8ed454648ba765c435bfd384",
+    "us-final-native-tail-13.jpg": "e26a0ea056152b252e7db402de5e9ddbc499318e1e81999ee7d1e5705849b99b",
+    "us-final-native-tail-contact.jpg": "3cd17ce47ef34517ae6d9f7c760e38cd91bf04051077d8ad9cee3eb3139536a9",
+    "wim-interview-candidate-full-contact.jpg": "a16938097cfcc95107a9afae233c20ea7372b54ddd26e5033e133f5982b97da7",
+    "montreal-native-tail-12.jpg": "9fa32f21c1cc2ff337f9299bfc4e62ccd8e4943141304d8837f40ad73a479965",
+    "us-final-native-tail-29.jpg": "a8e520880f02eb16fab493a0290b4d47d1ae67624e697504dc258efc71ac6ec0",
+    "montreal-serve-result-04.20.jpg": "409fdda35d901c0777b1f4110ca24544350d1a3c95eb5bc67541045aa58dd60b",
+    "montreal-28.80.jpg": "18d41c92cbe5527d26c9305f1136a49c02f6564fb76098552515f01c38d943d1",
+    "us-final-clean-tail-contact.jpg": "dd321ec95b3e1dc3b3dbc03ee13c7a9b957876bdf2fbeb70d9553181f2a51e83",
+    "us-final-native-tail-21.jpg": "a242d19fdc6bbfbc7fe5104caaf0daa4886c122e26b4ef44d9c3b4648c1dfcea",
+    "montreal-tail-28.80.jpg": "18d41c92cbe5527d26c9305f1136a49c02f6564fb76098552515f01c38d943d1",
+    "montreal-tail-28.20.jpg": "1c649478e1640f66c456bd0c239766458575227ffbfcd9e8d24d9336b1c20b7c",
+    "montreal-00.00.jpg": "b3a169efbb9648973afb2ec9216a17c73ea7027e5ca7f6087517a29b68cde192",
+    "montreal-serve-result-00.00.jpg": "b3a169efbb9648973afb2ec9216a17c73ea7027e5ca7f6087517a29b68cde192",
+    "us-final-whole-0192.50.jpg": "598ab2ed15eba7e5a41d1e26e50d79fbeb8c6835d56dee54526e7878160dce59",
+    "montreal-serve-result-03.00.jpg": "bc59e2f0cddc0c8a8c659d8a0be9851ea80b34340f2a9ae0f1e08f605122b546",
+    "us-final-whole-0055.00.jpg": "705a43d25867612be25a3691e93d41af7afd7e9bb47644337a717cec05ca435c",
+    "us-final-native-tail-10.jpg": "0706a109e02216f3de8cb6fed0b58ac69f68db23f123eb93c2fafd39917aa89a",
+    "montreal-14.00.jpg": "a4fd7e077b0a5f7f62d01eb300e45da9b573a50fc8dbd9648a2b8a6d62a58e37",
+    "montreal-serve-result-14.50.jpg": "b1d860be5739701e7817791b86fd6564740ddf894161330420d9965fda283af2",
+    "us-final-whole-0027.50.jpg": "1aac1e663e723652467e7f06d0eef70e0fbe502c6d844478b8f1b1278485c0d9",
+    "montreal-native-tail-04.jpg": "7cf7debb423f46ef7fd837f6b2448c85a61319401cd6ba4dd4e58c6d7d271641",
+    "montreal-native-tail-01.jpg": "ac40f6e5dc5395bee1e281300780899962b11d7f2c35d70fd61c31aead81e0cc",
+    "wim-feature-candidate-point-detail.jpg": "b7f5614333901f187ddeea0e83bb6b016db3e52e25546d47acf16c560b23240c",
+    "montreal-native-tail-10.jpg": "31bbb8b749e51b351ead42a8f8ed1b12363b84821aa233a9c1e13555e7280ba0",
+    "montreal-tail-28.40.jpg": "a26cbd4bdfdd97d4149af1aa42edbb2b13b07b61b83d66df2a113efe8dfa6a3a",
+    "us-final-whole-0302.40.jpg": "f72044897c028970f11749a66f50b3007b68b835fa6ead0073e5871b7e80f4f2",
+    "montreal-29.40.jpg": "494d6adfa67de8ee82db0dfaa4d0d2f1318c515c44046e3f3213133fb9b42b44",
+    "montreal-serve-result-13.50.jpg": "bd49b5bd58dcc7956a73238cc0b21a5437be325cb5e36ee932b83c7c337194b1",
+    "montreal-serve-result-00.50.jpg": "c9cecc2efb56160e621565bafa8ad2e7898d1d2921666b9503235e80f5e6a8cf",
+    "us-final-clean-tail-0031.80.jpg": "687f010d72bc990520c738522d05d7ee763c824f5776c68e4221ebd4a4ad59a1",
+    "montreal-12.00.jpg": "eccdc0f8b0859cc0712a5f0a90f76fd00387726aa0748b49b3979b871c91a1f7",
+    "us-final-native-tail-00.jpg": "c963868090b89fe9cdce8f52c8e011a6dd2b8e7a0c65c460840371bb3d747f27",
+    "us-final-native-tail-04.jpg": "21bc015b908e4c7338872ee9e9b374be764fde356627c9a0d97edd60eed31ea2",
+    "us-final-native-tail-15.jpg": "258f65395a5d4747b04a5d8cba839ebf3aa92389be126bbbcb6e7b8a268664b7",
+    "wim-feature-candidate-full-contact.jpg": "91baaed32e9ebb8dfe02f0da021ae24705cc975a8e7bb15fc6c5653e59b577c0",
+    "us-final-clean-tail-0034.85.jpg": "82881bb0c4f2ce9f4788920e8a58c535145984f14b4861674f652208ea3db04c",
+    "us-final-clean-tail-0030.00.jpg": "03002d8d55f8d8496f87c97ce191d952b3aeadaae48492b8e67108a884b5f660",
+    "montreal-tail-29.36.jpg": "da67a7b5b5d72e2e0495a5e7375f70eb59799b9cc19fff636750069c5de8516e",
+    "us-final-whole-0275.00.jpg": "0d7f2793e8453726834100b58efc87ac655d4ef61ea0f7089afdc5427cc29236",
+    "us-final-clean-tail-0032.50.jpg": "c2da85c853aa005717bd4c66f94705e9bd49dbcfd8a95329e4d13a91c52d84f1",
+    "us-final-clean-tail-0033.50.jpg": "5d73f58ce1bc3aaafcb0a6a9bdc16ce50540f29b8376db9383686577a88d8a07",
+    "montreal-native-tail-11.jpg": "0a56f9dbd1788450b951f3b00375144c40ae0afc1c4b2d5e9dfe019e9e6b4393",
+    "us-final-native-tail-16.jpg": "94b7bfdab5c5787283ba81644cfa94d2fe17553a2c26b9f5655222a4b4518820",
+    "us-final-native-tail-19.jpg": "c29da56a7ef5bd983eb4f9a31c02bab2e32aa2e7a4a7484feba2f5e571bfc2a0",
+    "montreal-native-tail-09.jpg": "b213b15107f5ec448be546a33240dbcee53a3113671d181f5678ebabf351ddca",
+    "montreal-serve-result-15.00.jpg": "315c2f377c33fd8c74afefeaebdadfbfd900b01bec55d3bb2ed367eef582617a",
+    "us-final-clean-tail-0034.20.jpg": "136acb84859f6089683c3db6e99034c1c4c9a5bc0f09bd53d7b2cc00c6d3bb1a",
+    "montreal-24.00.jpg": "771af9da5251e3240d1d9ba9e461a51657a1e625868e53d5c47ad504be4c7d91",
+    "montreal-tail-29.00.jpg": "3ed0553440d31029f8ff692285e04a32549192b57aac6acb17d4b8be8401b85e",
+    "us-final-native-tail-27.jpg": "b55578b06a7d5e5d60f4cf4da85965350cf313ac97f42719403d7f5a2c26a07a",
+    "us-final-whole-contact.jpg": "42974dca2720658e813c60e13f531dceaf5fa977344de100a3c564310c594d3b",
+    "montreal-native-tail-06.jpg": "7632debaf497b516b2ea7a58dc708711ffa26bf1bb3b68ae3ed0d0a570e04a48",
+    "montreal-serve-result-contact.jpg": "60b0a1617692ee16b082825f312e06c112636f52c0822c61ac3ed2b0767b7009",
+    "us-final-native-tail-05.jpg": "935c80dc4aa4b5889b46908a70573f69c5def4864ed9181f3bf3814dd78c9c51",
+    "montreal-tail-28.00.jpg": "785690e4020a9b4ed1beb10d7e2dad023a7fa8a34f7362fcfae03a75f8e195e1",
+    "montreal-tail-27.80.jpg": "accd111dba40e2e895a1bcc08c44e56c1dd42ba62d53c59c287b1c316800661c",
+    "us-final-native-tail-02.jpg": "4ae976dc8b54d9c5edc69a4690e6444b4bd3e5bbec882d6458c9648813c9552a",
+    "us-final-whole-0137.50.jpg": "5d3db84d4e3c1fa9896d59299d6b35e6df318fe443e9edb6ded8f8dcc8bf7aab",
+    "b40hO04eyLo-point-detail.jpg": "f4e5655dd2baa8a322e9d917696b48c6cce6abfa32473ecc6d619e10b9f95a2d",
+    "montreal-native-tail-07.jpg": "46bd23cf998184e432bd467d7272fb5b33e4491362646c263667027f6ed2b792",
+    "montreal-native-tail-contact.jpg": "3bc7353fd0249751977efe87bdb87b02a47198c4f3273ffc7cf7ccf4e652fbab",
+    "montreal-native-tail-02.jpg": "0152137f6fea478869781305b55651cce242514abc2bd13c13e200a4a7eba985",
+    "us-final-native-tail-28.jpg": "af90d1a89fd8fd430bdd48c52a05212197d39c46d93b49c63458fdb3a6ae00ca",
+    "wim-interview-candidate-first12-contact.jpg": "1bb2e6ff0b173cbb7cb288c30332602ffa335bd2bbeff3c313e0f6805600742a",
+    "montreal-serve-result-16.00.jpg": "4c10be324d2be85d65cce400b8d1760c5f32036daad04d3fb60579a50db2236b",
+    "montreal-serve-result-02.20.jpg": "e6c46fb9c5d68bc428757e9769d8934c1cade23576e9dc4c93865e7f6852089d",
+    "us-final-native-tail-26.jpg": "643e4a7228b5a7c7e2a930e2b5f5f7a41599032218c3513285635cdb723f00a6",
+    "us-final-native-tail-09.jpg": "74ee8952ae049d144109e74c7026f1789793fbd4e3d793c619ad4201e84bdc32",
+    "montreal-serve-result-02.60.jpg": "31d7b0800b6fc08b828121be49dd59b92941fa89ea867f19d4f23745ce6e9f7a",
+    "us-final-clean-tail-0034.70.jpg": "4a9bb9988f2435993a1c2ed889622bf50a0671a8553031c5e01fa5f864dcf2bc",
+    "montreal-native-tail-05.jpg": "1cb533c7719b95f66175e4cb542cd941433e73c0eaedccd5a778717b0057062e",
+    "montreal-04.00.jpg": "b6efaf9ac690ddab6e6c9684ecc1b7ee58a559edb549e9d1a21752c9e07a98f4",
+    "us-final-clean-tail-0033.00.jpg": "5d1a395fbde46cd7f902d04e3318678c88d3a902fedc94fcbdd7fdecb9664c1c",
+    "us-final-native-tail-14.jpg": "bf543cfb8f3ec40bfa68580a4fd32debd3aab505d6660582282b3a88e73c2eb4",
+    "montreal-serve-result-01.00.jpg": "b7304eac22b46ee9b843334456fab02e95238c638291903928590068f8832505",
+    "montreal-18.00.jpg": "794f5d3a03aa645572cc75703df2d72dc2aaeaa38984bc6e05419c070b6c54b3",
+    "us-final-native-tail-20.jpg": "a831843097634ec9df282c00a45fd3c4d33df13616f55f65b1f9cf6a0813d7d6",
+    "us-final-native-tail-03.jpg": "d0a02cf4d63769d618fbfb3c219848eb6bb92c92b5ea9293d5d526f2344bd5f9",
+    "montreal-tail-29.44.jpg": "de8de8e9fee23240688bb160422c6df55197e740d396cfadd54a9b3f288ca37e",
+    "montreal-27.00.jpg": "dd7e48380fbd564263062fe96ec68baa4157c6771ddac534a498177b7b03a7f3",
+    "us-final-native-tail-24.jpg": "d3623c64f549a03db9f3464155a4e467acc867cbc1c8c8e4ca9b952c4cd5f976",
+    "us-final-native-tail-22.jpg": "108c5a913eaf1bb6db70dc1eaa55c71511236524854bb50a4798d03ec90d3154",
+    "montreal-16.00.jpg": "4c10be324d2be85d65cce400b8d1760c5f32036daad04d3fb60579a50db2236b",
+    "us-final-native-tail-12.jpg": "797cc0b47b37a5f8843275cace08773a49915fc12dcaf6adcf0686817cc5043a",
+    "b40hO04eyLo-contact.jpg": "98037ee74d2b80418f2c5d02b173a6a8a319ee376f3802750884fc3ddb68de2c"
+  },
+  "frozen_utc": "2026-11-06T02:39:17.141936+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "as_of_match_cutoff": "2026-11-06 Paris QF vs TommyPaul not yet played",
+  "match_rows": 62,
+  "individual_events": 21,
+  "source_primary_draw_checked_matches": 44,
+  "score_convention": "winner_perspective_score always belongs to actual match winner, including Shelton losses; tiebreak parenthesis is loser point count",
+  "date_convention": "date_source_european retained raw source calendar; date_local populated only when independently verified",
+  "counts": {
+    "individual_tour": {
+      "W": 43,
+      "L": 16
+    },
+    "davis_cup": {
+      "L": 2
+    },
+    "exhibition": {
+      "W": 1
+    }
+  },
+  "accepted_primary_draws": 17,
+  "rejected_placeholder_draws": 4,
+  "conflicts": [
+    {
+      "claim": "Shanghai2026 final score Fokina vsJodar",
+      "sourceA": "OfficialShanghai article 1-6 7-6(5)6-4",
+      "sourceB": "OfficialPTL draw5-7 6-4 6-3",
+      "resolution": "Do not use Shanghai final score in Shelton video. Both sources agree Fokina champion; officialTennisTV post independently confirms exact qualification trigger."
+    },
+    {
+      "claim": "RolandGarros2026 Collignon vsShelton terminal score",
+      "sourceA": "RolandGarros+ATP+TE+Lequipe6-4 7-5 6-4",
+      "sourceB": "CNAReuters syndicated copy7-5 6-4 6-4",
+      "resolution": "Use6-4 7-5 6-4 from actualGSofficial match report and structuredTE; reject CNAReuters score-order detail."
+    },
+    {
+      "claim": "Stuttgart2026 final route lostfirstseteverymatch",
+      "sourceA": "Pre-final ATP notes hypothetical record if he were to do so",
+      "sourceB": "Actualofficialfinal draw Shelton6-4 2-6 6-4",
+      "resolution": "Only firstthree matches were comebacks fromsetdown. Final hewontheopening set."
+    }
+  ],
+  "not_inferred": [
+    "No2026injuryclaim withoutarticle",
+    "NoParisQFresult beforeplayed",
+    "No2026qualificationdebutclaim",
+    "NoMontrealfirstMastersclaim",
+    "No14sitesor20eventcountclaim; actual21events"
+  ],
+  "qualification_trigger_verified": "18Oct Fokina Shanghai title overJodar, officialTTVpost2111803837757444140 plusofficialNittoqualification18Oct."
+}

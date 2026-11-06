@@ -1,57 +1,62 @@
 {
-  "spec_sha256": "726ca89ccd191e7bcc2ca7316b716783aec410617cb92c7de1161d8c1816e79b",
+  "version": 2,
+  "superseded_unpublished_movie_sha256": "d3433c239561a61d0bdf1c498f7d5e63c9a5b3083f4bab1e0c4d727bdc2abbe0",
+  "reason": "Actualv1manualQC: holdAOreactioninsidebody; removeoffcenterMontrealprepointcloseup.",
+  "spec_sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894",
   "voice_bundle_sha256": "11fede1990f13864f64e584633d097d507a87e97e2fb1c5a7ff5b4c3d3a05196",
   "requests": 17,
-  "sources": 5,
-  "narration_scenes": 15,
-  "root_actual_cover_race_pass": true,
-  "native_spec_shape_voice_copy_taste_gates": "PASS actual commands logged; no fullfilmQC claim",
+  "unchanged_TTS_photos_facts_style": true,
   "selected_windows": [
     {
       "id": "ao_point",
-      "source": "australian-open-qf",
       "start": 116.8,
-      "end": 139.15,
-      "native_extra_tail_end": 139.65,
-      "card_hold": 10,
+      "end": 139.65,
+      "extra_video_tail_end": 140.15,
+      "audio_tail": "silence",
+      "requested_card_seconds": 10,
+      "native_card_cap_seconds": 8,
       "card_onset": 0
     },
     {
       "id": "dallas_point",
-      "source": "dallas-final",
       "start": 112.3,
       "end": 144.4,
-      "native_extra_tail_end": 144.9,
-      "card_hold": 10,
+      "extra_video_tail_end": 144.9,
+      "audio_tail": "silence",
+      "requested_card_seconds": 10,
+      "native_card_cap_seconds": 8,
       "card_onset": 0
     },
     {
       "id": "munich_point",
-      "source": "munich-final",
       "start": 152.2,
       "end": 171.7,
-      "native_extra_tail_end": 172.2,
-      "card_hold": 10,
+      "extra_video_tail_end": 172.2,
+      "audio_tail": "silence",
+      "requested_card_seconds": 10,
+      "native_card_cap_seconds": 8,
       "card_onset": 0
     },
     {
       "id": "montreal_point",
-      "source": "montreal-final",
-      "start": 0.0,
+      "start": 1.96,
       "end": 29.0,
-      "native_extra_tail_end": 29.5,
-      "card_hold": 10,
+      "extra_video_tail_end": 29.5,
+      "audio_tail": "silence",
+      "requested_card_seconds": 10,
+      "native_card_cap_seconds": 8,
       "card_onset": 0
     },
     {
       "id": "us_open_final_point",
-      "source": "us-open-final",
       "start": 9.0,
       "end": 31.8,
-      "native_extra_tail_end": 32.3,
-      "card_hold": 10,
+      "extra_video_tail_end": 32.3,
+      "audio_tail": "silence",
+      "requested_card_seconds": 10,
+      "native_card_cap_seconds": 8,
       "card_onset": 0
     }
   ],
-  "stage": "ready_for_native_render_push_false"
+  "stage": "v2ready_for_native_cached_render_push_false_not_finalQA"
 }
