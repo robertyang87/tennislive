@@ -1,9 +1,9 @@
-"""vibetennis 器材三部曲 ② 球拍的演变：字幕与出处叠加层（VT_LANG=zh|en）。
+"""vibetennis 器材三部曲 ③ 球：字幕与出处叠加层（VT_LANG=zh|en）。
 
 用法：python3 overlay.py <3D 母带.mp4 或 concat 列表.txt> <输出.mp4> <分段锚点.json ...>；python3 overlay.py still <静帧.jpg ...>
 通用函数（字体、字幕框、品牌标、span）沿用 EP07；文案时间跟着 narration.json 的 at 走（plan.py 排定）。
-3D 场景里已经有标签（三个甜点、专利号、频率、规则尺寸），这里只补**画面上没有的上下文**，统一放底部。
-每一条都只讲 papers/vibetennis-racket-2026/sources.md 里核过、可上屏的内容；单源数字（3.78 倍、9°/0.8°、17.5%、「硬 3 倍」）不上屏。
+3D 场景里已经有标签（规格环、工艺、弹跳带、三种球、换球节奏），这里只补**画面上没有的上下文**，统一放底部。
+每一条都只讲 papers/vibetennis-ball-2026/sources.md 里核过、可上屏的内容；单源数字（32 毫米、阻力系数、19.3%）不上屏。
 """
 import skia, numpy as np, math, json, sys, subprocess, glob, os
 W,H,FPS=1920,1080,30
@@ -192,46 +192,36 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('h1',0,None,tr("偏心击球：球的【方向】几乎没变，变的是【速度】（Cross 2010）","Off-centre hit: the ball's 【direction】 barely changes — its 【speed】 does (Cross 2010)"),BOT),
-('w0',0,None,tr("白蜡木：比强度高、韧、能【弯成型】（国际网联）","Ash: strong for its weight, tough, and it 【bends to shape】 (ITF)"),BOT),
-('w3',0,None,tr("形状、尺寸和连带的重量：一个为了【耐用】的折中（国际网联）","Shape, size and resulting weight: a 【compromise】 for durability (ITF)"),BOT),
-('m1',0,None,tr("1961 年在美国申请，1963 年授权（法国优先权 1960 年）","Filed in the US in 1961, granted 1963 (French priority 1960)"),BOT),
-('m3',0,None,tr("空心铝合金【挤压型材】：一次挤出整条带腔的框","Hollow aluminium 【extrusion】: the whole cored frame pushed out in one piece"),BOT),
-('o0',0,None,tr("金属框更硬、更结实，才让大拍面做得出来（国际网联）","Stiffer, stronger metal frames made the oversize head possible (ITF)"),BOT),
-('o1',0,None,tr("打击中心：球打在这里，握拍的手【不受冲击】","Centre of percussion: hit here and the hand 【feels no jolt】"),BOT),
-('o4',0,None,tr("木拍约 70 平方英寸 → 大拍面【大了 40% 以上】","Wood ≈ 70 sq in → oversize 【40%+ bigger】"),BOT),
-('s0',0,None,tr("「甜点」有好几种定义，各自对应【不同的物理现象】（Brody 1981）","“Sweet spot” has several definitions, each a 【different physical effect】 (Brody 1981)"),BOT),
-('s3',0,None,tr("握在手里时，打在哪一点，手受的力都【降不到零】（Cross 1998）","With a hand on the grip, no impact point brings the force on the hand 【to zero】 (Cross 1998)"),BOT),
-('t0',0,None,tr("扭转惯量：拍子绕【长轴】转动的惯性，拍头越宽越大","Polar moment: resistance to twisting about the 【long axis】 — grows with head width"),BOT),
-('t2',0,None,tr("模型：打偏、线床更硬 → 出球【更慢、更高】（Spurr 2017）","Model: off-centre or stiffer stringbed → ball 【slower, higher】 (Spurr 2017)"),BOT),
-('c0',0,None,tr("碳纤维：1960 年代才造得出来，复合材料框靠它才成为可能（国际网联）","Carbon fibre (1960s) is what made composite frames possible (ITF)"),BOT),
-('c3',0,None,tr("拍框频率：1970 年前约【80–120 赫兹】 → 今天约【100–180 赫兹】","Frame frequency: pre-1970s 【80–120 Hz】 → today 【100–180 Hz】"),BOT),
-('c4',0,None,tr("打在节点上，拍框的主振型根本【没被激起】，硬不硬一样（Allen 2016）","At the node the frame's main mode 【isn't excited】 — stiffness doesn't matter (Allen 2016)"),BOT),
-('c5',0,None,tr("挥速 ∝ 挥拍重量^−0.27：差 10%，挥速只差约 3%（Cross & Bower 2006）","Swing speed ∝ swing weight^−0.27: 10% lighter → only ≈3% faster (Cross & Bower 2006)"),BOT),
-('r0',0,None,tr("国际网联写的是 1979 年；名人堂写 1981 年","ITF says 1979; the Hall of Fame says 1981"),BOT),
-('r1',0,None,tr("29 英寸长度上限：2000 年 1 月 1 日起成为正式规则（国际网联）","The 29-inch limit became an official Rule of Tennis on 1 January 2000 (ITF)"),BOT),
-('y0',0,None,tr("同一篇也写：更硬的拍＋更硬的球，传到手臂的冲击更大，可能和伤病有关","The same paper: stiffer rackets + harder balls send more shock to the arm, likely linked to injury"),BOT),
-('y3',0,None,tr("同一时期，线和球也在变（Miller 2006：球变硬了）——【时间对得上】不等于【因果】","Strings and balls changed too (Miller 2006: harder balls) — 【timing】 isn't 【causation】"),BOT),
-('e1',0,None,tr("评论区说说：你用的是【多大拍面】？","Tell us: what 【head size】 do you play?"),('s',960,965,C,48)),
+('h1',0,None,tr("规则原文：《2026 网球规则》附录一（球）、附录二（球拍）","Source: ITF Rules of Tennis 2026, Appendix I (ball) and Appendix II (racket)"),BOT),
+('m2',0,None,tr("各家给的数在 0.4 到 1 个大气压之间；所以球装在【加压罐】里，防它慢慢漏气","Figures range from 0.4 to 1 atmosphere — which is why balls come in a 【pressurised can】"),BOT),
+('m5',0,None,tr("无压球的壁约 4 毫米，有压球约 3 毫米（Cross 1999；Goodwill 2002）","Pressureless wall ≈ 4 mm vs ≈ 3 mm pressurised (Cross 1999; Goodwill 2002)"),BOT),
+('r4',0,None,tr("规则只写「约定的奇数局」——7 局、9 局是赛事的选择","The Rules only say “an agreed odd number of games” — 7 and 9 are the event's choice"),BOT),
+('d3',0,None,tr("国际网联 2001 年自己说的是 20 毫秒；这里取同行评审的模拟（Haake 等 2000）","The ITF claimed 20 ms in 2001; this is the peer-reviewed simulation (Haake et al. 2000)"),BOT),
+('d6',0,None,tr("这是本集的归纳：调速不只改球一条路，球拍、场地也各有规则","Our summary: the ball isn't the only lever — rackets and courts have rules too"),BOT),
+('n1',0,None,tr("球员也把伤病怪到球上，但目前【没有数据证明】这层因果","Players also blame the ball for injuries — 【no data yet】 proves that link"),BOT),
+('f0',0,None,tr("美联社 2023 年的估计：每年约 3.3 亿颗","AP's 2023 estimate: about 330 million a year"),BOT),
+('f4',0,None,tr("据报道，2026 年 8 月一站挑战赛试过：第 5 局后首换，之后每 7 局一换","Reportedly, a Challenger in Aug 2026 trialled: first change after 5 games, then every 7"),BOT),
+('e4',0,None,tr("评论区说说：你【多少局】换一次球？","Tell us: 【how many games】 before you open new balls?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
     for s in TL['sections']:
         if s['t0']<=t<s['t1']: return s
     return TL['sections'][-1]
-ITF=tr("国际网联《History of Rackets and Strings》2019","ITF, “History of Rackets and Strings”, 2019")
+ITF=tr("国际网联《History of Tennis Balls》2019","ITF, “History of Tennis Balls”, 2019")
+R26=tr("国际网联《2026 网球规则》","ITF Rules of Tennis 2026")
 NOTE={  # 每段底部的出处
- 'hook':tr("Cross 2010《Polar moment of inertia》· 画面为示意","Cross 2010, “Polar moment of inertia” · illustrative"),
- 'wood':ITF+tr(" · 美国专利 US 3,999,756 · Taraborrelli 等 2019 · 1893 年版画（公有领域）"," · US Patent 3,999,756 · Taraborrelli et al. 2019 · 1893 engraving (public domain)"),
- 'metal':ITF+tr(" · 美国专利 US 3,086,777、US 3,752,478 · 国际网球名人堂"," · US Patents 3,086,777 & 3,752,478 · International Tennis Hall of Fame"),
- 'oversize':tr("美国专利 US 3,999,756（霍华德·黑德，1976）· ","US Patent 3,999,756 (Howard Head, 1976) · ")+ITF+tr(" · 国际网球名人堂"," · International Tennis Hall of Fame"),
- 'sweet':tr("Brody 1981 · Cross 1998、2004 · Allen 等 2016 · 三个点的位置为示意","Brody 1981 · Cross 1998, 2004 · Allen et al. 2016 · point positions illustrative"),
- 'twist':tr("Cross 2010 · Spurr 等 2017 · Allen 等 2016 · 飞行轨迹为示意","Cross 2010 · Spurr et al. 2017 · Allen et al. 2016 · flight paths illustrative"),
- 'carbon':ITF+tr(" · Allen 等 2016 · Taraborrelli 等 2019、2021 · Cross & Bower 2006 · 波形为示意"," · Allen et al. 2016 · Taraborrelli et al. 2019, 2021 · Cross & Bower 2006 · waveforms illustrative"),
- 'rules':tr("国际网联《2026 网球规则》附录二 · ","ITF Rules of Tennis 2026, Appendix II · ")+ITF+tr(" · 国际网球名人堂"," · International Tennis Hall of Fame"),
- 'style':tr("Miller 2006《英国运动医学杂志》· Haake 等 2007 · Cross（Brody 等 2002 书中）","Miller 2006, Br J Sports Med · Haake et al. 2007 · Cross (in Brody et al. 2002)")}
-CHAP={'wood':("01",tr("木拍","WOOD")),'metal':("02",tr("金属拍","METAL")),'oversize':("03",tr("大拍面","OVERSIZE")),'sweet':("04",tr("甜点","SWEET SPOTS")),
- 'twist':("05",tr("防扭转","TWIST")),'carbon':("06",tr("碳纤维","CARBON")),'rules':("07",tr("规则","RULES")),'style':("08",tr("打法","PLAYING STYLE")),'end':("09",tr("结论","CONCLUSION"))}
+ 'hook':R26+tr(" 附录一、附录二 · 画面为示意"," Appendices I & II · illustrative"),
+ 'origin':ITF+tr(" · 维基百科「Tennis ball」"," · Wikipedia “Tennis ball”"),
+ 'make':tr("国际网联《Ball Manufacture》· Cross 1999 · Goodwill 2002 · 剖面为示意","ITF “Ball Manufacture” · Cross 1999 · Goodwill 2002 · cross-sections illustrative"),
+ 'color':ITF+tr(" · 维基百科「Tennis ball」"," · Wikipedia “Tennis ball”"),
+ 'impact':tr("Brody、Cross、Lindsey 2002 · Cross 1999 · Goodwill 2002 · Chadwick 2003 · Rose 等 2000 · 剖面与气流为示意","Brody, Cross & Lindsey 2002 · Cross 1999 · Goodwill 2002 · Chadwick 2003 · Rose et al. 2000 · sections and airflow illustrative"),
+ 'lab':R26+tr(" 规则 3、附录一 · 国际网联《Ball Approval Tests》· 《洛杉矶时报》2022"," Rule 3, Appendix I · ITF “Ball Approval Tests” · LA Times 2022"),
+ 'dial':tr("Haake 等 2000 · Blackwell & Knudson 2002 · ","Haake et al. 2000 · Blackwell & Knudson 2002 · ")+R26+tr(" · 国际网联场地评估 · 路透／法新社 2001"," · ITF court pace assessment · Reuters/AFP 2001"),
+ 'now':tr("Sky Sports 2023 · tennis365 2026 · ATP 官网 2025","Sky Sports 2023 · tennis365 2026 · ATP 2025"),
+ 'future':tr("美联社 2023 · Laykold 2021 · 英国野生动物信托 · 国际网联","AP 2023 · Laykold 2021 · The Wildlife Trusts · ITF")}
+CHAP={'origin':("01",tr("演化","EVOLUTION")),'make':("02",tr("构造","ANATOMY")),'color':("03",tr("颜色","COLOUR")),'impact':("04",tr("那几毫秒","THE IMPACT")),
+ 'lab':("05",tr("实验室","THE LAB")),'dial':("06",tr("调速","THE DIAL")),'now':("07",tr("争议","THE COMPLAINTS")),'future':("08",tr("未来","THE FUTURE")),'end':("09",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return
@@ -241,7 +231,7 @@ def draw(c,t,an):
     brand(c); chapter(c,t); s=sec_of(t); u=t-s['t0']; a=min(1,u/0.6,(s['t1']-t)/0.4)
     if s['name'] in NOTE: text(c,NOTE[s['name']],960,1050,18,GRAY,a*0.9,SANSR)
     if s['name']=='end' and u>2:
-        text(c,tr("资料：国际网联 · 美国专利 · Cross 等 · Allen 等 · Brody · Spurr 等 · Haake 等 · Miller · 详见文案","Sources: ITF · US patents · Cross et al. · Allen et al. · Brody · Spurr et al. · Haake et al. · Miller · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
+        text(c,tr("资料：国际网联 · Brody、Cross、Lindsey · Haake 等 · Goodwill · Chadwick · ATP · 美联社 · 详见文案","Sources: ITF · Brody, Cross & Lindsey · Haake et al. · Goodwill · Chadwick · ATP · AP · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
     for s0,d,txt,pl in CAPS:
         if s0<=t<s0+d+0.35: caption(c,t,s0,d,txt,pl,an)
 

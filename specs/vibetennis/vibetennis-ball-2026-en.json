@@ -1,0 +1,69 @@
+{
+ "slug": "vibetennis-ball-2026-en",
+ "_status": "EP09 英文版：3D 用 lang=en 另渲一份（场景里有 3D 文字），叠加层 VT_LANG=en；无配音、无 BGM（所有者 2026-11-02），音效＋自己合成的环境底。",
+ "_column": "vibetennis 第 9 集（器材三部曲③球）：球是什么（两个橡胶半壳压合、同时充气，裹两片哑铃形毛毡；无压球靠更厚的壁）→ 演化（塞毛的皮／布球 → 1870 年代橡胶 → 外裹布 → 麦尔登呢与硫化胶缝 → 空心充气；颜色 白／黑 → 1972 黄 → 温网 1986）→ 那几毫秒（线床上 4–5 ms、30 m/s 撞墙压扁约一半、内壁翻泡；毛绒是气闸，发球落地约剩 3/4；蓬毛更慢、磨秃更快；0 度比 20 度弹低 20% 以上；高海拔专用球）→ 实验室（254 cm 落下弹回 135–147 cm、形变、九局磨损 ↔ 温网 7／9 局换球）→ 调速（2001 年三种球速，3 号球大 6% 配快场；模拟一发 +10 ms；测场地也用球）→ 争议（球员抱怨、ATP 2025 统一挑球、2027 同段一种球）→ 未来（数以亿计、拆不开、碾进球场、巢鼠；少用球 vs 换更勤）→ 结论：线和拍决定你能把球打成什么样，球决定这项运动按什么速度进行。",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-ball-2026/cover/make_cover.py",
+  "hook": "Why is the ball\nso tightly ruled?",
+  "subject": "球",
+  "topic": "网球 · 构造 · 演化 · 调速 · 未来",
+  "_why": "同中文版（B 杂志信息图），文字英文、品牌 Tennis Jetlag。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "一颗球，凭什么管得这么严？",
+  "thesis": "规则附录一给球写了重量、直径、弹跳、前向与回复形变、耐久六项数字，附录二对球拍只限尺寸（2026 规则原文）。球的构造：两个橡胶半壳压合时同时充气（国际网联《Ball Manufacture》、Cross 1999），内压比外面高约 0.4–1 个大气压（Cross 1999、Goodwill 2002、国际网联），裹两片哑铃形毛毡；无压球靠更厚的壁（Cross 1999、Goodwill 2002）。物理：线床接触 4–5 ms（Brody、Cross、Lindsey 2002；Cross 1999）；30 m/s 撞墙压扁约一半（Goodwill 2002、BCL 2002）；内壁内翻成泡（Cross 1999、BCL 2002）；毛绒增阻，蓬毛更慢、磨秃阻力变小（Chadwick 2003、Goodwill & Haake 2004）；冷让球变死（Rose 等 2000、Allen & Allen 2022）。实验室：254 cm 落下弹回 135–147 cm，耐久测试模拟九局（规则附录一、国际网联《Ball Approval Tests》）；温网 7／9 局换球（《洛杉矶时报》2022，规则 3 公式）。调速：2001 年三种球速（路透／法新社、爱尔兰时报），3 号球大 6% 配快场（规则附录一、Haake 2000、Cooke & Davey 2005）；模拟一发 +10 ms、二发最多 +16 ms（Haake 2000），发球初速不变（Blackwell & Knudson 2002）；国际网联测场地快慢就是用球（场地评估手册、ISSS 2002）。争议与未来：梅德韦杰夫 2023、佩古拉 2026；ATP 2025 起统一挑球、3500 多份问卷、2027 目标（ATP 官网）；每年数以亿计、职业级可回收球还没有（美联社 2023、威尔逊）；旧球碾进球场底层（Laykold 2021）、温网旧球做巢鼠窝（野生动物信托）。结论（本集归纳）：场地快不快用球量，比赛太快改球调——球是这项运动的尺子和旋钮；不说「唯一手段」（无出处）。",
+  "beats": [
+   "钩子：一颗不到 60 克的球，规则给它写了六项数字；对球拍只管尺寸——凭什么？",
+   "演化：塞毛的皮／布球 → 1870 年代橡胶 → 外裹布 → 麦尔登呢与硫化胶缝 → 空心充气",
+   "构造：150 度压两个半壳、合上时充气、内压将近一个大气压、两片哑铃形毛毡错开 90 度、蒸汽蓬毛；无压球靠厚壁——充了气的橡胶壳穿一件毛衣",
+   "颜色：白或黑看场地 → 1972 年为电视加黄 → 温网 1986",
+   "那几毫秒：线床 4–5 ms；撞墙压扁约一半、内壁翻泡；毛绒是气闸，发球落地剩约 3/4；蓬毛更慢、磨秃变快；冷了变死；高海拔专用球",
+   "实验室：254 cm 落下弹回 135–147 cm；形变；模拟九局 ↔ 温网 7／9 局换球、第一次提前两局",
+   "调速：大球让比赛慢下来；2001 年三种球速；模拟一发 +10 ms、初速不变；测场地也用球——用球量、改球调",
+   "争议：球员抱怨球变毛、每周不一样；ATP 2025 统一挑球、2027 同段一种球",
+   "未来：数以亿计、拆不开、碾进球场、巢鼠；少用球 vs 换更勤；每一颗都一样、用完还能回去",
+   "结论：线和拍决定能把球打成什么样，球决定这项运动的速度；你多久换一次新球？"
+  ],
+  "sources": [
+   "ITF《2026 Rules of Tennis》规则 3、附录一、附录二；《2026 Ball Approval Procedures》；《Ball Approval Tests》《History of Tennis Balls》《Balls》（2019-11）；《Ball Manufacture》；场地评估手册；ISSS 2002",
+   "Brody, Cross & Lindsey (2002) The Physics and Technology of Tennis；Cross (1999) Sports Eng 2:23；Cross (1999) Am J Phys 67",
+   "Goodwill (2002)、Chadwick (2003)、Dignall (2004) Sheffield 博士论文；Goodwill & Haake (2004)；Allen & Allen (2022) arXiv 2202.03034",
+   "Haake et al. (2000) Sports Eng 3:131；Blackwell & Knudson (2002) Sports Biomech；Cooke & Davey (2005) J Sports Sci；Times Higher Education 2000-06-30",
+   "Daily Star（路透／法新社）2001-09-19；Irish Times 2001-09-19；LA Times／Spokesman-Review 2022-07-08",
+   "Sky Sports 2023；tennis365 2026；ATP 官网 2025-06-11；美联社 2023（tennis.com、CBS）；Laykold 2021；野生动物信托（2025 报道）"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-ball-2026/sources.md"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "visual_standards": "照 docs/vibetennis.md：GLOW 光晕上限、MOVE 转场运镜（0.6 s 交叉溶解、缓推＋绕转）、TYPE 大字（typefx：冲击、编织、下沉、书写、旋转、粒子、疾驰）；渲前 glow_check.py --pair（2026-11-06 21 帧全过）、成片 motion_check.py；子弹时间在线床那一下（运动模糊 6 子帧累积只开在慢放那 0.8 秒）和给球场测速那一球；3D 字由 layoutText 每帧收进安全区",
+  "audio": {
+   "music": "none",
+   "_music_why": "所有者 2026-11-02：英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从 Instagram 曲库挂。",
+   "sfx": "sfx.py 合成（111 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上（慢放击球按 0.18／0.22 倍速算出的接触时刻）；声像手动给：分屏两支拍左右分开、其余居中",
+   "loudness": "只有音效；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "Ball",
+  "_summary_why": "标题 EP09.vibetennis|Ball（主题最多 4 个字符）。",
+  "lead": "The rules give a tennis ball under 60 grams six numbers — mass, size, rebound, two deformations, durability — while the racket only gets size limits. Two rubber half-shells are pressed, filled with nearly one extra atmosphere of air, and wrapped in two dumb-bell felts. On the strings it stays just 4–5 milliseconds. Since 2001 there are three ball speeds; the slow Type 3 is 6% bigger, for fast courts. Court speed is measured with a ball, and when the game got too fast, the ball was changed.",
+  "_lead_why": "同中文版 lead，出处见 papers/vibetennis-ball-2026/sources.md"
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-ball-2026"
+}
