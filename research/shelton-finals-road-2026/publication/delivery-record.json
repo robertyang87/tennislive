@@ -1,0 +1,60 @@
+{
+  "completed_at": "2026-11-06T04:22:59.332887+00:00",
+  "status": "COMPLETE_native_movie_actual_QC_merged_single_push_and_actual_publication_verified",
+  "slug": "shelton-finals-road-2026",
+  "movie": {
+    "path": "/workspace/shelton-finals-production/final/native-input-v3/shelton-finals-road-2026.mp4",
+    "sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+    "bytes": 153629475,
+    "seconds": 255.32,
+    "width": 1080,
+    "height": 1440,
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-finals-road-2026/shelton-finals-road-2026.mp4"
+  },
+  "review": {
+    "at": "2026-11-06T04:07:08.460045+00:00",
+    "master_sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+    "path": "/workspace/shelton-finals-production/final/review-v3/shelton-finals-road-2026-审片版.mp4",
+    "sha256": "18b29e5ed162eaf5c5310c65562197f12844b9c84dee3b1d584955f946b35e89",
+    "bytes": 26748248,
+    "duration": 255.32,
+    "width": 720,
+    "height": 960,
+    "full_ffmpeg_decode_exit_code": 0,
+    "publication_policy": "Review only; nativeHD master is actualpublication file."
+  },
+  "wechat_url": "https://www.pushplus.plus/shortMessage/3270b2bb0f8f4482bbf092c1fddcff8a",
+  "native_push": {
+    "key": "pushplus:reel:shelton-finals-road-2026:667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+    "fingerprint": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+    "status": "sent",
+    "at": "2026-11-06T04:20:41Z",
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/42161823490",
+    "pushplus_receipt": "3270b2bb0f8f4482bbf092c1fddcff8a",
+    "message_url": "https://www.pushplus.plus/shortMessage/3270b2bb0f8f4482bbf092c1fddcff8a"
+  },
+  "send_attempt_count": 1,
+  "pr": "https://github.com/robertyang87/tennislive/pull/1464",
+  "exact_ci_head_before_merge": "208b22b87b85e27b701adaa5edc55211b8aa21d9",
+  "required_checks": [
+    "test SUCCESS",
+    "queue-contract SUCCESS"
+  ],
+  "merge_commit": "c574be5809d3aace092dd41eec77090855430cf0",
+  "native_publication_commit": "328604cd0e77ca5a40afd603733fe81229f68b05",
+  "native_final_render_run": "https://github.com/robertyang87/tennislive/actions/runs/42158751969",
+  "tts_request_count": 17,
+  "tts_bundle_sha256": "11fede1990f13864f64e584633d097d507a87e97e2fb1c5a7ff5b4c3d3a05196",
+  "spec_sha256": "7d47e189ee5ce23fc7d6aac89991922eff299c5c459fc219da987ab42c637484",
+  "proof_files": {
+    "final/root-qc-v3/root-final-actual-review.json": "f7f478b27525192ea179c6ff895b235fd46a41561842c6a9a8a9dd48b102c013",
+    "final/independent-qc/photos-visual-v3.json": "0e10c6f54593810f31935e159bd5a53e27ce12997a42550c4ef4e478c458dc0a",
+    "final/publication/root-publication-verification.json": "9f1c9d5d209d4aa48fb3fa35a5b465c82904860b34f8770b1eafe45486871fed",
+    "final/publication/release-entire-file-verification.json": "2ab98ff30eb4d0ef9d52245ad56d54ffbe4eb6eef21c39cfdc886b4ff90d41bd",
+    "final/publication/prepublication-freshness.json": "d42365519da5f3113ff3578f190efc32644a7c6536e583d5e74640933ebeb6f9",
+    "final/publication/ledger.json": "88cfd869e074c6916a3dbae0d8fa70d29cd46d6aa23fbfcef69c9b8019d5a44c",
+    "final/publication/pushed.json": "c73ead672bc3b01abd00fd40ba8f007f0911d0d66efb3dfd977971c0e7bcf2db",
+    "final/published-metadata/render.json": "872449284daf506128b6e79c03d8f4af4ddcec0247cca7c0d9f211766a76725b",
+    "final/published-metadata/voice_quality_review.json": "791bcab1e0b3ff164d93143df361297aff0d4e23d63b0f4e126c085033889b91"
+  }
+}
