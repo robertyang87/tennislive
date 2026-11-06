@@ -1,0 +1,75 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-06T02:39:51.228000+00:00",
+  "model": "medium.en",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+  "clip": [
+    116.8,
+    139.65
+  ],
+  "duration": 22.85,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 138.22,
+      "end": 139.62,
+      "text": "I'll see you in the next video.",
+      "avg_logprob": -1.1042380630970001,
+      "no_speech_prob": 0.5740854740142822,
+      "words": [
+        {
+          "w": " I'll",
+          "s": 138.22,
+          "e": 139.62,
+          "p": 0.03050344344228506
+        },
+        {
+          "w": " see",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.2831575572490692
+        },
+        {
+          "w": " you",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.9577556252479553
+        },
+        {
+          "w": " in",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.167387917637825
+        },
+        {
+          "w": " the",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.4445957541465759
+        },
+        {
+          "w": " next",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.6601178050041199
+        },
+        {
+          "w": " video.",
+          "s": 139.62,
+          "e": 139.62,
+          "p": 0.658513605594635
+        }
+      ]
+    }
+  ]
+}
