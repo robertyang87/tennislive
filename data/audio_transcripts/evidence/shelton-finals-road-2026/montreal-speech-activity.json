@@ -1,0 +1,50 @@
+{
+  "method": "Local Silero VAD activity support, not auditory listening or precise quiet syllable/sample proof. Not a loudness/gain QC.",
+  "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+  "clip": [
+    14.0,
+    24.5
+  ],
+  "created_at": "2026-11-06T02:26:28.940340+00:00",
+  "activity": [
+    {
+      "threshold": 0.3,
+      "regions": [
+        [
+          15.12,
+          23.6
+        ]
+      ]
+    },
+    {
+      "threshold": 0.5,
+      "regions": [
+        [
+          15.152,
+          15.6
+        ],
+        [
+          15.888,
+          16.112
+        ],
+        [
+          16.464,
+          23.472
+        ]
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "regions": [
+        [
+          15.152,
+          15.408
+        ],
+        [
+          16.464,
+          23.408
+        ]
+      ]
+    }
+  ]
+}

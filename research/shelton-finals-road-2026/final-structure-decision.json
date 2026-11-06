@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-06T02:40:32.865113+00:00",
+  "slug": "shelton-finals-road-2026",
+  "narration_plan_sha256": "8ed7d80468211cd9b3b5aeb023886f388737edb3b230a4bb8f1c37edfd70b2a7",
+  "decision": "Keep all fifteen frozen narrated segments and five actual complete-point video segments; remove three source placeholders where no conforming complete official point could be obtained. Do not pad duration.",
+  "photo_fallback_nodes": [
+    "roland_garros_r2",
+    "stuttgart_final",
+    "wimbledon_r1"
+  ],
+  "point_video_nodes": [
+    "australian_open_qf",
+    "dallas_final",
+    "munich_final",
+    "montreal_final",
+    "us_open_final"
+  ],
+  "australian_open_window": [
+    116.8,
+    139.15
+  ],
+  "native_additional_tail_end": 139.65,
+  "fallback_authority": {
+    "path": "/workspace/tennislive/.claude/skills/tennis-owner-taste/SKILL.md",
+    "section": "2026-10-04：全部栏目使用官方素材，关键点缺口用文字说明",
+    "instruction": "仍缺关键点时，允许使用原生 title_card 与旁白事实说明继续制作；素材缺口仅记录在内部制作与质检资料中。"
+  },
+  "scope": "Production decision only; no final-render QC or publication approval claimed."
+}

@@ -1,0 +1,480 @@
+{
+  "schema": "shelton.final-frozen-fact-audit.v1",
+  "status": "PASS",
+  "reviewed_at_utc": "2026-11-06T02:45:44.556659+00:00",
+  "reviewer": "current assistant shelton_facts; direct review, no external model API",
+  "bound_files": [
+    {
+      "path": "/workspace/shelton-finals-production/research/editorial-plan.json",
+      "sha256": "40f03060eab5eeef0a42adfd04fab74e292849c5077460e7c76111982cd2353f",
+      "bytes": 7187
+    },
+    {
+      "path": "/workspace/shelton-finals-production/production/race-chart/data-canonical.json",
+      "sha256": "67905206237ead83c01975650d72bddac46d85cc3956c562288ce21bbc269710",
+      "bytes": 9744
+    }
+  ],
+  "edits_made_to_narration_tts_native": false,
+  "freshness": {
+    "rechecked_at_utc": "2026-11-06T02:40:16Z",
+    "snapshot_validity": "Paris QFNov6 beforeplay; freshofficialdrawstilllastupdatedNov5R16, sameSHA as priorresearch",
+    "official_field_six": [
+      "Alexander Zverev",
+      "Carlos Alcaraz",
+      "Ben Shelton",
+      "Daniil Medvedev",
+      "Flavio Cobolli",
+      "Arthur Fils"
+    ],
+    "official_field_status": "PASS sixactualofficialplayers exactlyequalallhighlightedrows",
+    "official_qualification_date": "2026-10-18",
+    "official_appearance_ordinal": 2,
+    "live_race_latest_response": "HTTP200; LastModifiedNov6 01:57:14GMT, responseDate02:40:16GMT, Age2579seconds; this is a cachedcurrentpage, freshness doesnotmean uncachedreal-time",
+    "all15_rank_points_match_fresh_live_race": true,
+    "source_manifest": "/workspace/shelton-finals-production/research/facts/final-freshness/manifest.json",
+    "source_manifest_sha256": "68b2bcc729e9684edf4f319a89626ac0b27e5472365efb347185f4a33f685fab",
+    "official_vs_independent": "Points/rank fromindependentLiveTennis, qualificationfromofficialNitto; nofalseclaimthatfullRacepointsareofficialATPresponse."
+  },
+  "qualification_trigger": {
+    "status": "PASS",
+    "date": "2026-10-18",
+    "trigger": "Alejandro Davidovich Fokina defeated Rafael Jodar inShanghaiFinal",
+    "source_official_post": "https://x.com/TennisTV/status/2111803837757444140",
+    "source_embedded_original_archive": "/workspace/shelton-finals-production/research/facts/sources/qualification-trigger.html",
+    "source_embedded_archive_sha256": "ee4466b5a71efadd097d4451242f05bd60010924a992cf2b611e62faa429a08d",
+    "source_nitto_fresh": "/workspace/shelton-finals-production/research/facts/final-freshness/official-shelton-qualification.html",
+    "caution": "ShanghaiFinalscoreconflict remainsquarantined; frozenfilmdoesnot state it."
+  },
+  "chronology": {
+    "status": "PASS",
+    "openingJun30_toSep13_days": 75,
+    "stuttgartJun14_toWimbledonJun30_days": 16,
+    "slams_terminal_rounds": [
+      "AOQF",
+      "RGR2",
+      "WIMR1",
+      "USF"
+    ],
+    "four_titles": [
+      "DallasFeb15",
+      "MunichApr19",
+      "StuttgartJun14",
+      "MontrealAug13local"
+    ],
+    "post_US_completed": "ShanghaiR3exitOct11; BaselR16exitOct29; ParisR32winNov3; ParisR16winNov5",
+    "next_unplayed": "ParisQFvsTommyPaulNov6; noresultclaim"
+  },
+  "race_row_reviews": [
+    {
+      "rank": 1,
+      "player": "Alexander Zverev",
+      "player_zh": "兹维列夫",
+      "points": 9350,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "1 ✓ Alexander Zverev 29 GER 9350 +10 Lost in Paris R32"
+    },
+    {
+      "rank": 2,
+      "player": "Jannik Sinner",
+      "player_zh": "辛纳",
+      "points": 7950,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "2 ✗ Jannik Sinner 25 ITA 7950"
+    },
+    {
+      "rank": 3,
+      "player": "Carlos Alcaraz",
+      "player_zh": "阿尔卡拉斯",
+      "points": 5300,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "3 ✓ Carlos Alcaraz 23 ESP 5300 +200 Paris QF (R32 ) 5500 6100"
+    },
+    {
+      "rank": 4,
+      "player": "Ben Shelton",
+      "player_zh": "谢尔顿",
+      "points": 4720,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "4 ✓ Ben Shelton 24 USA 4720 +200 Paris QF (R16 ) 4920 5520"
+    },
+    {
+      "rank": 5,
+      "player": "Daniil Medvedev",
+      "player_zh": "梅德韦德夫",
+      "points": 3820,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "5 ✓ Daniil Medvedev 30 RUS 3820 +10 Lost in Paris R32"
+    },
+    {
+      "rank": 6,
+      "player": "Flavio Cobolli",
+      "player_zh": "科博利",
+      "points": 3680,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "6 ✓ Flavio Cobolli 24 ITA 3680"
+    },
+    {
+      "rank": 7,
+      "player": "Arthur Fils",
+      "player_zh": "菲斯",
+      "points": 3625,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "7 ✓ Arthur Fils 22 FRA 3625 +100 Lost in Paris R16"
+    },
+    {
+      "rank": 8,
+      "player": "Frances Tiafoe",
+      "player_zh": "蒂亚福",
+      "points": 3390,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "8 Frances Tiafoe 28 USA 3390 +10 Lost in Paris R32"
+    },
+    {
+      "rank": 9,
+      "player": "Rafael Jódar",
+      "player_zh": "霍达尔",
+      "points": 3234,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "9 Rafael Jódar 20 ESP 3234 +50 Lost in Paris R32"
+    },
+    {
+      "rank": 10,
+      "player": "Alex de Minaur",
+      "player_zh": "德米纳尔",
+      "points": 3170,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "10 ✗ Alex de Minaur 27 AUS 3170 +10 Lost in Paris R32"
+    },
+    {
+      "rank": 11,
+      "player": "Taylor Fritz",
+      "player_zh": "弗里茨",
+      "points": 3050,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "11 Taylor Fritz 29 USA 3050 +1 +200 Paris QF (R16 ) 3250 3850"
+    },
+    {
+      "rank": 12,
+      "player": "Novak Djoković",
+      "player_zh": "德约科维奇",
+      "points": 2940,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "12 ✗ Novak Djoković 39 SRB 2940 -1 +50 Lost in Paris R32"
+    },
+    {
+      "rank": 13,
+      "player": "Tommy Paul",
+      "player_zh": "保罗",
+      "points": 2925,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "13 Tommy Paul 29 USA 2925 +200 Paris QF (R16 ) 3125 3725"
+    },
+    {
+      "rank": 14,
+      "player": "Jiří Lehečka",
+      "player_zh": "莱赫奇卡",
+      "points": 2540,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "14 ✗ Jiří Lehečka 24 CZE 2540 +10 Lost in Paris R64"
+    },
+    {
+      "rank": 15,
+      "player": "Jakub Menšík",
+      "player_zh": "门西克",
+      "points": 2500,
+      "checks": {
+        "rank": true,
+        "points": true,
+        "player_identity": true,
+        "canonical_chinese_name": true,
+        "qualification_marker": true
+      },
+      "status": "PASS",
+      "raw_live_row": "15 ✗ Jakub Menšík 21 CZE 2500"
+    }
+  ],
+  "segment_reviews": [
+    {
+      "id": "opening",
+      "status": "PASS",
+      "frozen_narration": "温网第一轮，谢尔顿拿到赛点，最后却输掉了比赛。两个多月后，他第一次站上大满贯决赛的球场。",
+      "finding": "温网6/30首轮1个MP未兑现；美网9/13首次GS决赛，相距75天，“两个多月后”成立。"
+    },
+    {
+      "id": "ao_intro",
+      "status": "PASS",
+      "frozen_narration": "先从澳网说起。打进8强之后，他三盘输给辛纳。",
+      "finding": "AO1/4决赛，Sinner6-3 6-4 6-4胜Shelton。"
+    },
+    {
+      "id": "ao_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Australian Open QF vs Jannik Sinner",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "dallas_intro",
+      "status": "PASS",
+      "frozen_narration": "二月达拉斯，面对弗里茨，他在决胜盘救回三个冠军点，最后逆转夺冠。",
+      "finding": "2/15DallasF，决胜盘救3冠军点，Shelton3-6 6-3 7-5胜Fritz。"
+    },
+    {
+      "id": "dallas_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Dallas final vs Taylor Fritz",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "munich_intro",
+      "status": "PASS",
+      "frozen_narration": "四月慕尼黑，两盘击败科博利，赛季第二冠到手。这一回，他在红土上举起奖杯。",
+      "finding": "Resolved scope ambiguity: frozen text now says赛季第二冠. MunichApr19win6-2 7-5vsCobolli is second2026title/fifthcareer title."
+    },
+    {
+      "id": "munich_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Munich final vs Flavio Cobolli",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "rg_intro",
+      "status": "PASS",
+      "frozen_narration": "可到了法网，他却在第二轮三盘输给科利尼翁。红土冠军，没有变成大满贯突破。",
+      "finding": "5/28RG R2 Collignon6-4 7-5 6-4胜Shelton。未实现新的GS突破属当季结果概述，不夸大伤病或心理。"
+    },
+    {
+      "id": "rg_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Roland-Garros R2 vs Raphael Collignon",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "stuttgart_intro",
+      "status": "PASS",
+      "frozen_narration": "转上草地，斯图加特决赛又遇弗里茨。他三盘赢球，拿到生涯第一座草地冠军。",
+      "finding": "6/14StuttgartF，Shelton6-4 2-6 6-4胜Fritz，生涯首草地冠。"
+    },
+    {
+      "id": "stuttgart_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Stuttgart final vs Taylor Fritz",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "wimbledon_intro",
+      "status": "PASS",
+      "frozen_narration": "半个月后的温网，决胜盘最后的抢十，他曾以八比五领先，还拿到一个赛点，最终却在第一轮出局。",
+      "finding": "Resolved timing precision:半个月后 approximates16days Jun14→Jun30. Fifth-settiebreak8-5lead andoneMP9-8 beforeR1lossverified."
+    },
+    {
+      "id": "wimbledon_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Wimbledon R1 vs Otto Virtanen",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "montreal_intro",
+      "status": "PASS",
+      "frozen_narration": "八月，加拿大大师赛。他六场比赛一盘未失，两盘击败中岛布兰登，成功卫冕。",
+      "finding": "8/13当地MontrealF Shelton6-3 7-6(4)胜Nakashima，6场12盘全胜；成功卫冕2025Toronto冠军，未误称首Masters。"
+    },
+    {
+      "id": "montreal_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 Montreal final vs Brandon Nakashima",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "us_open_run",
+      "status": "PASS",
+      "frozen_narration": "美网，他第一次击败阿尔卡拉斯，又逆转蒂亚福，第一次打进大满贯决赛。",
+      "finding": "9/9当地凌晨QF首胜Alcaraz；9/11SF4-6 6-3 6-3 7-5逆转Tiafoe；首次GS决赛。"
+    },
+    {
+      "id": "us_open_final_intro",
+      "status": "PASS",
+      "frozen_narration": "决赛对兹维列夫，他四盘落败，收获亚军。从温网首轮到纽约决赛，他走出了完全不同的一段路。",
+      "finding": "9/13F Zverev6-3 7-6(2)5-7 6-2胜Shelton，亚军。后一比较是事实性路线总结，未编心理。"
+    },
+    {
+      "id": "us_open_final_point",
+      "status": "FACT_IDENTITY_PASS",
+      "event": "2026 US Open final vs Alexander Zverev",
+      "finding": "Same-match opponent/round/year identity matches verified fact packet. Final production uses five full-point videos and three same-match photo fallbacks by root instruction; this metadata does not certify an actual video window."
+    },
+    {
+      "id": "autumn",
+      "status": "PASS",
+      "frozen_narration": "亚洲赛季，上海止步第三轮。十月十八日，另一场比赛替他锁定了年终席位。",
+      "finding": "10/11上海R3负ArthurGea，10/18其他球员决赛结果触发锁定，非本人上海赢球直接锁定。"
+    },
+    {
+      "id": "qualification",
+      "status": "PASS",
+      "frozen_narration": "达维多维奇·福基纳，在上海决赛击败霍达尔。谢尔顿连续第二年，拿到都灵门票。",
+      "finding": "Full canonical达维多维奇·福基纳 now used. OfficialTTVpost2111803837757444140 confirms his Shanghai win overJodar triggersShelton qualification; Nitto freshGET confirmsOct18 andsecondconsecutiveappearance. OneChinesecomma after福基纳 adds subjectpause only, doesnotchange identity/date/winner/trigger/secondappearance."
+    },
+    {
+      "id": "late_season",
+      "status": "PASS",
+      "frozen_narration": "资格到手以后，巴塞尔止步第二轮。巴黎先胜诺里，再逆转林德克内希，打进8强。",
+      "finding": "BaselR16=32签第二轮，10/29负Kym；Paris11/3胜Norrie、11/5三盘逆转Rinderknech，实际已进QF。"
+    },
+    {
+      "id": "race_table",
+      "status": "PASS",
+      "frozen_narration": "截至十一月六日，谢尔顿四千七百二十分，排名赛季积分榜第四。高亮的六位球员，都已锁定年终资格。",
+      "finding": "与research/race/data-canonical.json 02:16UTC快照一致：Shelton4720第4，6名active已晋级。排名是赛季Race，并未称官方当前52周排名；定格图保留截止日。"
+    },
+    {
+      "id": "question",
+      "status": "PASS",
+      "frozen_narration": "错过温网赛点，后来站上美网决赛。第二次到都灵，你看好谢尔顿冲进4强吗？",
+      "finding": "第2次Turin、向观众问能否4强均合理；“错过温网赛点”可选改“错失温网赛点”使未兑现语义更直接。"
+    }
+  ],
+  "special_name_checks": {
+    "梅德韦德夫": "PASS ownerfixedcanonicalinplayers.py andoverrides",
+    "门西克": "PASS JakubMensik,accentnormalizeonly",
+    "科利尼翁": "PASS RaphaelCollignon",
+    "林德克内希": "PASS ArthurRinderknech",
+    "中岛布兰登": "PASS BrandonNakashima"
+  },
+  "canonical_name_source": {
+    "path": "/workspace/shelton-finals-production/native/src/tennislive/zh/players.py",
+    "sha256": "6d7f2701223a65fc4baef8bd480904685f602e43f0e97196a40e4e8707278364"
+  },
+  "hard_fact_issues": [],
+  "nonblocking_metadata_observations": [
+    {
+      "location": "production/race-chart/data-canonical.json qualification_shelton.trigger_status",
+      "finding": "Containsoldresearchworkflowwording facts_role_fetching...; trigger is actually nowverified with officialTTVpost. Renderedracepoints/names/narrationarenotaffected."
+    },
+    {
+      "location": "research/editorial-plan.json source-kindsegments/style.information_cards/scope",
+      "finding": "Planstilllists8sourceblocks and4GS+4titlepointscope; rootconfirmedactualfilmwillhave5fullpointvideos+3same-matchphotofallbacks(RG/Stuttgart/WIM). This auditpassesfacts, nottheplanmetadataasactualdeliveryproof."
+    }
+  ],
+  "limits": [
+    "ActualrenderASS,textcardsandimageidentitieswillneedpostrenderaudit againstthisboundfactsnapshot.",
+    "Thispassdoesnotcertifycompletepointwindows, Englishspeechsentenceboundaries, oractualfilmvisualQC.",
+    "PhotosroleprovidedadditionalIPTClocaldates forAucklandJan15/MiamiMar21/CincyAug16; frozenfilmdoesnotnamethosedays, soTEEuropeandatecolumncannotcausecurrentnarrationerror."
+  ],
+  "punctuation_rebind": {
+    "status": "PASS",
+    "scope": "oneChinesecomma in qualification narration plus frozen_atmetadataonly",
+    "verified_full_file_byte_transform": true,
+    "old_plan_sha256": "8ed7d80468211cd9b3b5aeb023886f388737edb3b230a4bb8f1c37edfd70b2a7",
+    "new_plan_sha256": "40f03060eab5eeef0a42adfd04fab74e292849c5077460e7c76111982cd2353f",
+    "old_narration": "达维多维奇·福基纳在上海决赛击败霍达尔。谢尔顿连续第二年，拿到都灵门票。",
+    "new_narration": "达维多维奇·福基纳，在上海决赛击败霍达尔。谢尔顿连续第二年，拿到都灵门票。",
+    "prior_audit_path": "/workspace/shelton-finals-production/research/facts/final-frozen-fact-audit.before-caption-punctuation.json",
+    "prior_audit_sha256": "5d5628a68bd92c5ef0a8069bc8595f22857a4afb75e5c34f4457847df69db208",
+    "change_proof_path": "/workspace/shelton-finals-production/research/editorial-caption-punctuation-proof.json",
+    "change_proof_sha256": "7f392e6236d4523f3efa7e342e727c3f9823ed5385d405f4427f489ad54a94bf",
+    "unchanged_race_sha256": "67905206237ead83c01975650d72bddac46d85cc3956c562288ce21bbc269710",
+    "web_refetch_performed": false,
+    "previous_freshness_preserved": true,
+    "tts_cache_or_native_mutated_by_reviewer": false,
+    "review_scope_limit": "Doesnotclaimindependentcachebytecheck; producerwillregenerateonewholeutteranceandreuseother16requests."
+  }
+}

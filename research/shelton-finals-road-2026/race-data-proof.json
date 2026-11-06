@@ -1,0 +1,54 @@
+{
+  "status": "PASS_data_identity_and_qualification_source_check",
+  "canonical_sha256": "67905206237ead83c01975650d72bddac46d85cc3956c562288ce21bbc269710",
+  "rows": 15,
+  "highlighted": [
+    "兹维列夫",
+    "阿尔卡拉斯",
+    "谢尔顿",
+    "梅德韦德夫",
+    "科博利",
+    "菲斯"
+  ],
+  "focus": "谢尔顿",
+  "points": 4720,
+  "rank": 4,
+  "raw_sources": [
+    {
+      "key": "live-race",
+      "url": "https://live-tennis.eu/en/atp-race",
+      "http_status": 200,
+      "fetched_at": "2026-11-06T02:16:02.490248+00:00",
+      "server_date": "Fri, 06 Nov 2026 02:16:02 GMT",
+      "bytes": 347655,
+      "sha256": "bfbb435f0fb16d85eb987b046eb1a4d6f1b17c483d25b1d26531e68a24673371",
+      "raw_path": "/workspace/shelton-finals-production/research/race/live-race.html",
+      "text_path": "/workspace/shelton-finals-production/research/race/live-race.txt"
+    },
+    {
+      "key": "official-singles",
+      "url": "https://www.nittoatpfinals.com/en/players/singles",
+      "http_status": 200,
+      "fetched_at": "2026-11-06T02:16:03.082137+00:00",
+      "server_date": "Fri, 06 Nov 2026 02:16:03 GMT",
+      "bytes": 47321,
+      "sha256": "8b14d2546d00d239e4c53b08ed9330ea1d5e5273fcb1639beae7e58bc99c254f",
+      "raw_path": "/workspace/shelton-finals-production/research/race/official-singles.html",
+      "text_path": "/workspace/shelton-finals-production/research/race/official-singles.txt"
+    },
+    {
+      "key": "shelton-qualification",
+      "url": "https://www.nittoatpfinals.com/en/news/shelton-nitto-atp-finals-2026-qualification",
+      "http_status": 200,
+      "fetched_at": "2026-11-06T02:16:03.256529+00:00",
+      "server_date": "Fri, 06 Nov 2026 02:16:03 GMT",
+      "bytes": 35516,
+      "sha256": "9137265e8ec6730c0721cb6d93655b940be0f910251e43e18f43e6dc74a58698",
+      "raw_path": "/workspace/shelton-finals-production/research/race/shelton-qualification.html",
+      "text_path": "/workspace/shelton-finals-production/research/race/shelton-qualification.txt"
+    }
+  ],
+  "visual_review_performed": false,
+  "native_overlay_review_required": true,
+  "storage_note": "Downloaded first into independent tmpfs during full-overlay incident, copied byte-for-byte to this durable research directory after space restored; all raw hashes reverified."
+}

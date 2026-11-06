@@ -1,0 +1,17 @@
+{
+  "finding": "Current native metadata-only reattestation cannot reuse voice identity without compatibility support.",
+  "observed_ci_run": 42156985075,
+  "ci_result": {
+    "passed": 6749,
+    "failed": 1,
+    "failure": "test_新片默认开自动推送: auto=false without documentedreason"
+  },
+  "root_correction": "Use canonical auto=true. No publication/code/manifest/voiceapproval bypass. Native cached formal render rebuilds actualfullspec provenance with unchanged17voicebytes and unchangedrenderprojection.",
+  "compatibility_evidence": [
+    "reattest_check.apply leaves originalrender_inputs.spec_sha256 and changesrender.json.",
+    "voice_quality_gate._identity demands currentfullspecSHA==originalmanifestSHA and exactrender.json hash.",
+    "Native reattest therefore does not by itself rebuild currently enforced voiceidentity."
+  ],
+  "future_work": "Separate bounded native compatibility fix with meaningful negative tests, outside this episode.",
+  "final_delivery_requirement": "New native formalrender, actualfive-suite and exact-head CI plus actualmovieQA; no oldmetadata approval masquerading as current."
+}

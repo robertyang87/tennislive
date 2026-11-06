@@ -1,0 +1,236 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-sh26ao/sh26ao.mp4",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_audio_race; actual local two-model ASR, refined word timing and local speech activity reviewed; no human auditory listening claimed",
+  "reviewed_at": "2026-11-06T02:34:28.202412+00:00",
+  "reviewed_from": 116.8,
+  "reviewed_to": 153.3,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 147.5,
+      "end": 149.2,
+      "en": "Unplayable at times,",
+      "zh": "有时简直无懈可击，"
+    },
+    {
+      "start": 149.88,
+      "end": 152.74,
+      "en": "but Shelton gave it his best.",
+      "zh": "但谢尔顿已经拼尽全力。"
+    }
+  ],
+  "uncertain_spans": [
+    {
+      "start": 139.7,
+      "end": 141.26,
+      "kind": "background_umpire_obscured",
+      "action": "retain_source_audio_no_caption",
+      "reason": "ASR disagreement; no generic score-formula reconstruction."
+    },
+    {
+      "start": 142.36,
+      "end": 146.8,
+      "kind": "partly_obscured_commentary",
+      "action": "retain_source_audio_no_caption_per_parent_editor",
+      "reason": "All6 real model/context runs disagree on initial phrase. Common ending from start to finish only. Not falsely marked lexical resolution; editorial accepts unchanged real audio without speculative subtitles."
+    }
+  ],
+  "review_notes": [
+    "All4 actual English-model full/tight runs agree on retained complete final sentence. Tight medium first word147.60 plus local activity147.568–147.632 support onset147.50; earlier146.82 full-medium/147.08 small first-word starts are broad envelopes, not claimed exact onset. End152.74 conservatively preserves final best across rawcontexts.",
+    "Actual official Brightcove metadata subtitles={} and requested_subtitles=null, checked once. No official caption words available to resolve uncertain previous clause.",
+    "Parent/editor specifically directed retain uncertain142–146 real audio but do not manufacture full quotation, explanatory production cards or fabricated literal text. Only last reliable sentence bilingual. Court/result announcement139–141 is background and not fabricated.",
+    "Start116.8 visually verified still contains genuine same-point serve preparation before118.6 contact; entire rally to138.9, reaction/handshake and clean native extra0.5 tail153.8 retained."
+  ],
+  "coverage_policy": "Only reliably established foreground commentary gets bilingual quotation. Retained uncertain or background source speech is documented honestly below, not fabricated or presented as a complete verbatim transcript.",
+  "known_untranscribed_retained_audio": [
+    {
+      "start": 139.7,
+      "end": 141.26,
+      "kind": "background_umpire_obscured",
+      "action": "retain_source_audio_no_caption",
+      "reason": "ASR disagreement; no generic score-formula reconstruction."
+    },
+    {
+      "start": 142.36,
+      "end": 146.8,
+      "kind": "partly_obscured_commentary",
+      "action": "retain_source_audio_no_caption_per_parent_editor",
+      "reason": "All6 real model/context runs disagree on initial phrase. Common ending from start to finish only. Not falsely marked lexical resolution; editorial accepts unchanged real audio without speculative subtitles."
+    }
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "181.269333",
+        "size": "83978142"
+      }
+    }
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/medium.en.json",
+      "sha256": "f3a9d08b1a1f95b087a9ead70de9126807b87cae46ecabcddc84b3f90e631240",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "medium.en",
+      "clip": [
+        116.4,
+        157.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/sh26ao/small.en.json",
+      "sha256": "f7a9eef7c10c5db2bd27dcbd847789c397c2b78493decf9ccf8f2f93cfb5901c",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "small.en",
+      "clip": [
+        116.4,
+        157.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26ao/medium.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26ao/medium.en.json",
+      "sha256": "53913cf629fbca0c01b843d7226e60dc87cf5c12be0af1bec0e8810d0c30cb3e",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "medium.en",
+      "clip": [
+        138.5,
+        153.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26ao/small.en.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/refined/sh26ao/small.en.json",
+      "sha256": "31c61f0efe83918fbb7c6c2d318549a2e3cb2e478a10ff4bb0440224eb9b2708",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "small.en",
+      "clip": [
+        138.5,
+        153.5
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/lexical-refined/sh26ao/medium.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/lexical-refined/sh26ao/medium.json",
+      "sha256": "3d8a00c8ced9599230e6f38ab12d0db133bcac499fc3be27061ed04a8ae0a225",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "medium",
+      "clip": [
+        141.7,
+        146.4
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_cached_multilingual_refine.py",
+      "script_sha256": "2472883caf1f11b123be89c21a8e32b84220ffbf3bb44a41e2c3d63c546079d9"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/research/audio/raw/lexical-refined/sh26ao/small.json",
+      "research_path": "/workspace/shelton-finals-production/research/audio/raw/lexical-refined/sh26ao/small.json",
+      "sha256": "79761d15b4aeb080f11e128d1d902bd6818bf44cf424c8f58906ee4d70972ca6",
+      "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "model": "small",
+      "clip": [
+        141.7,
+        146.4
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_cached_multilingual_refine.py",
+      "script_sha256": "2472883caf1f11b123be89c21a8e32b84220ffbf3bb44a41e2c3d63c546079d9"
+    }
+  ],
+  "timing_support": {
+    "path": "/workspace/shelton-finals-production/research/audio/early-speech-activity.json",
+    "sha256": "0dc0062cb06a661ed82096e984e385e358a162aad0c81a38563e9bb44478aa32",
+    "scope": "Local Silero activity support only, not auditory listening or precise quiet-syllable proof."
+  },
+  "native_quote": [
+    {
+      "at": 30.7,
+      "end": 32.4,
+      "text": "Unplayable at times,\n有时简直无懈可击，"
+    },
+    {
+      "at": 33.08,
+      "end": 35.94,
+      "text": "but Shelton gave it his best.\n但谢尔顿已经拼尽全力。"
+    }
+  ]
+}

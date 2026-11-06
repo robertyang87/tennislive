@@ -1,0 +1,35 @@
+{
+  "status": "SOURCE_VISUAL_HANDOFF_READY_ACTUAL_RERENDER_PENDING",
+  "source_id": "sh26ao",
+  "source_path": "/dev/shm/shelton-sources/sh26ao.mp4",
+  "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "official_url": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
+  "new_window": {
+    "start": 116.8,
+    "end": 139.65,
+    "duration": 22.85,
+    "native_video_extra_tail": 0.5,
+    "video_end_with_tail": 140.15,
+    "audio_tail": "silence",
+    "audio_exclusion": "139.7+ result announcement outside selectedsource body; audio reviewer owns ASRfreeze"
+  },
+  "source_actual_visual_review": {
+    "dense_evidence": "rerender-tail-through140.2.jpg",
+    "personally_opened": true,
+    "frame_step_seconds": 0.05,
+    "range_inspected": [
+      139.1,
+      140.2
+    ],
+    "result_reaction_start": 139.15,
+    "body_end_fist_visible": 139.65,
+    "tail_end_fist_visible": 140.15,
+    "tail_no_advertisement_or_unrelated_point": true,
+    "same_source_full_serve_and_rally_unchanged": true,
+    "crop": "fixedcx.5 cy.5 cover3:4, trackfalse"
+  },
+  "prior_film_sha256": "d3433c239561a61d0bdf1c498f7d5e63c9a5b3083f4bab1e0c4d727bdc2abbe0",
+  "prior_film_failure_evidence": "/workspace/shelton-finals-production/final/independent-qc/early-visual.json",
+  "prior_frozen_sourcewindow_preserved": "source-window-visual.json",
+  "root_change_authorization": "Extend AOend139.15→139.65 only; cachednative rerender with same17TTS, source, style. Sourcehandoff approval is not actualmovie finalapproval."
+}

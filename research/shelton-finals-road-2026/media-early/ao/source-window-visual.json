@@ -1,0 +1,63 @@
+{
+  "path": "/dev/shm/shelton-sources/sh26ao.mp4",
+  "sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+  "duration": 181.269333,
+  "width": 1920,
+  "height": 1080,
+  "fps": "25/1",
+  "event": "Australian Open 2026 QF",
+  "source_id": "sh26ao",
+  "release": "source-sh26ao",
+  "publisher": "Australian Open official own Brightcove player",
+  "official_url": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
+  "visual_review": {
+    "actual_images_opened": [
+      "whole.jpg",
+      "tail.jpg",
+      "point-dense.jpg",
+      "serve-dense.jpg",
+      "short-end-dense.jpg"
+    ],
+    "source_single_court": true,
+    "no_embedded_split": true,
+    "identity": "Blue Rod Laver Arena, scoreboard SHELTON 3 4 4 vs SINNER 6 6 5 at 15-40 terminal point; Sinner olive shirt/white cap, Shelton gray sleeveless/white shorts",
+    "same_terminal_point_clean_start": 116.4,
+    "serve_contact_approx": 118.6,
+    "entire_rally_end_approx": 138.9,
+    "true_result_reaction_start": 139.0,
+    "handshake_start_approx": 146.0,
+    "previous_point_excluded": "113-116.3 contains previous point tail / Sinner close-up / official dissolve; do not use it as terminal-point preparation",
+    "candidate_window": [
+      116.8,
+      139.15
+    ],
+    "candidate_window_status": "Root selected short clean ambience boundary before139.7 speech onset",
+    "native_extra_tail_seconds": 0.5,
+    "native_tail_clean_through": 139.65,
+    "commercial_endcard_first_approx": 178.0,
+    "crop": {
+      "mode": "cover",
+      "cx": 0.5,
+      "cy": 0.5,
+      "track": false
+    },
+    "source_prepare_complete": true,
+    "matchpoint_complete": true,
+    "extra_point_selected": false,
+    "native_tail_actually_opened": "short-end-dense.jpg",
+    "audio_complete_sentence_end": null,
+    "reaction_note": "At139.12 first Sinner fist reaction cut; .5 native tail through139.65 displays fist extending. Whole terminal rally is visible before138.9."
+  },
+  "selected_window": {
+    "start": 116.8,
+    "end": 139.15,
+    "duration": 22.35,
+    "native_extra_tail_seconds": 0.5,
+    "native_end_including_tail": 139.65
+  },
+  "superseded_window": {
+    "start": 116.8,
+    "end": 153.3,
+    "reason": "Root rejected uncertain139.7+ original speech for publication; do not use this older longer window"
+  }
+}
