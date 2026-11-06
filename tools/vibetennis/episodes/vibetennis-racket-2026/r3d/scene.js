@@ -167,8 +167,9 @@ const IN=0.254;                                   // 1 英寸 = 0.254 单位
 const WOOD={a:10.5/2*IN, b:8.5/2*IN}, BIG={a:13.5/2*IN, b:10.5/2*IN};
 const GOLD='rgba(255,194,74,0.95)', CYAN='rgba(79,227,255,0.95)', RED='rgba(255,90,74,0.95)', VIO='rgba(167,139,250,0.95)', MINT='rgba(52,245,168,0.95)';
 const TT={}; const tx=(k,s,o={},grp=scene)=>TT[k]||(TT[k]=textSprite(s,o,grp));
-const TITLE_DIM=0.86;   // 光晕标准：纯白大字满不透明度会越过泛光阈值（0.93），钩子和片尾两行问句 glow_check 超标（gain 2.15 / 3.09）；整体压到 86%
-const TB={}; const bt=(k,s,o={})=>TB[k]||(TB[k]=(t=>{ const up=t.update.bind(t); t.update=(u,IN,OUT=Infinity,mul=1)=>up(u,IN,OUT,mul*TITLE_DIM); return t; })(makeTitle(THREE,s,Object.assign({k:GLOW.k,group:scene},o))));   // 一级大字：TYPE 标准（engine/typefx.js）；不叫 BIG——那个名字是大拍面尺寸
+const TITLE_DIM=0.86;   // 另加 0.2 s 淡入：冲击／书写／编织这几种出场在第一帧就整块亮出来，英文版钩子那句更宽，motion_check 在 14.1 s 量到 12.4（门槛 12）
+   // 光晕标准：纯白大字满不透明度会越过泛光阈值（0.93），钩子和片尾两行问句 glow_check 超标（gain 2.15 / 3.09）；整体压到 86%
+const TB={}; const bt=(k,s,o={})=>TB[k]||(TB[k]=(t=>{ const up=t.update.bind(t); t.update=(u,IN,OUT=Infinity,mul=1)=>up(u,IN,OUT,mul*TITLE_DIM*ss(IN,IN+0.2,u)); return t; })(makeTitle(THREE,s,Object.assign({k:GLOW.k,group:scene},o))));   // 一级大字：TYPE 标准（engine/typefx.js）；不叫 BIG——那个名字是大拍面尺寸
 const HUDQ=[];   // hud() 在 look() 之前调也行：先记下，等这一帧机位定了再放
 function hud(o,x,y,d=9){ HUDQ.push([o,x,y,d]); return o; }
 function flushHud(){ camera.updateMatrixWorld(); for(const [o,x,y,d] of HUDQ){ const v=new THREE.Vector3(x,y,-d).applyQuaternion(camera.quaternion).add(camera.position); if(o.isSprite) o.position.copy(v); else { o.g.position.copy(v); o.g.quaternion.copy(camera.quaternion); } } HUDQ.length=0; }

@@ -9,8 +9,8 @@ SEG="${SEG:-r3d/seg}"   # 中文先渲完挪到 r3d/seg_zh、英文渲进 r3d/se
 ls $SEG/c*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
 [ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls $SEG/c*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
 [ -f sfx/final_$L.m4a ] || {
-  [ -f sfx/sfx_only.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
-  BED=sfx/sfx_only.wav; [ "$L" = zh ] && { "$PY" voice.py; BED=sfx/sfx_bed_zh.wav; }   # 英文版只有音效：所有者 2026-11-02 定英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从曲库挂
+  [ -f sfx/sfx_amb_en.wav ] && [ -f sfx/bgm_bed.wav ] || "$PY" sfx.py 2>&1 | grep -v -i fontconfig
+  BED=sfx/sfx_amb_en.wav; [ "$L" = zh ] && { "$PY" voice.py; BED=sfx/sfx_bed_zh.wav; }   # 英文版：音效＋自己合成的环境底，不带 BGM（所有者 2026-11-02 定，EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从曲库挂
   D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 r3d/full_ov_$L.mp4)
   ffmpeg -y -loglevel error -i $BED -af "atrim=0:$D" -ac 2 -c:a pcm_f32le sfx/trim_$L.wav
   "$PY" ln.py sfx/trim_$L.wav sfx/n14_$L.wav -14 -2.5
