@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-shelton-finals-road-2026-11fede1990f13864",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-shelton-finals-road-2026-11fede1990f13864/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42155300597"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42158751969"
   },
   "cover_seconds": 4.426,
   "cover_narrated": true,
@@ -57,44 +57,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "61759c5b8bcd6a5cff09eaaa01ff761741535e0e35d76e9dfd470f471d74d4c2",
+  "render_inputs_sha256": "cade1d1bfd35927fc409cbafaca791127248233e4dfedfa19a36b7404d32783f",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "shelton-finals-road-2026",
-    "received_at": "2026-11-06T03:14:25Z",
-    "artifact_ready_at": "2026-11-06T03:23:07Z",
-    "elapsed_seconds": 522.296,
+    "received_at": "2026-11-06T03:48:43Z",
+    "artifact_ready_at": "2026-11-06T03:57:34Z",
+    "elapsed_seconds": 531.867,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
-    "spec_sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894",
-    "run_id": "42155300597",
+    "film_sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+    "spec_sha256": "7d47e189ee5ce23fc7d6aac89991922eff299c5c459fc219da987ab42c637484",
+    "run_id": "42158751969",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-06T03:17:59Z",
-        "run_id": "42155300597"
+        "at": "2026-11-06T03:52:29Z",
+        "run_id": "42158751969"
       }
     ],
-    "render_seconds": 308.296,
-    "pre_render_seconds": 214.0
+    "render_seconds": 305.867,
+    "pre_render_seconds": 226.0
   },
-  "film_sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
-  "film_bytes": 153616900,
-  "qc_attestation_sha256": "a3b2ee77d1f72404a43afc3c124baacc1b8515522fb7e33468413d96908c5606",
+  "film_sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+  "film_bytes": 153629475,
+  "qc_attestation_sha256": "ab541d1974aa5643409f35925d3f0c986c0405a9475d6779eee8c040d4e46eef",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-06T03:17:59Z",
-      "run_id": "42155300597"
+      "at": "2026-11-06T03:52:29Z",
+      "run_id": "42158751969"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-06T03:23:10Z",
-      "run_id": "42155300597"
+      "at": "2026-11-06T03:57:39Z",
+      "run_id": "42158751969"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-shelton-finals-road-2026/shelton-finals-road-2026.mp4",
-  "video_bytes": 153616900
+  "video_bytes": 153629475
 }
