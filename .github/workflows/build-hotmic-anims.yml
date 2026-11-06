@@ -1,13 +1,20 @@
 name: build-hotmic-anims
 on:
   workflow_dispatch: {}
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 不碰 output/：稀疏检出把它挡在外面（同 assets.yml，test_不碰产物的工作流不许把output拉下来）
+          sparse-checkout: |
+            assets
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
