@@ -392,7 +392,7 @@ function hideAll(){
 const rims=(a,b,i=5)=>{ rimL.intensity=i; rimR.intensity=i; rimL.color.set(a); rimR.color.set(b); rimL.position.set(-4,3,4); rimR.position.set(4,3,4); };
 // 规格环：绕球的一圈光环＋标签
 function specRing(i,c,r,tilt,ang,k,label,col){ const l=ln(col,2); const pts=[]; const q=new THREE.Quaternion().setFromEuler(new THREE.Euler(tilt,ang,0));
-  for(let j=0;j<=72;j++){ const a=j/72*6.283*k; pts.push(V(Math.cos(a)*r,0,Math.sin(a)*r).applyQuaternion(q).add(c)); } setLine(l,pts); l.material.opacity=0.85*Math.min(1,k*3);
+  for(let j=0;j<=72;j++){ const a=j/72*6.283*k; pts.push(V(Math.cos(a)*r,0,Math.sin(a)*r).applyQuaternion(q).add(c)); } setLine(l,pts); l.material.opacity=0.55*Math.min(1,k*3);
   if(label){ const s=tx('spec'+i,label,{color:'#ffffff',size:0.34,glow:col===0xffc24a?GOLD:CYAN}); s.position.copy(V(r*1.02,0,0).applyQuaternion(q).add(c)); op(s,ss(0.3,0.8,k)); } }
 
 // ---------- 1 钩子：一颗不到 60 克的球，被写了六项数字 ----------
@@ -410,10 +410,10 @@ function shotHook(u,D){
   for(let i=0;i<6;i++) specRing(i,V(-2.4,0.2,0),1.4+i*0.12,0.5+i*0.33,i*1.05+u*0.08,1,'',i%2?0x4fe3ff:0xffc24a);
   const R=rkA; rkOp(R,ss(0,0.6,v)); R.g.position.set(2.6,-R.cy*0.15-0.4,0); R.g.scale.setScalar(0.62); R.g.rotation.y=Math.sin(u*0.4)*0.25;
   const top=R.tip*0.62-0.4+0.25, bot=R.butt*0.62-0.4-0.15, hw=R.b*0.62+0.25; const bx=ln(0xffffff,2,true); const kb=ss(0.4,1.2,v);
-  setLine(bx,[V(2.6-hw,bot,0),V(2.6+hw,bot,0),V(2.6+hw,top,0),V(2.6-hw,top,0),V(2.6-hw,bot,0)]); bx.material.opacity=0.8*kb;
+  setLine(bx,[V(2.6-hw,bot,0),V(2.6+hw,bot,0),V(2.6+hw,top,0),V(2.6-hw,top,0),V(2.6-hw,bot,0)]); bx.material.opacity=0.55*kb;
   const la=tx('hkRk',T('球拍：只限尺寸','Racket: size limits only'),{color:'#e8f0ff',size:0.5,glow:CYAN}); la.position.set(2.6,bot-0.45,0.2); op(la,kb*(1-ss(QQ-RK+1.6,QQ-RK+2.2,v)));
   const lb=tx('hkBl',T('球：六项数字','Ball: six numbers'),{color:'#fff3c8',size:0.5,glow:GOLD}); lb.position.set(-2.4,-1.85,0.2); op(lb,ss(0.2,0.8,v)*(1-ss(QQ-RK+1.6,QQ-RK+2.2,v)));
-  const q=bt('hookQ',T('一颗球，凭什么管得这么严？','Why is one ball regulated so tightly?'),{size:0.9,glow:GOLD,accent:T('这么严','so tightly'),fx:'shock'}); hud(q,0,2.3); q.update(v,QQ-RK);   /* 冲击：一记重音 */
+  const q=bt('hookQ',T('一颗球，凭什么管得这么严？','Why is one ball regulated so tightly?'),{size:0.9,glow:GOLD,accent:T('这么严','so tightly'),fx:'shock'}); hud(q,0,2.3); q.update(v,QQ-RK,Infinity,0.86);   /* 光晕：这一行字大、白字多，再压一档（glow_check gain 1.06 → 门槛内） */   /* 冲击：一记重音 */
   look(lerp(-0.6,0.6,ss(0,D-RK,v)),0.5,lerp(10.5,9.6,ss(0,D-RK,v)),0,0.1,0); rims(0xffc24a,0x4fe3ff,5); beamMat.uniforms.uOp.value=0.08; }
 
 // ---------- 2 演化：五个展台 ----------
