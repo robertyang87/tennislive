@@ -17,6 +17,8 @@ import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { TL } from './shots.js';
+import { TTFLoader } from 'three/addons/loaders/TTFLoader.js';
+import { TYPE, loadTypeFonts, makeTitle } from './typefx.js';   // 大字标准（字体＋粒子汇聚），engine/typefx.js
 const Q=new URLSearchParams(location.search);
 const W=+(Q.get('w')||1920), H=+(Q.get('h')||1080), LANG=Q.get('lang')||'zh';
 const T=(zh,en)=>LANG==='en'?en:zh;
@@ -104,7 +106,7 @@ function textSprite(str,{color='#ffffff',size=1,font='700 120px "Noto Sans CJK S
   const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,opacity:0,color:0xd8d8d8,depthTest:false})); s.renderOrder=20; /* 字永远压在 3D 物体上面，不被球拍挡住 */ s.scale.set(size*w/200,size,1); group.add(s); return s; }
 const NOTEXT=!!Q.get('notext');   // 封面底图：3D 里的字全部不出，标题由封面脚本自己排
 const op=(s,v)=>{ s.material.opacity=NOTEXT?0:v; };
-let FONT=null; const FONT_READY=new Promise(res=>new FontLoader().load('./node_modules/three/examples/fonts/helvetiker_bold.typeface.json',f=>{ FONT=f; res(); }));
+let FONT=null; const FONT_READY=new Promise((res,rej)=>Object.assign(new TTFLoader(),{reversed:true}).load('./fonts/InterDisplay-Black.otf',j=>{ FONT=new FontLoader().parse(j); res(); },undefined,rej));   // 大字标准：3D 数字用 Inter Display Black，不再用 Three.js 自带的示例字体 helvetiker
 const text3D={};
 function t3d(key,str,color,size=1,group=scene){ // 3D 立体数字：金属挤出＋发光描边
   if(text3D[key]) return text3D[key];
@@ -165,6 +167,8 @@ const IN=0.254;                                   // 1 英寸 = 0.254 单位
 const WOOD={a:10.5/2*IN, b:8.5/2*IN}, BIG={a:13.5/2*IN, b:10.5/2*IN};
 const GOLD='rgba(255,194,74,0.95)', CYAN='rgba(79,227,255,0.95)', RED='rgba(255,90,74,0.95)', VIO='rgba(167,139,250,0.95)', MINT='rgba(52,245,168,0.95)';
 const TT={}; const tx=(k,s,o={},grp=scene)=>TT[k]||(TT[k]=textSprite(s,o,grp));
+const TITLE_DIM=0.86;   // 光晕标准：纯白大字满不透明度会越过泛光阈值（0.93），钩子和片尾两行问句 glow_check 超标（gain 2.15 / 3.09）；整体压到 86%
+const TB={}; const bt=(k,s,o={})=>TB[k]||(TB[k]=(t=>{ const up=t.update.bind(t); t.update=(u,IN,OUT=Infinity,mul=1)=>up(u,IN,OUT,mul*TITLE_DIM); return t; })(makeTitle(THREE,s,Object.assign({k:GLOW.k,group:scene},o))));   // 一级大字：TYPE 标准（engine/typefx.js）；不叫 BIG——那个名字是大拍面尺寸
 const HUDQ=[];   // hud() 在 look() 之前调也行：先记下，等这一帧机位定了再放
 function hud(o,x,y,d=9){ HUDQ.push([o,x,y,d]); return o; }
 function flushHud(){ camera.updateMatrixWorld(); for(const [o,x,y,d] of HUDQ){ const v=new THREE.Vector3(x,y,-d).applyQuaternion(camera.quaternion).add(camera.position); if(o.isSprite) o.position.copy(v); else { o.g.position.copy(v); o.g.quaternion.copy(camera.quaternion); } } HUDQ.length=0; }
@@ -332,7 +336,7 @@ function hideAll(){
   courtG.visible=false; ALLRK.forEach(R=>{ R.g.position.set(0,0,0); R.g.rotation.set(0,0,0); R.g.scale.setScalar(1); rkOp(R,0); R.frame.material.emissive&&R.frame.material.emissive.set(R.kind==='wood'?0x2a1406:0x0a1420); });
   for(const b of [ball,ball2,ball3]){ b.m.visible=false; b.gl.visible=false; b.m.scale.set(1,1,1); }
   LN.forEach(l=>{ l.material.opacity=0; l.material.dashed=false; }); lnI=0; RG.forEach(r=>r.material.opacity=0); rgI=0; GS.forEach(s=>{ s.material.opacity=0; s.visible=false; }); gsI=0;
-  for(const k in TT) op(TT[k],0); for(const k in text3D) t3op(text3D[k],0); chide(pt);
+  for(const k in TT) op(TT[k],0); for(const k in TB) TB[k].g.visible=false; for(const k in text3D) t3op(text3D[k],0); chide(pt);
   page.visible=false; page2.visible=false; page.material.opacity=0; page2.material.opacity=0; lightTable.material.opacity=0; pageG.position.set(0,0,0); pageG.rotation.set(0,0,0);
   holePlate.visible=false; secG.visible=false; [beadT,beadB,web].forEach(m=>{ m.visible=false; m.position.x=0; }); aluSec.visible=false; aluCells.forEach(c=>c.material.opacity=0);
   tubeG.visible=false; balG.visible=false; steelBar.visible=fibBundle.visible=true; stackG.visible=false; pzG.visible=false; scanBand.material.opacity=0; fillRing.material.opacity=0;
@@ -366,7 +370,7 @@ function shotHook(u,D){
   const yrs=[T('木','Wood'),T('钢','Steel'),T('铝','Aluminium'),T('大拍面','Oversize'),T('碳纤维','Graphite')];
   row.forEach((R,i)=>{ const s=tx('row'+i,yrs[i],{color:'#ffffff',size:0.42,glow:CYAN}); s.position.set((i-2)*2.9,R.gripY-1.0,0.3); op(s,ss(i*0.45+0.2,i*0.45+0.8,v)*(1-ss(QQ-ROW-0.3,QQ-ROW,v))); });
   const qk=ss(QQ-ROW-0.6,QQ-ROW+0.5,v); particles(qk,0,2.6,1,7,1.3,0xffc24a,qk>0?1-ss(QQ-ROW+0.8,QQ-ROW+1.4,v):0);
-  const q=tx('hookQ',T('是球拍，改写了网球吗？','Did the racket rewrite tennis?'),{color:'#ffffff',size:1.0,font:BIGF,glow:GOLD}); q.position.set(0,2.6,1); op(q,ss(QQ-ROW+0.3,QQ-ROW+0.9,v));
+  const q=bt('hookQ',T('是球拍，改写了网球吗？','Did the racket change tennis?'),{size:1.0,glow:GOLD,accent:T('球拍','racket'),fx:'shock'}); hud(q,0,2.15); q.update(v,QQ-ROW+0.3);   /* 冲击：钩子是一记击球 */
   look(lerp(-3,3,ss(0,QQ-ROW,v)),0.4,lerp(13,11.5,ss(0,D-ROW,v)),0,0.3,0); beamMat.uniforms.uOp.value=0.1; rimL.intensity=4; rimR.intensity=4; rimL.position.set(-6,3,4); rimR.position.set(6,3,4);
 }
 
@@ -469,7 +473,7 @@ function shotOversize(u,D){
   // 面积：多出来的一圈填亮
   const ak=ss(AR-CO,AR-CO+0.8,v); if(ak>0){ setFill(WOOD.a-WOOD.a,WOOD.a,WOOD.b,R.cy,R.a,R.b); fillRing.position.set(0,0,0.11); fillRing.material.opacity=0.35*ak; }
   const ol=ln(0xffffff,2,true); setLine(ol,new THREE.EllipseCurve(0,0,WOOD.b,WOOD.a,0,Math.PI*2).getPoints(100).map(p=>new THREE.Vector3(p.x,p.y,0.13))); ol.material.opacity=0.6*ss(ST-CO+0.5,ST-CO+1.2,v);
-  const ar=tx('area',T('拍面 大了 40% 以上','Strung area: 40%+ larger'),{color:'#ffffff',size:0.62,glow:GOLD}); ar.position.set(-3.6,1.2,0.3); op(ar,ak);
+  const ar=bt('area',T('拍面 大了 40% 以上','Strung area: 40%+ larger'),{size:0.6,glow:GOLD,accent:'40%',fx:'shock'}); hud(ar,-3.7,1.75); ar.update(v,AR-CO);   /* 冲击：面积一下子撑大 */
   const as=tx('areas',T('《Harvard Crimson》1981 · Inside Tennis','Harvard Crimson 1981 · Inside Tennis'),{color:'#cfe8ff',size:0.28}); as.position.set(-3.6,0.6,0.3); op(as,ak);
   look(lerp(0.4,0.9,ss(0,D-CO,v)),0.2,lerp(9.2,9.8,ss(ST-CO,D-CO,v)),0.6,-0.4,0); proj('cop',cop); }
 
@@ -478,7 +482,7 @@ const P3=[[0.0,'#ffc24a',T('回弹最快的点','Max rebound')],[0.35,'#4fe3ff',
 function shotSweet(u,D){
   const SP=ev('split',2.3), P1=ev('p1',4.5), P2=ev('p2',6.0), P3_=ev('p3',7.7), NO=ev('node',15.7), GR=ev('grip',17.6);
   const R=rkB; setRk(R,BIG.a,BIG.b); R.g.position.set(0,-R.cy,0); rkOp(R,1);
-  if(u<SP+0.3){ const k=ss(0,SP,u); particles(k,0,0,0.3,3.2,1,0xffc24a); const s=tx('sweetW',T('「甜点」','"Sweet spot"'),{color:'#ffffff',size:0.9,font:BIGF,glow:GOLD}); s.position.set(0,0,0.4); op(s,ss(SP-0.8,SP-0.2,u)*(1-ss(SP,SP+0.3,u))); look(0,0,7.5,0,0,0); return; }
+  if(u<SP+0.3){ const k=ss(0,SP,u); const s=bt('sweetW',T('「甜点」','"Sweet spot"'),{size:0.9,glow:GOLD,fx:'particles'}); hud(s,0,0); s.update(u,0.5,SP);   /* 粒子：聚成「甜点」，在 SP 散开、正好接上三颗光点分飞 */ look(0,0,7.5,0,0,0); return; }
   const v=u-SP;
   P3.forEach(([fy,col,lab],i)=>{ const p=new THREE.Vector3(0,fy*R.a,0.15); const k=ss(0.1+i*0.15,0.6+i*0.15,v); const from=new THREE.Vector3(0,0,0.4);
     const pos=from.clone().lerp(p,k); const dim=(u>NO&&i!==1)?0.25:1; const s=gs(col,0.9,0.9*k*dim); s.position.copy(pos);
@@ -602,8 +606,8 @@ function shotRules(u,D){
 function shotStyle(u,D){
   const QU=ev('quote',0.5), PW=ev('power',4.1), SI=ev('sim',6.3), RE=ev('real',11.3), PZ=ev('puzzle',16.3);
   if(u<SI-0.3){ const a=tx('kq1',T('现代球拍让比赛从','Modern rackets moved the game from'),{color:'#e8ecf6',size:0.5}); a.position.set(0,1.5,0); op(a,ss(QU,QU+0.6,u));
-    const b=tx('kq2',T('「技术」','"technique"'),{color:'#ffffff',size:0.95,font:BIGF,glow:CYAN}); b.position.set(0,0.4,0); op(b,ss(QU+0.6,QU+1.2,u)*(1-0.7*ss(PW,PW+0.6,u)));
-    const c=tx('kq3',T('转向「力量和旋转」','to "power and spin"'),{color:'#ffffff',size:0.95,font:BIGF,glow:GOLD}); c.position.set(0,-0.9,0); op(c,ss(PW,PW+0.6,u));
+    const b=bt('kq2',T('「技术」','"technique"'),{size:0.95,glow:CYAN,fx:'write'}); hud(b,0,0.55); b.update(u,QU+0.6,Infinity,1-0.7*ss(PW,PW+0.6,u));   /* 书写：技术 */
+    const c=bt('kq3',T('转向「力量和旋转」','to "power and spin"'),{size:0.95,glow:GOLD,accent:T('力量和旋转','power and spin'),fx:'spin'}); hud(c,0,-0.75); c.update(u,PW);   /* 旋转：力量和旋转 */
     const s=tx('kqs',T('Miller 2006《英国运动医学杂志》（作者来自国际网联）','Miller 2006, Br J Sports Med (ITF author)'),{color:'#cfe8ff',size:0.3}); s.position.set(0,-2.0,0); op(s,ss(QU+1,QU+1.6,u));
     look(0,0,lerp(9,8.2,ss(0,SI,u)),0,0,0); return; }
   if(u<PZ-0.3){ balG.visible=true; balG.position.set(0,0.8,0); balMat.opacity=1; steelBar.visible=fibBundle.visible=false;   // 这里托盘上放的是「模拟」「实测」，不是上一节的钢条和碳纤维束
@@ -627,7 +631,7 @@ function shotStyle(u,D){
   const v=u-PZ; pzG.visible=true; pzG.rotation.y=Math.sin(v*0.5)*0.2; const gap=lerp(0.4,0,ss(0.2,1.4,v));
   pz.forEach((m,i)=>{ m.position.x=(i-1)*(2.25+gap); m.material.opacity=i===2?0.25:1; m.material.emissiveIntensity=i===2?0.05:GLOW.emissive; });
   const labs=[T('线','Strings'),T('拍','Racket'),T('球','Ball')]; labs.forEach((s,i)=>{ const t=tx('pz'+i,s,{color:'#ffffff',size:0.7}); t.position.set((i-1)*2.25,0,0.4); op(t,i===2?0.35:ss(0.2,0.8,v)); });
-  const tq=tx('pzT',T('时间对得上，作用分不开','The timing fits; the effects can\'t be separated'),{color:'#ffffff',size:0.5,glow:VIO}); tq.position.set(0,-2.0,0.4); op(tq,ss(0.8,1.4,v));
+  const tq=bt('pzT',T('时间对得上，作用分不开','The timing fits; the effects can\'t be separated'),{size:0.62,glow:VIO,fx:'weave',thread:'#c9b8ff'}); hud(tq,0,-1.75); tq.update(v,0.8);   /* 编织：线、拍、球缠在一起分不开 */
   const tn=tx('pzN',T('第三集：球','Episode 3: the ball'),{color:'#c8ffe6',size:0.42}); tn.position.set(2.25,1.6,0.4); op(tn,ss(1.6,2.2,v));
   look(0,0.3,8,0,0,0); }
 
@@ -638,15 +642,15 @@ function shotEnd(u,D){
     const R=rkA; rkOp(R,1); const s=u*0.3; R.g.rotation.set(0,twistAng(s-0.3,0.16),0); R.g.position.set(0,0,0);
     const hp=new THREE.Vector3(R.b*0.8,R.cy+0.15,0.33); { const bz=s<0.3?lerp(8,0.33,ss(0,0.3,s)):0.33+(s-0.3)*12; showB(ball,hp.clone().setZ(bz),true,s<0.3?ss(0,0.15,s):1-ss(3,5.5,bz)); }
     const k=ss(RP,RP+0.8,u); const b1=ln(0xffc24a,10), b2=ln(0x34f5a8,10); bar3(b1,new THREE.Vector3(-2.6,R.gripY-0.6,0.3),1.75*k); bar3(b2,new THREE.Vector3(-2.6,R.gripY-1.1,0.3),2.4*k); b1.material.opacity=b2.material.opacity=k;
-    const t=tx('endT',T('它至少改写了：打偏的代价','At least it rewrote: the cost of an off-centre hit'),{color:'#ffffff',size:0.55,glow:GOLD}); t.position.set(0,R.tip+1.0,0.3); op(t,ss(RP,RP+0.6,u));
+    const t=bt('endT',T('它至少改写了：打偏的代价','At least it changed: the cost of a miss-hit'),{size:0.66,glow:GOLD,accent:T('打偏的代价','the cost of a miss-hit'),fx:'shock'}); hud(t,0,2.45); t.update(u,RP);   /* 冲击：回到开场那一球 */
     look(3.4,1,6.4,0.4,R.cy,0.8); return; }
   // 玻璃光：木拍与现代拍并排慢转；最后一颗球从光柱落下
   const v=u-GL; const A_=rkW, B_=rkC; setRk(A_,WOOD.a,WOOD.b); setRk(B_,BIG.a*0.92,BIG.b*0.92); rkOp(A_,1); rkOp(B_,1);
   A_.g.position.set(-1.8,-A_.cy,0); B_.g.position.set(1.8,-B_.cy,0); A_.g.rotation.y=v*0.4; B_.g.rotation.y=-v*0.4;
   beamMat.uniforms.uOp.value=0.16; rimL.intensity=6; rimR.intensity=6; rimL.color.set(0xffc24a); rimR.color.set(0x4fe3ff); rimL.position.set(-4,3,3); rimR.position.set(4,3,3);
-  const q=tx('endQ',T('你的拍子拍面多大？打偏的时候，你感觉得到吗？','How big is your racket head? Can you feel an off-centre hit?'),{color:'#ffffff',size:0.62,glow:GOLD}); q.position.set(0,BIG.a+1.4,0.3); op(q,ss(0.3,0.9,v)*(1-ss(BA-GL-0.4,BA-GL,v)));
+  [[T('你的拍子拍面多大？','How big is your racket head?'),2.35],[T('打偏的时候，你感觉得到吗？','Can you feel a miss-hit?'),1.5]].forEach(([str,y],i)=>{ const q=bt('endQ'+i,str,{size:0.72,glow:GOLD,fx:'particles'}); hud(q,0,y); q.update(v,0.3+i*0.5,BA-GL-0.8); });   /* 片尾问句分两行（一行放不下），粒子汇聚、球落下之前散开 */
   const bk=ss(BA-GL,BA-GL+1.2,v); showB(ball3,new THREE.Vector3(0,lerp(6,-1.6,bk)+Math.abs(Math.sin(bk*9))*(1-bk)*0.6,1.2),bk>0,1);
-  const nx=tx('nextB',T('下一集：球','Next: the ball'),{color:'#ffffff',size:0.8,font:BIGF,glow:MINT}); hud(nx,0,2.2); op(nx,ss(BA-GL+0.8,BA-GL+1.4,v));
+  const nx=bt('nextB',T('下一集：球','Next: the ball'),{size:0.85,glow:MINT,accent:T('球','ball'),fx:'streak'}); hud(nx,0,2.2); nx.update(v,BA-GL+0.8);   /* 疾驰：球飞进来 */
   look(0,0.2,lerp(9.5,8.5,ss(0,D-GL,v)),0,-0.2,0); }
 
 // ---------- 段落配色（按情绪） ----------
@@ -728,7 +732,7 @@ window.renderAt=(t)=>{
   else composer.render();
   return JSON.stringify(Object.assign({_shot:s},anchors)); };
 window.CUTS=()=>CUTS;
-Promise.all([FONT_READY,document.fonts.ready,...texP]).then(()=>{ CUTS=findCuts(); window.READY=true; }).catch(e=>console.error('READY failed',e));
+Promise.all([FONT_READY,document.fonts.ready,loadTypeFonts(),...texP]).then(()=>{ CUTS=findCuts(); window.READY=true; }).catch(e=>console.error('READY failed',e));
 // 自检：可见的 3D 字有没有出画、压进底部字幕带（y>880）或顶部标题带（y<120）——review_pack 前先跑 tools 里的 textcheck
 window.textCheck=()=>{ camera.updateMatrixWorld(); const out=[]; const R=new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion);
   for(const k in TT){ const s=TT[k]; if(!s.visible||s.material.opacity<0.15) continue; const p=new THREE.Vector3(); s.getWorldPosition(p);
