@@ -1,0 +1,154 @@
+{
+  "schema": "independent-actual-film-early-visual.v2",
+  "status": "PASS_SCOPED",
+  "actual_film_reviewed": true,
+  "scope": "AO revised result reaction and retainedserve/rally/outcome; Dallas/Munich newmovie boundary binding; fixedcenterfill/no native split; informationcardactual8accepted. This is not wholefilm/audio/publication approval.",
+  "reviewer": "shelton_media_early",
+  "movie": "/workspace/shelton-finals-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+  "movie_sha256": "656e249b6a8d788b6edf5aeb3c5ab447999a7437e48f39263ff544ba827ee1c0",
+  "duration_seconds": 255.32,
+  "spec": "/workspace/shelton-finals-production/native/specs/reels/shelton-finals-road-2026.json",
+  "spec_sha256": "463fe3cefcca46d9447ffcb12c7138b2a76090639a51d5d7f541b81866d11894",
+  "new_images_personally_opened": [
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/early-v2-frames/ao-point-binding.jpg",
+      "sha256": "e95af9492231f2618c62ab333dfbd27d480c16e9c91e1ed247bd774fb947bcc8"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/early-v2-frames/ao-reaction-boundary.jpg",
+      "sha256": "0bb5cae9c1d623db9c101c3e6dcd8513420d75be548037ebd7d770d5efd86ab9"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/early-v2-frames/dallas-binding.jpg",
+      "sha256": "d9d9ff4c04f78dc3c8e28c55f6f1deac7950ab10aa62032d24524f6bcc821f18"
+    },
+    {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/early-v2-frames/munich-binding.jpg",
+      "sha256": "954eb80029394e7af49ab2c25954d9f0e16b620f731e5374b4b565c116e450c2"
+    }
+  ],
+  "new_actual_extraction_manifest": "/workspace/shelton-finals-production/final/independent-qc/early-v2-extraction-manifest.json",
+  "prior_report_preserved": {
+    "path": "/workspace/shelton-finals-production/final/independent-qc/early-visual.json",
+    "sha256": "822b0f1eb8ddf7301ecd55cce2d9b56b9414e0b8712c2b3edb06959de100732e",
+    "status": "REQUIRES_RERENDER_DO_NOT_PUBLISH",
+    "not_modified": true
+  },
+  "explicit_evidence_reuse": {
+    "sourcepoint_deep_reviews": "Research immutable AO/Dallas/Munich source visual handoffs plusv1source/moviedense proof reused for unchanged source/recipe; v2movie was additionally opened at starts/ends and AOwholepoint samplepositions. No claim of freshly reauditing everyDallas/Munich frame.",
+    "immutable_source_sha256": {
+      "ao": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+      "dallas": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+      "munich": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643"
+    },
+    "v1_center_pixel_comparison": "early-frames/center-crop-actual-vs-source.jpg; unchanged cx.5 cy.5 trackfalse native scene recipe, reinforced by new v2actualcourtframes"
+  },
+  "ao_repair": {
+    "source_window": [
+      116.8,
+      139.65
+    ],
+    "video_extra_tail_end": 140.15,
+    "audio_tail_contract": "silence; audio reviewowned by otherrole, not independentlyapproved here",
+    "same_point_serve_and_rally_retained": true,
+    "actual_serve_frame_opened": 21.96,
+    "actual_rally_samples_opened": [
+      24.5,
+      28.5,
+      32.5,
+      36.5,
+      40.5,
+      41.5
+    ],
+    "actual_unobscured_reaction_samples": [
+      41.8,
+      41.88,
+      41.96,
+      42.04,
+      42.12,
+      42.2
+    ],
+    "unobscured_reaction_interval_approx": [
+      41.8,
+      42.24
+    ],
+    "unobscured_reaction_duration_approx": 0.48,
+    "nextphoto_fade_first_observed": 42.28,
+    "actual_fade_tail_samples_opened": [
+      42.36,
+      42.44,
+      42.52,
+      42.6,
+      42.68,
+      42.76
+    ],
+    "true_result_present_without_nextphoto_ghost": true,
+    "tail_no_unrelated_point_or_ad": true,
+    "old_blocking_finding_resolved": true
+  },
+  "dallas_binding": {
+    "recipe_unchanged": true,
+    "new_movie_start_samples": [
+      49.68,
+      49.96,
+      50.24,
+      51.0
+    ],
+    "entry_fade_complete_before_serve": true,
+    "actual_contact_clearly_unobscured": 50.24,
+    "actual_outcome_reaction_samples": [
+      69.6,
+      70.5
+    ],
+    "actual_native_tail_samples": [
+      81.0,
+      81.48,
+      81.64,
+      81.88
+    ],
+    "true_reaction_and_handshake_survive": true,
+    "native_tail_no_advertisement": true,
+    "fullserve_rally_result": "PASS with explicitunchangedsource deep reviewreuse plusnewactualmoviebinding"
+  },
+  "munich_binding": {
+    "recipe_unchanged": true,
+    "new_movie_start_samples": [
+      90.08,
+      90.4,
+      91.8,
+      92.8
+    ],
+    "entry_fade_complete_before_serve": true,
+    "same_terminal_point_prepare_visible": 90.4,
+    "actual_outcome_reaction_samples": [
+      97.5,
+      98.5
+    ],
+    "actual_native_tail_samples": [
+      108.8,
+      109.24,
+      109.4,
+      109.64
+    ],
+    "true_fist_and_handshake_survive": true,
+    "native_tail_no_advertisement": true,
+    "fullserve_rally_result": "PASS with explicitunchangedsource deep reviewreuse plusnewactualmoviebinding"
+  },
+  "crop_and_layout": {
+    "actual1080x1440_fullcanvas": true,
+    "singlecourtsource_no_original_stacked_split": true,
+    "fixedcenter_fill": true,
+    "added_ball_tracking": false,
+    "evidence": "New v2point/binding sheets show same fixedcenter sourcecrop; natural original broadcast camera movement is not renderertracking."
+  },
+  "information_cards": {
+    "actual_hold_seconds_approx": 8,
+    "not_actual10": true,
+    "onset": "Appear with incomingmatchlayer duringentryfade, no separateshow_afterdelay",
+    "v2_spot_evidence": "AO19.7 cardcoappears with incomingcourt and gone28.5; Dallas49.68 cardcoappears; Munich90.08 cardcoappears. All5actual8 and unchangedrenderer cap was v1deepreview and Rootaccepted; later two cardscenes independentlyreviewed bylate role.",
+    "root_accepted_actual8_instead_of_spec10": true,
+    "hard_limit_seconds": 15
+  },
+  "open_blocking_findings_in_scope": [],
+  "mutations": "External evidenceonly; no nativeedit/reencode/duplicate masterdownload."
+}
