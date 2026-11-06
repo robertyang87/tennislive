@@ -1,0 +1,23 @@
+name: build-hotmic-rekey
+on:
+  workflow_dispatch: {}
+jobs:
+  rekey:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Rekey animation archives to 11-char video keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          declare -A MAP=( [hm1]=hm1mic00001 [hmq]=hmqmic00002 [hm4]=hm4mic00004 [hm5]=hm5mic00005 [hm6]=hm6mic00006 [hm7]=hm7mic00007 )
+          for k in "${!MAP[@]}"; do
+            key="${MAP[$k]}"
+            gh release download "source-hotmic-$k" --repo robertyang87/tennislive --pattern "hotmic-$k-v1.mp4" --dir /tmp/rk
+            mv "/tmp/rk/hotmic-$k-v1.mp4" "/tmp/rk/$key.mp4"
+            gh release view "source-$key" --repo robertyang87/tennislive > /dev/null 2>&1 || \
+              gh release create "source-$key" --repo robertyang87/tennislive --title "source-$key" --notes "animation source for wta-finals-hotmic-2026 (rekeyed)"
+            gh release upload "source-$key" "/tmp/rk/$key.mp4" --repo robertyang87/tennislive --clobber
+            echo "rekeyed $k -> $key"
+          done

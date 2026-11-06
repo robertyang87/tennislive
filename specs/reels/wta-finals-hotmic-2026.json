@@ -1,0 +1,757 @@
+{
+  "slug": "wta-finals-hotmic-2026",
+  "date": "2026-11-06",
+  "_column": "网球有故事",
+  "title": "悄悄话被直播了？",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "系列故事条统一 edge 云健（zh-CN-YunjianNeural），同 zverev/walkover/slot8 各期。",
+  "_voice_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "story_kind": "other",
+    "subject": "总决赛训练直播麦克风事件",
+    "winner": "佩古拉",
+    "_winner_why": "本期事件第一当事人（先流出段的主人公）；字段只喂措辞闸人名盘点，无 result/matchup 字段时海报与记分牌消费点惰性（slot8/zverev 同判例）。",
+    "hook": "看比赛可以\n听悄悄话不行",
+    "_hook_why": "任务简报指定：封面钩子用金句双锚之一（冯德罗索娃通道原话）。脚本定稿中文版『看比赛可以，听悄悄话不行』即 S7 收束句与 S5 原话大意，两行 5/6 字，问句式标题已在 title 承担钩子功能，封面用金句断言式收束。",
+    "narration": "看比赛可以，听悄悄话不行——冯德罗索娃把话说死了",
+    "_narration_why": "封面口播含钩子全字（字集重合闸口径），并点出发言人。",
+    "topic": "总决赛训练直播麦克风未关 · 佩古拉莱巴金娜悄悄话流出 · WTA 删片道歉",
+    "portrait": {
+      "image": "assets/covers/hotmic-cover-2026.png",
+      "fit": "cover",
+      "focus": 0.5,
+      "focus_y": 0.5,
+      "zoom": 1.0,
+      "_credit": "自制设计封面（代码绘制，系列 tokens）：场边热麦克风母题＋ON AIR 标记＋冯德罗索娃金句钩子，无球员照片。",
+      "_portrait_why": "事件本身无官方实拍可用：涉事训练直播已被 WTA 删除且所有者口径禁用其任何画面；当事人照片与本事件无关且易误导为『当事人封面』。按 walkover 期自制设计封面判例（cover.approved_image 同图），以事件母题（麦克风）＋金句锚做封面，1080×1440 原生出图不放大。"
+    },
+    "approved_image": "assets/covers/hotmic-cover-2026.png",
+    "_approved_by_user": "所有者 2026-11-06 批准脚本与引用口径、并指定封面钩子锚（冯德罗索娃通道原话）；涉事训练直播已删且口径禁用其画面、无官方事件图可用，自制设计封面为口径内唯一路线，循 walkover 期自制封面判例（approved_image 直用）；具体图面随验片结论报所有者、推送前由所有者点验。"
+  },
+  "push": {
+    "auto": false,
+    "_no_auto_why": "所有者指令：全链做到 push 前停手，成片经所有者点验后另行派发推送。",
+    "summary": "悄悄话被直播了？",
+    "lead": "总决赛还没开打，训练场的麦克风先出了事：佩古拉评安德列娃、莱巴金娜吼教练，两段悄悄话被 WTA 自己的直播送给了全世界。WTA 删片、道歉、担全责，可话已经收不回来。训练直播带声音，你站哪边——看比赛可以，听悄悄话不行？"
+  },
+  "editorial": {
+    "mode": "match_review",
+    "question": "训练直播该不该带声音——给球迷看比赛的通道，和给球迷听私下对话的通道，是不是一回事？",
+    "thesis": "WTA 总决赛赛前，官方训练直播的场边麦克风未关且未告知球员，佩古拉与莱巴金娜两段私下对话被直播流出；WTA 删片并声明承担全部责任、余下直播取消音频。事件的真问题不是谁说错了话，而是镜头与麦克风的边界：冯德罗索娃『给球迷看比赛，和给球迷听私下对话，是两回事』成为全场落点；而十个月前刚声援过高芙隐私的佩古拉，自己栽进同一个坑——片子摊开事件链、原话、当事方回应与三年先例，结论留给观众站队。",
+    "beats": [
+      "冷开场：总决赛未开打，训练直播麦克风未关——悄悄话被全世界听见（IW 画面＋直播链路示意动画）",
+      "第一段原话：佩古拉训练后复盘评安德列娃（diva/敲打＋高芙心态两张引言卡，多家一致转录）",
+      "第二段原话：莱巴金娜吼武科夫（引言卡）＋武科夫被 WTA 调查停职的前情与叙事反转",
+      "WTA 处置：删片＋声明担全责（声明引言卡）＋经纪人证实佩古拉不知情、私下道歉",
+      "落点：冯德罗索娃 IG 点名 WTA——看比赛的通道≠听私下对话的通道（金句卡）",
+      "前史闭环：训练直播惯例与澳网高芙砸拍先例、斯瓦泰克动物园论、佩古拉 1 月原话的反讽（时间线动画）",
+      "收束：分组表（两人最早半决赛相遇）＋站队题"
+    ],
+    "chapters": [
+      "冷开场",
+      "佩古拉段",
+      "莱巴金娜段",
+      "删片道歉",
+      "通道之争",
+      "前史闭环",
+      "站队收束"
+    ],
+    "human_context": {
+      "angle": "不站队评判佩古拉的话该不该说，把镜头对准『谁有权把话播出去』：事件型选题，时效钉在总决赛开赛前 48 小时，两位当事人分属两组、最早半决赛相遇是第二落点。引用口径与本片立场自洽——不用已删直播的搬运录屏/原声，原话全部走多家一致转录的引言卡。",
+      "facts": [
+        "事件：2026-11-04 WTA 在自家 YouTube 直播总决赛（印第安维尔斯，11-08 至 11-15）赛前训练，场边麦克风开启且未告知球员与团队；佩古拉段先流出、莱巴金娜段随后（事实卡 §二，多家一致）",
+        "佩古拉原话（多源一致逐字，仅此两句入片）：'I think she's a nice girl, she's just a diva. She needs to be humbled.'／'If she had Coco's mentality, she would be better than Coco.'——语境：合练中安德列娃 4-0 领先并冲教练马丁内斯发火、把球朝教练打，佩古拉训练后与教练诺尔斯复盘；带粗口句转录分歧，禁用",
+        "莱巴金娜原话（多源一致）：'Stay here. I'm talking to you!'＋'Can you stand over here?'——与诺斯科娃二号球场合练、走向网前时对教练武科夫喊话，要他站到指定位置",
+        "武科夫前情：2025 年初经 WTA 依据 Safeguarding 准则独立调查后一度被暂停资格（调查对象为其对待莱巴金娜的方式），2025 年 8 月解除；两人 2024 分开、2025 重组",
+        "WTA 处置（11-05）：下架本届全部训练直播；声明 'The WTA takes full responsibility for failing to inform our players and their teams that microphones … were active'，称麦克风本只收环境声，余下训练直播继续但取消音频（FOS/The National/Sky Sports 同一文本）",
+        "回应状态（截至 2026-11-06 开工刷新轮）：佩古拉本人未公开发声；经纪人 Chris McCormack 对 BBC/The Athletic 称她 'had absolutely no idea'，已亲自（非经媒体）联系安德列娃与马丁内斯道歉；安德列娃/马丁内斯/莱巴金娜/武科夫均未公开回应",
+        "冯德罗索娃（不在总决赛名单，前温网冠军）IG 两条（Yardbarker/tennisuptodate/tennis365 三家一致转录）：'there's a difference between giving fans access to the sport and giving them access to private conversations.'＋'Stop this.'",
+        "前史：2026-01 澳网高芙 1/4 决赛 1-6 2-6 负斯维托丽娜后躲自以为没镜头处砸拍被播；斯瓦泰克『动物园』论；佩古拉（球员理事会成员）声援原话：'Literally the only time you're not being recorded is when you're going into the shower and going to the bathroom.'；其后 WTA 主席公开表态支持球员隐私；2023 美网萨巴伦卡幕后砸拍被拍为更早先例",
+        "分组（WTA 官方）：第 1 组莱巴金娜、高芙、佩古拉、诺斯科娃；第 2 组萨巴伦卡、安德列娃、斯维托丽娜、穆霍娃；佩古拉首战 11-08 对高芙；佩古拉与安德列娃最早半决赛（11-14）相遇"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4603196/2026-wta-finals-group-breakdown-who-will-rybakina-and-sabalenka-face",
+        "https://www.wtatennis.com/news/4442119/aryna-sabalenka-vs-elena-rybakina-australian-open-final-2026-live-updates-and-top-moments",
+        "https://www.tennisabstract.com/cgi-bin/wtourney.cgi?t=2026-609/Indian-Wells",
+        "https://english.news.cn/20260127/c23057c1cb26485aa7997c2e79736f8e/c.html",
+        "https://www.thenationalnews.com/sport/tennis/2026/06/06/french-open-mirra-andreeva-ends-maja-chwalinskas-dream-run-to-clinch-maiden-grand-slam-title"
+      ]
+    }
+  },
+  "_facts": {
+    "incident": "2026-11-04（周三）WTA 在自家 YouTube 直播总决赛训练，场边麦克风开启且未告知球员与团队；佩古拉段先流出、莱巴金娜段随后。11-05 WTA 下架本届全部训练直播、发表声明承担全部责任并致歉，宣布余下训练直播继续但取消音频。",
+    "pegula_quotes": "多源一致逐字句仅两句：『I think she's a nice girl, she's just a diva. She needs to be humbled.』『If she had Coco's mentality, she would be better than Coco.』带粗口句转录分歧且禁用，不入片。语境：合练安德列娃 4-0 领先并冲教练马丁内斯发火、把球朝教练打；佩古拉与教练诺尔斯训练后复盘。",
+    "rybakina_quote": "『Stay here. I'm talking to you!』＋『Can you stand over here?』（多家一致）：与诺斯科娃在二号球场合练、走向网前时对教练武科夫喊话，要他站到指定位置。",
+    "vukov_background": "武科夫 2025 年初经 WTA 依据 Safeguarding 准则独立调查后一度被暂停资格（调查对象为其对待莱巴金娜的方式），2025 年 8 月解除；两人 2024 分开、2025 重组。",
+    "wta_statement": "『The WTA takes full responsibility for failing to inform our players and their teams that microphones … were active … The microphones were intended to capture the ambient sounds of tennis, not player or coach conversations. … We are continuing with live streaming of practice but there will not be any audio.』",
+    "responses": "佩古拉本人未就本事件公开发声；经纪人 Chris McCormack 对 BBC/The Athletic：她『had absolutely no idea』，已亲自（非经媒体）联系安德列娃与马丁内斯道歉。安德列娃/马丁内斯/莱巴金娜/武科夫截至 2026-11-06 刷新轮均未公开回应。冯德罗索娃（不在总决赛名单，前温网冠军）IG 两条：通道之句＋『Stop this.』（三家一致转录）。",
+    "prehistory": "2026-01 澳网：高芙 1/4 决赛 1-6 2-6 负斯维托丽娜后躲镜头砸拍被播；斯瓦泰克『动物园』论；佩古拉（球员理事会）声援：『I'm not a fan of the cameras… Literally the only time you're not being recorded is when you're going into the shower and going to the bathroom.』其后 WTA 主席公开支持球员隐私。2023 美网萨巴伦卡幕后砸拍被拍为更早先例。",
+    "groups": "第 1 组：莱巴金娜、高芙、佩古拉、诺斯科娃；第 2 组：萨巴伦卡、安德列娃、斯维托丽娜、穆霍娃。佩古拉首战 11-08 对高芙；佩古拉与安德列娃最早半决赛（11-14）相遇。",
+    "refresh_1106": "2026-11-06 14:05–14:10 开工刷新三路检索（佩古拉/安德列娃媒体日、莱巴金娜/武科夫、总决赛媒体日）：无新的当事人原话；一条一致补注：其后一场 Townsend/Siniakova 训练直播已无音频（与声明互证）。脚本按定稿零增补。"
+  },
+  "_claims": {
+    "总决赛分组（第1组莱巴金娜/高芙/佩古拉/诺斯科娃；第2组萨巴伦卡/安德列娃/斯维托丽娜/穆霍娃）": [
+      "https://www.wtatennis.com/news/4603196/2026-wta-finals-group-breakdown-who-will-rybakina-and-sabalenka-face"
+    ],
+    "莱巴金娜澳网决赛 6-4 4-6 6-4 胜萨巴伦卡": [
+      "https://www.wtatennis.com/news/4442119/aryna-sabalenka-vs-elena-rybakina-australian-open-final-2026-live-updates-and-top-moments"
+    ],
+    "印第安维尔斯 1/4 决赛莱巴金娜 6-1 7-6(4) 胜佩古拉": [
+      "https://www.tennisabstract.com/cgi-bin/wtourney.cgi?t=2026-609/Indian-Wells"
+    ],
+    "安德列娃法网决赛 6-3 6-2 胜赫瓦林斯卡": [
+      "https://www.thenationalnews.com/sport/tennis/2026/06/06/french-open-mirra-andreeva-ends-maja-chwalinskas-dream-run-to-clinch-maiden-grand-slam-title"
+    ],
+    "斯维托丽娜澳网 1/4 决赛 6-1 6-2 胜高芙（2026-01-27）": [
+      "https://english.news.cn/20260127/c23057c1cb26485aa7997c2e79736f8e/c.html"
+    ]
+  },
+  "_why_sources": "全部比赛源为官方频道集锦（WTA、Roland-Garros、Australian Open、Wimbledon），经一次性归档工作流钉 Release 存档（source-<id>），不用 YouTube 直链入 spec；温网决赛源为素材库已归档源（slot8 期同源复用）。已删训练直播及其粉丝搬运录屏/录音按所有者口径一律不用（画面与原声均不用）；动画为自制代码片（系列 tokens），经 build-hotmic-anims 工作流构建并归档 Release。佩古拉 1 月澳网发布会官方录像未探得可用 video ID，原声位按预案以引言卡承担（脚本预案允许）。",
+  "_production_status": "2026-11-06 生产中：事实卡＋脚本所有者已批（14:02）；开工刷新轮无增补；六源 probe＋ASR 齐、六支动画构建中；封面为自制设计图（金句锚）；待动画归档 probe 后组 spec 过 preflight。",
+  "sources": {
+    "iw": "https://github.com/robertyang87/tennislive/releases/download/source-W-8a9rj2wEw/W-8a9rj2wEw.mp4",
+    "was": "https://github.com/robertyang87/tennislive/releases/download/source-OvjNXy1mQjY/OvjNXy1mQjY.mp4",
+    "rg": "https://github.com/robertyang87/tennislive/releases/download/source-WVWjACQ11-Y/WVWjACQ11-Y.mp4",
+    "ao": "https://github.com/robertyang87/tennislive/releases/download/source-69CCqjPNc6o/69CCqjPNc6o.mp4",
+    "aoq": "https://github.com/robertyang87/tennislive/releases/download/source-q2BG1_A699A/q2BG1_A699A.mp4",
+    "cin": "https://github.com/robertyang87/tennislive/releases/download/source-Z2_awLHqcww/Z2_awLHqcww.mp4",
+    "fin": "https://github.com/robertyang87/tennislive/releases/download/source-L4lde2qREYU/L4lde2qREYU.mp4",
+    "hm1": "https://github.com/robertyang87/tennislive/releases/download/source-hm1mic00001/hm1mic00001.mp4",
+    "hmq": "https://github.com/robertyang87/tennislive/releases/download/source-hmqmic00002/hmqmic00002.mp4",
+    "hm4": "https://github.com/robertyang87/tennislive/releases/download/source-hm4mic00004/hm4mic00004.mp4",
+    "hm5": "https://github.com/robertyang87/tennislive/releases/download/source-hm5mic00005/hm5mic00005.mp4",
+    "hm6": "https://github.com/robertyang87/tennislive/releases/download/source-hm6mic00006/hm6mic00006.mp4",
+    "hm7": "https://github.com/robertyang87/tennislive/releases/download/source-hm7mic00007/hm7mic00007.mp4"
+  },
+  "source_quality_exceptions": {},
+  "mixed_fps": {
+    "hm1": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+    "hmq": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+    "hm4": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+    "hm5": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+    "hm6": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题",
+    "hm7": "自制动画源 30 fps 落到 25 fps 输出，按时间重采样；代码绘制的缓动画面，无实拍顿挫问题"
+  },
+  "_primary_why": "主源为印第安维尔斯官方集锦（WTA，1920×1080）：总决赛同场馆、两位当事人（莱巴金娜/佩古拉）同场交手，冷开场与第二段引子均出于此。",
+  "source_crop": {
+    "hm1": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    },
+    "hmq": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    },
+    "hm4": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    },
+    "hm5": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    },
+    "hm6": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    },
+    "hm7": {
+      "reason": "自制动画原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，全帧。"
+    }
+  },
+  "archival": {},
+  "segments": [
+    {
+      "source": "iw",
+      "start": 171.9,
+      "end": 191.3,
+      "cx": 0.5,
+      "track": false,
+      "narration": "总决赛还没开打，先出事的是训练场。印第安维尔斯，官方把八位球员的训练全程直播——画面有，声音也有，只是没人告诉球员，场边的麦克风开着。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S1 冷开场上半：总决赛同场馆（印第安维尔斯）官方集锦——莱巴金娜 vs 佩古拉 IW 1/4 决赛，本届总决赛两位当事人同场。窗口落 ASR 空当 169.3–195.9，首尾为剪辑切点。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-iw26qf.png",
+        "label": {
+          "topic": "印第安维尔斯 1/4决赛",
+          "date": "2026.03.12",
+          "place": "印第安维尔斯",
+          "people": "莱巴金娜 vs 佩古拉",
+          "score": "6-1 7-6(4)",
+          "result": {
+            "winner": "莱巴金娜",
+            "score": "6-1 7-6(4)",
+            "source": "https://www.tennisabstract.com/cgi-bin/wtourney.cgi?t=2026-609/Indian-Wells"
+          }
+        }
+      }
+    },
+    {
+      "source": "hm1",
+      "start": 0,
+      "end": 13,
+      "cx": 0.5,
+      "track": false,
+      "narration": "于是这几天，世界排名最靠前的几位球员在训练场上说的悄悄话，被全世界听了个清清楚楚。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S1 冷开场下半：自制动画 hm1（直播链路示意：球场俯视线框＋场边麦克风脉冲＋直播信号链），系列 tokens 定版，动画不演打球。"
+    },
+    {
+      "source": "was",
+      "start": 44.0,
+      "end": 66.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "先流出的是佩古拉。周三，她刚和安德列娃合练完——练球局里，安德列娃连下四局，还冲着自己的教练马丁内斯发了火。训练一结束，佩古拉留下跟教练诺尔斯复盘，话越说越直。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口起点落在分与分之间；终点 66.0 时该分未完——紧接同源原声段（66.0–71.3）把这一分完整打完再切（验片定点帧证实后于 2026-11-06 修正，原窗口在分中途溶解违反切点规矩）。",
+      "_why": "S2 开场：佩古拉华盛顿决赛官方集锦（WTA）。窗口落 ASR 空当 42.4–67.5；首帧为佩古拉发球特写。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-was26f.png",
+        "label": {
+          "topic": "华盛顿决赛",
+          "date": "2026.08.03",
+          "place": "华盛顿",
+          "people": "伊阿拉 vs 佩古拉",
+          "score": "4-6 6-4 6-0",
+          "result": {
+            "winner": "伊阿拉",
+            "score": "4-6 6-4 6-0",
+            "source": "https://en.wikipedia.org/wiki/2026_Mubadala_Citi_DC_Open"
+          }
+        }
+      }
+    },
+    {
+      "source": "was",
+      "start": 66.0,
+      "end": 71.3,
+      "cx": 0.5,
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 4.9,
+          "text": "That is absolutely world-class.\n这球绝对是世界级的。"
+        }
+      ],
+      "_quote_kind": "broadcast_commentary",
+      "_why": "承接上段同一分：把伊阿拉这记回球制胜分打完（源 66.0–71.3，解说原声『That is absolutely world-class.』整句 66.27–70.80 由双语字幕盖住，两档 ASR 一致）；切点落在分与分之间（其后为佩古拉特写反应）。官方 WTA 集锦原声，非涉事训练直播内容，不触引用口径红线。",
+      "point_end_ok": "整段为一分之尾：分在约 67.3 结束，71.3 切走时双方已进入分间特写。"
+    },
+    {
+      "source": "hmq",
+      "start": 0,
+      "end": 9.5,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 4.6,
+          "text": "I think she's a nice girl, she's just a diva.\n她人不错，就是有点被惯坏了"
+        },
+        {
+          "at": 4.8,
+          "end": 9.3,
+          "text": "She needs to be humbled.\n得有人敲打敲打"
+        }
+      ],
+      "_quote_kind": "player_quote_card",
+      "_quote_why": "引言卡（所有者批准口径）：已删训练直播的粉丝搬运录屏/录音一律不用；原话只用事实卡核定的多家独立来源一致转录（见 _facts），中文为字幕大意。底图为自制引言卡背板动画 hmq。本卡：佩古拉谈安德列娃第一句（Yardbarker/TNT/Sky 等多家一致转录）。",
+      "point_end_ok": "底图为自制动画（无比赛分），不涉及切分。"
+    },
+    {
+      "source": "rg",
+      "start": 171.6,
+      "end": 199.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "她说，这个姑娘人不错，就是有点被惯坏了的范儿，总要有人敲打敲打。她对马丁内斯也少了点尊重——球员冲教练发火，教练不拦着，反而像在拱火。最狠的一句是。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间：尾端原 192.0 落在安德列娃发球分进行中（验片定点帧证实），2026-11-06 延长至 199.2——该分约 198.2 结束、其后球员走回底线，199.8 起的主裁报分噪声在窗口之外；窗口内两档 ASR 均无英文解说整句。",
+      "_why": "S2 释义：安德列娃法网决赛官方集锦（Roland-Garros）——她在法网夺冠、世界第 3 的画面语境。窗口落 ASR 空当 166.2–204.7，起点为分末（point_ends 171.5）。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-rg26f.png",
+        "label": {
+          "topic": "法网决赛",
+          "date": "2026.06.06",
+          "place": "巴黎",
+          "people": "安德列娃 vs 赫瓦林斯卡",
+          "score": "6-3 6-2",
+          "result": {
+            "winner": "安德列娃",
+            "score": "6-3 6-2",
+            "source": "https://www.thenationalnews.com/sport/tennis/2026/06/06/french-open-mirra-andreeva-ends-maja-chwalinskas-dream-run-to-clinch-maiden-grand-slam-title"
+          }
+        }
+      }
+    },
+    {
+      "source": "hmq",
+      "start": 9.5,
+      "end": 16,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 3.4,
+          "text": "If she had Coco's mentality,\n她要有高芙的心态"
+        },
+        {
+          "at": 3.6,
+          "end": 6.3,
+          "text": "she would be better than Coco.\n会比高芙还强"
+        }
+      ],
+      "_quote_kind": "player_quote_card",
+      "_quote_why": "引言卡（所有者批准口径）：已删训练直播的粉丝搬运录屏/录音一律不用；原话只用事实卡核定的多家独立来源一致转录（见 _facts），中文为字幕大意。底图为自制引言卡背板动画 hmq。本卡：佩古拉第二句（Yardbarker/Front Office Sports 一致转录），脚本钦定『最狠的一句』。",
+      "point_end_ok": "底图为自制动画（无比赛分），不涉及切分。"
+    },
+    {
+      "source": "was",
+      "start": 96.6,
+      "end": 105.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "而佩古拉完全不知道，这段话正通过 WTA 自己的频道，直播给所有人。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S2 收束：华盛顿决赛佩古拉得分后握拳特写（104.5s）——本人浑然不知的反讽落点。窗口落 ASR 空当 94.0–105.2，尾端为分末。"
+    },
+    {
+      "source": "iw",
+      "start": 228.8,
+      "end": 240.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二段流出的，是世界第一莱巴金娜。她和诺斯科娃合练，往网前走的时候，冲教练武科夫喊。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S3 开场：印第安维尔斯 1/4 决赛莱巴金娜发球特写＋回合（228.5s 特写正对本人）。窗口落 ASR 空当 226.7–242.5；同源 iw 时间轴与第 1 段保持单调（ending-payoff 闸口径）。"
+    },
+    {
+      "source": "hmq",
+      "start": 16,
+      "end": 21.5,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 3.0,
+          "text": "Stay here. I'm talking to you!\n站在这儿，我在跟你说话"
+        },
+        {
+          "at": 3.2,
+          "end": 5.3,
+          "text": "Can you stand over here?\n你能站到这边来吗"
+        }
+      ],
+      "_quote_kind": "player_quote_card",
+      "_quote_why": "引言卡（所有者批准口径）：已删训练直播的粉丝搬运录屏/录音一律不用；原话只用事实卡核定的多家独立来源一致转录（见 _facts），中文为字幕大意。底图为自制引言卡背板动画 hmq。本卡：莱巴金娜对武科夫原话（多家一致转录，事实卡 §3.2）。",
+      "point_end_ok": "底图为自制动画（无比赛分），不涉及切分。"
+    },
+    {
+      "source": "ao",
+      "start": 15.7,
+      "end": 38.7,
+      "cx": 0.5,
+      "track": false,
+      "narration": "语气冲得完全不像她平时说话的样子。这段为什么传得格外快？因为武科夫这个名字自带前情：去年年初，他刚被 WTA 调查过——查的正是他对待莱巴金娜的方式，一度被停职，去年八月才解除。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S3 前情上半：莱巴金娜澳网决赛官方长集锦（AO）。窗口落 ASR 空当 13.6–64.0，首尾为剪辑切点/分末（point_ends 38.8）。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-ao26f.png",
+        "label": {
+          "topic": "澳网决赛",
+          "date": "2026.01.31",
+          "place": "墨尔本",
+          "people": "莱巴金娜 vs 萨巴伦卡",
+          "score": "6-4 4-6 6-4",
+          "result": {
+            "winner": "莱巴金娜",
+            "score": "6-4 4-6 6-4",
+            "source": "https://www.wtatennis.com/news/4442119/aryna-sabalenka-vs-elena-rybakina-australian-open-final-2026-live-updates-and-top-moments"
+          }
+        }
+      }
+    },
+    {
+      "source": "fin",
+      "start": 229.0,
+      "end": 237.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "被调查的是教练怎么对球员，这一次被全网听见的，是球员怎么吼教练。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S3 前情下半（反转句）：诺斯科娃温网决赛画面——她正是与莱巴金娜合练的当事人。窗口落 ASR 空当 227.2–239.1。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-slot8-2026/label-wim26f.png",
+        "label": {
+          "topic": "温网决赛",
+          "date": "2026.07.11",
+          "place": "伦敦",
+          "people": "诺斯科娃 vs 穆霍娃",
+          "score": "6-2 5-7 6-3",
+          "result": {
+            "winner": "诺斯科娃",
+            "score": "6-2 5-7 6-3",
+            "source": "https://www.reuters.com/sports/tennis/noskova-beats-muchova-win-wimbledon-womens-singles-title-2026-07-11/"
+          }
+        }
+      }
+    },
+    {
+      "source": "hm4",
+      "start": 0,
+      "end": 9.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "WTA 的反应很快：频道上的训练直播全部下架，声明紧跟着来。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S4 开场：自制动画 hm4（声明与报道卡：下架/致歉/取消音频三行依次落位），系列 tokens 定版。"
+    },
+    {
+      "source": "hmq",
+      "start": 21.5,
+      "end": 33.5,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 3.4,
+          "text": "The WTA takes full responsibility\n我们承担全部责任"
+        },
+        {
+          "at": 3.6,
+          "end": 7.0,
+          "text": "for failing to inform our players\n没能提前告知球员和团队"
+        },
+        {
+          "at": 7.2,
+          "end": 11.8,
+          "text": "and their teams that microphones were active.\n麦克风当时是开着的"
+        }
+      ],
+      "_quote_kind": "player_quote_card",
+      "_quote_why": "WTA 官方声明引言卡：声明原文（FOS/The National/Sky Sports 刊载同一文本，事实卡 §四逐字存档），中文为字幕大意。底图 hmq。",
+      "point_end_ok": "底图为自制动画（无比赛分），不涉及切分。"
+    },
+    {
+      "source": "hm4",
+      "start": 12,
+      "end": 25.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "声明还补了一句：麦克风本来只想收击球的环境声。可片段早被球迷录屏传遍全网，删，是删不回来了。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S4 下半：hm4 后段（余下直播取消音频行＋结论条『删得掉视频，删不回传播』）。"
+    },
+    {
+      "source": "cin",
+      "start": 15.5,
+      "end": 33.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "佩古拉那边，经纪人说得很清楚：她完全不知道自己在被直播；事后她已经亲自联系了安德列娃和马丁内斯道歉——没通过媒体，是私下联系的。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S4 收束：佩古拉辛辛那提决赛官方集锦（WTA，对手高芙）。窗口落 ASR 空当 14.1–32.7，尾端在本分结束、观众镜头前。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-cin26f.png",
+        "label": {
+          "topic": "辛辛那提决赛",
+          "date": "2026.08.23",
+          "place": "辛辛那提",
+          "people": "高芙 vs 佩古拉",
+          "score": "6-2 6-4",
+          "result": {
+            "winner": "高芙",
+            "score": "6-2 6-4",
+            "source": "https://www.flashscore.co.uk/news/tennis-cincinnati-wta-singles-coco-gauff-holds-off-jessica-pegula-to-claim-second-cincinnati-open-title/dzhssvYF/"
+          }
+        }
+      }
+    },
+    {
+      "source": "hm5",
+      "start": 0,
+      "end": 13.5,
+      "cx": 0.5,
+      "track": false,
+      "narration": "吵得最响的，反而是一个不在总决赛名单里的人。前温网冠军冯德罗索娃，直接在社交媒体上点名 WTA。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S5 引子：自制动画 hm5（社交帖卡背板：发帖人冯德罗索娃·前温网冠军），引言卡文字由 builder 渲染于框内。"
+    },
+    {
+      "source": "hm5",
+      "start": 13.5,
+      "end": 28,
+      "cx": 0.5,
+      "track": false,
+      "kind": "quote",
+      "quote": [
+        {
+          "at": 0.2,
+          "end": 3.8,
+          "text": "There's a difference between giving fans\n给球迷看比赛的通道"
+        },
+        {
+          "at": 4.0,
+          "end": 7.6,
+          "text": "access to the sport and giving them\n和给球迷听私下对话的通道"
+        },
+        {
+          "at": 7.8,
+          "end": 11.0,
+          "text": "access to private conversations.\n是两回事"
+        },
+        {
+          "at": 11.2,
+          "end": 14.3,
+          "text": "Stop this.\n停下这个"
+        }
+      ],
+      "_quote_kind": "player_quote_card",
+      "_quote_why": "冯德罗索娃 IG 公开动态引言卡（Yardbarker/tennisuptodate/tennis365 三家一致转录，事实卡 §五）：金句双锚之一，本片落点。底图 hm5 帖卡框。",
+      "point_end_ok": "底图为自制动画（无比赛分），不涉及切分。"
+    },
+    {
+      "source": "rg",
+      "start": 310.6,
+      "end": 326.2,
+      "cx": 0.5,
+      "track": false,
+      "narration": "第二条更短，就一句：停下这个。一句话，把这件事从「谁说错了话」，拉回到「谁有权把话播出去」。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S5 收束：法网决赛安德列娃分末走动特写收尾。窗口落 ASR 空当 306.0–333.2，尾端为分末（point_ends 326.3）。"
+    },
+    {
+      "source": "aoq",
+      "start": 53.4,
+      "end": 69.4,
+      "cx": 0.5,
+      "track": false,
+      "narration": "其实训练直播不是新鲜事，美网、公开赛都在做，惯例是收环境声，给球迷一个看热身的窗口。真正的老问题，是镜头和麦克风的边界。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S6 惯例：高芙澳网 1/4 决赛官方集锦（AO）——下一段事件的当事人本人入画。窗口落 ASR 空当 41.7–70.0，首尾为剪辑切点/分末。",
+      "inset": {
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "top_pad": 0.043,
+        "show_after": 0,
+        "show_for": 8,
+        "motion": "editorial",
+        "animate": false,
+        "image": "assets/reel/wta-finals-hotmic-2026/label-ao26qf.png",
+        "label": {
+          "topic": "澳网 1/4决赛",
+          "date": "2026.01.27",
+          "place": "墨尔本",
+          "people": "斯维托丽娜 vs 高芙",
+          "score": "6-1 6-2",
+          "result": {
+            "winner": "斯维托丽娜",
+            "score": "6-1 6-2",
+            "source": "https://english.news.cn/20260127/c23057c1cb26485aa7997c2e79736f8e/c.html"
+          }
+        }
+      }
+    },
+    {
+      "source": "aoq",
+      "start": 156.5,
+      "end": 168.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "今年一月的澳网，高芙输球后特意躲到自以为没镜头的地方连砸了七把拍子，全被播了出去。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S6 前史：同一场比赛的赛点与赛后段（高芙输球当场）。窗口落 ASR 空当 154.3–174.7，尾端在握手镜头前（分与分之间）。"
+    },
+    {
+      "source": "hm6",
+      "start": 0,
+      "end": 21,
+      "cx": 0.5,
+      "track": false,
+      "narration": "斯瓦泰克当时说：我们到底是网球运动员，还是动物园里连上厕所都被围观的动物？而站出来声援高芙的人里，就有佩古拉——球员理事会成员。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S6 时间线：自制动画 hm6（2023 美网→2026.01 澳网→2026.11 总决赛三节点），系列 tokens 定版。"
+    },
+    {
+      "source": "cin",
+      "start": 86.5,
+      "end": 101.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "她说自己不是摄像头的粉丝，「除了洗澡和上厕所，你永远在被拍」。那一次，WTA 主席还公开表态支持球员的隐私权。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S6 反讽闭环上半：佩古拉 1 月原话（金句双锚之二）压在她与高芙的辛辛那提决赛画面上。窗口落 ASR 空当 85.2–101.2，尾端为分末。"
+    },
+    {
+      "source": "was",
+      "start": 233.0,
+      "end": 245.8,
+      "cx": 0.5,
+      "track": false,
+      "narration": "十个月后，轮到佩古拉自己，在 WTA 自家的旗舰赛事上，栽进了同一个坑里。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S6 闭环收束：华盛顿决赛赛点段——佩古拉输掉决赛分（伊阿拉跪地庆祝在窗外 246.5s 起，本窗止于分末）。窗口落 ASR 空当 232.3–246.2。"
+    },
+    {
+      "source": "hm7",
+      "start": 0,
+      "end": 14,
+      "cx": 0.5,
+      "track": false,
+      "narration": "现在，总决赛周日开打。佩古拉在第一组，首场就打高芙；安德列娃在第二组。两个人想碰面，最早要等到半决赛。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S7 分组：自制动画 hm7（总决赛分组表，佩古拉/安德列娃双高亮＋最早半决赛相遇注），系列 tokens 定版。"
+    },
+    {
+      "source": "fin",
+      "start": 440.0,
+      "end": 463.0,
+      "cx": 0.5,
+      "track": false,
+      "narration": "话已经漏出去了，球还照打。所以最后一个问题留给你：训练直播，你站哪边——带声音才真实、才圈粉，幕后就该给球迷看？还是冯德罗索娃那句：看比赛可以，听悄悄话不行？评论区，站队。",
+      "voice": {
+        "pitch": "+10Hz",
+        "_why": "网球有故事沿用云健 +18% 语速、+10Hz 音高（与本账号故事条同一档）。"
+      },
+      "point_end_ok": "窗口两端落在分与分之间（集锦剪辑切点/分末特写/局间），不切一分进行中；旁白落点经源 ASR 核过，不压英文解说整句。",
+      "_why": "S7 站队收束：温网决赛后段画面（诺斯科娃）收尾接品牌页。窗口落 ASR 空当 436.8–487.1。"
+    }
+  ]
+}

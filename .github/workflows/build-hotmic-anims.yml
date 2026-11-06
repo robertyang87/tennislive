@@ -1,0 +1,36 @@
+name: build-hotmic-anims
+on:
+  workflow_dispatch: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: |
+          pip install --quiet pillow numpy imageio-ffmpeg
+          FFMPEG=$(python3 -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())")
+          sudo ln -sf "$FFMPEG" /usr/local/bin/ffmpeg
+          ffmpeg -version | head -1
+      - name: Render animations
+        env:
+          HOTMIC_FONT_DIR: ${{ github.workspace }}/assets/fonts
+          HOTMIC_OUT: ${{ github.workspace }}/out
+        run: |
+          mkdir -p out
+          python3 tools/hotmic-anims/render_anims.py all
+          ls -la out/
+      - name: Upload to Release archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for k in hm1 hmq hm4 hm5 hm6 hm7; do
+            tag="source-hotmic-$k"
+            gh release view "$tag" > /dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "animation source for wta-finals-hotmic-2026"
+            gh release upload "$tag" "out/hotmic-$k-v1.mp4" --clobber
+          done
