@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-06T04:07:52.945655+00:00",
+  "status": "PASS_root_final_actual_visual_and_provenance_review",
+  "film_sha256": "667fc7d1de06d509269f3660a783577f12ae554b4ec6961d948e3d710f1c24e9",
+  "film_seconds": 255.32,
+  "film_bytes": 153629475,
+  "spec_sha256": "7d47e189ee5ce23fc7d6aac89991922eff299c5c459fc219da987ab42c637484",
+  "native_render_run": 42158751969,
+  "tts_bundle_sha256": "11fede1990f13864f64e584633d097d507a87e97e2fb1c5a7ff5b4c3d3a05196",
+  "reviewer": "Root Codex actual view_image review and exact decoded/input file comparisons; no human auditory playback claimed",
+  "actual_opened_all6_contacts": [
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-00.jpg",
+      "sha256": "f6f65fd83544a1ed69210997e0d9150d304db271b52d8d1d4efa2bb9d6d7b46f"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-01.jpg",
+      "sha256": "6522c99f1eb7bb3351791d6dd4a89ef4cda92c870c9ec0eb48cff17d2e570da8"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-02.jpg",
+      "sha256": "20cbe38df9c45268a0befe1da0c2d6b1edf991bbf6c3b590ec39e2de46e37aff"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-03.jpg",
+      "sha256": "604034bcf0980c6e12866d70f63e5f7cc09d7408296b34cc705b995b28c9b142"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-04.jpg",
+      "sha256": "6d2db986404c847002fca01cdbb9402b225d14fa480076694734c3a94cffb419"
+    },
+    {
+      "file": "/workspace/shelton-finals-production/final/root-qc-v3/contact-05.jpg",
+      "sha256": "f25b30057d51610454ab6da37f55b00be3dc2a103f919f514b5ca6576bd13374"
+    }
+  ],
+  "actual_opened_difference_comparison": "/workspace/shelton-finals-production/final/v3-diff/photo-region-side-by-side.jpg",
+  "frame_comparison": {
+    "frames_each": 6383,
+    "equal_pixel_frames": 5901,
+    "differing_photo_frames": 482,
+    "differing_ranges_seconds": [
+      [
+        85.88,
+        89.56
+      ],
+      [
+        122.48,
+        138.0
+      ]
+    ],
+    "actual_all5_point_windows_and_tails": [
+      {
+        "segment": "ao_point",
+        "actual_all_point_and_halfsecond_tail_pixels_equal": true,
+        "nominal_start": 19.41,
+        "nominal_end": 42.26
+      },
+      {
+        "segment": "dallas_point",
+        "actual_all_point_and_halfsecond_tail_pixels_equal": true,
+        "nominal_start": 49.428,
+        "nominal_end": 81.528
+      },
+      {
+        "segment": "munich_point",
+        "actual_all_point_and_halfsecond_tail_pixels_equal": true,
+        "nominal_start": 89.8,
+        "nominal_end": 109.3
+      },
+      {
+        "segment": "montreal_point",
+        "actual_all_point_and_halfsecond_tail_pixels_equal": true,
+        "nominal_start": 143.036,
+        "nominal_end": 170.076
+      },
+      {
+        "segment": "us_open_final_point",
+        "actual_all_point_and_halfsecond_tail_pixels_equal": true,
+        "nominal_start": 186.332,
+        "nominal_end": 209.132
+      }
+    ]
+  },
+  "equivalence": {
+    "projection_equal": true,
+    "asset_hashes_equal": true,
+    "all_actual_native_artifact_hashes_equal": true,
+    "all34_voice_and_word_files_equal": true,
+    "actual_ASS_bytes_equal": true,
+    "compressed_AAC_packet_payload_equal": true,
+    "sourcegain_or_PCM_waveform_check_performed": false
+  },
+  "findings": [
+    "All six actualV3 contact sheets personally opened and clear.",
+    "Changed photograph ranges additionally viewed as six actualV2/V3 imagepairs: same scene subjects/staticcrop/subtitles, no new identity or geometry defects. Independent photo role also reviewed actual new sourceframes.",
+    "All five full points and their dissolve tails are pixel-identical to independently audited fixedcentreV2, including repairedAOreaction/Montrealserve preparation.",
+    "Race/header/cover/qualification/question/outro pixels unchanged; six qualified and Shelton4720 fourth readable.",
+    "Metadata-only auto=true is canonical current publication policy; renderer, gate code, narration and material are unchanged.",
+    "Native current exactspec17request automated5voice suite PASS read independently; no previous actualspec attestation carried as if freshly rendered."
+  ],
+  "review_reuse": {
+    "previous_root_report_sha256": "a4dc916ed2a84a9af798d15cb0bc582af33fe180cb1d5c87058ded8ddd7b83ce",
+    "previous_actual_independent_scope_reports": [
+      {
+        "path": "/workspace/shelton-finals-production/final/independent-qc/early-visual-v2.json",
+        "sha256": "546308f489c3f8ff3f1d52dd18159e4815a40d3e9929d12d8f9d389e88e8e9f8",
+        "status": "PASS_SCOPED"
+      },
+      {
+        "path": "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2.json",
+        "sha256": "e00e2947c5958365761bc0fe39cd220a11c4d59f770615adacaca81f97874da6",
+        "status": "PASS_LATE_VISUAL_SCOPED"
+      },
+      {
+        "path": "/workspace/shelton-finals-production/final/independent-qc/photos-visual-v2.json",
+        "sha256": "d97175250b3f4304046d872ee19bfa6a1a99a152c101a8f1ed5e174fb9a1c1a3",
+        "status": "PASS_PHOTOGRAPHY_VISUAL_SCOPE_V2"
+      },
+      {
+        "path": "/workspace/shelton-finals-production/final/independent-qc/actual-facts-v2.json",
+        "sha256": "27f37396eed0ae7df0ac9dae636359770b03a68b459bff54330cdf5659f852fc",
+        "status": "PASS"
+      },
+      {
+        "path": "/workspace/shelton-finals-production/final/independent-qc/actual-audio-binding-v2.json",
+        "sha256": "932103dae2c3c13c74aa3b48053b5b4cd63ffa9b21d388013fff2138cab50eb8",
+        "status": "PASS_ACTUAL_FILM_AUDIO_BINDINGS_ASS_WORD_BOUNDARIES_AND_STREAM_DURATION_SCOPE"
+      }
+    ],
+    "new_photo_report": {
+      "path": "/workspace/shelton-finals-production/final/independent-qc/photos-visual-v3.json",
+      "sha256": "0e10c6f54593810f31935e159bd5a53e27ce12997a42550c4ef4e478c458dc0a"
+    }
+  },
+  "publication_gate": "Actualfilm and actualnative17voice checks pass. Require current exacthead requiredCI green and clean normalmerge, then only mainautomatic single push; no manual duplicate."
+}
