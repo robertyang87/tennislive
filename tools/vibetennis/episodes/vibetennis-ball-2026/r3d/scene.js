@@ -652,8 +652,8 @@ function shotNow(u,D){
 function shotFuture(u,D){
   const PI_=ev('pile',0.5), FI=ev('fill',3.7), NO=ev('none',8.5), GR=ev('grind',13.6), NE=ev('nest',18.1), SP=ev('split',20.6), TW=ev('two',26.4);
   const dummy=new THREE.Object3D();
-  if(u<GR-0.3){ pile.visible=true; pile.material.opacity=1; const k=ss(PI_,PI_+2.5,u); const sink=ss(FI,FI+2.5,u)*2.0;
-    for(let i=0;i<PILE_N;i++){ const p=PILE[i]; const show=p[4]<k; const drop=show?Math.max(0,(1-ss(p[4]*2.5+PI_,p[4]*2.5+PI_+0.8,u)))*6:20; dummy.position.set(p[0],p[1]+drop-sink,p[2]); dummy.rotation.set(p[3],p[3]*2,0); dummy.scale.setScalar(show?1:0.0001); dummy.updateMatrix(); pile.setMatrixAt(i,dummy.matrix); }
+  if(u<GR-0.3){ pile.visible=true; pile.material.opacity=1; const k=ss(PI_,PI_+2.3,u); const sink=ss(FI,FI+2.5,u)*2.0;
+    for(let i=0;i<PILE_N;i++){ const p=PILE[i]; const show=p[4]<k; const drop=show?Math.max(0,(1-ss(p[4]*2.3+PI_,p[4]*2.3+PI_+1.0,u)))*1.6:20;   /* 落差 6 → 1.6、每颗 1 s：1400 颗一起高速下落，motion_check 在 237–239 s 量到 22 */ dummy.position.set(p[0],p[1]+drop-sink,p[2]); dummy.rotation.set(p[3],p[3]*2,0); dummy.scale.setScalar(show?1:0.0001); dummy.updateMatrix(); pile.setMatrixAt(i,dummy.matrix); }
     pile.instanceMatrix.needsUpdate=true;
     if(u>FI-0.3){ layer.visible=true; layer.material.color.set(0x3a2a1c); layer.material.emissive.set(0x140a04); layer.position.set(0,lerp(-2,0.6,ss(FI,FI+2.5,u)),0); layer.material.opacity=0.95*ss(FI-0.3,FI+0.6,u); }   /* 淡入（原来整块突然出现，240.1 s 跳变 44） */
     const l=tx('fP',T('每年生产：数以亿计','Made every year: hundreds of millions'),{color:'#ffffff',size:0.44,plate:true}); hud(l,0,2.5); op(l,ss(PI_,PI_+0.6,u)*(1-ss(FI-0.3,FI,u)));
