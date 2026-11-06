@@ -328,7 +328,7 @@ const piston=new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,2.4,48),new THREE
 
 // 计分块（换球节奏）、ATP 粒子、球堆
 const tiles=[...Array(25)].map(()=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(0.42,0.42,0.12),new THREE.MeshPhysicalMaterial({color:0x14243a,emissive:0x4fe3ff,emissiveIntensity:0,metalness:0.3,roughness:0.3,clearcoat:1,transparent:true})); scene.add(m); return m; });
-const PILE_N=1400; const pile=new THREE.InstancedMesh(new THREE.SphereGeometry(0.33,16,12),new THREE.MeshPhysicalMaterial({map:TEX.yellow,roughness:0.85,sheen:1,sheenColor:new THREE.Color(0xf6ffa0),emissive:0x1a2000,emissiveIntensity:0.2,transparent:true}),PILE_N); scene.add(pile);
+const PILE_N=1400; const pile=new THREE.InstancedMesh(new THREE.SphereGeometry(0.33,16,12),new THREE.MeshPhysicalMaterial({map:TEX.yellow,roughness:0.85,sheen:1,sheenColor:new THREE.Color(0xf6ffa0),emissive:0x1a2000,emissiveIntensity:0.2,transparent:true}),PILE_N); pile.frustumCulled=false; scene.add(pile);   /* 实例化网格的包围球只在第一次渲染时按当时的实例算——分块渲染从不同时刻起步，算出来不一样，一块里球堆被剔掉、下一块又在（240.1 s 跳变 48） */
 const PILE=[...Array(PILE_N)].map((_,i)=>{ const a=frnd()*6.283, r=Math.sqrt(frnd())*7; const h=Math.max(0,(1-r/7))*4.2*frnd()**0.4; return [Math.cos(a)*r,0.33+h,Math.sin(a)*r,frnd()*6.283,frnd()]; });
 const layer=new THREE.Mesh(new THREE.BoxGeometry(18,0.5,18),new THREE.MeshPhysicalMaterial({color:0x1b5aa3,roughness:0.7,emissive:0x082650,emissiveIntensity:0.4,transparent:true})); scene.add(layer);
 const crumbs=cloud(4000,0.12,6,scene); const CR=[...Array(4000)].map(()=>[frnd(),frnd(),frnd(),frnd()]);
