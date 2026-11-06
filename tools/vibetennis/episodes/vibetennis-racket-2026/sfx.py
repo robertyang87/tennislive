@@ -232,6 +232,8 @@ for i in range(2): EN(RK+i*0.3+0.4,zap(1800,600,0.25),0.35,name='strike-%d'%i)
 # 09 打法：引语（技术 → 力量和旋转）→ 天平左倾（模拟）→ 回正（实测）→ 拼图咬合
 y=SEC['style']; YQ=E('style','quote',0.5); YP=E('style','power',4.1); YS=E('style','sim',6.3); YR2=E('style','real',11.3); YZ=E('style','puzzle',16.3)
 EN(YQ,hum(3.6,65),0.45,name='quote'); EN(YP,number_pop(),0.4,name='power-spin')
+YW=E('style','why',6.5)
+for i in range(2): EN(YW+0.6+i*1.6,blip(1300+i*350,0.1,1.15,0.5),0.4,name='why-%d'%i)   # 两行「原因 → 结果」依次亮
 EN(YS,clink(1400),0.45,name='scale-tilt'); EN(YS+0.3,swish(0.8,300,1500),0.25); EN(YR2,clink(1900),0.45,name='scale-level')
 for i in range(2): EN(YZ+0.3+i*0.35,slam(),0.3,name='puzzle-%d'%i)
 EN(YZ+1.2,hum(3.0,82),0.35,name='inseparable')

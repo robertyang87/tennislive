@@ -17,7 +17,7 @@ SECTIONS = [("hook", "hook"), ("wood", "wood"), ("metal", "metal"), ("oversize",
 HOLD = {"h0": 4.6, "h1": 4.6, "h2": 4.2, "h3": 3.6, "w0": 6.0, "w1": 4.6, "w2": 4.2, "w3": 5.0, "m0": 6.8, "m1": 7.4, "m2": 5.2,
         "m3": 4.0, "m4": 3.6, "o0": 4.0, "o1": 4.8, "o2": 4.2, "o3": 7.2, "o4": 4.2, "s0": 4.0, "s1": 9.5, "s2": 3.6, "s3": 4.8,
         "t0": 7.4, "t1": 5.4, "t2": 5.8, "t3": 3.4, "c0": 5.4, "c1": 4.4, "c2": 5.8, "c3": 9.6, "c4": 6.6, "c5": 5.6,
-        "r0": 4.6, "r1": 8.2, "y0": 7.6, "y1": 5.0, "y2": 5.0, "y3": 6.4, "e0": 5.4, "e1": 5.6, "e2": 3.4}
+        "r0": 4.6, "r1": 8.2, "y0": 5.8, "y0b": 6.6, "y1": 5.0, "y2": 5.0, "y3": 6.4, "e0": 5.4, "e1": 5.6, "e2": 3.4}
 MIN_SEC = {"hook": 18.0, "wood": 18.0, "metal": 24.0, "oversize": 22.0, "sweet": 20.0, "twist": 20.0, "carbon": 34.0,
            "rules": 12.0, "style": 20.0, "end": 12.0}
 # 画面事件钉在旁白上：某句开口、或这句里某几个字开口那一刻（motion.md 逐句表）
@@ -33,7 +33,7 @@ EV = [("hook", "hit", "h0", None), ("hook", "fly", "h1", "球的左右"), ("hook
       ("twist", "out", "t3", "飞长"), ("carbon", "scale", "c0", None), ("carbon", "y1980", "c1", None), ("carbon", "noah", "c2", None),
       ("carbon", "micro", "c3", None), ("carbon", "wave", "c3", "振动频率"), ("carbon", "heat", "c4", None), ("carbon", "serve", "c4", "发球"),
       ("carbon", "stack", "c5", "挥拍重量"), ("carbon", "grow", "c5", "挥速"), ("rules", "box", "r0", "定上限"), ("rules", "shrink", "r1", "29"),
-      ("rules", "dims", "r1", "只管尺寸"), ("rules", "strike", "r1", "不管多重"), ("style", "quote", "y0", None), ("style", "power", "y0", "力量"),
+      ("rules", "dims", "r1", "只管尺寸"), ("rules", "strike", "r1", "不管多重"), ("style", "quote", "y0", None), ("style", "power", "y0", "力量"), ("style", "why", "y0b", None),
       ("style", "sim", "y1", None), ("style", "real", "y2", None), ("style", "puzzle", "y3", None), ("end", "replay", "e0", "打偏的代价"),
       ("end", "glass", "e1", None), ("end", "ball", "e2", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用

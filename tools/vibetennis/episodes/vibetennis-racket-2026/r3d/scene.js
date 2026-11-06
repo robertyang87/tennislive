@@ -604,11 +604,15 @@ function shotRules(u,D){
 
 // ---------- 9 打法 ----------
 function shotStyle(u,D){
-  const QU=ev('quote',0.5), PW=ev('power',4.1), SI=ev('sim',6.3), RE=ev('real',11.3), PZ=ev('puzzle',16.3);
-  if(u<SI-0.3){ const a=tx('kq1',T('现代球拍让比赛从','Modern rackets moved the game from'),{color:'#e8ecf6',size:0.5}); a.position.set(0,1.5,0); op(a,ss(QU,QU+0.6,u));
-    const b=bt('kq2',T('「技术」','"technique"'),{size:0.95,glow:CYAN,fx:'write'}); hud(b,0,0.55); b.update(u,QU+0.6,Infinity,1-0.7*ss(PW,PW+0.6,u));   /* 书写：技术 */
-    const c=bt('kq3',T('转向「力量和旋转」','to "power and spin"'),{size:0.95,glow:GOLD,accent:T('力量和旋转','power and spin'),fx:'spin'}); hud(c,0,-0.75); c.update(u,PW);   /* 旋转：力量和旋转 */
-    const s=tx('kqs',T('Miller 2006《英国运动医学杂志》（作者来自国际网联）','Miller 2006, Br J Sports Med (ITF author)'),{color:'#cfe8ff',size:0.3}); s.position.set(0,-2.0,0); op(s,ss(QU+1,QU+1.6,u));
+  const QU=ev('quote',0.5), PW=ev('power',4.1), WH=ev('why',6.5), SI=ev('sim',14.1), RE=ev('real',11.3), PZ=ev('puzzle',16.3);
+  if(u<SI-0.3){ const up=ss(WH-0.2,WH+0.8,u);   // 讲到原因时引语整体上移，腾出下面两行「原因 → 结果」
+    const a=tx('kq1',T('现代球拍让比赛从','Modern rackets moved the game from'),{color:'#e8ecf6',size:0.5}); hud(a,0,1.55+0.5*up); op(a,ss(QU,QU+0.6,u)*(1-0.6*up));
+    const b=bt('kq2',T('「技术」','"technique"'),{size:0.95,glow:CYAN,fx:'write'}); hud(b,0,0.55+0.75*up); b.update(u,QU+0.6,Infinity,1-0.7*ss(PW,PW+0.6,u));   /* 书写：技术 */
+    const c=bt('kq3',T('转向「力量和旋转」','to "power and spin"'),{size:0.95,glow:GOLD,accent:T('力量和旋转','power and spin'),fx:'spin'}); hud(c,0,-0.75+1.0*up); c.update(u,PW);   /* 旋转：力量和旋转 */
+    // 国际网联给的机制（History of Rackets and Strings 第 5 页）：两行依次出，箭头左边是拍子改了什么、右边是网球里的结果
+    [[T('拍头更大  →  打偏的球更好控制','Bigger head  →  better control of off-centre hits'),'#c8f4ff',0],[T('拍框更硬  →  被框吸走的能量更少，出球更快','Stiffer frame  →  less energy lost, faster ball'),'#ffe2a0',1.6]].forEach(([str,col,dt],i)=>{
+      const m=tx('why'+i,str,{color:col,size:0.46,glow:i?GOLD:CYAN}); hud(m,0,-0.7-0.58*i); op(m,ss(WH+0.6+dt,WH+1.2+dt,u)); });
+    const s=tx('kqs',T('Miller 2006《英国运动医学杂志》（作者来自国际网联）· 国际网联《History of Rackets and Strings》','Miller 2006, Br J Sports Med (ITF author) · ITF, History of Rackets and Strings'),{color:'#cfe8ff',size:0.28}); hud(s,0,-2.05); op(s,ss(QU+1,QU+1.6,u));
     look(0,0,lerp(9,8.2,ss(0,SI,u)),0,0,0); return; }
   if(u<PZ-0.3){ balG.visible=true; balG.position.set(0,0.8,0); balMat.opacity=1; steelBar.visible=fibBundle.visible=false;   // 这里托盘上放的是「模拟」「实测」，不是上一节的钢条和碳纤维束
     const tilt=lerp(0,0.18,ss(SI,SI+1,u))*(1-ss(RE+0.6,RE+1.8,u)); balBeam.rotation.z=tilt;
