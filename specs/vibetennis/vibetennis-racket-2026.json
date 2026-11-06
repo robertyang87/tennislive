@@ -1,0 +1,67 @@
+{
+ "slug": "vibetennis-racket-2026",
+ "_status": "EP08 中文版：资料包 papers/vibetennis-racket-2026/（sources.md、verification-2.md、motion.md、materials/）；配音 41 句；时间轴 229.6 s；3D 十段；审片包 2026-11-05 发过所有者，所有者回「你自己决定，目标是做优质视频」→ 整片渲。",
+ "_column": "vibetennis 第 8 集（器材三部曲②球拍）：木拍一百年拍面约 70 平方英寸 → 拉科斯特钢拍专利（1963 授权，→威尔逊 T2000）与挤压铝框 → 霍华德·黑德大拍面专利（1976）把拍面往手柄方向拉长去包住打击中心 → 1980 年前后碳纤维复合材料成主流（更大、更轻、更硬；拍框频率约 80–120 Hz → 100–180 Hz）→ 国际网联只限尺寸。物理：甜点是三个点（最大回弹点、振动节点、打击中心）；宽拍头＝绕长轴转动惯量大，打偏时左右几乎不偏但明显变慢、真实挥拍里飞得更高更远；更硬对打在节点上的球几乎没影响，帮的是打不准的人和发球；更轻挥得更快但很不敏感。打法：国际网联认为转向力量和旋转，没有研究单独算出球拍的作用。",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-racket-2026/cover/make_cover.py",
+  "hook": "是球拍，\n改写了网球吗？",
+  "subject": "球拍",
+  "topic": "球拍演变 · 木 · 钢 · 大拍面 · 碳纤维",
+  "_why": "沿用 EP07 所有者选定的 B（杂志信息图）：粗黑体两行问句（「球拍」金色）＋四格时间轴（约 1870 木拍／1963 钢拍专利／1976 大拍面专利／1980 前后碳纤维）＋「拍面 +40% 以上」（Harvard Crimson 1981、Inside Tennis 两源原话「比传统拍大 40% 以上」）；底图是大拍面段 89.5 s 无字帧，木拍外圈多出来的面积被填亮。三个尺寸：3:4 海报、16:9 内置横版、9:16 竖版。topic 原写「球拍百年」，和旁白 h2 改「最近五十年」同理改掉"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "是球拍，改写了网球吗？",
+  "thesis": "木拍一百年拍面约 70 平方英寸（Head 专利原件、名人堂、Taraborrelli 2019 三源）。金属拍难在线穿过金属孔的锋利边缘（国际网联），拉科斯特钢拍专利 US 3,086,777（1963 授权）授权给威尔逊即 T2000；挤压三腔铝框 US 3,752,478（1973）。霍华德·黑德大拍面专利 US 3,999,756（1976-12-28 授权）：旧拍打击中心靠近拍喉、普通人打在几何中心，办法是把拍面往手柄方向加长去包住它。1980 年前后复合材料成主流（国际网联、名人堂、Taraborrelli 2019）。物理：甜点是最大回弹点、振动节点、打击中心三个点（Brody 1981、Allen 2016、Cross 1998），手感最好的通常是节点（Cross 2004）；宽拍头提高绕长轴转动惯量，偏心击球左右几乎不偏（Cross 2010）但明显掉速（Cross 2010、Spurr 2017），真实挥拍里出球角变大（Spurr 2017）；更硬（框频 80–120 → 100–180 Hz，Allen 2016、Taraborrelli 2019）对节点附近击球几乎无影响，帮的是偏心与发球（Allen 2016）；挥速随挥拍重量 V∝I^-0.27（Cross & Bower 2006），减 10%只快约 3%。规则：国际网联在大拍面之后才首次设限，现行只限尺寸（2026 规则附录二）。打法：国际网联研究者的论文（Miller 2006《英国运动医学杂志》）认为转向力量和旋转（论文观点，不是国际网联官方表态）；没有研究单独剥离球拍（Bayram & Barla 2026 未直接测器材）。",
+  "beats": [
+   "钩子：打偏了拍子被扭歪一大截，球左右几乎不偏；最近五十年球拍变大、变轻、变硬——是球拍改写了网球吗？",
+   "木拍一百年：拍面约 70 平方英寸",
+   "金属拍：线穿金属孔的难题；拉科斯特专利 → 威尔逊 T2000；三腔铝框",
+   "大拍面：1976 专利，拍面大了 40% 以上，把拍面往手柄方向拉长、包住打击中心",
+   "原理①：甜点是三个点，手感最好的是节点",
+   "原理②：宽拍头防扭转；打偏左右几乎不偏，但明显变慢、真实挥拍里飞得更高更远",
+   "碳纤维：更大更轻更硬；硬了帮的是打不准和发球；轻了挥得快但很不敏感",
+   "规则：大拍面之后才设限，只限尺寸",
+   "打法：国际网联研究者的论文说转向力量和旋转；国际网联给的机制是拍头更大→打偏更好控制、拍框更硬→出球更快；模拟说发球更快、实测说老木拍几乎一样快；和线一样，时间对得上、分不开（下一集：球）"
+  ],
+  "sources": [
+   "美国专利 US 3,086,777（Lacoste，1963）、US 3,752,478（Flak，1973）、US 3,999,756（Head，1976）、US 4,061,520（1977）、US 4,664,380（Kuebler，1987）——USPTO 原件",
+   "ITF《History of Rackets and Strings》《Product Conformity》（2019-11）、《2026 Rules of Tennis》附录二",
+   "International Tennis Hall of Fame 球拍展（racquets.tennisfame.com）",
+   "Allen, Choppin & Knudson (2016) Sports Engineering 19:1–11；Taraborrelli et al. (2019) Applied Sciences 9:4352",
+   "Brody (1981) Am J Phys；Cross (1998) Sports Eng；Cross (2004) Am J Phys；Cross & Bower (2006) J Sports Sci；Cross (2010) Sports Technology；Spurr (2017) PhD thesis, Sheffield Hallam",
+   "Haake et al. (2007) Tennis Science & Technology 3（只作旁白，不上数字）；Miller (2006) Br J Sports Med；Bayram & Barla (2026) Sci Rep",
+   "Brody, Cross & Lindsey (2002) The Physics and Technology of Tennis；Taraborrelli et al. (2021) Eur J Phys；Harvard Crimson 1981-12-04；Inside Tennis；SI 2013、Tennis Majors（诺阿 1983）；ITF 1999–2000 规则文本、ISO 11416:1995（第二轮补查见 papers/vibetennis-racket-2026/verification-2.md）"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-racket-2026/sources.md（含「主会话复核」与「提纲自审」两节）"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored：3D 里的锚定标签（中英两套，scene.js 的 T()）＋叠加层底部一条上下文字幕（overlay.py CAPS，只补画面上没有的出处与背景，不是逐句配音字幕）＋每节底部出处行；同 EP07",
+  "narration": "edge-tts zh-CN-YunjianNeural +18%（同 EP03–EP07）；41 句，narration.json（text 上屏原字、tts 合成文本，数字写汉字、引号去掉）；会话沙箱里用 tools/vibetennis/tts_synth.py 合成（代理 CA 已内置）；英文版不配音。",
+  "visual_standards": "照 docs/vibetennis.md：GLOW 光晕上限、MOVE 转场运镜（0.6 s 交叉溶解、缓推＋绕转），渲前 glow_check.py --pair（2026-11-05 34 帧全过）、成片 motion_check.py；子弹时间（慢放）在钩子、第 6 段、片尾回放三处，运动模糊（6 子帧累积）只开在其中球恢复常速高速飞出的 1.5–1.6 秒；3D 字由 layoutText 每帧收进安全区（画面内、y 120–880，不压底部字幕带）",
+  "audio": {
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（robertyang87/vibeknowledge，同 EP04–EP07）；中文版沿用，112.3 BPM 按整小节循环拼接，第 8 小节线落在开场那一球打上拍框的时刻，片尾 3 s 淡出；英文版成片不带 BGM，只有音效（所有者 2026-11-02 定：EP04 英文版被 Instagram Content ID 静音，音乐由所有者上传时从曲库挂；assemble.sh 英文版用 sfx_only.wav）",
+   "sfx": "sfx.py 合成（111 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上（慢放击球按 0.18／0.22 倍速算出的接触时刻）；声像手动给：分屏两支拍左右分开、其余居中",
+   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "_music_why": "所有者 2026-11-05 原话：「背景音乐沿用」。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "球拍演变",
+  "_summary_why": "标题 EP08.vibetennis|球拍演变（四字主题，≤20 字符、无空白）",
+  "lead": "近一百年里，木拍的拍面一直只有约 70 平方英寸；1963 年拉科斯特拿到钢拍专利，1976 年霍华德·黑德拿到大拍面专利，1980 年前后碳纤维成了主流。大拍面是为了把「不震手的那个点」包进拍面；「甜点」其实是三个点；拍头变宽，打偏时拍子扭得少、球左右几乎不偏，却会明显变慢。球拍改写了打法吗？至少改写了打偏的代价。",
+  "_lead_why": "push.py 把 lead 放在推送卡正文前（EP07 有，草稿漏了）；每个数字同 xhs 正文，出处见 sources.md"
+ }
+}

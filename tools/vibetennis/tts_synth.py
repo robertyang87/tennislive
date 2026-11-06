@@ -3,14 +3,20 @@
 并写词边界 <集>/voice/<file>.json（格式同 EP03–EP05：[{type:'WordBoundary', off, dur, text}]，秒）。
 
 只重合成 tts 文本、声线或语速变了的句子（哈希记在 voice/_tts_hash.json），没变的不动。
-会话沙箱连不上 speech.platform.bing.com（WebSocket 不能过代理），所以在 GitHub Actions 上跑：
-.github/workflows/vibetennis-tts.yml。
+会话沙箱能连上：edge-tts 的 SSL 上下文写死了 certifi，碰上代理的自签 CA 就报 CERTIFICATE_VERIFY_FAILED
+（看起来像「连不上」）。下面检测到代理 CA（/root/.ccr/ca-bundle.crt 或 SSL_CERT_FILE）就换上它（2026-11-05 实测，EP08 41 句在会话里合成）。
+GitHub Actions 上照旧可以跑：.github/workflows/vibetennis-tts.yml。
 
     python3 tools/vibetennis/tts_synth.py tools/vibetennis/episodes/<slug>
 """
 import asyncio, hashlib, json, sys
 from pathlib import Path
 import edge_tts
+import os, ssl
+import edge_tts.communicate as _etc
+_CA = os.environ.get("SSL_CERT_FILE") or "/root/.ccr/ca-bundle.crt"
+if os.path.isfile(_CA):
+    _etc._SSL_CTX = ssl.create_default_context(cafile=_CA)
 
 async def synth(text, voice, rate, mp3, js):
     c = edge_tts.Communicate(text, voice, rate=rate, boundary="WordBoundary")
