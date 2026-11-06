@@ -210,32 +210,49 @@ const MATS={
 const STRC={wood:0xf2dcb0, steel:0xe8eef8, alu:0xe8eef8, carbon:0xd9e4ff, glass:0xffffff};
 
 // ---- 参数化球拍：拍头椭圆（半长 a、半宽 b），拍头顶端固定在 tipY；拍杆、握把在下 ----
+// 球拍几何对照真实球拍定（2026-11-06 所有者「拍喉的开孔大小不对啊，你找个真实的拍子对比一下」）：
+//   Babolat Pure Drive 2012 正面照（Commons，500px）：拍喉是开口三角，高约全长 10%，上口宽约拍头宽 42%；拍框从拍头两侧顺滑地分出两条臂，
+//   拍面底下另有一根细横梁（yoke）封住线床——不是「整只椭圆下面挂一个 Y」。
+//   Dunlop Maxply 木拍正面照（Commons）：**没有开孔**，拍喉是实心的胶合楔块，拍杆长。黑德专利 US 3,999,756 Fig.1 同样是顺滑分臂。
+//   全长一律 27 英寸（6.86 单位）；握把占全长：木拍约 30%、现代拍约 28%（两张照片量的）。对照图 papers/vibetennis-racket-2026/materials/ref/throat-compare.jpg
+const RK_L=27*IN;
 function makeRk(kind,{a=WOOD.a,b=WOOD.b,beam=0.06}={},group=scene){
   const g=new THREE.Group(); group.add(g); const mat=MATS[kind]();
   const head=new THREE.Group(); g.add(head);
-  const ring=new THREE.EllipseCurve(0,0,1,1,0,Math.PI*2).getPoints(180).map(p=>new THREE.Vector3(p.x,p.y,0));
-  const frame=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ring,true),220,1,12,true),mat); head.add(frame);
   // 线床：单位圆内的格子（随拍头一起缩放）
-  const sp=[]; const nm=16, nc=19;
-  for(let i=0;i<nm;i++){ const x=-0.9+1.8*i/(nm-1), y=Math.sqrt(1-x*x)*0.985; sp.push(x,-y,0,x,y,0); }
-  for(let i=0;i<nc;i++){ const y=-0.9+1.8*i/(nc-1), x=Math.sqrt(1-y*y)*0.985; sp.push(-x,y,0,x,y,0); }
+  const sp=[]; const nm=16, nc=19, yc=kind==='wood'?-1:-Math.cos(Math.asin(0.45))+0.02;   // 开口拍喉的线床到横梁（yoke）为止，不画到椭圆最底下
+  for(let i=0;i<nm;i++){ const x=-0.9+1.8*i/(nm-1), y=Math.sqrt(1-x*x)*0.985; sp.push(x,Math.max(-y,yc),0,x,y,0); }
+  for(let i=0;i<nc;i++){ const y=-0.9+1.8*i/(nc-1), x=Math.sqrt(1-y*y)*0.985; if(y>=yc) sp.push(-x,y,0,x,y,0); }
   const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
   const strings=new THREE.LineSegments(sg,new THREE.LineBasicMaterial({color:new THREE.Color(STRC[kind]).multiplyScalar(0.8),transparent:true,opacity:0.7})); head.add(strings);
+  const frame=new THREE.Mesh(new THREE.BufferGeometry(),mat), yoke=new THREE.Mesh(new THREE.BufferGeometry(),mat), wedge=new THREE.Mesh(new THREE.BufferGeometry(),mat);
+  g.add(frame,yoke,wedge);
   const neck=new THREE.Group(); g.add(neck);
-  const nmat=mat; const th=[]; for(const s of [-1,1]){ const m=new THREE.Mesh(new THREE.CylinderGeometry(beam*0.9,beam*0.9,1,10),nmat); neck.add(m); th.push(m); }
-  const shaft=new THREE.Mesh(new THREE.CylinderGeometry(beam*1.6,beam*1.5,1,10),nmat); neck.add(shaft);
-  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.16,1.8,8),new THREE.MeshPhysicalMaterial({color:0x3a3f4c,roughness:0.6,emissive:0x0c1018,emissiveIntensity:0.6,transparent:true})); neck.add(handle);
-  const R={g,head,frame,strings,mat,neck,th,shaft,handle,kind,a,b,beam,tip:a};
+  const shaft=new THREE.Mesh(kind==='wood'?new THREE.CylinderGeometry(0.15,0.14,1,16):new THREE.CylinderGeometry(0.1,0.095,1,12),mat); neck.add(shaft);   // 拍杆宽：木拍约拍头宽 18%（Maxply 照片量的）、现代拍约 9%（Babolat）
+  const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.16,1,8),new THREE.MeshPhysicalMaterial({color:kind==='wood'?0x5a3a22:0x3a3f4c,roughness:0.6,emissive:0x0c1018,emissiveIntensity:0.6,transparent:true})); neck.add(handle);
+  const R={g,head,frame,yoke,wedge,strings,mat,neck,shaft,handle,kind,a,b,beam,tip:a,solid:kind==='wood'};
   setRk(R,a,b); return R; }
-// 改拍头尺寸：顶端固定（tip 不动），拍面往手柄方向长（Head 专利的做法）。拍杆、握把跟着往下挪
-function setRk(R,a,b,{keepTip=true}={}){ R.a=a; R.b=b; const cy=keepTip?R.tip-a:0;
-  R.head.position.set(0,cy,0); R.head.scale.set(b,a,1); R.frame.scale.set(1,1,R.beam*8);
-  R.frame.geometry.dispose(); const ring=new THREE.EllipseCurve(0,0,b,a,0,Math.PI*2).getPoints(180).map(p=>new THREE.Vector3(p.x,p.y,0));
-  R.frame.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ring,true),220,R.beam,12,true); R.frame.scale.set(1/b,1/a,1);
-  const bot=cy-a, thY=bot-0.55;   // 拍喉收拢点
-  R.th.forEach((m,i)=>{ const s=i?1:-1; const p0=new THREE.Vector3(s*b*Math.sin(0.75),cy-a*Math.cos(0.75),0), p1=new THREE.Vector3(s*0.1,thY,0);
-    m.position.copy(p0).lerp(p1,0.5); m.scale.set(1,p0.distanceTo(p1),1); m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),p1.clone().sub(p0).normalize()); });
-  R.shaft.position.set(0,thY-0.45,0); R.shaft.scale.set(1,0.9,1); R.handle.position.set(0,thY-0.9-0.9,0); R.gripY=thY-1.2; R.bot=bot; R.cy=cy; }
+// 改拍头尺寸：顶端固定（tip 不动），拍面往手柄方向长（Head 专利的做法）；全长不变，拍杆跟着变短
+function setRk(R,a,b,{keepTip=true}={}){ R.a=a; R.b=b; const cy=keepTip?R.tip-a:0, bm=R.beam;
+  R.head.position.set(0,cy,0); R.head.scale.set(b,a,1);
+  const yB=cy-a, JD=(R.solid?0.10:0.08)*RK_L, phi=Math.asin(R.solid?0.6:0.45), jw=R.solid?0.15:0.1, yJ=yB-JD;   // JD：拍喉收拢点在线床底下 10% 全长；phi：拍臂从拍头侧边分出的位置
+  const E=t=>new THREE.Vector3(b*Math.cos(t),cy+a*Math.sin(t),0);
+  const arm=(sgn)=>{ const tD=-Math.PI/2+sgn*phi, D=E(tD), dir=new THREE.Vector3(-b*Math.sin(tD),a*Math.cos(tD),0).multiplyScalar(-sgn).normalize(), J=new THREE.Vector3(sgn*jw,yJ,0);
+    const P1=D.clone().addScaledVector(dir,0.5*D.distanceTo(J)); const pts=[]; for(let i=0;i<=16;i++){ const k=i/16; pts.push(D.clone().multiplyScalar((1-k)*(1-k)).addScaledVector(P1,2*k*(1-k)).addScaledVector(J,k*k)); } return pts; };   // 二次贝塞尔：在分出点和拍头边相切，顺滑地收进拍杆
+  const armL=arm(-1), armR=arm(1);
+  const hoop=[]; for(let i=0;i<=200;i++){ const t=(-Math.PI/2-phi)-(i/200)*(2*Math.PI-2*phi); hoop.push(E(t)); }   // 从左分出点往上绕过顶端，到右分出点
+  const path=[...armL.slice().reverse(),...hoop.slice(1,-1),...armR];
+  R.frame.geometry.dispose(); R.frame.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(path,false,'centripetal'),420,bm,12,false);
+  const yk=[]; for(let i=0;i<=40;i++){ const k=i/40, P=E(-Math.PI/2-phi+k*2*phi); if(!R.solid){ const D=E(-Math.PI/2-phi); P.y=D.y-0.04*a*Math.sin(Math.PI*k); } yk.push(P); }   // 开口拍：横梁几乎是一根直杆、略往下弯（Babolat 照片）；木拍就是拍框底边
+  R.yoke.geometry.dispose(); R.yoke.geometry=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(yk),60,R.solid?bm:bm*0.75,10,false);   // 线床底下那根横梁（木拍就是拍框本身）
+  R.wedge.geometry.dispose();
+  if(R.solid){ const sh=new THREE.Shape(); armL.slice().reverse().forEach((p,i)=>i?sh.lineTo(p.x,p.y):sh.moveTo(p.x,p.y)); yk.forEach(p=>sh.lineTo(p.x,p.y)); armR.forEach(p=>sh.lineTo(p.x,p.y)); sh.closePath();   // 木拍：拍喉是实心楔块
+    R.wedge.geometry=new THREE.ExtrudeGeometry(sh,{depth:bm*1.6,bevelEnabled:false}); R.wedge.geometry.translate(0,0,-bm*0.8); R.wedge.visible=true; }
+  else { R.wedge.geometry=new THREE.BufferGeometry(); R.wedge.visible=false; }
+  const yTop=R.tip+bm, yButt=yTop-RK_L, GL=(R.solid?0.30:0.28)*RK_L, yG=yButt+GL;
+  R.shaft.position.set(0,(yJ+yG)/2,0); R.shaft.scale.set(1,Math.max(0.2,yJ-yG),1);
+  R.handle.position.set(0,(yG+yButt)/2,0); R.handle.scale.set(1,GL,1);
+  R.gripY=yG-0.3; R.bot=yB; R.cy=cy; R.butt=yButt; R.junction=yJ; }
 function rkOp(R,v){ R.mat.opacity=v; R.strings.material.opacity=0.7*v; R.handle.material.opacity=v; R.g.visible=v>0.003; }
 
 // ---- 一批球拍与物件 ----
@@ -702,6 +719,9 @@ function shotTL(t){ const sc=TL.sections.find(s=>t>=s.t0&&t<s.t1)||TL.sections[T
   hideAll(); FX_SHAKE=0; FX_FLASH=0; EV=sc.ev||{}; SEC_U=u;
   ({hook:shotHook,wood:shotWood,metal:shotMetal,oversize:shotOversize,sweet:shotSweet,twist:shotTwist,carbon:shotCarbon,rules:shotRules,style:shotStyle,end:shotEnd})[sc.kind](u,D);
   if(Q.get('cam')){ const c=Q.get('cam').split(',').map(Number); look(...c); }   // 封面机位覆盖
+  if(Q.get('rkonly')){ // 对照实物用：只摆一支拍子，正面、整支入画（?rkonly=rkW|rkS|rkAl|rkB|rkC|rkA），2026-11-06 拍喉开孔对照真实球拍
+    hideAll(); const R={rkW,rkS,rkAl,rkB,rkC,rkA}[Q.get('rkonly')]; rkOp(R,1); R.g.position.set(0,0,0); R.g.rotation.set(0,0,0);
+    const top=R.tip+0.1, bot=R.butt!==undefined?R.butt:R.gripY-1.6; const cyv=(top+bot)/2; CAMMOVE=null; look(0,cyv,(top-bot)*1.55,0,cyv,0); }
   flushHud(); layoutText();
   return sc.kind; }
 // 镜头切换点：载入时按机位跳变自动找（粗扫 10 fps、跳变附近细到 1/240 s），再并上段落起点
