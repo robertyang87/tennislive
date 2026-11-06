@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "a8b1bcbaa827594b8d7763bfb4f6d37e7229892162f76ec53d380330e362c5b2",
-    "render_inputs_sha256": "ec2d2155d1a0c586ba2c0eee521d24793fa662c62cadec0a0bb422c0e59e1b8d",
-    "spec_sha256": "20ae305d3e46618a882722a13960efa8b7c1b5c3d80738cb2170b0fb3668ef97",
-    "film_sha256": "3a4ca90b4142be974342d363c5187b26416d88b5e24fe0642f6f76875d9a57ac",
+    "render_sha256": "3bd2267d3bbcf8d9ccff48db858d55d9f586cb1fd1c2d3972c2b58a8464d06cb",
+    "render_inputs_sha256": "d1eab621a62cc90bb45240ea9530f6abfcf45d069d5e4494a448f271ff63dd52",
+    "spec_sha256": "4c930fae5e295093d3fd6a18795a39edcc2f1ae646d4e38c5ebc858b4ef371b8",
+    "film_sha256": "ca1dc4a91d3e2e0720496970e3bb3761d22ba0275b2952486c183e7491704af2",
     "inventory_sha256": "757d28df6a9e4620a6af310169603205808c71d60c7c42963f671f4afbae2207"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-06T10:47:18+00:00",
+  "reviewed_at": "2026-11-06T15:56:45+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -493,7 +493,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "她说,这个姑娘人不错,就是有点被灌坏了的范儿,总要有人敲打敲打。她对马丁内斯也少了点尊重,球员冲教练发火,教练不拦着,反而向在拱火。最狠的一句是。"
+        "transcript": "他说,这个姑娘人不错,就是有点被灌坏了的范儿,总要有人敲打敲打。她对马丁内斯也少了点尊重,球员冲教练发火,教练不拦着,反而向在拱火。最狠的一句是。"
       },
       "polyphones": [
         {
@@ -559,7 +559,7 @@
         "substituted": 2,
         "sub_ratio": 0.029,
         "longest_deletion": 0,
-        "transcript": "先留出的是佩古拉。周三,他刚和安德烈娃和烈娃练球局里,安德烈娃连下四局,还冲着自己的教练马丁内斯发了火。训练一结束,佩古拉留下跟教练诺尔斯复盘,话越说越止。"
+        "transcript": "先留出的是佩古拉。周三,他刚和安德烈娃和烈娃练球局里,安德烈娃连下四局,还冲着自己的教练马丁内斯发了火。训练一结束,佩古拉留下跟教练诺尔斯复盘,话越说越之。"
       },
       "polyphones": [
         {
@@ -646,7 +646,7 @@
         "substituted": 1,
         "sub_ratio": 0.017,
         "longest_deletion": 0,
-        "transcript": "总军赛还没开打,先出示的是训练场。印第安威尔斯官方把八位球员的训练全程直播、画面有、声音也有,只是没人告诉球员厂边的麦克风开着。"
+        "transcript": "总军赛还没开打,先出示的是训练场。印第安威尔斯官方把八位球员的训练全程直播、画面有、声音也有,只是没人告诉球员场边的麦克风开着。"
       },
       "polyphones": [
         {
@@ -700,7 +700,7 @@
         "substituted": 1,
         "sub_ratio": 0.026,
         "longest_deletion": 0,
-        "transcript": "今年1月的澳王,高福书球后特意躲到自以为没镜头的地方,连杂的七把拍子全被剥了出去。"
+        "transcript": "今年1月的澳王,高福书球后特意躲到自以为没镜头的地方连杂的七把拍子全被剥了出去。"
       },
       "polyphones": [],
       "pauses": {
@@ -840,7 +840,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第二条更短,就依据停下这个。依据话,把这件事从谁说错了话拉回到谁有权把话拨出去。"
+        "transcript": "第二条更短,就一句,停下这个。一句话,把这件事从谁说错了话,拉回到谁有权,把话拨出去。"
       },
       "polyphones": [],
       "pauses": {
@@ -1078,7 +1078,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "关注网球时差﹑时差归我﹑好球归你。"
+        "transcript": "关注网球时差,时差归我,好球归你。"
       },
       "polyphones": [],
       "pauses": {
@@ -1110,7 +1110,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "其实,训练直播不是新鲜事,没网、公开赛都在做,惯例是收环境声,给球迷一个看热身的窗口。真正的老问题,是镜头和麦克风的边界。"
+        "transcript": "其实,训练直播不是新鲜事,没网,公开赛都在做,惯例是收环境声,给球迷一个看热身的窗口。真正的老问题,是镜头和麦克风的边界。"
       },
       "polyphones": [],
       "pauses": {
@@ -1283,7 +1283,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "斯瓦泰克当时说,我们到底是网球运动员,还是动物园里连上厕所都被围观的动物,而站出来声援高福的人里,就有佩古拉,球园里事会成员。"
+        "transcript": "斯瓦泰克当时说,我们到底是网球运动员,还是动物远离连上厕所都被围观的动物,而站出来声援高福的人里,就有佩古拉、球员里事会成员。"
       },
       "polyphones": [
         {
