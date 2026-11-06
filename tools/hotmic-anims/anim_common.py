@@ -21,8 +21,8 @@ INTER = f"{FD}/Inter-SemiBold.ttf"
 DISPLAY = f"{FD}/SmileySans-Oblique.ttf"      # 得意黑 titles
 TLSCORE = f"{FD}/TLScore-Bold.ttf"
 TLSCORE_R = f"{FD}/TLScore-Regular.ttf"
-CJK_B = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
-CJK_R = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+CJK_B = f"{FD}/NotoSansSC-Bold-sub.ttf"
+CJK_R = f"{FD}/NotoSansSC-Regular-sub.ttf"
 
 CREAM = (244, 251, 247)      # foreground #F4FBF7
 CREAM_DIM = (207, 230, 216)  # muted-foreground #CFE6D8
