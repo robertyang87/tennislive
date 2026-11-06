@@ -1,4 +1,4 @@
-"""vibetennis 器材三部曲 ② 球拍的演变：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
+"""vibetennis 器材三部曲 ③ 球：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
 生成 r3d/timeline.json 和 r3d/shots.js（每段的起止秒、镜头类型、每句开口时刻、画面事件时刻）。
 
     python3 plan.py            # 有 voice/*.json 词边界就按实测排
@@ -11,31 +11,32 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
-SECTIONS = [("hook", "hook"), ("wood", "wood"), ("metal", "metal"), ("oversize", "oversize"), ("sweet", "sweet"),
-            ("twist", "twist"), ("carbon", "carbon"), ("rules", "rules"), ("style", "style"), ("end", "end")]
-# 每句最短停留（从这句开口到下一句开口）：给 motion.md 里这句的动效留够时间
-HOLD = {"h0": 4.6, "h1": 4.6, "h2": 4.2, "h3": 3.6, "w0": 6.0, "w1": 4.6, "w2": 4.2, "w3": 5.0, "m0": 6.8, "m1": 7.4, "m2": 5.2,
-        "m3": 4.0, "m4": 3.6, "o0": 4.0, "o1": 4.8, "o2": 4.2, "o3": 7.2, "o4": 4.2, "s0": 4.0, "s1": 9.5, "s2": 3.6, "s3": 4.8,
-        "t0": 7.4, "t1": 5.4, "t2": 5.8, "t3": 3.4, "c0": 5.4, "c1": 4.4, "c2": 5.8, "c3": 9.6, "c4": 6.6, "c5": 5.6,
-        "r0": 4.6, "r1": 8.2, "y0": 5.8, "y0b": 6.6, "y1": 5.0, "y2": 5.0, "y3": 6.4, "e0": 5.4, "e1": 5.6, "e2": 3.4}
-MIN_SEC = {"hook": 18.0, "wood": 18.0, "metal": 24.0, "oversize": 22.0, "sweet": 20.0, "twist": 20.0, "carbon": 34.0,
-           "rules": 12.0, "style": 20.0, "end": 12.0}
-# 画面事件钉在旁白上：某句开口、或这句里某几个字开口那一刻（motion.md 逐句表）
-EV = [("hook", "hit", "h0", None), ("hook", "fly", "h1", "球的左右"), ("hook", "row", "h2", None), ("hook", "q", "h3", None),
-      ("wood", "lt", "w0", None), ("wood", "bend", "w0", "弯出来"), ("wood", "years", "w1", None), ("wood", "scan", "w2", "约"),
-      ("wood", "crack", "w3", "妥协"), ("metal", "hole", "m0", "孔边"), ("metal", "patent", "m1", None), ("metal", "lift", "m1", "两道梁"),
-      ("metal", "join", "m2", None), ("metal", "alu", "m3", "三格"), ("metal", "same", "m4", "还是"),
-      ("oversize", "patent", "o0", None), ("oversize", "cop", "o1", "不震手"), ("oversize", "hits", "o2", "拍面正中"),
-      ("oversize", "stretch", "o3", "拉长"), ("oversize", "area", "o4", "百分之四十"),
-      ("sweet", "split", "s0", "三个点"), ("sweet", "p1", "s1", "回弹"), ("sweet", "p2", "s1", "振动最小"), ("sweet", "p3", "s1", "不震手"),
-      ("sweet", "node", "s2", "节点"), ("sweet", "grip", "s3", None),
-      ("twist", "split", "t0", None), ("twist", "hitboth", "t0", "打偏时"), ("twist", "speed", "t1", "明显变慢"), ("twist", "court", "t2", None),
-      ("twist", "out", "t3", "飞长"), ("carbon", "scale", "c0", None), ("carbon", "y1980", "c1", None), ("carbon", "noah", "c2", None),
-      ("carbon", "micro", "c3", None), ("carbon", "wave", "c3", "振动频率"), ("carbon", "heat", "c4", None), ("carbon", "serve", "c4", "发球"),
-      ("carbon", "stack", "c5", "挥拍重量"), ("carbon", "grow", "c5", "挥速"), ("rules", "box", "r0", "定上限"), ("rules", "shrink", "r1", "29"),
-      ("rules", "dims", "r1", "只管尺寸"), ("rules", "strike", "r1", "不管多重"), ("style", "quote", "y0", None), ("style", "power", "y0", "力量"), ("style", "why", "y0b", None),
-      ("style", "sim", "y1", None), ("style", "real", "y2", None), ("style", "puzzle", "y3", None), ("end", "replay", "e0", "打偏的代价"),
-      ("end", "glass", "e1", None), ("end", "ball", "e2", None)]
+SECTIONS = [(n, n) for n in ("hook", "origin", "make", "color", "impact", "lab", "dial", "now", "future", "end")]
+# 每句最短停留（从这句开口到下一句开口）：给这句的动效留够时间
+HOLD = {"h0": 3.8, "h1": 6.4, "h2": 3.4, "h3": 4.0, "o0": 5.0, "o1": 4.0, "o2": 4.0, "o4": 4.2,
+        "m0": 6.2, "m1": 4.2, "m2": 4.6, "m3": 5.2, "m4": 4.2, "m6": 6.0, "c1": 5.2, "c2": 4.4,
+        "p0": 4.8, "p1": 5.4, "p2": 7.8, "p4": 6.2, "p6": 4.8, "r1": 7.6, "r2": 5.2, "r3": 4.4, "r4": 8.6,
+        "d1": 4.4, "d2": 7.6, "d3": 7.8, "d5": 6.2, "d6": 5.2, "n1": 5.0, "n4": 6.4, "n5": 4.6,
+        "f1": 4.8, "f3": 7.0, "f5": 5.6, "e0": 3.0, "e1": 3.8, "e2": 4.0, "e3": 6.0, "e4": 4.6}
+MIN_SEC = {}
+EV = [("hook", "spin", "h0", None), ("hook", "specs", "h1", "重量"), ("hook", "rk", "h2", None), ("hook", "q", "h3", None),
+      ("origin", "leather", "o0", None), ("origin", "rubber", "o1", None), ("origin", "cloth", "o2", None), ("origin", "melton", "o3", None),
+      ("origin", "hollow", "o4", None),
+      ("make", "press", "m0", None), ("make", "heat", "m0", "150"), ("make", "join", "m1", None), ("make", "gas", "m1", "充进气"),
+      ("make", "pr", "m2", None), ("make", "felt", "m3", None), ("make", "cross", "m3", "错开"), ("make", "steam", "m4", None),
+      ("make", "pl", "m5", None), ("make", "sweater", "m6", "毛衣"),
+      ("color", "wb", "c0", None), ("color", "tv", "c1", None), ("color", "yel", "c1", "黄色"), ("color", "wim", "c2", None),
+      ("impact", "str", "p0", None), ("impact", "wall", "p1", None), ("impact", "squash", "p1", "压扁"), ("impact", "bub", "p2", "往里一翻"),
+      ("impact", "air", "p3", None), ("impact", "serve", "p3", "一记发球"), ("impact", "fluff", "p4", None), ("impact", "bald", "p4", "磨秃"),
+      ("impact", "cold", "p5", None), ("impact", "alt", "p6", None),
+      ("lab", "lon", "r0", None), ("lab", "drop", "r1", None), ("lab", "half", "r1", "一半多"), ("lab", "press", "r2", None),
+      ("lab", "wear", "r3", None), ("lab", "nine", "r4", None), ("lab", "wim", "r4", "温网"), ("lab", "two", "r5", "提前两局"),
+      ("dial", "big", "d0", None), ("dial", "vote", "d1", None), ("dial", "types", "d2", None), ("dial", "t3", "d2", "3号球"),
+      ("dial", "race", "d3", None), ("dial", "init", "d4", None), ("dial", "court", "d5", None), ("dial", "fire", "d5", "每秒"), ("dial", "knob", "d6", None),
+      ("now", "complain", "n0", None), ("now", "q1", "n1", None), ("now", "q2", "n2", None), ("now", "weeks", "n3", None), ("now", "atp", "n4", None), ("now", "one", "n5", None),
+      ("future", "pile", "f0", None), ("future", "fill", "f1", None), ("future", "none", "f2", None), ("future", "grind", "f3", None),
+      ("future", "nest", "f3", "巢鼠"), ("future", "split", "f4", None), ("future", "two", "f5", None),
+      ("end", "tri", "e0", None), ("end", "sr", "e1", None), ("end", "ball", "e2", None), ("end", "rule", "e3", None), ("end", "q", "e4", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 PUNCT = "，。：；？！、—"
