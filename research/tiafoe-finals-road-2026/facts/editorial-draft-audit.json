@@ -1,0 +1,44 @@
+{
+  "audited_at": "2026-11-07T00:56:15.020551+00:00",
+  "artifact": "/workspace/tiafoe-finals-production/research/editorial-plan.draft-before-canonical-names.json",
+  "sha256": "80d4a680d1df3995bd8197dc3eb5ebb971f092ed3142a0130cbacf524c3ae3fe",
+  "status": "NEEDS_NAME_CORRECTIONS_BEFORE_FREEZE",
+  "findings": [
+    {
+      "severity": "required",
+      "segment": "rg_intro",
+      "field": "narration",
+      "observed": "阿纳尔迪",
+      "expected": "阿尔纳尔迪",
+      "evidence": "/workspace/tennislive/src/tennislive/zh/players.py:76"
+    },
+    {
+      "severity": "required",
+      "segment": "us_open_qf_intro",
+      "field": "narration",
+      "observed": "米克尔森",
+      "expected": "米切尔森",
+      "evidence": "/workspace/tennislive/src/tennislive/zh/players.py:69"
+    }
+  ],
+  "approved_factual_semantics": [
+    "coverhook andopening: Shelton defeatedTiafoeUSOpenSF thentriggeredfirstFinalsqualification",
+    "AO3straightsets; Acapulco2setsrunnerup",
+    "RG5h26,sets2-1andfourth4-1lead, lost",
+    "HalleQF3savedMPs, finalFritz2sets, firstATP500",
+    "WimbledonR3five-setlossBublik",
+    "Montrealinjuryretirement thenright-handsurgery thenCincinnatiF; HSSandtwoofficialeventreportssupport",
+    "Cincinnati secondcareerMastersF, wonsecondsetlostthird0-6",
+    "USOpenQF0-2sets+third0-3comeback; SFwonfirstthenlost3; thirdUSSFnotconsecutive",
+    "terminalthreetourmatcheslostShanghaiViennaParis",
+    "Nov4ParislossHalys triggeredFils; Nov6SheltonPaul triggeredTiafoe"
+  ],
+  "outside_audit_scope": [
+    "Race3390/#8 and latestall8qualified: rootseparatecurrentofficialpacket",
+    "Final actualphotos/points/scorecard orientation/captions timing: nativeQC"
+  ],
+  "suggested_wording": {
+    "rg_intro": "盘分二比一领先"
+  },
+  "next_step": "Root correct two canonical Chinese names, retain original draft, freeze new SHA; facts reviewer can audit new frozen artifact and final actual ASS."
+}

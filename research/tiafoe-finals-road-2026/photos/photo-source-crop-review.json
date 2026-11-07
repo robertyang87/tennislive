@@ -1,0 +1,39 @@
+{
+  "reviewed_at": "2026-11-07T00:59:55.708327+00:00",
+  "reviewer": "current assistant /root/tiafoe_photos",
+  "scope": "Actual professional still identity, year/event/round captions, original dimensions/hash and fixed person-centred 3:4 crops. Not a native film QC or a publishing rights grant.",
+  "assets": 24,
+  "groups": 15,
+  "result": "PASS_SOURCE_AND_FIXED_CROP_POOL",
+  "contacts": [
+    {
+      "path": "/workspace/tiafoe-finals-production/research/photos/cover-options-3x4-contact.jpg",
+      "sha256": "52a7b7e119cf96ef537e0b1c31dfdbf64fb267a2594c9e235615359e81128e9d"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/photos/fixed-crop-contact-1.jpg",
+      "sha256": "6f07ece979e33794a26ed7c1184630987eb116666d199d4c841bc0bd3376fa6f"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/photos/fixed-crop-contact-2.jpg",
+      "sha256": "698d0443940bbb5762a23c620b87f252748e16438e0926a3729bb40adb13dc19"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/photos/crop-corrections.jpg",
+      "sha256": "84b8d79aa9f96c28cd51787f30e3f8bbed4628625cff574214e1f684839dae2a"
+    }
+  ],
+  "cover_native_header_hook_status": "PENDING",
+  "final_movie_photo_QC_status": "PENDING",
+  "notable_corrections": [
+    "Acapulco prematch group cx.78→.59",
+    "USQFprofile cx.55→.74 toretainfullface",
+    "Shanghaicx.65→.59 balancedpersoncentre"
+  ],
+  "limits": [
+    "No new fabricatedeventphoto or screenshot substituted",
+    "Sourcecaption doesnotestablish exactrally instant unless explicitlystatesit",
+    "Preserved missingEXIF/IPTC without inferring capturetime from APIpublication",
+    "No verified hand-surgeryphotograph supplied"
+  ]
+}

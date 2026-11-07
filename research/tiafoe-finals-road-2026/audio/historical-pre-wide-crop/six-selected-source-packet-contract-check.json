@@ -1,0 +1,319 @@
+{
+  "schema": "tiafoe-selected-source-packet-contract-check.v1",
+  "created_at": "2026-11-07T01:13:27.809780+00:00",
+  "gate_path": "/dev/shm/tiafoe-production/native/tools/foreground_audio_gate.py",
+  "gate_sha256": "c3320d91a3b3258f903c2637e8c443217844105133f66d721197508b380f8e09",
+  "status": "PASS_actual_six_packet_identity_and_native_foreground_contract",
+  "selected_packet_count": 6,
+  "required_cues": 22,
+  "actual_source_bytes_bound": true,
+  "scope": "Isolated native-contract check using exact six real packets, full raw/caption hash checks and actual source-byte identities. Does not edit producer native spec, does not replace final master or speech/naturalness QC. Bracketed editorial subject and contextual courtcall descriptions explicitly disclose unresolved background/prefix lexical evidence; not an assertion of hearing every word.",
+  "excluded_sources": {
+    "AO": "photo/narration only; do not publish original-audio packet",
+    "RG": "photo/narration only; do not publish original-audio packet"
+  },
+  "selected": [
+    {
+      "source_key": "acapulco-final",
+      "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/acapulco-final.json",
+      "packet_sha256": "e49033dc371957a28261c30736b3fd872cb63b4bd6c636d0764e08aa3e14bee9",
+      "window": [
+        129.3,
+        143.4
+      ],
+      "cue_count": 3,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-small.en.json",
+          "sha256": "29f6a908404350cc40e03180bdcdf179d001dad4fcee23f7a0281cb6f1575d4b"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-medium.en.json",
+          "sha256": "762ef5c95d91ca5b1b3d3216f9383a3dae59bfb62057b7a3aae64846e2049ed1"
+        }
+      ],
+      "explicit_lexical_limits": null
+    },
+    {
+      "source_key": "halle-final",
+      "source_sha256": "13077fcf9d1789490da03c429a2514b25aca255dca5ed0713fbaddd6fc914041",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/halle-final.json",
+      "packet_sha256": "ce78487cb91d7277821a79fa8abf66d0b3ae7e91a3b3dbdaa1fe70ceceff5beb",
+      "window": [
+        114.9,
+        146.9
+      ],
+      "cue_count": 4,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/small.en.json",
+          "sha256": "b47058d4875c62a8a4afb9070226b77c1cb71c56d0b05573221741afe598b4f8"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/medium.en.json",
+          "sha256": "6da6c7af1c3e1217570d529ceeb368e1c09a2323411bed7481996a67e060a5a0"
+        }
+      ],
+      "explicit_lexical_limits": null
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_sha256": "5b789bf00d4267d64fc708469cb03feba72c140c9434d0f5a1408957373d577b",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/wimbledon-r3.json",
+      "packet_sha256": "1429fcd91c1a567ecb60af20d72dd7f2a32b17fe78c313f1bd084bd93bff273a",
+      "window": [
+        0,
+        21.8
+      ],
+      "cue_count": 5,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26wimmp/small.en.json",
+          "sha256": "e8d3574943fa4127835f1aa9d4be865b44c8407db2762ee2a177256abe33885e"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26wimmp/medium.en.json",
+          "sha256": "c53e65f5d1bb2f711fda17068b5baa07c570167af3abbf0e7cd8d02326e2255b"
+        }
+      ],
+      "explicit_lexical_limits": null
+    },
+    {
+      "source_key": "cincinnati-final",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/cincinnati-final.json",
+      "packet_sha256": "f181e2e0305cb9becf38cb34c737897ad608ec803de2a38cb5f70a8c4660e82b",
+      "window": [
+        68.7,
+        97.0
+      ],
+      "cue_count": 3,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/RAAXKA85t3g/reused-exact-source/small.en.json",
+          "sha256": "0f3c2e0fad41633d6f6bcbedea5a2bb7874dc26c5ae0842127ef6bf752b0f117"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/RAAXKA85t3g/reused-exact-source/medium.en.json",
+          "sha256": "4a2fb36a2ba009fe578a7dbfd10fad945dd5b180b71c891d0ba72af0e565fae4"
+        }
+      ],
+      "explicit_lexical_limits": null
+    },
+    {
+      "source_key": "us-open-qf",
+      "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/us-open-qf.json",
+      "packet_sha256": "bdfd083120b784fe75f7cf705076eb50dabcd47be7425635613f90c1f92ca0bb",
+      "window": [
+        66.6,
+        86.0
+      ],
+      "cue_count": 3,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26usqf/medium.en.json",
+          "sha256": "ec4628da8ce2088172b024605e81bf2360209e86162c9c81a628cb1f953f6936"
+        }
+      ],
+      "explicit_lexical_limits": null
+    },
+    {
+      "source_key": "us-open-sf",
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/us-open-sf.json",
+      "packet_sha256": "536cc492543bce0116d0496f0b590cd4f6efa9e7592296159a1c9a5f97e0570f",
+      "window": [
+        95.0,
+        123.2
+      ],
+      "cue_count": 4,
+      "raw_hashes": [
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26ussf/small.en.json",
+          "sha256": "48a2ad8e0292d7f5bcc97c06c3614440e500ba26345a3c30647e46b183524f21"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26ussf/medium.en.json",
+          "sha256": "a59cb389e05fc6fb063501158fe37693bb352e2d8c392a3e3693c217cc789c76"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/final-clause-refine/tf26ussf/small.en.json",
+          "sha256": "63c299467b17260a4689ea9464eaf8fcd5c444fd9a3d3e77d44d7e0f5ca6b94d"
+        },
+        {
+          "path": "/workspace/tiafoe-finals-production/research/audio/raw/final-clause-refine/tf26ussf/medium.en.json",
+          "sha256": "6fbea0ce1bd1ba46a2d496e9af7bba950b90db4956d66fbf1dbd22df4a3478b0"
+        }
+      ],
+      "explicit_lexical_limits": {
+        "prefix_lexical_status": "not_resolved_verbatim_and_not_represented_as_an_exact_quote",
+        "preserved_bad_official_caption": "112.000–113.030 375.;113.600–117.390 Is it the championship match of the 2026 US Open.",
+        "raw_disagreement": "Full-gap small.en guesses And Sheldon...; And probability0.068 is unreliable; medium.en omits clear subject. Neither proves an exact prefix. One bounded113.2–118.4 dual-model refinement agrees on the complete is in...Open predicate. No further ASR performed.",
+        "representation_decision": "Root explicitly approved bracketed editorial [Shelton] for known subject and background result-call descriptor, with all true raw retained. This does not turn missing lexical evidence into a resolved verbatim hearing claim.",
+        "rejected_inventions": [
+          "No And or But prefix invented.",
+          "No umpire exact score or GameSetAndMatch formula fabricated.",
+          "No courtcall surname joined to the commentator to fabricate a full spoken sentence."
+        ]
+      }
+    }
+  ],
+  "required": [
+    {
+      "segment": 0,
+      "start": 2.4399999999999977,
+      "end": 6.319999999999993,
+      "en": "Acapulco belongs to Flavio.",
+      "zh": "阿卡普尔科，属于弗拉维奥。"
+    },
+    {
+      "segment": 0,
+      "start": 6.319999999999993,
+      "end": 8.839999999999975,
+      "en": "Cobolli the champion.",
+      "zh": "科博利，冠军！"
+    },
+    {
+      "segment": 0,
+      "start": 10.599999999999994,
+      "end": 13.259999999999991,
+      "en": "A second ATP 500 title.",
+      "zh": "第二座五百分赛冠军。"
+    },
+    {
+      "segment": 1,
+      "start": 16.72,
+      "end": 21.680000000000007,
+      "en": "It's a fourth ATP Tour title for Frances Tiafoe,",
+      "zh": "蒂亚福收获生涯第四座巡回赛冠军，"
+    },
+    {
+      "segment": 1,
+      "start": 21.840000000000003,
+      "end": 24.419999999999987,
+      "en": "the biggest of his career.",
+      "zh": "也是他生涯分量最重的一冠。"
+    },
+    {
+      "segment": 1,
+      "start": 24.419999999999987,
+      "end": 25.120000000000005,
+      "en": "[Umpire announces the score]",
+      "zh": "【裁判报分】"
+    },
+    {
+      "segment": 1,
+      "start": 27.25999999999999,
+      "end": 31.819999999999993,
+      "en": "The first American to win the title here in Halle.",
+      "zh": "首位在哈雷夺冠的美国球员。"
+    },
+    {
+      "segment": 2,
+      "start": 1.26,
+      "end": 9.14,
+      "en": "[Umpire announces the result and score]",
+      "zh": "【裁判宣布比赛结果和比分】"
+    },
+    {
+      "segment": 2,
+      "start": 10.62,
+      "end": 12.72,
+      "en": "Well, it was a different result four years ago,",
+      "zh": "四年前的结果可不一样，"
+    },
+    {
+      "segment": 2,
+      "start": 13.46,
+      "end": 15.68,
+      "en": "it was Tiafoe going through to the last 16.",
+      "zh": "那次晋级第四轮的是蒂亚福。"
+    },
+    {
+      "segment": 2,
+      "start": 15.84,
+      "end": 18.58,
+      "en": "This time it is Alexander Bublik",
+      "zh": "这一次，亚历山大·布勃利克"
+    },
+    {
+      "segment": 2,
+      "start": 19.28,
+      "end": 21.58,
+      "en": "who will take his place in round four.",
+      "zh": "拿到了第四轮的席位。"
+    },
+    {
+      "segment": 3,
+      "start": 10.060000000000002,
+      "end": 10.86,
+      "en": "Arthur Fils.",
+      "zh": "菲斯。"
+    },
+    {
+      "segment": 3,
+      "start": 12.399999999999991,
+      "end": 14.560000000000002,
+      "en": "Quite scintillating in Cincinnati.",
+      "zh": "在辛辛那提大放异彩。"
+    },
+    {
+      "segment": 3,
+      "start": 18.42,
+      "end": 22.42,
+      "en": "It is the biggest title of his young career.",
+      "zh": "他年轻生涯分量最重的冠军。"
+    },
+    {
+      "segment": 4,
+      "start": 0.06900000000000261,
+      "end": 2.6300000000000097,
+      "en": "Match point for the 11 seed.",
+      "zh": "11号种子的赛点。"
+    },
+    {
+      "segment": 4,
+      "start": 9.900000000000006,
+      "end": 11.600000000000009,
+      "en": "[Umpire announces the winner]",
+      "zh": "【裁判宣布比赛胜者】"
+    },
+    {
+      "segment": 4,
+      "start": 13.02900000000001,
+      "end": 18.510000000000005,
+      "en": "A comeback that is extra special for Frances Tiafoe.",
+      "zh": "这场逆转，对蒂亚福意义非凡。"
+    },
+    {
+      "segment": 5,
+      "start": 5.730000000000004,
+      "end": 6.239999999999995,
+      "en": "It's crazy.",
+      "zh": "太不可思议了。"
+    },
+    {
+      "segment": 5,
+      "start": 14.0,
+      "end": 18.03,
+      "en": "[Umpire announces the result]",
+      "zh": "【裁判宣布比赛结果】"
+    },
+    {
+      "segment": 5,
+      "start": 18.200000000000003,
+      "end": 22.39,
+      "en": "[Shelton] is in the championship match of the 2026 US Open.",
+      "zh": "谢尔顿晋级2026年美网决赛。"
+    },
+    {
+      "segment": 5,
+      "start": 24.879999999999995,
+      "end": 27.599999999999994,
+      "en": "And what a pity it had to end on a double fault.",
+      "zh": "遗憾的是，比赛竟以一次双误结束。"
+    }
+  ]
+}

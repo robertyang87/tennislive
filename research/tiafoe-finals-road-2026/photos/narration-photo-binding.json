@@ -1,0 +1,472 @@
+{
+  "player": "Frances Tiafoe",
+  "created_at": "2026-11-07T01:07:49.218643+00:00",
+  "frozen_editorial_plan": "/workspace/tiafoe-finals-production/research/editorial-plan.json",
+  "frozen_editorial_plan_sha256": "80b90966c9679faa3d04762fa5110d71b25bd0cd46c5a6caf133fd5cdad5b394",
+  "photo_map": "/workspace/tiafoe-finals-production/research/photos/photo-map.json",
+  "body_segments_count": 15,
+  "narrated_photo_segments": 14,
+  "narrated_graphic_segments": 1,
+  "mutates_native_or_tts": false,
+  "timing_policy": {
+    "segment_budget": "actual rendered voice duration + 0.4 seconds; no guessed reading-speed durations",
+    "switches": "For two-photo entries switch at measured actual voice phrase boundary shown by each exact clause, not fixed half duration. For single photo hold whole segment.",
+    "max_photos_per_segment": 2,
+    "short_segment": "If actual voice under8 seconds, prefer1photo unless two distinct picturedpeople/events are essential and both can hold>=3sec; ask root/producer to shorten/resolve semantically rather than rapid montage.",
+    "motion": "Fixed normalized cx/cy; fullcanvas cover, no balltracking or pan, no blurredpadding.",
+    "info_cards": "Native info cards absent on transition cards; show at segment onset with allowed duration8seconds(default) to15max, subject to actual segment duration."
+  },
+  "bindings": [
+    {
+      "segment_id": "opening",
+      "kind": "narrated_photo",
+      "narration": "美网半决赛，谢尔顿挡住了蒂亚福。到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "uso-sf-firstset-ap",
+          "local_path": "/dev/shm/tiafoe-production/photos/uso-sf-firstset-ap.jpg",
+          "sha256": "61f84d263c346c8ec0f7b70f823ff4f6a5a70d4585b812489e94295cba473a7f",
+          "cx": 0.57,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/uso-sf-firstset-ap-3x4.jpg",
+          "exact_narration_clause": "美网半决赛，谢尔顿挡住了蒂亚福。",
+          "semantic_use": "2026美网半决赛同场第一盘结束庆祝照，作为那场半决赛上下文，不表示赢下全场。",
+          "source_url": "https://media.guim.co.uk/a95ad173600a391eb99cc62d7e55f2cd36516ac3/0_0_3375_2250/3375.jpg",
+          "source_caption": "Frances Tiafoe celebrates after winning the first set on Friday night. Photograph: Frank Franklin II/AP",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/uso-sf-firstset-ap.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "atp-4605666",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4605666.jpg",
+          "sha256": "899fda9230bfe0967350b90662961a87db6cd45b048a588cd020cc73681bea31",
+          "cx": 0.67,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4605666-3x4.jpg",
+          "exact_narration_clause": "到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+          "semantic_use": "2026年11月6日巴黎QF谢尔顿胜保罗后的同场采访合影，画面主体是谢尔顿；这是蒂亚福资格触发比赛，不是蒂亚福本人庆祝。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/11/06/f01c5562-f217-4b1e-b299-b2ad5ae492bd/COC_2059.JPG",
+          "source_caption": "",
+          "official_api_title": "2026 Paris Paul Shelton",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4605666.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "ao_intro",
+      "kind": "narrated_photo",
+      "narration": "先回到澳网。第三轮对德米纳尔，他三盘落败。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "ao-abc-r3-getty-highres",
+          "local_path": "/dev/shm/tiafoe-production/photos/ao-abc-r3-getty-highres.jpg",
+          "sha256": "ea1e97ee63208d3b80ae3b3c8f5aba1fdb233a57107e1e67c828e9253623d672",
+          "cx": 0.4,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/ao-abc-r3-getty-highres-3x4.jpg",
+          "exact_narration_clause": "先回到澳网。第三轮对德米纳尔，他三盘落败。",
+          "semantic_use": "2026澳网R3对德米纳尔同场趴坐球场照片，不声称受伤或赛点后瞬间。",
+          "source_url": "https://live-production.wcms.abc-cdn.net.au/c985c53640915a5922d6d9642dfad0d8",
+          "source_caption": "Frances Tiafoe lies on the court at the Australian Open. GettyImages. ArticleJan24reviewofJan23DeMinaurR3.",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/ao-abc-r3-getty-highres.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "acapulco_intro",
+      "kind": "narrated_photo",
+      "narration": "二月阿卡普尔科，他打到决赛，两盘输给科博利，收获亚军。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "atp-4459709",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4459709.jpg",
+          "sha256": "9227f53c6c8fc2f23c9ada405b2a36f9471292452efb811b8837ea3d27b49714",
+          "cx": 0.59,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4459709-3x4.jpg",
+          "exact_narration_clause": "二月阿卡普尔科，他打到决赛，两盘输给科博利，收获亚军。",
+          "semantic_use": "真实决赛赛前合照，蒂亚福右侧；只作决赛背景，不表示赛后失落/亚军颁奖。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/03/01/5a49d556-e0e6-4cb5-bcff-c19d0bb4bdb3/2026-Acapulco-Cobolli-Tiafoe.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Acapulco Cobolli Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4459709.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "rg_intro",
+      "kind": "narrated_photo",
+      "narration": "法网第四轮，打了五小时二十六分。他曾盘分二比一领先，第四盘也领先四比一，最后却被阿尔纳尔迪逆转。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "rg-r4-official",
+          "local_path": "/dev/shm/tiafoe-production/photos/rg-r4-official.jpg",
+          "sha256": "ba590ffd79530c40caf3772c737931cc8f7a77dbcecaa57e3b51f7d55d33c5c1",
+          "cx": 0.53,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/rg-r4-official-3x4.jpg",
+          "exact_narration_clause": "法网第四轮，打了五小时二十六分。他曾盘分二比一领先，第四盘也领先四比一，最后却被阿尔纳尔迪逆转。",
+          "semantic_use": "官方FFT2026法网R4同场发球写真，不将静态图标成2比1/4比1具体一球。",
+          "source_url": "https://images.prismic.io/fft-rg-commun-news/ah3krQeQX7-eWgTU_LW_20097-1-.JPG",
+          "source_caption": "Frances Tiafoe, R4, Roland-Garros2026. ©Loic Wacziak/FFT",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/rg-r4-official.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "halle_intro",
+      "kind": "narrated_photo",
+      "narration": "六月哈雷，先在四分之一决赛救回三个赛点。决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "atp-4522580",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4522580.jpg",
+          "sha256": "6e45b94e330c4f7bb40cf410ea632e31ada9a12eb5333eb010c821ed613806c9",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4522580-3x4.jpg",
+          "exact_narration_clause": "六月哈雷，先在四分之一决赛救回三个赛点。",
+          "semantic_use": "真正2026年6月19日蒂亚福对FAA四分之一决赛专业摄影；文件名双方姓名、API当日日期。只作同场QF介绍，不冒充某次救赛点瞬间。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/06/19/d24c9fbd-0345-467e-8634-fc3d882b7c94/Frances-Tiafoe-of-United-States-and-Felix-Auger-Aliassime-of-Canada-31.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Halle Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4522580.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "atp-4524919",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4524919.jpg",
+          "sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+          "cx": 0.59,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4524919-3x4.jpg",
+          "exact_narration_clause": "决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+          "semantic_use": "真实2026哈雷捧杯笑容，支持决赛夺冠段；不是四分之一决赛，更不是年终赛奖杯。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/06/22/37aae27e-c2b3-42ce-8833-ef3aab3f4795/Taylor-Fritz-of-United-States-and-Frances-Tiafoe-of-United-States-57.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Halle Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4524919.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "wimbledon_intro",
+      "kind": "narrated_photo",
+      "narration": "带着哈雷冠军来到温网，他在第三轮五盘输给布勃利克。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "wim-r3-guardian-getty",
+          "local_path": "/dev/shm/tiafoe-production/photos/wim-r3-guardian-getty.jpg",
+          "sha256": "f59610b2d903d7aaf0753c23a7334e3bed80bf918e914ef1c238f2d1bb0fe6dc",
+          "cx": 0.6,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/wim-r3-guardian-getty-3x4.jpg",
+          "exact_narration_clause": "带着哈雷冠军来到温网，他在第三轮五盘输给布勃利克。",
+          "semantic_use": "2026温网R3同场滑倒后反应照，Getty/GlynKirk；不诊断受伤，不标为最后输球一瞬。",
+          "source_url": "https://media.guim.co.uk/05eb2ba7ff97e4209830afd12c95649286b68573/0_0_3864_2709/3864.jpg",
+          "source_caption": "Frances Tiafoe reacts after slipping. Photograph: Glyn Kirk/AFP/Getty Images",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/wim-r3-guardian-getty.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "summer",
+      "kind": "narrated_photo",
+      "narration": "八月，在蒙特利尔因伤退赛。右手接受手术后，他又在辛辛那提闯进决赛。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "atp-4555619",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4555619.jpg",
+          "sha256": "38fe287a36685bf1ade7f923e3f6623b21b5d3f5b9bbca53319e37f8e4ab6f82",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4555619-3x4.jpg",
+          "exact_narration_clause": "八月，在蒙特利尔因伤退赛。右手接受手术后，",
+          "semantic_use": "蒙特利尔2026年8月6日本场发球照，只支持赛事上下文；手术由已核实旁白交代，画面不是医疗过程，不拍手部特写、不加伤情箭头。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/07/a31108ce-0c52-4f58-946a-eac38cdd657d/2026-Montreal-Tiafoe.JPG",
+          "source_caption": "August 6, 2026\rPascal Ratthe/Tennis Canada\r\rFrances Tiafoe ",
+          "official_api_title": "2026 Montreal Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4555619.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "atp-4565359",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4565359.jpg",
+          "sha256": "1caa8e6462851f915dd7a37791178fe93615cc896db3e94391ac5109773e181e",
+          "cx": 0.6,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4565359-3x4.jpg",
+          "exact_narration_clause": "他又在辛辛那提闯进决赛。",
+          "semantic_use": "真实2026辛辛那提决赛对菲斯反手写真，衔接手术后回到决赛的时间线，不声称拍摄于复健。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/23/2209eec0-32fc-4da3-8f17-a48dae116aea/CincyOpen8.23.26BJ_350.jpg",
+          "source_caption": "2026 Cincinnati Open\n2026, 20260823, Tennis, 2026 Cincinnati Open Wick Photography, Jared Wickerham\nDuring the 2026 Cincinnati Open at Lindner Family Tennis Center on Aug. 23, 2026 in Cincinnati, OH. (Photo by Jared Wickerham/Wick Photography for Cincinnati Open)",
+          "official_api_title": "2026 Cincinnati Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4565359.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "cincinnati_intro",
+      "kind": "narrated_photo",
+      "narration": "对菲斯，他扳回第二盘，决胜盘却一局未得。第二次打进大师赛决赛，还是收获亚军。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "atp-4565358",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4565358.jpg",
+          "sha256": "94d19ec980707fcce3456a47b8eb295137c13ad6a5247ba911d215c693f0e749",
+          "cx": 0.55,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4565358-3x4.jpg",
+          "exact_narration_clause": "对菲斯，他扳回第二盘，决胜盘却一局未得。第二次打进大师赛决赛，还是收获亚军。",
+          "semantic_use": "2026年8月23日辛辛那提决赛正手写真，和summer另一张同场图分开；不声称具体第二盘或第三盘球。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/23/5d76d570-e9d9-4e75-8aec-1e7faa4ba96f/CincinnatiOpen_20260823_JM055889_PS2.jpg",
+          "source_caption": "2026 Cincinnati Open\n2026, 20260823, Tennis, Cincinnati Open, Wick Photography, Pam Smith\nDuring the 2026 Cincinnati Open at Lindner Family Tennis Center on Aug. 23, 2026 in Cincinnati, Ohio. (Photo by Pam Smith /Wick Photography for Cincinnati Open)",
+          "official_api_title": "2026 Cincinnati Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4565358.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "us_open_qf_intro",
+      "kind": "narrated_photo",
+      "narration": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。他最后连赢三盘，逆转米切尔森。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "uso-qf-4",
+          "local_path": "/dev/shm/tiafoe-production/photos/uso-qf-4.jpg",
+          "sha256": "b48292ea91fe3d523e163ba0431d0e5003051864fb70ee8d7012911f030e8578",
+          "cx": 0.74,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/uso-qf-4-3x4.jpg",
+          "exact_narration_clause": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。",
+          "semantic_use": "AP/YukiIwamura同场MichelsenQF侧脸写真，源caption为looks on；只作低位局面上下文，不声称拍于0比3或宣称人物心理。",
+          "source_url": "https://media.guim.co.uk/62437e5958cffbd82a5206722133cbbd7d2b79a7/0_0_3927_2618/3927.jpg",
+          "source_caption": "View image in fullscreen Frances Tiafoe will have to continue to battle if he is to get back into this match. Photograph: Yuki Iwamura/AP",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/uso-qf-4.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "uso-qf-0",
+          "local_path": "/dev/shm/tiafoe-production/photos/uso-qf-0.jpg",
+          "sha256": "e24513fd3993b5e8f5d835059fac82d18e8d7541b8fbc3a6d7a4db14d4e63639",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/uso-qf-0-3x4.jpg",
+          "exact_narration_clause": "他最后连赢三盘，逆转米切尔森。",
+          "semantic_use": "AP/KirstyWigglesworth源caption明确after beatingMichelsen，背面双臂举起的真实赛后胜利照。",
+          "source_url": "https://media.guim.co.uk/e91b540a1e785056a646b80cef9e2220deb456b8/513_0_5132_4105/5132.jpg",
+          "source_caption": "Frances Tiafoe looks to the skies after beating Alex Michelsen in a US Open classic. Photograph: Kirsty Wigglesworth/AP View image in fullscreen Frances Tiafoe looks to the skies after beating Alex Michelsen in a US Open classic. Photograph: Kirsty Wigglesworth/AP",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/uso-qf-0.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "us_open_sf_intro",
+      "kind": "narrated_photo",
+      "narration": "半决赛对谢尔顿，先赢一盘，随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "uso-sf-firstset-ap",
+          "local_path": "/dev/shm/tiafoe-production/photos/uso-sf-firstset-ap.jpg",
+          "sha256": "61f84d263c346c8ec0f7b70f823ff4f6a5a70d4585b812489e94295cba473a7f",
+          "cx": 0.57,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/uso-sf-firstset-ap-3x4.jpg",
+          "exact_narration_clause": "半决赛对谢尔顿，先赢一盘，",
+          "semantic_use": "AP/FrankFranklinII源caption明确赢第一盘后的真吼叫，严格用在先赢一盘这一子句。",
+          "source_url": "https://media.guim.co.uk/a95ad173600a391eb99cc62d7e55f2cd36516ac3/0_0_3375_2250/3375.jpg",
+          "source_caption": "Frances Tiafoe celebrates after winning the first set on Friday night. Photograph: Frank Franklin II/AP",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/uso-sf-firstset-ap.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "uso-sf-backhand-reuters",
+          "local_path": "/dev/shm/tiafoe-production/photos/uso-sf-backhand-reuters.jpg",
+          "sha256": "94161d3b8e1ab07ad3a2eecf1cdaa7618c73263e216ebe89341db1eeb8b3e80a",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/uso-sf-backhand-reuters-3x4.jpg",
+          "exact_narration_clause": "随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+          "semantic_use": "RobertDeutsch/IMAGN/Reuters同场SF反手写真，转出第一盘庆祝照后交代全场失利；不冒充输球后瞬间。",
+          "source_url": "https://media.guim.co.uk/5ddefc3a86f0a9bcfe27a11c75aa20dedd71765a/0_0_4821_3194/4821.jpg",
+          "source_caption": "Frances Tiafoe in action against Ben Shelton during their US Open semi-final on Friday. Photograph: Robert Deutsch/IMAGN IMAGES/Reuters",
+          "official_api_title": null,
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/uso-sf-backhand-reuters.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "autumn",
+      "kind": "narrated_photo",
+      "narration": "上海、维也纳，再到巴黎，他遭遇了三连败。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "atp-4590561",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4590561.jpg",
+          "sha256": "36fdd067d0c790a66b277a2e1ddb465c793af680b706d13e3f23eec18756ef04",
+          "cx": 0.59,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4590561-3x4.jpg",
+          "exact_narration_clause": "上海、维也纳，再到巴黎，他遭遇了三连败。",
+          "semantic_use": "真实2026上海对DavidovichFokina同场写真。此段短，仅1图作三站总结的首站背景；不能给图加维也纳/巴黎event标签。巴黎下一独段另用巴黎图。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/11/fce63c1c-b76c-4066-ac71-816f5a0f0b8f/Alejandro-DAVIDOVICH-FOKINA-vs-Frances-TIAFOE-2072.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Shanghai Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4590561.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "paris",
+      "kind": "narrated_photo",
+      "narration": "十一月四日，巴黎第二轮输给阿利斯，这个结果先让菲斯锁定了年终资格。",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "atp-4604284",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4604284.jpg",
+          "sha256": "f7862b844eb7dc77749f219c12646bee143ee31035ab9b881bcf02a78527d28f",
+          "cx": 0.55,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4604284-3x4.jpg",
+          "exact_narration_clause": "十一月四日，巴黎第二轮输给阿利斯，这个结果先让菲斯锁定了年终资格。",
+          "semantic_use": "2026年11月4日巴黎R2同场近景。不能说照片是赛后失落或菲斯本人图。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/11/04/38ca720b-96d0-4e7b-96eb-a720458921fe/COC_6319.JPG",
+          "source_caption": "",
+          "official_api_title": "2026 Paris Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4604284.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "qualification",
+      "kind": "narrated_photo",
+      "narration": "十一月六日，谢尔顿在巴黎击败保罗。蒂亚福终于锁定资格，第一次走进都灵。",
+      "photo_count": 2,
+      "photos": [
+        {
+          "asset_id": "atp-4605666",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4605666.jpg",
+          "sha256": "899fda9230bfe0967350b90662961a87db6cd45b048a588cd020cc73681bea31",
+          "cx": 0.67,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4605666-3x4.jpg",
+          "exact_narration_clause": "十一月六日，谢尔顿在巴黎击败保罗。",
+          "semantic_use": "2026年11月6日真实谢尔顿/保罗赛后采访画面，明确另一场比赛触发资格。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/11/06/f01c5562-f217-4b1e-b299-b2ad5ae492bd/COC_2059.JPG",
+          "source_caption": "",
+          "official_api_title": "2026 Paris Paul Shelton",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4605666.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        },
+        {
+          "asset_id": "atp-4524919",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4524919.jpg",
+          "sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+          "cx": 0.59,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4524919-3x4.jpg",
+          "exact_narration_clause": "蒂亚福终于锁定资格，第一次走进都灵。",
+          "semantic_use": "使用蒂亚福本赛季哈雷捧杯作为人物回扣，接下段真实race表；不是11月6日现场庆祝，不标成巴黎夺冠/年终捧杯。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/06/22/37aae27e-c2b3-42ce-8833-ef3aab3f4795/Taylor-Fritz-of-United-States-and-Frances-Tiafoe-of-United-States-57.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Halle Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4524919.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    },
+    {
+      "segment_id": "race_table",
+      "kind": "narrated_graphic",
+      "narration": "截至十一月七日，蒂亚福三千三百九十分，排名赛季积分榜第八。高亮的八位球员，都已锁定年终资格。",
+      "photo_count": 0,
+      "graphic": "race-points-qualified.png",
+      "photos": [],
+      "semantic_use": "Canonical ATP seasonrace table showing all8qualified highlights; no sourcephoto substitute.",
+      "budget_seconds": null,
+      "budget_status": "producer actualvoice+.4"
+    },
+    {
+      "segment_id": "question",
+      "kind": "narrated_photo",
+      "narration": "第一次到都灵，你看好蒂亚福拿到几场胜利？",
+      "photo_count": 1,
+      "photos": [
+        {
+          "asset_id": "atp-4524919",
+          "local_path": "/dev/shm/tiafoe-production/photos/atp-4524919.jpg",
+          "sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+          "cx": 0.59,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/tiafoe-production/photos/atp-4524919-3x4.jpg",
+          "exact_narration_clause": "第一次到都灵，你看好蒂亚福拿到几场胜利？",
+          "semantic_use": "同年哈雷冠军肖像作为结尾人物回扣，不将奖杯说成年终赛奖杯或都灵现场。",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/06/22/37aae27e-c2b3-42ce-8833-ef3aab3f4795/Taylor-Fritz-of-United-States-and-Frances-Tiafoe-of-United-States-57.jpg",
+          "source_caption": "",
+          "official_api_title": "2026 Halle Tiafoe",
+          "source_metadata_path": "/workspace/tiafoe-finals-production/research/photos/atp-4524919.json",
+          "visual_review_result": "PASS_PHOTOGRAPH_IDENTITY_AND_FIXED_CROP"
+        }
+      ],
+      "budget_seconds": null,
+      "budget_status": "ACTUAL_FULL_TTS_NOT_MEASURED_BY_PHOTO_ROLE; producer to fill from actualvoice+.4"
+    }
+  ]
+}

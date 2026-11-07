@@ -1,0 +1,145 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4523365/halle-2026-final-fritz-tiafoe-short-highlights",
+  "source_sha256": "13077fcf9d1789490da03c429a2514b25aca255dca5ed0713fbaddd6fc914041",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex tiafoe_audio_race; actual cachedlocal small.en/medium.en sourceword crosscheck; no human auditory listening or wholevoice quality claim",
+  "reviewed_at": "2026-11-07T01:06:46.143876+00:00",
+  "reviewed_from": 114.9,
+  "reviewed_to": 146.9,
+  "status": "complete",
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 131.62,
+      "end": 136.58,
+      "en": "It's a fourth ATP Tour title for Frances Tiafoe,",
+      "zh": "蒂亚福收获生涯第四座巡回赛冠军，",
+      "sentence_id": "halle-first-complete-sentence-part1"
+    },
+    {
+      "start": 136.74,
+      "end": 139.32,
+      "en": "the biggest of his career.",
+      "zh": "也是他生涯分量最重的一冠。",
+      "sentence_id": "halle-first-complete-sentence-part2"
+    },
+    {
+      "start": 139.32,
+      "end": 140.02,
+      "display_until": 141.0,
+      "en": "[Umpire announces the score]",
+      "zh": "【裁判报分】",
+      "caption_kind": "descriptive_not_verbatim"
+    },
+    {
+      "start": 142.16,
+      "end": 146.72,
+      "en": "The first American to win the title here in Halle.",
+      "zh": "首位在哈雷夺冠的美国球员。",
+      "sentence_id": "halle-second-complete-sentence"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": [
+    "Real small.en and medium.en agree on the full retained commentator meaning and timing; medium fourth ATP Tour resolves small 4 for ATP to a. Frances Tiafoe and Halle spelling normalized against verified player/event identity, not changed to another subject.",
+    "The complete first sentence is displayed in two semantic parts after Tiafoe name; both are retained, never two separately synthesized utterances. Earliest firstword131.62 and latest career139.32/full Halle146.72 cover both actualraw hypotheses.",
+    "Medium-only isolated 6-4 at139.32–140.02 is a backgroundchairscorecall, not reliable full exactscores. Explicit bracketdescription is nonverbatim; no specific setcounts are fabricated. Extra display readability until141.0 ends before next true sentence142.16.",
+    "Early visual role independently sealed114.9–146.9. All originalaudio preserved throughbody; extra0.5video only is silenttail147.4, before actualblack147.5/LIVE147.6. Final native16:9tocentre3:4 preview andactualmovie still require separate checks."
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/small.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/small.en.json",
+      "sha256": "b47058d4875c62a8a4afb9070226b77c1cb71c56d0b05573221741afe598b4f8",
+      "source_sha256": "13077fcf9d1789490da03c429a2514b25aca255dca5ed0713fbaddd6fc914041",
+      "model": "small.en",
+      "clip": [
+        113.8,
+        147.4
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/tiafoe-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26halle/medium.en.json",
+      "sha256": "6da6c7af1c3e1217570d529ceeb368e1c09a2323411bed7481996a67e060a5a0",
+      "source_sha256": "13077fcf9d1789490da03c429a2514b25aca255dca5ed0713fbaddd6fc914041",
+      "model": "medium.en",
+      "clip": [
+        113.8,
+        147.4
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/tiafoe-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/tiafoe-production/media-early/tf26halle.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "44100",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "156.400000",
+        "size": "76474961"
+      }
+    }
+  },
+  "coverage_policy": "Verified commentator words get sourceEnglish/Chinese; bracketed umpire captions explicitly describe actual backgroundresult/score calls without inventing exact numbers or claiming verbatim transcription.",
+  "native_quote": [
+    {
+      "at": 16.72,
+      "end": 21.68,
+      "text": "It's a fourth ATP Tour title for Frances Tiafoe,\n蒂亚福收获生涯第四座巡回赛冠军，"
+    },
+    {
+      "at": 21.84,
+      "end": 24.42,
+      "text": "the biggest of his career.\n也是他生涯分量最重的一冠。"
+    },
+    {
+      "at": 24.42,
+      "end": 26.1,
+      "text": "[Umpire announces the score]\n【裁判报分】"
+    },
+    {
+      "at": 27.26,
+      "end": 31.82,
+      "text": "The first American to win the title here in Halle.\n首位在哈雷夺冠的美国球员。"
+    }
+  ]
+}

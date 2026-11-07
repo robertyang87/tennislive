@@ -1,0 +1,209 @@
+{
+  "audited_at": "2026-11-07T01:02:16.709326+00:00",
+  "artifact": "/workspace/tiafoe-finals-production/research/editorial-plan.json",
+  "sha256": "80b90966c9679faa3d04762fa5110d71b25bd0cd46c5a6caf133fd5cdad5b394",
+  "status": "NARRATIVE_AND_RACE_FACTS_PASS_ACTUAL_MEDIA_QC_PENDING",
+  "findings": [],
+  "approved_factual_semantics": [
+    "coverhook andopening: Shelton defeatedTiafoeUSOpenSF thentriggeredfirstFinalsqualification",
+    "AO3straightsets; Acapulco2setsrunnerup",
+    "RG5h26,sets2-1andfourth4-1lead, lost",
+    "HalleQF3savedMPs, finalFritz2sets, firstATP500",
+    "WimbledonR3five-setlossBublik",
+    "Montrealinjuryretirement thenright-handsurgery thenCincinnatiF; HSSandtwoofficialeventreportssupport",
+    "Cincinnati secondcareerMastersF, wonsecondsetlostthird0-6",
+    "USOpenQF0-2sets+third0-3comeback; SFwonfirstthenlost3; thirdUSSFnotconsecutive",
+    "terminalthreetourmatcheslostShanghaiViennaParis",
+    "Nov4ParislossHalys triggeredFils; Nov6SheltonPaul triggeredTiafoe"
+  ],
+  "outside_audit_scope": [
+    "Final actualphotos/pointwindows/sourceaudio/scorecardorientation/captionstiming: nativeQC"
+  ],
+  "suggested_wording": {
+    "rg_intro": "盘分二比一领先"
+  },
+  "next_step": "All15narratedsegments andcover facts pass at bound editorialSHA; actual chosen video/photo/audio/caption frames remain pending nativeQC.",
+  "resolved_draft_findings": [
+    "阿纳尔迪 corrected to 阿尔纳尔迪",
+    "米克尔森 corrected to 米切尔森",
+    "盘分二比一领先 adopted"
+  ],
+  "segment_results": [
+    {
+      "id": "opening",
+      "kind": "narrated_photo",
+      "narration": "美网半决赛，谢尔顿挡住了蒂亚福。到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "ao_intro",
+      "kind": "narrated_photo",
+      "narration": "先回到澳网。第三轮对德米纳尔，他三盘落败。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "ao_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "acapulco_intro",
+      "kind": "narrated_photo",
+      "narration": "二月阿卡普尔科，他打到决赛，两盘输给科博利，收获亚军。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "acapulco_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "rg_intro",
+      "kind": "narrated_photo",
+      "narration": "法网第四轮，打了五小时二十六分。他曾盘分二比一领先，第四盘也领先四比一，最后却被阿尔纳尔迪逆转。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "rg_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "halle_intro",
+      "kind": "narrated_photo",
+      "narration": "六月哈雷，先在四分之一决赛救回三个赛点。决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "halle_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "wimbledon_intro",
+      "kind": "narrated_photo",
+      "narration": "带着哈雷冠军来到温网，他在第三轮五盘输给布勃利克。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "wimbledon_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "summer",
+      "kind": "narrated_photo",
+      "narration": "八月，在蒙特利尔因伤退赛。右手接受手术后，他又在辛辛那提闯进决赛。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "cincinnati_intro",
+      "kind": "narrated_photo",
+      "narration": "对菲斯，他扳回第二盘，决胜盘却一局未得。第二次打进大师赛决赛，还是收获亚军。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "cincinnati_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "us_open_qf_intro",
+      "kind": "narrated_photo",
+      "narration": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。他最后连赢三盘，逆转米切尔森。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "us_open_qf_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "us_open_sf_intro",
+      "kind": "narrated_photo",
+      "narration": "半决赛对谢尔顿，先赢一盘，随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "us_open_sf_point",
+      "kind": "official_point_video",
+      "narration": "",
+      "fact_status": "PENDING_ACTUAL_SOURCE_FRAME_QC",
+      "fact_basis": "planned node result verified; actual chosen source/window not in scope"
+    },
+    {
+      "id": "autumn",
+      "kind": "narrated_photo",
+      "narration": "上海、维也纳，再到巴黎，他遭遇了三连败。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "paris",
+      "kind": "narrated_photo",
+      "narration": "十一月四日，巴黎第二轮输给阿利斯，这个结果先让菲斯锁定了年终资格。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "qualification",
+      "kind": "narrated_photo",
+      "narration": "十一月六日，谢尔顿在巴黎击败保罗。蒂亚福终于锁定资格，第一次走进都灵。",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    },
+    {
+      "id": "race_table",
+      "kind": "narrated_graphic",
+      "narration": "截至十一月七日，蒂亚福三千三百九十分，排名赛季积分榜第八。高亮的八位球员，都已锁定年终资格。",
+      "fact_status": "PASS",
+      "fact_basis": "race-data-fact-audit.json: current archived LiveTennis15rows+officialNitto8singlesprofiles+officialSinnerwithdrawalstatus; Tiafoe3390/Race8/8highlight exact."
+    },
+    {
+      "id": "question",
+      "kind": "narrated_photo",
+      "narration": "第一次到都灵，你看好蒂亚福拿到几场胜利？",
+      "fact_status": "PASS",
+      "fact_basis": "editorial-handoff.json key nodes and archived primary reports"
+    }
+  ],
+  "cover_result": {
+    "hook": "蒂亚福首进年终\n谢尔顿替他锁定门票",
+    "narration": "蒂亚福首进年终，谢尔顿替他锁定门票。",
+    "fact_status": "PASS",
+    "photo_status": "PENDING_ACTUAL_IDENTITY_TIME_MOMENT_QC",
+    "basis": "First career Finals qualification triggered SheltonParisQFwinPaulNov6. Halleportrait can illustrateplayerbutmustnotmislabelqualificationphoto."
+  },
+  "prior_fact_audit": {
+    "path": "/workspace/tiafoe-finals-production/research/facts/editorial-frozen-fact-audit.before-race.json",
+    "sha256": "5033eeaea4239de0b31c226eeb907bf5f44f16f8a35eeacb5de901572f17f3ea"
+  },
+  "race_fact_audit": {
+    "path": "/workspace/tiafoe-finals-production/research/facts/race-data-fact-audit.json",
+    "canonical_data_sha256": "b85e0f10368486f669be477233a3dd03d8d013e53c5b70aefa7cb7a4155e6bb8"
+  }
+}

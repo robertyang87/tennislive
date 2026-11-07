@@ -1,0 +1,111 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T00:57:42.045597+00:00",
+  "model": "small.en",
+  "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+  "source_path": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+  "clip": [
+    109.0,
+    118.5
+  ],
+  "duration": 9.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 110.64,
+      "end": 117.2,
+      "text": "And Sheldon is in the championship match of the 2026 U.S. Open.",
+      "avg_logprob": -0.49563648402690885,
+      "no_speech_prob": 0.3804272413253784,
+      "words": [
+        {
+          "w": " And",
+          "s": 110.64,
+          "e": 111.48,
+          "p": 0.0683569386601448
+        },
+        {
+          "w": " Sheldon",
+          "s": 111.48,
+          "e": 111.78,
+          "p": 0.6903951168060303
+        },
+        {
+          "w": " is",
+          "s": 111.78,
+          "e": 112.96,
+          "p": 0.7959688901901245
+        },
+        {
+          "w": " in",
+          "s": 112.96,
+          "e": 113.86,
+          "p": 0.9812442660331726
+        },
+        {
+          "w": " the",
+          "s": 113.86,
+          "e": 114.0,
+          "p": 0.9623711109161377
+        },
+        {
+          "w": " championship",
+          "s": 114.0,
+          "e": 114.42,
+          "p": 0.8028256297111511
+        },
+        {
+          "w": " match",
+          "s": 114.42,
+          "e": 114.98,
+          "p": 0.9952239394187927
+        },
+        {
+          "w": " of",
+          "s": 114.98,
+          "e": 115.4,
+          "p": 0.9245901703834534
+        },
+        {
+          "w": " the",
+          "s": 115.4,
+          "e": 115.52,
+          "p": 0.989550769329071
+        },
+        {
+          "w": " 2026",
+          "s": 115.52,
+          "e": 116.44,
+          "p": 0.9148808419704437
+        },
+        {
+          "w": " U",
+          "s": 116.44,
+          "e": 116.66,
+          "p": 0.43983155488967896
+        },
+        {
+          "w": ".S.",
+          "s": 116.66,
+          "e": 116.88,
+          "p": 0.9868944585323334
+        },
+        {
+          "w": " Open.",
+          "s": 117.18,
+          "e": 117.2,
+          "p": 0.9451873898506165
+        }
+      ]
+    }
+  ]
+}

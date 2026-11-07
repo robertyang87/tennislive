@@ -1,0 +1,215 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tf26ussf/tf26ussf.mp4",
+  "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+  "method": "verified_source_captions",
+  "reviewer": "Codex tiafoe_audio_race; exact official-caption bytes/timecode plus two real local ASR models and one bounded gap refinement; explicit nonverbatim context supplements; no human auditory listening claim",
+  "reviewed_at": "2026-11-07T01:13:00.910149+00:00",
+  "reviewed_from": 95.0,
+  "reviewed_to": 123.2,
+  "status": "complete",
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 100.73,
+      "end": 101.24,
+      "display_until": 102.0,
+      "en": "It's crazy.",
+      "zh": "太不可思议了。",
+      "caption_kind": "verified_official_caption"
+    },
+    {
+      "start": 109.0,
+      "end": 113.03,
+      "en": "[Umpire announces the result]",
+      "zh": "【裁判宣布比赛结果】",
+      "caption_kind": "descriptive_not_verbatim",
+      "timing_note": "Contextual background courtcall span, not an exact phonetic word-onset assertion; automatic VTT only has the corrupt token 375 at112–113.03."
+    },
+    {
+      "start": 113.2,
+      "end": 117.39,
+      "en": "[Shelton] is in the championship match of the 2026 US Open.",
+      "zh": "谢尔顿晋级2026年美网决赛。",
+      "caption_kind": "verified_predicate_explicit_editorial_subject",
+      "editorial_supplement": {
+        "text": "Shelton",
+        "rendered": "[Shelton]",
+        "basis": "Actual match identity and official source article name Shelton as finalist. The bracketed subject is editorial context, not a claim the prefix was heard clearly.",
+        "verbatim_reliable_from": 113.2,
+        "verbatim_reliable_text": "is in the championship match of the 2026 US Open."
+      }
+    },
+    {
+      "start": 119.88,
+      "end": 122.6,
+      "en": "And what a pity it had to end on a double fault.",
+      "zh": "遗憾的是，比赛竟以一次双误结束。",
+      "caption_kind": "verified_official_caption"
+    }
+  ],
+  "uncertain_spans": [],
+  "representation_scope": "Complete chosen audio coverage with the disclosed nonverbatim background courtcall and bracketed editorial subject. Not a claim every background/prefix phoneme was lexically resolved.",
+  "lexical_limitations_preserved": {
+    "prefix_lexical_status": "not_resolved_verbatim_and_not_represented_as_an_exact_quote",
+    "preserved_bad_official_caption": "112.000–113.030 375.;113.600–117.390 Is it the championship match of the 2026 US Open.",
+    "raw_disagreement": "Full-gap small.en guesses And Sheldon...; And probability0.068 is unreliable; medium.en omits clear subject. Neither proves an exact prefix. One bounded113.2–118.4 dual-model refinement agrees on the complete is in...Open predicate. No further ASR performed.",
+    "representation_decision": "Root explicitly approved bracketed editorial [Shelton] for known subject and background result-call descriptor, with all true raw retained. This does not turn missing lexical evidence into a resolved verbatim hearing claim.",
+    "rejected_inventions": [
+      "No And or But prefix invented.",
+      "No umpire exact score or GameSetAndMatch formula fabricated.",
+      "No courtcall surname joined to the commentator to fabricate a full spoken sentence."
+    ]
+  },
+  "source_identity": {
+    "source_path": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "152.716667",
+        "size": "116679618"
+      }
+    }
+  },
+  "official_caption": {
+    "official_caption_url": "https://usopenvideo.akamaized.net/2026/prd/interviews/captions/914ccfc1-4fa2-4abc-8347-133a49b02769.vtt",
+    "path": "research/tiafoe-finals-road-2026/audio/captions/us-open-sf-official.vtt",
+    "sha256": "63cd2c8c207d3336536ae71f53e7771ba11f902391676024d8cd0f1056d8a24a",
+    "original_path": "/workspace/tiafoe-finals-production/research/media-late/usf-official-embedded.vtt",
+    "same_video_UUID": true,
+    "caption_source_identity_file": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-source-identity.json"
+  },
+  "asr_evidence": [
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/official-caption-gap/tf26ussf/small.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26ussf/small.en.json",
+      "sha256": "48a2ad8e0292d7f5bcc97c06c3614440e500ba26345a3c30647e46b183524f21",
+      "model": "small.en",
+      "clip": [
+        109.0,
+        118.5
+      ],
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      }
+    },
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/official-caption-gap/tf26ussf/medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26ussf/medium.en.json",
+      "sha256": "a59cb389e05fc6fb063501158fe37693bb352e2d8c392a3e3693c217cc789c76",
+      "model": "medium.en",
+      "clip": [
+        109.0,
+        118.5
+      ],
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      }
+    },
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/final-clause-refine/tf26ussf/small.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/final-clause-refine/tf26ussf/small.en.json",
+      "sha256": "63c299467b17260a4689ea9464eaf8fcd5c444fd9a3d3e77d44d7e0f5ca6b94d",
+      "model": "small.en",
+      "clip": [
+        113.2,
+        118.4
+      ],
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      }
+    },
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/final-clause-refine/tf26ussf/medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/final-clause-refine/tf26ussf/medium.en.json",
+      "sha256": "6fbea0ce1bd1ba46a2d496e9af7bba950b90db4956d66fbf1dbd22df4a3478b0",
+      "model": "medium.en",
+      "clip": [
+        113.2,
+        118.4
+      ],
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      }
+    }
+  ],
+  "native_quote": [
+    {
+      "at": 5.73,
+      "end": 7.0,
+      "text": "It's crazy.\n太不可思议了。"
+    },
+    {
+      "at": 14.0,
+      "end": 18.03,
+      "text": "[Umpire announces the result]\n【裁判宣布比赛结果】"
+    },
+    {
+      "at": 18.2,
+      "end": 22.39,
+      "text": "[Shelton] is in the championship match of the 2026 US Open.\n谢尔顿晋级2026年美网决赛。"
+    },
+    {
+      "at": 24.88,
+      "end": 27.6,
+      "text": "And what a pity it had to end on a double fault.\n遗憾的是，比赛竟以一次双误结束。"
+    }
+  ],
+  "review_notes": [
+    "Both serves are the same terminal matchpoint;95–96.6 preparation,firstserve97.x fault,secondserve105.x–107.x doublefault,real reactions and hug to123.2. Preserve full original source audio at unity, no source gain or speech removal. Pixel timings are the late visual reviewer evidence, not a human audio listening claim.",
+    "OfficialVTT gives complete It is crazy / doublefault sentence; caption text kept faithfully as It's crazy. and And what a pity it had to end on a double fault. The editorial subject appears only as explicit [Shelton], not an unbracketed asserted verbatim recovery.",
+    "Reliable predicate113.2–117.39 is covered without inventing a connective. Backgroundcourtcall109–113.03 receives an explicitly nonverbatim descriptor without exactscores. Original bad VTT and all4 rawmodel outputs retain exact hashes as evidence of lexical limits.",
+    "Selected source95 begins after previousclause ending94.09;123.2 ends after full doublefault sentence122.60 and real reaction; next hug commentary129.27 is excluded. Extra0.5visualtail123.7 uses nativeaudio_tail silence, not more source speech. Not final actual-film auditory/naturalness approval."
+  ]
+}

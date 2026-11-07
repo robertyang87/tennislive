@@ -1,0 +1,88 @@
+{
+  "source_key": "us-open-sf",
+  "source_id": "tf26ussf",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tf26ussf/tf26ussf.mp4",
+  "source_path": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+  "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+  "window": [
+    95.0,
+    123.2
+  ],
+  "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/us-open-sf.json",
+  "packet_sha256": "536cc492543bce0116d0496f0b590cd4f6efa9e7592296159a1c9a5f97e0570f",
+  "quote": [
+    {
+      "at": 5.73,
+      "end": 7.0,
+      "text": "It's crazy.\n太不可思议了。"
+    },
+    {
+      "at": 14.0,
+      "end": 18.03,
+      "text": "[Umpire announces the result]\n【裁判宣布比赛结果】"
+    },
+    {
+      "at": 18.2,
+      "end": 22.39,
+      "text": "[Shelton] is in the championship match of the 2026 US Open.\n谢尔顿晋级2026年美网决赛。"
+    },
+    {
+      "at": 24.88,
+      "end": 27.6,
+      "text": "And what a pity it had to end on a double fault.\n遗憾的是，比赛竟以一次双误结束。"
+    }
+  ],
+  "absolute_utterances": [
+    {
+      "start": 100.73,
+      "end": 101.24,
+      "display_until": 102.0,
+      "en": "It's crazy.",
+      "zh": "太不可思议了。",
+      "caption_kind": "verified_official_caption"
+    },
+    {
+      "start": 109.0,
+      "end": 113.03,
+      "en": "[Umpire announces the result]",
+      "zh": "【裁判宣布比赛结果】",
+      "caption_kind": "descriptive_not_verbatim",
+      "timing_note": "Contextual background courtcall span, not an exact phonetic word-onset assertion; automatic VTT only has the corrupt token 375 at112–113.03."
+    },
+    {
+      "start": 113.2,
+      "end": 117.39,
+      "en": "[Shelton] is in the championship match of the 2026 US Open.",
+      "zh": "谢尔顿晋级2026年美网决赛。",
+      "caption_kind": "verified_predicate_explicit_editorial_subject",
+      "editorial_supplement": {
+        "text": "Shelton",
+        "rendered": "[Shelton]",
+        "basis": "Actual match identity and official source article name Shelton as finalist. The bracketed subject is editorial context, not a claim the prefix was heard clearly.",
+        "verbatim_reliable_from": 113.2,
+        "verbatim_reliable_text": "is in the championship match of the 2026 US Open."
+      }
+    },
+    {
+      "start": 119.88,
+      "end": 122.6,
+      "en": "And what a pity it had to end on a double fault.",
+      "zh": "遗憾的是，比赛竟以一次双误结束。",
+      "caption_kind": "verified_official_caption"
+    }
+  ],
+  "lexical_limitations_preserved": {
+    "prefix_lexical_status": "not_resolved_verbatim_and_not_represented_as_an_exact_quote",
+    "preserved_bad_official_caption": "112.000–113.030 375.;113.600–117.390 Is it the championship match of the 2026 US Open.",
+    "raw_disagreement": "Full-gap small.en guesses And Sheldon...; And probability0.068 is unreliable; medium.en omits clear subject. Neither proves an exact prefix. One bounded113.2–118.4 dual-model refinement agrees on the complete is in...Open predicate. No further ASR performed.",
+    "representation_decision": "Root explicitly approved bracketed editorial [Shelton] for known subject and background result-call descriptor, with all true raw retained. This does not turn missing lexical evidence into a resolved verbatim hearing claim.",
+    "rejected_inventions": [
+      "No And or But prefix invented.",
+      "No umpire exact score or GameSetAndMatch formula fabricated.",
+      "No courtcall surname joined to the commentator to fabricate a full spoken sentence."
+    ]
+  },
+  "status": "complete_audio_scope_with_explicit_nonverbatim_supplements_not_actualfilmapproval",
+  "native_audio_tail": "silence"
+}

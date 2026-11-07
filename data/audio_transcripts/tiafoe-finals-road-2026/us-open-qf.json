@@ -1,0 +1,139 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/highlights_from_frances_tiafoe_vs_alex_michelsen_at_the_2026_us_open.html",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tf26usqf/tf26usqf.mp4",
+  "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+  "method": "verified_source_captions",
+  "reviewer": "Codex tiafoe_audio_race; exact official-sourcecaption bytes/timecode crosscheck plus bounded actual medium.en gapASR; no human auditory listening claim",
+  "reviewed_at": "2026-11-07T01:09:09.134637+00:00",
+  "reviewed_from": 66.6,
+  "reviewed_to": 86.0,
+  "status": "complete",
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 66.669,
+      "end": 69.23,
+      "en": "Match point for the 11 seed.",
+      "zh": "11号种子的赛点。",
+      "caption_kind": "verified_official_caption"
+    },
+    {
+      "start": 76.5,
+      "end": 78.2,
+      "display_until": 79.0,
+      "en": "[Umpire announces the winner]",
+      "zh": "【裁判宣布比赛胜者】",
+      "caption_kind": "descriptive_not_verbatim"
+    },
+    {
+      "start": 79.629,
+      "end": 85.11,
+      "en": "A comeback that is extra special for Frances Tiafoe.",
+      "zh": "这场逆转，对蒂亚福意义非凡。",
+      "caption_kind": "verified_official_caption_name_normalized"
+    }
+  ],
+  "uncertain_spans": [],
+  "source_identity": {
+    "source_path": "/dev/shm/tiafoe-production/sources/tf26usqf.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60/1"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "159.933333",
+        "size": "134664066"
+      }
+    }
+  },
+  "official_caption": {
+    "official_caption_url": "https://usopenvideo.akamaized.net/2026/prd/interviews/captions/f6154210-d198-47ad-8c9f-8549a640a834.vtt",
+    "path": "research/tiafoe-finals-road-2026/audio/captions/us-open-qf-official.vtt",
+    "sha256": "3b72fb7076beb16342d012f8c6b90d1894fe154a52746cbaa98bf8b896030032",
+    "original_path": "/workspace/tiafoe-finals-production/research/media-late/usqf-official-embedded.vtt",
+    "same_video_UUID": true,
+    "caption_source_identity_file": "/workspace/tiafoe-finals-production/research/media-late/usopen-qf-source-identity.json"
+  },
+  "asr_evidence": [
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/official-caption-gap/tf26usqf/medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/official-caption-gap/tf26usqf/medium.en.json",
+      "sha256": "ec4628da8ce2088172b024605e81bf2360209e86162c9c81a628cb1f953f6936",
+      "model": "medium.en",
+      "clip": [
+        75.0,
+        86.0
+      ],
+      "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_caption_gap_medium.py",
+      "script_sha256": "ec163361dac665d45c4eae6e940ae4873aaf648f3aa480e094bbd06da6ee4cb2",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      }
+    }
+  ],
+  "native_quote": [
+    {
+      "at": 6.35,
+      "end": 8.85,
+      "text": "[Umpire announces the winner]\n【裁判宣布比赛胜者】"
+    },
+    {
+      "at": 9.479,
+      "end": 14.96,
+      "text": "A comeback that is extra special for Frances Tiafoe.\n这场逆转，对蒂亚福意义非凡。"
+    }
+  ],
+  "review_notes": [
+    "OfficialVTT has complete Matchpointforthe11seed66.669–69.230 and complete comeback sentence79.629–85.110. FrancesTiafoe standard spelling replaces automatic FrancisTiapo by exact matchplayeridentity; the bounded real medium.en raw independently agrees on all comeback words except the same propername phonetics.",
+    "OfficialVTT courtcall77.480–77.959 only says to match Tiafo; real localized medium does not reliably recover its completelexical formula. Represent actual resultannouncement with an explicitly bracketed description only, not an invented GameSetMatch phrase or exactsets. Descriptor76.5–78.2 is a contextual readablecallspan, not a phonetic exactword-onset assertion. Extra display readability to79.0 ends before next commentary79.629.",
+    "Selected end86.0 retains full Tiafoe85.110 and clean real reaction, excludes next commentary99.330. Allselectedsourceaudio remains original; added0.5visualtail is silent by nativeaudio_tail contract. Actual terminalpoint preparation/contact/result and pixel-tail are separately verified bylatevisualrole; this packet is not finalactualfilmapproval.",
+    "Selected window narrowed to70.15–86.0 after actualfixedcenter preview. Original66.6–86.0 fullreview and raw evidence still cover this exactsubwindow; out-of-window firstcue removed from selected nativequote only. Fullreview utterance evidence preserved, not deleted."
+  ],
+  "selected_window": [
+    70.15,
+    86.0
+  ],
+  "subwindow_rebind": {
+    "from_packet_sha256": "bdfd083120b784fe75f7cf705076eb50dabcd47be7425635613f90c1f92ca0bb",
+    "original_packet_preserved": "/workspace/tiafoe-finals-production/research/audio/historical-pre-wide-crop/us-open-qf.json",
+    "old_selected_window": [
+      66.6,
+      86.0
+    ],
+    "new_selected_window": [
+      70.15,
+      86.0
+    ],
+    "reviewed_range_unchanged": [
+      66.6,
+      86.0
+    ],
+    "reason": "Root actual preview found face outside right edge during closeup at67.6. Late actual pixels confirmed70.15 is first safewide,70.65fadeclear before70.9333–70.9667strike; whole terminal point/reaction/hug through86.5 preserved.",
+    "outside_sentence_excluded": "Match point for the 11 seed.66.669–69.230 is complete before new70.15start; no partial utterance remains.",
+    "additional_asr_performed": false,
+    "at": "2026-11-07T01:18:44.878932+00:00"
+  }
+}
