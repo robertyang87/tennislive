@@ -1,0 +1,95 @@
+{
+  "scoreboard_qc_sha256": "3953da692339bd58c48bbf8c47ff03c9271aa7b4bf6e63ad71e1845d6256e2df",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "dea995686bd7d576fc992cec3ebf0cbe4cca290950b8cf3bceebbb2e228f6a6a",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-eala-sakkari-hong-kong-2026-sf-dea995686bd7d576",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-eala-sakkari-hong-kong-2026-sf-dea995686bd7d576/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42387457805"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 203.4,
+  "topbar": {
+    "line1": "2026 WTA250 香港 半决赛",
+    "line2": "伊埃拉 7-5 3-6 6-4 萨卡里",
+    "start": 1.2,
+    "end": 204.6
+  },
+  "film_seconds": 209.16,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 10.32,
+    "3": 6.552,
+    "5": 8.184,
+    "7": 8.184,
+    "9": 6.84
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "f93298e1728ef24c936a41e9be65f57e0dc7caf07ec6e74c33c1caac06d69951",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "eala-sakkari-hong-kong-2026-sf",
+    "received_at": "2026-11-07T15:39:51Z",
+    "artifact_ready_at": "2026-11-07T15:48:23Z",
+    "elapsed_seconds": 512.564,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "5500b9a6c87e1518a173a15c8bbddd2bd4cf617a6a4a7c8802526a652944109c",
+    "spec_sha256": "ac32e18f88cdd53141b5b2a3c5c243c0e274d8bb5dde3e94c20a988847f60375",
+    "run_id": "42387457805",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-07T15:43:39Z",
+        "run_id": "42387457805"
+      }
+    ],
+    "render_seconds": 284.564,
+    "pre_render_seconds": 228.0
+  },
+  "film_sha256": "5500b9a6c87e1518a173a15c8bbddd2bd4cf617a6a4a7c8802526a652944109c",
+  "film_bytes": 95052489,
+  "qc_attestation_sha256": "0cc9b46fac9e371ae4505e9f5b744c3a19eb5e2192d21ffbdc0ac28d47b57825",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-07T15:43:39Z",
+      "run_id": "42387457805"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-07T15:48:27Z",
+      "run_id": "42387457805"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-eala-sakkari-hong-kong-2026-sf/eala-sakkari-hong-kong-2026-sf.mp4",
+  "video_bytes": 95052489
+}
