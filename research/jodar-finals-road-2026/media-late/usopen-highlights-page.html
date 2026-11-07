@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<!-- OneTrust Cookies Consent Notice start for usopen.org -->
+
+		<script
+			src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+			type="text/javascript"
+			charset="UTF-8"
+			data-domain-script="dacb2004-5f90-4d7f-81e8-ef15334a5a6e"
+		></script>
+		<script type="text/javascript">
+			/**
+			 * C0001 - necessary 
+			 * C0002 - performance
+			 * C0003 - functional
+			 * C0004 - targeting
+			 **/
+			function OptanonWrapper() {
+				// creat custom event to notify app of user consent updates
+				if (window.OnetrustActiveGroups) {
+					const activeGroups = OnetrustActiveGroups.split(',').map(s => s.trim()).filter(Boolean);
+					logger?.log('[OptanonWrapper] activeGroups:%o', activeGroups);
+					window.dispatchEvent(new CustomEvent('consentUpdated', { detail: { activeGroups: activeGroups } }));
+				}
+			}
+		</script>
+		<!-- OneTrust Cookies Consent Notice end for usopen.org -->
+
+		<meta charset="UTF-8" />
+
+		<!-- Preload styles and scripts -->
+		<link rel="preload" href="/assets/style/style.91062f7b.css" as="style" />
+		<link rel="preload" href="/assets/js/vendors.91062f7b.js" as="script" />
+		<link rel="preload" href="/assets/js/main.91062f7b.js" as="script" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+		<!-- for android chrome -->
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="192x192"
+			href="/assets/images/misc/apple-touch-icon-192x192.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="256x256"
+			href="/assets/images/misc/android-chrome-256x256.png"
+		/>
+		<link rel="manifest" href="/en_US/json/man/manifest.json" />
+		<!-- for safari -->
+		<!-- <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/images/misc/apple-touch-icon.png" /> -->
+		<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/images/misc/apple-touch-icon.png" />
+
+		<!-- for safari pinned tab -->
+		<link rel="mask-icon" href="/assets/images/misc/safari-pinned-tab.svg" color="#FFFFFF" />
+		<!-- for windows 8 IE 10 -->
+		<meta name="theme-color" content="#001d67" />
+		<meta name="msapplication-TileColor" content="#001d67" />
+		<meta name="msapplication-TileImage" content="/assets/images/misc/apple-touch-icon-192x192.png" />
+		<meta name="msapplication-square150x150logo" content="/assets/images/misc/mstile-150x150.png" />
+		<!-- browserxml -->
+		<meta name="msapplication-config" content="/en_US/xml/man/browserconfig.xml" />
+		<!-- other -->
+		<link rel="stylesheet" href="https://use.typekit.net/hna0smy.css" />
+		<link rel="icon" type="image/icon" href="/favicon.ico" />
+		<link rel="stylesheet" href="/assets/style/style.91062f7b.css" />
+		<script src="https:&#x2F;&#x2F;assets.adobedtm.com&#x2F;9bfde7a3cd0d&#x2F;fb6fbd1d59b4&#x2F;launch-EN4cb0ade3a4044a19838922b6a89df941.min.js"></script>
+		<script src="/assets/static/cookie/checkCookie.js"></script>
+		<script id="usntA42start" src="https://a42cdn.usablenet.com/a42/usopen/default/prod/cs-start?position=bottom-right" async></script>
+	</head>
+	<body>
+		<Component type="DevTools"></Component>
+		<Component type="data/Config"></Component>
+		<Component type="general/BreakingAlert"></Component>
+		<Component type="Controller"></Component>
+		<Component type="data/ActiveData"></Component>
+		<Component type="ScoreManager"></Component>
+		<Component type="data/Tournament"></Component>
+		<Component type="pages/LiveVideo/PipController"></Component>
+		<Component type="_scoring/SlamtrackerPanel"></Component>
+		<div id="root"></div>
+
+		<script>
+			window.version = '0.0.3';
+			window.commit = '91062f7b';
+			window.level = '';
+			window.ssr = false;
+			window.restAPI = '/api';
+			window.parseAppId = 'Actinium';
+		</script>
+		<script charset="UTF-8" src="/assets/js/vendors.91062f7b.js"></script>
+		<script charset="UTF-8" src="/assets/js/main.91062f7b.js"></script>
+		<script src="//apv-launcher.minute-ly.com/api/launcher/MIN-11300.js" async></script>
+	</body>
+</html>

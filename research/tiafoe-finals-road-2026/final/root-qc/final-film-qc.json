@@ -1,0 +1,57 @@
+{
+  "status": "PASS_ACTUAL_FILM_QC_READY_FOR_EXACT_HEAD_CI_AND_NATIVE_SINGLE_PUBLISH",
+  "checked_at": "2026-11-07T01:41:48.133855+00:00",
+  "reviewer": "root actual view_image + independent actualfilm roles; no fabricatedhumanlistening",
+  "film": {
+    "file": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+    "sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+    "bytes": 176482943,
+    "seconds": 261.2,
+    "native_inputs_artifact_id": 13554736666,
+    "formal_run": "42323648819"
+  },
+  "spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+  "actual_ass_sha256": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
+  "actual_render_inputs_sha256": "bf56177df35afa9d4d08783f862a19a8366ad5e991daaad79fb85e41b7b95faa",
+  "actual_final_render_sha256": "9989bb55bf81b98c5dadb4a1777b8b16977c985ca2463e7a29ce32a132db016d",
+  "root_actual_visual_scope": {
+    "wholefilm_contact_sheets_personally_opened": 7,
+    "actualfilm_frames_in_those_sheets": 81,
+    "critical_original_frames_personally_opened": [
+      "Acap133.12s",
+      "Acap133.52s",
+      "Acap136.3s"
+    ],
+    "source_point_dense_continuity": "Independent early/late reviewers inspected actualmaster servecontacts, complete terminalpoints, realresults/reactions, all6entryfades and.5visualtails.",
+    "fullcanvas_fixedcentre": "1080x1440 native fixedcx.5 trackfalse; source-reactioncameracuts allowed; no balltracking.",
+    "observed_minor": "USQF~1.4s naturalcamera/performermovement puts face near rightedge; completepoint and cleanreactionsbeforeafter/hug retained; accepteduserfixedcentre priority.",
+    "false_positive_closed": "AcapviewisphysicalLEDwallwithspectatorstands, not split; all3fullEnglishsentences retained. No unnecessaryrerender."
+  },
+  "integrity": {
+    "master_full_ffmpeg_decode_exit": 0,
+    "review_full_ffmpeg_decode_exit": 0,
+    "review_sha256": "116f6dd3e2b796f2b4f5a8627e22ada8621b16e56084504d75722e884ef94ba4",
+    "review_bytes": 26872518,
+    "review_width": 720,
+    "review_seconds": 261.2
+  },
+  "native_audio_gate": {
+    "status": "PASS_AUTOMATED_5_SUITE",
+    "unique_frozen_tts_requests": 17,
+    "bundle_sha256": "b8ef9af4f6ea84bf5f3026e6519b29efaa8af0eb9160836e69b924ec2fa7653b",
+    "actual_source_cues": 21,
+    "review_sha256": "5d4e54ba824c2f51be1e20564bdf32e1024e197a8e67a175230b69633fda36ec",
+    "auto_report_sha256": "d43e3244a0cb094e69588c2e77b0f12f165cd4223ba462439ea7e9bf7f0fa9dd",
+    "limitation": "Real automatedsuite and exactbyte/text/timing checks; no claim of human naturalness/pitch listening."
+  },
+  "scoped_reviews": {
+    "qc-early/actualmaster-early-visual-qc.json": "9a68066327e0caefeb1f087770fb16d53879733d0d3c15ce10d8097f70e004c3",
+    "qc-late/actualmaster-late-qc.json": "94cc63af8c6af5978118a1eabfb54ded58f5326b5e28bed0fa90827c7809bd67",
+    "qc-photos/actual-master-photo-qc.json": "acbb02a78e21f7fd010f87198647c429f3bb5d9eb3f40d58e2f29d4b07969745",
+    "qc-facts/final-fact-audit.json": "efa38dc202a577800057166eb711f0f69d360cf9cb6179af483205fc01ddde8a",
+    "qc-audio/current-master-qc-addendum.json": "8c167d6e0430e660dc6fbccbce09765900ae8c8ef687fb4beaef073ad3327fd7",
+    "root-qc/acap-composite-finding-closed.json": "6c27d5a7894c50c0e2ca0b3859f46a286ff04c8d0312f3eeb93bec5dbdbe2569",
+    "publication/freshness/verification.json": "be4f678c2a395abb8c4485bd86e0d08a42fb6795704b9bf7fa56a12b53c8c8a3"
+  },
+  "publication_status": "Notyetsent. Producer must check exactcurrentheadCIgreen+cleanmerge and run normalmain-only native once; noextra manualpush."
+}

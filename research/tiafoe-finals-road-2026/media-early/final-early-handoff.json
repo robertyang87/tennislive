@@ -1,0 +1,18 @@
+{
+  "status": "two_video_windows_ready_two_internal_source_gaps",
+  "ready": [
+    "acapulco/source-window-visual.json",
+    "halle/source-window-visual.json"
+  ],
+  "gaps": [
+    "ao/source-gap-visual.json",
+    "rg/source-gap-visual.json"
+  ],
+  "source_downloads": "Single actual downloads by tiafoe_media_early delegated by producer. Acapulco exact old source reused, not re-downloaded. No git/spec changes.",
+  "storage": "Large actual media and full-quality contacts on /dev/shm. Persistent images recompressed retaining same frames/labels after actual review, <=10MB total.",
+  "original_contact_ram": "/dev/shm/tiafoe-production/media-early/full-quality-contacts",
+  "root_accepted_photo_fallbacks": [
+    "ao",
+    "rg"
+  ]
+}

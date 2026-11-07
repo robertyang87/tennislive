@@ -1,0 +1,725 @@
+{
+  "status": "FROZEN_NARRATION_BINDING_WITH_EXPLICIT_FACT_CARD_GAPS",
+  "player": "Rafael Jodar",
+  "created_at": "2026-11-07T01:43:12.735141+00:00",
+  "frozen_editorial_plan": "/workspace/jodar-finals-production/research/editorial-plan.json",
+  "frozen_editorial_plan_sha256": "27cd42c680314e7efb42b02a9acd7976f564e40850cade69ada6f2c5c844956e",
+  "cover_selected": "atp-4594534",
+  "body_segments_count": 14,
+  "narrated_photo_or_factcard_segments": 13,
+  "narrated_graphic_segments": 1,
+  "mutates_native_or_tts": false,
+  "timing_policy": {
+    "segment_budget": "actualvoice+.4seconds; producerfillsmeasuredactualvalue, notestimatedreadingspeed",
+    "max_images_per_segment": 2,
+    "exact_clause_boundary": "Switchattheactualvoiceboundaryforeachprovidedclause; twophotosnotmechanicallyhalf.",
+    "minimum_hold": "Aim>=3secondsperimage; ifactualvoiceclausebelow3secondsroot/producercanholdoneverifiedeventcontextorfactcardforentiresegmentratherthanfragment. Do not inventmatchedHDphotos.",
+    "motion": "Fixed cx/cy fullcanvas; no trackingorpan, noextra zoom forMarrakech approved fullbody.",
+    "fact_cards": "Provided4active simplestatic1080x1440cards fornecessarygaps, nativetopbrand/captionoverlayclear. Noadditionalstoryinfoinsetontop."
+  },
+  "bindings": [
+    {
+      "segment_id": "opening",
+      "kind": "narrated_visual",
+      "narration": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "uva-2025-headshot",
+          "local_path": "/dev/shm/jodar-production/photos/uva-2025-headshot.jpg",
+          "sha256": "0c7f8835f4b4748189c1eee19476c79e597dc193e11d2767e2e4e33cdfd35ca3",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/uva-2025-headshot-3x4.jpg",
+          "source_url": "https://storage.googleapis.com/virginiasports-com-prod/2024/07/Rafael-Jodar_20250109_MTN_Headshot_JH_0011.jpg",
+          "source_caption": "CHARLOTTESVILLE, VA - JANUARY 09 - Rafael Jodar during the Virginia Men's Tennis Media Day in Charlottesville, VA on Thursday, Jan. 9, 2025.\r\rPhoto by Jamie Holt/Virginia Athletics",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/uva-2025-headshot.json",
+          "original_actual_size": [
+            1200,
+            1500
+          ],
+          "scale_to_native": 0.96,
+          "exact_narration_clause": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。",
+          "semantic_use": "GenuineJan9,2025UVAMediaDaystudentarchive; notNovembermatchinstant. CaptiondoesnotclaimcapturedNovember."
+        },
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4465812",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4465812.jpg",
+          "sha256": "165b3d92dbb4042f9fae37b5288ab3f92ff8430d06e4e8277ad91d39d0adc920",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4465812-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/03/11/887876d9-d12a-406c-9c4f-ef3a36aecc99/RAFAEL-JODAR_MT.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4465812.json",
+          "original_actual_size": [
+            2755,
+            2920
+          ],
+          "scale_to_native": 0.493,
+          "exact_narration_clause": "今年十一月，他拿到了都灵最后一张门票。",
+          "semantic_use": "Official2026studioseasonportrait, notqualificationdaycelebration."
+        }
+      ],
+      "photo_count": 2,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "ao_intro",
+      "kind": "narrated_visual",
+      "narration": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+      "elements": [
+        {
+          "kind": "fact_card",
+          "card_id": "fact-ao",
+          "local_path": "/dev/shm/jodar-production/photos/fact-ao.png",
+          "sha256": "2d4321c3d2943b5726f4f19b63821a5f1504dcfc901243940ffa826dc34fee41",
+          "dimensions": [
+            1080,
+            1440
+          ],
+          "visible_lines": [
+            "2026 赛季",
+            "澳网",
+            "资格赛突围 · 正赛首胜",
+            "第2轮负门西克"
+          ],
+          "cx": 0.5,
+          "cy": 0.5,
+          "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+          "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+          "exact_narration_clause": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+          "semantic_use": "OneconciseAOcontextfactcardbecauseverifiedpersonphotosactual700x367/1200x800belowHDfloor. No unrelatedpictureorscreenshotposedasphoto."
+        }
+      ],
+      "photo_count": 0,
+      "fact_card_count": 1,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "marrakech_intro",
+      "kind": "narrated_visual",
+      "narration": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "marrakech-event-2932",
+          "local_path": "/dev/shm/jodar-production/photos/marrakech-event-2932.jpg",
+          "sha256": "0bbb6bf3a488daf21a445e9abca11181d89a33414e3ad5357d351c8e0d8715e4",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/marrakech-event-2932-3x4.jpg",
+          "source_url": "https://grandprixhassan2.com/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-05-at-23.47.21.jpeg",
+          "source_caption": "OfficialGrandPrixHassanII2026championmedia,WordPressattachment2932,published2026-04-05T22:55:07;title{'rendered': 'WhatsApp Image 2026-04-05 at 23.47.21'}. Captionnotprovided; actualimage/person/trophyneedvisualconfirmation.",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/marrakech-event-2932.json",
+          "original_actual_size": [
+            1024,
+            1280
+          ],
+          "scale_to_native": 1.125,
+          "exact_narration_clause": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+          "semantic_use": "Rootapprovedofficialcleanchampionfullbodyraisingtrophy.Morrocanpresentersatbothsides. Source1024x1280crop960x1280→native1080x1440=1.125xtruthfullyrecorded.Noextraheaddetailzoom, noHD/4Kclaim.",
+          "zoom": 1.0,
+          "quality_approval": "ROOT_APPROVED_BODY_FULLBODY_ONLY: original1024x1280→fixedcrop960x1280→native1080x1440=1.125x, noadditionalzoom, notsourceHD/4K, notcover."
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "clay",
+      "kind": "narrated_visual",
+      "narration": "随后，巴塞罗那打进4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4489822",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4489822.jpg",
+          "sha256": "f0e1dd22ccde653dd8ed0aacfe4e0e336e344a2a18949655d9f47e3486594a4b",
+          "cx": 0.6,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4489822-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/04/18/6a889b7e-b3cf-4be5-a651-4cc5657a2d00/PR124386.jpg",
+          "source_caption": "BARCELONA, SPAIN - APRIL 18: ATP Barcelona Open Banc Sabadell 2026 at the Real Club de Tenis Barcelona on April 18, 2026 in Barcelona, Spain. (Photo by Pablo Rodriguez/Quality Sport images//Barcelona Open Banc Sabadell)",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4489822.json",
+          "original_actual_size": [
+            2400,
+            1600
+          ],
+          "scale_to_native": 0.9,
+          "exact_narration_clause": "随后，巴塞罗那打进4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+          "semantic_use": "OneexactBarcelonaSFApril18photoasfirst-eventcontextforthebriefclaysummary; notstampedMadrid/Rome,nothreerapidflashes."
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "rg_intro",
+      "kind": "narrated_visual",
+      "narration": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "rg-r4-fft",
+          "local_path": "/dev/shm/jodar-production/photos/rg-r4-fft.jpg",
+          "sha256": "bedfe271ca4d8dee787de89e1855cea298111c98c3a7c8f4711dba6c5ef1944c",
+          "cx": 0.4,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/rg-r4-fft-3x4.jpg",
+          "source_url": "https://images.prismic.io/fft-rg-commun-news/ahxNJgeQX7-eWdRH__NG11299.JPG",
+          "source_caption": "RafaelJodar,R4,Roland-Garros2026. NicolasGouhier/FFT. May31,2026.",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/rg-r4-fft.json",
+          "original_actual_size": [
+            3000,
+            2000
+          ],
+          "scale_to_native": 0.72,
+          "exact_narration_clause": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，",
+          "semantic_use": "ExactMay31R4FFT/NicolasGouhiercelebrationphotoEXIF16:55:02.Generalroundillustration, notspecificcomebackballinstant."
+        },
+        {
+          "kind": "photograph",
+          "asset_id": "rg-qf-zverev-fft",
+          "local_path": "/dev/shm/jodar-production/photos/rg-qf-zverev-fft.jpg",
+          "sha256": "ac9a649c11bff12c1c7ada19ab74fd5b9a0f7d29096fac45a21d0a4d16af8652",
+          "cx": 0.45,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/rg-qf-zverev-fft-3x4.jpg",
+          "source_url": "https://images.prismic.io/fft-rg-commun-news/ah7ucweQX7-eWkBz__PM25634.JPG",
+          "source_caption": "Alexander Zverev,QF,Roland-Garros2026. ©PhilippeMontigny/FFT. OfficialarticleTuesdayJune2,2026:Unbothered,Zverevmovesintoanothersemifinal. OpponentRafaelJodar.",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/rg-qf-zverev-fft.json",
+          "original_actual_size": [
+            3000,
+            2000
+          ],
+          "scale_to_native": 0.72,
+          "exact_narration_clause": "随后三盘输给兹维列夫。",
+          "semantic_use": "RootapprovedrealopponentZverevsameJune2QFphoto. ChangefromJodarR4celebrationonlywhenvoiceintroducestheQFlosstoZverev. Do notlabelpicturedpersonJodarorclaimthisisJodarreaction."
+        }
+      ],
+      "photo_count": 2,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "wimbledon_intro",
+      "kind": "narrated_visual",
+      "narration": "温网第二轮，再赢一场五盘大战。第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "wim-r2-guardian-epa",
+          "local_path": "/dev/shm/jodar-production/photos/wim-r2-guardian-epa.jpg",
+          "sha256": "75305f222b69db7899687efe10b11ec610e3794eab16f352746de32cc939330e",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/wim-r2-guardian-epa-3x4.jpg",
+          "source_url": "https://media.guim.co.uk/7c24c47a5668f190720e511912e374cdafe05b68/358_83_2360_1888/2360.jpg",
+          "source_caption": "RafaelJodarhitsareturntoPabloCarrenoBustaduringtheirsecondroundmatchatWimbledon.July2,2026.NeilHall/EPA.",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/wim-r2-guardian-epa.json",
+          "original_actual_size": [
+            2360,
+            1888
+          ],
+          "scale_to_native": 0.763,
+          "exact_narration_clause": "温网第二轮，再赢一场五盘大战。",
+          "semantic_use": "ExactJuly2R2vsCarrenoBustaNeilHallEPAprofessionalphoto."
+        },
+        {
+          "kind": "fact_card",
+          "card_id": "fact-wim-r3",
+          "local_path": "/dev/shm/jodar-production/photos/fact-wim-r3.png",
+          "sha256": "77506699d0394129caf02fe0baf3707791e120d94f2c47fc4cc71c659c88439f",
+          "dimensions": [
+            1080,
+            1440
+          ],
+          "visible_lines": [
+            "2026 赛季",
+            "温网第3轮",
+            "先赢1盘",
+            "负于望月慎太郎"
+          ],
+          "cx": 0.5,
+          "cy": 0.5,
+          "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+          "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+          "exact_narration_clause": "第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+          "semantic_use": "SimpleR3factcardbecauseJuly2R2photocannotmasqueradeasJuly3R3.",
+          "draft_visible_lines": [
+            "2026 赛季",
+            "温网第3轮",
+            "先赢一盘",
+            "负于望月慎太郎"
+          ],
+          "native_production_replacement": {
+            "component": "tennislive.video.transition_cards.render_clip",
+            "path": "assets/reel/jodar-finals-road-2026/native-factcards/fact-wim-r3.mp4",
+            "sha256": "3c5ffbc180d546d70ece33eaddb2e030c35e2c5d3562e357de3c708d1a0bc2bc",
+            "note": "Original Pillow draft bytes/hash remain provenance only; this shared native animation is the actual selected card. Arabic counting numerals affect card pixels only, not frozen narration."
+          }
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 1,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "washington_intro",
+      "kind": "narrated_visual",
+      "narration": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。对弗里茨，首盘抢七落败，最终收获亚军。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4551517",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4551517.jpg",
+          "sha256": "a33d44b3bf280921fbc4ccbab696db099dd2d694f32813d0fa0b44393ee9ddcc",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4551517-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/01/3b86be63-a0e1-434e-ae9e-811c2c7afed3/2026-Washington-Jodar.jpg",
+          "source_caption": "During the 2026 Mubadala DC Open at Rock Creek Park Tennis Center on July 31, 2026 in Washington, D.C. (Photo by Jeff Dean/Wick Photography for Mubadala DC Open)",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4551517.json",
+          "original_actual_size": [
+            7275,
+            4850
+          ],
+          "scale_to_native": 0.72,
+          "exact_narration_clause": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。",
+          "semantic_use": "ExactJuly31QFMusettiprofessionalactionasruncontext; notAug1SF-specificphoto.NoSF/TFclauseprecisepointclaim."
+        },
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4557201",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4557201.jpg",
+          "sha256": "3c47f2c9cb999a0b3e49db1a118cd6962ddb07df3a8d00c7e6a095a66a7367db",
+          "cx": 0.33,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4557201-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/10/27777ed5-c781-431d-b4b1-f63712cb7664/GettyImages-2288180313.jpg",
+          "source_caption": "WASHINGTON, DC - AUGUST 03: Taylor Fritz of the United States (R) shakes hands with Rafael Jodar of Spain after winning the men's singles championship match on the final day of the Mubadala DC Open 2026 at William H.G. FitzGerald Tennis Center on August 3, 2026 in Washington, DC. (Photo by Scott Taetsch/Getty Images)",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4557201.json",
+          "original_actual_size": [
+            6000,
+            4000
+          ],
+          "scale_to_native": 0.72,
+          "exact_narration_clause": "对弗里茨，首盘抢七落败，最终收获亚军。",
+          "semantic_use": "ExactAug3finalhandshakeGettyScottTaetsch,Jodarleft,Fritzright. Notwinnerstrophy."
+        }
+      ],
+      "photo_count": 2,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "montreal",
+      "kind": "narrated_visual",
+      "narration": "接着，在蒙特利尔首次打进大师赛4强。但来到美网，他第一轮就三盘输给布云朝克特。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4558426",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4558426.jpg",
+          "sha256": "3baeb4d4944ab99cc6a1fee20c8fb2982c9dd6d621c49f424bba83a39569c448",
+          "cx": 0.35,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4558426-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/08/12/6c6385de-111f-417a-b5c3-4f20fb0680db/MB-Rafael-Jodar-0848.jpg",
+          "source_caption": "August 12, 2026\r\r@mbelanger_photo\r\rMathieu Belanger/Tennis Canada\r\rRafael Jodar \r\r",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4558426.json",
+          "original_actual_size": [
+            3086,
+            2055
+          ],
+          "scale_to_native": 0.721,
+          "exact_narration_clause": "接着，在蒙特利尔首次打进大师赛4强。",
+          "semantic_use": "ExactlocalAug12SFvsNakashimaTennisCanadaMathieuBelangerprofessionalphoto."
+        },
+        {
+          "kind": "fact_card",
+          "card_id": "fact-us-r1",
+          "local_path": "/dev/shm/jodar-production/photos/fact-us-r1.png",
+          "sha256": "b08446b8c5d9b9195d4d46a39a9808fd0b165ca2969c8ec308817a0081fd4755",
+          "dimensions": [
+            1080,
+            1440
+          ],
+          "visible_lines": [
+            "2026 赛季",
+            "美网首轮",
+            "三盘落败",
+            "负于布云朝克特"
+          ],
+          "cx": 0.5,
+          "cy": 0.5,
+          "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+          "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+          "exact_narration_clause": "但来到美网，他第一轮就三盘输给布云朝克特。",
+          "semantic_use": "SimpleUSOpenR1factcard. VerifiedAPJodarpictureonlyactual1024x682notcalledHD; officialpointvideoseparate.",
+          "draft_visible_lines": [
+            "2026 赛季",
+            "美网首轮",
+            "三盘落败",
+            "负于布云朝克特"
+          ],
+          "native_production_replacement": {
+            "component": "tennislive.video.transition_cards.render_clip",
+            "path": "assets/reel/jodar-finals-road-2026/native-factcards/fact-us-r1.mp4",
+            "sha256": "dd559a013ea3cfbb69dab85bf3661ab26fba3ec8c75654cf888392bf9daca347",
+            "note": "Original Pillow draft bytes/hash remain provenance only; this shared native animation is the actual selected card. Arabic counting numerals affect card pixels only, not frozen narration."
+          }
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 1,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "shanghai_run",
+      "kind": "narrated_visual",
+      "narration": "上海，前四场全部逆转过关。半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4593133",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4593133.jpg",
+          "sha256": "acdd94b9751ab497d11cc3d18cf541b421c01187eb72cf83af561e4fe4246cdc",
+          "cx": 0.45,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4593133-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/16/5bcdfa7c-6617-4ddf-9de0-c6902e0d75b9/Rafael-JODAR-vs-Casper-RUUD9773.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4593133.json",
+          "original_actual_size": [
+            3004,
+            2145
+          ],
+          "scale_to_native": 0.672,
+          "exact_narration_clause": "上海，前四场全部逆转过关。",
+          "semantic_use": "ExactOct16QFvsRuudgenericactionrepresentsoneofthefourcomebacks, notclaimedprecisebreak/matchpoint."
+        },
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4593563",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4593563.jpg",
+          "sha256": "e21089500a14f354e72f6410525d8e54a47299707acd913d09e639db92b67c66",
+          "cx": 0.3,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4593563-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/17/b17e92e6-9d6e-4415-806f-94b7bbec99a6/Rafael-JODAR-vs-Daniil-MEDVEDEV0258.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4593563.json",
+          "original_actual_size": [
+            2981,
+            2166
+          ],
+          "scale_to_native": 0.665,
+          "exact_narration_clause": "半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+          "semantic_use": "ExactOct17SFvsMedvedevJodaractualphoto, fixedcx.30keepsentireface. Do notuseMedvedevphotoormislabelfinal."
+        }
+      ],
+      "photo_count": 2,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "shanghai_intro",
+      "kind": "narrated_visual",
+      "narration": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4593898",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4593898.jpg",
+          "sha256": "00f0dce47edac37c4a07df489fe78a1679ea6c69fb55c6dfca1c15d952c6fe7b",
+          "cx": 0.4,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4593898-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/10/18/f59fae89-853e-4675-8b9c-d3d0c5d2aebe/Alejandro-DAVIDOVICH-FOKINA-vs-Rafael-JODAR0494.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4593898.json",
+          "original_actual_size": [
+            3256,
+            2385
+          ],
+          "scale_to_native": 0.655,
+          "exact_narration_clause": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+          "semantic_use": "ExactOct18finalactionphotoofJodar, genericwholematchcontext; nospecificfirstset/secondsetleadinstantclaimed. Keeponephotoforcompactness."
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "paris",
+      "kind": "narrated_visual",
+      "narration": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+      "elements": [
+        {
+          "kind": "fact_card",
+          "card_id": "fact-paris-r2",
+          "local_path": "/dev/shm/jodar-production/photos/fact-paris-r2.png",
+          "sha256": "a856b787aff8f0f6edd566d0e7755b66dcddfd2e1181ddc9e09c5088d3350305",
+          "dimensions": [
+            1080,
+            1440
+          ],
+          "visible_lines": [
+            "2026 赛季",
+            "巴黎第2轮",
+            "负于鲁德",
+            "等待年终资格"
+          ],
+          "cx": 0.5,
+          "cy": 0.5,
+          "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+          "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+          "exact_narration_clause": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+          "semantic_use": "SimpleNov3R2factcard. ATP4604006EXIFNov2R1excludedfromthisnode; noguesspublicationdate=round."
+        }
+      ],
+      "photo_count": 0,
+      "fact_card_count": 1,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "qualification",
+      "kind": "narrated_visual",
+      "narration": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4605823",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4605823.jpg",
+          "sha256": "8031d08cae42ae011750a2be4232b47b9517e19f7a43cd88b4a9f3116c07138b",
+          "cx": 0.65,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4605823-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/11/06/3bf52c64-e8ad-40ce-a168-e3e012b165f2/COC_6438.JPG",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4605823.json",
+          "original_actual_size": [
+            5392,
+            3592
+          ],
+          "scale_to_native": 0.72,
+          "exact_narration_clause": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。",
+          "semantic_use": "ExactNov6ParisQFpostmatchAlcaraz/Fritzhandshake, officialjointtitle+EXIF23:58:15; anothermatchtriggersJodarqualification, notJodarbeatingFritz."
+        },
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4465812",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4465812.jpg",
+          "sha256": "165b3d92dbb4042f9fae37b5288ab3f92ff8430d06e4e8277ad91d39d0adc920",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4465812-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/03/11/887876d9-d12a-406c-9c4f-ef3a36aecc99/RAFAEL-JODAR_MT.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4465812.json",
+          "original_actual_size": [
+            2755,
+            2920
+          ],
+          "scale_to_native": 0.493,
+          "exact_narration_clause": "一年前还是大学生的他，今年第一次入围年终。",
+          "semantic_use": "2026studioseasoncallback, notNov6Jodarphysicalcelebration."
+        }
+      ],
+      "photo_count": 2,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    },
+    {
+      "segment_id": "race_table",
+      "kind": "narrated_graphic",
+      "narration": "截至十一月七日，三千二百三十四分，赛季积分榜第九。辛纳已退赛，霍达尔位列本届总决赛八位正选之中。",
+      "elements": [
+        {
+          "kind": "race_graphic",
+          "graphic": "race-points-qualified.png",
+          "semantic_use": "CanonicalNov7RacetableJodar3234Race9,Sinnerwithdrawn,Jodaroneof8qualified; retainall8qualifiedhighlightwithoutcallingrace9firstalternate."
+        }
+      ],
+      "budget_seconds": null
+    },
+    {
+      "segment_id": "question",
+      "kind": "narrated_visual",
+      "narration": "这一次在都灵，你最想看霍达尔碰上谁？",
+      "elements": [
+        {
+          "kind": "photograph",
+          "asset_id": "atp-4465812",
+          "local_path": "/dev/shm/jodar-production/photos/atp-4465812.jpg",
+          "sha256": "165b3d92dbb4042f9fae37b5288ab3f92ff8430d06e4e8277ad91d39d0adc920",
+          "cx": 0.5,
+          "cy": 0.5,
+          "fixed_crop_preview": "/dev/shm/jodar-production/photos/atp-4465812-3x4.jpg",
+          "source_url": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/03/11/887876d9-d12a-406c-9c4f-ef3a36aecc99/RAFAEL-JODAR_MT.jpg",
+          "source_caption": "",
+          "source_metadata_path": "/workspace/jodar-finals-production/research/photos/atp-4465812.json",
+          "original_actual_size": [
+            2755,
+            2920
+          ],
+          "scale_to_native": 0.493,
+          "exact_narration_clause": "这一次在都灵，你最想看霍达尔碰上谁？",
+          "semantic_use": "Official2026studioseasonportraitcallback; notTurinphysicalscene."
+        }
+      ],
+      "photo_count": 1,
+      "fact_card_count": 0,
+      "budget_seconds": null,
+      "budget_status": "PRODUCER_ACTUAL_VOICE_PLUS_POINT4_PENDING"
+    }
+  ],
+  "fact_cards": {
+    "fact-ao": {
+      "kind": "fact_card",
+      "card_id": "fact-ao",
+      "local_path": "/dev/shm/jodar-production/photos/fact-ao.png",
+      "sha256": "2d4321c3d2943b5726f4f19b63821a5f1504dcfc901243940ffa826dc34fee41",
+      "dimensions": [
+        1080,
+        1440
+      ],
+      "visible_lines": [
+        "2026 赛季",
+        "澳网",
+        "资格赛突围 · 正赛首胜",
+        "第2轮负门西克"
+      ],
+      "cx": 0.5,
+      "cy": 0.5,
+      "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+      "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded."
+    },
+    "fact-wim-r3": {
+      "kind": "fact_card",
+      "card_id": "fact-wim-r3",
+      "local_path": "/dev/shm/jodar-production/photos/fact-wim-r3.png",
+      "sha256": "77506699d0394129caf02fe0baf3707791e120d94f2c47fc4cc71c659c88439f",
+      "dimensions": [
+        1080,
+        1440
+      ],
+      "visible_lines": [
+        "2026 赛季",
+        "温网第3轮",
+        "先赢1盘",
+        "负于望月慎太郎"
+      ],
+      "cx": 0.5,
+      "cy": 0.5,
+      "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+      "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+      "draft_visible_lines": [
+        "2026 赛季",
+        "温网第3轮",
+        "先赢一盘",
+        "负于望月慎太郎"
+      ],
+      "native_production_replacement": {
+        "component": "tennislive.video.transition_cards.render_clip",
+        "path": "assets/reel/jodar-finals-road-2026/native-factcards/fact-wim-r3.mp4",
+        "sha256": "3c5ffbc180d546d70ece33eaddb2e030c35e2c5d3562e357de3c708d1a0bc2bc",
+        "note": "Original Pillow draft bytes/hash remain provenance only; this shared native animation is the actual selected card. Arabic counting numerals affect card pixels only, not frozen narration."
+      }
+    },
+    "fact-us-r1": {
+      "kind": "fact_card",
+      "card_id": "fact-us-r1",
+      "local_path": "/dev/shm/jodar-production/photos/fact-us-r1.png",
+      "sha256": "b08446b8c5d9b9195d4d46a39a9808fd0b165ca2969c8ec308817a0081fd4755",
+      "dimensions": [
+        1080,
+        1440
+      ],
+      "visible_lines": [
+        "2026 赛季",
+        "美网首轮",
+        "三盘落败",
+        "负于布云朝克特"
+      ],
+      "cx": 0.5,
+      "cy": 0.5,
+      "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+      "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded.",
+      "draft_visible_lines": [
+        "2026 赛季",
+        "美网首轮",
+        "三盘落败",
+        "负于布云朝克特"
+      ],
+      "native_production_replacement": {
+        "component": "tennislive.video.transition_cards.render_clip",
+        "path": "assets/reel/jodar-finals-road-2026/native-factcards/fact-us-r1.mp4",
+        "sha256": "dd559a013ea3cfbb69dab85bf3661ab26fba3ec8c75654cf888392bf9daca347",
+        "note": "Original Pillow draft bytes/hash remain provenance only; this shared native animation is the actual selected card. Arabic counting numerals affect card pixels only, not frozen narration."
+      }
+    },
+    "fact-paris-r2": {
+      "kind": "fact_card",
+      "card_id": "fact-paris-r2",
+      "local_path": "/dev/shm/jodar-production/photos/fact-paris-r2.png",
+      "sha256": "a856b787aff8f0f6edd566d0e7755b66dcddfd2e1181ddc9e09c5088d3350305",
+      "dimensions": [
+        1080,
+        1440
+      ],
+      "visible_lines": [
+        "2026 赛季",
+        "巴黎第2轮",
+        "负于鲁德",
+        "等待年终资格"
+      ],
+      "cx": 0.5,
+      "cy": 0.5,
+      "source": "Facts from exactfrozennarration; graphicalfallbackduetonoeligibleHDsameevent/roundportrait. NOT aphotograph.",
+      "native_overlay_safe": "Allauthoredtexty350..965; nativebrandheadery0..170 andcaptionbottomremainclear. No additionalinformationcardneeded."
+    }
+  },
+  "bounded_opponent_review": {
+    "scope": "Exactly2existingknownsame-roundofficialopponentphotooriginals; nobroadnewsearch.",
+    "reviewed_at": "2026-11-07T01:46:09.060223+00:00",
+    "rg_qf": "PASS_TRUE_ZVEREV_SAME_QF_3000x2000_REPLACED_CARD",
+    "wim_r3": "TRUE_MOCHIZUKI_SAME_R3_IPTC_BUT800x489_REQUIRES2.945x_NOT_SELECTED_CARD_RETAINED",
+    "active_fact_card_count": 4,
+    "contact": "/workspace/jodar-finals-production/research/photos/bounded-opponents-contact.jpg"
+  },
+  "cover_native_preview_status": "PASS_ACTUAL_NATIVE_COVER_IDENTITY_CROP_HEADER_HOOK",
+  "cover_native_preview_evidence": "/workspace/jodar-finals-production/research/photos/native-cover-independent-photo-review.json",
+  "cover_identity_rebinding": {
+    "old_frozen_plan": "/workspace/jodar-finals-production/research/editorial-plan.frozen-before-final-cover.json",
+    "old_frozen_plan_sha256": "578a226332b5259b0112b35b94153540e5c9e2b0e9f3203ba812cb73618e1a04",
+    "new_frozen_plan": "/workspace/jodar-finals-production/research/editorial-plan.json",
+    "new_frozen_plan_sha256": "2fc8268f487406bdd69d67121061cea9b85589c6d58083bedd069671f469f753",
+    "all_segments_identical": true,
+    "body_narration_count": 14,
+    "body_segments_sha256": "1b36b45bd0b4ba3f3607c2ee62136854ffc0a4c5f23458b7348865880c7e3d53",
+    "cover_hook_narration_topic_unchanged": true,
+    "identity_only_changes": "Coverimage_candidate4465812→4594534 plusimage_momentmetadata. Bodyphotos,factcards,all14narrationsandtheirclausesunchanged.",
+    "opening_ending_studio_allowed": "Bodyopening/qualification/questionretainstudio4465812as2026seasonprofile; theyneednotmatchthecoverphotograph.",
+    "rebound_at": "2026-11-07T02:02:28.605200+00:00"
+  }
+}

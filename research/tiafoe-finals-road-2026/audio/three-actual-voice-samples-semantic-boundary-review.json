@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-07T01:04:45.279190+00:00",
+  "status": "PASS_text_hash_actual_marks_and_semantic_scope_only",
+  "frozen_plan_sha256": "80b90966c9679faa3d04762fa5110d71b25bd0cd46c5a6caf133fd5cdad5b394",
+  "sample_manifest_sha256": "eb73e400c87cc4fa9869e6ab3cb098b890e786d45c60764ab4d271065a7d747d",
+  "samples": [
+    {
+      "id": "cover",
+      "audio_sha256": "6771b30a831fad18d4fea35aca614b794a93a64e084785e0e8eeb17d9da5ff4f",
+      "words_sha256": "ccadf5c1b982ceab0215a943c07f486163d2a269360b2904e52dae237f8b5be5",
+      "actual_duration": 3.888,
+      "last_word_end": 3.066041,
+      "all_normalized_source_characters_covered_by_marks": true,
+      "single_mark_names": [
+        "蒂亚福",
+        "谢尔顿"
+      ],
+      "semantic_layout_notes": "Two complete clauses. Tiafoe/Shelton each a single realmark."
+    },
+    {
+      "id": "rg_intro",
+      "audio_sha256": "edd8668baea1a5e46051a86756e097b48567e95f2336b17c70c21d78e94ccc38",
+      "words_sha256": "fdcfefda94880ee32959816b36861a23e3f2cd8979d622e1bd869f81c2ddba43",
+      "actual_duration": 9.528,
+      "last_word_end": 8.702833,
+      "all_normalized_source_characters_covered_by_marks": true,
+      "single_mark_names": [
+        "阿尔纳尔迪"
+      ],
+      "semantic_layout_notes": "Clauses distinguish matchduration, setlead, fourthsetlead andloss. Arnaldi is one realmark; longsentence punctuation already protects each complete clause."
+    },
+    {
+      "id": "us_open_qf_intro",
+      "audio_sha256": "2fd620394f441a010bb9e3bc1413fbe91d3daeb7a201601a57c31b0cff5383e2",
+      "words_sha256": "048bdf94a1bc613477bf7a75c19e77754ffe7f67bd341bf16ae66465933d7253",
+      "actual_duration": 8.424,
+      "last_word_end": 7.594333,
+      "all_normalized_source_characters_covered_by_marks": true,
+      "single_mark_names": [
+        "米切尔森"
+      ],
+      "semantic_layout_notes": "Stage/setscore clauses distinct; Michelsen one realmark. No edited spelling versus frozen canonical names."
+    }
+  ],
+  "speech_phonetics_or_naturalness_approval": false,
+  "human_listening_claimed": false,
+  "not_full17request_approval": true,
+  "scope": "Actual three MP3/marks/hash and fullmeaning/risk review only. Native visualcaption preview must still confirm real rendered linebreaks. Automatedfivevoice-suite required on final actual inventory; these marks alone do not prove audible pronunciation or whole voice quality."
+}

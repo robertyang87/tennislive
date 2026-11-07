@@ -1,0 +1,65 @@
+{
+  "source_key": "us-open-qf",
+  "source_id": "tf26usqf",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/highlights_from_frances_tiafoe_vs_alex_michelsen_at_the_2026_us_open.html",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tf26usqf/tf26usqf.mp4",
+  "source_path": "/dev/shm/tiafoe-production/sources/tf26usqf.mp4",
+  "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+  "window": [
+    70.15,
+    86.0
+  ],
+  "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/us-open-qf.json",
+  "packet_sha256": "ce37ab2a22940f51de167c55f1e82c80734b27764e5f00f4d6ec7871ca361560",
+  "quote": [
+    {
+      "at": 6.35,
+      "end": 8.85,
+      "text": "[Umpire announces the winner]\n【裁判宣布比赛胜者】"
+    },
+    {
+      "at": 9.479,
+      "end": 14.96,
+      "text": "A comeback that is extra special for Frances Tiafoe.\n这场逆转，对蒂亚福意义非凡。"
+    }
+  ],
+  "absolute_utterances": [
+    {
+      "start": 76.5,
+      "end": 78.2,
+      "display_until": 79.0,
+      "en": "[Umpire announces the winner]",
+      "zh": "【裁判宣布比赛胜者】",
+      "caption_kind": "descriptive_not_verbatim"
+    },
+    {
+      "start": 79.629,
+      "end": 85.11,
+      "en": "A comeback that is extra special for Frances Tiafoe.",
+      "zh": "这场逆转，对蒂亚福意义非凡。",
+      "caption_kind": "verified_official_caption_name_normalized"
+    }
+  ],
+  "status": "complete_audio_scope_not_actualfilmapproval",
+  "native_audio_tail": "silence",
+  "subwindow_rebind": {
+    "from_packet_sha256": "bdfd083120b784fe75f7cf705076eb50dabcd47be7425635613f90c1f92ca0bb",
+    "original_packet_preserved": "/workspace/tiafoe-finals-production/research/audio/historical-pre-wide-crop/us-open-qf.json",
+    "old_selected_window": [
+      66.6,
+      86.0
+    ],
+    "new_selected_window": [
+      70.15,
+      86.0
+    ],
+    "reviewed_range_unchanged": [
+      66.6,
+      86.0
+    ],
+    "reason": "Root actual preview found face outside right edge during closeup at67.6. Late actual pixels confirmed70.15 is first safewide,70.65fadeclear before70.9333–70.9667strike; whole terminal point/reaction/hug through86.5 preserved.",
+    "outside_sentence_excluded": "Match point for the 11 seed.66.669–69.230 is complete before new70.15start; no partial utterance remains.",
+    "additional_asr_performed": false,
+    "at": "2026-11-07T01:18:44.878932+00:00"
+  }
+}

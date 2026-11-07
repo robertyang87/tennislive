@@ -1,0 +1,51 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T00:54:34.275651+00:00",
+  "model": "medium",
+  "source_sha256": "777d7b8271e29e52decda7067a8c840c46282d847a96999020e4851ca3ab9516",
+  "source_path": "/dev/shm/tiafoe-production/media-early/tf26rg.mp4",
+  "clip": [
+    171.0,
+    179.85
+  ],
+  "duration": 8.85,
+  "language_requested": "fr",
+  "detected_language": "fr",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 171.0,
+      "end": 172.0,
+      "text": "C'est Zaka.",
+      "avg_logprob": -0.7871857219272189,
+      "no_speech_prob": 0.6593042612075806,
+      "words": [
+        {
+          "w": " C",
+          "s": 171.0,
+          "e": 171.16,
+          "p": 0.17131516337394714
+        },
+        {
+          "w": "'est",
+          "s": 171.16,
+          "e": 171.24,
+          "p": 0.9568534195423126
+        },
+        {
+          "w": " Zaka.",
+          "s": 171.24,
+          "e": 172.0,
+          "p": 0.5408885404467583
+        }
+      ]
+    }
+  ]
+}

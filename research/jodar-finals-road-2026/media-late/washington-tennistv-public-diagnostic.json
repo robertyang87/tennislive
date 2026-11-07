@@ -1,0 +1,46 @@
+{
+  "channel": "Tennis TV free short",
+  "page": "https://www.tennistv.com/videos/4553271/washington-2026-final-fritz-jodar-short-highlights",
+  "entry_id": "0_mdb7h6gx",
+  "no_login_no_cookies": true,
+  "manifest_status": 200,
+  "manifest_variants": [
+    "#EXT-X-STREAM-INF:BANDWIDTH=489000,CODECS=\"mp4a.40.2,avc1.42C01E\",RESOLUTION=483x272,AUDIO=\"audio-aacl-64\",CLOSED-CAPTIONS=NONE",
+    "#EXT-X-STREAM-INF:BANDWIDTH=1006000,CODECS=\"mp4a.40.2,avc1.4D401F\",RESOLUTION=640x360,AUDIO=\"audio-aacl-128\",CLOSED-CAPTIONS=NONE",
+    "#EXT-X-STREAM-INF:BANDWIDTH=2550000,CODECS=\"mp4a.40.2,avc1.640028\",RESOLUTION=1280x720,AUDIO=\"audio-aacl-128\",CLOSED-CAPTIONS=NONE"
+  ],
+  "actual_ffprobe_returncode": 0,
+  "actual_streams": [
+    {
+      "codec_type": "audio",
+      "width": null,
+      "height": null,
+      "r_frame_rate": "0/0"
+    },
+    {
+      "codec_type": "audio",
+      "width": null,
+      "height": null,
+      "r_frame_rate": "0/0"
+    },
+    {
+      "codec_type": "video",
+      "width": 480,
+      "height": 272,
+      "r_frame_rate": "25/1"
+    },
+    {
+      "codec_type": "video",
+      "width": 640,
+      "height": 360,
+      "r_frame_rate": "25/1"
+    },
+    {
+      "codec_type": "video",
+      "width": 1280,
+      "height": 720,
+      "r_frame_rate": "25/1"
+    }
+  ],
+  "duration": "156.120000"
+}

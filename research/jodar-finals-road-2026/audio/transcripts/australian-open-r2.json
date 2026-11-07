@@ -1,0 +1,129 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://ausopen.com/match/2026-jakub-mensik-vs-rafael-jodar-ms221",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-jd26ao/jd26ao.mp4",
+  "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex jodar audio role; exact actual source SHA and fullselected-window real small.en/medium.en with one bounded tail inspection for editorial scope; no human auditory listening claim",
+  "reviewed_at": "2026-11-07T01:59:45.799030+00:00",
+  "status": "complete",
+  "reviewed_from": 143.6,
+  "reviewed_to": 150.68,
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [],
+  "no_foreground_english_reason": "Real original MP4 SHA and full143.6–163.4 small.en/medium.en raw cover the complete selected143.6–150.68. Both actual modeloutputs have no corroborated foreground English sentence in this subwindow; first complete commentary begins at estimated150.92/150.98. Selectedbody ends0.24s before earliest estimate, with timinglimits explicitly preserved and no false humanphoneme precision. Actualsamepoint servecontact145.8/rally/result149.6 then>=1.08s clean mainreaction verified byearlyfinepixels; native+.5video tail151.18 is silent via audio_tail and does not introduce later source speech. Original serve/ball/crowd sourceaudio stays unity, no speech removal inside the chosenbody. This is a foregroundsemantic conclusion based on real wholewindow evidence, not recognition of every ambient crowd/umpire phoneme.",
+  "uncertain_spans": [],
+  "lexical_limitations_outside_selected_window": {
+    "outside_selected_original_commentary": "Full143.6–163.4 rawsmall/medium starts complete commentary A professional win from Jakub Mensik... at estimated150.92/150.98 and runs through a nationality selfcorrection. One bounded160–178.5 tail gives Czech...Spaniard I shouldsay RafaelJodar, complete name ends166.12/166.52. Nextparagraph begins167.9/168.68.",
+    "unresolved_outside_connector": "small recognizes of SpanishSpaniards; medium orSpaniard but or is zero-duration p.245. Exact connector not declared resolved. Root chose original required completepoint+genuine reaction, without the long nonessential commentary paragraph, not a cut through a sentence or a removal of a needed keypoint.",
+    "no_exact_phoneme_claim": "Earliest150.92 ASR onset is a broad modelestimate (A150.92–151.76), not human firstphoneme timing. Shortselectedend150.68 leaves0.24s to that conservative earliestmodel boundary. No statement that everybackgroundphoneme was humanheard.",
+    "original_raw_preserved": "All4 true modeloutput files remain unchanged for internal scope/limits, including zero-length hallucinated clipped-prefix It’s at160.0 and weak connector; do not count those as positive exactword evidence."
+  },
+  "source_identity": {
+    "source_path": "/dev/shm/jodar-production/sources/jd26ao.mp4",
+    "source_bytes": 84668999,
+    "actual_probe_identity_file": "/workspace/jodar-finals-production/research/media-early/ao/source-identity.json"
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/jd26ao/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/jd26ao/small.en.json",
+      "sha256": "b93133a0d23cd7f7162c05d1fea7b305a403697766d9adf58726d581256c371a",
+      "model": "small.en",
+      "clip": [
+        143.6,
+        163.4
+      ],
+      "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/jd26ao/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/jd26ao/medium.en.json",
+      "sha256": "120a696d18652b547582176a7280ebad6af1b664d874f16f262af647c01b4b21",
+      "model": "medium.en",
+      "clip": [
+        143.6,
+        163.4
+      ],
+      "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/jd26ao/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/jd26ao/small.en.json",
+      "sha256": "7d51b1338834411b92c5b28cb5918b1c08aff6d937374a35e26f8d988374b05b",
+      "model": "small.en",
+      "clip": [
+        160.0,
+        178.5
+      ],
+      "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/jd26ao/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/jd26ao/medium.en.json",
+      "sha256": "25aa3945c0f1d36a72d5bc5e55bf6efba8d1b1765e0bd77a5a032e3201564122",
+      "model": "medium.en",
+      "clip": [
+        160.0,
+        178.5
+      ],
+      "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    }
+  ],
+  "native_quote": [],
+  "editorial_selected_scope": {
+    "root_approved_window": [
+      143.6,
+      150.68
+    ],
+    "pure_visual_tail_to": 151.18,
+    "main_reaction_after_result_at_least": 1.08,
+    "wholepoint_preserved": true,
+    "new_asr_after_bounded_tail": false
+  },
+  "review_notes": [
+    "No originalEnglishsentence is cut, and no uncertain source clause inside selectedbody is relabelled resolved. Longoutsidecommentary and all4 raw remain original; only the fullpoint+reaction subset is chosen because it completes the requiredGrandSlam terminalpoint without a lengthy nationality slip tangent.",
+    "Start143.6 is after source143.4 owntransition, before actual145.8contact. Exactpointprep/contact/result and fixedcentre pixelproof are early role. End150.68 and+.5tail151.18 separately actualreviewed clean; addedtail sourceaudio silent by explicit nativecontract. No finalnativepreview/master/voice naturalness approval."
+  ]
+}

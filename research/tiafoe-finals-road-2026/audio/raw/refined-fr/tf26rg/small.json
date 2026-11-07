@@ -1,0 +1,93 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T00:54:23.326344+00:00",
+  "model": "small",
+  "source_sha256": "777d7b8271e29e52decda7067a8c840c46282d847a96999020e4851ca3ab9516",
+  "source_path": "/dev/shm/tiafoe-production/media-early/tf26rg.mp4",
+  "clip": [
+    171.0,
+    179.85
+  ],
+  "duration": 8.85,
+  "language_requested": "fr",
+  "detected_language": "fr",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 171.0,
+      "end": 179.82,
+      "text": "Je vous dis à la fin de la cérémonie des",
+      "avg_logprob": -2.0227432250976562,
+      "no_speech_prob": 0.5840237140655518,
+      "words": [
+        {
+          "w": " Je",
+          "s": 171.0,
+          "e": 172.48,
+          "p": 0.029777400195598602
+        },
+        {
+          "w": " vous",
+          "s": 172.48,
+          "e": 173.92,
+          "p": 0.14916999638080597
+        },
+        {
+          "w": " dis",
+          "s": 173.92,
+          "e": 175.16,
+          "p": 0.018060797825455666
+        },
+        {
+          "w": " à",
+          "s": 175.16,
+          "e": 175.86,
+          "p": 0.5259727835655212
+        },
+        {
+          "w": " la",
+          "s": 175.86,
+          "e": 177.9,
+          "p": 0.22487623989582062
+        },
+        {
+          "w": " fin",
+          "s": 177.9,
+          "e": 177.9,
+          "p": 0.3871164321899414
+        },
+        {
+          "w": " de",
+          "s": 177.9,
+          "e": 177.9,
+          "p": 0.5220780968666077
+        },
+        {
+          "w": " la",
+          "s": 177.9,
+          "e": 177.9,
+          "p": 0.25253260135650635
+        },
+        {
+          "w": " cérémonie",
+          "s": 177.9,
+          "e": 179.78,
+          "p": 0.49393198010511696
+        },
+        {
+          "w": " des",
+          "s": 179.78,
+          "e": 179.82,
+          "p": 0.014626700431108475
+        }
+      ]
+    }
+  ]
+}

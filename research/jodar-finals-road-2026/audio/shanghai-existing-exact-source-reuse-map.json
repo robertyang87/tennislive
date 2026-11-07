@@ -1,0 +1,129 @@
+{
+  "created_at": "2026-11-07T01:29:06.313667+00:00",
+  "status": "reuse_mapping_actual_current_source_bytes_verified_pending_parent_window_selection_and_packet",
+  "source_id": "402fnpRkS3c",
+  "primary_official_url": "https://www.youtube.com/watch?v=402fnpRkS3c",
+  "existing_archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
+  "expected_immutable_source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "expected_source_bytes": 104092732,
+  "actual_current_source_bytes_verified": true,
+  "old_reviewed_range": [
+    413.6,
+    470.18
+  ],
+  "old_packet": {
+    "path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/source-audio/full_ending_and_trophy.json",
+    "sha256": "1b6484708dce4c8cbb7c4ab77fe5a5888b73ff4430f59d7364ed77f1006d9339"
+  },
+  "old_review_index": {
+    "path": "/workspace/fils-finals-production/native/data/audio_reviews/davidovichfokina-jodar-shanghai-2026-final.json",
+    "sha256": "28776d99e56856921d28cb2a2fe817b8bab04c3a4d4650a920536b587161806c"
+  },
+  "all_old_packet_evidence_file_hashes_actually_reverified": [
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/source_asr/402fnpRkS3c/small.en.json",
+      "sha256": "953f6bb4d146dcca0f69e9ca7efba7f4662052e74051c4d465a265830b4fc9ff",
+      "bytes": 21498
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/source_asr/402fnpRkS3c/medium.en.json",
+      "sha256": "e92bac9863c6d8254988cd03f282e8d12926dc2095ca1ba4b206864e9090f24d",
+      "bytes": 27446
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/402fnpRkS3c.en-orig.json3",
+      "sha256": "45e32494064a27d5f563c4f291c76734a42115336195cf256ca7efd0b84aa580",
+      "bytes": 27438
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/context-vad-raw-all.json",
+      "sha256": "5eeae3a2b65760a633a6c871c98d6c73173ae01e4beeb2f330d01a182fdc4036",
+      "bytes": 24286
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/large-v3-turbo-critical-raw.json",
+      "sha256": "e58cd684ba0722872d554fbeee04543d3d164cced3dcc40c48f641120abf2bbb",
+      "bytes": 6856
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/candidate-acoustic-comparison-raw.json",
+      "sha256": "606a7a74055bf4a4b77df89485745940b7ead5c25d6467bdf26042505e48f23a",
+      "bytes": 197789
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/native/data/evidence/davidovichfokina-jodar-shanghai-2026-final/captions/ctc-candidate-comparison-raw.json",
+      "sha256": "a12ef46901a152ed4a0b413b8caa3c95a04d855416fe3f6e3db9b27758018e2d",
+      "bytes": 4342
+    }
+  ],
+  "old_true_visual_winning_point": [
+    436.54,
+    439.24
+  ],
+  "old_next_ad_start": 470.18,
+  "safe_reuse_condition": "Current producer unique archive byte SHA must equal805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975; actual new selected window must be within reviewed413.6–470.18, all source sentences whole and native extra0.5video tail independently pixelreviewed. Then transfer only relevant exactraw/quotes/timing, rebind new sourceURL contract and correct Jodar loser perspective. No new ASR necessary for an already fullycovered frozen subwindow.",
+  "editorial_perspective": "Shanghai final audio announces winner AlejandroDavidovichFokina, not Jodar. Do not recast champion commentary as Jodar title. First3cue to450.48 are a complete subject/predicate sentence; if keeping champion commentary must keep whole sentence. Later trophycommentary454.5–469.98 can be omitted as whole sentences to fit budget.",
+  "known_lexical_limits_not_inferred_resolved": [
+    {
+      "start": 49.18,
+      "end": 58.0,
+      "unresolved_utterance": [
+        49.66,
+        52.5
+      ],
+      "former_ambiguity": "a001",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 49.36
+    },
+    {
+      "start": 311.16,
+      "end": 321.46,
+      "unresolved_utterance": [
+        311.62,
+        314.38
+      ],
+      "former_ambiguity": "a006",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 311.34
+    },
+    {
+      "start": 402.16,
+      "end": 405.88,
+      "unresolved_utterance": [
+        402.5,
+        405.8
+      ],
+      "former_ambiguity": "a008_and_reply",
+      "status": "actually_excluded_not_resolved",
+      "next_native_tail_before_utterance": 402.34
+    }
+  ],
+  "background_candidate_evidence": [
+    {
+      "span": [
+        413.0,
+        431.82
+      ],
+      "kind": "unstable_numeric_hallucination_candidate",
+      "actual_evidence": "medium repeats1,2,1 beginningp.01/.015; small full no text, bounded small/base VAD both no text, independentYT no text. Long on-court rally and crowd retained; no corroborated foreground sentence.",
+      "foreground_uncertainty": false
+    }
+  ],
+  "new_tts_created": false,
+  "new_asr_performed": false,
+  "new_packet_sealed": false,
+  "current_source_path": "/dev/shm/jodar-production/sources/402fnpRkS3c.mp4",
+  "current_source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "current_actual_visual_candidate_window": [
+    436.54,
+    453.7
+  ],
+  "current_visual_tail_to": 454.2,
+  "current_visual_reported_strike": [
+    437.14,
+    437.16
+  ],
+  "current_visual_reported_fadeclear": 437.04,
+  "current_visual_reviewer": "tiafoe_media_late actual pixels; final parent selection still pending",
+  "current_evidence_identity_verified_at": "2026-11-07T01:29:41.802272+00:00"
+}

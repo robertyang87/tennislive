@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-07T00:45:12.994851+00:00",
+  "status": "actual_old_source_and_raw_bytes_verified_audio_reuse_ready_visual_window_pending",
+  "source_path": "/workspace/fils-finals-production/research/media-late/RAAXKA85t3g.mp4",
+  "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+  "source_actual_sha256_verified": true,
+  "origin_packet": "/workspace/fils-finals-production/research/audio/transcripts/cincinnati-final.json",
+  "origin_packet_sha256": "2c4484cbac6afbc90ef2f5104ddfdf48aa68d0605b323ab7e351570e8892565d",
+  "origin_window": [
+    68.7,
+    97.0
+  ],
+  "origin_reviewed_at": "2026-11-05T09:28:49.383869+00:00",
+  "asr_new_model_calls": 0,
+  "human_listening_claimed": false,
+  "raw": [
+    {
+      "original_path": "/workspace/fils-finals-production/research/audio/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/small.en.json",
+      "reused_path": "/workspace/tiafoe-finals-production/research/audio/raw/RAAXKA85t3g/reused-exact-source/small.en.json",
+      "sha256": "0f3c2e0fad41633d6f6bcbedea5a2bb7874dc26c5ae0842127ef6bf752b0f117",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d"
+    },
+    {
+      "original_path": "/workspace/fils-finals-production/research/audio/raw/RAAXKA85t3g/f5fa92e97d2b80cfce80851f4058295b5a12776a/medium.en.json",
+      "reused_path": "/workspace/tiafoe-finals-production/research/audio/raw/RAAXKA85t3g/reused-exact-source/medium.en.json",
+      "sha256": "4a2fb36a2ba009fe578a7dbfd10fad945dd5b180b71c891d0ba72af0e565fae4",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d"
+    }
+  ],
+  "timing_support": {
+    "path": "/workspace/tiafoe-finals-production/research/audio/cincinnati-origin-speech-activity.json",
+    "sha256": "c1d72cab7d197c1496e26b9a5c3f1cc49eb3bb1fd561b5563288bf544cba21ca"
+  },
+  "visual_selection_pending": "Do not promote this evidence-only record as full point/video approval. Late role is checking current real visuals and server preparation; no inherited full-server-preparation claim."
+}

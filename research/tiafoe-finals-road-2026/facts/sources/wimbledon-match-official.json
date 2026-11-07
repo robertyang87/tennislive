@@ -1,0 +1,273 @@
+{
+  "source_url": "https://www.wimbledon.com/en_GB/players/overview/atpbk92",
+  "extraction": "Decode actualNextFlight JSONstrings from archivedofficialHTML; select2026Match withTiafoe",
+  "match": {
+    "__typename": "Match",
+    "broadcaster": null,
+    "conjunction": null,
+    "comment": null,
+    "courtId": "AB",
+    "courtName": "No.1 Court",
+    "epoch": 1783200432000,
+    "duration": "4:08",
+    "eventCode": "MS",
+    "eventName": "Gentlemen's Singles",
+    "lastServeSpeed": null,
+    "notBefore": null,
+    "matchId": "1314",
+    "order": null,
+    "roundCode": "3",
+    "roundName": "Third Round",
+    "roundNameShort": "R3",
+    "server": null,
+    "shortCourtName": "No.1 Court",
+    "shortEventName": "Gentlemen's Singles",
+    "statsLevel": "H",
+    "status": "Completed",
+    "statusCode": "D",
+    "winner": "2",
+    "year": 2026,
+    "score": {
+      "__typename": "MatchScores",
+      "setsWon": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        2
+      ],
+      "setDurations": [
+        39,
+        49,
+        75,
+        55,
+        30
+      ],
+      "gameScore": [
+        null,
+        null
+      ],
+      "sets": [
+        [
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "4",
+            "scoreDisplay": "4",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        ],
+        [
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": "5",
+            "tiebreakDisplay": "5"
+          },
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "7",
+            "scoreDisplay": "7",
+            "tiebreak": "7",
+            "tiebreakDisplay": "7"
+          }
+        ],
+        [
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": "11",
+            "tiebreakDisplay": "11"
+          },
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "7",
+            "scoreDisplay": "7",
+            "tiebreak": "13",
+            "tiebreakDisplay": "13"
+          }
+        ],
+        [
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "4",
+            "scoreDisplay": "4",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        ],
+        [
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "3",
+            "scoreDisplay": "3",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        ]
+      ],
+      "tennisSets": [
+        {
+          "__typename": "MatchScoreTennisSet",
+          "set": 1,
+          "team1": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          "team2": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "4",
+            "scoreDisplay": "4",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        },
+        {
+          "__typename": "MatchScoreTennisSet",
+          "set": 2,
+          "team1": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": "5",
+            "tiebreakDisplay": "5"
+          },
+          "team2": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "7",
+            "scoreDisplay": "7",
+            "tiebreak": "7",
+            "tiebreakDisplay": "7"
+          }
+        },
+        {
+          "__typename": "MatchScoreTennisSet",
+          "set": 3,
+          "team1": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": "11",
+            "tiebreakDisplay": "11"
+          },
+          "team2": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "7",
+            "scoreDisplay": "7",
+            "tiebreak": "13",
+            "tiebreakDisplay": "13"
+          }
+        },
+        {
+          "__typename": "MatchScoreTennisSet",
+          "set": 4,
+          "team1": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          "team2": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "4",
+            "scoreDisplay": "4",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        },
+        {
+          "__typename": "MatchScoreTennisSet",
+          "set": 5,
+          "team1": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "3",
+            "scoreDisplay": "3",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          },
+          "team2": {
+            "__typename": "MatchScoreTennisSetTeamScore",
+            "score": "6",
+            "scoreDisplay": "6",
+            "tiebreak": null,
+            "tiebreakDisplay": null
+          }
+        }
+      ]
+    },
+    "flags": {
+      "__typename": "MatchFlags",
+      "upset": false
+    },
+    "team1": [
+      {
+        "__typename": "MatchTeam",
+        "challengesAvailable": null,
+        "challengesUsed": null,
+        "displayNameA": "F. Tiafoe",
+        "displayNameB": null,
+        "entryStatus": null,
+        "firstNameA": "Frances",
+        "firstNameB": null,
+        "idA": "atptd51",
+        "idB": null,
+        "lastNameA": "Tiafoe",
+        "lastNameB": null,
+        "nationA": "USA",
+        "nationB": null,
+        "seed": 17,
+        "totalSetsWon": 2,
+        "won": false
+      }
+    ],
+    "team2": [
+      {
+        "__typename": "MatchTeam",
+        "challengesAvailable": null,
+        "challengesUsed": null,
+        "displayNameA": "A. Bublik",
+        "displayNameB": null,
+        "entryStatus": null,
+        "firstNameA": "Alexander",
+        "firstNameB": null,
+        "idA": "atpbk92",
+        "idB": null,
+        "lastNameA": "Bublik",
+        "lastNameB": null,
+        "nationA": "KAZ",
+        "nationB": null,
+        "seed": 10,
+        "totalSetsWon": 3,
+        "won": true
+      }
+    ]
+  }
+}

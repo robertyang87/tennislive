@@ -1,0 +1,164 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://x.com/Wimbledon/status/2073520443403669555",
+  "source_sha256": "5b789bf00d4267d64fc708469cb03feba72c140c9434d0f5a1408957373d577b",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex tiafoe_audio_race; actual cachedlocal small.en/medium.en sourceword crosscheck; no human auditory listening or wholevoice quality claim",
+  "reviewed_at": "2026-11-07T01:06:46.285131+00:00",
+  "reviewed_from": 0,
+  "reviewed_to": 21.8,
+  "status": "complete",
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 1.26,
+      "end": 9.14,
+      "en": "[Umpire announces the result and score]",
+      "zh": "【裁判宣布比赛结果和比分】",
+      "caption_kind": "descriptive_not_verbatim"
+    },
+    {
+      "start": 10.62,
+      "end": 12.72,
+      "en": "Well, it was a different result four years ago,",
+      "zh": "四年前的结果可不一样，",
+      "sentence_id": "wimbledon-first-complete-sentence-part1"
+    },
+    {
+      "start": 13.46,
+      "end": 15.68,
+      "en": "it was Tiafoe going through to the last 16.",
+      "zh": "那次晋级第四轮的是蒂亚福。",
+      "sentence_id": "wimbledon-first-complete-sentence-part2"
+    },
+    {
+      "start": 15.84,
+      "end": 18.58,
+      "en": "This time it is Alexander Bublik",
+      "zh": "这一次，亚历山大·布勃利克",
+      "sentence_id": "wimbledon-second-complete-sentence-part1"
+    },
+    {
+      "start": 19.28,
+      "end": 21.58,
+      "en": "who will take his place in round four.",
+      "zh": "拿到了第四轮的席位。",
+      "sentence_id": "wimbledon-second-complete-sentence-part2"
+    }
+  ],
+  "uncertain_spans": [],
+  "review_notes": [
+    "Originalsource English has actual umpirewinner/scorecall1.26–9.14 and then commentator. Both real models misrecognize numbers and seven for setand; do not reconstruct literal setscore from resultdatabase. The clear bracketdescription gives actual generalcall semantics without a manufactured verbatim formula or numbers.",
+    "Full commentator first sentence10.62–15.68 and second15.84–21.58 are preserved in semantic displayparts. Medium high-confidence Well itwas chosen over small spurious But with probability.021 and early9.06 envelope. Both stronglyagree different result/four years/Tiafoe/last16 and This time/AlexanderBublik/roundfour. Player spellings normalized against exact matchidentity.",
+    "Selected21.8 ends after final four21.56/.58 and before next commentator And: small early21.58–22.76 And envelope is broad; medium true And22.66 supports no nextsentence body intrusion. Whole source0–40.042667 is transcribed, so later paragraphs remain available but not selected.",
+    "Actual latevisual role confirms same-terminal servecontact0.683–.700 after0.5entryfade, visible initialtoss but no pre-tossserverpreparation; no fullserver-preparation claim. Actual Tiafoe reaction and handshake20.5 retained. Nativeextra0.5visualtail ends22.3, before nextclause22.66 and remains same genuine result/reaction."
+  ],
+  "asr_evidence": [
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/tf26wimmp/small.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26wimmp/small.en.json",
+      "sha256": "e8d3574943fa4127835f1aa9d4be865b44c8407db2762ee2a177256abe33885e",
+      "source_sha256": "5b789bf00d4267d64fc708469cb03feba72c140c9434d0f5a1408957373d577b",
+      "model": "small.en",
+      "clip": [
+        0,
+        40.042667
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "research/tiafoe-finals-road-2026/audio/raw/tf26wimmp/medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/tf26wimmp/medium.en.json",
+      "sha256": "c53e65f5d1bb2f711fda17068b5baa07c570167af3abbf0e7cd8d02326e2255b",
+      "source_sha256": "5b789bf00d4267d64fc708469cb03feba72c140c9434d0f5a1408957373d577b",
+      "model": "medium.en",
+      "clip": [
+        0,
+        40.042667
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "research/tiafoe-finals-road-2026/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/tiafoe-production/sources/tf26wimmp.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "60000/1001"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "40.042667",
+        "size": "22663206"
+      }
+    }
+  },
+  "coverage_policy": "Verified commentator words get sourceEnglish/Chinese; bracketed umpire captions explicitly describe actual backgroundresult/score calls without inventing exact numbers or claiming verbatim transcription.",
+  "known_lexically_untranscribed_background_calls": [
+    {
+      "start": 1.26,
+      "end": 9.14,
+      "kind": "umpire_result_and_score",
+      "represented_by": "Explicit nonverbatim bracketdescription; exactnumeric formula not invented."
+    }
+  ],
+  "native_quote": [
+    {
+      "at": 1.26,
+      "end": 9.14,
+      "text": "[Umpire announces the result and score]\n【裁判宣布比赛结果和比分】"
+    },
+    {
+      "at": 10.62,
+      "end": 12.72,
+      "text": "Well, it was a different result four years ago,\n四年前的结果可不一样，"
+    },
+    {
+      "at": 13.46,
+      "end": 15.68,
+      "text": "it was Tiafoe going through to the last 16.\n那次晋级第四轮的是蒂亚福。"
+    },
+    {
+      "at": 15.84,
+      "end": 18.58,
+      "text": "This time it is Alexander Bublik\n这一次，亚历山大·布勃利克"
+    },
+    {
+      "at": 19.28,
+      "end": 21.58,
+      "text": "who will take his place in round four.\n拿到了第四轮的席位。"
+    }
+  ]
+}

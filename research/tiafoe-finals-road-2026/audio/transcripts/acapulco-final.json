@@ -1,0 +1,109 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights",
+  "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex tiafoe_audio_race; actual immutable-source byteSHA and original small.en/medium.en raw crosscheck; same-window evidence reused without newASR or human auditory listening",
+  "reviewed_at": "2026-11-07T00:55:12.927322+00:00",
+  "reviewed_from": 129.3,
+  "reviewed_to": 143.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 131.74,
+      "end": 135.62,
+      "en": "Acapulco belongs to Flavio.",
+      "zh": "阿卡普尔科，属于弗拉维奥。"
+    },
+    {
+      "start": 135.62,
+      "end": 138.14,
+      "en": "Cobolli the champion.",
+      "zh": "科博利，冠军！"
+    },
+    {
+      "start": 139.9,
+      "end": 142.56,
+      "en": "A second ATP 500 title.",
+      "zh": "第二座五百分赛冠军。"
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-small.en.json",
+      "sha256": "29f6a908404350cc40e03180bdcdf179d001dad4fcee23f7a0281cb6f1575d4b",
+      "model": "small.en",
+      "source_window": [
+        120.0,
+        156.0
+      ],
+      "origin_path": "data/audio_reviews/cobolli-finals-2026/raw/4459713-small.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-small.en.json",
+      "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-medium.en.json",
+      "sha256": "762ef5c95d91ca5b1b3d3216f9383a3dae59bfb62057b7a3aae64846e2049ed1",
+      "model": "medium.en",
+      "source_window": [
+        120.0,
+        156.0
+      ],
+      "origin_path": "data/audio_reviews/cobolli-finals-2026/raw/4459713-medium.en.json",
+      "research_path": "/workspace/tiafoe-finals-production/research/audio/raw/4459713/reused-exact-source/4459713-medium.en.json",
+      "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd"
+    }
+  ],
+  "review_notes": "Exact native free-official Tennis TV source archive was freshly downloaded and both ASR files bind its actual native-container SHA01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd. Do not substitute the earlier local mux04ce8c... or unofficial long-source0EEZ8hRlZVg evidence. In the current120–156 transcripts both models agree on all three complete winning clauses; verified proper-name spelling Cobolli replaces Kaboli. Earliest Acapulco onset131.74 and latest Flavio end135.62 cover both hypotheses. Cobolli starts136.58 in small.en versus a stretched135.62 onset in medium.en; this name cue is displayed135.62–138.14, covering both whole-token timing hypotheses; its earlier onset may include a real pause, not a claimed extra spoken word. The third clause139.90–142.56 is complete in both. Prior “Oh, another one” ends128.90 or earlier before129.30. The next distinct ranking clause “Up to15 in the world now” begins143.76 in the earliest raw word hypothesis, so selected end143.40 leaves real ASR-boundary space after the title phrase and excludes that new clause. Original nominal source audio remains at unit gain; native audio_tail:silence is required only for added dissolve continuation. No human listening is claimed.",
+  "source_identity": {
+    "video_id": "4459713",
+    "source_path": "/workspace/cobolli-research/media-a/4459713-native.mp4",
+    "sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+    "bytes": 75715431,
+    "duration": 156.04,
+    "audio": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ],
+    "archive": "https://github.com/robertyang87/tennislive/releases/download/source-4459713/4459713-01d711954a47ee48.mp4"
+  },
+  "review_scope": "Exact selected source window and complete bilingual-caption coverage only; no whole-source or human listening claim",
+  "official_identity_evidence": "/workspace/cobolli-research/media-a/acapulco-final.metadata.json",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-4459713/4459713-01d711954a47ee48.mp4",
+  "human_listening_performed": false,
+  "reuse_provenance": {
+    "origin_packet": "/workspace/cobolli-tail-revision/native/data/audio_reviews/cobolli-finals-2026/acapulco-matchpoint.json",
+    "origin_packet_sha256": "f9ee3ded697b616edf1c96840764a8edba55df3a0369bf2341fd6004c7bbf0c7",
+    "origin_reviewed_at": "2026-11-04T10:28:13.860557+00:00",
+    "source_SHA_actual_recomputed": true,
+    "raw_SHA_actual_recomputed": true,
+    "same_window": [
+      129.3,
+      143.4
+    ],
+    "new_ASR_model_calls": 0,
+    "perspective_note": "Original source names and championship statements refer to winner FlavioCobolli. They are preserved truthfully inside current Tiafoe runner-up story; not rewritten as a Tiafoe title."
+  },
+  "current_visual_scope_note": "Current early role checked source servecontactabout130.20 after entryfade129.8; full point, original reactions and video addedtail143.9 reviewed separately. Audio packet is not actual finalfilm approval.",
+  "native_quote": [
+    {
+      "at": 2.44,
+      "end": 6.32,
+      "text": "Acapulco belongs to Flavio.\n阿卡普尔科，属于弗拉维奥。"
+    },
+    {
+      "at": 6.32,
+      "end": 8.84,
+      "text": "Cobolli the champion.\n科博利，冠军！"
+    },
+    {
+      "at": 10.6,
+      "end": 13.26,
+      "text": "A second ATP 500 title.\n第二座五百分赛冠军。"
+    }
+  ]
+}

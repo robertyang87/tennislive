@@ -1,0 +1,310 @@
+{
+  "as_of": "2026-11-07T00:56:15.020551+00:00",
+  "status": "verified_editorial_handoff",
+  "season": {
+    "as_of": "2026-11-07T00:57:15.312857+00:00",
+    "player": "Frances Tiafoe",
+    "individual_tour_events": 22,
+    "individual_tour_matches": 65,
+    "individual_tour_wins": 44,
+    "individual_tour_losses": 21,
+    "titles": [
+      "Halle"
+    ],
+    "finals": [
+      "Acapulco",
+      "Halle",
+      "Cincinnati"
+    ],
+    "grand_slam_wins": 12,
+    "grand_slam_losses": 4,
+    "exhibition_matches": 1,
+    "exhibition_wins": 0,
+    "exhibition_losses": 1,
+    "exhibition_event": "Kooyong, loss toKhachanov6-4 6-4, excludedtourrecord",
+    "DavisCup_singles_records_in_year_dataset": 0,
+    "all_provider_records": 66,
+    "provider_all_scope_record": "44W22L includesoneexhibitionloss; do not labelthat ATPtourrecord",
+    "terminal_three_tour_matches_all_losses": [
+      "Shanghai",
+      "Vienna",
+      "Paris"
+    ],
+    "qualification_date": "2026-11-06",
+    "qualification_appearance": "firstcareer",
+    "qualification_trigger": "BenShelton defeatedTommyPaul inParisquarterfinals; notTiafoeownwin",
+    "source_qualification": "https://www.nittoatpfinals.com/en/news/tiafoe-nitto-atp-finals-2026-qualification",
+    "dates_note": "ProviderTE/TT dates are separately archived; do not universally treat either as localfinish. Main editorial node dates checked to eventofficial reports. RGstartedJune1 andfinishedJune2."
+  },
+  "nodes": [
+    {
+      "id": "australian-open-r3",
+      "local_finish_date": "2026-01-23",
+      "round": "3R",
+      "winner": "Alex de Minaur",
+      "loser": "Frances Tiafoe",
+      "winner_score": "6-3 6-4 7-5",
+      "facts": [
+        "澳网第三轮直落三盘失利"
+      ],
+      "source": {
+        "url": "https://ausopen.com/articles/news/de-minaur-dazzles-leave-tiafoe-out-answers",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/ao-r3-official.html",
+        "sha256": "8309fe98e94d8ce933be5918b2e6b7c9e93b30d484d5a7b0090ae9a921087727"
+      }
+    },
+    {
+      "id": "acapulco-final",
+      "local_finish_date": "2026-02-28",
+      "round": "F",
+      "winner": "Flavio Cobolli",
+      "loser": "Frances Tiafoe",
+      "winner_score": "7-6(4) 6-4",
+      "facts": [
+        "赛季第一场决赛，亚军",
+        "当地周六2月28日结束；欧洲文章3月1日发布不改变比赛当地日期"
+      ],
+      "source": {
+        "url": "https://www.nittoatpfinals.com/en/news/cobolli-tiafoe-acapulco-2026-final",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/acapulco-final.html",
+        "sha256": "18ed66cc13ce5969361e49db237b94b196a5450a1168f30355934d8748f4cb71"
+      }
+    },
+    {
+      "id": "roland-garros-r4",
+      "local_start_date": "2026-06-01",
+      "local_finish_date": "2026-06-02",
+      "round": "R16",
+      "winner": "Matteo Arnaldi",
+      "loser": "Frances Tiafoe",
+      "winner_score": "7-6(5) 6-7(5) 3-6 7-6(3) 6-4",
+      "facts": [
+        "用时5小时26分",
+        "蒂亚福盘分2比1领先，第四盘双破发4比1领先",
+        "第四盘5比4时曾发球胜赛，但不能说已经拿到赛点",
+        "比赛跨午夜：星期一6月1日开始、星期二6月2日约01:11结束；日期卡建议6月2日"
+      ],
+      "source": {
+        "url": "https://www.rolandgarros.com/en-us/article/2026-edition-r4-arnaldi-tiafoe",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/rg-r4-official.html",
+        "sha256": "8e2422231c76d7e2cc8d76d41a4fc798aba2b7a7ca475052b0be39560e6cbf5a"
+      },
+      "clock_source": {
+        "url": "https://www.rolandgarros.com/en-us/article/2026-edition-rg-live-monday-june-1",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/rg-live-june1.html",
+        "sha256": "f172986563f99b9e8be760d96701e4d95a315b25601e3867a1912ecc653ad5bf"
+      }
+    },
+    {
+      "id": "halle-qf",
+      "local_finish_date": "2026-06-19",
+      "round": "QF",
+      "winner": "Frances Tiafoe",
+      "loser": "Felix Auger-Aliassime",
+      "winner_score": "3-6 6-3 7-6(12)",
+      "facts": [
+        "挽救3个赛点；决胜盘抢七14比12",
+        "仅赛事级转折事实，本片不必另加第二个额外精彩球"
+      ],
+      "source_url": "https://www.atptour.com/en/news/medvedev-altmaier-halle-2026-friday",
+      "source_access_note": "ATP官方文章已由网页搜索读取；正常直接GET受403，未重试绕过；官方PTL哈雷PDF本地证实比分。Reuters/CanadianPress交叉亦确认3个赛点。",
+      "source_search_evidence": {
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/halle-qf-three-mp-search-evidence.json",
+        "sha256": "cd4b6b5efd1ee195c704db46cb674c4a2bd60ca59cabd92cd1c610811d0a7301",
+        "note": "Official ATP + Reuters passages via search; exact website article GET403 recorded separately; not a falsely claimed fetched HTML."
+      }
+    },
+    {
+      "id": "halle-final",
+      "local_finish_date": "2026-06-21",
+      "round": "F",
+      "winner": "Frances Tiafoe",
+      "loser": "Taylor Fritz",
+      "winner_score": "6-4 6-4",
+      "facts": [
+        "2026赛季唯一冠军",
+        "生涯第4冠，首个ATP500冠军",
+        "该周击败3位世界前10：科博利(10)、阿利亚西姆(4)、弗里茨(9)，不要把种子排位当世界排名"
+      ],
+      "source": {
+        "url": "https://www.nittoatpfinals.com/en/news/fritz-tiafoe-halle-2026-final",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/halle-final.html",
+        "sha256": "af7f829ef5b134c92587189ba41387080dc20f19f2067a4c0794aa4bcc324164"
+      }
+    },
+    {
+      "id": "wimbledon-r3",
+      "local_finish_date": "2026-07-04",
+      "round": "3R",
+      "winner": "Alexander Bublik",
+      "loser": "Frances Tiafoe",
+      "winner_score": "4-6 7-6(5) 7-6(11) 4-6 6-3",
+      "facts": [
+        "五盘落败，用时4小时08分",
+        "官方Match1314：第三轮、Court1、Bublik winner；第三盘抢七13比11"
+      ],
+      "source": {
+        "url": "https://www.wimbledon.com/en_GB/players/overview/atpbk92",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/wimbledon-profile.html",
+        "sha256": "44a573d3be3fc1182b645019d0c4423a91d56d4ec64d24b3cd0aa14931a8e4db"
+      },
+      "extracted_match": "/workspace/tiafoe-finals-production/research/facts/sources/wimbledon-match-official.json"
+    },
+    {
+      "id": "montreal-retirement",
+      "round": "3R",
+      "winner": "Arthur Rinderknech",
+      "loser": "Frances Tiafoe",
+      "winner_score": "6-2 2-0 RET",
+      "facts": [
+        "八月蒙特利尔比赛中伤退",
+        "随后右手手术移除囊肿，有医院本人署名声明、辛辛那提赛事官方、美网官方支持",
+        "不进一步推断具体病情、未愈复出或手术因果疗效",
+        "日期TE/TT列8月7日，另源当地8月6日；本片仅写八月，不猜当地日"
+      ],
+      "sources": [
+        {
+          "url": "https://news.hss.edu/frances-tiafoe-undergoes-hand-surgery-performed-by-hss-surgeon-dr-michelle-carlson/",
+          "path": "/workspace/tiafoe-finals-production/research/facts/sources/hand-hospital.html",
+          "sha256": "1ac0712b830517c7c4ffe850c972868d3f0f9d47be09bd45bc9db32800ac7507"
+        },
+        {
+          "url": "https://cincinnatiopen.com/news/one-two-three-foe/",
+          "path": "/workspace/tiafoe-finals-production/research/facts/sources/cincinnati-hand-official.html",
+          "sha256": "2c82f6793cd697804e804e46e4c6aeb6bc4f725f704fb37560d76e8f9261c3a3"
+        },
+        {
+          "url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-07/frances_tiafoes_out-of-body_run_continues_at_2026_us_open.html",
+          "path": "/workspace/tiafoe-finals-production/research/facts/sources/usopen-hand-official.html",
+          "sha256": "4aabd8910982bf20d80c42797ac6cf06a9dff0de683be047ecb2d9efd041b3f5"
+        }
+      ]
+    },
+    {
+      "id": "cincinnati-final",
+      "local_finish_date": "2026-08-23",
+      "round": "F",
+      "winner": "Arthur Fils",
+      "loser": "Frances Tiafoe",
+      "winner_score": "6-3 1-6 6-0",
+      "facts": [
+        "蒂亚福先丢首盘，扳回第二盘，决胜盘0比6",
+        "生涯第二次大师赛决赛，两次均辛辛那提(2024、2026)",
+        "欧洲赛果站日期8月24日，本地官方星期日8月23日"
+      ],
+      "source": {
+        "url": "https://www.nittoatpfinals.com/en/news/fils-tiafoe-cincinnati-2026-final",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/cincinnati-final.html",
+        "sha256": "ef9e384acd3e52d1b4e9a37a262bff2e52d155152b9f512f6cbf24c31fd41ee5"
+      }
+    },
+    {
+      "id": "us-open-qf",
+      "local_finish_date": "2026-09-08",
+      "round": "QF",
+      "winner": "Frances Tiafoe",
+      "loser": "Alex Michelsen",
+      "winner_score": "5-7 3-6 7-5 6-3 7-6(6)",
+      "facts": [
+        "先丢两盘，第三盘一度0比3，最终连赢三盘",
+        "米切尔森第三盘5比4发球胜赛局被破；不要编造挽救赛点",
+        "第五盘亦一度0比3；最终抢十10比6",
+        "官方用时4小时38分，勿采其他报道4小时39分"
+      ],
+      "source": {
+        "url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-08/frances_tiafoe_makes_epic_comeback_to_defeat_alex_michelsen_at_the_2026_us_open_qfs.html",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/usopen-qf-official.html",
+        "sha256": "ff7850293afe45ff8aebd30af8060e1869741defd046ae9d58d6b16dcb40e3f6"
+      }
+    },
+    {
+      "id": "us-open-sf",
+      "local_finish_date": "2026-09-11",
+      "round": "SF",
+      "winner": "Ben Shelton",
+      "loser": "Frances Tiafoe",
+      "winner_score": "4-6 6-3 6-3 7-5",
+      "facts": [
+        "蒂亚福先赢一盘再连丢三盘",
+        "生涯第3次美网半决赛(2022、2024、2026)，不是连续第3年",
+        "欧洲赛果站9月12日，本地周五9月11日"
+      ],
+      "source": {
+        "url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/usopen-sf-official.html",
+        "sha256": "3248150cf6bcfeaa9bcec94c1d3c875da0743a24ee8f1b04a751932ce94f2762"
+      }
+    },
+    {
+      "id": "paris-r2",
+      "local_finish_date": "2026-11-04",
+      "round": "2R",
+      "winner": "Quentin Halys",
+      "loser": "Frances Tiafoe",
+      "winner_score": "6-3 1-6 7-6(9)",
+      "facts": [
+        "该结果先触发菲斯首次入围年终",
+        "蒂亚福自己的赛季末三场巡回赛均负：上海、维也纳、巴黎",
+        "不能说整个秋季未胜：东京与上海均有胜场"
+      ],
+      "source_url": "https://www.protennislive.com/posting/2026/352/mds.pdf",
+      "source_local": "/workspace/tiafoe-finals-production/research/facts/sources/paris.pdf",
+      "qualification_corroboration_url": "https://www.reuters.com/sports/tennis/frenchman-fils-reaches-atp-finals-first-time-2026-11-04/"
+    },
+    {
+      "id": "shelton-paris-qf-trigger",
+      "local_finish_date": "2026-11-06",
+      "round": "QF",
+      "winner": "Ben Shelton",
+      "loser": "Tommy Paul",
+      "winner_score": "6-4 4-6 6-3",
+      "facts": [
+        "谢尔顿在巴黎1/4决赛击败保罗，触发蒂亚福首次晋级都灵",
+        "不是蒂亚福在巴黎获胜晋级",
+        "蒂亚福是第7位实际取得资格的选手，但Race含退出辛纳故排第8，3390分由root另包核验"
+      ],
+      "source": {
+        "url": "https://www.rolexparismasters.com/en/news/article/quarterfinals-ben-shelton-victory-tommy-paul",
+        "status": 200,
+        "sha256": "91f0705360ca384d1b8da384bb9f9a225259d4d07b8e8dfb6863a4b359f28ea3",
+        "path": "/workspace/tiafoe-finals-production/research/facts/sources/qualification-trigger-paris.html",
+        "bytes": 85716,
+        "at": "2026-11-07T00:54:03.635234+00:00"
+      },
+      "qualification_source": {
+        "url": "https://www.nittoatpfinals.com/en/news/tiafoe-nitto-atp-finals-2026-qualification",
+        "path": "/workspace/tiafoe-finals-production/research/facts/qualification.html",
+        "sha256": "9350e9f4ce548fc317c006fadfba07464c1ff9c99e9980345c2171af318c41f0"
+      }
+    }
+  ],
+  "chinese_name_canon": {
+    "Frances Tiafoe": "蒂亚福",
+    "Alex de Minaur": "德米纳尔",
+    "Alexander Bublik": "布勃利克",
+    "Alex Michelsen": "米切尔森",
+    "Matteo Arnaldi": "阿尔纳尔迪",
+    "Quentin Halys": "阿利斯",
+    "Ben Shelton": "谢尔顿",
+    "Taylor Fritz": "弗里茨",
+    "Flavio Cobolli": "科博利",
+    "Tommy Paul": "保罗",
+    "Daniil Medvedev": "梅德韦德夫"
+  },
+  "canon_note": "Latest native85c players.py directly verified: Medvedev=梅德韦德夫 per explicit user override now committed; Michelsen=米切尔森, Arnaldi=阿尔纳尔迪.",
+  "story_spine": "美网是谢尔顿挡住蒂亚福；十一月又是谢尔顿替他锁定首次年终资格。中段法网领先遭逆转→哈雷首500→右手手术后辛辛那提亚军→美网两盘落后逆转入第三次4强→秋末3连败与两场他人赛果的资格链。",
+  "score_convention": "all winner_score fields from match winner perspective; parenthetical tiebreak digit=loser points; USOpen fifth-set 7-6(6) means match tiebreak10-6.",
+  "race_note": "由root独立最新Race包核验3390/#8与全部8人晋级。不以资格新闻发布当时only one spot remains推断今日仍有一席。",
+  "deliverables": [
+    "all-matches.json",
+    "all-matches.csv",
+    "event-summary.json",
+    "event-summary.csv",
+    "season-summary.json",
+    "secondary-comparison.json",
+    "official-source-manifest.json",
+    "official-draw-reuse-manifest.json",
+    "wimbledon-source-manifest.json"
+  ],
+  "race_fact_audit": "/workspace/tiafoe-finals-production/research/facts/race-data-fact-audit.json"
+}

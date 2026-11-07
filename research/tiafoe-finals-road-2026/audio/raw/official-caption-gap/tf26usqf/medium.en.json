@@ -1,0 +1,87 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T01:02:43.453573+00:00",
+  "model": "medium.en",
+  "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+  "source_path": "/dev/shm/tiafoe-production/sources/tf26usqf.mp4",
+  "clip": [
+    75.0,
+    86.0
+  ],
+  "duration": 11.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 77.36,
+      "end": 85.08,
+      "text": "A comeback that is extra special for Francis Thiapo.",
+      "avg_logprob": -0.6047223965326946,
+      "no_speech_prob": 0.34016910195350647,
+      "words": [
+        {
+          "w": " A",
+          "s": 77.36,
+          "e": 78.76,
+          "p": 0.3044954538345337
+        },
+        {
+          "w": " comeback",
+          "s": 78.76,
+          "e": 80.16,
+          "p": 0.9883684515953064
+        },
+        {
+          "w": " that",
+          "s": 80.16,
+          "e": 81.5,
+          "p": 0.8895515203475952
+        },
+        {
+          "w": " is",
+          "s": 81.5,
+          "e": 81.7,
+          "p": 0.9776370525360107
+        },
+        {
+          "w": " extra",
+          "s": 81.7,
+          "e": 82.24,
+          "p": 0.9674495458602905
+        },
+        {
+          "w": " special",
+          "s": 82.24,
+          "e": 82.9,
+          "p": 0.9716900587081909
+        },
+        {
+          "w": " for",
+          "s": 82.9,
+          "e": 83.68,
+          "p": 0.9221563935279846
+        },
+        {
+          "w": " Francis",
+          "s": 83.68,
+          "e": 84.32,
+          "p": 0.8692114949226379
+        },
+        {
+          "w": " Thiapo.",
+          "s": 84.32,
+          "e": 85.08,
+          "p": 0.42890864610671997
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "4c0e4f352eab25f7298c583a3eba2f1278d060d5150c735872fb6f5daa30d05f",
+  "segments": [
+    {
+      "index": 3,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/acapulco-final.json",
+      "transcript_sha256": "0f6beaf29dfd39cbb712a95577eb3bbc8d6b13acf812b4803416b877dc662e2e"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/halle-final.json",
+      "transcript_sha256": "007d1e5286fb2eb5873fed4713275f1c4c46f8ddc60dc2f2c138646ed5586831"
+    },
+    {
+      "index": 8,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/wimbledon-r3.json",
+      "transcript_sha256": "90d350d24b1edaa2deb1538331b506df4064fd5bd5f18e9afa1071fda5334639"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/cincinnati-final.json",
+      "transcript_sha256": "aea9c30433e3e751174bdfacc128e0747a0fc7a0c60b2c311b87bb3fb61b20da"
+    },
+    {
+      "index": 13,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/us-open-qf.json",
+      "transcript_sha256": "28025974b2f180cebfcb7db0fc84989b0615abb57e0731faa860c19c16f81b25"
+    },
+    {
+      "index": 15,
+      "transcript_path": "data/audio_transcripts/tiafoe-finals-road-2026/us-open-sf.json",
+      "transcript_sha256": "9b7897e29c93b20340f08f8650a9ae9a4b768a4159434857db6c4e13570163fa"
+    }
+  ],
+  "method_note": "Six true selected source windows, actual real ASR cross-check or official source captions. AO/RG source limitations use same-event photos and are absent from selected source list. No human listening claimed."
+}

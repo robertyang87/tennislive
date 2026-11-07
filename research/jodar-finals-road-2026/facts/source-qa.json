@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-07T01:30:18.486159+00:00",
+  "all_records": 78,
+  "provider_outcomes_matched": 78,
+  "provider_score_matches_before_resolution": 75,
+  "score_differences": [
+    {
+      "event": "Rome",
+      "correct": "7-6(5) 5-7 6-0",
+      "TT_wrong": "7-6(0) 5-7 6-0",
+      "primary": "sources/rome.pdf"
+    },
+    {
+      "event": "Madrid",
+      "correct": "6-2 7-6(0)",
+      "TT_wrong": "6-2 7-6(7)",
+      "primary": "sources/madrid.pdf"
+    },
+    {
+      "event": "CanberraSF",
+      "correct_display": "6-3 RET",
+      "TE_includes_unplayed_set": "6-3 0-0",
+      "TT": "6-3",
+      "primary": "sources/canberra.pdf"
+    }
+  ],
+  "event_aliases": {
+    "TTLongIsland": "Dallas",
+    "TTCasablanca": "Marrakech",
+    "TTCanberra": "Canberra2challenger"
+  },
+  "player_aliases": {
+    "VallejoD": "AdolfoDanielVallejo(TEVallejoA)",
+    "BuY": "YunchaoketeBu(TEYunchaoketeB)"
+  },
+  "source_limitations": [
+    "All78outcomes crossmatchedTE/TT; Rome/MadridtwoTBconflicts resolvedofficialdraw; CanberraJacquetunused0-0normalizedto6-3RET officialdraw.",
+    "16officialindividualeventnonGSdraws available, thirteen explicitly reusedfromexistingactualcapture and3fresh. GSmainnodes fromactualofficialarticles/WimbledonembeddedJSON.",
+    "Do not reuse oldsourceclaimAQF/IWQF from articlejodar-pif-atp-live-rankings-projection-montreal-2026: contradicts actualresults; notused.",
+    "Actualmediaidentity,完整赛点,info-carddate/scoreorientation/captiontiming requireseparateQC.",
+    "CurrentRace snapshot freezesbeforeParisNov7SF; not rolling52weekrank. Alternateappointmentnotconfirmedinfieldarticle."
+  ],
+  "HTTP200_not_article_detected": {
+    "url": "https://www.world.tennis/en/news-and-media/articles/sakamoto-v-jodar-battle-of-junior-champs-turned-grand-slam-debutants/",
+    "bytes": 212,
+    "class": "Incapsula challenge; excluded content evidence"
+  }
+}

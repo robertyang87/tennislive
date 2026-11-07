@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-07T01:41:27.352021+00:00",
+  "status": "PASS_PUBLICATION_FACTS",
+  "artifact": "/workspace/jodar-finals-production/research/publication-copy.json",
+  "artifact_sha256": "3ab973a2daf79625fd94f41615b17f41a2518de1e02d9fe47b503ca5fb296d7d",
+  "body_sha256": "78cb4fa1da623dfd66fd6491a86608c7d16629f7aa5a1d72bf18288c890278cb",
+  "copy_title": "11.7网球有故事|霍达尔首进年终",
+  "title_characters": 17,
+  "body_characters": 338,
+  "lead": "从马拉喀什巡回赛首冠，到上海大师赛亚军，霍达尔拿到都灵最后一个正选席位。",
+  "scope_correction": {
+    "old_artifact": "/workspace/jodar-finals-production/research/publication-copy.draft.json",
+    "old_artifact_sha256": "58e57a7a1fef3ab98f11878e34acb47f5c6b2571542c852cd57ff2f569b40c78",
+    "old_body_sha256": "e20bbc6148325904969b313690803fafd5bd22605a8c6a0bd4aec6e394349191",
+    "new_body_sha256": "78cb4fa1da623dfd66fd6491a86608c7d16629f7aa5a1d72bf18288c890278cb",
+    "exact_body_change": "生涯首冠 -> 巡回赛首冠",
+    "exact_lead_change": "马拉喀什首冠 -> 马拉喀什巡回赛首冠",
+    "reason": "2025threeChallengertitles; MarrakechfirstATPmainTourtitle",
+    "native_narration_unchanged": true
+  },
+  "checked_claims": [
+    "UVAstudent-athleteidentityoneyearearlier, notactualNovembercollegecompetition",
+    "AOfromqualifying/firstmajorwin/five-setR1",
+    "MarrakechfirstATPmaintourtitle; RG0-2comebackPCBfirstGSQF; WimbledonR3",
+    "Washingtonsuccessivecomebacksthenrunnerup; MontrealfirstMastersSF; USOpenR1straight-setloss",
+    "Shanghaifourconsecutivecomebacks+SFMedvedevwin+firstMastersF+lossADF",
+    "ParisR2exit; AlcarazFritzNov6qualificationtrigger; lastactivefieldslot",
+    "SnapshotexplicitNov7beforeParisSF/Race9/3234/Sinnerwithdrawn/Jodaroneof8actualqualifiers"
+  ],
+  "factual_sources": [
+    "editorial-handoff.json",
+    "editorial-frozen-fact-audit.json",
+    "race-data-fact-audit.json",
+    "sources/qualification-field.html"
+  ],
+  "findings": [],
+  "limits": [
+    "Not an external publication action or approval of renderedcover/voice/pointwindows.",
+    "Recheckcurrentqualificationfactsatfinalpublicationifsourcefreshnesschanges."
+  ]
+}

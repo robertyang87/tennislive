@@ -1,0 +1,126 @@
+{
+  "created_at": "2026-11-07T01:39:52.188924+00:00",
+  "status": "PASS_actual_current_master_66_ASS_events_21_source_cues_17_voice_hashes",
+  "spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+  "ass_sha256": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
+  "binding_sha256": "3c30310c04975b67967c12c2b502fbd32ae00650a4abc0373eb66e34cabd7b53",
+  "native_gate_sha256": "c3320d91a3b3258f903c2637e8c443217844105133f66d721197508b380f8e09",
+  "scene_count": 21,
+  "narrated_body_scene_count": 15,
+  "ass_events": 66,
+  "bilingual_source_cues": 21,
+  "actual_voice_occurrences_bound": 17,
+  "actual_source_sha_count": 6,
+  "body_checks": [
+    {
+      "segment": 0,
+      "id": "opening",
+      "caption_rows": 3,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 1,
+      "id": "ao_intro",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 2,
+      "id": "acapulco_intro",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 4,
+      "id": "rg_intro",
+      "caption_rows": 4,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 5,
+      "id": "halle_intro",
+      "caption_rows": 4,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 7,
+      "id": "wimbledon_intro",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 9,
+      "id": "summer",
+      "caption_rows": 3,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 10,
+      "id": "cincinnati_intro",
+      "caption_rows": 4,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 12,
+      "id": "us_open_qf_intro",
+      "caption_rows": 3,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 14,
+      "id": "us_open_sf_intro",
+      "caption_rows": 4,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 16,
+      "id": "autumn",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 17,
+      "id": "paris",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 18,
+      "id": "qualification",
+      "caption_rows": 3,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 19,
+      "id": "race_table",
+      "caption_rows": 5,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    },
+    {
+      "segment": 20,
+      "id": "question",
+      "caption_rows": 2,
+      "full_readable_narration_exact": true,
+      "all_names_and_places_unbroken_across_events": true
+    }
+  ],
+  "preview_scope_only": false,
+  "master_render_inputs_available": true,
+  "visual_finding_closed": "Root personally opened originalwideframes and withdrew sourcecomposite falsepositive: physicalLEDwall+realstands in one realcontinuous shot. See final/root-qc/acap-composite-finding-closed.json.",
+  "human_listening_claimed": false,
+  "limitations": "Real actualmaster native-input ASS and exact MP3/marks/source-hash binding and timeline only. All15 body full readable text matches with no canonical name/place split across ASS events. All21 original English+Chinese cues cover source-required timings, including explicit [Shelton] editorial supplement. Does not assert human listening, voice phonetics or naturalness. Sourcecomposite concern was a root-confirmed falsepositive and closed; formalv1 stays unchanged. This is audio/subtitle identity scope only, not a claim of humanhearing or universal visualquality approval."
+}

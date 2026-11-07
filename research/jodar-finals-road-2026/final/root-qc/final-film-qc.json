@@ -1,0 +1,61 @@
+{
+  "status": "PASS_ACTUAL_FILM_QC_READY_FOR_EXACT_HEAD_CI_AND_NATIVE_SINGLE_PUBLISH",
+  "at": "2026-11-07T02:58:47.869202+00:00",
+  "reviewer": "root actualview_image +5independent actualmasterreviewroles",
+  "film": {
+    "file": "/workspace/jodar-finals-production/final/jodar-finals-road-2026.mp4",
+    "actual_master_storage": "/dev/shm/jodar-production/final/jodar-finals-road-2026.mp4",
+    "sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+    "bytes": 116333337,
+    "seconds": 244.5,
+    "native_artifact_id": 13556589844,
+    "formal_run": 42330488120
+  },
+  "spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+  "actual_ass_sha256": "6878a8b7a062e940cd14dc5319fd2404585b138f5d92f996d1d1c92b1d51ccec",
+  "render_inputs_sha256": "8b569f46662a613bce9a63af398cb19c8c6d185d8140f878bd894ba8b51a12fa",
+  "tracked_final_render_sha256": "cb776cf9869488259f293e2981355d2723f25cc69bb7dc29d7ea2d5f4a2c2a8e",
+  "editorial_sha256": "27cd42c680314e7efb42b02a9acd7976f564e40850cade69ada6f2c5c844956e",
+  "root_actual_visual_review": {
+    "contact_sheets_personally_opened": 6,
+    "actualmaster_frames_in_contact_sheets": 66,
+    "findings": [
+      "19scenes:14narratedbody+5actualmatchvideos; full1080x1440canvasandfixedcx.5/trackfalse.",
+      "Originalpointpreparation/contact/wholeterminalpoint/result/reactionsand.5tails actualdensecheckedbyearly/late roles; tightShanghai actualfadegone188.72 beforecontact188.84–188.88.",
+      "Nativecardsnoinfoinset; numeric1/4andcounts1盘/3盘preserved; allplayernameswholecaptionevent.",
+      "ActualShanghai runner-upsilverplatecoverfrontfaceclear; originalcampus/seasonphotosandmatchopponentsaccuratelybound; native15rowRace3234rank9/eightqualified/Sinnerwithdrawnlegible."
+    ],
+    "accepted_minor": "RGactual66.89–67.59approximately.7swideballpartialbody/racketedge; fixedcentreprioritizedasuserrequires, beforeafterlongpointandfinaldefendinglungeclear; notclaimedfullyunoccluded.",
+    "gaps_truthful": "Marrakech/Wimbledoncriticalshotscouldnotremaininsidehardfixedcentrecrop; genuineeventphoto/factualnarrationonly, nofakepointortracking. InternalrawfullsourcesandASRretained."
+  },
+  "integrity": {
+    "master_ffmpeg_full_decode_exit": 0,
+    "review_ffmpeg_full_decode_exit": 0,
+    "review_sha256": "d9f09b4e63157305ac73ad3e7d860e75a0b94a44ba7ea0a2c6a80c91d7aad6e8",
+    "review_bytes": 26786372,
+    "review_width": 720,
+    "review_seconds": 244.501
+  },
+  "native_voice_gate": {
+    "status": "PASS_REAL_CONFIGURED_AUTOMATED_FIVE_SUITE",
+    "strict_frozen_tts_requests": 16,
+    "bundle_sha256": "2524182ba008d20c1a5d874286b3ec5fd33b2b5959ed2c98cc3fea00d739d013",
+    "source_cues": 14,
+    "ass_events": 67,
+    "actual_inventory_rows": 32,
+    "actual_voice_review_sha256": "169d444dfeae83d631b8ffb0c87ebf800ced7f03f100ff813686e7611b4c612b",
+    "actual_auto_review_sha256": "ef4c147652acbef43ab73b498f503b527e865814b989c50167b4a6c2bf831140",
+    "limits": "ConfiguredautomatedPASSretainsTierB3还uncertain/1发unmeasurableandpermittedASRdifferences; no fabricatedhumanlistening,allphoneticsor naturalnessapproval."
+  },
+  "scoped_reviews": {
+    "qc-early/actualmaster-early-visual-qc.json": "04c3539aa228bbd86088cb92bbbcdf26751cc3642b299cf358d6395237ad9607",
+    "qc-late/actualmaster-late-qc.json": "a730f0db673254c550c85e494f9cb53d82093c07f2fcc478c00b6d7cee4771f9",
+    "qc-photos/actual-master-photo-qc.json": "f8878e0465bfa7eb26bd2991623327e5d38fd4ff1ca4272c1197aad1c1be5fcc",
+    "qc-facts/final-fact-audit.json": "adb83ef1a44c8f48f6f6fb051f5f33d50eb8b546d439333564a8a1e349babf28",
+    "qc-audio/current-master-audio-qc-status.json": "12d879a327f9a95fb3ebafecf52c8df998f8db464562c00f944bb95faabb2ce8",
+    "qc-audio/formal-automated-voice-review-binding-qc.json": "a055a140d8cf638a99e1c68e66a92d9e51f208b6948abbe968ef21233da97ad3",
+    "publication/freshness/verification.json": "34410c2d7af23e5a323ee6c82d59928e453d5a2fff3b4a34b5cfb9d40c3f314f",
+    "publication/release-entire-file-verification.json": "7829f4ff833c87df089aba02e69c0c46bacf57e5ddb16b9fed1fdd8fc5bbdcbc"
+  },
+  "publication_status": "NotsentatQCtime. Next exactcurrentheadCIgreen+cleanmerge then normalmain-only once; noadditionalmanualpush."
+}

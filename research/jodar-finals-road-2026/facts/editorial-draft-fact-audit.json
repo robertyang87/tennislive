@@ -1,0 +1,364 @@
+{
+  "at": "2026-11-07T01:37:34.852095+00:00",
+  "artifact": "/workspace/jodar-finals-production/research/editorial-plan.draft.json",
+  "sha256": "9702085d6684a4f7aa20ad885975667e0c0f589dfac4e82f05aaff88d116862b",
+  "status": "PASS_14_BODY_AND_COVER_FACTS_PENDING_FREEZE_AND_MEDIA_QC",
+  "narrated_body_count": 14,
+  "planned_point_videos": 7,
+  "cover": {
+    "hook": "从大学球场到都灵\n霍达尔首进年终",
+    "narration": "从大学球场到都灵，霍达尔首进年终。",
+    "fact_status": "PASS",
+    "source": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.txt",
+    "source_sha256": "f741f1b14ae1e4642d2d11da82369dfe881f2069412a52f578be97b521c707e7",
+    "evidence": "formerUniversityVirginiaathleteandfirstcareerFinals; noassertionofNovember2025collegematch"
+  },
+  "segment_results": [
+    {
+      "id": "opening",
+      "kind": "narrated_photo",
+      "narration": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.txt",
+          "sha256": "f741f1b14ae1e4642d2d11da82369dfe881f2069412a52f578be97b521c707e7",
+          "supporting_text_or_match_token": "One year ago, Jodar was still a college student-athlete at the University of Virginia",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/uva-player.txt",
+          "sha256": "675f9af9294fb4b5da6fb57452872ca132b828755f668134b486dc21f427548d",
+          "supporting_text_or_match_token": "Did not play collegiate matches in the fall",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "ao_intro",
+      "kind": "narrated_photo",
+      "narration": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/ao-first-win-uva.txt",
+          "sha256": "11e8ea47dab68ecda422bb98f2e9df1996f1c2c9dd1616b9ce26a7ea98270c64",
+          "supporting_text_or_match_token": "The victory is Jódar's first career Grand Slam victory",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/ao-first-win-uva.txt",
+          "sha256": "11e8ea47dab68ecda422bb98f2e9df1996f1c2c9dd1616b9ce26a7ea98270c64",
+          "supporting_text_or_match_token": "Jódar picked up three victories in the qualifying tournament",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/ao-r2.txt",
+          "sha256": "67cd1544bf3ec4ca1d0e513131fffaa98f4d71b6024f4cfd87c622ab90695cce",
+          "supporting_text_or_match_token": "6-2 6-4 6-4",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "ao_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "marrakech_intro",
+      "kind": "narrated_photo",
+      "narration": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/marrakech-final.txt",
+          "sha256": "00fef5f0a1778bc46bac3dd92096c58e3528f8e69b56e202730d7673ebebd0c7",
+          "supporting_text_or_match_token": "eased past Marco Trungelliti 6-3, 6-2",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/career-feature.txt",
+          "sha256": "ed658f33ef82b6dfe2dc17de035db241cabd20806e2da190210cbba8711ee4f1",
+          "supporting_text_or_match_token": "first ever tournament on clay in the ATP",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "marrakech_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "clay",
+      "kind": "narrated_photo",
+      "narration": "随后，巴塞罗那4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/barcelona.txt",
+          "sha256": "6e52a7e526b209d8a609b53e2ac58869bcdc2475046dc745d18ac6473b509fa9",
+          "supporting_text_or_match_token": "R. Jodar",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/madrid.txt",
+          "sha256": "592549cc55563cc748d2aa38517bbac297a4008d53c2f37f0a03e0fae233a8d9",
+          "supporting_text_or_match_token": "62 760",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/rome.txt",
+          "sha256": "aec9c4132cd4245a14f15480c5d75b3702dd62d8e9d91ac616c400528bddc371",
+          "supporting_text_or_match_token": "765 57 60",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "rg_intro",
+      "kind": "narrated_photo",
+      "narration": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/rg-r4.txt",
+          "sha256": "4284e3dbdde8d03f660f12f811594a4e374942dc67a0cf2f25a732a76950e145",
+          "supporting_text_or_match_token": "4-6, 4-6, 6-1, 6-2, 6-2",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/rg-qf.txt",
+          "sha256": "5d2346f9706fe35ba5f50dacb1314a78fb32b11f5ef175c8bfe8c1800d71bce6",
+          "supporting_text_or_match_token": "7-6, 6-1, 6-3",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "rg_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "wimbledon_intro",
+      "kind": "narrated_photo",
+      "narration": "温网第二轮，再赢一场五盘大战。第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/wimbledon-official-matches.json",
+          "sha256": "b54f1e35a3f2463c34eb53629f28cef3c7b602226fe0a62b2d8ec1494e0e70b4",
+          "supporting_text_or_match_token": "\"matchId\": \"1203\"",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/wimbledon-official-matches.json",
+          "sha256": "b54f1e35a3f2463c34eb53629f28cef3c7b602226fe0a62b2d8ec1494e0e70b4",
+          "supporting_text_or_match_token": "\"matchId\": \"1302\"",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "wimbledon_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "washington_intro",
+      "kind": "narrated_photo",
+      "narration": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。对弗里茨，首盘抢七落败，最终收获亚军。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/washington.txt",
+          "sha256": "c16725399fd7748412d55986e8b8c2fa3350c1d0498ede4c6f6a1891c80349dc",
+          "supporting_text_or_match_token": "16 61 64",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/washington.txt",
+          "sha256": "c16725399fd7748412d55986e8b8c2fa3350c1d0498ede4c6f6a1891c80349dc",
+          "supporting_text_or_match_token": "676 64 64",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/washington-final.txt",
+          "sha256": "ad3747a6af5d1232bfa3eb5ae616e416ed4e8f2452ff3a3c57e47e7f42a6b163",
+          "supporting_text_or_match_token": "first-time ATP 500 finalist Rafael Jodar 7-6(2), 6-4",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "washington_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "montreal",
+      "kind": "narrated_photo",
+      "narration": "接着，在蒙特利尔首次打进大师赛4强。但来到美网，他第一轮就三盘输给布云朝克特。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/career-feature.txt",
+          "sha256": "ed658f33ef82b6dfe2dc17de035db241cabd20806e2da190210cbba8711ee4f1",
+          "supporting_text_or_match_token": "semi-finals at the ATP Masters 1000 event in Montreal",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/usopen-bu.txt",
+          "sha256": "4326de6fac69a7fcc87d3bcbf955f0b563f634b7fa46a7514d947ad0ada48e0d",
+          "supporting_text_or_match_token": "6-2, 6-1, 6-1",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "us_open_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "shanghai_run",
+      "kind": "narrated_photo",
+      "narration": "上海，前四场全部逆转过关。半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/shanghai.txt",
+          "sha256": "af493fca8a4738a28b7a5f5a53c7caf9a60ff0827adc9d49b7afc8f9a3473017",
+          "supporting_text_or_match_token": "R. Jodar",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/first-season-165.txt",
+          "sha256": "e97d9b5ed10b2b41a1b27092203cd5423ff883278c2b2ca9c059fd9b88a6e956",
+          "supporting_text_or_match_token": "into his first ATP Masters 1000 final",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "shanghai_intro",
+      "kind": "narrated_photo",
+      "narration": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/shanghai-final.txt",
+          "sha256": "935a31fe2e5a6067da432c2123734a0ec80f597481704e45135ed91b7cec3a93",
+          "supporting_text_or_match_token": "trailing by a set and a break at 1-6, 2-3",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "shanghai_point",
+      "kind": "official_point_video",
+      "status": "PENDING_ACTUAL_SOURCE_QC",
+      "why": "plannedmatchresultverified; noselectedsourcewindow/framePASS claimed"
+    },
+    {
+      "id": "paris",
+      "kind": "narrated_photo",
+      "narration": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/qualification-cobolli-trigger.txt",
+          "sha256": "577725a4da8e5032e856eea214a4ce5c14006dc751dbfce4d60a0ce20d854f8f",
+          "supporting_text_or_match_token": "Casper Ruud defeated Rafael Jodar",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/paris-exit-3234-search.json",
+          "sha256": "04c854283cc7f9c5d57ebe2515659bd2bfa8ad3495edc7768c8290d76e4218f8",
+          "supporting_text_or_match_token": "Jodar is out of Paris and stays on 3,234 points",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "qualification",
+      "kind": "narrated_photo",
+      "narration": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.txt",
+          "sha256": "f741f1b14ae1e4642d2d11da82369dfe881f2069412a52f578be97b521c707e7",
+          "supporting_text_or_match_token": "After Carlos Alcaraz defeated Taylor Fritz on Friday",
+          "literal_token_present": true
+        },
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.txt",
+          "sha256": "f741f1b14ae1e4642d2d11da82369dfe881f2069412a52f578be97b521c707e7",
+          "supporting_text_or_match_token": "four first-time competitors",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "race_table",
+      "kind": "narrated_graphic",
+      "narration": "截至十一月七日，三千二百三十四分，赛季积分榜第九。辛纳已退赛，霍达尔位列本届总决赛八位正选之中。",
+      "fact_status": "PASS",
+      "evidence": [
+        {
+          "path": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.txt",
+          "sha256": "f741f1b14ae1e4642d2d11da82369dfe881f2069412a52f578be97b521c707e7",
+          "supporting_text_or_match_token": "Rafael Jodar has qualified for the season finale",
+          "literal_token_present": true
+        }
+      ]
+    },
+    {
+      "id": "question",
+      "kind": "narrated_photo",
+      "narration": "这一次在都灵，你最想看霍达尔碰上谁？",
+      "fact_status": "PASS",
+      "evidence": []
+    }
+  ],
+  "race_snapshot": {
+    "at": "2026-11-07T01:26:16.522873+00:00",
+    "source": "/workspace/tiafoe-finals-production/final/publication/freshness/verification.json",
+    "source_sha256": "be4f678c2a395abb8c4485bd86e0d08a42fb6795704b9bf7fa56a12b53c8c8a3",
+    "rank": 9,
+    "points": 3234,
+    "qualified_active_count": 8,
+    "actual_status": "8thfinalactivequalifier; notfirstalternate",
+    "Sinner": "withdrawnretainedRace2;notrenumbered",
+    "fact_status": "PASS"
+  },
+  "source_notes": [
+    "Eachnarratedfactcrosscheckedagainsthandoff/full78records/primaryarticles; missingliteralPDFtokenwhenlinewrapped doesnotmean exactfullmatchscorefromdraw automaticallymachineparsed.",
+    "MarrakechfirsttourclayeventisconfirmedbyJodarquotecareer-feature, not inferredonlyfromdataset.",
+    "Openingstudent-athleteidentitysupported; UVArosterexplicitly saysnocollegematchesFall2025, soavoidNovembermatchclaim.",
+    "Do not add seasonstart165/168numberwithoutdateclarification: officialarticlesdiffer165January5vs168atyearstart; currentdraftdoesnotusethefigure.",
+    "Do not usefirstalternateforJodar; actualfield8qualifieddespiteRace9. Alternateappointmentnotprovenbyfieldarticle."
+  ],
+  "findings": [],
+  "previous_suggested_corrections_resolved": [
+    "AO openingnotfirsteventofyear;Canberraearlier",
+    "Universitystudent-athleteidentityratherthanactualNovembercollegeplay",
+    "Paris3234isexitpointintimeline, notyearpermanenttotal"
+  ],
+  "outside_scope": [
+    "actualphotosidentityandcaptiondates",
+    "actualsourcefullterminalpointstart/end",
+    "actualEnglishspeechtranscriptionandbilingualalignment",
+    "actualrenderedASS/cards/graph",
+    "finalfuturepublicationfreshnessafterthissnapshot"
+  ]
+}

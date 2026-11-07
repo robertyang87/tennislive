@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-07T02:21:20.423556+00:00",
+  "status": "FIVE_ROOT_SELECTED_SOURCE_PACKETS_READY_NATIVE_SCENE_INDEX_BINDING_BY_PRODUCER_PENDING",
+  "selected_count": 5,
+  "actual_quote_cue_count": 14,
+  "total_selected_source_body_seconds": 107.48,
+  "selected": [
+    {
+      "source_key": "australian-open-r2",
+      "source_id": "jd26ao",
+      "source_url": "https://ausopen.com/match/2026-jakub-mensik-vs-rafael-jodar-ms221",
+      "source_sha256": "e38fc1b4ed2e82438c8599cbfe8f0953f1172699ab64f47928f6a097b2557b99",
+      "window": [
+        143.6,
+        150.68
+      ],
+      "audio_tail": "silence",
+      "handoff_path": "/workspace/jodar-finals-production/research/audio/australian-open-r2-native-handoff.json",
+      "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/australian-open-r2.json",
+      "packet_sha256": "e44e56bde6b52f1a07739049d1611471f1876db41d39bc111d0cc7cb9e56dbe9",
+      "cue_count": 0
+    },
+    {
+      "source_key": "roland-garros-qf",
+      "source_id": "ifZ07lICjz8",
+      "source_url": "https://www.youtube.com/watch?v=ifZ07lICjz8",
+      "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+      "window": [
+        153.96,
+        177.0
+      ],
+      "audio_tail": "silence",
+      "handoff_path": "/workspace/jodar-finals-production/research/audio/roland-garros-qf-native-handoff.json",
+      "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/roland-garros-qf.json",
+      "packet_sha256": "e5fba1d64c602db652dd02f7db51e092c553c85a6607163bd7426ba7b44c2fe5",
+      "cue_count": 1
+    },
+    {
+      "source_key": "washington-final",
+      "source_id": "-4AXzTrC9Ls",
+      "source_url": "https://www.youtube.com/watch?v=-4AXzTrC9Ls",
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "window": [
+        426.4,
+        461.1
+      ],
+      "audio_tail": "silence",
+      "handoff_path": "/workspace/jodar-finals-production/research/audio/washington-final-native-handoff.json",
+      "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/washington-final.json",
+      "packet_sha256": "aaceebf6603f2bc34d7148b7568eef785890a017d091b3ae95c0ff250108a034",
+      "cue_count": 5
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_id": "jd26uso",
+      "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-03/who_is_bu_yunchaokete_the_lucky_loser_who_upset_rafael_jodar_at_the_2026_us_open.html",
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "window": [
+        103.5,
+        129.0
+      ],
+      "audio_tail": "silence",
+      "handoff_path": "/workspace/jodar-finals-production/research/audio/us-open-r1-native-handoff.json",
+      "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/us-open-r1.json",
+      "packet_sha256": "beca98c258962d572d49e70261ae5e1b7e04e30c8de886e88c1e3b78eb723058",
+      "cue_count": 5
+    },
+    {
+      "source_key": "shanghai-final",
+      "source_id": "402fnpRkS3c",
+      "source_url": "https://www.youtube.com/watch?v=402fnpRkS3c",
+      "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+      "window": [
+        436.54,
+        453.7
+      ],
+      "audio_tail": "silence",
+      "handoff_path": "/workspace/jodar-finals-production/research/audio/shanghai-final-native-handoff.json",
+      "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/shanghai-final.json",
+      "packet_sha256": "5c43479eb55bee6e5b94a56abf47786715add85223fd97332a39d4fb261ac42b",
+      "cue_count": 3
+    }
+  ],
+  "excluded_video_sources": [
+    {
+      "source_id": "GFovhzddHg0",
+      "source_key": "marrakech-final",
+      "reason": "Rootfixedcentrecropkeyreceiverwholepersonmissing; source/raw reviewednotselected, sameeventphoto/factnarration retained.",
+      "audio_internal_proof": "/workspace/jodar-finals-production/research/audio/marrakech-reviewed-not-selected-source-audio.json"
+    },
+    {
+      "source_id": "tJYSRivauxQ",
+      "source_key": "wimbledon-r3",
+      "reason": "Rootfixedcentrecriticalwholeperson/rallymissing; source/raw reviewednotselected, sameeventphoto/factnarration retained.",
+      "audio_internal_proof": "/workspace/jodar-finals-production/research/audio/wimbledon-reviewed-not-selected-source-audio.json"
+    }
+  ],
+  "existing_native_contract_check": {
+    "path": "/workspace/jodar-finals-production/research/audio/five-ready-source-packet-contract-check.json",
+    "sha256": "603ce5a28313267c69d175da885aac231d35d18cf9d939bb3600750c6f473449"
+  },
+  "narration_plan_sha256": "27cd42c680314e7efb42b02a9acd7976f564e40850cade69ada6f2c5c844956e",
+  "expected_unique_tts_requests": 16,
+  "actual_production_scene_indices": "Producer assigns from actual finalspec scene table; do not inherit Tiafoe21scenes/67events/17voice or invent a finalplan hash here.",
+  "no_new_asr_after_these_sealed_packets": true
+}

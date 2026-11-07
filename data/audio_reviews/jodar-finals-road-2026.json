@@ -1,0 +1,32 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "5e42ffba3eaa28fa9235fc0fdc309e4c4225e99febceaf8fcfac0e39b46c3ae5",
+  "segments": [
+    {
+      "index": 2,
+      "transcript_path": "data/audio_transcripts/jodar-finals-road-2026/australian-open-r2.json",
+      "transcript_sha256": "20e1a7dc5d9404147a571c28b5d81e7d0f4d8ab2059603b22702da1ef936c385"
+    },
+    {
+      "index": 6,
+      "transcript_path": "data/audio_transcripts/jodar-finals-road-2026/roland-garros-qf.json",
+      "transcript_sha256": "b9cb048e73a949bb909cec7f5a66f60341857cd95df60198fd02520cac887772"
+    },
+    {
+      "index": 9,
+      "transcript_path": "data/audio_transcripts/jodar-finals-road-2026/washington-final.json",
+      "transcript_sha256": "0070bc0472736f9062b7e0979b2e181100cb9cc5496a4e1a094cc4dc64265138"
+    },
+    {
+      "index": 11,
+      "transcript_path": "data/audio_transcripts/jodar-finals-road-2026/us-open-r1.json",
+      "transcript_sha256": "513767b4a1da6022d0280478ee6d94f049ac4c7a872d3d13060569a3294fe84e"
+    },
+    {
+      "index": 14,
+      "transcript_path": "data/audio_transcripts/jodar-finals-road-2026/shanghai-final.json",
+      "transcript_sha256": "fb92dbd6f0c6b116866b5e8b888974af5411b85611cf667d961b9aba5e20c351"
+    }
+  ],
+  "method_note": "Five true selected source windows with fourteen source caption cues; AO court-only window and RG explicitly nonverbatim result announcement preserve lexical limits. Marrakech and Wimbledon use approved same-event photo/native-card fallbacks and are not selected video sources. No human listening claimed."
+}

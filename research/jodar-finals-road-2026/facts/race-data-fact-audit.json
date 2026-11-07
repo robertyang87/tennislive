@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-07T01:40:52.576447+00:00",
+  "status": "PASS_15_ROWS_8QUALIFIED_JODAR_FOCUS",
+  "artifact": "/workspace/jodar-finals-production/production/race-chart/data-canonical.json",
+  "sha256": "4b6e469ee0b292525bfc82a50b082d2541b92704de9fede3af4f08d22e6815b9",
+  "verified_against_actual_source_packet": "/workspace/tiafoe-finals-production/final/publication/freshness/verification.json",
+  "previous_source_fact_audit": "/workspace/tiafoe-finals-production/research/facts/race-data-fact-audit.json",
+  "row_diffs_vs_previously_sourcechecked_snapshot": [
+    {
+      "rank": 8,
+      "field": "focus",
+      "old": true,
+      "new": false
+    },
+    {
+      "rank": 9,
+      "field": "focus",
+      "old": false,
+      "new": true
+    }
+  ],
+  "all15rank_points_and_names_unchanged": true,
+  "focus_player": "Rafael Jodar",
+  "focus_zh": "霍达尔",
+  "focus_rank": 9,
+  "focus_points": 3234,
+  "qualified_field_count": 8,
+  "Sinner": "retainedRace2withdrawnnotqualifiedhighlight",
+  "actual_rendered_graph_status": "PENDING_NATIVE_FINAL_IMAGE_QC"
+}

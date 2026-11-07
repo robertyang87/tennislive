@@ -1,0 +1,99 @@
+{
+  "scoreboard_qc_sha256": null,
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "2524182ba008d20c1a5d874286b3ec5fd33b2b5959ed2c98cc3fea00d739d013",
+    "request_count": 16,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-jodar-finals-road-2026-2524182ba008d20c",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-jodar-finals-road-2026-2524182ba008d20c/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42330488120"
+  },
+  "cover_seconds": 4.042,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 235.84,
+  "topbar": null,
+  "film_seconds": 244.5,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "0": 7.824,
+    "1": 10.752,
+    "3": 9.984,
+    "4": 8.328,
+    "5": 10.44,
+    "7": 8.208,
+    "8": 9.864,
+    "10": 8.472,
+    "12": 7.944,
+    "13": 8.064,
+    "15": 9.216,
+    "16": 9.624,
+    "17": 10.032,
+    "18": 4.008
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "8b569f46662a613bce9a63af398cb19c8c6d185d8140f878bd894ba8b51a12fa",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "jodar-finals-road-2026",
+    "received_at": "2026-11-07T02:41:39Z",
+    "artifact_ready_at": "2026-11-07T02:50:42Z",
+    "elapsed_seconds": 543.847,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+    "spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+    "run_id": "42330488120",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-07T02:45:35Z",
+        "run_id": "42330488120"
+      }
+    ],
+    "render_seconds": 307.847,
+    "pre_render_seconds": 236.0
+  },
+  "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "film_bytes": 116333337,
+  "qc_attestation_sha256": "0831e8d1fc96a4b9440541779a7b0617b81b33c43b92adb9aa8cf98992d71807",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-07T02:45:35Z",
+      "run_id": "42330488120"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-07T02:50:46Z",
+      "run_id": "42330488120"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-finals-road-2026/jodar-finals-road-2026.mp4",
+  "video_bytes": 116333337
+}

@@ -1,0 +1,67 @@
+{
+  "status": "PASS_data_current_source_and_official8crosscheck",
+  "at": "2026-11-07T00:59:58.829375+00:00",
+  "canonical_sha256": "b85e0f10368486f669be477233a3dd03d8d013e53c5b70aefa7cb7a4155e6bb8",
+  "rows": 15,
+  "highlighted": [
+    "兹维列夫",
+    "阿尔卡拉斯",
+    "谢尔顿",
+    "梅德韦德夫",
+    "科博利",
+    "菲斯",
+    "蒂亚福",
+    "霍达尔"
+  ],
+  "focus": {
+    "rank": 8,
+    "player": "Frances Tiafoe",
+    "player_zh": "蒂亚福",
+    "points": 3390,
+    "status": "qualified",
+    "status_zh": "已晋级",
+    "highlight": true,
+    "focus": true,
+    "points_evidence": "https://live-tennis.eu/en/atp-race",
+    "qualification_evidence": "https://www.nittoatpfinals.com/en/players/singles",
+    "current_paris": ""
+  },
+  "sources": [
+    {
+      "url": "https://live-tennis.eu/en/atp-race",
+      "http_status": 200,
+      "bytes": 349206,
+      "sha256": "036d2318c22979e5b2efca3f26e166cecab9b78d6e90d1f39266b3ba987a2398",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 00:59:58 GMT",
+        "Age": "1729",
+        "Last-Modified": "Sat, 07 Nov 2026 00:31:07 GMT"
+      },
+      "raw_path": "/workspace/tiafoe-finals-production/research/race/live-race.html"
+    },
+    {
+      "url": "https://www.nittoatpfinals.com/en/players/singles",
+      "http_status": 200,
+      "bytes": 48566,
+      "sha256": "e18d7c55632682a4349167d99fffb7241a1e81c918071f9a4514e36a0b8ad62c",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 00:59:57 GMT",
+        "Age": null,
+        "Last-Modified": "Sat, 07 Nov 2026 00:59:57 GMT"
+      },
+      "raw_path": "/workspace/tiafoe-finals-production/research/race/official-singles.html"
+    },
+    {
+      "url": "https://www.nittoatpfinals.com/en/news/tiafoe-nitto-atp-finals-2026-qualification",
+      "http_status": 200,
+      "bytes": 36376,
+      "sha256": "f347ab3412251668650705299f7375e8dee7fd423d44c1eb6830ac889da8b21e",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 00:59:57 GMT",
+        "Age": "178",
+        "Last-Modified": "Sat, 07 Nov 2026 00:57:08 GMT"
+      },
+      "raw_path": "/workspace/tiafoe-finals-production/research/race/tiafoe-qualification.html"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T01:52:13.839060+00:00",
+  "model": "medium.en",
+  "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+  "source_path": "/dev/shm/jodar-production/sources/jd26uso.mp4",
+  "clip": [
+    108.5,
+    118.5
+  ],
+  "duration": 10.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 110.9,
+      "end": 115.46,
+      "text": "That will do it, that is the win of his career.",
+      "avg_logprob": -0.6335685029625893,
+      "no_speech_prob": 0.4410398602485657,
+      "words": [
+        {
+          "w": " That",
+          "s": 110.9,
+          "e": 111.7,
+          "p": 0.41946765780448914
+        },
+        {
+          "w": " will",
+          "s": 111.7,
+          "e": 111.84,
+          "p": 0.19657766819000244
+        },
+        {
+          "w": " do",
+          "s": 111.84,
+          "e": 111.98,
+          "p": 0.9910379648208618
+        },
+        {
+          "w": " it,",
+          "s": 111.98,
+          "e": 112.26,
+          "p": 0.9899818301200867
+        },
+        {
+          "w": " that",
+          "s": 112.38,
+          "e": 112.46,
+          "p": 0.09653337299823761
+        },
+        {
+          "w": " is",
+          "s": 112.46,
+          "e": 112.92,
+          "p": 0.29455453157424927
+        },
+        {
+          "w": " the",
+          "s": 112.92,
+          "e": 113.98,
+          "p": 0.970352828502655
+        },
+        {
+          "w": " win",
+          "s": 113.98,
+          "e": 114.38,
+          "p": 0.9864272475242615
+        },
+        {
+          "w": " of",
+          "s": 114.38,
+          "e": 114.78,
+          "p": 0.9781448245048523
+        },
+        {
+          "w": " his",
+          "s": 114.78,
+          "e": 115.02,
+          "p": 0.9834172129631042
+        },
+        {
+          "w": " career.",
+          "s": 115.02,
+          "e": 115.46,
+          "p": 0.9511703252792358
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "created_at": "2026-11-07T01:39:52.079533+00:00",
+  "status": "PASS_actual_current_master_audio_text_identity_and_native_final_contract",
+  "film_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "film_bytes": 176482943,
+  "native_render_inputs_sha256": "bf56177df35afa9d4d08783f862a19a8366ad5e991daaad79fb85e41b7b95faa",
+  "actual_ass_sha256": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
+  "native_inventory_sha256": "c849e9d75bdf418341c466d22e889e57c3b6094065ef9e6ad5eee58a5df7881d",
+  "native_final_foreground_gate": "PASS actual film + ASS + plan + artifacts + source-review/timebinding",
+  "actual_request_count": 17,
+  "actual_inventory_rows": 34,
+  "inventory_alias_scope": "17bundle aliases plus17actual voice occurrences; same17unique requests, not34new TTS",
+  "actual_retained_source_count": 6,
+  "actual_bilingual_cue_count": 21,
+  "actual_ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1080,
+        "height": 1440,
+        "start_time": "0.000000",
+        "duration": "261.200000",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "start_time": "0.000000",
+        "duration": "261.166000"
+      }
+    ],
+    "format": {
+      "duration": "261.200000",
+      "size": "176482943"
+    }
+  },
+  "source_sentence_time_margins": [
+    {
+      "segment": 3,
+      "source": "acapulco-final",
+      "source_window": [
+        129.3,
+        143.4
+      ],
+      "film_window": [
+        23.962,
+        38.062
+      ],
+      "first_cue_offset": 2.4399999999999977,
+      "last_spoken_to_body_end_margin": 0.84,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    },
+    {
+      "segment": 6,
+      "source": "halle-final",
+      "source_window": [
+        114.9,
+        146.9
+      ],
+      "film_window": [
+        56.958,
+        88.958
+      ],
+      "first_cue_offset": 16.72,
+      "last_spoken_to_body_end_margin": 0.18,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    },
+    {
+      "segment": 8,
+      "source": "wimbledon-r3",
+      "source_window": [
+        0,
+        21.8
+      ],
+      "film_window": [
+        94.83,
+        116.63
+      ],
+      "first_cue_offset": 1.26,
+      "last_spoken_to_body_end_margin": 0.22,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    },
+    {
+      "segment": 11,
+      "source": "cincinnati-final",
+      "source_window": [
+        68.7,
+        97.0
+      ],
+      "film_window": [
+        132.958,
+        161.258
+      ],
+      "first_cue_offset": 10.060000000000002,
+      "last_spoken_to_body_end_margin": 5.88,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    },
+    {
+      "segment": 13,
+      "source": "us-open-qf",
+      "source_window": [
+        70.15,
+        86.0
+      ],
+      "film_window": [
+        170.08200000000002,
+        185.93200000000002
+      ],
+      "first_cue_offset": 6.349999999999994,
+      "last_spoken_to_body_end_margin": 0.89,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    },
+    {
+      "segment": 15,
+      "source": "us-open-sf",
+      "source_window": [
+        95,
+        123.2
+      ],
+      "film_window": [
+        194.63600000000002,
+        222.836
+      ],
+      "first_cue_offset": 5.730000000000004,
+      "last_spoken_to_body_end_margin": 0.6,
+      "native_audio_tail": "silence",
+      "first_cue_after_0_5sec_entry_fade": true
+    }
+  ],
+  "voice_actual_word_time_margins": [
+    {
+      "voice": "voice_00.mp3",
+      "film_start": 4.138,
+      "last_word_film_end": 11.366791,
+      "picture_end": 12.578,
+      "tail_after_final_mark": 1.211209
+    },
+    {
+      "voice": "voice_01.mp3",
+      "film_start": 12.578,
+      "last_word_film_end": 16.917625,
+      "picture_end": 18.162,
+      "tail_after_final_mark": 1.244375
+    },
+    {
+      "voice": "voice_02.mp3",
+      "film_start": 18.162,
+      "last_word_film_end": 22.749291,
+      "picture_end": 23.962,
+      "tail_after_final_mark": 1.212709
+    },
+    {
+      "voice": "voice_04.mp3",
+      "film_start": 38.062,
+      "last_word_film_end": 46.764833,
+      "picture_end": 47.99,
+      "tail_after_final_mark": 1.225167
+    },
+    {
+      "voice": "voice_05.mp3",
+      "film_start": 47.989999999999995,
+      "last_word_film_end": 55.737666,
+      "picture_end": 56.958,
+      "tail_after_final_mark": 1.220334
+    },
+    {
+      "voice": "voice_07.mp3",
+      "film_start": 88.958,
+      "last_word_film_end": 93.580624,
+      "picture_end": 94.83,
+      "tail_after_final_mark": 1.249376
+    },
+    {
+      "voice": "voice_09.mp3",
+      "film_start": 116.63,
+      "last_word_film_end": 123.186624,
+      "picture_end": 124.422,
+      "tail_after_final_mark": 1.235376
+    },
+    {
+      "voice": "voice_10.mp3",
+      "film_start": 124.422,
+      "last_word_film_end": 131.745124,
+      "picture_end": 132.958,
+      "tail_after_final_mark": 1.212876
+    },
+    {
+      "voice": "voice_12.mp3",
+      "film_start": 161.258,
+      "last_word_film_end": 168.852333,
+      "picture_end": 170.082,
+      "tail_after_final_mark": 1.229667
+    },
+    {
+      "voice": "voice_14.mp3",
+      "film_start": 185.93200000000002,
+      "last_word_film_end": 193.396624,
+      "picture_end": 194.636,
+      "tail_after_final_mark": 1.239376
+    },
+    {
+      "voice": "voice_16.mp3",
+      "film_start": 222.836,
+      "last_word_film_end": 226.597791,
+      "picture_end": 227.82,
+      "tail_after_final_mark": 1.222209
+    },
+    {
+      "voice": "voice_17.mp3",
+      "film_start": 227.82000000000002,
+      "last_word_film_end": 233.138416,
+      "picture_end": 234.364,
+      "tail_after_final_mark": 1.225584
+    },
+    {
+      "voice": "voice_18.mp3",
+      "film_start": 234.36400000000003,
+      "last_word_film_end": 241.073916,
+      "picture_end": 242.3,
+      "tail_after_final_mark": 1.226084
+    },
+    {
+      "voice": "voice_19.mp3",
+      "film_start": 242.30000000000004,
+      "last_word_film_end": 250.778791,
+      "picture_end": 252.012,
+      "tail_after_final_mark": 1.233209
+    },
+    {
+      "voice": "voice_20.mp3",
+      "film_start": 252.01200000000003,
+      "last_word_film_end": 255.384666,
+      "picture_end": 256.612,
+      "tail_after_final_mark": 1.227334
+    },
+    {
+      "voice": "voice_cover.mp3",
+      "film_start": 0,
+      "last_word_film_end": 3.066041,
+      "picture_end": 4.138,
+      "tail_after_final_mark": 1.071959
+    },
+    {
+      "voice": "voice_outro.mp3",
+      "film_start": 256.61199999999997,
+      "last_word_film_end": 259.878499,
+      "picture_end": 261.166,
+      "tail_after_final_mark": 1.287501
+    }
+  ],
+  "preserved_native_code_facts": {
+    "source_body_audio": "Native _seg_audio_chain trims only after the full nominal body, appends silent0.5visualtail. Transition acrossfade begins at the next segment nominal onset, so it does not truncate the preceding source body. All required source English starts beyond0.5entry fade.",
+    "tts": "Native mixer adds frozen voice tracks after the source-video acrossfade chain using absolute delays, so slide xfade does not remove any TTS samples. Actual final marks all lie before assigned pictureends.",
+    "build_match_reel_sha256": "2766631fe3150da071980bfa46f0d09c7cad97a84bd9cf41ee820c94df6a9210"
+  },
+  "visual_finding_closed": "Root personally opened true originalfullframes and withdrew false composite report; physicalLEDwall+realstands+camera zoomout is one continuous shot. Formalmaster remains unchanged. Closure evidence final/root-qc/acap-composite-finding-closed.json.",
+  "human_listening_claimed": false,
+  "pronunciation_or_naturalness_approval": false,
+  "new_asr_performed": false,
+  "source_audio_mutated": false,
+  "automated_five_suite_status": "Producer reports actual GHA five-suite PASS; this independent reviewer has not yet opened the actual suite report bytes and does not claim the five-suite as independently reviewed here.",
+  "limitations": "This review proves actual identities, final native subtitle/time contracts, genuine MP3/wordmark reuse, container AV structure and deterministic join boundaries. Word timestamps are ASR/TTS evidence estimates, not a direct human hearing claim; no acoustic wave/loudness/RMS measurement was performed."
+}

@@ -1,0 +1,149 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=ifZ07lICjz8",
+  "official_context_page": "https://www.rolandgarros.com/en-us/video/2026-edition-match-highlights-zverev-vs-jodar-qf",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-ifZ07lICjz8/ifZ07lICjz8.mp4",
+  "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex jodar audio role; exactsource identity, two realautomatic-language models plus one bounded Frenchcheck, failedlexical outputs preserved, root-approved explicit contextual resultdescriptor; no humanlistening or recoveredsourcewords claim",
+  "reviewed_at": "2026-11-07T02:13:51.936499+00:00",
+  "status": "complete",
+  "reviewed_from": 153.96,
+  "reviewed_to": 177.0,
+  "human_listening_performed": false,
+  "source_language": "und",
+  "source_raw_utterance_lexical_transcription_claimed": false,
+  "foreground_english": [
+    {
+      "start": 164.28,
+      "end": 171.8,
+      "en": "[On-court result announcement]",
+      "zh": "【场上宣布比赛结果】",
+      "caption_kind": "descriptive_not_verbatim",
+      "source_words_transcribed_verbatim": false,
+      "annotation_language": "en",
+      "source_spoken_language": "not_reliably_determined",
+      "timing_note": "Contextual resultannouncement activity window after actualterminalpoint164.2, through latest recognizedcourtactivity171.8, not exact first/lastphoneme wordtiming."
+    }
+  ],
+  "uncertain_spans": [],
+  "lexical_limitations_preserved": {
+    "exact_original_language": "Not reliably determined from actualraw. Do not call the source English or create a fake French original. The displayed bracketed English is editorial contextlabel, not claimed originalspeech.",
+    "actual_auto_failures": "Small autodetect produces repeatedPolish Dzieńdobry during inplay and afterpoint; medium autodetect produces English Justatouch.../systemsystem. Not accepted as actual words.",
+    "actual_bounded_fr_failures": "One bounded162–173.5 Frenchsmall produces Jesaispascequejaidit…; medium C’estça repeated. These are inconsistent generic modelresponses, not a verified literal courtannouncement or score. All4 exactraw are preserved, and no moremodel runs.",
+    "semantic_representation": "Actualsamepoint stadium resultannouncement follows terminalball; root approved neutral [On-court result announcement]/【场上宣布比赛结果】 as transparently nonverbatim description. No exactplayername, score, Frenchphrase, Englishphrase or language is fabricated. Lexical uncertainty is preserved rather than claimed resolved by ASR.",
+    "scope_meaning": "Statuscomplete refers selectedsemantic captioncoverage with this explicitly approved neutral resultcontextdescription, not a claim exactsourcewords or everybackgroundphoneme were recovered."
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/ifZ07lICjz8/small.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/ifZ07lICjz8/small.json",
+      "sha256": "78dc9c116c05aa422bcbedd9a38d8e8f5bb6224894d5681822585bc351237725",
+      "model": "small",
+      "clip": [
+        153.96,
+        177.5
+      ],
+      "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+      "language_requested": "auto",
+      "detected_language": "pl",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_multilingual.py",
+      "script_sha256": "d9d8a2cfbc6422e0b455a7f269ad74e87df3bf80886505abc4a767711ee98777"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/ifZ07lICjz8/medium.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/ifZ07lICjz8/medium.json",
+      "sha256": "3b165f1a816966c19ae5a751de632e791d92cdce035c00abffbc4fdeee9f3b8d",
+      "model": "medium",
+      "clip": [
+        153.96,
+        177.5
+      ],
+      "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+      "language_requested": "auto",
+      "detected_language": "en",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_multilingual.py",
+      "script_sha256": "d9d8a2cfbc6422e0b455a7f269ad74e87df3bf80886505abc4a767711ee98777"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-french/ifZ07lICjz8/small.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-french/ifZ07lICjz8/small.json",
+      "sha256": "098e5987b3ce720ac17081e252636f11632ef39106448a9f8c10363942655440",
+      "model": "small",
+      "clip": [
+        162.0,
+        173.5
+      ],
+      "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+      "language_requested": "fr",
+      "detected_language": "fr",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_french_refine.py",
+      "script_sha256": "b0797c5a38d361c4235c1f99fae9d14e60a53a887fc1f29581c077f08e649201"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-french/ifZ07lICjz8/medium.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-french/ifZ07lICjz8/medium.json",
+      "sha256": "68747a80a669d733095702c4099a14387d7d1671b50171e2658e5465a19818c2",
+      "model": "medium",
+      "clip": [
+        162.0,
+        173.5
+      ],
+      "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+      "language_requested": "fr",
+      "detected_language": "fr",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_french_refine.py",
+      "script_sha256": "b0797c5a38d361c4235c1f99fae9d14e60a53a887fc1f29581c077f08e649201"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/jodar-production/sources/ifZ07lICjz8.mp4",
+    "source_bytes": 57727582,
+    "actual_probe_identity_file": "/workspace/jodar-finals-production/research/media-early/rg/source-identity.json"
+  },
+  "native_quote": [
+    {
+      "at": 10.32,
+      "end": 17.84,
+      "text": "[On-court result announcement]\n【场上宣布比赛结果】"
+    }
+  ],
+  "review_notes": [
+    "Selectedsource sound is original unity. True terminalpoint preparation/contact/wholeball/result andcleanwinnerreaction plus realJodar net handshake are visuallyreviewed byearly/root. Actualstatement context afterterminalresult is treated only as neutral oncourt resultannouncement; no fabricated word-level subtitle is offered.",
+    "Root accepted brief0.7s naturalpartialedgecrop160.4–161.1; do not claim every stroke has wholepersonvisible. Whole terminalpoint/rally/163.2finishingdig/165.6reaction visible under required fixedcx.5; exactpixel evidence separate from this audio semantic packet.",
+    "No corroborated independent foregroundEnglishcommentary before orafter resultannounce in selected153.96–177.0 fullrawscope; repeatedPolishgreetings duringplay are rejected as modelhallucination by repeatedout-of-context semantics andlackofcrossmodel corroboration, not relabelled as genuinePolishspeech.",
+    "Fullchosenbody and .5visualtail177.5 contain sameevent net handshake/shoulderpat, no sourcepromo, confirmed byearlyactualfineview175.8–177.9. Nativeaudio_tail silence preserves onlysourcebody and adds no unreviewed speech. No finalmaster or naturalness approval."
+  ]
+}
