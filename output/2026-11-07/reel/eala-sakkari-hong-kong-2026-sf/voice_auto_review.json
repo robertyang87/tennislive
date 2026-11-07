@@ -1,0 +1,379 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "a0ffa610bc3e5a6b1aeeb293804da73dcda19df0e4fbc5ce714af29a02032d8a",
+    "render_inputs_sha256": "f93298e1728ef24c936a41e9be65f57e0dc7caf07ec6e74c33c1caac06d69951",
+    "spec_sha256": "ac32e18f88cdd53141b5b2a3c5c243c0e274d8bb5dde3e94c20a988847f60375",
+    "film_sha256": "5500b9a6c87e1518a173a15c8bbddd2bd4cf617a6a4a7c8802526a652944109c",
+    "inventory_sha256": "7aa943ba405417603d747db61406f040d3476d620b86432de01caf8804420117"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-07T15:49:44+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:6b3e517d252bfc507ef0ba95cb52e36efdd164cb13980cd1d078bf689b5ae18e",
+      "audio_sha256": "9f7eee1c69e2316bf685754a210125af10afcfa7196c15a7f5548851b274e75a",
+      "pass": true,
+      "result_of": "bundle:6b3e517d252bfc507ef0ba95cb52e36efdd164cb13980cd1d078bf689b5ae18e"
+    },
+    {
+      "id": "bundle:93d5179f988edcaf2f164c140dd48486bcd746b9455d1057566ac7001bd0d68a",
+      "audio_sha256": "fe727bb7b5eed59010d2898abe4fabe5fa426c123bee09d2a5f79eaddbe3f2eb",
+      "pass": true,
+      "result_of": "bundle:93d5179f988edcaf2f164c140dd48486bcd746b9455d1057566ac7001bd0d68a"
+    },
+    {
+      "id": "bundle:b39dc2661f68b8df89a634884e7ceef712a9c42ba79021fdd0194f02b8e32aab",
+      "audio_sha256": "d413f735ec28390fb7720f8f02a216217f7ade8e3ad0faebd726032ff69adbf9",
+      "pass": true,
+      "result_of": "bundle:b39dc2661f68b8df89a634884e7ceef712a9c42ba79021fdd0194f02b8e32aab"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "156069b234d443232163d3c54608ea93ce2b1e50474eae61e2fb19b30fc0a895",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:f3eec19ff058ff24a693e8900a3c425b8f41085ccb5bc2919573786072d21bea",
+      "audio_sha256": "4e4094016faaaf67540c08d609c0def638a2ff88e713c8eb2241a45b16c9cf1b",
+      "pass": true,
+      "result_of": "bundle:f3eec19ff058ff24a693e8900a3c425b8f41085ccb5bc2919573786072d21bea"
+    },
+    {
+      "id": "bundle:f8385cf8c69bad22248a741448039dceaca284fe93bef8ac0e818a5486a38fb9",
+      "audio_sha256": "a909b175f7a422f24c72bdb1d45b5da1b72c9eded8f7b7704f83001be03e0451",
+      "pass": true,
+      "result_of": "bundle:f8385cf8c69bad22248a741448039dceaca284fe93bef8ac0e818a5486a38fb9"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "d413f735ec28390fb7720f8f02a216217f7ade8e3ad0faebd726032ff69adbf9",
+      "pass": true,
+      "result_of": "bundle:b39dc2661f68b8df89a634884e7ceef712a9c42ba79021fdd0194f02b8e32aab"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "4e4094016faaaf67540c08d609c0def638a2ff88e713c8eb2241a45b16c9cf1b",
+      "pass": true,
+      "result_of": "bundle:f3eec19ff058ff24a693e8900a3c425b8f41085ccb5bc2919573786072d21bea"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "fe727bb7b5eed59010d2898abe4fabe5fa426c123bee09d2a5f79eaddbe3f2eb",
+      "pass": true,
+      "result_of": "bundle:93d5179f988edcaf2f164c140dd48486bcd746b9455d1057566ac7001bd0d68a"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "a909b175f7a422f24c72bdb1d45b5da1b72c9eded8f7b7704f83001be03e0451",
+      "pass": true,
+      "result_of": "bundle:f8385cf8c69bad22248a741448039dceaca284fe93bef8ac0e818a5486a38fb9"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "9f7eee1c69e2316bf685754a210125af10afcfa7196c15a7f5548851b274e75a",
+      "pass": true,
+      "result_of": "bundle:6b3e517d252bfc507ef0ba95cb52e36efdd164cb13980cd1d078bf689b5ae18e"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "156069b234d443232163d3c54608ea93ce2b1e50474eae61e2fb19b30fc0a895",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:6b3e517d252bfc507ef0ba95cb52e36efdd164cb13980cd1d078bf689b5ae18e",
+      "text": "从四比四到连赢最后两局，这样的关键分表现，能帮伊埃拉拿下香港冠军吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从斯比斯到联营最后两局,这样的关键分表现能帮伊埃拉拿下香港冠军吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 5.955,
+        "cps": 5.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 四比四 ｜ 到 ｜ 连 ｜ 赢 ｜ 最后 ｜ 两局 ｜ 这样 ｜ 的 ｜ 关键 ｜ 分 ｜ 表现 ｜ 能 ｜ 帮 ｜ 伊埃拉 ｜ 拿下 ｜ 香港 ｜ 冠军 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:93d5179f988edcaf2f164c140dd48486bcd746b9455d1057566ac7001bd0d68a",
+      "text": "决胜盘，伊埃拉先冲到四比一，萨卡里连追三局。四比四之后，这场比赛还要再争一次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决胜盘,伊埃拉先冲到4比1,萨卡里连追三局。4比4之后,这场比赛还要再争一次。"
+      },
+      "polyphones": [
+        {
+          "index": 32,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.072,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.311,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 伊埃拉 ｜ 先 ｜ 冲 ｜ 到 ｜ 四比一 ｜ 萨卡里 ｜ 连 ｜ 追 ｜ 三 ｜ 局 ｜ 四比四 ｜ 之后 ｜ 这 ｜ 场 ｜ 比赛 ｜ 还要 ｜ 再 ｜ 争 ｜ 一次"
+      }
+    },
+    {
+      "id": "bundle:b39dc2661f68b8df89a634884e7ceef712a9c42ba79021fdd0194f02b8e32aab",
+      "text": "三局优势被追平，伊埃拉靠什么守住决赛门票？北京时间十一月七日下午，她与萨卡里在香港展开三盘苦战。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三居优势北追平,伊埃拉靠什么守住决赛门票。北京时间11月7日下午,他与萨卡里在香港展开三盘苦战。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.446,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三局 ｜ 优势 ｜ 被 ｜ 追 ｜ 平 ｜ 伊埃拉 ｜ 靠 ｜ 什么 ｜ 守 ｜ 住 ｜ 决赛 ｜ 门票 ｜ 北京时间 ｜ 十一月七日 ｜ 下午 ｜ 她 ｜ 与 ｜ 萨卡里 ｜ 在 ｜ 香港 ｜ 展开 ｜ 三盘 ｜ 苦战"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.231,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:f3eec19ff058ff24a693e8900a3c425b8f41085ccb5bc2919573786072d21bea",
+      "text": "首盘七比五之后，萨卡里在第二盘发出五记直接得分，以六比三扳平盘分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "首盘7比5之后,萨卡里在第二盘发出5G直接得分,以6比3半平盘分。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发出",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 21,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 5.66,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 七比五 ｜ 之后 ｜ 萨卡 ｜ 里 ｜ 在 ｜ 第二盘 ｜ 发出 ｜ 五 ｜ 记 ｜ 直接 ｜ 得分 ｜ 以 ｜ 六比三 ｜ 扳 ｜ 平盘分"
+      }
+    },
+    {
+      "id": "bundle:f8385cf8c69bad22248a741448039dceaca284fe93bef8ac0e818a5486a38fb9",
+      "text": "直接发球得分二比十二，伊埃拉却有四十五个制胜分，非受迫失误比对手少七次，总得分领先十一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "直接发球得分2比12, 伊埃拉却有45个智盛分。非受破15比对手少7次, 总得分领先11分。"
+      },
+      "polyphones": [
+        {
+          "index": 2,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 4,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 37,
+          "char": "得",
+          "word": "总得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 7.3,
+        "cps": 5.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "直接 ｜ 发球 ｜ 得分 ｜ 二 ｜ 比 ｜ 十二 ｜ 伊埃拉 ｜ 却 ｜ 有 ｜ 四十五个 ｜ 制胜 ｜ 分 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 比 ｜ 对手 ｜ 少 ｜ 七次 ｜ 总 ｜ 得分 ｜ 领先 ｜ 十一分"
+      }
+    }
+  ]
+}

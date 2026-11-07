@@ -1,0 +1,442 @@
+{
+  "version": 2,
+  "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
+  "slug": "eala-sakkari-hong-kong-2026-sf",
+  "written_at": "2026-11-07T15:48:20Z",
+  "code_sha": "55c8731636f5e54b44d7359e5ebb469e44a7a667",
+  "spec_sha256": "ac32e18f88cdd53141b5b2a3c5c243c0e274d8bb5dde3e94c20a988847f60375",
+  "film_sha256": "5500b9a6c87e1518a173a15c8bbddd2bd4cf617a6a4a7c8802526a652944109c",
+  "film_bytes": 95052489,
+  "projection_sha256": "b761907309e62659c508b5ad51fb37881748ce750286dd111b0b791e680be23c",
+  "claims": [
+    [
+      "segments",
+      0,
+      "_ending_payoff_required"
+    ],
+    [
+      "_match"
+    ],
+    [
+      "segments",
+      0,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      2,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      4,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      6,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      8,
+      "_quote_kind"
+    ],
+    [
+      "segments",
+      8,
+      "_score_inset_why"
+    ],
+    [
+      "_tactics_why"
+    ],
+    [
+      "_tts_backend_why"
+    ],
+    [
+      "stats",
+      "_winners_ue_evidence"
+    ]
+  ],
+  "assets": {
+    "assets/players/headshots/wta-318312.jpg": "aa135532bd3a5dcde3ef7a9fcbd91f2a8626b39715e044d7513ebbb2819675f5",
+    "assets/players/headshots/wta-330332.jpg": "732d8295731bdcd254120d5ced523ae83f8b18e4839d22e06637ddc679242831",
+    "assets/reel/eala-sakkari-hong-kong-2026-sf-cover.jpg": "0cef2051860c513f6f817e10c2089d1f3b5dc69267453fbd20192f7e784c9f79"
+  },
+  "artifacts": {
+    "audio_review_binding.json": "895f84e495e851f70f6df8f1f4d7c114d203ead053c8f0e9100ff2e9f5001bb6",
+    "subtitles.ass": "357c09505674818504ca67d0be4a442c820a42e6255f563047d0b5c6abb9fa2c",
+    "topbar.ass": "6ad81a60c7d85570a91e1845b624f08878b4e89f4a474cc2dc69ff546b35dd5d",
+    "poster.jpg": "5b1b0ef972d8c9c108fa6168a3d4a403062b00a44941b9831b63534446037d97",
+    "stat_card.jpg": "b340841d82c7c45172c852943fc7a23b10cc29dd7d261dfbc5643a544c4d7492",
+    "scoreboard_qc.json": "3953da692339bd58c48bbf8c47ff03c9271aa7b4bf6e63ad71e1845d6256e2df",
+    "voice_quality_inventory.json": "7aa943ba405417603d747db61406f040d3476d620b86432de01caf8804420117"
+  },
+  "projection": {
+    "slug": "eala-sakkari-hong-kong-2026-sf",
+    "_column": "赛场之上",
+    "tts_backend": "edge",
+    "track": false,
+    "outro": true,
+    "stat_card_full_canvas": true,
+    "sources": {
+      "main": "https://github.com/robertyang87/tennislive/releases/download/source-6408062676112/6408062676112.mp4"
+    },
+    "primary": "main",
+    "preserve_source_audio": true,
+    "source_quality_exceptions": {
+      "https://github.com/robertyang87/tennislive/releases/download/source-6408062676112/6408062676112.mp4": {
+        "min_height": 720,
+        "approved_by": "user",
+        "reason": "2026-11-07 用户对这一本场官方WTA 720p源明确答复“可以放宽限制”。仅本期和精确源；保留原生720p事实，画布按既定比例居中裁切铺满。"
+      }
+    },
+    "cover": {
+      "matchup": [
+        {
+          "name": "伊埃拉",
+          "name_en": "Alexandra Eala",
+          "country": "PHI",
+          "rank": 19
+        },
+        {
+          "name": "萨卡里",
+          "name_en": "Maria Sakkari",
+          "country": "GRE",
+          "rank": 30
+        }
+      ],
+      "winner": "伊埃拉",
+      "result": "7-5 3-6 6-4",
+      "eyebrow": "赛场之上",
+      "layout": "solo",
+      "subject": "伊埃拉",
+      "topic": "WTA250 香港 半决赛 · 伊埃拉 VS 萨卡里",
+      "hook": "3局优势被追回\n伊埃拉仍进决赛",
+      "hook_accent": "决赛",
+      "portrait": {
+        "image": "assets/reel/eala-sakkari-hong-kong-2026-sf-cover.jpg",
+        "focus": 0.58,
+        "focus_y": 0.5,
+        "zoom": 1,
+        "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/11/07/2a85b191-30cb-41ce-9d8d-a4f082d76571/GettyImages-2303448447.jpg?width=4000"
+      },
+      "scoreboard": {
+        "court": "Centre Court",
+        "duration_source": {
+          "url": "https://api.wtatennis.com/tennis/tournaments/1074/2026/matches",
+          "match_id": "LS003"
+        }
+      }
+    },
+    "topbar": {
+      "line1": "2026 WTA250 香港 半决赛",
+      "line2": "伊埃拉 7-5 3-6 6-4 萨卡里"
+    },
+    "editorial": {
+      "mode": "match_review",
+      "hook": [
+        "3局优势被追回",
+        "伊埃拉仍进决赛"
+      ],
+      "question": "四比一领先被追到四比四，伊埃拉如何赢下最后两局？",
+      "thesis": "保留追平过程、关键保发和完整赛点；伊埃拉以7-5、3-6、6-4获胜，制胜分45比43，非受迫失误31比38。",
+      "beats": [
+        "七比五先拿首盘",
+        "萨卡里六比三扳平",
+        "四比一到四比四，再连赢最后两局"
+      ],
+      "narration": [
+        "首盘伊埃拉连赢最后两局，以七比五先下一盘。",
+        "第二盘萨卡里发出五记直接得分，以六比三扳平盘分。",
+        "决胜盘从四比一到四比四，伊埃拉再赢最后两局，闯入香港决赛。"
+      ],
+      "human_context": {
+        "angle": "发球直接得分落后十个，伊埃拉仍在被追平后兑现决赛席位。",
+        "facts": [
+          "ACE2比12，总得分119比108。",
+          "决胜盘4比1到4比4，随后连赢最后两局。"
+        ],
+        "sources": [
+          "https://api.wtatennis.com/tennis/tournaments/1074/2026/matches/LS003/stats",
+          "https://www.gmanetwork.com/news/sports/othersports/1008633/live-updates-alex-eala-vs-maria-sakkari-at-the-hong-kong-tennis-open-semifinals/story/"
+        ]
+      }
+    },
+    "segments": [
+      {
+        "source": "main",
+        "start": 352.3,
+        "end": 357.84,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 0.06,
+            "end": 5.16,
+            "text": "It is a third main tour final for Alexandra Eala.\n伊埃拉第三次闯入巡回赛决赛。"
+          }
+        ],
+        "crosses_cut": "Original same-match WTA highlight edits retained; no claim of continuous match time.",
+        "point_end_ok": "Actual winning rally ends before354.00; Eala close-up356.92 confirms winner. No live point remains at357.84; detector359.20 is reaction/board movement, not a later unresolved rally."
+      },
+      {
+        "title_card": "从领先到被追平\n决赛门票还要再争",
+        "kicker": "香港半决赛",
+        "narration": "三局优势被追平，伊埃拉靠什么守住决赛门票？北京时间十一月七日下午，她与萨卡里在香港展开三盘苦战。",
+        "seconds": 11.3
+      },
+      {
+        "source": "main",
+        "start": 76.08,
+        "end": 100.76,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 7.02,
+            "end": 10.46,
+            "text": "Oh, it's another rip-roaring forehand.\n又是一记势大力沉的正手。"
+          },
+          {
+            "at": 17.86,
+            "end": 19.32,
+            "text": "Wide.\n出界了。"
+          },
+          {
+            "at": 19.32,
+            "end": 23.5,
+            "text": "Sakkari loses the first set. Eala takes it 7-5.\n伊埃拉7比5赢下首盘。"
+          }
+        ],
+        "crosses_cut": "Original same-match WTA highlight edits retained; no claim of continuous match time.",
+        "point_end_ok": "First-set final point ends by96.24;7-5 confirmed on scoreboard and broadcast through99.58. End100.76 excludes the next-set shot; detector102.40 belongs to the next set."
+      },
+      {
+        "title_card": "萨卡里扳回一盘\n悬念留到决胜盘",
+        "kicker": "第二盘：3比6",
+        "narration": "首盘七比五之后，萨卡里在第二盘发出五记直接得分，以六比三扳平盘分。",
+        "seconds": 7.6
+      },
+      {
+        "source": "main",
+        "start": 182.84,
+        "end": 205.56,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 9.22,
+            "end": 11.52,
+            "text": "Well, Eala won't give up yet.\n伊埃拉还不会放弃。"
+          },
+          {
+            "at": 16.34,
+            "end": 18.72,
+            "text": "And with a clench of the fist, eventually,\n她握紧了拳头，终于，"
+          },
+          {
+            "at": 19.36,
+            "end": 21.68,
+            "text": "Maria Sakkari has the second set on the board.\n玛丽亚·萨卡里拿下了第二盘。"
+          }
+        ],
+        "crosses_cut": "Original same-match WTA highlight edits retained; no claim of continuous match time.",
+        "point_end_ok": "Complete selected rallies and actual result/reaction retained. Source contact sheets, 25fps cuts and whole scoring sequences checked; the internal card split at336.30 is before the next service motion, after the preceding point and its complete English sentence."
+      },
+      {
+        "title_card": "从4比1到4比4\n关键在接下来两局",
+        "kicker": "决胜盘的考验",
+        "narration": "决胜盘，伊埃拉先冲到四比一，萨卡里连追三局。四比四之后，这场比赛还要再争一次。",
+        "seconds": 9.2
+      },
+      {
+        "source": "main",
+        "start": 284.64,
+        "end": 336.3,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 10.3,
+            "end": 11.56,
+            "text": "Magnificent!\n太精彩了！"
+          },
+          {
+            "at": 12.66,
+            "end": 15.4,
+            "text": "Sakkari stranded. Eala with the pass.\n萨卡里被定住，伊埃拉穿越得手。"
+          },
+          {
+            "at": 34.6,
+            "end": 36.8,
+            "text": "Sakkari was there and waiting.\n萨卡里早已等在那里。"
+          },
+          {
+            "at": 37.08,
+            "end": 39.7,
+            "text": "She's completed the comeback.\n她已经追了回来。"
+          },
+          {
+            "at": 39.98,
+            "end": 41.94,
+            "text": "Mustn't let that play on her mind.\n不能让这一分影响自己的心态。"
+          },
+          {
+            "at": 47.7,
+            "end": 51.52,
+            "text": "I think she's found the line.\n我觉得这球压线了。"
+          }
+        ],
+        "crosses_cut": "Original same-match WTA highlight edits retained; no claim of continuous match time.",
+        "point_end_ok": "Complete selected rallies and actual result/reaction retained. Source contact sheets, 25fps cuts and whole scoring sequences checked; the internal card split at336.30 is before the next service motion, after the preceding point and its complete English sentence."
+      },
+      {
+        "stat_card": true,
+        "seconds": 9.2,
+        "narration": "直接发球得分二比十二，伊埃拉却有四十五个制胜分，非受迫失误比对手少七次，总得分领先十一分。"
+      },
+      {
+        "source": "main",
+        "start": 336.3,
+        "end": 390.0,
+        "cx": 0.5,
+        "track": false,
+        "fit": "crop",
+        "score_inset": true,
+        "subtitle_bottom": 304,
+        "narration": "",
+        "quote": [
+          {
+            "at": 7.0,
+            "end": 9.26,
+            "text": "Sakkari saves it.\n萨卡里化解了这个赛点。"
+          },
+          {
+            "at": 16.06,
+            "end": 21.16,
+            "text": "It is a third main tour final for Alexandra Eala.\n伊埃拉第三次闯入巡回赛决赛。"
+          },
+          {
+            "at": 22.56,
+            "end": 24.86,
+            "text": "She can barely believe it.\n她几乎不敢相信。"
+          },
+          {
+            "at": 25.72,
+            "end": 27.78,
+            "text": "Likewise this crowd on Centre Court.\n中心球场的观众也是如此。"
+          },
+          {
+            "at": 29.28,
+            "end": 33.08,
+            "text": "She has had some epic matches this week,\n她这周经历了几场苦战，"
+          },
+          {
+            "at": 33.08,
+            "end": 36.44,
+            "text": "and she's somehow coming out the right side.\n但总能挺过来。"
+          },
+          {
+            "at": 40.14,
+            "end": 42.12,
+            "text": "What a season this has been.\n这是多么精彩的一个赛季。"
+          },
+          {
+            "at": 43.46,
+            "end": 45.92,
+            "text": "Could it finish with a flourish?\n能否以漂亮的表现收官？"
+          },
+          {
+            "at": 46.54,
+            "end": 48.74,
+            "text": "Could she be champion here in Hong Kong?\n她能在香港夺冠吗？"
+          },
+          {
+            "at": 49.78,
+            "end": 50.86,
+            "text": "We'll find out tomorrow.\n答案明天揭晓。"
+          },
+          {
+            "at": 51.36,
+            "end": 52.7,
+            "text": "She will be in the final.\n她将出战决赛。"
+          }
+        ],
+        "crosses_cut": "Original same-match WTA highlight edits retained; no claim of continuous match time.",
+        "point_end_ok": "Complete selected rallies and actual result/reaction retained. Source contact sheets, 25fps cuts and whole scoring sequences checked; the internal card split at336.30 is before the next service motion, after the preceding point and its complete English sentence.",
+        "score_inset_windows": [
+          [
+            336.3,
+            356.92
+          ]
+        ]
+      },
+      {
+        "title_card": "连赢最后2局\n下一场冲击冠军",
+        "kicker": "关键分的答案",
+        "narration": "从四比四到连赢最后两局，这样的关键分表现，能帮伊埃拉拿下香港冠军吗？",
+        "seconds": 7.8
+      }
+    ],
+    "stats": {
+      "a": {
+        "aces": 2,
+        "df": 1,
+        "first_in": 77,
+        "first_won": 48,
+        "first_total": 97,
+        "second_total": 20,
+        "second_won": 11,
+        "bp_conv": 5,
+        "bp_chances": 22,
+        "pts_won": 119,
+        "pts_total": 227,
+        "headshot": "assets/players/headshots/wta-330332.jpg",
+        "winners": 45,
+        "ue": 31
+      },
+      "b": {
+        "aces": 12,
+        "df": 6,
+        "first_in": 85,
+        "first_won": 50,
+        "first_total": 130,
+        "second_total": 45,
+        "second_won": 20,
+        "bp_conv": 4,
+        "bp_chances": 9,
+        "pts_won": 108,
+        "pts_total": 227,
+        "headshot": "assets/players/headshots/wta-318312.jpg",
+        "winners": 43,
+        "ue": 38
+      },
+      "tour": "wta",
+      "footer_date": "2026-11-07",
+      "footer_venue": "香港 · 全场"
+    },
+    "scorebox": [
+      58,
+      550,
+      445,
+      662
+    ]
+  }
+}
