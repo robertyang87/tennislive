@@ -1,0 +1,55 @@
+name: eala-source-search
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install public video metadata client
+        run: pip install -q "yt-dlp[default]"
+      - name: Read latest official WTA uploads and exact match searches
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        shell: python
+        run: |
+          import os, subprocess, pathlib, json
+          cookie = pathlib.Path(os.environ["RUNNER_TEMP"]) / "eala-search-cookies.txt"
+          args = []
+          if os.environ.get("YT_COOKIES_TXT"):
+              cookie.write_text(os.environ["YT_COOKIES_TXT"])
+              cookie.chmod(0o600)
+              args = ["--cookies", str(cookie)]
+          targets = [
+              "https://www.youtube.com/channel/UCaBIVVpHjq6j3tSyxwTE-8Q/videos",
+              "ytsearch8:Eala Sakkari Hong Kong 2026 highlights",
+              "ytsearch5:Hong Kong 2026 semifinals WTA highlights",
+          ]
+          result = []
+          for target in targets:
+              cmd = ["yt-dlp", *args, "--flat-playlist", "--playlist-end", "25", "--socket-timeout", "20", "--retries", "1", "--dump-json", target]
+              try:
+                  r = subprocess.run(cmd, capture_output=True, text=True, timeout=150)
+                  rows = []
+                  for line in r.stdout.splitlines():
+                      try:
+                          d = json.loads(line)
+                          rows.append({k:d.get(k) for k in ["id","title","url","webpage_url","channel","channel_id","duration","upload_date"]})
+                      except json.JSONDecodeError:
+                          pass
+                  item = {"target":target,"returncode":r.returncode,"videos":rows,"error":r.stderr[-2000:]}
+              except subprocess.TimeoutExpired:
+                  item = {"target":target,"error":"metadata search exceeded 150 seconds"}
+              result.append(item)
+              print(json.dumps(item, ensure_ascii=False), flush=True)
+          pathlib.Path("source-search.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
+          cookie.unlink(missing_ok=True)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eala-official-source-search
+          path: source-search.json
