@@ -189,15 +189,15 @@ def whoosh_fast(d=0.35): t=tt(d); return bp(rng.standard_normal(len(t)),1500,800
 def tick_seq(t0,n,gap,g=0.35,name=None):
     for i in range(n): EN(t0+i*gap,tick(),g,name=(name+'-%d'%i) if (name and i==0) else None)
 
-# 01 钩子：赛点（费德勒发球）→ 正手接发直接得分 → 3:5 → 7:5 → 接发之王 → 官方榜单第 7 → 问题
-h=SEC['hook']; SV=E('hook','serve',3.15); RT=E('hook','ret',6.2); RUN=E('hook','run',10.9); CR=E('hook','crown',14.5); BD=E('hook','board',18.1); R7=E('hook','r7',20.6); QQ=E('hook','q',22.5)
-EN(h['t0']+0.1,crowd(SV-h['t0']+0.5),0.35,name='crowd-hush'); EN(SV-0.3,toss(),0.4,name='toss')
-C=SV+0.9; EN(C,pock(1.0),0.8,name='SERVE'); EN(C+0.4,bounce(1.0),0.3); EN(RT-0.6,riser(0.6),0.35)
-EN(RT,pock(0.5),1.0,name='RETURN-slowmo'); EN(RT,sub_boom(),0.5); EN(RT+0.84,bounce(1.0),0.5,name='winner-land'); EN(RT+0.9,applause(3.0),0.45,name='crowd-erupts')
-EN(RUN+0.6,swish(0.9,400,2600),0.4,name='score-flip'); EN(RUN+1.6,slam(),0.45,name='7-5')
-EN(CR,sub_boom(),0.55,name='KING'); EN(CR+0.1,chime([72,79,84,88],0.12,0.45),0.5)
-EN(BD,panel(),0.4,name='leaderboard'); tick_seq(BD+0.3,3,0.25,0.4,'rows'); EN(R7,glitch(0.5),0.45,name='RANK-7'); EN(R7+0.1,number_pop(),0.4)
-EN(QQ,hit(),0.45,name='question')
+# 01 钩子：「7」从第一帧砸下（0.55 s 落地）→ 冲击波＋粒子炸开 → 「第 7」高亮 → 炸成金色粒子汇成「接发之王」→ 2011 美网赛点接发 → 王在哪？
+h=SEC['hook']; SEV=E('hook','seven',2.4); CRN=E('hook','crown',5.5); CT=E('hook','court',7.7); SV=E('hook','serve',11.4); RT=E('hook','ret',14.6); RUN=E('hook','run',16.5); QQ=E('hook','q',19.9)
+EN(h['t0']+0.0,riser(0.55),0.5,name='fall'); EN(h['t0']+0.55,sub_boom(),0.9,name='SLAM'); EN(h['t0']+0.55,slam(),0.8); EN(h['t0']+0.6,crackle(0.8),0.5); EN(h['t0']+0.7,boom(2.5),0.4,name='shockwave')
+EN(h['t0']+1.1,panel(),0.35,name='leaderboard'); EN(SEV,glitch(0.5),0.45,name='RANK-7'); EN(SEV+0.05,number_pop(),0.45)
+EN(CRN-0.2,riser(0.4),0.35); EN(CRN,sub_boom(),0.6,name='EXPLODE'); EN(CRN+0.05,rain_hiss(1.6),0.45,name='particles'); EN(CRN+0.8,chime([72,79,84,88],0.12,0.45),0.5,name='KING')
+EN(CT-0.3,swish(0.9,300,3000),0.45,name='to-court'); EN(CT,crowd(SV-CT+1.0),0.3,name='crowd'); EN(SV-0.3,toss(),0.4,name='toss')
+C=SV+0.9; EN(C,pock(1.0),0.8,name='SERVE'); EN(RT-0.6,riser(0.6),0.4)
+EN(RT,pock(0.5),1.0,name='RETURN-slowmo'); EN(RT,sub_boom(),0.6); EN(RT+0.05,zap(3000,900,0.5),0.35,name='shockwave'); EN(RT+1.1,bounce(1.0),0.5,name='winner-land'); EN(RT+1.2,applause(3.0),0.45,name='crowd-erupts')
+EN(RUN,swish(0.9,400,2600),0.35,name='7-5'); EN(QQ,hit(),0.5,name='question')
 # 02 时间：时间轴展开 → 来球（慢放循环）→ 反应条 → 起跳／落地／动拍 → 两个方向 → 猜好了
 TL0=E('race','tl',0.5); FL=E('race','fly',5.4); RE=E('race','react',7.1); JP=E('race','jump',15.8); LD=E('race','land',16.7); RK=E('race','racket',18.2); FK=E('race','fork',26.1); GU=E('race','guess',31.9)
 EN(TL0,zap(600,2400,0.6),0.35,name='timeline'); tick_seq(TL0+0.1,8,0.1,0.3,'ticks')
@@ -248,7 +248,7 @@ song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
 # 循环＋卡点（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）：曲子 112.3 BPM，小节 4×0.53194 s，曲内第一个强拍 0.4757 s（librosa 实测）。
 # 小节号 → 段落：0–7 前奏、8–39 主段、40–47 间奏（轻）、48–63 主段、64 起尾段淡出。起点 BGM_OFF 取钩子大问题砸下来那一刻＝第 8 小节线，
 # 之后按「主段 → 间奏 → 主段 → 再从第 8 小节循环」整小节往后拼，不放尾段；拼缝都在小节线上，10 ms 交叉淡化
-BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-CR   # 「接发之王」砸下来那一刻＝第 8 小节线，主段进来
+BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-CRN   # 「7」炸成「接发之王」那一刻＝第 8 小节线，主段进来
 order=[(BGM_OFF,bar(40)),(bar(40),bar(48)),(bar(48),bar(64))]
 while sum(b1-b0 for b0,b1 in order)<TOTAL+2: order.append((bar(8),bar(40)))
 xf=int(0.01*SR); parts=[]
