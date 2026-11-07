@@ -1,0 +1,75 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T01:51:14.457878+00:00",
+  "model": "small.en",
+  "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+  "source_path": "/dev/shm/jodar-production/sources/jd26uso.mp4",
+  "clip": [
+    108.5,
+    118.5
+  ],
+  "duration": 10.0,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 112.0,
+      "end": 115.46,
+      "text": "That is the win of his career.",
+      "avg_logprob": -0.6250436739488081,
+      "no_speech_prob": 0.349387526512146,
+      "words": [
+        {
+          "w": " That",
+          "s": 112.0,
+          "e": 112.88,
+          "p": 0.4027774930000305
+        },
+        {
+          "w": " is",
+          "s": 112.88,
+          "e": 113.76,
+          "p": 0.5657787322998047
+        },
+        {
+          "w": " the",
+          "s": 113.76,
+          "e": 113.98,
+          "p": 0.9871538281440735
+        },
+        {
+          "w": " win",
+          "s": 113.98,
+          "e": 114.32,
+          "p": 0.8706313371658325
+        },
+        {
+          "w": " of",
+          "s": 114.32,
+          "e": 114.72,
+          "p": 0.9502739310264587
+        },
+        {
+          "w": " his",
+          "s": 114.72,
+          "e": 114.98,
+          "p": 0.9913846254348755
+        },
+        {
+          "w": " career.",
+          "s": 114.98,
+          "e": 115.46,
+          "p": 0.9605066776275635
+        }
+      ]
+    }
+  ]
+}

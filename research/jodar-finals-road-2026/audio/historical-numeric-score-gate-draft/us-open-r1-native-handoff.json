@@ -1,0 +1,83 @@
+{
+  "source_key": "us-open-r1",
+  "source_id": "jd26uso",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-03/who_is_bu_yunchaokete_the_lucky_loser_who_upset_rafael_jodar_at_the_2026_us_open.html",
+  "source_path": "/dev/shm/jodar-production/sources/jd26uso.mp4",
+  "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+  "window": [
+    103.5,
+    129.0
+  ],
+  "packet_path": "/workspace/jodar-finals-production/research/audio/transcripts/us-open-r1.json",
+  "packet_sha256": "2e1b84a7ef9d75922c6ed42692e338fd5dce805d1d9d565cabfb035f5ea6d45b",
+  "quote": [
+    {
+      "at": 7.4,
+      "end": 8.76,
+      "text": "That'll do it.\n比赛结束了。"
+    },
+    {
+      "at": 8.82,
+      "end": 11.96,
+      "text": "That is the win of his career.\n这是他生涯最重要的一场胜利。"
+    },
+    {
+      "at": 12.66,
+      "end": 18.69,
+      "text": "Yunchaokete has knocked out the 12th seed,\n布云朝克特淘汰了12号种子，"
+    },
+    {
+      "at": 19.23,
+      "end": 22.089,
+      "text": "and it has been emphatic today.\n而且他今天赢得相当强势。"
+    },
+    {
+      "at": 22.629,
+      "end": 24.91,
+      "text": "6-2, 6-1, 6-1.\n6比2、6比1、6比1。"
+    }
+  ],
+  "absolute_utterances": [
+    {
+      "start": 110.9,
+      "end": 112.26,
+      "en": "That'll do it.",
+      "zh": "比赛结束了。",
+      "caption_kind": "verified_official_caption_crosschecked_bounded_actual_medium",
+      "evidence_note": "Official VTT111.650–112.089 That’ll do it; real bounded medium agrees That will do it110.90–112.26. Same full clause; contraction editorial spelling matches officialcaption. Firstword onset is broad ASRestimate, not human phoneme timing."
+    },
+    {
+      "start": 112.32,
+      "end": 115.46,
+      "en": "That is the win of his career.",
+      "zh": "这是他生涯最重要的一场胜利。",
+      "caption_kind": "verified_official_caption_and_two_actual_models",
+      "evidence_note": "Whole small112.32–115.46, medium112.38–115.44 and official113.410–115.410 agree complete words. Conservative wholewordcoverage timing uses genuineASR, not a precise measured onset claim."
+    },
+    {
+      "start": 116.16,
+      "end": 122.19,
+      "en": "Yunchaokete has knocked out the 12th seed,",
+      "zh": "布云朝克特淘汰了12号种子，",
+      "caption_kind": "two_actual_models_name_normalized_and_verified_official_context",
+      "evidence_note": "small Woon In-chap Kettet / medium Uinca Quete both phonetic Yunchaokete. Normalize givenname to official match identity; do not invent Bu prefix that the models did not establish. VTT’s In6-2/6-16-1 are corrupt recognition of this name/gap, not a second score readout. Both fullmodels agree hasknockedoutthe12thseed, corroborated by exact officialmatcharticle."
+    },
+    {
+      "start": 122.73,
+      "end": 125.589,
+      "en": "and it has been emphatic today.",
+      "zh": "而且他今天赢得相当强势。",
+      "caption_kind": "verified_official_caption_and_two_actual_models"
+    },
+    {
+      "start": 126.129,
+      "end": 128.41,
+      "en": "6-2, 6-1, 6-1.",
+      "zh": "6比2、6比1、6比1。",
+      "caption_kind": "verified_official_caption_and_two_actual_models"
+    }
+  ],
+  "native_audio_tail": "silence",
+  "archive_status": "Producer unique archive pending; actual directsource bytes shared, never guessed archiveURL",
+  "status": "complete_original_audio_scope_not_actualmaster_approval"
+}

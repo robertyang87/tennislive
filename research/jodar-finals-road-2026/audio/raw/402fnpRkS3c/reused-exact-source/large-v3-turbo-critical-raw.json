@@ -1,0 +1,258 @@
+{
+  "model": "openai/whisper-large-v3-turbo converted CT2",
+  "snapshot": "/tmp/fokina-whisper-models/models--dropbox-dash--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+  "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "settings": {
+    "cpu_threads": 2,
+    "device": "cpu",
+    "compute_type": "int8",
+    "beam_size": 8,
+    "vad_filter": true,
+    "word_timestamps": true,
+    "language": "en",
+    "condition_on_previous_text": false,
+    "initial_prompt": null,
+    "local_files_only": true
+  },
+  "elapsed_seconds_total": 26.486725864997425,
+  "windows": [
+    {
+      "window": "percentage",
+      "source_start": 44.68,
+      "source_end": 58.04,
+      "audio_sha256": "617e9f4eeccde1dc8d2ffff64ccc15269beae51e3057c654dd3bef2a7d2825bb",
+      "audio_samples": 213760,
+      "duration_after_vad": 3.552,
+      "segments": [
+        {
+          "start": 49.66,
+          "end": 52.46,
+          "text": " 82% of first serves did Davidovic for Kina.",
+          "avg_logprob": -0.2615524549037218,
+          "no_speech_prob": 1.241509811622521e-10,
+          "words": [
+            {
+              "w": " 82",
+              "s": 49.66,
+              "e": 50.24,
+              "p": 0.8551455736160278
+            },
+            {
+              "w": "%",
+              "s": 50.24,
+              "e": 50.68,
+              "p": 0.640259861946106
+            },
+            {
+              "w": " of",
+              "s": 50.68,
+              "e": 50.92,
+              "p": 0.8989390730857849
+            },
+            {
+              "w": " first",
+              "s": 50.92,
+              "e": 51.14,
+              "p": 0.9772984385490417
+            },
+            {
+              "w": " serves",
+              "s": 51.14,
+              "e": 51.4,
+              "p": 0.7934674620628357
+            },
+            {
+              "w": " did",
+              "s": 51.4,
+              "e": 51.6,
+              "p": 0.4109571874141693
+            },
+            {
+              "w": " Davidovic",
+              "s": 51.6,
+              "e": 52.08,
+              "p": 0.9252848029136658
+            },
+            {
+              "w": " for",
+              "s": 52.08,
+              "e": 52.26,
+              "p": 0.6401770710945129
+            },
+            {
+              "w": " Kina.",
+              "s": 52.26,
+              "e": 52.46,
+              "p": 0.7691434621810913
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 8.139993415003119
+    },
+    {
+      "window": "at_play",
+      "source_start": 306.62,
+      "source_end": 319.38,
+      "audio_sha256": "cddb728ff1367536a012bb75c52439059e3ce30ac7bdca60a94e1b3fbc4bfbe0",
+      "audio_samples": 204160,
+      "duration_after_vad": 3.496,
+      "segments": [
+        {
+          "start": 311.82,
+          "end": 313.46,
+          "text": " Couldn't keep him up a long enough",
+          "avg_logprob": -0.5309000185557774,
+          "no_speech_prob": 2.9365777171053153e-11,
+          "words": [
+            {
+              "w": " Couldn't",
+              "s": 311.82,
+              "e": 312.4,
+              "p": 0.7694304585456848
+            },
+            {
+              "w": " keep",
+              "s": 312.4,
+              "e": 312.54,
+              "p": 0.9662755131721497
+            },
+            {
+              "w": " him",
+              "s": 312.54,
+              "e": 312.7,
+              "p": 0.507498562335968
+            },
+            {
+              "w": " up",
+              "s": 312.7,
+              "e": 312.84,
+              "p": 0.23364458978176117
+            },
+            {
+              "w": " a",
+              "s": 312.84,
+              "e": 312.94,
+              "p": 0.4983208179473877
+            },
+            {
+              "w": " long",
+              "s": 312.94,
+              "e": 313.12,
+              "p": 0.9872981309890747
+            },
+            {
+              "w": " enough",
+              "s": 313.12,
+              "e": 313.46,
+              "p": 0.9936560392379761
+            }
+          ]
+        },
+        {
+          "start": 318.48,
+          "end": 318.82,
+          "text": " 59",
+          "avg_logprob": -0.5309000185557774,
+          "no_speech_prob": 2.9365777171053153e-11,
+          "words": [
+            {
+              "w": " 59",
+              "s": 318.48,
+              "e": 318.82,
+              "p": 0.2613704800605774
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 8.0073246979955
+    },
+    {
+      "window": "foot_question",
+      "source_start": 397.5,
+      "source_end": 409.5,
+      "audio_sha256": "8620425eb1e14843cb16866a0f79c7fbbec5175d17dbcc665d041f380dec2490",
+      "audio_samples": 192000,
+      "duration_after_vad": 3.392,
+      "segments": [
+        {
+          "start": 402.83,
+          "end": 405.59,
+          "text": " Did he hit himself the record that was my thought yeah",
+          "avg_logprob": -0.27292267978191376,
+          "no_speech_prob": 8.237602440452907e-12,
+          "words": [
+            {
+              "w": " Did",
+              "s": 402.83,
+              "e": 403.31,
+              "p": 0.4938778281211853
+            },
+            {
+              "w": " he",
+              "s": 403.31,
+              "e": 403.43,
+              "p": 0.9907633662223816
+            },
+            {
+              "w": " hit",
+              "s": 403.43,
+              "e": 403.59,
+              "p": 0.9742660522460938
+            },
+            {
+              "w": " himself",
+              "s": 403.59,
+              "e": 403.87,
+              "p": 0.9302802681922913
+            },
+            {
+              "w": " the",
+              "s": 403.87,
+              "e": 404.13,
+              "p": 0.5468470454216003
+            },
+            {
+              "w": " record",
+              "s": 404.13,
+              "e": 404.49,
+              "p": 0.9303862452507019
+            },
+            {
+              "w": " that",
+              "s": 404.49,
+              "e": 404.75,
+              "p": 0.6483171582221985
+            },
+            {
+              "w": " was",
+              "s": 404.75,
+              "e": 404.91,
+              "p": 0.991020143032074
+            },
+            {
+              "w": " my",
+              "s": 404.91,
+              "e": 405.09,
+              "p": 0.8689706325531006
+            },
+            {
+              "w": " thought",
+              "s": 405.09,
+              "e": 405.37,
+              "p": 0.6441923975944519
+            },
+            {
+              "w": " yeah",
+              "s": 405.37,
+              "e": 405.59,
+              "p": 0.780063271522522
+            }
+          ]
+        }
+      ],
+      "elapsed_seconds": 7.893457469996065
+    }
+  ]
+}

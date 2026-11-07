@@ -1,0 +1,242 @@
+{
+  "at": "2026-11-07T01:50:18.679613+00:00",
+  "status": "PRE_TTS_SEMANTIC_PRONUNCIATION_PLAN_not_auditory_approval",
+  "frozen_plan_path": "/workspace/jodar-finals-production/research/editorial-plan.json",
+  "frozen_plan_sha256": "578a226332b5259b0112b35b94153540e5c9e2b0e9f3203ba812cb73618e1a04",
+  "body_count": 14,
+  "expected_unique_requests": 16,
+  "expected_occurrences": "14body+cover+nativebrandoutro",
+  "tts_owner": "producer only; this role issues no synthesis calls",
+  "fixed_parameters": {
+    "voice": "zh-CN-YunjianNeural",
+    "rate": "+6%",
+    "pitch": "+0Hz",
+    "backend": "native edge strict frozenbundle path"
+  },
+  "sample_recommendations": [
+    {
+      "id": "cover",
+      "text": "从大学球场到都灵，霍达尔首进年终。",
+      "why": "Short two-clause hook, canonical 霍达尔 and 都灵; test full subject/name marks and clean comma pause, no detached name syllables."
+    },
+    {
+      "id": "marrakech_intro",
+      "text": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "why": "Long-place 马拉喀什 and opponent 特伦杰利蒂 plus firsttitle/firstclayevent distinction; complete original two sentences, not chopped fragments."
+    },
+    {
+      "id": "rg_intro",
+      "text": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "why": "Long surname 卡雷尼奥·布斯塔 and 兹维列夫, two-sets-down comeback then quarterfinal loss; pauses must keep matchstage/score/result unambiguous."
+    }
+  ],
+  "pronunciation_risks": [
+    {
+      "text": "霍达尔",
+      "intended_reading": "huò dá ěr",
+      "handling": "Canonical Jodar name, retain exact Chinese spelling; do not rename or invent phonetic respelling."
+    },
+    {
+      "text": "都灵",
+      "intended_reading": "dū líng",
+      "handling": "都 uses dū in the city name, not dōu."
+    },
+    {
+      "text": "马拉喀什",
+      "intended_reading": "mǎ lā kā shí",
+      "handling": "喀 kā; 什 shí in the place name, not interrogative shén."
+    },
+    {
+      "text": "特伦杰利蒂",
+      "intended_reading": "tè lún jié lì dì",
+      "handling": "Keep complete opponent name; mark/token display preview must not split surname across subtitle events."
+    },
+    {
+      "text": "卡雷尼奥·布斯塔",
+      "intended_reading": "kǎ léi ní ào · bù sī tǎ",
+      "handling": "Full compound name, preserve middle dot in screen text; TTS speakable may normalize punctuation only through native rules."
+    },
+    {
+      "text": "兹维列夫",
+      "intended_reading": "zī wéi liè fū",
+      "handling": "Existing library canonical spelling; no text rewrite."
+    },
+    {
+      "text": "布云朝克特",
+      "intended_reading": "bù yún cháo kè tè",
+      "handling": "朝 cháo for the player name; final wholeinventory automated configured polyphonecheck must cover this actual occurrence if supported, do not claim samples cover it."
+    },
+    {
+      "text": "望月慎太郎",
+      "intended_reading": "wàng yuè shèn tài láng",
+      "handling": "慎 shèn; retain entire name and avoid forced hard split."
+    },
+    {
+      "text": "蒙特利尔",
+      "intended_reading": "méng tè lì ěr",
+      "handling": "蒙 méng in Montréal."
+    },
+    {
+      "text": "梅德韦德夫",
+      "intended_reading": "méi dé wéi dé fū",
+      "handling": "User explicitly fixed official ATP Chinese canonical name; never revert to 梅德维德夫."
+    },
+    {
+      "text": "弗吉尼亚大学",
+      "intended_reading": "fú jí ní yà dà xué",
+      "handling": "University affiliation phrase stays together at meaningful boundary."
+    },
+    {
+      "text": "抢七",
+      "intended_reading": "qiǎng qī",
+      "handling": "Tennis tiebreak term, preserve as term rather than digitized 抢7."
+    },
+    {
+      "text": "首冠 / 冠军",
+      "intended_reading": "shǒu guàn / guàn jūn",
+      "handling": "冠军/首冠 use guàn."
+    },
+    {
+      "text": "还没有 / 还要 / 还是",
+      "intended_reading": "hái méi yǒu / hái yào / hái shì",
+      "handling": "还 means still, not return huán."
+    },
+    {
+      "text": "连扳三盘",
+      "intended_reading": "lián bān sān pán",
+      "handling": "扳 bān; maintain comeback action with its three sets, not an isolated numeral."
+    }
+  ],
+  "body_semantic_boundaries": [
+    {
+      "id": "opening",
+      "unchanged_narration": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "existing_punctuation_clauses": [
+        "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。",
+        "今年十一月，他拿到了都灵最后一张门票。"
+      ],
+      "semantic_note": "Separate lastNovember student identity from thisNovember qualifier; do not imply same month/year."
+    },
+    {
+      "id": "ao_intro",
+      "unchanged_narration": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+      "existing_punctuation_clauses": [
+        "先从澳网说起。",
+        "资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。",
+        "第二轮，他三盘输给门西克。"
+      ],
+      "semantic_note": "Qualifying3 wins / main-draw1five-setwin / R2loss are three different stages; keep the original full sentences and logical pauses."
+    },
+    {
+      "id": "marrakech_intro",
+      "unchanged_narration": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "existing_punctuation_clauses": [
+        "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。",
+        "这是他第一次参加巡回赛级别的红土赛事。"
+      ],
+      "semantic_note": "First Tourtitle and first Tourlevelclayappearance are separate facts, both complete sentences."
+    },
+    {
+      "id": "clay",
+      "unchanged_narration": "随后，巴塞罗那4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "existing_punctuation_clauses": [
+        "随后，巴塞罗那4强，马德里和罗马连续打进8强。",
+        "红土上的突破还没有结束。"
+      ],
+      "semantic_note": "BarcelonaSF versus consecutive Madrid/RomeQF; do not read all three as same round."
+    },
+    {
+      "id": "rg_intro",
+      "unchanged_narration": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "existing_punctuation_clauses": [
+        "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。",
+        "首次闯进大满贯8强，随后三盘输给兹维列夫。"
+      ],
+      "semantic_note": "R4comeback from0–2 then QFloss toZverev; do not let adjacent scoreclauses sound as same match."
+    },
+    {
+      "id": "wimbledon_intro",
+      "unchanged_narration": "温网第二轮，再赢一场五盘大战。第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+      "existing_punctuation_clauses": [
+        "温网第二轮，再赢一场五盘大战。",
+        "第三轮对望月慎太郎，先赢一盘，随后连丢三盘。"
+      ],
+      "semantic_note": "R2five-setwin followed by R3loss after winningfirstset."
+    },
+    {
+      "id": "washington_intro",
+      "unchanged_narration": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。对弗里茨，首盘抢七落败，最终收获亚军。",
+      "existing_punctuation_clauses": [
+        "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。",
+        "对弗里茨，首盘抢七落败，最终收获亚军。"
+      ],
+      "semantic_note": "QF/SFcomebacks then final first-settiebreakloss and runnerup."
+    },
+    {
+      "id": "montreal",
+      "unchanged_narration": "接着，在蒙特利尔首次打进大师赛4强。但来到美网，他第一轮就三盘输给布云朝克特。",
+      "existing_punctuation_clauses": [
+        "接着，在蒙特利尔首次打进大师赛4强。",
+        "但来到美网，他第一轮就三盘输给布云朝克特。"
+      ],
+      "semantic_note": "MontrealSFhigh separated from USR1straight-setloss."
+    },
+    {
+      "id": "shanghai_run",
+      "unchanged_narration": "上海，前四场全部逆转过关。半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+      "existing_punctuation_clauses": [
+        "上海，前四场全部逆转过关。",
+        "半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。"
+      ],
+      "semantic_note": "Firstfourmatchcomebacks separate from two-setSFwin overMedvedev."
+    },
+    {
+      "id": "shanghai_intro",
+      "unchanged_narration": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "existing_punctuation_clauses": [
+        "对福基纳，他先赢一盘，第二盘又领先一个破发。",
+        "最终被逆转，距离大师赛首冠还差一步。"
+      ],
+      "semantic_note": "One-setlead then second-setbreaklead, eventual defeat; no win claim."
+    },
+    {
+      "id": "paris",
+      "unchanged_narration": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+      "existing_punctuation_clauses": [
+        "巴黎第二轮，两盘输给鲁德。",
+        "出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。"
+      ],
+      "semantic_note": "3234points is a complete number and waiting state; no qualification implied yet."
+    },
+    {
+      "id": "qualification",
+      "unchanged_narration": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "existing_punctuation_clauses": [
+        "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。",
+        "一年前还是大学生的他，今年第一次入围年终。"
+      ],
+      "semantic_note": "November6 Alcaraz beatsFritz is actual trigger; Jodar takeslastplace. Preserve full firstsentence before retrospective secondsentence."
+    },
+    {
+      "id": "race_table",
+      "unchanged_narration": "截至十一月七日，三千二百三十四分，赛季积分榜第九。辛纳已退赛，霍达尔位列本届总决赛八位正选之中。",
+      "existing_punctuation_clauses": [
+        "截至十一月七日，三千二百三十四分，赛季积分榜第九。",
+        "辛纳已退赛，霍达尔位列本届总决赛八位正选之中。"
+      ],
+      "semantic_note": "Points3234, RaceNo9, Sinnerwithdrawal and eight actual entrants must sound distinct. RaceNo9 is not ninth actual entrant."
+    },
+    {
+      "id": "question",
+      "unchanged_narration": "这一次在都灵，你最想看霍达尔碰上谁？",
+      "existing_punctuation_clauses": [
+        "这一次在都灵，你最想看霍达尔碰上谁？"
+      ],
+      "semantic_note": "One clean complete question; no extra ending textcards."
+    }
+  ],
+  "pre_freeze_policy": "Frozen original words remain unchanged. Use existing punctuation and actual marks/caption events. Any necessary pronounce substitution must follow existing native speakable/pronounce controls with original screen spelling retained and exact request text recorded; do not silently rewrite frozen editorial text. The3 real samples should be byte-reused in final16requests.",
+  "after_actual_samples": "Check hashes, allactualmarks character coverage and canonical name token boundaries, then actual native ASS/pixel wrapping. Never claim phonetics or naturalness pass from marks alone. Producer runs mandatory real five-suite once on final actual frozeninventory; no duplicate fullTTS.",
+  "human_listening_claimed": false,
+  "tts_created": false
+}

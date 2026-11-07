@@ -1,0 +1,135 @@
+{
+  "status": "PASS_SCOPED_actualmaster_three_late_terminal_points_and_transitions",
+  "reviewed_at": "2026-11-07T02:56:01.138317+00:00",
+  "reviewer": "Codex media-late, actual view_image of movie-derived whole-window/dense-entry/contact/reaction/tail sheets and fullsize keyframes; no ASR or human-auditory claim",
+  "movie_path": "/workspace/jodar-finals-production/final/jodar-finals-road-2026.mp4",
+  "movie_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "movie_bytes": 116333337,
+  "movie_format": {
+    "width": 1080,
+    "height": 1440,
+    "fps": "25/1",
+    "duration": 244.5
+  },
+  "frozen_native_spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+  "timeline_method": "Exactnativecover4.042 + nominalsegmentdurations. Actualframe seek requests recorded in *-times.json.25fps display has40ms granularity; final/source clockmapping is nominal withinframe rounding, not subframe/acoustic verification.",
+  "checks": [
+    {
+      "event": "Washington Final",
+      "source_id": "-4AXzTrC9Ls",
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "source_window": [
+        426.4,
+        461.1
+      ],
+      "final_body_nominal": [
+        102.362,
+        137.062
+      ],
+      "source_visual_tail_end": 461.6,
+      "final_visual_tail_end_nominal": 137.562,
+      "status": "PASS",
+      "actual_observations": [
+        "Source426.4 samefinalpointAD Fritz ball/racket preparation present.102.56/102.76 entrytransition and102.88 cleanFritzprep; realservecontact104.0–104.12 is afterfade, no predecessorphoto ghost.",
+        "Samewholeterminalrally across104–113.56 thenactualFritzfall114.0, cleanlyingreaction116.76, risingandtruematchnet handshake124.76–126.76 withJodarvisible.",
+        "SameeventFritzceremony/cup128–137.04, winneridentitycorrectlyFritznotJodar. Wholelastoriginalquote endsnominal136.782 beforebody137.062.",
+        "Actual137.04 stillFritzholdingcup;137.24 dissolvesto nextJodarphoto,137.56photo. No sourcepromo, nextpointor foreignmatch in tail.",
+        "Fixedcentre sourcecamera edgeclip occursbriefly whileFritzstands at120.76, butcleanwinnerface116.76 and123+ andtrueJodarhandshakearepreserved. Naturalinheritedmotion; no digitalpan/balltracking."
+      ]
+    },
+    {
+      "event": "US Open R1",
+      "source_id": "jd26uso",
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "source_window": [
+        103.5,
+        129
+      ],
+      "final_body_nominal": [
+        145.934,
+        171.434
+      ],
+      "source_visual_tail_end": 129.5,
+      "final_visual_tail_end_nominal": 171.934,
+      "status": "PASS",
+      "actual_observations": [
+        "145.92 priorcard,146.12/146.32 entrydissolve,146.44 pure samepointBu preparationcloseupfacevisible.147.84 realserveupwardcontact cleanafterfade; wholeterminalrallycontinues148.04–153.44.",
+        "TrueBu result/celebration154.44–157.44, genuineJodarhandshake164.44 and disappointedcloseup166.44 clearinbody, plusrealnetgesture/scorelastcue170.44. Do not make Buwinningvoice intoJodarwin.",
+        "Lastfullscorecue170.844 finishesbeforebody171.434.171.4 stillBu nearumpire;171.64 dissolvestonextShanghaiJodarphoto and171.92nextphoto; no ad/foreignpoint.",
+        "Fixedcentre fullcanvas remainsconstant, nofollowingball. Nativecontextcard andactualfirstmotionfitwithinframewithnormalcourtclipping."
+      ]
+    },
+    {
+      "event": "Shanghai Final",
+      "source_id": "402fnpRkS3c",
+      "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+      "source_window": [
+        436.54,
+        453.7
+      ],
+      "final_body_nominal": [
+        188.242,
+        205.402
+      ],
+      "source_visual_tail_end": 454.2,
+      "final_visual_tail_end_nominal": 205.902,
+      "status": "PASS_actual_dense_entry_before_contact",
+      "actual_observations": [
+        "ACTUAL25FPSDENSE188.24–189.00personallyopened. Predecessorphotofadevisiblethrough188.68,188.72onwardpurecourt; servecontactbracket188.84–188.88 completelyfreeofphotoghost,188.92+samewholepointcontinues. Thisisactualfinalfilmreview, notsourceclockarithmetic.",
+        "Threefullsizeactualkeyframes188.72/188.84/188.88personallyopened. Courtpaintscuff/lightingpatterns verifiedagainstactualimmutable source437.14 side-by-side; notmistakenfor predecessorphotoghost.",
+        "Terminalpoint/result190.24–190.92, realFokinawinnerarms191.24–196.24; actualJodardisappointedface201.24/201.76 andnetapproach/truehandshake202.24–204.24 inbody.",
+        "CompleteFokina championsentence endsnominal202.182 beforebody205.402.205.4stilltwoplayersnetexit,205.64dissolvestonextParistitlecard,205.88carddominant. No470.18sourcead/foreignpoint/newtrophyshotintail.",
+        "Nativefixedcx.5 fullcanvasactualscreencourtconsistent; no ball/personfollow. No claimfullserverpretossavailable: sourceopensduringtruefinalpointtoss."
+      ]
+    }
+  ],
+  "audio_contract": "audio_tail=silence: bodyoriginalspeechonly, +.5 isvisualtail. Auditorycontent completeness supported by dedicated frozenaudio packets; this reviewer inspected actualbakedsubtitleclauseend andvisualtransition, did not rerunASR/listen or claim acousticallwords.",
+  "evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-actual.jpg",
+      "sha256": "8b5e41c816ec1dfa8df9ca2840eb6be6feeca2b8b55c86591a842d253224ed6a"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-clear188.72.jpg",
+      "sha256": "abc4aabdfc4b0eb77baf9252f31fcd026555a9411e2798c135665a98fffdbd65"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-contact-source-vs-actual.jpg",
+      "sha256": "08d168aa215d6059302d7feae12f904cd8243489f97f278ad678352f6a073804"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-contact188.84.jpg",
+      "sha256": "ddb004ccbeb65098a1f0a13dd669794b33fea692a1ae394deec84fab5e9a5d81"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-contact188.88.jpg",
+      "sha256": "9fb92f59d62e0fcfef115758d58c6d51e09502676b8e1cfc9d82188bc4555cd5"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/shanghai-entry-contact-actual.jpg",
+      "sha256": "9a74ebb825e96f0741555b5a1b12e4e1ef95e143e351646a6e950838fe5fb506"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/usopen-actual.jpg",
+      "sha256": "156e3f7a8fe1424f25f3702a7e38d2c192f0fead4d707315ef85075fcbca09c1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/usopen-serve147.84.jpg",
+      "sha256": "3149f07ac3fd6336ecf070613223492ef37bff135ac32e54a9139823cb563589"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/washington-actual.jpg",
+      "sha256": "b1a20328e098113344ffe2e20878ba655deaa5346ac6646ccb3871006a692f3b"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-late/washington-serve104.04.jpg",
+      "sha256": "cf5ef5f41a51fc20fae7a45c4b3685e8deed9fc27c546b45d6c7d7943ea4b3c1"
+    }
+  ],
+  "out_of_scope": [
+    "Rootwholefilmfact/editorial/cover/rankingaudit",
+    "Audio role actualTTS/sourcespeech audit and finalsemantic ASR",
+    "Early role AO/RG actualterminalpointQC"
+  ],
+  "mutations": "OnlynewQCframesandreceipt; masterreadthroughoriginalsymlink, no copy/newdownload/spec/audio/renderchange."
+}

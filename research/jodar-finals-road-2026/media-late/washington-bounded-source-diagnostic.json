@@ -1,0 +1,169 @@
+{
+  "status": "RECOVERED_TRUE1080_BY_UNIQUE_NATIVE_OFFICIAL_YT_ARCHIVE",
+  "checked_at": "2026-11-07T01:56:26.245838+00:00",
+  "channels": [
+    {
+      "channel": "Tennis TV free short",
+      "page": "https://www.tennistv.com/videos/4553271/washington-2026-final-fritz-jodar-short-highlights",
+      "entry_id": "0_mdb7h6gx",
+      "no_login_no_cookies": true,
+      "manifest_status": 200,
+      "manifest_variants": [
+        "#EXT-X-STREAM-INF:BANDWIDTH=489000,CODECS=\"mp4a.40.2,avc1.42C01E\",RESOLUTION=483x272,AUDIO=\"audio-aacl-64\",CLOSED-CAPTIONS=NONE",
+        "#EXT-X-STREAM-INF:BANDWIDTH=1006000,CODECS=\"mp4a.40.2,avc1.4D401F\",RESOLUTION=640x360,AUDIO=\"audio-aacl-128\",CLOSED-CAPTIONS=NONE",
+        "#EXT-X-STREAM-INF:BANDWIDTH=2550000,CODECS=\"mp4a.40.2,avc1.640028\",RESOLUTION=1280x720,AUDIO=\"audio-aacl-128\",CLOSED-CAPTIONS=NONE"
+      ],
+      "actual_ffprobe_returncode": 0,
+      "actual_streams": [
+        {
+          "codec_type": "audio",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0"
+        },
+        {
+          "codec_type": "audio",
+          "width": null,
+          "height": null,
+          "r_frame_rate": "0/0"
+        },
+        {
+          "codec_type": "video",
+          "width": 480,
+          "height": 272,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "video",
+          "width": 640,
+          "height": 360,
+          "r_frame_rate": "25/1"
+        },
+        {
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "25/1"
+        }
+      ],
+      "duration": "156.120000"
+    },
+    {
+      "channel": "Sky Sports public player",
+      "page": "https://www.skysports.com/tennis/video/13569567/taylor-fritz-vs-rafael-jodar-mubadala-dc-open-final-highlights",
+      "account": "6057984924001",
+      "video": "ref:ee6d1f11-1861-4af6-b956-a63b7b0103b2",
+      "no_login_no_region_changes": true,
+      "publicplayer_key_found": true,
+      "blocked": "HTTP Error 403: Forbidden"
+    },
+    {
+      "url": "https://x.com/TennisTV/status/2084364241218285801",
+      "returncode": 0,
+      "error": "",
+      "title": "Tennis TV - American champion in the American capital ✨  The moment Fritz found t...",
+      "uploader": "Tennis TV",
+      "uploader_id": "TennisTV",
+      "duration": 51.362,
+      "formats": [
+        {
+          "format_id": "hls-audio-32000-Audio",
+          "width": null,
+          "height": null,
+          "fps": null,
+          "protocol": "m3u8_native"
+        },
+        {
+          "format_id": "hls-audio-64000-Audio",
+          "width": null,
+          "height": null,
+          "fps": null,
+          "protocol": "m3u8_native"
+        },
+        {
+          "format_id": "hls-audio-128000-Audio",
+          "width": null,
+          "height": null,
+          "fps": null,
+          "protocol": "m3u8_native"
+        },
+        {
+          "format_id": "http-632",
+          "width": 320,
+          "height": 400,
+          "fps": null,
+          "protocol": "https"
+        },
+        {
+          "format_id": "hls-294",
+          "width": 320,
+          "height": 400,
+          "fps": null,
+          "protocol": "m3u8_native"
+        },
+        {
+          "format_id": "http-950",
+          "width": 480,
+          "height": 600,
+          "fps": null,
+          "protocol": "https"
+        },
+        {
+          "format_id": "hls-552",
+          "width": 480,
+          "height": 600,
+          "fps": null,
+          "protocol": "m3u8_native"
+        },
+        {
+          "format_id": "http-2176",
+          "width": 576,
+          "height": 720,
+          "fps": null,
+          "protocol": "https"
+        },
+        {
+          "format_id": "hls-795",
+          "width": 576,
+          "height": 720,
+          "fps": null,
+          "protocol": "m3u8_native"
+        }
+      ],
+      "metadata_path": "/dev/shm/jodar-production/media-late/washington-matchpoint-x-meta.json",
+      "metadata_sha256": "d79c8062336fff190cd62dc4fa9cb8903485eb41ddc2c9d9550c886d8b87af7f"
+    }
+  ],
+  "tournament_own": {
+    "actual_page": "https://www.mubadaladcopen.com/en/media/videos",
+    "actual_saved_html": "/workspace/jodar-finals-production/research/media-late/washington-tournament-videos.html",
+    "actual_html_sha256": "8137aa6115274d8d35806d4e0a4eb22ba3b06d04137a207e9797c2904f9bd50d",
+    "status": "Publiccurrentpage200; historicalmain source review expressly records WashingtonfinalownBrightcove129.62s at720max. Currentownpage list not proof of freshspecificfinal1080. No inventedsourceID or upscaledstream."
+  },
+  "official_x_provenance": {
+    "actual_report": "https://tennisnow.com/this-one-goes-to-11-fritz-defeats-jodar-for-first-title-of-26/",
+    "actual_saved_html": "/workspace/jodar-finals-production/research/media-late/washington-tennisnow.html",
+    "embed": "https://x.com/TennisTV/status/2084364241218285801",
+    "text": "American champion in the American capital. The moment Fritz found the way to the DC title!",
+    "metadata_confirmed_TennisTV": true,
+    "highest_format": [
+      576,
+      720
+    ],
+    "large_video_downloaded": false
+  },
+  "youtube_candidate": {
+    "url": "https://www.youtube.com/watch?v=-4AXzTrC9Ls",
+    "historical_main_source_review": "/dev/shm/tiafoe-production/native/specs/reels/fritz-jodar-final.json _source explicitly verified TennisTV official title486.53s1920x1080@25",
+    "fresh_oembed": "ordinarypublicGET403TunnelForbidden, no retry/bypass; not reclassified as currentnativebotfailure",
+    "current_local_raw": false,
+    "unique_native_archive": "Producer decision pending; no sourcebytes nor wholepointwindow falselypassed"
+  },
+  "fallback": "Notcurrentlyneeded: primaryofficialYTuniquearchiveactual1080success; prior720/403diagnosticsremainhistoricalandnotglobalnosourceclaim.",
+  "actual_recovered_source": {
+    "source_id": "-4AXzTrC9Ls",
+    "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source--4AXzTrC9Ls/-4AXzTrC9Ls.mp4",
+    "sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+    "bytes": 99720601
+  }
+}

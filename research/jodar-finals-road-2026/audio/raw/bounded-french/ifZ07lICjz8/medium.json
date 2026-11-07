@@ -1,0 +1,93 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T02:08:02.425530+00:00",
+  "model": "medium",
+  "source_sha256": "abdc63d9e84bd1df7bbfb302763d5ad9396a4c51f2441157302c5ba363459cd1",
+  "source_path": "/dev/shm/jodar-production/sources/ifZ07lICjz8.mp4",
+  "clip": [
+    162.0,
+    173.5
+  ],
+  "duration": 11.5,
+  "language_requested": "fr",
+  "detected_language": "fr",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 167.76,
+      "end": 171.8,
+      "text": "C'est ça, c'est ça, c'est ça !",
+      "avg_logprob": -0.6380783683723874,
+      "no_speech_prob": 0.5043430924415588,
+      "words": [
+        {
+          "w": " C",
+          "s": 167.76,
+          "e": 168.4,
+          "p": 0.017690658569335938
+        },
+        {
+          "w": "'est",
+          "s": 168.4,
+          "e": 169.04,
+          "p": 0.9495847821235657
+        },
+        {
+          "w": " ça,",
+          "s": 169.04,
+          "e": 169.54,
+          "p": 0.1269010752439499
+        },
+        {
+          "w": " c",
+          "s": 169.74,
+          "e": 170.02,
+          "p": 0.8149552345275879
+        },
+        {
+          "w": "'est",
+          "s": 170.02,
+          "e": 170.02,
+          "p": 0.9956074059009552
+        },
+        {
+          "w": " ça,",
+          "s": 170.02,
+          "e": 170.34,
+          "p": 0.95122230052948
+        },
+        {
+          "w": " c",
+          "s": 170.66,
+          "e": 170.88,
+          "p": 0.9503654837608337
+        },
+        {
+          "w": "'est",
+          "s": 170.88,
+          "e": 170.94,
+          "p": 0.999227374792099
+        },
+        {
+          "w": " ça",
+          "s": 170.94,
+          "e": 171.08,
+          "p": 0.7646574378013611
+        },
+        {
+          "w": " !",
+          "s": 171.08,
+          "e": 171.8,
+          "p": 0.30804285407066345
+        }
+      ]
+    }
+  ]
+}

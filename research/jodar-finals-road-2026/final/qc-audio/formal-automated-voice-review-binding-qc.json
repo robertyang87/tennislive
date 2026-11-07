@@ -1,0 +1,235 @@
+{
+  "at": "2026-11-07T02:57:34.839949+00:00",
+  "status": "PASS_ACTUAL_FORMAL_AUTOMATED_SUITE_REPORT_AND_EVIDENCE_IDENTITY_WITH_DECLARED_LIMITS",
+  "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "actual_formal_run": 42330488120,
+  "tracked_bot_commit": "a204f458184267c750fd4259ab21d2edf555075e",
+  "tracked_head_proof_sha256": "65c9ca82cc364ac6b792e62d29f4e47c35c6cf1059c0199c8fe14e78ef3be409",
+  "quality_review_path": "/workspace/jodar-finals-production/final/published-metadata/voice_quality_review.json",
+  "quality_review_sha256": "169d444dfeae83d631b8ffb0c87ebf800ced7f03f100ff813686e7611b4c612b",
+  "raw_auto_review_path": "/workspace/jodar-finals-production/final/published-metadata/voice_auto_review.json",
+  "raw_auto_review_sha256": "ef4c147652acbef43ab73b498f503b527e865814b989c50167b4a6c2bf831140",
+  "actual_identity_fields_verified": {
+    "render_sha256": "cb776cf9869488259f293e2981355d2723f25cc69bb7dc29d7ea2d5f4a2c2a8e",
+    "render_inputs_sha256": "8b569f46662a613bce9a63af398cb19c8c6d185d8140f878bd894ba8b51a12fa",
+    "spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+    "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+    "inventory_sha256": "6270e20196c9f888b7a6aca23be40ec06cea35f89779b7032938d66ac0fed241"
+  },
+  "actual_inventory_rows": 32,
+  "actual_bundle_alias_rows": 16,
+  "actual_playback_occurrences": 16,
+  "unique_requests_and_rawaudio_results": 16,
+  "whole_utterance_requests_no_splits": true,
+  "configured_checks_all16pass": [
+    "completeness",
+    "polyphones",
+    "pauses",
+    "speed"
+  ],
+  "tierB_nondefinitive_polyphone_results_preserved": [
+    {
+      "id": "bundle:525d276a61ded96286bcd1a571b3b48a39633ef0534adad340d379f4c6c36498",
+      "text": "随后，巴塞罗那打进4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "polyphone": {
+        "index": 31,
+        "char": "还",
+        "word": "还",
+        "intended": "hai2",
+        "wrong": [
+          "huan2"
+        ],
+        "tier": "B",
+        "verdict": "uncertain",
+        "runs": [
+          {
+            "wrong": "huan2",
+            "verdict": "uncertain",
+            "score": 0.098,
+            "confidence": null,
+            "near": null
+          }
+        ],
+        "ok_refs": "孩骸"
+      }
+    },
+    {
+      "id": "bundle:61aa9e30d705b0d15c29e4d93f9919e11290f57f53bc72422cc2ab6a2a4e139a",
+      "text": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "polyphone": {
+        "index": 33,
+        "char": "还",
+        "word": "还是",
+        "intended": "hai2",
+        "wrong": [
+          "huan2"
+        ],
+        "tier": "B",
+        "verdict": "uncertain",
+        "runs": [
+          {
+            "wrong": "huan2",
+            "verdict": "unreliable",
+            "score": 0.12,
+            "confidence": null,
+            "near": null
+          }
+        ],
+        "ok_refs": "孩骸"
+      }
+    },
+    {
+      "id": "bundle:bc63c2423148b4bd2f2664196ba39bae61c30ce44a443a56e7ad3cd149d3152d",
+      "text": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "polyphone": {
+        "index": 20,
+        "char": "发",
+        "word": "发",
+        "intended": "fa1",
+        "wrong": [
+          "fa4"
+        ],
+        "tier": "B",
+        "verdict": "unmeasurable",
+        "why": "找不到只读 fa1 的常用字当参考"
+      }
+    },
+    {
+      "id": "bundle:eea9d8338b369cbb6b8263e07a2408a0b267c86a4971947bd486555566fb8e52",
+      "text": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "polyphone": {
+        "index": 9,
+        "char": "还",
+        "word": "还是",
+        "intended": "hai2",
+        "wrong": [
+          "huan2"
+        ],
+        "tier": "B",
+        "verdict": "uncertain",
+        "runs": [
+          {
+            "wrong": "huan2",
+            "verdict": "uncertain",
+            "score": 0.159,
+            "confidence": null,
+            "near": null
+          }
+        ],
+        "ok_refs": "孩骸"
+      }
+    }
+  ],
+  "asr_completeness_within_native_tolerance_not_claimed_perfect": [
+    {
+      "id": "bundle:28f225ac023811e2d9bd4297c7ed3487346d5e4e225a8a25b3ca47e2d851a78a",
+      "within_configured_pass_tolerance": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.048,
+        "longest_deletion": 0,
+        "transcript": "先从澳网说解,资格赛联果三关在营下一场五盘大战,拿到大满冠正赛手上。第二轮,他三盘输给门西克。"
+      }
+    },
+    {
+      "id": "bundle:a1f378dc260615a08cd1a36528aa08f8ae03c4dc877a1879001063cd2daa7db9",
+      "within_configured_pass_tolerance": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.062,
+        "longest_deletion": 0,
+        "transcript": "这一次在独岭,你最想看霍达尔碰上谁。"
+      }
+    },
+    {
+      "id": "bundle:abda36e1d498b2a8a9a2e389b156c722a69332e9280da191244b3d1a3364dbe0",
+      "within_configured_pass_tolerance": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.067,
+        "longest_deletion": 0,
+        "transcript": "从大学球场到都临,霍达尔守禁年中。"
+      }
+    },
+    {
+      "id": "bundle:bc63c2423148b4bd2f2664196ba39bae61c30ce44a443a56e7ad3cd149d3152d",
+      "within_configured_pass_tolerance": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "对弗吉娜,她先赢一盘,第二盘又领先一个破发。最终被逆转,距离大师在手冠还差一步。"
+      }
+    },
+    {
+      "id": "bundle:eea9d8338b369cbb6b8263e07a2408a0b267c86a4971947bd486555566fb8e52",
+      "within_configured_pass_tolerance": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.053,
+        "longest_deletion": 1,
+        "transcript": "去年11月,霍达尔还是福金亚大学的学生球员。今年11月,他拿到了都临最后一张门票。"
+      }
+    }
+  ],
+  "raw_thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams_scope_original_text": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "prepublication_archive_render_sha256": "1595f1067dc2bfce8135a90b3095a3ee012af7f0ab4982f2b17fa69565f62aba",
+  "formal_tracked_reviewed_render_sha256": "cb776cf9869488259f293e2981355d2723f25cc69bb7dc29d7ea2d5f4a2c2a8e",
+  "render_snapshot_differences_metadata_only": {
+    "video_bytes": {
+      "archive": null,
+      "published": 116333337
+    },
+    "production_stage_events": {
+      "archive": null,
+      "published": [
+        {
+          "stage": "render",
+          "at": "2026-11-07T02:45:35Z",
+          "run_id": "42330488120"
+        },
+        {
+          "stage": "qc_passed",
+          "at": "2026-11-07T02:50:46Z",
+          "run_id": "42330488120"
+        }
+      ]
+    },
+    "video_url": {
+      "archive": null,
+      "published": "https://github.com/robertyang87/tennislive/releases/download/reel-jodar-finals-road-2026/jodar-finals-road-2026.mp4"
+    }
+  },
+  "human_listening_claimed": false,
+  "all_polyphones_precisely_verified_claimed": false,
+  "naturalness_emotional_stress_or_pitch_approval_claimed": false,
+  "new_asr_or_five_suite_run_performed_by_this_review": false,
+  "scope": "Actualformal5suite already executed in GHA; this review opened actualrawauto evidence and qualityreview, verified every32inventoryrow/16uniquerequest, genuineMP3/marks and exactfilm/spec/render/inventory identities, and preserved actualnondefinitiveTierB notes and allowedASRdeviations. This is configuredautomated pass, not a claim allpronunciation/naturalness/humanlistening are proven."
+}

@@ -1,0 +1,77 @@
+{
+  "at": "2026-11-07T02:06:52.247549+00:00",
+  "status": "PASS_THREE_ACTUAL_SAMPLE_TEXT_HASH_MARKS_AND_SEMANTIC_SCOPE_ONLY",
+  "frozen_plan_sha256": "2fc8268f487406bdd69d67121061cea9b85589c6d58083bedd069671f469f753",
+  "sample_manifest_sha256": "d736f49f5d966222dd95a4ca390524134c45dec2a6ed232a5ad85792b1d02424",
+  "samples": [
+    {
+      "id": "cover",
+      "audio_sha256": "99129c9b911f84ad37b941c341a86b0fd1b48dfc162107c839c423614357a9a1",
+      "words_sha256": "d240cf18397dbe097c9d0436610f87236c3cbaa4a3310f061d3b5b23ee72fc1c",
+      "actual_duration": 3.792,
+      "last_word_end": 2.959916,
+      "all_normalized_spoken_characters_covered": true,
+      "name_components_each_single_actual_mark": [
+        "都灵",
+        "霍达尔"
+      ],
+      "actual_punctuation_boundary_marks": [
+        {
+          "before": "都灵",
+          "after": "霍达尔",
+          "gap_between_actual_marks": 0.318375
+        }
+      ],
+      "compound_name_caveat": null
+    },
+    {
+      "id": "marrakech_intro",
+      "audio_sha256": "3b785d2027af12870e33269e0ecb752751b6b1058b02517789fb338956959b53",
+      "words_sha256": "aa1d8a91882b53aa195d301051e45184c7f583442e6b6ab699a2e1c67c0a7de2",
+      "actual_duration": 9.984,
+      "last_word_end": 9.139166,
+      "all_normalized_spoken_characters_covered": true,
+      "name_components_each_single_actual_mark": [
+        "马拉喀什",
+        "特伦杰利蒂"
+      ],
+      "actual_punctuation_boundary_marks": [
+        {
+          "before": "冠军",
+          "after": "这是",
+          "gap_between_actual_marks": 0.542459
+        }
+      ],
+      "compound_name_caveat": null
+    },
+    {
+      "id": "rg_intro",
+      "audio_sha256": "563cfebb8ef8ff4051134f9b73dd9cb8be212c237a2da123f1cfb321e0312d74",
+      "words_sha256": "f8935fb9bb5b4ce2630dec9073a26301ec55cea093856b23ce09002596ab4ff3",
+      "actual_duration": 10.44,
+      "last_word_end": 9.599041,
+      "all_normalized_spoken_characters_covered": true,
+      "name_components_each_single_actual_mark": [
+        "卡雷尼奥",
+        "布斯塔",
+        "兹维列夫"
+      ],
+      "actual_punctuation_boundary_marks": [
+        {
+          "before": "布斯塔",
+          "after": "首次",
+          "gap_between_actual_marks": 0.542417
+        }
+      ],
+      "compound_name_caveat": "卡雷尼奥·布斯塔 has2intact componenttokens separated by middle-dot punctuation; not claimed to be one mark. NativeASS should keep full8-charactername in samecaption event."
+    }
+  ],
+  "text_rewrite_needed": false,
+  "samples_should_be_exact_bytes_reused_in_final16": true,
+  "native_ass_pixel_linebreaks": "producer independentactualpreview pending; fullcompoundname plus1/4-style stagecaption andnumbers must bechecked on realrenderedtext",
+  "pronunciation_targets_plan": "/workspace/jodar-finals-production/research/audio/frozen-text-semantic-pronunciation-sample-plan.json",
+  "human_listening_claimed": false,
+  "pronunciation_or_naturalness_approval": false,
+  "whole16_request_or_master_approval": false,
+  "scope": "ActualMP3+marks bytes/wholefrozen originaltext/native speakable/ffprobe duration and realmarktimes only. Gap timings substantiate existing punctuation structure, not humanaudible prosody or pitch. Nativefinalfive-suite required for actual16inventory. Marrakech sourcevideo fallback does not change original photo narration or this real9.984s sample."
+}

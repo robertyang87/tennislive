@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-07T02:57:34.842350+00:00",
+  "status": "PASS_CURRENT_MASTER_AUDIO_SUBTITLE_IDENTITY_NATIVE_FINAL_GATE_AND_FORMAL_AUTOMATED_SUITE_SCOPE",
+  "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "film_bytes": 116333337,
+  "actual_duration_seconds": 244.5,
+  "body_scenes": 19,
+  "narrated_body_scenes": 14,
+  "original_source_windows": 5,
+  "original_bilingual_cues": 14,
+  "actual_ass_events": 67,
+  "unique_frozen_requests": 16,
+  "inventory_rows": 32,
+  "evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-audio/actual-master-audio-binding-qc.json",
+      "sha256": "fbad8c4f4fbb54ed29c1d5b26172fed95a19080ed1c773ce3967f9f3a8c395b3"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-audio/actual-master-ass-16-voice-14-source-cue-binding-review.json",
+      "sha256": "b31c4094bd72e2bbb77097263b9591dfb1823fbdbaac55e468e19339f50ada2c"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-audio/formal-automated-voice-review-binding-qc.json",
+      "sha256": "a055a140d8cf638a99e1c68e66a92d9e51f208b6948abbe968ef21233da97ad3"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/final/qc-audio/final-five-source-index-binding.json",
+      "sha256": "bfd054fe0656fb693a200bbf4a6350131e0e11c230d4a84c030de77c42005ee6"
+    }
+  ],
+  "formal_auto_review_method": "automated_voice_suite, automatic, not human listening",
+  "formal_run": 42330488120,
+  "nondefinitive_tierB_polyphone_count": 4,
+  "scope_limits": "Configuredfive-suite PASS retains3uncertain还 and1unmeasurable发TierB items plus acceptedASRtolerances; not an assertion everypolyphone/voiceemotion/naturalness was humanheard. SourceRG descriptor is explicitlynonverbatim, originalASRlimits/negativeevidence preserved in packets. Marrakech/Wim photo fallback is deliberate, not fakecompletepoint footage.",
+  "remaining_blockers_within_audio_subtitle_identity_and_configured_suite_scope": [],
+  "new_models_tts_or_master_reencoding": false
+}

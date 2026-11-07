@@ -1,0 +1,115 @@
+{
+  "source_sha256": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+  "model": "Xenova/wav2vec2-base-960h ONNXquantized (facebook/wav2vec2-base-960h conversion)",
+  "model_revision": "a19f851b3d42865797e410752b4c570c871e4825",
+  "model_sha256": "cd5040c147381580ed73258143dd8e0c28e800a09e74ee42ee2b3e8cb4d760a3",
+  "snapshot": "/tmp/fokina-ctc-models/models--Xenova--wav2vec2-base-960h/snapshots/a19f851b3d42865797e410752b4c570c871e4825",
+  "elapsed_seconds": 6.372229968997999,
+  "method": "Raw independent non-autoregressive CTC alphabet logits and exact forward marginal probabilities for predeclared candidates. No language model, no text prompt. Greedy CTC is independent recognizer; candidate scores are forced comparison, not a second independent transcript.",
+  "windows": [
+    {
+      "window": "percentage",
+      "start": 49.4,
+      "end": 52.7,
+      "audio_sha256": "faa3feccbcbddfd3327287173837996527dde2387d291e246b5c100f6c939190",
+      "unprompted_greedy_CTC": "TI TWO PISOHTO FOR ASIR THE TIVITOVITCH VOKINA ",
+      "candidate_scores": [
+        {
+          "label": "of_first_serves_for",
+          "candidate": "EIGHTY TWO PERCENT OF FIRST SERVES FOR DAVIDOVICH FOKINA",
+          "CTC_log_probability": -139.99249606422103
+        },
+        {
+          "label": "of_first_serves_in",
+          "candidate": "EIGHTY TWO PERCENT OF FIRST SERVES IN DAVIDOVICH FOKINA",
+          "CTC_log_probability": -135.17941132263826
+        },
+        {
+          "label": "on_first_serve_for",
+          "candidate": "EIGHTY TWO PERCENT ON FIRST SERVE FOR DAVIDOVICH FOKINA",
+          "CTC_log_probability": -141.6139446962348
+        },
+        {
+          "label": "of_first_serves_did",
+          "candidate": "EIGHTY TWO PERCENT OF FIRST SERVES DID DAVIDOVICH FOKINA",
+          "CTC_log_probability": -136.37526770355316
+        },
+        {
+          "label": "of_first_serve_the",
+          "candidate": "EIGHTY TWO PERCENT OF FIRST SERVE THE DAVIDOVICH FOKINA",
+          "CTC_log_probability": -121.7000083492609
+        }
+      ]
+    },
+    {
+      "window": "keep_him",
+      "start": 311.55,
+      "end": 313.75,
+      "audio_sha256": "d25e2f8fc82e0123903e66af4b794b000ac9f0f98e0ba3f7240acfa91a6b4132",
+      "unprompted_greedy_CTC": " I",
+      "candidate_scores": [
+        {
+          "label": "at bay",
+          "candidate": "COULDNT KEEP HIM AT BAY LONG ENOUGH",
+          "CTC_log_probability": -169.78640863615482
+        },
+        {
+          "label": "away",
+          "candidate": "COULDNT KEEP HIM AWAY LONG ENOUGH",
+          "CTC_log_probability": -163.2432069664278
+        },
+        {
+          "label": "at play",
+          "candidate": "COULDNT KEEP HIM AT PLAY LONG ENOUGH",
+          "CTC_log_probability": -173.7008446615296
+        },
+        {
+          "label": "up a",
+          "candidate": "COULDNT KEEP HIM UP A LONG ENOUGH",
+          "CTC_log_probability": -161.68037139108873
+        },
+        {
+          "label": "up very",
+          "candidate": "COULDNT KEEP HIM UP VERY LONG ENOUGH",
+          "CTC_log_probability": -179.36512450267702
+        }
+      ]
+    },
+    {
+      "window": "hit_himself",
+      "start": 402.65,
+      "end": 404.6,
+      "audio_sha256": "b49dd9571562e17aea315bc82e6e7ee510375aab1eca86beb62455428885dc5d",
+      "unprompted_greedy_CTC": "DIT E HE IMSECT THE RECOR ",
+      "candidate_scores": [
+        {
+          "label": "with the racket",
+          "candidate": "DID HE HIT HIMSELF WITH THE RACKET",
+          "CTC_log_probability": -79.55026810516237
+        },
+        {
+          "label": "at the racket",
+          "candidate": "DID HE HIT HIMSELF AT THE RACKET",
+          "CTC_log_probability": -59.22989867595428
+        },
+        {
+          "label": "with the record",
+          "candidate": "DID HE HIT HIMSELF WITH THE RECORD",
+          "CTC_log_probability": -71.75247462473902
+        },
+        {
+          "label": "at the record",
+          "candidate": "DID HE HIT HIMSELF AT THE RECORD",
+          "CTC_log_probability": -51.43210519553022
+        },
+        {
+          "label": "the record",
+          "candidate": "DID HE HIT HIMSELF THE RECORD",
+          "CTC_log_probability": -34.761570737099206
+        }
+      ]
+    }
+  ],
+  "complete_translation_pass": false,
+  "human_listening_claimed": false
+}
