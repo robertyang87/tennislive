@@ -1,0 +1,161 @@
+{
+  "status": "PASS_SCOPED_actualmaster_terminal_points_transitions_with_crop_observation_for_root",
+  "reviewed_at": "2026-11-07T01:36:59.115738+00:00",
+  "reviewer": "Codex late-source agent independent actual movie frame review using view_image; no new ASR, no human auditory claim",
+  "movie_path": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+  "movie_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "movie_bytes": 176482943,
+  "actual_movie_format": {
+    "width": 1080,
+    "height": 1440,
+    "fps": "25/1",
+    "duration": 261.2
+  },
+  "native_inputs_spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+  "timeline_method": "Exact native render cover4.138 plus nominal segment durations; 25fps sampling/encoding rounds actual displayed source moments to neighboring40ms frames. Final sample times exact seek requests; no subframe acoustic claims.",
+  "checks": [
+    {
+      "event": "Wimbledon R3",
+      "source_id": "tf26wimmp",
+      "source_sha256": "5b789bf00d4267d64fc708469cb03feba72c140c9434d0f5a1408957373d577b",
+      "source_window": [
+        0,
+        21.8
+      ],
+      "final_body_nominal": [
+        94.83,
+        116.63
+      ],
+      "source_tail_end": 22.3,
+      "final_tail_end_nominal": 117.13,
+      "observations": [
+        "Entry fade visible95.03–95.23 and gone95.33; actualcontact95.4967–95.53 source.6833–.70 clean without predecessorphoto ghost.",
+        "True ace/result/Bublikcollapse and losingTiafoe/handshake reactions retained inbody.",
+        "Complete bilingual clauses before116.63; 116.63 stillsameplayers and116.83 crossfades cleanly to next summerphoto,117.13 nextphoto; no ad/otherpoint."
+      ],
+      "status": "PASS"
+    },
+    {
+      "event": "Cincinnati Final",
+      "source_id": "RAAXKA85t3g",
+      "source_sha256": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+      "source_window": [
+        68.7,
+        97
+      ],
+      "final_body_nominal": [
+        132.958,
+        161.258
+      ],
+      "source_tail_end": 97.5,
+      "final_tail_end_nominal": 161.758,
+      "observations": [
+        "Receiverprep clean133.458 and later; serve/fullterminalrally134.0–142.3 afterfade, exact same matchup.",
+        "WinnerFilsrealreaction and Tiafoerealnetembrace160.258–161.258 inbody, no attribution as Tiafoewinner.",
+        "Three bilingual original cues completeby155.38, huguntil161.258 then dissolvenextUSphoto; no sourcepromo104+ or foreignmatch."
+      ],
+      "status": "PASS"
+    },
+    {
+      "event": "US Open QF",
+      "source_id": "tf26usqf",
+      "source_sha256": "485312dd2376bc7ff2eebff0408ced479aabf1ef99b0dfdd0db0cb69118a5efa",
+      "source_window": [
+        70.15,
+        86
+      ],
+      "final_body_nominal": [
+        170.082,
+        185.932
+      ],
+      "source_tail_end": 86.5,
+      "final_tail_end_nominal": 186.432,
+      "observations": [
+        "Newfirstwide entry170.082–170.482; by170.582 purecourt, realservecontactaround170.88 source70.9333–.9667 has no predecessorphoto ghost or discardedbadprepface.",
+        "Whole terminalrally/result retained; cleanTiafoe fist177.43–177.83, clearTiafoereturn179.63+ and truehug185.43–185.93 inbody.",
+        "Completecomebackcue179.56–185.04 displayed and endsbeforebodyboundary185.932.",
+        "185.932 samehug,186.132 dissolvesnextSFphoto,186.432 nextphoto; no clippedpoint/sourcemontage/publisherad."
+      ],
+      "status": "PASS_terminalcoverage_with_crop_observation",
+      "crop_observation": {
+        "final_interval_approx": [
+          178.03,
+          179.43
+        ],
+        "duration_approx": 1.4,
+        "finding": "Original camera subject moves right during postpointreaction; fixedcx.5 causes much/most face clipping for~1.4s, then returns. Fullcleanreaction beforeandafter and actualhug retained. This is not oldbadprepcloseup nor balltracking; root informed to adjudicate presentational tolerance.",
+        "evidence": "usqf-reaction-actual.jpg"
+      }
+    },
+    {
+      "event": "US Open SF",
+      "source_id": "tf26ussf",
+      "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+      "source_window": [
+        95,
+        123.2
+      ],
+      "final_body_nominal": [
+        194.636,
+        222.836
+      ],
+      "source_tail_end": 123.7,
+      "final_tail_end_nominal": 223.336,
+      "observations": [
+        "Firstserveprep195.136+ afterfade, firststrike196.736–196.936, terminalMP#2/15:40 scoreboardconsistent.",
+        "Secondserveprep204.64–205.44, actualupwardcontact205.64+ andfaultball206.24–206.84, no omittedfirstserve or insertedpreviouspoint.",
+        "ActualTiafoedisappointment207.63/208.63/214.63, Sheltonrestrainedreaction209–211, truehug220.1–222.836 inbody.",
+        "BilingualDFwholecue219.52–222.24 endsbeforebodyend; hug222.836 then223.036 dissolvesnextautumnphoto and223.336 nextphoto. No ad/LIVE/sourcepromotion/otherpoint."
+      ],
+      "status": "PASS"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/cincinnati-actual.jpg",
+      "sha256": "77b9b510d312fb713fd60b87b3c51484f33d57befd86f2c4f2cde607914aea67"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/usqf-actual.jpg",
+      "sha256": "e9e35d6ab0c037777299123953738b7dffbe87676daecc43dcc937e9184a90a6"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/usqf-contact.jpg",
+      "sha256": "1629fd1519e0b3b5d4df9c96dc714898180aebf6b50b57484c1320551e856a99"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/usqf-reaction-actual.jpg",
+      "sha256": "d6c200019bf7a1194663d97c71e5eaa2d636af5775eb131bab2a4553fc54094b"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/ussf-actual.jpg",
+      "sha256": "919c7a87c300565a14ce8ec115a167b0e1dac2443d323b812cff5d38cf09a0b4"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/ussf-first-contact.jpg",
+      "sha256": "2cc3299795094ae74ee9d464126241beda3372eb5dae497e555ea7a011e3667a"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/ussf-second-fault-result.jpg",
+      "sha256": "bb176d7bc65c3116abd14cc72b9107b60ab807564a6792cb8af9af40670e00f2"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/ussf-second-serve-actual.jpg",
+      "sha256": "c5a54bef0e48f59adb489de3a2bf07021bd0b22b090fb74a4211bd85ac62c98f"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/wimbledon-actual.jpg",
+      "sha256": "ce28874ca5a7e5cacdd846e4728c7a5212206ea99a0b426c5c910d1c8d1b72f5"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-late/wimbledon-contact.jpg",
+      "sha256": "f833ecf11e80ea679de1d25cf4af181491a45b44905c0b4f6346389bd31c9ebf"
+    }
+  ],
+  "out_of_scope": [
+    "Wholefilm fact and editorial audit handled byroot",
+    "Wholefilm sound/ASR handled byaudio; no new auditory claim",
+    "Rootdisposition of QF briefpostreactionedgeclip"
+  ],
+  "mutations": "Only new QC proof/receipt files; no frozen spec/native rendering/master alterations."
+}

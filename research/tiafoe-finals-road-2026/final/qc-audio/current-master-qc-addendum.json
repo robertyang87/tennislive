@@ -1,0 +1,102 @@
+{
+  "schema": "tiafoe-final-audio-qc-addendum.v1",
+  "at": "2026-11-07T01:41:00.019395+00:00",
+  "status": "PASS_CURRENT_MASTER_AUDIO_SUBTITLE_IDENTITY_NATIVE_FINAL_GATE_AND_EXISTING_AUTO_REVIEW_BINDING",
+  "film_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "film_seconds": 261.2,
+  "selected_source_count": 6,
+  "retained_source_cue_count": 21,
+  "unique_tts_requests": 17,
+  "inventory_rows": 34,
+  "inventory_row_meaning": "17 bundlealiases +17 actual playback occurrences, all same17unique requests",
+  "actual_source_window_acapulco": [
+    129.3,
+    143.4
+  ],
+  "acapulco_whole_english_sentences_preserved": 3,
+  "root_visual_finding_closed": {
+    "path": "/workspace/tiafoe-finals-production/final/root-qc/acap-composite-finding-closed.json",
+    "sha256": "6c27d5a7894c50c0e2ca0b3859f46a286ff04c8d0312f3eeb93bec5dbdbe2569",
+    "decision": "Root personally opened originalwideframes; physicalLEDwall+realstands in onecontinuouscamera zoomout, compositeflag withdrawn."
+  },
+  "current_audio_scope_reports": [
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-audio/current-master-actual-audio-binding-qc.json",
+      "sha256": "995184d8c4b88579456a72e56cf495acbd1187690e11ea12fc821595622047ed"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-audio/current-master-ass-17-voice-21-source-cue-binding-review.json",
+      "sha256": "23b619a7c20c4a0d3709ef76932390fcef2aaf449326e229a0e5b998ac9b10ff"
+    }
+  ],
+  "active_original_restore_proof": {
+    "path": "/workspace/tiafoe-finals-production/research/audio/active-v1-restore-proof.json",
+    "sha256": "6c6b5eef70ec1cc8ce8b3fc869f0c653b1d0894d38436f02f9f4de776fc30ea1"
+  },
+  "existing_automated_voice_review_binding": {
+    "actual_report_path": "/workspace/tiafoe-finals-production/final/qc-audio/actual-voice-quality-review.json",
+    "original_native_report_path": "/workspace/tiafoe-finals-production/native/output/2026-11-07/reel/tiafoe-finals-road-2026/voice_quality_review.json",
+    "actual_report_sha256": "5d4e54ba824c2f51be1e20564bdf32e1024e197a8e67a175230b69633fda36ec",
+    "status": "pass",
+    "method": "automated_voice_suite",
+    "reviewer": "voice_auto_review v1（自动检查，非真人听审）",
+    "actual_identity_fields_verified": {
+      "render_sha256": "9989bb55bf81b98c5dadb4a1777b8b16977c985ca2463e7a29ce32a132db016d",
+      "render_inputs_sha256": "bf56177df35afa9d4d08783f862a19a8366ad5e991daaad79fb85e41b7b95faa",
+      "spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+      "film_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+      "inventory_sha256": "c849e9d75bdf418341c466d22e889e57c3b6094065ef9e6ad5eee58a5df7881d"
+    },
+    "exact_reviewed_render_path": "/workspace/tiafoe-finals-production/final/qc-audio/actual-voice-quality-reviewed-render.json",
+    "prepublication_archive_render_sha256": "7a44129d75adcc30816a588b2ea2146b527ef850e2d8e647790689925980018d",
+    "render_snapshot_metadata_differences_only": {
+      "video_url": {
+        "archived": null,
+        "reviewed_tracked": "https://github.com/robertyang87/tennislive/releases/download/reel-tiafoe-finals-road-2026/tiafoe-finals-road-2026.mp4"
+      },
+      "production_stage_events": {
+        "archived": null,
+        "reviewed_tracked": [
+          {
+            "stage": "render",
+            "at": "2026-11-07T01:25:23Z",
+            "run_id": "42323648819"
+          },
+          {
+            "stage": "qc_passed",
+            "at": "2026-11-07T01:31:19Z",
+            "run_id": "42323648819"
+          }
+        ]
+      },
+      "video_bytes": {
+        "archived": null,
+        "reviewed_tracked": 176482943
+      }
+    },
+    "all34entries_match_exact_inventory_audio_hashes": true,
+    "raw_auto_evidence_sha256_referenced_by_review": "d43e3244a0cb094e69588c2e77b0f12f165cd4223ba462439ea7e9bf7f0fa9dd",
+    "raw_auto_evidence_bytes_independently_opened_here": false,
+    "scope": "Existing actual GHA auto-review report identity and all covered entries verified, not a new five-suite run or human listening claim."
+  },
+  "historical_reports_not_current": [
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-audio/master-v1-actual-audio-binding-qc.json",
+      "sha256": "66a1bfac772b4eab31fcd47d7eebc22d3630f3b755d24f7315e4fb9da7ce58ad",
+      "status": "Retained historical assessment before rootcorrectedfalsepositive, superseded by this addendum"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-audio/master-v1-ass-17-voice-21-source-cue-binding-review.json",
+      "sha256": "2275c0f5478c48a202f624a16e9b1a17eb725e3c260b01e892daef01930189db",
+      "status": "Retained historical assessment before rootcorrectedfalsepositive, superseded by this addendum"
+    }
+  ],
+  "candidate_shortwindow_not_adopted": "/workspace/tiafoe-finals-production/research/audio/candidate-13152-not-adopted",
+  "native_spec_changed": false,
+  "movie_reencoded": false,
+  "tts_or_sourceaudio_changed": false,
+  "new_asr_or_five_suite_performed": false,
+  "human_listening_claimed": false,
+  "human_naturalness_or_pitch_approval_claimed": false,
+  "remaining_audio_scope_blockers": []
+}

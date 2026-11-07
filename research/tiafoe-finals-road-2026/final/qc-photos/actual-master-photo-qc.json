@@ -1,0 +1,684 @@
+{
+  "schema": "independent.actual-master.photo-qc.v1",
+  "reviewer": "/root/tiafoe_photos currentassistant",
+  "reviewed_at": "2026-11-07T01:36:12.663222+00:00",
+  "status": "SCOPED_PASS_ACTUAL_MASTER_PHOTOS_COVER_BRAND_SUBTITLE_SCENE_SEMANTICS",
+  "master": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+  "master_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "master_sha_matches_native": true,
+  "native_spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+  "native_render_inputs_sha256": "bf56177df35afa9d4d08783f862a19a8366ad5e991daaad79fb85e41b7b95faa",
+  "actual_subtitle_ass_sha256": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
+  "binding_path": "/workspace/tiafoe-finals-production/research/photos/narration-photo-binding.json",
+  "binding_sha256": "634eba61b94b847b4ec2827f5c72ae48b3ae080c8dac15fb9bbec8aa40aa120d",
+  "photo_placements_exactly_match_binding": true,
+  "cover_poster_path": "/workspace/tiafoe-finals-production/final/native-inputs/poster.jpg",
+  "cover_poster_sha256": "318c385c3c01d56ddc22a183fd71b1b73bee51e6bc605a3c6378ce2f478c3936",
+  "cover_actual_master_opened_full_resolution": true,
+  "cover_poster_opened_full_resolution": true,
+  "method": "Extracted23samplesdirectlyfromuniqueofficialmasterusingactualnativecoverdurationandprojectedsegmentdurations, withone midpointperactualphoto placement. Personallyopenedboth12/11-framecontactsandfullsizecover/poster. Alsoextractedandpersonallyopened6actualmatchcontext/header/brandframes. ReadactualfrozenASS againstsourcecaptions/semanticbinding. No alternate render/download or assetmutation.",
+  "photo_scene_samples": [
+    {
+      "label": "cover_actual_master",
+      "t": 1.5,
+      "photo_id": "atp-4524919",
+      "segment": "cover",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/cover_actual_master.jpg",
+      "frame_sha256": "27cb447791ed402911d47fa87966a942ac7877574373edd794d011759fb92ba7",
+      "actual_visual_result": "PASS",
+      "finding": "Actualmaster1.5sframe and artifactposter separately opened atfullresolution. Same real2026Hallechampionportrait, eyes/nose/mouth/wholehead unobstructed. Headerleftabove trophy;hookon torso. Correctbrand/topic; nocomposite or blurredpadding."
+    },
+    {
+      "label": "00_opening_1",
+      "segment": "opening",
+      "segment_start": 4.138,
+      "segment_seconds": 8.44,
+      "photo_id": "uso-sf-firstset-ap",
+      "t": 5.812,
+      "photo_relative_range": [
+        0.0,
+        3.349
+      ],
+      "source_crop_box": [
+        960,
+        0,
+        2460,
+        2000
+      ],
+      "source_photo_sha256": "61f84d263c346c8ec0f7b70f823ff4f6a5a70d4585b812489e94295cba473a7f",
+      "narration": "美网半决赛，谢尔顿挡住了蒂亚福。到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/00_opening_1.jpg",
+      "frame_sha256": "b1393e6512edc3cb4e316c2fafdd0ee4a66629e79b8edb8ff6db0ba2b0a2d821",
+      "actual_visual_result": "PASS",
+      "finding": "ActualSFfirst-setroar thenShelton/PaulsameParisNov6postmatchinterview. Subtitle says Shelton blocked Tiafoe inSF then triggeredqualification; no USSFmatchwin or TiafoeNov6celebrationclaim."
+    },
+    {
+      "label": "00_opening_2",
+      "segment": "opening",
+      "segment_start": 4.138,
+      "segment_seconds": 8.44,
+      "photo_id": "atp-4605666",
+      "t": 10.032,
+      "photo_relative_range": [
+        3.349,
+        8.44
+      ],
+      "source_crop_box": [
+        1260,
+        0,
+        2760,
+        1999
+      ],
+      "source_photo_sha256": "899fda9230bfe0967350b90662961a87db6cd45b048a588cd020cc73681bea31",
+      "narration": "美网半决赛，谢尔顿挡住了蒂亚福。到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/00_opening_2.jpg",
+      "frame_sha256": "71289f1ef4f045718b64514d4f7d5dd2af0776eba09bbd5dc9c1961d829b2ab8",
+      "actual_visual_result": "PASS",
+      "finding": "ActualSFfirst-setroar thenShelton/PaulsameParisNov6postmatchinterview. Subtitle says Shelton blocked Tiafoe inSF then triggeredqualification; no USSFmatchwin or TiafoeNov6celebrationclaim."
+    },
+    {
+      "label": "01_ao_intro_1",
+      "segment": "ao_intro",
+      "segment_start": 12.578,
+      "segment_seconds": 5.584,
+      "photo_id": "ao-abc-r3-getty-highres",
+      "t": 15.37,
+      "photo_relative_range": [
+        0.0,
+        5.584
+      ],
+      "source_crop_box": [
+        450,
+        0,
+        1950,
+        2000
+      ],
+      "source_photo_sha256": "ea1e97ee63208d3b80ae3b3c8f5aba1fdb233a57107e1e67c828e9253623d672",
+      "narration": "先回到澳网。第三轮对德米纳尔，他三盘落败。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/01_ao_intro_1.jpg",
+      "frame_sha256": "579ccc5f3eb6e3d674fda1fdf35bbe72a6113d6f79a6ff3b77c2dfea076d49ad",
+      "actual_visual_result": "PASS",
+      "finding": "ActualGettyJan23R3fell/seatedoncourtphoto, fullcanvasfixed. Caption only R3lostthree sets, no injury diagnosis. No substituteAOpoint invented; sourcefallbackscopekept."
+    },
+    {
+      "label": "02_acapulco_intro_1",
+      "segment": "acapulco_intro",
+      "segment_start": 18.162,
+      "segment_seconds": 5.8,
+      "photo_id": "atp-4459709",
+      "t": 21.062,
+      "photo_relative_range": [
+        0.0,
+        5.8
+      ],
+      "source_crop_box": [
+        1010,
+        0,
+        2530,
+        2026
+      ],
+      "source_photo_sha256": "9227f53c6c8fc2f23c9ada405b2a36f9471292452efb811b8837ea3d27b49714",
+      "narration": "二月阿卡普尔科，他打到决赛，两盘输给科博利，收获亚军。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/02_acapulco_intro_1.jpg",
+      "frame_sha256": "5edfaa0f7199a14809a2274178a8767b321d5acbe77310f017c4171050795ba3",
+      "actual_visual_result": "PASS",
+      "finding": "Actualsamefinalprematchgroup withTiafoeright/Cobollileft/childcentre. Fullface preserved; genericcontextwhile narratingfinal loss, no stagedrunner-upceremonyclaim."
+    },
+    {
+      "label": "04_rg_intro_1",
+      "segment": "rg_intro",
+      "segment_start": 38.062,
+      "segment_seconds": 9.928,
+      "photo_id": "rg-r4-official",
+      "t": 43.026,
+      "photo_relative_range": [
+        0.0,
+        9.928
+      ],
+      "source_crop_box": [
+        840,
+        0,
+        2340,
+        2000
+      ],
+      "source_photo_sha256": "ba590ffd79530c40caf3772c737931cc8f7a77dbcecaa57e3b51f7d55d33c5c1",
+      "narration": "法网第四轮，打了五小时二十六分。他曾盘分二比一领先，第四盘也领先四比一，最后却被阿尔纳尔迪逆转。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/04_rg_intro_1.jpg",
+      "frame_sha256": "a3b59d4cc5b8bba1d92a12dcdf1065b473ca260878548da2ad7a6b72e5fa773e",
+      "actual_visual_result": "PASS",
+      "finding": "ActualFFT2026R4serveportrait, faceclear, fixedcentre. Displayed 2-1and4-1 narrative facts are not presented as photographedspecificscoreinstant. No fabricatedRGmatchpointphoto."
+    },
+    {
+      "label": "05_halle_intro_1",
+      "segment": "halle_intro",
+      "segment_start": 47.989999999999995,
+      "segment_seconds": 8.968,
+      "photo_id": "atp-4522580",
+      "t": 49.965,
+      "photo_relative_range": [
+        0.0,
+        3.9505
+      ],
+      "source_crop_box": [
+        750,
+        0,
+        2250,
+        2000
+      ],
+      "source_photo_sha256": "6e45b94e330c4f7bb40cf410ea632e31ada9a12eb5333eb010c821ed613806c9",
+      "narration": "六月哈雷，先在四分之一决赛救回三个赛点。决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/05_halle_intro_1.jpg",
+      "frame_sha256": "f94639e2385ca879499e039dae01bd9cbc7b5f4e9b41bb0aa74f291f123fcd73",
+      "actual_visual_result": "PASS",
+      "finding": "ActualQFvsFAA4522580 first, exactJune19professionalphoto, thenrealHallechampiontrophyportrait4524919. QFsave3MPclauseusesQFpicture, not finaltrophy. No claimexactsaveMPinstant."
+    },
+    {
+      "label": "05_halle_intro_2",
+      "segment": "halle_intro",
+      "segment_start": 47.989999999999995,
+      "segment_seconds": 8.968,
+      "photo_id": "atp-4524919",
+      "t": 54.449,
+      "photo_relative_range": [
+        3.9505,
+        8.968
+      ],
+      "source_crop_box": [
+        1020,
+        0,
+        2520,
+        2000
+      ],
+      "source_photo_sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+      "narration": "六月哈雷，先在四分之一决赛救回三个赛点。决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/05_halle_intro_2.jpg",
+      "frame_sha256": "975669edfd3092096e4fb0caab5547ad25a0954f6f59724b7f1222f3d16d2cd7",
+      "actual_visual_result": "PASS",
+      "finding": "ActualQFvsFAA4522580 first, exactJune19professionalphoto, thenrealHallechampiontrophyportrait4524919. QFsave3MPclauseusesQFpicture, not finaltrophy. No claimexactsaveMPinstant."
+    },
+    {
+      "label": "07_wimbledon_intro_1",
+      "segment": "wimbledon_intro",
+      "segment_start": 88.958,
+      "segment_seconds": 5.872,
+      "photo_id": "wim-r3-guardian-getty",
+      "t": 91.894,
+      "photo_relative_range": [
+        0.0,
+        5.872
+      ],
+      "source_crop_box": [
+        1011,
+        0,
+        2589,
+        2103
+      ],
+      "source_photo_sha256": "f59610b2d903d7aaf0753c23a7334e3bed80bf918e914ef1c238f2d1bb0fe6dc",
+      "narration": "带着哈雷冠军来到温网，他在第三轮五盘输给布勃利克。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/07_wimbledon_intro_1.jpg",
+      "frame_sha256": "690ccccf19ef8c3c2f57ac80bddbfb53ffc877b9aab311d1a4cb59f0d65d0d5b",
+      "actual_visual_result": "PASS",
+      "finding": "ActualJuly4R3slipreactionprofessionalphoto. NarratedR3five-setloss; no medicaldiagnosis or exactfinalpointaftermathclaim."
+    },
+    {
+      "label": "09_summer_1",
+      "segment": "summer",
+      "segment_start": 116.63,
+      "segment_seconds": 7.792,
+      "photo_id": "atp-4555619",
+      "t": 118.823,
+      "photo_relative_range": [
+        0.0,
+        4.3868
+      ],
+      "source_crop_box": [
+        702,
+        0,
+        2298,
+        2129
+      ],
+      "source_photo_sha256": "38fe287a36685bf1ade7f923e3f6623b21b5d3f5b9bbca53319e37f8e4ab6f82",
+      "narration": "八月，在蒙特利尔因伤退赛。右手接受手术后，他又在辛辛那提闯进决赛。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/09_summer_1.jpg",
+      "frame_sha256": "a4c1fbbd3bbff574a312999725e266a998a3b80b2a90ecd900bb1fce9f9c0b85",
+      "actual_visual_result": "PASS",
+      "finding": "ActualMontrealserve4555619 thenCincinnatifinalbackhand4565359. No surgery/clinic/handcloseup fabricated; medicalfactspokenagainstgenericcorrecteventcontext."
+    },
+    {
+      "label": "09_summer_2",
+      "segment": "summer",
+      "segment_start": 116.63,
+      "segment_seconds": 7.792,
+      "photo_id": "atp-4565359",
+      "t": 122.719,
+      "photo_relative_range": [
+        4.3868,
+        7.792
+      ],
+      "source_crop_box": [
+        1050,
+        0,
+        2550,
+        2000
+      ],
+      "source_photo_sha256": "1caa8e6462851f915dd7a37791178fe93615cc896db3e94391ac5109773e181e",
+      "narration": "八月，在蒙特利尔因伤退赛。右手接受手术后，他又在辛辛那提闯进决赛。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/09_summer_2.jpg",
+      "frame_sha256": "a5bcb2a76fb33fd08c9202eac635ba181b335a5beb770c46bdc9935dcbe65ff9",
+      "actual_visual_result": "PASS",
+      "finding": "ActualMontrealserve4555619 thenCincinnatifinalbackhand4565359. No surgery/clinic/handcloseup fabricated; medicalfactspokenagainstgenericcorrecteventcontext."
+    },
+    {
+      "label": "10_cincinnati_intro_1",
+      "segment": "cincinnati_intro",
+      "segment_start": 124.422,
+      "segment_seconds": 8.536,
+      "photo_id": "atp-4565358",
+      "t": 128.69,
+      "photo_relative_range": [
+        0.0,
+        8.536
+      ],
+      "source_crop_box": [
+        900,
+        0,
+        2400,
+        2000
+      ],
+      "source_photo_sha256": "94d19ec980707fcce3456a47b8eb295137c13ad6a5247ba911d215c693f0e749",
+      "narration": "对菲斯，他扳回第二盘，决胜盘却一局未得。第二次打进大师赛决赛，还是收获亚军。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/10_cincinnati_intro_1.jpg",
+      "frame_sha256": "7db3851a8bdd6c1455caccd72e75e609e414bf9e389b03bdcdb86595394ce792",
+      "actual_visual_result": "PASS",
+      "finding": "ActualAug23finalforehand4565358, whitepatternedkit. Genericon-courtpicture, notclaimedsecondset/thirdsetspecificpoint."
+    },
+    {
+      "label": "12_us_open_qf_intro_1",
+      "segment": "us_open_qf_intro",
+      "segment_start": 161.25799999999998,
+      "segment_seconds": 8.824,
+      "photo_id": "uso-qf-4",
+      "t": 163.634,
+      "photo_relative_range": [
+        0.0,
+        4.7524
+      ],
+      "source_crop_box": [
+        1470,
+        0,
+        2970,
+        2000
+      ],
+      "source_photo_sha256": "b48292ea91fe3d523e163ba0431d0e5003051864fb70ee8d7012911f030e8578",
+      "narration": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。他最后连赢三盘，逆转米切尔森。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/12_us_open_qf_intro_1.jpg",
+      "frame_sha256": "b2fdcb1276dda894c8b2ffd042a239e22bcb3aab8af621ad31707f25ef133766",
+      "actual_visual_result": "PASS",
+      "finding": "ActualsameQFprofile withfixedcx.74retainingfullnose/mouth thenAPpost-winbackarmsraised. Correctloss-to-comeback semanticorder, no 3rdsetcelebrationmislabelledfullmatchwin."
+    },
+    {
+      "label": "12_us_open_qf_intro_2",
+      "segment": "us_open_qf_intro",
+      "segment_start": 161.25799999999998,
+      "segment_seconds": 8.824,
+      "photo_id": "uso-qf-0",
+      "t": 168.046,
+      "photo_relative_range": [
+        4.7524,
+        8.824
+      ],
+      "source_crop_box": [
+        600,
+        0,
+        2400,
+        2400
+      ],
+      "source_photo_sha256": "e24513fd3993b5e8f5d835059fac82d18e8d7541b8fbc3a6d7a4db14d4e63639",
+      "narration": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。他最后连赢三盘，逆转米切尔森。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/12_us_open_qf_intro_2.jpg",
+      "frame_sha256": "1d8f777a2006c6947db057dce8c04fea93d68e114158eb4fb26dd986775fb267",
+      "actual_visual_result": "PASS",
+      "finding": "ActualsameQFprofile withfixedcx.74retainingfullnose/mouth thenAPpost-winbackarmsraised. Correctloss-to-comeback semanticorder, no 3rdsetcelebrationmislabelledfullmatchwin."
+    },
+    {
+      "label": "14_us_open_sf_intro_1",
+      "segment": "us_open_sf_intro",
+      "segment_start": 185.932,
+      "segment_seconds": 8.704,
+      "photo_id": "uso-sf-firstset-ap",
+      "t": 187.229,
+      "photo_relative_range": [
+        0.0,
+        2.5943
+      ],
+      "source_crop_box": [
+        960,
+        0,
+        2460,
+        2000
+      ],
+      "source_photo_sha256": "61f84d263c346c8ec0f7b70f823ff4f6a5a70d4585b812489e94295cba473a7f",
+      "narration": "半决赛对谢尔顿，先赢一盘，随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/14_us_open_sf_intro_1.jpg",
+      "frame_sha256": "efb5137fce72b62b55c4cf04c8df3e049de42675562141a21e908df5ac6a9605",
+      "actual_visual_result": "PASS",
+      "finding": "Actualfirstsetroar appears first, switches tosameSFbackhand when narrative turns to lost3sets. Thefinalfateis loss, sourcephotocaptionfirstsetwinnotmisrepresented."
+    },
+    {
+      "label": "14_us_open_sf_intro_2",
+      "segment": "us_open_sf_intro",
+      "segment_start": 185.932,
+      "segment_seconds": 8.704,
+      "photo_id": "uso-sf-backhand-reuters",
+      "t": 191.581,
+      "photo_relative_range": [
+        2.5943,
+        8.704
+      ],
+      "source_crop_box": [
+        754,
+        0,
+        2246,
+        1988
+      ],
+      "source_photo_sha256": "94161d3b8e1ab07ad3a2eecf1cdaa7618c73263e216ebe89341db1eeb8b3e80a",
+      "narration": "半决赛对谢尔顿，先赢一盘，随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/14_us_open_sf_intro_2.jpg",
+      "frame_sha256": "94fface662983f51b2c4edec84784c8368f0fb096792cbccc80925d95d1a4cda",
+      "actual_visual_result": "PASS",
+      "finding": "Actualfirstsetroar appears first, switches tosameSFbackhand when narrative turns to lost3sets. Thefinalfateis loss, sourcephotocaptionfirstsetwinnotmisrepresented."
+    },
+    {
+      "label": "16_autumn_1",
+      "segment": "autumn",
+      "segment_start": 222.836,
+      "segment_seconds": 4.984,
+      "photo_id": "atp-4590561",
+      "t": 225.328,
+      "photo_relative_range": [
+        0.0,
+        4.984
+      ],
+      "source_crop_box": [
+        1020,
+        0,
+        2520,
+        1999
+      ],
+      "source_photo_sha256": "36fdd067d0c790a66b277a2e1ddb465c793af680b706d13e3f23eec18756ef04",
+      "narration": "上海、维也纳，再到巴黎，他遭遇了三连败。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/16_autumn_1.jpg",
+      "frame_sha256": "61ce5edaaf43ead404df116174ec9ed5a9b605fa5031c73a6959de2c9955476c",
+      "actual_visual_result": "PASS",
+      "finding": "ActualShanghai2026black/khakikit/Shanghai-signagepicture, NOT Tokyo burgundyphoto. Onephoto forbriefthreelosses summary; no ViennaorPariseventlabelstampedonShanghaiframe."
+    },
+    {
+      "label": "17_paris_1",
+      "segment": "paris",
+      "segment_start": 227.82000000000002,
+      "segment_seconds": 6.544,
+      "photo_id": "atp-4604284",
+      "t": 231.092,
+      "photo_relative_range": [
+        0.0,
+        6.544
+      ],
+      "source_crop_box": [
+        900,
+        0,
+        2400,
+        2000
+      ],
+      "source_photo_sha256": "f7862b844eb7dc77749f219c12646bee143ee31035ab9b881bcf02a78527d28f",
+      "narration": "十一月四日，巴黎第二轮输给阿利斯，这个结果先让菲斯锁定了年终资格。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/17_paris_1.jpg",
+      "frame_sha256": "12475540990e32ec13edcdb936edca72bc75e07cd44aacc2cf8d96b175913f0b",
+      "actual_visual_result": "PASS",
+      "finding": "ActualNov4R2Tiafoenavyclose-up4604284. Distinctfromautumnphoto; not Filsphoto or inventedpost-defeatinstant."
+    },
+    {
+      "label": "18_qualification_1",
+      "segment": "qualification",
+      "segment_start": 234.36400000000003,
+      "segment_seconds": 7.936,
+      "photo_id": "atp-4605666",
+      "t": 236.151,
+      "photo_relative_range": [
+        0.0,
+        3.5731
+      ],
+      "source_crop_box": [
+        1260,
+        0,
+        2760,
+        1999
+      ],
+      "source_photo_sha256": "899fda9230bfe0967350b90662961a87db6cd45b048a588cd020cc73681bea31",
+      "narration": "十一月六日，谢尔顿在巴黎击败保罗。蒂亚福终于锁定资格，第一次走进都灵。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/18_qualification_1.jpg",
+      "frame_sha256": "f3056cd0fc636fc43b6ea959a8cd6071a37157cfb9c00b5f6c163d29293f28bc",
+      "actual_visual_result": "PASS",
+      "finding": "ActualSheltonPaulNov6Parisinterviewtriggerphoto thenearlierHalleTiafoeseasoncallback. No TiafoeNov6physicalcelebration/Pariswin/Finalstrophy label."
+    },
+    {
+      "label": "18_qualification_2",
+      "segment": "qualification",
+      "segment_start": 234.36400000000003,
+      "segment_seconds": 7.936,
+      "photo_id": "atp-4524919",
+      "t": 240.119,
+      "photo_relative_range": [
+        3.5731,
+        7.936
+      ],
+      "source_crop_box": [
+        1020,
+        0,
+        2520,
+        2000
+      ],
+      "source_photo_sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+      "narration": "十一月六日，谢尔顿在巴黎击败保罗。蒂亚福终于锁定资格，第一次走进都灵。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/18_qualification_2.jpg",
+      "frame_sha256": "646247b719e1cce6d029896dbb8b7194d2124eedff25e00dc75e25a464070e16",
+      "actual_visual_result": "PASS",
+      "finding": "ActualSheltonPaulNov6Parisinterviewtriggerphoto thenearlierHalleTiafoeseasoncallback. No TiafoeNov6physicalcelebration/Pariswin/Finalstrophy label."
+    },
+    {
+      "label": "19_race_table",
+      "segment": "race_table",
+      "segment_start": 242.30000000000004,
+      "segment_seconds": 9.712,
+      "photo_id": null,
+      "t": 247.156,
+      "narration": "截至十一月七日，蒂亚福三千三百九十分，排名赛季积分榜第八。高亮的八位球员，都已锁定年终资格。",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/19_race_table.jpg",
+      "frame_sha256": "93619c31ae7e29a2e7d9031200a434e15b3a340117f7d91e5c670c4855bb6a29",
+      "actual_visual_result": "PASS",
+      "finding": "Actualnativegraphichighlights8qualifiedrows, Sinnergreywithdrawal, Tiafoe3390rowemphasised. Captionplacedbottom, tabletext unobscured. Numericalfactauditownedbyfactsrole."
+    },
+    {
+      "label": "20_question_1",
+      "segment": "question",
+      "segment_start": 252.01200000000003,
+      "segment_seconds": 4.6,
+      "photo_id": "atp-4524919",
+      "t": 254.312,
+      "photo_relative_range": [
+        0.0,
+        4.6
+      ],
+      "source_crop_box": [
+        1020,
+        0,
+        2520,
+        2000
+      ],
+      "source_photo_sha256": "e948cf5eab4c5b24694c30a07e4420bde4e7333180a5d1bec3a8f37ccee43597",
+      "narration": "第一次到都灵，你看好蒂亚福拿到几场胜利？",
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/20_question_1.jpg",
+      "frame_sha256": "cda6dd6c1a0ec6c145fd54bf74852e341b0f5293056e902b8751bba91a7e1692",
+      "actual_visual_result": "PASS",
+      "finding": "ActualHallechampionsmilecallback, questionaboutTurinwins, nofalseyear-endtrophyclaim."
+    },
+    {
+      "label": "outro_actual_master",
+      "segment": "outro",
+      "t": 258.612,
+      "photo_id": null,
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/outro_actual_master.jpg",
+      "frame_sha256": "e2c50ca3a1b0438acea667fb61c32a7b32e269b1ebe1c13a96b31044f7b725ef",
+      "actual_visual_result": "PASS",
+      "finding": "Actualnativeoutroballlogo and TennisJetlag branding plus把热爱留在场上, no unintendedtopiccard."
+    }
+  ],
+  "context_samples": [
+    {
+      "label": "context_03",
+      "t": 25.962,
+      "source": "acapulco-final",
+      "info": {
+        "topic": "阿卡普尔科亚军",
+        "date": "2026.02.28",
+        "place": "ATP500 阿卡普尔科决赛",
+        "people": "蒂亚福 vs 科博利",
+        "score": "6-7(4) 4-6",
+        "result": {
+          "winner": "科博利",
+          "score": "7-6(4) 6-4",
+          "source": "https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_03.jpg",
+      "sha256": "4647b4c571f430f0dce1d4990f3b7fff70393251b3f5d63a78f2510699b0d6c3",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    },
+    {
+      "label": "context_06",
+      "t": 58.958,
+      "source": "halle-final",
+      "info": {
+        "topic": "生涯首个500赛冠军",
+        "date": "2026.06.21",
+        "place": "ATP500 哈雷决赛",
+        "people": "蒂亚福 vs 弗里茨",
+        "score": "6-4 6-4",
+        "result": {
+          "winner": "蒂亚福",
+          "score": "6-4 6-4",
+          "source": "https://www.tennistv.com/videos/4523365/halle-2026-final-fritz-tiafoe-short-highlights"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_06.jpg",
+      "sha256": "f3f6c976c1aae1d46b98199de8a55f86e6956a5c1c2ae9ffb8ff00cc6e313fbb",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    },
+    {
+      "label": "context_08",
+      "t": 96.83,
+      "source": "wimbledon-r3",
+      "info": {
+        "topic": "温网止步第3轮",
+        "date": "2026.07.04",
+        "place": "温网第3轮",
+        "people": "蒂亚福 vs 布勃利克",
+        "score": "6-4 6-7(5) 6-7(11) 6-4 3-6",
+        "result": {
+          "winner": "布勃利克",
+          "score": "4-6 7-6(5) 7-6(11) 4-6 6-3",
+          "source": "https://x.com/Wimbledon/status/2073520443403669555"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_08.jpg",
+      "sha256": "3ef79dd805c3d19d51f8b0533916003bb3715d41083ff936c85c91b228b7da70",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    },
+    {
+      "label": "context_11",
+      "t": 134.958,
+      "source": "cincinnati-final",
+      "info": {
+        "topic": "辛辛那提亚军",
+        "date": "2026.08.23",
+        "place": "ATP1000 辛辛那提决赛",
+        "people": "蒂亚福 vs 菲斯",
+        "score": "3-6 6-1 0-6",
+        "result": {
+          "winner": "菲斯",
+          "score": "6-3 1-6 6-0",
+          "source": "https://www.youtube.com/watch?v=RAAXKA85t3g"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_11.jpg",
+      "sha256": "660b39ea151318c3bfdc5fc02b1cac48f6b12248b6c60ad1785469e839431a89",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    },
+    {
+      "label": "context_13",
+      "t": 172.082,
+      "source": "us-open-qf",
+      "info": {
+        "topic": "逆转闯进美网4强",
+        "date": "2026.09.08",
+        "place": "美网1/4决赛",
+        "people": "蒂亚福 vs 米切尔森",
+        "score": "5-7 3-6 7-5 6-3 7-6(6)",
+        "result": {
+          "winner": "蒂亚福",
+          "score": "5-7 3-6 7-5 6-3 7-6(6)",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/highlights_from_frances_tiafoe_vs_alex_michelsen_at_the_2026_us_open.html"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_13.jpg",
+      "sha256": "8666e31b178a01d308cf1b15e2318bc50dd2e52194d770fe040fa88a0ed2f162",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    },
+    {
+      "label": "context_15",
+      "t": 196.636,
+      "source": "us-open-sf",
+      "info": {
+        "topic": "第三次美网4强",
+        "date": "2026.09.11",
+        "place": "美网半决赛",
+        "people": "蒂亚福 vs 谢尔顿",
+        "score": "6-4 3-6 3-6 5-7",
+        "result": {
+          "winner": "谢尔顿",
+          "score": "4-6 6-3 6-3 7-5",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html"
+        }
+      },
+      "frame_path": "/dev/shm/tiafoe-production/qc-photos/context_15.jpg",
+      "sha256": "49aa45691118c1ebab4e478babe6855b8761366fc77e28a06378a73ac3c8ded6",
+      "actual_visual_result": "PASS_CONTEXT_BRAND_SAMPLED",
+      "finding": "Actualmasterframe opened incontact: fullcanvascourt withnativebrandheader andtoprightinfo, no transitioncard behind it; visiblematchlabelcorrespondsthisactualsourceevent. Sourcepointcontinuity/audio are assessed bythe designatedmedia/audio roles."
+    }
+  ],
+  "contacts": [
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-photos/actual-master-context-brand-contact.jpg",
+      "sha256": "0e056b73d7bc9f221c4ae1ec256d2b9fccb2fb1d829c40c27fb58006f8ddaa03"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-photos/actual-master-photos-contact-1.jpg",
+      "sha256": "9c323cec32a0df45860b6ecb5cebcf8f24241c356fd1193ad2110472f8195441"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/final/qc-photos/actual-master-photos-contact-2.jpg",
+      "sha256": "cd9530aa97bff2aeafe5fef334834e7e6ff0a216a650a22c10dbb159d7cc2c14"
+    }
+  ],
+  "limits": [
+    "This is a scoped photographidentity/fixedcrop/cover/brand/caption-scene semantic review; not a blanket whole-film audiovisual or sourcepointcontinuitypass.",
+    "Photosaregeneric same-event/round photography unless sourcecaption explicitlystatespoint/outcome. No emotional/medical diagnosisinferredfrompose.",
+    "Numericalracefacts, exactspokenwordaudio and fullpointcoverage are owned byindependentfacts/audio/media QC."
+  ],
+  "blocking_findings": [],
+  "changes_requested": []
+}

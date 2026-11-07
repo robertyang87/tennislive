@@ -1,0 +1,985 @@
+{
+  "status": "extracted_only_not_visual_approval",
+  "movie": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+  "movie_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "spec": "/dev/shm/tiafoe-production/native/specs/reels/tiafoe-finals-road-2026.json",
+  "spec_sha256": "5aabf7ef85b65fde83fa6fff32fa7764993d34890ea97f4cb820be82af845e84",
+  "render_meta_sha256": "7a44129d75adcc30816a588b2ea2146b527ef850e2d8e647790689925980018d",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1080,
+        "height": 1440,
+        "coded_width": 1080,
+        "coded_height": 1440,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "3:4",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/90000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 23508000,
+        "duration": "261.200000",
+        "bit_rate": "5221851",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "6530",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc63.26.101 libx264"
+        },
+        "side_data_list": [
+          {
+            "side_data_type": "ICC Profile"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 12535968,
+        "duration": "261.166000",
+        "bit_rate": "177480",
+        "nb_frames": "12244",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "261.200000",
+      "size": "176482943",
+      "bit_rate": "5405296",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "timeline_method": "Actual render cover_seconds + committed nominal scene durations; final per-frame rounding can differ slightly.",
+  "timeline": [
+    {
+      "index": 0,
+      "id": "opening",
+      "start": 4.138,
+      "duration": 8.44,
+      "end": 12.578
+    },
+    {
+      "index": 1,
+      "id": "ao_intro",
+      "start": 12.578,
+      "duration": 5.584,
+      "end": 18.162
+    },
+    {
+      "index": 2,
+      "id": "acapulco_intro",
+      "start": 18.162,
+      "duration": 5.8,
+      "end": 23.962
+    },
+    {
+      "index": 3,
+      "id": "acapulco_point",
+      "start": 23.962,
+      "duration": 14.1,
+      "end": 38.062
+    },
+    {
+      "index": 4,
+      "id": "rg_intro",
+      "start": 38.062,
+      "duration": 9.928,
+      "end": 47.99
+    },
+    {
+      "index": 5,
+      "id": "halle_intro",
+      "start": 47.99,
+      "duration": 8.968,
+      "end": 56.958
+    },
+    {
+      "index": 6,
+      "id": "halle_point",
+      "start": 56.958,
+      "duration": 32.0,
+      "end": 88.958
+    },
+    {
+      "index": 7,
+      "id": "wimbledon_intro",
+      "start": 88.958,
+      "duration": 5.872,
+      "end": 94.83
+    },
+    {
+      "index": 8,
+      "id": "wimbledon_point",
+      "start": 94.83,
+      "duration": 21.8,
+      "end": 116.63
+    },
+    {
+      "index": 9,
+      "id": "summer",
+      "start": 116.63,
+      "duration": 7.792,
+      "end": 124.422
+    },
+    {
+      "index": 10,
+      "id": "cincinnati_intro",
+      "start": 124.422,
+      "duration": 8.536,
+      "end": 132.958
+    },
+    {
+      "index": 11,
+      "id": "cincinnati_point",
+      "start": 132.958,
+      "duration": 28.3,
+      "end": 161.258
+    },
+    {
+      "index": 12,
+      "id": "us_open_qf_intro",
+      "start": 161.258,
+      "duration": 8.824,
+      "end": 170.082
+    },
+    {
+      "index": 13,
+      "id": "us_open_qf_point",
+      "start": 170.082,
+      "duration": 15.85,
+      "end": 185.932
+    },
+    {
+      "index": 14,
+      "id": "us_open_sf_intro",
+      "start": 185.932,
+      "duration": 8.704,
+      "end": 194.636
+    },
+    {
+      "index": 15,
+      "id": "us_open_sf_point",
+      "start": 194.636,
+      "duration": 28.2,
+      "end": 222.836
+    },
+    {
+      "index": 16,
+      "id": "autumn",
+      "start": 222.836,
+      "duration": 4.984,
+      "end": 227.82
+    },
+    {
+      "index": 17,
+      "id": "paris",
+      "start": 227.82,
+      "duration": 6.544,
+      "end": 234.364
+    },
+    {
+      "index": 18,
+      "id": "qualification",
+      "start": 234.364,
+      "duration": 7.936,
+      "end": 242.3
+    },
+    {
+      "index": 19,
+      "id": "race_table",
+      "start": 242.3,
+      "duration": 9.712,
+      "end": 252.012
+    },
+    {
+      "index": 20,
+      "id": "question",
+      "start": 252.012,
+      "duration": 4.6,
+      "end": 256.612
+    }
+  ],
+  "frames": [
+    {
+      "time": 0.8,
+      "tags": [
+        "cover"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-000-0000.800.jpg",
+      "sha256": "9d82fa48e8e76765cc492eec0ec8b34b7407faa05101a0003e90888ae9593021"
+    },
+    {
+      "time": 3.958,
+      "tags": [
+        "cover-before-cut"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-001-0003.958.jpg",
+      "sha256": "1d4db52a9b2866c852dae96b2033f58f01df4e4544901b22d8e538b2b19b31c6"
+    },
+    {
+      "time": 8.358,
+      "tags": [
+        "00-opening-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-002-0008.358.jpg",
+      "sha256": "6276395895fa1501781665242a9e4a0815772654f2e54b6b84b85c61d14d2103"
+    },
+    {
+      "time": 15.37,
+      "tags": [
+        "01-ao_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-003-0015.370.jpg",
+      "sha256": "579ccc5f3eb6e3d674fda1fdf35bbe72a6113d6f79a6ff3b77c2dfea076d49ad"
+    },
+    {
+      "time": 21.062,
+      "tags": [
+        "02-acapulco_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-004-0021.062.jpg",
+      "sha256": "5edfaa0f7199a14809a2274178a8767b321d5acbe77310f017c4171050795ba3"
+    },
+    {
+      "time": 24.212,
+      "tags": [
+        "03-acapulco_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-005-0024.212.jpg",
+      "sha256": "dc345e37b38131908df8ba1bb2e344d5dad2e5fbd8432e57843178cca835bf7c"
+    },
+    {
+      "time": 24.962,
+      "tags": [
+        "03-acapulco_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-006-0024.962.jpg",
+      "sha256": "9be5ace237e54e574d3616fc077298df44eafc7e135a7b6e30e8ce4004d00457"
+    },
+    {
+      "time": 27.962,
+      "tags": [
+        "03-acapulco_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-007-0027.962.jpg",
+      "sha256": "32a6903aefdca4ae7ec91c2392cdc4bfbb7143e1fd933916885f1e13b4f9de39"
+    },
+    {
+      "time": 28.342,
+      "tags": [
+        "03-acapulco_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-008-0028.342.jpg",
+      "sha256": "35a07ce7c317d1ce068bc9830dab9a7481fcae386468de9aa87f957073e22d89"
+    },
+    {
+      "time": 31.012,
+      "tags": [
+        "03-acapulco_point-middle",
+        "03-acapulco_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-009-0031.012.jpg",
+      "sha256": "c5b6738669a6b8d1f22304b420f2e0bf47b3155160dc25ec52bc8e951ab8402f"
+    },
+    {
+      "time": 31.542,
+      "tags": [
+        "03-acapulco_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-010-0031.542.jpg",
+      "sha256": "4043280af36083e5cb1b64664e7bd1f70917644a213e91be39f99aed38c77471"
+    },
+    {
+      "time": 32.462,
+      "tags": [
+        "03-acapulco_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-011-0032.462.jpg",
+      "sha256": "14bd022ee905a96947277fa58e55891b36696fd2524662234424194118c64306"
+    },
+    {
+      "time": 35.892,
+      "tags": [
+        "03-acapulco_point-bilingual2"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-012-0035.892.jpg",
+      "sha256": "0b6e158321ac8ab46be3bf67e5d230418c616afe5e78669090033b65dbfc9402"
+    },
+    {
+      "time": 37.712,
+      "tags": [
+        "03-acapulco_point-plus13.75"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-013-0037.712.jpg",
+      "sha256": "f839dd84d07c32552f63eaae4d731d7a0f1acc5cc2e08b746118e5c2965e92b0"
+    },
+    {
+      "time": 43.026,
+      "tags": [
+        "04-rg_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-014-0043.026.jpg",
+      "sha256": "a3b59d4cc5b8bba1d92a12dcdf1065b473ca260878548da2ad7a6b72e5fa773e"
+    },
+    {
+      "time": 52.474,
+      "tags": [
+        "05-halle_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-015-0052.474.jpg",
+      "sha256": "4eb3cd89db08fd3a77e436ee7746413fc698873b4aa584d14edf3b23ea76e7a2"
+    },
+    {
+      "time": 57.208,
+      "tags": [
+        "06-halle_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-016-0057.208.jpg",
+      "sha256": "5ddc5bbfd4329afc342cea359c299f19d096372ac4ea71a46c434b8db1ee24e3"
+    },
+    {
+      "time": 57.958,
+      "tags": [
+        "06-halle_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-017-0057.958.jpg",
+      "sha256": "717ddb4806dbac5a082302292a489c2504a7c6db724bb335c57d5642ed64e2e1"
+    },
+    {
+      "time": 60.958,
+      "tags": [
+        "06-halle_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-018-0060.958.jpg",
+      "sha256": "dada6f2c8cc3fd192e8b851a1b2e68a9c5de87740bdf7cb9e355f61cd38be46f"
+    },
+    {
+      "time": 63.958,
+      "tags": [
+        "06-halle_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-019-0063.958.jpg",
+      "sha256": "3f1bfd2ab3c1076669b5ddcdb3195076405df8df49813688c534a3b55dd8a77f"
+    },
+    {
+      "time": 65.458,
+      "tags": [
+        "06-halle_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-020-0065.458.jpg",
+      "sha256": "94d748b8817a0b3993c6a078238aa01e6bfe254e6ef9b2506e4436bc86a1b1dc"
+    },
+    {
+      "time": 72.958,
+      "tags": [
+        "06-halle_point-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-021-0072.958.jpg",
+      "sha256": "8bb44fae5c7b462cdf39fc49642076b6fb18f9d4be29c7b6055015153a853bee"
+    },
+    {
+      "time": 76.158,
+      "tags": [
+        "06-halle_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-022-0076.158.jpg",
+      "sha256": "ed2db6ce12b842afae7d7f8f406c823dbeb86668a3789271c1a1bf964c3630d8"
+    },
+    {
+      "time": 80.088,
+      "tags": [
+        "06-halle_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-023-0080.088.jpg",
+      "sha256": "117bed4837a3001dd8b0264e1f3be416b00ff6ea68a45e40e3d83ff4c005f6e1"
+    },
+    {
+      "time": 82.218,
+      "tags": [
+        "06-halle_point-bilingual2"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-024-0082.218.jpg",
+      "sha256": "986914c7c9313c59552213f69dfeba6104d7aa599b0d8b93e0ab9261ef71c9ac"
+    },
+    {
+      "time": 86.498,
+      "tags": [
+        "06-halle_point-bilingual3"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-025-0086.498.jpg",
+      "sha256": "7c3a0b6f740565cb56973a865403efd70036cd2c108c05461debc5eee17275ca"
+    },
+    {
+      "time": 88.608,
+      "tags": [
+        "06-halle_point-plus31.65"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-026-0088.608.jpg",
+      "sha256": "d065c86d446f36f4e0d21fc429ace8439fa12787515070816444d66391206389"
+    },
+    {
+      "time": 91.894,
+      "tags": [
+        "07-wimbledon_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-027-0091.894.jpg",
+      "sha256": "690ccccf19ef8c3c2f57ac80bddbfb53ffc877b9aab311d1a4cb59f0d65d0d5b"
+    },
+    {
+      "time": 95.08,
+      "tags": [
+        "08-wimbledon_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-028-0095.080.jpg",
+      "sha256": "1234ef441802844bcba3a302a573be230500e0d0ed83ce5a1f5e1a49d625ff1f"
+    },
+    {
+      "time": 95.83,
+      "tags": [
+        "08-wimbledon_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-029-0095.830.jpg",
+      "sha256": "6ab0b67114c6464bea319d521be77d1e1cb9de37e6b80f0f22cd534c16ef7955"
+    },
+    {
+      "time": 98.83,
+      "tags": [
+        "08-wimbledon_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-030-0098.830.jpg",
+      "sha256": "7dae56ebc896d7ab392cb2072ae8c0906079a71bed213fdb75d433d161b5fd2b"
+    },
+    {
+      "time": 100.03,
+      "tags": [
+        "08-wimbledon_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-031-0100.030.jpg",
+      "sha256": "c430ff53e4d3f42c9b82e567af8228c862d8d5f1e59a4ac462fcab6783c16e52"
+    },
+    {
+      "time": 101.83,
+      "tags": [
+        "08-wimbledon_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-032-0101.830.jpg",
+      "sha256": "c779007b316fe16b90c8dfe5e13f9a3821e3ec47faec3d5b7afd6e3edf676f3c"
+    },
+    {
+      "time": 103.33,
+      "tags": [
+        "08-wimbledon_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-033-0103.330.jpg",
+      "sha256": "9e1dfd9e2a910d6ac400dc5f39ce59c31db7f1da9f82c254ce1bb55d1283c6fa"
+    },
+    {
+      "time": 105.73,
+      "tags": [
+        "08-wimbledon_point-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-034-0105.730.jpg",
+      "sha256": "06e48a30eba96dd35c8288beaef5d0958f447f480b38d2cd9dc7666a81b2a3c9"
+    },
+    {
+      "time": 106.5,
+      "tags": [
+        "08-wimbledon_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-035-0106.500.jpg",
+      "sha256": "d8f9db212674845d37dc3a2c9f2f75b157cd98a86e2d096a8d743689cee771a0"
+    },
+    {
+      "time": 109.4,
+      "tags": [
+        "08-wimbledon_point-bilingual2"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-036-0109.400.jpg",
+      "sha256": "799b5908a113ebe87cdbb2889d82affe744dde76d2d7149348e79b65beeaa906"
+    },
+    {
+      "time": 112.04,
+      "tags": [
+        "08-wimbledon_point-bilingual3"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-037-0112.040.jpg",
+      "sha256": "0591ae235ca46d72cca3fb3c4e64db12b22a356bd76f8235974e0a1ba5b31985"
+    },
+    {
+      "time": 115.26,
+      "tags": [
+        "08-wimbledon_point-bilingual4"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-038-0115.260.jpg",
+      "sha256": "ea22647e19c759ab715bc92053b34d5e8ab7c2397c09791d70e19a644fabe95e"
+    },
+    {
+      "time": 116.28,
+      "tags": [
+        "08-wimbledon_point-plus21.45"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-039-0116.280.jpg",
+      "sha256": "ba79c472d0753d68ff609b27bb486b720abd93bd6ed53ed02105c058336549f3"
+    },
+    {
+      "time": 120.526,
+      "tags": [
+        "09-summer-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-040-0120.526.jpg",
+      "sha256": "01173b6a24d217e722f98b8d9b849ede505582ae844f1043a46a688c821455c2"
+    },
+    {
+      "time": 128.69,
+      "tags": [
+        "10-cincinnati_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-041-0128.690.jpg",
+      "sha256": "7db3851a8bdd6c1455caccd72e75e609e414bf9e389b03bdcdb86595394ce792"
+    },
+    {
+      "time": 133.208,
+      "tags": [
+        "11-cincinnati_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-042-0133.208.jpg",
+      "sha256": "96c803138c884a14cc9dea329e709eebd0a0ee56557becfffa386940f7fe8ee1"
+    },
+    {
+      "time": 133.958,
+      "tags": [
+        "11-cincinnati_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-043-0133.958.jpg",
+      "sha256": "300ac331f7a77d94a7fed9b69c11d3f517d9f8079913b2eb725290d6c8dc1819"
+    },
+    {
+      "time": 136.958,
+      "tags": [
+        "11-cincinnati_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-044-0136.958.jpg",
+      "sha256": "d0f88956a5614d60ed4e9fcd1dfe307b9c27378b120f4afeff6835ec7cf421be"
+    },
+    {
+      "time": 139.958,
+      "tags": [
+        "11-cincinnati_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-045-0139.958.jpg",
+      "sha256": "789b7a8fbdaa0e81958d032e52959b3914f3b77d3ec667d72223d0e487f2111c"
+    },
+    {
+      "time": 141.458,
+      "tags": [
+        "11-cincinnati_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-046-0141.458.jpg",
+      "sha256": "3e591ccd084feb8fe59f8cee29ddaafa759a8faba5348c731a1a7ceba57a0cef"
+    },
+    {
+      "time": 143.418,
+      "tags": [
+        "11-cincinnati_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-047-0143.418.jpg",
+      "sha256": "6fb25f022bcd114e4811110d1d584e7d014ddb75883cd4020a95b5190656d228"
+    },
+    {
+      "time": 146.438,
+      "tags": [
+        "11-cincinnati_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-048-0146.438.jpg",
+      "sha256": "795417b79c2a2e7d89da06f82f10b1c6afec3af36081d9069ce8c98360463bc8"
+    },
+    {
+      "time": 147.108,
+      "tags": [
+        "11-cincinnati_point-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-049-0147.108.jpg",
+      "sha256": "cd0844dc3c28f574e80505de88ef0bfefab3899cee3c49c70289f7c5da02ae65"
+    },
+    {
+      "time": 153.378,
+      "tags": [
+        "11-cincinnati_point-bilingual2"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-050-0153.378.jpg",
+      "sha256": "a5a5314a58760d8dd5dfa7f1dffc880438b51425136d8c418e2260440de8c441"
+    },
+    {
+      "time": 160.908,
+      "tags": [
+        "11-cincinnati_point-plus27.95"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-051-0160.908.jpg",
+      "sha256": "13043fd1ce8eb940753755d0db9a937ad7f6da7cf13b298fbe558e4b89084d85"
+    },
+    {
+      "time": 165.67,
+      "tags": [
+        "12-us_open_qf_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-052-0165.670.jpg",
+      "sha256": "28a04643b6b7a23b7ee9233b7ea3c9bbd5d835266364631c9ca404404767d164"
+    },
+    {
+      "time": 170.332,
+      "tags": [
+        "13-us_open_qf_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-053-0170.332.jpg",
+      "sha256": "c52f7fbbb918210e8c4e311fa28892cb857dfcea2a39f1b547864d3d03f2ffed"
+    },
+    {
+      "time": 171.082,
+      "tags": [
+        "13-us_open_qf_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-054-0171.082.jpg",
+      "sha256": "2d67da86eea643a709e0a47febded56b9e7d9348b93d8a3457857d19c3805a3e"
+    },
+    {
+      "time": 174.082,
+      "tags": [
+        "13-us_open_qf_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-055-0174.082.jpg",
+      "sha256": "614724bcea3974ca8ff0eab7f8b09fce76e0756e5193b59bce6f6e245bc66ae6"
+    },
+    {
+      "time": 177.082,
+      "tags": [
+        "13-us_open_qf_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-056-0177.082.jpg",
+      "sha256": "a43b26e29bd118f459b3de92a854ac3397f95ac856d1f53ca7b0c58c2605f69e"
+    },
+    {
+      "time": 177.682,
+      "tags": [
+        "13-us_open_qf_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-057-0177.682.jpg",
+      "sha256": "cc2e0a384f96377f6e595522b0a86dfd1bd0e9fd312b4b9aa5a7eae3bcbd60cb"
+    },
+    {
+      "time": 178.007,
+      "tags": [
+        "13-us_open_qf_point-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-058-0178.007.jpg",
+      "sha256": "d8c8ae05d0421c7d2d09d87b557365e39543459e3d67e838e6021ee5fa614885"
+    },
+    {
+      "time": 178.582,
+      "tags": [
+        "13-us_open_qf_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-059-0178.582.jpg",
+      "sha256": "1874c567e30922ff456ec78a239038162208637a942a1151451d788589c41687"
+    },
+    {
+      "time": 182.302,
+      "tags": [
+        "13-us_open_qf_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-060-0182.302.jpg",
+      "sha256": "8d21bc35ede6406824b2fd32c844a5dbd3059abcee958223fa4a2a5c56a7043a"
+    },
+    {
+      "time": 185.582,
+      "tags": [
+        "13-us_open_qf_point-plus15.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-061-0185.582.jpg",
+      "sha256": "20ef894b18ecd9309a9badfcbde1bf61bb2ce9b4a7369571f67340143ed8af96"
+    },
+    {
+      "time": 190.284,
+      "tags": [
+        "14-us_open_sf_intro-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-062-0190.284.jpg",
+      "sha256": "68562ae2c765502da33f5ec88239dbaadeb9b71aa522cd6d5090553b5dac9ad0"
+    },
+    {
+      "time": 194.886,
+      "tags": [
+        "15-us_open_sf_point-plus0.25"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-063-0194.886.jpg",
+      "sha256": "9eebaf4d38bc3da4910cc90e3497f70472413accc23a6d93a18933a350a7719e"
+    },
+    {
+      "time": 195.636,
+      "tags": [
+        "15-us_open_sf_point-plus1.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-064-0195.636.jpg",
+      "sha256": "b3d0e18d8f2103b1ad5b64ece623898ef432235ca1e02b9478286c28751f8f70"
+    },
+    {
+      "time": 198.636,
+      "tags": [
+        "15-us_open_sf_point-plus4.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-065-0198.636.jpg",
+      "sha256": "a0ac0b9c08200f1b9274c0b8b63d58d447ac3dc07c3807f39578f4c8ce33e40b"
+    },
+    {
+      "time": 201.001,
+      "tags": [
+        "15-us_open_sf_point-bilingual0"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-066-0201.001.jpg",
+      "sha256": "02111f3bc5d16c8b194ea0c107a7dbf03bc4425664876dfa3c7030d1402fea75"
+    },
+    {
+      "time": 201.636,
+      "tags": [
+        "15-us_open_sf_point-plus7.00"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-067-0201.636.jpg",
+      "sha256": "369502afc3543cb83f8b80f0d39610e94b199d1c1750b8363cd2a2f550db65e3"
+    },
+    {
+      "time": 203.136,
+      "tags": [
+        "15-us_open_sf_point-plus8.50"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-068-0203.136.jpg",
+      "sha256": "440b2e162c8fbd1db36b2db0afb756fe1f44a78ab8ca7b41e0cbb9a2a9a32202"
+    },
+    {
+      "time": 208.736,
+      "tags": [
+        "15-us_open_sf_point-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-069-0208.736.jpg",
+      "sha256": "3fc0310ef57870a62dca0529b929674fc2eee3d730fd4c81dd989454f5dd72dc"
+    },
+    {
+      "time": 210.651,
+      "tags": [
+        "15-us_open_sf_point-bilingual1"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-070-0210.651.jpg",
+      "sha256": "713fad77ec7624739b2591d1b06bb6470e8af4b8b4940b22336081b813358008"
+    },
+    {
+      "time": 214.931,
+      "tags": [
+        "15-us_open_sf_point-bilingual2"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-071-0214.931.jpg",
+      "sha256": "2055f4080ea1f3dc034b5eb1a55b62e6873177598f3568c0ef4f87ae0c7f9025"
+    },
+    {
+      "time": 220.876,
+      "tags": [
+        "15-us_open_sf_point-bilingual3"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-072-0220.876.jpg",
+      "sha256": "dd7ad09e2cac27eeb4d818e477605cd1d9a1a2c272a1a91c78837eff161d9787"
+    },
+    {
+      "time": 222.486,
+      "tags": [
+        "15-us_open_sf_point-plus27.85"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-073-0222.486.jpg",
+      "sha256": "410ce7a9f5a0c603b5f4e5cc5970644d59c34ea4f6f838d82139590e526ad02b"
+    },
+    {
+      "time": 225.328,
+      "tags": [
+        "16-autumn-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-074-0225.328.jpg",
+      "sha256": "61ce5edaaf43ead404df116174ec9ed5a9b605fa5031c73a6959de2c9955476c"
+    },
+    {
+      "time": 231.092,
+      "tags": [
+        "17-paris-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-075-0231.092.jpg",
+      "sha256": "12475540990e32ec13edcdb936edca72bc75e07cd44aacc2cf8d96b175913f0b"
+    },
+    {
+      "time": 238.332,
+      "tags": [
+        "18-qualification-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-076-0238.332.jpg",
+      "sha256": "650aefdf34b5edaf461e4a4d2e0d48cab696a80f7ed4c29647d612ace0654e5c"
+    },
+    {
+      "time": 247.156,
+      "tags": [
+        "19-race_table-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-077-0247.156.jpg",
+      "sha256": "93619c31ae7e29a2e7d9031200a434e15b3a340117f7d91e5c670c4855bb6a29"
+    },
+    {
+      "time": 254.312,
+      "tags": [
+        "20-question-middle"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-078-0254.312.jpg",
+      "sha256": "cda6dd6c1a0ec6c145fd54bf74852e341b0f5293056e902b8751bba91a7e1692"
+    },
+    {
+      "time": 257.412,
+      "tags": [
+        "native-outro-start"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-079-0257.412.jpg",
+      "sha256": "4d110061f9cb6b59e9267ebbb4d14dab4ac6e514b10159294147cd56be08077b"
+    },
+    {
+      "time": 260.2,
+      "tags": [
+        "native-outro-final"
+      ],
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/frame-080-0260.200.jpg",
+      "sha256": "302a64d52b3b78bb8ca90f66460fe41f4257e7bfdc15d4d6b2f12e8e587878d2"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-00.jpg",
+      "sha256": "e3a509fa03519f13798634cf6d3ba96621d0898e5b97f9c96358a572b93697fa"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-01.jpg",
+      "sha256": "a436451656df6b903bc04ac0c6b60ed3a96dde039628dec4a21dea832544be3f"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-02.jpg",
+      "sha256": "f80a0f9076fa4fa764e519a761490a825289cd102bc69092a664840b756fe0b3"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-03.jpg",
+      "sha256": "0cbb4b0923ffc90a66859ad46ac76a577d927a65b14084169e15d1f4810a6b6f"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-04.jpg",
+      "sha256": "c88e19279e9d764e0a20ee30c682e9bc86ab86d1865ca310d6bd4a6a638e2c2a"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-05.jpg",
+      "sha256": "1fca8b95e78447224d729cac476e58788136817bcc21d96d49476ed1ce336302"
+    },
+    {
+      "file": "/workspace/tiafoe-finals-production/final/root-qc/contact-06.jpg",
+      "sha256": "c11790cbaef985ab3b84cdf86ea534c2f9a07920fe9bea8459bd7517e2a7d59d"
+    }
+  ]
+}
