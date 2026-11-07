@@ -192,7 +192,7 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('h0',1.2,None,tr("Return Rating＝一发接发、二发接发、接发局、破发四项百分比相加；ATP 官方榜单，1991 年起，截至 2026 年 11 月","Return Rating = four return percentages added; ATP official board since 1991, as of Nov 2026"),BOT),
+('h0',1.2,None,tr("Return Rating＝一发接发、二发接发、接发局、破发四项百分比相加\nATP 官方榜单，1991 年起，截至 2026 年 11 月","Return Rating = four return percentages added; ATP official board since 1991, as of Nov 2026"),('s',960,1012,C,30)),   # 小字贴底：44 号折三行会被顶到 y≈880，压住 3D 名次「7 德约科维奇 163.5」（2026-11-07 预览抽帧发现）
 ('r0',0,None,tr("按空气阻力模型估算，并与实测（地毯场一发约 0.72 秒）对照","Estimated with an air-drag model, consistent with measurements (~0.72 s on carpet)"),BOT),
 ('r2',0,None,tr("法国网协 22 名职业球员实测：起跳 +9 毫秒、落地 +152 毫秒、动拍 +187 毫秒（Mecheri 2019）","22 French federation players: take-off +9 ms, landing +152 ms, racket +187 ms (Mecheri 2019)"),BOT),
 ('e1',0,None,tr("空间遮挡实验：遮住抛球，高手就猜不准方向了（Jackson & Mogan 2007）","Spatial occlusion: hide the toss and experts lose the direction (Jackson & Mogan 2007)"),BOT),
