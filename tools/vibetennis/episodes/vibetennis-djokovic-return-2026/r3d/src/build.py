@@ -18,9 +18,9 @@ d=sys.argv[1]
 head=open(d+'/head.txt').read()
 base=base.split('\n',3)[3]   # 去掉 EP09 前三行文件说明
 common=common.replace('// ==================== EP09 球：本集物件 ====================','// ==================== EP10 德约接发：本集物件 ====================')
-rig=open(d+'/rig.js').read(); shots=open(d+'/shots.js').read()
+rig=open(d+'/rig.js').read(); stands=open(d+'/stands.js').read(); shots=open(d+'/shots.js').read()
 import re
-post=re.sub(r"\(\{hook:shotHook[^)]*\}\)\[sc\.kind\]\(u,D\);", "(SHOTS[sc.kind]||shotTest)(u,D);", post)
+post=re.sub(r"\(\{hook:shotHook[^)]*\}\)\[sc\.kind\]\(u,D\);", "(SHOTS[sc.kind]||shotTest)(u,D); standsTick(t,sc.kind,u);", post)
 extra="\nconst pt=cloud(1600,0.05,8,scene,0.5); const PTS=[...Array(1600)].map(()=>[(frnd()-0.5)*16,(frnd()-0.5)*9,(frnd()-0.5)*8,frnd(),frnd()]);\n"
-out='\n'.join([head,base,common,racket,pools,extra,rig,camera,shots,post])
+out='\n'.join([head,base,common,racket,pools,extra,stands,rig,camera,shots,post])
 open(sys.argv[2],'w').write(out); print(len(out.split('\n')),'lines')

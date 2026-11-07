@@ -90,7 +90,7 @@ function shotRace(u,D){
   const rp=tb<0.009?POSE.ready:tb<0.152?mixPose(POSE.split,POSE.land,ss(0.009,0.152,tb)):tb<0.187?POSE.land:mixPose(POSE.land,POSE.lungeF,ss(0.187,0.5,tb));
   applyPose(RET,u<JP?(u<FL?POSE.ready:mixPose(POSE.ready,POSE.ready,0)):rp);
   if(u>=FL){ const A=V(-0.95,2.8,-L2+0.1), B=V(2.4,0,SLN-0.6), Cp=V(1.6,0.9,L2+0.6); const b=bl(); if(tb<0.65){ showB(b,serveAt(tb,A,B,Cp),1,BS*1.4); } const pts=[]; for(let i=0;i<=24;i++) pts.push(serveAt(Math.min(tb,0.65)*i/24,A,B,Cp)); trail(pts,GO,4,0.7); }
-  look(-23,6.5,0.4,0,0.0,0.4);   /* 侧面看整条来球路线：两个人都在画里 */
+  look(-23,13,0.4,0,0.0,0.4);   /* 侧面看整条来球路线：两个人都在画里；机位抬到看台前排人头上方（看台 2026-11-07 加的） */
   // 时间轴（镜头坐标里画）：0 → 0.7 s
   const x0=-4.2, x1=4.2, ty=2.15, X=t=>lerp(x0,x1,t/TMAX); const kk=ss(TL0,TL0+0.8,u);
   const ax=ln(0x9fd8ff,3); setLine(ax,[hp(x0,ty),hp(lerp(x0,x1,kk),ty)]); ax.material.opacity=0.9;
