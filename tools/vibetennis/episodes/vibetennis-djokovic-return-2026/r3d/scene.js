@@ -358,44 +358,53 @@ function hideAll(){
 function row(k,i,str,val,max,col,o,hl=0){ const y=1.4-i*0.75; const w=4.6*clamp(val/max); const l=ln(col,hl?14:10); setLine(l,[V(-1.2,y,0),V(-1.2+w,y,0)]); l.material.opacity=o*(0.75+0.25*hl);
   const t=tx(k,str,{color:hl?'#ffffff':'#c8d8ea',size:0.42,glow:hl?CYAN:'rgba(120,160,200,0.6)'}); t.position.set(-3.4,y,0.1); op(t,o); }
 
-// ---------- 1 钩子：2011 美网，赛点接发 → 官方榜单第 7 ----------
+// ---------- 1 钩子：开场即砸出冲突——「7」从天而降炸开 → 炸成「接发之王」→ 甩进 2011 美网赛点接发 → 王在哪？ ----------
+// 所有者 2026-11-07：「前几秒一定要抓住人……直接抛出来，然后用炸裂或者是非常爆裂的动作，或者特效把这个东西做到极致」
+function burst(c,k,col,spread=6,o=1){ const cc=new THREE.Color(col); for(let i=0;i<1600;i++){ const p=PTS[i]; const dir=V(p[0],p[1]*1.2,p[2]).normalize(); const sp=spread*(0.4+0.6*p[3]); const e=1-Math.pow(1-clamp(k),2.2);
+  cset(pt,i,c.x+dir.x*sp*e,c.y+dir.y*sp*e-1.5*e*e,c.z+dir.z*sp*e,cc.r,cc.g,cc.b,o*(1-ss(0.55,1,k))*(0.5+0.5*p[4])); } cdone(pt); }
+function shockRing(c,k,col,maxR,o=1,vertical=false){ const r=rg(); r.position.copy(c); vertical?r.rotation.set(0,0,0):r.rotation.set(-Math.PI/2,0,0); const e=1-Math.pow(1-clamp(k),3); r.scale.setScalar(0.2+maxR*e); r.material.color.set(col).multiplyScalar(GLOW.k); r.material.opacity=o*(1-ss(0.35,1,k)); }
 function shotHook(u,D){
-  const SV=ev('serve',3.15), RT=ev('ret',6.2), RUN=ev('run',10.9), CR=ev('crown',14.5), BD=ev('board',18.1), R7=ev('r7',20.6), QQ=ev('q',22.5);
-  if(u<RUN-0.3){ courtG.visible=true; const C=SV+0.9, sf=0.65/Math.max(0.6,RT-C);   /* 慢放：发球到接发人击球的 0.65 s 拉到旁白「正手」那一刻 */
+  const SLAM=ev('slam',0.3), SEV=ev('seven',2.4), CRN=ev('crown',5.5), CT=ev('court',7.7), SV=ev('serve',11.4), RT=ev('ret',14.6), RUN=ev('run',16.5), QQ=ev('q',19.9);
+  if(u<CT-0.3){ // A：巨大的「7」砸下来，冲击波＋粒子炸开；榜单在它周围拼出来 → B：「7」炸成粒子，汇成「接发之王」
+    look(lerp(1.2,-0.6,ss(0,CT,u)),lerp(-0.6,0.2,ss(0,CT,u)),lerp(10.5,9.0,ss(0,CT,u)),0,0.6,0);
+    const fall=clamp(u/0.55), imp=0.55; const y=lerp(4.2,0.7,fall*fall);   /* 第一帧「7」就在画面上方往下砸 */
+    const seven=t3d('bigSeven','7','#ff6a55',3.2); seven.g.position.set(0,y,0); seven.g.rotation.set(0,(1-fall)*0.6+Math.sin(u*0.6)*0.08,0); t3op(seven,1-ss(CRN-0.1,CRN+0.25,u));
+    if(u>imp){ const k=(u-imp)/1.4; shockRing(V(0,-1.0,0),k,RD,9); shockRing(V(0,-1.0,0),(u-imp-0.15)/1.6,GO,13,0.7); if(u<CRN) burst(V(0,-0.6,0),(u-imp)/1.6,0xff8a6a,7,0.9); FX_SHAKE=0.6*Math.exp(-(u-imp)*5)*(u-imp<0.8?1:0); const g=gs(RD,4.5,0.5*Math.exp(-(u-imp)*2.5)); g.position.set(0,-0.6,0.5); }
+    const o=ss(imp+0.1,imp+0.8,u)*(1-ss(CRN-0.2,CRN+0.2,u));
+    const rows=[[T('1  科里亚','1  Coria'),'171.5',2.0],[T('3  纳达尔','3  Nadal'),'167.8',1.25]];
+    rows.forEach(([n,v,yy],i)=>{ const a=tx('hr'+i,n,{color:'#c8d8ea',size:0.4}); a.position.set(-5.0,yy,-1.2); op(a,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); const b=tx('hv'+i,v,{color:'#9fb8d0',size:0.36}); b.position.set(5.0,yy,-1.2); op(b,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); });
+    const me=tx('hr7',T('7  德约科维奇  163.5','7  Djokovic  163.5'),{color:'#ffffff',size:0.48,glow:RED}); me.position.set(0,-1.75,0.6); op(me,ss(SEV-0.2,SEV+0.4,u)*(1-ss(CRN-0.2,CRN+0.2,u)));
+    const hd=tx('hH',T('ATP 官方 · 历史接发评分','ATP official · all-time Return Rating'),{color:'#c8f4ff',size:0.4,glow:CYAN}); hud(hd,0,2.6); op(hd,o);
+    if(u>SEV){ shockRing(V(0,0.7,0.4),((u-SEV)%1.2)/1.2,RD,2.6,0.6*(1-ss(CRN-0.6,CRN,u)),true); }
+    if(u>CRN-0.15){ const k=(u-CRN+0.15)/1.4; burst(V(0,0.7,0),k,0xffc24a,6,1); }   /* 「7」炸成金色粒子 */
+    const king=bt('kingT',T('接发之王','King of the Return'),{size:1.35,glow:GOLD,fx:'particles'}); hud(king,0,0.35,9); king.update(u,CRN+0.15,CT-0.6);
+    if(u>CRN+0.8){ const r2=(u-CRN-0.8)/1.6; shockRing(V(0,0.5,0),r2,GO,6,0.6,true); }
+    rims(RD,GO,6); beamMat.uniforms.uOp.value=0.06+0.1*ss(CRN,CRN+1,u); return; }
+  if(u<QQ-0.3){ // C：2011 美网赛点，子弹时间的正手接发，击球点炸出冲击波，球拖着光迹贯穿全场
+    courtG.visible=true; const C=SV+0.9, sf=0.65/Math.max(0.6,RT-C);
     humanOp(SRV,1); humanOp(RET,1); place(SRV,-0.8,-L2-0.3,0); place(RET,2.2,L2+0.9,Math.PI);
     applyPose(SRV,poseAt([[0,'stand'],[SV-0.6,'stand'],[SV,'sToss'],[SV+0.6,'sTrophy'],[C,'sHit'],[C+0.6,'sFollow']],u));
     const tb=(u-C)*sf; const A=V(-0.95,2.8,-L2+0.1), B=V(3.6,0,SLN-0.6), Cp=V(3.0,0.9,L2+0.7);
     applyPose(RET,poseAt([[0,'ready'],[C-0.15,'ready'],[C,'split'],[C+0.15/sf,'land'],[RT-0.35,'lungeF'],[RT+0.2,'lungeF'],[RT+1.4,'ready']],u));
     RET.root.position.x=lerp(2.2,2.7,ss(C+0.2/sf,RT-0.3,u));
     if(u>C&&tb<0.65){ const p=serveAt(tb,A,B,Cp); const b=bl(); showB(b,p,1,BS); const pts=[]; for(let i=0;i<=20;i++) pts.push(serveAt(tb*i/20,A,B,Cp)); trail(pts,GO,4,0.8); }
-    if(u>=RT){ const k=clamp((u-RT)*1.2); const E=V(-3.6,0,-L2+3.2); const p=V(lerp(Cp.x,E.x,k),0.9+Math.sin(Math.PI*k)*1.1,lerp(Cp.z,E.z,k)); const b=bl(); showB(b,p,1-ss(0.95,1,k),BS); const pts=[]; for(let i=0;i<=24;i++){ const kk=k*i/24; pts.push(V(lerp(Cp.x,E.x,kk),0.9+Math.sin(Math.PI*kk)*1.1,lerp(Cp.z,E.z,kk))); } trail(pts,CY,6,0.9);
-      if(k>=1){ const r=rg(); r.rotation.set(-Math.PI/2,0,0); r.position.set(E.x,0.02,E.z); r.scale.setScalar(lerp(0.3,2.5,ss(0,0.8,(u-RT)-0.84))); r.material.color.set(CY).multiplyScalar(GLOW.k); r.material.opacity=0.8*(1-ss(0,1.2,(u-RT)-0.84)); } }
-    SLOW=[RT-0.1,RT+0.5];
-    const sc=tx('hkSc',T('2011 美网半决赛 · 第五盘 3:5 · 费德勒发球 · 两个赛点','2011 US Open SF · fifth set 3-5 · Federer serving · 2 match points'),{color:'#ffe2a0',size:0.34,glow:GOLD,plate:true}); hud(sc,0,2.55); op(sc,ss(0.3,1,u)*(1-ss(RUN-0.8,RUN-0.3,u)));
-    const n1=tx('hkN1',T('费德勒','Federer'),{color:'#ffe2a0',size:0.34}); n1.position.set(-0.8,2.4,-L2-0.3); op(n1,ss(0.5,1.1,u)*(1-ss(SV+1.5,SV+2,u)));
-    const n2=tx('hkN2',T('德约科维奇','Djokovic'),{color:'#c8f4ff',size:0.34}); n2.position.set(2.4,2.4,L2+0.9); op(n2,ss(0.8,1.4,u)*(1-ss(SV+1.5,SV+2,u)));
-    const w=tx('hkW',T('正手接发 · 直接得分','Forehand return winner'),{color:'#ffffff',size:0.5,glow:CYAN}); hud(w,0,-2.2); op(w,ss(RT+0.3,RT+0.9,u));
+    if(u>=RT){ const k=clamp((u-RT)*0.9); const E=V(-3.6,0,-L2+3.2); const pos=kk=>V(lerp(Cp.x,E.x,kk),0.9+Math.sin(Math.PI*kk)*1.1,lerp(Cp.z,E.z,kk)); const b=bl(); showB(b,pos(k),1-ss(0.95,1,k),BS*1.3);
+      const pts=[]; for(let i=0;i<=30;i++) pts.push(pos(k*i/30)); trail(pts,CY,9,0.95); const pts2=[]; for(let i=0;i<=30;i++) pts2.push(pos(k*i/30).add(V(0,0.05,0))); trail(pts2,WH,3,0.6);
+      shockRing(Cp.clone(),(u-RT)/0.9,CY,3.2,1,true); shockRing(Cp.clone(),(u-RT-0.12)/1.1,WH,4.5,0.6,true); const g=gs(CY,2.2,0.6*Math.exp(-(u-RT)*3)); g.position.copy(Cp); FX_SHAKE=0.35*Math.exp(-(u-RT)*6)*(u-RT<0.6?1:0);
+      if(k>=1){ shockRing(E.clone().setY(0.03),(u-RT-1.11)/1.2,CY,3,0.9); } }
+    SLOW=[RT-0.1,RT+0.6];
+    const sc=tx('hkSc',T('2011 美网半决赛 · 第五盘 3:5 · 费德勒握两个赛点','2011 US Open SF · fifth set 3-5 · Federer, 2 match points'),{color:'#ffe2a0',size:0.34,glow:GOLD,plate:true}); hud(sc,0,2.55); op(sc,ss(CT,CT+0.6,u)*(1-ss(RUN-0.3,RUN,u)));
+    const sc2=tx('hkSc2',T('连赢四局 → 7:5 · 6-7 4-6 6-3 6-2 7-5','Four straight games → 7-5 · 6-7 4-6 6-3 6-2 7-5'),{color:'#c8f4ff',size:0.36,glow:CYAN,plate:true}); hud(sc2,0,2.55); op(sc2,ss(RUN,RUN+0.5,u));
+    const w=tx('hkW',T('正手接发 · 直接得分','Forehand return winner'),{color:'#ffffff',size:0.56,glow:CYAN}); hud(w,0,-2.15); op(w,ss(RT+0.3,RT+0.8,u));
     const sch=tx('hkS',T('动作为示意','Motion is schematic'),{color:'#9fb8d0',size:0.24}); hud(sch,3.6,-2.95); op(sch,1);
-    const tc=ss(0,SV,u), rc=ss(RT-0.5,RT+1.5,u);
-    look(lerp(7.5,5.2,tc)-rc*2.2, lerp(4.2,2.8,tc), lerp(L2+10,L2+7.2,tc)-rc*1.5, lerp(0,0.8,tc)-rc*1.4, 0.6, lerp(-2,-4,tc)+rc*-1);   /* 接发人身后偏高：两个人都在画里 */
+    const tc=ss(CT,SV,u), rc=ss(RT-0.5,RT+1.5,u);
+    look(lerp(7.5,5.2,tc)-rc*2.2, lerp(4.2,2.8,tc), lerp(L2+10,L2+7.2,tc)-rc*1.5, lerp(0,0.8,tc)-rc*1.4, 0.6, lerp(-2,-4,tc)+rc*-1);
     beamMat.uniforms.uOp.value=0.12; rims(GO,CY,5); DOF.on=u>C-0.3&&u<RT+1.2; DOF.focus=camera.position.distanceTo(V(3,0.9,L2)); DOF.ap=0.00005; return; }
-  if(u<BD-0.3){ // 连赢四局：3:5 → 7:5；接发之王
-    const v=u-RUN; const a=t3d('s35','3 : 5','#c8d8ea',0.9), b=t3d('s75','7 : 5','#ffd27a',1.1);
-    a.g.position.set(0,0.6,0); b.g.position.set(0,0.6,0); const k=ss(0.6,1.6,v); t3op(a,ss(0,0.4,v)*(1-k)); t3op(b,k*(1-ss(CR-RUN+0.2,CR-RUN+0.6,v))); a.g.rotation.y=k*Math.PI*0.5; b.g.rotation.y=(1-k)*-Math.PI*0.5;
-    const l=tx('hkRun',T('连赢四局 · 6-7 4-6 6-3 6-2 7-5','Four games in a row · 6-7 4-6 6-3 6-2 7-5'),{color:'#ffffff',size:0.4}); hud(l,0,-2.0); op(l,ss(0.4,1,v)*(1-ss(CR-RUN-0.3,CR-RUN,v)));
-    const t=bt('kingT',T('接发之王','King of the Return'),{size:1.25,glow:GOLD,fx:'shock'}); hud(t,0,0.4); t.update(v,CR-RUN);   /* 冲击 */
-    const k2=ss(CR-RUN,CR-RUN+1.4,v); particles(k2,0,1.9,0,3.6,0.5,0xffc24a,k2>0?0.8*(1-ss(BD-RUN-1,BD-RUN-0.4,v)):0);
-    look(Math.sin(v*0.3)*0.6,0.4,9,0,0.3,0); rims(GO,CY,5); beamMat.uniforms.uOp.value=0.08; return; }
-  // 官方榜单：第 1 科里亚、第 3 纳达尔、第 7 德约（只画核过的三行，中间用省略）
-  const v=u-BD; const o=ss(0,0.8,v);
-  row('lb1',0,T('1  科里亚','1  Coria'),171.5-150,22,0x9fb8d0,o); row('lb3',1,T('3  纳达尔','3  Nadal'),167.8-150,22,0x9fb8d0,o*ss(0.2,0.9,v));
-  const dots=tx('lbDot','· · ·',{color:'#7f93aa',size:0.5}); dots.position.set(-3.4,-0.15,0.1); op(dots,o);
-  const hl=ss(R7-BD,R7-BD+0.4,u-BD); row('lb7',2.5,T('7  德约科维奇','7  Djokovic'),163.5-150,22,hl>0.5?RD:CY,o*ss(0.4,1.1,v),hl);
-  const vals=[['lbv1','171.5',0],['lbv3','167.8',1],['lbv7','163.5',2.5]]; vals.forEach(([k,s,i])=>{ const t=tx(k,s,{color:'#e8f0ff',size:0.36}); t.position.set(3.75,1.4-i*0.75,0.1); op(t,o); });
-  const hd=tx('lbH',T('ATP 官方 · 历史接发评分（1991 年起）','ATP official · career Return Rating (since 1991)'),{color:'#c8f4ff',size:0.36,glow:CYAN}); hud(hd,0,2.6); op(hd,o);
-  const big=t3d('r7','7','#ff7a6a',1.6); big.g.position.set(3.2,-1.2,0.4); t3op(big,hl*(1-ss(QQ-BD-0.4,QQ-BD,v)));
-  const q=bt('hookQ',T('那这个「王」，到底王在哪？','So where does the "king" come from?'),{size:0.78,glow:GOLD,accent:T('王在哪','the "king"'),fx:'shock'}); hud(q,0,-2.2); q.update(v,QQ-BD,Infinity,0.9);
-  look(0.4,0.5,lerp(9.5,8.6,ss(0,D-BD,v)),0.4,0.4,0); rims(CY,RD,4); }
+  // D：王在哪？
+  const v=u-QQ; courtG.visible=true; courtG.userData.mat.opacity=lerp(1,0.45,ss(0,0.8,v)); humanOp(RET,lerp(1,0.5,ss(0,0.8,v))); place(RET,2.7,L2+0.9,Math.PI); applyPose(RET,POSE.ready);
+  look(4.0+v*0.2,2.4,L2+6.5,1.5,0.9,L2-2);
+  const q=bt('hookQ',T('那这个「王」，到底王在哪？','So where does the "king" come from?'),{size:0.86,glow:GOLD,accent:T('王在哪','the "king"'),fx:'shock'}); hud(q,0,0.6); q.update(v,0.05,Infinity,0.9);
+  rims(GO,CY,5); }
 
 // ---------- 2 时间赛跑：0.65 s 的来球，0.2 s 的反应，0.19 s 就动拍 ----------
 const TMAX=0.7;

@@ -13,7 +13,7 @@ EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
 SECTIONS = [(n, n) for n in ("hook", "race", "read", "split", "slide", "data", "end")]
 # 每句最短停留（从这句开口到下一句开口）：给这句的动效留够时间
-HOLD = {"h0": 5.2, "h1": 5.4, "h2": 3.6, "h3": 3.6, "h4": 4.4, "h5": 3.8,
+HOLD = {"h0": 4.0, "h1": 3.4, "h2": 6.2, "h3": 6.0, "h4": 3.8,
         "r0": 6.6, "r1": 4.6, "r2": 5.0, "r3": 5.4, "r4": 6.0, "r5": 5.6,
         "e0": 3.4, "e1": 6.4, "e2": 5.6, "e3": 6.8, "e4": 4.6,
         "s0": 2.8, "s1": 4.4, "s2": 5.4, "s3": 7.0, "s4": 4.2,
@@ -21,8 +21,8 @@ HOLD = {"h0": 5.2, "h1": 5.4, "h2": 3.6, "h3": 3.6, "h4": 4.4, "h5": 3.8,
         "k0": 3.0, "k1": 6.0, "k2": 7.6, "k3": 6.0, "k4": 7.4, "k5": 5.8, "k6": 4.2,
         "n0": 3.6, "n1": 5.2, "n2": 5.6}
 MIN_SEC = {}
-EV = [("hook", "serve", "h0", "费德勒发球"), ("hook", "ret", "h1", "正手"), ("hook", "run", "h2", None), ("hook", "crown", "h3", None),
-      ("hook", "board", "h4", None), ("hook", "r7", "h4", "第7"), ("hook", "q", "h5", None),
+EV = [("hook", "slam", "h0", None), ("hook", "seven", "h0", "第7"), ("hook", "crown", "h1", "接发之王"), ("hook", "court", "h2", None),
+      ("hook", "serve", "h2", "费德勒"), ("hook", "ret", "h3", "正手"), ("hook", "run", "h3", "连赢"), ("hook", "q", "h4", None),
       ("race", "tl", "r0", None), ("race", "fly", "r0", "六七百"), ("race", "react", "r1", None), ("race", "jump", "r2", "起跳"),
       ("race", "land", "r3", None), ("race", "racket", "r3", "0.19"), ("race", "fork", "r4", "判断"), ("race", "guess", "r5", "猜好"),
       ("read", "body", "e0", None), ("read", "toss", "e1", "抛球"), ("read", "arm", "e1", "持拍手臂"), ("read", "gaze", "e2", None),
