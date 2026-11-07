@@ -7420,6 +7420,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url == "https://github.com/robertyang87/tennislive/releases/download/source-6408062676112/6408062676112.mp4":
+            if spec.get("slug") != "eala-sakkari-hong-kong-2026-sf":
+                raise ReelError("source_quality_exceptions 此720p源授权仅限伊埃拉2026香港半决赛")
+            floor = 720
         if url in SHI_TAGGER_GUANGZHOU_2026_LOW_RES_SOURCES:
             if spec.get("slug") != "shi-tagger-guangzhou-2026-qf":
                 raise ReelError("source_quality_exceptions 此源授权仅限施晗2026广州1/4决赛")

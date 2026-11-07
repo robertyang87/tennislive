@@ -1,0 +1,53 @@
+{
+  "slug": "eala-sakkari-hong-kong-2026-sf",
+  "checked_at": "2026-11-07T15:22:32Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "c13a1318fb8b1c01": {
+      "segment": 2,
+      "spoken": 10.32,
+      "picture": 16.0
+    },
+    "a8a3336c8e3d882b": {
+      "segment": 4,
+      "spoken": 6.552,
+      "picture": 12.0
+    },
+    "99e95a8f7732e219": {
+      "segment": 6,
+      "spoken": 8.184,
+      "picture": 12.5
+    },
+    "ca37ab434b9c5887": {
+      "segment": 8,
+      "spoken": 8.184,
+      "picture": 14.0
+    },
+    "d78f4c47b2f1b20a": {
+      "segment": 10,
+      "spoken": 6.84,
+      "picture": 11.5
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "dea995686bd7d576fc992cec3ebf0cbe4cca290950b8cf3bceebbb2e228f6a6a",
+    "request_count": 6,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "b67fbb1592007df4e7a6a77e297cf7b884f133bf",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/b67fbb1592007df4e7a6a77e297cf7b884f133bf/assets/tts-bundles/eala-sakkari-hong-kong-2026-sf/dea995686bd7d576fc992cec3ebf0cbe4cca290950b8cf3bceebbb2e228f6a6a/tts_bundle.zip"
+  }
+}
