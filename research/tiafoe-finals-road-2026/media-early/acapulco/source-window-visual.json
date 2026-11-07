@@ -1,0 +1,63 @@
+{
+  "reviewer": "tiafoe_media_early",
+  "review_basis": "Actual source whole contact, terminal preparation dense, complete rally dense, reaction/tail and native fixed-center crop personally opened using view_image. No video/audio spec mutation by this role.",
+  "crop": {
+    "source_width": 1920,
+    "source_height": 1080,
+    "cx": 0.5,
+    "track": false,
+    "crop_width": 810,
+    "crop_height": 1080,
+    "crop_x": 555,
+    "crop_y": 0,
+    "output_width": 1080,
+    "output_height": 1440
+  },
+  "incoming_dissolve": 0.5,
+  "audio_tail": "silence",
+  "audio_review_owner": "tiafoe_audio_race",
+  "audio_status": "Separate actual two-model transcript packet; do not infer words from visual evidence.",
+  "status": "visual_window_ready",
+  "event": "Acapulco 2026 Final",
+  "local_date": "2026-02-28",
+  "identity": "Flavio Cobolli defeated Frances Tiafoe 7-6(4) 6-4",
+  "official_url": "https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights",
+  "source_path": "/workspace/cobolli-research/media-a/4459713-native.mp4",
+  "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+  "source_bytes": 75715431,
+  "source_duration": 156.04,
+  "source_window": {
+    "start": 129.3,
+    "end": 143.4,
+    "duration": 14.1,
+    "extra_visual_tail_end": 143.9
+  },
+  "point": {
+    "true_current_point_first_clean_wide": 129.4,
+    "toss_approx": 129.5,
+    "serve_contact_approx": 130.25,
+    "result_approx": 131.5,
+    "clean_reaction_body": [
+      131.8,
+      142.5
+    ],
+    "source_transition_note": "Source own dissolve at 129.0-129.3 leads previous score 30-0 closeup into current terminal 40-15. Previous closeup is not described as terminal preparation. Native entry finishes129.8, before contact130.25; actual same-point prep is visible129.4."
+  },
+  "tail_verdict": "142.8-144.3 fine contact sheet opened. Tail143.9 remains true same-match net approach; no promo. Next spoken sentence143.76 excluded by audio_tail silence.",
+  "evidence": [
+    "whole.jpg",
+    "tail.jpg",
+    "serve-dense.jpg",
+    "end-tail-dense.jpg",
+    "../crop-check.jpg",
+    "/dev/shm/tiafoe-production/media-early/acap-rally-dense.jpg"
+  ],
+  "evidence_sha256": {
+    "whole.jpg": "2489d7012de250d57e428eebcf784da587da943e54930a3f56e7bf5c11faa6b0",
+    "tail.jpg": "a1ea34018dadce740a79d3a2b4d4373e098ab54620f5551ed14d7f66c95e453c",
+    "serve-dense.jpg": "a02551f73ba14d8ace0a9448bd8ecb45bccfa8bc1b75c38cd31f031d4a4a61bd",
+    "end-tail-dense.jpg": "b6fc04b0d1c58b11b7a304c8da4b3492b1802fefe976ff4b43ab45ef239d4fac",
+    "../crop-check.jpg": "51df49e9e815f64cb30e894c0e5be4b7ff927d68855684fef076d591e2849366",
+    "/dev/shm/tiafoe-production/media-early/acap-rally-dense.jpg": "04174ea434e8a0dcc71447281605d090c244ccf91614db08ebdafb05dbbf0384"
+  }
+}

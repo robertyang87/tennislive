@@ -1,0 +1,1040 @@
+{
+  "schema": "tennislive.final-fact-qc.v1",
+  "at": "2026-11-07T01:36:00.749308+00:00",
+  "status": "PASS_FINAL_FACTS",
+  "film": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+  "film_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "final_native_input_hashes": {
+    "subtitles.ass": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
+    "render.json": "7a44129d75adcc30816a588b2ea2146b527ef850e2d8e647790689925980018d",
+    "render_inputs.json": "bf56177df35afa9d4d08783f862a19a8366ad5e991daaad79fb85e41b7b95faa",
+    "poster.jpg": "318c385c3c01d56ddc22a183fd71b1b73bee51e6bc605a3c6378ce2f478c3936"
+  },
+  "frozen_editorial_sha256": "80b90966c9679faa3d04762fa5110d71b25bd0cd46c5a6caf133fd5cdad5b394",
+  "checked_scope": {
+    "narrated_segments": 15,
+    "source_quote_cues": 21,
+    "actual_source_video_segments": 6,
+    "actual_info_cards": 6,
+    "race_rows": 15,
+    "qualified_highlight_rows": 8,
+    "cover": true
+  },
+  "narration_projection_exactly_matches_frozen": true,
+  "actual_ASS_per_segment": [
+    {
+      "index": 0,
+      "start": 4.138,
+      "end": 12.578,
+      "kind": "narrated",
+      "narration": "美网半决赛，谢尔顿挡住了蒂亚福。到了十一月，又是谢尔顿，替他锁定了第一张都灵门票。",
+      "actual_ASS": [
+        {
+          "start": 4.19,
+          "end": 7.49,
+          "text": "美网半决赛 谢尔顿挡住了蒂亚福"
+        },
+        {
+          "start": 7.49,
+          "end": 9.44,
+          "text": "到了11月 又是谢尔顿"
+        },
+        {
+          "start": 9.44,
+          "end": 12.18,
+          "text": "替他锁定了第一张都灵门票"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 1,
+      "start": 12.578,
+      "end": 18.162,
+      "kind": "narrated",
+      "narration": "先回到澳网。第三轮对德米纳尔，他三盘落败。",
+      "actual_ASS": [
+        {
+          "start": 12.63,
+          "end": 14.32,
+          "text": "先回到澳网"
+        },
+        {
+          "start": 14.32,
+          "end": 17.76,
+          "text": "第三轮对德米纳尔 他3盘落败"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 2,
+      "start": 18.162,
+      "end": 23.962,
+      "kind": "narrated",
+      "narration": "二月阿卡普尔科，他打到决赛，两盘输给科博利，收获亚军。",
+      "actual_ASS": [
+        {
+          "start": 18.21,
+          "end": 20.6,
+          "text": "2月阿卡普尔科 他打到决赛"
+        },
+        {
+          "start": 20.6,
+          "end": 23.56,
+          "text": "两盘输给科博利 收获亚军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 3,
+      "start": 23.962,
+      "end": 38.062,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 26.4,
+          "end": 30.28,
+          "text": "Acapulco belongs to Flavio.\n阿卡普尔科 属于弗拉维奥"
+        },
+        {
+          "start": 30.28,
+          "end": 32.8,
+          "text": "Cobolli the champion.\n科博利 冠军！"
+        },
+        {
+          "start": 34.56,
+          "end": 37.22,
+          "text": "A second ATP 500 title.\n第二座五百分赛冠军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 4,
+      "start": 38.062,
+      "end": 47.99,
+      "kind": "narrated",
+      "narration": "法网第四轮，打了五小时二十六分。他曾盘分二比一领先，第四盘也领先四比一，最后却被阿尔纳尔迪逆转。",
+      "actual_ASS": [
+        {
+          "start": 38.11,
+          "end": 41.46,
+          "text": "法网第四轮 打了5小时26分"
+        },
+        {
+          "start": 41.46,
+          "end": 43.23,
+          "text": "他曾盘分2比1领先"
+        },
+        {
+          "start": 43.23,
+          "end": 45.13,
+          "text": "第四盘也领先4比1"
+        },
+        {
+          "start": 45.13,
+          "end": 47.59,
+          "text": "最后却被阿尔纳尔迪逆转"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 5,
+      "start": 47.99,
+      "end": 56.958,
+      "kind": "narrated",
+      "narration": "六月哈雷，先在四分之一决赛救回三个赛点。决赛两盘击败弗里茨，拿下生涯首个五百赛冠军。",
+      "actual_ASS": [
+        {
+          "start": 48.04,
+          "end": 48.9,
+          "text": "6月哈雷"
+        },
+        {
+          "start": 48.9,
+          "end": 51.94,
+          "text": "先在1/4决赛救回3个赛点"
+        },
+        {
+          "start": 51.94,
+          "end": 53.79,
+          "text": "决赛两盘击败弗里茨"
+        },
+        {
+          "start": 53.79,
+          "end": 56.56,
+          "text": "拿下生涯首个500赛冠军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 6,
+      "start": 56.958,
+      "end": 88.958,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 73.68,
+          "end": 78.64,
+          "text": "It's a fourth ATP Tour title for Frances Tiafoe,\n蒂亚福收获生涯第四座巡回赛冠军"
+        },
+        {
+          "start": 78.8,
+          "end": 81.38,
+          "text": "the biggest of his career.\n也是他生涯分量最重的一冠"
+        },
+        {
+          "start": 81.38,
+          "end": 83.06,
+          "text": "[Umpire announces the score]\n【裁判报分】"
+        },
+        {
+          "start": 84.22,
+          "end": 88.78,
+          "text": "The first American to win the title here in Halle.\n首位在哈雷夺冠的美国球员"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 7,
+      "start": 88.958,
+      "end": 94.83,
+      "kind": "narrated",
+      "narration": "带着哈雷冠军来到温网，他在第三轮五盘输给布勃利克。",
+      "actual_ASS": [
+        {
+          "start": 89.01,
+          "end": 91.1,
+          "text": "带着哈雷冠军来到温网"
+        },
+        {
+          "start": 91.1,
+          "end": 94.43,
+          "text": "他在第三轮5盘输给布勃利克"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 8,
+      "start": 94.83,
+      "end": 116.63,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 96.09,
+          "end": 103.97,
+          "text": "[Umpire announces the result and score]\n【裁判宣布比赛结果和比分】"
+        },
+        {
+          "start": 105.45,
+          "end": 107.55,
+          "text": "Well, it was a different result four years ago,\n四年前的结果可不一样"
+        },
+        {
+          "start": 108.28999999999999,
+          "end": 110.50999999999999,
+          "text": "it was Tiafoe going through to the last 16.\n那次晋级第四轮的是蒂亚福"
+        },
+        {
+          "start": 110.67,
+          "end": 113.41,
+          "text": "This time it is Alexander Bublik\n这一次 亚历山大 布勃利克"
+        },
+        {
+          "start": 114.11,
+          "end": 116.41,
+          "text": "who will take his place in round four.\n拿到了第四轮的席位"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 9,
+      "start": 116.63,
+      "end": 124.422,
+      "kind": "narrated",
+      "narration": "八月，在蒙特利尔因伤退赛。右手接受手术后，他又在辛辛那提闯进决赛。",
+      "actual_ASS": [
+        {
+          "start": 116.68,
+          "end": 119.46000000000001,
+          "text": "8月 在蒙特利尔因伤退赛"
+        },
+        {
+          "start": 119.46000000000001,
+          "end": 121.02,
+          "text": "右手接受手术后"
+        },
+        {
+          "start": 121.02,
+          "end": 124.02,
+          "text": "他又在辛辛那提闯进决赛"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 10,
+      "start": 124.422,
+      "end": 132.958,
+      "kind": "narrated",
+      "narration": "对菲斯，他扳回第二盘，决胜盘却一局未得。第二次打进大师赛决赛，还是收获亚军。",
+      "actual_ASS": [
+        {
+          "start": 124.47,
+          "end": 126.43,
+          "text": "对菲斯 他扳回第二盘"
+        },
+        {
+          "start": 126.43,
+          "end": 128.71,
+          "text": "决胜盘却一局未得"
+        },
+        {
+          "start": 128.71,
+          "end": 130.62,
+          "text": "第二次打进大师赛决赛"
+        },
+        {
+          "start": 130.62,
+          "end": 132.56,
+          "text": "还是收获亚军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 11,
+      "start": 132.958,
+      "end": 161.258,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 143.02,
+          "end": 143.82,
+          "text": "Arthur Fils.\n菲斯"
+        },
+        {
+          "start": 145.36,
+          "end": 147.52,
+          "text": "Quite scintillating in Cincinnati.\n在辛辛那提大放异彩"
+        },
+        {
+          "start": 151.38,
+          "end": 155.38,
+          "text": "It is the biggest title of his young career.\n他年轻生涯分量最重的冠军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 12,
+      "start": 161.258,
+      "end": 170.082,
+      "kind": "narrated",
+      "narration": "美网四分之一决赛，先丢两盘，第三盘又一度零比三。他最后连赢三盘，逆转米切尔森。",
+      "actual_ASS": [
+        {
+          "start": 161.31,
+          "end": 163.78,
+          "text": "美网1/4决赛 先丢两盘"
+        },
+        {
+          "start": 163.78,
+          "end": 166.01,
+          "text": "第三盘又一度0比3"
+        },
+        {
+          "start": 166.01,
+          "end": 169.68,
+          "text": "他最后连赢3盘 逆转米切尔森"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 13,
+      "start": 170.082,
+      "end": 185.932,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 176.43,
+          "end": 178.93,
+          "text": "[Umpire announces the winner]\n【裁判宣布比赛胜者】"
+        },
+        {
+          "start": 179.56,
+          "end": 185.04,
+          "text": "A comeback that is extra special for Frances Tiafoe.\n这场逆转 对蒂亚福意义非凡"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 14,
+      "start": 185.932,
+      "end": 194.636,
+      "kind": "narrated",
+      "narration": "半决赛对谢尔顿，先赢一盘，随后连丢三盘。第三次美网4强，他还是没能更进一步。",
+      "actual_ASS": [
+        {
+          "start": 185.98,
+          "end": 187.54,
+          "text": "半决赛对谢尔顿"
+        },
+        {
+          "start": 187.54,
+          "end": 190.24,
+          "text": "先赢一盘 随后连丢3盘"
+        },
+        {
+          "start": 190.24,
+          "end": 191.83,
+          "text": "第三次美网4强"
+        },
+        {
+          "start": 191.83,
+          "end": 194.24,
+          "text": "他还是没能更进一步"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 15,
+      "start": 194.636,
+      "end": 222.836,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 200.37,
+          "end": 201.64,
+          "text": "It's crazy.\n太不可思议了"
+        },
+        {
+          "start": 208.64,
+          "end": 212.67000000000002,
+          "text": "[Umpire announces the result]\n【裁判宣布比赛结果】"
+        },
+        {
+          "start": 212.84,
+          "end": 217.03,
+          "text": "[Shelton] is in the championship match of the 2026 US Open.\n谢尔顿晋级2026年美网决赛"
+        },
+        {
+          "start": 219.52,
+          "end": 222.24,
+          "text": "And what a pity it had to end on a double fault.\n遗憾的是 比赛竟以一次双误结束"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 16,
+      "start": 222.836,
+      "end": 227.82,
+      "kind": "narrated",
+      "narration": "上海、维也纳，再到巴黎，他遭遇了三连败。",
+      "actual_ASS": [
+        {
+          "start": 222.88,
+          "end": 225.28,
+          "text": "上海 维也纳 再到巴黎"
+        },
+        {
+          "start": 225.28,
+          "end": 227.42000000000002,
+          "text": "他遭遇了三连败"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 17,
+      "start": 227.82,
+      "end": 234.364,
+      "kind": "narrated",
+      "narration": "十一月四日，巴黎第二轮输给阿利斯，这个结果先让菲斯锁定了年终资格。",
+      "actual_ASS": [
+        {
+          "start": 227.87,
+          "end": 230.57,
+          "text": "11月4日 巴黎第二轮输给阿利斯"
+        },
+        {
+          "start": 230.57,
+          "end": 233.96,
+          "text": "这个结果先让菲斯锁定了年终资格"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 18,
+      "start": 234.364,
+      "end": 242.3,
+      "kind": "narrated",
+      "narration": "十一月六日，谢尔顿在巴黎击败保罗。蒂亚福终于锁定资格，第一次走进都灵。",
+      "actual_ASS": [
+        {
+          "start": 234.41,
+          "end": 237.94,
+          "text": "11月6日 谢尔顿在巴黎击败保罗"
+        },
+        {
+          "start": 237.94,
+          "end": 239.71,
+          "text": "蒂亚福终于锁定资格"
+        },
+        {
+          "start": 239.71,
+          "end": 241.9,
+          "text": "第一次走进都灵"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 19,
+      "start": 242.3,
+      "end": 252.012,
+      "kind": "narrated",
+      "narration": "截至十一月七日，蒂亚福三千三百九十分，排名赛季积分榜第八。高亮的八位球员，都已锁定年终资格。",
+      "actual_ASS": [
+        {
+          "start": 242.35,
+          "end": 243.8,
+          "text": "截至11月7日"
+        },
+        {
+          "start": 243.8,
+          "end": 245.74,
+          "text": "蒂亚福3390分"
+        },
+        {
+          "start": 245.74,
+          "end": 247.89,
+          "text": "排名赛季积分榜第八"
+        },
+        {
+          "start": 247.89,
+          "end": 249.35,
+          "text": "高亮的8位球员"
+        },
+        {
+          "start": 249.35,
+          "end": 251.61,
+          "text": "都已锁定年终资格"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 20,
+      "start": 252.012,
+      "end": 256.612,
+      "kind": "narrated",
+      "narration": "第一次到都灵，你看好蒂亚福拿到几场胜利？",
+      "actual_ASS": [
+        {
+          "start": 252.06,
+          "end": 253.34,
+          "text": "第一次到都灵"
+        },
+        {
+          "start": 253.34,
+          "end": 256.21,
+          "text": "你看好蒂亚福拿到几场胜利？"
+        }
+      ],
+      "fact_status": "PASS"
+    }
+  ],
+  "source_cue_results": [
+    {
+      "source_key": "acapulco-final",
+      "source_relative_at": 2.44,
+      "source_relative_end": 6.32,
+      "text": "Acapulco belongs to Flavio.\n阿卡普尔科，属于弗拉维奥。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Cobollichampion; officialfinalresult",
+        "secondATP500title:2025Hamburg+2026Acapulco"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "acapulco-final",
+      "source_relative_at": 6.32,
+      "source_relative_end": 8.84,
+      "text": "Cobolli the champion.\n科博利，冠军！",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Cobollichampion; officialfinalresult",
+        "secondATP500title:2025Hamburg+2026Acapulco"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "acapulco-final",
+      "source_relative_at": 10.6,
+      "source_relative_end": 13.26,
+      "text": "A second ATP 500 title.\n第二座五百分赛冠军。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Cobollichampion; officialfinalresult",
+        "secondATP500title:2025Hamburg+2026Acapulco"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "halle-final",
+      "source_relative_at": 16.72,
+      "source_relative_end": 21.68,
+      "text": "It's a fourth ATP Tour title for Frances Tiafoe,\n蒂亚福收获生涯第四座巡回赛冠军，",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "TiafoefourthcareerATPtitle",
+        "firstATP500andbiggesttitleattheJune21event",
+        "firstAmericanHallechampionsinceeventinception1993"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "halle-final",
+      "source_relative_at": 21.84,
+      "source_relative_end": 24.42,
+      "text": "the biggest of his career.\n也是他生涯分量最重的一冠。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "TiafoefourthcareerATPtitle",
+        "firstATP500andbiggesttitleattheJune21event",
+        "firstAmericanHallechampionsinceeventinception1993"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "halle-final",
+      "source_relative_at": 24.42,
+      "source_relative_end": 26.1,
+      "text": "[Umpire announces the score]\n【裁判报分】",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "TiafoefourthcareerATPtitle",
+        "firstATP500andbiggesttitleattheJune21event",
+        "firstAmericanHallechampionsinceeventinception1993"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "halle-final",
+      "source_relative_at": 27.26,
+      "source_relative_end": 31.82,
+      "text": "The first American to win the title here in Halle.\n首位在哈雷夺冠的美国球员。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "TiafoefourthcareerATPtitle",
+        "firstATP500andbiggesttitleattheJune21event",
+        "firstAmericanHallechampionsinceeventinception1993"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_relative_at": 1.26,
+      "source_relative_end": 9.14,
+      "text": "[Umpire announces the result and score]\n【裁判宣布比赛结果和比分】",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "2022WimbledonR3TiafoebeatBublikandadvancedR4; fouryearsbefore2026",
+        "2026BublikwinneradvancedR4"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_relative_at": 10.62,
+      "source_relative_end": 12.72,
+      "text": "Well, it was a different result four years ago,\n四年前的结果可不一样，",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "2022WimbledonR3TiafoebeatBublikandadvancedR4; fouryearsbefore2026",
+        "2026BublikwinneradvancedR4"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_relative_at": 13.46,
+      "source_relative_end": 15.68,
+      "text": "it was Tiafoe going through to the last 16.\n那次晋级第四轮的是蒂亚福。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "2022WimbledonR3TiafoebeatBublikandadvancedR4; fouryearsbefore2026",
+        "2026BublikwinneradvancedR4"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_relative_at": 15.84,
+      "source_relative_end": 18.58,
+      "text": "This time it is Alexander Bublik\n这一次，亚历山大·布勃利克",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "2022WimbledonR3TiafoebeatBublikandadvancedR4; fouryearsbefore2026",
+        "2026BublikwinneradvancedR4"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "source_relative_at": 19.28,
+      "source_relative_end": 21.58,
+      "text": "who will take his place in round four.\n拿到了第四轮的席位。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "2022WimbledonR3TiafoebeatBublikandadvancedR4; fouryearsbefore2026",
+        "2026BublikwinneradvancedR4"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "cincinnati-final",
+      "source_relative_at": 10.06,
+      "source_relative_end": 10.86,
+      "text": "Arthur Fils.\n菲斯。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "FilsCincinnatichampionandfirstMasters1000/largestcareertitleatAug23event"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "cincinnati-final",
+      "source_relative_at": 12.4,
+      "source_relative_end": 14.56,
+      "text": "Quite scintillating in Cincinnati.\n在辛辛那提大放异彩。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "FilsCincinnatichampionandfirstMasters1000/largestcareertitleatAug23event"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "cincinnati-final",
+      "source_relative_at": 18.42,
+      "source_relative_end": 22.42,
+      "text": "It is the biggest title of his young career.\n他年轻生涯分量最重的冠军。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "FilsCincinnatichampionandfirstMasters1000/largestcareertitleatAug23event"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-qf",
+      "source_relative_at": 6.35,
+      "source_relative_end": 8.85,
+      "text": "[Umpire announces the winner]\n【裁判宣布比赛胜者】",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Tiafoewinnerafter0-2setcomeback; umpirewinnerdescriptionisnonverbatimlabel"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-qf",
+      "source_relative_at": 9.479,
+      "source_relative_end": 14.96,
+      "text": "A comeback that is extra special for Frances Tiafoe.\n这场逆转，对蒂亚福意义非凡。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Tiafoewinnerafter0-2setcomeback; umpirewinnerdescriptionisnonverbatimlabel"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-sf",
+      "source_relative_at": 5.73,
+      "source_relative_end": 7.0,
+      "text": "It's crazy.\n太不可思议了。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Sheltonwinneradvances2026USOpenfinal",
+        "Tiafoeendsmatchwithdoublefault; externalmatchreportcrosschecked"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-sf",
+      "source_relative_at": 14.0,
+      "source_relative_end": 18.03,
+      "text": "[Umpire announces the result]\n【裁判宣布比赛结果】",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Sheltonwinneradvances2026USOpenfinal",
+        "Tiafoeendsmatchwithdoublefault; externalmatchreportcrosschecked"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-sf",
+      "source_relative_at": 18.2,
+      "source_relative_end": 22.39,
+      "text": "[Shelton] is in the championship match of the 2026 US Open.\n谢尔顿晋级2026年美网决赛。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Sheltonwinneradvances2026USOpenfinal",
+        "Tiafoeendsmatchwithdoublefault; externalmatchreportcrosschecked"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    },
+    {
+      "source_key": "us-open-sf",
+      "source_relative_at": 24.88,
+      "source_relative_end": 27.6,
+      "text": "And what a pity it had to end on a double fault.\n遗憾的是，比赛竟以一次双误结束。",
+      "actual_ASS_found": true,
+      "factual_basis": [
+        "Sheltonwinneradvances2026USOpenfinal",
+        "Tiafoeendsmatchwithdoublefault; externalmatchreportcrosschecked"
+      ],
+      "fact_status": "PASS",
+      "auditory_verbatim_matching": "separateaudioQC, notclaimedbythisfactaudit"
+    }
+  ],
+  "actual_info_card_results": [
+    {
+      "source_key": "acapulco-final",
+      "label": {
+        "topic": "阿卡普尔科亚军",
+        "date": "2026.02.28",
+        "place": "ATP500 阿卡普尔科决赛",
+        "people": "蒂亚福 vs 科博利",
+        "score": "6-7(4) 4-6",
+        "result": {
+          "winner": "科博利",
+          "score": "7-6(4) 6-4",
+          "source": "https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-006-0024.962.jpg",
+      "actual_frame_sha256": "9be5ace237e54e574d3616fc077298df44eafc7e135a7b6e30e8ce4004d00457",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "halle-final",
+      "label": {
+        "topic": "生涯首个500赛冠军",
+        "date": "2026.06.21",
+        "place": "ATP500 哈雷决赛",
+        "people": "蒂亚福 vs 弗里茨",
+        "score": "6-4 6-4",
+        "result": {
+          "winner": "蒂亚福",
+          "score": "6-4 6-4",
+          "source": "https://www.tennistv.com/videos/4523365/halle-2026-final-fritz-tiafoe-short-highlights"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-017-0057.958.jpg",
+      "actual_frame_sha256": "717ddb4806dbac5a082302292a489c2504a7c6db724bb335c57d5642ed64e2e1",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "wimbledon-r3",
+      "label": {
+        "topic": "温网止步第3轮",
+        "date": "2026.07.04",
+        "place": "温网第3轮",
+        "people": "蒂亚福 vs 布勃利克",
+        "score": "6-4 6-7(5) 6-7(11) 6-4 3-6",
+        "result": {
+          "winner": "布勃利克",
+          "score": "4-6 7-6(5) 7-6(11) 4-6 6-3",
+          "source": "https://x.com/Wimbledon/status/2073520443403669555"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-029-0095.830.jpg",
+      "actual_frame_sha256": "6ab0b67114c6464bea319d521be77d1e1cb9de37e6b80f0f22cd534c16ef7955",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "cincinnati-final",
+      "label": {
+        "topic": "辛辛那提亚军",
+        "date": "2026.08.23",
+        "place": "ATP1000 辛辛那提决赛",
+        "people": "蒂亚福 vs 菲斯",
+        "score": "3-6 6-1 0-6",
+        "result": {
+          "winner": "菲斯",
+          "score": "6-3 1-6 6-0",
+          "source": "https://www.youtube.com/watch?v=RAAXKA85t3g"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-043-0133.958.jpg",
+      "actual_frame_sha256": "300ac331f7a77d94a7fed9b69c11d3f517d9f8079913b2eb725290d6c8dc1819",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "us-open-qf",
+      "label": {
+        "topic": "逆转闯进美网4强",
+        "date": "2026.09.08",
+        "place": "美网1/4决赛",
+        "people": "蒂亚福 vs 米切尔森",
+        "score": "5-7 3-6 7-5 6-3 7-6(6)",
+        "result": {
+          "winner": "蒂亚福",
+          "score": "5-7 3-6 7-5 6-3 7-6(6)",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/highlights_from_frances_tiafoe_vs_alex_michelsen_at_the_2026_us_open.html"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-054-0171.082.jpg",
+      "actual_frame_sha256": "2d67da86eea643a709e0a47febded56b9e7d9348b93d8a3457857d19c3805a3e",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "us-open-sf",
+      "label": {
+        "topic": "第三次美网4强",
+        "date": "2026.09.11",
+        "place": "美网半决赛",
+        "people": "蒂亚福 vs 谢尔顿",
+        "score": "6-4 3-6 3-6 5-7",
+        "result": {
+          "winner": "谢尔顿",
+          "score": "4-6 6-3 6-3 7-5",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html"
+        }
+      },
+      "winner_result_matches_primary": true,
+      "display_first_player_perspective": "FrancesTiafoe",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-064-0195.636.jpg",
+      "actual_frame_sha256": "b3d0e18d8f2103b1ad5b64ece623898ef432235ca1e02b9478286c28751f8f70",
+      "fact_status": "PASS"
+    }
+  ],
+  "race": {
+    "fact_status": "PASS",
+    "freshness_proof": "/workspace/tiafoe-finals-production/final/publication/freshness/verification.json",
+    "freshness_sha256": "be4f678c2a395abb8c4485bd86e0d08a42fb6795704b9bf7fa56a12b53c8c8a3",
+    "snapshot_sha256": "b85e0f10368486f669be477233a3dd03d8d013e53c5b70aefa7cb7a4155e6bb8",
+    "focus_rank": 8,
+    "focus_points": 3390,
+    "actual_frame": "/workspace/tiafoe-finals-production/final/root-qc/frame-077-0247.156.jpg",
+    "actual_frame_sha256": "93619c31ae7e29a2e7d9031200a434e15b3a340117f7d91e5c670c4855bb6a29",
+    "rendered_status": "8activequalifiedhighlighted; withdrawnSinnerretainedRace2notrenumbered; Tiafoe8focusfirstappearance;Jodar9qualified",
+    "name_canon": "currentnative85c, actualfullchartreadagainstcanonical15"
+  },
+  "visual_fact_observation": {
+    "viewed_actual_master_contact_sheets": [
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-00.jpg",
+        "sha256": "e3a509fa03519f13798634cf6d3ba96621d0898e5b97f9c96358a572b93697fa"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-01.jpg",
+        "sha256": "a436451656df6b903bc04ac0c6b60ed3a96dde039628dec4a21dea832544be3f"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-02.jpg",
+        "sha256": "f80a0f9076fa4fa764e519a761490a825289cd102bc69092a664840b756fe0b3"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-03.jpg",
+        "sha256": "0cbb4b0923ffc90a66859ad46ac76a577d927a65b14084169e15d1f4810a6b6f"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-04.jpg",
+        "sha256": "c88e19279e9d764e0a20ee30c682e9bc86ab86d1865ca310d6bd4a6a638e2c2a"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-05.jpg",
+        "sha256": "1fca8b95e78447224d729cac476e58788136817bcc21d96d49476ed1ce336302"
+      },
+      {
+        "path": "/workspace/tiafoe-finals-production/final/root-qc/contact-06.jpg",
+        "sha256": "c11790cbaef985ab3b84cdf86ea534c2f9a07920fe9bea8459bd7517e2a7d59d"
+      }
+    ],
+    "notes": [
+      "CoverHalle2026trophyillustratesplayer, not mislabeledasParisqualificationphoto.",
+      "AcapCobolli/HalleTiafoe/WimbledonBublik/CincinnatiFils/USQFTiafoe/USSFShelton matchidentityandoutcomes align visibleframes andprimaryresults.",
+      "Sixcards dates arelocalFeb28/Jun21/Jul4/Aug23/Sep8/Sep11.",
+      "DatesregardingRGfinishJun2andMontrealmonthnot exposedwrongdayinactualnarration."
+    ]
+  },
+  "new_source_cue_history_evidence": {
+    "path": "/workspace/tiafoe-finals-production/research/facts/sources/final-source-cues-history-crosscheck.json",
+    "sha256": "7115f3797d832f4250ba690969f80c54ab900db67686f538d631666fee25d937",
+    "checked": [
+      "Cobolli2nd500",
+      "Wimbledon2022R3Tiafoewin",
+      "USSFdoublefaultend"
+    ]
+  },
+  "prior_primary_fact_evidence": "/workspace/tiafoe-finals-production/research/facts/editorial-handoff.json",
+  "findings": [],
+  "limits": [
+    "Factauditdoesnotapprovecompletepointstart/end,dynamiccrop, subtitleauditoryalignmentororiginalspeechtranscription; separateframe/audioQCmustcoverthose.",
+    "Bracketedumpiredescriptionscheckedforcorrectevent/winnermeaning, notpresentedasverbatimumpirespeech.",
+    "Noapprovalforwardedfrompreview; allbindingsrefertofinalmasterandactualnativeASS/meta."
+  ]
+}

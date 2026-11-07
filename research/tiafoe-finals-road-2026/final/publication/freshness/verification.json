@@ -1,0 +1,129 @@
+{
+  "checked_at": "2026-11-07T01:26:16.522873+00:00",
+  "snapshot_sha256": "b85e0f10368486f669be477233a3dd03d8d013e53c5b70aefa7cb7a4155e6bb8",
+  "sources": {
+    "race": {
+      "url": "https://live-tennis.eu/en/atp-race",
+      "http_status": 200,
+      "bytes": 349206,
+      "sha256": "036d2318c22979e5b2efca3f26e166cecab9b78d6e90d1f39266b3ba987a2398",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 01:26:16 GMT",
+        "Age": "3306",
+        "Last-Modified": "Sat, 07 Nov 2026 00:31:07 GMT"
+      }
+    },
+    "singles": {
+      "url": "https://www.nittoatpfinals.com/en/players/singles",
+      "http_status": 200,
+      "bytes": 48566,
+      "sha256": "43fc8211870c5770137941b6b2175f634ff9481416cf9ec4260de5e50e03d37b",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 01:26:15 GMT",
+        "Age": null,
+        "Last-Modified": "Sat, 07 Nov 2026 01:26:15 GMT"
+      }
+    },
+    "qualification": {
+      "url": "https://www.nittoatpfinals.com/en/news/tiafoe-nitto-atp-finals-2026-qualification",
+      "http_status": 200,
+      "bytes": 36376,
+      "sha256": "262ef173726520375080fee816b5dd97c8fb26dff3d6fd998c86040bb25770e7",
+      "headers": {
+        "Date": "Sat, 07 Nov 2026 01:26:15 GMT",
+        "Age": null,
+        "Last-Modified": "Sat, 07 Nov 2026 01:26:15 GMT"
+      }
+    }
+  },
+  "latest_rows": [
+    {
+      "rank": 1,
+      "player": "Alexander Zverev",
+      "points": 9350
+    },
+    {
+      "rank": 2,
+      "player": "Jannik Sinner",
+      "points": 7950
+    },
+    {
+      "rank": 3,
+      "player": "Carlos Alcaraz",
+      "points": 5500
+    },
+    {
+      "rank": 4,
+      "player": "Ben Shelton",
+      "points": 4920
+    },
+    {
+      "rank": 5,
+      "player": "Daniil Medvedev",
+      "points": 3820
+    },
+    {
+      "rank": 6,
+      "player": "Flavio Cobolli",
+      "points": 3680
+    },
+    {
+      "rank": 7,
+      "player": "Arthur Fils",
+      "points": 3625
+    },
+    {
+      "rank": 8,
+      "player": "Frances Tiafoe",
+      "points": 3390
+    },
+    {
+      "rank": 9,
+      "player": "Rafael Jódar",
+      "points": 3234
+    },
+    {
+      "rank": 10,
+      "player": "Alex de Minaur",
+      "points": 3170
+    },
+    {
+      "rank": 11,
+      "player": "Taylor Fritz",
+      "points": 3050
+    },
+    {
+      "rank": 12,
+      "player": "Novak Djoković",
+      "points": 2940
+    },
+    {
+      "rank": 13,
+      "player": "Tommy Paul",
+      "points": 2925
+    },
+    {
+      "rank": 14,
+      "player": "Jiří Lehečka",
+      "points": 2540
+    },
+    {
+      "rank": 15,
+      "player": "Jakub Menšík",
+      "points": 2500
+    }
+  ],
+  "qualified_profiles": [
+    "alexander-zverev",
+    "arthur-fils",
+    "ben-shelton",
+    "carlos-alcaraz",
+    "daniil-medvedev",
+    "flavio-cobolli",
+    "frances-tiafoe",
+    "rafael-jodar"
+  ],
+  "row_mismatches": [],
+  "status": "PASS_CURRENT_SNAPSHOT_UNCHANGED",
+  "basis": "Normal public HTTP GET; original film explicitly dates snapshot Nov7 before Paris semifinals."
+}

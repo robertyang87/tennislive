@@ -1,0 +1,215 @@
+{
+  "source_id": "tf26ussf",
+  "official_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-11/shelton_beats_tiafoe_to_reach_first_grand_slam_final_at_2026_us_open.html",
+  "official_direct_video_url": "https://usopenvideo.akamaized.net/2026/prd/interviews/914ccfc1-4fa2-4abc-8347-133a49b02769.mp4",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tf26ussf/tf26ussf.mp4",
+  "path": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+  "sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+  "bytes": 116679618,
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "Main",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 42,
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "60/1",
+        "avg_frame_rate": "60/1",
+        "time_base": "1/60000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 9163000,
+        "duration": "152.716667",
+        "bit_rate": "5971353",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "9163",
+        "extradata_size": 53,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "creation_time": "2026-09-12T03:08:12.000000Z",
+          "language": "und",
+          "handler_name": "ETI ISO Video Media Handler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Elemental H.264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 7328192,
+        "duration": "152.670667",
+        "bit_rate": "128014",
+        "nb_frames": "7158",
+        "extradata_size": 2,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "creation_time": "2026-09-12T03:08:12.000000Z",
+          "language": "und",
+          "handler_name": "ETI ISO Audio Media Handler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "152.716667",
+      "size": "116679618",
+      "bit_rate": "6112213",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "M4V ",
+        "minor_version": "1",
+        "compatible_brands": "isomavc1mp42",
+        "creation_time": "2026-09-12T03:08:12.000000Z"
+      }
+    }
+  },
+  "status": "PASS_SCOPED_SOURCE_VISUAL_candidate_not_actualfilm",
+  "reviewed_at": "2026-11-07T01:01:20.958625+00:00",
+  "reviewer": "Codex tiafoe_media_late, actual view_image of newly generated whole/point/dense/tail contact sheets",
+  "event": "US Open 2026 SF 2026-09-11",
+  "result": {
+    "winner": "Ben Shelton",
+    "loser": "Frances Tiafoe",
+    "score": "4-6 6-3 6-3 7-5"
+  },
+  "window": [
+    95,
+    123.2
+  ],
+  "native_visual_tail_end": 123.7,
+  "actual_observations": [
+    "95.0 same terminal-point first-serve wide-court preparation begins before toss96.8 and serve contact97.1–97.2; .5 entry fade ends95.5 before both.",
+    "First-serve fault and receiver wait/closeup followed by second-serve preparation105+ and second fault107+, continuous same terminal MP#2 scoreboard Tiafoe15 /Shelton40 throughout. No prior-point firstserve is spliced.",
+    "Doublefault result is followed by genuine Tiafoe disappointment and Shelton subdued winning response; true handshake/hug120–123.7.",
+    "Body ends123.2 after full119.88–122.60 commentary sentence about doublefault; tail123.2–123.7 is same hug with no sourcepromo/nextpoint.",
+    "No whole-serverpreparation gap for this selected two-serve window; actual fixed-centre native crop review remains pending."
+  ],
+  "internal_gap": "None for whole two-serve terminal point in selected source window. Automatic official caption has bad umpire/opening at112–117; dedicated audio role resolving focused actual ASR, do not copy bad VTT literally.",
+  "evidence": [
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-whole-contact.jpg",
+      "sha256": "c1d95d565fed67684b206e68302cc424fa3673efb57c3fd53ce2a29e10186cc8"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-point-contact.jpg",
+      "sha256": "171ed9051f423fcb1caf092fb2090d9d30b290ce320effe67e12341d3b1ad36a"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-both-serve-dense.jpg",
+      "sha256": "b5aa09807798cd721ee6e33dd6f4bdd7a01b89292ef85a3d8f7a5c5c95b4920d"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-first-strike-dense.jpg",
+      "sha256": "9c01f2e6f96b9d9163a231b1c535d7a9f8fa87a3077422fe1dae8b39e16cf443"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-tail-dense.jpg",
+      "sha256": "b1243cc965bb6a2743fb26351ea303c49632daecb165cddad8b5d8f286176ba6"
+    },
+    {
+      "path": "/workspace/tiafoe-finals-production/research/media-late/usopen-sf-fixed-centre-crop-contact.jpg",
+      "sha256": "2dd8e20573fa1ce734bd33d81dda30db6660d4c20314145af28679446d66b37a"
+    }
+  ],
+  "crop_requirement": {
+    "cx": 0.5,
+    "track": false,
+    "canvas": [
+      1080,
+      1440
+    ],
+    "source_crop_rect": [
+      555,
+      0,
+      810,
+      1080
+    ],
+    "actual_native_crop_review": "pending episode nativepreview and actualfilm",
+    "source_fixed_crop_review": "Actual simulated fixed-centre source crops personally opened; actual episode nativepreview/movie pending."
+  },
+  "audio_status": "Dedicated audio role binds actual source SHA and source captions/real focused ASR; visual role makes no auditory claims."
+}

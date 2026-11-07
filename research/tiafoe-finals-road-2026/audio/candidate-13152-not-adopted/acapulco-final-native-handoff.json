@@ -1,0 +1,39 @@
+{
+  "source_key": "acapulco-final",
+  "source_id": "4459713",
+  "source_url": "https://www.tennistv.com/videos/4459713/acapulco-2026-final-cobolli-tiafoe-short-highlights",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-4459713/4459713-01d711954a47ee48.mp4",
+  "source_path": "/workspace/cobolli-research/media-a/4459713-native.mp4",
+  "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+  "window": [
+    129.3,
+    131.52
+  ],
+  "packet_path": "/workspace/tiafoe-finals-production/research/audio/transcripts/acapulco-final.json",
+  "packet_sha256": "6ddab269c5bfb0e441b994629be618ea51ab02a94ba585b8319ec3c9739b0e0e",
+  "absolute_utterances": [],
+  "quote": [],
+  "status": "complete_audio_scope",
+  "native_audio_tail": "silence",
+  "origin_source_ASR_exact_reuse": true,
+  "new_ASR_model_calls": 0,
+  "no_foreground_english_reason": "Exact original source SHA matches the existing real whole129.3–143.4s small.en/medium.en raw and previous full-window semantic review. Neither raw has a corroborated English utterance inside129.3–131.52. The first confirmed sentence Acapulco belongs to Flavio starts at medium-estimated131.74 (small132.54), entirely after chosen body end131.52. The first English onset is an ASR timing estimate, not a human-measured first phoneme; conservative chosen margin0.22s to earliest model onset is disclosed. The retained terminal serve/contact/result/crowd reaction is the actual same point, verified by the visual reviewer; sourcebody audio is preserved. Native audio_tail silence excludes all later source speech, including otherwise clean0.5s visualtail. No uncertain utterance was erased or relabelled heard: the known complete later sentences are retained below as deliberately outside the selected window.",
+  "subwindow_rebind": {
+    "from_packet_sha256": "e49033dc371957a28261c30736b3fd872cb63b4bd6c636d0764e08aa3e14bee9",
+    "original_packet_preserved": "/workspace/tiafoe-finals-production/research/audio/historical-before-acap-composite-removal/acapulco-final.json",
+    "previous_full_review_range": [
+      129.3,
+      143.4
+    ],
+    "new_selected_window": [
+      129.3,
+      131.52
+    ],
+    "visual_extra_tail_to": 132.02,
+    "visual_reason": "Root actualmaster source composite found; early actualfine view found strip begins133.3–133.5. Mainpoint result130.9–131.0 and clean armsreaction from131.2, chosen body includes>=0.52s genuine main reaction; video extra tail132.02 remains clean singlepicture.",
+    "audio_decision": "Root explicitly selected131.52. Earliest real ASR onset131.74 is only estimated, not an exact phoneme guarantee. Both model raw and original wholewindow review support no foreground English in chosen subwindow. First3 whole English sentences are excluded from publication, not truncated.",
+    "additional_asr_performed": false,
+    "human_listening_claimed": false,
+    "at": "2026-11-07T01:37:39.072964+00:00"
+  }
+}

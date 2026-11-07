@@ -1,0 +1,94 @@
+{
+  "reviewer": "tiafoe_media_early",
+  "movie_path": "/workspace/tiafoe-finals-production/final/tiafoe-finals-road-2026.mp4",
+  "actual_movie_sha256": "eefb5d7a7eae3afbabe9285fc9fd01fcca589445ad580fdd550e6e2e6721b07d",
+  "actual_movie_bytes": 176482943,
+  "actual_geometry": "1080x1440,25fps,261.2sec",
+  "status": "PASS_SCOPED_FINAL",
+  "actual_pixel_method": "83 native1080x1440 PNG frames extracted directly from same master, SHA manifest. Personally opened aspect-preserving contact sheets plus individual native originals. No new ASR, no movie copy, no spec/crop/window edits.",
+  "checks": {
+    "halle": {
+      "status": "scoped_visual_pass",
+      "approx_movie_body": [
+        56.958,
+        88.958
+      ],
+      "actually_observed": [
+        "57.44 clean same-point preparation after entry fade;58.6toss;59.36serve contact not blended",
+        "60.4-72.3 actual dense rally continuous;73.5result/real reaction",
+        "76-85clean same-match face/reaction in body, not only fade",
+        "88.86/89.0handshake;89.1-89.4dissolve only next trueWimbledonstill;89.5nextstill. No black/LIVE/promo enters outgoing halfsecond"
+      ],
+      "crop": "Fixed center and full-canvas3:4 retained. Faces at73.5-88.86 legible. Does not guarantee ball stays inside fixed court crop on every wide shot."
+    },
+    "ao": {
+      "status": "scoped_visual_pass_photo",
+      "approx_movie_body": [
+        12.578,
+        18.162
+      ],
+      "observed_times": [
+        13.2,
+        14.8,
+        16.8
+      ],
+      "facts_visible": "AO thirdround loss toDeMinaur in3sets, same-match photographic narrative, no fabricated MP."
+    },
+    "rg": {
+      "status": "scoped_visual_pass_photo",
+      "approx_movie_body": [
+        38.062,
+        47.99
+      ],
+      "observed_times": [
+        38.8,
+        40.5,
+        42.5,
+        44.5,
+        46.8
+      ],
+      "facts_visible": "R4 5h26, sets2-1/fourth4-1 leads thenArnaldi reversal, photographic narrative, no fabricated MP."
+    },
+    "acap": {
+      "status": "scoped_visual_pass_single_camera_reaction",
+      "approx_movie_body": [
+        23.962,
+        38.062
+      ],
+      "point_entry": "Actualmovie24.44cleancourt, serve24.9approx afterfade; actual terminalpoint/result included.",
+      "initial_concern": "Movie31.0 spectator band aboveCobolli interpreted as composite from small vertical contact.",
+      "full_source_recheck": "Actualnative1920x1080 originals source134.0/135.6/136.3 opened. Red racquet continuously crosses realLEDwalltop into spectatorbank, normal physical occlusion. Continuous zoomout revealswalltop and raisedbleachers; HSBC→OPPO LEDanimation samewall. No independently composed split frame. Earlier smallcontact composite interpretation withdrawn as mistaken; do not use it as confirmed blockage.",
+      "short_alternative_if_root_selects": {
+        "source_start": 129.3,
+        "source_end": 131.52,
+        "extra_visual_tail_end": 132.02,
+        "source_sha256": "01d711954a47ee48c9c054c582ff65fef8c6f25f4b4020264597ca6ec060a9bd",
+        "visual": "Candidateactuallyreviewed: whole serve at130.25, ballresult130.9-131.0, stop/forward/armsbegin through131.52; roughly.52sec body postresult, not1sec armsup closeup. Tail132.02 clean closeup; English onsetASR131.74 avoided. No actualv2 reviewclaim."
+      },
+      "tail_visual": "Movie37.94-38.5 same-match net approach blends intoRGphoto. Originalsource143.9 safe; no black/TTVpromo. No split-screen scene established."
+    }
+  },
+  "limits": "Visual pixel audit only. Does not certify audio intelligibility, TTS pronunciation, or publication. Root makes aggregate decision. No spec/crop/window edits. Short131.52 alternative remains a separately reviewed optionalsourcewindow, not an actualv2 approval.",
+  "evidence": {
+    "acap-short-source-candidate.jpg": "68c1352d016a2084fc9effa45398da008715d84c9408cb36aa67242ece4c9d94",
+    "acap-original-136.3.jpg": "7eaa8d561e3bbf78f7c63a86237ccbcaa45470638c4b38a35b845fcbbaf133e7",
+    "acap-serve-result.jpg": "9f2ac3ac66ca7927e9dadcc0e453bcea0f33d8c8f570232c06aac605628e7421",
+    "acap-original-134.jpg": "6b42c0b782ed1a8444beb5db5b77fa06639cb3ea3f5188ede960725da485d5e1",
+    "photo-fallbacks.jpg": "3c55ff7747535460098f2fb85978ebb65b280b9c25c82b6617cd5b50c4321601",
+    "halle-rally.jpg": "8bc8c4a0e73a4567a4341161d7827e69b9a1be7aa8c02c6ac6483f247c328ef9",
+    "acap-original-135.6.jpg": "bb5c40bd2063644c8429905fff248dcf3489fb3d29f06c0639db88c8f50e9182",
+    "halle-serve.jpg": "7e4cf0e42e120983585bd5a4dce1c7ace90f2c22f49a2b197ac4e48455740c51",
+    "halle-reaction-tail.jpg": "1961cd352b80f5b95397d5975515f588dde57cd92e03fee4a429a31a6119107b",
+    "acap-reaction-tail.jpg": "b8ce96382d7d01f24cfaff43bec95414ddaa24ddb53751fbe9253655a3fbf8b6",
+    "acap-split-first-boundary.jpg": "2b1b36757a4a8dd27f5957a90bca0ac073f9bdab1520591a35c0a79cb9684b00"
+  },
+  "correction": "Initial Acapcomposite suspicion from smallverticalcontact was erroneous when assessed against nativefullsourceframes. Retained here for traceability; original actualmaster is scopedvisualPASS.",
+  "root_concurrence": "Root independently inspected actual fullwidth133.12/133.52/136.3 and closed composite allegation. Original Acap129.3–143.4 and Halle114.9–146.9 unchanged; noV2render.",
+  "superseded_finding": "withdrawn-acap-composite-finding.json",
+  "current_acap_source_window": {
+    "start": 129.3,
+    "end": 143.4,
+    "extra_visual_tail_end": 143.9
+  },
+  "checked_at_utc": "2026-11-07T01:39:26.615373+00:00"
+}

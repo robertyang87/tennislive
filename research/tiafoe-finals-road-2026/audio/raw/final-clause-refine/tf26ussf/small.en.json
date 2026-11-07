@@ -1,0 +1,99 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T01:02:02.636559+00:00",
+  "model": "small.en",
+  "source_sha256": "e657cb5d1aa134495c073e45aa2a8454d62278f5aac41d39ca54691602fdc102",
+  "source_path": "/dev/shm/tiafoe-production/sources/tf26ussf.mp4",
+  "clip": [
+    113.2,
+    118.4
+  ],
+  "duration": 5.2,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 113.2,
+      "end": 117.16,
+      "text": "is in the championship match of the 2026 U.S. Open.",
+      "avg_logprob": -0.31376934548219043,
+      "no_speech_prob": 0.04310993105173111,
+      "words": [
+        {
+          "w": " is",
+          "s": 113.2,
+          "e": 113.72,
+          "p": 0.5150050520896912
+        },
+        {
+          "w": " in",
+          "s": 113.72,
+          "e": 113.86,
+          "p": 0.9854124188423157
+        },
+        {
+          "w": " the",
+          "s": 113.86,
+          "e": 114.0,
+          "p": 0.9806703329086304
+        },
+        {
+          "w": " championship",
+          "s": 114.0,
+          "e": 114.42,
+          "p": 0.8965321183204651
+        },
+        {
+          "w": " match",
+          "s": 114.42,
+          "e": 115.02,
+          "p": 0.995059609413147
+        },
+        {
+          "w": " of",
+          "s": 115.02,
+          "e": 115.4,
+          "p": 0.9614433646202087
+        },
+        {
+          "w": " the",
+          "s": 115.4,
+          "e": 115.52,
+          "p": 0.9942572116851807
+        },
+        {
+          "w": " 2026",
+          "s": 115.52,
+          "e": 116.46,
+          "p": 0.9473308026790619
+        },
+        {
+          "w": " U",
+          "s": 116.46,
+          "e": 116.66,
+          "p": 0.49125733971595764
+        },
+        {
+          "w": ".S.",
+          "s": 116.66,
+          "e": 116.86,
+          "p": 0.9855410754680634
+        },
+        {
+          "w": " Open.",
+          "s": 117.16,
+          "e": 117.16,
+          "p": 0.9729620218276978
+        }
+      ]
+    }
+  ]
+}
