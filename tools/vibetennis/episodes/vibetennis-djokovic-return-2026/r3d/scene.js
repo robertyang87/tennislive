@@ -268,10 +268,10 @@ const fmt=(x,d=1)=>x.toFixed(d);
 const pt=cloud(1600,0.05,8,scene,0.5); const PTS=[...Array(1600)].map(()=>[(frnd()-0.5)*16,(frnd()-0.5)*9,(frnd()-0.5)*8,frnd(),frnd()]);
 
 // ---- 球场周边：中央球场看台（所有者 2026-11-07「要把球场周边看台渲染出来，比较有沉浸感」）----
-// 1 单位 = 1 m。下层看台 20 排、LED 腰带、上层看台 24 排、顶沿灯环；场边一圈发光挡板；约两万名观众（坐姿低模）。
+// 1 单位 = 1 m。下层看台 20 排、LED 腰带、上层看台 24 排、顶沿灯环；场边一圈发光挡板；观众是光点（同 EP01）。
 // 看台跟着 courtG 一起显隐、一起淡；离镜头 3~6 m 内的东西做抖动消隐（侧面机位在看台里，不让人头糊在镜头上）。
 // 赛点那几秒观众席闪光灯变密（standsTick）。全部用自带的确定性随机，不动底座 frnd 的序列。
-let ST_F, ST_TOP, ST_FL, ST_N=0; const ST_MATS=[];
+let ST_F, ST_TOP, ST_FL, ST_CR, ST_N=0; const ST_MATS=[];
 const ST=(()=>{
   let sd=90210; const rr=()=>{ sd=(sd*48271)%2147483647; return sd/2147483647; };
   const G=new THREE.Group(); courtG.add(G);
@@ -318,25 +318,25 @@ const ST=(()=>{
     mkWall(ST_F[0]+0.02,ST_F[1]+0.02,ST_F[2]+0.02,ST_F[3]+0.35,0.45,0x2a8cff,GLOW.emissive*1.3);   // LED 腰带
     mkWall(ST_TOP[0],ST_TOP[1],ST_TOP[2],ST_TOP[3]-0.2,2.4,0x0a0f1c,0);   // 顶沿
   }
-  // 观众：坐姿低模（身子一个盒、头一个球），每排按弧长 0.6 m 一个，过道（每圈 28 条）空着、约一成空座
-  { const people=[]; for(const [a,b,rc,y,dp,lvl] of ROWS){ const R0=ring(a,b,rc,8); const n=Math.floor(R0.len/0.6); const R=ring(a+dp*0.55,b+dp*0.55,rc+dp*0.55,n).pts;
-      for(let i=0;i<n;i++){ const f=i/n*28; if(f-Math.floor(f)<0.06) continue; if(rr()<0.1){ rr(); continue; } people.push([R[i][0],y,R[i][1],R[i][2],R[i][3],rr()]); } }
-    const n=people.length, body=new THREE.BoxGeometry(0.44,0.62,0.32), head=new THREE.IcosahedronGeometry(0.12,1);
-    const mB=new THREE.InstancedMesh(body,near(new THREE.MeshLambertMaterial({transparent:true})),n), mH=new THREE.InstancedMesh(head,near(new THREE.MeshLambertMaterial({transparent:true})),n);
-    const SH=[0x1b2a4a,0x2a3346,0x3b4458,0x6b7488,0x8a2b3a,0x1f5a8a,0x9a8a3a,0x2f6a4a,0x5a3a7a,0xb0b6c2,0x14203a,0x22304e], SK=[0x6a5040,0x8a6a55,0x4a3428,0x9a7a60];
-    const o=new THREE.Object3D(), c=new THREE.Color(), heads=[];
-    for(let i=0;i<n;i++){ const [x,y,z,nx,nz,s]=people[i]; const yaw=Math.atan2(-nx,-nz)+ (s-0.5)*0.5, jitter=(s*7919%1-0.5)*0.12;
-      o.position.set(x+nx*jitter,y+0.33,z+nz*jitter); o.rotation.set(0,yaw,0); o.scale.setScalar(0.9+s*0.2); o.updateMatrix(); mB.setMatrixAt(i,o.matrix);
-      c.setHex(SH[Math.floor(s*997)%SH.length]).lerp(new THREE.Color(0x1a2438),0.35).multiplyScalar(0.42); mB.setColorAt(i,c);
-      o.position.y=y+0.33+0.44*(0.9+s*0.2); o.updateMatrix(); mH.setMatrixAt(i,o.matrix); heads.push(o.position.x-nx*0.32,o.position.y+0.05,o.position.z-nz*0.32);   /* 手机举在脸前，朝场内 */
-      c.setHex(SK[Math.floor(s*331)%SK.length]).multiplyScalar(0.45); mH.setColorAt(i,c); }
-    for(const m of [mB,mH]){ m.frustumCulled=false; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; G.add(m); ST_MATS.push([m.material,1]); }
+  // 观众：一人一个光点（同 EP01 看台：冷白／冰蓝为主、两成琥珀，亮度随机）——所有者 2026-11-07「用闪光灯或者星点来表示人比较好……颜色太乱会导致整个画面失去焦点」
+  { const pos=[], col=[], ph=[], heads=[]; for(const [a,b,rc,y,dp] of ROWS){ const R0=ring(a,b,rc,8); const n=Math.floor(R0.len/0.45); const R=ring(a+dp*0.5,b+dp*0.5,rc+dp*0.5,n).pts;
+      for(let i=0;i<n;i++){ const f=i/n*28; if(f-Math.floor(f)<0.05) continue; if(rr()<0.12){ rr(); continue; }
+        const x=R[i][0]+(rr()-0.5)*0.12, z=R[i][1]+(rr()-0.5)*0.12, yy=y+0.95; pos.push(x,yy,z); heads.push(x-R[i][2]*0.3,yy,z-R[i][3]*0.3); ph.push(rr()*6.283);
+        const b=0.22+0.78*rr()*rr(); if(rr()<0.2) col.push(b*1.0,b*0.74,b*0.42); else { const w=rr()*0.25; col.push(b*(0.55+w),b*(0.78+w*0.6),b); } } }
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(col,3)); g.setAttribute('aP',new THREE.Float32BufferAttribute(ph,1));
+    ST_CR=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uOp:{value:1},uT:{value:0},uPx:{value:H/2}},
+      vertexShader:`attribute vec3 color; attribute float aP; uniform float uPx,uT; varying vec3 vC; varying float vF;
+        void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); float px=0.28*uPx*projectionMatrix[1][1]/max(0.5,-mv.z); vF=clamp(px/max(px,6.0),0.25,1.0)*smoothstep(3.0,6.0,-mv.z);
+          vC=color*(0.86+0.14*sin(uT*1.3+aP)); gl_PointSize=clamp(px,1.5,6.0); gl_Position=projectionMatrix*mv; }`,
+      fragmentShader:`uniform float uOp; varying vec3 vC; varying float vF; void main(){ float d=length(gl_PointCoord-0.5); float a=exp(-d*d*16.0)*(1.0-smoothstep(0.42,0.5,d))*uOp*vF; gl_FragColor=vec4(vC*a*1.9,a); }`});
+    const cp=new THREE.Points(g,ST_CR); cp.frustumCulled=false; G.add(cp);
+    const n=heads.length/3;
     // 闪光灯：每个观众头顶一个点，uT 每 1/20 s 换一次谁在闪；uRate 是单人单步的闪光概率
-    const seed=new Float32Array(n); for(let i=0;i<n;i++) seed[i]=rr()*1000;
+    const seed=new Float32Array(n); for(let i=0;i<n;i++) seed[i]=rr()*1000;   /* 闪光点＝观众光点往场内挪 0.3 m */
     const fg=new THREE.BufferGeometry(); fg.setAttribute('position',new THREE.Float32BufferAttribute(heads,3)); fg.setAttribute('aS',new THREE.BufferAttribute(seed,1));
     ST_FL=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uT:{value:0},uRate:{value:0.0004},uOp:{value:1},uPx:{value:H/2}},
       vertexShader:`attribute float aS; uniform float uT,uRate,uPx; varying float vA; float h(float x){ return fract(sin(x)*43758.5453); }
-        void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); float r=h(aS*1.37+uT*17.13); vA= r<uRate ? 0.55+0.45*h(aS+uT) : 0.0; gl_PointSize= vA>0.0 ? 0.9*projectionMatrix[1][1]*uPx/max(1.0,-mv.z) : 0.0; gl_Position=projectionMatrix*mv; }`,
+        void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); float r=h(aS*1.37+uT*17.13); vA= r<uRate ? 0.55+0.45*h(aS+uT) : 0.0; gl_PointSize= vA>0.0 ? 0.5*projectionMatrix[1][1]*uPx/max(1.0,-mv.z) : 0.0; gl_Position=projectionMatrix*mv; }`,
       fragmentShader:`uniform float uOp; varying float vA; void main(){ if(vA<=0.0) discard; vec2 p=gl_PointCoord-0.5; float d=length(p)*2.0; float a=pow(max(0.0,1.0-d),2.2); gl_FragColor=vec4(vec3(1.0,0.97,0.9)*a*vA*uOp*0.9,a*vA*uOp); }`});
     const fp=new THREE.Points(fg,ST_FL); fp.frustumCulled=false; G.add(fp); ST_N=n; }
   // 顶沿灯环：一圈灯点（小光晕），照向场内
@@ -346,7 +346,7 @@ const ST=(()=>{
 function standsTick(t,kind,u){ ST.visible=courtG.visible; if(!ST.visible) return; const o=courtG.userData.mat.opacity;
   for(const [m,b] of ST_MATS) m.opacity=b*o;
   let rate=0.0003; if(kind==='hook'){ const a=ev('court',7.7), b=ev('run',16.5); rate=lerp(0.0003,0.006,ss(a,a+1.0,u)*(1-ss(b+1.0,b+2.5,u))); }
-  ST_FL.uniforms.uRate.value=rate; ST_FL.uniforms.uT.value=Math.floor(t*20); ST_FL.uniforms.uOp.value=o; }
+  ST_FL.uniforms.uRate.value=rate; ST_FL.uniforms.uT.value=Math.floor(t*20); ST_FL.uniforms.uOp.value=o; ST_CR.uniforms.uOp.value=o; ST_CR.uniforms.uT.value=t; }
 
 // ---- 全息人体（发球人／接发人）：胶囊骨骼＋菲涅尔边缘光，按关节角驱动（前向运动学）----
 // 尺寸按真人（1 单位 = 1 米）：德约身高约 1.88 m。动作是示意，画面标「示意」。
