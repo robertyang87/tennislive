@@ -2071,10 +2071,6 @@ _MUCHOVA_NATIVE_720_CROP_URLS = frozenset({
 # exception bound to this episode and the three actual official 720p sources;
 # it does not relax the native floor or archival defaults for other films.
 _NATIVE_720_CROP_URLS_BY_EPISODE = {
-    # 2026-11-07: owner answered “可以放宽限制” for this official match source.
-    "eala-sakkari-hong-kong-2026-sf": frozenset({
-        "https://github.com/robertyang87/tennislive/releases/download/source-6408062676112/6408062676112.mp4",
-    }),
     # 《Walkover》（walkover-story-2026）v2 对齐重推·孙心然段：账号所有者
     # 2026-10-30 拍板换实拍。WTA 官网本场（广州 R2 孙心然 vs 蒂莫费娃）
     # 官方集锦仅 1280×720 一档；所有者要全画布裁切呈现（与主源 sin 同款
