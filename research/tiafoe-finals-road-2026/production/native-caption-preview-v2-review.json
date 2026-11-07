@@ -5,7 +5,6 @@
   "ass_sha256": "fd3844c034a18a60fc63cf12e0920e35151dc36779084d7ac69674618bae30ed",
   "selected_source_cues": 21,
   "actual_tts_requests": 17,
-  "expected_seconds": 261.154,
   "observed": [
     "Full1080x1440 canvas with actualnative fixedcentre sourcecrop.",
     "Realnames and numeric1/4 matchlabels readable; 5set scores withinframe, winnergreen/loserwhite.",
@@ -16,5 +15,6 @@
   "limitations": [
     "Samplepixels are actual native render callbacks beforefinalH264 anddissolves, not final-film approval.",
     "Sourcepre-toss gaps explicitly retainedininternalhandoffs; AO/RG photo fallbackfinal."
-  ]
+  ],
+  "expected_seconds_approx": 261.2
 }
