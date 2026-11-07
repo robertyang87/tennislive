@@ -4,7 +4,7 @@ set -e
 # 3D 里有中英两套标签（scene.js 的 T()），所以英文版要另渲一份 3D（VT_LANG=en）；英文版不配音、不带 BGM（docs/vibetennis.md §8）。
 # 成片 = 片头 3 帧横版封面（0.1 s，docs/vibetennis.md §9）＋ 3D＋叠加层 ＋ BGM 与合成音效；中文版另加 TTS 配音（-14 LUFS / 真峰值 ≤ -1 dBTP）。
 HERE="$(cd "$(dirname "$0")" && pwd)"; PY="${PY:-python3}"; L="${1:-zh}"; cd "$HERE"; mkdir -p sfx
-SLUG=vibetennis-ball-2026; [ "$L" = en ] && SLUG=$SLUG-en
+SLUG=vibetennis-djokovic-return-2026; [ "$L" = en ] && SLUG=$SLUG-en
 SEG="${SEG:-r3d/seg}"   # 中文先渲完挪到 r3d/seg_zh、英文渲进 r3d/seg 时，用 SEG=r3d/seg_zh 合中文
 ls $SEG/c*.mp4 | sort | sed "s|^r3d/|file '|; s|$|'|" > r3d/list.txt
 [ -f r3d/full_ov_$L.mp4 ] || VT_LANG=$L "$PY" overlay.py r3d/list.txt r3d/full_ov_$L.mp4 $(ls $SEG/c*.mp4.anchors.json | sort) 2>&1 | grep -v -i fontconfig
