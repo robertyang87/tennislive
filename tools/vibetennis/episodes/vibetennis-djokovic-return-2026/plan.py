@@ -1,4 +1,4 @@
-"""vibetennis 器材三部曲 ③ 球：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
+"""vibetennis EP10 德约为什么是接发之王：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
 生成 r3d/timeline.json 和 r3d/shots.js（每段的起止秒、镜头类型、每句开口时刻、画面事件时刻）。
 
     python3 plan.py            # 有 voice/*.json 词边界就按实测排
@@ -11,32 +11,28 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
-SECTIONS = [(n, n) for n in ("hook", "origin", "make", "color", "impact", "lab", "dial", "now", "future", "end")]
+SECTIONS = [(n, n) for n in ("hook", "race", "read", "split", "slide", "data", "end")]
 # 每句最短停留（从这句开口到下一句开口）：给这句的动效留够时间
-HOLD = {"h0": 3.8, "h1": 6.4, "h2": 3.4, "h3": 4.0, "o0": 5.0, "o1": 4.0, "o2": 4.0, "o4": 4.2,
-        "m0": 6.2, "m1": 4.2, "m2": 4.6, "m3": 5.2, "m4": 4.2, "m6": 6.0, "c1": 5.2, "c2": 4.4,
-        "p0": 4.8, "p1": 5.4, "p2": 7.8, "p4": 6.2, "p6": 4.8, "r1": 7.6, "r2": 5.2, "r3": 4.4, "r4": 8.6,
-        "d1": 4.4, "d2": 7.6, "d3": 7.8, "d5": 6.2, "d6": 5.2, "n1": 5.0, "n4": 6.4, "n5": 4.6,
-        "f1": 4.8, "f3": 7.0, "f5": 5.6, "e0": 3.0, "e1": 3.8, "e2": 4.0, "e3": 6.0, "e4": 4.6}
+HOLD = {"h0": 5.2, "h1": 5.4, "h2": 3.6, "h3": 3.6, "h4": 4.4, "h5": 3.8,
+        "r0": 6.6, "r1": 4.6, "r2": 5.0, "r3": 5.4, "r4": 6.0, "r5": 5.6,
+        "e0": 3.4, "e1": 6.4, "e2": 5.6, "e3": 6.8, "e4": 4.6,
+        "s0": 2.8, "s1": 4.4, "s2": 5.4, "s3": 7.0, "s4": 4.2,
+        "d0": 4.6, "d1": 4.8, "d2": 7.2, "d3": 5.6,
+        "k0": 3.0, "k1": 6.0, "k2": 7.6, "k3": 6.0, "k4": 7.4, "k5": 5.8, "k6": 4.2,
+        "n0": 3.6, "n1": 5.2, "n2": 5.6}
 MIN_SEC = {}
-EV = [("hook", "spin", "h0", None), ("hook", "specs", "h1", "重量"), ("hook", "rk", "h2", None), ("hook", "q", "h3", None),
-      ("origin", "leather", "o0", None), ("origin", "rubber", "o1", None), ("origin", "cloth", "o2", None), ("origin", "melton", "o3", None),
-      ("origin", "hollow", "o4", None),
-      ("make", "press", "m0", None), ("make", "heat", "m0", "150"), ("make", "join", "m1", None), ("make", "gas", "m1", "充进气"),
-      ("make", "pr", "m2", None), ("make", "felt", "m3", None), ("make", "cross", "m3", "错开"), ("make", "steam", "m4", None),
-      ("make", "pl", "m5", None), ("make", "sweater", "m6", "毛衣"),
-      ("color", "wb", "c0", None), ("color", "tv", "c1", None), ("color", "yel", "c1", "黄色"), ("color", "wim", "c2", None),
-      ("impact", "str", "p0", None), ("impact", "wall", "p1", None), ("impact", "squash", "p1", "压扁"), ("impact", "bub", "p2", "往里一翻"),
-      ("impact", "air", "p3", None), ("impact", "serve", "p3", "一记发球"), ("impact", "fluff", "p4", None), ("impact", "bald", "p4", "磨秃"),
-      ("impact", "cold", "p5", None), ("impact", "alt", "p6", None),
-      ("lab", "lon", "r0", None), ("lab", "drop", "r1", None), ("lab", "half", "r1", "一半多"), ("lab", "press", "r2", None),
-      ("lab", "wear", "r3", None), ("lab", "nine", "r4", None), ("lab", "wim", "r4", "温网"), ("lab", "two", "r5", "提前两局"),
-      ("dial", "big", "d0", None), ("dial", "vote", "d1", None), ("dial", "types", "d2", None), ("dial", "t3", "d2", "3号球"),
-      ("dial", "race", "d3", None), ("dial", "init", "d4", None), ("dial", "court", "d5", None), ("dial", "fire", "d5", "每秒"), ("dial", "knob", "d6", None),
-      ("now", "complain", "n0", None), ("now", "q1", "n1", None), ("now", "q2", "n2", None), ("now", "weeks", "n3", None), ("now", "atp", "n4", None), ("now", "one", "n5", None),
-      ("future", "pile", "f0", None), ("future", "fill", "f1", None), ("future", "none", "f2", None), ("future", "grind", "f3", None),
-      ("future", "nest", "f3", "巢鼠"), ("future", "split", "f4", None), ("future", "two", "f5", None),
-      ("end", "tri", "e0", None), ("end", "sr", "e1", None), ("end", "ball", "e2", None), ("end", "rule", "e3", None), ("end", "q", "e4", None)]
+EV = [("hook", "serve", "h0", "费德勒发球"), ("hook", "ret", "h1", "正手"), ("hook", "run", "h2", None), ("hook", "crown", "h3", None),
+      ("hook", "board", "h4", None), ("hook", "r7", "h4", "第7"), ("hook", "q", "h5", None),
+      ("race", "tl", "r0", None), ("race", "fly", "r0", "六七百"), ("race", "react", "r1", None), ("race", "jump", "r2", "起跳"),
+      ("race", "land", "r3", None), ("race", "racket", "r3", "0.19"), ("race", "fork", "r4", "判断"), ("race", "guess", "r5", "猜好"),
+      ("read", "body", "e0", None), ("read", "toss", "e1", "抛球"), ("read", "arm", "e1", "持拍手臂"), ("read", "gaze", "e2", None),
+      ("read", "sacc", "e3", "提前跳"), ("read", "title", "e4", None),
+      ("split", "go", "s0", None), ("split", "hop", "s1", "分腿垫步"), ("split", "race", "s2", None), ("split", "spring", "s3", "拉长"),
+      ("split", "title", "s4", None),
+      ("slide", "slide", "d0", "滑步"), ("slide", "grip", "d1", "静摩擦"), ("slide", "kin", "d2", "滑动摩擦"), ("slide", "comp", "d3", None),
+      ("data", "board", "k0", None), ("data", "sum", "k1", "四项"), ("data", "all", "k2", None), ("data", "hard", "k2", "硬地"),
+      ("data", "act", "k2", "现役"), ("data", "y11", "k3", None), ("data", "deep", "k4", None), ("data", "h2h", "k5", None), ("data", "last", "k6", None),
+      ("end", "n0", "n0", None), ("end", "p1", "n1", "看懂"), ("end", "p2", "n1", "起跳"), ("end", "p3", "n1", "回得"), ("end", "q", "n2", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 PUNCT = "，。：；？！、—"
