@@ -1,0 +1,111 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T02:01:26.307546+00:00",
+  "model": "medium.en",
+  "source_sha256": "dccd8860280a533674c41036897063720c6cb5feff7feddb2188ba915bf317be",
+  "source_path": "/dev/shm/jodar-production/sources/GFovhzddHg0.mp4",
+  "clip": [
+    448.0,
+    454.5
+  ],
+  "duration": 6.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 448.0,
+      "end": 454.4,
+      "text": "This ends a remarkable week for Marco Trungelitti, who was playing his first.",
+      "avg_logprob": -0.42355285584926605,
+      "no_speech_prob": 0.3283495306968689,
+      "words": [
+        {
+          "w": " This",
+          "s": 448.0,
+          "e": 448.0,
+          "p": 0.09599389880895615
+        },
+        {
+          "w": " ends",
+          "s": 448.0,
+          "e": 448.36,
+          "p": 0.8602548241615295
+        },
+        {
+          "w": " a",
+          "s": 448.36,
+          "e": 449.08,
+          "p": 0.9671858549118042
+        },
+        {
+          "w": " remarkable",
+          "s": 449.08,
+          "e": 449.72,
+          "p": 0.9923601746559143
+        },
+        {
+          "w": " week",
+          "s": 449.72,
+          "e": 450.1,
+          "p": 0.9945269227027893
+        },
+        {
+          "w": " for",
+          "s": 450.1,
+          "e": 450.36,
+          "p": 0.9913683533668518
+        },
+        {
+          "w": " Marco",
+          "s": 450.36,
+          "e": 450.76,
+          "p": 0.9833225607872009
+        },
+        {
+          "w": " Trungelitti,",
+          "s": 450.76,
+          "e": 451.84,
+          "p": 0.6789318323135376
+        },
+        {
+          "w": " who",
+          "s": 452.58,
+          "e": 453.3,
+          "p": 0.9874244332313538
+        },
+        {
+          "w": " was",
+          "s": 453.3,
+          "e": 453.48,
+          "p": 0.9781576991081238
+        },
+        {
+          "w": " playing",
+          "s": 453.48,
+          "e": 453.74,
+          "p": 0.996882438659668
+        },
+        {
+          "w": " his",
+          "s": 453.74,
+          "e": 454.08,
+          "p": 0.9772120118141174
+        },
+        {
+          "w": " first.",
+          "s": 454.08,
+          "e": 454.4,
+          "p": 0.9911433458328247
+        }
+      ]
+    }
+  ]
+}

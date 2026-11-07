@@ -1,0 +1,183 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=-4AXzTrC9Ls",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source--4AXzTrC9Ls/-4AXzTrC9Ls.mp4",
+  "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex jodar audio role; exact actualsourceSHA and real wholecandidate small.en/medium.en plus one bounded tail pair, wholeclause semantic/name review; no human auditory listening claim",
+  "reviewed_at": "2026-11-07T02:20:54.987244+00:00",
+  "status": "complete",
+  "reviewed_from": 426.4,
+  "reviewed_to": 461.1,
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 440.84,
+      "end": 445.22,
+      "en": "A home champion in the capital.",
+      "zh": "主场冠军，就在这座首都。"
+    },
+    {
+      "start": 445.22,
+      "end": 448.48,
+      "en": "And for the American,",
+      "zh": "对这位美国球员来说，",
+      "timing_note": "And445.22–447.22 has broad modelpadding, not a precise firstphoneme estimate; fullphrase here uses conservative actualrawwordcoverage. No legacycaption timing asserted as currentexactbytes evidence."
+    },
+    {
+      "start": 448.48,
+      "end": 452.04,
+      "en": "it is his biggest title since 2022.",
+      "zh": "这是他自2022年以来最大的一冠。"
+    },
+    {
+      "start": 454.58,
+      "end": 458.66,
+      "en": "as he takes down the young Spaniard Rafael Jodar,",
+      "zh": "他击败了西班牙小将霍达尔，"
+    },
+    {
+      "start": 458.66,
+      "end": 460.82,
+      "en": "who pushed him hard in those two sets.",
+      "zh": "两盘都给他制造了不小的麻烦。"
+    }
+  ],
+  "uncertain_spans": [],
+  "lexical_and_timing_limitations_preserved": {
+    "timing_estimates": "FirstAhas lowmodelprobability and broadpadding (fullsmall.053/medium.015), bothrealmodels give same complete nounphrase. And445.22–447.2 also contains longpausepadding. Quotes follow actual wholeword semanticcoverage; no humanfirstphoneme or everyword acousticcertitude claim.",
+    "last_word_confirmed": "Initialwholewindow460.5 capped sets460.48. Exactlyone bounded455–470 independently returns complete lastsets through460.74/460.82; selected461.10 preserves>=0.28s beyond latestestimate. FollowingWellparagraph starts earliest461.52, outsidebody; no furthermodels.",
+    "proper_name": "RafaelHodar/Hoda are realmodelphonetic outputs; officialmatchidentity normalizes visibleEnglishname to RafaelJodar, Chinese霍达尔. No player/score meaning changed.",
+    "legacy_same_id_not_current_bytes": {
+      "spec_path": "/dev/shm/jodar-production/native/specs/reels/fritz-jodar-final.json",
+      "spec_sha256": "8d66eab304fb767b08033fff9545849799b1875bbded2b27503e9240bb7bee55",
+      "unverified_prior_claim": "Oldspec says TaylorFritzgetsitdonethistime437.84 and MC460.8 based on its oldYouTubeautomaticcaption reference. Actualcurrent7fee wholemodelpair does not reproduce thatfirstline, and actualboundedtail hears newWellthisfinal…paragraph461.52/462.92.",
+      "handling": "Do not import oldspec/oldASR as currentexactbytes evidence. Actual currenttrue raw drives retainedcues and all true old-vs-new limitations remain visible; no verified firstline inferred from an oldsameID alone. Root notified beforeseal."
+    }
+  },
+  "source_identity": {
+    "source_path": "/dev/shm/jodar-production/sources/-4AXzTrC9Ls.mp4",
+    "source_bytes": 99720601,
+    "actual_probe_identity_file": "/workspace/jodar-finals-production/research/media-late/washington-source-identity.json"
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/-4AXzTrC9Ls/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/-4AXzTrC9Ls/small.en.json",
+      "sha256": "fbeae7d269f7a96bad59c29fc6a190502cfcac234b1b62eb51c3237910736b6f",
+      "model": "small.en",
+      "clip": [
+        426.4,
+        460.5
+      ],
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/-4AXzTrC9Ls/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/-4AXzTrC9Ls/medium.en.json",
+      "sha256": "54755cbbe992dfdfc1619b5f72a88a4137f2257c10e768489348c2154b2b6a5f",
+      "model": "medium.en",
+      "clip": [
+        426.4,
+        460.5
+      ],
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/-4AXzTrC9Ls/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/-4AXzTrC9Ls/small.en.json",
+      "sha256": "4610db94080413618db2bca9ac06b9b2930fe3211e506c450bb41eead6f963de",
+      "model": "small.en",
+      "clip": [
+        455.0,
+        470.0
+      ],
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/-4AXzTrC9Ls/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-tail/-4AXzTrC9Ls/medium.en.json",
+      "sha256": "dfab4572c81287dfaad2ad8c9c3f7dfc3e71442317423a19f53d6236531010a1",
+      "model": "medium.en",
+      "clip": [
+        455.0,
+        470.0
+      ],
+      "source_sha256": "7fee0fa6d20793eb2ac93cc663b8e906dc58fe99025b4bed001638780aafaf6c",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    }
+  ],
+  "native_quote": [
+    {
+      "at": 14.44,
+      "end": 18.82,
+      "text": "A home champion in the capital.\n主场冠军，就在这座首都。"
+    },
+    {
+      "at": 18.82,
+      "end": 22.08,
+      "text": "And for the American,\n对这位美国球员来说，"
+    },
+    {
+      "at": 22.08,
+      "end": 25.64,
+      "text": "it is his biggest title since 2022.\n这是他自2022年以来最大的一冠。"
+    },
+    {
+      "at": 28.18,
+      "end": 32.26,
+      "text": "as he takes down the young Spaniard Rafael Jodar,\n他击败了西班牙小将霍达尔，"
+    },
+    {
+      "at": 32.26,
+      "end": 34.42,
+      "text": "who pushed him hard in those two sets.\n两盘都给他制造了不小的麻烦。"
+    }
+  ],
+  "review_notes": [
+    "Bothwhole426.4–460.5 models agree complete homechampion/capital/American/biggesttitlesince2022 and RafaelJodar/whopushedhimhardintwosets commentary. Bounded455–470 supports fullend460.82 and nextparagraph461.52+, so the rootselectedbody461.10 does not cut the retainedlastsentence.",
+    "Winner being described is TaylorFritz, not Jodar. SelectedrealJodar net handshake448–450 is included; no winner reaction mislabeledJodar. Actualterminalpointprep/toss/428.04–428.08contact/wholeball/result/reactions andfixedcx.5 limitations are latevisualrole; no claim everyplayerwholebodyvisibleeveryframe.",
+    "Rootapprovedlong426.4–461.10 window, late personallyopened461.0/461.1/461.6/461.7 anddense461.0–461.8: sameeventFritz trophy/smile/headgesture, completefaceinportrait, no promo/othermatch. Extra0.5visualtail461.60 has audio_tail silence; nextWellbody starts461.52 but its audioisnotretained, do not mechanicallyextendbodyaudio to visualtail.",
+    "Sourceoriginalaudiounity preserved; no gain/loudness/RMS/waveformanalysis or sourceaudiochanges. No newASR after oneboundedtail. This packet is source-original scope, not finalnative master/voiceapproval."
+  ]
+}

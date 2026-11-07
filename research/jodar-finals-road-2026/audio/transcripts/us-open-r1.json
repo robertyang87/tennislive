@@ -1,0 +1,202 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.usopen.org/amp/en_US/news/articles/2026-09-03/who_is_bu_yunchaokete_the_lucky_loser_who_upset_rafael_jodar_at_the_2026_us_open.html",
+  "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+  "method": "verified_source_captions",
+  "reviewer": "Codex jodar audio role; real official sameUUID VTT compared with actual fullselectedwindow small.en/medium.en and one bounded opening refinement, semantic/name review; no human auditory listening claim",
+  "reviewed_at": "2026-11-07T01:55:12.155196+00:00",
+  "status": "complete",
+  "reviewed_from": 103.5,
+  "reviewed_to": 129.0,
+  "human_listening_performed": false,
+  "source_language": "en",
+  "foreground_english": [
+    {
+      "start": 110.9,
+      "end": 112.26,
+      "en": "That'll do it.",
+      "zh": "比赛结束了。",
+      "caption_kind": "verified_official_caption_crosschecked_bounded_actual_medium",
+      "evidence_note": "Official VTT111.650–112.089 That’ll do it; real bounded medium agrees That will do it110.90–112.26. Same full clause; contraction editorial spelling matches officialcaption. Firstword onset is broad ASRestimate, not human phoneme timing."
+    },
+    {
+      "start": 112.32,
+      "end": 115.46,
+      "en": "That is the win of his career.",
+      "zh": "这是他生涯最重要的一场胜利。",
+      "caption_kind": "verified_official_caption_and_two_actual_models",
+      "evidence_note": "Whole small112.32–115.46, medium112.38–115.44 and official113.410–115.410 agree complete words. Conservative wholewordcoverage timing uses genuineASR, not a precise measured onset claim."
+    },
+    {
+      "start": 116.16,
+      "end": 122.19,
+      "en": "Yunchaokete has knocked out the 12th seed,",
+      "zh": "布云朝克特淘汰了12号种子，",
+      "caption_kind": "two_actual_models_name_normalized_and_verified_official_context",
+      "evidence_note": "small Woon In-chap Kettet / medium Uinca Quete both phonetic Yunchaokete. Normalize givenname to official match identity; do not invent Bu prefix that the models did not establish. VTT’s In6-2/6-16-1 are corrupt recognition of this name/gap, not a second score readout. Both fullmodels agree hasknockedoutthe12thseed, corroborated by exact officialmatcharticle."
+    },
+    {
+      "start": 122.73,
+      "end": 125.589,
+      "en": "and it has been emphatic today.",
+      "zh": "而且他今天赢得相当强势。",
+      "caption_kind": "verified_official_caption_and_two_actual_models"
+    },
+    {
+      "start": 126.129,
+      "end": 128.41,
+      "en": "[Score] 6-2, 6-1, 6-1.",
+      "zh": "6比2、6比1、6比1。",
+      "caption_kind": "verified_numeric_score_with_explicit_editorial_label",
+      "editorial_label": "[Score] is visibly bracketed editorial context, not a claim the commentator uttered Score. Nativeforeground gate requires A–Z in every Englishline and rejects a valid numbers-only Englishscore. Actual scores are unchanged and remain digits by owner globaldisplaypreference."
+    }
+  ],
+  "uncertain_spans": [],
+  "lexical_limitations_preserved": {
+    "isolated_official_token": {
+      "source_vtt_token": "How",
+      "source_vtt_interval": [
+        110.949,
+        111.069
+      ],
+      "status": "Not asserted heard or resolved as the literal word How. No independent semantic phrase established.",
+      "actual_comparison": "Both wholewindow raw and bounded small omit How; bounded medium restores the complete That will do it110.90–112.26, covering the same earlyactivity. Officialcaption’s complete That’ll do it agrees.",
+      "representation": "Root approved existing whole That’ll do it110.90–112.26, no invented separate exclamation, linecall, Out or score. Original badtoken preserved in exactVTT and all4 realraw remain."
+    },
+    "propername": "Normalize phonetic Yunchaokete by verified actualplayeridentity; do not add an unsupported Bu in the spoken English line. Chinese uses full official 布云朝克特.",
+    "timings": "VTT and ASR differ in low-probability leading functionword padding. Recorded timing covers full same clauses without trimming the selected source audio. These are evidence-based estimates, not human-measured phoneme onsets."
+  },
+  "source_identity": {
+    "source_path": "/dev/shm/jodar-production/sources/jd26uso.mp4",
+    "source_bytes": 114049590,
+    "actual_probe_identity_file": "/workspace/jodar-finals-production/research/media-late/usopen-source-identity.json"
+  },
+  "official_caption": {
+    "official_caption_url": "https://usopenvideo.akamaized.net/2026/prd/interviews/captions/97225869-a34c-4010-b8f5-6612a35da320.vtt",
+    "path": "/workspace/jodar-finals-production/research/audio/captions/us-open-r1-official.vtt",
+    "sha256": "2371ea5c36961d1e15ab87d3003ce534b13a54d9100621178fbd58372ba35fcb",
+    "same_video_UUID": true,
+    "original_path": "/workspace/jodar-finals-production/research/media-late/usopen-bu-official-embedded.vtt",
+    "actual_provenance_file": "/workspace/jodar-finals-production/research/media-late/usopen-vtt-provenance.json",
+    "actual_provenance_sha256": "ee0b732b29752180898ee16d32d297cb1964f2f83c94e3f7c058ef81bccede50"
+  },
+  "asr_evidence": [
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/jd26uso/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/jd26uso/small.en.json",
+      "sha256": "daafdbb880e5b64264543cb12f57745bea9db1178ea589c01eb63ecc92d20402",
+      "model": "small.en",
+      "clip": [
+        103.5,
+        129.0
+      ],
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/jd26uso/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/jd26uso/medium.en.json",
+      "sha256": "13dbc786048e429f2c95bad07935c3b6086cd1423cdd5aa2fc5cb9fea787784e",
+      "model": "medium.en",
+      "clip": [
+        103.5,
+        129.0
+      ],
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-opening/jd26uso/small.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-opening/jd26uso/small.en.json",
+      "sha256": "ba8a333299abecca261a9eb549b1163707a03dddd4fa488b783e331cc70d37ba",
+      "model": "small.en",
+      "clip": [
+        108.5,
+        118.5
+      ],
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    },
+    {
+      "path": "/workspace/jodar-finals-production/research/audio/raw/bounded-opening/jd26uso/medium.en.json",
+      "research_path": "/workspace/jodar-finals-production/research/audio/raw/bounded-opening/jd26uso/medium.en.json",
+      "sha256": "6ba92bd8f0fdeebad52d1b721e5c0ec9ba2af4e2fbf71261ac8d6a4c690fecaa",
+      "model": "medium.en",
+      "clip": [
+        108.5,
+        118.5
+      ],
+      "source_sha256": "836cc49ad29fb7256c4c9dec57c19a78b451f86c0076628c7ddf260371380ea0",
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/jodar-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1"
+    }
+  ],
+  "native_quote": [
+    {
+      "at": 7.4,
+      "end": 8.76,
+      "text": "That'll do it.\n比赛结束了。"
+    },
+    {
+      "at": 8.82,
+      "end": 11.96,
+      "text": "That is the win of his career.\n这是他生涯最重要的一场胜利。"
+    },
+    {
+      "at": 12.66,
+      "end": 18.69,
+      "text": "Yunchaokete has knocked out the 12th seed,\n布云朝克特淘汰了12号种子，"
+    },
+    {
+      "at": 19.23,
+      "end": 22.089,
+      "text": "and it has been emphatic today.\n而且他今天赢得相当强势。"
+    },
+    {
+      "at": 22.629,
+      "end": 24.91,
+      "text": "[Score] 6-2, 6-1, 6-1.\n6比2、6比1、6比1。"
+    }
+  ],
+  "review_notes": [
+    "Actual new836cc49…MP4 differs from oldYouTube source and timing, so no oldYouTubeASR reused. Fullselected103.5–129.0 both realmodels cover genuine terminalpoint and every retained completecommentary clause; one bounded108.5–118.5 check resolved whole That’ll do it, then stopped. Allrawbytes kept, no furtherASR.",
+    "Five nativecues preserve whole meaning from matchend through full winner/name/12thseed/strongwin/scores. These quotes describe winner Yunchaokete, not Jodar. Root approved fullfirstclause covering the isolated uncorroborated VTT How token without inventing an extra call. Lexical/timing limitations are explicit, not claimed exact hearing.",
+    "129.0 sourceend is after fullscore128.410 and clean actualreaction. Next commentary136.509 lies outside evenvisualtail129.5; nativeaudio_tail silence uses only bodyaudio. Sourcefirstcontact/completepoint/reactions/crop actualvisual evidence is late role, not a falsehuman hearingclaim. No source gain/loudness/waveformanalysis or sourceaudio changes. Not finalactualmaster approval.",
+    "Native contract firsttrial genuinely rejected numbers-only finalEnglishscorecue as missingEnglishletters. Retain same fullscore and timing with explicit bracketed editorial [Score] label; this is not an added spokenword claim or a hidden uncertainty clearance. No sourceaudio/ASR/meaning changed."
+  ]
+}

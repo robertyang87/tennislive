@@ -1,0 +1,82 @@
+................F....................F.................................. [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+___________________________ test_赛场之上要么有狠数据要么说清为什么没有 ___________________________
+
+    def test_赛场之上要么有狠数据要么说清为什么没有():
+        fresh = {slug for slug in _missing_hit_data() - _HIT_DATA_LEGACY
+                 if should_check('tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有', SPEC_DIR / f"{slug}.json")}
+>       assert not fresh, (
+            f"这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`："
+            f"{sorted(fresh)}。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）"
+            f"是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上"
+            f"分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，"
+            f"把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句"
+            f"`_no_hit_data_why` 说清查过哪些源。"
+        )
+E       AssertionError: 这几条「赛场之上」既没写 `_hit_data`、也没写 `_no_hit_data_why`：['khachanov-auger-aliassime-beijing-2026-r1']。狠数据（总分差/一发摆动/破发点兑现/连续保发/H2H）是显式认领——「忘了跑 match_stat_hooks」和「查过确实没有」在产物上分不出来。先跑 `python tools/match_stat_hooks.py --from-spec <slug>`，把候选记进 `_hit_data`；真没有（首次交手/低级别无统计）就写一句`_no_hit_data_why` 说清查过哪些源。
+E       assert not {'khachanov-auger-aliassime-beijing-2026-r1'}
+
+tests/test_reel_editorial.py:843: AssertionError
+____________________________ test_两种封面版式的钩子字号是同一个出处 ____________________________
+
+    def test_两种封面版式的钩子字号是同一个出处():
+        """账号所有者 2026-08-31：「**钩子文案大小修改后，同步到全局**」。
+    
+        钩子在两个地方渲：solo 的 `.storytitle`（默认版式，163 条）和 VS 那几版
+        的 `.hook`（cutout/diagonal，13 条存量）。后者原来**写死 100px**，和
+        solo 收成 94px 之后差着一档——同一个栏目的封面两种大小。
+    
+        两边的可用宽度本来就一样（solo 的 `TITLE_WIDTH_PX` 940；VS 的 `.copy` 是
+        `left:66px right:66px` → 948），所以同一个 `hook_title_px()` 直接适用。
+    
+        ⚠️ 判据是**渲出来的 CSS**，不是「源码里有没有写这个名字」：f-string 的
+        占位符没插上值时留下的是字面量 `{vs_hook_px}`，一个字都不报。
+        """
+        versus_poster = _versus_poster()
+        assert "font-size:100px" not in Path("tools/versus_poster.py").read_text(
+            encoding="utf-8"), "VS 版式的钩子又写死字号了"
+    
+        captured = {}
+        real = versus_poster._render_html
+        versus_poster._render_html = lambda html, out: captured.setdefault("html", html) or out
+        cover = {
+            "layout": "cutout", "eyebrow": "赛场之上",
+            "hook": "一二三四五六七八九十一\n短的一行", "winner": "甲", "result": "6-4 6-4",
+            "matchup": [{"name": "甲", "country": "CHN", "rank": 1},
+                        {"name": "乙", "country": "USA", "rank": 2}],
+            "versus": {
+                "names": ["甲", "乙"],
+                "top": {"cutout": "assets/players/atp-fb98-taylor-fritz.png",
+                        "country": "CHN", "rank": 1},
+                "bottom": {"cutout": "assets/players/atp-j0dz-rafael-jodar.png",
+                           "country": "USA", "rank": 2},
+                "background": {"image": "assets/reel/anisimova-cincinnati-2026-r3.jpg",
+                               "shot": "wide_court", "frame_at": 1.0},
+            },
+        }
+        try:
+            versus_poster.build_poster(cover, Path("/tmp/_vs_probe.jpg"), layout="cutout")
+        except Exception:            # noqa: BLE001 - 只要 HTML 拼出来了就够
+            pass
+        finally:
+            versus_poster._render_html = real
+        html = captured.get("html", "")
+>       assert html, "没拼出 HTML，这条判据的主语没了"
+E       AssertionError: 没拼出 HTML，这条判据的主语没了
+E       assert ''
+
+tests/test_reel_editorial.py:1537: AssertionError
+=============================== warnings summary ===============================
+../../../../opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14
+  /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_reel_editorial.py::test_赛场之上要么有狠数据要么说清为什么没有
+FAILED tests/test_reel_editorial.py::test_两种封面版式的钩子字号是同一个出处
+2 failed, 78 passed, 1 warning in 4.39s

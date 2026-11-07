@@ -1,0 +1,99 @@
+{
+  "schema": "native-faster-whisper-actual-source.v1",
+  "created_at": "2026-11-07T02:01:10.941112+00:00",
+  "model": "small.en",
+  "source_sha256": "dccd8860280a533674c41036897063720c6cb5feff7feddb2188ba915bf317be",
+  "source_path": "/dev/shm/jodar-production/sources/GFovhzddHg0.mp4",
+  "clip": [
+    448.0,
+    454.5
+  ],
+  "duration": 6.5,
+  "language_requested": "en",
+  "detected_language": "en",
+  "parameters": {
+    "word_timestamps": true,
+    "vad_filter": false,
+    "beam_size": 5,
+    "condition_on_previous_text": false,
+    "compute_type": "int8",
+    "cpu_threads": 2
+  },
+  "segments": [
+    {
+      "start": 448.0,
+      "end": 454.34,
+      "text": "a remarkable week for Marco Trungilliti who was playing his first",
+      "avg_logprob": -0.5025515275843003,
+      "no_speech_prob": 0.3725137412548065,
+      "words": [
+        {
+          "w": " a",
+          "s": 448.0,
+          "e": 448.46,
+          "p": 0.2780439555644989
+        },
+        {
+          "w": " remarkable",
+          "s": 448.46,
+          "e": 449.48,
+          "p": 0.9878786206245422
+        },
+        {
+          "w": " week",
+          "s": 449.48,
+          "e": 450.06,
+          "p": 0.979812741279602
+        },
+        {
+          "w": " for",
+          "s": 450.06,
+          "e": 450.36,
+          "p": 0.9709741473197937
+        },
+        {
+          "w": " Marco",
+          "s": 450.36,
+          "e": 450.7,
+          "p": 0.9746931791305542
+        },
+        {
+          "w": " Trungilliti",
+          "s": 450.7,
+          "e": 451.56,
+          "p": 0.5435665026307106
+        },
+        {
+          "w": " who",
+          "s": 451.56,
+          "e": 453.28,
+          "p": 0.4762348234653473
+        },
+        {
+          "w": " was",
+          "s": 453.28,
+          "e": 453.44,
+          "p": 0.990691602230072
+        },
+        {
+          "w": " playing",
+          "s": 453.44,
+          "e": 453.7,
+          "p": 0.9973012804985046
+        },
+        {
+          "w": " his",
+          "s": 453.7,
+          "e": 454.02,
+          "p": 0.9949725866317749
+        },
+        {
+          "w": " first",
+          "s": 454.02,
+          "e": 454.34,
+          "p": 0.9960732460021973
+        }
+      ]
+    }
+  ]
+}

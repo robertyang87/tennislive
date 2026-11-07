@@ -1,0 +1,364 @@
+{
+  "at": "2026-11-07T02:25:41.195977+00:00",
+  "status": "PASS_ACTUAL_16_FROZEN_REQUESTS_TEXT_PARAMETERS_BYTES_MARKS_DECODE_SCOPE",
+  "frozen_plan_sha256": "27cd42c680314e7efb42b02a9acd7976f564e40850cade69ada6f2c5c844956e",
+  "bundle_sha256": "2524182ba008d20c1a5d874286b3ec5fd33b2b5959ed2c98cc3fea00d739d013",
+  "bundle_bytes": 819710,
+  "bundle_schema": "tennislive.frozen-tts-bundle.v1",
+  "native_read_bundle_complete_decode": true,
+  "native_tts_bundle_code_sha256": "3fff7073d50533be5746ea7e2112356dbb0b06dde3b51018f1803587ed8f5aef",
+  "actual_unique_request_count": 16,
+  "actual_occurrence_count": 16,
+  "body_count": 14,
+  "cover_count": 1,
+  "native_outro_count": 1,
+  "all_parameter_cache_key_and_request_IDs_validated_by_actual_native_code": true,
+  "total_actual_voice_seconds": 130.656,
+  "three_original_samples_exactbytes_reused": [
+    "cover",
+    "marrakech_intro",
+    "rg_intro"
+  ],
+  "entries": [
+    {
+      "id": "washington_intro",
+      "request_id": "25c76ca6b4d141f4478f7051d26d77170b241f5cf1360d8e5ab65be63474e7af",
+      "text": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。对弗里茨，首盘抢七落败，最终收获亚军。",
+      "audio_sha256": "9c807c853aa8f607ea2c7b9dbc9e52e408676378683762ff36411fae1ec12031",
+      "marks_sha256": "db1cdf76f134028890bac5a9c9664487eaa9fb0bdf0716409fbfd03d1866cd02",
+      "actual_decode_duration": 9.864,
+      "last_word_end": 9.044833,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "塔比洛",
+        "弗里茨",
+        "穆塞蒂"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "ao_intro",
+      "request_id": "28f225ac023811e2d9bd4297c7ed3487346d5e4e225a8a25b3ca47e2d851a78a",
+      "text": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+      "audio_sha256": "0481a884165392be8857ec8947e75824ddef07de64fca0010414052b0f3708c3",
+      "marks_sha256": "0ccf111dfae6fd8e2985384139b0c6da8248fc523244c7f4b01a5248b6ba9056",
+      "actual_decode_duration": 10.752,
+      "last_word_end": 9.917458,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "门西克"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "montreal",
+      "request_id": "2bf263a4bda11b96ae974a44ce8f7eab3bdbb745dee08920b5e982a1f509e7fb",
+      "text": "接着，在蒙特利尔首次打进大师赛4强。但来到美网，他第一轮就三盘输给布云朝克特。",
+      "audio_sha256": "e7c7bce75752a7497111aecdf3af2c83609d9f657ab98b1f0d153702e8115f90",
+      "marks_sha256": "d2cd7e73215b2eb5b7ef963a2ef1f941c38d2ba91032b395dd8267e3411b9a80",
+      "actual_decode_duration": 8.472,
+      "last_word_end": 7.629708,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "布云朝克特",
+        "蒙特利尔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "paris",
+      "request_id": "351be80390b0a49c9bf87b55795d7053a92cfa4abc218aa2c3149244225516de",
+      "text": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+      "audio_sha256": "ffc403ec570f6cd5492f9ae5daf21189149ca96d35bd4a8b40382f57a178eb10",
+      "marks_sha256": "8a19fcca2594f8290e0be63410c20b2d232567c43f67d0c0bf65a5406f841d6b",
+      "actual_decode_duration": 9.216,
+      "last_word_end": 8.39625,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "巴黎",
+        "鲁德"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "rg_intro",
+      "request_id": "51a706ad98115f293394f0392b8c66789f747ac5989368e9b0e9df2a6be032d7",
+      "text": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "audio_sha256": "563cfebb8ef8ff4051134f9b73dd9cb8be212c237a2da123f1cfb321e0312d74",
+      "marks_sha256": "f8935fb9bb5b4ce2630dec9073a26301ec55cea093856b23ce09002596ab4ff3",
+      "actual_decode_duration": 10.44,
+      "last_word_end": 9.599041,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "兹维列夫",
+        "卡雷尼奥",
+        "布斯塔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "clay",
+      "request_id": "525d276a61ded96286bcd1a571b3b48a39633ef0534adad340d379f4c6c36498",
+      "text": "随后，巴塞罗那打进4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "audio_sha256": "a82aa7c065b2b8cd93b84a6600677e91536fc02ee2d0fdbb457263c5453b30c9",
+      "marks_sha256": "3d4812e2f2576ebb2319f3c7548b5103164f61f286c27e98faca1164b86b40fc",
+      "actual_decode_duration": 8.328,
+      "last_word_end": 7.499999,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "巴塞罗那",
+        "罗马",
+        "马德里"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "wimbledon_intro",
+      "request_id": "5e253c136912bddf32a9cd29905e8af279102384726ecb7549827a442c8752c8",
+      "text": "温网第二轮，再赢一场五盘大战。第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+      "audio_sha256": "3697c2725f0e96666601ac679303f948938faf1a9ef38466eb78c833cfe34bca",
+      "marks_sha256": "c8a6411d698467659d570600e9feca9c9d02847904af4e452c3ca94142ac0014",
+      "actual_decode_duration": 8.208,
+      "last_word_end": 7.393874,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "望月慎太郎"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "qualification",
+      "request_id": "61aa9e30d705b0d15c29e4d93f9919e11290f57f53bc72422cc2ab6a2a4e139a",
+      "text": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "audio_sha256": "29b3cd4d0ed4f70d608836978e87836a0988e80b416118086884c844d466e752",
+      "marks_sha256": "b293a8ce3f01a989494847d670e42110bce1a5ed7e78cd522d6a679881cdf3cf",
+      "actual_decode_duration": 9.624,
+      "last_word_end": 8.785416,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "巴黎",
+        "弗里茨",
+        "霍达尔"
+      ],
+      "multi_token_name_place_flags": [
+        "阿尔卡拉斯"
+      ],
+      "multi_token_rawmark_context": {
+        "阿尔卡拉斯": [
+          {
+            "text": "阿尔卡拉",
+            "start": 1.084916,
+            "end": 1.568416
+          },
+          {
+            "text": "斯",
+            "start": 1.568416,
+            "end": 1.780666
+          }
+        ]
+      }
+    },
+    {
+      "id": "question",
+      "request_id": "a1f378dc260615a08cd1a36528aa08f8ae03c4dc877a1879001063cd2daa7db9",
+      "text": "这一次在都灵，你最想看霍达尔碰上谁？",
+      "audio_sha256": "73204a12cfc96f012b6fcff5d0ee07cb3e281bd91c437429e6ef0adbb641e2ad",
+      "marks_sha256": "489d27e2af26a0fc4eb1b82c02dc8617fccf57268521634e6d85adcde2901367",
+      "actual_decode_duration": 4.008,
+      "last_word_end": 3.183957,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "都灵",
+        "霍达尔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "marrakech_intro",
+      "request_id": "aa71b10ff84a23f6da13fe08add7efdac82e31fe508b78174dae6b3c0670f62e",
+      "text": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "audio_sha256": "3b785d2027af12870e33269e0ecb752751b6b1058b02517789fb338956959b53",
+      "marks_sha256": "aa1d8a91882b53aa195d301051e45184c7f583442e6b6ab699a2e1c67c0a7de2",
+      "actual_decode_duration": 9.984,
+      "last_word_end": 9.139166,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "特伦杰利蒂",
+        "马拉喀什"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "cover",
+      "request_id": "abda36e1d498b2a8a9a2e389b156c722a69332e9280da191244b3d1a3364dbe0",
+      "text": "从大学球场到都灵，霍达尔首进年终。",
+      "audio_sha256": "99129c9b911f84ad37b941c341a86b0fd1b48dfc162107c839c423614357a9a1",
+      "marks_sha256": "d240cf18397dbe097c9d0436610f87236c3cbaa4a3310f061d3b5b23ee72fc1c",
+      "actual_decode_duration": 3.792,
+      "last_word_end": 2.959916,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "都灵",
+        "霍达尔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "race_table",
+      "request_id": "b02da06897f2f4ba8e8e530828f72768e3f80c25eb1fa773418fbb043f7296d0",
+      "text": "截至十一月七日，三千二百三十四分，赛季积分榜第九。辛纳已退赛，霍达尔位列本届总决赛八位正选之中。",
+      "audio_sha256": "b28591b4162552736dacff84df322c5616020aeebc34544ee34714c539f3df4c",
+      "marks_sha256": "e48101538050ed5f2d0ed6e6dbb2e510135877e917eb5b97704090449984c950",
+      "actual_decode_duration": 10.032,
+      "last_word_end": 9.198083,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "辛纳",
+        "霍达尔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "native_outro",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "audio_sha256": "55c3bcce5b8c41534d0dc89bc3d2a50e9a8c4896fbea489b4141db07f1b9b246",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "actual_decode_duration": 4.104,
+      "last_word_end": 3.266499,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "shanghai_intro",
+      "request_id": "bc63c2423148b4bd2f2664196ba39bae61c30ce44a443a56e7ad3cd149d3152d",
+      "text": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "audio_sha256": "6b0ed817d7721c5c274b5c0e5280be7111ad1158f702abc1ffb4915f372c18b8",
+      "marks_sha256": "b2d7123ef0bee386b71d6e09982463302967b68424cf81b1f534d1f897b46375",
+      "actual_decode_duration": 8.064,
+      "last_word_end": 7.252333,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "福基纳"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "shanghai_run",
+      "request_id": "edf9f73ef50d3ce64f5234bedb092e6957cf8fa59d330b92735e6dc63e67dd88",
+      "text": "上海，前四场全部逆转过关。半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+      "audio_sha256": "c13a4fe4e9d9e7957ab3d07e25e6265a5befac351adc22970861781211ed5fca",
+      "marks_sha256": "a4eba733f02ffcf9f797c80cacca1f53c838079bfbf6b0f2c50a14f6ffa073d7",
+      "actual_decode_duration": 7.944,
+      "last_word_end": 7.099082,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "上海",
+        "梅德韦德夫"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    },
+    {
+      "id": "opening",
+      "request_id": "eea9d8338b369cbb6b8263e07a2408a0b267c86a4971947bd486555566fb8e52",
+      "text": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "audio_sha256": "dcd8363a6cf9a47f7971afecc4e785b0db76e2c9862796ea649526e097d2f633",
+      "marks_sha256": "6775d234ceaab9c164620b1ceb2eeb006fa42d67f5b6117eec8199223e3c2e93",
+      "actual_decode_duration": 7.824,
+      "last_word_end": 6.992958,
+      "all_actual_mark_characters_match_request": true,
+      "names_places_single_token": [
+        "弗吉尼亚",
+        "都灵",
+        "霍达尔"
+      ],
+      "multi_token_name_place_flags": [],
+      "multi_token_rawmark_context": {}
+    }
+  ],
+  "occurrences": [
+    {
+      "output_name": "voice_00.mp3",
+      "request_id": "eea9d8338b369cbb6b8263e07a2408a0b267c86a4971947bd486555566fb8e52"
+    },
+    {
+      "output_name": "voice_01.mp3",
+      "request_id": "28f225ac023811e2d9bd4297c7ed3487346d5e4e225a8a25b3ca47e2d851a78a"
+    },
+    {
+      "output_name": "voice_03.mp3",
+      "request_id": "aa71b10ff84a23f6da13fe08add7efdac82e31fe508b78174dae6b3c0670f62e"
+    },
+    {
+      "output_name": "voice_04.mp3",
+      "request_id": "525d276a61ded96286bcd1a571b3b48a39633ef0534adad340d379f4c6c36498"
+    },
+    {
+      "output_name": "voice_05.mp3",
+      "request_id": "51a706ad98115f293394f0392b8c66789f747ac5989368e9b0e9df2a6be032d7"
+    },
+    {
+      "output_name": "voice_07.mp3",
+      "request_id": "5e253c136912bddf32a9cd29905e8af279102384726ecb7549827a442c8752c8"
+    },
+    {
+      "output_name": "voice_08.mp3",
+      "request_id": "25c76ca6b4d141f4478f7051d26d77170b241f5cf1360d8e5ab65be63474e7af"
+    },
+    {
+      "output_name": "voice_10.mp3",
+      "request_id": "2bf263a4bda11b96ae974a44ce8f7eab3bdbb745dee08920b5e982a1f509e7fb"
+    },
+    {
+      "output_name": "voice_12.mp3",
+      "request_id": "edf9f73ef50d3ce64f5234bedb092e6957cf8fa59d330b92735e6dc63e67dd88"
+    },
+    {
+      "output_name": "voice_13.mp3",
+      "request_id": "bc63c2423148b4bd2f2664196ba39bae61c30ce44a443a56e7ad3cd149d3152d"
+    },
+    {
+      "output_name": "voice_15.mp3",
+      "request_id": "351be80390b0a49c9bf87b55795d7053a92cfa4abc218aa2c3149244225516de"
+    },
+    {
+      "output_name": "voice_16.mp3",
+      "request_id": "61aa9e30d705b0d15c29e4d93f9919e11290f57f53bc72422cc2ab6a2a4e139a"
+    },
+    {
+      "output_name": "voice_17.mp3",
+      "request_id": "b02da06897f2f4ba8e8e530828f72768e3f80c25eb1fa773418fbb043f7296d0"
+    },
+    {
+      "output_name": "voice_18.mp3",
+      "request_id": "a1f378dc260615a08cd1a36528aa08f8ae03c4dc877a1879001063cd2daa7db9"
+    },
+    {
+      "output_name": "voice_outro.mp3",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "output_name": "voice_cover.mp3",
+      "request_id": "abda36e1d498b2a8a9a2e389b156c722a69332e9280da191244b3d1a3364dbe0"
+    }
+  ],
+  "human_listening_claimed": false,
+  "pronunciation_or_naturalness_approval": false,
+  "final_master_or_automatic_five_suite_approval": false,
+  "scope": "Real native bundle validates schema, implementation/codeidentity, completeparametercachekey/requestID, everyMP3/marks SHA, decode-integrity and realduration. Independent frozen14body+cover/nativeoutro text and allwordmarks checked. Multi-token name flags are caption protection risks, not acoustic errors or grounds to resynthesize; nativeASS/pixels must confirm whole names remain intact. Actual finalfive-suite still producerformalGHA. No newTTS/ASR or acousticgain/loudness/wave analysis."
+}
