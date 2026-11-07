@@ -1,256 +1,55 @@
-name: probe-blocked-sources
-
-# 在 Actions 的出口网络上探那些**沙箱够不到**的源（ATP 全站 403、
-# live-tennis.eu 403、赛事图库的 Cloudflare 人机校验）。
-#
-# 什么都不产、什么都不提交，结论**全打在日志里**——包括探不通的那几条。
-# 只在成功时出声的检查，没法证明它真的看过。
+name: eala-source-search
 on:
-  workflow_dispatch:
-    inputs:
-      want:
-        description: "要在正文里找的词，逗号分隔"
-        required: false
-        default: "Coleman Wong,Brooksby"
-      urls:
-        description: "http 模式：自定义目标 URL，逗号分隔（给了就不探默认那五条）。图片会存成 artifact"
-        required: false
-        default: ""
-      grep:
-        description: "http 模式：正则，在原始正文里按顺序打出每一处匹配（多个用 ;; 分隔）"
-        required: false
-        default: ""
-      mode:
-        description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
-        required: false
-        default: "http"
-      url:
-        description: "browser 模式要加载的页面（默认 tnnslive.com 首页）"
-        required: false
-        default: ""
-      fetch:
-        description: "browser 模式：过了挑战之后在页面里 fetch 的接口，逗号分隔"
-        required: false
-        default: ""
-      dump:
-        description: "browser 模式：在 fetch 回来的 JSON 里找含这个词的对象"
-        required: false
-        default: ""
-      print_body:
-        description: "browser 模式：正文含这个串的响应，整份分段打进日志（索引压缩的载荷 --dump 扫不动，而 artifact 在沙箱下不下来）"
-        required: false
-        default: ""
-      link:
-        description: "browser 模式：把页面里含这个串的 href 列出来"
-        required: false
-        default: ""
-      top_keys:
-        description: "browser 模式：先把响应顶层的键和形状打出来，再决定往哪挖"
-        required: false
-        type: boolean
-        default: false
-      html_context:
-        description: "browser 模式：--want 命中的词若出现在页面 HTML 里，把附近的文字打出来"
-        required: false
-        type: boolean
-        default: false
-      audio_url:
-        description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
-        required: false
-        default: ""
-
-# **不写这一块就是继承仓库默认，而默认可能是「读写」。** 2026-08-14 补上。
-# 这一条握着 `YT_COOKIES_TXT`（一份能冒充登录态的 cookie），密钥和可写
-# token 落在同一个 job 里是最不该省的那一处。
-#
-# 而它的 docstring 头一句就写着「**什么都不产、什么都不提交**，结论全打在
-# 日志里」——也就是说这条从设计上就不需要写权限，只是从来没人把它写下来。
-# 探到的图走 `upload-artifact`（runtime token，不吃 `GITHUB_TOKEN` 的权限）。
-# 判据在 `test_每条工作流都要自己写permissions`。
+  workflow_dispatch: {}
 permissions:
   contents: read
-
 jobs:
-  probe:
+  search:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
-        with:
-          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
-          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
-          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
-          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
-          #
-          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
-          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
-          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
-          sparse-checkout: |
-            assets
-            data
-            docs
-            specs
-            src
-            tests
-            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      # 图片这一档要解码才报得出真实尺寸——soft-404 会返回 200 加一张错误页，
-      # 只看状态码分不出来。
-      - name: 装 Pillow（http 模式探图要）
-        if: github.event.inputs.mode != 'browser' && github.event.inputs.audio_url == ''
-        run: pip install -q pillow
-      # browser 模式要浏览器。**装在跑之前**，别等跑到一半才报
-      # ModuleNotFoundError——竖版剪辑那条线同一个毛病犯过三次。
-      - name: 装 Chromium（browser 模式才要）
-        if: github.event.inputs.mode == 'browser'
-        # ⚠️ 这一步 run 里跑 `playwright install --with-deps`，**那个 `--with-deps`
-        # 会跑 apt**。原来它没有步骤级超时——判据看不见，因为 run 里当时不出现
-        # `apt-get` 这个字面量。2026-08-05 补等 dpkg 锁那段之后它才被照出来。
-        # 12 分钟 = 2×240 秒 + 60 秒等锁 + pip 那几行的余量。
-        timeout-minutes: 12
-        run: |
-          pip install -q playwright
-          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
-          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
-          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
-          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
-          #
-          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
-          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
-          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
-          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
-          # ⚠️ **第一次超时会毒死第二次，所以重试之前必须等 dpkg 锁松开。**
-          # `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get
-          # 活了下来并攥着 `/var/lib/dpkg/lock-frontend`**。run 31003290962 的
-          # 日志一清二楚：第 1 次 240 秒被杀，15 秒后第 2 次**两秒**就死在
-          # `held by process 4285 (apt-get)`——也就是说「重试」根本没重试成，
-          # 它只是第一次超时的一个必然后果。
-          #
-          # ⚠️ 用 `pgrep -x`（**按可执行名精确匹配**），不是 `pgrep -f`。
-          # CLAUDE.md 里那条「`until ! pgrep -f 'X'` 会匹配到它自己」说的就是
-          # `-f` 扫整条命令行；这个循环跑在 bash 里，名字对不上 apt-get/dpkg，
-          # 不会把自己数进去。也不用 fuser/lsof——runner 上不保证装着。
-          pw_wait_apt() {
-            for _ in $(seq 1 22); do
-              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
-                return 0
-              fi
-              sleep 5
-            done
-            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
-            # ⚠️⚠️ 2026-08-19（run 32211814483，tnns-stats）：等满 110 秒，锁**仍然**
-            # 没松——被 `timeout` 杀掉的那层壳没能把信号传给它派生出来的
-            # apt-get（这正是上面那条注释说的「派生的 apt-get 活了下来」），
-            # 那个孤儿这次不是挂死，是在镜像上慢慢下一个字体包，110 秒不够它
-            # 下完。而这一层已经贴着步骤预算的上限（`test_等dpkg锁的预算够长
-            # 又不许撑爆步骤预算` 钉的 110~120 秒）——**再往上加等待时间不是
-            # 出路**：上一次从 60 秒加到 110 秒就是这么来的，这次撞上同一个
-            # 天花板，说明「多等一会」这条路已经走到头了。
-            #
-            # 我们不需要保住那个孤儿的进度：它已经下进
-            # `/var/cache/apt/archives` 的包，下一次重试照样会复用（ci.yml
-            # 那条注释早说过）。所以**主动结束它，不再指望它自己让开**——
-            # 这比继续加大等待预算快得多，也不会撞步骤超时。
-            sudo pkill -9 apt-get 2>/dev/null || true
-            sudo pkill -9 dpkg 2>/dev/null || true
-            sudo dpkg --configure -a 2>/dev/null || true
-          }
-          pw_retry() {
-            for i in 1 2; do
-              timeout 240 python -m playwright install --with-deps chromium && return 0
-              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
-              # 等锁，别拿 sleep 猜。顺带：被杀掉那次已经把一部分包下进了
-              # /var/cache/apt/archives，所以第 2 次是接着下，不是从头来。
-              pw_wait_apt
-            done
-            echo "::error::装 Chromium 两次都没成功"
-            return 1
-          }
-          pw_retry
-      # audio 模式：YouTube 要 cookie 才下得动（沙箱直接吃 bot 校验），
-      # 所以这一条只能在 runner 上跑。
-      - name: 落 cookies（audio 模式才要）
-        if: github.event.inputs.audio_url != ''
-        id: cookies
+      - name: Install public video metadata client
+        run: pip install -q "yt-dlp[default]"
+      - name: Read latest official WTA uploads and exact match searches
         env:
           YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        shell: python
         run: |
-          # numpy 是算能量包络要的；ffmpeg runner 自带。
-          # 「加能力要同时改三处」——这条线上漏依赖已经是第四次了。
-          # `[default]` 带 yt-dlp-ejs（解 n challenge 的那一环）。这条线正是
-          # 判「是不是被挡了」的，少了它会把「我装少了」误报成「片子被挡」。
-          pip install -q "yt-dlp[default]" numpy imageio-ffmpeg
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
-            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
-            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
-          else
-            echo "::warning::没有 YT_COOKIES_TXT，多半会被 bot 校验挡住"
-          fi
-
-      - name: 验观众声
-        if: github.event.inputs.audio_url != ''
-        run: |
-          A=""
-          [ -n "${{ steps.cookies.outputs.path }}" ] && A="--cookies ${{ steps.cookies.outputs.path }}"
-          python tools/check_crowd_rise.py --url "${{ github.event.inputs.audio_url }}" $A
-
-      - name: 探
-        if: github.event.inputs.audio_url == ''
-        # ⚠️ **不许再用 `${{ inputs.x }}` 拼进 run 脚本正文。** GitHub Actions
-        # 在 bash 解析之前就把表达式换成裸文本——`dump: '"p":['` 这种带引号的
-        # 值，换出来的脚本源码里引号会和模板本身的引号相撞，拼出一段完全不同
-        # 的 shell 语法（这次实测拼出的 `--dump` 实际值是 `p:[`，比对象里
-        # 真正的 `"p":[` 少了一个引号，于是一次探测全空跑）。而它**不报语法
-        # 错误**——`eval` 把错的那串照样跑了出去，日志看着一切正常。
-        # 正解是走 `env:`：变量的值由 GitHub Actions 安全地设进环境，
-        # bash 用 `"$VAR"` 取值时不会重新解释里面的引号，跟 `YT_COOKIES_TXT`
-        # 那条路是同一个道理。
-        env:
-          P_WANT: ${{ github.event.inputs.want }}
-          P_MODE: ${{ github.event.inputs.mode }}
-          P_URL: ${{ github.event.inputs.url }}
-          P_DUMP: ${{ github.event.inputs.dump }}
-          P_PRINT_BODY: ${{ github.event.inputs.print_body }}
-          P_LINK: ${{ github.event.inputs.link }}
-          P_FETCH: ${{ github.event.inputs.fetch }}
-          P_URLS: ${{ github.event.inputs.urls }}
-          P_GREP: ${{ github.event.inputs.grep }}
-          P_TOP_KEYS: ${{ github.event.inputs.top_keys }}
-          P_HTML_CONTEXT: ${{ github.event.inputs.html_context }}
-        run: |
-          WANT_ARGS=()
-          IFS=',' read -ra WORDS <<< "$P_WANT"
-          for w in "${WORDS[@]}"; do [ -n "$w" ] && WANT_ARGS+=(--want "$w"); done
-          if [ "$P_MODE" = "browser" ]; then
-            EXTRA_ARGS=()
-            [ -n "$P_URL" ] && EXTRA_ARGS+=(--url "$P_URL")
-            [ -n "$P_DUMP" ] && EXTRA_ARGS+=(--dump "$P_DUMP")
-            [ -n "$P_PRINT_BODY" ] && EXTRA_ARGS+=(--print-body "$P_PRINT_BODY")
-            [ -n "$P_LINK" ] && EXTRA_ARGS+=(--link "$P_LINK")
-            [ "$P_TOP_KEYS" = "true" ] && EXTRA_ARGS+=(--top-keys)
-            [ "$P_HTML_CONTEXT" = "true" ] && EXTRA_ARGS+=(--html-context)
-            IFS=',' read -ra FS <<< "$P_FETCH"
-            for f in "${FS[@]}"; do [ -n "$f" ] && EXTRA_ARGS+=(--fetch "$f"); done
-            python tools/probe_tnns.py "${WANT_ARGS[@]}" "${EXTRA_ARGS[@]}"
-          else
-            URL_ARGS=()
-            IFS=',' read -ra URLS <<< "$P_URLS"
-            for u in "${URLS[@]}"; do [ -n "$u" ] && URL_ARGS+=(--url "$u"); done
-            GREP_ARGS=()
-            if [ -n "$P_GREP" ]; then
-              while IFS= read -r g; do [ -n "$g" ] && GREP_ARGS+=(--grep "$g"); done < <(printf '%s' "$P_GREP" | sed 's/;;/\n/g')
-            fi
-            python tools/probe_blocked_sources.py --save probe_out "${WANT_ARGS[@]}" "${URL_ARGS[@]}" "${GREP_ARGS[@]}"
-          fi
-      # 取到的图要能拿回来看——**光有日志里的尺寸没法过那四道闸门**，
-      # 精准/在比赛中/冲击力/清晰度全都得打开看。
-      - name: 把取到的图传出来
-        if: always() && github.event.inputs.mode != 'browser' && github.event.inputs.audio_url == ''
-        uses: actions/upload-artifact@v4
+          import os, subprocess, pathlib, json
+          cookie = pathlib.Path(os.environ["RUNNER_TEMP"]) / "eala-search-cookies.txt"
+          args = []
+          if os.environ.get("YT_COOKIES_TXT"):
+              cookie.write_text(os.environ["YT_COOKIES_TXT"])
+              cookie.chmod(0o600)
+              args = ["--cookies", str(cookie)]
+          targets = [
+              "https://www.youtube.com/channel/UCaBIVVpHjq6j3tSyxwTE-8Q/videos",
+              "ytsearch8:Eala Sakkari Hong Kong 2026 highlights",
+              "ytsearch5:Hong Kong 2026 semifinals WTA highlights",
+          ]
+          result = []
+          for target in targets:
+              cmd = ["yt-dlp", *args, "--flat-playlist", "--playlist-end", "25", "--socket-timeout", "20", "--retries", "1", "--dump-json", target]
+              try:
+                  r = subprocess.run(cmd, capture_output=True, text=True, timeout=150)
+                  rows = []
+                  for line in r.stdout.splitlines():
+                      try:
+                          d = json.loads(line)
+                          rows.append({k:d.get(k) for k in ["id","title","url","webpage_url","channel","channel_id","duration","upload_date"]})
+                      except json.JSONDecodeError:
+                          pass
+                  item = {"target":target,"returncode":r.returncode,"videos":rows,"error":r.stderr[-2000:]}
+              except subprocess.TimeoutExpired:
+                  item = {"target":target,"error":"metadata search exceeded 150 seconds"}
+              result.append(item)
+              print(json.dumps(item, ensure_ascii=False), flush=True)
+          pathlib.Path("source-search.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
+          cookie.unlink(missing_ok=True)
+      - uses: actions/upload-artifact@v4
         with:
-          name: probe-images
-          path: probe_out/
-          if-no-files-found: ignore
+          name: eala-official-source-search
+          path: source-search.json
