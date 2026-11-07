@@ -1,0 +1,66 @@
+{
+ "slug": "vibetennis-djokovic-return-2026-en",
+ "_status": "EP10 英文版：3D 用 lang=en 另渲，叠加层 VT_LANG=en；无配音、无 BGM，音效＋环境底。",
+ "_column": "vibetennis 第 10 集：钩子 2011 美网半决赛赛点正手接发得分 → 可 ATP 官方历史接发评分他只排第 7 → 时间：200 km/h 发球到接发人约 0.6–0.7 s，人的简单反应约 0.2 s，职业接发人对手击球时起跳、0.15 s 落地、0.19 s 动拍 → 读懂：抛球、持拍手臂＋球拍、上半身；板球研究的预测性扫视 → 分腿垫步快 12–13%（牵张-缩短循环）→ 硬地滑步：静摩擦到滑动摩擦 → 数据：历史第 7、硬地第 2、现役第 1、2011 年 38.8%、回球最深（约八成过发球线）、对拉奥尼奇 12-0、伊斯内尔 10-2 → 结论：比的不是反应，是更早看懂、及时起跳、回得够深；你心中的接发之王是谁？",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-djokovic-return-2026/cover/make_cover.py",
+  "hook": "No. 7 on the official list.\nWhy the king of the return?",
+  "subject": "德约科维奇",
+  "topic": "德约 · 接发 · 反应 · 预判 · 垫步",
+  "_why": "同中文版，文字英文、品牌 Tennis Jetlag。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "官方榜单只排第 7，凭什么叫他接发之王？",
+  "thesis": "vibetennis 第 10 集：钩子 2011 美网半决赛赛点正手接发得分 → 可 ATP 官方历史接发评分他只排第 7 → 时间：200 km/h 发球到接发人约 0.6–0.7 s，人的简单反应约 0.2 s，职业接发人对手击球时起跳、0.15 s 落地、0.19 s 动拍 → 读懂：抛球、持拍手臂＋球拍、上半身；板球研究的预测性扫视 → 分腿垫步快 12–13%（牵张-缩短循环）→ 硬地滑步：静摩擦到滑动摩擦 → 数据：历史第 7、硬地第 2、现役第 1、2011 年 38.8%、回球最深（约八成过发球线）、对拉奥尼奇 12-0、伊斯内尔 10-2 → 结论：比的不是反应，是更早看懂、及时起跳、回得够深；你心中的接发之王是谁？",
+  "beats": [
+   "钩子：2011 美网半决赛赛点正手接发；官方历史接发榜第 7",
+   "时间：0.6–0.7 s 的来球、0.2 s 的反应、0.19 s 就动拍——只能预判",
+   "读懂：抛球、持拍手臂＋球拍、上半身；视线先到落点（板球研究）",
+   "分腿垫步：快 12–13%，牵张-缩短循环",
+   "硬地滑步：静摩擦→滑动摩擦，回位更快",
+   "数据：历史第 7、硬地第 2、现役第 1；2011 年 38.8%；回球最深；对大炮发球手",
+   "结论：更早看懂、及时起跳、回得够深；你心中的接发之王是谁？"
+  ],
+  "sources": [
+   "ATP 官方 Return Leaders（生涯／硬地／2011）与交手记录；ATP 官网 2026-01-29 文章",
+   "Tennis Abstract 逐场数据重算；Match Charting Project；ESPN 2021-02-10",
+   "Mecheri 等 2019 J Sports Sci；Navia 等 2022 J Sports Sci；Woods 2015；Jain 2015",
+   "Jackson & Mogan 2007；Williams 2002；Mann 2007；Lin 2022；Land & McLeod 2000；Mann 2013",
+   "Uzu 2009；Nieminen 2014；Komi 2000；Ji 2025；Damm 2013",
+   "Cross 阻力模型；Carboch 2014（Kleinöder 2001）；Wikipedia「Djokovic–Federer rivalry」；tennis.com"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-djokovic-return-2026/sources.md"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "visual_standards": "照 docs/vibetennis.md 与 skills/vibetennis-production（2026-11-07 新标准：招牌镜头、强视觉）：全息人体（胶囊骨骼＋菲涅尔边缘光，关节角驱动）演发球与接发、子弹时间赛点接发、时间赛跑时间轴、X 光读发球线索、垫步弹簧腿、滑步摩擦箭头、粒子与全息数据；GLOW 光晕上限，glow_check --pair 15 帧全过；成片 motion_check",
+  "audio": {
+   "music": "none",
+   "_music_why": "所有者 2026-11-02：英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从 Instagram 曲库挂。",
+   "sfx": "sfx.py 合成（111 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上（慢放击球按 0.18／0.22 倍速算出的接触时刻）；声像手动给：分屏两支拍左右分开、其余居中",
+   "loudness": "只有音效；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "King",
+  "_summary_why": "标题 EP10.vibetennis|King（主题最多 4 个字符）",
+  "lead": "Fans call Djokovic the king of the return, yet on the ATP's official all-time Return Rating he is only No. 7. A 200 km/h serve reaches the returner in about 0.6–0.7 s, and a simple human reaction takes about 0.2 s. Elite returners take off as the server strikes, land 0.15 s later and start the racket at 0.19 s: they guess before they see the ball clearly. Djokovic is No. 7 all-time, No. 2 on hard courts, No. 1 among active players, and hits the deepest returns.",
+  "_lead_why": "同中文版"
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-djokovic-return-2026"
+}

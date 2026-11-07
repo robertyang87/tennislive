@@ -1,0 +1,64 @@
+{
+ "slug": "vibetennis-djokovic-return-2026",
+ "_status": "EP10 中文版：所有者 2026-11-07 选题「德约为什么是接发之王」并授权一气呵成；资料包 papers/vibetennis-djokovic-return-2026/sources.md（数据、科学两路调研，主会话抽查原文）；配音 36 句；时间轴 192.7 s；3D 七段（全息人体新做）；渲前静帧自审、glow_check --pair 15 帧全过。",
+ "_column": "vibetennis 第 10 集：钩子 2011 美网半决赛赛点正手接发得分 → 可 ATP 官方历史接发评分他只排第 7 → 时间：200 km/h 发球到接发人约 0.6–0.7 s，人的简单反应约 0.2 s，职业接发人对手击球时起跳、0.15 s 落地、0.19 s 动拍 → 读懂：抛球、持拍手臂＋球拍、上半身；板球研究的预测性扫视 → 分腿垫步快 12–13%（牵张-缩短循环）→ 硬地滑步：静摩擦到滑动摩擦 → 数据：历史第 7、硬地第 2、现役第 1、2011 年 38.8%、回球最深（约八成过发球线）、对拉奥尼奇 12-0、伊斯内尔 10-2 → 结论：比的不是反应，是更早看懂、及时起跳、回得够深；你心中的接发之王是谁？",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-djokovic-return-2026/cover/make_cover.py",
+  "hook": "官方榜单只排第 7，\n凭什么叫他接发之王？",
+  "subject": "德约科维奇",
+  "topic": "德约 · 接发 · 反应 · 预判 · 垫步",
+  "_why": "沿用 B（杂志信息图）：两行问句（「接发之王」金色）＋四格（0.2 s 反应／0.15 s 落地／0.19 s 动拍／八成回深）＋大数字「第 7」（ATP 官方历史接发评分）；底图是钩子段赛点接发的无字帧。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "官方榜单只排第 7，凭什么叫他接发之王？",
+  "thesis": "vibetennis 第 10 集：钩子 2011 美网半决赛赛点正手接发得分 → 可 ATP 官方历史接发评分他只排第 7 → 时间：200 km/h 发球到接发人约 0.6–0.7 s，人的简单反应约 0.2 s，职业接发人对手击球时起跳、0.15 s 落地、0.19 s 动拍 → 读懂：抛球、持拍手臂＋球拍、上半身；板球研究的预测性扫视 → 分腿垫步快 12–13%（牵张-缩短循环）→ 硬地滑步：静摩擦到滑动摩擦 → 数据：历史第 7、硬地第 2、现役第 1、2011 年 38.8%、回球最深（约八成过发球线）、对拉奥尼奇 12-0、伊斯内尔 10-2 → 结论：比的不是反应，是更早看懂、及时起跳、回得够深；你心中的接发之王是谁？",
+  "beats": [
+   "钩子：2011 美网半决赛赛点正手接发；官方历史接发榜第 7",
+   "时间：0.6–0.7 s 的来球、0.2 s 的反应、0.19 s 就动拍——只能预判",
+   "读懂：抛球、持拍手臂＋球拍、上半身；视线先到落点（板球研究）",
+   "分腿垫步：快 12–13%，牵张-缩短循环",
+   "硬地滑步：静摩擦→滑动摩擦，回位更快",
+   "数据：历史第 7、硬地第 2、现役第 1；2011 年 38.8%；回球最深；对大炮发球手",
+   "结论：更早看懂、及时起跳、回得够深；你心中的接发之王是谁？"
+  ],
+  "sources": [
+   "ATP 官方 Return Leaders（生涯／硬地／2011）与交手记录；ATP 官网 2026-01-29 文章",
+   "Tennis Abstract 逐场数据重算；Match Charting Project；ESPN 2021-02-10",
+   "Mecheri 等 2019 J Sports Sci；Navia 等 2022 J Sports Sci；Woods 2015；Jain 2015",
+   "Jackson & Mogan 2007；Williams 2002；Mann 2007；Lin 2022；Land & McLeod 2000；Mann 2013",
+   "Uzu 2009；Nieminen 2014；Komi 2000；Ji 2025；Damm 2013",
+   "Cross 阻力模型；Carboch 2014（Kleinöder 2001）；Wikipedia「Djokovic–Federer rivalry」；tennis.com"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-djokovic-return-2026/sources.md"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored：3D 里的锚定标签（中英两套，scene.js 的 T()）＋叠加层底部一条上下文字幕（overlay.py CAPS，只补画面上没有的出处与背景，不是逐句配音字幕）＋每节底部出处行；同 EP07",
+  "narration": "edge-tts zh-CN-YunjianNeural +18%；36 句，narration.json；会话沙箱合成；英文版不配音。",
+  "visual_standards": "照 docs/vibetennis.md 与 skills/vibetennis-production（2026-11-07 新标准：招牌镜头、强视觉）：全息人体（胶囊骨骼＋菲涅尔边缘光，关节角驱动）演发球与接发、子弹时间赛点接发、时间赛跑时间轴、X 光读发球线索、垫步弹簧腿、滑步摩擦箭头、粒子与全息数据；GLOW 光晕上限，glow_check --pair 15 帧全过；成片 motion_check",
+  "audio": {
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（同 EP04–EP09）；中文版第 8 小节线落在「接发之王」砸下来那一刻；英文版不带 BGM（环境底）",
+   "sfx": "sfx.py 合成，钉在 r3d/timeline.json 的 sec.ev 和 scene.js 动画节点上",
+   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "_music_why": "所有者 2026-11-05 原话：「背景音乐沿用」。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "接发之王",
+  "_summary_why": "标题 EP10.vibetennis|接发之王",
+  "lead": "球迷叫德约「接发之王」，可 ATP 官方历史接发评分他只排第 7。一记两百公里的发球，飞到接发人身前只要六七百毫秒，人的简单反应就要 0.2 秒；而职业接发人在对手击球那一刻起跳、0.15 秒落地、0.19 秒就开始动拍——他们是在看清球之前就猜好了。德约历史第 7，硬地第 2、现役第 1，回球最深。",
+  "_lead_why": "每个数字同 xhs，出处见 sources.md"
+ }
+}

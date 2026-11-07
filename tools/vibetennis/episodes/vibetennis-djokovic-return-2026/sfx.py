@@ -1,4 +1,4 @@
-# vibetennis 球篇（三部曲③）音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
+# vibetennis EP10 德约接发之王音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
 # 每个音效钉在 r3d/timeline.json 的画面事件（sec.ev，plan.py 按配音词边界排）和 scene.js 各镜头的动画节点上——画面动、声音同时到。
 # BGM 同第 4、5 集：robertyang87/vibeknowledge 的 assets/music/we-never-remix-hi-noise-qiucheng.m4a。
 import numpy as np, soundfile as sf, sys, json, math, os
@@ -185,67 +185,59 @@ def rumble(d=3.0):              # 球堆倾泻：一串随机的落球
         k=bounce(rng.uniform(0.8,1.3)); i=int(c*SR); j=min(len(t),i+len(k)); x[i:j]+=k[:j-i,0] if k.ndim==2 else k[:j-i]*rng.uniform(0.05,0.25)
     return x*0.6
 
-# 01 钩子：黑场里球亮起 → 六道规格环逐道套上 → 球拍只有一个尺寸框 → 大问题
-h=SEC['hook']; SP=E('hook','spin',0.3); SC=E('hook','specs',5.9); RK=E('hook','rk',10.5); QQ=E('hook','q',13.9)
-EN(h['t0']+0.1,hum(RK-h['t0'],62),0.6,name='hook-drone'); EN(SP+0.2,sparkle(1.2,40),0.3,name='ball-on')
-for i in range(6): EN(SC+i*0.42+0.1,blip(1100+i*220,0.09,1.2,0.6),0.45,name='spec-%d'%i)
-EN(RK+0.4,panel(),0.35,name='racket-box'); EN(QQ,sub_boom(),0.5,name='question-hit'); EN(QQ+0.1,chime([76,83,88],0.14,0.4),0.45,name='question')
-# 02 演化：五个展台逐个亮起
-for i,k in enumerate(['leather','rubber','cloth','melton','hollow']):
-    t=E('origin',k,0.5+i*4); EN(t,blip(800+i*180,0.12,1.15,0.5),0.45,name='pedestal-%d'%i); EN(t+0.15,ding(880+i*110),0.2)
-EN(E('origin','hollow',17.4)+0.3,hiss(1.4,2000,7000),0.3,name='hollow-gas')
-# 03 构造：压机合拢、受热 → 两半合上同时充气 → 毛毡飞来合拢 → 蒸汽 → 有压／无压 → 毛衣
-PR=E('make','press',0.5); HT=E('make','heat',2.6); JN=E('make','join',6.7); GA=E('make','gas',8.7); FE=E('make','felt',15.5); CR=E('make','cross',17.5); ST=E('make','steam',20.7); PL=E('make','pl',24.9); SWT=E('make','sweater',32.7)
-EN(PR+0.2,riser(1.4),0.3); EN(PR+1.6,slam(),0.55,name='PRESS-close'); EN(HT,hum(3.0,55),0.4,name='heat')
-EN(JN+0.8,slam(),0.45,name='halves-join'); EN(GA-0.2,hiss(2.2,1800,7500),0.55,name='GAS-in'); EN(E('make','pr',10.9),number_pop(),0.35,name='gauge')
-EN(FE,swish(1.4,300,2200),0.45,name='felt-fly'); EN(CR+1.0,click(),0.5,name='felt-lock'); EN(ST,hiss(2.6,900,4500),0.5,name='STEAM')
-EN(PL,panel(),0.35,name='two-sections'); EN(SWT-0.3,chime([72,76,79],0.15,0.35),0.4,name='sweater')
-# 04 颜色：白黑交替 → 1972 电视 → 温网草地落球
-WB=E('color','wb',0.5); TVt=E('color','tv',3.7); YEL=E('color','yel',5.7); WI=E('color','wim',8.9)
-for i in range(3): EN(WB+0.6+i*1.2,click(),0.35,name='bw-%d'%i)
-EN(TVt,glitch(0.4),0.35,name='tv-on'); EN(YEL,ding(1320),0.45,name='YELLOW'); EN(WI+0.4,bounce(1.0),0.5,name='grass-bounce'); EN(WI+1.4,bounce(1.1),0.3)
-# 05 那几毫秒：线床慢放 → 撞墙压扁 → 内壁翻泡 → 气闸流线 → 发球掉速 → 蓬起／磨秃 → 冷 → 高海拔
-STR=E('impact','str',0.5); WA=E('impact','wall',5.3); SQ=E('impact','squash',7.6); BU=E('impact','bub',15.2); AI=E('impact','air',18.5); SE=E('impact','serve',21.7); FL=E('impact','fluff',25.8); BA=E('impact','bald',29.3); CO=E('impact','cold',32.0); AL=E('impact','alt',38.5)
-EN(STR+0.5,riser(0.4),0.3); EN(STR+0.8,pock(0.35),0.9,name='STRINGS-slowmo'); EN(STR+0.8,sub_boom(),0.35)
-EN(SQ-0.6,squish(0.5),0.8,name='SQUASH'); EN(BU,squish(0.7),0.5,name='bubble'); EN(BU+1.1,pock(0.6),0.45,name='bubble-pop')
-EN(AI,hiss(5.5,600,3000),0.25,name='airflow'); EN(SE,swish(1.0,500,3500),0.45,name='serve-drag'); EN(FL,hiss(2.0,400,1800),0.3,name='fluff-drag'); EN(BA,swish(0.8,1500,6000),0.3,name='bald')
-for k,(e_,g) in enumerate([(0.76,0.5),(0.68,0.5)]):
-    t=CO+0.6
-    for n in range(4): t+=math.sqrt(2*3.2/3.43)*(e_**n)*(1 if n==0 else 2); EN(t,bounce(1.0 if k==0 else 0.8),g*(e_**n),pan=-0.4 if k==0 else 0.4,name=f'cold-bounce-{k}-{n}' if n==0 else None)
-EN(AL,blip(1800,0.12,1.4,0.5),0.4,name='altitude')
-# 06 实验室：伦敦 → 落球弹跳 → 只弹回一半多 → 活塞压 → 滚筒九局 → 换球节奏
-LO=E('lab','lon',0.5); DR=E('lab','drop',4.5); HF=E('lab','half',10.3); PS=E('lab','press',12.1); WE=E('lab','wear',17.3); NI=E('lab','nine',21.7); WIM=E('lab','wim',24.6); TW=E('lab','two',32.1)
-EN(LO,panel(),0.35,name='london'); EN(DR+0.3+math.sqrt(2*6.35/3.92),bounce(1.0),0.6,name='DROP-land'); EN(DR+1.0,ding(1175),0.3,name='band')
-EN(HF,sub_boom(),0.35,name='half'); EN(PS+1.0,squish(0.8),0.5,name='piston')
-EN(WE,hum(4.0,80),0.3,name='drum'); impacts(WE,NI-0.3,0.48,0.3,0.25,1.2,name='tumble'); EN(WE+0.4,number_pop(),0.4,name='nine')
-for i in range(25): EN(NI+i*0.06,tick(),0.25)
-for j in range(3): EN(WIM+j*0.9+0.3,ding(1047+j*200),0.35,name=f'ball-change-{j}')
-EN(TW,chime([79,84],0.14,0.35),0.35,name='two-early')
-# 07 调速：大球 → 2001 → 三种球 → 赛跑 → 初速 → 测场地 → 尺子与旋钮
-BG=E('dial','big',0.5); VO=E('dial','vote',5.8); TY=E('dial','types',10.3); T3=E('dial','t3',13.2); RA=E('dial','race',17.9); INIT=E('dial','init',25.7); CT=E('dial','court',29.4); FI=E('dial','fire',32.9); KN=E('dial','knob',35.6)
-EN(BG,boom(2.5),0.35,name='bigger'); EN(VO,slam(),0.45,name='VOTE-2001')
-for i in range(3): EN(TY+i*0.4,blip(1400-i*250,0.12,1.1,0.55),0.45,name=f'type-{i+1}')
-EN(T3+0.1,zap(1200,2400,0.6),0.3,name='six-pct'); EN(RA+0.6,pock(1.0),0.6,name='race-serve'); EN(RA+0.62,pock(0.95),0.5)
-EN(RA+0.6+1.1,bounce(1.0),0.4,pan=-0.3,name='race-a'); EN(RA+0.6+1.1*1.016+0.03,bounce(0.97),0.4,pan=0.3,name='race-b'); EN(RA+0.6+1.1*1.016+0.7,number_pop(),0.4,name='plus10ms')
-EN(INIT,blip(1600,0.1,1.2,0.5),0.4,name='init-speed'); EN(CT,panel(),0.3,name='court-test')
-EN(FI+0.3,zap(2400,900,0.4),0.45,name='FIRE'); EN(FI+0.3+2*0.5*1.0,bounce(1.2),0.5,name='court-hit')
-EN(KN,clink(1800),0.45,name='ruler'); EN(KN+0.6,riser(1.6),0.3,name='knob-turn'); EN(KN+2.2,ding(1320),0.4)
-# 08 争议：引语 → 每周不一样 → 3500 份问卷汇成一颗球 → 2027
-CP=E('now','complain',0.5); Q1=E('now','q1',3.8); Q2=E('now','q2',8.8); WK=E('now','weeks',13.1); AT=E('now','atp',17.0); ON=E('now','one',23.4)
-EN(CP,hum(3.0,58),0.4,name='complain'); EN(Q1,panel(),0.4,name='quote-1'); EN(Q2,panel(),0.4,name='quote-2')
-for i in range(6): EN(WK+i*0.15+0.1,click(),0.35,pan=(i-2.5)*0.15,name=f'week-{i}')
-EN(AT+0.6,rain_hiss(3.8),0.4,name='surveys-converge'); EN(AT+4.4,ding(990),0.4,name='one-ball'); EN(ON,chime([72,79,84],0.15,0.35),0.4,name='2027')
-# 09 未来：球堆倾泻 → 填埋 → 碾碎铺场 → 巢鼠 → 张力 → 两件事
-PI=E('future','pile',0.5); FIL=E('future','fill',3.7); NO=E('future','none',8.5); GR=E('future','grind',13.6); NE=E('future','nest',18.1); SPL=E('future','split',20.6); TWO=E('future','two',26.4)
-EN(PI,rumble(3.0),0.6,name='PILE'); EN(FIL,boom(3.0),0.35,name='landfill'); EN(NO,glitch(0.4),0.3,name='no-recyclable')
-EN(GR+0.4,rain_hiss(3.2),0.45,name='grind'); EN(GR+3.2,slam(),0.3,name='court-layer'); EN(NE+0.3,sparkle(1.4,30),0.3,name='nest')
-EN(SPL,blip(900,0.12,1.1,0.5),0.35,name='fewer'); EN(SPL+0.8,blip(1500,0.12,1.1,0.5),0.35,name='more-often')
-EN(TWO+0.2,chime([76,79],0.14,0.35),0.4,name='same'); EN(TWO+1.3,chime([79,84],0.14,0.35),0.4,name='return')
-# 10 结论：拼图合上 → 球那块亮 → 规则那句 → 问句、新球飞进来
-TR=E('end','tri',0.5); SRr=E('end','sr',3.5); BLL=E('end','ball',7.3); RU=E('end','rule',11.3); QE=E('end','q',17.3)
-for i in range(3): EN(TR+0.4+i*0.35,slam(),0.3,name=f'piece-{i}')
-EN(SRr,ding(880),0.3,name='strings-racket'); EN(BLL,sub_boom(),0.4,name='BALL-lit'); EN(BLL+0.1,chime([72,76,79,84],0.14,0.4),0.45)
-EN(RU,hum(5.0,73),0.35,name='rule'); EN(QE,swish(0.9,600,4000),0.45,name='new-ball'); EN(QE+0.9,bounce(1.0),0.5,name='ball-land'); EN(QE+1.4,bounce(1.1),0.3)
+def whoosh_fast(d=0.35): t=tt(d); return bp(rng.standard_normal(len(t)),1500,8000)*np.sin(np.pi*t/d)**2*0.6
+def tick_seq(t0,n,gap,g=0.35,name=None):
+    for i in range(n): EN(t0+i*gap,tick(),g,name=(name+'-%d'%i) if (name and i==0) else None)
+
+# 01 钩子：赛点（费德勒发球）→ 正手接发直接得分 → 3:5 → 7:5 → 接发之王 → 官方榜单第 7 → 问题
+h=SEC['hook']; SV=E('hook','serve',3.15); RT=E('hook','ret',6.2); RUN=E('hook','run',10.9); CR=E('hook','crown',14.5); BD=E('hook','board',18.1); R7=E('hook','r7',20.6); QQ=E('hook','q',22.5)
+EN(h['t0']+0.1,crowd(SV-h['t0']+0.5),0.35,name='crowd-hush'); EN(SV-0.3,toss(),0.4,name='toss')
+C=SV+0.9; EN(C,pock(1.0),0.8,name='SERVE'); EN(C+0.4,bounce(1.0),0.3); EN(RT-0.6,riser(0.6),0.35)
+EN(RT,pock(0.5),1.0,name='RETURN-slowmo'); EN(RT,sub_boom(),0.5); EN(RT+0.84,bounce(1.0),0.5,name='winner-land'); EN(RT+0.9,applause(3.0),0.45,name='crowd-erupts')
+EN(RUN+0.6,swish(0.9,400,2600),0.4,name='score-flip'); EN(RUN+1.6,slam(),0.45,name='7-5')
+EN(CR,sub_boom(),0.55,name='KING'); EN(CR+0.1,chime([72,79,84,88],0.12,0.45),0.5)
+EN(BD,panel(),0.4,name='leaderboard'); tick_seq(BD+0.3,3,0.25,0.4,'rows'); EN(R7,glitch(0.5),0.45,name='RANK-7'); EN(R7+0.1,number_pop(),0.4)
+EN(QQ,hit(),0.45,name='question')
+# 02 时间：时间轴展开 → 来球（慢放循环）→ 反应条 → 起跳／落地／动拍 → 两个方向 → 猜好了
+TL0=E('race','tl',0.5); FL=E('race','fly',5.4); RE=E('race','react',7.1); JP=E('race','jump',15.8); LD=E('race','land',16.7); RK=E('race','racket',18.2); FK=E('race','fork',26.1); GU=E('race','guess',31.9)
+EN(TL0,zap(600,2400,0.6),0.35,name='timeline'); tick_seq(TL0+0.1,8,0.1,0.3,'ticks')
+r=SEC['race']; t=FL
+while t<r['t1']-0.5: EN(t,pock(0.7),0.35); EN(t+4.0,bounce(0.8),0.2); t+=7.0
+EN(RE,heartbeat(),0.45,name='reaction-0.2s'); EN(JP,click(),0.55,name='take-off'); EN(LD,bounce(1.2),0.45,name='land'); EN(RK,blip(1600,0.1,1.2,0.6),0.5,name='racket-0.19')
+EN(FK,swish(0.6,800,4000),0.4,name='fork'); EN(GU,chime([76,83],0.14,0.4),0.45,name='guess')
+# 03 读：抛球、手臂、上半身三处亮起 → 视线 → 板球的预测性扫视 → 标题
+BO=E('read','body',0.5); TS=E('read','toss',6.5); AR=E('read','arm',7.2); GZ=E('read','gaze',10.3); SCd=E('read','sacc',18.7); TI=E('read','title',22.7)
+EN(BO,hum(5.0,70),0.35,name='xray'); EN(TS,ding(1320),0.45,name='cue-toss'); EN(AR,ding(1047),0.45,name='cue-arm'); EN(GZ,zap(2000,3200,0.5),0.35,name='gaze'); EN(GZ+0.6,ding(880),0.35,name='cue-body')
+t=SCd
+while t<SEC['read']['t1']-0.4: EN(t+0.35*3.2,blip(2400,0.06,1.0,0.5),0.4); EN(t+0.6*3.2,bounce(1.0),0.3); t+=3.2
+EN(TI,swish(0.8,500,3000),0.35,name='title-write')
+# 04 垫步：起跳落地（慢放）→ 两人比快 → 弹簧储能 → 标题
+GOg=E('split','go',0.5); HP=E('split','hop',4.7); RC=E('split','race',7.7); SPr=E('split','spring',15.5); TI2=E('split','title',20.1)
+t=HP
+while t<RC-0.4: EN(t+0.36,click(),0.4); EN(t+0.96,bounce(1.3),0.5); t+=2.4
+t=RC
+while t<SPr-0.4: EN(t+0.36,whoosh_fast(),0.3); EN(t+2.3,ding(1175),0.3); t+=3.0
+t=SPr
+while t<SEC['split']['t1']-0.3: EN(t+0.1,creak(0.8,160),0.35); EN(t+1.0,zap(400,1600,0.3),0.35); t+=2.2
+EN(TI2,sub_boom(),0.4,name='ssc')
+# 05 滑步：滑出去（慢放）→ 静摩擦 → 滑动摩擦 → 两人比回位
+SL=E('slide','slide',2.3); GR=E('slide','grip',7.7); KN=E('slide','kin',11.9); CPs=E('slide','comp',17.1)
+t=SL
+while t<CPs-0.3: EN(t+0.9,scrape(1.4),0.45,name=None); t+=4.0
+EN(GR,clink(1600),0.4,name='static'); EN(KN,swish(1.2,300,1800),0.4,name='kinetic')
+t=CPs
+while t<SEC['slide']['t1']-0.3: EN(t+1.5,scrape(0.8),0.3); t+=3.4
+# 06 数据：榜单 → 四项相加 → 7/2/1 → 38.8% → 落点 → 交手 → 标题
+BD2=E('data','board',0.5); SM=E('data','sum',5.0); AL=E('data','all',9.5); HD=E('data','hard',11.9); AC=E('data','act',13.3); Y1=E('data','y11',17.1); DP=E('data','deep',23.1); HH=E('data','h2h',30.5); LS=E('data','last',36.3)
+EN(BD2,panel(),0.35,name='board'); tick_seq(SM,4,0.25,0.4,'components'); EN(SM+2.0,slam(),0.4,name='sum')
+for i,tt_ in enumerate([AL,HD,AC]): EN(tt_,number_pop(),0.45,name=f'rank-{i}')
+EN(Y1+0.2,riser(1.6),0.35,name='2011'); EN(Y1+1.8,ding(1320),0.4)
+EN(DP+0.3,rain_hiss(2.4),0.35,name='landing-dots'); tick_seq(DP+1.4,7,0.25,0.3,'names')
+EN(HH,slam(),0.45,name='12-0'); EN(HH+0.6,slam(),0.4,name='10-2'); EN(LS,hit(),0.4,name='title')
+# 07 结论：三根柱子 → 问题
+N0=E('end','n0',0.5); P1=E('end','p1',5.0); P2=E('end','p2',5.9); P3=E('end','p3',6.5); QE=E('end','q',9.3)
+EN(N0,hum(4.0,82),0.3); EN(P1,ding(880),0.4,name='read'); EN(P2,ding(1047),0.4,name='split'); EN(P3,ding(1320),0.4,name='deep')
+EN(QE,chime([72,76,79,84],0.15,0.45),0.5,name='question')
 
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
@@ -256,7 +248,7 @@ song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
 # 循环＋卡点（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）：曲子 112.3 BPM，小节 4×0.53194 s，曲内第一个强拍 0.4757 s（librosa 实测）。
 # 小节号 → 段落：0–7 前奏、8–39 主段、40–47 间奏（轻）、48–63 主段、64 起尾段淡出。起点 BGM_OFF 取钩子大问题砸下来那一刻＝第 8 小节线，
 # 之后按「主段 → 间奏 → 主段 → 再从第 8 小节循环」整小节往后拼，不放尾段；拼缝都在小节线上，10 ms 交叉淡化
-BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-QQ   # 钩子大问题砸下来那一刻＝第 8 小节线，主段进来
+BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-CR   # 「接发之王」砸下来那一刻＝第 8 小节线，主段进来
 order=[(BGM_OFF,bar(40)),(bar(40),bar(48)),(bar(48),bar(64))]
 while sum(b1-b0 for b0,b1 in order)<TOTAL+2: order.append((bar(8),bar(40)))
 xf=int(0.01*SR); parts=[]

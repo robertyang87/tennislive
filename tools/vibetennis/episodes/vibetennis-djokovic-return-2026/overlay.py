@@ -1,9 +1,9 @@
-"""vibetennis 器材三部曲 ③ 球：字幕与出处叠加层（VT_LANG=zh|en）。
+"""vibetennis EP10 德约为什么是接发之王：字幕与出处叠加层（VT_LANG=zh|en）。
 
 用法：python3 overlay.py <3D 母带.mp4 或 concat 列表.txt> <输出.mp4> <分段锚点.json ...>；python3 overlay.py still <静帧.jpg ...>
 通用函数（字体、字幕框、品牌标、span）沿用 EP07；文案时间跟着 narration.json 的 at 走（plan.py 排定）。
-3D 场景里已经有标签（规格环、工艺、弹跳带、三种球、换球节奏），这里只补**画面上没有的上下文**，统一放底部。
-每一条都只讲 papers/vibetennis-ball-2026/sources.md 里核过、可上屏的内容；单源数字（32 毫米、阻力系数、19.3%）不上屏。
+3D 场景里已经有标签（榜单、时间轴、线索、垫步、摩擦、数据），这里只补**画面上没有的上下文**，统一放底部。
+每一条都只讲 papers/vibetennis-djokovic-return-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
 """
 import skia, numpy as np, math, json, sys, subprocess, glob, os
 W,H,FPS=1920,1080,30
@@ -192,36 +192,30 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('h1',0,None,tr("规则原文：《2026 网球规则》附录一（球）、附录二（球拍）","Source: ITF Rules of Tennis 2026, Appendix I (ball) and Appendix II (racket)"),BOT),
-('m2',0,None,tr("各家给的数在 0.4 到 1 个大气压之间；所以球装在【加压罐】里，防它慢慢漏气","Figures range from 0.4 to 1 atmosphere — which is why balls come in a 【pressurised can】"),BOT),
-('m5',0,None,tr("无压球的壁约 4 毫米，有压球约 3 毫米（Cross 1999；Goodwill 2002）","Pressureless wall ≈ 4 mm vs ≈ 3 mm pressurised (Cross 1999; Goodwill 2002)"),BOT),
-('r4',0,None,tr("规则只写「约定的奇数局」——7 局、9 局是赛事的选择","The Rules only say “an agreed odd number of games” — 7 and 9 are the event's choice"),BOT),
-('d3',0,None,tr("国际网联 2001 年自己说的是 20 毫秒；这里取同行评审的模拟（Haake 等 2000）","The ITF claimed 20 ms in 2001; this is the peer-reviewed simulation (Haake et al. 2000)"),BOT),
-('d6',0,None,tr("这是本集的归纳：调速不只改球一条路，球拍、场地也各有规则","Our summary: the ball isn't the only lever — rackets and courts have rules too"),BOT),
-('n1',0,None,tr("球员也把伤病怪到球上，但目前【没有数据证明】这层因果","Players also blame the ball for injuries — 【no data yet】 proves that link"),BOT),
-('f0',0,None,tr("美联社 2023 年的估计：每年约 3.3 亿颗","AP's 2023 estimate: about 330 million a year"),BOT),
-('f4',0,None,tr("据报道，2026 年 8 月一站挑战赛试过：第 5 局后首换，之后每 7 局一换","Reportedly, a Challenger in Aug 2026 trialled: first change after 5 games, then every 7"),BOT),
-('e4',0,None,tr("评论区说说：你【多少局】换一次球？","Tell us: 【how many games】 before you open new balls?"),('s',960,965,C,48)),
+('h4',0,None,tr("Return Rating＝一发接发、二发接发、接发局、破发四项百分比相加；ATP 官方榜单，1991 年起，截至 2026 年 11 月","Return Rating = four return percentages added; ATP official board since 1991, as of Nov 2026"),BOT),
+('r0',0,None,tr("按空气阻力模型估算，并与实测（地毯场一发约 0.72 秒）对照","Estimated with an air-drag model, consistent with measurements (~0.72 s on carpet)"),BOT),
+('r2',0,None,tr("法国网协 22 名职业球员实测：起跳 +9 毫秒、落地 +152 毫秒、动拍 +187 毫秒（Mecheri 2019）","22 French federation players: take-off +9 ms, landing +152 ms, racket +187 ms (Mecheri 2019)"),BOT),
+('e1',0,None,tr("空间遮挡实验：遮住抛球，高手就猜不准方向了（Jackson & Mogan 2007）","Spatial occlusion: hide the toss and experts lose the direction (Jackson & Mogan 2007)"),BOT),
+('e3',0,None,tr("这是板球的研究（Land & McLeod 2000）；网球接发还没有同类实测","This is cricket research (Land & McLeod 2000); not yet measured in tennis returns"),BOT),
+('s2',0,None,tr("实验室里对光信号做跨步反应：764 对 868 毫秒（Uzu 2009）；快 13.1%（Nieminen 2014）","Lab step-and-reach to a light: 764 vs 868 ms (Uzu 2009); 13.1% faster (Nieminen 2014)"),BOT),
+('d3',0,None,tr("100 名大学精英球员；这不是对德约本人的测量","100 elite college players; not a measurement of Djokovic himself"),BOT),
+('k4',0,None,tr("Match Charting Project 志愿者逐分统计，德约 670 场；偏重大场次","Match Charting Project volunteer data, 670 Djokovic matches; skewed to big matches"),BOT),
+('n2',0,None,tr("评论区说说：你心中的【接发之王】是谁？","Tell us: who's your 【king of the return】?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
     for s in TL['sections']:
         if s['t0']<=t<s['t1']: return s
     return TL['sections'][-1]
-ITF=tr("国际网联《History of Tennis Balls》2019","ITF, “History of Tennis Balls”, 2019")
-R26=tr("国际网联《2026 网球规则》","ITF Rules of Tennis 2026")
 NOTE={  # 每段底部的出处
- 'hook':R26+tr(" 附录一、附录二 · 画面为示意"," Appendices I & II · illustrative"),
- 'origin':ITF+tr(" · 维基百科「Tennis ball」"," · Wikipedia “Tennis ball”"),
- 'make':tr("国际网联《Ball Manufacture》· Cross 1999 · Goodwill 2002 · 剖面为示意","ITF “Ball Manufacture” · Cross 1999 · Goodwill 2002 · cross-sections illustrative"),
- 'color':ITF+tr(" · 维基百科「Tennis ball」"," · Wikipedia “Tennis ball”"),
- 'impact':tr("Brody、Cross、Lindsey 2002 · Cross 1999 · Goodwill 2002 · Chadwick 2003 · Rose 等 2000 · 剖面与气流为示意","Brody, Cross & Lindsey 2002 · Cross 1999 · Goodwill 2002 · Chadwick 2003 · Rose et al. 2000 · sections and airflow illustrative"),
- 'lab':R26+tr(" 规则 3、附录一 · 国际网联《Ball Approval Tests》· 《洛杉矶时报》2022"," Rule 3, Appendix I · ITF “Ball Approval Tests” · LA Times 2022"),
- 'dial':tr("Haake 等 2000 · Blackwell & Knudson 2002 · ","Haake et al. 2000 · Blackwell & Knudson 2002 · ")+R26+tr(" · 国际网联场地评估 · 路透／法新社 2001"," · ITF court pace assessment · Reuters/AFP 2001"),
- 'now':tr("Sky Sports 2023 · tennis365 2026 · ATP 官网 2025","Sky Sports 2023 · tennis365 2026 · ATP 2025"),
- 'future':tr("美联社 2023 · Laykold 2021 · 英国野生动物信托 · 国际网联","AP 2023 · Laykold 2021 · The Wildlife Trusts · ITF")}
-CHAP={'origin':("01",tr("演化","EVOLUTION")),'make':("02",tr("构造","ANATOMY")),'color':("03",tr("颜色","COLOUR")),'impact':("04",tr("那几毫秒","THE IMPACT")),
- 'lab':("05",tr("实验室","THE LAB")),'dial':("06",tr("调速","THE DIAL")),'now':("07",tr("争议","THE COMPLAINTS")),'future':("08",tr("未来","THE FUTURE")),'end':("09",tr("结论","CONCLUSION"))}
+ 'hook':tr("ATP 官方接发榜单（1991 年起）· Wikipedia · tennis.com · 动作为示意","ATP official return leaderboard (since 1991) · Wikipedia · tennis.com · motion schematic"),
+ 'race':tr("Woods 2015 · Jain 2015 · Mecheri 2019 · Navia 2022 · Cross 阻力模型 · Carboch 2014","Woods 2015 · Jain 2015 · Mecheri 2019 · Navia 2022 · Cross drag model · Carboch 2014"),
+ 'read':tr("Jackson & Mogan 2007 · Williams 2002 · Lin 2022 · Land & McLeod 2000 · Mann 2013","Jackson & Mogan 2007 · Williams 2002 · Lin 2022 · Land & McLeod 2000 · Mann 2013"),
+ 'split':tr("Uzu 2009 · Nieminen 2014 · Komi 2000 · 动作为示意","Uzu 2009 · Nieminen 2014 · Komi 2000 · motion schematic"),
+ 'slide':tr("Ji 2025 · Damm 2013 · 摩擦力为示意","Ji 2025 · Damm 2013 · friction schematic"),
+ 'data':tr("ATP 官方榜单与交手记录 · Tennis Abstract · Match Charting Project · ESPN 2021","ATP leaderboards & head-to-heads · Tennis Abstract · Match Charting Project · ESPN 2021")}
+CHAP={'race':("01",tr("时间","THE CLOCK")),'read':("02",tr("读懂","READING")),'split':("03",tr("垫步","SPLIT STEP")),'slide':("04",tr("滑步","SLIDING")),
+ 'data':("05",tr("数据","THE NUMBERS")),'end':("06",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return
@@ -231,7 +225,7 @@ def draw(c,t,an):
     brand(c); chapter(c,t); s=sec_of(t); u=t-s['t0']; a=min(1,u/0.6,(s['t1']-t)/0.4)
     if s['name'] in NOTE: text(c,NOTE[s['name']],960,1050,18,GRAY,a*0.9,SANSR)
     if s['name']=='end' and u>2:
-        text(c,tr("资料：国际网联 · Brody、Cross、Lindsey · Haake 等 · Goodwill · Chadwick · ATP · 美联社 · 详见文案","Sources: ITF · Brody, Cross & Lindsey · Haake et al. · Goodwill · Chadwick · ATP · AP · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
+        text(c,tr("资料：ATP 官方榜单 · Mecheri 2019 · Navia 2022 · Uzu 2009 · Nieminen 2014 · Jackson & Mogan 2007 · 详见文案","Sources: ATP leaderboards · Mecheri 2019 · Navia 2022 · Uzu 2009 · Nieminen 2014 · Jackson & Mogan 2007 · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
     for s0,d,txt,pl in CAPS:
         if s0<=t<s0+d+0.35: caption(c,t,s0,d,txt,pl,an)
 
