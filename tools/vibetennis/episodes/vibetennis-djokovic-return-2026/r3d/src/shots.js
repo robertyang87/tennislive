@@ -42,7 +42,7 @@ function shotHook(u,D){
     look(lerp(1.2,-0.6,ss(0,CT,u)),lerp(-0.6,0.2,ss(0,CT,u)),lerp(10.5,9.0,ss(0,CT,u)),0,0.6,0);
     const fall=clamp(u/0.55), imp=0.55; const y=lerp(4.2,0.7,fall*fall);   /* 第一帧「7」就在画面上方往下砸 */
     const seven=t3d('bigSeven','7','#ff6a55',3.2); seven.g.position.set(0,y,0); seven.g.rotation.set(0,(1-fall)*0.6+Math.sin(u*0.6)*0.08,0); t3op(seven,1-ss(CRN-0.1,CRN+0.25,u));
-    if(u>imp){ const k=(u-imp)/1.4; shockRing(V(0,-1.0,0),k,RD,9); shockRing(V(0,-1.0,0),(u-imp-0.15)/1.6,GO,13,0.7); if(u<CRN) burst(V(0,-0.6,0),(u-imp)/1.6,0xff8a6a,7,0.9); FX_SHAKE=0.6*Math.exp(-(u-imp)*5)*(u-imp<0.8?1:0); const g=gs(RD,4.5,0.5*Math.exp(-(u-imp)*2.5)); g.position.set(0,-0.6,0.5); }
+    if(u>imp){ const k=(u-imp)/1.4; shockRing(V(0,-1.0,0),k,RD,9); shockRing(V(0,-1.0,0),(u-imp-0.15)/1.6,GO,13,0.7); if(u<CRN) burst(V(0,-0.6,0),(u-imp)/1.6,0xff8a6a,7,0.9); const g=gs(RD,4.5,0.5*Math.exp(-(u-imp)*2.5)); g.position.set(0,-0.6,0.5); }
     const o=ss(imp+0.1,imp+0.8,u)*(1-ss(CRN-0.2,CRN+0.2,u));
     const rows=[[T('1  科里亚','1  Coria'),'171.5',2.0],[T('3  纳达尔','3  Nadal'),'167.8',1.25]];
     rows.forEach(([n,v,yy],i)=>{ const a=tx('hr'+i,n,{color:'#c8d8ea',size:0.4}); a.position.set(-5.0,yy,-1.2); op(a,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); const b=tx('hv'+i,v,{color:'#9fb8d0',size:0.36}); b.position.set(5.0,yy,-1.2); op(b,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); });
@@ -63,7 +63,7 @@ function shotHook(u,D){
     if(u>C&&tb<0.65){ const p=serveAt(tb,A,B,Cp); const b=bl(); showB(b,p,1,BS); const pts=[]; for(let i=0;i<=20;i++) pts.push(serveAt(tb*i/20,A,B,Cp)); trail(pts,GO,4,0.8); }
     if(u>=RT){ const k=clamp((u-RT)*0.9); const E=V(-3.6,0,-L2+3.2); const pos=kk=>V(lerp(Cp.x,E.x,kk),0.9+Math.sin(Math.PI*kk)*1.1,lerp(Cp.z,E.z,kk)); const b=bl(); showB(b,pos(k),1-ss(0.95,1,k),BS*1.3);
       const pts=[]; for(let i=0;i<=30;i++) pts.push(pos(k*i/30)); trail(pts,CY,9,0.95); const pts2=[]; for(let i=0;i<=30;i++) pts2.push(pos(k*i/30).add(V(0,0.05,0))); trail(pts2,WH,3,0.6);
-      shockRing(Cp.clone(),(u-RT)/0.9,CY,3.2,1,true); shockRing(Cp.clone(),(u-RT-0.12)/1.1,WH,4.5,0.6,true); const g=gs(CY,2.2,0.6*Math.exp(-(u-RT)*3)); g.position.copy(Cp); FX_SHAKE=0.35*Math.exp(-(u-RT)*6)*(u-RT<0.6?1:0);
+      shockRing(Cp.clone(),(u-RT)/0.9,CY,3.2,1,true); shockRing(Cp.clone(),(u-RT-0.12)/1.1,WH,4.5,0.6,true); const g=gs(CY,2.2,0.6*Math.exp(-(u-RT)*3)); g.position.copy(Cp);
       if(k>=1){ shockRing(E.clone().setY(0.03),(u-RT-1.11)/1.2,CY,3,0.9); } }
     SLOW=[RT-0.1,RT+0.6];
     const sc=tx('hkSc',T('2011 美网半决赛 · 第五盘 3:5 · 费德勒握两个赛点','2011 US Open SF · fifth set 3-5 · Federer, 2 match points'),{color:'#ffe2a0',size:0.34,glow:GOLD,plate:true}); hud(sc,0,2.55); op(sc,ss(CT,CT+0.6,u)*(1-ss(RUN-0.3,RUN,u)));
