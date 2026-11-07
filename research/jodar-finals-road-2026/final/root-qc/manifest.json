@@ -1,0 +1,846 @@
+{
+  "status": "extracted_only_not_visual_approval",
+  "movie": "/workspace/jodar-finals-production/final/jodar-finals-road-2026.mp4",
+  "movie_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "spec": "/workspace/jodar-finals-production/native/specs/reels/jodar-finals-road-2026.json",
+  "spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+  "render_meta_sha256": "1595f1067dc2bfce8135a90b3095a3ee012af7f0ab4982f2b17fa69565f62aba",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1080,
+        "height": 1440,
+        "coded_width": 1080,
+        "coded_height": 1440,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "3:4",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "25/1",
+        "avg_frame_rate": "25/1",
+        "time_base": "1/90000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 22003200,
+        "duration": "244.480000",
+        "bit_rate": "3622534",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "6112",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc63.26.101 libx264"
+        },
+        "side_data_list": [
+          {
+            "side_data_type": "ICC Profile"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 11736000,
+        "duration": "244.500000",
+        "bit_rate": "178113",
+        "nb_frames": "11459",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/workspace/jodar-finals-production/final/jodar-finals-road-2026.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "244.500000",
+      "size": "116333337",
+      "bit_rate": "3806407",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "timeline_method": "Actual render cover_seconds + committed nominal scene durations; final per-frame rounding can differ slightly.",
+  "timeline": [
+    {
+      "index": 0,
+      "id": "opening",
+      "start": 4.042,
+      "duration": 8.224,
+      "end": 12.266
+    },
+    {
+      "index": 1,
+      "id": "ao_intro",
+      "start": 12.266,
+      "duration": 11.152,
+      "end": 23.418
+    },
+    {
+      "index": 2,
+      "id": "ao_point",
+      "start": 23.418,
+      "duration": 7.08,
+      "end": 30.498
+    },
+    {
+      "index": 3,
+      "id": "marrakech_intro",
+      "start": 30.498,
+      "duration": 10.384,
+      "end": 40.882
+    },
+    {
+      "index": 4,
+      "id": "clay",
+      "start": 40.882,
+      "duration": 8.728,
+      "end": 49.61
+    },
+    {
+      "index": 5,
+      "id": "rg_intro",
+      "start": 49.61,
+      "duration": 10.84,
+      "end": 60.45
+    },
+    {
+      "index": 6,
+      "id": "rg_point",
+      "start": 60.45,
+      "duration": 23.04,
+      "end": 83.49
+    },
+    {
+      "index": 7,
+      "id": "wimbledon_intro",
+      "start": 83.49,
+      "duration": 8.608,
+      "end": 92.098
+    },
+    {
+      "index": 8,
+      "id": "washington_intro",
+      "start": 92.098,
+      "duration": 10.264,
+      "end": 102.362
+    },
+    {
+      "index": 9,
+      "id": "washington_point",
+      "start": 102.362,
+      "duration": 34.7,
+      "end": 137.062
+    },
+    {
+      "index": 10,
+      "id": "montreal",
+      "start": 137.062,
+      "duration": 8.872,
+      "end": 145.934
+    },
+    {
+      "index": 11,
+      "id": "us_open_point",
+      "start": 145.934,
+      "duration": 25.5,
+      "end": 171.434
+    },
+    {
+      "index": 12,
+      "id": "shanghai_run",
+      "start": 171.434,
+      "duration": 8.344,
+      "end": 179.778
+    },
+    {
+      "index": 13,
+      "id": "shanghai_intro",
+      "start": 179.778,
+      "duration": 8.464,
+      "end": 188.242
+    },
+    {
+      "index": 14,
+      "id": "shanghai_point",
+      "start": 188.242,
+      "duration": 17.16,
+      "end": 205.402
+    },
+    {
+      "index": 15,
+      "id": "paris",
+      "start": 205.402,
+      "duration": 9.616,
+      "end": 215.018
+    },
+    {
+      "index": 16,
+      "id": "qualification",
+      "start": 215.018,
+      "duration": 10.024,
+      "end": 225.042
+    },
+    {
+      "index": 17,
+      "id": "race_table",
+      "start": 225.042,
+      "duration": 10.432,
+      "end": 235.474
+    },
+    {
+      "index": 18,
+      "id": "question",
+      "start": 235.474,
+      "duration": 4.408,
+      "end": 239.882
+    }
+  ],
+  "frames": [
+    {
+      "time": 0.8,
+      "tags": [
+        "cover"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-000-0000.800.jpg",
+      "sha256": "ad8553c882ac4b2bc5d40686e8fc8490906aea2a8cd6c6b012438f652546a577"
+    },
+    {
+      "time": 3.862,
+      "tags": [
+        "cover-before-cut"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-001-0003.862.jpg",
+      "sha256": "0c5638b689e08e4b7f923703384e822dbb2990d5c8b5d7aa32aa8f3a0072a07b"
+    },
+    {
+      "time": 8.154,
+      "tags": [
+        "00-opening-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-002-0008.154.jpg",
+      "sha256": "f56db1d810cc693ea8b1021817b390663628a4338b73ea86eb024fe8329f335a"
+    },
+    {
+      "time": 17.842,
+      "tags": [
+        "01-ao_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-003-0017.842.jpg",
+      "sha256": "27a11a4c90c57d4455295e202aac4a5598c88fd2f78c6a56118ef4f0c01351ca"
+    },
+    {
+      "time": 23.668,
+      "tags": [
+        "02-ao_point-plus0.25"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-004-0023.668.jpg",
+      "sha256": "d65644afbd06899aff92df4fa59ca567fe9878526482c841a991b55efea0055b"
+    },
+    {
+      "time": 24.418,
+      "tags": [
+        "02-ao_point-plus1.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-005-0024.418.jpg",
+      "sha256": "4b5ad4b1b00881cf83314ee58083dded0c907beb49b819332a013655735f736f"
+    },
+    {
+      "time": 26.958,
+      "tags": [
+        "02-ao_point-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-006-0026.958.jpg",
+      "sha256": "7f44e9ec183bce5fa8b1b0760967ff4bfd786719ca6e73084e06a46d6d43a243"
+    },
+    {
+      "time": 27.418,
+      "tags": [
+        "02-ao_point-plus4.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-007-0027.418.jpg",
+      "sha256": "5515e66b0d8bcbfd72e724188fd05946bbea55784e22a2a322e35e6619a691d6"
+    },
+    {
+      "time": 30.148,
+      "tags": [
+        "02-ao_point-plus6.73"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-008-0030.148.jpg",
+      "sha256": "34a181a8e80fee9bc9765f467cd275637cbf079c3694f018495e3ce1b605cb91"
+    },
+    {
+      "time": 30.418,
+      "tags": [
+        "02-ao_point-plus7.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-009-0030.418.jpg",
+      "sha256": "bce3fc2a56a7587a33450981469ff4b433d1c0734533eb3542058102fa0336db"
+    },
+    {
+      "time": 35.69,
+      "tags": [
+        "03-marrakech_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-010-0035.690.jpg",
+      "sha256": "811d06a32af211e51007b49e5602fca44de9b8810c43254c4915a610280aabf5"
+    },
+    {
+      "time": 45.246,
+      "tags": [
+        "04-clay-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-011-0045.246.jpg",
+      "sha256": "7d56e16604419de24a40fde12024f62082c2355a8c89aff5aed172e5b1243d58"
+    },
+    {
+      "time": 55.03,
+      "tags": [
+        "05-rg_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-012-0055.030.jpg",
+      "sha256": "b3c0f5239d6ca34141e6bf307f15067628a155bd5bff009a2ee369fedc8553d9"
+    },
+    {
+      "time": 60.7,
+      "tags": [
+        "06-rg_point-plus0.25"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-013-0060.700.jpg",
+      "sha256": "f45fc329b9ca91bbcd48aec5f3008e43fd455eaac2c8ced911768564c967ba60"
+    },
+    {
+      "time": 61.45,
+      "tags": [
+        "06-rg_point-plus1.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-014-0061.450.jpg",
+      "sha256": "2fbdecfb61c80935d9c75ef181062fc4510607809187aed99d675a324253a4da"
+    },
+    {
+      "time": 64.45,
+      "tags": [
+        "06-rg_point-plus4.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-015-0064.450.jpg",
+      "sha256": "bed415410213962a2ccb7c8548d3fdf81585ef45a99fac787c74cc743cf01e5a"
+    },
+    {
+      "time": 67.45,
+      "tags": [
+        "06-rg_point-plus7.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-016-0067.450.jpg",
+      "sha256": "879841400985ece0c1658057a7bc3fe2c2783fc6058dd62f69a0ae606c05280d"
+    },
+    {
+      "time": 68.95,
+      "tags": [
+        "06-rg_point-plus8.50"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-017-0068.950.jpg",
+      "sha256": "79a5d9709e9450f1a33132f2163f91f7f8f69442cebd18bd4d76fcf983be5e13"
+    },
+    {
+      "time": 71.97,
+      "tags": [
+        "06-rg_point-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-018-0071.970.jpg",
+      "sha256": "c87eeae0fbc9ed1e0de0a8723905cd74b9e538f677f801e116c54477ba531001"
+    },
+    {
+      "time": 74.53,
+      "tags": [
+        "06-rg_point-bilingual0"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-019-0074.530.jpg",
+      "sha256": "fa23219f5bf5c5bd252d1dca8b17e9f688f93b2ff260a88938a90d375fe8c929"
+    },
+    {
+      "time": 83.14,
+      "tags": [
+        "06-rg_point-plus22.69"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-020-0083.140.jpg",
+      "sha256": "f4abfd1d37b1ff43666c72723c9d6e8c16d2534ea0e1a7eed6adf041d3a8174e"
+    },
+    {
+      "time": 87.794,
+      "tags": [
+        "07-wimbledon_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-021-0087.794.jpg",
+      "sha256": "11916a8d1f361796c1620ac78cad5a0cfa9de23b5fafd75a995da49c2b88af0b"
+    },
+    {
+      "time": 97.23,
+      "tags": [
+        "08-washington_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-022-0097.230.jpg",
+      "sha256": "dfcf9866ee94533e6a4b46f35865ba74b881f617f42acb37e9411efd5e465fd3"
+    },
+    {
+      "time": 102.612,
+      "tags": [
+        "09-washington_point-plus0.25"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-023-0102.612.jpg",
+      "sha256": "1b39604c19ae79c1fa2d6d5060a091e6c0153f84235115855dd335dbce1de2e1"
+    },
+    {
+      "time": 103.362,
+      "tags": [
+        "09-washington_point-plus1.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-024-0103.362.jpg",
+      "sha256": "6d6317e0c66361699761091473e6d9de31696426157db101c107b5c98fcb70be"
+    },
+    {
+      "time": 106.362,
+      "tags": [
+        "09-washington_point-plus4.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-025-0106.362.jpg",
+      "sha256": "517a67d756a05dc071354a800c35c1978cb42a0fba74a81c6c1aa53143748a4b"
+    },
+    {
+      "time": 109.362,
+      "tags": [
+        "09-washington_point-plus7.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-026-0109.362.jpg",
+      "sha256": "a4e153efb2d4637740207b310efeba7ba144d2cbc0500a58a466e9967eab91ed"
+    },
+    {
+      "time": 110.862,
+      "tags": [
+        "09-washington_point-plus8.50"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-027-0110.862.jpg",
+      "sha256": "5c0dbc47f567a3da4f89a9d83391f8fad933f185f0f81a54e8a2bccdd8cb31ce"
+    },
+    {
+      "time": 118.992,
+      "tags": [
+        "09-washington_point-bilingual0"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-028-0118.992.jpg",
+      "sha256": "d282d1856ee0bb2f5c8536b87a4380d08bdcdf6d625e0a345640dfae097085ca"
+    },
+    {
+      "time": 119.712,
+      "tags": [
+        "09-washington_point-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-029-0119.712.jpg",
+      "sha256": "add78810ae70e98a5dd3a527c8262ad8c1851c794b9ee8a76f188db2c5bfce9a"
+    },
+    {
+      "time": 122.812,
+      "tags": [
+        "09-washington_point-bilingual1"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-030-0122.812.jpg",
+      "sha256": "7855ea959ed8aaa71d061b8f2679e2220eaffe4d8d278660ae957e2171f15d8b"
+    },
+    {
+      "time": 126.222,
+      "tags": [
+        "09-washington_point-bilingual2"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-031-0126.222.jpg",
+      "sha256": "ac59be38331a07be40fb5230be9a9618cfa8fcba478c1a64174b358001b5c3d8"
+    },
+    {
+      "time": 132.582,
+      "tags": [
+        "09-washington_point-bilingual3"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-032-0132.582.jpg",
+      "sha256": "ea6941b18f3c5033f7b47da7593ec07efbdc80968128c60b93eb0fb296fab96c"
+    },
+    {
+      "time": 135.702,
+      "tags": [
+        "09-washington_point-bilingual4"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-033-0135.702.jpg",
+      "sha256": "1cbc0154aa5e529a24ff31e311263d5e0919f570c0e6a8f0922c8ac6020d9b0c"
+    },
+    {
+      "time": 136.712,
+      "tags": [
+        "09-washington_point-plus34.35"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-034-0136.712.jpg",
+      "sha256": "ac9ea0ed882d19fa7355481ceca8073128b63394bc59cf1185de9888fdfd728b"
+    },
+    {
+      "time": 141.498,
+      "tags": [
+        "10-montreal-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-035-0141.498.jpg",
+      "sha256": "42ae73d07f9429242fbd0880f37e9da0d5d594c2af0b4ef6fdf6021798ca05e4"
+    },
+    {
+      "time": 146.184,
+      "tags": [
+        "11-us_open_point-plus0.25"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-036-0146.184.jpg",
+      "sha256": "a6bc31882376d4fb286a0058fdcbec3a431bb023c6187ef84c9ab1db976e6a18"
+    },
+    {
+      "time": 146.934,
+      "tags": [
+        "11-us_open_point-plus1.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-037-0146.934.jpg",
+      "sha256": "3c6fb28f03c1a1d574835d232cd368171212bacbeb21fe2f115daced1e0aed5a"
+    },
+    {
+      "time": 149.934,
+      "tags": [
+        "11-us_open_point-plus4.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-038-0149.934.jpg",
+      "sha256": "d1036de38bbdb0c6161649045e882f6a9bc14a7dccf3a80af20e418647afb161"
+    },
+    {
+      "time": 152.934,
+      "tags": [
+        "11-us_open_point-plus7.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-039-0152.934.jpg",
+      "sha256": "eec891020944ae72d00f4017cf5638ea77a49830cfb420664ec0deec7d5fba16"
+    },
+    {
+      "time": 154.014,
+      "tags": [
+        "11-us_open_point-bilingual0"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-040-0154.014.jpg",
+      "sha256": "218afa88aa7bf00c41db5e36e50730e0912e7f0d450040ea831dcc63cc5efa13"
+    },
+    {
+      "time": 154.434,
+      "tags": [
+        "11-us_open_point-plus8.50"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-041-0154.434.jpg",
+      "sha256": "7bb5aa1c008ad79430b790be81d3cd100065e0db1c45f61e3585f5edc98c14da"
+    },
+    {
+      "time": 156.324,
+      "tags": [
+        "11-us_open_point-bilingual1"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-042-0156.324.jpg",
+      "sha256": "4e9d0008640ff71cf0cacf93a9de7f0d39248951ca01c1414ecf14f4314b4f2a"
+    },
+    {
+      "time": 158.684,
+      "tags": [
+        "11-us_open_point-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-043-0158.684.jpg",
+      "sha256": "46af441bcdabc9c6f47f796dde996bdc108cddedc7c97a84ae5f106e7af3fbb4"
+    },
+    {
+      "time": 161.609,
+      "tags": [
+        "11-us_open_point-bilingual2"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-044-0161.609.jpg",
+      "sha256": "5ebff287605a9699e9e260985f44c0abe934d7a0d51b6ea94246305f6e0d8928"
+    },
+    {
+      "time": 166.594,
+      "tags": [
+        "11-us_open_point-bilingual3"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-045-0166.594.jpg",
+      "sha256": "1ab7d41177e59ee05c37c8794b411dc3d306dbb96e607c2e6bb0f3a4f3e9dc29"
+    },
+    {
+      "time": 169.704,
+      "tags": [
+        "11-us_open_point-bilingual4"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-046-0169.704.jpg",
+      "sha256": "92eaa8435ab4fc859df8eca7976b9a9f836fada55cc015f3272a25b560950687"
+    },
+    {
+      "time": 171.084,
+      "tags": [
+        "11-us_open_point-plus25.15"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-047-0171.084.jpg",
+      "sha256": "5b95cb0bd14efa1d48bdea073e35d68ac72ef37e5279a2bb8d5cb0d94e73bc02"
+    },
+    {
+      "time": 175.606,
+      "tags": [
+        "12-shanghai_run-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-048-0175.606.jpg",
+      "sha256": "e28edb97a9cd04c83fceae3d232204d8bd014bd5e8028db56e835f018694c639"
+    },
+    {
+      "time": 184.01,
+      "tags": [
+        "13-shanghai_intro-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-049-0184.010.jpg",
+      "sha256": "f20abea51aa259b239a2976639021f646a4754f959144254cbfc88a3534c8367"
+    },
+    {
+      "time": 188.492,
+      "tags": [
+        "14-shanghai_point-plus0.25"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-050-0188.492.jpg",
+      "sha256": "9737bbf7e5fef505a377961152318135147c707f9defce089e63afe209cf4c57"
+    },
+    {
+      "time": 189.242,
+      "tags": [
+        "14-shanghai_point-plus1.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-051-0189.242.jpg",
+      "sha256": "0a03c783925d1c43eb2d29f34670e3d15123ea8ba50f56ef9b6e6fb8ea81fcd2"
+    },
+    {
+      "time": 191.382,
+      "tags": [
+        "14-shanghai_point-bilingual0"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-052-0191.382.jpg",
+      "sha256": "0545cff17f9d06442222ca9053600e3ebef3f023d713ebc790c23fd431cf27b0"
+    },
+    {
+      "time": 192.242,
+      "tags": [
+        "14-shanghai_point-plus4.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-053-0192.242.jpg",
+      "sha256": "ad77a32ef27cc47177e0b4f3b83a7115598b9524ad9391f94b38b8c5a9372bba"
+    },
+    {
+      "time": 193.962,
+      "tags": [
+        "14-shanghai_point-bilingual1"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-054-0193.962.jpg",
+      "sha256": "ae4894166f1d211afa40e511f25d0854e9891e55f4f23d11eb70a43cb7c11e48"
+    },
+    {
+      "time": 195.242,
+      "tags": [
+        "14-shanghai_point-plus7.00"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-055-0195.242.jpg",
+      "sha256": "be17894cb981f01c0975bebcebe7346c4784a9bc867d5099725588d155a8ee77"
+    },
+    {
+      "time": 196.742,
+      "tags": [
+        "14-shanghai_point-plus8.50"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-056-0196.742.jpg",
+      "sha256": "31984e8a1d94b67a6cfc321d0223fd918373ed4ed2b2e3a0f4c3f585cd4ec1a3"
+    },
+    {
+      "time": 196.822,
+      "tags": [
+        "14-shanghai_point-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-057-0196.822.jpg",
+      "sha256": "2606bbee68882d46aa5a65a1e5111e6f838c3772904df8b7ae84e19423808b9b"
+    },
+    {
+      "time": 198.882,
+      "tags": [
+        "14-shanghai_point-bilingual2"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-058-0198.882.jpg",
+      "sha256": "0f3183a350ab61ae6d1b17ec40de89a4753b8f03e988c1055541845e5311ce47"
+    },
+    {
+      "time": 205.052,
+      "tags": [
+        "14-shanghai_point-plus16.81"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-059-0205.052.jpg",
+      "sha256": "ab435c6cf11e92f00bb5d1a2ff7d0e03cbdcb5b77bbc513f8c046dcd0d303357"
+    },
+    {
+      "time": 210.21,
+      "tags": [
+        "15-paris-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-060-0210.210.jpg",
+      "sha256": "b880bf20616fd903286ea305d8a94b12f8f61637b1d8e54dd7ac1897c3467c71"
+    },
+    {
+      "time": 220.03,
+      "tags": [
+        "16-qualification-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-061-0220.030.jpg",
+      "sha256": "7136ee932f0afbe4597b5f62648b4aec15b77dd2c3e029c39212c0088dc7fd0b"
+    },
+    {
+      "time": 230.258,
+      "tags": [
+        "17-race_table-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-062-0230.258.jpg",
+      "sha256": "3491ca2f77f446dc5c892b414dabffcf9684f4b4864a736dec5f055433eeacd9"
+    },
+    {
+      "time": 237.678,
+      "tags": [
+        "18-question-middle"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-063-0237.678.jpg",
+      "sha256": "b68939a51d89cb975d6f1328ed797a8d592a40c682c2ec473e337f6d4245f4ce"
+    },
+    {
+      "time": 240.682,
+      "tags": [
+        "native-outro-start"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-064-0240.682.jpg",
+      "sha256": "43a6218aa1554376affc193a76e0d548485829ec17e92cb4ef55ba37d592b35c"
+    },
+    {
+      "time": 243.5,
+      "tags": [
+        "native-outro-final"
+      ],
+      "file": "/workspace/jodar-finals-production/final/root-qc/frame-065-0243.500.jpg",
+      "sha256": "7aa8eb983e54fa399bfb73209794c2ab4492c6cada59038426445e4f98acf006"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-00.jpg",
+      "sha256": "0e9cf807ed0d79eb611d2d8e1b4428587dd60b2eadbe1c1833eca277463dccb3"
+    },
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-01.jpg",
+      "sha256": "1de705aa9af9ff1d03b4ccfd5e14f504d1aed8dc98de8fa82282e5790228bb61"
+    },
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-02.jpg",
+      "sha256": "b0367c86c58835213988acd8114fb13247121b4fccf50dd097a5b1ddc261d8b4"
+    },
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-03.jpg",
+      "sha256": "285012f5b6724d02083cc0fc6edb61f1cc81289ed380255e70fd2be2979a213a"
+    },
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-04.jpg",
+      "sha256": "5e2dbc49685f545542133eb8d6232adb0e5951064a3fcd9b4ab0378b1f1fce82"
+    },
+    {
+      "file": "/workspace/jodar-finals-production/final/root-qc/contact-05.jpg",
+      "sha256": "af5d279d6d76f7aafa37e7c640904853b6a9f0a5774af728c81e6be505026ece"
+    }
+  ]
+}

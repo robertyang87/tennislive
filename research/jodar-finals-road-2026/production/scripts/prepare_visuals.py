@@ -10,7 +10,7 @@ bindings={r['segment_id']:r for r in json.load(open(BASE/'research/photos/narrat
 z=zipfile.ZipFile('/dev/shm/jodar-production/jodar-tts-bundle.zip');bundle=json.loads(z.read('manifest.json'));entries={r['request']['text']:r for r in bundle['entries']}
 clean=lambda t:re.sub(r'[^\w]','',t)
 assets=ROOT/f'assets/reel/{SLUG}';voices=Path('/dev/shm/jodar-production/frozen-voices');voices.mkdir(exist_ok=True)
-cardtext={'fact-ao':('资格赛突围\n澳网正赛首胜','2026 · 第2轮负门西克'),'fact-wim-r3':('先赢一盘\n负于望月慎太郎','2026 · 温网第3轮'),'fact-us-r1':('美网首轮\n三盘负布云朝克特','2026 赛季'),'fact-paris-r2':('巴黎第2轮\n等待年终资格','2026 · 负于鲁德')}
+cardtext={'fact-ao':('资格赛突围\n澳网正赛首胜','2026 · 第2轮负门西克'),'fact-wim-r3':('先赢1盘\n负于望月慎太郎','2026 · 温网第3轮'),'fact-us-r1':('美网首轮\n3盘负布云朝克特','2026 赛季'),'fact-paris-r2':('巴黎第2轮\n等待年终资格','2026 · 负于鲁德')}
 rows=[];proof=[]
 for index,segment in enumerate(spec['segments']):
     if not segment.get('narration'):continue

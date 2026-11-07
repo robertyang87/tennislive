@@ -1,0 +1,927 @@
+{
+  "schema": "tennislive.final-fact-qc.v1",
+  "at": "2026-11-07T02:54:45.982822+00:00",
+  "status": "PASS_FINAL_FACTS",
+  "film": "/workspace/jodar-finals-production/final/jodar-finals-road-2026.mp4",
+  "film_sha256": "1c4145ff015b2acb3229103f3253d84ff268e8e41992d964f3e814e483978a14",
+  "film_bytes": 116333337,
+  "native_spec_sha256": "c4bbdc9a7c5ce8587361e2da4349de15985a721e270d563ebd8394a471bc9150",
+  "actual_native_artifact_hashes": {
+    "subtitles.ass": "6878a8b7a062e940cd14dc5319fd2404585b138f5d92f996d1d1c92b1d51ccec",
+    "render.json": "1595f1067dc2bfce8135a90b3095a3ee012af7f0ab4982f2b17fa69565f62aba",
+    "render_inputs.json": "8b569f46662a613bce9a63af398cb19c8c6d185d8140f878bd894ba8b51a12fa",
+    "poster.jpg": "ade2604c06879bd2f5bad41f371905fb6bb54a08aa25798f4050402d67f6ab59"
+  },
+  "frozen_editorial_sha256": "27cd42c680314e7efb42b02a9acd7976f564e40850cade69ada6f2c5c844956e",
+  "scope": {
+    "scenes": 19,
+    "narrated_body_segments": 14,
+    "source_video_segments": 5,
+    "source_quote_cues": 14,
+    "actual_ASS_events": 67,
+    "actual_info_cards": 5,
+    "race_rows": 15,
+    "active_qualified_highlight_count": 8
+  },
+  "actual_projection_exactly_matches_latest_frozen_narration": true,
+  "clay_achievement_verb": "Actual ASS has 巴塞罗那打进4强; matches latest audited freeze rather than superseded bare4强 version.",
+  "actual_ASS_per_segment": [
+    {
+      "index": 0,
+      "start": 4.042,
+      "end": 12.266,
+      "kind": "narrated",
+      "narration": "去年十一月，霍达尔还是弗吉尼亚大学的学生球员。今年十一月，他拿到了都灵最后一张门票。",
+      "actual_ASS": [
+        {
+          "start": 4.09,
+          "end": 5.07,
+          "text": "去年11月"
+        },
+        {
+          "start": 5.07,
+          "end": 8.05,
+          "text": "霍达尔还是弗吉尼亚大学的学生球员"
+        },
+        {
+          "start": 8.05,
+          "end": 8.99,
+          "text": "今年11月"
+        },
+        {
+          "start": 8.99,
+          "end": 11.87,
+          "text": "他拿到了都灵最后一张门票"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 1,
+      "start": 12.266,
+      "end": 23.418,
+      "kind": "narrated",
+      "narration": "先从澳网说起。资格赛连过三关，再赢下一场五盘大战，拿到大满贯正赛首胜。第二轮，他三盘输给门西克。",
+      "actual_ASS": [
+        {
+          "start": 12.31,
+          "end": 14.12,
+          "text": "先从澳网说起"
+        },
+        {
+          "start": 14.12,
+          "end": 15.65,
+          "text": "资格赛连过三关"
+        },
+        {
+          "start": 15.65,
+          "end": 17.67,
+          "text": "再赢下一场5盘大战"
+        },
+        {
+          "start": 17.67,
+          "end": 19.92,
+          "text": "拿到大满贯正赛首胜"
+        },
+        {
+          "start": 19.92,
+          "end": 23.02,
+          "text": "第二轮 他3盘输给门西克"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 2,
+      "start": 23.418,
+      "end": 30.498,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 3,
+      "start": 30.498,
+      "end": 40.882,
+      "kind": "narrated",
+      "narration": "四月的马拉喀什，两盘击败特伦杰利蒂，拿下生涯首座巡回赛冠军。这是他第一次参加巡回赛级别的红土赛事。",
+      "actual_ASS": [
+        {
+          "start": 30.55,
+          "end": 32.11,
+          "text": "4月的马拉喀什"
+        },
+        {
+          "start": 32.11,
+          "end": 33.88,
+          "text": "两盘击败特伦杰利蒂"
+        },
+        {
+          "start": 33.88,
+          "end": 36.5,
+          "text": "拿下生涯首座巡回赛冠军"
+        },
+        {
+          "start": 36.5,
+          "end": 38.84,
+          "text": "这是他第一次参加巡回赛级别的"
+        },
+        {
+          "start": 38.84,
+          "end": 40.48,
+          "text": "红土赛事"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 4,
+      "start": 40.882,
+      "end": 49.61,
+      "kind": "narrated",
+      "narration": "随后，巴塞罗那打进4强，马德里和罗马连续打进8强。红土上的突破还没有结束。",
+      "actual_ASS": [
+        {
+          "start": 40.93,
+          "end": 43.35,
+          "text": "随后 巴塞罗那打进4强"
+        },
+        {
+          "start": 43.35,
+          "end": 46.19,
+          "text": "马德里和罗马连续打进8强"
+        },
+        {
+          "start": 46.19,
+          "end": 49.21,
+          "text": "红土上的突破还没有结束"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 5,
+      "start": 49.61,
+      "end": 60.45,
+      "kind": "narrated",
+      "narration": "法网第四轮，先丢两盘，他连扳三盘逆转卡雷尼奥·布斯塔。首次闯进大满贯8强，随后三盘输给兹维列夫。",
+      "actual_ASS": [
+        {
+          "start": 49.66,
+          "end": 52.06,
+          "text": "法网第四轮 先丢两盘"
+        },
+        {
+          "start": 52.06,
+          "end": 55.44,
+          "text": "他连扳3盘逆转卡雷尼奥 布斯塔"
+        },
+        {
+          "start": 55.44,
+          "end": 57.46,
+          "text": "首次闯进大满贯8强"
+        },
+        {
+          "start": 57.46,
+          "end": 60.05,
+          "text": "随后3盘输给兹维列夫"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 6,
+      "start": 60.45,
+      "end": 83.49,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 70.77,
+          "end": 78.28999999999999,
+          "text": "[On-court result announcement]\n【场上宣布比赛结果】"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 7,
+      "start": 83.49,
+      "end": 92.098,
+      "kind": "narrated",
+      "narration": "温网第二轮，再赢一场五盘大战。第三轮对望月慎太郎，先赢一盘，随后连丢三盘。",
+      "actual_ASS": [
+        {
+          "start": 83.53999999999999,
+          "end": 86.82,
+          "text": "温网第二轮 再赢一场5盘大战"
+        },
+        {
+          "start": 86.82,
+          "end": 88.64,
+          "text": "第三轮对望月慎太郎"
+        },
+        {
+          "start": 88.64,
+          "end": 91.7,
+          "text": "先赢一盘 随后连丢3盘"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 8,
+      "start": 92.098,
+      "end": 102.362,
+      "kind": "narrated",
+      "narration": "华盛顿，连续逆转穆塞蒂和塔比洛，闯进生涯首个五百赛决赛。对弗里茨，首盘抢七落败，最终收获亚军。",
+      "actual_ASS": [
+        {
+          "start": 92.15,
+          "end": 95.11,
+          "text": "华盛顿 连续逆转穆塞蒂和塔比洛"
+        },
+        {
+          "start": 95.11,
+          "end": 97.63,
+          "text": "闯进生涯首个500赛决赛"
+        },
+        {
+          "start": 97.63,
+          "end": 99.94,
+          "text": "对弗里茨 首盘抢七落败"
+        },
+        {
+          "start": 99.94,
+          "end": 101.96000000000001,
+          "text": "最终收获亚军"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 9,
+      "start": 102.362,
+      "end": 137.062,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 116.8,
+          "end": 121.18,
+          "text": "A home champion in the capital.\n主场冠军 就在这座首都"
+        },
+        {
+          "start": 121.18,
+          "end": 124.44,
+          "text": "And for the American,\n对这位美国球员来说"
+        },
+        {
+          "start": 124.44,
+          "end": 128.0,
+          "text": "it is his biggest title since 2022.\n这是他自2022年以来最大的一冠"
+        },
+        {
+          "start": 130.54,
+          "end": 134.62,
+          "text": "as he takes down the young Spaniard Rafael Jodar,\n他击败了西班牙小将霍达尔"
+        },
+        {
+          "start": 134.62,
+          "end": 136.78,
+          "text": "who pushed him hard in those two sets.\n两盘都给他制造了不小的麻烦"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 10,
+      "start": 137.062,
+      "end": 145.934,
+      "kind": "narrated",
+      "narration": "接着，在蒙特利尔首次打进大师赛4强。但来到美网，他第一轮就三盘输给布云朝克特。",
+      "actual_ASS": [
+        {
+          "start": 137.11,
+          "end": 137.73,
+          "text": "接着"
+        },
+        {
+          "start": 137.73,
+          "end": 141.07,
+          "text": "在蒙特利尔首次打进大师赛4强"
+        },
+        {
+          "start": 141.07,
+          "end": 142.1,
+          "text": "但来到美网"
+        },
+        {
+          "start": 142.1,
+          "end": 145.53,
+          "text": "他第一轮就3盘输给布云朝克特"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 11,
+      "start": 145.934,
+      "end": 171.434,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 153.32999999999998,
+          "end": 154.69,
+          "text": "That'll do it.\n比赛结束了"
+        },
+        {
+          "start": 154.75,
+          "end": 157.89,
+          "text": "That is the win of his career.\n这是他生涯最重要的一场胜利"
+        },
+        {
+          "start": 158.59,
+          "end": 164.62,
+          "text": "Yunchaokete has knocked out the 12th seed,\n布云朝克特淘汰了12号种子"
+        },
+        {
+          "start": 165.16,
+          "end": 168.02,
+          "text": "and it has been emphatic today.\n而且他今天赢得相当强势"
+        },
+        {
+          "start": 168.56,
+          "end": 170.84,
+          "text": "[Score] 6-2, 6-1, 6-1.\n6比2 6比1 6比1"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 12,
+      "start": 171.434,
+      "end": 179.778,
+      "kind": "narrated",
+      "narration": "上海，前四场全部逆转过关。半决赛两盘击败梅德韦德夫，第一次走进大师赛决赛。",
+      "actual_ASS": [
+        {
+          "start": 171.48,
+          "end": 174.67000000000002,
+          "text": "上海 前4场全部逆转过关"
+        },
+        {
+          "start": 174.67000000000002,
+          "end": 176.89,
+          "text": "半决赛两盘击败梅德韦德夫"
+        },
+        {
+          "start": 176.89,
+          "end": 179.38,
+          "text": "第一次走进大师赛决赛"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 13,
+      "start": 179.778,
+      "end": 188.242,
+      "kind": "narrated",
+      "narration": "对福基纳，他先赢一盘，第二盘又领先一个破发。最终被逆转，距离大师赛首冠还差一步。",
+      "actual_ASS": [
+        {
+          "start": 179.82999999999998,
+          "end": 181.82,
+          "text": "对福基纳 他先赢一盘"
+        },
+        {
+          "start": 181.82,
+          "end": 183.96,
+          "text": "第二盘又领先一个破发"
+        },
+        {
+          "start": 183.96,
+          "end": 185.05,
+          "text": "最终被逆转"
+        },
+        {
+          "start": 185.05,
+          "end": 187.84,
+          "text": "距离大师赛首冠还差一步"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 14,
+      "start": 188.242,
+      "end": 205.402,
+      "kind": "source",
+      "narration": "",
+      "actual_ASS": [
+        {
+          "start": 190.74,
+          "end": 192.02,
+          "text": "Game, set, match.\n比赛结束"
+        },
+        {
+          "start": 192.34,
+          "end": 195.58,
+          "text": "Alejandro Davidovich Fokina\n福基纳"
+        },
+        {
+          "start": 195.58,
+          "end": 202.18,
+          "text": "claims a maiden Masters 1000 title in Shanghai.\n在上海夺得生涯首座大师赛冠军！"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 15,
+      "start": 205.402,
+      "end": 215.018,
+      "kind": "narrated",
+      "narration": "巴黎第二轮，两盘输给鲁德。出局时，他的赛季积分来到三千二百三十四分，年终资格还要等待。",
+      "actual_ASS": [
+        {
+          "start": 205.45,
+          "end": 208.29,
+          "text": "巴黎第二轮 两盘输给鲁德"
+        },
+        {
+          "start": 208.29,
+          "end": 212.36,
+          "text": "出局时 他的赛季积分来到3234分"
+        },
+        {
+          "start": 212.36,
+          "end": 214.62,
+          "text": "年终资格还要等待"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 16,
+      "start": 215.018,
+      "end": 225.042,
+      "kind": "narrated",
+      "narration": "十一月六日，阿尔卡拉斯在巴黎击败弗里茨，霍达尔锁定最后一席。一年前还是大学生的他，今年第一次入围年终。",
+      "actual_ASS": [
+        {
+          "start": 215.07,
+          "end": 216.1,
+          "text": "11月6日"
+        },
+        {
+          "start": 216.1,
+          "end": 218.56,
+          "text": "阿尔卡拉斯在巴黎击败弗里茨"
+        },
+        {
+          "start": 218.56,
+          "end": 220.69,
+          "text": "霍达尔锁定最后一席"
+        },
+        {
+          "start": 220.69,
+          "end": 222.46,
+          "text": "一年前还是大学生的他"
+        },
+        {
+          "start": 222.46,
+          "end": 224.64,
+          "text": "今年第一次入围年终"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 17,
+      "start": 225.042,
+      "end": 235.474,
+      "kind": "narrated",
+      "narration": "截至十一月七日，三千二百三十四分，赛季积分榜第九。辛纳已退赛，霍达尔位列本届总决赛八位正选之中。",
+      "actual_ASS": [
+        {
+          "start": 225.09,
+          "end": 228.38,
+          "text": "截至11月7日 3234分"
+        },
+        {
+          "start": 228.38,
+          "end": 230.28,
+          "text": "赛季积分榜第九"
+        },
+        {
+          "start": 230.28,
+          "end": 231.45,
+          "text": "辛纳已退赛"
+        },
+        {
+          "start": 231.45,
+          "end": 235.07,
+          "text": "霍达尔位列本届总决赛8位正选之中"
+        }
+      ],
+      "fact_status": "PASS"
+    },
+    {
+      "index": 18,
+      "start": 235.474,
+      "end": 239.882,
+      "kind": "narrated",
+      "narration": "这一次在都灵，你最想看霍达尔碰上谁？",
+      "actual_ASS": [
+        {
+          "start": 235.52,
+          "end": 236.95,
+          "text": "这一次在都灵"
+        },
+        {
+          "start": 236.95,
+          "end": 239.48,
+          "text": "你最想看霍达尔碰上谁？"
+        }
+      ],
+      "fact_status": "PASS"
+    }
+  ],
+  "source_quote_results": [
+    {
+      "source_key": "roland-garros-qf",
+      "source_relative_at": 10.32,
+      "source_relative_end": 17.84,
+      "text": "[On-court result announcement]\n【场上宣布比赛结果】",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Zverev wins and Jodar is a first-time Grand Slam quarterfinalist. Bracketed result announcement is descriptive, not fabricated verbatim speech."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "washington-final",
+      "source_relative_at": 14.44,
+      "source_relative_end": 18.82,
+      "text": "A home champion in the capital.\n主场冠军，就在这座首都。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Fritz is American and Washington is the home US capital tournament.",
+        "Fritz wins 7-6(2) 6-4. Official report calls this his first title above ATP250 since Tokyo2022; biggest since2022 is accurate.",
+        "Young Spaniard Jodar is 19 at Aug3 event."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "washington-final",
+      "source_relative_at": 18.82,
+      "source_relative_end": 22.08,
+      "text": "And for the American,\n对这位美国球员来说，",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Fritz is American and Washington is the home US capital tournament.",
+        "Fritz wins 7-6(2) 6-4. Official report calls this his first title above ATP250 since Tokyo2022; biggest since2022 is accurate.",
+        "Young Spaniard Jodar is 19 at Aug3 event."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "washington-final",
+      "source_relative_at": 22.08,
+      "source_relative_end": 25.64,
+      "text": "it is his biggest title since 2022.\n这是他自2022年以来最大的一冠。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Fritz is American and Washington is the home US capital tournament.",
+        "Fritz wins 7-6(2) 6-4. Official report calls this his first title above ATP250 since Tokyo2022; biggest since2022 is accurate.",
+        "Young Spaniard Jodar is 19 at Aug3 event."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "washington-final",
+      "source_relative_at": 28.18,
+      "source_relative_end": 32.26,
+      "text": "as he takes down the young Spaniard Rafael Jodar,\n他击败了西班牙小将霍达尔，",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Fritz is American and Washington is the home US capital tournament.",
+        "Fritz wins 7-6(2) 6-4. Official report calls this his first title above ATP250 since Tokyo2022; biggest since2022 is accurate.",
+        "Young Spaniard Jodar is 19 at Aug3 event."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "washington-final",
+      "source_relative_at": 32.26,
+      "source_relative_end": 34.42,
+      "text": "who pushed him hard in those two sets.\n两盘都给他制造了不小的麻烦。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Fritz is American and Washington is the home US capital tournament.",
+        "Fritz wins 7-6(2) 6-4. Official report calls this his first title above ATP250 since Tokyo2022; biggest since2022 is accurate.",
+        "Young Spaniard Jodar is 19 at Aug3 event."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_relative_at": 7.4,
+      "source_relative_end": 8.76,
+      "text": "That'll do it.\n比赛结束了。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Bu winner 6-2 6-1 6-1; Jodar is 12th seed, not13th.",
+        "Official USOpen report confirms first main-draw Grand Slam win for Bu.",
+        "win of his career is the original commentator assessment, not an independently quantified highest-ranked-victory claim; Chinese conveys importance and does not add ranking statistics."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_relative_at": 8.82,
+      "source_relative_end": 11.96,
+      "text": "That is the win of his career.\n这是他生涯最重要的一场胜利。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Bu winner 6-2 6-1 6-1; Jodar is 12th seed, not13th.",
+        "Official USOpen report confirms first main-draw Grand Slam win for Bu.",
+        "win of his career is the original commentator assessment, not an independently quantified highest-ranked-victory claim; Chinese conveys importance and does not add ranking statistics."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_relative_at": 12.66,
+      "source_relative_end": 18.69,
+      "text": "Yunchaokete has knocked out the 12th seed,\n布云朝克特淘汰了12号种子，",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Bu winner 6-2 6-1 6-1; Jodar is 12th seed, not13th.",
+        "Official USOpen report confirms first main-draw Grand Slam win for Bu.",
+        "win of his career is the original commentator assessment, not an independently quantified highest-ranked-victory claim; Chinese conveys importance and does not add ranking statistics."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_relative_at": 19.23,
+      "source_relative_end": 22.089,
+      "text": "and it has been emphatic today.\n而且他今天赢得相当强势。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Bu winner 6-2 6-1 6-1; Jodar is 12th seed, not13th.",
+        "Official USOpen report confirms first main-draw Grand Slam win for Bu.",
+        "win of his career is the original commentator assessment, not an independently quantified highest-ranked-victory claim; Chinese conveys importance and does not add ranking statistics."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "us-open-r1",
+      "source_relative_at": 22.629,
+      "source_relative_end": 24.91,
+      "text": "[Score] 6-2, 6-1, 6-1.\n6比2、6比1、6比1。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Bu winner 6-2 6-1 6-1; Jodar is 12th seed, not13th.",
+        "Official USOpen report confirms first main-draw Grand Slam win for Bu.",
+        "win of his career is the original commentator assessment, not an independently quantified highest-ranked-victory claim; Chinese conveys importance and does not add ranking statistics."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "shanghai-final",
+      "source_relative_at": 2.5,
+      "source_relative_end": 3.78,
+      "text": "Game, set, match.\n比赛结束。",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Alejandro Davidovich Fokina is winner and claims first career ATP Masters1000 title at Shanghai."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "shanghai-final",
+      "source_relative_at": 4.1,
+      "source_relative_end": 7.34,
+      "text": "Alejandro Davidovich Fokina\n福基纳，",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Alejandro Davidovich Fokina is winner and claims first career ATP Masters1000 title at Shanghai."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    },
+    {
+      "source_key": "shanghai-final",
+      "source_relative_at": 7.34,
+      "source_relative_end": 13.94,
+      "text": "claims a maiden Masters 1000 title in Shanghai.\n在上海夺得生涯首座大师赛冠军！",
+      "actual_ASS_found": true,
+      "fact_status": "PASS",
+      "factual_basis": [
+        "Alejandro Davidovich Fokina is winner and claims first career ATP Masters1000 title at Shanghai."
+      ],
+      "scope_note": "Original-speech auditory transcription/alignment reviewed separately; this audit checks the meaning and objective factual references."
+    }
+  ],
+  "info_card_results": [
+    {
+      "source_key": "australian-open-r2",
+      "label": {
+        "topic": "澳网止步第2轮",
+        "date": "2026.01.22",
+        "place": "澳网第2轮",
+        "people": "霍达尔 vs 门西克",
+        "score": "2-6 4-6 4-6",
+        "result": {
+          "winner": "门西克",
+          "score": "6-2 6-4 6-4",
+          "source": "https://ausopen.com/articles/news/same-old-feeling-mensik-musetti-leading-lorenzo"
+        }
+      },
+      "winner_and_result_direction_matches_primary": true,
+      "display_perspective": "Rafael Jodar first player",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-005-0024.418.jpg",
+      "actual_master_frame_sha256": "4b5ad4b1b00881cf83314ee58083dded0c907beb49b819332a013655735f736f",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "roland-garros-qf",
+      "label": {
+        "topic": "首次大满贯8强",
+        "date": "2026.06.02",
+        "place": "法网1/4决赛",
+        "people": "霍达尔 vs 兹维列夫",
+        "score": "6-7(3) 1-6 3-6",
+        "result": {
+          "winner": "兹维列夫",
+          "score": "7-6(3) 6-1 6-3",
+          "source": "https://www.rolandgarros.com/en-us/article/2026-edition-qf-zverev-jodar"
+        }
+      },
+      "winner_and_result_direction_matches_primary": true,
+      "display_perspective": "Rafael Jodar first player",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-014-0061.450.jpg",
+      "actual_master_frame_sha256": "2fbdecfb61c80935d9c75ef181062fc4510607809187aed99d675a324253a4da",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "washington-final",
+      "label": {
+        "topic": "首个500赛决赛",
+        "date": "2026.08.03",
+        "place": "ATP500 华盛顿决赛",
+        "people": "霍达尔 vs 弗里茨",
+        "score": "6-7(2) 4-6",
+        "result": {
+          "winner": "弗里茨",
+          "score": "7-6(2) 6-4",
+          "source": "https://www.nittoatpfinals.com/en/news/fritz-jodar-washington-2026-monday-final"
+        }
+      },
+      "winner_and_result_direction_matches_primary": true,
+      "display_perspective": "Rafael Jodar first player",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-024-0103.362.jpg",
+      "actual_master_frame_sha256": "6d6317e0c66361699761091473e6d9de31696426157db101c107b5c98fcb70be",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "us-open-r1",
+      "label": {
+        "topic": "美网首轮出局",
+        "date": "2026.09.02",
+        "place": "美网第1轮",
+        "people": "霍达尔 vs 布云朝克特",
+        "score": "2-6 1-6 1-6",
+        "result": {
+          "winner": "布云朝克特",
+          "score": "6-2 6-1 6-1",
+          "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-03/who_is_bu_yunchaokete_the_lucky_loser_who_upset_rafael_jodar_at_the_2026_us_open.html"
+        }
+      },
+      "winner_and_result_direction_matches_primary": true,
+      "display_perspective": "Rafael Jodar first player",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-037-0146.934.jpg",
+      "actual_master_frame_sha256": "3c6fb28f03c1a1d574835d232cd368171212bacbeb21fe2f115daced1e0aed5a",
+      "fact_status": "PASS"
+    },
+    {
+      "source_key": "shanghai-final",
+      "label": {
+        "topic": "上海大师赛亚军",
+        "date": "2026.10.18",
+        "place": "ATP1000 上海决赛",
+        "people": "霍达尔 vs 福基纳",
+        "score": "6-1 6-7(5) 4-6",
+        "result": {
+          "winner": "福基纳",
+          "score": "1-6 7-6(5) 6-4",
+          "source": "https://en.rolexshanghaimasters.com/en/media/news/jodar-davidovich-fokina-shanghai-2026-final"
+        }
+      },
+      "winner_and_result_direction_matches_primary": true,
+      "display_perspective": "Rafael Jodar first player",
+      "display_score_matches_primary": true,
+      "local_date_checked": true,
+      "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-051-0189.242.jpg",
+      "actual_master_frame_sha256": "0a03c783925d1c43eb2d29f34670e3d15123ea8ba50f56ef9b6e6fb8ea81fcd2",
+      "fact_status": "PASS"
+    }
+  ],
+  "cover": {
+    "fact_status": "PASS",
+    "actual_context": "Shanghai Oct18 2026 runner-up silverplate portrait; no champion or Nov6 qualification-day claim.",
+    "source_photo_metadata": "/workspace/jodar-finals-production/research/photos/atp-4594534.json",
+    "source_photo_metadata_sha256": "61f5de9034837108764f17cca9ab5a4dfaa4de24b0ea10afcc94505627a3d6b8",
+    "actual_frame": "/workspace/jodar-finals-production/final/root-qc/frame-000-0000.800.jpg",
+    "actual_frame_sha256": "ad8553c882ac4b2bc5d40686e8fc8490906aea2a8cd6c6b012438f652546a577",
+    "hook": "从大学球场到都灵\n霍达尔首进年终"
+  },
+  "race": {
+    "fact_status": "PASS",
+    "data_artifact": "/workspace/jodar-finals-production/production/race-chart/data-canonical.json",
+    "data_sha256": "4b6e469ee0b292525bfc82a50b082d2541b92704de9fede3af4f08d22e6815b9",
+    "freshness_artifact": "/workspace/jodar-finals-production/final/publication/freshness/verification.json",
+    "freshness_sha256": "34410c2d7af23e5a323ee6c82d59928e453d5a2fff3b4a34b5cfb9d40c3f314f",
+    "freshness_checked_at": "2026-11-07T02:43:36.507273+00:00",
+    "focus": "Jodar Race9 /3234 /firstFinals appearance",
+    "qualified_field": "8 active participants, Jodar final eighth berth; Sinner withdrawn remains Race2 and is not highlighted. No alternate-label confusion.",
+    "actual_master_frame": "/workspace/jodar-finals-production/final/root-qc/frame-062-0230.258.jpg",
+    "actual_master_frame_sha256": "3491ca2f77f446dc5c892b414dabffcf9684f4b4864a736dec5f055433eeacd9",
+    "actual_frame_personally_opened": true
+  },
+  "qualification_trigger": {
+    "fact_status": "PASS",
+    "date": "2026-11-06",
+    "event": "Carlos Alcaraz defeats Taylor Fritz in Paris quarterfinal, final active Finals berth clinched by Jodar.",
+    "official_source": "/workspace/jodar-finals-production/research/facts/sources/qualification-field.html",
+    "official_source_sha256": "e23cb4a4b484171ced633e25ec6a2070013181043f36e52b68abc77515fbebc2"
+  },
+  "actual_visual_factual_observations": {
+    "contact_sheets_personally_opened": [
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-00.jpg",
+        "sha256": "0e9cf807ed0d79eb611d2d8e1b4428587dd60b2eadbe1c1833eca277463dccb3"
+      },
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-01.jpg",
+        "sha256": "1de705aa9af9ff1d03b4ccfd5e14f504d1aed8dc98de8fa82282e5790228bb61"
+      },
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-02.jpg",
+        "sha256": "b0367c86c58835213988acd8114fb13247121b4fccf50dd097a5b1ddc261d8b4"
+      },
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-03.jpg",
+        "sha256": "285012f5b6724d02083cc0fc6edb61f1cc81289ed380255e70fd2be2979a213a"
+      },
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-04.jpg",
+        "sha256": "5e2dbc49685f545542133eb8d6232adb0e5951064a3fcd9b4ab0378b1f1fce82"
+      },
+      {
+        "path": "/workspace/jodar-finals-production/final/root-qc/contact-05.jpg",
+        "sha256": "af5d279d6d76f7aafa37e7c640904853b6a9f0a5774af728c81e6be505026ece"
+      }
+    ],
+    "notes": [
+      "Actual cover displays Jodar holding runner-up plate; surrounding wording only first Finals qualification.",
+      "AO/Mensik, RG/Zverev, Washington/Fritz, USOpen/Bu, Shanghai/DavidovichFokina identities and outcomes align the actual visible frames.",
+      "Marrakech championship photo and Wimbledon fallback title card support the narrated season nodes without pretending to be extra actual match point videos.",
+      "First tour title, first GSquarterfinal, first ATP500final, first Masters semifinal/final, Shanghai four comeback wins, Nov6 Finals trigger, and all canonical Chinese names agree with the archived facts."
+    ]
+  },
+  "publication_copy_fact_audit": "/workspace/jodar-finals-production/research/facts/publication-copy-fact-audit.json",
+  "prior_primary_facts": "/workspace/jodar-finals-production/research/facts/editorial-handoff.json",
+  "findings": [],
+  "limits": [
+    "This is final facts QA bound to actual master and ASS, not inherited preview approval.",
+    "Does not certify complete terminal-point start/end, fixed crop, source-audio verbatim hearing or caption time alignment; corresponding separate QC covers these.",
+    "Subjective original commentary, such as Bu win of his career, is not converted into an independently verified ranking-record superlative."
+  ]
+}
