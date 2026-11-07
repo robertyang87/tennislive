@@ -1,13 +1,13 @@
-"""vibetennis 球篇（三部曲③）封面（不进视频）：沿用 EP07/EP08 所有者选定的 B 版式（杂志信息图）——
-粗黑体两行问句（「这么严」金色）＋四格时间轴＋一个关键数字（带出处），主体退到一侧。
-底图是 3D 场景无字模式（r3d/still_cover.js，notext=1）在 9.6 s：钩子段六道规格环套住一颗球——正好是封面那个数字「6 项数字」。
-    tall：W=1440 H=1920 CAM="0.2,0.4,7.4,0,0.7,0"，再 Lanczos 放大到 2160×2880（swiftshader 在 2880 高时球上会出一条横带，2026-11-06 实测）
-    wide：W=1920 H=1080 CAM="-1.0,0.3,6.0,-2.3,0.1,0"
-    vert：W=1080 H=1920 CAM="0.2,0.4,9.4,0,0.95,0"（9:16，短视频平台竖版封面）
+"""vibetennis EP10 德约接发之王封面（不进视频）：沿用 B 版式（杂志信息图）——
+两行问句（「接发之王」金色）＋四格时间轴＋大数字「第 7」（ATP 官方历史接发评分），主体退到一侧。
+底图是 3D 场景无字模式（r3d/still_cover.js，notext=1）在 6.6 s：赛点正手接发出手的那一刻。
+    tall：W=1440 H=1920 CAM="5.5,2.2,17.6,1.5,0.9,8.0"，再 Lanczos 放大到 2160×2880（swiftshader 在 2880 高时会出横带）
+    wide：W=1920 H=1080 CAM="-3.0,2.4,19.5,-0.6,1.0,10.0"（人在画面右边，左边放字）
+    vert：W=1080 H=1920 CAM="5.5,2.2,18.4,1.5,0.9,8.0"
   抽出来的图放 cover/raw/B_<tall|wide|vert>.jpg
     python3 cover/make_cover.py B tall|wide|vert <输出.jpg> [zh|en]
-数字口径：「6 项数字」＝国际网联《2026 网球规则》附录一的重量、直径、弹跳、前向形变、回复形变、耐久；附录二对球拍只限尺寸。
-时间轴：1870 年代橡胶球、1972 规则加黄色、2001 三种球速、2025 ATP 统一挑球——都见 papers/vibetennis-ball-2026/sources.md。
+数字口径见 papers/vibetennis-djokovic-return-2026/sources.md：第 7＝ATP 官方生涯 Return Rating（1991 年起）；
+0.2 s＝简单视觉反应（Woods 2015、Jain 2015）；0.15／0.19 s＝职业接发人落地／动拍（Mecheri 2019、Navia 2022）；八成＝回过发球线（Match Charting Project、ESPN）。
 """
 import json, sys
 from pathlib import Path
@@ -55,18 +55,18 @@ def hgrad(c,H,x0,x1,a0,a1):
 def dot(c,x,y,col,r=7): c.drawCircle(x,y,r*2.4,P(col,0.35,blur=10)); c.drawCircle(x,y,r,P(col,1))
 def leader(c,x0,y0,x1,y1,col,a=0.85): c.drawLine(x0,y0,x1,y1,P(col,a,stroke=2.2))
 
-Q2=lambda: [(T("凭什么管得","so tightly "),WHITE),(T("这么严？","ruled?"),GOLD)]
-TL4=lambda: [(T("1870 年代","1870s"),T("橡胶球","Rubber")),("1972",T("加入黄色","Yellow")),("2001",T("三种球速","3 speeds")),("2025",T("统一挑球","ATP picks"))]
+Q2=lambda: [(T("凭什么叫他","Why the "),WHITE),(T("接发之王？","return king?"),GOLD)]
+TL4=lambda: [("0.2 s",T("人的反应","Reaction")),("0.15 s",T("垫步落地","Split lands")),("0.19 s",T("开始动拍","Racket moves")),(T("约八成","~80%"),T("回过发球线","Deep returns"))]
 def timeline(c,x0,x1,y,size=26):
     n=4; xs=[x0+(x1-x0)*i/(n-1) for i in range(n)]
     c.drawLine(x0,y,x1,y,P(GOLD,0.55,stroke=2.5))
     for x,(yr,lab) in zip(xs,TL4()):
         dot(c,x,y,GOLD,6); text(c,yr,x,y-22,size*0.95,GOLD2,1,MONO,align='c',shadow=0.4)
         text(c,lab,x,y+16+size,size,WHITE,0.95,SANS,align='c')
-BIG=lambda: T("6 项数字","6 numbers")
-CAP=lambda: T("重量、直径、弹跳、两种形变、耐久——球拍只限尺寸","Mass, size, rebound, 2 deformations, durability — racket: size only")
-NOTE=lambda: T("国际网联《2026 网球规则》附录一、附录二","ITF Rules of Tennis 2026, Appendices I & II")
-L1=lambda: T("一颗球，","Why is the ball")
+BIG=lambda: T("第 7","No. 7")
+CAP=lambda: T("ATP 官方历史接发评分（1991 年起）：德约排第 7","ATP all-time Return Rating (since 1991): Djokovic is No. 7")
+NOTE=lambda: T("ATP 官方榜单 · Mecheri 2019 · Navia 2022 · Match Charting Project","ATP leaderboards · Mecheri 2019 · Navia 2022 · Match Charting Project")
+L1=lambda: T("官方榜单只排第 7，","Officially No. 7.")
 def make(opt,kind,out):
     bg=np.array(Image.open(RAW/f'{opt}_{kind}.jpg').convert('RGBA')); H,W=bg.shape[:2]
     surf=skia.Surface(W,H); c=surf.getCanvas(); c.drawImage(skia.Image.fromarray(bg,colorType=skia.kRGBA_8888_ColorType),0,0)
