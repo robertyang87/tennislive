@@ -193,13 +193,13 @@ TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
 ('h0',1.2,None,tr("Return Rating＝一发接发、二发接发、接发局、破发四项百分比相加\nATP 官方榜单，1991 年起，截至 2026 年 11 月","Return Rating = four return percentages added; ATP official board since 1991, as of Nov 2026"),('s',960,1012,C,30)),   # 小字贴底：44 号折三行会被顶到 y≈880，压住 3D 名次「7 德约科维奇 163.5」（2026-11-07 预览抽帧发现）
-('r0',0,None,tr("按空气阻力模型估算，并与实测（地毯场一发约 0.72 秒）对照","Estimated with an air-drag model, consistent with measurements (~0.72 s on carpet)"),BOT),
-('r2',0,None,tr("法国网协 22 名职业球员实测：起跳 +9 毫秒、落地 +152 毫秒、动拍 +187 毫秒（Mecheri 2019）","22 French federation players: take-off +9 ms, landing +152 ms, racket +187 ms (Mecheri 2019)"),BOT),
-('e1',0,None,tr("空间遮挡实验：遮住抛球，高手就猜不准方向了（Jackson & Mogan 2007）","Spatial occlusion: hide the toss and experts lose the direction (Jackson & Mogan 2007)"),BOT),
-('e3',0,None,tr("这是板球的研究（Land & McLeod 2000）；网球接发还没有同类实测","This is cricket research (Land & McLeod 2000); not yet measured in tennis returns"),BOT),
-('s2',0,None,tr("实验室里对光信号做跨步反应：764 对 868 毫秒（Uzu 2009）；快 13.1%（Nieminen 2014）","Lab step-and-reach to a light: 764 vs 868 ms (Uzu 2009); 13.1% faster (Nieminen 2014)"),BOT),
-('d3',0,None,tr("100 名大学精英球员；这不是对德约本人的测量","100 elite college players; not a measurement of Djokovic himself"),BOT),
-('k4',0,None,tr("Match Charting Project 志愿者逐分统计，德约 670 场；偏重大场次","Match Charting Project volunteer data, 670 Djokovic matches; skewed to big matches"),BOT),
+('r0',0,None,tr("按空气阻力模型估算，并与实测（地毯场一发约 0.72 秒）对照","Air-drag model estimate;\nmeasured ~0.72 s on carpet"),BOT),
+('r2',0,None,tr("法国网协 22 名职业球员实测（Mecheri 2019）\n起跳 +9 毫秒、落地 +152 毫秒、动拍 +187 毫秒","22 French federation players: take-off +9 ms, landing +152 ms, racket +187 ms (Mecheri 2019)"),BOT),
+('e1',0,None,tr("空间遮挡实验（Jackson & Mogan 2007）\n遮住抛球，高手就猜不准方向了","Spatial occlusion (Jackson & Mogan 2007):\nhide the toss and experts lose the direction"),BOT),
+('e3',0,None,tr("这是板球的研究（Land & McLeod 2000）\n网球接发还没有同类实测","This is cricket research (Land & McLeod 2000);\nnot yet measured in tennis returns"),BOT),
+('s2',0,None,tr("看到光信号就跨步：764 对 868 毫秒（Uzu 2009）\n快 13.1%（Nieminen 2014）","Lab step-and-reach to a light: 764 vs 868 ms (Uzu 2009); 13.1% faster (Nieminen 2014)"),BOT),
+('d3',0,None,tr("100 名大学精英球员；这不是对德约本人的测量","100 elite college players;\nnot a measurement of Djokovic himself"),BOT),
+('k4',0,None,tr("Match Charting Project 志愿者逐分统计\n德约 670 场；偏重大场次","Match Charting Project volunteer data,\n670 Djokovic matches; skewed to big matches"),BOT),
 ('n2',0,None,tr("评论区说说：你心中的【接发之王】是谁？","Tell us: who's your 【king of the return】?"),('s',960,965,C,48)),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
