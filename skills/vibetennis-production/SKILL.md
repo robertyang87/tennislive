@@ -91,6 +91,7 @@ description: Produce, QC and publish a "vibetennis" episode — 网球时差's 1
      成片跑 `tools/vibetennis/motion_check.py`（相邻帧差 > 12 即超标）。见 docs/vibetennis.md「转场与运镜」
    - 然后 `overlay.py` → `sfx.py`（BGM 要盖满全片）→ `assemble.sh`
 4. `r3d/still_cover.js`（EP05；EP01 叫 `still_hd.js`）渲一张竖版原生帧当封面素材；`tools/vibetennis/cover.py` 出**单独一张** 2160×2880 海报（封面**不进视频**，所有者 2026-10-30）
+   - ⭐ **封面只放标题两行**（所有者 2026-11-08 看 EP11 封面：「封面文案太多了」）：品牌角标 ＋ 一句问题 ＋ 一句答案（关键词高亮），**不加**数字时间轴、大数字、说明句、出处行——那些留给片子和正文。画面靠 3D 主体撑
 5. `finalize.py`（母片原样拷入，不重编码）→ `qc.py`（全绿才有凭证；有旁白的中文版自动过 `voice_check.py`：配音齐、句与句不重叠、多音字换字或在 narration.json 写 `poly_ok` 认领；背景声 3 秒窗不低于 -28 LUFS）→ 看 `qc_contact.jpg`，最好整片看一遍
 6. `upload.py --slug <slug> --date <日期>`（切块代传 Release；改版自动写 replace、英文版自动写 release_tag）→ 等 `vibetennis-upload/<slug>` 分支被删 → `release.py`（video_url ＋ copy.html）→ `push.py --dry-run` 看标题正文 → 提交（不提交 mp4）→ PR
 7. 合并即推（CLAUDE.md「片子做完就合并、就推微信」）。**中英两版的 render.json 分两个 PR 依次合**（一趟只发一条）：第一个 PR 里英文版 render.json／凭证保持 main 那份，中文推完再开英文那个；重推先删各自的 `pushed.json`；推完用 `tools/push_link.py --slug <slug>` 取消息网页链接发给所有者

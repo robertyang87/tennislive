@@ -73,15 +73,13 @@ def make(opt,kind,out):
         hgrad(c,h,0,1250,0.9,0); grad(c,w,0,160,0.5,0)
         brand(c,60,92,34,44)
         text(c,L1(),80,300,T(118,92),WHITE,1,SANS); rich(c,Q2(),80,430,T(118,92),align='l',glow=0)
-        timeline(c,130,1030,580,26)
-        text(c,BIG(),80,820,T(92,92),GOLD,1,SANS,glow=0.25); text(c,CAP(),84,870,28,WHITE,0.95,SANS); text(c,NOTE(),84,912,20,GRAY,0.95,MONO,shadow=0)
+        # 所有者 2026-11-08「封面文案太多了」：只留标题两行，数字行、大数字、说明、出处都不上封面
     else:
         yb=h-210   # 底部数字块：tall h=1440 → 1230，vert h=1920 → 1710
         grad(c,w,0,h*0.5,0.92,0); grad(c,w,h*0.62,h,0,0.92)
         brand(c)
         text(c,L1(),70,300,T(86,60),WHITE,1,SANS); rich(c,Q2(),70,420,T(86,80),align="l",glow=0)
-        timeline(c,130,950,560,28)
-        text(c,BIG(),70,yb,T(104,104),GOLD,1,SANS,glow=0.25); text(c,CAP(),74,yb+60,T(28,25),WHITE,0.95,SANS); text(c,NOTE(),74,yb+106,T(20,19),GRAY,0.95,MONO,shadow=0)
+        # 同上：只留标题两行
     c.restore()
     img=surf.makeImageSnapshot().convert(colorType=skia.kRGBA_8888_ColorType).toarray()[...,:3]
     Image.fromarray(img).save(out,quality=95); print(out)
