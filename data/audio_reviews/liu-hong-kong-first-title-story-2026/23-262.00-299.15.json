@@ -1,0 +1,97 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-6408098837112/6408098837112.mp4",
+  "source_sha256": "b48915c5d941ce53b2e81d1e8431c8abbb29d18e1bf5bff5b399978e5400828a",
+  "method": "asr_cross_checked",
+  "reviewer": "Current assistant: actual faster-whisper multilingual small/medium cross-check; turbo adjudication for final and semifinal; no human-listening claim",
+  "reviewed_at": "2026-11-08T12:48:47+00:00",
+  "reviewed_from": 262.0,
+  "reviewed_to": 299.15,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 267.66,
+      "end": 270.96,
+      "en": "And Claire Liu has done it.",
+      "zh": "刘婧文做到了"
+    },
+    {
+      "start": 273.42,
+      "end": 276.5,
+      "en": "She has her first main tour title.",
+      "zh": "她拿下了巡回赛单打首冠"
+    },
+    {
+      "start": 276.5,
+      "end": 279.38,
+      "en": "Coach is on his feet.",
+      "zh": "教练已经站了起来"
+    },
+    {
+      "start": 281.74,
+      "end": 284.55,
+      "en": "Eala offers her congratulations.",
+      "zh": "伊埃拉向她表示祝贺"
+    },
+    {
+      "start": 284.55,
+      "end": 287.28,
+      "en": "It wasn't to be for her today.",
+      "zh": "今天胜利没有属于伊埃拉"
+    },
+    {
+      "start": 287.9,
+      "end": 289.0,
+      "en": "Ladies and gentlemen,",
+      "zh": "女士们先生们"
+    },
+    {
+      "start": 289.0,
+      "end": 294.62,
+      "en": "the champion of the 2026 Prudential Hong Kong Tennis Open, Claire Liu.",
+      "zh": "2026香港公开赛冠军 刘婧文"
+    },
+    {
+      "start": 295.58,
+      "end": 296.45,
+      "en": "A worthy winner.",
+      "zh": "当之无愧的冠军"
+    },
+    {
+      "start": 296.45,
+      "end": 298.72,
+      "en": "Few can argue with that.",
+      "zh": "这一点没有什么争议"
+    }
+  ],
+  "source_asr_evidence": [
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/final-small.json",
+      "sha256": "5d2aad45a5920a71b5d3ac6f8bc33d68f1c4a20d23534e5c03fdbb8b58353655",
+      "model": "small",
+      "clip": [
+        245,
+        299.584
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/final-medium.json",
+      "sha256": "dc1302b356cab1718423a5e5cfa9e89acb96791cd88e344d5578f515903e7ff3",
+      "model": "medium",
+      "clip": [
+        245,
+        299.584
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/final-turbo.json",
+      "sha256": "d37791c10431db4620063020daf29a4f74bbd3ee3dc3ce5b5ce31cf17943fb7e",
+      "model": "turbo",
+      "clip": [
+        245,
+        299.584
+      ]
+    }
+  ],
+  "evidence": "Actual ffmpeg-decoded original PCM, word timestamps and two multilingual ASR models retained. Reviewed all selected windows, including reactions and speech tails. Corrected names using verified official identities: Claire Liu, Eala, Clemens Wagner, Rabat and Prudential Hong Kong Tennis Open. ASR model identities remain accurate, not relabelled as English-only .en models. Translated retained clauses into concise Chinese without inventing spoken content."
+}

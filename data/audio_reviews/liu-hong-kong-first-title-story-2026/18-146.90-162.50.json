@@ -1,0 +1,47 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-X3fBK3y5TXQ/X3fBK3y5TXQ.mp4",
+  "source_sha256": "e5052395ad180b593ec56d5ce38655069d795301028e267c972d752641798510",
+  "method": "asr_cross_checked",
+  "reviewer": "Current assistant: actual faster-whisper multilingual small/medium cross-check; turbo adjudication for final and semifinal; no human-listening claim",
+  "reviewed_at": "2026-11-08T12:48:47+00:00",
+  "reviewed_from": 146.9,
+  "reviewed_to": 162.5,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 151.42,
+      "end": 156.12,
+      "en": "And Claire Liu, quietly but devastatingly,",
+      "zh": "刘婧文不声不响 却势不可挡"
+    },
+    {
+      "start": 156.12,
+      "end": 161.86,
+      "en": "making her way into a first semifinal on tour in just over 12 months.",
+      "zh": "1年多来首次打进巡回赛4强"
+    }
+  ],
+  "source_asr_evidence": [
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/qfhd-clean-small.json",
+      "sha256": "0a5fcdcf4ecf9776c9b7feb9f3fb089e8446b5e6e9c4cc4e3cc50130b6ae0ea0",
+      "model": "small",
+      "clip": [
+        146.9,
+        162.5
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/qfhd-clean-medium.json",
+      "sha256": "12c10dfd4aa38cf0133127328133122efb9b13c851c20fd53377dec9f9ceede1",
+      "model": "medium",
+      "clip": [
+        146.9,
+        162.5
+      ]
+    }
+  ],
+  "evidence": "Actual ffmpeg-decoded original PCM, word timestamps and two multilingual ASR models retained. Reviewed all selected windows, including reactions and speech tails. Corrected names using verified official identities: Claire Liu, Eala, Clemens Wagner, Rabat and Prudential Hong Kong Tennis Open. ASR model identities remain accurate, not relabelled as English-only .en models. Translated retained clauses into concise Chinese without inventing spoken content.",
+  "adjudication": "Same selected final point and commentary also appear in official single-match video6408005835112. Its two actual ASR results independently agree with the HD-collection commentary; the chosen HD source is separately hashed and transcribed. Previous point commentary ends before146.9; next complete clause Emphatic begins162.88, outside selected window."
+}

@@ -1,0 +1,57 @@
+{
+  "model": "turbo",
+  "model_snapshot": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+  "engine": "faster-whisper",
+  "source_sha256": "6b782486cad0bcc86ce1938fc357a5582a175bb222dfd392348497e0a7d26eb7",
+  "clip": [
+    105,
+    142
+  ],
+  "duration": 37.0,
+  "audio_decode": "ffmpeg 16000Hz mono float32 PCM; avoids local PyAV metadata_errors incompatibility",
+  "pcm_sha256": "581191482a7fd95f40c78daae8e7be6f399561be0296de364a7e22d08faa06f5",
+  "segments": [
+    {
+      "start": 113.28,
+      "end": 114.1,
+      "text": "Thank you.",
+      "avg_logprob": -0.776137113571167,
+      "no_speech_prob": 1.0450614679191617e-10,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 113.28,
+          "e": 113.88,
+          "p": 0.02391846664249897
+        },
+        {
+          "w": " you.",
+          "s": 113.88,
+          "e": 114.1,
+          "p": 0.9890572428703308
+        }
+      ]
+    },
+    {
+      "start": 135.96,
+      "end": 138.76,
+      "text": "Thank you.",
+      "avg_logprob": -0.6597355008125305,
+      "no_speech_prob": 1.4715796636810552e-10,
+      "words": [
+        {
+          "w": " Thank",
+          "s": 135.96,
+          "e": 137.36,
+          "p": 0.30321770906448364
+        },
+        {
+          "w": " you.",
+          "s": 137.36,
+          "e": 138.76,
+          "p": 0.9973860383033752
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-hZ9q489IRbg/hZ9q489IRbg.mp4",
+  "source_sha256": "6b52c64f57e463f82767ecb16035526d020c019b5d8785ace9f6c29ee0b7bc4a",
+  "method": "asr_cross_checked",
+  "reviewer": "Current assistant: actual faster-whisper multilingual small/medium cross-check; turbo adjudication for final and semifinal; no human-listening claim",
+  "reviewed_at": "2026-11-08T12:48:45+00:00",
+  "reviewed_from": 45.8,
+  "reviewed_to": 51.32,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 46.0,
+      "end": 51.3,
+      "en": "Not really, just because I'm playing against a lot older and more experienced players,",
+      "zh": "没压力 对手更年长也更老练"
+    }
+  ],
+  "source_asr_evidence": [
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/tcinterview-small.json",
+      "sha256": "31892d5468d1e54dbd0d36c53679a88885e871e808d4357cfa801f945802df1a",
+      "model": "small",
+      "clip": [
+        0,
+        61.53288
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/tcinterview-medium.json",
+      "sha256": "5b399988da5209d8397acf987a2f77277e652ef7c99ee08847ac42c7b55765de",
+      "model": "medium",
+      "clip": [
+        0,
+        61.53288
+      ]
+    }
+  ],
+  "evidence": "Actual ffmpeg-decoded original PCM, word timestamps and two multilingual ASR models retained. Reviewed all selected windows, including reactions and speech tails. Corrected names using verified official identities: Claire Liu, Eala, Clemens Wagner, Rabat and Prudential Hong Kong Tennis Open. ASR model identities remain accurate, not relabelled as English-only .en models. Translated retained clauses into concise Chinese without inventing spoken content."
+}

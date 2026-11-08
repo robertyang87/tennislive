@@ -1,0 +1,43 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ruNe_9HKsFI/ruNe_9HKsFI.mp4",
+  "source_sha256": "6b782486cad0bcc86ce1938fc357a5582a175bb222dfd392348497e0a7d26eb7",
+  "method": "asr_cross_checked",
+  "reviewer": "Current assistant: actual faster-whisper multilingual small/medium cross-check; turbo adjudication for final and semifinal; no human-listening claim",
+  "reviewed_at": "2026-11-08T12:48:45+00:00",
+  "reviewed_from": 118.3,
+  "reviewed_to": 133.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "source_asr_evidence": [
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/junior-small.json",
+      "sha256": "6bc9f93e64e1575e3a44ce4443414d0c420ed0c482dfbace7c031290ffa78b37",
+      "model": "small",
+      "clip": [
+        105,
+        142
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/junior-medium.json",
+      "sha256": "82f9d3f2995ccf44ccbb2b098a4ae7bca4f4970477ecaf3a78acba19e7078d71",
+      "model": "medium",
+      "clip": [
+        105,
+        142
+      ]
+    },
+    {
+      "path": "data/source_asr/liu-hong-kong-first-title-story-2026/junior-turbo.json",
+      "sha256": "7ca7385d9f0707ac37bc89f94a0aab84ae43538cff4903349cd53ff635ef193d",
+      "model": "turbo",
+      "clip": [
+        105,
+        142
+      ]
+    }
+  ],
+  "evidence": "Actual ffmpeg-decoded original PCM, word timestamps and two multilingual ASR models retained. Reviewed all selected windows, including reactions and speech tails. Corrected names using verified official identities: Claire Liu, Eala, Clemens Wagner, Rabat and Prudential Hong Kong Tennis Open. ASR model identities remain accurate, not relabelled as English-only .en models. Translated retained clauses into concise Chinese without inventing spoken content.",
+  "no_foreground_english_reason": "Both actual ASR models identify no intelligible foreground English during118.3–133.1; their isolated Thank you/numbers detections are after134, excluded. Stadium and tennis audio retained unchanged."
+}
