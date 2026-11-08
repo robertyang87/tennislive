@@ -1,0 +1,14 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+  "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-08T23:53:20+00:00",
+  "reviewed_from": 29.56,
+  "reviewed_to": 61.98,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807，存于 data/source_asr/tennistv-4606354/small.en.json 与 data/source_asr/tennistv-4606354/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文",
+  "no_foreground_english_reason": "所选首盘抢七窗口，两档ASR未交叉确认任何前景英文句：small.en的Thank you平均logprob=-1.312且首词概率0.003；medium.en的孤立I仅0.012词概率。两条互不支持，判为掌声/击球背景引出的低置信识别，不伪造双语台词。保留原声；未声称人工听审。"
+}
