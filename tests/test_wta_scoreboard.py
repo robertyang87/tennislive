@@ -66,6 +66,19 @@ def test_full_games_cell_cannot_replace_unmeasurable_points_boundary():
         w.board_edge(band)
 
 
+def test_hong_kong_advantage_slot_retains_its_measured_outer_edge():
+    root = Path(__file__).parent / "fixtures" / "wta_scoreboard"
+    for name, right in (("hong-kong-liu-274040-advantage.png", 512),
+                        ("hong-kong-liu-274360-advantage.png", 511)):
+        band = np.asarray(Image.open(root / name).convert("RGB"))
+        geometry = w.frame_geometry(band, cap=583)
+        assert geometry is not None
+        assert geometry["body"][2] == right
+        alpha = w.alpha_frame(geometry, (0, 0, band.shape[1], band.shape[0]))
+        assert alpha[120, 480] == 255  # real Ad text is retained
+        assert not alpha[:, right:].any()  # no added background rectangle
+
+
 def test_wuhan_green_background_wipe_has_a_measured_edge():
     path = (Path(__file__).parent / "fixtures" / "wta_scoreboard"
             / "wuhan-sabalenka-li-008960-green-wipe.png")

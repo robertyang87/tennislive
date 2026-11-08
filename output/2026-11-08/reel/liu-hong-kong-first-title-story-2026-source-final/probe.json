@@ -1,0 +1,98 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-6408098837112/6408098837112.mp4",
+  "width": 1280,
+  "height": 720,
+  "duration": 299.541667,
+  "fps": "25/1",
+  "fps_value": 25.0,
+  "source_sha256": "b48915c5d941ce53b2e81d1e8431c8abbb29d18e1bf5bff5b399978e5400828a",
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 262.0,
+    "frames": 186,
+    "source_window": [
+      262.0,
+      299.15
+    ],
+    "scans": [
+      {
+        "box": [
+          87,
+          825,
+          670,
+          993
+        ],
+        "frames": 186,
+        "profiles": {
+          "wta": {
+            "present": 40,
+            "unresolved": 0,
+            "runs": [
+              [
+                10,
+                597,
+                597
+              ],
+              [
+                10,
+                596,
+                596
+              ],
+              [
+                18,
+                597,
+                597
+              ],
+              [
+                1,
+                596,
+                596
+              ],
+              [
+                1,
+                564,
+                564
+              ],
+              [
+                146,
+                null,
+                null
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "coordinate_space": [
+      1920,
+      1080
+    ],
+    "display_transform": "Native conform equivalent: proportional Lanczos scale 1280×720 to1920×1080; QF source is already1920×1080",
+    "input_source_sha256": "b48915c5d941ce53b2e81d1e8431c8abbb29d18e1bf5bff5b399978e5400828a",
+    "measured_derivative_sha256": "0aaf0251b9dc12eed0f5f970929a76351378b1df832905cee3cb172be53b2335",
+    "measured_derivative_command": [
+      "ffmpeg",
+      "-v",
+      "error",
+      "-y",
+      "-threads",
+      "1",
+      "-ss",
+      "262.0",
+      "-i",
+      "/workspace/liu-hong-kong-story/media/6408098837112.mp4",
+      "-t",
+      "37.14999999999998",
+      "-vf",
+      "fps=5,scale=1920:1080:flags=lanczos",
+      "-an",
+      "-c:v",
+      "ffv1",
+      "-threads",
+      "1",
+      "/workspace/liu-hong-kong-story/board-calibration-final.mkv"
+    ],
+    "scope": "Only selected source window, actual frames at5fps; not a full-source scene/point scan"
+  }
+}

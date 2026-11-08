@@ -1,0 +1,34 @@
+{
+  "schema": "tennislive.preproduction-visual-review.v1",
+  "status": "owner_cover_selected_ready_for_rerender",
+  "spec_sha256": "1d57418e615cdd541ecd7578e7ceda53ac8ee0777827eeff2f6d0a5696f2399a",
+  "master_rendered": false,
+  "publication_approved": false,
+  "observations": [
+    {
+      "item": "geometry",
+      "finding": "Actual native PNG previews retain fixed court center for match footage and fill the original1080x950 photo area; no blurred backing."
+    },
+    {
+      "item": "interview",
+      "finding": "Complete2018 answer split at source51.32: fixed measured Liu portrait first, fixed centered original Wimbledon B-roll second;23 bilingual clauses across the film. Original answer remains continuous."
+    },
+    {
+      "item": "scoreboard",
+      "finding": "Complete same-frame boards retained, including cold-open board and semifinalAd. WiderAd edges require measured lettering, fill and boundary; no rectangular fallback."
+    },
+    {
+      "item": "history",
+      "finding": "WTA Wimbledon-feature clay header rejected;2026 Wimbledon uses sourced cards. Rabat portrait lost near server, so its video is excluded and loss is explained with result cards."
+    },
+    {
+      "item": "cover",
+      "finding": "Verified5000x3335 same-final trophy-kiss photograph; owner explicitly selected this natural closed-eye cover on2026-11-08 with「封面可以推送吧」."
+    }
+  ],
+  "limitations": [
+    "Frame and timing previews are not full-film QC or a film-bound voice-quality pass."
+  ],
+  "cover_rule": ".claude/skills/tennis-owner-taste/SKILL.md:465",
+  "voice_revision": "Five complete paragraphs revised after the first film did not pass voice review. Local diagnostics pass; final film-bound suite is still required."
+}

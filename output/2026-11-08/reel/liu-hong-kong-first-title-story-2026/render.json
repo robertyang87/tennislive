@@ -1,0 +1,103 @@
+{
+  "scoreboard_qc_sha256": "f84b23696a09a4a4835096c5adec751f2a1df9d9712ca06025cfdcd874eff69b",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "ab83fd9868f5f4ce2b0de2408f974b13dbd67fa2e3106c2475dcef375434c1cd",
+    "request_count": 20,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-liu-hong-kong-first-title-story-2026-ab83fd9868f5f4ce",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-liu-hong-kong-first-title-story-2026-ab83fd9868f5f4ce/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42487691085"
+  },
+  "cover_seconds": 4.402,
+  "cover_narrated": true,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 453.454,
+  "topbar": null,
+  "film_seconds": 462.44,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 16.752,
+    "2": 13.344,
+    "3": 18.24,
+    "5": 17.352,
+    "8": 17.568,
+    "9": 17.304,
+    "10": 17.088,
+    "11": 17.808,
+    "12": 16.44,
+    "13": 16.536,
+    "14": 16.296,
+    "15": 18.456,
+    "16": 14.592,
+    "17": 17.352,
+    "19": 15.936,
+    "21": 19.08,
+    "22": 14.232,
+    "24": 20.568
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "e1663e26a62946df6a9e3285b31a0cec5dd246d439a60f70b7d0f1c1268d8e1b",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "liu-hong-kong-first-title-story-2026",
+    "received_at": "2026-11-08T14:01:08Z",
+    "artifact_ready_at": "2026-11-08T14:12:04Z",
+    "elapsed_seconds": 656.742,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "2c144394e733847f384f1ca22227f3f8421e75583f2b5192a3f902853332666d",
+    "spec_sha256": "1d57418e615cdd541ecd7578e7ceda53ac8ee0777827eeff2f6d0a5696f2399a",
+    "run_id": "42487691085",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-08T14:05:52Z",
+        "run_id": "42487691085"
+      }
+    ],
+    "render_seconds": 372.742,
+    "pre_render_seconds": 284.0
+  },
+  "film_sha256": "2c144394e733847f384f1ca22227f3f8421e75583f2b5192a3f902853332666d",
+  "film_bytes": 129468453,
+  "qc_attestation_sha256": "ff62e3b88bd1eacfddb402656cd4b4376f1cf2154e09fc129f70d3d88dfcc2bd",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-08T14:05:52Z",
+      "run_id": "42487691085"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-08T14:12:09Z",
+      "run_id": "42487691085"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-liu-hong-kong-first-title-story-2026/liu-hong-kong-first-title-story-2026.mp4",
+  "video_bytes": 129468453
+}

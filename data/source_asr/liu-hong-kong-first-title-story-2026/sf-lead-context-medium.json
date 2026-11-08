@@ -1,0 +1,72 @@
+{
+  "model": "medium",
+  "model_snapshot": "08e178d48790749d25932bbc082711ddcfdfbc4f",
+  "engine": "faster-whisper",
+  "source_sha256": "d85ba500bb3acf384e333baccaa3b9f4669258ec776e2ab90a25cc2eb4ad05e5",
+  "clip": [
+    248.7,
+    265
+  ],
+  "duration": 16.3,
+  "audio_decode": "ffmpeg 16000Hz mono float32 PCM; avoids local PyAV metadata_errors incompatibility",
+  "pcm_sha256": "3b43da42113e7a758323774483315f849cacbb7596d91720877cc223bca472b4",
+  "segments": [
+    {
+      "start": 258.32,
+      "end": 262.48,
+      "text": "Now it's only one point, she's almost there.",
+      "avg_logprob": -0.3760800917943319,
+      "no_speech_prob": 0.2972995638847351,
+      "words": [
+        {
+          "w": " Now",
+          "s": 258.32,
+          "e": 259.08,
+          "p": 0.616969645023346
+        },
+        {
+          "w": " it's",
+          "s": 259.08,
+          "e": 259.38,
+          "p": 0.9468725323677063
+        },
+        {
+          "w": " only",
+          "s": 259.38,
+          "e": 259.52,
+          "p": 0.9673307538032532
+        },
+        {
+          "w": " one",
+          "s": 259.52,
+          "e": 259.88,
+          "p": 0.9333275556564331
+        },
+        {
+          "w": " point,",
+          "s": 259.88,
+          "e": 260.24,
+          "p": 0.9981367588043213
+        },
+        {
+          "w": " she's",
+          "s": 261.32,
+          "e": 261.72,
+          "p": 0.9800003170967102
+        },
+        {
+          "w": " almost",
+          "s": 261.72,
+          "e": 262.06,
+          "p": 0.9989546537399292
+        },
+        {
+          "w": " there.",
+          "s": 262.06,
+          "e": 262.48,
+          "p": 0.9975674152374268
+        }
+      ]
+    }
+  ]
+}
