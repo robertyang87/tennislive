@@ -7412,6 +7412,15 @@ SHI_TAGGER_GUANGZHOU_2026_LOW_RES_SOURCES: dict[str, int] = {
 }
 
 
+# 2026-11-08: owner explicitly answered “允许本期使用官方720p（推荐）”.
+# Only this biography and these four exact official archives qualify. The Hong
+# Kong quarterfinal and 2018 interview remain native 1080p; no global waiver.
+LIU_HONG_KONG_STORY_2026_LOW_RES_SOURCES: dict[str, int] = {
+    f"https://github.com/robertyang87/tennislive/releases/download/source-{video}/{video}.mp4": 720
+    for video in ("6408098837112", "6408057005112", "ruNe_9HKsFI", "c-H2LyM77z0")
+}
+
+
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
     declared = spec.get("source_quality_exceptions", {})
@@ -7420,6 +7429,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in LIU_HONG_KONG_STORY_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "liu-hong-kong-first-title-story-2026":
+                raise ReelError("source_quality_exceptions 此720p授权仅限刘婧文2026香港首冠人物片")
+            floor = LIU_HONG_KONG_STORY_2026_LOW_RES_SOURCES[url]
         if url == "https://github.com/robertyang87/tennislive/releases/download/source-6408062676112/6408062676112.mp4":
             if spec.get("slug") != "eala-sakkari-hong-kong-2026-sf":
                 raise ReelError("source_quality_exceptions 此720p源授权仅限伊埃拉2026香港半决赛")
