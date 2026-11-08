@@ -62,7 +62,7 @@ function shotHook(u,D){
   if(u<SV-0.2){ // 微距：毛茸茸的网球自转 → 毛被一阵风剃飞
     look(Math.sin(u*0.3)*0.4,0.1,lerp(4.8,4.2,ss(0,SV,u)),0,0,0); rims(PJ,CY,4);
     const c=V(0,0,0); showBall(BL.tennis,c,1.0,1,u*0.6); const fz=1-ss(SH,SH+0.6,u); BL.fuzz(c,1.0,Math.max(0.02,fz)*1.6,1);
-    if(u>SH){ const k=(u-SH)/1.4; burst(c.clone().add(V(0.3,0,0)),k,0xeaff80,4,0.9); showBall(BL.smooth,c,1.002,ss(SH+0.1,SH+0.5,u),u*0.6); BL.tennis.material.transparent=true; BL.tennis.material.opacity=1-ss(SH+0.1,SH+0.5,u); }
+    if(u>SH){ const k=(u-SH)/1.4; burst(c.clone().add(V(0.3,0,0)),k,0xeaff80,4,0.9); showBall(BL.smooth,c,1.002,ss(SH+0.1,SH+0.5,u),u*0.6); BL.tennis.visible=ss(SH+0.1,SH+0.5,u)<0.999; /* 有毛的球保持不透明垫在下面，光球淡入盖住再撤：两颗都半透明会一起变暗、中间一帧几乎全空（motion_check 3.87s 跳变） */ }
     const q=bt('hkQ',T('网球为什么要长毛？','Why does a tennis ball wear fuzz?'),{size:0.95,glow:'rgba(214,238,58,0.55)',fx:'particles'}); hud(q,0,1.75,9); q.update(u,0.2,SH+0.4,0.85);
     return; }
   // 侧上方看球场：两条球道，同一记 200 km/h 的发球（按 v=v0/(1+k v0 t) 的阻力规律慢放）；光球两个幽灵＝悬崖前（Cd 0.5）/悬崖后（Cd 0.1）
