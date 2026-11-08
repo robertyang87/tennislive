@@ -1,4 +1,4 @@
-# 组装 EP10 scene.js：EP09 的底座＋球拍＋通用池＋镜头＋后期，中间换成本集的 rig.js 与 shots.js
+# 组装 EP11 scene.js：EP09 的底座＋球拍＋通用池＋镜头＋后期，中间换成本集的 rig.js 与 shots.js
 import sys
 E='/home/user/tennislive/tools/vibetennis/episodes/vibetennis-ball-2026/r3d/scene.js'
 L=open(E).read().split('\n')
@@ -17,10 +17,10 @@ post='\n'.join(L[i_post:])
 d=sys.argv[1]
 head=open(d+'/head.txt').read()
 base=base.split('\n',3)[3]   # 去掉 EP09 前三行文件说明
-common=common.replace('// ==================== EP09 球：本集物件 ====================','// ==================== EP10 德约接发：本集物件 ====================')
-rig=open(d+'/rig.js').read(); stands=open(d+'/stands.js').read(); shots=open(d+'/shots.js').read()
+common=common.replace('// ==================== EP09 球：本集物件 ====================','// ==================== EP11 抽筋：本集物件 ====================')
+rig=open(d+'/rig.js').read(); stands=open(d+'/stands.js').read(); anat=open(d+'/anatomy.js').read(); shots=open(d+'/shots.js').read()
 import re
 post=re.sub(r"\(\{hook:shotHook[^)]*\}\)\[sc\.kind\]\(u,D\);", "(SHOTS[sc.kind]||shotTest)(u,D); standsTick(t,sc.kind,u);", post)
 extra="\nconst pt=cloud(1600,0.05,8,scene,0.5); const PTS=[...Array(1600)].map(()=>[(frnd()-0.5)*16,(frnd()-0.5)*9,(frnd()-0.5)*8,frnd(),frnd()]);\n"
-out='\n'.join([head,base,common,racket,pools,extra,stands,rig,camera,shots,post])
+out='\n'.join([head,base,common,racket,pools,extra,stands,rig,anat,camera,shots,post])
 open(sys.argv[2],'w').write(out); print(len(out.split('\n')),'lines')
