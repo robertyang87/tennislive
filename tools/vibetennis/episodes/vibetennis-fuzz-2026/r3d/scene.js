@@ -606,7 +606,7 @@ function shotEiffel(u,D){
   const sep=lerp(80,120,Math.max(crisis*(1-ss(WR-1.2,WR-0.4,u)),wired));
   if(u>TN-0.4){ FLOW.draw(c,R,sep,0.3,ss(TN-0.4,TN+0.4,u),u,0x9fd8ff,0.3+0.6*speed); showBall(BL.smooth,c,R,1,0); }
   WIRE.material.opacity=wired; WIRE.position.copy(c); WIRE.scale.setScalar(R*1.01);
-  lab('eiY',T('1912 · 埃菲尔的风洞','1912 · Eiffel’s wind tunnel'),0.8,3.0,ss(0.6,1.2,u),{size:0.32,color:'#ffe2a0',glow:GOLD,plate:true});
+  lab('eiY',T('1912 · 埃菲尔的风洞','1912 · Eiffel\'s wind tunnel'),0.8,3.0,ss(0.6,1.2,u),{size:0.32,color:'#ffe2a0',glow:GOLD,plate:true});
   // 右下的 Cd–Re 图（只画光滑球那条），点随风速滑；到悬崖掉下去
   const o=ss(DR-1.0,DR-0.3,u); CH.x0=0.4; CH.x1=4.4; CH.y0=-2.7; CH.y1=-0.3;
   chart(o,[[CURVE.smooth,0xffffff,ss(DR-1.0,CL+1.0,u)]]);
@@ -662,7 +662,7 @@ function shotFootball(u,D){
   const sk=ss(KN-0.5,KN+0.5,u)*Math.sin(u*3.1)*0.9; const c=V(-0.6+sk*0.12,0.6+sk*0.25,0), R=0.95;
   FLOW.draw(c,R,lerp(80,110,ss(ED,ED+1,u)),0.8,1,u,0x9fd8ff,0.5,0.3,sk); showBall(BL.foot,c,R,1,0);
   if(u>KN){ const tr=ln(0xffffff,3); const pts=[]; for(let i=0;i<=40;i++){ const x=-5+i*0.25; pts.push(hp(x,-2.0+0.35*Math.sin(i*0.6+u*2)*ss(KN,KN+1,u),9)); } setLine(tr,pts); tr.material.opacity=0.6*ss(KN,KN+0.6,u); tr.material.depthTest=false; }
-  lab('fbE',T('足球的速度：正好卡在悬崖边','a football’s speed sits right at the cliff edge'),0,2.6,ss(ED,ED+0.5,u),{size:0.32});
+  lab('fbE',T('足球的速度：正好卡在悬崖边','a football\'s speed sits right at the cliff edge'),0,2.6,ss(ED,ED+0.5,u),{size:0.32});
   lab('fbK',T('不转时，尾流忽左忽右 → 电梯球','no spin: the wake flips side to side → knuckleball'),0,-2.6,ss(KN,KN+0.5,u),{size:0.32,color:'#ffb0a8',glow:RED});
 }
 
@@ -694,7 +694,7 @@ function shotTennis(u,D){
   courtG.visible=true; ST_RATE=0.0008; const k=ss(RL-0.4,D,u); look(lerp(9,7,k),lerp(4.5,3.8,k),lerp(13,11,k),0,0.6,0); rims(PJ,CY,5);
   const per=1.6, f=((u-RL)%per)/per, dir=Math.floor((u-RL)/per)%2; const z=lerp(-10,10,dir?1-f:f); const y=0.5+1.4*Math.sin(Math.PI*f);
   const p=V(0.6*Math.sin(u),y,z); showBall(BL.tennis,p,0.12,1,u*4); BL.fuzz(p,0.12,1,1); const g=gs(PJ,0.6,0.35); g.position.copy(p);
-  const t=bt('tnR',T('慢一点、稳一点，才有一来一回','Slower, steadier — that’s what makes a rally'),{size:0.7,glow:'rgba(214,238,58,0.45)',fx:'particles'}); hud(t,0,2.3,9); t.update(u,RL+0.2,D-0.1,0.82);
+  const t=bt('tnR',T('慢一点、稳一点，才有一来一回','Slower, steadier — that\'s what makes a rally'),{size:0.7,glow:'rgba(214,238,58,0.45)',fx:'particles'}); hud(t,0,2.3,9); t.update(u,RL+0.2,D-0.1,0.82);
 }
 
 // ---------- 7 毛的状态：紧的毛 vs 蓬的毛 → 尾流与阻力 → 球员挑球 → 帕特·卡什 ----------
@@ -718,7 +718,7 @@ function shotFluff(u,D){
   const cc=new THREE.Color(0xeaff80); for(const [q,amt] of [[pp[0],1.6],[pp[2],1.6]]){ for(let i=0;i<120;i++){ const p=PTS[i]; const uu=p[3]*2-1, ang=p[4]*6.283, s2=Math.sqrt(1-uu*uu); const r=0.062*(1+0.25*amt*0.5); cset(pt,(q===pp[0]?0:200)+i,q.x+s2*Math.cos(ang)*r,q.y+uu*r,q.z+s2*Math.sin(ang)*r,cc.r,cc.g,cc.b,0.8); } } cdone(pt);
   const sel=pp[1]; const g=gs(PJ,0.4,0.5*ss(PK+0.8,PK+1.4,u)); g.position.copy(sel);
   lab('flP',T('发球前，挑一颗毛不蓬的','before serving: pick the one with tight felt'),0,2.5,ss(PK,PK+0.5,u),{size:0.34});
-  lab('flC',T('「发球，你要一颗没起毛的球。」——帕特·卡什，1987 温网冠军','“If you’re serving, you want a ball that isn’t fluffed up.” — Pat Cash, 1987 Wimbledon champion'),0,-2.4,ss(CS,CS+0.6,u),{size:0.3,color:'#ffe2a0',glow:GOLD,plate:true});
+  lab('flC',T('「发球，你要一颗没起毛的球。」——帕特·卡什，1987 温网冠军','"If you\'re serving, you want a ball that isn\'t fluffed up." — Pat Cash, 1987 Wimbledon champion'),0,-2.4,ss(CS,CS+0.6,u),{size:0.3,color:'#ffe2a0',glow:GOLD,plate:true});
 }
 
 // ---------- 8 国际网联 3 号球：大约 6%，重量不变 → 迎风面积大、阻力大 ----------
