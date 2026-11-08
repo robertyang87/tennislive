@@ -1,4 +1,4 @@
-"""vibetennis EP11 抽筋，多半不是缺盐：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
+"""vibetennis EP11 阻力危机：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
 生成 r3d/timeline.json 和 r3d/shots.js（每段的起止秒、镜头类型、每句开口时刻、画面事件时刻）。
 
     python3 plan.py            # 有 voice/*.json 词边界就按实测排
@@ -11,32 +11,31 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
-SECTIONS = [(n, n) for n in ("hook", "camps", "pickle", "brake", "stretch", "data", "salt", "back", "end")]
+SECTIONS = [(n, n) for n in ("hook", "eiffel", "layer", "golf", "football", "tennis", "fluff", "itf", "end")]
 # 每句最短停留（从这句开口到下一句开口）：给这句的动效留够时间
-HOLD = {"h0": 4.2, "h1": 4.2, "h2": 4.6, "h3": 6.6, "h4": 3.4,
-        "c0": 3.0, "c1": 4.4, "c2": 4.4,
-        "p0": 8.4, "p1": 8.0, "p2": 7.4, "p3": 6.8,
-        "b0": 3.6, "b1": 6.4, "b2": 6.4, "b3": 6.4, "b4": 6.8,
-        "s0": 3.6, "s1": 6.8,
-        "d0": 2.4, "d1": 5.6, "d2": 6.4, "d3": 4.8, "d4": 5.2, "d5": 7.0,
-        "x0": 2.8, "x1": 9.4, "x2": 3.6, "x3": 5.6,
-        "k0": 7.4, "k1": 4.0, "k2": 6.6,
-        "n0": 5.0, "n1": 6.6, "n2": 5.0}
+HOLD = {"h0": 3.2, "h1": 9.6, "h2": 3.6, "h3": 4.6, "h4": 6.4,
+        "e0": 6.0, "e1": 6.0, "e2": 7.2, "e3": 6.0,
+        "l0": 4.6, "l1": 7.8, "l2": 6.8, "l3": 4.4, "l4": 8.0,
+        "g0": 3.0, "g1": 6.0, "g2": 5.4,
+        "f0": 2.6, "f1": 3.4, "f2": 7.0,
+        "t0": 2.4, "t1": 7.4, "t2": 5.8, "t3": 8.6, "t4": 4.4, "t5": 5.0,
+        "u0": 5.0, "u1": 5.0, "u2": 5.6,
+        "i0": 2.8, "i1": 6.4, "i2": 4.6,
+        "n0": 4.8, "n1": 5.4, "n2": 5.0}
 MIN_SEC = {}
-EV = [("hook", "sinner", "h0", None), ("hook", "fall", "h0", "抽筋"), ("hook", "crowd", "h1", None), ("hook", "salt", "h1", "缺盐"),
-      ("hook", "drop", "h2", "腌黄瓜汁"), ("hook", "clock", "h3", "不抽了"), ("hook", "stomach", "h3", "胃里"), ("hook", "q", "h4", None),
-      ("camps", "split", "c0", None), ("camps", "wat", "c1", "水和盐"), ("camps", "nerve", "c2", "神经"),
-      ("pickle", "lab", "p0", None), ("pickle", "zap", "p0", "电刺激"), ("pickle", "cramp", "p0", "脚底"), ("pickle", "water", "p1", "喝水"),
-      ("pickle", "pj", "p1", "喝腌黄瓜汁"), ("pickle", "gut", "p2", None), ("pickle", "flat", "p2", "血液"), ("pickle", "reflex", "p3", "神经反射"),
-      ("brake", "dive", "b0", None), ("brake", "spindle", "b1", "肌梭"), ("brake", "gas", "b1", "油门"), ("brake", "gto", "b2", "高尔基"),
-      ("brake", "brk", "b2", "刹车"), ("brake", "tired", "b3", "肌肉累了"), ("brake", "storm", "b4", "一直放电"), ("brake", "lock", "b4", "锁死"),
-      ("stretch", "go", "s0", None), ("stretch", "flex", "s1", "勾回来"), ("stretch", "relief", "s1", "压住"),
-      ("data", "q", "d0", None), ("data", "crowd", "d1", None), ("data", "same", "d2", None), ("data", "fast", "d3", "成绩更快"),
-      ("data", "dehyd", "d4", None), ("data", "banana", "d5", "香蕉"),
-      ("salt", "turn", "x0", None), ("salt", "kid", "x1", "网球选手"), ("salt", "sweat", "x1", "每小时出汗"), ("salt", "loss", "x1", "汗里丢的钠"),
-      ("salt", "fixed", "x2", None), ("salt", "humid", "x3", None),
-      ("back", "rg", "k0", "法网"), ("back", "cramp", "k0", "全身抽筋"), ("back", "tension", "k1", "紧张"), ("back", "sh", "k2", None), ("back", "both", "k2", "两样"),
-      ("end", "n0", "n0", None), ("end", "p1", "n1", "拉伸"), ("end", "p2", "n1", "补盐"), ("end", "q", "n2", None)]
+EV = [("hook", "q", "h0", None), ("hook", "shave", "h1", "剃光"), ("hook", "serve", "h1", "公里"), ("hook", "fork", "h1", "可能只剩"),
+      ("hook", "wobble", "h2", None), ("hook", "steady", "h3", None), ("hook", "brake", "h4", "刹车"), ("hook", "stab", "h4", "稳定器"), ("hook", "tower", "h4", "铁塔"),
+      ("eiffel", "rise", "e0", None), ("eiffel", "tunnel", "e0", "风洞"), ("eiffel", "drop", "e1", "突然掉"), ("eiffel", "cliff", "e2", None),
+      ("eiffel", "name", "e2", "阻力危机"), ("eiffel", "wire", "e3", "细线"),
+      ("layer", "zoom", "l0", None), ("layer", "bl", "l0", "边界层"), ("layer", "lam", "l1", "层流"), ("layer", "sep", "l1", "脱开"),
+      ("layer", "turb", "l2", "湍流"), ("layer", "narrow", "l3", "变窄"), ("layer", "re", "l4", "雷诺数"),
+      ("golf", "g", "g0", None), ("golf", "dimple", "g1", "凹坑"), ("golf", "shift", "g1", "更低的速度"), ("golf", "drive", "g2", "开球"),
+      ("football", "f", "f0", None), ("football", "edge", "f1", "悬崖附近"), ("football", "knuckle", "f2", "忽左忽右"),
+      ("tennis", "q", "t0", None), ("tennis", "band", "t1", "换算成"), ("tennis", "flip", "t2", "时而"), ("tennis", "flat", "t3", "抹平"),
+      ("tennis", "fuzz", "t3", "每根毛"), ("tennis", "cd", "t3", "上下"), ("tennis", "labs", "t4", None), ("tennis", "rally", "t5", "一来一回"),
+      ("fluff", "fl", "u0", "毛越蓬"), ("fluff", "pick", "u1", "挑一颗"), ("fluff", "cash", "u2", "温网冠军"),
+      ("itf", "i", "i0", None), ("itf", "big", "i1", "标准球"), ("itf", "area", "i2", "迎风面积"),
+      ("end", "n0", "n0", None), ("end", "slow", "n1", "慢下来"), ("end", "q", "n2", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 PUNCT = "，。：；？！、—"

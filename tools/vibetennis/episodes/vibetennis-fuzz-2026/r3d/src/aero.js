@@ -24,7 +24,7 @@ const FLOW=(()=>{
   const P=cloud(2600,0.09,9,scene,0); let sd=777; const rr=()=>{ sd=(sd*48271)%2147483647; return sd/2147483647; };
   const SEED=[...Array(2600)].map(()=>[rr(),rr(),rr(),rr()]);
   // c：球心；R：球半径（世界单位）；sep：分离角；turb：尾流的乱度；o：透明度；t：时间；col：颜色；z0：烟线所在的面（离球心的深度偏移）
-  function draw(c,R,sep,turb,o,t,col=0x9fd8ff,speed=0.45,lineO=0.3){ const L=get(Math.round(sep)); for(const k in lcache) lcache[k].visible=false; const lo=lineObj(Math.round(sep)); lo.visible=o>0.003; lo.position.copy(c); lo.scale.setScalar(R); LMAT.opacity=o*lineO; const cc=new THREE.Color(col), wc=new THREE.Color(0xffd27a);
+  function draw(c,R,sep,turb,o,t,col=0x9fd8ff,speed=0.45,lineO=0.3,skew=0){ const L=get(Math.round(sep)); for(const k in lcache) lcache[k].visible=false; const lo=lineObj(Math.round(sep)); lo.visible=o>0.003; lo.position.copy(c); lo.scale.setScalar(R); LMAT.opacity=o*lineO; const cc=new THREE.Color(col), wc=new THREE.Color(0xffd27a);
     const wake=Math.sin(sep*Math.PI/180);   // 尾流半宽（以 R 计）
     for(let i=0;i<2600;i++){ const s=SEED[i]; if(i<2000){ const line=L[i%L.length]; const f=(s[0]+t*speed*(0.9+0.2*s[1]))%1; const k=f*(line.length-1), a=Math.floor(k), w=k-a; const p0=line[a], p1=line[Math.min(line.length-1,a+1)];
         const x=lerp(p0[0],p1[0],w), y=lerp(p0[1],p1[1],w); const fade=Math.min(1,f*6,(1-f)*6);
@@ -32,16 +32,16 @@ const FLOW=(()=>{
       else { // 尾流里的涡：在分离之后、宽度 wake 的区域里打转
         const f=(s[0]+t*0.35)%1; const x=0.4+f*5.0; const amp=wake*(0.75+0.25*Math.sin(x*1.3)); const ph=s[1]*6.283+t*(2+3*turb)+x*1.7;
         const y=Math.sin(ph)*amp*(0.25+0.75*s[2])*(1+0.15*turb*Math.sin(t*7+s[3]*20)); const z=Math.cos(ph)*amp*0.5*s[2];
-        cset(P,i,c.x+x*R,c.y+y*R,c.z+z*R,wc.r,wc.g,wc.b,o*0.55*(1-f)*Math.min(1,f*8)); } }
+        cset(P,i,c.x+x*R,c.y+(y+skew*x*0.35)*R,c.z+z*R,wc.r,wc.g,wc.b,o*0.7*(1-f)*Math.min(1,f*8)); } }
     cdone(P); }
   return {draw,hide(){ chide(P); for(const k in lcache) lcache[k].visible=false; }};
 })();
 
 // Cd–Re 曲线（屏幕上的全息图表；数据点按文献量级手描，画面标「示意」，具体数字只在 sources.md 核过的才上屏）
 const CURVE=(()=>{
-  const smooth=[[4.0,0.47],[4.6,0.47],[5.0,0.47],[5.2,0.45],[5.35,0.40],[5.45,0.25],[5.55,0.12],[5.7,0.10],[5.9,0.13],[6.2,0.18]];
+  const smooth=[[4.0,0.5],[4.6,0.5],[5.0,0.5],[5.3,0.49],[5.4,0.44],[5.47,0.25],[5.53,0.12],[5.6,0.1],[5.9,0.12],[6.2,0.16]];
   const golf=[[4.0,0.47],[4.4,0.46],[4.6,0.40],[4.75,0.27],[4.9,0.24],[5.1,0.25],[5.4,0.27],[5.7,0.28],[6.2,0.29]];
-  const tennis=[[4.0,0.62],[4.6,0.62],[5.0,0.61],[5.2,0.60],[5.4,0.58],[5.6,0.56],[5.9,0.55],[6.2,0.55]];
+  const tennis=[[4.0,0.66],[4.6,0.65],[5.0,0.63],[5.2,0.6],[5.4,0.59],[5.6,0.58],[5.9,0.58],[6.2,0.58]];
   const at=(arr,lx)=>{ for(let i=0;i<arr.length-1;i++){ const [a,b]=[arr[i],arr[i+1]]; if(lx<=b[0]) return lerp(a[1],b[1],clamp((lx-a[0])/(b[0]-a[0]))); } return arr[arr.length-1][1]; };
   return {smooth,golf,tennis,at};
 })();
