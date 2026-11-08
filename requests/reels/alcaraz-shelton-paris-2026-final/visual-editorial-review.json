@@ -1,0 +1,91 @@
+{
+  "reviewer": "current assistant",
+  "method": "full_source_contact_sheets_and_dense_timecoded_windows",
+  "external_model_pass_claimed": false,
+  "human_listening_claimed": false,
+  "cold_open": {
+    "start": 121.84,
+    "end": 143.2,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "谢尔顿发球后完整拉锯；132.68后阿尔卡拉斯张开双臂，135.3–143.0解说确认首夺巴黎冠军。",
+    "confidence": 0.97
+  },
+  "ending": {
+    "start": 121.84,
+    "end": 150.2,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "完全重放冷开场窗口，接球网握手与阿卡向场边致意；在宣传板前结束。",
+    "confidence": 0.97
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "Carlos Alcaraz",
+    "moment": "庆祝",
+    "wrong_or_old": false,
+    "reason": "官方ATP Media本届11月8日原图4606336，8256×5504；紫色黄领上衣和黄短裤与决赛一致，正面睁眼握拳。EXIF偏移+02与巴黎11月不合，不以EXIF为唯一证明；同日赛事元数据与转播画面互证。",
+    "confidence": 0.94,
+    "path": "assets/reel/alcaraz-shelton-paris-2026-final/official-final-celebration.jpg",
+    "sha256": "383241119d57ff225045b379bbe8ab5aa27c705b7f5c432dcace5c085b7a5797"
+  },
+  "contact_sheets": [
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/sf-detail.jpg",
+      "sha256": "4ca6dcb1c58641763ea3f155c85a65ca1918c8a692b1ca8d7a44540915ff5f2b"
+    },
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/r2-detail.jpg",
+      "sha256": "298fa56d88cb8b28c38e1394d57ff585ac364ccd447ebb9a7d1cf957cf507599"
+    },
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/road-seek.jpg",
+      "sha256": "2e5ff46b0fb76c2fef1e78699aede8cc335234f6bd1f164d52523c33cbe9a8f0"
+    },
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/final-sheet.jpg",
+      "sha256": "73f8f6b4c999174ad4a367960a0086e9dd46986e7d905db8745b3728f01fb69e"
+    },
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/mp-detail.jpg",
+      "sha256": "11e038441fa53e6e1812fc8095890df2026af824976eee64ac7722a1684bc1dc"
+    },
+    {
+      "path": "requests/reels/alcaraz-shelton-paris-2026-final/qf-detail.jpg",
+      "sha256": "9c5179bfee341f46a0964135714b124e932e5c4c7c6fcc794c276c66cdc74fed"
+    }
+  ],
+  "earlier_rounds": [
+    {
+      "source": "road",
+      "round": "R2",
+      "opponent": "Alex Michelsen",
+      "start": 264.4,
+      "end": 281.5,
+      "evidence": "粉上衣白帽米克尔森；记分条双方姓名，第二盘3比5至3比6完整赛点与握手。",
+      "confidence": 0.96
+    },
+    {
+      "source": "road",
+      "round": "QF",
+      "opponent": "Taylor Fritz",
+      "start": 653,
+      "end": 682,
+      "evidence": "棕上衣粉反帽弗里茨；决胜盘3比5至3比6完整赛点、阿卡庆祝与握手。",
+      "confidence": 0.96
+    },
+    {
+      "source": "road",
+      "round": "SF",
+      "opponent": "Casper Ruud",
+      "start": 920.1,
+      "end": 937,
+      "evidence": "蓝上衣鲁德；第二盘4比5、15比40，阿卡发球结束比赛，两个6比4与握手。",
+      "confidence": 0.97
+    }
+  ],
+  "internal_gaps": [
+    "已查官方短集锦、决赛日集锦、showreel及本日ATP Media照片；当前可用源未含捧杯，使用本场冠军点、庆祝、握手，绝不以旧赛事捧杯替代。",
+    "单档CHEERING AND APPLAUSE为声效标签，未伪造为口语。"
+  ]
+}
