@@ -1,0 +1,1271 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "7f67b1eb27c11b581dcbbc26e6ddeb255ade37ad49adb3ca84a99455f5389ad5",
+    "render_inputs_sha256": "e1663e26a62946df6a9e3285b31a0cec5dd246d439a60f70b7d0f1c1268d8e1b",
+    "spec_sha256": "1d57418e615cdd541ecd7578e7ceda53ac8ee0777827eeff2f6d0a5696f2399a",
+    "film_sha256": "2c144394e733847f384f1ca22227f3f8421e75583f2b5192a3f902853332666d",
+    "inventory_sha256": "7753393313e29c7fd18e7cda68a1d24dd05cefecf663b2e5ccccdf41210eea32"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-08T14:16:05+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1ad0e132fab677d58bad1b646a3c8097e2d765a69c0c52f4db412df7f89ea934",
+      "audio_sha256": "fc5d2f0cffbea8bdcd2f2d9d09d1ceb3e352518714689c57aeb4d64a9779632c",
+      "pass": true,
+      "result_of": "bundle:1ad0e132fab677d58bad1b646a3c8097e2d765a69c0c52f4db412df7f89ea934"
+    },
+    {
+      "id": "bundle:1de5486c92c9e8446ffd969a9582418677c854916a74dbfb5b8ef54284bcc878",
+      "audio_sha256": "99bb95c7b49a3982ca553edf662c8208980a85a3d42bde893a0c4cccab17217e",
+      "pass": true,
+      "result_of": "bundle:1de5486c92c9e8446ffd969a9582418677c854916a74dbfb5b8ef54284bcc878"
+    },
+    {
+      "id": "bundle:2e7a5fee3af4cfdfb437812adcb85c0cc3eea1f825ad2f4b442bd4a1c391bceb",
+      "audio_sha256": "ed4cd10eae599202d8d8f05cb1c73854edc5cf8322fd03be9daa4031c165c5e7",
+      "pass": true,
+      "result_of": "bundle:2e7a5fee3af4cfdfb437812adcb85c0cc3eea1f825ad2f4b442bd4a1c391bceb"
+    },
+    {
+      "id": "bundle:2ed352057fcfe5206f11e5bff1b7af1af3c6bd21b4f82d82b4352cdeb06c1db6",
+      "audio_sha256": "391db690a74c50d7bbe4ba59f08ce029322ef12e13e0de8d6a1cf7cf6f9b0582",
+      "pass": true,
+      "result_of": "bundle:2ed352057fcfe5206f11e5bff1b7af1af3c6bd21b4f82d82b4352cdeb06c1db6"
+    },
+    {
+      "id": "bundle:3b86f83ea5c314835b0d2eb47d40ea4cc83b9bf2676e0667326ede3e6d50c5fd",
+      "audio_sha256": "9fa9e7f93bed4ec294f370ddb0699f787432d84687e20907bd960839db2a3e7e",
+      "pass": true,
+      "result_of": "bundle:3b86f83ea5c314835b0d2eb47d40ea4cc83b9bf2676e0667326ede3e6d50c5fd"
+    },
+    {
+      "id": "bundle:3ee23b2757b21f5a42045aa336b327bb0e086c4a390ca29014c1d04c2bb4184f",
+      "audio_sha256": "c03d52c3702df2644a621827526dff66ed966efbdeefd78758ef6b6e62f8b3c1",
+      "pass": true,
+      "result_of": "bundle:3ee23b2757b21f5a42045aa336b327bb0e086c4a390ca29014c1d04c2bb4184f"
+    },
+    {
+      "id": "bundle:5fb1709fa9e0e01f1b675303c08582d75a3088307f051b9dacaf01082fa06af1",
+      "audio_sha256": "0929fb0c0038a4edb7a3bf4c7aea5f4ba2504c002908859627750763db18721a",
+      "pass": true,
+      "result_of": "bundle:5fb1709fa9e0e01f1b675303c08582d75a3088307f051b9dacaf01082fa06af1"
+    },
+    {
+      "id": "bundle:635835172367d28b8c82866ae2a729eb9c072a6a7b37604c38e2b572f782f4d6",
+      "audio_sha256": "c3e7caca2816a25910b0a1d05b559d9b5da06f8af410e7cdc05415fbcc6c83f1",
+      "pass": true,
+      "result_of": "bundle:635835172367d28b8c82866ae2a729eb9c072a6a7b37604c38e2b572f782f4d6"
+    },
+    {
+      "id": "bundle:681e66c3b4421bca37741f1d22d803b7b702a294cb9d8262be4bc3a26722d05e",
+      "audio_sha256": "fac9c220fc646f77cc1f199874c560ca751154bb945e3b876331408b7f010969",
+      "pass": true,
+      "result_of": "bundle:681e66c3b4421bca37741f1d22d803b7b702a294cb9d8262be4bc3a26722d05e"
+    },
+    {
+      "id": "bundle:74d97ab4695bbed46a7a0a214a5ca4ee358697dd8ac0c04d59ed620f0d2f529a",
+      "audio_sha256": "c9017bd739d04c788eff1f66d14b7a7fb6e372853de2740fd0db8d760f6119f5",
+      "pass": true,
+      "result_of": "bundle:74d97ab4695bbed46a7a0a214a5ca4ee358697dd8ac0c04d59ed620f0d2f529a"
+    },
+    {
+      "id": "bundle:752be66dcd08d6cf1e49bcd946d4b080fe95de13cb5c1a5a6d777a5bb07bf65b",
+      "audio_sha256": "9a1aae18a0839d0b1e9fe786598e8f11adeb8a4865b1efe99fa61bd5a9f7972c",
+      "pass": true,
+      "result_of": "bundle:752be66dcd08d6cf1e49bcd946d4b080fe95de13cb5c1a5a6d777a5bb07bf65b"
+    },
+    {
+      "id": "bundle:79acd78b9800164931d632a5b28b63d31cb78f4eb7118bb5ea5dfe0f5a57d24d",
+      "audio_sha256": "0002db186848b2092e864d8d6f3f48f6c03eb74907eff8bdda0da79479ff9181",
+      "pass": true,
+      "result_of": "bundle:79acd78b9800164931d632a5b28b63d31cb78f4eb7118bb5ea5dfe0f5a57d24d"
+    },
+    {
+      "id": "bundle:7f0668da52e86fd243db0e74a6506baeb2a538ae8bd57d135b14326e985d476e",
+      "audio_sha256": "77e07f59b7f3fd4584644de9c8374394fafcf6cd4cae79e0d114f504e364d783",
+      "pass": true,
+      "result_of": "bundle:7f0668da52e86fd243db0e74a6506baeb2a538ae8bd57d135b14326e985d476e"
+    },
+    {
+      "id": "bundle:8f23844dec391f4f994217db71d5f1c81afe209fb8f565dff70d86c9aacc063f",
+      "audio_sha256": "6b2b33b335a1e53b423b65c6108423ffe5aafa94361030ba2198cfd65b15130e",
+      "pass": true,
+      "result_of": "bundle:8f23844dec391f4f994217db71d5f1c81afe209fb8f565dff70d86c9aacc063f"
+    },
+    {
+      "id": "bundle:9a05e7d7303729ae8bcfb4e0e6b2f596de2ebcc5ee924ebbd266710515b833e4",
+      "audio_sha256": "cf4160538e91279f45026a362f28192e68d561c8eb6df955d174d05e482e3d4a",
+      "pass": true,
+      "result_of": "bundle:9a05e7d7303729ae8bcfb4e0e6b2f596de2ebcc5ee924ebbd266710515b833e4"
+    },
+    {
+      "id": "bundle:b130200c97ac07e19a08fefa00b999c5c0c808d7ddecb7591eae2c6f5a94da48",
+      "audio_sha256": "a6b6a528a98e1e244ec4f969a9f583e26c64b5deb41415ca5c11490b091073cd",
+      "pass": true,
+      "result_of": "bundle:b130200c97ac07e19a08fefa00b999c5c0c808d7ddecb7591eae2c6f5a94da48"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:dbe0f9bbd9651078caf5698220fe85a18adbaa66ccf4efa921ed5882c92aa92a",
+      "audio_sha256": "eafb285c24d530ba034db91a1c7a541124034a6ea7895e2e60905fca1e688d7b",
+      "pass": true,
+      "result_of": "bundle:dbe0f9bbd9651078caf5698220fe85a18adbaa66ccf4efa921ed5882c92aa92a"
+    },
+    {
+      "id": "bundle:f1e722a1053ef847fe095554e81d552d6d36abdcb2047f2668cbdab095e71c8f",
+      "audio_sha256": "463fa7befc5237913155e2b53b0876bc5a29e5272ba00115247969950971b0e3",
+      "pass": true,
+      "result_of": "bundle:f1e722a1053ef847fe095554e81d552d6d36abdcb2047f2668cbdab095e71c8f"
+    },
+    {
+      "id": "bundle:ffacc2a899cd38484ee94255df218cbe1b02bc58b267555255ac964ec5ce0f3a",
+      "audio_sha256": "ca71a009c63b40ff4fc5af990862f982c11731c1843697d12ea923c773162308",
+      "pass": true,
+      "result_of": "bundle:ffacc2a899cd38484ee94255df218cbe1b02bc58b267555255ac964ec5ce0f3a"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "463fa7befc5237913155e2b53b0876bc5a29e5272ba00115247969950971b0e3",
+      "pass": true,
+      "result_of": "bundle:f1e722a1053ef847fe095554e81d552d6d36abdcb2047f2668cbdab095e71c8f"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "99bb95c7b49a3982ca553edf662c8208980a85a3d42bde893a0c4cccab17217e",
+      "pass": true,
+      "result_of": "bundle:1de5486c92c9e8446ffd969a9582418677c854916a74dbfb5b8ef54284bcc878"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "9a1aae18a0839d0b1e9fe786598e8f11adeb8a4865b1efe99fa61bd5a9f7972c",
+      "pass": true,
+      "result_of": "bundle:752be66dcd08d6cf1e49bcd946d4b080fe95de13cb5c1a5a6d777a5bb07bf65b"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "77e07f59b7f3fd4584644de9c8374394fafcf6cd4cae79e0d114f504e364d783",
+      "pass": true,
+      "result_of": "bundle:7f0668da52e86fd243db0e74a6506baeb2a538ae8bd57d135b14326e985d476e"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "391db690a74c50d7bbe4ba59f08ce029322ef12e13e0de8d6a1cf7cf6f9b0582",
+      "pass": true,
+      "result_of": "bundle:2ed352057fcfe5206f11e5bff1b7af1af3c6bd21b4f82d82b4352cdeb06c1db6"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "c03d52c3702df2644a621827526dff66ed966efbdeefd78758ef6b6e62f8b3c1",
+      "pass": true,
+      "result_of": "bundle:3ee23b2757b21f5a42045aa336b327bb0e086c4a390ca29014c1d04c2bb4184f"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "fc5d2f0cffbea8bdcd2f2d9d09d1ceb3e352518714689c57aeb4d64a9779632c",
+      "pass": true,
+      "result_of": "bundle:1ad0e132fab677d58bad1b646a3c8097e2d765a69c0c52f4db412df7f89ea934"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "0929fb0c0038a4edb7a3bf4c7aea5f4ba2504c002908859627750763db18721a",
+      "pass": true,
+      "result_of": "bundle:5fb1709fa9e0e01f1b675303c08582d75a3088307f051b9dacaf01082fa06af1"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "c9017bd739d04c788eff1f66d14b7a7fb6e372853de2740fd0db8d760f6119f5",
+      "pass": true,
+      "result_of": "bundle:74d97ab4695bbed46a7a0a214a5ca4ee358697dd8ac0c04d59ed620f0d2f529a"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "6b2b33b335a1e53b423b65c6108423ffe5aafa94361030ba2198cfd65b15130e",
+      "pass": true,
+      "result_of": "bundle:8f23844dec391f4f994217db71d5f1c81afe209fb8f565dff70d86c9aacc063f"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "eafb285c24d530ba034db91a1c7a541124034a6ea7895e2e60905fca1e688d7b",
+      "pass": true,
+      "result_of": "bundle:dbe0f9bbd9651078caf5698220fe85a18adbaa66ccf4efa921ed5882c92aa92a"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "9fa9e7f93bed4ec294f370ddb0699f787432d84687e20907bd960839db2a3e7e",
+      "pass": true,
+      "result_of": "bundle:3b86f83ea5c314835b0d2eb47d40ea4cc83b9bf2676e0667326ede3e6d50c5fd"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "cf4160538e91279f45026a362f28192e68d561c8eb6df955d174d05e482e3d4a",
+      "pass": true,
+      "result_of": "bundle:9a05e7d7303729ae8bcfb4e0e6b2f596de2ebcc5ee924ebbd266710515b833e4"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "ca71a009c63b40ff4fc5af990862f982c11731c1843697d12ea923c773162308",
+      "pass": true,
+      "result_of": "bundle:ffacc2a899cd38484ee94255df218cbe1b02bc58b267555255ac964ec5ce0f3a"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "ed4cd10eae599202d8d8f05cb1c73854edc5cf8322fd03be9daa4031c165c5e7",
+      "pass": true,
+      "result_of": "bundle:2e7a5fee3af4cfdfb437812adcb85c0cc3eea1f825ad2f4b442bd4a1c391bceb"
+    },
+    {
+      "id": "voice_21.mp3",
+      "audio_sha256": "0002db186848b2092e864d8d6f3f48f6c03eb74907eff8bdda0da79479ff9181",
+      "pass": true,
+      "result_of": "bundle:79acd78b9800164931d632a5b28b63d31cb78f4eb7118bb5ea5dfe0f5a57d24d"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "fac9c220fc646f77cc1f199874c560ca751154bb945e3b876331408b7f010969",
+      "pass": true,
+      "result_of": "bundle:681e66c3b4421bca37741f1d22d803b7b702a294cb9d8262be4bc3a26722d05e"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "a6b6a528a98e1e244ec4f969a9f583e26c64b5deb41415ca5c11490b091073cd",
+      "pass": true,
+      "result_of": "bundle:b130200c97ac07e19a08fefa00b999c5c0c808d7ddecb7591eae2c6f5a94da48"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "c3e7caca2816a25910b0a1d05b559d9b5da06f8af410e7cdc05415fbcc6c83f1",
+      "pass": true,
+      "result_of": "bundle:635835172367d28b8c82866ae2a729eb9c072a6a7b37604c38e2b572f782f4d6"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "d01422f286e7af5fcb3cad995867c7b55dc5ee16f6c86f3e3b83990789fd5f97",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1ad0e132fab677d58bad1b646a3c8097e2d765a69c0c52f4db412df7f89ea934",
+      "text": "二零二四年的法网资格赛之后，刘婧文暂停了比赛，把时间留给心理健康。那年九月，她在自己的博客里写下这件事。她原本还想继续打、继续试，但教练和运动心理学家的建议，让她开始认真考虑休息。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 81,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2024年的罚网资格赛之后,刘婧文暂停了比赛,把时间留给心理健康。那年9月,他在自己的博客里写下这件事。他原本还想继续打,继续是,但教练和运动心理学家的建议,让他开始认真考虑休息。"
+      },
+      "polyphones": [
+        {
+          "index": 55,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.25,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 81,
+        "speech_s": 16.203,
+        "cps": 5.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二四年 ｜ 的 ｜ 法网 ｜ 资格 ｜ 赛 ｜ 之后 ｜ 刘婧文 ｜ 暂停 ｜ 了 ｜ 比赛 ｜ 把 ｜ 时间 ｜ 留给 ｜ 心理 ｜ 健康 ｜ 那 ｜ 年 ｜ 九月 ｜ 她 ｜ 在 ｜ 自己 ｜ 的 ｜ 博客 ｜ 里 ｜ 写 ｜ 下 ｜ 这 ｜ 件 ｜ 事 ｜ 她 ｜ 原本 ｜ 还 ｜ 想 ｜ 继续 ｜ 打 ｜ 继续 ｜ 试 ｜ 但 ｜ 教练 ｜ 和 ｜ 运动心理学 ｜ 家 ｜ 的 ｜ 建议 ｜ 让 ｜ 她 ｜ 开始 ｜ 认真 ｜ 考虑 ｜ 休息"
+      }
+    },
+    {
+      "id": "bundle:1de5486c92c9e8446ffd969a9582418677c854916a74dbfb5b8ef54284bcc878",
+      "text": "她出生在美国加州的千橡市，五岁时，开始跟随当地大学的网球教练练球。十四岁，她就拿到了第一座ITF职业赛单打冠军。网球很早就成了她的生活。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他出生在美国加州的千项市,五岁时开始跟随当地大学的网球教练练球。14岁,他就拿到了第一座ITF职业赛单打冠军。网球很早就成了他的生活。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 12.453,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 出生 ｜ 在 ｜ 美国 ｜ 加州 ｜ 的 ｜ 千橡市 ｜ 五岁 ｜ 时 ｜ 开始 ｜ 跟随 ｜ 当地 ｜ 大学 ｜ 的 ｜ 网球 ｜ 教练 ｜ 练 ｜ 球 ｜ 十四岁 ｜ 她 ｜ 就 ｜ 拿 ｜ 到 ｜ 了 ｜ 第一座 ｜ ITF ｜ 职业赛 ｜ 单打 ｜ 冠军 ｜ 网球 ｜ 很 ｜ 早 ｜ 就 ｜ 成 ｜ 了 ｜ 她 ｜ 的 ｜ 生活"
+      }
+    },
+    {
+      "id": "bundle:2e7a5fee3af4cfdfb437812adcb85c0cc3eea1f825ad2f4b442bd4a1c391bceb",
+      "text": "半决赛面对舒布拉泽，首盘打到五平，她随后连赢两局。第二盘六比四，时隔四年，她又一次打进巡回赛单打决赛。从二十一岁时的拉巴特，到二十六岁时的香港，终于有了第二次机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 73,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.027,
+        "longest_deletion": 0,
+        "transcript": "半角赛面对舒布拉泽,手盘达到五平,他随后联赢两局。第二盘六比四,时隔四年,他又一次打进循回赛单打角赛。从21岁时的拉巴特到26岁时的香港,终于有了第二次机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 73,
+        "speech_s": 15.047,
+        "cps": 4.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 面对 ｜ 舒 ｜ 布拉泽 ｜ 首盘 ｜ 打 ｜ 到 ｜ 五 ｜ 平 ｜ 她 ｜ 随后 ｜ 连 ｜ 赢 ｜ 两局 ｜ 第二盘 ｜ 六比 ｜ 四 ｜ 时 ｜ 隔 ｜ 四年 ｜ 她 ｜ 又 ｜ 一次 ｜ 打 ｜ 进 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 决赛 ｜ 从 ｜ 二十一岁 ｜ 时 ｜ 的 ｜ 拉巴特 ｜ 到 ｜ 二十六岁 ｜ 时 ｜ 的 ｜ 香港 ｜ 终于 ｜ 有 ｜ 了 ｜ 第二次机会"
+      }
+    },
+    {
+      "id": "bundle:2ed352057fcfe5206f11e5bff1b7af1af3c6bd21b4f82d82b4352cdeb06c1db6",
+      "text": "二零二一年，她第一次进入单打世界前一百。第二年，她先在巴黎拿到WTA一百二十五级别冠军，又在拉巴特，第一次打进巡回赛单打决赛。可是决赛面对特雷维桑，她只拿到三局。奖杯，还要继续等。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 77,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "2021年,他第一次进入单打世界前100,第二年,他现在巴黎拿到WTA 125级别冠军,又在拉巴特,第一次打进循徊赛单打决赛,可是决赛面对特雷维桑,他只拿到三局。奖杯,还要继续等。"
+      },
+      "polyphones": [
+        {
+          "index": 84,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.408,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 77,
+        "speech_s": 16.686,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二一年 ｜ 她 ｜ 第一次 ｜ 进入 ｜ 单打 ｜ 世界 ｜ 前 ｜ 一百 ｜ 第二年 ｜ 她 ｜ 先 ｜ 在 ｜ 巴黎 ｜ 拿 ｜ 到 ｜ WTA ｜ 一百二十五 ｜ 级别 ｜ 冠军 ｜ 又 ｜ 在 ｜ 拉巴特 ｜ 第一次 ｜ 打 ｜ 进 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 决赛 ｜ 可是 ｜ 决赛 ｜ 面对 ｜ 特雷维桑 ｜ 她 ｜ 只 ｜ 拿 ｜ 到 ｜ 三局 ｜ 奖杯 ｜ 还要 ｜ 继续 ｜ 等"
+      }
+    },
+    {
+      "id": "bundle:3b86f83ea5c314835b0d2eb47d40ea4cc83b9bf2676e0667326ede3e6d50c5fd",
+      "text": "九年前，她在这里拿过同年龄组冠军；九年后，第一次站上成年组第三轮。她说，年轻时的自己，反而会比现在更相信这件事。她仍在学习把信心找回来，也学着接受：比赛的结果，无法完全由自己控制。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 79,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "九年前,他在这里拿过童年龄组冠军。九年后,第一次站上成年组第三轮。他说,年轻时的自己,反而会比现在更相信这件事。他仍在学习,把信心找回来,也学着接受。比赛的结果,无法完全由自己控制。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 79,
+        "speech_s": 17.571,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九年 ｜ 前 ｜ 她 ｜ 在 ｜ 这里 ｜ 拿 ｜ 过 ｜ 同 ｜ 年龄 ｜ 组 ｜ 冠军 ｜ 九年 ｜ 后 ｜ 第一次 ｜ 站 ｜ 上 ｜ 成年 ｜ 组 ｜ 第三轮 ｜ 她 ｜ 说 ｜ 年轻 ｜ 时 ｜ 的 ｜ 自己 ｜ 反而 ｜ 会 ｜ 比 ｜ 现在 ｜ 更 ｜ 相信 ｜ 这 ｜ 件 ｜ 事 ｜ 她 ｜ 仍 ｜ 在 ｜ 学习 ｜ 把 ｜ 信心 ｜ 找 ｜ 回来 ｜ 也 ｜ 学 ｜ 着 ｜ 接受 ｜ 比赛 ｜ 的 ｜ 结果 ｜ 无法 ｜ 完全 ｜ 由 ｜ 自己 ｜ 控制"
+      }
+    },
+    {
+      "id": "bundle:3ee23b2757b21f5a42045aa336b327bb0e086c4a390ca29014c1d04c2bb4184f",
+      "text": "二零二三年一月，她的单打排名最高来到世界第五十二位。这个数字背后，也有她后来公开讲过的另一面：原以为进入前一百，就会觉得自己已经做到了；真正走到那里，赛前的紧张与眼泪，却没有自动消失。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 83,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 0,
+        "transcript": "2023年1月,他的单打排名最高来到世界第52位。这个数字背后,也有他后来公开讲过的另一面。原以为进入前100,就会觉得自己已经做到了。真正走到那里,在前的紧张与眼泪,却没有自动消失。"
+      },
+      "polyphones": [
+        {
+          "index": 59,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.15,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 83,
+        "speech_s": 16.439,
+        "cps": 5.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二零二三年 ｜ 一月 ｜ 她 ｜ 的 ｜ 单打 ｜ 排名 ｜ 最高 ｜ 来到 ｜ 世界 ｜ 第五十二位 ｜ 这个 ｜ 数字 ｜ 背后 ｜ 也有 ｜ 她 ｜ 后来 ｜ 公开 ｜ 讲 ｜ 过 ｜ 的 ｜ 另 ｜ 一面 ｜ 原 ｜ 以为 ｜ 进入 ｜ 前一百 ｜ 就 ｜ 会 ｜ 觉得 ｜ 自己 ｜ 已经 ｜ 做到 ｜ 了 ｜ 真正 ｜ 走 ｜ 到 ｜ 那里 ｜ 赛 ｜ 前 ｜ 的 ｜ 紧张 ｜ 与 ｜ 眼泪 ｜ 却 ｜ 没有 ｜ 自动 ｜ 消失"
+      }
+    },
+    {
+      "id": "bundle:5fb1709fa9e0e01f1b675303c08582d75a3088307f051b9dacaf01082fa06af1",
+      "text": "重返赛场，也有新的难关。二零二五年，她与合作多年的教练分开，排名一度跌出世界前四百。后来，她开始和克莱门斯·瓦格纳合作。到秋天的广州，当时排名三百零五的她，从资格赛打到了四强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 77,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "重返赛场,也有新的难关。2025年,他与合作多年的教练分开,排名一度跌出世界前四百。后来,他开始和克莱文斯·瓦格纳合作。到秋天的广州,当时排名305的他从资格赛打到了四强。"
+      },
+      "polyphones": [
+        {
+          "index": 0,
+          "char": "重",
+          "word": "重返",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.618,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 77,
+        "speech_s": 16.946,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "重返 ｜ 赛场 ｜ 也有 ｜ 新 ｜ 的 ｜ 难关 ｜ 二零二五年 ｜ 她 ｜ 与 ｜ 合作 ｜ 多年 ｜ 的 ｜ 教练 ｜ 分开 ｜ 排名 ｜ 一度 ｜ 跌 ｜ 出 ｜ 世界 ｜ 前四百 ｜ 后来 ｜ 她 ｜ 开始 ｜ 和 ｜ 克莱门 ｜ 斯 ｜ 瓦格纳 ｜ 合作 ｜ 到 ｜ 秋天 ｜ 的 ｜ 广州 ｜ 当时 ｜ 排名 ｜ 三百零五 ｜ 的 ｜ 她 ｜ 从 ｜ 资格 ｜ 赛 ｜ 打 ｜ 到 ｜ 了 ｜ 四 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:635835172367d28b8c82866ae2a729eb9c072a6a7b37604c38e2b572f782f4d6",
+      "text": "刘婧文等到二十六岁，巡回赛单打首冠。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 16,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.062,
+        "longest_deletion": 0,
+        "transcript": "刘婧文等到26岁,循回在丹达手冠。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 16,
+        "speech_s": 3.267,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "刘婧文 ｜ 等 ｜ 到 ｜ 二十六岁 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 首冠"
+      }
+    },
+    {
+      "id": "bundle:681e66c3b4421bca37741f1d22d803b7b702a294cb9d8262be4bc3a26722d05e",
+      "text": "第二盘五比零，刘婧文发球，四十比三十。这一次，距离巡回赛单打冠军，只差最后一分。十七岁赢温网的那个女孩，如今站在这里，二十六岁，准备再发一个球。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘5比0,刘婧文发球,40比30。这一次,距离寻回赛单打冠军,只差最后一分。17岁英文网的那个女孩,如今站在这里,26岁准备再发一个球。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 67,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 13.361,
+        "cps": 4.64,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 五比零 ｜ 刘婧文 ｜ 发球 ｜ 四十比三十 ｜ 这 ｜ 一次 ｜ 距离 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 冠军 ｜ 只 ｜ 差 ｜ 最后 ｜ 一 ｜ 分 ｜ 十七岁 ｜ 赢 ｜ 温 ｜ 网 ｜ 的 ｜ 那个女孩 ｜ 如今 ｜ 站在这里 ｜ 二十六岁 ｜ 准备 ｜ 再 ｜ 发 ｜ 一个 ｜ 球"
+      }
+    },
+    {
+      "id": "bundle:74d97ab4695bbed46a7a0a214a5ca4ee358697dd8ac0c04d59ed620f0d2f529a",
+      "text": "她也在写作。每天记日记，把赛前的焦虑和脑子里的想法一点点整理出来。她把自己的名字，和英文里清晰这个词，拼成了博客的标题。球场之外，她在学习怎样更好地理解自己。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 71,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他也在写作。每天记日记,把赛前的焦虑和脑子里的想法一点点整理出来。他把自己的名字和英文里清晰这个词拼成了博客的标题。球场之外,他在学习怎样更好地理解自己。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 71,
+        "speech_s": 15.566,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 也 ｜ 在 ｜ 写作 ｜ 每天 ｜ 记 ｜ 日记 ｜ 把 ｜ 赛 ｜ 前 ｜ 的 ｜ 焦虑 ｜ 和 ｜ 脑子 ｜ 里 ｜ 的 ｜ 想法 ｜ 一点点 ｜ 整理 ｜ 出来 ｜ 她 ｜ 把 ｜ 自己 ｜ 的 ｜ 名字 ｜ 和 ｜ 英文 ｜ 里 ｜ 清晰 ｜ 这个 ｜ 词 ｜ 拼 ｜ 成 ｜ 了 ｜ 博客 ｜ 的 ｜ 标题 ｜ 球场 ｜ 之外 ｜ 她 ｜ 在 ｜ 学习 ｜ 怎样 ｜ 更 ｜ 好 ｜ 地 ｜ 理解 ｜ 自己"
+      }
+    },
+    {
+      "id": "bundle:752be66dcd08d6cf1e49bcd946d4b080fe95de13cb5c1a5a6d777a5bb07bf65b",
+      "text": "十七岁那年，她先拿到法网同年龄组的女单亚军，又在温网走到决赛。这一次，对面是同样来自美国的安·李。打到决胜盘，她终于赢了下来。这是二十五年来，美国球员第一次拿到这个组别的温网女单冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 82,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "17岁那年,他先拿到法网童年龄组的女丹亚军,又在温王走到决赛。这一次,对面是同样来自美国的安·李。达到决胜盘,他终于赢了下来。这是25年来,美国球员第一次拿到这个组别的温王女丹冠军。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 82,
+        "speech_s": 17.359,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十七岁 ｜ 那 ｜ 年 ｜ 她 ｜ 先 ｜ 拿 ｜ 到 ｜ 法网 ｜ 同 ｜ 年龄 ｜ 组 ｜ 的 ｜ 女单 ｜ 亚军 ｜ 又 ｜ 在 ｜ 温 ｜ 网 ｜ 走 ｜ 到 ｜ 决赛 ｜ 这 ｜ 一次 ｜ 对面 ｜ 是 ｜ 同样 ｜ 来自 ｜ 美国 ｜ 的 ｜ 安 ｜ 李 ｜ 打 ｜ 到 ｜ 决胜 ｜ 盘 ｜ 她 ｜ 终于 ｜ 赢 ｜ 了 ｜ 下来 ｜ 这是 ｜ 二十五年 ｜ 来 ｜ 美国 ｜ 球员 ｜ 第一次 ｜ 拿 ｜ 到 ｜ 这个 ｜ 组 ｜ 别的 ｜ 温网 ｜ 女单 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:79acd78b9800164931d632a5b28b63d31cb78f4eb7118bb5ea5dfe0f5a57d24d",
+      "text": "决赛的对手，是世界排名第十七的伊埃拉。首盘三比四落后时，伊埃拉叫了医疗暂停。比赛继续，她也坚持打到了最后。刘婧文拿下首盘六比三，第二盘又建立起领先。这一次，她要把自己的节奏，保持到比赛结束。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 84,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛的对手是世界排名第十七的伊埃拉。手盘三比四落后时,伊埃拉叫了医疗暂停。比赛继续,他也坚持打到了最后。刘婧文拿下手盘六比三,第二盘又建立起领先。这一次,他要把自己的节奏保持到比赛结束。"
+      },
+      "polyphones": [
+        {
+          "index": 24,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.264,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": -0.035,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 84,
+        "speech_s": 18.208,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 的 ｜ 对手 ｜ 是 ｜ 世界 ｜ 排名 ｜ 第十七 ｜ 的 ｜ 伊埃拉 ｜ 首盘 ｜ 三比四 ｜ 落后 ｜ 时 ｜ 伊埃拉 ｜ 叫 ｜ 了 ｜ 医疗 ｜ 暂停 ｜ 比赛 ｜ 继续 ｜ 她 ｜ 也 ｜ 坚持 ｜ 打 ｜ 到 ｜ 了 ｜ 最后 ｜ 刘婧文 ｜ 拿下 ｜ 首盘 ｜ 六比三 ｜ 第二盘 ｜ 又 ｜ 建立 ｜ 起 ｜ 领先 ｜ 这 ｜ 一次 ｜ 她 ｜ 要 ｜ 把 ｜ 自己 ｜ 的 ｜ 节奏 ｜ 保持 ｜ 到 ｜ 比赛 ｜ 结束"
+      }
+    },
+    {
+      "id": "bundle:7f0668da52e86fd243db0e74a6506baeb2a538ae8bd57d135b14326e985d476e",
+      "text": "登顶同年龄组的世界第一，并没有替她打开成年赛场的每一道门。同年的美网，她从资格赛连赢三场进入正赛，首轮输给了段莹莹。此后几年，她仍要在资格赛和低级别职业赛之间，争取自己的位置。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 80,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "登顶童年龄组的世界第一并没有替他打开成年赛场的每一道门。童年的眉网,他从资格赛连营三场进入正赛,首轮输给了断营营。此后几年,他仍要在资格赛和低级别职业赛之间争取自己的位置。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 80,
+        "speech_s": 16.474,
+        "cps": 4.86,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "登顶 ｜ 同 ｜ 年龄 ｜ 组 ｜ 的 ｜ 世界 ｜ 第一 ｜ 并 ｜ 没有 ｜ 替 ｜ 她 ｜ 打开 ｜ 成年 ｜ 赛场 ｜ 的 ｜ 每 ｜ 一 ｜ 道 ｜ 门 ｜ 同年 ｜ 的 ｜ 美 ｜ 网 ｜ 她 ｜ 从 ｜ 资格 ｜ 赛 ｜ 连 ｜ 赢 ｜ 三场 ｜ 进入 ｜ 正 ｜ 赛 ｜ 首轮 ｜ 输 ｜ 给 ｜ 了 ｜ 段莹莹 ｜ 此后 ｜ 几年 ｜ 她 ｜ 仍 ｜ 要 ｜ 在 ｜ 资格 ｜ 赛 ｜ 和 ｜ 低 ｜ 级别 ｜ 职业赛 ｜ 之间 ｜ 争取 ｜ 自己 ｜ 的 ｜ 位置"
+      }
+    },
+    {
+      "id": "bundle:8f23844dec391f4f994217db71d5f1c81afe209fb8f565dff70d86c9aacc063f",
+      "text": "今年五月，在斯洛伐克的特尔纳瓦，她拿到两年来第一座单打冠军。那是一站ITF赛事。随后来到法网，她又从资格赛打起，走进正赛。排名、胜场、信心，都在一点点重新积累。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 66,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年5月,在斯洛伐克的特尔纳瓦,他拿到两年来第一座单打冠军,那是伊伊战ITF赛事。随后来到伐王,他又从资格赛打起,走进正赛。排名、胜场、信心都在一点点重新积累。"
+      },
+      "polyphones": [
+        {
+          "index": 75,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.555,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 66,
+        "speech_s": 15.66,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今年五月 ｜ 在 ｜ 斯洛伐克 ｜ 的 ｜ 特尔纳瓦 ｜ 她 ｜ 拿 ｜ 到 ｜ 两年 ｜ 来 ｜ 第一座 ｜ 单打 ｜ 冠军 ｜ 那 ｜ 是 ｜ 一 ｜ 站 ｜ ITF ｜ 赛事 ｜ 随后 ｜ 来到 ｜ 法网 ｜ 她 ｜ 又 ｜ 从 ｜ 资格 ｜ 赛 ｜ 打 ｜ 起 ｜ 走进 ｜ 正 ｜ 赛 ｜ 排名 ｜ 胜 ｜ 场 ｜ 信心 ｜ 都 ｜ 在 ｜ 一点点 ｜ 重新 ｜ 积累"
+      }
+    },
+    {
+      "id": "bundle:9a05e7d7303729ae8bcfb4e0e6b2f596de2ebcc5ee924ebbd266710515b833e4",
+      "text": "九月，她又在巴兰基亚拿到一座WTA一百二十五级别冠军。所以，香港这次，准确地说，是巡回赛单打首冠。她已经拿过不少奖杯，这一座，却有不同的分量。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "9月,他又在巴兰吉亚拿到一座WTA125级别冠军。所以,香港这次准确地说是巡回赛单打手冠。他已经拿过不少奖杯,这一座却有不同的分量。"
+      },
+      "polyphones": [
+        {
+          "index": 68,
+          "char": "分",
+          "word": "分量",
+          "intended": "fen4",
+          "wrong": [
+            "fen1"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fen1",
+              "verdict": "correct",
+              "score": 0.318,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "忿愤粪"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 13.715,
+        "cps": 4.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九月 ｜ 她 ｜ 又 ｜ 在 ｜ 巴兰基亚 ｜ 拿 ｜ 到 ｜ 一 ｜ 座 ｜ WTA ｜ 一百二十五 ｜ 级别 ｜ 冠军 ｜ 所以 ｜ 香港 ｜ 这次 ｜ 准确 ｜ 地 ｜ 说 ｜ 是 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 首冠 ｜ 她 ｜ 已经 ｜ 拿 ｜ 过 ｜ 不少 ｜ 奖杯 ｜ 这 ｜ 一 ｜ 座 ｜ 却 ｜ 有 ｜ 不同 ｜ 的 ｜ 分量"
+      }
+    },
+    {
+      "id": "bundle:b130200c97ac07e19a08fefa00b999c5c0c808d7ddecb7591eae2c6f5a94da48",
+      "text": "五场胜利，一盘未失。刘婧文终于拿到巡回赛单打首冠。那个十七岁在温网赢球的女孩，经历过暂停，也经历过重新出发。今天，她亲吻了这只奖杯。这个故事里，你更佩服夺冠的那一分，还是那些把自己带回球场的日子？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 87,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "无场胜利,亦盘未失。刘婧文终于拿到巡回赛单打手冠。那个17岁在温网赢球的女孩,经历过暂停,也经历过重新出发。今天,她亲吻了这支奖杯。这个故事里,你更佩服夺冠的那一分,还是那些把自己带回球场的日子。"
+      },
+      "polyphones": [
+        {
+          "index": 49,
+          "char": "重",
+          "word": "过重",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.47,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        },
+        {
+          "index": 52,
+          "char": "发",
+          "word": "出发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 83,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.304,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 87,
+        "speech_s": 19.682,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五场 ｜ 胜利 ｜ 一 ｜ 盘 ｜ 未 ｜ 失 ｜ 刘婧文 ｜ 终于 ｜ 拿 ｜ 到 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 首冠 ｜ 那个 ｜ 十七岁 ｜ 在 ｜ 温 ｜ 网 ｜ 赢 ｜ 球 ｜ 的 ｜ 女孩 ｜ 经历 ｜ 过 ｜ 暂停 ｜ 也 ｜ 经历 ｜ 过 ｜ 重新出发 ｜ 今天 ｜ 她 ｜ 亲吻 ｜ 了 ｜ 这 ｜ 只 ｜ 奖杯 ｜ 这个 ｜ 故事 ｜ 里 ｜ 你 ｜ 更 ｜ 佩服 ｜ 夺冠 ｜ 的 ｜ 那 ｜ 一 ｜ 分 ｜ 还是 ｜ 那些 ｜ 把 ｜ 自己 ｜ 带 ｜ 回 ｜ 球场 ｜ 的 ｜ 日子"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:dbe0f9bbd9651078caf5698220fe85a18adbaa66ccf4efa921ed5882c92aa92a",
+      "text": "到了温网，她连过资格赛，再打进生涯第一次大满贯第三轮。那天早上，她的酒店住宿到期，只能先退房；赢球后，又得重新找住处。男友提醒她：收拾行李，并不代表你就要离开比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 71,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "到了温网,他连过资格赛,再打进生涯第一次大满冠第三轮。那天早上,他的酒店住宿到期,只能先退房,赢球后又得重新找住处。难有提醒他,收拾行李,并不代表你就要离开比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 52,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 53,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.39,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        },
+        {
+          "index": 67,
+          "char": "行",
+          "word": "行李",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.505,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 71,
+        "speech_s": 15.413,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "到 ｜ 了 ｜ 温网 ｜ 她 ｜ 连 ｜ 过 ｜ 资格 ｜ 赛 ｜ 再 ｜ 打 ｜ 进 ｜ 生涯 ｜ 第一次 ｜ 大满贯 ｜ 第三轮 ｜ 那天 ｜ 早上 ｜ 她 ｜ 的 ｜ 酒店 ｜ 住宿 ｜ 到期 ｜ 只能 ｜ 先 ｜ 退房 ｜ 赢 ｜ 球 ｜ 后 ｜ 又 ｜ 得 ｜ 重新 ｜ 找 ｜ 住处 ｜ 男 ｜ 友 ｜ 提醒 ｜ 她 ｜ 收拾 ｜ 行李 ｜ 并 ｜ 不 ｜ 代表 ｜ 你 ｜ 就要 ｜ 离开 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:f1e722a1053ef847fe095554e81d552d6d36abdcb2047f2668cbdab095e71c8f",
+      "text": "香港的这座奖杯，刘婧文等到了二十六岁。九年前，她已经在温网的十八岁及以下组夺冠，还登上了这个组别的世界第一。可从那座草地球场，走到巡回赛单打首冠，中间还有一段很长的路。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 76,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "香港的这座奖杯,刘婧文等到了二十六岁。九年前,他已经在温网的十八岁及以下祖夺冠,还登上了这个祖别的世界第一。可从那座草地球场,走到循回赛单打手冠,中间还有一段很长的路。"
+      },
+      "polyphones": [
+        {
+          "index": 40,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.299,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 75,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.344,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 80,
+          "char": "长",
+          "word": "长",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.75,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 76,
+        "speech_s": 15.884,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "香港 ｜ 的 ｜ 这 ｜ 座 ｜ 奖杯 ｜ 刘婧文 ｜ 等到 ｜ 了 ｜ 二十六岁 ｜ 九年 ｜ 前 ｜ 她 ｜ 已经 ｜ 在 ｜ 温 ｜ 网 ｜ 的 ｜ 十八岁 ｜ 及 ｜ 以下 ｜ 组 ｜ 夺冠 ｜ 还 ｜ 登上 ｜ 了 ｜ 这个 ｜ 组 ｜ 别的 ｜ 世界 ｜ 第一 ｜ 可 ｜ 从 ｜ 那 ｜ 座 ｜ 草地 ｜ 球场 ｜ 走 ｜ 到 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 首冠 ｜ 中间 ｜ 还有 ｜ 一段 ｜ 很 ｜ 长 ｜ 的 ｜ 路"
+      }
+    },
+    {
+      "id": "bundle:ffacc2a899cd38484ee94255df218cbe1b02bc58b267555255ac964ec5ce0f3a",
+      "text": "一周前的广州，她止步八强。来到香港时，她的世界排名是一百零二。首轮击败普罗佐罗娃，第二轮战胜博尔特，再过森梅兹这一关。来到赛季末的这一站，她把胜利一场接一场留了下来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 74,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一周前的广州﹚它止步八强。来到香港时﹚它的世界排名是一百零二。首轮击败普罗佐罗娃﹚第二轮战胜波尔特﹚再过森梅兹这一关。来到赛季墨的这一战﹚他把胜利一场﹚接一场留了下来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 74,
+        "speech_s": 16.474,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一周 ｜ 前 ｜ 的 ｜ 广州 ｜ 她 ｜ 止步 ｜ 八 ｜ 强 ｜ 来到 ｜ 香港 ｜ 时 ｜ 她 ｜ 的 ｜ 世界 ｜ 排名 ｜ 是 ｜ 一百零二 ｜ 首轮 ｜ 击败 ｜ 普罗佐罗娃 ｜ 第二轮 ｜ 战胜 ｜ 博尔特 ｜ 再 ｜ 过 ｜ 森梅兹 ｜ 这 ｜ 一 ｜ 关 ｜ 来到 ｜ 赛季 ｜ 末 ｜ 的 ｜ 这 ｜ 一 ｜ 站 ｜ 她 ｜ 把 ｜ 胜利 ｜ 一 ｜ 场 ｜ 接 ｜ 一 ｜ 场 ｜ 留 ｜ 了 ｜ 下来"
+      }
+    }
+  ]
+}
