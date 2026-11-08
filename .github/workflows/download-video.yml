@@ -96,6 +96,21 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
           fi
 
+      - name: Inspect official Liu story source candidates
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          ARGS=(--js-runtimes node --flat-playlist --dump-single-json --playlist-end 30)
+          if [ -n "$YT_COOKIES" ]; then ARGS+=(--cookies "$YT_COOKIES"); fi
+          yt-dlp "${ARGS[@]}" "https://www.youtube.com/@WTA/videos" > "$RUNNER_TEMP/wta-official-candidates.json"
+          python - "$RUNNER_TEMP/wta-official-candidates.json" <<'PYMETA'
+          import json,sys
+          j=json.load(open(sys.argv[1]))
+          print('OFFICIAL_CHANNEL', j.get('channel_id'),j.get('channel'))
+          for x in j.get('entries',[]):
+              print('OFFICIAL_VIDEO',x.get('id'),x.get('title'),x.get('duration'))
+          PYMETA
+
       - name: 解析并下载原片
         id: video
         env:
