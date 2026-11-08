@@ -60,7 +60,7 @@ function bolt(pts,k,col,o=1,jit=0.06,seed=1){ const cc=new THREE.Color(col); con
     const s=f*n, a=Math.floor(Math.min(s,n-1e-6)), w=s-a; const p=pts[a].clone().lerp(pts[a+1],w); const h=Math.sin((i+seed*31)*12.9898)*43758.5453; const r=(h-Math.floor(h))-0.5;
     cset(pt,i,p.x+r*jit,p.y+r*jit*0.7,p.z-r*jit,cc.r,cc.g,cc.b,o*(0.35+0.65*ss(k-0.25,k,f))); } cdone(pt); }
 // 镜头空间里的一条横向进度条（look() 之后调）
-function bar(col,x0,x1,y,o,w=10,d=9){ const l=ln(col,w); setLine(l,[hp(x0,y,d),hp(Math.abs(x1-x0)<0.001?x0+0.001:x1,y,d)]); l.material.opacity=o; return l; }   // x1 可以在 x0 左边（往左长）
+function bar(col,x0,x1,y,o,w=10,d=9){ const l=ln(col,w); setLine(l,[hp(x0,y,d),hp(Math.abs(x1-x0)<0.001?x0+0.001:x1,y,d)]); l.material.opacity=o; l.material.depthTest=false; l.renderOrder=20; return l; }   // HUD 条不被场地挡（俯视球场时，镜头前 9 m 已在地面以下）   // x1 可以在 x0 左边（往左长）
 function lab(k,str,x,y,o,opt={}){ const t=tx(k,str,Object.assign({color:'#e8f4ff',size:0.34,glow:CYAN},opt)); if(x!==null) hud(t,x,y,opt.d||9); op(t,o); return t; }   // x=null：挂在世界坐标上（调用方自己设 position）
 
 // ---------- 1 钩子：上海夜场，辛纳抽筋倒地 → 水、盐、香蕉飞来 → 一滴腌黄瓜汁击碎它们 → 85 秒 vs 还在胃里 → 管住了什么？ ----------
@@ -250,8 +250,8 @@ function shotSalt(u,D){
   cdone(pt);
   lab('slK',T('17 岁网球选手 · 每小时出汗 2.5 升','17-year-old tennis player · sweats 2.5 L per hour'),0,2.7,ss(KD,KD+0.6,u),{size:0.3,plate:true});
   const o=ss(LS,LS+0.6,u)*(1-ss(HM-0.4,HM,u));
-  bar(SALT,1.2,1.2+2.8*0.52,-1.9,o,14); bar(SALT,1.2+2.8*0.52,1.2+2.8*1.03,-1.9,o*0.35,14); bar(0x9fb8d0,1.2,1.2+2.8,-2.6,o*0.7,14);
-  lab('slA',T('打 1 小时，汗里丢的钠（约 90 mmol）','sodium lost in 1 hour of sweat (~90 mmol)'),2.6,-1.45,o,{size:0.28}); lab('slB',T('他一天饮食里的钠（87–174 mmol）','sodium in his whole day of food (87–174 mmol)'),2.6,-3.0,o,{size:0.28,color:'#aab8c8'});
+  bar(SALT,1.2,1.2+2.8*0.52,-1.15,o,14); bar(SALT,1.2+2.8*0.52,1.2+2.8*1.03,-1.15,o*0.35,14); bar(0x9fb8d0,1.2,1.2+2.8,-2.15,o*0.7,14);
+  lab('slA',T('打 1 小时，汗里丢的钠（约 90 mmol）','sodium lost in 1 hour of sweat (~90 mmol)'),2.6,-0.75,o,{size:0.28}); lab('slB',T('他一天饮食里的钠（87–174 mmol）','sodium in his whole day of food (87–174 mmol)'),2.6,-1.75,o,{size:0.28,color:'#aab8c8'});
   lab('slF',T('加盐以后，不再抽筋','after adding salt: no more cramps'),-2.4,-2.4,ss(FX,FX+0.5,u)*(1-ss(HM-0.4,HM,u)),{size:0.32,color:'#ffffff'});
   if(u>FX){ const C=calfOf(H); const g=gs(CY,0.8,0.5*ss(FX,FX+0.5,u)); g.position.copy(C); }
   lab('slH',T('又湿又热、汗多又咸 → 盐确实要紧','hot, humid, heavy salty sweat → salt really matters'),0,-2.4,ss(HM,HM+0.5,u),{size:0.32,color:'#ffd27a',glow:GOLD});
