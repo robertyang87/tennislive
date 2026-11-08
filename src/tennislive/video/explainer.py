@@ -12819,7 +12819,7 @@ _DECIMAL_STOP = "分半刻钟点"
 # 和「一千六百人」的千，靠上下文是个会误判的判据（和 `_DECIMAL_STOP` 上面
 # 那段「钟点 vs 小数」同一个教训）；而「凡千/百后面不跟量词就不转」会把
 # 「三千米」「五百强」这类真数放掉。所以取最窄的那一刀：词表里的词逐个
-# 都是从成语/固定说法里挑的、里面的数**永远**不是计数；新撞上一个再往表里
+# 都是成语、固定说法或专名，里面的数**永远**不是计数；新撞上一个再往表里
 # 加一个，和 `_TYPO_SAFE`、这文件里「一号种」「百分点」那几个卡死形状的
 # 挡法同一路数。判据 `test_成语里的千百十是修辞不是数` 两头都钉。
 _FIGURATIVE_NUMERAL_WORDS = (
@@ -12833,6 +12833,9 @@ _FIGURATIVE_NUMERAL_WORDS = (
     # 更糟，「抢十五比零」渲成了「抢105比0」（2026-10-27 venus-why-not-retire-2026
     # 渲完抽帧才看见）。判据 `test_抢十是赛制名不是数`。
     "抢十",
+    # Thousand Oaks is Liu's hometown: 千 is part of a proper place name,
+    # not a standalone count. Keep the same narrow position-based protection.
+    "千橡市",
 )
 
 
@@ -13041,7 +13044,7 @@ def arabic_numerals(text: str) -> str:
         if value is None:
             return m.group(0)
         if _figurative_word_covers(text, m.start()):
-            # 成语/固定词里的十百千是修辞不是计数（「千真万确」），换成
+            # 固定词或专名里的十百千不作计数（「千真万确」「千橡市」），换成
             # 阿拉伯数字就是屏幕上的错字。词表与判据见 `_FIGURATIVE_NUMERAL_WORDS`。
             return m.group(0)
         if nxt == "几":

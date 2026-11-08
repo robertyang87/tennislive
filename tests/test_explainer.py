@@ -8,6 +8,7 @@ from unittest import mock
 
 import pytest
 
+
 from tennislive.zh.tts_fake_words import FAKE_WORDS
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
@@ -4857,3 +4858,9 @@ def test_塞伦多洛全名不误报而同句错姓氏仍报错():
     hits = scan(full + "，" + wrong + "。")
     assert ("塞伦多罗", "塞伦多洛") in hits
     assert (wrong, full) in hits
+
+def test_千橡市是地名而不是计数():
+    from tennislive.video.explainer import arabic_numerals
+    assert arabic_numerals("她出生在美国加州的千橡市，五岁开始打球") == "她出生在美国加州的千橡市，5岁开始打球"
+    assert arabic_numerals("两千名观众来自千橡市") == "2000名观众来自千橡市"
+
