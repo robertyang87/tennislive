@@ -1,9 +1,9 @@
-"""vibetennis EP11 抽筋，多半不是缺盐：字幕与出处叠加层（VT_LANG=zh|en）。
+"""vibetennis EP11 阻力危机：字幕与出处叠加层（VT_LANG=zh|en）。
 
 用法：python3 overlay.py <3D 母带.mp4 或 concat 列表.txt> <输出.mp4> <分段锚点.json ...>；python3 overlay.py still <静帧.jpg ...>
 通用函数（字体、字幕框、品牌标、span）沿用 EP07；文案时间跟着 narration.json 的 at 走（plan.py 排定）。
 3D 场景里已经有标签（计时条、油门刹车、人群数据、盐派），这里只补**画面上没有的上下文**，统一放底部。
-每一条都只讲 papers/vibetennis-cramp-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
+每一条都只讲 papers/vibetennis-fuzz-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
 """
 import skia, numpy as np, math, json, sys, subprocess, glob, os
 W,H,FPS=1920,1080,30
@@ -192,9 +192,8 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('p1',0.6,None,tr("一项 10 人、电刺激诱发的小实验（Miller 2010）\n腌黄瓜汁止抽筋，还没有被反复验证","Small study: 10 men, cramps induced electrically\n(Miller 2010) — not yet replicated"),TOP),
-('b3',0.4,None,tr("目前更受支持的假说，还不是定论\n（Giuriato 2018 综述了 69 篇研究）","The leading hypothesis, not a settled fact\n(Giuriato 2018 reviewed 69 studies)"),TOP),
-('n2',0.3,None,tr("评论区说说：你抽筋的时候，是怎么缓过来的？","Tell us: when you cramp,\nhow do you get out of it?"),BOT),
+('h1',2.4,None,tr("按阻力公式推算：200 km/h 的发球飞过 23.77 米\n不计重力、落地与旋转；光滑球的阻力系数取 0.5 或 0.1","Drag-law estimate: a 200 km/h serve over 23.77 m\nno gravity, bounce or spin; smooth-ball Cd 0.5 or 0.1"),('s',960,1008,C,30)),
+('n2',0.3,None,tr("评论区说说：你发球前，会挑球吗？","Tell us: do you pick your ball before serving?"),BOT),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
@@ -202,16 +201,16 @@ def sec_of(t):
         if s['t0']<=t<s['t1']: return s
     return TL['sections'][-1]
 NOTE={  # 每段底部的出处
- 'hook':tr("tennis.com · Sky Sports（2025 上海大师赛）· Miller 2010 · 动作为示意","tennis.com · Sky Sports (2025 Shanghai Masters) · Miller 2010 · motion schematic"),
- 'camps':tr("Schwellnus 2009 · Giuriato 2018 · Minetto 2013","Schwellnus 2009 · Giuriato 2018 · Minetto 2013"),
- 'pickle':tr("Miller 等 2010（Med Sci Sports Exerc；J Athl Train）· 解剖为示意","Miller et al. 2010 (Med Sci Sports Exerc; J Athl Train) · anatomy schematic"),
- 'brake':tr("Giuriato 2018 · Schwellnus 2009 · Minetto 2013 · 解剖为示意","Giuriato 2018 · Schwellnus 2009 · Minetto 2013 · anatomy schematic"),
- 'stretch':tr("Giuriato 2018 · Schwellnus 2009 · 解剖为示意","Giuriato 2018 · Schwellnus 2009 · anatomy schematic"),
- 'data':tr("Schwellnus 2011 · Shang 2011 · Braulick 2013 · Miller 2012","Schwellnus 2011 · Shang 2011 · Braulick 2013 · Miller 2012"),
- 'salt':tr("Bergeron 1996 · Bergeron 2003 · 动作为示意","Bergeron 1996 · Bergeron 2003 · motion schematic"),
- 'back':tr("tennis.com · tennis365（2023 法网）· Sky Sports（2025 上海）· 动作为示意","tennis.com · tennis365 (2023 Roland Garros) · Sky Sports (2025 Shanghai) · motion schematic")}
-CHAP={'camps':("01",tr("两种说法","TWO THEORIES")),'pickle':("02",tr("腌黄瓜汁","PICKLE JUICE")),'brake':("03",tr("油门与刹车","ACCELERATOR & BRAKE")),
- 'stretch':("04",tr("拉伸","STRETCH")),'data':("05",tr("数据","THE DATA")),'salt':("06",tr("盐派","THE SALT CAMP")),'back':("07",tr("名场面","ON COURT")),'end':("08",tr("结论","CONCLUSION"))}
+ 'hook':tr("阻力公式推算 · Cross（悉尼大学）· RMIT 2004 · 流场为示意","drag-law calculation · Cross (Univ. of Sydney) · RMIT 2004 · flow is schematic"),
+ 'eiffel':tr("Ahlborn 1931（NACA TM-653）· Cross · Asai 2007 · 流场为示意","Ahlborn 1931 (NACA TM-653) · Cross · Asai 2007 · flow is schematic"),
+ 'layer':tr("Mehta 1985 · Cross · 流场为示意","Mehta 1985 · Cross · flow is schematic"),
+ 'golf':tr("Mehta 1985 · Cross · 曲线为示意","Mehta 1985 · Cross · curves schematic"),
+ 'football':tr("Asai 2007（Sports Engineering）· 流场为示意","Asai 2007 (Sports Engineering) · flow is schematic"),
+ 'tennis':tr("Alam, Watkins & Subic 2004（RMIT）· Cross · Mehta, Alam & Subic 2008 · 曲线为示意","Alam, Watkins & Subic 2004 (RMIT) · Cross · Mehta, Alam & Subic 2008 · curves schematic"),
+ 'fluff':tr("Nakajima 2017 · Goodwill & Haake 2004 · LA Times 2022 · NZ Herald 2024","Nakajima 2017 · Goodwill & Haake 2004 · LA Times 2022 · NZ Herald 2024"),
+ 'itf':tr("ITF 网球规则附录 I · Irish Times 2001 · Physics World 1999","ITF Rules of Tennis, Appendix I · Irish Times 2001 · Physics World 1999")}
+CHAP={'eiffel':("01",tr("阻力危机","DRAG CRISIS")),'layer':("02",tr("边界层","BOUNDARY LAYER")),'golf':("03",tr("高尔夫","GOLF")),'football':("04",tr("足球","FOOTBALL")),
+ 'tennis':("05",tr("网球","TENNIS")),'fluff':("06",tr("挑球","PICKING A BALL")),'itf':("07",tr("大球","THE BIG BALL")),'end':("08",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return
@@ -221,7 +220,7 @@ def draw(c,t,an):
     brand(c); chapter(c,t); s=sec_of(t); u=t-s['t0']; a=min(1,u/0.6,(s['t1']-t)/0.4)
     if s['name'] in NOTE: text(c,NOTE[s['name']],960,1050,18,GRAY,a*0.9,SANSR)
     if s['name']=='end' and u>2:
-        text(c,tr("资料：Miller 2010 · Schwellnus 2011 · Braulick 2013 · Giuriato 2018 · Bergeron 1996 · 详见文案","Sources: Miller 2010 · Schwellnus 2011 · Braulick 2013 · Giuriato 2018 · Bergeron 1996 · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
+        text(c,tr("资料：Cross · Mehta 1985/2008 · Alam 等 2004 · Asai 2007 · ITF 规则 · 详见文案","Sources: Cross · Mehta 1985/2008 · Alam et al. 2004 · Asai 2007 · ITF Rules · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
     for s0,d,txt,pl in CAPS:
         if s0<=t<s0+d+0.35: caption(c,t,s0,d,txt,pl,an)
 

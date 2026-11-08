@@ -1,0 +1,68 @@
+{
+ "slug": "vibetennis-fuzz-2026-en",
+ "_status": "EP11 英文版：3D 用 lang=en 另渲，叠加层 VT_LANG=en；无配音、无 BGM，音效＋环境底。",
+ "_column": "vibetennis 第 11 集：钩子——网球为什么要长毛？把毛剃光，同一记 200 km/h 的发球飞过一个场地长度，可能只剩约 130、也可能还剩约 180（按阻力公式推算），有毛的稳稳约 120 → 1912 年埃菲尔在风洞里发现阻力危机：光滑球的阻力系数在雷诺数约 30 万处从约 0.5 掉到约 0.1；普朗特 1914 年用一圈细线也让阻力掉了下来 → 边界层：层流早分离、尾流宽；湍流贴得更久、尾流窄 → 高尔夫用凹坑让阻力危机提前发生 → 足球卡在悬崖附近，不转时尾流忽左忽右（电梯球）→ 职业比赛 100–250 km/h 正好落在光滑球的悬崖区；绒毛把悬崖抹平，阻力系数一直约 0.6，三组测量一致 → 毛越蓬阻力越大，球员发球前挑毛不蓬的球（帕特·卡什）→ ITF 3 号球大约 6%、重量不变、给快场地与高海拔 → 结论：网球的毛是刹车，也是稳定器；你发球前会挑球吗？",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-fuzz-2026/cover/make_cover.py",
+  "hook": "Why does a tennis ball wear fuzz?\nIt’s a brake",
+  "subject": "网球",
+  "topic": "阻力危机 · 边界层 · 绒毛 · 发球",
+  "_why": "同中文版，文字英文、品牌 Tennis Jetlag。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "网球为什么偏偏要长毛？",
+  "thesis": "vibetennis 第 11 集：钩子——网球为什么要长毛？把毛剃光，同一记 200 km/h 的发球飞过一个场地长度，可能只剩约 130、也可能还剩约 180（按阻力公式推算），有毛的稳稳约 120 → 1912 年埃菲尔在风洞里发现阻力危机：光滑球的阻力系数在雷诺数约 30 万处从约 0.5 掉到约 0.1；普朗特 1914 年用一圈细线也让阻力掉了下来 → 边界层：层流早分离、尾流宽；湍流贴得更久、尾流窄 → 高尔夫用凹坑让阻力危机提前发生 → 足球卡在悬崖附近，不转时尾流忽左忽右（电梯球）→ 职业比赛 100–250 km/h 正好落在光滑球的悬崖区；绒毛把悬崖抹平，阻力系数一直约 0.6，三组测量一致 → 毛越蓬阻力越大，球员发球前挑毛不蓬的球（帕特·卡什）→ ITF 3 号球大约 6%、重量不变、给快场地与高海拔 → 结论：网球的毛是刹车，也是稳定器；你发球前会挑球吗？",
+  "beats": [
+   "钩子：剃光的球忽快忽慢，有毛的稳（按阻力公式推算）",
+   "埃菲尔 1912：阻力危机；普朗特的细线",
+   "边界层：层流早分离、尾流宽；湍流贴得久、尾流窄；雷诺数约 30 万",
+   "高尔夫：凹坑让危机提前",
+   "足球：卡在悬崖边，电梯球",
+   "网球：球速段正好在光滑球的悬崖区；绒毛抹平悬崖，约 0.6；三组测量一致",
+   "局限与反面：毛的作用机制两派说法不同；毛越蓬阻力越大、挑球",
+   "ITF 3 号球：大约 6%，迎风面积大",
+   "结论：刹车，也是稳定器；你会挑球吗？"
+  ],
+  "sources": [
+   "Cross《Sports ball aerodynamics》讲义（悉尼大学）",
+   "Asai 等 2007 Sports Engineering 10:101；Achenbach 1972（转引）",
+   "Mehta 1985 Annu Rev Fluid Mech 17:151；Mehta, Alam & Subic 2008 综述",
+   "Alam, Watkins & Subic 2004（RMIT 风洞）；Nakajima 等 2017；Goodwill & Haake 2004",
+   "Ahlborn 1931 NACA TM-653",
+   "ITF 网球规则附录 I；Irish Times 2001；Physics World 1999；LA Times 2022；NZ Herald 2024"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-fuzz-2026/sources.md"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "visual_standards": "照 docs/vibetennis.md 与 skills/vibetennis-production：风洞烟线（层流→湍流、分离点滑动、尾流收窄）、Cd–Re 阻力曲线（悬崖、左移、抹平）、四种球（光滑、高尔夫、足球、网球绒毛壳）、全息埃菲尔铁塔、带看台的球场；GLOW 光晕上限，glow_check --pair 全过；成片 motion_check",
+  "audio": {
+   "music": "none",
+   "_music_why": "所有者 2026-11-02：英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从 Instagram 曲库挂。",
+   "sfx": "sfx.py 合成（56 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上",
+   "loudness": "只有音效；整片 -14 LUFS / 真峰值 ≤ -1 dBTP"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "Fuzz",
+  "_summary_why": "标题 EP11.vibetennis|Fuzz（可复制标题上限 20 个字符）",
+  "lead": "Why does a tennis ball wear fuzz? In 1912 Eiffel found that a smooth ball's drag suddenly falls from about 0.5 to about 0.1 past a certain speed — the drag crisis. Golf balls use dimples to jump that cliff early; footballs sit on its edge and knuckle. Pro tennis speeds of 100–250 km/h fall right in a smooth ball's cliff zone. The felt flattens the cliff: a tennis ball's drag coefficient stays around 0.6. It's a brake — and a stabiliser.",
+  "_lead_why": "每个数字同 xhs，出处见 sources.md"
+ },
+ "lang": "en",
+ "variant_of": "vibetennis-fuzz-2026"
+}

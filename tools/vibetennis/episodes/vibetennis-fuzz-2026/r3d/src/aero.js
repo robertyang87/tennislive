@@ -58,16 +58,17 @@ const BL=(()=>{
   const footTex=(()=>{ const c=document.createElement('canvas'); c.width=1024; c.height=512; const x=c.getContext('2d'); x.fillStyle='#f4f4f4'; x.fillRect(0,0,1024,512); x.strokeStyle='#2a3240'; x.lineWidth=5;
     for(let i=0;i<8;i++){ x.beginPath(); for(let k=0;k<=64;k++){ const yy=k/64*512; const xx=i*128+40*Math.sin(yy/512*Math.PI*2+i); k?x.lineTo(xx,yy):x.moveTo(xx,yy); } x.stroke(); }
     x.beginPath(); x.moveTo(0,256); for(let k=0;k<=128;k++) x.lineTo(k*8,256+40*Math.sin(k/16)); x.stroke(); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
-  const smooth=mk(new THREE.MeshPhysicalMaterial({color:0xd6ee3a,roughness:0.25,clearcoat:1,emissive:0x2a3200,emissiveIntensity:0.2}));
-  const golf=mk(new THREE.MeshStandardMaterial({map:golfTex,roughness:0.5,emissive:0x101418,emissiveIntensity:0.2}));
+  const smooth=mk(new THREE.MeshPhysicalMaterial({color:0xb0c430,roughness:0.25,clearcoat:1,emissive:0x2a3200,emissiveIntensity:0.2}));
+  const golf=mk(new THREE.MeshStandardMaterial({map:golfTex,color:0xb8b8b8,roughness:0.5,emissive:0x101418,emissiveIntensity:0.2}));
   const foot=mk(new THREE.MeshStandardMaterial({map:footTex,roughness:0.45,emissive:0x101418,emissiveIntensity:0.2}));
-  const tennis=mk(new THREE.MeshPhysicalMaterial({map:ballTex,roughness:0.85,sheen:1,sheenColor:new THREE.Color(0xf6ff9a),emissive:0x2a3200,emissiveIntensity:0.25}));
+  const tennis=mk(new THREE.MeshPhysicalMaterial({map:ballTex,color:0xc8c8c8,roughness:0.85,sheen:1,sheenColor:new THREE.Color(0xf6ff9a),emissive:0x2a3200,emissiveIntensity:0.25}));
   // 绒毛：网球外面一层短毛（粒子壳），fuzz 0–1 控制毛的长短（磨秃＝0）
   const FZ=cloud(1800,0.035,5,g,0); let sd=31337; const rr=()=>{ sd=(sd*48271)%2147483647; return sd/2147483647; };
   const FD=[...Array(1800)].map(()=>{ const u=rr()*2-1, a=rr()*6.283, s=Math.sqrt(1-u*u); return [s*Math.cos(a),u,s*Math.sin(a),rr()]; });
-  function fuzz(c,R,amt,o,col=0xeaff80){ const cc=new THREE.Color(col); for(let i=0;i<1800;i++){ const d=FD[i]; const rr_=R*(1+amt*0.06*(0.3+0.7*d[3])); cset(FZ,i,c.x+d[0]*rr_,c.y+d[1]*rr_,c.z+d[2]*rr_,cc.r,cc.g,cc.b,o*amt*(0.4+0.6*d[3])); } cdone(FZ); }
-  const all=[smooth,golf,foot,tennis];
-  return {g,smooth,golf,foot,tennis,all,fuzz,hide(){ all.forEach(m=>{ m.visible=false; m.scale.setScalar(1); m.rotation.set(0,0,0); m.material.opacity=1; m.material.transparent=false; }); chide(FZ); }};
+  function fuzz(c,R,amt,o,col=0xeaff80){ const cc=new THREE.Color(col).multiplyScalar(0.5);   /* 光晕标准：毛是叠加发光，压一半 */ for(let i=0;i<1800;i++){ const d=FD[i]; const rr_=R*(1+amt*0.06*(0.3+0.7*d[3])); cset(FZ,i,c.x+d[0]*rr_,c.y+d[1]*rr_,c.z+d[2]*rr_,cc.r,cc.g,cc.b,o*amt*(0.4+0.6*d[3])); } cdone(FZ); }
+  const tennis2=mk(new THREE.MeshPhysicalMaterial({map:ballTex,color:0xc8c8c8,roughness:0.9,sheen:1,sheenColor:new THREE.Color(0xf6ff9a),emissive:0x2a3200,emissiveIntensity:0.25}));
+  const all=[smooth,golf,foot,tennis,tennis2];
+  return {g,smooth,golf,foot,tennis,tennis2,all,fuzz,hide(){ all.forEach(m=>{ m.visible=false; m.scale.setScalar(1); m.rotation.set(0,0,0); m.material.opacity=1; m.material.transparent=false; }); chide(FZ); }};
 })();
 function showBall(m,c,R,o=1,spin=0){ m.visible=o>0.003; m.position.copy(c); m.scale.setScalar(R); m.rotation.set(0.3,spin,0.2); m.material.transparent=o<1; m.material.opacity=o; }
 
