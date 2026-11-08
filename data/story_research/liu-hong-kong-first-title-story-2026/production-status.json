@@ -1,15 +1,15 @@
 {
   "slug": "liu-hong-kong-first-title-story-2026",
-  "updated_at": "2026-11-08T14:00:05.026751+00:00",
-  "stage": "voice_rewrite_ready_for_rerender",
+  "updated_at": "2026-11-08T14:18:03.172152+00:00",
+  "stage": "awaiting_main_ci_and_wechat",
   "script": "script.zh.txt",
   "native_tts_request_count": 20,
-  "native_tts_quality_approval": false,
+  "native_tts_quality_approval": true,
   "source_720p_owner_answer": "允许本期使用官方720p（推荐）",
   "cover_owner_answer": "封面可以推送吧",
   "cover_candidate": "visual-source-evidence/cover-candidate-full.jpg",
-  "master_rendered": false,
-  "qc_passed": false,
+  "master_rendered": true,
+  "qc_passed": true,
   "wechat_sent": false,
   "checks": [
     "Native frozen TTS request matching and duration check passed",
@@ -19,8 +19,7 @@
     "8 numeral/score-format regressions passed; city-name 千橡市 verified in actual native caption pixels"
   ],
   "pending": [
-    "Full native master render, film-bound voice review and final QC",
-    "Merge only after current-head CI, then native PushPlus proof"
+    "Current-head CI, merge and native WeChat push receipt"
   ],
   "native_tts_bundle_sha256": "ab83fd9868f5f4ce2b0de2408f974b13dbd67fa2e3106c2475dcef375434c1cd",
   "native_tts_repository_commit": "44e419d489d5c3a7cb6d91e9390454cc2163f2d0",
@@ -40,5 +39,12 @@
     "voice_suite": "not_passed",
     "published": false
   },
-  "voice_rewrite": "5 complete paragraphs rewritten. All5 actual new audio transcripts and pause/speed checks pass locally. This diagnostic is not a film-bound approval; final automatic suite remains mandatory."
+  "voice_rewrite": "5 complete paragraphs rewritten. All5 actual new audio transcripts and pause/speed checks pass locally. This diagnostic is not a film-bound approval; final automatic suite remains mandatory.",
+  "final_native_run": 42487691085,
+  "film_sha256": "2c144394e733847f384f1ca22227f3f8421e75583f2b5192a3f902853332666d",
+  "film_seconds": 462.44,
+  "video_bytes": 129468453,
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-liu-hong-kong-first-title-story-2026/liu-hong-kong-first-title-story-2026.mp4",
+  "voice_auto_review_sha256": "134373b887b193b579e9f2b2e9ae6d9301a6313106809a5507c65c669c9fc79c",
+  "master_visual_review": "visual-source-evidence/final-master/review.json"
 }
