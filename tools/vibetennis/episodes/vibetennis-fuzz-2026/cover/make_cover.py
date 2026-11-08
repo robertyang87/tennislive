@@ -52,7 +52,7 @@ def hgrad(c,H,x0,x1,a0,a1):
 def dot(c,x,y,col,r=7): c.drawCircle(x,y,r*2.4,P(col,0.35,blur=10)); c.drawCircle(x,y,r,P(col,1))
 def leader(c,x0,y0,x1,y1,col,a=0.85): c.drawLine(x0,y0,x1,y1,P(col,a,stroke=2.2))
 
-Q2=lambda: [(T("这层毛，是一个","It’s a "),WHITE),(T("刹车","brake"),GOLD)]
+Q2=lambda: [(T("这层毛，是一个","It's a "),WHITE),(T("刹车","brake"),GOLD)]
 TL4=lambda: [("0.5 → 0.1",T("光滑球的悬崖","Smooth-ball cliff")),(T("约 30 万","~300,000"),T("悬崖在这里","Where it falls")),("0.6",T("网球：没有悬崖","Tennis: no cliff")),("+6%",T("3 号大球","Type 3 ball"))]
 def timeline(c,x0,x1,y,size=26):
     n=4; xs=[x0+(x1-x0)*i/(n-1) for i in range(n)]
@@ -61,7 +61,7 @@ def timeline(c,x0,x1,y,size=26):
         dot(c,x,y,GOLD,6); text(c,yr,x,y-22,size*0.95,GOLD2,1,MONO,align='c',shadow=0.4)
         text(c,lab,x,y+16+size,size,WHITE,0.95,SANS,align='c')
 BIG=lambda: T("0.6","0.6")
-CAP=lambda: T("网球的阻力系数：一直在 0.6 上下，没有阻力危机","A tennis ball’s drag coefficient stays near 0.6: no drag crisis")
+CAP=lambda: T("网球的阻力系数：一直在 0.6 上下，没有阻力危机","A tennis ball's drag coefficient stays near 0.6: no drag crisis")
 NOTE=lambda: T("Cross · Asai 2007 · Alam 等 2004 · Mehta 2008 · ITF","Cross · Asai 2007 · Alam et al. 2004 · Mehta 2008 · ITF")
 L1=lambda: T("网球为什么偏偏要长毛？","Why does a tennis ball wear fuzz?")
 def make(opt,kind,out):
@@ -70,16 +70,16 @@ def make(opt,kind,out):
     s=W/1080 if kind!='wide' else 1.0
     c.save(); c.scale(s,s); w,h=W/s,H/s
     if kind=='wide':
-        hgrad(c,h,0,1250,0.9,0.1); grad(c,w,0,160,0.5,0)
+        hgrad(c,h,0,1250,0.9,0); grad(c,w,0,160,0.5,0)
         brand(c,60,92,34,44)
         text(c,L1(),80,300,T(118,92),WHITE,1,SANS); rich(c,Q2(),80,430,T(118,92),align='l',glow=0)
         timeline(c,130,1030,580,26)
         text(c,BIG(),80,820,T(92,92),GOLD,1,SANS,glow=0.25); text(c,CAP(),84,870,28,WHITE,0.95,SANS); text(c,NOTE(),84,912,20,GRAY,0.95,MONO,shadow=0)
     else:
         yb=h-210   # 底部数字块：tall h=1440 → 1230，vert h=1920 → 1710
-        grad(c,w,0,h*0.5,0.92,0.15); grad(c,w,h*0.62,h,0.1,0.92)
+        grad(c,w,0,h*0.5,0.92,0); grad(c,w,h*0.62,h,0,0.92)
         brand(c)
-        text(c,L1(),70,300,T(104,92),WHITE,1,SANS); rich(c,Q2(),70,430,T(104,92),align="l",glow=0)
+        text(c,L1(),70,300,T(86,60),WHITE,1,SANS); rich(c,Q2(),70,420,T(86,80),align="l",glow=0)
         timeline(c,130,950,560,28)
         text(c,BIG(),70,yb,T(104,104),GOLD,1,SANS,glow=0.25); text(c,CAP(),74,yb+60,T(28,25),WHITE,0.95,SANS); text(c,NOTE(),74,yb+106,T(20,19),GRAY,0.95,MONO,shadow=0)
     c.restore()
