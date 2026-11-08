@@ -1,0 +1,113 @@
+{
+  "url": "https://github.com/robertyang87/tennislive/releases/download/source-X3fBK3y5TXQ/X3fBK3y5TXQ.mp4",
+  "width": 1920,
+  "height": 1080,
+  "duration": 723.069388,
+  "fps": "25/1",
+  "fps_value": 25.0,
+  "source_sha256": "e5052395ad180b593ec56d5ce38655069d795301028e267c972d752641798510",
+  "board": {
+    "version": 1,
+    "fps": 5,
+    "t0": 146.9,
+    "frames": 78,
+    "source_window": [
+      146.9,
+      162.5
+    ],
+    "scans": [
+      {
+        "box": [
+          87,
+          825,
+          670,
+          993
+        ],
+        "frames": 78,
+        "profiles": {
+          "wta": {
+            "present": 38,
+            "unresolved": 0,
+            "runs": [
+              [
+                6,
+                597,
+                597
+              ],
+              [
+                1,
+                596,
+                596
+              ],
+              [
+                1,
+                597,
+                597
+              ],
+              [
+                1,
+                597,
+                596
+              ],
+              [
+                19,
+                597,
+                597
+              ],
+              [
+                8,
+                596,
+                596
+              ],
+              [
+                1,
+                562,
+                562
+              ],
+              [
+                1,
+                572,
+                572
+              ],
+              [
+                40,
+                null,
+                null
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "coordinate_space": [
+      1920,
+      1080
+    ],
+    "display_transform": "Native conform equivalent: proportional Lanczos scale 1280×720 to1920×1080; QF source is already1920×1080",
+    "input_source_sha256": "e5052395ad180b593ec56d5ce38655069d795301028e267c972d752641798510",
+    "measured_derivative_sha256": "01c428019321b6d6d50e362f23d4eafa9e4836c09461bf0c7ee1d9c50512448c",
+    "measured_derivative_command": [
+      "ffmpeg",
+      "-v",
+      "error",
+      "-y",
+      "-threads",
+      "1",
+      "-ss",
+      "146.9",
+      "-i",
+      "/workspace/liu-hong-kong-story/media/X3fBK3y5TXQ.mp4",
+      "-t",
+      "15.599999999999994",
+      "-vf",
+      "fps=5,scale=1920:1080:flags=lanczos",
+      "-an",
+      "-c:v",
+      "ffv1",
+      "-threads",
+      "1",
+      "/workspace/liu-hong-kong-story/board-calibration-qf.mkv"
+    ],
+    "scope": "Only selected source window, actual frames at5fps; not a full-source scene/point scan"
+  }
+}
