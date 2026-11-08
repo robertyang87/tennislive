@@ -182,7 +182,7 @@ function shotBrake(u,D){
   lab('bkTa',T('油门','accelerator'),1.8,-1.9,o,{size:0.32,color:'#ffd27a'}); lab('bkTb',T('刹车','brake'),1.8,-2.45,o,{size:0.32,color:'#9fd0ff'});
   lab('bkT',T('肌肉累了','fatigue'),3.7,-1.3,o*(1-ss(SM-0.4,SM,u)),{size:0.36});
   if(u>LK){ const k=u-LK; const c=V(0,1.4,-0.6); shockRing(c,k/1.0,RD,3,0.9,true); shockRing(c,(k-0.2)/1.3,RD,4.5,0.5,true); }
-  const lk=bt('bkLk',T('锁死','LOCKED'),{size:0.9,glow:RED,fx:'particles'}); hud(lk,2.4,1.6,9); lk.update(u,LK,D-0.1);
+  const lk=bt('bkLk',T('锁死','LOCKED'),{size:0.9,glow:'rgba(255,90,74,0.5)',fx:'particles'}); hud(lk,2.4,1.6,9); lk.update(u,LK,D-0.1,0.78);
 }
 
 // ---------- 5 拉伸：勾脚尖 → 跟腱被拉紧 → 刹车（蓝）压过油门（红）→ 肌肉松开 ----------
@@ -191,9 +191,9 @@ function shotStretch(u,D){
   const f=ss(FX-0.3,FX+1.0,u), r=ss(FX+0.3,RL+1.2,u);
   LEG.st.op=1; LEG.st.ankle=lerp(-0.35,0.55,f); LEG.st.ib=lerp(0.08,1,f); LEG.st.ia=lerp(1,0.3,r); LEG.st.mot=lerp(1,0.06,r); LEG.st.c=lerp(1,0,r); LEG.update(u);
   legCam(u,2.05,2.45,D,0.8,12); rims(BLU,GO,4);
-  if(u>FX){ const c=V(0,-1.2,-0.58); const g=gs(BLU,1.4,0.6*f); g.position.copy(c); shockRing(c,(u-FX)/1.2,BLU,2.2,0.8,true); }
+  if(u>FX){ const c=V(0,-1.2,-0.58); const g=gs(BLU,0.8,0.3*f); g.position.copy(c); shockRing(c,(u-FX)/1.2,BLU,2.2,0.6,true); }
   const a=lab('stA',T('勾脚尖 → 跟腱拉紧','toes pulled up → tendon stretched'),-2.6,-1.6,ss(FX,FX+0.5,u),{size:0.32,color:'#cfe4ff',glow:CYAN});
-  const t=bt('stT',T('刹车又起作用了','The brake kicks back in'),{size:0.8,glow:CYAN,fx:'particles'}); hud(t,0,2.0,9); t.update(u,RL,D-0.1);
+  const t=bt('stT',T('刹车又起作用了','The brake kicks back in'),{size:0.8,glow:'rgba(79,227,255,0.45)',fx:'particles'}); hud(t,0,2.0,9); t.update(u,RL,D-0.1,0.78);
 }
 
 // ---------- 6 数据：铁人三项 209 个光点，约五分之一抽筋 → 两组电解质、体重变化一样高 → 拉开的是速度 → 脱水 4.7% 也没变容易 → 香蕉太慢 ----------
@@ -285,7 +285,7 @@ function shotEnd(u,D){
   const P1=ev('p1',5.9), P2=ev('p2',10.0), QQ=ev('q',12.1);
   LEG.st.op=1-ss(QQ-0.6,QQ,u); const r=ss(P1,P1+2.0,u); LEG.st.c=lerp(1,0,r); LEG.st.ia=lerp(1,0.3,r); LEG.st.ib=lerp(0.1,0.8,r); LEG.st.mot=lerp(1,0.1,r); LEG.st.ankle=lerp(-0.35,0.5,r); LEG.update(u);
   legCam(u,1.7,2.1,D,1.5,13); rims(CY,GO,4);
-  const t=bt('ndT',T('油门踩死 · 刹车失灵','Accelerator stuck · brake failing'),{size:0.85,glow:RED,fx:'particles'}); hud(t,0,2.2,9); t.update(u,0.5,QQ-0.4);
+  const t=bt('ndT',T('油门踩死 · 刹车失灵','Accelerator stuck · brake failing'),{size:0.85,glow:'rgba(255,90,74,0.45)',fx:'particles'}); hud(t,0,2.2,9); t.update(u,0.5,QQ-0.4,0.78);
   lab('ndA',T('① 先拉伸','① stretch first'),-2.6,-1.9,ss(P1,P1+0.5,u)*(1-ss(QQ-0.4,QQ,u)),{size:0.36,color:'#9fd0ff',glow:CYAN});
   lab('ndB',T('② 汗多又咸的人，再补盐','② heavy, salty sweaters: add salt'),1.6,-1.9,ss(P2,P2+0.5,u)*(1-ss(QQ-0.4,QQ,u)),{size:0.36,color:'#ffd27a',glow:GOLD});
   const q=bt('ndQ',T('你抽筋的时候，是怎么缓过来的？','When you cramp, how do you get out of it?'),{size:0.85,glow:CYAN,fx:'particles'}); hud(q,0,0.2,9); q.update(u,QQ,D+5);

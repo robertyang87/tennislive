@@ -1,0 +1,66 @@
+{
+ "slug": "vibetennis-cramp-2026",
+ "_status": "EP11 中文版：所有者 2026-11-08 从四个「大家以为 A，其实是 B」候选里选定「抽筋多半不是缺盐」，一气呵成；资料包 papers/vibetennis-cramp-2026/sources.md（研究代理读 PubMed 摘要与能打开的全文）；配音 35 句；时间轴 200.35 s；3D 九段（透明小腿、神经冲动、消化道为新做）；渲前静帧自审、glow_check --pair 全过。",
+ "_column": "vibetennis 第 11 集：钩子 2025 上海大师赛辛纳抽筋退赛，大家第一反应是缺水缺盐 → 可实验里一口腌黄瓜汁 85 秒止住抽筋（水 134 秒），那时它大部分还在胃里、血液里的盐没变 → 两种说法：脱水／电解质 vs 神经肌肉控制 → 机制：肌梭是油门、高尔基腱器是刹车，累了油门越来越灵、刹车越来越弱，运动神经停不下来 → 拉伸为什么立刻有效 → 数据：铁人三项 209 人约五分之一抽筋，抽的和没抽的电解质、体重变化没差别，差在比赛更快和以前抽过；脱水 4.7% 也没让抽筋更容易；香蕉 30–60 分钟才升一点血钾 → 盐派：17 岁网球选手一小时汗里丢的钠有他一天饮食的一半甚至更多，加盐后不再抽 → 阿尔卡拉斯：最主要的是紧张；辛纳那天又湿又热，也许两样都有 → 结论：油门踩死、刹车失灵，先拉伸；你抽筋时怎么缓过来？",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-cramp-2026/cover/make_cover.py",
+  "hook": "抽筋了递香蕉、递盐水？\n85 秒止住它的，是一口腌黄瓜汁",
+  "subject": "辛纳",
+  "topic": "抽筋 · 神经 · 盐 · 拉伸",
+  "_why": "沿用 B（杂志信息图）：两行问句＋四格（85 秒／134 秒／4.7%／30–60 分钟）＋大数字「85 秒」；底图是钩子段辛纳倒地、腌黄瓜汁砸下的无字帧。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "抽筋，真的是因为缺盐吗？",
+  "thesis": "vibetennis 第 11 集：钩子 2025 上海大师赛辛纳抽筋退赛，大家第一反应是缺水缺盐 → 可实验里一口腌黄瓜汁 85 秒止住抽筋（水 134 秒），那时它大部分还在胃里、血液里的盐没变 → 两种说法：脱水／电解质 vs 神经肌肉控制 → 机制：肌梭是油门、高尔基腱器是刹车，累了油门越来越灵、刹车越来越弱，运动神经停不下来 → 拉伸为什么立刻有效 → 数据：铁人三项 209 人约五分之一抽筋，抽的和没抽的电解质、体重变化没差别，差在比赛更快和以前抽过；脱水 4.7% 也没让抽筋更容易；香蕉 30–60 分钟才升一点血钾 → 盐派：17 岁网球选手一小时汗里丢的钠有他一天饮食的一半甚至更多，加盐后不再抽 → 阿尔卡拉斯：最主要的是紧张；辛纳那天又湿又热，也许两样都有 → 结论：油门踩死、刹车失灵，先拉伸；你抽筋时怎么缓过来？",
+  "beats": [
+   "钩子：辛纳上海抽筋退赛；腌黄瓜汁 85 秒止抽筋，快到来不及吸收",
+   "两种说法：脱水／电解质 vs 神经肌肉控制",
+   "实验：10 人电刺激诱发，水 134 秒、腌黄瓜汁 85 秒；胃里没动、血盐没变；研究者推测神经反射",
+   "机制：肌梭油门、腱器刹车；累了油门变灵刹车变弱，运动神经停不下来",
+   "拉伸：拉紧肌腱，刹车回来",
+   "数据：铁人三项电解质、体重变化无差别，差在速度与既往；脱水 4.7% 也没变容易；香蕉太慢",
+   "反方（局限）：咸汗网球选手加盐有效；湿热天盐确实要紧",
+   "名场面：阿尔卡拉斯紧张；辛纳也许两样都有",
+   "结论：先拉伸，汗多又咸再补盐；你抽筋时怎么缓过来？"
+  ],
+  "sources": [
+   "Miller 等 2010 Med Sci Sports Exerc 42(5):953；Miller 等 2010 J Athl Train 45(6):601",
+   "Schwellnus 2011 Br J Sports Med 45(8):650；Shang 2011 Clin J Sport Med；Schwellnus 2009 Br J Sports Med 综述",
+   "Braulick 等 2013 Br J Sports Med 47(11):710；Miller 2012 J Athl Train 47(6):648",
+   "Giuriato 2018 J Electromyogr Kinesiol 41:89；Minetto 2013 Exerc Sport Sci Rev",
+   "Bergeron 1996 Int J Sport Nutr；Bergeron 2003 J Sci Med Sport",
+   "tennis.com、Sky Sports（2025 上海大师赛）；tennis.com、tennis365（2023 法网半决赛）"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-cramp-2026/sources.md"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored：3D 里的锚定标签（中英两套，scene.js 的 T()）＋叠加层底部一条上下文字幕（overlay.py CAPS，只补画面上没有的出处与背景，不是逐句配音字幕）＋每节底部出处行；同 EP07",
+  "narration": "edge-tts zh-CN-YunjianNeural +18%；35 句，narration.json；会话沙箱合成；英文版不配音。",
+  "visual_standards": "照 docs/vibetennis.md 与 skills/vibetennis-production：透明小腿 X 光（肌纤维收缩变红、肌梭／高尔基腱器／脊髓、神经冲动粒子）、嘴到腿的神经反射闪电 vs 消化道、腌黄瓜汁砸碎三样常识、带看台的上海夜场与全息人体、粒子人群数据；GLOW 光晕上限，glow_check --pair 全过；成片 motion_check",
+  "audio": {
+   "music": "We Never (Remix) — Hi Noise & Qiu Cheng（同 EP04–EP10）；中文版第 8 小节线落在腌黄瓜汁砸下那一刻；英文版不带 BGM（环境底）",
+   "sfx": "sfx.py 合成，钉在 r3d/timeline.json 的 sec.ev 和 scene.js 动画节点上",
+   "loudness": "同 EP07：人声 -16 LUFS、音效 -22、BGM -26 且人声开口时再压 8 dB；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "_music_why": "所有者 2026-11-05 原话：「背景音乐沿用」。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "抽筋真相",
+  "_summary_why": "标题 EP11.vibetennis|抽筋真相",
+  "lead": "球员一抽筋，大家就说缺水缺盐。可一项实验里，一小口腌黄瓜汁 85 秒就止住抽筋（喝水要 134 秒），那时它大部分还在胃里、血液里的盐也没变。铁人三项的研究里，抽筋和不抽筋的人电解质、体重变化都没差别。目前更受支持的解释是神经的「油门」踩死、「刹车」失灵——所以先拉伸；出汗特别多特别咸的人，补盐仍然要紧。",
+  "_lead_why": "每个数字同 xhs，出处见 sources.md"
+ }
+}

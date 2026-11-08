@@ -42,7 +42,7 @@ const LEG=(()=>{
     a :C([[cordX+0.15,4.6,cordZ],[-2.2,3.9,-1.3],[-1.2,3.0,-1.0],[-0.4,2.1,-0.85],[0.1,1.3,-0.8]])};
   const NL={}; for(const k in PATH){ const l=fatLine(k==='Ib'?0x5aa8ff:k==='Ia'?0xffc24a:0xff6a55,3); setLine(l,PATH[k].getPoints(60)); l.material.opacity=0; NL[k]=l; }
   // 冲动粒子
-  const NP=600, imp=cloud(NP,0.5,22,scene,0); const ISEED=[...Array(NP)].map(()=>[rr(),rr(),rr()]);
+  const NP=600, imp=cloud(NP,0.38,18,scene,0); const ISEED=[...Array(NP)].map(()=>[rr(),rr(),rr()]);
   const st={op:0,c:0,ia:0,ib:0,mot:0,ankle:0};
   function update(t){
     G.visible=st.op>0.003; const o=st.op;
@@ -60,13 +60,13 @@ const LEG=(()=>{
       let px,py,pz; for(let s=0;s<NS;s++){ const k=s/(NS-1); const y=lerp(top,bot,k); const b=Math.sin(Math.PI*k)*bulge; const x=f.x*(1-0.7*k*k), z=f.z-b+0.02*st.c*Math.sin(t*50+f.ph);
         if(s>0){ P[q++]=px;P[q++]=py;P[q++]=pz;P[q++]=x;P[q++]=y;P[q++]=z; } px=x;py=y;pz=z; } }
     fg.attributes.position.needsUpdate=true; fibMat.opacity=o*0.55; fibMat.color.copy(col).lerp(new THREE.Color(0xffffff),0.35);
-    spMat.opacity=o*(0.35+0.65*st.ia); gtoMat.opacity=o*(0.25+0.75*st.ib); gto.rotation.y=t*0.6;
+    spMat.opacity=o*(0.35+0.65*st.ia); gtoMat.opacity=o*(0.15+0.45*st.ib); gto.rotation.y=t*0.6;
     NL.Ia.material.opacity=o*(0.25+0.6*st.ia); NL.Ib.material.opacity=o*(0.25+0.6*st.ib); NL.a.material.opacity=o*(0.25+0.6*st.mot);
     // 冲动：前 1/3 跑 Ia、中 1/3 跑 Ib、后 1/3 跑 α；rate 控制亮起的颗数
     const cs={Ia:[1,0.76,0.29],Ib:[0.35,0.66,1],a:[1,0.35,0.28]};
     for(let i=0;i<NP;i++){ const [s0,s1,s2]=ISEED[i]; const k=i<200?'Ia':i<400?'Ib':'a'; const rate=k==='Ia'?st.ia:k==='Ib'?st.ib:st.mot;
       const on=s1<rate; const sp=0.35+1.4*rate; const u=(s0+t*sp*0.5)%1; const p=PATH[k].getPointAt(u);
-      const c=cs[k]; cset(imp,i,p.x,p.y,p.z,c[0],c[1],c[2],on?o*(0.6+0.4*s2):0); }
+      const c=cs[k]; cset(imp,i,p.x,p.y,p.z,c[0]*0.75,c[1]*0.75,c[2]*0.75,on?o*(0.5+0.35*s2):0); }
     cdone(imp); }
   return {G,st,update,PATH,imp,gL,gR,sol,gto,spindle,foot,cord:new THREE.Vector3(cordX,5.0,cordZ),hide(){ st.op=0; G.visible=false; for(const k in NL) NL[k].material.opacity=0; chide(imp); fibMat.opacity=0; spMat.opacity=0; gtoMat.opacity=0; }};
 })();
