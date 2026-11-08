@@ -103,12 +103,20 @@ jobs:
           ARGS=(--js-runtimes node --flat-playlist --dump-single-json --playlist-end 30)
           if [ -n "$YT_COOKIES" ]; then ARGS+=(--cookies "$YT_COOKIES"); fi
           yt-dlp "${ARGS[@]}" "https://www.youtube.com/@WTA/videos" > "$RUNNER_TEMP/wta-official-candidates.json"
+          yt-dlp "${ARGS[@]}" "https://www.youtube.com/@WTA/shorts" > "$RUNNER_TEMP/wta-official-shorts.json"
+          yt-dlp "${ARGS[@]}" "ytsearch12:Claire Liu Wimbledon 2026 interview" > "$RUNNER_TEMP/liu-wimbledon-candidates.json"
           python - "$RUNNER_TEMP/wta-official-candidates.json" <<'PYMETA'
           import json,sys
           j=json.load(open(sys.argv[1]))
           print('OFFICIAL_CHANNEL', j.get('channel_id'),j.get('channel'))
           for x in j.get('entries',[]):
               print('OFFICIAL_VIDEO',x.get('id'),x.get('title'),x.get('duration'))
+          import pathlib
+          for file in ['wta-official-shorts.json','liu-wimbledon-candidates.json']:
+              j=json.load(open(pathlib.Path(sys.argv[1]).parent/file))
+              print('CANDIDATE_LIST',file)
+              for x in j.get('entries',[]):
+                  print('CANDIDATE_VIDEO',x.get('id'),x.get('title'),x.get('duration'),x.get('channel_id'),x.get('channel'))
           PYMETA
 
       - name: 解析并下载原片
