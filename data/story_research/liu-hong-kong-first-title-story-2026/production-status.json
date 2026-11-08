@@ -1,7 +1,7 @@
 {
   "slug": "liu-hong-kong-first-title-story-2026",
-  "updated_at": "2026-11-08T13:34:38.183780+00:00",
-  "stage": "ready_for_master_render",
+  "updated_at": "2026-11-08T14:00:05.026751+00:00",
+  "stage": "voice_rewrite_ready_for_rerender",
   "script": "script.zh.txt",
   "native_tts_request_count": 20,
   "native_tts_quality_approval": false,
@@ -22,15 +22,23 @@
     "Full native master render, film-bound voice review and final QC",
     "Merge only after current-head CI, then native PushPlus proof"
   ],
-  "native_tts_bundle_sha256": "633299b22009f68ac382bb2ebf82929cb172359c4810915e8b57f2ced3201f6f",
+  "native_tts_bundle_sha256": "ab83fd9868f5f4ce2b0de2408f974b13dbd67fa2e3106c2475dcef375434c1cd",
   "native_tts_repository_commit": "f0537c06680cc582ed2e1e3b5de0fd88cbd8eadc",
   "cover_search": "Rechecked official WTA player and latest photos: only5000×3335 trophy-kiss image; official HKTennisOpen trophy tweet contains a match graphic, excluded as a camera original.",
-  "spec_sha256": "546d3915c05ae95462a0476bee4a5ccc549b8cc0b840f25113418074e8a05e15",
+  "spec_sha256": "1d57418e615cdd541ecd7578e7ceda53ac8ee0777827eeff2f6d0a5696f2399a",
   "source_audio_review_sha256": "a4549abbf4376c1f7360a464248b44c0967bedf3bd67f45181c550ee2ad312c0",
-  "planned_body_seconds": 451.942,
+  "planned_body_seconds": 453.454,
   "native_frame_preview": "visual-source-evidence/prepared-native-frames/preview_manifest.json",
   "script_display": "review-script.zh.txt",
   "immutable_tts_transport_verified": true,
   "immutable_tts_restored_sha256": "633299b22009f68ac382bb2ebf82929cb172359c4810915e8b57f2ced3201f6f",
-  "city_caption_preview": "visual-source-evidence/city-caption/preview_manifest.json"
+  "city_caption_preview": "visual-source-evidence/city-caption/preview_manifest.json",
+  "previous_native_attempt": {
+    "run_id": 42486101289,
+    "film_sha256": "81bacfb80aebfc142bc0297b887ef0d66e0c78e426259cce4ffccee524383edf",
+    "picture_qc": "pass",
+    "voice_suite": "not_passed",
+    "published": false
+  },
+  "voice_rewrite": "5 complete paragraphs rewritten. All5 actual new audio transcripts and pause/speed checks pass locally. This diagnostic is not a film-bound approval; final automatic suite remains mandatory."
 }
