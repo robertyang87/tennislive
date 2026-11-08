@@ -1,0 +1,1188 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "06df9b0f268b06d65aeae8ae537cba1cb1705036fc14d3248967dce5fbf21f02",
+    "render_inputs_sha256": "d9d421236c768cb6191e4af0d3f18f2adc825acdd58ff5b758e09772f702dab6",
+    "spec_sha256": "a952ad64d9841d6a77729bbbe3c91132cdac337a1c450ad2b406cce21444dfd7",
+    "film_sha256": "e45f9f8bbc56f49b0e1bb164da6a57235c63e0116acba099655d5803f72831c9",
+    "inventory_sha256": "a4d1e079b22ed4bbc084246e79f232657de97b49e05d31af88c3028785d93c07"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-08T19:35:42+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:09648fddf445330437de4d57ba3799950359b9ce41d9f23dc8ac4012e5740428",
+      "audio_sha256": "400644c3231fa8fde93723d120f8a0174d9c62dc2c380ca594d3d911e685febd",
+      "pass": true,
+      "result_of": "bundle:09648fddf445330437de4d57ba3799950359b9ce41d9f23dc8ac4012e5740428"
+    },
+    {
+      "id": "bundle:202071c4226d458f035466bb0648835822e930635de6a6915eae59718ebb9d8c",
+      "audio_sha256": "f2658830fbb40edc61e74469bee82ac3d5680918e0d751dadbda0d69999a03bd",
+      "pass": true,
+      "result_of": "bundle:202071c4226d458f035466bb0648835822e930635de6a6915eae59718ebb9d8c"
+    },
+    {
+      "id": "bundle:57db5d9b07171b76606e844c9587b7c9f7f592162578b81731d2c40776b00316",
+      "audio_sha256": "893eacac6c9ad884f5fcbf9d7ee204a62f3f45ebcf80bc0e0a4d64d544ada141",
+      "pass": true,
+      "result_of": "bundle:57db5d9b07171b76606e844c9587b7c9f7f592162578b81731d2c40776b00316"
+    },
+    {
+      "id": "bundle:71bfe335e2c21f2e64915dcb0e2cfc77d470d1bf357802ab93876c12cc4f41e9",
+      "audio_sha256": "9215483228d72347612717ad005448edf1413c59a9a51fcf2f2813cbc441028b",
+      "pass": true,
+      "result_of": "bundle:71bfe335e2c21f2e64915dcb0e2cfc77d470d1bf357802ab93876c12cc4f41e9"
+    },
+    {
+      "id": "bundle:7c8b1f4abb1e334eb9083d1f69c1cd813e067b09f14522365980a992830bf133",
+      "audio_sha256": "734fe7d8a26f30732f5a00a89ab43b21b5511bcccc50cc00187b953a23788b8e",
+      "pass": true,
+      "result_of": "bundle:7c8b1f4abb1e334eb9083d1f69c1cd813e067b09f14522365980a992830bf133"
+    },
+    {
+      "id": "bundle:7ef4b12b582dbfd6e02dbb7b5541e648b84e220454be3d6807a7626708b076db",
+      "audio_sha256": "a5d143ad6c87f08b974b1a80596f2ab01f7d2196f20871e57552c430b745a966",
+      "pass": true,
+      "result_of": "bundle:7ef4b12b582dbfd6e02dbb7b5541e648b84e220454be3d6807a7626708b076db"
+    },
+    {
+      "id": "bundle:80585510368711458a0c927e59647ff1bfb8dc5e4a092f91cd943ced5745224f",
+      "audio_sha256": "d52816c0b5f36ad6d329bcfbaa7a7f0b4ea646db99763bb054cb5efd02a5d4af",
+      "pass": true,
+      "result_of": "bundle:80585510368711458a0c927e59647ff1bfb8dc5e4a092f91cd943ced5745224f"
+    },
+    {
+      "id": "bundle:80df55669db505c7f68e63f91635ae39388289d2a114cb08a7cfdee414fff197",
+      "audio_sha256": "ff33b86858f41d45851b4a4ddbb4448155264bc1b3a4b6cca6820468ba83efaa",
+      "pass": true,
+      "result_of": "bundle:80df55669db505c7f68e63f91635ae39388289d2a114cb08a7cfdee414fff197"
+    },
+    {
+      "id": "bundle:a5ff80b256a0784449a5d5c111cf73a53d5e6f05f805943fa7554e64ac66811b",
+      "audio_sha256": "31390275a88735a8b2c7474272d5dd35c89052b477a84a8ef873f0273a8dd596",
+      "pass": true,
+      "result_of": "bundle:a5ff80b256a0784449a5d5c111cf73a53d5e6f05f805943fa7554e64ac66811b"
+    },
+    {
+      "id": "bundle:a8fb7efdfb0d590f150ca3acb88f2dd399876e0c7309aec521ad899df8fa30e4",
+      "audio_sha256": "e060b5754170f37ce0bca08fe4426c91992c3f5dd16b37a8ba28f04a70de5a49",
+      "pass": true,
+      "result_of": "bundle:a8fb7efdfb0d590f150ca3acb88f2dd399876e0c7309aec521ad899df8fa30e4"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "12102fb3fe69d4f62a5b9d3d58de8e6ec9d3793b39c602bf7981a1f549c136bd",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:e32d8701b1b13dda9f7812276944ab303d6d83d3faf7adf839c25d7f4da27740",
+      "audio_sha256": "448e9379750eeab838122de968958bdfa2f75f004e3da52edd2e30297f9948f4",
+      "pass": true,
+      "result_of": "bundle:e32d8701b1b13dda9f7812276944ab303d6d83d3faf7adf839c25d7f4da27740"
+    },
+    {
+      "id": "bundle:ef2d1bc2d3b11bf6a83d548ae810bb5247737c9c9b4847c084fac765f1fdf25b",
+      "audio_sha256": "0acdcc81107ea852bc4847b408a75be49b20288b0a5de3b1550dd8fb2fefc2c5",
+      "pass": true,
+      "result_of": "bundle:ef2d1bc2d3b11bf6a83d548ae810bb5247737c9c9b4847c084fac765f1fdf25b"
+    },
+    {
+      "id": "bundle:f90ffac9b4cc1eab55987f4ddf4708ff1995243980bb1b19b1043ce4fe36761e",
+      "audio_sha256": "ff793387ee90eb47b5ed35dcf092f5d29522c4a8795b278ad38f632af947398d",
+      "pass": true,
+      "result_of": "bundle:f90ffac9b4cc1eab55987f4ddf4708ff1995243980bb1b19b1043ce4fe36761e"
+    },
+    {
+      "id": "voice_00.mp3",
+      "audio_sha256": "e060b5754170f37ce0bca08fe4426c91992c3f5dd16b37a8ba28f04a70de5a49",
+      "pass": true,
+      "result_of": "bundle:a8fb7efdfb0d590f150ca3acb88f2dd399876e0c7309aec521ad899df8fa30e4"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "0acdcc81107ea852bc4847b408a75be49b20288b0a5de3b1550dd8fb2fefc2c5",
+      "pass": true,
+      "result_of": "bundle:ef2d1bc2d3b11bf6a83d548ae810bb5247737c9c9b4847c084fac765f1fdf25b"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "a5d143ad6c87f08b974b1a80596f2ab01f7d2196f20871e57552c430b745a966",
+      "pass": true,
+      "result_of": "bundle:7ef4b12b582dbfd6e02dbb7b5541e648b84e220454be3d6807a7626708b076db"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "d52816c0b5f36ad6d329bcfbaa7a7f0b4ea646db99763bb054cb5efd02a5d4af",
+      "pass": true,
+      "result_of": "bundle:80585510368711458a0c927e59647ff1bfb8dc5e4a092f91cd943ced5745224f"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "f2658830fbb40edc61e74469bee82ac3d5680918e0d751dadbda0d69999a03bd",
+      "pass": true,
+      "result_of": "bundle:202071c4226d458f035466bb0648835822e930635de6a6915eae59718ebb9d8c"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "ff33b86858f41d45851b4a4ddbb4448155264bc1b3a4b6cca6820468ba83efaa",
+      "pass": true,
+      "result_of": "bundle:80df55669db505c7f68e63f91635ae39388289d2a114cb08a7cfdee414fff197"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "ff793387ee90eb47b5ed35dcf092f5d29522c4a8795b278ad38f632af947398d",
+      "pass": true,
+      "result_of": "bundle:f90ffac9b4cc1eab55987f4ddf4708ff1995243980bb1b19b1043ce4fe36761e"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "893eacac6c9ad884f5fcbf9d7ee204a62f3f45ebcf80bc0e0a4d64d544ada141",
+      "pass": true,
+      "result_of": "bundle:57db5d9b07171b76606e844c9587b7c9f7f592162578b81731d2c40776b00316"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "31390275a88735a8b2c7474272d5dd35c89052b477a84a8ef873f0273a8dd596",
+      "pass": true,
+      "result_of": "bundle:a5ff80b256a0784449a5d5c111cf73a53d5e6f05f805943fa7554e64ac66811b"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "448e9379750eeab838122de968958bdfa2f75f004e3da52edd2e30297f9948f4",
+      "pass": true,
+      "result_of": "bundle:e32d8701b1b13dda9f7812276944ab303d6d83d3faf7adf839c25d7f4da27740"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "400644c3231fa8fde93723d120f8a0174d9c62dc2c380ca594d3d911e685febd",
+      "pass": true,
+      "result_of": "bundle:09648fddf445330437de4d57ba3799950359b9ce41d9f23dc8ac4012e5740428"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "9215483228d72347612717ad005448edf1413c59a9a51fcf2f2813cbc441028b",
+      "pass": true,
+      "result_of": "bundle:71bfe335e2c21f2e64915dcb0e2cfc77d470d1bf357802ab93876c12cc4f41e9"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "734fe7d8a26f30732f5a00a89ab43b21b5511bcccc50cc00187b953a23788b8e",
+      "pass": true,
+      "result_of": "bundle:7c8b1f4abb1e334eb9083d1f69c1cd813e067b09f14522365980a992830bf133"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "12102fb3fe69d4f62a5b9d3d58de8e6ec9d3793b39c602bf7981a1f549c136bd",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:09648fddf445330437de4d57ba3799950359b9ce41d9f23dc8ac4012e5740428",
+      "text": "所以真正值得吵的，是另一个问题：半路顶上、只打一两场的人，该不该有出线的资格？说「该」的理据是，替补是规则预先点名的正式角色，她赢下的每一分都是真打出来的。说「不该」的理据是，出线名额属于从头打满的人，只打一场就挤掉打满三场的人，对正选不公平。而现行规则给出的答案很微妙：资格，给；但用出线数学，把这条路压到几乎走不通。等于规则自己，把这场争论判了个折中。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 155,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以,真正值得炒的是另一个问题,半路顶上,只打一两场的人该不该有出现的资格。说该的理据是,替不是规则预先点名的正式角色,他赢下的每一分都是真打出来的。说不该的理据是,出现名额属于从头打满的人,只打一场就挤掉打满三场的人,对正选不公平。而现行规则给出的答案很微妙资格给,但用出现数学把这条路压到几乎走不通等于规则自己把这场争论判了个折中"
+      },
+      "polyphones": [
+        {
+          "index": 60,
+          "char": "角",
+          "word": "角色",
+          "intended": "jue2",
+          "wrong": [
+            "jiao3"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "jiao3",
+              "verdict": "correct",
+              "score": 0.396,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "决抉攫"
+        },
+        {
+          "index": 154,
+          "char": "几",
+          "word": "几乎",
+          "intended": "ji1",
+          "wrong": [
+            "ji3"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ji3",
+              "verdict": "correct",
+              "score": 0.621,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "击基箕"
+        },
+        {
+          "index": 5,
+          "char": "得",
+          "word": "值得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": -0.288,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 124,
+          "char": "行",
+          "word": "现行",
+          "intended": "xing2",
+          "wrong": [
+            "hang2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "hang2",
+              "verdict": "correct",
+              "score": 0.212,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "刑型形"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 155,
+        "speech_s": 33.443,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所以 ｜ 真正 ｜ 值得 ｜ 吵 ｜ 的 ｜ 是 ｜ 另一个 ｜ 问题 ｜ 半路 ｜ 顶上 ｜ 只 ｜ 打 ｜ 一两场 ｜ 的 ｜ 人 ｜ 该 ｜ 不该 ｜ 有 ｜ 出线 ｜ 的 ｜ 资格 ｜ 说 ｜ 该 ｜ 的 ｜ 理据 ｜ 是 ｜ 替补 ｜ 是 ｜ 规则 ｜ 预先 ｜ 点名 ｜ 的 ｜ 正式 ｜ 角色 ｜ 她 ｜ 赢 ｜ 下 ｜ 的 ｜ 每 ｜ 一 ｜ 分 ｜ 都是 ｜ 真 ｜ 打 ｜ 出来 ｜ 的 ｜ 说 ｜ 不该 ｜ 的 ｜ 理据 ｜ 是 ｜ 出线 ｜ 名额 ｜ 属于 ｜ 从头 ｜ 打 ｜ 满 ｜ 的 ｜ 人 ｜ 只 ｜ 打 ｜ 一 ｜ 场 ｜ 就 ｜ 挤 ｜ 掉 ｜ 打 ｜ 满 ｜ 三场 ｜ 的 ｜ 人 ｜ 对 ｜ 正 ｜ 选 ｜ 不 ｜ 公平 ｜ 而 ｜ 现行 ｜ 规则 ｜ 给 ｜ 出 ｜ 的 ｜ 答案 ｜ 很 ｜ 微妙 ｜ 资格 ｜ 给 ｜ 但 ｜ 用 ｜ 出线 ｜ 数学 ｜ 把 ｜ 这 ｜ 条 ｜ 路 ｜ 压 ｜ 到 ｜ 几乎 ｜ 走 ｜ 不 ｜ 通 ｜ 等于 ｜ 规则 ｜ 自己 ｜ 把 ｜ 这 ｜ 场 ｜ 争论 ｜ 判 ｜ 了 ｜ 个 ｜ 折中"
+      }
+    },
+    {
+      "id": "bundle:202071c4226d458f035466bb0648835822e930635de6a6915eae59718ebb9d8c",
+      "text": "替补什么时候顶进来，分三种情况，这条时间线是今天最关键的一张图。第一种，首战之前顶入，就是科斯秋克这一种：满格正选，打满三场，从零攒自己的战绩。第二种，已经打了一两场才有人退出：替补继承的只是席位和赛程，不是战绩——退赛者打完的比赛全部保留，她从 0 胜 0 负起步，只打剩下的场次。第三种，只剩最后一场小组赛，照样能换人，2024 年的卡萨金娜、2023 年的胡尔卡奇，都只打了一场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 168,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.006,
+        "longest_deletion": 0,
+        "transcript": "踢步什么时候顶进来?分三种情况,这条时间线是今天最关键的一张图。第一种,手战之前顶入,就是科斯秋克这一种,满格正选,打满三场,从领暂自己的战绩。第二种,已经打了一两场,才有人退出,踢步继承的只是席位和赛程,不是战绩,退赛者打完的比赛全部保留,他从零胜零负起步,只打剩下的长次。第三种,只剩最后一场小组赛照样能换人2024年的卡萨金娜2023年的胡尔卡奇都只打了一场"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.991,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 34,
+          "char": "种",
+          "word": "一种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.267,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 51,
+          "char": "种",
+          "word": "一种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.51,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 74,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.777,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 144,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.435,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 164,
+        "speech_s": 35.177,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "替补 ｜ 什么时候 ｜ 顶 ｜ 进来 ｜ 分 ｜ 三种 ｜ 情况 ｜ 这 ｜ 条 ｜ 时间线 ｜ 是 ｜ 今天 ｜ 最 ｜ 关键 ｜ 的 ｜ 一 ｜ 张 ｜ 图 ｜ 第一种 ｜ 首战 ｜ 之前 ｜ 顶 ｜ 入 ｜ 就 ｜ 是 ｜ 科斯秋克 ｜ 这 ｜ 一种 ｜ 满 ｜ 格 ｜ 正 ｜ 选 ｜ 打 ｜ 满 ｜ 三场 ｜ 从 ｜ 零 ｜ 攒 ｜ 自己 ｜ 的 ｜ 战绩 ｜ 第二种 ｜ 已经 ｜ 打 ｜ 了 ｜ 一两场 ｜ 才有人 ｜ 退出 ｜ 替补 ｜ 继承 ｜ 的 ｜ 只是 ｜ 席位 ｜ 和 ｜ 赛程 ｜ 不是 ｜ 战绩 ｜ 退赛 ｜ 者 ｜ 打 ｜ 完 ｜ 的 ｜ 比赛 ｜ 全部 ｜ 保留 ｜ 她 ｜ 从 ｜ 0 ｜ 胜 ｜ 0 ｜ 负 ｜ 起步 ｜ 只 ｜ 打 ｜ 剩下 ｜ 的 ｜ 场次 ｜ 第三种 ｜ 只 ｜ 剩 ｜ 最后 ｜ 一 ｜ 场 ｜ 小组 ｜ 赛 ｜ 照样 ｜ 能 ｜ 换人 ｜ 2024 ｜ 年 ｜ 的 ｜ 卡萨金娜 ｜ 2023 ｜ 年 ｜ 的 ｜ 胡尔卡奇 ｜ 都 ｜ 只 ｜ 打 ｜ 了 ｜ 一 ｜ 场"
+      }
+    },
+    {
+      "id": "bundle:57db5d9b07171b76606e844c9587b7c9f7f592162578b81731d2c40776b00316",
+      "text": "但赛中顶入的替补，面前有一堵数学的墙。小组排名先比胜场，再比一个冷门指标：已赛场次。同为两胜，打满三场的人，排在只打两场的人前面；三个人同胜场，没打满三场的，直接先出局。也就是说，半路顶进来的人哪怕全赢，也几乎总被「场次」这一条压住——出不了线，不是实力问题，是规则砌的墙。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 117,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但赛中顶入的替补,面前有一堵数学的墙。小组排名先比胜场,再比一个冷门指标,以赛场次。同为两胜,打满三场的人,排在直打两场的人前面,三个人同胜场,没打满三场的,直接先出局。也就是说,半路顶进来的人哪怕全赢,也几乎总被场次这一条压住,出不了线,不是实力问题,是规则器的墙。"
+      },
+      "polyphones": [
+        {
+          "index": 103,
+          "char": "几",
+          "word": "几乎",
+          "intended": "ji1",
+          "wrong": [
+            "ji3"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "ji3",
+              "verdict": "correct",
+              "score": 0.737,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "击基箕"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 117,
+        "speech_s": 26.262,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 赛 ｜ 中 ｜ 顶 ｜ 入 ｜ 的 ｜ 替补 ｜ 面前 ｜ 有 ｜ 一 ｜ 堵 ｜ 数学 ｜ 的 ｜ 墙 ｜ 小组 ｜ 排名 ｜ 先 ｜ 比 ｜ 胜 ｜ 场 ｜ 再 ｜ 比 ｜ 一个 ｜ 冷门 ｜ 指标 ｜ 已 ｜ 赛 ｜ 场次 ｜ 同 ｜ 为 ｜ 两 ｜ 胜 ｜ 打 ｜ 满 ｜ 三场 ｜ 的 ｜ 人 ｜ 排 ｜ 在 ｜ 只 ｜ 打 ｜ 两场 ｜ 的 ｜ 人 ｜ 前面 ｜ 三个 ｜ 人 ｜ 同 ｜ 胜 ｜ 场 ｜ 没 ｜ 打 ｜ 满 ｜ 三场 ｜ 的 ｜ 直接 ｜ 先 ｜ 出局 ｜ 也就是说 ｜ 半路 ｜ 顶 ｜ 进来 ｜ 的 ｜ 人 ｜ 哪怕 ｜ 全 ｜ 赢 ｜ 也 ｜ 几乎 ｜ 总 ｜ 被 ｜ 场次 ｜ 这 ｜ 一条 ｜ 压 ｜ 住 ｜ 出 ｜ 不了 ｜ 线 ｜ 不是 ｜ 实力 ｜ 问题 ｜ 是 ｜ 规则 ｜ 砌 ｜ 的 ｜ 墙"
+      }
+    },
+    {
+      "id": "bundle:71bfe335e2c21f2e64915dcb0e2cfc77d470d1bf357802ab93876c12cc4f41e9",
+      "text": "回到科斯秋克。她不属于「半路」的那一种，她是满格入场，和正选站在同一条起跑线上。三天前，她被总决赛的门槛挡在门外；三天后，她替世界第一的位置，站上了揭幕战的赛场。替补席从来不是观众席——它离冠军，只隔着一次退赛，和一条写在规则里的路。最后把问题留给你们：如果她真的一路赢下去，捧起这座奖杯，这座冠军，你认不认？评论区站个队。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 140,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "回到科斯秋克,他部属于半路的那一种,他是满阁入场和正选站在同一条起跑线上。三天前,他被总决赛的门槛挡在门外,三天后,他替世界第一的位置站上了揭幕站的赛场。踢步习从来不是观众习,他离冠军只隔着一次退赛和一条写在规则里的路。最后把问题留给你们,如果他真的一路迎下去,捧起这座奖杯、这座冠军,你认不认?评论区战阁队。"
+      },
+      "polyphones": [
+        {
+          "index": 18,
+          "char": "种",
+          "word": "一种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.392,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 140,
+        "speech_s": 30.696,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "回到 ｜ 科斯秋克 ｜ 她 ｜ 不 ｜ 属于 ｜ 半路 ｜ 的 ｜ 那 ｜ 一种 ｜ 她 ｜ 是 ｜ 满 ｜ 格 ｜ 入场 ｜ 和 ｜ 正 ｜ 选 ｜ 站 ｜ 在 ｜ 同 ｜ 一条 ｜ 起跑线上 ｜ 三天 ｜ 前 ｜ 她 ｜ 被 ｜ 总决赛 ｜ 的 ｜ 门槛 ｜ 挡 ｜ 在 ｜ 门 ｜ 外 ｜ 三天 ｜ 后 ｜ 她 ｜ 替 ｜ 世界 ｜ 第一 ｜ 的 ｜ 位置 ｜ 站 ｜ 上 ｜ 了 ｜ 揭幕 ｜ 战 ｜ 的 ｜ 赛场 ｜ 替补 ｜ 席 ｜ 从来 ｜ 不是 ｜ 观众席 ｜ 它 ｜ 离 ｜ 冠军 ｜ 只 ｜ 隔 ｜ 着 ｜ 一次 ｜ 退赛 ｜ 和 ｜ 一条 ｜ 写 ｜ 在 ｜ 规则 ｜ 里 ｜ 的 ｜ 路 ｜ 最后 ｜ 把 ｜ 问题 ｜ 留给 ｜ 你们 ｜ 如果 ｜ 她 ｜ 真 ｜ 的 ｜ 一路 ｜ 赢 ｜ 下去 ｜ 捧 ｜ 起 ｜ 这 ｜ 座 ｜ 奖杯 ｜ 这 ｜ 座 ｜ 冠军 ｜ 你 ｜ 认 ｜ 不 ｜ 认 ｜ 评论 ｜ 区 ｜ 站 ｜ 个 ｜ 队"
+      }
+    },
+    {
+      "id": "bundle:7c8b1f4abb1e334eb9083d1f69c1cd813e067b09f14522365980a992830bf133",
+      "text": "她全年排第十，怎么捧起总决赛奖杯？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 15,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他全年排地时,怎么捧起总决赛奖杯。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 15,
+        "speech_s": 3.125,
+        "cps": 4.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 全年 ｜ 排 ｜ 第十 ｜ 怎么 ｜ 捧 ｜ 起 ｜ 总决赛 ｜ 奖杯"
+      }
+    },
+    {
+      "id": "bundle:7ef4b12b582dbfd6e02dbb7b5541e648b84e220454be3d6807a7626708b076db",
+      "text": "先说结论，可能颠覆很多人的印象：科斯秋克不是来凑数的。因为她顶进来的时候，莱巴金娜一场比赛都还没打。她不需要接盘任何人的战绩，她是满格入场：三场小组赛一场不少，积分、奖金全按正选口径算。换句话说，全年排第十的她，捧起这座总决赛奖杯的通道，在规则上是真实敞开的。至于大家印象里那句「替补没戏」——那说的是另一种替补：半路顶进来的那一种。两种替补命运完全不一样，分水岭，就是顶进来的时间点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 170,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.006,
+        "longest_deletion": 0,
+        "transcript": "先说结论,可能颠覆很多人的印象,科斯秋克不是来凑数的,因为他顶进来的时候,来巴基那一场比赛都还没打。他不需要接盘任何人的战绩,他是满歌入场,三场小组赛一场不少,积分,奖金全按正选口径算。换句话说,全年排地时的他,彭奇这座总决赛奖杯的通道,在规则上是真实敞开的。至于大家印象里,那句替补眉细那说的是另一种替补,半路顶进来的那一种,两种替补命运完全不一样,分水灵就是顶进来的时间点。"
+      },
+      "polyphones": [
+        {
+          "index": 46,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.544,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 153,
+          "char": "种",
+          "word": "一种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.57,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 165,
+          "char": "种",
+          "word": "一种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.237,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        },
+        {
+          "index": 168,
+          "char": "种",
+          "word": "种",
+          "intended": "zhong3",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "correct",
+              "score": 0.605,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "肿冢"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 170,
+        "speech_s": 35.979,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 说 ｜ 结论 ｜ 可能 ｜ 颠覆 ｜ 很多 ｜ 人 ｜ 的 ｜ 印象 ｜ 科斯秋克 ｜ 不是 ｜ 来 ｜ 凑数 ｜ 的 ｜ 因为 ｜ 她 ｜ 顶 ｜ 进来 ｜ 的 ｜ 时候 ｜ 莱巴金娜 ｜ 一 ｜ 场 ｜ 比赛 ｜ 都 ｜ 还 ｜ 没 ｜ 打 ｜ 她 ｜ 不 ｜ 需要 ｜ 接盘 ｜ 任何 ｜ 人 ｜ 的 ｜ 战绩 ｜ 她 ｜ 是 ｜ 满 ｜ 格 ｜ 入场 ｜ 三场 ｜ 小组 ｜ 赛 ｜ 一 ｜ 场 ｜ 不少 ｜ 积分 ｜ 奖金 ｜ 全 ｜ 按 ｜ 正 ｜ 选 ｜ 口径 ｜ 算 ｜ 换句话说 ｜ 全年 ｜ 排 ｜ 第十 ｜ 的 ｜ 她 ｜ 捧 ｜ 起 ｜ 这 ｜ 座 ｜ 总决赛 ｜ 奖杯 ｜ 的 ｜ 通道 ｜ 在 ｜ 规则 ｜ 上 ｜ 是 ｜ 真实 ｜ 敞开 ｜ 的 ｜ 至于 ｜ 大家 ｜ 印象 ｜ 里 ｜ 那 ｜ 句 ｜ 替补 ｜ 没戏 ｜ 那 ｜ 说 ｜ 的 ｜ 是 ｜ 另 ｜ 一种 ｜ 替补 ｜ 半路 ｜ 顶 ｜ 进来 ｜ 的 ｜ 那 ｜ 一种 ｜ 两种 ｜ 替补 ｜ 命运 ｜ 完全 ｜ 不 ｜ 一样 ｜ 分水岭 ｜ 就 ｜ 是 ｜ 顶 ｜ 进来 ｜ 的 ｜ 时间点"
+      }
+    },
+    {
+      "id": "bundle:80585510368711458a0c927e59647ff1bfb8dc5e4a092f91cd943ced5745224f",
+      "text": "先看替补是怎么定的。不是临时抓人，是赛季竞逐收官时按顺位预先点名，人在现场待命。WTA 设两名替补：先看第八到第二十名里，有没有第二位当年的大满贯冠军排队，没有，才纯按顺位往下。今年排第九的斯瓦泰克赛季已经结束、明确不来，顺位就落到第十的科斯秋克和第十一的施耐德。记住，替补必须本人到场，整个小组赛阶段随叫随到，不来，就等于放弃排队。科斯秋克顶进去之后，替补席顺延一位，施耐德接上班，后面还排着约维奇。ATP 那边更严：官方只指定一名替补，规则书原文写明，必须出席赛前媒体发布会，待命一直持续到最后一场小组赛开打——今年都灵的那个人，是德米纳尔。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 236,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.004,
+        "longest_deletion": 0,
+        "transcript": "先看替补是怎么定的。不是临时抓人,是赛季竞逐收官时按顺位预先点名,人在现场待命。WTA射两名替补,先看第八到第二十名里,有没有第二位当年的大满冠冠军排队?没有,才纯按顺位往下。今年排第九的斯瓦泰克赛季已经结束,明确不来,顺位就落到第十的科斯秋克和第十一的施耐德。记住 替补必须本人到场整个小组赛阶段随叫随到不来就等于放弃排队科斯丘克顶进去之后替补习顺延一位施耐德接上班后面还排着约为起ATP那边更严官方只指定一名替补规则书原文写明必须出席赛前媒体发布会待命一直持续到最后一场小组赛开达今年都临的那个人是德米娜尔"
+      },
+      "polyphones": [
+        {
+          "index": 114,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.954,
+              "confidence": "high",
+              "near": "intended"
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.947,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 194,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.947,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 236,
+          "char": "发",
+          "word": "发布",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 236,
+        "speech_s": 50.189,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 替补 ｜ 是 ｜ 怎么 ｜ 定 ｜ 的 ｜ 不是 ｜ 临时 ｜ 抓人 ｜ 是 ｜ 赛季 ｜ 竞逐 ｜ 收官 ｜ 时 ｜ 按 ｜ 顺位 ｜ 预先 ｜ 点名 ｜ 人 ｜ 在 ｜ 现场 ｜ 待命 ｜ WTA ｜ 设 ｜ 两名 ｜ 替补 ｜ 先 ｜ 看 ｜ 第八 ｜ 到 ｜ 第二十名 ｜ 里 ｜ 有没有 ｜ 第二位 ｜ 当年 ｜ 的 ｜ 大满贯 ｜ 冠军 ｜ 排队 ｜ 没有 ｜ 才 ｜ 纯 ｜ 按 ｜ 顺位 ｜ 往下 ｜ 今年 ｜ 排 ｜ 第九 ｜ 的 ｜ 斯瓦泰克 ｜ 赛季 ｜ 已经 ｜ 结束 ｜ 明确 ｜ 不 ｜ 来 ｜ 顺位 ｜ 就 ｜ 落 ｜ 到 ｜ 第十 ｜ 的 ｜ 科斯秋克 ｜ 和 ｜ 第十一 ｜ 的 ｜ 施耐德 ｜ 记住 ｜ 替补 ｜ 必须 ｜ 本人 ｜ 到场 ｜ 整个 ｜ 小组 ｜ 赛 ｜ 阶段 ｜ 随叫随到 ｜ 不 ｜ 来 ｜ 就 ｜ 等于 ｜ 放弃 ｜ 排队 ｜ 科斯秋克 ｜ 顶 ｜ 进去 ｜ 之后 ｜ 替补 ｜ 席 ｜ 顺延 ｜ 一 ｜ 位 ｜ 施耐德 ｜ 接 ｜ 上班 ｜ 后面 ｜ 还 ｜ 排 ｜ 着 ｜ 约维奇 ｜ ATP ｜ 那边 ｜ 更 ｜ 严 ｜ 官方 ｜ 只 ｜ 指定 ｜ 一 ｜ 名 ｜ 替补 ｜ 规则书 ｜ 原文 ｜ 写 ｜ 明 ｜ 必须 ｜ 出席 ｜ 赛 ｜ 前 ｜ 媒体 ｜ 发布会 ｜ 待命 ｜ 一直 ｜ 持续 ｜ 到 ｜ 最后 ｜ 一 ｜ 场 ｜ 小组 ｜ 赛 ｜ 开打 ｜ 今年 ｜ 都灵 ｜ 的 ｜ 那个 ｜ 人 ｜ 是 ｜ 德米纳尔"
+      }
+    },
+    {
+      "id": "bundle:80df55669db505c7f68e63f91635ae39388289d2a114cb08a7cfdee414fff197",
+      "text": "但有一条硬线：半决赛开始就不再递补，谁退赛，对手直接轮空晋级。还有个最容易讲错的点：比赛中退赛，不等于退出赛事。丢掉一场、人留在赛事里继续打，替补不上；只有正式退出整个赛事，递补才触发，而且退了，就不能再回来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 91,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "但有一条硬线,半决赛开始就不在地补,谁退赛,对手直接轮空进击。还有个最容易讲错的点,比赛中退赛不等于退出赛事。丢掉一场,人留在赛事里继续打,替补不上,只有正式退出整个赛事,地补才触发,而且退了就不能再回来。"
+      },
+      "polyphones": [
+        {
+          "index": 31,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.362,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 91,
+          "char": "发",
+          "word": "触发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 91,
+        "speech_s": 19.576,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "但 ｜ 有 ｜ 一条 ｜ 硬线 ｜ 半决赛 ｜ 开始 ｜ 就 ｜ 不再 ｜ 递补 ｜ 谁 ｜ 退赛 ｜ 对手 ｜ 直接 ｜ 轮空 ｜ 晋级 ｜ 还有 ｜ 个 ｜ 最 ｜ 容易 ｜ 讲 ｜ 错 ｜ 的 ｜ 点 ｜ 比赛 ｜ 中 ｜ 退赛 ｜ 不 ｜ 等于 ｜ 退出 ｜ 赛事 ｜ 丢掉 ｜ 一 ｜ 场 ｜ 人 ｜ 留 ｜ 在 ｜ 赛事 ｜ 里 ｜ 继续 ｜ 打 ｜ 替补 ｜ 不 ｜ 上 ｜ 只有 ｜ 正式 ｜ 退出 ｜ 整个 ｜ 赛事 ｜ 递补 ｜ 才 ｜ 触发 ｜ 而且 ｜ 退 ｜ 了 ｜ 就不能 ｜ 再 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:a5ff80b256a0784449a5d5c111cf73a53d5e6f05f805943fa7554e64ac66811b",
+      "text": "历史把这条分界线划得清清楚楚。赛前顶入的替补，能走多远只看实力：2018 年，贝尔腾斯赛前顶替哈勒普，两胜一负打进四强。而赛中顶入的，至今没有一个人进过四强，上限就是赢一场。2011 年，巴托丽只打最后一场，赢了阿扎伦卡，照样小组第四出局——那堵数学的墙，她第一个撞上。2021 年，辛纳顶替受伤的贝雷蒂尼，开赛前四小时才接到通知，那天晚上横扫胡尔卡奇，还把梅德韦杰夫拖进决胜盘抢七，打出赛中替补最好看的一次，结果还是没出线。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 193,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "历史把这条分界线画得清清楚楚,赛前顶入的剃补能走多远只看实力,2018年贝尔腾斯赛前顶替哈勒普两胜一副打进四墙,而赛中顶入的至今没有一个人进过四墙,上线就是赢一场。2011年,巴托利只打最后一场,赢了阿扎伦卡、照样小组第四出局纳赌数学的墙,他第一个撞上。2021年,辛娜鼎替受傷的貝雷蒂尼開賽前四小時才接到通知,那天晚上橫掃忽而卡齊,還把梅德維傑夫拖進決勝盤搶棄,打出賽中替補最好看的一次,結果還是沒出現。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 177,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.861,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 207,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.073,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 187,
+        "speech_s": 39.387,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "历史 ｜ 把 ｜ 这 ｜ 条 ｜ 分界线 ｜ 划 ｜ 得 ｜ 清清楚楚 ｜ 赛 ｜ 前 ｜ 顶 ｜ 入 ｜ 的 ｜ 替补 ｜ 能 ｜ 走 ｜ 多 ｜ 远 ｜ 只 ｜ 看 ｜ 实力 ｜ 2018 ｜ 年 ｜ 贝尔腾斯 ｜ 赛 ｜ 前 ｜ 顶替 ｜ 哈勒普 ｜ 两 ｜ 胜 ｜ 一 ｜ 负 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 而 ｜ 赛 ｜ 中 ｜ 顶 ｜ 入 ｜ 的 ｜ 至今 ｜ 没有 ｜ 一个 ｜ 人 ｜ 进 ｜ 过 ｜ 四 ｜ 强 ｜ 上限 ｜ 就 ｜ 是 ｜ 赢 ｜ 一 ｜ 场 ｜ 2011 ｜ 年 ｜ 巴托丽 ｜ 只 ｜ 打 ｜ 最后 ｜ 一 ｜ 场 ｜ 赢 ｜ 了 ｜ 阿扎伦卡 ｜ 照样 ｜ 小组 ｜ 第四 ｜ 出局 ｜ 那 ｜ 堵 ｜ 数学 ｜ 的 ｜ 墙 ｜ 她 ｜ 第一个 ｜ 撞 ｜ 上 ｜ 2021 ｜ 年 ｜ 辛纳 ｜ 顶替 ｜ 受伤 ｜ 的 ｜ 贝雷蒂尼 ｜ 开赛 ｜ 前 ｜ 四小时 ｜ 才 ｜ 接到 ｜ 通知 ｜ 那天晚上 ｜ 横扫 ｜ 胡尔卡奇 ｜ 还 ｜ 把 ｜ 梅德韦杰夫 ｜ 拖 ｜ 进 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 七 ｜ 打 ｜ 出赛 ｜ 中 ｜ 替补 ｜ 最 ｜ 好看 ｜ 的 ｜ 一次 ｜ 结果 ｜ 还是 ｜ 没 ｜ 出线"
+      }
+    },
+    {
+      "id": "bundle:a8fb7efdfb0d590f150ca3acb88f2dd399876e0c7309aec521ad899df8fa30e4",
+      "text": "总决赛还没开打，卫冕冠军先退了赛。周五的媒体日，八位正选到了七位，唯独莱巴金娜缺席，赛事方给的口径只有四个字：身体不适。周六，当地时间上午 11 点多，官宣来了：因为病毒性疾病，莱巴金娜退出本届总决赛。她是年终世界第一，也是卫冕冠军——这是 2021 年以来，现任世界第一第一次缺席总决赛。她留下一句话：这个赛季很不可思议，但我的身体还没准备好比赛。揭幕战就在明天，对手诺斯科娃已经站在那里了。问题来了：这一场，谁来打？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 183,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "总决赛还没开打,未免冠军先退了赛。周五的媒体日,8位正选到了7位。唯独来巴金娜缺席,赛事方给的口径只有4个字,身体不适。周六,当地时间上午11点多,官宣来了,因为病毒性疾病,来巴金娜退出本届总决赛。她是年中世界第一,也是未免冠军,这是2021年以来,现任世界第一,第一次缺席总决赛。他留下一句话,这个赛季很不可思议,但我的身体还没准备好比赛。节目站就在明天,对手诺斯科娃已经站在那里了。问题来了,这一场谁来打?"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.371,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 167,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.1,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 181,
+        "speech_s": 38.172,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "总决赛 ｜ 还 ｜ 没 ｜ 开打 ｜ 卫冕 ｜ 冠军 ｜ 先 ｜ 退 ｜ 了 ｜ 赛 ｜ 周五 ｜ 的 ｜ 媒体 ｜ 日 ｜ 八位 ｜ 正 ｜ 选 ｜ 到 ｜ 了 ｜ 七位 ｜ 唯独 ｜ 莱巴金娜 ｜ 缺席 ｜ 赛事 ｜ 方 ｜ 给 ｜ 的 ｜ 口径 ｜ 只有 ｜ 四个 ｜ 字 ｜ 身体 ｜ 不适 ｜ 周六 ｜ 当地 ｜ 时间 ｜ 上午 ｜ 11 点 ｜ 多 ｜ 官宣 ｜ 来 ｜ 了 ｜ 因为 ｜ 病毒 ｜ 性 ｜ 疾病 ｜ 莱巴金娜 ｜ 退出 ｜ 本届 ｜ 总决赛 ｜ 她 ｜ 是 ｜ 年终 ｜ 世界 ｜ 第一 ｜ 也是 ｜ 卫冕 ｜ 冠军 ｜ 这是 ｜ 2021 ｜ 年 ｜ 以来 ｜ 现任 ｜ 世界 ｜ 第一 ｜ 第一次 ｜ 缺席 ｜ 总决赛 ｜ 她 ｜ 留下 ｜ 一句话 ｜ 这个 ｜ 赛季 ｜ 很 ｜ 不可思议 ｜ 但 ｜ 我 ｜ 的 ｜ 身体 ｜ 还 ｜ 没 ｜ 准备 ｜ 好 ｜ 比赛 ｜ 揭幕 ｜ 战 ｜ 就 ｜ 在 ｜ 明天 ｜ 对手 ｜ 诺斯科娃 ｜ 已经 ｜ 站 ｜ 在 ｜ 那里 ｜ 了 ｜ 问题 ｜ 来 ｜ 了 ｜ 这 ｜ 一 ｜ 场 ｜ 谁 ｜ 来 ｜ 打"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:e32d8701b1b13dda9f7812276944ab303d6d83d3faf7adf839c25d7f4da27740",
+      "text": "最仓促的是 2008 年的斯捷潘内克：世界第 27，正在泰国度假，排在他前面的 16 个人都拒绝来当替补。罗迪克一退赛，他飞到上海，装备卡在海关，最后借了德约科维奇的球拍、穆雷的袜子，上场打了费德勒。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最倉促的是2008年的四届攀内客,世界第27正在泰国度假排在他前面的16个人都拒绝来当替补。罗迪克一退赛,他飞到上海,装备卡在海关,最后借了德约科维奇的球拍《木雷的袜子》上场打了费德勒。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 85,
+        "speech_s": 17.017,
+        "cps": 5.0,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最 ｜ 仓促 ｜ 的 ｜ 是 ｜ 2008 ｜ 年 ｜ 的 ｜ 斯捷潘内克 ｜ 世界 ｜ 第 ｜ 27 ｜ 正在 ｜ 泰国 ｜ 度假 ｜ 排 ｜ 在 ｜ 他 ｜ 前面 ｜ 的 ｜ 16 个 ｜ 人 ｜ 都 ｜ 拒绝 ｜ 来 ｜ 当 ｜ 替补 ｜ 罗迪克 ｜ 一 ｜ 退赛 ｜ 他 ｜ 飞 ｜ 到 ｜ 上海 ｜ 装备 ｜ 卡 ｜ 在 ｜ 海关 ｜ 最后 ｜ 借 ｜ 了 ｜ 德约科维奇 ｜ 的 ｜ 球拍 ｜ 穆雷 ｜ 的 ｜ 袜子 ｜ 上场 ｜ 打 ｜ 了 ｜ 费德勒"
+      }
+    },
+    {
+      "id": "bundle:ef2d1bc2d3b11bf6a83d548ae810bb5247737c9c9b4847c084fac765f1fdf25b",
+      "text": "顶上来的人，叫科斯秋克。三天前我们刚讲过她：全年竞逐榜排第十，冠军保留席把门槛抬高之后，她得连赢两站才够格，门关得严严实实。可谁也没想到——三天前，门在她面前关上；三天后，门从里面开了。科斯秋克是本届的第一替补，人早就到了印第安维尔斯现场待命。莱巴金娜一退，她直接顶进签表，揭幕战，由她来打诺斯科娃。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 131,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "顶上来的人,叫科斯秋克。三天前,我们刚讲过他,全年竞逐榜牌地时,冠军保留席把门槛抬高之后,他得连赢两战才够格,门关的言言实实。可谁也没想到,三天前,门在他面前关上,三天后,门从里面开了。科斯秋克是本届的第一替补,人早就到了印第安威尔斯现场待命。莱巴金娜一退,他直接顶进千表,节目战,由他来打诺斯科娃。"
+      },
+      "polyphones": [
+        {
+          "index": 45,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 56,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 131,
+        "speech_s": 28.679,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "顶上来 ｜ 的 ｜ 人 ｜ 叫 ｜ 科斯秋克 ｜ 三天 ｜ 前 ｜ 我们 ｜ 刚 ｜ 讲 ｜ 过 ｜ 她 ｜ 全年 ｜ 竞逐 ｜ 榜 ｜ 排 ｜ 第十 ｜ 冠军 ｜ 保留 ｜ 席 ｜ 把 ｜ 门槛 ｜ 抬高 ｜ 之后 ｜ 她 ｜ 得 ｜ 连 ｜ 赢 ｜ 两站 ｜ 才 ｜ 够格 ｜ 门 ｜ 关 ｜ 得 ｜ 严严实实 ｜ 可 ｜ 谁 ｜ 也 ｜ 没 ｜ 想到 ｜ 三天 ｜ 前 ｜ 门 ｜ 在 ｜ 她 ｜ 面前 ｜ 关上 ｜ 三天 ｜ 后 ｜ 门 ｜ 从 ｜ 里面 ｜ 开 ｜ 了 ｜ 科斯秋克 ｜ 是 ｜ 本届 ｜ 的 ｜ 第一 ｜ 替补 ｜ 人 ｜ 早就 ｜ 到 ｜ 了 ｜ 印第安维尔斯 ｜ 现场 ｜ 待命 ｜ 莱巴金娜 ｜ 一 ｜ 退 ｜ 她 ｜ 直接 ｜ 顶 ｜ 进 ｜ 签表 ｜ 揭幕 ｜ 战 ｜ 由 ｜ 她 ｜ 来 ｜ 打 ｜ 诺斯科娃"
+      }
+    },
+    {
+      "id": "bundle:f90ffac9b4cc1eab55987f4ddf4708ff1995243980bb1b19b1043ce4fe36761e",
+      "text": "再说钱。替补这个身份本身就值钱：WTA 的替补费是 10 万美元，一场没打、坐在场边也能领；真上了场，参赛费和胜场奖金按自己打过的场次另算，小组赛每赢一场，再加 23 万美元和 200 分。科斯秋克按正选口径走到底，三场全胜夺冠的话，奖金路径和任何正选完全一样。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 108,
+        "deleted": 0,
+        "inserted": 1,
+        "substituted": 2,
+        "sub_ratio": 0.019,
+        "longest_deletion": 0,
+        "transcript": "再说钱,替补这个身份本身就值钱,WTA的替补费是10万美元,一场没打,坐在场边也能领。真上了场,参赛费和胜场奖金按自己打过的场次订算,小组赛每赢一场,再加23万美元和200分。科斯秋克按政选口径走到底,三场全胜夺冠的话,奖金路径和任何政选完全一样。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 109,
+        "speech_s": 23.072,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再说 ｜ 钱 ｜ 替补 ｜ 这个 ｜ 身份 ｜ 本身 ｜ 就 ｜ 值钱 ｜ WTA ｜ 的 ｜ 替补 ｜ 费 ｜ 是 ｜ 10 万 ｜ 美元 ｜ 一 ｜ 场 ｜ 没 ｜ 打 ｜ 坐 ｜ 在 ｜ 场 ｜ 边 ｜ 也 ｜ 能 ｜ 领 ｜ 真 ｜ 上 ｜ 了 ｜ 场 ｜ 参赛 ｜ 费 ｜ 和 ｜ 胜 ｜ 场 ｜ 奖金 ｜ 按 ｜ 自己 ｜ 打 ｜ 过 ｜ 的 ｜ 场次 ｜ 另 ｜ 算 ｜ 小组 ｜ 赛 ｜ 每 ｜ 赢 ｜ 一 ｜ 场 ｜ 再 ｜ 加 ｜ 23 万 ｜ 美元 ｜ 和 ｜ 200 分 ｜ 科斯秋克 ｜ 按 ｜ 正 ｜ 选 ｜ 口径 ｜ 走 ｜ 到底 ｜ 三场 ｜ 全胜 ｜ 夺冠 ｜ 的话 ｜ 奖金 ｜ 路径 ｜ 和 ｜ 任何 ｜ 正 ｜ 选 ｜ 完全 ｜ 一样"
+      }
+    }
+  ]
+}
