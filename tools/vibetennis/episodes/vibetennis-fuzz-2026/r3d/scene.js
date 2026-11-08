@@ -588,7 +588,7 @@ function shotHook(u,D){
   lab('hkV0',T('同一记发球：出手 200 km/h','same serve: launched at 200 km/h'),0,3.0,o*ss(SV,SV+0.4,u),{size:0.34,color:'#ffe2a0',glow:GOLD,plate:true});
   const t1=tx('hkVS'+vS,T('到对面 '+vS+' km/h','at the far end '+vS+' km/h'),{color:'#ffffff',size:1.2,glow:CYAN}); t1.position.set(0,yS+1.3,L2_-3.0); op(t1,ol*ss(FK,FK+0.3,u));
   lab('hkVT',T('到对面 ≈ 118 km/h，每次都一样','at the far end ≈ 118 km/h, every time'),null,0,ol*ss(SD-0.4,SD+0.2,u),{size:1.1,color:'#d8ffc8',glow:'rgba(157,255,90,0.7)'}).position.set(0,yb-1.2,L2_-3.5);
-  lab('hkWB',T('忽快忽慢','fast, then slow'),3.2,1.6,o*ss(WB,WB+0.4,u)*(1-ss(BR-0.5,BR,u)),{size:0.5,color:'#ffb0a8',glow:RED});
+  lab('hkWB',T('忽快忽慢','fast, then slow'),0,2.35,o*ss(WB,WB+0.4,u)*(1-ss(BR-0.5,BR,u)),{size:0.5,color:'#ffb0a8',glow:RED});
   const b1=bt('hkB',T('刹车','A BRAKE'),{size:1.0,glow:'rgba(214,238,58,0.5)',fx:'particles'}); hud(b1,-2.2,1.2,9); b1.update(u,BR,TW-0.4,0.82);
   const b2=bt('hkS',T('稳定器','A STABILISER'),{size:1.0,glow:'rgba(79,227,255,0.5)',fx:'particles'}); hud(b2,2.4,1.2,9); b2.update(u,STb,TW-0.4,0.82);
   if(u>TW-0.6){ TOWER.set(ss(TW-0.6,TW+0.8,u)); TOWER.g.position.set(0,0,0); TOWER.g.scale.setScalar(1.6); look(lerp(17,10,ss(TW-0.6,D,u)),lerp(15,3,ss(TW-0.6,D,u)),lerp(2,6,ss(TW-0.6,D,u)),0,lerp(0,2.4,ss(TW-0.6,D,u)),0); }

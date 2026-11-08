@@ -193,7 +193,7 @@ TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
 ('h1',2.4,None,tr("按阻力公式推算：200 km/h 的发球飞过 23.77 米\n不计重力、落地与旋转；光滑球的阻力系数取 0.5 或 0.1","Drag-law estimate: a 200 km/h serve over 23.77 m\nno gravity, bounce or spin; smooth-ball Cd 0.5 or 0.1"),('s',960,1008,C,30)),
-('n2',0.3,None,tr("评论区说说：你发球前，会挑球吗？","Tell us: do you pick your ball before serving?"),BOT),
+('n2',0.3,None,tr("评论区说说：你发球前，会挑球吗？","Tell us: do you pick your ball before serving?"),TOP),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
