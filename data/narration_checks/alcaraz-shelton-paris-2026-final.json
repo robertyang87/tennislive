@@ -1,6 +1,6 @@
 {
   "slug": "alcaraz-shelton-paris-2026-final",
-  "checked_at": "2026-11-08T23:53:44Z",
+  "checked_at": "2026-11-08T23:59:05Z",
   "voice": "zh-CN-YunjianNeural",
   "rate": "+6%",
   "backend": "edge-tts",
@@ -10,10 +10,10 @@
   ],
   "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
   "segments": {
-    "595563b8b209ff39": {
+    "0c0d04d38786b6cd": {
       "segment": 2,
-      "spoken": 8.112,
-      "picture": 9.0
+      "spoken": 9.744,
+      "picture": 14.0
     },
     "4a8901e8afc6ff20": {
       "segment": 3,
@@ -50,9 +50,9 @@
       "spoken": 10.824,
       "picture": 13.0
     },
-    "68e2ce34d16ed990": {
+    "1d43003446d13cca": {
       "segment": 16,
-      "spoken": 7.104,
+      "spoken": 6.84,
       "picture": 8.0
     },
     "51c8f3c77eb6d8bc": {
@@ -63,12 +63,16 @@
   },
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
-    "bundle_sha256": "519e421be01c93768043adef91c821c839c9630927a03f8c9d35d97084e240d6",
+    "bundle_sha256": "78972b48077445bd5f57bdffc273af8ea017ed026583f31b2f1bacda447ab23a",
     "request_count": 11,
     "mode": "capture_export",
     "strict_reused": false,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
-    "audio_decoding_verified": true
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "85516ce6be88248c0a62d25debca849edf99418a",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/85516ce6be88248c0a62d25debca849edf99418a/assets/tts-bundles/alcaraz-shelton-paris-2026-final/78972b48077445bd5f57bdffc273af8ea017ed026583f31b2f1bacda447ab23a/tts_bundle.zip"
   }
 }
