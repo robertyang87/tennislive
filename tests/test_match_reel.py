@@ -17883,3 +17883,18 @@ def test_venus_owner_nickname_preserves_identity_and_rejects_other_players(tmp_p
         assert normalize_player_zh(different_name) == different_name
         other = {**alias, "cover": {"matchup": [{"name": different_name}, {"name": "塔格尔"}]}}
         assert chk.stat_card_headshot_problem(other, reels)[0] is True
+
+
+def test_story_stat_card_false_is_an_explicit_no_card_assertion():
+    reel = _reel()
+    reel._validate_story_stat_card_declaration({"cover": {"eyebrow": "网球有故事"}, "stat_card": False})
+    reel._validate_story_stat_card_declaration({"cover": {"eyebrow": "赛场之上"}})
+    for bad in (
+        {"cover": {"eyebrow": "网球有故事"}, "stat_card": True},
+        {"cover": {"eyebrow": "网球有故事"}, "stat_card": 0},
+        {"cover": {"eyebrow": "赛场之上"}, "stat_card": False},
+        {"cover": {"eyebrow": "网球有故事"}, "stat_card": False, "stats": {"tour": "wta"}},
+        {"cover": {"eyebrow": "网球有故事"}, "stat_card": False, "segments": [{"stat_card": True}]},
+    ):
+        with pytest.raises(reel.ReelError, match="stat_card"):
+            reel._validate_story_stat_card_declaration(bad)

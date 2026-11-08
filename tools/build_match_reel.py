@@ -4237,7 +4237,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("archival", "conform", "source_crop", "cover", "crop_y", "crop_zoom", "cx", "date", "title",
-             "layout", "column", "mode", "thesis", "question", "mixed_fps", "primary", "stat_card_full_canvas", "revision_of",
+             "layout", "column", "mode", "thesis", "question", "mixed_fps", "primary", "stat_card", "stat_card_full_canvas", "revision_of",
              "music", "outro", "push", "rate", "scorebox", "scoreboard_profile", "source_scorebox", "segments",
              "silent_source",
              "slug", "source_audio", "source_fallbacks", "source_url",
@@ -4255,6 +4255,23 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
                 "seconds", "source", "speed", "square_pan", "start", "stat_card", "title_card", "transition_card", "title_card_story_label",
                 "kind", "kicker", "track", "transition", "voice", "subtitle_bottom", "subtitle_bottom_windows", "visual_image", "trim_top", "visual_end"),
 }
+
+
+
+def _validate_story_stat_card_declaration(spec: dict) -> None:
+    """A story may explicitly declare it contains no statistics card.
+
+    Root ``stat_card: false`` is an assertion, not the segment-card switch.
+    Reject contradictory content and unsupported true values rather than
+    silently accepting a setting that does nothing.
+    """
+    if "stat_card" not in spec:
+        return
+    column = spec.get("column") or (spec.get("cover") or {}).get("eyebrow")
+    if spec["stat_card"] is not False or column != "网球有故事":
+        raise ReelError("顶层 stat_card 仅接受网球有故事的 false 声明；统计卡请在 segments 中配置")
+    if spec.get("stats") or any(row.get("stat_card") for row in spec.get("segments") or []):
+        raise ReelError("stat_card:false 声明不含统计卡，不能同时提供 stats 或统计卡段")
 
 
 def _reject_underscored_fields(spec: dict) -> None:
@@ -4490,6 +4507,7 @@ def load_spec(path: Path) -> dict:
             raise ReelError(f"spec 缺少 {key}")
     _reject_underscored_fields(spec)
     _reject_dead_voice_keys(spec)
+    _validate_story_stat_card_declaration(spec)
     _normalize_stat_card_segments(spec)
     _normalize_title_card_segments(spec)
     if not spec.get("sources") and not spec.get("source_url"):
@@ -10218,6 +10236,7 @@ def validate_spec(
     **不读发布账本**——「这一趟重渲之前回头查过没有」只有渲染入口问得出意义，
     全库扫描读账本会让推送落账那一下把 main 打红。生产调用一律用默认 false。
     """
+    _validate_story_stat_card_declaration(spec)
     validate_preserved_source_audio(spec)
     # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
     # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
