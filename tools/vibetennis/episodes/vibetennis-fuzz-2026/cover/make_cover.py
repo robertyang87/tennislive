@@ -1,13 +1,10 @@
-"""vibetennis EP10 德约接发之王封面（不进视频）：沿用 B 版式（杂志信息图）——
-两行问句（「接发之王」金色）＋四格时间轴＋大数字「第 7」（ATP 官方历史接发评分），主体退到一侧。
-底图是 3D 场景无字模式（r3d/still_cover.js，notext=1）在 14.5 s：赛点正手接发出手前一瞬（来球拖着光迹，带中央球场看台，2026-11-07 重出）。
-    tall：W=1440 H=1920 CAM="5.5,2.2,17.6,1.5,0.9,8.0"，再 Lanczos 放大到 2160×2880（swiftshader 在 2880 高时会出横带）
-    wide：W=1920 H=1080 CAM="-3.0,2.4,19.5,-0.6,1.0,10.0"（人在画面右边，左边放字）
-    vert：W=1080 H=1920 CAM="5.5,2.2,18.4,1.5,0.9,8.0"
+"""vibetennis EP11 阻力危机封面（不进视频）：沿用 B 版式（杂志信息图）——
+两行问句（「刹车」亮黄）＋四格（悬崖前后的阻力系数、悬崖的位置、网球的阻力系数、3 号球）＋大数字「0.6」，主体网球退到一侧。
+底图是 3D 场景无字模式（r3d/still_cover.js，notext=1）在钩子段毛茸茸网球那几秒（取景见下）。
+    tall：W=1440 H=1920，再 Lanczos 放大到 2160×2880；wide：W=1920 H=1080；vert：W=1080 H=1920
   抽出来的图放 cover/raw/B_<tall|wide|vert>.jpg
     python3 cover/make_cover.py B tall|wide|vert <输出.jpg> [zh|en]
-数字口径见 papers/vibetennis-djokovic-return-2026/sources.md：第 7＝ATP 官方生涯 Return Rating（1991 年起）；
-0.2 s＝简单视觉反应（Woods 2015、Jain 2015）；0.15／0.19 s＝职业接发人落地／动拍（Mecheri 2019、Navia 2022）；八成＝回过发球线（Match Charting Project、ESPN）。
+数字口径见 papers/vibetennis-fuzz-2026/sources.md：约 0.5→0.1、雷诺数约 30 万（Cross 讲义、Asai 2007）；网球约 0.6（RMIT 2004、Cross、Mehta 2008）；3 号球大约 6%（ITF 规则附录 I）。
 """
 import json, sys
 from pathlib import Path
@@ -55,18 +52,18 @@ def hgrad(c,H,x0,x1,a0,a1):
 def dot(c,x,y,col,r=7): c.drawCircle(x,y,r*2.4,P(col,0.35,blur=10)); c.drawCircle(x,y,r,P(col,1))
 def leader(c,x0,y0,x1,y1,col,a=0.85): c.drawLine(x0,y0,x1,y1,P(col,a,stroke=2.2))
 
-Q2=lambda: [(T("凭什么叫他","Why the "),WHITE),(T("接发之王？","return king?"),GOLD)]
-TL4=lambda: [("0.2 s",T("人的反应","Reaction")),("0.15 s",T("垫步落地","Split lands")),("0.19 s",T("开始动拍","Racket moves")),(T("约八成","~80%"),T("回过发球线","Deep returns"))]
+Q2=lambda: [(T("这层毛，是一个","It’s a "),WHITE),(T("刹车","brake"),GOLD)]
+TL4=lambda: [("0.5 → 0.1",T("光滑球的悬崖","Smooth-ball cliff")),(T("约 30 万","~300,000"),T("悬崖在这里","Where it falls")),("0.6",T("网球：没有悬崖","Tennis: no cliff")),("+6%",T("3 号大球","Type 3 ball"))]
 def timeline(c,x0,x1,y,size=26):
     n=4; xs=[x0+(x1-x0)*i/(n-1) for i in range(n)]
     c.drawLine(x0,y,x1,y,P(GOLD,0.55,stroke=2.5))
     for x,(yr,lab) in zip(xs,TL4()):
         dot(c,x,y,GOLD,6); text(c,yr,x,y-22,size*0.95,GOLD2,1,MONO,align='c',shadow=0.4)
         text(c,lab,x,y+16+size,size,WHITE,0.95,SANS,align='c')
-BIG=lambda: T("第 7","No. 7")
-CAP=lambda: T("ATP 官方历史接发评分（1991 年起）：德约排第 7","ATP all-time Return Rating (since 1991): Djokovic is No. 7")
-NOTE=lambda: T("ATP 官方榜单 · Mecheri 2019 · Navia 2022 · Match Charting Project","ATP leaderboards · Mecheri 2019 · Navia 2022 · Match Charting Project")
-L1=lambda: T("官方榜单只排第 7，","Officially No. 7.")
+BIG=lambda: T("0.6","0.6")
+CAP=lambda: T("网球的阻力系数：一直在 0.6 上下，没有阻力危机","A tennis ball’s drag coefficient stays near 0.6: no drag crisis")
+NOTE=lambda: T("Cross · Asai 2007 · Alam 等 2004 · Mehta 2008 · ITF","Cross · Asai 2007 · Alam et al. 2004 · Mehta 2008 · ITF")
+L1=lambda: T("网球为什么偏偏要长毛？","Why does a tennis ball wear fuzz?")
 def make(opt,kind,out):
     bg=np.array(Image.open(RAW/f'{opt}_{kind}.jpg').convert('RGBA')); H,W=bg.shape[:2]
     surf=skia.Surface(W,H); c=surf.getCanvas(); c.drawImage(skia.Image.fromarray(bg,colorType=skia.kRGBA_8888_ColorType),0,0)
