@@ -1,0 +1,76 @@
+name: build-alternate-anims
+run-name: "alternate anims · ${{ inputs.which }} ${{ inputs.ver }}"
+
+# One-off animation builder for wta-finals-alternate-2026: renders the
+# code-drawn animation segments (scripts in tools/alternate_anims/) and
+# uploads each mp4 to Release tag source-alt-segNN as alt-segNN-<ver>.mp4.
+# Remove after ship.
+
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        description: "a1|a2|...|a12|all"
+        required: true
+        type: string
+        default: "all"
+      dur:
+        description: "duration override seconds (single 'which' only; blank = base)"
+        required: false
+        type: string
+        default: ""
+      ver:
+        description: "version tag for filenames"
+        required: true
+        type: string
+        default: "v1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-alternate-anims
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deps
+        run: |
+          pip install -q pillow numpy
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg >/dev/null
+          ls assets/fonts/ | head
+      - name: Render
+        env:
+          WHICH: ${{ inputs.which }}
+          DUR: ${{ inputs.dur }}
+          VER: ${{ inputs.ver }}
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          cp tools/alternate_anims/anim_common.py tools/alternate_anims/render_anims.py work/
+          cd work
+          sed -i "s|/home/hatch/workspace/tlrun/assets/fonts|$GITHUB_WORKSPACE/assets/fonts|" anim_common.py
+          if [ "$WHICH" = "all" ]; then
+            python3 render_anims.py all "" "$VER"
+          else
+            python3 render_anims.py "$WHICH" "$DUR" "$VER"
+          fi
+          ls -la
+      - name: Upload to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VER: ${{ inputs.ver }}
+        run: |
+          set -euo pipefail
+          cd work
+          for f in alt-seg*-${VER}.mp4; do
+            nn=$(echo "$f" | sed -E 's/^alt-seg([0-9]+)-.*/\1/')
+            tag="source-alt-seg$nn"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "source · alt-seg$nn" --notes "code-drawn animation source for wta-finals-alternate-2026 ($VER)"
+            gh release upload "$tag" "$f" --clobber
+            echo "uploaded $f -> $tag"
+          done
