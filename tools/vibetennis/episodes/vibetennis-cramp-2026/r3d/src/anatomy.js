@@ -32,17 +32,17 @@ const LEG=(()=>{
   const gtoMat=new THREE.MeshBasicMaterial({color:0x5aa8ff,wireframe:true,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false});
   const gto=new THREE.Mesh(new THREE.TorusKnotGeometry(0.2,0.05,80,8,2,5),gtoMat); gto.position.set(0,-1.2,-0.58); G.add(gto);
   // 脊髓段：左上方一截发光的柱子＋椎骨环
-  const cordX=-3.0, cordZ=-1.6; mesh(new THREE.CylinderGeometry(0.22,0.22,4.2,20),M.spine,cordX,6.2,cordZ);
-  for(let i=0;i<5;i++) mesh(new THREE.TorusGeometry(0.42,0.06,10,40),M.spine,cordX,4.6+i*0.8,cordZ).rotation.x=Math.PI/2;
+  const cordX=-3.0, cordZ=-1.6; mesh(new THREE.CylinderGeometry(0.22,0.22,3.0,20),M.spine,cordX,5.0,cordZ);
+  for(let i=0;i<4;i++) mesh(new THREE.TorusGeometry(0.42,0.06,10,40),M.spine,cordX,3.9+i*0.75,cordZ).rotation.x=Math.PI/2;
   // 神经通路
   const C=(pts)=>new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));
   const PATH={
-    Ia:C([[-0.3,1.4,-0.62],[-0.7,2.4,-1.2],[-1.4,3.8,-1.5],[-2.4,5.3,-1.6],[cordX+0.15,6.0,cordZ]]),
-    Ib:C([[0,-1.2,-0.58],[-0.6,0.0,-1.3],[-1.2,2.0,-1.7],[-2.0,4.4,-1.8],[cordX+0.15,6.6,cordZ]]),
-    a :C([[cordX+0.15,5.6,cordZ],[-2.2,4.6,-1.3],[-1.2,3.2,-1.0],[-0.4,2.2,-0.85],[0.1,1.3,-0.8]])};
+    Ia:C([[-0.3,1.4,-0.62],[-0.7,2.3,-1.2],[-1.5,3.4,-1.5],[-2.4,4.6,-1.6],[cordX+0.15,5.1,cordZ]]),
+    Ib:C([[0,-1.2,-0.58],[-0.6,0.0,-1.3],[-1.2,1.8,-1.7],[-2.1,3.9,-1.8],[cordX+0.15,5.6,cordZ]]),
+    a :C([[cordX+0.15,4.6,cordZ],[-2.2,3.9,-1.3],[-1.2,3.0,-1.0],[-0.4,2.1,-0.85],[0.1,1.3,-0.8]])};
   const NL={}; for(const k in PATH){ const l=fatLine(k==='Ib'?0x5aa8ff:k==='Ia'?0xffc24a:0xff6a55,3); setLine(l,PATH[k].getPoints(60)); l.material.opacity=0; NL[k]=l; }
   // 冲动粒子
-  const NP=600, imp=cloud(NP,0.16,9,scene,0); const ISEED=[...Array(NP)].map(()=>[rr(),rr(),rr()]);
+  const NP=600, imp=cloud(NP,0.5,22,scene,0); const ISEED=[...Array(NP)].map(()=>[rr(),rr(),rr()]);
   const st={op:0,c:0,ia:0,ib:0,mot:0,ankle:0};
   function update(t){
     G.visible=st.op>0.003; const o=st.op;
@@ -68,7 +68,7 @@ const LEG=(()=>{
       const on=s1<rate; const sp=0.35+1.4*rate; const u=(s0+t*sp*0.5)%1; const p=PATH[k].getPointAt(u);
       const c=cs[k]; cset(imp,i,p.x,p.y,p.z,c[0],c[1],c[2],on?o*(0.6+0.4*s2):0); }
     cdone(imp); }
-  return {G,st,update,PATH,imp,gL,gR,sol,gto,spindle,foot,cord:new THREE.Vector3(cordX,6.2,cordZ),hide(){ st.op=0; G.visible=false; for(const k in NL) NL[k].material.opacity=0; chide(imp); fibMat.opacity=0; spMat.opacity=0; gtoMat.opacity=0; }};
+  return {G,st,update,PATH,imp,gL,gR,sol,gto,spindle,foot,cord:new THREE.Vector3(cordX,5.0,cordZ),hide(){ st.op=0; G.visible=false; for(const k in NL) NL[k].material.opacity=0; chide(imp); fibMat.opacity=0; spMat.opacity=0; gtoMat.opacity=0; }};
 })();
 
 // 消化道（挂在全息人身上，单位 m）：嘴→食道→胃→小肠；用来跟「嘴里的神经信号」比速度

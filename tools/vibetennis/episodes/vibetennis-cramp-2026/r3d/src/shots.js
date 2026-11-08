@@ -26,7 +26,8 @@ function hideAll(){
   BALLS.forEach(b=>{ b.m.visible=false; b.gl.visible=false; }); bI=0; DOTS.forEach(m=>m.visible=false);
   LN.forEach(l=>{ l.material.opacity=0; l.material.dashed=false; }); lnI=0; RG.forEach(r=>r.material.opacity=0); rgI=0; GS.forEach(s=>{ s.material.opacity=0; s.visible=false; }); gsI=0;
   for(const k in TT) op(TT[k],0); for(const k in TB) TB[k].g.visible=false; for(const k in text3D) t3op(text3D[k],0); chide(pt);
-  beamMat.uniforms.uOp.value=0; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; SLOW=null; }
+  beamMat.uniforms.uOp.value=0; rimL.intensity=0; rimR.intensity=0; DOF.on=false; MOTE_SPEED=1; SLOW=null;
+  LEG.hide(); GUT.set(0); propsHide(); if(typeof CROWD!=='undefined') chide(CROWD); HUM.forEach(H=>{ H.root.scale.setScalar(1); if(H.racket) H.racket.g.visible=true; }); ST_RATE=0.0003; courtG.userData.mat.color.set(0xffffff); }
 // 全息榜单行
 function row(k,i,str,val,max,col,o,hl=0){ const y=1.4-i*0.75; const w=4.6*clamp(val/max); const l=ln(col,hl?14:10); setLine(l,[V(-1.2,y,0),V(-1.2+w,y,0)]); l.material.opacity=o*(0.75+0.25*hl);
   const t=tx(k,str,{color:hl?'#ffffff':'#c8d8ea',size:0.42,glow:hl?CYAN:'rgba(120,160,200,0.6)'}); t.position.set(-3.4,y,0.1); op(t,o); }
@@ -36,210 +37,259 @@ function row(k,i,str,val,max,col,o,hl=0){ const y=1.4-i*0.75; const w=4.6*clamp(
 function burst(c,k,col,spread=6,o=1){ const cc=new THREE.Color(col); for(let i=0;i<1600;i++){ const p=PTS[i]; const dir=V(p[0],p[1]*1.2,p[2]).normalize(); const sp=spread*(0.4+0.6*p[3]); const e=1-Math.pow(1-clamp(k),2.2);
   cset(pt,i,c.x+dir.x*sp*e,c.y+dir.y*sp*e-1.5*e*e,c.z+dir.z*sp*e,cc.r,cc.g,cc.b,o*(1-ss(0.55,1,k))*(0.5+0.5*p[4])); } cdone(pt); }
 function shockRing(c,k,col,maxR,o=1,vertical=false){ const r=rg(); r.position.copy(c); vertical?r.rotation.set(0,0,0):r.rotation.set(-Math.PI/2,0,0); const e=1-Math.pow(1-clamp(k),3); r.scale.setScalar(0.2+maxR*e); r.material.color.set(col).multiplyScalar(GLOW.k); r.material.opacity=o*(1-ss(0.35,1,k)); }
+
+// ==================== EP11 本集道具 ====================
+const NEU=0x34f5a8, SALT=0xf4f7ff, PJ=0x9dff5a, YEL=0xffd84a, BLU=0x5aa8ff;
+const PROPS=(()=>{
+  const g=new THREE.Group(); scene.add(g);
+  const arc=[]; for(let i=0;i<=24;i++){ const a=-0.9+i/24*1.8; arc.push(V(Math.sin(a)*0.9,Math.cos(a)*0.9-0.9,0)); }
+  const banana=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(arc),48,0.16,14,false),holoMat(YEL)); g.add(banana);
+  const bottle=new THREE.Group(); const bm=holoMat(BLU); bottle.add(new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.28,1.3,24),bm)); const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.25,16),bm); cap.position.y=0.78; bottle.add(cap); g.add(bottle);
+  const drop=new THREE.Mesh(new THREE.SphereGeometry(0.22,32,24),new THREE.MeshBasicMaterial({color:new THREE.Color(PJ).multiplyScalar(0.8),transparent:true})); drop.scale.set(1,1.35,1); g.add(drop);
+  const vessel=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.55,9,32,1,true),holoMat(0xff6a7a)); vessel.rotation.z=Math.PI/2; g.add(vessel);
+  const all=[banana,bottle,drop,vessel]; all.forEach(o=>o.visible=false);
+  return {g,banana,bottle,drop,vessel,all,bm};
+})();
+function noRk(H){ if(H.racket) H.racket.g.visible=false; }
+function propsHide(){ PROPS.all.forEach(o=>{ o.visible=false; o.position.set(0,0,0); o.rotation.set(o===PROPS.vessel?0:0,0,o===PROPS.vessel?Math.PI/2:0); o.scale.setScalar(1); }); PROPS.drop.scale.set(1,1.35,1); }
+function hop(o,v){ o.visible=v>0.003; const set=(m)=>{ if(m.uniforms&&m.uniforms.uOp) m.uniforms.uOp.value=v; else { m.opacity=v; m.transparent=true; } }; o.traverse(c=>{ if(c.material) set(c.material); }); }
+const calfOf=(H)=>wpos(H.legR.kn).lerp(wpos(H.legR.an),0.4);
+const headOf=(H)=>wpos(H.eye);
+// 粒子：沿一条折线的闪电（嘴 → 脊髓 → 腿），k 是闪电头走到哪
+function bolt(pts,k,col,o=1,jit=0.06,seed=1){ const cc=new THREE.Color(col); const n=pts.length-1; for(let i=0;i<700;i++){ const f=i/700; if(f>k){ cset(pt,i,0,0,0,0,0,0,0); continue; }
+    const s=f*n, a=Math.floor(Math.min(s,n-1e-6)), w=s-a; const p=pts[a].clone().lerp(pts[a+1],w); const h=Math.sin((i+seed*31)*12.9898)*43758.5453; const r=(h-Math.floor(h))-0.5;
+    cset(pt,i,p.x+r*jit,p.y+r*jit*0.7,p.z-r*jit,cc.r,cc.g,cc.b,o*(0.35+0.65*ss(k-0.25,k,f))); } cdone(pt); }
+// 镜头空间里的一条横向进度条（look() 之后调）
+function bar(col,x0,x1,y,o,w=10,d=9){ const l=ln(col,w); setLine(l,[hp(x0,y,d),hp(Math.abs(x1-x0)<0.001?x0+0.001:x1,y,d)]); l.material.opacity=o; return l; }   // x1 可以在 x0 左边（往左长）
+function lab(k,str,x,y,o,opt={}){ const t=tx(k,str,Object.assign({color:'#e8f4ff',size:0.34,glow:CYAN},opt)); if(x!==null) hud(t,x,y,opt.d||9); op(t,o); return t; }   // x=null：挂在世界坐标上（调用方自己设 position）
+
+// ---------- 1 钩子：上海夜场，辛纳抽筋倒地 → 水、盐、香蕉飞来 → 一滴腌黄瓜汁击碎它们 → 85 秒 vs 还在胃里 → 管住了什么？ ----------
+// 所有者 2026-11-07：「前几秒一定要抓住人……直接抛出来，然后用炸裂或者是非常爆裂的动作」。（不用闪白、抖屏：11-05 转场标准）
 function shotHook(u,D){
-  const SLAM=ev('slam',0.3), SEV=ev('seven',2.4), CRN=ev('crown',5.5), CT=ev('court',7.7), SV=ev('serve',11.4), RT=ev('ret',14.6), RUN=ev('run',16.5), QQ=ev('q',19.9);
-  if(u<CT-0.3){ // A：巨大的「7」砸下来，冲击波＋粒子炸开；榜单在它周围拼出来 → B：「7」炸成粒子，汇成「接发之王」
-    look(lerp(1.2,-0.6,ss(0,CT,u)),lerp(-0.6,0.2,ss(0,CT,u)),lerp(10.5,9.0,ss(0,CT,u)),0,0.6,0);
-    const fall=clamp(u/0.55), imp=0.55; const y=lerp(4.2,0.7,fall*fall);   /* 第一帧「7」就在画面上方往下砸 */
-    const seven=t3d('bigSeven','7','#ff6a55',3.2); seven.g.position.set(0,y,0); seven.g.rotation.set(0,(1-fall)*0.6+Math.sin(u*0.6)*0.08,0); t3op(seven,1-ss(CRN-0.1,CRN+0.25,u));
-    if(u>imp){ const k=(u-imp)/1.4; shockRing(V(0,-1.0,0),k,RD,9); shockRing(V(0,-1.0,0),(u-imp-0.15)/1.6,GO,13,0.7); if(u<CRN) burst(V(0,-0.6,0),(u-imp)/1.6,0xff8a6a,7,0.9); const g=gs(RD,4.5,0.5*Math.exp(-(u-imp)*2.5)); g.position.set(0,-0.6,0.5); }
-    const o=ss(imp+0.1,imp+0.8,u)*(1-ss(CRN-0.2,CRN+0.2,u));
-    const rows=[[T('1  科里亚','1  Coria'),'171.5',2.0],[T('3  纳达尔','3  Nadal'),'167.8',1.25]];
-    rows.forEach(([n,v,yy],i)=>{ const a=tx('hr'+i,n,{color:'#c8d8ea',size:0.4}); a.position.set(-5.0,yy,-1.2); op(a,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); const b=tx('hv'+i,v,{color:'#9fb8d0',size:0.36}); b.position.set(5.0,yy,-1.2); op(b,o*ss(imp+0.1+i*0.15,imp+0.6+i*0.15,u)); });
-    const me=tx('hr7',T('7  德约科维奇  163.5','7  Djokovic  163.5'),{color:'#ffffff',size:0.48,glow:RED}); me.position.set(0,-1.75,0.6); op(me,ss(SEV-0.2,SEV+0.4,u)*(1-ss(CRN-0.2,CRN+0.2,u)));
-    const hd=tx('hH',T('ATP 官方 · 历史接发评分','ATP official · all-time Return Rating'),{color:'#c8f4ff',size:0.4,glow:CYAN}); hud(hd,0,2.6); op(hd,o);
-    if(u>SEV){ shockRing(V(0,0.7,0.4),((u-SEV)%1.2)/1.2,RD,2.6,0.6*(1-ss(CRN-0.6,CRN,u)),true); }
-    if(u>CRN-0.15){ const k=(u-CRN+0.15)/1.4; burst(V(0,0.7,0),k,0xffc24a,6,1); }   /* 「7」炸成金色粒子 */
-    const king=bt('kingT',T('接发之王','King of the Return'),{size:1.35,glow:GOLD,fx:'particles'}); hud(king,0,0.35,9); king.update(u,CRN+0.15,CT-0.6);
-    if(u>CRN+0.8){ const r2=(u-CRN-0.8)/1.6; shockRing(V(0,0.5,0),r2,GO,6,0.6,true); }
-    rims(RD,GO,6); beamMat.uniforms.uOp.value=0.06+0.1*ss(CRN,CRN+1,u); return; }
-  if(u<QQ-0.3){ // C：2011 美网赛点，子弹时间的正手接发，击球点炸出冲击波，球拖着光迹贯穿全场
-    courtG.visible=true; const C=SV+0.9, sf=0.65/Math.max(0.6,RT-C);
-    humanOp(SRV,1); humanOp(RET,1); place(SRV,-0.8,-L2-0.3,0); place(RET,2.2,L2+0.9,Math.PI);
-    applyPose(SRV,poseAt([[0,'stand'],[SV-0.6,'stand'],[SV,'sToss'],[SV+0.6,'sTrophy'],[C,'sHit'],[C+0.6,'sFollow']],u));
-    const tb=(u-C)*sf; const A=V(-0.95,2.8,-L2+0.1), B=V(3.6,0,SLN-0.6), Cp=V(3.0,0.9,L2+0.7);
-    applyPose(RET,poseAt([[0,'ready'],[C-0.15,'ready'],[C,'split'],[C+0.15/sf,'land'],[RT-0.35,'lungeF'],[RT+0.2,'lungeF'],[RT+1.4,'ready']],u));
-    RET.root.position.x=lerp(2.2,2.7,ss(C+0.2/sf,RT-0.3,u));
-    if(u>C&&tb<0.65){ const p=serveAt(tb,A,B,Cp); const b=bl(); showB(b,p,1,BS); const pts=[]; for(let i=0;i<=20;i++) pts.push(serveAt(tb*i/20,A,B,Cp)); trail(pts,GO,4,0.8); }
-    if(u>=RT){ const k=clamp((u-RT)*0.9); const E=V(-3.6,0,-L2+3.2); const pos=kk=>V(lerp(Cp.x,E.x,kk),0.9+Math.sin(Math.PI*kk)*1.1,lerp(Cp.z,E.z,kk)); const b=bl(); showB(b,pos(k),1-ss(0.95,1,k),BS*1.3);
-      const pts=[]; for(let i=0;i<=30;i++) pts.push(pos(k*i/30)); trail(pts,CY,9,0.95); const pts2=[]; for(let i=0;i<=30;i++) pts2.push(pos(k*i/30).add(V(0,0.05,0))); trail(pts2,WH,3,0.6);
-      shockRing(Cp.clone(),(u-RT)/0.9,CY,3.2,1,true); shockRing(Cp.clone(),(u-RT-0.12)/1.1,WH,4.5,0.6,true); const g=gs(CY,2.2,0.6*Math.exp(-(u-RT)*3)); g.position.copy(Cp);
-      if(k>=1){ shockRing(E.clone().setY(0.03),(u-RT-1.11)/1.2,CY,3,0.9); } }
-    SLOW=[RT-0.1,RT+0.6];
-    const sc=tx('hkSc',T('2011 美网半决赛 · 第五盘 3:5 · 费德勒握两个赛点','2011 US Open SF · fifth set 3-5 · Federer, 2 match points'),{color:'#ffe2a0',size:0.34,glow:GOLD,plate:true}); hud(sc,0,2.55); op(sc,ss(CT,CT+0.6,u)*(1-ss(RUN-0.3,RUN,u)));
-    const sc2=tx('hkSc2',T('连赢四局 → 7:5 · 6-7 4-6 6-3 6-2 7-5','Four straight games → 7-5 · 6-7 4-6 6-3 6-2 7-5'),{color:'#c8f4ff',size:0.36,glow:CYAN,plate:true}); hud(sc2,0,2.55); op(sc2,ss(RUN,RUN+0.5,u));
-    const w=tx('hkW',T('正手接发 · 直接得分','Forehand return winner'),{color:'#ffffff',size:0.56,glow:CYAN}); hud(w,0,-2.15); op(w,ss(RT+0.3,RT+0.8,u));
-    const sch=tx('hkS',T('动作为示意','Motion is schematic'),{color:'#9fb8d0',size:0.24}); hud(sch,3.6,-2.95); op(sch,1);
-    const tc=ss(CT,SV,u), rc=ss(RT-0.5,RT+1.5,u);
-    look(lerp(7.5,5.2,tc)-rc*2.2, lerp(4.2,2.8,tc), lerp(L2+10,L2+7.2,tc)-rc*1.5, lerp(0,0.8,tc)-rc*1.4, 0.6, lerp(-2,-4,tc)+rc*-1);
-    beamMat.uniforms.uOp.value=0.12; rims(GO,CY,5); DOF.on=u>C-0.3&&u<RT+1.2; DOF.focus=camera.position.distanceTo(V(3,0.9,L2)); DOF.ap=0.00005; return; }
-  // D：王在哪？
-  const v=u-QQ; courtG.visible=true; courtG.userData.mat.opacity=lerp(1,0.45,ss(0,0.8,v)); humanOp(RET,lerp(1,0.5,ss(0,0.8,v))); place(RET,2.7,L2+0.9,Math.PI); applyPose(RET,POSE.ready);
-  look(4.0+v*0.2,2.4,L2+6.5,1.5,0.9,L2-2);
-  const q=bt('hookQ',T('那这个「王」，到底王在哪？','So where does the "king" come from?'),{size:0.86,glow:GOLD,accent:T('王在哪','the "king"'),fx:'shock'}); hud(q,0,0.6); q.update(v,0.05,Infinity,0.9);
-  rims(GO,CY,5); }
+  const FALL=ev('fall',2.3), CR=ev('crowd',4.5), SL=ev('salt',7.2), DR=ev('drop',11.7), CK=ev('clock',14.2), ST=ev('stomach',16.7), QQ=ev('q',19.9);
+  courtG.visible=true; const H=RET; humanOp(H,1); place(H,0.4,L2-0.6,Math.PI);
+  applyPose(H,poseAt([[0,'ready'],[0.9,'lungeF'],[FALL-0.2,'lungeF'],[FALL+0.5,'cramp']],u));
+  ST_RATE=lerp(0.0004,0.006,ss(FALL-0.2,FALL+0.4,u)*(1-ss(CR+1,CR+3,u)));
+  const C=calfOf(H);
+  if(u>FALL-0.1){ const k=u-FALL; const g=gs(RD,1.6+0.4*Math.sin(u*9),0.55*ss(0,0.2,k)*(1-ss(DR,DR+0.6,u))); g.position.copy(C); shockRing(C.clone().setY(0.03),k/1.1,RD,3.5,0.9*(1-ss(DR,DR+0.5,u))); }
+  H.mat.uniforms.uC.value.set(0x4fe3ff).lerp(new THREE.Color(0xff5a4a),0.55*ss(FALL,FALL+0.4,u)*(1-ss(CK,CK+1.5,u)));
+  const cap=tx('hkSc',T('2025 上海大师赛第三轮 · 辛纳 6-7 7-5 2-3 抽筋退赛','2025 Shanghai Masters R3 · Sinner retires with cramps at 6-7 7-5 2-3'),{color:'#ffe2a0',size:0.32,glow:GOLD,plate:true});
+  // 三样「常识」从三面飞来：水瓶、盐粒、香蕉
+  const ink=ss(CR,CR+1.2,u)*(1-ss(DR+0.05,DR+0.25,u));
+  const home=[V(-1.3,0.9,L2-0.3),V(1.9,1.0,L2-0.5),V(0.4,1.6,L2-1.3)];
+  const from=[V(-9,4,L2+2),V(9,4,L2+2),V(0,9,L2-6)];
+  const PB=PROPS.bottle, PBa=PROPS.banana;
+  if(u<DR+0.3){ PB.visible=true; PB.position.copy(from[0].clone().lerp(home[0],ss(CR,CR+1.1,u))); PB.rotation.set(0.3,u*0.8,0.2); hop(PB,ink);
+    PBa.visible=true; PBa.position.copy(from[2].clone().lerp(home[2],ss(CR+0.3,CR+1.4,u))); PBa.rotation.set(0.2,u*0.6,0.4); hop(PBa,ink); }
+  const lbW=lab('hkW',T('缺水？','Water?'),null,0,0,{color:'#9fd0ff',glow:CYAN,size:0.42}); lbW.position.copy(home[0]).add(V(0,1.0,0)); op(lbW,ink);
+  const lbS=lab('hkS',T('缺盐？','Salt?'),null,0,0,{color:'#ffffff',glow:'rgba(255,255,255,0.8)',size:0.42}); lbS.position.copy(home[1]).add(V(0,1.0,0)); op(lbS,ink*ss(SL-0.6,SL,u));
+  const lbB=lab('hkB',T('香蕉？','Banana?'),null,0,0,{color:'#ffe27a',glow:GOLD,size:0.42}); lbB.position.copy(home[2]).add(V(0,0.9,0)); op(lbB,ink);
+  if(u<DR+1.6){ const cc=new THREE.Color(SALT); const e=ss(SL-0.8,SL+0.3,u);   // 盐粒：一团闪着的白色晶粒聚到右边
+    for(let i=0;i<500;i++){ const p=PTS[i]; const tgt=home[1].clone().add(V((p[3]-0.5)*1.2,(p[4]-0.5)*1.2,(p[0]/16)*1.2));
+      let pos=V(9+p[0]*0.6,4+p[1],L2+2+p[2]).lerp(tgt,e); if(u>DR){ const k=(u-DR)/1.4; const dir=pos.clone().sub(home[1]).normalize(); pos.add(dir.multiplyScalar(5*(1-Math.pow(1-clamp(k),2)))); pos.y-=2*k*k; }
+      cset(pt,i,pos.x,pos.y,pos.z,cc.r,cc.g,cc.b,e*(1-ss(DR+0.4,DR+1.4,u))*(0.4+0.6*p[4])); }
+    cdone(pt); }
+  // 一滴腌黄瓜汁从天而降，砸碎三样常识
+  const D0=V(0.5,9,L2-0.3), D1=V(0.5,1.1,L2-0.5);
+  if(u>DR-1.1 && u<CK+0.2){ const k=ss(DR-1.1,DR,u); PROPS.drop.visible=true; PROPS.drop.position.copy(D0.clone().lerp(D1,k*k)); PROPS.drop.material.opacity=1-ss(DR,DR+0.15,u); }
+  if(u>DR){ const k=(u-DR); shockRing(D1.clone(),k/1.2,PJ,4,1); shockRing(D1.clone(),(k-0.15)/1.5,WH,6,0.6); if(k<1.6&&u>DR+0.2) burst(D1.clone(),k/1.6,PJ,5,0.9); const g=gs(PJ,3.5,0.6*Math.exp(-k*2.5)); g.position.copy(D1); }
+  // 85 秒 ＋ 还在胃里
+  const n85=t3d('n85','85',0x9dff5a,1.6); hud(n85,-2.6,0.45,9); t3op(n85,ss(CK,CK+0.3,u)*(1-ss(QQ-0.3,QQ,u)));
+  const s85=lab('hk85',T('秒，就不抽了','seconds — cramp gone'),-2.6,-0.75,ss(CK+0.2,CK+0.6,u)*(1-ss(QQ-0.3,QQ,u)),{color:'#d8ffc8',glow:'rgba(157,255,90,0.8)',size:0.36});
+  const sg=lab('hkSt',T('那时它大部分还在胃里','still mostly in the stomach'),2.6,-0.75,ss(ST,ST+0.4,u)*(1-ss(QQ-0.3,QQ,u)),{color:'#e8f4ff',size:0.36});
+  if(u>CK-0.5){ GUT.set(ss(CK-0.5,CK+0.3,u)*(1-ss(QQ+0.3,QQ+1.2,u))); }
+  const q=bt('hkQ',T('那它到底管住了什么？','So what did it actually stop?'),{size:0.9,glow:CYAN,fx:'particles'}); hud(q,0,0.2,9); q.update(u,QQ,D-0.2);
+  // 机位：先全景压近倒地的人 → 抬头看三样东西 → 落滴后推近 → 问句时朝小腿钻进去
+  if(u<CK-0.4){ const k=ss(0,FALL+0.8,u), k2=ss(CR,DR,u);
+    look(lerp(4.0,2.2,k)+k2*0.3,lerp(1.5,0.95,k)+k2*0.55,lerp(L2+4.8,L2+2.7,k)+k2*1.6,0.4,lerp(0.85,0.45,k)+k2*0.75,L2-0.7); hud(cap,0,3.1,9); op(cap,ss(0.3,0.9,u)*(1-ss(CR+1,CR+1.6,u))); rims(CY,RD,5); }
+  else { // 人体侧视：嘴、胃、腿都在画面里
+    place(H,0,0,0); applyPose(H,POSE.stand); H.root.position.set(0,0,0); courtG.visible=false; noRk(H);
+    GUT.G.position.set(0,0,0); const k=ss(QQ,D,u); look(lerp(2.6,0.9,k),lerp(1.2,0.5,k),lerp(0.9,0.4,k),0,lerp(1.15,0.45,k),0); rims(NEU,CY,4); hud(cap,0,3.1,9); op(cap,0); }
+}
 
-// ---------- 2 时间赛跑：0.65 s 的来球，0.2 s 的反应，0.19 s 就动拍 ----------
-const TMAX=0.7;
-function shotRace(u,D){
-  const TL0=ev('tl',0.5), FL=ev('fly',5.4), RE=ev('react',7.1), JP=ev('jump',15.8), LD=ev('land',16.7), RK=ev('racket',18.2), FK=ev('fork',26.1), GU=ev('guess',31.9);
-  courtG.visible=true; humanOp(SRV,1); humanOp(RET,1); place(SRV,-0.8,-L2-0.3,0); place(RET,0.6,L2+0.9,Math.PI);
-  // 慢放：整段里把 0–0.7 s 循环演示（每轮 7 s，即 1/10 速），时间轴上的光标同步走
-  const per=7.0, cyc=u<FL?0:((u-FL)%per)/per*TMAX+(u<FL?0:0), tb=u<FL?0:cyc;
-  applyPose(SRV,tb<0.001&&u<FL?POSE.sTrophy:mixPose(POSE.sHit,POSE.sFollow,ss(0,0.25,tb)));
-  const rp=tb<0.009?POSE.ready:tb<0.152?mixPose(POSE.split,POSE.land,ss(0.009,0.152,tb)):tb<0.187?POSE.land:mixPose(POSE.land,POSE.lungeF,ss(0.187,0.5,tb));
-  applyPose(RET,u<JP?(u<FL?POSE.ready:mixPose(POSE.ready,POSE.ready,0)):rp);
-  if(u>=FL){ const A=V(-0.95,2.8,-L2+0.1), B=V(2.4,0,SLN-0.6), Cp=V(1.6,0.9,L2+0.6); const b=bl(); if(tb<0.65){ showB(b,serveAt(tb,A,B,Cp),1,BS*1.4); } const pts=[]; for(let i=0;i<=24;i++) pts.push(serveAt(Math.min(tb,0.65)*i/24,A,B,Cp)); trail(pts,GO,4,0.7); }
-  look(-23,13,0.4,0,0.0,0.4);   /* 侧面看整条来球路线：两个人都在画里；机位抬到看台前排人头上方（看台 2026-11-07 加的） */
-  // 时间轴（镜头坐标里画）：0 → 0.7 s
-  const x0=-4.2, x1=4.2, ty=2.15, X=t=>lerp(x0,x1,t/TMAX); const kk=ss(TL0,TL0+0.8,u);
-  const ax=ln(0x9fd8ff,3); setLine(ax,[hp(x0,ty),hp(lerp(x0,x1,kk),ty)]); ax.material.opacity=0.9;
-  for(let i=0;i<=7;i++){ const t=ln(0x9fd8ff,2); setLine(t,[hp(X(i*0.1),ty-0.08),hp(X(i*0.1),ty+0.08)]); t.material.opacity=0.8*kk; const s=tx('tk'+i,(i/10).toFixed(1)+'s',{color:'#9fb8d0',size:0.2}); hud(s,X(i*0.1),ty+0.28); op(s,kk); }
-  const bf=ln(GO,9); setLine(bf,[hp(x0,ty-0.42),hp(X(0.65)*ss(FL,FL+1,u)+x0*(1-ss(FL,FL+1,u)),ty-0.42)]); bf.material.opacity=ss(FL,FL+0.5,u);
-  const lb=tx('rBall',T('来球：发球到接发人约 0.6–0.7 秒','Ball: ~0.6–0.7 s from serve to returner'),{color:'#ffe2a0',size:0.28,glow:GOLD}); hud(lb,X(0.5),ty-0.68); op(lb,ss(FL,FL+0.6,u)*(1-ss(JP-0.6,JP,u)));
-  const rr=ln(RD,9); setLine(rr,[hp(x0,ty-1.05),hp(lerp(x0,X(0.2),ss(RE,RE+0.8,u)),ty-1.05)]); rr.material.opacity=ss(RE,RE+0.4,u);
-  const ll=tx('rReact',T('人的简单反应 ≈ 0.2 秒','Simple reaction ≈ 0.2 s'),{color:'#ffd2c8',size:0.28,glow:RED}); hud(ll,X(0.2)+1.9,ty-1.05); op(ll,ss(RE,RE+0.6,u)*(1-ss(JP-0.6,JP,u)));
-  // 职业接发人的三个时刻
-  const marks=[[0.009,JP,T('起跳','Take-off'),0],[0.152,LD,T('落地 0.15 s','Land 0.15 s'),1],[0.187,RK,T('动拍 0.19 s','Racket moves 0.19 s'),2]];
-  marks.forEach(([t,e,s,i])=>{ const k=ss(e,e+0.5,u); const m=ln(CY,5); setLine(m,[hp(X(t),ty-0.3),hp(X(t),ty-1.7-i*0.0)]); m.material.opacity=k; const lb2=tx('rm'+i,s,{color:'#c8f4ff',size:0.28,glow:CYAN}); hud(lb2,X(t)+0.5+i*0.95,ty-1.95-i*0.3); op(lb2,k); });
-  const cur=ln(WH,3); setLine(cur,[hp(X(tb),ty+0.15),hp(X(tb),ty-2.6)]); cur.material.opacity=u>FL?0.55:0;
-  const src=tx('rSrc',T('职业球员实测（Mecheri 2019；Navia 2022）','Measured in pros (Mecheri 2019; Navia 2022)'),{color:'#9fb8d0',size:0.24}); hud(src,2.6,-2.95); op(src,ss(JP,JP+0.6,u));
-  if(u>FK-0.2){ const k=ss(FK,FK+0.8,u); const c=wpos(RET.root).add(V(0,1.0,-1.0)); [-1,1].forEach((s,i)=>{ const a=ln(i?CY:GO,6,true); setLine(a,[c,c.clone().add(V(s*1.6*k,0,-1.6*k))]); a.material.opacity=k; }); const q=tx('rQ',T('往哪边？','Which way?'),{color:'#ffffff',size:0.5}); q.position.copy(c.clone().add(V(0,0.8,-1))); op(q,k*(1-ss(GU-0.4,GU,u))); }
-  const g=bt('raceT',T('看清球之前，就已经猜好了','They guess before they see the ball clearly'),{size:0.62,glow:GOLD,accent:T('猜好了','guess'),fx:'streak'}); hud(g,0,-2.2); g.update(u,GU);
-  rims(GO,CY,5); beamMat.uniforms.uOp.value=0.08; }
+// ---------- 2 两派：左边血管里的离子变稀（脱水／电解质），右边神经在放电（神经肌肉控制） ----------
+function shotCamps(u,D){
+  const WA=ev('wat',4.7), NV=ev('nerve',10.2);
+  look(Math.sin(u*0.1)*0.4,0.2,9.5,0,0.1,0); rims(CY,NEU,4);
+  const V0=PROPS.vessel; V0.visible=true; V0.scale.set(1,0.48,1); V0.position.copy(hp(-3.0,-0.2,10)); hop(V0,0.55*ss(0.2,1.0,u)*(1-0.5*ss(NV,NV+0.8,u)));
+  // 离子：钠（黄）、钾（紫），出汗后变稀
+  const thin=ss(WA,WA+2.5,u); for(let i=0;i<500;i++){ const p=PTS[i]; const x=((p[3]+u*0.05*(1+p[4]))%1-0.5)*4.2; const c=new THREE.Color(i%3?0xffd84a:0xa78bfa);
+    const pos=hp(-3.0+x,-0.2+(p[4]-0.5)*0.9,10+(p[2]/8)); cset(pt,i,pos.x,pos.y,pos.z,c.r,c.g,c.b,ss(0.2,1.0,u)*(p[0]/16+0.5>thin*0.85?1:0.12)*(1-0.5*ss(NV,NV+0.8,u))); }
+  // 神经：右边一条折线，冲动越来越密
+  const N=[]; for(let i=0;i<=10;i++) N.push(hp(1.0+i*0.42,-0.2+0.35*Math.sin(i*1.7),10));
+  const l=ln(NEU,4); setLine(l,N); l.material.opacity=0.35+0.4*ss(NV,NV+0.6,u);
+  const cc=new THREE.Color(NEU); for(let i=500;i<900;i++){ const p=PTS[i]; const f=(p[3]+u*(0.25+0.8*ss(NV,NV+1,u)))%1; const s=f*10, a=Math.floor(s); const q=N[a].clone().lerp(N[Math.min(10,a+1)],s-a);
+    cset(pt,i,q.x,q.y,q.z,cc.r,cc.g,cc.b,ss(0.6,1.4,u)*(p[4]<0.35+0.6*ss(NV,NV+1,u)?1:0)); } cdone(pt);
+  lab('cpA',T('脱水／电解质说','Dehydration / electrolytes'),-3.0,1.2,ss(0.4,1,u)*(1-0.5*ss(NV,NV+0.8,u)),{color:'#ffe2a0',glow:GOLD});
+  lab('cpB',T('神经肌肉控制说','Neuromuscular control'),2.9,1.2,ss(0.8,1.4,u),{color:'#c8ffe8',glow:'rgba(52,245,168,0.8)'});
+  lab('cpVs','VS',0,0.2,ss(0.8,1.4,u),{size:0.5,color:'#ffffff'});
+}
 
-// ---------- 3 读懂发球人：抛球、持拍手臂＋球拍、上半身；眼睛先跳到落点 ----------
-function shotRead(u,D){
-  const BO=ev('body',0.5), TS=ev('toss',6.5), AR=ev('arm',7.2), GZ=ev('gaze',10.3), SC=ev('sacc',18.7), TI=ev('title',22.7);
-  if(u<SC-0.3){ courtG.visible=true; humanOp(SRV,1); place(SRV,0,0,0); SRV.root.position.set(0,0,-L2-0.2);
-    const ph=0.5+0.5*Math.sin((u-BO)*0.9); applyPose(SRV,mixPose(POSE.sToss,POSE.sTrophy,ss(0.1,0.9,ph)));
-    // 抛球
-    const tossH=2.4+1.0*ss(0.1,0.9,ph); const handL=wpos(SRV.armL.hand); const ball=bl(); const bp=V(handL.x,tossH,handL.z+0.15); showB(ball,bp,1,BS*1.3);
-    const cues=[[TS,bp,GO,T('抛球','Ball toss'),0.7],[AR,wpos(SRV.armR.el),CY,T('持拍手臂＋球拍','Arm + racket'),0.9],[GZ,wpos(SRV.spine).add(V(0,0.4,0)),MT,T('上半身','Upper body'),1.2]];
-    cues.forEach(([e,p,c,s,sz],i)=>{ const k=ss(e,e+0.6,u); const g=gs(c,sz,0.55*k); g.position.copy(p); const r=rg(); r.position.copy(p); r.rotation.set(0,0,0); r.scale.setScalar(sz*0.7*(1+0.08*Math.sin(u*4+i))); r.material.color.set(c).multiplyScalar(GLOW.k); r.material.opacity=0.8*k;
-      const t=tx('cue'+i,s,{color:'#ffffff',size:0.3,glow:i===0?GOLD:i===1?CYAN:MINT}); t.position.copy(p.clone().add(V(i===0?0.7:-0.9,0.25,0.2))); op(t,k); });
-    // 视线：从镜头这边（接发人的眼睛）射向线索
-    if(u>GZ){ const eye=V(0.6,1.7,L2+0.6); const k=ss(GZ,GZ+0.8,u); [wpos(SRV.spine).add(V(0,0.4,0)),bp].forEach((p,i)=>{ const l=ln(MT,3,true); setLine(l,[eye,eye.clone().lerp(p,k)]); l.material.opacity=0.8*k; });
-      const t=tx('gzT',T('眼动追踪：高手更多看上半身和球','Eye tracking: experts fixate the upper body and ball'),{color:'#c8ffe6',size:0.32,glow:MINT}); hud(t,0,-2.3); op(t,k); }
-    const tt=tx('rdT',T('研究：高手靠抛球和持拍手臂＋球拍预判发球方向','Research: experts read the toss and arm + racket'),{color:'#ffe2a0',size:0.32,glow:GOLD}); hud(tt,0,-2.3); op(tt,ss(TS,TS+0.6,u)*(1-ss(GZ-0.3,GZ,u)));
-    look(lerp(1.2,0.4,ss(0,SC,u)),1.7,-L2+lerp(6.5,5.2,ss(0,SC,u)),0,1.8,-L2-0.2); rims(GO,MT,5); DOF.on=true; DOF.focus=6; DOF.ap=0.00004; return; }
-  // 板球研究：视线提前跳到落点等球
-  const v=u-SC; courtG.visible=true; const per=3.2, k=(v%per)/per; const A=V(-0.6,2.6,-8), B=V(0.3,0,3.2), E=V(0.5,1.0,9.0);
-  const p=k<0.6?A.clone().lerp(B,k/0.6).add(V(0,Math.sin(Math.PI*k/0.6)*0.6,0)):B.clone().lerp(E,(k-0.6)/0.4).add(V(0,Math.sin(Math.PI*(k-0.6)/0.4)*0.5,0));
-  const b=bl(); showB(b,p,1,BS*1.4); const eye=V(0.5,1.7,9.6);
-  const gT=k<0.35?p:B; const gl=ln(MT,4,true); setLine(gl,[eye,gT]); gl.material.opacity=0.85;
-  const r=rg(); r.rotation.set(-Math.PI/2,0,0); r.position.set(B.x,0.02,B.z); r.scale.setScalar(0.8+0.2*Math.sin(v*6)); r.material.color.set(MT).multiplyScalar(GLOW.k); r.material.opacity=0.9*ss(0.3,0.36,k);
-  const t=tx('scT',T('板球研究：顶级击球手的视线提前跳到落点等球','Cricket studies: elite batters\' eyes jump ahead to the bounce'),{color:'#c8ffe6',size:0.32,glow:MINT}); hud(t,0,2.5); op(t,ss(0,0.6,v)*(1-ss(TI-SC-0.4,TI-SC,v)));
-  const ti=bt('readT',T('接发，在球过网之前就开始了','The return starts before the ball crosses the net'),{size:0.64,glow:GOLD,accent:T('之前','before'),fx:'write'}); hud(ti,0,-2.2); ti.update(v,TI-SC);
-  look(3.2,2.4,12,0,0.8,1); rims(MT,CY,4); }
+// ---------- 3 腌黄瓜实验：电刺激脚底抽筋 → 水 134 秒 vs 腌黄瓜汁 85 秒 → 胃里还没动、血液里的盐没变 → 口咽神经反射（推测） ----------
+function shotPickle(u,D){
+  const ZP=ev('zap',4.2), CR=ev('cramp',5.2), WT=ev('water',10.7), PJt=ev('pj',13.4), GT=ev('gut',16.9), FL=ev('flat',21.2), RF=ev('reflex',28.2);
+  if(u<WT-0.5){ // 小腿＋脚特写：电极、电流、脚底抽紧
+    LEG.st.op=1; LEG.st.c=0.15*ss(CR,CR+0.4,u); LEG.st.mot=0.15+0.6*ss(ZP,ZP+0.3,u); LEG.st.ia=0.1; LEG.st.ib=0.1; LEG.st.ankle=-0.25*ss(CR,CR+0.4,u); LEG.update(u);
+    look(4.2,-1.4,4.8,0,-2.4,0.4); rims(CY,RD,4);
+    const sole=V(0,-3.55,0.9); if(u>ZP){ const k=u-ZP; const zz=[V(-0.2,-1.2,1.6),V(0.1,-1.9,1.4),V(-0.1,-2.6,1.3),sole]; bolt(zz,ss(0,0.25,k),0x9fd8ff,1-ss(WT-1.2,WT-0.6,u),0.12,3); }
+    if(u>CR){ const g=gs(RD,1.4,0.55*(1-ss(WT-1.2,WT-0.6,u))); g.position.copy(sole); }
+    lab('pkN',T('10 人 · 先脱水约 3% · 电刺激诱发脚底肌肉抽筋','10 men · ~3% dehydrated · cramp induced electrically in a foot muscle'),0,2.6,ss(0.6,1.2,u)*(1-ss(WT-1.2,WT-0.6,u)),{size:0.3,plate:true});
+    return; }
+  if(u<GT-0.4){ // 计时赛跑：两条条子一起长，绿色在 85 秒停下
+    look(0,0.2,9,0,0.2,0); rims(PJ,BLU,4); const t=clamp((u-WT)/(GT-0.8-WT))*150;   // 画面上 150 秒压到这几秒里
+    const X0=-3.6, SC=7.2/150; const tw=Math.min(t,133.7), tp=Math.min(t,84.6);
+    bar(BLU,X0,X0+SC*tw,0.75,1,16); bar(PJ,X0,X0+SC*tp,-0.55,ss(PJt-0.6,PJt,u),16);
+    lab('pkW',T('水','Water'),X0-0.6,0.75,1,{color:'#9fd0ff',size:0.4}); lab('pkP',T('腌黄瓜汁','Pickle juice'),X0-0.95,-0.55,ss(PJt-0.6,PJt,u),{color:'#d8ffc8',size:0.4,glow:'rgba(157,255,90,0.8)'});
+    const nw=t3d('n134','134',0x5aa8ff,0.55); hud(nw,X0+SC*133.7+0.8,0.75,9); t3op(nw,ss(132,134,t));
+    const np=t3d('n85b','85',0x9dff5a,0.55); hud(np,X0+SC*84.6+0.6,-0.55,9); t3op(np,ss(83,85,t)*ss(PJt-0.6,PJt,u));
+    if(t>84.6){ const k=(t-84.6)/20; const c=hp(X0+SC*84.6,-0.55,9); shockRing(c,k,PJ,1.6,0.8,true); }
+    lab('pkU',T('秒（平均）','seconds (mean)'),2.6,-1.6,ss(WT,WT+0.6,u),{size:0.3,color:'#aab8c8'});
+    return; }
+  // 人体透视：胃里的汁几乎不动、血液里的盐没变；然后一道神经闪电从嘴打到腿
+  const H=RET; humanOp(H,0.55); noRk(H); place(H,0,0,0); applyPose(H,POSE.stand); GUT.set(0.9); GUT.G.position.set(0,0,0);
+  const k=ss(GT-0.4,D,u); look(lerp(2.2,1.6,k),lerp(1.2,1.0,k),lerp(1.3,1.0,k),0,lerp(1.15,0.95,k),0); rims(NEU,CY,4);
+  // 胃里的绿色液体粒子（基本不出胃）
+  const st=GUT.stomach.position; const gc=new THREE.Color(PJ);
+  for(let i=700;i<1000;i++){ const p=PTS[i]; const a=p[3]*6.283+u*0.4, r=0.07*Math.sqrt(p[4]); const leak=i<715?ss(GT,GT+3,u):0; const g=GUT.gut.getPointAt(clamp(leak*0.3*(p[0]/16+0.5)));
+    const q=leak>0?g:V(st.x+Math.cos(a)*r,st.y-0.02+Math.sin(a)*r*0.5,st.z+(p[2]/8)*0.04); cset(pt,i,q.x,q.y,q.z,gc.r,gc.g,gc.b,0.9); }
+  cdone(pt);
+  lab('pkG',T('喝下 5 分钟后，几乎不再离开胃','after 5 min, almost none leaves the stomach'),0.9,0.9,ss(GT,GT+0.6,u)*(1-ss(RF-0.6,RF,u)),{size:0.3,d:3});
+  lab('pkF',T('血液里的盐：没变','salt in the blood: unchanged'),0.9,0.55,ss(FL,FL+0.5,u)*(1-ss(RF-0.6,RF,u)),{size:0.3,color:'#ffb0b8',glow:'rgba(255,106,122,0.8)',d:3});
+  if(u>RF-0.4){ const mouth=headOf(H).add(V(0,-0.06,0.02)); const neck=wpos(H.neck), hip=wpos(H.pelvis), C=calfOf(H);
+    bolt([mouth,neck,neck.clone().lerp(hip,0.5),hip,C],ss(RF-0.4,RF+1.0,u),NEU,1,0.03,7); if(u>RF+1.0){ const g=gs(NEU,0.6,0.7*Math.exp(-(u-RF-1.0)*2)); g.position.copy(C); shockRing(C,(u-RF-1.0)/0.8,NEU,0.6,0.8,true); }
+    lab('pkR',T('研究者推测：嘴和喉咙里的神经反射','researchers suspect a reflex from the mouth and throat'),-0.8,0.9,ss(RF,RF+0.6,u),{size:0.3,color:'#c8ffe8',glow:'rgba(52,245,168,0.8)',d:3}); }
+}
 
-// ---------- 4 分腿垫步：快一成多；牵张-缩短循环 ----------
-function spring(a,b,col,o,comp){ const l=ln(col,4); const pts=[]; const ax=b.clone().sub(a), len=ax.length(); ax.normalize(); const side=new THREE.Vector3(1,0,0).cross(ax).normalize(); const side2=ax.clone().cross(side).normalize(); const n=10, r=0.07*(1+comp*0.6);
-  for(let i=0;i<=n*16;i++){ const t=i/(n*16); const ang=t*n*Math.PI*2; pts.push(a.clone().addScaledVector(ax,len*t).addScaledVector(side,Math.cos(ang)*r).addScaledVector(side2,Math.sin(ang)*r)); } setLine(l,pts); l.material.opacity=o; }
-function shotSplit(u,D){
-  const GOg=ev('go',0.5), HP=ev('hop',4.7), RC=ev('race',7.7), SP=ev('spring',15.5), TI=ev('title',20.1);
-  courtG.visible=true;
-  if(u<RC-0.3){ humanOp(RET,1); place(RET,0,L2+0.6,Math.PI); const v=u-HP; const per=2.4; const k=v<0?0:(v%per)/per;
-    const P=k<0.15?mixPose(POSE.ready,POSE.split,ss(0,0.15,k)):k<0.4?mixPose(POSE.split,POSE.land,ss(0.15,0.4,k)):k<0.75?mixPose(POSE.land,POSE.lungeF,ss(0.45,0.75,k)):mixPose(POSE.lungeF,POSE.ready,ss(0.75,1,k));
-    applyPose(RET,P); RET.root.position.y=k>0.15&&k<0.4?Math.sin(Math.PI*(k-0.15)/0.25)*0.12:0; RET.root.position.x=k>0.45&&k<0.75?ss(0.45,0.75,k)*1.0:k>=0.75?lerp(1,0,ss(0.75,1,k)):0;
-    SLOW=[HP,RC];
-    const t=tx('spT',T('分腿垫步：对手击球那一刻起跳','Split step: take off as the server strikes'),{color:'#c8f4ff',size:0.36,glow:CYAN}); hud(t,0,-2.3); op(t,ss(HP,HP+0.6,u));
-    look(3.6,1.4,L2+4.2,0,0.9,L2+0.6); rims(CY,GO,5); return; }
-  if(u<SP-0.3){ // 两个人比启动：垫步的先到
-    const v=u-RC; humanOp(G1,1); humanOp(G2,1); const per=3.0, k=(v%per)/per;
-    const go=t=>clamp((t-0.12)/0.75), go2=t=>clamp((t-0.12)/(0.75/1.125));   /* 垫步约快 12%：同样距离，用时 ÷ 1.12 */
-    [[G1,-1.4,go(k),false],[G2,1.4,go2(k),true]].forEach(([H,x,g,sp])=>{ place(H,x,0,Math.PI*0.5); H.root.position.z=-g*4.5+2; applyPose(H,g>0&&g<1?mixPose(POSE.lungeF,POSE.ready,0.5*Math.sin(g*20)+0.5):POSE.ready); });
-    const f1=ln(0x9fb8d0,4), f2=ln(CY,4); setLine(f1,[V(-1.4,0.02,-2.5),V(1.4,0.02,-2.5)]); f1.material.opacity=0.7; f2.material.opacity=0;
-    const a=tx('spA',T('不垫步','No split step'),{color:'#c8d8ea',size:0.36}); a.position.set(-1.4,2.3,2); op(a,1);
-    const b=tx('spB',T('垫步','Split step'),{color:'#c8f4ff',size:0.36,glow:CYAN}); b.position.set(1.4,2.3,2); op(b,1);
-    const r=tx('spR',T('实验：快 12–13%','Lab tests: 12–13% faster'),{color:'#ffffff',size:0.46,glow:CYAN}); hud(r,0,-2.2); op(r,ss(0.3,0.9,v));
-    const s=tx('spS',T('Uzu 等 2009；Nieminen 等 2014（光信号实验）','Uzu et al. 2009; Nieminen et al. 2014 (light-signal tasks)'),{color:'#9fb8d0',size:0.24}); hud(s,2.6,-2.95); op(s,1);
-    look(0,4.2,7.2,0,0.6,0); rims(CY,0x9fb8d0,5); return; }
-  // X 光腿：肌肉和肌腱像弹簧
-  const v=u-SP; look(1.6,1.0,L2+3.0,0,0.6,L2+0.6); humanOp(RET,0.35); place(RET,0,L2+0.6,Math.PI); const per=2.2, k=(v%per)/per; const comp=k<0.4?ss(0,0.4,k):1-ss(0.4,0.55,k);
-  applyPose(RET,mixPose(POSE.split,POSE.land,comp));
-  [[RET.legR,0],[RET.legL,1]].forEach(([Lg,i])=>{ const hip=wpos(Lg.hp), knee=wpos(Lg.kn), an=wpos(Lg.an); spring(hip,knee,GO,0.9,comp); spring(knee,an,GO,0.9,comp); const g=gs(GO,0.5+0.5*comp,0.35*comp); g.position.copy(knee); });
-  const e=ln(GO,10); setLine(e,[hp(-3.8,-1.4),hp(-3.8,-1.4+2.2*comp)]); e.material.opacity=0.9; const el=tx('spE',T('储能','Stored energy'),{color:'#ffe2a0',size:0.3}); hud(el,-3.8,-1.75); op(el,1);
-  const ti=bt('ssc',T('牵张-缩短循环','Stretch-shortening cycle'),{size:0.78,glow:GOLD,fx:'sag'}); hud(ti,0,2.3); ti.update(v,TI-SP);   /* 下沉：像落地 */
-  const l=tx('spL',T('落地拉长 → 像弹簧一样存能 → 立刻弹出','Landing stretches → stores energy like a spring → snaps back'),{color:'#ffffff',size:0.32}); hud(l,0,-2.3); op(l,ss(0,0.6,v));
-  rims(GO,CY,6); }
+// ---------- 4 油门与刹车：钻进透明小腿 → 肌梭（油门）、高尔基腱器（刹车）→ 累了：油门越来越灵、刹车越来越弱 → 运动神经停不下来 → 锁死 ----------
+function legCam(u,az0,az1,D,y=1.5,r=13){ const a=lerp(az0,az1,ss(0,D,u)); look(-1.0+Math.sin(a)*r,y+0.8,-1.0+Math.cos(a)*r,-1.0,y,-1.0); }   // 从 +x 侧后方看：屏幕左右≈世界 z（+z 在左）   // 侧后方看：腿、三条神经、脊髓都在画面里
+function shotBrake(u,D){
+  const SP=ev('spindle',6.0), GA=ev('gas',8.5), GO_=ev('gto',10.5), BK=ev('brk',14.2), TI=ev('tired',18.8), SM=ev('storm',25.2), LK=ev('lock',26.5);
+  LEG.st.op=ss(0,0.6,u); const tire=ss(TI,SM,u);
+  LEG.st.ia=lerp(0.25,1,tire)*(u>SP-0.3?1:0.3); LEG.st.ib=lerp(0.45,0.08,tire)*(u>GO_-0.3?1:0.3); LEG.st.mot=lerp(0.3,1,ss(TI+1,LK,u));
+  LEG.st.c=ss(SM-0.5,LK+0.3,u); LEG.st.ankle=-0.35*LEG.st.c; LEG.update(u);
+  if(u<1.6){ const k=ss(0,1.6,u), a=1.55; const r=lerp(2.5,13,k); look(-1.0+Math.sin(a)*r,lerp(0.8,2.3,k),-1.0+Math.cos(a)*r,-1.0,lerp(0.6,1.5,k),-1.0); } else legCam(u,1.55,2.05,D);   /* 从小腿肚里退出来，看到整个回路 */
+  rims(GO,BLU,4);
+  const sp=V(-0.3,1.4,-0.62), gt=V(0,-1.2,-0.58);
+  if(u>SP-0.3){ const g=gs(GO,0.9,0.5*ss(SP-0.3,SP+0.3,u)); g.position.copy(sp); }
+  if(u>GO_-0.3){ const g=gs(BLU,0.9,0.5*ss(GO_-0.3,GO_+0.3,u)); g.position.copy(gt); }
+  const a=lab('bkS',T('肌梭：感受拉长 → 让肌肉收缩','muscle spindle: senses stretch → contracts the muscle'),null,0,ss(SP,SP+0.5,u)*(1-ss(TI-0.6,TI,u)),{size:0.3,color:'#ffe2a0',glow:GOLD}); a.position.copy(sp).add(V(0,0.9,2.9));
+  const b=lab('bkG',T('高尔基腱器：感受张力 → 让肌肉放松','Golgi tendon organ: senses tension → relaxes the muscle'),null,0,ss(GO_,GO_+0.5,u)*(1-ss(TI-0.6,TI,u)),{size:0.3,color:'#cfe4ff',glow:'rgba(90,168,255,0.8)'}); b.position.copy(gt).add(V(0,-0.6,3.0));
+  const g1=lab('bkGas',T('油门','ACCELERATOR'),null,0,ss(GA,GA+0.4,u),{size:0.42,color:'#ffd27a',glow:GOLD}); g1.position.copy(sp).add(V(0,0.1,1.2));
+  const g2=lab('bkBrk',T('刹车','BRAKE'),null,0,ss(BK,BK+0.4,u),{size:0.42,color:'#9fd0ff',glow:CYAN}); g2.position.copy(gt).add(V(0,0.1,1.2));
+  const cd=lab('bkC',T('脊髓','spinal cord'),null,0,ss(SP,SP+0.6,u),{size:0.26,color:'#d8c8ff',glow:VIO}); cd.position.copy(LEG.cord).add(V(0,1.9,-0.6));
+  // 累了之后：右下角两根计量条
+  const o=ss(TI,TI+0.6,u); bar(GO,2.4,2.4+2.6*lerp(0.35,1,tire),-1.9,o,14); bar(BLU,2.4,2.4+2.6*lerp(0.7,0.12,tire),-2.45,o,14);
+  lab('bkTa',T('油门','accelerator'),1.8,-1.9,o,{size:0.32,color:'#ffd27a'}); lab('bkTb',T('刹车','brake'),1.8,-2.45,o,{size:0.32,color:'#9fd0ff'});
+  lab('bkT',T('肌肉累了','fatigue'),3.7,-1.3,o*(1-ss(SM-0.4,SM,u)),{size:0.36});
+  if(u>LK){ const k=u-LK; const c=V(0,1.4,-0.6); shockRing(c,k/1.0,RD,3,0.9,true); shockRing(c,(k-0.2)/1.3,RD,4.5,0.5,true); }
+  const lk=bt('bkLk',T('锁死','LOCKED'),{size:0.9,glow:RED,fx:'particles'}); hud(lk,2.4,1.6,9); lk.update(u,LK,D-0.1);
+}
 
-// ---------- 5 硬地滑步：静摩擦 → 滑动摩擦 ----------
-function shotSlide(u,D){
-  const SL=ev('slide',2.3), GR=ev('grip',7.7), KN=ev('kin',11.9), CP=ev('comp',17.1);
-  courtG.visible=true;
-  if(u<CP-0.3){ humanOp(RET,1); place(RET,0,L2,Math.PI); const per=4.0, v=Math.max(0,u-SL), k=(v%per)/per;
-    const x=k<0.55?ss(0,0.55,k)*3.2:3.2-ss(0.7,1,k)*3.2; RET.root.position.x=x; applyPose(RET,k<0.15?POSE.ready:k<0.7?mixPose(POSE.ready,POSE.lungeF,ss(0.15,0.45,k)):mixPose(POSE.lungeF,POSE.ready,ss(0.7,1,k)));
-    const foot=wpos(RET.legR.ft); const sliding=k>0.3&&k<0.55; const mu=u<KN?1:(sliding?0.55:1);
-    const fl=ln(u<KN?GO:CY,14); setLine(fl,[foot.clone().setY(0.06),foot.clone().setY(0.06).add(V(-1.6*mu,0,0))]); const fh=ln(u<KN?GO:CY,14); const tip=foot.clone().setY(0.06).add(V(-1.6*mu,0,0)); setLine(fh,[tip.clone().add(V(0.25,0,0.15)),tip,tip.clone().add(V(0.25,0,-0.15))]); fh.material.opacity=u>GR?0.95:0; fl.material.opacity=u>GR?0.95:0;
-    const tr=ln(CY,5); setLine(tr,[V(Math.max(0,x-1.6),0.02,L2+0.15),V(x,0.02,L2+0.15)]); tr.material.opacity=sliding&&u>SL?0.6:0;
-    const a=tx('slA',T('静摩擦：抓住地面','Static friction: grip'),{color:'#ffe2a0',size:0.36,glow:GOLD}); hud(a,0,-2.25); op(a,ss(GR,GR+0.6,u)*(1-ss(KN-0.3,KN,u)));
-    const b=tx('slB',T('滑起来：滑动摩擦更小，一边刹车一边到位','Sliding: smaller kinetic friction, braking while reaching'),{color:'#c8f4ff',size:0.34,glow:CYAN}); hud(b,0,-2.25); op(b,ss(KN,KN+0.6,u));
-    const c=tx('slC',T('摩擦力示意','Friction schematic'),{color:'#9fb8d0',size:0.24}); hud(c,3.6,-2.95); op(c,ss(GR,GR+0.6,u));
-    SLOW=[SL,CP]; look(lerp(5.5,3.2,ss(0,GR,u)),lerp(1.8,0.8,ss(GR-1,GR+1,u)),L2+lerp(5.5,3.4,ss(0,GR,u)),1.6,0.4,L2); DOF.on=u>GR; DOF.focus=3.6; DOF.ap=0.00005; rims(GO,CY,5); return; }
-  // 两个人比回位：滑步刹车先回到中间
-  const v=u-CP; humanOp(G1,1); humanOp(G2,1); const per=3.4, k=(v%per)/per;
-  [[G1,-0.9,1.0,false],[G2,0.9,1/1.08,true]].forEach(([H,dz,sc,sl])=>{ const kk=clamp(k/sc); const x=kk<0.5?ss(0,0.5,kk)*3:3-ss(0.5,1,kk)*3; place(H,x-1.5,L2+dz,Math.PI); applyPose(H,kk<0.5?mixPose(POSE.ready,POSE.lungeF,ss(0.1,0.5,kk)):mixPose(POSE.lungeF,POSE.ready,ss(0.5,1,kk))); });
-  const a=tx('slD',T('普通刹车','Normal braking'),{color:'#c8d8ea',size:0.34}); a.position.set(-3.6,2.2,L2-0.9); op(a,1);
-  const b=tx('slE',T('滑步刹车','Slide braking'),{color:'#c8f4ff',size:0.34,glow:CYAN}); b.position.set(-3.6,2.2,L2+0.9); op(b,1);
-  const r=tx('slR',T('大学精英球员实验：滑步回位更快（Ji 等 2025）','Elite college players: sliding recovers faster (Ji et al. 2025)'),{color:'#ffffff',size:0.32}); hud(r,0,-2.25); op(r,ss(0.3,0.9,v));
-  look(0,5.5,L2+6.5,0,0.5,L2); rims(CY,0x9fb8d0,4); }
+// ---------- 5 拉伸：勾脚尖 → 跟腱被拉紧 → 刹车（蓝）压过油门（红）→ 肌肉松开 ----------
+function shotStretch(u,D){
+  const FX=ev('flex',4.5), RL=ev('relief',7.3);
+  const f=ss(FX-0.3,FX+1.0,u), r=ss(FX+0.3,RL+1.2,u);
+  LEG.st.op=1; LEG.st.ankle=lerp(-0.35,0.55,f); LEG.st.ib=lerp(0.08,1,f); LEG.st.ia=lerp(1,0.3,r); LEG.st.mot=lerp(1,0.06,r); LEG.st.c=lerp(1,0,r); LEG.update(u);
+  legCam(u,2.05,2.45,D,0.8,12); rims(BLU,GO,4);
+  if(u>FX){ const c=V(0,-1.2,-0.58); const g=gs(BLU,1.4,0.6*f); g.position.copy(c); shockRing(c,(u-FX)/1.2,BLU,2.2,0.8,true); }
+  const a=lab('stA',T('勾脚尖 → 跟腱拉紧','toes pulled up → tendon stretched'),-2.6,-1.6,ss(FX,FX+0.5,u),{size:0.32,color:'#cfe4ff',glow:CYAN});
+  const t=bt('stT',T('刹车又起作用了','The brake kicks back in'),{size:0.8,glow:CYAN,fx:'particles'}); hud(t,0,2.0,9); t.update(u,RL,D-0.1);
+}
 
-// ---------- 6 数据：榜单拆开看 ----------
+// ---------- 6 数据：铁人三项 209 个光点，约五分之一抽筋 → 两组电解质、体重变化一样高 → 拉开的是速度 → 脱水 4.7% 也没变容易 → 香蕉太慢 ----------
+const CROWD=cloud(220,0.13,16,scene,0);
 function shotData(u,D){
-  const BD=ev('board',0.5), SM=ev('sum',5.0), AL=ev('all',9.5), HD=ev('hard',11.9), AC=ev('act',13.3), Y1=ev('y11',17.1), DP=ev('deep',23.1), HH=ev('h2h',30.5), LS=ev('last',36.3);
-  if(u<Y1-0.3){ // 四项相加 → 三个名次
-    look(Math.sin(u*0.2)*0.4,0.3,9,0,0.2,0); const o=ss(BD,BD+0.6,u); const comps=[[T('一发接发得分率','1st-serve return pts'),33.4,GO],[T('二发接发得分率','2nd-serve return pts'),55.0,CY],[T('接发局胜率','Return games won'),31.2,MT],[T('破发成功率','Break points converted'),43.9,0xa78bfa]];
-    let acc=0; const ks=ss(SM,SM+2.0,u);
-    comps.forEach(([s,val,c],i)=>{ const w=val/170*8.4; const x0=lerp(-4.2,-4.2+acc,ks), y=lerp(1.3-i*0.6,-0.3,ks); const l=ln(c,12); setLine(l,[hp(x0,y),hp(x0+w,y)]); l.material.opacity=o*ss(SM-0.2+i*0.25,SM+0.4+i*0.25,u+0.6)*(1-ss(AL-0.6,AL,u));
-      const t=tx('dc'+i,s+' '+val.toFixed(1),{color:'#ffffff',size:0.26}); hud(t,x0+w/2,y+0.32); op(t,o*(1-ks)); acc+=w; });
-    const sum=tx('dSum',T('= 163.5','= 163.5'),{color:'#ffe2a0',size:0.5,glow:GOLD}); hud(sum,3.9,-0.3); op(sum,ks*(1-ss(AL-0.3,AL,u)));
-    const hd=tx('dH',T('ATP 接发评分 = 四项百分比相加','ATP Return Rating = four percentages added'),{color:'#c8f4ff',size:0.34,glow:CYAN}); hud(hd,0,2.5); op(hd,ss(SM,SM+0.5,u)*(1-ss(AL-0.3,AL,u)));
-    const ranks=[[AL,'7',T('历史','All-time'),'#ff9a8a'],[HD,'2',T('硬地','Hard court'),'#ffd27a'],[AC,'1',T('现役','Active players'),'#7fffd0']];
-    ranks.forEach(([e,n,s,c],i)=>{ const k=ss(e,e+0.5,u); const o3=t3d('rk'+n,n,c,1.3); o3.g.position.copy(hp(-3+i*3,0.2,9)); o3.g.quaternion.copy(camera.quaternion); t3op(o3,k); const t=tx('rkl'+i,s,{color:'#ffffff',size:0.4}); hud(t,-3+i*3,-1.1); op(t,k); });
-    const ft=tx('dF',T('ATP 官方榜单，截至 2026 年 11 月','ATP official leaderboards, as of Nov 2026'),{color:'#9fb8d0',size:0.24}); hud(ft,2.6,-2.95); op(ft,ss(AL,AL+0.5,u));
-    rims(GO,CY,4); return; }
-  if(u<DP-0.3){ // 2011：38.8% 的接发局
-    const v=u-Y1; const k=ss(0.2,1.8,v); const r=ln(GO,12); arc(r,V(0,0.3,0),1.6,Math.PI/2,Math.PI/2-Math.PI*2*0.388*k,'z'); r.material.opacity=0.95; const r2=ln(0x5a6a80,4); arc(r2,V(0,0.3,0),1.6,0,Math.PI*2,'z'); r2.material.opacity=0.6;
-    const n=t3d('p388','38.8%','#ffd27a',0.6); n.g.position.set(0,0.3,0); t3op(n,ss(0.6,1.2,v)); const y=t3d('y2011','2011','#c8f4ff',0.45); y.g.position.set(0,2.4,0); t3op(y,ss(0,0.5,v));
-    const t=tx('d11',T('接发局胜率 · 当年接发评分第一','Return games won · No. 1 that year'),{color:'#ffffff',size:0.36}); hud(t,0,-2.3); op(t,ss(0.4,1,v));
-    look(0,0.5,7.2,0,0.4,0); rims(GO,CY,4); return; }
-  if(u<HH-0.3){ // 回球深度：3D 球场上 100 个落点，八成落在发球线以后
-    const v=u-DP; courtG.visible=true; const kd=ss(0.3,2.5,v);
-    const cnt=Math.floor(100*kd); DOTS.forEach((m,i)=>{ const deep=(i%5)!==4; const h=((i*7919)%997)/997, h2=((i*104729)%991)/991; m.visible=i<cnt;   /* 100 个落点，按真实的八成落在发球线以后 */
-      m.position.set(-3.6+h2*7.2,0.06,deep?-(SLN+0.4+h*(L2-SLN-0.8)):-(1.2+h*(SLN-1.6))); m.material.color.set(deep?CY:RD).multiplyScalar(0.9); });
-    const sl=ln(WH,4); setLine(sl,[V(-4.1,0.03,-SLN),V(4.1,0.03,-SLN)]); sl.material.opacity=0.9*ss(0,0.5,v);
-    const a=tx('dpA',T('发球线','Service line'),{color:'#ffffff',size:0.3}); a.position.set(4.6,0.4,-SLN); op(a,ss(0,0.5,v));
-    const names=[[T('德约','Djokovic'),80,CY],[T('穆雷','Murray'),76,0x9fb8d0],[T('辛纳','Sinner'),76,0x9fb8d0],[T('费德勒','Federer'),75,0x9fb8d0],[T('阿加西','Agassi'),74,0x9fb8d0],[T('阿尔卡拉斯','Alcaraz'),74,0x9fb8d0],[T('纳达尔','Nadal'),69,0x9fb8d0]];
-    look(-4.2,9.5,2.5,-4.2,0,-7.5);   /* 球场偏到画面右边，左边放名单 */
-    names.forEach(([s,val,c],i)=>{ const k=ss(1.4+i*0.25,2.0+i*0.25,v); const y=1.9-i*0.48; const l=ln(c,i?8:12); setLine(l,[hp(-2.9,y),hp(-2.9+(val-60)/25*2.4*k,y)]); l.material.opacity=k; const t=tx('dpn'+i,s+'  '+val+'%',{color:i?'#c8d8ea':'#ffffff',size:0.28,glow:i?'rgba(120,160,200,0.6)':CYAN}); hud(t,-4.0,y); op(t,k); });
-    const h=tx('dpH',T('回到发球线以后的比例（志愿者逐分统计）','Returns landing beyond the service line (volunteer charting)'),{color:'#c8f4ff',size:0.32,glow:CYAN}); hud(h,0,2.6); op(h,ss(0.3,0.9,v));
-    rims(CY,GO,4); return; }
-  // 对大炮发球手
-  const v=u-HH; const pairs=[[T('拉奥尼奇','Raonic'),'12 – 0'],[T('伊斯内尔','Isner'),'10 – 2']];
-  pairs.forEach(([s,sc],i)=>{ const k=ss(i*0.6,i*0.6+0.6,v); const o3=t3d('hh'+i,sc,i?'#ffd27a':'#7fffd0',0.75); o3.g.position.set(-2.2+i*4.4,0.4,0); t3op(o3,k*(1-ss(LS-HH-0.3,LS-HH,v))); const t=tx('hhn'+i,T('对 ','vs ')+s,{color:'#ffffff',size:0.42}); t.position.set(-2.2+i*4.4,-0.7,0); op(t,k*(1-ss(LS-HH-0.3,LS-HH,v))); });
-  const h=tx('hhH',T('面对大炮发球手（ATP 交手记录）','Against big servers (ATP head-to-head)'),{color:'#c8f4ff',size:0.34,glow:CYAN}); hud(h,0,2.5); op(h,ss(0,0.5,v)*(1-ss(LS-HH-0.3,LS-HH,v)));
-  const ti=bt('dataT',T('未必破发最多，却回得最深','Not the most breaks — but the deepest returns'),{size:0.66,glow:GOLD,accent:T('回得最深','deepest'),fx:'spin'}); hud(ti,0,0.3); ti.update(v,LS-HH);
-  look(Math.sin(v*0.3)*0.6,0.3,8.5,0,0.2,0); rims(GO,CY,4); }
+  const CW=ev('crowd',2.9), SM=ev('same',8.5), FS=ev('fast',16.7), DH=ev('dehyd',19.7), BN=ev('banana',25.2);
+  look(Math.sin(u*0.07)*0.4,0.3,9.5,0,0.2,0); rims(CY,RD,4); chide(CROWD);
+  const q=bt('dtQ',T('那水和盐呢？','What about water and salt?'),{size:0.9,glow:CYAN,fx:'particles'}); hud(q,0,0.4,9); q.update(u,0.3,CW-0.2);
+  if(u<DH-0.4){ // 209 人：43 红（抽筋）166 青
+    const sep=ss(SM-0.6,SM+0.6,u); const o=ss(CW,CW+0.8,u)*(1-ss(DH-0.8,DH-0.4,u)); let jr=0, jc=0;
+    for(let i=0;i<209;i++){ const red=(i*37)%209<43; const col=new THREE.Color(red?0xff5a4a:0x4fe3ff).lerp(new THREE.Color(0x9fb8d0),red?1-ss(CW+1.2,CW+2.2,u):0);
+      const gx=(i%19-9)*0.3, gy=(Math.floor(i/19)-5)*0.3; let x, y;
+      if(red){ x=lerp(gx,-4.6+(jr%8)*0.3,sep); y=lerp(gy+0.3,2.3-Math.floor(jr/8)*0.3,sep); jr++; }
+      else { x=lerp(gx,0.4+(jc%15)*0.3,sep); y=lerp(gy+0.3,2.3-Math.floor(jc/15)*0.3,sep); jc++; }
+      const p=hp(x,y,9.5); cset(CROWD,i,p.x,p.y,p.z,col.r,col.g,col.b,o); }
+    cdone(CROWD);
+    lab('dtN',T('铁人三项 209 人 · 约五分之一抽筋','209 Ironman triathletes · about 1 in 5 cramped'),0,3.05,ss(CW,CW+0.6,u)*(1-ss(DH-0.8,DH-0.4,u)),{size:0.34});
+    const ob=ss(SM,SM+0.6,u)*(1-ss(DH-0.8,DH-0.4,u)); const rows=[[T('血液电解质','serum electrolytes'),0.7,0.7],[T('体重变化','body-mass change'),0.55,0.55],[T('比赛速度','race speed'),0.9,0.62]];
+    rows.forEach(([nm,a,b],j)=>{ const y=-0.85-j*0.62; const oj=j<2?ob:ob*ss(FS-0.3,FS+0.3,u); bar(RD,-1.2,-1.2-2.6*a,y,oj,14); bar(CY,1.2,1.2+2.6*b,y,oj,14); lab('dtR'+j,nm,0,y,oj,{size:0.3,color:'#e8f4ff'}); });
+    lab('dtA',T('抽筋的','cramped'),-3.4,2.85,ob,{size:0.32,color:'#ffb0a8'}); lab('dtB',T('没抽筋的','did not'),2.5,2.85,ob,{size:0.32,color:'#9fe8ff'});
+    lab('dtS',T('看不出区别','no difference'),0,-2.85,ob*(1-ss(FS-0.3,FS,u)),{size:0.38,color:'#ffffff'});
+    lab('dtF',T('真正不一样：比赛更快、以前抽过','what differed: racing faster, past cramps'),0,-2.85,ob*ss(FS,FS+0.4,u),{size:0.36,color:'#ffd27a',glow:GOLD});
+    return; }
+  if(u<BN-0.4){ // 脱水 4.7%：诱发抽筋需要的刺激没变低
+    const o=ss(DH-0.4,DH+0.3,u)*(1-ss(BN-0.8,BN-0.4,u));
+    const n=t3d('n47','4.7%',0x5aa8ff,1.1); hud(n,-2.6,0.6,9); t3op(n,o);
+    lab('dhA',T('脱水（约 3.9 升汗）','dehydrated (≈3.9 L of sweat)'),-2.6,-0.65,o,{size:0.34,color:'#9fd0ff'});
+    const k=ss(DH+1.0,DH+2.0,u); bar(GO,0.9,0.9+3.0*(15/16),0.75,o,18); bar(GO,0.9,0.9+3.0*(13/16),-0.15,o*k,18);
+    lab('dhP',T('脱水前 15 Hz','before: 15 Hz'),2.4,1.25,o,{size:0.3,color:'#ffd27a'}); lab('dhQ',T('脱水后 13 Hz','after: 13 Hz'),2.2,0.35,o*k,{size:0.3,color:'#ffd27a'});
+    lab('dhB',T('诱发抽筋需要的电刺激频率：没有显著变化','stimulus frequency needed to trigger a cramp: no significant change'),1.0,-1.3,o*ss(DH+2.0,DH+2.6,u),{size:0.28});
+    return; }
+  // 香蕉：钾离子慢慢进血，30–60 分钟才一点点
+  const o=ss(BN-0.4,BN+0.3,u); const B=PROPS.banana; B.visible=true; B.position.copy(hp(-2.8,0.6,8)); B.rotation.set(0.2,u*0.5,0.6); B.scale.setScalar(1.2); hop(B,o);
+  const Vs=PROPS.vessel; Vs.visible=true; Vs.scale.set(0.5,0.6,0.5); Vs.position.copy(hp(1.4,-0.6,9)); hop(Vs,0.5*o);
+  const tm=clamp((u-BN-0.5)/(D-BN-1.2)); const cc=new THREE.Color(0xa78bfa);
+  for(let i=0;i<200;i++){ const p=PTS[i]; const f=clamp(tm*1.1-p[3]*0.9); const a=hp(-2.4,0.4,8), b=hp(0.6+p[4]*2.6,-0.6+(p[0]/16)*0.4,9); const q=a.clone().lerp(b,ss(0,1,f)); cset(CROWD,i,q.x,q.y,q.z,cc.r,cc.g,cc.b,o*(f>0?0.9:0.3)); }
+  cdone(CROWD);
+  bar(VIO,-1.0,-1.0+4.4*tm,-2.0,o,8); lab('bnT',T('0 → 60 分钟','0 → 60 min'),-1.8,-2.0,o,{size:0.3});
+  lab('bnA',T('吃 2 根：血钾要 30–60 分钟才升一点点','2 bananas: blood potassium edges up only after 30–60 min'),0.6,1.9,o*ss(BN+0.5,BN+1.1,u),{size:0.32,color:'#e0d4ff',glow:VIO});
+}
 
-// ---------- 7 结论 ----------
+// ---------- 7 盐派：17 岁网球选手，每小时出汗 2.5 升，一小时丢的钠 ≈ 他一天饮食的一半甚至更多 → 加盐后不再抽筋 ----------
+function shotSalt(u,D){
+  const KD=ev('kid',4.9), SW=ev('sweat',5.8), LS=ev('loss',8.2), FX=ev('fixed',12.7), HM=ev('humid',16.3);
+  const t=bt('slT',T('盐派也不是没道理','The salt camp has a point'),{size:0.85,glow:GOLD,fx:'particles'}); hud(t,0,0.3,9); t.update(u,0.3,KD-0.3);
+  if(u<KD-0.4){ look(0,0.3,9,0,0.3,0); return; }
+  courtG.visible=true; const H=G2; humanOp(H,1); place(H,0.6,L2-0.4,Math.PI); applyPose(H,poseAt([[0,'ready'],[1.2,'lungeF'],[2.4,'ready'],[3.6,'lungeB'],[4.8,'ready']],(u-KD)%4.8));
+  ST_RATE=0.0004; const k=ss(KD,D,u); look(lerp(3.4,2.4,k),lerp(1.5,1.25,k),L2+lerp(3.4,2.5,k),0.6,1.0,L2-0.4); rims(GO,RD,5);
+  courtG.userData.mat.color.set(0xffffff).lerp(new THREE.Color(0xffc9a0),0.35*ss(HM-0.5,HM+0.5,u));
+  // 汗滴：持续往下掉的蓝色小点；衣服上析出的盐：白色闪点
+  const top=wpos(H.neck); const sc=new THREE.Color(0x9fd8ff), wc=new THREE.Color(SALT);
+  for(let i=0;i<600;i++){ const p=PTS[i]; const f=((p[3]+u*0.9*(0.6+p[4]))%1); const q=top.clone().add(V((p[0]/16)*0.5,-f*1.6,(p[2]/8)*0.3)); cset(pt,i,q.x,q.y,q.z,sc.r,sc.g,sc.b,ss(SW-0.3,SW+0.3,u)*(1-f)*0.8); }
+  for(let i=600;i<900;i++){ const p=PTS[i]; const q=wpos(H.spine).add(V((p[0]/16)*0.34,0.05+p[4]*0.42,0.13*(p[2]>0?1:-1))); cset(pt,i,q.x,q.y,q.z,wc.r,wc.g,wc.b,ss(LS,LS+2,u)*(p[3]<ss(LS,LS+2.5,u)?0.9:0)); }
+  cdone(pt);
+  lab('slK',T('17 岁网球选手 · 每小时出汗 2.5 升','17-year-old tennis player · sweats 2.5 L per hour'),0,2.7,ss(KD,KD+0.6,u),{size:0.3,plate:true});
+  const o=ss(LS,LS+0.6,u)*(1-ss(HM-0.4,HM,u));
+  bar(SALT,1.2,1.2+2.8*0.52,-1.9,o,14); bar(SALT,1.2+2.8*0.52,1.2+2.8*1.03,-1.9,o*0.35,14); bar(0x9fb8d0,1.2,1.2+2.8,-2.6,o*0.7,14);
+  lab('slA',T('打 1 小时，汗里丢的钠（约 90 mmol）','sodium lost in 1 hour of sweat (~90 mmol)'),2.6,-1.45,o,{size:0.28}); lab('slB',T('他一天饮食里的钠（87–174 mmol）','sodium in his whole day of food (87–174 mmol)'),2.6,-3.0,o,{size:0.28,color:'#aab8c8'});
+  lab('slF',T('加盐以后，不再抽筋','after adding salt: no more cramps'),-2.4,-2.4,ss(FX,FX+0.5,u)*(1-ss(HM-0.4,HM,u)),{size:0.32,color:'#ffffff'});
+  if(u>FX){ const C=calfOf(H); const g=gs(CY,0.8,0.5*ss(FX,FX+0.5,u)); g.position.copy(C); }
+  lab('slH',T('又湿又热、汗多又咸 → 盐确实要紧','hot, humid, heavy salty sweat → salt really matters'),0,-2.4,ss(HM,HM+0.5,u),{size:0.32,color:'#ffd27a',glow:GOLD});
+}
+
+// ---------- 8 名场面：2023 法网半决赛阿尔卡拉斯全身抽筋、赛后说「最主要的是紧张」→ 回到辛纳的上海：两样都有？ ----------
+function shotBack(u,D){
+  const RG_=ev('rg',3.0), CR=ev('cramp',6.1), TN=ev('tension',9.9), SH=ev('sh',11.9), BO=ev('both',16.4);
+  courtG.visible=true;
+  if(u<SH-0.4){ courtG.userData.mat.color.set(0xffb48a);   // 红土色调（示意）
+    const H=SRV; humanOp(H,1); place(H,0.2,L2-0.5,Math.PI); applyPose(H,poseAt([[0,'ready'],[1.0,'lungeB'],[2.2,'ready'],[CR,'ready'],[CR+0.8,'cramp']],u));
+    const k=ss(0,SH,u); look(lerp(3.8,2.3,k),lerp(1.7,1.1,k),L2+lerp(4.0,2.5,k),0.2,0.75,L2-0.6); rims(GO,RD,5); ST_RATE=lerp(0.0004,0.005,ss(CR,CR+0.5,u));
+    H.mat.uniforms.uC.value.set(0xffc24a).lerp(new THREE.Color(0xff5a4a),0.6*ss(CR,CR+0.6,u));
+    lab('bkRG',T('2023 法网半决赛 · 阿尔卡拉斯 对 德约','2023 Roland Garros SF · Alcaraz vs Djokovic'),0,2.9,ss(RG_-0.6,RG_,u),{size:0.32,color:'#ffe2a0',glow:GOLD,plate:true});
+    lab('bkCr',T('第三盘开始，全身抽筋','from the third set, cramps all over'),0,-2.5,ss(CR,CR+0.5,u)*(1-ss(TN-0.4,TN,u)),{size:0.32});
+    if(u>TN-0.6){ const hd=headOf(H), hip=wpos(H.pelvis); const pts=[hd,wpos(H.neck),hip,calfOf(H)]; bolt(pts,ss(TN-0.6,TN+0.6,u),NEU,1,0.05,11);
+      const qq=lab('bkQ','"The main thing, it was the tension."',0,2.2,ss(TN,TN+0.5,u),{size:0.36,color:'#ffffff'}); lab('bkQz',T('「最主要的，是紧张。」','— Alcaraz, after the match'),0,1.65,ss(TN+0.3,TN+0.8,u),{size:0.34,color:'#c8ffe8',glow:'rgba(52,245,168,0.8)'}); }
+    return; }
+  // 回到上海：辛纳倒地；盐（白）和神经（绿）两种信号同时出现
+  const H=RET; humanOp(H,1); place(H,0.4,L2-0.6,Math.PI); applyPose(H,POSE.cramp); ST_RATE=0.0015;
+  const k=ss(SH-0.4,D,u); look(lerp(3.0,2.0,k),lerp(1.4,1.0,k),L2+lerp(3.2,2.2,k),0.4,0.4,L2-0.8); rims(CY,GO,5);
+  lab('bkSH',T('2025 上海 · 又湿又热','Shanghai 2025 · hot and humid'),0,2.9,ss(SH-0.2,SH+0.4,u),{size:0.32,plate:true});
+  const ob=ss(BO-0.4,BO+0.3,u); const C=calfOf(H), hd=headOf(H);
+  if(ob>0){ bolt([hd,wpos(H.neck),wpos(H.pelvis),C],ss(BO-0.4,BO+0.6,u),NEU,ob,0.04,13);
+    const wc=new THREE.Color(SALT); for(let i=700;i<1000;i++){ const p=PTS[i]; const q=wpos(H.spine).add(V((p[0]/16)*0.6,p[4]*0.7,(p[2]/8)*0.4)); cset(pt,i,q.x,q.y,q.z,wc.r,wc.g,wc.b,ob*(0.3+0.6*p[3])); } cdone(pt); }
+  const b=bt('bkBo',T('两样都有？','Both?'),{size:0.8,glow:GOLD,fx:'particles'}); hud(b,2.2,1.6,9); b.update(u,BO,D-0.1);
+}
+
+// ---------- 9 结论 ＋ 问句 ----------
 function shotEnd(u,D){
-  const N0=ev('n0',0.5), P1=ev('p1',5.0), P2=ev('p2',5.9), P3=ev('p3',6.5), QQ=ev('q',9.3);
-  look(lerp(3,1.5,ss(0,D,u)),1.6,L2+5,0,1.0,L2); courtG.visible=true; humanOp(RET,1); place(RET,0,L2+0.6,Math.PI); applyPose(RET,poseAt([[0,'ready'],[P2,'ready'],[P2+0.3,'split'],[P2+0.6,'land'],[P3+0.4,'lungeF'],[P3+1.6,'ready']],u));
-  const t0=bt('endA',T('接发比的不是反应','It\'s not about reaction speed'),{size:0.7,glow:CYAN,fx:'particles'}); hud(t0,0,2.4); t0.update(u,N0,P1-0.6);
-  const pil=[[P1,T('更早看懂','Read earlier'),MT],[P2,T('及时起跳','Split in time'),CY],[P3,T('回得够深','Return deep'),GO]];
-  pil.forEach(([e,s,c],i)=>{ const k=ss(e,e+0.5,u); const x=-3.2+i*3.2; const l=ln(c,10); setLine(l,[hp(x,-1.7),hp(x,-1.7+1.5*k)]); l.material.opacity=k*(1-ss(QQ-0.4,QQ,u)); const t=tx('pil'+i,s,{color:'#ffffff',size:0.42,glow:i===0?MINT:i===1?CYAN:GOLD}); hud(t,x,-2.2); op(t,k*(1-ss(QQ-0.4,QQ,u))); });
-  const q=bt('endQ',T('你心中的接发之王是谁？','Who is your king of the return?'),{size:0.82,glow:GOLD,fx:'shock'}); hud(q,0,2.4); q.update(u,QQ);
-  const nm=tx('endN',T('德约 · 纳达尔 · 阿加西 ……','Djokovic · Nadal · Agassi …'),{color:'#ffe2a0',size:0.5,glow:GOLD}); hud(nm,0,1.4); op(nm,ss(QQ+0.6,QQ+1.2,u));
-  rims(GO,CY,5); beamMat.uniforms.uOp.value=0.1; }
+  const P1=ev('p1',5.9), P2=ev('p2',10.0), QQ=ev('q',12.1);
+  LEG.st.op=1-ss(QQ-0.6,QQ,u); const r=ss(P1,P1+2.0,u); LEG.st.c=lerp(1,0,r); LEG.st.ia=lerp(1,0.3,r); LEG.st.ib=lerp(0.1,0.8,r); LEG.st.mot=lerp(1,0.1,r); LEG.st.ankle=lerp(-0.35,0.5,r); LEG.update(u);
+  legCam(u,1.7,2.1,D,1.5,13); rims(CY,GO,4);
+  const t=bt('ndT',T('油门踩死 · 刹车失灵','Accelerator stuck · brake failing'),{size:0.85,glow:RED,fx:'particles'}); hud(t,0,2.2,9); t.update(u,0.5,QQ-0.4);
+  lab('ndA',T('① 先拉伸','① stretch first'),-2.6,-1.9,ss(P1,P1+0.5,u)*(1-ss(QQ-0.4,QQ,u)),{size:0.36,color:'#9fd0ff',glow:CYAN});
+  lab('ndB',T('② 汗多又咸的人，再补盐','② heavy, salty sweaters: add salt'),1.6,-1.9,ss(P2,P2+0.5,u)*(1-ss(QQ-0.4,QQ,u)),{size:0.36,color:'#ffd27a',glow:GOLD});
+  const q=bt('ndQ',T('你抽筋的时候，是怎么缓过来的？','When you cramp, how do you get out of it?'),{size:0.85,glow:CYAN,fx:'particles'}); hud(q,0,0.2,9); q.update(u,QQ,D+5);
+}
 
-const SHOTS={hook:shotHook,race:shotRace,read:shotRead,split:shotSplit,slide:shotSlide,data:shotData,end:shotEnd};
-function shotTest(u,D){}
-Object.assign(PAL,{
-  hook: {top:0x05030f,hz:0x1a1048,vi:0x3a0a3a,a:0xffc24a},
-  race: {top:0x030812,hz:0x0b2a50,vi:0x0a2030,a:0x4fe3ff},
-  read: {top:0x020c0a,hz:0x063828,vi:0x062a2a,a:0x34f5a8},
-  split:{top:0x03050c,hz:0x0c1a3a,vi:0x08202a,a:0x4fe3ff},
-  slide:{top:0x0c0806,hz:0x3a2a08,vi:0x0a2030,a:0xffc24a},
-  data: {top:0x06041a,hz:0x1d1250,vi:0x2b0d55,a:0xa78bfa},
-  end:  {top:0x050505,hz:0x2a2008,vi:0x08202a,a:0xffc24a}});
+const SHOTS={hook:shotHook,camps:shotCamps,pickle:shotPickle,brake:shotBrake,stretch:shotStretch,data:shotData,salt:shotSalt,back:shotBack,end:shotEnd};
+function shotTest(u,D){ look(0,0,8,0,0,0); }

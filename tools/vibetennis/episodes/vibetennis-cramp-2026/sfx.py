@@ -1,4 +1,4 @@
-# vibetennis EP10 德约接发之王音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
+# vibetennis EP11 抽筋音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
 # 每个音效钉在 r3d/timeline.json 的画面事件（sec.ev，plan.py 按配音词边界排）和 scene.js 各镜头的动画节点上——画面动、声音同时到。
 # BGM 同第 4、5 集：robertyang87/vibeknowledge 的 assets/music/we-never-remix-hi-noise-qiucheng.m4a。
 import numpy as np, soundfile as sf, sys, json, math, os
@@ -189,55 +189,50 @@ def whoosh_fast(d=0.35): t=tt(d); return bp(rng.standard_normal(len(t)),1500,800
 def tick_seq(t0,n,gap,g=0.35,name=None):
     for i in range(n): EN(t0+i*gap,tick(),g,name=(name+'-%d'%i) if (name and i==0) else None)
 
-# 01 钩子：「7」从第一帧砸下（0.55 s 落地）→ 冲击波＋粒子炸开 → 「第 7」高亮 → 炸成金色粒子汇成「接发之王」→ 2011 美网赛点接发 → 王在哪？
-h=SEC['hook']; SEV=E('hook','seven',2.4); CRN=E('hook','crown',5.5); CT=E('hook','court',7.7); SV=E('hook','serve',11.4); RT=E('hook','ret',14.6); RUN=E('hook','run',16.5); QQ=E('hook','q',19.9)
-EN(h['t0']+0.0,riser(0.55),0.5,name='fall'); EN(h['t0']+0.55,sub_boom(),0.9,name='SLAM'); EN(h['t0']+0.55,slam(),0.8); EN(h['t0']+0.6,crackle(0.8),0.5); EN(h['t0']+0.7,boom(2.5),0.4,name='shockwave')
-EN(h['t0']+1.1,panel(),0.35,name='leaderboard'); EN(SEV,glitch(0.5),0.45,name='RANK-7'); EN(SEV+0.05,number_pop(),0.45)
-EN(CRN-0.2,riser(0.4),0.35); EN(CRN,sub_boom(),0.6,name='EXPLODE'); EN(CRN+0.05,rain_hiss(1.6),0.45,name='particles'); EN(CRN+0.8,chime([72,79,84,88],0.12,0.45),0.5,name='KING')
-EN(CT-0.3,swish(0.9,300,3000),0.45,name='to-court'); EN(CT,crowd(SV-CT+1.0),0.3,name='crowd'); EN(SV-0.3,toss(),0.4,name='toss')
-C=SV+0.9; EN(C,pock(1.0),0.8,name='SERVE'); EN(RT-0.6,riser(0.6),0.4)
-EN(RT,pock(0.5),1.0,name='RETURN-slowmo'); EN(RT,sub_boom(),0.6); EN(RT+0.05,zap(3000,900,0.5),0.35,name='shockwave'); EN(RT+1.1,bounce(1.0),0.5,name='winner-land'); EN(RT+1.2,applause(3.0),0.45,name='crowd-erupts')
-EN(RUN,swish(0.9,400,2600),0.35,name='7-5'); EN(QQ,hit(),0.5,name='question')
-# 02 时间：时间轴展开 → 来球（慢放循环）→ 反应条 → 起跳／落地／动拍 → 两个方向 → 猜好了
-TL0=E('race','tl',0.5); FL=E('race','fly',5.4); RE=E('race','react',7.1); JP=E('race','jump',15.8); LD=E('race','land',16.7); RK=E('race','racket',18.2); FK=E('race','fork',26.1); GU=E('race','guess',31.9)
-EN(TL0,zap(600,2400,0.6),0.35,name='timeline'); tick_seq(TL0+0.1,8,0.1,0.3,'ticks')
-r=SEC['race']; t=FL
-while t<r['t1']-0.5: EN(t,pock(0.7),0.35); EN(t+4.0,bounce(0.8),0.2); t+=7.0
-EN(RE,heartbeat(),0.45,name='reaction-0.2s'); EN(JP,click(),0.55,name='take-off'); EN(LD,bounce(1.2),0.45,name='land'); EN(RK,blip(1600,0.1,1.2,0.6),0.5,name='racket-0.19')
-EN(FK,swish(0.6,800,4000),0.4,name='fork'); EN(GU,chime([76,83],0.14,0.4),0.45,name='guess')
-# 03 读：抛球、手臂、上半身三处亮起 → 视线 → 板球的预测性扫视 → 标题
-BO=E('read','body',0.5); TS=E('read','toss',6.5); AR=E('read','arm',7.2); GZ=E('read','gaze',10.3); SCd=E('read','sacc',18.7); TI=E('read','title',22.7)
-EN(BO,hum(5.0,70),0.35,name='xray'); EN(TS,ding(1320),0.45,name='cue-toss'); EN(AR,ding(1047),0.45,name='cue-arm'); EN(GZ,zap(2000,3200,0.5),0.35,name='gaze'); EN(GZ+0.6,ding(880),0.35,name='cue-body')
-t=SCd
-while t<SEC['read']['t1']-0.4: EN(t+0.35*3.2,blip(2400,0.06,1.0,0.5),0.4); EN(t+0.6*3.2,bounce(1.0),0.3); t+=3.2
-EN(TI,swish(0.8,500,3000),0.35,name='title-write')
-# 04 垫步：起跳落地（慢放）→ 两人比快 → 弹簧储能 → 标题
-GOg=E('split','go',0.5); HP=E('split','hop',4.7); RC=E('split','race',7.7); SPr=E('split','spring',15.5); TI2=E('split','title',20.1)
-t=HP
-while t<RC-0.4: EN(t+0.36,click(),0.4); EN(t+0.96,bounce(1.3),0.5); t+=2.4
-t=RC
-while t<SPr-0.4: EN(t+0.36,whoosh_fast(),0.3); EN(t+2.3,ding(1175),0.3); t+=3.0
-t=SPr
-while t<SEC['split']['t1']-0.3: EN(t+0.1,creak(0.8,160),0.35); EN(t+1.0,zap(400,1600,0.3),0.35); t+=2.2
-EN(TI2,sub_boom(),0.4,name='ssc')
-# 05 滑步：滑出去（慢放）→ 静摩擦 → 滑动摩擦 → 两人比回位
-SL=E('slide','slide',2.3); GR=E('slide','grip',7.7); KN=E('slide','kin',11.9); CPs=E('slide','comp',17.1)
-t=SL
-while t<CPs-0.3: EN(t+0.9,scrape(1.4),0.45,name=None); t+=4.0
-EN(GR,clink(1600),0.4,name='static'); EN(KN,swish(1.2,300,1800),0.4,name='kinetic')
-t=CPs
-while t<SEC['slide']['t1']-0.3: EN(t+1.5,scrape(0.8),0.3); t+=3.4
-# 06 数据：榜单 → 四项相加 → 7/2/1 → 38.8% → 落点 → 交手 → 标题
-BD2=E('data','board',0.5); SM=E('data','sum',5.0); AL=E('data','all',9.5); HD=E('data','hard',11.9); AC=E('data','act',13.3); Y1=E('data','y11',17.1); DP=E('data','deep',23.1); HH=E('data','h2h',30.5); LS=E('data','last',36.3)
-EN(BD2,panel(),0.35,name='board'); tick_seq(SM,4,0.25,0.4,'components'); EN(SM+2.0,slam(),0.4,name='sum')
-for i,tt_ in enumerate([AL,HD,AC]): EN(tt_,number_pop(),0.45,name=f'rank-{i}')
-EN(Y1+0.2,riser(1.6),0.35,name='2011'); EN(Y1+1.8,ding(1320),0.4)
-EN(DP+0.3,rain_hiss(2.4),0.35,name='landing-dots'); tick_seq(DP+1.4,7,0.25,0.3,'names')
-EN(HH,slam(),0.45,name='12-0'); EN(HH+0.6,slam(),0.4,name='10-2'); EN(LS,hit(),0.4,name='title')
-# 07 结论：三根柱子 → 问题
-N0=E('end','n0',0.5); P1=E('end','p1',5.0); P2=E('end','p2',5.9); P3=E('end','p3',6.5); QE=E('end','q',9.3)
-EN(N0,hum(4.0,82),0.3); EN(P1,ding(880),0.4,name='read'); EN(P2,ding(1047),0.4,name='split'); EN(P3,ding(1320),0.4,name='deep')
-EN(QE,chime([72,76,79,84],0.15,0.45),0.5,name='question')
+# 01 钩子：上海夜场 → 辛纳抽筋倒地 → 水、盐、香蕉飞来 → 一滴腌黄瓜汁砸下击碎 → 85 秒 → 还在胃里 → 管住了什么？
+h=SEC['hook']; FALL=E('hook','fall',2.3); CRW=E('hook','crowd',4.5); SLT=E('hook','salt',7.2); DR=E('hook','drop',11.7); CK=E('hook','clock',14.2); STM=E('hook','stomach',16.7); QQ=E('hook','q',19.9)
+EN(h['t0'],crowd(CRW+1.0),0.3,name='crowd'); EN(h['t0']+0.6,pock(1.0),0.6,name='rally'); EN(h['t0']+1.6,bounce(1.0),0.3)
+EN(FALL-0.3,riser(0.3),0.4); EN(FALL,sub_boom(),0.8,name='CRAMP'); EN(FALL+0.05,creak(0.8,140),0.5); EN(FALL+0.2,heartbeat(),0.5)
+for k,p in enumerate([-0.6,0.6,0.0]): EN(CRW+0.2+0.3*k,swish(0.7,400,3200),0.35,pan=p,name='props-in' if k==0 else None)
+EN(SLT-0.5,sparkle(1.2),0.4,name='salt')
+EN(DR-1.0,riser(1.0),0.5,name='drop-fall'); EN(DR,sub_boom(),0.9,name='DROP'); EN(DR,slam(),0.7); EN(DR+0.05,rain_hiss(1.4),0.5,name='shatter'); EN(DR+0.1,boom(2.2),0.35)
+EN(CK,number_pop(),0.55,name='85s'); tick_seq(CK+0.2,6,0.2,0.3,'clock'); EN(STM,hum(3.0,70),0.35,name='stomach'); EN(QQ,hit(),0.5,name='question')
+# 02 两派：离子变稀 vs 神经放电
+CS=E('camps','split',0.5); WA=E('camps','wat',4.7); NV=E('camps','nerve',10.2)
+EN(CS,panel(),0.35,name='versus'); EN(WA,rain_hiss(1.6),0.3,name='ions'); EN(NV,zap(900,3200,0.4),0.4,name='nerve'); EN(NV+0.5,zap(1200,3600,0.3),0.3)
+# 03 腌黄瓜实验：电刺激 → 抽紧 → 计时赛跑 → 胃里不动 → 神经反射闪电
+LB=E('pickle','lab',0.5); ZP=E('pickle','zap',4.2); PC=E('pickle','cramp',5.2); WT=E('pickle','water',10.7); PJt=E('pickle','pj',13.4); GT=E('pickle','gut',16.9); FLt=E('pickle','flat',21.2); RF=E('pickle','reflex',28.2)
+EN(LB,hum(4.0,82),0.3); EN(ZP,zap(900,3200,0.35),0.5,name='electrode'); EN(PC,creak(0.9,150),0.45,name='foot-cramp')
+tick_seq(WT,int(max(1,(GT-0.8-WT)/0.25)),0.25,0.25,'timer'); EN(WT+(GT-0.8-WT)*84.6/150,ding(1320),0.5,name='85-stop'); EN(WT+(GT-0.8-WT)*133.7/150,ding(880),0.4,name='134-stop')
+EN(GT,hum(4.0,65),0.35,name='body-xray'); EN(FLt,blip(1600,0.1,1.0,0.5),0.4,name='blood-flat')
+EN(RF-0.3,riser(0.3),0.35); EN(RF,zap(3200,600,0.6),0.55,name='REFLEX'); EN(RF+1.0,sub_boom(),0.45)
+# 04 油门与刹车：退出小腿 → 肌梭 → 油门 → 腱器 → 刹车 → 累了（心跳加快）→ 放电风暴 → 锁死
+DV=E('brake','dive',0.5); SPd=E('brake','spindle',6.0); GA=E('brake','gas',8.5); GO_=E('brake','gto',10.5); BK=E('brake','brk',14.2); TIr=E('brake','tired',18.8); SMm=E('brake','storm',25.2); LK=E('brake','lock',26.5)
+EN(DV,swish(1.2,300,2600),0.45,name='pull-out'); EN(DV+0.8,hum(6.0,60),0.3)
+EN(SPd,ding(1047),0.45,name='spindle'); EN(GA,blip(2400,0.08,1.3,0.6),0.45,name='accelerator'); EN(GO_,ding(784),0.45,name='GTO'); EN(BK,blip(900,0.1,0.8,0.6),0.45,name='brake')
+t=TIr; gap=1.0
+while t<SMm: EN(t,heartbeat(),0.35); t+=gap; gap=max(0.45,gap*0.85)
+EN(SMm,glitch(1.0),0.45,name='storm'); tick_seq(SMm,10,0.12,0.3,'firing'); EN(LK,slam(),0.7,name='LOCK'); EN(LK,sub_boom(),0.7)
+# 05 拉伸：勾脚 → 刹车回来 → 松开
+FX=E('stretch','flex',4.5); RL=E('stretch','relief',7.3)
+EN(FX,creak(1.0,120),0.45,name='flex'); EN(FX+0.3,zap(600,1800,0.5),0.35,name='brake-signal'); EN(RL,chime([84,79,76,72],0.14,0.4),0.45,name='release')
+# 06 数据：问题 → 209 个光点 → 两组一样高 → 速度拉开 → 脱水 4.7% → 香蕉
+DQ=E('data','q',0.5); CWd=E('data','crowd',2.9); SAm=E('data','same',8.5); FS=E('data','fast',16.7); DH=E('data','dehyd',19.7); BN=E('data','banana',25.2)
+EN(DQ,hit(),0.45,name='q'); EN(CWd,rain_hiss(1.8),0.4,name='209-dots'); EN(SAm,swish(0.9,300,2600),0.4,name='split'); tick_seq(SAm+0.6,2,0.4,0.35,'bars')
+EN(FS,number_pop(),0.45,name='faster'); EN(DH,hiss(2.0,800,5000),0.35,name='dehydrate'); EN(DH+1.2,number_pop(),0.4,name='4.7')
+EN(BN,swish(0.8,500,3000),0.4,name='banana'); tick_seq(BN+0.6,8,0.6,0.2,'slow-potassium')
+# 07 盐派：标题 → 选手出汗 → 盐霜 → 加盐 → 湿热
+TU=E('salt','turn',0.5); KD=E('salt','kid',4.9); SW=E('salt','sweat',5.8); LSs=E('salt','loss',8.2); FXs=E('salt','fixed',12.7); HM=E('salt','humid',16.3)
+EN(TU,hit(),0.45,name='salt-camp'); EN(KD,crowd(SEC['salt']['t1']-KD),0.22); t=KD+0.4
+while t<SEC['salt']['t1']-0.5: EN(t,pock(1.0),0.35); t+=2.4
+EN(SW,rain_hiss(2.0),0.3,name='sweat'); EN(LSs,sparkle(1.5),0.4,name='salt-crust'); EN(LSs+0.8,number_pop(),0.35); EN(FXs,ding(1047),0.45,name='fixed'); EN(HM,hum(4.0,90),0.3,name='humid')
+# 08 名场面：法网 → 全身抽筋 → 「是紧张」→ 上海 → 两样都有？
+RGt=E('back','rg',3.0); BC=E('back','cramp',6.1); TN=E('back','tension',9.9); SHt=E('back','sh',11.9); BO=E('back','both',16.4)
+EN(SEC['back']['t0'],crowd(SHt-SEC['back']['t0']),0.3,name='rg-crowd'); EN(RGt,panel(),0.3); EN(BC,sub_boom(),0.6,name='alcaraz-cramp'); EN(BC+0.1,groan(1.4,90),0.4)
+EN(TN,heartbeat(),0.5,name='tension'); EN(TN+0.3,zap(2400,800,0.6),0.4); EN(SHt,swish(1.0,300,2400),0.4,name='to-shanghai'); EN(BO,chime([72,76],0.16,0.4),0.45,name='both')
+# 09 结论：标题 → 先拉伸 → 补盐 → 问题
+N0=E('end','n0',0.5); P1=E('end','p1',5.9); P2=E('end','p2',10.0); QE=E('end','q',12.1)
+EN(N0,hum(4.0,82),0.3); EN(N0+0.2,slam(),0.35,name='title'); EN(P1,ding(880),0.4,name='stretch'); EN(P2,ding(1047),0.4,name='salt'); EN(QE,chime([72,76,79,84],0.15,0.45),0.5,name='question')
 
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
@@ -248,7 +243,7 @@ song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
 # 循环＋卡点（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）：曲子 112.3 BPM，小节 4×0.53194 s，曲内第一个强拍 0.4757 s（librosa 实测）。
 # 小节号 → 段落：0–7 前奏、8–39 主段、40–47 间奏（轻）、48–63 主段、64 起尾段淡出。起点 BGM_OFF 取钩子大问题砸下来那一刻＝第 8 小节线，
 # 之后按「主段 → 间奏 → 主段 → 再从第 8 小节循环」整小节往后拼，不放尾段；拼缝都在小节线上，10 ms 交叉淡化
-BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-CRN   # 「7」炸成「接发之王」那一刻＝第 8 小节线，主段进来
+BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(8)-DR   # 腌黄瓜汁砸下击碎三样常识那一刻＝第 8 小节线，主段进来
 order=[(BGM_OFF,bar(40)),(bar(40),bar(48)),(bar(48),bar(64))]
 while sum(b1-b0 for b0,b1 in order)<TOTAL+2: order.append((bar(8),bar(40)))
 xf=int(0.01*SR); parts=[]

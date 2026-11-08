@@ -1,9 +1,9 @@
-"""vibetennis EP10 德约为什么是接发之王：字幕与出处叠加层（VT_LANG=zh|en）。
+"""vibetennis EP11 抽筋，多半不是缺盐：字幕与出处叠加层（VT_LANG=zh|en）。
 
 用法：python3 overlay.py <3D 母带.mp4 或 concat 列表.txt> <输出.mp4> <分段锚点.json ...>；python3 overlay.py still <静帧.jpg ...>
 通用函数（字体、字幕框、品牌标、span）沿用 EP07；文案时间跟着 narration.json 的 at 走（plan.py 排定）。
-3D 场景里已经有标签（榜单、时间轴、线索、垫步、摩擦、数据），这里只补**画面上没有的上下文**，统一放底部。
-每一条都只讲 papers/vibetennis-djokovic-return-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
+3D 场景里已经有标签（计时条、油门刹车、人群数据、盐派），这里只补**画面上没有的上下文**，统一放底部。
+每一条都只讲 papers/vibetennis-cramp-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
 """
 import skia, numpy as np, math, json, sys, subprocess, glob, os
 W,H,FPS=1920,1080,30
@@ -192,15 +192,9 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('h0',1.2,None,tr("Return Rating＝一发接发、二发接发、接发局、破发四项百分比相加\nATP 官方榜单，1991 年起，截至 2026 年 11 月","Return Rating = four return percentages added; ATP official board since 1991, as of Nov 2026"),('s',960,1012,C,30)),   # 小字贴底：44 号折三行会被顶到 y≈880，压住 3D 名次「7 德约科维奇 163.5」（2026-11-07 预览抽帧发现）
-('r0',0,None,tr("按空气阻力模型估算，并与实测（地毯场一发约 0.72 秒）对照","Air-drag model estimate;\nmeasured ~0.72 s on carpet"),BOT),
-('r2',0,None,tr("法国网协 22 名职业球员实测（Mecheri 2019）\n起跳 +9 毫秒、落地 +152 毫秒、动拍 +187 毫秒","22 French federation players: take-off +9 ms, landing +152 ms, racket +187 ms (Mecheri 2019)"),BOT),
-('e1',0,None,tr("空间遮挡实验（Jackson & Mogan 2007）\n遮住抛球，高手就猜不准方向了","Spatial occlusion (Jackson & Mogan 2007):\nhide the toss and experts lose the direction"),BOT),
-('e3',0,None,tr("这是板球的研究（Land & McLeod 2000）\n网球接发还没有同类实测","This is cricket research (Land & McLeod 2000);\nnot yet measured in tennis returns"),BOT),
-('s2',0,None,tr("看到光信号就跨步：764 对 868 毫秒（Uzu 2009）\n快 13.1%（Nieminen 2014）","Lab step-and-reach to a light: 764 vs 868 ms (Uzu 2009); 13.1% faster (Nieminen 2014)"),BOT),
-('d3',0,None,tr("100 名大学精英球员；这不是对德约本人的测量","100 elite college players;\nnot a measurement of Djokovic himself"),BOT),
-('k4',0,None,tr("Match Charting Project 志愿者逐分统计\n德约 670 场；偏重大场次","Match Charting Project volunteer data,\n670 Djokovic matches; skewed to big matches"),BOT),
-('n2',0,None,tr("评论区说说：你心中的【接发之王】是谁？","Tell us: who's your 【king of the return】?"),('s',960,965,C,48)),
+('p1',0.6,None,tr("一项 10 人、电刺激诱发的小实验（Miller 2010）\n腌黄瓜汁止抽筋，还没有被反复验证","Small study: 10 men, cramps induced electrically\n(Miller 2010) — not yet replicated"),TOP),
+('b3',0.4,None,tr("目前更受支持的假说，还不是定论\n（Giuriato 2018 综述了 69 篇研究）","The leading hypothesis, not a settled fact\n(Giuriato 2018 reviewed 69 studies)"),TOP),
+('n2',0.3,None,tr("评论区说说：你抽筋的时候，是怎么缓过来的？","Tell us: when you cramp,\nhow do you get out of it?"),BOT),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
@@ -208,14 +202,16 @@ def sec_of(t):
         if s['t0']<=t<s['t1']: return s
     return TL['sections'][-1]
 NOTE={  # 每段底部的出处
- 'hook':tr("ATP 官方接发榜单（1991 年起）· Wikipedia · tennis.com · 动作为示意","ATP official return leaderboard (since 1991) · Wikipedia · tennis.com · motion schematic"),
- 'race':tr("Woods 2015 · Jain 2015 · Mecheri 2019 · Navia 2022 · Cross 阻力模型 · Carboch 2014","Woods 2015 · Jain 2015 · Mecheri 2019 · Navia 2022 · Cross drag model · Carboch 2014"),
- 'read':tr("Jackson & Mogan 2007 · Williams 2002 · Lin 2022 · Land & McLeod 2000 · Mann 2013","Jackson & Mogan 2007 · Williams 2002 · Lin 2022 · Land & McLeod 2000 · Mann 2013"),
- 'split':tr("Uzu 2009 · Nieminen 2014 · Komi 2000 · 动作为示意","Uzu 2009 · Nieminen 2014 · Komi 2000 · motion schematic"),
- 'slide':tr("Ji 2025 · Damm 2013 · 摩擦力为示意","Ji 2025 · Damm 2013 · friction schematic"),
- 'data':tr("ATP 官方榜单与交手记录 · Tennis Abstract · Match Charting Project · ESPN 2021","ATP leaderboards & head-to-heads · Tennis Abstract · Match Charting Project · ESPN 2021")}
-CHAP={'race':("01",tr("时间","THE CLOCK")),'read':("02",tr("读懂","READING")),'split':("03",tr("垫步","SPLIT STEP")),'slide':("04",tr("滑步","SLIDING")),
- 'data':("05",tr("数据","THE NUMBERS")),'end':("06",tr("结论","CONCLUSION"))}
+ 'hook':tr("tennis.com · Sky Sports（2025 上海大师赛）· Miller 2010 · 动作为示意","tennis.com · Sky Sports (2025 Shanghai Masters) · Miller 2010 · motion schematic"),
+ 'camps':tr("Schwellnus 2009 · Giuriato 2018 · Minetto 2013","Schwellnus 2009 · Giuriato 2018 · Minetto 2013"),
+ 'pickle':tr("Miller 等 2010（Med Sci Sports Exerc；J Athl Train）· 解剖为示意","Miller et al. 2010 (Med Sci Sports Exerc; J Athl Train) · anatomy schematic"),
+ 'brake':tr("Giuriato 2018 · Schwellnus 2009 · Minetto 2013 · 解剖为示意","Giuriato 2018 · Schwellnus 2009 · Minetto 2013 · anatomy schematic"),
+ 'stretch':tr("Giuriato 2018 · Schwellnus 2009 · 解剖为示意","Giuriato 2018 · Schwellnus 2009 · anatomy schematic"),
+ 'data':tr("Schwellnus 2011 · Shang 2011 · Braulick 2013 · Miller 2012","Schwellnus 2011 · Shang 2011 · Braulick 2013 · Miller 2012"),
+ 'salt':tr("Bergeron 1996 · Bergeron 2003 · 动作为示意","Bergeron 1996 · Bergeron 2003 · motion schematic"),
+ 'back':tr("tennis.com · tennis365（2023 法网）· Sky Sports（2025 上海）· 动作为示意","tennis.com · tennis365 (2023 Roland Garros) · Sky Sports (2025 Shanghai) · motion schematic")}
+CHAP={'camps':("01",tr("两种说法","TWO THEORIES")),'pickle':("02",tr("腌黄瓜汁","PICKLE JUICE")),'brake':("03",tr("油门与刹车","ACCELERATOR & BRAKE")),
+ 'stretch':("04",tr("拉伸","STRETCH")),'data':("05",tr("数据","THE DATA")),'salt':("06",tr("盐派","THE SALT CAMP")),'back':("07",tr("名场面","ON COURT")),'end':("08",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return
@@ -225,7 +221,7 @@ def draw(c,t,an):
     brand(c); chapter(c,t); s=sec_of(t); u=t-s['t0']; a=min(1,u/0.6,(s['t1']-t)/0.4)
     if s['name'] in NOTE: text(c,NOTE[s['name']],960,1050,18,GRAY,a*0.9,SANSR)
     if s['name']=='end' and u>2:
-        text(c,tr("资料：ATP 官方榜单 · Mecheri 2019 · Navia 2022 · Uzu 2009 · Nieminen 2014 · Jackson & Mogan 2007 · 详见文案","Sources: ATP leaderboards · Mecheri 2019 · Navia 2022 · Uzu 2009 · Nieminen 2014 · Jackson & Mogan 2007 · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
+        text(c,tr("资料：Miller 2010 · Schwellnus 2011 · Braulick 2013 · Giuriato 2018 · Bergeron 1996 · 详见文案","Sources: Miller 2010 · Schwellnus 2011 · Braulick 2013 · Giuriato 2018 · Bergeron 1996 · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
     for s0,d,txt,pl in CAPS:
         if s0<=t<s0+d+0.35: caption(c,t,s0,d,txt,pl,an)
 

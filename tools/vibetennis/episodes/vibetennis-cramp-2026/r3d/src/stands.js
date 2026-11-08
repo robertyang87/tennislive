@@ -2,7 +2,7 @@
 // 1 单位 = 1 m。下层看台 20 排、LED 腰带、上层看台 24 排、顶沿灯环；场边一圈发光挡板；观众是光点（同 EP01）。
 // 看台跟着 courtG 一起显隐、一起淡；离镜头 3~6 m 内的东西做抖动消隐（侧面机位在看台里，不让人头糊在镜头上）。
 // 赛点那几秒观众席闪光灯变密（standsTick）。全部用自带的确定性随机，不动底座 frnd 的序列。
-let ST_F, ST_TOP, ST_FL, ST_CR, ST_N=0; const ST_MATS=[];
+let ST_F, ST_TOP, ST_FL, ST_CR, ST_N=0, ST_RATE=0.0003; const ST_MATS=[];
 const ST=(()=>{
   let sd=90210; const rr=()=>{ sd=(sd*48271)%2147483647; return sd/2147483647; };
   const G=new THREE.Group(); courtG.add(G);
@@ -78,5 +78,5 @@ function standsTick(t,kind,u){ ST.visible=courtG.visible; if(!ST.visible) return
   for(const [m,b] of ST_MATS){ m.opacity=b*o;
     // 看台的实体（台阶、挡板、墙、地面）平时走不透明队列：先画、写深度，全息人（半透明、不写深度）才不会被背后的看台盖住（所有者 2026-11-07 截图：发球人上半身被挡）。只有跟着球场淡出时才切成半透明
     if(m.isMeshLambertMaterial||m.isMeshStandardMaterial){ const tr=b*o<0.999; if(m.transparent!==tr){ m.transparent=tr; m.needsUpdate=true; } } }
-  let rate=0.0003; if(kind==='hook'){ const a=ev('court',7.7), b=ev('run',16.5); rate=lerp(0.0003,0.006,ss(a,a+1.0,u)*(1-ss(b+1.0,b+2.5,u))); }
+  const rate=ST_RATE;   /* 闪光灯密度由镜头设（hideAll 复位成 0.0003）；名场面那几秒调到 0.006 左右 */
   ST_FL.uniforms.uRate.value=rate; ST_FL.uniforms.uT.value=Math.floor(t*20); ST_FL.uniforms.uOp.value=o; ST_CR.uniforms.uOp.value=o; ST_CR.uniforms.uT.value=t; }

@@ -27,7 +27,10 @@ const POSE={
   sToss:{y:0, lean:0.05, side:-0.1, twist:-0.5, head:0.35, aR:[0.3,0.6,0.2,0.6], aL:[2.9,0.2,0,0.05], lR:[0.15,0.15,0.2,0.1], lL:[0.15,0.1,0.25,0.1]},   // 发球抛球
   sTrophy:{y:-0.22, lean:-0.25, side:-0.35, twist:-0.9, head:0.55, aR:[1.4,1.4,1.6,1.9], aL:[2.8,0.25,0,0.1], lR:[0.6,0.15,1.1,0.4], lL:[0.6,0.1,1.1,0.4]},
   sHit:{y:0.18, lean:0.0, side:0.15, twist:0.25, head:0.45, aR:[3.0,0.15,-0.4,0.05], aL:[0.9,0.4,0,0.9], lR:[0.05,0.05,0.05,-0.4], lL:[0.05,0.08,0.05,-0.4]},
-  sFollow:{y:-0.08, lean:0.6, side:0.1, twist:0.6, head:0.0, aR:[0.4,-0.3,0.3,0.6], aL:[0.5,0.3,0,1.1], lR:[0.7,0.1,0.7,0.2], lL:[0.2,0.15,0.3,0.1]}};
+  sFollow:{y:-0.08, lean:0.6, side:0.1, twist:0.6, head:0.0, aR:[0.4,-0.3,0.3,0.6], aL:[0.5,0.3,0,1.1], lR:[0.7,0.1,0.7,0.2], lL:[0.2,0.15,0.3,0.1]},
+  // EP11：抽筋坐地（右腿伸直、脚尖被拉下，双手去够右小腿）、坐姿拉伸（勾脚尖、身体前倾够脚）
+  cramp:{y:-0.84, lean:0.6, side:0.05, twist:0.15, head:-0.35, aR:[1.25,0.25,0.3,0.45], aL:[1.25,0.25,-0.3,0.45], lR:[1.45,0.08,0.05,-0.6], lL:[1.15,0.35,1.7,0.3]},
+  stretchS:{y:-0.84, lean:0.9, side:0.0, twist:0.0, head:-0.2, aR:[1.6,0.12,0.2,0.08], aL:[1.6,0.12,-0.2,0.08], lR:[1.45,0.05,0.0,0.6], lL:[1.15,0.35,1.7,0.3]}};
 function mixPose(a,b,k){ const o={}; for(const key in a){ if(Array.isArray(a[key])) o[key]=a[key].map((v,i)=>lerp(v,b[key][i],k)); else o[key]=lerp(a[key],b[key],k); } return o; }
 // keys:[[t,poseName],...]（段内秒）→ 当前姿势；两帧之间 smoothstep
 function poseAt(keys,u){ if(u<=keys[0][0]) return POSE[keys[0][1]]; for(let i=0;i<keys.length-1;i++){ const [t0,a]=keys[i], [t1,b]=keys[i+1]; if(u<t1) return mixPose(POSE[a],POSE[b],ss(t0,t1,u)); } return POSE[keys[keys.length-1][1]]; }
