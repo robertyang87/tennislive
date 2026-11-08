@@ -55,7 +55,7 @@ EDGE_PAD = 2          # 板右缘外多留的源片像素（抗锯齿的那一�
 SCAN_W = 760          # 从板左缘往右扫多宽：板 ≤ ~480
 MIN_BOARD_W = 150     # 名字那一栏最窄也这么宽
 NAME_W = 140          # 判「板在」看名字那一栏的这么宽
-POINTS_MAX = 56       # 最后一列薄荷绿之后，小分格最多这么宽（源片像素；三档实测 51~54）
+POINTS_MAX = 56       # 最后一列薄荷绿之后，小分格最多这么宽（源片像素；三档实测51~54）
 MINT_COLS = 12        # 薄荷绿列至少这么多（源片像素；640 宽抽帧量到 9~10 列 ×3）
 
 
@@ -213,6 +213,22 @@ def board_edge(band: np.ndarray, cap: int | None = None, *, native_event: bool =
                            if across_two[x - 2] >= .55]
         if soft_boundaries:
             return soft_boundaries[-1]
+        # Hong Kong's 720p Ad slot becomes64px in an explicitly declared
+        # 1080p display transform. Preserve every established edge above; only
+        # a failed narrow scan may inspect the additional12px. Require actual
+        # score lettering, contiguous graphic fill and a measured outer jump.
+        wide_last = min(band.shape[1] - 1, cell_hi + 68 + EDGE_PAD)
+        wide_boundaries = []
+        for candidate in range(last + 1, wide_last + 1):
+            point = body[:, cell_hi + EDGE_PAD:candidate - EDGE_PAD]
+            if not point.size or persistent[candidate - 1] < .55:
+                continue
+            lettering = mint_mask(point) | (point.min(axis=2) > 225)
+            fill = board_colour(point).mean(axis=0)
+            if lettering.sum() >= 2 * MINT_COLS and (fill >= .5).mean() >= .9:
+                wide_boundaries.append(candidate)
+        if wide_boundaries:
+            return wide_boundaries[-1]
         raise RuntimeError("WTA board present but native right boundary cannot be measured")
     # 没有薄荷绿（开局还没有局分那几秒）：没有签名色撑着，
     # 越过 spec 右缘的读数不可信，照旧封顶

@@ -86,3 +86,19 @@ def test_拉沃尔杯的自动草稿按赛事名认转播():
     auto = {"topbar": {"line1": "2026 LAVER CUP 第一日"}, "segments": ON,
             "_production": {"event": "Laver Cup"}}
     assert b.scoreboard_profile(auto) == "lavercup"
+
+
+def test_biography_identifies_wta_without_an_empty_match_stats_card():
+    from winners_ue_gate import problem
+    biography = {"cover": {"eyebrow": "网球有故事"}, "segments": ON,
+                 "_production": {"event": "Hong Kong", "tour": "wta"},
+                 "scoreboard_profile": "wta"}
+    assert b.scoreboard_profile(biography) == "wta"
+    assert problem(biography) is None
+    biography["stats"] = {"tour": "atp"}
+    from reel_facts import spec_tour
+    assert spec_tour(biography) == "atp"  # explicit stats retains precedence
+    biography.pop("stats")
+    biography["_production"]["tour"] = "unverified"
+    with pytest.raises(b.ReelError):
+        b.scoreboard_profile(biography)  # invalid metadata cannot force WTA

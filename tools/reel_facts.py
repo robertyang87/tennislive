@@ -813,6 +813,12 @@ def spec_tour(spec: dict) -> str | None:
     tour = str(stats.get("tour") or "").lower()
     if tour in ("atp", "wta"):
         return tour
+    # Biography reels can identify the tour without displaying a match-stats
+    # card. Do not create an empty stats object solely to calibrate scoreboards.
+    production = spec.get("_production")
+    tour = str(production.get("tour") or "").lower() if isinstance(production, dict) else ""
+    if tour in ("atp", "wta"):
+        return tour
     for side in ("a", "b"):
         shot = str((stats.get(side) or {}).get("headshot") or "") if isinstance(
             stats.get(side), dict) else ""
