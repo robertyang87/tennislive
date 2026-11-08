@@ -7,7 +7,7 @@ starts y1299), chips/blocks centred on ink bbox, mid-tier glow in BG.
 All key elements land by ~80% of each clip; the tail is a hold so spec
 windows can be trimmed without cutting a landing.
 Usage: python3 render_anims.py [a1|..|a12|all] [dur_override] [ver]
-Output: alt-segNN-<ver>.mp4 in this dir (new filename per version).
+Output: faNNanim<serial>.mp4 in this dir (11-char video id; new serial per version).
 """
 import math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -713,8 +713,10 @@ if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "all"
     dur_o = float(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2] else None
     ver = sys.argv[3] if len(sys.argv) > 3 else "v1"
+    serial = int(ver[1:]) if ver.startswith("v") and ver[1:].isdigit() else 1
     keys = list(FNS) if which == "all" else [which]
     for k in keys:
         dur = dur_o if (dur_o and len(keys) == 1) else DURS[k]
-        out = f"alt-seg{int(k[1:]):02d}-{ver}.mp4"
+        # 11-char synthetic video id (video_key _REL pattern), cf. hm1mic00001
+        out = f"fa{int(k[1:]):02d}anim{serial:03d}.mp4"
         render(lambda tt, fn=FNS[k], dd=dur: fn(tt, dd), dur, out)

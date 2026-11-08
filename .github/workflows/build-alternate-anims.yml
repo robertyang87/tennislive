@@ -3,7 +3,7 @@ run-name: "alternate anims · ${{ inputs.which }} ${{ inputs.ver }}"
 
 # One-off animation builder for wta-finals-alternate-2026: renders the
 # code-drawn animation segments (scripts in tools/alternate_anims/) and
-# uploads each mp4 to Release tag source-alt-segNN as alt-segNN-<ver>.mp4.
+# uploads each mp4 to Release tag source-<videoid> as <videoid>.mp4.
 # Remove after ship.
 
 on:
@@ -67,9 +67,8 @@ jobs:
         run: |
           set -euo pipefail
           cd work
-          for f in alt-seg*-${VER}.mp4; do
-            nn=$(echo "$f" | sed -E 's/^alt-seg([0-9]+)-.*/\1/')
-            tag="source-alt-seg$nn"
+          for f in fa*anim*.mp4; do
+            tag="source-${f%.mp4}"
             gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "source · alt-seg$nn" --notes "code-drawn animation source for wta-finals-alternate-2026 ($VER)"
             gh release upload "$tag" "$f" --clobber
             echo "uploaded $f -> $tag"

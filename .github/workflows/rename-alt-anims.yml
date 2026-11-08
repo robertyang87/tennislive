@@ -1,0 +1,37 @@
+name: rename-alt-anims
+run-name: "rename alt anims to 11-char ids"
+
+# One-off: copy the 12 already-rendered animation assets from
+# source-alt-segNN / alt-segNN-v1.mp4 to source-faNNanim001 / faNNanim001.mp4
+# (video_key only recognises 11-char Release ids). Remove after ship.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rename-alt-anims
+  cancel-in-progress: false
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Copy assets to 11-char-id releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p dl
+          for i in 01 02 03 04 05 06 07 08 09 10 11 12; do
+            gh release download "source-alt-seg$i" -R "$REPO" -p "alt-seg$i-v1.mp4" -D dl
+            mv "dl/alt-seg$i-v1.mp4" "dl/fa${i}anim001.mp4"
+            tag="source-fa${i}anim001"
+            gh release view "$tag" -R "$REPO" >/dev/null 2>&1 || gh release create "$tag" -R "$REPO" --title "source · fa${i}anim001" --notes "code-drawn animation source for wta-finals-alternate-2026 (v1)"
+            gh release upload "$tag" "dl/fa${i}anim001.mp4" -R "$REPO" --clobber
+            echo "copied alt-seg$i -> $tag"
+          done
