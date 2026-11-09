@@ -1,0 +1,30 @@
+{
+  "film_sha256": "67d1c1b53719a8cae5913419e45fb8730f9b1172fe38565a19535e29c3047439",
+  "method": "assistant_visual_inspection_of_original_movie_pngs",
+  "frames": [
+    {
+      "file": "header-final.png",
+      "frame_index": 150,
+      "seconds": 6.0,
+      "sha256": "40c1f30a2acdf2d7f56d521c64c39b18c8bdf3a38ff18edd386ea59cacf8f360",
+      "observation": "原生 MATCH POINT #3 提示条完整，比分与球场均可见。"
+    },
+    {
+      "file": "quote-final.png",
+      "frame_index": 3002,
+      "seconds": 120.08,
+      "sha256": "5a67232141a9fcc546eed5a5f122fd4a277e460b227d8fb4b8fc679983afd19d",
+      "observation": "英文及中文原声字幕完整，置于原生赛点提示条上方，无重叠。"
+    },
+    {
+      "file": "late-final.png",
+      "frame_index": 4425,
+      "seconds": 177.0,
+      "sha256": "adecc6ca46568e2fc7e24f3697a40288836b16f1c483b33cf03ac05c4a5bc86c",
+      "observation": "决胜盘非受迫失误数据为高芙6次、佩古拉23次，文字与图表留有边距。"
+    }
+  ],
+  "result": "pass",
+  "scope": "核实修正后成片的原生赛点提示条、字幕避让与数据卡；其余分镜与动画依据已归档的全片接触表及原生动画多相位预览。",
+  "voice_review": "由对应 film_sha256 的 voice_auto_review.json 覆盖自动审音；此记录不声称人工听审。"
+}
