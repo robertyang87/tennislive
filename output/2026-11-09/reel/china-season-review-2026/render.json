@@ -5,15 +5,15 @@
     "schema": "tennislive.frozen-tts-bundle.v1",
     "bundle_sha256": "eab375eef542472512728eb7a9f4db71c645566259fc03002712ec6a9110df42",
     "request_count": 21,
-    "mode": "capture_export",
-    "strict_reused": false,
+    "mode": "strict_import",
+    "strict_reused": true,
     "artifact_kind": "native_tts_inputs",
     "quality_approval": false,
     "audio_decoding_verified": true,
     "release_tag": "reel-tts-china-season-review-2026-eab375eef5424725",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-china-season-review-2026-eab375eef5424725/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42603823446"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42607954379"
   },
   "cover_seconds": 2.746,
   "cover_narrated": true,
@@ -61,44 +61,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "d3039b834492b2c6881587c14cf741bb6db711ef67c11a122ed9c78856934273",
+  "render_inputs_sha256": "eca288fea65e95d042e80ec3c8871c034bd79a5ecfaa3a25d8d12382fda5b5f9",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "china-season-review-2026",
-    "received_at": "2026-11-09T10:48:03Z",
-    "artifact_ready_at": "2026-11-09T11:05:40Z",
-    "elapsed_seconds": 1057.256,
+    "received_at": "2026-11-09T11:18:24Z",
+    "artifact_ready_at": "2026-11-09T11:35:49Z",
+    "elapsed_seconds": 1045.191,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "3ac9995b2ac3b2e8bb673d594d4295ec4b5c4d0c7270965955690b548b358994",
-    "spec_sha256": "914042358cd7046daaf4a82138d4c6cbd8796df8269b425c1c6a1b7f07bba671",
-    "run_id": "42603823446",
+    "film_sha256": "08ea75c43ce0f03844190e978973ab46f3d7b4987a8fae3f37a3dc5b63697093",
+    "spec_sha256": "693310cb7b2af37342b2e3190318d3bb7406a2c8b743efb4aaee7d224cce356d",
+    "run_id": "42607954379",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-09T10:53:11Z",
-        "run_id": "42603823446"
+        "at": "2026-11-09T11:23:34Z",
+        "run_id": "42607954379"
       }
     ],
-    "render_seconds": 749.256,
-    "pre_render_seconds": 308.0
+    "render_seconds": 735.191,
+    "pre_render_seconds": 310.0
   },
-  "film_sha256": "3ac9995b2ac3b2e8bb673d594d4295ec4b5c4d0c7270965955690b548b358994",
-  "film_bytes": 305952858,
-  "qc_attestation_sha256": "08e0883780ed48efc994051865f0a54676e22ea35e53a01f189416dd66d13f63",
+  "film_sha256": "08ea75c43ce0f03844190e978973ab46f3d7b4987a8fae3f37a3dc5b63697093",
+  "film_bytes": 306031695,
+  "qc_attestation_sha256": "1a8609cd3ead0e6c740c3969454472aa2d889d767146425650dc2800a5092b0d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-09T10:53:11Z",
-      "run_id": "42603823446"
+      "at": "2026-11-09T11:23:34Z",
+      "run_id": "42607954379"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-09T11:05:47Z",
-      "run_id": "42603823446"
+      "at": "2026-11-09T11:35:55Z",
+      "run_id": "42607954379"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-china-season-review-2026/china-season-review-2026.mp4",
-  "video_bytes": 305952858
+  "video_bytes": 306031695
 }
