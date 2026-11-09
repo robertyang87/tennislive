@@ -1,0 +1,43 @@
+name: import-china-anims
+run-name: "import-china-anims · china-season-review-2026"
+
+# 一次性：《中国赛季回顾》china-season-review-2026 两段本地自制动画的源存档。
+# 动画在本地用 PIL 逐帧代码绘制（系列 tokens/字体/光晕中间档），本地直传
+# uploads.github.com 被凭据 401 挡住，故照 import-walkover-anim-sources
+# 先例走 runner。两段动画已自带静音 AAC 轨。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-china-anims
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: <redacted>
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/china-season-review-2026/anim-src
+          sparse-checkout-cone-mode: false
+
+      - name: 逐条建 Release 并上传两段动画
+        run: |
+          set -euo pipefail
+          cd research/china-season-review-2026/anim-src
+          sha256sum *.mp4
+          for f in china26map1 china26wall; do
+            tag="source-"
+            gh release view "" >/dev/null 2>&1 || gh release create "" --title "" --notes "《中国赛季回顾》china-season-review-2026 自制动画源存档：（本地代码绘制，含静音 AAC 轨）。"
+            gh release upload "" ".mp4" --clobber
+            gh release view "" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+          done
