@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "bba1efcfbe3a79cf4f687803e48526cbcafa4a66375a33d4c506f5a4530ffb12",
+  "scoreboard_qc_sha256": "c997341f249a6c6131c4210f5f263a9093072e4bbf39955bb9a8cf4078d85135",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-gauff-pegula-finals-2026-group1-6392baa35adec128",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-gauff-pegula-finals-2026-group1-6392baa35adec128/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42563688090"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42565060848"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -54,46 +54,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "01d51547c18bc53cc67750dced9789ae015d5a5a7878e70057b979dc6ca662b1",
+  "render_inputs_sha256": "f0dc7808c24f29dc347e2b94d4eef6ca6b3f28c4ce9bcb8059d4b0253eb65e20",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "gauff-pegula-finals-2026-group1",
-    "received_at": "2026-11-09T04:47:11Z",
-    "artifact_ready_at": "2026-11-09T04:53:51Z",
-    "elapsed_seconds": 400.009,
+    "received_at": "2026-11-09T05:03:11Z",
+    "artifact_ready_at": "2026-11-09T05:08:36Z",
+    "elapsed_seconds": 325.697,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "9467cb594d9a60ba9fa23cf807548e57ff85882265be92cbc973bd96cd6bf4de",
-    "spec_sha256": "19e9b518d03e92124b3f0265ff4876d713691c53d62c5fa240f9206dac18b2d3",
+    "film_sha256": "67d1c1b53719a8cae5913419e45fb8730f9b1172fe38565a19535e29c3047439",
+    "spec_sha256": "c22ec65b67e4cfa4fb9926550d39cd806bbddd40050702b8f2bc8b295977424a",
     "request_received_at": "2026-11-09T04:26:00Z",
-    "request_to_artifact_seconds": 1671.009,
-    "run_id": "42563688090",
+    "request_to_artifact_seconds": 2556.697,
+    "run_id": "42565060848",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-09T04:49:27Z",
-        "run_id": "42563688090"
+        "at": "2026-11-09T05:05:41Z",
+        "run_id": "42565060848"
       }
     ],
-    "render_seconds": 264.009,
-    "pre_render_seconds": 136.0
+    "render_seconds": 175.697,
+    "pre_render_seconds": 150.0
   },
-  "film_sha256": "9467cb594d9a60ba9fa23cf807548e57ff85882265be92cbc973bd96cd6bf4de",
-  "film_bytes": 86096724,
-  "qc_attestation_sha256": "52de76b5d32cbafbba744bed301b6248c64d83bd16a06f80bf7fe0ed67b430e7",
+  "film_sha256": "67d1c1b53719a8cae5913419e45fb8730f9b1172fe38565a19535e29c3047439",
+  "film_bytes": 86074926,
+  "qc_attestation_sha256": "cdd83879bb610a29d41cec5643c16ab1bb442d329ee3b44de2a60bf2640dcd64",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-09T04:49:27Z",
-      "run_id": "42563688090"
+      "at": "2026-11-09T05:05:41Z",
+      "run_id": "42565060848"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-09T04:53:54Z",
-      "run_id": "42563688090"
+      "at": "2026-11-09T05:08:40Z",
+      "run_id": "42565060848"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-gauff-pegula-finals-2026-group1/gauff-pegula-finals-2026-group1.mp4",
-  "video_bytes": 86096724
+  "video_bytes": 86074926
 }
