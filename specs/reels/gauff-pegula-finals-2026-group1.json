@@ -440,7 +440,7 @@
       "provider": "Flashscore",
       "method": "api",
       "source_url": "https://local-global.flashscore.ninja/2/x/feed/df_st_1_SK2Gq2Jr",
-      "source_path": "data/evidence/reels/gauff-pegula-finals-2026-group1/flashscore.json",
+      "source_path": "requests/reels/gauff-pegula-finals-2026-group1/flashscore.json",
       "source_sha256": "37d07a3972d4d39b98c16df7ca99dadfd1ba72168c50c06a0ed1af083aff9dea",
       "match_date": "2026-11-08",
       "winner_result": "6-4 6-7(5) 6-2",
@@ -469,7 +469,7 @@
   "_facts": {
     "official_report": "https://www.wtatennis.com/news/4606606/dominant-third-set-lifts-gauff-past-pegula-in-fage-wta-finals-opener",
     "official_match": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C",
-    "statistics_path": "data/evidence/reels/gauff-pegula-finals-2026-group1/flashscore.json",
+    "statistics_path": "requests/reels/gauff-pegula-finals-2026-group1/flashscore.json",
     "coverage_gaps": [
       "官方集锦第二盘最低点之后从2比5切入，本片选4比5盘点；决胜盘前段未收录，用同场官方战报和分盘统计交代3比0，不替换其他回合。"
     ]
@@ -492,8 +492,8 @@
   ],
   "_editing_why": "按用户本轮要求丰富编排：原声冷开场→短悬念动效→同场高清人物摄影→首盘完整盘点→比分推进→救盘点→比分反转→错失赛点完整长回合→抢七结果→分盘数据对照→完整赛点握手→真实谢场摄影→全场统计和下一场问题。共用transition_cards的GSAP/D3动效与原生溶解，不用一套字卡重复全片。",
   "_visual_review": {
-    "path": "data/evidence/reels/gauff-pegula-finals-2026-group1/visual-editorial-review.json",
-    "sha256": "46eff5907e7675312b0ae4153a7c2d587e5c09a2144c4e07c6c6da72ef5f783e",
+    "path": "requests/reels/gauff-pegula-finals-2026-group1/visual-editorial-review.json",
+    "sha256": "cfde253b472a1f86143f1bd76e17c7ea909e88533bf62eba7f5b5a594a13b7d9",
     "method": "current_assistant_complete_contact_sheets_plus_dense_selected_windows",
     "external_model_pass_claimed": false,
     "human_listening_claimed": false
@@ -515,10 +515,5 @@
       "source": "https://www.wtatennis.com/news/4606606/dominant-third-set-lifts-gauff-past-pegula-in-fage-wta-finals-opener"
     }
   ],
-  "_scorebox_why": "实际成片9467cb59复核：870上缘漏掉本场原生MATCH/SET POINT提示，源提示位于830–870；改用824–982完整搜索带，逐帧独立测body/header，不贴实心矩形。先以同源236–251秒校准，正式渲染全选段重验。",
-  "_source_assets": [
-    "assets/reel/gauff-pegula-finals-2026-group1/official-return.jpg",
-    "assets/reel/gauff-pegula-finals-2026-group1/official-salute.jpg"
-  ],
-  "_frozen_voice_input": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-gauff-pegula-finals-2026-group1-6392baa35adec128/tts_bundle.zip"
+  "_scorebox_why": "实际成片9467cb59复核：870上缘漏掉本场原生MATCH/SET POINT提示，源提示位于830–870；改用824–982完整搜索带，逐帧独立测body/header，不贴实心矩形。先以同源236–251秒校准，正式渲染全选段重验。"
 }
