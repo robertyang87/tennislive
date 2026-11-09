@@ -30,6 +30,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: source-asr-${{ inputs.url }}
@@ -37,6 +38,7 @@ concurrency:
 
 jobs:
   asr:
+    if: ${{ inputs.url != 'recover-noskova-evidence' }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -106,3 +108,40 @@ jobs:
           git commit -m "asr: 源片 $KEY 两档英文转写（small.en / medium.en）"
           source tools/git_push_retry.sh
           push_with_rebase_retry "${{ github.ref_name }}" 5
+
+  recover_evidence:
+    if: ${{ inputs.url == 'recover-noskova-evidence' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: reel-noskova-kostyuk-wta-finals-2026-rr-4215
+          run-id: 42582342409
+          github-token: ${{ github.token }}
+          path: /tmp/recovered
+      - name: Transport unchanged native sidecars from the completed render
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, zipfile
+          from pathlib import Path
+          root = Path('/tmp/recovered')
+          films = list(root.rglob('noskova-kostyuk-wta-finals-2026-rr.mp4'))
+          assert len(films) == 1, 'Need actual film from the successful render attempt'
+          film_sha = hashlib.sha256(films[0].read_bytes()).hexdigest()
+          assert film_sha == 'c378c2fb648d11daf918d280c92229950d0a01c5124c1031d7efb816eb1dabab'
+          rows = []
+          with zipfile.ZipFile('/tmp/production-evidence-42582342409.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+              for p in root.rglob('*'):
+                  if p.is_file() and p != films[0]:
+                      raw = p.read_bytes()
+                      name = str(p.relative_to(root))
+                      z.writestr(name, raw)
+                      rows.append({'path': name, 'sha256': hashlib.sha256(raw).hexdigest()})
+              z.writestr('recovery-transport.json', json.dumps({'source_run': 42582342409, 'film_sha256': film_sha, 'scope': 'Byte-preserving artifact transport, not a QC approval', 'files': rows}, indent=2))
+          print('Recovered film identity:', film_sha, 'sidecars:', len(rows))
+          PY
+          gh release upload reel-noskova-kostyuk-wta-finals-2026-rr /tmp/production-evidence-42582342409.zip --clobber
