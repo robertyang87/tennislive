@@ -1,5 +1,5 @@
 {
-  "status": "ready_for_render",
+  "status": "qc_passed_ready_to_publish",
   "user_update": "丰富编排、吸引人的文案、流畅转场卡动画",
   "source_download_run": "https://github.com/robertyang87/tennislive/actions/runs/42561882383",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/42561900546",
@@ -7,7 +7,7 @@
   "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
   "earliest_blocker": null,
   "human_listening_claimed": false,
-  "render_dispatched": false,
+  "render_dispatched": true,
   "published": false,
   "visual_checks": [
     "全源308.57s均匀联系表已看",
@@ -23,7 +23,14 @@
   "latest_publication_attempt": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/publication-request.json",
   "selected_source_audio_gate": "pass:33 retained bilingual utterances plus verified non-speech matchpoint window",
   "formal_spec": "specs/reels/noskova-kostyuk-wta-finals-2026-rr.json",
-  "formal_final_qc_completed": false,
-  "production_qc_pass": false,
-  "owner_edit": "整句剪去，保留赛点及后续庆祝"
+  "formal_final_qc_completed": true,
+  "production_qc_pass": true,
+  "owner_edit": "整句剪去，保留赛点及后续庆祝",
+  "render_run": "https://github.com/robertyang87/tennislive/actions/runs/42582342409",
+  "recovery_run": "https://github.com/robertyang87/tennislive/actions/runs/42585915003",
+  "voice_review_method": "automated_voice_suite",
+  "voice_suite_pass": true,
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-noskova-kostyuk-wta-finals-2026-rr/noskova-kostyuk-wta-finals-2026-rr.mp4",
+  "film_sha256": "c378c2fb648d11daf918d280c92229950d0a01c5124c1031d7efb816eb1dabab",
+  "duration_seconds": 281.5
 }
