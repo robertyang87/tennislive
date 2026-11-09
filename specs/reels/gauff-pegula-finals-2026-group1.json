@@ -169,7 +169,8 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_ending_payoff_required": true
+      "_ending_payoff_required": true,
+      "subtitle_bottom": 360
     },
     {
       "_id": "opening",
@@ -297,7 +298,8 @@
           "text": "Against her former doubles partner. Match point.\n面对昔日双打搭档，高芙拿到赛点。"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "subtitle_bottom": 360
     },
     {
       "_id": "second-set-tiebreak",
@@ -321,7 +323,8 @@
           "text": "And the American duel in the desert is not done.\n这场沙漠中的美国对决还没结束。"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "subtitle_bottom": 360
     },
     {
       "_id": "deciding-set-reset",
@@ -374,7 +377,8 @@
           "text": "Her 48th of the season, and she takes down Pegula in three.\n赛季第48胜，她三盘击败佩古拉。"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "subtitle_bottom": 360
     },
     {
       "_id": "emotion",
@@ -482,9 +486,9 @@
   "_tts_backend_why": "本期不要求Azure专用情绪风格；沿用已验证的Edge云见体育解说声线，合成后执行原生自动五项审音。",
   "scorebox": [
     90,
-    870,
-    550,
-    980
+    824,
+    556,
+    982
   ],
   "_editing_why": "按用户本轮要求丰富编排：原声冷开场→短悬念动效→同场高清人物摄影→首盘完整盘点→比分推进→救盘点→比分反转→错失赛点完整长回合→抢七结果→分盘数据对照→完整赛点握手→真实谢场摄影→全场统计和下一场问题。共用transition_cards的GSAP/D3动效与原生溶解，不用一套字卡重复全片。",
   "_visual_review": {
@@ -510,5 +514,6 @@
       "detail": "高芙本赛季第三次击败佩古拉，生涯交手6比5领先",
       "source": "https://www.wtatennis.com/news/4606606/dominant-third-set-lifts-gauff-past-pegula-in-fage-wta-finals-opener"
     }
-  ]
+  ],
+  "_scorebox_why": "实际成片9467cb59复核：870上缘漏掉本场原生MATCH/SET POINT提示，源提示位于830–870；改用824–982完整搜索带，逐帧独立测body/header，不贴实心矩形。先以同源236–251秒校准，正式渲染全选段重验。"
 }
