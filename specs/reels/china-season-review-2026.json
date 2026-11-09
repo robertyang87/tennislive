@@ -131,9 +131,14 @@
   },
   "anim_wall": {
    "reason": "自制动画（结尾冠军墙）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，3:4 窗口即全帧，不与主源 1920×1080 共享裁切窗口（共享必静默裁错）。"
+  },
+  "sun_guangzhou": {
+   "reason": "WTA 官方广州第二轮集锦（孙心然 vs 蒂莫费娃）原生 1280×720，本场官方仅此一档、无 1080p；所有者 2026-10-30 已批该源 720p 全画布裁切呈现、2026-11-09 定案本期复用（第二幕两窗：救赛点＋抢七制胜分）。按原生几何取窗，不与主源 1920×1080 共享裁切窗口（共享必静默裁错）；URL 已登记 build_match_reel.py 的 _NATIVE_720_CROP_URLS_BY_EPISODE[china-season-review-2026]。",
+   "min_height": 720,
+   "approved_by": "user"
   }
  },
- "_geometry_why": "render dry-run 的 check_sources_match 预演拦下：自制动画两源 1080×1440 与主源 zheng 1920×1080 尺寸不同。按仓库既有认领机制（walkover-story-2026 同款）落位：动画两源走 source_crop 原生几何（窗口即全帧）；两源均为 25fps 与主源一致，无 mixed_fps 认领。",
+ "_geometry_why": "render dry-run 的 check_sources_match 预演拦下：自制动画两源 1080×1440、孙心然广州源 1280×720 与主源 zheng 1920×1080 尺寸不同。按仓库既有认领机制（walkover-story-2026 同款）落位：三源走 source_crop 原生几何（动画窗口即全帧；广州源按原生几何取窗，min_height 720＋approved_by user，URL 已登记本集 720p 原生裁切白名单）；三源均为 25fps 与主源一致，无 mixed_fps 认领。",
  "sources": {
   "zheng": "https://github.com/robertyang87/tennislive/releases/download/source-Vq_UC0n5DKQ/Vq_UC0n5DKQ.mp4",
   "sun_gauff": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
