@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4504895/tennistv-4504895.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4504895/rome-2026-final-sinner-ruud-short-highlights",
+ "source_sha256": "5bfe93bd616f76444a94fede580760c20832d9bb5c8eb41adb234e85c9de58de",
+ "source_bytes": 71566649,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 116.92,
+ "reviewed_to": 127.6,
+ "selected_from": 116.92,
+ "selected_to": 127.6,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 118.02,
+   "end": 127.42,
+   "en": "Jannik Sinner ends Italy's 50-year wait for a champion in Rome.",
+   "zh": "辛纳终结意大利罗马50年冠军荒。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-small.en.json",
+   "sha256": "1ed639a1224860e5747326dfbfe31224f3fd10dc2e5cc0d5ca27b09ce100923c",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-medium.en.json",
+   "sha256": "227ad782eae0a649e69add4049899021c92dbe92013795ac6284abf313c6031f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冷开场：罗马决赛冠军点落地后（116.92 切到庆祝近景），辛纳张开双臂；解说一句话交代这一冠的分量。整句 118.02–127.42 落在窗口内（两档转写一致），段尾 127.6。正文第 5 站放的是同一场的完整冠军点和赛后握手，不重复这一镜。"
+}

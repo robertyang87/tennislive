@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights",
+ "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+ "source_bytes": 161016998,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 91.6,
+ "reviewed_to": 97.9,
+ "selected_from": 91.6,
+ "selected_to": 97.9,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/source_asr/tennistv-4606354/small.en.json",
+   "sha256": "25e9c03a5d36c91a31e82fb5dc9218be0e16d8a438e067fde2b44057913be9e3",
+   "model": "small.en"
+  },
+  {
+   "path": "data/source_asr/tennistv-4606354/medium.en.json",
+   "sha256": "4ac3ea71730843bfbbc5c3282d56fdbc57e647971e04e7b96f89ed4f07bd9031",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "第二盘回合（87.76–113.12 同一镜头）。事实沿用 alcaraz-shelton-paris-2026-final 已核口径。两档转写 91.50→112.40 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}

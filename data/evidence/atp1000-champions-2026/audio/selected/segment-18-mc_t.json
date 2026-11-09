@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4486445/tennistv-4486445.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4486445",
+ "source_sha256": "d4d1887f80eea54b868fe18dde68aa1985a512f01bf70d317fc693f2a0619632",
+ "source_bytes": 13157336,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:42:41.373783+00:00",
+ "status": "complete",
+ "reviewed_from": 18.6,
+ "reviewed_to": 24.9,
+ "selected_from": 18.6,
+ "selected_to": 24.9,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc_t-tennistv-4486445-small.en.json",
+   "sha256": "4bbac3304457f9af953af66e36e43b403091e3dace017e5eb6f542bb75f17d8d",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc_t-tennistv-4486445-medium.en.json",
+   "sha256": "b4682ae1ffa64459803d433826d864d8a85ef77a7bae1d720c5d991e6ffcddee",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "蒙特卡洛颁奖：辛纳捧着奖杯（官方 trophy lift 条目 18.6–24.9s）。事实：ATP 与路透都写这一冠让他重回世界第一、是他第一个红土大师赛冠军。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}

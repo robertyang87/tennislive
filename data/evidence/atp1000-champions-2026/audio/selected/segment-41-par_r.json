@@ -1,0 +1,47 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606098/tennistv-4606098.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4606098/road-to-final-paris",
+ "source_sha256": "a0f4a1ee73821cec94f80dfc03bb7d0a3c268e898161eca08d76626d379ff04d",
+ "source_bytes": 959834685,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 662.64,
+ "reviewed_to": 682.0,
+ "selected_from": 662.64,
+ "selected_to": 682.0,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 672.58,
+   "end": 675.5,
+   "en": "Carlos Alcaraz back from the brink.",
+   "zh": "阿尔卡拉斯从悬崖边回来了。"
+  },
+  {
+   "start": 678.36,
+   "end": 681.38,
+   "en": "It's a heartbreaker for Taylor Fritz.",
+   "zh": "对弗里茨来说，太让人心碎了。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/par_r-tennistv-4606098-small.en.json",
+   "sha256": "fa99781cf65938c55fce2afa9aff52cdf09db72cd69bd0b5c63a17d6c8195202",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/par_r-tennistv-4606098-medium.en.json",
+   "sha256": "d4ddb2abe8cf93053ee2f77a38a06e41ae7e9db93863030745cd70a5edc5380d",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "1/4决赛对弗里茨的最后一分和赛后：662.64 切入最后一分，670.76 起阿尔卡拉斯张开双臂，674.24 弗里茨低头，678.40 网前握手（alcaraz-shelton-paris-2026-final 的 qf 段从 653 起，这里从最后一分起）。两档转写：上一句 651.92 结束，两句 672.58–675.50 / 678.36–681.38 一致，下一句 683.46 开始。"
+}

@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4497782/tennistv-4497782.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4497782",
+ "source_sha256": "720f07f49d97e24be45e6fbd9634da07539629c698ba07f1aaaa4c125b542785",
+ "source_bytes": 71738405,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:43:32.181571+00:00",
+ "status": "complete",
+ "reviewed_from": 122.64,
+ "reviewed_to": 137.05,
+ "selected_from": 122.64,
+ "selected_to": 137.05,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 133.46,
+   "end": 137.04,
+   "en": "Jannik Sinner rewrites the history books.",
+   "zh": "辛纳改写了历史。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-tennistv-4497782-small.en.json",
+   "sha256": "fdb4b62f6c5d1a3e6266678e0b55eb8e39b040aa070b7852133f5638c35de931",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-tennistv-4497782-medium.en.json",
+   "sha256": "35e83096b5ec8bc7956745a963b2887100c17a1994b1c934a4dc2fe71c3f60b9",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 5-2 40-0 辛纳发球（124/129.5s 读过），122.64 切入、130.84 起辛纳在花墙前微笑。解说 small.en「Yannick Sinner rewrites the history books」133.54–137.06、medium.en 133.46–137.00；small.en 之后 137.06 起有半句（medium 没有），所以段尾收在 137.05 之前那一刻。"
+}

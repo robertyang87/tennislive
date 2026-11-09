@@ -1,0 +1,47 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-I1Uil8WUoew/I1Uil8WUoew.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=I1Uil8WUoew",
+ "source_sha256": "0f82eb3ce93cb6281c07787299c6d570a2b98d8b469db1fe060757c1e6c9425d",
+ "source_bytes": 38894607,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 98.54,
+ "reviewed_to": 113.35,
+ "selected_from": 98.54,
+ "selected_to": 113.35,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 103.98,
+   "end": 107.74,
+   "en": "And California dreams come true for Jannik Sinner,",
+   "zh": "加州梦成真，属于扬尼克·辛纳，"
+  },
+  {
+   "start": 107.74,
+   "end": 113.24,
+   "en": "as he rises up to snatch glory as champion of Indian Wells.",
+   "zh": "他登顶成为印第安维尔斯冠军。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-I1Uil8WUoew-small.en.json",
+   "sha256": "ad2fb3773f59b540aceec91ddbaccbcbdb1f5266557417a474ab6906ee972ffb",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-I1Uil8WUoew-medium.en.json",
+   "sha256": "849fe56ed291c2c07d43acdaa3fa034b39d48b0a374f5600d6f8e29e2e49304f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条抢七小分 6-4 辛纳（96.5/101s 读过），98.54 切入回合、103.9 落地切到辛纳近景，接着是梅德韦德夫的反应。解说整句 103.98–113.24（两档一致）完整落在窗口里，段尾 113.35，114.28 之后是握手。"
+}

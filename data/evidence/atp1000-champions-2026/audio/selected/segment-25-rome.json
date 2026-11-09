@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4504895/tennistv-4504895.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4504895/rome-2026-final-sinner-ruud-short-highlights",
+ "source_sha256": "5bfe93bd616f76444a94fede580760c20832d9bb5c8eb41adb234e85c9de58de",
+ "source_bytes": 71566649,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:43:32.181571+00:00",
+ "status": "complete",
+ "reviewed_from": 129.44,
+ "reviewed_to": 138.35,
+ "selected_from": 129.44,
+ "selected_to": 138.35,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 134.28,
+   "end": 137.9,
+   "en": "He claims his first title here at the Foro Italico.",
+   "zh": "这是他在罗马的第一个冠军。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-small.en.json",
+   "sha256": "1ed639a1224860e5747326dfbfe31224f3fd10dc2e5cc0d5ca27b09ce100923c",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-medium.en.json",
+   "sha256": "227ad782eae0a649e69add4049899021c92dbe92013795ac6284abf313c6031f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "赛后：辛纳近景、和鲁德在网前拥抱（129.44–138.35）。解说 medium.en 134.28–138.00、small.en 134.36–137.80（「Four Intellico」即 Foro Italico）。段尾 138.35，138.4 之后是 Tennis TV 片尾。"
+}

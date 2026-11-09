@@ -1,0 +1,47 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4478518/tennistv-4478518.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4478518/miami-2026-final-lehecka-sinner-short-highlights",
+ "source_sha256": "6c8c4b471326dfc49308db8eb23d8dd7ba0fd3769ab79fc6ce7fca2a667489a2",
+ "source_bytes": 74230218,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 122.76,
+ "reviewed_to": 141.5,
+ "selected_from": 122.76,
+ "selected_to": 141.5,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 128.72,
+   "end": 133.42,
+   "en": "It is a Sinner Sunshine Double.",
+   "zh": "这是属于辛纳的阳光双冠。"
+  },
+  {
+   "start": 134.94,
+   "end": 141.2,
+   "en": "The Italian adds the Miami title to his Indian Wells trophy earlier this month.",
+   "zh": "继印第安维尔斯之后，又拿下迈阿密。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-small.en.json",
+   "sha256": "c242274a4097ebf736ef5976e8462a7a9ff335bf7806444716832ef291d38d5b",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-medium.en.json",
+   "sha256": "0b104869beb7b4b4c71a5ac6a5eec6708470a9ca8fd0957999df29153be20bcb",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 5-4 40-15 辛纳发球（123.5/129s 读过），122.76 切入、130.56 落地切到辛纳张开双臂，138.4 起网前握手。解说两句（small.en 128.72–133.42 / 134.94–141.16，medium.en 129.10–139.26 / 139.26–141.26）完整落在窗口里；147 之后是 Tennis TV 片尾，段尾 141.5。"
+}

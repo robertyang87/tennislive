@@ -1,0 +1,1316 @@
+{
+ "slug": "atp1000-champions-2026",
+ "date": "2026-11-09",
+ "_column": "网球有故事",
+ "title": "9站5个冠军",
+ "cx": 0.5,
+ "track": false,
+ "preserve_source_audio": true,
+ "tts_backend": "edge",
+ "_tts_backend_why": "与 wta1000-champions-2026 同一系列、同一口径：edge 云见 +18% +10Hz，不用情绪风格。",
+ "_voice_why": "渲染传 --voice zh-CN-YunjianNeural --rate +18% --pitch +10Hz。不写 style、lead_pause。",
+ "cover": {
+  "eyebrow": "网球有故事",
+  "hook": "9站5冠",
+  "narration": "九站，五冠，前五站全是辛纳。",
+  "_narration_why": "海报印阿拉伯数字「9站5冠」，口播用汉字；口播多半句「前五站全是辛纳」是同一句钩子的展开（与 wta1000-champions-2026「十站，九冠，四个第一次」同一写法）。",
+  "subject": "2026 ATP1000 冠军",
+  "topic": "2026 ATP1000 冠军全盘点",
+  "story_kind": "other",
+  "layout": "solo",
+  "approved_image": "assets/reel/atp1000-2026/cover.jpg",
+  "_cover_sources": {
+   "印第安维尔斯": "ATP Media 4470339（Getty，图注：Sinner poses with the championship trophy after defeating Daniil Medvedev…BNP Paribas Open）",
+   "迈阿密": "ATP Media 4478725（图注：Sinner holds the Butch Buchholz trophy…March 29, 2026）",
+   "蒙特卡洛": "ATP Media 4486442（Getty，APRIL 12，celebrates with his winners trophy after victory against Carlos Alcaraz）",
+   "马德里": "ATP Media 4498574（Getty，MAY 03，poses with the trophy after defeating Alexander Zverev）",
+   "罗马": "ATP Media 4505330（2026/05/17，lifts the Trophy…Jannik Sinner won 6-4, 6-4）",
+   "蒙特利尔": "ATP Media 4559404（Getty，AUGUST 13，kisses the championship trophy after the victory against Brandon Nakashima）",
+   "辛辛那提": "ATP Media 4565506（Cincinnati Open 官方摄影 Jeff Dean，Aug. 23, 2026 决赛日；赛事方没有发菲斯单人捧杯照，用夺冠瞬间怒吼）",
+   "上海": "ATP Media 4594537（October 18, 2026，poses with the trophy after his victory against Rafael Jodar）",
+   "巴黎": "ATP Media 4606336（2026-11-08 16:04Z 决赛后上线，8256×5504；接口里没有阿尔卡拉斯单人捧杯照，用夺冠瞬间怒吼，球衣与决赛集锦一致）"
+  },
+  "_cover_why": "沿用 wta1000-champions-2026 账号所有者选定的「捧杯宫格＋居中大字」版式：九格 ATP Media 官方原图（图注四要素逐张读过，无发布限制），上 4 格印第安维尔斯／迈阿密／蒙特卡洛／马德里，中间「9站5冠」，下面罗马整宽一格，再 4 格蒙特利尔／辛辛那提／上海／巴黎。生成脚本 /tmp 外留档：research/atp1000-champions-2026/cover.py。",
+  "portrait": {
+   "image": "assets/reel/atp1000-2026/cover.jpg",
+   "_why": "封面是成品海报（approved_image，1080×1440 九格宫格），渲染直接整张用；portrait 指向同一张图，只为 solo 版式字段齐全。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "9站5个冠军",
+  "lead": "2026赛季九站ATP1000：前五站全是辛纳，后四站，四个不同的冠军。"
+ },
+ "primary": "rome",
+ "editorial": {
+  "mode": "match_review",
+  "question": "2026赛季九站ATP1000，冠军都是谁？每个人是怎么走到捧杯那一刻的？",
+  "thesis": "按时间顺序盘点2026赛季九站ATP1000：辛纳连拿前五站（印第安维尔斯、迈阿密、蒙特卡洛、马德里、罗马），在罗马集齐全部九站大师赛；之后他因伤一站未打，后四站换了四个冠军——谢尔顿卫冕加拿大、菲斯和达维多维奇·福基纳首夺大师赛、阿尔卡拉斯首夺巴黎。比分以 ATP 官网战报与维基 2026 ATP Masters 1000 汇总为准。",
+  "beats": [
+   "冷开场：罗马辛纳张开双臂，解说宣告意大利五十年等待结束",
+   "开场：九站五冠，前五站一个人",
+   "印第安维尔斯两个抢七、迈阿密一盘不丢的阳光双冠",
+   "蒙特卡洛击败阿尔卡拉斯重回世界第一、马德里57分钟五连冠",
+   "罗马集齐九站大师赛",
+   "转折：后四站辛纳没能出场",
+   "蒙特利尔谢尔顿卫冕、辛辛那提菲斯决胜盘6比0",
+   "上海福基纳首盘1比6后逆转、巴黎阿尔卡拉斯八强救赛点后首夺巴黎",
+   "收尾：九站五冠，留一问"
+  ],
+  "human_context": {
+   "angle": "前五站只有一个名字，后四站换了四个人：辛纳在罗马集齐九站大师赛，然后从赛场上消失。",
+   "facts": [
+    "印第安维尔斯 2026-03-15 辛纳 7-6(6) 7-6(4) 梅德韦德夫，第二盘抢七0-4落后连拿七分，集齐六站硬地大师赛（ATP/Nitto ATP Finals 战报；美联社、Tennisnerd）",
+    "迈阿密 2026-03-29 辛纳 6-4 6-4 莱赫奇卡，开赛因雨推迟、第二盘雨停，男子第一位一盘不丢完成阳光双冠（ATP 战报、美联社、维基）",
+    "蒙特卡洛 2026-04-12 辛纳 7-6(5) 6-3 阿尔卡拉斯，第二盘1-3落后连赢五局，首个红土大师赛冠军、重回世界第一（ATP、路透、奥林匹克官网）",
+    "马德里 2026-05-03 辛纳 6-1 6-2 兹维列夫，57分钟，男子第一位大师赛五连冠（2025巴黎起）（ATP、美联社、天空体育）",
+    "罗马 2026-05-17 辛纳 6-4 6-4 鲁德，1976年帕纳塔之后第一位罗马意大利男单冠军，继德约科维奇后第二位集齐九站大师赛（美联社、路透）",
+    "辛纳之后缺席加拿大（7/24退赛）、辛辛那提（8/9因右膝退赛）、上海与巴黎（10/6宣布伤缺赛季剩余赛事）（ATP 官网、ESPN、维基 2026 Jannik Sinner tennis season）",
+    "蒙特利尔 2026-08-13 谢尔顿 6-3 7-6(4) 中岛布兰登，卫冕加拿大大师赛（2025多伦多），中岛全场破发点0（shelton-nakashima-montreal-final 已核）",
+    "辛辛那提 2026-08-23 菲斯 6-3 1-6 6-0 蒂亚福，生涯首个大师赛冠军（fils-tiafoe-cincinnati-2026-final 已核）",
+    "上海 2026-10-18 达维多维奇·福基纳 1-6 7-6(5) 6-4 霍达尔，落后一盘一破后逆转，生涯首个大师赛冠军（davidovichfokina-jodar-shanghai-2026-final 已核）",
+    "巴黎 2026-11-08 阿尔卡拉斯 7-6(5) 7-5 谢尔顿，1/4决赛对弗里茨救两个赛点，首盘救6个破发点、第二盘2-4落后追回，首夺巴黎（alcaraz-shelton-paris-2026-final 已核，BBC）"
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments",
+    "https://en.wikipedia.org/wiki/2026_Jannik_Sinner_tennis_season",
+    "https://www.nittoatpfinals.com/en/news/sinner-medvedev-indian-wells-2026-final",
+    "https://www.thestar.com.my/sport/tennis/2026/03/16/tennis-sinner-triumphs-over-medvedev-to-secure-first-indian-wells-title",
+    "https://www.tennisnerd.net/?p=64425",
+    "https://www.atptour.com/en/news/sinner-lehecka-miami-2026-final",
+    "https://www.ksl.com/article/51474713/sinner-follows-sabalenkas-lead-with-a-sunshine-double-beating-lehecka-in-miami-open-final",
+    "https://www.atptour.com/en/news/alcaraz-sinner-monte-carlo-2026-final",
+    "https://www.thestar.com.my/sport/tennis/2026/04/12/tennis-sinner-beats-alcaraz-in-monte-carlo-final-to-top-rankings",
+    "https://www.atptour.com/en/news/sinner-zverev-madrid-2026-final",
+    "https://www.ksl.com/article/51492421/sinner-crushes-zverev-to-win-madrid-open-and-claim-record-5th-straight-masters-1000-title",
+    "https://www.arabnews.com/node/2643958/amp",
+    "https://www.thestar.com.my/sport/tennis/2026/05/18/tennis-sinner-wins-italian-open-to-complete-masters-collection",
+    "https://www.atptour.com/en/news/sinner-cincinnati-2026-withdrawal",
+    "https://www.espn.com/tennis/story/_/id/49568255/jannik-sinner-withdraws-cincinnati-open-knee-injury",
+    "https://www.bbc.com/sport/tennis/articles/ck9qz8d2znl5o"
+   ]
+  }
+ },
+ "segments": [
+  {
+   "source": "rome",
+   "start": 116.92,
+   "end": 127.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 1.1,
+     "end": 10.5,
+     "text": "Jannik Sinner ends Italy's 50-year wait for a champion in Rome.\n辛纳终结意大利罗马50年冠军荒。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冷开场：罗马决赛冠军点落地后（116.92 切到庆祝近景），辛纳张开双臂；解说一句话交代这一冠的分量。整句 118.02–127.42 落在窗口内（两档转写一致），段尾 127.6。正文第 5 站放的是同一场的完整冠军点和赛后握手，不重复这一镜。",
+   "_ending_payoff_required": false,
+   "_head_open_why": "这是九站盘点的片头预告，不是单场复盘的结局：罗马决赛的完整冠军点在正文第 5 站按时间顺序完整放一遍（106.20–116.92），片子的结局是巴黎。"
+  },
+  {
+   "source": "mc_t",
+   "start": 13.0,
+   "end": 18.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "二〇二六赛季，九站ATP一千赛全部打完。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "蒙特卡洛颁奖：辛纳在摩纳哥王室成员旁举起奖杯（Tennis TV 官方 trophy lift 条目 13–18s）。这条源只有 0–1.46s 一句残句，窗口内两档转写都没有词。"
+  },
+  {
+   "source": "cin",
+   "start": 467.85,
+   "end": 472.55,
+   "cx": 0.5,
+   "track": false,
+   "narration": "九站，只有五个冠军。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "辛辛那提颁奖台：菲斯举起奖杯（467–472s）。上一句「And Arthur, we'd love to hear from you」在 467.78 结束，段首 467.85 不切句；472.6 之后是 Tennis TV 片尾板，段尾 472.55。"
+  },
+  {
+   "source": "mad",
+   "start": 66.8,
+   "end": 73.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "辛纳一个人拿走五站，后四站，换了四个人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "马德里决赛第二盘的回合（64.28–78.36 同一镜头）。两档转写 66.70→77.96 之间无词。"
+  },
+  {
+   "source": "iw",
+   "start": 54.2,
+   "end": 61.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "三月，印第安维尔斯。辛纳对梅德韦德夫，两盘都打进抢七。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "记分条：首盘 7-6(6) 已定、第二盘 4-5（54–78s 读过）。两档转写 53.88→75.06 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-iw.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第1站",
+     "date": "2026.03.15",
+     "place": "ATP1000 印第安维尔斯",
+     "score": "7-6(6) 7-6(4)",
+     "people": "辛纳 vs 梅德韦德夫",
+     "result": {
+      "winner": "辛纳",
+      "score": "7-6(6) 7-6(4)",
+      "source": "https://www.nittoatpfinals.com/en/news/sinner-medvedev-indian-wells-2026-final"
+     }
+    }
+   }
+  },
+  {
+   "source": "iw",
+   "start": 61.0,
+   "end": 67.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘抢七，他零比四落后，然后连拿七分。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "事实：美联社与 Tennisnerd 都写「第二盘抢七 0-4 落后后连拿七分」。画面是第二盘 4-5 的回合（记分条读过），下一段就是冠军点。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-iw.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第1站",
+     "date": "2026.03.15",
+     "place": "ATP1000 印第安维尔斯",
+     "score": "7-6(6) 7-6(4)",
+     "people": "辛纳 vs 梅德韦德夫",
+     "result": {
+      "winner": "辛纳",
+      "score": "7-6(6) 7-6(4)",
+      "source": "https://www.nittoatpfinals.com/en/news/sinner-medvedev-indian-wells-2026-final"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "iw",
+   "start": 98.54,
+   "end": 113.35,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.44,
+     "end": 9.2,
+     "text": "And California dreams come true for Jannik Sinner,\n加州梦成真，属于扬尼克·辛纳，"
+    },
+    {
+     "at": 9.2,
+     "end": 14.7,
+     "text": "as he rises up to snatch glory as champion of Indian Wells.\n他登顶成为印第安维尔斯冠军。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：记分条抢七小分 6-4 辛纳（96.5/101s 读过），98.54 切入回合、103.9 落地切到辛纳近景，接着是梅德韦德夫的反应。解说整句 103.98–113.24（两档一致）完整落在窗口里，段尾 113.35，114.28 之后是握手。"
+  },
+  {
+   "source": "iw",
+   "start": 114.28,
+   "end": 119.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "六站硬地大师赛，他全部集齐。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "网前握手（114.28 起，源片 119.49 结束）。事实：ATP 官网「joins Djokovic & Federer as only men to win all six Masters 1000 hard-court trophies」。窗口里两档转写无词。"
+  },
+  {
+   "source": "mia",
+   "start": 51.9,
+   "end": 57.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "两周后，迈阿密。决赛对手是莱赫奇卡。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘 3-5 莱赫奇卡占先的回合（51.84 切点起）。两档转写 48.48→62.48 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mia.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第2站",
+     "date": "2026.03.29",
+     "place": "ATP1000 迈阿密 决赛",
+     "score": "6-4 6-4",
+     "people": "辛纳 vs 莱赫奇卡",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-4 6-4",
+      "source": "https://www.atptour.com/en/news/sinner-lehecka-miami-2026-final"
+     }
+    }
+   }
+  },
+  {
+   "source": "mia",
+   "start": 96.9,
+   "end": 103.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "两次雨停，各等了一个半小时，他还是两个六比四。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘开局的回合（记分条 0-0，93–117s 读过）。事实：美联社写决赛遇到两次各 90 分钟的雨停（two 90-minute rain delays），奥林匹克官网写开赛推迟、第二盘又中断。两档转写 92.04→128.72 无词。"
+  },
+  {
+   "source": "mia",
+   "start": 118.4,
+   "end": 122.76,
+   "cx": 0.5,
+   "track": false,
+   "narration": "一盘不丢的阳光双冠，男子第一人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "赛点前辛纳走回底线、近景（118.40–122.76）。事实：维基「first man to win the Sunshine Double without dropping a set」，美联社同口径。"
+  },
+  {
+   "source": "mia",
+   "start": 122.76,
+   "end": 141.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.96,
+     "end": 10.66,
+     "text": "It is a Sinner Sunshine Double.\n这是属于辛纳的阳光双冠。"
+    },
+    {
+     "at": 12.18,
+     "end": 18.44,
+     "text": "The Italian adds the Miami title to his Indian Wells trophy earlier this month.\n继印第安维尔斯之后，又拿下迈阿密。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：记分条第二盘 5-4 40-15 辛纳发球（123.5/129s 读过），122.76 切入、130.56 落地切到辛纳张开双臂，138.4 起网前握手。解说两句（small.en 128.72–133.42 / 134.94–141.16，medium.en 129.10–139.26 / 139.26–141.26）完整落在窗口里；147 之后是 Tennis TV 片尾，段尾 141.5。"
+  },
+  {
+   "source": "mc",
+   "start": 12.0,
+   "end": 17.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "四月，蒙特卡洛。决赛遇上阿尔卡拉斯。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘 3-3 的回合（记分条 9–45s 读过）。两档转写 11.80→26.78 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mc.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第3站",
+     "date": "2026.04.12",
+     "place": "ATP1000 蒙特卡洛 决赛",
+     "score": "7-6(5) 6-3",
+     "people": "辛纳 vs 阿尔卡拉斯",
+     "result": {
+      "winner": "辛纳",
+      "score": "7-6(5) 6-3",
+      "source": "https://www.atptour.com/en/news/alcaraz-sinner-monte-carlo-2026-final"
+     }
+    }
+   }
+  },
+  {
+   "source": "mc",
+   "start": 47.7,
+   "end": 52.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "首盘打进抢七，他七比五先拿下。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘抢七进行中（记分条 6-6、小分 1-1，48–60s 读过）。两档转写 47.68→60.00 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mc.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第3站",
+     "date": "2026.04.12",
+     "place": "ATP1000 蒙特卡洛 决赛",
+     "score": "7-6(5) 6-3",
+     "people": "辛纳 vs 阿尔卡拉斯",
+     "result": {
+      "winner": "辛纳",
+      "score": "7-6(5) 6-3",
+      "source": "https://www.atptour.com/en/news/alcaraz-sinner-monte-carlo-2026-final"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "mc",
+   "start": 97.5,
+   "end": 104.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘，阿尔卡拉斯一度三比一领先，辛纳随后连赢五局。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘 1-1 的回合（记分条 96–114s 读过）。事实：路透「rallied from 3-1 down in the second set」，奥林匹克官网「won the final five games」。两档转写 75.48→105.44 无词。"
+  },
+  {
+   "source": "mc",
+   "start": 122.32,
+   "end": 135.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 6.54,
+     "end": 12.66,
+     "text": "It's Sinner that reigns supreme in Monte Carlo.\n蒙特卡洛，辛纳称王。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：记分条第二盘 5-3 40-15 辛纳发球（123/126.5s 读过），122.32 切入回合，127.36 起辛纳跪在红土上、俯拍。解说 medium.en 128.86–135.02 / small.en 129.06–135.00 同一句；之后两档对不上（medium「7-6, 7-3」、small「So it takes…」），所以段尾收在 135.02，不带下一句。"
+  },
+  {
+   "source": "mc_t",
+   "start": 18.6,
+   "end": 24.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第一个红土大师赛冠军，世界第一也拿了回来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "蒙特卡洛颁奖：辛纳捧着奖杯（官方 trophy lift 条目 18.6–24.9s）。事实：ATP 与路透都写这一冠让他重回世界第一、是他第一个红土大师赛冠军。"
+  },
+  {
+   "source": "mad",
+   "start": 27.3,
+   "end": 31.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "五月，马德里，决赛对兹维列夫。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘开局（记分条 6-1、0-0，27–81s 读过）。两档转写 27.20→46.98 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mad.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第4站",
+     "date": "2026.05.03",
+     "place": "ATP1000 马德里 决赛",
+     "score": "6-1 6-2",
+     "people": "辛纳 vs 兹维列夫",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-1 6-2",
+      "source": "https://www.atptour.com/en/news/sinner-zverev-madrid-2026-final"
+     }
+    }
+   }
+  },
+  {
+   "source": "mad",
+   "start": 99.0,
+   "end": 103.7,
+   "cx": 0.5,
+   "track": false,
+   "narration": "六比一，六比二，不到一个小时。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘 4-2 的回合（记分条 99–117s 读过）。事实：美联社、天空体育写 57 分钟，ATP 战报引辛纳的话是 58 分钟——两源差一分钟，所以只说「不到一个小时」。两档转写 98.16→114.66 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mad.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第4站",
+     "date": "2026.05.03",
+     "place": "ATP1000 马德里 决赛",
+     "score": "6-1 6-2",
+     "people": "辛纳 vs 兹维列夫",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-1 6-2",
+      "source": "https://www.atptour.com/en/news/sinner-zverev-madrid-2026-final"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "mad",
+   "start": 103.7,
+   "end": 108.4,
+   "cx": 0.5,
+   "track": false,
+   "narration": "大师赛五连冠，男子网球史上第一人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "同一镜头的下一分。事实：ATP「the first man to win five consecutive ATP Masters 1000 titles」（2025 巴黎＋2026 印第安维尔斯、迈阿密、蒙特卡洛、马德里），美联社同口径。"
+  },
+  {
+   "source": "mad",
+   "start": 122.64,
+   "end": 137.05,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 10.82,
+     "end": 14.4,
+     "text": "Jannik Sinner rewrites the history books.\n辛纳改写了历史。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：记分条第二盘 5-2 40-0 辛纳发球（124/129.5s 读过），122.64 切入、130.84 起辛纳在花墙前微笑。解说 small.en「Yannick Sinner rewrites the history books」133.54–137.06、medium.en 133.46–137.00；small.en 之后 137.06 起有半句（medium 没有），所以段尾收在 137.05 之前那一刻。"
+  },
+  {
+   "source": "rome",
+   "start": 36.7,
+   "end": 42.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "然后是罗马，决赛对鲁德，又是两个六比四。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘 2-0 的回合（记分条 36–57s 读过）。两档转写 34.80→52.00 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-rome.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第5站",
+     "date": "2026.05.17",
+     "place": "ATP1000 罗马 决赛",
+     "score": "6-4 6-4",
+     "people": "辛纳 vs 鲁德",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-4 6-4",
+      "source": "https://www.thestar.com.my/sport/tennis/2026/05/18/tennis-sinner-wins-italian-open-to-complete-masters-collection"
+     }
+    }
+   }
+  },
+  {
+   "source": "rome",
+   "start": 73.2,
+   "end": 80.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "这一冠，让他集齐全部九站大师赛，此前只有德约科维奇做到过。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘 3-2 的回合（记分条 75–99s 读过）。事实：美联社、路透都写他成为继德约科维奇之后第二位集齐九站大师赛冠军的男子球员。两档转写 73.10→97.76 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-rome.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第5站",
+     "date": "2026.05.17",
+     "place": "ATP1000 罗马 决赛",
+     "score": "6-4 6-4",
+     "people": "辛纳 vs 鲁德",
+     "result": {
+      "winner": "辛纳",
+      "score": "6-4 6-4",
+      "source": "https://www.thestar.com.my/sport/tennis/2026/05/18/tennis-sinner-wins-italian-open-to-complete-masters-collection"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "rome",
+   "start": 106.2,
+   "end": 116.92,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "_why": "冠军点：记分条第二盘 5-4 40-0 辛纳发球（107/115.5s 读过），106.20 切入回合、116.92 切到庆祝（冷开场已经放过那一镜）。",
+   "_quote_skip_why": "冠军点这一分解说没开口（两档转写都没有词，只有现场欢呼）；整句解说在冷开场那一镜（118.02 起）。"
+  },
+  {
+   "source": "rome",
+   "start": 129.44,
+   "end": 138.35,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 4.84,
+     "end": 8.46,
+     "text": "He claims his first title here at the Foro Italico.\n这是他在罗马的第一个冠军。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "赛后：辛纳近景、和鲁德在网前拥抱（129.44–138.35）。解说 medium.en 134.28–138.00、small.en 134.36–137.80（「Four Intellico」即 Foro Italico）。段尾 138.35，138.4 之后是 Tennis TV 片尾。"
+  },
+  {
+   "source": "mc",
+   "start": 82.8,
+   "end": 88.84,
+   "cx": 0.5,
+   "track": false,
+   "narration": "可罗马之后，后四站大师赛，他一站都没能出场。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "辛纳近景（蒙特卡洛决赛 82.80–88.84 同一镜头）。事实：ATP 官网 7/24 加拿大退赛、8/9 辛辛那提因伤退赛、10/6 宣布伤缺赛季剩余赛事（维基 2026 Jannik Sinner tennis season 汇总）。两档转写 75.48→105.44 无词。"
+  },
+  {
+   "source": "mtl",
+   "start": 107.84,
+   "end": 113.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "八月，蒙特利尔，谢尔顿卫冕加拿大大师赛。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘回合（107.84 切点起）。事实：Tennis TV「reigning champion Ben Shelton」、ATP 采访「win the ATP Masters 1000 Canada in back-to-back years」（2025 多伦多、2026 蒙特利尔）。两档转写 106.6→121.2 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mtl.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第6站",
+     "date": "2026.08.13",
+     "place": "ATP1000 蒙特利尔 决赛",
+     "score": "6-3 7-6(4)",
+     "people": "谢尔顿 vs 中岛布兰登",
+     "result": {
+      "winner": "谢尔顿",
+      "score": "6-3 7-6(4)",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    }
+   }
+  },
+  {
+   "source": "mtl",
+   "start": 145.76,
+   "end": 151.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决赛两盘，中岛布兰登一个破发点都没拿到。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘回合（145.76 切点起）。事实沿用 shelton-nakashima-montreal-final 已核过的 flashscore 技术统计（中岛破发点 0）。两档转写 143.5→152.4 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-mtl.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第6站",
+     "date": "2026.08.13",
+     "place": "ATP1000 蒙特利尔 决赛",
+     "score": "6-3 7-6(4)",
+     "people": "谢尔顿 vs 中岛布兰登",
+     "result": {
+      "winner": "谢尔顿",
+      "score": "6-3 7-6(4)",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "mtl",
+   "start": 406.68,
+   "end": 412.28,
+   "cx": 0.5,
+   "track": false,
+   "narration": "抢七，六比三，谢尔顿拿到三个赛点。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘抢七，这一分打完记分条小分 6-3（413s 读过）。两档转写 392.1→420.7 无词。"
+  },
+  {
+   "source": "mtl",
+   "start": 414.0,
+   "end": 436.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 6.72,
+     "end": 8.06,
+     "text": "Oh!\n噢！"
+    },
+    {
+     "at": 8.08,
+     "end": 9.08,
+     "text": "Here we go.\n来了。"
+    },
+    {
+     "at": 13.08,
+     "end": 20.74,
+     "text": "Ben Shelton delivers a masterful performance in Montreal that will yield the most glittering of prizes.\n谢尔顿打出大师级表现，捧走大奖。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：414.00–427.08 是同一个远景镜头，先是中岛救下第一个赛点（小分 6-4，423.5s 读过），再是最后一分；427.08 切到谢尔顿庆祝。两档转写：medium.en 420.72–422.12「Oh」、small.en 422.08–423.08「Here we go」（两档各记到一个短感叹，都保留并配字幕），整句 427.08–434.74（small.en 断成四截、medium.en 并进下一句，取 small.en 的句末 434.74）。段尾 436.0，下一句「The chase is complete」445.78 才开始。"
+  },
+  {
+   "source": "cin",
+   "start": 246.5,
+   "end": 251.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "十天后，辛辛那提，菲斯对蒂亚福。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘结束后的回合（246.36–258.24 同一镜头）。两档转写 246.36→259.34 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-cin.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第7站",
+     "date": "2026.08.23",
+     "place": "ATP1000 辛辛那提 决赛",
+     "score": "6-3 1-6 6-0",
+     "people": "菲斯 vs 蒂亚福",
+     "result": {
+      "winner": "菲斯",
+      "score": "6-3 1-6 6-0",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    }
+   }
+  },
+  {
+   "source": "cin",
+   "start": 273.5,
+   "end": 279.2,
+   "cx": 0.5,
+   "track": false,
+   "narration": "次盘一比六输掉，决胜盘他六比零拿回来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘尾段的回合（272.72–292.76 同一镜头，296 起解说才宣布进入决胜盘）。上一声「Oh」273.42 结束，两档转写 273.42→291.70 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-cin.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第7站",
+     "date": "2026.08.23",
+     "place": "ATP1000 辛辛那提 决赛",
+     "score": "6-3 1-6 6-0",
+     "people": "菲斯 vs 蒂亚福",
+     "result": {
+      "winner": "菲斯",
+      "score": "6-3 1-6 6-0",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "cin",
+   "start": 372.08,
+   "end": 376.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决胜盘，蒂亚福一局都没拿到。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "决胜盘破发之后的回合（372.08 切点起）。两档转写 370.34→384.80 无词。"
+  },
+  {
+   "source": "cin",
+   "start": 416.8,
+   "end": 439.08,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 8.32,
+     "end": 13.46,
+     "text": "Arthur Fils, quite scintillating in Cincinnati.\n菲斯，在辛辛那提光芒四射。"
+    },
+    {
+     "at": 17.98,
+     "end": 21.3,
+     "text": "It is the biggest title of his young career.\n这是他年轻生涯里最大的冠军。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：416.80 切入最后一分的远景，425.40 起菲斯走向看台庆祝（fils-tiafoe 那条已核过：决胜盘第六局第三个赛点）。上一句「…a game away from the biggest title of his career」在 416.02 结束。medium.en「After a piece, quite scintillating, it's Scintillati」、small.en「heart of peace. Quite scintillating in Scintillati」——两档都把「Arthur Fils」「in Cincinnati」听走了音，按人名和地名还原；第二句两档一致。段尾 439.08 切到握手前。"
+  },
+  {
+   "source": "cin",
+   "start": 449.64,
+   "end": 457.5,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 0.06,
+     "end": 3.14,
+     "text": "Ladies and gentlemen, your champion, Mr. Arthur Fils.\n女士们先生们，冠军是阿瑟·菲斯！"
+    }
+   ],
+   "_quote_kind": "ceremony",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "frame": "court",
+   "_frame_why": "颁奖台广播：画面是颁奖台的固定机位全景（菲斯和颁奖嘉宾都在居中 3:4 窗口里，449.64–457.5 抽帧看过），没有人对镜头说话，按全局固定居中取景。",
+   "_why": "颁奖：主持人宣布冠军（449.64 切镜）。下一句 457.66 开始，段尾 457.5。"
+  },
+  {
+   "source": "sh",
+   "start": 30.6,
+   "end": 36.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "十月，上海。二十岁的霍达尔，首盘六比一。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "首盘回合（29.88 切点起）。两档转写 30.5→49.7 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-sh.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第8站",
+     "date": "2026.10.18",
+     "place": "ATP1000 上海 决赛",
+     "score": "1-6 7-6(5) 6-4",
+     "people": "达维多维奇·福基纳 vs 霍达尔",
+     "result": {
+      "winner": "达维多维奇·福基纳",
+      "score": "1-6 7-6(5) 6-4",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    }
+   }
+  },
+  {
+   "source": "sh",
+   "start": 128.7,
+   "end": 134.26,
+   "cx": 0.5,
+   "track": false,
+   "narration": "落后一盘，第二盘又被破发，福基纳还在追。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘开局（首盘「Six games to one」在 126.7 说完）。两档转写 128.7→142.5 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-sh.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第8站",
+     "date": "2026.10.18",
+     "place": "ATP1000 上海 决赛",
+     "score": "1-6 7-6(5) 6-4",
+     "people": "达维多维奇·福基纳 vs 霍达尔",
+     "result": {
+      "winner": "达维多维奇·福基纳",
+      "score": "1-6 7-6(5) 6-4",
+      "source": "https://en.wikipedia.org/wiki/2026_ATP_Masters_1000_tournaments"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "sh",
+   "start": 179.9,
+   "end": 198.28,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 1.36,
+     "end": 5.68,
+     "text": "What a chase from Davidovich Fokina\n福基纳这次追球太惊人了，"
+    },
+    {
+     "at": 5.68,
+     "end": 11.56,
+     "text": "to get his first break of the match.\n拿下了本场第一次破发。"
+    },
+    {
+     "at": 14.08,
+     "end": 18.32,
+     "text": "The nuclear athleticism that is so often associated with this guy.\n这种惊人的爆发力，一直是他的招牌。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "第二盘回破：179.90 切点起，福基纳从底线追到网前倒地救球（davidovichfokina-jodar-shanghai-2026-final 第 8 段同一回合，句子与那条已审听包一致：181.26–191.46）。上一句「Oh, that is remarkable」175.96 说完；small.en 把「the match」两个词的时长拉到 205.94，medium.en 句末是 191.46。记分条 192.40、195.60 两次翻牌（破发、局分），第三句 193.98–198.22（medium.en；small.en 并在前一段里）也一并保留，段尾 198.28 收在源片 198.30 的切点前，下一句 213.24 才开始。"
+  },
+  {
+   "source": "sh",
+   "start": 384.74,
+   "end": 390.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "第二盘抢七，他七比五拿下；决胜盘五比四，他发球胜赛。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "决胜盘后段的回合（384.74 切点起；420s 记分条 5-4 福基纳发球）。两档转写 383.98→402.50 无词。"
+  },
+  {
+   "source": "sh",
+   "start": 433.78,
+   "end": 450.56,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 5.26,
+     "end": 6.54,
+     "text": "Game, set, match.\n比赛结束。"
+    },
+    {
+     "at": 6.86,
+     "end": 10.1,
+     "text": "Alejandro Davidovich Fokina\n亚历杭德罗·达维多维奇·福基纳，"
+    },
+    {
+     "at": 10.1,
+     "end": 16.7,
+     "text": "claims a maiden Masters 1000 title in Shanghai.\n在上海夺得生涯首座大师赛冠军！"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：433.78 霍达尔走回底线，436.54 切入最后一分，439.24 起福基纳张开双臂。句子与 davidovichfokina-jodar-shanghai-2026-final 已审听包一致（「Game, set, match」两档 Whisper 都没出，那条包按 YouTube 官方自动字幕记在 439.04）；medium.en 413–431.8 的「1, 2, 1」是 Whisper 对现场呼喊的幻听，落在窗口之前。段尾 450.56，下一句 454.5 开始。",
+   "point_end_ok": "冠军点 439.24 已经落地（福基纳张开双臂、霍达尔走向网前，缩略图墙 439–450 看过）；451.60 记分条那次「翻牌」是赛后转播把整场比分板刷新出来，不是这一分还没打完。"
+  },
+  {
+   "source": "par",
+   "start": 29.8,
+   "end": 36.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "最后一站，巴黎。阿尔卡拉斯在四分之一决赛，救下两个赛点。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "决赛首盘回合（29.56–48.94 同一镜头）。事实：alcaraz-shelton-paris-2026-final 已核（BBC：对弗里茨 6-7(10) 7-5 6-3，救两个赛点）。两档转写 29.80→49.82 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-par.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第9站",
+     "date": "2026.11.08",
+     "place": "ATP1000 巴黎 决赛",
+     "score": "7-6(5) 7-5",
+     "people": "阿尔卡拉斯 vs 谢尔顿",
+     "result": {
+      "winner": "阿尔卡拉斯",
+      "score": "7-6(5) 7-5",
+      "source": "https://www.bbc.com/sport/tennis/articles/ck9qz8d2znl5o"
+     }
+    }
+   }
+  },
+  {
+   "source": "par_r",
+   "start": 662.64,
+   "end": 682.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 9.94,
+     "end": 12.86,
+     "text": "Carlos Alcaraz back from the brink.\n阿尔卡拉斯从悬崖边回来了。"
+    },
+    {
+     "at": 15.72,
+     "end": 18.74,
+     "text": "It's a heartbreaker for Taylor Fritz.\n对弗里茨来说，太让人心碎了。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "1/4决赛对弗里茨的最后一分和赛后：662.64 切入最后一分，670.76 起阿尔卡拉斯张开双臂，674.24 弗里茨低头，678.40 网前握手（alcaraz-shelton-paris-2026-final 的 qf 段从 653 起，这里从最后一分起）。两档转写：上一句 651.92 结束，两句 672.58–675.50 / 678.36–681.38 一致，下一句 683.46 开始。"
+  },
+  {
+   "source": "par",
+   "start": 51.9,
+   "end": 57.6,
+   "cx": 0.5,
+   "track": false,
+   "narration": "决赛对谢尔顿，首盘抢七拿下，第二盘七比五。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "决赛回合（51.82 切点起）。两档转写 51.22→63.82 无词。",
+   "inset": {
+    "image": "assets/reel/atp1000-2026/label-par.png",
+    "kind": "story_text",
+    "corner": "tr",
+    "width": 0.6,
+    "pad": 0.043,
+    "show_after": 0,
+    "show_for": 8,
+    "motion": "editorial",
+    "label": {
+     "topic": "第9站",
+     "date": "2026.11.08",
+     "place": "ATP1000 巴黎 决赛",
+     "score": "7-6(5) 7-5",
+     "people": "阿尔卡拉斯 vs 谢尔顿",
+     "result": {
+      "winner": "阿尔卡拉斯",
+      "score": "7-6(5) 7-5",
+      "source": "https://www.bbc.com/sport/tennis/articles/ck9qz8d2znl5o"
+     }
+    },
+    "carry": "mid"
+   }
+  },
+  {
+   "source": "par",
+   "start": 91.6,
+   "end": 97.9,
+   "cx": 0.5,
+   "track": false,
+   "narration": "首盘他救下六个破发点，第二盘二比四落后，又追了回来。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "第二盘回合（87.76–113.12 同一镜头）。事实沿用 alcaraz-shelton-paris-2026-final 已核口径。两档转写 91.50→112.40 无词。"
+  },
+  {
+   "source": "par",
+   "start": 118.75,
+   "end": 143.0,
+   "cx": 0.5,
+   "track": false,
+   "narration": "",
+   "quote": [
+    {
+     "at": 16.63,
+     "end": 20.65,
+     "text": "Carlos Alcaraz wins the Rolex Paris Masters\n阿尔卡拉斯赢下巴黎大师赛，"
+    },
+    {
+     "at": 20.65,
+     "end": 24.13,
+     "text": "for the very first time in his career.\n这是他生涯第一次。"
+    }
+   ],
+   "_quote_kind": "broadcast",
+   "crosses_cut": "同一场官方集锦自己的切镜（回合→球员近景→握手），没有拼接别的比赛、没有变速；原声句子跨镜头说完，所以按句子定窗口。",
+   "_why": "冠军点：记分条第二盘 6-5 40-30 阿尔卡拉斯（121/131s 读过），120 切入回合、132.68 起他张开双臂。上一句「…a magnificent point from both」118.64 结束，段首 118.7。解说整句 135.38–142.88（两档一致）。"
+  },
+  {
+   "source": "par",
+   "start": 143.0,
+   "end": 149.55,
+   "cx": 0.5,
+   "track": false,
+   "narration": "九站，五个冠军。前五站都是辛纳，后四站，四个不同的人。",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "阿尔卡拉斯走向球网、和谢尔顿拥抱（141.88–150.52 同一镜头），149.7 之后画面开始暗下去、150.52 之后是 Tennis TV 片尾，段尾 149.55。两档转写 142.88→152.78（「CHEERING」标注）之间无词。"
+  },
+  {
+   "source": "mia",
+   "start": 141.6,
+   "end": 146.8,
+   "cx": 0.5,
+   "track": false,
+   "narration": "九站决赛，你心里最好看的是哪一场？",
+   "voice": {
+    "pitch": "+10Hz",
+    "_why": "网球有故事沿用云见 +18% 语速、+10Hz 音高（与 wta1000-champions-2026 同口径）。语速走 --rate +18%，音高逐段写在这里。"
+   },
+   "_why": "收在一问：迈阿密决赛后辛纳和莱赫奇卡网前拥抱（138.4–147.0 同一镜头）。解说 141.26 说完；147 之后是 Tennis TV 片尾。"
+  }
+ ],
+ "sources": {
+  "rome": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4504895/tennistv-4504895.mp4",
+  "iw": "https://github.com/robertyang87/tennislive/releases/download/source-I1Uil8WUoew/I1Uil8WUoew.mp4",
+  "mia": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4478518/tennistv-4478518.mp4",
+  "mc": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4486431/tennistv-4486431.mp4",
+  "mc_t": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4486445/tennistv-4486445.mp4",
+  "mad": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4497782/tennistv-4497782.mp4",
+  "mtl": "https://github.com/robertyang87/tennislive/releases/download/source-dvynMKs124E/dvynMKs124E.mp4",
+  "cin": "https://github.com/robertyang87/tennislive/releases/download/source-5eniSK6BDZU/5eniSK6BDZU.mp4",
+  "sh": "https://github.com/robertyang87/tennislive/releases/download/source-402fnpRkS3c/402fnpRkS3c.mp4",
+  "par": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+  "par_r": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606098/tennistv-4606098.mp4"
+ },
+ "_derived_sources": {
+  "iw": "https://www.youtube.com/watch?v=I1Uil8WUoew — BNP Paribas Open 赛事官方 YouTube《Sinner vs Medvedev | Match Highlights | Final》",
+  "mia": "https://www.tennistv.com/videos/4478518/miami-2026-final-lehecka-sinner-short-highlights — Tennis TV 官方免费短集锦",
+  "mc": "https://www.tennistv.com/videos/4486431/monte-carlo-2026-final-alcaraz-sinner-short-highlights — Tennis TV 官方免费短集锦",
+  "mc_t": "https://www.tennistv.com/videos/4486445 — Tennis TV 官方免费条目「check out the trophy lift here」（蒙特卡洛决赛捧杯）",
+  "mad": "https://www.tennistv.com/videos/4497782 — Tennis TV 官方免费短集锦（马德里决赛 辛纳 vs 兹维列夫，2026-05-03 16:21Z 上线，151 秒）",
+  "rome": "https://www.tennistv.com/videos/4504895/rome-2026-final-sinner-ruud-short-highlights — Tennis TV 官方免费短集锦",
+  "mtl": "https://www.youtube.com/watch?v=dvynMKs124E — Tennis TV 官方 YouTube《Ben Shelton vs Brandon Nakashima Title Battle | Montreal 2026 Final Highlights》",
+  "cin": "https://youtu.be/5eniSK6BDZU — Tennis TV 官方 YouTube《Arthur Fils vs Frances Tiafoe for Maiden Masters TITLE | Cincinnati 2026 Highlights》",
+  "sh": "https://youtu.be/402fnpRkS3c — Tennis TV 官方 YouTube 上海决赛集锦（davidovichfokina-jodar-shanghai-2026-final 同一条源）",
+  "par": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights — Tennis TV 官方免费短集锦",
+  "par_r": "https://www.tennistv.com/videos/4606098/road-to-final-paris — Tennis TV 官方「Road To Final」（alcaraz-shelton-paris-2026-final 同一条源）"
+ },
+ "_no_probe_why": {
+  "iw": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "mia": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "mc": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "mc_t": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "mad": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "rome": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "mtl": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "cin": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "25/1"
+  },
+  "sh": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "par": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  },
+  "par_r": {
+   "why": "官方源片已下载到本地：逐秒缩略图墙、ffmpeg scene 切点、记分条裁切放大读比分、small.en/medium.en 两档转写定窗口（research/atp1000-champions-2026/build.py），不另跑 probe。",
+   "width": 1920,
+   "height": 1080,
+   "fps": "50/1"
+  }
+ },
+ "mixed_fps": {
+  "iw": "Tennis TV／赛事官方 1080p/50fps，主源为 25fps；统一按主源帧率输出，实拍画面与原声，不加速不减速。",
+  "sh": "Tennis TV／赛事官方 1080p/50fps，主源为 25fps；统一按主源帧率输出，实拍画面与原声，不加速不减速。",
+  "par": "Tennis TV／赛事官方 1080p/50fps，主源为 25fps；统一按主源帧率输出，实拍画面与原声，不加速不减速。",
+  "par_r": "Tennis TV／赛事官方 1080p/50fps，主源为 25fps；统一按主源帧率输出，实拍画面与原声，不加速不减速。"
+ },
+ "_claims": {
+  "大师赛五连冠，男子网球史上第一人": "2026 马德里夺冠后，辛纳连续拿下 2025 巴黎、2026 印第安维尔斯、迈阿密、蒙特卡洛、马德里五站大师赛；ATP 战报副标题「Italian is first player to win five consecutive ATP Masters 1000 titles」https://www.atptour.com/en/news/sinner-zverev-madrid-2026-final ；美联社标题「claim record 5th straight Masters 1000 title」https://www.ksl.com/article/51492421/sinner-crushes-zverev-to-win-madrid-open-and-claim-record-5th-straight-masters-1000-title",
+  "一盘不丢的阳光双冠，男子第一人": "维基「Sinner was also the first man to win the Sunshine Double without dropping a set」https://en.wikipedia.org/wiki/2026_Miami_Open_%E2%80%93_Men%27s_singles ；美联社「Sinner is the first male to do so without dropping a set in either tournament」https://www.ksl.com/article/51474713/sinner-follows-sabalenkas-lead-with-a-sunshine-double-beating-lehecka-in-miami-open-final",
+  "这一冠，让他集齐全部九站大师赛，此前只有德约科维奇做到过": "美联社「matches Djokovic's Masters sweep」https://www.arabnews.com/node/2643958/amp ；路透「Sinner wins Italian Open to complete Masters collection」https://www.thestar.com.my/sport/tennis/2026/05/18/tennis-sinner-wins-italian-open-to-complete-masters-collection"
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4504895/tennistv-4504895.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4504895/rome-2026-final-sinner-ruud-short-highlights",
+ "source_sha256": "5bfe93bd616f76444a94fede580760c20832d9bb5c8eb41adb234e85c9de58de",
+ "source_bytes": 71566649,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 106.2,
+ "reviewed_to": 116.92,
+ "selected_from": 106.2,
+ "selected_to": 116.92,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [
+  {
+   "model": "small.en",
+   "start": 113.6,
+   "end": 114.56,
+   "text": "CHEERING AND APPLAUSE",
+   "why": "small.en 在 113.60–114.56 输出的是「CHEERING AND APPLAUSE」——这是 Whisper 对欢呼掌声的标注，不是人说的话；medium.en 同一处没有任何词。"
+  }
+ ],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-small.en.json",
+   "sha256": "1ed639a1224860e5747326dfbfe31224f3fd10dc2e5cc0d5ca27b09ce100923c",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-medium.en.json",
+   "sha256": "227ad782eae0a649e69add4049899021c92dbe92013795ac6284abf313c6031f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 5-4 40-0 辛纳发球（107/115.5s 读过），106.20 切入回合、116.92 切到庆祝（冷开场已经放过那一镜）。",
+ "no_foreground_english_reason": "两档转写在这个窗口里都没有人声：small.en 113.60–114.56 是 Whisper 写出来的「CHEERING AND APPLAUSE」标注，medium.en 同一处无词。"
+}

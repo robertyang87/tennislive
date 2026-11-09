@@ -1,0 +1,47 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights",
+ "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+ "source_bytes": 161016998,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 118.75,
+ "reviewed_to": 143.0,
+ "selected_from": 118.75,
+ "selected_to": 143.0,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 135.38,
+   "end": 139.4,
+   "en": "Carlos Alcaraz wins the Rolex Paris Masters",
+   "zh": "阿尔卡拉斯赢下巴黎大师赛，"
+  },
+  {
+   "start": 139.4,
+   "end": 142.88,
+   "en": "for the very first time in his career.",
+   "zh": "这是他生涯第一次。"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/source_asr/tennistv-4606354/small.en.json",
+   "sha256": "25e9c03a5d36c91a31e82fb5dc9218be0e16d8a438e067fde2b44057913be9e3",
+   "model": "small.en"
+  },
+  {
+   "path": "data/source_asr/tennistv-4606354/medium.en.json",
+   "sha256": "4ac3ea71730843bfbbc5c3282d56fdbc57e647971e04e7b96f89ed4f07bd9031",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 6-5 40-30 阿尔卡拉斯（121/131s 读过），120 切入回合、132.68 起他张开双臂。上一句「…a magnificent point from both」118.64 结束，段首 118.7。解说整句 135.38–142.88（两档一致）。"
+}
