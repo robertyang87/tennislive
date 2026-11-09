@@ -1,0 +1,39 @@
+{
+  "status": "waiting_audio_review",
+  "method": "small.en / medium.en / large-v3-turbo cross-check; no listening claimed",
+  "uncertain_spans": [
+    {
+      "start": 12.74,
+      "end": 19.28,
+      "small": "Awww She’s amazing! Magical forammoscova.",
+      "medium": "Oh, she’s made it! Magical from Noskova.",
+      "turbo": "Oh, she’s amazing! Magical from Noskova.",
+      "reason": "made it / amazing 是不同原文，未猜补。"
+    },
+    {
+      "start": 99.46,
+      "end": 110.98,
+      "reason": "首盘结束句三档识别不同，词首与完整句待核。"
+    },
+    {
+      "start": 268.58,
+      "end": 287.0,
+      "reason": "获胜宣告和替补入围句三档不一致；turbo全源出现重复go for it幻觉，分段版本仍漏开头。"
+    }
+  ],
+  "known_good_shared_phrases": [
+    "So much penetration on that backhand.",
+    "Noskova strikes again.",
+    "But she found the Wimbledon champion in ruthless mood."
+  ],
+  "raw_files": [
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/medium.en.json",
+      "sha256": "8ed9236a8b6862099d2569a5da89efaac0a2b8be15297d747250764aeb26a212"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/small.en.json",
+      "sha256": "1e12ca0827a5fd02f55a9ac9428e7dff494454e9db0dd62e822c72187c2ad3d4"
+    }
+  ]
+}
