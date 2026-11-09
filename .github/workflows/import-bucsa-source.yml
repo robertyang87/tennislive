@@ -28,10 +28,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # 只需外部下载器和 GH CLI；不读取 output 或仓库业务素材。
-          fetch-depth: 1
+          # 本工作流不碰 output/，按 assets.yml 先例稀疏检出，免全量拉取。
           sparse-checkout: |
-            .github
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
