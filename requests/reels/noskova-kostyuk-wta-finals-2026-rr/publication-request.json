@@ -3,7 +3,7 @@
   "owner_instruction": "质检通过就推送",
   "pushplus_authorized": true,
   "authorization_condition": "Formal production QC passes on the actual final render; no further confirmation needed.",
-  "earliest_blocker": "waiting_audio_review",
+  "earliest_blocker": null,
   "source_span": [
     268.58,
     270.0
@@ -33,5 +33,11 @@
   "formal_final_qc_completed": false,
   "production_qc_pass": false,
   "pushplus_sent": false,
-  "pushed_json_written": false
+  "pushed_json_written": false,
+  "owner_edit_instruction": "整句剪去，保留赛点及后续庆祝",
+  "removed_source_window": [
+    269.12,
+    273.0
+  ],
+  "source_audio_gate": "passed_on_new_selected_plan"
 }

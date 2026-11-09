@@ -49,7 +49,7 @@
     "year": 2026,
     "round": "Round Robin",
     "court": "Indian Wells Tennis Garden",
-    "status": "review_cut_audio_pending",
+    "status": "ready_for_render",
     "authoring_method": "current_assistant_manual",
     "human_listening_claimed": false,
     "owner_update": "丰富内容与流畅动画要求落在十个主要段落：7个原声比赛/庆祝窗口和3个内容动画卡；完整过程优先。"
@@ -324,9 +324,9 @@
       ]
     },
     "narration": [
-      "北京时间十一月九日凌晨，印第安维尔斯总决赛。莱巴金娜退赛，科斯秋克临时替补上场。两人都是第一次出战总决赛，但诺斯科娃先把节奏抢了过来。首盘一比一后，她连续压迫对手的发球局，拉开到四比一。接下来，她要把先手变成一盘的优势。",
-      "同样四个破发点，诺斯科娃四次全拿下，对手只兑现一次。但第二盘四比三，科斯秋克又有了扳平的机会。诺斯科娃必须先把这一局守住，再来到五比四的发球胜赛局。赢球的路，要一分一分走完。",
-      "看台前，她笑着挥手。第一次打总决赛，先把胜利留在自己这一边。接下来面对同组的高芙和佩古拉，她还能延续关键分的效率吗？"
+      "北京时间十一月九日凌晨，印第安维尔斯总决赛。莱巴金娜退赛，科斯秋克临时替补上场。两人都是总决赛新面孔。首盘一比一，诺斯科娃跑动中打出正手制胜分，接着把领先拉到四比一。接下来，她要把先手变成一盘的优势。",
+      "同样四个破发点，诺斯科娃四次全拿下，对手只兑现一次。她靠网前截击先守到四比二，但四比三时，科斯秋克又拿到了破发点。这一局守得住，她才能迈向五比四的发球胜赛局。",
+      "看台前，她笑着挥手。六比二，六比四，总决赛首秀，她先拿下一胜。接下来面对同组的高芙和佩古拉，她还能延续关键分的效率吗？"
     ],
     "_authoring": {
       "method": "current_assistant_manual",
@@ -336,7 +336,7 @@
   "segments": [
     {
       "start": 287.0,
-      "end": 300.4,
+      "end": 299.88,
       "cx": 0.5,
       "track": false,
       "score_inset": false,
@@ -372,12 +372,12 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "_score_inset_why": "赛后挥手近景，原局分板已消失；终场赛果由顶栏持续完整显示，不将较宽的赛后图当即时记分条回贴。"
+      "_score_inset_why": "赛后近景没有左下常驻比分条；末段画面中央的全屏赛果图形完整位于固定1190px取景窗口内，不另重复回贴。顶栏持续给完整赛果。"
     },
     {
       "title_card": "临时换了对手\n先手仍在她手里",
-      "seconds": 22,
-      "narration": "北京时间十一月九日凌晨，印第安维尔斯总决赛。莱巴金娜退赛，科斯秋克临时替补上场。两人都是第一次出战总决赛，但诺斯科娃先把节奏抢了过来。首盘一比一后，她连续压迫对手的发球局，拉开到四比一。接下来，她要把先手变成一盘的优势。",
+      "seconds": 21,
+      "narration": "北京时间十一月九日凌晨，印第安维尔斯总决赛。莱巴金娜退赛，科斯秋克临时替补上场。两人都是总决赛新面孔。首盘一比一，诺斯科娃跑动中打出正手制胜分，接着把领先拉到四比一。接下来，她要把先手变成一盘的优势。",
       "kicker": "临时变阵",
       "transition": "dissolve",
       "transition_card": {
@@ -386,7 +386,7 @@
             {
               "kind": "headline",
               "start": 0,
-              "duration": 4,
+              "duration": 4.1,
               "frame": [
                 70,
                 250,
@@ -397,16 +397,16 @@
                 "年终总决赛",
                 "两位新面孔"
               ],
-              "kicker": "印第安维尔斯",
+              "kicker": "2026 · 印第安维尔斯",
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "headline",
-              "start": 4,
+              "start": 4.1,
               "duration": 3.5,
               "frame": [
                 70,
@@ -421,12 +421,12 @@
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
-              "start": 4.15,
+              "start": 4.25,
               "duration": 3.35,
               "frame": [
                 90,
@@ -449,13 +449,13 @@
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "headline",
-              "start": 7.5,
-              "duration": 5.1,
+              "start": 7.6,
+              "duration": 2.4,
               "frame": [
                 70,
                 250,
@@ -470,13 +470,13 @@
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
               "start": 7.75,
-              "duration": 4.85,
+              "duration": 2.25,
               "frame": [
                 90,
                 730,
@@ -498,13 +498,13 @@
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "headline",
-              "start": 12.6,
-              "duration": 9.4,
+              "start": 10,
+              "duration": 11,
               "frame": [
                 70,
                 250,
@@ -512,20 +512,20 @@
                 420
               ],
               "lines": [
-                "先把节奏",
-                "抢到自己手里"
+                "跑动正手破发",
+                "首盘拉到四比一"
               ],
-              "kicker": "首盘先手",
+              "kicker": "先拿主动",
               "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
-              "start": 13.2,
-              "duration": 8.8,
+              "start": 10.15,
+              "duration": 10.85,
               "frame": [
                 90,
                 730,
@@ -536,18 +536,18 @@
                 {
                   "label": "首盘开局",
                   "value": "1比1",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 },
                 {
                   "label": "拉开领先",
                   "value": "4比1",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 }
               ],
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             }
           ]
@@ -594,7 +594,7 @@
     },
     {
       "start": 90.32,
-      "end": 114.08,
+      "end": 158.52,
       "cx": 0.5,
       "track": false,
       "score_inset": true,
@@ -626,60 +626,43 @@
           "at": 17.36,
           "end": 20.68,
           "text": "losing just two games en route.\n这一盘她只丢了两局。"
-        }
-      ],
-      "_quote_kind": "broadcast"
-    },
-    {
-      "start": 114.08,
-      "end": 158.52,
-      "cx": 0.5,
-      "track": false,
-      "score_inset": true,
-      "narration": "",
-      "_why": "完整保留第二盘2-1这一分、对应完整解说句，再到2-2发球局；不在127-133秒的完整解说中间切入。",
-      "crosses_cut": "本场官方集锦原生切镜，完整保留回合、得分和反应。",
-      "point_end_ok": "源片比分与逐帧已核；字幕待核，不认定可发布。",
-      "audio_tail": "silence",
-      "fit": "contain",
-      "contain_keep": 0.62,
-      "_frame_why": "固定中心，实际照片区1080×980，超过既定1080×950最小照片区；不跟球、不留虚化底。",
-      "quote": [
+        },
         {
-          "at": 9.5,
-          "end": 13.86,
+          "at": 33.26,
+          "end": 37.62,
           "text": "Oh, she's got away with that again.\n她又化解了这一拍！"
         },
         {
-          "at": 13.86,
-          "end": 16.22,
+          "at": 37.62,
+          "end": 39.98,
           "text": "And Marta knows it, doesn't she?\n玛尔塔自己也知道，对吧？"
         },
         {
-          "at": 16.28,
-          "end": 19.52,
+          "at": 40.04,
+          "end": 43.28,
           "text": "Because it was a late decision to come forward.\n因为她决定上网时已经有些晚了。"
         },
         {
-          "at": 25.84,
-          "end": 27.42,
+          "at": 49.6,
+          "end": 51.18,
           "text": "Oh, delightful!\n噢，太巧妙了！"
         },
         {
-          "at": 28.07,
-          "end": 28.82,
+          "at": 51.83,
+          "end": 52.58,
           "text": "Fifteen-love.\n15比0。"
         },
         {
-          "at": 39.92,
-          "end": 43.92,
+          "at": 63.68,
+          "end": 67.68,
           "text": "Fabulous stuff in the forecourt from Noskova.\n诺斯科娃在网前的处理太精彩了！"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "_editing_why": "原来90.32–114.08与114.08–158.52连续，合并同一原声窗口，完整保留盘点、第二盘衔接和全部已核双语句子。"
     },
     {
-      "start": 173.0,
+      "start": 172.4,
       "end": 210.12,
       "cx": 0.5,
       "track": false,
@@ -694,27 +677,28 @@
       "_frame_why": "固定中心，实际照片区1080×980，超过既定1080×950最小照片区；不跟球、不留虚化底。",
       "quote": [
         {
-          "at": 0.36,
-          "end": 1.66,
-          "text": "Forty-thirty.\n40比30。"
+          "at": 0.32,
+          "end": 2.26,
+          "text": "Thirty-fifteen.\n30比15。"
         },
         {
-          "at": 16.36,
-          "end": 20.86,
+          "at": 16.96,
+          "end": 21.46,
           "text": "Oh, simply fabulous from Marta Kostyuk.\n噢，科斯秋克打得实在太精彩了！"
         },
         {
-          "at": 31.85,
-          "end": 34.3,
+          "at": 32.45,
+          "end": 34.9,
           "text": "Oh, a touch of genius!\n噢，真是神来之笔！"
         }
       ],
-      "_quote_kind": "broadcast"
+      "_quote_kind": "broadcast",
+      "_score_utterance_evidence": "172.72–174.66 报分：逐帧源板173/173.5/174为诺斯科娃30、科斯秋克15；175镜头已跳为40–30，不能倒用175比分认句。Qwen原Opus识别Thirty-eighteen，Whisper识别30；规范为Thirty-fifteen。段首172.4保留完整报分，不从173截掉句首。"
     },
     {
       "title_card": "同样四次机会\n兑现差了三次",
-      "seconds": 18,
-      "narration": "同样四个破发点，诺斯科娃四次全拿下，对手只兑现一次。但第二盘四比三，科斯秋克又有了扳平的机会。诺斯科娃必须先把这一局守住，再来到五比四的发球胜赛局。赢球的路，要一分一分走完。",
+      "seconds": 16.4,
+      "narration": "同样四个破发点，诺斯科娃四次全拿下，对手只兑现一次。她靠网前截击先守到四比二，但四比三时，科斯秋克又拿到了破发点。这一局守得住，她才能迈向五比四的发球胜赛局。",
       "kicker": "关键分",
       "transition": "dissolve",
       "transition_card": {
@@ -735,16 +719,16 @@
                 "兑现差了三次"
               ],
               "kicker": "关键分",
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches/LS010/stats",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
-              "start": 0.4,
-              "duration": 4.4,
+              "start": 0.15,
+              "duration": 4.65,
               "frame": [
                 90,
                 730,
@@ -755,24 +739,73 @@
                 {
                   "label": "诺斯科娃",
                   "value": "4次／4次",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches/LS010/stats"
                 },
                 {
                   "label": "科斯秋克",
                   "value": "1次／4次",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches/LS010/stats"
                 }
               ],
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches/LS010/stats",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "headline",
               "start": 4.8,
-              "duration": 6.9,
+              "duration": 2.7,
+              "frame": [
+                70,
+                250,
+                940,
+                420
+              ],
+              "lines": [
+                "网前一拍轻挡",
+                "先守到四比二"
+              ],
+              "kicker": "先守住领先",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
+              "exit": {
+                "style": "fade",
+                "duration": 0.25
+              }
+            },
+            {
+              "kind": "nodes",
+              "start": 4.95,
+              "duration": 2.55,
+              "frame": [
+                90,
+                730,
+                900,
+                410
+              ],
+              "nodes": [
+                {
+                  "label": "上网截击",
+                  "value": "拿下局点",
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
+                },
+                {
+                  "label": "第二盘保发",
+                  "value": "4比2",
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
+                }
+              ],
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
+              "exit": {
+                "style": "fade",
+                "duration": 0.25
+              }
+            },
+            {
+              "kind": "headline",
+              "start": 7.5,
+              "duration": 4.9,
               "frame": [
                 70,
                 250,
@@ -783,17 +816,17 @@
                 "第二盘四比三",
                 "这一局必须守住"
               ],
-              "kicker": "守住领先",
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "kicker": "对手又来施压",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
-              "start": 5.3,
-              "duration": 6.4,
+              "start": 7.65,
+              "duration": 4.75,
               "frame": [
                 90,
                 730,
@@ -802,26 +835,26 @@
               ],
               "nodes": [
                 {
-                  "label": "对手",
+                  "label": "科斯秋克",
                   "value": "拿到破发点",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 },
                 {
                   "label": "诺斯科娃",
                   "value": "守住发球局",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 }
               ],
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "headline",
-              "start": 11.7,
-              "duration": 6.3,
+              "start": 12.4,
+              "duration": 4.0,
               "frame": [
                 70,
                 250,
@@ -832,17 +865,17 @@
                 "最后一关",
                 "发球胜赛局"
               ],
-              "kicker": "一分一分赢完",
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "kicker": "迈向终点",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             },
             {
               "kind": "nodes",
-              "start": 12.2,
-              "duration": 5.8,
+              "start": 12.55,
+              "duration": 3.85,
               "frame": [
                 90,
                 730,
@@ -853,18 +886,18 @@
                 {
                   "label": "关键发球局",
                   "value": "4比3",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 },
                 {
                   "label": "来到胜赛局",
                   "value": "5比4",
-                  "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary"
+                  "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells"
                 }
               ],
-              "source": "https://www.flashscore.com/match/tennis/Mg4rL6T8/#/match-summary",
+              "source": "https://www.wtatennis.com/news/4606553/noskova-handles-kostyuk-in-the-wta-finals-opener-at-indian-wells",
               "exit": {
                 "style": "fade",
-                "duration": 0.35
+                "duration": 0.25
               }
             }
           ]
@@ -906,7 +939,26 @@
     },
     {
       "start": 261.52,
-      "end": 300.4,
+      "end": 269.12,
+      "cx": 0.5,
+      "track": false,
+      "score_inset": true,
+      "narration": "",
+      "_why": "完整赛点261.52起，到赛后握拳、握手、挥手、最终比分及完整解说末尾；300.44源片品牌片尾前收住。",
+      "crosses_cut": "本场官方集锦原生切镜，完整保留回合、得分和反应。",
+      "point_end_ok": "源片比分与逐帧已核；字幕待核，不认定可发布。",
+      "audio_tail": "silence",
+      "fit": "contain",
+      "contain_keep": 0.62,
+      "_frame_why": "固定中心，实际照片区1080×980，超过既定1080×950最小照片区；不跟球、不留虚化底。",
+      "quote": [],
+      "_quote_kind": "broadcast",
+      "_quote_skip_why": "完整赛点的发球、击球和现场欢呼窗口；实际原声须经两模型检查无前景英文，对应本计划的空转写证据，不以此文字代替原声核验。",
+      "_owner_cut_why": "用户本轮明确选择“整句剪去，保留赛点及后续庆祝”；269.12结束保留完整最后一分，剪去随后的含混解说及约3秒首次握拳近景。"
+    },
+    {
+      "start": 273.0,
+      "end": 299.88,
       "cx": 0.5,
       "track": false,
       "score_inset": true,
@@ -920,63 +972,58 @@
       "_frame_why": "固定中心，实际照片区1080×980，超过既定1080×950最小照片区；不跟球、不留虚化底。",
       "quote": [
         {
-          "at": 8.48,
-          "end": 11.18,
-          "text": "... to finish on debut.\n以这样的方式结束了总决赛首秀。"
-        },
-        {
-          "at": 11.68,
-          "end": 13.48,
+          "at": 0.2,
+          "end": 2.0,
           "text": "As Linda Noskova\n诺斯科娃，"
         },
         {
-          "at": 13.48,
-          "end": 16.98,
+          "at": 2.0,
+          "end": 5.5,
           "text": "gets off to a winning start at the WTA Finals.\n在年终总决赛赢得开门红。"
         },
         {
-          "at": 17.56,
-          "end": 19.64,
+          "at": 6.08,
+          "end": 8.16,
           "text": "Just too consistent today\n她今天打得更加稳定，"
         },
         {
-          "at": 19.64,
-          "end": 22.28,
+          "at": 8.16,
+          "end": 10.8,
           "text": "against Marta Kostyuk,\n面对的是科斯秋克，"
         },
         {
-          "at": 22.28,
-          "end": 25.48,
+          "at": 10.8,
+          "end": 14.0,
           "text": "who stepped into the shoes of Elena Rybakina.\n她替补退出比赛的莱巴金娜出战。"
         },
         {
-          "at": 26.4,
-          "end": 28.4,
+          "at": 14.92,
+          "end": 16.92,
           "text": "But she found the Wimbledon champion\n但她遇上了这位温网冠军，"
         },
         {
-          "at": 28.4,
-          "end": 30.3,
+          "at": 16.92,
+          "end": 18.82,
           "text": "in ruthless mood.\n今天的她毫不手软。"
         },
         {
-          "at": 31.34,
-          "end": 33.68,
+          "at": 19.86,
+          "end": 22.2,
           "text": "Straight sets and straightforward\n直落两盘，干净利落，"
         },
         {
-          "at": 33.68,
-          "end": 36.18,
+          "at": 22.2,
+          "end": 24.7,
           "text": "for the world number eight.\n世界第8拿下胜利。"
         }
       ],
       "_quote_kind": "broadcast",
-      "_quote_pending": "269-270秒句首仍含混，审片版以省略号标注；不是已通过的正式双语稿。"
+      "_editing_why": "从已核“As Linda Noskova…”句头之前接回，完整保留握手、挥手和最终比分；含混的第一句整个不进入本计划。"
     },
     {
       "title_card": "她笑着挥手\n首胜已经到手",
-      "seconds": 13,
-      "narration": "看台前，她笑着挥手。第一次打总决赛，先把胜利留在自己这一边。接下来面对同组的高芙和佩古拉，她还能延续关键分的效率吗？",
+      "seconds": 13.0,
+      "narration": "看台前，她笑着挥手。六比二，六比四，总决赛首秀，她先拿下一胜。接下来面对同组的高芙和佩古拉，她还能延续关键分的效率吗？",
       "kicker": "下一道考题",
       "transition": "dissolve",
       "transition_card": {
@@ -985,7 +1032,7 @@
             {
               "kind": "headline",
               "start": 0,
-              "duration": 6,
+              "duration": 6.639,
               "frame": [
                 70,
                 250,
@@ -1005,8 +1052,8 @@
             },
             {
               "kind": "headline",
-              "start": 6,
-              "duration": 7,
+              "start": 6.639,
+              "duration": 6.361,
               "frame": [
                 70,
                 250,
@@ -1026,8 +1073,8 @@
             },
             {
               "kind": "nodes",
-              "start": 7,
-              "duration": 6,
+              "start": 7.639,
+              "duration": 5.361,
               "frame": [
                 90,
                 730,
@@ -1059,29 +1106,99 @@
   ],
   "push": {
     "auto": true,
-    "summary": "对手临时换了，诺斯科娃照样赢",
-    "lead": "临时更换对手，诺斯科娃仍以6-2、6-4击败科斯秋克，赢得总决赛首秀。她四个破发点全部兑现，对手四次机会只拿下一次。第二盘连续守住受压的发球局，最终将领先带到终点。",
+    "summary": "临时换对手，首秀照样赢",
+    "lead": "同样四个破发点，诺斯科娃四次全部拿下，科斯秋克只兑现一次。首盘6-2抢先，第二盘又守住受压的发球局，最终6-4收官。临时更换对手，她把总决赛首秀变成开门红。",
     "matchup": "诺斯科娃 vs 科斯秋克",
     "score": "6-2 6-4"
   },
-  "_editing_why": "十段叙事：胜利冷开场、临时变阵卡、首盘1-1到4-1、完整盘点、次盘2-2、3-2发球局、关键分对照卡、4-3救险、完整赛点和赛后反应、情绪收尾。三种卡使用人物变化、数据对照、论点揭晓动效，接缝0.5秒溶解。说明放在对应动作之前，原声与TTS分段，固定中心，比赛铺满既定照片区。",
+  "_editing_why": "十段叙事；连续原声90.32–158.52合并。按用户明确选择整句移除269.12–273.0含混赛后句及握拳近景，保留完整赛点和273.0–300.4握手挥手；其余精彩原声与字幕完整保留。三张分阶段动画卡交代临时换人、跑动正手破发、网前截击与关键分效率。",
   "_source": "WTA官方YouTube；Release源片308.569977s/1920x1080/25fps，probe run42561900546。",
   "_tts_backend_why": "本片自然体育叙述，不需要情绪style，沿用Edge云见+6%。",
   "scorebox": [
     90,
     832,
-    550,
+    850,
     980
   ],
-  "_scorebox_why": "probe wta校准主框[90,870,550,980]，上沿扩至832保留BREAK POINT / SET POINT / MATCH POINT提示，逐帧动态收紧，不包含周围球场。",
+  "_scorebox_why": "源片逐帧probe量到右缘766；搜索提示框扩至850覆盖全部所选状态，上沿832保留BREAK/SET/MATCH POINT。渲染按WTA原生判据逐帧收紧四边并透明合成，搜索框中的球场不进入贴片。",
   "_no_stat_card_why": "片中动态关键分对照承担分析；完整双人技术统计另附推送用数据图，不在比赛末尾再重复一张静态表。",
-  "_tennistv_trim": "WTA源片300.44开始品牌订阅片尾，选段统一止于300.40；通过固定中心裁切去源片右上台标，保留真实转播比分。",
+  "_tennistv_trim": "WTA品牌板300.44起；段体止299.88，0.5秒视频溶解尾料最多到300.38，留0.06秒安全间隔，原声音轨只保留段体。",
   "title_card_handle_bottom": 28,
-  "_caption_pending": [
+  "_tactical_evidence": [
     {
-      "source_start": 268.58,
-      "source_end": 270.0,
-      "reason": "赛后宣告句首仍未恢复可靠逐字原文；不得声称完整原声检查通过。"
+      "segment": 1,
+      "claim": "跑动正手制胜分",
+      "source": "https://www.wtatennis.com/videos/4606564/magical-noskova-dazzles-with-on-the-run-break-point-in-fage-wta-finals-debut",
+      "visual_window": [
+        0,
+        20.4
+      ],
+      "verification": "官方本场新闻内嵌视频描述明确on-the-run forehand winner to break Kostyuk；主源回合及球员对应。"
+    },
+    {
+      "segment": 6,
+      "claim": "网前截击保发到4比2",
+      "source_window": [
+        200,
+        209.5
+      ],
+      "verification": "200–203诺斯科娃由近端底线前压到网前，203–205网前截击得分，209记分板第二盘4–2；画面包volley-200-209.jpg。"
     }
-  ]
+  ],
+  "_owner_audio_edit": {
+    "instruction": "整句剪去，保留赛点及后续庆祝",
+    "removed_source_window": [
+      269.12,
+      273.0
+    ],
+    "kept_matchpoint": [
+      261.52,
+      269.12
+    ],
+    "kept_after_match": [
+      273,
+      299.88
+    ],
+    "first_fist_closeup_removed": true,
+    "original_source_audio_modified": false
+  },
+  "_caption_pending": [],
+  "_set_coverage_why": "首盘用1-1到4-1及完整盘点交代6-2，第二盘用2-2、3-2保发、4-3救险与完整赛点交代进程，结尾旁白明确六比二、六比四。",
+  "_visual_evidence": {
+    "cold_open": {
+      "start": 287,
+      "end": 299.88,
+      "kind": "winner_celebration",
+      "winner_visible": true,
+      "confidence": 0.98,
+      "reason": "保留同场诺斯科娃蓝裙白帽赛后挥手及最终比分，完整Wimbledon champion/ruthless/straight sets解说；后段273–299.88再次兑现。"
+    },
+    "ending": {
+      "start": 261.52,
+      "end": 299.88,
+      "kind": "match_point",
+      "winner_visible": true,
+      "confidence": 0.98,
+      "reason": "261.52发球准备，264.5抛球，265.4主机位，最后一分在269.12之前结束；按用户明确选择整句剪去269.12–273.0含混赛后句与首次握拳近景。273.0接回清楚解说，完整握手、挥手与最终比分，最后视频溶解尾料仍止于品牌板之前。",
+      "kept_windows": [
+        [
+          261.52,
+          269.12
+        ],
+        [
+          273,
+          299.88
+        ]
+      ]
+    },
+    "cover": {
+      "same_match": true,
+      "subject": "Linda Noskova",
+      "wrong_or_old": false,
+      "confidence": 0.98,
+      "reason": "WTA本场赛后稿指定摄影原图；蓝色Yonex服、白空顶帽、绿色围挡和紫场、相同阳光；人物和源片近景吻合。"
+    },
+    "evidence_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/visual-editorial-review.json",
+    "evidence_sha256": "2bd64f7f2efeb2bfa2f5bb422d6664b2fced5dc97b70495914c70e3279b56edc"
+  }
 }

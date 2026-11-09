@@ -1,0 +1,43 @@
+{
+  "slug": "noskova-kostyuk-wta-finals-2026-rr",
+  "checked_at": "2026-11-09T07:49:15Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "242b921cd3321836": {
+      "segment": 2,
+      "spoken": 20.304,
+      "picture": 21.0
+    },
+    "4a7dab366e3eaafc": {
+      "segment": 6,
+      "spoken": 15.768,
+      "picture": 16.4
+    },
+    "d2dccdc5bb0cd48d": {
+      "segment": 10,
+      "spoken": 12.264,
+      "picture": 13.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "d09a7e666cbb2933d421ba29da10b25abadb071583af69a48fa1c38c9b73fdc6",
+    "request_count": 4,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "fa870401b8aa0a35e0112c5d8f6f9caf04472dad",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/fa870401b8aa0a35e0112c5d8f6f9caf04472dad/assets/tts-bundles/noskova-kostyuk-wta-finals-2026-rr/d09a7e666cbb2933d421ba29da10b25abadb071583af69a48fa1c38c9b73fdc6/tts_bundle.zip"
+  }
+}

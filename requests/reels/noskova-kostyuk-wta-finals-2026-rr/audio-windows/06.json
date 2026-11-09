@@ -1,0 +1,61 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-5yZN0py5qSk/5yZN0py5qSk.mp4",
+  "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
+  "method": "asr_cross_checked",
+  "reviewer": "Current production assistant: full selected-window ASR/caption evidence cross-check; no human listening claimed",
+  "reviewed_at": "2026-11-09T07:44:03.799232+00:00",
+  "status": "complete",
+  "reviewed_from": 232.84,
+  "reviewed_to": 261.52,
+  "foreground_english": [
+    {
+      "start": 245.2,
+      "end": 247.0,
+      "en": "Sensational!",
+      "zh": "太精彩了！"
+    },
+    {
+      "start": 256.52,
+      "end": 258.4,
+      "en": "Finds another.",
+      "zh": "她又打出了一记好球！"
+    },
+    {
+      "start": 259.0,
+      "end": 261.34,
+      "en": "Advantage, Noskova.",
+      "zh": "诺斯科娃占先。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/small.en.json",
+      "sha256": "1e12ca0827a5fd02f55a9ac9428e7dff494454e9db0dd62e822c72187c2ad3d4"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/medium.en.json",
+      "sha256": "8ed9236a8b6862099d2569a5da89efaac0a2b8be15297d747250764aeb26a212"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/large-v3.json",
+      "sha256": "ff29b50d570313d48373f5b0bf445d5bc935d48d92b2b8c1df7ac7dc04810eef"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/parakeet.json",
+      "sha256": "ff412b671e928ad64b54c496b56a707dd70f880c5f3bdae099134249b8d0e6f7"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/qwen.json",
+      "sha256": "cdaf28a90a519e76e334c7168a641f3849fd698d013bc76db8d934a483cd44ce"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/candidate-scores.json",
+      "sha256": "e423bf22548eaff373d720e249d078263274bdb50da77ce7f23bc9a53eb14fe2"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/youtube-captions/5yZN0py5qSk.en-orig.json3",
+      "sha256": "b50fee9b48df2fcc9e57dd0e2b4dc482acf3986d2eb76ee2c05b4475f6f89a29"
+    }
+  ]
+}

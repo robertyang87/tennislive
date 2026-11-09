@@ -1,7 +1,7 @@
 {
   "method": "current assistant visual inspection",
-  "status": "visual_selection_reviewed_audio_pending",
-  "reviewed_at": "2026-11-09T04:41:15.590294+00:00",
+  "status": "final_selection_reviewed",
+  "reviewed_at": "2026-11-09T07:44:03.799232+00:00",
   "source_duration": 308.569977,
   "source_contact_sheets": [
     {
@@ -30,20 +30,30 @@
     }
   ],
   "cold_open": {
-    "start": 269.88,
-    "end": 280.0,
+    "start": 287,
+    "end": 299.88,
     "kind": "winner_celebration",
     "winner_visible": true,
     "confidence": 0.98,
-    "reason": "269.88蓝裙白帽诺斯科娃握拳，随后走向球网，280秒两人握手；同场记分2-6、4-6。"
+    "reason": "保留同场诺斯科娃蓝裙白帽赛后挥手及最终比分，完整Wimbledon champion/ruthless/straight sets解说；后段273–299.88再次兑现。"
   },
   "ending": {
     "start": 261.52,
-    "end": 298.48,
+    "end": 299.88,
     "kind": "match_point",
     "winner_visible": true,
     "confidence": 0.98,
-    "reason": "261.52发球准备，264.5抛球，265.4回到主机位，269.88得分后握拳，随后握手和挥手；完整包含冷开场。"
+    "reason": "261.52发球准备，264.5抛球，265.4主机位，最后一分在269.12之前结束；按用户明确选择整句剪去269.12–273.0含混赛后句与首次握拳近景。273.0接回清楚解说，完整握手、挥手与最终比分，最后视频溶解尾料仍止于品牌板之前。",
+    "kept_windows": [
+      [
+        261.52,
+        269.12
+      ],
+      [
+        273,
+        299.88
+      ]
+    ]
   },
   "cover": {
     "same_match": true,
@@ -56,5 +66,16 @@
     "英文原声逐字核验通过",
     "成片QC通过",
     "PushPlus已发送"
+  ],
+  "owner_instruction": "整句剪去，保留赛点及后续庆祝",
+  "editorial_tactics": [
+    {
+      "claim": "跑动正手破发",
+      "evidence": "WTA本场新闻内嵌官方hotshot文字明确on-the-run forehand winner"
+    },
+    {
+      "claim": "网前截击保发4-2",
+      "evidence": "volley-200-209.jpg逐帧，209记分板4-2"
+    }
   ]
 }

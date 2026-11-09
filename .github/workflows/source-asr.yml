@@ -37,7 +37,6 @@ concurrency:
 
 jobs:
   asr:
-    if: ${{ !contains(inputs.url, 'youtube.com') }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -107,62 +106,3 @@ jobs:
           git commit -m "asr: 源片 $KEY 两档英文转写（small.en / medium.en）"
           source tools/git_push_retry.sh
           push_with_rebase_retry "${{ github.ref_name }}" 5
-
-  original_audio:
-    if: ${{ contains(inputs.url, 'youtube.com') }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    steps:
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-      - name: Retrieve original Opus audio for commentary verification
-        env:
-          SOURCE_URL: ${{ inputs.url }}
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          set -euo pipefail
-          pip install -q 'yt-dlp[default]'
-          mkdir -p "$RUNNER_TEMP/original-audio"
-          ARGS=(--js-runtimes node --remote-components ejs:github)
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/cookies.txt"
-            ARGS+=(--cookies "$RUNNER_TEMP/cookies.txt")
-          fi
-          yt-dlp "${ARGS[@]}" --skip-download --dump-single-json "$SOURCE_URL" > "$RUNNER_TEMP/original-audio/source-info.json"
-          yt-dlp "${ARGS[@]}" -f 'bestaudio[acodec=opus]/bestaudio' -o "$RUNNER_TEMP/original-audio/%(id)s.%(ext)s" "$SOURCE_URL"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: original-audio-verification
-          path: ${{ runner.temp }}/original-audio
-
-  independent_stt:
-    needs: original_audio
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      AUDIO_DIR: /tmp/original-audio
-      AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
-      AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: requests/reels/noskova-kostyuk-wta-finals-2026-rr
-      - uses: actions/download-artifact@v4
-        with:
-          name: original-audio-verification
-          path: /tmp/original-audio
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Independent speech service cross-check
-        run: |
-          pip install -q requests imageio-ffmpeg
-          python requests/reels/noskova-kostyuk-wta-finals-2026-rr/verify-original-audio.py
-          cp "$AUDIO_DIR/5yZN0py5qSk.webm" "$AUDIO_DIR/5yZN0py5qSk-original-opus.webm"
-          gh release upload source-5yZN0py5qSk "$AUDIO_DIR/5yZN0py5qSk-original-opus.webm" "$AUDIO_DIR/original-audio-stt.json" --clobber

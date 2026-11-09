@@ -1,11 +1,11 @@
 {
-  "status": "waiting_audio_review",
+  "status": "ready_for_render",
   "user_update": "丰富编排、吸引人的文案、流畅转场卡动画",
   "source_download_run": "https://github.com/robertyang87/tennislive/actions/runs/42561882383",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/42561900546",
   "asr_run": "https://github.com/robertyang87/tennislive/actions/runs/42562033341",
   "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
-  "earliest_blocker": "waiting_audio_review: source 268.58–270.0 prefix still unresolved after independent denoised ASR; native production preflight exits 1.",
+  "earliest_blocker": null,
   "human_listening_claimed": false,
   "render_dispatched": false,
   "published": false,
@@ -20,5 +20,10 @@
   "review_video_sha256": "a5e2da6135896c41249c4edbfcebe70cea0471974563127e39b0e482039e5536",
   "review_video": "/workspace/output/noskova-kostyuk-review.mp4",
   "push_authorized_on_qc_pass": true,
-  "latest_publication_attempt": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/publication-request.json"
+  "latest_publication_attempt": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/publication-request.json",
+  "selected_source_audio_gate": "pass:33 retained bilingual utterances plus verified non-speech matchpoint window",
+  "formal_spec": "specs/reels/noskova-kostyuk-wta-finals-2026-rr.json",
+  "formal_final_qc_completed": false,
+  "production_qc_pass": false,
+  "owner_edit": "整句剪去，保留赛点及后续庆祝"
 }
