@@ -1,0 +1,91 @@
+{
+  "schema": "shelton-paris.v2-one-actual-sample-independent-review.v1",
+  "status": "scoped_pass_native_single_input_predicates",
+  "checked_at": "2026-11-09T06:52:31.707201+00:00",
+  "method": "ExactnewMP3/marks/onefrozenbundle/precheckrequest binding and native pure compare_transcript/pause_and_speed/poly_ok on existingresults. No newASR/referenceTTS/measure/model/PCM or humanlistening.",
+  "actual_audio_sha256": "124abb24acbc108a2896cc2b5a9d236abf30db1447aab22f0d5c1da2b4f1c699",
+  "actual_words_sha256": "c27315ad6e8469869a481ff3cb4ffd43b05aef595a61db1e924f2fe8cef6ccba",
+  "sample_bundle_sha256": "f6cd5a11b63318e9f7bdf0368fb6b3543e4971f4812663ef0626142e588f0430",
+  "sample_index_sha256": "96aea15af9da07986d96da5df951b0e641ec892b57547c03928e358c7e27f78c",
+  "native_precheck_sha256": "ba1acaca17b0764f04b1c39c2db0c15b093efa22fc78e0427f619cf747abf5e3",
+  "actual_asr_transcript_sha256": "ee94a6f45ab7a4da8fedd3c21d28322f088c5bc8c7d1320ef66c4d418de54b2f",
+  "native_completeness": {
+    "ok": true,
+    "ref_syllables": 33,
+    "deleted": 0,
+    "inserted": 0,
+    "substituted": 0,
+    "sub_ratio": 0.0,
+    "longest_deletion": 0,
+    "transcript": "资格到手以后,巴塞尔执步第二轮。巴黎先过保罗这一关,再从一盘落后打进决赛。"
+  },
+  "native_pauses": {
+    "inner_pauses": [],
+    "fake_tokens": [],
+    "chars": 33,
+    "speech_s": 7.3,
+    "cps": 4.52,
+    "pause_ok": true,
+    "speed_ok": true,
+    "tokens": "资格 ｜ 到手 ｜ 以后 ｜ 巴塞尔 ｜ 止步 ｜ 第二轮 ｜ 巴黎 ｜ 先 ｜ 过 ｜ 保罗 ｜ 这 ｜ 一 ｜ 关 ｜ 再 ｜ 从 ｜ 一 ｜ 盘 ｜ 落后 ｜ 打 ｜ 进 ｜ 决赛"
+  },
+  "native_polyphones": [
+    {
+      "index": 30,
+      "char": "落",
+      "word": "落后",
+      "intended": "luo4",
+      "wrong": [
+        "la4",
+        "lao4"
+      ],
+      "tier": "B",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "la4",
+          "verdict": "correct",
+          "score": 0.325,
+          "confidence": "medium",
+          "near": null
+        },
+        {
+          "wrong": "lao4",
+          "verdict": "correct",
+          "score": 0.362,
+          "confidence": "low",
+          "near": null
+        }
+      ],
+      "ok_refs": "洛骆摞"
+    }
+  ],
+  "native_checks": {
+    "completeness": true,
+    "polyphones": true,
+    "pauses": true,
+    "speed": true,
+    "whole_sentences": true
+  },
+  "audio_seconds": 8.184,
+  "last_mark_end_s": 7.346707,
+  "tail_after_mark_s": 0.8373,
+  "photo_wordmark_binding": {
+    "second_round_last_word_end_s": 2.818416,
+    "paris_first_word_start_s": 3.360833,
+    "guan_last_end_s": 5.047166,
+    "zai_next_word_start_s": 5.283,
+    "proposed_cuts_s": [
+      0,
+      3.08,
+      5.06,
+      8.584
+    ]
+  },
+  "prior_failure_closure": "Firstformal范阿舍舍Aunmeasurable remainsliteralhistoricalfailure. RootacceptednewwholeclauseavoidsunmeasurableAwithout changingnativegate. Oldrecordnotrewrittenaspass.",
+  "limits": [
+    "ActualB落 nativeverdictcorrect has medium/lowconfidences0.325/0.362; not highcertainty/fullhumanphoneticcertification.",
+    "Nativeformalv2suite/currentfilmmasteridentity andactualASS/photocut/dissolves remainpending.",
+    "Complete18bundle must containexact17otheroldrequests plusonlythischangedrequest."
+  ]
+}

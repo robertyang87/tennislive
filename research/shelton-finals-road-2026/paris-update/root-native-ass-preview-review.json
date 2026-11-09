@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-11-09T06:22:07.101309+00:00",
+  "status": "PASS_SCOPED_actual_native_ASS_input_previews",
+  "spec_file_sha256": "5a4f67e282e61c5e026538e4814bf887eb8dde7c158e2f86933e228d62e4cee6",
+  "ass_sha256": "5fa30f3ff22931ccf16607fe881d525ad75be74eb6aec0d8ce65b871d3459442",
+  "actual_opened": [
+    {
+      "file": "/dev/shm/shelton-paris-production/production/native-preview/contact-01.jpg",
+      "sha256": "12c1dceb2c3639a2ceee199093d440ae82689fe5f5e71e2eec0717722caa5914"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/native-preview/contact-02.jpg",
+      "sha256": "9273a44f5fc4d76cace014c03e21f748a573f01f5342ed29e142555d756d6128"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/native-preview/contact-03.jpg",
+      "sha256": "aa7d7ba1152c44ea9d066998f56170a9b0b8c7b6869cf9556f7c7c9bcb53e44f"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/native-preview/caption-06.png",
+      "sha256": "5067a6f7abf55367dcffe6aefdc631ede4c88819439e6c47986f9f6e4500a369"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/native-preview/caption-13.png",
+      "sha256": "05ee81092ffa93bd84023e443d551c6a21614b7a17e488c50dad2e91ef7f3ed6"
+    }
+  ],
+  "samples_inspected": 15,
+  "findings": [
+    "All three contact sheets personally opened: Basel/QF/SF/F photos fullcanvas and proper subject, no match info labels over photos.",
+    "Paris source prep/serve and label at+7.9 seconds present; +8.1 seconds absent. Transparent right info scores Shelton6-7(5)5-7, finalNov8, correct winnerAlcaraz.",
+    "Two actual bilingual captions are readable and complete across both cues, no isolated person-name final glyph.",
+    "Race full frame personally opened: 5170 fourth, 8 active mint rows, Sinner grey withdrawn; narration captions and footer safely separate.",
+    "Last question remains original realMontreal champion photo and original wording; no extra ending cards added."
+  ],
+  "limits": [
+    "These inner-scene previews do not encode cross-scene dissolves; actual rendered master still requires seam/point verification.",
+    "Source edge-crop minor retained in root-paris-input-visual-review.json.",
+    "Unchanged cover/old scenes require actual film visual checks; no final publication approval here."
+  ]
+}

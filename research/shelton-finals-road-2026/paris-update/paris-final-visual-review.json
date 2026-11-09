@@ -1,0 +1,118 @@
+{
+  "schema": "tennis-season-source-visual-review.v1",
+  "status": "pass_with_accepted_minor",
+  "reviewer": "Codex shelton_paris_media",
+  "reviewed_at": "2026-11-09T06:14:22.924035+00:00",
+  "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+  "source_path": "/dev/shm/shelton-paris-production/research/media-paris/tennistv-4606354.mp4",
+  "source_ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "50/1",
+        "avg_frame_rate": "50/1"
+      },
+      {
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0"
+      }
+    ],
+    "format": {
+      "duration": "158.869333",
+      "size": "161016998"
+    }
+  },
+  "selected_window": [
+    120.4,
+    149.3
+  ],
+  "native_tail": 149.8,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "crop": {
+    "cx": 0.5,
+    "track": false,
+    "native_horizontal_crop": [
+      555,
+      1365
+    ],
+    "source_pixels_crop_width": 810,
+    "fit": "fill"
+  },
+  "match": {
+    "event": "Rolex Paris Masters 2026",
+    "round": "Final",
+    "local_date": "2026-11-08",
+    "winner": "Carlos Alcaraz",
+    "loser": "Ben Shelton",
+    "score_winner_perspective": "7-6(5) 7-5"
+  },
+  "point_stages": {
+    "first_selected_frame": "120.4 continuous wide court; scoreboard Shelton5:6,30:40 (second match point), bends before serve",
+    "native_dissolve_clears_by": 120.9,
+    "serve_toss_around": 122.2,
+    "serve_contact_range": [
+      122.48,
+      122.56
+    ],
+    "rally_result_before": 132.36,
+    "winner_celebration_cut": 132.68,
+    "true_shelton_loser_reaction": [
+      138.8,
+      141.6
+    ],
+    "same_match_handshake_and_hug": [
+      148.4,
+      149.8
+    ]
+  },
+  "accepted_minor": {
+    "description": "Fixed-center fill naturally clips extremely brief edge racket/ball and partial bodies on lateral stretch; no entire player action is absent. Near Shelton left volley around128.8–129.2 has body/arm readable and racket edge momentarily at/barely outside left bound; far Alcaraz left stretch128.2–128.5 partial followthrough edges; final forehand/backhand approach/result stay readable. Do NOT describe entire rally as having zero edge crop.",
+    "root_review": "Root personally opened equivalent YT435.76/435.84 originals and accepted as minor under fixed cx.5; short exact same broadcaster court framing separately inspected.",
+    "reference_pngs": [
+      "/dev/shm/shelton-paris-production/research/media-paris/yt-review/435.76-full.png",
+      "/dev/shm/shelton-paris-production/research/media-paris/yt-review/435.84-full.png"
+    ]
+  },
+  "tail_safety": {
+    "last_sampled_clear_hug": 149.92,
+    "first_promo_sample": 149.96,
+    "selected_visual_tail_end": 149.8,
+    "margin_before_promo_s": 0.16,
+    "audio_tail": "silence"
+  },
+  "actually_opened_contact_sheets": [
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/whole.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/tail.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/point-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/point-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/forehand-detail-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/forehand-detail-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/serve-detail-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/shelton-left-volley-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/shelton-left-volley-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/yt-review/shelton-right-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/tail.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/serve-detail-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/left-stretch-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/serve-contact-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/late-point-crop.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/tail-end-full.jpg",
+    "/dev/shm/shelton-paris-production/research/media-paris/short-review/reaction-tail-crop.jpg"
+  ],
+  "notes": [
+    "Official TTV original source, not crowd/news repost. Both YT and TTV candidates real1080, only selected TTV used.",
+    "No arbitrary horizontal shift, ball tracking, stacked camera, blurred padding, stretched image or source manipulation.",
+    "Unselected YT archive bytes retained. No new ASR inference required for selected source because exact current source wrapper already exists.",
+    "Native final composition, subtitles, story label, entry blend and actual final-film tail still require final-film QC."
+  ]
+}

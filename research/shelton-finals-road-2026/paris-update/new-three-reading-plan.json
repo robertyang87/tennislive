@@ -1,0 +1,135 @@
+{
+  "schema": "shelton-paris.changed-voice-reading-plan.v1",
+  "status": "text_semantic_plan_fact_editorial_accepted_actual_audio_pending",
+  "created_at": "2026-11-09T06:09:15.602461+00:00",
+  "editorial_draft_path": "/dev/shm/shelton-paris-production/research/editorial/shelton-paris-new-lines-and-copy.final-draft.json",
+  "editorial_draft_sha256": "abdcb3769f8191fb91cda45d7e3f73a1c94fb87365092e51222d11175c254460",
+  "method": "Text and semantic planning only, not a request to synthesize nor audio approval.",
+  "representative_requests": [
+    "paris_final_intro",
+    "race_table"
+  ],
+  "sample_scope": "These cover all3 changed lines high-risk names and all timestamp/point/ordinal numbers; producer may use current changed lines as finite representative batch.",
+  "rows": [
+    {
+      "id": "late_season",
+      "display_text": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+      "tts_text_before_normal_pronunciation_mapping": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+      "reading_parameters": {
+        "backend": "edge",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0
+      },
+      "controls": "Do not add unsupported SSML/emotion; punctuation/whole semantic sentences plus supported voice/rate/pitch only.",
+      "name_or_number_split_protection": "Never insert pause within listed high-risk token. Exact delivered marks/audio will be checked after synthesis, no proof from draft.",
+      "purpose": "Move from qualification to final pre-Turin event, preserving chronology.",
+      "emphasis": [
+        "巴塞尔止步第二轮",
+        "逆转范阿舍",
+        "打进决赛"
+      ],
+      "semantic_pauses": [
+        "资格到手以后，｜巴塞尔止步第二轮。",
+        "巴黎先胜保罗，｜再逆转范阿舍，｜打进决赛。"
+      ],
+      "expected_duration_s": [
+        7,
+        10
+      ],
+      "high_risk_tokens": [
+        "巴塞尔",
+        "保罗",
+        "范阿舍",
+        "第二轮"
+      ]
+    },
+    {
+      "id": "paris_final_intro",
+      "display_text": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "tts_text_before_normal_pronunciation_mapping": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "reading_parameters": {
+        "backend": "edge",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0
+      },
+      "controls": "Do not add unsupported SSML/emotion; punctuation/whole semantic sentences plus supported voice/rate/pitch only.",
+      "name_or_number_split_protection": "Never insert pause within listed high-risk token. Exact delivered marks/audio will be checked after synthesis, no proof from draft.",
+      "purpose": "Connect prior USOpen win over Alcaraz to Paris final defeat, restrained transition before genuine match point.",
+      "emphasis": [
+        "美网他曾赢下",
+        "这次却两盘告负",
+        "巴黎亚军"
+      ],
+      "semantic_pauses": [
+        "决赛再次遇到阿尔卡拉斯。",
+        "美网他曾赢下这组对决，｜这次却两盘告负，｜收获巴黎亚军。"
+      ],
+      "expected_duration_s": [
+        7,
+        10
+      ],
+      "high_risk_tokens": [
+        "阿尔卡拉斯",
+        "两盘",
+        "告负",
+        "巴黎亚军"
+      ]
+    },
+    {
+      "id": "race_table",
+      "display_text": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "tts_text_before_normal_pronunciation_mapping": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "reading_parameters": {
+        "backend": "edge",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0
+      },
+      "controls": "Do not add unsupported SSML/emotion; punctuation/whole semantic sentences plus supported voice/rate/pitch only.",
+      "name_or_number_split_protection": "Never insert pause within listed high-risk token. Exact delivered marks/audio will be checked after synthesis, no proof from draft.",
+      "purpose": "Clearly read timestamped season Race, distinction between Sinner withdrawal and eight active qualified entrants.",
+      "emphasis": [
+        "截至十一月九日",
+        "五千一百七十分",
+        "第四",
+        "八位正选"
+      ],
+      "semantic_pauses": [
+        "截至十一月九日，｜谢尔顿五千一百七十分，｜赛季积分榜第四。",
+        "辛纳已退赛，｜高亮的是本届年终的八位正选。"
+      ],
+      "expected_duration_s": [
+        9,
+        12
+      ],
+      "high_risk_tokens": [
+        "十一月九日",
+        "五千一百七十分",
+        "赛季积分榜第四",
+        "辛纳",
+        "八位正选"
+      ]
+    }
+  ],
+  "next_checks": [
+    "Rebind to fact/editorial frozen exact text before any synth.",
+    "Inspect actual MP3 and marks of all3 changed requests; no word-split pause above0.18s, CPS<=6.3, full-sentence text.",
+    "Producer captures old exact hits plus new actual bytes to complete bundle; strict new request-set validation before render.",
+    "Native5suite must be bound to current actual final movie/inventory/render inputs, preserving limited polyphone results and automated-not-human label."
+  ],
+  "fact_editorial_acceptance": "finals_editorial_photos reports root accepted three exact lines and facts PASS; final producer spec binding remains pending.",
+  "editorial_current_file_sha256": "f2d568e1293fbfea3261fcf30f2b77af9d76dd92584ef46d9d6b7a499f5b4e18",
+  "voice_text_identity_sha256": "b8008a4d867849c7d2e7cf57eee472fed443db8409ca66b442bce933f291a0af",
+  "note": "Publication-only body revision is not a voice change. Final native spec exact request text/parameters remain authoritative."
+}

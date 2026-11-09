@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-11-09T06:58:27.770992+00:00",
+  "status": "PASS_SCOPED_actual_native_v2_previews",
+  "spec_sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf",
+  "ass_sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf",
+  "personally_opened": [
+    {
+      "file": "/dev/shm/shelton-paris-production/production/v2/native-preview/contact-01.jpg",
+      "sha256": "ee88bdf7a35ca3ca70a02f92bb68975efd3060c5f413743dbfb8f18ffd12103a"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/v2/native-preview/contact-02.jpg",
+      "sha256": "1ce37b847984fafc7f22a5f7aa5346219da6aef6ea054a590c6f848ad3142384"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/production/v2/native-preview/contact-03.jpg",
+      "sha256": "aef93bc1bc25e9850811e38064853649abafe7bb94821868bec44c845418f2fd"
+    }
+  ],
+  "samples_inspected": 15,
+  "findings": [
+    "New single late narration displays correctly across Basel/ParisQF/ParisSF photos, no isolated name glyph or unsupportedemotion.",
+    "Known Paris wholepoint window and two bilingual cues unchanged; info immediate/mintcorrectscore/8sec disappearance clear.",
+    "Race still5170fourth/8active qualified/Sinnerwithdrawn with safe captions/footer, no extra ending cards."
+  ],
+  "limits": [
+    "Inner-scene previews do not establish final cross-scene fades.",
+    "V1 actualvisualPASS preserved for its exact oldmaster, not a newpublication approval. NativeV2 final5suite and actualmasterQC still required."
+  ]
+}

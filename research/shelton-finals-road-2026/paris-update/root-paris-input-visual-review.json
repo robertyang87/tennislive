@@ -1,0 +1,66 @@
+{
+  "checked_at": "2026-11-09T06:14:00.074086+00:00",
+  "status": "PASS_SCOPED_fixed_center_input_with_explicit_minor",
+  "reviewer": "root actual view_image",
+  "source": {
+    "path": "/dev/shm/shelton-paris-production/research/media-paris/tennistv-4606354.mp4",
+    "sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+    "duration": 158.869333,
+    "width": 1920,
+    "height": 1080,
+    "fps": "50/1"
+  },
+  "selected_window": [
+    120.4,
+    149.3
+  ],
+  "visual_tail_end": 149.8,
+  "findings": [
+    "Actually opened eight source/crop contact sheets or exact PNGs, including both YT and shorter official same-match camera.",
+    "120.4 full-court frame shows true same-point serve preparation at30:40; begins1.6s before contact after native0.5s dissolve.",
+    "Complete final point reaches actual result and champion reaction, then true Shelton reaction and players handshake/hug.",
+    "Fixed center .5 crop accepted: brief natural edge crops of racket/ball and far-player followthrough, action remains understandable; no tracking or offset.",
+    "End149.3 plus0.5 silent visual tail149.8 precedes first ad149.96."
+  ],
+  "minor": [
+    "Brief edge crop does not support a claim that all player limbs, racket or ball are visible throughout."
+  ],
+  "limits": [
+    "Native final source/ASS actual preview and final rendered movie require separate checks.",
+    "Original speech whole-sentence and bilingual evidence await final exact source audio packet."
+  ],
+  "personally_opened": [
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/yt-review/point-crop.jpg",
+      "sha256": "eca4dc6fe1edddec122c6d80cf3e163d5a7f06951fe6adc09470f0fdd4a4e120"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/yt-review/serve-detail-full.jpg",
+      "sha256": "4488e658ab202eb5560751b0d6b27c62ea484802aca7911f45b1a61efe5da89a"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/yt-review/tail.jpg",
+      "sha256": "2e1fbd4227aa42d0f40fbe1fe97c819c057d4685174bfb6d2dd909dee826289c"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/yt-review/435.76-full.png",
+      "sha256": "6f8a411adb7a9d439505370314c2ee2232f99efd70753e5278ce3f1c77449fbc"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/yt-review/435.84-full.png",
+      "sha256": "3a3b913d123090ba635d8724d8f1bd76bd0420f63d00e1240b6f0da049b577c1"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/short-review/serve-detail-full.jpg",
+      "sha256": "89baf046cf2bca1682d51139c16ba3753b33fcd04e66bf83c8e32db5604ff2ea"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/short-review/left-stretch-crop.jpg",
+      "sha256": "107a73a28bce217c010eb06cb1a3740f4bbaffa4bd01618770de7c773e47c02b"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/research/media-paris/short-review/tail.jpg",
+      "sha256": "b4d535ac99e382b02d3b79d04764cb84d7af054723b91162c19be14c7274c950"
+    }
+  ]
+}

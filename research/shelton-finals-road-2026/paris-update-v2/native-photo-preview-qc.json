@@ -1,0 +1,67 @@
+{
+  "reviewed_at": "2026-11-09T07:01:08.454213+00:00",
+  "reviewer": "/root/finals_editorial_photos",
+  "status": "PASS_SCOPED_V2_NATIVE_PHOTO_PREVIEW_NOT_FINAL_QC",
+  "spec_sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf",
+  "ass_sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf",
+  "actual_viewed": [
+    "contact-01.jpg",
+    "caption-02.png",
+    "caption-03.png"
+  ],
+  "manifest": "/dev/shm/shelton-paris-production/production/v2/native-preview/preview_manifest.json",
+  "change_scope": "One spokenlate sentence changes toavoidunmeasurableA-tier舍—not claimwrongpronunciation; old590066formalphotoQC remainsoldmovieonly.",
+  "photo_inputs": "SameoldBaselR16→ATP4605604Nov6QFvsPaul→ATP4606037Nov7SFvsVanAsscher. Parisintro keepsATP4606318Nov8F.",
+  "actual_cuts": [
+    0,
+    3.08,
+    5.06,
+    8.584
+  ],
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "time": 225.484,
+      "segment": 17,
+      "image_sha256": "372958e98fdabe27f3626569d1e64db44a7585292ed15acb4049e604ce5ac194"
+    },
+    {
+      "image": "caption-02.png",
+      "time": 228.364,
+      "segment": 17,
+      "image_sha256": "9e2750a2c76de75532ef25e3dd7ec1a04551ae9e60ce5427715e0458127da676"
+    },
+    {
+      "image": "caption-03.png",
+      "time": 231.16400000000002,
+      "segment": 17,
+      "image_sha256": "0e71db1dc6d82354675eceb96354142e25f649b22bc1b26c49d24e9f8712bc83"
+    },
+    {
+      "image": "caption-04.png",
+      "time": 234.86800000000002,
+      "segment": 18,
+      "image_sha256": "4f98367c49ae9a0a5c226f5a6639c19e8defb4f2726eeedc93ddba9cf8fbb4d4"
+    },
+    {
+      "image": "caption-05.png",
+      "time": 239.86800000000002,
+      "segment": 18,
+      "image_sha256": "b47d19c4877a916b7e2821e1ffe6b2a578ceb7bbff0d49833e901ff8fc50d348"
+    }
+  ],
+  "checks": {
+    "BaselclauseonBaselphoto": true,
+    "巴黎先过保罗这一关onQFPaulphoto": true,
+    "再从一盘落后打进决赛onactualSFFrom5_7_firstsetcomebackphoto": true,
+    "no_fictitious_firstParisopponentclaim": true,
+    "headfacecaptionandsourceidentitycorrect": true,
+    "ParisFintrophotoandtextremaincorrectrunnerup": true,
+    "no_info_insets_on_any5_photo_samples": true
+  },
+  "findings": [],
+  "scope_limits": [
+    "No actual v2 film yet reviewed; no formalQCorpushapproval inherited fromold590066.",
+    "No TTS/reASR/encodingperformedbythisagent."
+  ]
+}

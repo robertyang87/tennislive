@@ -1,0 +1,68 @@
+{
+  "schema": "shelton-paris.source-packet-audio-text-binding.v1",
+  "status": "scoped_pass",
+  "checked_at": "2026-11-09T06:15:49.158225+00:00",
+  "method": "Read exact selected source SHA/size, actual two historical raw wrapper bytes/Git blob identity, complete selected lexical sentence, native bilingual quotes and all window boundaries. No new ASR/TTS/audio equality/PCM/gain/loudness test; not human listening.",
+  "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+  "source_bytes": 161016998,
+  "transcript_packet_sha256": "be678b69317f22027d55b194abcfb32eced01590ccbbd48e3398c68a79e025e5",
+  "window": [
+    120.4,
+    149.3
+  ],
+  "native_visual_tail_end": 149.8,
+  "quote": [
+    {
+      "at": 135.3,
+      "end": 139.7,
+      "text": "Carlos Alcaraz wins the Rolex Paris Masters\n阿尔卡拉斯赢得巴黎大师赛，"
+    },
+    {
+      "at": 139.7,
+      "end": 143.0,
+      "text": "for the very first time in his career.\n这是他生涯第一次。"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "model": "small.en",
+      "raw_sha256": "25e9c03a5d36c91a31e82fb5dc9218be0e16d8a438e067fde2b44057913be9e3",
+      "exact_historical_git_blob_matches": true,
+      "origin_commit": "5f770a7bf3c6e12623b43e925c5af75a95bbdbcd",
+      "origin_repo_path": "data/source_asr/tennistv-4606354/small.en.json",
+      "origin_blob_sha": "a0b3ff945f2d522f787ed383939f9926f6d06063",
+      "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+      "original_inference_source_sha256": "8788d9e58be795749793cf6a1e69e45b3754c2dd0bad074d05118036cc1154ea",
+      "historical_remux_rebind_retained_verbatim": true,
+      "first_selected_speech_s": 135.45,
+      "last_selected_speech_s": 142.81,
+      "selected_lexical_sentence": "Carlos Alcaraz wins the Rolex Paris Masters for the very first time in his career."
+    },
+    {
+      "model": "medium.en",
+      "raw_sha256": "4ac3ea71730843bfbbc5c3282d56fdbc57e647971e04e7b96f89ed4f07bd9031",
+      "exact_historical_git_blob_matches": true,
+      "origin_commit": "5f770a7bf3c6e12623b43e925c5af75a95bbdbcd",
+      "origin_repo_path": "data/source_asr/tennistv-4606354/medium.en.json",
+      "origin_blob_sha": "2b5028d4f4e33811d9d987747476c92b972fb0a6",
+      "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+      "original_inference_source_sha256": "8788d9e58be795749793cf6a1e69e45b3754c2dd0bad074d05118036cc1154ea",
+      "historical_remux_rebind_retained_verbatim": true,
+      "first_selected_speech_s": 135.38,
+      "last_selected_speech_s": 142.88,
+      "selected_lexical_sentence": "Carlos Alcaraz wins the Rolex Paris Masters for the very first time in his career."
+    }
+  ],
+  "observations": [
+    "Both actual raw wrappers agree whole CarlosAlcaraz winsRolexParisMasters forveryfirsttimeinhiscareer sentence.",
+    "Chinese translation faithfully states Alcaraz Paris title, not Shelton title.",
+    "Firstquote135.3 precedes earliest speech135.38 by0.08s; second ends143.0 after latestcareer142.88 by0.12s.",
+    "Previous speech ends118.71 beforewindow120.4 by1.69s; windowends149.3 afterlastword by6.42s.",
+    "Tail muted and visualend149.8 before media-role actualpromo149.96 by0.16s.",
+    "OriginalASR inference source8788d9e… plus existing historicalremuxrebind to21b7d1d… preserved literally; no claim of new inference on currentcontainer."
+  ],
+  "limitations": [
+    "Source visual stage/edge crop/advertising findings are media+root actual-frame evidence, not newly inferred from this audio-text check.",
+    "Final nativeASS/actualmovie identity and transition/sentence rendering still pending."
+  ]
+}

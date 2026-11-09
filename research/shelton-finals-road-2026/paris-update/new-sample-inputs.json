@@ -1,0 +1,77 @@
+{
+  "created_at": "2026-11-09T06:10:19.912233+00:00",
+  "scope": "Actual new three sample audio+marks only, not fullfilm or quality approval",
+  "editorial_snapshot_sha256": "f2d568e1293fbfea3261fcf30f2b77af9d76dd92584ef46d9d6b7a499f5b4e18",
+  "rows": [
+    {
+      "id": "late_season",
+      "display_text": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+      "request": {
+        "text": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "4a414723e3cfd6551d2871dc1b10cc22"
+      },
+      "path": "/dev/shm/shelton-paris-production/production/changed-samples/late_season.mp3",
+      "audio_sha256": "6ca978e38d298dd61f3f4ca9309f340400fcde78033b9b4f00ce10080b6f1a21",
+      "marks_path": "/dev/shm/shelton-paris-production/production/changed-samples/late_season.words.json",
+      "marks_sha256": "69cc701a973e1e74735181ac6a40831a0d201d2426663b3aa19eec3af1154e19",
+      "seconds": 7.728
+    },
+    {
+      "id": "paris_final_intro",
+      "display_text": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "request": {
+        "text": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "e8f2f1e6598531f5b5c50c15e9c715fc"
+      },
+      "path": "/dev/shm/shelton-paris-production/production/changed-samples/paris_final_intro.mp3",
+      "audio_sha256": "404d2fd7b0052a27250356668243bfa49264febe57e2c78869958a3b2d6cfa9f",
+      "marks_path": "/dev/shm/shelton-paris-production/production/changed-samples/paris_final_intro.words.json",
+      "marks_sha256": "5632705ba819763dcdaeb60844dd133459b62e441f77a6d15b63d6fa4fa6ef15",
+      "seconds": 8.184
+    },
+    {
+      "id": "race_table",
+      "display_text": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "request": {
+        "text": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "5a20f9fb3d8c62ddfcaf66cbbeb59d25"
+      },
+      "path": "/dev/shm/shelton-paris-production/production/changed-samples/race_table.mp3",
+      "audio_sha256": "d720b940efd7c43c917bacc19a4ce361460e3ef608d4705669660f5716cad09a",
+      "marks_path": "/dev/shm/shelton-paris-production/production/changed-samples/race_table.words.json",
+      "marks_sha256": "6c9ae6549ddb7e7e901cc3d0322880b9a62560ad5f98372b52d2787c30e4a8da",
+      "seconds": 9.744
+    }
+  ],
+  "bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "e4207ced724ff016fdf1ebfd3c90fab4c2322064d226a91036b2e88576b49cad",
+    "request_count": 3,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

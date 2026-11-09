@@ -1,0 +1,96 @@
+{
+  "checked_at": "2026-11-09T07:25:25.386224+00:00",
+  "status": "PASS_root_actual_v2_film_QC_with_explicit_limits",
+  "film_sha256": "7d984672c71c36592ddb32590cce8c0b7e4ee8b1588c6b7056fcfcd00c8deb0b",
+  "film_bytes": 178220566,
+  "duration_seconds": 293.52,
+  "formal_render_run": 42576768657,
+  "spec_sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf",
+  "actual_ass_sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf",
+  "render_inputs_sha256": "9f283d429fa7c904a34e32af74f7b3ca6abf359b8f42ffb2ab24dece066e4b4f",
+  "final_tracked_render_sha256": "8555bd0d364538278cbdb12c32705da68476b43cf7022e23de1bacd35e6b25dc",
+  "frozen_tts_bundle_sha256": "9e05f0b20f857723bb111f233a64393b1e71f1cb6f38b01df365bf0d5d6699eb",
+  "reviewer": "root personally opened all7 actualV2 contacts76frames and6 actual old/new photo pairs; no human auditory listening claimed",
+  "actual_contacts_personally_opened": [
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-00.jpg",
+      "sha256": "f6f65fd83544a1ed69210997e0d9150d304db271b52d8d1d4efa2bb9d6d7b46f"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-01.jpg",
+      "sha256": "6522c99f1eb7bb3351791d6dd4a89ef4cda92c870c9ec0eb48cff17d2e570da8"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-02.jpg",
+      "sha256": "3f254f50780756991ee0681a172af510ba466865d603b3e9044cceb0571d6ad9"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-03.jpg",
+      "sha256": "604034bcf0980c6e12866d70f63e5f7cc09d7408296b34cc705b995b28c9b142"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-04.jpg",
+      "sha256": "6d2db986404c847002fca01cdbb9402b225d14fa480076694734c3a94cffb419"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-05.jpg",
+      "sha256": "31a7506d5ac61f152f725efcd9f165a400ba3fa93682307450ba446697784312"
+    },
+    {
+      "file": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-06.jpg",
+      "sha256": "d6333da1f214508c3e2db90ca8ba62be377abc625118f895832492dc7c49d57f"
+    }
+  ],
+  "actual_photo_pairs_personally_opened": "/dev/shm/shelton-paris-production/final/v2-video-prefix-comparison/actual-photo-pairs.jpg",
+  "independent_current_scope_reports": [
+    {
+      "path": "/dev/shm/shelton-paris-production/final/qc-audio-v2/final-current-v2-audio-race-qc.json",
+      "sha256": "f81764c0757fffb5131df78504d356a0830e7f41678c8aaab1fa6a6493fc017e"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/final/qc-facts-v2/final-fact-audit.json",
+      "sha256": "864e79f76c41368e2d0bf7eae78c7eb28bb819e845f09211c34b27ec421360a5"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/final/qc-photos-v2/actual-master-photo-cover-race-qc.json",
+      "sha256": "7c62e3e234a26b8e7a6d61c7a030e61e54937358661e6a16d1a8aa551687e794"
+    },
+    {
+      "path": "/dev/shm/shelton-paris-production/final/qc-paris-v2/actual-master-paris-qc-v2.json",
+      "sha256": "1018fbba9eab9d1bc8d8a7b363353cf986c7f8beb88f3d9ebd345d1e9c986651"
+    }
+  ],
+  "video_prefix_comparison": {
+    "path": "/dev/shm/shelton-paris-production/final/v2-video-prefix-comparison/report.json",
+    "sha256": "22d34135481bad9c91a421da7d0773639e64c7903d1af5f00b0bbdce962af948",
+    "frames_each": 5500,
+    "pixel_equal_frames": 5016,
+    "differing_ranges_seconds": [
+      [
+        85.88,
+        89.56
+      ],
+      [
+        122.4,
+        138.0
+      ]
+    ],
+    "all_five_full_points_and_visual_tails_pixel_identical_to_independently_reviewed_v1": true,
+    "difference_review": "Personally opened6 actualV1/V2photo pairs in2differingphoto ranges; subject/photo/crop/semanticcaption correct, no new visual defect."
+  },
+  "findings": [
+    "Oneactual late voice rewritten to truthful Paulwin/one-setcomeback,17other actual voice requests reused exactly; no actual pronunciationerror claimed for prior unmeasurable 舍.",
+    "All old5 fullpoint windows/tails are actualpixelidentical to independentlydeepreviewed V1. AllV2 source/photo/cover frames additionally viewed.",
+    "Paris truefullserve/rally/result and realShelton reaction/hug intact; atcontact no previousphoto ghost, label immediateand8s, actual bilingual sentenceend complete, no adtail.",
+    "Exact datedRace15 chart: Shelton5170fourth,8activequalified highlighted,Sinner7950withdrawngrey, safe subtitle/footer.",
+    "Full actualV2master ffmpegdecode exited0; stream/duration/probe and actual hash correct. WholepublicRelease178220566B SHA7d984matches, streamedonce no extra master copy.",
+    "Finalnative18unique/36inventory sourcebindings + automated5suite pass true and independent actualvoice/ASS67event review matches current render/spec/film."
+  ],
+  "limits": [
+    "Known fixed-center naturaledge crops retained honestly: AOnearplayerlateral movement and Parisbrief racket/ball/edge, not a claim every limb/ball visible at every instant.",
+    "FormalB 落 result uncertain medium/unreliable permittedby currentnative gate; localcorrect not substituted; not human/fulltone/naturalness guarantee.",
+    "Source speech evidence is bounded actualASR/retainednativeprovenance and faithful captions, no fabricated literal announcement scores.",
+    "Firstformal590066 master failed A舍 missingreference; preserved originalfailure/report, never sent. ThisV2 supersedes it, no gatewaiver or codechange."
+  ],
+  "publication_gate": "ActualV2film/QC PASS. Require normal currentexacthead requiredCI green and CLEAN/MERGEABLE before normalmerge; then ONE main-native automaticWeChat send, preserve oldNov6history and distinguish newfilmoneattempt. No manual duplicate/re-render needed."
+}

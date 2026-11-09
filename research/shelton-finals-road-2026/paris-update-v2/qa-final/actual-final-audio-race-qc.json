@@ -1,0 +1,123 @@
+{
+  "schema": "shelton-paris.v2-final-audio-race-qc.v1",
+  "status": "scoped_pass",
+  "checked_at": "2026-11-09T07:21:50.402139+00:00",
+  "method": "Actualv2MP4/18voices+marks/frozenbundle/67ASS/6source14bilingualcue identity; currenttrackednative5suite completeidentity/check-result evidence; personallyviewed7actualcontact76frames+4fullsizecurrentframes. No newASR/TTS/phonetic/model/PCM/loudness/gain orhumanlistening.",
+  "identity": {
+    "render_sha256": "8555bd0d364538278cbdb12c32705da68476b43cf7022e23de1bacd35e6b25dc",
+    "render_inputs_sha256": "9f283d429fa7c904a34e32af74f7b3ca6abf359b8f42ffb2ab24dece066e4b4f",
+    "spec_sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf",
+    "film_sha256": "7d984672c71c36592ddb32590cce8c0b7e4ee8b1588c6b7056fcfcd00c8deb0b",
+    "inventory_sha256": "c2832fcfee82688cdd3346c300344d4d8d171fe7457c7f0f7932b250d09321e9"
+  },
+  "actual_film_bytes": 178220566,
+  "actual_film_seconds": 293.52,
+  "tts_bundle_sha256": "9e05f0b20f857723bb111f233a64393b1e71f1cb6f38b01df365bf0d5d6699eb",
+  "actual_ass_sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf",
+  "actual_inventory_rows": 36,
+  "unique_voice_requests": 18,
+  "actual_v1_to_v2_voice_diff": {
+    "exact_unchanged_files": [
+      "voice_00.mp3",
+      "voice_01.mp3",
+      "voice_03.mp3",
+      "voice_05.mp3",
+      "voice_07.mp3",
+      "voice_08.mp3",
+      "voice_09.mp3",
+      "voice_10.mp3",
+      "voice_12.mp3",
+      "voice_13.mp3",
+      "voice_15.mp3",
+      "voice_16.mp3",
+      "voice_18.mp3",
+      "voice_20.mp3",
+      "voice_21.mp3",
+      "voice_cover.mp3",
+      "voice_outro.mp3"
+    ],
+    "changed_files": [
+      "voice_17.mp3"
+    ]
+  },
+  "native_suite": {
+    "actual_pass": true,
+    "unique_audio_count": 18,
+    "occurrence_count": 36,
+    "sentence_splits": [],
+    "auto_review_sha256": "5118805902fe96f71c065adda3a3c42c34ad82f3e1467d4da3901231a3330ce7",
+    "voice_quality_review_sha256": "098a5b028065b966a541c455338fe8f42f1855c3683e708656a0f782d88e7822",
+    "current_formal_limited_polyphone_results": [
+      {
+        "id": "bundle:2e7fc0d42f96bbc9c5801a7bc53f915147a4b010f03cf2f7a5650454dda533d0",
+        "text": "资格到手以后，巴塞尔止步第二轮。巴黎先过保罗这一关，再从一盘落后打进决赛。",
+        "target": {
+          "index": 30,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.49,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.523,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      }
+    ]
+  },
+  "actually_viewed_actual_contact_sheets": [
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-03.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-04.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-05.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-06.jpg"
+  ],
+  "actually_viewed_fullsize_frames": [
+    "/dev/shm/shelton-paris-production/final/qc-audio-v2/actual-late-231.52.png",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/frame-069-0259.032.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/frame-070-0262.882.jpg",
+    "/dev/shm/shelton-paris-production/final/root-qc-v2/frame-072-0275.904.jpg"
+  ],
+  "extra_actual_late_frame": {
+    "path": "/dev/shm/shelton-paris-production/final/qc-audio-v2/actual-late-231.52.png",
+    "sha256": "5a64c96879fbd2aaa19649e9e9788cca605c0af0ae28d37ac7df54a7235db297",
+    "film_time_s": 231.52,
+    "nominal_frame_index": 5788
+  },
+  "visual_observations": [
+    "Actualupdatedlatecaption再从一盘落后打进决赛completeat231.52 withgenuineSFphoto.",
+    "All14sourcebilingualcue contexts visible andcomplete inactualframes; newParisEnglish/CJKnoorphanname.",
+    "ActualRace15rows/eightqualifiers/Sinnergreywithdrawn/Shelton4-5170 unchangedaccurate, header/footer/subtitleseparated.",
+    "All6matchcontexts fixedcenterfullcanvas, nolabelsonphoto/Race; native8slabeltimingpreserved."
+  ],
+  "supporting_actual_input_review": {
+    "path": "/dev/shm/shelton-paris-production/final/qc-audio-v2/actual-master-v2-audio-ass-input-binding.json",
+    "sha256": "73ae91ab6289d4dd6a138340e1efb57335124a31151e0114f72d77f38221610a"
+  },
+  "historical_failure_closure": "Firstformal590066movie failedoneA-tier舍unmeasurable remainspreserved. Rootacceptedoneclauserevision yieldedonlyonechangedactualrequest, formalv2current5suitefullypasses; no rewritingpastfailure orwaiverofnativegate.",
+  "limitations": [
+    "FinalnativeB落isuncertain: la4correct0.49medium, lao4unreliable0.523, nativeBpolicypermits; localprecheckcorrectisNOTcarriedoverasformalpronunciationproof.",
+    "No fullhumanlistening/allphoneme/naturalness/emphasisguarantee. Nativewholefilmseamscopeisdeterministicoverrun/mutualexclusion, nothumanhearing.",
+    "Detailedpointcompleteness/edgecrop/rootacceptedminors andtailvisualreviews remainroot/mediaactualevidence, notallframeapprovalfromcontacts."
+  ]
+}

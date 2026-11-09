@@ -1,0 +1,24 @@
+{
+  "schema": "race-chart.data-and-visual-qc.v1",
+  "status": "pass",
+  "checked_at": "2026-11-09T06:08:10.279503+00:00",
+  "reviewer": "finals_audio_race_qc",
+  "image_sha256": "7ce57ef3cc7c5c2d6ebc8484c6dd2ed94fb84c9c423d01f62ec7f0732eca3295",
+  "data_sha256": "c48a51e8f23462872d9d871965b1a2d903ee8af23c38e6254048995ac19dc251",
+  "method": "Personally viewed exact1080x1440 full-size output; independently parsed actual source HTML direct rows and compared all15 ranks/points/names/positive qualifier markers to facts canonical.",
+  "observations": [
+    "All15 ranked rows visible with correct descending season points.",
+    "Exactly8 active qualifiers mint-highlighted: ranks1,3,4,5,6,7,8,9.",
+    "Sinner #2/7950 is grey with 已退赛, no qualified highlight.",
+    "Shelton #4/5170 focused with 连续第2年.",
+    "Alcaraz #3/6100; all Chinese names match current facts canonical.",
+    "Header says 截至11月9日·巴黎决赛后 and8席全部确定.",
+    "Title begins y139 leaving native series topbar area; rows stop1243 leaving caption1260–1370 and footer1394.",
+    "Race ranks not described as tournament seeds; points attributed Live-Tennis, qualificationATP/Nitto."
+  ],
+  "limits": [
+    "Final native ASS composite and actual movie still need separate verification.",
+    "Source is exact timestamped independent live Race snapshot, not official ATP ranking page.",
+    "Stockholm can subsequently change lower-ranked points; field already fixed."
+  ]
+}

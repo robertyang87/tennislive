@@ -129,6 +129,60 @@
   "captions": null,
   "board": {
     "version": 1,
-    "error": "WTA board present but complete two-player body geometry is unmeasurable"
+    "fps": 5,
+    "t0": 243.0,
+    "frames": 12,
+    "scans": [
+      {
+        "box": [
+          88,
+          824,
+          650,
+          988
+        ],
+        "frames": 12,
+        "profiles": {
+          "wta": {
+            "present": 12,
+            "unresolved": 0,
+            "runs": [
+              [
+                6,
+                517,
+                517
+              ],
+              [
+                6,
+                516,
+                516
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "source_profile": "wta"
+  },
+  "_previous_board_probe_failure": {
+    "original_probe_sha256": "9df36216c07c9a30ada5d6b3225fd0621c0fdce867606839e8eab70abd0ea69b",
+    "board": {
+      "version": 1,
+      "error": "WTA board present but complete two-player body geometry is unmeasurable"
+    },
+    "preserved_file": "research/shelton-finals-road-2026/required-ci-probe-repair/previous-nov9-probe-unchanged-failure.json"
+  },
+  "source_sha256": "bd7107a181bf143a0e0e9d4463fdc4cdfef6fc70deb133972dc56469c49fb972",
+  "_board_calibration_repair": {
+    "method": "Actual currentRelease source12frame native BoardScan, not unverified oldSHA reuse",
+    "source_sha256": "bd7107a181bf143a0e0e9d4463fdc4cdfef6fc70deb133972dc56469c49fb972",
+    "source_bytes": 95602939,
+    "actual_scan_window": [
+      243.0,
+      245.4
+    ],
+    "actual_frames": 12,
+    "corrected_at": "2026-11-09T07:03:53.887180+00:00",
+    "native_tool": "tools/probe_board.py::BoardScan",
+    "evidence": "research/shelton-finals-road-2026/required-ci-probe-repair/actual-12-frame-native-calibration.json"
   }
 }

@@ -1,6 +1,6 @@
 {
   "slug": "shelton-finals-road-2026",
-  "date": "2026-11-06",
+  "date": "2026-11-09",
   "_column": "网球有故事",
   "title": "谢尔顿：从温网首轮出局到美网亚军",
   "cover": {
@@ -27,13 +27,14 @@
   "cx": 0.5,
   "track": false,
   "tts_backend": "edge",
-  "_tts_backend_why": "Natural Yunjian+6%/+0Hz whole sentences,17actual native TTS requests measured and frozen; strictbundle reuse required.",
+  "_tts_backend_why": "Reuse15exact approved prior Yunjian+6%/+0Hz requests and three actual frozen changed requests; strict18requestimport, no unsupported emotioncontrols.",
   "sources": {
     "australian-open-qf": "https://ausopen.com/match/2026-ben-shelton-vs-jannik-sinner-ms504",
     "dallas-final": "https://www.tennistv.com/videos/4451143/dallas-2026-final-fritz-shelton-short-highlights",
     "munich-final": "https://www.dailymotion.com/video/xa5ysu8",
     "montreal-final": "https://www.tennistv.com/videos/4559432/montreal-2026-final-match-point",
-    "us-open-final": "https://www.youtube.com/watch?v=b40hO04eyLo"
+    "us-open-final": "https://www.youtube.com/watch?v=b40hO04eyLo",
+    "paris-final": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights"
   },
   "preserve_source_audio": true,
   "segments": [
@@ -83,7 +84,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 10,
+        "show_for": 8,
         "show_after": 0,
         "animate": false,
         "motion": "editorial",
@@ -146,7 +147,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 10,
+        "show_for": 8,
         "show_after": 0,
         "animate": false,
         "motion": "editorial",
@@ -213,7 +214,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 10,
+        "show_for": 8,
         "show_after": 0,
         "animate": false,
         "motion": "editorial",
@@ -314,7 +315,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 10,
+        "show_for": 8,
         "show_after": 0,
         "animate": false,
         "motion": "editorial",
@@ -404,7 +405,7 @@
         "corner": "tr",
         "width": 0.6,
         "pad": 0.043,
-        "show_for": 10,
+        "show_for": 8,
         "show_after": 0,
         "animate": false,
         "motion": "editorial",
@@ -452,8 +453,8 @@
       "_id": "late_season",
       "image": "assets/reel/shelton-finals-road-2026/photo-sequences/late_season.mp4",
       "image_kind": "photo",
-      "seconds": 8.392,
-      "narration": "资格到手以后，巴塞尔止步第二轮。巴黎先胜诺里，再逆转林德克内希，打进8强。",
+      "seconds": 8.584,
+      "narration": "资格到手以后，巴塞尔止步第二轮。巴黎先过保罗这一关，再从一盘落后打进决赛。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "完整冻结句，云健+6%自然预合成。"
@@ -462,11 +463,73 @@
       "_photo_caption_safety": "Actual same-event/round2026 stills with originalIPTC/EXIF, normalized staticcrop and personally reviewed3:4 inputs; exact manifests research/shelton-finals-road-2026/photo-map.json and photo-source-metadata.json. No point reconstruction or invented reaction."
     },
     {
+      "_id": "paris_final_intro",
+      "image": "assets/reel/shelton-finals-road-2026/photo-sequences/paris_final_intro.mp4",
+      "image_kind": "photo",
+      "seconds": 8.584,
+      "narration": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "voice": {
+        "pitch": "+0Hz",
+        "_why": "Whole exact editorial sentence; actual three-request representative sample reviewed, same Yunjian+6% native voice."
+      },
+      "_photo_source": "https://resources.prod.atpmedia.pulselive.com/atpmedia/photo/2026/11/08/295c9b6b-b196-437f-928b-c01f647c7d5c/COC_1583.JPG",
+      "_photo_caption_safety": "Actual2026Nov8Parisfinal BenShelton photo4606318, no specificpoint or trophyclaim; original4314x2874 and independentlyseen3:4 crop; sourceevidence inresearch/shelton-finals-road-2026/paris-update/."
+    },
+    {
+      "_id": "paris_final_point",
+      "source": "paris-final",
+      "start": 120.4,
+      "end": 149.3,
+      "fit": "crop",
+      "cx": 0.5,
+      "track": false,
+      "narration": "",
+      "audio_tail": "silence",
+      "_quote_kind": "broadcast",
+      "quote": [
+        {
+          "at": 14.9,
+          "end": 19.3,
+          "text": "Carlos Alcaraz wins the Rolex Paris Masters\n阿尔卡拉斯赢得巴黎大师赛，"
+        },
+        {
+          "at": 19.3,
+          "end": 22.6,
+          "text": "for the very first time in his career.\n这是他生涯第一次。"
+        }
+      ],
+      "point_end_ok": "Actualsamepointservepreparation from120.4, contact122.52, fullterminalpoint/result and realAlcarazcelebration/Sheltonhandshake. Incomingnative.5dissolve退净120.9 beforecontact. Source149.96promoexcluded; bodyends149.3and silent.5visualtail149.8. Fixedcenter minor brieflyclippedrackethead/ball atedge explicitlyreviewedbyroot; notclaimingzerocrop.",
+      "crosses_cut": "Singlehorizontalfixedcourt duringpoint; natural samepoint reaction/handshakecuts afterresult.",
+      "inset": {
+        "image": "assets/reel/shelton-finals-road-2026/context-paris_final_point.png",
+        "kind": "story_text",
+        "corner": "tr",
+        "width": 0.6,
+        "pad": 0.043,
+        "show_for": 8,
+        "show_after": 0,
+        "animate": false,
+        "motion": "editorial",
+        "label": {
+          "topic": "巴黎收获亚军",
+          "date": "2026.11.08",
+          "place": "巴黎大师赛决赛",
+          "people": "谢尔顿 vs 阿尔卡拉斯",
+          "score": "6-7(5) 5-7",
+          "result": {
+            "winner": "阿尔卡拉斯",
+            "score": "7-6(5) 7-5",
+            "source": "https://www.nittoatpfinals.com/en/news/alcaraz-shelton-paris-2026-final"
+          }
+        }
+      }
+    },
+    {
       "_id": "race_table",
       "image": "assets/reel/shelton-finals-road-2026/race-points-qualified.png",
       "image_kind": "canvas",
-      "seconds": 9.592,
-      "narration": "截至十一月六日，谢尔顿四千七百二十分，排名赛季积分榜第四。高亮的六位球员，都已锁定年终资格。",
+      "seconds": 10.144,
+      "narration": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
       "voice": {
         "pitch": "+0Hz",
         "_why": "完整冻结句，云健+6%自然预合成。"
@@ -490,7 +553,7 @@
   "editorial": {
     "mode": "match_review",
     "question": "从温网赛点到美网决赛，谢尔顿如何再次拿到都灵门票？",
-    "thesis": "按事实赛季时间线呈现四冠、大满贯起伏和十月十八日资格触发，再展示最新Race积分。",
+    "thesis": "按事实赛季时间线呈现四冠、大满贯起伏和十月十八日资格触发，补入巴黎亚军后展示十一月九日最新Race与八位正选。",
     "beats": [
       "opening",
       "ao_intro",
@@ -510,6 +573,8 @@
       "autumn",
       "qualification",
       "late_season",
+      "paris_final_intro",
+      "paris_final_point",
       "race_table",
       "question"
     ],
@@ -517,7 +582,8 @@
       "angle": "温网首轮错失赛点之后，连续第二年入围年终。",
       "facts": [
         "2026年达拉斯、慕尼黑、斯图加特、蒙特利尔四冠。",
-        "温网首轮、美网亚军，十月十八日锁定都灵。"
+        "温网首轮、美网亚军，十月十八日锁定都灵。",
+        "2026巴黎大师赛亚军，十一月九日5170分列Race第四；辛纳退赛，本届八位正选确定。"
       ],
       "sources": [
         "https://www.nittoatpfinals.com/en/news/shelton-nitto-atp-finals-2026-qualification"
@@ -529,7 +595,8 @@
     "dallas-final": "https://github.com/robertyang87/tennislive/releases/download/source-sh26dallas/sh26dallas.mp4",
     "munich-final": "https://github.com/robertyang87/tennislive/releases/download/source-sh26munich/sh26munich.mp4",
     "montreal-final": "https://github.com/robertyang87/tennislive/releases/download/source-sh26montmp/sh26montmp.mp4",
-    "us-open-final": "https://github.com/robertyang87/tennislive/releases/download/source-b40hO04eyLo/b40hO04eyLo.mp4"
+    "us-open-final": "https://github.com/robertyang87/tennislive/releases/download/source-b40hO04eyLo/b40hO04eyLo.mp4",
+    "paris-final": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4"
   },
   "_no_probe_why": {
     "australian-open-qf": {
@@ -561,23 +628,30 @@
       "width": 1920,
       "height": 1080,
       "fps": "60000/1001"
+    },
+    "paris-final": {
+      "why": "ActualimmutableReleasebytesffprobed;SHA25621b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807; selected120.4–149.3+silent.5visualtail149.8 reviewed withfixedcenter edge minor.",
+      "width": 1920,
+      "height": 1080,
+      "fps": "50/1"
     }
   },
   "mixed_fps": {
     "munich-final": "True source sampled to25fps, no speed change.",
-    "us-open-final": "True source sampled to25fps, no speed change."
+    "us-open-final": "True source sampled to25fps, no speed change.",
+    "paris-final": "True1920x1080@50sampledto25fps, no speedchange."
   },
   "source_crop": {},
   "push": {
     "auto": true,
-    "summary": "谢尔顿年终路",
-    "lead": "温网错失赛点之后，谢尔顿夺得加拿大大师赛冠军、首次闯进大满贯决赛，并连续第二年拿到都灵门票。"
+    "summary": "温网低谷到巴黎亚军",
+    "lead": "从温网错过赛点，到美网与巴黎亚军，谢尔顿连续第二年奔赴都灵。"
   },
   "_heat_why": "User explicitly requested Shelton2026ATPFinals road; current season chronology and currentRace proof.",
   "_outline_review": {
     "shown": true,
-    "basis": "Root showed concrete sixpart approximately5:15 plan in conversation. Final approved actual compact fallback retains15frozen narration scenes and5verified source blocks.",
-    "outline": "research/shelton-finals-road-2026/editorial-plan.json"
+    "basis": "Root showed concrete approximately5minute updated chronologicaloutline inconversation2026Nov9 beforeformalrender; retainedfirst209s,qualification,Parisfinal/Raceupdate.",
+    "outline": "research/shelton-finals-road-2026/paris-update/editorial-freeze.json"
   },
-  "_production_status": "Version2 native revision after actualv1movie inspection: AO reaction heldinsidebody, Montreal starts firsttruewide frame.17TTS/photos/facts/styles unchanged. Awaiting second formalrender and actualfinalfilmQA; oldd343version blocked and neverpublished."
+  "_production_status": "User-requested2026Nov9Parisupdate. FinalpriorV3sourcewindows/15voiceinputs retained exact;3changedrequests actualfrozen; Paris120.4–149.3+silenttail149.8 source/ASR/visualreviewed. Nativeactualpreviews/currentformalQC and exact-headCI must gate singlemainpublication."
 }

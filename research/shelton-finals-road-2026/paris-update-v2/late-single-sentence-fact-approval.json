@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SINGLE_SENTENCE_FACT_SCOPE_ONLY",
+  "reviewed_at_utc": "2026-11-09T06:47:16.582928+00:00",
+  "segment_id": "late_season",
+  "exact_narration": "资格到手以后，巴塞尔止步第二轮。巴黎先过保罗这一关，再从一盘落后打进决赛。",
+  "narration_sha256": "6ea52d27c7665830aa08709f1a159ffb81e9b0abd23758d9934615e663096f4a",
+  "claims": [
+    {
+      "phrase": "资格到手以后，巴塞尔止步第二轮",
+      "verdict": "PASS",
+      "facts": "SheltonqualifiedOct18; BaselR16lostKymOct29, afterqualification.",
+      "source": "/workspace/shelton-finals-production/research/facts/all-matches.json"
+    },
+    {
+      "phrase": "巴黎先过保罗这一关",
+      "verdict": "PASS",
+      "facts": "ParisQFNov6SheltondPaul6-4 4-6 6-3; chronologysafeanddoesnotcallPaulfirstParismatch.",
+      "source": "https://www.rolexparismasters.com/en/news/article/quarterfinals-ben-shelton-victory-tommy-paul",
+      "archive": "/dev/shm/finals-update-research/facts/sources/paris-shelton-qf.html"
+    },
+    {
+      "phrase": "再从一盘落后打进决赛",
+      "verdict": "PASS",
+      "facts": "ParisSFNov7Sheltonlostfirstset5-7thenwon6-3 6-4vsLucaVanAssche; finalqualificationnotATPFinalsqualification.",
+      "source": "https://www.rolexparismasters.com/en/news/article/singles-semifinals-ben-shelton-victory-luca-van-assche",
+      "archive": "/dev/shm/finals-update-research/facts/sources/paris-shelton-sf.html"
+    }
+  ],
+  "scope": "Onechangednarrationsentenceonly; previousMaster590066…factQCremainsspecificallyboundtothatfilm. NoTTS/pronunciation/CI/newmasterapprovalimplied.",
+  "unchanged_intent": [
+    "Publicationbodyunchanged",
+    "Other17audiorequestsunchanged",
+    "All6sourcewindowsandbilingualquotesunchanged"
+  ],
+  "new_master_fact_QC": "Pendingactualv2movie/spec/ASSandshiftedframes; cannotinheritoldfilmPASSasnewmaster."
+}

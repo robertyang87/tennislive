@@ -1,0 +1,106 @@
+{
+  "checked_at": "2026-11-09T07:19:30.198948+00:00",
+  "scope": "Video-only decoded pixel framehash first220s. No audio decoded/PCM/gain/loudness comparison.",
+  "first_master": "5900667441dd392e2b3595e17f21e3d0bbb5fd1004bbcba3d753b245bfb037bf",
+  "final_master": "7d984672c71c36592ddb32590cce8c0b7e4ee8b1588c6b7056fcfcd00c8deb0b",
+  "frame_count_first": 5500,
+  "frame_count_final": 5500,
+  "equal_pixel_frames": 5016,
+  "differing_frames": 484,
+  "first_differences": [
+    2147,
+    2148,
+    2149,
+    2150,
+    2151,
+    2152,
+    2153,
+    2154,
+    2155,
+    2156,
+    2157,
+    2158,
+    2159,
+    2160,
+    2161,
+    2162,
+    2163,
+    2164,
+    2165,
+    2166
+  ],
+  "all_old_five_point_windows_inside_checked_prefix": true,
+  "limitations": "Changed late-segment and later timeline are outside this proof and need actual final frames.",
+  "differing_ranges_seconds": [
+    [
+      85.88,
+      89.56
+    ],
+    [
+      122.4,
+      138.0
+    ]
+  ],
+  "old_five_actual_point_and_tail_pixel_comparisons": [
+    {
+      "id": "ao_point",
+      "seconds_including_visual_tail": [
+        19.41,
+        42.76
+      ],
+      "frames": [
+        486,
+        1069
+      ],
+      "all_pixel_frames_equal": true
+    },
+    {
+      "id": "dallas_point",
+      "seconds_including_visual_tail": [
+        49.428,
+        82.028
+      ],
+      "frames": [
+        1236,
+        2050
+      ],
+      "all_pixel_frames_equal": true
+    },
+    {
+      "id": "munich_point",
+      "seconds_including_visual_tail": [
+        89.8,
+        109.8
+      ],
+      "frames": [
+        2245,
+        2745
+      ],
+      "all_pixel_frames_equal": true
+    },
+    {
+      "id": "montreal_point",
+      "seconds_including_visual_tail": [
+        143.036,
+        170.576
+      ],
+      "frames": [
+        3576,
+        4264
+      ],
+      "all_pixel_frames_equal": true
+    },
+    {
+      "id": "us_open_final_point",
+      "seconds_including_visual_tail": [
+        186.332,
+        209.632
+      ],
+      "frames": [
+        4659,
+        5240
+      ],
+      "all_pixel_frames_equal": true
+    }
+  ]
+}

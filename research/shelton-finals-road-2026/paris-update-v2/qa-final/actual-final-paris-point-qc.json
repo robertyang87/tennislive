@@ -1,0 +1,104 @@
+{
+  "schema": "final-native-master-paris-scoped-qc.v2",
+  "reviewed_at": "2026-11-09T07:23:22.131309+00:00",
+  "reviewer": "Codex shelton_paris_media",
+  "status": "PASS_WITH_PREVIOUSLY_ACCEPTED_MINOR",
+  "scope": "Current V2 actual master Paris time-shift recheck; no new audio inference, no original source or V1 complete-frame extraction repeated, no claim V1/V2 encoded pixels identical.",
+  "actual_movie": {
+    "path": "/dev/shm/shelton-paris-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+    "sha256": "7d984672c71c36592ddb32590cce8c0b7e4ee8b1588c6b7056fcfcd00c8deb0b",
+    "size_bytes": 178220566,
+    "duration_s": 293.52
+  },
+  "actual_spec": {
+    "path": "/dev/shm/shelton-paris-production/final/actual-spec-v2.json",
+    "sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf"
+  },
+  "actual_ass": {
+    "path": "/dev/shm/shelton-paris-production/final/native-input-v2/subtitles.ass",
+    "sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf"
+  },
+  "actual_render_inputs": {
+    "path": "/dev/shm/shelton-paris-production/final/native-input-v2/render_inputs.json",
+    "sha256": "9f283d429fa7c904a34e32af74f7b3ca6abf359b8f42ffb2ab24dece066e4b4f"
+  },
+  "reuse_boundary": {
+    "baseline_final_film_qc": "/dev/shm/shelton-paris-production/final/qc-paris/actual-master-paris-qc.json",
+    "baseline_film_sha256": "5900667441dd392e2b3595e17f21e3d0bbb5fd1004bbcba3d753b245bfb037bf",
+    "current_and_baseline_paris_segment_exact_dict_equal": true,
+    "source_reference_equal": true,
+    "unchanged_source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+    "unchanged_source_window": [
+      120.4,
+      149.3
+    ],
+    "unchanged_source_visual_tail_to": 149.8,
+    "unchanged_caption_words_and_cx_track": true,
+    "limit": "This reuses underlying exact source/selection/ASR review and prior minor, not a blanket approval of new movie pixels. Current actual pixels were separately sampled and inspected below."
+  },
+  "current_actual_evidence": {
+    "manifest": "/dev/shm/shelton-paris-production/final/qc-paris-v2/manifest.json",
+    "new_master_png_count": 39,
+    "new_contact_sheets_personally_opened": [
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/entry-serve.jpg",
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/info-minor.jpg",
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/quotes.jpg",
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/tail.jpg"
+    ],
+    "root_contact_sheet_personally_opened_for_paris": "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-05.jpg",
+    "original_current_full_size_pngs_personally_opened": [
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/frame-006102.png",
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/frame-006249.png",
+      "/dev/shm/shelton-paris-production/final/qc-paris-v2/frame-006531.png"
+    ]
+  },
+  "checks": {
+    "entry_and_serve": {
+      "status": "pass",
+      "nominal_current_start": 241.932,
+      "actual_picture": "f6050/242.00 court+info already entering; f6061/242.44 photograph fully gone; f6101/244.04–f6104/244.16 clear actual service contact/progression",
+      "full_original": "frame-006102.png",
+      "result": "At least1.6s pure court before touch; full prep, no photo ghost at serve, no delayed right-info appearance."
+    },
+    "fixed_crop_and_minor": {
+      "status": "pass_with_retained_minor",
+      "current_frames": "Rootactual245.932,248.932,250.432 and own250.48/.52/.56 show samecenteredfullcourt and same local edge lunge",
+      "limit": "Alreadyacceptedbriefnatural lateralrackethead/ball/bodyclipping persists, not claimed absent; no new tracking, offcenter crop, skippedpoint or duplicatedscene."
+    },
+    "right_info_8_seconds": {
+      "status": "pass",
+      "last_positive_sample": 249.92,
+      "first_absent_sample": 249.96,
+      "first_absent_frame": 6249,
+      "full_original": "frame-006249.png",
+      "timing": "Nominal8s cutoff249.932 lies between these25fpsframes. Frame quantization, no extra sustained card.",
+      "layout": "Transparentnative text/verticalline; correct2026.11.08 Parisfinal, Sheltonlosing6-7(5)5-7. AbsentonfollowingRace."
+    },
+    "bilingual_quote_and_sentence_end": {
+      "status": "pass",
+      "actual_ass_events": [
+        [
+          256.83,
+          261.23
+        ],
+        [
+          261.23,
+          264.53
+        ]
+      ],
+      "current_actual_samples": "256.80 no cue,256.84 firstcompletecue,261.20 firstcue,261.24 secondcue,264.52 secondcue,264.56 absent",
+      "full_original_second_cue": "frame-006531.png",
+      "language": "UnchangedcompleteCarlos AlcarazwinsRolexParisMasters /fortheveryfirsttimeinhiscareer with accurateChinese; actualfull-sizeEnglish/Chinesecompleteandclear, nobottomcut/orphanname.",
+      "source_binding": "Existing source ASR sentence end142.88 is wellbefore149.3cut; currentmappedcompletecue ends264.53, over6s beforecurrentbodyend270.832. No newhuman listening orASR claimed."
+    },
+    "reaction_handshake_and_clean_tail": {
+      "status": "pass",
+      "current_actual_samples": "TrueSheltonreaction260.4,261.24,262.4; root270.482 genuinehug; own270.72,.80,.84 hugging,270.92–271.28 dissolveintoRace,271.36/.40 pureRace",
+      "nominal_outgoing_start": 270.832,
+      "source_limit": "Source149.3body+.5silentvisualtail149.8 remains before149.96firstpromo. Everyselectedcurrenttailframeclean; no ad,nextmatch,ceremony or blackflash."
+    }
+  },
+  "audio_scope": "ASS/source sentence bounds and actual burned captions checked. Other agent owns full current voice5suite/input binding. No newmodel call, sourcegain/loudness/PCM test, re-render or git/spec mutation.",
+  "new_blockers": [],
+  "rerender_requested": false
+}
