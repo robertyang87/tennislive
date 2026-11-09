@@ -1,17 +1,17 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4504895/tennistv-4504895.mp4",
- "official_source_url": "https://www.tennistv.com/videos/4504895/rome-2026-final-sinner-ruud-short-highlights",
- "source_sha256": "5bfe93bd616f76444a94fede580760c20832d9bb5c8eb41adb234e85c9de58de",
- "source_bytes": 71566649,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-cjCU6WbXekk/cjCU6WbXekk.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=cjCU6WbXekk",
+ "source_sha256": "67e0da19f56545bb4c87db08d3fe23249e1e1ff3ae7197f3bb4823f63374978b",
+ "source_bytes": 81807561,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 73.2,
- "reviewed_to": 80.6,
- "selected_from": 73.2,
- "selected_to": 80.6,
+ "reviewed_from": 421.52,
+ "reviewed_to": 433.84,
+ "selected_from": 421.52,
+ "selected_to": 433.84,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
@@ -20,16 +20,16 @@
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-small.en.json",
-   "sha256": "1ed639a1224860e5747326dfbfe31224f3fd10dc2e5cc0d5ca27b09ce100923c",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-cjCU6WbXekk-small.en.json",
+   "sha256": "448b0863916febecca264844c119b80788740fb7003e821c5a2226b517fc09e7",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-tennistv-4504895-medium.en.json",
-   "sha256": "227ad782eae0a649e69add4049899021c92dbe92013795ac6284abf313c6031f",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-cjCU6WbXekk-medium.en.json",
+   "sha256": "f6e5444c3ad1942cc4a9ebc3578d02b13aeef94a5350f092cc50561206730815",
    "model": "medium.en"
   }
  ],
- "review_note": "第二盘 3-2 的回合（记分条 75–99s 读过）。事实：美联社、路透都写他成为继德约科维奇之后第二位集齐九站大师赛冠军的男子球员。两档转写 73.10→97.76 无词。",
- "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+ "review_note": "冠军点：记分条第二盘 5-4 40-0 辛纳发球（420/432s 读过），421.52 切入回合，433.84 切到他张开双臂（那一镜是冷开场）。",
+ "no_foreground_english_reason": "两档转写在 390.6→435.08 之间都没有词，冠军点这一分解说没开口，只有现场声。"
 }

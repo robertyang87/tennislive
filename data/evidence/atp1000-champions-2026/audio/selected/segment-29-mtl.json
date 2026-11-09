@@ -6,34 +6,28 @@
  "source_bytes": 117332539,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 414.0,
- "reviewed_to": 436.0,
- "selected_from": 414.0,
- "selected_to": 436.0,
+ "reviewed_from": 462.9,
+ "reviewed_to": 471.4,
+ "selected_from": 462.9,
+ "selected_to": 471.4,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
  "foreground_english": [
   {
-   "start": 420.72,
-   "end": 422.06,
-   "en": "Oh!",
-   "zh": "噢！"
+   "start": 462.96,
+   "end": 468.48,
+   "en": "Remarkable stuff from start to finish, as Ben Shelton wins his seventh career title,",
+   "zh": "从头到尾都出色，谢尔顿生涯第七冠"
   },
   {
-   "start": 422.08,
-   "end": 423.08,
-   "en": "Here we go.",
-   "zh": "来了。"
-  },
-  {
-   "start": 427.08,
-   "end": 434.74,
-   "en": "Ben Shelton delivers a masterful performance in Montreal that will yield the most glittering of prizes.",
-   "zh": "谢尔顿打出大师级表现，捧走大奖。"
+   "start": 468.48,
+   "end": 470.84,
+   "en": "his first ever without dropping a set.",
+   "zh": "也是第一次一盘不丢夺冠"
   }
  ],
  "asr_rejected": [],
@@ -49,5 +43,5 @@
    "model": "medium.en"
   }
  ],
- "review_note": "冠军点：414.00–427.08 是同一个远景镜头，先是中岛救下第一个赛点（小分 6-4，423.5s 读过），再是最后一分；427.08 切到谢尔顿庆祝。两档转写：medium.en 420.72–422.12「Oh」、small.en 422.08–423.08「Here we go」（两档各记到一个短感叹，都保留并配字幕），整句 427.08–434.74（small.en 断成四截、medium.en 并进下一句，取 small.en 的句末 434.74）。段尾 436.0，下一句「The chase is complete」445.78 才开始。"
+ "review_note": "颁奖：462.9 起颁奖台全景，465.5 起谢尔顿捧着奖杯笑（465.5–471.4 抽帧看过），471.48 之后是片尾。medium 462.96–468.48 / 468.48–470.84，small 并在 449.92–470.74 一长段里（前半「the Canadian double in Toronto and Montreal」在 455.34 已说完）。"
 }

@@ -1,41 +1,41 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4497782/tennistv-4497782.mp4",
- "official_source_url": "https://www.tennistv.com/videos/4497782",
- "source_sha256": "720f07f49d97e24be45e6fbd9634da07539629c698ba07f1aaaa4c125b542785",
- "source_bytes": 71738405,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-U111uQCv6yc/U111uQCv6yc.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=U111uQCv6yc",
+ "source_sha256": "61cdcbb1cdd119b08fb56743ea7b4dac57b1f453034932611fe5d4d7c36aecec",
+ "source_bytes": 155119715,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:42:41.373783+00:00",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
  "status": "complete",
- "reviewed_from": 114.62,
- "reviewed_to": 122.64,
- "selected_from": 114.62,
- "selected_to": 122.64,
+ "reviewed_from": 434.16,
+ "reviewed_to": 442.6,
+ "selected_from": 434.16,
+ "selected_to": 442.6,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
  "foreground_english": [
   {
-   "start": 114.66,
-   "end": 119.08,
-   "en": "He is absolutely unwavering.",
-   "zh": "他心如止水。"
+   "start": 435.72,
+   "end": 442.02,
+   "en": "He becomes the first ever man to win five consecutive Masters 1000 events.",
+   "zh": "他成为史上第一位大师赛五连冠的男子球员。"
   }
  ],
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-tennistv-4497782-small.en.json",
-   "sha256": "fdb4b62f6c5d1a3e6266678e0b55eb8e39b040aa070b7852133f5638c35de931",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-U111uQCv6yc-small.en.json",
+   "sha256": "a7ab03ae2afafe20efb925766045eb688431bc2473ba25a9fcf7b66c045cf6b6",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-tennistv-4497782-medium.en.json",
-   "sha256": "35e83096b5ec8bc7956745a963b2887100c17a1994b1c934a4dc2fe71c3f60b9",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-U111uQCv6yc-medium.en.json",
+   "sha256": "fa87b15f39b21a5a8fc1bd16cb3ef5ccafe99023a23eb306f463b3a3bc0fea13",
    "model": "medium.en"
   }
  ],
- "review_note": "冠军点前，辛纳走回底线、近景（116.68 切镜）。small.en 114.66–119.08 / medium.en 116.40–118.56 同一句，取并集；段首 114.62 在句前。"
+ "review_note": "网前握手（434.16 切镜）。两档同一句 435.72–442.02；下一句 442.88 开始。事实：ATP「first player to win five consecutive ATP Masters 1000 titles」。"
 }

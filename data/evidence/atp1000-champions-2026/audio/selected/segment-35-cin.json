@@ -6,24 +6,17 @@
  "source_bytes": 107242616,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:43:32.181571+00:00",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
  "status": "complete",
- "reviewed_from": 449.64,
- "reviewed_to": 457.5,
- "selected_from": 449.64,
- "selected_to": 457.5,
+ "reviewed_from": 246.5,
+ "reviewed_to": 251.2,
+ "selected_from": 246.5,
+ "selected_to": 251.2,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
- "foreground_english": [
-  {
-   "start": 449.7,
-   "end": 452.78,
-   "en": "Ladies and gentlemen, your champion, Mr. Arthur Fils.",
-   "zh": "女士们先生们，你们的冠军，阿瑟·菲斯！"
-  }
- ],
+ "foreground_english": [],
  "asr_rejected": [],
  "raw_evidence": [
   {
@@ -37,5 +30,6 @@
    "model": "medium.en"
   }
  ],
- "review_note": "颁奖：主持人宣布冠军（449.64 切镜）。下一句 457.66 开始，段尾 457.5。"
+ "review_note": "首盘结束后的回合（246.36–258.24 同一镜头）。两档转写 246.36→259.34 无词（small「Come on, man.」见 NON_SPEECH）。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

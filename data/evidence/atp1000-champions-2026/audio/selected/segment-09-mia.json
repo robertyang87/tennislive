@@ -1,17 +1,17 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4478518/tennistv-4478518.mp4",
- "official_source_url": "https://www.tennistv.com/videos/4478518/miami-2026-final-lehecka-sinner-short-highlights",
- "source_sha256": "6c8c4b471326dfc49308db8eb23d8dd7ba0fd3769ab79fc6ce7fca2a667489a2",
- "source_bytes": 74230218,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-qWXm2tzc6OY/qWXm2tzc6OY.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=qWXm2tzc6OY",
+ "source_sha256": "ef9c0b41891ecb7bed799820b65dc1e061f36edec52388035940d2948decdb56",
+ "source_bytes": 85942936,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 96.9,
- "reviewed_to": 103.6,
- "selected_from": 96.9,
- "selected_to": 103.6,
+ "reviewed_from": 371.4,
+ "reviewed_to": 378.0,
+ "selected_from": 371.4,
+ "selected_to": 378.0,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
@@ -20,16 +20,16 @@
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-small.en.json",
-   "sha256": "c242274a4097ebf736ef5976e8462a7a9ff335bf7806444716832ef291d38d5b",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-small.en.json",
+   "sha256": "885b83c138d6ac9251969e79057d88b8bb537bf8d2127f0555a6db4e81ae643f",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-medium.en.json",
-   "sha256": "0b104869beb7b4b4c71a5ac6a5eec6708470a9ca8fd0957999df29153be20bcb",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-medium.en.json",
+   "sha256": "c866bd102fb2e22bc18594a034b836dc02d5adb49b5692c913fb8c78592f983f",
    "model": "medium.en"
   }
  ],
- "review_note": "第二盘开局的回合（记分条 0-0，93–117s 读过）。事实：美联社写决赛遇到两次各 90 分钟的雨停（two 90-minute rain delays），奥林匹克官网写开赛推迟、第二盘又中断。两档转写 92.04→128.72 无词。",
+ "review_note": "第二盘回合（368.76–385.32 同一镜头）。两档转写 371.22→384.60 无词。事实：美联社「two 90-minute rain delays」。",
  "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

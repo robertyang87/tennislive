@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-qWXm2tzc6OY/qWXm2tzc6OY.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=qWXm2tzc6OY",
+ "source_sha256": "ef9c0b41891ecb7bed799820b65dc1e061f36edec52388035940d2948decdb56",
+ "source_bytes": 85942936,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
+ "status": "complete",
+ "reviewed_from": 456.3,
+ "reviewed_to": 464.0,
+ "selected_from": 456.3,
+ "selected_to": 464.0,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 456.4,
+   "end": 463.74,
+   "en": "Ladies and gentlemen, may I present to you your Miami Open men's singles champion, Jannik Sinner!",
+   "zh": "女士们先生们，迈阿密公开赛男单冠军，扬尼克·辛纳！"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-small.en.json",
+   "sha256": "885b83c138d6ac9251969e79057d88b8bb537bf8d2127f0555a6db4e81ae643f",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-medium.en.json",
+   "sha256": "c866bd102fb2e22bc18594a034b836dc02d5adb49b5692c913fb8c78592f983f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "颁奖：456.52 切到辛纳在颁奖台捧着水晶奖杯近景（457–464 抽帧看过）。主持人整句 456.40–463.74（medium 456.40–463.48，small 456.66–463.74，中间「presented by Itaú」赞助商名照两档字面略去不译）。段首 456.3 在句前、跨一刀。"
+}

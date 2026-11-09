@@ -6,30 +6,17 @@
  "source_bytes": 107242616,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:42:41.373783+00:00",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
  "status": "complete",
- "reviewed_from": 416.8,
- "reviewed_to": 439.08,
- "selected_from": 416.8,
- "selected_to": 439.08,
+ "reviewed_from": 273.5,
+ "reviewed_to": 279.2,
+ "selected_from": 273.5,
+ "selected_to": 279.2,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
- "foreground_english": [
-  {
-   "start": 425.12,
-   "end": 430.26,
-   "en": "Arthur Fils, quite scintillating in Cincinnati.",
-   "zh": "菲斯，在辛辛那提光芒四射。"
-  },
-  {
-   "start": 434.78,
-   "end": 438.1,
-   "en": "It is the biggest title of his young career.",
-   "zh": "这是他年轻生涯里最大的冠军。"
-  }
- ],
+ "foreground_english": [],
  "asr_rejected": [],
  "raw_evidence": [
   {
@@ -43,5 +30,6 @@
    "model": "medium.en"
   }
  ],
- "review_note": "冠军点：416.80 切入最后一分的远景，425.40 起菲斯走向看台庆祝（fils-tiafoe 那条已核过：决胜盘第六局第三个赛点）。上一句「…a game away from the biggest title of his career」在 416.02 结束。medium.en「After a piece, quite scintillating, it's Scintillati」、small.en「heart of peace. Quite scintillating in Scintillati」——两档都把「Arthur Fils」「in Cincinnati」听走了音，按人名和地名还原；第二句两档一致。段尾 439.08 切到握手前。"
+ "review_note": "第二盘尾段的回合（272.72–292.76 同一镜头）。上一声「Oh」273.42 结束，两档转写 273.42→291.70 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

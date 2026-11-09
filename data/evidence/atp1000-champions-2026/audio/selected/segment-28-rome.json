@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-cjCU6WbXekk/cjCU6WbXekk.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=cjCU6WbXekk",
+ "source_sha256": "67e0da19f56545bb4c87db08d3fe23249e1e1ff3ae7197f3bb4823f63374978b",
+ "source_bytes": 81807561,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
+ "status": "complete",
+ "reviewed_from": 463.32,
+ "reviewed_to": 471.6,
+ "selected_from": 463.32,
+ "selected_to": 471.6,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-cjCU6WbXekk-small.en.json",
+   "sha256": "448b0863916febecca264844c119b80788740fb7003e821c5a2226b517fc09e7",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/rome-cjCU6WbXekk-medium.en.json",
+   "sha256": "f6e5444c3ad1942cc4a9ebc3578d02b13aeef94a5350f092cc50561206730815",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "颁奖：意大利总统马塔雷拉在旁鼓掌，辛纳举起奖杯（463.32–471.6 抽帧看过）。",
+ "no_foreground_english_reason": "颁奖：两档转写在 463.18 之后都没有词，只有现场掌声。"
+}

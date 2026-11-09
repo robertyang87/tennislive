@@ -6,22 +6,28 @@
  "source_bytes": 107242616,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:42:41.373783+00:00",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
  "status": "complete",
- "reviewed_from": 449.64,
- "reviewed_to": 457.5,
- "selected_from": 449.64,
- "selected_to": 457.5,
+ "reviewed_from": 416.8,
+ "reviewed_to": 439.08,
+ "selected_from": 416.8,
+ "selected_to": 439.08,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
  "foreground_english": [
   {
-   "start": 449.7,
-   "end": 452.78,
-   "en": "Ladies and gentlemen, your champion, Mr. Arthur Fils.",
-   "zh": "女士们先生们，你们的冠军，阿瑟·菲斯！"
+   "start": 425.12,
+   "end": 430.26,
+   "en": "Arthur Fils, quite scintillating in Cincinnati.",
+   "zh": "菲斯，在辛辛那提光芒四射。"
+  },
+  {
+   "start": 434.78,
+   "end": 438.1,
+   "en": "It is the biggest title of his young career.",
+   "zh": "这是他年轻生涯里最大的冠军。"
   }
  ],
  "asr_rejected": [],
@@ -37,5 +43,5 @@
    "model": "medium.en"
   }
  ],
- "review_note": "颁奖：主持人宣布冠军（449.64 切镜）。下一句 457.66 开始，段尾 457.5。"
+ "review_note": "冠军点：416.80 切入最后一分的远景，425.40 起菲斯走向看台庆祝（fils-tiafoe-cincinnati-2026-final 已核：决胜盘第六局第三个赛点）。上一句 416.02 结束。两档都把「Arthur Fils」「in Cincinnati」听走了音，按人名和地名还原。"
 }

@@ -6,36 +6,17 @@
  "source_bytes": 104092732,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:43:32.181571+00:00",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
  "status": "complete",
- "reviewed_from": 433.78,
- "reviewed_to": 450.56,
- "selected_from": 433.78,
- "selected_to": 450.56,
+ "reviewed_from": 30.6,
+ "reviewed_to": 36.0,
+ "selected_from": 30.6,
+ "selected_to": 36.0,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
- "foreground_english": [
-  {
-   "start": 439.04,
-   "end": 440.32,
-   "en": "Game, set, match.",
-   "zh": "比赛结束。"
-  },
-  {
-   "start": 440.64,
-   "end": 443.88,
-   "en": "Alejandro Davidovich Fokina",
-   "zh": "亚历杭德罗·达维多维奇·福基纳，"
-  },
-  {
-   "start": 443.88,
-   "end": 450.48,
-   "en": "claims a maiden Masters 1000 title in Shanghai.",
-   "zh": "在上海夺得生涯首座大师赛冠军！"
-  }
- ],
+ "foreground_english": [],
  "asr_rejected": [],
  "raw_evidence": [
   {
@@ -49,5 +30,6 @@
    "model": "medium.en"
   }
  ],
- "review_note": "冠军点：433.78 霍达尔走回底线，436.54 切入最后一分，439.24 起福基纳张开双臂。句子与 davidovichfokina-jodar-shanghai-2026-final 已审听包一致（「Game, set, match」两档 Whisper 都没出，那条包按 YouTube 官方自动字幕记在 439.04）；medium.en 413–431.8 的「1, 2, 1」是 Whisper 对现场呼喊的幻听，落在窗口之前。段尾 450.56，下一句 454.5 开始。"
+ "review_note": "首盘回合（29.88 切点之后）。上一句「…this is exquisite」30.48 结束，两档转写 30.5→49.7 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

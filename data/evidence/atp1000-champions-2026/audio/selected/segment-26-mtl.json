@@ -6,7 +6,7 @@
  "source_bytes": 117332539,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
  "reviewed_from": 107.84,
  "reviewed_to": 113.0,
@@ -30,6 +30,6 @@
    "model": "medium.en"
   }
  ],
- "review_note": "首盘回合（107.84 切点起）。事实：Tennis TV「reigning champion Ben Shelton」、ATP 采访「win the ATP Masters 1000 Canada in back-to-back years」（2025 多伦多、2026 蒙特利尔）。两档转写 106.6→121.2 无词。",
+ "review_note": "首盘回合（107.84 切点起）。事实：Tennis TV「reigning champion Ben Shelton」，ATP 采访「back-to-back years」（2025 多伦多、2026 蒙特利尔）。两档转写 106.6→121.2 无词。",
  "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

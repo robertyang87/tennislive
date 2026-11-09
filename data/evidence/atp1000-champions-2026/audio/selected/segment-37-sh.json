@@ -6,34 +6,34 @@
  "source_bytes": 104092732,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 179.9,
- "reviewed_to": 198.28,
- "selected_from": 179.9,
- "selected_to": 198.28,
+ "reviewed_from": 433.78,
+ "reviewed_to": 450.56,
+ "selected_from": 433.78,
+ "selected_to": 450.56,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
  "foreground_english": [
   {
-   "start": 181.26,
-   "end": 185.58,
-   "en": "What a chase from Davidovich Fokina",
-   "zh": "福基纳这次追球太惊人了，"
+   "start": 439.04,
+   "end": 440.32,
+   "en": "Game, set, match.",
+   "zh": "比赛结束。"
   },
   {
-   "start": 185.58,
-   "end": 191.46,
-   "en": "to get his first break of the match.",
-   "zh": "拿下了本场第一次破发。"
+   "start": 440.64,
+   "end": 443.88,
+   "en": "Alejandro Davidovich Fokina",
+   "zh": "亚历杭德罗·达维多维奇·福基纳，"
   },
   {
-   "start": 193.98,
-   "end": 198.22,
-   "en": "The nuclear athleticism that is so often associated with this guy.",
-   "zh": "这种惊人的爆发力，一直是他的招牌。"
+   "start": 443.88,
+   "end": 450.48,
+   "en": "claims a maiden Masters 1000 title in Shanghai.",
+   "zh": "在上海夺得生涯首座大师赛冠军！"
   }
  ],
  "asr_rejected": [],
@@ -49,5 +49,5 @@
    "model": "medium.en"
   }
  ],
- "review_note": "第二盘回破：179.90 切点起，福基纳从底线追到网前倒地救球（davidovichfokina-jodar-shanghai-2026-final 第 8 段同一回合，句子与那条已审听包一致：181.26–191.46）。上一句「Oh, that is remarkable」175.96 说完；small.en 把「the match」两个词的时长拉到 205.94，medium.en 句末是 191.46。记分条 192.40、195.60 两次翻牌（破发、局分），第三句 193.98–198.22（medium.en；small.en 并在前一段里）也一并保留，段尾 198.28 收在源片 198.30 的切点前，下一句 213.24 才开始。"
+ "review_note": "冠军点：433.78 霍达尔走回底线，436.54 切入最后一分，439.24 起福基纳张开双臂。句子与 davidovichfokina-jodar-shanghai-2026-final 已审听包一致（「Game, set, match」两档 Whisper 都没出，那条包按 YouTube 官方自动字幕记在 439.04）；medium.en 413–431.8 的「1, 2, 1」落在窗口之前。下一句 453.80 开始。"
 }

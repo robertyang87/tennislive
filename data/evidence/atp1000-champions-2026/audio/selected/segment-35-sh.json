@@ -6,17 +6,36 @@
  "source_bytes": 104092732,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 30.6,
- "reviewed_to": 36.0,
- "selected_from": 30.6,
- "selected_to": 36.0,
+ "reviewed_from": 179.9,
+ "reviewed_to": 198.28,
+ "selected_from": 179.9,
+ "selected_to": 198.28,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
- "foreground_english": [],
+ "foreground_english": [
+  {
+   "start": 181.26,
+   "end": 185.58,
+   "en": "What a chase from Davidovich Fokina",
+   "zh": "福基纳这次追球太惊人了，"
+  },
+  {
+   "start": 185.58,
+   "end": 191.46,
+   "en": "to get his first break of the match.",
+   "zh": "拿下了本场第一次破发。"
+  },
+  {
+   "start": 193.98,
+   "end": 198.22,
+   "en": "The nuclear athleticism that is so often associated with this guy.",
+   "zh": "这种爆发力，一直是他的招牌"
+  }
+ ],
  "asr_rejected": [],
  "raw_evidence": [
   {
@@ -30,6 +49,5 @@
    "model": "medium.en"
   }
  ],
- "review_note": "首盘回合（29.88 切点起）。两档转写 30.5→49.7 无词。",
- "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+ "review_note": "第二盘回破：179.90 切点起，福基纳从底线追到网前倒地救球（davidovichfokina-jodar-shanghai-2026-final 第 8 段同一回合，句子与那条已审听包一致）。上一句「Oh, that is remarkable」175.96 说完；记分条 192.40、195.60 两次翻牌；段尾 198.28 收在源片 198.30 的切点前，下一句 213.24 才开始。"
 }

@@ -1,17 +1,17 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-I1Uil8WUoew/I1Uil8WUoew.mp4",
- "official_source_url": "https://www.youtube.com/watch?v=I1Uil8WUoew",
- "source_sha256": "0f82eb3ce93cb6281c07787299c6d570a2b98d8b469db1fe060757c1e6c9425d",
- "source_bytes": 38894607,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-pWYku2zpgKQ/pWYku2zpgKQ.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=pWYku2zpgKQ",
+ "source_sha256": "f5399d71d90abc991ccf02589c25d61763beff31ae7e5e4de16a75433bc66ec1",
+ "source_bytes": 129421986,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 54.2,
- "reviewed_to": 61.0,
- "selected_from": 54.2,
- "selected_to": 61.0,
+ "reviewed_from": 365.5,
+ "reviewed_to": 373.0,
+ "selected_from": 365.5,
+ "selected_to": 373.0,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
@@ -20,16 +20,16 @@
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-I1Uil8WUoew-small.en.json",
-   "sha256": "ad2fb3773f59b540aceec91ddbaccbcbdb1f5266557417a474ab6906ee972ffb",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-pWYku2zpgKQ-small.en.json",
+   "sha256": "af4db3c70c6f08d9358849880a85ab8e0b79fc9ade75062e0bb37f61c671d5d8",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-I1Uil8WUoew-medium.en.json",
-   "sha256": "849fe56ed291c2c07d43acdaa3fa034b39d48b0a374f5600d6f8e29e2e49304f",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/iw-pWYku2zpgKQ-medium.en.json",
+   "sha256": "c1d20708a957c917eda66538f6f652c5fc6b36af31c5bf6e2dc3daf74295b1f0",
    "model": "medium.en"
   }
  ],
- "review_note": "记分条：首盘 7-6(6) 已定、第二盘 4-5（54–78s 读过）。两档转写 53.88→75.06 无词。",
+ "review_note": "同一镜头。事实：美联社、Tennisnerd「rallied from 4-0 down in the second-set tiebreak, winning seven straight points」。",
  "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

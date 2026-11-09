@@ -1,17 +1,17 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4486431/tennistv-4486431.mp4",
- "official_source_url": "https://www.tennistv.com/videos/4486431/monte-carlo-2026-final-alcaraz-sinner-short-highlights",
- "source_sha256": "85f0e313b25a90106d1c50c64e6993f9860b7f30caef73e1fa0b386e92cb9a3e",
- "source_bytes": 75715785,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-dQUKOY8D3IE/dQUKOY8D3IE.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=dQUKOY8D3IE",
+ "source_sha256": "df8807d5e00d2edc3978209c48e517c1a019e61c264902c50fe76777ddb1ac2f",
+ "source_bytes": 75835617,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 97.5,
- "reviewed_to": 104.2,
- "selected_from": 97.5,
- "selected_to": 104.2,
+ "reviewed_from": 364.3,
+ "reviewed_to": 371.6,
+ "selected_from": 364.3,
+ "selected_to": 371.6,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
@@ -20,16 +20,16 @@
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-tennistv-4486431-small.en.json",
-   "sha256": "d121bd65bd17169e2eb4dc48fd18d7f1713f35e627a76b76aa8a06691617c168",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-small.en.json",
+   "sha256": "1af0831202b45745834339cba2a9e28ff2f96fe8e669eaf54762b050c198db40",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-tennistv-4486431-medium.en.json",
-   "sha256": "a5d310860f22ee5c3d1b477ea6dacade21ad253e756172bff5f956515261caa1",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-medium.en.json",
+   "sha256": "b504c8a158af79fbd757b78876937dd641747ae2ea0ee943cfc27d18a72bc894",
    "model": "medium.en"
   }
  ],
- "review_note": "第二盘 1-1 的回合（记分条 96–114s 读过）。事实：路透「rallied from 3-1 down in the second set」，奥林匹克官网「won the final five games」。两档转写 75.48→105.44 无词。",
+ "review_note": "第二盘回合（362.68–379.24 同一镜头，记分条 3-3）。事实：路透「rallied from 3-1 down in the second set」、奥林匹克官网「won the final five games」。两档转写 364.28→377.72 无词。",
  "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
 }

@@ -1,41 +1,35 @@
 {
  "schema": "tennislive.foreground-transcript.v1",
- "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4486431/tennistv-4486431.mp4",
- "official_source_url": "https://www.tennistv.com/videos/4486431/monte-carlo-2026-final-alcaraz-sinner-short-highlights",
- "source_sha256": "85f0e313b25a90106d1c50c64e6993f9860b7f30caef73e1fa0b386e92cb9a3e",
- "source_bytes": 75715785,
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-dQUKOY8D3IE/dQUKOY8D3IE.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=dQUKOY8D3IE",
+ "source_sha256": "df8807d5e00d2edc3978209c48e517c1a019e61c264902c50fe76777ddb1ac2f",
+ "source_bytes": 75835617,
  "method": "asr_cross_checked",
  "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
- "reviewed_at": "2026-11-09T09:43:32.181571+00:00",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
  "status": "complete",
- "reviewed_from": 122.32,
- "reviewed_to": 135.0,
- "selected_from": 122.32,
- "selected_to": 135.0,
+ "reviewed_from": 464.68,
+ "reviewed_to": 472.8,
+ "selected_from": 464.68,
+ "selected_to": 472.8,
  "actual_listening_performed": false,
  "human_listening_claimed": false,
  "tone_verified": false,
  "uncertain_spans": [],
- "foreground_english": [
-  {
-   "start": 128.86,
-   "end": 134.98,
-   "en": "It's Sinner that reigns supreme in Monte Carlo.",
-   "zh": "蒙特卡洛，辛纳称王。"
-  }
- ],
+ "foreground_english": [],
  "asr_rejected": [],
  "raw_evidence": [
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-tennistv-4486431-small.en.json",
-   "sha256": "d121bd65bd17169e2eb4dc48fd18d7f1713f35e627a76b76aa8a06691617c168",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-small.en.json",
+   "sha256": "1af0831202b45745834339cba2a9e28ff2f96fe8e669eaf54762b050c198db40",
    "model": "small.en"
   },
   {
-   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-tennistv-4486431-medium.en.json",
-   "sha256": "a5d310860f22ee5c3d1b477ea6dacade21ad253e756172bff5f956515261caa1",
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-medium.en.json",
+   "sha256": "b504c8a158af79fbd757b78876937dd641747ae2ea0ee943cfc27d18a72bc894",
    "model": "medium.en"
   }
  ],
- "review_note": "冠军点：记分条第二盘 5-3 40-15 辛纳发球（123/126.5s 读过），122.32 切入回合，127.36 起辛纳跪在红土上、俯拍。解说 medium.en 128.86–135.02 / small.en 129.06–135.00 同一句；之后两档对不上（medium「7-6, 7-3」、small「So it takes…」），所以段尾收在 135.02，不带下一句。"
+ "review_note": "颁奖：辛纳在摩纳哥王室成员旁双手举起奖杯（464.68–472.8 抽帧看过），472.8 之后是片尾。",
+ "no_foreground_english_reason": "颁奖：两档转写在 464.26 之后都没有词（上一句「…opening three Masters 1000s of the season」464.26 结束），只有现场掌声。"
 }
