@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-dvynMKs124E/dvynMKs124E.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=dvynMKs124E",
+ "source_sha256": "dafba91818efccfaa1b159ffb4eab76c87fc4ec6dc951e50a65d25ea9491e530",
+ "source_bytes": 117332539,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
+ "status": "complete",
+ "reviewed_from": 145.76,
+ "reviewed_to": 151.2,
+ "selected_from": 145.76,
+ "selected_to": 151.2,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mtl-dvynMKs124E-small.en.json",
+   "sha256": "3ed850ad050894e5c4f98391febdc9c74406e7369514353172b8c1af8ea29d50",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mtl-dvynMKs124E-medium.en.json",
+   "sha256": "ccd5d1840f16ef3b647627455d15a6fd5dd4d06a3c6b9db391da67d12381fa3c",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "首盘回合（145.76 切点起）。事实沿用 shelton-nakashima-montreal-final 已核过的 flashscore 技术统计（中岛破发点 0）。两档转写 143.5→152.4 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}

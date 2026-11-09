@@ -1,0 +1,47 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-qWXm2tzc6OY/qWXm2tzc6OY.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=qWXm2tzc6OY",
+ "source_sha256": "ef9c0b41891ecb7bed799820b65dc1e061f36edec52388035940d2948decdb56",
+ "source_bytes": 85942936,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
+ "status": "complete",
+ "reviewed_from": 409.08,
+ "reviewed_to": 426.6,
+ "selected_from": 409.08,
+ "selected_to": 426.6,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 414.32,
+   "end": 418.66,
+   "en": "It is a Sinner Sunshine Double.",
+   "zh": "这是属于辛纳的阳光双冠。"
+  },
+  {
+   "start": 420.64,
+   "end": 426.26,
+   "en": "The Italian adds the Miami title to his Indian Wells trophy earlier this month.",
+   "zh": "继印第安维尔斯之后，又拿下迈阿密"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-small.en.json",
+   "sha256": "885b83c138d6ac9251969e79057d88b8bb537bf8d2127f0555a6db4e81ae643f",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-medium.en.json",
+   "sha256": "c866bd102fb2e22bc18594a034b836dc02d5adb49b5692c913fb8c78592f983f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 5-4 40-15 辛纳发球（408/412s 读过），409.08 切入回合，415.56 起辛纳张开双臂、手里攥着球，423.68 起网前和莱赫奇卡握手。上一句「And finally, Sinner converts」408.66 结束；下一句 431.40 开始。"
+}

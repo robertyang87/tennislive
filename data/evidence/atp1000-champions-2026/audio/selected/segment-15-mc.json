@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-dQUKOY8D3IE/dQUKOY8D3IE.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=dQUKOY8D3IE",
+ "source_sha256": "df8807d5e00d2edc3978209c48e517c1a019e61c264902c50fe76777ddb1ac2f",
+ "source_bytes": 75835617,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
+ "status": "complete",
+ "reviewed_from": 419.2,
+ "reviewed_to": 430.3,
+ "selected_from": 419.2,
+ "selected_to": 430.3,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 423.08,
+   "end": 430.2,
+   "en": "It's Sinner that reigns supreme in Monte Carlo.",
+   "zh": "蒙特卡洛，辛纳称王！"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-small.en.json",
+   "sha256": "1af0831202b45745834339cba2a9e28ff2f96fe8e669eaf54762b050c198db40",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-medium.en.json",
+   "sha256": "b504c8a158af79fbd757b78876937dd641747ae2ea0ee943cfc27d18a72bc894",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "冠军点：记分条第二盘 5-3 40-15 辛纳发球（416/420s 读过），419.20 切入，422.48 辛纳跪在红土上，425.48–430.3 俯拍。medium 423.08「Sinner.」＋424.86–430.18、small 424.00–430.20 同一句；上一句「…tough one from Sinner」418.58 结束。"
+}

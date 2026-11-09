@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-qWXm2tzc6OY/qWXm2tzc6OY.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=qWXm2tzc6OY",
+ "source_sha256": "ef9c0b41891ecb7bed799820b65dc1e061f36edec52388035940d2948decdb56",
+ "source_bytes": 85942936,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
+ "status": "complete",
+ "reviewed_from": 426.6,
+ "reviewed_to": 431.3,
+ "selected_from": 426.6,
+ "selected_to": 431.3,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-small.en.json",
+   "sha256": "885b83c138d6ac9251969e79057d88b8bb537bf8d2127f0555a6db4e81ae643f",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-qWXm2tzc6OY-medium.en.json",
+   "sha256": "c866bd102fb2e22bc18594a034b836dc02d5adb49b5692c913fb8c78592f983f",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "网前拥抱（423.68–439.16 同一镜头）。事实：维基「first man to win the Sunshine Double without dropping a set」，美联社同口径。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}

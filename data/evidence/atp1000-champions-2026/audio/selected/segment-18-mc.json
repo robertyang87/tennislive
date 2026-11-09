@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-dQUKOY8D3IE/dQUKOY8D3IE.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=dQUKOY8D3IE",
+ "source_sha256": "df8807d5e00d2edc3978209c48e517c1a019e61c264902c50fe76777ddb1ac2f",
+ "source_bytes": 75835617,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
+ "status": "complete",
+ "reviewed_from": 464.68,
+ "reviewed_to": 472.8,
+ "selected_from": 464.68,
+ "selected_to": 472.8,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-small.en.json",
+   "sha256": "1af0831202b45745834339cba2a9e28ff2f96fe8e669eaf54762b050c198db40",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mc-dQUKOY8D3IE-medium.en.json",
+   "sha256": "b504c8a158af79fbd757b78876937dd641747ae2ea0ee943cfc27d18a72bc894",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "颁奖：辛纳在摩纳哥王室成员旁双手举起奖杯（464.68–472.8 抽帧看过），472.8 之后是片尾。",
+ "no_foreground_english_reason": "颁奖：两档转写在 464.26 之后都没有词（上一句「…opening three Masters 1000s of the season」464.26 结束），只有现场掌声。"
+}

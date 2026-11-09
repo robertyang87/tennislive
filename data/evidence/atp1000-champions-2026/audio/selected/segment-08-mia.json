@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4478518/tennistv-4478518.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4478518/miami-2026-final-lehecka-sinner-short-highlights",
+ "source_sha256": "6c8c4b471326dfc49308db8eb23d8dd7ba0fd3769ab79fc6ce7fca2a667489a2",
+ "source_bytes": 74230218,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 51.9,
+ "reviewed_to": 57.6,
+ "selected_from": 51.9,
+ "selected_to": 57.6,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-small.en.json",
+   "sha256": "c242274a4097ebf736ef5976e8462a7a9ff335bf7806444716832ef291d38d5b",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mia-tennistv-4478518-medium.en.json",
+   "sha256": "0b104869beb7b4b4c71a5ac6a5eec6708470a9ca8fd0957999df29153be20bcb",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "首盘 3-5 莱赫奇卡占先的回合（51.84 切点起）。两档转写 48.48→62.48 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}

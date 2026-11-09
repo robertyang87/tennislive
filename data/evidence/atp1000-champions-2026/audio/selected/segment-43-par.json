@@ -1,0 +1,41 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-76kloSuaPEQ/76kloSuaPEQ.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=76kloSuaPEQ",
+ "source_sha256": "8e1fef930a01b5e4658cb79a2acf1e3f6cf4bec0df41e29bc11d639bae201bee",
+ "source_bytes": 83833188,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:06:35.443605+00:00",
+ "status": "complete",
+ "reviewed_from": 463.0,
+ "reviewed_to": 472.9,
+ "selected_from": 463.0,
+ "selected_to": 472.9,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [
+  {
+   "start": 464.54,
+   "end": 472.7,
+   "en": "He sure is on fire, a third title in his last four tournaments for Carlos Alcaraz.",
+   "zh": "状态火热，最近四站拿下三冠"
+  }
+ ],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/par-76kloSuaPEQ-small.en.json",
+   "sha256": "c22a90936db1d5a03927cf97e487138fb8282f7bded3a0bbe3e3e38cda7a1362",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/par-76kloSuaPEQ-medium.en.json",
+   "sha256": "622e4e3266e1c39804b9644bd39de83992acc1931c6f4512f2b6a60ec92593c8",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "颁奖：465.20 起阿尔卡拉斯在火花里捧杯、举杯近景（465–472.6 抽帧看过）。两档同一句 464.54–472.76；段首 463.0 在句前、跨一刀。"
+}

@@ -1,0 +1,35 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-U111uQCv6yc/U111uQCv6yc.mp4",
+ "official_source_url": "https://www.youtube.com/watch?v=U111uQCv6yc",
+ "source_sha256": "61cdcbb1cdd119b08fb56743ea7b4dac57b1f453034932611fe5d4d7c36aecec",
+ "source_bytes": 155119715,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T11:03:33.376438+00:00",
+ "status": "complete",
+ "reviewed_from": 467.38,
+ "reviewed_to": 471.0,
+ "selected_from": 467.38,
+ "selected_to": 471.0,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [],
+ "raw_evidence": [
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-U111uQCv6yc-small.en.json",
+   "sha256": "a7ab03ae2afafe20efb925766045eb688431bc2473ba25a9fcf7b66c045cf6b6",
+   "model": "small.en"
+  },
+  {
+   "path": "data/evidence/atp1000-champions-2026/audio/raw/mad-U111uQCv6yc-medium.en.json",
+   "sha256": "fa87b15f39b21a5a8fc1bd16cb3ef5ccafe99023a23eb306f463b3a3bc0fea13",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "捧杯近景：辛纳在漫天彩带里举着奖杯（467.38–471.0 抽帧看过）。",
+ "no_foreground_english_reason": "颁奖：两档转写在 462.92 之后都没有词，只有现场彩带和欢呼。"
+}

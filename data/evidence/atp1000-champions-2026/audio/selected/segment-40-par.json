@@ -1,0 +1,43 @@
+{
+ "schema": "tennislive.foreground-transcript.v1",
+ "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+ "official_source_url": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights",
+ "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+ "source_bytes": 161016998,
+ "method": "asr_cross_checked",
+ "reviewer": "Claude（Claude Code 会话）：faster-whisper small.en 与 medium.en 两档逐句交叉核对＋逐段缩略图与记分条抽帧；未人工听音、不声称语气",
+ "reviewed_at": "2026-11-09T09:54:24.449079+00:00",
+ "status": "complete",
+ "reviewed_from": 29.8,
+ "reviewed_to": 36.6,
+ "selected_from": 29.8,
+ "selected_to": 36.6,
+ "actual_listening_performed": false,
+ "human_listening_claimed": false,
+ "tone_verified": false,
+ "uncertain_spans": [],
+ "foreground_english": [],
+ "asr_rejected": [
+  {
+   "model": "small.en",
+   "start": 30.0,
+   "end": 37.0,
+   "text": "Thank you.",
+   "why": "small.en 在 30.00–37.00 输出「Thank you.」：首词置信 0.003、第二个词被拉成 7 秒——Whisper 的典型幻听；medium.en 在 29.80→49.82 之间无任何词，画面是决赛首盘回合。"
+  }
+ ],
+ "raw_evidence": [
+  {
+   "path": "data/source_asr/tennistv-4606354/small.en.json",
+   "sha256": "25e9c03a5d36c91a31e82fb5dc9218be0e16d8a438e067fde2b44057913be9e3",
+   "model": "small.en"
+  },
+  {
+   "path": "data/source_asr/tennistv-4606354/medium.en.json",
+   "sha256": "4ac3ea71730843bfbbc5c3282d56fdbc57e647971e04e7b96f89ed4f07bd9031",
+   "model": "medium.en"
+  }
+ ],
+ "review_note": "决赛首盘回合（29.56–48.94 同一镜头）。事实：alcaraz-shelton-paris-2026-final 已核（BBC：对弗里茨 6-7(10) 7-5 6-3，救两个赛点）。两档转写 29.80→49.82 无词。",
+ "no_foreground_english_reason": "small.en 与 medium.en 两档转写在本窗口内都没有任何英文（旁白段，窗口按两档转写的空档取）。"
+}
