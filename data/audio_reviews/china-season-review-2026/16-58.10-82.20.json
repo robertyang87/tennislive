@@ -1,0 +1,38 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-kUbqV30q1OE/kUbqV30q1OE.mp4",
+  "source_sha256": "6adfc5634a18db54191027276fa268a94ff0552b17b7a97a724b206b7273fee5",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-09T07:14:45+00:00",
+  "reviewed_from": 58.1,
+  "reviewed_to": 82.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 58.24,
+      "end": 73.8,
+      "en": "I cannot describe these kind of moments, how to say to my team, what we achieved during this year.",
+      "zh": "无法形容这一刻，我们做到了。"
+    },
+    {
+      "start": 73.8,
+      "end": 77.7,
+      "en": "It was not an easy one, many injuries,",
+      "zh": "这一年不容易，伤病不断，"
+    },
+    {
+      "start": 77.7,
+      "end": 81.4,
+      "en": "but we keep believing,",
+      "zh": "但我们一直相信，"
+    },
+    {
+      "start": 81.4,
+      "end": 82.2,
+      "en": "you were believing in me all year.",
+      "zh": "你们也相信了我一整年。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 6adfc5634a18db54191027276fa268a94ff0552b17b7a97a724b206b7273fee5，存于 data/source_asr/kUbqV30q1OE/small.en.json 与 data/source_asr/kUbqV30q1OE/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
