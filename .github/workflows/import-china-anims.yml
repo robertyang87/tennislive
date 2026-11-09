@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      GH_TOKEN: <redacted>
+      GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +36,8 @@ jobs:
           cd research/china-season-review-2026/anim-src
           sha256sum *.mp4
           for f in china26map1 china26wall; do
-            tag="source-"
-            gh release view "" >/dev/null 2>&1 || gh release create "" --title "" --notes "《中国赛季回顾》china-season-review-2026 自制动画源存档：（本地代码绘制，含静音 AAC 轨）。"
-            gh release upload "" ".mp4" --clobber
-            gh release view "" --json assets --jq '.assets[] | "\(.name) \(.size)"'
+            tag="source-$f"
+            gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$tag" --notes "《中国赛季回顾》china-season-review-2026 自制动画源存档：$f（本地代码绘制，含静音 AAC 轨）。"
+            gh release upload "$tag" "$f.mp4" --clobber
+            gh release view "$tag" --json assets --jq '.assets[] | "\(.name) \(.size)"'
           done
