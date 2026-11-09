@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.foreground-audio-review.v1",
+  "plan_sha256": "6ae46ce5be114e32bb744a753e026cd330256d7421dc231dc1714cc602a6d19f",
+  "status": "complete",
+  "segments": [
+    {
+      "index": 0,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/00.json",
+      "transcript_sha256": "8df1b67d36e42c197499ad5f41f95b5af04950c66e4c166b934c0bc14d12f45e"
+    },
+    {
+      "index": 2,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/02.json",
+      "transcript_sha256": "0bec2fa5eb7d0cbd08fb1a50676c8402aa7bd299d7a03f901e9a9e69d85704de"
+    },
+    {
+      "index": 3,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/03.json",
+      "transcript_sha256": "539ae67ad7af68173c16146723f2ce0f3a1c1cfe634a713e94c6a9c3f236ef63"
+    },
+    {
+      "index": 4,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/04.json",
+      "transcript_sha256": "0a0e3668dd176420c057c62dc2331d078bc88166f2ddf3e929627682934316ef"
+    },
+    {
+      "index": 6,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/06.json",
+      "transcript_sha256": "99c77c6bb5baaea190e49b27adb309260c6c3271bb116da352427eaa384e10c4"
+    },
+    {
+      "index": 7,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/07.json",
+      "transcript_sha256": "3d259b1eaf00ee8d857a181ae5da0bd5c76758729db41ff5dccc0620af7787e9"
+    },
+    {
+      "index": 8,
+      "transcript_path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/audio-windows/08.json",
+      "transcript_sha256": "8a3404c197b9f1cc13359d528047d68513fd78501b97aadbe6071aed35357c83"
+    }
+  ],
+  "owner_edit": {
+    "instruction": "整句剪去，保留赛点及后续庆祝",
+    "removed_source_window": [
+      269.12,
+      273.0
+    ],
+    "kept_matchpoint": [
+      261.52,
+      269.12
+    ],
+    "kept_after_match": [
+      273,
+      299.88
+    ],
+    "first_fist_closeup_removed": true,
+    "original_source_audio_modified": false
+  }
+}

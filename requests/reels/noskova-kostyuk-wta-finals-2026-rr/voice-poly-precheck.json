@@ -1,0 +1,84 @@
+{
+  "scope": "Actual narration acoustic checks, not a formal render-bound voice approval.",
+  "rows": [
+    {
+      "segment": 1,
+      "audio_sha256": "bcf8f362c146f73df6493e80ab5d75bb9dbf9149121ab7ccd8aec5b35973b85c",
+      "polyphone_results": [
+        {
+          "index": 82,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "no_rejected_targets": true
+    },
+    {
+      "segment": 6,
+      "audio_sha256": "6adc1f5cae6e9f9f8e94f7a4268d3ce48eeada8ccae8755cf8cb3813f9c4c80b",
+      "polyphone_results": [
+        {
+          "index": 5,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 68,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "no_rejected_targets": true
+    },
+    {
+      "segment": 9,
+      "audio_sha256": "e30bfa9a5f46f2073f2b6a65199ca6244ccc7cbb8d53371de5672cc76a05c299",
+      "polyphone_results": [
+        {
+          "index": 46,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.509,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "no_rejected_targets": true
+    }
+  ],
+  "sentence_splits": []
+}

@@ -1,0 +1,16 @@
+{
+  "stage": "production_preflight",
+  "command": [
+    "/workspace/scratch/tennis-venv/bin/python",
+    "tools/production_preflight.py",
+    "--spec",
+    "specs/reels/pending/noskova-kostyuk-wta-finals-2026-rr.draft.json",
+    "--column",
+    "赛场之上"
+  ],
+  "exit_code": 1,
+  "stdout": "[自定义比分框] 自定义框校准扫描范围：源 https://github.com/robertyang87/tennislive/releases/download/source-5yZN0py5qSk/5yZN0py5qSk.mp4，0.000→308.400s，1542 帧/5fps。仅认领这一范围；不据此宣称全片通过，范围外选段仍须原生逐段蒙版检查。\n",
+  "stderr": "Traceback (most recent call last):\n  File \"/workspace/tennislive/tools/foreground_audio_gate.py\", line 221, in require\n    return inspect(spec,**kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/tennislive/tools/foreground_audio_gate.py\", line 113, in inspect\n    return _inspect(spec, root=root, sources=sources, review=None)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/tennislive/tools/foreground_audio_gate.py\", line 156, in _inspect\n    review=json.loads(path.read_text())\n                      ^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/workspace/tennislive/data/audio_reviews/noskova-kostyuk-wta-finals-2026-rr.json'\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/tennislive/tools/production_preflight.py\", line 225, in <module>\n    main()\n  File \"/workspace/tennislive/tools/production_preflight.py\", line 217, in main\n    require_audio_review(spec)\n  File \"/workspace/tennislive/tools/foreground_audio_gate.py\", line 223, in require\n    raise ValueError(f'waiting_audio_review：{exc}') from exc\nValueError: waiting_audio_review：[Errno 2] No such file or directory: '/workspace/tennislive/data/audio_reviews/noskova-kostyuk-wta-finals-2026-rr.json'\n",
+  "production_qc_pass": false,
+  "pushplus_sent": false
+}
