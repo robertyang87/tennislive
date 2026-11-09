@@ -1,0 +1,122 @@
+{
+  "schema": "tennis-season-source-visual-review.v1",
+  "reviewed_at": "2026-11-09T06:34:18.273459+00:00",
+  "reviewer": "Codex shelton_paris_media",
+  "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+  "source_path": "/dev/shm/alcaraz-finals-production/research/media/us-qf/wYd7I5_tMEs.mp4",
+  "actual_ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "60000/1001",
+        "avg_frame_rate": "60000/1001"
+      },
+      {
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0"
+      }
+    ],
+    "format": {
+      "duration": "199.691610",
+      "size": "74350264"
+    }
+  },
+  "status": "pass_with_documented_fixed_center_minor_pending_final_native_review",
+  "window": [
+    122.17,
+    139.0
+  ],
+  "native_visual_tail_end": 139.5,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "crop": {
+    "cx": 0.5,
+    "track": false,
+    "source_horizontal_pixels": [
+      555,
+      1365
+    ],
+    "source_crop_width": 810,
+    "fit": "fill"
+  },
+  "match": {
+    "event": "US Open 2026",
+    "round": "Quarter-Final",
+    "winner": "Ben Shelton",
+    "loser": "Carlos Alcaraz",
+    "score_winner_perspective": "6-7(5) 6-1 6-3 1-6 7-6(7)",
+    "official_report": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/highlights_from_ben_shelton_vs_carlos_alcaraz_at_the_2026_us_open.html",
+    "official_point_outcome": "winning ace; Alcaraz does not touch ball"
+  },
+  "point_stages": {
+    "first_wide_scene": 122.17,
+    "native_dissolve_ends_by": 122.67,
+    "far_shelton_toss_starts_around": 123.7,
+    "far_shelton_actual_contact_range": [
+      124.35,
+      124.4
+    ],
+    "serve_box_ball_flight_bounce_around": [
+      124.6,
+      124.75
+    ],
+    "post_bounce_visible_ball_at124_75_source_xy": [
+      1314,
+      568
+    ],
+    "near_alcaraz_unsuccessful_reach": [
+      124.75,
+      125.45
+    ],
+    "winner_reaction": [
+      125.5,
+      131.7
+    ],
+    "true_alcaraz_loser_reaction": [
+      131.9,
+      135.9
+    ],
+    "same_match_net_handshake_hug": [
+      136.0,
+      139.5
+    ]
+  },
+  "minor": {
+    "description": "Near Alcaraz body is partially clipped by fixed center frame during receiving stance; unsuccessful uncontacted chase/racket extension exits right by end of ace. This does not hide an actual racket contact. Server toss/contact and service-box ball flight/bounce remain inside center crop; genuine terminal result/loser reaction/net embrace follow. Do not claim zero player/ball edge crop.",
+    "not_a_tracking_or_shift_workaround": true
+  },
+  "actually_opened_evidence": [
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/whole.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/point-full.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/point-crop.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/serve-full.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/return-full.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/return-crop.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/123.45-full.png",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/124.98-full.png",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/serve-contact-actual-full.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/far-serve-ROI.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/near-serve-ROI-bound.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/far-actual-toss-contact-ROI.jpg",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/124.65-full.png",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/124.75-full.png",
+    "/dev/shm/alcaraz-finals-production/research/media/us-qf/review/selected-tail-crop.jpg"
+  ],
+  "withdrawn_inference_record": "/dev/shm/alcaraz-finals-production/research/media/us-qf/withdrawn-visual-inferences.json",
+  "notes": [
+    "Official source199.69161s actual1080, no stretching/upscaling exception or offcenter crop.",
+    "First valid wide begins122.17 with server still bouncing/preparing. Native.5 entry clears122.67,1.68s before earliest actual contact124.35. Earlier closeup of Shelton120.6–122.17 would half-crop his face and is unnecessary.",
+    "No extra rally selected; this is sole terminal ace. No earlier tiebreak point substituted.",
+    "Source139.5 clean same-match hug, no next point/promo/ceremony. Following commentary144.12 is safely excluded.",
+    "Final native preview/master remains to inspect; not a final-film clearance."
+  ]
+}

@@ -1,0 +1,709 @@
+{
+  "status": "ACTUAL_FROZEN15_MARKS_BOUND_READY_FOR_PRODUCER_SINGLE_ENCODE",
+  "editorial_path": "/dev/shm/alcaraz-finals-production/research/editorial/editorial-plan.frozen.json",
+  "editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+  "photo_map_path": "/dev/shm/alcaraz-finals-production/research/photos/photo-map.frozen.json",
+  "photo_map_sha256": "f0fa8375e72c1d6526ac8e945f398f6f8e673ca9ea40779d064b6205d0db672a",
+  "actual_input_path": "/dev/shm/alcaraz-finals-production/production/frozen15/actual-inputs.json",
+  "actual_inputs_sha256": "dc6c617fd94c0945312d5b684f28d02e9c61e393b067e7f363c987a5152997e4",
+  "actual15_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "5ecb7026f97e0412b3c125bb43f0267404e57289017cd4f1ac953d9cb4bc4cb5",
+    "request_count": 15,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  },
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "policy": "All shots exact pre-cropped 3:4, fixed center .5/.5, static zoom1; lower-resolution AO trophy/SF and USQF native 1.10429x limit retained, no extra zoom. .4s tail matches current producer native narration pattern; producer must use its actual spec timing. No info inset on photos/titlecard/Race. No placeholder video, no new model/TTS/ASR/render invoked.",
+  "vienna_credit_proof": "/dev/shm/alcaraz-finals-production/production/photo-assets/vienna-credit-proof.json",
+  "wrist_native_card_proof": "/dev/shm/alcaraz-finals-production/production/photo-assets/wrist-native-title-card-proof.json",
+  "segments": [
+    {
+      "id": "opening",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/opening.mp3",
+      "audio_sha256": "1017590ff024e5ccefd22642f3314b9de9a61b52ede335d510c45a46aed2eb4b",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/opening.words.json",
+      "marks_sha256": "f2f88bac7b1a44b5163501124052978e0cc10d4fab50d1383f18f062b01b261d",
+      "audio_seconds": 8.664,
+      "recommended_visual_seconds": 9.064,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        9.064
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4606341",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/alcaraz-paris-cover-4606341-3x4.jpg",
+          "sha256": "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "Nov8ParisFcurrenthero; opening introductionmentionspastinjurybutdoesnotdepictit",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [],
+      "source_binding": {
+        "id": "opening",
+        "photos": [
+          "atp-4606341"
+        ],
+        "source_context": "Nov8ParisFcurrenthero; opening introductionmentionspastinjurybutdoesnotdepictit",
+        "word_cuts": "Onecurrenthero allopening, no repeatedinjurycard."
+      },
+      "special_case": null
+    },
+    {
+      "id": "ao_semifinal",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/ao_semifinal.mp3",
+      "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/ao_semifinal.words.json",
+      "marks_sha256": "e229dd02b5a7e70852149c0bf02eb6be6ebd7776ab3d298a20c77564eb154e9c",
+      "audio_seconds": 10.68,
+      "recommended_visual_seconds": 11.08,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        11.08
+      ],
+      "shots": [
+        {
+          "photo_key": "ao-sf-elpais-report-3",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/australian-open-semifinal-alcaraz-2026-3x4.jpg",
+          "sha256": "fd0c16a93deec06de7378f5d5caed9fb065301dd814f5ca636e3c9941731a5d4",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "GenuineJan30AO-SFvsZverev, APAsankaBrendonRatnayake. In-matchblue-towelcloseup; notFeb1Fandnotliteralwinningrally/medicaldiagnosisphoto.",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [],
+      "source_binding": {
+        "id": "ao_semifinal",
+        "photos": [
+          "ao-sf-elpais-report-3"
+        ],
+        "source_context": "GenuineJan30AO-SFvsZverev, APAsankaBrendonRatnayake. In-matchblue-towelcloseup; notFeb1Fandnotliteralwinningrally/medicaldiagnosisphoto.",
+        "word_cuts": "UseonecorrectSFportraitfornatural~10sfullsentence, notholdforartificialduration; nextrealFeb1Fphotoat澳网决赛.",
+        "motion": "static_no_extraZoom;display1.10429x explicitlynotnative1080sourcecrop",
+        "photo_proof": "/dev/shm/alcaraz-finals-production/research/photos/ao-semifinal-new-photo-proof.json"
+      },
+      "special_case": null
+    },
+    {
+      "id": "ao_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/ao_intro.mp3",
+      "audio_sha256": "5e24c652dd7aa89509140ec65153229a4309f3d4a54f17db701ef0175b98ab4b",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/ao_intro.words.json",
+      "marks_sha256": "71fc8675f12005b45b510a7918556564bc63e821cbba6dd2a11da71573138c21",
+      "audio_seconds": 11.592,
+      "recommended_visual_seconds": 11.992,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        5.0,
+        11.992
+      ],
+      "shots": [
+        {
+          "photo_key": "ao-elpais-9",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/australian-open-celebration-alcaraz-2026-3x4.jpg",
+          "sha256": "7bfff8d2226fc59a290184c20ca06ff5e9d3f8724b5d7bd316bf1c474509cac0",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "BothFeb1finalsameDjokovic; photo9genuinepostwinreaction/APAsankaBrendonRatnayake, photo2genuinetrophypose/GettyDarrianTraynor",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "ao-elpais-2",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/australian-open-trophy-alcaraz-2026-3x4.jpg",
+          "sha256": "af333e0fd91e12c66004ce12040971d9beda7278c1909539837af9582b9825d2",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "BothFeb1finalsameDjokovic; photo9genuinepostwinreaction/APAsankaBrendonRatnayake, photo2genuinetrophypose/GettyDarrianTraynor",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "首夺澳网",
+          "actual_word_index": 14,
+          "raw_word_offset_seconds": 5.011791,
+          "cut_seconds_25fps": 5.0,
+          "quantization_error_seconds": -0.011791
+        }
+      ],
+      "source_binding": {
+        "id": "ao_intro",
+        "photos": [
+          "ao-elpais-9",
+          "ao-elpais-2"
+        ],
+        "source_context": "BothFeb1finalsameDjokovic; photo9genuinepostwinreaction/APAsankaBrendonRatnayake, photo2genuinetrophypose/GettyDarrianTraynor",
+        "word_cuts": "Cup photoafter首夺澳网 orbecomingyoungestfact; not calendarGS; awaitactualwordmarks",
+        "motion": "Bothstatic, trophy1.10429xdisplay noextra digitalzoom"
+      },
+      "special_case": null
+    },
+    {
+      "id": "doha_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/doha_intro.mp3",
+      "audio_sha256": "3f21b52e9b565522c36bd37ed72cac21cdc6960c522ca416a3a2b5232b0c07fe",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/doha_intro.words.json",
+      "marks_sha256": "f782186dd5ac5b4f99ddac08a256c669de12c3ce7c7459553bc72d9f0a1986a2",
+      "audio_seconds": 8.112,
+      "recommended_visual_seconds": 8.512,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        8.512
+      ],
+      "shots": [
+        {
+          "photo_key": "doha-ap-8",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/doha-final-celebration-alcaraz-2026-3x4.jpg",
+          "sha256": "1cf8d6401548c44142e0a34540554cb00d13277ee7545f8d643c8f6625217f59",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "Feb21AP HusseinSayyed authentic celebrationafterbeatingFils, nototherround",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [],
+      "source_binding": {
+        "id": "doha_intro",
+        "photos": [
+          "doha-ap-8"
+        ],
+        "source_context": "Feb21AP HusseinSayyed authentic celebrationafterbeatingFils, nototherround",
+        "word_cuts": "Singlephoto6sec adequate; trophycandidate9unselected becauseface/trophy3:4compositionlessbalanced."
+      },
+      "special_case": null
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/sunshine_montecarlo_intro.mp3",
+      "audio_sha256": "be3064b24d262ad867c93992b79deda21411b3d317f4c25bfcbf3328390b379e",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/sunshine_montecarlo_intro.words.json",
+      "marks_sha256": "4cc4391b3814e1577a5531c83315b26dfbef1f5400896b377754e90f9fa1fabf",
+      "audio_seconds": 9.216,
+      "recommended_visual_seconds": 9.616,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        2.8,
+        5.28,
+        9.616
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4469366",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/indian-wells-semifinal-alcaraz-2026-3x4.jpg",
+          "sha256": "54ddbec9380731a7391146dd449b222cdc07e4e29e05449dbba2c6b77f108996",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "IWcaptureMarch14localvsMedvedev/APIpublishMar15UTC;MiamiMar22R3vsKorda;MCApr12FvsSinner",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4474554",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/miami-third-round-alcaraz-2026-3x4.jpg",
+          "sha256": "7d0c24c3eea54b41b3af6a2683b1da80bbaf952939e17710af44e2b3147ea271",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "IWcaptureMarch14localvsMedvedev/APIpublishMar15UTC;MiamiMar22R3vsKorda;MCApr12FvsSinner",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4486387",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/montecarlo-final-alcaraz-2026-3x4.jpg",
+          "sha256": "a2b64feef1c80445bc932368884121ec42d987bb7d39600139d6416a30d9e9c8",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "IWcaptureMarch14localvsMedvedev/APIpublishMar15UTC;MiamiMar22R3vsKorda;MCApr12FvsSinner",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "迈阿密",
+          "actual_word_index": 5,
+          "raw_word_offset_seconds": 2.806583,
+          "cut_seconds_25fps": 2.8,
+          "quantization_error_seconds": -0.006583
+        },
+        {
+          "next_shot_index": 2,
+          "anchor": "来到蒙特卡洛决赛",
+          "actual_word_index": 10,
+          "raw_word_offset_seconds": 5.271208,
+          "cut_seconds_25fps": 5.28,
+          "quantization_error_seconds": 0.008792
+        }
+      ],
+      "source_binding": {
+        "id": "sunshine_montecarlo_intro",
+        "photos": [
+          "atp-4469366",
+          "atp-4474554",
+          "atp-4486387"
+        ],
+        "source_context": "IWcaptureMarch14localvsMedvedev/APIpublishMar15UTC;MiamiMar22R3vsKorda;MCApr12FvsSinner",
+        "word_cuts": "Actualmarks:三月/IW→迈阿密→蒙特卡洛决赛; cuephotoswholeclauses",
+        "precision": "MCphotoisAlcarazreactingafterwinningagame insideeventuallostfinal, neverdepictitaswinningmatch/championshipreaction."
+      },
+      "special_case": null
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/wrist_and_missing_majors.mp3",
+      "audio_sha256": "4de0f130ec63fc956ee88d35c853e5fccc40bc21a610bd6a4174f6f14d404d9f",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/wrist_and_missing_majors.words.json",
+      "marks_sha256": "79348235e17816f108e224659d55b6d4a7a1eee43c5aff310b99026516e97a94",
+      "audio_seconds": 8.52,
+      "recommended_visual_seconds": 8.92,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        4.24,
+        8.92
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4487752",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/barcelona-first-round-alcaraz-2026-3x4.jpg",
+          "sha256": "a6fb9c672e982097bbf1e2e099b82368cef00fcdf910d9bb6ff9afd621bd4fc2",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "ActualApr14R1vsVirtanen, genericmatchphotobeforenextdaywithdrawal; NOT photograph of medicaldiagnosis",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": null,
+          "path": "/dev/shm/alcaraz-finals-production/production/photo-assets/wrist-native-title-card.png",
+          "sha256": "a957224506c11f4b10e924a76809542588b8d7f96e191f71cc160b808fca46b3",
+          "kind": "native_title_card",
+          "text": "右腕伤停\n缺席法网与温网",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "no_information_inset": true
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "他退出了下一轮",
+          "actual_word_index": 9,
+          "raw_word_offset_seconds": 4.245291,
+          "cut_seconds_25fps": 4.24,
+          "quantization_error_seconds": -0.005291
+        }
+      ],
+      "source_binding": {
+        "id": "wrist_and_missing_majors",
+        "photos": [
+          "atp-4487752"
+        ],
+        "source_context": "ActualApr14R1vsVirtanen, genericmatchphotobeforenextdaywithdrawal; NOT photograph of medicaldiagnosis",
+        "word_cuts": "PhotoonBarcelonaR1context; thenonebriefnativechronologyat退出下一轮/错过法网温网",
+        "native_card_candidate": {
+          "title": "右腕伤停\n缺席法网与温网",
+          "timeline": [
+            "4月15日 巴塞罗那退赛",
+            "5–7月 缺席法网、温网"
+          ],
+          "precision": "No playedR16loss; WOnotdefeat; no invented injury movement ormedicalprocedure"
+        }
+      },
+      "special_case": null
+    },
+    {
+      "id": "us_open_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/us_open_intro.mp3",
+      "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/us_open_intro.words.json",
+      "marks_sha256": "2fef05b44d500c8ee009643f238c73bf8d10d06333dd0f14e72fb85137c6b956",
+      "audio_seconds": 8.76,
+      "recommended_visual_seconds": 9.16,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        2.88,
+        9.16
+      ],
+      "shots": [
+        {
+          "photo_key": "us-comeback-cadenaser-2",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/us-open-first-round-return-alcaraz-2026-3x4.jpg",
+          "sha256": "9380a0947745a184ef7ec4cdfdeb7e7e276cac5a21d726225e7936ea7075f606",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "FirstAug31R1vsSafiullin GettyDustinSatloff; thenQFvsShelton APHeatherKhalifa, actualheadcoveredbyownshirt inmatch, notcroperror andnotinjuryreinjuryproof",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "us-qf-elpais-4",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/us-open-quarterfinal-alcaraz-2026-3x4.jpg",
+          "sha256": "a5494d4f873d82d529791053c0b5375a84111ff4e2b230138ec6f48222b4d0f2",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "FirstAug31R1vsSafiullin GettyDustinSatloff; thenQFvsShelton APHeatherKhalifa, actualheadcoveredbyownshirt inmatch, notcroperror andnotinjuryreinjuryproof",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "打进8强之后",
+          "actual_word_index": 7,
+          "raw_word_offset_seconds": 2.877375,
+          "cut_seconds_25fps": 2.88,
+          "quantization_error_seconds": 0.002625
+        }
+      ],
+      "source_binding": {
+        "id": "us_open_intro",
+        "photos": [
+          "us-comeback-cadenaser-2",
+          "us-qf-elpais-4"
+        ],
+        "source_context": "FirstAug31R1vsSafiullin GettyDustinSatloff; thenQFvsShelton APHeatherKhalifa, actualheadcoveredbyownshirt inmatch, notcroperror andnotinjuryreinjuryproof",
+        "word_cuts": "R1photoonlyreturnclause; QFphotofrom打进8强之后 tofullpointintro; nevercallR1photoQF",
+        "date_precision": "QFscheduled/startSept8local, finishedSept9local; sourcephotocaptions/recordsretainedaswritten, videoresultlabelSept9",
+        "motion": "QFstatic1.10429xdisplay,noextraZoom; no physiologic/emotionalcauseassertionbasedonwipingface"
+      },
+      "special_case": null
+    },
+    {
+      "id": "qualification",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/qualification.mp3",
+      "audio_sha256": "c34093ad12275b8ab37ccd62ebd8931959aaea7cc969ab104ca80d0a500c66fa",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/qualification.words.json",
+      "marks_sha256": "f632e888f5ba5440ae384bd365a7c552ecbb217868edc43fb94d55ef299e5568",
+      "audio_seconds": 7.2,
+      "recommended_visual_seconds": 7.6,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        7.6
+      ],
+      "shots": [
+        {
+          "photo_key": "ao-elpais-2",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/australian-open-trophy-alcaraz-2026-3x4.jpg",
+          "sha256": "af333e0fd91e12c66004ce12040971d9beda7278c1909539837af9582b9825d2",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "SeasonachievementcallbackFeb1trophy, notSept16physicalqualificationscene; officialqualificationispoints/GrandSlamrulefact",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [],
+      "source_binding": {
+        "id": "qualification",
+        "photos": [
+          "ao-elpais-2"
+        ],
+        "source_context": "SeasonachievementcallbackFeb1trophy, notSept16physicalqualificationscene; officialqualificationispoints/GrandSlamrulefact",
+        "word_cuts": "Singlebriefportraitcallback, no matchinfoinset andnofakequalifyingcelebration"
+      },
+      "special_case": null
+    },
+    {
+      "id": "tokyo_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/tokyo_intro.mp3",
+      "audio_sha256": "f561cf2615afe06e654bdfc6c5b42162a4364ff832d718a18965206f0bb7cd42",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/tokyo_intro.words.json",
+      "marks_sha256": "fe273d77527f2a3d54474d3450a24a89cf8773d6f81797240940038124f2e0d6",
+      "audio_seconds": 5.592,
+      "recommended_visual_seconds": 5.992,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        2.8,
+        5.992
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4587337",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/tokyo-final-action-alcaraz-2026-3x4.jpg",
+          "sha256": "a1cc1d743b5e3ceaca8c32e541a6629a9bef2afcfd17f00b4303aaba2626b964",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "BothOct6FvsLehecka, EXIFtrue;finaltrophyGettyKentaHarada cropoutLeheckafaceentirely; retainactualwinnerCarlosownlargecup",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4587428",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/tokyo-final-trophy-alcaraz-2026-3x4.jpg",
+          "sha256": "cf1017d50b3f6e508667a1ff3e7d31d10ce2937b5327d9b6b16c4d4da47946c9",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "BothOct6FvsLehecka, EXIFtrue;finaltrophyGettyKentaHarada cropoutLeheckafaceentirely; retainactualwinnerCarlosownlargecup",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "他拿下复出后的首个冠军",
+          "actual_word_index": 5,
+          "raw_word_offset_seconds": 2.818416,
+          "cut_seconds_25fps": 2.8,
+          "quantization_error_seconds": -0.018416
+        }
+      ],
+      "source_binding": {
+        "id": "tokyo_intro",
+        "photos": [
+          "atp-4587337",
+          "atp-4587428"
+        ],
+        "source_context": "BothOct6FvsLehecka, EXIFtrue;finaltrophyGettyKentaHarada cropoutLeheckafaceentirely; retainactualwinnerCarlosownlargecup",
+        "word_cuts": "Actionon两盘击败; trophyfrom拿下复出后的首个冠军; actualmarksrequired"
+      },
+      "special_case": null
+    },
+    {
+      "id": "shanghai_vienna_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/shanghai_vienna_intro.mp3",
+      "audio_sha256": "8f1f40ef7c100b43eb142b2d493bcabdd358a589ba3705816c65d73cc54e7002",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/shanghai_vienna_intro.words.json",
+      "marks_sha256": "83ba0ba4a8dea96f9aa6a24674511ebfa29668b4726a9fe77e07ef6223d6acf8",
+      "audio_seconds": 6.792,
+      "recommended_visual_seconds": 7.192,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        2.52,
+        7.192
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4590970",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/shanghai-third-round-alcaraz-2026-3x4.jpg",
+          "sha256": "e403d9bd14429aea841ec579ca30ffcf574b57b267567d7b16e9c0e76a47551e",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "ShanghaiOct12R3vsBergsfilenameexact;ViennaFNov1capture18:04/15:57notNov2uploadasmatchday",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4602900",
+          "path": "/dev/shm/alcaraz-finals-production/production/photo-assets/vienna-final-trophy-alcaraz-2026-3x4-credit-v1.png",
+          "sha256": "e769d98207d8fe1973cc6bb6e1283245e8f816fdaec80158de648e1f8e853678",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "ShanghaiOct12R3vsBergsfilenameexact;ViennaFNov1capture18:04/15:57notNov2uploadasmatchday",
+          "required_visible_credit": "© e-motion/Sascha Feuster"
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "他在维也纳",
+          "actual_word_index": 6,
+          "raw_word_offset_seconds": 2.535375,
+          "cut_seconds_25fps": 2.52,
+          "quantization_error_seconds": -0.015375
+        }
+      ],
+      "source_binding": {
+        "id": "shanghai_vienna_intro",
+        "photos": [
+          "atp-4590970",
+          "atp-4602900"
+        ],
+        "source_context": "ShanghaiOct12R3vsBergsfilenameexact;ViennaFNov1capture18:04/15:57notNov2uploadasmatchday",
+        "word_cuts": "Cutat维也纳actualmark",
+        "mandatory_photo_credit": "© e-motion/Sascha Feuster",
+        "credit_reason": "ViennaoriginalIPTCexplicitallowsfee-freeeditorialcoverageofErsteBankOpen2026onlywithsourceandcopyrightquote; thissegmentcoverssameevent; creditlegiblyoutsideface/subtitles."
+      },
+      "special_case": null
+    },
+    {
+      "id": "paris_intro",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/paris_intro.mp3",
+      "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/paris_intro.words.json",
+      "marks_sha256": "65575eb3abd57e6d00a5443673a9c5d1daae0cdc792c8bd0e5a88727c93fc5a0",
+      "audio_seconds": 9.864,
+      "recommended_visual_seconds": 10.264,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        4.16,
+        10.264
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4605822",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/paris-quarterfinal-alcaraz-2026-3x4.jpg",
+          "sha256": "bdda0eb86c729ffcdb61415214393327a165f6cb46ac9aca2d584a179800db29",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "QFNov6ATP4605822capture23:18vFritz→FNov8ATP4606341genuineownwinnercelebration",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4606341",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/alcaraz-paris-cover-4606341-3x4.jpg",
+          "sha256": "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "QFNov6ATP4605822capture23:18vFritz→FNov8ATP4606341genuineownwinnercelebration",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "决赛再遇谢尔顿",
+          "actual_word_index": 10,
+          "raw_word_offset_seconds": 4.150958,
+          "cut_seconds_25fps": 4.16,
+          "quantization_error_seconds": 0.009042
+        }
+      ],
+      "source_binding": {
+        "id": "paris_intro",
+        "photos": [
+          "atp-4605822",
+          "atp-4606341"
+        ],
+        "source_context": "QFNov6ATP4605822capture23:18vFritz→FNov8ATP4606341genuineownwinnercelebration",
+        "word_cuts": "QFphotoon四分之一决赛逆转Fritz;Fphotowhen决赛再遇谢尔顿; firsttitleclaimmustexplicitlyParisMastersnotsimplyfirsttitleinParis."
+      },
+      "special_case": null
+    },
+    {
+      "id": "race_table",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/race_table.mp3",
+      "audio_sha256": "c1a2b4059842c7b17ddd301032b147c720a60a86301e3738e22e5a872542d8bc",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/race_table.words.json",
+      "marks_sha256": "74ac879ac2a93832cbfed76212385ef6447d97cfd0e2470844e5fc2fa11b3b4c",
+      "audio_seconds": 8.928,
+      "recommended_visual_seconds": 9.328,
+      "tail_seconds": 0.4,
+      "cuts": [],
+      "shots": [],
+      "cut_word_evidence": [],
+      "source_binding": {
+        "id": "race_table",
+        "photos": [],
+        "source_context": "freshNov9Race15chartfocusAlcaraz3/6100,8qualifiedhighlightandSinnerwithdrawngrey"
+      },
+      "special_case": "Use existing fresh Alca-focused Race chart; no photo sequence."
+    },
+    {
+      "id": "question",
+      "audio_path": "/dev/shm/alcaraz-finals-production/production/frozen15/question.mp3",
+      "audio_sha256": "da682e2f36bcfbeaab39e3afb5c52e26d8cacb1d9fa4482faf04c7d3acc0a80b",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/frozen15/question.words.json",
+      "marks_sha256": "26d3b7ce7dd3d4078c9f58aa4b14f144944b8a9754f996b6b0ff18bddd9471c1",
+      "audio_seconds": 7.296,
+      "recommended_visual_seconds": 7.696,
+      "tail_seconds": 0.4,
+      "cuts": [
+        0,
+        2.36,
+        7.696
+      ],
+      "shots": [
+        {
+          "photo_key": "atp-4403403",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/turin-final-alcaraz-2025-3x4.jpg",
+          "sha256": "dcb1f701711848670c5b7a25cab1e3f8046b55ca3d1aab68237fdab7ff3dcc59",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "FirstactualNov16,2025TurinFarchivevsSinner, thenNov8,2026ParisF. NOT2026Turinplayedmatch.",
+          "required_visible_credit": null
+        },
+        {
+          "photo_key": "atp-4606341",
+          "path": "/dev/shm/alcaraz-finals-production/research/photos/alcaraz-paris-cover-4606341-3x4.jpg",
+          "sha256": "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34",
+          "cx": 0.5,
+          "cy": 0.5,
+          "zoom": 1,
+          "motion": "static",
+          "provenance": "FirstactualNov16,2025TurinFarchivevsSinner, thenNov8,2026ParisF. NOT2026Turinplayedmatch.",
+          "required_visible_credit": null
+        }
+      ],
+      "cut_word_evidence": [
+        {
+          "next_shot_index": 1,
+          "anchor": "今年带着巴黎大师赛冠军回来",
+          "actual_word_index": 5,
+          "raw_word_offset_seconds": 2.3585,
+          "cut_seconds_25fps": 2.36,
+          "quantization_error_seconds": 0.0015
+        }
+      ],
+      "source_binding": {
+        "id": "question",
+        "photos": [
+          "atp-4403403",
+          "atp-4606341"
+        ],
+        "source_context": "FirstactualNov16,2025TurinFarchivevsSinner, thenNov8,2026ParisF. NOT2026Turinplayedmatch.",
+        "word_cuts": "At去年在都灵收获亚军show2025blondAlcarazarchive;at今年cutcurrentlonghairedParis2026championpicture. Exactwordmarksshoulddrivecut.",
+        "photo_proofs": [
+          "/dev/shm/alcaraz-finals-production/research/photos/turin-2025-question-photo-proof.json",
+          "/dev/shm/alcaraz-finals-production/research/photos/cover-candidate-crop-proof.json"
+        ]
+      },
+      "special_case": null
+    }
+  ]
+}

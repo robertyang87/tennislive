@@ -1,0 +1,232 @@
+{
+  "created_at": "2026-11-09T07:49:47.721095+00:00",
+  "scope": "Actualfourrepresentativevoices same unmodified native5predicate only; no human listening/film approval; no sourcegain/loudness checks.",
+  "bundle_sha256": "5325d4a8426f66a2312d7f04e19a6380a06729f9c603927ad402a8e013ae2225",
+  "pass": true,
+  "results": [
+    {
+      "request": {
+        "backend": "edge",
+        "cache_key": "396607e1208a464327555537912012a7",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "阿卡年终路，从伤停到巴黎冠军。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "f4033df25b923d6ebd3b04d976f5b6566aec60e5f1186ab31d3b1a6c34ea17e9",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true,
+        "whole_sentences": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.077,
+        "longest_deletion": 0,
+        "transcript": "阿卡联中路,从商厅到巴黎冠军。"
+      },
+      "asr_model": "small",
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.653,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 年终 ｜ 路 ｜ 从 ｜ 伤 ｜ 停 ｜ 到 ｜ 巴黎 ｜ 冠军"
+      },
+      "sentence_splits": []
+    },
+    {
+      "request": {
+        "backend": "edge",
+        "cache_key": "f38f53363baeaa25553ec77e780cfdae",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true,
+        "whole_sentences": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四个多月后,他再没往复出。搭进八墙之后,与谢尔顿拼满五盘,最后在决胜盘抢时落败。"
+      },
+      "asr_model": "small",
+      "polyphones": [
+        {
+          "index": 37,
+          "char": "落",
+          "word": "落",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.402,
+              "confidence": "medium",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.277,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.901,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四个多月 ｜ 后 ｜ 他 ｜ 在 ｜ 美 ｜ 网 ｜ 复出 ｜ 打 ｜ 进 ｜ 8 ｜ 强 ｜ 之后 ｜ 与 ｜ 谢尔顿 ｜ 拼 ｜ 满 ｜ 五盘 ｜ 最后 ｜ 在 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 十 ｜ 落败"
+      },
+      "sentence_splits": []
+    },
+    {
+      "request": {
+        "backend": "edge",
+        "cache_key": "98e2dc1e75ba8272b1ff2d8459508425",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true,
+        "whole_sentences": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "巴黎四分之一决赛,他先丢一盘,逆转弗里茨。决赛在玉谢尔顿,这次两盘赢球,首次得得巴黎大师赛冠军。"
+      },
+      "asr_model": "small",
+      "polyphones": [
+        {
+          "index": 39,
+          "char": "得",
+          "word": "夺得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.986,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "巴黎 ｜ 四分之一 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 逆转 ｜ 弗里茨 ｜ 决赛 ｜ 再 ｜ 遇 ｜ 谢尔顿 ｜ 这次 ｜ 两盘 ｜ 赢 ｜ 球 ｜ 首次 ｜ 夺得 ｜ 巴黎 ｜ 大师 ｜ 赛 ｜ 冠军"
+      },
+      "sentence_splits": []
+    },
+    {
+      "request": {
+        "backend": "edge",
+        "cache_key": "8c6967593d3c5b7736a92c2940ef01c0",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+6%",
+        "style": "",
+        "styledegree": "",
+        "text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true,
+        "whole_sentences": true
+      },
+      "pass": true,
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "回到年初的傲望,半决赛对兹维列夫先赢两盘,又被追平,期间一度抽筋。打了五个多小时,他才闯进决赛。"
+      },
+      "asr_model": "small",
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.8,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "回到 ｜ 年初 ｜ 的 ｜ 澳 ｜ 网 ｜ 半决赛 ｜ 对 ｜ 兹维列夫 ｜ 先 ｜ 赢 ｜ 两盘 ｜ 又 ｜ 被 ｜ 追 ｜ 平 ｜ 其间 ｜ 一度 ｜ 抽筋 ｜ 打 ｜ 了 ｜ 五个多小时 ｜ 他 ｜ 才 ｜ 闯进 ｜ 决赛"
+      },
+      "sentence_splits": []
+    }
+  ]
+}

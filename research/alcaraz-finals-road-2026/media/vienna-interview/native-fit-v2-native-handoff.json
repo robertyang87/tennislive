@@ -1,0 +1,89 @@
+{
+  "source_key": "vienna-interview",
+  "source_id": "tennistv-4602481",
+  "source_url": "https://www.tennistv.com/videos/4602481/vienna-2026-final-carlos-alcaraz-interview",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4602481/tennistv-4602481.mp4",
+  "source_path": "/dev/shm/alcaraz-finals-production/research/media/sources/tennistv-4602481.mp4",
+  "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+  "window": [
+    69.82,
+    93.6
+  ],
+  "native_tail_s": 0.5,
+  "native_visual_tail_end": 94.1,
+  "audio_tail": "silence",
+  "fit": "cover",
+  "cx": 0.5,
+  "track": false,
+  "quote": [
+    {
+      "at": 69.92,
+      "end": 72.82,
+      "text": "So I'm just really happy that at the end,\n我很高兴"
+    },
+    {
+      "at": 72.82,
+      "end": 75.1,
+      "text": "I found my way and just played great.\n最终找到了办法，也打得很好。"
+    },
+    {
+      "at": 75.1,
+      "end": 77.66,
+      "text": "And obviously it's been a really emotional\n这一周让我感慨万千，"
+    },
+    {
+      "at": 77.66,
+      "end": 79.34,
+      "text": "and an amazing week for me\n也非常美妙。"
+    },
+    {
+      "at": 79.34,
+      "end": 80.92,
+      "text": "that I learned a lot, you know,\n我也学到了很多。"
+    },
+    {
+      "at": 80.92,
+      "end": 85.3,
+      "text": "to keep going forward step by step,\n继续一步一步向前走，"
+    },
+    {
+      "at": 85.3,
+      "end": 86.38,
+      "text": "playing on indoor courts,\n在室内场上比赛，"
+    },
+    {
+      "at": 86.38,
+      "end": 89.82,
+      "text": "trying to gain more confidence playing on this surface.\n努力在这种场地上积累信心。"
+    },
+    {
+      "at": 89.82,
+      "end": 91.24,
+      "text": "So I'm just really happy\n所以我很高兴，"
+    },
+    {
+      "at": 91.24,
+      "end": 93.42,
+      "text": "and looking forward for the rest of the season.\n也期待赛季接下来的比赛。"
+    }
+  ],
+  "packet_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/native-fit-v2-transcript.json",
+  "packet_sha256": "b8bb3a417a2ca3c162fdfde74629893397c69a68c63d808fc43c9498d2808d9f",
+  "visual_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-visual-review.json",
+  "visual_sha256": "0f18ec9c03fa7bf4dea68964659d0ec65bb31bf7fd6fc68682e273dd2443bba0",
+  "status": "Source and two-model evidence prepared; root editorial/native/actual-film review remains",
+  "notes": [
+    "This is verified本人 Alcaraz Vienna title post-final interview. The excerpt concerns finding his level, an emotional week and gaining indoor-court confidence for the rest of the season. It does not contain an explicit wrist injury/comeback claim and must not be marketed as that.",
+    "Exact actual-source 1920x1080@50 and sourceSHA verified; original speaker face/head/torso remains centered within cx0.5 fixed3:4 in all sampled frames of selected excerpt. No tracking or changing cx.",
+    "Both models previous me ends69.72/69.76; next So begins69.92. Selected start69.82 keeps nominal0.10s before next full clause and0.06s after previous clause; final film/audio must confirm actual boundary, not infer from semantic transcript alone.",
+    "Both models season ends93.38/93.42. Next interviewer begins93.82/93.86. Selected voiced end93.60 leaves0.18s past latest end and0.22s before earliest next speaker. Native0.5s visual tail93.60–94.10 must be SILENT; do not include next interviewer audio.",
+    "True head/chest closeup is the intended visual throughout. About96s source black transition and99s advertisement are outside selected window."
+  ],
+  "native_fit_revision": "v2",
+  "quotes_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/native-fit-v2-quotes.json",
+  "quotes_sha256": "60af8352993f7ed61acb2a5dd16901228ce9f2547dd369d3f5b5f3f712443dbf",
+  "boundary_proof_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/native-fit-v2-boundary-proof.json",
+  "boundary_proof_sha256": "00ef802a8512d3f6cb7ed83dc2cb024dfd0c2c4a93fc696de4580f08155f1192",
+  "lineage_prior_handoff_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-native-handoff.json",
+  "lineage_prior_handoff_sha256": "40471390a6a13ff000e66cb7cba14bb4404e2664d609598e89e6de70543a0f63"
+}

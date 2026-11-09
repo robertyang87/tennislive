@@ -1,0 +1,194 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4602481/vienna-2026-final-carlos-alcaraz-interview",
+  "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex alcaraz_media_prepare; exact-source local small.en and medium.en once each; contextual normalizations disclosed, no human hearing claimed",
+  "reviewed_at": "2026-11-09T08:04:35.905720+00:00",
+  "reviewed_from": 69.82,
+  "reviewed_to": 93.6,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 69.92,
+      "end": 72.82,
+      "en": "So I'm just really happy that at the end,",
+      "zh": "我很高兴"
+    },
+    {
+      "start": 72.82,
+      "end": 75.1,
+      "en": "I found my way and just played great.",
+      "zh": "最终找到了办法，也打得很好。"
+    },
+    {
+      "start": 75.1,
+      "end": 77.66,
+      "en": "And obviously it's been a really emotional",
+      "zh": "这一周让我感慨万千，"
+    },
+    {
+      "start": 77.66,
+      "end": 79.34,
+      "en": "and an amazing week for me",
+      "zh": "也非常美妙。"
+    },
+    {
+      "start": 79.34,
+      "end": 80.92,
+      "en": "that I learned a lot, you know,",
+      "zh": "我也学到了很多。"
+    },
+    {
+      "start": 80.92,
+      "end": 85.3,
+      "en": "to keep going forward step by step,",
+      "zh": "继续一步一步向前走，"
+    },
+    {
+      "start": 85.3,
+      "end": 86.38,
+      "en": "playing on indoor courts,",
+      "zh": "在室内场上比赛，"
+    },
+    {
+      "start": 86.38,
+      "end": 89.82,
+      "en": "trying to gain more confidence playing on this surface.",
+      "zh": "努力在这种场地上积累信心。"
+    },
+    {
+      "start": 89.82,
+      "end": 91.24,
+      "en": "So I'm just really happy",
+      "zh": "所以我很高兴，"
+    },
+    {
+      "start": 91.24,
+      "end": 93.42,
+      "en": "and looking forward for the rest of the season.",
+      "zh": "也期待赛季接下来的比赛。"
+    }
+  ],
+  "uncertain_spans": [],
+  "unresolved_verbatim_spans": [],
+  "editorial_normalizations": [
+    "Both raw models indoor course corrected to tennis-context indoor courts (homophone/contextual normalization, no human hearing claim).",
+    "small.en confidence selected over medium.en confident, preserving both raw outputs.",
+    "Filler you know at80.46–80.92 follows medium.en word evidence; punctuation and subtitle clause boundaries curated without inventing a new statement."
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/source_asr/tennistv-4602481/small.en.json",
+      "sha256": "40bbec1cdbe46ca24afa6aefad7438ea778b840219123b5c9a3a1417612819d2",
+      "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+      "model": "small.en",
+      "clip": [
+        0,
+        99
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/dev/shm/alcaraz-finals-production/research/media/transcribe_mc_once.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "research_path": "/dev/shm/alcaraz-finals-production/research/media/raw-new/vienna-interview/small.en.json"
+    },
+    {
+      "path": "data/source_asr/tennistv-4602481/medium.en.json",
+      "sha256": "6b120e40d76db1d50344b252b12babb50cb75d4953c25230be793e13ba026820",
+      "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+      "model": "medium.en",
+      "clip": [
+        0,
+        99
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/dev/shm/alcaraz-finals-production/research/media/transcribe_mc_once.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "research_path": "/dev/shm/alcaraz-finals-production/research/media/raw-new/vienna-interview/medium.en.json"
+    }
+  ],
+  "review_notes": [
+    "This is verified本人 Alcaraz Vienna title post-final interview. The excerpt concerns finding his level, an emotional week and gaining indoor-court confidence for the rest of the season. It does not contain an explicit wrist injury/comeback claim and must not be marketed as that.",
+    "Exact actual-source 1920x1080@50 and sourceSHA verified; original speaker face/head/torso remains centered within cx0.5 fixed3:4 in all sampled frames of selected excerpt. No tracking or changing cx.",
+    "Both models previous me ends69.72/69.76; next So begins69.92. Selected start69.82 keeps nominal0.10s before next full clause and0.06s after previous clause; final film/audio must confirm actual boundary, not infer from semantic transcript alone.",
+    "Both models season ends93.38/93.42. Next interviewer begins93.82/93.86. Selected voiced end93.60 leaves0.18s past latest end and0.22s before earliest next speaker. Native0.5s visual tail93.60–94.10 must be SILENT; do not include next interviewer audio.",
+    "True head/chest closeup is the intended visual throughout. About96s source black transition and99s advertisement are outside selected window.",
+    "Native-fit-v2 splits the same complete English word sequence from5 into10 natural clause cues. Chinese is concise and faithful, every rendered Chinese row<=15 folded width at native68px; no font/pipeline/source/window/audio/TTS edits.",
+    "Adjacent clause boundaries use existing two-model word timings, retaining original broad source69.82–93.60 with silent visual tail94.10. Source69.92/93.42 first/last speech unchanged."
+  ],
+  "native_quote": [
+    {
+      "at": 0.1,
+      "end": 3.0,
+      "text": "So I'm just really happy that at the end,\n我很高兴"
+    },
+    {
+      "at": 3.0,
+      "end": 5.28,
+      "text": "I found my way and just played great.\n最终找到了办法，也打得很好。"
+    },
+    {
+      "at": 5.28,
+      "end": 7.84,
+      "text": "And obviously it's been a really emotional\n这一周让我感慨万千，"
+    },
+    {
+      "at": 7.84,
+      "end": 9.52,
+      "text": "and an amazing week for me\n也非常美妙。"
+    },
+    {
+      "at": 9.52,
+      "end": 11.1,
+      "text": "that I learned a lot, you know,\n我也学到了很多。"
+    },
+    {
+      "at": 11.1,
+      "end": 15.48,
+      "text": "to keep going forward step by step,\n继续一步一步向前走，"
+    },
+    {
+      "at": 15.48,
+      "end": 16.56,
+      "text": "playing on indoor courts,\n在室内场上比赛，"
+    },
+    {
+      "at": 16.56,
+      "end": 20.0,
+      "text": "trying to gain more confidence playing on this surface.\n努力在这种场地上积累信心。"
+    },
+    {
+      "at": 20.0,
+      "end": 21.42,
+      "text": "So I'm just really happy\n所以我很高兴，"
+    },
+    {
+      "at": 21.42,
+      "end": 23.6,
+      "text": "and looking forward for the rest of the season.\n也期待赛季接下来的比赛。"
+    }
+  ],
+  "native_fit_revision": "v2 clause segmentation only; source, window and actual raw ASR unchanged",
+  "lineage": {
+    "prior_packet": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-transcript.json",
+    "prior_packet_sha256": "7727ed36669924a82d4f4dca44730a66e0b76ed605ed21967444e353809c9267",
+    "prior_handoff": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-native-handoff.json",
+    "prior_handoff_sha256": "40471390a6a13ff000e66cb7cba14bb4404e2664d609598e89e6de70543a0f63"
+  },
+  "native_quote_timebase": "relative toselected69.82; foreground_english absolute"
+}

@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-11-09T07:58:50.092344+00:00",
+  "status": "PASS_SCOPED_actual_static_assets_personally_viewed",
+  "files": [
+    {
+      "file": "/dev/shm/alcaraz-finals-production/production/photo-assets/vienna-credit-native-size-preview.jpg",
+      "sha256": "6e9c093567ca757e4b9e3574822f7d030b9456890dd8849ab1861e57d57a8659"
+    },
+    {
+      "file": "/dev/shm/alcaraz-finals-production/production/photo-assets/wrist-native-title-card.png",
+      "sha256": "a957224506c11f4b10e924a76809542588b8d7f96e191f71cc160b808fca46b3"
+    }
+  ],
+  "findings": [
+    "Vienna actualchampion photo retains full required copyright text © e-motion/Sascha Feuster at visible24px; faceandcupclear andcaptionregionbelow remainsavailable.",
+    "Onlywristfactcard usescurrentnavy native design; clearcomplete two semantics, no rightmatchinfo, no orphanword, footerbranddistinct."
+  ],
+  "limits": [
+    "Staticinputsonly; actualnativeASSand finalmovieplacement still to check."
+  ]
+}

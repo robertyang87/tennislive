@@ -1,0 +1,25 @@
+{
+  "status": "PASS_BODY_ONLY_FACT_SCOPE_REBIND",
+  "reviewed_at_utc": "2026-11-09T08:00:18.513984+00:00",
+  "input": "/dev/shm/alcaraz-finals-production/production/publication-freeze.native-fix.json",
+  "input_sha256": "429ae886948d0a3bc8e4334c72d3596f4bc1772fd170250f3fd1502dd06ea85d",
+  "original_editorial": "/dev/shm/alcaraz-finals-production/research/editorial/alcaraz-finals-editorial-plan.final-candidate.json",
+  "original_editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+  "previous_unified_fact_approval": "/dev/shm/alcaraz-finals-production/research/editorial/alcaraz-final-candidate-unified-fact-freeze.json",
+  "exact_delta": "Prefix阿尔卡拉斯： beforepublicationbodyfirstlineonly",
+  "body_sha256": "28b06d5ac456dfbaa7cd4e0e5bb14b99ee977ee6bdd9244f8dd5d60b924c7903",
+  "body_chars": 285,
+  "comparison_checks": {
+    "prefix_only_exact_remainder_original_body": true,
+    "publication_title_summary_lead_comment_unchanged": true,
+    "original13narrations_cover_editorial_file_unchanged": true,
+    "added_name_matches_subject": "CarlosAlcaraz=阿尔卡拉斯",
+    "no_new_result_stat_qual_date_claim": true
+  },
+  "scope_limits": [
+    "Thisrebindssolepublicationbodyidentityprefix.",
+    "NoTTS/ASR/synthesis/filmoperationperformed; unchangedfrozenvoicesnotreapprovedbyimplication.",
+    "Originaleditorialand279charbodyevidencekeptunchanged; publish285charbodywiththisnewidentity."
+  ],
+  "findings": []
+}

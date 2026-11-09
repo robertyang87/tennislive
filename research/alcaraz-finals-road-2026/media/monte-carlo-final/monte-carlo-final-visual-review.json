@@ -1,0 +1,34 @@
+{
+  "status": "SOURCE_REVIEWED_NATIVE_ACTUAL_FILM_CHECKS_REMAIN",
+  "source_path": "/dev/shm/alcaraz-finals-production/research/media/sources/K2Ifk8HnQHo.mp4",
+  "source_sha256": "0f6a5c36a506f71db3afb814ac1d2a08096c20cf6691fd77de1fde1e1b7325f8",
+  "actual_resolution": [
+    1920,
+    1080
+  ],
+  "fixed_crop": {
+    "x": 555,
+    "y": 0,
+    "width": 810,
+    "height": 1080,
+    "cx": 0.5,
+    "track": false,
+    "output": [
+      1080,
+      1440
+    ]
+  },
+  "manifest_paths": [
+    "/dev/shm/alcaraz-finals-production/research/media/visual/K2Ifk8HnQHo/manifest.json",
+    "/dev/shm/alcaraz-finals-production/research/media/dense/K2Ifk8HnQHo/manifest.json",
+    "/dev/shm/alcaraz-finals-production/research/media/dense-mc-final/K2Ifk8HnQHo/manifest.json"
+  ],
+  "notes": [
+    "Source starts415.03 on broadcast crowd bridge. Actual415.533333 still shows crowd and415.566667 first shows court. At first court the ball is already above server Sinner head: toss has begun, so this source does NOT show the ball-release/start of toss or earlier standing/bouncing preparation. With0.5s transition, fade fully ends415.53 before first court and service contact. Root must explicitly decide whether the shown pre-contact motion satisfies complete-point scope; do not claim a full toss from hand release. Never use390–410 prior break-game as same-point preparation. Exact first-court frame boundary must be confirmed by root native QC.",
+    "Near Sinner serve approximately416.15, far Alcaraz return417.2–417.5 stays within fixed crop as confirmed with exact full/crop PNG. Near Sinner reply approximately417.8, point ends418.8; real winner Sinner kneels419 onward; actual losing Alcaraz closeup429 onward.",
+    "During overhead celebration around425.5–426.5 winner Sinner briefly drifts to the lateral edge/outside fixed crop. No live ball is active; genuine Alcaraz reaction429 onward retained. No adaptive reframing is proposed.",
+    "Previous medium-only uncertain call411.02–414.96 is not included;415.03 has only0.07s nominal ASR clearance, so do not claim human-auditory confirmation. Native/audio review remains required.",
+    "Two models agree on main sentence but onset differs420.36 vs421.04; captions conservatively cover earliest plausible onset. Native silent tail430.2–430.7 preserves reaction and excludes later approximately432.7+ commentary."
+  ],
+  "scope": "Actual source sampled original+fixed-center images were opened; no formal new-film render approval, no inferred source identity from thumbnails."
+}
