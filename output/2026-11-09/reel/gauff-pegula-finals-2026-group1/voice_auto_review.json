@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "c9037ada4e640e564cf4b7ca9069292798d3e23c3fe5938c83a083a106443255",
-    "render_inputs_sha256": "01d51547c18bc53cc67750dced9789ae015d5a5a7878e70057b979dc6ca662b1",
-    "spec_sha256": "19e9b518d03e92124b3f0265ff4876d713691c53d62c5fa240f9206dac18b2d3",
-    "film_sha256": "9467cb594d9a60ba9fa23cf807548e57ff85882265be92cbc973bd96cd6bf4de",
+    "render_sha256": "55953224f2b2c15dd4bae6c07f68f516c8162a4d95d93a5454517e8653439f88",
+    "render_inputs_sha256": "f0dc7808c24f29dc347e2b94d4eef6ca6b3f28c4ce9bcb8059d4b0253eb65e20",
+    "spec_sha256": "c22ec65b67e4cfa4fb9926550d39cd806bbddd40050702b8f2bc8b295977424a",
+    "film_sha256": "67d1c1b53719a8cae5913419e45fb8730f9b1172fe38565a19535e29c3047439",
     "inventory_sha256": "5228bdcab4c9e9707f234a2b321422447617a23e5aa04ca833e98b9f919c2a2a"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-09T04:55:18+00:00",
+  "reviewed_at": "2026-11-09T05:09:45+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -202,7 +202,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "只差一分就能赢,转眼却要再打一盘。北京时间十一月九日清晨,年中总决赛印第安威尔斯小组赛。高福怎么赢回这场球?"
+        "transcript": "只差一分就能赢, 转眼却要再打一盘。北京时间十一月九日清晨, 年中总决赛印第安威尔斯小组赛。高福怎么赢回这场球?"
       },
       "polyphones": [],
       "pauses": {
@@ -234,7 +234,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "抢7,5比7。追回来的这一盘还是丢了。可决胜盘高幅先拿3比0。该盘飞受破15,它6次,佩古拉23次。"
+        "transcript": "抢七、五比七。追回来的这一盘还是丢了。可决胜盘高幅先拿三比零。该盘飞受破十五,它六次,佩古拉二十三次。"
       },
       "polyphones": [
         {
