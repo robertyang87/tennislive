@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-XjhOB_EL1ok/XjhOB_EL1ok.mp4",
+  "source_sha256": "fa415aaf2dcad08a320a10105cdc687f6cab23c8e7b9b2b9bb68570f1d181672",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-09T05:54:18+00:00",
+  "reviewed_from": 155.8,
+  "reviewed_to": 165.4,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 155.92,
+      "end": 162.34,
+      "en": "Yeah, and the energy, it means a lot, so I really enjoyed my time here.",
+      "zh": "这里的能量意义重大，我很享受。"
+    },
+    {
+      "start": 162.34,
+      "end": 163.46,
+      "en": "It was my first time as well,",
+      "zh": "这是我第一次来武汉，"
+    },
+    {
+      "start": 163.46,
+      "end": 165.4,
+      "en": "definitely not the last.",
+      "zh": "但肯定不是最后一次。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 fa415aaf2dcad08a320a10105cdc687f6cab23c8e7b9b2b9bb68570f1d181672，存于 data/source_asr/XjhOB_EL1ok/small.en.json 与 data/source_asr/XjhOB_EL1ok/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
