@@ -1,11 +1,11 @@
 {
-  "status": "review_cut_ready_audio_pending",
+  "status": "waiting_audio_review",
   "user_update": "丰富编排、吸引人的文案、流畅转场卡动画",
   "source_download_run": "https://github.com/robertyang87/tennislive/actions/runs/42561882383",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/42561900546",
   "asr_run": "https://github.com/robertyang87/tennislive/actions/runs/42562033341",
   "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
-  "earliest_blocker": "Only source 268.58–270.0 commentary prefix remains unverified. Draft uses ellipsis; full source-audio gate is not passed.",
+  "earliest_blocker": "waiting_audio_review: source 268.58–270.0 prefix still unresolved after independent denoised ASR; native production preflight exits 1.",
   "human_listening_claimed": false,
   "render_dispatched": false,
   "published": false,
@@ -18,5 +18,7 @@
   "duration_conflict": "Resolved using official WTA LS010 MatchTimeTotal 01:26:33; rounded narration uses no exact duration.",
   "local_review_render": true,
   "review_video_sha256": "a5e2da6135896c41249c4edbfcebe70cea0471974563127e39b0e482039e5536",
-  "review_video": "/workspace/output/noskova-kostyuk-review.mp4"
+  "review_video": "/workspace/output/noskova-kostyuk-review.mp4",
+  "push_authorized_on_qc_pass": true,
+  "latest_publication_attempt": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/publication-request.json"
 }
