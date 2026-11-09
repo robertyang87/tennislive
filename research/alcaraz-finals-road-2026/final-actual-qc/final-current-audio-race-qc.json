@@ -1,0 +1,289 @@
+{
+  "schema": "independent.current-film-audio-race-qc.v1",
+  "status": "PASS_SCOPED_CURRENT_ACTUAL_INPUT_AND_FINAL_NATIVE_AUTOMATED_SUITE",
+  "checked_at": "2026-11-09T08:40:25.939137+00:00",
+  "identity": {
+    "render_sha256": "9211608fc1d5e9bb2e292056ce08e3f3b790b852b9b528fa0c490bd1d5c4c558",
+    "render_inputs_sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+    "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "film_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "inventory_sha256": "c87d4aea45d0860205a22f1abe334222820b92b7a033f15c776db68316d10382"
+  },
+  "formal_run_id": "42585544224",
+  "tracked_head": "afa776a44cfd913273cddfe9fb0e472247826521",
+  "master": {
+    "path": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+    "sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "bytes": 88813632,
+    "film_seconds": 209.467,
+    "hash_binding": "actual bytes checked by immutable prior proof; current root frame manifest and final tracked metadata exact same identity"
+  },
+  "prior_actual_input_proof": {
+    "path": "/dev/shm/alcaraz-finals-production/final/qc-audio/actual-master-audio-ass-input-binding.json",
+    "sha256": "f7a6003c56b390d57d8bd6050f8a150af6f9a9fd5c53940f945e1fb902c1f747",
+    "bytes": 15799
+  },
+  "transport_rebind_appendix": {
+    "path": "/dev/shm/alcaraz-finals-production/research/audio-race-qc/native-producer-bundle-rebind-appendix.json",
+    "sha256": "724e763b2687adefd84a162384a81f91aa4343ce32f9c92c9f9668de21996efc",
+    "bytes": 15309
+  },
+  "final_native_suite": {
+    "native_pass": true,
+    "method": "automated_voice_suite",
+    "reviewed_at": "2026-11-09T08:32:45+00:00",
+    "unique_audio": 15,
+    "occurrences": 30,
+    "all_four_per_audio_predicates_true": true,
+    "sentence_splits": [],
+    "identity_all_exact": true,
+    "evidence": {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/voice_auto_review.json",
+      "sha256": "12c99aca0059b41dfa18f2473b4a9e0d695c99ca0adfd1eb5f96a39d550dcee9",
+      "bytes": 28819
+    },
+    "quality_review": {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/voice_quality_review.json",
+      "sha256": "4859874c75a22e4917dfa325eef415591e74a3596c9152202e78aeeaae1fa79e",
+      "bytes": 39442
+    },
+    "polyphone_findings": [
+      {
+        "id": "bundle:7448d9adcc1cead4cf7ba75a1c5ab10a6fc1d8aa8d1c115866f31939b254788d",
+        "text": "巴黎，阿尔卡拉斯拿到赛季第五冠。可在几个月前，他还因为右腕受伤，错过了法网和温网。",
+        "findings": [
+          {
+            "index": 24,
+            "char": "还",
+            "word": "还",
+            "intended": "hai2",
+            "wrong": [
+              "huan2"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "huan2",
+                "verdict": "correct",
+                "score": 0.644,
+                "confidence": "medium",
+                "near": null
+              }
+            ],
+            "ok_refs": "孩骸"
+          }
+        ]
+      },
+      {
+        "id": "bundle:8afeab819e4422cf7feadb1518a8ede2cebef64b36f529ed1913b96ebae44808",
+        "text": "澳网决赛，他先丢一盘，再连赢三盘击败德约科维奇。首夺澳网，22岁的他，成为男单历史最年轻的生涯全满贯得主。",
+        "findings": [
+          {
+            "index": 50,
+            "char": "得",
+            "word": "得",
+            "intended": "de2",
+            "wrong": [
+              "dei3"
+            ],
+            "tier": "B",
+            "verdict": "unmeasurable",
+            "runs": [],
+            "ok_refs": "德锝"
+          }
+        ]
+      },
+      {
+        "id": "bundle:afd730c20b8b05fbbdce7759390bffe950fe2d005266c2dbbaf3be93aee93477",
+        "text": "九月十六日，他连续第五年锁定年终资格。可伤停后的赛季，还没有结束。",
+        "findings": [
+          {
+            "index": 27,
+            "char": "还",
+            "word": "还",
+            "intended": "hai2",
+            "wrong": [
+              "huan2"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "huan2",
+                "verdict": "correct",
+                "score": 0.707,
+                "confidence": "medium",
+                "near": null
+              }
+            ],
+            "ok_refs": "孩骸"
+          }
+        ]
+      },
+      {
+        "id": "bundle:b427aec3758ef189babcf5e80cd537a2982e5d950510027c6ac9b5745069fe5d",
+        "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+        "findings": [
+          {
+            "index": 37,
+            "char": "落",
+            "word": "落",
+            "intended": "luo4",
+            "wrong": [
+              "la4",
+              "lao4"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "la4",
+                "verdict": "correct",
+                "score": 0.403,
+                "confidence": "medium",
+                "near": null
+              },
+              {
+                "wrong": "lao4",
+                "verdict": "correct",
+                "score": 0.278,
+                "confidence": "low",
+                "near": null
+              }
+            ],
+            "ok_refs": "洛骆摞"
+          }
+        ]
+      },
+      {
+        "id": "bundle:ebead02ce77f591187149e7a979d19399a1db3e24d526969e142f898bc311a2d",
+        "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+        "findings": [
+          {
+            "index": 39,
+            "char": "得",
+            "word": "夺得",
+            "intended": "de2",
+            "wrong": [
+              "dei3"
+            ],
+            "tier": "B",
+            "verdict": "unmeasurable",
+            "runs": [],
+            "ok_refs": "德锝"
+          }
+        ]
+      }
+    ],
+    "seam_scope": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝"
+  },
+  "sealed_current_small_artifacts": [
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/render_inputs.json",
+      "sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+      "bytes": 22832
+    },
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/voice_quality_inventory.json",
+      "sha256": "c87d4aea45d0860205a22f1abe334222820b92b7a033f15c776db68316d10382",
+      "bytes": 21758
+    },
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/subtitles.ass",
+      "sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+      "bytes": 7353
+    },
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/audio_review_binding.json",
+      "sha256": "670219d72889255ff7092c7f54876ce246087b28214cf95a09531b999d475769",
+      "bytes": 1142
+    },
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/qc_attestation.json",
+      "sha256": "d6a22fda8985a0d9e49e0d53780dc06e682592f91b0747e92e55cfa0de90c6b4",
+      "bytes": 708
+    },
+    {
+      "path": "/dev/shm/alcaraz-finals-production/final/published-metadata/poster.jpg",
+      "sha256": "812d0a1cfb359f98ab9da497a15b5ebb201343c26e89175110a79707bac9fa89",
+      "bytes": 450934
+    }
+  ],
+  "tracked_files_exact": 28,
+  "actual_ass": {
+    "events": 61,
+    "sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "source_scenes": 4,
+    "bilingual_cues": 15,
+    "exact_source_cue_and_timing_check": "prior actual-input proof; unchanged exact ASS and audio_review_binding in current published metadata"
+  },
+  "independent_actual_frame_review": {
+    "manifest": {
+      "path": "/dev/shm/alcaraz-finals-production/final/root-qc/manifest.json",
+      "sha256": "64b63b428edccf5c404f46df56ca49ca3a62537663f81009a3ec084a558c575b",
+      "bytes": 23980
+    },
+    "frames_seen_as_contact_tiles": 60,
+    "contact_sheets_seen": [
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-00.jpg",
+        "sha256": "3ce375a479ea770e9ea349bdec432a7c856f688bc504b0f8d9731abad9d8fd2d",
+        "bytes": 419009
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+        "sha256": "3b24e586e39cca82c8c1ecc55af5f4578b773b813255db1c17898f538800dafe",
+        "bytes": 365088
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-02.jpg",
+        "sha256": "cabb22af77e4c8ee949efb234dd0696e7f85bba1255075578d3ba4f481bf0fab",
+        "bytes": 462193
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+        "sha256": "49b85f2b222fec3a2806322454a3bc7f8bc48c1648760170657160d308c089f6",
+        "bytes": 470086
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg",
+        "sha256": "5ab6f7ca553fe158111356594675d44ed8cdbf6471aac01355b711dab615ee29",
+        "bytes": 324728
+      }
+    ],
+    "full_size_seen": [
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-056-0192.514.jpg",
+        "sha256": "5ceb6cf32634afa4e3e00e78ec27a9bc570a6a2e8a096af743d135a2415a9f70",
+        "bytes": 213042
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-042-0143.186.jpg",
+        "sha256": "08499212ce067e443554ce2071c1ceb9767f8e32765225b7cc3a35e2da986cf3",
+        "bytes": 198447
+      }
+    ],
+    "observations": [
+      "All 15 source bilingual cues represented in actual sampled frames and visibly fit. Vienna longest cue has two English lines above one Chinese line and is not clipped.",
+      "Native original-video upper-right information is absent from photo/story cards; actual excerpts fill the canvas with fixed-center crop.",
+      "Actual Race frame has all 15 rows: Alcaraz 6100 rank 3 focused; eight qualified players highlighted; Sinner withdrawn grey; Fritz 3085 and Fokina 2510 correctly appear in Nov 9 snapshot.",
+      "MC score and US result subtitle transparently describe announcement rather than fabricate uncertain verbatim score. Paris final two complete quote cues fit and no advertisement appears in sampled tail."
+    ]
+  },
+  "source_boundary_limits_retained": [
+    "Vienna: voiced69.82–93.60 thenmandatory0.5silentvisualtailto94.10; nextspeaker93.82 excludedbyrecipe, notclaimedPCM/hearingchecked.",
+    "MC: entry415.03 vsmedium-onlyuncertainpreviouscallend414.96 nominal0.07s; retainASRlimit andnohumanhearingclaim.",
+    "USQF/MCnumericannouncements remainexplicitbracketednonverbatimdescriptors, notinventedquotedscore."
+  ],
+  "limits": [
+    "Independent audit of actual bytes, marks, ASS, source packet/times, images and final native automated results; not a claim of human whole-film listening or phoneme/tone/naturalness guarantee.",
+    "Two native tier-B 得/de2 entries are unmeasurable with runs=[] because wrong dei3 references are unavailable; native policy permits tier-B unmeasurable. This is not positive pronunciation evidence.",
+    "Native final tier-B 还 findings are correct at medium confidence. 落 finding compares la4 at medium and lao4 at low confidence; retain those limits.",
+    "Seams covered by native narration-overrun and original-audio/narration mutual-exclusion gates, not a new auditory or PCM seam examination.",
+    "MC source begins after toss already started with visible pre-contact preparation; only nominal 0.07 s ASR previous-call clearance. No claim of full observed ball release or independent ear confirmation.",
+    "Vienna next interviewer begins inside visual tail; final recipe explicitly sets audio_tail=silence. No PCM or human listening test performed.",
+    "Source windows, raw ASR disagreements, contextual courts homophone correction and description subtitles retain the exact source-review limitations. No new TTS, ASR, reference inference, loudness, gain or PCM analysis performed."
+  ],
+  "publication_scope": "Current actual master and final native suite only; root retains release/CI/push/external publication proof."
+}

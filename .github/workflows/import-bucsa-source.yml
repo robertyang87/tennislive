@@ -27,6 +27,11 @@ jobs:
       GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 只需外部下载器和 GH CLI；不读取 output 或仓库业务素材。
+          fetch-depth: 1
+          sparse-checkout: |
+            .github
 
       - uses: actions/setup-python@v5
         with:
@@ -35,7 +40,7 @@ jobs:
       - name: yt-dlp 取 WTA 官方播放器本场集锦
         run: |
           set -euo pipefail
-          pip install -q yt-dlp
+          pip install -q "yt-dlp[default]"
           mkdir -p dl
           yt-dlp --merge-output-format mp4 -o dl/6406166508112.mp4 "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406166508112"
           ls -la dl

@@ -632,6 +632,10 @@ PLAYER_ZH: dict[str, str] = {
 # data/evidence/paolini-bejlek-wuhan-2026-r1/facts/raw/wta-match-row.json。
 # PLAYER_ZH 的规范输出仍是「保利尼」，别名不改已经配音/渲染的显示文案。
 PLAYER_ZH_ALIASES: dict[str, str] = {
+    # 上海劳力士大师赛官方官博 5353296537586520（2026-10-12）同场报道使用此异译；
+    # 证据：research/alcaraz-finals-road-2026/facts/bergs-official-alias-evidence.json。
+    # 只登记 Zizou Bergs 的完整中文别名，规范输出与球员身份仍是贝尔格斯。
+    "贝尔赫斯": PLAYER_ZH["Zizou Bergs"],
     # 2026-11-05新规范名；历史译名只作精确同人输入，不改已审原声与发布封印。
     "梅德韦杰夫": PLAYER_ZH["Daniil Medvedev"],
     "梅德维德夫": PLAYER_ZH["Daniil Medvedev"],

@@ -1,0 +1,97 @@
+{
+  "created_at": "2026-11-09T07:48:28.868216+00:00",
+  "editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+  "scope": "Four actual representative naturalvoice requests; pending native5predicate review. No human listening claim.",
+  "rows": [
+    {
+      "id": "cover",
+      "display_text": "阿卡年终路，从伤停到巴黎冠军。",
+      "request": {
+        "text": "阿卡年终路，从伤停到巴黎冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "396607e1208a464327555537912012a7"
+      },
+      "path": "/dev/shm/alcaraz-finals-production/production/representative-samples/cover.mp3",
+      "audio_sha256": "f4033df25b923d6ebd3b04d976f5b6566aec60e5f1186ab31d3b1a6c34ea17e9",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/representative-samples/cover.words.json",
+      "marks_sha256": "534e1570f8647a9b0c14f0e0c21d6009d8263b40130acd8bd4852e89b9296ee1",
+      "seconds": 3.528
+    },
+    {
+      "id": "ao_semifinal",
+      "display_text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+      "request": {
+        "text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "8c6967593d3c5b7736a92c2940ef01c0"
+      },
+      "path": "/dev/shm/alcaraz-finals-production/production/representative-samples/ao_semifinal.mp3",
+      "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/representative-samples/ao_semifinal.words.json",
+      "marks_sha256": "e229dd02b5a7e70852149c0bf02eb6be6ebd7776ab3d298a20c77564eb154e9c",
+      "seconds": 10.68
+    },
+    {
+      "id": "us_open_intro",
+      "display_text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+      "request": {
+        "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "f38f53363baeaa25553ec77e780cfdae"
+      },
+      "path": "/dev/shm/alcaraz-finals-production/production/representative-samples/us_open_intro.mp3",
+      "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/representative-samples/us_open_intro.words.json",
+      "marks_sha256": "2fef05b44d500c8ee009643f238c73bf8d10d06333dd0f14e72fb85137c6b956",
+      "seconds": 8.76
+    },
+    {
+      "id": "paris_intro",
+      "display_text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+      "request": {
+        "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "98e2dc1e75ba8272b1ff2d8459508425"
+      },
+      "path": "/dev/shm/alcaraz-finals-production/production/representative-samples/paris_intro.mp3",
+      "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+      "marks_path": "/dev/shm/alcaraz-finals-production/production/representative-samples/paris_intro.words.json",
+      "marks_sha256": "65575eb3abd57e6d00a5443673a9c5d1daae0cdc792c8bd0e5a88727c93fc5a0",
+      "seconds": 9.864
+    }
+  ],
+  "bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "5325d4a8426f66a2312d7f04e19a6380a06729f9c603927ad402a8e013ae2225",
+    "request_count": 4,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

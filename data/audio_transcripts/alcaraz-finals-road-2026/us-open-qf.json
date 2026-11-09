@@ -1,0 +1,93 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.youtube.com/watch?v=wYd7I5_tMEs",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-wYd7I5_tMEs/wYd7I5_tMEs.mp4",
+  "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_paris_media; two actual cached-local-model runs on exact source bytes, disagreement retained and nonverbatim descriptor selected, no human hearing claimed",
+  "reviewed_at": "2026-11-09T06:34:18.273459+00:00",
+  "reviewed_from": 122.17,
+  "reviewed_to": 139.0,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 125.6,
+      "end": 138.5,
+      "en": "[Match result announced]",
+      "zh": "【主裁宣布比赛结果】",
+      "non_verbatim_description": true,
+      "description_scope": "Neutral descriptor for actual official result announcement over crowd noise, NOT quoted lexical English or reconstructed numeric score."
+    }
+  ],
+  "uncertain_spans": [],
+  "unresolved_verbatim_spans": [
+    {
+      "from": 125.66,
+      "to": 138.3,
+      "reason": "Two model numeric outputs disagree and are not a dependable transcript of score announcement. No original words/numeric scores are claimed by retained descriptive caption. small.en-only What a battle133.74–134.52 absent medium and attached official VTT; not accepted as verified quote."
+    }
+  ],
+  "asr_evidence": [
+    {
+      "path": "data/source_asr/wYd7I5_tMEs/small.en.json",
+      "sha256": "013424f4ad79efc81b01c0babd72f971e04cb053a8ac6cb0dd776b346fad820b",
+      "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+      "model": "small.en",
+      "clip": [
+        118.0,
+        165.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "research_path": "/dev/shm/alcaraz-finals-production/research/media/us-qf/asr-raw/us-qf-final-point/small.en.json"
+    },
+    {
+      "path": "data/source_asr/wYd7I5_tMEs/medium.en.json",
+      "sha256": "50da16fcc2d7ebeff407a147b39b9e14a2a597344ee5f1b63bee2f2469a08544",
+      "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+      "model": "medium.en",
+      "clip": [
+        118.0,
+        165.0
+      ],
+      "parameters": {
+        "word_timestamps": true,
+        "vad_filter": false,
+        "beam_size": 5,
+        "condition_on_previous_text": false,
+        "compute_type": "int8",
+        "cpu_threads": 2
+      },
+      "script_path": "/workspace/shelton-finals-production/research/audio/asr_selected_sources.py",
+      "script_sha256": "d67a96e57f95dbe2f97a319c47fab0d6a186be45e7abcba6e2379eba391c0dc1",
+      "research_path": "/dev/shm/alcaraz-finals-production/research/media/us-qf/asr-raw/us-qf-final-point/medium.en.json"
+    }
+  ],
+  "verbatim_transcription_status": "unresolved; honest nonverbatim announcement descriptor covers retained source, no invented quotes",
+  "review_notes": [
+    "Only newly selected USQF source ran actual small.en/medium.en once; all raw preserved. No new TTS, external model API or loudness/gain/PCM tests.",
+    "ASR preceding sentence ends120.0 latest; start122.17 leaves2.17s and no cut utterance.",
+    "Retained announcement both raw traces125.66–138.3 is fully covered125.6–138.5 by explicit bracketed nonverbatim descriptor. Do not reconstruct the official match score as purported spoken words.",
+    "English commentator next actual sentence begins144.12/144.58, well after selected139.0 and mute visual tail139.5. Later hugs/4h28/biggest moment commentary not retained.",
+    "Official AMP VTT of another edit archived for reference only, never bound as exact timing evidence to this source.",
+    "Native exact-source ASR lexeme mismatch/description handling must be reviewed honestly; if downstream contract refuses descriptors, use verified factual photo/card fallback instead of waiving global rules."
+  ],
+  "native_quote": [
+    {
+      "at": 3.43,
+      "end": 16.33,
+      "text": "[Match result announced]\n【主裁宣布比赛结果】",
+      "_non_verbatim_description": true
+    }
+  ],
+  "native_quote_timebase": "relative toselectedsource start122.17; foreground_english remains absolutesourcetime"
+}

@@ -1,0 +1,63 @@
+[片长] 202.3s = 3 分 22 秒，按实测 12560 kb/s 估 303 MiB —— 成片一律走 Release 附件，不进 git
+[TTS] spec 认领 tts_backend=edge，这一趟不走 Azure：Actual four representative native5predicate passed and exact15voicebundle frozen; fourexact samples+oneprioroutro exactbytes reused, tennewactual; Yunjian+6%/+0Hz natural voice, no unsupported controls.
+[多音字] 没有换字表管不到的非常用读音（550 字、15 段查过）
+  另 6 处落在量过读对的词上（check_polyphones.MEASURED_OK），不逐条报
+  静态筛选不是声学通过；词典和历史词条不能证明本次整句读对。本次 15 段仍须按实际嗓音、语速逐段声学复核，含封面、旁白和片尾。
+
+[dry-run] spec 形状没问题：17 段，画面共 201.1s
+[fps] us-open-qf 是 30000/1001，重采样到主源的 30/1——TrueHDsource sampled25fps with no speedchange.
+[fps] vienna-interview 是 50/1，重采样到主源的 30/1——TrueHDsource sampled25fps with no speedchange.
+[fps] paris-final 是 25，重采样到主源的 30/1——TrueHDsource sampled25fps with no speedchange.
+
+[查选段] 认领到 2 份 probe.json，**没查成的源：['monte-carlo-final', 'vienna-interview']**
+
+[查选段] 另外这几条也只报不拦：
+  源 monte-carlo-final（https://www.youtube.com/watch?v=K2Ifk8HnQHo）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：Actualuniqueofficial archived1080source independentlyffprobed and current sourceSHA2560f6a5c36a506f71db3afb814ac1d2a08096c20cf6691fd77de1fde1e1b7325f8; actualpreparedsource handoff+boundedfixedcenterreview archived.
+  源 vienna-interview（https://www.tennistv.com/videos/4602481/vienna-2026-final-carlos-alcaraz-interview）一份 probe.json 都认领不上——宽高帧率、切点、死球、静音这几层对它全是哑的
+    已认领 _no_probe_why：Actualuniqueofficial archived1080source independentlyffprobed and current sourceSHA2565acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd; actualpreparedsource handoff+boundedfixedcenterreview archived.
+  第 15 段 end=149.30s 切在一分打完之前——记分条在 149.70s 才翻牌（按猜的记分条框量的），观众看不出这分归谁；end 至少要挪到 150.9s（翻牌后再留 1.2s 反应）
+    已认领 point_end_ok：ExactsameactualSheltonParis source21b7, preparation120.4/fullcontact122.52/result/handshake149.3+silenttail149.8; ads149.96excluded. Previouslyexplicitrootacceptedbriefnaturalracketedge minor, notzerocropclaim.
+  源 us-open-qf：死球时刻还没量过——probe 猜过 --scorebox 104,888,653,978，还没有人拿它重跑一轮 probe 确认（老 probe；新 probe 会按猜的框自己量一遍）
+  ⚠️ 这几条源片的切点没查成：['monte-carlo-final', 'vienna-interview']
+  选段这一层没有硬伤（片长、分辨率、几何；响度校验按用户要求移除）。**挑段仍然要看缩略图墙**——「近端是谁」「情绪对不对题」机器判不了。
+[dry-run] 文案 alcaraz-finals-road-2026.xhs.txt：正文 285 字（上限 1000）、tag 5 个（上限 5）
+[官方上传] spec 里认不出英文名（cover.matchup[].name_en）——要列官方上传就给 --who <姓>,<姓>
+
+[估旁白] 13 段有旁白（离线估，误差 ±2.2s）
+  第  1 段 画面   9.1s 估旁白  8.03s 余量 +1.04s ← 悬，跑一次 mode=narration
+  第  2 段 画面  11.1s 估旁白  9.66s 余量 +1.42s ← 悬，跑一次 mode=narration
+  第  3 段 画面  12.0s 估旁白 10.17s 余量 +1.82s ← 悬，跑一次 mode=narration
+  第  4 段 画面   8.5s 估旁白  7.53s 余量 +0.98s ← 悬，跑一次 mode=narration
+  第  5 段 画面   9.6s 估旁白  8.36s 余量 +1.26s ← 悬，跑一次 mode=narration
+  第  7 段 画面   8.9s 估旁白  7.69s 余量 +1.23s ← 悬，跑一次 mode=narration
+  第  8 段 画面   9.2s 估旁白  7.86s 余量 +1.30s ← 悬，跑一次 mode=narration
+  第 10 段 画面   7.6s 估旁白  6.54s 余量 +1.06s ← 悬，跑一次 mode=narration
+  第 11 段 画面   6.0s 估旁白  5.23s 余量 +0.76s ← 悬，跑一次 mode=narration
+  第 12 段 画面   7.2s 估旁白  6.22s 余量 +0.97s ← 悬，跑一次 mode=narration
+  第 14 段 画面  10.3s 估旁白  9.34s 余量 +0.92s ← 悬，跑一次 mode=narration
+  第 16 段 画面   9.3s 估旁白  8.19s 余量 +1.14s ← 悬，跑一次 mode=narration
+  第 17 段 画面   7.7s 估旁白  6.56s 余量 +1.14s ← 悬，跑一次 mode=narration
+
+[估旁白] 误差带里这几段已经拿真 TTS 量过（data/narration_checks/alcaraz-finals-road-2026.json）：
+  第 1 段：真 TTS 量过 8.66s，余量 +0.40s
+  第 2 段：真 TTS 量过 10.68s，余量 +0.40s
+  第 3 段：真 TTS 量过 11.59s，余量 +0.40s
+  第 4 段：真 TTS 量过 8.11s，余量 +0.40s
+  第 5 段：真 TTS 量过 9.22s，余量 +0.40s
+  第 7 段：真 TTS 量过 8.52s，余量 +0.40s
+  第 8 段：真 TTS 量过 8.76s，余量 +0.40s
+  第 10 段：真 TTS 量过 7.20s，余量 +0.40s
+  第 11 段：真 TTS 量过 5.59s，余量 +0.40s
+  第 12 段：真 TTS 量过 6.79s，余量 +0.40s
+  第 14 段：真 TTS 量过 9.86s，余量 +0.40s
+  第 16 段：真 TTS 量过 8.93s，余量 +0.40s
+  第 17 段：真 TTS 量过 7.30s，余量 +0.40s
+
+[断句] 1 个子句宽过一行字幕（16 格），只能硬切——加个逗号断在该断的地方：
+  （下面印的是**它现在会被切成什么样**）
+  第 3 段（17 格）「成为男单历史最年轻的 ｜ 生涯全满贯得主」
+
+[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**：
+  PYTHONPATH=src python3 tools/preview_segments_local.py --slug alcaraz-finals-road-2026
+  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）

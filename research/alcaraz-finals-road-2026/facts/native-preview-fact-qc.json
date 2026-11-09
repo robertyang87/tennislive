@@ -1,0 +1,218 @@
+{
+  "status": "PASS_FACT_SCOPE_CURRENT_NATIVE_PREVIEW_NOT_FORMAL_FILM",
+  "reviewed_at_utc": "2026-11-09T08:14:08.222645+00:00",
+  "binding": {
+    "spec": "/dev/shm/alcaraz-finals-production/native/specs/reels/alcaraz-finals-road-2026.json",
+    "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "frozen_editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+    "ASS": "/dev/shm/alcaraz-finals-production/production/native-preview/subtitles.ass",
+    "ASS_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "ASS_dialogue_events": 61,
+    "native_preview_manifest": "/dev/shm/alcaraz-finals-production/production/native-preview/preview-combined-manifest.json",
+    "manifest_sha256": "d94aded5f1fbc2a721df503d42ee6a16b22ae424cbd20eb762cc7b5bf05112ce",
+    "actual_preview_samples": 52,
+    "native_timeline": "/dev/shm/alcaraz-finals-production/production/native-preview/native-timeline.json",
+    "timeline_sha256": "cff441a4def79e65a11f3a37e2573be9dc816d9a10fead235ea726742488c403"
+  },
+  "actual_opened": [
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-01.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-02.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-03.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-04.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-05.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-06.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-07.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-08.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/contact-09.jpg",
+    "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-02.png",
+    "/dev/shm/alcaraz-finals-production/production/native-cover/native-cover.jpg"
+  ],
+  "checks": {
+    "13bodywordstrings_exactfrozen67ef34": "PASS",
+    "coverhook_voice_topic_exactfrozen": "PASS; actualnativecoverpersonandtextseen",
+    "all61ASSfactsemantics_read": "PASS; scores/dates/numericaldisplay/nameandtitlesbound",
+    "AOJan30SF_thenFeb1finalphotos": "PASS correctSFtowelcontextthenpostvictory/trophy; nofakecrampdiagnosticshot",
+    "AprilrightwristvsJanuarycramps": "PASS distinctchronologyandnativecard",
+    "USAug31return_thenQF_Sep8startSep9finish": "PASS label2026.09.09actualresultdateandQFopponentShelton",
+    "Sep16fifthconsecutivequalification": "PASS not5actualappearances; AOchampionphotoisaqualifiedbasiscontextnotinventedSep16ceremony",
+    "TokyoShanghaiVienna": "PASS accuratechronologyandrealphotos",
+    "Vienna_interview_10splitcues": "PASS faithfullevel/week/indoorconfidence/restofseasoncontent; notmarketedaswristquote",
+    "ParisfirstParisMasters": "PASS notfirstanyPariscitytitle; actualQFFritzphoto→currentFphoto; labelswinnerAlcaraz",
+    "2025TurinRU_to2026Paris": "PASS explicit去年oldATP4403403→今年currentATP4606341 seeninnativesamples198.178/199.978",
+    "Race15lines_current0728": "PASS actualfullnativeframe191.85allrowsread;focusAlcaraz6100rank3,8mintqualified,Sinnergreywithdrawn; lowerFritz3085andFokina2510updated",
+    "Publicationbodyonlyprefix": "PASS285chars28b06d5a…scopedpriorrebindc87a…retained"
+  },
+  "three_information_labels": [
+    {
+      "topic": "蒙特卡洛收获亚军",
+      "date": "2026.04.12",
+      "place": "蒙特卡洛大师赛决赛",
+      "people": "阿尔卡拉斯 vs 辛纳",
+      "score": "6-7(5) 3-6",
+      "result": {
+        "winner": "辛纳",
+        "score": "7-6(5) 6-3",
+        "source": "https://www.nittoatpfinals.com/en/news/alcaraz-sinner-monte-carlo-2026-final"
+      }
+    },
+    {
+      "topic": "复出首站打进8强",
+      "date": "2026.09.09",
+      "place": "美网1/4决赛",
+      "people": "阿尔卡拉斯 vs 谢尔顿",
+      "score": "7-6(5) 1-6 3-6 6-1 6-7(7)",
+      "result": {
+        "winner": "谢尔顿",
+        "score": "6-7(5) 6-1 6-3 1-6 7-6(7)",
+        "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/shelton_ends_alcarazs_us_open_title_defense_in_late-night_five-setter.html"
+      }
+    },
+    {
+      "topic": "首夺巴黎大师赛",
+      "date": "2026.11.08",
+      "place": "巴黎大师赛决赛",
+      "people": "阿尔卡拉斯 vs 谢尔顿",
+      "score": "7-6(5) 7-5",
+      "result": {
+        "winner": "阿尔卡拉斯",
+        "score": "7-6(5) 7-5",
+        "source": "https://www.nittoatpfinals.com/en/news/alcaraz-shelton-paris-2026-final-sunday"
+      }
+    }
+  ],
+  "source_label_review": {
+    "MonteCarlo": "Alcarazlosingperspective6-7(5)3-6; sourcewinnerSinner7-6(5)6-3,Apr12F.",
+    "USOpen": "Alcaraz7-6(5)1-6 3-6 6-1 6-7(7); sourcewinnerShelton6-7(5)6-1 6-3 1-6 7-6(7),Sep9QF.",
+    "Paris": "Alcarazwinning7-6(5)7-5,Nov8F."
+  },
+  "race_current_expected": [
+    {
+      "rank": 1,
+      "name": "Alexander Zverev",
+      "points": 9350,
+      "qualified": true,
+      "display_name": "兹维列夫",
+      "status": "qualified"
+    },
+    {
+      "rank": 2,
+      "name": "Jannik Sinner",
+      "points": 7950,
+      "qualified": false,
+      "display_name": "辛纳",
+      "status": "withdrawn"
+    },
+    {
+      "rank": 3,
+      "name": "Carlos Alcaraz",
+      "points": 6100,
+      "qualified": true,
+      "display_name": "阿尔卡拉斯",
+      "status": "qualified"
+    },
+    {
+      "rank": 4,
+      "name": "Ben Shelton",
+      "points": 5170,
+      "qualified": true,
+      "display_name": "谢尔顿",
+      "status": "qualified"
+    },
+    {
+      "rank": 5,
+      "name": "Daniil Medvedev",
+      "points": 3820,
+      "qualified": true,
+      "display_name": "梅德韦德夫",
+      "status": "qualified"
+    },
+    {
+      "rank": 6,
+      "name": "Flavio Cobolli",
+      "points": 3680,
+      "qualified": true,
+      "display_name": "科博利",
+      "status": "qualified"
+    },
+    {
+      "rank": 7,
+      "name": "Arthur Fils",
+      "points": 3625,
+      "qualified": true,
+      "display_name": "菲斯",
+      "status": "qualified"
+    },
+    {
+      "rank": 8,
+      "name": "Frances Tiafoe",
+      "points": 3390,
+      "qualified": true,
+      "display_name": "蒂亚福",
+      "status": "qualified"
+    },
+    {
+      "rank": 9,
+      "name": "Rafael Jódar",
+      "points": 3234,
+      "qualified": true,
+      "display_name": "霍达尔",
+      "status": "qualified"
+    },
+    {
+      "rank": 10,
+      "name": "Alex de Minaur",
+      "points": 3170,
+      "qualified": false,
+      "display_name": "德米纳尔",
+      "status": "not_qualified"
+    },
+    {
+      "rank": 11,
+      "name": "Taylor Fritz",
+      "points": 3085,
+      "qualified": false,
+      "display_name": "弗里茨",
+      "status": "not_qualified"
+    },
+    {
+      "rank": 12,
+      "name": "Novak Djoković",
+      "points": 2940,
+      "qualified": false,
+      "display_name": "德约科维奇",
+      "status": "not_qualified"
+    },
+    {
+      "rank": 13,
+      "name": "Tommy Paul",
+      "points": 2925,
+      "qualified": false,
+      "display_name": "保罗",
+      "status": "not_qualified"
+    },
+    {
+      "rank": 14,
+      "name": "Jiří Lehečka",
+      "points": 2540,
+      "qualified": false,
+      "display_name": "莱赫奇卡",
+      "status": "not_qualified"
+    },
+    {
+      "rank": 15,
+      "name": "Alejandro Davidovich Fokina",
+      "points": 2510,
+      "qualified": false,
+      "display_name": "福基纳",
+      "status": "not_qualified"
+    }
+  ],
+  "limitations": [
+    "Nativepreviewonly, noactualformalMP4identityexistswithinthisapproval.",
+    "Pointservetoss/occlusion/transition/centering/completenessandinterviewaudibleseamdecisionsremainroot/visual/audioactualmovieQC; thisfactsapprovaldoesnotwaivetheirfindings.",
+    "NoASR/TTS/externalresearch/modelrequesttriggeredbythisreview.",
+    "ASS61events include15sourcecuefragments; lexicaltranslationreviewdoesnotclaimhumanfullauditoryverification.",
+    "Nativepreviewmanifestkindlabelmentions51butactualsamples52; reviewcountusesactualarrayand9contactspersonallyviewed."
+  ],
+  "findings": []
+}

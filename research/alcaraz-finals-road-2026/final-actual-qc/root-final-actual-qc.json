@@ -1,0 +1,78 @@
+{
+  "schema": "tennislive.root-actual-master-review.v1",
+  "status": "PASS_ACTUAL_MASTER_SCOPED",
+  "at": "2026-11-09T08:41:14.521030+00:00",
+  "film": {
+    "sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "bytes": 88813632,
+    "seconds": 209.467
+  },
+  "identities": {
+    "render_sha256": "9211608fc1d5e9bb2e292056ce08e3f3b790b852b9b528fa0c490bd1d5c4c558",
+    "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "render_inputs_sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+    "ass_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "formal_voice_suite_sha256": "12c99aca0059b41dfa18f2473b4a9e0d695c99ca0adfd1eb5f96a39d550dcee9",
+    "poster_sha256": "812d0a1cfb359f98ab9da497a15b5ebb201343c26e89175110a79707bac9fa89",
+    "frozen_native_15_bundle_sha256": "c075b2896d17e9f77bf9fe20926b95d34442cfea73e898f70b58ce10f98a3890"
+  },
+  "root_actual_visual_review": {
+    "contact_sheets_personally_opened": [
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-00.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-02.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg"
+    ],
+    "actual_sample_frames": 60,
+    "additional_full_images_personally_opened": [
+      "native-input/poster.jpg",
+      "root-qc/frame-056-0192.514.jpg"
+    ],
+    "actual_cover_and_scene_preview_previously_reviewed": "../production/native-preview/root-native-input-visual-review.json",
+    "observations": "Single full-canvas fixed match crop; fixed interview person crop; no info overlay on photos/card; actual bilingual cues readable; dated top15 Race with eight qualified highlighted and Alcaraz focused. Actual 2025Turin vs2026Paris photos correctly sequenced."
+  },
+  "deterministic_integrity": {
+    "master_entire_decode_exit": 0,
+    "review_entire_decode_exit": 0,
+    "public_release_entire_response_sha_matches": true,
+    "actual_final_copy_matches_frozen_285_char_body": true,
+    "current_formal_voice_suite_pass": true,
+    "current_voice_entries": 30,
+    "all_30_entries_pass": true
+  },
+  "independent_actual_master_reviews": [
+    {
+      "path": "qc-facts/final-fact-audit.json",
+      "sha256": "ad3016b568b776bc3a3d006b3f8142c3f1e7d1a84613882c9352a6ab14ff9862"
+    },
+    {
+      "path": "editorial-photo-qc/actual-master-photo-cover-card-credit-race-qc.json",
+      "sha256": "4696bcd2276271976deba3557d6d619480e54d20976a9aaa57c607f142f6ef94"
+    },
+    {
+      "path": "qc-audio/final-current-audio-race-qc.json",
+      "sha256": "3d6fe0fa940f145a606560d969d10c1c659f6d319a56776c5ea93ee7a4c92726"
+    },
+    {
+      "path": "independent-mc-interview/actual-mc-interview-qc.json",
+      "sha256": "df8fb98c570cd1a1b8aff2f6cc90d55a2b3f544f4abbcd9f2f3e58bfa5ab1fe5"
+    },
+    {
+      "path": "qc-us-paris/actual-master-usqf-paris-qc.json",
+      "sha256": "ca799ceba6a29196562adbd7f4491e7527783de36a6a408177752b8b84dffac4"
+    },
+    {
+      "path": "publication/release-entire-file-verification.json",
+      "sha256": "201e17e2996b58699a0088e3edf490379ef7eb22b45fcc9a2adb12711654eda7"
+    }
+  ],
+  "honest_limits": [
+    "Official footage gaps AO/Doha/Tokyo/Vienna match point closed by verified photo/narration fallback; Vienna genuine interview retained. No substitute rally claimed.",
+    "MonteCarlo source begins with toss already airborne and visible pre-contact preparation; no claim of hand release or earlier unavailable preparation.",
+    "Paris fixed upper-right info overlaps far receiver preparation position, near serve and ball visible; disclosed accepted limitation, not all actors unobscured guarantee.",
+    "Bounded ASR/word-marks/native automatic suite are evidence, not a human full-listen or universal tone/naturalness guarantee. Two B得 checks unmeasurable are retained per native allowed semantics.",
+    "Existing scoped source speech boundary limitations retained; no gain/loudness/PCM analysis performed."
+  ],
+  "publication": "Not yet merged/sent. Exact final-head CI green+CLEAN and one normal main native auto send still required; no request to alter or rerender movie."
+}

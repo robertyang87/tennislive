@@ -1,0 +1,57 @@
+{
+  "source_key": "vienna-interview",
+  "source_id": "tennistv-4602481",
+  "source_url": "https://www.tennistv.com/videos/4602481/vienna-2026-final-carlos-alcaraz-interview",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4602481/tennistv-4602481.mp4",
+  "source_path": "/dev/shm/alcaraz-finals-production/research/media/sources/tennistv-4602481.mp4",
+  "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+  "window": [
+    69.82,
+    93.6
+  ],
+  "native_tail_s": 0.5,
+  "native_visual_tail_end": 94.1,
+  "audio_tail": "silence",
+  "fit": "cover",
+  "cx": 0.5,
+  "track": false,
+  "quote": [
+    {
+      "at": 69.92,
+      "end": 75.1,
+      "text": "So I'm just really happy that at the end, I found my way and just played great.\n我很高兴，最终找到了自己的办法，也打出了很好的表现。"
+    },
+    {
+      "at": 75.1,
+      "end": 80.92,
+      "text": "And obviously it's been a really emotional and an amazing week for me that I learned a lot, you know,\n这一周让我感慨万千，也非常美妙，我学到了很多。"
+    },
+    {
+      "at": 80.92,
+      "end": 85.3,
+      "text": "to keep going forward step by step,\n继续一步一步向前走，"
+    },
+    {
+      "at": 85.3,
+      "end": 89.82,
+      "text": "playing on indoor courts, trying to gain more confidence playing on this surface.\n在室内场上比赛，努力在这种场地上积累更多信心。"
+    },
+    {
+      "at": 89.82,
+      "end": 93.42,
+      "text": "So I'm just really happy and looking forward for the rest of the season.\n我很高兴，也期待赛季接下来的比赛。"
+    }
+  ],
+  "packet_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-transcript.json",
+  "packet_sha256": "7727ed36669924a82d4f4dca44730a66e0b76ed605ed21967444e353809c9267",
+  "visual_path": "/dev/shm/alcaraz-finals-production/research/media/vienna-interview/vienna-interview-visual-review.json",
+  "visual_sha256": "0f18ec9c03fa7bf4dea68964659d0ec65bb31bf7fd6fc68682e273dd2443bba0",
+  "status": "Source and two-model evidence prepared; root editorial/native/actual-film review remains",
+  "notes": [
+    "This is verified本人 Alcaraz Vienna title post-final interview. The excerpt concerns finding his level, an emotional week and gaining indoor-court confidence for the rest of the season. It does not contain an explicit wrist injury/comeback claim and must not be marketed as that.",
+    "Exact actual-source 1920x1080@50 and sourceSHA verified; original speaker face/head/torso remains centered within cx0.5 fixed3:4 in all sampled frames of selected excerpt. No tracking or changing cx.",
+    "Both models previous me ends69.72/69.76; next So begins69.92. Selected start69.82 keeps nominal0.10s before next full clause and0.06s after previous clause; final film/audio must confirm actual boundary, not infer from semantic transcript alone.",
+    "Both models season ends93.38/93.42. Next interviewer begins93.82/93.86. Selected voiced end93.60 leaves0.18s past latest end and0.22s before earliest next speaker. Native0.5s visual tail93.60–94.10 must be SILENT; do not include next interviewer audio.",
+    "True head/chest closeup is the intended visual throughout. About96s source black transition and99s advertisement are outside selected window."
+  ]
+}

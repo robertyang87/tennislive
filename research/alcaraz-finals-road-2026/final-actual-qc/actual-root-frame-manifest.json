@@ -1,0 +1,780 @@
+{
+  "status": "extracted_only_not_visual_approval",
+  "movie": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+  "movie_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+  "spec": "/dev/shm/alcaraz-finals-production/final/actual-spec.json",
+  "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+  "render_meta_sha256": "bb143153b2919ee9254f5bf1aba4de2d22d9525c6ec400616e276c1c1b0ad2da",
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 1080,
+        "height": 1440,
+        "coded_width": 1080,
+        "coded_height": 1440,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "3:4",
+        "pix_fmt": "yuv420p",
+        "level": 41,
+        "color_range": "tv",
+        "color_space": "bt470bg",
+        "chroma_location": "center",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "time_base": "1/90000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 18852000,
+        "duration": "209.466667",
+        "bit_rate": "3208196",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "6284",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc63.27.100 libx264"
+        },
+        "side_data_list": [
+          {
+            "side_data_type": "ICC Profile"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 10052544,
+        "duration": "209.428000",
+        "bit_rate": "175036",
+        "nb_frames": "9818",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "209.466667",
+      "size": "88813632",
+      "bit_rate": "3391991",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "encoder": "Lavf63.18.100"
+      }
+    }
+  },
+  "timeline_method": "Actual render cover_seconds + committed nominal scene durations; final per-frame rounding can differ slightly.",
+  "timeline": [
+    {
+      "index": 0,
+      "id": "opening",
+      "start": 3.778,
+      "duration": 9.064,
+      "end": 12.842
+    },
+    {
+      "index": 1,
+      "id": "ao_semifinal",
+      "start": 12.842,
+      "duration": 11.08,
+      "end": 23.922
+    },
+    {
+      "index": 2,
+      "id": "ao_intro",
+      "start": 23.922,
+      "duration": 11.992,
+      "end": 35.914
+    },
+    {
+      "index": 3,
+      "id": "doha_intro",
+      "start": 35.914,
+      "duration": 8.512,
+      "end": 44.426
+    },
+    {
+      "index": 4,
+      "id": "sunshine_montecarlo_intro",
+      "start": 44.426,
+      "duration": 9.616,
+      "end": 54.042
+    },
+    {
+      "index": 5,
+      "id": "montecarlo_point",
+      "start": 54.042,
+      "duration": 15.17,
+      "end": 69.212
+    },
+    {
+      "index": 6,
+      "id": "wrist_and_missing_majors",
+      "start": 69.212,
+      "duration": 8.92,
+      "end": 78.132
+    },
+    {
+      "index": 7,
+      "id": "us_open_intro",
+      "start": 78.132,
+      "duration": 9.16,
+      "end": 87.292
+    },
+    {
+      "index": 8,
+      "id": "us_open_point",
+      "start": 87.292,
+      "duration": 16.83,
+      "end": 104.122
+    },
+    {
+      "index": 9,
+      "id": "qualification",
+      "start": 104.122,
+      "duration": 7.6,
+      "end": 111.722
+    },
+    {
+      "index": 10,
+      "id": "tokyo_intro",
+      "start": 111.722,
+      "duration": 5.992,
+      "end": 117.714
+    },
+    {
+      "index": 11,
+      "id": "shanghai_vienna_intro",
+      "start": 117.714,
+      "duration": 7.192,
+      "end": 124.906
+    },
+    {
+      "index": 12,
+      "id": "vienna_interview",
+      "start": 124.906,
+      "duration": 23.78,
+      "end": 148.686
+    },
+    {
+      "index": 13,
+      "id": "paris_intro",
+      "start": 148.686,
+      "duration": 10.264,
+      "end": 158.95
+    },
+    {
+      "index": 14,
+      "id": "paris_point",
+      "start": 158.95,
+      "duration": 28.9,
+      "end": 187.85
+    },
+    {
+      "index": 15,
+      "id": "race_table",
+      "start": 187.85,
+      "duration": 9.328,
+      "end": 197.178
+    },
+    {
+      "index": 16,
+      "id": "question",
+      "start": 197.178,
+      "duration": 7.696,
+      "end": 204.874
+    }
+  ],
+  "frames": [
+    {
+      "time": 0.8,
+      "tags": [
+        "cover"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-000-0000.800.jpg",
+      "sha256": "156ffbd2107694d1d81d75a4e300d3c8d0a7042e737eafd72e5f9618565412d4"
+    },
+    {
+      "time": 3.598,
+      "tags": [
+        "cover-before-cut"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-001-0003.598.jpg",
+      "sha256": "a61dccc252150a6038a60eb4e3144b1418b2b6d5b1f0b55bc5c6f80fa5d22863"
+    },
+    {
+      "time": 8.31,
+      "tags": [
+        "00-opening-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-002-0008.310.jpg",
+      "sha256": "0efefffce9bd384e93feaf8d3a0f573adab6c59df864b8021c5823eeff38bb60"
+    },
+    {
+      "time": 18.382,
+      "tags": [
+        "01-ao_semifinal-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-003-0018.382.jpg",
+      "sha256": "9603642a825aad7c016b66d023fec5c531fb053f506aba78cc8137c88a0eae8e"
+    },
+    {
+      "time": 29.918,
+      "tags": [
+        "02-ao_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-004-0029.918.jpg",
+      "sha256": "1721217a2ffa60122511daff5d1aee947f5f44da41b45934894eb64d72c002d6"
+    },
+    {
+      "time": 40.17,
+      "tags": [
+        "03-doha_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-005-0040.170.jpg",
+      "sha256": "d8aaba9f1ca2d80a81789915956288d5cbe6c7583548bac9c9ebe25de63357fe"
+    },
+    {
+      "time": 49.234,
+      "tags": [
+        "04-sunshine_montecarlo_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-006-0049.234.jpg",
+      "sha256": "f0eb639d40a1f7a82ba7867e1ccb47f70c60745257c532d337c81b3893ac7890"
+    },
+    {
+      "time": 54.292,
+      "tags": [
+        "05-montecarlo_point-plus0.25"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-007-0054.292.jpg",
+      "sha256": "090c84c672db3b6c5991090e01bcc0fd21c514bfea29ce868615fda0d08d239d"
+    },
+    {
+      "time": 55.042,
+      "tags": [
+        "05-montecarlo_point-plus1.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-008-0055.042.jpg",
+      "sha256": "ec978c4eaa279a490b788e85575042f07d6549a5dfb9b97a09e9db68aa6e1ba3"
+    },
+    {
+      "time": 58.042,
+      "tags": [
+        "05-montecarlo_point-plus4.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-009-0058.042.jpg",
+      "sha256": "21d8827f82bc29068588bed563aed15eb80a0b9ac46a70df21695dcabc75686b"
+    },
+    {
+      "time": 61.042,
+      "tags": [
+        "05-montecarlo_point-plus7.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-010-0061.042.jpg",
+      "sha256": "d7cae3a6877d82726b5a90d458b8928e06c14aac6a18e703d0f5b41f24f0b0c0"
+    },
+    {
+      "time": 61.627,
+      "tags": [
+        "05-montecarlo_point-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-011-0061.627.jpg",
+      "sha256": "fd650fd8374b138338595a9fd1112e0d7b016d5a2733132fc4da2e45e38fb181"
+    },
+    {
+      "time": 62.472,
+      "tags": [
+        "05-montecarlo_point-bilingual0"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-012-0062.472.jpg",
+      "sha256": "e7095f73f3d5133c7f5b628da70d88d03c02ddbc0a1641336bda24e49dbb70c4"
+    },
+    {
+      "time": 62.542,
+      "tags": [
+        "05-montecarlo_point-plus8.50"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-013-0062.542.jpg",
+      "sha256": "2c2f2532e11bae3a62d3f8401d2c0603172d6d91924d8476fb19023cd933f5e9"
+    },
+    {
+      "time": 67.192,
+      "tags": [
+        "05-montecarlo_point-bilingual1"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-014-0067.192.jpg",
+      "sha256": "c22178d438f9dd4db417707fafce83a93b259a96624d8ed13004d0d7e377449f"
+    },
+    {
+      "time": 68.862,
+      "tags": [
+        "05-montecarlo_point-plus14.82"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-015-0068.862.jpg",
+      "sha256": "f8d3d7565bce2ab44e5035a0fc13d59a5c7bb27daa36e69074dfe02d0c9fabd7"
+    },
+    {
+      "time": 73.672,
+      "tags": [
+        "06-wrist_and_missing_majors-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-016-0073.672.jpg",
+      "sha256": "510253db4c3b197ba063fd326a8f083d339311a285dfeb977ebc1ebb05bb0976"
+    },
+    {
+      "time": 82.712,
+      "tags": [
+        "07-us_open_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-017-0082.712.jpg",
+      "sha256": "a857900a87fbe462389fc1afd22538c3b27a4f2e3f37b0f4addac96c79974c21"
+    },
+    {
+      "time": 87.542,
+      "tags": [
+        "08-us_open_point-plus0.25"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-018-0087.542.jpg",
+      "sha256": "72d5dc488f7775a4e22b757ed4433d79766587e31d5b797edcbf4cddebb9001b"
+    },
+    {
+      "time": 88.292,
+      "tags": [
+        "08-us_open_point-plus1.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-019-0088.292.jpg",
+      "sha256": "124b1fec4a91ceaf45b559840f11da54e88d663918b47928862ab440b1866d99"
+    },
+    {
+      "time": 91.292,
+      "tags": [
+        "08-us_open_point-plus4.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-020-0091.292.jpg",
+      "sha256": "5c08bf88a9174056a211ba01db52fc6d5e6f97400c55ca8cf248daef6aea5ca9"
+    },
+    {
+      "time": 94.292,
+      "tags": [
+        "08-us_open_point-plus7.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-021-0094.292.jpg",
+      "sha256": "a833afb55b3c35ac1907fe5f5152e12847d6868121a9934d77472ba0907a9edd"
+    },
+    {
+      "time": 95.707,
+      "tags": [
+        "08-us_open_point-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-022-0095.707.jpg",
+      "sha256": "e2ce4684366e7669b1139d74afcca9f38a1bd84a04468cd87b014cfadd1016c5"
+    },
+    {
+      "time": 95.792,
+      "tags": [
+        "08-us_open_point-plus8.50"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-023-0095.792.jpg",
+      "sha256": "1352d86089ba542f166e2b83ba73b7958c6ece144a352601c9927b231b79f39a"
+    },
+    {
+      "time": 97.172,
+      "tags": [
+        "08-us_open_point-bilingual0"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-024-0097.172.jpg",
+      "sha256": "18dd29d222cf1a0566af6909460938182c42db1d385e562a66527773762a2a86"
+    },
+    {
+      "time": 103.772,
+      "tags": [
+        "08-us_open_point-plus16.48"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-025-0103.772.jpg",
+      "sha256": "899beda0c9390a331acf15003a3bd6ea3f6482a37c7622e72b5974c4551eb155"
+    },
+    {
+      "time": 107.922,
+      "tags": [
+        "09-qualification-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-026-0107.922.jpg",
+      "sha256": "081e7c0d70c8171678a240d1f4d97e29cc5bdfd28d437109f4a927e5b111ccfe"
+    },
+    {
+      "time": 114.718,
+      "tags": [
+        "10-tokyo_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-027-0114.718.jpg",
+      "sha256": "c43984b17a2d99b67b0d35e61d968163096e904440c53f1b7134766f7b6b49e5"
+    },
+    {
+      "time": 121.31,
+      "tags": [
+        "11-shanghai_vienna_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-028-0121.310.jpg",
+      "sha256": "63b69455980aac97cceb37f17604bd32eacef39b8e1fbb25bfc5c2ac9820f281"
+    },
+    {
+      "time": 125.156,
+      "tags": [
+        "12-vienna_interview-plus0.25"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-029-0125.156.jpg",
+      "sha256": "540b8685b79e83d9210cb8c05aec2aa5e5978223a0847f1dc96845c35f521362"
+    },
+    {
+      "time": 125.906,
+      "tags": [
+        "12-vienna_interview-plus1.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-030-0125.906.jpg",
+      "sha256": "382206cb180265847055db7e36cfd48c3292c73498f1d465d366268661a24866"
+    },
+    {
+      "time": 126.456,
+      "tags": [
+        "12-vienna_interview-bilingual0"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-031-0126.456.jpg",
+      "sha256": "bf7c12f2edcc773b5913167206c81952db98ccb105ad6f17b1bf1128475003fd"
+    },
+    {
+      "time": 128.906,
+      "tags": [
+        "12-vienna_interview-plus4.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-032-0128.906.jpg",
+      "sha256": "d24b22244cc34cb57bdf72633bfaf395c23c814901dd211fc4824f583e79401a"
+    },
+    {
+      "time": 129.046,
+      "tags": [
+        "12-vienna_interview-bilingual1"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-033-0129.046.jpg",
+      "sha256": "f01a52f15cfb956172486641c4e2ad2f2a2d74583432c54962292c1b1073cc9a"
+    },
+    {
+      "time": 131.466,
+      "tags": [
+        "12-vienna_interview-bilingual2"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-034-0131.466.jpg",
+      "sha256": "49f505ea23f4024aaadd179000944c01808edbcf36e7fc485a515556cff6e472"
+    },
+    {
+      "time": 131.906,
+      "tags": [
+        "12-vienna_interview-plus7.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-035-0131.906.jpg",
+      "sha256": "fd9dd560b856f286e8f9c03a91dd8bbd2bd30dc75dadb0aa953950296a48ae22"
+    },
+    {
+      "time": 133.406,
+      "tags": [
+        "12-vienna_interview-plus8.50"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-036-0133.406.jpg",
+      "sha256": "8ac81fdbd79f727c99c73aab5daabbaa248019f1eec8b60ead2a0786963296c6"
+    },
+    {
+      "time": 133.586,
+      "tags": [
+        "12-vienna_interview-bilingual3"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-037-0133.586.jpg",
+      "sha256": "f7339fa9fef034db1a399d9061f2f2b02b026fb6460b801e480fd576c50c7b5f"
+    },
+    {
+      "time": 135.216,
+      "tags": [
+        "12-vienna_interview-bilingual4"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-038-0135.216.jpg",
+      "sha256": "8273f6e880dcef7fc34c87515e48fd24c103b595203c1a53f3a865429465ec57"
+    },
+    {
+      "time": 136.796,
+      "tags": [
+        "12-vienna_interview-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-039-0136.796.jpg",
+      "sha256": "ddae8437e23ca77fee8636b99eea2cff5a4a176f99a7eee0663a0bdefeae30fb"
+    },
+    {
+      "time": 138.196,
+      "tags": [
+        "12-vienna_interview-bilingual5"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-040-0138.196.jpg",
+      "sha256": "394fe65153afeff5b2c7eb6d98365ee537afef3f9396fcf0d641c6466062f165"
+    },
+    {
+      "time": 140.926,
+      "tags": [
+        "12-vienna_interview-bilingual6"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-041-0140.926.jpg",
+      "sha256": "2ea1530b5968a38b256838d0b108515d4f1f15961eec1059515111dea68c46ad"
+    },
+    {
+      "time": 143.186,
+      "tags": [
+        "12-vienna_interview-bilingual7"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-042-0143.186.jpg",
+      "sha256": "08499212ce067e443554ce2071c1ceb9767f8e32765225b7cc3a35e2da986cf3"
+    },
+    {
+      "time": 145.616,
+      "tags": [
+        "12-vienna_interview-bilingual8"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-043-0145.616.jpg",
+      "sha256": "57ac43f10eb765d94c86322d229cdda96ac251641eada29148f743094c563f7c"
+    },
+    {
+      "time": 147.416,
+      "tags": [
+        "12-vienna_interview-bilingual9"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-044-0147.416.jpg",
+      "sha256": "b9f88add0a0e9bc1c72e6203e86c619a5acf36b2059ca203926349bdd020df9e"
+    },
+    {
+      "time": 148.336,
+      "tags": [
+        "12-vienna_interview-plus23.43"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-045-0148.336.jpg",
+      "sha256": "2b87a14401d99c07e5cd7edeccde476d61043105b161aba4ffd2f576acace1f2"
+    },
+    {
+      "time": 153.818,
+      "tags": [
+        "13-paris_intro-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-046-0153.818.jpg",
+      "sha256": "670f666bc2f5d1ecfa65db4b8e760ff159b7a9769190a8d744333bdb1132dbaf"
+    },
+    {
+      "time": 159.2,
+      "tags": [
+        "14-paris_point-plus0.25"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-047-0159.200.jpg",
+      "sha256": "4d44662c77a1d847ce91d34996a508989a524b6ca571e3b5b897453ff57f29f0"
+    },
+    {
+      "time": 159.95,
+      "tags": [
+        "14-paris_point-plus1.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-048-0159.950.jpg",
+      "sha256": "c7cfdd4d796ec8c37cd8633428835e473d73a9dcbdf076ebc5a1c8fcb1768b83"
+    },
+    {
+      "time": 162.95,
+      "tags": [
+        "14-paris_point-plus4.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-049-0162.950.jpg",
+      "sha256": "7af34d9dea37b51877c06c342d1f1430148da33b590ab711a5b20d49c7ecc799"
+    },
+    {
+      "time": 165.95,
+      "tags": [
+        "14-paris_point-plus7.00"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-050-0165.950.jpg",
+      "sha256": "f32592bbae89958455a3dcba2189173527cca688e84887f0b2b66e3a7c4adb28"
+    },
+    {
+      "time": 167.45,
+      "tags": [
+        "14-paris_point-plus8.50"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-051-0167.450.jpg",
+      "sha256": "249f6eb0c0f9b88df56d26cd42a85ce625810931a0e38da8e21860f809e9b9a6"
+    },
+    {
+      "time": 173.4,
+      "tags": [
+        "14-paris_point-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-052-0173.400.jpg",
+      "sha256": "3f4552f9cefe485b7fedd2352c904921dcc7dc409b190434957c716110136ac9"
+    },
+    {
+      "time": 176.05,
+      "tags": [
+        "14-paris_point-bilingual0"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-053-0176.050.jpg",
+      "sha256": "96f5594eebd11fde48672eb0ae8447e2d3d2910126f5fd5d3a157ee8c1e5e957"
+    },
+    {
+      "time": 179.9,
+      "tags": [
+        "14-paris_point-bilingual1"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-054-0179.900.jpg",
+      "sha256": "0483c7677fc5bcd9c63ba3a5236576bb452ad589671f24e08f6819130621099a"
+    },
+    {
+      "time": 187.5,
+      "tags": [
+        "14-paris_point-plus28.55"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-055-0187.500.jpg",
+      "sha256": "dfc59c1e0ae6624ccfc681e275a18d2f82a241050bc389dc18bd1050b6906464"
+    },
+    {
+      "time": 192.514,
+      "tags": [
+        "15-race_table-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-056-0192.514.jpg",
+      "sha256": "5ceb6cf32634afa4e3e00e78ec27a9bc570a6a2e8a096af743d135a2415a9f70"
+    },
+    {
+      "time": 201.026,
+      "tags": [
+        "16-question-middle"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-057-0201.026.jpg",
+      "sha256": "764af76954acabfac09da3aeb8bc17ac2fbb6de483c07d1c1c1ce90d00d9372f"
+    },
+    {
+      "time": 205.674,
+      "tags": [
+        "native-outro-start"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-058-0205.674.jpg",
+      "sha256": "3263a23f0fece3180b7303f694b1dc7b3c31ab4747310710adf771a866452824"
+    },
+    {
+      "time": 208.467,
+      "tags": [
+        "native-outro-final"
+      ],
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-059-0208.467.jpg",
+      "sha256": "8985db34a0918ddb0d11fe932bd1a05bf42d97ac7f3eceff518ea4afca9997fb"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-00.jpg",
+      "sha256": "3ce375a479ea770e9ea349bdec432a7c856f688bc504b0f8d9731abad9d8fd2d"
+    },
+    {
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+      "sha256": "3b24e586e39cca82c8c1ecc55af5f4578b773b813255db1c17898f538800dafe"
+    },
+    {
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-02.jpg",
+      "sha256": "cabb22af77e4c8ee949efb234dd0696e7f85bba1255075578d3ba4f481bf0fab"
+    },
+    {
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+      "sha256": "49b85f2b222fec3a2806322454a3bc7f8bc48c1648760170657160d308c089f6"
+    },
+    {
+      "file": "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg",
+      "sha256": "5ab6f7ca553fe158111356594675d44ed8cdbf6471aac01355b711dab615ee29"
+    }
+  ]
+}

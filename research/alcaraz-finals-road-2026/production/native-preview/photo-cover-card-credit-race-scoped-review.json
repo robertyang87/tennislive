@@ -1,0 +1,563 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_PREVIEW_PHOTO_COVER_CARD_CREDIT_RACE_SCOPE",
+  "reviewer": "finals_editorial_photos",
+  "created_at": "2026-11-09T08:13:26.772613+00:00",
+  "binding": {
+    "spec_path": "/dev/shm/alcaraz-finals-production/native/specs/reels/alcaraz-finals-road-2026.json",
+    "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "ass_path": "/dev/shm/alcaraz-finals-production/production/native-preview/subtitles.ass",
+    "ass_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "preview_manifest_path": "/dev/shm/alcaraz-finals-production/production/native-preview/preview-combined-manifest.json",
+    "preview_manifest_sha256": "d94aded5f1fbc2a721df503d42ee6a16b22ae424cbd20eb762cc7b5bf05112ce",
+    "native_cover_path": "/dev/shm/alcaraz-finals-production/production/native-cover/native-cover.jpg",
+    "native_cover_sha256": "ce6664c1756f7f040bc3fa7214335a29742c09869d2d7a5838b0f2f03b3ca224",
+    "frozen_editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+    "frozen_photo_map_sha256": "f0fa8375e72c1d6526ac8e945f398f6f8e673ca9ea40779d064b6205d0db672a",
+    "actual_marks_photo_plan_sha256": "4f68fac88459d0b8d945f537e53413978197fb7a622b7bb8fcde27d74102ea81"
+  },
+  "personally_viewed": {
+    "contacts": [
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-01.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-02.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-03.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-04.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-05.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-06.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-07.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-08.jpg",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/contact-09.jpg"
+    ],
+    "full_png": [
+      "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-06.png",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-17.png",
+      "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-02.png"
+    ],
+    "cover": "/dev/shm/alcaraz-finals-production/production/native-cover/native-cover.jpg"
+  },
+  "checks": [
+    {
+      "check": "year_event_round_identity",
+      "result": "PASS",
+      "evidence": "Actual native: Jan30AO-SF true towel portrait, Feb1F celebration→trophy, DohaFeb21 title, IW-SF→MiamiR3→MCF, BarcelonaApr14R1→one native injury card, Aug31USreturn→sameSep8/9QF, Oct6TokyoF action→title, Oct12ShanghaiR3→Nov1Vienna title, Nov6ParisQF→Nov8ParisF."
+    },
+    {
+      "check": "photo_cuts_and_fixed_crop",
+      "result": "PASS",
+      "evidence": "All12 executable photo/card clips, source input exact hashes and native copied photo hashes verified; all cuts equal actual frozen15 wordmarks plan; 1080x1440 full-canvas static hardcuts .5/.5 zoom1, no extra push. Small1.10429x AO trophy/SF/USQF display limit retained."
+    },
+    {
+      "check": "vienna_required_credit",
+      "result": "PASS",
+      "evidence": "Actual full1080 caption-06 at121.014s shows complete © e-motion/Sascha Feuster legibly, native text bbox x39–352.8 y1188.6–1212.6 above narration. Face/trophy intact. Only this selected Vienna photo carries required visible credit."
+    },
+    {
+      "check": "one_native_injury_card",
+      "result": "PASS",
+      "evidence": "Actual full caption-17 at75.712s: 右腕伤停 / 缺席法网与温网; subtitle_bottom96 keeps narration clear above native footer, top native story watermark clear, no information inset. Real BarcelonaR1 generic photo never asserted as literal diagnosis."
+    },
+    {
+      "check": "archive_question_year_cut",
+      "result": "PASS",
+      "evidence": "Actual captions198.178s blonde-haired true2025TurinF photo under去年在都灵收获亚军;199.978s long-haired true2026ParisF under今年带着巴黎大师赛冠军回来. Exact internalcut2.36s at今年."
+    },
+    {
+      "check": "race_chart",
+      "result": "PASS",
+      "evidence": "Actual full caption-02 at191.85s shows Alcaraz3/6100 focus and 已晋级, all15 rows, mint8 rows1/3/4/5/6/7/8/9; Sinner2/7950 grey 已退赛. Subtitle and sourcefooter are separated. No inference that Sinner takes a current seat."
+    },
+    {
+      "check": "actual_cover",
+      "result": "PASS",
+      "evidence": "GenuineNov8ParisF ATP4606341 face sharp frontish/open eyes, intact head/mouth, ear celebration visible; correct2linehook阿卡年终路/从伤停到巴黎冠军; hook below face, native header/topic clear; no extra invented yearend scene."
+    },
+    {
+      "check": "information_inset_placement",
+      "result": "PASS_SCOPED_SAMPLES",
+      "evidence": "No right info inset on photo/card/Race samples. Real source samples show latest transparent native info, 7.9s present→8.1s absent. Full-source rally/audio/quote audit delegated, not approved by this photo report."
+    }
+  ],
+  "verified_clip_assets": [
+    {
+      "id": "opening",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/opening.mp4",
+      "sha256": "2d4fed5363d3d5ef12f3c23851c2ad7b85bac7cb805a2c0cefeb1dc9c1147a0d",
+      "cuts": [
+        0,
+        9.064
+      ],
+      "photo_input_hashes": [
+        "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34"
+      ]
+    },
+    {
+      "id": "ao_semifinal",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/ao_semifinal.mp4",
+      "sha256": "2b2536e8635596f2d1697030a12f99439141f4bcfd6e137736302585e177df3b",
+      "cuts": [
+        0,
+        11.08
+      ],
+      "photo_input_hashes": [
+        "fd0c16a93deec06de7378f5d5caed9fb065301dd814f5ca636e3c9941731a5d4"
+      ]
+    },
+    {
+      "id": "ao_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/ao_intro.mp4",
+      "sha256": "44bdc6938eb1b66335e95f8abd4819b1614b40bc1680116417cb745bdb84e234",
+      "cuts": [
+        0,
+        5.0,
+        11.992
+      ],
+      "photo_input_hashes": [
+        "7bfff8d2226fc59a290184c20ca06ff5e9d3f8724b5d7bd316bf1c474509cac0",
+        "af333e0fd91e12c66004ce12040971d9beda7278c1909539837af9582b9825d2"
+      ]
+    },
+    {
+      "id": "doha_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/doha_intro.mp4",
+      "sha256": "41ff498f04a188a5551743dc2531f5bec31120837a9073a9df00563e53a2160c",
+      "cuts": [
+        0,
+        8.512
+      ],
+      "photo_input_hashes": [
+        "1cf8d6401548c44142e0a34540554cb00d13277ee7545f8d643c8f6625217f59"
+      ]
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/sunshine_montecarlo_intro.mp4",
+      "sha256": "11c2d0600d361239cb9ad1ce1f512b70c9cc94ab19f0c13d20a703b4301ee4c6",
+      "cuts": [
+        0,
+        2.8,
+        5.28,
+        9.616
+      ],
+      "photo_input_hashes": [
+        "54ddbec9380731a7391146dd449b222cdc07e4e29e05449dbba2c6b77f108996",
+        "7d0c24c3eea54b41b3af6a2683b1da80bbaf952939e17710af44e2b3147ea271",
+        "a2b64feef1c80445bc932368884121ec42d987bb7d39600139d6416a30d9e9c8"
+      ]
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/wrist_and_missing_majors.mp4",
+      "sha256": "f2d1e86b10b6ad2f585205c853f821ecb7ca3d72a3bd25bd486d333fc271290b",
+      "cuts": [
+        0,
+        4.24,
+        8.92
+      ],
+      "photo_input_hashes": [
+        "a6fb9c672e982097bbf1e2e099b82368cef00fcdf910d9bb6ff9afd621bd4fc2",
+        "a957224506c11f4b10e924a76809542588b8d7f96e191f71cc160b808fca46b3"
+      ]
+    },
+    {
+      "id": "us_open_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/us_open_intro.mp4",
+      "sha256": "52dff319c8ab1c546f52bd53ed43a085f349c00d72bcbe9e58df60e36e08a5a4",
+      "cuts": [
+        0,
+        2.88,
+        9.16
+      ],
+      "photo_input_hashes": [
+        "9380a0947745a184ef7ec4cdfdeb7e7e276cac5a21d726225e7936ea7075f606",
+        "a5494d4f873d82d529791053c0b5375a84111ff4e2b230138ec6f48222b4d0f2"
+      ]
+    },
+    {
+      "id": "qualification",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/qualification.mp4",
+      "sha256": "5609897717698c935f9742fad50308687520d249cccda8c31905fbb86dde7831",
+      "cuts": [
+        0,
+        7.6
+      ],
+      "photo_input_hashes": [
+        "af333e0fd91e12c66004ce12040971d9beda7278c1909539837af9582b9825d2"
+      ]
+    },
+    {
+      "id": "tokyo_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/tokyo_intro.mp4",
+      "sha256": "5141e1e35b6c2a5c31f5c7946c12eb5edb4cce24edfedab6055f3da75f0c5e89",
+      "cuts": [
+        0,
+        2.8,
+        5.992
+      ],
+      "photo_input_hashes": [
+        "a1cc1d743b5e3ceaca8c32e541a6629a9bef2afcfd17f00b4303aaba2626b964",
+        "cf1017d50b3f6e508667a1ff3e7d31d10ce2937b5327d9b6b16c4d4da47946c9"
+      ]
+    },
+    {
+      "id": "shanghai_vienna_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/shanghai_vienna_intro.mp4",
+      "sha256": "51c1ac8934280c7dee774ebc2de5bfb3719b64fd060f87bce3b2f689edda4b3d",
+      "cuts": [
+        0,
+        2.52,
+        7.192
+      ],
+      "photo_input_hashes": [
+        "e403d9bd14429aea841ec579ca30ffcf574b57b267567d7b16e9c0e76a47551e",
+        "e769d98207d8fe1973cc6bb6e1283245e8f816fdaec80158de648e1f8e853678"
+      ]
+    },
+    {
+      "id": "paris_intro",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/paris_intro.mp4",
+      "sha256": "04f1bba62e84d270ff5754da75ad796703105a7c1f9bf8896189f4b67b1c6cf9",
+      "cuts": [
+        0,
+        4.16,
+        10.264
+      ],
+      "photo_input_hashes": [
+        "bdda0eb86c729ffcdb61415214393327a165f6cb46ac9aca2d584a179800db29",
+        "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34"
+      ]
+    },
+    {
+      "id": "question",
+      "clip": "/dev/shm/alcaraz-finals-production/native/assets/reel/alcaraz-finals-road-2026/photo-sequences/question.mp4",
+      "sha256": "e23f3f74c7d149377464fb07e7e23d964e5d612dfd62b100fb689880b971249b",
+      "cuts": [
+        0,
+        2.36,
+        7.696
+      ],
+      "photo_input_hashes": [
+        "dcb1f701711848670c5b7a25cab1e3f8046b55ca3d1aab68237fdab7ff3dcc59",
+        "5bc6d43826723ff55f16f9c1e5ee02c47e00731b778152503707b75b7655fb34"
+      ]
+    }
+  ],
+  "verified_preview_frames": [
+    {
+      "id": "opening",
+      "relative_seconds": 3.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-01.png",
+      "sha256": "16e087ba66c79f8a85c1fc8d1977d4196b1a16c0d0aee39221119b140c5ba951"
+    },
+    {
+      "id": "ao_semifinal",
+      "relative_seconds": 4.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-02.png",
+      "sha256": "85bb515ef8592a424209d043f44cc0d514144784055062ed4792a27171105728"
+    },
+    {
+      "id": "ao_intro",
+      "relative_seconds": 2.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-03.png",
+      "sha256": "bc6b738b6e0b41b35abb16a4d627c3e9e0b39f0ac676380e1f40e516c9dad2da"
+    },
+    {
+      "id": "ao_intro",
+      "relative_seconds": 5.3,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-04.png",
+      "sha256": "41838c576ee72509656236c94bf9ea64a8ce5044406e1b558bd77c6c534bb447"
+    },
+    {
+      "id": "doha_intro",
+      "relative_seconds": 3.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-05.png",
+      "sha256": "83fc211dd43d58928a151894b20ada5cb8422f4c986a515b633a30d8d1d94dfa"
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-06.png",
+      "sha256": "ad653ab8cc88727d5ad5cf85abe62218fb8b93d3b079077bd90d51872800c238"
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "relative_seconds": 3.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-07.png",
+      "sha256": "93d05094a8572657ea5485a8d78821e40650633e86f247ed701fa351cd36f0cd"
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "relative_seconds": 5.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-08.png",
+      "sha256": "4d3c9630288f3646978a14f46b00306ea9b860078e18d66e473c809a1a034366"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 0.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-09.png",
+      "sha256": "e60ac41afec1caa8ee3020cfc3d3fbdce504e86bc0fa4e762072f7271f6c0c95"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 1.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-10.png",
+      "sha256": "8714a8dad1eea2d2389eb3cbbb582a55389e0a151604f3f6de51754255698ee7"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 7.9,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-11.png",
+      "sha256": "914bc08e62137b2825280b58c1da819eafae365aa03f5bea02c21f90a186bcd3"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 8.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-12.png",
+      "sha256": "64f8cd0919e24d68be7f5cd463a90bb41319f5540b823b46b44d557c4bb3b9ba"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 8.4,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-13.png",
+      "sha256": "7650a8f52cd906961b76f42e8b6bff6897159dc963fbfca9f8c043ad6e99816a"
+    },
+    {
+      "id": "montecarlo_point",
+      "relative_seconds": 14.966666666666667,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-14.png",
+      "sha256": "3ab76c92b257ce5f5e59f6bce8dcffff56ff1d42967a2d5dbb5483ed043fca1b"
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-15.png",
+      "sha256": "d2f4304adbfaeafdde3919348f06c40453dd93b892e2f53421b7ad2128e06c96"
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "relative_seconds": 4.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-16.png",
+      "sha256": "174aa0a838c4dcb06f320bd365af97c459efa765358662e8c1666086c705db0f"
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "relative_seconds": 6.5,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-17.png",
+      "sha256": "a030ef2eb6d8c2ac0d6735f3a35c001bf2b2ff043d7afb048d662c2ec2c3b49d"
+    },
+    {
+      "id": "us_open_intro",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-18.png",
+      "sha256": "76fc83ef2f7855773423a1db39c1e99e79eaee81ea4b7d425a41f91bb00e5185"
+    },
+    {
+      "id": "us_open_intro",
+      "relative_seconds": 3.2,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-19.png",
+      "sha256": "6753e008120a44791e2fa52cbec743f6d1dab86abd60b391e656bd05fef47580"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 0.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-20.png",
+      "sha256": "f55001a2c71ed32dc23aab8f1b120c2f35c63bafeae565d6d8a2a2783c320044"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 2.1666666666666665,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-21.png",
+      "sha256": "e9786904210e8b75c106ffad7713391500bf7dd1d08ec7ea70fef4188dcfcf18"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 7.9,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-22.png",
+      "sha256": "29b3c90a23ffff0e78a62dc2004f036c6012a08795afcaf424016350b3619d69"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 8.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-23.png",
+      "sha256": "1f3ad1134c12a70b6ace03b8c3ea580d703940d3877e89320054e223433838a8"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 9.866666666666667,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-1/caption-24.png",
+      "sha256": "2fd319a9180c9f8bba25dac9a7098640d5f2d8599bc82a55882f2312062f4b9a"
+    },
+    {
+      "id": "us_open_point",
+      "relative_seconds": 16.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-01.png",
+      "sha256": "6b82238f5e350988377f008da473a9609e689b6088d4ccd10bfae2e6da3d911b"
+    },
+    {
+      "id": "qualification",
+      "relative_seconds": 2.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-02.png",
+      "sha256": "fe09ee729d2ebac4598b5958e2b90fa01beeaf846e2dd5410f5f6066ed2059fb"
+    },
+    {
+      "id": "tokyo_intro",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-03.png",
+      "sha256": "5ed25af74e046f3692f25ae96889eda847516cf2cdfb4a2b3affb894ca97bfe9"
+    },
+    {
+      "id": "tokyo_intro",
+      "relative_seconds": 3.2,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-04.png",
+      "sha256": "b427a74462ca8d64e8aeebb3b15b4928f704901c1e174cca279a330f5632a0eb"
+    },
+    {
+      "id": "shanghai_vienna_intro",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-05.png",
+      "sha256": "1d6f5017837d6163dbbb03170a69a858b0658af3f4cd7a989b375084e14ed18a"
+    },
+    {
+      "id": "shanghai_vienna_intro",
+      "relative_seconds": 3.3,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-06.png",
+      "sha256": "cceb5f3d2dd3449e48926ab642484c2f06c0abf7296414d16507b1bde6f7454e"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 0.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-07.png",
+      "sha256": "863303709f49be12624130d7aa5b972e5e497750b8cbee35de159b17216c26dc"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 1.5333333333333334,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-08.png",
+      "sha256": "380ff0094aa50bba1a24b47f0f1343a4047f52514a23d4f539bdbb50178e30b3"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 4.133333333333334,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-09.png",
+      "sha256": "37142b3b4501fc4e5a9bc2d51d0b132ba2a8a5055cee2cac57a9c696656a603a"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 6.533333333333333,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-10.png",
+      "sha256": "8cc48b772b60d135379aacff1b708417a246e3a4b84f03ef9386345ed36fab9e"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 8.666666666666666,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-11.png",
+      "sha256": "b43a1e07b7773ce3b338eae343d4f41d83a63e7c2cac91f2952e5c871531798e"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 10.3,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-12.png",
+      "sha256": "fe657446d711d9f6509107e5d1f050b9a288e4ad886a755053b185beaf9a6b58"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 13.266666666666667,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-13.png",
+      "sha256": "5bfd6edbb9eff0f69d9c0fcc7b06fc423f9b0fc7cdda407625e3559c3b4d30ff"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 16.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-14.png",
+      "sha256": "e8b482e2463889aaf5a49e28f418a18c9902eebf30a121f39fad9138a57d678b"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 18.266666666666666,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-15.png",
+      "sha256": "33dca085953ca6d95a911217a8bb83ae28f6849f2788de10780365a6adf666dd"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 20.7,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-16.png",
+      "sha256": "8c78f8fa3d153c30bcdbaf5b82df89a860bfe7ae3a34b3307753c8275c5b3770"
+    },
+    {
+      "id": "vienna_interview",
+      "relative_seconds": 22.5,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-17.png",
+      "sha256": "27399644e1700c0c20b4fdf9e300f9414636b93cba48b4e5458dbff73505148a"
+    },
+    {
+      "id": "paris_intro",
+      "relative_seconds": 2.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-18.png",
+      "sha256": "a5ddbc6040cbc144f66397681da42500c3b007cf1be72488febe3415294a9cd7"
+    },
+    {
+      "id": "paris_intro",
+      "relative_seconds": 4.5,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-19.png",
+      "sha256": "74b7e411954bfa3004132b3c789c69aa50249a5eeb04dfd3dd3d4656df24c287"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 0.6,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-20.png",
+      "sha256": "03843c92c299c03102da535bca9351dec9f8e7ea71033c1f2f39326ca0783236"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 2.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-21.png",
+      "sha256": "d1963246ea177efcf3f24d0a202af91c08ee6adab093784228add9554087bec0"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 7.9,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-22.png",
+      "sha256": "8189509b3da7e456f6d3ae81c94c5f1ae39204b659b1dac1a76e14d1d12c6b6b"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 8.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-23.png",
+      "sha256": "276bf842f5d61e7fc36c81d756c490588aa30f3bcba45daada03352b8ff76000"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 17.1,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-2/caption-24.png",
+      "sha256": "549bf3aff602ea71cb1da75c81b3d23f20fc2361a82776c4698116ba9e469249"
+    },
+    {
+      "id": "paris_point",
+      "relative_seconds": 28.7,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-01.png",
+      "sha256": "0cfc7aa110658c73106cb30f1b9f6b9978f9615f34ec189de48cf2915e7101be"
+    },
+    {
+      "id": "race_table",
+      "relative_seconds": 4.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-02.png",
+      "sha256": "ecd5bdc6e21656656db00beafb44faa2879e09fee37ab0be85a8a4e574edb010"
+    },
+    {
+      "id": "question",
+      "relative_seconds": 1.0,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-03.png",
+      "sha256": "5a352e9b698fe9ffb7f69c293c18dd85bea6efefa420e057f66b128f0f46f6d1"
+    },
+    {
+      "id": "question",
+      "relative_seconds": 2.8,
+      "path": "/dev/shm/alcaraz-finals-production/production/native-preview/batch-3/caption-04.png",
+      "sha256": "b1543b0fdc033d889ea2d96d3c1d661d5a0e300c9bcd8e8d8b22dbaa86f235db"
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Native preview stills exclude actual final transition/compression/audio; formal actual movie scope must be reviewed after render.",
+    "This report does not assert source rally completeness, full original audio fidelity, actual TTS 5-suite or publication readiness.",
+    "Global final movie fps30 converts25fps intermediate photo clips; exact mark cuts and pictures are verified as implemented, not a false pixel-identical source assertion."
+  ]
+}

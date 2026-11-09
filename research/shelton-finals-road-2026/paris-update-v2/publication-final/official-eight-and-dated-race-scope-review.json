@@ -1,0 +1,124 @@
+{
+  "status": "PASS_DATED_CHECKPOINT_SCOPE_OFFICIAL_EIGHT_AND_FOCAL_POINTS_CURRENT",
+  "reviewed_at_utc": "2026-11-09T07:33:49.246134+00:00",
+  "basis": "Read-onlyreviewofrootordinaryGET07:28:02ZrawHTMLandverification, noadditionalnetworkrequests/noartifactsmodified.",
+  "inputs": {
+    "verification.json": "42de7990de456a30103792b0f021fa5d8dfcbc6e582c515b739c7084fd27c5df",
+    "race.html": "bd99271321b8d00254181966b6904a77e7ab395e20735ddc5dea46901c3f89c0",
+    "singles.html": "c49d9d158d3a01bba6815f994a17a29d45ddb123090eac3b102876e66bcd345c",
+    "field.html": "a2d8f4a3fe6a998e3b70624c82ee5ddcdc27c142970a0e4d8d16ed644da4e97c"
+  },
+  "official_eight_profile_roster": {
+    "source": "https://www.nittoatpfinals.com/en/players/singles",
+    "exact_profile_card_count": 8,
+    "checks": [
+      {
+        "expected_name": "Alexander Zverev",
+        "actual_official_roster_label": "Alexander Zverev",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/alexander-zverev",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Carlos Alcaraz",
+        "actual_official_roster_label": "Carlos Alcaraz",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/carlos-alcaraz",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Ben Shelton",
+        "actual_official_roster_label": "Ben Shelton",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/ben-shelton",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Daniil Medvedev",
+        "actual_official_roster_label": "Daniil Medvedev",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/daniil-medvedev",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Flavio Cobolli",
+        "actual_official_roster_label": "Flavio Cobolli",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/flavio-cobolli",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Arthur Fils",
+        "actual_official_roster_label": "Arthur Fils",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/arthur-fils",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Frances Tiafoe",
+        "actual_official_roster_label": "Frances Tiafoe",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/frances-tiafoe",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      },
+      {
+        "expected_name": "Rafael Jódar",
+        "actual_official_roster_label": "Rafael Jodar",
+        "official_profile_url": "https://www.nittoatpfinals.com/en/players/singles/rafael-jodar",
+        "url_exact_match": true,
+        "name_accent_normalized_match": true
+      }
+    ],
+    "all_eight_present": true,
+    "Jodar_resolution": "CurrentrosterwritesRafaelJodarwithoutaccentandlink/rafael-jodar. OriginalliteralstringcheckRafaelJódar=falseisorthographicmismatch, NOTmissingqualifier. Originalverificationkeptunmodified; normalizedidentityverifiedonlyforaccent/whitespace."
+  },
+  "race_scope": {
+    "snapshot_in_movie": "2026-11-09early06:04ZcapturedafterParisfinal; visibleheader截至11月9日·巴黎决赛后, anexplicitdatedcheckpoint.",
+    "current_read": "2026-11-09T07:28:02Z",
+    "top9_names_ranks_points_qualified_all_unchanged": true,
+    "Shelton_focal_current": {
+      "rank": 4,
+      "points": 5170
+    },
+    "Alcaraz_focal_current": {
+      "rank": 3,
+      "points": 6100
+    },
+    "all15_live_match": false,
+    "current_lower_row_differences": [
+      {
+        "actual": {
+          "rank": 11,
+          "name": "Taylor Fritz",
+          "points": 3085,
+          "qualified": false
+        },
+        "expected": {
+          "rank": 11,
+          "name": "Taylor Fritz",
+          "points": 3050,
+          "qualified": false
+        }
+      },
+      {
+        "actual": {
+          "rank": 15,
+          "name": "Alejandro Davidovich Fokina",
+          "points": 2510,
+          "qualified": false
+        },
+        "expected": {
+          "rank": 15,
+          "name": "Jakub Menšík",
+          "points": 2500,
+          "qualified": false
+        }
+      }
+    ],
+    "difference_scope": "11Fritz3050→3085;15Mensik2500→DavidovichFokina2510. TheseunqualifiedbackgroundrowsareallowedtomoveafterthefrozenParistimelinecheckpoint; nochangein8directqualifiedfieldorfilmfocusedfacts.",
+    "explicit_noclaim": "Do notsayall15rowsmatch07:28livepageorframeiscontinuousliveleaderboard.",
+    "dated_snapshot_review_decision": "KeepalreadyverifiedV2movie7d984672…; no3rdrender/requestbasedonlaterbackgroundchanges. NotreopeningapprovalorblockingCI.",
+    "source_attribution": "Live-TennisindependentRacepoints;ATP/Nittoofficialqualification8profiles."
+  },
+  "Alcaraz_next_film": "Beforeformalinputfreeze, audio/raceowner mayrefreshlowerrowsfromcurrentnormalGETandrenderlatestchart; focal6100/rank3and13narrationsunchanged. ThisreportdoesnotrewritecurrentAlcarazspec/chart."
+}

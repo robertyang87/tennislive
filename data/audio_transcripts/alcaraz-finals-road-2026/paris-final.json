@@ -1,0 +1,120 @@
+{
+  "schema": "tennislive.foreground-audio-transcript.v1",
+  "source_url": "https://www.tennistv.com/videos/4606354/paris-2026-final-shelton-alcaraz-short-highlights",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4606354/tennistv-4606354.mp4",
+  "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+  "method": "asr_cross_checked",
+  "reviewer": "Codex shelton_paris_media; existing exact-byte two-ASR wrappers with original inference/remux provenance reused; no new model inference or human listening",
+  "reviewed_at": "2026-11-09T06:14:22.923694+00:00",
+  "reviewed_from": 120.4,
+  "reviewed_to": 149.3,
+  "status": "complete",
+  "human_listening_performed": false,
+  "foreground_english": [
+    {
+      "start": 135.3,
+      "end": 139.7,
+      "en": "Carlos Alcaraz wins the Rolex Paris Masters",
+      "zh": "阿尔卡拉斯赢得巴黎大师赛，"
+    },
+    {
+      "start": 139.7,
+      "end": 143.0,
+      "en": "for the very first time in his career.",
+      "zh": "这是他生涯第一次。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "path": "data/source_asr/tennistv-4606354/small.en.json",
+      "sha256": "25e9c03a5d36c91a31e82fb5dc9218be0e16d8a438e067fde2b44057913be9e3",
+      "model": "small.en",
+      "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+      "clip": [
+        0.0,
+        null
+      ],
+      "origin_commit": "5f770a7bf3c6e12623b43e925c5af75a95bbdbcd",
+      "origin_repo_path": "data/source_asr/tennistv-4606354/small.en.json",
+      "origin_blob_sha": "a0b3ff945f2d522f787ed383939f9926f6d06063",
+      "original_asr_source_sha256": "8788d9e58be795749793cf6a1e69e45b3754c2dd0bad074d05118036cc1154ea",
+      "historical_rebind_proof_retained_verbatim": {
+        "method": "decoded_pcm_sha256_equality",
+        "pcm_sha256": "d77a895303a0f49aa86d4f48327f52b08226c77dce93fe5857c3609678d4bcb5",
+        "reason": "同一官方码流在runner重新封装，容器哈希改变；已完整解码两份音频，PCM逐字节SHA256相同。转写未重新推断、不冒称重新听审。"
+      },
+      "scope": "Original existing ASR wrapper bytes reused, not retranscribed or new listening. This task did not run any PCM/equality/gain/loudness test.",
+      "research_path": "/dev/shm/shelton-paris-production/research/media-paris/reused-raw/small.en.json"
+    },
+    {
+      "path": "data/source_asr/tennistv-4606354/medium.en.json",
+      "sha256": "4ac3ea71730843bfbbc5c3282d56fdbc57e647971e04e7b96f89ed4f07bd9031",
+      "model": "medium.en",
+      "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+      "clip": [
+        0.0,
+        null
+      ],
+      "origin_commit": "5f770a7bf3c6e12623b43e925c5af75a95bbdbcd",
+      "origin_repo_path": "data/source_asr/tennistv-4606354/medium.en.json",
+      "origin_blob_sha": "2b5028d4f4e33811d9d987747476c92b972fb0a6",
+      "original_asr_source_sha256": "8788d9e58be795749793cf6a1e69e45b3754c2dd0bad074d05118036cc1154ea",
+      "historical_rebind_proof_retained_verbatim": {
+        "method": "decoded_pcm_sha256_equality",
+        "pcm_sha256": "d77a895303a0f49aa86d4f48327f52b08226c77dce93fe5857c3609678d4bcb5",
+        "reason": "同一官方码流在runner重新封装，容器哈希改变；已完整解码两份音频，PCM逐字节SHA256相同。转写未重新推断、不冒称重新听审。"
+      },
+      "scope": "Original existing ASR wrapper bytes reused, not retranscribed or new listening. This task did not run any PCM/equality/gain/loudness test.",
+      "research_path": "/dev/shm/shelton-paris-production/research/media-paris/reused-raw/medium.en.json"
+    }
+  ],
+  "source_identity": {
+    "source_path": "/dev/shm/shelton-paris-production/research/media-paris/tennistv-4606354.mp4",
+    "actual_ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "50/1",
+          "avg_frame_rate": "50/1"
+        },
+        {
+          "codec_type": "audio",
+          "sample_rate": "48000",
+          "channels": 2,
+          "r_frame_rate": "0/0",
+          "avg_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "158.869333",
+        "size": "161016998"
+      }
+    }
+  },
+  "review_notes": [
+    "Existing ASR wrappers reused verbatim after exact selected-container SHA verified. Both retain original 8788d9e... inference identity plus historical PCM equality remux rebind; this task does NOT rerun or claim a new audio equality check.",
+    "small.en sentence135.45–142.81; medium.en135.38–142.88 agree lexical content. Native two clauses135.3–139.7 and139.7–143.0 preserve all words; punctuation-only boundary.",
+    "Previous spoken sentence ends118.71 latest; start120.4 is at least1.69s later. No retained leading partial sentence.",
+    "Final last word career ends142.88 latest; retained selected end149.3 leaves6.42s. Source tail+0.5 ends149.8.",
+    "Actual every0.04s tail source149.92 still same-match hug;149.96 starts promo fade/next player. Old presumed150.52 boundary was second promo shot, corrected after real PNGs.",
+    "No human auditory listening claimed. No new ASR, TTS, loudness/peak/RMS/source-gain/PCM tests. No source alteration."
+  ],
+  "native_quote": [
+    {
+      "at": 14.9,
+      "end": 19.3,
+      "text": "Carlos Alcaraz wins the Rolex Paris Masters\n阿尔卡拉斯赢得巴黎大师赛，"
+    },
+    {
+      "at": 19.3,
+      "end": 22.6,
+      "text": "for the very first time in his career.\n这是他生涯第一次。"
+    }
+  ],
+  "native_quote_timebase": "relative toselectedsource start120.4; foreground_english remains absolutesourcetime"
+}

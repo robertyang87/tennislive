@@ -1,0 +1,1280 @@
+{
+  "schema": "alcaraz-finals.actual-complete15-frozen-input-qc.v1",
+  "status": "scoped_pass_all15_actual_input_native_ahead_checks",
+  "checked_at": "2026-11-09T07:55:58.648006+00:00",
+  "method": "Nativecurrentbundleexpected15/decode, exactactualMP3/marks/editorial identity,4representatives+priorbrand exactcanonicalzip bytecomparisons, existing10newASR/precheck purepredicate checks only. No newASR/TTS/referenceaudio/measure/model/PCM/humanlistening.",
+  "editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+  "bundle_sha256": "5ecb7026f97e0412b3c125bb43f0267404e57289017cd4f1ac953d9cb4bc4cb5",
+  "bundle_bytes": 747006,
+  "actual_input_index_sha256": "dc6c617fd94c0945312d5b684f28d02e9c61e393b067e7f363c987a5152997e4",
+  "ahead_check_sha256": "6428d100bf9f4ca292b02bf17f2422d5137ea96e01d3409364642a2637ed7530",
+  "new_ten_raw_asr_sha256": "21588a4e3fb117e45134e187832a5ddd5e5366011c075296cd4b383ced2768e5",
+  "prior_brand_formal_suite_sha256": "5118805902fe96f71c065adda3a3c42c34ad82f3e1467d4da3901231a3330ce7",
+  "actual_request_count": 15,
+  "body_count": 13,
+  "actual_total_audio_seconds": 118.848,
+  "actual_origins": {
+    "exact_prior_four_actual_representative": 4,
+    "new_actual_nonrepresentative_request": 10,
+    "exact_prior_brand_actual_with_prior_formal_suite": 1
+  },
+  "rows": [
+    {
+      "id": "cover",
+      "request_id": "19f7facbbda3677bf356cf86c8a744f26e5b896129d896832822f5e2a5bb7dd1",
+      "request": {
+        "text": "阿卡年终路，从伤停到巴黎冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "396607e1208a464327555537912012a7"
+      },
+      "audio_sha256": "f4033df25b923d6ebd3b04d976f5b6566aec60e5f1186ab31d3b1a6c34ea17e9",
+      "words_file_sha256": "534e1570f8647a9b0c14f0e0c21d6009d8263b40130acd8bd4852e89b9296ee1",
+      "seconds": 3.528,
+      "last_mark_end_s": 2.700499,
+      "tail_after_last_mark_s": 0.8275,
+      "origin": "exact_prior_four_actual_representative",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "396607e1208a464327555537912012a7",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "阿卡年终路，从伤停到巴黎冠军。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "f4033df25b923d6ebd3b04d976f5b6566aec60e5f1186ab31d3b1a6c34ea17e9",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 13,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 1,
+          "sub_ratio": 0.077,
+          "longest_deletion": 0,
+          "transcript": "阿卡联中路,从商厅到巴黎冠军。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 13,
+          "speech_s": 2.653,
+          "cps": 4.9,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "阿卡 ｜ 年终 ｜ 路 ｜ 从 ｜ 伤 ｜ 停 ｜ 到 ｜ 巴黎 ｜ 冠军"
+        },
+        "sentence_splits": [],
+        "precheck_reuse": "Exact MP3 SHA/request representative native five-predicate result, not repeated inference."
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.653,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 年终 ｜ 路 ｜ 从 ｜ 伤 ｜ 停 ｜ 到 ｜ 巴黎 ｜ 冠军"
+      }
+    },
+    {
+      "id": "opening",
+      "request_id": "7448d9adcc1cead4cf7ba75a1c5ab10a6fc1d8aa8d1c115866f31939b254788d",
+      "request": {
+        "text": "巴黎，阿尔卡拉斯拿到赛季第五冠。可在几个月前，他还因为右腕受伤，错过了法网和温网。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "4a2f78b5a85780c42087627e01c66374"
+      },
+      "audio_sha256": "1017590ff024e5ccefd22642f3314b9de9a61b52ede335d510c45a46aed2eb4b",
+      "words_file_sha256": "f2f88bac7b1a44b5163501124052978e0cc10d4fab50d1383f18f062b01b261d",
+      "seconds": 8.664,
+      "last_mark_end_s": 7.818416,
+      "tail_after_last_mark_s": 0.8456,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "4a2f78b5a85780c42087627e01c66374",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "巴黎，阿尔卡拉斯拿到赛季第五冠。可在几个月前，他还因为右腕受伤，错过了法网和温网。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "1017590ff024e5ccefd22642f3314b9de9a61b52ede335d510c45a46aed2eb4b",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 36,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "巴黎、阿尔卡拉斯拿到赛季第五罐,可在几个月前,他还因为诱万受伤错过了罚网和温网。"
+        },
+        "asr_model": "small",
+        "polyphones": [
+          {
+            "index": 24,
+            "char": "还",
+            "word": "还",
+            "intended": "hai2",
+            "wrong": [
+              "huan2"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "huan2",
+                "verdict": "correct",
+                "score": 0.638,
+                "confidence": "medium",
+                "near": null
+              }
+            ],
+            "ok_refs": "孩骸"
+          }
+        ],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 36,
+          "speech_s": 7.771,
+          "cps": 4.63,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "巴黎 ｜ 阿尔卡拉 ｜ 斯 ｜ 拿 ｜ 到 ｜ 赛季 ｜ 第五 ｜ 冠 ｜ 可 ｜ 在 ｜ 几个月 ｜ 前 ｜ 他 ｜ 还 ｜ 因为 ｜ 右 ｜ 腕 ｜ 受伤 ｜ 错过 ｜ 了 ｜ 法网 ｜ 和 ｜ 温网"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.771,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "巴黎 ｜ 阿尔卡拉 ｜ 斯 ｜ 拿 ｜ 到 ｜ 赛季 ｜ 第五 ｜ 冠 ｜ 可 ｜ 在 ｜ 几个月 ｜ 前 ｜ 他 ｜ 还 ｜ 因为 ｜ 右 ｜ 腕 ｜ 受伤 ｜ 错过 ｜ 了 ｜ 法网 ｜ 和 ｜ 温网"
+      }
+    },
+    {
+      "id": "ao_semifinal",
+      "request_id": "f15c71a7940e66208784502dbb46f9c080bf7534fce00e9928b4b5119fd53f11",
+      "request": {
+        "text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "8c6967593d3c5b7736a92c2940ef01c0"
+      },
+      "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+      "words_file_sha256": "e229dd02b5a7e70852149c0bf02eb6be6ebd7776ab3d298a20c77564eb154e9c",
+      "seconds": 10.68,
+      "last_mark_end_s": 9.846708,
+      "tail_after_last_mark_s": 0.8333,
+      "origin": "exact_prior_four_actual_representative",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "8c6967593d3c5b7736a92c2940ef01c0",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 42,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "回到年初的傲望,半决赛对兹维列夫先赢两盘,又被追平,期间一度抽筋。打了五个多小时,他才闯进决赛。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 42,
+          "speech_s": 9.8,
+          "cps": 4.29,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "回到 ｜ 年初 ｜ 的 ｜ 澳 ｜ 网 ｜ 半决赛 ｜ 对 ｜ 兹维列夫 ｜ 先 ｜ 赢 ｜ 两盘 ｜ 又 ｜ 被 ｜ 追 ｜ 平 ｜ 其间 ｜ 一度 ｜ 抽筋 ｜ 打 ｜ 了 ｜ 五个多小时 ｜ 他 ｜ 才 ｜ 闯进 ｜ 决赛"
+        },
+        "sentence_splits": [],
+        "precheck_reuse": "Exact MP3 SHA/request representative native five-predicate result, not repeated inference."
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.8,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "回到 ｜ 年初 ｜ 的 ｜ 澳 ｜ 网 ｜ 半决赛 ｜ 对 ｜ 兹维列夫 ｜ 先 ｜ 赢 ｜ 两盘 ｜ 又 ｜ 被 ｜ 追 ｜ 平 ｜ 其间 ｜ 一度 ｜ 抽筋 ｜ 打 ｜ 了 ｜ 五个多小时 ｜ 他 ｜ 才 ｜ 闯进 ｜ 决赛"
+      }
+    },
+    {
+      "id": "ao_intro",
+      "request_id": "8afeab819e4422cf7feadb1518a8ede2cebef64b36f529ed1913b96ebae44808",
+      "request": {
+        "text": "澳网决赛，他先丢一盘，再连赢三盘击败德约科维奇。首夺澳网，22岁的他，成为男单历史最年轻的生涯全满贯得主。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "c74f30080b23f7f93ef483c791b76282"
+      },
+      "audio_sha256": "5e24c652dd7aa89509140ec65153229a4309f3d4a54f17db701ef0175b98ab4b",
+      "words_file_sha256": "71fc8675f12005b45b510a7918556564bc63e821cbba6dd2a11da71573138c21",
+      "seconds": 11.592,
+      "last_mark_end_s": 10.742958,
+      "tail_after_last_mark_s": 0.849,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "c74f30080b23f7f93ef483c791b76282",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "澳网决赛，他先丢一盘，再连赢三盘击败德约科维奇。首夺澳网，22岁的他，成为男单历史最年轻的生涯全满贯得主。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "5e24c652dd7aa89509140ec65153229a4309f3d4a54f17db701ef0175b98ab4b",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 48,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "奥网决赛,他先丢一盘,再连赢三盘,击败德约科维奇。首多奥网,22岁的他,成为南丹历史最年轻的盛雅,全满惯得主。"
+        },
+        "asr_model": "small",
+        "polyphones": [
+          {
+            "index": 50,
+            "char": "得",
+            "word": "得",
+            "intended": "de2",
+            "wrong": [
+              "dei3"
+            ],
+            "tier": "B",
+            "verdict": "unmeasurable",
+            "runs": [],
+            "ok_refs": "德锝"
+          }
+        ],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 47,
+          "speech_s": 10.696,
+          "cps": 4.39,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "澳 ｜ 网 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 再 ｜ 连 ｜ 赢 ｜ 三盘 ｜ 击败 ｜ 德约科维奇 ｜ 首 ｜ 夺 ｜ 澳 ｜ 网 ｜ 22岁 ｜ 的 ｜ 他 ｜ 成为 ｜ 男单 ｜ 历史 ｜ 最 ｜ 年轻 ｜ 的 ｜ 生涯 ｜ 全 ｜ 满贯 ｜ 得主"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.696,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "澳 ｜ 网 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 再 ｜ 连 ｜ 赢 ｜ 三盘 ｜ 击败 ｜ 德约科维奇 ｜ 首 ｜ 夺 ｜ 澳 ｜ 网 ｜ 22岁 ｜ 的 ｜ 他 ｜ 成为 ｜ 男单 ｜ 历史 ｜ 最 ｜ 年轻 ｜ 的 ｜ 生涯 ｜ 全 ｜ 满贯 ｜ 得主"
+      }
+    },
+    {
+      "id": "doha_intro",
+      "request_id": "cfae72725e6cb6edf4f7fc2bf9c850b2f869754c49f4152327b4a1aa45e8043a",
+      "request": {
+        "text": "二月多哈，两盘击败菲斯，拿下赛季第二冠。开年的两站巡回赛，他都带着冠军离开。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "7048ce43de1816d1a40f9b82519be06d"
+      },
+      "audio_sha256": "3f21b52e9b565522c36bd37ed72cac21cdc6960c522ca416a3a2b5232b0c07fe",
+      "words_file_sha256": "f782186dd5ac5b4f99ddac08a256c669de12c3ce7c7459553bc72d9f0a1986a2",
+      "seconds": 8.112,
+      "last_mark_end_s": 7.287749,
+      "tail_after_last_mark_s": 0.8243,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "7048ce43de1816d1a40f9b82519be06d",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "二月多哈，两盘击败菲斯，拿下赛季第二冠。开年的两站巡回赛，他都带着冠军离开。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "3f21b52e9b565522c36bd37ed72cac21cdc6960c522ca416a3a2b5232b0c07fe",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 33,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "2月多哈,两盘几百菲斯拿下赛季第二罐。开年的两战巡回赛,他都带着冠军离开。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 33,
+          "speech_s": 7.241,
+          "cps": 4.56,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "二月 ｜ 多哈 ｜ 两盘 ｜ 击败 ｜ 菲斯 ｜ 拿下 ｜ 赛季 ｜ 第二 ｜ 冠 ｜ 开年 ｜ 的 ｜ 两站 ｜ 巡回 ｜ 赛 ｜ 他 ｜ 都 ｜ 带 ｜ 着 ｜ 冠军 ｜ 离开"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.241,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二月 ｜ 多哈 ｜ 两盘 ｜ 击败 ｜ 菲斯 ｜ 拿下 ｜ 赛季 ｜ 第二 ｜ 冠 ｜ 开年 ｜ 的 ｜ 两站 ｜ 巡回 ｜ 赛 ｜ 他 ｜ 都 ｜ 带 ｜ 着 ｜ 冠军 ｜ 离开"
+      }
+    },
+    {
+      "id": "sunshine_montecarlo_intro",
+      "request_id": "10183995f0921e03aa6d3d9c2767f443d891be89d3322e6e2e17bf8980c0c8d2",
+      "request": {
+        "text": "三月，印第安维尔斯止步4强，迈阿密第三轮输给科达。来到蒙特卡洛决赛，又被辛纳两盘击败。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "010a4c9a2aa151943de115d49a4ad199"
+      },
+      "audio_sha256": "be3064b24d262ad867c93992b79deda21411b3d317f4c25bfcbf3328390b379e",
+      "words_file_sha256": "4cc4391b3814e1577a5531c83315b26dfbef1f5400896b377754e90f9fa1fabf",
+      "seconds": 9.216,
+      "last_mark_end_s": 8.372666,
+      "tail_after_last_mark_s": 0.8433,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "010a4c9a2aa151943de115d49a4ad199",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "三月，印第安维尔斯止步4强，迈阿密第三轮输给科达。来到蒙特卡洛决赛，又被辛纳两盘击败。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "be3064b24d262ad867c93992b79deda21411b3d317f4c25bfcbf3328390b379e",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 38,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "3月,印第安威尔斯止步四强,迈阿弥第三轮输给科达。来到蒙特卡洛决赛,又被辛纳两盘击败。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 38,
+          "speech_s": 8.326,
+          "cps": 4.56,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "三月 ｜ 印第安维尔斯 ｜ 止步 ｜ 4 ｜ 强 ｜ 迈阿密 ｜ 第三轮 ｜ 输 ｜ 给 ｜ 科达 ｜ 来到 ｜ 蒙特卡洛 ｜ 决赛 ｜ 又 ｜ 被 ｜ 辛纳 ｜ 两盘 ｜ 击败"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.326,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三月 ｜ 印第安维尔斯 ｜ 止步 ｜ 4 ｜ 强 ｜ 迈阿密 ｜ 第三轮 ｜ 输 ｜ 给 ｜ 科达 ｜ 来到 ｜ 蒙特卡洛 ｜ 决赛 ｜ 又 ｜ 被 ｜ 辛纳 ｜ 两盘 ｜ 击败"
+      }
+    },
+    {
+      "id": "wrist_and_missing_majors",
+      "request_id": "aedb68ba8eb8ce17c4c731e231c0ab0e68358fd40a07bb3a3e2778a46cf5f4fa",
+      "request": {
+        "text": "接下来，右手腕受伤。巴塞罗那赢下首轮后，他退出了下一轮，随后也错过法网和温网。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "038039247d4b80da5661555926eeed04"
+      },
+      "audio_sha256": "4de0f130ec63fc956ee88d35c853e5fccc40bc21a610bd6a4174f6f14d404d9f",
+      "words_file_sha256": "79348235e17816f108e224659d55b6d4a7a1eee43c5aff310b99026516e97a94",
+      "seconds": 8.52,
+      "last_mark_end_s": 7.688707,
+      "tail_after_last_mark_s": 0.8313,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "038039247d4b80da5661555926eeed04",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "接下来，右手腕受伤。巴塞罗那赢下首轮后，他退出了下一轮，随后也错过法网和温网。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "4de0f130ec63fc956ee88d35c853e5fccc40bc21a610bd6a4174f6f14d404d9f",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 34,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "接下来,又手万受伤。巴塞罗娜赢下手轮后,她退出了下一轮,随后也错过罚网和温网。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 34,
+          "speech_s": 7.642,
+          "cps": 4.45,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "接下来 ｜ 右 ｜ 手腕 ｜ 受伤 ｜ 巴塞罗那 ｜ 赢 ｜ 下 ｜ 首轮 ｜ 后 ｜ 他 ｜ 退出 ｜ 了 ｜ 下 ｜ 一 ｜ 轮 ｜ 随后 ｜ 也 ｜ 错过 ｜ 法网 ｜ 和 ｜ 温网"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.642,
+        "cps": 4.45,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "接下来 ｜ 右 ｜ 手腕 ｜ 受伤 ｜ 巴塞罗那 ｜ 赢 ｜ 下 ｜ 首轮 ｜ 后 ｜ 他 ｜ 退出 ｜ 了 ｜ 下 ｜ 一 ｜ 轮 ｜ 随后 ｜ 也 ｜ 错过 ｜ 法网 ｜ 和 ｜ 温网"
+      }
+    },
+    {
+      "id": "us_open_intro",
+      "request_id": "b427aec3758ef189babcf5e80cd537a2982e5d950510027c6ac9b5745069fe5d",
+      "request": {
+        "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "f38f53363baeaa25553ec77e780cfdae"
+      },
+      "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+      "words_file_sha256": "2fef05b44d500c8ee009643f238c73bf8d10d06333dd0f14e72fb85137c6b956",
+      "seconds": 8.76,
+      "last_mark_end_s": 7.948125,
+      "tail_after_last_mark_s": 0.8119,
+      "origin": "exact_prior_four_actual_representative",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "f38f53363baeaa25553ec77e780cfdae",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 35,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "四个多月后,他再没往复出。搭进八墙之后,与谢尔顿拼满五盘,最后在决胜盘抢时落败。"
+        },
+        "asr_model": "small",
+        "polyphones": [
+          {
+            "index": 37,
+            "char": "落",
+            "word": "落",
+            "intended": "luo4",
+            "wrong": [
+              "la4",
+              "lao4"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "la4",
+                "verdict": "correct",
+                "score": 0.402,
+                "confidence": "medium",
+                "near": null
+              },
+              {
+                "wrong": "lao4",
+                "verdict": "correct",
+                "score": 0.277,
+                "confidence": "low",
+                "near": null
+              }
+            ],
+            "ok_refs": "洛骆摞"
+          }
+        ],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 35,
+          "speech_s": 7.901,
+          "cps": 4.43,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "四个多月 ｜ 后 ｜ 他 ｜ 在 ｜ 美 ｜ 网 ｜ 复出 ｜ 打 ｜ 进 ｜ 8 ｜ 强 ｜ 之后 ｜ 与 ｜ 谢尔顿 ｜ 拼 ｜ 满 ｜ 五盘 ｜ 最后 ｜ 在 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 十 ｜ 落败"
+        },
+        "sentence_splits": [],
+        "precheck_reuse": "Exact MP3 SHA/request representative native five-predicate result, not repeated inference."
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.901,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四个多月 ｜ 后 ｜ 他 ｜ 在 ｜ 美 ｜ 网 ｜ 复出 ｜ 打 ｜ 进 ｜ 8 ｜ 强 ｜ 之后 ｜ 与 ｜ 谢尔顿 ｜ 拼 ｜ 满 ｜ 五盘 ｜ 最后 ｜ 在 ｜ 决胜 ｜ 盘 ｜ 抢 ｜ 十 ｜ 落败"
+      }
+    },
+    {
+      "id": "qualification",
+      "request_id": "afd730c20b8b05fbbdce7759390bffe950fe2d005266c2dbbaf3be93aee93477",
+      "request": {
+        "text": "九月十六日，他连续第五年锁定年终资格。可伤停后的赛季，还没有结束。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "dcc2c27ee75bc1458bbfac1dd0fa328d"
+      },
+      "audio_sha256": "c34093ad12275b8ab37ccd62ebd8931959aaea7cc969ab104ca80d0a500c66fa",
+      "words_file_sha256": "f632e888f5ba5440ae384bd365a7c552ecbb217868edc43fb94d55ef299e5568",
+      "seconds": 7.2,
+      "last_mark_end_s": 6.379707,
+      "tail_after_last_mark_s": 0.8203,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "dcc2c27ee75bc1458bbfac1dd0fa328d",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "九月十六日，他连续第五年锁定年终资格。可伤停后的赛季，还没有结束。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "c34093ad12275b8ab37ccd62ebd8931959aaea7cc969ab104ca80d0a500c66fa",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 29,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "9月16日,他连续第五年所定年中资格,可商厅后的赛季还没有结束。"
+        },
+        "asr_model": "small",
+        "polyphones": [
+          {
+            "index": 27,
+            "char": "还",
+            "word": "还",
+            "intended": "hai2",
+            "wrong": [
+              "huan2"
+            ],
+            "tier": "B",
+            "verdict": "correct",
+            "runs": [
+              {
+                "wrong": "huan2",
+                "verdict": "correct",
+                "score": 0.719,
+                "confidence": "medium",
+                "near": null
+              }
+            ],
+            "ok_refs": "孩骸"
+          }
+        ],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 29,
+          "speech_s": 6.333,
+          "cps": 4.58,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "九月十六日 ｜ 他 ｜ 连续 ｜ 第五年 ｜ 锁定 ｜ 年终 ｜ 资格 ｜ 可 ｜ 伤 ｜ 停 ｜ 后 ｜ 的 ｜ 赛季 ｜ 还 ｜ 没有 ｜ 结束"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.333,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九月十六日 ｜ 他 ｜ 连续 ｜ 第五年 ｜ 锁定 ｜ 年终 ｜ 资格 ｜ 可 ｜ 伤 ｜ 停 ｜ 后 ｜ 的 ｜ 赛季 ｜ 还 ｜ 没有 ｜ 结束"
+      }
+    },
+    {
+      "id": "tokyo_intro",
+      "request_id": "e2231123584bec3f911a3e709a401d331f720c8d4ce79306fb21ad9a9cf0a09a",
+      "request": {
+        "text": "十月东京，两盘击败莱赫奇卡，他拿下复出后的首个冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "33f7ed22eb90bc943b312adc61680b09"
+      },
+      "audio_sha256": "f561cf2615afe06e654bdfc6c5b42162a4364ff832d718a18965206f0bb7cd42",
+      "words_file_sha256": "fe273d77527f2a3d54474d3450a24a89cf8773d6f81797240940038124f2e0d6",
+      "seconds": 5.592,
+      "last_mark_end_s": 4.764166,
+      "tail_after_last_mark_s": 0.8278,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "33f7ed22eb90bc943b312adc61680b09",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "十月东京，两盘击败莱赫奇卡，他拿下复出后的首个冠军。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "f561cf2615afe06e654bdfc6c5b42162a4364ff832d718a18965206f0bb7cd42",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 23,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "10月东京,两盘击败莱赫奇卡,他拿下付出后的首个冠军。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 23,
+          "speech_s": 4.717,
+          "cps": 4.88,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "十月 ｜ 东京 ｜ 两盘 ｜ 击败 ｜ 莱赫奇卡 ｜ 他 ｜ 拿下 ｜ 复出 ｜ 后 ｜ 的 ｜ 首个 ｜ 冠军"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.717,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "十月 ｜ 东京 ｜ 两盘 ｜ 击败 ｜ 莱赫奇卡 ｜ 他 ｜ 拿下 ｜ 复出 ｜ 后 ｜ 的 ｜ 首个 ｜ 冠军"
+      }
+    },
+    {
+      "id": "shanghai_vienna_intro",
+      "request_id": "7af257d03b107e3c8419c0057430451a0110b59cb6157f3eb98923c51ba6d147",
+      "request": {
+        "text": "上海第三轮负于贝尔赫斯后，他在维也纳两盘击败德米纳尔，再添一冠。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "84a831607405f8824beb5f1a7cc92554"
+      },
+      "audio_sha256": "8f1f40ef7c100b43eb142b2d493bcabdd358a589ba3705816c65d73cc54e7002",
+      "words_file_sha256": "83ba0ba4a8dea96f9aa6a24674511ebfa29668b4726a9fe77e07ef6223d6acf8",
+      "seconds": 6.792,
+      "last_mark_end_s": 5.978749,
+      "tail_after_last_mark_s": 0.8133,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "84a831607405f8824beb5f1a7cc92554",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "上海第三轮负于贝尔赫斯后，他在维也纳两盘击败德米纳尔，再添一冠。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "8f1f40ef7c100b43eb142b2d493bcabdd358a589ba3705816c65d73cc54e7002",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 29,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "上海第三轮赋予贝尔赫斯后,他在维也纳两盘击败德米纳尔在天一贯。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 29,
+          "speech_s": 5.932,
+          "cps": 4.89,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "上海 ｜ 第三轮 ｜ 负 ｜ 于 ｜ 贝尔赫斯 ｜ 后 ｜ 他 ｜ 在 ｜ 维也纳 ｜ 两盘 ｜ 击败 ｜ 德米纳尔 ｜ 再 ｜ 添 ｜ 一 ｜ 冠"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 5.932,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "上海 ｜ 第三轮 ｜ 负 ｜ 于 ｜ 贝尔赫斯 ｜ 后 ｜ 他 ｜ 在 ｜ 维也纳 ｜ 两盘 ｜ 击败 ｜ 德米纳尔 ｜ 再 ｜ 添 ｜ 一 ｜ 冠"
+      }
+    },
+    {
+      "id": "paris_intro",
+      "request_id": "ebead02ce77f591187149e7a979d19399a1db3e24d526969e142f898bc311a2d",
+      "request": {
+        "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "98e2dc1e75ba8272b1ff2d8459508425"
+      },
+      "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+      "words_file_sha256": "65575eb3abd57e6d00a5443673a9c5d1daae0cdc792c8bd0e5a88727c93fc5a0",
+      "seconds": 9.864,
+      "last_mark_end_s": 9.033041,
+      "tail_after_last_mark_s": 0.831,
+      "origin": "exact_prior_four_actual_representative",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "98e2dc1e75ba8272b1ff2d8459508425",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 42,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 1,
+          "sub_ratio": 0.024,
+          "longest_deletion": 0,
+          "transcript": "巴黎四分之一决赛,他先丢一盘,逆转弗里茨。决赛在玉谢尔顿,这次两盘赢球,首次得得巴黎大师赛冠军。"
+        },
+        "asr_model": "small",
+        "polyphones": [
+          {
+            "index": 39,
+            "char": "得",
+            "word": "夺得",
+            "intended": "de2",
+            "wrong": [
+              "dei3"
+            ],
+            "tier": "B",
+            "verdict": "unmeasurable",
+            "runs": [],
+            "ok_refs": "德锝"
+          }
+        ],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 42,
+          "speech_s": 8.986,
+          "cps": 4.67,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "巴黎 ｜ 四分之一 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 逆转 ｜ 弗里茨 ｜ 决赛 ｜ 再 ｜ 遇 ｜ 谢尔顿 ｜ 这次 ｜ 两盘 ｜ 赢 ｜ 球 ｜ 首次 ｜ 夺得 ｜ 巴黎 ｜ 大师 ｜ 赛 ｜ 冠军"
+        },
+        "sentence_splits": [],
+        "precheck_reuse": "Exact MP3 SHA/request representative native five-predicate result, not repeated inference."
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.986,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "巴黎 ｜ 四分之一 ｜ 决赛 ｜ 他 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 逆转 ｜ 弗里茨 ｜ 决赛 ｜ 再 ｜ 遇 ｜ 谢尔顿 ｜ 这次 ｜ 两盘 ｜ 赢 ｜ 球 ｜ 首次 ｜ 夺得 ｜ 巴黎 ｜ 大师 ｜ 赛 ｜ 冠军"
+      }
+    },
+    {
+      "id": "race_table",
+      "request_id": "4a1e2fd609b2bed73163687e62409be69675317475827a68273af8bccece11eb",
+      "request": {
+        "text": "截至十一月九日，六千一百分，赛季积分榜第三。辛纳已退赛，高亮的是本届年终的八位正选。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "e9d0dcf5d5018905ffcb903bb26b657b"
+      },
+      "audio_sha256": "c1a2b4059842c7b17ddd301032b147c720a60a86301e3738e22e5a872542d8bc",
+      "words_file_sha256": "74ac879ac2a93832cbfed76212385ef6447d97cfd0e2470844e5fc2fa11b3b4c",
+      "seconds": 8.928,
+      "last_mark_end_s": 8.101416,
+      "tail_after_last_mark_s": 0.8266,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "e9d0dcf5d5018905ffcb903bb26b657b",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "截至十一月九日，六千一百分，赛季积分榜第三。辛纳已退赛，高亮的是本届年终的八位正选。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "c1a2b4059842c7b17ddd301032b147c720a60a86301e3738e22e5a872542d8bc",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 37,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 0,
+          "sub_ratio": 0.0,
+          "longest_deletion": 0,
+          "transcript": "截至11月9日6100分,赛季积分榜第三。辛纳已退赛,高量的是本届年中的八位政选。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 37,
+          "speech_s": 8.054,
+          "cps": 4.59,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "截至 ｜ 十一月九日 ｜ 六千一百分 ｜ 赛季 ｜ 积分 ｜ 榜 ｜ 第三 ｜ 辛纳 ｜ 已 ｜ 退赛 ｜ 高亮 ｜ 的 ｜ 是 ｜ 本届 ｜ 年终 ｜ 的 ｜ 八位 ｜ 正 ｜ 选"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.054,
+        "cps": 4.59,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "截至 ｜ 十一月九日 ｜ 六千一百分 ｜ 赛季 ｜ 积分 ｜ 榜 ｜ 第三 ｜ 辛纳 ｜ 已 ｜ 退赛 ｜ 高亮 ｜ 的 ｜ 是 ｜ 本届 ｜ 年终 ｜ 的 ｜ 八位 ｜ 正 ｜ 选"
+      }
+    },
+    {
+      "id": "question",
+      "request_id": "db126dcb17fc0a9e0969942c4e126e0cf8ef2e4a7b2fc079640d19653e30dca9",
+      "request": {
+        "text": "去年在都灵收获亚军。今年带着巴黎大师赛冠军回来，你看好他走到哪一步？",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "497bf6762f11db314c69ed5b81db7ab6"
+      },
+      "audio_sha256": "da682e2f36bcfbeaab39e3afb5c52e26d8cacb1d9fa4482faf04c7d3acc0a80b",
+      "words_file_sha256": "26d3b7ce7dd3d4078c9f58aa4b14f144944b8a9754f996b6b0ff18bddd9471c1",
+      "seconds": 7.296,
+      "last_mark_end_s": 6.462249,
+      "tail_after_last_mark_s": 0.8338,
+      "origin": "new_actual_nonrepresentative_request",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "497bf6762f11db314c69ed5b81db7ab6",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "去年在都灵收获亚军。今年带着巴黎大师赛冠军回来，你看好他走到哪一步？",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "da682e2f36bcfbeaab39e3afb5c52e26d8cacb1d9fa4482faf04c7d3acc0a80b",
+        "checks": {
+          "completeness": true,
+          "polyphones": true,
+          "pauses": true,
+          "speed": true,
+          "whole_sentences": true
+        },
+        "pass": true,
+        "completeness": {
+          "ok": true,
+          "ref_syllables": 31,
+          "deleted": 0,
+          "inserted": 0,
+          "substituted": 1,
+          "sub_ratio": 0.032,
+          "longest_deletion": 0,
+          "transcript": "去年在都临收获亚军,今年带着巴黎大师赛冠军回来。你看好他走到哪一步。"
+        },
+        "asr_model": "small",
+        "polyphones": [],
+        "pauses": {
+          "inner_pauses": [],
+          "fake_tokens": [],
+          "chars": 31,
+          "speech_s": 6.415,
+          "cps": 4.83,
+          "pause_ok": true,
+          "speed_ok": true,
+          "tokens": "去年 ｜ 在 ｜ 都灵 ｜ 收获 ｜ 亚军 ｜ 今年 ｜ 带 ｜ 着 ｜ 巴黎 ｜ 大师 ｜ 赛 ｜ 冠军 ｜ 回来 ｜ 你 ｜ 看好 ｜ 他 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+        },
+        "sentence_splits": []
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.415,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "去年 ｜ 在 ｜ 都灵 ｜ 收获 ｜ 亚军 ｜ 今年 ｜ 带 ｜ 着 ｜ 巴黎 ｜ 大师 ｜ 赛 ｜ 冠军 ｜ 回来 ｜ 你 ｜ 看好 ｜ 他 ｜ 走 ｜ 到 ｜ 哪 ｜ 一 ｜ 步"
+      }
+    },
+    {
+      "id": "outro",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "request": {
+        "text": "关注网球时插，时插归我，好球归你。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "20da8f5468902afbbecb78daefb15d83"
+      },
+      "audio_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+      "words_file_sha256": "5c8edc51f7677e2b4101fd60ec989fee293941f5c66ef3c7cf73a8c23920dc4b",
+      "seconds": 4.104,
+      "last_mark_end_s": 3.266499,
+      "tail_after_last_mark_s": 0.8375,
+      "origin": "exact_prior_brand_actual_with_prior_formal_suite",
+      "actual_precheck_result": {
+        "request": {
+          "backend": "edge",
+          "cache_key": "20da8f5468902afbbecb78daefb15d83",
+          "lead_pause": 0.0,
+          "pitch": "+0Hz",
+          "rate": "+6%",
+          "style": "",
+          "styledegree": "",
+          "text": "关注网球时插，时插归我，好球归你。",
+          "voice": "zh-CN-YunjianNeural"
+        },
+        "audio_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+        "pass": true,
+        "precheck_reuse": "Exact approved Shelton V2 actual outro byte/request; prior current automated suite PASS. Full current episode formal suite still required."
+      },
+      "independent_pure_pauses_speed": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    }
+  ],
+  "native_limited_results": [
+    {
+      "id": "ao_intro",
+      "target": {
+        "index": 50,
+        "char": "得",
+        "word": "得",
+        "intended": "de2",
+        "wrong": [
+          "dei3"
+        ],
+        "tier": "B",
+        "verdict": "unmeasurable",
+        "runs": [],
+        "ok_refs": "德锝"
+      }
+    },
+    {
+      "id": "paris_intro",
+      "target": {
+        "index": 39,
+        "char": "得",
+        "word": "夺得",
+        "intended": "de2",
+        "wrong": [
+          "dei3"
+        ],
+        "tier": "B",
+        "verdict": "unmeasurable",
+        "runs": [],
+        "ok_refs": "德锝"
+      }
+    }
+  ],
+  "limits": [
+    "Aheadinputchecks arenotcurrentformalfilm5suiteapproval; finalspec/ASS/nativepreview/render/inventory/currentpostrenderidentity stillrequired.",
+    "AO得主 andParis夺得 B得 unmeasurable/runs[] explicitlyretained underexistingnativeBpolicy, notalltonesverified.",
+    "RawASRrecognizedsubstitutiondifferencesretained. No fullhumanhearing/naturalness/emphasis claim.",
+    "No lastminute text/Racefocalpoint/voicechanges; currentRacePNG may beupdatedonlywithsametimestampeddataandfrozen6100focus."
+  ]
+}

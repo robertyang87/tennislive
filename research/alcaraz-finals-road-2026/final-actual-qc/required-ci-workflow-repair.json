@@ -1,0 +1,18 @@
+{
+  "scope": "Required CI repair for pre-existing main workflow, no movie/spec/audio/gate/test change",
+  "failed_run": 42587926901,
+  "previous_feature_head": "45ebaacf6a412d078b1dbb8a0770434e839b2a2d",
+  "synced_main": "71be6a35bd8c611d2b28f0977b27cf5fa6994f33",
+  "github_synthetic_merge": "ec0e34e4a5b2b2715f24c894495eb295af7ec267",
+  "synthetic_tree": "7c25d7c529e6abd5ceb731d7950451315bd68989",
+  "failures": [
+    "tests/test_match_reel.py:4507 no sparse checkout in import-bucsa-source.yml",
+    "tests/test_match_reel.py:10663 bare yt-dlp without default extras"
+  ],
+  "repair": [
+    "Explicit shallow checkout and sparse .github only, matching actual job dependency",
+    "Install quoted yt-dlp[default]"
+  ],
+  "validation": "Current execution environment unavailable; exact-head required CI will run unchanged original predicates. Prior actual movie QC and 15-voice suite remain valid.",
+  "git_operation": "Use GitHub generated conflict-free 3-way merge tree, parents [feature,main], expected-head non-force fast-forward branch update"
+}

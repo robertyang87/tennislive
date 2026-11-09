@@ -1,0 +1,141 @@
+{
+  "schema": "alcaraz-final-native-master-usqf-paris-scoped-qc.v1",
+  "reviewed_at": "2026-11-09T08:37:47.311923+00:00",
+  "reviewer": "Codex shelton_paris_media",
+  "status": "PASS_WITH_PREVIOUSLY_ACCEPTED_MINORS",
+  "scope": "Actual final Alcaraz film US Open quarter-final and Paris final video scenes only. Other scenes/globalfacts/current15voice5suite reviewed by assigned agents.",
+  "actual_movie": {
+    "path": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+    "sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "size_bytes": 88813632,
+    "duration_s": 209.467
+  },
+  "actual_spec": {
+    "path": "/dev/shm/alcaraz-finals-production/final/actual-spec.json",
+    "sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589"
+  },
+  "actual_ass": {
+    "path": "/dev/shm/alcaraz-finals-production/final/native-input/subtitles.ass",
+    "sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b"
+  },
+  "actual_render_inputs": {
+    "path": "/dev/shm/alcaraz-finals-production/final/native-input/render_inputs.json",
+    "sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f"
+  },
+  "evidence": {
+    "manifest": "/dev/shm/alcaraz-finals-production/final/qc-us-paris/manifest.json",
+    "own_actual_master_pngs": 58,
+    "own_contact_sheets_personally_opened": [
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/us-entry-point.jpg",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/us-label-reaction-tail.jpg",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/paris-entry-point-label.jpg",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/paris-quotes-tail.jpg"
+    ],
+    "additional_root_contact_sheets_personally_opened": [
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg"
+    ],
+    "own_full_size_original_pngs_personally_opened": [
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/frame-002236.png",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/frame-002247.png",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/frame-002426.png",
+      "/dev/shm/alcaraz-finals-production/final/qc-us-paris/frame-004027.png"
+    ],
+    "scope_limit": "Sampled real master pixels plus frozen exactsource fullpoint/boundary evidence; not a claim every movieframe/full human audio listening."
+  },
+  "us_open_quarter_final": {
+    "status": "pass_with_explicit_receiving_player_edge_minor",
+    "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+    "source_window": [
+      122.17,
+      139.0
+    ],
+    "source_silent_visual_tail_end": 139.5,
+    "nominal_film_range": [
+      87.292,
+      104.122
+    ],
+    "actual_serve_and_transition": {
+      "entry": "87.36 firstcourt+cardblend,87.80 purecourt; complete serverbounce/toss beforelatercontact",
+      "serve": "farSheltonactualserve at89.44–89.56 currentframes2236–2239, no precedingphoto ghost",
+      "landing": "actualframe2247/89.88 preserves ball afterservice-boxbounce insidecrop; laternearAlcarazfails toreach anddoes NOT strike ball.",
+      "result": "90.64actualSheltonreaction; genuineAlcarazloserreaction97.04/98.0; handshake101.12,102.0 andhug103.64–104.16"
+    },
+    "fixed_crop_and_minor": "Singlecourt fixedcx.5 full1080x1440; nearAlcaraz receivingstance/bodyandunsuccessfuluncontactedreach partly exitsright. This is knownacceptedminor, noactualracketcontact missing. Oldcontradictory inferenceassertions withdrawn inoriginalsource closure record, not repeated.",
+    "actual_card": {
+      "correct_date": "2026.09.09 localfinishdate",
+      "correct_round": "美网1/4决赛",
+      "correct_people": "阿尔卡拉斯vs谢尔顿",
+      "correct_alcaraz_score": "7-6(5)1-6 3-6 6-1 6-7(7)",
+      "actual_full_size_png": "frame-002236.png",
+      "timing": "Appearswithincomingrealvideo,8snominal;95.24samplepositive and95.28/.32absent. No cardonfollowingqualificationphoto."
+    },
+    "actual_subtitle": {
+      "ass_event": [
+        90.72,
+        103.62
+      ],
+      "text": "[Match result announced]／【主裁宣布比赛结果】",
+      "not_verbatim": true,
+      "actual_full_size_png": "frame-002426.png",
+      "scope": "Explicitdescriptivecaption, not a reconstructednumeric resultorunsupportedspokenquote. Two rawASR numerics/Whatabattle disagreementretained unchanged inoriginalsource packet. No newASR/humanhearing claimed.",
+      "complete_source_bounds": "Originalannouncement evidence125.66–138.3 lies insidebody122.17–139, caption125.6–138.5equivalent coversit. Nextretained-Englishcandidate144.12 is outsidebothbodyandtail."
+    },
+    "actual_outgoing_tail": "104.08/.16 genuinehug,104.28–104.44 dissolveintoqualifiedphoto,104.64 cleanphoto; noad,nextpoint or cutoffannouncement."
+  },
+  "paris_final": {
+    "status": "pass_with_previously_accepted_crop_and_info_overlap_minors",
+    "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+    "source_window": [
+      120.4,
+      149.3
+    ],
+    "source_silent_visual_tail_end": 149.8,
+    "nominal_film_range": [
+      158.95,
+      187.85
+    ],
+    "actual_serve_and_transition": {
+      "entry": "159.0 firstcourt+cardblend,159.44 purecourt",
+      "serve": "actual161.04–161.16 touchprogression clearly oncourt, cleanfrompreviousphotograph; originalfullframe4027/161.08personallyopened",
+      "fullpoint": "samewholeterminalpoint retainsserve throughresult/realwinnercelebration; rootframes162.95/165.95/167.45 andown167.52 confirmcontinuedcourt/action"
+    },
+    "fixed_crop_and_prior_minors": [
+      "Samebriefnaturalrackethead/ball/partialbodyedgeclipinlateralstretch source128–129, previouslysource/rootaccepted; fixedcx.5noad-hocshift/tracking.",
+      "Righttransparentnativeinfo partly overlapsfarAlcarazreceivingpreparation positionearlyinthescene; rootexplicitlyacceptedbeforeactualfilm. Actualframe4027/161.08documentsit; nozerooverlapclaim."
+    ],
+    "actual_card": {
+      "correct_date": "2026.11.08",
+      "correct_round": "巴黎大师赛决赛",
+      "correct_people": "阿尔卡拉斯vs谢尔顿",
+      "correct_alcaraz_winner_score": "7-6(5)7-5",
+      "actual_full_size_png": "frame-004027.png",
+      "timing": "Appearswithincomingrealvideo;166.92/.96positive,167.0absent, consistent8snativeframequantization. No infoonfollowingRacecanvas."
+    },
+    "actual_bilingual_quotes": {
+      "ass_events": [
+        [
+          173.85,
+          178.25
+        ],
+        [
+          178.25,
+          181.55
+        ]
+      ],
+      "english": "Carlos Alcaraz wins the Rolex Paris Masters / for the very first time in his career.",
+      "chinese": "阿尔卡拉斯赢得巴黎大师赛 / 这是他生涯第一次",
+      "actual_samples": "173.84/.88 firstwholecue,178.24first/178.28second,181.52second/181.56none",
+      "scope": "BurnedEnglish/Chinesecomplete/readable. UnchangedexactsourceASR fullsentence135.38/45–142.81/88 iswellinside120.4–149.3; no truncatedsentence ornewverbatimclaim."
+    },
+    "real_reactions_and_tail": "TrueSheltonreaction177.36/178.28/180.0; realhug187.6/.84;187.92–188.24 Raceblend,188.40pureRace. Source149.8tail precedesactualfirstpromo149.96; noad,nextmatch,ceremony orblackflash."
+  },
+  "audio_scope": {
+    "actual_stream_present": true,
+    "checks": "ActualASSword/timing and burnedcaptionverification plus originalexactsourceutteranceboundaries. No human acoustic listening, newASR/TTS, loudness/source-gain/PCMtest performed.",
+    "source_evidence_reused": "ExistingselectedimmutableUSQF/Parisbytes, allraws andtransparentdescriptorlimitpreserved. Not a claim Alcaraz/Shelton movies are pixelidentical."
+  },
+  "new_blockers": [],
+  "rerender_requested": false
+}
