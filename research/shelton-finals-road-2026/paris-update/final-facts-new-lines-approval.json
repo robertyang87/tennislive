@@ -1,0 +1,42 @@
+{
+  "reviewed_at_utc": "2026-11-09T06:08:37.714900+00:00",
+  "status": "PASS_FACT_SCOPE",
+  "reviewed_input": "/dev/shm/shelton-paris-production/research/editorial/shelton-paris-new-lines-and-copy.final-draft.json",
+  "input_sha256": "abdcb3769f8191fb91cda45d7e3f73a1c94fb87365092e51222d11175c254460",
+  "changed_narrations": {
+    "late_season": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+    "paris_final_intro": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+    "race_table": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。"
+  },
+  "publication": {
+    "title": "11.9网球有故事|谢尔顿年终路",
+    "summary": "温网低谷到巴黎亚军",
+    "lead": "从温网错过赛点，到美网与巴黎亚军，谢尔顿连续第二年奔赴都灵。",
+    "body": "谢尔顿温网首轮错过赛点，后来第一次站上美网决赛，年终前又闯进巴黎大师赛决赛。\n\n从达拉斯救回3个冠军点，到慕尼黑、斯图加特和蒙特利尔的冠军，他的赛季也经历了法网和温网的低谷。10月18日锁定年终席位后，他在巴黎连过保罗、范阿舍两关，决赛两盘负于阿尔卡拉斯，收获亚军。\n\n截至11月9日，谢尔顿5170分列赛季积分榜第4。辛纳已退赛，片中高亮本届年终的8位正选。\n\n第二次到都灵，你看好谢尔顿冲进4强吗？\n\n#网球 #谢尔顿 #ATP年终总决赛 #巴黎大师赛 #网球时差",
+    "body_chars": 234,
+    "body_sha256": "c98bd997ee4e325ae7bddf636a5c6eac74395647fcc121ef898403de8db13a49",
+    "comment": "第二次到都灵，你看好谢尔顿冲进4强吗？"
+  },
+  "checks": {
+    "paris_qf_sf_final_chronology": true,
+    "Paris_final_winner_alcaraz_two_sets_shelton_runnerup": true,
+    "Montreal_Munich_Dallas_Stuttgart4_titles": true,
+    "Dallas3championship_points": true,
+    "WimbledonR1lost_after_matchpoint": true,
+    "qualification_Oct18_second_year": true,
+    "Race_Nov9_Shelton5170_rank4": true,
+    "eight_qualified_excluding_Sinner": true
+  },
+  "limits": [
+    "This approves facts in exactly3changed/newnarration strings andpublication, notphotoquality/audio/crop/fullmaster.",
+    "先胜保罗 expresses chronology relative to范阿舍; doesnot claim PaulwasfirstParismatch. Norrie/Rinderknechwins still retained fullfactpacket.",
+    "No eventrecord or rank is inferred from picture."
+  ],
+  "sources": [
+    "/dev/shm/finals-update-research/facts/shelton-paris-delta-handoff.json",
+    "/dev/shm/finals-update-research/facts/race-top15-2026-11-09.json",
+    "/dev/shm/finals-update-research/facts/source-manifest.json",
+    "/workspace/shelton-finals-production/research/facts/final-frozen-fact-audit.json",
+    "/workspace/shelton-finals-production/research/facts/sources/dallas-title-mirror.html"
+  ]
+}

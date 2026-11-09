@@ -1,0 +1,97 @@
+{
+  "created_at": "2026-11-09T06:22:43.931333+00:00",
+  "status": "PASS_old_final_sourcewindow_and_unaffected_story_input_identity",
+  "old_actual_spec_sha256": "7d47e189ee5ce23fc7d6aac89991922eff299c5c459fc219da987ab42c637484",
+  "current_spec_sha256": "5a4f67e282e61c5e026538e4814bf887eb8dde7c158e2f86933e228d62e4cee6",
+  "unchanged_old_segments_except_explicit_8s_label_hold": [
+    "opening",
+    "ao_intro",
+    "ao_point",
+    "dallas_intro",
+    "dallas_point",
+    "munich_intro",
+    "munich_point",
+    "rg_intro",
+    "stuttgart_intro",
+    "wimbledon_intro",
+    "montreal_intro",
+    "montreal_point",
+    "us_open_run",
+    "us_open_final_intro",
+    "us_open_final_point",
+    "autumn",
+    "qualification",
+    "question"
+  ],
+  "changed_existing_segments": [
+    "late_season",
+    "race_table"
+  ],
+  "new_segments": [
+    "paris_final_intro",
+    "paris_final_point"
+  ],
+  "old_five_source_windows": [
+    {
+      "id": "ao_point",
+      "source": "australian-open-qf",
+      "window": [
+        116.8,
+        139.65
+      ],
+      "quote_unchanged": true,
+      "fixed_center": true,
+      "only_explicit_label_hold_changed_from10_to8_native_already_clamped8": true
+    },
+    {
+      "id": "dallas_point",
+      "source": "dallas-final",
+      "window": [
+        112.3,
+        144.4
+      ],
+      "quote_unchanged": true,
+      "fixed_center": true,
+      "only_explicit_label_hold_changed_from10_to8_native_already_clamped8": true
+    },
+    {
+      "id": "munich_point",
+      "source": "munich-final",
+      "window": [
+        152.2,
+        171.7
+      ],
+      "quote_unchanged": true,
+      "fixed_center": true,
+      "only_explicit_label_hold_changed_from10_to8_native_already_clamped8": true
+    },
+    {
+      "id": "montreal_point",
+      "source": "montreal-final",
+      "window": [
+        1.96,
+        29.0
+      ],
+      "quote_unchanged": true,
+      "fixed_center": true,
+      "only_explicit_label_hold_changed_from10_to8_native_already_clamped8": true
+    },
+    {
+      "id": "us_open_final_point",
+      "source": "us-open-final",
+      "window": [
+        9.0,
+        31.8
+      ],
+      "quote_unchanged": true,
+      "fixed_center": true,
+      "only_explicit_label_hold_changed_from10_to8_native_already_clamped8": true
+    }
+  ],
+  "cover_exactly_unchanged": true,
+  "exact_unchanged_spoken_requests": 15,
+  "new_spoken_requests": 3,
+  "current_body_narration": 16,
+  "native_frozen_total_requests": 18,
+  "scope": "Structured inputs only; current actualmovieQC/5suite still required. No oldfilmquality attestation copied as current."
+}

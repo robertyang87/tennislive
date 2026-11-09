@@ -1,0 +1,85 @@
+{
+  "created_at": "2026-11-09T06:07:59.984111+00:00",
+  "status": "EDITORIAL_FINAL_WORDING_PENDING_FACTS_APPROVAL_NOT_TTS_YET",
+  "scope": "ONLY three changed/new narration requests; cover/oldbody/question remain exact bytes",
+  "lines": [
+    {
+      "id": "late_season",
+      "narration": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+      "visual_bindings": [
+        {
+          "phrase": "巴塞尔止步第二轮",
+          "asset": "old actual Basel R16 photo",
+          "source": "old actual v3 photo map"
+        },
+        {
+          "phrase": "巴黎先胜保罗",
+          "asset": "atp-4605604-original.jpg",
+          "event": "2026 Paris QF Nov6"
+        },
+        {
+          "phrase": "再逆转范阿舍，打进决赛",
+          "asset": "atp-4606037-original.jpg",
+          "event": "2026 Paris SF Nov7"
+        }
+      ]
+    },
+    {
+      "id": "paris_final_intro",
+      "narration": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "visual_bindings": [
+        {
+          "phrase": "whole segment",
+          "asset": "atp-4606318-original.jpg",
+          "event": "2026 Paris F Nov8",
+          "meaning": "neutral exactmatch Shelton portrait, not claim of specific point or final reaction"
+        }
+      ]
+    },
+    {
+      "id": "race_table",
+      "narration": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "visual_bindings": [
+        {
+          "phrase": "whole segment",
+          "asset": "fresh Race15 asofNov9",
+          "focus": "Shelton4 5170",
+          "qualified_highlights": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "withdrawn": [
+            2
+          ]
+        }
+      ]
+    }
+  ],
+  "cover": "unchanged latest actual v3 hook/photo/narration",
+  "publication": {
+    "title": "11.9网球有故事|谢尔顿年终路",
+    "summary": "温网低谷到巴黎亚军",
+    "lead": "从温网错过赛点，到美网与巴黎亚军，谢尔顿连续第二年奔赴都灵。",
+    "body": "谢尔顿温网首轮错过赛点，后来第一次站上美网决赛，年终前又闯进巴黎大师赛决赛。\n\n从达拉斯救回3个冠军点，到慕尼黑、斯图加特和蒙特利尔的冠军，他的赛季也经历了法网和温网的低谷。10月18日锁定年终席位后，他在巴黎连过保罗、范阿舍两关，决赛两盘负于阿尔卡拉斯，收获亚军。\n\n截至11月9日，谢尔顿5170分列赛季积分榜第4。辛纳已退赛，本届年终的8位正选全部确定。\n\n第二次到都灵，你看好谢尔顿冲进4强吗？\n\n#网球 #谢尔顿 #ATP年终总决赛 #巴黎大师赛 #网球时差",
+    "body_chars": 234,
+    "body_sha256": "5d1446d8e5ec61c84dc25e73bb19f91897d977385ac4ecba3333b072168de1d0",
+    "comment": "第二次到都灵，你看好谢尔顿冲进4强吗？"
+  },
+  "facts_handoff": "/workspace/finals-update-research/facts/shelton-paris-delta-handoff.json",
+  "actual_visual_review": "Contact8 actual images viewed; selected full-size crop review remains in progress.",
+  "body_only_delta": {
+    "at": "2026-11-09T06:09:19.150512+00:00",
+    "requested_by": "root editorial review",
+    "before": "辛纳已退赛，片中高亮本届年终的8位正选。",
+    "after": "辛纳已退赛，本届年终的8位正选全部确定。",
+    "old_body_sha256": "c98bd997ee4e325ae7bddf636a5c6eac74395647fcc121ef898403de8db13a49",
+    "reason": "Audience publication copy states finalfield fact; no implementation wording. Narrated Race highlighter guide remains unchanged.",
+    "tts_impact": "none; only publicationbody"
+  }
+}

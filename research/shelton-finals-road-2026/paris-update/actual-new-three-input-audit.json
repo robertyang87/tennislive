@@ -1,0 +1,124 @@
+{
+  "schema": "shelton-paris.actual-new-three-input-audit.v1",
+  "status": "scoped_pass",
+  "checked_at": "2026-11-09T06:11:39.299825+00:00",
+  "method": "Exact actual MP3/marks+bundle zip/parameter/editorial+semantic reading-plan binding; native bounded pause_and_speed function; ffmpeg decode only. No new TTS/ASR/voice-model invocation and no loudness/gain/PCM analysis.",
+  "input_bundle_sha256": "e4207ced724ff016fdf1ebfd3c90fab4c2322064d226a91036b2e88576b49cad",
+  "editorial_snapshot_sha256": "f2d568e1293fbfea3261fcf30f2b77af9d76dd92584ef46d9d6b7a499f5b4e18",
+  "sample_index_sha256": "776c34e24587289127f1bd32f12b174b5c98be9928c87023051d32b7a2ebed77",
+  "request_count": 3,
+  "rows": [
+    {
+      "id": "late_season",
+      "text": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+      "request": {
+        "text": "资格到手以后，巴塞尔止步第二轮。巴黎先胜保罗，再逆转范阿舍，打进决赛。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "4a414723e3cfd6551d2871dc1b10cc22"
+      },
+      "audio_sha256": "6ca978e38d298dd61f3f4ca9309f340400fcde78033b9b4f00ce10080b6f1a21",
+      "local_words_file_sha256": "69cc701a973e1e74735181ac6a40831a0d201d2426663b3aa19eec3af1154e19",
+      "bundle_canonical_marks_sha256": "e3727a7b191fcc2382255ec3b99c87770f82f021a414db688d19b1362b11d527",
+      "canonical_and_local_marks_semantically_identical": true,
+      "actual_decode": "pass",
+      "duration_s": 7.728,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 6.898583,
+      "audio_tail_after_last_mark_s": 0.8294,
+      "timing": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.851,
+        "cps": 4.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "资格 ｜ 到手 ｜ 以后 ｜ 巴塞尔 ｜ 止步 ｜ 第二轮 ｜ 巴黎 ｜ 先 ｜ 胜 ｜ 保罗 ｜ 再 ｜ 逆转 ｜ 范阿舍 ｜ 打 ｜ 进 ｜ 决赛"
+      },
+      "scope": "Actual file and frozen request identity, complete marks/token sequence, protected names/number pauses and CPS; not auditory naturalness/pronunciation or ASR completeness."
+    },
+    {
+      "id": "paris_final_intro",
+      "text": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+      "request": {
+        "text": "决赛再次遇到阿尔卡拉斯。美网他曾赢下这组对决，这次却两盘告负，收获巴黎亚军。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "e8f2f1e6598531f5b5c50c15e9c715fc"
+      },
+      "audio_sha256": "404d2fd7b0052a27250356668243bfa49264febe57e2c78869958a3b2d6cfa9f",
+      "local_words_file_sha256": "5632705ba819763dcdaeb60844dd133459b62e441f77a6d15b63d6fa4fa6ef15",
+      "bundle_canonical_marks_sha256": "dd106cfcba81e02f9dfc8e53c5858cb2301847a08681cd9e114a095919eacfe0",
+      "canonical_and_local_marks_semantically_identical": true,
+      "actual_decode": "pass",
+      "duration_s": 8.184,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 7.346708,
+      "audio_tail_after_last_mark_s": 0.8373,
+      "timing": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.3,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 再次 ｜ 遇到 ｜ 阿尔卡拉 ｜ 斯 ｜ 美 ｜ 网 ｜ 他 ｜ 曾 ｜ 赢 ｜ 下 ｜ 这 ｜ 组 ｜ 对决 ｜ 这次 ｜ 却 ｜ 两盘 ｜ 告负 ｜ 收获 ｜ 巴黎 ｜ 亚军"
+      },
+      "scope": "Actual file and frozen request identity, complete marks/token sequence, protected names/number pauses and CPS; not auditory naturalness/pronunciation or ASR completeness."
+    },
+    {
+      "id": "race_table",
+      "text": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "request": {
+        "text": "截至十一月九日，谢尔顿五千一百七十分，赛季积分榜第四。辛纳已退赛，高亮的是本届年终的八位正选。",
+        "voice": "zh-CN-YunjianNeural",
+        "rate": "+6%",
+        "pitch": "+0Hz",
+        "style": "",
+        "styledegree": "",
+        "lead_pause": 0.0,
+        "backend": "edge",
+        "cache_key": "5a20f9fb3d8c62ddfcaf66cbbeb59d25"
+      },
+      "audio_sha256": "d720b940efd7c43c917bacc19a4ce361460e3ef608d4705669660f5716cad09a",
+      "local_words_file_sha256": "6c9ae6549ddb7e7e901cc3d0322880b9a62560ad5f98372b52d2787c30e4a8da",
+      "bundle_canonical_marks_sha256": "6a5b008e86bb88063928f5194939ef863556a514a3a2dff65f5d312a466c9c42",
+      "canonical_and_local_marks_semantically_identical": true,
+      "actual_decode": "pass",
+      "duration_s": 9.744,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 8.926875,
+      "audio_tail_after_last_mark_s": 0.8171,
+      "timing": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.88,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "截至 ｜ 十一月九日 ｜ 谢尔顿 ｜ 五千一百七十分 ｜ 赛季 ｜ 积分 ｜ 榜 ｜ 第四 ｜ 辛纳 ｜ 已 ｜ 退赛 ｜ 高亮 ｜ 的 ｜ 是 ｜ 本届 ｜ 年终 ｜ 的 ｜ 八位 ｜ 正 ｜ 选"
+      },
+      "scope": "Actual file and frozen request identity, complete marks/token sequence, protected names/number pauses and CPS; not auditory naturalness/pronunciation or ASR completeness."
+    }
+  ],
+  "sentence_splits": [],
+  "limitations": [
+    "No full human listening claim; naturalness/emphasis and phonetic correctness not independently certified by this check.",
+    "Formal native five-suite and exact final movie binding still pending.",
+    "Changed three samples must be byte-identical in complete18-request bundle and final movie actual-input archive.",
+    "Local words JSON serialization differs from canonical bundle marks bytes; decoded JSON values are exactly identical, both raw hashes retained."
+  ]
+}

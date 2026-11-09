@@ -1,0 +1,76 @@
+{
+  "reviewed_at": "2026-11-09T06:22:42.673316+00:00",
+  "reviewer": "/root/finals_editorial_photos",
+  "status": "PASS_SCOPED_NATIVE_INPUT_PREVIEW",
+  "kind": "Not finalmovieQC orpublication approval",
+  "spec_file_sha256": "5a4f67e282e61c5e026538e4814bf887eb8dde7c158e2f86933e228d62e4cee6",
+  "ass_sha256": "5fa30f3ff22931ccf16607fe881d525ad75be74eb6aec0d8ce65b871d3459442",
+  "actual_viewed": [
+    "contact-01.jpg",
+    "caption-01.png",
+    "caption-02.png",
+    "caption-03.png",
+    "caption-04.png",
+    "caption-05.png"
+  ],
+  "samples": [
+    {
+      "image": "caption-01.png",
+      "image_sha256": "372958e98fdabe27f3626569d1e64db44a7585292ed15acb4049e604ce5ac194",
+      "segment": 17,
+      "frame": 18,
+      "film_time": 225.484,
+      "segment_time": 0.72,
+      "still_sha256": "aa190d67b621e1421856356af29238f2b0d35ba98cc093234b0a339e7da87302"
+    },
+    {
+      "image": "caption-02.png",
+      "image_sha256": "58c041facddc23823cb2ea7f57ac5ac7fed252881f638185ccf1a79724716a77",
+      "segment": 17,
+      "frame": 90,
+      "film_time": 228.364,
+      "segment_time": 3.6,
+      "still_sha256": "aa190d67b621e1421856356af29238f2b0d35ba98cc093234b0a339e7da87302"
+    },
+    {
+      "image": "caption-03.png",
+      "image_sha256": "e13e231e4b5238b1eed2e0b33225de16180ca59ce00bd4b6802bb0f8f9206b37",
+      "segment": 17,
+      "frame": 153,
+      "film_time": 230.88400000000001,
+      "segment_time": 6.12,
+      "still_sha256": "aa190d67b621e1421856356af29238f2b0d35ba98cc093234b0a339e7da87302"
+    },
+    {
+      "image": "caption-04.png",
+      "image_sha256": "25161813086b226dab9dd097816df875b2adfe8fba7fc97329193a8dcd14f322",
+      "segment": 18,
+      "frame": 40,
+      "film_time": 234.492,
+      "segment_time": 1.6,
+      "still_sha256": "b590e657cb68088fd161b5c1df9d97b9ba0890d3ef71e4e35d45b3ba6a2d98e6"
+    },
+    {
+      "image": "caption-05.png",
+      "image_sha256": "1bccd06db58f03c06e3a4abd3bea9bb62e0f0c3261f45777c45fcdb054b167d8",
+      "segment": 18,
+      "frame": 165,
+      "film_time": 239.492,
+      "segment_time": 6.6,
+      "still_sha256": "b590e657cb68088fd161b5c1df9d97b9ba0890d3ef71e4e35d45b3ba6a2d98e6"
+    }
+  ],
+  "checks": {
+    "Basel_actualoldR16_photo_on_Baselclause": true,
+    "QF_selectedATP4605604_on_ParisPaul_clause": true,
+    "SF_selectedATP4606037_on_VanAsscher_comeback_and_finalqualification": true,
+    "F_selectedATP4606318_on_actualNov8Alcarazfinal_intro_notMC_US_otherround": true,
+    "all_selected_faces_clear_intact": true,
+    "photos_fill_1080x1440_no_letterbox_or_blurpadding": true,
+    "native_header_and_bottomcaptions_readable_no_faceoverlap": true,
+    "no_rightinfoinset_on_photos": true,
+    "narration_saysParisrunnerup_nofalsechampion": true
+  },
+  "timing_notes": "photo cuts atsegment0/3.08/4.54/8.128 fromactualwordmarks; a captionline includes bothPaul andVanAsscherclauses whilephoto switchfollows spokenphrase, normal continuousnarrative anddoesnotclaimimage exactrally. FormaldissolveandcompressedmasterremainrootfinalQCscope.",
+  "source_provenance": "selected-crop-proof.json andoriginalactualmetadata indexed samefolder"
+}
