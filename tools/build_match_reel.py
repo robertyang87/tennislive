@@ -7382,6 +7382,13 @@ APPROVED_LOW_RES_SOURCES: dict[str, int] = {
     # 实证，见制作目录 sources-wta-sun.md）；本段为本片核心实拍、内容不可替
     # 代。白名单只加这条存档 URL，不及于 WTA 原址。
     'https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4': 720,
+    # 《中国赛季回顾》（china-season-review-2026）孙心然-布克沙段：2026-11-09
+    # 源核查红旗更正取源——WTA 官网中网 R2 本场官方集锦（Brightcove
+    # 6406166508112）实存，先前 spec 误记「无官方集锦」；官网仅 1280×720
+    # 一档、无 1080p。按所有者「有视频尽量全部用视频」立规（2026-10-20 定）
+    # 与本期红旗处理指令取用本场实拍（救破发点整分＋赛点整分原声），内容
+    # 不可替代。白名单只加这条存档 URL，不及于 WTA 原址。
+    'https://github.com/robertyang87/tennislive/releases/download/source-6406166508112/6406166508112.mp4': 720,
 }
 
 
