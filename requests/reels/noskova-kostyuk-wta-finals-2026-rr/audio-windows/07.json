@@ -1,0 +1,23 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-5yZN0py5qSk/5yZN0py5qSk.mp4",
+  "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
+  "method": "asr_cross_checked",
+  "reviewer": "Current production assistant: full selected-window ASR/caption evidence cross-check; no human listening claimed",
+  "reviewed_at": "2026-11-09T07:44:03.799232+00:00",
+  "status": "complete",
+  "reviewed_from": 261.52,
+  "reviewed_to": 269.12,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence": [
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/point-only-parakeet.json",
+      "sha256": "942307c710525fd2d76e0d51af5ed82956f27c26fd7a3589a7e74f4a75b8688f"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/point-only-whisper.json",
+      "sha256": "21b4cdb1f5fe5b9de466f28065b5ce8547d60c7019ce7449735fdc4f961a3d53"
+    }
+  ],
+  "no_foreground_english_reason": "Actual selected 261.52–269.12 source PCM reviewed through independent Parakeet and Whisper turbo; both return empty, Silero speech activity empty. Retained audio consists of serve, rally and crowd; unverified post-match sentence is entirely outside the retained body. User explicitly chose removal of that sentence/first fist closeup."
+}
