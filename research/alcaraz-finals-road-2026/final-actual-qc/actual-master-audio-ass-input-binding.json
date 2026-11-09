@@ -1,0 +1,370 @@
+{
+  "schema": "alcaraz-finals.actual-master-audio-ass-input-binding.v1",
+  "status": "actual_input_scope_pass_final_formal_suite_pending",
+  "checked_at": "2026-11-09T08:34:06.752348+00:00",
+  "method": "ExactactualMP4 SHA/size plus15actualMP3/marks/current30inventoryrows/frozenproducerzip/spec/renderinputs/61nativeASS/4source15cuetiming binding; ffprobe streams only. No newTTS/ASR/PCM/gain/loudness/model orhumanlistening.",
+  "actual_film_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+  "actual_film_bytes": 88813632,
+  "actual_film_probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1080,
+        "height": 1440,
+        "r_frame_rate": "30/1",
+        "duration": "209.466667",
+        "side_data_list": [
+          {}
+        ]
+      },
+      {
+        "codec_type": "audio",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "duration": "209.428000"
+      }
+    ],
+    "format": {
+      "duration": "209.466667",
+      "size": "88813632"
+    }
+  },
+  "actual_spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+  "artifact_render_sha256": "bb143153b2919ee9254f5bf1aba4de2d22d9525c6ec400616e276c1c1b0ad2da",
+  "render_inputs_sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+  "actual_ass_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+  "actual_inventory_sha256": "c87d4aea45d0860205a22f1abe334222820b92b7a033f15c776db68316d10382",
+  "actual_audio_review_binding_sha256": "670219d72889255ff7092c7f54876ce246087b28214cf95a09531b999d475769",
+  "tts_bundle_sha256": "c075b2896d17e9f77bf9fe20926b95d34442cfea73e898f70b58ce10f98a3890",
+  "actual_voices": [
+    {
+      "file": "voice_00.mp3",
+      "request_id": "7448d9adcc1cead4cf7ba75a1c5ab10a6fc1d8aa8d1c115866f31939b254788d",
+      "audio_sha256": "1017590ff024e5ccefd22642f3314b9de9a61b52ede335d510c45a46aed2eb4b",
+      "marks_sha256": "cf555d8c1246ce2ba4fdd80919f1aef7e591c2659d1dfd29dcaf218dfec61f64",
+      "text": "巴黎，阿尔卡拉斯拿到赛季第五冠。可在几个月前，他还因为右腕受伤，错过了法网和温网。",
+      "duration_s": 8.664,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 7.818416
+    },
+    {
+      "file": "voice_01.mp3",
+      "request_id": "f15c71a7940e66208784502dbb46f9c080bf7534fce00e9928b4b5119fd53f11",
+      "audio_sha256": "8358e234e26967aef543a01e49dd12e407ba5513511340e07f4721b94db86df1",
+      "marks_sha256": "d2ccbcf35f685d457bf283daa42d98ab6cd3e973592f4f589a324ea8228c0a80",
+      "text": "回到年初的澳网。半决赛对兹维列夫，先赢两盘，又被追平，其间一度抽筋。打了五个多小时，他才闯进决赛。",
+      "duration_s": 10.68,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 9.846708
+    },
+    {
+      "file": "voice_02.mp3",
+      "request_id": "8afeab819e4422cf7feadb1518a8ede2cebef64b36f529ed1913b96ebae44808",
+      "audio_sha256": "5e24c652dd7aa89509140ec65153229a4309f3d4a54f17db701ef0175b98ab4b",
+      "marks_sha256": "a038d876d2fb42104d605a3bf035576eb35e583b6c22a2797f767d3087e751f1",
+      "text": "澳网决赛，他先丢一盘，再连赢三盘击败德约科维奇。首夺澳网，22岁的他，成为男单历史最年轻的生涯全满贯得主。",
+      "duration_s": 11.592,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 10.742958
+    },
+    {
+      "file": "voice_03.mp3",
+      "request_id": "cfae72725e6cb6edf4f7fc2bf9c850b2f869754c49f4152327b4a1aa45e8043a",
+      "audio_sha256": "3f21b52e9b565522c36bd37ed72cac21cdc6960c522ca416a3a2b5232b0c07fe",
+      "marks_sha256": "1d0eb831c4430e854057abddcf9e4db977950a6bb6064da62efaede51f38e358",
+      "text": "二月多哈，两盘击败菲斯，拿下赛季第二冠。开年的两站巡回赛，他都带着冠军离开。",
+      "duration_s": 8.112,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 7.287749
+    },
+    {
+      "file": "voice_04.mp3",
+      "request_id": "10183995f0921e03aa6d3d9c2767f443d891be89d3322e6e2e17bf8980c0c8d2",
+      "audio_sha256": "be3064b24d262ad867c93992b79deda21411b3d317f4c25bfcbf3328390b379e",
+      "marks_sha256": "e48738e51c00c9835023e33a81beb036f6392c8ba22212a40caf1ab739f0f9c9",
+      "text": "三月，印第安维尔斯止步4强，迈阿密第三轮输给科达。来到蒙特卡洛决赛，又被辛纳两盘击败。",
+      "duration_s": 9.216,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 8.372666
+    },
+    {
+      "file": "voice_06.mp3",
+      "request_id": "aedb68ba8eb8ce17c4c731e231c0ab0e68358fd40a07bb3a3e2778a46cf5f4fa",
+      "audio_sha256": "4de0f130ec63fc956ee88d35c853e5fccc40bc21a610bd6a4174f6f14d404d9f",
+      "marks_sha256": "5dd2d7337aef7cd6e5464eb9cb58656eda2bdc632320719fd4f212d7ecf969c9",
+      "text": "接下来，右手腕受伤。巴塞罗那赢下首轮后，他退出了下一轮，随后也错过法网和温网。",
+      "duration_s": 8.52,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 7.688707
+    },
+    {
+      "file": "voice_07.mp3",
+      "request_id": "b427aec3758ef189babcf5e80cd537a2982e5d950510027c6ac9b5745069fe5d",
+      "audio_sha256": "17a0c6df4d9e63aa2af32539d61d725ddf9fbc8ad6b4068977e1e60adda08c43",
+      "marks_sha256": "6528f48bd28e67109257fc4203a4f4186b6ff928b3fa30d09609b3ffb83eee1b",
+      "text": "四个多月后，他在美网复出。打进8强之后，与谢尔顿拼满五盘，最后在决胜盘抢十落败。",
+      "duration_s": 8.76,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 7.948125
+    },
+    {
+      "file": "voice_09.mp3",
+      "request_id": "afd730c20b8b05fbbdce7759390bffe950fe2d005266c2dbbaf3be93aee93477",
+      "audio_sha256": "c34093ad12275b8ab37ccd62ebd8931959aaea7cc969ab104ca80d0a500c66fa",
+      "marks_sha256": "fbb049ea1e14232b64eb52f441fd33f74ecd51e23393495e0bf6452f1be6ac68",
+      "text": "九月十六日，他连续第五年锁定年终资格。可伤停后的赛季，还没有结束。",
+      "duration_s": 7.2,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 6.379707
+    },
+    {
+      "file": "voice_10.mp3",
+      "request_id": "e2231123584bec3f911a3e709a401d331f720c8d4ce79306fb21ad9a9cf0a09a",
+      "audio_sha256": "f561cf2615afe06e654bdfc6c5b42162a4364ff832d718a18965206f0bb7cd42",
+      "marks_sha256": "0fa77360ad1d8f83e3f8cfde5b97876b4074f2cde98d046d0d75ed86a4e3ab4e",
+      "text": "十月东京，两盘击败莱赫奇卡，他拿下复出后的首个冠军。",
+      "duration_s": 5.592,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 4.764166
+    },
+    {
+      "file": "voice_11.mp3",
+      "request_id": "7af257d03b107e3c8419c0057430451a0110b59cb6157f3eb98923c51ba6d147",
+      "audio_sha256": "8f1f40ef7c100b43eb142b2d493bcabdd358a589ba3705816c65d73cc54e7002",
+      "marks_sha256": "f9b07c0983b5e973a68461aae94a2c9d96d50000d58e5ca3c5a65e2549a252e3",
+      "text": "上海第三轮负于贝尔赫斯后，他在维也纳两盘击败德米纳尔，再添一冠。",
+      "duration_s": 6.792,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 5.978749
+    },
+    {
+      "file": "voice_13.mp3",
+      "request_id": "ebead02ce77f591187149e7a979d19399a1db3e24d526969e142f898bc311a2d",
+      "audio_sha256": "7b3643a8fe8efd2f546443b946e5eb993a4d1157338325c58396ad288a3b6b2b",
+      "marks_sha256": "39b37e4abb973bed98a2f6b3b0ca857f5b2321ca69044916946b75bf4f73d439",
+      "text": "巴黎四分之一决赛，他先丢一盘，逆转弗里茨。决赛再遇谢尔顿，这次两盘赢球，首次夺得巴黎大师赛冠军。",
+      "duration_s": 9.864,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 9.033041
+    },
+    {
+      "file": "voice_15.mp3",
+      "request_id": "4a1e2fd609b2bed73163687e62409be69675317475827a68273af8bccece11eb",
+      "audio_sha256": "c1a2b4059842c7b17ddd301032b147c720a60a86301e3738e22e5a872542d8bc",
+      "marks_sha256": "1b72cea52940a86a73bc0439953c841d5f3b8a4de18eb12e2bd99b1d8443eb70",
+      "text": "截至十一月九日，六千一百分，赛季积分榜第三。辛纳已退赛，高亮的是本届年终的八位正选。",
+      "duration_s": 8.928,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 8.101416
+    },
+    {
+      "file": "voice_16.mp3",
+      "request_id": "db126dcb17fc0a9e0969942c4e126e0cf8ef2e4a7b2fc079640d19653e30dca9",
+      "audio_sha256": "da682e2f36bcfbeaab39e3afb5c52e26d8cacb1d9fa4482faf04c7d3acc0a80b",
+      "marks_sha256": "6c868b5ce6e2df4b203035c64536efacb050a7017890d41b6e3fc97a3f86189f",
+      "text": "去年在都灵收获亚军。今年带着巴黎大师赛冠军回来，你看好他走到哪一步？",
+      "duration_s": 7.296,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 6.462249
+    },
+    {
+      "file": "voice_cover.mp3",
+      "request_id": "19f7facbbda3677bf356cf86c8a744f26e5b896129d896832822f5e2a5bb7dd1",
+      "audio_sha256": "f4033df25b923d6ebd3b04d976f5b6566aec60e5f1186ab31d3b1a6c34ea17e9",
+      "marks_sha256": "4081d30843ede8b1c0aac3fd6b12ad81be67062206914d78d4c41b8e36193e3e",
+      "text": "阿卡年终路，从伤停到巴黎冠军。",
+      "duration_s": 3.528,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 2.700499
+    },
+    {
+      "file": "voice_outro.mp3",
+      "request_id": "b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "5e79e5655e47efc2c0d3cee79eaeb80b9ff840b05900c74b39a6b72a62d8d70e",
+      "marks_sha256": "ffd92401e4e51d044cd0ba811dd56c27dfa59f0de4734ee872348e09ba3401b8",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "duration_s": 4.104,
+      "first_mark_s": 0.0471659,
+      "last_mark_end_s": 3.266499
+    }
+  ],
+  "inventory_row_count": 30,
+  "actual_ass_events": 61,
+  "source_scene_count": 4,
+  "source_bilingual_cue_count": 15,
+  "sources": [
+    {
+      "segment_index": 5,
+      "source_key": "monte-carlo-final",
+      "source_sha256": "0f6a5c36a506f71db3afb814ac1d2a08096c20cf6691fd77de1fde1e1b7325f8",
+      "transcript_path": "data/audio_transcripts/alcaraz-finals-road-2026/monte-carlo-final.json",
+      "transcript_sha256": "f01b52dd335632a4c8a7a65f2b99ff9d52d74931f021aabaf270e255afdfb57d",
+      "packet_method": "asr_cross_checked",
+      "packet_status": "complete",
+      "source_window": [
+        415.03,
+        430.2
+      ],
+      "film_window": [
+        54.042,
+        69.212
+      ],
+      "audio_tail": "silence",
+      "actual_ass_cues": [
+        {
+          "start": 59.37,
+          "end": 65.57,
+          "text": "It's Sinner that reigns supreme in Monte Carlo.\\N辛纳称雄蒙特卡洛"
+        },
+        {
+          "start": 65.57,
+          "end": 68.81,
+          "text": "[Final score announced]\\N【现场报出最终比分】"
+        }
+      ],
+      "quote_count": 2
+    },
+    {
+      "segment_index": 8,
+      "source_key": "us-open-qf",
+      "source_sha256": "22a1e525096dfb701ab0173cc698bd1cb13c1afb5c4dc24fcb4776b3c4abb57d",
+      "transcript_path": "data/audio_transcripts/alcaraz-finals-road-2026/us-open-qf.json",
+      "transcript_sha256": "ec5c8c7c5d8cf3077d9a8dab71a5d2c3581d6edd252b48ea61ba9c2ab53a8064",
+      "packet_method": "asr_cross_checked",
+      "packet_status": "complete",
+      "source_window": [
+        122.17,
+        139.0
+      ],
+      "film_window": [
+        87.292,
+        104.122
+      ],
+      "audio_tail": "silence",
+      "actual_ass_cues": [
+        {
+          "start": 90.72,
+          "end": 103.62,
+          "text": "[Match result announced]\\N【主裁宣布比赛结果】"
+        }
+      ],
+      "quote_count": 1
+    },
+    {
+      "segment_index": 12,
+      "source_key": "vienna-interview",
+      "source_sha256": "5acad9199e5042bdedf408d107c2cac98bb9a8984dd1ecaeae39598cb17f9acd",
+      "transcript_path": "data/audio_transcripts/alcaraz-finals-road-2026/vienna-interview.json",
+      "transcript_sha256": "c4f16ef69969403f4f2056ce35a980de26dc52f013c397a34ae30cbf7ccf8f51",
+      "packet_method": "asr_cross_checked",
+      "packet_status": "complete",
+      "source_window": [
+        69.82,
+        93.6
+      ],
+      "film_window": [
+        124.906,
+        148.686
+      ],
+      "audio_tail": "silence",
+      "actual_ass_cues": [
+        {
+          "start": 125.01,
+          "end": 127.91,
+          "text": "So I'm just really happy that at the end,\\N我很高兴"
+        },
+        {
+          "start": 127.91,
+          "end": 130.19,
+          "text": "I found my way and just played great.\\N最终找到了办法 也打得很好"
+        },
+        {
+          "start": 130.19,
+          "end": 132.75,
+          "text": "And obviously it's been a really emotional\\N这一周让我感慨万千"
+        },
+        {
+          "start": 132.75,
+          "end": 134.43,
+          "text": "and an amazing week for me\\N也非常美妙"
+        },
+        {
+          "start": 134.43,
+          "end": 136.01,
+          "text": "that I learned a lot, you know,\\N我也学到了很多"
+        },
+        {
+          "start": 136.01,
+          "end": 140.39,
+          "text": "to keep going forward step by step,\\N继续一步一步向前走"
+        },
+        {
+          "start": 140.39,
+          "end": 141.47,
+          "text": "playing on indoor courts,\\N在室内场上比赛"
+        },
+        {
+          "start": 141.47,
+          "end": 144.91,
+          "text": "trying to gain more confidence playing on this surface.\\N努力在这种场地上积累信心"
+        },
+        {
+          "start": 144.91,
+          "end": 146.32999999999998,
+          "text": "So I'm just really happy\\N所以我很高兴"
+        },
+        {
+          "start": 146.32999999999998,
+          "end": 148.51,
+          "text": "and looking forward for the rest of the season.\\N也期待赛季接下来的比赛"
+        }
+      ],
+      "quote_count": 10
+    },
+    {
+      "segment_index": 14,
+      "source_key": "paris-final",
+      "source_sha256": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+      "transcript_path": "data/audio_transcripts/alcaraz-finals-road-2026/paris-final.json",
+      "transcript_sha256": "267fbf66e8badb89f170e417a74812152ba1c6fa42cd1b28ddb6150839aa6ca1",
+      "packet_method": "asr_cross_checked",
+      "packet_status": "complete",
+      "source_window": [
+        120.4,
+        149.3
+      ],
+      "film_window": [
+        158.95000000000002,
+        187.85000000000002
+      ],
+      "audio_tail": "silence",
+      "actual_ass_cues": [
+        {
+          "start": 173.85,
+          "end": 178.25,
+          "text": "Carlos Alcaraz wins the Rolex Paris Masters\\N阿尔卡拉斯赢得巴黎大师赛"
+        },
+        {
+          "start": 178.25,
+          "end": 181.55,
+          "text": "for the very first time in his career.\\N这是他生涯第一次"
+        }
+      ],
+      "quote_count": 2
+    }
+  ],
+  "sensitive_source_boundaries": [
+    "Vienna: voiced69.82–93.60 thenmandatory0.5silentvisualtailto94.10; nextspeaker93.82 excludedbyrecipe, notclaimedPCM/hearingchecked.",
+    "MC: entry415.03 vsmedium-onlyuncertainpreviouscallend414.96 nominal0.07s; retainASRlimit andnohumanhearingclaim.",
+    "USQF/MCnumericannouncements remainexplicitbracketednonverbatimdescriptors, notinventedquotedscore."
+  ],
+  "formal_voice_suite": "pending currentactualfinalpublished-metadata; earlyartifactrender notfinaltrackedmetadata.",
+  "actual_frame_visual_review": "pending rootactualcontactmanifest",
+  "limits": [
+    "Inputidentity/subtitle timing alone doesnotprovephoneticnaturalness or human-auditorycleanseams.",
+    "Nativeactualpostrender5suite stillmustbeinspected, cannotinheritprepared15aheadresults asformalpass."
+  ]
+}

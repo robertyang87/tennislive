@@ -1,0 +1,260 @@
+{
+  "schema": "alcaraz.finals-road.actual-master.fact-qc.v1",
+  "status": "PASS_FACT_SCOPE_ACTUAL_MASTER",
+  "reviewed_at_utc": "2026-11-09T08:34:48.246956+00:00",
+  "identity": {
+    "movie": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+    "movie_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "bytes": 88813632,
+    "duration_seconds": 209.467,
+    "dimensions": [
+      1080,
+      1440
+    ],
+    "spec": "/dev/shm/alcaraz-finals-production/final/actual-spec.json",
+    "spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "render_inputs_sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+    "ASS_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "ASS_events": 61,
+    "poster_sha256": "812d0a1cfb359f98ab9da497a15b5ebb201343c26e89175110a79707bac9fa89",
+    "native_artifact_id": 13659381506
+  },
+  "frozen_text_identity": {
+    "original_editorial_sha256": "67ef34c79802bbe04aefacfa1b03931dfe061d4515068ddd275e7732ad512d98",
+    "13body_narrations_exact_unchanged": true,
+    "coverhook_voice_topic_exact_unchanged": true,
+    "ASS_exact_same_as_personally_reviewed_native61events": true,
+    "four_source_nodes": "3actualmatchpointsegmentsplusVienna本人interview",
+    "15_actual_source_cues": "2MC+1USnonverbatimdescriptor+10Viennasemanticfragments+2Paris; factualtranslationcontextchecked, nofullhearingclaim"
+  },
+  "actual_visual_evidence": {
+    "root_manifest": "/dev/shm/alcaraz-finals-production/final/root-qc/manifest.json",
+    "root_manifest_sha256": "64b63b428edccf5c404f46df56ca49ca3a62537663f81009a3ec084a558c575b",
+    "actually_opened_contact_sheets": [
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-00.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-02.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg"
+    ],
+    "actual_master_frames_in_contacts": 60,
+    "additional_exact_facts_frames": [
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/qc-facts/actual-2025-turin-198.100.jpg",
+        "time_seconds": 198.1,
+        "source_master_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+        "purpose": "Actual2025Turinarchivephotounder去年在都灵收获亚军, personallyseen."
+      },
+      {
+        "path": "/dev/shm/alcaraz-finals-production/final/root-qc/frame-056-0192.514.jpg",
+        "time_seconds": 192.514,
+        "purpose": "Actual15rowRacefullsizeallrankpoints/highlightsread."
+      }
+    ],
+    "actual_poster_opened": "/dev/shm/alcaraz-finals-production/final/native-input/poster.jpg",
+    "observations": [
+      "ActualcoverParis2026sameAlcarazimageandsamefrozenhook, notfutureTurinimage.",
+      "Jan30SFneutralblue-towelphotowithtwo-setlead/crampsnarration; laterAOFeb1titlephotoandtrophywith22yearcareerGSclaim. NoJanuarylegcramps→Aprilwristcausalclaim.",
+      "OnlyactualBarcelonacontext/nativenavyinjurycardfortwoabsentmajors; nofakeRG/Wimbledonpoint.",
+      "ActualMCwinnerSinnerkneels, losingAlcarazreaction; labelcorrectApril12FandAlcarazlosingperspective.",
+      "ActualUSwinnerSheltoncelebration/Alcarazreaction/realhandshake, labelQFSep9resultdate, notSep8scheduleddayasaseparatematch.",
+      "ActualSept16qualificationcaptionwithAOchampioncontext; text连续第五年not5playedappearances.",
+      "ActualTokyotrophythenShanghai/Viennachronology, genuineAlcaraz本人interview. Captioncontentweek/indoorconfidence; nofalsewristinjuryquotation.",
+      "ActualPariswinnerAlcaraz/handshakeandfirstParisMasterssourcecue, Nov8dateandwinning7-6(5)7-5label.",
+      "ActualRaceNov9截点6100rank3focus,8qualifiedgreentracksandSinner2withdrawngrey; Fritz11/3085andFokina15/2510visible.",
+      "Actual198.1old2025TurinFphotoon去年clause; actual201.026current2026Parisphotoon今年clause."
+    ]
+  },
+  "chronology_results": "PASS all13bodyandcoveraspriorunifiedofficialfactpacket; currentactualASSidenticallypreservesdates/results/yearsscope.",
+  "three_information_labels": [
+    {
+      "topic": "蒙特卡洛收获亚军",
+      "date": "2026.04.12",
+      "place": "蒙特卡洛大师赛决赛",
+      "people": "阿尔卡拉斯 vs 辛纳",
+      "score": "6-7(5) 3-6",
+      "result": {
+        "winner": "辛纳",
+        "score": "7-6(5) 6-3",
+        "source": "https://www.nittoatpfinals.com/en/news/alcaraz-sinner-monte-carlo-2026-final"
+      }
+    },
+    {
+      "topic": "复出首站打进8强",
+      "date": "2026.09.09",
+      "place": "美网1/4决赛",
+      "people": "阿尔卡拉斯 vs 谢尔顿",
+      "score": "7-6(5) 1-6 3-6 6-1 6-7(7)",
+      "result": {
+        "winner": "谢尔顿",
+        "score": "6-7(5) 6-1 6-3 1-6 7-6(7)",
+        "source": "https://www.usopen.org/amp/en_US/news/articles/2026-09-09/shelton_ends_alcarazs_us_open_title_defense_in_late-night_five-setter.html"
+      }
+    },
+    {
+      "topic": "首夺巴黎大师赛",
+      "date": "2026.11.08",
+      "place": "巴黎大师赛决赛",
+      "people": "阿尔卡拉斯 vs 谢尔顿",
+      "score": "7-6(5) 7-5",
+      "result": {
+        "winner": "阿尔卡拉斯",
+        "score": "7-6(5) 7-5",
+        "source": "https://www.nittoatpfinals.com/en/news/alcaraz-shelton-paris-2026-final-sunday"
+      }
+    }
+  ],
+  "score_direction": {
+    "MC": "Sinnerwinner7-6(5)6-3→Alcaraz6-7(5)3-6 correct",
+    "US": "Sheltonwinner6-7(5)6-1 6-3 1-6 7-6(7)→Alcaraz7-6(5)1-6 3-6 6-1 6-7(7) correct",
+    "Paris": "Alcarazwinner7-6(5)7-5sameleftplayercorrect"
+  },
+  "qualification": {
+    "date": "2026-09-16",
+    "claim": "Fifthconsecutivequalification2022–26, not5thactualappearance;2022withdrawalno-playretained",
+    "source": "https://www.nittoatpfinals.com/en/news/alcaraz-nitto-atp-finals-2026-qualification"
+  },
+  "race_snapshot": {
+    "as_of": "2026-11-09T07:28:02Z",
+    "display_label": "11月9日赛季积分截点",
+    "canonical": [
+      {
+        "rank": 1,
+        "name": "Alexander Zverev",
+        "points": 9350,
+        "qualified": true,
+        "display_name": "兹维列夫",
+        "status": "qualified"
+      },
+      {
+        "rank": 2,
+        "name": "Jannik Sinner",
+        "points": 7950,
+        "qualified": false,
+        "display_name": "辛纳",
+        "status": "withdrawn"
+      },
+      {
+        "rank": 3,
+        "name": "Carlos Alcaraz",
+        "points": 6100,
+        "qualified": true,
+        "display_name": "阿尔卡拉斯",
+        "status": "qualified"
+      },
+      {
+        "rank": 4,
+        "name": "Ben Shelton",
+        "points": 5170,
+        "qualified": true,
+        "display_name": "谢尔顿",
+        "status": "qualified"
+      },
+      {
+        "rank": 5,
+        "name": "Daniil Medvedev",
+        "points": 3820,
+        "qualified": true,
+        "display_name": "梅德韦德夫",
+        "status": "qualified"
+      },
+      {
+        "rank": 6,
+        "name": "Flavio Cobolli",
+        "points": 3680,
+        "qualified": true,
+        "display_name": "科博利",
+        "status": "qualified"
+      },
+      {
+        "rank": 7,
+        "name": "Arthur Fils",
+        "points": 3625,
+        "qualified": true,
+        "display_name": "菲斯",
+        "status": "qualified"
+      },
+      {
+        "rank": 8,
+        "name": "Frances Tiafoe",
+        "points": 3390,
+        "qualified": true,
+        "display_name": "蒂亚福",
+        "status": "qualified"
+      },
+      {
+        "rank": 9,
+        "name": "Rafael Jódar",
+        "points": 3234,
+        "qualified": true,
+        "display_name": "霍达尔",
+        "status": "qualified"
+      },
+      {
+        "rank": 10,
+        "name": "Alex de Minaur",
+        "points": 3170,
+        "qualified": false,
+        "display_name": "德米纳尔",
+        "status": "not_qualified"
+      },
+      {
+        "rank": 11,
+        "name": "Taylor Fritz",
+        "points": 3085,
+        "qualified": false,
+        "display_name": "弗里茨",
+        "status": "not_qualified"
+      },
+      {
+        "rank": 12,
+        "name": "Novak Djoković",
+        "points": 2940,
+        "qualified": false,
+        "display_name": "德约科维奇",
+        "status": "not_qualified"
+      },
+      {
+        "rank": 13,
+        "name": "Tommy Paul",
+        "points": 2925,
+        "qualified": false,
+        "display_name": "保罗",
+        "status": "not_qualified"
+      },
+      {
+        "rank": 14,
+        "name": "Jiří Lehečka",
+        "points": 2540,
+        "qualified": false,
+        "display_name": "莱赫奇卡",
+        "status": "not_qualified"
+      },
+      {
+        "rank": 15,
+        "name": "Alejandro Davidovich Fokina",
+        "points": 2510,
+        "qualified": false,
+        "display_name": "福基纳",
+        "status": "not_qualified"
+      }
+    ],
+    "scope": "Currentfilmusesdated07:28snapshot; nofreshfactfetchrequested/performed, noassertionofcontinuousliveall15matchatreviewtime. Official8profilescorrectwithJodaraccentnormalization."
+  },
+  "formal_publication_inputs": {
+    "freeze": "/dev/shm/alcaraz-finals-production/production/publication-freeze.native-fix.json",
+    "xhs": "/dev/shm/alcaraz-finals-production/native/specs/reels/alcaraz-finals-road-2026.xhs.txt",
+    "body_chars": 285,
+    "body_sha256_without_single_terminal_newline": "28b06d5ac456dfbaa7cd4e0e5bb14b99ee977ee6bdd9244f8dd5d60b924c7903",
+    "title": "11.9网球有故事|阿卡年终路",
+    "prior_prefix_fact_rebind": "/dev/shm/alcaraz-finals-production/production/publication-native-name-prefix-fact-rebind.json",
+    "actual_output_copy_html": "NotyetavailableoutsideGHA; producerwillprovidefinaltrackedbytesafterbot. ThisapprovaldoesnotclaimpublishedpageorHTMLverified."
+  },
+  "limits": [
+    "OnlyACTUALFACTscopepass; continuouspointentry/occlusion/geometryandfullvoicereviewremainseparateroot/dedicatedQC.",
+    "Thisnative-inputarchivewaswrittenbeforefinalvoice5suitecommit; thisreviewdoesnotcallitsearlyvoiceevidencefinalgate.",
+    "Noexternalnewsfetch,ASR,TTS,loudnessanalysisornewencodeperformed; onefact-onlystillwasextractedfromexistingactualmaster.",
+    "CI/merge/singlePushPlus/actualcopy.htmlpageverificationnotasserted; publicationproofremainsrootproducer."
+  ],
+  "findings": []
+}

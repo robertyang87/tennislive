@@ -1,0 +1,95 @@
+{
+  "status": "PASS_ACTUAL_FINAL_MOVIE_PHOTO_COVER_CARD_CREDIT_RACE_SCOPE",
+  "reviewer": "finals_editorial_photos",
+  "created_at": "2026-11-09T08:34:01.351851+00:00",
+  "binding": {
+    "actual_movie": "/dev/shm/alcaraz-finals-production/final/native-input/alcaraz-finals-road-2026.mp4",
+    "actual_movie_sha256": "fa982c9f23f4154749968a95f954d17d4fb09e1466581ad98628d4824c341bdf",
+    "actual_movie_bytes": 88813632,
+    "actual_movie_duration_seconds": 209.466667,
+    "actual_spec_path": "/dev/shm/alcaraz-finals-production/final/actual-spec.json",
+    "actual_spec_sha256": "4ed9dbc84a4479ad31415f398c312311f5e7ede806f3539348094e7311505589",
+    "actual_ass_path": "/dev/shm/alcaraz-finals-production/final/native-input/subtitles.ass",
+    "actual_ass_sha256": "100180cbb658efc0097ffad2e9369bc4ca5b404020ddca24e1d2d39de193d08b",
+    "actual_poster_path": "/dev/shm/alcaraz-finals-production/final/native-input/poster.jpg",
+    "actual_poster_sha256": "812d0a1cfb359f98ab9da497a15b5ebb201343c26e89175110a79707bac9fa89",
+    "render_inputs_path": "/dev/shm/alcaraz-finals-production/final/native-input/render_inputs.json",
+    "render_inputs_sha256": "292f7af2ad6174b7dd06e4de123b109c941ba4a9874a0ff24794e280b3a97a6f",
+    "render_json_sha256": "bb143153b2919ee9254f5bf1aba4de2d22d9525c6ec400616e276c1c1b0ad2da",
+    "root_actual_frame_manifest_sha256": "64b63b428edccf5c404f46df56ca49ca3a62537663f81009a3ec084a558c575b",
+    "additional_actual_frame_manifest_sha256": "775820cc9526efff8ce87471097c61fdd6d7f634451c3e13188e4844a7db7081"
+  },
+  "evidence": {
+    "personally_viewed_actual_root_contact_sheets": [
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-00.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-01.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-02.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-03.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/contact-04.jpg"
+    ],
+    "personally_viewed_additional_actual_contacts": [
+      "/dev/shm/alcaraz-finals-production/final/editorial-photo-qc/extra-contact-00.jpg",
+      "/dev/shm/alcaraz-finals-production/final/editorial-photo-qc/extra-contact-01.jpg"
+    ],
+    "personally_viewed_full_size": [
+      "/dev/shm/alcaraz-finals-production/final/native-input/poster.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/frame-028-0121.310.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/frame-016-0073.672.jpg",
+      "/dev/shm/alcaraz-finals-production/final/root-qc/frame-056-0192.514.jpg"
+    ],
+    "root_actual_frames_verified": 60,
+    "additional_actual_frames_verified": 11,
+    "all_current_ri_assets_verified": 17,
+    "asset_byte_proof_path": "/dev/shm/alcaraz-finals-production/final/editorial-photo-qc/current-all-ri-asset-byte-verification.json",
+    "asset_byte_proof_sha256": "5752f0bb2b748e6b66621d6165f9d33abddd2c0d3557857bbf2832ea5399c8f3"
+  },
+  "checks": [
+    {
+      "name": "actual_photo_year_round_context",
+      "status": "PASS",
+      "evidence": "Finalmovie actualframes: Jan30AO-SF towel portrait at18.382; Feb1F celebration25.5→trophy29.918; Doha40.170; IW45.5→Miami49.234→MC51.0; Barcelona70.5; USreturn79.5→USQF82.712; AO trophy seasoncallback107.922; Tokyo action113.0→trophy114.718; Shanghai118.7→Vienna121.310; ParisQF150.5→ParisF153.818. All depict correct real player/event/round, never substitute another round point or invented medical scene."
+    },
+    {
+      "name": "actual_full_canvas_static_crop",
+      "status": "PASS",
+      "evidence": "All inspected actual photographs fill1080x1440 fixedcenter with no blur/letterbox/additionalzoom. Source original crop map, producer staticclip hashes and all17 RI currentasset bytes match; actual sampled composition confirms implemented inputs, not a claim of encoded pixelidentity."
+    },
+    {
+      "name": "actual_vienna_credit",
+      "status": "PASS",
+      "evidence": "Full actual121.310s frame has complete legible © e-motion/Sascha Feuster atx39–352.8/y1188.6–1212.6, separated from main narration and clear of face/trophy. Credit visible only on required actualVienna trophy photograph and naturally fades at source transition125.156; no unneeded global credit."
+    },
+    {
+      "name": "actual_single_injury_card",
+      "status": "PASS",
+      "evidence": "Full actual73.672s card says右腕伤停/缺席法网与温网 with accurate退下一轮 subtitle, nativefooter clear and no informationinset. BarcelonaR1 photo70.5 precedes card; no fakeRG/Wim appearance, no diagnostic image/medical movement claim."
+    },
+    {
+      "name": "actual_2025_to_2026_question_cut",
+      "status": "PASS",
+      "evidence": "Actual198.3/199.4s trueblond2025TurinFarchive under去年在都灵收获亚军;199.7/201.026s current2026ParisF under今年带着巴黎大师赛冠军回来. Clean hardcut around199.538 at今年, no fake2026Turinmatch."
+    },
+    {
+      "name": "actual_cover_movie_and_poster",
+      "status": "PASS",
+      "evidence": "Realmovie0.8/3.598s and artifactposter bothcorrectNov8ParisFATP4606341 with face/openeyes/mouthintact; hook阿卡年终路/从伤停到巴黎冠军 clear belowface and correct nativebrand/topic. Artifactposter hashboundexactRI. No source/generative substitution."
+    },
+    {
+      "name": "actual_race",
+      "status": "PASS",
+      "evidence": "Full actual192.514s: RaceNov9 Alca3/6100 highlighted, 8正选 rows1/3/4/5/6/7/8/9 mint, Sinner2/7950grey已退赛. All15rank/points readable;辛纳已退赛 subtitle above separate sourcefooter, no wrongseat highlight."
+    },
+    {
+      "name": "actual_info_inset_semantics",
+      "status": "PASS_BOUNDED",
+      "evidence": "Inspected actualphotographs/titlecard/Race have no rightinformationinset; actualsourceMC/US/Parisframes showcurrenttransparentinset, result/date/1/4 numeric contextcorrect and it is absentafter8seconds. Source ballprocess/audio fullscope audited byotherroles."
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Independent actualfinal visualphoto/cover/card/credit/Race scope, not inherited from nativepreview PASS.",
+    "No claim of fullmotion/source originalaudio/TTS five-suite QA or platformpublication status; those belong to other independent native checks.",
+    "Wholemovie actualframe decode/effect semantics can be seen in rootcontacts, but this report does not pretend every6284frame was individually viewed.",
+    "No new source image/model/TTS/ASR/formal reencode/download performed; eleven supplemental evidence frames extracted read-only from the same uniqueactualmaster."
+  ]
+}
