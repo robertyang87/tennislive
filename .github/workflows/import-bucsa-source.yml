@@ -1,0 +1,49 @@
+name: import-bucsa-source
+run-name: "import-bucsa-source · china-season-review-2026"
+
+# 一次性：《中国赛季回顾》china-season-review-2026 孙心然-布克沙段换源存档。
+# 2026-11-09 源核查红旗：WTA 官网有本场官方集锦（Brightcove 6406166508112，
+# 中网 R2 孙心然 胜 布克沙），先前 spec _why「替代三路已验皆无」系误记。
+# 本地已用 yt-dlp 自官方播放器取下同文件（sha256 2d56fb7f…）；本地直传
+# uploads.github.com 被凭据 401 挡住，故照 import-china-anims 先例走 runner
+# 以同法（yt-dlp 默认选流）重取并存档 Release，落档后回读 sha 对账。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-bucsa-source
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: yt-dlp 取 WTA 官方播放器本场集锦
+        run: |
+          set -euo pipefail
+          pip install -q yt-dlp
+          mkdir -p dl
+          yt-dlp --merge-output-format mp4 -o dl/6406166508112.mp4 "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406166508112"
+          ls -la dl
+          sha256sum dl/6406166508112.mp4
+
+      - name: 建 Release 并上传
+        run: |
+          set -euo pipefail
+          gh release view source-6406166508112 >/dev/null 2>&1 || gh release create source-6406166508112 --title "source-6406166508112" --notes "WTA 官方中网 R2 集锦：孙心然 胜 布克沙（Brightcove 6406166508112）。2026-11-09 为《中国赛季回顾》china-season-review-2026 布克沙段更正取源存档。"
+          gh release upload source-6406166508112 dl/6406166508112.mp4 --clobber
+          gh release view source-6406166508112 --json assets --jq '.assets[] | "\(.name) \(.size)"'
