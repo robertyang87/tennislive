@@ -2078,6 +2078,12 @@ _NATIVE_720_CROP_URLS_BY_EPISODE = {
     "walkover-story-2026": frozenset({
         "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4",
     }),
+    # 《中国赛季回顾》（china-season-review-2026）孙心然广州段：同一条已存档
+    # 官方集锦、同一份所有者授权（2026-10-30 拍板全画布裁切呈现；2026-11-09
+    # 所有者定案本期复用该源作孙心然第二幕两窗）。只登记这条存档 URL。
+    "china-season-review-2026": frozenset({
+        "https://github.com/robertyang87/tennislive/releases/download/source-wo26sunwta1/wo26sunwta1.mp4",
+    }),
     "muchova-finals-2026": _MUCHOVA_NATIVE_720_CROP_URLS,
     "rybakina-finals-2026": frozenset({
         "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6406171767112",
