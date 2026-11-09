@@ -1,0 +1,51 @@
+{
+  "kind": "voice_preflight_only_not_film_approval",
+  "text": "制胜分三十三比二十五。年终总决赛，阿卡还能靠接发球，把关键分的主动抢回来吗？",
+  "audio_sha256": "5fb42ad24137ebfa610b723903aeebe657bf740c0db78d5ba1f432af3063158d",
+  "asr": "智盛分33比25,年中总决赛,阿卡还能靠接发球,把关键分的主动抢回来吗?",
+  "completeness": {
+    "ok": true,
+    "ref_syllables": 34,
+    "deleted": 0,
+    "inserted": 0,
+    "substituted": 0,
+    "sub_ratio": 0.0,
+    "longest_deletion": 0,
+    "transcript": "智盛分33比25,年中总决赛,阿卡还能靠接发球,把关键分的主动抢回来吗?"
+  },
+  "pause_speed": {
+    "inner_pauses": [],
+    "fake_tokens": [],
+    "chars": 34,
+    "speech_s": 6.969,
+    "cps": 4.88,
+    "pause_ok": true,
+    "speed_ok": true,
+    "tokens": "制胜 ｜ 分 ｜ 三十三 ｜ 比 ｜ 二十五 ｜ 年终 ｜ 总决赛 ｜ 阿卡 ｜ 还 ｜ 能 ｜ 靠 ｜ 接 ｜ 发球 ｜ 把 ｜ 关键 ｜ 分 ｜ 的 ｜ 主动 ｜ 抢 ｜ 回来 ｜ 吗"
+  },
+  "polyphone_targets": [
+    {
+      "index": 19,
+      "char": "还",
+      "word": "还",
+      "intended": "hai2",
+      "wrong": [
+        "huan2"
+      ],
+      "tier": "B"
+    },
+    {
+      "index": 23,
+      "char": "发",
+      "word": "发球",
+      "intended": "fa1",
+      "wrong": [
+        "fa4"
+      ],
+      "tier": "B"
+    }
+  ],
+  "unchanged_audio_requests_verified": 10,
+  "failed_native_run": 42539005760,
+  "publication_approved": false
+}
