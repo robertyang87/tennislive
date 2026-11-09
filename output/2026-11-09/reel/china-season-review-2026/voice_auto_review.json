@@ -1,0 +1,1241 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "a5274102fb385f80f72e6df95965540dd35a402532b157f79a4f80c0cc0b572f",
+    "render_inputs_sha256": "d3039b834492b2c6881587c14cf741bb6db711ef67c11a122ed9c78856934273",
+    "spec_sha256": "914042358cd7046daaf4a82138d4c6cbd8796df8269b425c1c6a1b7f07bba671",
+    "film_sha256": "3ac9995b2ac3b2e8bb673d594d4295ec4b5c4d0c7270965955690b548b358994",
+    "inventory_sha256": "cb24f52d94b4fb926ae0a516964cef0361410dc336f0181e82210d53c73be225"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-09T11:09:14+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:061f7dd82088d0136bdba6a64022787735c4681e507d71d30b505b4f2dc1b1d8",
+      "audio_sha256": "5990708d6fa1f0f879d0f89bd7b43b2b29f9a6c0d2fdbfda6c86fe296ea6d388",
+      "pass": true,
+      "result_of": "bundle:061f7dd82088d0136bdba6a64022787735c4681e507d71d30b505b4f2dc1b1d8"
+    },
+    {
+      "id": "bundle:1735dfa4241993e29eb71b828a55ee2659db620a7e31e184a794d501b345f918",
+      "audio_sha256": "233fb4200a5fd16ef1907eab3b4091441b80f0b8367685d82f2e7c710fa0f31a",
+      "pass": true,
+      "result_of": "bundle:1735dfa4241993e29eb71b828a55ee2659db620a7e31e184a794d501b345f918"
+    },
+    {
+      "id": "bundle:19525571e9197e9964f5e5335015e90d6b9946ed593818ca46696f0155a4bc78",
+      "audio_sha256": "73726f59baa41432173751a61af11353569c6359fbc2531bbe535c8885b6d9f1",
+      "pass": true,
+      "result_of": "bundle:19525571e9197e9964f5e5335015e90d6b9946ed593818ca46696f0155a4bc78"
+    },
+    {
+      "id": "bundle:318c93cf1688da10ce3b1e2258d1692fb197b201b62994b3cba9c2b65b5af4ee",
+      "audio_sha256": "075d942d72dd7b55e714db7a6a9fad59969637b586544eb2f89aa5743fe785cc",
+      "pass": true,
+      "result_of": "bundle:318c93cf1688da10ce3b1e2258d1692fb197b201b62994b3cba9c2b65b5af4ee"
+    },
+    {
+      "id": "bundle:332dac11e966f69803e930dc831a4d412d797a8852e624832bdc7ec2b58e1f59",
+      "audio_sha256": "b980aae21661546fbcc10ad0cf6e8d3b85240ff05dc738706dbae612decad3c5",
+      "pass": true,
+      "result_of": "bundle:332dac11e966f69803e930dc831a4d412d797a8852e624832bdc7ec2b58e1f59"
+    },
+    {
+      "id": "bundle:52b07c19fb7735c12058c944b9f8460cb2ea0881ac604c64889f5ce682ca45de",
+      "audio_sha256": "04348b611f839a30038575ab3388e19d4881f3da46bbc9f826f0e34ebc83cd64",
+      "pass": true,
+      "result_of": "bundle:52b07c19fb7735c12058c944b9f8460cb2ea0881ac604c64889f5ce682ca45de"
+    },
+    {
+      "id": "bundle:55b2d9a6d2097c2c5a1dd29e1081784c39b0bd6581826be6a757748d9c8d099b",
+      "audio_sha256": "081b6d7c7ea6002b23e9fa3e546a972c0aa820827cccb03e7e2c7765964f452c",
+      "pass": true,
+      "result_of": "bundle:55b2d9a6d2097c2c5a1dd29e1081784c39b0bd6581826be6a757748d9c8d099b"
+    },
+    {
+      "id": "bundle:6985218e2c5dc93fc3aedc98642d2d905e716c80210d5e43463a670da088c2b9",
+      "audio_sha256": "93c7146d105339527a3ab31346945cb636ef463d2c3beb8d321e9f31ba36a723",
+      "pass": true,
+      "result_of": "bundle:6985218e2c5dc93fc3aedc98642d2d905e716c80210d5e43463a670da088c2b9"
+    },
+    {
+      "id": "bundle:8bfe6d12d5ae6d644958e91e67ebcd85eaf1900d4ae4025aae9348e747299c1d",
+      "audio_sha256": "32c841e0825a12c6c5809f47704fa05848fc4dbb1a86a796f1cc676b57f0c17d",
+      "pass": true,
+      "result_of": "bundle:8bfe6d12d5ae6d644958e91e67ebcd85eaf1900d4ae4025aae9348e747299c1d"
+    },
+    {
+      "id": "bundle:9515649948fd0f252c8fa1d0db495d55951fc8a5b30e13be013262fcee6fc8a5",
+      "audio_sha256": "0ba5c32a705173d634ea74d6c8977caefbe228e7ffe0a2806b5db38b473143de",
+      "pass": true,
+      "result_of": "bundle:9515649948fd0f252c8fa1d0db495d55951fc8a5b30e13be013262fcee6fc8a5"
+    },
+    {
+      "id": "bundle:9a5254c6a8ae96227d0a9307764f22d57ed521371407d00cb397608392fe4a20",
+      "audio_sha256": "8305fb9a4ec29c48ba55e35197a26f9a08331d5b5268a9412faca1b91bc45880",
+      "pass": true,
+      "result_of": "bundle:9a5254c6a8ae96227d0a9307764f22d57ed521371407d00cb397608392fe4a20"
+    },
+    {
+      "id": "bundle:b68b5d57d8109cb9e38f875878e9f1a59a57b81524266e84eaea75db43655152",
+      "audio_sha256": "572080feb39a6de8ad41297dbb2504fba4f6a552b10bd64941f77e6a1a3752cd",
+      "pass": true,
+      "result_of": "bundle:b68b5d57d8109cb9e38f875878e9f1a59a57b81524266e84eaea75db43655152"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "c5d2d4990d15624973a91035c2372dc14e2e779b2dd1a7ae32a906846c1a5398",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c06029ec20be71966be4e3ed43ab95e3360ad417d23b9853774c45dc4ccc83b9",
+      "audio_sha256": "8a8ca2240e27b6540ad781e1217440ffb30575e9e9556794f074a9b0c59fb31f",
+      "pass": true,
+      "result_of": "bundle:c06029ec20be71966be4e3ed43ab95e3360ad417d23b9853774c45dc4ccc83b9"
+    },
+    {
+      "id": "bundle:c329f5393d8f238730e0cbabe2951691a52a8e62fa4d169203441d5f6edcdb5f",
+      "audio_sha256": "34b1d24d13fe7a182890462f06003d785be81eebd3abcc01f2055269301c14d3",
+      "pass": true,
+      "result_of": "bundle:c329f5393d8f238730e0cbabe2951691a52a8e62fa4d169203441d5f6edcdb5f"
+    },
+    {
+      "id": "bundle:c481ab363aaa4f476704898efaa1b1f51a11ff06a250391dce4116381b8c9c9b",
+      "audio_sha256": "c4d21bf0be05e39307ddaf8b272acaeac199d32472ee05dce747bfc4661dfbb6",
+      "pass": true,
+      "result_of": "bundle:c481ab363aaa4f476704898efaa1b1f51a11ff06a250391dce4116381b8c9c9b"
+    },
+    {
+      "id": "bundle:d15c6300f74011c18546641407adf8656eef1ad3ca79bfbb38c481cd9f4da91d",
+      "audio_sha256": "e67e6afb2fd22b1cf8a8caddbe0f8f3e77e9f29f28d1160e41b8a8b035e605f9",
+      "pass": true,
+      "result_of": "bundle:d15c6300f74011c18546641407adf8656eef1ad3ca79bfbb38c481cd9f4da91d"
+    },
+    {
+      "id": "bundle:dac2fa1b91d473db0f342ac59ad9712e61396db1cc3e59bacbf6289b2d0a7a49",
+      "audio_sha256": "96e6b7d469599ad5c63b9d6611702f8764e9d95d2b7442584215b1d774858a6f",
+      "pass": true,
+      "result_of": "bundle:dac2fa1b91d473db0f342ac59ad9712e61396db1cc3e59bacbf6289b2d0a7a49"
+    },
+    {
+      "id": "bundle:dd6a29d0ee6d5ae5b791c3f9243d4ca2ea0005a40b1556c81fea035808037f7c",
+      "audio_sha256": "1090ce455502c6eb70a6620d9af98d9c7b0b4da682f3c67e18a1cc2375f87e98",
+      "pass": true,
+      "result_of": "bundle:dd6a29d0ee6d5ae5b791c3f9243d4ca2ea0005a40b1556c81fea035808037f7c"
+    },
+    {
+      "id": "bundle:f14ed017d53387a1d91df04e4063dbcf605f00be5527db85b8d2da0cb07dc6f9",
+      "audio_sha256": "a888b1e4d8ae2d5348d16c03c08f36a1cd163beb0f36753b7444db9eddcfe9ac",
+      "pass": true,
+      "result_of": "bundle:f14ed017d53387a1d91df04e4063dbcf605f00be5527db85b8d2da0cb07dc6f9"
+    },
+    {
+      "id": "bundle:ffae231122ef645be916eafb8418eebc9fbb31c668801916378c6e8eb9dc748e",
+      "audio_sha256": "64e758bbeaabde8730be1f6fed253f73972d31dc6da3d96dfa9c91b67636d335",
+      "pass": true,
+      "result_of": "bundle:ffae231122ef645be916eafb8418eebc9fbb31c668801916378c6e8eb9dc748e"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "8305fb9a4ec29c48ba55e35197a26f9a08331d5b5268a9412faca1b91bc45880",
+      "pass": true,
+      "result_of": "bundle:9a5254c6a8ae96227d0a9307764f22d57ed521371407d00cb397608392fe4a20"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "64e758bbeaabde8730be1f6fed253f73972d31dc6da3d96dfa9c91b67636d335",
+      "pass": true,
+      "result_of": "bundle:ffae231122ef645be916eafb8418eebc9fbb31c668801916378c6e8eb9dc748e"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "c4d21bf0be05e39307ddaf8b272acaeac199d32472ee05dce747bfc4661dfbb6",
+      "pass": true,
+      "result_of": "bundle:c481ab363aaa4f476704898efaa1b1f51a11ff06a250391dce4116381b8c9c9b"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "081b6d7c7ea6002b23e9fa3e546a972c0aa820827cccb03e7e2c7765964f452c",
+      "pass": true,
+      "result_of": "bundle:55b2d9a6d2097c2c5a1dd29e1081784c39b0bd6581826be6a757748d9c8d099b"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "96e6b7d469599ad5c63b9d6611702f8764e9d95d2b7442584215b1d774858a6f",
+      "pass": true,
+      "result_of": "bundle:dac2fa1b91d473db0f342ac59ad9712e61396db1cc3e59bacbf6289b2d0a7a49"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "572080feb39a6de8ad41297dbb2504fba4f6a552b10bd64941f77e6a1a3752cd",
+      "pass": true,
+      "result_of": "bundle:b68b5d57d8109cb9e38f875878e9f1a59a57b81524266e84eaea75db43655152"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "075d942d72dd7b55e714db7a6a9fad59969637b586544eb2f89aa5743fe785cc",
+      "pass": true,
+      "result_of": "bundle:318c93cf1688da10ce3b1e2258d1692fb197b201b62994b3cba9c2b65b5af4ee"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "0ba5c32a705173d634ea74d6c8977caefbe228e7ffe0a2806b5db38b473143de",
+      "pass": true,
+      "result_of": "bundle:9515649948fd0f252c8fa1d0db495d55951fc8a5b30e13be013262fcee6fc8a5"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "34b1d24d13fe7a182890462f06003d785be81eebd3abcc01f2055269301c14d3",
+      "pass": true,
+      "result_of": "bundle:c329f5393d8f238730e0cbabe2951691a52a8e62fa4d169203441d5f6edcdb5f"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "233fb4200a5fd16ef1907eab3b4091441b80f0b8367685d82f2e7c710fa0f31a",
+      "pass": true,
+      "result_of": "bundle:1735dfa4241993e29eb71b828a55ee2659db620a7e31e184a794d501b345f918"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "a888b1e4d8ae2d5348d16c03c08f36a1cd163beb0f36753b7444db9eddcfe9ac",
+      "pass": true,
+      "result_of": "bundle:f14ed017d53387a1d91df04e4063dbcf605f00be5527db85b8d2da0cb07dc6f9"
+    },
+    {
+      "id": "voice_17.mp3",
+      "audio_sha256": "32c841e0825a12c6c5809f47704fa05848fc4dbb1a86a796f1cc676b57f0c17d",
+      "pass": true,
+      "result_of": "bundle:8bfe6d12d5ae6d644958e91e67ebcd85eaf1900d4ae4025aae9348e747299c1d"
+    },
+    {
+      "id": "voice_20.mp3",
+      "audio_sha256": "b980aae21661546fbcc10ad0cf6e8d3b85240ff05dc738706dbae612decad3c5",
+      "pass": true,
+      "result_of": "bundle:332dac11e966f69803e930dc831a4d412d797a8852e624832bdc7ec2b58e1f59"
+    },
+    {
+      "id": "voice_23.mp3",
+      "audio_sha256": "73726f59baa41432173751a61af11353569c6359fbc2531bbe535c8885b6d9f1",
+      "pass": true,
+      "result_of": "bundle:19525571e9197e9964f5e5335015e90d6b9946ed593818ca46696f0155a4bc78"
+    },
+    {
+      "id": "voice_26.mp3",
+      "audio_sha256": "93c7146d105339527a3ab31346945cb636ef463d2c3beb8d321e9f31ba36a723",
+      "pass": true,
+      "result_of": "bundle:6985218e2c5dc93fc3aedc98642d2d905e716c80210d5e43463a670da088c2b9"
+    },
+    {
+      "id": "voice_29.mp3",
+      "audio_sha256": "04348b611f839a30038575ab3388e19d4881f3da46bbc9f826f0e34ebc83cd64",
+      "pass": true,
+      "result_of": "bundle:52b07c19fb7735c12058c944b9f8460cb2ea0881ac604c64889f5ce682ca45de"
+    },
+    {
+      "id": "voice_30.mp3",
+      "audio_sha256": "e67e6afb2fd22b1cf8a8caddbe0f8f3e77e9f29f28d1160e41b8a8b035e605f9",
+      "pass": true,
+      "result_of": "bundle:d15c6300f74011c18546641407adf8656eef1ad3ca79bfbb38c481cd9f4da91d"
+    },
+    {
+      "id": "voice_31.mp3",
+      "audio_sha256": "5990708d6fa1f0f879d0f89bd7b43b2b29f9a6c0d2fdbfda6c86fe296ea6d388",
+      "pass": true,
+      "result_of": "bundle:061f7dd82088d0136bdba6a64022787735c4681e507d71d30b505b4f2dc1b1d8"
+    },
+    {
+      "id": "voice_33.mp3",
+      "audio_sha256": "1090ce455502c6eb70a6620d9af98d9c7b0b4da682f3c67e18a1cc2375f87e98",
+      "pass": true,
+      "result_of": "bundle:dd6a29d0ee6d5ae5b791c3f9243d4ca2ea0005a40b1556c81fea035808037f7c"
+    },
+    {
+      "id": "voice_cover.mp3",
+      "audio_sha256": "8a8ca2240e27b6540ad781e1217440ffb30575e9e9556794f074a9b0c59fb31f",
+      "pass": true,
+      "result_of": "bundle:c06029ec20be71966be4e3ed43ab95e3360ad417d23b9853774c45dc4ccc83b9"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "c5d2d4990d15624973a91035c2372dc14e2e779b2dd1a7ae32a906846c1a5398",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:061f7dd82088d0136bdba6a64022787735c4681e507d71d30b505b4f2dc1b1d8",
+      "text": "决赛对伊埃拉，三比三之后，她连赢九局。整整一周，一盘未丢。她的第一个冠军，来得安静，又干脆。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛对伊埃拉3比3之后,他连赢9局。整整一周,一盘未丢。他的第一个冠军,来得安静,又干脆。"
+      },
+      "polyphones": [
+        {
+          "index": 38,
+          "char": "得",
+          "word": "来得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.312,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.591,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对 ｜ 伊埃拉 ｜ 三比三 ｜ 之后 ｜ 她 ｜ 连 ｜ 赢 ｜ 九局 ｜ 整整 ｜ 一周 ｜ 一 ｜ 盘 ｜ 未 ｜ 丢 ｜ 她 ｜ 的 ｜ 第一个 ｜ 冠军 ｜ 来得 ｜ 安静 ｜ 又 ｜ 干脆"
+      }
+    },
+    {
+      "id": "bundle:1735dfa4241993e29eb71b828a55ee2659db620a7e31e184a794d501b345f918",
+      "text": "这个秋天，故事不只属于中国球员。福基纳来到成都之前，六次打进巡回赛决赛，只赢下一次；这一站，是他伤停两个半月后的复出第一站。决赛对胡尔卡奇，他先下一盘，第二盘，被拖进抢七。没人想到，这个抢七，会成为他整个中国赛季的转折点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 97,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这个秋天,故事不只属于中国球员。弗吉那来到成都之前,六次达进循回赛决赛,只赢下一次。这一战,是他商庭两个半月后的付出第一战。决赛对胡尔卡奇,他先下一盘,第二盘,被拖进抢期。没人想到,这个抢期,会成为他整个中国赛季的转折点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 97,
+        "speech_s": 19.004,
+        "cps": 5.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这个秋天 ｜ 故事 ｜ 不只 ｜ 属于 ｜ 中国 ｜ 球员 ｜ 福基纳 ｜ 来到 ｜ 成都 ｜ 之前 ｜ 六次 ｜ 打 ｜ 进 ｜ 巡回 ｜ 赛 ｜ 决赛 ｜ 只 ｜ 赢 ｜ 下 ｜ 一次 ｜ 这 ｜ 一 ｜ 站 ｜ 是 ｜ 他伤 ｜ 停 ｜ 两个半月 ｜ 后 ｜ 的 ｜ 复出 ｜ 第一站 ｜ 决赛 ｜ 对 ｜ 胡尔卡奇 ｜ 他 ｜ 先 ｜ 下 ｜ 一 ｜ 盘 ｜ 第二盘 ｜ 被 ｜ 拖 ｜ 进 ｜ 抢七 ｜ 没 ｜ 人 ｜ 想到 ｜ 这个 ｜ 抢 ｜ 七 ｜ 会 ｜ 成为 ｜ 他 ｜ 整个 ｜ 中国 ｜ 赛季 ｜ 的 ｜ 转折点"
+      }
+    },
+    {
+      "id": "bundle:19525571e9197e9964f5e5335015e90d6b9946ed593818ca46696f0155a4bc78",
+      "text": "宁波是另一个极端。世界第一莱巴金娜，决赛六比二、六比二，整场没有丢过一个发球局。这是她职业生涯第一次成功卫冕，也是她登顶世界第一之后，拿到的第一座冠军。宁波的八连胜，从去年一直续到今年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 83,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 0,
+        "transcript": "宁波是另一个极端。世界第一来巴金娜,决赛6比2,6比2,整场没有丢过一个发球局。这是他职业生涯第一次成功位面,也是他登顶世界第一之后,拿到的第一座冠军。宁波的巴林胜,从去年一直续到今年。"
+      },
+      "polyphones": [
+        {
+          "index": 36,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 83,
+        "speech_s": 15.297,
+        "cps": 5.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "宁波 ｜ 是 ｜ 另一个 ｜ 极端 ｜ 世界 ｜ 第一 ｜ 莱巴金娜 ｜ 决赛 ｜ 六比二 ｜ 六比二 ｜ 整 ｜ 场 ｜ 没有 ｜ 丢 ｜ 过 ｜ 一个 ｜ 发球 ｜ 局 ｜ 这是 ｜ 她 ｜ 职业 ｜ 生涯 ｜ 第一次 ｜ 成功 ｜ 卫冕 ｜ 也是 ｜ 她 ｜ 登顶 ｜ 世界 ｜ 第一 ｜ 之后 ｜ 拿 ｜ 到 ｜ 的 ｜ 第一座 ｜ 冠军 ｜ 宁波 ｜ 的 ｜ 八 ｜ 连胜 ｜ 从 ｜ 去年 ｜ 一直 ｜ 续 ｜ 到 ｜ 今年"
+      }
+    },
+    {
+      "id": "bundle:318c93cf1688da10ce3b1e2258d1692fb197b201b62994b3cba9c2b65b5af4ee",
+      "text": "第三轮面对高芙，她一度在首盘五比四领先。那一周，她的排名从五百八十二位，一口气跳到四百一十八位。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三轮面对高福,他一度在手盘5比4领先。那一周,他的排名从582位,一口气跳到418位。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.263,
+        "cps": 5.2,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第三轮 ｜ 面对 ｜ 高芙 ｜ 她 ｜ 一度 ｜ 在 ｜ 首盘 ｜ 五比四 ｜ 领先 ｜ 那 ｜ 一周 ｜ 她 ｜ 的 ｜ 排名 ｜ 从 ｜ 五百八十二位 ｜ 一口气 ｜ 跳 ｜ 到 ｜ 四百一十八位"
+      }
+    },
+    {
+      "id": "bundle:332dac11e966f69803e930dc831a4d412d797a8852e624832bdc7ec2b58e1f59",
+      "text": "武汉的故事更安静。赫瓦林斯卡，半决赛掀翻斯瓦泰克，整场十九个制胜分，只送七个失误。决赛先丢一盘，又是逆转。她的职业生涯第一个冠军，直接是一千赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "武汉的故事更安静。赫瓦林斯卡,半爵塞先翻斯瓦泰克,整场19个制胜分,只送7个食物。爵塞先丢一盘,又是逆转。他的职业生涯第一个冠军,直接是1000赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 12.85,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "武汉 ｜ 的 ｜ 故事 ｜ 更 ｜ 安静 ｜ 赫瓦林斯卡 ｜ 半决赛 ｜ 掀翻 ｜ 斯瓦泰克 ｜ 整 ｜ 场 ｜ 十九个 ｜ 制胜 ｜ 分 ｜ 只 ｜ 送 ｜ 七个 ｜ 失误 ｜ 决赛 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 又是 ｜ 逆转 ｜ 她 ｜ 的 ｜ 职业 ｜ 生涯 ｜ 第一个 ｜ 冠军 ｜ 直接 ｜ 是 ｜ 一千 ｜ 赛"
+      }
+    },
+    {
+      "id": "bundle:52b07c19fb7735c12058c944b9f8460cb2ea0881ac604c64889f5ce682ca45de",
+      "text": "杭州，梅德韦杰夫七比五、六比四赢下卢布列夫，二十三个 Ace，赛季第三冠。中国赛季的男单版图里，他是最稳的那一个。布云朝克特在四分之一决赛，输给萨菲乌林，没能更进一步。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 70,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "杭州、美德维杰夫7比5、六比四营下卢布列夫、二十三个S,赛季第三冠,中国赛季的南丹版图里,它是最稳的那一个。布云朝克特在四分之一决赛,输给萨菲乌林,没能更进一步。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 70,
+        "speech_s": 14.343,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "杭州 ｜ 梅德韦杰夫 ｜ 七比五 ｜ 六比 ｜ 四 ｜ 赢 ｜ 下 ｜ 卢布列夫 ｜ 二十三个 ｜ Ace ｜ 赛季 ｜ 第三 ｜ 冠 ｜ 中国 ｜ 赛季 ｜ 的 ｜ 男单 ｜ 版图 ｜ 里 ｜ 他 ｜ 是 ｜ 最 ｜ 稳 ｜ 的 ｜ 那 ｜ 一个 ｜ 布云朝克特 ｜ 在 ｜ 四分之一 ｜ 决赛 ｜ 输 ｜ 给 ｜ 萨菲乌林 ｜ 没 ｜ 能 ｜ 更进一步"
+      }
+    },
+    {
+      "id": "bundle:55b2d9a6d2097c2c5a1dd29e1081784c39b0bd6581826be6a757748d9c8d099b",
+      "text": "首盘第十局，十五比四十，两个盘点压在头顶；平分之后，对手又拿到第三个。她一个一个全部救回，然后连赢十一分，顺手带走第一盘。排名第五十四位的外卡，站在她对面的，是世界前五的安德烈耶娃。整座钻石球场，先是鸦雀无声，然后炸开。第十一分，她用 Ace 收下首盘。五比四到七比五，一局球，改写了整场决赛的走向。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 126,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘第十局,十五比四十,两个盘点压在头顶,评分之后,对手又拿到第三个。他一个一个全部就回,然后连赢十一分,顺手带走第一盘。排名第五十四位的外卡,站在他对面的,是世界前五的安德列耶瓦。整座钻石球场,先是压却无声,然后炸开。第十一分,他用X收下手盘。五比四到七比五,一局球,改写了整场决赛的走向。"
+      },
+      "polyphones": [
+        {
+          "index": 93,
+          "char": "钻",
+          "word": "钻石",
+          "intended": "zuan4",
+          "wrong": [
+            "zuan1"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zuan1",
+              "verdict": "correct",
+              "score": 0.44,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "攥"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 126,
+        "speech_s": 25.71,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 第十局 ｜ 十五 ｜ 比 ｜ 四十 ｜ 两个 ｜ 盘点 ｜ 压 ｜ 在 ｜ 头顶 ｜ 平分 ｜ 之后 ｜ 对手 ｜ 又 ｜ 拿 ｜ 到 ｜ 第三个 ｜ 她 ｜ 一个 ｜ 一个 ｜ 全部 ｜ 救 ｜ 回 ｜ 然后 ｜ 连 ｜ 赢 ｜ 十一分 ｜ 顺手 ｜ 带 ｜ 走 ｜ 第一盘 ｜ 排名 ｜ 第五十四位 ｜ 的 ｜ 外卡 ｜ 站 ｜ 在 ｜ 她 ｜ 对面 ｜ 的 ｜ 是 ｜ 世界 ｜ 前五 ｜ 的 ｜ 安德烈耶娃 ｜ 整 ｜ 座 ｜ 钻石 ｜ 球场 ｜ 先是 ｜ 鸦雀无声 ｜ 然后 ｜ 炸 ｜ 开 ｜ 第十一分 ｜ 她 ｜ 用 ｜ Ace ｜ 收 ｜ 下 ｜ 首盘 ｜ 五比四 ｜ 到 ｜ 七比五 ｜ 一 ｜ 局 ｜ 球 ｜ 改写 ｜ 了 ｜ 整 ｜ 场 ｜ 决赛 ｜ 的 ｜ 走向"
+      }
+    },
+    {
+      "id": "bundle:6985218e2c5dc93fc3aedc98642d2d905e716c80210d5e43463a670da088c2b9",
+      "text": "北京属于德约科维奇。决赛首盘抢七拿下，第二盘，德米纳尔因伤退赛。三十四胜零负，第七座中网冠军，职业生涯第一百零二冠。十一年之后，他又站回了这里。可在半决赛，这座球场，刚刚见证过这个秋天最失控的一幕。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 87,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京属于德约科维奇,决赛手盘抢七拿下,第二盘,德米纳尔阴伤退赛。34胜领赴,第七座中网冠军,职业生涯第102冠。11年之后,他又占回了这里。可在半决赛,这座球场,刚刚见证过这个球天最失控的一幕。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 87,
+        "speech_s": 18.39,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京 ｜ 属于 ｜ 德约科维奇 ｜ 决赛 ｜ 首盘 ｜ 抢七 ｜ 拿下 ｜ 第二盘 ｜ 德米纳尔 ｜ 因 ｜ 伤 ｜ 退赛 ｜ 三十四 ｜ 胜 ｜ 零 ｜ 负 ｜ 第七座 ｜ 中 ｜ 网 ｜ 冠军 ｜ 职业 ｜ 生涯 ｜ 第一百零二 ｜ 冠 ｜ 十一年 ｜ 之后 ｜ 他 ｜ 又 ｜ 站 ｜ 回 ｜ 了 ｜ 这里 ｜ 可 ｜ 在 ｜ 半决赛 ｜ 这 ｜ 座 ｜ 球场 ｜ 刚刚 ｜ 见证 ｜ 过 ｜ 这个秋天 ｜ 最 ｜ 失控 ｜ 的 ｜ 一 ｜ 幕"
+      }
+    },
+    {
+      "id": "bundle:8bfe6d12d5ae6d644958e91e67ebcd85eaf1900d4ae4025aae9348e747299c1d",
+      "text": "到了上海，他已经在中国连赢九场。决赛先丢一盘，对手是二十岁的霍达尔，这是上海大师赛九年来，第一场全西班牙决赛。先丢一盘，抢七扳回，决胜盘咬住——他把这场决赛，打成了自己的履历：从不轻松，但从不放弃。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 85,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "到了上海,他已经在中国联营九场。决赛先丢一盘,对手是二十岁的霍达尔,这是上海大师赛九年来,第一场全西班牙决赛。先丢一盘,抢七班回,决胜盘咬住,他把这场决赛打成了自己的履历,从不轻松,但从不放弃。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 85,
+        "speech_s": 16.621,
+        "cps": 5.11,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "到 ｜ 了 ｜ 上海 ｜ 他 ｜ 已经 ｜ 在 ｜ 中国 ｜ 连 ｜ 赢 ｜ 九场 ｜ 决赛 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 对手 ｜ 是 ｜ 二十岁 ｜ 的 ｜ 霍达尔 ｜ 这是 ｜ 上海 ｜ 大师 ｜ 赛 ｜ 九年 ｜ 来 ｜ 第一场 ｜ 全 ｜ 西班牙 ｜ 决赛 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 抢七 ｜ 扳回 ｜ 决胜 ｜ 盘 ｜ 咬住 ｜ 他 ｜ 把 ｜ 这 ｜ 场 ｜ 决赛 ｜ 打 ｜ 成 ｜ 了 ｜ 自己 ｜ 的 ｜ 履历 ｜ 从不 ｜ 轻松 ｜ 但 ｜ 从不放弃"
+      }
+    },
+    {
+      "id": "bundle:9515649948fd0f252c8fa1d0db495d55951fc8a5b30e13be013262fcee6fc8a5",
+      "text": "广州，对蒂莫费娃，决胜盘二比五。对方发球胜赛，赛点，就在眼前。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "广州对地墨废瓦决胜盘2比5,对方发球胜赛赛点就在眼前。"
+      },
+      "polyphones": [
+        {
+          "index": 18,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.826,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "广州 ｜ 对 ｜ 蒂莫费娃 ｜ 决胜 ｜ 盘 ｜ 二比五 ｜ 对方 ｜ 发球 ｜ 胜赛 ｜ 赛点 ｜ 就 ｜ 在 ｜ 眼前"
+      }
+    },
+    {
+      "id": "bundle:9a5254c6a8ae96227d0a9307764f22d57ed521371407d00cb397608392fe4a20",
+      "text": "六个星期，八座城市，九站比赛。二零二六年的中国赛季，从成都的秋雨，一直打到香港的海风。九站比赛，打出了五个首冠。有人在这里拿到职业生涯第一个冠军，有人在这里，把丢掉的东西重新赢了回来。这是一个关于「第一次」的故事。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 93,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "六个星期,八座城市,九战比赛。二零二六年的中国赛季从成都的秋雨一直打到香港的海峰。九战比赛,打出了五个手冠。有人在这里拿到职业生涯第一个冠军,有人在这里把丢掉的东西重新赢了回来。这是一个关于第一次的故事。"
+      },
+      "polyphones": [
+        {
+          "index": 85,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 0.405,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 93,
+        "speech_s": 18.379,
+        "cps": 5.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六个星期 ｜ 八座 ｜ 城市 ｜ 九站 ｜ 比赛 ｜ 二零二六年 ｜ 的 ｜ 中国 ｜ 赛季 ｜ 从 ｜ 成都 ｜ 的 ｜ 秋雨 ｜ 一直 ｜ 打 ｜ 到 ｜ 香港 ｜ 的 ｜ 海风 ｜ 九站 ｜ 比赛 ｜ 打 ｜ 出 ｜ 了 ｜ 五个 ｜ 首冠 ｜ 有人 ｜ 在 ｜ 这里 ｜ 拿 ｜ 到 ｜ 职业 ｜ 生涯 ｜ 第一个 ｜ 冠军 ｜ 有人 ｜ 在 ｜ 这里 ｜ 把 ｜ 丢掉 ｜ 的 ｜ 东西 ｜ 重新 ｜ 赢 ｜ 了 ｜ 回来 ｜ 这是 ｜ 一个 ｜ 关于 ｜ 第一次 ｜ 的 ｜ 故事"
+      }
+    },
+    {
+      "id": "bundle:b68b5d57d8109cb9e38f875878e9f1a59a57b81524266e84eaea75db43655152",
+      "text": "同样在北京，十六岁的孙心然，赢下了世界前五十的布克沙，全场只送出三个非受迫性失误。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "同样在北京,16岁的孙心然、迎下了世界前50的布克沙,全场只送出三个非受迫性食物。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 6.472,
+        "cps": 5.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "同样 ｜ 在 ｜ 北京 ｜ 十六岁 ｜ 的 ｜ 孙心然 ｜ 赢 ｜ 下 ｜ 了 ｜ 世界 ｜ 前 ｜ 五十 ｜ 的 ｜ 布克沙 ｜ 全场 ｜ 只 ｜ 送 ｜ 出 ｜ 三个 ｜ 非 ｜ 受迫 ｜ 性 ｜ 失误"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c06029ec20be71966be4e3ed43ab95e3360ad417d23b9853774c45dc4ccc83b9",
+      "text": "九站，五个首冠？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 6,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "九战 五个手冠"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 6,
+        "speech_s": 1.639,
+        "cps": 3.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九站 ｜ 五个 ｜ 首冠"
+      }
+    },
+    {
+      "id": "bundle:c329f5393d8f238730e0cbabe2951691a52a8e62fa4d169203441d5f6edcdb5f",
+      "text": "她救下赛点，一路追进抢七，七比三拿下。两个小时四十一分钟，第一次站进巡回赛四强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "她就下赛点,一路追进抢7,7比3拿下。2个小时41分钟,第一次占进巡回赛4抢。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 6.6,
+        "cps": 5.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 救 ｜ 下 ｜ 赛点 ｜ 一路 ｜ 追 ｜ 进 ｜ 抢 ｜ 七 ｜ 七比三 ｜ 拿下 ｜ 两个小时 ｜ 四十一分钟 ｜ 第一次 ｜ 站 ｜ 进 ｜ 巡回 ｜ 赛 ｜ 四 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:c481ab363aaa4f476704898efaa1b1f51a11ff06a250391dce4116381b8c9c9b",
+      "text": "可只要一发进区，她得分的把握就压过对手，二发也更稳。这不是一场靠发球赢的比赛，这是一场靠接发和底线，一分一分抠回来的比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 55,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可只要一发进区,他得分的把握就压过对手,二发也更稳。这不是一场靠发球赢的比赛,这是一场靠接法和底线,一分一分抠回来的比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 9,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 32,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 45,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 55,
+        "speech_s": 9.64,
+        "cps": 5.71,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 只要 ｜ 一发 ｜ 进 ｜ 区 ｜ 她 ｜ 得分 ｜ 的 ｜ 把握 ｜ 就 ｜ 压 ｜ 过 ｜ 对手 ｜ 二发 ｜ 也 ｜ 更 ｜ 稳 ｜ 这 ｜ 不是 ｜ 一 ｜ 场 ｜ 靠 ｜ 发球 ｜ 赢 ｜ 的 ｜ 比赛 ｜ 这是 ｜ 一 ｜ 场 ｜ 靠 ｜ 接发 ｜ 和 ｜ 底线 ｜ 一 ｜ 分 ｜ 一 ｜ 分 ｜ 抠 ｜ 回来 ｜ 的 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:d15c6300f74011c18546641407adf8656eef1ad3ca79bfbb38c481cd9f4da91d",
+      "text": "刘婧文的秋天，是从一次退赛开始的。广州站，西尼亚科娃因伤退赛，她不战而胜进到四分之一决赛；最后捧杯的，是从资格赛打上来的达特。有时候，故事翻篇的方式，是先递给你一张轮空签，再看你接不接得住。广州她止步八强，没人记住她；香港，她要让所有人记住。一周后，她站到了决赛场上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 117,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "刘婧文的秋天是从一次退赛开始的。广州战,西尼亚科娃阴伤退赛,他不战而胜进到四分之一决赛。最后捧碑的是从资格赛打上来的达特。有时候故事翻篇的方式是先帝给你一张轮空签,再看你接不接得住。广州他只不扒墙,没人记住他,香港,他要让所有人记住。一周后,他占到了决赛场上。"
+      },
+      "polyphones": [
+        {
+          "index": 92,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 117,
+        "speech_s": 22.341,
+        "cps": 5.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "刘婧文 ｜ 的 ｜ 秋天 ｜ 是 ｜ 从 ｜ 一次 ｜ 退赛 ｜ 开始 ｜ 的 ｜ 广州站 ｜ 西尼亚科娃 ｜ 因 ｜ 伤 ｜ 退赛 ｜ 她 ｜ 不战而胜 ｜ 进 ｜ 到 ｜ 四分之一 ｜ 决赛 ｜ 最后 ｜ 捧杯 ｜ 的 ｜ 是 ｜ 从 ｜ 资格 ｜ 赛 ｜ 打 ｜ 上来 ｜ 的 ｜ 达特 ｜ 有时候 ｜ 故事 ｜ 翻篇 ｜ 的 ｜ 方式 ｜ 是 ｜ 先 ｜ 递 ｜ 给 ｜ 你 ｜ 一 ｜ 张 ｜ 轮空 ｜ 签 ｜ 再 ｜ 看 ｜ 你 ｜ 接 ｜ 不 ｜ 接 ｜ 得 ｜ 住 ｜ 广州 ｜ 她 ｜ 止步 ｜ 八 ｜ 强 ｜ 没 ｜ 人 ｜ 记住 ｜ 她 ｜ 香港 ｜ 她 ｜ 要 ｜ 让 ｜ 所有 ｜ 人 ｜ 记住 ｜ 一周 ｜ 后 ｜ 她 ｜ 站 ｜ 到 ｜ 了 ｜ 决赛场 ｜ 上"
+      }
+    },
+    {
+      "id": "bundle:dac2fa1b91d473db0f342ac59ad9712e61396db1cc3e59bacbf6289b2d0a7a49",
+      "text": "七比五、六比四。二零一一年李娜之后，中国球员第二次，捧起一千赛的冠军奖杯。她等这一冠，等了将近两年：伤病、手术、复出，这个秋天，她在主场把答案写完了。郑钦文说，这是她职业生涯最重要的一场胜利。而这个秋天，属于中国球员的故事，才刚刚开始。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 101,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "7比5,6比4。2011年里纳之后,中国球员第二次捧起一千赛的冠军奖杯。她等这一冠,等了将近两年,伤病、手术付出,这个秋天,她在主场把答案写完了。郑钦文说,这是她职业生涯最重要的一场胜利。而这个秋天,属于中国球员的故事,才刚刚开始。"
+      },
+      "polyphones": [
+        {
+          "index": 88,
+          "char": "重",
+          "word": "重要",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.991,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "仲众"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 101,
+        "speech_s": 20.551,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七比五 ｜ 六比 ｜ 四 ｜ 二零一一年 ｜ 李娜 ｜ 之后 ｜ 中国 ｜ 球员 ｜ 第二次 ｜ 捧 ｜ 起 ｜ 一千 ｜ 赛 ｜ 的 ｜ 冠军 ｜ 奖杯 ｜ 她 ｜ 等 ｜ 这 ｜ 一 ｜ 冠 ｜ 等 ｜ 了 ｜ 将近 ｜ 两年 ｜ 伤病 ｜ 手术 ｜ 复出 ｜ 这个秋天 ｜ 她 ｜ 在 ｜ 主场 ｜ 把 ｜ 答案 ｜ 写 ｜ 完 ｜ 了 ｜ 郑钦文 ｜ 说 ｜ 这是 ｜ 她 ｜ 职业 ｜ 生涯 ｜ 最 ｜ 重要 ｜ 的 ｜ 一 ｜ 场 ｜ 胜利 ｜ 而 ｜ 这个秋天 ｜ 属于 ｜ 中国 ｜ 球员 ｜ 的 ｜ 故事 ｜ 才 ｜ 刚刚 ｜ 开始"
+      }
+    },
+    {
+      "id": "bundle:dd6a29d0ee6d5ae5b791c3f9243d4ca2ea0005a40b1556c81fea035808037f7c",
+      "text": "九站比赛，九座冠军奖杯。这个秋天，有人从外卡打成冠军，有人把十连胜打成大师赛奖杯。有人决赛先丢一盘再逆转，还有人在退赛的阴影里，等来自己的第一冠。九站，五个首冠。郑钦文，福基纳，赫瓦林斯卡，孙心然。中国赛季的 MVP，你选谁？评论区，留下你的答案。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 102,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "九战比赛,九座冠军奖杯。这个球天,有人从外卡打成冠军,有人把失联胜打成大师赛奖杯。有人决赛先丢一盘在逆转,还有人在退赛的阴影里等来自己的第一罐。九战,五个手冠。郑钦文、福吉娜、赫瓦林斯卡、孙心然。中国赛季的MVP,你选谁?评论区,留下你的答案。"
+      },
+      "polyphones": [
+        {
+          "index": 53,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.573,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 102,
+        "speech_s": 23.252,
+        "cps": 4.39,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "九站 ｜ 比赛 ｜ 九座 ｜ 冠军 ｜ 奖杯 ｜ 这个秋天 ｜ 有人 ｜ 从 ｜ 外卡 ｜ 打 ｜ 成 ｜ 冠军 ｜ 有人 ｜ 把 ｜ 十 ｜ 连胜 ｜ 打 ｜ 成 ｜ 大师 ｜ 赛 ｜ 奖杯 ｜ 有人 ｜ 决赛 ｜ 先 ｜ 丢 ｜ 一 ｜ 盘 ｜ 再 ｜ 逆转 ｜ 还有 ｜ 人 ｜ 在 ｜ 退赛 ｜ 的 ｜ 阴影 ｜ 里 ｜ 等 ｜ 来 ｜ 自己 ｜ 的 ｜ 第一 ｜ 冠 ｜ 九站 ｜ 五个 ｜ 首冠 ｜ 郑钦文 ｜ 福基纳 ｜ 赫瓦林斯卡 ｜ 孙心然 ｜ 中国 ｜ 赛季 ｜ 的 ｜ MVP ｜ 你 ｜ 选 ｜ 谁 ｜ 评论 ｜ 区 ｜ 留下 ｜ 你的答案"
+      }
+    },
+    {
+      "id": "bundle:f14ed017d53387a1d91df04e4063dbcf605f00be5527db85b8d2da0cb07dc6f9",
+      "text": "抢七局，他一度三比六落后。四个盘点，一个接一个，被他全部救了回来。成都的这个夜晚，从这一刻开始属于他。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "抢七局,他一度三比六落后。四个盘点,一个接一个,被他全部救了回来。成都的这个夜晚,从这一刻开始属于他。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.198,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.114,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.036,
+        "cps": 4.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢七局 ｜ 他 ｜ 一度 ｜ 三比六 ｜ 落后 ｜ 四个 ｜ 盘点 ｜ 一个 ｜ 接 ｜ 一个 ｜ 被 ｜ 他 ｜ 全部 ｜ 救 ｜ 了 ｜ 回来 ｜ 成都 ｜ 的 ｜ 这个 ｜ 夜晚 ｜ 从 ｜ 这 ｜ 一刻 ｜ 开始 ｜ 属于 ｜ 他"
+      }
+    },
+    {
+      "id": "bundle:ffae231122ef645be916eafb8418eebc9fbb31c668801916378c6e8eb9dc748e",
+      "text": "决赛夜，郑钦文的一发频频出界，整场都在和自己的一发较劲。她的 Ace，比对手还少三个。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛业、郑钦文的一发频频出界,整场都在和自己的一发较劲。他的Ace比对手还少三个。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 24,
+          "char": "发",
+          "word": "一发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 38,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.465,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 6.939,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 夜 ｜ 郑钦文 ｜ 的 ｜ 一发 ｜ 频频 ｜ 出界 ｜ 整 ｜ 场 ｜ 都 ｜ 在 ｜ 和 ｜ 自己 ｜ 的 ｜ 一发 ｜ 较劲 ｜ 她 ｜ 的 ｜ Ace ｜ 比 ｜ 对手 ｜ 还 ｜ 少 ｜ 三个"
+      }
+    }
+  ]
+}
