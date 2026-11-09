@@ -194,10 +194,11 @@
    "quote": [
     {
      "at": 17.76,
+     "end": 23.85,
      "text": "And the ultimate exclamation point to conquer the China Open.\n征服中网，最有力的一分。"
     }
    ],
-   "_why": "冷开场（Netflix 口径：先现场声后旁白）：中网决赛冠军分整分＋欢呼＋解说收束句（small 档 269.76 起、整句不切），为结局分；正文第 6 段完整重放同一分（payoff）。"
+   "_why": "冷开场（Netflix 口径：先现场声后旁白）：中网决赛冠军分整分＋欢呼＋解说收束句（small 档 269.76 起、整句不切），为结局分；正文第 6 段完整重放同一分（payoff）。末 cue 显式 end=23.85（段长 24.10）：原声段末 cue 默认延到段尾，ASS 厘秒取整会与下一旁白段的封印时间轴贴边差约 4ms、撞 landed 自检的零容差重叠闸（run 42593163980 实测 10 处同型），凡后接旁白段的原声段末 cue 一律显式 end 留 ≥0.15s 余量。"
   },
   {
    "source": "anim_map",
@@ -268,7 +269,8 @@
    "quote": [
     {
      "at": 19.76,
-     "text": "And the ultimate exclamation point to conquer the China Open.\n征服中网，最有力的一分。"
+     "text": "And the ultimate exclamation point to conquer the China Open.\n征服中网，最有力的一分。",
+     "end": 25.85
     }
    ],
    "point_end_ok": true,
@@ -336,7 +338,8 @@
     },
     {
      "at": 11.68,
-     "text": "It's the biggest victory of this young 16-year-old's career.\n十六岁，生涯最大的一胜。"
+     "text": "It's the biggest victory of this young 16-year-old's career.\n十六岁，生涯最大的一胜。",
+     "end": 16.8
     }
    ],
    "point_end_ok": true,
@@ -375,7 +378,8 @@
     },
     {
      "at": 8.88,
-     "text": "I knew going in it was going to be a tough match.\n我知道，这会是一场硬仗。"
+     "text": "I knew going in it was going to be a tough match.\n我知道，这会是一场硬仗。",
+     "end": 10.5
     }
    ],
    "point_end_ok": true,
@@ -445,7 +449,8 @@
     },
     {
      "at": 11.58,
-     "text": "Oh my goodness, it's so good!\n我的天，太漂亮了！"
+     "text": "Oh my goodness, it's so good!\n我的天，太漂亮了！",
+     "end": 24.75
     }
    ],
    "point_end_ok": true,
@@ -530,7 +535,8 @@
     },
     {
      "at": 23.3,
-     "text": "you were believing in me all year.\n你们也相信了我一整年。"
+     "text": "you were believing in me all year.\n你们也相信了我一整年。",
+     "end": 23.85
     }
    ],
    "point_end_ok": true,
@@ -611,7 +617,8 @@
     },
     {
      "at": 7.66,
-     "text": "definitely not the last.\n但肯定不是最后一次。"
+     "text": "definitely not the last.\n但肯定不是最后一次。",
+     "end": 9.45
     }
    ],
    "point_end_ok": true,
@@ -672,7 +679,8 @@
     },
     {
      "at": 12.84,
-     "text": "Ningbo, xie xie.\n宁波，谢谢。"
+     "text": "Ningbo, xie xie.\n宁波，谢谢。",
+     "end": 14.85
     }
    ],
    "point_end_ok": true,
@@ -757,7 +765,8 @@
     },
     {
      "at": 32.56,
-     "text": "I'm very proud.\n我很骄傲。"
+     "text": "I'm very proud.\n我很骄傲。",
+     "end": 33.2
     }
    ],
    "point_end_ok": true,
@@ -866,7 +875,8 @@
     },
     {
      "at": 22.5,
-     "text": "Coaches on her feet.\n教练团队都站了起来。"
+     "text": "Coaches on her feet.\n教练团队都站了起来。",
+     "end": 27.25
     }
    ],
    "point_end_ok": true,
