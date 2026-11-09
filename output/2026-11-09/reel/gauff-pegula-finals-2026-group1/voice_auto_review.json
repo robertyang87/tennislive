@@ -1,0 +1,461 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "c9037ada4e640e564cf4b7ca9069292798d3e23c3fe5938c83a083a106443255",
+    "render_inputs_sha256": "01d51547c18bc53cc67750dced9789ae015d5a5a7878e70057b979dc6ca662b1",
+    "spec_sha256": "19e9b518d03e92124b3f0265ff4876d713691c53d62c5fa240f9206dac18b2d3",
+    "film_sha256": "9467cb594d9a60ba9fa23cf807548e57ff85882265be92cbc973bd96cd6bf4de",
+    "inventory_sha256": "5228bdcab4c9e9707f234a2b321422447617a23e5aa04ca833e98b9f919c2a2a"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-09T04:55:18+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:1f1cd0b3929b2598a9907c566680b126a53d34e1a0f19970c7cbfebf03b7c97e",
+      "audio_sha256": "56e1734fae05efab7904c51a7c12e280ba619a0db291298befae6c2ac2dfefe5",
+      "pass": true,
+      "result_of": "bundle:1f1cd0b3929b2598a9907c566680b126a53d34e1a0f19970c7cbfebf03b7c97e"
+    },
+    {
+      "id": "bundle:5e202f2e97e5fc065f726ee358c3d59b1a7353da358bd0aeff4e1a41423db19d",
+      "audio_sha256": "4718ea088a50719a3147bf5e8fd58931ae10cbf5d054c1353d0bd1b832be11df",
+      "pass": true,
+      "result_of": "bundle:5e202f2e97e5fc065f726ee358c3d59b1a7353da358bd0aeff4e1a41423db19d"
+    },
+    {
+      "id": "bundle:62e836d5939d314b9cb86715567af4722859b8994956aeceb90d3d09111bce03",
+      "audio_sha256": "b8e0604aebea8f96cd040b847b23953ce3f9eadb17c9167be06473f98c215f22",
+      "pass": true,
+      "result_of": "bundle:62e836d5939d314b9cb86715567af4722859b8994956aeceb90d3d09111bce03"
+    },
+    {
+      "id": "bundle:6bfdd46f888191b09d3733909e4409e8ef90c67d446c2710b07418bb2debafc9",
+      "audio_sha256": "f7f071d7bb7b3e490c4409a2d136b379125784c5ec840dc1e24b065e4083c712",
+      "pass": true,
+      "result_of": "bundle:6bfdd46f888191b09d3733909e4409e8ef90c67d446c2710b07418bb2debafc9"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ba7475f67a79110baa9cfcc72fbc824cefc5ce20612afc087225ba6aa26c3eed",
+      "audio_sha256": "ab2bd4abd37ed74c54ef217520503fe49d3086554bc6c0b525d85d75c40d69fe",
+      "pass": true,
+      "result_of": "bundle:ba7475f67a79110baa9cfcc72fbc824cefc5ce20612afc087225ba6aa26c3eed"
+    },
+    {
+      "id": "bundle:c36e26c110e7aada5396541d6e01a4758d65c286fbb67eef74ebd5cac026aa00",
+      "audio_sha256": "7d9ec94acf1e2d9e6ff995b43ad981081c3e7d5c275fc266a3a7579e89fe8452",
+      "pass": true,
+      "result_of": "bundle:c36e26c110e7aada5396541d6e01a4758d65c286fbb67eef74ebd5cac026aa00"
+    },
+    {
+      "id": "bundle:dc661396a17b046e040fa7f01deafc46376bcf7d7575036d125267d9fde92598",
+      "audio_sha256": "6a15fa4647ae3df3bb048f1bbc4d421522eca88fb9bdbe70dc4eaf3fda4b14a9",
+      "pass": true,
+      "result_of": "bundle:dc661396a17b046e040fa7f01deafc46376bcf7d7575036d125267d9fde92598"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "b8e0604aebea8f96cd040b847b23953ce3f9eadb17c9167be06473f98c215f22",
+      "pass": true,
+      "result_of": "bundle:62e836d5939d314b9cb86715567af4722859b8994956aeceb90d3d09111bce03"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "7d9ec94acf1e2d9e6ff995b43ad981081c3e7d5c275fc266a3a7579e89fe8452",
+      "pass": true,
+      "result_of": "bundle:c36e26c110e7aada5396541d6e01a4758d65c286fbb67eef74ebd5cac026aa00"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "6a15fa4647ae3df3bb048f1bbc4d421522eca88fb9bdbe70dc4eaf3fda4b14a9",
+      "pass": true,
+      "result_of": "bundle:dc661396a17b046e040fa7f01deafc46376bcf7d7575036d125267d9fde92598"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "56e1734fae05efab7904c51a7c12e280ba619a0db291298befae6c2ac2dfefe5",
+      "pass": true,
+      "result_of": "bundle:1f1cd0b3929b2598a9907c566680b126a53d34e1a0f19970c7cbfebf03b7c97e"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "f7f071d7bb7b3e490c4409a2d136b379125784c5ec840dc1e24b065e4083c712",
+      "pass": true,
+      "result_of": "bundle:6bfdd46f888191b09d3733909e4409e8ef90c67d446c2710b07418bb2debafc9"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "4718ea088a50719a3147bf5e8fd58931ae10cbf5d054c1353d0bd1b832be11df",
+      "pass": true,
+      "result_of": "bundle:5e202f2e97e5fc065f726ee358c3d59b1a7353da358bd0aeff4e1a41423db19d"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "ab2bd4abd37ed74c54ef217520503fe49d3086554bc6c0b525d85d75c40d69fe",
+      "pass": true,
+      "result_of": "bundle:ba7475f67a79110baa9cfcc72fbc824cefc5ce20612afc087225ba6aa26c3eed"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:1f1cd0b3929b2598a9907c566680b126a53d34e1a0f19970c7cbfebf03b7c97e",
+      "text": "从一比五到六比五，高芙连赢五局，反而拿到赛点。正反手的拉锯战里，她却没能收下这次机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从1比5到6比5,高幅连营5局,反而拿到赛点。正反手的拉鞠战力,他却没能收下这次机会。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.854,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 一比五 ｜ 到 ｜ 六比五 ｜ 高芙 ｜ 连 ｜ 赢 ｜ 五局 ｜ 反而 ｜ 拿 ｜ 到 ｜ 赛点 ｜ 正反 ｜ 手 ｜ 的 ｜ 拉锯战 ｜ 里 ｜ 她 ｜ 却 ｜ 没 ｜ 能 ｜ 收 ｜ 下 ｜ 这次 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:5e202f2e97e5fc065f726ee358c3d59b1a7353da358bd0aeff4e1a41423db19d",
+      "text": "这一次，她弯下腰，吼了出来。错过的赛点留在上一盘，她把胜利带到了终点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这一次,他弯下腰,吼了出来。错过的赛点留在上一盘,他把胜利带到了终点。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.451,
+        "cps": 4.65,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 一次 ｜ 她 ｜ 弯 ｜ 下腰 ｜ 吼 ｜ 了 ｜ 出来 ｜ 错过 ｜ 的 ｜ 赛点 ｜ 留 ｜ 在 ｜ 上 ｜ 一 ｜ 盘 ｜ 她 ｜ 把 ｜ 胜利 ｜ 带 ｜ 到 ｜ 了 ｜ 终点"
+      }
+    },
+    {
+      "id": "bundle:62e836d5939d314b9cb86715567af4722859b8994956aeceb90d3d09111bce03",
+      "text": "只差一分就能赢，转眼却要再打一盘。北京时间十一月九日清晨，年终总决赛印第安韦尔斯小组赛。高芙怎么赢回这场球？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "只差一分就能赢,转眼却要再打一盘。北京时间十一月九日清晨,年中总决赛印第安威尔斯小组赛。高福怎么赢回这场球?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.578,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "只 ｜ 差 ｜ 一 ｜ 分 ｜ 就 ｜ 能 ｜ 赢 ｜ 转眼 ｜ 却 ｜ 要 ｜ 再 ｜ 打 ｜ 一 ｜ 盘 ｜ 北京时间 ｜ 十一月九日 ｜ 清晨 ｜ 年终 ｜ 总决赛 ｜ 印第安韦尔斯 ｜ 小组 ｜ 赛 ｜ 高芙 ｜ 怎么 ｜ 赢 ｜ 回 ｜ 这 ｜ 场 ｜ 球"
+      }
+    },
+    {
+      "id": "bundle:6bfdd46f888191b09d3733909e4409e8ef90c67d446c2710b07418bb2debafc9",
+      "text": "抢七，五比七。追回来的这一盘还是丢了。可决胜盘，高芙先拿三比零。该盘非受迫失误，她六次，佩古拉二十三次。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "抢7,5比7。追回来的这一盘还是丢了。可决胜盘高幅先拿3比0。该盘飞受破15,它6次,佩古拉23次。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.258,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 10.731,
+        "cps": 4.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "抢 ｜ 七 ｜ 五比七 ｜ 追 ｜ 回来 ｜ 的 ｜ 这 ｜ 一 ｜ 盘 ｜ 还是 ｜ 丢 ｜ 了 ｜ 可 ｜ 决胜 ｜ 盘 ｜ 高芙 ｜ 先 ｜ 拿 ｜ 三比零 ｜ 该 ｜ 盘 ｜ 非 ｜ 受迫 ｜ 失误 ｜ 她 ｜ 六次 ｜ 佩古拉 ｜ 二十三次"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:ba7475f67a79110baa9cfcc72fbc824cefc5ce20612afc087225ba6aa26c3eed",
+      "text": "六比四、六比七、六比二。下一场对诺斯科娃，她能延续决胜盘的稳定，把小组第二胜也拿下来吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6比4、6比7、6比2。下一场对诺斯科娃,她能延续决胜盘的稳定,把小组第二胜也拿下来吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.467,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比 ｜ 四 ｜ 六比七 ｜ 六比 ｜ 二 ｜ 下 ｜ 一 ｜ 场 ｜ 对 ｜ 诺斯科娃 ｜ 她 ｜ 能 ｜ 延续 ｜ 决胜 ｜ 盘 ｜ 的 ｜ 稳定 ｜ 把 ｜ 小组 ｜ 第二 ｜ 胜 ｜ 也 ｜ 拿 ｜ 下来 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:c36e26c110e7aada5396541d6e01a4758d65c286fbb67eef74ebd5cac026aa00",
+      "text": "四个破发点，一个没给。二零二四年的总决赛冠军，先守住自己的五个发球局，再到佩古拉的发球局争盘点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "四个破发点,一个没给。2024年的总决赛冠军,先守住自己的五个发球局,再到佩古拉的发球局争盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 31,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 41,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.821,
+        "cps": 4.87,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四个 ｜ 破发 ｜ 点 ｜ 一个 ｜ 没 ｜ 给 ｜ 二零二四年 ｜ 的 ｜ 总决赛 ｜ 冠军 ｜ 先 ｜ 守 ｜ 住 ｜ 自己 ｜ 的 ｜ 五个 ｜ 发球 ｜ 局 ｜ 再 ｜ 到 ｜ 佩古拉 ｜ 的 ｜ 发球 ｜ 局 ｜ 争 ｜ 盘点"
+      }
+    },
+    {
+      "id": "bundle:dc661396a17b046e040fa7f01deafc46376bcf7d7575036d125267d9fde92598",
+      "text": "六比四先赢一盘，第二盘却一度一比五。追到四比五后，双方还在底线相持，佩古拉仍握着盘点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "六比四先赢一盘,第二盘却一度一比五。追到四比五后,双方还在底线相持,佩古拉仍握着盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.472,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.208,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比四 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 第二盘 ｜ 却 ｜ 一度 ｜ 一比五 ｜ 追 ｜ 到 ｜ 四比五 ｜ 后 ｜ 双方 ｜ 还 ｜ 在 ｜ 底线 ｜ 相持 ｜ 佩古拉 ｜ 仍 ｜ 握 ｜ 着 ｜ 盘点"
+      }
+    }
+  ]
+}
