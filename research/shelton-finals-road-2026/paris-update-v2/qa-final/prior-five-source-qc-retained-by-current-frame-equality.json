@@ -1,0 +1,186 @@
+{
+  "status": "PASS_SCOPED_EXISTING_FIVE_SOURCE_ACTUAL_RENDER_REVIEW",
+  "created_utc": "2026-11-09T06:49:19.180459+00:00",
+  "reviewer": "alcaraz_media_prepare independent child",
+  "scope": "New actual Shelton render five pre-existing match-point blocks only; not whole film, Paris, voice, loudness or publication approval.",
+  "movie": "/dev/shm/shelton-paris-production/final/native-input/shelton-finals-road-2026.mp4",
+  "movie_sha256": "5900667441dd392e2b3595e17f21e3d0bbb5fd1004bbcba3d753b245bfb037bf",
+  "actual_spec_sha256": "5a4f67e282e61c5e026538e4814bf887eb8dde7c158e2f86933e228d62e4cee6",
+  "actual_render_inputs_sha256": "2fb815d672afc65a97efcb9d536ff1acb09bd6db72e15ed2d8adfb4ad1245c79",
+  "actual_frame_manifest": "/dev/shm/shelton-paris-production/final/qc-old-five-source/manifest.json",
+  "actual_frame_manifest_sha256": "aae6a20945c541b364e2c3d9583223057b90d2627d828a93ef416ba26b7bdb87",
+  "frames_extracted": 184,
+  "contact_sheets_opened": [
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/australian-open-qf/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/australian-open-qf/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/australian-open-qf/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/dallas-final/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/dallas-final/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/dallas-final/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/dallas-final/contact-03.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/montreal-final/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/montreal-final/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/montreal-final/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/montreal-final/contact-03.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/munich-final/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/munich-final/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/munich-final/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/us-open-final/contact-00.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/us-open-final/contact-01.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/us-open-final/contact-02.jpg",
+    "/dev/shm/shelton-paris-production/final/qc-old-five-source/us-open-final/contact-03.jpg"
+  ],
+  "visual_method": "All 18 contact sheets containing 184 actual new-master frame extracts were personally opened; this is sampled visual inspection, not continuous frame-by-frame playback or pixel-identity comparison.",
+  "source_recipe_identity": {
+    "scope": "actual immutable input/source recipe identity, not pixels or listening",
+    "rows": [
+      {
+        "source": "australian-open-qf",
+        "source_path": "/dev/shm/shelton-paris-production/production/source-inputs/sh26ao.mp4",
+        "source_sha256": "702f94a8a252d6dd757a6b97d0ecc52fed1156fccc2bae9a3654ce9503697dc6",
+        "recipe_equal_except_label": true,
+        "field_comparisons": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "fit": true,
+          "cx": true,
+          "track": true,
+          "quote": true,
+          "audio_tail": true
+        }
+      },
+      {
+        "source": "dallas-final",
+        "source_path": "/dev/shm/shelton-paris-production/production/source-inputs/sh26dallas.mp4",
+        "source_sha256": "4ae0630ace08c3bc26cb75ef1d4932ea5a4f4cdda68d070589a2b4dc8a824912",
+        "recipe_equal_except_label": true,
+        "field_comparisons": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "fit": true,
+          "cx": true,
+          "track": true,
+          "quote": true,
+          "audio_tail": true
+        }
+      },
+      {
+        "source": "munich-final",
+        "source_path": "/dev/shm/shelton-paris-production/production/source-inputs/sh26munich.mp4",
+        "source_sha256": "491c7fc80c25392c8e67da9d6476dd490dc204c7b54f47c5f1bcb33575fb9643",
+        "recipe_equal_except_label": true,
+        "field_comparisons": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "fit": true,
+          "cx": true,
+          "track": true,
+          "quote": true,
+          "audio_tail": true
+        }
+      },
+      {
+        "source": "montreal-final",
+        "source_path": "/dev/shm/shelton-paris-production/production/source-inputs/sh26montmp.mp4",
+        "source_sha256": "59667371f40df7f125a4ba6d4f10cb00a04c2883ca0f160c7862b99009101cf8",
+        "recipe_equal_except_label": true,
+        "field_comparisons": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "fit": true,
+          "cx": true,
+          "track": true,
+          "quote": true,
+          "audio_tail": true
+        }
+      },
+      {
+        "source": "us-open-final",
+        "source_path": "/dev/shm/shelton-paris-production/production/source-inputs/b40hO04eyLo.mp4",
+        "source_sha256": "dd9a41791f99eb9a20f8e54ffa311432a957f5fd9377399c975e4a56c924a534",
+        "recipe_equal_except_label": true,
+        "field_comparisons": {
+          "source": true,
+          "start": true,
+          "end": true,
+          "fit": true,
+          "cx": true,
+          "track": true,
+          "quote": true,
+          "audio_tail": true
+        }
+      }
+    ]
+  },
+  "reused_source_QC": [
+    "/workspace/shelton-finals-production/final/independent-qc/early-visual-v2.json",
+    "/workspace/shelton-finals-production/final/independent-qc/late-visual-v2.json",
+    "/workspace/shelton-finals-production/final/root-qc-v3/root-final-actual-review.json"
+  ],
+  "audio_scope": "Source SHA, start/end, quote and audio_tail recipes independently match prior reviewed inputs. Actual ASS caption visual binding checked. No new auditory listening, ASR, PCM, RMS, loudness or gain tests performed; independent audio reviewer owns actual-film audio approval.",
+  "findings": [
+    {
+      "source": "australian-open-qf",
+      "index": 2,
+      "start": 19.41,
+      "end": 42.26,
+      "duration": 22.85,
+      "source_start": 116.8,
+      "source_end": 139.65,
+      "tail_source_end": 140.15,
+      "actual_observations": "Actual source begins with court preparation. Fade clear by 19.97; serve/toss and temporally complete point retained through result, Sinner real fist at 41.91/42.16, then next photograph transition. No advertising or split screen in inspected contacts.",
+      "limitation": "Existing fixed-center lateral crop sometimes loses near Shelton at approximately 30.4/34.4. This is the unchanged golden-v3 framing tradeoff, not evidence that every lateral player/stroke remains visible. No new whole-point omission found."
+    },
+    {
+      "source": "dallas-final",
+      "index": 4,
+      "start": 49.428,
+      "end": 81.528,
+      "duration": 32.1,
+      "source_start": 112.3,
+      "source_end": 144.4,
+      "tail_source_end": 144.9,
+      "actual_observations": "Preparation 49.988, toss 50.228 and serve approximately 50.4 after fade; continuous point through 69.4, Shelton kneels/celebrates approximately 70.4 onward, true handshake 81.178/81.428 and clean photo transition. Both commentary clauses have complete visible bilingual captions. No advertising/split screen found."
+    },
+    {
+      "source": "munich-final",
+      "index": 6,
+      "start": 89.8,
+      "end": 109.3,
+      "duration": 19.5,
+      "source_start": 152.2,
+      "source_end": 171.7,
+      "tail_source_end": 172.2,
+      "actual_observations": "Same-point receiving-player preparation after fade at 90.36–91.20, court from approximately 91.6, point/result around 97.8; actual Shelton fist at 98.8/99.8, father Bryan reaction and embrace after it; final runner-up-twelve-months-ago caption preserved through 108.95 and clean transition around 109.46. No advertising/split screen found."
+    },
+    {
+      "source": "montreal-final",
+      "index": 11,
+      "start": 143.036,
+      "end": 170.076,
+      "duration": 27.04,
+      "source_start": 1.96,
+      "source_end": 29.0,
+      "tail_source_end": 29.5,
+      "actual_observations": "Clean court by 143.596, full toss/contact at 144.036–144.836, temporally continuous rally/result through 156.036, Shelton winner reaction 157.036 onward, complete two-clause captions, handshake/hug 168.036–169.976 and only photograph transition after 170.076.",
+      "limitation": "At 161.036 a turquoise foreground person naturally occludes the source camera, followed by court-level net view. This same-match photographic occlusion is not an artificial inset/composite or new regression."
+    },
+    {
+      "source": "us-open-final",
+      "index": 14,
+      "start": 186.332,
+      "end": 209.132,
+      "duration": 22.8,
+      "source_start": 9.0,
+      "source_end": 31.8,
+      "tail_source_end": 32.3,
+      "actual_observations": "Zverev same-point preparation clear by 186.892, court by 187.732, serve toss/contact 188.532–189.332, short point/result through 192.332. Genuine Zverev winning reaction and complete honest umpire-score descriptor then There-you-go caption retained, followed by actual losing Shelton reaction at 206.332–209.032 and clean net/photo fade. No advertising/split screen found."
+    }
+  ],
+  "new_regressions_observed": false,
+  "rerender_requested": false
+}

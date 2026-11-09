@@ -1,0 +1,65 @@
+{
+  "schema": "shelton.paris-update.v2.actual-fact-audit.v1",
+  "status": "PASS_FACT_SCOPE_V2_ACTUAL_MASTER",
+  "reviewed_at_utc": "2026-11-09T07:22:18.562975+00:00",
+  "binding": {
+    "movie": "/dev/shm/shelton-paris-production/final/native-input-v2/shelton-finals-road-2026.mp4",
+    "movie_sha256": "7d984672c71c36592ddb32590cce8c0b7e4ee8b1588c6b7056fcfcd00c8deb0b",
+    "bytes": 178220566,
+    "duration_seconds": 293.52,
+    "spec": "/dev/shm/shelton-paris-production/final/actual-spec-v2.json",
+    "spec_sha256": "5e70f5fadced77bdbd2d68f2e8100ee12b052aae71a077071ac7775815bb6fcf",
+    "render_inputs_sha256": "9f283d429fa7c904a34e32af74f7b3ca6abf359b8f42ffb2ab24dece066e4b4f",
+    "ASS_sha256": "49bcdbf9694b4655c5ec7aeec73596fdbc32723f50d3ab44d0d24025de212fbf",
+    "ASS_events": 67
+  },
+  "actual_delta": {
+    "only_changed_narration_id": "late_season",
+    "new_exact_line": "资格到手以后，巴塞尔止步第二轮。巴黎先过保罗这一关，再从一盘落后打进决赛。",
+    "new_line_fact_approval": "/dev/shm/shelton-paris-production/research/editorial/late-season-v2-single-sentence-fact-approval.json",
+    "all_other21_segment_specs_exact": true,
+    "all14source_cue_texts_exact": true,
+    "all6label_facts_exact": true,
+    "narration17_seconds_old": 7.728,
+    "narration17_seconds_new": 8.184,
+    "logical_following_shift_seconds": 0.456,
+    "actual_ASS_timestamp_quantization": "followingeventsshift0.45–0.46s duetocentisecondASS; actualstampedpositionsmanuallyreviewed, notcopiedoldmastertimestamps.",
+    "photo_sequence17": "V2actualassetf9ddfa22585f7d36ff46a8a2f7dbed4261456938cb2c7e4850fe9d201d7da0f8; resizeddurationandnewcuts separatelyrecordedproduction/v2/new-photo-manifest.json; samecorrectBasel/QF/SFphotossupportnewclause."
+  },
+  "actual_visual_inspection": {
+    "manifest": "/dev/shm/shelton-paris-production/final/root-qc-v2/manifest.json",
+    "personally_opened": [
+      "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-05.jpg",
+      "/dev/shm/shelton-paris-production/final/root-qc-v2/contact-06.jpg",
+      "/dev/shm/shelton-paris-production/final/root-qc-v2/frame-065-0245.932.jpg",
+      "/dev/shm/shelton-paris-production/final/root-qc-v2/frame-072-0275.904.jpg"
+    ],
+    "observations": [
+      "CurrentactualnewParislabeldateNov8, playersSheltonvsAlcaraz, losingperspective6-7(5)5-7andrunneruptopicaccurate.",
+      "Actualcurrentlate-seasonsameBasel→ParisQF→ParisSFphotos, genericplayeractionsnotfakeopponentorpoint.",
+      "CurrentactualParisreaction/English-ChinesecuesretainAlcarazwinandfirstParisMastersscope.",
+      "CurrentactualRace275.904sheaderNov9postParisfinal, all15rankpointsmatchcanonical; Shelton4/5170focus; qualified1,3,4,5,6,7,8,9; Sinner2/7950greywithdrawn.",
+      "ActualoutroquestionstillsecondTurin/4强futurequestion."
+    ]
+  },
+  "fact_checks": {
+    "newlateBaselR2_PaulQF_SFsetdowncomeback": "PASS exactofficialQF/SFpreviousarchivedsources",
+    "16body_and14sourcecue_semantics": "PASS currentactualASSread; factualcontentunchangedexceptsingleapprovedline",
+    "sixlabelscorewinnerdirection": "PASS exactlysameofficialwinnerresultandleftplayerdisplay",
+    "Race15rows8qualification": "PASS currentactualpixelsread",
+    "qualificationOct18secondyear": "PASS unchangedcurrentactualASS",
+    "publication_body": "Unchanged5d1446d8…review; actualplatformpagepending"
+  },
+  "prior_report": {
+    "path": "/dev/shm/shelton-paris-production/final/qc-facts/final-fact-audit.json",
+    "bound_only_to": "5900667441dd392e2b3595e17f21e3d0bbb5fd1004bbcba3d753b245bfb037bf",
+    "identity_limit": "Priorfull76frameviewnotmisrepresentedasanewmovieview. ThisV2approvalusesexplicitinvariantinputcomparisonandfreshcurrentlate-sectionactualpixels/ASS."
+  },
+  "nonblocking_retained_note": "OldinternalNov6caption-safetycommentnotactualchart; nochange/rerenderrequested.",
+  "scope_limits": [
+    "Factsapprovalonly; notclaimingfullhearing/newmodelrevieworcontinuouspointvisualQC.",
+    "NoCIorpublicationstatusclaim; exactheadgreen/CLEAN/singlepushownedrootproducer.",
+    "Noneofspec/audio/moviebytesmodifiedbyreviewer."
+  ],
+  "findings": []
+}
