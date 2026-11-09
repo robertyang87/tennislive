@@ -1,11 +1,11 @@
 {
-  "status": "waiting_audio_review",
+  "status": "review_cut_ready_audio_pending",
   "user_update": "丰富编排、吸引人的文案、流畅转场卡动画",
   "source_download_run": "https://github.com/robertyang87/tennislive/actions/runs/42561882383",
   "probe_run": "https://github.com/robertyang87/tennislive/actions/runs/42561900546",
   "asr_run": "https://github.com/robertyang87/tennislive/actions/runs/42562033341",
   "source_sha256": "2ba2e09bd528c6e411480389c6c7603bff17c3e6a19adf17b4f9408940f2135b",
-  "earliest_blocker": "原声双语字幕：句首12.7-19.3、首盘结束99-111、赛后268.6-287.0三档转写仍存在显著分歧；未以常见句式或已知人名猜补。",
+  "earliest_blocker": "Only source 268.58–270.0 commentary prefix remains unverified. Draft uses ellipsis; full source-audio gate is not passed.",
   "human_listening_claimed": false,
   "render_dispatched": false,
   "published": false,
@@ -15,5 +15,8 @@
     "194.96比分板核为诺斯科娃局点，已纠正初稿误写的破发点",
     "高清WTA封面与本场服装和场地吻合"
   ],
-  "duration_conflict": "WTA正文和转播场边计时1:26，Flashscore分盘合计1:27；采用WTA/转播，不把差异当作秒级精度。"
+  "duration_conflict": "Resolved using official WTA LS010 MatchTimeTotal 01:26:33; rounded narration uses no exact duration.",
+  "local_review_render": true,
+  "review_video_sha256": "a5e2da6135896c41249c4edbfcebe70cea0471974563127e39b0e482039e5536",
+  "review_video": "/workspace/output/noskova-kostyuk-review.mp4"
 }

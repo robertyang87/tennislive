@@ -37,7 +37,6 @@ concurrency:
 
 jobs:
   asr:
-    if: ${{ !contains(inputs.url, 'youtube.com') }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -107,51 +106,3 @@ jobs:
           git commit -m "asr: 源片 $KEY 两档英文转写（small.en / medium.en）"
           source tools/git_push_retry.sh
           push_with_rebase_retry "${{ github.ref_name }}" 5
-
-  captions:
-    if: ${{ contains(inputs.url, 'youtube.com') }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      SOURCE_URL: ${{ inputs.url }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-          sparse-checkout: requests/reels/noskova-kostyuk-wta-finals-2026-rr
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Retrieve source caption tracks
-        env:
-          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
-        run: |
-          pip install -q 'yt-dlp[default]'
-          mkdir -p "$RUNNER_TEMP/captions"
-          ARGS=(--js-runtimes node --remote-components ejs:github)
-          if [ -n "$YT_COOKIES_TXT" ]; then
-            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/cookies.txt"
-            ARGS+=(--cookies "$RUNNER_TEMP/cookies.txt")
-          fi
-          yt-dlp "${ARGS[@]}" --skip-download --write-auto-subs --write-subs --sub-langs 'en.*' --sub-format json3 -o "$RUNNER_TEMP/captions/%(id)s.%(ext)s" "$SOURCE_URL" > "$RUNNER_TEMP/caption-log.txt" 2>&1 || true
-          OUT=requests/reels/noskova-kostyuk-wta-finals-2026-rr/youtube-captions
-          mkdir -p "$OUT"
-          cp "$RUNNER_TEMP"/captions/*.json3 "$OUT/" 2>/dev/null || true
-          python - <<'PYCODE'
-          import json,os,pathlib
-          p=pathlib.Path('requests/reels/noskova-kostyuk-wta-finals-2026-rr/youtube-captions')
-          p.joinpath('status.json').write_text(json.dumps({'source':os.environ['SOURCE_URL'],'files':[x.name for x in p.glob('*.json3')],'method':'YouTube source caption tracks via yt-dlp'},indent=2)+'\n')
-          PYCODE
-          tail -25 "$RUNNER_TEMP/caption-log.txt"
-      - name: Preserve caption evidence
-        run: |
-          git config user.name Codex
-          git config user.email codex@openai.com
-          git add requests/reels/noskova-kostyuk-wta-finals-2026-rr/youtube-captions
-          if ! git diff --cached --quiet; then
-            git commit -m 'reel: retrieve original YouTube caption evidence'
-            git push origin HEAD
-          fi

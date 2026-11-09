@@ -1,7 +1,22 @@
 {
   "status": "waiting_audio_review",
-  "method": "small.en / medium.en / large-v3-turbo cross-check; no listening claimed",
-  "uncertain_spans": [
+  "method": "Independent Whisper small.en, medium.en, large-v3, turbo, Parakeet v2 and Qwen3-ASR outputs; YouTube timed automatic captions used as additional evidence. No human listening claimed.",
+  "known_good_shared_phrases": [
+    "So much penetration on that backhand.",
+    "Noskova strikes again.",
+    "But she found the Wimbledon champion in ruthless mood."
+  ],
+  "raw_files": [
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/medium.en.json",
+      "sha256": "8ed9236a8b6862099d2569a5da89efaac0a2b8be15297d747250764aeb26a212"
+    },
+    {
+      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/small.en.json",
+      "sha256": "1e12ca0827a5fd02f55a9ac9428e7dff494454e9db0dd62e822c72187c2ad3d4"
+    }
+  ],
+  "previous_uncertain_spans": [
     {
       "start": 12.74,
       "end": 19.28,
@@ -21,19 +36,44 @@
       "reason": "获胜宣告和替补入围句三档不一致；turbo全源出现重复go for it幻觉，分段版本仍漏开头。"
     }
   ],
-  "known_good_shared_phrases": [
-    "So much penetration on that backhand.",
-    "Noskova strikes again.",
-    "But she found the Wimbledon champion in ruthless mood."
-  ],
-  "raw_files": [
+  "uncertain_spans": [
     {
-      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/medium.en.json",
-      "sha256": "8ed9236a8b6862099d2569a5da89efaac0a2b8be15297d747250764aeb26a212"
+      "start": 268.58,
+      "end": 270.0,
+      "reason": "Independent recognizers disagree on the first short phrase before to finish on debut. Preserved in source audio, draft caption uses ellipsis; no complete-source approval."
+    }
+  ],
+  "resolved_for_review_cut": [
+    {
+      "start": 12.74,
+      "end": 19.3,
+      "text": "Oh, she's made it! Magical from Noskova.",
+      "evidence": [
+        "medium.en.json",
+        "large-v3.json",
+        "parakeet.json",
+        "qwen.json",
+        "youtube-captions/5yZN0py5qSk.en-orig.json3"
+      ]
     },
     {
-      "path": "requests/reels/noskova-kostyuk-wta-finals-2026-rr/small.en.json",
-      "sha256": "1e12ca0827a5fd02f55a9ac9428e7dff494454e9db0dd62e822c72187c2ad3d4"
+      "start": 99.46,
+      "end": 111,
+      "text": "Muscular finish to a nerveless opening set on debut from Linda Noskova, losing just two games en route.",
+      "evidence": [
+        "qwen.json",
+        "candidate-scores.json"
+      ]
+    },
+    {
+      "start": 204.85,
+      "end": 207.3,
+      "text": "Oh, a touch of genius!",
+      "evidence": [
+        "qwen.json",
+        "youtube-captions/5yZN0py5qSk.en-orig.json3"
+      ]
     }
-  ]
+  ],
+  "production_audio_review_written": false
 }
