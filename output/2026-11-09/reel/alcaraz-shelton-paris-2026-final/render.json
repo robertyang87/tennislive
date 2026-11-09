@@ -1,0 +1,132 @@
+{
+  "scoreboard_qc_sha256": "2a39f37698bd776b0cba6196b4326db10ddc5657995de1e9b8a39fdfd97521fc",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "746c6e29be9ba7ad883634859c901662b3f887b4bf6b6e75b2924add37aa1ef4",
+    "request_count": 11,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-alcaraz-shelton-paris-2026-final-746c6e29be9ba7ad",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-alcaraz-shelton-paris-2026-final-746c6e29be9ba7ad/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42540728504"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 284.22,
+  "topbar_by_source": {
+    "final": {
+      "line1": "2026 ATP1000 巴黎 决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "谢尔顿",
+      "result": "7-6(5) 7-5",
+      "source": "https://www.bbc.com/sport/tennis/articles/ck9qz8d2znl5o"
+    },
+    "r2": {
+      "line1": "2026 ATP1000 巴黎 第二轮",
+      "winner": "阿尔卡拉斯",
+      "loser": "米克尔森",
+      "result": "7-6 6-3",
+      "source": "https://local-global.flashscore.ninja/2/x/feed/df_mh_1_SAsSTQxJ"
+    },
+    "qf": {
+      "line1": "2026 ATP1000 巴黎 1/4决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "弗里茨",
+      "result": "6-7(10) 7-5 6-3",
+      "source": "https://www.bbc.com/sport/tennis/articles/c6e9lldl3lpjo"
+    },
+    "sf": {
+      "line1": "2026 ATP1000 巴黎 半决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "鲁德",
+      "result": "6-4 6-4",
+      "source": "https://www.bbc.com/sport/tennis/articles/cw0k06v13xvxo"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP1000 巴黎 决赛",
+    "line2": "阿尔卡拉斯 7-6(5) 7-5 谢尔顿",
+    "start": 1.2,
+    "end": 285.42
+  },
+  "film_seconds": 290.0,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.744,
+    "2": 8.064,
+    "4": 9.312,
+    "6": 8.28,
+    "8": 8.064,
+    "9": 9.096,
+    "11": 8.088,
+    "13": 10.944,
+    "15": 6.84,
+    "16": 7.848
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "0f425fa03f04c50714dcd6f92fc2db2f8a00170f2b3eee529896c21a031229ba",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "alcaraz-shelton-paris-2026-final",
+    "received_at": "2026-11-09T00:32:25Z",
+    "artifact_ready_at": "2026-11-09T00:44:47Z",
+    "elapsed_seconds": 742.617,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "f3418a7f70ca6875af6e742c35b2ddfde78acb7b3d843ea92c417a29d77fa7da",
+    "spec_sha256": "697edef077f08e9ccf7762099de17f3152114a3ad48fb7034283e5b9d9bdbc9f",
+    "request_received_at": "2026-11-08T23:35:00Z",
+    "request_to_artifact_seconds": 4187.617,
+    "run_id": "42540728504",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-09T00:37:18Z",
+        "run_id": "42540728504"
+      }
+    ],
+    "render_seconds": 449.617,
+    "pre_render_seconds": 293.0
+  },
+  "film_sha256": "f3418a7f70ca6875af6e742c35b2ddfde78acb7b3d843ea92c417a29d77fa7da",
+  "film_bytes": 134998631,
+  "qc_attestation_sha256": "e1bb4197e88233ca83b542c3ef6b61d3914826933b861581d4e4eb924290a3d5",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-09T00:37:18Z",
+      "run_id": "42540728504"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-09T00:44:50Z",
+      "run_id": "42540728504"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-shelton-paris-2026-final/alcaraz-shelton-paris-2026-final.mp4",
+  "video_bytes": 134998631
+}
