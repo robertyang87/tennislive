@@ -37,6 +37,7 @@ concurrency:
 
 jobs:
   asr:
+    if: ${{ !contains(inputs.url, 'youtube.com') }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -106,3 +107,34 @@ jobs:
           git commit -m "asr: 源片 $KEY 两档英文转写（small.en / medium.en）"
           source tools/git_push_retry.sh
           push_with_rebase_retry "${{ github.ref_name }}" 5
+
+  original_audio:
+    if: ${{ contains(inputs.url, 'youtube.com') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Retrieve original Opus audio for commentary verification
+        env:
+          SOURCE_URL: ${{ inputs.url }}
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          set -euo pipefail
+          pip install -q 'yt-dlp[default]'
+          mkdir -p "$RUNNER_TEMP/original-audio"
+          ARGS=(--js-runtimes node --remote-components ejs:github)
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/cookies.txt"
+            ARGS+=(--cookies "$RUNNER_TEMP/cookies.txt")
+          fi
+          yt-dlp "${ARGS[@]}" --skip-download --dump-single-json "$SOURCE_URL" > "$RUNNER_TEMP/original-audio/source-info.json"
+          yt-dlp "${ARGS[@]}" -f 'bestaudio[acodec=opus]/bestaudio' -o "$RUNNER_TEMP/original-audio/%(id)s.%(ext)s" "$SOURCE_URL"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: original-audio-verification
+          path: ${{ runner.temp }}/original-audio
