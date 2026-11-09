@@ -138,3 +138,31 @@ jobs:
         with:
           name: original-audio-verification
           path: ${{ runner.temp }}/original-audio
+
+  independent_stt:
+    needs: original_audio
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AUDIO_DIR: ${{ runner.temp }}/original-audio
+      AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+      AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: requests/reels/noskova-kostyuk-wta-finals-2026-rr
+      - uses: actions/download-artifact@v4
+        with:
+          name: original-audio-verification
+          path: ${{ runner.temp }}/original-audio
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent speech service cross-check
+        run: |
+          pip install -q requests imageio-ffmpeg
+          python requests/reels/noskova-kostyuk-wta-finals-2026-rr/verify-original-audio.py
+          cp "$AUDIO_DIR/5yZN0py5qSk.webm" "$AUDIO_DIR/5yZN0py5qSk-original-opus.webm"
+          gh release upload source-5yZN0py5qSk "$AUDIO_DIR/5yZN0py5qSk-original-opus.webm" "$AUDIO_DIR/original-audio-stt.json" --clobber
