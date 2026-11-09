@@ -1,0 +1,68 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-8Dc6BvkUEZM/8Dc6BvkUEZM.mp4",
+  "source_sha256": "adf01b5dfa8191e4186873eae4076cb7d1db08b7bb6b92119c0c6bb96dc25001",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-09T05:54:18+00:00",
+  "reviewed_from": 404.8,
+  "reviewed_to": 438.2,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 404.92,
+      "end": 411.5,
+      "en": "But I was also quite aware that reality is a little bit different these days,",
+      "zh": "但我也清楚，十一年过去，"
+    },
+    {
+      "start": 411.5,
+      "end": 413.4,
+      "en": "11 years later,",
+      "zh": "现实已经不太一样了。"
+    },
+    {
+      "start": 413.4,
+      "end": 417.12,
+      "en": "and this year has been quite challenging for me.",
+      "zh": "今年对我来说很不容易。"
+    },
+    {
+      "start": 417.12,
+      "end": 422.82,
+      "en": "Lots of ups and downs and physical and health issues, et cetera.",
+      "zh": "起伏不断，还有健康问题。"
+    },
+    {
+      "start": 422.82,
+      "end": 427.3,
+      "en": "So I was just trying to find a good feeling on the court,",
+      "zh": "我只是努力在场上找回感觉。"
+    },
+    {
+      "start": 427.3,
+      "end": 432.3,
+      "en": "and obviously I know that when I'm feeling well and striking the ball well,",
+      "zh": "当我状态好、击球顺的时候，"
+    },
+    {
+      "start": 432.3,
+      "end": 433.6,
+      "en": "I can still compete at the highest level.",
+      "zh": "我依然能站在最高水平竞争。"
+    },
+    {
+      "start": 433.6,
+      "end": 437.36,
+      "en": "This week has been an evidence to that, to be honest.",
+      "zh": "说实话，这一周就证明了这一点。"
+    },
+    {
+      "start": 437.36,
+      "end": 438.2,
+      "en": "I'm very proud.",
+      "zh": "我很骄傲。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 adf01b5dfa8191e4186873eae4076cb7d1db08b7bb6b92119c0c6bb96dc25001，存于 data/source_asr/8Dc6BvkUEZM/small.en.json 与 data/source_asr/8Dc6BvkUEZM/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
