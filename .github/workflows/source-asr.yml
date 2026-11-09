@@ -144,7 +144,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      AUDIO_DIR: ${{ runner.temp }}/original-audio
+      AUDIO_DIR: /tmp/original-audio
       AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
       AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
       GH_TOKEN: ${{ github.token }}
@@ -156,7 +156,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: original-audio-verification
-          path: ${{ runner.temp }}/original-audio
+          path: /tmp/original-audio
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
