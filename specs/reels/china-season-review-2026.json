@@ -125,6 +125,15 @@
   }
  },
  "_facts": "全部事实口径见 _claims 与 editorial.human_context；本地事实卡 ~/workspace/china-season-review-2026/fact-card.md（仓库外生产档案）。禁用口径：腾讯『郑钦文 8 Ace』（半决赛串场）、网易『二发 70%』。",
+ "source_crop": {
+  "anim_map": {
+   "reason": "自制动画（开场地图动线）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，3:4 窗口即全帧，不与主源 1920×1080 共享裁切窗口（共享必静默裁错）。"
+  },
+  "anim_wall": {
+   "reason": "自制动画（结尾冠军墙）原生 1080×1440，与成片画布同尺寸同画幅；按原生几何取窗，3:4 窗口即全帧，不与主源 1920×1080 共享裁切窗口（共享必静默裁错）。"
+  }
+ },
+ "_geometry_why": "render dry-run 的 check_sources_match 预演拦下：自制动画两源 1080×1440 与主源 zheng 1920×1080 尺寸不同。按仓库既有认领机制（walkover-story-2026 同款）落位：动画两源走 source_crop 原生几何（窗口即全帧）；两源均为 25fps 与主源一致，无 mixed_fps 认领。",
  "sources": {
   "zheng": "https://github.com/robertyang87/tennislive/releases/download/source-Vq_UC0n5DKQ/Vq_UC0n5DKQ.mp4",
   "sun_gauff": "https://github.com/robertyang87/tennislive/releases/download/source-Wg6m85wS3Ps/Wg6m85wS3Ps.mp4",
