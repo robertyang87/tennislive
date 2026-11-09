@@ -1,0 +1,63 @@
+{
+  "slug": "gauff-pegula-finals-2026-group1",
+  "checked_at": "2026-11-09T04:42:06Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "58fcadca3d5921f2": {
+      "segment": 2,
+      "spoken": 11.448,
+      "picture": 15.0
+    },
+    "abfd50918cfca63f": {
+      "segment": 3,
+      "spoken": 9.696,
+      "picture": 12.0
+    },
+    "914968939344d38e": {
+      "segment": 5,
+      "spoken": 9.096,
+      "picture": 12.0
+    },
+    "2ca95ad6d4fc0042": {
+      "segment": 7,
+      "spoken": 8.736,
+      "picture": 12.0
+    },
+    "88c68c90cbdbe729": {
+      "segment": 10,
+      "spoken": 10.896,
+      "picture": 12.0
+    },
+    "2c5323c0f1a7d3b9": {
+      "segment": 12,
+      "spoken": 7.344,
+      "picture": 9.0
+    },
+    "cc344f65820bf24c": {
+      "segment": 13,
+      "spoken": 9.336,
+      "picture": 11.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "905a6edd6345d64bb2c37b893064b8fceb99b15382214d49cde9b7c08e7338bd",
+    "request_count": 8,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "312d49948799f695abe4a264a9e23da86bfb06be",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/312d49948799f695abe4a264a9e23da86bfb06be/assets/tts-bundles/gauff-pegula-finals-2026-group1/905a6edd6345d64bb2c37b893064b8fceb99b15382214d49cde9b7c08e7338bd/tts_bundle.zip"
+  }
+}
