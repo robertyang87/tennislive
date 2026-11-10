@@ -1,5 +1,5 @@
 {
-  "status": "correction_pending_final_film_review",
+  "status": "corrected_and_verified_in_final_encoded_film",
   "finding": {
     "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
     "seconds": 147.08,
@@ -17,5 +17,12 @@
     "at": "2026-11-10T03:23:39.753457+00:00",
     "status": "pass",
     "scope": "All four actual card narration cues at142.55/144.80/147.08/150 seconds have separate caption lane below scores and above footer. Native page checks pass. New formal film QC still required."
+  },
+  "closure": {
+    "film_sha256": "b91fa65c08a51aa19c9426a6829b65ed81d4ae8988dee5646466cdd010a0a5ad",
+    "review": "../final-film-review/review.json",
+    "four_cues_verified": true,
+    "native_qc": "pass",
+    "voice_auto_review": "pass"
   }
 }
