@@ -176,7 +176,7 @@ function shotEdge(u,D){
   // 账本：上面一排顺序格，下面一条「甲多发几个」的折线；先一人一分，再 1-2-2-2
   const m=ss(BA-0.4,BA+0.4,u); const o=ss(AB-0.3,AB+0.3,u);
   const seq=m<0.5?seqStr('ABAB',12):seqStr('ABBA',12); const per=m<0.5?(BA-0.5-AB)/12:(D-1.0-BA)/12; const t=m<0.5?(u-AB):(u-BA); const k=t/per;
-  const x0=-4.8, cw=0.8, oo=o*(1-ss(BA-0.5,BA-0.3,u)*(1-ss(BA-0.3,BA+0.1,u)));
+  const x0=-4.8, cw=0.8, oo=o*(1-ss(BA-0.5,BA-0.06,u)*(1-ss(BA+0.06,BA+0.5,u)));   // 一人一分 → 一二二二：完全淡到 0 再换序列（motion_check 57.83s 跳变）
   seqRow(seq,x0,1.45,cw,oo,{k:k+0.6,letters:true});
   const zl=ln(0x9fb8d0,2); setLine(zl,[hp(x0,-0.4),hp(x0+cw*12,-0.4)]); zl.material.opacity=0.6*oo; zl.material.depthTest=false;
   lab('egZ',T('一样多','even'),x0-0.55,-0.4,0.8*oo,{size:0.24,color:'#aab8c8'}); lab('egP',T('甲多 1','A +1'),x0-0.55,0.55,0.8*oo,{size:0.24,color:'#ffe2a0',glow:GOLD}); lab('egN',T('乙多 1','B +1'),x0-0.55,-1.35,0.8*oo*m,{size:0.24});
