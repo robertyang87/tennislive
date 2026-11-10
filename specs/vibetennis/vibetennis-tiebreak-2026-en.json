@@ -1,0 +1,67 @@
+{
+ "slug": "vibetennis-tiebreak-2026-en",
+ "_status": "EP12 英文版：3D 用 lang=en 另渲，叠加层 VT_LANG=en；无配音、无 BGM，音效＋环境底。",
+ "_column": "vibetennis 第 12 集：钩子——2019 温网决赛费德勒多赢 14 分却输了，3 个抢七全被德约拿走；抢七的发球顺序特别：先发的只发一分、之后每人连发两分，为什么不是一人一分？→ 规则（ITF 第 5 条、每 6 分换边）→ 发球占优（这场决赛德约 64%、费德勒接近七成）；一人一分时先发者每到单数分多发一个、后发者一直在追，1-2-2-2 让多发的人来回换 → 反转：在「每分独立」模型里两种顺序的胜率都是 50%（两人发球都赢 65%）；公平来自净胜两分：6 平之前结果等于把前 12 分打完谁多（两人各发 6 个），6 平之后每两分各发一个；去掉净胜两分、先到 7 分，先发者 53.6%，两种顺序一样 → 那图什么：12 分里换手 6 次（一人一分 11 次）；让一直在追的人轮流换——Thue–Morse 序列（1851 普鲁埃、图厄、莫尔斯），每一层轮流当先手，经济学家用它回答轮流比赛的公平顺序；网球只抄第一层 → 足球：129 次点球大战先踢六成，IFAB 2017 试行 ABBA、2018 停掉，540 次样本测不出 → 网球数据：2621 个抢七先发后发无显著区别；博客统计 ATP 50.8%、WTA 49.7% → 结论：公平靠净胜两分扯平发球次数，1-2-2-2 少换手、不让谁一直追；你喜欢先发还是后发？",
+ "column": "vibetennis",
+ "pipeline": "tools/vibetennis",
+ "cover": {
+  "eyebrow": "vibetennis",
+  "layout": "custom",
+  "script": "tools/vibetennis/episodes/vibetennis-tiebreak-2026/cover/make_cover.py",
+  "hook": "Why does a tiebreak go 1-2-2-2?\nThe answer is a surprise",
+  "subject": "网球",
+  "topic": "抢七 · 发球顺序 · Thue–Morse · 净胜两分",
+  "_why": "同中文版，文字英文、品牌 Tennis Jetlag。"
+ },
+ "editorial": {
+  "mode": "science_explainer",
+  "question": "抢七为什么先发一分、之后每人连发两分？",
+  "thesis": "vibetennis 第 12 集：钩子——2019 温网决赛费德勒多赢 14 分却输了，3 个抢七全被德约拿走；抢七的发球顺序特别：先发的只发一分、之后每人连发两分，为什么不是一人一分？→ 规则（ITF 第 5 条、每 6 分换边）→ 发球占优（这场决赛德约 64%、费德勒接近七成）；一人一分时先发者每到单数分多发一个、后发者一直在追，1-2-2-2 让多发的人来回换 → 反转：在「每分独立」模型里两种顺序的胜率都是 50%（两人发球都赢 65%）；公平来自净胜两分：6 平之前结果等于把前 12 分打完谁多（两人各发 6 个），6 平之后每两分各发一个；去掉净胜两分、先到 7 分，先发者 53.6%，两种顺序一样 → 那图什么：12 分里换手 6 次（一人一分 11 次）；让一直在追的人轮流换——Thue–Morse 序列（1851 普鲁埃、图厄、莫尔斯），每一层轮流当先手，经济学家用它回答轮流比赛的公平顺序；网球只抄第一层 → 足球：129 次点球大战先踢六成，IFAB 2017 试行 ABBA、2018 停掉，540 次样本测不出 → 网球数据：2621 个抢七先发后发无显著区别；博客统计 ATP 50.8%、WTA 49.7% → 结论：公平靠净胜两分扯平发球次数，1-2-2-2 少换手、不让谁一直追；你喜欢先发还是后发？",
+  "beats": [
+   "钩子：2019 温网决赛费德勒多赢 14 分却输了，3 个抢七全输；抢七的 1-2-2-2 和一串数列前四位相同",
+   "规则：ITF 第 5 条；每 6 分换边",
+   "发球占优；一人一分时后发者一直在追，1-2-2-2 让多发的人轮换",
+   "反转：模型里两种顺序胜率都是 50%；公平来自净胜两分（前 12 分各发 6 个，6 平后每两分各发一个）；去掉它先发者 53.6%",
+   "那图什么：少换手；让追的人轮换——Thue–Morse 序列，每层轮流当先手；网球只抄第一层",
+   "局限与反面：足球点球先踢六成的研究被 540 次大样本推翻；IFAB 试行后停掉",
+   "网球数据：2621 个抢七先发后发无显著区别；博客统计 50.8% / 49.7%",
+   "结论：公平靠净胜两分；你喜欢先发还是后发？"
+  ],
+  "sources": [
+   "ITF《网球规则》2026 第 5、10、14 条",
+   "Brams & Ismail 2018 SIAM Review 60(1)（预印本 MPRA 69714）",
+   "Cohen-Zada, Krumer & Shapir 2018 JEBO 146:106（IZA DP 10878）",
+   "Allouche & Shallit 1999《The ubiquitous Prouhet-Thue-Morse sequence》；Palacios-Huerta 2012 Economic Inquiry",
+   "Apesteguia & Palacios-Huerta 2010 AER；Kocher, Lenz & Sutter 2012 Management Science；Inside World Football 2017-05-04、2018-11-23",
+   "BBC 2019-07-14 赛报；Wikipedia 2019 温网男单决赛（引 wimbledon.com 统计）；Sackmann 2015 Heavy Topspin"
+  ],
+  "_claims": "每个上屏数字的出处、核实状态和不上屏的理由见 papers/vibetennis-tiebreak-2026/sources.md；概率由 tiebreak_math.py 复现"
+ },
+ "film": {
+  "canvas": [
+   1920,
+   1080
+  ],
+  "fps": 30,
+  "cover_in_film": false,
+  "outro_seconds": 0,
+  "captions": "anchored",
+  "narration": "none",
+  "visual_standards": "照 docs/vibetennis.md 与 skills/vibetennis-production：带看台的中央球场＋两名全息球员、发球光点按 1-2-2-2 跳转、发球次数账本（一人一分 vs 一二二二）、概率天平（50%=50% → 53.6%）、补打幽灵分格、Thue–Morse 自相似条码塔、点球大战球门；GLOW 光晕上限，glow_check --pair 全过；成片 motion_check",
+  "audio": {
+   "music": "none",
+   "sfx": "sfx.py 合成（66 个事件），时刻钉在 r3d/timeline.json 的 sec.ev 和 scene.js 的动画节点上",
+   "loudness": "只有音效；整片 -14 LUFS / 真峰值 ≤ -1 dBTP",
+   "_music_why": "所有者 2026-11-02：英文版成片不带 BGM（EP04 英文版被 Instagram Content ID 静音），音乐由所有者上传时从 Instagram 曲库挂。"
+  }
+ },
+ "push": {
+  "auto": true,
+  "summary": "Tiebreak",
+  "_summary_why": "标题 EP12.vibetennis|Tiebreak（可复制标题上限 20 个字符）",
+  "lead": "Why does a tiebreak go 1 point, then 2 each? Intuition says fairness. But in the standard 'independent points' model, plain alternation gives the first server exactly the same 50% — what makes a tiebreak fair is 'win by two', which always evens out the number of serves. Drop it, play first to 7, and the first server rises to 53.6%. The 1-2-2-2 order cuts server switches and stops one player from always chasing; it matches the Thue–Morse sequence for four symbols. In 2,621 pro tiebreaks, serving first made no significant difference.",
+  "_lead_why": "每个数字同 xhs，出处见 sources.md"
+ },
+ "variant_of": "vibetennis-tiebreak-2026",
+ "lang": "en"
+}
