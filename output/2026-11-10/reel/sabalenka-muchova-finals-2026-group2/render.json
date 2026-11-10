@@ -1,0 +1,100 @@
+{
+  "scoreboard_qc_sha256": "2c39eb0318b606c3fecd9da73e040b12286c830d8ff4ed7a0be956f44dba09b6",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "c947f3da75ca20f2586e30389671e566a770a6169016a2148ade7e665427323c",
+    "request_count": 9,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-sabalenka-muchova-finals-2026-group2-c947f3da75ca20f2",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-sabalenka-muchova-finals-2026-group2-c947f3da75ca20f2/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42744850621"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 214.58,
+  "topbar": {
+    "line1": "2026 WTA年终总决赛 印第安韦尔斯 小组赛",
+    "line2": "萨巴伦卡 7-6(2) 7-5 穆霍娃",
+    "start": 1.2,
+    "end": 215.78
+  },
+  "film_seconds": 220.4,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.864,
+    "2": 10.776,
+    "4": 8.856,
+    "6": 9.984,
+    "7": 8.664,
+    "9": 9.84,
+    "11": 6.744,
+    "12": 9.288
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "e4d42d3529d4c3dc89344d90bbc746f4c7ac7fab3e19eb0c13a65d910432e0f7",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "sabalenka-muchova-finals-2026-group2",
+    "received_at": "2026-11-10T02:44:57Z",
+    "artifact_ready_at": "2026-11-10T02:53:54Z",
+    "elapsed_seconds": 537.423,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "5eee1b6d60417a1ee40b59322caa43434d33eca7de2419455a9addceec248231",
+    "spec_sha256": "0622b4e99c4df1131f9e0ce70c335150fdc9aa622860e68d5986b20e432afaf1",
+    "request_received_at": "2026-11-10T01:44:50Z",
+    "request_to_artifact_seconds": 4144.423,
+    "run_id": "42744850621",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-10T02:48:28Z",
+        "run_id": "42744850621"
+      }
+    ],
+    "render_seconds": 326.423,
+    "pre_render_seconds": 211.0
+  },
+  "film_sha256": "5eee1b6d60417a1ee40b59322caa43434d33eca7de2419455a9addceec248231",
+  "film_bytes": 75062248,
+  "qc_attestation_sha256": "a6921db1b066968d53ea2266dfcc0fd29941933743b95bb17d2c15e0b92ff839",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-10T02:48:28Z",
+      "run_id": "42744850621"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-10T02:53:58Z",
+      "run_id": "42744850621"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-sabalenka-muchova-finals-2026-group2/sabalenka-muchova-finals-2026-group2.mp4",
+  "video_bytes": 75062248
+}
