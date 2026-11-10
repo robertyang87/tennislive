@@ -323,7 +323,7 @@
       "discovered_at": "2026-10-25T21:44:27.249138+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_interview",
-      "last_frames_at": "2026-11-08T09:30:23.126285+00:00"
+      "last_frames_at": "2026-11-10T00:34:51.110836+00:00"
     },
     "qpXRgj9FEeI": {
       "item": {
@@ -512,7 +512,7 @@
       "discovered_at": "2026-11-03T16:10:26.433669+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-08T09:30:23.126154+00:00"
+      "last_frames_at": "2026-11-10T00:34:51.110704+00:00"
     },
     "tScBbi8wSeg": {
       "item": {
@@ -701,7 +701,7 @@
       "discovered_at": "2026-11-05T22:57:36.002419+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-08T09:30:23.125964+00:00"
+      "last_frames_at": "2026-11-10T00:34:51.110483+00:00"
     },
     "qsZCT_lvdhU": {
       "item": {
@@ -783,6 +783,60 @@
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
       "last_frames_at": "2026-11-09T16:45:34.679279+00:00"
+    },
+    "mpx6bgzUjsI": {
+      "item": {
+        "id": "mpx6bgzUjsI",
+        "title": "Aryna Sabalenka reacts to winning her WTA Finals opener 🥰 | 2026 FAGE WTA Finals Indian Wells",
+        "duration_s": 170,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-10T00:29:19.431815+00:00",
+        "url": "https://www.youtube.com/watch?v=mpx6bgzUjsI",
+        "review_reason": "model_interview"
+      },
+      "input_sha256": "97a17ddc93bfc1ffbba68908c3957a52af2261e5b7712a5739476d992e826be2",
+      "suggestion": {
+        "id": "mpx6bgzUjsI",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 162.1,
+        "suggestion": "interview",
+        "confidence": 0.39,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-10T00:29:19.431815+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_interview",
+      "last_frames_at": "2026-11-10T00:34:51.110293+00:00"
+    },
+    "cVZ9-tkVz4A": {
+      "item": {
+        "id": "cVZ9-tkVz4A",
+        "title": "Linda Noskova on WTA Finals Debut | 2026 FAGE WTA Finals Indian Wells",
+        "duration_s": 209,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-10T00:29:19.431815+00:00",
+        "url": "https://www.youtube.com/watch?v=cVZ9-tkVz4A",
+        "review_reason": "model_uncertain"
+      },
+      "input_sha256": "272c02f53d34e57ab79b4a97c1a4647702b7232e728cc5a0b84dde1281f97023",
+      "suggestion": {
+        "id": "cVZ9-tkVz4A",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 94.9,
+        "suggestion": "uncertain",
+        "confidence": 0.54,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-10T00:29:19.431815+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_uncertain",
+      "last_frames_at": "2026-11-10T00:34:51.110091+00:00"
     }
   }
 }
