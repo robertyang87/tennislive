@@ -20,7 +20,7 @@
     "source_id": "808_2026_LS019",
     "flashscore_id": "Olq4fJX0",
     "participants": [
-      "安德烈娃",
+      "米拉·安德烈耶娃",
       "斯维托丽娜"
     ],
     "set_scores_home_away": [
@@ -37,7 +37,7 @@
       null,
       null
     ],
-    "winner": "安德烈娃",
+    "winner": "米拉·安德烈耶娃",
     "loser": "斯维托丽娜",
     "winner_en": "Mirra Andreeva",
     "loser_en": "Elina Svitolina",
@@ -53,15 +53,15 @@
   "cover": {
     "eyebrow": "赛场之上",
     "layout": "solo",
-    "subject": "安德烈娃",
-    "winner": "安德烈娃",
+    "subject": "米拉·安德烈耶娃",
+    "winner": "米拉·安德烈耶娃",
     "result": "6-4 6-0",
     "topic": "WTA年终总决赛 印第安韦尔斯 小组赛 · 安德烈娃 VS 斯维托丽娜",
     "hook": "对手6次机会全落空\n安德烈娃年终首胜",
     "hook_accent": "年终首胜",
     "matchup": [
       {
-        "name": "安德烈娃",
+        "name": "米拉·安德烈耶娃",
         "name_en": "Mirra Andreeva",
         "country": "RUS",
         "rank": 3
@@ -132,7 +132,7 @@
   },
   "topbar": {
     "line1": "2026 WTA年终总决赛 印第安韦尔斯 小组赛",
-    "line2": "安德烈娃 6-4 6-0 斯维托丽娜"
+    "line2": "米拉·安德烈耶娃 6-4 6-0 斯维托丽娜"
   },
   "segments": [
     {
@@ -322,14 +322,10 @@
             "value": "6–0",
             "source": "https://www.wtatennis.com/news/4607100/andreeva-wins-final-seven-games-to-beat-svitolina-in-fage-wta-finals-debut"
           }
-        ],
-        "summary": {
-          "label": "安德烈娃收官",
-          "value": "连赢7局",
-          "source": "https://www.wtatennis.com/news/4607100/andreeva-wins-final-seven-games-to-beat-svitolina-in-fage-wta-finals-debut"
-        }
+        ]
       },
-      "_reading_plan": "按标点作语义停顿，比分和球员全名内部连续；每段只强调当前局面或结果，不把完整句子拆到下一段。"
+      "_reading_plan": "按标点作语义停顿，比分和球员全名内部连续；每段只强调当前局面或结果，不把完整句子拆到下一段。",
+      "subtitle_bottom": 260
     },
     {
       "_id": "last-game-save-breakpoint",
@@ -554,5 +550,7 @@
     "method": "current_assistant_complete_contact_sheets_plus_dense_selected_windows",
     "external_model_pass_claimed": false,
     "human_listening_claimed": false
-  }
+  },
+  "_topic_format_why": "结构化姓名按历史头像登记使用米拉·安德烈耶娃，封面比分栏、正片顶栏与统计页保留全名。原生海报实测全名会使副标题把斯维托丽娜拆成两行，因此仅这一处栏目副标题沿用同一球员的通用简称安德烈娃；英文Mirra Andreeva、WTA头像ID及同场来源均已核实，未更换球员。",
+  "_hit_data": "已逐项核对WTA官方808/2026/LS019统计、官方赛报与Flashscore Olq4fJX0。主线采用全部6个破发点化解、其中最后一局4次，以及从首盘最后一局开始连赢7局；6次机会与6-0结果构成钩子反差。一发得分率88%（28/32）保留在统计页；总得分68比45只作数据页，不用总分差当胜负落点。下场交手承接已核实的2025印第安韦尔斯决赛，不把她说成去年参加过年终赛。原始统计和官方赛报均已哈希归档于data/evidence/reels/andreeva-svitolina-finals-2026-group2。"
 }

@@ -1,0 +1,23 @@
+{
+  "method": "assistant_visual_review_of_native_final_film_samples",
+  "reviewed_at": "2026-11-10T03:33:01.051717+00:00",
+  "status": "pass",
+  "film_sha256": "b91fa65c08a51aa19c9426a6829b65ed81d4ae8988dee5646466cdd010a0a5ad",
+  "film_bytes": 75916363,
+  "spec_sha256": "4925a0589e2111b2d25ace055101f9ddc9b3014db5d7c858dfaf86d2304c4d30",
+  "sample_manifest": "frame-manifest.json",
+  "scope": "Representative native sample of every segment; selected dissolve phases; final branded frame; all four narration cues of corrected card. Not continuous human viewing or listening.",
+  "findings": {
+    "cover_and_identity": "Same-match professional photo; full registered scoreboard name fits; semantic hook lines and topic intact.",
+    "court_and_board": "Native fixed crop, whole-board samples and complete point/reaction selections retained.",
+    "bilingual_result_caption": "At209.16s subtitles remain above GROUP STAGE/result bar; full long English phrase is readable.",
+    "corrected_score_card": "Original duplicate summary removed; complete headline and6-4/6-0 proof intact. All four actual native narration cues at142.56/144.80/147.08/150.00s occupy their separate lower lane without covering score boxes or footer.",
+    "motion": "Representative encoded blend phases preserve adjacent images without an intervening black image; native shared animation retained.",
+    "statistics": "Andreeva left / Svitolina right; 6-4/6-0, first-serve points28/32=88%, BP conversions4/6 vs0/6 and points68/45 match verified source packet.",
+    "ending": "Complete final point, handshake/reaction, next-Sabalenka question, branded ending visible."
+  },
+  "native_qc": "pass",
+  "voice_review": "automated_voice_suite pass; no human auditory approval claimed",
+  "release_download_byte_identity_verified": true,
+  "formal_run": "https://github.com/robertyang87/tennislive/actions/runs/42749154142"
+}

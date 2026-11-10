@@ -1,0 +1,16 @@
+{
+  "reviewed_at": "2026-11-10T03:05:51.653151+00:00",
+  "failed_run": "https://github.com/robertyang87/tennislive/actions/runs/42744850877",
+  "finding": "头像核对：同一 wta-331809 历史全名为米拉·安德烈耶娃，本片为简称安德烈娃。实际头像人正确。",
+  "correction": "cover.matchup、cover.winner/subject、_match participants/winner、topbar.line2、发布正文标题统一完整登记名；cover.topic 为避免原生海报副标题拆开对手姓名，使用既有通用简称并按既有 _topic_format_why 明确认领。旁白、素材窗口、比分及配音输入不变。",
+  "spec_sha256": "a9d11f7ce254d4660c51d63e9832c23248a845440c8e18eaf51d322824df9322",
+  "checks": {
+    "native_cover": "full name fits scoreboard; hook unchanged, visible face preserved",
+    "native_stat_card": "correct Mirra Andreeva left, Svitolina right; full name fits",
+    "headshot_identity": "pass",
+    "audio_review_readiness": "7 packets verified; unchanged audio plan",
+    "native_dry_run": "full native render preflight passes with all linked identity fields, not only a shape check"
+  },
+  "final_film_qc": "pending new formal render",
+  "additional_pre_encoding_failure": "42746438778: incomplete name propagation caught before encoding; current complete dry-run passes"
+}
