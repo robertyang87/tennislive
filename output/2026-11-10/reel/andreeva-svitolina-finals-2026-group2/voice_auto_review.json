@@ -1,0 +1,622 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "3451df7cdd22eae01a788c9c9819dff56e65218fdc2ff7dc6f38270de0cd6df7",
+    "render_inputs_sha256": "dbe06eb3d2cb668aed9c7590a84605f90452d93a942511b77e57acbc93b2663d",
+    "spec_sha256": "a9d11f7ce254d4660c51d63e9832c23248a845440c8e18eaf51d322824df9322",
+    "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
+    "inventory_sha256": "be336da5324c16b9b87d7acf90f9708e5dfb6d1bd227545ae20530e89f8e0760"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-10T03:17:12+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:03b585f23dd37b1c8093a0c3f5e2f6c32ab9bb090f91fdb781b1a9e3a9db5eb0",
+      "audio_sha256": "64558e40383d648420638b98a3fc30cb72d76f8ca274f57a1abc20d33865a37a",
+      "pass": true,
+      "result_of": "bundle:03b585f23dd37b1c8093a0c3f5e2f6c32ab9bb090f91fdb781b1a9e3a9db5eb0"
+    },
+    {
+      "id": "bundle:4c8d828cc36a1ad7e641c451e2be583e53f03e5237a3211f4d5e4fbce7d1b478",
+      "audio_sha256": "e0f5337fab223be67ab97963a2c379e577a35377d197a667ca3e88abeb6d3592",
+      "pass": true,
+      "result_of": "bundle:4c8d828cc36a1ad7e641c451e2be583e53f03e5237a3211f4d5e4fbce7d1b478"
+    },
+    {
+      "id": "bundle:a3a7382dca9bd0c5c56a5b3565efc634012da660091d27a0860d5bcdb606bea3",
+      "audio_sha256": "4b46861d96425bd7b7c5e11fdb85714ab59705f0b39b5a85bbeae343cf8f0d74",
+      "pass": true,
+      "result_of": "bundle:a3a7382dca9bd0c5c56a5b3565efc634012da660091d27a0860d5bcdb606bea3"
+    },
+    {
+      "id": "bundle:a7cf0c0beb73710cbbffccff006be73fd0588c1ce9cb6ffb76fcff61ebdf796f",
+      "audio_sha256": "6279b9d384afcdb9893b74fda47ca9fd0b3dcbfeb1394fcbbc710190e6de482a",
+      "pass": true,
+      "result_of": "bundle:a7cf0c0beb73710cbbffccff006be73fd0588c1ce9cb6ffb76fcff61ebdf796f"
+    },
+    {
+      "id": "bundle:aa3968db3d34a1aef92344e08dfa2764f1806b79578b6d587bbe8640d190d74f",
+      "audio_sha256": "c92dc375d6abce40d588d08259f6047aa4be7f77684424dfbf040eaf439fd66a",
+      "pass": true,
+      "result_of": "bundle:aa3968db3d34a1aef92344e08dfa2764f1806b79578b6d587bbe8640d190d74f"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:bd014e1f0b67ecb6d3a2f748c9e40910dd8fdcc34e7d79f39a925aa9fbb945fd",
+      "audio_sha256": "107162c531b553696e878b8db6777d131d23280b4fae4d56fcda25db57d6aaf2",
+      "pass": true,
+      "result_of": "bundle:bd014e1f0b67ecb6d3a2f748c9e40910dd8fdcc34e7d79f39a925aa9fbb945fd"
+    },
+    {
+      "id": "bundle:cd17d967031b6c9bed787150dbf91958ff050ba00533c344e65670998da98af8",
+      "audio_sha256": "f51a79d1a50d1f2d884d0328af4b87340577543dd0db0b987a6c63afc11908d9",
+      "pass": true,
+      "result_of": "bundle:cd17d967031b6c9bed787150dbf91958ff050ba00533c344e65670998da98af8"
+    },
+    {
+      "id": "bundle:d033939834cc7c74f3601413dd67e5d6845c75c4a3b7cc5578a6856a4708c0b4",
+      "audio_sha256": "26e2f926363a75ea8beed97f475144b131a4151823b80b7e8a5e12fe44f0917f",
+      "pass": true,
+      "result_of": "bundle:d033939834cc7c74f3601413dd67e5d6845c75c4a3b7cc5578a6856a4708c0b4"
+    },
+    {
+      "id": "bundle:f722bdb96aaf135f8535ff7f4ec53a76f244bcedb5d08355c94cef737eb885b1",
+      "audio_sha256": "587f11705d9a83e347b7ec47a8cb714a8134b434b1fdd2a100c2b6902e0608f1",
+      "pass": true,
+      "result_of": "bundle:f722bdb96aaf135f8535ff7f4ec53a76f244bcedb5d08355c94cef737eb885b1"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "e0f5337fab223be67ab97963a2c379e577a35377d197a667ca3e88abeb6d3592",
+      "pass": true,
+      "result_of": "bundle:4c8d828cc36a1ad7e641c451e2be583e53f03e5237a3211f4d5e4fbce7d1b478"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "c92dc375d6abce40d588d08259f6047aa4be7f77684424dfbf040eaf439fd66a",
+      "pass": true,
+      "result_of": "bundle:aa3968db3d34a1aef92344e08dfa2764f1806b79578b6d587bbe8640d190d74f"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "587f11705d9a83e347b7ec47a8cb714a8134b434b1fdd2a100c2b6902e0608f1",
+      "pass": true,
+      "result_of": "bundle:f722bdb96aaf135f8535ff7f4ec53a76f244bcedb5d08355c94cef737eb885b1"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "6279b9d384afcdb9893b74fda47ca9fd0b3dcbfeb1394fcbbc710190e6de482a",
+      "pass": true,
+      "result_of": "bundle:a7cf0c0beb73710cbbffccff006be73fd0588c1ce9cb6ffb76fcff61ebdf796f"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "64558e40383d648420638b98a3fc30cb72d76f8ca274f57a1abc20d33865a37a",
+      "pass": true,
+      "result_of": "bundle:03b585f23dd37b1c8093a0c3f5e2f6c32ab9bb090f91fdb781b1a9e3a9db5eb0"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "107162c531b553696e878b8db6777d131d23280b4fae4d56fcda25db57d6aaf2",
+      "pass": true,
+      "result_of": "bundle:bd014e1f0b67ecb6d3a2f748c9e40910dd8fdcc34e7d79f39a925aa9fbb945fd"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "4b46861d96425bd7b7c5e11fdb85714ab59705f0b39b5a85bbeae343cf8f0d74",
+      "pass": true,
+      "result_of": "bundle:a3a7382dca9bd0c5c56a5b3565efc634012da660091d27a0860d5bcdb606bea3"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "f51a79d1a50d1f2d884d0328af4b87340577543dd0db0b987a6c63afc11908d9",
+      "pass": true,
+      "result_of": "bundle:cd17d967031b6c9bed787150dbf91958ff050ba00533c344e65670998da98af8"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "26e2f926363a75ea8beed97f475144b131a4151823b80b7e8a5e12fe44f0917f",
+      "pass": true,
+      "result_of": "bundle:d033939834cc7c74f3601413dd67e5d6845c75c4a3b7cc5578a6856a4708c0b4"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:03b585f23dd37b1c8093a0c3f5e2f6c32ab9bb090f91fdb781b1a9e3a9db5eb0",
+      "text": "六比四先赢一盘。第二盘，双方还在底线正反手拉锯。安德烈娃继续争对手的发球局，把优势往前推。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6比4先赢一盘。第二盘,双方还在底线正反手拉距。安德烈娃继续争对手的发球局,把优势往前推。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.427,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 34,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.821,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比四 ｜ 先 ｜ 赢 ｜ 一 ｜ 盘 ｜ 第二盘 ｜ 双方 ｜ 还 ｜ 在 ｜ 底线 ｜ 正反 ｜ 手 ｜ 拉锯 ｜ 安德烈娃 ｜ 继续 ｜ 争 ｜ 对手 ｜ 的 ｜ 发球 ｜ 局 ｜ 把 ｜ 优势 ｜ 往前 ｜ 推"
+      }
+    },
+    {
+      "id": "bundle:4c8d828cc36a1ad7e641c451e2be583e53f03e5237a3211f4d5e4fbce7d1b478",
+      "text": "北京时间十一月十日清晨，印第安韦尔斯年终总决赛小组赛。第一次站上这个舞台，安德烈娃怎样把六次危机全部守住？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间十一月十日清晨,印第安威尔斯年中总决赛小组赛。第一次站上这个舞台,安德烈娃怎样把六次危机全部守住。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 9.505,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十日 ｜ 清晨 ｜ 印第安韦尔斯 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 第一次 ｜ 站 ｜ 上 ｜ 这个 ｜ 舞台 ｜ 安德烈娃 ｜ 怎样 ｜ 把 ｜ 六次 ｜ 危机 ｜ 全部 ｜ 守 ｜ 住"
+      }
+    },
+    {
+      "id": "bundle:a3a7382dca9bd0c5c56a5b3565efc634012da660091d27a0860d5bcdb606bea3",
+      "text": "最后一局，四个破发点全部化解。对手的机会过去了，这一次，轮到安德烈娃拿赛点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后一局,四个破发点全部化解,对手的机会过去了。这一次,轮到安德烈娃拿赛点。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.347,
+        "cps": 4.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 一 ｜ 局 ｜ 四个 ｜ 破发 ｜ 点 ｜ 全部 ｜ 化解 ｜ 对手 ｜ 的 ｜ 机会 ｜ 过去了 ｜ 这 ｜ 一次 ｜ 轮 ｜ 到 ｜ 安德烈娃 ｜ 拿 ｜ 赛点"
+      }
+    },
+    {
+      "id": "bundle:a7cf0c0beb73710cbbffccff006be73fd0588c1ce9cb6ffb76fcff61ebdf796f",
+      "text": "五比四，发球胜盘局，却遇到破发点。这一次的底线拉锯，她能先把危机挡回去吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 32,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "5比4,发球胜盘局,却遇到破发点。这一次的底线拉距,他能先把危机挡回去吗?"
+      },
+      "polyphones": [
+        {
+          "index": 4,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 14,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 32,
+        "speech_s": 7.04,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五比四 ｜ 发球 ｜ 胜 ｜ 盘 ｜ 局 ｜ 却 ｜ 遇到 ｜ 破发 ｜ 点 ｜ 这 ｜ 一次 ｜ 的 ｜ 底线 ｜ 拉锯 ｜ 她 ｜ 能 ｜ 先 ｜ 把 ｜ 危机 ｜ 挡 ｜ 回去 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:aa3968db3d34a1aef92344e08dfa2764f1806b79578b6d587bbe8640d190d74f",
+      "text": "一边是十九岁的年终总决赛新人，一边是二零一八年的冠军斯维托丽娜。安德烈娃要先拿下的，是自己的第一场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "一边是19岁的年种总决赛新人,一边是2018年的冠军,此为托丽娜。安德烈娃要先拿下的,是自己的第一场。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 9.045,
+        "cps": 5.09,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一边 ｜ 是 ｜ 十九岁 ｜ 的 ｜ 年终 ｜ 总决赛 ｜ 新人 ｜ 一边 ｜ 是 ｜ 二零一八 ｜ 年 ｜ 的 ｜ 冠军 ｜ 斯维托丽娜 ｜ 安德烈娃 ｜ 要 ｜ 先 ｜ 拿下 ｜ 的 ｜ 是 ｜ 自己 ｜ 的 ｜ 第一场"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:bd014e1f0b67ecb6d3a2f748c9e40910dd8fdcc34e7d79f39a925aa9fbb945fd",
+      "text": "从首盘最后一局起，她最终连赢七局。但第二盘五比零时，斯维托丽娜还在给她出难题。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从手盘最后一举起,他最终连营七举。但第二盘五比零十,斯维托丽娜还在给他出难题。"
+      },
+      "polyphones": [
+        {
+          "index": 31,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.58,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.5,
+        "cps": 4.67,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 首盘 ｜ 最后 ｜ 一 ｜ 局 ｜ 起 ｜ 她 ｜ 最终 ｜ 连 ｜ 赢 ｜ 七局 ｜ 但 ｜ 第二盘 ｜ 五比零时 ｜ 斯维托丽娜 ｜ 还 ｜ 在 ｜ 给 ｜ 她 ｜ 出难题"
+      }
+    },
+    {
+      "id": "bundle:cd17d967031b6c9bed787150dbf91958ff050ba00533c344e65670998da98af8",
+      "text": "她握拳，笑了，又举手向看台致意。第一次来到这个舞台，她用一场胜利，和它打了招呼。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "他握拳、笑了,又举手向看台致意。第一次来到这个舞台,他用一场胜利和他打了招呼。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.677,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 握拳 ｜ 笑 ｜ 了 ｜ 又 ｜ 举手 ｜ 向 ｜ 看台 ｜ 致意 ｜ 第一次 ｜ 来到 ｜ 这个 ｜ 舞台 ｜ 她 ｜ 用 ｜ 一 ｜ 场 ｜ 胜利 ｜ 和 ｜ 它 ｜ 打 ｜ 了 ｜ 招呼"
+      }
+    },
+    {
+      "id": "bundle:d033939834cc7c74f3601413dd67e5d6845c75c4a3b7cc5578a6856a4708c0b4",
+      "text": "六比四、六比零。上次在印第安韦尔斯交手时，赢的是安德烈娃。下一场，她还能再赢萨巴伦卡吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "6比4﹑6比0﹑上次在印第安威尔斯交手时,赢的是安德烈娃。下一场,他还能再赢萨巴伦卡吗?"
+      },
+      "polyphones": [
+        {
+          "index": 34,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.655,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 9.021,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "六比四 ｜ 六比零 ｜ 上次 ｜ 在 ｜ 印第安韦尔斯 ｜ 交手 ｜ 时 ｜ 赢 ｜ 的 ｜ 是 ｜ 安德烈娃 ｜ 下 ｜ 一 ｜ 场 ｜ 她 ｜ 还 ｜ 能 ｜ 再 ｜ 赢 ｜ 萨巴伦卡 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:f722bdb96aaf135f8535ff7f4ec53a76f244bcedb5d08355c94cef737eb885b1",
+      "text": "首盘二比二，斯维托丽娜的双误送出破发。三比二领先后，安德烈娃得把自己的发球局，一局一局守住。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘二比二,斯维托丽娜的双误送出破发。三比二领先后,安德烈娃得把自己的发球局一局一局守住。"
+      },
+      "polyphones": [
+        {
+          "index": 17,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 30,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.479,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 二比二 ｜ 斯维托丽娜 ｜ 的 ｜ 双 ｜ 误 ｜ 送 ｜ 出 ｜ 破发 ｜ 三比二 ｜ 领先 ｜ 后 ｜ 安德烈娃 ｜ 得 ｜ 把 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 一 ｜ 局 ｜ 一 ｜ 局 ｜ 守 ｜ 住"
+      }
+    }
+  ]
+}
