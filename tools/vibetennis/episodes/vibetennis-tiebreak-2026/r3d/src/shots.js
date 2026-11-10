@@ -236,10 +236,10 @@ function shotMath(u,D){
   seqRow(r,x0,1.35,cw,o,{k:(u-RC)*16,hl:12}); seqRow(r2,x0,0.5,cw,o,{k:(u-RC-0.25)*16,hl:12});
   const hl=ss(MO,MO+0.4,u); const g=gs(GO,1.3,0.45*o*hl); g.position.copy(hp(x0+cw*12.5,0.92));
   lab('mrT',T('改成先到 7 分就赢：最多 13 分（上：一人一分 · 下：一二二二）','first to 7, no margin: at most 13 points (top: one each · bottom: 1-2-2-2)'),0,2.2,o,{size:0.3,plate:true});
-  lab('mrC',T('甲发 7 个 · 乙发 6 个','A serves 7 · B serves 6'),0,-0.25,o*hl,{size:0.36,color:'#ffe2a0',glow:GOLD});
-  const p=ss(PC-0.2,PC+0.6,u); num('mr536','53.6%',GO,0.8,-1.6,-1.05,o*p); num('mr464','46.4%',CY,0.55,2.0,-1.05,o*p*0.85);
-  lab('mrA',T('先发的人','first server'),-3.6,-1.05,o*p,{size:0.28,color:'#ffe2a0',glow:GOLD}); lab('mrB',T('后发的人','second server'),3.7,-1.05,o*p,{size:0.28});
-  lab('mrS',T('两种顺序都一样 · 按发球赢 65% 推算','same for both orders · assuming 65% on serve'),0,-1.75,o*p,{size:0.24,color:'#aab8c8'});
+  lab('mrC',T('甲发 7 个 · 乙发 6 个 · 两种顺序都一样','A serves 7 · B serves 6 · same for both orders'),0,-0.25,o*hl,{size:0.36,color:'#ffe2a0',glow:GOLD});
+  const p=ss(PC-0.2,PC+0.6,u); num('mr536','53.6%',GO,0.8,-1.6,-0.95,o*p); num('mr464','46.4%',CY,0.55,2.2,-0.95,o*p*0.85);
+  lab('mrA',T('先发的人','first server'),-1.6,-1.72,o*p,{size:0.28,color:'#ffe2a0',glow:GOLD}); lab('mrB',T('后发的人','second server'),2.2,-1.72,o*p,{size:0.28});
+  lab('mrS',T('按发球赢 65% 推算','assuming 65% on serve'),4.3,-0.95,o*p,{size:0.24,color:'#aab8c8'});
 }
 
 // ---------- 5 那图什么：换手 11 次 vs 6 次 → 一直在追 → Thue–Morse 一层层长出来 → 每层轮流当先手 → 网球只抄第一层 ----------
