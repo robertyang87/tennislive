@@ -1,4 +1,4 @@
-"""vibetennis EP11 阻力危机：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
+"""vibetennis EP12 抢七轮发：时间轴。按 voice/ 实测配音时长排每句旁白的起点（写回 narration.json 的 at），
 生成 r3d/timeline.json 和 r3d/shots.js（每段的起止秒、镜头类型、每句开口时刻、画面事件时刻）。
 
     python3 plan.py            # 有 voice/*.json 词边界就按实测排
@@ -11,31 +11,30 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
 EST = "--estimate" in sys.argv
 GAP, SEC_GAP, LEAD = 0.35, 0.9, 0.3
-SECTIONS = [(n, n) for n in ("hook", "eiffel", "layer", "golf", "football", "tennis", "fluff", "itf", "end")]
+SECTIONS = [(n, n) for n in ("hook", "rule", "edge", "math", "why", "soccer", "data", "end")]
 # 每句最短停留（从这句开口到下一句开口）：给这句的动效留够时间
-HOLD = {"h0": 3.2, "h1": 9.6, "h2": 3.6, "h3": 4.6, "h4": 6.4,
-        "e0": 6.0, "e1": 6.0, "e2": 7.2, "e3": 6.0,
-        "l0": 4.6, "l1": 7.8, "l2": 6.8, "l3": 4.4, "l4": 8.0,
-        "g0": 3.0, "g1": 6.0, "g2": 5.4,
-        "f0": 2.6, "f1": 3.4, "f2": 7.0,
-        "t0": 2.4, "t1": 7.4, "t2": 5.8, "t3": 8.6, "t4": 4.4, "t5": 5.0,
-        "u0": 5.0, "u1": 5.0, "u2": 5.6,
-        "i0": 2.8, "i1": 6.4, "i2": 4.6,
-        "n0": 4.8, "n1": 5.4, "n2": 5.0}
+HOLD = {"h0": 5.0, "h1": 5.6, "h2": 6.4, "h3": 7.2, "h4": 4.0,
+        "r0": 4.4, "r1": 9.4,
+        "e0": 7.0, "e1": 7.0, "e2": 6.2,
+        "m0": 3.0, "m1": 9.6, "m2": 6.4, "m3": 6.6, "m4": 9.6, "m5": 6.4, "m6": 6.4,
+        "w0": 8.0, "w1": 4.6, "w2": 8.4, "w3": 8.8, "w4": 7.4, "w5": 5.0,
+        "f0": 7.0, "f1": 5.4, "f2": 6.6, "f3": 6.0,
+        "d0": 9.4, "d1": 7.4,
+        "n0": 7.6, "n1": 6.4, "n2": 4.6}
 MIN_SEC = {}
-EV = [("hook", "q", "h0", None), ("hook", "shave", "h1", "剃光"), ("hook", "serve", "h1", "公里"), ("hook", "fork", "h1", "可能只剩"),
-      ("hook", "wobble", "h2", None), ("hook", "steady", "h3", None), ("hook", "brake", "h4", "刹车"), ("hook", "stab", "h4", "稳定器"), ("hook", "tower", "h4", "铁塔"),
-      ("eiffel", "rise", "e0", None), ("eiffel", "tunnel", "e0", "风洞"), ("eiffel", "drop", "e1", "突然掉"), ("eiffel", "cliff", "e2", None),
-      ("eiffel", "name", "e2", "阻力危机"), ("eiffel", "wire", "e3", "细线"),
-      ("layer", "zoom", "l0", None), ("layer", "bl", "l0", "边界层"), ("layer", "lam", "l1", "层流"), ("layer", "sep", "l1", "脱开"),
-      ("layer", "turb", "l2", "湍流"), ("layer", "narrow", "l3", "变窄"), ("layer", "re", "l4", "雷诺数"),
-      ("golf", "g", "g0", None), ("golf", "dimple", "g1", "凹坑"), ("golf", "shift", "g1", "更低的速度"), ("golf", "drive", "g2", "开球"),
-      ("football", "f", "f0", None), ("football", "edge", "f1", "悬崖附近"), ("football", "knuckle", "f2", "忽左忽右"),
-      ("tennis", "q", "t0", None), ("tennis", "band", "t1", "换算成"), ("tennis", "flip", "t2", "时而"), ("tennis", "flat", "t3", "抹平"),
-      ("tennis", "fuzz", "t3", "每根毛"), ("tennis", "cd", "t3", "上下"), ("tennis", "labs", "t4", None), ("tennis", "rally", "t5", "一来一回"),
-      ("fluff", "fl", "u0", "毛越蓬"), ("fluff", "pick", "u1", "挑一颗"), ("fluff", "cash", "u2", "温网冠军"),
-      ("itf", "i", "i0", None), ("itf", "big", "i1", "标准球"), ("itf", "area", "i2", "迎风面积"),
-      ("end", "n0", "n0", None), ("end", "slow", "n1", "慢下来"), ("end", "q", "n2", None)]
+EV = [("hook", "pts", "h0", "多赢"), ("hook", "lose", "h0", "却输掉"), ("hook", "tb", "h1", None), ("hook", "tb3", "h1", "最后一个"),
+      ("hook", "order", "h2", None), ("hook", "one", "h2", "只发一分"), ("hook", "two", "h2", "连发两分"), ("hook", "why", "h3", None), ("hook", "seq", "h3", "数列"),
+      ("hook", "same", "h3", "前四位"), ("hook", "q2", "h4", None),
+      ("rule", "game", "r0", None), ("rule", "tb", "r1", None), ("rule", "ch", "r1", "每打"),
+      ("edge", "pct", "e0", None), ("edge", "dj", "e0", "德约"), ("edge", "fd", "e0", "费德勒"), ("edge", "abab", "e1", None), ("edge", "chase", "e1", "一直在追"), ("edge", "abba", "e2", None),
+      ("math", "m0", "m0", None), ("math", "calc", "m1", None), ("math", "r1", "m1", "一人一分"), ("math", "r2", "m1", "也是"), ("math", "model", "m2", None), ("math", "key", "m2", "秘密"),
+      ("math", "ex", "m3", None), ("math", "fill", "m3", "全打完"), ("math", "twelve", "m4", None), ("math", "after", "m4", "每两分"), ("math", "race", "m5", None),
+      ("math", "more", "m5", "对手只发"), ("math", "pct", "m6", None),
+      ("why", "sw", "w0", None), ("why", "cnt", "w0", "只换"), ("why", "ch", "w1", None), ("why", "build", "w2", None), ("why", "ab", "w2", "得到"), ("why", "abba2", "w2", "再接上"),
+      ("why", "tm", "w3", None), ("why", "hist", "w3", "论文"), ("why", "layer", "w4", None), ("why", "econ", "w4", "经济学家"), ("why", "tennis", "w5", None), ("why", "split", "w5", "第五位"),
+      ("soccer", "q", "f0", None), ("soccer", "pk", "f0", "点球"), ("soccer", "s60", "f1", None), ("soccer", "ifab", "f2", None), ("soccer", "stop", "f2", "又决定"), ("soccer", "big", "f3", None),
+      ("data", "d", "d0", None), ("data", "res", "d0", "先发和后发"), ("data", "blog", "d1", None),
+      ("end", "n0", "n0", None), ("end", "tip", "n1", None), ("end", "q", "n2", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用
 d = json.load(open("narration.json")); byf = {l["file"]: l for l in d["lines"]}
 PUNCT = "，。：；？！、—"

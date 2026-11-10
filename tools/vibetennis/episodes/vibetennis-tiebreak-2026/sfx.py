@@ -1,4 +1,4 @@
-# vibetennis EP11 阻力危机音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
+# vibetennis EP12 抢七轮发音效床：音效用 numpy/scipy 现场合成（音色同第 5～7 集 sfx.py），
 # 每个音效钉在 r3d/timeline.json 的画面事件（sec.ev，plan.py 按配音词边界排）和 scene.js 各镜头的动画节点上——画面动、声音同时到。
 # BGM 同第 4、5 集：robertyang87/vibeknowledge 的 assets/music/we-never-remix-hi-noise-qiucheng.m4a。
 import numpy as np, soundfile as sf, sys, json, math, os
@@ -189,49 +189,59 @@ def whoosh_fast(d=0.35): t=tt(d); return bp(rng.standard_normal(len(t)),1500,800
 def tick_seq(t0,n,gap,g=0.35,name=None):
     for i in range(n): EN(t0+i*gap,tick(),g,name=(name+'-%d'%i) if (name and i==0) else None)
 
-# 01 钩子：毛茸茸的网球 → 剃毛 → 同一记 200 km/h 发球（光球忽快忽慢、网球稳）→ 刹车、稳定器 → 铁塔
-h=SEC['hook']; SHv=E('hook','shave',3.6); SVv=E('hook','serve',5.2); FKv=E('hook','fork',7.6); WBv=E('hook','wobble',13.1); SDv=E('hook','steady',16.7); BRk=E('hook','brake',22.4); STb=E('hook','stab',23.5); TWr=E('hook','tower',25.8)
-EN(h['t0']+0.2,hum(3.4,70),0.3,name='macro'); EN(h['t0']+0.3,sparkle(1.4),0.35,name='fuzz')
-EN(SHv-0.3,riser(0.3),0.4); EN(SHv,whoosh_fast(0.5),0.6,name='SHAVE'); EN(SHv+0.05,crackle(0.8),0.5); EN(SHv+0.1,rain_hiss(1.2),0.4)
-EN(SVv,pock(1.0),0.8,name='SERVE'); EN(SVv+0.05,swish(0.9,600,4200),0.4)
-t=SVv+3.4
-while t<TWr-0.8: EN(t,pock(1.0),0.5); EN(t+0.05,swish(0.8,600,4200),0.3); t+=3.4
-EN(FKv,glitch(0.5),0.4,name='fork'); EN(WBv,zap(1600,600,0.4),0.35,name='wobble'); EN(SDv,ding(880),0.4,name='steady')
-EN(BRk,sub_boom(),0.8,name='BRAKE'); EN(BRk,slam(),0.6); EN(STb,sub_boom(),0.6,name='STABILISER'); EN(STb+0.05,chime([72,79],0.12,0.4),0.4)
-EN(TWr-0.3,riser(1.0),0.4,name='tower-rise'); EN(TWr+0.6,boom(2.5),0.35)
-# 02 埃菲尔：铁塔 → 风洞起风 → 阻力突然掉 → 悬崖数字 → 阻力危机 → 细线
-RS=E('eiffel','rise',0.5); TNn=E('eiffel','tunnel',2.8); DRp=E('eiffel','drop',10.3); CLf=E('eiffel','cliff',12.5); NMe=E('eiffel','name',17.4); WRe=E('eiffel','wire',21.9)
-EN(RS,rumble(1.6),0.3,name='tower'); EN(TNn,hiss(6.0,300,3000),0.35,name='wind'); EN(DRp-0.2,riser(0.3),0.4); EN(DRp,sub_boom(),0.7,name='DRAG-DROP'); EN(DRp+0.1,zap(2400,500,0.6),0.35)
-EN(CLf,number_pop(),0.45,name='0.5'); EN(CLf+0.7,number_pop(),0.45,name='0.1'); EN(NMe,slam(),0.6,name='CRISIS'); EN(NMe+0.05,sub_boom(),0.5); EN(WRe,clink(2400),0.45,name='wire')
-# 03 边界层：钻近球面 → 层流 → 分离点 → 湍流 → 尾流变窄 → 雷诺数
-ZM=E('layer','zoom',0.5); BLt=E('layer','bl',3.4); LMn=E('layer','lam',6.7); SPr=E('layer','sep',8.4); TBt=E('layer','turb',16.0); NRw=E('layer','narrow',21.0); REy=E('layer','re',25.8)
-EN(ZM,swish(1.2,300,2400),0.4,name='zoom'); EN(ZM+0.6,hiss(8.0,200,1800),0.25); EN(BLt,blip(1800,0.1,1.0,0.5),0.4,name='layer'); EN(LMn,hum(4.0,80),0.3,name='laminar')
-EN(SPr,ding(1047),0.45,name='separation'); EN(TBt,rain_hiss(2.0),0.4,name='turbulent'); EN(TBt+0.3,zap(600,2400,0.6),0.35); EN(NRw,whoosh_fast(0.4),0.45,name='narrow'); EN(NRw+0.4,slam(),0.35); EN(REy,panel(),0.4,name='Re')
-# 04 高尔夫：凹坑小涡 → 曲线左移 → 开球
-GG=E('golf','g',0.5); DMp=E('golf','dimple',3.9); SFt=E('golf','shift',7.0); DVr=E('golf','drive',9.8)
-EN(GG,swish(0.8,400,3000),0.4,name='golf'); EN(DMp,sparkle(2.0,90),0.35,name='dimple-vortices'); EN(SFt,swish(1.0,300,2000),0.35,name='curve-shift'); EN(DVr,pock(1.4),0.6,name='drive'); EN(DVr+0.1,whoosh_fast(0.6),0.4)
-# 05 足球：悬崖边 → 电梯球（左右摇摆）
-FF=E('football','f',0.5); EDg=E('football','edge',4.6); KNk=E('football','knuckle',8.2)
-EN(FF,squish(0.8),0.5,name='football'); EN(EDg,riser(0.6),0.35,name='edge')
-t=KNk
-while t<SEC['football']['t1']-0.3: EN(t,swish(0.5,500,3000),0.35,pan=-0.6); EN(t+0.45,swish(0.5,500,3000),0.35,pan=0.6); t+=0.9
-# 06 网球：图表 → 球速段 → 没毛时上时下 → 抹平 → 绒毛 → 0.6 → 三组 → 一来一回
-TQ=E('tennis','q',0.5); BDn=E('tennis','band',6.0); FPp=E('tennis','flip',12.8); FLt=E('tennis','flat',17.1); FZz=E('tennis','fuzz',17.9); CDd=E('tennis','cd',21.7); LBs=E('tennis','labs',24.7); RLy=E('tennis','rally',31.8)
-EN(TQ,hit(),0.45,name='q'); EN(BDn,panel(),0.4,name='band'); tick_seq(BDn+0.2,6,0.12,0.3,'band-lines')
-t=FPp
-while t<FLt-0.2: EN(t,glitch(0.3),0.3); t+=0.8
-EN(FLt,swish(1.4,200,1600),0.45,name='FLATTEN'); EN(FLt+0.1,chime([67,72,76],0.14,0.4),0.4); EN(FZz,sparkle(2.0),0.4,name='fuzz-macro'); EN(CDd,number_pop(),0.45,name='0.6'); tick_seq(LBs,3,0.3,0.4,'labs')
-EN(RLy,crowd(SEC['tennis']['t1']-RLy),0.3,name='rally-crowd'); t=RLy+0.2
-while t<SEC['tennis']['t1']-0.2: EN(t,pock(1.0),0.45); t+=1.6
-# 07 毛：紧 vs 蓬 → 挑球 → 卡什
-FLf=E('fluff','fl',2.6); PKk=E('fluff','pick',8.2); CSh=E('fluff','cash',11.2)
-EN(SEC['fluff']['t0']+0.4,hiss(2.0,800,4000),0.3); EN(FLf,number_pop(),0.4,name='fluff'); EN(PKk,crowd(SEC['fluff']['t1']-PKk),0.22); EN(PKk+0.8,bounce(1.0),0.45,name='pick'); EN(PKk+1.4,ding(1320),0.4); EN(CSh,panel(),0.35,name='quote')
-# 08 国际网联大球
-II=E('itf','i',0.5); BGg=E('itf','big',4.0); ARa=E('itf','area',9.7)
-EN(II,swish(0.8,400,2600),0.4,name='itf'); EN(BGg,creak(1.0,140),0.35,name='grow'); EN(BGg+0.9,number_pop(),0.4,name='6pct'); EN(ARa,whoosh_fast(0.5),0.4,name='area'); EN(ARa+0.3,slam(),0.35)
-# 09 结论
-N0=E('end','n0',0.5); SLw=E('end','slow',5.9); QE=E('end','q',10.7)
-EN(N0,hum(4.0,82),0.3); EN(N0+0.2,slam(),0.35,name='title'); EN(SLw,ding(880),0.35,name='slow'); EN(QE,chime([72,76,79,84],0.15,0.45),0.5,name='question')
+# 场上发球：和 scene.js 的 servePoint 同一张时刻表（击球在这一分的 36%，落地在 62%）
+def serves(t0,n,per,g=0.5,until=1e9):
+    for i in range(n):
+        tc=t0+i*per+0.36*per
+        if tc>until: break
+        EN(tc,pock(1.0),g); EN(tc+0.04,swish(0.6,600,4200),g*0.5); EN(t0+i*per+0.62*per,bounce(1.0),g*0.6)
+def pops(t0,n,gap,g=0.3):
+    for i in range(n): EN(t0+i*gap,blip(1500+120*(i%8),0.05,1.25,0.6),g)
+# 01 钩子：218 / 204 砸下 → 三个抢七 → 场上 1-2-2-2 → 两行序列前四位相同 → 问句
+h=SEC['hook']; PT=E('hook','pts',1.0); LO=E('hook','lose',3.2); TB1=E('hook','tb',5.2); TB3=E('hook','tb3',7.6); OR1=E('hook','order',10.0); ONE=E('hook','one',12.4); WHY=E('hook','why',16.6); SQ=E('hook','seq',18.8); SAME=E('hook','same',20.2); Q2=E('hook','q2',22.6)
+EN(h['t0']+0.2,crowd(PT-h['t0']+1.0),0.35,name='crowd'); EN(PT-0.25,riser(0.25),0.4); EN(PT+0.3,sub_boom(),0.7,name='218'); EN(PT+0.3,slam(),0.5); EN(PT+0.75,sub_boom(),0.6,name='204'); EN(PT+0.75,slam(),0.4)
+EN(LO,ding(660),0.4,name='lost')
+for i in range(3):
+    t0=TB1+i*0.75+(max(0,TB3-TB1-1.5) if i==2 else 0); EN(t0+0.3,slam(),0.5 if i<2 else 0.7,name='tb%d'%i); EN(t0+0.3,number_pop(),0.35)
+EN(OR1-0.3,swish(1.0,300,2400),0.4,name='to-court')
+serves(ONE-0.9,7,0.82,0.5,until=WHY+0.4); pops(ONE-0.9-0.6*0.82,8,0.82,0.25)
+EN(SQ,panel(),0.4,name='sequence'); pops(SQ+0.15,8,0.14,0.2); EN(SAME+0.3,chime([72,76,79],0.12,0.4),0.4,name='same-4')
+EN(Q2-0.3,riser(0.3),0.4); EN(Q2,sub_boom(),0.7,name='QUESTION'); EN(Q2,slam(),0.5)
+# 02 规则：一局全是甲发 → 抢七一分一换 → 换边
+r=SEC['rule']; G=E('rule','game',0.3); TBr=E('rule','tb',4.6); CH=E('rule','ch',11.5)
+serves(G+0.2,6,0.66,0.45,until=TBr-0.3); per=min(0.62,(CH+1.6-TBr)/7); serves(TBr-0.2,12,per,0.45,until=r['t1']-0.3); pops(TBr-0.2-0.6*per,12,per,0.2)
+EN(TBr-0.4,swish(0.6,500,3000),0.35,name='tiebreak'); EN(TBr-0.2+6*per,ding(988),0.35,name='change-ends'); EN(TBr-0.2+12*per,ding(988),0.3)
+# 03 发球占优：两根柱 → 账本折线（一人一分）→ 追 → 一二二二
+PC=E('edge','pct',0.3); DJ=E('edge','dj',3.2); FD=E('edge','fd',5.0); AB=E('edge','abab',8.5); CHs=E('edge','chase',12.5); BA=E('edge','abba',15.5)
+EN(PC,panel(),0.4,name='title'); EN(DJ-0.2,riser(0.8),0.35); EN(DJ+0.6,number_pop(),0.45,name='64'); EN(FD-0.2,riser(0.8),0.35); EN(FD+0.6,number_pop(),0.45,name='68.5')
+EN(AB,swish(0.7,400,3000),0.4,name='ledger'); pab=(BA-0.5-AB)/12; [EN(AB+i*pab,tick(),0.35) for i in range(12)]
+EN(CHs,zap(900,500,0.5),0.35,name='chase'); EN(BA,swish(0.7,400,3000),0.4,name='1-2-2-2'); pba=(SEC['edge']['t1']-1.0-BA)/12; [EN(BA+i*pba,tick(),0.35) for i in range(12)]; EN(BA+1.6,chime([67,72],0.12,0.35),0.35)
+# 04 算一算：天平 → 50% = 50% → 净胜两分 → 补打 → 各发 6 个 → 6 平之后 → 53.6%
+M0=E('math','m0',0.3); CA=E('math','calc',2.6); R1=E('math','r1',4.6); R2=E('math','r2',8.4); MD=E('math','model',11.0); KEY=E('math','key',13.6); EX=E('math','ex',17.0); FI=E('math','fill',19.5); TW=E('math','twelve',23.0); AF=E('math','after',27.0); RC=E('math','race',32.0); MO=E('math','more',34.5); PCm=E('math','pct',38.0)
+EN(M0,creak(1.0,120),0.35,name='scale'); EN(CA,panel(),0.35,name='assume'); EN(R1,number_pop(),0.45,name='50a'); EN(R2,number_pop(),0.45,name='50b'); EN(R2+0.3,ding(784),0.4); EN(MD,hum(2.5,80),0.25)
+EN(KEY-0.3,riser(0.3),0.45); EN(KEY,sub_boom(),0.8,name='WIN-BY-TWO'); EN(KEY,slam(),0.6)
+pops(EX,11,0.22,0.25); EN(EX+2.4,number_pop(),0.45,name='7-4'); EN(FI,whoosh_fast(0.4),0.4,name='ghost'); EN(FI+0.5,number_pop(),0.4)
+pops(TW,12,1/14,0.18); pops(TW+0.3,12,1/14,0.18); EN(TW+1.2,chime([72,79],0.12,0.4),0.4,name='6-each'); EN(AF,panel(),0.35,name='pairs')
+EN(RC,swish(0.8,300,2400),0.4,name='race'); pops(RC,13,1/16,0.18); EN(MO,ding(1047),0.45,name='13th'); EN(PCm-0.2,riser(0.6),0.4); EN(PCm+0.3,sub_boom(),0.6,name='53.6'); EN(PCm+0.3,number_pop(),0.4)
+# 05 那图什么：换手折线 → 11 / 6 → 追 → Thue–Morse 一层层长出来 → 层层轮换 → 网球只抄第一层
+SW=E('why','sw',0.3); CN=E('why','cnt',3.0); CHw=E('why','ch',7.5); BU=E('why','build',11.0); ABw=E('why','ab',13.2); AB2=E('why','abba2',15.5); TM=E('why','tm',19.0); HI=E('why','hist',21.0); LY=E('why','layer',26.0); EC=E('why','econ',28.0); TN=E('why','tennis',33.0); SP=E('why','split',35.0)
+for i in range(12): EN(SW+i/7,blip(1200 if i%2 else 1700,0.04,1.1,0.5),0.22)
+EN(CN,number_pop(),0.45,name='11'); EN(CN+0.6,number_pop(),0.45,name='6'); EN(CHw,hum(3.0,70),0.3,name='pressure')
+for k,t0 in enumerate([BU,ABw,AB2,TM,TM+1.0,TM+1.8,TM+2.5]): EN(t0,blip(900*(1.26**k),0.08,1.2,0.7),0.35,name='level%d'%k); EN(t0+0.1,whoosh_fast(0.3),0.25)
+EN(TM,chime([60,67,72,76],0.14,0.45),0.45,name='THUE-MORSE'); EN(HI,panel(),0.3,name='history'); EN(LY,swish(0.8,400,3000),0.35,name='layers'); EN(LY+1.2,swish(0.8,400,3000),0.3); EN(EC,ding(880),0.35,name='economists')
+EN(TN,panel(),0.4,name='compare'); pops(TN,8,1/12,0.2); EN(SP-0.9,chime([72,76],0.12,0.35),0.35,name='same-4'); EN(SP,glitch(0.4),0.4,name='split')
+# 06 足球：一人一脚 → 60% → 2017 试行 → 2018 停掉 → 540 次
+Qs=E('soccer','q',0.3); PK=E('soccer','pk',2.6); S6=E('soccer','s60',6.0); IF=E('soccer','ifab',10.0); STp=E('soccer','stop',13.0); BG=E('soccer','big',16.0)
+EN(SEC['soccer']['t0']+0.2,crowd(SEC['soccer']['t1']-SEC['soccer']['t0']-0.5),0.25,name='stadium')
+t=PK-0.4+0.1*1.1
+while t<SEC['soccer']['t1']-0.6: EN(t,squish(1.0),0.55); EN(t+0.45,whoosh_fast(0.3),0.3); t+=1.1
+EN(S6+0.2,number_pop(),0.5,name='60'); EN(IF,panel(),0.4,name='ifab'); EN(STp,sub_boom(),0.6,name='DROPPED'); EN(STp+0.1,creak(1.2,90),0.35); EN(BG+1.4,rumble(1.6),0.3,name='540'); EN(BG+2.0,ding(660),0.35)
+# 07 网球的真实数据：2621 → 无显著区别 → 50.8 / 49.7
+Dd=E('data','d',0.3); RS=E('data','res',3.2); BL=E('data','blog',6.6)
+EN(Dd,rain_hiss(2.2),0.35,name='2621-particles'); EN(Dd+0.3,number_pop(),0.45,name='2621'); EN(RS,chime([67,72,76],0.14,0.4),0.4,name='no-difference'); EN(BL,panel(),0.4,name='blog'); EN(BL+0.6,number_pop(),0.4)
+# 08 结论
+N0=E('end','n0',0.3); TP=E('end','tip',7.5); QE=E('end','q',11.5)
+EN(N0,hum(4.0,82),0.3); EN(N0+0.2,slam(),0.35,name='title'); serves(TP-0.2,8,0.75,0.4,until=QE+1.5); EN(QE,chime([72,76,79,84],0.15,0.45),0.5,name='question')
 
 # ================= BGM（vibeknowledge 库自有） =================
 import subprocess, re
@@ -242,7 +252,7 @@ song=np.frombuffer(raw,np.float32).reshape(-1,2).astype(np.float64)
 # 循环＋卡点（所有者 2026-11-04「BGM 要循环，同时看看怎么卡点」）：曲子 112.3 BPM，小节 4×0.53194 s，曲内第一个强拍 0.4757 s（librosa 实测）。
 # 小节号 → 段落：0–7 前奏、8–39 主段、40–47 间奏（轻）、48–63 主段、64 起尾段淡出。起点 BGM_OFF 取钩子大问题砸下来那一刻＝第 8 小节线，
 # 之后按「主段 → 间奏 → 主段 → 再从第 8 小节循环」整小节往后拼，不放尾段；拼缝都在小节线上，10 ms 交叉淡化
-BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(16)-BRk   # 「刹车」砸下来那一刻＝第 16 小节线（主段第 8 小节约在发球出手时进来）；第 8 小节对齐会让起点为负
+BAR=4*0.53194; bar=lambda k: 0.4757+k*BAR; BGM_OFF=bar(16)-Q2   # 钩子问句砸下来那一刻＝第 16 小节线（EP12：「它真的让抢七更公平吗？」）
 order=[(BGM_OFF,bar(40)),(bar(40),bar(48)),(bar(48),bar(64))]
 while sum(b1-b0 for b0,b1 in order)<TOTAL+2: order.append((bar(8),bar(40)))
 xf=int(0.01*SR); parts=[]

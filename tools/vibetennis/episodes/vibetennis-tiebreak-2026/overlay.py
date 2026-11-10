@@ -1,9 +1,9 @@
-"""vibetennis EP11 阻力危机：字幕与出处叠加层（VT_LANG=zh|en）。
+"""vibetennis EP12 抢七轮发：字幕与出处叠加层（VT_LANG=zh|en）。
 
 用法：python3 overlay.py <3D 母带.mp4 或 concat 列表.txt> <输出.mp4> <分段锚点.json ...>；python3 overlay.py still <静帧.jpg ...>
 通用函数（字体、字幕框、品牌标、span）沿用 EP07；文案时间跟着 narration.json 的 at 走（plan.py 排定）。
 3D 场景里已经有标签（计时条、油门刹车、人群数据、盐派），这里只补**画面上没有的上下文**，统一放底部。
-每一条都只讲 papers/vibetennis-fuzz-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
+每一条都只讲 papers/vibetennis-tiebreak-2026/sources.md 里核过、可上屏的内容；单源数字不上屏。
 """
 import skia, numpy as np, math, json, sys, subprocess, glob, os
 W,H,FPS=1920,1080,30
@@ -192,8 +192,12 @@ TL=json.load(open(os.path.join(HERE,'r3d','timeline.json')))
 TOP=('s',960,205,C,44); BOT=('s',960,965,C,44)
 # (句子, 开口后几秒起, 持续[None=到下一句开口/秒数], 文案, 位置)
 CAPS=[
-('h1',2.4,None,tr("按阻力公式推算：200 km/h 的发球飞过 23.77 米\n不计重力、落地与旋转；光滑球的阻力系数取 0.5 或 0.1","Drag-law estimate: a 200 km/h serve over 23.77 m\nno gravity, bounce or spin; smooth-ball Cd 0.5 or 0.1"),('s',960,1008,C,30)),
-('n2',0.3,None,tr("评论区说说：你发球前，会挑球吗？","Tell us: do you pick your ball before serving?"),TOP),
+('h0',0.3,None,tr("2019 温网男单决赛：德约 7-6(5) 1-6 7-6(4) 4-6 13-12(3) 费德勒","2019 Wimbledon final: Djokovic d. Federer 7-6(5) 1-6 7-6(4) 4-6 13-12(3)"),('s',960,1008,C,30)),
+('m1',0.3,None,tr("模型：每一分相互独立，发球方赢这一分的概率固定（Brams & Ismail 2018 同一模型）","Model: points independent, server's win chance fixed (same model as Brams & Ismail 2018)"),('s',960,1008,C,30)),
+('m6',0.3,None,tr("算式见本集资料包 tiebreak_math.py；不同的发球胜率，数字会变，偏向先发的方向不变","Code in this episode's tiebreak_math.py; the number shifts with the serve rate, the tilt toward the first server does not"),('s',960,1008,C,30)),
+('w1',0.2,None,tr("这一条是假设：足球和网球的数据都在检验它","This is a hypothesis: football and tennis data both test it"),('s',960,1008,C,30)),
+('d1',0.3,None,tr("博客统计：Sackmann，Tennis Abstract，2015；ATP 5200 多个、WTA 2500 个抢七","Blog analysis: Sackmann, Tennis Abstract, 2015; 5,200+ ATP and 2,500 WTA tiebreaks"),('s',960,1008,C,30)),
+('n2',0.3,None,tr("评论区说说：你打抢七，喜欢先发还是后发？","Tell us: in a tiebreak, do you like to serve first or second?"),TOP),
 ]
 CAPS=[(*span(f,o,u),txt,pl) for f,o,u,txt,pl in CAPS]
 def sec_of(t):
@@ -201,16 +205,15 @@ def sec_of(t):
         if s['t0']<=t<s['t1']: return s
     return TL['sections'][-1]
 NOTE={  # 每段底部的出处
- 'hook':tr("阻力公式推算 · Cross（悉尼大学）· RMIT 2004 · 流场为示意","drag-law calculation · Cross (Univ. of Sydney) · RMIT 2004 · flow is schematic"),
- 'eiffel':tr("Ahlborn 1931（NACA TM-653）· Cross · Asai 2007 · 流场为示意","Ahlborn 1931 (NACA TM-653) · Cross · Asai 2007 · flow is schematic"),
- 'layer':tr("Mehta 1985 · Cross · 流场为示意","Mehta 1985 · Cross · flow is schematic"),
- 'golf':tr("Mehta 1985 · Cross · 曲线为示意","Mehta 1985 · Cross · curves schematic"),
- 'football':tr("Asai 2007（Sports Engineering）· 流场为示意","Asai 2007 (Sports Engineering) · flow is schematic"),
- 'tennis':tr("Alam, Watkins & Subic 2004（RMIT）· Cross · Mehta, Alam & Subic 2008 · 曲线为示意","Alam, Watkins & Subic 2004 (RMIT) · Cross · Mehta, Alam & Subic 2008 · curves schematic"),
- 'fluff':tr("Nakajima 2017 · Goodwill & Haake 2004 · LA Times 2022 · NZ Herald 2024","Nakajima 2017 · Goodwill & Haake 2004 · LA Times 2022 · NZ Herald 2024"),
- 'itf':tr("ITF 网球规则附录 I · Irish Times 2001 · Physics World 1999","ITF Rules of Tennis, Appendix I · Irish Times 2001 · Physics World 1999")}
-CHAP={'eiffel':("01",tr("阻力危机","DRAG CRISIS")),'layer':("02",tr("边界层","BOUNDARY LAYER")),'golf':("03",tr("高尔夫","GOLF")),'football':("04",tr("足球","FOOTBALL")),
- 'tennis':("05",tr("网球","TENNIS")),'fluff':("06",tr("挑球","PICKING A BALL")),'itf':("07",tr("大球","THE BIG BALL")),'end':("08",tr("结论","CONCLUSION"))}
+ 'hook':tr("BBC 2019-07-14 · 温网官方技术统计 · ITF《网球规则》2026 第 5 条","BBC 2019-07-14 · Wimbledon official stats · ITF Rules of Tennis 2026, rule 5"),
+ 'rule':tr("ITF《网球规则》2026 第 5、10、14 条","ITF Rules of Tennis 2026, rules 5, 10, 14"),
+ 'edge':tr("温网官方技术统计（2019 决赛）· BBC · Brams & Ismail 2018","Wimbledon official stats (2019 final) · BBC · Brams & Ismail 2018"),
+ 'math':tr("Brams & Ismail 2018（SIAM Review）· 本集 tiebreak_math.py 推算","Brams & Ismail 2018 (SIAM Review) · computed in tiebreak_math.py"),
+ 'why':tr("Brams & Ismail 2018 · Allouche & Shallit 1999 · Palacios-Huerta 2012","Brams & Ismail 2018 · Allouche & Shallit 1999 · Palacios-Huerta 2012"),
+ 'soccer':tr("Apesteguia & Palacios-Huerta 2010（AER）· Kocher 等 2012 · IFAB 2017/2018","Apesteguia & Palacios-Huerta 2010 (AER) · Kocher et al. 2012 · IFAB 2017/2018"),
+ 'data':tr("Cohen-Zada, Krumer & Shapir 2018（JEBO）· Sackmann 2015","Cohen-Zada, Krumer & Shapir 2018 (JEBO) · Sackmann 2015")}
+CHAP={'rule':("01",tr("规则","THE RULE")),'edge':("02",tr("发球优势","SERVE EDGE")),'math':("03",tr("算一算","THE MATH")),'why':("04",tr("Thue–Morse","THUE–MORSE")),
+ 'soccer':("05",tr("足球","FOOTBALL")),'data':("06",tr("真实数据","THE DATA")),'end':("07",tr("结论","CONCLUSION"))}
 def chapter(c,t):  # 右上角章节标签
     s=sec_of(t)
     if s['name'] not in CHAP: return
@@ -220,7 +223,7 @@ def draw(c,t,an):
     brand(c); chapter(c,t); s=sec_of(t); u=t-s['t0']; a=min(1,u/0.6,(s['t1']-t)/0.4)
     if s['name'] in NOTE: text(c,NOTE[s['name']],960,1050,18,GRAY,a*0.9,SANSR)
     if s['name']=='end' and u>2:
-        text(c,tr("资料：Cross · Mehta 1985/2008 · Alam 等 2004 · Asai 2007 · ITF 规则 · 详见文案","Sources: Cross · Mehta 1985/2008 · Alam et al. 2004 · Asai 2007 · ITF Rules · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
+        text(c,tr("资料：ITF 规则 · Brams & Ismail 2018 · Cohen-Zada 等 2018 · Kocher 等 2012 · 详见文案","Sources: ITF Rules · Brams & Ismail 2018 · Cohen-Zada et al. 2018 · Kocher et al. 2012 · see caption"),960,1050,18,GRAY,min(1,(u-2)/0.5),SANSR)
     for s0,d,txt,pl in CAPS:
         if s0<=t<s0+d+0.35: caption(c,t,s0,d,txt,pl,an)
 
