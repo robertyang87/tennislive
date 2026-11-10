@@ -454,3 +454,12 @@ EP04 就是这个形状：马尔可夫链（理论）→ 54% 的分（网球）�
 | 避震器护不了手肘（PHY-10） | 待所有者选 | Li 2004、Stroede 1999：手腕手肘振动、不适感无差别 |
 | 拍线磅数迷思（PHY-08）、持拍臂骨头变粗不变密（BIO-05）、网球肘（MED-01） | 待所有者选 | Bower & Cross 2003/2005；Haapasalo 2000、Ducher 2005；Blackwell & Cole 1994 |
 | 发球前拍球、球很沉、新球帮发球、一发进球率、抛球稳定、发力靠腿 | ❌ 研究代理刷掉 | 无研究／效应小／非网球独有 |
+
+## 2026-11-10 选题轮次记录（EP11 之后，所有者「继续选题」）
+
+上一轮（11-08）列过、所有者没选的不再重复提。这一轮只挑库里没有的新题，按 11-07／11-08 标准逐条过。
+
+| 候选 | 结果 | 依据 |
+|---|---|---|
+| **上旋二发（kick）其实主要是侧旋** | ✅ 推荐（待所有者选） | ✅ Sakurai, Reid & Elliott (2013) *Sports Biomechanics* 12(1):23–29（PMID 23724605，摘要原文已读）：精英男子发球，Vicon 测球上三个标记点。转速：平击 127.4、切削 232.1、上旋（kick）336.5 rad/s；旋转轴与水平面夹角：平击 65.7°、切削 68.5°、kick 54.6°；旋转轴几乎垂直于球速方向。轴偏竖直＝侧旋分量大于上旋分量（kick：sin54.6°≈0.81 对 cos54.6°≈0.58）。✅ 独立第二源：Cross「Kick serve」页原文「The spin is primarily sidespin here with a small topspin component」。顺带的第二个反差：**平击发球也在转**，127 rad/s 约每秒 20 圈。⚠️ 风险：力的部分仍是马格努斯（EP03），片子主角要放在「旋转轴」上；落地往侧面跳的机制要读 Cross 原文再写，不凭推理 |
+| 下旋小球落地往回跳 | ❌ 不是网球独有 | ✅ Cross (2018)「Backward bounce of a spinning ball」*Eur. J. Phys.*（10.1088/1361-6404/aabece，摘要原文）：「The effect is common in many ball sports, including cricket, tennis, baseball, golf, billiards」 |
