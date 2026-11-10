@@ -1,0 +1,21 @@
+{
+  "status": "correction_pending_final_film_review",
+  "finding": {
+    "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
+    "seconds": 147.08,
+    "frame_index_25fps": 3677,
+    "image_sha256": "58b1e74901c82ef17ed3128a10c7496d5120423dca9e9789cb52d1b359ea515b",
+    "problem": "Segment10 native summary value/label encroach on actual narration subtitle. Native deterministic QC passed, but final image review rejects this film for publication."
+  },
+  "bounded_correction": "Remove redundant transition_card.summary; preserve 6-4/6-0 proof and full 连赢7局 headline; set only this segment subtitle_bottom=260 for a separate caption lane. Other narration, source windows and audio bytes unchanged.",
+  "spec_sha256": "4925a0589e2111b2d25ace055101f9ddc9b3014db5d7c858dfaf86d2304c4d30",
+  "reviewed_at": "2026-11-10T03:22:12.998518+00:00",
+  "formal_run_to_replace": "42747172138",
+  "publication": "not sent; no ledger reservation",
+  "preview_review": {
+    "method": "assistant_visual_review_of_native_GSAP_card_and_display_only_original_ASS",
+    "at": "2026-11-10T03:23:39.753457+00:00",
+    "status": "pass",
+    "scope": "All four actual card narration cues at142.55/144.80/147.08/150 seconds have separate caption lane below scores and above footer. Native page checks pass. New formal film QC still required."
+  }
+}
