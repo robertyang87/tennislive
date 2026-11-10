@@ -217,25 +217,25 @@ EN(PC,panel(),0.4,name='title'); EN(DJ-0.2,riser(0.8),0.35); EN(DJ+0.6,number_po
 EN(AB,swish(0.7,400,3000),0.4,name='ledger'); pab=(BA-0.5-AB)/12; [EN(AB+i*pab,tick(),0.35) for i in range(12)]
 EN(CHs,zap(900,500,0.5),0.35,name='chase'); EN(BA,swish(0.7,400,3000),0.4,name='1-2-2-2'); pba=(SEC['edge']['t1']-1.0-BA)/12; [EN(BA+i*pba,tick(),0.35) for i in range(12)]; EN(BA+1.6,chime([67,72],0.12,0.35),0.35)
 # 04 算一算：天平 → 50% = 50% → 净胜两分 → 补打 → 各发 6 个 → 6 平之后 → 53.6%
-M0=E('math','m0',0.3); CA=E('math','calc',2.6); R1=E('math','r1',4.6); R2=E('math','r2',8.4); MD=E('math','model',11.0); KEY=E('math','key',13.6); EX=E('math','ex',17.0); FI=E('math','fill',19.5); TW=E('math','twelve',23.0); AF=E('math','after',27.0); RC=E('math','race',32.0); MO=E('math','more',34.5); PCm=E('math','pct',38.0)
-EN(M0,creak(1.0,120),0.35,name='scale'); EN(CA,panel(),0.35,name='assume'); EN(R1,number_pop(),0.45,name='50a'); EN(R2,number_pop(),0.45,name='50b'); EN(R2+0.3,ding(784),0.4); EN(MD,hum(2.5,80),0.25)
+M0=E('math','m0',0.3); CA=E('math','calc',2.6); R1=E('math','r1',4.6); R2=E('math','r2',8.4); MD=E('math','model',11.0); RL=E('math','real',13.0); KEY=E('math','key',19.0); EX=E('math','ex',17.0); FI=E('math','fill',19.5); TW=E('math','twelve',23.0); AF=E('math','after',27.0); RC=E('math','race',37.0); MO=E('math','more',43.0); PCm=E('math','pct',46.0); Y75=E('math','y75',51.0)
+EN(M0,creak(1.0,120),0.35,name='scale'); EN(CA,panel(),0.35,name='assume'); EN(R1,number_pop(),0.45,name='50a'); EN(R2,number_pop(),0.45,name='50b'); EN(R2+0.3,ding(784),0.4); EN(MD,hum(2.5,80),0.25); EN(RL,panel(),0.35,name='model-check')
 EN(KEY-0.3,riser(0.3),0.45); EN(KEY,sub_boom(),0.8,name='WIN-BY-TWO'); EN(KEY,slam(),0.6)
 pops(EX,11,0.22,0.25); EN(EX+2.4,number_pop(),0.45,name='7-4'); EN(FI,whoosh_fast(0.4),0.4,name='ghost'); EN(FI+0.5,number_pop(),0.4)
 pops(TW,12,1/14,0.18); pops(TW+0.3,12,1/14,0.18); EN(TW+1.2,chime([72,79],0.12,0.4),0.4,name='6-each'); EN(AF,panel(),0.35,name='pairs')
-EN(RC,swish(0.8,300,2400),0.4,name='race'); pops(RC,13,1/16,0.18); EN(MO,ding(1047),0.45,name='13th'); EN(PCm-0.2,riser(0.6),0.4); EN(PCm+0.3,sub_boom(),0.6,name='53.6'); EN(PCm+0.3,number_pop(),0.4)
+EN(RC,swish(0.8,300,2400),0.4,name='1970'); pops(RC+1.0-0.6/10,9,0.1,0.2); EN(RC+0.5,zap(1400,700,0.5),0.35,name='sudden-death'); EN(MO,ding(1047),0.45,name='4-vs-5'); EN(PCm-0.2,riser(0.6),0.4); EN(PCm+0.3,sub_boom(),0.6,name='45.7'); EN(PCm+0.3,number_pop(),0.4); EN(Y75,swish(0.9,300,2400),0.4,name='1975'); pops(Y75-0.6/14,12,1/14,0.18); EN(Y75+1.0,chime([72,76,79],0.12,0.4),0.4,name='50-50')
 # 05 那图什么：换手折线 → 11 / 6 → 追 → Thue–Morse 一层层长出来 → 层层轮换 → 网球只抄第一层
-SW=E('why','sw',0.3); CN=E('why','cnt',3.0); CHw=E('why','ch',7.5); BU=E('why','build',11.0); ABw=E('why','ab',13.2); AB2=E('why','abba2',15.5); TM=E('why','tm',19.0); HI=E('why','hist',21.0); LY=E('why','layer',26.0); EC=E('why','econ',28.0); TN=E('why','tennis',33.0); SP=E('why','split',35.0)
+SW=E('why','sw',0.3); CN=E('why','cnt',3.0); CHw=E('why','ch',7.5); BU=E('why','build',11.0); ABw=E('why','ab',13.2); AB2=E('why','abba2',15.5); TM=E('why','tm',19.0); HI=E('why','hist',21.0); LY=E('why','layer',26.0); EC=E('why','econ',28.0); CV=E('why','caveat',33.0); TN=E('why','tennis',33.0); SP=E('why','split',35.0)
 for i in range(12): EN(SW+i/7,blip(1200 if i%2 else 1700,0.04,1.1,0.5),0.22)
 EN(CN,number_pop(),0.45,name='11'); EN(CN+0.6,number_pop(),0.45,name='6'); EN(CHw,hum(3.0,70),0.3,name='pressure')
 for k,t0 in enumerate([BU,ABw,AB2,TM,TM+1.0,TM+1.8,TM+2.5]): EN(t0,blip(900*(1.26**k),0.08,1.2,0.7),0.35,name='level%d'%k); EN(t0+0.1,whoosh_fast(0.3),0.25)
-EN(TM,chime([60,67,72,76],0.14,0.45),0.45,name='THUE-MORSE'); EN(HI,panel(),0.3,name='history'); EN(LY,swish(0.8,400,3000),0.35,name='layers'); EN(LY+1.2,swish(0.8,400,3000),0.3); EN(EC,ding(880),0.35,name='economists')
+EN(TM,chime([60,67,72,76],0.14,0.45),0.45,name='THUE-MORSE'); EN(HI,panel(),0.3,name='history'); EN(LY,swish(0.8,400,3000),0.35,name='layers'); EN(LY+1.2,swish(0.8,400,3000),0.3); EN(EC,ding(880),0.35,name='economists'); EN(CV,glitch(0.4),0.35,name='caveat'); EN(CV+0.6,creak(1.0,90),0.35)
 EN(TN,panel(),0.4,name='compare'); pops(TN,8,1/12,0.2); EN(SP-0.9,chime([72,76],0.12,0.35),0.35,name='same-4'); EN(SP,glitch(0.4),0.4,name='split')
 # 06 足球：一人一脚 → 60% → 2017 试行 → 2018 停掉 → 540 次
-Qs=E('soccer','q',0.3); PK=E('soccer','pk',2.6); S6=E('soccer','s60',6.0); IF=E('soccer','ifab',10.0); STp=E('soccer','stop',13.0); BG=E('soccer','big',16.0)
+Qs=E('soccer','q',0.3); PK=E('soccer','pk',2.6); S6=E('soccer','s60',6.0); IF=E('soccer','ifab',10.0); STp=E('soccer','stop',13.0); BG=E('soccer','big',16.0); B2=E('soccer','b2',18.0); B3=E('soccer','b3',21.0)
 EN(SEC['soccer']['t0']+0.2,crowd(SEC['soccer']['t1']-SEC['soccer']['t0']-0.5),0.25,name='stadium')
 t=PK-0.4+0.1*1.1
 while t<SEC['soccer']['t1']-0.6: EN(t,squish(1.0),0.55); EN(t+0.45,whoosh_fast(0.3),0.3); t+=1.1
-EN(S6+0.2,number_pop(),0.5,name='60'); EN(IF,panel(),0.4,name='ifab'); EN(STp,sub_boom(),0.6,name='DROPPED'); EN(STp+0.1,creak(1.2,90),0.35); EN(BG+1.4,rumble(1.6),0.3,name='540'); EN(BG+2.0,ding(660),0.35)
+EN(S6+0.2,number_pop(),0.5,name='60'); EN(IF,panel(),0.4,name='ifab'); EN(STp,sub_boom(),0.6,name='DROPPED'); EN(STp+0.1,creak(1.2,90),0.35); EN(BG,swish(0.6,400,3000),0.35,name='bars'); EN(BG+0.7,number_pop(),0.4,name='60'); EN(B2+0.7,number_pop(),0.4,name='55'); EN(B3+0.7,chime([67,72],0.12,0.4),0.4,name='no-edge')
 # 07 网球的真实数据：2621 → 无显著区别 → 50.8 / 49.7
 Dd=E('data','d',0.3); RS=E('data','res',3.2); BL=E('data','blog',6.6)
 EN(Dd,rain_hiss(2.2),0.35,name='2621-particles'); EN(Dd+0.3,number_pop(),0.45,name='2621'); EN(RS,chime([67,72,76],0.14,0.4),0.4,name='no-difference'); EN(BL,panel(),0.4,name='blog'); EN(BL+0.6,number_pop(),0.4)

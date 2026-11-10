@@ -16,9 +16,9 @@ SECTIONS = [(n, n) for n in ("hook", "rule", "edge", "math", "why", "soccer", "d
 HOLD = {"h0": 5.0, "h1": 5.6, "h2": 6.4, "h3": 7.2, "h4": 4.0,
         "r0": 4.4, "r1": 9.4,
         "e0": 7.0, "e1": 7.0, "e2": 6.2,
-        "m0": 3.0, "m1": 9.6, "m2": 6.4, "m3": 6.6, "m4": 9.6, "m5": 6.4, "m6": 6.4,
-        "w0": 8.0, "w1": 4.6, "w2": 8.4, "w3": 8.8, "w4": 7.4, "w5": 5.0,
-        "f0": 7.0, "f1": 5.4, "f2": 6.6, "f3": 6.0,
+        "m0": 3.0, "m1": 9.6, "m2": 3.6, "m2b": 9.2, "m2c": 4.4, "m3": 6.6, "m4": 9.6, "m5": 10.0, "m6": 11.5, "m7": 7.6,
+        "w0": 8.0, "w1": 4.6, "w2": 8.4, "w3": 8.8, "w4": 7.4, "w4b": 8.4, "w5": 5.0,
+        "f0": 7.0, "f1": 5.4, "f2": 6.6, "f3": 10.5,
         "d0": 9.4, "d1": 7.4,
         "n0": 7.6, "n1": 6.4, "n2": 4.6}
 MIN_SEC = {}
@@ -27,12 +27,12 @@ EV = [("hook", "pts", "h0", "多赢"), ("hook", "lose", "h0", "却输掉"), ("ho
       ("hook", "same", "h3", "前四位"), ("hook", "q2", "h4", None),
       ("rule", "game", "r0", None), ("rule", "tb", "r1", None), ("rule", "ch", "r1", "每打"),
       ("edge", "pct", "e0", None), ("edge", "dj", "e0", "德约"), ("edge", "fd", "e0", "费德勒"), ("edge", "abab", "e1", None), ("edge", "chase", "e1", "一直在追"), ("edge", "abba", "e2", None),
-      ("math", "m0", "m0", None), ("math", "calc", "m1", None), ("math", "r1", "m1", "一人一分"), ("math", "r2", "m1", "也是"), ("math", "model", "m2", None), ("math", "key", "m2", "秘密"),
+      ("math", "m0", "m0", None), ("math", "calc", "m1", None), ("math", "r1", "m1", "一人一分"), ("math", "r2", "m1", "也是"), ("math", "model", "m2", None), ("math", "real", "m2b", None), ("math", "key", "m2c", None),
       ("math", "ex", "m3", None), ("math", "fill", "m3", "全打完"), ("math", "twelve", "m4", None), ("math", "after", "m4", "每两分"), ("math", "race", "m5", None),
-      ("math", "more", "m5", "对手只发"), ("math", "pct", "m6", None),
+      ("math", "more", "m6", None), ("math", "pct", "m6", "只有"), ("math", "y75", "m7", None),
       ("why", "sw", "w0", None), ("why", "cnt", "w0", "只换"), ("why", "ch", "w1", None), ("why", "build", "w2", None), ("why", "ab", "w2", "得到"), ("why", "abba2", "w2", "再接上"),
-      ("why", "tm", "w3", None), ("why", "hist", "w3", "论文"), ("why", "layer", "w4", None), ("why", "econ", "w4", "经济学家"), ("why", "tennis", "w5", None), ("why", "split", "w5", "第五位"),
-      ("soccer", "q", "f0", None), ("soccer", "pk", "f0", "点球"), ("soccer", "s60", "f1", None), ("soccer", "ifab", "f2", None), ("soccer", "stop", "f2", "又决定"), ("soccer", "big", "f3", None),
+      ("why", "tm", "w3", None), ("why", "hist", "w3", "论文"), ("why", "layer", "w4", None), ("why", "econ", "w4", "经济学家"), ("why", "caveat", "w4b", None), ("why", "tennis", "w5", None), ("why", "split", "w5", "第五位"),
+      ("soccer", "q", "f0", None), ("soccer", "pk", "f0", "点球"), ("soccer", "s60", "f1", None), ("soccer", "ifab", "f2", None), ("soccer", "stop", "f2", "又决定"), ("soccer", "big", "f3", None), ("soccer", "b2", "f3", "先踢的赢了约"), ("soccer", "b3", "f3", "已经测不出"),
       ("data", "d", "d0", None), ("data", "res", "d0", "先发和后发"), ("data", "blog", "d1", None),
       ("end", "n0", "n0", None), ("end", "tip", "n1", None), ("end", "q", "n2", None)]
 CPS = 5.2  # 估算语速（字/秒），只给 --estimate 用

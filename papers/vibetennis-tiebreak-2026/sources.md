@@ -37,7 +37,7 @@
 | 一人一分（XY/XY…）同样公平——公平来自「每人发球次数相同」＋净胜两分，不是来自顺序 | Brams & Ismail 2018 第 6 节（"the strict alternation sequence XY/XY/XY/XY … [is] fair for the same reason that the tennis sequence, coupled with the Win-by-Two Rule, is fair"）；第 1 节 "primarily because of the alternation in serving and the Win-by-Two rule" | `tiebreak_math.py`：ABAB 0.5000；两人不一样强时两种顺序也逐位相同（0.662973 / 0.418383） | ✅ 片中「顺序根本没改变输赢的概率」限定在「这个模型里」 |
 | 「补打不改结果」：6 平之前有人赢了，把前 12 分打完他仍拿到 7 分以上；反之亦然 → 6 平之前比的就是 12 分谁多 | 算术（拿到 7 分时对手 ≤5 ⇔ 12 分里 ≥7） | Brams & Ismail 第 5 节同一论证（"Because these scores sum to an even number (12), each player will have had the same number of serves"） | ✅ |
 | 6 平之后每两分一组、两人各发一个，必须连赢一组两分才赢 | Brams & Ismail 第 5 节（"a player can win only by winning twice in a block—when it serves and when its opponent serves"） | `tiebreak_math.py` 序列（第 13、14 分：甲、乙） | ✅ |
-| 去掉净胜两分、先到 7 分就赢：两人都赢 65% 的发球分时，先发者胜率 53.6%（两种顺序相同；最多 13 分，先发者发 7 个） | `tiebreak_math.py` | Brams & Ismail 第 5 节「6-5 落在一组中间，X 多发一个」的同一机制 | ✅ 片中标「按假设推算」 |
+| 去掉净胜两分、先到 7 分就赢：两人都赢 65% 的发球分时，先发者胜率 53.6%（两种顺序相同；最多 13 分，先发者发 7 个） | `tiebreak_math.py` | Brams & Ismail 第 5 节「6-5 落在一组中间，X 多发一个」的同一机制 | ✅ 留作算式；**11-10 第二版片中换成真实历史（见第七节）** |
 | 12 分里换发球：一人一分 11 次，一、二、二、二 6 次 | `tiebreak_math.py` | Brams & Ismail 脚注 22（"maximizes the number of double repetitions … minimizes changeover time and thus the 'jerkiness' of switching serves"） | ✅ |
 | 一人一分时，每到单数分先发者多发一个（后发者一直在追）；一、二、二、二时多发的人轮流换 | `tiebreak_math.py` 累计差序列 | Brams & Ismail 第 5 节（"being in the midst of this block puts X one serve ahead"）；Cohen-Zada 等引言（ABAB 造成不对称心理压力） | ✅ |
 
@@ -66,6 +66,20 @@
 |---|---|---|---|
 | 2012–2015 年「四个最高级别」赛事（原文 "all four top-tier tournaments"，72 站男子、135 站女子）的第一盘抢七：男子 1,701 个、女子 920 个（共 2,621）；先发对赢抢七没有显著影响，男女都一样 | Cohen-Zada, Krumer & Shapir 2018 *JEBO* 146:106（预印本全文 IZA DP 10878） | Sackmann 2015（不同样本，结论相近） | ✅ 片中说「2621 个抢七」「没有显著差别」 |
 | ATP 5,200 多个抢七先发者胜 50.8%；WTA 2,500 个先发者胜 49.7% | Sackmann「Does Serving First in a Tiebreak Give You an Edge?」2015-10-14 | Cohen-Zada 等（同方向：无显著影响） | ⚠️ 单源（非同行评审），片中作为「另一份统计」并说明是博客统计；两个数都给，不挑 |
+
+## 七、2026-11-10 补的数据与理论（所有者「找找足够多的数据和背后的理论」）
+
+| 事实 | 出处 1 | 出处 2 | 状态 |
+|---|---|---|---|
+| 模型够不够真：每一分并不完全独立，赢了上一分、下一分发球胜率约高 1 个百分点（2015 四大满贯约 15 万分） | Kovalchik「Klaassen & Magnus's 22 Myths of Tennis — Myth 1」（on-the-t 博客，2016-02-14，读了原文） | Klaassen & Magnus 2001 *JASA* 96(454)（温网 1992–95 近 9 万分；摘要：「neither independent nor identically distributed … deviations from iid are small … good approximation」，经检索摘要转述，全文 403） | ✅ 片中说「大约高 1 个百分点，这点影响很小」 |
+| 1970 年美网第一次在大满贯用抢七：9 分制、先到 5 分就赢（4 平一分定胜负），发球 2-2-2-3 | usopen.org 2020-09-02「The US Open introduced the tiebreak set 50 years ago today」（"alternating serves at 2-2-2-3"） | World Tennis Magazine 2024-07-19（Randy Walker：先发者发 2 分、对手 2 分、先发者 2 分，最后三分由第二个发球人发）；Wikipedia「Tennis scoring system」（1970 年美网起用九分制，用到 1974） | ✅ |
+| 九分制下后发者发 5 个、先发者发 4 个；两人一样强、发球都赢 65% 时先发者胜率 45.7% | `tiebreak_math.py` 同法计算（序列 AABBAABBB，先到 5 分） | 与第三节「不看顺序、只看次数」的结论一致 | ✅ 片中标「按假设推算」 |
+| 1975 年美网在球员的抱怨下换成 12 分制（净胜两分）抢七 | usopen.org 2020-09-02（"In 1975, the US Open finally gave in to the players' demands and replaced the sudden death tiebreak with the 12-point tiebreak"） | Wikipedia「Tennis scoring system」（"The seven-point tiebreaker format was introduced in 1975"） | ✅ 不说「为了公平」，只说「在球员的抱怨声里」 |
+| 如果先后手本身影响得分，加赛（一球定胜负）阶段没有哪种循环顺序能绝对公平，Thue–Morse 也不行 | Lambers & Spieksma 2021 *IMA J. Management Mathematics* 32:411（全文） | Csató & Petróczy 2022 *J. Sports Sciences*（arXiv 2004.09225 全文：比较七种顺序，「ABBA|BAAB 最接近公平」，没有一种完全公平） | ✅ |
+| 点球大战：1,623 次（顺序可查）先踢方胜 54.71%，p<0.0001 | Rudi, Olivares & Shetty 2020 *PLOS ONE* 15:e0243786（全文表 2） | Csató & Petróczy 2022 引用（「1635 penalty shootouts … 54.86%」） | ✅ 片中说「1600 多次，约 55%」 |
+| 约 7,000 次点球大战、7.4 万脚：测不出先踢或后踢的优势，等效检验排除偏离 50% 超过 1.8 个百分点；冰球同样没有 | Pipke 2025 *J. Economic Psychology* 108:102816（IDEAS 摘要） | van Ours & van Tuijl 2026（Tinbergen DP 26-052，全文第 3 页综述：「around 7,000 penalty shootouts … no evidence of a first-mover advantage」） | ✅ 片中说「7000 多次，测不出区别」 |
+| 另外几组：Palacios-Huerta 2014 扩到 1,001 次仍约 60.6%；Arrondel 等 2019（法国杯 239 次）、Santos 2023（663 次）、Csató & Petróczy 2026（268 次）均无优势；荷兰杯 1968–2007 年 63%、2008–2026 年 53% 不显著 | van Ours & van Tuijl 2026 综述与表 1 | Csató 2021 *4OR*（arXiv 1806.01114）综述 | ⚠️ 只进文案背景，不上屏 |
+| 一盘、一场的胜率与谁先发球无关（每分独立的模型里） | Newton & Keller 2005 *Studies in Applied Math* 114:241（全文） | 选题库 MAT-04 已核 | ⚠️ 本集不展开（留给 MAT-04） |
 
 ## 不说
 - 「1-2-2-2 是范阿伦（Van Alen）为了公平设计的」——没找到设计意图的原始出处

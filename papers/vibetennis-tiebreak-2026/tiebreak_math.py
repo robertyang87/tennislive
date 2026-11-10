@@ -39,3 +39,12 @@ if __name__ == "__main__":
         print(f"③ {o} 前12分 甲发{s.count('A')} 乙发{s.count('B')}；累计差 {diff}；换发球 {sum(s[i] != s[i+1] for i in range(11))} 次")
     for pa, pb in ((0.7, 0.6), (0.6, 0.65)):   # 两人不一样强：两种顺序仍然完全相同
         print("不等强", pa, pb, [round(p_first(o, pa, pb), 6) for o in ("ABAB", "ABBA")])
+    # ④ 1970–74 年美网九分制「突然死亡」抢七：发球 2-2-2-3（甲甲乙乙甲甲乙乙乙），先到 5 分就赢，不要求净胜两分
+    nine = "AABBAABBB"
+    @lru_cache(None)
+    def g(a, b, p=0.65):
+        if a == 5: return 1.0
+        if b == 5: return 0.0
+        q = p if nine[a + b] == "A" else 1 - p
+        return q * g(a + 1, b) + (1 - q) * g(a, b + 1)
+    print(f"④ 九分制 2-2-2-3 先发者胜率 p=0.65: {g(0, 0):.4f}（甲发 {nine.count('A')} 个、乙发 {nine.count('B')} 个）")

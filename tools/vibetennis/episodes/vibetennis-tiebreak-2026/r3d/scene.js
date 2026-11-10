@@ -602,8 +602,8 @@ function shotEdge(u,D){
 
 // ---------- 4 反转：两种顺序都是 50% → 净胜两分 → 补打不改结果 → 前 12 分各发 6 个 → 6 平后每组各一个 → 去掉它：53.6% ----------
 function shotMath(u,D){
-  const M0=ev('m0',0.3), CA=ev('calc',2.6), R1=ev('r1',4.6), R2=ev('r2',8.4), MD=ev('model',11.0), KEY=ev('key',13.6), EX=ev('ex',17.0), FI=ev('fill',19.5),
-        TW=ev('twelve',23.0), AF=ev('after',27.0), RC=ev('race',32.0), MO=ev('more',34.5), PC=ev('pct',38.0);
+  const M0=ev('m0',0.3), CA=ev('calc',2.6), R1=ev('r1',4.6), R2=ev('r2',8.4), MD=ev('model',11.0), RL=ev('real',13.0), KEY=ev('key',19.0), EX=ev('ex',22.0), FI=ev('fill',24.5),
+        TW=ev('twelve',28.0), AF=ev('after',32.0), RC=ev('race',37.0), MO=ev('more',43.0), PC=ev('pct',46.0), Y75=ev('y75',51.0);
   rims(GO,CY,4);
   if(u<EX-0.3){ // 天平：两种顺序各放一边，平；50% = 50%
     const a=0.1*Math.sin(u*0.2); look(Math.sin(a)*10,2.2,Math.cos(a)*10,0,1.6,0);
@@ -614,8 +614,11 @@ function shotMath(u,D){
     const n1=t3d('mt50a','50%',CY,0.62); n1.g.position.copy(pl).add(V(0,0.55,0)); n1.g.quaternion.copy(camera.quaternion); t3op(n1,o*ss(R1,R1+0.4,u));
     const n2=t3d('mt50b','50%',GO,0.62); n2.g.position.copy(pr).add(V(0,0.55,0)); n2.g.quaternion.copy(camera.quaternion); t3op(n2,o*ss(R2,R2+0.4,u));
     lab('mtAs',T('假设：两人一样强，发球都赢 65%','assume: equal players, each wins 65% on serve'),0,2.6,o*ss(CA,CA+0.4,u),{size:0.3,plate:true});
-    lab('mtEq',T('顺序，没有改变输赢','the order changes nothing'),0,-1.55,o*ss(MD,MD+0.4,u)*(1-ss(KEY-0.4,KEY,u)),{size:0.4,color:'#ffffff'});
-    lab('mtMd',T('「每分独立」模型 · 按假设推算','"independent points" model · computed'),0,-2.1+0.25,o*ss(MD,MD+0.4,u),{size:0.24,color:'#aab8c8'});
+    lab('mtEq',T('顺序，没有改变输赢','the order changes nothing'),0,-1.55,o*ss(MD,MD+0.4,u)*(1-ss(RL-0.3,RL,u)),{size:0.4,color:'#ffffff'});
+    const rl=ss(RL,RL+0.4,u)*(1-ss(KEY-0.4,KEY,u));   // 模型够不够真：每分不完全独立，但影响约 1 个百分点
+    lab('mtR1',T('真实比赛：赢了上一分，下一分发球胜率 ≈ +1 个百分点','real matches: after winning a point, the next serve wins ≈ 1 point more often'),0,-1.25,o*rl,{size:0.3,color:'#ffe2a0',glow:GOLD});
+    lab('mtR2',T('影响很小，模型站得住 · 2015 四大满贯约 15 万分；温网近 9 万分','a small effect: the model holds · ~150k Slam points (2015); ~90k Wimbledon points'),0,-1.75,o*rl*ss(RL+1.5,RL+2.0,u),{size:0.24,color:'#c8d8ea'});
+    lab('mtMd',T('「每分独立」模型 · 按假设推算','"independent points" model · computed'),0,-2.1+0.25,o*ss(MD,MD+0.4,u)*(1-ss(RL-0.3,RL,u)),{size:0.24,color:'#aab8c8'});
     const t=bt('mtKey',T('净胜两分','WIN BY TWO'),{size:1.05,glow:'rgba(255,194,74,0.55)',fx:'shock'}); hud(t,0,-1.2,9); t.update(u,KEY,EX-0.6,0.85);
     if(u>KEY+0.3&&u<KEY+1.6) shockRing(hp(0,-1.2),(u-KEY-0.3)/1.3,GO,4,0.6,true);
     return; }
@@ -644,21 +647,28 @@ function shotMath(u,D){
         const br=ln(MT,3); setLine(br,[hp(xx,-0.98),hp(xx,-0.93),hp(xx+1.24,-0.93),hp(xx+1.24,-0.98)]); br.material.opacity=o*af*ss(j*0.33,j*0.33+0.3,(u-AF)/1.2); br.material.depthTest=false; }
       lab('mxA',T('6 平之后：每两分一组，各发一个','after 6-6: pairs, one serve each'),0,2.2,o*af,{size:0.36,color:'#b8ffd8',glow:MINT}); }
     return; }
-  // 去掉净胜两分：先到 7 分，最多 13 分；第 13 格是甲的，天平往甲那边沉
-  const o=ss(RC-0.3,RC+0.3,u); const x0=-4.81, cw=0.74; const r=seqStr('ABAB',13), r2=seqStr('ABBA',13);
-  seqRow(r,x0,1.35,cw,o,{k:(u-RC)*16,hl:12}); seqRow(r2,x0,0.5,cw,o,{k:(u-RC-0.25)*16,hl:12});
-  const hl=ss(MO,MO+0.4,u); const g=gs(GO,1.3,0.45*o*hl); g.position.copy(hp(x0+cw*12.5,0.92));
-  lab('mrT',T('改成先到 7 分就赢：最多 13 分（上：一人一分 · 下：一二二二）','first to 7, no margin: at most 13 points (top: one each · bottom: 1-2-2-2)'),0,2.2,o,{size:0.3,plate:true});
-  lab('mrC',T('甲发 7 个 · 乙发 6 个 · 两种顺序都一样','A serves 7 · B serves 6 · same for both orders'),0,-0.25,o*hl,{size:0.36,color:'#ffe2a0',glow:GOLD});
-  const p=ss(PC-0.2,PC+0.6,u); num('mr536','53.6%',GO,0.8,-1.6,-0.95,o*p); num('mr464','46.4%',CY,0.55,2.2,-0.95,o*p*0.85);
-  lab('mrA',T('先发的人','first server'),-1.6,-1.72,o*p,{size:0.28,color:'#ffe2a0',glow:GOLD}); lab('mrB',T('后发的人','second server'),2.2,-1.72,o*p,{size:0.28});
-  lab('mrS',T('按发球赢 65% 推算','assuming 65% on serve'),4.3,-0.95,o*p,{size:0.24,color:'#aab8c8'});
+  // 历史上真去掉过净胜两分：1970–74 年美网九分制抢七，发球 2-2-2-3，先到 5 分；后发者多发一个 → 先发者 45.7%（按假设）；1975 换成净胜两分 → 50%
+  const o=ss(RC-0.3,RC+0.3,u); const y75=ss(Y75-0.2,Y75+0.6,u); const x0=-3.6, cw=0.8;
+  const nine='AABBAABBB'; seqRow(nine,x0,1.3,cw,o*(1-y75),{k:(u-RC-1.0)*10});
+  const fl=ss(RC+0.4,RC+0.9,u)*(1-y75); const fg=tile(hp(x0+cw*8.5,0.55),cw*0.86,0.22,RD,o*fl);
+  lab('mrF',T('4 平：一分定胜负','4-all: one point decides'),x0+cw*8.5,0.18,o*fl,{size:0.24,color:'#ffb0a8',glow:RED});
+  lab('mrT',T('1970 年美网：9 分制抢七，先到 5 分就赢 · 发球二二二三','1970 US Open: 9-point tiebreak, first to 5 · serves 2-2-2-3'),0,2.2,o*(1-y75),{size:0.3,plate:true});
+  const hl=ss(MO,MO+0.4,u)*(1-y75); lab('mrC',T('先发的人发 4 个 · 后发的人发 5 个','first server: 4 serves · second server: 5'),0,-0.25,o*hl,{size:0.36,color:'#ffe2a0',glow:GOLD});
+  for(let i=6;i<9;i++){ const g=gs(GB,1.1,0.4*o*hl*(0.6+0.4*Math.sin(u*5+i))); g.position.copy(hp(x0+cw*(i+0.5),1.3)); }
+  const p=ss(PC-0.2,PC+0.6,u)*(1-y75); num('mr457','45.7%',GO,0.8,-1.6,-0.95,o*p); num('mr543','54.3%',CY,0.8,2.2,-0.95,o*p);
+  lab('mrA',T('先发的人','first server'),-1.6,-1.72,o*Math.max(p,y75),{size:0.28,color:'#ffe2a0',glow:GOLD}); lab('mrB',T('后发的人','second server'),2.2,-1.72,o*Math.max(p,y75),{size:0.28});
+  lab('mrS',T('按发球赢 65% 推算','assuming 65% on serve'),4.5,-1.72,o*Math.max(p,y75),{size:0.24,color:'#aab8c8'});
+  lab('mrN',T('不看顺序，只看谁发得多','order doesn\'t matter — the serve count does'),0,0.4,o*ss(PC+1.6,PC+2.0,u)*(1-y75),{size:0.34,color:'#ffffff'});
+  // 1975：换成 12 分制、净胜两分 → 回到 50% : 50%
+  if(y75>0){ seqRow(seqStr('ABBA',12),-4.8,1.3,0.8,o*y75,{k:(u-Y75)*14});
+    lab('mr75',T('1975 年：在球员的抱怨声里，换成净胜两分的 12 分制','1975: after player complaints, the 12-point win-by-two tiebreak'),0,2.2,o*y75,{size:0.3,plate:true,color:'#b8ffd8',glow:MINT});
+    num('mr50a','50%',GO,0.8,-1.6,-0.95,o*ss(Y75+0.8,Y75+1.3,u)); num('mr50b','50%',CY,0.8,2.2,-0.95,o*ss(Y75+0.8,Y75+1.3,u)); }
 }
 
 // ---------- 5 那图什么：换手 11 次 vs 6 次 → 一直在追 → Thue–Morse 一层层长出来 → 每层轮流当先手 → 网球只抄第一层 ----------
 function shotWhy(u,D){
   const SW=ev('sw',0.3), CN=ev('cnt',3.0), CHS=ev('ch',7.5), BU=ev('build',11.0), AB=ev('ab',13.2), AB2=ev('abba2',15.5), TM=ev('tm',19.0), HI=ev('hist',21.0),
-        LY=ev('layer',26.0), EC=ev('econ',28.0), TN=ev('tennis',33.0), SP=ev('split',35.0);
+        LY=ev('layer',26.0), EC=ev('econ',28.0), CV=ev('caveat',33.0), TN=ev('tennis',40.0), SP=ev('split',42.0);
   rims(GO,CY,4); const a=0.1*Math.sin(u*0.17); look(Math.sin(a)*9.5,0.3,Math.cos(a)*9.5,0,0.3,0);
   if(u<BU-0.3){ // 换手：两条轨道，球在两人之间跳；一人一分的折线来回 11 次，一二二二只有 6 次
     const o=ss(SW,SW+0.4,u)*(1-ss(BU-0.7,BU-0.3,u)); const x0=-4.6, cw=0.8;
@@ -687,8 +697,11 @@ function shotWhy(u,D){
     const ly=ss(LY,LY+0.5,u); if(ly>0){ const len=16, rowW=8.0, c2=rowW/len, x0=-rowW/2, y=yTop-4*dy; for(const [gsz,yo,col] of [[2,-0.32,MT],[4,-0.46,OR]]){ const e=ss(LY+(gsz===4?1.2:0),LY+(gsz===4?1.7:0.5),u);
         for(let j=0;j<len/gsz;j++){ const b=ln(col,3); const xa=x0+c2*j*gsz+0.04, xb=x0+c2*(j+1)*gsz-0.04; setLine(b,[hp(xa,y+yo+0.08),hp(xa,y+yo),hp(xb,y+yo),hp(xb,y+yo+0.08)]); b.material.opacity=o*e; b.material.depthTest=false; b.renderOrder=22; } } }
     lab('tmL',T('两个一组、四个一组：先手都在轮换','in pairs, in fours: the first mover alternates'),0,-1.55,o*ly*(1-ss(EC-0.3,EC,u)),{size:0.32,color:'#b8ffd8',glow:MINT});
-    lab('tmE',T('经济学家：两人轮流比赛，顺序怎么排才公平','economists: the fair order for taking turns'),0,-1.55,o*ss(EC,EC+0.4,u),{size:0.3});
-    lab('tmE2',T('Palacios-Huerta 2012','Palacios-Huerta 2012'),3.6,2.1,o*ss(EC,EC+0.4,u),{size:0.24,color:'#aab8c8'});
+    lab('tmE',T('经济学家：两人轮流比赛，顺序怎么排才公平','economists: the fair order for taking turns'),0,-1.55,o*ss(EC,EC+0.4,u)*(1-ss(CV-0.3,CV,u)),{size:0.3});
+    const cv=ss(CV,CV+0.4,u); lab('tmC',T('但先后手真有影响时，一球定胜负的加赛里，它也做不到绝对公平','but if going first matters, no cycling order is perfectly fair in sudden death — not even this'),0,-1.55,o*cv,{size:0.3,color:'#ffb0a8',glow:RED});
+    const st=bt('tmX',T('≠ 绝对公平','≠ PERFECTLY FAIR'),{size:0.62,glow:'rgba(255,90,74,0.5)',fx:'sag'}); hud(st,3.2,1.2,9); st.update(u,CV+0.6,TN-0.6,0.82);
+    lab('tmE2',T('Palacios-Huerta 2012','Palacios-Huerta 2012'),3.6,2.1,o*ss(EC,EC+0.4,u)*(1-ss(CV-0.3,CV,u)),{size:0.24,color:'#aab8c8'});
+    lab('tmE3',T('Lambers & Spieksma 2021','Lambers & Spieksma 2021'),3.6,2.1,o*cv,{size:0.24,color:'#aab8c8'});
     return; }
   // 网球只抄了第一层：两行对齐，前四位连线，第五位起红
   const o=ss(TN-0.3,TN+0.3,u); const tm=seqStr('TM',8), te=seqStr('ABBA',8); const x0=-3.6, cw=0.9;
@@ -700,22 +713,26 @@ function shotWhy(u,D){
 
 // ---------- 6 足球：点球大战一人一脚 → 129 次先踢六成 → IFAB 2017 试行甲乙乙甲、2018 停掉 → 540 次测不出 ----------
 function shotSoccer(u,D){
-  const Q=ev('q',0.3), PK=ev('pk',2.6), S6=ev('s60',6.0), IF=ev('ifab',10.0), ST=ev('stop',13.0), BG=ev('big',16.0);
-  rims(0x9fffc0,CY,4); GOAL.set(1); GOAL.G.position.set(0,0,0);
+  const Q=ev('q',0.3), PK=ev('pk',2.6), S6=ev('s60',6.0), IF=ev('ifab',10.0), ST=ev('stop',13.0), BG=ev('big',16.0), B2=ev('b2',18.0), B3=ev('b3',21.0);
+  rims(0x9fffc0,CY,4); const bgF=ss(ev('big',16.0)-0.3,ev('big',16.0)+0.5,u); GOAL.set(1-0.8*bgF); GOAL.G.position.set(0,0,0);
   const kk=ss(0,D,u); look(lerp(-2.2,2.2,kk),lerp(1.7,2.2,kk),lerp(15.5,14.0,kk),0,1.0,0);
   // 一人一脚：甲乙甲乙……球从点球点射向球门
   const per=1.1; const t=u-PK+0.4; const i=Math.max(0,Math.floor(t/per)); const k=t<0?0:(t-i*per)/per; const side=[0.6,-0.7,0.9,-1.0,0.2,-0.4,0.8,-0.9,0.5,-0.6][i%10];
   const spot=V(0,0.11,8.83); const tgt=V(side*3.0,0.5+0.8*Math.abs(side),-0.6); const kb=ss(0.1,0.55,k);
   GOAL.ball.position.copy(t<0?spot:spot.clone().lerp(tgt,kb)).add(V(0,Math.sin(kb*Math.PI)*0.4,0)); GOAL.ball.rotation.set(kb*8,kb*3,0);
-  const who=i%2?'B':'A'; if(t>=0){ const g=gs(who==='A'?GA:GB,0.9,0.4*(1-kb*0.6)); g.position.copy(GOAL.ball.position); }
-  const o=1-ss(D-0.5,D-0.1,u);
-  const row=u<IF+0.6?seqStr('ABAB',10):seqStr('ABBA',10); seqRow(row,-4.0,1.55,0.8,o,{k:u<IF+0.6?(t/per+1):(u-IF-0.6)*8,hl:u<IF+0.6?i:-1});
-  lab('scT',T('点球大战：一人一脚','penalty shootout: one kick each'),0,2.25,o*ss(Q,Q+0.4,u)*(1-ss(IF+0.2,IF+0.6,u)),{size:0.32,plate:true}); lab('scT2',T('2017 试行：甲乙乙甲','2017 trial: ABBA'),0,2.25,o*ss(IF+0.4,IF+0.8,u),{size:0.32,plate:true,color:'#ffe2a0',glow:GOLD});
+  const who=i%2?'B':'A'; if(t>=0){ const g=gs(who==='A'?GA:GB,0.9,0.4*(1-kb*0.6)*(1-bgF)); g.position.copy(GOAL.ball.position); }
+  const o=1-ss(D-0.5,D-0.1,u), oR=o*(1-bgF);
+  const row=u<IF+0.6?seqStr('ABAB',10):seqStr('ABBA',10); seqRow(row,-4.0,1.55,0.8,oR,{k:u<IF+0.6?(t/per+1):(u-IF-0.6)*8,hl:u<IF+0.6?i:-1});
+  lab('scT',T('点球大战：一人一脚','penalty shootout: one kick each'),0,2.25,o*ss(Q,Q+0.4,u)*(1-ss(IF+0.2,IF+0.6,u)),{size:0.32,plate:true}); lab('scT2',T('2017 试行：甲乙乙甲','2017 trial: ABBA'),0,2.25,oR*ss(IF+0.4,IF+0.8,u),{size:0.32,plate:true,color:'#ffe2a0',glow:GOLD});
   const p6=ss(S6-0.2,S6+0.5,u)*(1-ss(IF-0.4,IF,u)); num('sc60','60%',GO,0.9,-3.2,0.6,o*p6); lab('sc60L',T('先踢的一方赢了 · 129 次点球大战（2010）','first kickers won · 129 shootouts (2010)'),-1.6,-0.35,o*p6,{size:0.3,color:'#ffe2a0',glow:GOLD});
-  const sf=0; const st=bt('scStop',T('2018 · 停掉','2018 · DROPPED'),{size:0.7,glow:'rgba(255,90,74,0.5)',fx:'sag'}); hud(st,2.4,0.35,9); st.update(u,ST,BG+1.6,0.82);
-  lab('scIF',T('国际足球协会理事会（IFAB）','IFAB, football\'s lawmakers'),2.4,-0.45,o*ss(IF,IF+0.4,u)*(1-ss(BG+1.2,BG+1.6,u)),{size:0.28,color:'#c8d8ea'});
-  const bg=ss(BG+1.4,BG+2.0,u); if(bg>0){ cloudBars(ss(BG+1.4,BG+3.0,u),[[-1.2,-1.6,1.4,1.5*1.0,GO],[1.2,-1.6,1.4,1.5*0.95,CY]],o*bg*0.8);
-    lab('scBG',T('样本扩大到 540 次：先踢的优势，测不出来了（2012）','540 shootouts: no significant first-kicker edge (2012)'),0,0.25,o*ss(BG+1.6,BG+2.0,u),{size:0.32,color:'#ffffff'}); }
+  const sf=0; const st=bt('scStop',T('2018 · 停掉','2018 · DROPPED'),{size:0.7,glow:'rgba(255,90,74,0.5)',fx:'sag'}); hud(st,2.4,0.35,9); st.update(u,ST,BG-0.3,0.82);
+  lab('scIF',T('国际足球协会理事会（IFAB）','IFAB, football\'s lawmakers'),2.4,-0.45,o*ss(IF,IF+0.4,u)*(1-ss(BG-0.4,BG,u)),{size:0.28,color:'#c8d8ea'});
+  // 样本越大，优势越小：129 次 60% → 1623 次 54.7% → 约 7000 次测不出
+  const bg=ss(BG-0.1,BG+0.5,u); if(bg>0){ const H=2.6, y0=-1.75; const l50=ln(0xffffff,2,true); setLine(l50,[hp(-4.2,y0+H*0.5/0.65),hp(4.2,y0+H*0.5/0.65)]); l50.computeLineDistances(); l50.material.dashSize=0.15; l50.material.gapSize=0.1; l50.material.opacity=0.5*o*bg; l50.material.depthTest=false;
+    const BARS=[[-2.6,0.60,BG,T('2010 · 129 次','2010 · 129'),'60%'],[0,0.547,B2,T('2020 · 1623 次','2020 · 1,623'),'≈55%'],[2.6,0.50,B3,T('2025 · 约 7000 次','2025 · ~7,000'),T('测不出','no edge')]];
+    BARS.forEach(([x,v,t0,lb,vl],i)=>{ const e=ss(t0,t0+0.8,u); if(e<=0) return; const bb=ln(i===2?MT:GO,48); setLine(bb,[hp(x,y0),hp(x,y0+H*v/0.65*e+0.001)]); bb.material.opacity=0.85*o; bb.material.depthTest=false;
+      lab('scB'+i,lb,x,y0-0.28,o*e,{size:0.26,color:'#c8d8ea'}); lab('scV'+i,vl,x,y0+H*v/0.65*e+0.35,o*e,{size:0.4,color:i===2?'#b8ffd8':'#ffe2a0',glow:i===2?MINT:GOLD}); });
+    lab('scBG',T('先踢一方的胜率：样本越大，优势越小','first kickers\' win rate: the bigger the sample, the smaller the edge'),0,2.2,o*bg,{size:0.32,color:'#ffffff'}); }
 }
 
 // ---------- 7 网球的真实数据：2621 个抢七，先发后发无显著区别 → 博客统计 50.8% / 49.7% ----------
