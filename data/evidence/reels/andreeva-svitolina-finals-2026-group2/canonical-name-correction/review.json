@@ -1,0 +1,14 @@
+{
+  "reviewed_at": "2026-11-10T02:59:26.192325+00:00",
+  "failed_run": "https://github.com/robertyang87/tennislive/actions/runs/42744850877",
+  "finding": "头像核对：同一 wta-331809 历史全名为米拉·安德烈耶娃，本片为简称安德烈娃。实际头像人正确。",
+  "correction": "仅 cover.matchup[0].name 和 cover.winner 统一为历史全名；旁白、素材窗口、比分、配音输入均不变。",
+  "spec_sha256": "f88daf545b136e74870098f3d422208565fa072d5ae428179dca1e2437d8589e",
+  "checks": {
+    "native_cover": "full name fits scoreboard; hook unchanged, visible face preserved",
+    "native_stat_card": "correct Mirra Andreeva left, Svitolina right; full name fits",
+    "headshot_identity": "pass",
+    "audio_review_readiness": "7 packets verified; unchanged audio plan"
+  },
+  "final_film_qc": "pending new formal render"
+}
