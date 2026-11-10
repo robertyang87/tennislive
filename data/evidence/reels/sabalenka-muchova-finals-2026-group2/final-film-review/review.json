@@ -1,0 +1,102 @@
+{
+  "method": "assistant_visual_review_of_native_final_film_samples",
+  "reviewed_at": "2026-11-10T03:00:51.271361+00:00",
+  "film_sha256": "5eee1b6d60417a1ee40b59322caa43434d33eca7de2419455a9addceec248231",
+  "film_bytes": 75062248,
+  "spec_sha256": "0622b4e99c4df1131f9e0ce70c335150fdc9aa622860e68d5986b20e432afaf1",
+  "status": "pass",
+  "scope": "Final encoded film: representative sample of every segment plus selected dissolve phases and last frame. Not a claim of continuous human viewing or listening. Native deterministic whole-film QC and automated voice suite separately passed.",
+  "samples": [
+    {
+      "label": "cover",
+      "seconds": 0.5,
+      "frame_index_25fps": 12
+    },
+    {
+      "label": "segment-1",
+      "seconds": 7.2,
+      "frame_index_25fps": 180
+    },
+    {
+      "label": "segment-2",
+      "seconds": 34.7,
+      "frame_index_25fps": 867
+    },
+    {
+      "label": "segment-3",
+      "seconds": 46.7,
+      "frame_index_25fps": 1167
+    },
+    {
+      "label": "segment-4",
+      "seconds": 58.7,
+      "frame_index_25fps": 1467
+    },
+    {
+      "label": "segment-5",
+      "seconds": 83.1,
+      "frame_index_25fps": 2077
+    },
+    {
+      "label": "segment-6",
+      "seconds": 95.1,
+      "frame_index_25fps": 2377
+    },
+    {
+      "label": "segment-7",
+      "seconds": 115.1,
+      "frame_index_25fps": 2877
+    },
+    {
+      "label": "segment-8",
+      "seconds": 126.1,
+      "frame_index_25fps": 3152
+    },
+    {
+      "label": "segment-9",
+      "seconds": 137.1,
+      "frame_index_25fps": 3427
+    },
+    {
+      "label": "segment-10",
+      "seconds": 149.58,
+      "frame_index_25fps": 3739
+    },
+    {
+      "label": "segment-11",
+      "seconds": 161.58,
+      "frame_index_25fps": 4039
+    },
+    {
+      "label": "segment-12",
+      "seconds": 199.78,
+      "frame_index_25fps": 4994
+    },
+    {
+      "label": "segment-13",
+      "seconds": 209.78,
+      "frame_index_25fps": 5244
+    },
+    {
+      "label": "outro",
+      "seconds": 217.78,
+      "frame_index_25fps": 5444
+    },
+    {
+      "label": "first-set-result-subtitle",
+      "seconds": 105.5,
+      "frame_index_25fps": 2637
+    }
+  ],
+  "visual_findings": {
+    "cover": "readable two-line hook; same-match professional photo; correct winner and set scores",
+    "court_and_scoreboard": "fixed framing; native board retained; no scoreboard clipping in sampled points",
+    "bilingual_subtitles": "native first-set result graphic: lifted captions above result bar at film 105.50 seconds; long English phrase legible",
+    "cards": "varied native score/turn/photo cards; complete semantic line breaks; native phase review archived earlier",
+    "dissolve_phases": "28.72/28.92/29.12 and 89.12/89.32/89.52 show blended adjacent scenes with no intervening black image",
+    "stats": "Sabalenka left vs Muchova right; 4/5 aces, 22/23 winners, 77/67 total points match verified packet",
+    "ending": "full final point, handshake, result, next-opponent hook, branded outro text visible at 219.70s"
+  },
+  "voice_review": "automated_voice_suite pass; no human auditory approval claimed",
+  "release_download_identity_verified": true
+}
