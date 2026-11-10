@@ -473,3 +473,5 @@ EP04 就是这个形状：马尔可夫链（理论）→ 54% 的分（网球）�
 | 三巨头在签表里，别人打法会变（超级巨星效应，经济学） | 待所有者选 | ✅ Creutzburg (2026)「The Superstar Effect in Tennis—A Within-Match Analysis」*International Journal of Sport Finance*（摘要原文）：ATP 2004–2019 共 27,366 场正赛，排名高的一方会按后面哪一轮碰上巨星，在发球／接发局有意加减投入；⚠️ 效应大小要读全文；比勒费尔德工作论文「Who's afraid of the GOATs?」（pub.uni-bielefeld.de/record/2983815，摘要没抽到）；理论源头 Brown (2011) 老虎伍兹（高尔夫，非网球独有，要扣题） |
 | 费德勒击球后还盯着击球点，那一刻看不清球（神经科学） | ⚠️ 证据弱 | Lafont 2007《ITF Coaching and Sport Science Review》只是观察（费德勒、纳达尔击球后头保持不动）；「追踪眼动→最后一刻跳视」的实证来自棒球（Bahill & LaRitz 1984），网球眼动实测没找到 |
 | 抢七 1-2-2-2 轮发与 Thue–Morse 公平序列（MAT-05，数学） | 待所有者选（缺球星） | 见上方 MAT-05 行 |
+
+**2026-11-10 所有者选定 MAT-05（抢七 1-2-2-2 轮发）做 EP12**（`vibetennis-tiebreak-2026`）。调研后的反转写进了选题本身：在「每分独立」模型里，一人一分和 1-2-2-2 的胜率完全相同（Brams & Ismail 2018 第 5–6 节、`papers/vibetennis-tiebreak-2026/tiebreak_math.py`）；公平来自「净胜两分」，1-2-2-2 的用处是少换手、不让谁一直追。Cohen-Zada 等 2018（2,621 个抢七）实测先发后发无显著区别。
