@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "3451df7cdd22eae01a788c9c9819dff56e65218fdc2ff7dc6f38270de0cd6df7",
-    "render_inputs_sha256": "dbe06eb3d2cb668aed9c7590a84605f90452d93a942511b77e57acbc93b2663d",
-    "spec_sha256": "a9d11f7ce254d4660c51d63e9832c23248a845440c8e18eaf51d322824df9322",
-    "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
+    "render_sha256": "d003cb46d74748f45a671cc4c2fec37cc1740a26175a8d42c09d9c72321dac0a",
+    "render_inputs_sha256": "c667956137ed35fa73a0d9c2a3dffc15a349286a7dc6f0176301700fb89df1a2",
+    "spec_sha256": "4925a0589e2111b2d25ace055101f9ddc9b3014db5d7c858dfaf86d2304c4d30",
+    "film_sha256": "b91fa65c08a51aa19c9426a6829b65ed81d4ae8988dee5646466cdd010a0a5ad",
     "inventory_sha256": "be336da5324c16b9b87d7acf90f9708e5dfb6d1bd227545ae20530e89f8e0760"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-10T03:17:12+00:00",
+  "reviewed_at": "2026-11-10T03:32:00+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [

@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "a29a32a245ff7850015a8443f53e147e90e0a677645d1494aa6528a20bcbed94",
+  "scoreboard_qc_sha256": "7fad44e1bd1868813283a58be92141ece8904fe9d8e9d4dd76e810553303ed77",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-andreeva-svitolina-finals-2026-group2-88b2d1a156af0d53",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-svitolina-finals-2026-group2-88b2d1a156af0d53/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42747172138"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42749154142"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -56,46 +56,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "dbe06eb3d2cb668aed9c7590a84605f90452d93a942511b77e57acbc93b2663d",
+  "render_inputs_sha256": "c667956137ed35fa73a0d9c2a3dffc15a349286a7dc6f0176301700fb89df1a2",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "andreeva-svitolina-finals-2026-group2",
-    "received_at": "2026-11-10T03:06:01Z",
-    "artifact_ready_at": "2026-11-10T03:15:28Z",
-    "elapsed_seconds": 567.119,
+    "received_at": "2026-11-10T03:23:51Z",
+    "artifact_ready_at": "2026-11-10T03:30:35Z",
+    "elapsed_seconds": 404.64,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
-    "spec_sha256": "a9d11f7ce254d4660c51d63e9832c23248a845440c8e18eaf51d322824df9322",
+    "film_sha256": "b91fa65c08a51aa19c9426a6829b65ed81d4ae8988dee5646466cdd010a0a5ad",
+    "spec_sha256": "4925a0589e2111b2d25ace055101f9ddc9b3014db5d7c858dfaf86d2304c4d30",
     "request_received_at": "2026-11-10T01:44:50Z",
-    "request_to_artifact_seconds": 5438.119,
-    "run_id": "42747172138",
+    "request_to_artifact_seconds": 6345.64,
+    "run_id": "42749154142",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-10T03:09:35Z",
-        "run_id": "42747172138"
+        "at": "2026-11-10T03:26:56Z",
+        "run_id": "42749154142"
       }
     ],
-    "render_seconds": 353.119,
-    "pre_render_seconds": 214.0
+    "render_seconds": 219.64,
+    "pre_render_seconds": 185.0
   },
-  "film_sha256": "019b4e40a466cce7a26a88e36b8afedc5b2e0a7571d37c359f25fe8f4833b396",
-  "film_bytes": 75971318,
-  "qc_attestation_sha256": "1b3ccf6fbdcededd406fe233a46757246268cfb56fe518c6f7974b4f816ecf5d",
+  "film_sha256": "b91fa65c08a51aa19c9426a6829b65ed81d4ae8988dee5646466cdd010a0a5ad",
+  "film_bytes": 75916363,
+  "qc_attestation_sha256": "7c250dba79ecf399f40149b2c618e7084a0ab29f13416e865a48343cf376791e",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-10T03:09:35Z",
-      "run_id": "42747172138"
+      "at": "2026-11-10T03:26:56Z",
+      "run_id": "42749154142"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-10T03:15:32Z",
-      "run_id": "42747172138"
+      "at": "2026-11-10T03:30:38Z",
+      "run_id": "42749154142"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-svitolina-finals-2026-group2/andreeva-svitolina-finals-2026-group2.mp4",
-  "video_bytes": 75971318
+  "video_bytes": 75916363
 }
