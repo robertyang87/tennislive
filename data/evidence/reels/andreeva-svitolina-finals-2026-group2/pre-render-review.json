@@ -1,0 +1,13 @@
+{
+  "stage": "pre-render-source-and-layout-review",
+  "source_review": "visual-editorial-review.json",
+  "native_full_samples": 8,
+  "result_graphic_correction_samples": 1,
+  "observations": [
+    "实际盘点/赛点提示完整，比分板同源逐帧透明，场地中线居中且满画布。",
+    "中英原声字幕均按实际句子显示；首盘/全场居中赛果出现时整句抬高至bottom=500，GROUP STAGE与姓名/比分不被覆盖。",
+    "章节卡采用共享GSAP/D3组件；入口0.3/1.2秒与停稳3.5/6秒均已核对，语义分行无溢出，照片填满约定图片区域。"
+  ],
+  "voice_method": "实际冻结Edge云见音频已测长；非真人听审，正式影片的自动五项审音在render完成后执行。",
+  "final_film_qc": "pending_formal_render"
+}

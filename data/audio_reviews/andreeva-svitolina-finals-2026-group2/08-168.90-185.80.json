@@ -1,0 +1,20 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ghI6bMX89JQ/ghI6bMX89JQ.mp4",
+  "source_sha256": "02061b0ff7db73a749ba708f017b6d32ffe8c5f8338dc4062ab41f6af11fd608",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-10T02:37:00+00:00",
+  "reviewed_from": 168.9,
+  "reviewed_to": 185.8,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 180.8,
+      "end": 182.7,
+      "en": "Oh, come on! Take that!",
+      "zh": "哇，接这球吧！"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 02061b0ff7db73a749ba708f017b6d32ffe8c5f8338dc4062ab41f6af11fd608，存于 data/source_asr/ghI6bMX89JQ/small.en.json 与 data/source_asr/ghI6bMX89JQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

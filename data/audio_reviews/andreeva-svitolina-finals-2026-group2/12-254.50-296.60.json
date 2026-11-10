@@ -1,0 +1,56 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ghI6bMX89JQ/ghI6bMX89JQ.mp4",
+  "source_sha256": "02061b0ff7db73a749ba708f017b6d32ffe8c5f8338dc4062ab41f6af11fd608",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-10T02:37:00+00:00",
+  "reviewed_from": 254.5,
+  "reviewed_to": 296.6,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 266.7,
+      "end": 270.0,
+      "en": "It doesn't get much better than that.",
+      "zh": "很难有比这更好的表现了。"
+    },
+    {
+      "start": 270.0,
+      "end": 275.2,
+      "en": "Composed and flawless from Mirra Andreeva today.",
+      "zh": "安德烈娃今天冷静又出色。"
+    },
+    {
+      "start": 276.2,
+      "end": 280.8,
+      "en": "Against an out-of-sorts Elina Svitolina.",
+      "zh": "面对状态欠佳的斯维托丽娜。"
+    },
+    {
+      "start": 280.8,
+      "end": 284.8,
+      "en": "Especially on serve today, the world number six just couldn't find the magic.",
+      "zh": "世界第六今天尤其发球不顺。"
+    },
+    {
+      "start": 284.8,
+      "end": 288.0,
+      "en": "But Andreeva could. She wasn't broken at all.",
+      "zh": "安德烈娃却守住全部发球局。"
+    },
+    {
+      "start": 288.0,
+      "end": 292.4,
+      "en": "And found plenty more besides on return.",
+      "zh": "接发球时，也不断争到机会。"
+    },
+    {
+      "start": 292.4,
+      "end": 296.4,
+      "en": "That's a very good introduction to the WTA Finals for the world number three.",
+      "zh": "世界第三的年终初登场足够出色。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 02061b0ff7db73a749ba708f017b6d32ffe8c5f8338dc4062ab41f6af11fd608，存于 data/source_asr/ghI6bMX89JQ/small.en.json 与 data/source_asr/ghI6bMX89JQ/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}
