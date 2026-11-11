@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "7381cb46b6950c362666493018f232b10a45d3976748174e9173d4effd44f5d3",
+  "scoreboard_qc_sha256": "cd090d6f527bdd2bca429bb38d209930a0cb1e6241d0f7ee09292be740bd03f4",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-kostyuk-pegula-finals-2026-group1-cc922aacb9db4664",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kostyuk-pegula-finals-2026-group1-cc922aacb9db4664/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42949153816"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42950869262"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -52,46 +52,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "a49ab1dba0533d46d8a2ac0f41ae0b9ba3e8a5eea1f7a2a8214b7541044f1d8d",
+  "render_inputs_sha256": "9c9b75feb8f7a12bf834fdfc79073bbcec5a0a464218cb47b6c41abdb8223378",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "kostyuk-pegula-finals-2026-group1",
-    "received_at": "2026-11-11T02:54:26Z",
-    "artifact_ready_at": "2026-11-11T03:02:24Z",
-    "elapsed_seconds": 478.919,
+    "received_at": "2026-11-11T03:09:44Z",
+    "artifact_ready_at": "2026-11-11T03:17:14Z",
+    "elapsed_seconds": 450.435,
     "budget_seconds": 600,
     "met": true,
-    "film_sha256": "62a70d66035da6cc262ca0a982707b9634bde12910605c6a50d9915cdce07b1d",
-    "spec_sha256": "e4b61fd431d128b6b0812fe4306f4b93afcaa29f658f982ace79a550d91f8920",
+    "film_sha256": "2632a0444ebffd07d1f58cd5b7dd2b826e16c456c69cfd9b45f11ce78c162ceb",
+    "spec_sha256": "c02076a37970422104451d700dd9a6276666801bbae5e967d5d9b37b2fadbe04",
     "request_received_at": "2026-11-11T02:05:50Z",
-    "request_to_artifact_seconds": 3394.919,
-    "run_id": "42949153816",
+    "request_to_artifact_seconds": 4284.435,
+    "run_id": "42950869262",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-11T02:57:21Z",
-        "run_id": "42949153816"
+        "at": "2026-11-11T03:13:00Z",
+        "run_id": "42950869262"
       }
     ],
-    "render_seconds": 303.919,
-    "pre_render_seconds": 175.0
+    "render_seconds": 254.435,
+    "pre_render_seconds": 196.0
   },
-  "film_sha256": "62a70d66035da6cc262ca0a982707b9634bde12910605c6a50d9915cdce07b1d",
-  "film_bytes": 77588365,
-  "qc_attestation_sha256": "e486f16db7b93c61c3ca310ee8b6919eb3bf99577a38567903cc2c600da92073",
+  "film_sha256": "2632a0444ebffd07d1f58cd5b7dd2b826e16c456c69cfd9b45f11ce78c162ceb",
+  "film_bytes": 77544198,
+  "qc_attestation_sha256": "aa971bcd74e728cae421f61c74db926b4a0eaabc3daf188fb22712cf1ee2227d",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-11T02:57:21Z",
-      "run_id": "42949153816"
+      "at": "2026-11-11T03:13:00Z",
+      "run_id": "42950869262"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-11T03:02:28Z",
-      "run_id": "42949153816"
+      "at": "2026-11-11T03:17:17Z",
+      "run_id": "42950869262"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-kostyuk-pegula-finals-2026-group1/kostyuk-pegula-finals-2026-group1.mp4",
-  "video_bytes": 77588365
+  "video_bytes": 77544198
 }

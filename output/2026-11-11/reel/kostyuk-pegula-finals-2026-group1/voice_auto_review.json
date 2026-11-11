@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "eb5c840a06d166fe72f2712937510571242ee6418ef5aa44d440a4c72cc41325",
-    "render_inputs_sha256": "a49ab1dba0533d46d8a2ac0f41ae0b9ba3e8a5eea1f7a2a8214b7541044f1d8d",
-    "spec_sha256": "e4b61fd431d128b6b0812fe4306f4b93afcaa29f658f982ace79a550d91f8920",
-    "film_sha256": "62a70d66035da6cc262ca0a982707b9634bde12910605c6a50d9915cdce07b1d",
+    "render_sha256": "4591e75a9937d7e33ffe83e9221d38bf558c3f94b3c58096d27e850e7c914538",
+    "render_inputs_sha256": "9c9b75feb8f7a12bf834fdfc79073bbcec5a0a464218cb47b6c41abdb8223378",
+    "spec_sha256": "c02076a37970422104451d700dd9a6276666801bbae5e967d5d9b37b2fadbe04",
+    "film_sha256": "2632a0444ebffd07d1f58cd5b7dd2b826e16c456c69cfd9b45f11ce78c162ceb",
     "inventory_sha256": "e867ed41d939d0ebb23a8641746acf217c2a63ff008e333466417067b7b07a33"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-11T03:03:50+00:00",
+  "reviewed_at": "2026-11-11T03:18:37+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -289,7 +289,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "开场连赢9分,30分钟拿下手盘,可今年前两次交手,佩古拉都输了。第二盘,从底线相迟到往前,科斯秋克开始反扑。"
+        "transcript": "开场联营9分：30分钟拿下手盘：可今年前两次交手,佩古拉都输了。第二盘,从底线相迟到往前,科斯秋克开始反扑。"
       },
       "polyphones": [],
       "pauses": {
@@ -353,7 +353,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "她举起手,回应看台上的掌声。手站的势力过去了。下一场对诺斯科娃,她能把留住的机会变成晋级吗?"
+        "transcript": "他举起手,回应看台上的掌声。手站的施力过去了。下一场对诺斯科娃,他能把留住的机会变成晋级吗?"
       },
       "polyphones": [],
       "pauses": {
