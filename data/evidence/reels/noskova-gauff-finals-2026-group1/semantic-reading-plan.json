@@ -1,0 +1,42 @@
+{
+  "backend": "edge",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "controls": "Native punctuation and phrase order; no unsupported emphatic SSML claim. Exact six requests frozen and decoded.",
+  "human_listening_claimed": false,
+  "semantic_plan": [
+    {
+      "segment": 2,
+      "focus": "第一次／率先拿到四强门票",
+      "pause": "日期场地之后落停，问题完整收尾。",
+      "actual_seconds": 9.864
+    },
+    {
+      "segment": 4,
+      "focus": "长回合／四比一后连追两局／先稳住",
+      "pause": "把长回合结果与随后的反扑分句，不将2-1的回合冒充4-3局。",
+      "actual_seconds": 11.088
+    },
+    {
+      "segment": 6,
+      "focus": "八次／五个全部守住／每一分",
+      "pause": "统计后转入仍需争取的相持。",
+      "actual_seconds": 10.464
+    },
+    {
+      "segment": 8,
+      "focus": "同样四比一／没有再让出／提前打进四强",
+      "pause": "前两胜因果分句，最后落在自己发球拿下。",
+      "actual_seconds": 12.6
+    },
+    {
+      "segment": 10,
+      "focus": "掌声／已经打进四强／三战全胜吗",
+      "pause": "情绪一句后停，下一场问题上扬。",
+      "actual_seconds": 9.312
+    }
+  ],
+  "pronunciation": "诺斯科娃、高芙、科斯秋克、佩古拉整词与语音边界核查；长回合按chang2语义映射常回合，显示不改。",
+  "actual_inputs": "All actual MP3s decoded, native duration checks and word boundaries reviewed; strict bundle reuse SHA747ca473d224f8552ff8fb7683666448ae9d70d33aaf1422ac1beda87c22f7c3; final automated five-part voice suite still required.",
+  "source_audio": "unity; no loudness/PCM/gain/silence scan; original full sentences supported by original dual ASR and final-window spot ASR, recorded boundary exceptions."
+}
