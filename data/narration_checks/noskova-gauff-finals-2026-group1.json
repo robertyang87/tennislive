@@ -1,0 +1,53 @@
+{
+  "slug": "noskova-gauff-finals-2026-group1",
+  "checked_at": "2026-11-11T04:37:44Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "109ac0c2ff1cb8e9": {
+      "segment": 2,
+      "spoken": 9.864,
+      "picture": 12.0
+    },
+    "098704e3d6826dde": {
+      "segment": 4,
+      "spoken": 11.016,
+      "picture": 14.0
+    },
+    "76a0bdb226448be0": {
+      "segment": 6,
+      "spoken": 10.488,
+      "picture": 14.0
+    },
+    "d0f91f955b9d5a05": {
+      "segment": 8,
+      "spoken": 12.768,
+      "picture": 15.0
+    },
+    "c54834e176db1d84": {
+      "segment": 10,
+      "spoken": 9.312,
+      "picture": 12.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-noskova-gauff-finals-2026-group1-162a809556db56c5",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-noskova-gauff-finals-2026-group1-162a809556db56c5/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42962046087"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "status": "corrected_and_verified_in_final_encoded_film",
+  "film_sha256": "9072586a30b3f18fbc0a1a7371f772b164b922fc5033ebf55d52091fb07d13af",
+  "frame": {
+    "label": "seam-5-3",
+    "seconds": 167.52,
+    "frame_index_25fps": 4188,
+    "file": "seam-5-3.png",
+    "sha256": "4ce202ef91c7cf7450026eecfafef5723bac789669d35c5c169879922020ea31"
+  },
+  "finding": "Original source WTA end-brand graphic begins298.32 and enters the0.5s dissolve tail. Exact film167.52/frame4188 original PNG visibly contains large ghostWTA beneath ending title.",
+  "correction": "Set final segment visual_end298.08; freeze real last result/reaction frame through dissolve tail while keeping original speech window257→298.1 and silence audio tail. Exact same six frozen speech requests reused; no source audio gain processing.",
+  "native_method": "existing native visual_end/tpad implementation; final-film seam and fresh QC/voice attestation required.",
+  "closure": {
+    "film_sha256": "3f4cd5b8c39e1d0bed129ab2b81152319e331c00c78326374c670b3f13ce6f34",
+    "spec_sha256": "f690c66b388143bac40e81cddbf51ddaa434eff1036d45fa4cd61ac06128b6b3",
+    "formal_run": 42962046087,
+    "frame": {
+      "label": "seam-5-3",
+      "seconds": 167.52,
+      "frame_index_25fps": 4188,
+      "file": "seam-5-3.png",
+      "sha256": "adb0df3920604d25730fc1d0e8b53f899e683f18695dc45a70ffc1e313fa59d7"
+    },
+    "review": "../final-film-review/review.json",
+    "native_qc": "pass",
+    "automated_voice_suite": "pass"
+  }
+}

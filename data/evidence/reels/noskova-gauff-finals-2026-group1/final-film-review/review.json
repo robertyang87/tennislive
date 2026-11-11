@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "reviewed_at": "2026-11-11T05:01:21.063390+00:00",
+  "method": "assistant_visual_review_of_native_final_film_samples",
+  "film_sha256": "3f4cd5b8c39e1d0bed129ab2b81152319e331c00c78326374c670b3f13ce6f34",
+  "film_bytes": 74836256,
+  "film_seconds": 183.68,
+  "spec_sha256": "f690c66b388143bac40e81cddbf51ddaa434eff1036d45fa4cd61ac06128b6b3",
+  "formal_run": "https://github.com/robertyang87/tennislive/actions/runs/42962046087",
+  "scope": "Representative sample of every segment, cover, branded last frame; exact set/match-point headers, long result caption, photo and three-node score captions; selected native0.5s dissolves. Not continuous viewing or human listening.",
+  "findings": {
+    "cover": "Same-match Getty photo verified by IPTC and WTA record, Noskova front face clear, real crop,6-3/6-3 and world8/4/duration1:15 from official stats.",
+    "court": "Full selected long rally, third set point, second-set rally and final point; native score rows and SET POINT#3/MATCH POINT#2 preserved, source unity.",
+    "cards": "Five GSAP/D3 cards with complete semantic title lines, three-node first-set score advance, second-set8/3ACE comparison and score advance, sourced photo; subtitles and footer separated.",
+    "bilingual": "Original complete selected commentary clauses supported by archived full dualASR and localized ending transcripts; exact final English and Chinese remain above intact native result panel with both names and all6/3/6/3 digits.",
+    "motion": "Selected encoded dissolution phases preserve adjacent images and titles without inserted black frame. Native card motion separately inspected at.3/1.2/3.5/6s.",
+    "ending": "Full final point, fist smile, handshake, waving and full result commentary, followed by emotional photo/next-match3-0 question and native branded outro. Already-qualified status stated correctly.",
+    "statistics": "Native full poster9/8ACE,5/8DF,19/17winners,15/21UE,5/9vs2/2BP,63/47total; table and headshots checked against actual official/FS evidence."
+  },
+  "native_qc": "pass",
+  "voice_review": "automated_voice_suite pass; no human auditory approval claimed",
+  "release_download_byte_identity_verified": true,
+  "tts_bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b"
+}

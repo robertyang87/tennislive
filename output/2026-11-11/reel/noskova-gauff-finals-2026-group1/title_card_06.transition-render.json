@@ -1,0 +1,206 @@
+{
+  "version": 2,
+  "key": "974386f44d66d1edc8c9848568b41717fa650309bb4b396ceed005c91bcecbea",
+  "sha256": "d6f43fcb0bd7e0c0c9944ebfcfa42641b09097b17477f5b1753555c2d49584b1",
+  "seconds": 14.0,
+  "fps": "25/1",
+  "size": [
+    1080,
+    1440
+  ],
+  "plan": {
+    "canvas_width": 1080,
+    "kind": "comparison",
+    "lines": [
+      "发球先抢一拍",
+      "相持也要顶得住"
+    ],
+    "font_px": 96,
+    "nodes": [
+      {
+        "label": "诺斯科娃",
+        "value": "8",
+        "source": "data/evidence/reels/noskova-gauff-finals-2026-group1/flashscore.json",
+        "winning": true
+      },
+      {
+        "label": "高芙",
+        "value": "3",
+        "source": "data/evidence/reels/noskova-gauff-finals-2026-group1/flashscore.json"
+      }
+    ],
+    "direction": "horizontal",
+    "groups": [],
+    "proof_h": 218,
+    "node_height": 86,
+    "kicker_y": 394.12,
+    "headline_y": 478.12,
+    "proof_y": 791.88,
+    "safe_bottom": 1244,
+    "photo": null,
+    "highlight": "",
+    "kicker": "第二盘ACE数",
+    "content": {
+      "comparison": {
+        "metric": "第二盘ACE数",
+        "nodes": [
+          {
+            "label": "诺斯科娃",
+            "value": "8",
+            "source": "data/evidence/reels/noskova-gauff-finals-2026-group1/flashscore.json",
+            "winning": true
+          },
+          {
+            "label": "高芙",
+            "value": "3",
+            "source": "data/evidence/reels/noskova-gauff-finals-2026-group1/flashscore.json"
+          }
+        ]
+      }
+    },
+    "notes": []
+  },
+  "browser_evidence": {
+    "boxes": [
+      {
+        "text": "发球先抢一拍",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 478.109375,
+          "width": 940,
+          "height": 122.875,
+          "top": 478.109375,
+          "right": 1010,
+          "bottom": 600.984375,
+          "left": 70
+        }
+      },
+      {
+        "text": "相持也要顶得住",
+        "width": 940,
+        "scroll": 940,
+        "rect": {
+          "x": 70,
+          "y": 600.984375,
+          "width": 940,
+          "height": 122.875,
+          "top": 600.984375,
+          "right": 1010,
+          "bottom": 723.859375,
+          "left": 70
+        }
+      },
+      {
+        "text": null,
+        "width": 175,
+        "scroll": 175,
+        "rect": {
+          "x": 90,
+          "y": 786.875,
+          "width": 175,
+          "height": 44,
+          "top": 786.875,
+          "right": 265,
+          "bottom": 830.875,
+          "left": 90
+        }
+      },
+      {
+        "text": null,
+        "width": 108,
+        "scroll": 108,
+        "rect": {
+          "x": 90,
+          "y": 841.875,
+          "width": 108,
+          "height": 39,
+          "top": 841.875,
+          "right": 198,
+          "bottom": 880.875,
+          "left": 90
+        }
+      },
+      {
+        "text": null,
+        "width": 831,
+        "scroll": 831,
+        "rect": {
+          "x": 890,
+          "y": 833.875,
+          "width": 31,
+          "height": 58,
+          "top": 833.875,
+          "right": 921,
+          "bottom": 891.875,
+          "left": 890
+        }
+      },
+      {
+        "text": null,
+        "width": 54,
+        "scroll": 54,
+        "rect": {
+          "x": 90,
+          "y": 920.875,
+          "width": 54,
+          "height": 39,
+          "top": 920.875,
+          "right": 144,
+          "bottom": 959.875,
+          "left": 90
+        }
+      },
+      {
+        "text": null,
+        "width": 415,
+        "scroll": 415,
+        "rect": {
+          "x": 477.5,
+          "y": 912.875,
+          "width": 27,
+          "height": 58,
+          "top": 912.875,
+          "right": 504.5,
+          "bottom": 970.875,
+          "left": 477.5
+        }
+      }
+    ],
+    "content": [
+      {
+        "x": 400.5,
+        "y": 394.109375,
+        "width": 279,
+        "height": 56,
+        "top": 394.109375,
+        "right": 679.5,
+        "bottom": 450.109375,
+        "left": 400.5
+      },
+      {
+        "x": 70,
+        "y": 478.109375,
+        "width": 940,
+        "height": 245.75,
+        "top": 478.109375,
+        "right": 1010,
+        "bottom": 723.859375,
+        "left": 70
+      },
+      {
+        "x": 90,
+        "y": 791.875,
+        "width": 900,
+        "height": 218,
+        "top": 791.875,
+        "right": 990,
+        "bottom": 1009.875,
+        "left": 90
+      }
+    ],
+    "story": null
+  },
+  "review_scope": "deterministic browser geometry and encoding; not full visual/audio review"
+}

@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-QnV5tmSrHig/QnV5tmSrHig.mp4",
+  "source_sha256": "41926508bdb91144ee239ae7a0803d4844869b3e903a86501b410454af95570e",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-11T04:18:16+00:00",
+  "reviewed_from": 208.9,
+  "reviewed_to": 226.0,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 209.2,
+      "end": 212.65,
+      "en": "Noskova continues to hold her at bay, but here's just a touch of pressure.",
+      "zh": "她仍压着高芙，但也有些压力。"
+    },
+    {
+      "start": 219.9,
+      "end": 221.2,
+      "en": "Oh!",
+      "zh": "哇！"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 41926508bdb91144ee239ae7a0803d4844869b3e903a86501b410454af95570e，存于 data/source_asr/QnV5tmSrHig/small.en.json 与 data/source_asr/QnV5tmSrHig/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文。原始双档转写保持不变；单档分句不一致和片尾局部双档对照的具体决定见boundary_decisions。不声称人工听审。",
+  "boundary_decisions": "data/evidence/reels/noskova-gauff-finals-2026-group1/source-speech-spot/boundary-decisions.json"
+}

@@ -1,0 +1,432 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "6d45105226e7c9ff58e310440eb7d855d86164721110fe025b03c6b2f4aefa4c",
+    "render_inputs_sha256": "01eff0e5df3a59f3478eb06ee81ece724f38746f158dea6b66721a33a4555073",
+    "spec_sha256": "f690c66b388143bac40e81cddbf51ddaa434eff1036d45fa4cd61ac06128b6b3",
+    "film_sha256": "3f4cd5b8c39e1d0bed129ab2b81152319e331c00c78326374c670b3f13ce6f34",
+    "inventory_sha256": "b540f68424a2ba5434a6df01e1228a426615fed355cb566c4d8877caa00f7276"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-11T04:59:54+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0f025d3275483d72f137a983ea618f4fd1e9a5353b26b48e233b05a7acbf2ef6",
+      "audio_sha256": "cbb63aa95d32de36cb4a54ba21d28bac97d1f3d57a692d26c3df75c38b514f94",
+      "pass": true,
+      "result_of": "bundle:0f025d3275483d72f137a983ea618f4fd1e9a5353b26b48e233b05a7acbf2ef6"
+    },
+    {
+      "id": "bundle:2cb5a6f6ca5b1e1237f1fbd7e491e2e611c60657471f27a5cbe63616a174ee16",
+      "audio_sha256": "7c4190030712cc68d6218aa49c116c7a201bcd4d8e85814947f54fc9de080b8f",
+      "pass": true,
+      "result_of": "bundle:2cb5a6f6ca5b1e1237f1fbd7e491e2e611c60657471f27a5cbe63616a174ee16"
+    },
+    {
+      "id": "bundle:41021a0777eef7441188abffb32325026c2187980c7b7be8575091fb3a77e0f1",
+      "audio_sha256": "64553a2b6c8cdaccc0cb34b5b24bed1a7e69768329a2cdcb80397db87f002a96",
+      "pass": true,
+      "result_of": "bundle:41021a0777eef7441188abffb32325026c2187980c7b7be8575091fb3a77e0f1"
+    },
+    {
+      "id": "bundle:7fe571c00f1e72755688498f8e5231ac1699333d6bfa3fd9aed8d584bdfe60bd",
+      "audio_sha256": "7cb89c72bc40f8652781a39b3987b0244987110a46b1144009d05f6530bcf67e",
+      "pass": true,
+      "result_of": "bundle:7fe571c00f1e72755688498f8e5231ac1699333d6bfa3fd9aed8d584bdfe60bd"
+    },
+    {
+      "id": "bundle:8f5bf97575eea230e2db535be4c60c317310b6dfdf3df354ba6b858facf59480",
+      "audio_sha256": "7f39faae9b122f004fc1dfa4a6450c4f1a99fafaa1b86e7ac67a3e27faa0d463",
+      "pass": true,
+      "result_of": "bundle:8f5bf97575eea230e2db535be4c60c317310b6dfdf3df354ba6b858facf59480"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "7cb89c72bc40f8652781a39b3987b0244987110a46b1144009d05f6530bcf67e",
+      "pass": true,
+      "result_of": "bundle:7fe571c00f1e72755688498f8e5231ac1699333d6bfa3fd9aed8d584bdfe60bd"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "cbb63aa95d32de36cb4a54ba21d28bac97d1f3d57a692d26c3df75c38b514f94",
+      "pass": true,
+      "result_of": "bundle:0f025d3275483d72f137a983ea618f4fd1e9a5353b26b48e233b05a7acbf2ef6"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "64553a2b6c8cdaccc0cb34b5b24bed1a7e69768329a2cdcb80397db87f002a96",
+      "pass": true,
+      "result_of": "bundle:41021a0777eef7441188abffb32325026c2187980c7b7be8575091fb3a77e0f1"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "7c4190030712cc68d6218aa49c116c7a201bcd4d8e85814947f54fc9de080b8f",
+      "pass": true,
+      "result_of": "bundle:2cb5a6f6ca5b1e1237f1fbd7e491e2e611c60657471f27a5cbe63616a174ee16"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "7f39faae9b122f004fc1dfa4a6450c4f1a99fafaa1b86e7ac67a3e27faa0d463",
+      "pass": true,
+      "result_of": "bundle:8f5bf97575eea230e2db535be4c60c317310b6dfdf3df354ba6b858facf59480"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0f025d3275483d72f137a983ea618f4fd1e9a5353b26b48e233b05a7acbf2ef6",
+      "text": "从底线对拉到网前，再退回底线，诺斯科娃赢下常回合。可四比一领先后，高芙连追两局。她先要稳住自己的发球局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "从底线对拉到往前,在退回底线,诺斯科娃影响常回合。可斯比伊领先后,高福连追两局。他先要稳住自己的发球局。"
+      },
+      "polyphones": [
+        {
+          "index": 48,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 10.153,
+        "cps": 4.53,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 底线 ｜ 对 ｜ 拉 ｜ 到 ｜ 网 ｜ 前 ｜ 再 ｜ 退回 ｜ 底线 ｜ 诺斯科娃 ｜ 赢 ｜ 下 ｜ 常 ｜ 回合 ｜ 可 ｜ 四比一 ｜ 领先 ｜ 后 ｜ 高芙 ｜ 连 ｜ 追 ｜ 两局 ｜ 她 ｜ 先 ｜ 要 ｜ 稳住 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:2cb5a6f6ca5b1e1237f1fbd7e491e2e611c60657471f27a5cbe63616a174ee16",
+      "text": "同样是四比一，这次她没有再让出发球局。首战已赢下科斯秋克，再两盘拿下这一场，就能提前打进四强。最后一道关，仍要自己发球拿下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 55,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "同样是4比1,这次他没有再让出发球局。手战已赢下科斯秋克,在两盘拿下这一场,就能提前打进四枪。最后一道关,仍要自己发球拿下。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "出发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 57,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 55,
+        "speech_s": 11.875,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "同样 ｜ 是 ｜ 四比一 ｜ 这次 ｜ 她 ｜ 没有 ｜ 再 ｜ 让出 ｜ 发球 ｜ 局 ｜ 首战 ｜ 已 ｜ 赢 ｜ 下 ｜ 科斯秋克 ｜ 再 ｜ 两盘 ｜ 拿下 ｜ 这 ｜ 一 ｜ 场 ｜ 就 ｜ 能 ｜ 提前 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 最后 ｜ 一 ｜ 道 ｜ 关 ｜ 仍 ｜ 要 ｜ 自己 ｜ 发球 ｜ 拿下"
+      }
+    },
+    {
+      "id": "bundle:41021a0777eef7441188abffb32325026c2187980c7b7be8575091fb3a77e0f1",
+      "text": "第二盘，诺斯科娃八次发球直接得分，五个发球局全部守住。可多拍争夺还没结束，从底线打到网前，每一分还要自己拿。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 48,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.021,
+        "longest_deletion": 0,
+        "transcript": "第二盘,诺斯科娃、巴斯发球直接得分,五个发球局全部守住。可多派争夺还没结束,从底线打到往前,每一分还要自己拿。"
+      },
+      "polyphones": [
+        {
+          "index": 10,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 14,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        },
+        {
+          "index": 19,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 32,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.531,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 48,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.267,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 48,
+        "speech_s": 9.611,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 诺斯科娃 ｜ 八次 ｜ 发球 ｜ 直接 ｜ 得分 ｜ 五个 ｜ 发球 ｜ 局 ｜ 全部 ｜ 守 ｜ 住 ｜ 可 ｜ 多 ｜ 拍 ｜ 争夺 ｜ 还 ｜ 没 ｜ 结束 ｜ 从 ｜ 底线 ｜ 打 ｜ 到 ｜ 网 ｜ 前 ｜ 每 ｜ 一 ｜ 分 ｜ 还要 ｜ 自己 ｜ 拿"
+      }
+    },
+    {
+      "id": "bundle:7fe571c00f1e72755688498f8e5231ac1699333d6bfa3fd9aed8d584bdfe60bd",
+      "text": "北京时间十一月十一日清晨，印第安韦尔斯年终总决赛小组赛。第一次来到这里，诺斯科娃怎样率先拿到四强门票？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月11日清晨,印第安威尔斯年中总决赛小组赛。第一次来到这里,诺斯科娃怎样率先拿到四墙门票。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 8.986,
+        "cps": 5.23,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十一日 ｜ 清晨 ｜ 印第安韦尔斯 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 第一次 ｜ 来到这里 ｜ 诺斯科娃 ｜ 怎样 ｜ 率先 ｜ 拿 ｜ 到 ｜ 四 ｜ 强 ｜ 门票"
+      }
+    },
+    {
+      "id": "bundle:8f5bf97575eea230e2db535be4c60c317310b6dfdf3df354ba6b858facf59480",
+      "text": "属于她的掌声，还在看台上回响。她已经打进四强，下一场对佩古拉，能以三战全胜结束小组赛吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "属于他的掌声,还在看台上回想。他已经打进四墙,下一场对佩古拉,能以三战全胜结束小组赛吗?"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.752,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 8.432,
+        "cps": 4.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "属于 ｜ 她 ｜ 的 ｜ 掌声 ｜ 还 ｜ 在 ｜ 看台 ｜ 上 ｜ 回响 ｜ 她 ｜ 已经 ｜ 打 ｜ 进 ｜ 四 ｜ 强 ｜ 下 ｜ 一 ｜ 场 ｜ 对 ｜ 佩古拉 ｜ 能 ｜ 以 ｜ 三 ｜ 战 ｜ 全胜 ｜ 结束 ｜ 小组 ｜ 赛 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    }
+  ]
+}
