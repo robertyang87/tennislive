@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-11-11T02:54:00.417707+00:00",
+  "formal_spec_validation": "pass",
+  "new_reel_opening_coordinate_test": "1 passed",
+  "new_reel_ending_predicate": "pass",
+  "hit_data_annotation": "present before sealing",
+  "source_asr_crosscheck": "pass; two single-model grouped-boundary notes reviewed separately; uncertain223–254 omitted",
+  "actual_narration_fit": "all five fit, no pad over4s",
+  "voice_approval": "pending formal automated suite; no human listening claimed",
+  "native_ass_preview": {
+    "checked_at": "2026-11-11T02:54:00.143636+00:00",
+    "kind": "native_ASS_visual_preview_only",
+    "publication_approved": false,
+    "tts_bundle_sha256": "cc922aacb9db4664abd6dc514649a6fdac6b19d258228d14b4a8064d67ed5a1c",
+    "strict_frozen_import": true,
+    "original_preview_samples": 19,
+    "photo_corrected_samples": 4,
+    "findings": "原生实际ASS逐段样本已看。比分卡字幕260，与标题/数据/品牌分区；照片卡原150字幕压图片下沿14px，最终改110，四帧完整检查字幕、图片和品牌各有间隔。末段位置窗口从35改34.3，严格贴完整cue起点，不切字幕。长英文名字不换行拆名，双语赛果句在大赛果条上方。",
+    "human_listening_claimed": false,
+    "remaining_native_work": "Formal encode, native QC and automated voice suite, then final encoded samples and automatic WeChat receipt."
+  },
+  "repository_wide_taste_note": "Two tests stop first on unrelated historical specs; current reel ending predicate directly passed and current _hit_data present. No historical sealed spec changed."
+}

@@ -16,5 +16,6 @@
       "zh": "哇！科斯秋克这一分太精彩了！"
     }
   ],
-  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 789837aeb69c762e663054e9a22b44a1bcd283bc9ba586bd77a03fb5db0e8f4a，存于 data/source_asr/WV5vuvCevCM/small.en.json 与 data/source_asr/WV5vuvCevCM/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 789837aeb69c762e663054e9a22b44a1bcd283bc9ba586bd77a03fb5db0e8f4a，存于 data/source_asr/WV5vuvCevCM/small.en.json 与 data/source_asr/WV5vuvCevCM/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文。单档分句不一致处的真实边界与未采用的不确定窗口，详见boundary_decisions；原始ASR未修改。不声称人工听审。",
+  "boundary_decisions": "data/evidence/reels/kostyuk-pegula-finals-2026-group1/source-speech-spot/editorial-decision.json"
 }
