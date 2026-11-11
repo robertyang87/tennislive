@@ -102,7 +102,7 @@ jobs:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -euo pipefail
-          ARGS=(--force-ipv4 --socket-timeout 20 --retries 3 --js-runtimes node)
+          ARGS=(--force-ipv4 --socket-timeout 20 --retries 2 --extractor-args "youtube:player_client=android_vr,tv,web_safari" --js-runtimes node)
           # This public WTA source uses the anonymous PO-token channel; prior account cookies expired.
 
           VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
