@@ -366,7 +366,6 @@
         }
       ],
       "_quote_kind": "broadcast",
-      "score_inset_until": 15.28,
       "subtitle_bottom_windows": [
         [
           34.3,
@@ -374,7 +373,13 @@
           500
         ]
       ],
-      "_score_inset_why": "原生左下小记分条在269.28秒切镜后消失；仅至相对15.28秒回贴小记分条，不把后来的大赛果图误当小记分条；后续按居中裁切保留真实人物与赛事顶栏。"
+      "_score_inset_why": "逐原图核对小记分条在269.28秒切镜消失；实际原生score_inset_windows按源片绝对时间只回贴254.0–269.28秒。290秒以后的完整居中大赛果图由源片原样保留，不检测为小记分条；原始发现和有界修正在本期result-overlay-correction记录。",
+      "score_inset_windows": [
+        [
+          254.0,
+          269.28
+        ]
+      ]
     },
     {
       "_id": "ending-emotion",
@@ -489,7 +494,7 @@
   "_scorebox_why": "原生CALIBRATED wta规范框[90,870,550,980]；同源完整probe board固定机位识别1298/2234，实际原图核对左下90,870起的小比分条及动态宽度。正式逐选段逐帧量边，并在原生字幕预览核实际提示条。",
   "_visual_review": {
     "path": "data/evidence/reels/kostyuk-pegula-finals-2026-group1/visual-editorial-review.json",
-    "sha256": "90f11140db74cadb8b807ef718a0a317a5094e7aa3db8e76e464a391ddd6058a",
+    "sha256": "8cb88d3e2552535d3906c8bedce687d8be192ae852755f9b5d7c772ad65e7c23",
     "method": "current_assistant_complete_contact_sheets_plus_dense_selected_windows",
     "external_model_pass_claimed": false,
     "human_listening_claimed": false

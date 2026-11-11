@@ -1,0 +1,18 @@
+{
+  "status": "native_preview_corrected_awaiting_formal_rerender",
+  "recorded_at": "2026-11-11T03:07:38.250099+00:00",
+  "film_sha256": "62a70d66035da6cc262ca0a982707b9634bde12910605c6a50d9915cdce07b1d",
+  "finding_frame": {
+    "label": "result-final-quote",
+    "seconds": 184.96,
+    "frame_index_25fps": 4624,
+    "file": "result-final-quote.png",
+    "sha256": "e5a854192ae170c5db3854841b68425ff2936ab8e2902461d282c6e612af9210"
+  },
+  "original_png": "original-finding.png",
+  "original_source_png": "original-source.png",
+  "issue": "Final result panel partly covered by incorrect native scoreboard restoration. Spec used unrecognized score_inset_until, which is ignored; renderer continued detecting/restoring large end-result panel as small scoreboard.",
+  "bounded_correction": "Remove unrecognized score_inset_until; use actual score_inset_windows source-clock [[254.0,269.28]], where small original scoreboard disappears. Keep every source speech cue and exact frozen TTS bytes. Native preview and formal QC/voice must be rerun.",
+  "human_listening_claimed": false,
+  "preview_observation": "原生实际ASS预览确认269.28后不再回贴，完整GROUP STAGE双行姓名和6/7分数已恢复，英文/中文均在大赛果图上方；赛点5秒样本的小记分条保持完整。"
+}
