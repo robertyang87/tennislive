@@ -103,9 +103,7 @@ jobs:
         run: |
           set -euo pipefail
           ARGS=(--force-ipv4 --socket-timeout 20 --retries 3 --js-runtimes node)
-          if [ -n "$YT_COOKIES" ]; then
-            ARGS+=(--cookies "$YT_COOKIES")
-          fi
+          # This public WTA source uses the anonymous PO-token channel; prior account cookies expired.
 
           VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
           TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
