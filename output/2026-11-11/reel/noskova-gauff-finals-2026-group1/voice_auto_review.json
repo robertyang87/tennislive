@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "4aa50adbc39b677a8bc5d02acb887442e6e6eafd52da0fca83c451b0af97b0c4",
-    "render_inputs_sha256": "ace7d73ad171a625616878c16634223c3e51655cc40d88f5545f1c9f0f1e536c",
-    "spec_sha256": "aaac95e38cb8f60bc6bd68892df0d19628f2a447f5a8090aaacdd9059ef0427d",
-    "film_sha256": "9072586a30b3f18fbc0a1a7371f772b164b922fc5033ebf55d52091fb07d13af",
+    "render_sha256": "6d45105226e7c9ff58e310440eb7d855d86164721110fe025b03c6b2f4aefa4c",
+    "render_inputs_sha256": "01eff0e5df3a59f3478eb06ee81ece724f38746f158dea6b66721a33a4555073",
+    "spec_sha256": "f690c66b388143bac40e81cddbf51ddaa434eff1036d45fa4cd61ac06128b6b3",
+    "film_sha256": "3f4cd5b8c39e1d0bed129ab2b81152319e331c00c78326374c670b3f13ce6f34",
     "inventory_sha256": "b540f68424a2ba5434a6df01e1228a426615fed355cb566c4d8877caa00f7276"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-11T04:49:24+00:00",
+  "reviewed_at": "2026-11-11T04:59:54+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -114,7 +114,7 @@
         "substituted": 1,
         "sub_ratio": 0.022,
         "longest_deletion": 0,
-        "transcript": "从底线对拉到往前,在退回底线,诺斯科娃影响常回合。科斯比一领先后,高福连追两局。他先要稳住自己的发球局。"
+        "transcript": "从底线对拉到往前,在退回底线,诺斯科娃影响常回合。可斯比伊领先后,高福连追两局。他先要稳住自己的发球局。"
       },
       "polyphones": [
         {
@@ -154,12 +154,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 55,
-        "deleted": 1,
+        "deleted": 0,
         "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
-        "longest_deletion": 1,
-        "transcript": "同样是4比1,这次他没有再让出发球局。手战已赢下科斯秋克,在两盘拿下这场,就能提前打进四枪。最后一道关,仍要自己发球拿下。"
+        "longest_deletion": 0,
+        "transcript": "同样是4比1,这次他没有再让出发球局。手战已赢下科斯秋克,在两盘拿下这一场,就能提前打进四枪。最后一道关,仍要自己发球拿下。"
       },
       "polyphones": [
         {
@@ -216,7 +216,7 @@
         "substituted": 1,
         "sub_ratio": 0.021,
         "longest_deletion": 0,
-        "transcript": "第二盘,诺斯科娃84发球直接得分,五个发球局全部守住。可多派争夺还没结束,从底线打到往前,每一分还要自己拿。"
+        "transcript": "第二盘,诺斯科娃、巴斯发球直接得分,五个发球局全部守住。可多派争夺还没结束,从底线打到往前,每一分还要自己拿。"
       },
       "polyphones": [
         {
