@@ -1,0 +1,371 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "eb5c840a06d166fe72f2712937510571242ee6418ef5aa44d440a4c72cc41325",
+    "render_inputs_sha256": "a49ab1dba0533d46d8a2ac0f41ae0b9ba3e8a5eea1f7a2a8214b7541044f1d8d",
+    "spec_sha256": "e4b61fd431d128b6b0812fe4306f4b93afcaa29f658f982ace79a550d91f8920",
+    "film_sha256": "62a70d66035da6cc262ca0a982707b9634bde12910605c6a50d9915cdce07b1d",
+    "inventory_sha256": "e867ed41d939d0ebb23a8641746acf217c2a63ff008e333466417067b7b07a33"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-11T03:03:50+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:86c9c4d16df73ef0f0b476884fe08888fec2c2abefe695d47c56b2f8e2673689",
+      "audio_sha256": "ec73a0094af79413f4fabeda68445f815552426722e20d466ca18d32459bb412",
+      "pass": true,
+      "result_of": "bundle:86c9c4d16df73ef0f0b476884fe08888fec2c2abefe695d47c56b2f8e2673689"
+    },
+    {
+      "id": "bundle:86dff039cab4f98270b834da74fe25f5bfb1813a0d74674ee1e0467e4dc8dee6",
+      "audio_sha256": "0292ced108f7080f8965ca232ffed504329bcbf15c2da82c79e374aca8bd9df2",
+      "pass": true,
+      "result_of": "bundle:86dff039cab4f98270b834da74fe25f5bfb1813a0d74674ee1e0467e4dc8dee6"
+    },
+    {
+      "id": "bundle:a2738a9b67c1ad7070d6470f9d59aefdb7e60d808aa6cc7f1044628a83386ed2",
+      "audio_sha256": "b6a59539b23332e5a90010871156db42f1234173ee9fe84e7d116222ec5aa92f",
+      "pass": true,
+      "result_of": "bundle:a2738a9b67c1ad7070d6470f9d59aefdb7e60d808aa6cc7f1044628a83386ed2"
+    },
+    {
+      "id": "bundle:b440d2e7fd143b9942c91d2f4ec8530e5c05333b1285f34da2027e732c51c991",
+      "audio_sha256": "02a1bd4b633e3971d2800dc2fc88931b3c2c64eea1bbdc1f68b8a9694717029c",
+      "pass": true,
+      "result_of": "bundle:b440d2e7fd143b9942c91d2f4ec8530e5c05333b1285f34da2027e732c51c991"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:f68a322d219d1f4f1114cacb38db98491a9f492a0d33b36089c24a8c4019ef53",
+      "audio_sha256": "394b42966a190eb87bea130b827e94433428228db940c6c90679a1ec31bbfa7d",
+      "pass": true,
+      "result_of": "bundle:f68a322d219d1f4f1114cacb38db98491a9f492a0d33b36089c24a8c4019ef53"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "ec73a0094af79413f4fabeda68445f815552426722e20d466ca18d32459bb412",
+      "pass": true,
+      "result_of": "bundle:86c9c4d16df73ef0f0b476884fe08888fec2c2abefe695d47c56b2f8e2673689"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "02a1bd4b633e3971d2800dc2fc88931b3c2c64eea1bbdc1f68b8a9694717029c",
+      "pass": true,
+      "result_of": "bundle:b440d2e7fd143b9942c91d2f4ec8530e5c05333b1285f34da2027e732c51c991"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "0292ced108f7080f8965ca232ffed504329bcbf15c2da82c79e374aca8bd9df2",
+      "pass": true,
+      "result_of": "bundle:86dff039cab4f98270b834da74fe25f5bfb1813a0d74674ee1e0467e4dc8dee6"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "b6a59539b23332e5a90010871156db42f1234173ee9fe84e7d116222ec5aa92f",
+      "pass": true,
+      "result_of": "bundle:a2738a9b67c1ad7070d6470f9d59aefdb7e60d808aa6cc7f1044628a83386ed2"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "394b42966a190eb87bea130b827e94433428228db940c6c90679a1ec31bbfa7d",
+      "pass": true,
+      "result_of": "bundle:f68a322d219d1f4f1114cacb38db98491a9f492a0d33b36089c24a8c4019ef53"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:86c9c4d16df73ef0f0b476884fe08888fec2c2abefe695d47c56b2f8e2673689",
+      "text": "北京时间十一月十一日凌晨，印第安韦尔斯年终总决赛小组赛。首战失利后，佩古拉怎样把出线希望争回来？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月11日凌晨,印第安威尔思年中总决赛小组赛。首战失利后,佩古拉怎样把出现希望征回来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 8.715,
+        "cps": 5.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十一日 ｜ 凌晨 ｜ 印第安韦尔斯 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 首战 ｜ 失利 ｜ 后 ｜ 佩古拉 ｜ 怎样 ｜ 把 ｜ 出线 ｜ 希望 ｜ 争 ｜ 回来"
+      }
+    },
+    {
+      "id": "bundle:86dff039cab4f98270b834da74fe25f5bfb1813a0d74674ee1e0467e4dc8dee6",
+      "text": "三比三这一分，科斯秋克赢下底线常回合。第二盘前四局连续互破，两次领先被追回后，佩古拉一度四比五落后。她先保住自己的发球局，再去争对手的发球局。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 64,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "3比3这一分,科斯秋克赢下底线,常回合。第二盘前四局连续互破,两次领先被追回后,佩古拉1度4比5落后。他先保住自己的发球局,再去争对手的发球局。"
+      },
+      "polyphones": [
+        {
+          "index": 47,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.167,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": 0.094,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 57,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 67,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 64,
+        "speech_s": 13.208,
+        "cps": 4.85,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三比三 ｜ 这 ｜ 一 ｜ 分 ｜ 科斯秋克 ｜ 赢 ｜ 下 ｜ 底线 ｜ 常 ｜ 回合 ｜ 第二盘 ｜ 前 ｜ 四局 ｜ 连续 ｜ 互 ｜ 破 ｜ 两次 ｜ 领先 ｜ 被 ｜ 追回 ｜ 后 ｜ 佩古拉 ｜ 一度 ｜ 四比五 ｜ 落后 ｜ 她 ｜ 先 ｜ 保 ｜ 住 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 再 ｜ 去 ｜ 争 ｜ 对手 ｜ 的 ｜ 发球 ｜ 局"
+      }
+    },
+    {
+      "id": "bundle:a2738a9b67c1ad7070d6470f9d59aefdb7e60d808aa6cc7f1044628a83386ed2",
+      "text": "五比五这一局，科斯秋克连续救回三个破发点。第四次机会，她的双误送出破发。佩古拉六比五领先，终于轮到自己把比赛拿下来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 52,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "5比5这一局,科斯秋克连续救回三个破发点。第四次机会,他的双武送出破发。佩古拉6比5领先,终于轮到自己把比赛拿下来。"
+      },
+      "polyphones": [
+        {
+          "index": 18,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 34,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 52,
+        "speech_s": 10.542,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五比五 ｜ 这 ｜ 一 ｜ 局 ｜ 科斯秋克 ｜ 连续 ｜ 救 ｜ 回 ｜ 三个 ｜ 破发 ｜ 点 ｜ 第四次 ｜ 机会 ｜ 她 ｜ 的 ｜ 双 ｜ 误 ｜ 送 ｜ 出 ｜ 破发 ｜ 佩古拉 ｜ 六比五 ｜ 领先 ｜ 终于 ｜ 轮 ｜ 到 ｜ 自己 ｜ 把 ｜ 比赛 ｜ 拿 ｜ 下来"
+      }
+    },
+    {
+      "id": "bundle:b440d2e7fd143b9942c91d2f4ec8530e5c05333b1285f34da2027e732c51c991",
+      "text": "开场连赢九分，三十分钟拿下首盘。可今年前两次交手，佩古拉都输了。第二盘，从底线相持到网前，科斯秋克开始反扑。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "开场连赢9分,30分钟拿下手盘,可今年前两次交手,佩古拉都输了。第二盘,从底线相迟到往前,科斯秋克开始反扑。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.908,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "开场 ｜ 连 ｜ 赢 ｜ 九分 ｜ 三十分钟 ｜ 拿下 ｜ 首盘 ｜ 可 ｜ 今年 ｜ 前 ｜ 两次 ｜ 交手 ｜ 佩古拉 ｜ 都 ｜ 输 ｜ 了 ｜ 第二盘 ｜ 从 ｜ 底线 ｜ 相持 ｜ 到 ｜ 网 ｜ 前 ｜ 科斯秋克 ｜ 开始 ｜ 反扑"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:f68a322d219d1f4f1114cacb38db98491a9f492a0d33b36089c24a8c4019ef53",
+      "text": "她举起手，回应看台上的掌声。首战的失利过去了，下一场对诺斯科娃，她能把留住的机会变成晋级吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "她举起手,回应看台上的掌声。手站的势力过去了。下一场对诺斯科娃,她能把留住的机会变成晋级吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.762,
+        "cps": 4.68,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "她 ｜ 举起 ｜ 手 ｜ 回应 ｜ 看台 ｜ 上 ｜ 的 ｜ 掌声 ｜ 首战 ｜ 的 ｜ 失利 ｜ 过去了 ｜ 下 ｜ 一 ｜ 场 ｜ 对 ｜ 诺斯科娃 ｜ 她 ｜ 能 ｜ 把 ｜ 留住 ｜ 的 ｜ 机会 ｜ 变成 ｜ 晋级 ｜ 吗"
+      }
+    }
+  ]
+}
