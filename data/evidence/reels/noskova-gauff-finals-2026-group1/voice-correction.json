@@ -1,0 +1,14 @@
+{
+  "failed_run": 42959442975,
+  "stage": "automated_voice_suite",
+  "failure": "unmeasurable A-class dei3 for得; no common monophonic reference character. No incorrect pronunciation or human listening claim inferred.",
+  "affected_segments": [
+    4,
+    6,
+    8
+  ],
+  "action": "Rewrite to先要/还要/仍要, actual fresh affected TTS requests, unchanged requests reused; full native rerender and all voice checks required.",
+  "old_bundle_sha256": "747ca473d224f8552ff8fb7683666448ae9d70d33aaf1422ac1beda87c22f7c3",
+  "replacement_bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b",
+  "status": "correction_prepared_not_yet_formally_approved"
+}
