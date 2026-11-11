@@ -1,0 +1,97 @@
+{
+  "scoreboard_qc_sha256": "714b7281e69f18ab587261460f00f822cf3613aee29f00897a7cf01e1ef89d21",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-noskova-gauff-finals-2026-group1-162a809556db56c5",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-noskova-gauff-finals-2026-group1-162a809556db56c5/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42960705353"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 177.89,
+  "topbar": {
+    "line1": "2026 WTA年终总决赛 印第安韦尔斯 小组赛",
+    "line2": "诺斯科娃 6-3 6-3 高芙",
+    "start": 1.2,
+    "end": 179.09
+  },
+  "film_seconds": 183.68,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 9.864,
+    "3": 11.016,
+    "5": 10.488,
+    "7": 12.768,
+    "9": 9.312
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "ace7d73ad171a625616878c16634223c3e51655cc40d88f5545f1c9f0f1e536c",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "noskova-gauff-finals-2026-group1",
+    "received_at": "2026-11-11T04:40:06Z",
+    "artifact_ready_at": "2026-11-11T04:48:03Z",
+    "elapsed_seconds": 477.792,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "9072586a30b3f18fbc0a1a7371f772b164b922fc5033ebf55d52091fb07d13af",
+    "spec_sha256": "aaac95e38cb8f60bc6bd68892df0d19628f2a447f5a8090aaacdd9059ef0427d",
+    "request_received_at": "2026-11-11T03:51:05Z",
+    "request_to_artifact_seconds": 3418.792,
+    "run_id": "42960705353",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-11T04:43:57Z",
+        "run_id": "42960705353"
+      }
+    ],
+    "render_seconds": 247.792,
+    "pre_render_seconds": 230.0
+  },
+  "film_sha256": "9072586a30b3f18fbc0a1a7371f772b164b922fc5033ebf55d52091fb07d13af",
+  "film_bytes": 74938591,
+  "qc_attestation_sha256": "e504f47a1464dc31512e56fd74436a562f952314d62957d98cc0602c9d41ca86",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-11T04:43:57Z",
+      "run_id": "42960705353"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-11T04:48:07Z",
+      "run_id": "42960705353"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-noskova-gauff-finals-2026-group1/noskova-gauff-finals-2026-group1.mp4",
+  "video_bytes": 74938591
+}
