@@ -21,7 +21,7 @@ import hashlib
 import json
 from pathlib import Path
 
-MODELS = ("small.en", "medium.en")
+MODELS = ("small.en", "medium.en", "large-v3")
 
 
 def sha256(path: Path) -> str:
