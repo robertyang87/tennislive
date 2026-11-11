@@ -102,7 +102,7 @@ jobs:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -euo pipefail
-          ARGS=(--js-runtimes node)
+          ARGS=(--force-ipv4 --socket-timeout 20 --retries 3 --js-runtimes node)
           if [ -n "$YT_COOKIES" ]; then
             ARGS+=(--cookies "$YT_COOKIES")
           fi
