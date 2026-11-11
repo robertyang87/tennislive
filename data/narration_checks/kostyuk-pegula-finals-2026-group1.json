@@ -1,0 +1,53 @@
+{
+  "slug": "kostyuk-pegula-finals-2026-group1",
+  "checked_at": "2026-11-11T02:48:30Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "0758e1b3aae30b6c": {
+      "segment": 2,
+      "spoken": 9.576,
+      "picture": 12.0
+    },
+    "ac533da6265de651": {
+      "segment": 4,
+      "spoken": 11.784,
+      "picture": 14.0
+    },
+    "ca2df484d4d40a74": {
+      "segment": 7,
+      "spoken": 14.064,
+      "picture": 16.0
+    },
+    "340d8d8b95f07dde": {
+      "segment": 8,
+      "spoken": 11.424,
+      "picture": 14.0
+    },
+    "b8c923fbddbc15a3": {
+      "segment": 10,
+      "spoken": 9.624,
+      "picture": 12.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "cc922aacb9db4664abd6dc514649a6fdac6b19d258228d14b4a8064d67ed5a1c",
+    "request_count": 6,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-kostyuk-pegula-finals-2026-group1-cc922aacb9db4664",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-kostyuk-pegula-finals-2026-group1-cc922aacb9db4664/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/42950869262"
+  }
+}

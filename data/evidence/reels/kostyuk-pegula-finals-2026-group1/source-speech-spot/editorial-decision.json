@@ -1,0 +1,41 @@
+{
+  "method": "asr_cross_checked_editorial_boundaries",
+  "human_listening_claimed": false,
+  "source_sha256": "789837aeb69c762e663054e9a22b44a1bcd283bc9ba586bd77a03fb5db0e8f4a",
+  "original_full_source_asr_unchanged": true,
+  "omitted_window": [
+    223.4,
+    254.3
+  ],
+  "omission_reason": "Three localized models disagree on actual phrase (including surgery references); no reliable bilingual text established. Do not invent a quote. This optional raw window is omitted. Verified game outcome is explained with native fact cards.",
+  "selected_boundary_notes": [
+    {
+      "window": [
+        55.12,
+        69.3
+      ],
+      "note": "small.en no sentence; medium.en isolated I at62.86 is a single-model spurious token, no corresponding complete utterance. First result sentence starts70s and is excluded."
+    },
+    {
+      "window": [
+        96.9,
+        116.85
+      ],
+      "note": "Small.en Beautifully dispatched110.08–111.88 is a complete sentence. Medium groups separate later speech122.64 into110.10–127.78 without punctuation. Window includes complete short sentence, next point starts117. Original ASR preserved."
+    },
+    {
+      "window": [
+        131,
+        167.6
+      ],
+      "note": "Prior sentence ends130.32. New serve132s, full long rally to161s. small complete exclamation161.58–166.70; medium word Majestic164.14–164.72, from164.72–165.18, Marta165.18–166.04, Kostiuk166.04–166.82. Actual player spelling normalized to official Kostyuk; new separate sentence starts168.34 or168.98 outside this window."
+    },
+    {
+      "window": [
+        254,
+        299
+      ],
+      "note": "All result commentary retained bilingual. medium groups Indian Wells297.98–298.98 with following separate interviewer Jesse word ending300.12. Native max-word clamp begins Jesse299.42, after end299. Full last result phrase finishes298.98; never extend into interview merely to satisfy one grouped model."
+    }
+  ]
+}
