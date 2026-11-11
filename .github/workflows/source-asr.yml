@@ -84,7 +84,7 @@ jobs:
         run: |
           set -euo pipefail
           OUT="data/source_asr/$KEY"
-          for MODEL in small.en medium.en; do
+          for MODEL in large-v3; do
             python tools/source_asr.py --source "$RUNNER_TEMP/src.mp4" --model "$MODEL" \
               --out "$OUT/$MODEL.json" --from "${FROM:-0}" --to "${TO:-0}"
           done
