@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "reviewed_at": "2026-11-11T03:20:49.090365+00:00",
+  "method": "assistant_visual_review_of_native_final_film_samples",
+  "film_sha256": "2632a0444ebffd07d1f58cd5b7dd2b826e16c456c69cfd9b45f11ce78c162ceb",
+  "film_bytes": 77544198,
+  "film_seconds": 204.52,
+  "spec_sha256": "c02076a37970422104451d700dd9a6276666801bbae5e967d5d9b37b2fadbe04",
+  "formal_run": "https://github.com/robertyang87/tennislive/actions/runs/42950869262",
+  "scope": "Representative sample of every segment, selected native0.5s dissolves, complete long English result caption and corrected end-result panel, opening/end photo subtitles and final branded frame. Not continuous human viewing or listening.",
+  "findings": {
+    "cover": "Same-match Getty professional photo, true crop, front face unobscured, official world ranks5/10, result6-2/7-5 and1:28 duration. Source/crop credits and12.5% enlargement tradeoff documented.",
+    "court": "Fixed center and actual small scoreboard samples intact; complete selected serve/rally/point result retained.",
+    "cards": "Five native GSAP/D3 cards: photo, comparison and two score advances; complete semantic lines, narration subtitles below photo or data, separate footer.",
+    "bilingual": "Complete selected exclamations and result commentary; long player name remains together. Final Chinese and English both above the complete native result panel.",
+    "corrected_result_panel": "Exact same source296s event now shows both complete player names and all6/2/7/5 digits. Incorrect old native restoration no longer covers winner row.",
+    "statistics": "Pegula left/Kostyuk right, stats73/57total points, winners7/22 and UE16/47; first serve37/62 and36/68, breakpoints5/11 and2/3 match archived full-match FS/WTA packet. Conflicting first-set UE not used in film.",
+    "motion": "Selected encoded blend phases preserve adjacent pictures and complete titles without intervening black screen.",
+    "ending": "Full final point, handshake, waving, complete result sentence, emotional same-match photo and next-match qualification question followed by native branded outro."
+  },
+  "native_qc": "pass",
+  "voice_review": "automated_voice_suite pass; no human auditory approval claimed",
+  "release_download_byte_identity_verified": true,
+  "tts_bundle_sha256": "cc922aacb9db4664abd6dc514649a6fdac6b19d258228d14b4a8064d67ed5a1c"
+}
