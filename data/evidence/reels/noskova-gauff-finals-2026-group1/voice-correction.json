@@ -10,5 +10,12 @@
   "action": "Rewrite to先要/还要/仍要, actual fresh affected TTS requests, unchanged requests reused; full native rerender and all voice checks required.",
   "old_bundle_sha256": "747ca473d224f8552ff8fb7683666448ae9d70d33aaf1422ac1beda87c22f7c3",
   "replacement_bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b",
-  "status": "correction_prepared_not_yet_formally_approved"
+  "status": "corrected_and_verified_in_final_native_film",
+  "closure": {
+    "run": 42962046087,
+    "film_sha256": "3f4cd5b8c39e1d0bed129ab2b81152319e331c00c78326374c670b3f13ce6f34",
+    "spec_sha256": "f690c66b388143bac40e81cddbf51ddaa434eff1036d45fa4cd61ac06128b6b3",
+    "voice_review": "automated_voice_suite pass",
+    "actual_bundle_sha256": "162a809556db56c5acb3dc418c967aac4fdbad4e3d492d3fbc4646cc0238293b"
+  }
 }
