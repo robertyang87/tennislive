@@ -1,7 +1,7 @@
 {
   "status": "ready_for_native_render",
-  "reviewed_at": "2026-11-12T06:03:45.985637+00:00",
-  "spec_sha256": "dfdc5b19d380ef05ccfc398d6efb56103d6cbe9e997d3f9415bb7e719e24ec25",
+  "reviewed_at": "2026-11-12T06:19:29.064637+00:00",
+  "spec_sha256": "3405c4b416c92b29c027109ca199ac131fdfc3ffde16d7ecbfde93d10513c85d",
   "method": "assistant_native_caption_frame_and_card_entrance_review",
   "final_film_approved": false,
   "publication_approved": false,
@@ -9,16 +9,26 @@
   "findings": {
     "cold_open": "Source249.64 actual cut to match-point preparation, complete final point, fist, smile, handshake and complete11-in-row clause. Removed prior-game ballkid reaction. MATCHPOINT header and both names/sets intact.",
     "ending": "Covers cold-open payoff, umpire, wave/bow/crowd and result panel at297.0. Wow bilingual caption sits above full panel without blocking4/0 and6/6. Frozen final frame avoids next interview.",
-    "cover": "Actual native5194x3463 Getty same-match photo; IPTCNov11vsSabalenka, front face open eyes with natural visor shadow. ExcludedNov9photo despiteNov12upload. Winner6/6 vs4/0, world3/2, official1:02.",
+    "cover": "Actual native5194x3463 Getty same-match photo; IPTCNov11vsSabalenka, front face open eyes with natural visor shadow. ExcludedNov9photo despiteNov12upload. Winner6/6 vs4/0, world3/2, official1:02. Full identity is米拉·安德烈耶娃, repository WTA331809. Current cover single-line topic uses surname and preserves both full scoreboard names.",
     "cards": "GSAP/D3 entrance samples. Same-match opening and fist ending; three Andreeva1-4/2-4/3-4 nodes, first-set ACE5vs0 metric. Native current captions clear of card content and brandfooter.",
     "story": "1-4 deficit ->12straightpoints ->first-set final3ACE, only lastactualACE shown ->two complete points inSaba0-4servicegame ->completeactualmatchpoint. Second-set6-0 and nextMuchova in ending.",
-    "voice": "All5 exact finite MP3s completeness pass0deleted/inserted/substituted; word boundaries fit. Frozenbundlec3b7633b2140dea1. Mandatory final5checkvoice suite remains pending.",
+    "voice": "All5 exact v2 frozen MP3s pass0deleted/inserted/substituted; canonical surname安德烈耶娃. Formal5checksuite pending.",
     "scoreboard": "Original25fps board disappearance at144.24 has truncated point column. Native window ends144.2 after point; source board lives wholly outside centeredcrop, no residual cut names. No detector or QC code changed."
   },
-  "native_preview_manifest_sha256": "6d4cca3ad664f37699230c336b9a895eb8473dbd7791fe225d6968f2d69c9338",
-  "tts_bundle_sha256": "c3b7633b2140dea11db5b3bddb8b7cf0d019c15d7ad0db3f1f7b39c4e2cd12c8",
+  "native_preview_manifest_sha256": "6c2dcfd8799af514b1e808252cb0f5ce75dbfc1cf1ae6db7b87c1a8ddb0d6687",
+  "tts_bundle_sha256": "cfc2984ae195ee42baee2fd0ba282c9e5fff95c125889c4256976ec7013e28b3",
   "limitations": [
     "Sampled native preview is not encoded final film QC",
     "No human auditory review claimed"
-  ]
+  ],
+  "current_native_preview": "native-preview-namefix/preview_manifest.json",
+  "preview_spec_difference": {
+    "body_segments_topbar_stats_sources_identity": "asserted identical to finalspec",
+    "changed_after_body_preview": [
+      "cover.topic uses same-player surname abbreviation for fit, actual new cover separately reviewed",
+      "PushPlus lead clarifies55个小分",
+      "private explanatory metadata"
+    ]
+  },
+  "name_identity_gate": "native stat_card_headshot_problem returnsNone; existing two previously failing CI tests now2passed"
 }
