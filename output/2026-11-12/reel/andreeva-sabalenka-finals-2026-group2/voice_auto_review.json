@@ -1,0 +1,299 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "bedbcc0b1fa7f847ebfdcddefdde5f63673b3cd0efab7c80f531ac7348d9d1b1",
+    "render_inputs_sha256": "d36aec7ddc94b77ddd5f0dcbbe060364dfab70af03610c98f605de6ad0b975be",
+    "spec_sha256": "58d571bc1362ec07a6105550aa8adac4b6f308eb71b539176d2a8dd358343939",
+    "film_sha256": "c08627afed3d462b5b3f38a81989cff688ce8e26fa60bb1ee6e2588f04a83122",
+    "inventory_sha256": "d422725bf3ec7a664c50b8666da15fc0eb88520fc2fccbf6cce899ad6a1fb38b"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-12T06:52:09+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:3a160e13ea0472fe090b6320509883f9760928139ebbe06479d0bd54f39da38c",
+      "audio_sha256": "2ee888dbb383b59d78e72e08c00e117f7a8e1bfb25caf5700539eb4954408119",
+      "pass": true,
+      "result_of": "bundle:3a160e13ea0472fe090b6320509883f9760928139ebbe06479d0bd54f39da38c"
+    },
+    {
+      "id": "bundle:3fbddd7a83897d2d1621f5b3868f82a77d24b69aa479468465ac8a797f68875b",
+      "audio_sha256": "a655128e3a87fbfffc5661f5ffdcf09c58dd47d45ca7c0c4b5a058b361067b34",
+      "pass": true,
+      "result_of": "bundle:3fbddd7a83897d2d1621f5b3868f82a77d24b69aa479468465ac8a797f68875b"
+    },
+    {
+      "id": "bundle:7c57a2e8c797a273e1d0ce6ad8455113c7f693322a5b110ba7aa9eae37c52948",
+      "audio_sha256": "da0c391304edd2ada76d188bcacc1e1e22609d41a9b9204ca89b818d5e0353c8",
+      "pass": true,
+      "result_of": "bundle:7c57a2e8c797a273e1d0ce6ad8455113c7f693322a5b110ba7aa9eae37c52948"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:e5bb1c0c764ebe5f6029b7a5f44553828251c430d154b7047742ebe885ec31db",
+      "audio_sha256": "ee9b1fca829a56f1e47034e91d9d0681accf2960e30c83f18768d88fa0ab0dfd",
+      "pass": true,
+      "result_of": "bundle:e5bb1c0c764ebe5f6029b7a5f44553828251c430d154b7047742ebe885ec31db"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "ee9b1fca829a56f1e47034e91d9d0681accf2960e30c83f18768d88fa0ab0dfd",
+      "pass": true,
+      "result_of": "bundle:e5bb1c0c764ebe5f6029b7a5f44553828251c430d154b7047742ebe885ec31db"
+    },
+    {
+      "id": "voice_03.mp3",
+      "audio_sha256": "da0c391304edd2ada76d188bcacc1e1e22609d41a9b9204ca89b818d5e0353c8",
+      "pass": true,
+      "result_of": "bundle:7c57a2e8c797a273e1d0ce6ad8455113c7f693322a5b110ba7aa9eae37c52948"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "a655128e3a87fbfffc5661f5ffdcf09c58dd47d45ca7c0c4b5a058b361067b34",
+      "pass": true,
+      "result_of": "bundle:3fbddd7a83897d2d1621f5b3868f82a77d24b69aa479468465ac8a797f68875b"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "2ee888dbb383b59d78e72e08c00e117f7a8e1bfb25caf5700539eb4954408119",
+      "pass": true,
+      "result_of": "bundle:3a160e13ea0472fe090b6320509883f9760928139ebbe06479d0bd54f39da38c"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:3a160e13ea0472fe090b6320509883f9760928139ebbe06479d0bd54f39da38c",
+      "text": "第二盘六比零，连赢十一局。第一次站上总决赛舞台，安德烈耶娃已经走进四强。下一场对穆霍娃，能以三战全胜结束小组赛吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘6比0,连赢11局。第一次站上总决赛舞台,安德烈耶娃已经走进四墙。下一场对穆霍娃能以三战全胜结束小组赛吗?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 11.238,
+        "cps": 4.54,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 六比零 ｜ 连 ｜ 赢 ｜ 十一局 ｜ 第一次 ｜ 站 ｜ 上 ｜ 总决赛 ｜ 舞台 ｜ 安德烈耶娃 ｜ 已经 ｜ 走进 ｜ 四 ｜ 强 ｜ 下 ｜ 一 ｜ 场 ｜ 对 ｜ 穆霍娃 ｜ 能 ｜ 以 ｜ 三 ｜ 战 ｜ 全胜 ｜ 结束 ｜ 小组 ｜ 赛 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:3fbddd7a83897d2d1621f5b3868f82a77d24b69aa479468465ac8a797f68875b",
+      "text": "连续十二分，安德烈耶娃把一比四追成四比四。底线相持稳下来，发球又添一把火。连续三个发球直接得分，收下首盘。看最后这个盘点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 54,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "连续12分,安德烈耶娃,把1比4追成4比4。底线相吃稳下来,发球又添一把火。连续3个发球直接得分,收下手盘。看最后这个盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 29,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 41,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 45,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 54,
+        "speech_s": 11.993,
+        "cps": 4.5,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "连续 ｜ 十二分 ｜ 安德烈耶娃 ｜ 把 ｜ 一比四 ｜ 追 ｜ 成 ｜ 四比四 ｜ 底线 ｜ 相持 ｜ 稳 ｜ 下来 ｜ 发球 ｜ 又 ｜ 添 ｜ 一 ｜ 把 ｜ 火 ｜ 连续 ｜ 三个 ｜ 发球 ｜ 直接 ｜ 得分 ｜ 收 ｜ 下 ｜ 首盘 ｜ 看 ｜ 最后 ｜ 这个 ｜ 盘点"
+      }
+    },
+    {
+      "id": "bundle:7c57a2e8c797a273e1d0ce6ad8455113c7f693322a5b110ba7aa9eae37c52948",
+      "text": "萨巴伦卡从底线压到网前，很快四比一领先。安德烈耶娃先保住发球局，再把压力推回对面。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "萨巴伦卡从底线压到往前,很快4比1领线。安德烈耶娃先保住发球局,再把压力推回对面。"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 8.113,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "萨巴伦卡 ｜ 从 ｜ 底线 ｜ 压 ｜ 到 ｜ 网 ｜ 前 ｜ 很快 ｜ 四比一 ｜ 领先 ｜ 安德烈耶娃 ｜ 先 ｜ 保 ｜ 住 ｜ 发球 ｜ 局 ｜ 再 ｜ 把 ｜ 压力 ｜ 推回 ｜ 对面"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:e5bb1c0c764ebe5f6029b7a5f44553828251c430d154b7047742ebe885ec31db",
+      "text": "北京时间十一月十二日清晨，印第安韦尔斯年终总决赛小组赛。首盘一比四，十九岁的安德烈耶娃，怎样连赢十一局闯进四强？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 51,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间十一月十二日清晨,印第安威尔斯年中总决赛小组赛。首盘一比四,十九岁的安德烈耶娃怎样连赢十一局闯进四墙。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 51,
+        "speech_s": 10.66,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十二日 ｜ 清晨 ｜ 印第安韦尔斯 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 首盘 ｜ 一比四 ｜ 十九岁 ｜ 的 ｜ 安德烈耶娃 ｜ 怎样 ｜ 连 ｜ 赢 ｜ 十一局 ｜ 闯进 ｜ 四 ｜ 强"
+      }
+    }
+  ]
+}

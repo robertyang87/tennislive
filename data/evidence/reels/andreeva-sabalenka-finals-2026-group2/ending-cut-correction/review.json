@@ -1,0 +1,24 @@
+{
+  "status": "verified_in_final_native_film",
+  "checked_at": "2026-11-12T06:42:26.064601+00:00",
+  "run_with_flash": 43167518056,
+  "old_film_sha256": "e273a23202487964bfd6862017eb92164f789c55833f5e33fce54842b3cb9a43",
+  "finding": "Actual encoded ending dissolve includes interviewer because visual_end298.04 lies after native source shot change. Not accepted or pushed.",
+  "correction": "visual_end297.84 freezes complete resultpanel before sourcecut; audio/quotes remain full to298.1.",
+  "source_contact": "contact.jpg",
+  "native_QC_override": false,
+  "native_render_required": true,
+  "closure": {
+    "run": 43170130264,
+    "film_sha256": "c08627afed3d462b5b3f38a81989cff688ce8e26fa60bb1ee6e2588f04a83122",
+    "final_visual_end": 297.84,
+    "actual_encoded_seams_reviewed": [
+      "seam-6-1",
+      "seam-6-2",
+      "seam-6-3"
+    ],
+    "interviewer_flash_absent": true,
+    "native_QC": "pass",
+    "voice_suite": "pass"
+  }
+}
