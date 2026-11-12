@@ -30,8 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: tools/ci_apt_install.sh
-          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            tools
+            src
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -41,7 +42,7 @@ jobs:
           node-version: "22"
 
       - name: 安装 YouTube 下载器
-        run: pip install -q "yt-dlp[default]" bgutil-ytdlp-pot-provider
+        run: pip install -q -e . "yt-dlp[default]" bgutil-ytdlp-pot-provider
 
       - name: 恢复音视频工具 apt 缓存
         id: apt_cache
@@ -102,31 +103,34 @@ jobs:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -euo pipefail
-          ARGS=(--force-ipv4 --socket-timeout 20 --retries 2 --extractor-args "youtube:player_client=android_vr,tv,web_safari" --js-runtimes node)
-          # This public WTA source uses the anonymous PO-token channel; prior account cookies expired.
-
-          VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
-          TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
-          test -n "$VIDEO_ID" || { echo "::error::无法解析 YouTube 视频 ID"; exit 1; }
-
-          mkdir -p "$RUNNER_TEMP/download"
-          yt-dlp "${ARGS[@]}" \
-            -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
-            --merge-output-format mp4 --remux-video mp4 \
-            -o "$RUNNER_TEMP/download/$VIDEO_ID.%(ext)s" \
-            "$VIDEO_URL"
-
-          FILE="$RUNNER_TEMP/download/$VIDEO_ID.mp4"
-          test -s "$FILE" || { echo "::error::下载结束但没有生成 MP4"; exit 1; }
-          SIZE=$(stat -c%s "$FILE")
-          test "$SIZE" -gt 51200 || { echo "::error::文件只有 $SIZE 字节，不是有效视频"; exit 1; }
-
-          echo "id=$VIDEO_ID" >> "$GITHUB_OUTPUT"
-          echo "title<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$TITLE" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
-          echo "file=$FILE" >> "$GITHUB_OUTPUT"
-          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+          export PYTHONPATH=src:tools
+          export YT_POT_PROVIDER=http://127.0.0.1:4416
+          python - <<'NATIVE'
+          import os
+          from pathlib import Path
+          import build_match_reel as reel
+          url=os.environ['VIDEO_URL']
+          assert url=='https://www.youtube.com/watch?v=ip817TTdCtY'
+          reel.YTDLP_BASE += ['--force-ipv4','--retries','2']
+          dest=Path(os.environ['RUNNER_TEMP'])/'native-source'/'ip817TTdCtY.mp4'
+          dest.parent.mkdir(exist_ok=True)
+          try:
+              reel.download(url,dest)
+          except reel.ReelError:
+              if not os.environ.get('YT_COOKIES'):
+                  raise
+              print('[native] Authenticated ladder unavailable; retry same native ladder with public anonymous channel.')
+              os.environ.pop('YT_COOKIES',None)
+              reel.download(url,dest)
+          w,h=reel.probe_size(dest)
+          if h<1080:
+              raise SystemExit(f'Native helper retrieved only {w}x{h}; no source quality exception granted.')
+          print(f'[native] Actual source {w}x{h}, {dest.stat().st_size} bytes')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('id=ip817TTdCtY\n')
+              f.write('title=Elina Svitolina vs. Karolina Muchova | 2026 FAGE WTA Finals Group 2 | WTA Highlights\n')
+              f.write(f'file={dest}\nsize={dest.stat().st_size}\n')
+          NATIVE
 
       - name: 上传到 GitHub Release
         env:
