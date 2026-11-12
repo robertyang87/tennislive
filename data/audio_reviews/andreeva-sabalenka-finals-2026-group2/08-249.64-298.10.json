@@ -1,0 +1,62 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-vprYQcJIDt4/vprYQcJIDt4.mp4",
+  "source_sha256": "b33417973a52cc6b8ee5f8bec12281b08552f3228de420ebeebb54a232d7332b",
+  "method": "asr_cross_checked",
+  "reviewer": "tools/asr_plan.py（两档 ASR 交叉核对；未声称人工听审）",
+  "reviewed_at": "2026-11-12T06:01:01+00:00",
+  "reviewed_from": 249.64,
+  "reviewed_to": 298.1,
+  "status": "complete",
+  "uncertain_spans": [],
+  "foreground_english": [
+    {
+      "start": 255.1,
+      "end": 260.3,
+      "en": "Mirra Andreeva punches her ticket to the semifinals",
+      "zh": "安德烈娃拿到四强门票，"
+    },
+    {
+      "start": 260.3,
+      "end": 266.6,
+      "en": "at the FAGE WTA Finals, Indian Wells, with a breathtaking display.",
+      "zh": "在印第安韦尔斯，打出惊艳表现。"
+    },
+    {
+      "start": 266.6,
+      "end": 270.2,
+      "en": "From four-one down in the opening set,",
+      "zh": "从首盘1比4落后开始，"
+    },
+    {
+      "start": 270.2,
+      "end": 275.15,
+      "en": "she won every single game, eleven in a row.",
+      "zh": "她赢下之后每一局，连赢11局。"
+    },
+    {
+      "start": 276.6,
+      "end": 280.3,
+      "en": "It was jaw-droppingly good at times today from the teenager,",
+      "zh": "这位小将今天的表现令人惊叹，"
+    },
+    {
+      "start": 280.3,
+      "end": 284.4,
+      "en": "and what a statement performance that is.",
+      "zh": "她用表现发出了强有力的宣言。"
+    },
+    {
+      "start": 286.7,
+      "end": 291.4,
+      "en": "Sabalenka departs, dispatched in straight sets.",
+      "zh": "萨巴伦卡离场，直落两盘告负。"
+    },
+    {
+      "start": 296.5,
+      "end": 297.9,
+      "en": "Wow, wow.",
+      "zh": "哇，太精彩了。"
+    }
+  ],
+  "evidence": "两档 faster-whisper 转写（small.en / medium.en，逐词时间码，源片 sha256 b33417973a52cc6b8ee5f8bec12281b08552f3228de420ebeebb54a232d7332b，存于 data/source_asr/vprYQcJIDt4/small.en.json 与 data/source_asr/vprYQcJIDt4/medium.en.json），由 tools/asr_plan.py 逐句对照：窗口内转写听到的每一句都被一条中英字幕盖住、没有句子被切断、配音窗口里没有英文"
+}

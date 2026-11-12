@@ -1,0 +1,48 @@
+{
+  "slug": "andreeva-sabalenka-finals-2026-group2",
+  "checked_at": "2026-11-12T05:55:52Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "562b0a6d043b8c94": {
+      "segment": 2,
+      "spoken": 11.4,
+      "picture": 15.0
+    },
+    "72ddfd9ec53ab95d": {
+      "segment": 4,
+      "spoken": 8.904,
+      "picture": 12.0
+    },
+    "abb5524a657a1b88": {
+      "segment": 6,
+      "spoken": 12.576,
+      "picture": 15.0
+    },
+    "89d16dca887bca5b": {
+      "segment": 10,
+      "spoken": 12.024,
+      "picture": 14.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "c3b7633b2140dea11db5b3bddb8b7cf0d019c15d7ad0db3f1f7b39c4e2cd12c8",
+    "request_count": 5,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "c7969bd096d7bbbea328e2e13ab7127cf9227e2b",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/c7969bd096d7bbbea328e2e13ab7127cf9227e2b/assets/tts-bundles/andreeva-sabalenka-finals-2026-group2/c3b7633b2140dea11db5b3bddb8b7cf0d019c15d7ad0db3f1f7b39c4e2cd12c8/tts_bundle.zip"
+  }
+}
