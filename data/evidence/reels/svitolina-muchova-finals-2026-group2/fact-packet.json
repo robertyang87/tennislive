@@ -1,5 +1,5 @@
 {
-  "status": "facts_verified_source_choice_pending",
+  "status": "facts_verified_waiting_native1080_source",
   "checked_at": "2026-11-11T23:11:18.066593+00:00",
   "user_source_url": "https://www.youtube.com/watch?v=ip817TTdCtY",
   "official_video_title": "Elina Svitolina vs. Karolina Muchova | 2026 FAGE WTA Finals Group 2 | WTA Highlights",
@@ -90,7 +90,7 @@
   ],
   "official_report": "https://www.wtatennis.com/news/4607921/elina-svitolina-comes-back-from-a-set-down-to-beat-karolina-muchova-moves-to-1-1-at-fage-wta-finals",
   "source_choice": {
-    "youtube": "Original URL identified as WTA. Actual download attempts43116559623/43116810614/43117045862 all blocked by sign-in/bot validation; no downloaded YouTube file, no claim1080 version does not exist.",
+    "youtube": "Canonical repository downloader tested all8clients with configured cookies andagain anonymously; all16 attempts blocked atSign in verification. No original source downloaded; no claim1080 version does not exist.",
     "official_alternate_url": "https://www.wtatennis.com/videos/4607981/elina-svitolina-vs-karolina-muchova-match-highlights",
     "official_player_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6408255435112",
     "native_resolution": [
@@ -108,7 +108,8 @@
       "1280x720"
     ],
     "reviewed": "3s whole-source sheets actual visually reviewed; full match point/handshake/umpire/wave/scoreboard present; not full audio listening or final QC.",
-    "production_use_approved": false
+    "production_use_approved": false,
+    "native_download_check": "native-downloader-check.json"
   },
   "cover_candidates": [
     {
@@ -136,5 +137,10 @@
   "formal_spec_created": false,
   "render_completed": false,
   "QC_passed": false,
-  "wechat_sent": false
+  "wechat_sent": false,
+  "group_status_refresh": {
+    "checked_at": "2026-11-12T00:38:04.352084+00:00",
+    "official_matches_path": "wta-matches-refreshed.json",
+    "later_match": "Sabalenka dAndreeva6-4,6-0; Sabalenka qualified, group position not asserted. Svitolina1-1 andMuchova0-2; do not inferSvitolina owns qualification control orwinner ofnext match guaranteed qualification."
+  }
 }
