@@ -7457,6 +7457,15 @@ LIU_HONG_KONG_STORY_2026_LOW_RES_SOURCES: dict[str, int] = {
 }
 
 
+# 2026-11-12: owner explicitly said “那你先用 720 的做吧” for this
+# Svitolina–Muchova Finals reel after the original YouTube source was blocked.
+# Preserve the native720p bytes; this is not a global source-quality waiver.
+SVITOLINA_MUCHOVA_FINALS_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6408255435112": 720,
+    "https://github.com/robertyang87/tennislive/releases/download/source-6408255435112/6408255435112.mp4": 720,
+}
+
+
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
     declared = spec.get("source_quality_exceptions", {})
@@ -7465,6 +7474,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in SVITOLINA_MUCHOVA_FINALS_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "svitolina-muchova-finals-2026-group2":
+                raise ReelError("source_quality_exceptions 此720p授权仅限斯维托丽娜–穆霍娃2026年终小组赛")
+            floor = SVITOLINA_MUCHOVA_FINALS_2026_LOW_RES_SOURCES[url]
         if url in LIU_HONG_KONG_STORY_2026_LOW_RES_SOURCES:
             if spec.get("slug") != "liu-hong-kong-first-title-story-2026":
                 raise ReelError("source_quality_exceptions 此720p授权仅限刘婧文2026香港首冠人物片")
