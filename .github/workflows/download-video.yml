@@ -1,5 +1,5 @@
 name: download-video
-run-name: "download-video · ${{ inputs.url }}"
+run-name: "cookie-diagnostic · ${{ inputs.url }}"
 
 # 把单条公开 YouTube 视频下载到 runner，再作为 GitHub Release
 # 附件持久保存。不把大视频提交进 git 历史。
@@ -97,87 +97,40 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
           fi
 
-      - name: 解析并下载原片
-        id: video
+      - name: 仅检查Cookie到期元数据
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
-          set -euo pipefail
-          export PYTHONPATH=src:tools
-          export YT_POT_PROVIDER=http://127.0.0.1:4416
-          python - <<'NATIVE'
-          import os
+          python - <<'META'
+          import os,time,json
           from pathlib import Path
-          import build_match_reel as reel
-          url=os.environ['VIDEO_URL']
-          assert url=='https://www.youtube.com/watch?v=ip817TTdCtY'
-          reel.YTDLP_BASE += ['--force-ipv4','--retries','2']
-          dest=Path(os.environ['RUNNER_TEMP'])/'native-source'/'ip817TTdCtY.mp4'
-          dest.parent.mkdir(exist_ok=True)
-          try:
-              reel.download(url,dest)
-          except reel.ReelError:
-              if not os.environ.get('YT_COOKIES'):
-                  raise
-              print('[native] Authenticated ladder unavailable; retry same native ladder with public anonymous channel.')
-              os.environ.pop('YT_COOKIES',None)
-              reel.download(url,dest)
-          w,h=reel.probe_size(dest)
-          if h<1080:
-              raise SystemExit(f'Native helper retrieved only {w}x{h}; no source quality exception granted.')
-          print(f'[native] Actual source {w}x{h}, {dest.stat().st_size} bytes')
-          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
-              f.write('id=ip817TTdCtY\n')
-              f.write('title=Elina Svitolina vs. Karolina Muchova | 2026 FAGE WTA Finals Group 2 | WTA Highlights\n')
-              f.write(f'file={dest}\nsize={dest.stat().st_size}\n')
-          NATIVE
+          jar=os.environ.get('YT_COOKIES','')
+          result={'file_configured':bool(jar),'values_logged':False,'now_utc_epoch':int(time.time())}
+          auth={'SID','HSID','SSID','APISID','SAPISID','__Secure-1PSID','__Secure-3PSID','__Secure-1PAPISID','__Secure-3PAPISID','__Secure-1PSIDTS','__Secure-3PSIDTS'}
+          counts={'auth_records':0,'expired_auth_records':0,'unexpired_auth_records':0,'session_auth_records':0,'invalid_record_count':0}
+          if jar and Path(jar).is_file():
+              for line in Path(jar).read_text().splitlines():
+                  if line.startswith('#HttpOnly_'):line=line[len('#HttpOnly_'):]
+                  elif not line or line.startswith('#'):continue
+                  parts=line.split('\t')
+                  if len(parts)!=7:
+                      counts['invalid_record_count']+=1
+                      continue
+                  domain=parts[0].lstrip('.')
+                  if not(domain=='youtube.com' or domain.endswith('.youtube.com')) or parts[5] not in auth:continue
+                  counts['auth_records']+=1
+                  try:expiry=int(parts[4])
+                  except ValueError:
+                      counts['invalid_record_count']+=1
+                      continue
+                  if expiry<=0:counts['session_auth_records']+=1
+                  elif expiry<=time.time():counts['expired_auth_records']+=1
+                  else:counts['unexpired_auth_records']+=1
+          result.update(counts)
+          print(json.dumps(result,sort_keys=True))
+          META
 
-      - name: 上传到 GitHub Release
+      - name: 已知公开视频的原生三秒媒体对照
         env:
-          VIDEO_ID: ${{ steps.video.outputs.id }}
-          VIDEO_TITLE: ${{ steps.video.outputs.title }}
-          VIDEO_FILE: ${{ steps.video.outputs.file }}
-          VIDEO_SIZE: ${{ steps.video.outputs.size }}
-        run: |
-          set -euo pipefail
-          TAG="source-$VIDEO_ID"
-          ASSET="$VIDEO_ID.mp4"
-          cp "$VIDEO_FILE" "$RUNNER_TEMP/$ASSET"
-
-          gh release view "$TAG" >/dev/null 2>&1 || \
-            gh release create "$TAG" --title "$VIDEO_TITLE" \
-              --notes "由 download-video GitHub Action 保存的源视频。来源：$VIDEO_URL"
-
-          UPLOADED=0
-          for attempt in 1 2 3 4; do
-            if gh release upload "$TAG" "$RUNNER_TEMP/$ASSET" --clobber; then
-              UPLOADED=1
-              break
-            fi
-            sleep $((attempt * attempt * 5))
-          done
-          test "$UPLOADED" = 1 || { echo "::error::Release 附件连续 4 次上传失败"; exit 1; }
-
-          URL="https://github.com/${{ github.repository }}/releases/download/$TAG/$ASSET"
-          CODE=000
-          for attempt in 1 2 3 4 5 6 7 8; do
-            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
-            if [ "$CODE" = 200 ] || [ "$CODE" = 206 ]; then
-              break
-            fi
-            sleep 5
-          done
-          if [ "$CODE" != 200 ] && [ "$CODE" != 206 ]; then
-            echo "::error::Release 已上传，但直链探活返回 HTTP $CODE"
-            exit 1
-          fi
-
-          {
-            echo "## 视频已保存"
-            echo
-            echo "- 标题：$VIDEO_TITLE"
-            echo "- 大小：$VIDEO_SIZE 字节"
-            echo "- [直接下载]($URL)"
-            echo "- [Release 页](https://github.com/${{ github.repository }}/releases/tag/$TAG)"
-          } >> "$GITHUB_STEP_SUMMARY"
-          echo "download_url=$URL"
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: bash tools/yt_cookie_check.sh "https://www.youtube.com/watch?v=HyKTXynnI9c"
