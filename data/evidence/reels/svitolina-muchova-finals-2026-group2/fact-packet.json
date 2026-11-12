@@ -142,13 +142,19 @@
     }
   ],
   "formal_spec_created": true,
-  "render_completed": false,
-  "QC_passed": false,
+  "render_completed": true,
+  "QC_passed": true,
   "wechat_sent": false,
   "group_status_refresh": {
     "checked_at": "2026-11-12T04:59:20.516808+00:00",
     "later_match": "WTA LS016 ResultString and score rows: Andreeva d Sabalenka6-4,6-0, not the reverse. Official report4607998 confirms Andreeva qualified. Svitolina1-1 andnextSabalenka; current public reel only sayshopecontinues, noalreadyqualified orowncontrolassertion.",
     "official_report": "https://www.wtatennis.com/news/4607998/andreeva-wins-45-of-final-55-points-to-rout-sabalenka-reach-first-fage-wta-finals-semifinal",
     "correction": "Earlier internal refresh incorrectly assigned this later match toSabalenka. Corrected by official ResultString plus per-side set rows; never infer winner from orientation of ScoreString alone."
+  },
+  "final_film": {
+    "run": 43159694135,
+    "film_sha256": "88d8e40567f7393b533d936efb2c4d3c71b3efa67080db33957f0ab8d7d1a03c",
+    "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-svitolina-muchova-finals-2026-group2/svitolina-muchova-finals-2026-group2.mp4",
+    "voice_auto_review": "pass"
   }
 }
