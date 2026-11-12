@@ -1,0 +1,48 @@
+{
+  "slug": "svitolina-muchova-finals-2026-group2",
+  "checked_at": "2026-11-12T04:51:45Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "b6cc5e413a98993f": {
+      "segment": 2,
+      "spoken": 12.864,
+      "picture": 15.0
+    },
+    "ac7eed115ee7ddcf": {
+      "segment": 5,
+      "spoken": 9.792,
+      "picture": 14.0
+    },
+    "7e5aaee6d55d5c18": {
+      "segment": 7,
+      "spoken": 10.248,
+      "picture": 13.0
+    },
+    "17d65c39461016b6": {
+      "segment": 10,
+      "spoken": 11.52,
+      "picture": 13.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "b5d06719bde502232170dd61c7ac89ef25958b251be060e628173cdae1ebfa8c",
+    "request_count": 5,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "transport": "repository",
+    "repository_commit": "c5fff57d9d66a242e962aac4b99a558238f7195b",
+    "file_name": "tts_bundle.zip",
+    "url": "https://raw.githubusercontent.com/robertyang87/tennislive/c5fff57d9d66a242e962aac4b99a558238f7195b/assets/tts-bundles/svitolina-muchova-finals-2026-group2/b5d06719bde502232170dd61c7ac89ef25958b251be060e628173cdae1ebfa8c/tts_bundle.zip"
+  }
+}
