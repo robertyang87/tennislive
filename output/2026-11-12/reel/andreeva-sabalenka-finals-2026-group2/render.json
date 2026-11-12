@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "670dea16a5077193b559ace0ed43c48f92b204c03fd256c142aec8491128e704",
+  "scoreboard_qc_sha256": "eef81bdc23318bc82d7d6579d2906959efb7a45231fd067dc32e720a36355160",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,7 +13,7 @@
     "release_tag": "reel-tts-andreeva-sabalenka-finals-2026-group2-cfc2984ae195ee42",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-sabalenka-finals-2026-group2-cfc2984ae195ee42/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/43167518056"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/43170130264"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
@@ -51,46 +51,46 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "2b85a3fac9adc623a3a328c47015c5cc86fe9e128c5da26b4594c27824b90d6b",
+  "render_inputs_sha256": "d36aec7ddc94b77ddd5f0dcbbe060364dfab70af03610c98f605de6ad0b975be",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "andreeva-sabalenka-finals-2026-group2",
-    "received_at": "2026-11-12T06:21:07Z",
-    "artifact_ready_at": "2026-11-12T06:31:32Z",
-    "elapsed_seconds": 625.369,
+    "received_at": "2026-11-12T06:43:30Z",
+    "artifact_ready_at": "2026-11-12T06:51:21Z",
+    "elapsed_seconds": 471.07,
     "budget_seconds": 600,
-    "met": false,
-    "film_sha256": "e273a23202487964bfd6862017eb92164f789c55833f5e33fce54842b3cb9a43",
-    "spec_sha256": "3405c4b416c92b29c027109ca199ac131fdfc3ffde16d7ecbfde93d10513c85d",
+    "met": true,
+    "film_sha256": "c08627afed3d462b5b3f38a81989cff688ce8e26fa60bb1ee6e2588f04a83122",
+    "spec_sha256": "58d571bc1362ec07a6105550aa8adac4b6f308eb71b539176d2a8dd358343939",
     "request_received_at": "2026-11-12T05:06:52Z",
-    "request_to_artifact_seconds": 5080.369,
-    "run_id": "43167518056",
+    "request_to_artifact_seconds": 6269.07,
+    "run_id": "43170130264",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-12T06:25:56Z",
-        "run_id": "43167518056"
+        "at": "2026-11-12T06:47:04Z",
+        "run_id": "43170130264"
       }
     ],
-    "render_seconds": 336.369,
-    "pre_render_seconds": 289.0
+    "render_seconds": 257.07,
+    "pre_render_seconds": 214.0
   },
-  "film_sha256": "e273a23202487964bfd6862017eb92164f789c55833f5e33fce54842b3cb9a43",
-  "film_bytes": 111636408,
-  "qc_attestation_sha256": "627ee3d3e3a1a1ad0951c4a2c8064e6080fdea81c03a582a69bf1cf4a51bf469",
+  "film_sha256": "c08627afed3d462b5b3f38a81989cff688ce8e26fa60bb1ee6e2588f04a83122",
+  "film_bytes": 111576941,
+  "qc_attestation_sha256": "7278b61b1c857c4282c0f64ecb712ccd57c4eb74a06985d8feaa1b5302ca27ee",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-12T06:25:56Z",
-      "run_id": "43167518056"
+      "at": "2026-11-12T06:47:04Z",
+      "run_id": "43170130264"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-12T06:31:37Z",
-      "run_id": "43167518056"
+      "at": "2026-11-12T06:51:24Z",
+      "run_id": "43170130264"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-sabalenka-finals-2026-group2/andreeva-sabalenka-finals-2026-group2.mp4",
-  "video_bytes": 111636408
+  "video_bytes": 111576941
 }
