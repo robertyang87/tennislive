@@ -25,11 +25,35 @@
   "result": "All native client attempts returned Sign in to confirm you are not a bot. No source file returned.",
   "live_media_check_run": "https://github.com/robertyang87/tennislive/actions/runs/43128092422",
   "live_media_check_result": "No3second media file; cookies are no longer valid warning andSign in response.",
-  "diagnostic_limit": "Cookie expiry and temporary account/IP rate limits cannot be distinguished by these logs alone. Previous equivalent failures were over an hour earlier and on different runners.",
-  "next_required_action": "Refresh YouTube login session using docs/youtube-cookies-refresh.md and update repository Actions secretYT_COOKIES_TXT through GitHub settings; do not send cookie contents in chat. Recheck actual3second media before probe/render.",
+  "diagnostic_limit": "Cannot distinguish server-side session revocation and account/IP throttling from these responses. File expiry timestamps are not expired. Cookie-expiry warning is not proof of server-side session expiry.",
+  "next_required_action": "No mandatory credential replacement is established. Preserve current credential, retain authenticated/anonymous andknown-public control evidence; only request credential refresh as an explicitly labeled recovery option, not a confirmed diagnosis.",
   "720p_production_approved": false,
   "formal_spec_created": false,
   "render_completed": false,
   "QC_passed": false,
-  "wechat_sent": false
+  "wechat_sent": false,
+  "cookie_expiry_metadata": {
+    "auth_records": 11,
+    "expired_auth_records": 0,
+    "file_configured": true,
+    "invalid_record_count": 0,
+    "now_utc_epoch": 1794452458,
+    "session_auth_records": 0,
+    "unexpired_auth_records": 11,
+    "values_logged": false,
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/43145204569",
+    "interpretation": "All11 selected authentication-cookie records have future file expiry timestamps; none expired by timestamp. This does not prove Google still accepts the server-side session."
+  },
+  "control_video_check": {
+    "url": "https://www.youtube.com/watch?v=HyKTXynnI9c",
+    "run": 43145204569,
+    "result": "Existing canonical3second media check fails withsame sign-in response."
+  },
+  "fresh_native_retry_after_cooldown": {
+    "run": 43145377569,
+    "gap_from_prior_native_attempt_hours": 2.4,
+    "status": "failed",
+    "result": "15 client attempts returned sign-in validation; authenticated tv(+POT) reached video-data retrieval but gotHTTP403. No media file returned. These observations do not establish credential expiry."
+  },
+  "diagnosis_correction": "Withdraw prior statement that credential refresh was required.11 inspected core authentication-cookie records have future expiry timestamps and0 expired timestamps. Server-side session acceptance remains unverified; session revocation and account/IP throttling remain unresolved alternatives."
 }
