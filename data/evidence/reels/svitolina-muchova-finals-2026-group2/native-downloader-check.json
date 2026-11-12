@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-11-12T00:38:04.352084+00:00",
+  "status": "blocked_at_actual_youtube_media_download",
+  "canonical_downloader": "tools/build_match_reel.py::download",
+  "canonical_code_matches_main": true,
+  "download_workflow_run": "https://github.com/robertyang87/tennislive/actions/runs/43128401960",
+  "helper_commit": "0feaf5d1",
+  "isolated_helper_branch": "review/download-ip817ttdcty-ipv4",
+  "helper_branch_must_not_merge": true,
+  "tested_clients": [
+    "web(+POT)",
+    "mweb(+POT)",
+    "tv(+POT)",
+    "default",
+    "android_vr",
+    "tv_simply",
+    "web_embedded",
+    "android+ios"
+  ],
+  "authentication_paths": [
+    "configured YT_COOKIES_TXT",
+    "anonymous after all authenticated clients failed"
+  ],
+  "actual_attempts": 16,
+  "result": "All native client attempts returned Sign in to confirm you are not a bot. No source file returned.",
+  "live_media_check_run": "https://github.com/robertyang87/tennislive/actions/runs/43128092422",
+  "live_media_check_result": "No3second media file; cookies are no longer valid warning andSign in response.",
+  "diagnostic_limit": "Cannot distinguish server-side session revocation and account/IP throttling from these responses. File expiry timestamps are not expired. Cookie-expiry warning is not proof of server-side session expiry.",
+  "next_required_action": "No mandatory credential replacement is established. Preserve current credential, retain authenticated/anonymous andknown-public control evidence; only request credential refresh as an explicitly labeled recovery option, not a confirmed diagnosis.",
+  "720p_production_approved": false,
+  "formal_spec_created": false,
+  "render_completed": false,
+  "QC_passed": false,
+  "wechat_sent": false,
+  "cookie_expiry_metadata": {
+    "auth_records": 11,
+    "expired_auth_records": 0,
+    "file_configured": true,
+    "invalid_record_count": 0,
+    "now_utc_epoch": 1794452458,
+    "session_auth_records": 0,
+    "unexpired_auth_records": 11,
+    "values_logged": false,
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/43145204569",
+    "interpretation": "All11 selected authentication-cookie records have future file expiry timestamps; none expired by timestamp. This does not prove Google still accepts the server-side session."
+  },
+  "control_video_check": {
+    "url": "https://www.youtube.com/watch?v=HyKTXynnI9c",
+    "run": 43145204569,
+    "result": "Existing canonical3second media check fails withsame sign-in response."
+  },
+  "fresh_native_retry_after_cooldown": {
+    "run": 43145377569,
+    "gap_from_prior_native_attempt_hours": 2.4,
+    "status": "failed",
+    "result": "15 client attempts returned sign-in validation; authenticated tv(+POT) reached video-data retrieval but gotHTTP403. No media file returned. These observations do not establish credential expiry."
+  },
+  "diagnosis_correction": "Withdraw prior statement that credential refresh was required.11 inspected core authentication-cookie records have future expiry timestamps and0 expired timestamps. Server-side session acceptance remains unverified; session revocation and account/IP throttling remain unresolved alternatives."
+}

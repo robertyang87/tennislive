@@ -1,0 +1,270 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "ccbd542654f934fe4a3465c3433ce6f4c0ba698c91215234f366468e48f3a10f",
+    "render_inputs_sha256": "fa34a184921afe8c3ec4f68dc4c3d34f2a748a99d3555dad1eab1cccd4782d6f",
+    "spec_sha256": "3c07da17547aa9b291af5c12cf37a72cc541bf6eb10684fd9df5c6f7d948548f",
+    "film_sha256": "88d8e40567f7393b533d936efb2c4d3c71b3efa67080db33957f0ab8d7d1a03c",
+    "inventory_sha256": "411806eb7ba842028f837312a03cd65ec9a60691b2df114550b26223f45df388"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-12T05:19:41+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:3c9d2515f6c7e25bb632a937465f1cc88683d0d5161fa20e3ea6da7f679c8cb9",
+      "audio_sha256": "dfa7f00f7dd61bb1a882f5aca48990a42c893e79d7bd9c35829200188c1071db",
+      "pass": true,
+      "result_of": "bundle:3c9d2515f6c7e25bb632a937465f1cc88683d0d5161fa20e3ea6da7f679c8cb9"
+    },
+    {
+      "id": "bundle:ab96c447c4e81e09e7314e7e49769ae03788a79105537884261e4392a9284ea5",
+      "audio_sha256": "8c9bb9d7df8484f0d02ac4f227e6a0cfad6fd42ab5595fcd752010c28609c9db",
+      "pass": true,
+      "result_of": "bundle:ab96c447c4e81e09e7314e7e49769ae03788a79105537884261e4392a9284ea5"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:ca5a6c7c783a2e73aeaf37954a8a15ea61f233809be3641a6adf3528b1a4701b",
+      "audio_sha256": "429dcfb1ce48f597421a8df4ffa6c148db89adeb53ed152bbe3c04b63dca3fd8",
+      "pass": true,
+      "result_of": "bundle:ca5a6c7c783a2e73aeaf37954a8a15ea61f233809be3641a6adf3528b1a4701b"
+    },
+    {
+      "id": "bundle:de974ddc15d66ea58be4177bdde338ccf3d7b948c6b7ae96c48465399a68b33c",
+      "audio_sha256": "cdd176c59ae866c1848d5d71c0479f3604988e15bbc65d800cf20dff5f3c6143",
+      "pass": true,
+      "result_of": "bundle:de974ddc15d66ea58be4177bdde338ccf3d7b948c6b7ae96c48465399a68b33c"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "cdd176c59ae866c1848d5d71c0479f3604988e15bbc65d800cf20dff5f3c6143",
+      "pass": true,
+      "result_of": "bundle:de974ddc15d66ea58be4177bdde338ccf3d7b948c6b7ae96c48465399a68b33c"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "dfa7f00f7dd61bb1a882f5aca48990a42c893e79d7bd9c35829200188c1071db",
+      "pass": true,
+      "result_of": "bundle:3c9d2515f6c7e25bb632a937465f1cc88683d0d5161fa20e3ea6da7f679c8cb9"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "8c9bb9d7df8484f0d02ac4f227e6a0cfad6fd42ab5595fcd752010c28609c9db",
+      "pass": true,
+      "result_of": "bundle:ab96c447c4e81e09e7314e7e49769ae03788a79105537884261e4392a9284ea5"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "429dcfb1ce48f597421a8df4ffa6c148db89adeb53ed152bbe3c04b63dca3fd8",
+      "pass": true,
+      "result_of": "bundle:ca5a6c7c783a2e73aeaf37954a8a15ea61f233809be3641a6adf3528b1a4701b"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:3c9d2515f6c7e25bb632a937465f1cc88683d0d5161fa20e3ea6da7f679c8cb9",
+      "text": "穆霍娃用放短和上网施压，斯维托丽娜在底线追赶。首盘三比六后，第二盘一比二起连赢五局，追平盘分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "穆霍娃用放短和上网施压,思维托丽娜在底线追赶。手盘3比6后,第二盘一比两起连影5局,追平盘分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.927,
+        "cps": 4.7,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "穆霍娃 ｜ 用 ｜ 放短 ｜ 和 ｜ 上网 ｜ 施压 ｜ 斯维托丽娜 ｜ 在 ｜ 底线 ｜ 追赶 ｜ 首盘 ｜ 三 ｜ 比 ｜ 六 ｜ 后 ｜ 第二盘 ｜ 一 ｜ 比 ｜ 二 ｜ 起 ｜ 连 ｜ 赢 ｜ 五局 ｜ 追平 ｜ 盘 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:ab96c447c4e81e09e7314e7e49769ae03788a79105537884261e4392a9284ea5",
+      "text": "面对放短和上网，她逐渐适应节奏。首盘只有五个制胜分，第二盘十二个。先把盘分追平，再去争决胜盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "面对放短和上网,他逐渐适应节奏。手盘只有五个质胜分,第二盘十二个。先把盘分追平,再去争决胜盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 9.269,
+        "cps": 4.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "面对 ｜ 放 ｜ 短 ｜ 和 ｜ 上网 ｜ 她 ｜ 逐渐 ｜ 适应 ｜ 节奏 ｜ 首盘 ｜ 只有 ｜ 五个 ｜ 制胜 ｜ 分 ｜ 第二盘 ｜ 十二个 ｜ 先 ｜ 把 ｜ 盘 ｜ 分 ｜ 追 ｜ 平 ｜ 再 ｜ 去 ｜ 争 ｜ 决胜 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:ca5a6c7c783a2e73aeaf37954a8a15ea61f233809be3641a6adf3528b1a4701b",
+      "text": "七年之后，她终于再次在年终总决赛赢球。一胜一负，出线希望还在。下一场面对萨巴伦卡，这次逆转能帮她继续往前吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 48,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "7年之后,他终于再次在年中总决赛赢球。一生一复,出现希望还在。下一场面对萨巴伦卡,这次逆转能帮他继续往前吗?"
+      },
+      "polyphones": [
+        {
+          "index": 28,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.754,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 48,
+        "speech_s": 10.637,
+        "cps": 4.51,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "七年 ｜ 之后 ｜ 她 ｜ 终于 ｜ 再次 ｜ 在 ｜ 年终 ｜ 总决赛 ｜ 赢 ｜ 球 ｜ 一 ｜ 胜 ｜ 一 ｜ 负 ｜ 出线 ｜ 希望 ｜ 还 ｜ 在 ｜ 下 ｜ 一 ｜ 场 ｜ 面对 ｜ 萨巴伦卡 ｜ 这次 ｜ 逆转 ｜ 能 ｜ 帮 ｜ 她 ｜ 继续 ｜ 往前 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:de974ddc15d66ea58be4177bdde338ccf3d7b948c6b7ae96c48465399a68b33c",
+      "text": "北京时间十一月十二日凌晨，印第安韦尔斯年终总决赛小组赛。穆霍娃本赛季先赢首盘，三十二战全胜。这一次，斯维托丽娜怎样翻回来？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 55,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月12日凌晨,印第安威尔斯年中总决赛小组赛。穆霍娃本赛季先赢手盘,32战全胜。这一次,斯维托丽娜怎样翻回来?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 55,
+        "speech_s": 12.005,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十二日 ｜ 凌晨 ｜ 印第安韦尔斯 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 穆霍娃 ｜ 本 ｜ 赛季 ｜ 先 ｜ 赢 ｜ 首盘 ｜ 三十二 ｜ 战 ｜ 全胜 ｜ 这 ｜ 一次 ｜ 斯维托丽娜 ｜ 怎样 ｜ 翻 ｜ 回来"
+      }
+    }
+  ]
+}

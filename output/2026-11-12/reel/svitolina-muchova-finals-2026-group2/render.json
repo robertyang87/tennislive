@@ -1,0 +1,96 @@
+{
+  "scoreboard_qc_sha256": "0c1262d370ee9a1848052de941efdddd5618645090c7d7bf55822392c64ac911",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "041bc37b68fe69b29e9688150204cd324d80f8755304a59f99ca4b55415c4be3",
+    "request_count": 5,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-svitolina-muchova-finals-2026-group2-041bc37b68fe69b2",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-svitolina-muchova-finals-2026-group2-041bc37b68fe69b2/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/43159694135"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 207.72,
+  "topbar": {
+    "line1": "2026 WTA年终总决赛 印第安韦尔斯 小组赛",
+    "line2": "斯维托丽娜 3-6 6-2 6-2 穆霍娃",
+    "start": 1.2,
+    "end": 208.92
+  },
+  "film_seconds": 213.5,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.864,
+    "4": 9.792,
+    "6": 10.128,
+    "9": 11.52
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "fa34a184921afe8c3ec4f68dc4c3d34f2a748a99d3555dad1eab1cccd4782d6f",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "svitolina-muchova-finals-2026-group2",
+    "received_at": "2026-11-12T05:11:30Z",
+    "artifact_ready_at": "2026-11-12T05:18:38Z",
+    "elapsed_seconds": 428.851,
+    "budget_seconds": 600,
+    "met": true,
+    "film_sha256": "88d8e40567f7393b533d936efb2c4d3c71b3efa67080db33957f0ab8d7d1a03c",
+    "spec_sha256": "3c07da17547aa9b291af5c12cf37a72cc541bf6eb10684fd9df5c6f7d948548f",
+    "request_received_at": "2026-11-12T04:41:07Z",
+    "request_to_artifact_seconds": 2251.851,
+    "run_id": "43159694135",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-12T05:14:48Z",
+        "run_id": "43159694135"
+      }
+    ],
+    "render_seconds": 230.851,
+    "pre_render_seconds": 198.0
+  },
+  "film_sha256": "88d8e40567f7393b533d936efb2c4d3c71b3efa67080db33957f0ab8d7d1a03c",
+  "film_bytes": 90118635,
+  "qc_attestation_sha256": "47147281e27ea5304b20f9505751a34826e9ec3e42556917e3977f29a1ef2d47",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-12T05:14:48Z",
+      "run_id": "43159694135"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-12T05:18:42Z",
+      "run_id": "43159694135"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-svitolina-muchova-finals-2026-group2/svitolina-muchova-finals-2026-group2.mp4",
+  "video_bytes": 90118635
+}
