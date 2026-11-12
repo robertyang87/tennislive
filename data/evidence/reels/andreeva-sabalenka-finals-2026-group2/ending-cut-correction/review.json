@@ -1,0 +1,11 @@
+{
+  "status": "corrected_source_boundary_final_render_pending",
+  "checked_at": "2026-11-12T06:42:26.064601+00:00",
+  "run_with_flash": 43167518056,
+  "old_film_sha256": "e273a23202487964bfd6862017eb92164f789c55833f5e33fce54842b3cb9a43",
+  "finding": "Actual encoded ending dissolve includes interviewer because visual_end298.04 lies after native source shot change. Not accepted or pushed.",
+  "correction": "visual_end297.84 freezes complete resultpanel before sourcecut; audio/quotes remain full to298.1.",
+  "source_contact": "contact.jpg",
+  "native_QC_override": false,
+  "native_render_required": true
+}
