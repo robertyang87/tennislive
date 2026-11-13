@@ -1,0 +1,44 @@
+{
+  "slug": "gauff-kostyuk-finals-2026-group1",
+  "checked_at": "2026-11-13T03:33:37Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "017593da7127c7c8": {
+      "segment": 2,
+      "spoken": 10.632,
+      "picture": 14.0
+    },
+    "d2147b0425e38364": {
+      "segment": 5,
+      "spoken": 11.832,
+      "picture": 15.0
+    },
+    "8370af32e39ed125": {
+      "segment": 7,
+      "spoken": 12.528,
+      "picture": 15.0
+    },
+    "d65ba3cd6ea01d82": {
+      "segment": 9,
+      "spoken": 14.88,
+      "picture": 18.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "6366ec1937529162e04bee7c03da15e020caa9e4ad60f2bc9d137c1e653dcf33",
+    "request_count": 5,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

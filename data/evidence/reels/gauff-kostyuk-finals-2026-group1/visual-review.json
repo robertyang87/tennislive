@@ -1,0 +1,42 @@
+{
+  "method": "current_assistant_direct_visual_review",
+  "human_listening_claimed": false,
+  "source_sha256": "ecb9cfff995a0782002e7592bea234e05bbec2ffe4dce2be01cdced905878f3f",
+  "whole_source_contact_sheets": [
+    {
+      "path": "data/evidence/reels/gauff-kostyuk-finals-2026-group1/official720-contact/contact-00.jpg",
+      "sha256": "def11b1b3274c6a8a393b374d76006b4b7adc8c7878bc066ee694fc644c81717"
+    },
+    {
+      "path": "data/evidence/reels/gauff-kostyuk-finals-2026-group1/official720-contact/contact-01.jpg",
+      "sha256": "0a40aa32b8051f24f7c17388ed409f1fe80511a14c41082c6f1baada66626354"
+    }
+  ],
+  "cold_open": {
+    "start": 132.32,
+    "end": 158.3,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "132.32秒由赛点发球准备起，142.48切获胜反应，150.64已握手；原生左下比分高芙6-4、7-5，完整首段逆转广播结束158.06。",
+    "confidence": 0.98
+  },
+  "ending": {
+    "start": 132.32,
+    "end": 179.6,
+    "kind": "aftermath",
+    "winner_visible": true,
+    "reason": "完整覆盖同一赛点及冷开场窗口，继续握手、裁判致意和162.44起挥手，167.24之后谢场及真实赛果图；官网179.755结束，没有场内采访镜头。",
+    "confidence": 0.98
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "高芙",
+    "moment": "比赛接球实拍；不冒称赛点瞬间",
+    "wrong_or_old": false,
+    "reason": "USA TODAY摄影原始IPTC明确Nov12,2026、Gauff击败Kostyuk、Indian Wells Tennis Garden；近正面两眼睁开，紫头带和淡紫球衣与已审原片一致；照片1920×1281，不是视频截图。",
+    "confidence": 0.98,
+    "image_sha256": "cdc486214c7b8d507327aa3eda6ea3160542c8e57fff9b26fe47f640361565f7",
+    "provenance": "same-match-gauff-biglead.json"
+  },
+  "unresolved": []
+}

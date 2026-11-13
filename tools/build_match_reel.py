@@ -7465,6 +7465,13 @@ SVITOLINA_MUCHOVA_FINALS_2026_LOW_RES_SOURCES: dict[str, int] = {
     "https://github.com/robertyang87/tennislive/releases/download/source-6408255435112/6408255435112.mp4": 720,
 }
 
+# 2026-11-13: owner requested the official website720p source after Actions
+# minutes ran out. Approval is tied to this match and these exact source URLs.
+GAUFF_KOSTYUK_FINALS_2026_LOW_RES_SOURCES: dict[str, int] = {
+    "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6408304798112": 720,
+    "https://github.com/robertyang87/tennislive/releases/download/source-6408304798112/6408304798112.mp4": 720,
+}
+
 
 def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     """按精确 URL 记录用户授权；保留原生分辨率，默认门槛仍是 1080p。"""
@@ -7474,6 +7481,10 @@ def source_quality_exceptions(spec: dict) -> dict[str, dict]:
     urls = set(spec_sources(spec).values()) if declared else set()
     for url, claim in declared.items():
         floor = APPROVED_LOW_RES_SOURCES.get(url)
+        if url in GAUFF_KOSTYUK_FINALS_2026_LOW_RES_SOURCES:
+            if spec.get("slug") != "gauff-kostyuk-finals-2026-group1":
+                raise ReelError("source_quality_exceptions 此720p授权仅限高芙–科斯秋克2026年终小组赛")
+            floor = GAUFF_KOSTYUK_FINALS_2026_LOW_RES_SOURCES[url]
         if url in SVITOLINA_MUCHOVA_FINALS_2026_LOW_RES_SOURCES:
             if spec.get("slug") != "svitolina-muchova-finals-2026-group2":
                 raise ReelError("source_quality_exceptions 此720p授权仅限斯维托丽娜–穆霍娃2026年终小组赛")

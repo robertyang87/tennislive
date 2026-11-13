@@ -30,6 +30,7 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -265,9 +266,18 @@ def source_ids(spec: dict) -> dict[str, str]:
     used = {str(seg.get("source", _primary(spec))) for _i, seg in _windows(spec)}
     ids = {}
     for key in sorted(used):
-        vid = video_key(str(urls.get(key) or ""))
+        url = str(urls.get(key) or "")
+        vid = video_key(url)
         if not vid:
-            raise SystemExit(f"源 {key!r}（{urls.get(key)}）认不出视频 id——只认 YouTube 地址或 Release 存档直链")
+            parsed = urlsplit(url)
+            candidates = parse_qs(parsed.query).get("videoId", [])
+            if (parsed.scheme == "https" and parsed.netloc == "players.brightcove.net"
+                    and parsed.path.endswith("/index.html")
+                    and len(candidates) == 1 and candidates[0].isascii()
+                    and candidates[0].isdigit() and len(candidates[0]) >= 12):
+                vid = candidates[0]
+        if not vid:
+            raise SystemExit(f"源 {key!r}（{urls.get(key)}）认不出视频 id——只认 YouTube、Brightcove播放器或 Release 存档直链")
         ids[key] = vid
     return ids
 

@@ -1,0 +1,13 @@
+{
+  "method": "native_source_asr_CLI_with_ffmpeg_decode_compatibility_adapter",
+  "models": [
+    "small.en",
+    "medium.en"
+  ],
+  "source": "6408304798112.mp4",
+  "audio_processing": "Decode only to model-required16kmono float32; no gain, normalization, silence detection or trimming",
+  "transcript_prompt": null,
+  "native_Whisper_transcription_options_unchanged": true,
+  "cpu_threads": 2,
+  "human_listening_claimed": false
+}

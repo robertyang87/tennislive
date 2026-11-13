@@ -22,6 +22,18 @@ SPEC = ROOT / "specs/reels/wangxiyu-wangxinyu-wuhan-2026-r1.json"
 VIDEO = "y9d6IHw0cZk"
 
 
+def test_brightcove_player_uses_its_own_transcript_identity():
+    url = "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6408304798112"
+    spec = {"sources": {"website": url}, "segments": [{"source": "website", "start": 1, "end": 2}]}
+    assert asr_plan.source_ids(spec) == {"website": "6408304798112"}
+    for bad in (url.replace("players.brightcove.net", "example.org"),
+                url.replace("6408304798112", "not-an-id"),
+                url + "&videoId=6408304798113"):
+        spec["sources"]["website"] = bad
+        with pytest.raises(SystemExit):
+            asr_plan.source_ids(spec)
+
+
 @pytest.fixture(scope="module")
 def sents():
     if not asr_plan.asr_dir(VIDEO).is_dir():
