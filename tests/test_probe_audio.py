@@ -29,6 +29,39 @@ G = 20 * math.log10(reel.BED_LOUD)       # −2.85 dB
 BLOCKS_PER_S = round(1 / pa.BLOCK_SECONDS)
 
 
+@pytest.mark.parametrize("spec", [{}, {"preserve_source_audio": True},
+                                  {"cover": {"eyebrow": "赛场之上"}}])
+def test_normal_final_mix_never_reaches_legacy_loudness_processing(tmp_path, monkeypatch, spec):
+    mixed = tmp_path / "actual_mix.m4a"
+    original = b"opaque existing mix; normal finishing must not decode or rewrite it"
+    mixed.write_bytes(original)
+    monkeypatch.setattr(reel, "limit_true_peak", lambda path: pytest.fail(
+        "Owner removed whole-film loudness scanning and limiting from normal production"))
+    result = reel.final_mix_audio_policy(spec, mixed)
+    assert result == {"status": "removed_by_owner", "applied": False}
+    assert mixed.read_bytes() == original
+
+
+def test_explicit_audio_mode_keeps_its_existing_final_policy(tmp_path, monkeypatch):
+    mixed = tmp_path / "mix.m4a"
+    measured = {"applied": False, "input_tp": -3.0, "output_tp": -3.0}
+    calls = []
+    monkeypatch.setattr(reel, "limit_true_peak", lambda path: calls.append(path) or measured)
+    result = reel.final_mix_audio_policy({"original_audio_mode": "explicit-test-mode"}, mixed)
+    assert calls == [mixed]
+    assert result == {"status": "explicit_audio_mode", **measured}
+
+
+def test_render_finishes_through_the_audio_policy_without_a_direct_limiter_call():
+    import ast
+    import inspect
+    tree = ast.parse(inspect.getsource(reel.render))
+    calls = [n.func.id for n in ast.walk(tree)
+             if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)]
+    assert calls.count("final_mix_audio_policy") == 1
+    assert "limit_true_peak" not in calls
+
+
 def _levels(plan: list[tuple[float, float]]) -> list[float]:
     """[(秒数, dB)] → 逐块 dB（合成的「量出来的」数）。"""
     out: list[float] = []

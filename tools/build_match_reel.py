@@ -1035,6 +1035,23 @@ def _loudnorm_stats(path: Path) -> dict[str, float]:
     return {k: float(data[k]) for k in ("input_i", "input_tp", "input_lra")}
 
 
+def final_mix_audio_policy(spec: dict, path: Path) -> dict:
+    """Normal production never measures or changes the completed mix's gain."""
+    if reel_source_audio_policy.normal_source_audio(spec):
+        print("[原声] 按账号要求移除整片峰值扫描与限幅，保留实际混音")
+        return {"status": "removed_by_owner", "applied": False}
+    peak = limit_true_peak(path)
+    if peak["applied"]:
+        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP 过 "
+              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，已限幅到 "
+              f"{peak['output_tp']:+.2f} dBTP（整体响度 {peak['input_i']:.2f}"
+              f" → {peak['output_i']:.2f} LUFS，钉住原响度只削峰）")
+    else:
+        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP，未过 "
+              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，混音原样")
+    return {"status": "explicit_audio_mode", **peak}
+
+
 def limit_true_peak(path: Path) -> dict:
     """把混音的真峰值压到 `FINAL_PEAK_CEILING_DBTP` 以下，**原地写回 `path`**。
 
@@ -11294,19 +11311,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
                 "-ar", AUDIO_RATE, str(mixed))
 
-    # 真峰值天花板（2026-10-25 账号所有者拍板进管线，见 `limit_true_peak`）：
-    # 混音一落地就量、过线才限，限完的结果才是后面 seal 和终编码用的那份。
-    # 放在 seal 之前是故意的——封存/ attest 的对象必须是观众真正听到的音频。
-    # 原地写回：`mixed` 变量和文件名都不许变（中间物清理按它删，见函数 docstring）。
-    peak = limit_true_peak(mixed)
-    if peak["applied"]:
-        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP 过 "
-              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，已限幅到 "
-              f"{peak['output_tp']:+.2f} dBTP（整体响度 {peak['input_i']:.2f}"
-              f" → {peak['output_i']:.2f} LUFS，钉住原响度只削峰）")
-    else:
-        print(f"[峰值] 混音真峰值 {peak['input_tp']:+.2f} dBTP，未过 "
-              f"{FINAL_PEAK_CEILING_DBTP:+.0f} dBTP 天花板，混音原样")
+    # The legacy limiter belongs only to explicitly authorized special modes.
+    # Apply the normal no-loudness policy before sealing the actual mix.
+    final_audio_processing = final_mix_audio_policy(spec, mixed)
 
     narrated_audio_mode.seal_mix(spec, outdir, mixed, voices, audio_cue_offsets,
                                 spoken_of, cover_voice, cover_secs, outro_voice, offset,
@@ -11463,6 +11470,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "scoreboard_qc_sha256": (hashlib.sha256((outdir / "scoreboard_qc.json").read_bytes()).hexdigest()
                                  if (outdir / "scoreboard_qc.json").is_file() else None),
         "source_audio_policy": reel_source_audio_policy.record(spec),
+        "final_audio_processing": final_audio_processing,
         **({"tts_bundle": _tts_bundle_session.identity} if _tts_bundle_session is not None else {}),
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
