@@ -1,0 +1,26 @@
+.........................................................                [100%]
+=============================== warnings summary ===============================
+tests/test_probe_audio.py::test_narration和render不为移除的响度检查重复取probe
+  /workspace/tennislive/.venv/lib/python3.12/site-packages/_pytest/unraisableexception.py:63: PytestUnraisableExceptionWarning: Exception ignored in: <generator object _decode at 0x7f64f0b4d1c0>
+
+  Traceback (most recent call last):
+    File "/workspace/tennislive-h6j5/tools/probe_board.py", line 284, in _decode
+      yield np.frombuffer(raw, np.uint8).reshape(h, w, 3)
+  GeneratorExit
+
+  During handling of the above exception, another exception occurred:
+
+  Traceback (most recent call last):
+    File "/workspace/tennislive-h6j5/tools/probe_board.py", line 292, in _decode
+      raise RuntimeError(f"ffmpeg 解板失败：{err.strip()[-300:]}")
+  RuntimeError: ffmpeg 解板失败：0/rawvideo @ 0x564753ecce40] Task finished with error code: -32 (Broken pipe)
+  [out#0/rawvideo @ 0x564753ecce40] Terminating thread with return code -32 (Broken pipe)
+  [out#0/rawvideo @ 0x564753ecce40] Error writing trailer: Broken pipe
+  [out#0/rawvideo @ 0x564753ecce40] Error closing file: Broken pipe
+
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+57 passed, 1 warning in 65.26s (0:01:05)

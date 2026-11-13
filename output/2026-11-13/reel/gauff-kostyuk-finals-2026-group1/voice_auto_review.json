@@ -1,0 +1,359 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "d893c0740358fa1f79dcb8520f61ccda378e35656ee41a0b1990f929b5c711d6",
+    "render_inputs_sha256": "aab1f0f72bf160f1ae7fd55dd61fc7065cf38b1011ef6df0eec364dd9207dc90",
+    "spec_sha256": "943d995e799b5a2341befae5ffe5dbeed97c094035e097263b04ab464f04473f",
+    "film_sha256": "a1269fae08cab6b573c43b9443174d477f63df5631c3189dff4d984e88621699",
+    "inventory_sha256": "92ea903d63f79ef35f828b7f072a9de1acbebe02901532abdad07065478818bb"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-13T09:22:30+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:538bc81f4e2f33c0d912fa68f4be49109e31d5ee9b777700e84dae654556fa39",
+      "audio_sha256": "e220c2b78bccd3476977cff89f3c81d96842bcec166ae2fbaf713bb0d0fa3e73",
+      "pass": true,
+      "result_of": "bundle:538bc81f4e2f33c0d912fa68f4be49109e31d5ee9b777700e84dae654556fa39"
+    },
+    {
+      "id": "bundle:a710a0a2e0650059e99ac5b12eaf15f13668d587a31134adac2f83cc718e8001",
+      "audio_sha256": "f8f036a3fe6803f87bc8991e14d7a42fd10e4a8dbb6993ba674cdc96b5d6d22c",
+      "pass": true,
+      "result_of": "bundle:a710a0a2e0650059e99ac5b12eaf15f13668d587a31134adac2f83cc718e8001"
+    },
+    {
+      "id": "bundle:aa824389a30aaaa0ec31ea25cf9cb394a84349532bad0ec9b62202b9c53f50e3",
+      "audio_sha256": "159a7a51861c2fc08042cae191f81d848fa7384949296d03c4943cf4378d37e0",
+      "pass": true,
+      "result_of": "bundle:aa824389a30aaaa0ec31ea25cf9cb394a84349532bad0ec9b62202b9c53f50e3"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:f7d28efb329006830e750dc9b86075f54fb1941df6a980287b2f3c1d76051d18",
+      "audio_sha256": "03c861254df568c8bccc6dd23896cd8b56390ee191a4a04c1d143639c69967e5",
+      "pass": true,
+      "result_of": "bundle:f7d28efb329006830e750dc9b86075f54fb1941df6a980287b2f3c1d76051d18"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "159a7a51861c2fc08042cae191f81d848fa7384949296d03c4943cf4378d37e0",
+      "pass": true,
+      "result_of": "bundle:aa824389a30aaaa0ec31ea25cf9cb394a84349532bad0ec9b62202b9c53f50e3"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "03c861254df568c8bccc6dd23896cd8b56390ee191a4a04c1d143639c69967e5",
+      "pass": true,
+      "result_of": "bundle:f7d28efb329006830e750dc9b86075f54fb1941df6a980287b2f3c1d76051d18"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "f8f036a3fe6803f87bc8991e14d7a42fd10e4a8dbb6993ba674cdc96b5d6d22c",
+      "pass": true,
+      "result_of": "bundle:a710a0a2e0650059e99ac5b12eaf15f13668d587a31134adac2f83cc718e8001"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "e220c2b78bccd3476977cff89f3c81d96842bcec166ae2fbaf713bb0d0fa3e73",
+      "pass": true,
+      "result_of": "bundle:538bc81f4e2f33c0d912fa68f4be49109e31d5ee9b777700e84dae654556fa39"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "483146879e449370270b496c5ddaa4b2c83a833826ca7685a8d93af5deca391d",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:538bc81f4e2f33c0d912fa68f4be49109e31d5ee9b777700e84dae654556fa39",
+      "text": "可随后佩古拉赢了诺斯科娃，三人同为两胜一负。高芙七盘赢四盘，佩古拉八盘赢五盘，盘胜率更高。连赢六局仍然出局，这样的结局，你觉得残酷吗？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可随后,佩古拉赢了诺斯科娃,三人同为两胜一副。高福七盘赢四盘,佩古拉八盘赢五盘,盘胜率更高。连赢六局仍然出局,这样的结局,你觉得残酷吗?"
+      },
+      "polyphones": [
+        {
+          "index": 62,
+          "char": "得",
+          "word": "觉得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": 0.064,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 14.009,
+        "cps": 4.21,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 随后 ｜ 佩古拉 ｜ 赢 ｜ 了 ｜ 诺斯科娃 ｜ 三 ｜ 人 ｜ 同 ｜ 为 ｜ 两 ｜ 胜 ｜ 一 ｜ 负 ｜ 高芙 ｜ 七盘 ｜ 赢 ｜ 四盘 ｜ 佩古拉 ｜ 八盘 ｜ 赢 ｜ 五盘 ｜ 盘 ｜ 胜率 ｜ 更 ｜ 高 ｜ 连 ｜ 赢 ｜ 六局 ｜ 仍然 ｜ 出局 ｜ 这样 ｜ 的 ｜ 结局 ｜ 你 ｜ 觉得 ｜ 残酷 ｜ 吗"
+      }
+    },
+    {
+      "id": "bundle:a710a0a2e0650059e99ac5b12eaf15f13668d587a31134adac2f83cc718e8001",
+      "text": "三个盘点全部救回。高芙开始冲击对手的正手，先追到三比五，再连拿八个小分，追成五比五。接着保发到六比五，把压力推回对面。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 52,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "三个盘点全部就回。高幅开始冲击对手的正手,先追到3比5,再连拿8个小分,追成5比5。接着爆发到6比5,把压力推回对面。"
+      },
+      "polyphones": [
+        {
+          "index": 45,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 52,
+        "speech_s": 11.651,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三个 ｜ 盘点 ｜ 全部 ｜ 救 ｜ 回 ｜ 高芙 ｜ 开始 ｜ 冲击 ｜ 对手 ｜ 的 ｜ 正手 ｜ 先 ｜ 追 ｜ 到 ｜ 三比五 ｜ 再 ｜ 连 ｜ 拿 ｜ 八个 ｜ 小 ｜ 分 ｜ 追 ｜ 成 ｜ 五比五 ｜ 接着 ｜ 保 ｜ 发 ｜ 到 ｜ 六比五 ｜ 把 ｜ 压力 ｜ 推回 ｜ 对面"
+      }
+    },
+    {
+      "id": "bundle:aa824389a30aaaa0ec31ea25cf9cb394a84349532bad0ec9b62202b9c53f50e3",
+      "text": "北京时间十一月十三日凌晨，年终总决赛小组赛。高芙连赢六局，却仍无缘四强。先看她怎样拿下这场逆转。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.023,
+        "longest_deletion": 0,
+        "transcript": "北京时间十一月十三日凌晨,年中总决赛小组赛。高福联营六局,却人无缘四强。先看他怎样拿下这场逆转。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 9.741,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月十三日 ｜ 凌晨 ｜ 年终 ｜ 总决赛 ｜ 小组 ｜ 赛 ｜ 高芙 ｜ 连 ｜ 赢 ｜ 六局 ｜ 却 ｜ 仍 ｜ 无缘 ｜ 四 ｜ 强 ｜ 先 ｜ 看 ｜ 她 ｜ 怎样 ｜ 拿下 ｜ 这 ｜ 场 ｜ 逆转"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:f7d28efb329006830e750dc9b86075f54fb1941df6a980287b2f3c1d76051d18",
+      "text": "高芙六比四先下一盘，次盘却零比三落后。背部发紧，她叫了医疗暂停，随后还是一比五。自己的发球局，又要面对三个盘点。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 49,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "高福六比四掀下一盘,次盘却零比三落后。被捕发紧,他叫了医疗暂停,随后还是一比五。自己的发球局又要面对三个盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "uncertain",
+              "score": 0.09,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "uncertain",
+              "score": -0.02,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        },
+        {
+          "index": 21,
+          "char": "发",
+          "word": "发紧",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 34,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.274,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 43,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 49,
+        "speech_s": 10.955,
+        "cps": 4.47,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "高芙 ｜ 六比 ｜ 四 ｜ 先 ｜ 下 ｜ 一 ｜ 盘 ｜ 次 ｜ 盘 ｜ 却 ｜ 零比 ｜ 三落后 ｜ 背部 ｜ 发紧 ｜ 她 ｜ 叫 ｜ 了 ｜ 医疗 ｜ 暂停 ｜ 随后 ｜ 还是 ｜ 一比五 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 又要 ｜ 面对 ｜ 三个 ｜ 盘点"
+      }
+    }
+  ]
+}
