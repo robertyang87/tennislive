@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.custom-explainer-qc.v1",
-  "film_sha256": "348f5e48bd0330ff5e5fe1ede88408ed161a8499f430034638fc54eec76564b2",
-  "checked_at": "2026-11-14T04:44:21.592278+00:00",
+  "film_sha256": "619aba657f87af2535e58f467ee680c6a5e4364cf85f0a462faeb4836e6b7e6b",
+  "checked_at": "2026-11-14T05:27:40.676162+00:00",
   "format": {
     "programs": [],
     "stream_groups": [],
@@ -30,7 +30,7 @@
     "reference_style": "WTA 2026 prediction; six H2H cards, season footage/photos, four picks, champion preference",
     "scoreboard": "cropped away with fixed court centre; no overlays, blur or inpainting",
     "faces_and_caption_safety": "reviewed actual contact sheets, clean photo identities and labelled four-person prediction",
-    "cover_revision": "cover-revision.json; eight official ATP identities, WTA-style 4+4 layout, current actual final-film cover and dissolve viewed"
+    "cover_revision": "cover-revision.json; actual ATP Finals singles Brad Drewett Trophy compared with official Thomas Lyte reference; eight portraits and labels reviewed; actual opening and dissolve viewed"
   },
   "editorial_checks": {
     "all_12_group_pairings": true,
@@ -47,6 +47,15 @@
     "rg": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
     "almaty": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
   },
-  "publication_gate": "Fresh automated voice suite and require_publish for exact cover revision; independent final PCM binding; unchanged complete AAC stream and body video packets",
-  "cover_only_packet_verification": "cover-packet-verification.json"
+  "publication_gate": "Fresh automated voice suite and require_publish for exact trophy-corrected revision; independent final PCM binding; unchanged complete AAC stream and body video packet data and timestamps",
+  "cover_only_packet_verification": "cover-packet-verification.json",
+  "black_frame_check": {
+    "changed_interval_scanned_s": [
+      0,
+      2.2
+    ],
+    "unchanged_body_previous_full_scan_film_sha256": "348f5e48bd0330ff5e5fe1ede88408ed161a8499f430034638fc54eec76564b2",
+    "unchanged_body_proof": "cover-packet-verification.json",
+    "result": "pass"
+  }
 }

@@ -1,11 +1,11 @@
 from pathlib import Path
 import subprocess,json,hashlib,shutil
-O=Path('/workspace/atp-finals-2026'); V=O/'cover-v2'; film=O/'atp-finals-preview-2026.mp4'
+O=Path('/workspace/atp-finals-2026'); V=O/'trophy-fix'; film=O/'atp-finals-preview-2026.mp4'
 old=V/'previous-film.mp4'
 if not old.exists():shutil.copy2(film,old)
 def run(args):subprocess.run(['ffmpeg','-y','-nostdin','-v','error','-threads','2','-filter_complex_threads','1']+args,check=True)
 enc=['-c:v','libx264','-preset','veryfast','-crf','21','-pix_fmt','yuv420p','-r','30','-threads','2','-c:a','aac','-b:a','128k','-ar','48000','-ac','2','-movflags','+faststart']
-run(['-i','/workspace/generated_images/exec-ad7ab88c-010e-4022-9904-b8bd1d0c3d1d.png','-vf','scale=1080:1440','-frames:v','1','-q:v','2',str(O/'poster.jpg')])
+run(['-i','/workspace/generated_images/exec-9ce3620d-aa49-4480-9607-3196c6cc52b5.png','-vf','scale=1080:1440','-frames:v','1','-q:v','2',str(O/'poster.jpg')])
 run(['-loop','1','-framerate','30','-i',str(O/'poster.jpg'),'-f','lavfi','-i','anullsrc=r=48000:cl=stereo','-t','1.7']+enc+[str(O/'cover.mp4')])
 run(['-i',str(O/'cover.mp4'),'-t','1.2','-frames:v','36']+enc+[str(O/'interior_00.mp4')])
 blend='[0:v]settb=1/30,setpts=PTS-STARTPTS[v0];[1:v]settb=1/30,setpts=PTS-STARTPTS[v1];[v0][v1]blend=all_expr=A*(1-T/0.5)+B*T/0.5[v];[0:a][1:a]amix=inputs=2:normalize=0[a]'
