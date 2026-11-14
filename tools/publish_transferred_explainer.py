@@ -53,7 +53,7 @@ def publish(outdir: Path, *, restore_only: bool = False) -> None:
         print('Exact reviewed movie restored; native gate passed.')
         return
     subprocess.run(['gh', 'release', 'upload', slug, str(film), str(outdir / 'poster.jpg'), str(outdir / 'analysis.txt'), '--clobber'], check=True)
-    assets = json.loads(subprocess.check_output(['gh', 'api', f'repos/robertyang87/tennislive/releases/tags/{slug}']))['assets']
+    assets = json.loads(subprocess.check_output(['gh', 'release', 'view', slug, '--json', 'assets']))['assets']
     asset = next(a for a in assets if a['name'] == film.name)
     if asset['size'] != meta['video_bytes']:
         raise ValueError('Uploaded movie size differs')
