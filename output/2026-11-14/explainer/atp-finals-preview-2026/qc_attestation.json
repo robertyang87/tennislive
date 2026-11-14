@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.custom-explainer-qc.v1",
-  "film_sha256": "ceff3ec03a8c3e4104e92ca59c9f23478cc4d51a3450ac425a3896812f475959",
-  "checked_at": "2026-11-14T03:47:31.391762+00:00",
+  "film_sha256": "348f5e48bd0330ff5e5fe1ede88408ed161a8499f430034638fc54eec76564b2",
+  "checked_at": "2026-11-14T04:44:21.592278+00:00",
   "format": {
     "programs": [],
     "stream_groups": [],
@@ -29,7 +29,8 @@
     "scope": "all 19 chapter/cover/outro samples plus 20 official source boundary frames; actual corrected centred-crop preview; 8 source photos reviewed",
     "reference_style": "WTA 2026 prediction; six H2H cards, season footage/photos, four picks, champion preference",
     "scoreboard": "cropped away with fixed court centre; no overlays, blur or inpainting",
-    "faces_and_caption_safety": "reviewed actual contact sheets, clean photo identities and labelled four-person prediction"
+    "faces_and_caption_safety": "reviewed actual contact sheets, clean photo identities and labelled four-person prediction",
+    "cover_revision": "cover-revision.json; eight official ATP identities, WTA-style 4+4 layout, current actual final-film cover and dissolve viewed"
   },
   "editorial_checks": {
     "all_12_group_pairings": true,
@@ -46,5 +47,6 @@
     "rg": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
     "almaty": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
   },
-  "publication_gate": "final 17-request automated suite passed and require_publish passed for exact current film; not human listening"
+  "publication_gate": "Fresh automated voice suite and require_publish for exact cover revision; independent final PCM binding; unchanged complete AAC stream and body video packets",
+  "cover_only_packet_verification": "cover-packet-verification.json"
 }
