@@ -1,0 +1,50 @@
+{
+  "schema": "tennislive.custom-explainer-qc.v1",
+  "film_sha256": "ceff3ec03a8c3e4104e92ca59c9f23478cc4d51a3450ac425a3896812f475959",
+  "checked_at": "2026-11-14T03:47:31.391762+00:00",
+  "format": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1080,
+        "height": 1440,
+        "r_frame_rate": "30/1",
+        "start_time": "0.000000",
+        "duration": "321.633333",
+        "nb_frames": "9649"
+      },
+      {
+        "r_frame_rate": "0/0",
+        "start_time": "0.000000",
+        "duration": "321.633000",
+        "nb_frames": "15078"
+      }
+    ]
+  },
+  "black_frames_detected": false,
+  "complete_utterances_bound_to_actual_film": 18,
+  "audio_binding": "actual-audio-binding.json",
+  "visual_review": {
+    "scope": "all 19 chapter/cover/outro samples plus 20 official source boundary frames; actual corrected centred-crop preview; 8 source photos reviewed",
+    "reference_style": "WTA 2026 prediction; six H2H cards, season footage/photos, four picks, champion preference",
+    "scoreboard": "cropped away with fixed court centre; no overlays, blur or inpainting",
+    "faces_and_caption_safety": "reviewed actual contact sheets, clean photo identities and labelled four-person prediction"
+  },
+  "editorial_checks": {
+    "all_12_group_pairings": true,
+    "all_8_players": true,
+    "facts_separate_from_prediction": true,
+    "historic_surface_and_recency_noted": true,
+    "no_unverified_season_win_loss": true,
+    "unsupported_injury_or_guaranteed_result": false
+  },
+  "sources": {
+    "paris": "21b7d1df91656e2a63dc20ef61eb7352ca3beb605c8a995e5daf27fb1df36807",
+    "cincinnati": "00d1449822f22548eaa2865d6709fe5c86263831d0f020a9d382552cc0e0f42d",
+    "shanghai": "805bfda10e11ffccc9f1ecc03db4af4661c5ead00d4858d4625c70618737c975",
+    "rg": "04e0eb86a3df06c5cc98baa8df0e383a5e1f7ec7962dca2dd611ef4b898f7755",
+    "almaty": "9a42eaccdadd6ffadbf7bd698787f7c7dc2d640a7d285c4f07c8592dd203556e"
+  },
+  "publication_gate": "final 17-request automated suite passed and require_publish passed for exact current film; not human listening"
+}
