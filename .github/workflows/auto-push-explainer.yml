@@ -71,6 +71,7 @@ jobs:
             data/explainer_publish_ledger
             src
             tools
+            specs/explainers
 
       - uses: actions/setup-python@v5
         with:
@@ -106,6 +107,12 @@ jobs:
       - name: 把这一格放进稀疏范围
         if: steps.gate.outputs.found == 'true'
         run: git sparse-checkout add "${{ steps.gate.outputs.outdir }}"
+
+      - name: 发布已审ATP预测成片到Release
+        if: steps.gate.outputs.found == 'true' && steps.gate.outputs.slug == 'atp-finals-preview-2026'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/publish_transferred_explainer.py --outdir "${{ steps.gate.outputs.outdir }}"
 
       - name: 预占发布账本（发送前）
         # sending 必须在不可撤回 POST 之前落进 main；runner 在 POST 后崩溃时，

@@ -2017,6 +2017,8 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 # ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
 # 而微信那条消息发出去收不回来。
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
+    # Account-requested ATP preview; custom explainer with sealed actual speech.
+    "atp-finals-preview-2026",
     # Renoise process remake, run 40881358677, SHA 74a0dbd5baba: 212.433s,
     # 1080x1440/30fps H264 High 4:2:0; 25 actual frames, logo/fonts and
     # fixed32 draw/queue/unused-slot/seed motions verified. Frozen speech and

@@ -1,0 +1,903 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "e2d58ba1835b56a1fde9e7c44453c4932413d227cd7446209550a6ea92753fcd",
+    "render_inputs_sha256": "6fc034558a82bbad5a99f78c64239f96211d58e224c7f61773380eded99eb6d9",
+    "spec_sha256": "3a4e2a9c29997575d1903967b731774d097687fc59aa054f101aa0f2f4fc35cc",
+    "film_sha256": "ceff3ec03a8c3e4104e92ca59c9f23478cc4d51a3450ac425a3896812f475959",
+    "inventory_sha256": "fe53e85ae74281a8033ed69ea6fcfd6f28c7f7db999c167485bccb760817bd77"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-14T03:47:05+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:05db35c89515570b9f55f636b4624f56c9d0e130c2828cb1d0e3f0148304fb93",
+      "audio_sha256": "e91d63e33d0df2490ad1d734af0721bdd9ddc7a356e4c1059eb3ca97824fd20f",
+      "pass": true,
+      "result_of": "bundle:05db35c89515570b9f55f636b4624f56c9d0e130c2828cb1d0e3f0148304fb93"
+    },
+    {
+      "id": "bundle:0796d0ac0a46aa27aea351b86c4f45837f38229d8840e4a35c1df00e301edd4a",
+      "audio_sha256": "3cb7164e7cfb0c6fbe13caa0c25d929f82fe0839f683988def238adadb7c7a79",
+      "pass": true,
+      "result_of": "bundle:0796d0ac0a46aa27aea351b86c4f45837f38229d8840e4a35c1df00e301edd4a"
+    },
+    {
+      "id": "bundle:2cff0ad231215e02d579cb9ba15c034d51a86958faff617f04380ea53409e015",
+      "audio_sha256": "65971a2df89c92409864044c51bb2d591f694174fddfb68e95ffc9f191230bc6",
+      "pass": true,
+      "result_of": "bundle:2cff0ad231215e02d579cb9ba15c034d51a86958faff617f04380ea53409e015"
+    },
+    {
+      "id": "bundle:36fa3ff9c7ea6aed9dde12ffe7ff1bb6873e6d2f431535818fd9108d878635f5",
+      "audio_sha256": "2781723eaf565b499f64bb7b5e176f3de3a8915d270c6c3b8f8fe88edb490a5e",
+      "pass": true,
+      "result_of": "bundle:36fa3ff9c7ea6aed9dde12ffe7ff1bb6873e6d2f431535818fd9108d878635f5"
+    },
+    {
+      "id": "bundle:377af10bcce03b255f2abfad85cbd0613625a74572d490349fe65d92027ac11b",
+      "audio_sha256": "46cfe2b9d807669c43096ca66d21c40c5f70e165d54f68f4627c949288904bfb",
+      "pass": true,
+      "result_of": "bundle:377af10bcce03b255f2abfad85cbd0613625a74572d490349fe65d92027ac11b"
+    },
+    {
+      "id": "bundle:487f5e0c8d0874e72150abf5c4b5d6b9d8aa0b04a9ad7b2c09e428180d18d24c",
+      "audio_sha256": "87fea87eb93c7b3761383b25eb960ada273f2486d04f5c211158974c572c1c99",
+      "pass": true,
+      "result_of": "bundle:487f5e0c8d0874e72150abf5c4b5d6b9d8aa0b04a9ad7b2c09e428180d18d24c"
+    },
+    {
+      "id": "bundle:4fce0df438fd3a449a4620263c1e37b490660901212cd051b16e3bdfe4b01a04",
+      "audio_sha256": "581fedf39a90c72a787d2ec5ba07954f99a399eb4b9d07d55cc4a8c3f61df243",
+      "pass": true,
+      "result_of": "bundle:4fce0df438fd3a449a4620263c1e37b490660901212cd051b16e3bdfe4b01a04"
+    },
+    {
+      "id": "bundle:6b574554cb0594d99db2eb85a618169b0e8bc5d37fd35b94762221cf081c23ba",
+      "audio_sha256": "e64dc60a612ef96074fee4b7644301d8760bfef5e7c9ed506a428354db0cad4b",
+      "pass": true,
+      "result_of": "bundle:6b574554cb0594d99db2eb85a618169b0e8bc5d37fd35b94762221cf081c23ba"
+    },
+    {
+      "id": "bundle:7303afe4ed5c3ebafa2c8a46730bee6e30395e20e94ad08d0cde2a38d34d803c",
+      "audio_sha256": "73f532798c8ac26c7df7fe9ff2031ae353311b4592c9c20140fb7dc316529849",
+      "pass": true,
+      "result_of": "bundle:7303afe4ed5c3ebafa2c8a46730bee6e30395e20e94ad08d0cde2a38d34d803c"
+    },
+    {
+      "id": "bundle:8708c856d607e7823f734f28f67217eb95288a7a0c5aa379f148b37f05de1f51",
+      "audio_sha256": "03537ba640d5bc1e0641abec1d05faa75276ad308e1dc873f176b1a90d99cf6d",
+      "pass": true,
+      "result_of": "bundle:8708c856d607e7823f734f28f67217eb95288a7a0c5aa379f148b37f05de1f51"
+    },
+    {
+      "id": "bundle:913c050107f45398af7cd3640a42f5ee616ce1d85b7c818a7345ddd78ad3b615",
+      "audio_sha256": "d8af982846dd44318877d4a773de75d6e2735e7ec2ad2399fbc3c4cfdf3d4f8a",
+      "pass": true,
+      "result_of": "bundle:913c050107f45398af7cd3640a42f5ee616ce1d85b7c818a7345ddd78ad3b615"
+    },
+    {
+      "id": "bundle:a75efa4dcd59ef9d25ef8332a9f6ad1be1bacf057d3b64274ce3eb644049830e",
+      "audio_sha256": "eebee00ddf65fe61a53d55e330e6a7369c5ce45b611b401f793ae23d7587a036",
+      "pass": true,
+      "result_of": "bundle:a75efa4dcd59ef9d25ef8332a9f6ad1be1bacf057d3b64274ce3eb644049830e"
+    },
+    {
+      "id": "bundle:bb387d8289f3ed7389589ea9fcc37587e76695f917175f9ee5e6f644ca847541",
+      "audio_sha256": "4dc524a1b60eb66970fc3a4bef24db94c7a4e42bf1bf18a54dcdf5b110f482de",
+      "pass": true,
+      "result_of": "bundle:bb387d8289f3ed7389589ea9fcc37587e76695f917175f9ee5e6f644ca847541"
+    },
+    {
+      "id": "bundle:e260b416d686c0cce2f7e6a37e90c331103b8f045c0172d7e1dbf51d3f905fb4",
+      "audio_sha256": "bf9919a456115603368c74e822b77b4d048874f92e11cdcc1526253ffabc8965",
+      "pass": true,
+      "result_of": "bundle:e260b416d686c0cce2f7e6a37e90c331103b8f045c0172d7e1dbf51d3f905fb4"
+    },
+    {
+      "id": "bundle:f3e8f2e47ce2f0ec63aedd2063055043d6a34456b3b8e50ae3802704316b6310",
+      "audio_sha256": "6298dc311a042996d150470eb4bfa3cb637e00a2a6506756a87429b071128af1",
+      "pass": true,
+      "result_of": "bundle:f3e8f2e47ce2f0ec63aedd2063055043d6a34456b3b8e50ae3802704316b6310"
+    },
+    {
+      "id": "bundle:f51934068fc9d86e77e33334f09eb63db54e9eb22190ce7a2dfeca7f72146430",
+      "audio_sha256": "c54693d69f99c3ee4636eb2d3212d104c0e66c02cca094d2f833ac6549d555eb",
+      "pass": true,
+      "result_of": "bundle:f51934068fc9d86e77e33334f09eb63db54e9eb22190ce7a2dfeca7f72146430"
+    },
+    {
+      "id": "bundle:fb680b19d8b0aff515d31bad8c49680122f25c98a97bfbb6fd8e7d4519e16af0",
+      "audio_sha256": "e08b5cdff225eaf858ec837e768a250b893cdf7765692dbf8ed155d250b27406",
+      "pass": true,
+      "result_of": "bundle:fb680b19d8b0aff515d31bad8c49680122f25c98a97bfbb6fd8e7d4519e16af0"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:05db35c89515570b9f55f636b4624f56c9d0e130c2828cb1d0e3f0148304fb93",
+      "text": "兹维列夫对霍达尔一比零，但那是今年法网的红土。谢尔顿对菲斯二比一，两场胜利都在室内硬帝。不过他们自二零二四年以后没有再碰面，旧记录不能代表今年的差距。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "滋维列夫对霍达尔1比0,但那是今年乏网的红土。谢尔顿对菲斯2比1,两场胜利都在室内应定。不过他们自2024年以后没有在碰面,就记录不能代表今年的差距。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 12.355,
+        "cps": 5.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "兹维列夫 ｜ 对 ｜ 霍达尔 ｜ 一比零 ｜ 但 ｜ 那 ｜ 是 ｜ 今年 ｜ 法网 ｜ 的 ｜ 红土 ｜ 谢尔顿 ｜ 对 ｜ 菲斯 ｜ 二比一 ｜ 两场 ｜ 胜利 ｜ 都 ｜ 在 ｜ 室内 ｜ 硬 ｜ 帝 ｜ 不过 ｜ 他们 ｜ 自 ｜ 二零二四年 ｜ 以后 ｜ 没有 ｜ 再 ｜ 碰面 ｜ 旧 ｜ 记录 ｜ 不能 ｜ 代表 ｜ 今年 ｜ 的 ｜ 差距"
+      }
+    },
+    {
+      "id": "bundle:0796d0ac0a46aa27aea351b86c4f45837f38229d8840e4a35c1df00e301edd4a",
+      "text": "阿卡对蒂亚福二比一，但最近交手是二零二四年温网。梅德韦德夫对科博利二比一，今年马德里却输了。科博利已经能赢过他，不过红土的胜利也不能照搬到都灵。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 66,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.015,
+        "longest_deletion": 0,
+        "transcript": "阿卡对蒂亚福2比1,但最近交手是2024年温网。梅德维德夫对科博利2比1,今年马德里却输了。科博利已经能赢过他,不过宏土的胜利也不能照颁到独领。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 66,
+        "speech_s": 12.221,
+        "cps": 5.4,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 对 ｜ 蒂亚福 ｜ 二比一 ｜ 但 ｜ 最近 ｜ 交手 ｜ 是 ｜ 二零二四年 ｜ 温网 ｜ 梅德韦德夫 ｜ 对 ｜ 科博利 ｜ 二比一 ｜ 今年 ｜ 马德里 ｜ 却 ｜ 输 ｜ 了 ｜ 科博利 ｜ 已经 ｜ 能 ｜ 赢 ｜ 过 ｜ 他 ｜ 不过 ｜ 红土 ｜ 的 ｜ 胜利 ｜ 也 ｜ 不能 ｜ 照搬 ｜ 到 ｜ 都灵"
+      }
+    },
+    {
+      "id": "bundle:2cff0ad231215e02d579cb9ba15c034d51a86958faff617f04380ea53409e015",
+      "text": "再看赛季。兹维列夫拿下法网和美网，已经锁定年终第一，还有两次年终夺冠经验。我把他放在麦肯罗组第一顺位。理由是大赛成绩与组内交锋同时支持，而不是只凭排名。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 69,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.014,
+        "longest_deletion": 0,
+        "transcript": "在看赛界,自卫列夫拿下法网和美网已经锁定年中第一,还有两次年中夺冠经验。我把它放在麦肯罗组第一顺位,理由是大赛成绩与组内交锋同时支持,而不是只凭排名。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.437,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 69,
+        "speech_s": 14.074,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 看 ｜ 赛季 ｜ 兹维列夫 ｜ 拿下 ｜ 法网 ｜ 和美 ｜ 网 ｜ 已经 ｜ 锁定 ｜ 年终 ｜ 第一 ｜ 还有 ｜ 两次 ｜ 年终 ｜ 夺冠 ｜ 经验 ｜ 我 ｜ 把 ｜ 他 ｜ 放 ｜ 在 ｜ 麦肯罗 ｜ 组 ｜ 第一 ｜ 顺位 ｜ 理由 ｜ 是 ｜ 大赛 ｜ 成绩 ｜ 与 ｜ 组 ｜ 内 ｜ 交锋 ｜ 同时 ｜ 支持 ｜ 而 ｜ 不是 ｜ 只 ｜ 凭 ｜ 排名"
+      }
+    },
+    {
+      "id": "bundle:36fa3ff9c7ea6aed9dde12ffe7ff1bb6873e6d2f431535818fd9108d878635f5",
+      "text": "谢尔顿和霍达尔还没交过手。霍达尔却对菲斯二比一领先，今年在华盛顿和蒙特利尔连续赢了他。这个小组的第二名，我偏向谢尔顿，但霍达尔有直接搅局的依据。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 66,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.015,
+        "longest_deletion": 1,
+        "transcript": "谢尔顿和霍达尔还没交过手。霍达尔却对菲斯2比1领先,今年在华盛顿和蒙特莲连续赢了他。这个小组的第二名,我偏向谢尔顿,但霍达尔有直接角局的依据。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.131,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 66,
+        "speech_s": 11.897,
+        "cps": 5.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "谢尔顿 ｜ 和 ｜ 霍达尔 ｜ 还 ｜ 没 ｜ 交 ｜ 过手 ｜ 霍达尔 ｜ 却 ｜ 对 ｜ 菲斯 ｜ 二比一 ｜ 领先 ｜ 今年 ｜ 在 ｜ 华盛顿 ｜ 和 ｜ 蒙特利尔 ｜ 连续 ｜ 赢 ｜ 了 ｜ 他 ｜ 这个 ｜ 小组 ｜ 的 ｜ 第二名 ｜ 我 ｜ 偏向 ｜ 谢尔顿 ｜ 但 ｜ 霍达尔 ｜ 有 ｜ 直接 ｜ 搅局 ｜ 的 ｜ 依据"
+      }
+    },
+    {
+      "id": "bundle:377af10bcce03b255f2abfad85cbd0613625a74572d490349fe65d92027ac11b",
+      "text": "兹维列夫是世界第一，阿卡刚拿维也纳和巴黎两冠。今年年终，我更看好谁？先看十二组交锋，再看八个人的赛季和近况，最后给出四强和冠军选择。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "滋维列夫是世界第一、阿卡刚拿维尔娜和巴黎两冠。今年年中,我更看好谁?先看十二组交锋,再看八个人的赛季和近况,最后给出四强和冠军选择。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 12.277,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "兹维列夫 ｜ 是 ｜ 世界 ｜ 第一 ｜ 阿卡刚 ｜ 拿 ｜ 维也纳 ｜ 和 ｜ 巴黎 ｜ 两 ｜ 冠 ｜ 今年年终 ｜ 我 ｜ 更 ｜ 看好 ｜ 谁 ｜ 先 ｜ 看 ｜ 十二组 ｜ 交锋 ｜ 再 ｜ 看 ｜ 八个 ｜ 人 ｜ 的 ｜ 赛季 ｜ 和 ｜ 近况 ｜ 最后 ｜ 给 ｜ 出 ｜ 四 ｜ 强 ｜ 和 ｜ 冠军 ｜ 选择"
+      }
+    },
+    {
+      "id": "bundle:487f5e0c8d0874e72150abf5c4b5d6b9d8aa0b04a9ad7b2c09e428180d18d24c",
+      "text": "阿卡对梅德韦德夫七比三，今年两人各赢一场。阿卡对科博利一比零，可唯一那场还是二零二三年法网。一个是今年有来有回，一个是样本太旧，都不能只看总数。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 65,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "阿卡对梅德维德夫7比3, 今年两人各赢一场。阿卡对科博利1比0, 可唯一那场还是2023年罚网。一个是今年有来有回, 一个是样本太旧,都不能只看总数。"
+      },
+      "polyphones": [
+        {
+          "index": 36,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.182,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 65,
+        "speech_s": 12.589,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 对 ｜ 梅德韦德夫 ｜ 七比三 ｜ 今年 ｜ 两 ｜ 人 ｜ 各 ｜ 赢 ｜ 一 ｜ 场 ｜ 阿卡 ｜ 对 ｜ 科博利 ｜ 一比零 ｜ 可 ｜ 唯一 ｜ 那 ｜ 场 ｜ 还是 ｜ 二零二三年 ｜ 法网 ｜ 一个 ｜ 是 ｜ 今年 ｜ 有 ｜ 来 ｜ 有 ｜ 回 ｜ 一个 ｜ 是 ｜ 样本 ｜ 太 ｜ 旧 ｜ 都 ｜ 不能 ｜ 只 ｜ 看 ｜ 总数"
+      }
+    },
+    {
+      "id": "bundle:4fce0df438fd3a449a4620263c1e37b490660901212cd051b16e3bdfe4b01a04",
+      "text": "冠军我选阿卡，第二选择是兹维列夫。兹维列夫的全年成绩更硬，阿卡最近的室内表现更热。我的取舍，是把近期在同类场地的表现放在前面。如果出现疲劳或身体问题，这个判断就需要调整。你会把谁换进四强？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 85,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "冠军我选阿卡,第二选择是滋维列夫。滋维列夫的全年成绩更硬,阿卡最近的室内表现更热。我的取舍是把近期在同类场地的表现放在前面。如果出现疲劳或身体问题,这个判断就需要调整。你会把谁换进四墙。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 85,
+        "speech_s": 17.612,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "冠军 ｜ 我 ｜ 选 ｜ 阿卡 ｜ 第二 ｜ 选择 ｜ 是 ｜ 兹维列夫 ｜ 兹维列夫 ｜ 的 ｜ 全年 ｜ 成绩 ｜ 更 ｜ 硬 ｜ 阿卡 ｜ 最近 ｜ 的 ｜ 室内 ｜ 表现 ｜ 更 ｜ 热 ｜ 我 ｜ 的 ｜ 取舍 ｜ 是 ｜ 把 ｜ 近期 ｜ 在 ｜ 同类 ｜ 场地 ｜ 的 ｜ 表现 ｜ 放 ｜ 在 ｜ 前面 ｜ 如果 ｜ 出现 ｜ 疲劳 ｜ 或 ｜ 身体 ｜ 问题 ｜ 这个 ｜ 判断 ｜ 就 ｜ 需要 ｜ 调整 ｜ 你 ｜ 会 ｜ 把 ｜ 谁 ｜ 换 ｜ 进 ｜ 四 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:6b574554cb0594d99db2eb85a618169b0e8bc5d37fd35b94762221cf081c23ba",
+      "text": "伦德尔组，阿卡是我的第一选择。他今年五冠，最近在维也纳、巴黎连续夺冠，带着室内九连胜来到都灵。相比年初的成绩，这段最近发生的室内表现，更直接支持我看好他。但他去年是亚军，年终冠军这一步还要自己完成。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 88,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.011,
+        "longest_deletion": 0,
+        "transcript": "伦德尔祖、阿卡是我的第一选择。他今年武冠,最近在维也那,巴黎连续奪冠,带着室内九连胜来到独领。相比年初的成绩,这段最近发生的室内表现更直接支持我看好他。但他去年是亚军,年中冠军这一步还要自己完成。"
+      },
+      "polyphones": [
+        {
+          "index": 59,
+          "char": "发",
+          "word": "发生",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 92,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": -0.101,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 88,
+        "speech_s": 18.17,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "伦德尔 ｜ 组 ｜ 阿卡 ｜ 是 ｜ 我 ｜ 的 ｜ 第一 ｜ 选择 ｜ 他 ｜ 今年 ｜ 五 ｜ 冠 ｜ 最近 ｜ 在 ｜ 维也纳 ｜ 巴黎 ｜ 连续 ｜ 夺冠 ｜ 带 ｜ 着 ｜ 室内 ｜ 九 ｜ 连胜 ｜ 来到 ｜ 都灵 ｜ 相比 ｜ 年初 ｜ 的 ｜ 成绩 ｜ 这 ｜ 段 ｜ 最近 ｜ 发生 ｜ 的 ｜ 室内 ｜ 表现 ｜ 更 ｜ 直接 ｜ 支持 ｜ 我 ｜ 看好 ｜ 他 ｜ 但 ｜ 他 ｜ 去年 ｜ 是 ｜ 亚军 ｜ 年终 ｜ 冠军 ｜ 这 ｜ 一 ｜ 步 ｜ 还要 ｜ 自己 ｜ 完成"
+      }
+    },
+    {
+      "id": "bundle:7303afe4ed5c3ebafa2c8a46730bee6e30395e20e94ad08d0cde2a38d34d803c",
+      "text": "梅德韦德夫今年四冠，十月刚拿阿拉木图室内冠军，随后在维也纳进了四强。再加上二零二零年年终冠军的经验，我把他放在组内第二顺位。但蒂亚福最近赢过他，今年又输过科博利，他需要在直接对话里守住这个位置。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "梅德维德夫今年四冠,10月刚拿阿拉木图室内冠军,随后在维也纳进了四墙。再加上2020年年中冠军的经验,我把它放在组内第二顺位。但蒂亚福最近赢过他,今年又输过科博利,他需要在直接对话里守住这个位置。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 16.116,
+        "cps": 5.52,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "梅德韦德夫 ｜ 今年 ｜ 四 ｜ 冠 ｜ 十月 ｜ 刚 ｜ 拿 ｜ 阿拉木图 ｜ 室内 ｜ 冠军 ｜ 随后 ｜ 在 ｜ 维也纳 ｜ 进 ｜ 了 ｜ 四 ｜ 强 ｜ 再 ｜ 加上 ｜ 二零二零年 ｜ 年终 ｜ 冠军 ｜ 的 ｜ 经验 ｜ 我 ｜ 把 ｜ 他 ｜ 放 ｜ 在 ｜ 组 ｜ 内 ｜ 第二 ｜ 顺位 ｜ 但 ｜ 蒂亚福 ｜ 最近 ｜ 赢 ｜ 过 ｜ 他 ｜ 今年 ｜ 又 ｜ 输 ｜ 过 ｜ 科博利 ｜ 他 ｜ 需要 ｜ 在 ｜ 直接 ｜ 对话 ｜ 里 ｜ 守 ｜ 住 ｜ 这个 ｜ 位置"
+      }
+    },
+    {
+      "id": "bundle:8708c856d607e7823f734f28f67217eb95288a7a0c5aa379f148b37f05de1f51",
+      "text": "菲斯今年拿下巴塞罗那和辛辛那提，辛辛那提是他的首座大师赛冠军。他当然有爆发力。但这组里，他对兹维列夫、谢尔顿、霍达尔的总交锋都落后。我的判断是，有冲击力，出线仍排在谢尔顿之后。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 4,
+        "sub_ratio": 0.051,
+        "longest_deletion": 0,
+        "transcript": "菲斯今年拿下巴塞罗娜和辛希那提,辛希那提是她的首座大师在冠军。她当然有爆发力,但这组里,她对滋维列夫、谢尔顿、霍达尔的总交锋都落后。我的判断是,有冲击力,出现人排在谢尔顿之后。"
+      },
+      "polyphones": [
+        {
+          "index": 36,
+          "char": "发",
+          "word": "爆发力",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 63,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "correct",
+              "score": 0.34,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.235,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 15.647,
+        "cps": 4.98,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "菲斯 ｜ 今年 ｜ 拿下 ｜ 巴塞罗那 ｜ 和 ｜ 辛辛那提 ｜ 辛辛那提 ｜ 是 ｜ 他 ｜ 的 ｜ 首座 ｜ 大师 ｜ 赛 ｜ 冠军 ｜ 他 ｜ 当然 ｜ 有 ｜ 爆发力 ｜ 但 ｜ 这 ｜ 组 ｜ 里 ｜ 他 ｜ 对 ｜ 兹维列夫 ｜ 谢尔顿 ｜ 霍达尔 ｜ 的 ｜ 总 ｜ 交锋 ｜ 都 ｜ 落后 ｜ 我 ｜ 的 ｜ 判断 ｜ 是 ｜ 有 ｜ 冲击力 ｜ 出线 ｜ 仍 ｜ 排 ｜ 在 ｜ 谢尔顿 ｜ 之后"
+      }
+    },
+    {
+      "id": "bundle:913c050107f45398af7cd3640a42f5ee616ce1d85b7c818a7345ddd78ad3b615",
+      "text": "四强我选兹维列夫、谢尔顿、阿卡、梅德韦德夫。麦肯罗组最防霍达尔搅局，伦德尔组最防蒂亚福替换梅德韦德夫。这是结合交锋和近期状态的个人判断，不是四个人已经锁定出线。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 72,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.028,
+        "longest_deletion": 0,
+        "transcript": "四强我选择为列夫、谢尔顿、阿卡、梅德韦德夫、麦克罗祖罪坊霍达尔角局、伦德尔祖罪坊地亚福替换梅德韦德夫。这是结合交锋和近期状态的个人判断,不是四个人已经锁定出现。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 72,
+        "speech_s": 14.554,
+        "cps": 4.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四 ｜ 强 ｜ 我 ｜ 选 ｜ 兹维列夫 ｜ 谢尔顿 ｜ 阿卡 ｜ 梅德韦德夫 ｜ 麦肯罗 ｜ 组 ｜ 最 ｜ 防 ｜ 霍达尔 ｜ 搅局 ｜ 伦德尔 ｜ 组 ｜ 最 ｜ 防 ｜ 蒂亚福 ｜ 替换 ｜ 梅德韦德夫 ｜ 这是 ｜ 结合 ｜ 交锋 ｜ 和 ｜ 近期 ｜ 状态 ｜ 的 ｜ 个人 ｜ 判断 ｜ 不是 ｜ 四个 ｜ 人 ｜ 已经 ｜ 锁定 ｜ 出线"
+      }
+    },
+    {
+      "id": "bundle:a75efa4dcd59ef9d25ef8332a9f6ad1be1bacf057d3b64274ce3eb644049830e",
+      "text": "谢尔顿今年四冠，美网和巴黎都进了决赛。巴黎刚输给阿卡，说明他有竞争力，也说明最后一步还没跨过。去年年终三战全负，所以我选他出线，依据是今年的提升，不是已经证明的年终表现。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 76,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "谢尔顿今年四冠,梅网和巴黎都进了决赛。巴黎刚输给阿卡,说明他有竞争力,也说明最后一步还没跨过。去年年中三战全赴,所以我选他出现,依据是今年的提升,不是已经证明的年中表现。"
+      },
+      "polyphones": [
+        {
+          "index": 42,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": -0.045,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 76,
+        "speech_s": 14.911,
+        "cps": 5.1,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "谢尔顿 ｜ 今年 ｜ 四 ｜ 冠 ｜ 美 ｜ 网 ｜ 和 ｜ 巴黎 ｜ 都 ｜ 进 ｜ 了 ｜ 决赛 ｜ 巴黎 ｜ 刚 ｜ 输 ｜ 给 ｜ 阿卡 ｜ 说明 ｜ 他 ｜ 有 ｜ 竞争力 ｜ 也 ｜ 说明 ｜ 最后 ｜ 一 ｜ 步 ｜ 还 ｜ 没 ｜ 跨过 ｜ 去年年终 ｜ 三 ｜ 战 ｜ 全 ｜ 负 ｜ 所以 ｜ 我 ｜ 选 ｜ 他 ｜ 出线 ｜ 依据 ｜ 是 ｜ 今年 ｜ 的 ｜ 提升 ｜ 不是 ｜ 已经 ｜ 证明 ｜ 的 ｜ 年终 ｜ 表现"
+      }
+    },
+    {
+      "id": "bundle:bb387d8289f3ed7389589ea9fcc37587e76695f917175f9ee5e6f644ca847541",
+      "text": "梅德韦德夫对蒂亚福六比二，可最近三场输了两场，今年美网也输了。蒂亚福对科博利四比一，今年虽然输掉阿卡普尔科决赛，随后两次又都赢了。梅德韦德夫这个出线位，并不保险。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 73,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "梅德韦德夫对蒂亚福6比2,可最近三场输了两场,今年梅网也输了。蒂亚福对科博利4比1,今年虽然输掉阿卡普尔克决赛,随后两次又都赢了。梅德韦德夫这个出现位并不保险。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 73,
+        "speech_s": 13.304,
+        "cps": 5.49,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "梅德韦德夫 ｜ 对 ｜ 蒂亚福 ｜ 六比 ｜ 二 ｜ 可 ｜ 最近 ｜ 三场 ｜ 输 ｜ 了 ｜ 两场 ｜ 今年 ｜ 美 ｜ 网 ｜ 也 ｜ 输 ｜ 了 ｜ 蒂亚福 ｜ 对 ｜ 科博利 ｜ 四比一 ｜ 今年 ｜ 虽然 ｜ 输 ｜ 掉 ｜ 阿卡普尔科 ｜ 决赛 ｜ 随后 ｜ 两次 ｜ 又 ｜ 都 ｜ 赢 ｜ 了 ｜ 梅德韦德夫 ｜ 这个 ｜ 出线 ｜ 位 ｜ 并 ｜ 不 ｜ 保险"
+      }
+    },
+    {
+      "id": "bundle:e260b416d686c0cce2f7e6a37e90c331103b8f045c0172d7e1dbf51d3f905fb4",
+      "text": "蒂亚福今年在哈雷夺冠，辛辛那提进决赛，美网进四强。我最防他挤掉梅德韦德夫，因为今年美网直接赢过，而且对科博利总交锋四比一。我的排序仍是梅德韦德夫略前，但这个位置，远没有阿卡那一席稳。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 82,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "蒂亚福今年在哈雷朵冠、新西纳提近决赛、梅网近四抢。我对防他挤掉梅德维德夫,因为今年梅网直接赢过,而且对科博利总交锋4比1。我的排序仍是梅德维德夫掠钱,但这个位置远没有阿卡那一席稳。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 82,
+        "speech_s": 15.893,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "蒂亚福 ｜ 今年 ｜ 在 ｜ 哈雷 ｜ 夺冠 ｜ 辛辛那提 ｜ 进 ｜ 决赛 ｜ 美 ｜ 网 ｜ 进 ｜ 四 ｜ 强 ｜ 我 ｜ 最 ｜ 防 ｜ 他 ｜ 挤 ｜ 掉 ｜ 梅德韦德夫 ｜ 因为 ｜ 今年 ｜ 美 ｜ 网 ｜ 直接 ｜ 赢 ｜ 过 ｜ 而且 ｜ 对 ｜ 科博利 ｜ 总 ｜ 交锋 ｜ 四比一 ｜ 我 ｜ 的 ｜ 排序 ｜ 仍是 ｜ 梅德韦德夫 ｜ 略 ｜ 前 ｜ 但 ｜ 这个 ｜ 位置 ｜ 远 ｜ 没有 ｜ 阿卡那 ｜ 一 ｜ 席 ｜ 稳"
+      }
+    },
+    {
+      "id": "bundle:f3e8f2e47ce2f0ec63aedd2063055043d6a34456b3b8e50ae3802704316b6310",
+      "text": "霍达尔今年拿到马拉喀什冠军，还打进上海决赛。他已在硬帝赢过菲斯两次，不能因为初次参赛就低估。但对兹维列夫唯一一场输了，对谢尔顿还没打过；我看好他制造悬念，暂不把他放进四强。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 78,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "霍达尔今年拿到马拉卡斯冠军,还打进上海决赛。他已在印第赢国飞死两次,不能因为初次参赛就低估。但对梓维列夫唯一异常书了,对谢尔顿还没打过,我看好他制造悬念,暂不把他放进四墙。"
+      },
+      "polyphones": [
+        {
+          "index": 14,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.18,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        },
+        {
+          "index": 63,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.226,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 78,
+        "speech_s": 14.498,
+        "cps": 5.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "霍达尔 ｜ 今年 ｜ 拿 ｜ 到 ｜ 马拉喀什 ｜ 冠军 ｜ 还 ｜ 打 ｜ 进 ｜ 上海 ｜ 决赛 ｜ 他 ｜ 已 ｜ 在 ｜ 硬 ｜ 帝 ｜ 赢 ｜ 过 ｜ 菲斯 ｜ 两次 ｜ 不能 ｜ 因为 ｜ 初次 ｜ 参赛 ｜ 就 ｜ 低估 ｜ 但 ｜ 对 ｜ 兹维列夫 ｜ 唯一 ｜ 一 ｜ 场 ｜ 输 ｜ 了 ｜ 对 ｜ 谢尔顿 ｜ 还 ｜ 没 ｜ 打 ｜ 过 ｜ 我 ｜ 看好 ｜ 他 ｜ 制造 ｜ 悬念 ｜ 暂 ｜ 不 ｜ 把 ｜ 他 ｜ 放 ｜ 进 ｜ 四 ｜ 强"
+      }
+    },
+    {
+      "id": "bundle:f51934068fc9d86e77e33334f09eb63db54e9eb22190ce7a2dfeca7f72146430",
+      "text": "兹维列夫对谢尔顿六比零，对菲斯五比二。今年美网决赛，他又赢了谢尔顿。历史对位明显偏向兹维列夫，但美网是五盘赛，不能直接等同于年终的三盘赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "自卫列夫对谢尔顿 6比0,对菲斯5比2。今年美网决赛,他又赢了谢尔顿。历史对位明显偏向自卫列夫,但美网是五盘赛,不能直接等同于年终的三盘赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 12.254,
+        "cps": 5.06,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "兹维列夫 ｜ 对 ｜ 谢尔顿 ｜ 六比零 ｜ 对 ｜ 菲斯 ｜ 五比二 ｜ 今年 ｜ 美 ｜ 网 ｜ 决赛 ｜ 他 ｜ 又 ｜ 赢 ｜ 了 ｜ 谢尔顿 ｜ 历史 ｜ 对位 ｜ 明显 ｜ 偏向 ｜ 兹维列夫 ｜ 但 ｜ 美 ｜ 网 ｜ 是 ｜ 五盘 ｜ 赛 ｜ 不能 ｜ 直接 ｜ 等同 ｜ 于 ｜ 年终 ｜ 的 ｜ 三盘 ｜ 赛"
+      }
+    },
+    {
+      "id": "bundle:fb680b19d8b0aff515d31bad8c49680122f25c98a97bfbb6fd8e7d4519e16af0",
+      "text": "科博利拿下阿卡普尔科，还打进法网决赛。这些成绩证明他有资格站在这里。但法网是红土；到了都灵，主场支持也不能替他赢球。我把他列为搅局者，关键看能否把今年对梅德韦德夫的胜利，带到室内硬帝。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 83,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.012,
+        "longest_deletion": 0,
+        "transcript": "科博利拿下阿卡普尔科还打进法网决赛。这些成绩证明他有资格站在这里。但法网是宏土,到了都临,主场支持也不能替他赢球。我把它列为角局者,关键看能否把今年对梅德韦德夫的胜利带到室内应地。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "还",
+          "word": "还",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "unreliable",
+              "score": 0.882,
+              "confidence": null,
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 83,
+        "speech_s": 16.484,
+        "cps": 5.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "科博利 ｜ 拿下 ｜ 阿卡普尔科 ｜ 还 ｜ 打 ｜ 进 ｜ 法网 ｜ 决赛 ｜ 这些 ｜ 成绩 ｜ 证明 ｜ 他 ｜ 有 ｜ 资格 ｜ 站在这里 ｜ 但 ｜ 法网 ｜ 是 ｜ 红土 ｜ 到 ｜ 了 ｜ 都灵 ｜ 主场 ｜ 支持 ｜ 也 ｜ 不能 ｜ 替 ｜ 他 ｜ 赢 ｜ 球 ｜ 我 ｜ 把 ｜ 他 ｜ 列为 ｜ 搅局 ｜ 者 ｜ 关键 ｜ 看 ｜ 能否 ｜ 把 ｜ 今年 ｜ 对 ｜ 梅德韦德夫 ｜ 的 ｜ 胜利 ｜ 带 ｜ 到 ｜ 室内 ｜ 硬 ｜ 帝"
+      }
+    }
+  ]
+}

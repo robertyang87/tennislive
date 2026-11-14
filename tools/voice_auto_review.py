@@ -376,7 +376,7 @@ def review(outdir: Path, bundle: Path, *, model: str = "small", second_model: st
     identity["inventory_sha256"] = _file_sha(inventory_path)
     if _file_sha(bundle) != inventory.get("bundle_sha256"):
         raise SystemExit("小包和封存的配音库存不是同一份")
-    spec_paths = [ROOT / f"specs/{k}/{outdir.name}.json" for k in ("reels", "interviews")]
+    spec_paths = [ROOT / f"specs/{k}/{outdir.name}.json" for k in ("reels", "interviews", "explainers")]
     spec_paths.append(ROOT / f"src/tennislive/video/episodes/{outdir.name}.json")
     spec_path = next(p for p in spec_paths if p.is_file())
     spec = json.loads(spec_path.read_text("utf-8"))
