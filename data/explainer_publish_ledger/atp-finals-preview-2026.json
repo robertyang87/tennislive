@@ -5,9 +5,14 @@
     {
       "key": "pushplus:explainer:atp-finals-preview-2026:f67d77b10690f69b78d534ebd52fb231fd7fec3e2f436eb3a10ff6855628ffdf",
       "fingerprint": "f67d77b10690f69b78d534ebd52fb231fd7fec3e2f436eb3a10ff6855628ffdf",
-      "status": "uncertain",
+      "status": "rejected",
       "at": "2026-11-14T04:11:12Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/43555229396"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/43555229396",
+      "previous_status": "uncertain",
+      "failure_stage": "prepare_image_delivery before requests.post(URL)",
+      "message_post_attempted": false,
+      "reconciliation_evidence": "Actions 43555229396, send step 04:11:12: image mapping validation rejected before the sole message POST; src/tennislive/publish/pushplus.py lines 634-646.",
+      "reconciled_at": "2026-11-14T04:15:11.749103+00:00"
     }
   ]
 }
