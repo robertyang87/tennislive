@@ -16,7 +16,7 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/atp-finals-2026/atp-finals-p
     compatible_brands: isomiso2avc1mp41
     encoder         : Lavf61.7.103
   Duration: 00:05:21.63, start: 0.000000, bitrate: 1132 kb/s
-  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1440 [SAR 1:1 DAR 3:4], 1026 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1440, 1026 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
       Metadata:
         handler_name    : VideoHandler
         vendor_id       : [0][0][0][0]
@@ -27,100 +27,110 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/atp-finals-2026/atp-finals-p
         vendor_id       : [0][0][0][0]
 Stream mapping:
   Stream #0:0 -> #0:0 (h264 (native) -> wrapped_avframe (native))
-Press [q] to stop, [?] for help
 Output #0, null, to 'pipe:':
   Metadata:
     major_brand     : isom
     minor_version   : 512
     compatible_brands: isomiso2avc1mp41
     encoder         : Lavf61.7.103
-  Stream #0:0(und): Video: wrapped_avframe, yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1440 [SAR 1:1 DAR 3:4], q=2-31, 200 kb/s, 30 fps, 30 tbn (default)
+  Stream #0:0(und): Video: wrapped_avframe, yuvj420p(pc, bt470bg/unknown/unknown, progressive), 1080x1440, q=2-31, 200 kb/s, 30 fps, 30 tbn (default)
       Metadata:
         handler_name    : VideoHandler
         vendor_id       : [0][0][0][0]
         encoder         : Lavc61.19.101 wrapped_avframe
-frame=  205 fps=0.0 q=-0.0 size=N/A time=00:00:06.83 bitrate=N/A speed=13.6x
-frame=  509 fps=505 q=-0.0 size=N/A time=00:00:16.96 bitrate=N/A speed=16.8x
-frame=  866 fps=575 q=-0.0 size=N/A time=00:00:28.86 bitrate=N/A speed=19.2x
-frame= 1234 fps=615 q=-0.0 size=N/A time=00:00:41.13 bitrate=N/A speed=20.5x
-frame= 1578 fps=629 q=-0.0 size=N/A time=00:00:52.60 bitrate=N/A speed=  21x
-frame= 1923 fps=639 q=-0.0 size=N/A time=00:01:04.10 bitrate=N/A speed=21.3x
-frame= 2283 fps=650 q=-0.0 size=N/A time=00:01:16.10 bitrate=N/A speed=21.7x
-frame= 2686 fps=670 q=-0.0 size=N/A time=00:01:29.53 bitrate=N/A speed=22.3x
-[vf#0:0 @ 0x562faf619b40] Reconfiguring filter graph because video parameters changed to yuv420p(tv, bt709), 1080x1440
-[swscaler @ 0x7f9fc0015540] deprecated pixel format used, make sure you did set range correctly
-frame= 3047 fps=676 q=-0.0 size=N/A time=00:01:41.56 bitrate=N/A speed=22.5x
-frame= 3089 fps=616 q=-0.0 size=N/A time=00:01:42.96 bitrate=N/A speed=20.5x
-frame= 3163 fps=574 q=-0.0 size=N/A time=00:01:45.43 bitrate=N/A speed=19.1x
-frame= 3240 fps=539 q=-0.0 size=N/A time=00:01:48.00 bitrate=N/A speed=  18x
-frame= 3310 fps=508 q=-0.0 size=N/A time=00:01:50.33 bitrate=N/A speed=16.9x
-frame= 3370 fps=481 q=-0.0 size=N/A time=00:01:52.33 bitrate=N/A speed=  16x
-frame= 3439 fps=458 q=-0.0 size=N/A time=00:01:54.63 bitrate=N/A speed=15.3x
-frame= 3494 fps=436 q=-0.0 size=N/A time=00:01:56.46 bitrate=N/A speed=14.5x
-frame= 3562 fps=418 q=-0.0 size=N/A time=00:01:58.73 bitrate=N/A speed=13.9x
-frame= 3611 fps=400 q=-0.0 size=N/A time=00:02:00.36 bitrate=N/A speed=13.3x
-frame= 3650 fps=383 q=-0.0 size=N/A time=00:02:01.66 bitrate=N/A speed=12.8x
-frame= 3680 fps=367 q=-0.0 size=N/A time=00:02:02.66 bitrate=N/A speed=12.2x
-frame= 3709 fps=352 q=-0.0 size=N/A time=00:02:03.63 bitrate=N/A speed=11.7x
-frame= 3744 fps=339 q=-0.0 size=N/A time=00:02:04.80 bitrate=N/A speed=11.3x
-frame= 3771 fps=327 q=-0.0 size=N/A time=00:02:05.70 bitrate=N/A speed=10.9x
-frame= 3799 fps=316 q=-0.0 size=N/A time=00:02:06.63 bitrate=N/A speed=10.5x
-frame= 3840 fps=306 q=-0.0 size=N/A time=00:02:08.00 bitrate=N/A speed=10.2x
-frame= 3886 fps=298 q=-0.0 size=N/A time=00:02:09.53 bitrate=N/A speed=9.94x
-frame= 3944 fps=291 q=-0.0 size=N/A time=00:02:11.46 bitrate=N/A speed=9.72x
-frame= 3995 fps=285 q=-0.0 size=N/A time=00:02:13.16 bitrate=N/A speed=9.49x
-frame= 4055 fps=279 q=-0.0 size=N/A time=00:02:15.16 bitrate=N/A speed= 9.3x
-frame= 4112 fps=274 q=-0.0 size=N/A time=00:02:17.06 bitrate=N/A speed=9.12x
-frame= 4172 fps=269 q=-0.0 size=N/A time=00:02:19.06 bitrate=N/A speed=8.95x
-frame= 4229 fps=264 q=-0.0 size=N/A time=00:02:20.96 bitrate=N/A speed=8.79x
-frame= 4290 fps=259 q=-0.0 size=N/A time=00:02:23.00 bitrate=N/A speed=8.65x
-frame= 4345 fps=255 q=-0.0 size=N/A time=00:02:24.83 bitrate=N/A speed= 8.5x
-frame= 4392 fps=250 q=-0.0 size=N/A time=00:02:26.40 bitrate=N/A speed=8.35x
-frame= 4447 fps=247 q=-0.0 size=N/A time=00:02:28.23 bitrate=N/A speed=8.22x
-frame= 4509 fps=243 q=-0.0 size=N/A time=00:02:30.30 bitrate=N/A speed=8.11x
-frame= 4569 fps=240 q=-0.0 size=N/A time=00:02:32.30 bitrate=N/A speed=   8x
-frame= 4624 fps=237 q=-0.0 size=N/A time=00:02:34.13 bitrate=N/A speed=7.89x
-frame= 4687 fps=234 q=-0.0 size=N/A time=00:02:36.23 bitrate=N/A speed= 7.8x
-frame= 4753 fps=231 q=-0.0 size=N/A time=00:02:38.43 bitrate=N/A speed=7.71x
-frame= 4816 fps=229 q=-0.0 size=N/A time=00:02:40.53 bitrate=N/A speed=7.63x
-frame= 4878 fps=226 q=-0.0 size=N/A time=00:02:42.60 bitrate=N/A speed=7.55x
-frame= 4943 fps=224 q=-0.0 size=N/A time=00:02:44.76 bitrate=N/A speed=7.48x
-frame= 5002 fps=222 q=-0.0 size=N/A time=00:02:46.73 bitrate=N/A speed= 7.4x
-frame= 5054 fps=219 q=-0.0 size=N/A time=00:02:48.46 bitrate=N/A speed=7.31x
-frame= 5105 fps=217 q=-0.0 size=N/A time=00:02:50.16 bitrate=N/A speed=7.23x
-frame= 5156 fps=214 q=-0.0 size=N/A time=00:02:51.86 bitrate=N/A speed=7.15x
-frame= 5213 fps=212 q=-0.0 size=N/A time=00:02:53.76 bitrate=N/A speed=7.08x
-frame= 5271 fps=210 q=-0.0 size=N/A time=00:02:55.70 bitrate=N/A speed=7.02x
-frame= 5330 fps=209 q=-0.0 size=N/A time=00:02:57.66 bitrate=N/A speed=6.96x
-frame= 5381 fps=207 q=-0.0 size=N/A time=00:02:59.36 bitrate=N/A speed=6.89x
-frame= 5437 fps=205 q=-0.0 size=N/A time=00:03:01.23 bitrate=N/A speed=6.83x
-frame= 5502 fps=203 q=-0.0 size=N/A time=00:03:03.40 bitrate=N/A speed=6.78x
-frame= 5543 fps=201 q=-0.0 size=N/A time=00:03:04.76 bitrate=N/A speed=6.71x
-frame= 5579 fps=199 q=-0.0 size=N/A time=00:03:05.96 bitrate=N/A speed=6.63x
-frame= 5615 fps=197 q=-0.0 size=N/A time=00:03:07.16 bitrate=N/A speed=6.55x
-frame= 5661 fps=195 q=-0.0 size=N/A time=00:03:08.70 bitrate=N/A speed=6.49x
-frame= 5689 fps=192 q=-0.0 size=N/A time=00:03:09.63 bitrate=N/A speed=6.42x
-frame= 5724 fps=190 q=-0.0 size=N/A time=00:03:10.80 bitrate=N/A speed=6.35x
-frame= 5767 fps=189 q=-0.0 size=N/A time=00:03:12.23 bitrate=N/A speed=6.29x
-frame= 5802 fps=187 q=-0.0 size=N/A time=00:03:13.40 bitrate=N/A speed=6.23x
-frame= 5843 fps=185 q=-0.0 size=N/A time=00:03:14.76 bitrate=N/A speed=6.17x
-frame= 5890 fps=184 q=-0.0 size=N/A time=00:03:16.33 bitrate=N/A speed=6.12x
-frame= 5943 fps=183 q=-0.0 size=N/A time=00:03:18.13 bitrate=N/A speed=6.08x
-frame= 5997 fps=181 q=-0.0 size=N/A time=00:03:19.90 bitrate=N/A speed=6.05x
-[vf#0:0 @ 0x562faf619b40] Reconfiguring filter graph because video parameters changed to yuvj420p(pc, bt470bg), 1080x1440
-frame= 6181 fps=184 q=-0.0 size=N/A time=00:03:26.03 bitrate=N/A speed=6.14x
-frame= 6504 fps=191 q=-0.0 size=N/A time=00:03:36.80 bitrate=N/A speed=6.36x
-frame= 6733 fps=195 q=-0.0 size=N/A time=00:03:44.43 bitrate=N/A speed=6.49x
-frame= 6956 fps=198 q=-0.0 size=N/A time=00:03:51.86 bitrate=N/A speed=6.61x
-frame= 7180 fps=202 q=-0.0 size=N/A time=00:03:59.30 bitrate=N/A speed=6.73x
-frame= 7352 fps=204 q=-0.0 size=N/A time=00:04:05.06 bitrate=N/A speed= 6.8x
-frame= 7619 fps=208 q=-0.0 size=N/A time=00:04:13.96 bitrate=N/A speed=6.95x
-frame= 7916 fps=214 q=-0.0 size=N/A time=00:04:23.86 bitrate=N/A speed=7.12x
-frame= 8206 fps=218 q=-0.0 size=N/A time=00:04:33.53 bitrate=N/A speed=7.28x
-frame= 8431 fps=221 q=-0.0 size=N/A time=00:04:41.03 bitrate=N/A speed=7.38x
-frame= 8713 fps=226 q=-0.0 size=N/A time=00:04:50.43 bitrate=N/A speed=7.53x
-frame= 8960 fps=229 q=-0.0 size=N/A time=00:04:58.66 bitrate=N/A speed=7.65x
-frame= 9274 fps=234 q=-0.0 size=N/A time=00:05:09.13 bitrate=N/A speed=7.81x
-frame= 9550 fps=238 q=-0.0 size=N/A time=00:05:18.33 bitrate=N/A speed=7.94x
-[out#0/null @ 0x562faf616100] video:4146KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
-frame= 9649 fps=240 q=-0.0 Lsize=N/A time=00:05:21.63 bitrate=N/A speed=7.99x
+frame=  138 fps=0.0 q=-0.0 size=N/A time=00:00:04.60 bitrate=N/A speed= 9.2x
+frame=  380 fps=380 q=-0.0 size=N/A time=00:00:12.66 bitrate=N/A speed=12.7x
+frame=  607 fps=405 q=-0.0 size=N/A time=00:00:20.23 bitrate=N/A speed=13.5x
+frame=  859 fps=429 q=-0.0 size=N/A time=00:00:28.63 bitrate=N/A speed=14.3x
+frame= 1146 fps=458 q=-0.0 size=N/A time=00:00:38.23 bitrate=N/A speed=15.3x
+frame= 1461 fps=487 q=-0.0 size=N/A time=00:00:48.70 bitrate=N/A speed=16.2x
+frame= 1732 fps=495 q=-0.0 size=N/A time=00:00:57.73 bitrate=N/A speed=16.5x
+frame= 1933 fps=483 q=-0.0 size=N/A time=00:01:04.43 bitrate=N/A speed=16.1x
+frame= 2253 fps=500 q=-0.0 size=N/A time=00:01:15.10 bitrate=N/A speed=16.7x
+frame= 2520 fps=504 q=-0.0 size=N/A time=00:01:24.00 bitrate=N/A speed=16.8x
+frame= 2818 fps=512 q=-0.0 size=N/A time=00:01:33.93 bitrate=N/A speed=17.1x
+frame= 3008 fps=501 q=-0.0 size=N/A time=00:01:40.26 bitrate=N/A speed=16.7x
+[vf#0:0 @ 0x55f79fde6440] Reconfiguring filter graph because video parameters changed to yuv420p(tv, bt709), 1080x1440
+[swscaler @ 0x7f4174014e00] deprecated pixel format used, make sure you did set range correctly
+frame= 3073 fps=472 q=-0.0 size=N/A time=00:01:42.43 bitrate=N/A speed=15.7x
+frame= 3112 fps=444 q=-0.0 size=N/A time=00:01:43.73 bitrate=N/A speed=14.8x
+frame= 3144 fps=419 q=-0.0 size=N/A time=00:01:44.80 bitrate=N/A speed=  14x
+frame= 3171 fps=396 q=-0.0 size=N/A time=00:01:45.70 bitrate=N/A speed=13.2x
+frame= 3196 fps=375 q=-0.0 size=N/A time=00:01:46.53 bitrate=N/A speed=12.5x
+frame= 3220 fps=357 q=-0.0 size=N/A time=00:01:47.33 bitrate=N/A speed=11.9x
+frame= 3246 fps=341 q=-0.0 size=N/A time=00:01:48.20 bitrate=N/A speed=11.4x
+frame= 3272 fps=327 q=-0.0 size=N/A time=00:01:49.06 bitrate=N/A speed=10.9x
+frame= 3297 fps=313 q=-0.0 size=N/A time=00:01:49.90 bitrate=N/A speed=10.4x
+frame= 3327 fps=302 q=-0.0 size=N/A time=00:01:50.90 bitrate=N/A speed=10.1x
+frame= 3366 fps=292 q=-0.0 size=N/A time=00:01:52.20 bitrate=N/A speed=9.74x
+frame= 3414 fps=284 q=-0.0 size=N/A time=00:01:53.80 bitrate=N/A speed=9.47x
+frame= 3476 fps=278 q=-0.0 size=N/A time=00:01:55.86 bitrate=N/A speed=9.25x
+frame= 3542 fps=272 q=-0.0 size=N/A time=00:01:58.06 bitrate=N/A speed=9.06x
+frame= 3603 fps=266 q=-0.0 size=N/A time=00:02:00.10 bitrate=N/A speed=8.88x
+frame= 3664 fps=261 q=-0.0 size=N/A time=00:02:02.13 bitrate=N/A speed=8.71x
+frame= 3714 fps=256 q=-0.0 size=N/A time=00:02:03.80 bitrate=N/A speed=8.52x
+frame= 3769 fps=251 q=-0.0 size=N/A time=00:02:05.63 bitrate=N/A speed=8.36x
+frame= 3814 fps=246 q=-0.0 size=N/A time=00:02:07.13 bitrate=N/A speed=8.19x
+frame= 3865 fps=241 q=-0.0 size=N/A time=00:02:08.83 bitrate=N/A speed=8.04x
+frame= 3917 fps=237 q=-0.0 size=N/A time=00:02:10.56 bitrate=N/A speed= 7.9x
+frame= 3979 fps=234 q=-0.0 size=N/A time=00:02:12.63 bitrate=N/A speed=7.79x
+frame= 4035 fps=230 q=-0.0 size=N/A time=00:02:14.50 bitrate=N/A speed=7.67x
+frame= 4072 fps=226 q=-0.0 size=N/A time=00:02:15.73 bitrate=N/A speed=7.53x
+frame= 4118 fps=222 q=-0.0 size=N/A time=00:02:17.26 bitrate=N/A speed=7.41x
+frame= 4176 fps=219 q=-0.0 size=N/A time=00:02:19.20 bitrate=N/A speed=7.31x
+frame= 4231 fps=217 q=-0.0 size=N/A time=00:02:21.03 bitrate=N/A speed=7.22x
+frame= 4277 fps=213 q=-0.0 size=N/A time=00:02:22.56 bitrate=N/A speed=7.12x
+frame= 4314 fps=210 q=-0.0 size=N/A time=00:02:23.80 bitrate=N/A speed=   7x
+frame= 4376 fps=208 q=-0.0 size=N/A time=00:02:25.86 bitrate=N/A speed=6.93x
+frame= 4434 fps=206 q=-0.0 size=N/A time=00:02:27.80 bitrate=N/A speed=6.86x
+frame= 4492 fps=204 q=-0.0 size=N/A time=00:02:29.73 bitrate=N/A speed=6.79x
+frame= 4542 fps=201 q=-0.0 size=N/A time=00:02:31.40 bitrate=N/A speed=6.72x
+frame= 4600 fps=200 q=-0.0 size=N/A time=00:02:33.33 bitrate=N/A speed=6.65x
+frame= 4658 fps=198 q=-0.0 size=N/A time=00:02:35.26 bitrate=N/A speed=6.59x
+frame= 4719 fps=196 q=-0.0 size=N/A time=00:02:37.30 bitrate=N/A speed=6.54x
+frame= 4773 fps=194 q=-0.0 size=N/A time=00:02:39.10 bitrate=N/A speed=6.48x
+frame= 4837 fps=193 q=-0.0 size=N/A time=00:02:41.23 bitrate=N/A speed=6.44x
+frame= 4906 fps=192 q=-0.0 size=N/A time=00:02:43.53 bitrate=N/A speed= 6.4x
+frame= 4971 fps=191 q=-0.0 size=N/A time=00:02:45.70 bitrate=N/A speed=6.36x
+frame= 5018 fps=189 q=-0.0 size=N/A time=00:02:47.26 bitrate=N/A speed= 6.3x
+frame= 5079 fps=188 q=-0.0 size=N/A time=00:02:49.30 bitrate=N/A speed=6.26x
+frame= 5129 fps=186 q=-0.0 size=N/A time=00:02:50.96 bitrate=N/A speed= 6.2x
+frame= 5173 fps=184 q=-0.0 size=N/A time=00:02:52.43 bitrate=N/A speed=6.15x
+frame= 5210 fps=182 q=-0.0 size=N/A time=00:02:53.66 bitrate=N/A speed=6.08x
+frame= 5252 fps=181 q=-0.0 size=N/A time=00:02:55.06 bitrate=N/A speed=6.03x
+frame= 5287 fps=179 q=-0.0 size=N/A time=00:02:56.23 bitrate=N/A speed=5.96x
+frame= 5319 fps=177 q=-0.0 size=N/A time=00:02:57.30 bitrate=N/A speed= 5.9x
+frame= 5360 fps=175 q=-0.0 size=N/A time=00:02:58.66 bitrate=N/A speed=5.85x
+frame= 5403 fps=174 q=-0.0 size=N/A time=00:03:00.10 bitrate=N/A speed= 5.8x
+frame= 5443 fps=172 q=-0.0 size=N/A time=00:03:01.43 bitrate=N/A speed=5.75x
+frame= 5488 fps=171 q=-0.0 size=N/A time=00:03:02.93 bitrate=N/A speed= 5.7x
+frame= 5539 fps=170 q=-0.0 size=N/A time=00:03:04.63 bitrate=N/A speed=5.67x
+frame= 5583 fps=169 q=-0.0 size=N/A time=00:03:06.10 bitrate=N/A speed=5.63x
+frame= 5639 fps=168 q=-0.0 size=N/A time=00:03:07.96 bitrate=N/A speed= 5.6x
+frame= 5681 fps=167 q=-0.0 size=N/A time=00:03:09.36 bitrate=N/A speed=5.56x
+frame= 5735 fps=166 q=-0.0 size=N/A time=00:03:11.16 bitrate=N/A speed=5.53x
+frame= 5788 fps=165 q=-0.0 size=N/A time=00:03:12.93 bitrate=N/A speed= 5.5x
+frame= 5842 fps=164 q=-0.0 size=N/A time=00:03:14.73 bitrate=N/A speed=5.47x
+frame= 5908 fps=164 q=-0.0 size=N/A time=00:03:16.93 bitrate=N/A speed=5.46x
+frame= 5959 fps=163 q=-0.0 size=N/A time=00:03:18.63 bitrate=N/A speed=5.43x
+frame= 6009 fps=162 q=-0.0 size=N/A time=00:03:20.30 bitrate=N/A speed= 5.4x
+[vf#0:0 @ 0x55f79fde6440] Reconfiguring filter graph because video parameters changed to yuvj420p(pc, bt470bg), 1080x1440
+frame= 6131 fps=163 q=-0.0 size=N/A time=00:03:24.36 bitrate=N/A speed=5.44x
+frame= 6359 fps=167 q=-0.0 size=N/A time=00:03:31.96 bitrate=N/A speed=5.57x
+frame= 6527 fps=169 q=-0.0 size=N/A time=00:03:37.56 bitrate=N/A speed=5.64x
+frame= 6671 fps=171 q=-0.0 size=N/A time=00:03:42.40 bitrate=N/A speed=5.69x
+frame= 6837 fps=173 q=-0.0 size=N/A time=00:03:47.90 bitrate=N/A speed=5.76x
+frame= 7042 fps=176 q=-0.0 size=N/A time=00:03:54.73 bitrate=N/A speed=5.86x
+frame= 7217 fps=178 q=-0.0 size=N/A time=00:04:00.56 bitrate=N/A speed=5.93x
+frame= 7345 fps=179 q=-0.0 size=N/A time=00:04:04.83 bitrate=N/A speed=5.96x
+frame= 7504 fps=180 q=-0.0 size=N/A time=00:04:10.13 bitrate=N/A speed=6.02x
+frame= 7762 fps=184 q=-0.0 size=N/A time=00:04:18.73 bitrate=N/A speed=6.15x
+frame= 7994 fps=188 q=-0.0 size=N/A time=00:04:26.46 bitrate=N/A speed=6.26x
+frame= 8249 fps=191 q=-0.0 size=N/A time=00:04:34.96 bitrate=N/A speed=6.38x
+frame= 8468 fps=194 q=-0.0 size=N/A time=00:04:42.30 bitrate=N/A speed=6.48x
+frame= 8746 fps=198 q=-0.0 size=N/A time=00:04:51.53 bitrate=N/A speed=6.61x
+frame= 8988 fps=202 q=-0.0 size=N/A time=00:04:59.60 bitrate=N/A speed=6.72x
+frame= 9233 fps=205 q=-0.0 size=N/A time=00:05:07.76 bitrate=N/A speed=6.83x
+frame= 9521 fps=209 q=-0.0 size=N/A time=00:05:17.36 bitrate=N/A speed=6.96x
+[out#0/null @ 0x55f79fd78d00] video:4146KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame= 9649 fps=210 q=-0.0 Lsize=N/A time=00:05:21.63 bitrate=N/A speed=7.01x

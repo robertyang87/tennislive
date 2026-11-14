@@ -83,14 +83,8 @@ for i,s in enumerate(S):
   bg=photo_bg(s).convert('RGBA');bg.alpha_composite(overlay);bg.convert('RGB').save(O/f'card_{i:02d}.jpg',quality=96)
  else:overlay.save(O/f'overlay_{i:02d}.png')
 (O/'timeline.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
-# Solo photographic cover, using the actual reviewed Paris final photograph.
-cover=photo('alcaraz',(1080,1440)).convert('RGBA');d=ImageDraw.Draw(cover)
-# Only the bottom title zone receives a light readability gradient.
-grad=Image.new('RGBA',cover.size);gd=ImageDraw.Draw(grad)
-for y in range(1000,1440):gd.line((0,y,1080,y),fill=(5,13,25,int(210*(y-1000)/440)))
-cover.alpha_composite(grad);cover.alpha_composite(logo,(62,45));d=ImageDraw.Draw(cover)
-text(d,(146,43),'网球时差',52,display=True);text(d,(62,1138),'ATP年终预测',92,bold=True);text(d,(62,1260),'冠军，我选阿卡',92,C['lime'],bold=True);text(d,(62,1375),'12组交锋 × 8人状态 · 2026.11.14',29)
-cover.convert('RGB').save(O/'poster.jpg',quality=96)
+# Reviewed eight-player WTA companion cover; see cover-revision.json and cover-update-source.py.
+assert (O/'poster.jpg').is_file(), 'Prepare reviewed poster.jpg before rendering'
 if '--graphics-only' in sys.argv:sys.exit()
 def render(m):
  i=m['index'];s=S[i];dur=m['duration'];out=O/f'segment_{i:02d}.mp4'
