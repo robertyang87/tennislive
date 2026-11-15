@@ -1,0 +1,613 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "6b3334133ff7c25d8f98dff30c6aee1b8d89825aef2ebdad6b9a346adfe62b34",
+    "render_inputs_sha256": "7b9c94769feb0e30ac6b708e79792305a8a7897b9f1fe6cb7ce16f46d97dba00",
+    "spec_sha256": "dc5bedc2553c0c0817fee7e74330ab84590ce7fccfe75ce7b7d274dc4f265c7e",
+    "film_sha256": "1b9789fda48eaeb7476a7e26d56c1984ebcc810cc53d7b720ec846fadf7eb07a",
+    "inventory_sha256": "a35b9a7ac90eabdb9817e2cb02fa4a97f745dba935d2b2dbbad697f23e9bc60e"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-15T03:33:09+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:28854b9d2baecc9fa9838bd15ca01caa1bad8381e4c43aa04f4f7ca96e658fc1",
+      "audio_sha256": "25b530469ca4325786548dcdb52b3cac97cf10000130f3833f17b3b24059e39b",
+      "pass": true,
+      "result_of": "bundle:28854b9d2baecc9fa9838bd15ca01caa1bad8381e4c43aa04f4f7ca96e658fc1"
+    },
+    {
+      "id": "bundle:3c2045fb07f7f0be8427e150dcdc12a79b50f58c9f6f00001aa7257053b6fa65",
+      "audio_sha256": "28960f5f315663ee6700bebe130218a354d763a0833753f6d9f555d0b6bf211f",
+      "pass": true,
+      "result_of": "bundle:3c2045fb07f7f0be8427e150dcdc12a79b50f58c9f6f00001aa7257053b6fa65"
+    },
+    {
+      "id": "bundle:4e9bc6893609f621b91cdcfd897bc814b8b157c3bdfc7a2116a8ef78c7cec143",
+      "audio_sha256": "3793e63d74805b41960979470297849e0c11ae0bbd9f37dacc3cf372b932c077",
+      "pass": true,
+      "result_of": "bundle:4e9bc6893609f621b91cdcfd897bc814b8b157c3bdfc7a2116a8ef78c7cec143"
+    },
+    {
+      "id": "bundle:66a50e92586622de9cf147c3284d6bce9718e42927ba4ff2b899d07475f7a734",
+      "audio_sha256": "6644b73314a82581a00ee29ae4f28ac24b295aca114e4d6d946f892d7349c2f0",
+      "pass": true,
+      "result_of": "bundle:66a50e92586622de9cf147c3284d6bce9718e42927ba4ff2b899d07475f7a734"
+    },
+    {
+      "id": "bundle:6aaa554b886bc14a8bd0cfe9fdd96eb25a8770466e16e870f604a2c1e2a9a30b",
+      "audio_sha256": "8341380e6eb4e47eea7c5af4821b0e9c940991d5ce543e8e3036bde674e0c71b",
+      "pass": true,
+      "result_of": "bundle:6aaa554b886bc14a8bd0cfe9fdd96eb25a8770466e16e870f604a2c1e2a9a30b"
+    },
+    {
+      "id": "bundle:6c31949a84a5cef79ccb69137ae5864370dd4ed71422b82f86f61aff6fcde8b8",
+      "audio_sha256": "1d733de99296e0a0d047a3246eed22e94156593ebe4e77386151deddbcfae296",
+      "pass": true,
+      "result_of": "bundle:6c31949a84a5cef79ccb69137ae5864370dd4ed71422b82f86f61aff6fcde8b8"
+    },
+    {
+      "id": "bundle:8e2b51739158ddb39af759cd6932f9889db413c4bc7e7dc031b502d99782f1e6",
+      "audio_sha256": "5f89292dacc1c441d256c58b1ccb83aef5f69f77a21cc9b2d46badb41b3981af",
+      "pass": true,
+      "result_of": "bundle:8e2b51739158ddb39af759cd6932f9889db413c4bc7e7dc031b502d99782f1e6"
+    },
+    {
+      "id": "bundle:a2049b3ea93bc10b804b86e30e56de19eb81320722be04fa82ddb1bfac89e6bb",
+      "audio_sha256": "daea1d05b857885350ca24adf0cd19b6530ac67f2021c36b7bcb3bb52bdeaa4e",
+      "pass": true,
+      "result_of": "bundle:a2049b3ea93bc10b804b86e30e56de19eb81320722be04fa82ddb1bfac89e6bb"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "a9eb311e942fc17fb41b44df63d3436c00c9679d1b119829b6bd8a43712a9dd9",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:d07e189a7b904a67daeb6e5ca32bf5e1b87673b1ce2119ceeb3a06d9c4715fbe",
+      "audio_sha256": "4e2135c571088086b2e3157b5d9a6048c4c29d2e10d3f139257ea59f4ea7704e",
+      "pass": true,
+      "result_of": "bundle:d07e189a7b904a67daeb6e5ca32bf5e1b87673b1ce2119ceeb3a06d9c4715fbe"
+    },
+    {
+      "id": "bundle:e3046b914700060214f7ebc38dc4ced843b4ff8bab39a27917e4a8349887a4ca",
+      "audio_sha256": "bd451fc8b8f06af297d6dd3a9b3688bcc45f9c180fccd3a45ebc64fec73b0426",
+      "pass": true,
+      "result_of": "bundle:e3046b914700060214f7ebc38dc4ced843b4ff8bab39a27917e4a8349887a4ca"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "3793e63d74805b41960979470297849e0c11ae0bbd9f37dacc3cf372b932c077",
+      "pass": true,
+      "result_of": "bundle:4e9bc6893609f621b91cdcfd897bc814b8b157c3bdfc7a2116a8ef78c7cec143"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "28960f5f315663ee6700bebe130218a354d763a0833753f6d9f555d0b6bf211f",
+      "pass": true,
+      "result_of": "bundle:3c2045fb07f7f0be8427e150dcdc12a79b50f58c9f6f00001aa7257053b6fa65"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "daea1d05b857885350ca24adf0cd19b6530ac67f2021c36b7bcb3bb52bdeaa4e",
+      "pass": true,
+      "result_of": "bundle:a2049b3ea93bc10b804b86e30e56de19eb81320722be04fa82ddb1bfac89e6bb"
+    },
+    {
+      "id": "voice_05.mp3",
+      "audio_sha256": "8341380e6eb4e47eea7c5af4821b0e9c940991d5ce543e8e3036bde674e0c71b",
+      "pass": true,
+      "result_of": "bundle:6aaa554b886bc14a8bd0cfe9fdd96eb25a8770466e16e870f604a2c1e2a9a30b"
+    },
+    {
+      "id": "voice_07.mp3",
+      "audio_sha256": "bd451fc8b8f06af297d6dd3a9b3688bcc45f9c180fccd3a45ebc64fec73b0426",
+      "pass": true,
+      "result_of": "bundle:e3046b914700060214f7ebc38dc4ced843b4ff8bab39a27917e4a8349887a4ca"
+    },
+    {
+      "id": "voice_09.mp3",
+      "audio_sha256": "4e2135c571088086b2e3157b5d9a6048c4c29d2e10d3f139257ea59f4ea7704e",
+      "pass": true,
+      "result_of": "bundle:d07e189a7b904a67daeb6e5ca32bf5e1b87673b1ce2119ceeb3a06d9c4715fbe"
+    },
+    {
+      "id": "voice_11.mp3",
+      "audio_sha256": "1d733de99296e0a0d047a3246eed22e94156593ebe4e77386151deddbcfae296",
+      "pass": true,
+      "result_of": "bundle:6c31949a84a5cef79ccb69137ae5864370dd4ed71422b82f86f61aff6fcde8b8"
+    },
+    {
+      "id": "voice_13.mp3",
+      "audio_sha256": "25b530469ca4325786548dcdb52b3cac97cf10000130f3833f17b3b24059e39b",
+      "pass": true,
+      "result_of": "bundle:28854b9d2baecc9fa9838bd15ca01caa1bad8381e4c43aa04f4f7ca96e658fc1"
+    },
+    {
+      "id": "voice_15.mp3",
+      "audio_sha256": "5f89292dacc1c441d256c58b1ccb83aef5f69f77a21cc9b2d46badb41b3981af",
+      "pass": true,
+      "result_of": "bundle:8e2b51739158ddb39af759cd6932f9889db413c4bc7e7dc031b502d99782f1e6"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "6644b73314a82581a00ee29ae4f28ac24b295aca114e4d6d946f892d7349c2f0",
+      "pass": true,
+      "result_of": "bundle:66a50e92586622de9cf147c3284d6bce9718e42927ba4ff2b899d07475f7a734"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "a9eb311e942fc17fb41b44df63d3436c00c9679d1b119829b6bd8a43712a9dd9",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:28854b9d2baecc9fa9838bd15ca01caa1bad8381e4c43aa04f4f7ca96e658fc1",
+      "text": "决胜盘，双方十二个发球局全部保住，谁都没拿到破发点。冠军只能在抢七里争。最后，弗里茨拿下七比三。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 0,
+        "transcript": "决胜盘﹑双方十二个发球局全部保住﹑谁都没拿到破发点。冠军只能再抢七里征。最后,弗里茨拿下七里散。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 23,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.835,
+        "cps": 4.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决胜 ｜ 盘 ｜ 双方 ｜ 十二 ｜ 个 ｜ 发球局 ｜ 全部 ｜ 保住 ｜ 谁 ｜ 都 ｜ 没 ｜ 拿到 ｜ 破发点 ｜ 冠军 ｜ 只能 ｜ 在 ｜ 抢 ｜ 七 ｜ 里 ｜ 争 ｜ 最后 ｜ 弗里茨 ｜ 拿下 ｜ 七比三"
+      }
+    },
+    {
+      "id": "bundle:3c2045fb07f7f0be8427e150dcdc12a79b50f58c9f6f00001aa7257053b6fa65",
+      "text": "首轮轮空后，他用七比五、六比三击败诺里，迈过这周的第一关。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首轮轮空后,他用7比5、6比3击败诺里,卖过这周的第一关。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 5.224,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首轮 ｜ 轮空 ｜ 后 ｜ 他 ｜ 用 ｜ 七比五 ｜ 六比三 ｜ 击败 ｜ 诺里 ｜ 迈 ｜ 过 ｜ 这 ｜ 周 ｜ 的 ｜ 第一关"
+      }
+    },
+    {
+      "id": "bundle:4e9bc6893609f621b91cdcfd897bc814b8b157c3bdfc7a2116a8ef78c7cec143",
+      "text": "巴黎那一周，弗里茨握着两个赛点，最后却没能击败阿卡。一周之后，北京时间十一月十四日晚，他在斯德哥尔摩，赢得生涯首个室内冠军。这一周，他怎样走到这里？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 65,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "巴黎那一周,弗里茨握着两个赛典,最后却没能击败阿卡。一周之后,北京时间11月14日晚,他在斯德哥尔摩赢得生涯首个室内冠军。这一周,他怎样走到这里?"
+      },
+      "polyphones": [
+        {
+          "index": 52,
+          "char": "得",
+          "word": "赢得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 65,
+        "speech_s": 14.257,
+        "cps": 4.56,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "巴黎 ｜ 那 ｜ 一 ｜ 周 ｜ 弗里茨 ｜ 握 ｜ 着 ｜ 两个 ｜ 赛点 ｜ 最后 ｜ 却 ｜ 没 ｜ 能 ｜ 击败 ｜ 阿卡 ｜ 一周 ｜ 之后 ｜ 北京时间 ｜ 十一月 ｜ 十四日 ｜ 晚 ｜ 他 ｜ 在 ｜ 斯德哥尔摩 ｜ 赢得 ｜ 生涯 ｜ 首 ｜ 个 ｜ 室内 ｜ 冠军 ｜ 这 ｜ 一 ｜ 周 ｜ 他 ｜ 怎样 ｜ 走到这里"
+      }
+    },
+    {
+      "id": "bundle:66a50e92586622de9cf147c3284d6bce9718e42927ba4ff2b899d07475f7a734",
+      "text": "弗里茨制胜分二十二，蒂兰特三十五；非受迫失误二十一对三十六。这场决赛，你最记得哪一个关键分？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 41,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "弗里茨制声分二十二,帝兰特三十五,非受迫失误二十一对三十六。这场决赛,你最记得哪一个关键分。"
+      },
+      "polyphones": [
+        {
+          "index": 38,
+          "char": "得",
+          "word": "记得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "correct",
+              "score": 0.24,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 41,
+        "speech_s": 8.325,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "弗里茨 ｜ 制胜 ｜ 分 ｜ 二十二 ｜ 蒂兰特 ｜ 三十五 ｜ 非 ｜ 受 ｜ 迫 ｜ 失误 ｜ 二十一 ｜ 对 ｜ 三十六 ｜ 这 ｜ 场 ｜ 决赛 ｜ 你 ｜ 最 ｜ 记得 ｜ 哪 ｜ 一个 ｜ 关键 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:6aaa554b886bc14a8bd0cfe9fdd96eb25a8770466e16e870f604a2c1e2a9a30b",
+      "text": "半决赛再遇穆塞蒂。六比四、六比二，弗里茨用两盘争到最后一场的门票。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "半决赛在玉木赛地。6比4、6比2,弗里茨用两盘争到最后一场的门票。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.144,
+        "cps": 4.72,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 再 ｜ 遇 ｜ 穆塞蒂 ｜ 六比四 ｜ 六比二 ｜ 弗里茨 ｜ 用 ｜ 两盘 ｜ 争到 ｜ 最后 ｜ 一 ｜ 场 ｜ 的 ｜ 门票"
+      }
+    },
+    {
+      "id": "bundle:6c31949a84a5cef79ccb69137ae5864370dd4ed71422b82f86f61aff6fcde8b8",
+      "text": "五比四发球，蒂兰特来到盘点。弗里茨最后一拍反手下网，比赛进入决胜盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "伍比斯发球,蒂兰特来到盘点。弗里茨最后一拍反手下往,比赛进入决胜盘。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.12,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五比四 ｜ 发球 ｜ 蒂兰特 ｜ 来到 ｜ 盘点 ｜ 弗里茨 ｜ 最后 ｜ 一 ｜ 拍 ｜ 反手 ｜ 下网 ｜ 比赛 ｜ 进入 ｜ 决胜盘"
+      }
+    },
+    {
+      "id": "bundle:8e2b51739158ddb39af759cd6932f9889db413c4bc7e7dc031b502d99782f1e6",
+      "text": "这是他第十二座巡回赛单打冠军，也是继华盛顿之后的赛季第二冠。巴黎的遗憾之后，他用奖杯结束这一周。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这是他第十二座巡迴赛单打冠军,也是季华盛顿之后的赛季第二冠。巴黎的遗憾之后,他用奖杯结束这一周。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 8.762,
+        "cps": 5.02,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这是 ｜ 他 ｜ 第十二座 ｜ 巡回 ｜ 赛 ｜ 单打 ｜ 冠军 ｜ 也是 ｜ 继 ｜ 华盛顿 ｜ 之后 ｜ 的 ｜ 赛季 ｜ 第二 ｜ 冠 ｜ 巴黎 ｜ 的 ｜ 遗憾 ｜ 之后 ｜ 他 ｜ 用 ｜ 奖杯 ｜ 结束 ｜ 这 ｜ 一周"
+      }
+    },
+    {
+      "id": "bundle:a2049b3ea93bc10b804b86e30e56de19eb81320722be04fa82ddb1bfac89e6bb",
+      "text": "四分之一决赛，鲁内赛前因腿伤退出，弗里茨直接晋级半决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 25,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.04,
+        "longest_deletion": 0,
+        "transcript": "四分之一决赛,卢内赛前阴腿伤退出,弗里茨直接进其半决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 25,
+        "speech_s": 4.835,
+        "cps": 5.17,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四分之一 ｜ 决赛 ｜ 鲁内 ｜ 赛 ｜ 前因 ｜ 腿 ｜ 伤 ｜ 退出 ｜ 弗里茨 ｜ 直接 ｜ 晋级 ｜ 半决赛"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:d07e189a7b904a67daeb6e5ca32bf5e1b87673b1ce2119ceeb3a06d9c4715fbe",
+      "text": "第二盘三比三，蒂兰特在弗里茨的发球局找到机会。十五比四十，这一分没能守住，局势就此改变。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘3比3,迪兰特在弗里茨的发球局找到机会。15比40,这一分没能守住,局势就此改变。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.925,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二 ｜ 盘 ｜ 三比三 ｜ 蒂兰特 ｜ 在 ｜ 弗里茨 ｜ 的 ｜ 发球局 ｜ 找到 ｜ 机会 ｜ 十五 ｜ 比 ｜ 四十 ｜ 这 ｜ 一 ｜ 分 ｜ 没 ｜ 能 ｜ 守 ｜ 住 ｜ 局势 ｜ 就此 ｜ 改变"
+      }
+    },
+    {
+      "id": "bundle:e3046b914700060214f7ebc38dc4ced843b4ff8bab39a27917e4a8349887a4ca",
+      "text": "决赛对面，是首次打进巡回赛决赛的蒂兰特。第一盘，弗里茨两次破发。第二个盘点，他用反手直线收下第一盘，六比二。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 47,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "绝赛对面,是首次打进熏回赛、绝赛的蒂兰特。第一盘,弗里茨两次破发。第二个盘点,他用反手直线收下第一盘,6比2。"
+      },
+      "polyphones": [
+        {
+          "index": 30,
+          "char": "发",
+          "word": "发",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 47,
+        "speech_s": 10.649,
+        "cps": 4.41,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对面 ｜ 是 ｜ 首次 ｜ 打 ｜ 进 ｜ 巡回 ｜ 赛 ｜ 决赛 ｜ 的 ｜ 蒂兰特 ｜ 第一盘 ｜ 弗里茨 ｜ 两次 ｜ 破发 ｜ 第二个 ｜ 盘点 ｜ 他 ｜ 用 ｜ 反手 ｜ 直线 ｜ 收 ｜ 下 ｜ 第一盘 ｜ 六比二"
+      }
+    }
+  ]
+}

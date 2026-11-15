@@ -1,0 +1,42 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-Z2MBVfYX1pA/Z2MBVfYX1pA.mp4",
+  "source_sha256": "7f20679c2d9854468c0f5761640f5c200637b308f3ffbb55c4b9b7e71c7bf3ea",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant (text/visual review; no human listening claimed)",
+  "status": "complete",
+  "reviewed_at": "2026-11-15T02:57:53.738540+00:00",
+  "reviewed_from": 147.0,
+  "reviewed_to": 172.0,
+  "foreground_english": [
+    {
+      "start": 153.92,
+      "end": 157.76,
+      "en": "Such a good return, which actually Norrie dealt with very well.",
+      "zh": "这次接发很好，诺里也应对得不错。"
+    },
+    {
+      "start": 157.76,
+      "end": 161.16,
+      "en": "He just then completely mishit the forehand.",
+      "zh": "只是随后那拍正手完全没打好。"
+    },
+    {
+      "start": 163.6,
+      "end": 167.72,
+      "en": "And ace number 13 sees him through the match.",
+      "zh": "第十三记直接得分，送他赢下比赛。"
+    },
+    {
+      "start": 167.72,
+      "end": 171.86,
+      "en": "And after what happened last week...",
+      "zh": "在经历上周那场比赛之后……"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/Z2MBVfYX1pA/small.en.json",
+    "data/source_asr/Z2MBVfYX1pA/medium.en.json"
+  ],
+  "review_basis": "整窗对照官方源字幕与两档逐词转写；决赛medium.en后段产生数字计数且漏句，拒绝该退化部分，用官方源字幕与small.en对应逐词结果互证，保留原始不改写。"
+}

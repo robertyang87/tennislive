@@ -2263,6 +2263,17 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
     print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}（{shape}）")
 
 
+def native_frame_rate(path: Path) -> tuple[str, float]:
+    """Read the decoder's frame clock, before any output-rate conversion."""
+    raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=r_frame_rate",
+              "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
+    rate = Fraction(raw)
+    if rate <= 0:
+        raise ReelError(f"源片帧率无效：{raw!r}")
+    return raw, float(rate)
+
+
 def resolve_fps(path: Path) -> tuple[str, float]:
     """普通源跟随原帧率，高帧率源按整数倍降到 24~30 fps。
 
@@ -5500,7 +5511,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     if seg.visual_end is not None:
         body = seg.visual_end - seg.start
         hold = seg.end - seg.visual_end + tail + .1
-        source_fps_expr, source_fps = resolve_fps(source)
+        source_fps_expr, source_fps = native_frame_rate(source)
         # Reset timestamps after cloning: some source frames carry zero duration,
         # so tpad alone repeats their PTS and a later fps filter drops the hold.
         chain = (f"trim=end_frame={math.ceil(body * source_fps - 1e-7)},"

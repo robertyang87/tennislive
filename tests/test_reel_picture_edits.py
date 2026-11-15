@@ -57,6 +57,32 @@ def test_hold_stops_end_card_but_preserves_same_original_audio(tmp_path,monkeypa
     assert render_inputs.project({'segments':[{'visual_end':.4}]})['segments'][0]['visual_end']==.4
 
 
+@pytest.mark.parametrize('rate', ['50', '60000/1001'])
+def test_high_fps_hold_keeps_source_time_and_original_audio(tmp_path, monkeypatch, rate):
+    monkeypatch.setattr(reel, 'VIDEO_W', 120)
+    monkeypatch.setattr(reel, 'VIDEO_H', 160)
+    monkeypatch.setattr(reel, 'PART_PRESET', 'ultrafast')
+    src = tmp_path / 'high-fps.mp4'
+    ff('-y', '-f', 'lavfi', '-i',
+       f'color=c=green:s=320x180:r={rate},'
+       'drawbox=color=blue:t=fill:enable=gte(t\\,0.24),'
+       'drawbox=color=red:t=fill:enable=gte(t\\,0.48)',
+       '-f', 'lavfi', '-i', 'sine=frequency=880:sample_rate=48000', '-t', '0.8',
+       '-c:v', 'libx264', '-c:a', 'aac', src)
+    seg = reel.parse_segments({'segments': [{
+        'start': 0, 'end': .8, 'cx': .5, 'narration': '', 'fit': 'full_source',
+        'visual_end': .4, '_visual_end_why': 'Hold blue before the red end card.'
+    }]}, {'': src}, '')[0]
+    hold = reel.cut_segment(src, seg, tmp_path / 'hold.mp4', 320, threads=1)
+    plain = reel.cut_segment(src, replace(seg, visual_end=None), tmp_path / 'plain.mp4', 320, threads=1)
+    assert frame(hold, .32)[80, 60, 2] > 150
+    assert frame(hold, .65)[80, 60, 2] > 150
+    assert frame(plain, .65)[80, 60, 0] > 150
+    def pcm(p):
+        return ff('-i', p, '-vn', '-f', 's16le', '-ac', '1', '-ar', '16000', '-')
+    assert pcm(hold) == pcm(plain)
+
+
 @pytest.mark.parametrize('edit',[{'trim_top':True},{'trim_top':15},{'trim_top':300},
     {'trim_top':16,'fit':'crop','_trim_top_why':'wrong mode'},
     {'visual_end':.5},{'visual_end':1,'_visual_end_why':'outside'},

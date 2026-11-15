@@ -1,0 +1,131 @@
+{
+  "reviewer": "current assistant",
+  "method": "full_source_contact_sheets_and_dense_timecoded_windows",
+  "external_model_pass_claimed": false,
+  "human_listening_claimed": false,
+  "cold_open": {
+    "start": 432.2,
+    "end": 451.5,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "433.2起记分条显示决胜盘6比6、小分6比3；完整发球与底线回合后，442秒记分翻为7比6、弗里茨举臂，439.74至451.22英文确认夺冠和室内首冠。",
+    "confidence": 0.98
+  },
+  "ending": {
+    "start": 432.2,
+    "end": 470.4,
+    "kind": "match_point",
+    "winner_visible": true,
+    "reason": "完整重放冷开场全部窗口，再到454至462秒网前握手，464至470秒换蓝外套手捧透明球形奖杯。470.44后品牌片尾全部排除。",
+    "confidence": 0.98
+  },
+  "cover": {
+    "same_match": true,
+    "subject": "Taylor Fritz",
+    "moment": "trophy presentation",
+    "wrong_or_old": false,
+    "reason": "赛事官网11月14日冠军报道原图5472×3648；蓝色外套和透明球形奖杯与源片464至470秒颁奖镜头一致，正面偏侧睁眼微笑，无转播截图。",
+    "confidence": 0.99,
+    "path": "assets/reel/fritz-stockholm-title-run-2026/trophy-official.jpg",
+    "sha256": "63c363e3abccdf87cc6bed8a5dce7400220c1cce899110f881fa8f1fd1d0fe32"
+  },
+  "contact_sheets": [
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/cCQS2fUyDGk-sheet.jpg",
+      "sha256": "55466d4ca7c048c563a97889d43239470a50f35305deb28bc9c1aedce85478ee"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/short-sheet.jpg",
+      "sha256": "f1db32592b97f4ae582c263f43f7d2dfe95212e9d4483051c5a061a3665ed6ed"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/ZzW_2QLpKb4-sheet.jpg",
+      "sha256": "e1cc8b2bb7a5f73fbc4d94847435f1be5b2c417ee42d5dae1b4165d01826adb7"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/Z2MBVfYX1pA-sheet.jpg",
+      "sha256": "39c250c4160c922436085e345e2da859d31f07405052253b7ec436b4cf661c38"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/final-mp-dense.jpg",
+      "sha256": "4d12137e62026bb9dd9a3b7cafe134e185ddad4454891e51c70f3b8f9cfb931d"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/final-set2-dense.jpg",
+      "sha256": "59836478741dec51b1ab82f89b313212a4b962a88425aa862548fe1676615ac7"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/final-turn-dense.jpg",
+      "sha256": "2b76e2d6c2383c3587fe6df22ea14a330264e8ee7d0b337d1993564cb84a9f80"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/r2-mp-dense.jpg",
+      "sha256": "bd73b6fafe84bd4957b3853451eb3733131cb0a1d769220314968ce9755ee556"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/final-first-dense.jpg",
+      "sha256": "87993d62c8cd91a9f0819a44a9489101be2a15e02f83f612d3365ed142665f03"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/tiebreak-dense.jpg",
+      "sha256": "4326d0a8668eb8d0d701afa2f5ae7b4f070fb7a2f5f19446b0252948fa8b68f7"
+    },
+    {
+      "path": "requests/reels/fritz-stockholm-title-run-2026/sf-mp-dense.jpg",
+      "sha256": "ce5c8603c0a6b30a99019763d35f602d59e941b2938589c7690febc35ccaffb9"
+    }
+  ],
+  "earlier_rounds": [
+    {
+      "source": "r2",
+      "round": "R2",
+      "opponent": "Cameron Norrie",
+      "start": 147.0,
+      "end": 172.0,
+      "evidence": "FRITZ/NORRIE记分条，末段第二盘5比3，发球直接得分至6比3，双方网前握手。",
+      "confidence": 0.98
+    },
+    {
+      "source": "sf",
+      "round": "SF",
+      "opponent": "Lorenzo Musetti",
+      "start": 246.94,
+      "end": 269.1,
+      "evidence": "FRITZ/MUSETTI记分条，第二盘5比2、40比0，完整发球与回合后6比2，网前握手。",
+      "confidence": 0.98
+    }
+  ],
+  "tactical_nodes": [
+    {
+      "source": "final",
+      "window": [
+        87.1,
+        97.86
+      ],
+      "score": "首盘5比2，第二个盘点",
+      "action": "弗里茨反手直线制胜拿下首盘",
+      "corroboration": "https://www.stockholmopen.se/en/tournament/nyheter/fritz-vann-singelturneringen"
+    },
+    {
+      "source": "final",
+      "window": [
+        203.78,
+        212.68
+      ],
+      "score": "第二盘3比3，弗里茨发球15比40",
+      "action": "弗里茨击球出界，蒂兰特破发至4比3",
+      "corroboration": "source captions 211.84: It is wide; score updates to3比4"
+    },
+    {
+      "source": "final",
+      "window": [
+        236.1,
+        256.02
+      ],
+      "score": "第二盘蒂兰特5比4发球盘点",
+      "action": "弗里茨反手下网，蒂兰特扳成一盘平",
+      "corroboration": "https://www.stockholmopen.se/en/tournament/nyheter/fritz-vann-singelturneringen"
+    }
+  ],
+  "audio_method_note": "决赛medium.en末段发生数字序列幻觉并漏掉真实英文，不使用该退化结果做字幕；原始文件完整保留，以官方源字幕与small.en逐词结果互证，未声称真人听审。"
+}
