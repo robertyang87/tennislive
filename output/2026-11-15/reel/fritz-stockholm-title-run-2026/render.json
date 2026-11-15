@@ -1,0 +1,123 @@
+{
+  "scoreboard_qc_sha256": "26a1c8cf5156a4700817cbdb1b09e1233c38ddf560ed83ebbbc0b6958c91b013",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "f395f26b94bbbaa95adcf667e503c15d5874dbdae9f7347f634a8dc977b53488",
+    "request_count": 11,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-fritz-stockholm-title-run-2026-f395f26b94bbbaa9",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-fritz-stockholm-title-run-2026-f395f26b94bbbaa9/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/43672016297"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 258.74,
+  "topbar_by_source": {
+    "final": {
+      "line1": "2026 ATP250 斯德哥尔摩 决赛",
+      "winner": "弗里茨",
+      "loser": "蒂兰特",
+      "result": "6-2 4-6 7-6(3)",
+      "source": "https://www.protennislive.com/posting/2026/429/mds.pdf"
+    },
+    "r2": {
+      "line1": "2026 ATP250 斯德哥尔摩 第二轮",
+      "winner": "弗里茨",
+      "loser": "诺里",
+      "result": "7-5 6-3",
+      "source": "https://www.protennislive.com/posting/2026/429/mds.pdf"
+    },
+    "sf": {
+      "line1": "2026 ATP250 斯德哥尔摩 半决赛",
+      "winner": "弗里茨",
+      "loser": "穆塞蒂",
+      "result": "6-4 6-2",
+      "source": "https://www.protennislive.com/posting/2026/429/mds.pdf"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP250 斯德哥尔摩 决赛",
+    "line2": "弗里茨 6-2 4-6 7-6(3) 蒂兰特",
+    "start": 1.2,
+    "end": 259.94
+  },
+  "film_seconds": 264.52,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 15.144,
+    "2": 6.12,
+    "4": 5.712,
+    "5": 7.032,
+    "7": 11.52,
+    "9": 8.808,
+    "11": 7.008,
+    "13": 10.728,
+    "15": 9.624,
+    "16": 9.192
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "7b9c94769feb0e30ac6b708e79792305a8a7897b9f1fe6cb7ce16f46d97dba00",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "fritz-stockholm-title-run-2026",
+    "received_at": "2026-11-15T03:21:49Z",
+    "artifact_ready_at": "2026-11-15T03:31:51Z",
+    "elapsed_seconds": 602.288,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "1b9789fda48eaeb7476a7e26d56c1984ebcc810cc53d7b720ec846fadf7eb07a",
+    "spec_sha256": "dc5bedc2553c0c0817fee7e74330ab84590ce7fccfe75ce7b7d274dc4f265c7e",
+    "run_id": "43672016297",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-15T03:25:47Z",
+        "run_id": "43672016297"
+      }
+    ],
+    "render_seconds": 364.288,
+    "pre_render_seconds": 238.0
+  },
+  "film_sha256": "1b9789fda48eaeb7476a7e26d56c1984ebcc810cc53d7b720ec846fadf7eb07a",
+  "film_bytes": 82422329,
+  "qc_attestation_sha256": "2e0c6ec315beda3504c2302e0b5572369d2eb27e090021aa715dec462dd15a2a",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-15T03:25:47Z",
+      "run_id": "43672016297"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-15T03:31:54Z",
+      "run_id": "43672016297"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-fritz-stockholm-title-run-2026/fritz-stockholm-title-run-2026.mp4",
+  "video_bytes": 82422329
+}
