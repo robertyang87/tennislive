@@ -1,0 +1,74 @@
+{
+  "slug": "fritz-stockholm-title-run-2026",
+  "checked_at": "2026-11-15T03:02:01Z",
+  "voice": "zh-CN-YunjianNeural",
+  "rate": "+6%",
+  "backend": "edge-tts",
+  "base_style": [
+    "",
+    ""
+  ],
+  "_why": "--check-narration 量到的真 TTS 时长，--dry-run 对「落在估算误差里」的段按旁白指纹认这份账（build_match_reel.narration_check_findings）",
+  "segments": {
+    "e9ac825d3a24e618": {
+      "segment": 2,
+      "spoken": 15.144,
+      "picture": 18.0
+    },
+    "3542dcf00b0bf330": {
+      "segment": 3,
+      "spoken": 6.12,
+      "picture": 9.0
+    },
+    "a0f2cfc5a0365c02": {
+      "segment": 5,
+      "spoken": 5.712,
+      "picture": 9.0
+    },
+    "b8b8d8b641ecacc3": {
+      "segment": 6,
+      "spoken": 7.032,
+      "picture": 10.0
+    },
+    "4eba7216be885640": {
+      "segment": 8,
+      "spoken": 11.52,
+      "picture": 18.0
+    },
+    "ec37950247c877db": {
+      "segment": 10,
+      "spoken": 8.808,
+      "picture": 11.0
+    },
+    "422c533c27b6f4ea": {
+      "segment": 12,
+      "spoken": 7.008,
+      "picture": 12.0
+    },
+    "43c490c5ae9d9e89": {
+      "segment": 14,
+      "spoken": 10.728,
+      "picture": 13.0
+    },
+    "b5b002cdc4932108": {
+      "segment": 16,
+      "spoken": 9.624,
+      "picture": 11.0
+    },
+    "8704e49e358912e7": {
+      "segment": 17,
+      "spoken": 9.192,
+      "picture": 12.0
+    }
+  },
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "f395f26b94bbbaa95adcf667e503c15d5874dbdae9f7347f634a8dc977b53488",
+    "request_count": 11,
+    "mode": "capture_export",
+    "strict_reused": false,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true
+  }
+}

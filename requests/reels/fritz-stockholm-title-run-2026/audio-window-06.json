@@ -1,0 +1,36 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-cCQS2fUyDGk/cCQS2fUyDGk.mp4",
+  "source_sha256": "5c5862679f053317d9478a30b7a6f4a1e3d33d918ef206443d908102d926da3f",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant (text/visual review; no human listening claimed)",
+  "status": "complete",
+  "reviewed_at": "2026-11-15T02:57:53.738540+00:00",
+  "reviewed_from": 246.94,
+  "reviewed_to": 269.1,
+  "foreground_english": [
+    {
+      "start": 257.36,
+      "end": 261.12,
+      "en": "It's been an absolute blitz from Fritz in Stockholm.",
+      "zh": "弗里茨在斯德哥尔摩打出凌厉一战。"
+    },
+    {
+      "start": 262.9,
+      "end": 265.8,
+      "en": "A real masterclass from the top seed.",
+      "zh": "头号种子打出了一场示范。"
+    },
+    {
+      "start": 267.8,
+      "end": 269.0,
+      "en": "And in double quick time.",
+      "zh": "而且赢得相当快。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/cCQS2fUyDGk/small.en.json",
+    "data/source_asr/cCQS2fUyDGk/medium.en.json"
+  ],
+  "review_basis": "整窗对照官方源字幕与两档逐词转写；决赛medium.en后段产生数字计数且漏句，拒绝该退化部分，用官方源字幕与small.en对应逐词结果互证，保留原始不改写。"
+}

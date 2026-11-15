@@ -1,0 +1,37 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ZzW_2QLpKb4/ZzW_2QLpKb4.mp4",
+  "source_sha256": "620a060f1135c4a2b4be3d7a94a1f64a9de8d23a7580d8913871064b00daf80b",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant (text/visual review; no human listening claimed)",
+  "status": "complete",
+  "reviewed_at": "2026-11-15T02:57:53.738540+00:00",
+  "reviewed_from": 432.2,
+  "reviewed_to": 451.5,
+  "foreground_english": [
+    {
+      "start": 439.74,
+      "end": 441.76,
+      "en": "Fritz has done it!",
+      "zh": "弗里茨做到了！"
+    },
+    {
+      "start": 442.84,
+      "end": 446.6,
+      "en": "Taylor Fritz is the champion in Stockholm in 2026.",
+      "zh": "弗里茨夺得斯德哥尔摩冠军。"
+    },
+    {
+      "start": 447.96,
+      "end": 451.22,
+      "en": "Finally, he has his first ever indoor title.",
+      "zh": "终于，他拿到生涯首个室内冠军。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/ZzW_2QLpKb4/small.en.json",
+    "data/source_asr/ZzW_2QLpKb4/medium.en.json"
+  ],
+  "review_basis": "整窗对照官方源字幕与两档逐词转写；决赛medium.en后段产生数字计数且漏句，拒绝该退化部分，用官方源字幕与small.en对应逐词结果互证，保留原始不改写。",
+  "source_captions_path": "requests/reels/fritz-stockholm-title-run-2026/source-captions.txt"
+}
