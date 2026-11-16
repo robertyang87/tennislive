@@ -1,0 +1,37 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-LBFTWj7CHMA/LBFTWj7CHMA.mp4",
+  "source_sha256": "4fca052f89212b511fe9cd28d1d08b44ecd453d219d634d948fcafed1df588b3",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: original source captions, small.en/medium.en cross-check and visual timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-16T04:16:46.824153+00:00",
+  "reviewed_from": 252.8,
+  "reviewed_to": 278.4,
+  "foreground_english": [
+    {
+      "start": 262.49,
+      "end": 267.9,
+      "en": "Mirra Andreeva writes the latest dazzling chapter",
+      "zh": "安德烈娃又写下了耀眼的一章，"
+    },
+    {
+      "start": 267.9,
+      "end": 272.3,
+      "en": "in her compelling storyline on debut at the WTA Finals, Indian Wells.",
+      "zh": "首次参赛，她的故事继续。"
+    },
+    {
+      "start": 272.3,
+      "end": 278.22,
+      "en": "She's through to the final at the expense of Jessica Pegula.",
+      "zh": "她击败佩古拉，闯进了决赛。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/LBFTWj7CHMA/small.en.json",
+    "data/source_asr/LBFTWj7CHMA/medium.en.json",
+    "requests/reels/andreeva-finals-title-run-2026/source-captions-LBFTWj7CHMA.txt"
+  ],
+  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames."
+}

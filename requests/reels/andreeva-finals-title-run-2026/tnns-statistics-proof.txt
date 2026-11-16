@@ -1,0 +1,38 @@
+stats	取这一场的统计	﻿2026-11-16T03:46:37.3019364Z ##[group]Run ARGS=()
+stats	取这一场的统计	2026-11-16T03:46:37.3019679Z [36;1mARGS=()[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3019916Z [36;1mIFS=',' read -ra WS <<< "$T_WHO"[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3020263Z [36;1mfor w in "${WS[@]}"; do [ -n "$w" ] && ARGS+=(--who "$w"); done[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3020613Z [36;1m[ -n "$T_MATCH_ID" ] && ARGS+=(--match-id "$T_MATCH_ID")[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3021185Z [36;1m[ -n "$T_DATE" ] && ARGS+=(--date "$T_DATE")[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3021498Z [36;1mpython tools/tnns_stats.py fetch "${ARGS[@]}"[0m
+stats	取这一场的统计	2026-11-16T03:46:37.3048874Z shell: /usr/bin/bash -e {0}
+stats	取这一场的统计	2026-11-16T03:46:37.3049152Z env:
+stats	取这一场的统计	2026-11-16T03:46:37.3049503Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+stats	取这一场的统计	2026-11-16T03:46:37.3049918Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+stats	取这一场的统计	2026-11-16T03:46:37.3050314Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+stats	取这一场的统计	2026-11-16T03:46:37.3050657Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+stats	取这一场的统计	2026-11-16T03:46:37.3050998Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+stats	取这一场的统计	2026-11-16T03:46:37.3051458Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+stats	取这一场的统计	2026-11-16T03:46:37.3051767Z   T_WHO: Andreeva,Svitolina
+stats	取这一场的统计	2026-11-16T03:46:37.3052035Z   T_MATCH_ID: 
+stats	取这一场的统计	2026-11-16T03:46:37.3052249Z   T_DATE: 2026-11-15
+stats	取这一场的统计	2026-11-16T03:46:37.3052462Z ##[endgroup]
+stats	取这一场的统计	2026-11-16T03:47:24.5770785Z [TNNS] 打开 https://tnnslive.com/
+stats	取这一场的统计	2026-11-16T03:47:24.5771585Z [TNNS] 页面内取 https://api.tnnslive.com/v1/matches?date=2026-11-15&web=true
+stats	取这一场的统计	2026-11-16T03:47:24.5772242Z [TNNS] 按 date=2026-11-15 取到 93128 字节、179 场
+stats	取这一场的统计	2026-11-16T03:47:24.5772647Z [TNNS] 认到这一场：id=76809010
+stats	取这一场的统计	2026-11-16T03:47:24.5773107Z [TNNS] 打开 https://tnnslive.com/match/76809010
+stats	取这一场的统计	2026-11-16T03:47:24.5773390Z 
+stats	取这一场的统计	2026-11-16T03:47:24.5773608Z === TNNS 单场统计 id=76809010 ===
+stats	取这一场的统计	2026-11-16T03:47:24.5773922Z hasExtendedStats: True
+stats	取这一场的统计	2026-11-16T03:47:24.5774320Z 制胜分       [10, 19]
+stats	取这一场的统计	2026-11-16T03:47:24.5774639Z 非受迫失误   [38, 29]
+stats	取这一场的统计	2026-11-16T03:47:24.5774970Z （选手顺序 ['Svitolina', 'Andreeva']）
+stats	取这一场的统计	2026-11-16T03:47:24.5775406Z   [Set 1] 制胜分 [6, 8]　非受迫失误 [18, 15]
+stats	取这一场的统计	2026-11-16T03:47:24.5775780Z   [Set 2] 制胜分 [4, 11]　非受迫失误 [20, 14]
+stats	取这一场的统计	2026-11-16T03:47:24.5776249Z   自证 winners：分盘合计 [10, 19] vs 全场 [10, 19]  ✅
+stats	取这一场的统计	2026-11-16T03:47:24.5776728Z   自证 ue：分盘合计 [38, 29] vs 全场 [38, 29]  ✅
+stats	取这一场的统计	2026-11-16T03:47:24.5776960Z 
+stats	取这一场的统计	2026-11-16T03:47:24.5777418Z 粘进 spec 的 `stats` 块（⚠️ a/b 跟 cover.matchup 的顺序，不是这里的顺序——CLAUDE.md「stats.a 跟的是 cover.matchup[0]」）：
+stats	取这一场的统计	2026-11-16T03:47:24.5778364Z   "winners": 10,  "ue": 38    ← Svitolina
+stats	取这一场的统计	2026-11-16T03:47:24.5778795Z   "winners": 19,  "ue": 29    ← Andreeva
