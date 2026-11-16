@@ -1,0 +1,137 @@
+{
+  "scoreboard_qc_sha256": "6c42713ffcfb59877b0e0d57f0958a34349530436a15a6d65195a58b94647f76",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "af7d8d860531d911144f052f0036dd752eecc5b4202a66c1d958107989b18efc",
+    "request_count": 11,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-andreeva-finals-title-run-2026-af7d8d860531d911",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-andreeva-finals-title-run-2026-af7d8d860531d911/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/43805919120"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 354.46,
+  "topbar_by_source": {
+    "final": {
+      "line1": "2026 WTA年终总决赛 决赛",
+      "winner": "米拉·安德烈耶娃",
+      "loser": "斯维托丽娜",
+      "result": "7-5 6-3",
+      "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C"
+    },
+    "rr1": {
+      "line1": "2026 WTA年终总决赛 小组赛",
+      "winner": "米拉·安德烈耶娃",
+      "loser": "斯维托丽娜",
+      "result": "6-4 6-0",
+      "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C"
+    },
+    "rr2": {
+      "line1": "2026 WTA年终总决赛 小组赛",
+      "winner": "米拉·安德烈耶娃",
+      "loser": "萨巴伦卡",
+      "result": "6-4 6-0",
+      "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C"
+    },
+    "rr3": {
+      "line1": "2026 WTA年终总决赛 小组赛",
+      "winner": "米拉·安德烈耶娃",
+      "loser": "施耐德",
+      "result": "6-2 6-1",
+      "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C"
+    },
+    "sf": {
+      "line1": "2026 WTA年终总决赛 半决赛",
+      "winner": "米拉·安德烈耶娃",
+      "loser": "佩古拉",
+      "result": "6-3 6-4",
+      "source": "https://api.wtatennis.com/tennis/tournaments/808/2026/matches?states=C"
+    }
+  },
+  "topbar": {
+    "line1": "2026 WTA年终总决赛 决赛",
+    "line2": "米拉·安德烈耶娃 7-5 6-3 斯维托丽娜",
+    "start": 1.2,
+    "end": 355.66
+  },
+  "film_seconds": 360.3,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 10.44,
+    "2": 7.8,
+    "4": 10.944,
+    "6": 9.408,
+    "8": 10.944,
+    "10": 14.76,
+    "12": 10.008,
+    "14": 7.848,
+    "16": 10.32,
+    "18": 7.968
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "2966d23071fd60838990c6b4fbb867ea38eccaf1673798d955c0c72714754428",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "andreeva-finals-title-run-2026",
+    "received_at": "2026-11-16T04:44:53Z",
+    "artifact_ready_at": "2026-11-16T04:58:32Z",
+    "elapsed_seconds": 819.295,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "addab11455544d6d518fc55f03f8aff5393bf30ef5126b4b515133df6480addb",
+    "spec_sha256": "346627b2a27c043b7b1a9702e4353ae055eed0d65d4b918d0e6946b10718cb39",
+    "run_id": "43805919120",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-16T04:49:20Z",
+        "run_id": "43805919120"
+      }
+    ],
+    "render_seconds": 552.295,
+    "pre_render_seconds": 267.0
+  },
+  "film_sha256": "addab11455544d6d518fc55f03f8aff5393bf30ef5126b4b515133df6480addb",
+  "film_bytes": 178245345,
+  "qc_attestation_sha256": "af45c25039996253dca9819c4a9bb187849a15f3f0a5bc26d23bc440c78805c2",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-16T04:49:20Z",
+      "run_id": "43805919120"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-16T04:58:37Z",
+      "run_id": "43805919120"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-andreeva-finals-title-run-2026/andreeva-finals-title-run-2026.mp4",
+  "video_bytes": 178245345
+}

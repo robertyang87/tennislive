@@ -1,0 +1,46 @@
+{
+  "reviewed_at": "2026-11-16T04:20:29.788114+00:00",
+  "reviewer": "current assistant",
+  "method": "manual fact-bound editorial and original-media visual audit; no human listening or external model claimed",
+  "editorial": {
+    "score": 92,
+    "threshold": 80,
+    "basis": [
+      "Official event/round/opponents/result/rankings/duration and road verified before copy.",
+      "Three group matches and semifinal have authentic footage with distinct source banners.",
+      "Two concrete shot outcomes from native frames: first-set baseline return out; championship overhead into net.",
+      "Final complete championship point, reaction and same-source trophy handover/lift; concrete closing question."
+    ]
+  },
+  "visual": {
+    "score": 94,
+    "threshold": 85,
+    "basis": [
+      "Full-source timecoded contact sheets plus selected-window dense images.",
+      "Cold open 264–278.5 replayed in full in final 239.7–299.",
+      "Official 4000px same-event trophy photo; fixed center court cropping.",
+      "Trophy segment 799.4–833.7, final authentic trophy frame held at833.48 before promo."
+    ]
+  },
+  "caption_acquisition": {
+    "run": "https://github.com/robertyang87/tennislive/actions/runs/43801562872",
+    "outcome": "Primary and semifinal native captions recovered from original YouTube URLs; third RR3 request hit HTTP429. One separate RR3 retry also429; no repeated retries. RR3 uses a complete earlier point ending246.6 before foreground commentary starts246.68; both model transcripts and actual dead-ball frames reviewed.",
+    "fallback_retry_run": "https://github.com/robertyang87/tennislive/actions/runs/43801880883"
+  },
+  "statistics_crosscheck": {
+    "winners": [
+      19,
+      10
+    ],
+    "ue": [
+      29,
+      38
+    ],
+    "sources": [
+      "Rallyher complete Match table",
+      "TNNS76809010 extended Match and sum of both sets"
+    ],
+    "tnns_run": "https://github.com/robertyang87/tennislive/actions/runs/43800082858"
+  },
+  "publication": "Pending formal render, QC, current-head CI, merge and automatic PushPlus receipt."
+}

@@ -1,0 +1,19 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-ZE-hW-Eti7I/ZE-hW-Eti7I.mp4",
+  "source_sha256": "2a63dbf3309c3057f9ae2d3f8f303673a23adb7d2e3d88c7cf9c419e7b613c56",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: original source captions, small.en/medium.en cross-check and visual timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-16T04:43:00.934069+00:00",
+  "reviewed_from": 219.8,
+  "reviewed_to": 246.6,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/ZE-hW-Eti7I/small.en.json",
+    "data/source_asr/ZE-hW-Eti7I/medium.en.json"
+  ],
+  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames.",
+  "no_foreground_english_reason": "仅完整比赛声、观众声与非词汇感叹；两档转写该窗均无实质英文句，下一句246.68开始，已排除。",
+  "name_normalization": "Same Mirra Andreeva source identity; canonical Chinese display name aligned to existing official headshot registry. No source audio or cut changed."
+}

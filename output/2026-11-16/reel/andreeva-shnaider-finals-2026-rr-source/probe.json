@@ -187,6 +187,64 @@
   "captions": null,
   "board": {
     "version": 1,
+    "fps": 5,
+    "t0": 219.8,
+    "frames": 51,
+    "scans": [
+      {
+        "box": [
+          90,
+          810,
+          550,
+          981
+        ],
+        "frames": 51,
+        "profiles": {
+          "wta": {
+            "present": 51,
+            "unresolved": 0,
+            "runs": [
+              [
+                1,
+                738,
+                738
+              ],
+              [
+                1,
+                714,
+                714
+              ],
+              [
+                1,
+                609,
+                609
+              ],
+              [
+                1,
+                515,
+                515
+              ],
+              [
+                1,
+                516,
+                516
+              ],
+              [
+                46,
+                515,
+                515
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "source_profile": "wta",
+    "source_sha256": "2a63dbf3309c3057f9ae2d3f8f303673a23adb7d2e3d88c7cf9c419e7b613c56",
+    "_scope": "仅此真实解码扫描区间校准自定义框，不代表全片或所选窗口已通过；正式渲染另以25fps量每个保留窗口的原生蒙版。"
+  },
+  "_previous_probe_board": {
+    "version": 1,
     "error": "WTA board present but native body height cannot be measured"
   }
 }

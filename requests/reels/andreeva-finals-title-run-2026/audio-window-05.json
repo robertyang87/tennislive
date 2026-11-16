@@ -1,0 +1,43 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-vprYQcJIDt4/vprYQcJIDt4.mp4",
+  "source_sha256": "b33417973a52cc6b8ee5f8bec12281b08552f3228de420ebeebb54a232d7332b",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: original source captions, small.en/medium.en cross-check and visual timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-16T04:43:00.932775+00:00",
+  "reviewed_from": 249.64,
+  "reviewed_to": 275.4,
+  "foreground_english": [
+    {
+      "start": 255.1,
+      "end": 260.3,
+      "en": "Mirra Andreeva punches her ticket to the semifinals",
+      "zh": "安德烈耶娃拿到了四强门票，"
+    },
+    {
+      "start": 260.3,
+      "end": 266.6,
+      "en": "at the FAGE WTA Finals, Indian Wells, with a breathtaking display.",
+      "zh": "在印第安韦尔斯打出惊艳表现。"
+    },
+    {
+      "start": 266.6,
+      "end": 270.2,
+      "en": "From four-one down in the opening set,",
+      "zh": "从首盘一比四落后开始，"
+    },
+    {
+      "start": 270.2,
+      "end": 275.15,
+      "en": "she won every single game, eleven in a row.",
+      "zh": "她赢下之后每一局，连赢十一局。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/vprYQcJIDt4/small.en.json",
+    "data/source_asr/vprYQcJIDt4/medium.en.json"
+  ],
+  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames.",
+  "name_normalization": "Same Mirra Andreeva source identity; canonical Chinese display name aligned to existing official headshot registry. No source audio or cut changed."
+}

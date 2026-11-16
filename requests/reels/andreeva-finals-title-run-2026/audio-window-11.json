@@ -1,0 +1,27 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-_yrgKY_y4yU/_yrgKY_y4yU.mp4",
+  "source_sha256": "3886a64b80696c1a55004efc388f48e23243f374a8395fd496d5938cd6990d8b",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: original source captions, small.en/medium.en cross-check and visual timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-16T04:43:00.935505+00:00",
+  "reviewed_from": 110.1,
+  "reviewed_to": 125.2,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/_yrgKY_y4yU/small.en.json",
+    "data/source_asr/_yrgKY_y4yU/medium.en.json",
+    "requests/reels/andreeva-finals-title-run-2026/source-captions-_yrgKY_y4yU.txt"
+  ],
+  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames.",
+  "no_foreground_english_reason": "仅保留完整盘点、观众反应与主裁例行报比分；按照“只是报比分”规则不造字幕，下一句评论125.20开始，已排除。",
+  "routine_score_call_exclusions": [
+    {
+      "start": 120.88,
+      "end": 125.2,
+      "reason": "Routine chair score call only; explicit score-only subtitle exception, source audio retained in full; no guessed verbatim transcription."
+    }
+  ],
+  "name_normalization": "Same Mirra Andreeva source identity; canonical Chinese display name aligned to existing official headshot registry. No source audio or cut changed."
+}

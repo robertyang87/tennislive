@@ -1,0 +1,646 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "47ec29b1a50e78c80c1104166245a14815035ea36ef622efeaf20c376619c1a4",
+    "render_inputs_sha256": "2966d23071fd60838990c6b4fbb867ea38eccaf1673798d955c0c72714754428",
+    "spec_sha256": "346627b2a27c043b7b1a9702e4353ae055eed0d65d4b918d0e6946b10718cb39",
+    "film_sha256": "addab11455544d6d518fc55f03f8aff5393bf30ef5126b4b515133df6480addb",
+    "inventory_sha256": "344a37340a38cc8184188e0548b54eb78d126380e60fd9d41fee87449f34060e"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-16T05:00:28+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:095fb1fdd61587d042c3636bc03c01f4b26b790474eb657f5c0616e7ee280efb",
+      "audio_sha256": "d2c5c8703f832d498591dfb87b41e89b7ca6514ddef17d7bbca5dc8921581077",
+      "pass": true,
+      "result_of": "bundle:095fb1fdd61587d042c3636bc03c01f4b26b790474eb657f5c0616e7ee280efb"
+    },
+    {
+      "id": "bundle:260aba2ab37383ff8c44e883879518b2bdfa9b8a4c79a8c8a197ad76cd571a0f",
+      "audio_sha256": "d9408b66d9459b934e9f195591567cc889dc38fd7a6b9e00dac8010f0a1370cf",
+      "pass": true,
+      "result_of": "bundle:260aba2ab37383ff8c44e883879518b2bdfa9b8a4c79a8c8a197ad76cd571a0f"
+    },
+    {
+      "id": "bundle:48ad4dcf1889121b8c5b1fc2184a900ec272dee614eb742b32bf79fd5356b97d",
+      "audio_sha256": "3dd67ce16c4d4b8389760552b77d6f4e67e0cf909b7aa842016c59829fcbbc7e",
+      "pass": true,
+      "result_of": "bundle:48ad4dcf1889121b8c5b1fc2184a900ec272dee614eb742b32bf79fd5356b97d"
+    },
+    {
+      "id": "bundle:9b593ad74d727bdc444c32ec55477117f174202fb758d09a0f55f7ff8c35640c",
+      "audio_sha256": "61e46f245ae67c43bec36d21268e021bc35595f34a4c3b7236e68b9b0ee06fa8",
+      "pass": true,
+      "result_of": "bundle:9b593ad74d727bdc444c32ec55477117f174202fb758d09a0f55f7ff8c35640c"
+    },
+    {
+      "id": "bundle:ab6f0cf2d78ef1ba170c27dfe1815e145356e7d4b08bd90b65ed023ef4c16f08",
+      "audio_sha256": "15e0ac0baaf343199c307eb717838f46f1b8dae8b5c97f95851ba9f22964cb4d",
+      "pass": true,
+      "result_of": "bundle:ab6f0cf2d78ef1ba170c27dfe1815e145356e7d4b08bd90b65ed023ef4c16f08"
+    },
+    {
+      "id": "bundle:adabf59413b287471f12e4606e73e714343785f95c7264f495ba75c55d5f02bd",
+      "audio_sha256": "59f4183b16b5bcd92e74493897f1d0cf1c5ea5191afbfd97eb9a78b665f55054",
+      "pass": true,
+      "result_of": "bundle:adabf59413b287471f12e4606e73e714343785f95c7264f495ba75c55d5f02bd"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "a9eb311e942fc17fb41b44df63d3436c00c9679d1b119829b6bd8a43712a9dd9",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:d9841032333e2b7604f17f735f241a5b3b51ce123c32b0d1bddba9409522a08d",
+      "audio_sha256": "ba534069983c133e142ad7594fbf6cd15cefca18385ba60ae46d3e2dd88c2232",
+      "pass": true,
+      "result_of": "bundle:d9841032333e2b7604f17f735f241a5b3b51ce123c32b0d1bddba9409522a08d"
+    },
+    {
+      "id": "bundle:df2ed8763533740eb036b2c5dba1632376f5076944b6da48f5d6f9f6cf7d3da4",
+      "audio_sha256": "574d55ec902aa846857fc95739a8f24d1f917c7f4a416161a7f13253c04fd451",
+      "pass": true,
+      "result_of": "bundle:df2ed8763533740eb036b2c5dba1632376f5076944b6da48f5d6f9f6cf7d3da4"
+    },
+    {
+      "id": "bundle:e7fd92383398e2111af4976e142b32318efd31d57f12babbfc631342155672f5",
+      "audio_sha256": "db90cd58595fcd5669e634d08d03896dbaa77a3a72f1fdfcc5844d7da2e03b65",
+      "pass": true,
+      "result_of": "bundle:e7fd92383398e2111af4976e142b32318efd31d57f12babbfc631342155672f5"
+    },
+    {
+      "id": "bundle:e9750f268ca39a5bbcbaf3ac31bddcb858175bb330e4c69e4f0fef3eb2d2010c",
+      "audio_sha256": "f6895e952f996c0df4175aa60e714ec667ea4c5783a3d8ec21e93c30f354db43",
+      "pass": true,
+      "result_of": "bundle:e9750f268ca39a5bbcbaf3ac31bddcb858175bb330e4c69e4f0fef3eb2d2010c"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "db90cd58595fcd5669e634d08d03896dbaa77a3a72f1fdfcc5844d7da2e03b65",
+      "pass": true,
+      "result_of": "bundle:e7fd92383398e2111af4976e142b32318efd31d57f12babbfc631342155672f5"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "f6895e952f996c0df4175aa60e714ec667ea4c5783a3d8ec21e93c30f354db43",
+      "pass": true,
+      "result_of": "bundle:e9750f268ca39a5bbcbaf3ac31bddcb858175bb330e4c69e4f0fef3eb2d2010c"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "ba534069983c133e142ad7594fbf6cd15cefca18385ba60ae46d3e2dd88c2232",
+      "pass": true,
+      "result_of": "bundle:d9841032333e2b7604f17f735f241a5b3b51ce123c32b0d1bddba9409522a08d"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "61e46f245ae67c43bec36d21268e021bc35595f34a4c3b7236e68b9b0ee06fa8",
+      "pass": true,
+      "result_of": "bundle:9b593ad74d727bdc444c32ec55477117f174202fb758d09a0f55f7ff8c35640c"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "d2c5c8703f832d498591dfb87b41e89b7ca6514ddef17d7bbca5dc8921581077",
+      "pass": true,
+      "result_of": "bundle:095fb1fdd61587d042c3636bc03c01f4b26b790474eb657f5c0616e7ee280efb"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "15e0ac0baaf343199c307eb717838f46f1b8dae8b5c97f95851ba9f22964cb4d",
+      "pass": true,
+      "result_of": "bundle:ab6f0cf2d78ef1ba170c27dfe1815e145356e7d4b08bd90b65ed023ef4c16f08"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "574d55ec902aa846857fc95739a8f24d1f917c7f4a416161a7f13253c04fd451",
+      "pass": true,
+      "result_of": "bundle:df2ed8763533740eb036b2c5dba1632376f5076944b6da48f5d6f9f6cf7d3da4"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "d9408b66d9459b934e9f195591567cc889dc38fd7a6b9e00dac8010f0a1370cf",
+      "pass": true,
+      "result_of": "bundle:260aba2ab37383ff8c44e883879518b2bdfa9b8a4c79a8c8a197ad76cd571a0f"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "59f4183b16b5bcd92e74493897f1d0cf1c5ea5191afbfd97eb9a78b665f55054",
+      "pass": true,
+      "result_of": "bundle:adabf59413b287471f12e4606e73e714343785f95c7264f495ba75c55d5f02bd"
+    },
+    {
+      "id": "voice_18.mp3",
+      "audio_sha256": "3dd67ce16c4d4b8389760552b77d6f4e67e0cf909b7aa842016c59829fcbbc7e",
+      "pass": true,
+      "result_of": "bundle:48ad4dcf1889121b8c5b1fc2184a900ec272dee614eb742b32bf79fd5356b97d"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "a9eb311e942fc17fb41b44df63d3436c00c9679d1b119829b6bd8a43712a9dd9",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:095fb1fdd61587d042c3636bc03c01f4b26b790474eb657f5c0616e7ee280efb",
+      "text": "半决赛面对佩古拉。先拿六比三，第二盘却一比三落后。她赢下随后六局中的五局，以六比四，把决赛门票拿到手。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 45,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.044,
+        "longest_deletion": 0,
+        "transcript": "班决在面对佩古拉。先拿6比3,第二盘却1比3落后。他赢下随后6局中的5局,以6比4把决在门票拿到手。"
+      },
+      "polyphones": [
+        {
+          "index": 22,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "misread",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "misread",
+              "score": -0.243,
+              "confidence": "low",
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "correct",
+              "score": 0.211,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 45,
+        "speech_s": 10.083,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 面对 ｜ 佩古拉 ｜ 先 ｜ 拿 ｜ 六比三 ｜ 第二 ｜ 盘 ｜ 却 ｜ 一 ｜ 比 ｜ 三落后 ｜ 她 ｜ 赢 ｜ 下 ｜ 随后 ｜ 六局 ｜ 中 ｜ 的 ｜ 五 ｜ 局 ｜ 以 ｜ 六比四 ｜ 把 ｜ 决赛 ｜ 门票 ｜ 拿 ｜ 到手"
+      }
+    },
+    {
+      "id": "bundle:260aba2ab37383ff8c44e883879518b2bdfa9b8a4c79a8c8a197ad76cd571a0f",
+      "text": "五比三来到对手发球局。第二个冠军点，这一分拿下，她就能以五战全胜结束这周。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "5比3来到对手发球局。第二个冠军点,这一分拿下,他就能以五战全胜结束这周。"
+      },
+      "polyphones": [
+        {
+          "index": 7,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 6.981,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五比三 ｜ 来到 ｜ 对手 ｜ 发球局 ｜ 第二个 ｜ 冠军 ｜ 点 ｜ 这 ｜ 一 ｜ 分 ｜ 拿下 ｜ 她 ｜ 就 ｜ 能 ｜ 以 ｜ 五 ｜ 战 ｜ 全胜 ｜ 结束 ｜ 这 ｜ 周"
+      }
+    },
+    {
+      "id": "bundle:48ad4dcf1889121b8c5b1fc2184a900ec272dee614eb742b32bf79fd5356b97d",
+      "text": "从对萨巴伦卡首盘一比四，到决赛首盘五比五。这周，你最记得她哪一次回应？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从对萨巴伦卡手盘1比4,到决赛手盘5比5。这周,你最记得他哪一次回应。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "得",
+          "word": "记得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.095,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 7.087,
+        "cps": 4.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 对 ｜ 萨巴伦卡 ｜ 首盘 ｜ 一比四 ｜ 到 ｜ 决赛 ｜ 首盘 ｜ 五比五 ｜ 这 ｜ 周 ｜ 你 ｜ 最 ｜ 记得 ｜ 她 ｜ 哪 ｜ 一次 ｜ 回应"
+      }
+    },
+    {
+      "id": "bundle:9b593ad74d727bdc444c32ec55477117f174202fb758d09a0f55f7ff8c35640c",
+      "text": "第三场，她面对替补出战的施耐德，六比二、六比一。三场全胜，她把一盘未丢的势头带进淘汰赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三场,他面对替不出战的施奈德6比2、6比1。三场全胜,他把一盘未丢的势头带进淘汰赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.526,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第三 ｜ 场 ｜ 她 ｜ 面对 ｜ 替补 ｜ 出战 ｜ 的 ｜ 施耐德 ｜ 六 ｜ 比 ｜ 二 ｜ 六 ｜ 比 ｜ 一 ｜ 三 ｜ 场 ｜ 全胜 ｜ 她 ｜ 把 ｜ 一 ｜ 盘 ｜ 未 ｜ 丢 ｜ 的 ｜ 势头 ｜ 带 ｜ 进 ｜ 淘汰赛"
+      }
+    },
+    {
+      "id": "bundle:ab6f0cf2d78ef1ba170c27dfe1815e145356e7d4b08bd90b65ed023ef4c16f08",
+      "text": "决赛又遇斯维托丽娜。首盘五比四发球，没能收下，被追成五比五。安德烈耶娃接着连拿两局；第二个盘点，底线相持中对手回球出界，她以七比五先下一盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛幼玉斯维托利娜。手盘5比4发球,没能收下,被追成5比5。安德烈耶娃接着连拿两局。第二个盘点,底线相持中,对手回球出界。他以7比5先下一盘。"
+      },
+      "polyphones": [
+        {
+          "index": 15,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 13.892,
+        "cps": 4.46,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 又 ｜ 遇 ｜ 斯维托丽娜 ｜ 首盘 ｜ 五比四 ｜ 发球 ｜ 没 ｜ 能 ｜ 收 ｜ 下 ｜ 被 ｜ 追成 ｜ 五比五 ｜ 安德烈耶娃 ｜ 接着 ｜ 连 ｜ 拿 ｜ 两局 ｜ 第二个 ｜ 盘点 ｜ 底线 ｜ 相持 ｜ 中 ｜ 对手 ｜ 回球 ｜ 出界 ｜ 她 ｜ 以 ｜ 七比五 ｜ 先下 ｜ 一 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:adabf59413b287471f12e4606e73e714343785f95c7264f495ba75c55d5f02bd",
+      "text": "对手的高压球下网。安德烈耶娃抛起球拍，跳了起来，随后走向教练席和团队拥抱。这个冠军，终于来到她手里。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "对手的高压球下往。安德烈耶娃抛起球拍,跳了起来,随后走向教练习和团队拥抱。这个冠军终于来到他手里。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.446,
+        "cps": 4.66,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "对手 ｜ 的 ｜ 高压球 ｜ 下网 ｜ 安德烈耶娃 ｜ 抛 ｜ 起 ｜ 球拍 ｜ 跳 ｜ 了 ｜ 起来 ｜ 随后 ｜ 走 ｜ 向 ｜ 教练 ｜ 席 ｜ 和 ｜ 团队 ｜ 拥抱 ｜ 这个 ｜ 冠军 ｜ 终于 ｜ 来到 ｜ 她 ｜ 手 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:d9841032333e2b7604f17f735f241a5b3b51ce123c32b0d1bddba9409522a08d",
+      "text": "再遇萨巴伦卡，首盘一比四落后。安德烈耶娃随后连赢十一局，六比四、六比零。她提前以小组第一进入半决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.023,
+        "longest_deletion": 0,
+        "transcript": "赛玉萨巴伦卡,手盘1比4落后。安德烈耶娃随后联营11局,6比4,6比0。她提前以小组第一进入半决赛。"
+      },
+      "polyphones": [
+        {
+          "index": 12,
+          "char": "落",
+          "word": "落后",
+          "intended": "luo4",
+          "wrong": [
+            "la4",
+            "lao4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "la4",
+              "verdict": "unreliable",
+              "score": 0.318,
+              "confidence": null,
+              "near": null
+            },
+            {
+              "wrong": "lao4",
+              "verdict": "unreliable",
+              "score": 0.27,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "洛骆摞"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 10.059,
+        "cps": 4.37,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 遇 ｜ 萨巴伦卡 ｜ 首盘 ｜ 一 ｜ 比 ｜ 四 ｜ 落后 ｜ 安德烈 ｜ 耶娃 ｜ 随后 ｜ 连赢 ｜ 十一局 ｜ 六比四 ｜ 六 ｜ 比 ｜ 零 ｜ 她 ｜ 提前 ｜ 以 ｜ 小组 ｜ 第一 ｜ 进入 ｜ 半决赛"
+      }
+    },
+    {
+      "id": "bundle:df2ed8763533740eb036b2c5dba1632376f5076944b6da48f5d6f9f6cf7d3da4",
+      "text": "第二盘四比三，安德烈耶娃在自己的发球局先后化解四个破发点。保住这一局，带着五比三领先，再去争冠军。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二盘4比3,安德烈耶娃在自己的发球局先后化解四个破发点。保住这一局,带着5比3领先,再去争冠军。"
+      },
+      "polyphones": [
+        {
+          "index": 16,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        },
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发点",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "why": "找不到只读 fa1 的常用字当参考"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.116,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二盘 ｜ 四比 ｜ 三 ｜ 安德烈 ｜ 耶娃 ｜ 在 ｜ 自己 ｜ 的 ｜ 发球 ｜ 局 ｜ 先后 ｜ 化解 ｜ 四个 ｜ 破发 ｜ 点 ｜ 保 ｜ 住 ｜ 这 ｜ 一 ｜ 局 ｜ 带 ｜ 着 ｜ 五比三 ｜ 领先 ｜ 再 ｜ 去 ｜ 争 ｜ 冠军"
+      }
+    },
+    {
+      "id": "bundle:e7fd92383398e2111af4976e142b32318efd31d57f12babbfc631342155672f5",
+      "text": "北京时间十一月十六日凌晨，年终总决赛决赛。十九岁的安德烈耶娃，第一次参赛就五场全胜，十盘全胜夺冠。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 44,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月16日凌晨,年中总决赛决赛。19岁的安德烈耶娃,第一次参赛,就五场全胜,十盘全胜奪冠。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 44,
+        "speech_s": 9.552,
+        "cps": 4.61,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月 ｜ 十六日 ｜ 凌晨 ｜ 年终 ｜ 总决赛 ｜ 决赛 ｜ 十九 ｜ 岁 ｜ 的 ｜ 安德烈耶娃 ｜ 第一次 ｜ 参赛 ｜ 就 ｜ 五 ｜ 场 ｜ 全胜 ｜ 十盘 ｜ 全胜 ｜ 夺冠"
+      }
+    },
+    {
+      "id": "bundle:e9750f268ca39a5bbcbaf3ac31bddcb858175bb330e4c69e4f0fef3eb2d2010c",
+      "text": "首战对斯维托丽娜，六比四、六比零。她拿下最后七局，先把第一场胜利留下。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 30,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首战队斯维托利娜6比4、6比0。他拿下最后7局,先把第一场胜利留下。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 30,
+        "speech_s": 6.922,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首战 ｜ 对 ｜ 斯维托丽娜 ｜ 六比四 ｜ 六 ｜ 比 ｜ 零 ｜ 她 ｜ 拿下 ｜ 最后 ｜ 七局 ｜ 先 ｜ 把 ｜ 第一 ｜ 场 ｜ 胜利 ｜ 留下"
+      }
+    }
+  ]
+}
