@@ -71,7 +71,64 @@ permissions:
   contents: read
 
 jobs:
+  captions:
+    if: github.event.inputs.mode == 'captions'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            src
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install native public-caption reader
+        run: pip install -q -e . "yt-dlp[default]"
+      - name: Read original YouTube captions without redownloading footage
+        env:
+          P_URLS: ${{ github.event.inputs.urls }}
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          python - <<'PY'
+          import os, sys, tempfile
+          from pathlib import Path
+          sys.path.insert(0, 'tools')
+          from build_match_reel import fetch_captions
+          from probe_claims import video_key
+          cookies = os.environ.get('YT_COOKIES_TXT', '')
+          if cookies:
+              jar = Path(tempfile.gettempdir()) / 'caption-cookies.txt'
+              jar.write_text(cookies)
+              os.environ['YT_COOKIES'] = str(jar)
+          urls = [x.strip() for x in os.environ['P_URLS'].split(',') if x.strip()]
+          if not urls:
+              raise SystemExit('Supply original public YouTube URLs.')
+          for url in urls:
+              key = video_key(url)
+              if not key or not url.startswith(('https://www.youtube.com/watch?', 'https://youtu.be/')):
+                  raise SystemExit('Only original public YouTube URLs are accepted.')
+              out = Path('probe_out') / key
+              out.mkdir(parents=True, exist_ok=True)
+              captions = fetch_captions(url, out)
+              if captions is None:
+                  raise SystemExit(f'No source captions recovered for {key}; inspect diagnostics.')
+              print(f'=== SOURCE CAPTIONS {key} ===', flush=True)
+              print(captions.read_text(), flush=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-captions-${{ github.run_id }}
+          path: probe_out/
+          retention-days: 14
+          if-no-files-found: error
   probe:
+    if: github.event.inputs.mode != 'captions'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
