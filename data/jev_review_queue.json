@@ -26,7 +26,7 @@
       "discovered_at": "2026-09-23T06:37:10.281909+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_interview",
-      "last_frames_at": "2026-11-14T01:57:27.847979+00:00"
+      "last_frames_at": "2026-11-16T03:12:19.778601+00:00"
     },
     "lVql-4uZ8t8": {
       "item": {
@@ -674,7 +674,7 @@
       "discovered_at": "2026-11-05T22:57:36.002419+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-14T01:57:27.848070+00:00"
+      "last_frames_at": "2026-11-16T03:12:19.778681+00:00"
     },
     "ZrmZvPot368": {
       "item": {
@@ -1160,7 +1160,7 @@
       "discovered_at": "2026-11-14T01:55:08.699185+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_interview",
-      "last_frames_at": "2026-11-14T01:57:27.847840+00:00"
+      "last_frames_at": "2026-11-16T03:12:19.778515+00:00"
     },
     "8WQoyWrvJ6A": {
       "item": {
@@ -1188,6 +1188,60 @@
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
       "last_frames_at": "2026-11-15T23:42:57.994412+00:00"
+    },
+    "kx-70EGpcCE": {
+      "item": {
+        "id": "kx-70EGpcCE",
+        "title": "Mirra Andreeva talks UNDEFEATED title triumph 🏆 | 2026 FAGE WTA Finals Indian Wells",
+        "duration_s": 288,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-16T03:06:06.998659+00:00",
+        "url": "https://www.youtube.com/watch?v=kx-70EGpcCE",
+        "review_reason": "model_interview"
+      },
+      "input_sha256": "0322265c92bdb8ce58452bb7306c71639070d3c7e2dd6cc2930496a0348a2957",
+      "suggestion": {
+        "id": "kx-70EGpcCE",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 227.8,
+        "suggestion": "interview",
+        "confidence": 0.4,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-16T03:06:06.998659+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_interview",
+      "last_frames_at": "2026-11-16T03:12:19.778358+00:00"
+    },
+    "KsYunr7RcCE": {
+      "item": {
+        "id": "KsYunr7RcCE",
+        "title": "WTA Chair Valerie Camillo joins us to talk partnerships, athletes, and more ✨ | 2026 FAGE WTA Finals",
+        "duration_s": 351,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-16T03:06:06.998659+00:00",
+        "url": "https://www.youtube.com/watch?v=KsYunr7RcCE",
+        "review_reason": "model_uncertain"
+      },
+      "input_sha256": "4e2f76ebbd14bf6b20d8c354cacf143fff052e198dc82c4496d77a01c1167833",
+      "suggestion": {
+        "id": "KsYunr7RcCE",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 135.5,
+        "suggestion": "uncertain",
+        "confidence": 0.32,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-16T03:06:06.998659+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_uncertain",
+      "last_frames_at": "2026-11-16T03:12:19.778227+00:00"
     }
   }
 }
