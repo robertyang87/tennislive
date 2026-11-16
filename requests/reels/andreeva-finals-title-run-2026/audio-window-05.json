@@ -4,7 +4,7 @@
   "method": "asr_cross_checked",
   "reviewer": "current assistant: original source captions, small.en/medium.en cross-check and visual timing review; no human listening claimed",
   "status": "complete",
-  "reviewed_at": "2026-11-16T04:16:46.824153+00:00",
+  "reviewed_at": "2026-11-16T04:43:00.932775+00:00",
   "reviewed_from": 249.64,
   "reviewed_to": 275.4,
   "foreground_english": [
@@ -12,7 +12,7 @@
       "start": 255.1,
       "end": 260.3,
       "en": "Mirra Andreeva punches her ticket to the semifinals",
-      "zh": "安德烈娃拿到了四强门票，"
+      "zh": "安德烈耶娃拿到了四强门票，"
     },
     {
       "start": 260.3,
@@ -38,5 +38,6 @@
     "data/source_asr/vprYQcJIDt4/small.en.json",
     "data/source_asr/vprYQcJIDt4/medium.en.json"
   ],
-  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames."
+  "review_basis": "Full selected window checked against both word-timed ASR transcripts; official source captions resolve final/SF wording; canonical proper names from structured WTA match facts. Prior accepted same-byte RR1/RR2 subtitle cues independently cross-checked. Ball contacts and actual visual endings checked in dense native frames.",
+  "name_normalization": "Same Mirra Andreeva source identity; canonical Chinese display name aligned to existing official headshot registry. No source audio or cut changed."
 }
