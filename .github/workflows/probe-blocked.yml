@@ -21,7 +21,7 @@ on:
         required: false
         default: ""
       mode:
-        description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
+        description: "http=urllib 探固定源；browser=Chromium 探 TNNS；captions=读取 urls 中原始 YouTube 字幕"
         required: false
         default: "http"
       url:
