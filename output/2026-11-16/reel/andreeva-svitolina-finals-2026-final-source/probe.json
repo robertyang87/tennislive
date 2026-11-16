@@ -178,6 +178,39 @@
   "captions": null,
   "board": {
     "version": 1,
+    "fps": 5,
+    "t0": 110.1,
+    "frames": 47,
+    "scans": [
+      {
+        "box": [
+          90,
+          810,
+          550,
+          981
+        ],
+        "frames": 47,
+        "profiles": {
+          "wta": {
+            "present": 47,
+            "unresolved": 0,
+            "runs": [
+              [
+                47,
+                480,
+                480
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "source_profile": "wta",
+    "source_sha256": "3886a64b80696c1a55004efc388f48e23243f374a8395fd496d5938cd6990d8b",
+    "_scope": "仅此真实解码扫描区间校准自定义框，不代表全片或所选窗口已通过；正式渲染另以25fps量每个保留窗口的原生蒙版。"
+  },
+  "_previous_probe_board": {
+    "version": 1,
     "error": "WTA board present but complete two-player body geometry is unmeasurable"
   }
 }
