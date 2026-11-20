@@ -53,7 +53,7 @@
       "discovered_at": "2026-09-23T06:37:10.281909+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-16T21:05:33.327202+00:00"
+      "last_frames_at": "2026-11-20T08:33:54.038051+00:00"
     },
     "rNRZHBcZGIo": {
       "item": {
@@ -323,7 +323,7 @@
       "discovered_at": "2026-10-25T21:44:27.249138+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_interview",
-      "last_frames_at": "2026-11-16T21:05:33.327127+00:00"
+      "last_frames_at": "2026-11-20T08:33:54.037870+00:00"
     },
     "qpXRgj9FEeI": {
       "item": {
@@ -512,7 +512,7 @@
       "discovered_at": "2026-11-03T16:10:26.433669+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-16T21:05:33.327053+00:00"
+      "last_frames_at": "2026-11-20T08:33:54.037699+00:00"
     },
     "tScBbi8wSeg": {
       "item": {
@@ -1079,7 +1079,7 @@
       "discovered_at": "2026-11-12T11:57:09.518003+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-17T03:49:03.854275+00:00"
+      "last_frames_at": "2026-11-20T08:33:54.038186+00:00"
     },
     "ASvHATbhcjE": {
       "item": {
@@ -1431,6 +1431,33 @@
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
       "last_frames_at": "2026-11-20T01:03:03.746639+00:00"
+    },
+    "Jvt84oCdyVA": {
+      "item": {
+        "id": "Jvt84oCdyVA",
+        "title": "Carlos Alcaraz on PHENOMENAL opening win in Turin 🤯 | 2026 ATP Finals Round Robin",
+        "duration_s": 67,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-20T08:28:00.097872+00:00",
+        "url": "https://www.youtube.com/watch?v=Jvt84oCdyVA",
+        "review_reason": "model_interview"
+      },
+      "input_sha256": "1045c1201b0742f1a51221548732838ad36f643c50bf24736198d4f66a622629",
+      "suggestion": {
+        "id": "Jvt84oCdyVA",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 39.9,
+        "suggestion": "interview",
+        "confidence": 0.26,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-20T08:28:00.097872+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_interview",
+      "last_frames_at": "2026-11-20T08:33:54.037496+00:00"
     }
   }
 }
