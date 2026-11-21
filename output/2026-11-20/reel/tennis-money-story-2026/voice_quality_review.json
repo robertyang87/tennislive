@@ -1,0 +1,1386 @@
+{
+  "schema": "tennislive.voice-quality.v1",
+  "identity": {
+    "render_sha256": "7d5cd6f166eb7f8d76010d13de05844412a2e9475b0aba95bb31684cccbb9b72",
+    "render_inputs_sha256": "0d4e6fd738351b6c15dc260ac95c5a13283a1162f9e95ad855f3ab537cbbaa75",
+    "spec_sha256": "7f1c928be8cce22fbb10c6a13f6389eb2c6fa9f3c75f86187e394a133dc977e6",
+    "film_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
+    "inventory_sha256": "826e9177436b3fef31bb39d29abbf14bc204874d0b43606c68a09ac5d12a2dcf"
+  },
+  "film_review": {
+    "status": "pass",
+    "method": "full_audio_listening",
+    "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+    "reviewed_at": "2026-11-21T11:50:10+00:00",
+    "film_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
+    "whole_narration_and_seams": true,
+    "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。 覆盖全部配音段及前后接缝。"
+  },
+  "entries": [
+    {
+      "id": "bundle:3e346febebc74ca7bd530f7db526216efd0c96161f78dc652dd3b928d709315b",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1ab3433908c39963b3fa1273f7dcd7af81becefbb8398b3eeb54e885d017a180",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1ab3433908c39963b3fa1273f7dcd7af81becefbb8398b3eeb54e885d017a180",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:7a5921501f8dfc20389137678f33ea48d2135a40280fa03ede65012fd19b34bb",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "50268700a09184928deba479290e84dafe5dc10d62936b64c3357289c6e8f68a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "50268700a09184928deba479290e84dafe5dc10d62936b64c3357289c6e8f68a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:ec97fad674cd888b42dd5731f58880f531bd3470086db9f492ca40d3cb2affaa",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3da321893f5d40df4c4f3daae33e2c69c10377c63fbc059dc97dd9945d89610c",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "3da321893f5d40df4c4f3daae33e2c69c10377c63fbc059dc97dd9945d89610c",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:8479b9debb9bd68cf5a54eaa81eb65610f27474c684eba193d8b5f537bf1f2ac",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "16f66ced9e5bcd64182b9cc6b20eb8af87bab3d54d5769fd9b401c17eec12a50",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "16f66ced9e5bcd64182b9cc6b20eb8af87bab3d54d5769fd9b401c17eec12a50",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:868c30cc20a9b67a1119b6c0d49891c29273fe72da67dbfcef042ad7ef382ae8",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9c785bc1b7c4bb5903e12d38483591996d677dddd55253b9eb366bf95e1147c8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9c785bc1b7c4bb5903e12d38483591996d677dddd55253b9eb366bf95e1147c8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:a40d12c71da99454bf2de61565938ebcce2a411935a5c299a8ff56a8c340cbe4",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "e03658063e613714182f403b26294a76b96e82d6e300e7b34915dbdaa24ac3ec",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "e03658063e613714182f403b26294a76b96e82d6e300e7b34915dbdaa24ac3ec",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:e3e6399e8f29c5b37f02193e57d5f73f5df94fed95ad124aa925a3b71ce55df6",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "97103e51aac65a787fc66c830e31043ae04da1bc5ec9390d1049a1538ec76e8c",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "97103e51aac65a787fc66c830e31043ae04da1bc5ec9390d1049a1538ec76e8c",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:30553000ab692b263f075224c6b44e29cba475d49ab3a629f1b137f14f5c4b87",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "6d338a942902fdb2546077c9cb1bd4ff1a36b864750572002c8ba4a2326433f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "6d338a942902fdb2546077c9cb1bd4ff1a36b864750572002c8ba4a2326433f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3853e21695d0ba6e33dc6735be76c58628afb2f37bb7be46c7451b79e31556d2",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "698dab5f70e3c4953cfb102de55932b59858cd41f9d4ef2d3e635bc605682e2f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "698dab5f70e3c4953cfb102de55932b59858cd41f9d4ef2d3e635bc605682e2f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3d7acdbe0035dd7e69c852e46a4dd8e1664cfcf7ccfb72de138fe548a8612cf2",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9467a2d2de20a1ab63b5811f55ae976d4c15aff098c6ddb15875da57b780fd0f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9467a2d2de20a1ab63b5811f55ae976d4c15aff098c6ddb15875da57b780fd0f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:7e5f73db5982611d940b7c32cfa921d744d7170593a56cd2af80f30c3d03c6da",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ddb006b149b85acc216023e6f8abf2d9603276399e3a38a00f31bdefce605798",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ddb006b149b85acc216023e6f8abf2d9603276399e3a38a00f31bdefce605798",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:7cfe569911280645997f700679fd48ed72dac147f82e2aca77d158d0794837ea",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "d6a20e95354644819c29501186580574726216840f00fe5759c1bf4f12643eb9",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "d6a20e95354644819c29501186580574726216840f00fe5759c1bf4f12643eb9",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:2a3fd4566fcb3d8fe0b8675e80bf60e73fb95e62d0faaa93db505a34762586c7",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "632c1c427cd47f917c1c30c9b6efa762e854428fd81773a7dd7748cfff2b05e1",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "632c1c427cd47f917c1c30c9b6efa762e854428fd81773a7dd7748cfff2b05e1",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3809d2f3262cdecc6b529ba20b4b191f18156a4e4e52bedd7080481279877930",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "17778e471047b96f53bba5c1e8226737b621793f06a78491b2a3ef0de36f9bcf",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "17778e471047b96f53bba5c1e8226737b621793f06a78491b2a3ef0de36f9bcf",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:eddc3828fdd380f88d07298f60646d89b1fa812e877672301b600ee6f014859c",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b0ee2548c69676d7c0f7cba3d80cfd10fbe51233cc6a8f05ea39b9814561525a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b0ee2548c69676d7c0f7cba3d80cfd10fbe51233cc6a8f05ea39b9814561525a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:38bc1b6c431cddf045bbe668e63e8476bac21f9a7d77715544efbf1893c7c4d6",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b088ba93d77a737e97bee7fd84c483ee5c29d43c891dca427f8de3066986f8cc",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b088ba93d77a737e97bee7fd84c483ee5c29d43c891dca427f8de3066986f8cc",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:7edc743360c84d6b43f80699a2d661025a0b71f42b07d4a4f9f331895986ba86",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a26b85ca7cd283f3118177afa18d6892ccb9c609e5e003268d0df3e7728803f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a26b85ca7cd283f3118177afa18d6892ccb9c609e5e003268d0df3e7728803f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:8fd9dd40dc47afc2400f225393752455c78b44a696456186bc02a23347a7a1fc",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "467e02d04e1f8a07b1f5cc68a29972b6c412d2ff1788a294b91069841695d91d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "467e02d04e1f8a07b1f5cc68a29972b6c412d2ff1788a294b91069841695d91d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:6f7770dffd1df967139cd09b0cef2aa4c695e2992442fdf42fcc735b6ebae907",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "0d8a1f0d85ebc23ac735877c75ae209275b86713c7381b6cb1f61f16781a3f99",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "0d8a1f0d85ebc23ac735877c75ae209275b86713c7381b6cb1f61f16781a3f99",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:1c3fd1e2390740850763bf3211c1aed6738e1681ba2181218f4a21fc53800453",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "97dcf6fcaf24d687c9395be4d41f7b07984d8ea20e41e0d8be03ee1f77d7f4ab",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "97dcf6fcaf24d687c9395be4d41f7b07984d8ea20e41e0d8be03ee1f77d7f4ab",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:275696a4d4e7243860883117bbfb679fc277ab70aa8cb790620b6b369c5a8b80",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "931103e59a42410710e9a7c7b9efed3cd5ab7961ef633b9d552fc4985a569867",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "931103e59a42410710e9a7c7b9efed3cd5ab7961ef633b9d552fc4985a569867",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:db11cf2b95ed4c911d1d2ede2cfc61e639bce131f9f8cca16d068e36b4053834",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "76612f0af4b9497b105e1aca1091c022d0e513ad33a70047e6a856cff7d895ec",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "76612f0af4b9497b105e1aca1091c022d0e513ad33a70047e6a856cff7d895ec",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:1fa9754525579bfea3f0833b73bd86fec87a48728a5657234576e49c79f6938b",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "77637828d3a3b536486060144f166a090c1fe5d20a623b05764378c761ecef3b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "77637828d3a3b536486060144f166a090c1fe5d20a623b05764378c761ecef3b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3902f2e0b1ab5a6443d246654735c6adfc488fcccfb88dcddbb45e692cfdbca1",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b479a1d129e924f62794ede326ec42fb47247f85d8664748773e499416076e7b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b479a1d129e924f62794ede326ec42fb47247f85d8664748773e499416076e7b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:e3065dfc2b205f05389c60609a2dccf84df30c9a03131d45e91466c9e92f7694",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ae2d4a5eb66fe2a55c10e1cc329a1c9ea2309cac862a6770618f71bcc5c03ee0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ae2d4a5eb66fe2a55c10e1cc329a1c9ea2309cac862a6770618f71bcc5c03ee0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:cebc579e8d9f75ac43acef15086f5f5213a063318fd5c03d1465a53e253819e4",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b9364a9ccd594c7ca7e0e03b09b9ea153cc86eff1627103348a3527141748912",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "b9364a9ccd594c7ca7e0e03b09b9ea153cc86eff1627103348a3527141748912",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:ba70c35c0f27e5d361d449c0fc8dc5553227092e24084ff4eb097b85e480c8b2",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ef09e7be8c3c79210d5ca167d9518ba3a1cd155c3ee2ab9f7da791f7364a2e8b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ef09e7be8c3c79210d5ca167d9518ba3a1cd155c3ee2ab9f7da791f7364a2e8b",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:e96bee43763903973faa4db6725d917b1b30677a4c4af14168d0d4faad3029c3",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ec0d84292b403e8a712f94bd75e9ac39931e271590d27d949d03e545eec0caf1",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ec0d84292b403e8a712f94bd75e9ac39931e271590d27d949d03e545eec0caf1",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:fdff68dffd11bf76fc71e7f8cf3b46df07ed568534e9a12265393e06eb9325d0",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "58b03bd33bea11b671cf31fb2abe130da278aa878d5a11a454174dd7554c09f7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "58b03bd33bea11b671cf31fb2abe130da278aa878d5a11a454174dd7554c09f7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:1a6c317dd9df454aabd7956c51784d0ef770921a8d9546db8302dab12fd28359",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ac91b7c40d61406488e5a85e68b1c51dda58ab7b7afff2fa3ff3adf4d4ed4509",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ac91b7c40d61406488e5a85e68b1c51dda58ab7b7afff2fa3ff3adf4d4ed4509",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:ed67765c7c98ef10bc55da1d1ddb6a7380231813f3c78f80d5f13e3db432b0dd",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "398d800e8442412a758ddb9ad58769ed8ed50c68684a9b2d7c713f851394ed40",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "398d800e8442412a758ddb9ad58769ed8ed50c68684a9b2d7c713f851394ed40",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:e5038e9fe1f2e8afe02dd11855f38d725ce9fe7f68bd9e47e181070301dea2a3",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "cbf0fcf950f8880b4205297e20025a30d79e8dfc4902084097f7b619c5e10bb2",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "cbf0fcf950f8880b4205297e20025a30d79e8dfc4902084097f7b619c5e10bb2",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:1a04daad986e299bf20d5f78042f250225035d67f30a28cb7d18b0620ebfb4ca",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9349b9f25a58abb0193070782cbd8108e2ed5417f57ef90a345885be2cf85d55",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9349b9f25a58abb0193070782cbd8108e2ed5417f57ef90a345885be2cf85d55",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:87d4e8b541c418b599bbf9bad96aa58ba3a6bc81adc1a4d1a9d8046a44f622e4",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8249f3c8a147af4236df99bdbc5c60b2ae133139dcd211e96445f1a9ff7f32d2",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8249f3c8a147af4236df99bdbc5c60b2ae133139dcd211e96445f1a9ff7f32d2",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:ba38b33724af7a6c553db58be01c781458faa86cd08b0f922ee39c05971db9da",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ff322c45912a0da5aca1d663f00b5e3d8d36ab5f89e864f9b229ebc788afbe0f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ff322c45912a0da5aca1d663f00b5e3d8d36ab5f89e864f9b229ebc788afbe0f",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:6703c8d85712c0ccab1cba35e296cde2d81a2bb1b717e08c0cc44d784cebc83b",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ae67d8eb8641c494927d1b5ee5100d84ef56d78a1ea70a117126aaff4734398a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ae67d8eb8641c494927d1b5ee5100d84ef56d78a1ea70a117126aaff4734398a",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:743ef7c507fb96ea00024d52c329f31e5ed29f4b40fa8bea9195180ae408ad06",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "56b1c8f6e6ce7b42d8691f2d8d2abb758c3cb20e5b7d4693a71fc014c4dd0cb9",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "56b1c8f6e6ce7b42d8691f2d8d2abb758c3cb20e5b7d4693a71fc014c4dd0cb9",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:c6e1157d78e8b7501acc90c6a725daecfe3276fad194dee96aee7e5d68a400db",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "bbc84234b7b9a21625d6f6e0fd7048a9ffe6cedbfd3123cdea8833701f625f82",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "bbc84234b7b9a21625d6f6e0fd7048a9ffe6cedbfd3123cdea8833701f625f82",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:0c4ba31989cdc55fcc882acdf8e9c5122fde303a70669004663501d9d1e4cac0",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ec8ded0f2e76aa3b8d0ea09fb14f74c910d86f98f5ca379720e794bf60901404",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ec8ded0f2e76aa3b8d0ea09fb14f74c910d86f98f5ca379720e794bf60901404",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:15c563755d6e7672c3b572591a2bae05633f4e99885e9b300f28b674297434b7",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8334f0bebb9a4873901130c65d65618f95b9f4932e81d046abd71cdbaa397276",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8334f0bebb9a4873901130c65d65618f95b9f4932e81d046abd71cdbaa397276",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:61c315aef55759645e7dc25e26fe3b248ee3ed24a6c47ebf84d99b7d00c91dc5",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2728d8ca72935970a98a3b1a2a2555ea15684eb412be9810ba7bd73168a9afd7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "2728d8ca72935970a98a3b1a2a2555ea15684eb412be9810ba7bd73168a9afd7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:47dc427ddeed74347be20366b55d6795993945768f75d28e865ede631e8e62d8",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "498e1de7432c6fca8425e0ba1f1b4b68f9da57c9b0f4c6632419c08b4932989d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "498e1de7432c6fca8425e0ba1f1b4b68f9da57c9b0f4c6632419c08b4932989d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:013882d7b8c492f798cf6c249e88a57414692926768d910a40bd2cc6137ee452",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1a2604e101d27ec6d4ead21ef5df835be2a6870bfb6934924d30f98093ea4e00",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "1a2604e101d27ec6d4ead21ef5df835be2a6870bfb6934924d30f98093ea4e00",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:43d87e99131b3e41fcdace1314b5b0abf1fe0e60ba77fd3ae571fedb2462f54e",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "79693779ba01dbcda816c4b41ed1513fb1bfb6c2e13410e2e550e89e6f57ff96",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "79693779ba01dbcda816c4b41ed1513fb1bfb6c2e13410e2e550e89e6f57ff96",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:9fa2288f2850edc2a7143e12ee7b671a85a68221d0cf5e2573f67d056de6bbce",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "595bacb7c16998ad8f4450613e9921ab27141a3a52fb0c439c28564172b83499",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "595bacb7c16998ad8f4450613e9921ab27141a3a52fb0c439c28564172b83499",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:08d56364dd775fcb5019da896252512a88d4709d17c69746f889544051e4c798",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "057f67cf9fd33cd86f3bf7fe952dbe3575d45184a8ce6ee8e8dd854caf14eaed",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "057f67cf9fd33cd86f3bf7fe952dbe3575d45184a8ce6ee8e8dd854caf14eaed",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3bf74bc69d767657424cf2410071d9a33f734c1cd8993b53f0d72a8667764614",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a367c24569a60b879c90d48b04df813435eb435acca696b3b430fc19398969d7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a367c24569a60b879c90d48b04df813435eb435acca696b3b430fc19398969d7",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:6ee02123aedc3ec152ffd5e7ab6fc26d344a3ca3355dec0070e018e7d34e4239",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9efec7fe810a8c6e6d95259c9314c0d2a667c8efcb047e2945377d0e3166d778",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "9efec7fe810a8c6e6d95259c9314c0d2a667c8efcb047e2945377d0e3166d778",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:4f9bb439c6d78a9201f537e440be179f2157384b3ac2da2927c44bbd3092b88a",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8acde8705259b76950e51280f039ab1054018967cd58965068d7f90214605cdc",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8acde8705259b76950e51280f039ab1054018967cd58965068d7f90214605cdc",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:77d156532af26bb64ffda60a46651409caaa72789209d2e26ec8deb52eff092d",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41edf63ff184d20bc7e188ac797965ec0a46535f3a5b527de30b22ec931a7d20",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "41edf63ff184d20bc7e188ac797965ec0a46535f3a5b527de30b22ec931a7d20",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:d6c8c368071e4beced4d0c94166ac2a1d002ea5e09cb8ea17034a2115bb339dd",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ca1f96b70c5435fd79106f24b55536b7f5239a7c0e4458c5a5f8ef0cfce98fad",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "ca1f96b70c5435fd79106f24b55536b7f5239a7c0e4458c5a5f8ef0cfce98fad",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:139b77c4eda7635d0a3c05dc9fd6856e7ece366ea690c1c45451f328d43a265d",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "86c3ab107042a1d0139df55b4c1a65afd65888e94dda65270324126e3a3b8171",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "86c3ab107042a1d0139df55b4c1a65afd65888e94dda65270324126e3a3b8171",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:8f4b3de89f16fb69c42b1195ad99629fc1136e738f4679ed78e8916e90dc887e",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "78b9a725b4b6fbcef07052fb8540e109c89cdb1b4ca940875f563e776d21fcd0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "78b9a725b4b6fbcef07052fb8540e109c89cdb1b4ca940875f563e776d21fcd0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:f1722ddda454c721b0975c70921b93fcaf12074648ec6f9c00aa692880b80c85",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8e327271d90d173eb17b96533dcf92a6553ee169e1a977f996ca583486258d93",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "8e327271d90d173eb17b96533dcf92a6553ee169e1a977f996ca583486258d93",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:bdfc27f88280524264c66eab761434886d0850d35c39ca5e1f131f62cbd0596b",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d839efbda3f5c9276c747a40efe1c1c63c42bb783286f315b2b194d42cd0cbb",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "4d839efbda3f5c9276c747a40efe1c1c63c42bb783286f315b2b194d42cd0cbb",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:9f9e34b6bd4ef26c32ca0ab4be3e09a974c5565fcc06037e14e54d26fef222a9",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "81fa655f7eaf708f692c4dc2a60d6299b05cfb1379174aee13e361d1982c8ef0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "81fa655f7eaf708f692c4dc2a60d6299b05cfb1379174aee13e361d1982c8ef0",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:038c1e728e65f04c7531e93abe7f6246a226ce1b7f9a888125ff348177d9a52a",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "90addbd721ae85f38f08efa52215903f0586b18c1d11ff576a1e09952a2c5757",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "90addbd721ae85f38f08efa52215903f0586b18c1d11ff576a1e09952a2c5757",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:ead5b82149addc2446e4f6d59751e64d1dbb4af939fc5da41a42e1cb027db3ab",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "cc49f3db8482165451e3ccce94948952861902b3bd015fd0d129d980cad4ceb4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "cc49f3db8482165451e3ccce94948952861902b3bd015fd0d129d980cad4ceb4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:f1df74148b6d98fc7992f47c456f2f82257cd943b1bfc1afd4ab59db8292565d",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "174e3f384dd849cfc51e41b58b61cc4bbe2c4c8e95eefa11bf7885eb4f6306df",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "174e3f384dd849cfc51e41b58b61cc4bbe2c4c8e95eefa11bf7885eb4f6306df",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:e926689710644c6c6b3baaf617664a467e53b3d6e91a3c765d5dc0216aa4beac",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "58e44dcd57d7f1c31a2d4224bdaa4f6b216c802b8e5608664d32e0f9b0f27e58",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "58e44dcd57d7f1c31a2d4224bdaa4f6b216c802b8e5608664d32e0f9b0f27e58",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:89f14766d586a960e35fbfbfcba39f41161ac46fd4326ec561f7bd16de1324c1",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "5d0cd3aad805300354b85232e16749efd7bdf14f51a216279e38ff55fe1e3781",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "5d0cd3aad805300354b85232e16749efd7bdf14f51a216279e38ff55fe1e3781",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:3c6f6e5c03c45e1e89d60a894545c0055e828aa18c2bbb9e759773a72b707449",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "733af58eb178b64f69269ec3a8b62b117cc641fc135ca68ede48dd927e54499d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "733af58eb178b64f69269ec3a8b62b117cc641fc135ca68ede48dd927e54499d",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:24c37fea3526c4c0fdef627129580d933629ac7f5cfb556702cb0f9ad569909c",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a8f94c6d16111a06bb035c9c3c73a407411388519be2fdeda7bc0c3e4750b0c8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "a8f94c6d16111a06bb035c9c3c73a407411388519be2fdeda7bc0c3e4750b0c8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:14853f93ba945d8641ea5b84e26c66c52a803a4770e19361a23df6c84a462f15",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "75194f769c85c2f920dd01d7b25dae82521cf8d63bd26aa5b747a81159cddaa8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "75194f769c85c2f920dd01d7b25dae82521cf8d63bd26aa5b747a81159cddaa8",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    },
+    {
+      "id": "bundle:a16e137b6a00981cce14a61d6af5c76bcc1a6cf82544306ff04460dbf08addbd",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "233c704148888681d8f89d22f5fa0f981f22c2010f78183203d7e2972d7f79f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "账号所有者 JUN YANG（junyang.ustb@gmail.com）",
+        "reviewed_at": "2026-11-21T11:50:10+00:00",
+        "whole_audio": true,
+        "audio_sha256": "233c704148888681d8f89d22f5fa0f981f22c2010f78183203d7e2972d7f79f4",
+        "observations": "自动听审（SUITE_VERSION 2，数字归一化口径修正后）完整性/语速/停顿/错字四项全过，仅 3 处 A 档多音字被声学判别器判 uncertain：差额「差」应读 cha1、佣金「佣」应读 yong4、切割「切」应读 qie1（两个 ASR 模型均听成正确读音，卡的是判别器置信度）。三处原声片段已发账号所有者听审，所有者于 2026-11-21 19:50 CST 回复「三处听着没问题，按真人听审放行，推送」；所有者此前已批准 v4 全片，v5 音轨与 v4 解码后逐字节一致，读音、重音、停顿未发现问题。记录由 Claude 代填，Claude 本身未听音。"
+      }
+    }
+  ]
+}

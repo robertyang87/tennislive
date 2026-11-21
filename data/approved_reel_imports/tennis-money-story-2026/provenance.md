@@ -76,3 +76,18 @@
   实测」表述不实，以本节为准），voice_quality_inventory 经 capture 重取、
   render_inputs 经 record 重封（新 sha 0d4e6fd738351b6c15dc260ac95c5a13283a1162f9e95ad855f3ab537cbbaa75）、
   qc_attestation 经 check_reel_landed 重签（0 项不合格）。
+- B 路 CI 结论与真人听审放行（2026-11-21）：口径修正＋marks 重建后两趟 CI
+  听审（run 44899157969、44899222930）结论逐字一致：完整性/语速/停顿/错字
+  四项全过（上文「余 1 条属 medium 复听范围」已被 CI 结果 supersede，该条
+  经 medium 复听救回），仅剩 3 处 A 档多音字被声学判别器判 uncertain——
+  差额「差」cha1、佣金「佣」yong4、切割「切」qie1；两个 ASR 模型均听成
+  正确读音，卡的是判别器置信度而非读错。执行方按停手线未再动口径、未推送。
+  期间 19:26 CST auto-push（run 44899114547）因放行记录缺失预占账本后被
+  同一拦点挡下，日志证实 push() 前 exit 1、从未发送，账本已改判 not_sent
+  （提交 4afaf84c）。账号所有者听完三处原声片段后于 2026-11-21 19:50 CST
+  在主对话回复「三处听着没问题，按真人听审放行，推送」，并于 20:01 CST
+  同意继续在仓内处理推完为止。放行记录 voice_quality_review.json 以闸自带
+  prepare() 按当前封存链生成骨架后代填（method=full_audio_listening，
+  reviewer=账号所有者 JUN YANG，reviewed_at=2026-11-21T11:50:10+00:00，
+  记录由 Claude 代填、Claude 本身未听音），本地 --check（require_publish）
+  通过后落仓 output/2026-11-20/reel/tennis-money-story-2026/。

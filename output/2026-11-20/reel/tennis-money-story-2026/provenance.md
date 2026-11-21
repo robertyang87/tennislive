@@ -39,6 +39,21 @@
 - 导入：tools/import_approved_money.py＋.github/workflows/import-approved-money-story.yml
   （仿 import-approved-laver，钉版 v5 身份；required 文件含 render_inputs.json
   与 audio_review_binding.json，CI 内重跑 push_reel check 与 check_reel_landed）。
+- 配音听审补件（2026-11-21 恢复趟）：首趟 match-reel 推送 run 44864938825 在
+  push_reel 发送前被 voice_quality_gate 拦下（waiting_voice_quality_review：
+  缺 voice_quality_inventory.json），作业日志确证 push() 未被调用、PushPlus
+  未被联系、无回执生成；账本 attempt 因此记 uncertain 后经人工核实改记
+  not_sent（核实依据即该 run 日志，见账本 resolution 字段）。
+  本片旁白为自有制作线 edge-tts zh-CN-XiaoxiaoNeural 逐行合成（+0%/+0Hz，
+  实际请求与实际音频字节冻结为 tts_bundle.zip，sha256
+  98940060e8b9f04c631b163e19446758d9e5962fae7a46ad27cc192ac971afe4，65 条）；
+  合成时未开启词边界流，词边界由实际音频的 faster-whisper 强制对齐实测补齐；
+  53 条读稿取自制作记录 tts_full.py，12 条样片行读稿按全片读稿惯例由展示
+  文本重构并经 ASR 逐字核对。voice_quality_inventory.json 已由
+  voice_quality_gate.capture_inventory 生成并经 render_inputs 封存；
+  五项自动听审由 CI 工作流 voice-review-money-story 在实际小包上执行，
+  证据 voice_auto_review.json 与放行记录 voice_quality_review.json 随其
+  提交落仓（method=automated_voice_suite，不冒充真人听审）。
 - 听审 B 路修复（2026-11-21，账号所有者裁决走 B：修工具口径＋重建 marks）：
   首趟 CI 听审（run 44867051672）没过的真因不在配音本体：① 首版 marks 实为
   faster-whisper 自由转写 token（繁体字、阿拉伯数字形、误听），并非上文所记
@@ -61,3 +76,18 @@
   实测」表述不实，以本节为准），voice_quality_inventory 经 capture 重取、
   render_inputs 经 record 重封（新 sha 0d4e6fd738351b6c15dc260ac95c5a13283a1162f9e95ad855f3ab537cbbaa75）、
   qc_attestation 经 check_reel_landed 重签（0 项不合格）。
+- B 路 CI 结论与真人听审放行（2026-11-21）：口径修正＋marks 重建后两趟 CI
+  听审（run 44899157969、44899222930）结论逐字一致：完整性/语速/停顿/错字
+  四项全过（上文「余 1 条属 medium 复听范围」已被 CI 结果 supersede，该条
+  经 medium 复听救回），仅剩 3 处 A 档多音字被声学判别器判 uncertain——
+  差额「差」cha1、佣金「佣」yong4、切割「切」qie1；两个 ASR 模型均听成
+  正确读音，卡的是判别器置信度而非读错。执行方按停手线未再动口径、未推送。
+  期间 19:26 CST auto-push（run 44899114547）因放行记录缺失预占账本后被
+  同一拦点挡下，日志证实 push() 前 exit 1、从未发送，账本已改判 not_sent
+  （提交 4afaf84c）。账号所有者听完三处原声片段后于 2026-11-21 19:50 CST
+  在主对话回复「三处听着没问题，按真人听审放行，推送」，并于 20:01 CST
+  同意继续在仓内处理推完为止。放行记录 voice_quality_review.json 以闸自带
+  prepare() 按当前封存链生成骨架后代填（method=full_audio_listening，
+  reviewer=账号所有者 JUN YANG，reviewed_at=2026-11-21T11:50:10+00:00，
+  记录由 Claude 代填、Claude 本身未听音），本地 --check（require_publish）
+  通过后落仓 output/2026-11-20/reel/tennis-money-story-2026/。
