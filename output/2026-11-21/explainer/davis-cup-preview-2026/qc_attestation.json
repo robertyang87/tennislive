@@ -1,0 +1,59 @@
+{
+  "schema": "tennislive.custom-explainer-qc.v1",
+  "film_sha256": "bf4893c5df524d7a056d87f501d95fc5eca79ba8954e29d02bdbe3c029012223",
+  "checked_at": "2026-11-21T06:59:57.374695+00:00",
+  "format": {
+    "video": {
+      "codec_name": "h264",
+      "pix_fmt": "yuvj420p",
+      "width": 1080,
+      "height": 1440,
+      "r_frame_rate": "30/1",
+      "start_time": "0.000000",
+      "duration": "288.466667",
+      "nb_frames": "8654"
+    },
+    "audio": {
+      "codec_name": "aac",
+      "sample_rate": "48000",
+      "channels": 2,
+      "start_time": "0.000000",
+      "duration": "288.466000"
+    }
+  },
+  "black_frames_detected": false,
+  "black_frame_check": {
+    "scope": "Full final movie decoded,8654 frames",
+    "evidence": "blackdetect.txt",
+    "result": "pass"
+  },
+  "complete_utterances_bound_to_actual_film": 17,
+  "audio_binding": "actual-audio-binding.json",
+  "visual_review": {
+    "scope": "26 actual final-film samples: every chapter, both photos where changed, cover and native outro; final-contact.jpg",
+    "facts_and_forecast": "Initial draw uses placeholders; later bracket and gold connections explicitly personal predictions. All eight nations present.",
+    "cover": "Eight correct country/player portraits; actual Davis Cup ornate silver punchbowl and dark wooden plaque pedestal checked against official Bologna tourism photograph. HD PNG is a Lanczos export of generated master, not native 4K.",
+    "photo_scope": "Official national-team file photography labelled as archival; full photo region filled with proportional crop; captions and faces reviewed.",
+    "reference_style": "Eight portraits and championship forecast follow owner-approved WTA/ATP format."
+  },
+  "editorial_checks": {
+    "all_4_quarterfinals": true,
+    "all_8_nations": true,
+    "fact_cutoff": "2026-11-21",
+    "current_withdrawals_verified": [
+      "Canada:Shapovalov and Diallo",
+      "Spain:Davidovich Fokina replaced by Merida"
+    ],
+    "facts_separate_from_prediction": true,
+    "british_slam_titles_with_separate_partners_explicit": true,
+    "german_18_2_is_pair_record": true,
+    "no_future_results_invented": true,
+    "announced_roster_not_confirmed_starting_lineup": true,
+    "champion_preference": "Spain",
+    "second_choice": "Italy",
+    "upset_risk": "Germany"
+  },
+  "publication_gate": "Fresh native automated actual-voice review plus require_publish; independent decoded final-PCM binding of all 16 frozen TTS utterances and native brand source; no human listening claimed.",
+  "sources": "source-provenance.json and facts.json",
+  "music": "No BGM"
+}

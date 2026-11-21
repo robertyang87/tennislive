@@ -108,8 +108,8 @@ jobs:
         if: steps.gate.outputs.found == 'true'
         run: git sparse-checkout add "${{ steps.gate.outputs.outdir }}"
 
-      - name: 发布已审ATP预测成片到Release
-        if: steps.gate.outputs.found == 'true' && steps.gate.outputs.slug == 'atp-finals-preview-2026'
+      - name: 发布带传输清单的已审成片到Release
+        if: steps.gate.outputs.found == 'true' && hashFiles(format('{0}/transfer.json', steps.gate.outputs.outdir)) != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: python tools/publish_transferred_explainer.py --outdir "${{ steps.gate.outputs.outdir }}"
