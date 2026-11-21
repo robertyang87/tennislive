@@ -322,6 +322,13 @@ def suggest_homophones(reading: str, exclude: str = "", k: int = 3) -> tuple[lis
     Tier 1: GB2312 level-1 (the 3755 common chars) with a single reading.
     Tier 2: GB2312 level-2 with a single reading.
     Tier 3: level-1 whose FIRST (dominant) reading is `reading` -- weaker.
+    Tier 4 (last resort, 2026-11-21): a CJK ideograph (U+4E00–U+9FFF) outside
+    GB2312 with a single reading -- used ONLY when tiers 1-3 found nothing.
+    Some readings have no GB2312 reference at all (qie1: 切 in 切割 was
+    unmeasurable); tier 4 is monotone -- it cannot change any case that was
+    already measurable. Its first qie1 candidate 苆 was verified against the
+    production voice (Xiaoxiao reads it qiē; ASR of the substituted sentence
+    hears 切割）, see research/voice-auto-calib/normalization-20261121.json.
     """
     from pypinyin import Style, pinyin
     from pypinyin.pinyin_dict import pinyin_dict
@@ -335,24 +342,32 @@ def suggest_homophones(reading: str, exclude: str = "", k: int = 3) -> tuple[lis
             return 0
         return 1 if 0xB0 <= b[0] <= 0xD7 else 2 if 0xD8 <= b[0] <= 0xF7 else 0
 
-    tiers: dict[int, list[str]] = {1: [], 2: [], 3: []}
+    tiers: dict[int, list[str]] = {1: [], 2: [], 3: [], 4: []}
     for cp in pinyin_dict:
         c = chr(cp)
-        lv = level(c)
-        if not lv or c in exclude:
+        if c in exclude:
             continue
+        lv = level(c)
         rs = pinyin(c, style=Style.TONE3, heteronym=True, neutral_tone_with_five=True)[0]
-        if rs == [reading]:
+        if lv and rs == [reading]:
             tiers[lv].append(c)
         elif lv == 1 and rs and rs[0] == reading:
             tiers[3].append(c)
+        elif not lv and rs == [reading] and "一" <= c <= "鿿":
+            tiers[4].append(c)
     out, used = [], []
     for t in (1, 2, 3):
         for c in tiers[t]:
             if len(out) < k:
                 out.append(c)
                 used.append(t)
-    note = {1: "single-reading common", 2: "single-reading level-2", 3: "dominant-reading only"}
+    if not out:
+        for c in tiers[4]:
+            if len(out) < k:
+                out.append(c)
+                used.append(4)
+    note = {1: "single-reading common", 2: "single-reading level-2", 3: "dominant-reading only",
+            4: "single-reading outside GB2312 (last resort)"}
     return out, ", ".join(sorted({note[t] for t in used})) or "none found"
 
 

@@ -41,12 +41,26 @@ runner 上 3 分 53 秒含首次下模型；证据在 `research/voice-auto-calib
 （correct 9、uncertain 5、找不到参考字 2，都不红）；停顿、语速全过；
 整句被拆 10 处——这一条片子真正该改的就是它。
 第一版把 137 处多音字全量，跑了 8 分 49 秒、红成一片，见 `poly_targets` 的说明。
+
+校准补记（2026-11-21，SUITE_VERSION 2）：完整性比对的数字归一化补齐三件——
+① 小数是一个音节块（整数部读数＋点＋小数逐位，或全逐位），旧版把「77.7%」拆成
+「77」和「7%」两块、丢了「点」还倒置语序；② 数字之间的 -/–/~ 读「至」，旧版
+直接丢掉连词；③ 百分比的「百分之」在并列/区间里共享（百分之二十至二十三、
+百分之十或二十点八），旧版只认每个 % 各带一个。另把转写侧数字念法的挑选从
+逐块贪心改成对参考的全局对齐（贪心会把年份挑成读数形、多塞「千/十」）。
+计数对齐也从 difflib 块匹配换成音节级编辑距离：块匹配对等值异分解的读数
+（三百九十二千 vs 三十九万二千）交叉对位、把替换误计成漏读＋多读。
+门槛常量一概没动。回归证据 `research/voice-auto-calib/normalization-20261121.json`：
+本集 11 组实测（脚本, 转写）对旧版全红、新版全过且音节差归零（ASR 误听的替换
+不计）；已发原生证据的 (脚本, 转写) 对新版复跑不翻红；构造缺陷（漏读整句、
+漏读数字段、多读整句、整句换词）新版仍全红。
 """
 from __future__ import annotations
 
 import argparse
 import difflib
 import hashlib
+import itertools
 import json
 import re
 import subprocess
@@ -65,7 +79,7 @@ for p in (ROOT / "src", ROOT / "tools"):
 SCHEMA = "tennislive.voice-auto-review.v1"
 EVIDENCE = "voice_auto_review.json"
 METHOD = "automated_voice_suite"
-SUITE_VERSION = 1
+SUITE_VERSION = 2
 
 #: 人名、比分内部两个 token 之间允许的最长停顿（秒）。
 MAX_INNER_GAP = 0.18
@@ -138,9 +152,22 @@ def _num_zh(n: int) -> str:
     return out
 
 
+def _digits_zh(s: str) -> str:
+    return "".join(_DIG[int(c)] for c in s)
+
+
 def _num_readings(s: str) -> list[str]:
-    """转写出来的阿拉伯数字可能是读数（七十五）也可能是逐位（二零二六），两种都给。"""
-    forms = ["".join(_DIG[int(c)] for c in s)]
+    """转写出来的阿拉伯数字可能是读数（七十五）也可能是逐位（二零二六），两种都给。
+
+    小数按口语形：整数部读数＋「点」＋小数部逐位（77.7→七十七点七、1.94→一点九四），
+    或全逐位（七七点七）；整数部的读数形只在不太长、没有前导零时给。"""
+    if "." in s:
+        ip, fp = s.split(".", 1)
+        forms = [_digits_zh(ip) + "点" + _digits_zh(fp)]
+        if ip and len(ip) <= 8 and not (len(ip) > 1 and ip[0] == "0"):
+            forms.insert(0, _num_zh(int(ip)) + "点" + _digits_zh(fp))
+        return list(dict.fromkeys(forms))
+    forms = [_digits_zh(s)]
     if len(s) <= 8 and not (len(s) > 1 and s[0] == "0"):
         forms.insert(0, _num_zh(int(s)))
     return list(dict.fromkeys(forms))
@@ -151,18 +178,103 @@ def _py(text: str) -> list[str]:
     return lazy_pinyin(text) if text else []
 
 
+#: 切块：汉字串，或一个数字（整数/小数，可带 %）。数字之间的 -/–/~ 先换成「至」。
+_CHUNK = re.compile(r"[㐀-鿿]+|\d+(?:\.\d+)?%?")
+_RANGE_DASH = re.compile(r"(\d%?)\s*[-–—~～]\s*(?=\d)")
+
+
+def _expand(text: str) -> list[list[list[str]]]:
+    """逐块展开候选音节串（每块一组候选，汉字块只有一种）。
+
+    - 数字之间的连字符读「至」（101-200＝一百零一至二百）：先在原文里换成「至」
+      再切块；脚本侧本是汉字「至」，同一规则跑过是空操作。
+    - 百分比：第一个 % 展开为「百分之＋数字」；其后的 % 多给一种不带「百分之」的
+      展开——口语里并列/区间的百分比共享一个「百分之」（百分之二十至二十三、
+      百分之十或二十点八），脚本写全形时全局对齐会挑全形那种，不会误伤。
+    """
+    text = _RANGE_DASH.sub(lambda m: m.group(1) + "至", text)
+    out: list[list[list[str]]] = []
+    seen_percent = False
+    for chunk in _CHUNK.findall(text):
+        if not chunk[0].isdigit():
+            out.append([_py(chunk)])
+            continue
+        forms = [_py(f) for f in _num_readings(chunk.rstrip("%"))]
+        if not chunk.endswith("%"):
+            out.append(forms)
+            continue
+        headed = [["bai", "fen", "zhi"] + f for f in forms]
+        out.append(headed + forms if seen_percent else headed)
+        seen_percent = True
+    return out
+
+
+def _diff_counts(ref: list[str], got: list[str]) -> tuple[int, int, int, int]:
+    """(漏读， 多读， 替换， 最长连续漏读)，按拼音音节数。
+
+    用真正的编辑距离对齐（DP，先最小化总编辑数、再最小化增删数——替换比漏读
+    便宜，ASR 把同音字写错形是常态），不用 difflib 的块匹配：块匹配遇到
+    「三百九十二千」对「三十九万二千」这种等值异分解的读数会交叉对位，
+    把 2 处替换误计成漏读 2＋多读 2（2026-11-21 校准补记）。"""
+    n, m = len(ref), len(got)
+    # dp[i][j] = (总编辑数， 增删数， 路径) 对 ref[:i] -> got[:j] 的最优
+    dp = [[None] * (m + 1) for _ in range(n + 1)]
+    dp[0][0] = (0, 0, "")
+    for i in range(n + 1):
+        for j in range(m + 1):
+            cur = dp[i][j]
+            if cur is None:
+                continue
+            ops, indel, path = cur
+            if i < n and j < m:
+                step = (ops, indel, path + "E") if ref[i] == got[j] else (ops + 1, indel, path + "S")
+                if dp[i + 1][j + 1] is None or step[:2] < dp[i + 1][j + 1][:2]:
+                    dp[i + 1][j + 1] = step
+            if i < n:
+                step = (ops + 1, indel + 1, path + "D")
+                if dp[i + 1][j] is None or step[:2] < dp[i + 1][j][:2]:
+                    dp[i + 1][j] = step
+            if j < m:
+                step = (ops + 1, indel + 1, path + "I")
+                if dp[i][j + 1] is None or step[:2] < dp[i][j + 1][:2]:
+                    dp[i][j + 1] = step
+    _ops, _indel, path = dp[n][m]
+    dele = path.count("D")
+    ins = path.count("I")
+    sub = path.count("S")
+    worst = 0
+    run = 0
+    for c in path:
+        run = run + 1 if c == "D" else 0
+        worst = max(worst, run)
+    return dele, ins, sub, worst
+
+
 def _syllables(text: str, ref: list[str] | None = None) -> list[str]:
     """拼音音节（不带声调）。外文词不计：转写对英文缩写和 Ace 一类太不稳。
 
-    给了 `ref` 时，转写里的数字挑和参考对得最好的那种念法。"""
-    text = re.sub(r"(\d+)%", lambda m: "百分之" + m.group(1), text)
+    给了 `ref` 时，转写里每个数字块的念法（读数/逐位、百分比带不带「百分之」）
+    按**全局对齐**挑和参考差得最少的那种——逐块贪心挑会把年份挑成读数形、
+    多塞「千/十」（2026-11-21 校准补记）。组合数过大时退回逐块贪心。"""
+    parts = _expand(text)
+    if ref is None:
+        return [s for forms in parts for s in forms[0]]
+    total = 1
+    for forms in parts:
+        total *= len(forms)
+    if total <= 8192:
+        best: list[str] | None = None
+        best_score: tuple[int, int, int] | None = None
+        for combo in itertools.product(*(range(len(f)) for f in parts)):
+            cand = [s for forms, i in zip(parts, combo) for s in forms[i]]
+            d, ins, sub, worst = _diff_counts(ref, cand)
+            score = (d + ins, worst, sub)
+            if best_score is None or score < best_score:
+                best, best_score = cand, score
+        return best if best is not None else []
     out: list[str] = []
-    for chunk in re.findall(r"[㐀-鿿]+|\d+", text):
-        if not chunk.isdigit():
-            out += _py(chunk)
-            continue
-        forms = [_py(f) for f in _num_readings(chunk)]
-        if ref is None:
+    for forms in parts:
+        if len(forms) == 1:
             out += forms[0]
         else:
             out += max(forms, key=lambda f: difflib.SequenceMatcher(
@@ -173,22 +285,7 @@ def _syllables(text: str, ref: list[str] | None = None) -> list[str]:
 def compare_transcript(text: str, hyp: str) -> dict:
     ref = _syllables(text)
     got = _syllables(hyp, ref)
-    sm = difflib.SequenceMatcher(a=ref, b=got, autojunk=False)
-    dele = ins = sub = worst = 0
-    for op, i1, i2, j1, j2 in sm.get_opcodes():
-        if op == "delete":
-            dele += i2 - i1
-            worst = max(worst, i2 - i1)
-        elif op == "insert":
-            ins += j2 - j1
-        elif op == "replace":
-            n, m = i2 - i1, j2 - j1
-            sub += min(n, m)
-            if n > m:
-                dele += n - m
-                worst = max(worst, n - m)
-            elif m > n:
-                ins += m - n
+    dele, ins, sub, worst = _diff_counts(ref, got)
     ratio = sub / max(1, len(ref))
     ok = dele + ins <= MAX_INDEL and worst <= MAX_RUN_DELETE and ratio <= MAX_SUB_RATIO
     return {"ok": ok, "ref_syllables": len(ref), "deleted": dele, "inserted": ins,
