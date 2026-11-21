@@ -1,0 +1,41 @@
+name: Davis Cup public review assets
+on:
+  push:
+    branches: [review-assets/davis-cup-preview-2026]
+permissions:
+  contents: write
+concurrency:
+  group: davis-cup-preview-2026-review-assets
+  cancel-in-progress: false
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+            tools
+            specs/explainers
+            output/2026-11-21/explainer/davis-cup-preview-2026
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install native publication verifier
+        timeout-minutes: 5
+        run: pip install -q -e .
+      - name: Restore exact reviewed film and make review assets accessible
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python tools/publish_transferred_explainer.py --outdir output/2026-11-21/explainer/davis-cup-preview-2026
+          gh release upload davis-cup-preview-2026 output/2026-11-21/explainer/davis-cup-preview-2026/poster-hd-3240x4320.png --clobber
+          gh api repos/robertyang87/tennislive/releases/tags/davis-cup-preview-2026 --jq '{tag_name,draft,assets:[.assets[]|{name,size,digest,browser_download_url}]}' > review-upload-proof.json
+      - name: Keep actual upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: davis-cup-flags-review-upload
+          path: review-upload-proof.json
+          if-no-files-found: warn
