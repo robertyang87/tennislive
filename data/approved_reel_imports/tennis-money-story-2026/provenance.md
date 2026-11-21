@@ -1,0 +1,41 @@
+# tennis-money-story-2026 落地包来源与状态
+
+- 成片（v5）：final_tennis_money_story_v5.mp4（1080×1440，697.609s，220,212,799 B，
+  sha256 a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e）；
+  封面 poster.jpg 为定版封面原件
+  （sha256 a4a1378a7877250919ae0f49563b5882f1a9591ff8ab62069c6802d87eed38b4），
+  成片第一页即该封面静帧 2.0 秒。
+- v5 与 v4 的唯一差异：两段原声（第 34 段丹尼尔太郎播客 298.465–342.965、
+  第 45 段乔娃林斯卡法网发布会 416.422–454.422）的烧录字幕由中文提要式（3＋4 条）
+  改为逐句双语字幕（10 句，EN 原文＋ZH 译文，逐字取自审听包，字幕窗按句子
+  毫秒级切分）。其余镜头画面与 v4 逐字节同源（非原声段抽帧与 v4 像素级一致），
+  音轨与 v4 解码后逐字节一致（decoded audio SHA-256
+  5ab1a2bfe451c42011911f73e6e96fe3b61f1aab5b5d0df1c669ae96edef71c2），
+  总时长不变。v4 原文件保留未动。账号所有者 2026-11-21 批准出 v5 并推送。
+- 制作：自有制作线（tennis-money-story-2026/build，build_v5.py＋assemble_v5.py），
+  非原生渲染器；spec 按 laver-cup-history-2026 先例以母带自身为 source
+  `approved_master` 建模，68 段为母带连续跨度；旁白 edge-tts
+  zh-CN-XiaoxiaoNeural，锁稿见仓外 SCRIPT.md（65 行，逐行事实标注）。
+- 人工 QC：真实做过——QC_RECORD.md 及 v2/v3/v4 逐项修正与抽帧记录在案
+  （字幕断行锁定表、字形审计、左上标题块与封面逐像素对齐、封面页 60 帧整接等）；
+  v5 双语字幕抽帧自检在仓外 frames_v5/（两段原声各帧双语完整可读、无溢出）。
+- 审听：对母带本体执行（data/audio_reviews/tennis-money-story-2026*）：
+  faster-whisper small 全片 zh 一遍＋F00/OA1/OA2 窗口 en 交叉核对，原始输出
+  在 raw/。F00 冷开为现场人群声、无前景英文（VAD 交叉核对结论在案）。
+  v5 音轨与 v4 逐字节一致，审听结论原样沿用；审听包 source_sha256 已换为
+  v5 身份并注明复核依据，plan 经 foreground_audio_gate.rebind_plan 重绑定。
+- subtitles.ass：由 v5 成片实际烧录字幕导出（锁稿文本＋v3 锁定 SUB_BREAKS
+  断行＋原声段 10 条双语事件，格式照原生 write_subtitles 双语成例：
+  EN 行 Inter 小字在上、ZH 主行在下、\an2 下锚）；全部事件时间已按所属段落
+  窗口做厘秒级钳制，避免厘秒取整跨段（与成片烧录差 ≤0.01s，低于一帧）。
+- 管线闸口（2026-11-21 本地实跑，全过）：
+  - push_reel --stage check：通过（标题「11.20网球有故事|职业网球真的赚钱么」）。
+  - foreground_audio_gate.require：恰好 10 条 required cues，全在第 34/45 段。
+  - check_reel_landed：0 项不合格，qc_attestation.json 已签发
+    （film a269948e3a1f…，render.json 已钉 attestation sha）。
+  - auto_push_gate：本地因产物未入仓＋render.json 尚无 Release video_url
+    按设计跳过（这两项由 CI 导入流程的 release/提交步补齐后在 CI 内判定，
+    与 laver 先例同一顺序）。
+- 导入：tools/import_approved_money.py＋.github/workflows/import-approved-money-story.yml
+  （仿 import-approved-laver，钉版 v5 身份；required 文件含 render_inputs.json
+  与 audio_review_binding.json，CI 内重跑 push_reel check 与 check_reel_landed）。

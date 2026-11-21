@@ -1,0 +1,523 @@
+{
+  "slug": "tennis-money-story-2026",
+  "date": "2026-11-20",
+  "_column": "网球有故事",
+  "title": "职业网球真的赚钱么？",
+  "cx": 0.5,
+  "track": false,
+  "tts_backend": "edge",
+  "_tts_backend_why": "本片在自有制作线以本地 edge-tts 通道合成（zh-CN-XiaoxiaoNeural），成片已定版；此字段只记录事实，不经原生渲染器重渲。",
+  "_import": {
+    "kind": "finished_master_inspection",
+    "renderer": "tennis-money-story-2026/build: build_full.py + scenes_full.py + render_samples_v4.py + assemble_v4.py（自有代码制作，非原生渲染器）",
+    "master_file": "final_tennis_money_story_v5.mp4",
+    "master_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
+    "master_bytes": 220212799,
+    "_why": "segments 的 source 一律记 approved_master，start/end 是母带自身时间轴的窗口（同 laver-cup-history-2026 导入先例）：spec 描述的是这份已定版成片本身，审听证据也对母带本体做。 v5（2026-11-21）：仅两段原声（第 34/45 段）字幕层按管线闸口重烧为逐句双语，其余画面/音频/时长与 v4 逐项一致（音轨解码哈希与 v4 相同）。"
+  },
+  "_production_status": "finished_master_pending_pipeline_landing",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "story_kind": "other",
+    "hook": "美网首轮出局 $110,000\nITF M15 冠军 $2,160",
+    "sub": "从大满贯到 M15 的奖金实账",
+    "topic": "职业网球真的赚钱么？",
+    "approved_image": "data/approved_reel_imports/tennis-money-story-2026/poster.jpg",
+    "_approved_image_why": "定版封面原件：辛纳 2024 美网举杯官方图（ATP/Getty）＋数字钩子版式，账号所有者 2026-11-19 定版。成片第一页即此封面静帧 2.0 秒（cover_seconds=2.0、无配音）。"
+  },
+  "push": {
+    "auto": true,
+    "summary": "职业网球真的赚钱么",
+    "lead": "奖金写的是他赢了多少，不是他最后能留下多少。从大满贯到 M15，把职业网球这本账算给你看。"
+  },
+  "editorial": {
+    "mode": "story",
+    "question": "职业网球真的赚钱么？钱被谁赚走，又由什么规则决定？",
+    "thesis": "总量巨大但分配极端金字塔化：能进哪一层由排名与规则分配，成本刚性且由球员自担，多数球员净账为负或接近于零；官方补丁（ATP Baseline、挑战赛奖金增长）本身即是底层不可持续的结构自证。",
+    "beats": [
+      "开场：三个标准（总量、净账、持续性）与结论先行",
+      "第 1 章 总量：美网 9,000 万美元总补偿与塔尖年收入",
+      "第 2 章 分配：WTA 前 100 名拿走 77.7%",
+      "第 3 章 层级差：美网首轮 $110,000 对 M15 冠军 $2,160",
+      "第 4 章 规则分配：cutoff、签位结构、统一奖金表、双打分成",
+      "第 5 章 成本与净账：五本真实账目与三个盈亏平衡口径",
+      "第 6 章 安全网：免费待遇边界与 ATP Baseline 最低收入保障",
+      "第 7 章 结构与改革：PTPA 诉讼、塔尖涨幅更快、回到标题之问"
+    ],
+    "human_context": {
+      "angle": "跟着一笔钱往下走：冠军支票→分配结构→底层球员逐项扣账→拉回规则→官方补丁→回到标题之问。球员只作各自主账的证人，不作传记段。",
+      "facts": [
+        "2025 年 WTA 奖金池 2.497 亿美元，前 100 名合计 1.94 亿、占 77.7%（Tennis & Money 基于 WTA 官方数据）。",
+        "2025 年美网单打首轮出局 $110,000，ITF M15 冠军 $2,160，相差约 51 倍（美网/ITF 官方）。",
+        "丹尼尔太郎自述：每月运营支出不低于 20,000 美元（不含团队工资），排名五六十位全年支出约 500,000 美元（本人播客原声）。",
+        "ATP Baseline 2025：前 100 名保底 $300,000、101–175 名 $200,000、176–250 名 $100,000，全年向 30 人发放逾 200 万美元（ATP 官方）。",
+        "PTPA 2025-03-18 于纽约南区联邦法院提起反垄断诉讼，主张球员只取得行业收入约 17.5%——诉讼方单方主张，未经法院认定（片中已标注）。"
+      ]
+    }
+  },
+  "sources": {
+    "approved_master": "https://github.com/robertyang87/tennislive/releases/download/reel-tennis-money-story-2026/tennis-money-story-2026.mp4"
+  },
+  "segments": [
+    {
+      "source": "approved_master",
+      "start": 2.0,
+      "end": 4.99,
+      "narration": "职业网球，真的赚钱么？"
+    },
+    {
+      "source": "approved_master",
+      "start": 4.99,
+      "end": 13.308,
+      "narration": "本片用三个标准回答：奖金是否足够高，扣除成本后是否为正，收入能否持续。"
+    },
+    {
+      "source": "approved_master",
+      "start": 13.308,
+      "end": 19.824,
+      "narration": "结论先行：能全部达到的，只有金字塔顶层的少数球员。"
+    },
+    {
+      "source": "approved_master",
+      "start": 19.824,
+      "end": 27.224
+    },
+    {
+      "source": "approved_master",
+      "start": 27.224,
+      "end": 35.957,
+      "narration": "先看总量。2025 年美网，球员总补偿 9,000 万美元，单打冠军奖金 500 万美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 35.957,
+      "end": 44.49,
+      "narration": "同年，WTA 全年奖金总额 2.497 亿美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 44.49,
+      "end": 57.278,
+      "narration": "阿尔卡拉斯 2025 年奖金 2,135 万美元，居 ATP 第一；萨巴伦卡以 1,501 万美元，刷新女子单赛季奖金纪录。"
+    },
+    {
+      "source": "approved_master",
+      "start": 57.278,
+      "end": 65.278,
+      "narration": "但在成名早期，萨巴伦卡的全队开支，只靠她一人的奖金承担。"
+    },
+    {
+      "source": "approved_master",
+      "start": 65.278,
+      "end": 77.58,
+      "narration": "2018 年，她的赛季奖金为 187 万美元；她的两位教练为节省开支，长期合住一间房，持续到她稳居世界前十之后。"
+    },
+    {
+      "source": "approved_master",
+      "start": 77.58,
+      "end": 84.313,
+      "narration": "丹尼尔太郎在采访中说：“作为一名网球运动员，你就像一家小公司。”"
+    },
+    {
+      "source": "approved_master",
+      "start": 84.313,
+      "end": 92.295,
+      "narration": "先看分配。2025 年，WTA 全年奖金总额为 2.497 亿美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 92.295,
+      "end": 101.813,
+      "narration": "其中，奖金收入排名前 100 位的球员，合计取得 1.94 亿美元，占总额的 77.7%。"
+    },
+    {
+      "source": "approved_master",
+      "start": 101.813,
+      "end": 106.507,
+      "narration": "其余 22.3%，由数百名球员分配。"
+    },
+    {
+      "source": "approved_master",
+      "start": 106.507,
+      "end": 111.993,
+      "narration": "以下分档按奖金收入排名计算，不是世界排名。"
+    },
+    {
+      "source": "approved_master",
+      "start": 111.993,
+      "end": 122.039,
+      "narration": "第 101 至 200 位，ATP 人均约 30.8 万美元；第 201 至 300 位，人均约 15.8 万美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 122.039,
+      "end": 126.997,
+      "narration": "第 401 至 500 位，人均约 2.7 万美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 126.997,
+      "end": 134.446,
+      "narration": "2025 年，全年奖金超过 100 万美元的 ATP 球员，共 88 人。"
+    },
+    {
+      "source": "approved_master",
+      "start": 134.446,
+      "end": 142.618,
+      "narration": "阿尔卡拉斯一人的年度奖金，约为第 401 至 500 位分档人均的 791 倍。"
+    },
+    {
+      "source": "approved_master",
+      "start": 142.618,
+      "end": 157.651,
+      "narration": "2025 年美网，单打首轮出局，每人获得 110,000 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 157.651,
+      "end": 175.651,
+      "narration": "同年，挑战赛 75 级赛事的单打冠军，奖金 14,200 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 175.651,
+      "end": 184.881,
+      "narration": "ITF 最低级别 M15 赛事，冠军奖金 2,160 美元，首轮出局只有 156 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 184.881,
+      "end": 195.407,
+      "narration": "美网首轮出局的奖金，约为 M15 冠军的 51 倍；美网冠军奖金，约为挑战赛 75 级冠军的 352 倍。"
+    },
+    {
+      "source": "approved_master",
+      "start": 195.407,
+      "end": 204.491,
+      "narration": "即便在大满贯内部，单打冠军也只占全站总奖金池的 3.63% 至 5.61%。"
+    },
+    {
+      "source": "approved_master",
+      "start": 204.491,
+      "end": 219.024,
+      "narration": "球员能参加哪一级赛事，由排名决定。"
+    },
+    {
+      "source": "approved_master",
+      "start": 219.024,
+      "end": 224.966,
+      "narration": "这个排名界限称为 cutoff，即正赛最后一名的入围排名。"
+    },
+    {
+      "source": "approved_master",
+      "start": 224.966,
+      "end": 233.548,
+      "narration": "大满贯正赛 128 个签位，104 个直接入围，16 个来自资格赛，8 个为外卡。"
+    },
+    {
+      "source": "approved_master",
+      "start": 233.548,
+      "end": 242.682,
+      "narration": "挑战赛 75 级德里站的正赛线是第 303 位，50 级赛事的正赛线是第 416 位。"
+    },
+    {
+      "source": "approved_master",
+      "start": 242.682,
+      "end": 253.448,
+      "narration": "每一轮金额由巡回赛统一制定的奖金分配表决定；所有挑战赛 50 级赛事的冠军奖金，都是 8,350 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 253.448,
+      "end": 262.054,
+      "narration": "ATP 规则书设有 500 级赛事奖金公式条款，但公式全文未公开，本片不作推测。"
+    },
+    {
+      "source": "approved_master",
+      "start": 262.054,
+      "end": 269.484,
+      "narration": "双打冠军每队奖金只有单打冠军的 20% 至 23%，由两名球员分配。"
+    },
+    {
+      "source": "approved_master",
+      "start": 269.484,
+      "end": 278.017,
+      "narration": "大满贯首轮赛前退赛，球员保留首轮奖金的 50%，另一半由幸运落败者取得；开赛后退赛或未达职业标准，奖金可被罚没，2018 年澳网，兹维列夫被罚 45,000 澳元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 278.017,
+      "end": 284.432,
+      "narration": "奖金只是收入端。成本由球员本人承担，不随胜负增减。"
+    },
+    {
+      "source": "approved_master",
+      "start": 284.432,
+      "end": 298.465,
+      "narration": "丹尼尔太郎自述：每月运营支出不低于 20,000 美元，不含团队工资；一名随行教练年薪不低于 50,000 美元，另有约 10% 奖金提成，全年总成本约 100,000 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 298.465,
+      "end": 342.965,
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 8.24,
+          "text": "But this is just for the operational expenses, not including the salaries of the coaches and stuff.\n这还只是运营支出，不包括教练等团队成员的薪资。"
+        },
+        {
+          "at": 9.24,
+          "end": 13.78,
+          "text": "So if you have a full-time traveling team with a coach and a physio\n如果你有一支全职随行团队，有教练和理疗师，"
+        },
+        {
+          "at": 16.06,
+          "end": 21.72,
+          "text": "and you're like 50, 60 in the world, you're going to be spending like $500,000\n而你排名世界五六十位，你一年就要花大约五十万美元；"
+        },
+        {
+          "at": 22.28,
+          "end": 35.7,
+          "text": "a year and a guy who's 50, 60 will make close to a million minus the 20 percent withholding\n同等排名的球员一年收入接近一百万美元，扣掉百分之二十的预扣税，"
+        },
+        {
+          "at": 35.7,
+          "end": 43.16,
+          "text": "tax on average like that's like 800,000 but that's a very short margin for the amount of\n平均约八十万美元，但相对于投入的规模，利润空间非常小。（原声在此被成片淡出截断）"
+        }
+      ]
+    },
+    {
+      "source": "approved_master",
+      "start": 342.965,
+      "end": 346.123,
+      "narration": "先看一本完整的年度账目。"
+    },
+    {
+      "source": "approved_master",
+      "start": 346.123,
+      "end": 352.281,
+      "narration": "法国球员德罗盖，2024 年，世界排名第 183 位。"
+    },
+    {
+      "source": "approved_master",
+      "start": 352.281,
+      "end": 360.767,
+      "narration": "他全年奖金收入 164,000 欧元，全年成本 100,000 欧元，成本占收入的 61%。"
+    },
+    {
+      "source": "approved_master",
+      "start": 360.767,
+      "end": 366.349,
+      "narration": "扣除成本后，账面结余 64,000 欧元，尚未计税。"
+    },
+    {
+      "source": "approved_master",
+      "start": 366.349,
+      "end": 374.187,
+      "narration": "同一级别的阿特马内，2024 年收入 392,000 欧元，成本 200,000 欧元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 374.187,
+      "end": 379.889,
+      "narration": "其中仅穿线一项，他全年支出 8,000 至 10,000 欧元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 379.889,
+      "end": 390.889,
+      "narration": "挑战赛 175 级凤凰城站，穿线费每把 25 美元，直接从奖金中扣除。"
+    },
+    {
+      "source": "approved_master",
+      "start": 390.889,
+      "end": 401.389,
+      "narration": "伤病会改变结果。前世界第 16 位巴希拉什维利，2024 年奖金 63,183 美元，全年净亏损约 120,000 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 401.389,
+      "end": 407.922,
+      "narration": "印度球员纳加尔 2023 年自述，银行账户余额只有 900 欧元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 407.922,
+      "end": 416.422,
+      "narration": "赫瓦林斯卡在 2026 年法网自述，奖金赛后发放，她一度无力支付酒店账单，当时没有赞助商和服装合同。"
+    },
+    {
+      "source": "approved_master",
+      "start": 416.422,
+      "end": 454.422,
+      "quote": [
+        {
+          "at": 0.0,
+          "end": 8.3,
+          "text": "I mean for now I'm playing so I'm very grateful for the Oshi company to help me to cover my\n我现在还在参赛，我非常感谢那家公司帮我承担我的"
+        },
+        {
+          "at": 8.3,
+          "end": 16.58,
+          "text": "hotel expenses this three weeks now but other than that now I'm just focusing on tennis and\n这三周的住宿费用；除此之外，我现在只专注于网球，"
+        },
+        {
+          "at": 16.58,
+          "end": 19.18,
+          "text": "the rest I guess will come after the tournament.\n其余的事情我想等比赛结束后再说。"
+        },
+        {
+          "at": 21.02,
+          "end": 28.02,
+          "text": "Hi Maya, congrats. What we've seen you with different outfits on different runs. What's the\n（记者提问）你好，玛雅，恭喜你。我们注意到你这几轮穿的服装都不一样，这背后有什么"
+        },
+        {
+          "at": 28.02,
+          "end": 36.6,
+          "text": "story behind all of those outfits? I mean there is no story really I'm not sponsored so I guess that's the story.\n故事吗？其实真的没什么故事——我没有赞助商，我想这就是故事本身。"
+        }
+      ]
+    },
+    {
+      "source": "approved_master",
+      "start": 454.422,
+      "end": 467.972,
+      "narration": "盈亏平衡点有三个口径。不计教练成本，ITF 按 2013 年数据测算，男子约第 336 名、女子约第 253 名可以打平。"
+    },
+    {
+      "source": "approved_master",
+      "start": 467.972,
+      "end": 477.034,
+      "narration": "计入团队成本，2025 至 2026 年的一项学术研究给出的平衡点，约为第 150 名。"
+    },
+    {
+      "source": "approved_master",
+      "start": 477.034,
+      "end": 483.096,
+      "narration": "球员琼斯对 BBC 表示，不进前 75 名，就无法打平。"
+    },
+    {
+      "source": "approved_master",
+      "start": 483.096,
+      "end": 488.916,
+      "narration": "奖金写的是他赢了多少，不是他最后能留下多少。"
+    },
+    {
+      "source": "approved_master",
+      "start": 488.916,
+      "end": 502.466,
+      "narration": "先看免费待遇的边界。按 ATP 规则书第一章，1000 级赛事提供至少 10 晚住宿，250 级至少 5 晚，含打进正赛的资格赛球员。"
+    },
+    {
+      "source": "approved_master",
+      "start": 502.466,
+      "end": 510.199,
+      "narration": "美网为每名球员提供 1,000 美元旅行补贴，外加两间酒店房间，或每天 600 美元替代补贴。"
+    },
+    {
+      "source": "approved_master",
+      "start": 510.199,
+      "end": 517.341,
+      "narration": "ATP 的 Baseline 计划，为排名前 250 位的球员设定最低收入标准。"
+    },
+    {
+      "source": "approved_master",
+      "start": 517.341,
+      "end": 530.435,
+      "narration": "2025 年标准：前 100 名 300,000 美元，101 至 175 名 200,000 美元，176 至 250 名 100,000 美元，差额由 ATP 补足。"
+    },
+    {
+      "source": "approved_master",
+      "start": 530.435,
+      "end": 536.785,
+      "narration": "2025 年，该计划发放超过 200 万美元，覆盖 30 名球员。"
+    },
+    {
+      "source": "approved_master",
+      "start": 536.785,
+      "end": 544.785,
+      "narration": "新人预支为 200,000 美元，以巡回赛奖金的一半偿还；德容领取预支后，2025 年奖金超过 780,000 美元，年终排名升至第 73 位。"
+    },
+    {
+      "source": "approved_master",
+      "start": 544.785,
+      "end": 553.285,
+      "narration": "大师赛利润分享，2024 年向 186 名球员分配 18,300,000 美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 553.285,
+      "end": 559.827,
+      "narration": "截至本片制作时，WTA 没有公布同类的最低收入保障计划。"
+    },
+    {
+      "source": "approved_master",
+      "start": 559.827,
+      "end": 574.169,
+      "narration": "税款再减少到账金额。美国赛事对外国球员预扣 30%，印度预扣 10% 或 20.8%，英国按在英天数比例，对全球代言收入计税。"
+    },
+    {
+      "source": "approved_master",
+      "start": 574.169,
+      "end": 585.125,
+      "narration": "球员是独立承包商，不是雇员；网球没有集体谈判协议，规则书中也没有经纪人许可或佣金上限条款。"
+    },
+    {
+      "source": "approved_master",
+      "start": 585.125,
+      "end": 599.707,
+      "narration": "改革确实在发生。挑战赛总奖金从 2022 年的 1,210 万美元，增至 2025 年的 2,850 万美元，2026 年宣布达到 3,240 万美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 599.707,
+      "end": 609.081,
+      "narration": "但顶层涨幅更高。2025 年美网，冠军奖金上涨 39%，首轮只上涨 10%。"
+    },
+    {
+      "source": "approved_master",
+      "start": 609.081,
+      "end": 629.183,
+      "narration": "2025 年 3 月，PTPA 在美国纽约南区联邦法院提起反垄断诉讼，主张球员只取得行业收入的约 17.5%——这是诉讼方的单方主张，未经法院认定。ATP 和 WTA 均回应称，诉讼毫无根据。"
+    },
+    {
+      "source": "approved_master",
+      "start": 629.183,
+      "end": 645.325,
+      "narration": "2026 年 9 月至 10 月，法院驳回全部撤案动议，案件进入证据开示；澳大利亚网球协会已经和解。德约科维奇不是原告，已于 2026 年 1 月与 PTPA 完全切割。"
+    },
+    {
+      "source": "approved_master",
+      "start": 645.325,
+      "end": 652.858,
+      "narration": "中国球员郑赛赛，是原告之一。"
+    },
+    {
+      "source": "approved_master",
+      "start": 652.858,
+      "end": 662.391,
+      "narration": "顶层还有奖金之外的收入：2025 年，郑钦文奖金 160 万美元，场外收入 2,100 万美元。"
+    },
+    {
+      "source": "approved_master",
+      "start": 662.391,
+      "end": 675.869,
+      "narration": "回到三个标准：总量足够高；77.7% 的 WTA 年度奖金集中于前 100 名；扣除成本后，大量球员净收入为负数或接近于零。"
+    },
+    {
+      "source": "approved_master",
+      "start": 675.869,
+      "end": 681.535,
+      "narration": "丹尼尔太郎的原话，适用于全片的账目：“作为一名网球运动员，你就像一家小公司。”"
+    },
+    {
+      "source": "approved_master",
+      "start": 681.535,
+      "end": 693.487,
+      "narration": "所以，职业网球真的赚钱么？赚钱的，是金字塔顶层的少数球员；对大多数球员，奖金不足以覆盖参赛成本。"
+    }
+  ]
+}

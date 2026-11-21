@@ -1,0 +1,105 @@
+{
+  "schema": "tennislive.foreground-audio-packet.v1",
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tennis-money-story-2026/tennis-money-story-2026.mp4",
+  "source_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
+  "method": "asr_cross_checked",
+  "reviewer": "Muse（tennislive 制作代理）· faster-whisper small（int8）全片 zh 一遍＋F00/OA1/OA2 窗口 en 交叉核对，原始 ASR 输出见 raw/；旁白段逐段与锁稿文本比对",
+  "reviewed_at": "2026-11-21T04:06:17Z",
+  "status": "complete",
+  "reviewed_from": 0,
+  "reviewed_to": 697.609,
+  "foreground_english": [
+    {
+      "start": 298.465,
+      "end": 306.705,
+      "en": "But this is just for the operational expenses, not including the salaries of the coaches and stuff.",
+      "zh": "这还只是运营支出，不包括教练等团队成员的薪资。"
+    },
+    {
+      "start": 307.705,
+      "end": 312.245,
+      "en": "So if you have a full-time traveling team with a coach and a physio",
+      "zh": "如果你有一支全职随行团队，有教练和理疗师，"
+    },
+    {
+      "start": 314.525,
+      "end": 320.185,
+      "en": "and you're like 50, 60 in the world, you're going to be spending like $500,000",
+      "zh": "而你排名世界五六十位，你一年就要花大约五十万美元；"
+    },
+    {
+      "start": 320.745,
+      "end": 334.165,
+      "en": "a year and a guy who's 50, 60 will make close to a million minus the 20 percent withholding",
+      "zh": "同等排名的球员一年收入接近一百万美元，扣掉百分之二十的预扣税，"
+    },
+    {
+      "start": 334.165,
+      "end": 341.625,
+      "en": "tax on average like that's like 800,000 but that's a very short margin for the amount of",
+      "zh": "平均约八十万美元，但相对于投入的规模，利润空间非常小。（原声在此被成片淡出截断）"
+    },
+    {
+      "start": 416.422,
+      "end": 424.722,
+      "en": "I mean for now I'm playing so I'm very grateful for the Oshi company to help me to cover my",
+      "zh": "我现在还在参赛，我非常感谢那家公司帮我承担我的"
+    },
+    {
+      "start": 424.722,
+      "end": 433.002,
+      "en": "hotel expenses this three weeks now but other than that now I'm just focusing on tennis and",
+      "zh": "这三周的住宿费用；除此之外，我现在只专注于网球，"
+    },
+    {
+      "start": 433.002,
+      "end": 435.602,
+      "en": "the rest I guess will come after the tournament.",
+      "zh": "其余的事情我想等比赛结束后再说。"
+    },
+    {
+      "start": 437.442,
+      "end": 444.442,
+      "en": "Hi Maya, congrats. What we've seen you with different outfits on different runs. What's the",
+      "zh": "（记者提问）你好，玛雅，恭喜你。我们注意到你这几轮穿的服装都不一样，这背后有什么"
+    },
+    {
+      "start": 444.442,
+      "end": 453.022,
+      "en": "story behind all of those outfits? I mean there is no story really I'm not sponsored so I guess that's the story.",
+      "zh": "故事吗？其实真的没什么故事——我没有赞助商，我想这就是故事本身。"
+    }
+  ],
+  "uncertain_spans": [],
+  "asr_evidence": [
+    {
+      "tool": "faster-whisper small int8, language=zh, word_timestamps",
+      "clip": "full master [0, 697.609]",
+      "raw_file": "data/audio_reviews/tennis-money-story-2026/raw/film-small.zh.json",
+      "raw_sha256": "88bc7c00103fbcfcfa0da10f5fa8273cbcbcf13020d8ceace796ca43e89a3570",
+      "note": "旁白段转写与锁稿中文逐段对应；OA1 窗口在 zh 遍中无转写段、OA2 窗口呈英文语音被 zh 强行解码的乱码段，两处均另以 en 遍逐句转写为准。"
+    },
+    {
+      "tool": "faster-whisper small int8, language=en, word_timestamps",
+      "clip": "OA1 window [298.465, 342.965]（丹尼尔太郎播客原声）",
+      "raw_file": "data/audio_reviews/tennis-money-story-2026/raw/oa1-small.en.json",
+      "raw_sha256": "1dd24548c376f5065a325725e235c18f2deb446b9c33422dec7edda2e653e648",
+      "note": "language_probability=1.00；5 句即 foreground_english 前 5 条。"
+    },
+    {
+      "tool": "faster-whisper small int8, language=en, word_timestamps",
+      "clip": "OA2 window [416.422, 454.422]（乔娃林斯卡法网发布会原声，含记者提问）",
+      "raw_file": "data/audio_reviews/tennis-money-story-2026/raw/oa2-small.en.json",
+      "raw_sha256": "9afcb91859a0a067252f337dcd82cdea8fa567b8d0b4c9f34a28fe93dea6d0ab",
+      "note": "language_probability=1.00；5 句即 foreground_english 后 5 条，含 21.02 起的记者英文提问。"
+    },
+    {
+      "tool": "faster-whisper small int8, language=en (+VAD) 与 language=zh 两遍交叉",
+      "clip": "F00 cold open [19.824, 27.224]（美网决赛冠军点现场声）",
+      "raw_file": "data/audio_reviews/tennis-money-story-2026/raw/f00-small.en.json",
+      "raw_sha256": "80e44ad5dadb462c3eacedad178046d97cbcf63b9d5d354a96cbe87732a4b50e",
+      "note": "无前景英文：裸 en 遍对人群声幻听出重复的 “Oh, my God!”；加 VAD 后塌缩为单个 p≈0.00 的 “Oh” 碎片（no_speech_prob 0.56），zh 遍仅幻听一句无关短语——典型人群欢呼噪声特征，无解说/采访类前景英文语音。"
+    }
+  ],
+  "v5_reverification": "2026-11-21 v5 母带复核：v5 仅重烧第 34/45 段原声字幕层（中文提要式 -> 逐句双语），音轨与 v4 母带解码后逐字节一致（decoded audio SHA-256 5ab1a2bfe451c42011911f73e6e96fe3b61f1aab5b5d0df1c669ae96edef71c2 与 v4 相同），故 foreground_english 逐句转写/译文与时间码原样沿用；source_sha256 更新为 v5 母带身份。"
+}

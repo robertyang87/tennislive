@@ -1,0 +1,17 @@
+{
+  "slug": "tennis-money-story-2026",
+  "cover_seconds": 2.0,
+  "cover_narrated": false,
+  "outro_seconds": 4.122,
+  "layout": "full",
+  "segments_seconds": 691.487,
+  "film_seconds": 697.609,
+  "narration_backend": "edge-tts",
+  "narration_voice": "zh-CN-XiaoxiaoNeural",
+  "renderer": "tennis-money-story-2026/build (build_full.py + render_samples_v4.py + build_v5.py + assemble_v5.py)",
+  "import_note": "Finished master produced outside the native renderer; landed via the approved-master route (laver-cup-history-2026 precedent). v5 master: identical to v4 except the two original-audio shots (segments 34/45) whose burned subtitles were re-rendered as per-sentence bilingual cues (EN original + ZH translation from the audio-review packet) to satisfy the foreground-audio gate; audio track is byte-identical to v4 after decode. subtitles.ass is exported from the v5 master's actual burned cues (locked SCRIPT.md text, v3-locked SUB_BREAKS, bilingual OA cues as burned). Native brand outro preserved as the final shot (outro_seconds).",
+  "render_inputs_sha256": "a3f225cc91557ffc354c077991e0c9cc5067d9e6657834a9102fb4afc017d712",
+  "film_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
+  "film_bytes": 220212799,
+  "qc_attestation_sha256": "0cee9fcb93109b431a1576d399f18fa2e8f1558bfa060a6779ebb306d2fdb99d"
+}
