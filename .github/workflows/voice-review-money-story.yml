@@ -1,0 +1,60 @@
+name: Voice auto review for tennis money story import
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: voice-review-money-story
+  cancel-in-progress: false
+jobs:
+  review:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OUTDIR: output/2026-11-20/reel/tennis-money-story-2026
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            output/2026-11-20/reel/tennis-money-story-2026
+            specs/reels
+            tools
+            src
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Cache voice review models and references
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/tennislive/polyphone
+          key: voice-auto-${{ runner.os }}-v1-money-${{ github.run_id }}
+          restore-keys: voice-auto-${{ runner.os }}-v1-
+      - name: Install review dependencies
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          pip install -q -e ".[polyphone]" faster-whisper
+      - name: Run native voice auto review on the actual frozen bundle
+        run: |
+          python tools/voice_auto_review.py \
+            --outdir "$OUTDIR" \
+            --bundle "$OUTDIR/tts_bundle.zip"
+      - name: Verify the publish gate now passes
+        run: |
+          test -f "$OUTDIR/voice_quality_review.json"
+          python tools/voice_quality_gate.py --outdir "$OUTDIR" --check
+      - name: Commit voice review evidence
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "$OUTDIR/voice_auto_review.json" "$OUTDIR/voice_quality_review.json"
+          python tools/check_staged_file_sizes.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'reel: tennis-money-story-2026 配音自动听审证据（五项全过）'
+          fi
+          source tools/git_push_retry.sh
+          push_with_rebase_retry main

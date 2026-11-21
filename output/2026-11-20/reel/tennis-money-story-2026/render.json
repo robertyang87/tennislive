@@ -10,10 +10,13 @@
   "narration_voice": "zh-CN-XiaoxiaoNeural",
   "renderer": "tennis-money-story-2026/build (build_full.py + render_samples_v4.py + build_v5.py + assemble_v5.py)",
   "import_note": "Finished master produced outside the native renderer; landed via the approved-master route (laver-cup-history-2026 precedent). v5 master: identical to v4 except the two original-audio shots (segments 34/45) whose burned subtitles were re-rendered as per-sentence bilingual cues (EN original + ZH translation from the audio-review packet) to satisfy the foreground-audio gate; audio track is byte-identical to v4 after decode. subtitles.ass is exported from the v5 master's actual burned cues (locked SCRIPT.md text, v3-locked SUB_BREAKS, bilingual OA cues as burned). Native brand outro preserved as the final shot (outro_seconds).",
-  "render_inputs_sha256": "a3f225cc91557ffc354c077991e0c9cc5067d9e6657834a9102fb4afc017d712",
+  "render_inputs_sha256": "849eb9be8a6223957b043e0d476136d4799360dcd17d71e5da9f18de5cc55bb6",
   "film_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
   "film_bytes": 220212799,
-  "qc_attestation_sha256": "ef66f484663a531ec3352d1cf26f93e09b03047370dbc08ac86d72b763694f11",
-  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-tennis-money-story-2026/tennis-money-story-2026.mp4",
-  "video_bytes": 220212799
+  "qc_attestation_sha256": "9b62d8955bd5f301d05ccd7d1b50e362aae675a8ac16c4b80e1f4d1d796f0e04",
+  "tts_bundle": {
+    "bundle_sha256": "98940060e8b9f04c631b163e19446758d9e5962fae7a46ad27cc192ac971afe4",
+    "request_count": 65,
+    "note": "本片旁白由自有制作线以 edge-tts zh-CN-XiaoxiaoNeural 逐行合成（+0%/+0Hz）；此小包冻结的是实际送合成的 65 条请求与实际音频字节，词边界为实际音频的 faster-whisper 强制对齐实测（合成时未开启词边界流）。12 条样片行读稿按全片读稿惯例由展示文本重构并经 ASR 逐字核对。"
+  }
 }

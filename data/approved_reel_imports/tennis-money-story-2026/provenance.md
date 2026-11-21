@@ -39,3 +39,18 @@
 - 导入：tools/import_approved_money.py＋.github/workflows/import-approved-money-story.yml
   （仿 import-approved-laver，钉版 v5 身份；required 文件含 render_inputs.json
   与 audio_review_binding.json，CI 内重跑 push_reel check 与 check_reel_landed）。
+- 配音听审补件（2026-11-21 恢复趟）：首趟 match-reel 推送 run 44864938825 在
+  push_reel 发送前被 voice_quality_gate 拦下（waiting_voice_quality_review：
+  缺 voice_quality_inventory.json），作业日志确证 push() 未被调用、PushPlus
+  未被联系、无回执生成；账本 attempt 因此记 uncertain 后经人工核实改记
+  not_sent（核实依据即该 run 日志，见账本 resolution 字段）。
+  本片旁白为自有制作线 edge-tts zh-CN-XiaoxiaoNeural 逐行合成（+0%/+0Hz，
+  实际请求与实际音频字节冻结为 tts_bundle.zip，sha256
+  98940060e8b9f04c631b163e19446758d9e5962fae7a46ad27cc192ac971afe4，65 条）；
+  合成时未开启词边界流，词边界由实际音频的 faster-whisper 强制对齐实测补齐；
+  53 条读稿取自制作记录 tts_full.py，12 条样片行读稿按全片读稿惯例由展示
+  文本重构并经 ASR 逐字核对。voice_quality_inventory.json 已由
+  voice_quality_gate.capture_inventory 生成并经 render_inputs 封存；
+  五项自动听审由 CI 工作流 voice-review-money-story 在实际小包上执行，
+  证据 voice_auto_review.json 与放行记录 voice_quality_review.json 随其
+  提交落仓（method=automated_voice_suite，不冒充真人听审）。
