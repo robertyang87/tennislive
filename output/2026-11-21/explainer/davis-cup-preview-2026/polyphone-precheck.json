@@ -1,0 +1,146 @@
+[
+  {
+    "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
+    "target": {
+      "index": 50,
+      "char": "长",
+      "word": "长期",
+      "intended": "chang2",
+      "wrong": [
+        "zhang3"
+      ],
+      "tier": "B",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "zhang3",
+          "verdict": "correct",
+          "score": 0.912,
+          "confidence": "medium",
+          "near": null
+        }
+      ],
+      "ok_refs": "偿尝常"
+    }
+  },
+  {
+    "id": "bundle:4b119bcdd23ecea07862b59d86529b68b2173086d3640c67d3b3e90f273d86ee",
+    "target": {
+      "index": 61,
+      "char": "重",
+      "word": "重新",
+      "intended": "chong2",
+      "wrong": [
+        "zhong4"
+      ],
+      "tier": "B",
+      "verdict": "uncertain",
+      "runs": [
+        {
+          "wrong": "zhong4",
+          "verdict": "unreliable",
+          "score": 1.0,
+          "confidence": null,
+          "near": "intended"
+        }
+      ],
+      "ok_refs": "崇虫"
+    }
+  },
+  {
+    "id": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599",
+    "target": {
+      "index": 29,
+      "char": "冠",
+      "word": "三连冠",
+      "intended": "guan4",
+      "wrong": [
+        "guan1"
+      ],
+      "tier": "A",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "guan1",
+          "verdict": "correct",
+          "score": 0.724,
+          "confidence": "medium",
+          "near": null
+        }
+      ],
+      "ok_refs": "惯罐贯"
+    }
+  },
+  {
+    "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
+    "target": {
+      "index": 35,
+      "char": "冠",
+      "word": "三连冠",
+      "intended": "guan4",
+      "wrong": [
+        "guan1"
+      ],
+      "tier": "A",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "guan1",
+          "verdict": "correct",
+          "score": 0.972,
+          "confidence": "high",
+          "near": "intended"
+        }
+      ],
+      "ok_refs": "惯罐贯"
+    }
+  },
+  {
+    "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
+    "target": {
+      "index": 24,
+      "char": "重",
+      "word": "重要",
+      "intended": "zhong4",
+      "wrong": [
+        "chong2"
+      ],
+      "tier": "B",
+      "verdict": "correct",
+      "runs": [
+        {
+          "wrong": "chong2",
+          "verdict": "correct",
+          "score": 0.306,
+          "confidence": "low",
+          "near": null
+        }
+      ],
+      "ok_refs": "仲众"
+    }
+  },
+  {
+    "id": "bundle:cf2322fc0fe22dd4cae03a6ee9559d1797f748e29a67941aaf82c2621e07b0d4",
+    "target": {
+      "index": 8,
+      "char": "还",
+      "word": "还是",
+      "intended": "hai2",
+      "wrong": [
+        "huan2"
+      ],
+      "tier": "B",
+      "verdict": "uncertain",
+      "runs": [
+        {
+          "wrong": "huan2",
+          "verdict": "uncertain",
+          "score": 0.18,
+          "confidence": null,
+          "near": null
+        }
+      ],
+      "ok_refs": "孩骸"
+    }
+  }
+]

@@ -1,0 +1,767 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 1,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "35044aac90360e36425c0a1d781f125cfaa77376a9b1ff1f703b7c73652a115e",
+    "render_inputs_sha256": "57d2aa2978dd6583ce0022efadb6f039fc3fe28309fe50dd6e2cb4e261f5c97d",
+    "spec_sha256": "a1745e2c3353676a353c3baabbada952be2dd29f880c0c4767c2d377a1857104",
+    "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
+    "inventory_sha256": "43a1124f2729cbfd9c6834638a93598df4c60cb62a85c826d73bcc3e40bb7c04"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-21T07:56:22+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:0a31278576123cade1b6d3e3d333bacd18a1f124a7a2969e8e5679e2a6c79959",
+      "audio_sha256": "734afbfc550dfa11b64e3801b97275b4fdcdce651a4aa3e45efd47abb9d1a228",
+      "pass": true,
+      "result_of": "bundle:0a31278576123cade1b6d3e3d333bacd18a1f124a7a2969e8e5679e2a6c79959"
+    },
+    {
+      "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
+      "audio_sha256": "169cb80015ff4145cf5a6d89612500b170642358f8c370d090634349886a42cc",
+      "pass": true,
+      "result_of": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd"
+    },
+    {
+      "id": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2",
+      "audio_sha256": "be5837162137362c0aad43c61e0b87b9f6b2b679dea27cdeec0d1c08f3d6e7da",
+      "pass": true,
+      "result_of": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2"
+    },
+    {
+      "id": "bundle:4b119bcdd23ecea07862b59d86529b68b2173086d3640c67d3b3e90f273d86ee",
+      "audio_sha256": "f81f1a4bfb8e7d49ebd4cf8dcff1aee291a7092d080b11b26b813f82ec514f49",
+      "pass": true,
+      "result_of": "bundle:4b119bcdd23ecea07862b59d86529b68b2173086d3640c67d3b3e90f273d86ee"
+    },
+    {
+      "id": "bundle:4d42b7248e27fe3a6ac75704a1bd4250eae40d9c2a4ba6c454fa187c95294f06",
+      "audio_sha256": "26331f6d755604894cbb39ddabf0bbbb3bfc909265d5712bc08faed82fbb08a8",
+      "pass": true,
+      "result_of": "bundle:4d42b7248e27fe3a6ac75704a1bd4250eae40d9c2a4ba6c454fa187c95294f06"
+    },
+    {
+      "id": "bundle:65c570b076a66f0a8d02b4d216b6f1ef7267d2d945aa02444bc76605fc0a307a",
+      "audio_sha256": "97cd331d7e3cef3c74bd98b61c5b5506d10d100a2315b26e72cc4998781e3adc",
+      "pass": true,
+      "result_of": "bundle:65c570b076a66f0a8d02b4d216b6f1ef7267d2d945aa02444bc76605fc0a307a"
+    },
+    {
+      "id": "bundle:6d0004c3c487a8156a33c0efef9a2f3f82c70b7051fe7e4c0091642511fb658b",
+      "audio_sha256": "75a2a5fb985eb13daaf65e99a4965c165b8e5b33c0c89334f912333c21eff549",
+      "pass": true,
+      "result_of": "bundle:6d0004c3c487a8156a33c0efef9a2f3f82c70b7051fe7e4c0091642511fb658b"
+    },
+    {
+      "id": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599",
+      "audio_sha256": "76e8408e5971c91bc2110d218d289f6b8c0a4cd047b9ae5a71f3d4210412c14e",
+      "pass": true,
+      "result_of": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599"
+    },
+    {
+      "id": "bundle:7568a3b022caa4fbc83f4483fcb8b16a49914eee9379ade239dc3389a9bdb17a",
+      "audio_sha256": "53a5e049aeca453d661f6c81795c02d3eb9efc477c6871499b658dd616f4f13b",
+      "pass": true,
+      "result_of": "bundle:7568a3b022caa4fbc83f4483fcb8b16a49914eee9379ade239dc3389a9bdb17a"
+    },
+    {
+      "id": "bundle:9a0f7982cdf4e22cea9381f8f537c1241c07e1e93b9721fbf9258f7100b8fa40",
+      "audio_sha256": "2b3b9fe6d58eaa2a4e2aea546a5c5b103dccd168ba593f1aec54ebc1b6a98555",
+      "pass": true,
+      "result_of": "bundle:9a0f7982cdf4e22cea9381f8f537c1241c07e1e93b9721fbf9258f7100b8fa40"
+    },
+    {
+      "id": "bundle:b71def8514bafbe3cae9f01160174dd4880780d01dc8cfc97640e11e1511c4b2",
+      "audio_sha256": "d3c330cde13fb31f7cabc00214dd73055fb0fe28b4fded997d5db70fc2408759",
+      "pass": true,
+      "result_of": "bundle:b71def8514bafbe3cae9f01160174dd4880780d01dc8cfc97640e11e1511c4b2"
+    },
+    {
+      "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
+      "audio_sha256": "f1cba195f7657e1032b2a7433ea5d84ae5a1310a23aad83819c516de17dc2da0",
+      "pass": true,
+      "result_of": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0"
+    },
+    {
+      "id": "bundle:cdbdd1fff3a09c8e4f5381e2cbfec4ff41d7fe0e3257b4a3d120289f492be6f4",
+      "audio_sha256": "7483ea7c67e13b80a4ac1c6d487a912fb54a8b3039c514cad8e370c47981ece6",
+      "pass": true,
+      "result_of": "bundle:cdbdd1fff3a09c8e4f5381e2cbfec4ff41d7fe0e3257b4a3d120289f492be6f4"
+    },
+    {
+      "id": "bundle:cf2322fc0fe22dd4cae03a6ee9559d1797f748e29a67941aaf82c2621e07b0d4",
+      "audio_sha256": "7b591e779bb2629cc4eb461eb01e008f9b89b2ab310b0a550038f6062953d7cd",
+      "pass": true,
+      "result_of": "bundle:cf2322fc0fe22dd4cae03a6ee9559d1797f748e29a67941aaf82c2621e07b0d4"
+    },
+    {
+      "id": "bundle:f0fd16de242950563d01e39af463104ab2860b7ceecf992999669ebb557824c5",
+      "audio_sha256": "dcbaa8daf0d506311b2e3cee656a815b2964c25eee7709e1d45d052494c4f125",
+      "pass": true,
+      "result_of": "bundle:f0fd16de242950563d01e39af463104ab2860b7ceecf992999669ebb557824c5"
+    },
+    {
+      "id": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5",
+      "audio_sha256": "ae3a900f9b808d6cfcc5ac482d7c2d23e70749e87105bdb8c50c50f5bfaff652",
+      "pass": true,
+      "result_of": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:0a31278576123cade1b6d3e3d333bacd18a1f124a7a2969e8e5679e2a6c79959",
+      "text": "上半区，捷克对加拿大，意大利对韩国。下半区，英国对德国，奥地利对西班牙。意大利与捷克可能提前碰头，阿卡与兹维列夫所在的两队，也可能在半决赛相遇。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 63,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.032,
+        "longest_deletion": 0,
+        "transcript": "上半区,捷克对加拿大、意大利对韩国。下半区,英国对德国、奥地利对西班牙。意大利与捷克可能提前碰头,阿卡与斯维列夫所在的两队也可能在半决在相遇。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 63,
+        "speech_s": 13.092,
+        "cps": 4.81,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "上 ｜ 半 ｜ 区 ｜ 捷克 ｜ 对 ｜ 加拿大 ｜ 意大利 ｜ 对 ｜ 韩国 ｜ 下 ｜ 半 ｜ 区 ｜ 英国 ｜ 对 ｜ 德国 ｜ 奥地利 ｜ 对 ｜ 西班牙 ｜ 意大利 ｜ 与 ｜ 捷克 ｜ 可能 ｜ 提前 ｜ 碰头 ｜ 阿卡 ｜ 与 ｜ 兹维列夫 ｜ 所在 ｜ 的 ｜ 两 ｜ 队 ｜ 也 ｜ 可能 ｜ 在 ｜ 半决赛 ｜ 相遇"
+      }
+    },
+    {
+      "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
+      "text": "德国历史交锋六比五领先。我这一轮选择德国。兹维列夫是最显眼的单打支点，施特鲁夫也有戴杯经验，双打则有长期配合的组合。不过英国有费里和诺里，双打更不能轻看；这不是一张世界第一的名片就能解决的比赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "德国历史交锋6比5领线。我这一轮选择德国,自卫列夫是最显眼的单打支点,斯特鲁夫也有带杯经验,双打则有长期配合的组合。不过英国有费力和诺礼,双打更不能侵看,这不是一张世界第一的名片就能解决的比赛。"
+      },
+      "polyphones": [
+        {
+          "index": 50,
+          "char": "长",
+          "word": "长期",
+          "intended": "chang2",
+          "wrong": [
+            "zhang3"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "zhang3",
+              "verdict": "correct",
+              "score": 0.912,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "偿尝常"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 17.366,
+        "cps": 5.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德国 ｜ 历史 ｜ 交锋 ｜ 六比五 ｜ 领先 ｜ 我 ｜ 这 ｜ 一 ｜ 轮 ｜ 选择 ｜ 德国 ｜ 兹维列夫 ｜ 是 ｜ 最 ｜ 显眼 ｜ 的 ｜ 单打 ｜ 支点 ｜ 施特鲁夫 ｜ 也有 ｜ 戴 ｜ 杯 ｜ 经验 ｜ 双打 ｜ 则 ｜ 有 ｜ 长期 ｜ 配合 ｜ 的 ｜ 组合 ｜ 不过 ｜ 英国 ｜ 有 ｜ 费里 ｜ 和 ｜ 诺里 ｜ 双打 ｜ 更 ｜ 不能 ｜ 轻看 ｜ 这 ｜ 不是 ｜ 一 ｜ 张 ｜ 世界 ｜ 第一 ｜ 的 ｜ 名片 ｜ 就 ｜ 能 ｜ 解决 ｜ 的 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2",
+      "text": "为什么我反复提双打？英国的帕滕和斯库普斯基，分别随各自搭档拿走今年四站大满贯中的三冠。德国克拉维茨与皮茨这一组合，戴杯十八胜两负。两场单打各赢一场，双打就能把纸面判断推倒。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 79,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "为什么我反复提双打?英国的帕腾和斯库普斯基分别随各自搭档拿走今年四战大满冠中的三冠。德国克拉维茨与皮茨这一组合带背十八胜两副。阳场单打个赢一场,双打就能把纸面判断推倒。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 79,
+        "speech_s": 16.049,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "为什么 ｜ 我 ｜ 反复 ｜ 提 ｜ 双打 ｜ 英国 ｜ 的 ｜ 帕滕 ｜ 和 ｜ 斯库普斯基 ｜ 分别 ｜ 随 ｜ 各自 ｜ 搭档 ｜ 拿 ｜ 走 ｜ 今年 ｜ 四站 ｜ 大满贯 ｜ 中 ｜ 的 ｜ 三 ｜ 冠 ｜ 德国 ｜ 克拉维 ｜ 茨 ｜ 与 ｜ 皮茨 ｜ 这 ｜ 一 ｜ 组合 ｜ 戴 ｜ 杯 ｜ 十八 ｜ 胜 ｜ 两 ｜ 负 ｜ 两场 ｜ 单打 ｜ 各 ｜ 赢 ｜ 一 ｜ 场 ｜ 双打 ｜ 就 ｜ 能 ｜ 把 ｜ 纸面 ｜ 判断 ｜ 推倒"
+      }
+    },
+    {
+      "id": "bundle:4b119bcdd23ecea07862b59d86529b68b2173086d3640c67d3b3e90f273d86ee",
+      "text": "这些判断有两个观察点：主力能否正常出场，以及实际的排兵布阵。阿卡和兹维列夫仍在都灵年终赛的竞争中，到了博洛尼亚，恢复情况要重新看。西班牙如果没在单打建立优势，德国就有改变整个下半区的机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 3,
+        "sub_ratio": 0.035,
+        "longest_deletion": 0,
+        "transcript": "这些判断有两个观察点,主力能否正常出场,以及实际的排兵布战。阿卡和斯维列夫仍在都临年中赛的竞争中到了博洛尼亚,恢复情况要重新看。西班牙如果没在单打建立优势,德国就有改变整个下半区的机会。"
+      },
+      "polyphones": [
+        {
+          "index": 61,
+          "char": "重",
+          "word": "重新",
+          "intended": "chong2",
+          "wrong": [
+            "zhong4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "zhong4",
+              "verdict": "unreliable",
+              "score": 1.0,
+              "confidence": null,
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "崇虫"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 86,
+        "speech_s": 16.362,
+        "cps": 5.26,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这些 ｜ 判断 ｜ 有 ｜ 两个 ｜ 观察点 ｜ 主力 ｜ 能否 ｜ 正常 ｜ 出场 ｜ 以及 ｜ 实际 ｜ 的 ｜ 排兵布阵 ｜ 阿卡 ｜ 和 ｜ 兹维列夫 ｜ 仍 ｜ 在 ｜ 都灵 ｜ 年终 ｜ 赛 ｜ 的 ｜ 竞争 ｜ 中 ｜ 到 ｜ 了 ｜ 博洛尼亚 ｜ 恢复 ｜ 情况 ｜ 要 ｜ 重新 ｜ 看 ｜ 西班牙 ｜ 如果 ｜ 没 ｜ 在 ｜ 单打 ｜ 建立 ｜ 优势 ｜ 德国 ｜ 就 ｜ 有 ｜ 改变 ｜ 整个 ｜ 下 ｜ 半 ｜ 区 ｜ 的 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:4d42b7248e27fe3a6ac75704a1bd4250eae40d9c2a4ba6c454fa187c95294f06",
+      "text": "西班牙的福基纳也已因伤退出，梅里达补入，所以不能再按最初那份名单分析。阿卡、霍达尔之外，马丁内斯和格拉诺列尔斯提供双打选择。阵容有变化，但我仍把西班牙放在争冠第一档。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 75,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 1,
+        "transcript": "西班牙的弗吉娜也以阴伤退出、梅里达捕入,所以不能再按最初那份名单分析。阿卡、霍达尔之外,马丁内斯和格拉诺列斯提供双大选择。陣容有变化,但我仍把西班牙放在征馆第一档。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 75,
+        "speech_s": 14.877,
+        "cps": 5.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "西班牙 ｜ 的 ｜ 福基纳 ｜ 也 ｜ 已 ｜ 因 ｜ 伤 ｜ 退出 ｜ 梅里达 ｜ 补 ｜ 入 ｜ 所以 ｜ 不能 ｜ 再 ｜ 按 ｜ 最初 ｜ 那 ｜ 份 ｜ 名单 ｜ 分析 ｜ 阿卡 ｜ 霍达尔 ｜ 之外 ｜ 马丁内斯 ｜ 和 ｜ 格拉诺 ｜ 列尔斯 ｜ 提供 ｜ 双打 ｜ 选择 ｜ 阵容 ｜ 有 ｜ 变化 ｜ 但 ｜ 我 ｜ 仍 ｜ 把 ｜ 西班牙 ｜ 放 ｜ 在 ｜ 争 ｜ 冠 ｜ 第一档"
+      }
+    },
+    {
+      "id": "bundle:65c570b076a66f0a8d02b4d216b6f1ef7267d2d945aa02444bc76605fc0a307a",
+      "text": "总交锋其实是奥地利三比二领先，但这是跨年代的国家队旧账，不能直接套到今年。西班牙有阿卡和霍达尔两位世界前十，我更看好他们的单打配置。奥地利今年赢过日本和比利时，也不是一张能直接略过的签。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "总交锋其实是奥地利3比2领先,但这是跨年代的国家队旧账,不能直接套到今年。西班牙有阿卡和霍达尔两位世界前时,我更看好他们的单打配置。奥地利今年赢过日本和比利时,也不是一张能直接略过的欠。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 86,
+        "speech_s": 15.859,
+        "cps": 5.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "总 ｜ 交锋 ｜ 其实 ｜ 是 ｜ 奥地利 ｜ 三比二 ｜ 领先 ｜ 但 ｜ 这是 ｜ 跨年代 ｜ 的 ｜ 国家队 ｜ 旧账 ｜ 不能 ｜ 直接 ｜ 套 ｜ 到 ｜ 今年 ｜ 西班牙 ｜ 有 ｜ 阿卡 ｜ 和 ｜ 霍达尔 ｜ 两位 ｜ 世界 ｜ 前十 ｜ 我 ｜ 更 ｜ 看好 ｜ 他们 ｜ 的 ｜ 单打 ｜ 配置 ｜ 奥地利 ｜ 今年 ｜ 赢 ｜ 过 ｜ 日本 ｜ 和 ｜ 比利时 ｜ 也 ｜ 不是 ｜ 一 ｜ 张 ｜ 能 ｜ 直接 ｜ 略 ｜ 过 ｜ 的 ｜ 签"
+      }
+    },
+    {
+      "id": "bundle:6d0004c3c487a8156a33c0efef9a2f3f82c70b7051fe7e4c0091642511fb658b",
+      "text": "加拿大最大的变化，是沙波瓦洛夫和迪亚洛因伤退出，阿利亚西姆仍然领衔。这不等于加拿大没有机会；九月赢法国时，他们也不只靠一位球员。但两位原定主力缺席，会让我把票投给配置更完整的捷克。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 82,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "加拿大最大的变化,使沙波瓦洛夫和迪亚洛因伤退出,阿利亚西姆仍然领先。这不等于加拿大没有机会,9月赢法国时,他们也不只靠一位球员。但两位原定主力缺席,会让我把票头给配置更完整的捷克。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 82,
+        "speech_s": 15.882,
+        "cps": 5.16,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "加拿大 ｜ 最大 ｜ 的 ｜ 变化 ｜ 是 ｜ 沙波瓦洛夫 ｜ 和 ｜ 迪亚洛 ｜ 因 ｜ 伤 ｜ 退出 ｜ 阿利亚 ｜ 西姆 ｜ 仍然 ｜ 领衔 ｜ 这 ｜ 不 ｜ 等于 ｜ 加拿大 ｜ 没有 ｜ 机会 ｜ 九月 ｜ 赢 ｜ 法国 ｜ 时 ｜ 他们 ｜ 也 ｜ 不只 ｜ 靠 ｜ 一 ｜ 位 ｜ 球员 ｜ 但 ｜ 两位 ｜ 原定 ｜ 主力 ｜ 缺席 ｜ 会 ｜ 让 ｜ 我 ｜ 把 ｜ 票 ｜ 投 ｜ 给 ｜ 配置 ｜ 更 ｜ 完整 ｜ 的 ｜ 捷克"
+      }
+    },
+    {
+      "id": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599",
+      "text": "假如决赛是意大利对西班牙，我的冠军票投西班牙。意大利的三连冠与主场优势都很硬，但西班牙这次有阿卡，也有霍达尔提供第二个单打支点。我更愿意押他们在两场单打里争取结束比赛，而不是把希望全留给最后的双打。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 92,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "假如决赛是意大利对西班牙,我的冠军票投西班牙。意大利的三连冠与主场优势都很硬,但西班牙这次有阿卡,也有霍达尔提供第二个单打支点。我更愿意压他们在两场单打里争取结束比赛,而不是把希望全留给最后的双打。"
+      },
+      "polyphones": [
+        {
+          "index": 29,
+          "char": "冠",
+          "word": "三连冠",
+          "intended": "guan4",
+          "wrong": [
+            "guan1"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "guan1",
+              "verdict": "correct",
+              "score": 0.724,
+              "confidence": "medium",
+              "near": null
+            }
+          ],
+          "ok_refs": "惯罐贯"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 92,
+        "speech_s": 17.254,
+        "cps": 5.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "假如 ｜ 决赛 ｜ 是 ｜ 意大利 ｜ 对 ｜ 西班牙 ｜ 我 ｜ 的 ｜ 冠军 ｜ 票 ｜ 投 ｜ 西班牙 ｜ 意大利 ｜ 的 ｜ 三 ｜ 连冠 ｜ 与 ｜ 主场 ｜ 优势 ｜ 都 ｜ 很 ｜ 硬 ｜ 但 ｜ 西班牙 ｜ 这次 ｜ 有 ｜ 阿卡 ｜ 也有 ｜ 霍达尔 ｜ 提供 ｜ 第二个 ｜ 单打 ｜ 支点 ｜ 我 ｜ 更 ｜ 愿意 ｜ 押 ｜ 他们 ｜ 在 ｜ 两场 ｜ 单打 ｜ 里 ｜ 争取 ｜ 结束 ｜ 比赛 ｜ 而 ｜ 不是 ｜ 把 ｜ 希望 ｜ 全 ｜ 留给 ｜ 最后 ｜ 的 ｜ 双打"
+      }
+    },
+    {
+      "id": "bundle:7568a3b022caa4fbc83f4483fcb8b16a49914eee9379ade239dc3389a9bdb17a",
+      "text": "比赛十一月二十四日开打，二十九日决出冠军。八队直接淘汰，每轮两场单打，必要时再打一场双打，先拿两分晋级。一位明星赢下一场，离晋级仍差一分。以下按十一月二十一日公布的阵容分析，具体出场看赛前名单。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 87,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "比赛11月24日开打,29日决出冠军。八队直接淘汰,每轮两场单打,必要实在打一场双打,先拿两分禁忌。一位明星赢下一场,离禁忌仍差一分。以下按11月21日公布的阵容分析,具体出场看赛前名单。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 87,
+        "speech_s": 17.511,
+        "cps": 4.97,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "比赛 ｜ 十一月 ｜ 二十四日 ｜ 开打 ｜ 二十九日 ｜ 决出 ｜ 冠军 ｜ 八 ｜ 队 ｜ 直接 ｜ 淘汰 ｜ 每 ｜ 轮 ｜ 两场 ｜ 单打 ｜ 必要 ｜ 时 ｜ 再 ｜ 打 ｜ 一 ｜ 场 ｜ 双打 ｜ 先 ｜ 拿 ｜ 两分 ｜ 晋级 ｜ 一 ｜ 位 ｜ 明星 ｜ 赢 ｜ 下 ｜ 一 ｜ 场 ｜ 离 ｜ 晋级 ｜ 仍 ｜ 差 ｜ 一 ｜ 分 ｜ 以下 ｜ 按 ｜ 十一月 ｜ 二十一日 ｜ 公布 ｜ 的 ｜ 阵容 ｜ 分析 ｜ 具体 ｜ 出场 ｜ 看 ｜ 赛 ｜ 前 ｜ 名单"
+      }
+    },
+    {
+      "id": "bundle:9a0f7982cdf4e22cea9381f8f537c1241c07e1e93b9721fbf9258f7100b8fa40",
+      "text": "我的四强选择，是意大利、捷克、德国和西班牙。接下来两场是假设这些球队晋级后的推演：上半区我选意大利，下半区更倾向西班牙。两场的理由并不一样。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 62,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "我的四枪选择是意大利、杰克、德国和西班牙。接下来,两场是假设这些球队尽急后的推演,上半区我选意大利,下半区更倾向西班牙。两场的理由并不一样。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 62,
+        "speech_s": 12.868,
+        "cps": 4.82,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "我 ｜ 的 ｜ 四 ｜ 强 ｜ 选择 ｜ 是 ｜ 意大利 ｜ 捷克 ｜ 德国 ｜ 和 ｜ 西班牙 ｜ 接下来 ｜ 两场 ｜ 是 ｜ 假设 ｜ 这些 ｜ 球队 ｜ 晋级 ｜ 后 ｜ 的 ｜ 推演 ｜ 上 ｜ 半 ｜ 区 ｜ 我 ｜ 选 ｜ 意大利 ｜ 下 ｜ 半 ｜ 区 ｜ 更 ｜ 倾向 ｜ 西班牙 ｜ 两场 ｜ 的 ｜ 理由 ｜ 并 ｜ 不 ｜ 一样"
+      }
+    },
+    {
+      "id": "bundle:b71def8514bafbe3cae9f01160174dd4880780d01dc8cfc97640e11e1511c4b2",
+      "text": "德国对西班牙，是我最犹豫的一票。最后仍选西班牙，因为阿卡之外，霍达尔让另一个单打位置也有竞争力。德国要改写预测，关键可能在施特鲁夫这个点；一旦两队各拿一场单打，就不能再只比较阿卡和兹维列夫。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 86,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.023,
+        "longest_deletion": 0,
+        "transcript": "德国对西班牙是我最犹豫的一票。最后仍选西班牙,因为阿卡之外,霍达尔让另一个单打位置也有竞争力。德国要改写预测,关键可能在斯特鲁夫这个点,一旦两队跟拿一场单打,就不能再只比较阿卡和自卫列夫。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 86,
+        "speech_s": 16.328,
+        "cps": 5.27,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "德国 ｜ 对 ｜ 西班牙 ｜ 是 ｜ 我 ｜ 最 ｜ 犹豫 ｜ 的 ｜ 一 ｜ 票 ｜ 最后 ｜ 仍 ｜ 选 ｜ 西班牙 ｜ 因为 ｜ 阿卡 ｜ 之外 ｜ 霍达尔 ｜ 让 ｜ 另一个 ｜ 单打 ｜ 位置 ｜ 也有 ｜ 竞争力 ｜ 德国 ｜ 要 ｜ 改写 ｜ 预测 ｜ 关键 ｜ 可能 ｜ 在 ｜ 施特鲁夫 ｜ 这个 ｜ 点 ｜ 一旦 ｜ 两 ｜ 队 ｜ 各 ｜ 拿 ｜ 一 ｜ 场 ｜ 单打 ｜ 就不能 ｜ 再 ｜ 只 ｜ 比较 ｜ 阿卡 ｜ 和 ｜ 兹维列夫"
+      }
+    },
+    {
+      "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
+      "text": "意大利历史交锋三比零领先韩国。这次我选意大利，更重要的依据是主场、三连冠的团队经验，以及科博利、穆塞蒂和达尔德里的单打选择。韩国首次进入八队淘汰阶段，权纯雨和郑泫有冲击力，但这轮对手确实更完整。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 88,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "意大利历史交锋3比0领先韩国。这次我选意大利更重要的依据是主场三连冠的团队经验,以及科博利、穆塞蒂和达尔德里的担大选择。韩国首次进入八队淘汰阶段,权纯雨和郑炫有冲击力,但这轮对手确实更完整。"
+      },
+      "polyphones": [
+        {
+          "index": 35,
+          "char": "冠",
+          "word": "三连冠",
+          "intended": "guan4",
+          "wrong": [
+            "guan1"
+          ],
+          "tier": "A",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "guan1",
+              "verdict": "correct",
+              "score": 0.972,
+              "confidence": "high",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "惯罐贯"
+        },
+        {
+          "index": 24,
+          "char": "重",
+          "word": "重要",
+          "intended": "zhong4",
+          "wrong": [
+            "chong2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "chong2",
+              "verdict": "correct",
+              "score": 0.306,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "仲众"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 88,
+        "speech_s": 17.746,
+        "cps": 4.96,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "意大利 ｜ 历史 ｜ 交锋 ｜ 三比零 ｜ 领先 ｜ 韩国 ｜ 这次 ｜ 我 ｜ 选 ｜ 意大利 ｜ 更 ｜ 重要 ｜ 的 ｜ 依据 ｜ 是 ｜ 主场 ｜ 三 ｜ 连冠 ｜ 的 ｜ 团队 ｜ 经验 ｜ 以及 ｜ 科博利 ｜ 穆塞蒂 ｜ 和 ｜ 达尔德里 ｜ 的 ｜ 单打 ｜ 选择 ｜ 韩国 ｜ 首次 ｜ 进入 ｜ 八 ｜ 队 ｜ 淘汰 ｜ 阶段 ｜ 权纯雨 ｜ 和 ｜ 郑泫 ｜ 有 ｜ 冲击力 ｜ 但 ｜ 这 ｜ 轮 ｜ 对手 ｜ 确实 ｜ 更 ｜ 完整"
+      }
+    },
+    {
+      "id": "bundle:cdbdd1fff3a09c8e4f5381e2cbfec4ff41d7fe0e3257b4a3d120289f492be6f4",
+      "text": "最后把答案放在一张图上：四强选意大利、捷克、德国和西班牙，决赛选意大利对西班牙，冠军先选西班牙。最需要防的变数是德国。戴维斯杯不是把单打排名相加，谁能稳定拿到第二分，谁才更接近银碗。你会把谁换进决赛？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "最后,把答案放在一张图上,四强选意大利、杰克、德国和西班牙,决赛选意大利对西班牙,冠军先选西班牙。最需要防的变数是德国。戴维斯杯不是把单打排名相加,谁能稳定拿到第二分,谁才更接近银碗。你会把谁换进决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 18.75,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 把 ｜ 答案 ｜ 放 ｜ 在 ｜ 一 ｜ 张 ｜ 图 ｜ 上 ｜ 四 ｜ 强 ｜ 选 ｜ 意大利 ｜ 捷克 ｜ 德国 ｜ 和 ｜ 西班牙 ｜ 决赛 ｜ 选 ｜ 意大利 ｜ 对 ｜ 西班牙 ｜ 冠军 ｜ 先 ｜ 选 ｜ 西班牙 ｜ 最 ｜ 需要 ｜ 防 ｜ 的 ｜ 变数 ｜ 是 ｜ 德国 ｜ 戴维斯 ｜ 杯 ｜ 不是 ｜ 把 ｜ 单打 ｜ 排名 ｜ 相加 ｜ 谁 ｜ 能 ｜ 稳定 ｜ 拿 ｜ 到 ｜ 第二分 ｜ 谁 ｜ 才 ｜ 更 ｜ 接近 ｜ 银 ｜ 碗 ｜ 你 ｜ 会 ｜ 把 ｜ 谁 ｜ 换 ｜ 进 ｜ 决赛"
+      }
+    },
+    {
+      "id": "bundle:cf2322fc0fe22dd4cae03a6ee9559d1797f748e29a67941aaf82c2621e07b0d4",
+      "text": "这两队在戴维斯杯还是第一次碰面。我更看好捷克，因为莱赫奇卡和门西克都是世界前二十，单打有两个可靠选择，马哈奇同样进入名单。我的判断看的是阵容厚度，不是某一位球员必胜。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 76,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这两队在戴维斯杯还是第一次碰面。我更看好捷克,因为莱赫奇卡和门西克都是世界前二十,单打有两个可靠选择,马哈奇同样进入名单。我的判断看的是阵容厚度,不是某一位球员避胜。"
+      },
+      "polyphones": [
+        {
+          "index": 8,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.18,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 76,
+        "speech_s": 14.52,
+        "cps": 5.23,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 两 ｜ 队 ｜ 在 ｜ 戴维斯 ｜ 杯 ｜ 还是 ｜ 第一次 ｜ 碰面 ｜ 我 ｜ 更 ｜ 看好 ｜ 捷克 ｜ 因为 ｜ 莱赫奇卡 ｜ 和 ｜ 门西克 ｜ 都是 ｜ 世界 ｜ 前 ｜ 二十 ｜ 单打 ｜ 有 ｜ 两个 ｜ 可靠 ｜ 选择 ｜ 马哈奇 ｜ 同样 ｜ 进入 ｜ 名单 ｜ 我 ｜ 的 ｜ 判断 ｜ 看 ｜ 的 ｜ 是 ｜ 阵容 ｜ 厚度 ｜ 不是 ｜ 某 ｜ 一 ｜ 位 ｜ 球员 ｜ 必胜"
+      }
+    },
+    {
+      "id": "bundle:f0fd16de242950563d01e39af463104ab2860b7ceecf992999669ebb557824c5",
+      "text": "阿卡和兹维列夫都来，戴维斯杯就成了两个人的对决吗？我先给结论，冠军倾向西班牙，最防德国改写下半区。理由要从每队怎样拿到第二分说起。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.017,
+        "longest_deletion": 0,
+        "transcript": "阿卡和斯维列夫都来,带维斯杯就成了两个人的对决吗?我先给结论,冠军倾向西班牙,罪防德国改写下半去。理由要从美队怎样拿到第二分说起。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 11.25,
+        "cps": 5.24,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "阿卡 ｜ 和 ｜ 兹维列夫 ｜ 都 ｜ 来 ｜ 戴维斯 ｜ 杯 ｜ 就 ｜ 成 ｜ 了 ｜ 两个 ｜ 人 ｜ 的 ｜ 对决 ｜ 吗 ｜ 我 ｜ 先 ｜ 给 ｜ 结论 ｜ 冠军 ｜ 倾向 ｜ 西班牙 ｜ 最 ｜ 防 ｜ 德国 ｜ 改写 ｜ 下 ｜ 半 ｜ 区 ｜ 理由 ｜ 要 ｜ 从 ｜ 每 ｜ 队 ｜ 怎样 ｜ 拿 ｜ 到 ｜ 第二分 ｜ 说 ｜ 起"
+      }
+    },
+    {
+      "id": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5",
+      "text": "意大利对捷克，我选意大利进决赛。捷克有两位前二十单打，这是最实在的挑战。意大利的优势，则是阵容选择、主场，以及博莱利和瓦瓦索里的双打搭配。捷克若想改写这条线，最理想的路径是在两场单打里直接拿够两分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 89,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "伊达利对捷克,我选伊达利竞决赛。捷克有两位前二十单打,这是最实在的挑战。伊达利的优势则是阵容选择、主场以及博莱利和瓦巴索里的双打搭配。捷克若想改写这条线,最理想的路径是在两场单打里直接拿够两分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 89,
+        "speech_s": 17.846,
+        "cps": 4.99,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "意大利 ｜ 对 ｜ 捷克 ｜ 我 ｜ 选 ｜ 意大利 ｜ 进 ｜ 决赛 ｜ 捷克 ｜ 有 ｜ 两位 ｜ 前二十 ｜ 单打 ｜ 这是 ｜ 最 ｜ 实在 ｜ 的 ｜ 挑战 ｜ 意大利 ｜ 的 ｜ 优势 ｜ 则 ｜ 是 ｜ 阵容 ｜ 选择 ｜ 主场 ｜ 以及 ｜ 博莱利 ｜ 和 ｜ 瓦瓦索里 ｜ 的 ｜ 双打 ｜ 搭配 ｜ 捷克 ｜ 若 ｜ 想 ｜ 改写 ｜ 这 ｜ 条 ｜ 线 ｜ 最 ｜ 理想 ｜ 的 ｜ 路径 ｜ 是 ｜ 在 ｜ 两场 ｜ 单打 ｜ 里 ｜ 直接 ｜ 拿 ｜ 够 ｜ 两分"
+      }
+    }
+  ]
+}

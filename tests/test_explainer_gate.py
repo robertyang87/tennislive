@@ -218,3 +218,56 @@ def test_幻灯取不到时要说清是没东西可验还是不合格(tmp_path):
     assert r.returncode == 2 and "取不到" in r.stdout, r.stdout
     # --local 那条路不该再劝人「用 --local」——它已经在用了。
     assert "请用 --local" not in r.stdout, "已经是 --local 了还劝人用 --local"
+
+
+def test_transferred_forecast_restores_exact_bytes_before_second_native_gate(tmp_path, monkeypatch):
+    """A new forecast slug uses the same content-addressed transfer contract."""
+    import base64
+    import hashlib
+    import json
+
+    monkeypatch.syspath_prepend(str(Path('tools').resolve()))
+    import publish_transferred_explainer as publisher
+
+    out = tmp_path / 'davis-cup-preview-2026'
+    out.mkdir()
+    payload = b'reviewed forecast bytes'
+    digest = hashlib.sha256(payload).hexdigest()
+    blob = 'a' * 40
+    rows = {
+        'render.json': {'slug': out.name, 'film_sha256': digest, 'video_bytes': len(payload)},
+        'transfer.json': {'film_sha256': digest, 'film_bytes': len(payload), 'chunks': [
+            {'sha': blob, 'sha256': digest, 'bytes': len(payload)}]},
+        'qc_attestation.json': {'film_sha256': digest, 'black_frames_detected': False},
+        'actual-audio-binding.json': {'film_sha256': digest, 'all_pass': True},
+    }
+    for name, value in rows.items():
+        (out / name).write_text(json.dumps(value))
+    film = out / f'{out.name}.mp4'
+    checked = []
+    monkeypatch.setattr(publisher, 'require_publish',
+                        lambda _: checked.append(film.read_bytes() if film.exists() else None))
+
+    def download(argv):
+        assert argv == ['gh', 'api', f'repos/robertyang87/tennislive/git/blobs/{blob}',
+                        '--jq', '.content']
+        return base64.b64encode(payload)
+
+    monkeypatch.setattr(publisher.subprocess, 'check_output', download)
+    monkeypatch.setattr(publisher.subprocess, 'run',
+                        lambda *a, **kw: (_ for _ in ()).throw(AssertionError('restore-only published')))
+    publisher.publish(out, restore_only=True)
+    assert film.read_bytes() == payload
+    assert checked == [None, payload]
+    assert not (out / f'{out.name}.transfer.tmp').exists()
+
+    # Same-size transport corruption must never be promoted or sent.
+    film.unlink()
+    checked.clear()
+    monkeypatch.setattr(publisher.subprocess, 'check_output',
+                        lambda _: base64.b64encode(b'X' + payload[1:]))
+    import pytest
+    with pytest.raises(ValueError, match='transport bytes differ'):
+        publisher.publish(out, restore_only=True)
+    assert checked == [None]
+    assert not film.exists()
