@@ -269,7 +269,7 @@
       "discovered_at": "2026-10-17T01:32:03.259721+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-18T11:34:03.709751+00:00"
+      "last_frames_at": "2026-11-21T19:52:17.291723+00:00"
     },
     "ovvlLake-OU": {
       "item": {
@@ -485,7 +485,7 @@
       "discovered_at": "2026-11-03T01:22:23.571941+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-18T11:34:03.709643+00:00"
+      "last_frames_at": "2026-11-21T19:52:17.291650+00:00"
     },
     "h7GInrpGsPA": {
       "item": {
@@ -890,7 +890,7 @@
       "discovered_at": "2026-11-11T01:29:57.922982+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-18T11:34:03.709506+00:00"
+      "last_frames_at": "2026-11-21T19:52:17.291549+00:00"
     },
     "-hIx-7H2tOc": {
       "item": {
@@ -917,7 +917,7 @@
       "discovered_at": "2026-11-11T01:29:57.922982+00:00",
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
-      "last_frames_at": "2026-11-18T03:02:05.672715+00:00"
+      "last_frames_at": "2026-11-21T19:52:17.291393+00:00"
     },
     "Szfu39xoiug": {
       "item": {
@@ -1512,6 +1512,33 @@
       "status": "pending_visual_review",
       "review_reason": "model_uncertain",
       "last_frames_at": "2026-11-21T12:39:17.801624+00:00"
+    },
+    "A9nYYXOkN1Y": {
+      "item": {
+        "id": "A9nYYXOkN1Y",
+        "title": "Carlos Alcaraz talks semifinal win over Ben Shelton | 2026 Nitto ATP Finals",
+        "duration_s": 85,
+        "channel": "NA",
+        "source": "Tennis Channel",
+        "discovered_at": "2026-11-21T19:46:23.783666+00:00",
+        "url": "https://www.youtube.com/watch?v=A9nYYXOkN1Y",
+        "review_reason": "model_interview"
+      },
+      "input_sha256": "de6d1dd1c37cce3ecb766e4db2b5fdcf79c280d2b4ee2c766a98f4179c88796a",
+      "suggestion": {
+        "id": "A9nYYXOkN1Y",
+        "decision": "api_ok",
+        "production_action": "unchanged",
+        "elapsed_ms": 135.2,
+        "suggestion": "interview",
+        "confidence": 0.56,
+        "model": "jev-1.13.0",
+        "needs_review": true
+      },
+      "discovered_at": "2026-11-21T19:46:23.783666+00:00",
+      "status": "pending_visual_review",
+      "review_reason": "model_interview",
+      "last_frames_at": "2026-11-21T19:52:17.291247+00:00"
     }
   }
 }
