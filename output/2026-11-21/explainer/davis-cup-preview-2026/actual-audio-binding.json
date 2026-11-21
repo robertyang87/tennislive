@@ -1,126 +1,375 @@
 {
   "schema": "tennislive.actual-audio-binding.v1",
-  "method": "independent decoded final PCM versus all exact input MP3s and frozen brand source; normalized waveform correlation; full utterances, no ASR prompt matching",
-  "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
-  "all_pass": true,
+  "method": "Independent two-channel final-PCM audit against every exact frozen input placed at its intended time. Full-film20ms RMS-envelope reconstruction rejects additional speech copies outside intended placement; complete-utterance waveform correlation checks both channels separately; no human listening claimed.",
+  "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
   "entries": [
     {
       "index": 0,
       "start": 1.85,
-      "measured_offset_s": 0.0,
-      "correlation": 0.987728,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999466,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999437,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 1,
       "start": 14.95,
-      "measured_offset_s": 0.0,
-      "correlation": 0.999446,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999315,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999264,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 2,
-      "start": 34.316666999999995,
-      "measured_offset_s": 0.000333,
-      "correlation": 0.999403,
+      "start": 34.317,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999339,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999341,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 3,
-      "start": 49.24999999999999,
-      "measured_offset_s": 0.0,
-      "correlation": 0.999452,
+      "start": 49.25,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999091,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999244,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 4,
-      "start": 65.616667,
-      "measured_offset_s": 0.000333,
-      "correlation": 0.999525,
+      "start": 65.617,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999255,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999263,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 5,
-      "start": 83.35000000000001,
-      "measured_offset_s": -0.0,
-      "correlation": 0.999526,
+      "start": 83.35,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999321,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999402,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 6,
-      "start": 102.916667,
-      "measured_offset_s": 0.000333,
-      "correlation": 0.999664,
+      "start": 102.917,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.99956,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999602,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 7,
       "start": 122.15,
-      "measured_offset_s": -6.3e-05,
-      "correlation": 0.989882,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999331,
+          "offset_s": -2.1e-05,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999402,
+          "offset_s": -2.1e-05,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 8,
       "start": 139.85,
-      "measured_offset_s": 0.0,
-      "correlation": 0.99959,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999505,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999503,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 9,
-      "start": 156.58333299999998,
-      "measured_offset_s": -0.000333,
-      "correlation": 0.999519,
+      "start": 156.583,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.99939,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999336,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 10,
-      "start": 171.28333299999997,
-      "measured_offset_s": -0.000333,
-      "correlation": 0.999483,
+      "start": 171.283,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999261,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999302,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 11,
-      "start": 190.98333299999996,
-      "measured_offset_s": -0.000333,
-      "correlation": 0.999531,
+      "start": 190.983,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999442,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999437,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 12,
-      "start": 209.14999999999995,
-      "measured_offset_s": 0.0,
-      "correlation": 0.999533,
+      "start": 209.15,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999401,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999414,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 13,
-      "start": 227.04999999999995,
-      "measured_offset_s": 0.0,
-      "correlation": 0.999409,
+      "start": 227.05,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999161,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999139,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 14,
-      "start": 246.14999999999995,
-      "measured_offset_s": 0.0,
-      "correlation": 0.999505,
+      "start": 246.15,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999335,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999403,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": 15,
-      "start": 264.38333299999994,
-      "measured_offset_s": -0.000333,
-      "correlation": 0.999533,
+      "start": 264.383,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999423,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999406,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     },
     {
       "index": "brand_outro",
-      "correlation": 0.99955,
-      "measured_offset_s": -0.000333,
+      "start": 284.333,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999457,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999418,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
       "pass": true
     }
-  ]
+  ],
+  "cover_silence": {
+    "until_s": 1.7,
+    "peak_per_channel": [
+      0.0,
+      0.0
+    ],
+    "pass": true
+  },
+  "complete_mix_reconstruction": {
+    "sample_rate": 48000,
+    "rms_window_ms": 20,
+    "rms_envelope_relative_error_per_channel": [
+      0.007474964018911123,
+      0.007471383083611727
+    ],
+    "max_rms_envelope_relative_error": 0.04,
+    "raw_waveform_relative_error_diagnostic": [
+      0.05437937006354332,
+      0.05405668541789055
+    ],
+    "pass": true
+  },
+  "scheduled_speech_gaps": {
+    "minimum_s": 0.3660000000000423,
+    "all_gaps_s": [
+      1.0280000000000005,
+      1.0309999999999988,
+      1.0129999999999981,
+      1.007000000000005,
+      1.0049999999999955,
+      1.0150000000000148,
+      1.016999999999996,
+      1.0199999999999818,
+      1.0130000000000052,
+      1.0199999999999818,
+      1.02800000000002,
+      1.007000000000005,
+      1.004000000000019,
+      1.0039999999999907,
+      1.0249999999999773,
+      0.3660000000000423
+    ],
+    "pass": true
+  },
+  "all_pass": true
 }
