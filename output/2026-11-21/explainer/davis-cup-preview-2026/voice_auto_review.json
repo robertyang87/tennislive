@@ -3,10 +3,10 @@
   "suite_version": 1,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "8ef126956497e3cda2663b602ace4419b04740a3afb29c52c39490ea76d7e807",
-    "render_inputs_sha256": "6758adbf2635dfc08c7d6f527974aab4d4490d08994a8c00628d207ca60df4f6",
+    "render_sha256": "35044aac90360e36425c0a1d781f125cfaa77376a9b1ff1f703b7c73652a115e",
+    "render_inputs_sha256": "57d2aa2978dd6583ce0022efadb6f039fc3fe28309fe50dd6e2cb4e261f5c97d",
     "spec_sha256": "a1745e2c3353676a353c3baabbada952be2dd29f880c0c4767c2d377a1857104",
-    "film_sha256": "bf4893c5df524d7a056d87f501d95fc5eca79ba8954e29d02bdbe3c029012223",
+    "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
     "inventory_sha256": "43a1124f2729cbfd9c6834638a93598df4c60cb62a85c826d73bcc3e40bb7c04"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-21T06:59:53+00:00",
+  "reviewed_at": "2026-11-21T07:56:22+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [

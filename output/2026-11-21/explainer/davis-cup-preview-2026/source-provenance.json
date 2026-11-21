@@ -58,79 +58,80 @@
     }
   ],
   "cover": {
-    "method": "ImageGen composition using official ATP headshots and actual Davis Cup trophy references; no invented match event. Native generated master 1086x1448; native video poster1080x1440; separate Lanczos HD PNG export3240x4320.",
-    "master_sha256": "7d31fc86b9ea39fb2e11afc34143931017bc456b97a9b9584fc1ae46e207ef79",
-    "trophy_reference": "https://www.bolognawelcome.com/en/events/sport-en/davis-cup-en",
-    "trophy_reference_image": "https://static.bolognawelcome.com/immagini/18/ab/5f/c3/20241209152803_landscape_4_3_mobile.jpeg",
-    "trophy_reference_sha256": "d3351e17d15c909717b47a6bda25f8feb5cd2ee12843fd6a456e67c191c455d7",
-    "bowl_reference_path": "assets/explainer/davis-cup-road-to-bologna/trophy.jpg",
-    "bowl_reference_sha256": "2a48951fb7ce4f68da416c9e429305f9644c29baea5ce32b592965905d40d6d5",
-    "headshots": [
+    "method": "ImageGen local edit of previous cover: replace eight player portraits with national flags using verified flag reference atlas. Generated master1086x1448; native poster1080x1440; Lanczos PNG export3240x4320.",
+    "master_sha256": "4f6cd392f39ba8e331f24ef8c041df2adb736d8bdc0ce253b8217b0bef4acd9c",
+    "previous_revision": "cover-revision-1.json",
+    "flags": [
       {
-        "nation": "czechia",
-        "player": "Jiri Lehecka",
-        "atp_id": "L0BV",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/L0BV",
-        "repo_path": "assets/players/headshots/atp-L0BV.png",
-        "sha256": "2c0c20f0252fdccb23a3715ec1651d983b26b6860ae8f46015b0b79ba5781afe"
+        "code": "cz",
+        "name": "捷克",
+        "url": "https://flagcdn.com/w1280/cz.png",
+        "sha256": "f7cf52bb6c82522fbcd200c34eee0a8b88820788904fd4276d41d402c218d4f8"
       },
       {
-        "nation": "canada",
-        "player": "Felix Auger-Aliassime",
-        "atp_id": "AG37",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/AG37",
-        "repo_path": "assets/players/headshots/atp-AG37.png",
-        "sha256": "2f92f88a5d91c855dd1bf15c9ee093146741dadcf67b75c07696703be26f953c"
+        "code": "ca",
+        "name": "加拿大",
+        "url": "https://flagcdn.com/w1280/ca.png",
+        "sha256": "a6a992f826743bafacee14f7b11a3b86c2f11ce95b4a06549e8cf0ea02ae6d37"
       },
       {
-        "nation": "italy",
-        "player": "Flavio Cobolli",
-        "atp_id": "C0E9",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/C0E9",
-        "repo_path": "assets/players/headshots/atp-C0E9.png",
-        "sha256": "b855b3ec0e2a198e0d7218c2fa4c47ecbf192c10fbf85f88680f0b274c85d818"
+        "code": "it",
+        "name": "意大利",
+        "url": "https://flagcdn.com/w1280/it.png",
+        "sha256": "adcee0a13c6de2ea92ea8bd2bda6af63979203fb512c1c30df2207339ca4bf55"
       },
       {
-        "nation": "korea-rep",
-        "player": "Soonwoo Kwon",
-        "atp_id": "KF17",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/KF17",
-        "repo_path": null,
-        "sha256": "30fccc7afb99e371ee4c57d4f388c35b92d9aa8cad0324b49abf490145f6bd76"
+        "code": "kr",
+        "name": "韩国",
+        "url": "https://flagcdn.com/w1280/kr.png",
+        "sha256": "733c3b46de8e04271d2ad51161efa22a0df04ff5b90ca39014f1220f70519106"
       },
       {
-        "nation": "great-britain",
-        "player": "Arthur Fery",
-        "atp_id": "F0DM",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/F0DM",
-        "repo_path": "assets/players/headshots/atp-F0DM.png",
-        "sha256": "53ed036bdcb54cb665bb7d83dce6251b6de74638a5115586327869b8068ff3fd"
+        "code": "gb",
+        "name": "英国",
+        "url": "https://flagcdn.com/w1280/gb.png",
+        "sha256": "8054ab40a69e982f3c78b03e3830441eff6d5d45f1be4079283ad57bebecc58b"
       },
       {
-        "nation": "germany",
-        "player": "Alexander Zverev",
-        "atp_id": "Z355",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/Z355",
-        "repo_path": "assets/players/headshots/atp-Z355.png",
-        "sha256": "7c0d9a53189c0f670d06159881572b673886fa6929107f5210f84e33bac4679f"
+        "code": "de",
+        "name": "德国",
+        "url": "https://flagcdn.com/w1280/de.png",
+        "sha256": "7f4c4d590303c069c2b0eea9c1d343f47cba8cd38313a4bce5de55dcb250e109"
       },
       {
-        "nation": "austria",
-        "player": "Jurij Rodionov",
-        "atp_id": "R09X",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/R09X",
-        "repo_path": null,
-        "sha256": "ee2382ee35189b5cbe05eb10a80ea407f580fcbdc0cd85dee0ae198723401f06"
+        "code": "at",
+        "name": "奥地利",
+        "url": "https://flagcdn.com/w1280/at.png",
+        "sha256": "f3895c9c486bc380cec4905038efb5acd83991fc93a54c3884392f83b42e0ccb"
       },
       {
-        "nation": "spain",
-        "player": "Carlos Alcaraz",
-        "atp_id": "A0E2",
-        "source_url": "https://www.mubadaladcopen.com/-/media/alias/player-headshot/A0E2",
-        "repo_path": "assets/players/headshots/atp-A0E2.png",
-        "sha256": "2bcde7b6fbd1ebad060543106facde1924065dde536af9abbd5cded3ef8ef0e8"
+        "code": "es",
+        "name": "西班牙",
+        "url": "https://flagcdn.com/w1280/es.png",
+        "sha256": "17ee15fdf1348735ea2e0c81270b5efb288cdb7518ee1af797fd1835273809a1"
       }
-    ]
+    ],
+    "left_column": [
+      "Czechia",
+      "Italy",
+      "United Kingdom",
+      "Austria"
+    ],
+    "right_column": [
+      "Canada",
+      "Korea Rep",
+      "Germany",
+      "Spain"
+    ],
+    "gold_forecast_semifinalists": [
+      "Czechia",
+      "Italy",
+      "Germany",
+      "Spain"
+    ],
+    "trophy_reference": "https://www.bolognawelcome.com/en/events/sport-en/davis-cup-en",
+    "trophy_reference_sha256": "d3351e17d15c909717b47a6bda25f8feb5cd2ee12843fd6a456e67c191c455d7",
+    "visual_review": "All eight flag identities, country labels and gold outlines checked against flag atlas; Korean taegeuk and trigrams, UK Union Jack and Spanish coat of arms present. Correct Davis Cup silver punchbowl on wooden plaque pedestal retained."
   },
   "source_scope": "National-team file photography, not images of the future Final 8 matches. Prediction rendered separately from official draw and factual results."
 }

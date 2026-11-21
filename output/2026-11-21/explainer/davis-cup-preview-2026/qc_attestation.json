@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.custom-explainer-qc.v1",
-  "film_sha256": "bf4893c5df524d7a056d87f501d95fc5eca79ba8954e29d02bdbe3c029012223",
-  "checked_at": "2026-11-21T06:59:57.374695+00:00",
+  "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
+  "checked_at": "2026-11-21T07:56:59.679883+00:00",
   "format": {
     "video": {
       "codec_name": "h264",
@@ -23,8 +23,9 @@
   },
   "black_frames_detected": false,
   "black_frame_check": {
-    "scope": "Full final movie decoded,8654 frames",
-    "evidence": "blackdetect.txt",
+    "scope": "Changed interval0..2.2s decoded and scanned; full previous body remains identical by video packet hashes and timestamps",
+    "evidence": "cover-blackdetect.txt and cover-packet-verification.json",
+    "previous_full_scan_film_sha256": "bf4893c5df524d7a056d87f501d95fc5eca79ba8954e29d02bdbe3c029012223",
     "result": "pass"
   },
   "complete_utterances_bound_to_actual_film": 17,
@@ -32,7 +33,7 @@
   "visual_review": {
     "scope": "26 actual final-film samples: every chapter, both photos where changed, cover and native outro; final-contact.jpg",
     "facts_and_forecast": "Initial draw uses placeholders; later bracket and gold connections explicitly personal predictions. All eight nations present.",
-    "cover": "Eight correct country/player portraits; actual Davis Cup ornate silver punchbowl and dark wooden plaque pedestal checked against official Bologna tourism photograph. HD PNG is a Lanczos export of generated master, not native 4K.",
+    "cover": "Eight national flags and country labels checked against reference atlas. Czechia, Italy, Germany, Spain retain gold predicted-semifinalist borders. Correct Davis Cup punchbowl and wood pedestal retained. Actual final-film opening and dissolve viewed.",
     "photo_scope": "Official national-team file photography labelled as archival; full photo region filled with proportional crop; captions and faces reviewed.",
     "reference_style": "Eight portraits and championship forecast follow owner-approved WTA/ATP format."
   },
@@ -53,7 +54,8 @@
     "second_choice": "Italy",
     "upset_risk": "Germany"
   },
-  "publication_gate": "Fresh native automated actual-voice review plus require_publish; independent decoded final-PCM binding of all 16 frozen TTS utterances and native brand source; no human listening claimed.",
+  "publication_gate": "Fresh native automated actual-voice suite and require_publish for updated final film; independent actual-PCM binding of all17 complete inputs; exact unchanged AAC and body packets. No human listening claimed.",
   "sources": "source-provenance.json and facts.json",
-  "music": "No BGM"
+  "music": "No BGM",
+  "cover_only_packet_verification": "cover-packet-verification.json"
 }
