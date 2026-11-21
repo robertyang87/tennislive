@@ -1,12 +1,12 @@
 {
   "schema": "tennislive.voice-auto-review.v1",
-  "suite_version": 1,
+  "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "35044aac90360e36425c0a1d781f125cfaa77376a9b1ff1f703b7c73652a115e",
-    "render_inputs_sha256": "57d2aa2978dd6583ce0022efadb6f039fc3fe28309fe50dd6e2cb4e261f5c97d",
-    "spec_sha256": "a1745e2c3353676a353c3baabbada952be2dd29f880c0c4767c2d377a1857104",
-    "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
+    "render_sha256": "f42a7fde3dd8acade3d12231e9cb2dd01033c65dc517de4a3fc00e115e86679e",
+    "render_inputs_sha256": "b87bf72013280b7833332163270c2f1fb291c682924d79a6cf4e390a9a2aef32",
+    "spec_sha256": "df10be865bf76b20beac79fafb9fde4f504452041213770ec88959d3295e959f",
+    "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
     "inventory_sha256": "43a1124f2729cbfd9c6834638a93598df4c60cb62a85c826d73bcc3e40bb7c04"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-21T07:56:22+00:00",
+  "reviewed_at": "2026-11-21T15:45:27+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [

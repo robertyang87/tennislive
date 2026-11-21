@@ -131,8 +131,8 @@ run(['-f','concat','-safe','0','-i',str(O/'concat.txt'),'-map','0:v:0','-c','cop
 duration=sum(round(sec(p)*FPS) for p in parts)/FPS
 args=[];fl=[]
 for i,m in enumerate(ft[1:-1]):
- args+=['-i',str(O/f'voice_{i:02d}.mp3')];fl.append(f'[{i}:a]adelay={round((m["start"]+.65)*1000)},apad,atrim=0:{duration},asetpts=PTS-STARTPTS[a{i}]')
-n=len(ft)-2;args+=['-i',str(O/'brand/outro.mp4')];fl.append(f'[{n}:a]adelay={round(ft[-1]["start"]*1000)},apad,atrim=0:{duration},asetpts=PTS-STARTPTS[a{n}]');fl.append(''.join(f'[a{i}]' for i in range(n+1))+f'amix=inputs={n+1}:normalize=0,atrim=0:{duration}[a]')
+ args+=['-i',str(O/f'voice_{i:02d}.mp3')];fl.append(f'[{i}:a]adelay={round((m["start"]+.65)*1000)}:all=1,apad,atrim=0:{duration},asetpts=PTS-STARTPTS[a{i}]')
+n=len(ft)-2;args+=['-i',str(O/'brand/outro.mp4')];fl.append(f'[{n}:a]adelay={round(ft[-1]["start"]*1000)}:all=1,apad,atrim=0:{duration},asetpts=PTS-STARTPTS[a{n}]');fl.append(''.join(f'[a{i}]' for i in range(n+1))+f'amix=inputs={n+1}:normalize=0,atrim=0:{duration}[a]')
 run(args+['-filter_complex',';'.join(fl),'-map','[a]','-c:a','pcm_s16le','-ar','48000','-ac','2',str(O/'final-audio.wav')],'audio-assembly.log')
 run(['-i',str(O/'video-only.mp4'),'-i',str(O/'final-audio.wav'),'-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','aac','-b:a','128k','-ar','48000','-ac','2','-t',str(duration),'-movflags','+faststart',str(O/(S['slug']+'.mp4'))],'final-mux.log')
 print('Ready',S['slug'],duration,flush=True)

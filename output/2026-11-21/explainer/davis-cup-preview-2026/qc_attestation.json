@@ -1,11 +1,11 @@
 {
   "schema": "tennislive.custom-explainer-qc.v1",
-  "film_sha256": "7fa0e402df5e00add55cf36aed618825fc49fc007a318560c83eab1c2e350820",
-  "checked_at": "2026-11-21T07:56:59.679883+00:00",
+  "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
+  "checked_at": "2026-11-21T15:44:53.715569+00:00",
   "format": {
     "video": {
       "codec_name": "h264",
-      "pix_fmt": "yuvj420p",
+      "pix_fmt": "yuv420p",
       "width": 1080,
       "height": 1440,
       "r_frame_rate": "30/1",
@@ -23,9 +23,8 @@
   },
   "black_frames_detected": false,
   "black_frame_check": {
-    "scope": "Changed interval0..2.2s decoded and scanned; full previous body remains identical by video packet hashes and timestamps",
-    "evidence": "cover-blackdetect.txt and cover-packet-verification.json",
-    "previous_full_scan_film_sha256": "bf4893c5df524d7a056d87f501d95fc5eca79ba8954e29d02bdbe3c029012223",
+    "scope": "All8654 actual final frames decoded and scanned",
+    "evidence": "blackdetect.txt",
     "result": "pass"
   },
   "complete_utterances_bound_to_actual_film": 17,
@@ -33,9 +32,10 @@
   "visual_review": {
     "scope": "26 actual final-film samples: every chapter, both photos where changed, cover and native outro; final-contact.jpg",
     "facts_and_forecast": "Initial draw uses placeholders; later bracket and gold connections explicitly personal predictions. All eight nations present.",
-    "cover": "Eight national flags and country labels checked against reference atlas. Czechia, Italy, Germany, Spain retain gold predicted-semifinalist borders. Correct Davis Cup punchbowl and wood pedestal retained. Actual final-film opening and dissolve viewed.",
+    "cover": "8-country flags and correct Davis Cup trophy retained. Shared four-stop thin brand stripe only on cover; body, transition and outro top stripes removed. Actual26-frame contact sheet, opening and outro reviewed.",
     "photo_scope": "Official national-team file photography labelled as archival; full photo region filled with proportional crop; captions and faces reviewed.",
-    "reference_style": "Eight portraits and championship forecast follow owner-approved WTA/ATP format."
+    "reference_style": "Eight portraits and championship forecast follow owner-approved WTA/ATP format.",
+    "brand_bar_evidence": "brand-bar-review.json:actual top rows of26 final-frame samples"
   },
   "editorial_checks": {
     "all_4_quarterfinals": true,
@@ -54,8 +54,12 @@
     "second_choice": "Italy",
     "upset_risk": "Germany"
   },
-  "publication_gate": "Fresh native automated actual-voice suite and require_publish for updated final film; independent actual-PCM binding of all17 complete inputs; exact unchanged AAC and body packets. No human listening claimed.",
+  "publication_gate": "Fresh native automatic review of all16 frozen narration inputs; independent stereo waveform binding of17 complete sources; full-film20ms RMS-envelope reconstruction, intro-silence negative check and actual opening/end ASR. Old published film fails the same stereo audit. No human listening claim.",
   "sources": "source-provenance.json and facts.json",
   "music": "No BGM",
-  "cover_only_packet_verification": "cover-packet-verification.json"
+  "audio_regression": {
+    "old_fails": "audio-regression-previous-fail.json",
+    "new_passes": "actual-audio-binding.json",
+    "root_cause": "audio-root-cause.json"
+  }
 }

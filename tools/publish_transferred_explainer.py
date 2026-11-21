@@ -52,7 +52,11 @@ def publish(outdir: Path, *, restore_only: bool = False) -> None:
     if restore_only:
         print('Exact reviewed movie restored; native gate passed.')
         return
-    subprocess.run(['gh', 'release', 'upload', slug, str(film), str(outdir / 'poster.jpg'), str(outdir / 'analysis.txt'), '--clobber'], check=True)
+    uploads = [film, outdir / 'poster.jpg', outdir / 'analysis.txt']
+    hd_cover = outdir / 'poster-hd-3240x4320.png'
+    if hd_cover.is_file():
+        uploads.append(hd_cover)
+    subprocess.run(['gh', 'release', 'upload', slug, *map(str, uploads), '--clobber'], check=True)
     assets = json.loads(subprocess.check_output(['gh', 'release', 'view', slug, '--json', 'assets']))['assets']
     asset = next(a for a in assets if a['name'] == film.name)
     if asset['size'] != meta['video_bytes']:
