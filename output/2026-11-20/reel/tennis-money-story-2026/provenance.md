@@ -39,3 +39,25 @@
 - 导入：tools/import_approved_money.py＋.github/workflows/import-approved-money-story.yml
   （仿 import-approved-laver，钉版 v5 身份；required 文件含 render_inputs.json
   与 audio_review_binding.json，CI 内重跑 push_reel check 与 check_reel_landed）。
+- 听审 B 路修复（2026-11-21，账号所有者裁决走 B：修工具口径＋重建 marks）：
+  首趟 CI 听审（run 44867051672）没过的真因不在配音本体：① 首版 marks 实为
+  faster-whisper 自由转写 token（繁体字、阿拉伯数字形、误听），并非上文所记
+  「强制对齐实测」——闸内 token 按原文 find 不到即跳过、zip 错位，语速/停顿/
+  多音字定位全测歪（实测真实语速最高 4.68 字/秒，限值 6.3）；② 听审工具
+  voice_auto_review 的完整性归一化有口径损耗（小数百分比丢「点」、区间丢
+  「至」、并列百分比的「百分之」共享未建模、数字念法逐块贪心多塞音节），
+  11 处「不完整」全是伪影。修复：(a) 工具归一化补齐上述口径并把念法挑选
+  改成对参考的全局对齐（SUITE_VERSION 2，门槛常量未动），校准证据
+  research/voice-auto-calib/normalization-20261121.json（原生包 andreeva-
+  finals-2026 已过包 13/13 新旧同过；本集 65 条 small 转写旧口径 52 过→
+  新口径 64 过，余 1 条为 ASR 漏听两个「第」、属 CI medium 复听范围；
+  构造缺陷漏读/多读/换词仍全红、语速压缩样本仍判超标）；多音字参考字补
+  第四档（GB2312 外单读音字，仅前三档为空时启用；qie1 的苆经晓晓实际
+  合成＋ASR 验证读 qiē）。(b) 本集 marks 全部重建：对实际音频做
+  faster-whisper small 词时间戳转写，按拼音单位全局对齐原文逐字切分实测
+  边界；音频字节、请求文本、包成员顺序未动，新 bundle sha256
+  6d79135fc2c1a91ae2b9c4c0c34b4164dcf3397fa36803df6458b0def5340153。
+  render.json 的 tts_bundle 钉与 note 已同步更正（首版 note 的「强制对齐
+  实测」表述不实，以本节为准），voice_quality_inventory 经 capture 重取、
+  render_inputs 经 record 重封（新 sha 0d4e6fd738351b6c15dc260ac95c5a13283a1162f9e95ad855f3ab537cbbaa75）、
+  qc_attestation 经 check_reel_landed 重签（0 项不合格）。

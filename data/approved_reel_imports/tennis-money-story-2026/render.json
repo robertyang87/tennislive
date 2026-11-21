@@ -10,13 +10,13 @@
   "narration_voice": "zh-CN-XiaoxiaoNeural",
   "renderer": "tennis-money-story-2026/build (build_full.py + render_samples_v4.py + build_v5.py + assemble_v5.py)",
   "import_note": "Finished master produced outside the native renderer; landed via the approved-master route (laver-cup-history-2026 precedent). v5 master: identical to v4 except the two original-audio shots (segments 34/45) whose burned subtitles were re-rendered as per-sentence bilingual cues (EN original + ZH translation from the audio-review packet) to satisfy the foreground-audio gate; audio track is byte-identical to v4 after decode. subtitles.ass is exported from the v5 master's actual burned cues (locked SCRIPT.md text, v3-locked SUB_BREAKS, bilingual OA cues as burned). Native brand outro preserved as the final shot (outro_seconds).",
-  "render_inputs_sha256": "849eb9be8a6223957b043e0d476136d4799360dcd17d71e5da9f18de5cc55bb6",
+  "render_inputs_sha256": "0d4e6fd738351b6c15dc260ac95c5a13283a1162f9e95ad855f3ab537cbbaa75",
   "film_sha256": "a269948e3a1f1d21fb022e583aa835b249394b2a400e84d06166ec5b1afa708e",
   "film_bytes": 220212799,
-  "qc_attestation_sha256": "9b62d8955bd5f301d05ccd7d1b50e362aae675a8ac16c4b80e1f4d1d796f0e04",
+  "qc_attestation_sha256": "d718024768af150ef67231f6e9a6b57340cd3f77f71f49422fb3163876b8fb3e",
   "tts_bundle": {
-    "bundle_sha256": "98940060e8b9f04c631b163e19446758d9e5962fae7a46ad27cc192ac971afe4",
+    "bundle_sha256": "6d79135fc2c1a91ae2b9c4c0c34b4164dcf3397fa36803df6458b0def5340153",
     "request_count": 65,
-    "note": "本片旁白由自有制作线以 edge-tts zh-CN-XiaoxiaoNeural 逐行合成（+0%/+0Hz）；此小包冻结的是实际送合成的 65 条请求与实际音频字节，词边界为实际音频的 faster-whisper 强制对齐实测（合成时未开启词边界流）。12 条样片行读稿按全片读稿惯例由展示文本重构并经 ASR 逐字核对。"
+    "note": "本片旁白由自有制作线以 edge-tts zh-CN-XiaoxiaoNeural 逐行合成（+0%/+0Hz）；此小包冻结的是实际送合成的 65 条请求与实际音频字节。词边界：2026-11-21 按听审 B 路重建——合成时未开启词边界流，首版 marks 为 faster-whisper 自由转写 token（繁体/阿拉伯数字形/误听，与简体原文对不齐，已废弃）；现行 marks 为对实际音频的强制对齐实测（faster-whisper small 词时间戳＋拼音单位全局对齐原文，逐字边界），音频字节与请求未动。12 条样片行读稿按全片读稿惯例由展示文本重构并经 ASR 逐字核对。"
   }
 }
