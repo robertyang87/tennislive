@@ -1,0 +1,25 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-aF96XdF7CQ0/aF96XdF7CQ0.mp4",
+  "source_sha256": "28cc3d9c0bc7ec27732467dfb92d3f893afd93bbced65767f5b4a962ef55bb4a",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
+  "reviewed_from": 150.96,
+  "reviewed_to": 168.5,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/aF96XdF7CQ0/small.en.json",
+    "data/source_asr/aF96XdF7CQ0/medium.en.json"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "no_foreground_english_reason": "Court-level full third set point: medium has only a low-confidence nonlexical Oh; small has inconsistent hallucinated sentences over continuous ball/crowd audio. Native same-point score/progression supports chair routine score-only calls; no stable substantive English utterance in either source evidence. No lexical dialogue fabricated.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 150.96,
+      "end": 168.5,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-aJ_bIrNtrtA/aJ_bIrNtrtA.mp4",
+  "source_sha256": "63320c9fe9eba9ca28bc243206a2ffd458b96c040c1b99c096833a0749534567",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
+  "reviewed_from": 398.0,
+  "reviewed_to": 407.8,
+  "foreground_english": [
+    {
+      "start": 401.1,
+      "end": 402.75,
+      "en": "What a way to seal it!",
+      "zh": "以这样的方式锁定胜利！"
+    },
+    {
+      "start": 402.75,
+      "end": 405.12,
+      "en": "Carlos Alcaraz survives.",
+      "zh": "阿尔卡拉斯挺过了这场考验。"
+    },
+    {
+      "start": 405.12,
+      "end": 406.9,
+      "en": "He's back in the final in Turin.",
+      "zh": "他再次闯进都灵的决赛。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/aJ_bIrNtrtA/small.en.json",
+    "data/source_asr/aJ_bIrNtrtA/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-aJ_bIrNtrtA.txt"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 398.0,
+      "end": 407.8,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ]
+}

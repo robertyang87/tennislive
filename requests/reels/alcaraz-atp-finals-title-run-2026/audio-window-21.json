@@ -1,0 +1,26 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-VajH-Syn0Y4/VajH-Syn0Y4.mp4",
+  "source_sha256": "b041ed7c04515517dc34e5de3e204ebca5ba792963da6b886f73720cc8eb4ef9",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
+  "reviewed_from": 199.5,
+  "reviewed_to": 226.5,
+  "foreground_english": [],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/VajH-Syn0Y4/small.en.json",
+    "data/source_asr/VajH-Syn0Y4/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-VajH-Syn0Y4.txt"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "no_foreground_english_reason": "Cup window199.5–226.5: both ASR and native captions show music/applause only before speech229.68.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 199.5,
+      "end": 226.5,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ]
+}

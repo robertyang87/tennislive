@@ -1,0 +1,308 @@
+{
+  "method": "official native source captions compared with independent small.en and medium.en word-timed ASR; no human listening claimed",
+  "checked_at": "2026-11-22T23:44:23.776077+00:00",
+  "sources": {
+    "YiWjCKWBWog": {
+      "source_sha256": "1b06b27ff247d36ec427e5f9807b52be165b1be6bc27cb637dd9a58372886bd9",
+      "cues": [
+        {
+          "start": 363.2,
+          "end": 364.7,
+          "en": "Didn't get there that time.",
+          "zh": "这次没能赶上。",
+          "basis": "CC and small agree get there; medium go there is minority, optional nonlexical Oh omitted."
+        },
+        {
+          "start": 370.3,
+          "end": 371.8,
+          "en": "That's two gone.",
+          "zh": "两个盘点都没了。",
+          "basis": "CC and both ASR agree words."
+        },
+        {
+          "start": 383.9,
+          "end": 385.2,
+          "en": "Oh, he's missed it.",
+          "zh": "噢，他打丢了。",
+          "basis": "CC and both ASR agree words; small Oh starts too early, use CC/medium."
+        },
+        {
+          "start": 433.52,
+          "end": 436.0,
+          "en": "Yes, he's done it!",
+          "zh": "是的，他做到了！",
+          "basis": "CC 433.52; small/medium agree words but applause causes early spurious ASR start."
+        },
+        {
+          "start": 436.4,
+          "end": 440.7,
+          "en": "Carlos Alcaraz is the Nitto ATP Finals champion.",
+          "zh": "卡洛斯·阿尔卡拉斯成为ATP年终总决赛冠军。",
+          "basis": "CC and small have name ASR errors, medium has canonical Carlos Alcaraz; Nitto canonical event normalization."
+        },
+        {
+          "start": 442.4,
+          "end": 445.9,
+          "en": "Historic moment.",
+          "zh": "历史性的一刻。",
+          "basis": "CC historic starts442.4; bothASR historic moment; medium hallucinated initial A has probability0.011."
+        },
+        {
+          "start": 467.25,
+          "end": 468.4,
+          "en": "Time to celebrate.",
+          "zh": "尽情庆祝吧。",
+          "basis": "CC467.44, bothASR core phrase agree. Medium initial and low confidence0.284 not presentCC/small."
+        }
+      ],
+      "not_safe_without_change": [
+        {
+          "start": 459.55,
+          "end": 464.9,
+          "native_words": "And only the third Spanish champion in the 57.",
+          "problem": "BothASR andCC native source stops at57; editions/year etc is not present. Do not invent continuation. Recommend cut before459.55, resume465.5 if needing subsequent full Time to celebrate and team hug.",
+          "possible_safe_cuts": [
+            [
+              419.0,
+              457.0
+            ],
+            [
+              465.5,
+              473.0
+            ]
+          ]
+        }
+      ]
+    },
+    "aJ_bIrNtrtA": {
+      "source_sha256": "63320c9fe9eba9ca28bc243206a2ffd458b96c040c1b99c096833a0749534567",
+      "cues": [
+        {
+          "start": 401.1,
+          "end": 402.75,
+          "en": "What a way to seal it!",
+          "zh": "以这样的方式锁定胜利！",
+          "basis": "CC and both ASR agree."
+        },
+        {
+          "start": 402.75,
+          "end": 405.12,
+          "en": "Carlos Alcaraz survives.",
+          "zh": "阿尔卡拉斯挺过了这场考验。",
+          "basis": "CC plus bothASR Carlos Alcaraz; small initial As probability0.083 ignored."
+        },
+        {
+          "start": 405.12,
+          "end": 406.9,
+          "en": "He's back in the final in Turin.",
+          "zh": "他再次闯进都灵的决赛。",
+          "basis": "NativeCC explicitly in Turin resolves small final entry and medium final interim."
+        }
+      ],
+      "uncertain_prior_cue": {
+        "start": 395.04,
+        "end": 398.1,
+        "words": "Well in control now, [with/in/at] the change of ends.",
+        "problem": "ASR both hands, nativeCC ends correctly; preposition uncertain. Avoid by selecting full final matchpoint starting~398.2 if visual serving preparation present."
+      }
+    },
+    "aF96XdF7CQ0": {
+      "source_sha256": "28cc3d9c0bc7ec27732467dfb92d3f893afd93bbced65767f5b4a962ef55bb4a",
+      "window": [
+        140,
+        174
+      ],
+      "foreground_english": [],
+      "basis": "Court-level native sound. medium only low-confidence nonlexical Oh162–163.4; small Save Marty see someone166–168 low logprob-1.62 then another30-second hallucinated sentence inconsistent with medium. No substantive English sentence has corroboration; do not turn crowd/grunts or routine chair score call into invented bilingual speech.",
+      "human_listening_claimed": false
+    },
+    "VajH-Syn0Y4": {
+      "source_sha256": "b041ed7c04515517dc34e5de3e204ebca5ba792963da6b886f73720cc8eb4ef9",
+      "status": "checked against native CC plus both completed ASR transcripts",
+      "cues": [
+        {
+          "start": 173.44,
+          "end": 179.7,
+          "en": "The 2026 Nitto ATP Finals champion, Carlos Alcaraz!",
+          "zh": "2026年ATP年终总决赛冠军，卡洛斯·阿尔卡拉斯！",
+          "basis": "NativeCC173.44 and bothASR agree entire ceremonial announcement after canonical Nitto/Carlos normalization; medium173.57–179.61; small start172.2 blends previous speech tail and is rejected."
+        }
+      ],
+      "window_after180": "Both ASR contain no substantive foreground English180–226. small has no speech until229.68, medium215.07–217.87 explicitly CHEERING AND APPLAUSE; nativeCC music/applause agrees. NativeCC Heat Heat185.12 unsupported by eitherASR is music/nonlexical syllables. First next actual Alcaraz speech229.68–229.92.",
+      "evidence_paths": [
+        "data/source_asr/VajH-Syn0Y4/small.en.json",
+        "data/source_asr/VajH-Syn0Y4/medium.en.json",
+        "/workspace/scratch/alcaraz-finals/captions-VajH-Syn0Y4.txt"
+      ]
+    }
+  },
+  "extra_windows": {
+    "rr2-GBdXpIAAgv4-361.0-377.8": {
+      "video_id": "GBdXpIAAgv4",
+      "reviewed_from": 361.0,
+      "reviewed_to": 377.8,
+      "method": "verified_source_captions_and_two_asr",
+      "human_listening_claimed": false,
+      "cues": [
+        {
+          "start": 365.24,
+          "end": 367.94,
+          "en": "Alcaraz makes it two out of two",
+          "zh": "阿尔卡拉斯取得两战全胜，"
+        },
+        {
+          "start": 367.94,
+          "end": 369.82,
+          "en": "this week here in Turin.",
+          "zh": "就在本周的都灵。"
+        },
+        {
+          "start": 369.82,
+          "end": 372.12,
+          "en": "Even with the medical timeout,",
+          "zh": "尽管中途申请了医疗暂停，"
+        },
+        {
+          "start": 372.12,
+          "end": 374.7,
+          "en": "still a very comfortable scoreline.",
+          "zh": "最终比分依然相当轻松。"
+        }
+      ],
+      "next_utterance_starts": 378.62,
+      "basis": "NativeCC plus bothASR agree complete utterance. Alcaraz proper-name canonical normalization. small374.68 endpoint covers medium word line374.20; no substantive English361–365.24 or374.70–377.8.",
+      "evidence_paths": [
+        "data/source_asr/GBdXpIAAgv4/small.en.json",
+        "data/source_asr/GBdXpIAAgv4/medium.en.json",
+        "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-GBdXpIAAgv4.txt"
+      ]
+    },
+    "rr3-TkigOzAxERU-308.8-327.0": {
+      "video_id": "TkigOzAxERU",
+      "reviewed_from": 308.8,
+      "reviewed_to": 327.0,
+      "method": "verified_source_captions_and_two_asr",
+      "human_listening_claimed": false,
+      "cues": [
+        {
+          "start": 312.9,
+          "end": 316.0,
+          "en": "Another outrageously good performance",
+          "zh": "又是一场好得惊人的表现，"
+        },
+        {
+          "start": 316.0,
+          "end": 317.9,
+          "en": "from Carlos Alcaraz.",
+          "zh": "来自卡洛斯·阿尔卡拉斯。"
+        },
+        {
+          "start": 317.95,
+          "end": 320.35,
+          "en": "Nothing Cobolli could do.",
+          "zh": "科博利无能为力。"
+        }
+      ],
+      "previous_utterance_ends": 308.64,
+      "next_utterance_starts": 338.39,
+      "basis": "BothASR include Another omitted in nativeCC. NativeCC and small agree Nothing Cobolli could do; medium omits second sentence. Cobolli normalized against verified participant identity, never Cappoli/Caballe. Previous He's everywhere completed by308.64, before selected308.8. No further English until338.39.",
+      "evidence_paths": [
+        "data/source_asr/TkigOzAxERU/small.en.json",
+        "data/source_asr/TkigOzAxERU/medium.en.json",
+        "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-TkigOzAxERU.txt"
+      ]
+    },
+    "sf-aJ_bIrNtrtA-274.5-290.7": {
+      "video_id": "aJ_bIrNtrtA",
+      "reviewed_from": 274.5,
+      "reviewed_to": 290.7,
+      "method": "verified_source_captions_and_two_asr",
+      "human_listening_claimed": false,
+      "cues": [
+        {
+          "start": 286.05,
+          "end": 287.7,
+          "en": "Yeah, there is.",
+          "zh": "是的，来了。"
+        },
+        {
+          "start": 288.15,
+          "end": 290.55,
+          "en": "First break of the day.",
+          "zh": "他今天的第一次破发。"
+        }
+      ],
+      "required_end_minimum": 290.55,
+      "requested_end_290_2_issue": "small day word289.52–290.48; medium289.54–290.38. End290.2 cuts word tail; extend290.6/290.7.",
+      "match_context": "Second set, Alcaraz4–3 Shelton, Shelton serving; Alcaraz wins to5–3. This is first break for Alcaraz, not first break by either player in match.",
+      "basis": "Core words there is and first break day in nativeCC and small/medium. NativeCC supplies Yeah; medium extra he is low-confidence0.341, unsupportedCC/small, omitted. of the day agreed by bothASR; nativeCC on the day has weak preposition. Quote retains spoken fragment structure. Medium Hey274.18(prob.01),279.64,282.06,284.30 are nonlexical player/crowd cries during strokes; do not fabricate substantive dialogue. Previous At some point ends274.18, before selected274.5.",
+      "evidence_paths": [
+        "data/source_asr/aJ_bIrNtrtA/small.en.json",
+        "data/source_asr/aJ_bIrNtrtA/medium.en.json",
+        "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-aJ_bIrNtrtA.txt"
+      ]
+    },
+    "final-YiWjCKWBWog-179.8-199.0": {
+      "video_id": "YiWjCKWBWog",
+      "reviewed_from": 179.8,
+      "reviewed_to": 199.0,
+      "method": "verified_source_captions_and_two_asr",
+      "human_listening_claimed": false,
+      "cues": [
+        {
+          "start": 194.72,
+          "end": 198.1,
+          "en": "Once more, he's got a nice cushion.",
+          "zh": "他再次拉开了领先差距。"
+        }
+      ],
+      "previous_utterance_ends": 177.84,
+      "next_utterance_starts": 200.44,
+      "basis": "Complete sentence with no unfinished tail in179.8–199.0. BothASR agree once more/cushion; small next-word It's start198.54 is an erroneous long word duration through201.18, while nativeCC200.96 and medium200.44 correctly identify next onset beyond selected199.0. Do not include next quote or extend window into it.",
+      "evidence_paths": [
+        "data/source_asr/YiWjCKWBWog/small.en.json",
+        "data/source_asr/YiWjCKWBWog/medium.en.json",
+        "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-YiWjCKWBWog.txt"
+      ]
+    },
+    "rr1-4609943-126.3-144.9": {
+      "video_id": "4609943",
+      "reviewed_from": 126.3,
+      "reviewed_to": 144.9,
+      "method": "two_asr_cross_checked",
+      "human_listening_claimed": false,
+      "cues": [
+        {
+          "start": 131.64,
+          "end": 132.96,
+          "en": "That will do it.",
+          "zh": "比赛就此结束。"
+        },
+        {
+          "start": 132.96,
+          "end": 135.15,
+          "en": "A near-perfect display",
+          "zh": "近乎完美的表现，"
+        },
+        {
+          "start": 135.15,
+          "end": 137.32,
+          "en": "from Carlos Alcaraz.",
+          "zh": "来自卡洛斯·阿尔卡拉斯。"
+        },
+        {
+          "start": 138.24,
+          "end": 140.8,
+          "en": "Simply sensational, every department.",
+          "zh": "各个环节，都出色极了。"
+        }
+      ],
+      "previous_utterance_ends": 126.18,
+      "basis": "BothASR agree core wording, small supplies initial A before near perfect; native serving begins after previous sentence ends126.18. Small word that129.12–132.18 wrongly spans silence, medium131.64–132.18 is plausible onset. BothASR have no speech after140.74 through144.9. Score-call exception if routine chair result is present. Source identity must bind archived151MB b298af170cc66e46 file, not earlier ffmpeg remux.",
+      "evidence_paths": [
+        "data/source_asr/4609943/small.en.json",
+        "data/source_asr/4609943/medium.en.json"
+      ]
+    }
+  }
+}

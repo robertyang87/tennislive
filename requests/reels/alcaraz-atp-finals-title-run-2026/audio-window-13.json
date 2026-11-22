@@ -1,0 +1,32 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-YiWjCKWBWog/YiWjCKWBWog.mp4",
+  "source_sha256": "1b06b27ff247d36ec427e5f9807b52be165b1be6bc27cb637dd9a58372886bd9",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
+  "reviewed_from": 179.8,
+  "reviewed_to": 199.0,
+  "foreground_english": [
+    {
+      "start": 194.72,
+      "end": 198.1,
+      "en": "Once more, he's got a nice cushion.",
+      "zh": "他再次拉开了领先差距。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/YiWjCKWBWog/small.en.json",
+    "data/source_asr/YiWjCKWBWog/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-YiWjCKWBWog.txt"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 179.8,
+      "end": 199.0,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ]
+}
