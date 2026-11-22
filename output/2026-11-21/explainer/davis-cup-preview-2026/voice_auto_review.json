@@ -18,8 +18,8 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-22T01:18:39+00:00",
-  "pass": false,
+  "reviewed_at": "2026-11-22T06:44:09+00:00",
+  "pass": true,
   "sentence_splits": [],
   "entries": [
     {
@@ -73,7 +73,7 @@
     {
       "id": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599",
       "audio_sha256": "76e8408e5971c91bc2110d218d289f6b8c0a4cd047b9ae5a71f3d4210412c14e",
-      "pass": false,
+      "pass": true,
       "result_of": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599"
     },
     {
@@ -97,7 +97,7 @@
     {
       "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
       "audio_sha256": "f1cba195f7657e1032b2a7433ea5d84ae5a1310a23aad83819c516de17dc2da0",
-      "pass": false,
+      "pass": true,
       "result_of": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0"
     },
     {
@@ -187,7 +187,7 @@
             {
               "wrong": "zhang3",
               "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "偿尝常"
@@ -222,7 +222,7 @@
         "substituted": 2,
         "sub_ratio": 0.022,
         "longest_deletion": 0,
-        "transcript": "伊达利对捷克,我选伊达利竞决赛。捷克有两位前二十丹达,这是最实在的挑战。伊达利的优势还是主场和丹达深度。瓦瓦索里仍在名单,双打搭档要看领场排兵。捷克若想改写这条线,最理想的路径是在两场丹达里直接拿够两分。"
+        "transcript": "意大利对捷克,我选意大利竞决赛。捷克有两位前二十单打,这是最实在的挑战。意大利的优势还是主场和单打深度。瓦瓦索里仍在名单,双打搭档要看领场排兵。捷克若想改写这条线,最理想的路径是在两场单打里直接拿够两分。"
       },
       "polyphones": [
         {
@@ -239,7 +239,7 @@
             {
               "wrong": "huan2",
               "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "孩骸"
@@ -323,7 +323,7 @@
             {
               "wrong": "zhong4",
               "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "崇虫"
@@ -439,10 +439,10 @@
     {
       "id": "bundle:6fac788fd1421c5b4397945fa9ed880751cb8f6dbdd0d30c003c58a55a59a599",
       "text": "假如决赛是意大利对西班牙，我的冠军票投西班牙。意大利的三连冠与主场优势都很硬，但西班牙这次有阿卡，也有霍达尔提供第二个单打支点。我更愿意押他们在两场单打里争取结束比赛，而不是把希望全留给最后的双打。",
-      "pass": false,
+      "pass": true,
       "checks": {
         "completeness": true,
-        "polyphones": false,
+        "polyphones": true,
         "pauses": true,
         "speed": true
       },
@@ -466,12 +466,14 @@
             "guan1"
           ],
           "tier": "A",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "guan1",
-              "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "verdict": "correct",
+              "score": 0.744,
+              "confidence": "medium",
+              "near": null
             }
           ],
           "ok_refs": "惯罐贯"
@@ -587,10 +589,10 @@
     {
       "id": "bundle:bd1b169462b2120b08f169238e407e3fe552715d2ba039c09c2406ace782ebc0",
       "text": "意大利历史交锋三比零领先韩国。这次我选意大利，更重要的依据是主场、三连冠的团队经验，以及科博利、穆塞蒂和达尔德里的单打选择。韩国首次进入八队淘汰阶段，权纯雨和郑泫有冲击力，但这轮对手确实更完整。",
-      "pass": false,
+      "pass": true,
       "checks": {
         "completeness": true,
-        "polyphones": false,
+        "polyphones": true,
         "pauses": true,
         "speed": true
       },
@@ -614,12 +616,14 @@
             "guan1"
           ],
           "tier": "A",
-          "verdict": "uncertain",
+          "verdict": "correct",
           "runs": [
             {
               "wrong": "guan1",
-              "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "verdict": "correct",
+              "score": 0.925,
+              "confidence": "high",
+              "near": "intended"
             }
           ],
           "ok_refs": "惯罐贯"
@@ -638,7 +642,7 @@
             {
               "wrong": "chong2",
               "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "仲众"
@@ -722,7 +726,7 @@
             {
               "wrong": "huan2",
               "verdict": "error",
-              "why": "OSError: [Errno 30] Read-only file system: '/home/agent/.cache/tennislive'"
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "孩骸"
