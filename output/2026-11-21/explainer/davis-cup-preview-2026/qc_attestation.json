@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.custom-explainer-qc.v1",
-  "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
-  "checked_at": "2026-11-21T15:44:53.715569+00:00",
+  "film_sha256": "8abb3d407345d4865e5c44dd7322a985e34b7cbd5fb81fd9d9eb04a4e816465f",
+  "checked_at": "2026-11-22T01:22:05+00:00",
   "format": {
     "video": {
       "codec_name": "h264",
@@ -30,12 +30,15 @@
   "complete_utterances_bound_to_actual_film": 17,
   "audio_binding": "actual-audio-binding.json",
   "visual_review": {
-    "scope": "26 actual final-film samples: every chapter, both photos where changed, cover and native outro; final-contact.jpg",
-    "facts_and_forecast": "Initial draw uses placeholders; later bracket and gold connections explicitly personal predictions. All eight nations present.",
-    "cover": "8-country flags and correct Davis Cup trophy retained. Shared four-stop thin brand stripe only on cover; body, transition and outro top stripes removed. Actual26-frame contact sheet, opening and outro reviewed.",
-    "photo_scope": "Official national-team file photography labelled as archival; full photo region filled with proportional crop; captions and faces reviewed.",
-    "reference_style": "Eight portraits and championship forecast follow owner-approved WTA/ATP format.",
-    "brand_bar_evidence": "brand-bar-review.json:actual top rows of26 final-frame samples"
+    "scope": "Independent exact-film frame review plus full-frame blackdetect; prior chapter/contact-sheet/photo source design unchanged outside corrected subtitle strip.",
+    "corrected_burned_subtitle_seconds": {
+      "180.60": "意大利的优势还是主场和单打深度",
+      "181.50": "瓦瓦索里仍在名单",
+      "182.80": "双打搭档要看临场排兵",
+      "184.30": "双打搭档要看临场排兵"
+    },
+    "cover": "Four-color accent and flags present at 0.20 and 1.10, no accent in story at 1.90, body titles readable near 171.10 and 191.40; end-brand uninterrupted at 285.90.",
+    "carry_forward_visual_design": "The previous final-contact.jpg and brand-bar-review.json show the already-approved prior original design and are not presented as fresh revision-4 artifacts."
   },
   "editorial_checks": {
     "all_4_quarterfinals": true,
@@ -52,14 +55,27 @@
     "announced_roster_not_confirmed_starting_lineup": true,
     "champion_preference": "Spain",
     "second_choice": "Italy",
-    "upset_risk": "Germany"
+    "upset_risk": "Germany",
+    "italy_latest_roster": {
+      "as_of": "2026-11-19",
+      "source": "https://www.fitp.it/Federazione/News/Attivita-internazionale/Davis-Cup-by-Generali-2026-i-convocati-dellItalia-per-le-Finals-di-Bologna",
+      "announced": [
+        "Cobolli",
+        "Musetti",
+        "Darderi",
+        "Berrettini",
+        "Vavassori"
+      ],
+      "lineup": "未官宣，不推断固定双打组合"
+    }
   },
-  "publication_gate": "Fresh native automatic review of all16 frozen narration inputs; independent stereo waveform binding of17 complete sources; full-film20ms RMS-envelope reconstruction, intro-silence negative check and actual opening/end ASR. Old published film fails the same stereo audit. No human listening claim.",
+  "publication_gate": "Hold, not approved for publishing: current exact-film visual check, all 17 stereo source bindings, and fresh actual-film ASR passed. The current native complete automated voice review still requires exact contextual reference comparisons for unchanged segments. No Release or PushPlus until it passes and CI requirements are met.",
   "sources": "source-provenance.json and facts.json",
   "music": "No BGM",
   "audio_regression": {
     "old_fails": "audio-regression-previous-fail.json",
     "new_passes": "actual-audio-binding.json",
     "root_cause": "audio-root-cause.json"
-  }
+  },
+  "actual_film_asr": "actual-opening-ending-asr.json"
 }

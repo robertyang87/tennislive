@@ -1,10 +1,15 @@
 {
-  "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
-  "method": "faster-whisper small on actual final-film opening and ending audio; initial prompt contains names only, not the script.",
+  "film_sha256": "8abb3d407345d4865e5c44dd7322a985e34b7cbd5fb81fd9d9eb04a4e816465f",
+  "checked_at": "2026-11-22T01:21:57+00:00",
+  "method": "faster-whisper small on three actual final-film audio windows; no script prompt, names only.",
   "windows_s": {
     "opening": [
       0,
       14.8
+    ],
+    "revised_italy": [
+      170.63,
+      190.3
     ],
     "ending": [
       284.333,
@@ -12,7 +17,8 @@
     ]
   },
   "transcripts": {
-    "opening": "阿卡和斯维列夫都来,戴维斯杯就成了两个人的对决吗?我先给结论,冠军倾向西班牙,罪防德国改写下半去。理由要从美队怎样拿到第二分说起。",
-    "ending": "关注网球时差,时差归我,好球归你。"
+    "opening": "阿卡和自维列夫都来,戴维斯杯就成了两个人的对决吗?我先给结论,冠军倾向西班牙,罪防德国改写下半去。理由要从美队怎样拿到第二分说起。",
+    "revised_italy": "意大利对捷克 我选意大利竞决赛捷克有两位前二师丹达 这是最实在的挑战意大利的优势还是主场和丹达深度瓦瓦索里仍在名单 双打搭档要看临场排兵捷克若想改写这条线 最理想的路径是在两场丹达里直接拿够两分",
+    "ending": "关注网球时差,时差归我,好球归你"
   }
 }

@@ -3,11 +3,11 @@
   "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "f42a7fde3dd8acade3d12231e9cb2dd01033c65dc517de4a3fc00e115e86679e",
-    "render_inputs_sha256": "b87bf72013280b7833332163270c2f1fb291c682924d79a6cf4e390a9a2aef32",
-    "spec_sha256": "df10be865bf76b20beac79fafb9fde4f504452041213770ec88959d3295e959f",
-    "film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
-    "inventory_sha256": "43a1124f2729cbfd9c6834638a93598df4c60cb62a85c826d73bcc3e40bb7c04"
+    "render_sha256": "ef78781fa0bc6e98e290257ad019786e8c08230cca204dcd1cf0d1a4e9efa6e1",
+    "render_inputs_sha256": "01f682529063850176812311af1daec1d0840c773bd5d05efa1e3592be2e7b8a",
+    "spec_sha256": "eb118d5596172336c317919145fc98daaeb56e4c03aee5d11da3b3767066d8c3",
+    "film_sha256": "8abb3d407345d4865e5c44dd7322a985e34b7cbd5fb81fd9d9eb04a4e816465f",
+    "inventory_sha256": "37e9817d1b0c889c47227fe3b2495ccf51a889139a52de255745eeebe0f01ead"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-21T15:45:27+00:00",
+  "reviewed_at": "2026-11-22T06:44:09+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -33,6 +33,12 @@
       "audio_sha256": "169cb80015ff4145cf5a6d89612500b170642358f8c370d090634349886a42cc",
       "pass": true,
       "result_of": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd"
+    },
+    {
+      "id": "bundle:39aede379b396dc17015a329365596c5f61fb4b6e18da8ca822fa92ac3c553d3",
+      "audio_sha256": "b59a1cd33c2f01b86c17592e63e5d389e079c08ee6c198df7a0cc4cd3a0af37b",
+      "pass": true,
+      "result_of": "bundle:39aede379b396dc17015a329365596c5f61fb4b6e18da8ca822fa92ac3c553d3"
     },
     {
       "id": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2",
@@ -111,12 +117,6 @@
       "audio_sha256": "dcbaa8daf0d506311b2e3cee656a815b2964c25eee7709e1d45d052494c4f125",
       "pass": true,
       "result_of": "bundle:f0fd16de242950563d01e39af463104ab2860b7ceecf992999669ebb557824c5"
-    },
-    {
-      "id": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5",
-      "audio_sha256": "ae3a900f9b808d6cfcc5ac482d7c2d23e70749e87105bdb8c50c50f5bfaff652",
-      "pass": true,
-      "result_of": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5"
     }
   ],
   "audio": [
@@ -182,14 +182,12 @@
             "zhang3"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "zhang3",
-              "verdict": "correct",
-              "score": 0.912,
-              "confidence": "medium",
-              "near": null
+              "verdict": "error",
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "偿尝常"
@@ -204,6 +202,58 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "德国 ｜ 历史 ｜ 交锋 ｜ 六比五 ｜ 领先 ｜ 我 ｜ 这 ｜ 一 ｜ 轮 ｜ 选择 ｜ 德国 ｜ 兹维列夫 ｜ 是 ｜ 最 ｜ 显眼 ｜ 的 ｜ 单打 ｜ 支点 ｜ 施特鲁夫 ｜ 也有 ｜ 戴 ｜ 杯 ｜ 经验 ｜ 双打 ｜ 则 ｜ 有 ｜ 长期 ｜ 配合 ｜ 的 ｜ 组合 ｜ 不过 ｜ 英国 ｜ 有 ｜ 费里 ｜ 和 ｜ 诺里 ｜ 双打 ｜ 更 ｜ 不能 ｜ 轻看 ｜ 这 ｜ 不是 ｜ 一 ｜ 张 ｜ 世界 ｜ 第一 ｜ 的 ｜ 名片 ｜ 就 ｜ 能 ｜ 解决 ｜ 的 ｜ 比赛"
+      }
+    },
+    {
+      "id": "bundle:39aede379b396dc17015a329365596c5f61fb4b6e18da8ca822fa92ac3c553d3",
+      "text": "意大利对捷克，我选意大利进决赛。捷克有两位前二十单打，这是最实在的挑战。意大利的优势还是主场和单打深度。瓦瓦索里仍在名单，双打搭档要看临场排兵。捷克若想改写这条线，最理想的路径是在两场单打里直接拿够两分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 93,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "意大利对捷克,我选意大利竞决赛。捷克有两位前二十单打,这是最实在的挑战。意大利的优势还是主场和单打深度。瓦瓦索里仍在名单,双打搭档要看领场排兵。捷克若想改写这条线,最理想的路径是在两场单打里直接拿够两分。"
+      },
+      "polyphones": [
+        {
+          "index": 42,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "error",
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 93,
+        "speech_s": 18.862,
+        "cps": 4.93,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "意大利 ｜ 对 ｜ 捷克 ｜ 我 ｜ 选 ｜ 意大利 ｜ 进 ｜ 决赛 ｜ 捷克 ｜ 有 ｜ 两位 ｜ 前二十 ｜ 单打 ｜ 这是 ｜ 最 ｜ 实在 ｜ 的 ｜ 挑战 ｜ 意大利 ｜ 的 ｜ 优势 ｜ 还是 ｜ 主场 ｜ 和 ｜ 单打 ｜ 深度 ｜ 瓦瓦索里 ｜ 仍 ｜ 在 ｜ 名单 ｜ 双打 ｜ 搭档 ｜ 要 ｜ 看 ｜ 临场 ｜ 排兵 ｜ 捷克 ｜ 若 ｜ 想 ｜ 改写 ｜ 这 ｜ 条 ｜ 线 ｜ 最 ｜ 理想 ｜ 的 ｜ 路径 ｜ 是 ｜ 在 ｜ 两场 ｜ 单打 ｜ 里 ｜ 直接 ｜ 拿 ｜ 够 ｜ 两分"
       }
     },
     {
@@ -272,10 +322,8 @@
           "runs": [
             {
               "wrong": "zhong4",
-              "verdict": "unreliable",
-              "score": 1.0,
-              "confidence": null,
-              "near": "intended"
+              "verdict": "error",
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "崇虫"
@@ -423,7 +471,7 @@
             {
               "wrong": "guan1",
               "verdict": "correct",
-              "score": 0.724,
+              "score": 0.744,
               "confidence": "medium",
               "near": null
             }
@@ -573,7 +621,7 @@
             {
               "wrong": "guan1",
               "verdict": "correct",
-              "score": 0.972,
+              "score": 0.925,
               "confidence": "high",
               "near": "intended"
             }
@@ -589,14 +637,12 @@
             "chong2"
           ],
           "tier": "B",
-          "verdict": "correct",
+          "verdict": "uncertain",
           "runs": [
             {
               "wrong": "chong2",
-              "verdict": "correct",
-              "score": 0.306,
-              "confidence": "low",
-              "near": null
+              "verdict": "error",
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "仲众"
@@ -679,10 +725,8 @@
           "runs": [
             {
               "wrong": "huan2",
-              "verdict": "uncertain",
-              "score": 0.18,
-              "confidence": null,
-              "near": null
+              "verdict": "error",
+              "why": "ValueError: No external comparison permitted for this non-required target; no local cached reference"
             }
           ],
           "ok_refs": "孩骸"
@@ -729,38 +773,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "阿卡 ｜ 和 ｜ 兹维列夫 ｜ 都 ｜ 来 ｜ 戴维斯 ｜ 杯 ｜ 就 ｜ 成 ｜ 了 ｜ 两个 ｜ 人 ｜ 的 ｜ 对决 ｜ 吗 ｜ 我 ｜ 先 ｜ 给 ｜ 结论 ｜ 冠军 ｜ 倾向 ｜ 西班牙 ｜ 最 ｜ 防 ｜ 德国 ｜ 改写 ｜ 下 ｜ 半 ｜ 区 ｜ 理由 ｜ 要 ｜ 从 ｜ 每 ｜ 队 ｜ 怎样 ｜ 拿 ｜ 到 ｜ 第二分 ｜ 说 ｜ 起"
-      }
-    },
-    {
-      "id": "bundle:f717577e53467aa57ca4e73b151872335dabb68afd5af20d3e6ea253c1d247e5",
-      "text": "意大利对捷克，我选意大利进决赛。捷克有两位前二十单打，这是最实在的挑战。意大利的优势，则是阵容选择、主场，以及博莱利和瓦瓦索里的双打搭配。捷克若想改写这条线，最理想的路径是在两场单打里直接拿够两分。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 89,
-        "deleted": 0,
-        "inserted": 0,
-        "substituted": 2,
-        "sub_ratio": 0.022,
-        "longest_deletion": 0,
-        "transcript": "伊达利对捷克,我选伊达利竞决赛。捷克有两位前二十单打,这是最实在的挑战。伊达利的优势则是阵容选择、主场以及博莱利和瓦巴索里的双打搭配。捷克若想改写这条线,最理想的路径是在两场单打里直接拿够两分。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 89,
-        "speech_s": 17.846,
-        "cps": 4.99,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "意大利 ｜ 对 ｜ 捷克 ｜ 我 ｜ 选 ｜ 意大利 ｜ 进 ｜ 决赛 ｜ 捷克 ｜ 有 ｜ 两位 ｜ 前二十 ｜ 单打 ｜ 这是 ｜ 最 ｜ 实在 ｜ 的 ｜ 挑战 ｜ 意大利 ｜ 的 ｜ 优势 ｜ 则 ｜ 是 ｜ 阵容 ｜ 选择 ｜ 主场 ｜ 以及 ｜ 博莱利 ｜ 和 ｜ 瓦瓦索里 ｜ 的 ｜ 双打 ｜ 搭配 ｜ 捷克 ｜ 若 ｜ 想 ｜ 改写 ｜ 这 ｜ 条 ｜ 线 ｜ 最 ｜ 理想 ｜ 的 ｜ 路径 ｜ 是 ｜ 在 ｜ 两场 ｜ 单打 ｜ 里 ｜ 直接 ｜ 拿 ｜ 够 ｜ 两分"
       }
     }
   ]
