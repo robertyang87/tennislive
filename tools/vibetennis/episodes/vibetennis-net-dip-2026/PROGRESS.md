@@ -25,3 +25,8 @@
 - 11-22 08:17 中文成片合成完：vibetennis-net-dip-2026_push.mp4（日志 /workspace/ep13_assemble_zh.log）
 - 11-22 08:32 中文 QC 全绿（qc.py 0 项不合格、motion_check 最大 11.9≤12、-14.8 LUFS/-3.1 dBTP），预览 /workspace/ep13_preview/；英文改为局部重渲：probe.js 逐帧比字 → en_patch/jobs.txt（6383 帧重渲、877 帧复用中文块），en_patch/render_en.sh 后台跑（日志 /workspace/ep13_en_render.log）
 - 11-22 08:37 修：标题段「中央带／宽≤5厘米」标签被白带子挡住 → 挪到带子左侧（shots.js 215–216）；中文局部重渲 870–1000 帧（r3d/patch_zh），英文对应段需在英文渲完后重渲
+- 11-22 08:40 本地提交 ac6afa9ae（分支 vibetennis-net-dip-2026，未推送；不含 docs/vibetennis.md、output/、mp4）
+- 11-22 10:34 中文 v2 完成（标签修正）：vibetennis-net-dip-2026_push.mp4、预览 /workspace/ep13_preview/EP13_网中间矮_zh_preview_v2.mp4；旧版 *_v1；motion 见 /workspace/scratch/motion_zh_v2.log
+- 11-22 10:43 第2步：v2 finalize.py＋qc.py 0 项不合格（-14.8 LUFS / -3.1 dBTP / 242.10s，film ded513b8）；motion_check 最大 12.0≤12、硬切 0（/workspace/ep13_tmp/motion_zh_v2.log）；海报已换 B（opt_B_tall_zh），spec cover 已改，旧 A 改名 *_A_v1
+- 11-22 10:46 glow_check --pair 修正段 29.7/30.5/31.5/32.5s 全 ✓（gain ≤0.21；/workspace/ep13_tmp/glow）。下一步 release.py
+- 11-22 10:47 第4步：release.py 已传 Release vibetennis-vibetennis-net-dip-2026（236.2 MB），写 copy.html；接着提交、推分支、开 PR
