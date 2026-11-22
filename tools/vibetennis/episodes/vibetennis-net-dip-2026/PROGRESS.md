@@ -30,3 +30,15 @@
 - 11-22 10:43 第2步：v2 finalize.py＋qc.py 0 项不合格（-14.8 LUFS / -3.1 dBTP / 242.10s，film ded513b8）；motion_check 最大 12.0≤12、硬切 0（/workspace/ep13_tmp/motion_zh_v2.log）；海报已换 B（opt_B_tall_zh），spec cover 已改，旧 A 改名 *_A_v1
 - 11-22 10:46 glow_check --pair 修正段 29.7/30.5/31.5/32.5s 全 ✓（gain ≤0.21；/workspace/ep13_tmp/glow）。下一步 release.py
 - 11-22 10:47 第4步：release.py 已传 Release vibetennis-vibetennis-net-dip-2026（236.2 MB），写 copy.html；接着提交、推分支、开 PR
+- 11-22 10:47 分支已推，PR #1501 https://github.com/robertyang87/tennislive/pull/1501（只含中文 render.json）；等检查后合并
+- 11-22 11:01 PR #1501 CI：20 项失败与 main 最新一次完全相同（存量，和本集无关）；合并
+- 11-22 11:03 已合并 c5acf99e4；auto-push-vibetennis run 44978745523 在跑
+- 11-22 11:03 第5步：中文已推微信 https://www.pushplus.plus/shortMessage/82665e3370154cfca46963c43c13f946（run 44978745523 success，流水号 82665e33…）；英文 PR 待英文成片后另开
+- 11-22 11:04 英文：34 段完成 30；c06240 在渲（~10 s/帧）；720/960（标签修正）和 3360（起页超时）由 en_chain.sh 第二轮补，之后自动合成英文，预计 13:00–14:00 出片
+- 11-22 17:36 英文卡住诊断：cap.js 6240 段从 10:29 起 mp4 不再增长、node/chromium/ffmpeg 全部 sleeping、0% CPU（p.evaluate 无超时，chromium 渲染进程在虚机挂起/恢复后不再响应）；已杀掉 en_chain/render_en/cap.js 及其 chromium。改用带看门狗的 en_patch/render_en2.sh
+- 11-22 17:37 起 en_patch/en_chain2.sh（K=4，看门狗 600 s 无进展/5400 s 超时即杀组重试 ×3）→ assemble en → 720p 预览 → motion；日志 /workspace/ep13_en_chain2.log、ep13_en_render2.log
+- 11-22 17:51 英文 3D 局部重渲完成（r3d/seg_en，render_en2）
+- 11-22 17:57 英文 45 段首尾相接 0–7260 无缺口；glow_check --pair 英文标签段 29.7/30.5/31.5/32.5s 全 ✓（/workspace/ep13_tmp/glow_en）
+- 11-22 18:04 英文成片合成完：vibetennis-net-dip-2026-en_push.mp4
+- 11-22 18:05 英文预览 /workspace/ep13_preview/EP13_en_preview_720p.mp4；motion 见 /workspace/ep13_tmp/motion_en.log
+- 11-22 18:11 英文 finalize＋qc.py 0 项不合格（242.10s，-14.1 LUFS / -3.0 dBTP，film cca96482），motion 最大 11.7、硬切 0；预览 /workspace/ep13_preview/EP13_en_preview_720p.mp4（111 MB）。未推送、未开 PR、未传 Release，等 Robert 审。待看：203s 附近三行字幕贴近底部出处说明；扇形图「down the line, unforced errors」标签被扇形压住
