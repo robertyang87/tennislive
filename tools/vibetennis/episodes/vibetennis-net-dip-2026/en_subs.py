@@ -1,0 +1,42 @@
+# 英文版旁白字幕（docs/vibetennis.md §8：英文版不配音，旁白译成英文字幕、跟中文旁白同一时间）。数字一个不改。
+EN={
+'h0':"Ever noticed the tennis net seems to sag in the middle?",
+'h1':"1.07 m at the ends, only 0.914 m in the middle: a full 15.6 cm lower.",
+'h2':"Is the net just slack? A rope hanging between two points makes a curve with a name:",
+'t0':"The catenary. Mathematicians first solved it in 1691.",
+'t1':"But a tennis net is NOT a catenary.",
+'t2':"The answer is this white strap in the middle.",
+'s0':"First, how a net is hung: the cord is pulled tight. The ITF recommends 1.8 to 2.0 kN, about 400 to 450 lb.",
+'s1':"On court: loosen the centre strap, tension the cord until the middle sits at about 99 cm, roughly 8 cm below the ends.",
+'s2':"Then pull the white strap down: 91.4 cm. Another 7.7 cm.",
+'s3':"So of those 15.6 cm, about half is the natural sag of the tight cord, and the other half is the strap pulling it down.",
+'s4':"A rope carrying only its own weight hangs in a smooth catenary. Pull it down at one point, and the sides become straight lines with a kink at that point.",
+'s5':"So the net is a shallow V. It isn't sagging. It's pulled into shape.",
+'y0':"High ends and a low middle weren't there from the start. In 1874, Wingfield's lawn tennis had posts 7 feet high.",
+'y1':"At the first Wimbledon in 1877 the court was already today's size, but the posts were still 5 ft, the middle 3 ft 3 in.",
+'y2':"With the ends that high, passing shots down the line rarely got through, and players rushing the net had a big edge.",
+'y3':"Over the next few years the posts came down step by step: by 1878 the middle was 3 ft; in 1880 the posts dropped to 4 ft.",
+'y4':"In 1882 the posts were set at 3 ft 6 in, the middle at 3 ft, and that's still the rule today.",
+'y5':"Writers at the time said the posts were lowered so baseline passing shots could answer the net rushers.",
+'y6':"So what do those leftover 15.6 cm mean for how the game is played?",
+'d0':"A singles court is 23.77 m by 8.23 m.",
+'d1':"Corner to opposite corner, by Pythagoras, the diagonal is 25.15 m: 1.38 m longer than the straight line.",
+'d2':"Where the ball crosses the net differs too: down the line, the net is about 104 cm; crosscourt goes over the middle, only 91.4 cm.",
+'d3':"Crosscourt: a longer path and a lower net. That's why it's safer, not just coach talk.",
+'m0':"How much safer? A model: contact 1 m high, 100 km/h, landing 1 m inside the far baseline.",
+'m1':"Crosscourt, the ball clears the net by about 45 cm; down the line, only about 30 cm.",
+'m2':"And the window of launch angles that land in is nearly 50% wider crosscourt.",
+'m3':"That's before spin. Topspin adds even more margin: that's the Magnus episode.",
+'m4':"Pros choose the same way: in Tennis Abstract's charting data, men's backhands from the backhand corner go 52.9% crosscourt, only 17.4% down the line.",
+'m5':"Down the line from the backhand corner, 19% are unforced errors; for all shots from that corner, just 11%.",
+'k0':"One more detail: on many courts the posts stand at doubles width.",
+'k1':"For singles, a stick goes in 0.914 m outside each singles sideline, propping the net back up to 1.07 m.",
+'k2':"The rules want exactly this: high at the sides, low in the middle.",
+'n0':"Look at the net once more.",
+'n1':"It isn't sagging. It's pulled into shape.",
+'n2':"Next match, will you look at the white strap in the middle first?",
+}
+if __name__=='__main__':
+    import json; n=json.load(open('narration.json'))
+    for l in n['lines']: l['en']=EN[l['file']]
+    json.dump(n,open('narration.json','w'),ensure_ascii=False,indent=1); print('en added',len(EN))

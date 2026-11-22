@@ -1,0 +1,287 @@
+{
+ "voice": "zh-CN-YunjianNeural",
+ "rate": "+18%",
+ "_why": "同 EP03–EP12：edge-tts 云健 +18%。text 为屏幕原文（阿拉伯数字），tts 为合成文本（数字写汉字、去破折号）。每句只讲 papers/vibetennis-net-dip-2026/sources.md 里核过、可上屏的内容；m0–m2 的余量与角度窗口是 net_geometry.py 真空弹道模型算的，画面标「按模型算，不计空气阻力和旋转」；99 cm 是 USTA 转述的场上校准做法。at 由 plan.py 按 voice/ 实测时长排定。",
+ "lines": [
+  {
+   "file": "h0",
+   "sec": "hook",
+   "text": "看球的时候你有没有发现：球网中间，好像塌下去了一截？",
+   "tts": "看球的时候你有没有发现：球网中间，好像塌下去了一截？",
+   "at": 0.208,
+   "en": "Ever noticed the tennis net seems to sag in the middle?"
+  },
+  {
+   "file": "h1",
+   "sec": "hook",
+   "text": "两端1.07米，中间只有0.914米，足足矮了15.6厘米。",
+   "tts": "两端一点零七米，中间只有零点九一四米，足足矮了十五点六厘米。",
+   "at": 4.708,
+   "en": "1.07 m at the ends, only 0.914 m in the middle: a full 15.6 cm lower."
+  },
+  {
+   "file": "h2",
+   "sec": "hook",
+   "text": "是网松了吗？一根绳子挂在两点之间，自然垂下来的曲线，有个名字——",
+   "tts": "是网松了吗？一根绳子挂在两点之间，自然垂下来的曲线，有个名字：",
+   "at": 11.108,
+   "en": "Is the net just slack? A rope hanging between two points makes a curve with a name:"
+  },
+  {
+   "file": "t0",
+   "sec": "title",
+   "text": "悬链线。1691年，数学家们第一次把它解了出来。",
+   "tts": "悬链线。一六九一年，数学家们第一次把它解了出来。",
+   "at": 18.208,
+   "en": "The catenary. Mathematicians first solved it in 1691."
+  },
+  {
+   "file": "t1",
+   "sec": "title",
+   "text": "可球网，不是悬链线。",
+   "tts": "可球网，不是悬链线。",
+   "at": 23.808,
+   "en": "But a tennis net is NOT a catenary."
+  },
+  {
+   "file": "t2",
+   "sec": "title",
+   "text": "答案，就在中间这条白带子上。",
+   "tts": "答案，就在中间这条白带子上。",
+   "at": 28.408,
+   "en": "The answer is this white strap in the middle."
+  },
+  {
+   "file": "s0",
+   "sec": "strap",
+   "text": "先看网是怎么挂的：网绳先绷紧，国际网联建议的张力是1.8到2.0千牛，大约400到450磅。",
+   "tts": "先看网是怎么挂的：网绳先绷紧，国际网联建议的张力是一点八到二点零千牛，大约四百到四百五十磅。",
+   "at": 33.102,
+   "en": "First, how a net is hung: the cord is pulled tight. The ITF recommends 1.8 to 2.0 kN, about 400 to 450 lb."
+  },
+  {
+   "file": "s1",
+   "sec": "strap",
+   "text": "场上的做法是：先松开中间的带子，把网绳绷到中间大约99厘米，比两端低8厘米左右。",
+   "tts": "场上的做法是：先松开中间的带子，把网绳绷到中间大约九十九厘米，比两端低八厘米左右。",
+   "at": 41.502,
+   "en": "On court: loosen the centre strap, tension the cord until the middle sits at about 99 cm, roughly 8 cm below the ends."
+  },
+  {
+   "file": "s2",
+   "sec": "strap",
+   "text": "然后，把这条白带子往下一拉：91.4厘米。又是7.7厘米。",
+   "tts": "然后，把这条白带子往下一拉：九十一点四厘米。又是七点七厘米。",
+   "at": 49.502,
+   "en": "Then pull the white strap down: 91.4 cm. Another 7.7 cm."
+  },
+  {
+   "file": "s3",
+   "sec": "strap",
+   "text": "这15.6厘米，大约一半是绷紧之后的自然下垂，另一半，是带子拉下来的。",
+   "tts": "这十五点六厘米，大约一半是绷紧之后的自然下垂，另一半，是带子拉下来的。",
+   "at": 56.502,
+   "en": "So of those 15.6 cm, about half is the natural sag of the tight cord, and the other half is the strap pulling it down."
+  },
+  {
+   "file": "s4",
+   "sec": "strap",
+   "text": "绳子只挂着自己的重量，才会垂成光滑的悬链线；中间被一个点往下拉，两边就被拉成直线，在拉点折出一个角。",
+   "tts": "绳子只挂着自己的重量，才会垂成光滑的悬链线；中间被一个点往下拉，两边就被拉成直线，在拉点折出一个角。",
+   "at": 63.702,
+   "en": "A rope carrying only its own weight hangs in a smooth catenary. Pull it down at one point, and the sides become straight lines with a kink at that point."
+  },
+  {
+   "file": "s5",
+   "sec": "strap",
+   "text": "所以球网是一个浅浅的V字。它不是塌的，是被拉成这样的。",
+   "tts": "所以球网是一个浅浅的V字。它不是塌的，是被拉成这样的。",
+   "at": 73.302,
+   "en": "So the net is a shallow V. It isn't sagging. It's pulled into shape."
+  },
+  {
+   "file": "y0",
+   "sec": "hist",
+   "text": "两端高、中间低，也不是一开始就这样。1874年，温菲尔德的草地网球，网柱高达7英尺。",
+   "tts": "两端高、中间低，也不是一开始就这样。一八七四年，温菲尔德的草地网球，网柱高达七英尺。",
+   "at": 81.509,
+   "en": "High ends and a low middle weren't there from the start. In 1874, Wingfield's lawn tennis had posts 7 feet high."
+  },
+  {
+   "file": "y1",
+   "sec": "hist",
+   "text": "1877年第一届温网，场地尺寸已经和今天一样，可网柱还有5英尺，中间3英尺3英寸。",
+   "tts": "一八七七年第一届温网，场地尺寸已经和今天一样，可网柱还有五英尺，中间三英尺三英寸。",
+   "at": 89.309,
+   "en": "At the first Wimbledon in 1877 the court was already today's size, but the posts were still 5 ft, the middle 3 ft 3 in."
+  },
+  {
+   "file": "y2",
+   "sec": "hist",
+   "text": "两边这么高，沿边线的穿越球很难打过去，冲到网前截击的人占了大优势。",
+   "tts": "两边这么高，沿边线的穿越球很难打过去，冲到网前截击的人占了大优势。",
+   "at": 96.909,
+   "en": "With the ends that high, passing shots down the line rarely got through, and players rushing the net had a big edge."
+  },
+  {
+   "file": "y3",
+   "sec": "hist",
+   "text": "之后几年，网柱一截一截降下来：1878年，中间已经是3英尺；1880年，网柱降到4英尺。",
+   "tts": "之后几年，网柱一截一截降下来：一八七八年，中间已经是三英尺；一八八零年，网柱降到四英尺。",
+   "at": 103.709,
+   "en": "Over the next few years the posts came down step by step: by 1878 the middle was 3 ft; in 1880 the posts dropped to 4 ft."
+  },
+  {
+   "file": "y4",
+   "sec": "hist",
+   "text": "1882年，网柱定在3英尺6英寸，中间3英尺，一直用到今天。",
+   "tts": "一八八二年，网柱定在三英尺六英寸，中间三英尺，一直用到今天。",
+   "at": 112.109,
+   "en": "In 1882 the posts were set at 3 ft 6 in, the middle at 3 ft, and that's still the rule today."
+  },
+  {
+   "file": "y5",
+   "sec": "hist",
+   "text": "当时的史料说，降低网柱，是为了让底线的穿越球也能对付网前截击。",
+   "tts": "当时的史料说，降低网柱，是为了让底线的穿越球也能对付网前截击。",
+   "at": 118.909,
+   "en": "Writers at the time said the posts were lowered so baseline passing shots could answer the net rushers."
+  },
+  {
+   "file": "y6",
+   "sec": "hist",
+   "text": "那留下来的这15.6厘米，对打球意味着什么？",
+   "tts": "那留下来的这十五点六厘米，对打球意味着什么？",
+   "at": 125.309,
+   "en": "So what do those leftover 15.6 cm mean for how the game is played?"
+  },
+  {
+   "file": "d0",
+   "sec": "diag",
+   "text": "单打场地是23.77米乘8.23米。",
+   "tts": "单打场地是二十三点七七米乘八点二三米。",
+   "at": 130.98,
+   "en": "A singles court is 23.77 m by 8.23 m."
+  },
+  {
+   "file": "d1",
+   "sec": "diag",
+   "text": "从底线一角打到对面一角，按勾股定理，斜线是25.15米，比直线多出1.38米。",
+   "tts": "从底线一角打到对面一角，按勾股定理，斜线是二十五点一五米，比直线多出一点三八米。",
+   "at": 135.58,
+   "en": "Corner to opposite corner, by Pythagoras, the diagonal is 25.15 m: 1.38 m longer than the straight line."
+  },
+  {
+   "file": "d2",
+   "sec": "diag",
+   "text": "过网的位置也不同：沿边线打，那里的网大约104厘米；斜线从中间过，网只有91.4厘米。",
+   "tts": "过网的位置也不同：沿边线打，那里的网大约一百零四厘米；斜线从中间过，网只有九十一点四厘米。",
+   "at": 143.98,
+   "en": "Where the ball crosses the net differs too: down the line, the net is about 104 cm; crosscourt goes over the middle, only 91.4 cm."
+  },
+  {
+   "file": "d3",
+   "sec": "diag",
+   "text": "斜线，路更远，网更低。所以斜线更安全，不只是教练嘴上说说。",
+   "tts": "斜线，路更远，网更低。所以斜线更安全，不只是教练嘴上说说。",
+   "at": 152.78,
+   "en": "Crosscourt: a longer path and a lower net. That's why it's safer, not just coach talk."
+  },
+  {
+   "file": "m0",
+   "sec": "margin",
+   "text": "安全多少？按模型算：击球点1米高，时速100公里，落在对面底线内1米。",
+   "tts": "安全多少？按模型算：击球点一米高，时速一百公里，落在对面底线内一米。",
+   "at": 160.768,
+   "en": "How much safer? A model: contact 1 m high, 100 km/h, landing 1 m inside the far baseline."
+  },
+  {
+   "file": "m1",
+   "sec": "margin",
+   "text": "斜线过网时，球比网高出约45厘米；沿线只有约30厘米。",
+   "tts": "斜线过网时，球比网高出约四十五厘米；沿线只有约三十厘米。",
+   "at": 168.168,
+   "en": "Crosscourt, the ball clears the net by about 45 cm; down the line, only about 30 cm."
+  },
+  {
+   "file": "m2",
+   "sec": "margin",
+   "text": "能打进的出手角度，斜线也宽了将近一半。",
+   "tts": "能打进的出手角度，斜线也宽了将近一半。",
+   "at": 174.768,
+   "en": "And the window of launch angles that land in is nearly 50% wider crosscourt."
+  },
+  {
+   "file": "m3",
+   "sec": "margin",
+   "text": "这还没算旋转。加上上旋，余量会更大，那是马格努斯那一期的故事。",
+   "tts": "这还没算旋转。加上上旋，余量会更大，那是马格努斯那一期的故事。",
+   "at": 179.968,
+   "en": "That's before spin. Topspin adds even more margin: that's the Magnus episode."
+  },
+  {
+   "file": "m4",
+   "sec": "margin",
+   "text": "职业球员的选择也对得上：Tennis Abstract的记拍数据里，男子在反手位用反手抽击，斜线占52.9%，沿线只有17.4%。",
+   "tts": "职业球员的选择也对得上：Tennis Abstract的记拍数据里，男子在反手位用反手抽击，斜线占百分之五十二点九，沿线只有百分之十七点四。",
+   "at": 186.368,
+   "en": "Pros choose the same way: in Tennis Abstract's charting data, men's backhands from the backhand corner go 52.9% crosscourt, only 17.4% down the line."
+  },
+  {
+   "file": "m5",
+   "sec": "margin",
+   "text": "从反手位打沿线，非受迫性失误是19%；这个位置所有出球，平均只有11%。",
+   "tts": "从反手位打沿线，非受迫性失误是百分之十九；这个位置所有出球，平均只有百分之十一。",
+   "at": 196.968,
+   "en": "Down the line from the backhand corner, 19% are unforced errors; for all shots from that corner, just 11%."
+  },
+  {
+   "file": "k0",
+   "sec": "sticks",
+   "text": "还有一个细节：很多球场的网柱，是按双打宽度立的。",
+   "tts": "还有一个细节：很多球场的网柱，是按双打宽度立的。",
+   "at": 206.515,
+   "en": "One more detail: on many courts the posts stand at doubles width."
+  },
+  {
+   "file": "k1",
+   "sec": "sticks",
+   "text": "打单打时，要在单打边线外0.914米，各插一根单打支杆，把网重新撑到1.07米。",
+   "tts": "打单打时，要在单打边线外零点九一四米，各插一根单打支杆，把网重新撑到一点零七米。",
+   "at": 211.515,
+   "en": "For singles, a stick goes in 0.914 m outside each singles sideline, propping the net back up to 1.07 m."
+  },
+  {
+   "file": "k2",
+   "sec": "sticks",
+   "text": "规则要的，就是两边高、中间低。",
+   "tts": "规则要的，就是两边高、中间低。",
+   "at": 220.115,
+   "en": "The rules want exactly this: high at the sides, low in the middle."
+  },
+  {
+   "file": "n0",
+   "sec": "end",
+   "text": "再看一次这张网。",
+   "tts": "再看一次这张网。",
+   "at": 225.665,
+   "en": "Look at the net once more."
+  },
+  {
+   "file": "n1",
+   "sec": "end",
+   "text": "它不是塌的。是被拉成这样的。",
+   "tts": "它不是塌的。是被拉成这样的。",
+   "at": 228.265,
+   "en": "It isn't sagging. It's pulled into shape."
+  },
+  {
+   "file": "n2",
+   "sec": "end",
+   "text": "下次看球，你会先瞄中间那条白带子吗？",
+   "tts": "下次看球，你会先瞄中间那条白带子吗？",
+   "at": 233.065,
+   "en": "Next match, will you look at the white strap in the middle first?"
+  }
+ ]
+}
