@@ -1,9 +1,9 @@
 {
   "status": "publication_blocked_by_existing_repository_failures",
-  "checked_at": "2026-11-23T00:42:54.740106+00:00",
-  "run_id": 45088863931,
-  "run_url": "https://github.com/robertyang87/tennislive/actions/runs/45088863931",
-  "head_commit": "3479e18360d640a71f9bd7bcb6d5afc65c621f15",
+  "checked_at": "2026-11-23T01:38:30.176301+00:00",
+  "run_id": 45093789332,
+  "run_url": "https://github.com/robertyang87/tennislive/actions/runs/45093789332",
+  "head_commit": "67ba144170f85479d56c56b055fb47170d3a6fe1",
   "summary": {
     "failed": 20,
     "passed": 6789,
@@ -16,6 +16,21 @@
     "voice-review-money-story.yml": 3
   },
   "film_specific_failures": 0,
-  "log_sha256": "e97301ac4cd0bc2c8fc87cea643b26f984be79adcf92b1b6b93009c45ffab1af",
-  "decision": "Do not weaken gates or rewrite previously delivered movie metadata to fabricate a green baseline. Complete this requested movie and voice/media QC; leave merge and PushPlus unsent while repository CI is red. This does not declare the five-part publication workflow complete."
+  "log_sha256": "07d963f46ba3b0861bc3aeab00445c651ad60014629440bae9ca0bb3012a00e2",
+  "decision": "Do not weaken gates or rewrite previously delivered movie metadata to fabricate a green baseline. Complete this requested movie and voice/media QC; leave merge and PushPlus unsent while repository CI is red. This does not declare the five-part publication workflow complete.",
+  "current_film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
+  "render_run": 45093785041,
+  "render_commit": "7e136478",
+  "render_status": "success",
+  "new_film_voice_and_media_qc": "pass",
+  "pushplus_sent": false,
+  "pushed_json_present": false,
+  "independent_visual_status": "passed_all11_serves_and_championship_continuity",
+  "completion_proof": {
+    "formal_spec": true,
+    "completed_render": true,
+    "passed_movie_qc": true,
+    "successful_pushplus_response": false,
+    "committed_pushed_json": false
+  }
 }
