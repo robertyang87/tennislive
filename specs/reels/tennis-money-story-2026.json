@@ -20,6 +20,11 @@
     "eyebrow": "网球有故事",
     "layout": "solo",
     "story_kind": "other",
+    "subject": "辛纳",
+    "portrait": {
+      "image": "data/approved_reel_imports/tennis-money-story-2026/poster.jpg",
+      "_low_res_why": "如实保留已定版封面原件。成片不经原生渲染器重渲，这张图只让 spec 认得出封面在哪。"
+    },
     "hook": "美网首轮出局 $110,000\nITF M15 冠军 $2,160",
     "sub": "从大满贯到 M15 的奖金实账",
     "topic": "职业网球真的赚钱么？",
@@ -32,7 +37,8 @@
     "lead": "奖金写的是他赢了多少，不是他最后能留下多少。从大满贯到 M15，把职业网球这本账算给你看。"
   },
   "editorial": {
-    "mode": "story",
+    "mode": "match_review",
+    "_mode_why": "导入成片的内容合同只有 match_review 这一档（同 laver-cup-history-2026）。片子讲的是奖金结构，不是一场比赛复盘。",
     "question": "职业网球真的赚钱么？钱被谁赚走，又由什么规则决定？",
     "thesis": "总量巨大但分配极端金字塔化：能进哪一层由排名与规则分配，成本刚性且由球员自担，多数球员净账为负或接近于零；官方补丁（ATP Baseline、挑战赛奖金增长）本身即是底层不可持续的结构自证。",
     "beats": [
@@ -53,6 +59,9 @@
         "丹尼尔太郎自述：每月运营支出不低于 20,000 美元（不含团队工资），排名五六十位全年支出约 500,000 美元（本人播客原声）。",
         "ATP Baseline 2025：前 100 名保底 $300,000、101–175 名 $200,000、176–250 名 $100,000，全年向 30 人发放逾 200 万美元（ATP 官方）。",
         "PTPA 2025-03-18 于纽约南区联邦法院提起反垄断诉讼，主张球员只取得行业收入约 17.5%——诉讼方单方主张，未经法院认定（片中已标注）。"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/baseline-financial-security-programme-august-2023"
       ]
     }
   },
@@ -81,7 +90,8 @@
     {
       "source": "approved_master",
       "start": 19.824,
-      "end": 27.224
+      "end": 27.224,
+      "_quote_skip_why": "母带这一段没有旁白，字幕轨也是空的，是结论和下一章之间的画面，没有解说开口。"
     },
     {
       "source": "approved_master",
@@ -335,7 +345,7 @@
       "source": "approved_master",
       "start": 390.889,
       "end": 401.389,
-      "narration": "伤病会改变结果。前世界第 16 位巴希拉什维利，2024 年奖金 63,183 美元，全年净亏损约 120,000 美元。"
+      "narration": "伤病会改变结果。前世界第 16 位巴西拉什维利，2024 年奖金 63,183 美元，全年净亏损约 120,000 美元。"
     },
     {
       "source": "approved_master",

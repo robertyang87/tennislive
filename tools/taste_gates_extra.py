@@ -327,6 +327,10 @@ ENDING_LEGACY = frozenset({
     # 而这条判据当时只活在 pytest 里——自动链直推 main 不触发 CI。挪进
     # `validate_spec` 之后自动 spec 也会在 dry-run 里被报出来。
     "andreeva-gauff",
+    # tennis-money-story-2026 是已定版导入母带。收尾旁白停在
+    # 「对大多数球员，奖金不足以覆盖参赛成本。」小红书正文另有一问。
+    # 母带禁止重渲，音轨改不了。
+    "tennis-money-story-2026",
 })
 
 
