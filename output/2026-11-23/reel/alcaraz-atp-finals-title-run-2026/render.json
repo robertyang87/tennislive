@@ -1,0 +1,153 @@
+{
+  "scoreboard_qc_sha256": "bc3254501f710698b100ad2e3c44f674b12dda3e64c13801119b6c6b791b1b5f",
+  "source_audio_policy": "unity_no_loudness_v1",
+  "tts_bundle": {
+    "schema": "tennislive.frozen-tts-bundle.v1",
+    "bundle_sha256": "c36ef76239ac28a5bb7f725a4fe616b7996a983fd8d3f0ebaae709c05f6af359",
+    "request_count": 13,
+    "mode": "strict_import",
+    "strict_reused": true,
+    "artifact_kind": "native_tts_inputs",
+    "quality_approval": false,
+    "audio_decoding_verified": true,
+    "release_tag": "reel-tts-alcaraz-atp-finals-title-run-2026-c36ef76239ac28a5",
+    "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-alcaraz-atp-finals-title-run-2026-c36ef76239ac28a5/tts_bundle.zip",
+    "file_name": "tts_bundle.zip",
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/45088975413"
+  },
+  "cover_seconds": 1.2,
+  "cover_narrated": false,
+  "outro_seconds": 4.554,
+  "layout": "full",
+  "segments_seconds": 381.01,
+  "topbar_by_source": {
+    "final": {
+      "line1": "2026 ATP年终总决赛 决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "兹维列夫",
+      "result": "6-2 7-6(7)",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "rr1": {
+      "line1": "2026 ATP年终总决赛 小组赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "蒂亚福",
+      "result": "6-2 6-2",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "rr2": {
+      "line1": "2026 ATP年终总决赛 小组赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "梅德韦德夫",
+      "result": "6-2 6-4",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "rr3": {
+      "line1": "2026 ATP年终总决赛 小组赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "科博利",
+      "result": "6-4 6-1",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "sf": {
+      "line1": "2026 ATP年终总决赛 半决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "谢尔顿",
+      "result": "3-6 6-3 7-6(1)",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "court": {
+      "line1": "2026 ATP年终总决赛 决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "兹维列夫",
+      "result": "6-2 7-6(7)",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    },
+    "trophy": {
+      "line1": "2026 ATP年终总决赛 决赛",
+      "winner": "阿尔卡拉斯",
+      "loser": "兹维列夫",
+      "result": "6-2 7-6(7)",
+      "source": "https://www.nittoatpfinals.com/en/scores-centre/results"
+    }
+  },
+  "topbar": {
+    "line1": "2026 ATP年终总决赛 决赛",
+    "line2": "阿尔卡拉斯 6-2 7-6(7) 兹维列夫",
+    "start": 1.2,
+    "end": 382.21
+  },
+  "film_seconds": 386.8,
+  "narration_voice": "zh-CN-YunjianNeural",
+  "narration_rate": "+6%",
+  "narration_backend": "edge-tts",
+  "narration_seconds": {
+    "1": 12.888,
+    "2": 8.184,
+    "4": 9.96,
+    "6": 8.736,
+    "8": 8.856,
+    "10": 13.56,
+    "12": 10.656,
+    "14": 8.616,
+    "16": 12.624,
+    "19": 12.792,
+    "22": 11.496,
+    "24": 9.696
+  },
+  "face_checks": {
+    "cover": {
+      "status": "not_applicable",
+      "why": "封面不是抽帧"
+    },
+    "segments": {
+      "status": "ok",
+      "model": "buffalo_s-v0.7",
+      "report_only": true,
+      "segments": [],
+      "findings": [],
+      "frames": 0,
+      "faces": 0
+    }
+  },
+  "render_inputs_sha256": "df4ae8c4904e63a76702b4e5171fe6e232b81b853010f1beae8926de4a77b85b",
+  "production_sla": {
+    "version": 2,
+    "pipeline": "match-reel",
+    "slug": "alcaraz-atp-finals-title-run-2026",
+    "received_at": "2026-11-23T00:28:31Z",
+    "artifact_ready_at": "2026-11-23T00:43:44Z",
+    "elapsed_seconds": 913.315,
+    "budget_seconds": 600,
+    "met": false,
+    "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+    "spec_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
+    "run_id": "45088975413",
+    "stage_events": [
+      {
+        "stage": "render",
+        "at": "2026-11-23T00:33:41Z",
+        "run_id": "45088975413"
+      }
+    ],
+    "render_seconds": 603.315,
+    "pre_render_seconds": 310.0
+  },
+  "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+  "film_bytes": 172176941,
+  "qc_attestation_sha256": "f619907077a76521e562706ccccad3bd3bf11c48e41e5e4445727822837ba84f",
+  "production_stage_events": [
+    {
+      "stage": "render",
+      "at": "2026-11-23T00:33:41Z",
+      "run_id": "45088975413"
+    },
+    {
+      "stage": "qc_passed",
+      "at": "2026-11-23T00:43:49Z",
+      "run_id": "45088975413"
+    }
+  ],
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-atp-finals-title-run-2026/alcaraz-atp-finals-title-run-2026.mp4",
+  "video_bytes": 172176941
+}

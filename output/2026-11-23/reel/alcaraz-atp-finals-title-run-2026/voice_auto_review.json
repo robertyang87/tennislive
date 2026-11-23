@@ -1,0 +1,754 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 2,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "59a33ab990899bc28154fde6dd431f16b33adeda59005c770a307917b9d16c05",
+    "render_inputs_sha256": "df4ae8c4904e63a76702b4e5171fe6e232b81b853010f1beae8926de4a77b85b",
+    "spec_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
+    "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+    "inventory_sha256": "c3b1c54ffaddd8b91d92fbd05a2a55a49f9a0d2b240a0af047dec21dd1b2c27f"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-23T00:45:50+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:5a30c67f99fbb67a7217de4c909a2de00eb9a6f531c391c16d655184f4cb6b78",
+      "audio_sha256": "972e4d24ca11317aac17d931e7dc75531589a5886d8682f41a58f94a6aec3ea7",
+      "pass": true,
+      "result_of": "bundle:5a30c67f99fbb67a7217de4c909a2de00eb9a6f531c391c16d655184f4cb6b78"
+    },
+    {
+      "id": "bundle:88e3b639ab349decf14142246b79ddbc9b198bac9ba2042f0d8d552fbf7d9e6d",
+      "audio_sha256": "c583f34398dced445dec13cbf03aea3a0108f74ff7885ba1e8da39cfc81fdf46",
+      "pass": true,
+      "result_of": "bundle:88e3b639ab349decf14142246b79ddbc9b198bac9ba2042f0d8d552fbf7d9e6d"
+    },
+    {
+      "id": "bundle:8ec1c8b96a8b3cb7d729807c0ba86802c3c10981f841ca80c15baca0d0ccb08d",
+      "audio_sha256": "f835b67f979f22c29943e0532a6faf226aee0a701dc1be8c4f3318961cbd0080",
+      "pass": true,
+      "result_of": "bundle:8ec1c8b96a8b3cb7d729807c0ba86802c3c10981f841ca80c15baca0d0ccb08d"
+    },
+    {
+      "id": "bundle:b4dbf15a9c1a89dfaa2c29c39443e44d91b7a77fda0e06aa45925f7781d529cd",
+      "audio_sha256": "0f1392bde6f00513d09b774d52e6170abe0829a26a52f0aaa19434307b05e897",
+      "pass": true,
+      "result_of": "bundle:b4dbf15a9c1a89dfaa2c29c39443e44d91b7a77fda0e06aa45925f7781d529cd"
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "audio_sha256": "b9f2ddec5251f74b230a8582938378b5e8a1c0ea729c34c10be40149fc65292c",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    },
+    {
+      "id": "bundle:c3864c3e7e131882bbe910cf9077e4bc7be06fb2156edfdd332895abf49c4347",
+      "audio_sha256": "ac162e99dd1a8a728e6922b8eaeb297c7013032d27fd36b568aaa2d2693b01f2",
+      "pass": true,
+      "result_of": "bundle:c3864c3e7e131882bbe910cf9077e4bc7be06fb2156edfdd332895abf49c4347"
+    },
+    {
+      "id": "bundle:c8d2c6dfff7cd5bff756ffafa940e75700df90e2600eb215b2819b4f21cd4fb3",
+      "audio_sha256": "fb4ab918008ddb6bdbc51aad8e101d450e253d0fa10aeec35bdfb9f63b9bd3be",
+      "pass": true,
+      "result_of": "bundle:c8d2c6dfff7cd5bff756ffafa940e75700df90e2600eb215b2819b4f21cd4fb3"
+    },
+    {
+      "id": "bundle:c96376ce496d038cca75effae9cb1aed44110db55aa7a6516e7c0b7f904cf1c6",
+      "audio_sha256": "83a085ef051e04ae192b75b95481b016c4b3fc2e8f3915de6d78c4e42628d090",
+      "pass": true,
+      "result_of": "bundle:c96376ce496d038cca75effae9cb1aed44110db55aa7a6516e7c0b7f904cf1c6"
+    },
+    {
+      "id": "bundle:cce7a049f11c7d95ec15a79e7954254d26ba8756c06e33a6ac6acb56fde5521d",
+      "audio_sha256": "07b7b4e08727b6fb7eab8d28256ed6506ecdc0e4dd956650a5ad62633de95b45",
+      "pass": true,
+      "result_of": "bundle:cce7a049f11c7d95ec15a79e7954254d26ba8756c06e33a6ac6acb56fde5521d"
+    },
+    {
+      "id": "bundle:d21fee1384f17eaee33a111869d12c004fe5db74d71274cd827ba8fcee376411",
+      "audio_sha256": "c68cd52826fee8685e9f62cb08dd29fd5a2f0effa60afdf785352325b864b43a",
+      "pass": true,
+      "result_of": "bundle:d21fee1384f17eaee33a111869d12c004fe5db74d71274cd827ba8fcee376411"
+    },
+    {
+      "id": "bundle:d4090f5b055a05197e7eb18ec3b603684b00082e8713e29c14674daec13fb195",
+      "audio_sha256": "921e4495425aea2d358f1b9b02fbdc07fa2b9cb0c8da43809f2a7a9b850462a4",
+      "pass": true,
+      "result_of": "bundle:d4090f5b055a05197e7eb18ec3b603684b00082e8713e29c14674daec13fb195"
+    },
+    {
+      "id": "bundle:da8a3811e8ed69dff9c90e35daab69602a612ac4d0e475392097289734b23d92",
+      "audio_sha256": "b884de7a49317df19f91676d6134bdad244c06b161072508cd226d610aff7c3d",
+      "pass": true,
+      "result_of": "bundle:da8a3811e8ed69dff9c90e35daab69602a612ac4d0e475392097289734b23d92"
+    },
+    {
+      "id": "bundle:f5a246d8d8a54d6701cf0950fe2e642144e954005d21b07b7aca3798ca699bcb",
+      "audio_sha256": "752fd8094cd40ff371e24c9d7fcd8d96a8624ba74c202e05021d1c2d5bc3c6a5",
+      "pass": true,
+      "result_of": "bundle:f5a246d8d8a54d6701cf0950fe2e642144e954005d21b07b7aca3798ca699bcb"
+    },
+    {
+      "id": "voice_01.mp3",
+      "audio_sha256": "921e4495425aea2d358f1b9b02fbdc07fa2b9cb0c8da43809f2a7a9b850462a4",
+      "pass": true,
+      "result_of": "bundle:d4090f5b055a05197e7eb18ec3b603684b00082e8713e29c14674daec13fb195"
+    },
+    {
+      "id": "voice_02.mp3",
+      "audio_sha256": "972e4d24ca11317aac17d931e7dc75531589a5886d8682f41a58f94a6aec3ea7",
+      "pass": true,
+      "result_of": "bundle:5a30c67f99fbb67a7217de4c909a2de00eb9a6f531c391c16d655184f4cb6b78"
+    },
+    {
+      "id": "voice_04.mp3",
+      "audio_sha256": "ac162e99dd1a8a728e6922b8eaeb297c7013032d27fd36b568aaa2d2693b01f2",
+      "pass": true,
+      "result_of": "bundle:c3864c3e7e131882bbe910cf9077e4bc7be06fb2156edfdd332895abf49c4347"
+    },
+    {
+      "id": "voice_06.mp3",
+      "audio_sha256": "c583f34398dced445dec13cbf03aea3a0108f74ff7885ba1e8da39cfc81fdf46",
+      "pass": true,
+      "result_of": "bundle:88e3b639ab349decf14142246b79ddbc9b198bac9ba2042f0d8d552fbf7d9e6d"
+    },
+    {
+      "id": "voice_08.mp3",
+      "audio_sha256": "0f1392bde6f00513d09b774d52e6170abe0829a26a52f0aaa19434307b05e897",
+      "pass": true,
+      "result_of": "bundle:b4dbf15a9c1a89dfaa2c29c39443e44d91b7a77fda0e06aa45925f7781d529cd"
+    },
+    {
+      "id": "voice_10.mp3",
+      "audio_sha256": "c68cd52826fee8685e9f62cb08dd29fd5a2f0effa60afdf785352325b864b43a",
+      "pass": true,
+      "result_of": "bundle:d21fee1384f17eaee33a111869d12c004fe5db74d71274cd827ba8fcee376411"
+    },
+    {
+      "id": "voice_12.mp3",
+      "audio_sha256": "07b7b4e08727b6fb7eab8d28256ed6506ecdc0e4dd956650a5ad62633de95b45",
+      "pass": true,
+      "result_of": "bundle:cce7a049f11c7d95ec15a79e7954254d26ba8756c06e33a6ac6acb56fde5521d"
+    },
+    {
+      "id": "voice_14.mp3",
+      "audio_sha256": "83a085ef051e04ae192b75b95481b016c4b3fc2e8f3915de6d78c4e42628d090",
+      "pass": true,
+      "result_of": "bundle:c96376ce496d038cca75effae9cb1aed44110db55aa7a6516e7c0b7f904cf1c6"
+    },
+    {
+      "id": "voice_16.mp3",
+      "audio_sha256": "b884de7a49317df19f91676d6134bdad244c06b161072508cd226d610aff7c3d",
+      "pass": true,
+      "result_of": "bundle:da8a3811e8ed69dff9c90e35daab69602a612ac4d0e475392097289734b23d92"
+    },
+    {
+      "id": "voice_19.mp3",
+      "audio_sha256": "fb4ab918008ddb6bdbc51aad8e101d450e253d0fa10aeec35bdfb9f63b9bd3be",
+      "pass": true,
+      "result_of": "bundle:c8d2c6dfff7cd5bff756ffafa940e75700df90e2600eb215b2819b4f21cd4fb3"
+    },
+    {
+      "id": "voice_22.mp3",
+      "audio_sha256": "752fd8094cd40ff371e24c9d7fcd8d96a8624ba74c202e05021d1c2d5bc3c6a5",
+      "pass": true,
+      "result_of": "bundle:f5a246d8d8a54d6701cf0950fe2e642144e954005d21b07b7aca3798ca699bcb"
+    },
+    {
+      "id": "voice_24.mp3",
+      "audio_sha256": "f835b67f979f22c29943e0532a6faf226aee0a701dc1be8c4f3318961cbd0080",
+      "pass": true,
+      "result_of": "bundle:8ec1c8b96a8b3cb7d729807c0ba86802c3c10981f841ca80c15baca0d0ccb08d"
+    },
+    {
+      "id": "voice_outro.mp3",
+      "audio_sha256": "b9f2ddec5251f74b230a8582938378b5e8a1c0ea729c34c10be40149fc65292c",
+      "pass": true,
+      "result_of": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:5a30c67f99fbb67a7217de4c909a2de00eb9a6f531c391c16d655184f4cb6b78",
+      "text": "首战蒂亚福，阿尔卡拉斯打出两个六比二。一场只丢四局的小组赛，为这一周开了个好头。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 36,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "首瞻蒂亚福、阿尔卡拉斯打出两个6比2。一场只丢四局的小组赛,为这一周开了个好头。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 36,
+        "speech_s": 7.323,
+        "cps": 4.92,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首战 ｜ 蒂亚福 ｜ 阿尔卡拉 ｜ 斯 ｜ 打 ｜ 出 ｜ 两个 ｜ 六比二 ｜ 一 ｜ 场 ｜ 只 ｜ 丢 ｜ 四局 ｜ 的 ｜ 小组 ｜ 赛 ｜ 为 ｜ 这 ｜ 一周 ｜ 开 ｜ 了 ｜ 个 ｜ 好 ｜ 头"
+      }
+    },
+    {
+      "id": "bundle:88e3b639ab349decf14142246b79ddbc9b198bac9ba2042f0d8d552fbf7d9e6d",
+      "text": "小组赛最后一场，对阵科博利。他六比四、六比一过关，三战全胜，一盘未丢，进入半决赛。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "小组赛最后一场,对阵科博利。他6比4、6比1过关,三战全胜,一盘未丢,进入半决赛。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.842,
+        "cps": 4.34,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "小组 ｜ 赛 ｜ 最后 ｜ 一 ｜ 场 ｜ 对阵 ｜ 科博利 ｜ 他 ｜ 六比四 ｜ 六比一 ｜ 过关 ｜ 三 ｜ 战 ｜ 全胜 ｜ 一 ｜ 盘 ｜ 未 ｜ 丢 ｜ 进入 ｜ 半决赛"
+      }
+    },
+    {
+      "id": "bundle:8ec1c8b96a8b3cb7d729807c0ba86802c3c10981f841ca80c15baca0d0ccb08d",
+      "text": "五场全胜，赛季第六冠、生涯第三十冠。这一周，你最记得半决赛的逆转，还是决赛救回三个盘点？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "五场全胜,赛季第六冠,生涯第三十冠。这一周,你最记得半决赛的逆转,还是决赛就回三个盘点。"
+      },
+      "polyphones": [
+        {
+          "index": 25,
+          "char": "得",
+          "word": "记得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "unreliable",
+              "score": 0.474,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 33,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "correct",
+              "score": 0.289,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 8.809,
+        "cps": 4.31,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "五场 ｜ 全胜 ｜ 赛季 ｜ 第六 ｜ 冠 ｜ 生涯 ｜ 第三十 ｜ 冠 ｜ 这 ｜ 一周 ｜ 你 ｜ 最 ｜ 记得 ｜ 半决赛 ｜ 的 ｜ 逆转 ｜ 还是 ｜ 决赛 ｜ 救 ｜ 回 ｜ 三个 ｜ 盘点"
+      }
+    },
+    {
+      "id": "bundle:b4dbf15a9c1a89dfaa2c29c39443e44d91b7a77fda0e06aa45925f7781d529cd",
+      "text": "半决赛才是真正的苦战。谢尔顿先拿六比三；第二盘四比三，阿尔卡拉斯在对手发球局等到机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "斑绝赛才是真正的苦战。谢尔顿先拿6比3,第二盘4比3,阿尔卡拉斯在对手发球局等到机会。"
+      },
+      "polyphones": [
+        {
+          "index": 35,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "uncertain",
+              "score": 0.123,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 7.984,
+        "cps": 4.89,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "半决赛 ｜ 才是 ｜ 真正 ｜ 的 ｜ 苦战 ｜ 谢尔顿 ｜ 先 ｜ 拿 ｜ 六比三 ｜ 第二盘 ｜ 四比 ｜ 三 ｜ 阿尔卡拉 ｜ 斯 ｜ 在 ｜ 对手 ｜ 发球 ｜ 局 ｜ 等到 ｜ 机会"
+      }
+    },
+    {
+      "id": "bundle:b80ad40cf03e2a1bf0849f74b5dd89f9591e3dfac6354816bf5cd093c739d31d",
+      "text": "关注网球时插，时插归我，好球归你。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 14,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "关注网球时差,时差归我,好球归你。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 14,
+        "speech_s": 3.219,
+        "cps": 4.35,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "关注 ｜ 网球 ｜ 时 ｜ 插 ｜ 时 ｜ 插 ｜ 归 ｜ 我 ｜ 好 ｜ 球 ｜ 归 ｜ 你"
+      }
+    },
+    {
+      "id": "bundle:c3864c3e7e131882bbe910cf9077e4bc7be06fb2156edfdd332895abf49c4347",
+      "text": "第二场遇到梅德韦德夫。阿尔卡拉斯因左腿问题申请医疗暂停，仍以六比二、六比四取胜，两场都没丢盘。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第二场遇到梅德韦德夫,阿尔卡拉斯因左腿问题申请医疗暂停,仍以6比2、6比4取胜,两场都没丢盘。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.092,
+        "cps": 4.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第二场 ｜ 遇到 ｜ 梅德韦德夫 ｜ 阿尔卡拉 ｜ 斯 ｜ 因 ｜ 左 ｜ 腿 ｜ 问题 ｜ 申请 ｜ 医疗 ｜ 暂停 ｜ 仍 ｜ 以 ｜ 六比二 ｜ 六比四 ｜ 取胜 ｜ 两场 ｜ 都 ｜ 没 ｜ 丢 ｜ 盘"
+      }
+    },
+    {
+      "id": "bundle:c8d2c6dfff7cd5bff756ffafa940e75700df90e2600eb215b2819b4f21cd4fb3",
+      "text": "第三个盘点，兹维列夫在底线相持中回球出界。六比六。阿尔卡拉斯连续救回三个机会，随后又错过第一个冠军点。八比七，第二次机会来到。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 56,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "第三个盘点,自为列夫在底线箱池中回球出界。6比6,阿尔卡拉斯连续就回三个机会,随后又错过第一个冠军点。8比7,第二次机会来到。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 56,
+        "speech_s": 11.946,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "第三个 ｜ 盘点 ｜ 兹维列夫 ｜ 在 ｜ 底线 ｜ 相持 ｜ 中 ｜ 回球 ｜ 出界 ｜ 六比六 ｜ 阿尔卡拉 ｜ 斯 ｜ 连续 ｜ 救 ｜ 回 ｜ 三个 ｜ 机会 ｜ 随后 ｜ 又 ｜ 错过 ｜ 第一个 ｜ 冠军 ｜ 点 ｜ 八比七 ｜ 第二次机会 ｜ 来到"
+      }
+    },
+    {
+      "id": "bundle:c96376ce496d038cca75effae9cb1aed44110db55aa7a6516e7c0b7f904cf1c6",
+      "text": "首盘六比二，第二盘又领先四比二。到了四比三，阿尔卡拉斯发球。兹维列夫拿到了一次机会。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "手盘6比2：第二盘又领先4比2：到了4比3：阿尔卡拉斯发球,自为列夫拿到了一次机会。"
+      },
+      "polyphones": [
+        {
+          "index": 27,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "correct",
+              "score": 0.595,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.724,
+        "cps": 4.79,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "首盘 ｜ 六比二 ｜ 第二盘 ｜ 又 ｜ 领先 ｜ 四比二 ｜ 到 ｜ 了 ｜ 四比三 ｜ 阿尔卡拉 ｜ 斯 ｜ 发球 ｜ 兹维列夫 ｜ 拿 ｜ 到 ｜ 了 ｜ 一次机会"
+      }
+    },
+    {
+      "id": "bundle:cce7a049f11c7d95ec15a79e7954254d26ba8756c06e33a6ac6acb56fde5521d",
+      "text": "决赛对兹维列夫。首盘，阿尔卡拉斯三次拿下对手的发球局。这是四比二时的又一次机会，拿下就能把差距拉到五比二。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 48,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "决赛队自为列夫。手盘、阿尔卡拉斯三次拿下对手的发球局。这是4比20的又一次机会,拿下就能把差距拉到5比2。"
+      },
+      "polyphones": [
+        {
+          "index": 23,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "correct",
+              "score": 0.405,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 48,
+        "speech_s": 9.776,
+        "cps": 4.91,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "决赛 ｜ 对 ｜ 兹维列夫 ｜ 首盘 ｜ 阿尔卡拉 ｜ 斯 ｜ 三次 ｜ 拿下 ｜ 对手 ｜ 的 ｜ 发球 ｜ 局 ｜ 这是 ｜ 四比二 ｜ 时 ｜ 的 ｜ 又 ｜ 一次机会 ｜ 拿下 ｜ 就 ｜ 能 ｜ 把 ｜ 差距 ｜ 拉 ｜ 到 ｜ 五比二"
+      }
+    },
+    {
+      "id": "bundle:d21fee1384f17eaee33a111869d12c004fe5db74d71274cd827ba8fcee376411",
+      "text": "底线相持后，谢尔顿回球出界。阿尔卡拉斯第一次破掉他的发球局，五比三，随后六比三扳平。决胜盘打到六比六，最后这轮小分，他只让对手拿到一分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 60,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "底线相持后,谢尔顿回球出界。阿尔卡拉斯第一次破掉他的发球局5比3,随后6比3颁平。决生盘达到6比6,最后这轮小分,他只让对手拿到1分。"
+      },
+      "polyphones": [
+        {
+          "index": 26,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "correct",
+              "score": 0.777,
+              "confidence": "low",
+              "near": "intended"
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 60,
+        "speech_s": 12.689,
+        "cps": 4.73,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "底线 ｜ 相持 ｜ 后 ｜ 谢尔顿 ｜ 回 ｜ 球 ｜ 出界 ｜ 阿尔卡拉 ｜ 斯 ｜ 第一次 ｜ 破 ｜ 掉 ｜ 他 ｜ 的 ｜ 发球 ｜ 局 ｜ 五比三 ｜ 随后 ｜ 六比三 ｜ 扳 ｜ 平 ｜ 决胜 ｜ 盘 ｜ 打 ｜ 到 ｜ 六比六 ｜ 最后 ｜ 这 ｜ 轮 ｜ 小 ｜ 分 ｜ 他 ｜ 只 ｜ 让 ｜ 对手 ｜ 拿 ｜ 到 ｜ 一 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:d4090f5b055a05197e7eb18ec3b603684b00082e8713e29c14674daec13fb195",
+      "text": "北京时间十一月二十三日凌晨，ATP年终总决赛决赛，阿尔卡拉斯六比二、七比六击败兹维列夫，首次捧杯。五场全胜，这座冠军从小组赛开始讲起。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 57,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "北京时间11月23日凌晨,ATP年中总决赛决赛,阿尔卡拉斯6比2,7比6,几百姿维列夫首次捧碑。无场全胜,这座冠军从小组赛开始讲起。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 57,
+        "speech_s": 12.005,
+        "cps": 4.75,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "北京时间 ｜ 十一月二十三日 ｜ 凌晨 ｜ ATP ｜ 年终 ｜ 总决赛 ｜ 决赛 ｜ 阿尔卡拉 ｜ 斯 ｜ 六比二 ｜ 七比六 ｜ 击败 ｜ 兹维列夫 ｜ 首次 ｜ 捧杯 ｜ 五场 ｜ 全胜 ｜ 这 ｜ 座 ｜ 冠军 ｜ 从 ｜ 小组 ｜ 赛 ｜ 开始 ｜ 讲 ｜ 起"
+      }
+    },
+    {
+      "id": "bundle:da8a3811e8ed69dff9c90e35daab69602a612ac4d0e475392097289734b23d92",
+      "text": "四比四，兹维列夫又保住发球局，追到五比四。比赛最终打到六比六，小分三比六，三个连续盘点。兹维列夫再拿一分，就能扳平盘数。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 52,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "4比4,梓维列夫又保住发球局,追到5比4。比赛最终打到6比6,小分3比6,三个连续盘点。梓维列夫再拿一分,就能颁平盘数。"
+      },
+      "polyphones": [
+        {
+          "index": 11,
+          "char": "发",
+          "word": "发球",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "correct",
+              "score": 0.419,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 52,
+        "speech_s": 11.745,
+        "cps": 4.43,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "四比四 ｜ 兹维列夫 ｜ 又 ｜ 保 ｜ 住 ｜ 发球 ｜ 局 ｜ 追 ｜ 到 ｜ 五比四 ｜ 比赛 ｜ 最终 ｜ 打 ｜ 到 ｜ 六比六 ｜ 小 ｜ 分 ｜ 三比 ｜ 六 ｜ 三个 ｜ 连续 ｜ 盘点 ｜ 兹维列夫 ｜ 再 ｜ 拿 ｜ 一 ｜ 分 ｜ 就 ｜ 能 ｜ 扳 ｜ 平 ｜ 盘 ｜ 数"
+      }
+    },
+    {
+      "id": "bundle:f5a246d8d8a54d6701cf0950fe2e642144e954005d21b07b7aca3798ca699bcb",
+      "text": "最后一拍，反拍制胜。阿尔卡拉斯仰面倒在球场上，起身后走向团队拥抱。去年决赛失利，今年这座奖杯终于属于他。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 46,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.022,
+        "longest_deletion": 0,
+        "transcript": "最后一拍,反拍至上。阿尔卡拉斯、杨面倒在球场上,起身后走向团队拥抱。去年决赛失礼,今年这座奖杯终于属于他。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 46,
+        "speech_s": 10.625,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "最后 ｜ 一 ｜ 拍 ｜ 反 ｜ 拍 ｜ 制胜 ｜ 阿尔卡拉 ｜ 斯 ｜ 仰面 ｜ 倒在 ｜ 球场 ｜ 上 ｜ 起身 ｜ 后 ｜ 走 ｜ 向 ｜ 团队 ｜ 拥抱 ｜ 去年 ｜ 决赛 ｜ 失利 ｜ 今年 ｜ 这 ｜ 座 ｜ 奖杯 ｜ 终于 ｜ 属于 ｜ 他"
+      }
+    }
+  ]
+}
