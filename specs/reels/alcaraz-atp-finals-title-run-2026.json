@@ -359,7 +359,7 @@
     {
       "_id": "sf-key-break",
       "source": "sf",
-      "start": 274.2,
+      "start": 271.4,
       "end": 290.7,
       "cx": 0.5,
       "track": false,
@@ -368,20 +368,25 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+      "point_end_ok": "原生逐帧核实本分首个发球宽镜在274.08s；新入点271.40s使0.5s溶解在271.90s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点274.20s已撤回，详point-entry-audit.json。",
       "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
       "_frame_why": "固定cx0.5，track=false，单球场中心等比裁切铺满1080x1440，无上下拼贴或追球。",
       "visual_end": 290.66,
       "_visual_end_why": "定格本窗真实末帧，避免0.5秒溶解尾侵入下一分、下一句或推广片尾。",
       "quote": [
         {
-          "at": 11.85,
-          "end": 13.5,
+          "at": 0.59,
+          "end": 1.4,
+          "text": "Some point.\n这一分真精彩。"
+        },
+        {
+          "at": 14.65,
+          "end": 16.3,
           "text": "Yeah, there is.\n是的，来了。"
         },
         {
-          "at": 13.95,
-          "end": 16.35,
+          "at": 16.75,
+          "end": 19.15,
           "text": "First break of the day.\n他今天的第一次破发。"
         }
       ],
@@ -397,7 +402,7 @@
     {
       "_id": "sf-complete-match-point",
       "source": "sf",
-      "start": 398.0,
+      "start": 394.5,
       "end": 407.8,
       "cx": 0.5,
       "track": false,
@@ -406,25 +411,30 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+      "point_end_ok": "原生逐帧核实本分首个发球宽镜在398.28s；新入点394.50s使0.5s溶解在395.00s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点398.00s已撤回，详point-entry-audit.json。",
       "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
       "_frame_why": "固定cx0.5，track=false，单球场中心等比裁切铺满1080x1440，无上下拼贴或追球。",
       "visual_end": 407.76,
       "_visual_end_why": "定格本窗真实末帧，避免0.5秒溶解尾侵入下一分、下一句或推广片尾。",
       "quote": [
         {
-          "at": 3.1,
-          "end": 4.75,
+          "at": 0.54,
+          "end": 3.44,
+          "text": "Well in control now, with a change of ends.\n换边之后，他已经掌控局面。"
+        },
+        {
+          "at": 6.6,
+          "end": 8.25,
           "text": "What a way to seal it!\n以这样的方式锁定胜利！"
         },
         {
-          "at": 4.75,
-          "end": 7.12,
+          "at": 8.25,
+          "end": 10.62,
           "text": "Carlos Alcaraz survives.\n阿尔卡拉斯挺过了这场考验。"
         },
         {
-          "at": 7.12,
-          "end": 8.9,
+          "at": 10.62,
+          "end": 12.4,
           "text": "He's back in the final in Turin.\n他再次闯进都灵的决赛。"
         }
       ],
@@ -432,7 +442,7 @@
       "_score_inset_why": "原生ATP两行板位于x98、y920至1029，按同一源帧真实几何动态识别和逐帧蒙版回贴；撤板后的反应不补造比分。",
       "score_inset_windows": [
         [
-          398,
+          394.5,
           401.92
         ]
       ],
@@ -447,7 +457,7 @@
     {
       "_id": "final-set1-break",
       "source": "final",
-      "start": 179.8,
+      "start": 179.2,
       "end": 199.0,
       "cx": 0.5,
       "track": false,
@@ -456,15 +466,15 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+      "point_end_ok": "原生逐帧核实本分首个发球宽镜在179.88s；新入点179.20s使0.5s溶解在179.70s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点179.80s已撤回，详point-entry-audit.json。",
       "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
       "_frame_why": "固定cx0.5，track=false，单球场中心等比裁切铺满1080x1440，无上下拼贴或追球。",
       "visual_end": 198.96,
       "_visual_end_why": "定格本窗真实末帧，避免0.5秒溶解尾侵入下一分、下一句或推广片尾。",
       "quote": [
         {
-          "at": 14.92,
-          "end": 18.3,
+          "at": 15.52,
+          "end": 18.9,
           "text": "Once more, he's got a nice cushion.\n他再次拉开了领先差距。"
         }
       ],
@@ -472,7 +482,7 @@
       "_score_inset_why": "原生ATP两行板位于x98、y920至1029，按同一源帧真实几何动态识别和逐帧蒙版回贴；撤板后的反应不补造比分。",
       "score_inset_windows": [
         [
-          179.8,
+          179.2,
           196.08
         ]
       ],
@@ -487,7 +497,7 @@
     {
       "_id": "final-zverev-breaks-back",
       "source": "final",
-      "start": 289.98,
+      "start": 287.1,
       "end": 300.65,
       "cx": 0.5,
       "track": false,
@@ -496,20 +506,25 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+      "point_end_ok": "原生逐帧核实本分首个发球宽镜在289.90s；新入点287.10s使0.5s溶解在287.60s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点289.98s已撤回，详point-entry-audit.json。",
       "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
       "_frame_why": "固定cx0.5，track=false，单球场中心等比裁切铺满1080x1440，无上下拼贴或追球。",
       "visual_end": 300.61,
       "_visual_end_why": "定格本窗真实末帧，避免0.5秒溶解尾侵入下一分、下一句或推广片尾。",
       "quote": [
         {
-          "at": 5.79,
-          "end": 6.97,
+          "at": 0.58,
+          "end": 2.87,
+          "text": "It's too good that time. Beautiful volley.\n这次太漂亮了，精彩的截击。"
+        },
+        {
+          "at": 8.67,
+          "end": 9.85,
           "text": "And he breaks!\n他破发了！"
         },
         {
-          "at": 9.0,
-          "end": 10.57,
+          "at": 11.88,
+          "end": 13.45,
           "text": "And it is game on!\n比赛又有悬念了！"
         }
       ],
@@ -525,7 +540,7 @@
     {
       "_id": "final-first-two-set-points-saved",
       "source": "final",
-      "start": 351.5,
+      "start": 351.3,
       "end": 372.1,
       "cx": 0.5,
       "track": false,
@@ -534,20 +549,20 @@
       "audio_tail": "silence",
       "narration": "",
       "score_inset": true,
-      "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+      "point_end_ok": "原生逐帧核实本分首个发球宽镜在351.90s；新入点351.30s使0.5s溶解在351.80s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点351.50s已撤回，详point-entry-audit.json。",
       "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
       "_frame_why": "固定cx0.5，track=false，单球场中心等比裁切铺满1080x1440，无上下拼贴或追球。",
       "visual_end": 372.06,
       "_visual_end_why": "定格本窗真实末帧，避免0.5秒溶解尾侵入下一分、下一句或推广片尾。",
       "quote": [
         {
-          "at": 11.7,
-          "end": 13.2,
+          "at": 11.9,
+          "end": 13.4,
           "text": "Didn't get there that time.\n这次没能赶上。"
         },
         {
-          "at": 18.8,
-          "end": 20.3,
+          "at": 19.0,
+          "end": 20.5,
           "text": "That's two gone.\n两个盘点都没了。"
         }
       ],

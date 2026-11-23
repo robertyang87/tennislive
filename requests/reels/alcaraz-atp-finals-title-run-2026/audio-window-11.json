@@ -4,10 +4,16 @@
   "method": "verified_source_captions",
   "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
   "status": "complete",
-  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
-  "reviewed_from": 398.0,
+  "reviewed_at": "2026-11-23T01:09:03.418599+00:00",
+  "reviewed_from": 394.5,
   "reviewed_to": 407.8,
   "foreground_english": [
+    {
+      "start": 395.04,
+      "end": 397.94,
+      "en": "Well in control now, with a change of ends.",
+      "zh": "换边之后，他已经掌控局面。"
+    },
     {
       "start": 401.1,
       "end": 402.75,
@@ -36,9 +42,31 @@
   "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
   "routine_score_call_exclusions": [
     {
-      "start": 398.0,
+      "start": 394.5,
       "end": 407.8,
       "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
     }
-  ]
+  ],
+  "serve_entry_review": {
+    "prior_source_in": 398.0,
+    "corrected_source_in": 394.5,
+    "default_dissolve_seconds": 0.5,
+    "corrected_dissolve_complete_source_seconds": 395.0,
+    "source_fps": 50,
+    "native_first_serve_wide_frame": 398.28,
+    "last_prior_frame": 398.26,
+    "evidence_statement": "逐帧实源切镜核：第一宽镜中发球者已举起抛球臂/球已在空中，随后为同一发球、接发和相持，并非已经开始的底线相持。新入点的0.5秒溶解在该第一宽镜前结束。只声称保留源片首个可见抛球阶段及其后全部发球、接发、相持，不把上分近景冒充本分准备，不声称源片未给出的完整站定、拍球或抛球起始。",
+    "source_frame_evidence": "/workspace/scratch/alcaraz-finals/serve-systematic/sfmp-precise-wall.jpg",
+    "no_listening_claimed": true
+  },
+  "added_commentary_basis": {
+    "native_cc": [
+      "395.50 In well in control now in the change of",
+      "397.60 ends."
+    ],
+    "small_asr": "395.16–397.94 Well in control now, with a change of hands.",
+    "medium_asr": "395.04–397.90 well in control now with a change of hands",
+    "normalization": "The final noun is ends in official native CC and the match change-of-ends context; ASR hands is not copied. The editor-selected complete cue is Well in control now, with the change of ends. Article/preposition wording is normalized from the conflicting text sources; no human audio listening is claimed.",
+    "rendered_article_policy": "Use with a shared by both ASR passes rather than the earlier assistant-selected the; ends is supported by official source captions. Raw caption/ASR bytes retained, no human listening claim."
+  }
 }

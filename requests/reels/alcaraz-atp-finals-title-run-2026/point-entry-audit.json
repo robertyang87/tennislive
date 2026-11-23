@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-23T01:10:25.396857+00:00",
+  "reviewer": "independent production agent /root/audio_windows",
+  "method": "dense native-source visual frame inspection, exact native50fps cut comparisons, plus officialCC and independent small/mediumASR for newly included English; no listening claimed",
+  "scope": "All seven newly requested point-entry windows; checks whether the default0.5-second card dissolve has ended before the earliest visible source serving action.",
+  "overall_status": "corrected_source_plan_pass_pending_replacement_render",
+  "results": [
+    {
+      "segment": "rr1",
+      "source_id": "4609943",
+      "source_fps": 50,
+      "prior_source_start": 126.3,
+      "prior_dissolve_complete_source_seconds": 126.8,
+      "prior_dissolve_clear_before_first_serve_wide_frame": true,
+      "corrected_source_start": 126.3,
+      "corrected_dissolve_complete_source_seconds": 126.8,
+      "native_first_serve_wide_frame": 127.98,
+      "last_prior_frame": 127.96,
+      "serve_contact_visual_bracket_seconds": [
+        129.12,
+        129.3
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Alcaraz serving near court at6–2,5–2,40–15; near closeup before127.98 shows actual held-ball service preparation. The first wide frame is still before the toss release.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 1.18,
+      "entry_verdict": "retain existing entry",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/rr1-precise-wall.jpg",
+      "evidence_sha256": "c0383aabcc6e06b83cdde57e50157516f6b5305316ca5e3bfd8ddf667a7bf8e0"
+    },
+    {
+      "segment": "rr3",
+      "source_id": "TkigOzAxERU",
+      "source_fps": 50,
+      "prior_source_start": 308.8,
+      "prior_dissolve_complete_source_seconds": 309.3,
+      "prior_dissolve_clear_before_first_serve_wide_frame": true,
+      "corrected_source_start": 308.8,
+      "corrected_dissolve_complete_source_seconds": 309.3,
+      "native_first_serve_wide_frame": 309.34,
+      "last_prior_frame": 309.32,
+      "serve_contact_visual_bracket_seconds": [
+        309.66,
+        309.8
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Cobolli serving far court atAlcaraz6–4,5–1,40–0; first wide frame shows the raised toss/serve position, followed by service contact and receiver return.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 0.04,
+      "entry_verdict": "retain existing entry",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/rr3-precise-wall.jpg",
+      "evidence_sha256": "e3f40d483fe76375dd92cb27c4fdffbcf84c56ede9fa69fa301249a6f66d5841"
+    },
+    {
+      "segment": "sf-key-break",
+      "source_id": "aJ_bIrNtrtA",
+      "source_fps": 50,
+      "prior_source_start": 274.2,
+      "prior_dissolve_complete_source_seconds": 274.7,
+      "prior_dissolve_clear_before_first_serve_wide_frame": false,
+      "corrected_source_start": 271.4,
+      "corrected_dissolve_complete_source_seconds": 271.9,
+      "native_first_serve_wide_frame": 274.08,
+      "last_prior_frame": 274.06,
+      "serve_contact_visual_bracket_seconds": [
+        274.38,
+        274.52
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Shelton serving near court atAlcaraz3–6,4–3,40–15; first wide frame shows the airborne toss and raised tossing arm, not a rally stroke. Point wins the break to5–3.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 2.18,
+      "entry_verdict": "move entry earlier before replacement render",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/sfbreak-precise-wall.jpg",
+      "evidence_sha256": "227812ac826e5280a6e791c22a80f1657d76f78b2ae162a4d4bcdf9550a908db"
+    },
+    {
+      "segment": "sf-match-point",
+      "source_id": "aJ_bIrNtrtA",
+      "source_fps": 50,
+      "prior_source_start": 398.0,
+      "prior_dissolve_complete_source_seconds": 398.5,
+      "prior_dissolve_clear_before_first_serve_wide_frame": false,
+      "corrected_source_start": 394.5,
+      "corrected_dissolve_complete_source_seconds": 395.0,
+      "native_first_serve_wide_frame": 398.28,
+      "last_prior_frame": 398.26,
+      "serve_contact_visual_bracket_seconds": [
+        398.5,
+        398.64
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Shelton serving near court atthird-set6–6,AlcarazTB6–1; first wide frame shows raised toss and bent knees. First serve and Alcaraz return precede the winning point.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 3.28,
+      "entry_verdict": "move entry earlier before replacement render",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/sfmp-precise-wall.jpg",
+      "evidence_sha256": "3f402710aab7d19fce85066da746217d79a68c49eac817ee71c811d1cbd109e2"
+    },
+    {
+      "segment": "final-set1-break",
+      "source_id": "YiWjCKWBWog",
+      "source_fps": 50,
+      "prior_source_start": 179.8,
+      "prior_dissolve_complete_source_seconds": 180.3,
+      "prior_dissolve_clear_before_first_serve_wide_frame": false,
+      "corrected_source_start": 179.2,
+      "corrected_dissolve_complete_source_seconds": 179.7,
+      "native_first_serve_wide_frame": 179.88,
+      "last_prior_frame": 179.86,
+      "serve_contact_visual_bracket_seconds": [
+        180.24,
+        180.36
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Zverev serving far court at2–4,15–40; first wide frame shows the tossing arm raised and service windup, not a baseline exchange.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 0.18,
+      "entry_verdict": "move entry earlier before replacement render",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/set1-precise-wall.jpg",
+      "evidence_sha256": "03cbaaa361736d7558733b937f07568260d49f1c43a8bc0591572a085ed5eb58"
+    },
+    {
+      "segment": "final-breakback",
+      "source_id": "YiWjCKWBWog",
+      "source_fps": 50,
+      "prior_source_start": 289.98,
+      "prior_dissolve_complete_source_seconds": 290.48,
+      "prior_dissolve_clear_before_first_serve_wide_frame": false,
+      "corrected_source_start": 287.1,
+      "corrected_dissolve_complete_source_seconds": 287.6,
+      "native_first_serve_wide_frame": 289.9,
+      "last_prior_frame": 289.88,
+      "serve_contact_visual_bracket_seconds": [
+        290.22,
+        290.4
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Alcaraz serving far court at4–3,30–40; first wide frame shows the tossing arm raised. Zverev near court is ready to receive, not already hitting in a rally.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 2.3,
+      "entry_verdict": "move entry earlier before replacement render",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/breakback-precise-wall.jpg",
+      "evidence_sha256": "c7a000a5b56156819d8b449612209c32b6c5a8ca5745bf01ecc8314d9714bfdd"
+    },
+    {
+      "segment": "final-first-two-set-points",
+      "source_id": "YiWjCKWBWog",
+      "source_fps": 50,
+      "prior_source_start": 351.5,
+      "prior_dissolve_complete_source_seconds": 352.0,
+      "prior_dissolve_clear_before_first_serve_wide_frame": false,
+      "corrected_source_start": 351.3,
+      "corrected_dissolve_complete_source_seconds": 351.8,
+      "native_first_serve_wide_frame": 351.9,
+      "last_prior_frame": 351.88,
+      "serve_contact_visual_bracket_seconds": [
+        352.18,
+        352.34
+      ],
+      "contact_bracket_precision_note": "Visual bracket from dense source frames, not a claimed exact ball/racket-contact sample or an audio determination. First-wide cut itself is measured on the native50fps grid.",
+      "native_frame_finding": "Alcaraz serving near court atTB3–6; first wide frame has raised tossing arm and airborne ball. The second set point atTB4–6 has a visible new service toss by364.50 and contact around364.75–365.00, inside the same selected segment with no card dissolve.",
+      "corrected_dissolve_clear_before_first_serve_wide_frame": true,
+      "margin_before_first_wide_seconds": 0.1,
+      "entry_verdict": "move entry earlier before replacement render",
+      "evidence_path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/point-entry/setpoints-precise-wall.jpg",
+      "evidence_sha256": "aebc658f1908e72695ce5fd8d7da734bd81c5e302583d9fe1882a95349e53de9"
+    }
+  ],
+  "known_already_corrected_entries": [
+    {
+      "segment": "RR2",
+      "source_start": 361.0,
+      "prior_point_closeup_through": 362.12,
+      "native_first_visible_serve_wide_frame": 362.14,
+      "default_dissolve_complete": 361.5,
+      "status": "safe; prior-point closeup is not called current-point preparation",
+      "evidence": "rr2-point-continuity-review.json"
+    },
+    {
+      "segment": "final-third-set-point-court",
+      "source_start": 150.44,
+      "native_fps": 25,
+      "native_first_visible_serve_wide_frame": 151.04,
+      "default_dissolve_complete": 150.94,
+      "status": "safe after earlier entry; toss already airborne at native cut",
+      "evidence": "audio-window-16.json"
+    },
+    {
+      "segment": "championship-point",
+      "source_start": 408.0,
+      "native_first_visible_serve_wide_frame": 412.22,
+      "default_dissolve_complete": 408.5,
+      "status": "safe after earlier entry; toss already airborne at native cut",
+      "evidence": "audio-window-18.json"
+    }
+  ],
+  "newly_included_english_evidence": {
+    "audio-window-09.json": "271.99–272.80 Some point. / 这一分真精彩。",
+    "audio-window-11.json": "395.04–397.94 Well in control now, with a change of ends. / 换边之后，他已经掌控局面。 with a follows both ASR passes; ends is supported by official CC, raw evidence unchanged; no human listening claim.",
+    "audio-window-13.json": "No newly included substantive English. Prior showtime comment ends by177.84, outside corrected179.20 entry.",
+    "audio-window-breakback.json": "287.68–289.97 It's too good that time. Beautiful volley. / 这次太漂亮了，精彩的截击。",
+    "audio-window-15.json": "No newly included substantive English."
+  },
+  "limitations": [
+    "Most official highlight sources cut into a toss already underway. This review claims only the earliest visible source toss stage and all subsequent available serving/return/rally action, never an unseen full pre-toss routine.",
+    "The corrected entries require a replacement render; this source audit does not approve the old film or an unexamined replacement film.",
+    "Earlier previous-point closeups and result commentary remain only as genuine source-order transitions, never substitutes for the current-point service preparation."
+  ],
+  "file_changes": "Five audio packets and this audit only; no spec, rendered movie or voice asset modified by this agent. No commit performed.",
+  "current_assistant_application": {
+    "applied_at": "2026-11-23T01:11:57.932628+00:00",
+    "all_five_extra_entry_corrections_applied": true,
+    "source_audio_gate": "pass13 windows33 cues",
+    "spec_file_sha256": "1477bf26b4476dc555f8188990ed62e251271c1ff52e889071c91d20eadad69d"
+  }
+}
