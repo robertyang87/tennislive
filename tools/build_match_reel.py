@@ -427,6 +427,8 @@ _LEGACY_LONG_HOOKS = frozenset({
     "swiatek-rybakina-toronto-final", "swiatek-shnaider",
     "swiatek-svitolina-toronto-sf", "tirante-fritz", "zhang-ostapenko",
     "zhang-sabalenka", "zverev-griekspoor",
+    # 导入成片的封面是定版原件，钩子两行都超过 10 字；成片不走原生渲染器，不重渲。
+    "tennis-money-story-2026",
 })
 # contain 模式横向保留多少。0.62 → 1920 宽的源片留 1190px，球员落在画面
 # 19%~81% 之间都还在，缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的
@@ -9142,6 +9144,8 @@ _LEGACY_QUOTE_OVERFLOW = frozenset({
     "swiatek-rybakina-cincinnati-2026-qf",
     "tiafoe-nakashima-cincinnati-2026-sf",
     "zheng-from-low-to-us-open-comeback",
+    # 导入成片的原声中文行已经烧进母带，超宽行不重渲。
+    "tennis-money-story-2026",
 })
 
 
