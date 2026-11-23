@@ -2,7 +2,8 @@ name: archive-sinner-fall-source
 run-name: "archive-sinner-fall-source"
 
 # 本机房 IP 被 YouTube 挡成「Sign in to confirm you're not a bot」。
-# 这一条只在本分支上跑一次，把温网官方延长集锦存进 Release。不提交视频。
+# 延长集锦 CRLz1DnoDSo 已存过，里面没有第三盘 2-2 的那次滑倒。
+# 这一轮只切官方全场回放 GKH_429gZsI 的 1:00:00–2:30:00，找那一滑。不提交视频。
 on:
   push:
     branches: [cursor/sinner-knee-fall-v2-c395]
@@ -16,7 +17,7 @@ permissions:
 jobs:
   archive:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 50
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
@@ -88,8 +89,8 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，仅使用 PO token/client 通道"
           fi
 
-      - name: 下载温网官方延长集锦并上传 Release
-        timeout-minutes: 25
+      - name: 下载温网官方全场回放的第三盘窗口并上传 Release
+        timeout-minutes: 35
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
@@ -98,11 +99,15 @@ jobs:
           if [ -n "${YT_COOKIES:-}" ]; then
             ARGS+=(--cookies "$YT_COOKIES")
           fi
-          VIDEO_URL="https://www.youtube.com/watch?v=CRLz1DnoDSo"
+          VIDEO_URL="https://www.youtube.com/watch?v=GKH_429gZsI"
           VIDEO_ID=$(yt-dlp "${ARGS[@]}" --skip-download --print id "$VIDEO_URL" | tail -1)
           TITLE=$(yt-dlp "${ARGS[@]}" --skip-download --print title "$VIDEO_URL" | tail -1)
-          test -n "$VIDEO_ID"
+          test "$VIDEO_ID" = "GKH_429gZsI"
+          # 比赛 3 小时 30 分，视频约 3 小时 36 分。第三盘 2-2 的滑倒落在前两盘之后，
+          # 先取 1:00:00–2:30:00。文件时间从这一段的开头算。
           yt-dlp "${ARGS[@]}" \
+            --download-sections "*1:00:00-2:30:00" \
+            --force-keyframes-at-cuts \
             -f "bv*[ext=mp4][height<=1080]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/b" \
             --merge-output-format mp4 --remux-video mp4 \
             -o "$RUNNER_TEMP/$VIDEO_ID.%(ext)s" \
@@ -112,6 +117,6 @@ jobs:
           TAG="source-$VIDEO_ID"
           gh release view "$TAG" >/dev/null 2>&1 || \
             gh release create "$TAG" --title "$TITLE" \
-              --notes "温网官方延长集锦。来源：$VIDEO_URL"
+              --notes "温网官方全场回放 1:00:00–2:30:00，用来找第三盘 2 平那次滑倒。来源：$VIDEO_URL 。延长集锦 CRLz1DnoDSo 没有这一刻。"
           gh release upload "$TAG" "$FILE" --clobber
           echo "saved https://github.com/${{ github.repository }}/releases/download/$TAG/$VIDEO_ID.mp4"
