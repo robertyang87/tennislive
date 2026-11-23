@@ -1,0 +1,56 @@
+name: Jev selective shadow audit
+on:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Call TypeSafe on unresolved titles (separately billed); default offline'
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: jev-selective-shadow
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            demos/jev-routing
+            tools/collect_oncourt_interviews.py
+            data/oncourt_sources.json
+            data/oncourt_interviews.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: .jev-cache
+          key: jev-shadow-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            jev-shadow-v1-${{ github.ref_name }}-
+      - name: Verify isolated adapter
+        run: python -m unittest discover -s demos/jev-routing -p 'test_*.py'
+      - name: Audit candidates
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          LIVE: ${{ inputs.live }}
+        run: |
+          args=()
+          if [ "$LIVE" = "true" ]; then args+=(--live); fi
+          python demos/jev-routing/selective.py --cache .jev-cache/ledger.sqlite --output jev-audit/report.json --max-calls 20 --daily-limit 50 "${args[@]}"
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: .jev-cache
+          key: jev-shadow-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jev-shadow-report
+          path: jev-audit/report.json
