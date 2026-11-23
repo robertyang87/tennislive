@@ -7414,7 +7414,12 @@ def test_小红书正文首行要点出是谁():
     # 4 是量出来的（cover 没有 matchup 的四条老 spec），涨了就说明
     # `spec_player_names` 取不到名字了——那时这条闸对整库都是哑的。
     assert checked >= 180, f"只校到 {checked} 条——跳过的条件是不是写宽了？"
-    assert len(unjudgeable) <= 4, f"判不了的条数涨了：{sorted(unjudgeable)}"
+    # 4 是 cover 没有 matchup 的老 spec。多出来的仍要红。
+    known_unnamed = {
+        "eala-pegula", "eala-zheng", "jodar-fritz", "nishikori-shang",
+    }
+    extra_unnamed = set(unjudgeable) - known_unnamed
+    assert not extra_unnamed, f"判不了的条数涨了：{sorted(unjudgeable)}"
 
 
 def test_首行判据认简称而且没名字可比时不报红():
@@ -10412,8 +10417,13 @@ def test_每条spec的旁白都还估得下():
     # 它是**反面先例**（spec 里的 `_source_denied` 记着全部来路），片子不删、
     # 但也不该再渲一次。
     known_denied = {"shang-darderi-montreal-2026"}
+    # 已定版导入母带。旁白是烧进成片的原句，里面有百分号；
+    # validate_spec 按「还要重渲」来拦，而这份母带禁止重渲。
+    # 只许减：少一条说明它已经能过渲染校验，就从这里拿掉。
+    known_finished = {"tennis-money-story-2026"}
     broken: list[str] = []
     denied: set[str] = set()
+    finished: set[str] = set()
     checked = 0
     from promote_reel_draft import _published_reel_matches
     published_matches = _published_reel_matches()
@@ -10425,13 +10435,25 @@ def test_每条spec的旁白都还估得下():
         except reel.ReelError as exc:
             # ⚠️ 只放过**源禁令**这一种，别把 ReelError 整类都吞掉——
             # 那会把「这条 spec 真的坏了」也一起变成绿灯。
-            if "换取签名令牌" not in str(exc):
-                raise
-            denied.add(slug)
-            continue
+            if "换取签名令牌" in str(exc):
+                denied.add(slug)
+                continue
+            if (slug in known_finished
+                    and spec.get("_import", {}).get("kind") == "finished_master_inspection"):
+                finished.add(slug)
+                continue
+            raise
         spec = _with_legacy_soft_cover(slug, _with_legacy_scoreboard(slug, spec))
-        for index, secs, room in reel.narration_estimates(reel.validate_spec(
-                spec, allow_published_legacy=True, published_matches=published_matches)):
+        try:
+            validated = reel.validate_spec(
+                spec, allow_published_legacy=True, published_matches=published_matches)
+        except reel.ReelError:
+            if (slug in known_finished
+                    and spec.get("_import", {}).get("kind") == "finished_master_inspection"):
+                finished.add(slug)
+                continue
+            raise
+        for index, secs, room in reel.narration_estimates(validated):
             checked += 1
             if room < -reel.SPEECH_EST_ERR:
                 broken.append(f"{slug} 第 {index + 1} 段：画面 "
@@ -10442,6 +10464,9 @@ def test_每条spec的旁白都还估得下():
         f"名单里写的是 {sorted(known_denied)}。\n"
         "多出来的那条多半是又写了一个换签名令牌拿到的源——那条路是禁的，"
         "换未签名的公开地址或换源；少掉的那条修好了就把它从名单里划掉。")
+    assert finished == known_finished, (
+        f"跳过重渲校验的导入母带变了：现在是 {sorted(finished)}，"
+        f"名单里写的是 {sorted(known_finished)}。少掉的那条已经能过校验，从名单划掉。")
     assert checked >= 100, f"只估到 {checked} 段，判据失效了"
     assert not broken, (
         "这几段的旁白比自己那段画面长（离线估，已经扣掉 "
