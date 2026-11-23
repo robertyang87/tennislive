@@ -10,8 +10,10 @@
   "format": {
     "straight_knockout": true,
     "singles": 2,
-    "deciding_doubles_if_needed": 1,
-    "matches_to_win_tie": 2
+    "matches_to_win_tie": 2,
+    "doubles_decides_when_singles_split": true,
+    "dead_doubles_quarterfinal_and_semifinal": "Played unless both nations and the referee agree otherwise",
+    "dead_doubles_final": "Not played after a decisive second singles match"
   },
   "teams": {
     "czechia": {
@@ -188,7 +190,8 @@
     "korea": "https://www.daviscup.com/en/news/korea-rep-meet-the-davis-cup-by-generali-final-8-team",
     "italy_roster_update": "https://www.fitp.it/Federazione/News/Attivita-internazionale/Davis-Cup-by-Generali-2026-i-convocati-dellItalia-per-le-Finals-di-Bologna",
     "spain_arrival_update": "https://www.rfet.es/es/noticia/la-seleccion-espanola-generali-de-tenis-prepara-la-final-8-de-copa-davis-en-bolonia-a-la-espera-de-alcaraz",
-    "zverev_post_final": "https://www.tennismajors.com/atp/nitto-atp-finals-atp/it-comes-once-every-two-months-zverev-explains-his-ankle-says-the-davis-cup-is-not-in-danger-867755.html"
+    "zverev_post_final": "https://www.tennismajors.com/atp/nitto-atp-finals-atp/it-comes-once-every-two-months-zverev-explains-his-ankle-says-the-davis-cup-is-not-in-danger-867755.html",
+    "doubles_regulation": "https://assets.ctfassets.net/0gg9pgt9u0k4/1zolhtUmJrhBlkvkxt1ogJ/b00b059cbfb4261aacd40da874f6d8c4/2026_Davis_Cup_Regulations_-_January_2026_Update.pdf#page=73"
   },
   "prediction_is_not_result": true,
   "ranking_policy": "Do not use exact Czech rankings because official profile and Canadian federation article disagree; both support two Top-20 singles players.",

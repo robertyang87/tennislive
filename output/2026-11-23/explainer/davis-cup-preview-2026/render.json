@@ -2,12 +2,12 @@
   "slug": "davis-cup-preview-2026",
   "column": "网球有故事",
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/davis-cup-preview-2026/davis-cup-preview-2026.mp4",
-  "watch_url": "https://robertyang87.github.io/tennislive/output/2026-11-23/explainer/davis-cup-preview-2026/watch.html",
-  "film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
-  "video_bytes": 27709337,
+  "watch_url": "https://robertyang87.github.io/tennislive/output/2026-11-23/explainer/davis-cup-preview-2026/watch.html?v=5125d461e3a4",
+  "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
+  "video_bytes": 27763744,
   "duration": 283.733333,
   "tts_bundle": {
-    "bundle_sha256": "0bf7ab9916795e98a8790bd15a762940c8c16733a48886ae656c5124c14775ff",
+    "bundle_sha256": "c2671904cd9b04147063d38441537cf2c6a2b238e25bd6a43d90dcf57ed75796",
     "request_count": 16
   },
   "brand_audio": {
@@ -21,11 +21,17 @@
   "fps": 30,
   "narration_count": 16,
   "updated_as_of": "2026-11-23",
-  "previous_film_sha256": "74e982b71459e64fa38990c104ff81eac404f729675453c452476b4bd2322fbc",
+  "previous_film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
   "outro_visual_fix": {
     "source": "outro-fix-source.py",
     "source_sha256": "3110a9783697d3ff32296a499f87c566f14729ff8d6fa3ad6d2e2f433ff14016",
     "description": "Removed decorative brand stripe from outro and its incoming dissolve; complete actual speech unchanged."
   },
-  "render_inputs_sha256": "28f389b51445673ae8bd98ba07d21df0dd08fdee9ca0238d7d0a89021b477958"
+  "render_inputs_sha256": "df7f3d218a90d192d902e75c044e267c684e7b6e256a5a8f6a20822bd75b550e",
+  "doubles_rule_revision": {
+    "section_index": 1,
+    "baseline_film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
+    "rule_regulation": "https://assets.ctfassets.net/0gg9pgt9u0k4/1zolhtUmJrhBlkvkxt1ogJ/b00b059cbfb4261aacd40da874f6d8c4/2026_Davis_Cup_Regulations_-_January_2026_Update.pdf#page=73",
+    "video_packet_preservation": "doubles-rule-frame-preservation.json"
+  }
 }
