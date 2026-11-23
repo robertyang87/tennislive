@@ -1,0 +1,23 @@
+{
+  "status": "passed_revised_native_point_preview_only",
+  "reviewer": "current assistant",
+  "checked_at": "2026-11-23T01:00:30.149000+00:00",
+  "spec_file_sha256": "2dffac049510a469b6ffee0baa94b6a3961c85ba1e82480547f0f3f7a742233f",
+  "samples": 14,
+  "publication_approved": false,
+  "sheet": {
+    "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/revised-point-native-preview.jpg",
+    "sha256": "bf383423068084ab43f10f9830d6acb3609faf9a53386c258bfc1abfdee2aa52"
+  },
+  "checks": [
+    "Court source151.04 and151.16 show toss,151.48 shows subsequent serve action, lead150.44 clears.5 dissolve before first native court serve image",
+    "Main body source412.52 shows actual serve contact,413.0 return; old415.7 mid-rally entry withdrawn",
+    "New full pre-serve commentary cue layout fits; complete English source408.56–411.96 is captioned",
+    "New408–412 lead-in does not create a wide blue-backdrop mask; native board remains measured334px"
+  ],
+  "limitations": [
+    "Interior previews exclude dissolves and H264 compression, so upcoming actual exported movie must verify both transition/serve edges",
+    "Source itself starts first full-court view after toss has begun; no claim of full pre-bounce or toss-start",
+    "Old film SHAe6298... is failed and withdrawn. New film still needs QC/voice review."
+  ]
+}

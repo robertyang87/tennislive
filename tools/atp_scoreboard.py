@@ -79,7 +79,11 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     # 盘末蓝格会收起，但两行名字和藏青板底仍在（北京 2026 108.5s）。
     # 用这两个同时成立的图形特征认这一版板；单有深色背景不算。
     r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
-    blue_cols = ((b > 180) & (r < 70) & (g < 70)).mean(axis=0) > 0.4
+    # Turin's native blue cells retain green near 80 after RGB decoding.
+    # They remain strongly blue-dominant; the old g<70 missed the complete
+    # set column and treated the adjoining dark-blue backdrop as the panel.
+    blue_cols = ((b > 180) & (r < 70) & (g < 100)
+                 & (b - g > 100)).mean(axis=0) > 0.4
     navy = board_mask(band) & (g - r > 4) & (b - r > 8)
     white = (np.minimum(np.minimum(r, g), b) > 150) & (
         np.maximum(np.maximum(r, g), b) - np.minimum(np.minimum(r, g), b) < 50)
@@ -213,9 +217,15 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     pixels = band.astype(np.float32)
     whites = (pixels.min(axis=2) > 150) & (pixels.max(axis=2) - pixels.min(axis=2) < 50)
     points = whites[:, after + 3:min(len(blue_cols), after + cell + 12)]
-    point_rows = (points.shape[1] >= 18 and (
-        0.008 < points[:h // 2].mean() < 0.25,
-        0.008 < points[h // 2:].mean() < 0.25))
+    # Sparse white arena lettering can enter only the top edge of this band.
+    # Point digits sit inside their row and leave its outer borders dark.
+    margin = min(7, max(1, h // 8))
+    point_rows = (points.shape[1] >= 18 and tuple(
+        0.008 < row.mean() < 0.25
+        and row[margin:len(row) // 2].mean() > 0.008
+        and row[len(row) // 2:-margin].mean() > 0.008
+        and np.concatenate((row[:margin], row[-margin:])).mean() < 0.1
+        for row in (points[:h // 2], points[h // 2:])))
     point_digits = bool(point_rows and all(point_rows))
     point_present = bool(point_rows and any(point_rows))
     if cell < 18 or (edge <= after + 6 and not point_present):
@@ -225,9 +235,10 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     if h < 24:
         return edge
     divider_edge = None
+    coherent_rule = False
     highlighted = yellow_mask(band[:, first:after]).mean() > .25
     point_borders = np.concatenate((points[:7], points[-7:]))
-    if highlighted and point_present and point_borders.mean() < .1:
+    if point_present and point_borders.mean() < .1:
         # A single AD row is valid. On dark close-ups the translucent outer
         # border can merge with the backdrop, while the thin horizontal rule
         # between the two player rows still visibly ends at the native edge.
@@ -242,7 +253,8 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         core = divider[lo:after + cell - 4]
         contrast = np.median(core) if len(core) else 0
         strong = divider > max(2, contrast * .1)
-        if contrast >= 8 and strong[lo:after + cell - 4].mean() > .85:
+        coherent_rule = bool(contrast >= 8 and strong[lo:after + cell - 4].mean() > .85)
+        if coherent_rule:
             for x in range(after + cell // 2, hi):
                 if not strong[x:x + 3].any():
                     divider_edge = x
@@ -270,6 +282,19 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     hi = min(after + cell + 16, len(shared) + 1)
     if hi <= lo:
         return edge
+    if not highlighted:
+        # The blue layout's row rule is inset from the outer panel edge.
+        # Both point digits plus that coherent rule establish a real cell;
+        # either outer border may merge into a similarly coloured close-up.
+        # Keep an independently visible contour beyond the rule, not the
+        # rule's shorter edge or a cell width inferred from the spec.
+        border = np.maximum(np.abs(top_step), np.abs(bottom_step))
+        begin = max(lo, divider_edge or after + cell // 2)
+        if coherent_rule and point_digits and edge > after + cell + 16 and begin < hi:
+            observed = int(np.argmax(border[begin - 1:hi - 1])) + begin
+            if border[observed - 1] >= 4:
+                return observed
+        divider_edge = None
     candidate = int(np.argmax(shared[lo - 1:hi - 1])) + lo
     if divider_edge is not None:
         # An independent outer contour can end before a background stripe
@@ -284,7 +309,10 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         # Retain the observed last blue cell and its antialiased outer border,
         # rather than interpreting an arbitrarily long green run as a cell.
         r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
-        blue_border = ((b - r > 35) & (b - g > 30)).mean(axis=0) > 0.5
+        # A dark-blue arena backdrop can share the hue differences but is
+        # much dimmer than the antialiased blue cell border itself.
+        blue_border = ((b > 100) & (b - r > 35)
+                       & (b - g > 30)).mean(axis=0) > 0.5
         withdrawn = after
         while withdrawn < min(after + 6, len(blue_border)) and blue_border[withdrawn]:
             withdrawn += 1
@@ -355,6 +383,60 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def _point_state(band: np.ndarray):
+    """Exact blue bounds and point boxes, plus a noise-tolerant glyph mask."""
+    r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
+    cols = ((b > 180) & (r < 70) & (g < 100) & (b - g > 100)).mean(0) > .4
+    indices = np.flatnonzero(cols)
+    if len(indices) < 18:
+        return None
+    last = int(indices[-1])
+    first = last
+    while first and cols[first - 1]:
+        first -= 1
+    cell = last - first + 1
+    if cell < 18:
+        return None
+    white = (np.minimum.reduce([r, g, b]) > 150) & (
+        np.maximum.reduce([r, g, b]) - np.minimum.reduce([r, g, b]) < 50)
+    points = white[:, last + 4:min(band.shape[1], last + 1 + cell + 12)]
+    boxes = []
+    for row in (points[:len(points) // 2], points[len(points) // 2:]):
+        if not .008 < row.mean() < .25:
+            return None
+        yy, xx = np.nonzero(row)
+        boxes.append((int(xx.min()), int(xx.max()), int(yy.min()), int(yy.max())))
+    return (first, last, tuple(boxes)), points, last + 1 + cell + 16
+
+
+def _continue_point_edges(frames: list, states: list) -> tuple[list, list]:
+    """Hold only unresolved edges for at most four frames from a measured one.
+
+    Blue-column bounds and both point boxes must match exactly. At most2% of
+    white glyph pixels may differ (compression noise); changed digits or moved
+    graphics cannot borrow a previous edge. A repaired frame never becomes a
+    new reference, and independently measured widening remains untouched.
+    """
+    references = {}
+    output, repairs = [], []
+    for i, ((edge, tag), state) in enumerate(zip(frames, states)):
+        if edge is not None and state is not None:
+            key, glyphs, limit = state
+            last_glyph = key[1] + 4 + max(box[1] for box in key[2])
+            if last_glyph < edge <= limit:
+                references[key] = (i, edge, glyphs)
+            elif edge > limit and key in references:
+                j, measured, previous = references[key]
+                union = np.logical_or(glyphs, previous).sum()
+                if (i - j <= 4 and measured < edge
+                        and np.logical_xor(glyphs, previous).sum() <= union * .02):
+                    edge = measured
+                    repairs.append({'frame': i, 'reference': j, 'edge': measured,
+                                    'blue_bounds': key[:2], 'point_boxes': key[2]})
+        output.append((edge, tag))
+    return output, repairs
+
+
 def scan(source: Path, box: tuple[int, int, int, int], start: float,
          seconds: float, fps: str) -> tuple[list, int]:
     """逐帧量 → [(板右缘 or None, 黄条框 or None)]，以及扫的带宽。"""
@@ -371,13 +453,18 @@ def scan(source: Path, box: tuple[int, int, int, int], start: float,
          "-f", "rawvideo", "-"], capture_output=True, check=False)
     raw = proc.stdout or b""
     per = width * height * 3
-    frames = []
+    frames, states = [], []
     for k in range(len(raw) // per):
         band = np.frombuffer(raw[k * per:(k + 1) * per], np.uint8).reshape(height, width, 3)
         e = board_edge(band, cap=x1 - x0)
         frames.append((e, None if e is None else tag_rect(band, e)))
+        states.append(_point_state(band) if e is not None else None)
     if not frames:
         raise RuntimeError(f"{start:.2f}s 起一帧都没解出来（解码失败，不是板不在）")
+    frames, repairs = _continue_point_edges(frames, states)
+    if repairs:
+        print('[score-mask] 最近独立边界单侧延续（最多4帧；蓝列/点分框不变）：'
+              + json.dumps({'source_start': start, 'fps': fps, 'repairs': repairs}))
     return frames, width
 
 
@@ -447,6 +534,13 @@ def resolve_masks(sources: dict, segments: list, outdir: Path, fps: str,
         x0, y0, spec_x1, y1 = seg.score_inset
         seconds = seg.end - seg.start + tail * seg.speed
         raw, width = scan(Path(sources[seg.source]), seg.score_inset, seg.start, seconds, fps)
+        windows = getattr(seg, "score_inset_windows", ())
+        if windows:
+            # parse_segments stores reviewed windows in source seconds
+            # relative to seg.start, on this scan's fps clock. Exclude them
+            # before smoothing so a false backdrop cannot widen a neighbour.
+            raw = [state if any(a <= k / rate < b for a, b in windows)
+                   else (None, None) for k, state in enumerate(raw)]
         frames = stabilize(raw)
         present = [f for f in frames if f[0] is not None]
         if not present:

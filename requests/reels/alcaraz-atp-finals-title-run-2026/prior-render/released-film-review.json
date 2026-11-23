@@ -1,0 +1,63 @@
+{
+  "status": "superseded_failed_point_entry_review",
+  "reviewer": "current assistant",
+  "checked_at": "2026-11-23T00:48:36.859930+00:00",
+  "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+  "duration": 386.8,
+  "canvas": [
+    1080,
+    1440
+  ],
+  "fps": 25,
+  "uniform_samples": 97,
+  "interval_seconds": 4,
+  "sheets": [
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/released-film-01.jpg",
+      "sha256": "54535f4c131b4a27187f553f978828fd961e8762d33ab973e262dd26716d66e4"
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/released-film-02.jpg",
+      "sha256": "53d691503ebf875770d6fb4e926a4acb63bba1862a9b5e166e142b3d9a8397a3"
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/released-film-03.jpg",
+      "sha256": "9d88ba3a7becf5bfde19fce275812b5a2e72f0f7b425ba540e5fb60537d435fc"
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/released-film-04.jpg",
+      "sha256": "141f36179c2ba799d77a299601f3acc60289f339de1b82565b1da1737fe24f08"
+    }
+  ],
+  "findings": [
+    "All97 actual-MP4 samples reviewed from cover to outro; no unintended empty canvas or wrong-match footage found",
+    "Three group-stage matches, semifinal setback/key break/finish, final break-back and all three set points appear chronologically",
+    "Full final championship point and genuine floor celebration cover cold-open payoff",
+    "Handover, lift and fireworks from same event visible from5:48 to6:08",
+    "Winner-first full statistics card and closing brand outro present; native captions remain readable",
+    "Source audio kept at unity with no added music/loudness scans; automatic voice review is not human listening"
+  ],
+  "formal_qc": {
+    "path": "output/2026-11-23/reel/alcaraz-atp-finals-title-run-2026/qc_attestation.json",
+    "sha256": "f619907077a76521e562706ccccad3bd3bf11c48e41e5e4445727822837ba84f",
+    "status": "pass"
+  },
+  "voice": {
+    "method": "automated_voice_suite",
+    "pass": true,
+    "checked_entries": 26,
+    "frozen_requests": 13,
+    "evidence_path": "output/2026-11-23/reel/alcaraz-atp-finals-title-run-2026/voice_auto_review.json",
+    "evidence_sha256": "bcbe0bead2fc348d1c6616ad2f31897f30c5037cd94de9478b5c3733f02e48fb",
+    "seam_limitations": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝"
+  },
+  "publication": {
+    "merge": false,
+    "pushplus_sent": false,
+    "pushed_json_present": false,
+    "reason": "Existing repository CI failures; see publication-block.json. Render/QC pass does not declare full publication completion."
+  },
+  "human_listening_claimed": false,
+  "failure": "Late independent check found missing412.22–415.70 source serve/return in main championship point and partly dissolved court-level toss; former full-point approval withdrawn.",
+  "publication_approved": false
+}

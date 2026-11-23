@@ -1,0 +1,57 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-YiWjCKWBWog/YiWjCKWBWog.mp4",
+  "source_sha256": "1b06b27ff247d36ec427e5f9807b52be165b1be6bc27cb637dd9a58372886bd9",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: actual native score/serve-to-point contact frames and original captions compared with small.en and medium.en; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-23T01:09:03.418599+00:00",
+  "reviewed_from": 287.1,
+  "reviewed_to": 300.65,
+  "foreground_english": [
+    {
+      "start": 287.68,
+      "end": 289.97,
+      "en": "It's too good that time. Beautiful volley.",
+      "zh": "这次太漂亮了，精彩的截击。"
+    },
+    {
+      "start": 295.77,
+      "end": 296.95,
+      "en": "And he breaks!",
+      "zh": "他破发了！"
+    },
+    {
+      "start": 298.98,
+      "end": 300.55,
+      "en": "And it is game on!",
+      "zh": "比赛又有悬念了！"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/YiWjCKWBWog/small.en.json",
+    "data/source_asr/YiWjCKWBWog/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-YiWjCKWBWog.txt"
+  ],
+  "review_basis": "Source score Zverev3 Alcaraz4,40-30; first frame follows previous commentary volley ending289.97; source cut289.9 begins Alcaraz service preparation. Complete serve/rally/point to4-4 then actual reaction. OriginalCC296.24 and299.04; bothASR agree core phrases and words end300.53. Next point starts300.76, outside selection.",
+  "serve_entry_review": {
+    "prior_source_in": 289.98,
+    "corrected_source_in": 287.1,
+    "default_dissolve_seconds": 0.5,
+    "corrected_dissolve_complete_source_seconds": 287.6,
+    "source_fps": 50,
+    "native_first_serve_wide_frame": 289.9,
+    "last_prior_frame": 289.88,
+    "evidence_statement": "逐帧实源切镜核：第一宽镜中发球者已举起抛球臂/球已在空中，随后为同一发球、接发和相持，并非已经开始的底线相持。新入点的0.5秒溶解在该第一宽镜前结束。只声称保留源片首个可见抛球阶段及其后全部发球、接发、相持，不把上分近景冒充本分准备，不声称源片未给出的完整站定、拍球或抛球起始。",
+    "source_frame_evidence": "/workspace/scratch/alcaraz-finals/serve-systematic/breakback-precise-wall.jpg",
+    "no_listening_claimed": true
+  },
+  "added_commentary_basis": {
+    "native_cc": [
+      "287.68 It's too good that time. Beautiful",
+      "289.28 volley."
+    ],
+    "medium_asr": "274.53–289.97 overlong segment ending Oh, it's too good that time beautiful volley",
+    "selected_timing": "Native CC287.68 start and medium289.97 end preserve the whole previous-point volley commentary before289.90 serve wide cut."
+  }
+}

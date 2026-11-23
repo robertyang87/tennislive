@@ -1,0 +1,62 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-aJ_bIrNtrtA/aJ_bIrNtrtA.mp4",
+  "source_sha256": "63320c9fe9eba9ca28bc243206a2ffd458b96c040c1b99c096833a0749534567",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-23T01:09:03.418599+00:00",
+  "reviewed_from": 271.4,
+  "reviewed_to": 290.7,
+  "foreground_english": [
+    {
+      "start": 271.99,
+      "end": 272.8,
+      "en": "Some point.",
+      "zh": "这一分真精彩。"
+    },
+    {
+      "start": 286.05,
+      "end": 287.7,
+      "en": "Yeah, there is.",
+      "zh": "是的，来了。"
+    },
+    {
+      "start": 288.15,
+      "end": 290.55,
+      "en": "First break of the day.",
+      "zh": "他今天的第一次破发。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/aJ_bIrNtrtA/small.en.json",
+    "data/source_asr/aJ_bIrNtrtA/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-aJ_bIrNtrtA.txt"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 271.4,
+      "end": 290.7,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ],
+  "serve_entry_review": {
+    "prior_source_in": 274.2,
+    "corrected_source_in": 271.4,
+    "default_dissolve_seconds": 0.5,
+    "corrected_dissolve_complete_source_seconds": 271.9,
+    "source_fps": 50,
+    "native_first_serve_wide_frame": 274.08,
+    "last_prior_frame": 274.06,
+    "evidence_statement": "逐帧实源切镜核：第一宽镜中发球者已举起抛球臂/球已在空中，随后为同一发球、接发和相持，并非已经开始的底线相持。新入点的0.5秒溶解在该第一宽镜前结束。只声称保留源片首个可见抛球阶段及其后全部发球、接发、相持，不把上分近景冒充本分准备，不声称源片未给出的完整站定、拍球或抛球起始。",
+    "source_frame_evidence": "/workspace/scratch/alcaraz-finals/serve-systematic/sfbreak-precise-wall.jpg",
+    "no_listening_claimed": true
+  },
+  "added_commentary_basis": {
+    "native_cc": "271.99 Some point.",
+    "small_asr": "270.86–272.58 At some point.",
+    "medium_asr": "271.76–274.18 At some point; the segment end runs over the next serve",
+    "selected_timing": "271.99 follows the native caption onset;272.80 conservatively contains small-ASR end272.58. No fabricated At is added."
+  }
+}

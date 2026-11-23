@@ -1,0 +1,49 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-tennistv-4609943/4609943-b298af170cc66e46.mp4",
+  "source_sha256": "b298af170cc66e46fe8ba2e6f610b123cc8cc65129dd99a05a13e2f1d5da7204",
+  "method": "asr_cross_checked",
+  "reviewer": "current assistant: independent small.en/medium.en source transcripts, native captions where available, complete selected-window timing review; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:45:34.440497+00:00",
+  "reviewed_from": 126.3,
+  "reviewed_to": 144.9,
+  "foreground_english": [
+    {
+      "start": 131.64,
+      "end": 132.96,
+      "en": "That will do it.",
+      "zh": "比赛就此结束。"
+    },
+    {
+      "start": 132.96,
+      "end": 135.15,
+      "en": "A near-perfect display",
+      "zh": "近乎完美的表现，"
+    },
+    {
+      "start": 135.15,
+      "end": 137.32,
+      "en": "from Carlos Alcaraz.",
+      "zh": "来自卡洛斯·阿尔卡拉斯。"
+    },
+    {
+      "start": 138.24,
+      "end": 140.8,
+      "en": "Simply sensational, every department.",
+      "zh": "各个环节，都出色极了。"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/4609943/small.en.json",
+    "data/source_asr/4609943/medium.en.json"
+  ],
+  "review_basis": "Selected whole window compared against both word-timed transcripts and native source captions when available. Proper names normalized only against the same verified match identity. Routine score calls and nonlexical crowd/player shouts remain in original audio; no invented verbatim words. Full rallies and actual reactions checked in dense source frames.",
+  "routine_score_call_exclusions": [
+    {
+      "start": 126.3,
+      "end": 144.9,
+      "reason": "Chair routine score calls only are exempt from verbatim subtitles; all real substantive commentary in this window is separately listed and translated."
+    }
+  ]
+}

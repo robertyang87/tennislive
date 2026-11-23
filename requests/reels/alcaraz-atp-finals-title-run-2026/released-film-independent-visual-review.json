@@ -1,0 +1,649 @@
+{
+  "schema_version": 2,
+  "reviewed_at": "2026-11-23T01:39:25.353041+00:00",
+  "reviewer": "independent production agent /root/audio_windows",
+  "status": "passed",
+  "scope_status": "passed for all11 serve entries/contacts, championship-point continuous action and sampled cover/scoreboard/trophy/statistics tail",
+  "publication_blocking": false,
+  "film_path": "/workspace/artifacts/alcaraz-atp-finals-title-run-2026/alcaraz-atp-finals-title-run-2026.mp4",
+  "film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
+  "film_bytes": 184373838,
+  "film_format": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "duration_seconds": 405.0
+  },
+  "render_head": "67ba1441",
+  "render_run": "45093785041",
+  "method": "Independently extracted actual final MP4 frames at exact25fps PTS. All11 serving events have an11-frame entry window and11-frame service-contact window at0.04-second intervals. Championship point is additionally decoded continuously at25fps from297.04 through323.04 and visually inspected across the whole range in0.2-second contact-sheet samples, with consecutive-frame pixel-change measurements as supporting evidence. Cover/scoreboard/trophy/statistics/outro were inspected from actual full-resolution decoded frames. No listening or acoustic QC claimed.",
+  "audio_listening_performed": false,
+  "blocking_findings": [],
+  "serve_events": [
+    {
+      "event": 1,
+      "segment_index": 3,
+      "source": "rr1",
+      "source_anchor_seconds": 127.98,
+      "nominal_film_anchor_seconds": 39.18,
+      "actual_first_visible_serve_wide_frame": 39.2,
+      "last_preceding_frame": 39.16,
+      "serve_contact_observed_film_bracket": [
+        40.44,
+        40.48
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Alcaraz持球准备后近端发球，Tiafoe远端接发。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/01-rr1-entry.jpg",
+          "sha256": "71c46c43b84981704e5772558a590f00350f7632a389dee850feaf6fb66e76aa",
+          "film_pts_start": 39.0,
+          "film_pts_end": 39.4,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/01-rr1-contact.jpg",
+          "sha256": "9d46dfbf53c41406ba5f69c2cbd3bc555a782dea51bfc67f643718e3099f11a4",
+          "film_pts_start": 40.2,
+          "film_pts_end": 40.6,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 2,
+      "segment_index": 5,
+      "source": "rr2",
+      "source_anchor_seconds": 362.14,
+      "nominal_film_anchor_seconds": 68.44,
+      "actual_first_visible_serve_wide_frame": 68.48,
+      "last_preceding_frame": 68.44,
+      "serve_contact_observed_film_bracket": [
+        68.96,
+        69.08
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "前一分15–15近景结束后，Alcaraz在40–30赛点远端举臂发球。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/02-rr2-entry.jpg",
+          "sha256": "9c125b6e003a6f74bbea0d012b8832bbd34cd3a15db1833a60115ba10c344803",
+          "film_pts_start": 68.24,
+          "film_pts_end": 68.64,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/02-rr2-contact.jpg",
+          "sha256": "d1245b8b26afe52629dc58876dfc2ceaea03686f0a7a84be73099cd91dccff98",
+          "film_pts_start": 68.8,
+          "film_pts_end": 69.2,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 3,
+      "segment_index": 7,
+      "source": "rr3",
+      "source_anchor_seconds": 309.34,
+      "nominal_film_anchor_seconds": 94.44,
+      "actual_first_visible_serve_wide_frame": 94.48,
+      "last_preceding_frame": 94.44,
+      "serve_contact_observed_film_bracket": [
+        94.84,
+        94.92
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "30–0前一分近景后，Cobolli在Alcaraz40–0赛点远端举臂发球。94.48首宽镜无任何字卡残影。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/03-rr3-entry.jpg",
+          "sha256": "21c2fac6cf712d01d6843af6d23702d4daf4f44c622c6865b90ba2b1e0fe04ce",
+          "film_pts_start": 94.24,
+          "film_pts_end": 94.64,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/03-rr3-contact.jpg",
+          "sha256": "720bc8fd109afe95c4f574d3e1ca93d1a385f0cc735c3d9d2aa67207891d51fa",
+          "film_pts_start": 94.64,
+          "film_pts_end": 95.04,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 4,
+      "segment_index": 9,
+      "source": "sf",
+      "source_anchor_seconds": 274.08,
+      "nominal_film_anchor_seconds": 125.48,
+      "actual_first_visible_serve_wide_frame": 125.48,
+      "last_preceding_frame": 125.44,
+      "serve_contact_observed_film_bracket": [
+        125.8,
+        125.88
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Shelton近端在Alcaraz第二盘4–3、40–15破发点举臂发球。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/04-sf-entry.jpg",
+          "sha256": "945396f3e18bed1a860bc538c7763937bd926eb3e75a0bdc9337417e6b3e253c",
+          "film_pts_start": 125.28,
+          "film_pts_end": 125.68,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/04-sf-contact.jpg",
+          "sha256": "42e293d556119900f2ae27f32501d2b5b0417d9c905c22e6bf30fca576d05d37",
+          "film_pts_start": 125.68,
+          "film_pts_end": 126.08,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 5,
+      "segment_index": 11,
+      "source": "sf",
+      "source_anchor_seconds": 398.28,
+      "nominal_film_anchor_seconds": 160.58,
+      "actual_first_visible_serve_wide_frame": 160.6,
+      "last_preceding_frame": 160.56,
+      "serve_contact_observed_film_bracket": [
+        160.88,
+        160.96
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Shelton近端在第三盘6–6、Alcaraz抢七6–1赛点举臂发球。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/05-sf-entry.jpg",
+          "sha256": "fb40e071e3559c90353475ce31f85436a21b22d4fee9381a1dc981f4cc2a3121",
+          "film_pts_start": 160.4,
+          "film_pts_end": 160.8,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/05-sf-contact.jpg",
+          "sha256": "26eb5d433dd15770bbe0d4bb78affe6ba61497deee8273c9ad1544fb714d396a",
+          "film_pts_start": 160.68,
+          "film_pts_end": 161.08,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 6,
+      "segment_index": 13,
+      "source": "final",
+      "source_anchor_seconds": 179.88,
+      "nominal_film_anchor_seconds": 182.58,
+      "actual_first_visible_serve_wide_frame": 182.6,
+      "last_preceding_frame": 182.56,
+      "serve_contact_observed_film_bracket": [
+        183.0,
+        183.12
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Zverev远端在2–4、15–40破发点举臂发球。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/06-final-entry.jpg",
+          "sha256": "aa179b46b836e18740d0bfa96a686e299569342b92ed9a719515b1dc69cee9a6",
+          "film_pts_start": 182.36,
+          "film_pts_end": 182.76,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/06-final-contact.jpg",
+          "sha256": "43e93c8aa017070087621e21b18eb69de5eabe636a16802f4c3af482f3a24a39",
+          "film_pts_start": 182.8,
+          "film_pts_end": 183.2,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 7,
+      "segment_index": 15,
+      "source": "final",
+      "source_anchor_seconds": 289.9,
+      "nominal_film_anchor_seconds": 215.5,
+      "actual_first_visible_serve_wide_frame": 215.52,
+      "last_preceding_frame": 215.48,
+      "serve_contact_observed_film_bracket": [
+        215.92,
+        216.0
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Alcaraz远端在第二盘4–3、30–40破发点举臂发球；上一分volley评论按真实源顺序结束。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/07-final-entry.jpg",
+          "sha256": "74b852fe4ad45564d222eb071345e352c44896b6f55cb334094ad008f005d65a",
+          "film_pts_start": 215.32,
+          "film_pts_end": 215.72,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/07-final-contact.jpg",
+          "sha256": "d6b90cf11938be334baa6b362fd562e228d2de5ede82fa12f80ab76d397efddb",
+          "film_pts_start": 215.72,
+          "film_pts_end": 216.12,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 8,
+      "segment_index": 17,
+      "source": "final",
+      "source_anchor_seconds": 351.9,
+      "nominal_film_anchor_seconds": 241.15,
+      "actual_first_visible_serve_wide_frame": 241.16,
+      "last_preceding_frame": 241.12,
+      "serve_contact_observed_film_bracket": [
+        241.48,
+        241.56
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Alcaraz近端在抢七3–6的第一个盘点举臂发球。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/08-final-entry.jpg",
+          "sha256": "5cd941ad9c22a9631a4a438b6de5f555e2581bcb0c442b929599fe43a069369a",
+          "film_pts_start": 240.96,
+          "film_pts_end": 241.36,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/08-final-contact.jpg",
+          "sha256": "f69cb8598669e57471b3f95bef8a17c9e99ad00f8b725285c1a1a2a78c2d4c3d",
+          "film_pts_start": 241.32,
+          "film_pts_end": 241.72,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 9,
+      "segment_index": 17,
+      "source": "final",
+      "source_anchor_seconds": 364.54,
+      "nominal_film_anchor_seconds": 253.79,
+      "actual_first_visible_serve_wide_frame": 253.68,
+      "last_preceding_frame": 253.64,
+      "serve_contact_observed_film_bracket": [
+        254.04,
+        254.12
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "同一未中断选段内，Alcaraz在抢七4–6第二个盘点近端举臂发球；253.68已是首宽镜，名义253.79只是抛球中段锚点。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/09-final-entry.jpg",
+          "sha256": "d72eff17e4d81c0eb7ee9f62bd175b9c77324290b452998d97d5b381da12ffaa",
+          "film_pts_start": 253.6,
+          "film_pts_end": 254.0,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/09-final-contact.jpg",
+          "sha256": "cd7310611b4a683e42f1b38a4c14ee63b9cb464e8fcfd0bd358c64a2a218acf9",
+          "film_pts_start": 253.88,
+          "film_pts_end": 254.28,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 10,
+      "segment_index": 18,
+      "source": "court",
+      "source_anchor_seconds": 151.04,
+      "nominal_film_anchor_seconds": 261.95,
+      "actual_first_visible_serve_wide_frame": 261.96,
+      "last_preceding_frame": 261.92,
+      "serve_contact_observed_film_bracket": [
+        262.8,
+        262.88
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "球场低机位Zverev在抢七6–5第三盘点举臂抛球，151.04源首可见阶段完整呈现，无上一段溶解残影。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/10-court-entry.jpg",
+          "sha256": "a3d72734f95249ea7543a89cb3e1c66702ef95c6bdd17f6a9c9806dfcc750ffe",
+          "film_pts_start": 261.76,
+          "film_pts_end": 262.16,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/10-court-contact.jpg",
+          "sha256": "b3534146b7d7f84b22a7a3fc83b420e7975816eed43986da59cc0d4d905ffda4",
+          "film_pts_start": 262.52,
+          "film_pts_end": 262.92,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    },
+    {
+      "event": 11,
+      "segment_index": 20,
+      "source": "final",
+      "source_anchor_seconds": 412.22,
+      "nominal_film_anchor_seconds": 297.03,
+      "actual_first_visible_serve_wide_frame": 297.08,
+      "last_preceding_frame": 297.04,
+      "serve_contact_observed_film_bracket": [
+        297.32,
+        297.44
+      ],
+      "first_wide_and_service_contact_free_of_card_dissolve": true,
+      "visual_finding": "Zverev近端在抢七7–8、Alcaraz第二个冠军点举臂抛球；首宽镜297.08清楚，随后完整可见发球、接发、相持。",
+      "evidence": {
+        "entry": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/11-final-entry.jpg",
+          "sha256": "7bb8db420b37678c452c2d6217ece8e9f4d211eaf52f26ecc4bbe2a85d00ae6d",
+          "film_pts_start": 296.84,
+          "film_pts_end": 297.24,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        },
+        "contact": {
+          "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/11-final-contact.jpg",
+          "sha256": "1cb035d80e03da684f97734b84d6a01c86a5aa606edccbde353a0e7fc618f5ba",
+          "film_pts_start": 297.12,
+          "film_pts_end": 297.52,
+          "sample_interval_seconds": 0.04,
+          "frame_count": 11
+        }
+      }
+    }
+  ],
+  "rr3_dissolve_specific_check": {
+    "nominal_source_margin_seconds": 0.04,
+    "actual_frame_before_first_wide": 94.44,
+    "actual_first_wide": 94.48,
+    "last_visibly_faint_card_in_entry_wall": 94.36,
+    "card_not_visible_by": 94.4,
+    "actual_first_wide_has_card_or_prior_scene_ghost": false,
+    "finding": "At94.44 the old player closeup remains, fully clear of the card.94.48 is the first actual wide/toss frame, fully opaque source image, with service contact94.84–94.92 also clear. The decision is based on actual frames, not just source timing arithmetic."
+  },
+  "championship_point_continuity": {
+    "status": "passed",
+    "first_actual_serve_wide_frame": 297.08,
+    "service_contact_bracket": [
+      297.32,
+      297.44
+    ],
+    "full_native_wide_rally_visible_through": 318.32,
+    "first_native_reaction_cut": 318.36,
+    "actual_visual_sweep_seconds": [
+      297.04,
+      323.04
+    ],
+    "decoded_consecutive_25fps_frames": 651,
+    "visually_inspected_0_2_second_samples": 131,
+    "finding": "The actual film now shows the source first visible toss phase, Zverev service, Alcaraz return, the entire ensuing baseline exchange, final shot/failed chase, and native winning reaction and fall to the court. No card returns during the point, and no intervening camera/edit cut appears in the serving/rally wide shot. At318.36 the native camera changes to Alcaraz celebrating, then follows his fall and the champion announcement. The previous415.7-source in-point omission is resolved in this SHA.",
+    "largest_within_wide_adjacent_frame_delta": {
+      "film_pts": 314.92,
+      "mean_absolute_pixel_delta": 2.501
+    },
+    "evidence_paths": [
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-01.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-02.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-03.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-04.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-05.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-06.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-07.jpg",
+      "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-measurements.json"
+    ]
+  },
+  "sampled_other_visual_checks": [
+    {
+      "film_requested_seconds": 0.6,
+      "decoded_frame_pts_seconds": 0.6,
+      "status": "passed",
+      "finding": "真实高清捧杯摄影、面部与奖杯清楚，钩子不盖脸；6–2、7–6(7)及身份可读。"
+    },
+    {
+      "film_requested_seconds": 198.7,
+      "decoded_frame_pts_seconds": 198.72,
+      "status": "passed",
+      "finding": "源196.0附近完整小分15/40保留，蓝板止于真实右缘，无旧超宽补丁；双语cushion字幕可读。"
+    },
+    {
+      "film_requested_seconds": 198.9,
+      "decoded_frame_pts_seconds": 198.92,
+      "status": "passed",
+      "finding": "原生撤板后不残留比分补丁；双语字幕仍清楚。"
+    },
+    {
+      "film_requested_seconds": 368.31,
+      "decoded_frame_pts_seconds": 368.32,
+      "status": "passed",
+      "finding": "同届接杯，奖杯主体和交接双手可见，无造板或猜造对白。"
+    },
+    {
+      "film_requested_seconds": 374.51,
+      "decoded_frame_pts_seconds": 374.52,
+      "status": "passed",
+      "finding": "真实双手举杯和烟火；奖杯自然挡住部分面部，不是字幕遮挡。"
+    },
+    {
+      "film_requested_seconds": 384.51,
+      "decoded_frame_pts_seconds": 384.52,
+      "status": "passed",
+      "finding": "真实持杯、蓝白礼花收束。"
+    },
+    {
+      "film_requested_seconds": 394.5,
+      "decoded_frame_pts_seconds": 394.52,
+      "status": "passed",
+      "finding": "统计卡双方视角一致：Alcaraz左、Zverev右，6–2/7–6(7)，总得分80–64；表内数字可读。"
+    },
+    {
+      "film_requested_seconds": 400.5,
+      "decoded_frame_pts_seconds": 400.52,
+      "status": "passed",
+      "finding": "统计卡向品牌片尾溶解的过渡帧，属于既定结束动画。"
+    },
+    {
+      "film_requested_seconds": 404.0,
+      "decoded_frame_pts_seconds": 404.0,
+      "status": "passed",
+      "finding": "完整品牌片尾，字样网球时差·赛场之上、时差归我好球归你可读。"
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/01-rr1-contact.jpg",
+      "sha256": "9d46dfbf53c41406ba5f69c2cbd3bc555a782dea51bfc67f643718e3099f11a4",
+      "bytes": 538994
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/01-rr1-entry.jpg",
+      "sha256": "71c46c43b84981704e5772558a590f00350f7632a389dee850feaf6fb66e76aa",
+      "bytes": 483608
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/02-rr2-contact.jpg",
+      "sha256": "d1245b8b26afe52629dc58876dfc2ceaea03686f0a7a84be73099cd91dccff98",
+      "bytes": 520753
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/02-rr2-entry.jpg",
+      "sha256": "9c125b6e003a6f74bbea0d012b8832bbd34cd3a15db1833a60115ba10c344803",
+      "bytes": 459090
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/03-rr3-contact.jpg",
+      "sha256": "720bc8fd109afe95c4f574d3e1ca93d1a385f0cc735c3d9d2aa67207891d51fa",
+      "bytes": 515528
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/03-rr3-entry.jpg",
+      "sha256": "21c2fac6cf712d01d6843af6d23702d4daf4f44c622c6865b90ba2b1e0fe04ce",
+      "bytes": 439473
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/04-sf-contact.jpg",
+      "sha256": "42e293d556119900f2ae27f32501d2b5b0417d9c905c22e6bf30fca576d05d37",
+      "bytes": 527602
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/04-sf-entry.jpg",
+      "sha256": "945396f3e18bed1a860bc538c7763937bd926eb3e75a0bdc9337417e6b3e253c",
+      "bytes": 455233
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/05-sf-contact.jpg",
+      "sha256": "26eb5d433dd15770bbe0d4bb78affe6ba61497deee8273c9ad1544fb714d396a",
+      "bytes": 532457
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/05-sf-entry.jpg",
+      "sha256": "fb40e071e3559c90353475ce31f85436a21b22d4fee9381a1dc981f4cc2a3121",
+      "bytes": 505363
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/06-final-contact.jpg",
+      "sha256": "43e93c8aa017070087621e21b18eb69de5eabe636a16802f4c3af482f3a24a39",
+      "bytes": 495580
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/06-final-entry.jpg",
+      "sha256": "aa179b46b836e18740d0bfa96a686e299569342b92ed9a719515b1dc69cee9a6",
+      "bytes": 409577
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/07-final-contact.jpg",
+      "sha256": "d6b90cf11938be334baa6b362fd562e228d2de5ede82fa12f80ab76d397efddb",
+      "bytes": 485438
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/07-final-entry.jpg",
+      "sha256": "74b852fe4ad45564d222eb071345e352c44896b6f55cb334094ad008f005d65a",
+      "bytes": 439416
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/08-final-contact.jpg",
+      "sha256": "f69cb8598669e57471b3f95bef8a17c9e99ad00f8b725285c1a1a2a78c2d4c3d",
+      "bytes": 508959
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/08-final-entry.jpg",
+      "sha256": "5cd941ad9c22a9631a4a438b6de5f555e2581bcb0c442b929599fe43a069369a",
+      "bytes": 498573
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/09-final-contact.jpg",
+      "sha256": "cd7310611b4a683e42f1b38a4c14ee63b9cb464e8fcfd0bd358c64a2a218acf9",
+      "bytes": 511729
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/09-final-entry.jpg",
+      "sha256": "d72eff17e4d81c0eb7ee9f62bd175b9c77324290b452998d97d5b381da12ffaa",
+      "bytes": 519909
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/10-court-contact.jpg",
+      "sha256": "b3534146b7d7f84b22a7a3fc83b420e7975816eed43986da59cc0d4d905ffda4",
+      "bytes": 533731
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/10-court-entry.jpg",
+      "sha256": "a3d72734f95249ea7543a89cb3e1c66702ef95c6bdd17f6a9c9806dfcc750ffe",
+      "bytes": 538536
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/11-final-contact.jpg",
+      "sha256": "1cb035d80e03da684f97734b84d6a01c86a5aa606edccbde353a0e7fc618f5ba",
+      "bytes": 504817
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/11-final-entry.jpg",
+      "sha256": "7bb8db420b37678c452c2d6217ece8e9f4d211eaf52f26ecc4bbe2a85d00ae6d",
+      "bytes": 429501
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-01.jpg",
+      "sha256": "0c50157b6f87e367874a9bafb375e4a212fc749a6f0c4e45fd4be7e24da48f45",
+      "bytes": 899209
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-02.jpg",
+      "sha256": "21d1a8b431fb19bdfd82716558a694ad75a95d02176dc72182417468500fd417",
+      "bytes": 909028
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-03.jpg",
+      "sha256": "fc6401b5eee465af55821497d7694c09e98fd28d55d43f07d66226a3813ab2b7",
+      "bytes": 914572
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-04.jpg",
+      "sha256": "fc3d4b0a06684dced1795af4d6e79eace562ded86fc70d217e43164cef1c8344",
+      "bytes": 918837
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-05.jpg",
+      "sha256": "632ac5ec2815b60b1a1d2ccfe40dd49621a75680d305216804d2fd923a78927b",
+      "bytes": 916786
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-06.jpg",
+      "sha256": "182917d2aba3d27d9f3819fe4a3abb2909083a6137402f400b961f78411aca33",
+      "bytes": 793659
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-07.jpg",
+      "sha256": "4a545778fb948ae7601b662ffd50311e54b2505e24073f0cb901f0bf93fd2435",
+      "bytes": 512924
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/championship-continuity-measurements.json",
+      "sha256": "dd90743338fa2faae92d3fbd0af6754dfa871c34f01b161ed39ba3e22c95eed3",
+      "bytes": 2374
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/final-serve-audit/cover-board-trophy-statistics-tail.jpg",
+      "sha256": "e41db041d71d3bfed07b9163cbeb54a4dca8f244f52e7d9cba5d885775f07649",
+      "bytes": 800963
+    }
+  ],
+  "limitations": [
+    "This is a visual review, not human listening or a complete405-second audiovisual playback. Root reviewer separately owns the whole-film wall and acoustic review.",
+    "For serving actions already entered mid-toss in the official source, only the first visible source toss phase and the available subsequent serve/return/rally are claimed; no unseen pre-toss routine is invented.",
+    "The selected fixed portrait crop occasionally lets a lateral player move partly outside the frame; this review does not claim a full-width court image. Serving actions inspected here remain visible.",
+    "Contact timestamps are observable25fps brackets, not a claim to an infinitesimal racket/ball-contact instant.",
+    "The25fps all-frame decode is not claimed to have been manually viewed frame by frame over the whole point; manual inspection uses complete0.2-second progression plus dense0.04-second entry/contact windows."
+  ],
+  "prior_render_disposition": "The failed e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4 version is obsolete and retained separately in prior-render evidence. This pass applies only to3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734.",
+  "changes_made": "This review JSON and its actual-film contact-sheet evidence only. No spec, render, voice asset or git commit modified."
+}

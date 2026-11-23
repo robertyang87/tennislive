@@ -7,6 +7,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -122,3 +123,36 @@ def test_real_shanghai_board_removal_without_extra_blue_border_excludes_green_ba
     fixtures = Path(__file__).resolve().parents[1] / 'data/evidence/medvedev-tsitsipas-shanghai-2026-r4/scoreboard-regression'
     band = np.asarray(Image.open(fixtures / '221.500.png').convert('RGB'))
     assert a.board_edge(band, cap=421) == 290
+
+
+@pytest.mark.parametrize('reviewed', [True, False])
+def test_reviewed_windows_gate_fake_backdrop_and_later_real_board(tmp_path, monkeypatch, reviewed):
+    # Raw scan: a false close-up, then the reviewed native board, then a
+    # genuinely different board. Only the reviewed source interval may appear.
+    raw = [(643, None)] * 5 + [(332, None)] * 10 + [(354, None)] * 10
+    monkeypatch.setattr(a, 'scan', lambda *args: (raw, W))
+    seg = SimpleNamespace(score_inset=(98, 920, 519, 1029), source='main',
+                          start=123.4, end=124.4, speed=1.0,
+                          score_inset_windows=((.2, .6),) if reviewed else ())
+    a.resolve_masks({'main': Path('source.mp4')}, [seg], tmp_path, '25', 0.0)
+    width = seg.score_inset[2] - seg.score_inset[0]
+    data = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', seg.score_inset_mask,
+                                    '-f', 'rawvideo', '-pix_fmt', 'gray', '-'])
+    mask = np.frombuffer(data, np.uint8).reshape(25, 109, width)
+    assert mask[5:15, :, :332].min() == 255
+    if reviewed:
+        assert width == 332 + a.EDGE_PAD
+        assert mask[:5].max() == 0 and mask[15:].max() == 0
+    else:
+        assert mask[:5, :, :643].min() == 255
+        assert mask[15:, :, :354].min() == 255
+
+
+def test_reviewed_window_without_a_real_board_still_fails(tmp_path, monkeypatch):
+    raw = [(332, None)] * 5 + [(None, None)] * 10 + [(354, None)] * 10
+    monkeypatch.setattr(a, 'scan', lambda *args: (raw, W))
+    seg = SimpleNamespace(score_inset=(98, 920, 519, 1029), source='main',
+                          start=123.4, end=124.4, speed=1.0,
+                          score_inset_windows=((.2, .6),))
+    with pytest.raises(RuntimeError, match='一帧都没认出 ATP 比分板'):
+        a.resolve_masks({'main': Path('source.mp4')}, [seg], tmp_path, '25', 0.0)

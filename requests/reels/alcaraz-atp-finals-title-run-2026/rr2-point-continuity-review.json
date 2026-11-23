@@ -1,0 +1,108 @@
+{
+  "schema": "tennislive.visual-point-continuity-review.v1",
+  "reviewed_at": "2026-11-23T00:33:32.636878+00:00",
+  "reviewer": "current assistant, independent native-frame review; no human audio listening claimed",
+  "source_url": "https://www.youtube.com/watch?v=GBdXpIAAgv4",
+  "archive_url": "https://github.com/robertyang87/tennislive/releases/download/source-GBdXpIAAgv4/GBdXpIAAgv4.mp4",
+  "source_sha256": "0bca55bcd19a760b8c67a01a2faffcf2047b997dc0a8b3f8f0819eac76eb29be",
+  "source_geometry": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "50/1"
+  },
+  "selected_source_window": [
+    361.0,
+    377.8
+  ],
+  "match_identity": {
+    "event": "2026 Nitto ATP Finals",
+    "round": "Round Robin",
+    "players": [
+      "Carlos Alcaraz",
+      "Daniil Medvedev"
+    ],
+    "winner_result": "6-2 6-4"
+  },
+  "preceding_point_reaction": {
+    "start": 361.0,
+    "last_native_frame": 362.12,
+    "shot": "Alcaraz close-up after an earlier point",
+    "visible_score": {
+      "Alcaraz": [
+        6,
+        5,
+        15
+      ],
+      "Medvedev": [
+        2,
+        4,
+        15
+      ]
+    },
+    "finding": "This is a genuine previous-point reaction followed by an official edit to40-30. It is not a delayed match-point scoreboard and is not claimed as the preparation for the following point."
+  },
+  "actual_match_point": {
+    "first_native_wide_frame": 362.14,
+    "score_before_point": {
+      "Alcaraz": [
+        6,
+        5,
+        40
+      ],
+      "Medvedev": [
+        2,
+        4,
+        30
+      ]
+    },
+    "server": "Carlos Alcaraz, far baseline",
+    "receiver": "Daniil Medvedev, near baseline",
+    "visible_preparation": {
+      "from": 362.14,
+      "description": "At the official cut Alcaraz already has his tossing arm raised and knees bent in the loading phase; the visible wind-up continues into the serve.",
+      "not_claimed_present": [
+        "pre-serve standing/ball-bouncing routine",
+        "beginning of the ball-toss motion before the native cut"
+      ]
+    },
+    "serve_contact_interval": [
+      362.68,
+      362.72
+    ],
+    "continuity": "From the first native wide frame362.14 through at least365.76, one uninterrupted full-court camera shows the visible service loading, serve contact, rally and decisive out call. No reaction or different point is inserted into this shot.",
+    "out_result": {
+      "physical_out_interval_approx": [
+        365.3,
+        365.52
+      ],
+      "electronic_out_first_clearly_legible": 365.52,
+      "electronic_out_onset_interval": [
+        365.48,
+        365.52
+      ],
+      "description": "Medvedev's final ball is out. Blue OUT signage appears on the chair tower and back LED boards; Alcaraz then wins the match. The exact bounce instant is not claimed beyond this visual interval."
+    },
+    "subsequent_reaction_closeup_from_approx": 365.8,
+    "match_point_present": true,
+    "service_contact_through_decisive_result_continuous": true,
+    "full_pre_toss_routine_present": false
+  },
+  "contact_sheet": {
+    "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/rr2-match-point-continuity.jpg",
+    "sha256": "8fdbb9a2542cbaa432a96c46fbc155b2a0edd44fdc3be66c13be7fbcdc7b74e5",
+    "sampling": "10fps absolute source-time grid361.7–365.8; each label is a resampled grid timestamp (up to50ms quantization), not a claim of the exact cut frame. Exact362.14 cut and contact bracket were separately checked on native50fps frames.",
+    "full_frame_views_preserved": true
+  },
+  "additional_scratch_verification": {
+    "cut_wall": "/workspace/scratch/alcaraz-finals/rr2-serve-entry-50fps.jpg",
+    "contact_wall": "/workspace/scratch/alcaraz-finals/rr2-mp-serve-contact.jpg",
+    "out_wall": "/workspace/scratch/alcaraz-finals/rr2-mp-out-25fps.jpg"
+  },
+  "production_changes": {
+    "spec_changed": false,
+    "tts_changed": false,
+    "video_or_audio_changed": false,
+    "commit_created": false
+  },
+  "claim_boundary": "The selected window contains a preceding-point close-up and the actual match point. Do not label361.0 as this point's preparation, and do not claim the missing pre-toss routine is present."
+}
