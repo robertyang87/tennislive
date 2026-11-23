@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-23T00:52:08.514971+00:00",
+  "reviewer": "independent production agent /root/audio_windows",
+  "method": "actual_rendered_film_frame_inspection_and_native_source_cut_comparison",
+  "status": "failed",
+  "publication_blocking": true,
+  "film_path": "/workspace/artifacts/alcaraz-atp-finals-title-run-2026/alcaraz-atp-finals-title-run-2026.mp4",
+  "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+  "expected_film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+  "film_format": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 25,
+    "duration_seconds": 386.8
+  },
+  "scope": "12 selected actual exported-film frames, supplemented by native source serve-entry frames after a concrete continuity defect was found. Visual inspection only; no listening or full-film playback claimed.",
+  "findings": [
+    {
+      "severity": "blocking",
+      "code": "championship_point_serve_missing",
+      "film_segment_start_seconds": 282.31,
+      "source_id": "YiWjCKWBWog",
+      "source_sha256": "1b06b27ff247d36ec427e5f9807b52be165b1be6bc27cb637dd9a58372886bd9",
+      "current_source_in_seconds": 415.7,
+      "native_first_championship_serve_wide_frame_seconds": 412.22,
+      "last_closeup_frame_seconds": 412.2,
+      "serve_contact_bracket_seconds": [
+        412.5,
+        412.54
+      ],
+      "omitted_source_seconds": [
+        412.22,
+        415.7
+      ],
+      "finding": "Actual film starts this segment already during the championship-point rally. Native 412.22 first wide frame shows Zverev serving at 7–8; 415.70 is several shots into the same point. The current 415.70 in-point omits the visible serve, return and initial rally. Champion reaction and trophy samples are valid but do not cure this missing action.",
+      "required_resolution": "Move the source in-point earlier and re-render, keeping the original visible serve unobscured by the card dissolve. Do not mark this film as a complete championship point."
+    },
+    {
+      "severity": "needs_resolution",
+      "code": "third_set_point_toss_obscured_by_dissolve",
+      "source_id": "aF96XdF7CQ0",
+      "source_fps": 25,
+      "current_source_in_seconds": 150.96,
+      "native_first_set_point_serve_wide_frame_seconds": 151.04,
+      "last_prior_point_closeup_seconds": 151.0,
+      "finding": "The current 150.96 in-point includes the native serve cut at151.04, so the source selection itself does not drop the visible serve. However the default 0.5-second card dissolve spans the early toss. A short earlier in-point or hard cut is needed to present all available source serve motion clearly. The official source cuts in with the toss already airborne; a full pre-toss routine is absent natively."
+    }
+  ],
+  "nonblocking_checks": {
+    "scoreboard_repaired_samples": "pass",
+    "cover_sample": "pass",
+    "championship_reaction_subtitle_samples": "pass",
+    "trophy_handover_lift_confetti_samples": "pass"
+  },
+  "primary_frames": [
+    {
+      "film_requested_seconds": 0.6,
+      "decoded_frame_pts_seconds": 0.6,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-0.60.png",
+      "image_sha256": "358386418f58a919befa37b167fecf7922d3be4625fa96a990046345326552a5",
+      "finding": "真实捧杯摄影、双眼与笑脸清楚；两行钩子位于下部，不盖脸；决赛6–2、7–6(7)及双方身份可读。"
+    },
+    {
+      "film_requested_seconds": 67.9,
+      "decoded_frame_pts_seconds": 67.92,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-67.90.png",
+      "image_sha256": "4938721e1ed1c6a9d608439f0255de8f44eeeb52fe03ef77821248cc80c045f1",
+      "finding": "RR2完整两行姓名、盘分及15–15点分可见，右侧没有超宽深蓝补丁。这是此前一分后的近景，非真正赛点准备；完整赛点另见rr2-point-continuity-review.json。"
+    },
+    {
+      "film_requested_seconds": 137.2,
+      "decoded_frame_pts_seconds": 137.2,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-137.20.png",
+      "image_sha256": "2cab9d1a9e173d2397ab73a7363b616b819a134c3865fa4eeeaf61850c6e0a89",
+      "finding": "SF阿卡握拳全身近景；两行板为第一盘3–6、第二盘5–3，无点分列；右侧止于真实蓝盘分，不搬入远端深蓝背景。字幕First break of the day./他今天的第一次破发可读。"
+    },
+    {
+      "film_requested_seconds": 157.4,
+      "decoded_frame_pts_seconds": 157.4,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-157.40.png",
+      "image_sha256": "805dcbc1917ef84ca36521d877f1b7f98066b8b6b644bdfded616a15ca388aea",
+      "finding": "SF晋级反应完整原生板保留第三盘6–6、抢七6–1，右侧小分白字未被截；无超宽深蓝补丁。字幕What a way to seal it!/以这样的方式锁定胜利！可读。"
+    },
+    {
+      "film_requested_seconds": 191.8,
+      "decoded_frame_pts_seconds": 191.8,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-191.80.png",
+      "image_sha256": "2967966fe0607f50b34ea557181aba5b6a24aa2b8c06d41ad4f9087823c75670",
+      "finding": "首盘破发后完整2–5及15–40点分白字保留；板右缘没有旧421宽补丁。Once more, he's got a nice cushion./他再次拉开了领先差距可读。"
+    },
+    {
+      "film_requested_seconds": 192.0,
+      "decoded_frame_pts_seconds": 192.0,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-192.00.png",
+      "image_sha256": "247f73de314269dcc219770b9588599f40f6e92409184a72cb854e2ad534cff6",
+      "finding": "该源时刻已在原生点分列撤板阶段，回贴已消失，人物与背景没有比分补丁残留；同一句双语字幕仍可读。"
+    },
+    {
+      "film_requested_seconds": 282.75,
+      "decoded_frame_pts_seconds": 282.76,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-282.75.png",
+      "image_sha256": "d462b1f054ee3b12114c80d001d07f91caef6b4e68cb82f45feb962e379fba0e",
+      "finding": "冠军点入段后阿卡已在远端底线双手反拍动作中，近端兹维列夫移动；字卡溶解尚有极淡残影。它不能作为发球准备已保留的证据。"
+    },
+    {
+      "film_requested_seconds": 304.31,
+      "decoded_frame_pts_seconds": 304.32,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-304.31.png",
+      "image_sha256": "f8ed9514fada1a7707afc8e76797073643997f11df5aa02a0c0937753d3cb52f",
+      "finding": "阿卡仰面躺地，冠军宣告Carlos Alcaraz is the Nitto ATP Finals champion./阿尔卡拉斯成为年终总决赛冠军完整、可读，不盖脸；无虚假比分板。"
+    },
+    {
+      "film_requested_seconds": 310.31,
+      "decoded_frame_pts_seconds": 310.32,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-310.31.png",
+      "image_sha256": "3edddd1993f189aa10bad0ac6d0c33893a05ad64f1355b7ac5789df2a7863ff0",
+      "finding": "俯拍阿卡从倒地起身的反应；Historic moment./历史性的一刻完整可读。"
+    },
+    {
+      "film_requested_seconds": 350.11,
+      "decoded_frame_pts_seconds": 350.12,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-350.11.png",
+      "image_sha256": "021d86d0e523cab1aee5cee933f88d022daa30937f5713a85a504488c49cebdd",
+      "finding": "同届冠军奖杯在交接，两人双手与奖杯主体可见；无虚假比赛比分板或猜造原声字幕。"
+    },
+    {
+      "film_requested_seconds": 356.31,
+      "decoded_frame_pts_seconds": 356.32,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-356.31.png",
+      "image_sha256": "141d88cc8372454713aa8c91f2e89752d52f78e71a2958a17e76dd407825cea0",
+      "finding": "阿卡双手举起Nitto ATP Finals奖杯，烟火明显；本帧奖杯底座自然遮住部分面部，并非字幕遮挡。"
+    },
+    {
+      "film_requested_seconds": 366.31,
+      "decoded_frame_pts_seconds": 366.32,
+      "image_path": "/workspace/scratch/alcaraz-finals/released-independent/film-366.31.png",
+      "image_sha256": "1c5fddcde7175284fd416b72ca4d512a7fa109131de0c6d0edececcf8433753a",
+      "finding": "阿卡持杯、蓝白礼花满场；真实举杯收束可见，无虚假比分板。"
+    }
+  ],
+  "investigation_evidence": [
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/source-final-411-417-wall.jpg",
+      "sha256": "31617e7fda033b29959c4a709bd2a4365ca690e2bfa885c8d0df75d3d5fd08cb"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/source-final-412-413-dense.jpg",
+      "sha256": "9bd350a6925b98115db9641d4101e74daa785c5ebdb13f3e89c29043a82e450f"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/final-serve-precise-wall.jpg",
+      "sha256": "baf8be8bb30651a258a1072925fd7ddddf721f9d76c6d5c9ae4460664be7fc0c"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/court-entry-50fps.jpg",
+      "sha256": "cc5b9adf53fdf25427608c23f29849d07bf2d465d29fb898a0e24ad8970bc03a"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/court-serve-precise-wall.jpg",
+      "sha256": "0f22bb5e5d1c48d9ec235a31d1982f1406cbb24179af9c97d0d1f80f793acbee"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/film-282.31.png",
+      "sha256": "70f206bb6f3bea42134881619317701b9b7622a2d967c2d923cf969d6f0d489c"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/film-282.43.png",
+      "sha256": "76287a4947417bf619e7dd515b31ad7c8b0cf4b75338874953ea00d49317166a"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/film-283.00.png",
+      "sha256": "8f3d2e4d625fa262e6cc1d1b3fece405a4066931d8301ba3eaa953d03403509f"
+    },
+    {
+      "path": "/workspace/scratch/alcaraz-finals/released-independent/film-283.61.png",
+      "sha256": "1bbdc516bbd7777ad101b50a0946fc0e4c4871a59f782cf562afa757fda6e878"
+    }
+  ],
+  "limitations": [
+    "No audio listening claimed.",
+    "Twelve sampled frames do not prove uninterrupted full-film continuity.",
+    "The observed serve omission blocks this version; a newly rendered film must receive a new SHA-bound review.",
+    "Official source cuts into both inspected serving actions with toss already in flight; do not describe unseen pre-toss preparation as present."
+  ],
+  "changes_made": "Review JSON only. No spec, rendered film or voice evidence modified by this review."
+}

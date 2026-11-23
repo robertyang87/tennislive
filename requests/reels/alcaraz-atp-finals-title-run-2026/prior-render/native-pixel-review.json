@@ -1,0 +1,261 @@
+{
+  "status": "superseded_failed_point_entry_review",
+  "reviewer": "current assistant",
+  "checked_at": "2026-11-23T00:35:23.914190+00:00",
+  "spec_file_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
+  "samples": 24,
+  "publication_approved": false,
+  "basis": [
+    "Exact current spec SHA matches native preview manifest",
+    "All known deep-blue false board frames inspected:433.66,361.6,288.6,401.4,196.0",
+    "Native point cells/names retained; source196.2 is transparent after actual withdrawal begins",
+    "Semifinal canonical-name subtitle fits without broken last syllable",
+    "Complete points, final crowd reaction and team embrace visible with fixed center",
+    "Same-event handover205.3, lift211.5 and confetti221.5 retained",
+    "Full statistics card: winner-first6-2 7-6(7),rank3 vs1,28/12 winners and25/31 UE"
+  ],
+  "limitations": [
+    "Native preview is not released-film QC",
+    "No human listening claimed; final automated native voice suite still required"
+  ],
+  "sheets": [
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/native-pixel-preview-1.jpg",
+      "sha256": "a244928fa05d7c1546ac95fd0a724e8fa2a0a7a2044170525f9e76dccfccf909"
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/native-pixel-preview-2.jpg",
+      "sha256": "a5f4d9b832457900437879079d188238e1118a67f2dcf5f9db5d1af35d5b457f"
+    },
+    {
+      "path": "requests/reels/alcaraz-atp-finals-title-run-2026/contacts/prior-render/native-pixel-preview-3.jpg",
+      "sha256": "64946b49d17004a89108732caf0ab6ec827da52ffc4097688f5ab8fd0cd680c7"
+    }
+  ],
+  "mask_report": {
+    "status": "pass",
+    "profile": "atp-tour-v1",
+    "segments": [
+      {
+        "segment": 0,
+        "frames": 333,
+        "present_frames": 38,
+        "tag_frames": 0,
+        "board_edges": [
+          244,
+          258,
+          270,
+          276,
+          281,
+          282,
+          300,
+          318,
+          323,
+          327,
+          329,
+          331,
+          332,
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-01.mkv",
+        "mask_sha256": "3410eb54c3ca97e7500bb7bfe8e2469b52ba8ae36a1e5920fd66ca6ff1f7e147"
+      },
+      {
+        "segment": 3,
+        "frames": 478,
+        "present_frames": 163,
+        "tag_frames": 0,
+        "board_edges": [
+          150,
+          198,
+          214,
+          236,
+          252,
+          264,
+          282,
+          286,
+          306,
+          312,
+          316,
+          318,
+          324,
+          326,
+          332,
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-04.mkv",
+        "mask_sha256": "579c60311fcfd85d7155d72a7844d25048a89e0b7ed2e27bb3869875c04bd12c"
+      },
+      {
+        "segment": 5,
+        "frames": 433,
+        "present_frames": 119,
+        "tag_frames": 0,
+        "board_edges": [
+          353,
+          354
+        ],
+        "right": 356,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-06.mkv",
+        "mask_sha256": "28354c6b05b41995a0fa41952df1f2424fbb7439cb25dae113b241a7cd9ed811"
+      },
+      {
+        "segment": 7,
+        "frames": 468,
+        "present_frames": 115,
+        "tag_frames": 0,
+        "board_edges": [
+          258,
+          270,
+          278,
+          280,
+          282,
+          290,
+          306,
+          317,
+          322,
+          326,
+          329,
+          330,
+          332,
+          333
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-08.mkv",
+        "mask_sha256": "575c6d5867d4e869cb95515e39afaefc09c89241036d7f59afb2bf7fa916b9a4"
+      },
+      {
+        "segment": 9,
+        "frames": 425,
+        "present_frames": 425,
+        "tag_frames": 0,
+        "board_edges": [
+          280,
+          293,
+          305,
+          313,
+          320,
+          324,
+          327,
+          330,
+          331,
+          332,
+          333
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-10.mkv",
+        "mask_sha256": "1337b4be5d339cff20ace22fd2ac68554e0a3e9c277fc1c9b6e446cc6fd07283"
+      },
+      {
+        "segment": 11,
+        "frames": 258,
+        "present_frames": 99,
+        "tag_frames": 0,
+        "board_edges": [
+          344,
+          361,
+          380
+        ],
+        "right": 382,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-12.mkv",
+        "mask_sha256": "c8b9a792143631bb903cac709162146ee5b43bafc23db862d3ddca9b39076eb9"
+      },
+      {
+        "segment": 13,
+        "frames": 493,
+        "present_frames": 407,
+        "tag_frames": 0,
+        "board_edges": [
+          286,
+          290
+        ],
+        "right": 292,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-14.mkv",
+        "mask_sha256": "048a695484b870d958650e9d6c18eaefdc84a6d1a0dd39abd9811be6a16e51b6"
+      },
+      {
+        "segment": 15,
+        "frames": 280,
+        "present_frames": 280,
+        "tag_frames": 0,
+        "board_edges": [
+          281,
+          282,
+          284,
+          288,
+          296,
+          299,
+          310,
+          318,
+          323,
+          327,
+          329,
+          331,
+          332,
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-16.mkv",
+        "mask_sha256": "e792defa10d4e22ab5d4dd0ba5519c451398a05a12508d53879de6f72e41cc64"
+      },
+      {
+        "segment": 17,
+        "frames": 528,
+        "present_frames": 528,
+        "tag_frames": 0,
+        "board_edges": [
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-18.mkv",
+        "mask_sha256": "899db9d4633883965e7caa3e90c4c5b9ada90b8c3d19b0456ee1fce1fb491687"
+      },
+      {
+        "segment": 18,
+        "frames": 451,
+        "present_frames": 451,
+        "tag_frames": 0,
+        "board_edges": [
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-19.mkv",
+        "mask_sha256": "d826436da791af7c7d47a8394dd0f3173afe40e579565f0f9154689c00fb6e28"
+      },
+      {
+        "segment": 20,
+        "frames": 1083,
+        "present_frames": 478,
+        "tag_frames": 0,
+        "board_edges": [
+          244,
+          258,
+          270,
+          276,
+          281,
+          282,
+          300,
+          318,
+          323,
+          327,
+          329,
+          331,
+          332,
+          333,
+          334
+        ],
+        "right": 336,
+        "mask": "/workspace/scratch/alcaraz-finals/native-preview/score_masks/segment-21.mkv",
+        "mask_sha256": "ae4d015deaa092ca7d1ee5205412305b44a12a4f6d6f55e233d20b4d8f8c43af"
+      }
+    ]
+  },
+  "failure": "Late independent check found missing412.22–415.70 source serve/return in main championship point and partly dissolved court-level toss; former full-point approval withdrawn."
+}
