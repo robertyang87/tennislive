@@ -3,11 +3,11 @@
   "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "59e6a95819ef30b768d9331c3d72468f22f39498f6e2b73f1616682e70ede9c8",
-    "render_inputs_sha256": "28f389b51445673ae8bd98ba07d21df0dd08fdee9ca0238d7d0a89021b477958",
-    "spec_sha256": "b6fc3a8731bdc9a9f722da77ade83ea8aed5ed567695f40cc7a3105c13fde721",
-    "film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
-    "inventory_sha256": "973b825c7ec6c29e15d2213eb3e82eb475ab941f561d3714601d1b446b3d6cb4"
+    "render_sha256": "f8125fafdd8649c6018909164b88cab0903af57abba58dc3b7e20d5ab253f1ef",
+    "render_inputs_sha256": "df7f3d218a90d192d902e75c044e267c684e7b6e256a5a8f6a20822bd75b550e",
+    "spec_sha256": "ee32c86bcca3c47967b746dc75cceea55def4f0de45d5ca7a823065f6507ddc6",
+    "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
+    "inventory_sha256": "5d374137e02388dd331e5aea93b0c4917d249da276fe185fc90df0e47e59948d"
   },
   "asr_model": "faster-whisper small",
   "thresholds": {
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-23T05:26:26+00:00",
+  "reviewed_at": "2026-11-23T11:28:12+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -29,16 +29,16 @@
       "result_of": "bundle:0a31278576123cade1b6d3e3d333bacd18a1f124a7a2969e8e5679e2a6c79959"
     },
     {
+      "id": "bundle:23a9acaf7611c1e1a949c946ba109dc1133cf252b57a4d334528fc45c4b19295",
+      "audio_sha256": "43b9f26bda602b96422dfdd1091d6924bf8938168c615456f965478102e19bf3",
+      "pass": true,
+      "result_of": "bundle:23a9acaf7611c1e1a949c946ba109dc1133cf252b57a4d334528fc45c4b19295"
+    },
+    {
       "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
       "audio_sha256": "169cb80015ff4145cf5a6d89612500b170642358f8c370d090634349886a42cc",
       "pass": true,
       "result_of": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd"
-    },
-    {
-      "id": "bundle:4478c5b43edd5824effa7bf687c68dc5c0623397a2b80bba98d4581ccb8862dc",
-      "audio_sha256": "164773b3826cd740a77014e1965a8f0706897e7cc70ffe612acffb37dec26076",
-      "pass": true,
-      "result_of": "bundle:4478c5b43edd5824effa7bf687c68dc5c0623397a2b80bba98d4581ccb8862dc"
     },
     {
       "id": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2",
@@ -153,6 +153,38 @@
       }
     },
     {
+      "id": "bundle:23a9acaf7611c1e1a949c946ba109dc1133cf252b57a4d334528fc45c4b19295",
+      "text": "比赛十一月二十四日开打，二十九日决出冠军。两场单打各胜一场，就由双打决胜。按规则，八强和半决赛二比零也不自动取消双打，决赛二比零不打。阵容核实至十一月二十三日，出场看赛前名单。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 79,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.013,
+        "longest_deletion": 0,
+        "transcript": "比赛11月24日开打,29日决出冠军。阳场单打各胜一场,就由双打决胜。按规则,八强和半决赛2比0也不自动取消双打,决赛2比0不打。阵容核实至11月23日出场看赛前名单。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 79,
+        "speech_s": 16.373,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "比赛 ｜ 十一月 ｜ 二十四日 ｜ 开打 ｜ 二十九日 ｜ 决出 ｜ 冠军 ｜ 两场 ｜ 单打 ｜ 各 ｜ 胜 ｜ 一 ｜ 场 ｜ 就 ｜ 由 ｜ 双打 ｜ 决胜 ｜ 按 ｜ 规则 ｜ 八 ｜ 强 ｜ 和 ｜ 半决赛 ｜ 二比零 ｜ 也 ｜ 不 ｜ 自动 ｜ 取消 ｜ 双打 ｜ 决赛 ｜ 二比零 ｜ 不 ｜ 打 ｜ 阵容 ｜ 核实 ｜ 至 ｜ 十一月二十三日 ｜ 出场 ｜ 看 ｜ 赛 ｜ 前 ｜ 名单"
+      }
+    },
+    {
       "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
       "text": "德国历史交锋六比五领先。我这一轮选择德国。兹维列夫是最显眼的单打支点，施特鲁夫也有戴杯经验，双打则有长期配合的组合。不过英国有费里和诺里，双打更不能轻看；这不是一张世界第一的名片就能解决的比赛。",
       "pass": true,
@@ -204,38 +236,6 @@
         "pause_ok": true,
         "speed_ok": true,
         "tokens": "德国 ｜ 历史 ｜ 交锋 ｜ 六比五 ｜ 领先 ｜ 我 ｜ 这 ｜ 一 ｜ 轮 ｜ 选择 ｜ 德国 ｜ 兹维列夫 ｜ 是 ｜ 最 ｜ 显眼 ｜ 的 ｜ 单打 ｜ 支点 ｜ 施特鲁夫 ｜ 也有 ｜ 戴 ｜ 杯 ｜ 经验 ｜ 双打 ｜ 则 ｜ 有 ｜ 长期 ｜ 配合 ｜ 的 ｜ 组合 ｜ 不过 ｜ 英国 ｜ 有 ｜ 费里 ｜ 和 ｜ 诺里 ｜ 双打 ｜ 更 ｜ 不能 ｜ 轻看 ｜ 这 ｜ 不是 ｜ 一 ｜ 张 ｜ 世界 ｜ 第一 ｜ 的 ｜ 名片 ｜ 就 ｜ 能 ｜ 解决 ｜ 的 ｜ 比赛"
-      }
-    },
-    {
-      "id": "bundle:4478c5b43edd5824effa7bf687c68dc5c0623397a2b80bba98d4581ccb8862dc",
-      "text": "比赛十一月二十四日开打，二十九日决出冠军。八队直接淘汰，每轮两场单打，必要时再打一场双打，先拿两分晋级。一位明星赢下一场，离晋级仍差一分。以下按十一月二十三日核实的阵容分析，具体出场看赛前名单。",
-      "pass": true,
-      "checks": {
-        "completeness": true,
-        "polyphones": true,
-        "pauses": true,
-        "speed": true
-      },
-      "completeness": {
-        "ok": true,
-        "ref_syllables": 87,
-        "deleted": 1,
-        "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.011,
-        "longest_deletion": 1,
-        "transcript": "比赛11月24日开打,29日决出冠军。八队直接淘汰,每轮两场单打,表时再打一场双打,先拿两分进击。一位明星赢下一场,离进击仍差一分。以下按11月23日合时的阵容分析,具体出场看赛前名单。"
-      },
-      "polyphones": [],
-      "pauses": {
-        "inner_pauses": [],
-        "fake_tokens": [],
-        "chars": 87,
-        "speech_s": 17.377,
-        "cps": 5.01,
-        "pause_ok": true,
-        "speed_ok": true,
-        "tokens": "比赛 ｜ 十一月 ｜ 二十四日 ｜ 开打 ｜ 二十九日 ｜ 决出 ｜ 冠军 ｜ 八 ｜ 队 ｜ 直接 ｜ 淘汰 ｜ 每 ｜ 轮 ｜ 两场 ｜ 单打 ｜ 必要 ｜ 时 ｜ 再 ｜ 打 ｜ 一 ｜ 场 ｜ 双打 ｜ 先 ｜ 拿 ｜ 两分 ｜ 晋级 ｜ 一 ｜ 位 ｜ 明星 ｜ 赢 ｜ 下 ｜ 一 ｜ 场 ｜ 离 ｜ 晋级 ｜ 仍 ｜ 差 ｜ 一 ｜ 分 ｜ 以下 ｜ 按 ｜ 十一月二十三日 ｜ 核实 ｜ 的 ｜ 阵容 ｜ 分析 ｜ 具体 ｜ 出场 ｜ 看 ｜ 赛 ｜ 前 ｜ 名单"
       }
     },
     {

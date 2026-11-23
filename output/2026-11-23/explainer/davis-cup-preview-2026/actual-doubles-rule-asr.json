@@ -1,0 +1,18 @@
+{
+  "schema": "tennislive.final-mixed-segment-asr.v1",
+  "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
+  "window_s": [
+    14.88,
+    33.1
+  ],
+  "method": "Two local decoding configurations on the actual final stereo film mix converted to 16 kHz mono, no target text provided. Cross-checks the spoken rule, not human listening. Transcription variants are recorded verbatim.",
+  "model": "faster-whisper small",
+  "actual_final_transcripts": [
+    "比赛11月24日开打,29日决出冠军。两场单打各胜一场,就由双打决胜。按规则,八强和半决赛2比0也不自动取消双打,决赛2比0不打。阵容核实至11月23日出场看赛前名单。",
+    "比赛11月24日开打,29日决出冠军。两场单打各胜一场,就由双打决胜。按规则,八强和半决赛2比0也不自动取消双打,决赛2比0不打。阵容核实至11月23日出场看赛前名单。"
+  ],
+  "changed_native_audio_sha256": "43b9f26bda602b96422dfdd1091d6924bf8938168c615456f965478102e19bf3",
+  "old_wrong_phrase_present": false,
+  "three_core_rule_assertions_match": true,
+  "checked_at": "2026-11-23T11:29:00.668117+00:00"
+}

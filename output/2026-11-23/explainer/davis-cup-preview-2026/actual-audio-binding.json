@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.actual-audio-binding.v1",
   "method": "Independent two-channel final-PCM audit against every exact frozen input placed at its intended time. Full-film20ms RMS-envelope reconstruction rejects additional speech copies outside intended placement; complete-utterance waveform correlation checks both channels separately; no human listening claimed.",
-  "film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
+  "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
   "entries": [
     {
       "index": 0,
@@ -9,13 +9,13 @@
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999466,
+          "correlation": 0.999684,
           "offset_s": 0.0,
           "pass": true
         },
         {
           "channel": 1,
-          "correlation": 0.999437,
+          "correlation": 0.999688,
           "offset_s": 0.0,
           "pass": true
         }
@@ -28,13 +28,13 @@
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999141,
+          "correlation": 0.999537,
           "offset_s": 0.0,
           "pass": true
         },
         {
           "channel": 1,
-          "correlation": 0.999113,
+          "correlation": 0.999557,
           "offset_s": 0.0,
           "pass": true
         }
@@ -47,216 +47,7 @@
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999237,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999254,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 3,
-      "start": 49.117,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.99933,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999294,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 4,
-      "start": 65.483,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999372,
-          "offset_s": -2.1e-05,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999309,
-          "offset_s": -2.1e-05,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 5,
-      "start": 83.217,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999441,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999444,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 6,
-      "start": 101.983,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999177,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999464,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 7,
-      "start": 121.217,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999247,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999238,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 8,
-      "start": 138.917,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999286,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999358,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 9,
-      "start": 155.65,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999251,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999334,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 10,
-      "start": 170.35,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999502,
-          "offset_s": -2.1e-05,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999477,
-          "offset_s": -2.1e-05,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 11,
-      "start": 189.15,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999457,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.99943,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 12,
-      "start": 207.317,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999394,
-          "offset_s": 0.0,
-          "pass": true
-        },
-        {
-          "channel": 1,
-          "correlation": 0.999313,
-          "offset_s": 0.0,
-          "pass": true
-        }
-      ],
-      "pass": true
-    },
-    {
-      "index": 13,
-      "start": 225.217,
-      "channels": [
-        {
-          "channel": 0,
-          "correlation": 0.999322,
+          "correlation": 0.999327,
           "offset_s": 0.0,
           "pass": true
         },
@@ -270,18 +61,227 @@
       "pass": true
     },
     {
-      "index": 14,
-      "start": 244.317,
+      "index": 3,
+      "start": 49.117,
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999464,
+          "correlation": 0.99953,
           "offset_s": 0.0,
           "pass": true
         },
         {
           "channel": 1,
-          "correlation": 0.99945,
+          "correlation": 0.999512,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 4,
+      "start": 65.483,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999565,
+          "offset_s": -2.1e-05,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999571,
+          "offset_s": -2.1e-05,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 5,
+      "start": 83.217,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999564,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999568,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 6,
+      "start": 101.983,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999688,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999726,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 7,
+      "start": 121.217,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999308,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999384,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 8,
+      "start": 138.917,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999676,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999676,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 9,
+      "start": 155.65,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999405,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999416,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 10,
+      "start": 170.35,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999525,
+          "offset_s": -2.1e-05,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999622,
+          "offset_s": -2.1e-05,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 11,
+      "start": 189.15,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999628,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999647,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 12,
+      "start": 207.317,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999584,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999599,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 13,
+      "start": 225.217,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999399,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999415,
+          "offset_s": 0.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "index": 14,
+      "start": 244.317,
+      "channels": [
+        {
+          "channel": 0,
+          "correlation": 0.999417,
+          "offset_s": 0.0,
+          "pass": true
+        },
+        {
+          "channel": 1,
+          "correlation": 0.999438,
           "offset_s": 0.0,
           "pass": true
         }
@@ -294,13 +294,13 @@
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999388,
+          "correlation": 0.99962,
           "offset_s": 0.0,
           "pass": true
         },
         {
           "channel": 1,
-          "correlation": 0.999391,
+          "correlation": 0.999619,
           "offset_s": 0.0,
           "pass": true
         }
@@ -313,13 +313,13 @@
       "channels": [
         {
           "channel": 0,
-          "correlation": 0.999404,
+          "correlation": 0.999516,
           "offset_s": 0.0,
           "pass": true
         },
         {
           "channel": 1,
-          "correlation": 0.999401,
+          "correlation": 0.999517,
           "offset_s": 0.0,
           "pass": true
         }
@@ -339,13 +339,13 @@
     "sample_rate": 48000,
     "rms_window_ms": 20,
     "rms_envelope_relative_error_per_channel": [
-      0.007664759177714586,
-      0.007651680614799261
+      0.006764292251318693,
+      0.006750538945198059
     ],
     "max_rms_envelope_relative_error": 0.04,
     "raw_waveform_relative_error_diagnostic": [
-      0.06941455602645874,
-      0.06921389698982239
+      0.0667850598692894,
+      0.06653176248073578
     ],
     "pass": true
   },
@@ -353,7 +353,7 @@
     "minimum_s": 0.3660000000000423,
     "all_gaps_s": [
       1.0280000000000005,
-      1.017000000000003,
+      2.0489999999999995,
       1.0139999999999958,
       1.0060000000000002,
       1.005999999999986,

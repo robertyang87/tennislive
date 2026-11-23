@@ -1,8 +1,8 @@
 {
   "schema": "tennislive.film-qc.v1",
-  "film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
-  "spec_sha256": "b6fc3a8731bdc9a9f722da77ade83ea8aed5ed567695f40cc7a3105c13fde721",
-  "render_inputs_sha256": "28f389b51445673ae8bd98ba07d21df0dd08fdee9ca0238d7d0a89021b477958",
+  "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
+  "spec_sha256": "ee32c86bcca3c47967b746dc75cceea55def4f0de45d5ca7a823065f6507ddc6",
+  "render_inputs_sha256": "df7f3d218a90d192d902e75c044e267c684e7b6e256a5a8f6a20822bd75b550e",
   "canvas": [
     1080,
     1440
@@ -14,10 +14,22 @@
   "visual_review_status": "pass",
   "roster_update": "Italy Berrettini in, Bolelli out; no claim that original doubles pair participates. Alcaraz/Zverev post-final status updated. Cover and body as-of11/23.",
   "visual_review": {
-    "reviewer": "current production assistant",
-    "reviewed_at": "2026-11-23T05:27:16.157879+00:00",
-    "film_sha256": "e10f44b68703b77b1a5b61f8a89c2c6d1cfb7ce5410ee5fc3e1c489541f0f72d",
-    "contact_sha256": "64e6dd0cb29c31f8228dd10b774384b0caa3713a01fef1301c56da3832e28720",
-    "observations": "Reviewed26 actual final-film samples covering all16 content segments,8 national teams,3 bracket states, full-resolution changed Italy segments and risk subtitles, updated11/23 eight-flag cover, and final unstriped outro. Official file photography identified; photos fill existing region; no overflow or stale roster claim. Decorative brand stripe only in cover, no intro brand speech; actual stereo audit independently passes."
+    "reviewer": "current production assistant, decoded frame review",
+    "reviewed_at": "2026-11-23T11:28:05.497196+00:00",
+    "film_sha256": "5125d461e3a42806c1fa12f434a8763264bd27002e3db5c58872d28ac2ac0702",
+    "contact_sha256": "96f47a13aa6efcaa6814b92ac6714f5142ec5b55fd56e522edc7d9629a1c1809",
+    "observations": "Reviewed the current exact-film decoded sample sheet at 0.85s, 14.30s, 14.60s, 14.85s, 21s, 23.5s, 26.5s, 28.8s, 32.4s, 33.7s, 34.05s and 281.66s. Four rule rows, updated subtitles, half-second transition, original silent cover and dark outro checked. All 8,512 PTS and video packets outside frames [429,1021) are identical to the prior approved exact film. No new inference about individual tie pairings."
+  },
+  "rules_revision": {
+    "source": "https://assets.ctfassets.net/0gg9pgt9u0k4/1zolhtUmJrhBlkvkxt1ogJ/b00b059cbfb4261aacd40da874f6d8c4/2026_Davis_Cup_Regulations_-_January_2026_Update.pdf#page=73",
+    "rendered_text": [
+      "单打各胜一场／双打决胜",
+      "八强、半决赛2比0／双打不自动取消",
+      "两队和裁判长同意／才可取消双打",
+      "决赛2比0／不打双打"
+    ],
+    "audio_evidence": "actual-audio-binding.json",
+    "packet_evidence": "doubles-rule-frame-preservation.json",
+    "actual_final_asr": "actual-doubles-rule-asr.json"
   }
 }

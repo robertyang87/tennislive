@@ -1,6 +1,6 @@
 {
   "schema": "tennislive.voice-quality.v1.inventory",
-  "bundle_sha256": "0bf7ab9916795e98a8790bd15a762940c8c16733a48886ae656c5124c14775ff",
+  "bundle_sha256": "c2671904cd9b04147063d38441537cf2c6a2b238e25bd6a43d90dcf57ed75796",
   "bundle_request_count": 16,
   "entries": [
     {
@@ -21,6 +21,23 @@
       "words_sha256": "77777309b376f072c244b48339ae92f98693d8772c0c35805c8bf98bb25f0df5"
     },
     {
+      "id": "bundle:23a9acaf7611c1e1a949c946ba109dc1133cf252b57a4d334528fc45c4b19295",
+      "request_id": "23a9acaf7611c1e1a949c946ba109dc1133cf252b57a4d334528fc45c4b19295",
+      "request": {
+        "backend": "edge",
+        "cache_key": "128306e61b641221f0af8380239bb6be",
+        "lead_pause": 0.0,
+        "pitch": "+0Hz",
+        "rate": "+12%",
+        "style": "",
+        "styledegree": "",
+        "text": "比赛十一月二十四日开打，二十九日决出冠军。两场单打各胜一场，就由双打决胜。按规则，八强和半决赛二比零也不自动取消双打，决赛二比零不打。阵容核实至十一月二十三日，出场看赛前名单。",
+        "voice": "zh-CN-YunjianNeural"
+      },
+      "audio_sha256": "43b9f26bda602b96422dfdd1091d6924bf8938168c615456f965478102e19bf3",
+      "words_sha256": "81f51e77b822a7bbbfa27dfc55503e0b2954c19ea36b0676644ff4eec73f2131"
+    },
+    {
       "id": "bundle:37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
       "request_id": "37ba0664364fa8e02041d38859e36f1ecf725dc0e6e59abb84b416aa8eaab5dd",
       "request": {
@@ -36,23 +53,6 @@
       },
       "audio_sha256": "169cb80015ff4145cf5a6d89612500b170642358f8c370d090634349886a42cc",
       "words_sha256": "b81c16379b90488083d30dc28e472a01abc1d5f45ff8b4e1e13f7af411c24fb0"
-    },
-    {
-      "id": "bundle:4478c5b43edd5824effa7bf687c68dc5c0623397a2b80bba98d4581ccb8862dc",
-      "request_id": "4478c5b43edd5824effa7bf687c68dc5c0623397a2b80bba98d4581ccb8862dc",
-      "request": {
-        "backend": "edge",
-        "cache_key": "13d36ed705601aeaa175ea2b145c1e52",
-        "lead_pause": 0.0,
-        "pitch": "+0Hz",
-        "rate": "+12%",
-        "style": "",
-        "styledegree": "",
-        "text": "比赛十一月二十四日开打，二十九日决出冠军。八队直接淘汰，每轮两场单打，必要时再打一场双打，先拿两分晋级。一位明星赢下一场，离晋级仍差一分。以下按十一月二十三日核实的阵容分析，具体出场看赛前名单。",
-        "voice": "zh-CN-YunjianNeural"
-      },
-      "audio_sha256": "164773b3826cd740a77014e1965a8f0706897e7cc70ffe612acffb37dec26076",
-      "words_sha256": "13b03d1ddfb402c740278c0cf20d47166ece0e4b1a1516f3f57facb37f011101"
     },
     {
       "id": "bundle:44c623dbbb52c37e1069f22c00a4ad09a90b4fad2caafaf6de5ceeab6f7b87f2",
