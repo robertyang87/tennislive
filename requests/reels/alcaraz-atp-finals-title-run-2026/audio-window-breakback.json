@@ -1,0 +1,31 @@
+{
+  "source_url": "https://github.com/robertyang87/tennislive/releases/download/source-YiWjCKWBWog/YiWjCKWBWog.mp4",
+  "source_sha256": "1b06b27ff247d36ec427e5f9807b52be165b1be6bc27cb637dd9a58372886bd9",
+  "method": "verified_source_captions",
+  "reviewer": "current assistant: actual native score/serve-to-point contact frames and original captions compared with small.en and medium.en; no human listening claimed",
+  "status": "complete",
+  "reviewed_at": "2026-11-22T23:59:03.196265+00:00",
+  "reviewed_from": 289.98,
+  "reviewed_to": 300.65,
+  "foreground_english": [
+    {
+      "start": 295.77,
+      "end": 296.95,
+      "en": "And he breaks!",
+      "zh": "他破发了！"
+    },
+    {
+      "start": 298.98,
+      "end": 300.55,
+      "en": "And it is game on!",
+      "zh": "比赛又有悬念了！"
+    }
+  ],
+  "uncertain_spans": [],
+  "evidence_paths": [
+    "data/source_asr/YiWjCKWBWog/small.en.json",
+    "data/source_asr/YiWjCKWBWog/medium.en.json",
+    "requests/reels/alcaraz-atp-finals-title-run-2026/source-captions-YiWjCKWBWog.txt"
+  ],
+  "review_basis": "Source score Zverev3 Alcaraz4,40-30; first frame follows previous commentary volley ending289.97; source cut289.9 begins Alcaraz service preparation. Complete serve/rally/point to4-4 then actual reaction. OriginalCC296.24 and299.04; bothASR agree core phrases and words end300.53. Next point starts300.76, outside selection."
+}

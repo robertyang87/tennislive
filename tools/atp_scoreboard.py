@@ -79,7 +79,11 @@ def board_edge(band: np.ndarray, cap: int | None = None) -> int | None:
     # 盘末蓝格会收起，但两行名字和藏青板底仍在（北京 2026 108.5s）。
     # 用这两个同时成立的图形特征认这一版板；单有深色背景不算。
     r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
-    blue_cols = ((b > 180) & (r < 70) & (g < 70)).mean(axis=0) > 0.4
+    # Turin's native blue cells retain green near 80 after RGB decoding.
+    # They remain strongly blue-dominant; the old g<70 missed the complete
+    # set column and treated the adjoining dark-blue backdrop as the panel.
+    blue_cols = ((b > 180) & (r < 70) & (g < 100)
+                 & (b - g > 100)).mean(axis=0) > 0.4
     navy = board_mask(band) & (g - r > 4) & (b - r > 8)
     white = (np.minimum(np.minimum(r, g), b) > 150) & (
         np.maximum(np.maximum(r, g), b) - np.minimum(np.minimum(r, g), b) < 50)
@@ -213,9 +217,15 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
     pixels = band.astype(np.float32)
     whites = (pixels.min(axis=2) > 150) & (pixels.max(axis=2) - pixels.min(axis=2) < 50)
     points = whites[:, after + 3:min(len(blue_cols), after + cell + 12)]
-    point_rows = (points.shape[1] >= 18 and (
-        0.008 < points[:h // 2].mean() < 0.25,
-        0.008 < points[h // 2:].mean() < 0.25))
+    # Sparse white arena lettering can enter only the top edge of this band.
+    # Point digits sit inside their row and leave its outer borders dark.
+    margin = min(7, max(1, h // 8))
+    point_rows = (points.shape[1] >= 18 and tuple(
+        0.008 < row.mean() < 0.25
+        and row[margin:len(row) // 2].mean() > 0.008
+        and row[len(row) // 2:-margin].mean() > 0.008
+        and np.concatenate((row[:margin], row[-margin:])).mean() < 0.1
+        for row in (points[:h // 2], points[h // 2:])))
     point_digits = bool(point_rows and all(point_rows))
     point_present = bool(point_rows and any(point_rows))
     if cell < 18 or (edge <= after + 6 and not point_present):
@@ -284,7 +294,10 @@ def point_container_edge(band: np.ndarray, blue_cols: np.ndarray, edge: int) -> 
         # Retain the observed last blue cell and its antialiased outer border,
         # rather than interpreting an arbitrarily long green run as a cell.
         r, g, b = (band[:, :, i].astype(np.int16) for i in range(3))
-        blue_border = ((b - r > 35) & (b - g > 30)).mean(axis=0) > 0.5
+        # A dark-blue arena backdrop can share the hue differences but is
+        # much dimmer than the antialiased blue cell border itself.
+        blue_border = ((b > 100) & (b - r > 35)
+                       & (b - g > 30)).mean(axis=0) > 0.5
         withdrawn = after
         while withdrawn < min(after + 6, len(blue_border)) and blue_border[withdrawn]:
             withdrawn += 1
