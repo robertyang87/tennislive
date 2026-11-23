@@ -2,12 +2,12 @@
   "version": 2,
   "rules": "523e4424d232045ef36a1795b9a0b3efa9ee9610db32ff56e3e95a74911c9c5a",
   "slug": "alcaraz-atp-finals-title-run-2026",
-  "written_at": "2026-11-23T00:43:40Z",
-  "code_sha": "3479e18360d640a71f9bd7bcb6d5afc65c621f15",
-  "spec_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
-  "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
-  "film_bytes": 172176941,
-  "projection_sha256": "3a65476a34340bc613e4c104bd8b268b81e4d21cfe377a4e6faad3edb6589f32",
+  "written_at": "2026-11-23T01:32:15Z",
+  "code_sha": "67ba144170f85479d56c56b055fb47170d3a6fe1",
+  "spec_sha256": "1477bf26b4476dc555f8188990ed62e251271c1ff52e889071c91d20eadad69d",
+  "film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
+  "film_bytes": 184373838,
+  "projection_sha256": "365147734bf12295a92fa61ebf0183807dcf1d1734929e85b967a627d71ac518",
   "claims": [
     [
       "segments",
@@ -302,12 +302,12 @@
     "assets/reel/alcaraz-atp-finals-title-run-2026/trophy-official.jpg": "ec736c8e861695127e963fc97f1e2863744b1c8a7f43890b0e788a67c1e21193"
   },
   "artifacts": {
-    "audio_review_binding.json": "f5017880c4eb494ebd250a6f70363cc7b4f84bfe744cedde1fdf6d594bb10793",
-    "subtitles.ass": "9b12ee9076d02b619fcfa867599d6059c86fd02521ce0857efacaa009cb7dca3",
-    "topbar.ass": "22867a0fc86da6320cb397908971bb137729c13901ef9ae4f516c509ccd02c35",
+    "audio_review_binding.json": "5b6ca3d0469aa282134f0b7a5d718fe520b575cbf55691a2d3240a8d658cf542",
+    "subtitles.ass": "9ea2ad851318834d13a3487983469048776c9da0e21b3f0d9e35288588bb38c5",
+    "topbar.ass": "8275d703f321da4b5a87b357dd4cd35d19a5fcba5fe92107c0168ec936238812",
     "poster.jpg": "ca88117eec9484c643026a89ae9d58ec5d0b434f9850145db53f53e5b64a6335",
     "stat_card.jpg": "b75ef83771aa1c38440ac0fabf18ecf10c010170e9409d8c0bea1d4ff368a46d",
-    "scoreboard_qc.json": "bc3254501f710698b100ad2e3c44f674b12dda3e64c13801119b6c6b791b1b5f",
+    "scoreboard_qc.json": "403d4f9fbfb49d92e7516998eae95bc6f355b7ba5eb02e95e333ff452180637f",
     "voice_quality_inventory.json": "c3b1c54ffaddd8b91d92fbd05a2a55a49f9a0d2b240a0af047dec21dd1b2c27f"
   },
   "projection": {
@@ -592,7 +592,7 @@
       },
       {
         "source": "sf",
-        "start": 274.2,
+        "start": 271.4,
         "end": 290.7,
         "cx": 0.5,
         "track": false,
@@ -601,18 +601,23 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生逐帧核实本分首个发球宽镜在274.08s；新入点271.40s使0.5s溶解在271.90s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点274.20s已撤回，详point-entry-audit.json。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 290.66,
         "quote": [
           {
-            "at": 11.85,
-            "end": 13.5,
+            "at": 0.59,
+            "end": 1.4,
+            "text": "Some point.\n这一分真精彩。"
+          },
+          {
+            "at": 14.65,
+            "end": 16.3,
             "text": "Yeah, there is.\n是的，来了。"
           },
           {
-            "at": 13.95,
-            "end": 16.35,
+            "at": 16.75,
+            "end": 19.15,
             "text": "First break of the day.\n他今天的第一次破发。"
           }
         ]
@@ -624,7 +629,7 @@
       },
       {
         "source": "sf",
-        "start": 398.0,
+        "start": 394.5,
         "end": 407.8,
         "cx": 0.5,
         "track": false,
@@ -633,29 +638,34 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生逐帧核实本分首个发球宽镜在398.28s；新入点394.50s使0.5s溶解在395.00s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点398.00s已撤回，详point-entry-audit.json。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 407.76,
         "quote": [
           {
-            "at": 3.1,
-            "end": 4.75,
+            "at": 0.54,
+            "end": 3.44,
+            "text": "Well in control now, with a change of ends.\n换边之后，他已经掌控局面。"
+          },
+          {
+            "at": 6.6,
+            "end": 8.25,
             "text": "What a way to seal it!\n以这样的方式锁定胜利！"
           },
           {
-            "at": 4.75,
-            "end": 7.12,
+            "at": 8.25,
+            "end": 10.62,
             "text": "Carlos Alcaraz survives.\n阿尔卡拉斯挺过了这场考验。"
           },
           {
-            "at": 7.12,
-            "end": 8.9,
+            "at": 10.62,
+            "end": 12.4,
             "text": "He's back in the final in Turin.\n他再次闯进都灵的决赛。"
           }
         ],
         "score_inset_windows": [
           [
-            398,
+            394.5,
             401.92
           ]
         ]
@@ -667,7 +677,7 @@
       },
       {
         "source": "final",
-        "start": 179.8,
+        "start": 179.2,
         "end": 199.0,
         "cx": 0.5,
         "track": false,
@@ -676,19 +686,19 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生逐帧核实本分首个发球宽镜在179.88s；新入点179.20s使0.5s溶解在179.70s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点179.80s已撤回，详point-entry-audit.json。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 198.96,
         "quote": [
           {
-            "at": 14.92,
-            "end": 18.3,
+            "at": 15.52,
+            "end": 18.9,
             "text": "Once more, he's got a nice cushion.\n他再次拉开了领先差距。"
           }
         ],
         "score_inset_windows": [
           [
-            179.8,
+            179.2,
             196.08
           ]
         ]
@@ -700,7 +710,7 @@
       },
       {
         "source": "final",
-        "start": 289.98,
+        "start": 287.1,
         "end": 300.65,
         "cx": 0.5,
         "track": false,
@@ -709,18 +719,23 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生逐帧核实本分首个发球宽镜在289.90s；新入点287.10s使0.5s溶解在287.60s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点289.98s已撤回，详point-entry-audit.json。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 300.61,
         "quote": [
           {
-            "at": 5.79,
-            "end": 6.97,
+            "at": 0.58,
+            "end": 2.87,
+            "text": "It's too good that time. Beautiful volley.\n这次太漂亮了，精彩的截击。"
+          },
+          {
+            "at": 8.67,
+            "end": 9.85,
             "text": "And he breaks!\n他破发了！"
           },
           {
-            "at": 9.0,
-            "end": 10.57,
+            "at": 11.88,
+            "end": 13.45,
             "text": "And it is game on!\n比赛又有悬念了！"
           }
         ]
@@ -732,7 +747,7 @@
       },
       {
         "source": "final",
-        "start": 351.5,
+        "start": 351.3,
         "end": 372.1,
         "cx": 0.5,
         "track": false,
@@ -741,25 +756,25 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生逐帧核实本分首个发球宽镜在351.90s；新入点351.30s使0.5s溶解在351.80s结束，早于全部可见发球、接发与连续相持。源片未给的拍球/抛球起始不补造；前置近景仅为源片过渡。旧入点351.50s已撤回，详point-entry-audit.json。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 372.06,
         "quote": [
           {
-            "at": 11.7,
-            "end": 13.2,
+            "at": 11.9,
+            "end": 13.4,
             "text": "Didn't get there that time.\n这次没能赶上。"
           },
           {
-            "at": 18.8,
-            "end": 20.3,
+            "at": 19.0,
+            "end": 20.5,
             "text": "That's two gone.\n两个盘点都没了。"
           }
         ]
       },
       {
         "source": "court",
-        "start": 150.96,
+        "start": 150.44,
         "end": 168.5,
         "cx": 0.5,
         "track": false,
@@ -768,7 +783,7 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "原生151.04首个6-5全场帧已在抛球阶段，保留其后全部可见发球、接发、相持、出界和比分回到6-6。150.44入点使0.5s溶解在150.94结束，提前于首个宽镜；前置近景只作源片自带过渡，不冒充本分拍球准备。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 168.46
       },
@@ -779,7 +794,7 @@
       },
       {
         "source": "final",
-        "start": 415.7,
+        "start": 408.0,
         "end": 458.5,
         "cx": 0.5,
         "track": false,
@@ -788,23 +803,33 @@
         "audio_tail": "silence",
         "narration": "",
         "score_inset": true,
-        "point_end_ok": "同源密集原生帧核实发球、完整回合、得分结果及同一真实反应；庆祝、颁奖为无进行中回合。",
+        "point_end_ok": "源片首个本分全场镜头为412.22，球已在抛球阶段、尚未击球，412.50–412.54发球接触，随后接发与连续相持至433.3前后得分。408.0入点保留完整前置原声与8-7近景，0.5s溶解在408.5结束，完整保留所有可见发球/接发；原生未给站定拍球及抛球起始，未以另一分补造。415.7旧入点遗漏3.48s，已撤回。",
         "crosses_cut": "本场官方原生机位或同一真实得分反应切镜，时间保持先后，不用另一分填缺。",
         "visual_end": 458.46,
         "quote": [
           {
-            "at": 17.82,
-            "end": 20.3,
+            "at": 0.56,
+            "end": 2.64,
+            "text": "Oh, he's used that drop shot an awful lot,\n他用了很多次放小球，"
+          },
+          {
+            "at": 2.64,
+            "end": 3.96,
+            "text": "hasn't he? In the last few minutes.\n对吧？就在最近这几分钟。"
+          },
+          {
+            "at": 25.52,
+            "end": 28.0,
             "text": "Yes, he's done it!\n是的，他做到了！"
           },
           {
-            "at": 20.7,
-            "end": 25.0,
+            "at": 28.4,
+            "end": 32.7,
             "text": "Carlos Alcaraz is the Nitto ATP Finals champion.\n阿尔卡拉斯成为年终总决赛冠军。"
           },
           {
-            "at": 26.7,
-            "end": 30.2,
+            "at": 34.4,
+            "end": 37.9,
             "text": "Historic moment.\n历史性的一刻。"
           }
         ]

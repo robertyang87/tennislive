@@ -3,10 +3,10 @@
   "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "59a33ab990899bc28154fde6dd431f16b33adeda59005c770a307917b9d16c05",
-    "render_inputs_sha256": "df4ae8c4904e63a76702b4e5171fe6e232b81b853010f1beae8926de4a77b85b",
-    "spec_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
-    "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
+    "render_sha256": "83726ddca8893922717f5a98e6e7f4ed986dae476c437812ceb5e27983bdf7ce",
+    "render_inputs_sha256": "d430fe0b39c6d8c649d743a6b5d1c7d7a553ff1c51c0650571fc417c9c66247f",
+    "spec_sha256": "1477bf26b4476dc555f8188990ed62e251271c1ff52e889071c91d20eadad69d",
+    "film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
     "inventory_sha256": "c3b1c54ffaddd8b91d92fbd05a2a55a49f9a0d2b240a0af047dec21dd1b2c27f"
   },
   "asr_model": "faster-whisper small",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-23T00:45:50+00:00",
+  "reviewed_at": "2026-11-23T01:34:24+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -198,7 +198,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "首瞻蒂亚福、阿尔卡拉斯打出两个6比2。一场只丢四局的小组赛,为这一周开了个好头。"
+        "transcript": "手沾蒂亚福、阿尔卡拉斯打出两个6比2。一场只丢四局的小组赛,为这一周开了个好头。"
       },
       "polyphones": [],
       "pauses": {
@@ -338,7 +338,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "斑绝赛才是真正的苦战。谢尔顿先拿6比3,第二盘4比3,阿尔卡拉斯在对手发球局等到机会。"
+        "transcript": "斑决赛才是真正的苦战。谢尔顿先拿6比3,第二盘4比3,阿尔卡拉斯在对手发球局等到机会。"
       },
       "polyphones": [
         {
@@ -456,7 +456,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "第三个盘点,自为列夫在底线箱池中回球出界。6比6,阿尔卡拉斯连续就回三个机会,随后又错过第一个冠军点。8比7,第二次机会来到。"
+        "transcript": "第三个盘点,自为列夫在底线相持中回球出界。6比6,阿尔卡拉斯连续就回三个机会,随后又错过第一个冠军点。8比7,第二次机会来到。"
       },
       "polyphones": [],
       "pauses": {
@@ -542,7 +542,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "决赛队自为列夫。手盘、阿尔卡拉斯三次拿下对手的发球局。这是4比20的又一次机会,拿下就能把差距拉到5比2。"
+        "transcript": "决赛队自维列夫、手盘、阿尔卡拉斯三次拿下对手的发球局,这是4比20的又一次机会,拿下就能把差距拉到5比2。"
       },
       "polyphones": [
         {
@@ -596,7 +596,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "底线相持后,谢尔顿回球出界。阿尔卡拉斯第一次破掉他的发球局5比3,随后6比3颁平。决生盘达到6比6,最后这轮小分,他只让对手拿到1分。"
+        "transcript": "底线相持后,谢尔顿回球出界。阿尔卡拉斯第一次破掉他的发球局5比3,随后6比3颁平。爵声盘达到6比6,最后这轮小分,他只让对手拿到1分。"
       },
       "polyphones": [
         {
@@ -650,7 +650,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "北京时间11月23日凌晨,ATP年中总决赛决赛,阿尔卡拉斯6比2,7比6,几百姿维列夫首次捧碑。无场全胜,这座冠军从小组赛开始讲起。"
+        "transcript": "北京时间11月23日凌晨,ATP年中总决赛决赛,阿尔卡拉斯6比2,7比6,几百姿维列夫,首次捧碑。五场全胜,这座冠军从小组赛开始讲起。"
       },
       "polyphones": [],
       "pauses": {
@@ -682,7 +682,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "4比4,梓维列夫又保住发球局,追到5比4。比赛最终打到6比6,小分3比6,三个连续盘点。梓维列夫再拿一分,就能颁平盘数。"
+        "transcript": "四比四,梓维列夫又保住发球局,追到五比四。比赛最终打到六比六,小分三比六,三个连续盘点。梓维列夫再拿一分,就能颁平盘数。"
       },
       "polyphones": [
         {
@@ -736,7 +736,7 @@
         "substituted": 1,
         "sub_ratio": 0.022,
         "longest_deletion": 0,
-        "transcript": "最后一拍,反拍至上。阿尔卡拉斯、杨面倒在球场上,起身后走向团队拥抱。去年决赛失礼,今年这座奖杯终于属于他。"
+        "transcript": "最后一拍,反拍至上。阿尔卡拉斯仰面倒在球场上,起身后走向团队拥抱。去年决赛失礼,今年这座奖杯终于属于他。"
       },
       "polyphones": [],
       "pauses": {

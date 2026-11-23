@@ -1,5 +1,5 @@
 {
-  "scoreboard_qc_sha256": "bc3254501f710698b100ad2e3c44f674b12dda3e64c13801119b6c6b791b1b5f",
+  "scoreboard_qc_sha256": "403d4f9fbfb49d92e7516998eae95bc6f355b7ba5eb02e95e333ff452180637f",
   "source_audio_policy": "unity_no_loudness_v1",
   "tts_bundle": {
     "schema": "tennislive.frozen-tts-bundle.v1",
@@ -13,13 +13,13 @@
     "release_tag": "reel-tts-alcaraz-atp-finals-title-run-2026-c36ef76239ac28a5",
     "url": "https://github.com/robertyang87/tennislive/releases/download/reel-tts-alcaraz-atp-finals-title-run-2026-c36ef76239ac28a5/tts_bundle.zip",
     "file_name": "tts_bundle.zip",
-    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/45088975413"
+    "source_run": "https://github.com/robertyang87/tennislive/actions/runs/45093785041"
   },
   "cover_seconds": 1.2,
   "cover_narrated": false,
   "outro_seconds": 4.554,
   "layout": "full",
-  "segments_seconds": 381.01,
+  "segments_seconds": 399.21,
   "topbar_by_source": {
     "final": {
       "line1": "2026 ATP年终总决赛 决赛",
@@ -75,9 +75,9 @@
     "line1": "2026 ATP年终总决赛 决赛",
     "line2": "阿尔卡拉斯 6-2 7-6(7) 兹维列夫",
     "start": 1.2,
-    "end": 382.21
+    "end": 400.41
   },
-  "film_seconds": 386.8,
+  "film_seconds": 405.0,
   "narration_voice": "zh-CN-YunjianNeural",
   "narration_rate": "+6%",
   "narration_backend": "edge-tts",
@@ -110,44 +110,44 @@
       "faces": 0
     }
   },
-  "render_inputs_sha256": "df4ae8c4904e63a76702b4e5171fe6e232b81b853010f1beae8926de4a77b85b",
+  "render_inputs_sha256": "d430fe0b39c6d8c649d743a6b5d1c7d7a553ff1c51c0650571fc417c9c66247f",
   "production_sla": {
     "version": 2,
     "pipeline": "match-reel",
     "slug": "alcaraz-atp-finals-title-run-2026",
-    "received_at": "2026-11-23T00:28:31Z",
-    "artifact_ready_at": "2026-11-23T00:43:44Z",
-    "elapsed_seconds": 913.315,
+    "received_at": "2026-11-23T01:18:12Z",
+    "artifact_ready_at": "2026-11-23T01:32:17Z",
+    "elapsed_seconds": 845.13,
     "budget_seconds": 600,
     "met": false,
-    "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
-    "spec_sha256": "9e0882ac861e796667c61b4ba80adc25495cf3e2208af3e2a074f97b70323acc",
-    "run_id": "45088975413",
+    "film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
+    "spec_sha256": "1477bf26b4476dc555f8188990ed62e251271c1ff52e889071c91d20eadad69d",
+    "run_id": "45093785041",
     "stage_events": [
       {
         "stage": "render",
-        "at": "2026-11-23T00:33:41Z",
-        "run_id": "45088975413"
+        "at": "2026-11-23T01:22:38Z",
+        "run_id": "45093785041"
       }
     ],
-    "render_seconds": 603.315,
-    "pre_render_seconds": 310.0
+    "render_seconds": 579.13,
+    "pre_render_seconds": 266.0
   },
-  "film_sha256": "e6298aa31b753709d50270d1c2c0268c72006b80a10a17f8e24754752ebbdcc4",
-  "film_bytes": 172176941,
-  "qc_attestation_sha256": "f619907077a76521e562706ccccad3bd3bf11c48e41e5e4445727822837ba84f",
+  "film_sha256": "3e59155984b9033ef2ea63a58ec0d39c46283e5fa70f7a96bef98e13e1182734",
+  "film_bytes": 184373838,
+  "qc_attestation_sha256": "aa5e5d9d631fccf34339165f27a70673bd2ce1de5bdebebe48a5388acc170943",
   "production_stage_events": [
     {
       "stage": "render",
-      "at": "2026-11-23T00:33:41Z",
-      "run_id": "45088975413"
+      "at": "2026-11-23T01:22:38Z",
+      "run_id": "45093785041"
     },
     {
       "stage": "qc_passed",
-      "at": "2026-11-23T00:43:49Z",
-      "run_id": "45088975413"
+      "at": "2026-11-23T01:32:22Z",
+      "run_id": "45093785041"
     }
   ],
   "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-alcaraz-atp-finals-title-run-2026/alcaraz-atp-finals-title-run-2026.mp4",
-  "video_bytes": 172176941
+  "video_bytes": 184373838
 }
