@@ -2019,6 +2019,8 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset({
     # Owner-requested Davis Cup forecast; sealed speech and final-film gates apply.
     "davis-cup-preview-2026",
+    # Owner-requested 2026 season review annual special (transferred); sealed speech and final-film gates apply.
+    "season-review-2026",
     # Account-requested ATP preview; custom explainer with sealed actual speech.
     "atp-finals-preview-2026",
     # Renoise process remake, run 40881358677, SHA 74a0dbd5baba: 212.433s,
