@@ -1,7 +1,7 @@
 {
   "schema": "tennislive.actual-audio-binding.v1",
   "method": "Two-stage automated acoustic audit. Stage A: each segment's first narration sentence is located in the final film by normalized cross-correlation (wide ±0.75s search), measuring the segment's true placement — stream-copy concatenation of AAC segments accumulates ~0.03s priming per boundary, constant within a segment. Stage B: every one of the 114 frozen TTS sentences (atempo 1.12, the mix's own transform) must peak within ±0.12s of its measured placement, peak correlation >= 0.35 and >= median + 0.25. No human listening claimed.",
-  "film_sha256": "bdf292902bbb2875c97e0003d39e9a4fb48dcf30c7ced7138bf615f9a792f82b",
+  "film_sha256": "060abaf9b61e6f69fde5de46c5b6899912021a7d9a52cbacb7385e587471f6ca",
   "segment_offsets": {
     "S0V5": {
       "nominal": 0.0,
@@ -16,7 +16,7 @@
     "S2_v5": {
       "nominal": 111.733,
       "measured_delta": 0.011,
-      "anchor_corr": 0.947
+      "anchor_corr": 0.952
     },
     "S3": {
       "nominal": 169.533,
@@ -211,7 +211,7 @@
       "start": 112.044,
       "peak_at": 112.044,
       "offset_err": 0.0,
-      "peak_corr": 0.947,
+      "peak_corr": 0.952,
       "median_corr": -0.002,
       "pass": true
     },
@@ -231,7 +231,7 @@
       "start": 141.844,
       "peak_at": 141.844,
       "offset_err": 0.0,
-      "peak_corr": 0.97,
+      "peak_corr": 0.971,
       "median_corr": -0.0,
       "pass": true
     },
@@ -262,7 +262,7 @@
       "peak_at": 162.444,
       "offset_err": -0.0,
       "peak_corr": 0.976,
-      "median_corr": -0.0,
+      "median_corr": 0.0,
       "pass": true
     },
     {
@@ -651,7 +651,7 @@
       "start": 564.201,
       "peak_at": 564.201,
       "offset_err": 0.0,
-      "peak_corr": 0.916,
+      "peak_corr": 0.922,
       "median_corr": -0.0,
       "pass": true
     },
@@ -732,7 +732,7 @@
       "peak_at": 629.236,
       "offset_err": 0.0,
       "peak_corr": 0.986,
-      "median_corr": 0.0,
+      "median_corr": -0.0,
       "pass": true
     },
     {
@@ -1131,8 +1131,8 @@
       "start": 972.18,
       "peak_at": 972.18,
       "offset_err": 0.0,
-      "peak_corr": 0.939,
-      "median_corr": -0.001,
+      "peak_corr": 0.938,
+      "median_corr": -0.0,
       "pass": true
     },
     {
@@ -1141,7 +1141,7 @@
       "start": 981.98,
       "peak_at": 981.98,
       "offset_err": 0.0,
-      "peak_corr": 0.959,
+      "peak_corr": 0.96,
       "median_corr": -0.0,
       "pass": true
     },
@@ -1181,8 +1181,8 @@
       "start": 1022.203,
       "peak_at": 1022.203,
       "offset_err": 0.0,
-      "peak_corr": 0.976,
-      "median_corr": 0.0,
+      "peak_corr": 0.975,
+      "median_corr": -0.0,
       "pass": true
     },
     {
@@ -1201,7 +1201,7 @@
       "start": 1043.203,
       "peak_at": 1043.203,
       "offset_err": 0.0,
-      "peak_corr": 0.978,
+      "peak_corr": 0.977,
       "median_corr": 0.0,
       "pass": true
     },

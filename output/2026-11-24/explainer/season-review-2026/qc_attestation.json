@@ -1,8 +1,8 @@
 {
   "schema": "tennislive.film-qc.v1",
-  "film_sha256": "bdf292902bbb2875c97e0003d39e9a4fb48dcf30c7ced7138bf615f9a792f82b",
-  "spec_sha256": "90c617948d06a2d46c75096171d8f86201daf1d6d99d79fb41a11c2eabc3d30c",
-  "render_inputs_sha256": "8d9805db9720db93b8044df3d430a3a9035bd6b59e663df4384e95747979e0d0",
+  "film_sha256": "060abaf9b61e6f69fde5de46c5b6899912021a7d9a52cbacb7385e587471f6ca",
+  "spec_sha256": "8131bf1a81c5433cbfd0080a6734fc3b4389484c7e66cf4b94765ffcf285aaf6",
+  "render_inputs_sha256": "6b2b63d45c68437ee96e5a6855c3db09ad8c4231d319f98cfe203eea4a2dee17",
   "canvas": [
     1080,
     1920
@@ -14,26 +14,19 @@
     {
       "start": 38.99,
       "end": 43.95,
-      "note": "Designed black title beat: top-left episode title block + golden-sentence subtitle on black; frames byte-identical to the owner-approved v5 at the same timecodes."
+      "note": "Designed black title beat: top-left episode title block + golden-sentence subtitle on black; segment S0V5 byte-identical to the pushed v6."
     },
     {
       "start": 1077.12,
       "end": 1079.69,
-      "note": "Outro brand page fade-out tail."
+      "note": "Outro brand page fade-out tail; outro byte-identical to the pushed v6."
     }
   ],
   "two_channel_complete_mix_audit": true,
   "visual_review_status": "pass",
   "loudness": {
     "integrated_lufs": -14.79,
-    "true_peak_dbtp": -0.32
+    "true_peak_dbtp": -0.25
   },
-  "visual_review": {
-    "reviewer": "route-1 production executor, decoded frame review",
-    "reviewed_at": "2026-11-24T16:05:00+00:00",
-    "film_sha256": "bdf292902bbb2875c97e0003d39e9a4fb48dcf30c7ced7138bf615f9a792f82b",
-    "observations": "Frames at 5s (intro wall playing), 8s (intro dissolve into S0 with 2026 年度回顾 title), 12s (commentary bilingual subtitle EN over ZH, single event), 18s (first narration sentence, Chinese single line only), 42s (designed black golden-sentence beat, identical to approved v5), 62s (S1 top-right info card: key stat / event+round / score / Djokovic vs Sinner, green rail, no background), 300s, 560s, 900s, 1050s, 1072s (finale). Right-edge column averages at 10 sample times are all scene colors — no yellow bar. Subtitle rules match v5 final: narration Chinese-only single line, commentary bilingual, chunks 5-14 chars, no orphan tails. Duration 1079.72s <= 1080s owner cap. Audio: integrated -14.79 LUFS, true peak -0.32 dBTP (v5: -14.76 / -0.34)."
-  },
-  "audio_evidence": "actual-audio-binding.json",
-  "route": "Route 1 (owner ruling 2026-11-24 22:18 CST): all 114 narration sentences re-synthesized through the pipeline-native path with real server-returned WordBoundary marks, frozen by the pipeline's own BundleSession (bundle sha256 7c9b595173db1ec287651899f91a8cb44c05ab005e880982927a429bf413c9d0); per-sentence raw durations match the v5 takes within 0.005s, no atempo changes; picture is the owner-approved v5 cut, re-rendered pass-2 only for the new narration mix."
+  "revision_note": "Rename revision (莱巴金娜): binding audit 114/114 ALL_PASS (actual-audio-binding.json); frame-verified new-name subtitles at S2/S9/S15 (keyframes_v7)."
 }

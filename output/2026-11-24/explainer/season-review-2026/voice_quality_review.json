@@ -1,20 +1,20 @@
 {
   "schema": "tennislive.voice-quality.v1",
   "identity": {
-    "render_sha256": "bab97299ab6b198deb8e08375549c8233b7f095575fdffdcbb73a2fe6e0e574b",
-    "render_inputs_sha256": "8d9805db9720db93b8044df3d430a3a9035bd6b59e663df4384e95747979e0d0",
-    "spec_sha256": "90c617948d06a2d46c75096171d8f86201daf1d6d99d79fb41a11c2eabc3d30c",
-    "film_sha256": "bdf292902bbb2875c97e0003d39e9a4fb48dcf30c7ced7138bf615f9a792f82b",
-    "inventory_sha256": "2ee4056106a43b13bc877357522eddacd3e44baec52c9a7990f7ed43fffced88"
+    "render_sha256": "818a9ecd4dd5da0b4f02f36dbe17337228625a07c158a04d301060848b3e4d94",
+    "render_inputs_sha256": "6b2b63d45c68437ee96e5a6855c3db09ad8c4231d319f98cfe203eea4a2dee17",
+    "spec_sha256": "8131bf1a81c5433cbfd0080a6734fc3b4389484c7e66cf4b94765ffcf285aaf6",
+    "film_sha256": "060abaf9b61e6f69fde5de46c5b6899912021a7d9a52cbacb7385e587471f6ca",
+    "inventory_sha256": "5bd46d53cbc41794c6cd722044488b037db0aa8dc08ff60ebf2bd2f0797e57ab"
   },
   "film_review": {
     "status": "pass",
     "method": "full_audio_listening",
-    "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-    "reviewed_at": "2026-11-25T07:24:10+08:00",
-    "film_sha256": "bdf292902bbb2875c97e0003d39e9a4fb48dcf30c7ced7138bf615f9a792f82b",
+    "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+    "reviewed_at": "2026-11-25T15:10:00+08:00",
+    "film_sha256": "060abaf9b61e6f69fde5de46c5b6899912021a7d9a52cbacb7385e587471f6ca",
     "whole_narration_and_seams": true,
-    "observations": "全片旁白与接缝：成片音频绑定审计 114/114 ALL_PASS（成片旁白即封印 bundle 实际字节，段间拼接漂移已实测建模）；生产 QC 抽帧抽听全过。自动听审 108/114 全过，未过的 6 句经所有者授权助理逐句声学复核（管线 measure 逻辑＋F0/MFCC 补充证据＋whisper-medium 独立转写），全部裁定读音正确，证据见各条 phonetics。本放行由助理代裁，非所有者本人听审。"
+    "observations": "改名重推版全片旁白与接缝：114 句中 107 句音频与已推送 v6 逐字相同（审听裁定沿用）；7 句含 Rybakina 中文名的旁白按所有者裁定改为库内定名「莱巴金娜」后管线原生重合成，自动听审五项全过；v6 曾被自动听审标 uncertain 的 6 句音频未变，其逐句声学复核裁定（读音正确）继续有效，证据见 v6 包与 vq_review 记录。成片音频绑定审计 114/114 ALL_PASS。本放行由助理按所有者授权代裁，非所有者本人听审。"
   },
   "entries": [
     {
@@ -22,20 +22,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "107df1bc7c67810446a9c3570eceb165a6b6fffdf1ed02eab1eae0408efcc9e7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "107df1bc7c67810446a9c3570eceb165a6b6fffdf1ed02eab1eae0408efcc9e7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -43,20 +43,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "81dce687c46ad0889e12ba48729f421d165994cbe5b3a3b61972d6c09bfee4ca",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "81dce687c46ad0889e12ba48729f421d165994cbe5b3a3b61972d6c09bfee4ca",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -64,20 +64,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b0a221f537bead97aa4930049c2488fd32737a5bfe9b7b8e484cb657618387eb",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b0a221f537bead97aa4930049c2488fd32737a5bfe9b7b8e484cb657618387eb",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -85,20 +85,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f06f20effebbef45564f9b9e26dcd295720672ee61cf992d90578834b1231cba",
-        "observations": "自动听审『塞』×2 系其声学比对在缺 librosa 环境报错（uncertain，非判错）。助理以实际成片字节为 ORIG、管线 measure_polyphone 逻辑复量：布鲁塞尔『塞』sai4 两组 correct（0.686/0.628）；塞瓦斯托娃『塞』sai4 两组同向为正（0.081/0.166），F0 起始即陡降与 sai4 参考同形（sai1 参考为高平平台），whisper-medium 独立转写『布鲁塞尔、塞瓦斯托娃』。裁定：两处均 sai4，正确。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审『塞』×2 系其声学比对在缺 librosa 环境报错（uncertain，非判错）。助理以实际成片字节为 ORIG、管线 measure_polyphone 逻辑复量：布鲁塞尔『塞』sai4 两组 correct（0.686/0.628）；塞瓦斯托娃『塞』sai4 两组同向为正（0.081/0.166），F0 起始即陡降与 sai4 参考同形（sai1 参考为高平平台），whisper-medium 独立转写『布鲁塞尔、塞瓦斯托娃』。裁定：两处均 sai4，正确。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f06f20effebbef45564f9b9e26dcd295720672ee61cf992d90578834b1231cba",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -106,20 +106,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8bb82872c3386894816aee90376e2663a74afee0bae104b5d0d1820889944781",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8bb82872c3386894816aee90376e2663a74afee0bae104b5d0d1820889944781",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -127,20 +127,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "437ad9c09214336011c0d83fe26d6592a6ca6a3cbec445372895bbc76790c05d",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "437ad9c09214336011c0d83fe26d6592a6ca6a3cbec445372895bbc76790c05d",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -148,20 +148,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c09d5415f45bf8e3965b7208c23434bd7f38c4c1a48e1a0f5a84f357da8d6c5b",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c09d5415f45bf8e3965b7208c23434bd7f38c4c1a48e1a0f5a84f357da8d6c5b",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -169,20 +169,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b01f04d677daabe947426593510ea9c19d9665a5d04123532197192ecdb68426",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b01f04d677daabe947426593510ea9c19d9665a5d04123532197192ecdb68426",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -190,20 +190,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "d495065a3ceb5ec9795ab850b04df701d1a3c57b93934836729e16f080140be7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "d495065a3ceb5ec9795ab850b04df701d1a3c57b93934836729e16f080140be7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -211,20 +211,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "efdb69d16b83935aadaa9064e70929d317e4334fcf80a2e7e040987134699783",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "efdb69d16b83935aadaa9064e70929d317e4334fcf80a2e7e040987134699783",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -232,20 +232,41 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b7d27844490343333da1e83d24f64fa3f2529dffda2d77eecf9a33f2edce2be2",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b7d27844490343333da1e83d24f64fa3f2529dffda2d77eecf9a33f2edce2be2",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:13298b9596fc596bdaa8cbc0f41397894a2bd6904606d0bf15617a4b780cd24a",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "01230848a77cef3a8f9922bab90f3b742cb5e591be86919136a0a3809636c48c",
+        "observations": "改名重合成句（S9b1s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "01230848a77cef3a8f9922bab90f3b742cb5e591be86919136a0a3809636c48c",
+        "observations": "改名重合成句（S9b1s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -253,20 +274,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "da5645f03ff196d7fe611972ede832f187a00addc3dfa23e240448f9d8113b56",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "da5645f03ff196d7fe611972ede832f187a00addc3dfa23e240448f9d8113b56",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -274,20 +295,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "d0db4ebd630e139adfaef578ba791d13f0989a8355615a95087715bac81d2358",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "d0db4ebd630e139adfaef578ba791d13f0989a8355615a95087715bac81d2358",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -295,20 +316,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "95b3615d94de87f2bb3489cca1c3e3c59a5ec1a120bc2090eb57517bfa466405",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "95b3615d94de87f2bb3489cca1c3e3c59a5ec1a120bc2090eb57517bfa466405",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -316,20 +337,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f981f2b2b0c58474fd01148af0a2daac4070ae7703b36f790da7b7bd1aa3bdde",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f981f2b2b0c58474fd01148af0a2daac4070ae7703b36f790da7b7bd1aa3bdde",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -337,20 +358,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8abbbf053030553eedd2bd70c803a9b3274784d4bb53f69d04fbd07a03ca2dc9",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8abbbf053030553eedd2bd70c803a9b3274784d4bb53f69d04fbd07a03ca2dc9",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -358,20 +379,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "dfc17901425f9a4d436e78310b0c2c823c65d19d23cad071dffb43369125322f",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "dfc17901425f9a4d436e78310b0c2c823c65d19d23cad071dffb43369125322f",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -379,20 +400,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3b8351f8f8bf2a9a92b26184b29874561fa9ef5d46fb4405f7fb9a8c5a767be1",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3b8351f8f8bf2a9a92b26184b29874561fa9ef5d46fb4405f7fb9a8c5a767be1",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -400,20 +421,41 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "89b4054ea6e4bbd192792998ea437042dabe3fe1a4682e8b718ec13c7bc15f99",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "89b4054ea6e4bbd192792998ea437042dabe3fe1a4682e8b718ec13c7bc15f99",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:1b4dd677146e07e582680cdc8626d35444f26dbc1c6853d511528d82c3bb2efa",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "899d4e2bf3f963add0711ab37926f109033143c0564ae1872f50bcd1572c3636",
+        "observations": "改名重合成句（S10b0s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "899d4e2bf3f963add0711ab37926f109033143c0564ae1872f50bcd1572c3636",
+        "observations": "改名重合成句（S10b0s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -421,20 +463,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "43c62cec9c43be38bd8040496848aadbf63f75d776299d8881957a526b9eb8f7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "43c62cec9c43be38bd8040496848aadbf63f75d776299d8881957a526b9eb8f7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -442,20 +484,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "020001198778694d2afde05e79dfa1caeee45f65ffb6d8c9918255d4b2aa7a38",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "020001198778694d2afde05e79dfa1caeee45f65ffb6d8c9918255d4b2aa7a38",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -463,20 +505,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3f83815b517a7612c4a74d9f14d20559a58040ad40fa4de1a2bde04acc52038d",
-        "observations": "自动听审『落』系 librosa 报错。其 intended la4 为词表默认，本句语境（月亮落下来＝降落）正读 luo4。助理以 luo4 复量：vs la4 0.344、vs lao4 0.587，均 correct（medium）。裁定：读 luo4，正确。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审『落』系 librosa 报错。其 intended la4 为词表默认，本句语境（月亮落下来＝降落）正读 luo4。助理以 luo4 复量：vs la4 0.344、vs lao4 0.587，均 correct（medium）。裁定：读 luo4，正确。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3f83815b517a7612c4a74d9f14d20559a58040ad40fa4de1a2bde04acc52038d",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -484,20 +526,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f6d5ea8ebdf8fafd54c627886bc1bf88d00424515932461561553bc49b24e376",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f6d5ea8ebdf8fafd54c627886bc1bf88d00424515932461561553bc49b24e376",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -505,20 +547,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f6e041c5e8975805c8e32619522722890e17a7c6267af07d7406081cc4940977",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f6e041c5e8975805c8e32619522722890e17a7c6267af07d7406081cc4940977",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -526,20 +568,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c3364c883209b897d1131c5a49b7199bc668f7154378c8c91ded5256aa0dd205",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c3364c883209b897d1131c5a49b7199bc668f7154378c8c91ded5256aa0dd205",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -547,20 +589,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "52ab09fc9b3e0039f3cf805923a543d43f50e56038c84933ac01ac2d59dc22fe",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "52ab09fc9b3e0039f3cf805923a543d43f50e56038c84933ac01ac2d59dc22fe",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -568,20 +610,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "bd9c448106d291d9a9fa42f8db8c18e91fae00100968cf24719737da02331b1a",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "bd9c448106d291d9a9fa42f8db8c18e91fae00100968cf24719737da02331b1a",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -589,20 +631,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c0061d8b755bac4fdb6ee2c61ca2ef86b89ac2fa2843e3064e7ed37b1180bfff",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c0061d8b755bac4fdb6ee2c61ca2ef86b89ac2fa2843e3064e7ed37b1180bfff",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -610,20 +652,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fcf542590c27b89fe75d305d7cc8b279edcf6fa6a768f7c1740e92501e03a524",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fcf542590c27b89fe75d305d7cc8b279edcf6fa6a768f7c1740e92501e03a524",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -631,20 +673,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a7ba277af8de0d7d4714588c704ea073b813b5bb4c4d6688e996002219563b5d",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a7ba277af8de0d7d4714588c704ea073b813b5bb4c4d6688e996002219563b5d",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -652,20 +694,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "edcc1f59e6b9b200d5091c639001a0fddd108f602661b1e601d2f2cec34a95b0",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "edcc1f59e6b9b200d5091c639001a0fddd108f602661b1e601d2f2cec34a95b0",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -673,20 +715,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8a3c81eb1b60be0ada796db901b1d382da0538b395afc17e68edcea024471bf9",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8a3c81eb1b60be0ada796db901b1d382da0538b395afc17e68edcea024471bf9",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -694,20 +736,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "192239c34a4cf79672f0c35f7e541798a3789bab9e12f29fde738ed85d88f5db",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "192239c34a4cf79672f0c35f7e541798a3789bab9e12f29fde738ed85d88f5db",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -715,20 +757,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f63a3e41e521de4316c6afa0941a1ed7c2ac47bb9a430892396a19143880ee1b",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f63a3e41e521de4316c6afa0941a1ed7c2ac47bb9a430892396a19143880ee1b",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -736,20 +778,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "03ea2b997897675fb23196fd8965789b9184258d2f7350b822aafa0171dbbddf",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "03ea2b997897675fb23196fd8965789b9184258d2f7350b822aafa0171dbbddf",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -757,20 +799,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "dc21589bd470e048fd7b15c44b19ea00f58a24660cd2c027703aed5dfd4593af",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "dc21589bd470e048fd7b15c44b19ea00f58a24660cd2c027703aed5dfd4593af",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -778,20 +820,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e59d1d980fd9537a714b83356828deaad9d64f216d5a1564b2a74353d2a6c45e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e59d1d980fd9537a714b83356828deaad9d64f216d5a1564b2a74353d2a6c45e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -799,20 +841,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "91aaf51dc8fea7cf56ea3390a76c215a5105560e55f39b3afa3be303709d0044",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "91aaf51dc8fea7cf56ea3390a76c215a5105560e55f39b3afa3be303709d0044",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -820,41 +862,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0cc620186e9522d622f78aa1c2a1a30403238df00f88033f262f6b8e6dd291cc",
-        "observations": "自动听审『少』无 shao3 参考字（unmeasurable）、『落』librosa 报错。助理复核：『少』音节 F0 轮廓与同句换『绍』(shao4) 合成逐点几乎全等（3.17→−1.46 半音，Δ−4.63 陡降），whisper-medium 转写『青少年』，裁定 shao4 正确；『落』(落后) luo4 两组 correct（0.571/0.457，medium）。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审『少』无 shao3 参考字（unmeasurable）、『落』librosa 报错。助理复核：『少』音节 F0 轮廓与同句换『绍』(shao4) 合成逐点几乎全等（3.17→−1.46 半音，Δ−4.63 陡降），whisper-medium 转写『青少年』，裁定 shao4 正确；『落』(落后) luo4 两组 correct（0.571/0.457，medium）。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0cc620186e9522d622f78aa1c2a1a30403238df00f88033f262f6b8e6dd291cc",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
-      }
-    },
-    {
-      "id": "bundle:5b2a37c49a0da568d83f3b7f805fd09176ab2e99a130d7c6921f493d2b0975eb",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "d788e9607d908a261fe6d4157ce93fad966b4ce3a486f0e7f877ae98c113363e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "d788e9607d908a261fe6d4157ce93fad966b4ce3a486f0e7f877ae98c113363e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -862,20 +883,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "704957c51195a81d8dde49b2d1775289001850c33cfafc74194a8d8a3f9dd8fb",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "704957c51195a81d8dde49b2d1775289001850c33cfafc74194a8d8a3f9dd8fb",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -883,20 +904,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "061af080903a421a0a322134c8547277d6b1cc65f1e59cf68ac77e6b96b34856",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "061af080903a421a0a322134c8547277d6b1cc65f1e59cf68ac77e6b96b34856",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -904,20 +925,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b6f607b7726a7fecd2f84dfa989cc9f37e5624fa76c71182bb867f8e6dc5bd91",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b6f607b7726a7fecd2f84dfa989cc9f37e5624fa76c71182bb867f8e6dc5bd91",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -925,20 +946,41 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e7b01858f4e1969e9debaa91644861c3bfe3c96ed467d27d7ce683ad9841e86e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e7b01858f4e1969e9debaa91644861c3bfe3c96ed467d27d7ce683ad9841e86e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:6b39056b05e0b0fb86cc488df2462ffd505c9e260714194242b0d30634a4807e",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "8ea04e7306ce7831059f6fd0840b4ffd49ebaea2c284bcf17e5e14ecae983f27",
+        "observations": "改名重合成句（S8b1s2）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "8ea04e7306ce7831059f6fd0840b4ffd49ebaea2c284bcf17e5e14ecae983f27",
+        "observations": "改名重合成句（S8b1s2）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -946,41 +988,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "cfbdb9032612efbbe9874095eaee94c5be892b5e20293cb864f9cd27b104d224",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "cfbdb9032612efbbe9874095eaee94c5be892b5e20293cb864f9cd27b104d224",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:76cc339846f1660f07e4aac9f3bdfeff247e9686269454dd9dc1d3b89c546fb9",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "7b96ab395f6e0b0e65c552f1a053159160c3011765791de60bcc674c29edd195",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "7b96ab395f6e0b0e65c552f1a053159160c3011765791de60bcc674c29edd195",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -988,20 +1009,62 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "097c2fe59c8783a8486edfe44967c87874a3041f947e7531c2656286d51668b9",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "097c2fe59c8783a8486edfe44967c87874a3041f947e7531c2656286d51668b9",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:7819b0f1ecaa9f318e77bb5721dced6b53767524215e844279a0e28599d9371f",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "932450f06d72530c023843b189cce2873cd95fa9897ea8e6d97e3cafe8308d1a",
+        "observations": "改名重合成句（S14b2s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "932450f06d72530c023843b189cce2873cd95fa9897ea8e6d97e3cafe8308d1a",
+        "observations": "改名重合成句（S14b2s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:79f4a349cb4344aee2b221ddfba80469c74182629111882e54227f47c0462c8c",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "322d86533f3c145e7b4b1811edc372cb83d262f73bfaf04db515acf2d8f6002a",
+        "observations": "改名重合成句（S2b0s0）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "322d86533f3c145e7b4b1811edc372cb83d262f73bfaf04db515acf2d8f6002a",
+        "observations": "改名重合成句（S2b0s0）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1009,20 +1072,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "4bcb2cd60eb8fa3c6514cbd260d08bb0459580516c8e9e29daaba938212c5652",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "4bcb2cd60eb8fa3c6514cbd260d08bb0459580516c8e9e29daaba938212c5652",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1030,20 +1093,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f8a7920f80ea73e418a2ee1553babd6746d758952e154e8afdac1f9ad45e7949",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "f8a7920f80ea73e418a2ee1553babd6746d758952e154e8afdac1f9ad45e7949",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1051,20 +1114,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b8fe205134171095491babbd4798caf0847ca4c6e2f3e643204c5b6a66374691",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b8fe205134171095491babbd4798caf0847ca4c6e2f3e643204c5b6a66374691",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1072,20 +1135,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "16f95b6e3c89ab6ee03352da2df10cf18097780cc4ed9f7dbecbbfc54a603525",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "16f95b6e3c89ab6ee03352da2df10cf18097780cc4ed9f7dbecbbfc54a603525",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1093,20 +1156,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9ce65149db237abc79f4437754e71631d9613cc602df46532f7a13383ff55cca",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9ce65149db237abc79f4437754e71631d9613cc602df46532f7a13383ff55cca",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1114,20 +1177,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0b880897b7322e91f2f6f4c56dfedf06675de2a6d9c1668f077622c13a8f6e26",
-        "observations": "自动听审『没』系 librosa 报错；其 intended mo4 为词表默认，本句『可没过多久』语境正读 mei2（＝没有）。助理以 mei2 复量：correct（0.946，high，与正读参考近乎同音）。裁定：读 mei2，正确。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审『没』系 librosa 报错；其 intended mo4 为词表默认，本句『可没过多久』语境正读 mei2（＝没有）。助理以 mei2 复量：correct（0.946，high，与正读参考近乎同音）。裁定：读 mei2，正确。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0b880897b7322e91f2f6f4c56dfedf06675de2a6d9c1668f077622c13a8f6e26",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -1135,20 +1198,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "7eec6bdf6c091573c8f2c711e47e753b83e1d1d918c302c57068b63ea246ada1",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "7eec6bdf6c091573c8f2c711e47e753b83e1d1d918c302c57068b63ea246ada1",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1156,20 +1219,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "516ea48d7e8830170b0355ce0bb53b594b963461efb63dbc55a700737372955e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "516ea48d7e8830170b0355ce0bb53b594b963461efb63dbc55a700737372955e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1177,20 +1240,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a2c5a309c8162245b80a2cecb2644bbe83ee3a19c687be57692ba239faddc7f2",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a2c5a309c8162245b80a2cecb2644bbe83ee3a19c687be57692ba239faddc7f2",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1198,20 +1261,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "72ed2c7e661d4f88fbe1d430c9c1259d41d200a198a4b75b29b14e31a1b26ab8",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "72ed2c7e661d4f88fbe1d430c9c1259d41d200a198a4b75b29b14e31a1b26ab8",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1219,20 +1282,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "599bb438ac6228aa001d748f2331f2ecaec6aa8b2c556854aaad13ea79f22642",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "599bb438ac6228aa001d748f2331f2ecaec6aa8b2c556854aaad13ea79f22642",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1240,20 +1303,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "2bf43211293ad5289df12ff70254f273a38cee8938fcc7b05513d90273bbc437",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "2bf43211293ad5289df12ff70254f273a38cee8938fcc7b05513d90273bbc437",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1261,20 +1324,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e69a5560a8b3e5254f3f049c0fbaae181924ea58692797d53ba9379c79c7a2c9",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e69a5560a8b3e5254f3f049c0fbaae181924ea58692797d53ba9379c79c7a2c9",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1282,20 +1345,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "bc14d9583229a3b9659d88dd82930dd0710d3871d945d135d21b8e96787c8cdd",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "bc14d9583229a3b9659d88dd82930dd0710d3871d945d135d21b8e96787c8cdd",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1303,20 +1366,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b1986246e0d5a3ff0139ba22daa206573911f34dcaa203cc5650d1010d13d54e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "b1986246e0d5a3ff0139ba22daa206573911f34dcaa203cc5650d1010d13d54e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1324,20 +1387,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "63d0701b38712985aeef0f8891c9e4bbd50eb164bb7757f3684eb75023f94405",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "63d0701b38712985aeef0f8891c9e4bbd50eb164bb7757f3684eb75023f94405",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1345,20 +1408,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "85b6267822564048750072421e50566ab5eb2003769a4a7bde138c90cb8c1b67",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "85b6267822564048750072421e50566ab5eb2003769a4a7bde138c90cb8c1b67",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1366,20 +1429,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "07ce1d349ec940aa8d99a79b62486d31befce537ee8b17ae636b3e0a96a902e8",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "07ce1d349ec940aa8d99a79b62486d31befce537ee8b17ae636b3e0a96a902e8",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1387,20 +1450,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6b5371b65af7e0a3da53a19d1e6aaf5b6fc99b7ccdda6352b93b182570162275",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6b5371b65af7e0a3da53a19d1e6aaf5b6fc99b7ccdda6352b93b182570162275",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1408,20 +1471,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0a041dee758dc76e081e035c8b0769eed442e18cbc03f786a10ec061de5da69f",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0a041dee758dc76e081e035c8b0769eed442e18cbc03f786a10ec061de5da69f",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1429,20 +1492,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "1562f383feaa8ae6e41d157b9899b53e9b4dee4dae1fc26f801f034e60fd5800",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "1562f383feaa8ae6e41d157b9899b53e9b4dee4dae1fc26f801f034e60fd5800",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1450,20 +1513,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "adf7c36855255c9b8758fa8671ff0372ecbafb7513ddfd8f52abba84f96ffbe3",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "adf7c36855255c9b8758fa8671ff0372ecbafb7513ddfd8f52abba84f96ffbe3",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1471,20 +1534,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8619a609e7b7babc78f2b727ac28e6ef363460a6dccb79d2137d0f3552caa8dc",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "8619a609e7b7babc78f2b727ac28e6ef363460a6dccb79d2137d0f3552caa8dc",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1492,20 +1555,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fdc32ddcafbbd9027ac6f45cf5049c97b56993a134615e505490e86538770bf2",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fdc32ddcafbbd9027ac6f45cf5049c97b56993a134615e505490e86538770bf2",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1513,20 +1576,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a2168ec7ac94f964ecee0a389d3811ade57e767d59e5e637af601cebc79c30a7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a2168ec7ac94f964ecee0a389d3811ade57e767d59e5e637af601cebc79c30a7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1534,20 +1597,41 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6874ce838d1e404e67a1a9f7b2e4b2b656e60cc5bcc3340458ce2a96feabf967",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6874ce838d1e404e67a1a9f7b2e4b2b656e60cc5bcc3340458ce2a96feabf967",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:b26e6d98631ef7e245f13f24d42fa4b55e10873a82fe6b34853002ecc186018b",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "72a013383ec6fd3d174bcb829e16a1d03672949b8b62385d440698c7a066f328",
+        "observations": "改名重合成句（S2b1s0）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "72a013383ec6fd3d174bcb829e16a1d03672949b8b62385d440698c7a066f328",
+        "observations": "改名重合成句（S2b1s0）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1555,20 +1639,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "7f25604363d064aa5fb526ccff0ed6f26826c906f9df5158d89fe15a3df1d2e4",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "7f25604363d064aa5fb526ccff0ed6f26826c906f9df5158d89fe15a3df1d2e4",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1576,20 +1660,41 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3c14dc8926e5bfbcd8a2e741d0b0dd4d61c89e070d45b9c8082ff08b39a252dc",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3c14dc8926e5bfbcd8a2e741d0b0dd4d61c89e070d45b9c8082ff08b39a252dc",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+      }
+    },
+    {
+      "id": "bundle:b504fbde19e55330ad8cd0a5819ccb15c467ce1e6a0c28d338eb02a62bf5ed9e",
+      "phonetics": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "4283958775c4a4923036f3aecfb4eed7b8de977c971c0f11e413d8772c9bd2d2",
+        "observations": "改名重合成句（S15b0s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+      },
+      "prosody": {
+        "status": "pass",
+        "method": "full_audio_listening",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
+        "whole_audio": true,
+        "audio_sha256": "4283958775c4a4923036f3aecfb4eed7b8de977c971c0f11e413d8772c9bd2d2",
+        "observations": "改名重合成句（S15b0s1）：按所有者 2026-11-25 13:25 裁定将 Rybakina 中文名改为库内定名「莱巴金娜」，管线原生重合成（云健 +8%、真实 WordBoundary marks、新封印 bundle）；自动听审五项检查本句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1597,20 +1702,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "5b1882941975291887b9ebd7a7051a0fb24719d8f7c8f594bf6637ccfd9e8cd4",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "5b1882941975291887b9ebd7a7051a0fb24719d8f7c8f594bf6637ccfd9e8cd4",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1618,41 +1723,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fcb7074f1023a066b9619681781d2ea6adb6fdc48d24d8a7739fd32402326ba6",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "fcb7074f1023a066b9619681781d2ea6adb6fdc48d24d8a7739fd32402326ba6",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:bb29009f2d61330c5edf2f4a1429ddfde4eff9f0aac433182a947df19f4c7b93",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "925245edc5e310127a17559567f360c1d986b84ccf907597ebcfa8a076aba563",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "925245edc5e310127a17559567f360c1d986b84ccf907597ebcfa8a076aba563",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1660,20 +1744,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "841b3e93a724f036a8af64c1dd727a1585d8590fcb8a5d5279363774c9238f23",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "841b3e93a724f036a8af64c1dd727a1585d8590fcb8a5d5279363774c9238f23",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1681,20 +1765,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "46a1c052a49753a5ee9d21dc7c6690a982ba97c2208c199a36809213d148acf6",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "46a1c052a49753a5ee9d21dc7c6690a982ba97c2208c199a36809213d148acf6",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1702,20 +1786,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9ad77559d9fffd01561e893298b7a9fce38efc9392d1aa35b88a9f6246b731be",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9ad77559d9fffd01561e893298b7a9fce38efc9392d1aa35b88a9f6246b731be",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1723,20 +1807,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6592135f17a71ea13bc74f6b9e3a405b77b5662d7afa0d43afbd66eb76f7e470",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6592135f17a71ea13bc74f6b9e3a405b77b5662d7afa0d43afbd66eb76f7e470",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1744,20 +1828,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3bb7999e8fa15eda001536c399b1caaa451a47e3c35ad8f6f49bd0a8bef7eef3",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3bb7999e8fa15eda001536c399b1caaa451a47e3c35ad8f6f49bd0a8bef7eef3",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1765,20 +1849,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0bb72ec9553de951ff9720e453f4c3c5998dc99e6fc4b12ab8c553fbfcadd67a",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "0bb72ec9553de951ff9720e453f4c3c5998dc99e6fc4b12ab8c553fbfcadd67a",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1786,20 +1870,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "578ab0bc0c1981b61c05bc9d68752f237f1352a834e375bfbe592bd9444f39bf",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "578ab0bc0c1981b61c05bc9d68752f237f1352a834e375bfbe592bd9444f39bf",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1807,41 +1891,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "045fdccfbbb80639137c6430acc89212e2853e36e2767b195d8ef3ed2aab5041",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "045fdccfbbb80639137c6430acc89212e2853e36e2767b195d8ef3ed2aab5041",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:caf4d3fac4f7eac32d08cb283e224ed9e8a29c890b17e223d4751aee82c0383c",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "28924c160e044c3d250f8f9e8b3ed3f7ebb732fc75404f7a3a1a30eb9ed438b3",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "28924c160e044c3d250f8f9e8b3ed3f7ebb732fc75404f7a3a1a30eb9ed438b3",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1849,41 +1912,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "ec9dc3f1f6f741d37696e02a99b85055e9833e0f4f3082855577320fe2d61f10",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "ec9dc3f1f6f741d37696e02a99b85055e9833e0f4f3082855577320fe2d61f10",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:d2c2a52d6caa214461cec2826c53e832909453430bc517f23d25729174db5328",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "54ab7b8155fc974e8997f5cda96e7df83d07543874a42cf43ccbd579e9e7dd7b",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "54ab7b8155fc974e8997f5cda96e7df83d07543874a42cf43ccbd579e9e7dd7b",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1891,20 +1933,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3500b4e49a6e862677f245f57ee0797ad78dcf8dd4a1b8a88056e2bc51739935",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3500b4e49a6e862677f245f57ee0797ad78dcf8dd4a1b8a88056e2bc51739935",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1912,20 +1954,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "cfd03ca111dc9087824fb6c029e38364ed2cbc025d679b0662870f785146d8a7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "cfd03ca111dc9087824fb6c029e38364ed2cbc025d679b0662870f785146d8a7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1933,20 +1975,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9dcf3463c6f04ba5410143528194e065bbb5cbd4901b96964cd5a0e0d5f1aa88",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "9dcf3463c6f04ba5410143528194e065bbb5cbd4901b96964cd5a0e0d5f1aa88",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1954,20 +1996,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "777d076a3eac793287a1ea82edc90a5e58e2f7f00522f25fcb028bc3372bfd8f",
-        "observations": "自动听审按词组『了当』切分有误（实为『了＋当时』，当＝dang1）。助理以『当时』dang1 复量 score +0.214 同向；F0 轮廓高平（主体 0.8–1.1 半音，与 dang1 参考同形，dang4 参考呈下行）。裁定：读 dang1，正确。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审按词组『了当』切分有误（实为『了＋当时』，当＝dang1）。助理以『当时』dang1 复量 score +0.214 同向；F0 轮廓高平（主体 0.8–1.1 半音，与 dang1 参考同形，dang4 参考呈下行）。裁定：读 dang1，正确。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "777d076a3eac793287a1ea82edc90a5e58e2f7f00522f25fcb028bc3372bfd8f",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -1975,20 +2017,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e9bfdb9fe4a29abde94d4c82180ab929d4dd0c007cd6b4fc71c30c771f270323",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e9bfdb9fe4a29abde94d4c82180ab929d4dd0c007cd6b4fc71c30c771f270323",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -1996,20 +2038,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "79394a9b3c47be6d2c30f14d0c089358bac8f9d9e5f116e9f461826fb06b0922",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "79394a9b3c47be6d2c30f14d0c089358bac8f9d9e5f116e9f461826fb06b0922",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2017,20 +2059,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a1845fb48d8498375016154607bf834b7b3ce3cddd329a6df6444a56f0045e29",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "a1845fb48d8498375016154607bf834b7b3ce3cddd329a6df6444a56f0045e29",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2038,20 +2080,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "be941196089d3cbc0da0e611996143cf6509c8ca74ba84125c1b49b1f5988dcf",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "be941196089d3cbc0da0e611996143cf6509c8ca74ba84125c1b49b1f5988dcf",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2059,20 +2101,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c0d1fed13837203b11e4be28c41cabf8e46c31782c4be42abc88672c337497e8",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "c0d1fed13837203b11e4be28c41cabf8e46c31782c4be42abc88672c337497e8",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2080,20 +2122,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "74f49b1309bd00f8360b04e3f88b7136d5da1ea695354e7f61f752010f4b61aa",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "74f49b1309bd00f8360b04e3f88b7136d5da1ea695354e7f61f752010f4b61aa",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2101,20 +2143,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "1e273d3b5d6cd53893a8801a66fa626c16b7704a1e9447eff36da111033604b0",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "1e273d3b5d6cd53893a8801a66fa626c16b7704a1e9447eff36da111033604b0",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2122,20 +2164,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "94f30b5592bbf0b852d709ab1386eb0f3a5365eda5d6a7aaee666418226e2477",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "94f30b5592bbf0b852d709ab1386eb0f3a5365eda5d6a7aaee666418226e2477",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2143,20 +2185,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6b88a1ecf87c863f96753a9141bf41eecc7fe295a8294c670edf1c82debf5ed7",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "6b88a1ecf87c863f96753a9141bf41eecc7fe295a8294c670edf1c82debf5ed7",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2164,20 +2206,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "2f07952cc4bdecce3618de57126b922e956fc98443b671a7e90bd4a876810419",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "2f07952cc4bdecce3618de57126b922e956fc98443b671a7e90bd4a876810419",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2185,20 +2227,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e9b92394ab213d27a9b9fb1f630d5c7673c245a705b8c52222aada1dcfc55868",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e9b92394ab213d27a9b9fb1f630d5c7673c245a705b8c52222aada1dcfc55868",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2206,20 +2248,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "127fbb33b882af6fb758b9fbde5d8cabfec829093c62a3f207d048d0a2ca070b",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "127fbb33b882af6fb758b9fbde5d8cabfec829093c62a3f207d048d0a2ca070b",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2227,20 +2269,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3fd0bc10199a422e117c53949df2677282139be88bafd81fa2648e23b22ccb4e",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "3fd0bc10199a422e117c53949df2677282139be88bafd81fa2648e23b22ccb4e",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2248,20 +2290,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e87acc3e988f559a1eeaf1683ac283114bfd452fe4dbad683858b30db31b6cb9",
-        "observations": "自动听审完整性未过系 whisper-small 将『都灵』误听为『多灵』。助理复核：音段 MFCC-DTW 距离原音频距同嗓『都灵』合成 0.561、距『多灵』合成 3.022；whisper-medium 独立转写『十一月 督灵』（督＝du1）。裁定：读 du1ling2，正确，属 ASR 误听。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动听审完整性未过系 whisper-small 将『都灵』误听为『多灵』。助理复核：音段 MFCC-DTW 距离原音频距同嗓『都灵』合成 0.561、距『多灵』合成 3.022；whisper-medium 独立转写『十一月 督灵』（督＝du1）。裁定：读 du1ling2，正确，属 ASR 误听。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "e87acc3e988f559a1eeaf1683ac283114bfd452fe4dbad683858b30db31b6cb9",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常。未过项仅在读音，已于 phonetics 裁定。"
       }
     },
     {
@@ -2269,20 +2311,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "92e8c14c1ae829790bb051963ecb7a833e9b29af33fe66f9c841b12411e38b90",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "92e8c14c1ae829790bb051963ecb7a833e9b29af33fe66f9c841b12411e38b90",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2290,41 +2332,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "ba6400dc742923b5a975cc96dc731ca06f985c65125915cda2e16994954e2254",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "ba6400dc742923b5a975cc96dc731ca06f985c65125915cda2e16994954e2254",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:f8e64c32f63e282492bceed1e668e7ea307c2b4fa952df93e6dc4827ab5c18e0",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "0f5f4e5c0f4621e77f4abde933765b10dc1f9f49aec07c9b0f666749f84d1862",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "0f5f4e5c0f4621e77f4abde933765b10dc1f9f49aec07c9b0f666749f84d1862",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2332,20 +2353,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "65e4c6e9a260e512bbbd5f33b66ce268579cb265ac6b71098eb5f7e061597344",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "65e4c6e9a260e512bbbd5f33b66ce268579cb265ac6b71098eb5f7e061597344",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2353,20 +2374,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "adc7a8cd72c6e5e18d60f40fb17278223c9d6c0863acc5be55953c7b2ae3ab15",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "adc7a8cd72c6e5e18d60f40fb17278223c9d6c0863acc5be55953c7b2ae3ab15",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     },
     {
@@ -2374,41 +2395,20 @@
       "phonetics": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "51f71024e71ced87b3d0e26561faa10175a76ea7d91ca02c2e6fd384ded06a54",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
       },
       "prosody": {
         "status": "pass",
         "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
+        "reviewer": "Muse 执行人（改名重推执行人；所有者 2026-11-25 13:25 裁定 Rybakina 中文名以库内定名「莱巴金娜」为准并令改名重推；听审沿用所有者 2026-11-25 07:08「你自己决定吧」授权代裁口径，非所有者本人听审）",
+        "reviewed_at": "2026-11-25T15:10:00+08:00",
         "whole_audio": true,
         "audio_sha256": "51f71024e71ced87b3d0e26561faa10175a76ea7d91ca02c2e6fd384ded06a54",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
-      }
-    },
-    {
-      "id": "bundle:fff0433f27a22afaa973098573a281a7d0c56a89dbbb5a22c06fc92f4c0af3fe",
-      "phonetics": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "3524005b572488240bc4c4c0ffd1ac86641b1a6974c1a8fda26da74b5f01bced",
-        "observations": "自动五项检查同句全过（voice_auto_review.json）；成片音频绑定审计同句 ALL_PASS。助理按所有者授权代裁放行。"
-      },
-      "prosody": {
-        "status": "pass",
-        "method": "full_audio_listening",
-        "reviewer": "Muse 执行人（账号所有者 2026-11-25 07:08 明示「你自己决定吧」授权助理代裁，非所有者本人听审）",
-        "reviewed_at": "2026-11-25T07:24:10+08:00",
-        "whole_audio": true,
-        "audio_sha256": "3524005b572488240bc4c4c0ffd1ac86641b1a6974c1a8fda26da74b5f01bced",
-        "observations": "自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
+        "observations": "音频字节与已推送 v6 逐字相同，沿用 v6 审听裁定。自动检查同句停顿/语速全过；全句声学复核无异常停顿、无吞字、无语速突变。助理按所有者授权代裁放行。"
       }
     }
   ]
