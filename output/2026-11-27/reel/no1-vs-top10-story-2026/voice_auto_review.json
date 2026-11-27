@@ -1,0 +1,1362 @@
+{
+  "schema": "tennislive.voice-auto-review.v1",
+  "suite_version": 2,
+  "method": "automated_voice_suite",
+  "identity": {
+    "render_sha256": "ed6aae79a36e47d4278d9c5496e68e88f18936381f230bd2e52995ea34dfc940",
+    "render_inputs_sha256": "a2f0807a239ab32fef55338d3a3a27c5ca8ccb2b4d979e92c5c3dfbfa19a37b2",
+    "spec_sha256": "8d7b8521b093eec6d0816e41924b082a4a065c6a6d02c82e187bae8fb3591d34",
+    "film_sha256": "3894ff0c9acb5bff99ced4600e37d4354661b7fff7a03c20a6b0e90ffd2d5def",
+    "inventory_sha256": "80ae5bb7d658ea9cff47898d01c0a8da3b0b6fb90a638e3a0799cc1bb213e50d"
+  },
+  "asr_model": "faster-whisper small",
+  "thresholds": {
+    "MAX_INNER_GAP": 0.18,
+    "MAX_CPS": 6.3,
+    "MAX_INDEL": 1,
+    "MAX_RUN_DELETE": 1,
+    "MAX_SUB_RATIO": 0.15
+  },
+  "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
+  "reviewed_at": "2026-11-27T15:24:28+00:00",
+  "pass": true,
+  "sentence_splits": [],
+  "entries": [
+    {
+      "id": "bundle:64a283401497c9382ff5409907ba08d41aebb80befcf3879134254ef8205b27f",
+      "audio_sha256": "6309171ac5e3c41915783d7a3d6790c3d91b6a43ff6a6f81268254d23e0a0e5c",
+      "pass": true,
+      "result_of": "bundle:64a283401497c9382ff5409907ba08d41aebb80befcf3879134254ef8205b27f"
+    },
+    {
+      "id": "bundle:fed31706f2de9b25a62aeb4b0362b8eb10033497779a4eabe9235c949c950635",
+      "audio_sha256": "7b92bc05767e04d8ca87ba21e2cd8faca8373e607527d475d46bc242a8041b58",
+      "pass": true,
+      "result_of": "bundle:fed31706f2de9b25a62aeb4b0362b8eb10033497779a4eabe9235c949c950635"
+    },
+    {
+      "id": "bundle:e2f135507b6a6b4c1c1e136244563d48165fd5778932182cf25e03cf8b2661a8",
+      "audio_sha256": "a80aabf3003a458524222d835988277818477ebacea706910dd543b5d24164a4",
+      "pass": true,
+      "result_of": "bundle:e2f135507b6a6b4c1c1e136244563d48165fd5778932182cf25e03cf8b2661a8"
+    },
+    {
+      "id": "bundle:64161608eb1a8eb3357899fd51c3b543de828d9c3edb44cc8e2d4ac4a5d7a1f4",
+      "audio_sha256": "ee1daccfa9b3d6b93d512a832e2555f9a181b1cd296c591cc7bbde5e786354bc",
+      "pass": true,
+      "result_of": "bundle:64161608eb1a8eb3357899fd51c3b543de828d9c3edb44cc8e2d4ac4a5d7a1f4"
+    },
+    {
+      "id": "bundle:2709a2f77ed7a2acc18987ffc28096d00604045c2d9882ca9fb00763bbf8ad04",
+      "audio_sha256": "b7be2273405ec65ac94fcd9f773af9d6ff67c4f90d6cd11bae1e8f5e2417131d",
+      "pass": true,
+      "result_of": "bundle:2709a2f77ed7a2acc18987ffc28096d00604045c2d9882ca9fb00763bbf8ad04"
+    },
+    {
+      "id": "bundle:3e402004f782490f5c232660f2771239600b61cf63c10d45aee1544f203f93c6",
+      "audio_sha256": "5126862b697cf7b2adad2218e3d507db63ec59d079f37cc5da9b4f170564340f",
+      "pass": true,
+      "result_of": "bundle:3e402004f782490f5c232660f2771239600b61cf63c10d45aee1544f203f93c6"
+    },
+    {
+      "id": "bundle:2f7105522fcdba2e12ce0d3876f53ba5dabee0e10af80a202b520db7c3c42f81",
+      "audio_sha256": "65febd9900fbab9eaa6818d2f8bf6882ff2aa03d355bd11fe24e4c09721c92fa",
+      "pass": true,
+      "result_of": "bundle:2f7105522fcdba2e12ce0d3876f53ba5dabee0e10af80a202b520db7c3c42f81"
+    },
+    {
+      "id": "bundle:5c803bf0f1b013b5644db2d956df06e151f02e2192eb0204d018a50147dc53f2",
+      "audio_sha256": "e3f9d93de2f26e4dc7ac5f6d91244b6ccfb61c7cb32d554af10909477f12e1ea",
+      "pass": true,
+      "result_of": "bundle:5c803bf0f1b013b5644db2d956df06e151f02e2192eb0204d018a50147dc53f2"
+    },
+    {
+      "id": "bundle:20a699f9c278811d7a0336ebe8128aba86f358ff02b7ecba6852334e71d628e1",
+      "audio_sha256": "2352280944c5dc4c78a5ef0de362c06329dfc0b11ef2ff4977a6f2690c1f0552",
+      "pass": true,
+      "result_of": "bundle:20a699f9c278811d7a0336ebe8128aba86f358ff02b7ecba6852334e71d628e1"
+    },
+    {
+      "id": "bundle:d299d8ad44bb3fb7596ca06bbb57fb43952353e4a00fd9c96b1ebe5ac2d5e5a9",
+      "audio_sha256": "ad24d4b3c4bcfbf4f3605341271454bf61875b1d0e14f70ce20db1cdccd95861",
+      "pass": true,
+      "result_of": "bundle:d299d8ad44bb3fb7596ca06bbb57fb43952353e4a00fd9c96b1ebe5ac2d5e5a9"
+    },
+    {
+      "id": "bundle:62b8018e334e35543f35912d4b2453f3aae1856c3c678a723846a59f5c92b281",
+      "audio_sha256": "2956c0dfa09fa881c792394150e406518586f9b29a43625638c5f1b564b34310",
+      "pass": true,
+      "result_of": "bundle:62b8018e334e35543f35912d4b2453f3aae1856c3c678a723846a59f5c92b281"
+    },
+    {
+      "id": "bundle:523a2c9d4146e5eff53ee91fd179e9f60e091e033a6cfba5589e1edbc54fa38b",
+      "audio_sha256": "473a5178aa65115dd1bf8c8a51f454dea737bba9542fe8c3ad22a77f56a19ad5",
+      "pass": true,
+      "result_of": "bundle:523a2c9d4146e5eff53ee91fd179e9f60e091e033a6cfba5589e1edbc54fa38b"
+    },
+    {
+      "id": "bundle:798918989953d4e06259d266022a395b865fac925560be8cc2ed957ada569820",
+      "audio_sha256": "0a6a8cac5ca73182c32fa5e776d95587d58f7316e0d2c485a5feddb8deb00e35",
+      "pass": true,
+      "result_of": "bundle:798918989953d4e06259d266022a395b865fac925560be8cc2ed957ada569820"
+    },
+    {
+      "id": "bundle:bade99915fd820219c40be2b208e18b6492184288c07ce2dc005bd20545c0798",
+      "audio_sha256": "02af369062d67b7c572ac03cc52d3cab3bdedd79a7efae67ae9b3f4338611cee",
+      "pass": true,
+      "result_of": "bundle:bade99915fd820219c40be2b208e18b6492184288c07ce2dc005bd20545c0798"
+    },
+    {
+      "id": "bundle:9ae26ca4f07ae117e35ec1ac0f3cc5248dfc63dbb9945b6dc82d347e1030ac04",
+      "audio_sha256": "8c470d6f0bbcb70b99df332acccbaa2f1d6b4ac16a5bbef6a6b2708ac80c33a1",
+      "pass": true,
+      "result_of": "bundle:9ae26ca4f07ae117e35ec1ac0f3cc5248dfc63dbb9945b6dc82d347e1030ac04"
+    },
+    {
+      "id": "bundle:f848c15fdc36352f28ee2bfe6681b65310af0e2f1e4096774ef8e428a0236aa7",
+      "audio_sha256": "ce268397f850102aca65ee377f82363da4a3afe7d26519d7650125b667f85007",
+      "pass": true,
+      "result_of": "bundle:f848c15fdc36352f28ee2bfe6681b65310af0e2f1e4096774ef8e428a0236aa7"
+    },
+    {
+      "id": "bundle:a091f49cfb729c2e75992b281748651b2cc5abc3c40dcbe8b6bcae8d3f6c1452",
+      "audio_sha256": "c202916cf2017a248a587ebe5893039609960ba697531725191f692daadfcce9",
+      "pass": true,
+      "result_of": "bundle:a091f49cfb729c2e75992b281748651b2cc5abc3c40dcbe8b6bcae8d3f6c1452"
+    },
+    {
+      "id": "bundle:00d5825983c491da0764690b548f4ecee8f033937dfdebe8d889bc5738b89922",
+      "audio_sha256": "1dd1a776f42ed94fad4423440318f9cfb607be52e186eb3df6ad2445ac058fba",
+      "pass": true,
+      "result_of": "bundle:00d5825983c491da0764690b548f4ecee8f033937dfdebe8d889bc5738b89922"
+    },
+    {
+      "id": "bundle:82d734d2d56ef01eb28f464db7d2afe8d384e83a47ab623e18517062fa25de50",
+      "audio_sha256": "261e2973030701e85b3f10b41507427f254ac722326add8a6e5566392b4fca35",
+      "pass": true,
+      "result_of": "bundle:82d734d2d56ef01eb28f464db7d2afe8d384e83a47ab623e18517062fa25de50"
+    },
+    {
+      "id": "bundle:5d708c075a427203f8842f204d805134af9fd9d7fb8dca9c27c67e80f8bf0e0e",
+      "audio_sha256": "d07b287b8a1151af52a3b5fa49e0b27ae29f0d5055e153ad4914fabcf4c112c2",
+      "pass": true,
+      "result_of": "bundle:5d708c075a427203f8842f204d805134af9fd9d7fb8dca9c27c67e80f8bf0e0e"
+    },
+    {
+      "id": "bundle:bddea3124f738e62c4ad3494da61e3fd836f3e5f780c7141f911bd5fa0c184ba",
+      "audio_sha256": "ca9991d182290819feb76606dd034fae8de9159ac9d1d22949a60ac5fba80225",
+      "pass": true,
+      "result_of": "bundle:bddea3124f738e62c4ad3494da61e3fd836f3e5f780c7141f911bd5fa0c184ba"
+    },
+    {
+      "id": "bundle:b0aa37bb915a8e49e49a966b8b4c6564b1cd32db090b721a626ec3218ccb7fc8",
+      "audio_sha256": "b07a242bb36cbb4a0b07aff79955642f8f42925e92a2966993f5327aca5ee93f",
+      "pass": true,
+      "result_of": "bundle:b0aa37bb915a8e49e49a966b8b4c6564b1cd32db090b721a626ec3218ccb7fc8"
+    },
+    {
+      "id": "bundle:2c10d5f61d5b5cdff4aeaa0251c38512e5d8d046d8d7050a22798177bf9d1b12",
+      "audio_sha256": "a21e42051c4e47ae7f12001f8b50ca1e19a0aa4fc1cdfe444e3f74101cad57b7",
+      "pass": true,
+      "result_of": "bundle:2c10d5f61d5b5cdff4aeaa0251c38512e5d8d046d8d7050a22798177bf9d1b12"
+    },
+    {
+      "id": "bundle:80a6af02e8ed9c7b1e9aed10751ed596dd7ab6c3ea502e2b8494b624cad3187e",
+      "audio_sha256": "19c3fbee0c73e77e2acf87748ce4de086a405e3af1acd7b54342982c2a2becf4",
+      "pass": true,
+      "result_of": "bundle:80a6af02e8ed9c7b1e9aed10751ed596dd7ab6c3ea502e2b8494b624cad3187e"
+    },
+    {
+      "id": "bundle:585e3d5d9150ae932f53097e031dea7bbd2283c381a129bca589871f0ef54fe4",
+      "audio_sha256": "44a00af6e36a4fbc1f12898992e78f482db24110684f9968907de23c8f6ee2f8",
+      "pass": true,
+      "result_of": "bundle:585e3d5d9150ae932f53097e031dea7bbd2283c381a129bca589871f0ef54fe4"
+    },
+    {
+      "id": "bundle:b26a84061cc641e4c8dcdd9283789496d1cf87ce4e3d7a86dd61ecd61c9ce7eb",
+      "audio_sha256": "bcd7f02e8021c0bf29085fa129ae36fcd34bed050087236cf74e7a7355b74772",
+      "pass": true,
+      "result_of": "bundle:b26a84061cc641e4c8dcdd9283789496d1cf87ce4e3d7a86dd61ecd61c9ce7eb"
+    },
+    {
+      "id": "bundle:e853e3f62151f3794bb25ca1bcb51bd9b5db576c1cd9fbeb5940015c64b822d3",
+      "audio_sha256": "517918febc51e9778b6db1844d7050b4e4eab1e542235db05cd3967945c0bb1d",
+      "pass": true,
+      "result_of": "bundle:e853e3f62151f3794bb25ca1bcb51bd9b5db576c1cd9fbeb5940015c64b822d3"
+    },
+    {
+      "id": "bundle:5336007a7eb720f1da7a6eb8fb5dd0a4977d0ab772783cef9469d69c6f76943d",
+      "audio_sha256": "6ca3729e3d478b924309b9d9637e78454d080a5bb15b28c9e1d131058f3f38e2",
+      "pass": true,
+      "result_of": "bundle:5336007a7eb720f1da7a6eb8fb5dd0a4977d0ab772783cef9469d69c6f76943d"
+    },
+    {
+      "id": "bundle:56360b866aab88124309a4d04ae450cfcb793b89a2f02a9e6cbd0456180ea1cc",
+      "audio_sha256": "5411310d1da0e8efe4d8e5ffecb039e28e51794bb1526e7786394120409cda0f",
+      "pass": true,
+      "result_of": "bundle:56360b866aab88124309a4d04ae450cfcb793b89a2f02a9e6cbd0456180ea1cc"
+    },
+    {
+      "id": "bundle:c83efd7de5ce8ef127b34c31b8236789a8b0e5087c72e6b0ecf69cc7cff7d929",
+      "audio_sha256": "7b5659ed5eb262993a94c9b24d40b57c49d14bccc65ba1a71e8af3012cf4bc6f",
+      "pass": true,
+      "result_of": "bundle:c83efd7de5ce8ef127b34c31b8236789a8b0e5087c72e6b0ecf69cc7cff7d929"
+    },
+    {
+      "id": "bundle:736d691c51f6d55fe90499afb737a133d54e27ae611c708ff6c93f45c680b4fe",
+      "audio_sha256": "d4dd7a28c58c42abbe952da0e054d8c7c7b00a5525b014b29624a3be16b778fc",
+      "pass": true,
+      "result_of": "bundle:736d691c51f6d55fe90499afb737a133d54e27ae611c708ff6c93f45c680b4fe"
+    },
+    {
+      "id": "bundle:c6acc75d129a0c8b460c4be882dc83dfd129e14066c26e97556f92d52c945c3c",
+      "audio_sha256": "f8e2e3119d48f7b6b546c0bc37e7f2958bc80f301e5411bed23d692f362de512",
+      "pass": true,
+      "result_of": "bundle:c6acc75d129a0c8b460c4be882dc83dfd129e14066c26e97556f92d52c945c3c"
+    },
+    {
+      "id": "bundle:7c847760d7c6fe4c69b2d039d63fcc5dbf7c1e0007e3b753790698549f569037",
+      "audio_sha256": "2e2fdbc42a4a0f5bce6c8a3eb70a60e54acce76607dd95b9a3354a88a3a8d95d",
+      "pass": true,
+      "result_of": "bundle:7c847760d7c6fe4c69b2d039d63fcc5dbf7c1e0007e3b753790698549f569037"
+    }
+  ],
+  "audio": [
+    {
+      "id": "bundle:64a283401497c9382ff5409907ba08d41aebb80befcf3879134254ef8205b27f",
+      "text": "从二零零零年到二零二六年，男子网球一共产生过二十七个年终世界第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 31,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "从2000年到2026年,男子网球一共产生过27个年中世界第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 31,
+        "speech_s": 6.02,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "从 ｜ 二 ｜ 零 ｜ 零 ｜ 零 ｜ 年 ｜ 到 ｜ 二 ｜ 零 ｜ 二 ｜ 六 ｜ 年 ｜ 男 ｜ 子 ｜ 网 ｜ 球 ｜ 一 ｜ 共 ｜ 产 ｜ 生 ｜ 过 ｜ 二 ｜ 十 ｜ 七 ｜ 个 ｜ 年 ｜ 终 ｜ 世 ｜ 界 ｜ 第 ｜ 一"
+      }
+    },
+    {
+      "id": "bundle:fed31706f2de9b25a62aeb4b0362b8eb10033497779a4eabe9235c949c950635",
+      "text": "把他们每个人当年对阵世界前十的成绩排成一张表，你会看到一条二十六年没有人跌破的线，胜率五成。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "把他们每个人当年对阵世界前十的成绩排成一张表。你会看到一条26年没有人跌破的线胜率5成。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.52,
+        "cps": 5.05,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "把 ｜ 他 ｜ 们 ｜ 每 ｜ 个 ｜ 人 ｜ 当 ｜ 年 ｜ 对 ｜ 阵 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 的 ｜ 成 ｜ 绩 ｜ 排 ｜ 成 ｜ 一 ｜ 张 ｜ 表 ｜ 你 ｜ 会 ｜ 看 ｜ 到 ｜ 一 ｜ 条 ｜ 二 ｜ 十 ｜ 六 ｜ 年 ｜ 没 ｜ 有 ｜ 人 ｜ 跌 ｜ 破 ｜ 的 ｜ 线 ｜ 胜 ｜ 率 ｜ 五 ｜ 成"
+      }
+    },
+    {
+      "id": "bundle:e2f135507b6a6b4c1c1e136244563d48165fd5778932182cf25e03cf8b2661a8",
+      "text": "排名算的是你一整年攒了多少分，从来不问你赢过谁。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 22,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.045,
+        "longest_deletion": 0,
+        "transcript": "排名算的是你一整年砸了多少分,从来不问你赢过谁。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 22,
+        "speech_s": 4.06,
+        "cps": 5.42,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "排 ｜ 名 ｜ 算 ｜ 的 ｜ 是 ｜ 你 ｜ 一 ｜ 整 ｜ 年 ｜ 攒 ｜ 了 ｜ 多 ｜ 少 ｜ 分 ｜ 从 ｜ 来 ｜ 不 ｜ 问 ｜ 你 ｜ 赢 ｜ 过 ｜ 谁"
+      }
+    },
+    {
+      "id": "bundle:64161608eb1a8eb3357899fd51c3b543de828d9c3edb44cc8e2d4ac4a5d7a1f4",
+      "text": "今年，这条线破了。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 7,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "今年,这条线破了。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 7,
+        "speech_s": 1.84,
+        "cps": 3.8,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "今 ｜ 年 ｜ 这 ｜ 条 ｜ 线 ｜ 破 ｜ 了"
+      }
+    },
+    {
+      "id": "bundle:2709a2f77ed7a2acc18987ffc28096d00604045c2d9882ca9fb00763bbf8ad04",
+      "text": "先看这张表的顶端。二零零四年的费德勒，对世界前十打了十八场，全胜。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 29,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "先看这张表的顶端。2004年的费德勒对世界前十达了十八场,全胜。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 29,
+        "speech_s": 6.38,
+        "cps": 4.55,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "先 ｜ 看 ｜ 这 ｜ 张 ｜ 表 ｜ 的 ｜ 顶 ｜ 端 ｜ 二 ｜ 零 ｜ 零 ｜ 四 ｜ 年 ｜ 的 ｜ 费 ｜ 德 ｜ 勒 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 打 ｜ 了 ｜ 十 ｜ 八 ｜ 场 ｜ 全 ｜ 胜"
+      }
+    },
+    {
+      "id": "bundle:3e402004f782490f5c232660f2771239600b61cf63c10d45aee1544f203f93c6",
+      "text": "那一年他输了六场球，对手的排名全部在十名开外。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 21,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那一年,他输了六场球,对手的排名全部在失明开外。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 21,
+        "speech_s": 4.6,
+        "cps": 4.57,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 一 ｜ 年 ｜ 他 ｜ 输 ｜ 了 ｜ 六 ｜ 场 ｜ 球 ｜ 对 ｜ 手 ｜ 的 ｜ 排 ｜ 名 ｜ 全 ｜ 部 ｜ 在 ｜ 十 ｜ 名 ｜ 开 ｜ 外"
+      }
+    },
+    {
+      "id": "bundle:2f7105522fcdba2e12ce0d3876f53ba5dabee0e10af80a202b520db7c3c42f81",
+      "text": "也就是说，那一年的世界第一，面对最强的十个人，一场都没有输过。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 27,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "也就是说,那一年的世界第一, 面对最强的十个人,一场都没有输过。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 27,
+        "speech_s": 5.66,
+        "cps": 4.77,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "也 ｜ 就 ｜ 是 ｜ 说 ｜ 那 ｜ 一 ｜ 年 ｜ 的 ｜ 世 ｜ 界 ｜ 第 ｜ 一 ｜ 面 ｜ 对 ｜ 最 ｜ 强 ｜ 的 ｜ 十 ｜ 个 ｜ 人 ｜ 一 ｜ 场 ｜ 都 ｜ 没 ｜ 有 ｜ 输 ｜ 过"
+      }
+    },
+    {
+      "id": "bundle:5c803bf0f1b013b5644db2d956df06e151f02e2192eb0204d018a50147dc53f2",
+      "text": "这是这张表二十七年里的唯一一个满分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这是这张表27年里的唯一一个满分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 2.86,
+        "cps": 5.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 是 ｜ 这 ｜ 张 ｜ 表 ｜ 二 ｜ 十 ｜ 七 ｜ 年 ｜ 里 ｜ 的 ｜ 唯 ｜ 一 ｜ 一 ｜ 个 ｜ 满 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:20a699f9c278811d7a0336ebe8128aba86f358ff02b7ecba6852334e71d628e1",
+      "text": "再看数量。二零一五年的德约科维奇，一个赛季和世界前十交手三十六次，赢了三十一场，至今是单季纪录。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 43,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "再看数量。2015年的德约科维奇,一个赛季和世界前十交手36次,赢了31场,至今是单级记录。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 43,
+        "speech_s": 8.82,
+        "cps": 4.88,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 看 ｜ 数 ｜ 量 ｜ 二 ｜ 零 ｜ 一 ｜ 五 ｜ 年 ｜ 的 ｜ 德 ｜ 约 ｜ 科 ｜ 维 ｜ 奇 ｜ 一 ｜ 个 ｜ 赛 ｜ 季 ｜ 和 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 交 ｜ 手 ｜ 三 ｜ 十 ｜ 六 ｜ 次 ｜ 赢 ｜ 了 ｜ 三 ｜ 十 ｜ 一 ｜ 场 ｜ 至 ｜ 今 ｜ 是 ｜ 单 ｜ 季 ｜ 纪 ｜ 录"
+      }
+    },
+    {
+      "id": "bundle:d299d8ad44bb3fb7596ca06bbb57fb43952353e4a00fd9c96b1ebe5ac2d5e5a9",
+      "text": "那一年的前十，他每一个都赢过。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那一年的前十,他每一个都赢过。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 3.02,
+        "cps": 4.3,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 一 ｜ 年 ｜ 的 ｜ 前 ｜ 十 ｜ 他 ｜ 每 ｜ 一 ｜ 个 ｜ 都 ｜ 赢 ｜ 过"
+      }
+    },
+    {
+      "id": "bundle:62b8018e334e35543f35912d4b2453f3aae1856c3c678a723846a59f5c92b281",
+      "text": "把这个数字放在今年旁边：今年的世界第一，在都灵开赛之前，对世界前十只赢了三场。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 35,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.029,
+        "longest_deletion": 0,
+        "transcript": "把这个数字放在今年旁边,今年的世界第一在都临开赛之前对世界前十只赢了三场。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 35,
+        "speech_s": 7.08,
+        "cps": 4.94,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "把 ｜ 这 ｜ 个 ｜ 数 ｜ 字 ｜ 放 ｜ 在 ｜ 今 ｜ 年 ｜ 旁 ｜ 边 ｜ 今 ｜ 年 ｜ 的 ｜ 世 ｜ 界 ｜ 第 ｜ 一 ｜ 在 ｜ 都 ｜ 灵 ｜ 开 ｜ 赛 ｜ 之 ｜ 前 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 只 ｜ 赢 ｜ 了 ｜ 三 ｜ 场"
+      }
+    },
+    {
+      "id": "bundle:523a2c9d4146e5eff53ee91fd179e9f60e091e033a6cfba5589e1edbc54fa38b",
+      "text": "三十一，和三。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 5,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "31. 核散"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 5,
+        "speech_s": 1.6,
+        "cps": 3.12,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "三 ｜ 十 ｜ 一 ｜ 和 ｜ 三"
+      }
+    },
+    {
+      "id": "bundle:798918989953d4e06259d266022a395b865fac925560be8cc2ed957ada569820",
+      "text": "那这张表的底，原来在哪里？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 11,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那这张表的底原来在哪里?"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 11,
+        "speech_s": 2.4,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 这 ｜ 张 ｜ 表 ｜ 的 ｜ 底 ｜ 原 ｜ 来 ｜ 在 ｜ 哪 ｜ 里"
+      }
+    },
+    {
+      "id": "bundle:bade99915fd820219c40be2b208e18b6492184288c07ce2dc005bd20545c0798",
+      "text": "二零零三年的罗迪克，六胜五负，胜率百分之五十四点五，是三巨头之前最弱的一位年终第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2003年的罗迪克：六胜五负：胜率54.5%：是三句头之前最弱的一位年中第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.56,
+        "cps": 5.03,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二 ｜ 零 ｜ 零 ｜ 三 ｜ 年 ｜ 的 ｜ 罗 ｜ 迪 ｜ 克 ｜ 六 ｜ 胜 ｜ 五 ｜ 负 ｜ 胜 ｜ 率 ｜ 百 ｜ 分 ｜ 之 ｜ 五 ｜ 十 ｜ 四 ｜ 点 ｜ 五 ｜ 是 ｜ 三 ｜ 巨 ｜ 头 ｜ 之 ｜ 前 ｜ 最 ｜ 弱 ｜ 的 ｜ 一 ｜ 位 ｜ 年 ｜ 终 ｜ 第 ｜ 一"
+      }
+    },
+    {
+      "id": "bundle:9ae26ca4f07ae117e35ec1ac0f3cc5248dfc63dbb9945b6dc82d347e1030ac04",
+      "text": "可即便是他，也是赢得比输得多。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 13,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可即便是他,也是赢得比输的多。"
+      },
+      "polyphones": [
+        {
+          "index": 9,
+          "char": "得",
+          "word": "赢得",
+          "intended": "de5",
+          "wrong": [
+            "de2",
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "de2",
+              "verdict": "uncertain",
+              "score": -0.145,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "的"
+        },
+        {
+          "index": 12,
+          "char": "得",
+          "word": "得",
+          "intended": "de2",
+          "wrong": [
+            "dei3"
+          ],
+          "tier": "B",
+          "verdict": "unmeasurable",
+          "runs": [],
+          "ok_refs": "德锝"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 13,
+        "speech_s": 2.74,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 即 ｜ 便 ｜ 是 ｜ 他 ｜ 也 ｜ 是 ｜ 赢 ｜ 得 ｜ 比 ｜ 输 ｜ 得 ｜ 多"
+      }
+    },
+    {
+      "id": "bundle:f848c15fdc36352f28ee2bfe6681b65310af0e2f1e4096774ef8e428a0236aa7",
+      "text": "此后二十三年，从纳达尔、穆雷，到阿尔卡拉斯、辛纳，每一位年终第一对世界前十的胜率都在六成或以上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "此后二十三年,从纳达尔、穆雷、到阿尔卡拉斯、新纳,每一位年中第一队世界前十的胜率都在六成货以上。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 9.14,
+        "cps": 4.6,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "此 ｜ 后 ｜ 二 ｜ 十 ｜ 三 ｜ 年 ｜ 从 ｜ 纳 ｜ 达 ｜ 尔 ｜ 穆 ｜ 雷 ｜ 到 ｜ 阿 ｜ 尔 ｜ 卡 ｜ 拉 ｜ 斯 ｜ 辛 ｜ 纳 ｜ 每 ｜ 一 ｜ 位 ｜ 年 ｜ 终 ｜ 第 ｜ 一 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 的 ｜ 胜 ｜ 率 ｜ 都 ｜ 在 ｜ 六 ｜ 成 ｜ 或 ｜ 以 ｜ 上"
+      }
+    },
+    {
+      "id": "bundle:a091f49cfb729c2e75992b281748651b2cc5abc3c40dcbe8b6bcae8d3f6c1452",
+      "text": "赢前十，曾经是世界第一不用言说的及格线。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 18,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "英前时,曾经是世界第一不用严说的及格线。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 18,
+        "speech_s": 3.8,
+        "cps": 4.74,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "赢 ｜ 前 ｜ 十 ｜ 曾 ｜ 经 ｜ 是 ｜ 世 ｜ 界 ｜ 第 ｜ 一 ｜ 不 ｜ 用 ｜ 言 ｜ 说 ｜ 的 ｜ 及 ｜ 格 ｜ 线"
+      }
+    },
+    {
+      "id": "bundle:00d5825983c491da0764690b548f4ecee8f033937dfdebe8d889bc5738b89922",
+      "text": "断裂就发生在这两年。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 9,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "断裂就发生在这两年。"
+      },
+      "polyphones": [
+        {
+          "index": 3,
+          "char": "发",
+          "word": "发生",
+          "intended": "fa1",
+          "wrong": [
+            "fa4"
+          ],
+          "tier": "B",
+          "verdict": "correct",
+          "runs": [
+            {
+              "wrong": "fa4",
+              "verdict": "correct",
+              "score": 0.322,
+              "confidence": "low",
+              "near": null
+            }
+          ],
+          "ok_refs": "彂沷発"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 9,
+        "speech_s": 1.86,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "断 ｜ 裂 ｜ 就 ｜ 发 ｜ 生 ｜ 在 ｜ 这 ｜ 两 ｜ 年"
+      }
+    },
+    {
+      "id": "bundle:82d734d2d56ef01eb28f464db7d2afe8d384e83a47ab623e18517062fa25de50",
+      "text": "二零二五年的阿尔卡拉斯，对世界前十十七胜三负，胜率百分之八十五，近十年最高。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 34,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "2025年的阿尔卡拉斯对世界前实施七胜三负,胜率85%,仅十年最高。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 34,
+        "speech_s": 7.12,
+        "cps": 4.78,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二 ｜ 零 ｜ 二 ｜ 五 ｜ 年 ｜ 的 ｜ 阿 ｜ 尔 ｜ 卡 ｜ 拉 ｜ 斯 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 十 ｜ 七 ｜ 胜 ｜ 三 ｜ 负 ｜ 胜 ｜ 率 ｜ 百 ｜ 分 ｜ 之 ｜ 八 ｜ 十 ｜ 五 ｜ 近 ｜ 十 ｜ 年 ｜ 最 ｜ 高"
+      }
+    },
+    {
+      "id": "bundle:5d708c075a427203f8842f204d805134af9fd9d7fb8dca9c27c67e80f8bf0e0e",
+      "text": "一年之后，兹维列夫成为年终第一：他这一年拿了法网和美网两座大满贯，可对世界前十，都灵之前三胜九负，对辛纳和阿尔卡拉斯，一次都没赢过。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 59,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 2,
+        "sub_ratio": 0.034,
+        "longest_deletion": 0,
+        "transcript": "一年之后,自威列夫成为年中第一,他这一年拿了法网和眉网两座大猛冠,可对世界前十、都龄之前三胜九负,对新大和阿尔卡拉斯一次都没赢过。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 59,
+        "speech_s": 12.78,
+        "cps": 4.62,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 年 ｜ 之 ｜ 后 ｜ 兹 ｜ 维 ｜ 列 ｜ 夫 ｜ 成 ｜ 为 ｜ 年 ｜ 终 ｜ 第 ｜ 一 ｜ 他 ｜ 这 ｜ 一 ｜ 年 ｜ 拿 ｜ 了 ｜ 法 ｜ 网 ｜ 和 ｜ 美 ｜ 网 ｜ 两 ｜ 座 ｜ 大 ｜ 满 ｜ 贯 ｜ 可 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 都 ｜ 灵 ｜ 之 ｜ 前 ｜ 三 ｜ 胜 ｜ 九 ｜ 负 ｜ 对 ｜ 辛 ｜ 纳 ｜ 和 ｜ 阿 ｜ 尔 ｜ 卡 ｜ 拉 ｜ 斯 ｜ 一 ｜ 次 ｜ 都 ｜ 没 ｜ 赢 ｜ 过"
+      }
+    },
+    {
+      "id": "bundle:bddea3124f738e62c4ad3494da61e3fd836f3e5f780c7141f911bd5fa0c184ba",
+      "text": "算上都灵后来赢下的四场，全年七胜十负二十七年里，第一个对前十输多赢少的年终第一。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 37,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.027,
+        "longest_deletion": 0,
+        "transcript": "算上都临后来营下的四场,全年七胜十福二十七年里,第一个对前十书多营少的年中第一。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 37,
+        "speech_s": 7.18,
+        "cps": 5.15,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "算 ｜ 上 ｜ 都 ｜ 灵 ｜ 后 ｜ 来 ｜ 赢 ｜ 下 ｜ 的 ｜ 四 ｜ 场 ｜ 全 ｜ 年 ｜ 七 ｜ 胜 ｜ 十 ｜ 负 ｜ 二 ｜ 十 ｜ 七 ｜ 年 ｜ 里 ｜ 第 ｜ 一 ｜ 个 ｜ 对 ｜ 前 ｜ 十 ｜ 输 ｜ 多 ｜ 赢 ｜ 少 ｜ 的 ｜ 年 ｜ 终 ｜ 第 ｜ 一"
+      }
+    },
+    {
+      "id": "bundle:b0aa37bb915a8e49e49a966b8b4c6564b1cd32db090b721a626ec3218ccb7fc8",
+      "text": "这怎么可能？因为积分系统里，根本没有对手是谁这一项。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 23,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.043,
+        "longest_deletion": 0,
+        "transcript": "这怎么可能?因为积分系统里根本没有对手是谁这一下。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 23,
+        "speech_s": 4.9,
+        "cps": 4.69,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 怎 ｜ 么 ｜ 可 ｜ 能 ｜ 因 ｜ 为 ｜ 积 ｜ 分 ｜ 系 ｜ 统 ｜ 里 ｜ 根 ｜ 本 ｜ 没 ｜ 有 ｜ 对 ｜ 手 ｜ 是 ｜ 谁 ｜ 这 ｜ 一 ｜ 项"
+      }
+    },
+    {
+      "id": "bundle:2c10d5f61d5b5cdff4aeaa0251c38512e5d8d046d8d7050a22798177bf9d1b12",
+      "text": "你打进一站比赛的第几轮、这站是什么级别，决定你拿多少分；站在网对面的人排第几，不决定。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 38,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "你打进一战比赛的第几轮,这战是什么级别,决定你拿多少分,站在往对面的人排第几,不决定。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 38,
+        "speech_s": 7.86,
+        "cps": 4.83,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "你 ｜ 打 ｜ 进 ｜ 一 ｜ 站 ｜ 比 ｜ 赛 ｜ 的 ｜ 第 ｜ 几 ｜ 轮 ｜ 这 ｜ 站 ｜ 是 ｜ 什 ｜ 么 ｜ 级 ｜ 别 ｜ 决 ｜ 定 ｜ 你 ｜ 拿 ｜ 多 ｜ 少 ｜ 分 ｜ 站 ｜ 在 ｜ 网 ｜ 对 ｜ 面 ｜ 的 ｜ 人 ｜ 排 ｜ 第 ｜ 几 ｜ 不 ｜ 决 ｜ 定"
+      }
+    },
+    {
+      "id": "bundle:80a6af02e8ed9c7b1e9aed10751ed596dd7ab6c3ea502e2b8494b624cad3187e",
+      "text": "一座大满贯冠军是两千分，他今年有两座。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 17,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "一座大满罐冠军是两千分,他今年有两座。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 17,
+        "speech_s": 3.88,
+        "cps": 4.38,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "一 ｜ 座 ｜ 大 ｜ 满 ｜ 贯 ｜ 冠 ｜ 军 ｜ 是 ｜ 两 ｜ 千 ｜ 分 ｜ 他 ｜ 今 ｜ 年 ｜ 有 ｜ 两 ｜ 座"
+      }
+    },
+    {
+      "id": "bundle:585e3d5d9150ae932f53097e031dea7bbd2283c381a129bca589871f0ef54fe4",
+      "text": "而他的总胜场是全巡回赛最多的：六十九场胜利，一站一站打到后段，输给前十，也照样有分进账。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 39,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.026,
+        "longest_deletion": 0,
+        "transcript": "而他的总胜场是全循回赛最多的,69场胜利,一战一战打到后段,输给前十,也照样有分近乍。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 39,
+        "speech_s": 9.1,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "而 ｜ 他 ｜ 的 ｜ 总 ｜ 胜 ｜ 场 ｜ 是 ｜ 全 ｜ 巡 ｜ 回 ｜ 赛 ｜ 最 ｜ 多 ｜ 的 ｜ 六 ｜ 十 ｜ 九 ｜ 场 ｜ 胜 ｜ 利 ｜ 一 ｜ 站 ｜ 一 ｜ 站 ｜ 打 ｜ 到 ｜ 后 ｜ 段 ｜ 输 ｜ 给 ｜ 前 ｜ 十 ｜ 也 ｜ 照 ｜ 样 ｜ 有 ｜ 分 ｜ 进 ｜ 账"
+      }
+    },
+    {
+      "id": "bundle:b26a84061cc641e4c8dcdd9283789496d1cf87ce4e3d7a86dd61ecd61c9ce7eb",
+      "text": "再加上辛纳在温网之后因伤停赛、提前结束了赛季，分数的空间，就这样让了出来。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.03,
+        "longest_deletion": 0,
+        "transcript": "再加上新纳在温网之后,因商停赛,提前结束了赛季,分数的空间就这样让得出来。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.2,
+        "cps": 4.58,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "再 ｜ 加 ｜ 上 ｜ 辛 ｜ 纳 ｜ 在 ｜ 温 ｜ 网 ｜ 之 ｜ 后 ｜ 因 ｜ 伤 ｜ 停 ｜ 赛 ｜ 提 ｜ 前 ｜ 结 ｜ 束 ｜ 了 ｜ 赛 ｜ 季 ｜ 分 ｜ 数 ｜ 的 ｜ 空 ｜ 间 ｜ 就 ｜ 这 ｜ 样 ｜ 让 ｜ 了 ｜ 出 ｜ 来"
+      }
+    },
+    {
+      "id": "bundle:e853e3f62151f3794bb25ca1bcb51bd9b5db576c1cd9fbeb5940015c64b822d3",
+      "text": "年终第一结算的那一天，他有一万零三百五十分，比第三名多出两千七百五十分。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.03,
+        "longest_deletion": 0,
+        "transcript": "年中第一结算的那一天,他有10350分,比第三名多出2750分。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 5.86,
+        "cps": 5.63,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "年 ｜ 终 ｜ 第 ｜ 一 ｜ 结 ｜ 算 ｜ 的 ｜ 那 ｜ 一 ｜ 天 ｜ 他 ｜ 有 ｜ 一 ｜ 万 ｜ 零 ｜ 三 ｜ 百 ｜ 五 ｜ 十 ｜ 分 ｜ 比 ｜ 第 ｜ 三 ｜ 名 ｜ 多 ｜ 出 ｜ 两 ｜ 千 ｜ 七 ｜ 百 ｜ 五 ｜ 十 ｜ 分"
+      }
+    },
+    {
+      "id": "bundle:5336007a7eb720f1da7a6eb8fb5dd0a4977d0ab772783cef9469d69c6f76943d",
+      "text": "这个第一，在数学上毫无问题。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "这个第一在数学尚毫无问题。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.8,
+        "cps": 4.29,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "这 ｜ 个 ｜ 第 ｜ 一 ｜ 在 ｜ 数 ｜ 学 ｜ 上 ｜ 毫 ｜ 无 ｜ 问 ｜ 题"
+      }
+    },
+    {
+      "id": "bundle:56360b866aab88124309a4d04ae450cfcb793b89a2f02a9e6cbd0456180ea1cc",
+      "text": "所以问题不在兹维列夫身上。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 12,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "所以,问题不在自卫列夫身上。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 12,
+        "speech_s": 2.38,
+        "cps": 5.04,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "所 ｜ 以 ｜ 问 ｜ 题 ｜ 不 ｜ 在 ｜ 兹 ｜ 维 ｜ 列 ｜ 夫 ｜ 身 ｜ 上"
+      }
+    },
+    {
+      "id": "bundle:c83efd7de5ce8ef127b34c31b8236789a8b0e5087c72e6b0ecf69cc7cff7d929",
+      "text": "二十七个年终第一二十六个对世界前十赢多输少。我们早就默认，世界第一，就该是赢过最强对手的人。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 42,
+        "deleted": 1,
+        "inserted": 0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
+        "longest_deletion": 1,
+        "transcript": "27个年中,第26个对世界前适应多书上。我们早就默认,世界第一就该是赢过最强对手的人。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 42,
+        "speech_s": 8.68,
+        "cps": 4.84,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "二 ｜ 十 ｜ 七 ｜ 个 ｜ 年 ｜ 终 ｜ 第 ｜ 一 ｜ 二 ｜ 十 ｜ 六 ｜ 个 ｜ 对 ｜ 世 ｜ 界 ｜ 前 ｜ 十 ｜ 赢 ｜ 多 ｜ 输 ｜ 少 ｜ 我 ｜ 们 ｜ 早 ｜ 就 ｜ 默 ｜ 认 ｜ 世 ｜ 界 ｜ 第 ｜ 一 ｜ 就 ｜ 该 ｜ 是 ｜ 赢 ｜ 过 ｜ 最 ｜ 强 ｜ 对 ｜ 手 ｜ 的 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:736d691c51f6d55fe90499afb737a133d54e27ae611c708ff6c93f45c680b4fe",
+      "text": "可排名从第一天起，量的就不是这个。它量的是到场、是稳定、是一整年攒分的总和。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 33,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "可排名从第一天起,量的就不是这个。它量的是道厂,是稳定,是一整年攒分的综合。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 33,
+        "speech_s": 7.62,
+        "cps": 4.33,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "可 ｜ 排 ｜ 名 ｜ 从 ｜ 第 ｜ 一 ｜ 天 ｜ 起 ｜ 量 ｜ 的 ｜ 就 ｜ 不 ｜ 是 ｜ 这 ｜ 个 ｜ 它 ｜ 量 ｜ 的 ｜ 是 ｜ 到 ｜ 场 ｜ 是 ｜ 稳 ｜ 定 ｜ 是 ｜ 一 ｜ 整 ｜ 年 ｜ 攒 ｜ 分 ｜ 的 ｜ 总 ｜ 和"
+      }
+    },
+    {
+      "id": "bundle:c6acc75d129a0c8b460c4be882dc83dfd129e14066c26e97556f92d52c945c3c",
+      "text": "那么你来选：如果世界第一只能代表一件事，你希望它代表赢过最强的人，还是一整年最稳定的人？",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 40,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "那么你来选,如果世界第一只能代表一件事,你希望他代表赢过最强的人还是一整年最稳定的人。"
+      },
+      "polyphones": [
+        {
+          "index": 33,
+          "char": "还",
+          "word": "还是",
+          "intended": "hai2",
+          "wrong": [
+            "huan2"
+          ],
+          "tier": "B",
+          "verdict": "uncertain",
+          "runs": [
+            {
+              "wrong": "huan2",
+              "verdict": "uncertain",
+              "score": 0.04,
+              "confidence": null,
+              "near": null
+            }
+          ],
+          "ok_refs": "孩骸"
+        }
+      ],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 40,
+        "speech_s": 8.16,
+        "cps": 4.9,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "那 ｜ 么 ｜ 你 ｜ 来 ｜ 选 ｜ 如 ｜ 果 ｜ 世 ｜ 界 ｜ 第 ｜ 一 ｜ 只 ｜ 能 ｜ 代 ｜ 表 ｜ 一 ｜ 件 ｜ 事 ｜ 你 ｜ 希 ｜ 望 ｜ 它 ｜ 代 ｜ 表 ｜ 赢 ｜ 过 ｜ 最 ｜ 强 ｜ 的 ｜ 人 ｜ 还 ｜ 是 ｜ 一 ｜ 整 ｜ 年 ｜ 最 ｜ 稳 ｜ 定 ｜ 的 ｜ 人"
+      }
+    },
+    {
+      "id": "bundle:7c847760d7c6fe4c69b2d039d63fcc5dbf7c1e0007e3b753790698549f569037",
+      "text": "评论区，站个队。",
+      "pass": true,
+      "checks": {
+        "completeness": true,
+        "polyphones": true,
+        "pauses": true,
+        "speed": true
+      },
+      "completeness": {
+        "ok": true,
+        "ref_syllables": 6,
+        "deleted": 0,
+        "inserted": 0,
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "评论区、战阁队。"
+      },
+      "polyphones": [],
+      "pauses": {
+        "inner_pauses": [],
+        "fake_tokens": [],
+        "chars": 6,
+        "speech_s": 1.52,
+        "cps": 3.95,
+        "pause_ok": true,
+        "speed_ok": true,
+        "tokens": "评 ｜ 论 ｜ 区 ｜ 站 ｜ 个 ｜ 队"
+      }
+    }
+  ]
+}
