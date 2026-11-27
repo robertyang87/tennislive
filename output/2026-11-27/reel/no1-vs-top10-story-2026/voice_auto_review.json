@@ -3,7 +3,7 @@
   "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "c0224bae9cf6f91e9058141b396c20b69d41f39b8b3c0b914e5c3534e68f9ccd",
+    "render_sha256": "dae5f924df5b74386e86a0f2d7ba06caa87ea582a84068caddc8b72c3a3bd976",
     "render_inputs_sha256": "ed865e637a2a7f8ae7a2fec4df8e2e40f2dee0694688f682cf2e9ed3ea7804d7",
     "spec_sha256": "290667c8b9269576bbfbb38ef987b45c2410e77adf58aa3138463736144a365b",
     "film_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-27T12:15:09+00:00",
+  "reviewed_at": "2026-11-27T12:28:17+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -236,11 +236,11 @@
         "ok": true,
         "ref_syllables": 31,
         "deleted": 0,
-        "inserted": 1,
+        "inserted": 0,
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "从20000年到2026年,男子网球一共产生过27个年中世界第一。"
+        "transcript": "从2000年到2026年,男子网球一共产生过27个年中世界第一。"
       },
       "polyphones": [],
       "pauses": {
@@ -368,7 +368,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "先看这张表的顶端。2004年的费德勒对世界前十达了十八场,全胜。"
+        "transcript": "先看这张表的顶端。2004年的费德勒,对世界前十达了18场,全胜。"
       },
       "polyphones": [],
       "pauses": {
@@ -560,7 +560,7 @@
         "substituted": 1,
         "sub_ratio": 0.029,
         "longest_deletion": 0,
-        "transcript": "把这个数字放在今年旁边,今年的世界第一,在都临开赛之前,对世界前十只赢了三场。"
+        "transcript": "把这个数字放在今年旁边,今年的世界第一,在都林开赛之前,对世界前十只赢了三场。"
       },
       "polyphones": [],
       "pauses": {
@@ -656,7 +656,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2003年的罗迪克,六胜五富,胜率54.5%,是三巨头之前最弱的一位年中第一。"
+        "transcript": "2003年的罗迪克：六胜五负：胜率54.5%：是三巨头之前最弱的一位年中第一。"
       },
       "polyphones": [],
       "pauses": {
@@ -753,10 +753,10 @@
         "ref_syllables": 42,
         "deleted": 0,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
+        "substituted": 1,
+        "sub_ratio": 0.024,
         "longest_deletion": 0,
-        "transcript": "此后二十三年,从纳达尔、穆雷、到阿尔卡拉斯、新纳,每一位年中第一队世界前十的胜率都在六成或以上。"
+        "transcript": "此后二十三年,从纳达尔、穆雷、到阿尔卡拉斯、兹納,每一位年中第一队世界前十的胜率都在六成或以上。"
       },
       "polyphones": [],
       "pauses": {
@@ -874,7 +874,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2025年的阿尔卡拉斯,对世界前十十七胜三副,胜率85%,近十年最高。"
+        "transcript": "2025年的阿尔卡拉斯,对世界前十十七胜三负,胜率85%,近十年最高。"
       },
       "polyphones": [],
       "pauses": {
@@ -906,7 +906,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "一年之后,自维列夫成为年中第一,他这一年拿了罚网和眉网两座大满罐,可对世界前时,都龄之前三胜九负,对辛纳和阿尔卡拉斯一次都没赢过。"
+        "transcript": "一年之后,自为列夫成为年中第一,他这一年拿了罚网和眉网两座大满罐,可对世界前时,都龄之前三胜九富,对辛纳和阿尔卡拉斯一次都没赢过。"
       },
       "polyphones": [],
       "pauses": {
@@ -970,7 +970,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "这怎么可能?因为积分系统里,根本没有对手是谁这一项。"
+        "transcript": "这怎么可能? 因为积分系统里,根本没有对手是谁这一项。"
       },
       "polyphones": [],
       "pauses": {
@@ -1125,12 +1125,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 33,
-        "deleted": 1,
+        "deleted": 0,
         "inserted": 0,
-        "substituted": 1,
-        "sub_ratio": 0.03,
-        "longest_deletion": 1,
-        "transcript": "年中第一节算的那一天,他有10,350分,比第三名多出2750分。"
+        "substituted": 0,
+        "sub_ratio": 0.0,
+        "longest_deletion": 0,
+        "transcript": "年中第一节算的那一天,他有一万零三百五十分,比第三名多出两千七百五十分。"
       },
       "polyphones": [],
       "pauses": {
@@ -1258,7 +1258,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可排名从第一天起,亮的就不是这个。它亮的是道场,是稳定,是一整年攒分的总和。"
+        "transcript": "可排名从第一天起,亮的就不是这个。它亮的是道场﹚是稳定﹚是一整年攒分的总和。"
       },
       "polyphones": [],
       "pauses": {
@@ -1290,7 +1290,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "那么你来选,如果世界第一只能代表一件事,你希望它代表赢过最强的人,还是一整年最稳定的人。"
+        "transcript": "那么你来选,如果世界第一只能代表一件事,你希望它代表赢过最强的人,还是一整年最稳定的人?"
       },
       "polyphones": [
         {
@@ -1344,7 +1344,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "评论区,站个队。"
+        "transcript": "评论区：战个队。"
       },
       "polyphones": [],
       "pauses": {
