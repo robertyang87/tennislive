@@ -5,9 +5,10 @@
     {
       "key": "pushplus:reel:no1-vs-top10-story-2026:73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d",
       "fingerprint": "73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d",
-      "status": "uncertain",
+      "status": "not_sent",
       "at": "2026-11-27T10:32:50Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/45982606110"
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/45982606110",
+      "evidence": "改判（原 status uncertain）：run 45982606110 的 job 日志 step 67 显示 voice_quality_gate.require_publish 在调用 PushPlus 之前抛错（缺 voice_quality_review.json），PushPlus 从未被调用、无流水号，消息未发出。2026-11-27 所有者裁决 B 路（修音重渲 v3 再推），按此证据改判 not_sent。"
     }
   ]
 }
