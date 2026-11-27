@@ -3,8 +3,8 @@
   "suite_version": 2,
   "method": "automated_voice_suite",
   "identity": {
-    "render_sha256": "e15d80ef9d306eb2357cd3e817c31f19997ff7dec0166c1b6d9618a16733fcf2",
-    "render_inputs_sha256": "465bc648b3d4a2c114b0fd6292e695159b3bcfa9f512d454cdcff7f64b7d851a",
+    "render_sha256": "c0224bae9cf6f91e9058141b396c20b69d41f39b8b3c0b914e5c3534e68f9ccd",
+    "render_inputs_sha256": "ed865e637a2a7f8ae7a2fec4df8e2e40f2dee0694688f682cf2e9ed3ea7804d7",
     "spec_sha256": "290667c8b9269576bbfbb38ef987b45c2410e77adf58aa3138463736144a365b",
     "film_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
     "inventory_sha256": "4b1cacd5bf9534186e9188834002a98b348cf4c80321cf432746b378ad2b6e69"
@@ -18,7 +18,7 @@
     "MAX_SUB_RATIO": 0.15
   },
   "seams": "由出片确定性闸覆盖：旁白超长编码前红（narration_overruns）、原声段与旁白段互斥（validate_spec）；本工具未另行检查成片接缝",
-  "reviewed_at": "2026-11-27T12:03:22+00:00",
+  "reviewed_at": "2026-11-27T12:15:09+00:00",
   "pass": true,
   "sentence_splits": [],
   "entries": [
@@ -272,7 +272,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "把他们每个人当年对阵世界前十的成绩排成一张表。你会看到一条26年没有人跌破的线,胜率5成。"
+        "transcript": "把他们每个人当年对阵世界前时的成绩排成一张表。你会看到一条26年没有人跌破的线,胜率5成。"
       },
       "polyphones": [],
       "pauses": {
@@ -368,7 +368,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "先看这张表的顶端。2004年的费德勒,对世界前十达了18场,全胜。"
+        "transcript": "先看这张表的顶端。2004年的费德勒对世界前十达了十八场,全胜。"
       },
       "polyphones": [],
       "pauses": {
@@ -656,7 +656,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "2003年的罗迪克：六胜五负：胜率54.5%：是三巨头之前最弱的一位年中第一。"
+        "transcript": "2003年的罗迪克,六胜五富,胜率54.5%,是三巨头之前最弱的一位年中第一。"
       },
       "polyphones": [],
       "pauses": {
@@ -906,7 +906,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "一年之后,自为列夫成为年中第一,他这一年拿了罚网和眉网两座大满罐,可对世界前时,都龄之前三胜九负,对辛纳和阿尔卡拉斯一次都没赢过。"
+        "transcript": "一年之后,自维列夫成为年中第一,他这一年拿了罚网和眉网两座大满罐,可对世界前时,都龄之前三胜九负,对辛纳和阿尔卡拉斯一次都没赢过。"
       },
       "polyphones": [],
       "pauses": {
@@ -1125,12 +1125,12 @@
       "completeness": {
         "ok": true,
         "ref_syllables": 33,
-        "deleted": 0,
+        "deleted": 1,
         "inserted": 0,
-        "substituted": 0,
-        "sub_ratio": 0.0,
-        "longest_deletion": 0,
-        "transcript": "年中第一节算的那一天,他有一万零三百五十分,比第三名多出两千七百五十分。"
+        "substituted": 1,
+        "sub_ratio": 0.03,
+        "longest_deletion": 1,
+        "transcript": "年中第一节算的那一天,他有10,350分,比第三名多出2750分。"
       },
       "polyphones": [],
       "pauses": {
@@ -1226,7 +1226,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 1,
-        "transcript": "27个年中第26个,对世界前十赢多输少。我们早就默认,世界第一,就该是赢过最强对手的人。"
+        "transcript": "27个年中,第26个,对世界前十赢多输少。我们早就默认,世界第一,就该是赢过最强对手的人。"
       },
       "polyphones": [],
       "pauses": {
@@ -1258,7 +1258,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "可排名从第一天起,亮的就不是这个。它亮的是道场﹑是稳定﹑是一整年攒分的总和。"
+        "transcript": "可排名从第一天起,亮的就不是这个。它亮的是道场,是稳定,是一整年攒分的总和。"
       },
       "polyphones": [],
       "pauses": {
@@ -1344,7 +1344,7 @@
         "substituted": 0,
         "sub_ratio": 0.0,
         "longest_deletion": 0,
-        "transcript": "评论区：战个队。"
+        "transcript": "评论区,站个队。"
       },
       "polyphones": [],
       "pauses": {
