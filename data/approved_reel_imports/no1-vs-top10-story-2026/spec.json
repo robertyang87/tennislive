@@ -9,11 +9,11 @@
   "_tts_backend_why": "本片在自有制作线以本地 edge-tts 通道合成（zh-CN-XiaoxiaoNeural，+0%），成片已定版；此字段只记录事实，不经原生渲染器重渲。",
   "_import": {
     "kind": "finished_master_inspection",
-    "renderer": "no1-vs-top10-story-2026/build: build_full.py + build_proofs_v4.py（已批准格式体系）+ assemble_v2.py（自有代码制作，非原生渲染器）",
-    "master_file": "no1-vs-top10-story-2026_v2.mp4",
-    "master_sha256": "73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d",
-    "master_bytes": 117319624,
-    "_why": "segments 的 source 一律记 approved_master，start/end 是母带自身时间轴的窗口（同 tennis-money-story-2026 / laver-cup-history-2026 导入先例）：spec 描述的是这份已定版成片本身，审听证据也对母带本体做。v2 为补完版：第 3 章（德约 2015）改用 Tennis TV 官方合辑 EK8wQcv0BIk 的 1080p 窗口补渲，其余章节与 v1 同一镜头文件。"
+    "renderer": "no1-vs-top10-story-2026/build: build_full.py + build_proofs_v4.py（已批准格式体系）+ assemble_v3.py（自有代码制作，非原生渲染器）",
+    "master_file": "no1-vs-top10-story-2026_v3.mp4",
+    "master_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
+    "master_bytes": 115384605,
+    "_why": "segments 的 source 一律记 approved_master，start/end 是母带自身时间轴的窗口（同 tennis-money-story-2026 / laver-cup-history-2026 导入先例）：spec 描述的是这份已定版成片本身，审听证据也对母带本体做。v2 为补完版：第 3 章（德约 2015）改用 Tennis TV 官方合辑 EK8wQcv0BIk 的 1080p 窗口补渲，其余章节与 v1 同一镜头文件。v3 为听审修音版：v2 推送被自动听审闸拦下（6 处判红）后按所有者裁决修音重渲——6 段旁白重合成（原第 20/21 段合并为一整句单次合成，旁白段数 34→33），画面与 v2 同源同窗、仅音频段与连带时长变化（总时长 255.50→252.80s），锁稿文字一字未改，详见 QC-REPORT-v3.md。"
   },
   "_production_status": "finished_master_pending_pipeline_landing",
   "cover": {
@@ -110,90 +110,84 @@
       "source": "approved_master",
       "start": 49.636,
       "narration": "再看数量。2015 年的德约科维奇，一个赛季和世界前十交手 36 次，赢了 31 场，至今是单季纪录。",
-      "end": 60.57
+      "end": 60.172
     },
     {
       "source": "approved_master",
-      "start": 60.57,
+      "start": 60.172,
       "narration": "那一年的前十，他每一个都赢过。",
-      "end": 64.004
+      "end": 63.606
     },
     {
       "source": "approved_master",
-      "start": 64.004,
+      "start": 63.606,
       "narration": "把这个数字放在今年旁边：今年的世界第一，在都灵开赛之前，对世界前十只赢了 3 场。",
-      "end": 73.066
+      "end": 72.668
     },
     {
       "source": "approved_master",
-      "start": 73.066,
+      "start": 72.668,
       "narration": "三十一，和三。",
-      "end": 75.372
+      "end": 74.974
     },
     {
       "source": "approved_master",
-      "start": 75.372,
+      "start": 74.974,
       "narration": "那这张表的底，原来在哪里？",
-      "end": 78.65
+      "end": 78.252
     },
     {
       "source": "approved_master",
-      "start": 78.65,
+      "start": 78.252,
       "narration": "2003 年的罗迪克，6 胜 5 负，胜率 54.5%，是三巨头之前最弱的一位年终第一。",
-      "end": 87.76
+      "end": 87.362
     },
     {
       "source": "approved_master",
-      "start": 87.76,
+      "start": 87.362,
       "narration": "可即便是他，也是赢得比输得多。",
-      "end": 91.362
+      "end": 90.964
     },
     {
       "source": "approved_master",
-      "start": 91.362,
+      "start": 90.964,
       "narration": "此后 23 年，从纳达尔、穆雷，到阿尔卡拉斯、辛纳，每一位年终第一对世界前十的胜率都在六成或以上。",
-      "end": 102.104
+      "end": 101.706
     },
     {
       "source": "approved_master",
-      "start": 102.104,
+      "start": 101.706,
       "narration": "赢前十，曾经是世界第一不用言说的及格线。",
-      "end": 106.954
+      "end": 106.556
     },
     {
       "source": "approved_master",
-      "start": 106.954,
+      "start": 106.556,
       "narration": "断裂就发生在这两年。",
-      "end": 109.776
+      "end": 109.378
     },
     {
       "source": "approved_master",
-      "start": 109.776,
+      "start": 109.378,
       "narration": "2025 年，阿尔卡拉斯对世界前十 17 胜 3 负，胜率 85.0%，近十年最高。",
-      "end": 118.274
+      "end": 117.273
     },
     {
       "source": "approved_master",
-      "start": 118.274,
-      "narration": "一年之后，兹维列夫成为年终第一：他这一年拿了法网和美网两座大满贯，",
-      "end": 125.992
+      "start": 117.273,
+      "narration": "一年之后，兹维列夫成为年终第一：他这一年拿了法网和美网两座大满贯，可对世界前十，都灵之前 3 胜 9 负，对辛纳和阿尔卡拉斯，一次都没赢过。",
+      "end": 131.723
     },
     {
       "source": "approved_master",
-      "start": 125.992,
-      "narration": "可对世界前十，都灵之前 3 胜 9 负，对辛纳和阿尔卡拉斯，一次都没赢过。",
-      "end": 133.41
-    },
-    {
-      "source": "approved_master",
-      "start": 133.41,
+      "start": 131.723,
       "narration": "算上都灵后来赢下的四场，全年 7 胜 10 负——27 年里，第一个对前十输多赢少的年终第一。",
-      "end": 142.916
+      "end": 140.533
     },
     {
       "source": "approved_master",
-      "start": 142.916,
-      "end": 154.786,
+      "start": 140.533,
+      "end": 152.403,
       "quote": [
         {
           "at": 0.0,
@@ -209,50 +203,50 @@
     },
     {
       "source": "approved_master",
-      "start": 154.786,
+      "start": 152.403,
       "narration": "这怎么可能？因为积分系统里，根本没有「对手是谁」这一项。",
-      "end": 160.776
+      "end": 158.393
     },
     {
       "source": "approved_master",
-      "start": 160.776,
+      "start": 158.393,
       "narration": "你打进一站比赛的第几轮、这站是什么级别，决定你拿多少分；站在网对面的人排第几，不决定。",
-      "end": 170.078
+      "end": 167.695
     },
     {
       "source": "approved_master",
-      "start": 170.078,
+      "start": 167.695,
       "narration": "一座大满贯冠军是 2,000 分，他今年有两座。",
-      "end": 174.82
+      "end": 172.437
     },
     {
       "source": "approved_master",
-      "start": 174.82,
+      "start": 172.437,
       "narration": "而他的总胜场是全巡回赛最多的：69 场胜利，一站一站打到后段，输给前十，也照样有分进账。",
-      "end": 184.986
+      "end": 182.603
     },
     {
       "source": "approved_master",
-      "start": 184.986,
+      "start": 182.603,
       "narration": "再加上辛纳在温网之后因伤停赛、提前结束了赛季——分数的空间，就这样让了出来。",
-      "end": 193.184
+      "end": 190.801
     },
     {
       "source": "approved_master",
-      "start": 193.184,
+      "start": 190.801,
       "narration": "年终第一结算的那一天，他有 10,350 分，比第三名多出 2,750 分。",
-      "end": 201.022
+      "end": 198.639
     },
     {
       "source": "approved_master",
-      "start": 201.022,
+      "start": 198.639,
       "narration": "这个第一，在数学上毫无问题。",
-      "end": 204.768
+      "end": 202.385
     },
     {
       "source": "approved_master",
-      "start": 204.768,
-      "end": 216.538,
+      "start": 202.385,
+      "end": 214.155,
       "quote": [
         {
           "at": 0.0,
@@ -268,33 +262,33 @@
     },
     {
       "source": "approved_master",
-      "start": 216.538,
+      "start": 214.155,
       "narration": "所以问题不在兹维列夫身上。",
-      "end": 220.224
+      "end": 217.841
     },
     {
       "source": "approved_master",
-      "start": 220.224,
+      "start": 217.841,
       "narration": "27 个年终第一，26 个对世界前十赢多输少——我们早就默认，世界第一，就该是赢过最强对手的人。",
-      "end": 230.774
+      "end": 228.055
     },
     {
       "source": "approved_master",
-      "start": 230.774,
+      "start": 228.055,
       "narration": "可排名从第一天起，量的就不是这个。它量的是到场、是稳定、是一整年攒分的总和。",
-      "end": 239.524
+      "end": 236.805
     },
     {
       "source": "approved_master",
-      "start": 239.524,
+      "start": 236.805,
       "narration": "那么你来选：如果世界第一只能代表一件事，你希望它代表「赢过最强的人」，还是「一整年最稳定的人」？",
-      "end": 248.898
+      "end": 246.179
     },
     {
       "source": "approved_master",
-      "start": 248.898,
+      "start": 246.179,
       "narration": "评论区，站个队。",
-      "end": 251.372
+      "end": 248.653
     }
   ]
 }

@@ -2,18 +2,18 @@
   "cover_seconds": 0.0,
   "cover_narrated": false,
   "date": "2026-11-27",
-  "film_bytes": 117319624,
-  "film_seconds": 255.494,
-  "film_sha256": "73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d",
+  "film_bytes": 115384605,
+  "film_seconds": 252.8,
+  "film_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
   "outro_seconds": 4.122,
-  "segments_seconds": 251.372,
+  "segments_seconds": 248.678,
   "slug": "no1-vs-top10-story-2026",
   "title": "世界第一的及格线？",
   "tts_bundle": {
-    "bundle_sha256": "da865d36abdc9f1007b9e66ae5f7c27693b0cd60dc6c687d15bc9a06295fc234",
-    "request_count": 34,
-    "note": "本片 34 条旁白的实际合成请求与音频（本地 edge 通道、晓晓 +0%）；词边界由实际音频 faster-whisper 词时间戳＋拼音对齐重建（生产合成时未开边界流）"
+    "bundle_sha256": "8af0f52bdc649af107bfadc63235192e7cd1282c1e4649fdf7806dc638873a96",
+    "request_count": 33,
+    "note": "本片 33 条旁白的实际合成请求与音频（本地 edge 通道、晓晓 +0%）；v3 听审修音：6 条重合成（原第 20/21 段合并为一整句、2 条分段合成后按句界拼合、2 条朗读稿标点微调，口播词句与锁稿逐词一致）；词边界由实际音频 faster-whisper 词时间戳＋拼音对齐重建（生产合成时未开边界流）"
   },
-  "render_inputs_sha256": "c303878529e72f17d84fe95f3906daf429de6fc5d57b74eccbaf9ece9d0b7043",
-  "qc_attestation_sha256": "b896c47c5c1e60aa812a3cea80394a28cb3ed81bdec8238fc2660e432c94bcfd"
+  "render_inputs_sha256": "465bc648b3d4a2c114b0fd6292e695159b3bcfa9f512d454cdcff7f64b7d851a",
+  "qc_attestation_sha256": "b8b5ee81f4175d327e4fe22339351336828464f15ad4723fbe1e24ea63af5a1d"
 }

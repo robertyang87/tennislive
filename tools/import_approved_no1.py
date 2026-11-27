@@ -26,8 +26,8 @@ import requests
 
 SLUG = 'no1-vs-top10-story-2026'
 REPOSITORY = 'robertyang87/tennislive'
-EXPECTED_BYTES = 117319624
-EXPECTED_SHA = '73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d'
+EXPECTED_BYTES = 115384605
+EXPECTED_SHA = '4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -92,8 +92,17 @@ def assemble(request):
     spec = Path('specs/reels') / f'{SLUG}.json'
     tracked = subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
     already_pushed = any(p.endswith(f'/reel/{SLUG}/pushed.json') for p in tracked)
-    if already_pushed or Path(f'data/reel_publish_ledger/{SLUG}.json').exists():
+    if already_pushed:
         raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
+    ledger_path = Path(f'data/reel_publish_ledger/{SLUG}.json')
+    if ledger_path.exists():
+        # v3 修音重导（2026-11-27，所有者裁决 B 路）：v2 的唯一 attempt 已按
+        # run 45982606110 step 67 日志证据改判 not_sent（听审闸在调用 PushPlus
+        # 之前拦下、无流水号）。只有账本全部 attempt 都是 not_sent 才许重导；
+        # 任一 sent/uncertain 在册仍按原规矩拒绝，绝不自动覆写投递记录。
+        attempts = json.loads(ledger_path.read_text(encoding='utf-8')).get('attempts') or []
+        if not attempts or any(a.get('status') != 'not_sent' for a in attempts):
+            raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
     cache = Path(os.environ.get('RUNNER_TEMP', '.')) / 'approved-no1-chunks'
     cache.mkdir(parents=True, exist_ok=True)
     outdir.mkdir(parents=True, exist_ok=True)

@@ -1,13 +1,13 @@
 {
   "schema": "tennislive.foreground-audio-packet.v1",
-  "reviewer": "Muse 制作代理（实际母带双路 ASR 交叉核对：faster-whisper small 中文整片转写逐段比对锁稿、英文整片转写检出前景英文；236–255 秒英文检出经 medium 模型复核确认为中文旁白与片尾中文口播之上的幻听；OA 引文与生产期逐字转写一致）",
+  "reviewer": "Muse 制作代理（实际母带双路 ASR 交叉核对：faster-whisper small 中文整片转写逐段比对锁稿、英文整片转写检出前景英文；片尾 244–251 秒英文检出经 medium 模型复核确认为中文旁白与品牌片尾中文口播之上的幻听；OA 引文与生产期逐字转写一致；v3 修音 6 段已逐段以同法复核）",
   "method": "asr_cross_checked",
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-no1-vs-top10-story-2026/no1-vs-top10-story-2026.mp4",
-  "source_sha256": "73a15b2b38b56e86f0f7f8cd89d1b3ee91949a7bf2b33198a2fb65ff0461fc9d",
-  "reviewed_at": "2026-11-27T18:40:00+08:00",
+  "source_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
+  "reviewed_at": "2026-11-27T19:49:31+08:00",
   "status": "complete",
-  "reviewed_from": 154.786,
-  "reviewed_to": 160.776,
+  "reviewed_from": 158.393,
+  "reviewed_to": 167.695,
   "foreground_english": [],
   "no_foreground_english_reason": "本窗只有中文 TTS 旁白与器乐 BGM 床（Tycho《Awake》，无歌词）；对实际母带的中英双路 ASR 交叉核对在本窗未检出任何前景英文，前景英文只存在于 OA1/OA2 两段采访原声窗。"
 }
