@@ -13,9 +13,9 @@
     {
       "key": "pushplus:reel:no1-vs-top10-story-2026:4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
       "fingerprint": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
-      "status": "not_sent",
-      "at": "2026-11-27T12:12:50Z",
-      "run": "https://github.com/robertyang87/tennislive/actions/runs/45996688846",
+      "status": "sending",
+      "at": "2026-11-27T12:24:05Z",
+      "run": "https://github.com/robertyang87/tennislive/actions/runs/45997973335",
       "evidence": "改判（原 status uncertain）：auto-push-reel run 45996688846（commit #4 落地触发）step 10 日志显示 require_publish 抛 waiting_voice_quality_review（当时仓内听审凭证还是上一版身份、已过期），在调用 PushPlus 之前拦下、无收据，消息未发出；step 12 按设计标记 uncertain。听审二次运行 45996711696 已按新身份全绿落仓后，按此证据改判 not_sent。"
     }
   ]
