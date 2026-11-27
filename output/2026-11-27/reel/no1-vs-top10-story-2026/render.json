@@ -15,5 +15,7 @@
     "note": "本片 33 条旁白的实际合成请求与音频（本地 edge 通道、云健 zh-CN-YunjianNeural +0%）；v4 全片换云健重合成；合成侧处置 2 条：6-06 云健在数字短语内真停顿 2 处、2-04 头部与段中死静音，均只在波形上把异常静音收窄（口播词句与锁稿逐词一致）；词边界由实际音频 faster-whisper 词时间戳＋拼音对齐重建（生产合成时未开边界流）"
   },
   "render_inputs_sha256": "a2f0807a239ab32fef55338d3a3a27c5ca8ccb2b4d979e92c5c3dfbfa19a37b2",
-  "qc_attestation_sha256": "162fe81311fe2220e20be18775b27d75b790e0ea4aa5648d1d1ae52e94bd4c9b"
+  "qc_attestation_sha256": "8c84bcc180f15174b792ff647f9106b462508510f8cc5768fb5b3b18e9568e6e",
+  "video_url": "https://github.com/robertyang87/tennislive/releases/download/reel-no1-vs-top10-story-2026/no1-vs-top10-story-2026.mp4",
+  "video_bytes": 112716323
 }
