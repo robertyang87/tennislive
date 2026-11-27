@@ -2,18 +2,18 @@
   "cover_seconds": 0.0,
   "cover_narrated": false,
   "date": "2026-11-27",
-  "film_bytes": 115384605,
-  "film_seconds": 252.8,
-  "film_sha256": "4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28",
+  "film_bytes": 112716323,
+  "film_seconds": 252.333,
+  "film_sha256": "3894ff0c9acb5bff99ced4600e37d4354661b7fff7a03c20a6b0e90ffd2d5def",
   "outro_seconds": 4.122,
-  "segments_seconds": 248.678,
+  "segments_seconds": 248.211,
   "slug": "no1-vs-top10-story-2026",
   "title": "世界第一的及格线？",
   "tts_bundle": {
-    "bundle_sha256": "8af0f52bdc649af107bfadc63235192e7cd1282c1e4649fdf7806dc638873a96",
+    "bundle_sha256": "a204a517b0c7e058442f5b808e7af88e4bb18e09077968d7ebaa554777011bdd",
     "request_count": 33,
-    "note": "本片 33 条旁白的实际合成请求与音频（本地 edge 通道、晓晓 +0%）；v3 听审修音：6 条重合成（原第 20/21 段合并为一整句、2 条分段合成后按句界拼合、2 条朗读稿标点微调，口播词句与锁稿逐词一致）；词边界由实际音频 faster-whisper 词时间戳＋拼音对齐重建（生产合成时未开边界流）"
+    "note": "本片 33 条旁白的实际合成请求与音频（本地 edge 通道、云健 zh-CN-YunjianNeural +0%）；v4 全片换云健重合成；合成侧处置 2 条：6-06 云健在数字短语内真停顿 2 处、2-04 头部与段中死静音，均只在波形上把异常静音收窄（口播词句与锁稿逐词一致）；词边界由实际音频 faster-whisper 词时间戳＋拼音对齐重建（生产合成时未开边界流）"
   },
-  "render_inputs_sha256": "ed865e637a2a7f8ae7a2fec4df8e2e40f2dee0694688f682cf2e9ed3ea7804d7",
-  "qc_attestation_sha256": "b82cfbfab79b0590b74dff226098b16ab9a381b5c4739dd324ceadb50aa56d85"
+  "render_inputs_sha256": "2dbd15c4682a24c0d4a3ec055210a10c975d9e34ea87475d27b01ca897d9b601",
+  "qc_attestation_sha256": "2f74fa8bb7cd5c0d538aa01f83b7706c13191e93d5cf55b757737690d83846bf"
 }

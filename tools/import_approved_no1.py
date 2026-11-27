@@ -26,8 +26,8 @@ import requests
 
 SLUG = 'no1-vs-top10-story-2026'
 REPOSITORY = 'robertyang87/tennislive'
-EXPECTED_BYTES = 115384605
-EXPECTED_SHA = '4607e9df91dd75214a87d1bf52ad7e05b251dafe83920f49f2f072be23181f28'
+EXPECTED_BYTES = 112716323
+EXPECTED_SHA = '3894ff0c9acb5bff99ced4600e37d4354661b7fff7a03c20a6b0e90ffd2d5def'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -92,17 +92,24 @@ def assemble(request):
     spec = Path('specs/reels') / f'{SLUG}.json'
     tracked = subprocess.check_output(['git', 'ls-files'], text=True).splitlines()
     already_pushed = any(p.endswith(f'/reel/{SLUG}/pushed.json') for p in tracked)
-    if already_pushed:
-        raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
     ledger_path = Path(f'data/reel_publish_ledger/{SLUG}.json')
+    attempts = []
     if ledger_path.exists():
-        # v3 修音重导（2026-11-27，所有者裁决 B 路）：v2 的唯一 attempt 已按
-        # run 45982606110 step 67 日志证据改判 not_sent（听审闸在调用 PushPlus
-        # 之前拦下、无流水号）。只有账本全部 attempt 都是 not_sent 才许重导；
-        # 任一 sent/uncertain 在册仍按原规矩拒绝，绝不自动覆写投递记录。
         attempts = json.loads(ledger_path.read_text(encoding='utf-8')).get('attempts') or []
-        if not attempts or any(a.get('status') != 'not_sent' for a in attempts):
-            raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
+    # v4 重导（2026-11-27，所有者看过 v3 已推版后下达四处定规修改并明确批准
+    # 重推）：守卫按「本次待导母带指纹」收口——账本里 v3 的 sent attempt
+    # （指纹 4607e9df…，PushPlus ade3160463a049dcbf9b2327ec2c3f67）是上一个
+    # 母带的历史投递记录，逐字保留、不覆写、不改判；pushed.json 同理是上一
+    # 母带的投递凭证，随本次新 attempt 由推送环节正常更新。只有当待导指纹
+    # （EXPECTED_SHA）自身已有 sent/uncertain attempt 时才拒绝，防止同一母带
+    # 重复投递；账本存在但为空仍按异常拒绝。
+    if ledger_path.exists() and not attempts:
+        raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
+    own = [a for a in attempts if a.get('fingerprint') == EXPECTED_SHA]
+    if any(a.get('status') in ('sent', 'uncertain') for a in own):
+        raise RuntimeError('This master fingerprint already has a sent/uncertain delivery attempt; refusing to re-import')
+    if already_pushed and not attempts:
+        raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
     cache = Path(os.environ.get('RUNNER_TEMP', '.')) / 'approved-no1-chunks'
     cache.mkdir(parents=True, exist_ok=True)
     outdir.mkdir(parents=True, exist_ok=True)
