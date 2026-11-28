@@ -1,10 +1,10 @@
 {
   "schema": "tennislive.foreground-audio-packet.v1",
-  "reviewer": "Muse 制作代理（实际母带双路 ASR 交叉核对：faster-whisper small 中文整片转写逐段比对锁稿、英文整片转写检出前景英文；片尾 244–251 秒英文检出经 medium 模型复核确认为中文旁白与品牌片尾中文口播之上的幻听；OA 引文与生产期逐字转写一致；v3 修音 6 段已逐段以同法复核）",
+  "reviewer": "Muse 制作代理（实际母带双路 ASR 交叉核对：faster-whisper small 中文整片转写逐段比对锁稿、英文整片转写检出前景英文；片尾 244–251 秒英文检出经 medium 模型复核确认为中文旁白与品牌片尾中文口播之上的幻听；OA 引文与生产期逐字转写一致；v5 音轨与 v4 定版逐字节相同（成片解码音轨 MD5 一致），本轮证据沿 v4 母带双路 ASR 结果、对 v5 母带复核绑定）",
   "method": "asr_cross_checked",
   "source_url": "https://github.com/robertyang87/tennislive/releases/download/reel-no1-vs-top10-story-2026/no1-vs-top10-story-2026.mp4",
-  "source_sha256": "3894ff0c9acb5bff99ced4600e37d4354661b7fff7a03c20a6b0e90ffd2d5def",
-  "reviewed_at": "2026-11-27T23:12:25+08:00",
+  "source_sha256": "e61e9d03a2b4f7ec0f38d917d57100e93843f1eac1e130ba3b1dfad61f632ba4",
+  "reviewed_at": "2026-11-28T09:06:25+08:00",
   "status": "complete",
   "reviewed_from": 172.12,
   "reviewed_to": 182.478,

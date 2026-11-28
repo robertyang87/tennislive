@@ -26,8 +26,8 @@ import requests
 
 SLUG = 'no1-vs-top10-story-2026'
 REPOSITORY = 'robertyang87/tennislive'
-EXPECTED_BYTES = 112716323
-EXPECTED_SHA = '3894ff0c9acb5bff99ced4600e37d4354661b7fff7a03c20a6b0e90ffd2d5def'
+EXPECTED_BYTES = 113325806
+EXPECTED_SHA = 'e61e9d03a2b4f7ec0f38d917d57100e93843f1eac1e130ba3b1dfad61f632ba4'
 
 def run(*args):
     subprocess.run(args, check=True)
@@ -103,6 +103,10 @@ def assemble(request):
     # 母带的投递凭证，随本次新 attempt 由推送环节正常更新。只有当待导指纹
     # （EXPECTED_SHA）自身已有 sent/uncertain attempt 时才拒绝，防止同一母带
     # 重复投递；账本存在但为空仍按异常拒绝。
+    # v5 重导（2026-11-28，所有者逐章验看 v5 字卡帧后批准第三次推送）：v5 只
+    # 修正右上字卡内容行（来源注仍不上字卡），音轨与 v4 逐字节相同；账本里
+    # v4 的 sent attempt（指纹 3894ff0c…，PushPlus 698bb69985804d5a889af861d7fd94c9）
+    # 同为上一母带的历史投递记录，逐字保留。守卫口径不变：只拦待导指纹自身。
     if ledger_path.exists() and not attempts:
         raise RuntimeError('Existing delivery record: inspect it before importing; never automatically overwrite it')
     own = [a for a in attempts if a.get('fingerprint') == EXPECTED_SHA]
